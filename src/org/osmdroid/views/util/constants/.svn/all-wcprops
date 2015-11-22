@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/!svn/ver/877/trunk/osmdroid-android/src/org/osmdroid/views/util/constants
+END
+MapViewConstants.java
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/svn/!svn/ver/877/trunk/osmdroid-android/src/org/osmdroid/views/util/constants/MapViewConstants.java
+END
+MathConstants.java
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/svn/!svn/ver/626/trunk/osmdroid-android/src/org/osmdroid/views/util/constants/MathConstants.java
+END
+OverlayConstants.java
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/svn/!svn/ver/795/trunk/osmdroid-android/src/org/osmdroid/views/util/constants/OverlayConstants.java
+END

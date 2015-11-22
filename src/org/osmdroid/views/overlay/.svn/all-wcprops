@@ -1,0 +1,95 @@
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/!svn/ver/958/trunk/osmdroid-android/src/org/osmdroid/views/overlay
+END
+OverlayItem.java
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/!svn/ver/887/trunk/osmdroid-android/src/org/osmdroid/views/overlay/OverlayItem.java
+END
+ItemizedOverlayControlView.java
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/svn/!svn/ver/632/trunk/osmdroid-android/src/org/osmdroid/views/overlay/ItemizedOverlayControlView.java
+END
+ItemizedOverlayWithFocus.java
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/svn/!svn/ver/887/trunk/osmdroid-android/src/org/osmdroid/views/overlay/ItemizedOverlayWithFocus.java
+END
+ItemizedOverlay.java
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/!svn/ver/954/trunk/osmdroid-android/src/org/osmdroid/views/overlay/ItemizedOverlay.java
+END
+OverlayManager.java
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/!svn/ver/889/trunk/osmdroid-android/src/org/osmdroid/views/overlay/OverlayManager.java
+END
+ScaleBarOverlay.java
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/!svn/ver/958/trunk/osmdroid-android/src/org/osmdroid/views/overlay/ScaleBarOverlay.java
+END
+DirectedLocationOverlay.java
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/svn/!svn/ver/827/trunk/osmdroid-android/src/org/osmdroid/views/overlay/DirectedLocationOverlay.java
+END
+MyLocationOverlay.java
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/!svn/ver/943/trunk/osmdroid-android/src/org/osmdroid/views/overlay/MyLocationOverlay.java
+END
+Overlay.java
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/!svn/ver/887/trunk/osmdroid-android/src/org/osmdroid/views/overlay/Overlay.java
+END
+TilesOverlay.java
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/!svn/ver/889/trunk/osmdroid-android/src/org/osmdroid/views/overlay/TilesOverlay.java
+END
+SimpleLocationOverlay.java
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svn/!svn/ver/827/trunk/osmdroid-android/src/org/osmdroid/views/overlay/SimpleLocationOverlay.java
+END
+ItemizedIconOverlay.java
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/!svn/ver/934/trunk/osmdroid-android/src/org/osmdroid/views/overlay/ItemizedIconOverlay.java
+END
+IOverlayMenuProvider.java
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/svn/!svn/ver/889/trunk/osmdroid-android/src/org/osmdroid/views/overlay/IOverlayMenuProvider.java
+END
+MinimapOverlay.java
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/!svn/ver/877/trunk/osmdroid-android/src/org/osmdroid/views/overlay/MinimapOverlay.java
+END
+PathOverlay.java
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/!svn/ver/885/trunk/osmdroid-android/src/org/osmdroid/views/overlay/PathOverlay.java
+END

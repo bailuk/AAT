@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/!svn/ver/958/trunk/osmdroid-android/src/org/osmdroid/util
+END
+MyMath.java
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/!svn/ver/626/trunk/osmdroid-android/src/org/osmdroid/util/MyMath.java
+END
+GeoPoint.java
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/!svn/ver/958/trunk/osmdroid-android/src/org/osmdroid/util/GeoPoint.java
+END
+NetworkLocationIgnorer.java
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/!svn/ver/867/trunk/osmdroid-android/src/org/osmdroid/util/NetworkLocationIgnorer.java
+END
+BoundingBoxE6.java
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/!svn/ver/763/trunk/osmdroid-android/src/org/osmdroid/util/BoundingBoxE6.java
+END
+LocationUtils.java
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/!svn/ver/945/trunk/osmdroid-android/src/org/osmdroid/util/LocationUtils.java
+END
+GEMFFile.java
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/!svn/ver/946/trunk/osmdroid-android/src/org/osmdroid/util/GEMFFile.java
+END

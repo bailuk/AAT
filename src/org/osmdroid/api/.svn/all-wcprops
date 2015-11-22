@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/!svn/ver/958/trunk/osmdroid-android/src/org/osmdroid/api
+END
+IMapView.java
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/!svn/ver/769/trunk/osmdroid-android/src/org/osmdroid/api/IMapView.java
+END
+IProjection.java
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/!svn/ver/953/trunk/osmdroid-android/src/org/osmdroid/api/IProjection.java
+END
+IMyLocationOverlay.java
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/!svn/ver/691/trunk/osmdroid-android/src/org/osmdroid/api/IMyLocationOverlay.java
+END
+IMapController.java
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/!svn/ver/695/trunk/osmdroid-android/src/org/osmdroid/api/IMapController.java
+END
+IGeoPoint.java
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/!svn/ver/958/trunk/osmdroid-android/src/org/osmdroid/api/IGeoPoint.java
+END

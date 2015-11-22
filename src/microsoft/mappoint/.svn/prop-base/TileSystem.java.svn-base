@@ -1,0 +1,8 @@
+K 13
+svn:mergeinfo
+V 388
+/branches/issue-43-jar/osmdroid-android/src/org/osmdroid/views/util/TileSystem.java:194-224
+/branches/issue-43-no-service/osmdroid-android/src/org/osmdroid/views/util/TileSystem.java:175-192
+/branches/issue-81-renderer-as-interface/osmdroid-android/src/org/osmdroid/views/util/TileSystem.java:328-353
+/branches/release_3_0_4/osmdroid-android/src/microsoft/mappoint/TileSystem.java:929-931
+END

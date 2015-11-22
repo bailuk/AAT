@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+<string name="intro_about">About</string>
+<string name="intro_resume">Cockpit A</string>    
+<string name="intro_cockpit2">Cockpit B</string>
+<string name="intro_map">Map</string>
+<string name="intro_overpass">Overpass</string>
+<string name="intro_nominatim">Nominatim</string>
+<string name="intro_test">Test</string>
+<string name="intro_status">Status</string>
+<string name="intro_detail">Detail</string>
+
+<string name="intro_overlay_list">Overlay list</string>
+<string name="intro_list">Track list</string>
+<string name="intro_settings">Preferences</string>
+<string name="intro_file">Latest track</string>
+
+<string name="gps">GPS</string>
+<string name="gps_wait">&#8230;</string>
+<string name="gps_nogps">No GPS</string>
+<string name="gps_noaccess">No access</string>
+
+<string name="tracker">Tracker</string>
+<string name="tracker_start">Start</string>
+<string name="tracker_pause">Pause</string>
+<string name="tracker_stop">Stop</string>
+<string name="tracker_resume">Resume</string>
+
+<string name="status_paused">Paused</string>
+<string name="status_autopaused">A-Paused</string>
+
+
+<string name="on">On</string>
+<string name="off">Off</string>
+<string name="auto">Auto</string>
+
+
+
+<string name="p_unit_title">Units</string>
+<string-array name="p_unit_list">
+    <item>Metric (km, km/h)</item>
+    <item>Imperial (mi, mph)</item>
+    <item>Nautical (nm, kn)</item>
+    <item>International System of Units</item>
+</string-array>
+
+<string name="p_general">General</string>
+<string name="p_preset">Activity</string>
+<string name="p_met">MET</string>
+<string-array name="p_met_list">
+   <!--
+     List is taken and modified from "Compendium of Physical Activities"
+     https://sites.google.com/site/compendiumofphysicalactivities/Activity-Categories
+   -->
+    <item> 6.8 bicycling, leisure, moderate effort</item>   
+    <item> 8.5 bicycling, mountain, general</item>
+    <item> 7.0 jogging, general</item>
+    <item> 6.0 hiking, cross country</item>
+    <item> 2.0 test</item>
+   
+       <item>14.0 bicycling, mountain, uphill</item> 
+       <item>16.0 bicycling, mountain, competitive</item>
+       <item> 5.8 bicycling, leisure, light effort</item>
+       <item>10.0 bicycling, racing or leisure, vigorous effort</item>
+       <item> 6.0 running, 4 mph (13 min/mile)</item>
+       <item> 9.0 running, 5.2 mph (11.5 min/mile)</item>
+       <item> 9.8 running, 6 mph (10 min/mile)</item>
+       <item> 9.0 running, cross country</item>
+       <item>10.0 running, on a track, team practice</item>
+       <item> 8.0 running, training, pushing a wheelchair or baby carrier</item>
+       <item>13.3 running, marathon</item>
+       <item> 7.8 backpacking, hiking or organized walking with a daypack</item>
+       <item> 7.3 climbing hills with 10 to 20 lb load</item>
+       <item> 8.3 climbing hills with 21 to 42 lb load</item>
+       <item> 9.0 climbing hills with 42+ lb load</item>
+       <item> 5.3 hiking or walking at a normal pace through fields and hillsides</item>
+       <item> 6.5 race walking</item>
+       <item> 8.0 rock or mountain climbing</item>  
+       <item> 2.0 walking, strolling, very slow</item>
+       <item> 3.5 walking for pleasure</item>
+       <item> 3.0 walking the dog</item>
+       <item> 4.8 walking, for exercise, 3.5 to 4 mph, with ski poles, Nordic walking, level, moderate pace</item>
+       <item> 6.8 walking, for exercise, with ski poles, Nordic walking, uphill</item>
+       
+</string-array>
+
+
+<string name="p_map">Map</string>
+<string name="p_overlay">Overlays</string>
+<string name="p_autopause_title">Autopause</string>
+<string name="p_weight_title">Your weight in kg</string>
+
+<string name="p_backlight_title">Backlight</string>
+<string name="p_backlight_off">Off</string>
+<string name="p_backlight_dim">Dim</string>
+<string name="p_backlight_bright">Bright</string>
+<string name="p_update_interval">Updates per minute</string>
+
+<string name="file_reload">Reload preview</string>
+<string name="file_delete">Delete file</string>
+<string name="file_rename">Rename file</string>
+<string name="file_overlay">Use as overlay</string>
+<string name="file_mock">Use for mock location</string>
+<string name="file_delete_ask">Delete file?</string>
+<string name="dialog_yes">Yes</string>
+<string name="dialog_no">No</string>
+<string name="dialog_ok">OK</string>
+<string name="dialog_cancel">Cancel</string>
+
+
+<string name="d_longitude">Longitude</string>
+<string name="d_latitude">Latitude</string>
+<string name="d_chx">CH1903 X</string>
+<string name="d_chy">CH1903 Y</string>
+<string name="d_name">Name</string>
+<string name="d_accuracy">Accuracy</string>
+<string name="d_enddate">End</string>
+<string name="d_startdate">Start</string>
+<string name="d_acceleration">Acceleration</string>
+<string name="d_bearing">Bearing</string>
+
+<string name="pause">Pause</string>
+<string name="speed">Speed</string>
+<string name="average">Average</string>
+<string name="maximum">Maximum</string>
+<string name="distance">Distance</string>
+<string name="altitude">Altitude</string>
+<string name="time">Total Time</string>
+<string name="calories">Calories</string>
+
+
+<string name="filter">Filter</string>
+
+
+<string name="about">
+    &lt;h1>About&lt;/h1>
+    
+    &lt;p>
+    &lt;b>AAT - Android Activity Tracker&lt;/b> is a GPS-tracking application for tracking sportive activities, with emphasis on cycling. 
+          It uses &lt;b>osmdroid&lt;/b> to display map tiles from the &lt;b>OpenStreetMap&lt;/b> project.
+    &lt;/p>
+    
+    &lt;h1>Copyright&lt;/h1>
+        
+    &lt;h2>Map tiles&lt;/h2>
+    &lt;p>
+       &#169; OpenStreetMap, CC-BY-SA 2.0
+       &lt;br>http://wiki.openstreetmap.org/wiki/Legal_FAQ
+       &lt;br>
+       &lt;br>
+       &#0169; Waymarked Trails, CC BY-SA 3.0 DE
+       &lt;br>http://waymarkedtrails.org/en/help/legal
+       
+    &lt;/p>
+        
+    &lt;h2>osmdroid&lt;/h2>
+    &lt;p>
+       &#0169; the osmdroid project
+       &lt;br>license: GNU Lesser GPL
+       &lt;br>https://github.com/osmdroid/osmdroid
+       &lt;br>http://www.gnu.org/licenses/lgpl.html 
+    &lt;/p>
+        
+    &lt;h2>AAT&lt;/h2>
+    &lt;p>
+       &#0169; 2011-2015 Lukas Bai bailu@bailu.ch
+       &lt;br>license: GNU GPLv3 or later
+       &lt;br>http://www.gnu.org/licenses/gpl.html
+    &lt;/p>
+    
+</string>
+</resources>

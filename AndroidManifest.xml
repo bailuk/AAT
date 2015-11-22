@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="ch.bailu.aat"
+    android:versionCode="4"
+    android:versionName="150803" >
+
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" >  </uses-permission>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" >    </uses-permission>
+    <uses-permission android:name="android.permission.INTERNET" >                </uses-permission>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" >  </uses-permission>
+    <uses-permission android:name="android.permission.WAKE_LOCK" >               </uses-permission>
+
+    <uses-sdk
+        android:minSdkVersion="8"
+        android:targetSdkVersion="21" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/icon"
+        android:label="@string/app_sname"
+        android:theme="@android:style/Theme.NoTitleBar" >
+        <activity
+            android:name="ch.bailu.aat.activities.MainActivity"
+            android:screenOrientation="portrait" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="ch.bailu.aat.activities.PreferencesActivity"
+            android:label="@string/intro_settings"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="ch.bailu.aat.activities.TrackListActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="ch.bailu.aat.activities.OverlayListActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="ch.bailu.aat.activities.TrackerActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="ch.bailu.aat.activities.SplitViewActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="ch.bailu.aat.activities.DetailActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="ch.bailu.aat.activities.MapActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity android:name="ch.bailu.aat.activities.FileContentActivity" >
+        </activity>
+        <activity android:name="ch.bailu.aat.activities.AboutActivity" >
+        </activity>
+        <activity android:name="ch.bailu.aat.activities.StatusActivity" >
+        </activity>
+        <activity android:name="ch.bailu.aat.activities.TestActivity" >
+        </activity>
+        <activity
+            android:name="ch.bailu.aat.activities.GpxEditorActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity android:name="ch.bailu.aat.activities.OverpassActivity" >
+        </activity>
+        <activity android:name="ch.bailu.aat.activities.NominatimActivity" >
+        </activity>
+        <activity android:name="ch.bailu.aat.activities.MapFeaturesActivity" >
+        </activity>
+        <activity android:name="ch.bailu.aat.activities.MapFeatureListActivity" >
+        </activity>
+        <activity android:name="ch.bailu.aat.activities.NodeDetailActivity" >
+        </activity>
+        <activity android:name="ch.bailu.aat.activities.HtmlViewActivity" >
+        </activity>
+
+        <service android:name="ch.bailu.aat.services.tracker.TrackerService" >
+        </service>
+        <service android:name="ch.bailu.aat.services.directory.DirectoryService" >
+        </service>
+        <service android:name="ch.bailu.aat.services.overlay.OverlayService" >
+        </service>
+        <service android:name="ch.bailu.aat.services.editor.EditorService" >
+        </service>
+        <service android:name="ch.bailu.aat.services.srtm.ElevationService" >
+        </service>
+        <service android:name="ch.bailu.aat.services.background.BackgroundService" >
+        </service>
+        <service android:name="ch.bailu.aat.services.cache.CacheService" >
+        </service>
+        <service android:name="ch.bailu.aat.services.icons.IconMapService"></service>
+    </application>
+
+</manifest>

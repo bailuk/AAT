@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+  xmlns:android="http://schemas.android.com/apk/res/android">
+  
+    <item   android:id="@+id/m_start" 
+            android:title="@string/tracker_start">
+    
+    </item>
+    
+    <item android:id="@+id/m_pause"
+            android:title="@string/tracker_pause">    
+    </item>
+
+        <item android:id="@+id/m_backlight"
+        android:title="@string/p_backlight_title">
+    </item>
+    
+    <item android:id="@+id/m_autopause"
+            android:title="@string/p_autopause_title">
+    </item>
+    <item android:id="@+id/m_map" android:title="@string/p_map">
+    </item>
+
+    
+    <item android:id="@+id/m_overlay" android:title="@string/p_overlay">
+    </item>
+    
+</menu>
