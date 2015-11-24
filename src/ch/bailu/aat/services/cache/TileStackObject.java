@@ -1,5 +1,7 @@
 package ch.bailu.aat.services.cache;
 
+import java.io.File;
+
 import org.osmdroid.tileprovider.MapTile;
 
 import android.content.Context;
@@ -9,7 +11,6 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import ch.bailu.aat.helpers.AppBroadcaster;
-import ch.bailu.aat.helpers.AppLog;
 import ch.bailu.aat.services.background.ProcessHandle;
 import ch.bailu.aat.services.cache.CacheService.SelfOn;
 import ch.bailu.aat.services.cache.TileObject.Source;
@@ -192,8 +193,9 @@ public class TileStackObject extends ObjectHandle {
 
 
     public void deleteFromDisk() {
-        // TODO Auto-generated method stub
-
+        for (int i=0; i<tiles.length; i++) {
+            new File(tiles[i].id).delete();
+        }
     }
 
     public MapTile getTile() {
