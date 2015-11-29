@@ -12,6 +12,6 @@ project.
 .
 Auto Update Mode:None
 Update Check Mode:None
-Current Version:4
-Current Version Code:4
+Current Version:v0.5-alpha
+Current Version Code:5
 
