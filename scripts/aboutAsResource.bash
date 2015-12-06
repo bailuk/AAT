@@ -6,7 +6,7 @@
 #   bash scripts/aboutAsResource.bash
 
 cat scripts/about.html \
-| sed 's/</\&lt;/'       \
+| sed 's/</\&lt;/g'       \
 | sed 's/&lt;!DOCTYPE html>//'\
 | sed 's/&lt;html>/<string name="about">/'\
 | sed 's/&lt;body>//'     \

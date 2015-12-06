@@ -133,41 +133,50 @@
 <string name="filter">Filter</string>
 
 
+
 <string name="about">
-    &lt;h1>About&lt;/h1>
+
+&lt;h1>About&lt;/h1>
+&lt;p>&lt;b>AAT - Android Activity Tracker&lt;/b> is a GPS-tracking application 
+for tracking sportive activities, with emphasis on cycling. 
+It uses &lt;b>osmdroid&lt;/b> to display map tiles from the 
+&lt;b>OpenStreetMap&lt;/b> project.
+&lt;/p>
     
-    &lt;p>
-    &lt;b>AAT - Android Activity Tracker&lt;/b> is a GPS-tracking application for tracking sportive activities, with emphasis on cycling. 
-          It uses &lt;b>osmdroid&lt;/b> to display map tiles from the &lt;b>OpenStreetMap&lt;/b> project.
-    &lt;/p>
-    
-    &lt;h1>Copyright&lt;/h1>
+&lt;h1>Copyright&lt;/h1>
         
-    &lt;h2>Map tiles&lt;/h2>
-    &lt;p>
-       &#169; OpenStreetMap, CC-BY-SA 2.0
-       &lt;br>http://wiki.openstreetmap.org/wiki/Legal_FAQ
-       &lt;br>
-       &lt;br>
-       &#0169; Waymarked Trails, CC BY-SA 3.0 DE
-       &lt;br>http://waymarkedtrails.org/en/help/legal
-       
-    &lt;/p>
+&lt;h2>Map tiles&lt;/h2>
+&lt;p>
+&#0169; OpenStreetMap, CC-BY-SA 2.0
+&lt;br>&lt;a href="http://wiki.openstreetmap.org/wiki/Legal_FAQ">http://wiki.openstreetmap.org/wiki/Legal_FAQ&lt;/a>
+&lt;br>
+&lt;br>
+&#0169; Waymarked Trails, CC BY-SA 3.0 DE
+&lt;br>&lt;a href="http://waymarkedtrails.org/en/help/legal">http://waymarkedtrails.org/en/help/legal&lt;/a>
+&lt;/p>
+&lt;h2>osmdroid&lt;/h2>
+&lt;p>
+&#0169; the osmdroid project
+&lt;br>license: GNU Lesser GPL
+&lt;br>&lt;a href="https://github.com/osmdroid/osmdroid">https://github.com/osmdroid/osmdroid&lt;/a>
+&lt;br>&lt;a href="http://www.gnu.org/licenses/lgpl.html">http://www.gnu.org/licenses/lgpl.html&lt;/a>
+&lt;/p>
         
-    &lt;h2>osmdroid&lt;/h2>
-    &lt;p>
-       &#0169; the osmdroid project
-       &lt;br>license: GNU Lesser GPL
-       &lt;br>https://github.com/osmdroid/osmdroid
-       &lt;br>http://www.gnu.org/licenses/lgpl.html 
-    &lt;/p>
-        
-    &lt;h2>AAT&lt;/h2>
-    &lt;p>
-       &#0169; 2011-2015 Lukas Bai bailu@bailu.ch
-       &lt;br>license: GNU GPLv3 or later
-       &lt;br>http://www.gnu.org/licenses/gpl.html
-    &lt;/p>
-    
+&lt;h2>AAT&lt;/h2>
+&lt;p>
+&#0169; 2011-2015 Lukas Bai bailu@bailu.ch
+&lt;br>license: GNU GPLv3 or later
+&lt;br>&lt;a href="http://www.gnu.org/licenses/gpl.html">http://www.gnu.org/licenses/gpl.html&lt;/a>
+&lt;/p>
+
+
+&lt;h1>Availability&lt;/h1>
+&lt;p>
+Source: &lt;a href="https://github.com/bailuk/AAT">https://github.com/bailuk/AAT&lt;/a>
+&lt;br>Binary: &lt;a href="https://f-droid.org/repository/browse/?fdid=ch.bailu.aat">https://f-droid.org/repository/browse/?fdid=ch.bailu.aat&lt;/a>
+&lt;/p>
+
+
 </string>
+
 </resources>
