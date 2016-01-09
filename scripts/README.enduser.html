@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h1>Map Tiles</h1>
+<p>
+AAT does not remove any downloaded map tiles. This is to...
+<br>-reduce network traffic as much as possible.
+<br>-reduce battery drain.
+<br>-speed up the map view.
+<br>-(theoretically) share map tiles with other application.
+</p><p>
+This means that you have to remove old tiles manually from time to time.
+You can select an appropriate <b>cache directory</b> from the settings. Preferably this directory would be on external or internal mas storage that can also be accessed from your PC.
+</p>
+
+<h1>Where to find files?</h1>
+<p>
+AAT let's you create and view files in GPX format. This files are exchangeable with many other applications. They can also be edited in a text editor. 
+These and other files are stored in subdirectories of the <b>data directory</b>. You can choose the location of the <b>data directory</b> from the settings.
+The structure of the <b>data directory</b> is as follows: 
+</p><p>
+<br><b>aat_data/activity[0-4]</b> - tracked activities
+<br><b>aat_data/log</b>           - activity that gets tracked at the moment
+<br><b>aat_data/nominatim</b>     - search result from OpenStreetMap Nominatim
+<br><b>aat_data/osm_features</b>  - OSM Features original file and parsed files
+<br><b>aat_data/overlay</b>       - overlays such as planned tracks or search results
+<br><b>aat_data/overpass</b>      - queries from the OSM Overpass server
+<br><b>aat_data/SRTM</b>          - downloaded altitude information from the Shuttle Radar Topography Mission
+</p>
+
+<h1>Issues and feedback</h1>
+<p>
+For questions, feedback and bug-reports send an email to aat@bailu.ch
+</p>
+</body>
+</html>

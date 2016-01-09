@@ -3,9 +3,9 @@
 # Transform scripts/about.html from html to an android resource string.
 # To replace the 'about'-resource in 'res/values/strings.xml'
 # usage:
-#   bash scripts/aboutAsResource.bash
+#   bash scripts/aboutAsResource.bash scripts/about.html
 
-cat scripts/about.html \
+cat $1 \
 | sed 's/</\&lt;/g'       \
 | sed 's/&lt;!DOCTYPE html>//'\
 | sed 's/&lt;html>/<string name="about">/'\
