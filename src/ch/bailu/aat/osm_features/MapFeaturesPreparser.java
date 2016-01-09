@@ -81,7 +81,7 @@ public class MapFeaturesPreparser {
             if (in.haveEOF()) {
                 break;
                 
-            } else if (in.nextIs("h3>")) { // <h3>
+            } else if (in.nextIs("h3")) { // <h3>
                 parsePrimaryFeature(c);
             }
         }
