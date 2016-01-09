@@ -66,6 +66,7 @@ public class TrackLogger extends Logger {
         return track;
     }
 
+    /*
     @Override
     public long getTimeDelta() {
         long diff;
@@ -73,7 +74,7 @@ public class TrackLogger extends Logger {
         else diff = System.currentTimeMillis()-getEndTime();
         return super.getTimeDelta()+diff;            
     }
-
+*/
 
     public void logPause() throws IOException {
         if (track.getPointList().size()>0) {
