@@ -9,7 +9,7 @@ AAT does not remove any downloaded map tiles. This is to...
 -reduce network traffic as much as possible.
 -reduce battery drain.
 -speed up the map view.
--(theoretically) share map tiles with other application.
+-(theoretically) share map tiles with other applications.
 
 This means that you have to remove old tiles manually from time to time.
 You can select an appropriate cache directory from the settings. Preferably this directory would be on external or internal mas storage that can also be accessed from your PC.

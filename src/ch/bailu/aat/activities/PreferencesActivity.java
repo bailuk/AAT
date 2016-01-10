@@ -58,7 +58,7 @@ public class PreferencesActivity extends PreferenceActivity {
             addPreference(new IndexListPreference(this, new SolidMissingTrigger(this,i)));
         }
 
-        addCategory("Test*");
+        addCategory("System*");
         addPreference(new IndexListPreference(this, new SolidLocationProvider(this)));
         addPreference(new IndexListPreference(this, new SolidTileSize(this)));
         addPreference(new IndexListPreference(this, new SolidTileCacheDirectory(this)));

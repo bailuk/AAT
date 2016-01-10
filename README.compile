@@ -46,10 +46,3 @@ Building this project with Eclipse
     - if there still are errors:
       consult stack overflow or send me an email.
 
-
-Project related scripts
-=======================
-
-The 'scripts/' subdirectory contains some useful scripts.
-Open them in a text editor to get further documentation.
-
