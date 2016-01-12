@@ -215,7 +215,8 @@ implements OnClickListener,  Runnable {
     private void showCurrentFile() throws ServiceNotUpException {
         getEditorService().editOverlay(
                 new File(getDirectoryService().getCurrent().getPath()));
-        mapView.frameBoundingBox(getDirectoryService().getCurrent().getBoundingBox());            
+        mapView.frameBoundingBox(getDirectoryService().getCurrent().getBoundingBox());
+        getDispatcher().forceUpdate();
     }
 
 
@@ -313,7 +314,6 @@ implements OnClickListener,  Runnable {
         } catch (ServiceNotUpException e) {
             AppLog.e(this, e);
         }
-        getDispatcher().forceUpdate();
     }
 
 
