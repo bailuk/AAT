@@ -6,6 +6,7 @@ import android.view.View;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.GpxPoint;
 import ch.bailu.aat.helpers.AppLayout;
+import ch.bailu.aat.helpers.ToolTip;
 import ch.bailu.aat.preferences.SolidMapGrid;
 import ch.bailu.aat.services.cache.CacheService;
 import ch.bailu.aat.services.editor.EditorInterface;
@@ -55,15 +56,34 @@ public class EditorOverlay extends ControlBarOverlay {
         ControlBar bar = getBar();
         
         add = bar.addImageButton(R.drawable.list_add);
+        ToolTip.set(add, R.string.tt_edit_add);
+        
         remove = bar.addImageButton(R.drawable.list_remove);
+        ToolTip.set(remove, R.string.tt_edit_remove);
+        
         up = bar.addImageButton(R.drawable.go_up);
+        ToolTip.set(up, R.string.tt_edit_up);
+        
         down = bar.addImageButton(R.drawable.go_down);
+        ToolTip.set(down, R.string.tt_edit_down);
+        
         toggle = bar.addImageButton(R.drawable.gtk_convert);
+        ToolTip.set(toggle, R.string.tt_edit_convert);
+        
         clear = bar.addImageButton(R.drawable.edit_clear_all);
+        ToolTip.set(clear, R.string.tt_edit_clear);
+        
         redo = bar.addImageButton(R.drawable.edit_redo);
+        ToolTip.set(redo, R.string.tt_edit_redo);
+        
         undo = bar.addImageButton(R.drawable.edit_undo);
+        ToolTip.set(undo, R.string.tt_edit_undo);
+        
         save = bar.addImageButton(R.drawable.document_save);
+        ToolTip.set(save, R.string.tt_edit_save);
+        
         saveAs = bar.addImageButton(R.drawable.document_save_as);
+        ToolTip.set(saveAs, R.string.tt_edit_save_as);
     }
     
     

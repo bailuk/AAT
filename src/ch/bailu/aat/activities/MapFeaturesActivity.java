@@ -7,10 +7,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.TextView;
+import ch.bailu.aat.R;
 import ch.bailu.aat.helpers.AppBroadcaster;
 import ch.bailu.aat.helpers.AppDirectory;
 import ch.bailu.aat.helpers.AppLog;
 import ch.bailu.aat.helpers.AppTheme;
+import ch.bailu.aat.helpers.ToolTip;
 import ch.bailu.aat.services.MultiServiceLink.ServiceNotUpException;
 import ch.bailu.aat.services.background.BackgroundService;
 import ch.bailu.aat.views.ContentView;
@@ -39,7 +41,7 @@ public class MapFeaturesActivity extends AbsDispatcher implements OnClickListene
         ContentView contentView = new ContentView(this, ContentView.VERTICAL);
         
         download = new DownloadButton(this);
-        
+        ToolTip.set(download, R.string.tt_overpass_download_features);
         
         bar = new ControlBar(this,ControlBar.HORIZONTAL,6);
         

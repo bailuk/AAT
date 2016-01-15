@@ -25,6 +25,7 @@ import ch.bailu.aat.helpers.AppLayout;
 import ch.bailu.aat.helpers.AppLog;
 import ch.bailu.aat.helpers.AppTheme;
 import ch.bailu.aat.helpers.OsmApiHelper;
+import ch.bailu.aat.helpers.ToolTip;
 import ch.bailu.aat.preferences.AddOverlayDialog;
 import ch.bailu.aat.services.MultiServiceLink.ServiceNotUpException;
 import ch.bailu.aat.services.background.BackgroundService;
@@ -120,6 +121,12 @@ public abstract class AbsOsmApiActivity extends AbsDispatcher implements OnClick
         addLayer = bar.addImageButton(R.drawable.view_paged);
         saveCopy = bar.addImageButton(R.drawable.document_save_as);
 
+        
+        ToolTip.set(download, R.string.tt_nominatim_query);
+        ToolTip.set(erase, R.string.tt_nominatim_clear);
+        ToolTip.set(addLayer, R.string.tt_nominatim_overlay);
+        ToolTip.set(saveCopy, R.string.tt_nominatim_save);
+    
         addButtons(bar);
 
         bar.setOnClickListener1(this);

@@ -4,14 +4,15 @@ import org.osmdroid.views.MapView;
 
 import android.util.SparseArray;
 import android.view.View;
+import ch.bailu.aat.R;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.helpers.AppLayout;
 import ch.bailu.aat.helpers.AppLog;
+import ch.bailu.aat.helpers.ToolTip;
 import ch.bailu.aat.preferences.SolidPositionLock;
 import ch.bailu.aat.views.ControlBar;
 import ch.bailu.aat.views.map.AbsOsmView;
 import ch.bailu.aat.views.map.OsmInteractiveView;
-import ch.bailu.aat.R;
 
 
 public class NavigationBarOverlay extends ControlBarOverlay implements GpxInformation.ID {
@@ -33,9 +34,14 @@ public class NavigationBarOverlay extends ControlBarOverlay implements GpxInform
 
         buttonPlus = getBar().addImageButton(R.drawable.zoom_in);
         buttonMinus = getBar().addImageButton(R.drawable.zoom_out);
-        getBar().addSolidIndexButton(new SolidPositionLock(getMapView().getContext(),o.solidKey));
+        View lock = getBar().addSolidIndexButton(new SolidPositionLock(getMapView().getContext(),o.solidKey));
         buttonFrame = getBar().addImageButton(R.drawable.zoom_fit_best);
 
+        ToolTip.set(buttonPlus, R.string.tt_map_zoomin);
+        ToolTip.set(buttonMinus,R.string.tt_map_zoomout);
+        ToolTip.set(buttonFrame,  R.string.tt_map_frame);
+        ToolTip.set(lock, R.string.tt_map_home);
+        
     }
 
 

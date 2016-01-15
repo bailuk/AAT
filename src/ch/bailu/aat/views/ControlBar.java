@@ -13,6 +13,8 @@ import android.widget.ScrollView;
 import ch.bailu.aat.helpers.AppTheme;
 import ch.bailu.aat.preferences.SolidIndexList;
 
+
+
 public class ControlBar extends LinearLayout {
     private final  static int DEFAULT_VISIBLE_BUTTON_COUNT=4;
     
@@ -105,6 +107,7 @@ public class ControlBar extends LinearLayout {
         canvas.addView(v, controlSize, controlSize);
         v.setOnClickListener(onClickListener);
     }    
+
     
     public void addViewIgnoreSize(View v) {
         canvas.addView(v);
@@ -145,4 +148,5 @@ public class ControlBar extends LinearLayout {
         }
     }
     
+
 }

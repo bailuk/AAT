@@ -7,6 +7,7 @@ import org.osmdroid.util.BoundingBoxE6;
 import android.view.View;
 import ch.bailu.aat.helpers.OsmApiHelper;
 import ch.bailu.aat.helpers.OverpassApi;
+import ch.bailu.aat.helpers.ToolTip;
 import ch.bailu.aat.views.ControlBar;
 import ch.bailu.aat.R;
 
@@ -40,6 +41,7 @@ public class OverpassActivity extends AbsOsmApiActivity  {
     @Override
     public void addButtons(ControlBar bar) {
         feature = bar.addImageButton(R.drawable.content_loading);
+        ToolTip.set(feature, R.string.tt_overpass_mapfeatures);
     }
 
 }

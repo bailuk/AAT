@@ -2,14 +2,15 @@ package ch.bailu.aat.views;
 
 import android.content.Context;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.view.View.OnLongClickListener;
+import android.view.ViewGroup;
 import android.widget.ImageButton;
-import ch.bailu.aat.helpers.AppTheme;
 import ch.bailu.aat.R;
+import ch.bailu.aat.helpers.AppTheme;
 
 
-public class DownloadButton extends ViewGroup implements OnClickListener {
+public class DownloadButton extends ViewGroup implements OnClickListener, OnLongClickListener {
     private static final int PADDING=3;
     
     private final ImageButton button;
@@ -21,6 +22,8 @@ public class DownloadButton extends ViewGroup implements OnClickListener {
         button = new ImageButton(context);
         button.setImageResource(R.drawable.go_bottom);
         button.setOnClickListener(this);
+        button.setOnLongClickListener(this);
+        
         AppTheme.themify(button);
         addView(button);
         
@@ -84,6 +87,12 @@ public class DownloadButton extends ViewGroup implements OnClickListener {
 
     public boolean isWaiting() {
         return busy.isWaiting();
+    }
+
+
+    @Override
+    public boolean onLongClick(View v) {
+        return performLongClick();
     }
 
 

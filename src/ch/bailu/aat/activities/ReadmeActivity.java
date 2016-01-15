@@ -12,7 +12,7 @@ public class ReadmeActivity extends AbsHtmlViewActivity {
         super.onCreate(savedInstanceState);
         setText();
     }
-
+ 
     
     @Override
     public void onServicesUp() {}
