@@ -50,7 +50,7 @@ public class MapFeaturesActivity extends AbsDispatcher implements OnClickListene
         
         
         TextView text = new TextView(this);
-        text.setText("OSM Features*");
+        text.setText(R.string.query_features);
         text.setTextColor(AppTheme.getHighlightColor());
         text.setTextSize(25);
         bar.addViewIgnoreSize(text);

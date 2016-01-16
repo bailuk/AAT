@@ -1,5 +1,6 @@
 package ch.bailu.aat.preferences;
 
+import ch.bailu.aat.R;
 import android.content.Context;
 
 
@@ -37,7 +38,7 @@ public class SolidTileSize extends SolidIndexList {
 
     @Override
     public String getLabel() {
-        return "Tile size*";
+        return this.getContext().getString(R.string.p_tile_size);
     }
 
     @Override

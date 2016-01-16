@@ -16,7 +16,7 @@ implements GpxInformation.ID{
 
     @Override
     public String getLabel() {
-        return "State*";
+        return getString(R.string.d_state);
     }
 
     @Override

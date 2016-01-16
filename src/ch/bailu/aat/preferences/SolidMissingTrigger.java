@@ -1,5 +1,6 @@
 package ch.bailu.aat.preferences;
 
+import ch.bailu.aat.R;
 import android.content.Context;
 
 public class SolidMissingTrigger extends SolidStaticIndexList {
@@ -45,7 +46,7 @@ public class SolidMissingTrigger extends SolidStaticIndexList {
 
     @Override
     public String getLabel() {
-        return "Missing trigger*";
+        return getContext().getString(R.string.p_missing_trigger);
     }
 
 }

@@ -1,5 +1,6 @@
 package ch.bailu.aat.preferences;
 
+import ch.bailu.aat.R;
 import android.content.Context;
 
 public class SolidAccelerationFilter extends SolidStaticIndexList {
@@ -47,6 +48,6 @@ public class SolidAccelerationFilter extends SolidStaticIndexList {
 
     @Override
     public String getLabel() {
-        return "Acceleration filter*";
+        return getContext().getString(R.string.p_acceleration_filter);
     }
 }

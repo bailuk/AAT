@@ -1,5 +1,6 @@
 package ch.bailu.aat.description;
 
+import ch.bailu.aat.R;
 import ch.bailu.aat.gpx.GpxInformation;
 import android.content.Context;
 
@@ -17,6 +18,6 @@ public class PathDescription extends NameDescription {
     
     @Override
     public String getLabel() {
-        return "Path*";
+        return getString(R.string.d_path);
     }
 }

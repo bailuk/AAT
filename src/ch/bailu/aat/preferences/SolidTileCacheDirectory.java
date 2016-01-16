@@ -1,5 +1,6 @@
 package ch.bailu.aat.preferences;
 
+import ch.bailu.aat.R;
 import android.content.Context;
 
 public class SolidTileCacheDirectory extends SolidDirectoryList {
@@ -14,6 +15,6 @@ public class SolidTileCacheDirectory extends SolidDirectoryList {
 	
 	@Override
 	    public String getLabel() {
-	        return "Tile Cache Directory*"; 
+	        return getContext().getString(R.string.p_directory_tiles); 
 	    }
 }

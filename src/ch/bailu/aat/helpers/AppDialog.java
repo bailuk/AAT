@@ -71,11 +71,11 @@ public abstract class AppDialog {
         Dialog dialog;
         
         builder.setTitle(title);
-        builder.setMessage("File is modified*.");
+        builder.setMessage(activity.getString(R.string.dialog_modified));
         builder.setCancelable(true);
-        builder.setPositiveButton("Save*", new PositiveClickListener());
-        builder.setNeutralButton("Discard*", new NeutralClickListener());
-        builder.setNegativeButton("Cancel*", new NegativeClickListener());
+        builder.setPositiveButton(activity.getString(R.string.dialog_save), new PositiveClickListener());
+        builder.setNeutralButton(activity.getString(R.string.dialog_discard), new NeutralClickListener());
+        builder.setNegativeButton(activity.getString(R.string.dialog_cancel), new NegativeClickListener());
         
         dialog = builder.create();
         dialog.setOwnerActivity(activity);

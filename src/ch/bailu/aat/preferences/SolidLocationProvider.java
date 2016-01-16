@@ -1,5 +1,6 @@
 package ch.bailu.aat.preferences;
 
+import ch.bailu.aat.R;
 import android.content.Context;
 
 public class SolidLocationProvider extends SolidStaticIndexList {
@@ -20,7 +21,7 @@ public class SolidLocationProvider extends SolidStaticIndexList {
         
     @Override
     public String getLabel() {
-        return "Location Provider*"; 
+        return getContext().getString(R.string.p_location_provider); 
     }
 
     

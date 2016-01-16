@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+<!-- General -->
+<string name="on">On</string>
+<string name="off">Off</string>
+<string name="auto">Auto</string>
+<string name="none">None</string>
+
+
+<!-- Main activity (Intro) -->
 <string name="intro_about">About</string>
 <string name="intro_readme">README</string>
 <string name="intro_resume">Cockpit A</string>    
@@ -32,12 +40,9 @@
 <string name="status_autopaused">A-Paused</string>
 
 
-<string name="on">On</string>
-<string name="off">Off</string>
-<string name="auto">Auto</string>
 
 
-
+<!-- Preferences and Presets -->
 <string name="p_unit_title">Units</string>
 <string-array name="p_unit_list">
     <item>Metric (km, km/h)</item>
@@ -97,6 +102,16 @@
 <string name="p_backlight_dim">Dim</string>
 <string name="p_backlight_bright">Bright</string>
 <string name="p_update_interval">Updates per minute</string>
+<string name="p_system">System</string>
+<string name="p_tile_size">Tile size</string>
+<string name="p_accuracy_filter">Accuracy filter</string>
+<string name="p_acceleration_filter">Acceleration filter</string>
+<string name="p_distance_filter">Distance filter</string>
+<string name="p_directory_data">Data directory</string>
+<string name="p_directory_tiles">Tile cache directory</string>
+<string name="p_legend_fulldistance">Distance continuous</string>
+<string name="p_missing_trigger">Missing trigger</string>
+<string name="p_location_provider">Location provider</string>
 
 <string name="file_reload">Reload preview</string>
 <string name="file_delete">Delete file</string>
@@ -104,12 +119,19 @@
 <string name="file_overlay">Use as overlay</string>
 <string name="file_mock">Use for mock location</string>
 <string name="file_delete_ask">Delete file?</string>
+
+
+<!-- Dialog -->
 <string name="dialog_yes">Yes</string>
 <string name="dialog_no">No</string>
 <string name="dialog_ok">OK</string>
 <string name="dialog_cancel">Cancel</string>
+<string name="dialog_discard">Discard</string>
+<string name="dialog_save">Save</string>
+<string name="dialog_modified">File has been modified</string>
 
 
+<!-- Description -->
 <string name="d_longitude">Longitude</string>
 <string name="d_latitude">Latitude</string>
 <string name="d_chx">CH1903 X</string>
@@ -120,6 +142,10 @@
 <string name="d_startdate">Start</string>
 <string name="d_acceleration">Acceleration</string>
 <string name="d_bearing">Bearing</string>
+<string name="d_path">Path</string>
+<string name="d_state">State</string>
+<string name="d_size">Size</string>
+
 
 <string name="pause">Pause</string>
 <string name="speed">Speed</string>
@@ -132,6 +158,11 @@
 
 
 <string name="filter">Filter</string>
+
+
+<!-- OSM API Query -->
+<string name="query_overpass">Overpass</string>
+<string name="query_features">OSM Features</string>
 
 
 <!-- ToolTip -->

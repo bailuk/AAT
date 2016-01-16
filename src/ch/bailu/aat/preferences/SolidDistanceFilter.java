@@ -36,7 +36,7 @@ public class SolidDistanceFilter extends SolidIndexList {
     
     @Override
     public String getLabel() {
-        return "Distance filter*";
+        return getContext().getString(R.string.p_distance_filter);
     }
 
     @Override

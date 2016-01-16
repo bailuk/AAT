@@ -37,7 +37,7 @@ public class SolidAccuracyFilter extends SolidIndexList {
 
     @Override
     public String getLabel() {
-        return "Accuracy filter*";
+        return getContext().getString(R.string.p_accuracy_filter);
     }
 
     @Override

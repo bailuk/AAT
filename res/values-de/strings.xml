@@ -1,20 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     
+<string name="intro_about">Info</string>
 <string name="intro_list">Aufgezeichnete Aktivitäten</string>
 <string name="intro_settings">Einstellungen</string>
-
 <string name="intro_map">Kartenansicht</string>
 <string name="intro_detail">Detailansicht</string>
 <string name="intro_file">Letzte Aufzeichnung</string>
-
 
 <string name="gps_nogps">Kein GPS</string>
 <string name="gps_noaccess">Kein Zugriff</string>
 
 <string name="tracker_start">Start</string>
 <string name="tracker_pause">Pause</string>
-<string name="tracker_stop">Stop</string>
+<string name="tracker_stop">Stopp</string>
 <string name="tracker_resume">Weiter</string>
 
 <string name="status_paused">Pause</string>
@@ -26,13 +25,13 @@
 
 <string name="p_unit_title">Einheiten</string>
 <string-array name="p_unit_list">
-    <item>Metric (km, km/h)</item>
+    <item>Metrisch (km, km/h)</item>h
     <item>Britisch (mi, mph)</item>
     <item>Nautisch (nm, kn)</item>
     <item>SI-Einheiten</item>
 </string-array>
 
-<string name="p_general">Allgemeint</string>
+<string name="p_general">Allgemein</string>
 <string name="p_preset">Voreinstellungen</string>
 <string-array name="p_met_list">
    <!--
@@ -73,20 +72,32 @@
 <string name="p_backlight_off">Aus</string>
 <string name="p_backlight_dim">Dunkel</string>
 <string name="p_backlight_bright">Hell</string>
-<string name="p_update_interval">Updates pro minute</string>
+<string name="p_update_interval">Updates pro Minute</string>
 
 <string name="file_delete">Datei löschen</string>
 <string name="file_delete_ask">Datei löschen?</string>
+
+
+<!-- Dialog -->
 <string name="dialog_yes">Ja</string>
 <string name="dialog_no">Nein</string>
+<string name="dialog_cancel">Abbrechen</string>
+<string name="dialog_discard">Verwerfen</string>
+<string name="dialog_save">Speichern</string>
+<string name="dialog_modified">Datei wurde verändert</string>
 
 
+
+<!-- Description -->
 <string name="d_longitude">Länge</string>
 <string name="d_latitude">Breite</string>
 <string name="d_accuracy">Genauigkeit</string>
 <string name="d_enddate">Ende</string>
 <string name="d_acceleration">Beschleunigung</string>
 <string name="d_bearing">Lage</string>
+<string name="d_path">Pfad</string>
+<string name="d_state">Status</string>
+<string name="d_size">Grösse</string>
 
 
 <string name="speed">Geschwindigkeit</string>
@@ -96,5 +107,36 @@
 <string name="altitude">Höhe</string>
 <string name="time">Zeit</string>
 <string name="calories">Kalorien</string>
+
+
+<!-- ToolTip -->
+<string name ="tt_edit_add">Am Ort in der Kartenmitte einen Punkt hinzufügen.</string>
+<string name ="tt_edit_remove">Ausgewählten Punkt entfernen.</string>
+<string name ="tt_edit_up">Ausgewählten Punkt in der Liste nach oben bewegen.</string>
+<string name ="tt_edit_down">Ausgewählten Punkt in der Liste nach unten bewegen.</string>
+<string name ="tt_edit_convert">Wechseln zwischen GPX Track oder GPX Way.</string>
+<string name ="tt_edit_clear">Liste löschen: alle Punkte entfernen.</string>
+<string name ="tt_edit_redo">Letzte rückgängig gemachte Aktion wiederherstellen.</string>
+<string name ="tt_edit_undo">Letzte Aktion rückgängig machen.</string>
+<string name ="tt_edit_save">GPX Liste speichern.</string>
+<string name ="tt_edit_save_as">Kopie der GPX Liste speichern.</string>
+
+<string name ="tt_info_grid">Zwischen verschiedenen Kartengitter wechseln.</string>
+<string name ="tt_info_legend">Zwischen Beschreibungsmodi wechseln.</string>
+<string name ="tt_info_nominatim">Suchabfrage über OSM-Nominatim.</string>
+<string name ="tt_info_overpass">Abfrage über OSM-Overpass.</string>
+<string name ="tt_info_reload">Sichtbare Kacheln neuladen.</string>
+
+
+<string name ="tt_map_zoomin">Hineinzoomen.</string>
+<string name ="tt_map_zoomout">Heraus zoomen.</string>
+<string name ="tt_map_home">Karte im Bekannten Standort zentrieren.</string>
+<string name ="tt_map_frame">Zwischen der Gesamtansicht der Overlays wechseln.</string>
+
+
+<string name ="tt_nominatim_query">Abfrage starten...</string>
+<string name ="tt_nominatim_clear">Text für die Abfrage zurücksetzen.</string>
+<string name ="tt_nominatim_overlay">Abfrageresultat als Overlay anzeigen.</string>
+<string name ="tt_nominatim_save">Kopie des Abfrageresultats speichern.</string>
 
 </resources>

@@ -1,5 +1,6 @@
 package ch.bailu.aat.preferences;
 
+import ch.bailu.aat.R;
 import android.content.Context;
 
 public class SolidDataDirectory extends SolidDirectoryList {
@@ -13,6 +14,6 @@ public class SolidDataDirectory extends SolidDirectoryList {
 	
     @Override
     public String getLabel() {
-        return "Data Directory*"; 
+        return getContext().getString(R.string.p_directory_data);
     }
 }

@@ -8,11 +8,13 @@ import java.util.Locale;
 
 import org.osmdroid.util.BoundingBoxE6;
 
+import ch.bailu.aat.R;
+
 import android.content.Context;
 
 public class OverpassApi extends OsmApiHelper {
 
-    public final static String NAME="Overpass*";
+    public final String NAME;
     public final static String EXT=".osm";
     public final static String URL="http://overpass-api.de/api/interpreter?data=("; // data=node
     public final static String POST=">;);out;";
@@ -24,6 +26,7 @@ public class OverpassApi extends OsmApiHelper {
 
     
     public OverpassApi(Context context, BoundingBoxE6 b) throws SecurityException, IOException {
+        NAME=context.getString(R.string.query_overpass);
         bounding = toString(b);
         directory = AppDirectory.getDataDirectory(context, AppDirectory.DIR_OVERPASS);
     }

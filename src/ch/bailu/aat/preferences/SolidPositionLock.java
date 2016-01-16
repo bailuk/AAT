@@ -24,6 +24,6 @@ public class SolidPositionLock extends SolidBoolean {
     
     @Override
     public String getString() {
-        return "Lock to current position*";
+        return getContext().getString(R.string.tt_map_home);
     }
 }

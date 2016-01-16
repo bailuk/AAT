@@ -3,6 +3,7 @@ package ch.bailu.aat.description;
 import java.util.Locale;
 
 import android.content.Context;
+import ch.bailu.aat.R;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.GpxList;
 
@@ -36,6 +37,6 @@ public class TrackSizeDescription extends ContentDescription {
 
     @Override
     public String getLabel() {
-        return "Size*";
+        return getString(R.string.d_size);
     }
 }
