@@ -1,13 +1,8 @@
-Building this project
-=====================
-
+# Building this project
 Generally there are two ways for building Android projects. Either with Eclipse
 and the AVD plugin or independently from an IDE with Ant-scripts form the command line.
 
-
-Building this project with Ant
-==============================
-
+# Building this project with Ant
 1. Download and install the Android SDK according the official documentation:
    http://developer.android.com/sdk/index.html
 
@@ -25,10 +20,8 @@ Building this project with Ant
    If you are lucky this will create "bin/aat-debug.apk".
 
 
-Building this project with Eclipse
-==================================
-
-1. Install Eclipse (http://eclipse.org)
+# Building this project with Eclipse
+1. Install [Eclipse](http://eclipse.org)
 
 2. Download and install the Android SDK according the official documentation:
    http://developer.android.com/sdk/index.html
@@ -45,4 +38,3 @@ Building this project with Eclipse
       select 'Android Tools' -> 'Fix project properties' in the project's context menu
     - if there still are errors:
       consult stack overflow or send me an email.
-

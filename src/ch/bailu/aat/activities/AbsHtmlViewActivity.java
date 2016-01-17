@@ -2,6 +2,7 @@ package ch.bailu.aat.activities;
 
 import android.os.Bundle;
 import android.text.Html;
+import android.text.method.LinkMovementMethod;
 import android.text.util.Linkify;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -18,7 +19,10 @@ public abstract class AbsHtmlViewActivity extends AbsServiceLink {
 
         text = new TextView(this);
         text.setTextSize(15f);
-        text.setAutoLinkMask(Linkify.ALL);
+        //text.setAutoLinkMask(Linkify.ALL);
+        
+        //text.setLinksClickable(true);
+        text.setMovementMethod(LinkMovementMethod.getInstance());
         text.setLinkTextColor(AppTheme.getHighlightColor());
         
         scroll.addView(text);
@@ -28,7 +32,7 @@ public abstract class AbsHtmlViewActivity extends AbsServiceLink {
     
     
     public void setText(int mask) {
-        text.setAutoLinkMask(mask);
+        //text.setAutoLinkMask(mask);
         setText();
     }
     

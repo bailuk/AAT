@@ -1,0 +1,44 @@
+<h1>Building this project</h1>
+
+<p>Generally there are two ways for building Android projects. Either with Eclipse
+and the AVD plugin or independently from an IDE with Ant-scripts form the command line.</p>
+
+<h1>Building this project with Ant</h1>
+
+<ol>
+<li><p>Download and install the Android SDK according the official documentation:
+http://developer.android.com/sdk/index.html</p></li>
+<li><p>Add the "tools" and "platform-tools" directories from the SDK to the executable path of your system.</p></li>
+<li><p>Run the following commands inside the root directory of this (AAT) project.
+ android list targets
+ android update project --name AAT --path . --target X
+Where X is an ID listed by the first command
+This will create the android ant scripts.</p></li>
+<li><p>build the project with the commands:
+ ant clean
+ ant debug
+If you are lucky this will create "bin/aat-debug.apk".</p></li>
+</ol>
+
+<h1>Building this project with Eclipse</h1>
+
+<ol>
+<li><p>Install <a href="http://eclipse.org">Eclipse</a></p></li>
+<li><p>Download and install the Android SDK according the official documentation:
+http://developer.android.com/sdk/index.html
+Also install the AVD plugin as described there.</p></li>
+<li><p>In 'Window->Preferences->Compiler' set JDK Compliance to 1.6</p></li>
+<li><p>Import AAT:</p>
+
+<ul>
+<li>In Eclipse select 'File->import->existing project'
+<ul>
+<li>Provide the path to the projects root directory.</li>
+<li>Select 'copy projects into workspace' and then select 'finish'</li>
+</ul></li>
+<li>if there are errors:
+select 'Android Tools' -> 'Fix project properties' in the project's context menu</li>
+<li>if there still are errors:
+consult stack overflow or send me an email.</li>
+</ul></li>
+</ol>

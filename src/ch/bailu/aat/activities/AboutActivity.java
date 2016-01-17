@@ -20,6 +20,6 @@ public class AboutActivity extends AbsHtmlViewActivity {
     
     @Override
     public String getText() {
-        return getString(R.string.about);
+        return getString(R.string.README_about_html);
     }
 }

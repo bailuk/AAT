@@ -20,7 +20,7 @@ public class ReadmeActivity extends AbsHtmlViewActivity {
     
     @Override
     public String getText() {
-        return getString(R.string.readme);
+        return getString(R.string.README_enduser_html);
     }
 
 }
