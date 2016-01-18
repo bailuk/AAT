@@ -62,7 +62,7 @@ The structure of the data directory is as follows: &lt;/p>
 
 &lt;h2>Overview&lt;/h2>
 
-&lt;p>AAT lets you query the &lt;a href="http://wiki.openstreetmap.org/wiki/Overpass_API">Overpass API&lt;/a>. Any result of a query can be saved to  &lt;b>aat_data/overlays&lt;/b>. It then can be displayed as an overlay inside the map-view whenever needed.&lt;/p>
+&lt;p>AAT lets you query the &lt;a href="http://wiki.openstreetmap.org/wiki/Overpass_API">Overpass API&lt;/a>. Any result of a query can be saved to  &lt;b>aat_data/overlay&lt;/b>. It then can be displayed as an overlay inside the map-view whenever needed.&lt;/p>
 
 &lt;h2>Example&lt;/h2>
 
@@ -74,13 +74,13 @@ The structure of the data directory is as follows: &lt;/p>
 
 
 &lt;br>-Download the &lt;a href="http://www.sjjb.co.uk/mapicons/downloads/">PNG Icons Set&lt;/a>
-&lt;br>-Extract the icon set to &lt;b>aat_data/overpass/icons/&lt;/b>.
+&lt;br>-Extract the icon set to &lt;b>aat_data/osm_features/icons&lt;/b>.
 &lt;br>-Download &lt;a href="https://raw.githubusercontent.com/bailuk/AAT/master/iconmap/iconmap.txt">iconmap.txt from GitHUB&lt;/a>
-&lt;br>-Copy &lt;b>iconmap.txt&lt;/b> to &lt;code>aat_data/overpass/icons/&lt;/code>.
+&lt;br>-Copy &lt;b>iconmap.txt&lt;/b> to &lt;code>aat_data/osm_features/icons&lt;/code>.
 
 
 &lt;h1>Issues and feedback&lt;/h1>
 
-&lt;p>For questions, feedback and bug-reports send an email to aat@bailu.ch&lt;/p>
+&lt;p>For questions, feedback and bugreports send an e-mail to aat@bailu.ch&lt;/p>
 </string>
 </resources>

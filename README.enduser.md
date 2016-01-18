@@ -26,7 +26,7 @@ The structure of the data directory is as follows:
 
 # Overpass
 ## Overview
-AAT lets you query the [Overpass API](http://wiki.openstreetmap.org/wiki/Overpass_API). Any result of a query can be saved to  `aat_data/overlays`. It then can be displayed as an overlay inside the map-view whenever needed.
+AAT lets you query the [Overpass API](http://wiki.openstreetmap.org/wiki/Overpass_API). Any result of a query can be saved to  `aat_data/overlay`. It then can be displayed as an overlay inside the map-view whenever needed.
 
 ## Example
 `[amenity=restaurant]` will get you list of all restaurants located inside the area that was visible on the map-view before opening the Overpass dialog. 
@@ -35,11 +35,11 @@ AAT lets you query the [Overpass API](http://wiki.openstreetmap.org/wiki/Overpas
 Instead of the default symbol you can use the [map icons from SJJB Management](http://www.sjjb.co.uk/mapicons/):
 
 - Download the [PNG Icons Set](http://www.sjjb.co.uk/mapicons/downloads/)
-- Extract the icon set to `aat_data/overpass/icons`.
+- Extract the icon set to `aat_data/osm_features/icons`.
 - Download [iconmap.txt from GitHUB](https://raw.githubusercontent.com/bailuk/AAT/master/iconmap/iconmap.txt)
-- Copy `iconmap.txt` to `aat_data/overpass/icons`.
+- Copy `iconmap.txt` to `aat_data/osm_features/icons`.
 
 
 # Issues and feedback
-For questions, feedback and bug-reports send an email to aat@bailu.ch
+For questions, feedback and bugreports send an e-mail to aat@bailu.ch
 

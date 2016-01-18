@@ -7,7 +7,7 @@ and the AVD plugin or independently from an IDE with Ant-scripts form the comman
 
 <ol>
 <li><p>Download and install the Android SDK according the official documentation:
-http://developer.android.com/sdk/index.html</p></li>
+http://developer.android.com/sdk/installing/index.html</p></li>
 <li><p>Add the "tools" and "platform-tools" directories from the SDK to the executable path of your system.</p></li>
 <li><p>Run the following commands inside the root directory of this (AAT) project.
  android list targets
@@ -23,21 +23,19 @@ If you are lucky this will create "bin/aat-debug.apk".</p></li>
 <h1>Building this project with Eclipse</h1>
 
 <ol>
+<li><p>Download and install the Android SDK as described in above section.</p></li>
 <li><p>Install <a href="http://eclipse.org">Eclipse</a></p></li>
-<li><p>Download and install the Android SDK according the official documentation:
-http://developer.android.com/sdk/index.html
-Also install the AVD plugin as described there.</p></li>
-<li><p>In 'Window->Preferences->Compiler' set JDK Compliance to 1.6</p></li>
+<li><p>Install the <a href="https://dl-ssl.google.com/android/eclipse/">ADT plugin</a> from within Eclipse.
+<code>Help-&gt;Install new software</code></p></li>
+<li><p>In <code>Window-&gt;Preferences-&gt;Compiler</code> set JDK Compliance to 1.6</p></li>
 <li><p>Import AAT:</p>
 
 <ul>
-<li>In Eclipse select 'File->import->existing project'
-<ul>
+<li>In Eclipse select <code>File-&gt;import-&gt;existing project</code></li>
 <li>Provide the path to the projects root directory.</li>
-<li>Select 'copy projects into workspace' and then select 'finish'</li>
-</ul></li>
-<li>if there are errors:
-select 'Android Tools' -> 'Fix project properties' in the project's context menu</li>
+<li>Select <code>copy projects into workspace</code> and then select <code>finish</code></li>
+<li>if there are errors:</li>
+<li>select <code>Android Tools -&gt; 'Fix project properties</code> in the project's context menu</li>
 <li>if there still are errors:
 consult stack overflow or send me an email.</li>
 </ul></li>
