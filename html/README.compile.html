@@ -9,14 +9,13 @@ and the AVD plugin or independently from an IDE with Ant-scripts form the comman
 <li><p>Download and install the Android SDK according the official documentation:
 http://developer.android.com/sdk/installing/index.html</p></li>
 <li><p>Add the "tools" and "platform-tools" directories from the SDK to the executable path of your system.</p></li>
-<li><p>Run the following commands inside the root directory of this (AAT) project.
- android list targets
- android update project --name AAT --path . --target X
-Where X is an ID listed by the first command
-This will create the android ant scripts.</p></li>
-<li><p>build the project with the commands:
- ant clean
- ant debug
+<li><p>Run the following commands inside the root directory of this (AAT) project. <br>
+ <code>android list targets</code> <br>
+ <code>android update project --name AAT --path . --target X</code> <br>
+Where X is an ID listed by the first command. This will create the android ant scripts.</p></li>
+<li><p>Build the project with the commands: <br>
+ <code>ant clean</code> <br>
+ <code>ant debug</code> <br>
 If you are lucky this will create "bin/aat-debug.apk".</p></li>
 </ol>
 

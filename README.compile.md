@@ -8,15 +8,14 @@ and the AVD plugin or independently from an IDE with Ant-scripts form the comman
 
 2. Add the "tools" and "platform-tools" directories from the SDK to the executable path of your system.
 
-3. Run the following commands inside the root directory of this (AAT) project.
-     android list targets
-     android update project --name AAT --path . --target X
-   Where X is an ID listed by the first command
-   This will create the android ant scripts.
+3. Run the following commands inside the root directory of this (AAT) project.  
+     `android list targets`  
+     `android update project --name AAT --path . --target X`  
+   Where X is an ID listed by the first command. This will create the android ant scripts.
 
-4. build the project with the commands:
-     ant clean
-     ant debug
+4. Build the project with the commands:  
+     `ant clean`  
+     `ant debug`  
    If you are lucky this will create "bin/aat-debug.apk".
 
 
