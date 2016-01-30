@@ -12,6 +12,8 @@ import ch.bailu.aat.views.map.overlay.OsmOverlay;
 
 public class AltitudeOverlay extends OsmOverlay {
     private static final int MIN_ZOOM_LEVEL=10;
+    private static final int POINTS_ON_CIRCLE=10;
+    
     
     private final ElevationProvider elevation;
     
@@ -20,6 +22,8 @@ public class AltitudeOverlay extends OsmOverlay {
     
     private final GridMetricScaler scaler = new GridMetricScaler();
     private final Point pixel=new Point();
+    private       Point center;
+    
     private float centerElevation=0f;
 
     
@@ -33,36 +37,48 @@ public class AltitudeOverlay extends OsmOverlay {
     @Override
     public void draw(MapPainter painter) {
         if (getMapView().getZoomLevel() > MIN_ZOOM_LEVEL) {
+            
+            center = painter.projection.getCenterPixel();
+            centerElevation = getCenterElevation(painter);
+            
             scaler.findOptimalScale(painter.projection.getShortDistance()/2);
         
             if (scaler.getOptimalScale()>0) {
                 drawGrid(painter);
                 painter.canvas.drawTextTop(distanceDescription.getDistanceDescriptionRounded(scaler.getOptimalScale()),1);
+                painter.canvas.drawTextBottom(altitudeDescription.getValueUnit(centerElevation), 0);
             }
         }
     }
 
-    
-    private void drawGrid(MapPainter painter) {
-        Point center = painter.projection.getCenterPixel();
-        int dist=painter.projection.getPixelFromDistance(scaler.getOptimalScale());
 
+    private float getCenterElevation(MapPainter painter) {
         final IGeoPoint point = painter.projection.fromPixels(
                 center.x-painter.projection.screen.left, 
                 center.y-painter.projection.screen.top);
         
-        centerElevation=elevation.getElevation(point);
+        return elevation.getElevation(point);
+    }
+    
+    
+    private void drawGrid(MapPainter painter) {
+        int dist=painter.projection.getPixelFromDistance(scaler.getOptimalScale());
         
-        painter.canvas.drawTextBottom(altitudeDescription.getValueUnit(centerElevation), 0);
+        double step=(2.d*Math.PI) / POINTS_ON_CIRCLE;
         
-        for(int x=-1; x<2; x++) {
-            for(int y=-1; y<2; y++) {
-                pixel.x=center.x+x*dist;
-                pixel.y=center.y+y*dist;
-                drawAltitudePoint(painter, pixel);
-            }
-            
+        for (int p=0; p< POINTS_ON_CIRCLE; p++) {
+            drawAltitudePoint(painter, dist, p*step);
         }
+        drawAltitudePoint(painter, center);
+        
+    }
+    
+    
+    
+    private void drawAltitudePoint(MapPainter painter, int r, double radians) {
+        pixel.x = center.x + (int) (r * Math.sin(radians));
+        pixel.y = center.y + (int) (r * Math.cos(radians));
+        drawAltitudePoint(painter, pixel);
     }
     
     
