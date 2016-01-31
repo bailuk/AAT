@@ -3,6 +3,7 @@ package ch.bailu.aat.views.map.overlay.control;
 import org.osmdroid.api.IGeoPoint;
 
 import android.view.View;
+import ch.bailu.aat.R;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.GpxPoint;
 import ch.bailu.aat.helpers.AppLayout;
@@ -17,8 +18,8 @@ import ch.bailu.aat.views.map.overlay.MapPainter;
 import ch.bailu.aat.views.map.overlay.OsmOverlay;
 import ch.bailu.aat.views.map.overlay.editor.EditorNodeSelectorOverlay;
 import ch.bailu.aat.views.map.overlay.gpx.GpxDynOverlay;
-import ch.bailu.aat.views.map.overlay.gpx.GpxNodeIndexOverlay;
-import ch.bailu.aat.R;
+import ch.bailu.aat.views.map.overlay.gpx.legend.GpxLegendOverlay;
+import ch.bailu.aat.views.map.overlay.gpx.legend.PointIndexWalker;
 
 public class EditorOverlay extends ControlBarOverlay {
     private final SolidMapGrid sgrid;
@@ -47,7 +48,7 @@ public class EditorOverlay extends ControlBarOverlay {
         coordinates = sgrid.createCenterCoordinatesOverlay(getOsmView());
         
         content = new GpxDynOverlay(osm, c, id);
-        legend = new GpxNodeIndexOverlay(osm, id);
+        legend = new GpxLegendOverlay(osm,id, new PointIndexWalker());
         selector = new EditorNodeSelectorOverlay(osm, id, e);
         
         editor = e;

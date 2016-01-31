@@ -1,14 +1,17 @@
 package ch.bailu.aat.preferences;
 
 import android.content.Context;
+import ch.bailu.aat.R;
 import ch.bailu.aat.views.map.AbsOsmView;
 import ch.bailu.aat.views.map.overlay.NullOverlay;
 import ch.bailu.aat.views.map.overlay.OsmOverlay;
-import ch.bailu.aat.views.map.overlay.gpx.GpxAltitudeLengendOverlay;
-import ch.bailu.aat.views.map.overlay.gpx.GpxDistanceLegendOverlay;
-import ch.bailu.aat.views.map.overlay.gpx.GpxSegmentIndexOverlay;
-import ch.bailu.aat.views.map.overlay.gpx.GpxSpeedLegendOverlay;
-import ch.bailu.aat.R;
+import ch.bailu.aat.views.map.overlay.gpx.legend.GpxLegendOverlay;
+import ch.bailu.aat.views.map.overlay.gpx.legend.MarkerAltitudeWalker;
+import ch.bailu.aat.views.map.overlay.gpx.legend.MarkerDistanceWalker;
+import ch.bailu.aat.views.map.overlay.gpx.legend.MarkerSpeedWalker;
+import ch.bailu.aat.views.map.overlay.gpx.legend.PointAltitudeWalker;
+import ch.bailu.aat.views.map.overlay.gpx.legend.PointDistanceWalker;
+import ch.bailu.aat.views.map.overlay.gpx.legend.SegmentIndexWalker;
 
 public class SolidLegend extends SolidStaticIndexList {
 
@@ -27,11 +30,11 @@ public class SolidLegend extends SolidStaticIndexList {
 
     
     public OsmOverlay createTrackLegendOverlay(AbsOsmView osmPreview, int id) {
-        if (getIndex()==0) return new GpxSegmentIndexOverlay(osmPreview,id);
-        if (getIndex()==1) return new GpxDistanceLegendOverlay(osmPreview, id, false);
-        if (getIndex()==2) return new GpxDistanceLegendOverlay(osmPreview, id, true);
-        if (getIndex()==3) return new GpxAltitudeLengendOverlay(osmPreview, id);
-        if (getIndex()==4) return new GpxSpeedLegendOverlay(osmPreview, id);
+        if (getIndex()==0) return new GpxLegendOverlay(osmPreview,id, new SegmentIndexWalker());
+        if (getIndex()==1) return new GpxLegendOverlay(osmPreview,id,new MarkerDistanceWalker(getContext(), false));
+        if (getIndex()==2) return new GpxLegendOverlay(osmPreview,id,new MarkerDistanceWalker(getContext(), true));
+        if (getIndex()==3) return new GpxLegendOverlay(osmPreview,id,new MarkerAltitudeWalker(getContext()));
+        if (getIndex()==4) return new GpxLegendOverlay(osmPreview,id,new MarkerSpeedWalker(getContext()));
         
         return new NullOverlay(osmPreview);
     }
@@ -43,8 +46,10 @@ public class SolidLegend extends SolidStaticIndexList {
 
     
     public OsmOverlay createRouteLegendOverlay(AbsOsmView osmPreview, int id) {
-        if (getIndex()==1 || getIndex()==2) 
-            return createTrackLegendOverlay(osmPreview, id);
+        if (getIndex()==1) return new GpxLegendOverlay(osmPreview,id,new PointDistanceWalker(getContext(), false));
+        if (getIndex()==2) return new GpxLegendOverlay(osmPreview,id,new PointDistanceWalker(getContext(), true));
+        if (getIndex()==3) return new GpxLegendOverlay(osmPreview,id,new PointAltitudeWalker(getContext()));
+        
         return new NullOverlay(osmPreview);
     }
 
