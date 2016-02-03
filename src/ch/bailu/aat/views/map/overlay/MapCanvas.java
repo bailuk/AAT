@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Paint.FontMetrics;
 import android.graphics.Paint.Style;
 import android.graphics.Point;
 import android.graphics.PorterDuff;
@@ -18,9 +19,11 @@ public class MapCanvas {
     private final static int MARGIN=5;
     private final static float TEXT_SIZE=20;
     private final static int ALPHA=200;
+    private final static int BG_ALPHA=150;
 
 
-    private final Paint gridPaint, legendTextPaint, statusTextPaint, edgePaint, pointPaint;
+    private final Paint gridPaint, legendTextPaint, statusTextPaint, edgePaint, pointPaint, backgroundPaint;
+    private final FontMetrics legendMetrics;
 
     public Canvas canvas;
     private final MapProjection projection;
@@ -32,17 +35,28 @@ public class MapCanvas {
         statusTextPaint=createTextPaint(context, TEXT_SIZE);
         legendTextPaint=createTextPaint(context, TEXT_SIZE/3*2);
         legendTextPaint.setColor(Color.DKGRAY);
-        
+        legendMetrics = legendTextPaint.getFontMetrics();
+                        
         edgePaint=createEdgePaint();
         pointPaint=createEdgePaint();
         pointPaint.setStyle(Style.FILL);
+        
+        backgroundPaint=createBackgroundPaint();
     }
 
     public void init(Canvas c) {
         canvas=c;
     }
 
-
+    public static Paint createBackgroundPaint() {
+        Paint p=new Paint();
+        p.setColor(Color.WHITE);
+        p.setAlpha(BG_ALPHA);
+        p.setStyle(Style.FILL);
+        p.setAntiAlias(false);
+        return p;
+    }
+    
     public static Paint  createGridPaint() {
         Paint p=new Paint();
         p.setColor(Color.DKGRAY);
@@ -155,14 +169,18 @@ public class MapCanvas {
     
     
 
-    public void drawText(String s, int x, int y) {
-        canvas.drawText(s, x, y, statusTextPaint);
-    }
-
     public void drawText(String text, Point pixel) {
+        drawBackground(text, pixel);
         canvas.drawText(text, pixel.x+MARGIN, pixel.y, legendTextPaint);
     }
     
+    public void drawBackground(String text, Point pixel) {
+        canvas.drawRect(pixel.x,
+                pixel.y + legendMetrics.top - MARGIN,
+                pixel.x + legendTextPaint.measureText(text) + MARGIN*2, 
+                pixel.y + legendMetrics.bottom + MARGIN, 
+                backgroundPaint);
+    }
     
     public void draw(Drawable node, Point pixel) {
         centerBounds(node, pixel);
