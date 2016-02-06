@@ -11,6 +11,8 @@ import ch.bailu.aat.views.map.overlay.gpx.legend.MarkerDistanceWalker;
 import ch.bailu.aat.views.map.overlay.gpx.legend.MarkerSpeedWalker;
 import ch.bailu.aat.views.map.overlay.gpx.legend.PointAltitudeWalker;
 import ch.bailu.aat.views.map.overlay.gpx.legend.PointDistanceWalker;
+import ch.bailu.aat.views.map.overlay.gpx.legend.PointIndexWalker;
+import ch.bailu.aat.views.map.overlay.gpx.legend.PointNameWalker;
 import ch.bailu.aat.views.map.overlay.gpx.legend.SegmentIndexWalker;
 
 public class SolidLegend extends SolidStaticIndexList {
@@ -41,11 +43,17 @@ public class SolidLegend extends SolidStaticIndexList {
     
     
     public OsmOverlay createWayLegendOverlay(AbsOsmView osmPreview, int id) {
+        if (getIndex()==1) return new GpxLegendOverlay(osmPreview,id,new PointIndexWalker());
+        if (getIndex()==2) return new GpxLegendOverlay(osmPreview,id,new PointIndexWalker());
+        if (getIndex()==3) return new GpxLegendOverlay(osmPreview,id,new PointAltitudeWalker(getContext()));
+        if (getIndex()==4) return new GpxLegendOverlay(osmPreview,id,new PointNameWalker());
+
         return new NullOverlay(osmPreview);
     }
 
     
     public OsmOverlay createRouteLegendOverlay(AbsOsmView osmPreview, int id) {
+        if (getIndex()==0) return new GpxLegendOverlay(osmPreview,id,new PointIndexWalker());
         if (getIndex()==1) return new GpxLegendOverlay(osmPreview,id,new PointDistanceWalker(getContext(), false));
         if (getIndex()==2) return new GpxLegendOverlay(osmPreview,id,new PointDistanceWalker(getContext(), true));
         if (getIndex()==3) return new GpxLegendOverlay(osmPreview,id,new PointAltitudeWalker(getContext()));

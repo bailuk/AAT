@@ -18,8 +18,6 @@ import ch.bailu.aat.views.map.overlay.MapPainter;
 import ch.bailu.aat.views.map.overlay.OsmOverlay;
 import ch.bailu.aat.views.map.overlay.editor.EditorNodeSelectorOverlay;
 import ch.bailu.aat.views.map.overlay.gpx.GpxDynOverlay;
-import ch.bailu.aat.views.map.overlay.gpx.legend.GpxLegendOverlay;
-import ch.bailu.aat.views.map.overlay.gpx.legend.PointIndexWalker;
 
 public class EditorOverlay extends ControlBarOverlay {
     private final SolidMapGrid sgrid;
@@ -31,7 +29,7 @@ public class EditorOverlay extends ControlBarOverlay {
     
     private final EditorNodeSelectorOverlay selector;
     private final OsmOverlay content;
-    private final OsmOverlay legend;
+    //private final OsmOverlay legend;
     
     private OsmOverlay coordinates;
     
@@ -48,7 +46,7 @@ public class EditorOverlay extends ControlBarOverlay {
         coordinates = sgrid.createCenterCoordinatesOverlay(getOsmView());
         
         content = new GpxDynOverlay(osm, c, id);
-        legend = new GpxLegendOverlay(osm,id, new PointIndexWalker());
+        //legend = new GpxLegendOverlay(osm,id, new PointIndexWalker());
         selector = new EditorNodeSelectorOverlay(osm, id, e);
         
         editor = e;
@@ -93,7 +91,7 @@ public class EditorOverlay extends ControlBarOverlay {
     public void draw(MapPainter p) {
         content.draw(p);
         if (isVisible()) {
-            legend.draw(p);
+            //legend.draw(p);
             selector.draw(p);
             coordinates.draw(p);
         }
@@ -144,7 +142,7 @@ public class EditorOverlay extends ControlBarOverlay {
     public void updateGpxContent(GpxInformation info) {
         content.updateGpxContent(info);
         selector.updateGpxContent(info);
-        legend.updateGpxContent(info);
+        //legend.updateGpxContent(info);
     }
     
     
