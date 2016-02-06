@@ -63,6 +63,7 @@ public class MapCanvas {
         p.setAlpha(ALPHA);
         p.setStyle(Style.STROKE);
         p.setAntiAlias(false);
+        p.setStrokeWidth(0f);
         return p;
     }
 
@@ -104,13 +105,14 @@ public class MapCanvas {
     }
 
 
+    // FIXME: drawLine does not work correctly in zoomlevel 17
     public void drawHLine(int y) {
-        canvas.drawLine(projection.screen.left, y, projection.screen.right, y, gridPaint);
+        canvas.drawRect(projection.screen.left, y, projection.screen.right, y, gridPaint);
     }
 
 
     public void drawVLine(int x) {
-        canvas.drawLine(x, projection.screen.top, x, projection.screen.bottom, gridPaint);
+        canvas.drawRect(x, projection.screen.top, x, projection.screen.bottom, gridPaint);
 
     }
 
