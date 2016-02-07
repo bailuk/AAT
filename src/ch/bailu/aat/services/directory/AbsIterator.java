@@ -1,10 +1,11 @@
 package ch.bailu.aat.services.directory;
 
+import java.io.Closeable;
+
 import android.database.Cursor;
 import ch.bailu.aat.gpx.GpxInformation;
-import ch.bailu.aat.helpers.CleanUp;
 
-public abstract class AbsIterator extends GpxInformation implements CleanUp{
+public abstract class AbsIterator extends GpxInformation implements Closeable{
 
     public abstract void setCursor(Cursor c);
 
@@ -46,10 +47,12 @@ public abstract class AbsIterator extends GpxInformation implements CleanUp{
         }
 
         @Override
-        public void cleanUp() {
-
+        public void close() {
         }
 
     };
 
+    
+    @Override
+    public void close() {}
 }

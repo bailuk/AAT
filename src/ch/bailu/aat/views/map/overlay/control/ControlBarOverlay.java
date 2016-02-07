@@ -86,7 +86,7 @@ public abstract class ControlBarOverlay extends OsmOverlay implements Runnable, 
             isVisible=true;
         }
 
-        hideTimer.cleanUp();
+        hideTimer.close();
         hideTimer.kick();
     }
 

@@ -135,7 +135,7 @@ public class RealLocation extends LocationStackChainedItem implements LocationLi
     }
         
     @Override
-    public void cleanUp() {
+    public void close() {
         try {
             getLocationManager(context).removeUpdates(this);
         } catch (NoServiceException e) {

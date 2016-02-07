@@ -44,8 +44,8 @@ public class MockLocation extends LocationStackChainedItem implements Runnable, 
 
     
     @Override
-    public void cleanUp() {
-        timer.cleanUp();
+    public void close() {
+        timer.close();
     }
     
     @Override

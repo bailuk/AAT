@@ -91,7 +91,7 @@ public abstract class AbsTextBackup  {
 
                 }
             }
-            stream.cleanUp();
+            stream.close();
         }
     }
 }

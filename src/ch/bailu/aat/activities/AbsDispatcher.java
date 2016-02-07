@@ -21,7 +21,7 @@ public abstract class AbsDispatcher extends AbsMenu {
     
     
     public void setDispatcher(ContentDispatcher d) {
-    	dispatcher.cleanUp();
+    	dispatcher.close();
     	dispatcher = d;
     }
     
@@ -40,7 +40,7 @@ public abstract class AbsDispatcher extends AbsMenu {
 
     @Override
     public void onDestroy() {
-    	dispatcher.cleanUp();
+    	dispatcher.close();
     	dispatcher = null;
         super.onDestroy();
     }

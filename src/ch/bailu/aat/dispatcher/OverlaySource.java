@@ -34,7 +34,7 @@ public class OverlaySource extends ContentSource {
 
 
     @Override
-    public void cleanUp() {
+    public void close() {
         service.unregisterReceiver(onOverlayChanged);
     }
 

@@ -1,5 +1,6 @@
 package ch.bailu.aat.services.background;
 
+import java.io.Closeable;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -10,10 +11,9 @@ import android.content.Intent;
 import ch.bailu.aat.helpers.AppBroadcaster;
 import ch.bailu.aat.helpers.AppDirectory;
 import ch.bailu.aat.helpers.AppLog;
-import ch.bailu.aat.helpers.CleanUp;
 import ch.bailu.aat.osm_features.MapFeaturesPreparser;
 
-public class MapFeaturesDownloader implements CleanUp {
+public class MapFeaturesDownloader implements Closeable {
     private final static String SOURCE_URL = "http://wiki.openstreetmap.org/wiki/Map_Features";
 
     private final BackgroundService downloader;
@@ -46,7 +46,7 @@ public class MapFeaturesDownloader implements CleanUp {
 
     
     @Override
-    public void cleanUp() {
+    public void close() {
         downloader.unregisterReceiver(onFileDownloaded);
         terminate();
     }

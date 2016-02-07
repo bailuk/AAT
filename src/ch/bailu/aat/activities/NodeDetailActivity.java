@@ -124,7 +124,6 @@ public class NodeDetailActivity extends AbsDispatcher implements OnClickListener
 
     @Override
     public void onDestroy() {
-        verticalView.cleanUp();
         super.onDestroy();
     }
 

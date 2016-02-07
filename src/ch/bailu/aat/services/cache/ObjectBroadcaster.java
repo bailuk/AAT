@@ -1,14 +1,15 @@
 package ch.bailu.aat.services.cache;
 
+import java.io.Closeable;
+
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.util.SparseArray;
 import ch.bailu.aat.helpers.AppBroadcaster;
-import ch.bailu.aat.helpers.CleanUp;
 import ch.bailu.aat.services.cache.CacheService.SelfOn;
 
-public class ObjectBroadcaster implements CleanUp {
+public class ObjectBroadcaster implements Closeable {
     
     private final static int INITIAL_CAPACITY=200;
 
@@ -44,7 +45,7 @@ public class ObjectBroadcaster implements CleanUp {
 
 
     @Override
-    public void cleanUp() {
+    public void close() {
         self.context.unregisterReceiver(onFileDownloaded);
         self.context.unregisterReceiver(onFileChanged);
 

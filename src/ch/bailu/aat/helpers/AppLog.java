@@ -1,5 +1,7 @@
 package ch.bailu.aat.helpers;
 
+import java.io.Closeable;
+
 import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -9,7 +11,7 @@ import android.os.Looper;
 import android.widget.Toast;
 
 
-public class AppLog implements CleanUp {
+public class AppLog implements Closeable {
     private final static String UNKNOWN = "";
     
     private final static String NAME_SPACE=AppBroadcaster.NAME_SPACE;
@@ -17,7 +19,7 @@ public class AppLog implements CleanUp {
     private final static String EXTRA_SOURCE = "TITLE";
     
 
-    private abstract class Log extends BroadcastReceiver implements CleanUp {
+    private abstract class Log extends BroadcastReceiver implements Closeable {
 
         private final Context context;
         
@@ -35,7 +37,7 @@ public class AppLog implements CleanUp {
         }
 
         @Override
-        public void cleanUp() {
+        public void close() {
             context.unregisterReceiver(this);
         }
         
@@ -192,8 +194,8 @@ public class AppLog implements CleanUp {
     
     
     @Override
-    public void cleanUp() {
-        info.cleanUp();
-        error.cleanUp();
+    public void close() {
+        info.close();
+        error.close();
     }
 }

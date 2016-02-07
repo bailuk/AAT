@@ -6,11 +6,10 @@ import android.content.Intent;
 import ch.bailu.aat.description.ContentDescription;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.helpers.AppBroadcaster;
-import ch.bailu.aat.helpers.CleanUp;
 import ch.bailu.aat.services.directory.DirectoryService;
 
 public class GpxListSummaryView 
-extends SummaryListView  implements CleanUp {
+extends SummaryListView  {
     private static final String SOLID_KEY=GpxListSummaryView.class.getSimpleName();
 
     private final DirectoryService directory;
@@ -39,9 +38,9 @@ extends SummaryListView  implements CleanUp {
 
 
     @Override
-    public void cleanUp() {
+    public void onDetachedFromWindow() {
         directory.unregisterReceiver(onCursorChanged);
-        super.cleanUp();
+        super.onDetachedFromWindow();
     }
 
 }

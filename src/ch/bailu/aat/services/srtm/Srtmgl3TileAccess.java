@@ -64,7 +64,7 @@ public class Srtmgl3TileAccess extends SrtmAccess{
 
 
     @Override
-    public void cleanUp() {
+    public void close() {
         tile.free();
     }
 }

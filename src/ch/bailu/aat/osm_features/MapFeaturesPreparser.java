@@ -48,7 +48,7 @@ public class MapFeaturesPreparser {
 
         
         closeOut();
-        in.cleanUp();
+        in.close();
     }
     
     

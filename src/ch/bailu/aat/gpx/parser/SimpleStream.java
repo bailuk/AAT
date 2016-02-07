@@ -1,5 +1,6 @@
 package ch.bailu.aat.gpx.parser;
 import java.io.BufferedReader;
+import java.io.Closeable;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -11,10 +12,9 @@ import java.io.StringReader;
 import java.io.UnsupportedEncodingException;
 
 import ch.bailu.aat.helpers.AppLog;
-import ch.bailu.aat.helpers.CleanUp;
 
 
-public class SimpleStream implements CleanUp {
+public class SimpleStream implements Closeable {
     private final static String CHARSET="UTF-8";
     private final static int BUFFER_BYTES=1024*10;
     
@@ -105,7 +105,7 @@ public class SimpleStream implements CleanUp {
     }
 
     @Override
-    public void cleanUp() {
+    public void close() {
         try {
             reader.close();
         } catch (IOException e) {

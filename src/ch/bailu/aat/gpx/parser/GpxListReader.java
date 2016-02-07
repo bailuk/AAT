@@ -28,7 +28,7 @@ public class GpxListReader {
         parser.setOnTrackParsed(track);
         parser.setOnWayParsed(way);
         parser.parse();
-        parser.cleanUp();
+        parser.close();
 
     }
 

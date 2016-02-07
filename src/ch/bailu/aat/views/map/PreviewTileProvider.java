@@ -1,16 +1,16 @@
 package ch.bailu.aat.views.map;
 
+import java.io.Closeable;
 import java.util.ArrayList;
 
 import org.osmdroid.tileprovider.MapTile;
 
 import android.graphics.drawable.Drawable;
 import android.os.Handler;
-import ch.bailu.aat.helpers.CleanUp;
 import ch.bailu.aat.services.cache.CacheService;
 import ch.bailu.aat.services.cache.TileStackObject;
 
-public class PreviewTileProvider extends AbsOsmTileProvider implements CleanUp  {
+public class PreviewTileProvider extends AbsOsmTileProvider implements Closeable  {
 
     private ArrayList<TileStackObject> tiles = new ArrayList<TileStackObject>(10);
     
@@ -55,7 +55,7 @@ public class PreviewTileProvider extends AbsOsmTileProvider implements CleanUp  
 
 
     @Override
-    public void cleanUp() {
+    public void close() {
         for (int i=0; i<tiles.size(); i++) {
             tiles.get(i).free();
         }

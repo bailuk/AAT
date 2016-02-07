@@ -11,11 +11,7 @@ public class MissingTrigger extends LocationStackChainedItem {
         super(n);
     }
 
-    @Override
-    public void cleanUp() {
-
-    }
-
+    
     @Override
     public void newLocation(LocationInformation location) {
         stamp=location.getTimeStamp();

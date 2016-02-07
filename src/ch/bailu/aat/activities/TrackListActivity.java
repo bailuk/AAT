@@ -52,8 +52,6 @@ public class TrackListActivity extends AbsGpxListActivity {
 
     @Override
     public void onDestroy() {
-        if (summaryView != null) summaryView.cleanUp();
-        summaryView = null;
         super.onDestroy();
     }
 

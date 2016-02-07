@@ -46,7 +46,7 @@ public class SRTMGL3GeneralAccess extends SrtmAccess {
     
     private void loadNewTile(SrtmCoordinates c) {
         try {
-            srtmAccess.cleanUp();
+            srtmAccess.close();
             srtmAccess = new Srtmgl3TileAccess(c, loader);
         } catch (Exception e) {
             e.printStackTrace();
@@ -65,8 +65,8 @@ public class SRTMGL3GeneralAccess extends SrtmAccess {
     }
     
     @Override
-    public void cleanUp() {
-        srtmAccess.cleanUp();
+    public void close() {
+        srtmAccess.close();
     }
     
 }

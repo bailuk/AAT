@@ -1,6 +1,7 @@
 package ch.bailu.aat.preferences;
 
-import ch.bailu.aat.helpers.CleanUp;
+import java.io.Closeable;
+
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
@@ -8,7 +9,8 @@ import android.preference.EditTextPreference;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
 
-public class IntegerPreference extends EditTextPreference implements OnPreferenceChangeListener, OnSharedPreferenceChangeListener, CleanUp{
+public class IntegerPreference extends EditTextPreference 
+implements OnPreferenceChangeListener, OnSharedPreferenceChangeListener, Closeable{
     private final SolidInteger sinteger;
     private final Storage storage;
     
@@ -42,7 +44,7 @@ public class IntegerPreference extends EditTextPreference implements OnPreferenc
     }
 
     @Override
-    public void cleanUp() {
+    public void close() {
         storage.unregister(this);
         
     }

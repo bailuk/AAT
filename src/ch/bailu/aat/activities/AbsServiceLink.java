@@ -33,7 +33,7 @@ public abstract class AbsServiceLink extends AbsActivity implements GpxInformati
 
     @Override
     public void onDestroy() {
-        serviceLink.cleanUp();
+        serviceLink.close();
         serviceLink=null;
         super.onDestroy();
     }    

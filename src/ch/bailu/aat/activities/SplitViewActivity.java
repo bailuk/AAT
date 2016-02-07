@@ -183,8 +183,6 @@ public class SplitViewActivity extends AbsDispatcher implements OnClickListener{
 
     @Override
     public void onDestroy() {
-        mapView.cleanUp();
-        multiView.cleanUp();
         super.onDestroy();
     }
 

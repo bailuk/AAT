@@ -157,7 +157,6 @@ public class FileContentActivity extends AbsDispatcher implements OnClickListene
 
     @Override
     public void onDestroy() {
-        multiView.cleanUp();
         super.onDestroy();
     }
 

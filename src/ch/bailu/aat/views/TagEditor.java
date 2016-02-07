@@ -15,10 +15,9 @@ import ch.bailu.aat.helpers.AbsTextBackup;
 import ch.bailu.aat.helpers.AppBroadcaster;
 import ch.bailu.aat.helpers.AppLayout;
 import ch.bailu.aat.helpers.AppLog;
-import ch.bailu.aat.helpers.CleanUp;
 
 
-public class TagEditor extends LinearLayout implements CleanUp {
+public class TagEditor extends LinearLayout {
     private EditText editor;
     private File backup;
     
@@ -79,9 +78,10 @@ public class TagEditor extends LinearLayout implements CleanUp {
     
     
     @Override
-    public void cleanUp() {
+    public void onDetachedFromWindow() {
         saveFile();
         getContext().unregisterReceiver(onSelectMapFeature);
+        super.onDetachedFromWindow();
     }
 
 

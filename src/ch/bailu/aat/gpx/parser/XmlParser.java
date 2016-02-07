@@ -1,5 +1,6 @@
 package ch.bailu.aat.gpx.parser;
 
+import java.io.Closeable;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -10,9 +11,8 @@ import android.util.SparseArray;
 import ch.bailu.aat.gpx.GpxAttributes;
 import ch.bailu.aat.gpx.GpxAttributes.Tag;
 import ch.bailu.aat.gpx.interfaces.GpxPointInterface;
-import ch.bailu.aat.helpers.CleanUp;
 
-public class XmlParser implements CleanUp, GpxPointInterface {
+public class XmlParser implements Closeable, GpxPointInterface {
 
 
     private ParserIO io;
@@ -83,8 +83,8 @@ public class XmlParser implements CleanUp, GpxPointInterface {
 
     
     @Override
-    public void cleanUp() {
-        io.stream.cleanUp();
+    public void close() {
+        io.stream.close();
     }
 
     @Override

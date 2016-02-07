@@ -199,7 +199,7 @@ public class GpxIterator extends AbsIterator {
 
 
     @Override
-    public void cleanUp() {
+    public void close() {
         handle.free();
         handle = ObjectHandle.NULL;
         cursor.close();

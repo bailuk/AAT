@@ -1,9 +1,10 @@
 package ch.bailu.aat.services.cache;
 
-import android.util.SparseArray;
-import ch.bailu.aat.helpers.CleanUp;
+import java.io.Closeable;
 
-public class FreeLater implements CleanUp {
+import android.util.SparseArray;
+
+public class FreeLater implements Closeable {
     private final static int INITIAL_CAPACITY=20;
     private final SparseArray<ObjectHandle> table = new SparseArray<ObjectHandle>(INITIAL_CAPACITY);
 
@@ -28,7 +29,7 @@ public class FreeLater implements CleanUp {
 
     
     @Override
-    public void cleanUp() {
+    public void close() {
         freeAll();
     }
 }

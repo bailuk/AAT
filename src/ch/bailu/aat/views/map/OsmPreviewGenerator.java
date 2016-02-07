@@ -1,5 +1,6 @@
 package ch.bailu.aat.views.map;
 
+import java.io.Closeable;
 import java.io.File;
 import java.io.FileOutputStream;
 
@@ -10,12 +11,11 @@ import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.GpxList;
 import ch.bailu.aat.helpers.AppBroadcaster;
 import ch.bailu.aat.helpers.AppLog;
-import ch.bailu.aat.helpers.CleanUp;
 import ch.bailu.aat.services.cache.CacheService;
 import ch.bailu.aat.views.map.overlay.OsmOverlay;
 import ch.bailu.aat.views.map.overlay.gpx.GpxDynOverlay;
 
-public class OsmPreviewGenerator implements CleanUp {
+public class OsmPreviewGenerator implements Closeable {
     public static final int BITMAP_SIZE=128;
 
     private final OsmViewStatic map;
@@ -77,7 +77,7 @@ public class OsmPreviewGenerator implements CleanUp {
 
 
     @Override
-    public void cleanUp() {
-        tileProvider.cleanUp();
+    public void close() {
+        tileProvider.close();
     }
 }

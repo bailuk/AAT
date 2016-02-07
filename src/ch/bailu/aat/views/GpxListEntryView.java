@@ -143,8 +143,7 @@ public class GpxListEntryView extends  DescriptionViewGroup {
             entry.setText(text);
         }
 
-        @Override
-        public void cleanUp() {}
+       
     }
 
 

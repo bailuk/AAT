@@ -35,7 +35,7 @@ public class CleanLocation extends LocationStackItem {
     public void newState(int state) {}
 
     @Override
-    public void cleanUp() {}
+    public void close() {}
 
     @Override
     public void preferencesChanged(Context c, int i) {}

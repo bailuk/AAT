@@ -11,7 +11,7 @@ public class OffState extends State {
    public OffState(TrackerInternals ti) {
         super(ti);
         
-        internal.logger.cleanUp();
+        internal.logger.close();
         internal.statusIcon.hide();
         internal.backlight.unlock();
         internal.unlockService();

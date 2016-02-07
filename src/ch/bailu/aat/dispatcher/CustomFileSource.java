@@ -34,7 +34,7 @@ public class CustomFileSource extends ContentSource {
     }   
 
     @Override
-    public void cleanUp() {
+    public void close() {
         cacheService.unregisterReceiver(onChangedInCache);
         gpxObject.free();
     }

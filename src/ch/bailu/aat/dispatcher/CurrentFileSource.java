@@ -32,7 +32,7 @@ public class CurrentFileSource extends ContentSource {
 
 
     @Override
-    public void cleanUp() {
+    public void close() {
         directoryService.unregisterReceiver(onFileProcessed);
     }
 

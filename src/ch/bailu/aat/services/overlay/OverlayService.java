@@ -1,10 +1,10 @@
 package ch.bailu.aat.services.overlay;
 
+import java.io.Closeable;
 import java.io.IOException;
 
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.helpers.AppLog;
-import ch.bailu.aat.helpers.CleanUp;
 import ch.bailu.aat.preferences.SolidOverlayFileList;
 import ch.bailu.aat.services.AbsService;
 import ch.bailu.aat.services.MultiServiceLink.ServiceNotUpException;
@@ -21,13 +21,13 @@ public class OverlayService extends AbsService implements GpxInformation.ID {
     };
     
     
-    private class SelfOff implements CleanUp {
+    private class SelfOff implements Closeable {
         public GpxInformation getInformation(int id) {
             return GpxInformation.NULL;
         }
         
         @Override
-        public void cleanUp() {}
+        public void close() {}
         
     }
     
@@ -57,9 +57,9 @@ public class OverlayService extends AbsService implements GpxInformation.ID {
 
         
         @Override
-        public void cleanUp() {
+        public void close() {
             for (int i=0; i<overlayList.length; i++) 
-                overlayList[i].cleanUp();
+                overlayList[i].close();
         }
     }
     
@@ -97,6 +97,6 @@ public class OverlayService extends AbsService implements GpxInformation.ID {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        self.cleanUp();
+        self.close();
     }
 }

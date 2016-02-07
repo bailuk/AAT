@@ -62,6 +62,5 @@ public abstract class AbsGraphView extends TrackDescriptionView {
     public abstract void plot(Canvas canvas, GpxList list, SolidUnit sunit, boolean markerMode);    
     
     
-    @Override
-    public void cleanUp() {}
+    
 }

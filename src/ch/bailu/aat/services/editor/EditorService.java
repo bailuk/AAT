@@ -1,5 +1,6 @@
 package ch.bailu.aat.services.editor;
 
+import java.io.Closeable;
 import java.io.File;
 import java.io.IOException;
 
@@ -8,7 +9,6 @@ import ch.bailu.aat.gpx.GpxPoint;
 import ch.bailu.aat.gpx.GpxPointNode;
 import ch.bailu.aat.helpers.AppDirectory;
 import ch.bailu.aat.helpers.AppLog;
-import ch.bailu.aat.helpers.CleanUp;
 import ch.bailu.aat.services.AbsService;
 import ch.bailu.aat.services.MultiServiceLink.ServiceNotUpException;
 import ch.bailu.aat.services.cache.CacheService;
@@ -23,7 +23,7 @@ public class EditorService extends AbsService {
     
     private Self self = new Self();
     
-    public class Self implements CleanUp {
+    public class Self implements Closeable {
 
         public void editOverlay(File file) {}
 
@@ -44,7 +44,7 @@ public class EditorService extends AbsService {
         }
 
         @Override
-        public void cleanUp() {}
+        public void close() {}
         
     };
 
@@ -86,7 +86,7 @@ public class EditorService extends AbsService {
         
         
         @Override
-        public void cleanUp() {
+        public void close() {
             if (getDraftEditor().isModified()) { 
                 getDraftEditor().save();
             }
@@ -168,7 +168,7 @@ public class EditorService extends AbsService {
     
     @Override
     public void onDestroy() {
-        self.cleanUp();
+        self.close();
         self = new Self();
         super.onDestroy();
     }

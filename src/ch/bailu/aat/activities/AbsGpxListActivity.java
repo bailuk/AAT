@@ -118,7 +118,7 @@ public abstract class AbsGpxListActivity extends AbsMenu implements OnItemClickL
 
     @Override
     public void onDestroy() {
-        busyIndicator.cleanUp();
+        // busyIndicator.cleanUp();
 
 
         if (listView != null) {
@@ -127,9 +127,9 @@ public abstract class AbsGpxListActivity extends AbsMenu implements OnItemClickL
             } catch (ServiceNotUpException e) {
                 AppLog.e(this, e);
             }
-            listView.cleanUp();
+            //listView.close();
         }
-        if (directoryServiceHelper != null) directoryServiceHelper.cleanUp();
+        if (directoryServiceHelper != null) directoryServiceHelper.close();
 
         super.onDestroy();
     }

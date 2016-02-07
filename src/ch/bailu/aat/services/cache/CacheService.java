@@ -1,10 +1,11 @@
 package ch.bailu.aat.services.cache;
 
+import java.io.Closeable;
+
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import ch.bailu.aat.helpers.AppBroadcaster;
-import ch.bailu.aat.helpers.CleanUp;
 import ch.bailu.aat.services.AbsService;
 import ch.bailu.aat.services.MultiServiceLink.ServiceNotUpException;
 import ch.bailu.aat.services.background.BackgroundService;
@@ -21,9 +22,9 @@ public class CacheService extends AbsService {
 
 
     
-    public class Self implements CleanUp {
+    public class Self implements Closeable {
         @Override
-        public void cleanUp() {
+        public void close() {
         }
 
         public void onLowMemory() {}
@@ -86,9 +87,9 @@ public class CacheService extends AbsService {
 
        
         @Override
-        public void cleanUp() {
+        public void close() {
             unregisterReceiver(onFileProcessed);
-            broadcaster.cleanUp();
+            broadcaster.close();
         }
         
         
@@ -131,7 +132,7 @@ public class CacheService extends AbsService {
         
         
         if (background != null && iconMap != null)
-            self.cleanUp();
+            self.close();
             self = new SelfOn(background, iconMap);
     }
 
@@ -160,7 +161,7 @@ public class CacheService extends AbsService {
 
     @Override
     public void onDestroy() {
-        self.cleanUp();
+        self.close();
         self = new Self();
         super.onDestroy();
     }

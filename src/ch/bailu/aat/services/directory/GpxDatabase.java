@@ -69,8 +69,8 @@ public class GpxDatabase extends AbsDatabase{
 
 
     @Override
-    public void cleanUp() {
-        iterator.cleanUp();
+    public void close() {
+        iterator.close();
         database.close();
     }
 

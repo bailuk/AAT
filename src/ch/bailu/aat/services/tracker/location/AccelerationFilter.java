@@ -13,7 +13,7 @@ public class AccelerationFilter extends LocationStackChainedItem {
     }
 
     @Override
-    public void cleanUp() {}
+    public void close() {}
 
     @Override
     public void newLocation(LocationInformation location) {

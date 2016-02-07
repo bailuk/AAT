@@ -14,11 +14,7 @@ public class ViewWrapper extends TrackDescriptionView {
     }
 
     
-    @Override
-    public void cleanUp() {
-        
-    }
-
+   
 
 
     @Override

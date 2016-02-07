@@ -1,15 +1,16 @@
 package ch.bailu.aat.views.map.overlay.gpx;
 
+import java.io.Closeable;
+
 import android.graphics.drawable.Drawable;
 import ch.bailu.aat.gpx.GpxAttributes;
 import ch.bailu.aat.gpx.interfaces.GpxPointInterface;
-import ch.bailu.aat.helpers.CleanUp;
 import ch.bailu.aat.services.cache.CacheService;
 import ch.bailu.aat.services.cache.FreeLater;
 import ch.bailu.aat.services.cache.ImageObject;
 import ch.bailu.aat.services.icons.IconMapService;
 
-public class MapIconCache implements CleanUp {
+public class MapIconCache implements Closeable {
     private FreeLater current = new FreeLater();
     private FreeLater old = new FreeLater();
     
@@ -55,8 +56,8 @@ public class MapIconCache implements CleanUp {
 
 
     @Override
-    public void cleanUp() {
-        current.cleanUp();
-        old.cleanUp();
+    public void close() {
+        current.close();
+        old.close();
     }
 }

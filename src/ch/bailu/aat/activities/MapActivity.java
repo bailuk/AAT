@@ -80,7 +80,6 @@ public class MapActivity extends AbsDispatcher implements OnClickListener{
 
     @Override
     public void onDestroy() {
-        map.cleanUp();    
         super.onDestroy();
     }
 

@@ -3,7 +3,6 @@ package ch.bailu.aat.activities;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
-import android.text.util.Linkify;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import ch.bailu.aat.helpers.AppTheme;

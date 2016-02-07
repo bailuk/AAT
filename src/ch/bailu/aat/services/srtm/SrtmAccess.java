@@ -1,10 +1,10 @@
 package ch.bailu.aat.services.srtm;
 
+import java.io.Closeable;
+
 import org.osmdroid.api.IGeoPoint;
 
-import ch.bailu.aat.helpers.CleanUp;
-
-public class SrtmAccess implements ElevationProvider, CleanUp {
+public class SrtmAccess implements ElevationProvider, Closeable {
     //public static final SrtmAccess NULL = new SrtmAccess();
     public static final SrtmAccess NULL_READY = new SrtmAccess() {
         @Override
@@ -26,7 +26,7 @@ public class SrtmAccess implements ElevationProvider, CleanUp {
     }
 
     @Override
-    public void cleanUp() {}
+    public void close() {}
 
 
     public short getElevation(IGeoPoint point) {

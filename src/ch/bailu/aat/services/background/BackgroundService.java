@@ -136,17 +136,17 @@ public class BackgroundService extends AbsService{
      public void onDestroy() {
          unregisterReceiver(onFileDownloaded);
 
-         mapFeaturesDownloader.cleanUp();
+         mapFeaturesDownloader.close();
 
          for (int i=0; i<loaders.size(); i++)
-             loaders.valueAt(i).cleanUp();
+             loaders.valueAt(i).close();
          loaders.clear();
          
          for (int i=0; i<downloaders.size(); i++)
-             downloaders.valueAt(i).cleanUp();
+             downloaders.valueAt(i).close();
          downloaders.clear();
          
-         process.cleanUp();
+         process.close();
          process=null;
          
          super.onDestroy();

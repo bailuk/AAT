@@ -18,7 +18,7 @@ public class TrackerService extends AbsService {
     @Override
     public void onDestroy() {
 
-        internal.cleanUp();
+        internal.close();
         internal=null;
         super.onDestroy();
     }

@@ -1,11 +1,12 @@
 package ch.bailu.aat.views.map;
 
+import java.io.Closeable;
+
 import org.osmdroid.tileprovider.MapTile;
 
-import ch.bailu.aat.helpers.CleanUp;
 import ch.bailu.aat.services.cache.TileStackObject;
 
-public class TileCache implements CleanUp {
+public class TileCache implements Closeable {
     private TileStackObject[] tiles;
 
 
@@ -74,7 +75,7 @@ public class TileCache implements CleanUp {
 
 
     @Override
-    public void cleanUp() {
+    public void close() {
         reset();
     }
 

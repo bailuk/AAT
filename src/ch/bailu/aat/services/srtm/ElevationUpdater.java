@@ -1,17 +1,18 @@
 package ch.bailu.aat.services.srtm;
 
+import java.io.Closeable;
+
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.util.SparseArray;
 import ch.bailu.aat.coordinates.SrtmCoordinates;
 import ch.bailu.aat.helpers.AppBroadcaster;
-import ch.bailu.aat.helpers.CleanUp;
 import ch.bailu.aat.services.background.BackgroundService;
 import ch.bailu.aat.services.cache.CacheService;
 
 
-public class ElevationUpdater implements CleanUp{
+public class ElevationUpdater implements Closeable{
     private final SparseArray <ElevationUpdaterEntry> pendingFiles = new SparseArray<ElevationUpdaterEntry>();
     private final CacheService cache;
     private final BackgroundService background;
@@ -80,7 +81,7 @@ public class ElevationUpdater implements CleanUp{
 
         private void changeSRTM(SrtmCoordinates c) {
             if (srtmAccess.hashCode()!=c.hashCode()) {
-                srtmAccess.cleanUp();
+                srtmAccess.close();
                 srtmAccess=new Srtmgl3TileAccess(c, cache);
             }
         }
@@ -133,11 +134,11 @@ public class ElevationUpdater implements CleanUp{
 
 
     @Override
-    public void cleanUp() {
+    public void close() {
 
         context.unregisterReceiver(onRequestElevationUpdate);
         context.unregisterReceiver(onFileChanged);
-        srtmAccess.cleanUp();
+        srtmAccess.close();
 
     }
 

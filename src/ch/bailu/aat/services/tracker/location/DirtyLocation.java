@@ -29,7 +29,7 @@ public class DirtyLocation extends LocationStackChainedItem {
     }
     
     @Override
-    public void cleanUp() {
+    public void close() {
         storage.writeInteger(SOLID_KEY + OsmInteractiveView.LONGITUDE_SUFFIX, locationInformation.getLongitudeE6());
         storage.writeInteger(SOLID_KEY + OsmInteractiveView.LATITUDE_SUFFIX, locationInformation.getLatitudeE6());
     }

@@ -8,7 +8,6 @@ import org.osmdroid.util.BoundingBoxE6;
 import ch.bailu.aat.gpx.interfaces.GpxPointInterface;
 import ch.bailu.aat.gpx.parser.DoubleParser;
 import ch.bailu.aat.gpx.parser.SimpleStream;
-import ch.bailu.aat.helpers.AppLog;
 
 public class BoundingBox {
 

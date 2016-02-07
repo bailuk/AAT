@@ -123,13 +123,9 @@ public abstract class AbsOsmView extends TrackDescriptionView {
     
     @Override
     public void onDetachedFromWindow() {
-        mapIconCache.cleanUp();
+        mapIconCache.close();
         super.onDetachedFromWindow();
     }
 
     
-    @Override
-    public void cleanUp() {
-        mapIconCache.cleanUp();
-    }
 }

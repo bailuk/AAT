@@ -18,7 +18,7 @@ public class TrackerSource extends ContentSource {
     }
 
     @Override
-    public void cleanUp() {
+    public void close() {
         service.unregisterReceiver(onStateChanged);
         service.unregisterReceiver(onTrackChanged);
     }

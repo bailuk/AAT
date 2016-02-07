@@ -2,8 +2,8 @@ package ch.bailu.aat.helpers;
 
 import android.content.Context;
 import android.content.res.Configuration;
-import android.view.WindowManager;
 import android.view.View.MeasureSpec;
+import android.view.WindowManager;
 import android.widget.LinearLayout;
 
 public class AppLayout {

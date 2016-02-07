@@ -32,7 +32,7 @@ public abstract class AbsActivity extends Activity {
 
     @Override
     public void onPause() {
-        logger.cleanUp();
+        logger.close();
         logger=null;
         super.onPause();
     }

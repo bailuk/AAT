@@ -1,13 +1,15 @@
 package ch.bailu.aat.activities;
 
+import java.io.Closeable;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceCategory;
 import android.preference.PreferenceScreen;
+import ch.bailu.aat.R;
 import ch.bailu.aat.helpers.AppLog;
-import ch.bailu.aat.helpers.CleanUp;
 import ch.bailu.aat.preferences.IndexListPreference;
 import ch.bailu.aat.preferences.IntegerPreference;
 import ch.bailu.aat.preferences.SolidAccelerationFilter;
@@ -23,14 +25,13 @@ import ch.bailu.aat.preferences.SolidTileCacheDirectory;
 import ch.bailu.aat.preferences.SolidTileSize;
 import ch.bailu.aat.preferences.SolidUnit;
 import ch.bailu.aat.preferences.SolidWeight;
-import ch.bailu.aat.R;
 
 public class PreferencesActivity extends PreferenceActivity {
     
     private PreferenceScreen screen;
     private PreferenceCategory category;
     private SolidPreset spreset;
-    private ArrayList<CleanUp> cleanUp=new ArrayList<CleanUp>();
+    private ArrayList<Closeable> cleanUp=new ArrayList<Closeable>();
 
     private AppLog logger;
     
@@ -71,8 +72,12 @@ public class PreferencesActivity extends PreferenceActivity {
 
     @Override
     public void onDestroy() {
-        while (!cleanUp.isEmpty()) 
-            cleanUp.remove(0).cleanUp();
+        while (!cleanUp.isEmpty())
+            try {
+                cleanUp.remove(0).close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         
         super.onDestroy();
     }
@@ -87,7 +92,7 @@ public class PreferencesActivity extends PreferenceActivity {
     
     @Override
     public void onPause() {
-        logger.cleanUp();
+        logger.close();
         logger=null;
         super.onPause();
     }

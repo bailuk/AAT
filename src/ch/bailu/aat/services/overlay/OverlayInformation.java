@@ -1,5 +1,6 @@
 package ch.bailu.aat.services.overlay;
 
+import java.io.Closeable;
 import java.io.File;
 
 import android.content.BroadcastReceiver;
@@ -11,14 +12,13 @@ import ch.bailu.aat.coordinates.BoundingBox;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.GpxList;
 import ch.bailu.aat.helpers.AppBroadcaster;
-import ch.bailu.aat.helpers.CleanUp;
 import ch.bailu.aat.preferences.SolidOverlayFile;
 import ch.bailu.aat.services.cache.CacheService;
 import ch.bailu.aat.services.cache.GpxObject;
 import ch.bailu.aat.services.cache.GpxObjectStatic;
 import ch.bailu.aat.services.cache.ObjectHandle;
 
-public class OverlayInformation extends GpxInformation implements CleanUp {
+public class OverlayInformation extends GpxInformation implements Closeable {
         private final int updateID;
 
         private final SolidOverlayFile soverlay;
@@ -137,7 +137,7 @@ public class OverlayInformation extends GpxInformation implements CleanUp {
 
 
         @Override
-        public void cleanUp() {
+        public void close() {
             handle.free();
             soverlay.unregister(onPreferencesChanged);
             context.unregisterReceiver(onFileProcessed);

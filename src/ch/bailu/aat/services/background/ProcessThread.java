@@ -1,10 +1,9 @@
 package ch.bailu.aat.services.background;
 
+import java.io.Closeable;
 import java.util.concurrent.ArrayBlockingQueue;
 
-import ch.bailu.aat.helpers.CleanUp;
-
-public abstract class ProcessThread extends Thread implements CleanUp, ThreadControl {
+public abstract class ProcessThread extends Thread implements Closeable, ThreadControl {
     
     private boolean continueThread=true;
     
@@ -53,7 +52,7 @@ public abstract class ProcessThread extends Thread implements CleanUp, ThreadCon
 
 
     @Override
-    public void cleanUp() {
+    public void close() {
         continueThread=false;
 
         queue.clear();

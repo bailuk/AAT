@@ -108,10 +108,10 @@ implements MapListener, OnSharedPreferenceChangeListener, OnTouchListener {
 
 
     @Override
-    public void cleanUp() {
+    public void onDetachedFromWindow() {
         saveState();
         storage.unregister(this);
-        super.cleanUp();
+        super.onDetachedFromWindow();
     }
 
 

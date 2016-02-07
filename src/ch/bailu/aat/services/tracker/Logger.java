@@ -1,12 +1,12 @@
 package ch.bailu.aat.services.tracker;
 
+import java.io.Closeable;
 import java.io.IOException;
 
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.interfaces.GpxPointInterface;
-import ch.bailu.aat.helpers.CleanUp;
 
-public class Logger extends GpxInformation implements CleanUp {
+public class Logger extends GpxInformation implements Closeable {
     private int state=ID.STATE_WAIT;
     
     public static Logger createNullLogger() {
@@ -17,7 +17,7 @@ public class Logger extends GpxInformation implements CleanUp {
     public void log(GpxPointInterface tp) throws IOException {}
     
     @Override
-    public void cleanUp() {}
+    public void close() {}
     
 
     @Override

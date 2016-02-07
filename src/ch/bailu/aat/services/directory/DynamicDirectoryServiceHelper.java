@@ -66,8 +66,8 @@ public class DynamicDirectoryServiceHelper
 
 
     @Override
-    public void cleanUp() {
-        super.cleanUp();
+    public void close() {
+        super.close();
         storage.unregister(this);
     }
 }

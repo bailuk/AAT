@@ -86,7 +86,7 @@ public abstract class AbsService  extends Service {
         //AppLog.d(this, "onDestroy()");
 
         
-        serviceLink.cleanUp();
+        serviceLink.close();
         serviceLink=null;
         
         creations--;

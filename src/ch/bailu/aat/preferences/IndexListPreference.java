@@ -1,13 +1,14 @@
 package ch.bailu.aat.preferences;
 
-import ch.bailu.aat.helpers.CleanUp;
+import java.io.Closeable;
+
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceClickListener;
 
-public class IndexListPreference extends Preference implements OnPreferenceClickListener, OnSharedPreferenceChangeListener, CleanUp {
+public class IndexListPreference extends Preference implements OnPreferenceClickListener, OnSharedPreferenceChangeListener, Closeable {
     private final SolidIndexList slist;
 
 
@@ -46,7 +47,7 @@ public class IndexListPreference extends Preference implements OnPreferenceClick
 
     
     @Override
-    public void cleanUp() {
+    public void close() {
         slist.getStorage().unregister(this);
     }
 }

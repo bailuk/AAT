@@ -1,7 +1,5 @@
 package ch.bailu.aat.views;
 
-import java.io.IOException;
-
 import android.content.Context;
 import android.content.Intent;
 import android.database.DataSetObserver;
@@ -16,7 +14,6 @@ import ch.bailu.aat.activities.NodeDetailActivity;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.GpxList;
 import ch.bailu.aat.gpx.GpxListArray;
-import ch.bailu.aat.helpers.AppLog;
 import ch.bailu.aat.helpers.AppTheme;
 import ch.bailu.aat.services.cache.CacheService;
 
@@ -34,10 +31,6 @@ public class NodeListView extends TrackDescriptionView {
 
         addView(list);
     }
-
-    @Override
-    public void cleanUp() {}
-
 
 
     @Override

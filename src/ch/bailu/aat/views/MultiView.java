@@ -80,11 +80,12 @@ public class MultiView extends TrackDescriptionView {
     }
     
     @Override
-    public void cleanUp() {
+    public void onDetachedFromWindow() {
         Storage.activity(getContext()).writeInteger(solidKey + "_index",active);
-        for (int i=0; i<data.length; i++) {
+        /*for (int i=0; i<data.length; i++) {
             data[i].cleanUp();
-        }
+        }*/
+        super.onDetachedFromWindow();
     };
 
 }

@@ -1,17 +1,18 @@
 package ch.bailu.aat.dispatcher;
 
+import java.io.Closeable;
+
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import ch.bailu.aat.description.DescriptionInterface;
 import ch.bailu.aat.gpx.GpxInformation;
-import ch.bailu.aat.helpers.CleanUp;
 
-public class ContentDispatcher implements DescriptionInterface, CleanUp, OnSharedPreferenceChangeListener {
+public class ContentDispatcher implements DescriptionInterface, Closeable, OnSharedPreferenceChangeListener {
     public static final DescriptionInterface NULL_LIST[] = new DescriptionInterface[]{};
     public static final ContentDispatcher NULL=new ContentDispatcher() {
         @Override
-        public void cleanUp(){};
+        public void close(){};
     };
 
 
@@ -62,11 +63,11 @@ public class ContentDispatcher implements DescriptionInterface, CleanUp, OnShare
 
 
     @Override
-    public void cleanUp() {
+    public void close() {
         pause();
 
         for (ContentSource source: sourceList)
-            source.cleanUp();
+            source.close();
     }
 
     @Override

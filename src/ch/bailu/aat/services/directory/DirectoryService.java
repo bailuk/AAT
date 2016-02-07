@@ -104,7 +104,7 @@ public class DirectoryService extends AbsService	{
 
 
     private void openDataBase(CacheService loader, File path, String selection) throws IOException, ServiceNotUpException {
-        database.cleanUp();
+        database.close();
         database = new GpxDatabase(
                 this,
                 loader, 
@@ -121,7 +121,7 @@ public class DirectoryService extends AbsService	{
     public void onDestroy() {
         unregisterReceiver(onSyncChanged);
 
-        database.cleanUp();
+        database.close();
         stopSynchronizer();
 
         super.onDestroy();
@@ -137,7 +137,7 @@ public class DirectoryService extends AbsService	{
 
     private void stopSynchronizer() {
         if (synchronizer != null) {
-            synchronizer.cleanUp();
+            synchronizer.close();
             synchronizer=null;
         }
     }

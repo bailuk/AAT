@@ -156,8 +156,7 @@ implements OnClickListener,  Runnable {
 
     @Override
     public void onDestroy() {
-        timer.cleanUp();
-        if (multiView !=null)multiView.cleanUp();
+        timer.close();
         super.onDestroy();
     }
 

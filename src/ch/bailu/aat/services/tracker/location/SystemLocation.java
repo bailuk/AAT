@@ -8,16 +8,16 @@ public class SystemLocation extends RealLocation {
     private static final int NETWORK_INTERVAL=60*GPS_INTERVAL;
 
     private NetworkLocation networkLocation;
-    
+
     private class NetworkLocation extends RealLocation {
         public NetworkLocation(LocationStackItem i, Context c) {
             super(i, c, LocationManager.NETWORK_PROVIDER, NETWORK_INTERVAL);
         }
-        
+
         @Override
         public void sendState(int s) {}
     }
-    
+
     public SystemLocation(LocationStackItem i, Context c) {
         super(i, c, LocationManager.GPS_PROVIDER, GPS_INTERVAL);
         enableNetworkLocation();
@@ -27,11 +27,11 @@ public class SystemLocation extends RealLocation {
         super(i, c, LocationManager.GPS_PROVIDER, gpsInterval);
         enableNetworkLocation();
     }
-    
-    
+
+
     @Override
-    public void cleanUp() {
-        super.cleanUp();
+    public void close() {
+        super.close();
         disableNetworkLocation();
     }
     @Override
@@ -45,23 +45,23 @@ public class SystemLocation extends RealLocation {
         if (networkLocation == null && getContext() != null) 
             networkLocation=new NetworkLocation(this, getContext());
     }
-    
+
     private void disableNetworkLocation() {
         if (networkLocation != null) {
-            networkLocation.cleanUp();
+            networkLocation.close();
             networkLocation = null;
         }
     }
-    
-	@Override
-	public void appendStatusText(StringBuilder builder) {
-		super.appendStatusText(builder);
 
-		if (networkLocation == null) {
-			builder.append(NetworkLocation.class.getSimpleName());
-			builder.append(": disabled<br>");
-		} else
-			networkLocation.appendStatusText(builder);
-	}
+    @Override
+    public void appendStatusText(StringBuilder builder) {
+        super.appendStatusText(builder);
+
+        if (networkLocation == null) {
+            builder.append(NetworkLocation.class.getSimpleName());
+            builder.append(": disabled<br>");
+        } else
+            networkLocation.appendStatusText(builder);
+    }
 
 }

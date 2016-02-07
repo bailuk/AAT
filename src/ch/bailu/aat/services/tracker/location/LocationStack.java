@@ -1,5 +1,6 @@
 package ch.bailu.aat.services.tracker.location;
 
+import java.io.Closeable;
 import java.util.ArrayList;
 
 import android.content.Context;
@@ -7,11 +8,10 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.interfaces.GpxPointInterface;
-import ch.bailu.aat.helpers.CleanUp;
 import ch.bailu.aat.preferences.PresetDependent;
 import ch.bailu.aat.preferences.SolidLocationProvider;
 
-public class LocationStack implements CleanUp,  OnSharedPreferenceChangeListener, PresetDependent{
+public class LocationStack implements Closeable,  OnSharedPreferenceChangeListener, PresetDependent{
     private final SolidLocationProvider sprovider;
     
     private ArrayList<LocationStackItem> itemList=new ArrayList<LocationStackItem>();
@@ -62,7 +62,7 @@ public class LocationStack implements CleanUp,  OnSharedPreferenceChangeListener
     
     private void createLocationProvider() {
         if (itemList.remove(provider)) {
-            provider.cleanUp();
+            provider.close();
         }
         
         if      (sprovider.getIndex()==0) provider = new SystemLocation(lastItem(), context);
@@ -75,9 +75,9 @@ public class LocationStack implements CleanUp,  OnSharedPreferenceChangeListener
 
 
     @Override
-    public void cleanUp() {
+    public void close() {
         for (int i=0; i<itemList.size(); i++) 
-            itemList.get(i).cleanUp();
+            itemList.get(i).close();
         
         sprovider.unregister(this);
     }

@@ -43,7 +43,7 @@ public class EditorSource extends ContentSource {
 
 
     @Override
-    public void cleanUp() {
+    public void close() {
         editor.unregisterReceiver(onFileEdited);
     }
 

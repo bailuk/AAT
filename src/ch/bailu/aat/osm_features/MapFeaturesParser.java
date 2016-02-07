@@ -68,7 +68,7 @@ public class MapFeaturesParser {
         parseSummary(in);
         haveFeature();
         
-        in.cleanUp();
+        in.close();
     }
     
     
@@ -83,7 +83,7 @@ public class MapFeaturesParser {
             haveFeature();
         }
         
-        in.cleanUp();
+        in.close();
     }
 
     

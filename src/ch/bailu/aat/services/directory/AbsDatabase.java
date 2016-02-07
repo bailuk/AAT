@@ -1,10 +1,9 @@
 package ch.bailu.aat.services.directory;
 
+import java.io.Closeable;
 import java.io.IOException;
 
-import ch.bailu.aat.helpers.CleanUp;
-
-public abstract class AbsDatabase implements CleanUp{
+public abstract class AbsDatabase implements Closeable{
     public abstract AbsIterator getIterator();
 
     public abstract void reopenCursor();
@@ -29,8 +28,7 @@ public abstract class AbsDatabase implements CleanUp{
         @Override
         public void reopenDatabase(String selection) throws IOException {}
 
-        @Override
-        public void cleanUp() {}
+       
 
         @Override
         public void reopenCursor() {}
@@ -41,6 +39,12 @@ public abstract class AbsDatabase implements CleanUp{
         @Override
         public void deleteEntry(String pathName) {}
 
+        @Override
+        public void close() {
+        }
+
     };
 
+    @Override
+    public void close() {}
 }

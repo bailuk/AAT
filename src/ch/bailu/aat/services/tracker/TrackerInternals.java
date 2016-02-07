@@ -1,12 +1,12 @@
 package ch.bailu.aat.services.tracker;
 
+import java.io.Closeable;
 import java.io.IOException;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import ch.bailu.aat.helpers.AppLog;
-import ch.bailu.aat.helpers.CleanUp;
 import ch.bailu.aat.helpers.Timer;
 import ch.bailu.aat.preferences.SolidAutopause;
 import ch.bailu.aat.preferences.SolidBacklight;
@@ -16,7 +16,7 @@ import ch.bailu.aat.services.AbsService;
 import ch.bailu.aat.services.tracker.location.LocationStack;
 
 public class TrackerInternals 
-implements OnSharedPreferenceChangeListener, CleanUp ,Runnable {
+implements OnSharedPreferenceChangeListener, Closeable ,Runnable {
 
     private final static int TIMEOUT = 1000;
     private Timer timer;
@@ -75,7 +75,7 @@ implements OnSharedPreferenceChangeListener, CleanUp ,Runnable {
       
         try {
             logger = createLogger();
-            logger.cleanUp();
+            logger.close();
         } catch (IOException e) {}
         logger = Logger.createNullLogger();
 
@@ -112,20 +112,20 @@ implements OnSharedPreferenceChangeListener, CleanUp ,Runnable {
     
     public void emergencyOff(Exception e) {
         AppLog.e(this,e);
-        logger.cleanUp();
+        logger.close();
         logger = Logger.createNullLogger();
         state = new OffState(this);
     }
 
 
     @Override
-    public void cleanUp() {
-        logger.cleanUp();
-        timer.cleanUp();
+    public void close() {
+        logger.close();
+        timer.close();
 
         storage.unregister(this);            
 
-        location.cleanUp();
+        location.close();
         
     }
     

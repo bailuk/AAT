@@ -1,10 +1,11 @@
 package ch.bailu.aat.dispatcher;
 
+import java.io.Closeable;
+
 import ch.bailu.aat.description.DescriptionInterface;
 import ch.bailu.aat.gpx.GpxInformation;
-import ch.bailu.aat.helpers.CleanUp;
 
-public abstract class ContentSource implements CleanUp, DescriptionInterface {
+public abstract class ContentSource implements Closeable, DescriptionInterface {
 
     public static final ContentSource NULL_LIST[] = new ContentSource[]{};
     private ContentDispatcher dispatcher = ContentDispatcher.NULL; 
@@ -22,5 +23,11 @@ public abstract class ContentSource implements CleanUp, DescriptionInterface {
 
 
     public abstract void forceUpdate();
+    
+    
+    @Override
+    public void close() {
+        
+    }
 
 }

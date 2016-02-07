@@ -86,7 +86,6 @@ public class TrackerActivity extends AbsDispatcher implements OnClickListener{
 
     @Override
     public void onDestroy() {
-        multiView.cleanUp();
         super.onDestroy();
     }
 

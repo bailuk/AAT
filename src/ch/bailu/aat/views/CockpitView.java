@@ -141,6 +141,5 @@ public class CockpitView extends DescriptionViewGroup {
 
     }
     
-    @Override
-    public void cleanUp() {};
+  
 }

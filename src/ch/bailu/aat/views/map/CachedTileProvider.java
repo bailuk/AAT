@@ -63,7 +63,7 @@ public class CachedTileProvider extends AbsOsmTileProvider {
     public void detach() {
 
         context.unregisterReceiver(onFileChanged);
-        cache.cleanUp();
+        cache.close();
     }
 
 

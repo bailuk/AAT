@@ -1,16 +1,16 @@
 package ch.bailu.aat.services.directory;
 
+import java.io.Closeable;
 import java.io.File;
 import java.io.IOException;
 
 import android.app.Activity;
 import android.widget.EditText;
+import ch.bailu.aat.R;
 import ch.bailu.aat.helpers.AppDialog;
 import ch.bailu.aat.helpers.AppLog;
-import ch.bailu.aat.helpers.CleanUp;
-import ch.bailu.aat.R;
 
-public class DirectoryServiceHelper implements CleanUp {
+public class DirectoryServiceHelper implements Closeable {
 
     private final DirectoryService service;
     private final File directory;
@@ -72,7 +72,7 @@ public class DirectoryServiceHelper implements CleanUp {
 
 
     @Override
-    public void cleanUp() {}
+    public void close() {}
 
 
 

@@ -1,8 +1,10 @@
 package ch.bailu.aat.helpers;
 
+import java.io.Closeable;
+
 import android.os.Handler;
 
-public class Timer {
+public class Timer implements Closeable {
     private Handler timer;
     private final Runnable listener;
     private final long interval;
@@ -23,7 +25,7 @@ public class Timer {
         }
     }
 
-    public void cleanUp() {
+    public void close () {
         if (timer != null) {
             timer.removeCallbacks(listener);
             timer=null;

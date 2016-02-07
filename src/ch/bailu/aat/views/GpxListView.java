@@ -12,11 +12,10 @@ import ch.bailu.aat.description.ContentDescription;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.helpers.AppBroadcaster;
 import ch.bailu.aat.helpers.AppTheme;
-import ch.bailu.aat.helpers.CleanUp;
 import ch.bailu.aat.services.cache.CacheService;
 import ch.bailu.aat.services.directory.DirectoryService;
 
-public class GpxListView extends ListView implements CleanUp {
+public class GpxListView extends ListView {
 
     private final Context context;
     private final DirectoryService directory;
@@ -48,8 +47,9 @@ public class GpxListView extends ListView implements CleanUp {
 
 
     @Override
-    public void cleanUp() {
+    public void onDetachedFromWindow() {
         context.unregisterReceiver(onCursorChanged);
+        super.onDetachedFromWindow();
     }
 
 

@@ -4,10 +4,9 @@ import android.content.Context;
 import android.view.ViewGroup;
 import ch.bailu.aat.description.DescriptionInterface;
 import ch.bailu.aat.gpx.GpxInformation;
-import ch.bailu.aat.helpers.CleanUp;
 
 public abstract class TrackDescriptionView extends ViewGroup 
-implements DescriptionInterface, CleanUp, GpxInformation.ID {
+implements DescriptionInterface, GpxInformation.ID {
     public static final String DEFAULT_SOLID_KEY=TrackDescriptionView.class.getSimpleName();
     
     

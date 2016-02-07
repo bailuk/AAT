@@ -51,8 +51,6 @@ public class SummaryListView extends TrackDescriptionView {
         label[i].setText(text);
     }
 
-    @Override
-    public void cleanUp() {}
 
     @Override
     protected void onLayout(boolean c, int l, int t, int r, int b) {

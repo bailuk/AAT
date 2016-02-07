@@ -1,5 +1,6 @@
 package ch.bailu.aat.services.directory;
 
+import java.io.Closeable;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -17,7 +18,6 @@ import ch.bailu.aat.gpx.interfaces.GpxBigDeltaInterface;
 import ch.bailu.aat.helpers.AppBroadcaster;
 import ch.bailu.aat.helpers.AppDirectory;
 import ch.bailu.aat.helpers.AppLog;
-import ch.bailu.aat.helpers.CleanUp;
 import ch.bailu.aat.services.background.BackgroundService;
 import ch.bailu.aat.services.background.ProcessHandle;
 import ch.bailu.aat.services.cache.CacheService;
@@ -26,7 +26,7 @@ import ch.bailu.aat.services.cache.GpxObjectStatic;
 import ch.bailu.aat.services.cache.ObjectHandle;
 import ch.bailu.aat.views.map.OsmPreviewGenerator;
 
-public class DirectorySynchronizer  implements CleanUp {
+public class DirectorySynchronizer  implements Closeable {
 
     private GpxObject pendingHandle=null;
     private OsmPreviewGenerator pendingPreviewGenerator=null;
@@ -395,7 +395,7 @@ public class DirectorySynchronizer  implements CleanUp {
 
     private void setPendingPreviewGenerator(OsmPreviewGenerator g) {
         if (pendingPreviewGenerator != null) {
-            pendingPreviewGenerator.cleanUp();
+            pendingPreviewGenerator.close();
         }
         pendingPreviewGenerator=g;
     }
@@ -432,7 +432,7 @@ public class DirectorySynchronizer  implements CleanUp {
     
     
     @Override
-    public synchronized void cleanUp() {
+    public synchronized void close() {
         canContinue=false;
         state.ping();
     }

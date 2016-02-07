@@ -92,6 +92,5 @@ public class NumberView extends TrackDescriptionView {
         unit.setText(description.getUnit());
     }
 
-    @Override
-    public void cleanUp() {}
+   
 }

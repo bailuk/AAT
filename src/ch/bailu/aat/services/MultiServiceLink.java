@@ -1,5 +1,6 @@
 package ch.bailu.aat.services;
 
+import java.io.Closeable;
 import java.util.Hashtable;
 import java.util.Iterator;
 
@@ -9,7 +10,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.IBinder;
-import ch.bailu.aat.helpers.CleanUp;
 import ch.bailu.aat.services.background.BackgroundService;
 import ch.bailu.aat.services.cache.CacheService;
 import ch.bailu.aat.services.directory.DirectoryService;
@@ -18,7 +18,7 @@ import ch.bailu.aat.services.overlay.OverlayService;
 import ch.bailu.aat.services.srtm.ElevationService;
 import ch.bailu.aat.services.tracker.TrackerService;
 
-public abstract class MultiServiceLink implements CleanUp {
+public abstract class MultiServiceLink implements Closeable {
     public static final Class<?> ALL_SERVICES[] = {
         TrackerService.class, 
         DirectoryService.class, 
@@ -51,7 +51,7 @@ public abstract class MultiServiceLink implements CleanUp {
     }
 
 
-    private class Connection implements ServiceConnection, CleanUp {
+    private class Connection implements ServiceConnection, Closeable {
         private AbsService service=null;
         private Context context;
 
@@ -77,7 +77,7 @@ public abstract class MultiServiceLink implements CleanUp {
         }
 
         @Override
-        public void cleanUp() {
+        public void close() {
             context.unbindService(this);
             service=null;
         }
@@ -124,12 +124,12 @@ public abstract class MultiServiceLink implements CleanUp {
     public abstract void onServicesUp();
 
     @Override
-    public void cleanUp() {
+    public void close() {
         Iterator<Connection> iterator = serviceTable.values().iterator();
 
         while (iterator.hasNext()) {
             Connection current = iterator.next();
-            current.cleanUp();
+            current.close();
         }
     }
 
