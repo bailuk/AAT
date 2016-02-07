@@ -22,7 +22,9 @@ public abstract class OsmOverlay extends Overlay implements DescriptionInterface
 
     @Override
     public void draw(Canvas c, MapView m, boolean shadow) {
+        
         if (!shadow && !m.isAnimating()) {
+            osm.mapIconCache.newPass();
             painter.init(c,m);
             draw(painter);
         }

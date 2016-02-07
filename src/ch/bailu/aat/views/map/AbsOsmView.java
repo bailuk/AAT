@@ -11,11 +11,14 @@ import ch.bailu.aat.services.cache.TileObject;
 import ch.bailu.aat.views.TrackDescriptionView;
 import ch.bailu.aat.views.map.overlay.OsmOverlay;
 import ch.bailu.aat.views.map.overlay.OverlayList;
+import ch.bailu.aat.views.map.overlay.gpx.MapIconCache;
 
 public abstract class AbsOsmView extends TrackDescriptionView {
     private BoundingBox pendingFrameBounding=null;
     
     public final MapView map;
+    public final MapIconCache mapIconCache = new MapIconCache();
+    
     private OverlayList overlayList = new OverlayList(this, new OsmOverlay[] {});
     
     
@@ -76,11 +79,6 @@ public abstract class AbsOsmView extends TrackDescriptionView {
         return map.getTileProvider().getStartTime();
     }
 
-    
-
-
-
-
     public void frameBoundingBox(BoundingBox boundingBox)  {
         
 
@@ -120,5 +118,18 @@ public abstract class AbsOsmView extends TrackDescriptionView {
         if (filter.pass(info)) {
             overlayList.updateGpxContent(info);
         }
+    }
+    
+    
+    @Override
+    public void onDetachedFromWindow() {
+        mapIconCache.cleanUp();
+        super.onDetachedFromWindow();
+    }
+
+    
+    @Override
+    public void cleanUp() {
+        mapIconCache.cleanUp();
     }
 }

@@ -25,8 +25,7 @@ public class OsmViewStatic extends AbsOsmView {
     }
 
 
-    @Override
-    public void cleanUp() {}
+ 
 
 
 

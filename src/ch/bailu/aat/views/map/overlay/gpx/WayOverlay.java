@@ -1,12 +1,8 @@
 package ch.bailu.aat.views.map.overlay.gpx;
 
 import android.graphics.drawable.Drawable;
-import ch.bailu.aat.gpx.GpxAttributes;
-import ch.bailu.aat.gpx.interfaces.GpxPointInterface;
 import ch.bailu.aat.helpers.AppTheme;
 import ch.bailu.aat.services.cache.CacheService;
-import ch.bailu.aat.services.cache.ImageObject;
-import ch.bailu.aat.services.icons.IconMapService;
 import ch.bailu.aat.views.map.AbsOsmView;
 import ch.bailu.aat.views.map.overlay.MapPainter;
 import ch.bailu.aat.views.map.overlay.MapTwoNodes;
@@ -60,7 +56,7 @@ public class WayOverlay extends GpxOverlay {
         public void drawNode(PixelNode node) {
             if (node.isVisible() && count < MAX_VISIBLE_NODES) {
 
-                final Drawable nodeBitmap = getIcon(node.point);
+                final Drawable nodeBitmap = getOsmView().mapIconCache.getIcon(cache, node.point);
 
                 if (nodeBitmap != null) {
                     painter.canvas.draw(nodeBitmap, node.pixel);
@@ -71,27 +67,5 @@ public class WayOverlay extends GpxOverlay {
 
             }
         }
-
-
-        private Drawable getIcon(GpxPointInterface point) {
-            Drawable drawable=null;
-            
-            GpxAttributes a = point.getAttributes();
-            if (a != null) {
-                
-                String fileID = a.get(IconMapService.KEY_ICON_SMALL);
-                if (fileID != null) {
-                    
-                    ImageObject imageObject =  (ImageObject) cache.getObject(fileID, new ImageObject.Factory());
-                    if (imageObject != null) {
-                        
-                        drawable = imageObject.getDrawable();
-                        imageObject.free();
-                    }
-                }
-            }
-            return drawable;
-        }
-
     }
 }

@@ -41,7 +41,7 @@ public class IconMapService extends AbsService {
                 AppLog.e(this, e);
             }
         }
-        AppLog.d(this, mapFile.toString());
+        //AppLog.d(this, mapFile.toString());
         
     }
     

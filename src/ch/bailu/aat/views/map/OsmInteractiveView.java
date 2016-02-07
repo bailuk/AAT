@@ -111,6 +111,7 @@ implements MapListener, OnSharedPreferenceChangeListener, OnTouchListener {
     public void cleanUp() {
         saveState();
         storage.unregister(this);
+        super.cleanUp();
     }
 
 
