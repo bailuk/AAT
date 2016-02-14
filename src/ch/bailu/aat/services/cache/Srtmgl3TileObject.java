@@ -63,6 +63,7 @@ public class Srtmgl3TileObject extends ElevationProviderObject {
     private final byte data[]= new byte[SRTM_BUFFER_DIM*SRTM_BUFFER_DIM*2];
     private final ShortBuffer buffer = ByteBuffer.wrap(data).asShortBuffer();    
 
+    
 
     private boolean isReady=true;
 
@@ -70,49 +71,12 @@ public class Srtmgl3TileObject extends ElevationProviderObject {
     private final String url;
     
 
-    private static int inMemory=0;
-    private static int totalLock=0;
-    
-    public static int lockedInstances() {
-        return totalLock;
-    }
-    
-    
     public Srtmgl3TileObject(String id, SelfOn self, String u) {
         super(id);
         url = u;
         load = new SRTMGL3Loader(id);
-        inMemory++;
-        AppLog.d(this, "mem: " + inMemory + " / "+ totalLock);
     }
 
-    
-    protected void finalize() throws Throwable
-    {
-        inMemory--;
-        AppLog.d(this, "mem: " + inMemory + " / "+ totalLock);
-        super.finalize();
-    } 
-    
-    @Override
-    public synchronized void lock(SelfOn self) {
-        super.lock(self);
-        
-        totalLock++;
-        AppLog.d(this, "mem: " + inMemory + " / "+ totalLock);
-    }
-
-    @Override
-    public void free() {
-        super.free();
-        
-        totalLock--;
-        AppLog.d(this, "mem: " + inMemory + " / " + totalLock);
-    }
-    
-    
-    
-    
     @Override
     public void onInsert(SelfOn self) {
         final File file =new File(toString());
@@ -133,6 +97,8 @@ public class Srtmgl3TileObject extends ElevationProviderObject {
     
     @Override
     public void onRemove(SelfOn self) {
+        super.onRemove(self);
+        
         load.stopLoading();
     }
     
@@ -183,6 +149,7 @@ public class Srtmgl3TileObject extends ElevationProviderObject {
 
 
             } catch (IOException e) {
+                AppLog.d(this, toString());
                 e.printStackTrace();
             } finally {
                 if (input!=null)

@@ -9,6 +9,7 @@ import ch.bailu.aat.services.srtm.ElevationProvider;
 
 public class ElevationProviderObject extends ObjectHandle implements ElevationProvider {
    
+    public final static ElevationProviderObject NULL = new ElevationProviderObject(ElevationProviderObject.class.getName());
     
     public ElevationProviderObject(String id) {
         super(id);
@@ -46,6 +47,8 @@ public class ElevationProviderObject extends ObjectHandle implements ElevationPr
             ObjectHandle o=null;
             if (url != null) {
                 try {
+                    System.gc();
+                    System.runFinalization();
                     o=new Srtmgl3TileObject(id, self, url);
                 } catch (OutOfMemoryError E) {
                     o=new ElevationProviderObject(id);

@@ -50,7 +50,7 @@ public abstract class ProcessThread extends Thread implements Closeable, ThreadC
         queue.offer(handle);
     }
 
-
+    
     @Override
     public void close() {
         continueThread=false;

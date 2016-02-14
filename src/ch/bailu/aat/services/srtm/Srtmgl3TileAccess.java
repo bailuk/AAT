@@ -10,7 +10,7 @@ import ch.bailu.aat.services.cache.ElevationProviderObject;
 
 public class Srtmgl3TileAccess extends SrtmAccess{
 
-    private final ElevationProviderObject tile;
+    private ElevationProviderObject tile;
     private final CacheService loader;
     
     
@@ -66,5 +66,6 @@ public class Srtmgl3TileAccess extends SrtmAccess{
     @Override
     public void close() {
         tile.free();
+        tile = ElevationProviderObject.NULL;
     }
 }

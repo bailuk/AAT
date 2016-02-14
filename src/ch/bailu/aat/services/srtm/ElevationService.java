@@ -81,7 +81,4 @@ public class ElevationService extends AbsService implements ElevationProvider {
     public short getElevation(int index) {
         return srtmAccess.getElevation(index);
     }
-
-    
-
 }

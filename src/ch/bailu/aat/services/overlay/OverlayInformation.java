@@ -139,6 +139,7 @@ public class OverlayInformation extends GpxInformation implements Closeable {
         @Override
         public void close() {
             handle.free();
+            handle = GpxObjectStatic.NULL;
             soverlay.unregister(onPreferencesChanged);
             context.unregisterReceiver(onFileProcessed);
         }

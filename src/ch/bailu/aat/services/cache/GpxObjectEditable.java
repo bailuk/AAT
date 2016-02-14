@@ -46,6 +46,7 @@ public class GpxObjectEditable extends  GpxObject {
     @Override
     public void onRemove(SelfOn self) {
         currentHandle.free();
+        currentHandle=NULL;
     }
 
 

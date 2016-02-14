@@ -244,6 +244,7 @@ public class TileStackObject extends ObjectHandle {
 
         public void free() {
             handle.free();
+            handle = ObjectHandle.NULL;
         }
     }
 
