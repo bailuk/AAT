@@ -21,7 +21,7 @@ The structure of the data directory is as follows:
 - `aat_data/osm_features`  - OSM Features original file and parsed files
 - `aat_data/overlay`       - overlays such as planned tracks or search results
 - `aat_data/overpass`      - queries from the OSM Overpass server
-- `aat_data/SRTM`          - downloaded altitude information from the Shuttle Radar Topography Mission
+- `aat_data/dem3`          - cached [Digital elevation data](http://viewfinderpanoramas.org/dem3.html) from the Shuttle Radar Topography Mission and other sources
 
 
 # Overpass
