@@ -11,6 +11,7 @@ import java.util.zip.ZipFile;
 
 import android.content.Context;
 import ch.bailu.aat.helpers.AppBroadcaster;
+import ch.bailu.aat.helpers.AppLog;
 import ch.bailu.aat.services.background.BackgroundService;
 import ch.bailu.aat.services.background.DownloadHandle;
 import ch.bailu.aat.services.background.FileHandle;
@@ -63,21 +64,55 @@ public class Srtmgl3TileObject extends ElevationProviderObject {
     private final ShortBuffer buffer = ByteBuffer.wrap(data).asShortBuffer();    
 
 
-    private boolean locked=false;
+    private boolean isReady=true;
 
     private final SRTMGL3Loader load;
     private final String url;
     
 
-   
+    private static int inMemory=0;
+    private static int totalLock=0;
+    
+    public static int lockedInstances() {
+        return totalLock;
+    }
+    
     
     public Srtmgl3TileObject(String id, SelfOn self, String u) {
         super(id);
         url = u;
         load = new SRTMGL3Loader(id);
+        inMemory++;
+        AppLog.d(this, "mem: " + inMemory + " / "+ totalLock);
     }
 
+    
+    protected void finalize() throws Throwable
+    {
+        inMemory--;
+        AppLog.d(this, "mem: " + inMemory + " / "+ totalLock);
+        super.finalize();
+    } 
+    
+    @Override
+    public synchronized void lock(SelfOn self) {
+        super.lock(self);
+        
+        totalLock++;
+        AppLog.d(this, "mem: " + inMemory + " / "+ totalLock);
+    }
 
+    @Override
+    public void free() {
+        super.free();
+        
+        totalLock--;
+        AppLog.d(this, "mem: " + inMemory + " / " + totalLock);
+    }
+    
+    
+    
+    
     @Override
     public void onInsert(SelfOn self) {
         final File file =new File(toString());
@@ -104,7 +139,7 @@ public class Srtmgl3TileObject extends ElevationProviderObject {
     
     private void load(BackgroundService bg) {
         if (new File(toString()).exists() && load.isLocked()==false) {
-            locked=true;
+            isReady=false;
             bg.load(load);
         }
     }
@@ -163,7 +198,7 @@ public class Srtmgl3TileObject extends ElevationProviderObject {
 
         @Override
         public void broadcast(Context context) {
-            locked=false;
+            isReady=true;
             AppBroadcaster.broadcast(context, AppBroadcaster.FILE_CHANGED_INCACHE, Srtmgl3TileObject.this.toString());            
         }
     };
@@ -215,7 +250,7 @@ public class Srtmgl3TileObject extends ElevationProviderObject {
 
     @Override
     public boolean isReady() {
-        return locked==false;
+        return isReady;
     }
 
 
