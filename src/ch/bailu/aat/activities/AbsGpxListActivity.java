@@ -118,7 +118,6 @@ public abstract class AbsGpxListActivity extends AbsMenu implements OnItemClickL
 
     @Override
     public void onDestroy() {
-        // busyIndicator.cleanUp();
 
 
         if (listView != null) {

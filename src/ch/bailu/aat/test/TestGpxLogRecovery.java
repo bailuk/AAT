@@ -39,7 +39,7 @@ public class TestGpxLogRecovery extends TestGpx {
         File targetDirectory =  AppDirectory.getTrackListDirectory(getContext(),new SolidPreset(this.getContext()).getIndex());
         assertEquals(true, targetDirectory.isDirectory());
         
-        new TrackLogger(getContext(), new SolidPreset(this.getContext() ).getIndex()).cleanUp();
+        new TrackLogger(getContext(), new SolidPreset(this.getContext() ).getIndex()).close();
         assertEquals(logFile.exists(), false);
         
         String fileList[] = targetDirectory.list();

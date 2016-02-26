@@ -31,7 +31,7 @@ public class PreferencesActivity extends PreferenceActivity {
     private PreferenceScreen screen;
     private PreferenceCategory category;
     private SolidPreset spreset;
-    private ArrayList<Closeable> cleanUp=new ArrayList<Closeable>();
+    private ArrayList<Closeable> toClose=new ArrayList<Closeable>();
 
     private AppLog logger;
     
@@ -72,9 +72,9 @@ public class PreferencesActivity extends PreferenceActivity {
 
     @Override
     public void onDestroy() {
-        while (!cleanUp.isEmpty())
+        while (!toClose.isEmpty())
             try {
-                cleanUp.remove(0).close();
+                toClose.remove(0).close();
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -99,13 +99,13 @@ public class PreferencesActivity extends PreferenceActivity {
 
     
     private void addPreference(IndexListPreference pref) {
-        cleanUp.add(pref);
+        toClose.add(pref);
         category.addPreference(pref);
     }
     
     
     private void addPreference(IntegerPreference pref) {
-        cleanUp.add(pref);
+        toClose.add(pref);
         category.addPreference(pref);
     }
     

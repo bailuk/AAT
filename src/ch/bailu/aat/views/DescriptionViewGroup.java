@@ -53,10 +53,4 @@ public abstract class DescriptionViewGroup extends TrackDescriptionView {
     }
 
 
-/*    
-    @Override
-    public void cleanUp(){
-        for(TrackDescriptionView v: view)
-            v.cleanUp();
-    };*/
 }

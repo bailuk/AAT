@@ -99,7 +99,8 @@ public class TrackLogger extends Logger {
     }
 
 
-    public void cleanUp() {
+    @Override
+    public void close() {
         try {
             writer.close();
 

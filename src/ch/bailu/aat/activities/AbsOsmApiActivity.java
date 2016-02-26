@@ -248,7 +248,6 @@ public abstract class AbsOsmApiActivity extends AbsDispatcher implements OnClick
 
     @Override
     public void onDestroy() {
-        //if (tagEditor != null) tagEditor.cleanUp();
         unregisterReceiver(onFileDownloaded);
         super.onDestroy();
     }
