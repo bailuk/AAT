@@ -107,12 +107,12 @@ public class MapCanvas {
 
     // FIXME: drawLine does not work correctly in zoomlevel 17
     public void drawHLine(int y) {
-        canvas.drawRect(projection.screen.left, y, projection.screen.right, y, gridPaint);
+        canvas.drawLine(projection.screen.left, y, projection.screen.right, y, gridPaint);
     }
 
 
     public void drawVLine(int x) {
-        canvas.drawRect(x, projection.screen.top, x, projection.screen.bottom, gridPaint);
+        canvas.drawLine(x, projection.screen.top, x, projection.screen.bottom, gridPaint);
 
     }
 

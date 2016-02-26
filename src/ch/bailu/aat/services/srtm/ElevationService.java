@@ -47,11 +47,7 @@ public class ElevationService extends AbsService implements ElevationProvider {
     
   
    
-
-    
-   
-    
-    @Override
+  @Override
     public void onDestroy() {
         try {
             toClose.close();
