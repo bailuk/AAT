@@ -40,56 +40,45 @@ public class ElevationUpdaterEntry {
     }
     
 
- 
-
-    
     private void addSRTMTile(SrtmCoordinates c) {
         if (c.toFile(loader).exists()) {
-            tiles.put(c.toString().hashCode(),c);
+            tiles.put(c.hashCode(),c);
         }
     }
     
     
 
     
-    public SrtmCoordinates getNextSRTMTile() {
-        if (tiles.size()>0)       
-            return tiles.valueAt(0);
+    public SrtmCoordinates getTile(int i) {
+        if (tiles.size()>i)       
+            return tiles.valueAt(i);
         
         return null;
     }
     
-    public void update(BackgroundService bg, SrtmAccess srtm) {
+    public void update(BackgroundService bg, Dem3Tile tile) {
 
-        final SrtmCoordinates c = tiles.get(srtm.toString().hashCode());
+        final SrtmCoordinates c = tiles.get(tile.hashCode());
 
         
         if (c != null) {
+            
             final ObjectHandle handle = loader.getObject(id);
-
-            tiles.delete(srtm.toString().hashCode());
+            
+            
 
             if (ElevationUpdaterClient.class.isInstance(handle)) {
-                ((ElevationUpdaterClient) handle).updateFromSrtmTile(bg, srtm);
+                ((ElevationUpdaterClient) handle).updateFromSrtmTile(bg, tile);
+                tiles.delete(tile.hashCode());
             
             } else {
                 tiles.clear();
             }
             
             handle.free();
-
         }
         
     }
 
-    public boolean isUpdating() {
-        boolean r=false;
-        ObjectHandle handle = loader.getObject(id);
-
-        if (ElevationUpdaterClient.class.isInstance(handle)) {
-            r = ((ElevationUpdaterClient) handle).isUpdating();
-        }
-        handle.free();
-        return r;
-    }
+  
 }

@@ -18,8 +18,8 @@ import ch.bailu.aat.helpers.AppBroadcaster;
 import ch.bailu.aat.services.background.BackgroundService;
 import ch.bailu.aat.services.background.ProcessHandle;
 import ch.bailu.aat.services.cache.CacheService.SelfOn;
+import ch.bailu.aat.services.srtm.Dem3Tile;
 import ch.bailu.aat.services.srtm.ElevationUpdaterClient;
-import ch.bailu.aat.services.srtm.SrtmAccess;
 
 public abstract class ElevationTile extends TileObject implements ElevationUpdaterClient{
 
@@ -38,7 +38,7 @@ public abstract class ElevationTile extends TileObject implements ElevationUpdat
         tile=t;
     }
 
-    public abstract void fillBitmap(int[] buffer, int[] toLaRaster, int[] toLoRaster, Span laSpan, Span loSpan, SrtmAccess srtm);
+    public abstract void fillBitmap(int[] buffer, int[] toLaRaster, int[] toLoRaster, Span laSpan, Span loSpan, Dem3Tile srtm);
 
     @Override
     public void onInsert(SelfOn self) {
@@ -101,14 +101,14 @@ public abstract class ElevationTile extends TileObject implements ElevationUpdat
 
 
     @Override
-    public void updateFromSrtmTile(BackgroundService bg, SrtmAccess srtmAccess) {
-        final int key = srtmAccess.hashCode();
+    public void updateFromSrtmTile(BackgroundService bg, Dem3Tile tile) {
+        final int key = tile.hashCode();
         final TilePainter painter =  tilePainterList.get(key);
 
-        if (painter != null && srtmAccess.isReady()) {
+        if (painter != null && tile.isLoaded()) {
             tilePainterList.remove(key);
             updateLock=true;
-            painter.setAccess(srtmAccess);
+            painter.setTile(tile);
             bg.process(painter);
         }
     }
@@ -212,8 +212,8 @@ public abstract class ElevationTile extends TileObject implements ElevationUpdat
                 laS.addToList(laSpan, i, laDeg);
                 loS.addToList(loSpan, i, loDeg);
                 
-                toLaRaster[i]=Srtmgl3TileObject.toYPos(toLaRaster[i]);
-                toLoRaster[i]=Srtmgl3TileObject.toXPos(toLoRaster[i]);
+                toLaRaster[i]=Dem3Tile.toYPos(toLaRaster[i]);
+                toLoRaster[i]=Dem3Tile.toXPos(toLoRaster[i]);
             }
             
             
@@ -281,7 +281,7 @@ public abstract class ElevationTile extends TileObject implements ElevationUpdat
     
   
     private class TilePainter extends ProcessHandle {
-        private SrtmAccess srtmAccess=SrtmAccess.NULL_READY;
+        private Dem3Tile tile=null;
         private final SrtmCoordinates coordinates;
 
 
@@ -295,8 +295,9 @@ public abstract class ElevationTile extends TileObject implements ElevationUpdat
             loSpan = loS;
         }
 
-        public void setAccess(SrtmAccess a) {
-            srtmAccess = a;
+        public void setTile(Dem3Tile t) {
+            tile = t;
+            tile.lock();
         }
 
         @Override
@@ -318,7 +319,7 @@ public abstract class ElevationTile extends TileObject implements ElevationUpdat
         public long bgOnProcess() {
             final Rect interR = Span.toRect(laSpan, loSpan);
 
-            fillBitmap(buffer,toLaRaster, toLoRaster, laSpan, loSpan, srtmAccess);
+            fillBitmap(buffer,toLaRaster, toLoRaster, laSpan, loSpan, tile);
             
 
             Bitmap tile = bitmap.get();
@@ -341,7 +342,6 @@ public abstract class ElevationTile extends TileObject implements ElevationUpdat
             bitmap.set(tile);
             updateLock=false;
 
-
             return interR.width()*interR.height()*2;
         }
 
@@ -350,11 +350,13 @@ public abstract class ElevationTile extends TileObject implements ElevationUpdat
         
         @Override
         public void broadcast(Context context) {
+            tile.free();
             AppBroadcaster.broadcast(context, AppBroadcaster.FILE_CHANGED_INCACHE, ElevationTile.this.toString());
         }
 
     }
 
+    
     @Override
     public boolean isUpdating() {
         return updateLock;

@@ -12,17 +12,17 @@ import ch.bailu.aat.services.background.BackgroundService;
 import ch.bailu.aat.services.cache.CacheService;
 
 
-public class ElevationUpdater implements Closeable{
-    private final SparseArray <ElevationUpdaterEntry> pendingFiles = new SparseArray<ElevationUpdaterEntry>();
+public class ElevationUpdater implements Closeable, ElevationProvider{
+    private final SparseArray <ElevationUpdaterEntry> pendingObjects = new SparseArray<ElevationUpdaterEntry>();
     private final CacheService cache;
     private final BackgroundService background;
     private final Context context;
 
-
-    private SrtmAccess srtmAccess=SrtmAccess.NULL_READY;
+    private final Dem3Tiles tiles;
 
     protected ElevationUpdater(CacheService c, BackgroundService b) {
         cache = c;
+        tiles =new Dem3Tiles(b);
         context = c;
         background = b;
 
@@ -36,8 +36,10 @@ public class ElevationUpdater implements Closeable{
         @Override
         public void onReceive(Context context, Intent intent) {
             String id = AppBroadcaster.getFile(intent);
-            pendingFiles.put(id.hashCode(), new ElevationUpdaterEntry(cache, id));
-            state.ping();
+            
+            addObject(id);
+            updateObjects();
+            loadTiles();
         }
     };
 
@@ -46,100 +48,58 @@ public class ElevationUpdater implements Closeable{
     private BroadcastReceiver onFileChanged = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            String id = AppBroadcaster.getFile(intent);
-
-            if (id.contains(srtmAccess.toString()) || pendingFiles.get(id.hashCode()) != null) {
-                state.ping();
-            }
+            updateObjects();
+            loadTiles();
         }
     };
 
 
-    private State state = new StateNextTile();
-
-    private abstract class State {
-        public abstract void ping();
+    private void addObject(String id) {
+        pendingObjects.put(id.hashCode(), new ElevationUpdaterEntry(cache, id));
     }
-
-    private class StateNextTile extends State {
-
-        @Override
-        public void ping() {
-            for (int i = pendingFiles.size()-1; i>-1; i--) {
-                final SrtmCoordinates c = pendingFiles.valueAt(i).getNextSRTMTile();
-                if (c!=null)  {
-                    changeSRTM(c);
-
-
-                    state = new StateWaitTile();
-                    state.ping();
-
-                    return;
-                }
-            }            
-        }
-
-        private void changeSRTM(SrtmCoordinates c) {
-            if (srtmAccess.hashCode()!=c.hashCode()) {
-                srtmAccess.close();
-                srtmAccess=new Srtmgl3TileAccess(c, cache);
+    
+    
+    private void loadTiles() {
+        SrtmCoordinates c;
+        
+        for (int i = pendingObjects.size()-1; i>-1; i--) {
+            int x=0;
+            while((c = pendingObjects.valueAt(i).getTile(x)) != null) {
+                if (tiles.want(c)==null) return;
+                x++;
             }
         }
-
     }
+    
 
-
-    private class StateWaitTile extends State {
-
-        @Override
-        public void ping() {
-            if (srtmAccess.isReady()) {
-
-                for (int i = pendingFiles.size()-1; i>-1; i--) {
-                    pendingFiles.valueAt(i).update(background, srtmAccess);
-                    if (pendingFiles.valueAt(i).getNextSRTMTile() == null) {
-                        pendingFiles.remove(pendingFiles.keyAt(i));
+    private void updateObjects() {
+        int t=0;
+        Dem3Tile tile;
+        while ((tile=tiles.get(t)) != null) {
+            
+            if (tile.isLoaded()) {
+                t++;
+                for (int i = pendingObjects.size()-1; i>-1; i--) {
+                    pendingObjects.valueAt(i).update(background, tile);
+                    if (pendingObjects.valueAt(i).getTile(0) == null) {
+                        pendingObjects.remove(pendingObjects.keyAt(i)); 
                     }
-
                 }
-                state = new StateUpdate();
-                state.ping();
-
             }
         }
-
     }
-
-
-    private class StateUpdate extends State {
-
-        @Override
-        public void ping() {
-            if (isUpdating() == false) {
-                state = new StateNextTile();
-                state.ping();
-
-            }
-        }
-
-        private boolean isUpdating() {
-            for (int i = 0; i< pendingFiles.size(); i++) {
-                if (pendingFiles.valueAt(i).isUpdating()) return true;
-            }
-            return false;
-        }
-
-    }
-
-
+    
+    
 
     @Override
     public void close() {
-
         context.unregisterReceiver(onRequestElevationUpdate);
         context.unregisterReceiver(onFileChanged);
-        srtmAccess.close();
-
     }
 
+
+    @Override
+    public short getElevation(int laE6, int loE6) {
+        return tiles.getElevation(laE6, loE6);
+    }
 }

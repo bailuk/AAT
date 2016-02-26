@@ -106,7 +106,7 @@ public class EditorOverlay extends ControlBarOverlay {
         else if (v==saveAs)  editor.saveAs();
         else if (v==add)    {
             IGeoPoint p = getMapView().getBoundingBox(). getCenter(); 
-            editor.add(new GpxPoint(p, elevation.getElevation(p), 0));
+            editor.add(new GpxPoint(p, elevation.getElevation(p.getLatitudeE6(), p.getLongitudeE6()), 0));
         }
         else if (v==remove) editor.remove();
         

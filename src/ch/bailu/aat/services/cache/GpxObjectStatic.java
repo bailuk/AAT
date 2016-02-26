@@ -19,9 +19,9 @@ import ch.bailu.aat.helpers.AppBroadcaster;
 import ch.bailu.aat.services.background.BackgroundService;
 import ch.bailu.aat.services.background.FileHandle;
 import ch.bailu.aat.services.cache.CacheService.SelfOn;
+import ch.bailu.aat.services.srtm.Dem3Tile;
+import ch.bailu.aat.services.srtm.ElevationProvider;
 import ch.bailu.aat.services.srtm.ElevationUpdaterClient;
-import ch.bailu.aat.services.srtm.SRTM;
-import ch.bailu.aat.services.srtm.SrtmAccess;
 
 public class GpxObjectStatic extends GpxObject implements ElevationUpdaterClient {
     
@@ -147,7 +147,7 @@ public class GpxObjectStatic extends GpxObject implements ElevationUpdaterClient
 
 
     @Override
-    public void updateFromSrtmTile(BackgroundService bg, SrtmAccess srtm) {
+    public void updateFromSrtmTile(BackgroundService bg, Dem3Tile srtm) {
         new ListUpdater(srtm).walkTrack(gpxList);
         AppBroadcaster.broadcast(bg, AppBroadcaster.FILE_CHANGED_INCACHE, toString());
     }
@@ -162,15 +162,16 @@ public class GpxObjectStatic extends GpxObject implements ElevationUpdaterClient
 
     
     private class ListUpdater extends GpxListWalker {
-        private final SrtmAccess srtmAccess;
-    
-        public ListUpdater(SrtmAccess s) {
-            srtmAccess=s;
+        private final Dem3Tile tile;
+        private final SrtmCoordinates coordinates=new SrtmCoordinates(0,0);
+        
+        public ListUpdater(Dem3Tile s) {
+            tile=s;
         }
     
         @Override
         public boolean doList(GpxList l) {
-            return srtmAccess.isReady();
+            return tile.isLoaded();
         }
 
         @Override
@@ -185,10 +186,10 @@ public class GpxObjectStatic extends GpxObject implements ElevationUpdaterClient
 
         @Override
         public void doPoint(GpxPointNode point) {
-            if (point.getAltitude() == SRTM.NULL_ALTITUDE) {
-                SrtmCoordinates coordinates = new SrtmCoordinates(point);
-                if (srtmAccess.toString().equals(coordinates.toString())) {
-                    point.setAltitude(srtmAccess.getElevation(point));
+            if (point.getAltitude() == ElevationProvider.NULL_ALTITUDE) {
+                coordinates.set(point.getLatitudeE6(), point.getLongitudeE6());
+                if (tile.hashCode()==coordinates.hashCode()) {
+                    point.setAltitude(tile.getElevation(point.getLatitudeE6(), point.getLongitudeE6()));
                 }
             }
         }
@@ -214,7 +215,7 @@ public class GpxObjectStatic extends GpxObject implements ElevationUpdaterClient
 
         @Override
         public void doPoint(GpxPointNode point) {
-            if (point.getAltitude() == SRTM.NULL_ALTITUDE) {
+            if (point.getAltitude() == ElevationProvider.NULL_ALTITUDE) {
                 final SrtmCoordinates c = new SrtmCoordinates(point);
                 coordinates.put(c.toString().hashCode(), c);
             }

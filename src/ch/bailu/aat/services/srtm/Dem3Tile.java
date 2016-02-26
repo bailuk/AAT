@@ -1,7 +1,6 @@
-package ch.bailu.aat.services.cache;
+package ch.bailu.aat.services.srtm;
 
 import java.io.BufferedInputStream;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.ByteBuffer;
@@ -10,14 +9,15 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
 import android.content.Context;
+import ch.bailu.aat.coordinates.SrtmCoordinates;
 import ch.bailu.aat.helpers.AppBroadcaster;
 import ch.bailu.aat.helpers.AppLog;
 import ch.bailu.aat.services.background.BackgroundService;
-import ch.bailu.aat.services.background.DownloadHandle;
 import ch.bailu.aat.services.background.FileHandle;
-import ch.bailu.aat.services.cache.CacheService.SelfOn;
+import ch.bailu.aat.services.background.ProcessHandle;
 
-public class Srtmgl3TileObject extends ElevationProviderObject {
+public class Dem3Tile implements ElevationProvider {
+    
     /** 
      * SRTM
      * 
@@ -54,67 +54,87 @@ public class Srtmgl3TileObject extends ElevationProviderObject {
      * 
      * Source: http://wiki.openstreetmap.org/wiki/SRTM
      */
-
-
-
+    
+    
     public static final int SRTM_BUFFER_DIM=1201;
-    public static final int SRTM_DIM=SRTM_BUFFER_DIM-1;
+    private static final int SRTM_DIM=SRTM_BUFFER_DIM-1;
 
     private final byte data[]= new byte[SRTM_BUFFER_DIM*SRTM_BUFFER_DIM*2];
-    private final ShortBuffer buffer = ByteBuffer.wrap(data).asShortBuffer();    
-
+    private final ShortBuffer buffer = ByteBuffer.wrap(data).asShortBuffer();
     
-
-    private boolean isReady=true;
-
-    private final SRTMGL3Loader load;
-    private final String url;
     
-
-    public Srtmgl3TileObject(String id, SelfOn self, String u) {
-        super(id);
-        url = u;
-        load = new SRTMGL3Loader(id);
+    private ProcessHandle handle=FileHandle.NULL;
+    
+    private int lock=0;
+    //private boolean processed=true;
+    private boolean loading=false;
+    
+    
+    private long stamp=System.currentTimeMillis();
+    
+    private SrtmCoordinates coordinates = new SrtmCoordinates(0,0);
+    
+    public long getTimeStamp() {
+        return stamp;
+    }
+    
+    
+    public synchronized void lock() {
+        lock++;
+    }
+    
+    
+    public synchronized void free() {
+        lock--;
+    }
+    
+    
+    public boolean isLocked() {
+        return lock != 0;
+    }
+    
+    public boolean isProcessed() {
+        return (!loading && !isLocked());
+    }
+    
+/*    public void processed() {
+        processed=true;
+    }
+  */  
+    
+    public boolean isLoading() {
+        return loading;
+    }
+    public boolean isLoaded() {
+        return !loading;
+    }
+    
+    @Override
+    public String toString() {
+        return coordinates.toString();
     }
 
+    
     @Override
-    public void onInsert(SelfOn self) {
-        final File file =new File(toString());
-        
-        super.onInsert(self);
-        
-        
-        self.broadcaster.put(this);
-        
-        if (file.exists()==false) {
-            self.background.download(new DownloadHandle(url, file));
-        } else {
+    public int hashCode() {
+        return coordinates.hashCode();
+    }
+    
+    public void load(BackgroundService background, SrtmCoordinates c) {
+        if (!isLocked()) {
+            handle.stopLoading();
+            handle = new SRTMGL3Loader(c.toFile(background).getAbsolutePath());
+
+            coordinates=c;
+            loading=true;
+    //        processed=false;
+            stamp=System.currentTimeMillis();
+            background.load(handle);
             
-            load(self.background);
         }
     }
     
     
-    @Override
-    public void onRemove(SelfOn self) {
-        super.onRemove(self);
-        
-        load.stopLoading();
-    }
-    
-    
-    private void load(BackgroundService bg) {
-        if (new File(toString()).exists() && load.isLocked()==false) {
-            isReady=false;
-            bg.load(load);
-        }
-    }
-
-    @Override
-    public long getSize() {
-        return data.length;
-    }
-
     private class SRTMGL3Loader extends FileHandle {
 
         public SRTMGL3Loader(String f) {
@@ -126,8 +146,6 @@ public class Srtmgl3TileObject extends ElevationProviderObject {
             InputStream input=null;
             
             try {
-                
-                
                 ZipFile zip= new ZipFile(toString());
                 
                 if (zip.size()>0) {
@@ -149,8 +167,9 @@ public class Srtmgl3TileObject extends ElevationProviderObject {
 
 
             } catch (IOException e) {
+                for (int i=0; i<data.length; i++) data[i]=0;
                 AppLog.d(this, toString());
-                e.printStackTrace();
+                //e.printStackTrace();
             } finally {
                 if (input!=null)
                     try {
@@ -160,15 +179,18 @@ public class Srtmgl3TileObject extends ElevationProviderObject {
                     }
                 
             }
-            return getSize();
+            return data.length;
         }
 
         @Override
         public void broadcast(Context context) {
-            isReady=true;
-            AppBroadcaster.broadcast(context, AppBroadcaster.FILE_CHANGED_INCACHE, Srtmgl3TileObject.this.toString());            
+            loading=false;
+            AppBroadcaster.broadcast(context, AppBroadcaster.FILE_CHANGED_INCACHE, toString());
+            
         }
-    };
+    }
+
+
 
 
     
@@ -181,7 +203,6 @@ public class Srtmgl3TileObject extends ElevationProviderObject {
     }
 
 
-    @Override
     public short getElevation(int index) {
         return buffer.get(index);
     }
@@ -213,27 +234,4 @@ public class Srtmgl3TileObject extends ElevationProviderObject {
         final double x = min*60d*20d;
         return (int)x;
     }
-
-
-    @Override
-    public boolean isReady() {
-        return isReady;
-    }
-
-
-
-    @Override
-    public void onDownloaded(String id, String u, SelfOn self) {
-        if (u.equals(url)) load(self.background);
-    }
-
-
-    @Override
-    public void onChanged(String id, SelfOn self) {}
-    
-    
-    @Override
-    public long getAccessTime() {
-        return makeOld(super.getAccessTime());
-    }
-};
+}

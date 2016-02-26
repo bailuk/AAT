@@ -4,7 +4,7 @@ import org.osmdroid.tileprovider.MapTile;
 
 import android.graphics.Color;
 import ch.bailu.aat.services.cache.CacheService.SelfOn;
-import ch.bailu.aat.services.srtm.SrtmAccess;
+import ch.bailu.aat.services.srtm.Dem3Tile;
 
 public class ElevationExperimentalTile extends ElevationTile{
 
@@ -16,12 +16,12 @@ public class ElevationExperimentalTile extends ElevationTile{
 
     @Override
     public void fillBitmap(int[] buffer, int[] toLaRaster, int[] toLoRaster,
-            Span laSpan, Span loSpan, SrtmAccess srtm) {
+            Span laSpan, Span loSpan, Dem3Tile tile) {
         int c=0;
         for (int la=laSpan.start; la< laSpan.end; la++) {
             for (int lo=loSpan.start; lo<loSpan.end; lo++) {
-                final int altitude1 = srtm.getElevation(toLaRaster[la] * Srtmgl3TileObject.SRTM_BUFFER_DIM + toLoRaster[lo]);
-                final int altitude2 = srtm.getElevation(toLaRaster[la] * Srtmgl3TileObject.SRTM_BUFFER_DIM + toLoRaster[lo]+1);
+                final int altitude1 = tile.getElevation(toLaRaster[la] * Dem3Tile.SRTM_BUFFER_DIM + toLoRaster[lo]);
+                final int altitude2 = tile.getElevation(toLaRaster[la] * Dem3Tile.SRTM_BUFFER_DIM + toLoRaster[lo]+1);
                 
                 int gain = (altitude2-altitude1)*10;
                 

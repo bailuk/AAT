@@ -3,25 +3,26 @@ package ch.bailu.aat.services.srtm;
 import java.io.Closeable;
 import java.io.IOException;
 
-import org.osmdroid.api.IGeoPoint;
-
 import ch.bailu.aat.services.AbsService;
 import ch.bailu.aat.services.MultiServiceLink.ServiceNotUpException;
 import ch.bailu.aat.services.background.BackgroundService;
 import ch.bailu.aat.services.cache.CacheService;
 
 public class ElevationService extends AbsService implements ElevationProvider {
+    private static final Closeable NULL_CLOSEABLE= new Closeable() {
+        @Override
+        public void close() throws IOException {
+            
+        }
+    };
+    
     public static final Class<?> SERVICES[] = {
         CacheService.class,
         BackgroundService.class
     };
- 
-    private SrtmAccess srtmAccess=new SrtmAccess();
-    private Closeable elevationUpdater = new Closeable() {
-        @Override
-        public void close() {}
-        
-    };
+
+    private ElevationProvider elevation=ElevationProvider.NULL;
+    private Closeable toClose=NULL_CLOSEABLE;
 
     @Override
     public void onCreate() {
@@ -34,36 +35,29 @@ public class ElevationService extends AbsService implements ElevationProvider {
     @Override
     public void onServicesUp() {
         try {
-            elevationUpdater=new ElevationUpdater( this.getCacheService(), this.getBackgroundService());
-            srtmAccess=new SRTMGL3GeneralAccess(this.getCacheService());
+            ElevationUpdater e=new ElevationUpdater( this.getCacheService(), this.getBackgroundService());
+            toClose=e;
+            elevation=e;
+            
         } catch (ServiceNotUpException e) {
             e.printStackTrace();
         }
     }
     
-    @Override
-    public String toString() {
-        return srtmAccess.toString();
-    }
     
-    @Override
-    public short getElevation(IGeoPoint p) {
-        
-        return srtmAccess.getElevation(p);
-    }
+  
+   
 
     
-    @Override
-    public boolean isReady() {
-        return srtmAccess.isReady();
-    }
-
+   
     
     @Override
     public void onDestroy() {
         try {
-            srtmAccess.close();
-            elevationUpdater.close();
+            toClose.close();
+            toClose=NULL_CLOSEABLE;
+            elevation=ElevationProvider.NULL;
+            
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -73,12 +67,6 @@ public class ElevationService extends AbsService implements ElevationProvider {
 
     @Override
     public short getElevation(int laE6, int loE6) {
-        return srtmAccess.getElevation(laE6, loE6);
-    }
-
-
-    @Override
-    public short getElevation(int index) {
-        return srtmAccess.getElevation(index);
+        return elevation.getElevation(laE6, loE6);
     }
 }

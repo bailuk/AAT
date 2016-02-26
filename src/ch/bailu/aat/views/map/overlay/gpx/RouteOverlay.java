@@ -1,7 +1,7 @@
 package ch.bailu.aat.views.map.overlay.gpx;
 
 import ch.bailu.aat.helpers.AppTheme;
-import ch.bailu.aat.services.srtm.SRTM;
+import ch.bailu.aat.services.srtm.ElevationProvider;
 import ch.bailu.aat.views.graph.ColorTable;
 import ch.bailu.aat.views.map.AbsOsmView;
 import ch.bailu.aat.views.map.overlay.MapPainter;
@@ -49,7 +49,7 @@ public class RouteOverlay extends GpxOverlay {
              int c;
              int altitude=node.point.getAltitude();
              
-             if (altitude == SRTM.NULL_ALTITUDE) c=getColor();
+             if (altitude == ElevationProvider.NULL_ALTITUDE) c=getColor();
              else c=ColorTable.altitude.getColor(altitude);
 
              

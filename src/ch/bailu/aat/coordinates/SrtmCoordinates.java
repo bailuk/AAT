@@ -25,18 +25,31 @@ public class SrtmCoordinates extends Coordinates {
     private final static String base_url= "http://bailu.ch/dem3/";
     
     
-    private final double la, lo;
+    private double la, lo;
+    private String string;
+    
     
     public SrtmCoordinates(int la, int lo) {
-        this.la = la/1e6;
-        this.lo = lo/1e6;
+        set(la,lo);
     }
 
 
     public SrtmCoordinates(double la, double lo) {
+        set(la,lo);
+    }
+
+    
+    public void set(int la, int lo) {
+        set(la/1e6,lo/1e6);
+    }
+    
+    
+    public void set(double la, double lo) {
         this.la=la;
         this.lo=lo;
+        string = toLaString() + toLoString();
     }
+
     
     public SrtmCoordinates(IGeoPoint p) {
         this(p.getLatitudeE6(), p.getLongitudeE6());
@@ -57,22 +70,19 @@ public class SrtmCoordinates extends Coordinates {
     
     @Override
     public String toString() {
-        return toLaString() + toLoString();
-    }
-
-    
-    public String toExtString() {
-        return toLaString() + "/" + toString();
+        return string;
     }
 
     
     @Override
     public int hashCode() {
-        return toString().hashCode();
+        return string.hashCode();
     }
     
+    public String toExtString() {
+        return toLaString() + "/" + toString();
+    }
 
-    
     public String toURL() {
         return (base_url + toExtString() + ".hgt.zip");
     }

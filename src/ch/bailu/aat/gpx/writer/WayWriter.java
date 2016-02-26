@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.util.Locale;
 
 import ch.bailu.aat.gpx.interfaces.GpxPointInterface;
-import ch.bailu.aat.services.srtm.SRTM;
+import ch.bailu.aat.services.srtm.ElevationProvider;
 
 public class WayWriter extends GpxWriter {
 
@@ -36,7 +36,7 @@ public class WayWriter extends GpxWriter {
 
         writeBeginElementEnd();
 
-        if (tp.getAltitude() != SRTM.NULL_ALTITUDE) {
+        if (tp.getAltitude() != ElevationProvider.NULL_ALTITUDE) {
             writeBeginElement(QNAME_ALTITUDE);
             writeString(String.format((Locale)null, "%d",(int)tp.getAltitude()));
             writeEndElement(QNAME_ALTITUDE);

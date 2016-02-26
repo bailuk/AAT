@@ -57,7 +57,7 @@ public class AltitudeOverlay extends OsmOverlay {
                 center.x-painter.projection.screen.left, 
                 center.y-painter.projection.screen.top);
         
-        return elevation.getElevation(point);
+        return elevation.getElevation(point.getLatitudeE6(), point.getLongitudeE6());
     }
     
     
@@ -87,7 +87,7 @@ public class AltitudeOverlay extends OsmOverlay {
                 pixel.x-painter.projection.screen.left, 
                 pixel.y-painter.projection.screen.top);
         
-        float alt=elevation.getElevation(point) - centerElevation;
+        float alt=elevation.getElevation(point.getLatitudeE6(), point.getLongitudeE6()) - centerElevation;
         
         if (alt !=0f) 
             painter.canvas.drawText(altitudeDescription.getValue(alt), pixel);
