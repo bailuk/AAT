@@ -28,6 +28,7 @@ public class ElevationUpdater implements Closeable, ElevationProvider{
 
         AppBroadcaster.register(c, onRequestElevationUpdate, AppBroadcaster.REQUEST_ELEVATION_UPDATE);
         AppBroadcaster.register(c, onFileChanged, AppBroadcaster.FILE_CHANGED_INCACHE);
+        AppBroadcaster.register(c, onFileDownloaded, AppBroadcaster.FILE_CHANGED_ONDISK);
     }
 
 
@@ -44,6 +45,17 @@ public class ElevationUpdater implements Closeable, ElevationProvider{
     };
 
 
+    private BroadcastReceiver onFileDownloaded = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String id = AppBroadcaster.getFile(intent);
+            Dem3Tile tile = tiles.get(id);
+            
+            if (tile != null) {
+                tile.reload(background);
+            }
+        }
+    };
 
     private BroadcastReceiver onFileChanged = new BroadcastReceiver() {
         @Override
@@ -95,6 +107,7 @@ public class ElevationUpdater implements Closeable, ElevationProvider{
     public void close() {
         context.unregisterReceiver(onRequestElevationUpdate);
         context.unregisterReceiver(onFileChanged);
+        context.unregisterReceiver(onFileDownloaded);
     }
 
 

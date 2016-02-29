@@ -30,26 +30,17 @@ public class SrtmCoordinates extends Coordinates {
     
     
     public SrtmCoordinates(int la, int lo) {
-        set(la,lo);
+        this(la/1e6,lo/1e6);
     }
 
 
     public SrtmCoordinates(double la, double lo) {
-        set(la,lo);
-    }
-
-    
-    public void set(int la, int lo) {
-        set(la/1e6,lo/1e6);
-    }
-    
-    
-    public void set(double la, double lo) {
         this.la=la;
         this.lo=lo;
         string = toLaString() + toLoString();
     }
 
+    
     
     public SrtmCoordinates(IGeoPoint p) {
         this(p.getLatitudeE6(), p.getLongitudeE6());

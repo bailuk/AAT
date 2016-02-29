@@ -39,14 +39,19 @@ public class AltitudeOverlay extends OsmOverlay {
         if (getMapView().getZoomLevel() > MIN_ZOOM_LEVEL) {
             
             center = painter.projection.getCenterPixel();
-            centerElevation = getCenterElevation(painter);
+            
             
             scaler.findOptimalScale(painter.projection.getShortDistance()/2);
         
             if (scaler.getOptimalScale()>0) {
+                centerElevation = getCenterElevation(painter);
+                
                 drawGrid(painter);
                 painter.canvas.drawTextTop(distanceDescription.getDistanceDescriptionRounded(scaler.getOptimalScale()),1);
+                
+                centerElevation = getCenterElevation(painter);
                 painter.canvas.drawTextBottom(altitudeDescription.getValueUnit(centerElevation), 0);
+                
             }
         }
     }

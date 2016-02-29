@@ -1,10 +1,76 @@
 package ch.bailu.aat.services.srtm;
 
+import java.io.File;
+
 import ch.bailu.aat.coordinates.SrtmCoordinates;
+import ch.bailu.aat.helpers.Timer;
 import ch.bailu.aat.services.background.BackgroundService;
+import ch.bailu.aat.services.background.DownloadHandle;
 
 
 public class Dem3Tiles {
+    private class Loader {
+        private static final long MILLIS=1000;
+        private SrtmCoordinates toLoad = null;
+        
+        private final Runnable run = new Runnable() {
+        @Override
+        public void run() {
+            // now we are idle
+            if (toLoad != null) {
+                SrtmCoordinates loadNow=toLoad;
+                toLoad=null;
+                load(loadNow);
+                download(loadNow);
+                
+            }
+        }
+        };
+        
+        private final Timer timer = new Timer(run, MILLIS);
+        
+        
+        public Dem3Tile load(SrtmCoordinates c) {
+            timer.close();  // not idle
+            if (toLoad != null) timer.kick();
+            
+            if (!have(c)) {
+                Dem3Tile slot = getOldestProcessed();
+                
+                if (slot != null) {
+                    slot.load(background, c);
+                }
+            }
+            
+            return get(c);    
+        }
+        
+        
+        public void loadIfIdle(SrtmCoordinates c) {
+            if (toLoad == null) { // first request
+                timer.close();
+                timer.kick();
+            }
+            toLoad=c;
+        }
+        
+        
+        public void clearIdle() {
+            toLoad = null;
+            timer.close();
+        }
+        
+        private void download(SrtmCoordinates c) {
+            File target = c.toFile(background);
+            if (target.exists()==false) {
+                DownloadHandle handle = new DownloadHandle(c.toURL(), target);
+                background.download(handle);
+            }
+        }
+    }
+    
+    private final Loader loader= new Loader();
+    
     private final static int NUM_TILES=1;
     
     private final Dem3Tile tiles[];
@@ -16,16 +82,22 @@ public class Dem3Tiles {
         for (int i=0; i< NUM_TILES; i++) tiles[i]=new Dem3Tile();
     }
     
-    
+
+
     public short getElevation(int laE6, int loE6) {
-        SrtmCoordinates c=new SrtmCoordinates(laE6, loE6);
-        Dem3Tile t=want(c);
+        short r=0;
+        SrtmCoordinates c = new SrtmCoordinates (laE6, loE6);
+        Dem3Tile t=get(c);
         
-        if (t != null && t.isLoaded()) {
-            return t.getElevation(laE6, loE6);
+        if (t == null) {
+            loader.loadIfIdle(c);
         } else {
-            return 0;
+            loader.clearIdle();
+            if (t.isLoaded()) {
+                r=t.getElevation(laE6, loE6);
+            }
         }
+        return r;
     }
     
     
@@ -34,18 +106,15 @@ public class Dem3Tiles {
         Dem3Tile t=get(c);
         
         if (t==null) {
-            t = getOldestProcessed();
-            
-            if (t != null) {
-                t.load(background, c);
-            }
+            t=loader.load(c);
         }
         
         return t;
     }
     
     
-    public Dem3Tile getOldestProcessed() {
+    
+    private Dem3Tile getOldestProcessed() {
         Dem3Tile t=null;
         long stamp=System.currentTimeMillis();
         
@@ -71,7 +140,7 @@ public class Dem3Tiles {
     
     public Dem3Tile get(SrtmCoordinates c) {
         for (int i=0; i<NUM_TILES; i++) {
-            if (tiles[i].toString().equals(c.toString())) {
+            if (tiles[i].hashCode() == c.hashCode()) {
                 return tiles[i];
             }
         }
@@ -89,13 +158,13 @@ public class Dem3Tiles {
     }
 
     
-    boolean have(String id) {
+    public boolean have(String id) {
         return get(id) != null;
     }
 
 
     
-    boolean have(SrtmCoordinates c) {
+    public boolean have(SrtmCoordinates c) {
         return get(c) != null;
     }
 }

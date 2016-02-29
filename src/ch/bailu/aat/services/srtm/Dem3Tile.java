@@ -11,7 +11,6 @@ import java.util.zip.ZipFile;
 import android.content.Context;
 import ch.bailu.aat.coordinates.SrtmCoordinates;
 import ch.bailu.aat.helpers.AppBroadcaster;
-import ch.bailu.aat.helpers.AppLog;
 import ch.bailu.aat.services.background.BackgroundService;
 import ch.bailu.aat.services.background.FileHandle;
 import ch.bailu.aat.services.background.ProcessHandle;
@@ -66,7 +65,6 @@ public class Dem3Tile implements ElevationProvider {
     private ProcessHandle handle=FileHandle.NULL;
     
     private int lock=0;
-    //private boolean processed=true;
     private boolean loading=false;
     
     
@@ -97,10 +95,6 @@ public class Dem3Tile implements ElevationProvider {
         return (!loading && !isLocked());
     }
     
-/*    public void processed() {
-        processed=true;
-    }
-  */  
     
     public boolean isLoading() {
         return loading;
@@ -119,22 +113,25 @@ public class Dem3Tile implements ElevationProvider {
     public int hashCode() {
         return coordinates.hashCode();
     }
+
+    
     
     public void load(BackgroundService background, SrtmCoordinates c) {
         if (!isLocked()) {
-            handle.stopLoading();
-            handle = new SRTMGL3Loader(c.toFile(background).getAbsolutePath());
-
             coordinates=c;
-            loading=true;
-    //        processed=false;
-            stamp=System.currentTimeMillis();
-            background.load(handle);
-            
+            reload(background);
         }
     }
     
-    
+
+    public void reload(BackgroundService background) {
+        handle.stopLoading();
+        handle = new SRTMGL3Loader(coordinates.toFile(background).getAbsolutePath());
+        loading=true;
+        stamp=System.currentTimeMillis();
+        background.load(handle);
+    }
+
     private class SRTMGL3Loader extends FileHandle {
 
         public SRTMGL3Loader(String f) {
@@ -168,8 +165,6 @@ public class Dem3Tile implements ElevationProvider {
 
             } catch (IOException e) {
                 for (int i=0; i<data.length; i++) data[i]=0;
-                AppLog.d(this, toString());
-                //e.printStackTrace();
             } finally {
                 if (input!=null)
                     try {
@@ -193,7 +188,6 @@ public class Dem3Tile implements ElevationProvider {
 
 
 
-    
     @Override
     public short getElevation(int laE6, int loE6) {
         int x=toXPos(loE6);
@@ -234,4 +228,6 @@ public class Dem3Tile implements ElevationProvider {
         final double x = min*60d*20d;
         return (int)x;
     }
+
+
 }
