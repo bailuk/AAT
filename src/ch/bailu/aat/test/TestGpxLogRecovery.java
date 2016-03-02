@@ -8,9 +8,7 @@ import java.nio.channels.FileChannel;
 
 import android.content.Context;
 import ch.bailu.aat.helpers.AppDirectory;
-import ch.bailu.aat.preferences.SolidMockLocationFile;
 import ch.bailu.aat.preferences.SolidPreset;
-import ch.bailu.aat.preferences.SolidString;
 import ch.bailu.aat.services.tracker.TrackLogger;
 
 public class TestGpxLogRecovery extends TestGpx {
@@ -23,18 +21,17 @@ public class TestGpxLogRecovery extends TestGpx {
     
     @Override
     public void test() throws IOException, AssertionError  {
-        SolidString mockLocation = new SolidMockLocationFile(getContext());
         
-        File testFile = new File(mockLocation.getValue());
+        File testFile = getTestFile();
         File logFile = new File(AppDirectory.getDataDirectory(getContext(), AppDirectory.DIR_LOG),"log.gpx");
+        assertFalse(logFile.getAbsolutePath() + " is in use.", logFile.exists());
+        
         
         copyFile(testFile, logFile);
-        assertEquals(logFile.exists(), true);
+        assertTrue("Test failed: '" + logFile.getAbsolutePath() + "' does not exist." ,logFile.exists());
 
         
-        long logSize = logFile.length();
-        long testSize = testFile.length();
-        assertEquals(testSize, logSize);
+        testFile(logFile, testFile);
         
         File targetDirectory =  AppDirectory.getTrackListDirectory(getContext(),new SolidPreset(this.getContext()).getIndex());
         assertEquals(true, targetDirectory.isDirectory());
@@ -58,9 +55,7 @@ public class TestGpxLogRecovery extends TestGpx {
         
         assertNotNull(targetFile);
         assertEquals(true, targetFile.exists());
-        testFile(targetFile, 2869, 1);
-        assertEquals(true, targetFile.delete());
-        assertEquals(false, targetFile.exists());        
+        testFile(targetFile, testFile);
     }
 
     

@@ -43,10 +43,10 @@ public class SolidLegend extends SolidStaticIndexList {
     
     
     public OsmOverlay createWayLegendOverlay(AbsOsmView osmPreview, int id) {
-        if (getIndex()==1) return new GpxLegendOverlay(osmPreview,id,new PointIndexWalker());
-        if (getIndex()==2) return new GpxLegendOverlay(osmPreview,id,new PointIndexWalker());
+        if (getIndex()==1) return new GpxLegendOverlay(osmPreview,id,new PointNameWalker());
+        if (getIndex()==2) return new GpxLegendOverlay(osmPreview,id,new PointNameWalker());
         if (getIndex()==3) return new GpxLegendOverlay(osmPreview,id,new PointAltitudeWalker(getContext()));
-        if (getIndex()==4) return new GpxLegendOverlay(osmPreview,id,new PointNameWalker());
+        if (getIndex()==4) return new GpxLegendOverlay(osmPreview,id,new PointIndexWalker());
 
         return new NullOverlay(osmPreview);
     }
