@@ -39,7 +39,7 @@ public class ElevationUpdater implements Closeable, ElevationProvider{
             String id = AppBroadcaster.getFile(intent);
             
             addObject(id);
-            updateObjects();
+            updateObject(id);
             loadTiles();
         }
     };
@@ -60,7 +60,11 @@ public class ElevationUpdater implements Closeable, ElevationProvider{
     private BroadcastReceiver onFileChanged = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            updateObjects();
+            String id = AppBroadcaster.getFile(intent);
+            
+            if (tiles.have(id)){
+                updateObjects();
+            }
             loadTiles();
         }
     };
@@ -84,25 +88,65 @@ public class ElevationUpdater implements Closeable, ElevationProvider{
     }
     
 
+    
+
+    
     private void updateObjects() {
         int t=0;
         Dem3Tile tile;
         while ((tile=tiles.get(t)) != null) {
-            
-            if (tile.isLoaded()) {
-                t++;
-                for (int i = pendingObjects.size()-1; i>-1; i--) {
-                    pendingObjects.valueAt(i).update(background, tile);
-                    if (pendingObjects.valueAt(i).getTile(0) == null) {
-                        pendingObjects.remove(pendingObjects.keyAt(i)); 
-                    }
-                }
+            updateObjects(tile);
+            t++;
+        }
+    }
+    
+
+    private void updateObjects(Dem3Tile tile) {
+        if (tile.isLoaded()) {
+            for (int i = pendingObjects.size()-1; i>-1; i--) {
+                updateObject(i, tile);
             }
         }
     }
     
-    
 
+    
+    private void updateObject(int i, Dem3Tile tile) {
+        ElevationUpdaterEntry entry = pendingObjects.valueAt(i);
+        
+        entry.update(background, tile);
+        
+        if (entry.getTile(0) == null) {
+            pendingObjects.remove(pendingObjects.keyAt(i)); 
+        }
+    }
+
+    
+    private void updateObject(String id) {
+        int t=0;
+        Dem3Tile tile;
+        while ((tile=tiles.get(t)) != null) {
+            if (tile.isLoaded()) {
+                updateObject(id, tile);
+            }
+            t++;
+        }
+    }
+    
+    
+    private void updateObject(String id, Dem3Tile tile) {
+        ElevationUpdaterEntry entry = pendingObjects.get(id.hashCode());
+        
+        if (entry != null) {
+            entry.update(background, tile);
+            if (entry.getTile(0) == null) {
+                pendingObjects.remove(id.hashCode()); 
+            }
+        }
+    }
+
+    
+    
     @Override
     public void close() {
         context.unregisterReceiver(onRequestElevationUpdate);

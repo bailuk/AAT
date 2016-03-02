@@ -97,7 +97,6 @@ public class CacheService extends AbsService {
 
             @Override
             public void onReceive(Context context, Intent intent) {
-                //AppLog.d(CacheService.this, AppBroadcaster.getFile(intent));
                 table.onObjectChanged(intent, SelfOn.this);
             }
         };
