@@ -1,7 +1,7 @@
 package ch.bailu.aat.views.map.overlay.gpx;
 
 import ch.bailu.aat.helpers.AppTheme;
-import ch.bailu.aat.services.srtm.ElevationProvider;
+import ch.bailu.aat.services.dem.ElevationProvider;
 import ch.bailu.aat.views.graph.ColorTable;
 import ch.bailu.aat.views.map.AbsOsmView;
 import ch.bailu.aat.views.map.overlay.MapPainter;

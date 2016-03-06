@@ -117,7 +117,7 @@ public class SolidMapTileStack extends SolidCheckList {
 
         @Override
         public String getName() {
-            return "Experimental";
+            return "Hillshade*";
         }
 
         @Override
@@ -143,7 +143,6 @@ public class SolidMapTileStack extends SolidCheckList {
 
     private final static TileBitmapFilter[] FILTERS = new TileBitmapFilter[] {
         TileBitmapFilter.OVERLAY_FILTER,    
-        TileBitmapFilter.OVERLAY_FILTER,
         
         TileBitmapFilter.GRAYSCALE_FILTER,
         TileBitmapFilter.OVERLAY_FILTER,
@@ -161,12 +160,11 @@ public class SolidMapTileStack extends SolidCheckList {
     
     private final static Source[] SOURCES = new Source[] {
         ELEVATION_COLOR,    
+        
+        MAPNIK,
+        MAPNIK,
+        
         ELEVATION_EXPERIMENTAL,
-        
-        MAPNIK,
-        MAPNIK,
-        
-        ELEVATION_SHADE,
         
         TRANSPORT_OVERLAY,
         TRAIL_SKATING,

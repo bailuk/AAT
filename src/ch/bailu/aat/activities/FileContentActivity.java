@@ -5,6 +5,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import ch.bailu.aat.R;
 import ch.bailu.aat.description.AverageSpeedDescription;
 import ch.bailu.aat.description.CaloriesDescription;
 import ch.bailu.aat.description.ContentDescription;
@@ -30,10 +31,10 @@ import ch.bailu.aat.helpers.AppLayout;
 import ch.bailu.aat.helpers.AppLog;
 import ch.bailu.aat.services.MultiServiceLink.ServiceNotUpException;
 import ch.bailu.aat.services.cache.CacheService;
+import ch.bailu.aat.services.dem.ElevationService;
 import ch.bailu.aat.services.directory.DirectoryService;
 import ch.bailu.aat.services.editor.EditorService;
 import ch.bailu.aat.services.overlay.OverlayService;
-import ch.bailu.aat.services.srtm.ElevationService;
 import ch.bailu.aat.services.tracker.TrackerService;
 import ch.bailu.aat.views.BusyIndicator;
 import ch.bailu.aat.views.ContentView;
@@ -53,7 +54,6 @@ import ch.bailu.aat.views.map.overlay.control.NavigationBarOverlay;
 import ch.bailu.aat.views.map.overlay.gpx.GpxDynOverlay;
 import ch.bailu.aat.views.map.overlay.gpx.GpxOverlayListOverlay;
 import ch.bailu.aat.views.map.overlay.grid.GridDynOverlay;
-import ch.bailu.aat.R;
 
 
 public class FileContentActivity extends AbsDispatcher implements OnClickListener{

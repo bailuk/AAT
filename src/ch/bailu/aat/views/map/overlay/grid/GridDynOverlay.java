@@ -1,7 +1,7 @@
 package ch.bailu.aat.views.map.overlay.grid;
 
 import ch.bailu.aat.preferences.SolidMapGrid;
-import ch.bailu.aat.services.srtm.ElevationProvider;
+import ch.bailu.aat.services.dem.ElevationProvider;
 import ch.bailu.aat.views.map.OsmInteractiveView;
 import ch.bailu.aat.views.map.overlay.MapPainter;
 import ch.bailu.aat.views.map.overlay.OsmOverlay;

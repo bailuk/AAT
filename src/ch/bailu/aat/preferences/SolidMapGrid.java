@@ -2,7 +2,7 @@ package ch.bailu.aat.preferences;
 
 import android.content.Context;
 import ch.bailu.aat.R;
-import ch.bailu.aat.services.srtm.ElevationProvider;
+import ch.bailu.aat.services.dem.ElevationProvider;
 import ch.bailu.aat.views.map.AbsOsmView;
 import ch.bailu.aat.views.map.overlay.NullOverlay;
 import ch.bailu.aat.views.map.overlay.OsmOverlay;

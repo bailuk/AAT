@@ -6,7 +6,7 @@ import org.osmdroid.util.constants.GeoConstants;
 import android.graphics.Point;
 import ch.bailu.aat.coordinates.WGS84Sexagesimal;
 import ch.bailu.aat.description.AltitudeDescription;
-import ch.bailu.aat.services.srtm.ElevationProvider;
+import ch.bailu.aat.services.dem.ElevationProvider;
 import ch.bailu.aat.views.map.AbsOsmView;
 import ch.bailu.aat.views.map.overlay.MapPainter;
 import ch.bailu.aat.views.map.overlay.OsmOverlay;

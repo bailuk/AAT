@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.util.Locale;
 
 import ch.bailu.aat.gpx.interfaces.GpxPointInterface;
-import ch.bailu.aat.services.srtm.ElevationProvider;
+import ch.bailu.aat.services.dem.ElevationProvider;
 
 public class WayWriter extends GpxWriter {
 

@@ -1,4 +1,4 @@
-package ch.bailu.aat.services.srtm;
+package ch.bailu.aat.services.dem;
 
 
 
@@ -14,4 +14,7 @@ public interface ElevationProvider {
     };
     
     public short getElevation(int laE6, int loE6);
+    
+    
+
 }

@@ -1,4 +1,4 @@
-package ch.bailu.aat.services.srtm;
+package ch.bailu.aat.services.dem;
 
 import java.io.BufferedInputStream;
 import java.io.IOException;
@@ -15,7 +15,7 @@ import ch.bailu.aat.services.background.BackgroundService;
 import ch.bailu.aat.services.background.FileHandle;
 import ch.bailu.aat.services.background.ProcessHandle;
 
-public class Dem3Tile implements ElevationProvider {
+public class Dem3Tile implements ElevationProvider, DemProvider {
     
     /** 
      * SRTM
@@ -54,11 +54,25 @@ public class Dem3Tile implements ElevationProvider {
      * Source: http://wiki.openstreetmap.org/wiki/SRTM
      */
     
-    
-    public static final int SRTM_BUFFER_DIM=1201;
-    private static final int SRTM_DIM=SRTM_BUFFER_DIM-1;
+    public static final DemProvider NULL = new DemProvider() {
 
-    private final byte data[]= new byte[SRTM_BUFFER_DIM*SRTM_BUFFER_DIM*2];
+        @Override
+        public short getElevation(int index) {
+            return 0;
+        }
+
+        @Override
+        public DemDimension getDim() {
+            return DIMENSION;
+        }
+        
+    };
+    
+    private static final int DEM3_BUFFER_DIM=1201;
+    private static final int DEM3_BUFFER_OFFSET=1;
+    private static DemDimension DIMENSION= new DemDimension(DEM3_BUFFER_DIM-DEM3_BUFFER_OFFSET, DEM3_BUFFER_OFFSET,90);
+    
+    private final byte data[]= new byte[DEM3_BUFFER_DIM*DEM3_BUFFER_DIM*2];
     private final ShortBuffer buffer = ByteBuffer.wrap(data).asShortBuffer();
     
     
@@ -186,48 +200,20 @@ public class Dem3Tile implements ElevationProvider {
     }
 
 
+    @Override
+    public DemDimension getDim() {
+        return DIMENSION;
+    }
 
 
     @Override
     public short getElevation(int laE6, int loE6) {
-        int x=toXPos(loE6);
-        int y=toYPos(laE6);
-
-        return buffer.get(y*SRTM_BUFFER_DIM + x);
+        return buffer.get(DIMENSION.toPos(laE6, loE6));
     }
 
-
+    @Override
     public short getElevation(int index) {
         return buffer.get(index);
     }
     
-    private static int inverse(int v) {
-        return SRTM_DIM-1-v;    
-    }
-
-
-    public static int toXPos(int loE6) {
-        if (loE6<0) return inverse(toPos(loE6));
-        return toPos(loE6);
-    }
-    
-
-    public static int toYPos(int laE6) {
-        if (laE6 >0) return inverse(toPos(laE6));
-        return toPos(laE6);
-    }
-    
-    public static int toPos(int cE6) {
-        double c = Math.abs(cE6);
-        
-        c = c / 1e6d;
-        
-        final double deg = (int)c;
-
-        final double min  =(c-deg);
-        final double x = min*60d*20d;
-        return (int)x;
-    }
-
-
 }

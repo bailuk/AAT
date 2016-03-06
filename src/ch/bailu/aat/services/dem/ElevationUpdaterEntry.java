@@ -1,4 +1,4 @@
-package ch.bailu.aat.services.srtm;
+package ch.bailu.aat.services.dem;
 
 import android.util.SparseArray;
 import ch.bailu.aat.coordinates.SrtmCoordinates;

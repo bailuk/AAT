@@ -12,10 +12,10 @@ import android.content.ServiceConnection;
 import android.os.IBinder;
 import ch.bailu.aat.services.background.BackgroundService;
 import ch.bailu.aat.services.cache.CacheService;
+import ch.bailu.aat.services.dem.ElevationService;
 import ch.bailu.aat.services.directory.DirectoryService;
 import ch.bailu.aat.services.editor.EditorService;
 import ch.bailu.aat.services.overlay.OverlayService;
-import ch.bailu.aat.services.srtm.ElevationService;
 import ch.bailu.aat.services.tracker.TrackerService;
 
 public abstract class MultiServiceLink implements Closeable {

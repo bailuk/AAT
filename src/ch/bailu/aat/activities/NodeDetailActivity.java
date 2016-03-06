@@ -11,6 +11,7 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import ch.bailu.aat.R;
 import ch.bailu.aat.description.DescriptionInterface;
 import ch.bailu.aat.dispatcher.ContentDispatcher;
 import ch.bailu.aat.dispatcher.ContentSource;
@@ -25,8 +26,8 @@ import ch.bailu.aat.helpers.AppLog;
 import ch.bailu.aat.helpers.AppTheme;
 import ch.bailu.aat.services.MultiServiceLink.ServiceNotUpException;
 import ch.bailu.aat.services.cache.CacheService;
+import ch.bailu.aat.services.dem.ElevationService;
 import ch.bailu.aat.services.editor.EditorService;
-import ch.bailu.aat.services.srtm.ElevationService;
 import ch.bailu.aat.services.tracker.TrackerService;
 import ch.bailu.aat.views.ContentView;
 import ch.bailu.aat.views.ControlBar;
@@ -40,7 +41,6 @@ import ch.bailu.aat.views.map.overlay.control.InformationBarOverlay;
 import ch.bailu.aat.views.map.overlay.control.NavigationBarOverlay;
 import ch.bailu.aat.views.map.overlay.gpx.GpxDynOverlay;
 import ch.bailu.aat.views.map.overlay.grid.GridDynOverlay;
-import ch.bailu.aat.R;
 
 public class NodeDetailActivity extends AbsDispatcher implements OnClickListener{
 

@@ -19,9 +19,9 @@ import ch.bailu.aat.helpers.AppBroadcaster;
 import ch.bailu.aat.services.background.BackgroundService;
 import ch.bailu.aat.services.background.FileHandle;
 import ch.bailu.aat.services.cache.CacheService.SelfOn;
-import ch.bailu.aat.services.srtm.Dem3Tile;
-import ch.bailu.aat.services.srtm.ElevationProvider;
-import ch.bailu.aat.services.srtm.ElevationUpdaterClient;
+import ch.bailu.aat.services.dem.Dem3Tile;
+import ch.bailu.aat.services.dem.ElevationProvider;
+import ch.bailu.aat.services.dem.ElevationUpdaterClient;
 
 public class GpxObjectStatic extends GpxObject implements ElevationUpdaterClient {
     

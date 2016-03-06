@@ -93,7 +93,7 @@
         </service>
         <service android:name="ch.bailu.aat.services.editor.EditorService" >
         </service>
-        <service android:name="ch.bailu.aat.services.srtm.ElevationService" >
+        <service android:name="ch.bailu.aat.services.dem.ElevationService" >
         </service>
         <service android:name="ch.bailu.aat.services.background.BackgroundService" >
         </service>

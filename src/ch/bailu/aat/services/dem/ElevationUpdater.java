@@ -1,4 +1,4 @@
-package ch.bailu.aat.services.srtm;
+package ch.bailu.aat.services.dem;
 
 import java.io.Closeable;
 
