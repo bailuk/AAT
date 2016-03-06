@@ -11,6 +11,7 @@ import java.util.zip.ZipFile;
 import android.content.Context;
 import ch.bailu.aat.coordinates.SrtmCoordinates;
 import ch.bailu.aat.helpers.AppBroadcaster;
+import ch.bailu.aat.helpers.AppLog;
 import ch.bailu.aat.services.background.BackgroundService;
 import ch.bailu.aat.services.background.FileHandle;
 import ch.bailu.aat.services.background.ProcessHandle;
@@ -213,7 +214,14 @@ public class Dem3Tile implements ElevationProvider, DemProvider {
 
     @Override
     public short getElevation(int index) {
-        return buffer.get(index);
+        short r=0;
+    
+        try {
+           r= buffer.get(index);
+        } catch (IndexOutOfBoundsException e) {
+            AppLog.d(this, "Index: " + index);
+        }
+        return r;
     }
     
 }

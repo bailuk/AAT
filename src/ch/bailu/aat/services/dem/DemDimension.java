@@ -17,7 +17,7 @@ public class DemDimension {
 
     public int toPos(int laE6, int loE6) {
         int x=toXPos(loE6);
-        int y=toXPos(laE6);
+        int y=toYPos(laE6);
 
         return (y*DIM_OFFSET + x);
     }

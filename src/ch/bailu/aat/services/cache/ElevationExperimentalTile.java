@@ -3,6 +3,7 @@ package ch.bailu.aat.services.cache;
 import org.osmdroid.tileprovider.MapTile;
 
 import android.graphics.Color;
+import ch.bailu.aat.helpers.AppLog;
 import ch.bailu.aat.services.cache.CacheService.SelfOn;
 import ch.bailu.aat.services.dem.DemProvider;
 import ch.bailu.aat.views.graph.ColorTable;
@@ -19,12 +20,22 @@ public class ElevationExperimentalTile extends ElevationTile{
             Span laSpan, Span loSpan, DemProvider tile) {
         final int dim = tile.getDim().DIM_OFFSET;
         final int bitmap_dim = loSpan.size();
-        
+
         shade.meterPerPixel = tile.getDim().METER_PER_PIXEL;
         
         
         int c=0;
         int old_line=-1;
+
+        int a1_offset, a2_offset;
+        if (loSpan.deg < 0) {
+            a1_offset = -1;
+            a2_offset = 0;
+        } else {
+            a1_offset = 0;
+            a2_offset = 1;
+        }
+        
         
         for (int la=laSpan.start; la< laSpan.end; la++) {
 
@@ -32,8 +43,8 @@ public class ElevationExperimentalTile extends ElevationTile{
             int offset = toLoRaster[loSpan.start];
 
             if (old_line != line) {
-                shade.setAltitude1(tile.getElevation(line + offset));
-                shade.setAltitude2(tile.getElevation(line + offset + 1));
+                shade.setAltitude1(tile.getElevation(line + offset + a1_offset));
+                shade.setAltitude2(tile.getElevation(line + offset + a2_offset));
 
                 for (int lo=loSpan.start; lo<loSpan.end; lo++) {
                     final int new_offset=toLoRaster[lo];
@@ -41,7 +52,7 @@ public class ElevationExperimentalTile extends ElevationTile{
                     if (new_offset != offset) {
                         offset=new_offset;
 
-                        shade.setAltitude2(tile.getElevation(line + offset + 1));
+                        shade.setAltitude2(tile.getElevation(line + offset + a2_offset));
                     }
 
 
