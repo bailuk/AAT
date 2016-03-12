@@ -71,7 +71,7 @@ public class Dem3Tile implements ElevationProvider, DemProvider {
     
     private static final int DEM3_BUFFER_DIM=1201;
     private static final int DEM3_BUFFER_OFFSET=1;
-    private static DemDimension DIMENSION= new DemDimension(DEM3_BUFFER_DIM-DEM3_BUFFER_OFFSET, DEM3_BUFFER_OFFSET,90);
+    private static DemDimension DIMENSION= new DemDimension(DEM3_BUFFER_DIM-DEM3_BUFFER_OFFSET, DEM3_BUFFER_OFFSET);
     
     private final byte data[]= new byte[DEM3_BUFFER_DIM*DEM3_BUFFER_DIM*2];
     private final ShortBuffer buffer = ByteBuffer.wrap(data).asShortBuffer();

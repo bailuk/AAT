@@ -7,9 +7,8 @@ import android.content.Context;
 import ch.bailu.aat.services.cache.BitmapTileObject;
 import ch.bailu.aat.services.cache.ElevationColorTile;
 import ch.bailu.aat.services.cache.ElevationExperimentalTile;
-import ch.bailu.aat.services.cache.ElevationShadeTile;
-import ch.bailu.aat.services.cache.TileBitmapFilter;
 import ch.bailu.aat.services.cache.ObjectHandle.Factory;
+import ch.bailu.aat.services.cache.TileBitmapFilter;
 import ch.bailu.aat.services.cache.TileObject.Source;
 
 public class SolidMapTileStack extends SolidCheckList {
@@ -81,7 +80,7 @@ public class SolidMapTileStack extends SolidCheckList {
     };
     
 
-    
+    /*
     public final static Source ELEVATION_SHADE = 
             new Source() {
 
@@ -111,7 +110,7 @@ public class SolidMapTileStack extends SolidCheckList {
         }
     };
 
-    
+    */
     public final static Source ELEVATION_EXPERIMENTAL = 
             new Source() {
 

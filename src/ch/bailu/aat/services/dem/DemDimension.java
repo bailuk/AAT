@@ -4,14 +4,14 @@ public class DemDimension {
     public final int DIM;
     public final int DIM_OFFSET;
     public final int OFFSET;
-    public final int METER_PER_PIXEL;
     
     
-    public DemDimension(int dim, int offset, int meter_per_pixel) {
+    
+    public DemDimension(int dim, int offset) {
         DIM=dim;
         DIM_OFFSET=dim+offset;
         OFFSET=offset;
-        METER_PER_PIXEL=meter_per_pixel;
+    
     }
     
 

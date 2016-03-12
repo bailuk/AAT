@@ -5,7 +5,7 @@ import org.osmdroid.tileprovider.MapTile;
 import android.graphics.Color;
 import ch.bailu.aat.services.cache.CacheService.SelfOn;
 import ch.bailu.aat.services.dem.DemProvider;
-
+/*
 public class ElevationShadeTile extends ElevationTile {
 
     public ElevationShadeTile(String id, SelfOn self, MapTile t) {
@@ -57,3 +57,4 @@ public class ElevationShadeTile extends ElevationTile {
     }
 
 }
+*/

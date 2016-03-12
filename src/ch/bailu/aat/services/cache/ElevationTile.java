@@ -15,7 +15,6 @@ import android.graphics.Rect;
 import android.util.SparseArray;
 import ch.bailu.aat.coordinates.SrtmCoordinates;
 import ch.bailu.aat.helpers.AppBroadcaster;
-import ch.bailu.aat.helpers.AppLog;
 import ch.bailu.aat.services.background.BackgroundService;
 import ch.bailu.aat.services.background.ProcessHandle;
 import ch.bailu.aat.services.cache.CacheService.SelfOn;
@@ -36,8 +35,8 @@ public abstract class ElevationTile extends TileObject implements ElevationUpdat
     private final int[] toLaRaster = new int[TileObject.TILE_SIZE];
     private final int[] toLoRaster = new int[TileObject.TILE_SIZE];
 
-    private final static int MAX_PIXEL_SIZE=5;
-    private final static int MAX_SPLIT=3;
+//    private final static int MAX_PIXEL_SIZE=5;
+//    private final static int MAX_SPLIT=3;
     private int split=0;
 
     private DemProvider split(DemProvider p) {
@@ -50,7 +49,7 @@ public abstract class ElevationTile extends TileObject implements ElevationUpdat
         }
         return r;
     }
-
+/*
     private DemProvider auto_split(DemProvider p) {
         DemDimension dim = p.getDim();
 
@@ -90,13 +89,14 @@ public abstract class ElevationTile extends TileObject implements ElevationUpdat
         }
         return p;
     }
+*/
 
 
 
-
-    public ElevationTile(String id, SelfOn self, MapTile t) {
+    public ElevationTile(String id, SelfOn self, MapTile t, int _split) {
         super(id);
         tile=t;
+        split=_split;
     }
 
     public abstract void fillBitmap(int[] buffer, int[] toLaRaster, int[] toLoRaster, Span laSpan, Span loSpan, DemProvider srtm);
@@ -281,8 +281,8 @@ public abstract class ElevationTile extends TileObject implements ElevationUpdat
         }
 
         private void initializeIndexRaster() {
-            DemDimension dim=auto_split(Dem3Tile.NULL).getDim();
-            AppLog.d(this, "Split factor: "+split);
+            DemDimension dim=split(Dem3Tile.NULL).getDim();
+            //AppLog.d(this, "Split factor: "+split);
 
             for (int i=0; i< TileObject.TILE_SIZE; i++) {
                 toLaRaster[i]=dim.toYPos(toLaRaster[i]);
@@ -425,4 +425,21 @@ public abstract class ElevationTile extends TileObject implements ElevationUpdat
     public boolean isUpdating() {
         return updateLock;
     }
+    
+    public static int splitFromZoom(int zoom) {
+        int split = 0;
+        if (zoom>12) {
+            split++;
+        }
+        
+        if (zoom>13) {
+            split++;
+        }
+        
+        if (zoom>14) {
+            split++;
+        }
+        return split;
+    }
+
 }

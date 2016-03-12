@@ -3,15 +3,15 @@ package ch.bailu.aat.services.cache;
 import org.osmdroid.tileprovider.MapTile;
 
 import android.graphics.Color;
-import ch.bailu.aat.helpers.AppLog;
 import ch.bailu.aat.services.cache.CacheService.SelfOn;
 import ch.bailu.aat.services.dem.DemProvider;
-import ch.bailu.aat.views.graph.ColorTable;
 
 public class ElevationExperimentalTile extends ElevationTile{
     
-    public ElevationExperimentalTile(String id, SelfOn self, MapTile t) {
-        super(id, self, t);
+    public ElevationExperimentalTile(String id, SelfOn self, MapTile t, float weight, int shift) {
+        super(id, self, t, ElevationTile.splitFromZoom(t.getZoomLevel()));
+        shade.weight=weight;
+        shade.shift=shift;
     }
 
 
@@ -21,9 +21,6 @@ public class ElevationExperimentalTile extends ElevationTile{
         final int dim = tile.getDim().DIM_OFFSET;
         final int bitmap_dim = loSpan.size();
 
-        shade.meterPerPixel = tile.getDim().METER_PER_PIXEL;
-        
-        
         int c=0;
         int old_line=-1;
 
@@ -78,9 +75,12 @@ public class ElevationExperimentalTile extends ElevationTile{
     }
     
     private class ShadeColor {
+        private final int COLOR=0;
+        private float weight=200/90;
+        private int shift=30;
+        
         public int color=0;
         private int altitude1, altitude2;
-        public int meterPerPixel=90;
         
         public void setAltitude1(short a) {
             altitude1=a;
@@ -88,27 +88,24 @@ public class ElevationExperimentalTile extends ElevationTile{
         
         public void setAltitude2(short a) {
             altitude2=a;
-            changeColorHillShade();
+            changeColor();
             altitude1=altitude2;
         }
 
         
 
-        private void changeColorHillShade() {
-            int gain = ((altitude1-altitude2)*200) / meterPerPixel;
-            gain+=30;
+        private void changeColor() {
+            int alpha = (int) ((altitude1-altitude2)*weight);
+            alpha+=shift;
             
-            final int x=0;
+            
 
-            gain = Math.max(gain, 0);
-            gain = Math.min(gain, 255);
+            alpha = Math.max(alpha, 0);
+            alpha = Math.min(alpha, 255);
 
-            color = Color.argb(gain, x,x,x);
+            color = Color.argb(alpha, COLOR,COLOR,COLOR);
         }
 
-        private void changeColorColorTable() {
-            color = ColorTable.altitude.getColor(altitude1);
-        }
 
     } 
     private ShadeColor shade=new ShadeColor();
@@ -124,7 +121,42 @@ public class ElevationExperimentalTile extends ElevationTile{
 
         @Override
         public ObjectHandle factory(String id, SelfOn self) {
-            return  new ElevationExperimentalTile(id, self, mapTile);
+            float weight=2f;
+            int  shift=30;
+            
+            
+            switch (mapTile.getZoomLevel()) {
+            case 1:
+            case 2:
+            case 3:
+            case 4:
+            case 5:
+            case 6:
+            case 7:
+            case 8:
+            case 9:
+                weight=0.5f;
+                shift=15;
+                break;
+            case 10:
+            case 11:
+                weight=2f;
+                break;
+            case 12: 
+                weight=4f;
+                break;                
+            case 13:
+                weight=8f;
+                break;
+            case 14:
+            case 15:
+            case 16:
+            case 17:
+                weight=20f;
+                break;
+            }
+            return  new ElevationExperimentalTile(id, self, mapTile,weight, shift);
         }
+        
     } 
 }
