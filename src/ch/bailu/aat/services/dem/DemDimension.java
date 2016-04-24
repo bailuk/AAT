@@ -4,6 +4,8 @@ public class DemDimension {
     public final int DIM;
     public final int DIM_OFFSET;
     public final int OFFSET;
+    public final int SIZE;
+    public final int LAST_INDEX;
     
     
     
@@ -11,10 +13,20 @@ public class DemDimension {
         DIM=dim;
         DIM_OFFSET=dim+offset;
         OFFSET=offset;
+        
+        SIZE=DIM_OFFSET*DIM_OFFSET;
+        LAST_INDEX=SIZE-1;
     
     }
     
 
+    
+    public int limit(int index) {
+        index=Math.max(0, index);
+        index=Math.min(LAST_INDEX, index);
+        return index;
+    }
+    
     public int toPos(int laE6, int loE6) {
         int x=toXPos(loE6);
         int y=toYPos(laE6);
@@ -49,4 +61,5 @@ public class DemDimension {
         return DIM-v;    
     }
 
+    
 }

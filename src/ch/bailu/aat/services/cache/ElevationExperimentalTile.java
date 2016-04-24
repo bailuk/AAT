@@ -25,7 +25,7 @@ public class ElevationExperimentalTile extends ElevationTile{
         int old_line=-1;
 
         int a1_offset, a2_offset;
-        if (loSpan.deg < 0) {
+        if (loSpan.deg() < 0) {
             a1_offset = -1;
             a2_offset = 0;
         } else {
@@ -34,16 +34,16 @@ public class ElevationExperimentalTile extends ElevationTile{
         }
         
         
-        for (int la=laSpan.start; la< laSpan.end; la++) {
+        for (int la=laSpan.start(); la< laSpan.end(); la++) {
 
             final int line = toLaRaster[la]*dim;
-            int offset = toLoRaster[loSpan.start];
+            int offset = toLoRaster[loSpan.start()];
 
             if (old_line != line) {
                 shade.setAltitude1(tile.getElevation(line + offset + a1_offset));
                 shade.setAltitude2(tile.getElevation(line + offset + a2_offset));
 
-                for (int lo=loSpan.start; lo<loSpan.end; lo++) {
+                for (int lo=loSpan.start(); lo<loSpan.end(); lo++) {
                     final int new_offset=toLoRaster[lo];
 
                     if (new_offset != offset) {

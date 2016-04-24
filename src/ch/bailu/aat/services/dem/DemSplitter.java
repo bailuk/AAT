@@ -4,11 +4,14 @@ public class DemSplitter implements DemProvider {
     private final DemProvider parent;
     private final DemDimension dim;
     private final DemDimension parent_dim;
+    
+    private final int cellsize;
 
     public DemSplitter(DemProvider p) {
         parent=p;
         dim=new DemDimension(p.getDim().DIM*2, p.getDim().DIM_OFFSET*2);
         parent_dim=p.getDim();
+        cellsize=p.getCellsize()/2;
     }
 
     public short getElevation(int index) {
@@ -97,5 +100,10 @@ public class DemSplitter implements DemProvider {
     @Override
     public DemDimension getDim() {
         return dim;
+    }
+
+    @Override
+    public int getCellsize() {
+        return cellsize;
     }
 }

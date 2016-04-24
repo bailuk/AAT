@@ -7,6 +7,7 @@ import android.content.Context;
 import ch.bailu.aat.services.cache.BitmapTileObject;
 import ch.bailu.aat.services.cache.ElevationColorTile;
 import ch.bailu.aat.services.cache.ElevationExperimentalTile;
+import ch.bailu.aat.services.cache.NewHillshade;
 import ch.bailu.aat.services.cache.ObjectHandle.Factory;
 import ch.bailu.aat.services.cache.TileBitmapFilter;
 import ch.bailu.aat.services.cache.TileObject.Source;
@@ -140,6 +141,37 @@ public class SolidMapTileStack extends SolidCheckList {
         }
     };
 
+    
+    public final static Source ELEVATION_HILLSHADE = 
+            new Source() {
+
+        @Override
+        public String getName() {
+            return "New Hillshade*";
+        }
+
+        @Override
+        public String getID(MapTile t, Context x) {
+            return getName() + "/" + t.getZoomLevel() + "/" + t.getX() + "/" + t.getY(); 
+        }
+
+        @Override
+        public int getMinimumZoomLevel() {
+            return 6;
+        }
+
+        @Override
+        public int getMaximumZoomLevel() {
+            return 15;
+        }
+
+        @Override
+        public Factory getFactory(MapTile mt) {
+            return  new NewHillshade.Factory(mt);
+        }
+    };
+
+    
     private final static TileBitmapFilter[] FILTERS = new TileBitmapFilter[] {
         TileBitmapFilter.OVERLAY_FILTER,    
         
@@ -147,7 +179,7 @@ public class SolidMapTileStack extends SolidCheckList {
         TileBitmapFilter.OVERLAY_FILTER,
         
         TileBitmapFilter.COPY_FILTER,
-        
+        TileBitmapFilter.COPY_FILTER,
         
         TileBitmapFilter.OVERLAY_FILTER,
         TileBitmapFilter.OVERLAY_FILTER,
@@ -164,6 +196,7 @@ public class SolidMapTileStack extends SolidCheckList {
         MAPNIK,
         
         ELEVATION_EXPERIMENTAL,
+        ELEVATION_HILLSHADE,
         
         TRANSPORT_OVERLAY,
         TRAIL_SKATING,

@@ -8,7 +8,7 @@ import org.osmdroid.api.IGeoPoint;
 import android.content.Context;
 import ch.bailu.aat.preferences.SolidDataDirectory;
 
-public class SrtmCoordinates extends Coordinates {
+public class SrtmCoordinates extends Coordinates implements IGeoPoint {
     /**
      * # Dem3:
      * Digital Elevation Models in 3 arc / second resolution. 
@@ -25,8 +25,8 @@ public class SrtmCoordinates extends Coordinates {
     private final static String base_url= "http://bailu.ch/dem3/";
     
     
-    private double la, lo;
-    private String string;
+    private final int la, lo;
+    private final String string;
     
     
     public SrtmCoordinates(int la, int lo) {
@@ -35,8 +35,8 @@ public class SrtmCoordinates extends Coordinates {
 
 
     public SrtmCoordinates(double la, double lo) {
-        this.la=la;
-        this.lo=lo;
+        this.la=(int)Math.floor(la);
+        this.lo=(int)Math.floor(lo);
         string = toLaString() + toLoString();
     }
 
@@ -50,12 +50,12 @@ public class SrtmCoordinates extends Coordinates {
     
     public String toLaString() {
         return String.format((Locale)null,"%c%02d", 
-                WGS84Sexagesimal.getLatitudeChar(Math.floor(la)),  Math.abs((int)Math.floor(la)));
+                WGS84Sexagesimal.getLatitudeChar(la),  Math.abs(la));
     }
     
     public String toLoString() {
         return String.format((Locale)null,"%c%03d",
-                WGS84Sexagesimal.getLongitudeChar(Math.floor(lo)), Math.abs((int)Math.floor(lo)));
+                WGS84Sexagesimal.getLongitudeChar(lo), Math.abs(lo));
 
     }
     
@@ -99,29 +99,15 @@ public class SrtmCoordinates extends Coordinates {
         return new File(base, "/SRTM/" + toString() + ".SRTMGL3.hgt.zip");
     }
 
-    /*
-    private String toSRTMURL() {
-        if (isAreaCovered()) {
-            return (base_url_srtm + toString() + ".SRTMGL3.hgt.zip");
-        } 
-        return null;
 
+    @Override
+    public int getLatitudeE6() {
+        return la * (int)1e6;
     }
 
-    private boolean isAreaCovered() {
-        final int lat = (int) Math.floor(la);
-        return (lat > -56 && lat < 60); 
 
+    @Override
+    public int getLongitudeE6() {
+        return lo * (int)1e6;
     }
-    */
-    
-    /*
-    public SrtmCoordinates toTileOffset() {
-        final int laDeg = getLatitude().getDegree(); 
-        final int loDeg = getLongitude().getDegree();
-        
-        return new SrtmCoordinates((double)laDeg, (double)loDeg);
-        
-    }
-    */
 }

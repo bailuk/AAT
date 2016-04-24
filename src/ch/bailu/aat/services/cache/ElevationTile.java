@@ -27,18 +27,18 @@ import ch.bailu.aat.services.dem.ElevationUpdaterClient;
 public abstract class ElevationTile extends TileObject implements ElevationUpdaterClient{
 
     private final MapTile tile;
-    boolean updateLock=false;
+    private boolean updateLock=false;
 
     private final SynchronizedBitmap bitmap=new SynchronizedBitmap();
 
     private final SparseArray<TilePainter> tilePainterList = new SparseArray<TilePainter>(25);
+    
     private final int[] toLaRaster = new int[TileObject.TILE_SIZE];
     private final int[] toLoRaster = new int[TileObject.TILE_SIZE];
 
-//    private final static int MAX_PIXEL_SIZE=5;
-//    private final static int MAX_SPLIT=3;
     private int split=0;
 
+    
     private DemProvider split(DemProvider p) {
         DemProvider r=p;
 
@@ -49,47 +49,6 @@ public abstract class ElevationTile extends TileObject implements ElevationUpdat
         }
         return r;
     }
-/*
-    private DemProvider auto_split(DemProvider p) {
-        DemDimension dim = p.getDim();
-
-        if (split < MAX_SPLIT) {
-            int y_old = dim.toYPos(toLaRaster[0]);
-            int x_old = dim.toXPos(toLoRaster[0]);
-            int x_c=0;
-            int y_c=0;
-
-            for (int i=1; i< TileObject.TILE_SIZE; i++) {
-                int y_new = dim.toYPos(toLaRaster[i]);
-                int x_new = dim.toXPos(toLoRaster[i]);
-
-                if (y_new == y_old) {
-                    y_c++;
-                    if (y_c >= MAX_PIXEL_SIZE) {
-                        split++;
-                        return auto_split(new DemSplitter(p));
-                    }
-                } else {
-                    y_c=0;
-                }
-
-                if (x_new == x_old) {
-                    x_c++;
-                    if (x_c >= MAX_PIXEL_SIZE) {
-                        split++;
-                        return auto_split(new DemSplitter(p));
-                    }
-                } else {
-                    x_c=0;
-                }
-
-                y_old=y_new;
-                x_old=x_new;
-            }
-        }
-        return p;
-    }
-*/
 
 
 
@@ -99,8 +58,10 @@ public abstract class ElevationTile extends TileObject implements ElevationUpdat
         split=_split;
     }
 
-    public abstract void fillBitmap(int[] buffer, int[] toLaRaster, int[] toLoRaster, Span laSpan, Span loSpan, DemProvider srtm);
+    
+    public abstract void fillBitmap(int[] bitmap, int[] toLaRaster, int[] toLoRaster, Span laSpan, Span loSpan, DemProvider demtile);
 
+    
     @Override
     public void onInsert(SelfOn self) {
         self.broadcaster.put(this);
@@ -175,60 +136,6 @@ public abstract class ElevationTile extends TileObject implements ElevationUpdat
     }
 
 
-    public static class Span {
-        public int deg;
-        public int start;
-        public int end;
-
-        public Span(int d) {
-            deg = d; 
-            start = end = 0;
-        }
-
-        public Span(Span s) {
-            deg = s.deg;
-            start = s.start;
-            end = s.end;
-        }
-
-        public int size() {
-            return end - start;
-        }
-
-        public void addToList(ArrayList<Span> l, int i, int d) {
-            end = i;
-
-            if (d != deg) {
-                addToList(l);
-
-                deg = d;
-                start=i;
-            }
-        }
-
-        public void addToList(ArrayList<Span> l, int i) {
-            end = i;
-            addToList(l);
-
-        }
-
-        private void addToList(ArrayList<Span> l) {
-            if (size() >0) l.add(new Span(this));
-        }
-
-
-        public static Rect toRect(Span laSpan, Span loSpan) {
-            Rect r = new Rect();
-            r.top=laSpan.start;
-            r.bottom=laSpan.end;
-            r.left=loSpan.start;
-            r.right=loSpan.end;
-            return r;
-        }
-
-
-    }
-
     private class SrtmTileRasterInitializer extends ProcessHandle {
 
         final private ArrayList<Span> laSpan = new ArrayList<Span>(5);
@@ -260,33 +167,34 @@ public abstract class ElevationTile extends TileObject implements ElevationUpdat
             int loDiff=br.getLongitudeE6()-tl.getLongitudeE6(); //-1.2 - -1.5 = 0.3  //1.5 - 1.2 = 0.3
 
 
-                    final Span laS=new Span((int) Math.floor(tl.getLatitudeE6()/1e6));
+            final Span laS=new Span((int) Math.floor(tl.getLatitudeE6()/1e6));
             final Span loS=new Span((int) Math.floor(tl.getLongitudeE6()/1e6));
 
             int i;
             for (i=0; i< TileObject.TILE_SIZE; i++) {
-                toLaRaster[i]=tl.getLatitudeE6()+ (laDiff/TileObject.TILE_SIZE)*i;
+                // TODO faster calculation
+                toLaRaster[i]=tl.getLatitudeE6()+ (laDiff/TileObject.TILE_SIZE)*i;   
                 toLoRaster[i]=tl.getLongitudeE6()+ (loDiff/TileObject.TILE_SIZE)*i;
 
                 final int laDeg = (int) Math.floor(toLaRaster[i]/1e6);
                 final int loDeg = (int) Math.floor(toLoRaster[i]/1e6);
 
-                laS.addToList(laSpan, i, laDeg);
-                loS.addToList(loSpan, i, loDeg);
+                laS.takeSpan(laSpan, i, laDeg);
+                loS.takeSpan(loSpan, i, loDeg);
             }
 
 
-            laS.addToList(laSpan,i);
-            loS.addToList(loSpan,i);
+            laS.takeSpan(laSpan,i);
+            loS.takeSpan(loSpan,i);
         }
 
         private void initializeIndexRaster() {
             DemDimension dim=split(Dem3Tile.NULL).getDim();
-            //AppLog.d(this, "Split factor: "+split);
 
             for (int i=0; i< TileObject.TILE_SIZE; i++) {
-                toLaRaster[i]=dim.toYPos(toLaRaster[i]);
-                toLoRaster[i]=dim.toXPos(toLoRaster[i]);
+                // FIXME this is a hack to prevent -1 index in hillshading.
+                toLaRaster[i]=Math.min(Math.max(1, dim.toYPos(toLaRaster[i])), dim.DIM-1);  
+                toLoRaster[i]=Math.min(Math.max(1, dim.toXPos(toLoRaster[i])), dim.DIM-1);
             }
         }
 
@@ -354,7 +262,7 @@ public abstract class ElevationTile extends TileObject implements ElevationUpdat
         private final Span loSpan;
 
         public TilePainter(Span laS, Span loS) {
-            coordinates = new SrtmCoordinates((double)laS.deg, (double)loS.deg);
+            coordinates = new SrtmCoordinates((double)laS.deg(), (double)loS.deg());
 
             laSpan = laS;
             loSpan = loS;

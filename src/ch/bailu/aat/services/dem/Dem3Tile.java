@@ -8,6 +8,8 @@ import java.nio.ShortBuffer;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
+import org.osmdroid.util.GeoPoint;
+
 import android.content.Context;
 import ch.bailu.aat.coordinates.SrtmCoordinates;
 import ch.bailu.aat.helpers.AppBroadcaster;
@@ -65,6 +67,11 @@ public class Dem3Tile implements ElevationProvider, DemProvider {
         @Override
         public DemDimension getDim() {
             return DIMENSION;
+        }
+
+        @Override
+        public int getCellsize() {
+            return 0;
         }
         
     };
@@ -219,9 +226,26 @@ public class Dem3Tile implements ElevationProvider, DemProvider {
         try {
            r= buffer.get(index);
         } catch (IndexOutOfBoundsException e) {
-            AppLog.d(this, "Index: " + index);
+          AppLog.d(this, "Index: " + index + " of " + DIMENSION.DIM_OFFSET*DIMENSION.DIM_OFFSET);
         }
         return r;
+    }
+
+
+    private final static double REF_LO_1=7d;
+    private final static double REF_LO_2=8d;
+    
+    @Override
+    public int getCellsize() {
+        final float fdistance = GeoPoint.distanceBetween(
+                coordinates.getLatitudeE6()/1e6, REF_LO_1, 
+                coordinates.getLatitudeE6()/1e6, REF_LO_2);
+        
+        int idistance = Math.round(fdistance / DIMENSION.DIM);
+
+        if (idistance==0) idistance=50;
+        
+        return idistance;
     }
     
 }

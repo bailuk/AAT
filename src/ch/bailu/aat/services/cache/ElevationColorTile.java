@@ -23,15 +23,15 @@ public class ElevationColorTile extends ElevationTile {
         int old_line=-1;
         
         
-        for (int la=laSpan.start; la< laSpan.end; la++) {
+        for (int la=laSpan.start(); la< laSpan.end(); la++) {
 
             final int line = toLaRaster[la]*dim;
-            int offset = toLoRaster[loSpan.start];
+            int offset = toLoRaster[loSpan.start()];
 
             if (old_line != line) {
                 shade.setAltitude(dem.getElevation(line + offset));
 
-                for (int lo=loSpan.start; lo<loSpan.end; lo++) {
+                for (int lo=loSpan.start(); lo<loSpan.end(); lo++) {
                     final int new_offset=toLoRaster[lo];
 
                     if (new_offset != offset) {
