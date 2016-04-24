@@ -6,7 +6,6 @@ import org.osmdroid.tileprovider.tilesource.OnlineTileSourceBase;
 import android.content.Context;
 import ch.bailu.aat.services.cache.BitmapTileObject;
 import ch.bailu.aat.services.cache.ElevationColorTile;
-import ch.bailu.aat.services.cache.ElevationExperimentalTile;
 import ch.bailu.aat.services.cache.NewHillshade;
 import ch.bailu.aat.services.cache.ObjectHandle.Factory;
 import ch.bailu.aat.services.cache.TileBitmapFilter;
@@ -18,36 +17,46 @@ public class SolidMapTileStack extends SolidCheckList {
     public static final int MAX_ZOOM=17; // 18 takes way too much space for the gain. 
     
     private final static String KEY = "tile_overlay_";
+
+    /*
+    public final static BitmapTileObject.Source MAPNIK_GRAY = 
+            new BitmapTileObject.Source("Mapnik", TileBitmapFilter.GRAYSCALE_FILTER,
+                    MIN_ZOOM, MAX_ZOOM,
+                    "http://a.tile.openstreetmap.org/",
+                    "http://b.tile.openstreetmap.org/",
+                    "http://c.tile.openstreetmap.org/");
+*/
     
     public final static BitmapTileObject.Source MAPNIK = 
-            new BitmapTileObject.Source("Mapnik", MIN_ZOOM, MAX_ZOOM,
+            new BitmapTileObject.Source("Mapnik", TileBitmapFilter.OVERLAY_FILTER,
+                    MIN_ZOOM, MAX_ZOOM,
                     "http://a.tile.openstreetmap.org/",
                     "http://b.tile.openstreetmap.org/",
                     "http://c.tile.openstreetmap.org/");
 
     
     public final static Source TRAIL_MTB = 
-            new BitmapTileObject.Source("TrailMTB",  MIN_ZOOM, MAX_ZOOM,
+            new BitmapTileObject.Source("TrailMTB",  TileBitmapFilter.OVERLAY_FILTER, MIN_ZOOM, MAX_ZOOM,
                     "http://tile.waymarkedtrails.org/mtb/");
 
     public final static Source TRAIL_SKATING = 
-            new BitmapTileObject.Source("TrailSkating", MIN_ZOOM, MAX_ZOOM,
+            new BitmapTileObject.Source("TrailSkating",TileBitmapFilter.OVERLAY_FILTER, MIN_ZOOM, MAX_ZOOM,
                     "http://tile.waymarkedtrails.org/skating/");
 
 
     public final static Source TRAIL_HIKING = 
-            new BitmapTileObject.Source("TrailHiking", MIN_ZOOM, MAX_ZOOM,
+            new BitmapTileObject.Source("TrailHiking", TileBitmapFilter.OVERLAY_FILTER, MIN_ZOOM, MAX_ZOOM,
                     "http://tile.waymarkedtrails.org/hiking/");
 
 
     public final static Source TRAIL_CYCLING = 
-            new BitmapTileObject.Source("TrailCycling",  MIN_ZOOM, MAX_ZOOM,
+            new BitmapTileObject.Source("TrailCycling", TileBitmapFilter.OVERLAY_FILTER, MIN_ZOOM, MAX_ZOOM,
                     "http://tile.waymarkedtrails.org/cycling/");
 
 
 
     public final static Source TRANSPORT_OVERLAY = 
-            new BitmapTileObject.Source("OpenPtMap", 5, 16,
+            new BitmapTileObject.Source("OpenPtMap", TileBitmapFilter.OVERLAY_FILTER, 5, 16,
                     "http://openptmap.org/tiles/");
 
 
@@ -56,7 +65,7 @@ public class SolidMapTileStack extends SolidCheckList {
 
         @Override
         public String getName() {
-            return "ElevationColor";
+            return "ElevationColor*";
         }
 
         @Override
@@ -78,41 +87,17 @@ public class SolidMapTileStack extends SolidCheckList {
         public Factory getFactory(MapTile mt) {
             return  new ElevationColorTile.Factory(mt);
         }
+
+        @Override
+        public TileBitmapFilter getBitmapFilter() {
+            return TileBitmapFilter.OVERLAY_FILTER;
+        }
     };
     
 
-    /*
-    public final static Source ELEVATION_SHADE = 
-            new Source() {
 
-        @Override
-        public String getName() {
-            return "ElevationShade";
-        }
-
-        @Override
-        public String getID(MapTile t, Context x) {
-            return getName() + "/" + t.getZoomLevel() + "/" + t.getX() + "/" + t.getY(); 
-        }
-
-        @Override
-        public int getMinimumZoomLevel() {
-            return 6;
-        }
-
-        @Override
-        public int getMaximumZoomLevel() {
-            return 15;
-        }
-
-        @Override
-        public Factory getFactory(MapTile mt) {
-            return  new ElevationShadeTile.Factory(mt);
-        }
-    };
-
-    */
-    public final static Source ELEVATION_EXPERIMENTAL = 
+    
+    public final static Source ELEVATION_HILLSHADE = 
             new Source() {
 
         @Override
@@ -137,67 +122,21 @@ public class SolidMapTileStack extends SolidCheckList {
 
         @Override
         public Factory getFactory(MapTile mt) {
-            return  new ElevationExperimentalTile.Factory(mt);
-        }
-    };
-
-    
-    public final static Source ELEVATION_HILLSHADE = 
-            new Source() {
-
-        @Override
-        public String getName() {
-            return "New Hillshade*";
-        }
-
-        @Override
-        public String getID(MapTile t, Context x) {
-            return getName() + "/" + t.getZoomLevel() + "/" + t.getX() + "/" + t.getY(); 
-        }
-
-        @Override
-        public int getMinimumZoomLevel() {
-            return 6;
-        }
-
-        @Override
-        public int getMaximumZoomLevel() {
-            return 15;
-        }
-
-        @Override
-        public Factory getFactory(MapTile mt) {
             return  new NewHillshade.Factory(mt);
         }
-    };
 
-    
-    private final static TileBitmapFilter[] FILTERS = new TileBitmapFilter[] {
-        TileBitmapFilter.OVERLAY_FILTER,    
-        
-        TileBitmapFilter.GRAYSCALE_FILTER,
-        TileBitmapFilter.OVERLAY_FILTER,
-        
-        TileBitmapFilter.COPY_FILTER,
-        TileBitmapFilter.COPY_FILTER,
-        
-        TileBitmapFilter.OVERLAY_FILTER,
-        TileBitmapFilter.OVERLAY_FILTER,
-        TileBitmapFilter.OVERLAY_FILTER,
-        TileBitmapFilter.OVERLAY_FILTER,
-        TileBitmapFilter.OVERLAY_FILTER
+        @Override
+        public TileBitmapFilter getBitmapFilter() {
+            return TileBitmapFilter.COPY_FILTER;
+        }
     };
 
     
     private final static Source[] SOURCES = new Source[] {
         ELEVATION_COLOR,    
-        
+  //      MAPNIK_GRAY,
         MAPNIK,
-        MAPNIK,
-        
-        ELEVATION_EXPERIMENTAL,
         ELEVATION_HILLSHADE,
-        
         TRANSPORT_OVERLAY,
         TRAIL_SKATING,
         TRAIL_HIKING,
@@ -295,22 +234,6 @@ public class SolidMapTileStack extends SolidCheckList {
         for (int i=0; i<enabledArray.length; i++) {
             if (enabledArray[i].isEnabled()) {
                 array[index] = SOURCES[i];
-                index++;
-            }
-        }
-
-        return array;
-    }
-    
-    
-    public TileBitmapFilter[] getFilterList() {
-        TileBitmapFilter[]  array = new TileBitmapFilter[getCountOfEnabled()];
-
-        int index=0;
-
-        for (int i=0; i<enabledArray.length; i++) {
-            if (enabledArray[i].isEnabled()) {
-                array[index] = FILTERS[i];
                 index++;
             }
         }

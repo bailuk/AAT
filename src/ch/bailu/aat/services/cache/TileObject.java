@@ -15,11 +15,10 @@ public abstract class TileObject extends ObjectHandle{
     }
 
     
-    //public abstract MapTile getTile();
     public abstract Bitmap getBitmap();
 
-    
     public static abstract class  Source {
+        public abstract TileBitmapFilter getBitmapFilter();
         public abstract String getName();
         public abstract String getID(MapTile aTile, Context context);
         public abstract int getMinimumZoomLevel();
@@ -27,6 +26,8 @@ public abstract class TileObject extends ObjectHandle{
         
     
         public abstract ObjectHandle.Factory getFactory(MapTile mt);
+        
+        
     }
     
 }

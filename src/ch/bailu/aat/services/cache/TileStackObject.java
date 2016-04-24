@@ -256,7 +256,7 @@ public class TileStackObject extends ObjectHandle {
 
 
 
-        public Factory(Context context, MapTile mt, Source s[], TileBitmapFilter[] filters) {
+        public Factory(Context context, MapTile mt, Source s[]) {
             mapTile = mt;
             int count=0;
 
@@ -273,7 +273,7 @@ public class TileStackObject extends ObjectHandle {
                 if (isZoomLevelSupported(s[i])) {
                     tiles[x]=new TileContainer(
                             s[i].getID(mapTile, context),
-                            filters[i],
+                            s[i].getBitmapFilter(),
                             s[i].getFactory(mapTile));
                     x++;
                 }

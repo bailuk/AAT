@@ -9,8 +9,8 @@ import ch.bailu.aat.preferences.Storage;
 
 
 public class DynTileProvider extends CachedTileProvider implements OnSharedPreferenceChangeListener {
-    private final Storage              storage;
-    private final SolidPreset          spreset;
+    private final Storage     storage;
+    private final SolidPreset spreset;
 
     private SolidMapTileStack soverlay;
 
@@ -62,8 +62,6 @@ public class DynTileProvider extends CachedTileProvider implements OnSharedPrefe
 
 
     private void setSourceList() {
-        setSubTileSource(
-                soverlay.getSourceList(), 
-                soverlay.getFilterList());
+        setSubTileSource(soverlay.getSourceList());
     }
 }

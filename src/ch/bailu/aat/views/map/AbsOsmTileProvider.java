@@ -5,9 +5,8 @@ import org.osmdroid.tileprovider.tilesource.ITileSource;
 
 import ch.bailu.aat.preferences.SolidMapTileStack;
 import ch.bailu.aat.services.cache.CacheService;
-import ch.bailu.aat.services.cache.TileBitmapFilter;
-import ch.bailu.aat.services.cache.TileStackObject;
 import ch.bailu.aat.services.cache.TileObject.Source;
+import ch.bailu.aat.services.cache.TileStackObject;
 
 public abstract class AbsOsmTileProvider extends AbsTileProvider {
     
@@ -15,7 +14,6 @@ public abstract class AbsOsmTileProvider extends AbsTileProvider {
     private CacheService loader=null;
     
     private Source sources[] = new Source[]{SolidMapTileStack.MAPNIK};
-    private TileBitmapFilter filters[] = new TileBitmapFilter[]{TileBitmapFilter.OVERLAY_FILTER};
     
     
     private final StringBuilder builder = new StringBuilder();    
@@ -32,7 +30,7 @@ public abstract class AbsOsmTileProvider extends AbsTileProvider {
     public TileStackObject getTileHandle(MapTile mapTile) {
         if (loader != null) {
             final String id = generateTileID(mapTile);
-            return (TileStackObject) loader.getObject(id, new TileStackObject.Factory(loader, mapTile, sources, filters));
+            return (TileStackObject) loader.getObject(id, new TileStackObject.Factory(loader, mapTile, sources));
         } else  {
             return TileStackObject.NULL;
         }
@@ -51,7 +49,7 @@ public abstract class AbsOsmTileProvider extends AbsTileProvider {
 
         for (int i=0; i<sources.length; i++) {
             builder.append('/');
-            builder.append(sources[i].getName()+filters[i].toString());
+            builder.append(sources[i].getName()+sources[i].getBitmapFilter().toString());
         }
         return builder.toString();
     }
@@ -80,9 +78,8 @@ public abstract class AbsOsmTileProvider extends AbsTileProvider {
         loader = l;
     }
 
-    public void setSubTileSource(Source[] s, TileBitmapFilter[] f) {
+    public void setSubTileSource(Source[] s) {
         sources=s;
-        filters=f;
     }
     
     @Override

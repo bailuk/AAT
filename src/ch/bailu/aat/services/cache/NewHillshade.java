@@ -5,6 +5,7 @@ import org.osmdroid.tileprovider.MapTile;
 import android.graphics.Color;
 import ch.bailu.aat.services.cache.CacheService.SelfOn;
 import ch.bailu.aat.services.dem.DemProvider;
+import ch.bailu.aat.services.dem.MultiCell8;
 
 public class NewHillshade extends ElevationTile {
 
@@ -23,7 +24,8 @@ public class NewHillshade extends ElevationTile {
         int index=0;
         int old_line=-1;
 
-        Hillshade shade=new Hillshade(demtile.getCellsize());
+        final MultiCell8 mcell=new MultiCell8(demtile);
+        final Hillshade shade=new Hillshade();
         
         for (int la=laSpan.start(); la< laSpan.end(); la++) {
 
@@ -38,30 +40,10 @@ public class NewHillshade extends ElevationTile {
                     if (old_offset != offset) {
                         old_offset = offset;
 
-                        final int e=line+offset;
-                        
-                        final int f=e+1;
-                        final int h=e+demtile_dim;
-                        final int i=h+1;
-                        final int g=h-1;
-                        
-                        final int d=e-1;
-                        final int b=e-demtile_dim;
-                        final int c=b+1;
-                        final int a=b-1;
-                        
-                        color = shade.hillshade(
-                                demtile.getElevation(a),
-                                demtile.getElevation(b),
-                                demtile.getElevation(c),
-                                demtile.getElevation(d),
-                                demtile.getElevation(f),
-                                demtile.getElevation(g),
-                                demtile.getElevation(h),
-                                demtile.getElevation(i));
+                        mcell.set(line+offset);
+                        color = shade.hillshade(mcell);
                     }
-
-
+                    
                     bitmap[index]=color;
                     index++;
                 }
@@ -90,7 +72,7 @@ public class NewHillshade extends ElevationTile {
          * http://edndoc.esri.com/arcobjects/9.2/net/shared/geoprocessing/spatial_analyst_tools/how_hillshade_works.htm
          */
         
-        private static final int    COLOR=0;
+        private static final int    COLOR=50;
         private static final double ALTITUDE_DEG=45d;
 
         private static final double AZIMUTH_DEG=315d;
@@ -107,24 +89,10 @@ public class NewHillshade extends ElevationTile {
         private final static double HALF_PI=Math.PI/2d;
         private final static double ONEHALF_PI=DOUBLE_PI-HALF_PI;
 
-        private final double total_cellsize;
-        
-        public Hillshade(int cellsize) {
-            total_cellsize=cellsize*8;
-        }
-        
-        public int hillshade(
-                final short a, 
-                final short b, 
-                final short c, 
-                final short d, 
-                final short f, 
-                final short g, 
-                final short h, 
-                final short i) 
+        public int hillshade(final MultiCell8 mcell) 
         {
-            final double dzx = delta_zx(a, c, d, f, g, i);
-            final double dzy = delta_zy(a, b, c, g, h, i);
+            final double dzx = mcell.delta_zx();
+            final double dzy = mcell.delta_zy();
             final double slope=slope_rad(dzx, dzy);
             
             int shade = (int) (255d * (( ZENITH_COS * Math.cos(slope) ) + 
@@ -139,36 +107,8 @@ public class NewHillshade extends ElevationTile {
             return Color.argb(255-shade, COLOR,COLOR,COLOR);
         }
         
- /*       
-        private int shadeColor(int shade) {
-            return Color.argb(255-shade, shade, shade, shade);
-        }
-        
-        private int hyperColor(int shade) {
-            final int color=shade;
-            int alpha;
-            
-            if (shade < 128) {
-                alpha=255 - shade*2;
-            } else { 
-                alpha=((shade-128)*2);
-            }
-            
-            // 0== transparent 
-            return Color.argb(alpha, color, color, color);
-        }
-        */
-        
-        
-        private double delta_zx(final short a, final short c, final short d, final short f, final short g, final short i) {
-            final double sum = (c + 2*f + i) - (a + 2*d + g); 
-            return  (sum) / (total_cellsize);
-        }
-        
-        private double delta_zy(final int a, final int b, final int c, final int g, final int h, final int i) {
-            final double sum = (g + 2*h + i) - (a + 2*b + c); 
-            return (sum)  / (total_cellsize);
-        }
+ 
+    
         
         
         private double slope_rad(final double dzx, final double dzy) {

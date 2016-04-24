@@ -141,10 +141,13 @@ public class BitmapTileObject extends TileObject {
     public static class Source extends TileObject.Source {
 
         private final XYTileSource osmdroidSource;
+        private final TileBitmapFilter filter;
 
         
-        public Source (String sourceName, int minZ, int maxZ, final String... url) {
+        
+        public Source (String sourceName, TileBitmapFilter f, int minZ, int maxZ, final String... url) {
             osmdroidSource = new XYTileSource(sourceName, ResourceProxy.string.mapnik, minZ, maxZ, 256, ".png", url);
+            filter = f;
         }
         
 
@@ -176,6 +179,12 @@ public class BitmapTileObject extends TileObject {
 
         public String getTileURLString(MapTile tile) {
             return osmdroidSource.getTileURLString(tile);
+        }
+
+
+        @Override
+        public TileBitmapFilter getBitmapFilter() {
+            return filter;
         }
     }
 }

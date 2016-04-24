@@ -8,7 +8,6 @@ import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import ch.bailu.aat.helpers.AppBroadcaster;
-import ch.bailu.aat.services.cache.TileBitmapFilter;
 import ch.bailu.aat.services.cache.TileObject;
 import ch.bailu.aat.services.cache.TileStackObject;
 
@@ -80,8 +79,8 @@ public class CachedTileProvider extends AbsOsmTileProvider {
 
     
     @Override
-    public void setSubTileSource(TileObject.Source[] s, TileBitmapFilter[] f) {
-        super.setSubTileSource(s,f);
+    public void setSubTileSource(TileObject.Source[] s) {
+        super.setSubTileSource(s);
         cache.reset();
     }
     
