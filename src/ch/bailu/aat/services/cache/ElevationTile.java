@@ -53,7 +53,7 @@ public abstract class ElevationTile extends TileObject implements ElevationUpdat
     private DemProvider split(DemProvider dem) {
         int i=split;
         while(i>0) {
-            dem=new DemSplitter(dem);
+            dem=DemSplitter.factory(dem);
             i--;
         }
         return dem;

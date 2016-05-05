@@ -5,7 +5,6 @@ import org.osmdroid.tileprovider.MapTile;
 import ch.bailu.aat.services.cache.CacheService.SelfOn;
 import ch.bailu.aat.services.dem.DemProvider;
 import ch.bailu.aat.services.dem.MultiCell;
-import ch.bailu.aat.services.dem.MultiCell4;
 
 public class NewHillshade extends ElevationTile {
 
@@ -41,7 +40,7 @@ public class NewHillshade extends ElevationTile {
         int index=0;
         int old_line=-1;
 
-        final MultiCell mcell=new MultiCell4(demtile);
+        final MultiCell mcell=MultiCell.factory(demtile);
         
         
         for (int la=laSpan.start(); la< laSpan.end(); la++) {
@@ -58,7 +57,7 @@ public class NewHillshade extends ElevationTile {
                         old_offset = offset;
 
                         mcell.set(line+offset);
-                        color = table.getColor(mcell); //shade.hillshade(mcell);
+                        color = table.getColor(mcell); 
                     }
                     
                     bitmap[index]=color;

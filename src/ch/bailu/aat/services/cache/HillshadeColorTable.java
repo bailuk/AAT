@@ -1,7 +1,6 @@
 package ch.bailu.aat.services.cache;
 
 import android.content.Context;
-import android.graphics.Color;
 import ch.bailu.aat.helpers.AppBroadcaster;
 import ch.bailu.aat.services.background.ProcessHandle;
 import ch.bailu.aat.services.cache.CacheService.SelfOn;
@@ -19,8 +18,9 @@ public class HillshadeColorTable extends ObjectHandle {
     private final static int MAX_DELTA=240;
 
     private static final int COLOR=50;
+    private static final int GRAY=(COLOR << 16) | (COLOR << 8) | COLOR;
     
-    private short table[][]=new short[TABLE_DIM][TABLE_DIM];
+    private byte table[][]=new byte[TABLE_DIM][TABLE_DIM];
     
     public HillshadeColorTable() {
         super(ID);
@@ -67,9 +67,9 @@ public class HillshadeColorTable extends ObjectHandle {
     public int getColor(final MultiCell mcell) {
         final int x=deltaToIndex(cutDelta(mcell.delta_zx()));
         final int y=deltaToIndex(cutDelta(mcell.delta_zy()));
-        final int alpha=table[x][y];
+        final int alpha=table[x][y] & 0xFF;
         
-        return Color.argb(alpha, COLOR,COLOR,COLOR);
+        return (alpha << 24) | GRAY;
     }
     
     
@@ -108,7 +108,7 @@ public class HillshadeColorTable extends ObjectHandle {
         }
         
         
-        public short hillshade(float dzx, float dzy) {
+        public byte hillshade(float dzx, float dzy) {
             
             final double slope=slope_rad(dzx, dzy);
             
@@ -116,9 +116,9 @@ public class HillshadeColorTable extends ObjectHandle {
             shade = (int) (255d * (( ZENITH_COS * Math.cos(slope) ) + 
                     ( ZENITH_SIN * Math.sin(slope) * Math.cos(AZIMUTH_RAD - aspect_rad(dzx, dzy)) ) ));
             
-            shade = Math.max(0, shade); 
+            shade = 255-Math.max(0, shade); 
                     
-            return (short) (255-shade);
+            return (byte) shade;
         }
         
        

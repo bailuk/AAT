@@ -1,7 +1,6 @@
 package ch.bailu.aat.services.dem;
 
-
-public class MultiCell4 extends MultiCell {
+public class MultiCell4NE extends MultiCell {
     /**
      *      a  b
      *      c  d
@@ -15,7 +14,7 @@ public class MultiCell4 extends MultiCell {
     private final int total_cellsize;
 
 
-    private MultiCell4(final DemProvider dem) {
+    public MultiCell4NE(final DemProvider dem) {
         demtile = dem;
         dim = dem.getDim().DIM;
         total_cellsize=Math.round(dem.getCellsize()*4f);
@@ -30,37 +29,10 @@ public class MultiCell4 extends MultiCell {
 
 
     private void _set(int x) {
-            /**
-             *       a b
-             *       x d
-             */ 
-        int a,b,c,d;
-
-        if (demtile.inverseLatitude()==true && demtile.inverseLongitude()==false) { // NE
-            a=x-dim;    
-            b=a+1;
-            c=x;
-            d=x+1;
-
-        } else if (demtile.inverseLatitude()==false && demtile.inverseLongitude()==false) { // SE{
-            a=x;    
-            b=x+1;
-            c=x+dim;
-            d=c+1;
-
-        } else if (demtile.inverseLatitude()==false && demtile.inverseLongitude()==true) { // SW{
-            a=x-1;    
-            b=x;
-            d=x+dim;
-            c=d-1;
-            
-
-        } else { // NW
-            b=x-dim;
-            a=b-1;
-            c=x-1;
-            d=x;
-        }
+        final int a=x-dim;    
+        final int b=a+1;
+        final int c=x;
+        final int d=x+1;
         this.a=demtile.getElevation(a);
         this.b=demtile.getElevation(b);
         this.c=demtile.getElevation(c);

@@ -21,7 +21,7 @@ public class ElevationColorTile extends ElevationTile {
 
         int c=0;
         int old_line=-1;
-        
+        int color=0;
         
         for (int la=laSpan.start(); la< laSpan.end(); la++) {
 
@@ -29,19 +29,18 @@ public class ElevationColorTile extends ElevationTile {
             int offset = toLoRaster[loSpan.start()];
 
             if (old_line != line) {
-                shade.setAltitude(dem.getElevation(line + offset));
 
+                
                 for (int lo=loSpan.start(); lo<loSpan.end(); lo++) {
                     final int new_offset=toLoRaster[lo];
 
                     if (new_offset != offset) {
                         offset=new_offset;
 
-                        shade.setAltitude(dem.getElevation(line + offset));
+                        color=ColorTable.altitude.getColor(dem.getElevation(line + offset));
                     }
 
-
-                    buffer[c]=shade.color;
+                    buffer[c]=color;
                     c++;
                 }
             } else {
@@ -63,26 +62,6 @@ public class ElevationColorTile extends ElevationTile {
         }
     }
     
-    private class ShadeColor {
-        public int color=0;
-        private short altitude;
-        
-        
-        public void setAltitude(short a) {
-            altitude=a;
-            changeColor();
-            
-        }
-
-        
-
-
-        private void changeColor() {
-            color = ColorTable.altitude.getColor(altitude);
-        }
-
-    } 
-    private ShadeColor shade=new ShadeColor();
 
     public static class Factory extends ObjectHandle.Factory {
         private static final int SPLIT=0;

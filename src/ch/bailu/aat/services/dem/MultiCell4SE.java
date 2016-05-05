@@ -1,7 +1,6 @@
 package ch.bailu.aat.services.dem;
 
-
-public class MultiCell4 extends MultiCell {
+public class MultiCell4SE extends MultiCell {
     /**
      *      a  b
      *      c  d
@@ -15,7 +14,7 @@ public class MultiCell4 extends MultiCell {
     private final int total_cellsize;
 
 
-    private MultiCell4(final DemProvider dem) {
+    public MultiCell4SE(final DemProvider dem) {
         demtile = dem;
         dim = dem.getDim().DIM;
         total_cellsize=Math.round(dem.getCellsize()*4f);
@@ -23,51 +22,25 @@ public class MultiCell4 extends MultiCell {
 
     @Override
     public void set(int x) {
-            _set(x);
+        _set(x);
         dzx=_delta_zx();
         dzy=_delta_zy();
     }
 
 
     private void _set(int x) {
-            /**
-             *       a b
-             *       x d
-             */ 
-        int a,b,c,d;
 
-        if (demtile.inverseLatitude()==true && demtile.inverseLongitude()==false) { // NE
-            a=x-dim;    
-            b=a+1;
-            c=x;
-            d=x+1;
-
-        } else if (demtile.inverseLatitude()==false && demtile.inverseLongitude()==false) { // SE{
-            a=x;    
-            b=x+1;
-            c=x+dim;
-            d=c+1;
-
-        } else if (demtile.inverseLatitude()==false && demtile.inverseLongitude()==true) { // SW{
-            a=x-1;    
-            b=x;
-            d=x+dim;
-            c=d-1;
-            
-
-        } else { // NW
-            b=x-dim;
-            a=b-1;
-            c=x-1;
-            d=x;
-        }
+        final int a=x;    
+        final int b=x+1;
+        final int c=x+dim;
+        final int d=c+1;
         this.a=demtile.getElevation(a);
         this.b=demtile.getElevation(b);
         this.c=demtile.getElevation(c);
         this.d=demtile.getElevation(d);
 
     }
-    
+
 
     @Override
     public int delta_zx() {
