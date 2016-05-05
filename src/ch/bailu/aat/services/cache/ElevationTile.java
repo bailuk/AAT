@@ -15,6 +15,7 @@ import android.graphics.Rect;
 import android.util.SparseArray;
 import ch.bailu.aat.coordinates.SrtmCoordinates;
 import ch.bailu.aat.helpers.AppBroadcaster;
+import ch.bailu.aat.helpers.AppLog;
 import ch.bailu.aat.services.background.BackgroundService;
 import ch.bailu.aat.services.background.ProcessHandle;
 import ch.bailu.aat.services.cache.CacheService.SelfOn;
@@ -26,40 +27,47 @@ import ch.bailu.aat.services.dem.ElevationUpdaterClient;
 
 public abstract class ElevationTile extends TileObject implements ElevationUpdaterClient{
 
-    private final MapTile tile;
+    private final MapTile map_tile;
+    private final int split;
+    
     private boolean updateLock=false;
-
+    
+    
     private final SynchronizedBitmap bitmap=new SynchronizedBitmap();
 
     private final SparseArray<TilePainter> tilePainterList = new SparseArray<TilePainter>(25);
     
-    private final int[] toLaRaster = new int[TileObject.TILE_SIZE];
+    private final int[] toLaRaster = new int[TileObject.TILE_SIZE]; // 1. pixel to latitude | 2. pixel to dem index 
     private final int[] toLoRaster = new int[TileObject.TILE_SIZE];
 
-    private int split=0;
+    
 
     
-    private DemProvider split(DemProvider p) {
-        DemProvider r=p;
-
-        int i=split;
-        while(i>0) {
-            r=new DemSplitter(r);
-            i--;
-        }
-        return r;
-    }
-
-
-
-    public ElevationTile(String id, SelfOn self, MapTile t, int _split) {
+    public ElevationTile(String id, SelfOn self, MapTile _map_tile, int _split) {
         super(id);
-        tile=t;
+        map_tile=_map_tile;
         split=_split;
     }
 
     
-    public abstract void fillBitmap(int[] bitmap, int[] toLaRaster, int[] toLoRaster, Span laSpan, Span loSpan, DemProvider demtile);
+    private DemProvider split(DemProvider dem) {
+        int i=split;
+        while(i>0) {
+            dem=new DemSplitter(dem);
+            i--;
+        }
+        return dem;
+    }
+
+
+    
+    public abstract void fillBitmap(
+            int[] bitmap, 
+            int[] toLaRaster, 
+            int[] toLoRaster, 
+            Span laSpan, 
+            Span loSpan, 
+            DemProvider demtile);
 
     
     @Override
@@ -70,8 +78,7 @@ public abstract class ElevationTile extends TileObject implements ElevationUpdat
 
 
     @Override
-    public void onChanged(String id, SelfOn self) {
-    }
+    public void onChanged(String id, SelfOn self) {}
 
 
 
@@ -81,7 +88,6 @@ public abstract class ElevationTile extends TileObject implements ElevationUpdat
             AppBroadcaster.broadcast(self.context, AppBroadcaster.REQUEST_ELEVATION_UPDATE, toString());
         }
     }
-
 
 
 
@@ -108,6 +114,10 @@ public abstract class ElevationTile extends TileObject implements ElevationUpdat
     }
 
 
+    @Override
+    public boolean isUpdating() {
+        return updateLock;
+    }
 
 
     @Override
@@ -144,7 +154,8 @@ public abstract class ElevationTile extends TileObject implements ElevationUpdat
 
         @Override
         public long bgOnProcess() {
-
+            AppLog.d(this, "Initialize for: " + map_tile.toString());
+            
             initializeWGS84Raster();
             initializeIndexRaster();
             generateTilePainterList();
@@ -163,24 +174,32 @@ public abstract class ElevationTile extends TileObject implements ElevationUpdat
                     tileR.right, 
                     tileR.bottom);
 
-            int laDiff=br.getLatitudeE6()-tl.getLatitudeE6();
-            int loDiff=br.getLongitudeE6()-tl.getLongitudeE6(); //-1.2 - -1.5 = 0.3  //1.5 - 1.2 = 0.3
+            final int laDiff=br.getLatitudeE6()-tl.getLatitudeE6();
+            final int loDiff=br.getLongitudeE6()-tl.getLongitudeE6(); //-1.2 - -1.5 = 0.3  //1.5 - 1.2 = 0.3
 
 
-            final Span laS=new Span((int) Math.floor(tl.getLatitudeE6()/1e6));
-            final Span loS=new Span((int) Math.floor(tl.getLongitudeE6()/1e6));
+            int la = tl.getLatitudeE6();
+            int lo = tl.getLongitudeE6();
 
+            final Span laS=new Span((int) Math.floor(la/1e6d));
+            final Span loS=new Span((int) Math.floor(lo/1e6d));
+
+            final int laInc=laDiff / TileObject.TILE_SIZE;
+            final int loInc=loDiff / TileObject.TILE_SIZE;
+            
             int i;
             for (i=0; i< TileObject.TILE_SIZE; i++) {
-                // TODO faster calculation
-                toLaRaster[i]=tl.getLatitudeE6()+ (laDiff/TileObject.TILE_SIZE)*i;   
-                toLoRaster[i]=tl.getLongitudeE6()+ (loDiff/TileObject.TILE_SIZE)*i;
+                toLaRaster[i]=la;   
+                toLoRaster[i]=lo;
 
-                final int laDeg = (int) Math.floor(toLaRaster[i]/1e6);
-                final int loDeg = (int) Math.floor(toLoRaster[i]/1e6);
+                final int laDeg = (int) Math.floor(la/1e6d);
+                final int loDeg = (int) Math.floor(lo/1e6d);
 
                 laS.takeSpan(laSpan, i, laDeg);
                 loS.takeSpan(loSpan, i, loDeg);
+                
+                la+=laInc;
+                lo+=loInc;
             }
 
 
@@ -188,13 +207,22 @@ public abstract class ElevationTile extends TileObject implements ElevationUpdat
             loS.takeSpan(loSpan,i);
         }
 
+ 
+        private GeoPoint pixelToGeo(int x, int y) {
+            return TileSystem.PixelXYToLatLong(
+                    x, 
+                    y,
+                    map_tile.getZoomLevel(), 
+                    TileObject.TILE_SIZE, 
+                    null);
+        }        
+        
         private void initializeIndexRaster() {
             DemDimension dim=split(Dem3Tile.NULL).getDim();
 
             for (int i=0; i< TileObject.TILE_SIZE; i++) {
-                // FIXME this is a hack to prevent -1 index in hillshading.
-                toLaRaster[i]=Math.min(Math.max(1, dim.toYPos(toLaRaster[i])), dim.DIM-1);  
-                toLoRaster[i]=Math.min(Math.max(1, dim.toXPos(toLoRaster[i])), dim.DIM-1);
+                toLaRaster[i]=dim.toYPos(toLaRaster[i]);  
+                toLoRaster[i]=dim.toXPos(toLoRaster[i]);
             }
         }
 
@@ -227,19 +255,12 @@ public abstract class ElevationTile extends TileObject implements ElevationUpdat
 
 
         private Point tileToPixel() {
-            return new Point(tile.getX()*TileObject.TILE_SIZE, tile.getY()*TileObject.TILE_SIZE);
+            return new Point(map_tile.getX()*TileObject.TILE_SIZE, map_tile.getY()*TileObject.TILE_SIZE);
         }
 
 
 
-        private GeoPoint pixelToGeo(int x, int y) {
-            return TileSystem.PixelXYToLatLong(
-                    x, 
-                    y,
-                    tile.getZoomLevel(), 
-                    TileObject.TILE_SIZE, 
-                    null);
-        }
+ 
 
         @Override
         public void broadcast(Context context) {
@@ -292,6 +313,8 @@ public abstract class ElevationTile extends TileObject implements ElevationUpdat
         public long bgOnProcess() {
             final Rect interR = Span.toRect(laSpan, loSpan);
 
+            AppLog.d(this, "Fill bitmap for: " + ElevationTile.this.map_tile.toString() +"/"+ tile.toString() );
+
             fillBitmap(buffer,toLaRaster, toLoRaster, laSpan, loSpan, split(tile));
 
 
@@ -327,27 +350,6 @@ public abstract class ElevationTile extends TileObject implements ElevationUpdat
             AppBroadcaster.broadcast(context, AppBroadcaster.FILE_CHANGED_INCACHE, ElevationTile.this.toString());
         }
 
-    }
-
-    @Override
-    public boolean isUpdating() {
-        return updateLock;
-    }
-    
-    public static int splitFromZoom(int zoom) {
-        int split = 0;
-        if (zoom>12) {
-            split++;
-        }
-        
-        if (zoom>13) {
-            split++;
-        }
-        
-        if (zoom>14) {
-            split++;
-        }
-        return split;
     }
 
 }

@@ -4,5 +4,8 @@ public interface DemProvider {
     public short getElevation(int index);
     public DemDimension getDim();
     
-    public int getCellsize();
+    public float getCellsize();
+    
+    public boolean inverseLatitude();
+    public boolean inverseLongitude();
 }

@@ -56,7 +56,6 @@ public class Span {
     public void takeSpan(ArrayList<Span> span_array, int pixel_index) {
         _end = pixel_index;
         takeSpan(span_array);
-
     }
 
     private void takeSpan(ArrayList<Span> l) {

@@ -13,7 +13,6 @@ import org.osmdroid.util.GeoPoint;
 import android.content.Context;
 import ch.bailu.aat.coordinates.SrtmCoordinates;
 import ch.bailu.aat.helpers.AppBroadcaster;
-import ch.bailu.aat.helpers.AppLog;
 import ch.bailu.aat.services.background.BackgroundService;
 import ch.bailu.aat.services.background.FileHandle;
 import ch.bailu.aat.services.background.ProcessHandle;
@@ -70,15 +69,26 @@ public class Dem3Tile implements ElevationProvider, DemProvider {
         }
 
         @Override
-        public int getCellsize() {
-            return 0;
+        public float getCellsize() {
+            return 50;
+        }
+
+        @Override
+        public boolean inverseLatitude() {
+            return false;
+        }
+
+        @Override
+        public boolean inverseLongitude() {
+            return false;
         }
         
     };
     
     private static final int DEM3_BUFFER_DIM=1201;
     private static final int DEM3_BUFFER_OFFSET=1;
-    private static DemDimension DIMENSION= new DemDimension(DEM3_BUFFER_DIM-DEM3_BUFFER_OFFSET, DEM3_BUFFER_OFFSET);
+    private static DemDimension DIMENSION= 
+            new DemDimension(DEM3_BUFFER_DIM-DEM3_BUFFER_OFFSET, DEM3_BUFFER_OFFSET);
     
     private final byte data[]= new byte[DEM3_BUFFER_DIM*DEM3_BUFFER_DIM*2];
     private final ShortBuffer buffer = ByteBuffer.wrap(data).asShortBuffer();
@@ -214,6 +224,7 @@ public class Dem3Tile implements ElevationProvider, DemProvider {
     }
 
 
+    
     @Override
     public short getElevation(int laE6, int loE6) {
         return buffer.get(DIMENSION.toPos(laE6, loE6));
@@ -223,11 +234,11 @@ public class Dem3Tile implements ElevationProvider, DemProvider {
     public short getElevation(int index) {
         short r=0;
     
-        try {
-           r= buffer.get(index);
-        } catch (IndexOutOfBoundsException e) {
-          AppLog.d(this, "Index: " + index + " of " + DIMENSION.DIM_OFFSET*DIMENSION.DIM_OFFSET);
-        }
+        //try {
+        r= buffer.get(index);
+        //} catch (IndexOutOfBoundsException e) {
+        //  AppLog.d(this, "Index: " + index + " of " + DIMENSION.DIM_OFFSET*DIMENSION.DIM_OFFSET);
+        //}
         return r;
     }
 
@@ -236,16 +247,27 @@ public class Dem3Tile implements ElevationProvider, DemProvider {
     private final static double REF_LO_2=8d;
     
     @Override
-    public int getCellsize() {
+    public float getCellsize() {
         final float fdistance = GeoPoint.distanceBetween(
                 coordinates.getLatitudeE6()/1e6, REF_LO_1, 
                 coordinates.getLatitudeE6()/1e6, REF_LO_2);
         
-        int idistance = Math.round(fdistance / DIMENSION.DIM);
+        float idistance = fdistance / DIMENSION.DIM;
 
         if (idistance==0) idistance=50;
         
         return idistance;
     }
-    
+   
+    @Override
+    public boolean inverseLatitude() {
+        return (coordinates.getLatitudeE6()>0);
+    }
+
+
+    @Override
+    public boolean inverseLongitude() {
+        return (coordinates.getLongitudeE6()<0);
+    }
+
 }

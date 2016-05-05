@@ -15,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import ch.bailu.aat.R;
 import ch.bailu.aat.description.DescriptionInterface;
 import ch.bailu.aat.dispatcher.ContentDispatcher;
 import ch.bailu.aat.dispatcher.ContentSource;
@@ -42,6 +43,7 @@ import ch.bailu.aat.views.TrackDescriptionView;
 import ch.bailu.aat.views.ViewWrapper;
 import ch.bailu.aat.views.map.OsmInteractiveView;
 import ch.bailu.aat.views.map.overlay.CurrentLocationOverlay;
+import ch.bailu.aat.views.map.overlay.Dem3NameOverlay;
 import ch.bailu.aat.views.map.overlay.OsmOverlay;
 import ch.bailu.aat.views.map.overlay.RefreshLogOverlay;
 import ch.bailu.aat.views.map.overlay.ZoomLevelOverlay;
@@ -51,7 +53,6 @@ import ch.bailu.aat.views.map.overlay.gpx.GpxDynOverlay;
 import ch.bailu.aat.views.map.overlay.gpx.GpxOverlayListOverlay;
 import ch.bailu.aat.views.map.overlay.gpx.GpxTestOverlay;
 import ch.bailu.aat.views.map.overlay.grid.GridDynOverlay;
-import ch.bailu.aat.R;
 
 public class TestActivity extends AbsDispatcher implements OnClickListener {
     private static final String SOLID_KEY="test";
@@ -150,6 +151,7 @@ public class TestActivity extends AbsDispatcher implements OnClickListener {
                     new InformationBarOverlay(map),
                     new ZoomLevelOverlay(map),
                     new RefreshLogOverlay(map),
+                    new Dem3NameOverlay(map)
             };
             map.setOverlayList(overlayList);
             

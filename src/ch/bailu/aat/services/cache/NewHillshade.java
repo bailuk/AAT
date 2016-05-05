@@ -2,17 +2,34 @@ package ch.bailu.aat.services.cache;
 
 import org.osmdroid.tileprovider.MapTile;
 
-import android.graphics.Color;
 import ch.bailu.aat.services.cache.CacheService.SelfOn;
 import ch.bailu.aat.services.dem.DemProvider;
-import ch.bailu.aat.services.dem.MultiCell8;
+import ch.bailu.aat.services.dem.MultiCell;
+import ch.bailu.aat.services.dem.MultiCell4;
 
 public class NewHillshade extends ElevationTile {
 
+    private HillshadeColorTable table;
+    
     public NewHillshade(String id, SelfOn self, MapTile t) {
-        super(id, self, t, ElevationTile.splitFromZoom(t.getZoomLevel()));
+        super(id, self, t, splitFromZoom(t.getZoomLevel()));
     }
 
+    
+    @Override
+    public void onInsert(SelfOn self) {
+        table=(HillshadeColorTable) self.getObject(HillshadeColorTable.ID, new HillshadeColorTable.Factory());
+        
+        super.onInsert(self);
+    }
+    
+    
+    @Override
+    public void onRemove(SelfOn self) {
+        super.onRemove(self);
+        table.free();
+    }
+    
     
     @Override
     public void fillBitmap(int[] bitmap, int[] toLaRaster, int[] toLoRaster,
@@ -24,8 +41,8 @@ public class NewHillshade extends ElevationTile {
         int index=0;
         int old_line=-1;
 
-        final MultiCell8 mcell=new MultiCell8(demtile);
-        final Hillshade shade=new Hillshade();
+        final MultiCell mcell=new MultiCell4(demtile);
+        
         
         for (int la=laSpan.start(); la< laSpan.end(); la++) {
 
@@ -41,7 +58,7 @@ public class NewHillshade extends ElevationTile {
                         old_offset = offset;
 
                         mcell.set(line+offset);
-                        color = shade.hillshade(mcell);
+                        color = table.getColor(mcell); //shade.hillshade(mcell);
                     }
                     
                     bitmap[index]=color;
@@ -66,82 +83,21 @@ public class NewHillshade extends ElevationTile {
     }
     
     
-    private static class Hillshade {
-        /**
-         * Source: 
-         * http://edndoc.esri.com/arcobjects/9.2/net/shared/geoprocessing/spatial_analyst_tools/how_hillshade_works.htm
-         */
-        
-        private static final int    COLOR=50;
-        private static final double ALTITUDE_DEG=45d;
+   
 
-        private static final double AZIMUTH_DEG=315d;
-        private static final double AZIMUTH_MATH = 360d - AZIMUTH_DEG + 90d;
-        private        final double AZIMUTH_RAD = Math.toRadians(AZIMUTH_MATH);
-        
-        private static final double ZENITH_DEG=90d-ALTITUDE_DEG;
-        private        final double ZENITH_RAD=Math.toRadians(ZENITH_DEG);
-        private        final double ZENITH_COS=Math.cos(ZENITH_RAD);
-        private        final double ZENITH_SIN=Math.sin(ZENITH_RAD);
-        
-
-        private final static double DOUBLE_PI=Math.PI*2d;
-        private final static double HALF_PI=Math.PI/2d;
-        private final static double ONEHALF_PI=DOUBLE_PI-HALF_PI;
-
-        public int hillshade(final MultiCell8 mcell) 
-        {
-            final double dzx = mcell.delta_zx();
-            final double dzy = mcell.delta_zy();
-            final double slope=slope_rad(dzx, dzy);
-            
-            int shade = (int) (255d * (( ZENITH_COS * Math.cos(slope) ) + 
-                    ( ZENITH_SIN * Math.sin(slope) * Math.cos(AZIMUTH_RAD - aspect_rad(dzx, dzy)) ) ));
-            
-            shade = Math.max(0, shade); 
-                    
-            return alphaColor(shade);
+    public static int splitFromZoom(int zoom) {
+        int split = 0;
+        if (zoom > 11) {
+            split++;
         }
         
-        private int alphaColor(final int shade) {
-            return Color.argb(255-shade, COLOR,COLOR,COLOR);
+        if (zoom > 13) {
+            split++;
         }
         
- 
+        return split;
+    }
     
-        
-        
-        private double slope_rad(final double dzx, final double dzy) {
-            return Math.atan(Math.sqrt(dzx*dzx + dzy*dzy));
-        }
-        
-        
-        
-        private double aspect_rad(final double dzx, final double dzy) {
-            double ret=0d;
-            
-            if (dzx!=0d) {
-
-                ret = Math.atan2(dzy, -1d*dzx);
-
-                if (ret < 0d) {
-
-                  ret = DOUBLE_PI + ret;
-                }
-                
-            } else {
-
-                if (dzy > 0d) {
-                    ret = HALF_PI;
-
-                } else if (dzy < 0d) {
-                  ret = ONEHALF_PI;
-                } 
-            }
-            return ret;
-        }
-     }
-
     public static class Factory extends ObjectHandle.Factory {
         private final MapTile mapTile;
 
