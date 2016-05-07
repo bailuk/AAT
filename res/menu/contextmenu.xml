@@ -6,4 +6,5 @@
 <item android:id="@+id/m_file_rename" android:title="@string/file_rename"></item>
 <item android:id="@+id/m_file_overlay" android:title="@string/file_overlay"></item>
 <item android:id="@+id/m_file_mock" android:title="@string/file_mock"></item>
+<item android:id="@+id/m_file_send" android:title="@string/file_send"></item>
 </menu>

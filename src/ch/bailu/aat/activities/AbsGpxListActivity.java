@@ -12,6 +12,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.LinearLayout;
 import ch.bailu.aat.description.ContentDescription;
+import ch.bailu.aat.helpers.AppFile;
 import ch.bailu.aat.helpers.AppLog;
 import ch.bailu.aat.preferences.AddOverlayDialog;
 import ch.bailu.aat.preferences.SolidMockLocationFile;
@@ -211,6 +212,9 @@ public abstract class AbsGpxListActivity extends AbsMenu implements OnItemClickL
             } else if (item.getItemId() == R.id.m_file_mock) {
                 SolidMockLocationFile smock = new SolidMockLocationFile(this);
                 smock.setValue(getDirectoryService().getCurrent().getPath());
+                
+            } else if (item.getItemId() == R.id.m_file_send) {
+                AppFile.send(this, new File(getDirectoryService().getCurrent().getPath()));
             }
 
         } catch (Exception e) {
