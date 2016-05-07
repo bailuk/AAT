@@ -5,9 +5,11 @@ public class MultiCell8 extends MultiCell {
      *      a  b  c
      *      d [e] f
      *      g  h  i
+     *      
+     *      only works with double offset mode
      */
 
-    private short a,b,c,d,f,g,h,i;
+    private int A,B,C,D,F,G,H,I;
     private int dzx, dzy;
 
     private final DemProvider demtile;
@@ -31,14 +33,14 @@ public class MultiCell8 extends MultiCell {
         final int c=b+1;
         final int a=b-1;
 
-        this.a=demtile.getElevation(a);
-        this.b=demtile.getElevation(b);
-        this.c=demtile.getElevation(c);
-        this.d=demtile.getElevation(d);
-        this.f=demtile.getElevation(f);
-        this.g=demtile.getElevation(g);
-        this.h=demtile.getElevation(h);
-        this.i=demtile.getElevation(i);
+        A=demtile.getElevation(a);
+        B=demtile.getElevation(b);
+        C=demtile.getElevation(c);
+        D=demtile.getElevation(d);
+        F=demtile.getElevation(f);
+        G=demtile.getElevation(g);
+        H=demtile.getElevation(h);
+        I=demtile.getElevation(i);
         
         dzx=_delta_zx();
         dzy=_delta_zy();
@@ -54,12 +56,12 @@ public class MultiCell8 extends MultiCell {
     }
 
     private int _delta_zx() {
-        final int sum = (c + 2*f + i) - (a + 2*d + g); 
-        return  sum * 100  / total_cellsize;
+        final int sum = (C + 2*F + I) - (A + 2*D + G); 
+        return  (sum * 100)  / total_cellsize;
     }
     
     private int _delta_zy() {
-        final int sum = (g + 2*h + i) - (a + 2*b + c); 
-        return sum *100  / total_cellsize;
+        final int sum = (G + 2*H + I) - (A + 2*B + C); 
+        return (sum *100)  / total_cellsize;
     }
 }

@@ -2,120 +2,130 @@ package ch.bailu.aat.services.dem;
 
 
 public class DemSplitter implements DemProvider {
-    private final DemProvider parent;
-    private final DemDimension dim;
-    private final DemDimension parent_dim;
+    public final DemProvider parent;
+    public final int dim, parent_dim;
 
+    private final DemDimension _dim;
+    
     private final float cellsize;
 
-    
+
     public static DemProvider factory(DemProvider dem) {
-        if (dem.inverseLatitude()==true && dem.inverseLongitude()==false) { // NE
-            return new DemSplitterNE(dem);
+        
+        if (dem.inverseLatitude()==true && dem.inverseLongitude()==false) {
+            dem = new DemSplitterNE(dem);
 
-        } else if (dem.inverseLatitude()==false && dem.inverseLongitude()==false) { // SE{
-            return new DemSplitterSE(dem);
+        } else if (dem.inverseLatitude()==false && dem.inverseLongitude()==false) {
+            dem = new DemSplitterSE(dem);
 
-        } else if (dem.inverseLatitude()==false && dem.inverseLongitude()==true) { // SW{
-            return new DemSplitterSW(dem);
-            
-        } else { // NW
-            return new DemSplitterNW(dem);
+        } else if (dem.inverseLatitude()==false && dem.inverseLongitude()==true) {
+            dem = new DemSplitterSW(dem);
+
+        } else { 
+            dem =  new DemSplitterNW(dem);
         }
         
-    }
-    
-    private DemSplitter(DemProvider p) {
-        parent=p;
-        parent_dim=parent.getDim();
-        cellsize=parent.getCellsize()/2;
-        dim=new DemDimension(
-                parent_dim.DIM*2, 
-                parent_dim.OFFSET*2);
+        return dem;
     }
 
-    public short getElevation(int index) {
-        final int row = index / dim.DIM_OFFSET;
-        final int col = index % dim.DIM_OFFSET;
+    
+    public DemSplitter(DemProvider p) {
+        final DemDimension pdim=p.getDim();
+        
+        parent=p;
+        parent_dim=pdim.DIM;
+        
+        cellsize=parent.getCellsize()/2;
+        _dim=new DemDimension(
+                pdim.DIM*2, 
+                pdim.OFFSET*3); // Add extra offset (1x) for MultiCell. Original (parent) offset (2x) is used by DemSplitter. 
+        
+        dim = _dim.DIM;
+    }
+
+    public short getElevation(final int index) {
+        final int row = index / dim;
+        final int col = index % dim;
 
         final int parent_row=row/2;
         final int parent_col=col/2;
 
-        final int parent_index=parent_row*parent_dim.DIM_OFFSET + parent_col;
+        final int parent_index=parent_row*parent_dim + parent_col;
 
         final int row_mode=row % 2; 
         final int col_mode=col % 2;
 
-        float sum=0;
-        final float div=2;
+        
 
         /**
-         *  a b
-         *  C d
-         *  
-         *  [0,0] [0,1]
-         *  [1,0] [1,1]
-         *  
+         * Kernel:
+         *  a b c
+         *  d E f
+         *  g h i
+         *   
+         *    
+         * Splitted E: 
+         *   A B 
+         *   C D
          */
 
-        if (parent.inverseLatitude()==true && parent.inverseLongitude()==false) { // NE
-            final int C = parent.getElevation(parent_index);
+        final int e = parent_index;
+        final int b = e - parent_dim;
+        final int a = b - 1;
+        final int c = b + 1;
+        final int d = e - 1;
+        final int f = e + 1;
+        final int h = e + parent_dim;
+        final int g = h - 1;
+        final int i = h + 1;
 
-            if (row_mode+col_mode == 0) { // a
-                final int a = parent.getElevation(parent_index - parent_dim.DIM_OFFSET);
-                sum = C + a;
-            } else if (row_mode==0) {    // b
-                final int d = parent.getElevation(parent_index - parent_dim.DIM_OFFSET+1);
-                sum = C + d;
-            } else if (col_mode==0) {    // c
-                sum=C + C;
-            } else {                     // d
-                final int d = parent.getElevation(parent_index + 1);
-                sum = C + d;
-            }
+        
+        int sum = parent.getElevation(e)*2;
+        final int div=12;
+        
+        if (row_mode+col_mode == 0) { // A
+            sum = sum + 
+                    parent.getElevation(a)*2 + 
+                    parent.getElevation(b)*2 +
+                    parent.getElevation(c) +
+                    parent.getElevation(d)*2 +
+                    parent.getElevation(f) +
+                    parent.getElevation(g) +
+                    parent.getElevation(h);// +
+                    //parent.getElevation(i);
 
-        } else if (parent.inverseLatitude()==false && parent.inverseLongitude()==false) { // SE
-            final int A = parent.getElevation(parent_index);
-            if (row_mode+col_mode == 0) { // a
-                sum = A+A;
-            } else if (row_mode==0) {    // b
-                final int b = parent.getElevation(parent_index + 1);
-                sum = A + b;
-            } else if (col_mode==0) {    // c
-                final int c = parent.getElevation(parent_index+parent_dim.DIM_OFFSET);
-                sum=A+c;
-            } else {                     // d
-                final int d = parent.getElevation(parent_index +parent_dim.DIM_OFFSET+ 1);
-                sum = A+d;
-            }
-        } else if (parent.inverseLatitude()==false && parent.inverseLongitude()==true) { // SW
-            final int B = parent.getElevation(parent_index);
-            if (row_mode+col_mode == 0) { // a
-                final int a = parent.getElevation(parent_index - 1);
-                sum = B+a;
-            } else if (row_mode==0) {    // b
-                sum = B+B;
-            } else if (col_mode==0) {    // c
-                final int c = parent.getElevation(parent_index+parent_dim.DIM_OFFSET-1);
-                sum=B+c;
-            } else {                     // d
-                final int d = parent.getElevation(parent_index +parent_dim.DIM_OFFSET);
-                sum = B+d;
-            }
-        } else  {// NW
-            final int D = parent.getElevation(parent_index);
-            if (row_mode+col_mode == 0) { // a
-                final int a = parent.getElevation(parent_index - parent_dim.DIM_OFFSET-1);
-                sum = D+a;
-            } else if (row_mode==0) {    // b
-                final int b = parent.getElevation(parent_index - parent_dim.DIM_OFFSET);
-                sum = D+b;
-            } else if (col_mode==0) {    // c
-                final int c = parent.getElevation(parent_index - 1);
-                sum=D+c;
-            } else {                     // d
-                sum = D+D;
-            }
+        } else if (row_mode==0) {    // B
+            sum = sum + 
+                    parent.getElevation(a) + 
+                    parent.getElevation(b)*2 +
+                    parent.getElevation(c)*2 +
+                    parent.getElevation(d) +
+                    parent.getElevation(f)*2 +
+                    //parent.getElevation(g) +
+                    parent.getElevation(h) +
+                    parent.getElevation(i);
+
+        } else if (col_mode==0) {    // C
+            sum = sum + 
+                    parent.getElevation(a) + 
+                    parent.getElevation(b) +
+                    //parent.getElevation(c) +
+                    parent.getElevation(d)*2 +
+                    parent.getElevation(f) +
+                    parent.getElevation(g)*2 +
+                    parent.getElevation(h)*2 +
+                    parent.getElevation(i);
+
+        } else {                     // D
+            sum = sum + 
+                    //parent.getElevation(a) + 
+                    parent.getElevation(b) +
+                    parent.getElevation(c) +
+                    parent.getElevation(d) +
+                    parent.getElevation(f)*2 +
+                    parent.getElevation(g) +
+                    parent.getElevation(h)*2 +
+                    parent.getElevation(i)*2;
         }
 
         return (short)Math.round(sum / div);
@@ -124,7 +134,7 @@ public class DemSplitter implements DemProvider {
 
     @Override
     public DemDimension getDim() {
-        return dim;
+        return _dim;
     }
 
     @Override

@@ -3,8 +3,6 @@ package ch.bailu.aat.services.dem;
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.ByteBuffer;
-import java.nio.ShortBuffer;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
@@ -88,11 +86,9 @@ public class Dem3Tile implements ElevationProvider, DemProvider {
     private static final int DEM3_BUFFER_DIM=1201;
     private static final int DEM3_BUFFER_OFFSET=1;
     private static DemDimension DIMENSION= 
-            new DemDimension(DEM3_BUFFER_DIM-DEM3_BUFFER_OFFSET, DEM3_BUFFER_OFFSET);
+            new DemDimension(DEM3_BUFFER_DIM, DEM3_BUFFER_OFFSET);
     
     private final byte data[]= new byte[DEM3_BUFFER_DIM*DEM3_BUFFER_DIM*2];
-    private final ShortBuffer buffer = ByteBuffer.wrap(data).asShortBuffer();
-    
     
     private ProcessHandle handle=FileHandle.NULL;
     
@@ -101,6 +97,8 @@ public class Dem3Tile implements ElevationProvider, DemProvider {
     
     
     private long stamp=System.currentTimeMillis();
+    
+    private final DemGeoToIndex toIndex = new DemGeoToIndex(DIMENSION);
     
     private SrtmCoordinates coordinates = new SrtmCoordinates(0,0);
     
@@ -225,21 +223,19 @@ public class Dem3Tile implements ElevationProvider, DemProvider {
 
 
     
+    
+    
     @Override
     public short getElevation(int laE6, int loE6) {
-        return buffer.get(DIMENSION.toPos(laE6, loE6));
+        return getElevation(toIndex.toPos(laE6, loE6));
     }
 
     @Override
     public short getElevation(int index) {
-        short r=0;
-    
-        //try {
-        r= buffer.get(index);
-        //} catch (IndexOutOfBoundsException e) {
-        //  AppLog.d(this, "Index: " + index + " of " + DIMENSION.DIM_OFFSET*DIMENSION.DIM_OFFSET);
-        //}
-        return r;
+        index = index *2;
+        
+        final short x = (short) ((data[index] << 8) | (data[index+1]&0xFF));
+        return x; 
     }
 
 
@@ -252,7 +248,7 @@ public class Dem3Tile implements ElevationProvider, DemProvider {
                 coordinates.getLatitudeE6()/1e6, REF_LO_1, 
                 coordinates.getLatitudeE6()/1e6, REF_LO_2);
         
-        float idistance = fdistance / DIMENSION.DIM;
+        float idistance = fdistance / (DIMENSION.DIM-DIMENSION.OFFSET);
 
         if (idistance==0) idistance=50;
         

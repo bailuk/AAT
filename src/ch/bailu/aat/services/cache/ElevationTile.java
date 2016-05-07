@@ -15,12 +15,12 @@ import android.graphics.Rect;
 import android.util.SparseArray;
 import ch.bailu.aat.coordinates.SrtmCoordinates;
 import ch.bailu.aat.helpers.AppBroadcaster;
-import ch.bailu.aat.helpers.AppLog;
 import ch.bailu.aat.services.background.BackgroundService;
 import ch.bailu.aat.services.background.ProcessHandle;
 import ch.bailu.aat.services.cache.CacheService.SelfOn;
 import ch.bailu.aat.services.dem.Dem3Tile;
 import ch.bailu.aat.services.dem.DemDimension;
+import ch.bailu.aat.services.dem.DemGeoToIndex;
 import ch.bailu.aat.services.dem.DemProvider;
 import ch.bailu.aat.services.dem.DemSplitter;
 import ch.bailu.aat.services.dem.ElevationUpdaterClient;
@@ -50,16 +50,25 @@ public abstract class ElevationTile extends TileObject implements ElevationUpdat
     }
 
     
-    private DemProvider split(DemProvider dem) {
+    
+    public DemProvider split(DemProvider dem) {
         int i=split;
         while(i>0) {
-            dem=DemSplitter.factory(dem);
+            dem=factorySplitter(dem);
             i--;
         }
         return dem;
     }
 
+    public DemProvider factorySplitter(DemProvider dem) {
+        return DemSplitter.factory(dem);
+    }
 
+    public DemGeoToIndex factoryGeoToIndex(DemDimension dim) {
+        return new DemGeoToIndex(dim);
+    }
+    
+    
     
     public abstract void fillBitmap(
             int[] bitmap, 
@@ -154,8 +163,6 @@ public abstract class ElevationTile extends TileObject implements ElevationUpdat
 
         @Override
         public long bgOnProcess() {
-            AppLog.d(this, "Initialize for: " + map_tile.toString());
-            
             initializeWGS84Raster();
             initializeIndexRaster();
             generateTilePainterList();
@@ -219,10 +226,14 @@ public abstract class ElevationTile extends TileObject implements ElevationUpdat
         
         private void initializeIndexRaster() {
             DemDimension dim=split(Dem3Tile.NULL).getDim();
+            
 
+            DemGeoToIndex toIndex=factoryGeoToIndex(dim);
+            
+            
             for (int i=0; i< TileObject.TILE_SIZE; i++) {
-                toLaRaster[i]=dim.toYPos(toLaRaster[i]);  
-                toLoRaster[i]=dim.toXPos(toLoRaster[i]);
+                toLaRaster[i]=toIndex.toYPos(toLaRaster[i]);  
+                toLoRaster[i]=toIndex.toXPos(toLoRaster[i]);
             }
         }
 
@@ -313,8 +324,6 @@ public abstract class ElevationTile extends TileObject implements ElevationUpdat
         public long bgOnProcess() {
             final Rect interR = Span.toRect(laSpan, loSpan);
 
-            AppLog.d(this, "Fill bitmap for: " + ElevationTile.this.map_tile.toString() +"/"+ tile.toString() );
-
             fillBitmap(buffer,toLaRaster, toLoRaster, laSpan, loSpan, split(tile));
 
 
@@ -351,5 +360,7 @@ public abstract class ElevationTile extends TileObject implements ElevationUpdat
         }
 
     }
+
+
 
 }

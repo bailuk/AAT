@@ -33,7 +33,6 @@ public class IconMapService extends AbsService {
         
         final File mapFile = new File(directory, MAP_FILE);
 
-        AppLog.d(this, mapFile.toString());
         if (mapFile.exists()) {
             try {
                 new IconMapParser(mapFile, map);
@@ -41,8 +40,6 @@ public class IconMapService extends AbsService {
                 AppLog.e(this, e);
             }
         }
-        //AppLog.d(this, mapFile.toString());
-        
     }
     
     

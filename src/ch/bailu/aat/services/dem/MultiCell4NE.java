@@ -3,7 +3,7 @@ package ch.bailu.aat.services.dem;
 public class MultiCell4NE extends MultiCell {
     /**
      *      a  b
-     *      c  d
+     *      C  d
      */
 
     private short a, b, c, d;
@@ -27,7 +27,6 @@ public class MultiCell4NE extends MultiCell {
         dzy=_delta_zy();
     }
 
-
     private void _set(int x) {
         final int a=x-dim;    
         final int b=a+1;
@@ -37,7 +36,6 @@ public class MultiCell4NE extends MultiCell {
         this.b=demtile.getElevation(b);
         this.c=demtile.getElevation(c);
         this.d=demtile.getElevation(d);
-
     }
     
 

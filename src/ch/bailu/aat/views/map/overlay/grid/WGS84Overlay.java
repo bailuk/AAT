@@ -12,7 +12,7 @@ import ch.bailu.aat.views.map.overlay.MapPainter;
 import ch.bailu.aat.views.map.overlay.OsmOverlay;
 
 public class WGS84Overlay extends OsmOverlay implements GeoConstants{
-    
+    private final static int MIN_ZOOM_LEVEL=7;
     
     private final ElevationProvider elevation;
     private final AltitudeDescription altitudeDescription;
@@ -26,8 +26,11 @@ public class WGS84Overlay extends OsmOverlay implements GeoConstants{
     
     @Override
     public void draw(MapPainter painter) {
+        final IGeoPoint point = painter.projection.getCenterPoint();
+        
         drawGrid(painter);
-        drawLabel(painter);
+        drawCoordinates(painter, point);
+        drawElevation(painter, point);
     }
 
     
@@ -39,17 +42,18 @@ public class WGS84Overlay extends OsmOverlay implements GeoConstants{
     }
     
     
-    private void drawLabel(MapPainter painter) {
-        final IGeoPoint point = painter.projection.getCenterPoint();
-        
-        final short ele = elevation.getElevation(point.getLatitudeE6(), point.getLongitudeE6());
-        
-        painter.canvas.drawTextBottom(altitudeDescription.getValueUnit(ele),3);
-        
+    private void drawCoordinates(MapPainter painter, IGeoPoint point) {
         painter.canvas.drawTextBottom(new WGS84Sexagesimal(point).toString(),2);
         painter.canvas.drawTextBottom(String.format("%.6f/%.6f", 
                 ((double)point.getLatitudeE6()/1E6), 
                 ((double)point.getLongitudeE6()/1E6)),
                 1);
+    }
+    
+    private void drawElevation(MapPainter painter, IGeoPoint point) {
+        if (getMapView().getZoomLevel() > MIN_ZOOM_LEVEL) {
+            final short ele = elevation.getElevation(point.getLatitudeE6(), point.getLongitudeE6());
+            painter.canvas.drawTextBottom(altitudeDescription.getValueUnit(ele),3);
+        }
     }
 }

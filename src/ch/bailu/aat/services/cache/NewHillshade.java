@@ -20,6 +20,7 @@ public class NewHillshade extends ElevationTile {
         table=(HillshadeColorTable) self.getObject(HillshadeColorTable.ID, new HillshadeColorTable.Factory());
         
         super.onInsert(self);
+        
     }
     
     
@@ -30,21 +31,25 @@ public class NewHillshade extends ElevationTile {
     }
     
     
+    public MultiCell factoryMultiCell(DemProvider dem) {
+        return MultiCell.factory(dem);
+    }
+    
+    
+    
     @Override
     public void fillBitmap(int[] bitmap, int[] toLaRaster, int[] toLoRaster,
             Span laSpan, Span loSpan, DemProvider demtile) {
-        final int demtile_dim = demtile.getDim().DIM_OFFSET;
+        final int demtile_dim = demtile.getDim().DIM;
         final int bitmap_dim = loSpan.size();
 
         int color=0;
         int index=0;
         int old_line=-1;
 
-        final MultiCell mcell=MultiCell.factory(demtile);
-        
+        final MultiCell mcell = factoryMultiCell(demtile);
         
         for (int la=laSpan.start(); la< laSpan.end(); la++) {
-
             final int line = toLaRaster[la]*demtile_dim;
 
             if (old_line != line) {
@@ -89,11 +94,11 @@ public class NewHillshade extends ElevationTile {
         if (zoom > 11) {
             split++;
         }
-        
+/*        
         if (zoom > 13) {
             split++;
         }
-        
+  */      
         return split;
     }
     

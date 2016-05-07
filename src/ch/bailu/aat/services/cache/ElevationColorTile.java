@@ -16,7 +16,7 @@ public class ElevationColorTile extends ElevationTile {
 
     @Override
     public void fillBitmap(int[] buffer, int[] toLaRaster, int[] toLoRaster, Span laSpan, Span loSpan, DemProvider dem) {
-        final int dim = dem.getDim().DIM_OFFSET;
+        final int dim = dem.getDim().DIM;
         final int bitmap_dim = loSpan.size();
 
         int c=0;
@@ -26,7 +26,7 @@ public class ElevationColorTile extends ElevationTile {
         for (int la=laSpan.start(); la< laSpan.end(); la++) {
 
             final int line = toLaRaster[la]*dim;
-            int offset = toLoRaster[loSpan.start()];
+            int offset = -1; 
 
             if (old_line != line) {
 

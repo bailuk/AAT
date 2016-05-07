@@ -6,6 +6,7 @@ import org.osmdroid.tileprovider.tilesource.OnlineTileSourceBase;
 import android.content.Context;
 import ch.bailu.aat.services.cache.BitmapTileObject;
 import ch.bailu.aat.services.cache.ElevationColorTile;
+import ch.bailu.aat.services.cache.Hillshade8;
 import ch.bailu.aat.services.cache.NewHillshade;
 import ch.bailu.aat.services.cache.ObjectHandle.Factory;
 import ch.bailu.aat.services.cache.TileBitmapFilter;
@@ -97,27 +98,27 @@ public class SolidMapTileStack extends SolidCheckList {
 
 
     
-    public final static Source ELEVATION_HILLSHADE = 
+    public final static Source ELEVATION_HILLSHADE4 = 
             new Source() {
 
         @Override
         public String getName() {
-            return "Hillshade*";
+            return "Hillshade 4*";
         }
 
         @Override
         public String getID(MapTile t, Context x) {
-            return getName() + "/" + t.getZoomLevel() + "/" + t.getX() + "/" + t.getY(); 
+            return NewHillshade.class.getSimpleName() + "/" + t.getZoomLevel() + "/" + t.getX() + "/" + t.getY(); 
         }
 
         @Override
         public int getMinimumZoomLevel() {
-            return 6;
+            return 8;
         }
 
         @Override
         public int getMaximumZoomLevel() {
-            return 15;
+            return 14;
         }
 
         @Override
@@ -131,12 +132,46 @@ public class SolidMapTileStack extends SolidCheckList {
         }
     };
 
+    public final static Source ELEVATION_HILLSHADE8 = 
+            new Source() {
+
+        @Override
+        public String getName() {
+            return "Hillshade 8*";
+        }
+
+        @Override
+        public String getID(MapTile t, Context x) {
+            return Hillshade8.class.getSimpleName() + "/" + t.getZoomLevel() + "/" + t.getX() + "/" + t.getY(); 
+        }
+
+        @Override
+        public int getMinimumZoomLevel() {
+            return 8;
+        }
+
+        @Override
+        public int getMaximumZoomLevel() {
+            return 14;
+        }
+
+        @Override
+        public Factory getFactory(MapTile mt) {
+            return  new Hillshade8.Factory(mt);
+        }
+
+        @Override
+        public TileBitmapFilter getBitmapFilter() {
+            return TileBitmapFilter.COPY_FILTER;
+        }
+    };
     
     private final static Source[] SOURCES = new Source[] {
         ELEVATION_COLOR,    
   //      MAPNIK_GRAY,
         MAPNIK,
-        ELEVATION_HILLSHADE,
+        ELEVATION_HILLSHADE4,
+        ELEVATION_HILLSHADE8,
         TRANSPORT_OVERLAY,
         TRAIL_SKATING,
         TRAIL_HIKING,
