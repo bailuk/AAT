@@ -16,7 +16,29 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import ch.bailu.aat.R;
+import ch.bailu.aat.description.AccelerationDescription;
+import ch.bailu.aat.description.AccuracyDescription;
+import ch.bailu.aat.description.AltitudeDescription;
+import ch.bailu.aat.description.AverageSpeedDescription;
+import ch.bailu.aat.description.BearingDescription;
+import ch.bailu.aat.description.CH1903EastingDescription;
+import ch.bailu.aat.description.CH1903NorthingDescription;
+import ch.bailu.aat.description.CaloriesDescription;
+import ch.bailu.aat.description.ContentDescription;
+import ch.bailu.aat.description.CurrentSpeedDescription;
+import ch.bailu.aat.description.DateDescription;
 import ch.bailu.aat.description.DescriptionInterface;
+import ch.bailu.aat.description.EndDateDescription;
+import ch.bailu.aat.description.GpsStateDescription;
+import ch.bailu.aat.description.LatitudeDescription;
+import ch.bailu.aat.description.LongitudeDescription;
+import ch.bailu.aat.description.MaximumSpeedDescription;
+import ch.bailu.aat.description.NameDescription;
+import ch.bailu.aat.description.PathDescription;
+import ch.bailu.aat.description.PauseDescription;
+import ch.bailu.aat.description.TimeDescription;
+import ch.bailu.aat.description.TrackSizeDescription;
+import ch.bailu.aat.description.TrackerStateDescription;
 import ch.bailu.aat.dispatcher.ContentDispatcher;
 import ch.bailu.aat.dispatcher.ContentSource;
 import ch.bailu.aat.dispatcher.CurrentLocationSource;
@@ -39,6 +61,7 @@ import ch.bailu.aat.views.ContentView;
 import ch.bailu.aat.views.ControlBar;
 import ch.bailu.aat.views.MultiView;
 import ch.bailu.aat.views.NodeListView;
+import ch.bailu.aat.views.SummaryListView;
 import ch.bailu.aat.views.TrackDescriptionView;
 import ch.bailu.aat.views.ViewWrapper;
 import ch.bailu.aat.views.map.OsmInteractiveView;
@@ -65,7 +88,8 @@ public class TestActivity extends AbsDispatcher implements OnClickListener {
     private OsmInteractiveView   map;
 
     private NodeListView          wayList;
-
+    private SummaryListView gpsSummary, trackSummary;
+    
     
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -96,14 +120,50 @@ public class TestActivity extends AbsDispatcher implements OnClickListener {
         
         map=new OsmInteractiveView(this, SOLID_KEY);
         ViewWrapper list = new ViewWrapper(new TestList(this));
+        
+        ContentDescription gpsData[] = new ContentDescription[] {
+                new NameDescription(this),
+                new GpsStateDescription(this),
+                new AltitudeDescription(this),
+                new LongitudeDescription(this),
+                new LatitudeDescription(this),
+                new CH1903EastingDescription(this),
+                new CH1903NorthingDescription(this),
+                new AccuracyDescription(this),
+                new CurrentSpeedDescription(this),
+                new AccelerationDescription(this),
+                new BearingDescription(this),
+        };   
+
+        ContentDescription trackData[] = new ContentDescription[] {
+                new NameDescription(this),
+                new PathDescription(this),
+                new TrackerStateDescription(this),
+                new AverageSpeedDescription(this),
+                new MaximumSpeedDescription(this),
+                new CaloriesDescription(this),
+                new DateDescription(this),
+                new EndDateDescription(this),
+                new TimeDescription(this),
+                new PauseDescription(this),
+                new TrackSizeDescription(this),
+        };   
+
+        gpsSummary= new SummaryListView(this, SOLID_KEY, INFO_ID_LOCATION, gpsData);
+        trackSummary = new SummaryListView(this, SOLID_KEY, INFO_ID_TRACKER, trackData);
+
         TrackDescriptionView viewData[] = {
                 map,
+                gpsSummary,
+                trackSummary,
                 list,
                 wayList,
         };   
+
         
         return new MultiView(this, SOLID_KEY, INFO_ID_ALL, viewData);
     }
+
 
 
     
