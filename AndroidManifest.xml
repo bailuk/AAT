@@ -40,6 +40,18 @@
             android:name="ch.bailu.aat.activities.OverlayListActivity"
             android:screenOrientation="portrait" >
         </activity>
+        
+        <activity
+            android:name="ch.bailu.aat.activities.ImportListActivity"
+            android:screenOrientation="portrait" >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <data android:mimeType="application/gpx+xml"/>
+            </intent-filter>
+        </activity>
+        
+        
         <activity
             android:name="ch.bailu.aat.activities.TrackerActivity"
             android:screenOrientation="portrait" >

@@ -18,10 +18,10 @@
 <string name="intro_nominatim">Nominatim</string>
 <string name="intro_test">Test</string>
 <string name="intro_status">Status</string>
-<string name="intro_detail">Detail</string>
 
 <string name="intro_overlay_list">Overlay list</string>
 <string name="intro_list">Track list</string>
+<string name="intro_import_list">Imported files</string>
 <string name="intro_settings">Preferences</string>
 <string name="intro_file">Latest track</string>
 

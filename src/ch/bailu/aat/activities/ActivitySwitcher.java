@@ -17,6 +17,7 @@ public class ActivitySwitcher {
         new ActivitySwitcher(R.string.intro_map, MapActivity.class),
         new ActivitySwitcher(R.string.intro_list, TrackListActivity.class),
         new ActivitySwitcher(R.string.intro_overlay_list, OverlayListActivity.class),
+        new ActivitySwitcher(R.string.intro_import_list, ImportListActivity.class),
         new ActivitySwitcher(R.string.intro_settings, PreferencesActivity.class),
         new ActivitySwitcher(R.string.intro_readme, ReadmeActivity.class),
         new ActivitySwitcher(R.string.intro_about, AboutActivity.class),
