@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import ch.bailu.aat.R;
@@ -117,5 +118,10 @@ public class AppTheme {
         list.setDivider(new ColorDrawable(color));
         list.setDividerHeight(height);
         //list.setBackgroundColor(COLOR_BLUEGRAY);
+    }
+
+
+    public static void themify(LinearLayout bar) {
+        bar.setBackgroundResource(R.drawable.button);
     }
 }
