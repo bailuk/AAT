@@ -28,15 +28,15 @@ public abstract class AppDialog {
             onNeutralClick();
         }
     }
-    
+
     protected void onNegativeClick() {};
     protected abstract void onPositiveClick();
     public void onNeutralClick() {};
-    
+
     protected void displayYesNoDialog(Activity activity, String title, String text) {
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
         Dialog dialog;
-        
+
         builder.setTitle(title);
         builder.setMessage(text);
         builder.setCancelable(true);
@@ -46,40 +46,40 @@ public abstract class AppDialog {
         dialog.setOwnerActivity(activity);
         dialog.show();
     }
-    
-    
-    
+
+
+
     public void displayTextDialog(Activity activity, String title, EditText edit) {
-    	AlertDialog.Builder builder = new AlertDialog.Builder(activity);
-    	Dialog dialog;
-    	
-    	builder.setTitle(title);
-    	builder.setView(edit);
-    	builder.setCancelable(true);
-    	builder.setPositiveButton(activity.getString(R.string.dialog_ok), 
-    			new PositiveClickListener());
-    	builder.setNegativeButton(activity.getString(R.string.dialog_cancel), 
-    			new NegativeClickListener());
-    	
-    	dialog = builder.create();
-    	dialog.setOwnerActivity(activity);
-    	dialog.show();
+        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+        Dialog dialog;
+
+        builder.setTitle(title);
+        builder.setView(edit);
+        builder.setCancelable(true);
+        builder.setPositiveButton(activity.getString(R.string.dialog_ok), 
+                new PositiveClickListener());
+        builder.setNegativeButton(activity.getString(R.string.dialog_cancel), 
+                new NegativeClickListener());
+
+        dialog = builder.create();
+        dialog.setOwnerActivity(activity);
+        dialog.show();
     }
-    
+
     public void displaySaveDiscardDialog(Activity activity, String title) {
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
         Dialog dialog;
-        
+
         builder.setTitle(title);
         builder.setMessage(activity.getString(R.string.dialog_modified));
         builder.setCancelable(true);
         builder.setPositiveButton(activity.getString(R.string.dialog_save), new PositiveClickListener());
         builder.setNeutralButton(activity.getString(R.string.dialog_discard), new NeutralClickListener());
         builder.setNegativeButton(activity.getString(R.string.dialog_cancel), new NegativeClickListener());
-        
+
         dialog = builder.create();
         dialog.setOwnerActivity(activity);
         dialog.show();
-    	
+
     }
 }

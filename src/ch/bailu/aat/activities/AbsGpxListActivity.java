@@ -215,6 +215,10 @@ public abstract class AbsGpxListActivity extends AbsMenu implements OnItemClickL
                 
             } else if (item.getItemId() == R.id.m_file_send) {
                 AppFile.send(this, new File(getDirectoryService().getCurrent().getPath()));
+                
+            } else if (item.getItemId() == R.id.m_file_copy) {
+                AppFile.copyTo(this, new File(getDirectoryService().getCurrent().getPath()));
+                
             }
 
         } catch (Exception e) {

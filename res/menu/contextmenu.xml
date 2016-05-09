@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu
   xmlns:android="http://schemas.android.com/apk/res/android">
-<item android:id="@+id/m_file_delete" android:title="@string/file_delete"></item>
-<item android:id="@+id/m_file_reload" android:title="@string/file_reload"></item>
-<item android:id="@+id/m_file_rename" android:title="@string/file_rename"></item>
-<item android:id="@+id/m_file_overlay" android:title="@string/file_overlay"></item>
-<item android:id="@+id/m_file_mock" android:title="@string/file_mock"></item>
 <item android:id="@+id/m_file_send" android:title="@string/file_send"></item>
+<item android:id="@+id/m_file_rename" android:title="@string/file_rename"></item>
+<item android:id="@+id/m_file_copy" android:title="@string/file_copy"></item>
+<item android:id="@+id/m_file_delete" android:title="@string/file_delete"></item>
+<item android:id="@+id/m_file_overlay" android:title="@string/file_overlay"></item>
+<item android:id="@+id/m_file_reload" android:title="@string/file_reload"></item>
+<item android:id="@+id/m_file_mock" android:title="@string/file_mock"></item>
 </menu>
