@@ -1,6 +1,6 @@
 package ch.bailu.aat.services.cache;
 
-import ch.bailu.aat.services.cache.CacheService.SelfOn;
+import ch.bailu.aat.services.MultiServiceLink.ServiceContext;
 
 
 public abstract class ObjectHandle implements ObjectBroadcastReceiver{
@@ -9,10 +9,10 @@ public abstract class ObjectHandle implements ObjectBroadcastReceiver{
     public static final ObjectHandle NULL = new ObjectHandle(""){
         
         @Override
-        public void onDownloaded(String id, String url, SelfOn self) {}
+        public void onDownloaded(String id, String url, ServiceContext cs) {}
 
         @Override
-        public void onChanged(String id, SelfOn self) {}
+        public void onChanged(String id, ServiceContext cs) {}
     };
 
     private final String ID;
@@ -36,11 +36,11 @@ public abstract class ObjectHandle implements ObjectBroadcastReceiver{
     }
 
     
-    public void onInsert(SelfOn self) {}
-    public void onRemove(SelfOn self) {}
+    public void onInsert(ServiceContext sc) {}
+    public void onRemove(ServiceContext sc) {}
 
     
-    public synchronized void lock(SelfOn self) {
+    public synchronized void lock(ServiceContext sc) {
         lock++;
         access();
     }
@@ -82,7 +82,7 @@ public abstract class ObjectHandle implements ObjectBroadcastReceiver{
     
     
     public static class Factory {
-        public ObjectHandle factory(String id, SelfOn self) {
+        public ObjectHandle factory(String id, ServiceContext cs) {
             return NULL;
         }
     }

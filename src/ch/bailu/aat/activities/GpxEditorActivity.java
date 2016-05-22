@@ -89,21 +89,20 @@ implements OnClickListener,  Runnable {
 
 
     private MultiView createMultiView() throws ServiceNotUpException {
-        mapView = new OsmInteractiveView(this, SOLID_KEY);
+        mapView = new OsmInteractiveView(getServiceContext(), SOLID_KEY);
 
         OsmOverlay overlayList[] = {
-                new GpxOverlayListOverlay(mapView, getCacheService()),
-                new GpxDynOverlay(mapView, getCacheService(), GpxInformation.ID.INFO_ID_TRACKER), 
-                new GridDynOverlay(mapView, getElevationService()),
+                new GpxOverlayListOverlay(mapView, getServiceContext().getCacheService()),
+                new GpxDynOverlay(mapView, getServiceContext().getCacheService(), GpxInformation.ID.INFO_ID_TRACKER), 
+                new GridDynOverlay(mapView, getServiceContext().getElevationService()),
                 new CurrentLocationOverlay(mapView),
-                new EditorOverlay(mapView, getCacheService(), INFO_ID_EDITOR_OVERLAY, getEditorService().editor, getElevationService()),
+                new EditorOverlay(mapView, getServiceContext().getCacheService(), INFO_ID_EDITOR_OVERLAY, getServiceContext().getEditorService().editor, getServiceContext().getElevationService()),
                 new NavigationBarOverlay(mapView),
                 new InformationBarOverlay(mapView)
         };
 
 
         mapView.setOverlayList(overlayList);
-        mapView.setServices(getCacheService());         
 
 
         ContentDescription summaryData[] = {
@@ -114,12 +113,11 @@ implements OnClickListener,  Runnable {
         };
 
 
-        NodeListView wayList = new NodeListView(this,
+        NodeListView wayList = new NodeListView(getServiceContext(),
                 SOLID_KEY,
                 INFO_ID_EDITOR_OVERLAY 
                 );
 
-        wayList.setService(getCacheService());
         TrackDescriptionView viewData[] = {
 
                 wayList,
@@ -164,7 +162,7 @@ implements OnClickListener,  Runnable {
     @Override
     public void onPause() {
         try {
-            getDirectoryService().storePosition();
+            getServiceContext().getDirectoryService().storePosition();
         } catch (ServiceNotUpException e) {
             AppLog.e(this, e);
         }
@@ -193,11 +191,11 @@ implements OnClickListener,  Runnable {
 
 
             ContentSource[] source = new ContentSource[] {
-                    new EditorSource(getEditorService(), INFO_ID_EDITOR_OVERLAY),
-                    new CurrentLocationSource(getTrackerService()),
-                    new TrackerSource(getTrackerService()),
-                    new OverlaySource((OverlayService)getService(OverlayService.class)), 
-                    new CurrentFileSource(getDirectoryService())
+                    new EditorSource(getServiceContext().getEditorService(), INFO_ID_EDITOR_OVERLAY),
+                    new CurrentLocationSource(getServiceContext().getTrackerService()),
+                    new TrackerSource(getServiceContext().getTrackerService()),
+                    new OverlaySource(getServiceContext().getOverlayService()), 
+                    new CurrentFileSource(getServiceContext().getDirectoryService())
             };
 
             setDispatcher(new ContentDispatcher(this,source, target));
@@ -212,9 +210,9 @@ implements OnClickListener,  Runnable {
 
 
     private void showCurrentFile() throws ServiceNotUpException {
-        getEditorService().editOverlay(
-                new File(getDirectoryService().getCurrent().getPath()));
-        mapView.frameBoundingBox(getDirectoryService().getCurrent().getBoundingBox());
+        getServiceContext().getEditorService().editOverlay(
+                new File(getServiceContext().getDirectoryService().getCurrent().getPath()));
+        mapView.frameBoundingBox(getServiceContext().getDirectoryService().getCurrent().getBoundingBox());
         getDispatcher().forceUpdate();
     }
 
@@ -222,14 +220,14 @@ implements OnClickListener,  Runnable {
 
 
     private GpxInformation getEditorInfo() throws ServiceNotUpException {
-        return getEditorService().getOverlayInformation();
+        return getServiceContext().getEditorService().getOverlayInformation();
     }
 
 
     @Override
     public void onBackPressed() {
         try {
-            final EditorInterface editor = getEditorService().editor;
+            final EditorInterface editor = getServiceContext().getEditorService().editor;
 
             if (editor.isModified()) {
                 new AppDialog() {
@@ -268,7 +266,7 @@ implements OnClickListener,  Runnable {
     @Override
     public void onClick(final View v) {
         try {
-            final EditorInterface editor = getEditorService().editor;
+            final EditorInterface editor = getServiceContext().getEditorService().editor;
 
             if (v == previousFile || v ==nextFile) {
                 if (editor.isModified()) {
@@ -305,9 +303,9 @@ implements OnClickListener,  Runnable {
     private void switchFile(View v) {
         try {
             if (v==nextFile)
-                getDirectoryService().toNext();
+                getServiceContext().getDirectoryService().toNext();
             else if (v==previousFile)
-                getDirectoryService().toPrevious();
+                getServiceContext().getDirectoryService().toPrevious();
 
             showCurrentFile();
         } catch (ServiceNotUpException e) {

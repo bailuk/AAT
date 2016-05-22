@@ -112,7 +112,7 @@ public class FileContentActivity extends AbsDispatcher implements OnClickListene
 
 
     private MultiView createMultiView() {
-        map = new OsmInteractiveView(this, SOLID_KEY);
+        map = new OsmInteractiveView(getServiceContext(), SOLID_KEY);
 
 
 
@@ -144,9 +144,8 @@ public class FileContentActivity extends AbsDispatcher implements OnClickListene
 
     @Override
     public void onPause() {
-        //AppLog.d(this, "onPause()");
         try {
-            getDirectoryService().storePosition();
+            getServiceContext().getDirectoryService().storePosition();
         } catch (ServiceNotUpException e) {
             AppLog.e(this, e);
         }
@@ -165,24 +164,23 @@ public class FileContentActivity extends AbsDispatcher implements OnClickListene
     @Override
     public void onServicesUp() {
         try {
-            map.setServices(getCacheService());
 
             OsmOverlay overlayList[] = {
-                    new GpxOverlayListOverlay(map, getCacheService()),
-                    new GpxDynOverlay(map, getCacheService(), GpxInformation.ID.INFO_ID_TRACKER), 
-                    new GpxDynOverlay(map, getCacheService(), GpxInformation.ID.INFO_ID_FILEVIEW),
+                    new GpxOverlayListOverlay(map, getServiceContext().getCacheService()),
+                    new GpxDynOverlay(map, getServiceContext().getCacheService(), GpxInformation.ID.INFO_ID_TRACKER), 
+                    new GpxDynOverlay(map, getServiceContext().getCacheService(), GpxInformation.ID.INFO_ID_FILEVIEW),
                     new CurrentLocationOverlay(map),
-                    new GridDynOverlay(map, getElevationService()),
+                    new GridDynOverlay(map, getServiceContext().getElevationService()),
                     new NavigationBarOverlay(map),
                     new InformationBarOverlay(map),
-                    new EditorOverlay(map, getCacheService(),  GpxInformation.ID.INFO_ID_EDITOR_DRAFT, 
-                            getEditorService().getDraftEditor(), getElevationService()),
+                    new EditorOverlay(map, getServiceContext().getCacheService(),  GpxInformation.ID.INFO_ID_EDITOR_DRAFT, 
+                            getServiceContext().getEditorService().getDraftEditor(), getServiceContext().getElevationService()),
 
             };
             map.setOverlayList(overlayList);
 
 
-            map.frameBoundingBox(getDirectoryService().
+            map.frameBoundingBox(getServiceContext().getDirectoryService().
                     getCurrent().getBoundingBox());
 
 
@@ -191,11 +189,11 @@ public class FileContentActivity extends AbsDispatcher implements OnClickListene
             };
 
             ContentSource[] source = new ContentSource[] {
-                    new EditorSource(getEditorService(),GpxInformation.ID.INFO_ID_EDITOR_DRAFT),
-                    new TrackerSource(getTrackerService()),
-                    new CurrentLocationSource(getTrackerService()),
-                    new OverlaySource((OverlayService)getService(OverlayService.class)),
-                    new CurrentFileSource(getDirectoryService())
+                    new EditorSource(getServiceContext().getEditorService(),GpxInformation.ID.INFO_ID_EDITOR_DRAFT),
+                    new TrackerSource(getServiceContext().getTrackerService()),
+                    new CurrentLocationSource(getServiceContext().getTrackerService()),
+                    new OverlaySource(getServiceContext().getOverlayService()),
+                    new CurrentFileSource(getServiceContext().getDirectoryService())
             };
 
             setDispatcher(new ContentDispatcher(this,source, target));
@@ -215,12 +213,12 @@ public class FileContentActivity extends AbsDispatcher implements OnClickListene
 
             } else {
                 if (v == previousFile) {
-                    getDirectoryService().toPrevious();
+                    getServiceContext().getDirectoryService().toPrevious();
 
                 } else if (v ==nextFile) {
-                    getDirectoryService().toNext();
+                    getServiceContext().getDirectoryService().toNext();
                 }
-                map.frameBoundingBox(getDirectoryService().
+                map.frameBoundingBox(getServiceContext().getDirectoryService().
                         getCurrent().getBoundingBox());
                 getDispatcher().forceUpdate();
 

@@ -20,7 +20,12 @@ public class BackgroundService extends AbsService{
     private ProcessThread process;
     
     
-   private MapFeaturesDownloader mapFeaturesDownloader;
+    private MapFeaturesDownloader mapFeaturesDownloader;
+    
+
+    public static final Self NULL_SELF=new Self();
+    
+    private Self self=NULL_SELF;
     
     private BroadcastReceiver onFileDownloaded = new BroadcastReceiver() {
          @Override
@@ -29,7 +34,68 @@ public class BackgroundService extends AbsService{
          }
      };
 
+     
+     public static class Self {
+         public void process(ProcessHandle handle) {}
+         public void download(ProcessHandle handle) {}
+         public void load(ProcessHandle handle) {}
+         public void downloadMapFeatures() {}
+     }
+     
+     
+     public class SelfOn extends Self {
+         @Override
+         public void process(ProcessHandle handle) {
+             process.process(handle);
+         }
+         
+         @Override
+         public void download(ProcessHandle handle) {
+             URL url;
+             try {
+                 url = new URL(handle.toString());
+             } catch (MalformedURLException e) {
+                 url = null;
+             }
+              
+              if (url != null) {
+                  String host = url.getHost();
+                  DownloaderThread downloader = downloaders.get(host.hashCode());
+              
+                  if (downloader == null) {
+                      downloader = new DownloaderThread(BackgroundService.this, host);
+                      downloaders.put(host.hashCode(), downloader);
+                  }
+                  downloader.process(handle);
+              }
+         }
+         
+         @Override
+         public void load(ProcessHandle handle) {
+             final String base = getBaseDirectory(handle.toString());
+             
+             LoaderThread loader = loaders.get(base.hashCode());
+         
+             if (loader == null) {
+                 loader = new LoaderThread(BackgroundService.this, base);
+                 loaders.put(base.hashCode(), loader);
+             }
+             loader.process(handle);
+         }
+         
+         @Override
+         public void downloadMapFeatures() {
+             mapFeaturesDownloader.download();
+         }
 
+     }
+     
+
+     public Self getSelf() {
+         return self;
+     }
+     
+     
      @Override
      public void onCreate() {
          
@@ -53,48 +119,12 @@ public class BackgroundService extends AbsService{
                 }
             }
          };
+         
+         self = new SelfOn();
      }
 
      
-     
-     
-     public void process(ProcessHandle handle) {
-         process.process(handle);
-     }
-     
-     
-     public void download(ProcessHandle handle) {
-        URL url;
-        try {
-            url = new URL(handle.toString());
-        } catch (MalformedURLException e) {
-            url = null;
-        }
-         
-         if (url != null) {
-             String host = url.getHost();
-             DownloaderThread downloader = downloaders.get(host.hashCode());
-         
-             if (downloader == null) {
-                 downloader = new DownloaderThread(this, host);
-                 downloaders.put(host.hashCode(), downloader);
-             }
-             downloader.process(handle);
-         }
-     }
-     
 
-     public void load(ProcessHandle handle) {
-         final String base = getBaseDirectory(handle.toString());
-         
-         LoaderThread loader = loaders.get(base.hashCode());
-     
-         if (loader == null) {
-             loader = new LoaderThread(this, base);
-             loaders.put(base.hashCode(), loader);
-         }
-         loader.process(handle);
-     }
      
      private String getBaseDirectory(String id) {
          File p1 = new File (id);
@@ -134,6 +164,8 @@ public class BackgroundService extends AbsService{
      
      @Override
      public void onDestroy() {
+         self = NULL_SELF;
+         
          unregisterReceiver(onFileDownloaded);
 
          mapFeaturesDownloader.close();
@@ -153,6 +185,7 @@ public class BackgroundService extends AbsService{
      }
 
 
+     @Override
      public void appendStatusText(StringBuilder builder) {
          super.appendStatusText(builder);
 
@@ -166,8 +199,5 @@ public class BackgroundService extends AbsService{
      @Override
      public void onServicesUp() {}
 
-     
-     public void downloadMapFeatures() {
-         mapFeaturesDownloader.download();
-     }
+
 }

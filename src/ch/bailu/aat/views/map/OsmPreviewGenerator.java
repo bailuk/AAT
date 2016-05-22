@@ -4,14 +4,13 @@ import java.io.Closeable;
 import java.io.File;
 import java.io.FileOutputStream;
 
-import android.content.Context;
 import android.graphics.Bitmap;
 import ch.bailu.aat.gpx.GpxFileWrapper;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.GpxList;
 import ch.bailu.aat.helpers.AppBroadcaster;
 import ch.bailu.aat.helpers.AppLog;
-import ch.bailu.aat.services.cache.CacheService;
+import ch.bailu.aat.services.MultiServiceLink.ServiceContext;
 import ch.bailu.aat.views.map.overlay.OsmOverlay;
 import ch.bailu.aat.views.map.overlay.gpx.GpxDynOverlay;
 
@@ -19,23 +18,23 @@ public class OsmPreviewGenerator implements Closeable {
     public static final int BITMAP_SIZE=128;
 
     private final OsmViewStatic map;
-    private final Context context;
+    private final ServiceContext serviceContext;
     
     private final PreviewTileProvider tileProvider;
     
     private final File imageFile;
 
     
-    public OsmPreviewGenerator(CacheService loader, GpxList gpxList, File o)  {
-        context=loader;
+    public OsmPreviewGenerator(ServiceContext sc, GpxList gpxList, File o)  {
+        serviceContext=sc;
         imageFile=o;
-        tileProvider = new PreviewTileProvider(loader);
+        tileProvider = new PreviewTileProvider(sc);
 
-        map = new OsmViewStatic(context, tileProvider);
+        map = new OsmViewStatic(serviceContext.getContext(), tileProvider);
         map.setDrawingCacheEnabled(true);
         
         final OsmOverlay[] overlays = new OsmOverlay[] {
-                new GpxDynOverlay(map, loader, GpxInformation.ID.INFO_ID_FILEVIEW)
+                new GpxDynOverlay(map, sc.getCacheService(), GpxInformation.ID.INFO_ID_FILEVIEW)
         };
         map.setOverlayList(overlays);
         
@@ -55,13 +54,13 @@ public class OsmPreviewGenerator implements Closeable {
             final FileOutputStream outStream = new FileOutputStream(imageFile);
             bitmap.compress(Bitmap.CompressFormat.PNG, 90, outStream);
             outStream.close();
-            AppBroadcaster.broadcast(context, 
+            AppBroadcaster.broadcast(serviceContext.getContext(), 
                     AppBroadcaster.FILE_CHANGED_ONDISK, 
                     imageFile.getAbsolutePath(), 
                     getClass().getName());
             
         } catch (Exception e) {
-            AppLog.e(context, e);
+            AppLog.e(serviceContext.getContext(), e);
         }
     }
 

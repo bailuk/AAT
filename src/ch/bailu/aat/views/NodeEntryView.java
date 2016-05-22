@@ -1,6 +1,5 @@
 package ch.bailu.aat.views;
 
-import android.content.Context;
 import android.graphics.Color;
 import android.text.Html;
 import android.view.ViewGroup;
@@ -8,7 +7,7 @@ import android.widget.TextView;
 import ch.bailu.aat.coordinates.BoundingBox;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.GpxPointNode;
-import ch.bailu.aat.services.cache.CacheService;
+import ch.bailu.aat.services.MultiServiceLink.ServiceContext;
 import ch.bailu.aat.views.map.AbsOsmTileProvider;
 import ch.bailu.aat.views.map.CachedTileProvider;
 import ch.bailu.aat.views.map.OsmPreviewGenerator;
@@ -21,19 +20,18 @@ public class NodeEntryView extends ViewGroup {
     private final OsmViewStatic map;
     private final TextView text;
     
-    public NodeEntryView(Context context, CacheService cacheService, String key, int id) {
-        super(context);
+    public NodeEntryView(ServiceContext sc, String key, int id) {
+        super(sc.getContext());
 
-        AbsOsmTileProvider provider = new CachedTileProvider(context);
-        map = new OsmViewStatic(context, provider);
-        provider.setFileLoader(cacheService);
+        AbsOsmTileProvider provider = new CachedTileProvider(sc);
+        map = new OsmViewStatic(sc.getContext(), provider);
         
         final OsmOverlay[] overlays = new OsmOverlay[] {
-                new GpxDynOverlay(map, cacheService ,id)
+                new GpxDynOverlay(map, sc.getCacheService() ,id)
         };
         map.setOverlayList(overlays);
 
-        text=new TextView(context);
+        text=new TextView(sc.getContext());
         text.setTextColor(Color.WHITE);
 
         addView(map);

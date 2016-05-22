@@ -36,7 +36,7 @@ public class EditorOverlay extends ControlBarOverlay {
     private final ElevationProvider elevation;
     
     
-    public EditorOverlay(OsmInteractiveView osm, CacheService c, int id, EditorInterface e, ElevationProvider ele) {
+    public EditorOverlay(OsmInteractiveView osm, CacheService.Self c, int id, EditorInterface e, ElevationProvider ele) {
         super(osm, new ControlBar(
                 osm.getContext(),
                 AppLayout.getOrientationAlongLargeSide(osm.getContext())));

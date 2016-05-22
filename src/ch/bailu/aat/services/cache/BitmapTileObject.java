@@ -10,9 +10,9 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import ch.bailu.aat.helpers.AppBroadcaster;
 import ch.bailu.aat.helpers.AppDirectory;
+import ch.bailu.aat.services.MultiServiceLink.ServiceContext;
 import ch.bailu.aat.services.background.DownloadHandle;
 import ch.bailu.aat.services.background.FileHandle;
-import ch.bailu.aat.services.cache.CacheService.SelfOn;
 
 
 public class BitmapTileObject extends TileObject {
@@ -28,14 +28,14 @@ public class BitmapTileObject extends TileObject {
     private final SynchronizedBitmap bitmap=new SynchronizedBitmap();
 
 
-    public BitmapTileObject(String id, SelfOn self,  MapTile t, Source s) {
+    public BitmapTileObject(String id, ServiceContext cs,  MapTile t, Source s) {
         super(id);
         
         tile = t;
         source=s;
         url = source.getTileURLString(tile);
 
-        self.broadcaster.put(this);
+        cs.getCacheService().addToBroadcaster(this);
         download = new DownloadHandle(url, new File(id) );
         
         load = new FileHandle(id) {
@@ -59,9 +59,9 @@ public class BitmapTileObject extends TileObject {
 
     
     @Override
-    public void onInsert(SelfOn self) {
-        if (isLoadable()) self.background.load(load);
-        else if (isDownloadable()) self.background.download(download);
+    public void onInsert(ServiceContext sc) {
+        if (isLoadable()) sc.getBackgroundService().load(load);
+        else if (isDownloadable()) sc.getBackgroundService().download(download);
     }
 
 
@@ -78,16 +78,16 @@ public class BitmapTileObject extends TileObject {
     
     
     @Override
-    public void onDownloaded(String id, String u, SelfOn self) {
+    public void onDownloaded(String id, String u, ServiceContext sc) {
         if (u.equals(url) && isLoadable()) {
-            self.background.load(load);
+            sc.getBackgroundService().load(load);
         }
         
     }
 
 
     @Override
-    public void onChanged(String id, SelfOn self) {}
+    public void onChanged(String id, ServiceContext sc) {}
     
     
 
@@ -95,12 +95,6 @@ public class BitmapTileObject extends TileObject {
     public boolean isReady() {
         boolean d = bitmap.getDrawable()!=null;
         boolean l = isLoadable()==false;
-        
-        /*
-        if (d) AppLog.d(this, "have drawable");
-        else AppLog.d(this, "have NO drawable");
-        if (l) AppLog.d(this, "is not loadable");
-        */
         
         return  d || l;
     }
@@ -133,8 +127,8 @@ public class BitmapTileObject extends TileObject {
         }
 
         @Override
-        public ObjectHandle factory(String id, SelfOn self) {
-            return new BitmapTileObject(id, self, mapTile, source);
+        public ObjectHandle factory(String id, ServiceContext cs) {
+            return new BitmapTileObject(id, cs, mapTile, source);
         }
     }
     

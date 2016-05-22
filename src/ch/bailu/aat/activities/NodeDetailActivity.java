@@ -100,7 +100,7 @@ public class NodeDetailActivity extends AbsDispatcher implements OnClickListener
 
 
     private VerticalView createVerticalView() {
-        map = new OsmInteractiveView(this, SOLID_KEY);
+        map = new OsmInteractiveView(getServiceContext(), SOLID_KEY);
 
 
         ScrollView scroll=new ScrollView(this);
@@ -132,13 +132,12 @@ public class NodeDetailActivity extends AbsDispatcher implements OnClickListener
     @Override
     public void onServicesUp() {
         try {
-            map.setServices(getCacheService());
 
             OsmOverlay overlayList[] = {
-                    new GpxDynOverlay(map, getCacheService(), GpxInformation.ID.INFO_ID_TRACKER), 
-                    new GpxDynOverlay(map, getCacheService(), GpxInformation.ID.INFO_ID_FILEVIEW),
+                    new GpxDynOverlay(map, getServiceContext().getCacheService(), GpxInformation.ID.INFO_ID_TRACKER), 
+                    new GpxDynOverlay(map, getServiceContext().getCacheService(), GpxInformation.ID.INFO_ID_FILEVIEW),
                     new CurrentLocationOverlay(map),
-                    new GridDynOverlay(map, getElevationService()),
+                    new GridDynOverlay(map, getServiceContext().getElevationService()),
                     new NavigationBarOverlay(map),
                     new InformationBarOverlay(map),
 
@@ -151,9 +150,9 @@ public class NodeDetailActivity extends AbsDispatcher implements OnClickListener
             };
 
             ContentSource[] source = new ContentSource[] {
-                    new TrackerSource(getTrackerService()),
-                    new CurrentLocationSource(getTrackerService()),
-                    new CustomFileSource(getCacheService(), fileID),
+                    new TrackerSource(getServiceContext().getTrackerService()),
+                    new CurrentLocationSource(getServiceContext().getTrackerService()),
+                    new CustomFileSource(getServiceContext(), fileID),
             };
 
             setDispatcher(new ContentDispatcher(this,source, target));

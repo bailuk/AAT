@@ -17,7 +17,7 @@ import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.preferences.SolidPositionLock;
 import ch.bailu.aat.preferences.SolidTileSize;
 import ch.bailu.aat.preferences.Storage;
-import ch.bailu.aat.services.cache.CacheService;
+import ch.bailu.aat.services.MultiServiceLink.ServiceContext;
 
 public class OsmInteractiveView extends AbsOsmView 
 implements MapListener, OnSharedPreferenceChangeListener, OnTouchListener {
@@ -43,12 +43,12 @@ implements MapListener, OnSharedPreferenceChangeListener, OnTouchListener {
     private final DynTileProvider provider;
     
       
-    public OsmInteractiveView(Context context, String key) {
+    public OsmInteractiveView(ServiceContext context, String key) {
         this(
-                context, 
+                context.getContext(), 
                 key, 
                 new DynTileProvider(context,key), 
-                new SolidTileSize(context).getTileSize());
+                new SolidTileSize(context.getContext()).getTileSize());
     }
     
     
@@ -69,12 +69,6 @@ implements MapListener, OnSharedPreferenceChangeListener, OnTouchListener {
         loadState();
     }
 
-
-    
-    public void setServices(CacheService loader) {
-        provider.setFileLoader(loader);
-    }
-    
 
     
     private void loadState() {

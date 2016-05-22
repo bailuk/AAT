@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import ch.bailu.aat.helpers.AppBroadcaster;
 import ch.bailu.aat.services.AbsService;
+import ch.bailu.aat.services.MultiServiceLink.ServiceContext;
 import ch.bailu.aat.services.MultiServiceLink.ServiceNotUpException;
 import ch.bailu.aat.services.background.BackgroundService;
 import ch.bailu.aat.services.cache.ObjectHandle.Factory;
@@ -21,11 +22,21 @@ public class CacheService extends AbsService {
     };    
 
 
+    public final static Self NULL_SELF=new Self();
     
-    public class Self implements Closeable {
+    private Self self = NULL_SELF;
+    
+    public Self getSelf() {
+        return self;
+        
+    }
+    
+    public static class Self implements Closeable {
         @Override
         public void close() {
         }
+
+        public void addToBroadcaster(ObjectBroadcastReceiver b) {}
 
         public void onLowMemory() {}
 
@@ -38,27 +49,20 @@ public class CacheService extends AbsService {
         }
 
         public void appendStatusText(StringBuilder builder) {}
-
-        
     }
     
     
     public class SelfOn extends Self {
-        private final ObjectTable table=new ObjectTable();
+        public final ObjectTable table=new ObjectTable();
         public final ObjectBroadcaster broadcaster;
-        public final BackgroundService background;
-        public final IconMapService    iconMap;
-        public final Context context;
         
+        public final ServiceContext serviceContext;
 
-        public SelfOn(BackgroundService bg, IconMapService im) {
-            iconMap=im;
-            background = bg;
-            context = CacheService.this;
-            broadcaster = new ObjectBroadcaster(this);
+        public SelfOn(ServiceContext cs) {
+            broadcaster = new ObjectBroadcaster(cs);
+            serviceContext=cs;
             
-            
-            AppBroadcaster.register(context, onFileProcessed, AppBroadcaster.FILE_CHANGED_INCACHE);
+            AppBroadcaster.register(cs.getContext(), onFileProcessed, AppBroadcaster.FILE_CHANGED_INCACHE);
         }
         
         @Override
@@ -74,7 +78,7 @@ public class CacheService extends AbsService {
 
         @Override
         public ObjectHandle getObject(String id) {
-            ObjectHandle handle = table.getHandle(id, this);
+            ObjectHandle handle = table.getHandle(id, serviceContext);
             return handle;
         }
 
@@ -93,6 +97,10 @@ public class CacheService extends AbsService {
         }
         
         
+        @Override
+        public void addToBroadcaster(ObjectBroadcastReceiver b) {
+            broadcaster.put(b);
+        }
         private BroadcastReceiver onFileProcessed = new BroadcastReceiver() {
 
             @Override
@@ -104,7 +112,6 @@ public class CacheService extends AbsService {
     }
     
     
-    private Self self = new Self();
     
     @Override
     public void onCreate() {
@@ -118,12 +125,12 @@ public class CacheService extends AbsService {
     @Override
     public void onServicesUp() {
         
-        BackgroundService background=null;
+        BackgroundService.Self background=null;
         IconMapService    iconMap=null;
         
         try {
-            background = (BackgroundService) getService(BackgroundService.class);
-            iconMap = (IconMapService) getService(IconMapService.class);
+            background =  getServiceContext().getBackgroundService();
+            iconMap = getServiceContext().getIconMapService();
             
         } catch (ServiceNotUpException e) {
             e.printStackTrace();
@@ -132,7 +139,7 @@ public class CacheService extends AbsService {
         
         if (background != null && iconMap != null)
             self.close();
-            self = new SelfOn(background, iconMap);
+            self = new SelfOn(getServiceContext());
     }
 
     
@@ -161,7 +168,7 @@ public class CacheService extends AbsService {
     @Override
     public void onDestroy() {
         self.close();
-        self = new Self();
+        self = NULL_SELF;
         super.onDestroy();
     }
 }

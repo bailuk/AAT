@@ -16,9 +16,9 @@ import ch.bailu.aat.gpx.interfaces.GpxBigDeltaInterface;
 import ch.bailu.aat.gpx.linked_list.Node;
 import ch.bailu.aat.gpx.parser.GpxListReader;
 import ch.bailu.aat.helpers.AppBroadcaster;
-import ch.bailu.aat.services.background.BackgroundService;
+import ch.bailu.aat.services.MultiServiceLink.ServiceContext;
+import ch.bailu.aat.services.MultiServiceLink.ServiceNotUpException;
 import ch.bailu.aat.services.background.FileHandle;
-import ch.bailu.aat.services.cache.CacheService.SelfOn;
 import ch.bailu.aat.services.dem.Dem3Tile;
 import ch.bailu.aat.services.dem.ElevationProvider;
 import ch.bailu.aat.services.dem.ElevationUpdaterClient;
@@ -31,19 +31,19 @@ public class GpxObjectStatic extends GpxObject implements ElevationUpdaterClient
     private boolean ready=false;
     
     
-    public GpxObjectStatic(String id, SelfOn self) {
+    public GpxObjectStatic(String id, ServiceContext sc) {
         super(id);
-        self.broadcaster.put(this);
+        sc.getCacheService().addToBroadcaster(this);
     }
 
     
     @Override
-    public void onInsert(SelfOn self) {
-        reload(self);
+    public void onInsert(ServiceContext sc) {
+        reload(sc);
     }
     
 
-    private void reload(SelfOn self) {
+    private void reload(ServiceContext sc) {
         final FileHandle f = new FileHandle(toString()) {
 
             private boolean locked=false;
@@ -76,7 +76,7 @@ public class GpxObjectStatic extends GpxObject implements ElevationUpdaterClient
             }
         };
 
-        self.background.load(f);        
+        sc.getBackgroundService().load(f);        
     }
 
     public GpxObjectStatic() {
@@ -108,24 +108,30 @@ public class GpxObjectStatic extends GpxObject implements ElevationUpdaterClient
     public static class Factory extends ObjectHandle.Factory {
 
         @Override
-        public ObjectHandle factory(String id, SelfOn self) {
-            return new GpxObjectStatic(id, self);
+        public ObjectHandle factory(String id, ServiceContext sc) {
+            return new GpxObjectStatic(id, sc);
         }
     }
 
 
 
     @Override
-    public void onDownloaded(String id, String url,  SelfOn self) {
+    public void onDownloaded(String id, String url,  ServiceContext sc) {
         if (id.equals(toString())) {
-            reload(self);
+            reload(sc);
         }
         
     }
 
     @Override
-    public void onChanged(String id, SelfOn self) {
-        if (id.equals(toString())) self.iconMap.iconify(gpxList);
+    public void onChanged(String id, ServiceContext sc) {
+        if (id.equals(toString()))
+            try {
+                sc.getIconMapService().iconify(gpxList);
+            } catch (ServiceNotUpException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
     }
 
 
@@ -147,9 +153,9 @@ public class GpxObjectStatic extends GpxObject implements ElevationUpdaterClient
 
 
     @Override
-    public void updateFromSrtmTile(BackgroundService bg, Dem3Tile srtm) {
+    public void updateFromSrtmTile(ServiceContext sc, Dem3Tile srtm) {
         new ListUpdater(srtm).walkTrack(gpxList);
-        AppBroadcaster.broadcast(bg, AppBroadcaster.FILE_CHANGED_INCACHE, toString());
+        AppBroadcaster.broadcast(sc.getContext(), AppBroadcaster.FILE_CHANGED_INCACHE, toString());
     }
 
 

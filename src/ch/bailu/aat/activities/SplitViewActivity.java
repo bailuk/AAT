@@ -93,7 +93,7 @@ public class SplitViewActivity extends AbsDispatcher implements OnClickListener{
 
 
     private View createMapView() {
-        mapView = new OsmInteractiveView(this, SOLID_MAP_KEY);
+        mapView = new OsmInteractiveView(getServiceContext(), SOLID_MAP_KEY);
         return mapView;
     }
 
@@ -111,11 +111,11 @@ public class SplitViewActivity extends AbsDispatcher implements OnClickListener{
         };
 
 
-        mapViewAlt=new OsmInteractiveView(this, SOLID_KEY);
+        mapViewAlt=new OsmInteractiveView(getServiceContext(), SOLID_KEY);
 
         OsmOverlay overlayList[] = {
-                new GpxOverlayListOverlay(mapViewAlt,getCacheService()),
-                new GpxDynOverlay(mapViewAlt, getCacheService(), GpxInformation.ID.INFO_ID_TRACKER), 
+                new GpxOverlayListOverlay(mapViewAlt,getServiceContext().getCacheService()),
+                new GpxDynOverlay(mapViewAlt, getServiceContext().getCacheService(), GpxInformation.ID.INFO_ID_TRACKER), 
                 new CurrentLocationOverlay(mapViewAlt),
                 new NavigationBarOverlay(mapViewAlt,6),
         };
@@ -192,23 +192,19 @@ public class SplitViewActivity extends AbsDispatcher implements OnClickListener{
         try {
             setContentView(createContentView());
             
-            mapView.setServices(getCacheService());
             OsmOverlay overlayList[] = {
-                    new GpxOverlayListOverlay(mapView, getCacheService()),
-                    new GpxDynOverlay(mapView, getCacheService(), GpxInformation.ID.INFO_ID_TRACKER), 
+                    new GpxOverlayListOverlay(mapView, getServiceContext().getCacheService()),
+                    new GpxDynOverlay(mapView, getServiceContext().getCacheService(), GpxInformation.ID.INFO_ID_TRACKER), 
                     new CurrentLocationOverlay(mapView),
-                    new GridDynOverlay(mapView, getElevationService()),
+                    new GridDynOverlay(mapView, getServiceContext().getElevationService()),
                     new NavigationBarOverlay(mapView),
                     new InformationBarOverlay(mapView),
                     new CustomBarOverlay(mapView, createButtonBar()),
-                    new EditorOverlay(mapView, getCacheService(),  GpxInformation.ID.INFO_ID_EDITOR_DRAFT, 
-                            getEditorService().getDraftEditor(), getElevationService()),
+                    new EditorOverlay(mapView, getServiceContext().getCacheService(),  GpxInformation.ID.INFO_ID_EDITOR_DRAFT, 
+                            getServiceContext().getEditorService().getDraftEditor(), getServiceContext().getElevationService()),
 
             };
             mapView.setOverlayList(overlayList);
-
-
-            mapViewAlt.setServices(getCacheService());    		
 
 
             DescriptionInterface[] target = new DescriptionInterface[] {
@@ -216,10 +212,10 @@ public class SplitViewActivity extends AbsDispatcher implements OnClickListener{
             };
 
             ContentSource[] source = new ContentSource[] {
-                    new EditorSource(getEditorService(),GpxInformation.ID.INFO_ID_EDITOR_DRAFT),
-                    new TrackerSource(getTrackerService()),
-                    new CurrentLocationSource(getTrackerService()),
-                    new OverlaySource((OverlayService)getService(OverlayService.class)),
+                    new EditorSource(getServiceContext().getEditorService(),GpxInformation.ID.INFO_ID_EDITOR_DRAFT),
+                    new TrackerSource(getServiceContext().getTrackerService()),
+                    new CurrentLocationSource(getServiceContext().getTrackerService()),
+                    new OverlaySource(getServiceContext().getOverlayService()),
             };
 
             setDispatcher(new ContentDispatcher(this,source, target));

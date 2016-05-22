@@ -2,19 +2,18 @@ package ch.bailu.aat.services.dem;
 
 import android.util.SparseArray;
 import ch.bailu.aat.coordinates.SrtmCoordinates;
-import ch.bailu.aat.services.background.BackgroundService;
-import ch.bailu.aat.services.cache.CacheService;
+import ch.bailu.aat.services.MultiServiceLink.ServiceContext;
 import ch.bailu.aat.services.cache.ObjectHandle;
 
 public class ElevationUpdaterEntry {
     private final SparseArray <SrtmCoordinates> tiles = new SparseArray<SrtmCoordinates>(5);
     private final String id;
-    private final CacheService loader;
+    private final ServiceContext scontext;
  
     
-    public ElevationUpdaterEntry(CacheService l, String i) {
+    public ElevationUpdaterEntry(ServiceContext sc, String i) {
         id = i;
-        loader = l;
+        scontext=sc;
 
         fillSRTMTiles();
     }
@@ -24,7 +23,7 @@ public class ElevationUpdaterEntry {
     }
 
     private void fillSRTMTiles() {
-        ObjectHandle handle = loader.getObject(id);
+        ObjectHandle handle = scontext.getCacheService().getObject(id);
             
             
         if (ElevationUpdaterClient.class.isInstance(handle)) {
@@ -41,7 +40,7 @@ public class ElevationUpdaterEntry {
     
 
     private void addSRTMTile(SrtmCoordinates c) {
-        if (c.toFile(loader).exists()) {
+        if (c.toFile(scontext.getContext()).exists()) {
             tiles.put(c.hashCode(),c);
         }
     }
@@ -56,19 +55,19 @@ public class ElevationUpdaterEntry {
         return null;
     }
     
-    public void update(BackgroundService bg, Dem3Tile tile) {
+    public void update(ServiceContext sc, Dem3Tile tile) {
 
         final SrtmCoordinates c = tiles.get(tile.hashCode());
 
         
         if (c != null) {
             
-            final ObjectHandle handle = loader.getObject(id);
+            final ObjectHandle handle = scontext.getCacheService().getObject(id);
             
             
 
             if (ElevationUpdaterClient.class.isInstance(handle)) {
-                ((ElevationUpdaterClient) handle).updateFromSrtmTile(bg, tile);
+                ((ElevationUpdaterClient) handle).updateFromSrtmTile(sc, tile);
                 tiles.delete(tile.hashCode());
             
             } else {

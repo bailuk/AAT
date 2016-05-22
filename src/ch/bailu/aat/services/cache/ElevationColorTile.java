@@ -2,14 +2,14 @@ package ch.bailu.aat.services.cache;
 
 import org.osmdroid.tileprovider.MapTile;
 
-import ch.bailu.aat.services.cache.CacheService.SelfOn;
+import ch.bailu.aat.services.MultiServiceLink.ServiceContext;
 import ch.bailu.aat.services.dem.DemProvider;
 import ch.bailu.aat.views.graph.ColorTable;
 
 public class ElevationColorTile extends ElevationTile {
 
-    public ElevationColorTile(String id, SelfOn self, MapTile t, int _split) {
-        super(id, self, t, _split);
+    public ElevationColorTile(String id, ServiceContext cs, MapTile t, int _split) {
+        super(id, cs, t, _split);
     }
 
    
@@ -73,8 +73,8 @@ public class ElevationColorTile extends ElevationTile {
 
         
         @Override
-        public ObjectHandle factory(String id, SelfOn self) {
-            return  new ElevationColorTile(id, self, mapTile,SPLIT);
+        public ObjectHandle factory(String id, ServiceContext cs) {
+            return  new ElevationColorTile(id, cs, mapTile,SPLIT);
         }
     }
 

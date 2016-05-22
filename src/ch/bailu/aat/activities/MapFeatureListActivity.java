@@ -37,7 +37,7 @@ public class MapFeatureListActivity extends AbsDispatcher {
         
         IconMapService iconMap;
         try {
-            iconMap = (IconMapService)getService(IconMapService.class);
+            iconMap = getServiceContext().getIconMapService();
         } catch (ServiceNotUpException e) {
             iconMap=null;
             e.printStackTrace();

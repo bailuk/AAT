@@ -97,10 +97,9 @@ public abstract class AbsOsmApiActivity extends AbsDispatcher implements OnClick
         view.addView(postLabel, layout);
         AppTheme.themify(postLabel);
         
-        list = new NodeListView(this,SOLID_KEY,
+        list = new NodeListView(getServiceContext(),SOLID_KEY,
                 INFO_ID_FILEVIEW);
         
-        list.setService(getCacheService());
         
         view.addView(list,layout);
 
@@ -140,7 +139,7 @@ public abstract class AbsOsmApiActivity extends AbsDispatcher implements OnClick
             setContentView(createContentView());
 
             ContentSource[] source = new ContentSource[] {
-                    new CustomFileSource(getCacheService(),osmApi.getResultFile().toString()),};
+                    new CustomFileSource(getServiceContext(),osmApi.getResultFile().toString()),};
 
             DescriptionInterface[] target = new DescriptionInterface[] {
                     list
@@ -180,8 +179,7 @@ public abstract class AbsOsmApiActivity extends AbsDispatcher implements OnClick
         try {
             String query = tagEditor.getText();
 
-            BackgroundService background = (BackgroundService)
-                    getService(BackgroundService.class);
+            BackgroundService.Self background = getServiceContext().getBackgroundService();
 
 
             request.stopLoading();

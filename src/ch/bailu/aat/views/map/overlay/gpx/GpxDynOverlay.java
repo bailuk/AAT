@@ -18,18 +18,18 @@ public class GpxDynOverlay extends OsmOverlay {
     private final int ID;
     private final int color;
 
-    private final CacheService cache;
+    private final CacheService.Self cache;
     
     private final SolidLegend slegend;
     
     private GpxInformation info;
     
     
-    public GpxDynOverlay(AbsOsmView map, CacheService cs, int id) {
+    public GpxDynOverlay(AbsOsmView map, CacheService.Self cs, int id) {
         this(map,cs, id,-1);
     }
 
-    public GpxDynOverlay(AbsOsmView map, CacheService cs,  int id, int c) {
+    public GpxDynOverlay(AbsOsmView map, CacheService.Self cs,  int id, int c) {
         super(map);
         color=c;
         cache = cs;

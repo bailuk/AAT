@@ -15,6 +15,7 @@ import ch.bailu.aat.services.cache.CacheService;
 import ch.bailu.aat.services.dem.ElevationService;
 import ch.bailu.aat.services.directory.DirectoryService;
 import ch.bailu.aat.services.editor.EditorService;
+import ch.bailu.aat.services.icons.IconMapService;
 import ch.bailu.aat.services.overlay.OverlayService;
 import ch.bailu.aat.services.tracker.TrackerService;
 
@@ -32,8 +33,8 @@ public abstract class MultiServiceLink implements Closeable {
     public static final Class<?> LOADER_SERVICES[] = {
         CacheService.class
     };
-    
-    
+
+
 
     public static final MultiServiceLink NULL_SERVICE_LINK= new MultiServiceLink() {
         @Override
@@ -133,17 +134,99 @@ public abstract class MultiServiceLink implements Closeable {
         }
     }
 
-    public boolean isServiceUp(Class<?> s) {
+    private boolean isServiceUp(Class<?> s) {
         if (serviceTable.containsKey(s)) {
             return serviceTable.get(s).isUp();
         }
         return false;
     }
 
-    public AbsService getService(Class<?> s) throws ServiceNotUpException {
+    private AbsService getService(Class<?> s) throws ServiceNotUpException {
         if (isServiceUp(s))
             return serviceTable.get(s).getService();
         else 
             throw new ServiceNotUpException(s);
     }
+
+
+    public ServiceContext getServiceContext(Context context) {
+        return new ServiceContext(context);
+    }
+
+    public class ServiceContext {
+        private final Context context;
+
+        public ServiceContext(Context context) {
+            this.context=context;
+        }
+
+
+        public BackgroundService.Self getBackgroundService() {
+            try {
+                final BackgroundService bg = 
+                        (BackgroundService) getService(BackgroundService.class);
+                return bg.getSelf();
+
+            } catch (ServiceNotUpException e) {
+                return BackgroundService.NULL_SELF;
+            }
+        }
+
+        public OverlayService getOverlayService() throws ServiceNotUpException {
+            return (OverlayService) getService(OverlayService.class);
+        }
+
+
+        public EditorService getEditorService() throws ServiceNotUpException {
+            return (EditorService) getService(EditorService.class);
+        }
+
+
+        public CacheService.Self getCacheService()  {
+            try {
+                final CacheService s = 
+                        (CacheService) getService(CacheService.class);
+                return s.getSelf();
+
+            } catch (ServiceNotUpException e) {
+                return CacheService.NULL_SELF;
+            }
+        }
+
+
+        public TrackerService getTrackerService() throws ServiceNotUpException {
+            return (TrackerService) getService(TrackerService.class);
+        }
+
+        public DirectoryService getDirectoryService() throws ServiceNotUpException {
+            return (DirectoryService)getService(DirectoryService.class);
+        }
+
+
+        public ElevationService getElevationService() throws ServiceNotUpException {
+            return (ElevationService)getService(ElevationService.class);
+        }
+
+        public IconMapService getIconMapService() throws ServiceNotUpException {
+            return (IconMapService)getService(IconMapService.class);
+        }
+
+        public Context getContext() {
+            return context;
+        }
+
+        public void appendStatusText(StringBuilder content) {
+            for (Class<?> s: MultiServiceLink.ALL_SERVICES) {
+                try {
+                    getService(s).appendStatusText(content);
+                } catch (ServiceNotUpException e) {
+                    content.append("<p>ERROR*: ");
+                    content.append(e.getMessage());
+                    content.append("</p>");
+                }
+            }
+        }
+
+    }
+
 }

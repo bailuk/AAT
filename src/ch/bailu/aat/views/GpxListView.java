@@ -12,43 +12,36 @@ import ch.bailu.aat.description.ContentDescription;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.helpers.AppBroadcaster;
 import ch.bailu.aat.helpers.AppTheme;
-import ch.bailu.aat.services.cache.CacheService;
-import ch.bailu.aat.services.directory.DirectoryService;
+import ch.bailu.aat.services.MultiServiceLink.ServiceContext;
+import ch.bailu.aat.services.MultiServiceLink.ServiceNotUpException;
 
 public class GpxListView extends ListView {
 
-    private final Context context;
-    private final DirectoryService directory;
-    private final CacheService loader;
-
+    private final ServiceContext scontext;
     private DataSetObserver observer;
 
     private final ContentDescription data[];
 
     
-    public GpxListView(Context c, 
-            DirectoryService d, 
-            CacheService l, 
+    public GpxListView(ServiceContext c, 
             ContentDescription cd[]) {
-        super(c);
+        super(c.getContext());
 
         data = cd;
-        context=c;
-        directory=d;
-        loader=l;
+        scontext=c;
 
 
         setAdapter(adapter);
 
         AppTheme.themify(this, AppTheme.getHighlightColor());
-        AppBroadcaster.register(context, onCursorChanged, AppBroadcaster.DB_CURSOR_CHANGED);
+        AppBroadcaster.register(scontext.getContext(), onCursorChanged, AppBroadcaster.DB_CURSOR_CHANGED);
 
     }
 
 
     @Override
     public void onDetachedFromWindow() {
-        context.unregisterReceiver(onCursorChanged);
+        scontext.getContext().unregisterReceiver(onCursorChanged);
         super.onDetachedFromWindow();
     }
 
@@ -66,7 +59,11 @@ public class GpxListView extends ListView {
 
         @Override
         public int getCount() {
-            return directory.size();
+            try {
+                return scontext.getDirectoryService().size();
+            } catch (ServiceNotUpException e) {
+                return 0;
+            }
         }
 
         @Override
@@ -89,11 +86,18 @@ public class GpxListView extends ListView {
             GpxListEntryView entry = (GpxListEntryView) convertView;
 
             if (entry == null) {
-                entry = new GpxListEntryView(context, data, loader);
+                entry = new GpxListEntryView(scontext.getContext(), data, scontext.getCacheService());
             } 
 
-            directory.setPosition(position);
-            GpxInformation info = directory.getCurrent();
+            GpxInformation info;
+            try {
+                scontext.getDirectoryService().setPosition(position);
+                info = scontext.getDirectoryService().getCurrent();
+
+            } catch (ServiceNotUpException e) {
+                info = GpxInformation.NULL;
+            }
+            
             entry.updateGpxContent(info);
 
             return entry;

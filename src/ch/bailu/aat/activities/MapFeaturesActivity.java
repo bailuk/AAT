@@ -13,7 +13,6 @@ import ch.bailu.aat.helpers.AppDirectory;
 import ch.bailu.aat.helpers.AppLog;
 import ch.bailu.aat.helpers.AppTheme;
 import ch.bailu.aat.helpers.ToolTip;
-import ch.bailu.aat.services.MultiServiceLink.ServiceNotUpException;
 import ch.bailu.aat.services.background.BackgroundService;
 import ch.bailu.aat.views.ContentView;
 import ch.bailu.aat.views.ControlBar;
@@ -85,12 +84,8 @@ public class MapFeaturesActivity extends AbsDispatcher implements OnClickListene
     @Override
     public void onClick(View v) {
         if (v==download) {
-            try {
-                getBackgroundService().downloadMapFeatures();
-                download.startWaiting();
-            } catch (ServiceNotUpException e) {
-                AppLog.e(this, this, e);
-            }
+            getServiceContext().getBackgroundService().downloadMapFeatures();
+            download.startWaiting();
         }
     }
     

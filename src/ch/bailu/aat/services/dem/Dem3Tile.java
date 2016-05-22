@@ -11,7 +11,7 @@ import org.osmdroid.util.GeoPoint;
 import android.content.Context;
 import ch.bailu.aat.coordinates.SrtmCoordinates;
 import ch.bailu.aat.helpers.AppBroadcaster;
-import ch.bailu.aat.services.background.BackgroundService;
+import ch.bailu.aat.services.MultiServiceLink.ServiceContext;
 import ch.bailu.aat.services.background.FileHandle;
 import ch.bailu.aat.services.background.ProcessHandle;
 
@@ -146,20 +146,20 @@ public class Dem3Tile implements ElevationProvider, DemProvider {
 
     
     
-    public void load(BackgroundService background, SrtmCoordinates c) {
+    public void load(ServiceContext cs, SrtmCoordinates c) {
         if (!isLocked()) {
             coordinates=c;
-            reload(background);
+            reload(cs);
         }
     }
     
 
-    public void reload(BackgroundService background) {
+    public void reload(ServiceContext cs) {
         handle.stopLoading();
-        handle = new SRTMGL3Loader(coordinates.toFile(background).getAbsolutePath());
+        handle = new SRTMGL3Loader(coordinates.toFile(cs.getContext()).getAbsolutePath());
         loading=true;
         stamp=System.currentTimeMillis();
-        background.load(handle);
+        cs.getBackgroundService().load(handle);
     }
 
     private class SRTMGL3Loader extends FileHandle {

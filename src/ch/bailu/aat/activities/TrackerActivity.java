@@ -102,7 +102,7 @@ public class TrackerActivity extends AbsDispatcher implements OnClickListener{
 
         CockpitView cockpit = new CockpitView(this, SOLID_KEY, INFO_ID_TRACKER, data);
 
-        map = new OsmInteractiveView(this, SOLID_KEY);
+        map = new OsmInteractiveView(getServiceContext(), SOLID_KEY);
         TrackDescriptionView viewData[] = {
                 cockpit, 
                 map,
@@ -154,17 +154,16 @@ public class TrackerActivity extends AbsDispatcher implements OnClickListener{
     @Override
     public void onServicesUp() {
         try {
-            map.setServices(getCacheService());    		
             
             OsmOverlay overlayList[] = {
-                    new GpxOverlayListOverlay(map, getCacheService()),
-                    new GpxDynOverlay(map, getCacheService(), GpxInformation.ID.INFO_ID_TRACKER), 
+                    new GpxOverlayListOverlay(map, getServiceContext().getCacheService()),
+                    new GpxDynOverlay(map, getServiceContext().getCacheService(), GpxInformation.ID.INFO_ID_TRACKER), 
                     new CurrentLocationOverlay(map),
-                    new GridDynOverlay(map, getElevationService()),
+                    new GridDynOverlay(map, getServiceContext().getElevationService()),
                     new NavigationBarOverlay(map),
                     new InformationBarOverlay(map),
-                    new EditorOverlay(map, getCacheService(), GpxInformation.ID.INFO_ID_EDITOR_DRAFT, 
-                            getEditorService().getDraftEditor(), getElevationService()),
+                    new EditorOverlay(map, getServiceContext().getCacheService(), GpxInformation.ID.INFO_ID_EDITOR_DRAFT, 
+                            getServiceContext().getEditorService().getDraftEditor(), getServiceContext().getElevationService()),
             };
             map.setOverlayList(overlayList);
             
@@ -173,10 +172,10 @@ public class TrackerActivity extends AbsDispatcher implements OnClickListener{
             };
 
             ContentSource[] source = new ContentSource[] {
-                    new EditorSource(getEditorService(),GpxInformation.ID.INFO_ID_EDITOR_DRAFT),
-                    new TrackerSource(getTrackerService()),
-                    new CurrentLocationSource(getTrackerService()),
-                    new OverlaySource((OverlayService)getService(OverlayService.class)),
+                    new EditorSource(getServiceContext().getEditorService(),GpxInformation.ID.INFO_ID_EDITOR_DRAFT),
+                    new TrackerSource(getServiceContext().getTrackerService()),
+                    new CurrentLocationSource(getServiceContext().getTrackerService()),
+                    new OverlaySource(getServiceContext().getOverlayService()),
             };
             setDispatcher(new ContentDispatcher(this,source, target));
         } catch (ServiceNotUpException e) {

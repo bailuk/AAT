@@ -72,7 +72,7 @@ public class MapActivity extends AbsDispatcher implements OnClickListener{
 
 
     private OsmInteractiveView createMap() {
-        OsmInteractiveView map=new OsmInteractiveView(this, SOLID_KEY);
+        OsmInteractiveView map=new OsmInteractiveView(getServiceContext(), SOLID_KEY);
         return map;
     }
 
@@ -125,17 +125,16 @@ public class MapActivity extends AbsDispatcher implements OnClickListener{
     @Override
     public void onServicesUp() {
         try {
-            map.setServices(getCacheService());
             OsmOverlay overlayList[] = {
                     
-                    new GpxOverlayListOverlay(map, getCacheService()),
-                    new GpxDynOverlay(map, getCacheService(), GpxInformation.ID.INFO_ID_TRACKER), 
-                    new GridDynOverlay(map, getElevationService()),
+                    new GpxOverlayListOverlay(map, getServiceContext().getCacheService()),
+                    new GpxDynOverlay(map, getServiceContext().getCacheService(), GpxInformation.ID.INFO_ID_TRACKER), 
+                    new GridDynOverlay(map, getServiceContext().getElevationService()),
                     new CurrentLocationOverlay(map),
                     new NavigationBarOverlay(map),
                     new InformationBarOverlay(map),
-                    new EditorOverlay(map, getCacheService(), GpxInformation.ID.INFO_ID_EDITOR_DRAFT, 
-                            getEditorService().getDraftEditor(), getElevationService()),
+                    new EditorOverlay(map, getServiceContext().getCacheService(), GpxInformation.ID.INFO_ID_EDITOR_DRAFT, 
+                            getServiceContext().getEditorService().getDraftEditor(), getServiceContext().getElevationService()),
                             
                     new CustomBarOverlay(map, createButtonBar()),
             };
@@ -147,10 +146,10 @@ public class MapActivity extends AbsDispatcher implements OnClickListener{
             };
 
             ContentSource[] source = new ContentSource[] {
-                    new EditorSource(getEditorService(),GpxInformation.ID.INFO_ID_EDITOR_DRAFT),
-                    new TrackerSource(getTrackerService()),
-                    new CurrentLocationSource(getTrackerService()),
-                    new OverlaySource((OverlayService)getService(OverlayService.class)),};
+                    new EditorSource(getServiceContext().getEditorService(),GpxInformation.ID.INFO_ID_EDITOR_DRAFT),
+                    new TrackerSource(getServiceContext().getTrackerService()),
+                    new CurrentLocationSource(getServiceContext().getTrackerService()),
+                    new OverlaySource(getServiceContext().getOverlayService())};
 
             setDispatcher(new ContentDispatcher(this,source, target));
 

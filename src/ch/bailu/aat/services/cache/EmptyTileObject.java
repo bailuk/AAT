@@ -1,7 +1,7 @@
 package ch.bailu.aat.services.cache;
 
 import android.graphics.Bitmap;
-import ch.bailu.aat.services.cache.CacheService.SelfOn;
+import ch.bailu.aat.services.MultiServiceLink.ServiceContext;
 
 public class EmptyTileObject extends TileObject {
     public static final SynchronizedBitmap NULL_BITMAP=createBitmap();
@@ -18,10 +18,10 @@ public class EmptyTileObject extends TileObject {
     }
 
     @Override
-    public void onDownloaded(String id, String url, SelfOn self) {}
+    public void onDownloaded(String id, String url, ServiceContext sc) {}
 
     @Override
-    public void onChanged(String id, SelfOn self) {}
+    public void onChanged(String id, ServiceContext sc) {}
 
     @Override
     public Bitmap getBitmap() {

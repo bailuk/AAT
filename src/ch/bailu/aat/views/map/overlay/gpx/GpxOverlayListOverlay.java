@@ -13,7 +13,7 @@ public class GpxOverlayListOverlay extends OsmOverlay {
     private final OsmOverlay[] list;
 
 
-    public GpxOverlayListOverlay(OsmInteractiveView v, CacheService cache) {
+    public GpxOverlayListOverlay(OsmInteractiveView v, CacheService.Self cache) {
         super(v);
         
         list = new GpxDynOverlay[OverlayService.MAX_OVERLAYS];

@@ -90,7 +90,7 @@ public class ImportListActivity extends AbsGpxListActivity {
         super.onResume();
 
         try {
-            createDirectoryServiceHelper(getDirectoryService()).rescanDirectory();
+            createDirectoryServiceHelper(getServiceContext().getDirectoryService()).rescanDirectory();
         } catch (Exception e) {}
 
     }

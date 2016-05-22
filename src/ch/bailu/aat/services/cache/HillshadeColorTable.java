@@ -2,8 +2,8 @@ package ch.bailu.aat.services.cache;
 
 import android.content.Context;
 import ch.bailu.aat.helpers.AppBroadcaster;
+import ch.bailu.aat.services.MultiServiceLink.ServiceContext;
 import ch.bailu.aat.services.background.ProcessHandle;
-import ch.bailu.aat.services.cache.CacheService.SelfOn;
 import ch.bailu.aat.services.dem.MultiCell;
 
 public class HillshadeColorTable extends ObjectHandle {
@@ -28,17 +28,17 @@ public class HillshadeColorTable extends ObjectHandle {
 
     
     @Override
-    public void onInsert(SelfOn self) {
-        self.background.process(new TableInitializer());
+    public void onInsert(ServiceContext sc) {
+        sc.getBackgroundService().process(new TableInitializer());
     }
 
     @Override
-    public void onDownloaded(String id, String url, SelfOn self) {
+    public void onDownloaded(String id, String url, ServiceContext sc) {
 
     }
 
     @Override
-    public void onChanged(String id, SelfOn self) {
+    public void onChanged(String id, ServiceContext sc) {
 
     }
 
@@ -163,7 +163,7 @@ public class HillshadeColorTable extends ObjectHandle {
         public Factory() {}
 
         @Override
-        public ObjectHandle factory(String id, SelfOn self) {
+        public ObjectHandle factory(String id, ServiceContext sc) {
             return  new HillshadeColorTable();
         }
     } 

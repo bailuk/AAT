@@ -2,7 +2,7 @@ package ch.bailu.aat.services.cache;
 
 import org.osmdroid.tileprovider.MapTile;
 
-import ch.bailu.aat.services.cache.CacheService.SelfOn;
+import ch.bailu.aat.services.MultiServiceLink.ServiceContext;
 import ch.bailu.aat.services.dem.DemProvider;
 import ch.bailu.aat.services.dem.MultiCell;
 
@@ -10,23 +10,23 @@ public class NewHillshade extends ElevationTile {
 
     private HillshadeColorTable table;
     
-    public NewHillshade(String id, SelfOn self, MapTile t) {
-        super(id, self, t, splitFromZoom(t.getZoomLevel()));
+    public NewHillshade(String id, ServiceContext sc, MapTile t) {
+        super(id, sc, t, splitFromZoom(t.getZoomLevel()));
     }
 
     
     @Override
-    public void onInsert(SelfOn self) {
-        table=(HillshadeColorTable) self.getObject(HillshadeColorTable.ID, new HillshadeColorTable.Factory());
+    public void onInsert(ServiceContext sc) {
+        table=(HillshadeColorTable) sc.getCacheService().getObject(HillshadeColorTable.ID, new HillshadeColorTable.Factory());
         
-        super.onInsert(self);
+        super.onInsert(sc);
         
     }
     
     
     @Override
-    public void onRemove(SelfOn self) {
-        super.onRemove(self);
+    public void onRemove(ServiceContext sc) {
+        super.onRemove(sc);
         table.free();
     }
     
@@ -110,9 +110,9 @@ public class NewHillshade extends ElevationTile {
         }
 
         @Override
-        public ObjectHandle factory(String id, SelfOn self) {
+        public ObjectHandle factory(String id, ServiceContext sc) {
             
-            return  new NewHillshade(id, self, mapTile);
+            return  new NewHillshade(id, sc, mapTile);
         }
         
     } 

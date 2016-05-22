@@ -4,33 +4,39 @@ import org.osmdroid.tileprovider.MapTile;
 import org.osmdroid.tileprovider.tilesource.ITileSource;
 
 import ch.bailu.aat.preferences.SolidMapTileStack;
-import ch.bailu.aat.services.cache.CacheService;
+import ch.bailu.aat.services.MultiServiceLink.ServiceContext;
+import ch.bailu.aat.services.cache.ObjectHandle;
 import ch.bailu.aat.services.cache.TileObject.Source;
 import ch.bailu.aat.services.cache.TileStackObject;
 
 public abstract class AbsOsmTileProvider extends AbsTileProvider {
     
     
-    private CacheService loader=null;
+    private final ServiceContext scontext;
     
     private Source sources[] = new Source[]{SolidMapTileStack.MAPNIK};
     
     
     private final StringBuilder builder = new StringBuilder();    
     
-    public AbsOsmTileProvider(CacheService l) {
-        loader=l;
+    public AbsOsmTileProvider(ServiceContext sc) {
+        scontext = sc;
     }
 
     
-    public AbsOsmTileProvider() {}
+
 
 
    
     public TileStackObject getTileHandle(MapTile mapTile) {
-        if (loader != null) {
-            final String id = generateTileID(mapTile);
-            return (TileStackObject) loader.getObject(id, new TileStackObject.Factory(loader, mapTile, sources));
+          final String id = generateTileID(mapTile);
+          ObjectHandle handle = scontext.getCacheService().getObject(
+                  id, 
+                  new TileStackObject.Factory(scontext.getContext(), mapTile, sources)
+                  );
+          
+          if (TileStackObject.class.isInstance(handle)) {
+            return (TileStackObject) handle;
         } else  {
             return TileStackObject.NULL;
         }
@@ -74,9 +80,6 @@ public abstract class AbsOsmTileProvider extends AbsTileProvider {
 
     
     
-    public void setFileLoader(CacheService l) {
-        loader = l;
-    }
 
     public void setSubTileSource(Source[] s) {
         sources=s;

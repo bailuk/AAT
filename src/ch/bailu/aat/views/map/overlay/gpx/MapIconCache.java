@@ -26,7 +26,7 @@ public class MapIconCache implements Closeable {
     }
 
     
-    public Drawable getIcon(CacheService cache, GpxPointInterface point) {
+    public Drawable getIcon(CacheService.Self cache, GpxPointInterface point) {
         
         Drawable drawable=null;
         
@@ -42,7 +42,7 @@ public class MapIconCache implements Closeable {
     }
     
     
-    public Drawable getIcon(CacheService cache, String fileID) {
+    public Drawable getIcon(CacheService.Self cache, String fileID) {
         Drawable drawable=null;
         
         ImageObject imageObject =  (ImageObject) cache.getObject(fileID, new ImageObject.Factory());

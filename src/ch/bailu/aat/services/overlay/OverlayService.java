@@ -41,8 +41,7 @@ public class OverlayService extends AbsService implements GpxInformation.ID {
         
         private void fillOverlayList() throws SecurityException, IOException, ServiceNotUpException {
             for (int i=0; i<MAX_OVERLAYS; i++)
-                overlayList[i]= new OverlayInformation(INFO_ID_OVERLAY+i, 
-                        getCacheService());
+                overlayList[i]= new OverlayInformation(INFO_ID_OVERLAY+i, getServiceContext());
         }
 
         @Override

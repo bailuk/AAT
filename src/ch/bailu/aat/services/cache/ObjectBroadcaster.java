@@ -7,22 +7,22 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.SparseArray;
 import ch.bailu.aat.helpers.AppBroadcaster;
-import ch.bailu.aat.services.cache.CacheService.SelfOn;
+import ch.bailu.aat.services.MultiServiceLink.ServiceContext;
 
 public class ObjectBroadcaster implements Closeable {
     
     private final static int INITIAL_CAPACITY=200;
 
-    private final SelfOn self;
+    private final ServiceContext serviceContext;
 
     private final SparseArray<ObjectBroadcastReceiver> table = new SparseArray<ObjectBroadcastReceiver>(INITIAL_CAPACITY);
 
 
-    public ObjectBroadcaster(SelfOn s) {
-        self = s;
+    public ObjectBroadcaster(ServiceContext sc) {
+        serviceContext = sc;
         
-        AppBroadcaster.register(self.context, onFileChanged, AppBroadcaster.FILE_CHANGED_INCACHE);
-        AppBroadcaster.register(self.context, onFileDownloaded, AppBroadcaster.FILE_CHANGED_ONDISK);
+        AppBroadcaster.register(sc.getContext(), onFileChanged, AppBroadcaster.FILE_CHANGED_INCACHE);
+        AppBroadcaster.register(sc.getContext(), onFileDownloaded, AppBroadcaster.FILE_CHANGED_ONDISK);
         
         
         
@@ -46,8 +46,8 @@ public class ObjectBroadcaster implements Closeable {
 
     @Override
     public void close() {
-        self.context.unregisterReceiver(onFileDownloaded);
-        self.context.unregisterReceiver(onFileChanged);
+        serviceContext.getContext().unregisterReceiver(onFileDownloaded);
+        serviceContext.getContext().unregisterReceiver(onFileChanged);
 
     }
 
@@ -56,7 +56,7 @@ public class ObjectBroadcaster implements Closeable {
         @Override
         public void onReceive(Context context, Intent intent) {
             for (int i=0; i<table.size(); i++) {
-                table.valueAt(i).onChanged(AppBroadcaster.getFile(intent), self);
+                table.valueAt(i).onChanged(AppBroadcaster.getFile(intent), serviceContext);
             }
         }
     };
@@ -66,7 +66,7 @@ public class ObjectBroadcaster implements Closeable {
         @Override
         public void onReceive(Context context, Intent intent) {
             for (int i=0; i<table.size(); i++) {
-                table.valueAt(i).onDownloaded(AppBroadcaster.getFile(intent),AppBroadcaster.getUrl(intent), self);
+                table.valueAt(i).onDownloaded(AppBroadcaster.getFile(intent),AppBroadcaster.getUrl(intent), serviceContext);
             }
         }
     };

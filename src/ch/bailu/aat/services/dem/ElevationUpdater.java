@@ -8,24 +8,23 @@ import android.content.Intent;
 import android.util.SparseArray;
 import ch.bailu.aat.coordinates.SrtmCoordinates;
 import ch.bailu.aat.helpers.AppBroadcaster;
-import ch.bailu.aat.services.background.BackgroundService;
-import ch.bailu.aat.services.cache.CacheService;
+import ch.bailu.aat.services.MultiServiceLink.ServiceContext;
+import ch.bailu.aat.services.MultiServiceLink.ServiceNotUpException;
 
 
 public class ElevationUpdater implements Closeable, ElevationProvider{
     private final SparseArray <ElevationUpdaterEntry> pendingObjects = new SparseArray<ElevationUpdaterEntry>();
-    private final CacheService cache;
-    private final BackgroundService background;
-    private final Context context;
+    private final ServiceContext scontext;
+    private final ServiceContext serviceContext;
 
     private final Dem3Tiles tiles;
 
-    protected ElevationUpdater(CacheService c, BackgroundService b) {
-        cache = c;
-        tiles =new Dem3Tiles(b);
-        context = c;
-        background = b;
+    protected ElevationUpdater(ServiceContext cs) throws ServiceNotUpException {
+        scontext=cs;
+        tiles =new Dem3Tiles(cs);
+        serviceContext = cs;
 
+        final Context c = cs.getContext();
         AppBroadcaster.register(c, onRequestElevationUpdate, AppBroadcaster.REQUEST_ELEVATION_UPDATE);
         AppBroadcaster.register(c, onFileChanged, AppBroadcaster.FILE_CHANGED_INCACHE);
         AppBroadcaster.register(c, onFileDownloaded, AppBroadcaster.FILE_CHANGED_ONDISK);
@@ -52,7 +51,7 @@ public class ElevationUpdater implements Closeable, ElevationProvider{
             Dem3Tile tile = tiles.get(id);
             
             if (tile != null) {
-                tile.reload(background);
+                tile.reload(serviceContext);
             }
         }
     };
@@ -71,7 +70,7 @@ public class ElevationUpdater implements Closeable, ElevationProvider{
 
 
     private void addObject(String id) {
-        pendingObjects.put(id.hashCode(), new ElevationUpdaterEntry(cache, id));
+        pendingObjects.put(id.hashCode(), new ElevationUpdaterEntry(scontext, id));
     }
     
     
@@ -114,7 +113,7 @@ public class ElevationUpdater implements Closeable, ElevationProvider{
     private void updateObject(int i, Dem3Tile tile) {
         ElevationUpdaterEntry entry = pendingObjects.valueAt(i);
         
-        entry.update(background, tile);
+        entry.update(scontext, tile);
         
         if (entry.getTile(0) == null) {
             pendingObjects.remove(pendingObjects.keyAt(i)); 
@@ -138,7 +137,7 @@ public class ElevationUpdater implements Closeable, ElevationProvider{
         ElevationUpdaterEntry entry = pendingObjects.get(id.hashCode());
         
         if (entry != null) {
-            entry.update(background, tile);
+            entry.update(scontext, tile);
             if (entry.getTile(0) == null) {
                 pendingObjects.remove(id.hashCode()); 
             }
@@ -149,9 +148,11 @@ public class ElevationUpdater implements Closeable, ElevationProvider{
     
     @Override
     public void close() {
-        context.unregisterReceiver(onRequestElevationUpdate);
-        context.unregisterReceiver(onFileChanged);
-        context.unregisterReceiver(onFileDownloaded);
+        final Context c = serviceContext.getContext();
+
+        c.unregisterReceiver(onRequestElevationUpdate);
+        c.unregisterReceiver(onFileChanged);
+        c.unregisterReceiver(onFileDownloaded);
     }
 
 

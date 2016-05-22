@@ -1,8 +1,8 @@
 package ch.bailu.aat.services.cache;
 
-import ch.bailu.aat.services.cache.CacheService.SelfOn;
+import ch.bailu.aat.services.MultiServiceLink.ServiceContext;
 
 public interface ObjectBroadcastReceiver {
-    void onDownloaded(String id, String url, SelfOn self);
-    void onChanged(String id, SelfOn self);
+    void onDownloaded(String id, String url, ServiceContext sc);
+    void onChanged(String id, ServiceContext sc);
 }

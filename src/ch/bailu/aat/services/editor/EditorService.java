@@ -54,7 +54,7 @@ public class EditorService extends AbsService {
         private GpxObjectEditable overlay;
         
         public SelfOn () throws SecurityException, ServiceNotUpException, IOException {
-            draft=GpxObjectEditable.loadEditor(EditorService.this.getCacheService(), 
+            draft=GpxObjectEditable.loadEditor(getServiceContext(), 
                     AppDirectory.getEditorDraft(EditorService.this).getAbsolutePath(), 
                     GpxInformation.ID.INFO_ID_EDITOR_DRAFT);
         }
@@ -62,17 +62,13 @@ public class EditorService extends AbsService {
 
         @Override
         public void editOverlay(File file) {
-            try {
-                freeOverlay();
-                overlay = GpxObjectEditable.loadEditor(
-                        getCacheService(), 
-                        file.getAbsolutePath(), 
-                        GpxInformation.ID.INFO_ID_EDITOR_OVERLAY);
-                
-                
-            } catch (ServiceNotUpException e) {
-                AppLog.e(EditorService.this, e);
-            }
+            freeOverlay();
+            overlay = GpxObjectEditable.loadEditor(
+                    getServiceContext(), 
+                    file.getAbsolutePath(), 
+                    GpxInformation.ID.INFO_ID_EDITOR_OVERLAY);
+
+
         }
 
         

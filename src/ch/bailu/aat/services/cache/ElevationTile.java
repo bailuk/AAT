@@ -15,9 +15,8 @@ import android.graphics.Rect;
 import android.util.SparseArray;
 import ch.bailu.aat.coordinates.SrtmCoordinates;
 import ch.bailu.aat.helpers.AppBroadcaster;
-import ch.bailu.aat.services.background.BackgroundService;
+import ch.bailu.aat.services.MultiServiceLink.ServiceContext;
 import ch.bailu.aat.services.background.ProcessHandle;
-import ch.bailu.aat.services.cache.CacheService.SelfOn;
 import ch.bailu.aat.services.dem.Dem3Tile;
 import ch.bailu.aat.services.dem.DemDimension;
 import ch.bailu.aat.services.dem.DemGeoToIndex;
@@ -43,7 +42,7 @@ public abstract class ElevationTile extends TileObject implements ElevationUpdat
     
 
     
-    public ElevationTile(String id, SelfOn self, MapTile _map_tile, int _split) {
+    public ElevationTile(String id, ServiceContext cs, MapTile _map_tile, int _split) {
         super(id);
         map_tile=_map_tile;
         split=_split;
@@ -80,21 +79,21 @@ public abstract class ElevationTile extends TileObject implements ElevationUpdat
 
     
     @Override
-    public void onInsert(SelfOn self) {
-        self.broadcaster.put(this);
-        self.background.process(new SrtmTileRasterInitializer());
+    public void onInsert(ServiceContext sc) {
+        sc.getCacheService().addToBroadcaster(this);
+        sc.getBackgroundService().process(new SrtmTileRasterInitializer());
     }
 
 
     @Override
-    public void onChanged(String id, SelfOn self) {}
+    public void onChanged(String id, ServiceContext sc) {}
 
 
 
     @Override
-    public void onDownloaded(String id, String url, SelfOn self) {
+    public void onDownloaded(String id, String url, ServiceContext sc) {
         if (haveID(url)) {
-            AppBroadcaster.broadcast(self.context, AppBroadcaster.REQUEST_ELEVATION_UPDATE, toString());
+            AppBroadcaster.broadcast(sc.getContext(), AppBroadcaster.REQUEST_ELEVATION_UPDATE, toString());
         }
     }
 
@@ -142,7 +141,7 @@ public abstract class ElevationTile extends TileObject implements ElevationUpdat
 
 
     @Override
-    public void updateFromSrtmTile(BackgroundService bg, Dem3Tile tile) {
+    public void updateFromSrtmTile(ServiceContext cs, Dem3Tile tile) {
         final int key = tile.hashCode();
         final TilePainter painter =  tilePainterList.get(key);
 
@@ -150,7 +149,7 @@ public abstract class ElevationTile extends TileObject implements ElevationUpdat
             tilePainterList.remove(key);
             updateLock=true;
             painter.setTile(tile);
-            bg.process(painter);
+            cs.getBackgroundService().process(painter);
         }
     }
 

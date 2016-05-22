@@ -11,11 +11,13 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.LinearLayout;
+import ch.bailu.aat.R;
 import ch.bailu.aat.description.ContentDescription;
 import ch.bailu.aat.helpers.AppFile;
 import ch.bailu.aat.helpers.AppLog;
 import ch.bailu.aat.preferences.AddOverlayDialog;
 import ch.bailu.aat.preferences.SolidMockLocationFile;
+import ch.bailu.aat.services.MultiServiceLink.ServiceContext;
 import ch.bailu.aat.services.MultiServiceLink.ServiceNotUpException;
 import ch.bailu.aat.services.cache.CacheService;
 import ch.bailu.aat.services.directory.DirectoryService;
@@ -23,7 +25,6 @@ import ch.bailu.aat.services.directory.DirectoryServiceHelper;
 import ch.bailu.aat.views.ContentView;
 import ch.bailu.aat.views.DbSynchronizerBusyIndicator;
 import ch.bailu.aat.views.GpxListView;
-import ch.bailu.aat.R;
 
 
 
@@ -73,14 +74,15 @@ public abstract class AbsGpxListActivity extends AbsMenu implements OnItemClickL
 
     @Override
     public void onServicesUp() {
+        ServiceContext sc=getServiceContext();
         try {
-            directoryServiceHelper = createDirectoryServiceHelper(getDirectoryService());
+            directoryServiceHelper = createDirectoryServiceHelper(sc.getDirectoryService());
 
 
-            createSummaryView(contentView, getDirectoryService());
-            createListView(contentView, getDirectoryService(), getCacheService());
+            createSummaryView(contentView, sc.getDirectoryService());
+            createListView(contentView, sc);
 
-            listView.setSelection(getDirectoryService().getStoredPosition());
+            listView.setSelection(sc.getDirectoryService().getStoredPosition());
 
         } catch (Exception e) {
             AppLog.e(this, e);
@@ -97,15 +99,11 @@ public abstract class AbsGpxListActivity extends AbsMenu implements OnItemClickL
     public abstract void createSummaryView(LinearLayout layout, DirectoryService directory);
 
 
-    private void createListView(LinearLayout contentView, DirectoryService directory, 
-            CacheService loader) {
+    private void createListView(LinearLayout contentView, ServiceContext sc) {
 
         ContentDescription data[] = getGpxListItemData();
 
-        listView = new GpxListView(this, 
-                directory, 
-                loader,
-                data);
+        listView = new GpxListView(sc, data);
         listView.setOnItemClickListener(this);
         registerForContextMenu(listView);
 
@@ -123,7 +121,7 @@ public abstract class AbsGpxListActivity extends AbsMenu implements OnItemClickL
 
         if (listView != null) {
             try {
-                getDirectoryService().storePosition(listView.getFirstVisiblePosition());
+                getServiceContext().getDirectoryService().storePosition(listView.getFirstVisiblePosition());
             } catch (ServiceNotUpException e) {
                 AppLog.e(this, e);
             }
@@ -141,7 +139,7 @@ public abstract class AbsGpxListActivity extends AbsMenu implements OnItemClickL
         //AppLog.d(this, "onResume()");
         if (listView != null) {
             try {
-                listView.setSelection(getDirectoryService().getStoredPosition());
+                listView.setSelection(getServiceContext().getDirectoryService().getStoredPosition());
             } catch (ServiceNotUpException e) {
                 AppLog.e(this, e);
             }
@@ -161,7 +159,7 @@ public abstract class AbsGpxListActivity extends AbsMenu implements OnItemClickL
 
 
     private void displayFileOnPosition(int position) throws ServiceNotUpException {
-        getDirectoryService().setPosition(position);
+        getServiceContext().getDirectoryService().setPosition(position);
         displayFile();
     }
 
@@ -175,7 +173,7 @@ public abstract class AbsGpxListActivity extends AbsMenu implements OnItemClickL
             int position = 
                     ((AdapterView.AdapterContextMenuInfo)menuInfo).position;
 
-            displayContextMenu(getDirectoryService(), menu, position);
+            displayContextMenu(getServiceContext().getDirectoryService(), menu, position);
 
         } catch (ServiceNotUpException e) {
             AppLog.e(this, e);
@@ -207,17 +205,17 @@ public abstract class AbsGpxListActivity extends AbsMenu implements OnItemClickL
 
             } else if (item.getItemId() == R.id.m_file_overlay) {
                 new AddOverlayDialog(this,
-                        new File(getDirectoryService().getCurrent().getPath()));
+                        new File(getServiceContext().getDirectoryService().getCurrent().getPath()));
 
             } else if (item.getItemId() == R.id.m_file_mock) {
                 SolidMockLocationFile smock = new SolidMockLocationFile(this);
-                smock.setValue(getDirectoryService().getCurrent().getPath());
+                smock.setValue(getServiceContext().getDirectoryService().getCurrent().getPath());
                 
             } else if (item.getItemId() == R.id.m_file_send) {
-                AppFile.send(this, new File(getDirectoryService().getCurrent().getPath()));
+                AppFile.send(this, new File(getServiceContext().getDirectoryService().getCurrent().getPath()));
                 
             } else if (item.getItemId() == R.id.m_file_copy) {
-                AppFile.copyTo(this, new File(getDirectoryService().getCurrent().getPath()));
+                AppFile.copyTo(this, new File(getServiceContext().getDirectoryService().getCurrent().getPath()));
                 
             }
 

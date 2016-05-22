@@ -1,11 +1,11 @@
 package ch.bailu.aat.views.map;
 
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import ch.bailu.aat.preferences.SolidMapTileStack;
 import ch.bailu.aat.preferences.SolidPreset;
 import ch.bailu.aat.preferences.Storage;
+import ch.bailu.aat.services.MultiServiceLink.ServiceContext;
 
 
 public class DynTileProvider extends CachedTileProvider implements OnSharedPreferenceChangeListener {
@@ -16,10 +16,10 @@ public class DynTileProvider extends CachedTileProvider implements OnSharedPrefe
 
 
 
-    public DynTileProvider(Context context, String key) {
+    public DynTileProvider(ServiceContext context, String key) {
         super(context);
-        storage = Storage.preset(context); 
-        spreset = new SolidPreset(context);
+        storage = Storage.preset(context.getContext()); 
+        spreset = new SolidPreset(context.getContext());
 
         createSolid(spreset);
 

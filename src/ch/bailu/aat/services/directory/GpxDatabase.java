@@ -20,7 +20,7 @@ public class GpxDatabase extends AbsDatabase{
 
 
 
-    public GpxDatabase (Context c, CacheService loader, File p, String s) throws IOException {
+    public GpxDatabase (Context c, CacheService.Self loader, File p, String s) throws IOException {
 
         selection=s;
         context=c;

@@ -11,6 +11,7 @@ import ch.bailu.aat.helpers.AppBroadcaster;
 import ch.bailu.aat.helpers.AppDirectory;
 import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat.services.AbsService;
+import ch.bailu.aat.services.MultiServiceLink.ServiceContext;
 import ch.bailu.aat.services.MultiServiceLink.ServiceNotUpException;
 import ch.bailu.aat.services.background.BackgroundService;
 import ch.bailu.aat.services.cache.CacheService;
@@ -71,7 +72,7 @@ public class DirectoryService extends AbsService	{
     
     private void openPending() {
         try {
-            CacheService objectCache = getCacheService();
+            CacheService.Self objectCache = getServiceContext().getCacheService();
             
             
             if (pendingSelection!=null) {
@@ -79,7 +80,7 @@ public class DirectoryService extends AbsService	{
                 if (pendingDirectory!=null) {
                     openDataBase(objectCache, AppDirectory.getCacheDb(pendingDirectory), pendingSelection);
                     
-                    startSynchronizer(getCacheService(), getBackgroundService(), pendingDirectory);
+                    startSynchronizer(getServiceContext(), pendingDirectory);
                     positionKey = pendingDirectory.getName();
 
                 } else  {
@@ -103,7 +104,7 @@ public class DirectoryService extends AbsService	{
     }
 
 
-    private void openDataBase(CacheService loader, File path, String selection) throws IOException, ServiceNotUpException {
+    private void openDataBase(CacheService.Self loader, File path, String selection) throws IOException, ServiceNotUpException {
         database.close();
         database = new GpxDatabase(
                 this,
@@ -128,9 +129,9 @@ public class DirectoryService extends AbsService	{
     }
 
 
-    private void startSynchronizer(CacheService loader, BackgroundService bg, File directory) throws IOException {
+    private void startSynchronizer(ServiceContext cs, File directory) throws IOException, ServiceNotUpException {
         stopSynchronizer();
-        synchronizer = new DirectorySynchronizer(loader, bg, directory);
+        synchronizer = new DirectorySynchronizer(cs, directory);
         //synchronizer.synchronize();
     }
 

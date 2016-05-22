@@ -28,7 +28,7 @@ public class GpxListEntryView extends  DescriptionViewGroup {
     private final static int SPACE=20;
 
     private final ImageView imageView;
-    private final CacheService loader;
+    private final CacheService.Self loader;
 
     private ImageObject imageHandle=ImageObject.NULL;
 
@@ -36,7 +36,7 @@ public class GpxListEntryView extends  DescriptionViewGroup {
     private String imageToLoad=null;
 
 
-    public GpxListEntryView(Context context, ContentDescription[] description, CacheService l) {
+    public GpxListEntryView(Context context, ContentDescription[] description, CacheService.Self l) {
         super(context, SOLID_KEY, INFO_ID_ALL);
 
         loader = l;

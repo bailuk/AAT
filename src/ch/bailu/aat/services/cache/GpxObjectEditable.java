@@ -13,7 +13,7 @@ import ch.bailu.aat.gpx.writer.GpxListWriter;
 import ch.bailu.aat.helpers.AppBroadcaster;
 import ch.bailu.aat.helpers.AppDirectory;
 import ch.bailu.aat.helpers.AppLog;
-import ch.bailu.aat.services.cache.CacheService.SelfOn;
+import ch.bailu.aat.services.MultiServiceLink.ServiceContext;
 import ch.bailu.aat.services.editor.EditorInterface;
 import ch.bailu.aat.services.editor.GpxEditor;
 
@@ -26,25 +26,25 @@ public class GpxObjectEditable extends  GpxObject {
     public final GpxListEditor editor;
     
     
-    public GpxObjectEditable(String id, String p, SelfOn self, int iID) {
+    public GpxObjectEditable(String id, String p, ServiceContext sc, int iID) {
         super(id);
         path=p;
         vid=id;
         
-        editor = new GpxListEditor(self.context, iID);
-        self.broadcaster.put(this);        
+        editor = new GpxListEditor(sc.getContext(), iID);
+        sc.getCacheService().addToBroadcaster(this);        
     }
 
 
     @Override
-    public void onInsert(SelfOn self) {
-        currentHandle = (GpxObject)self.getObject(path, new GpxObjectStatic.Factory());
+    public void onInsert(ServiceContext sc) {
+        currentHandle = (GpxObject)sc.getCacheService().getObject(path, new GpxObjectStatic.Factory());
         editor.loadIntoEditor(currentHandle.getGpxList());
     }
     
 
     @Override
-    public void onRemove(SelfOn self) {
+    public void onRemove(ServiceContext sc) {
         currentHandle.free();
         currentHandle=NULL;
     }
@@ -57,11 +57,11 @@ public class GpxObjectEditable extends  GpxObject {
 
     
     @Override
-    public void onDownloaded(String id, String url, SelfOn self) {}
+    public void onDownloaded(String id, String url, ServiceContext sc) {}
 
 
     @Override
-    public void onChanged(String id, SelfOn self) {
+    public void onChanged(String id, ServiceContext sc) {
         if (id.equals(path)) {
             editor.loadIntoEditor(currentHandle.getGpxList());
         }
@@ -266,16 +266,16 @@ public class GpxObjectEditable extends  GpxObject {
  
 
         @Override
-        public ObjectHandle factory(String id, SelfOn self) {
-            return new GpxObjectEditable(id,path, self, infoID);
+        public ObjectHandle factory(String id, ServiceContext sc) {
+            return new GpxObjectEditable(id,path, sc, infoID);
         }
 
 
 
     }
     
-    public static GpxObjectEditable loadEditor(CacheService c, String path, int iID) {
-        return (GpxObjectEditable) c.getObject(getVirtualID(path), new Factory(path, iID));
+    public static GpxObjectEditable loadEditor(ServiceContext c, String path, int iID) {
+        return (GpxObjectEditable) c.getCacheService().getObject(getVirtualID(path), new Factory(path, iID));
     }
 
     private static String getVirtualID(String cID) {

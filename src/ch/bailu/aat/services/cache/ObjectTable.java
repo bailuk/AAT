@@ -3,6 +3,7 @@ package ch.bailu.aat.services.cache;
 import android.content.Intent;
 import android.util.SparseArray;
 import ch.bailu.aat.helpers.AppBroadcaster;
+import ch.bailu.aat.services.MultiServiceLink.ServiceContext;
 import ch.bailu.aat.services.cache.CacheService.SelfOn;
 import ch.bailu.aat.services.cache.ObjectHandle.Factory;
 
@@ -45,17 +46,17 @@ public class ObjectTable {
         ObjectHandle h=getFromCache(id);
 
         if (h == null) {
-            h = factory.factory(id, self);
+            h = factory.factory(id, self.serviceContext);
 
             putIntoCache(h);
 
-            h.lock(self);
-            h.onInsert(self);
+            h.lock(self.serviceContext);
+            h.onInsert(self.serviceContext);
 
             trim(self);
 
         } else {
-            h.lock(self);
+            h.lock(self.serviceContext);
         }
         return h;
     }
@@ -76,14 +77,14 @@ public class ObjectTable {
         return null;
     }
 
-    public synchronized ObjectHandle getHandle(String id, SelfOn self) {
+    public synchronized ObjectHandle getHandle(String id, ServiceContext sc) {
         ObjectHandle h=getFromCache(id);
 
         if (h == null) {
             h = ObjectHandle.NULL;
         } 
 
-        h.lock(self);
+        h.lock(sc);
         return h;
     }
 
@@ -154,7 +155,7 @@ public class ObjectTable {
             self.broadcaster.delete(remove.obj);
             table.remove(remove.hashCode());
             totalMemorySize -= remove.size;
-            remove.obj.onRemove(self);
+            remove.obj.onRemove(self.serviceContext);
             return true;
         }
         return false;

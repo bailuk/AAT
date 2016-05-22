@@ -1,6 +1,5 @@
 package ch.bailu.aat.views;
 
-import android.content.Context;
 import android.content.Intent;
 import android.database.DataSetObserver;
 import android.util.SparseArray;
@@ -15,7 +14,7 @@ import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.GpxList;
 import ch.bailu.aat.gpx.GpxListArray;
 import ch.bailu.aat.helpers.AppTheme;
-import ch.bailu.aat.services.cache.CacheService;
+import ch.bailu.aat.services.MultiServiceLink.ServiceContext;
 
 public class NodeListView extends TrackDescriptionView {
 
@@ -23,10 +22,10 @@ public class NodeListView extends TrackDescriptionView {
     private final MyWayListView list;
 
 
-    public NodeListView(Context context, String key, int infoID) {
-        super(context, key, infoID);
+    public NodeListView(ServiceContext scontext, String key, int infoID) {
+        super(scontext.getContext(), key, infoID);
 
-        list = new MyWayListView(context);
+        list = new MyWayListView(scontext);
         AppTheme.themify(list, AppTheme.getHighlightColor());
 
         addView(list);
@@ -54,9 +53,6 @@ public class NodeListView extends TrackDescriptionView {
         list.update(info);
     }
 
-    public void setService(CacheService c) {
-        list.setService(c);
-    }
 
 
     private class MyWayListView extends ListView
@@ -66,11 +62,13 @@ public class NodeListView extends TrackDescriptionView {
         private GpxListArray array = new GpxListArray(GpxList.NULL_ROUTE);
         private GpxInformation info = GpxInformation.NULL;
         
-        private CacheService cacheService;
+        private final ServiceContext scontext;
 
         
-        public MyWayListView(Context context) {
-            super(context);
+        public MyWayListView(ServiceContext sc) {
+            super(sc.getContext());
+            
+            scontext=sc;
             setAdapter(this);
             setOnItemClickListener(this);
         }
@@ -94,9 +92,6 @@ public class NodeListView extends TrackDescriptionView {
         }
 
 
-        public void setService(CacheService c) {
-            cacheService = c;
-        }
 
 
         @Override
@@ -111,7 +106,7 @@ public class NodeListView extends TrackDescriptionView {
             NodeEntryView entry = (NodeEntryView) recycle;
 
             if (entry == null) {
-                entry = new NodeEntryView(getContext(), cacheService, solidKey, filter.id);
+                entry = new NodeEntryView(scontext, solidKey, filter.id);
             } 
 
             entry.update(info, array.get(position));

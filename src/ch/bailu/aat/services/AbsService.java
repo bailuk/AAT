@@ -7,9 +7,7 @@ import android.app.Service;
 import android.content.Intent;
 import android.os.Binder;
 import android.os.IBinder;
-import ch.bailu.aat.services.MultiServiceLink.ServiceNotUpException;
-import ch.bailu.aat.services.background.BackgroundService;
-import ch.bailu.aat.services.cache.CacheService;
+import ch.bailu.aat.services.MultiServiceLink.ServiceContext;
 
 public abstract class AbsService  extends Service {
     private static int allbindings, allinstances, allcreations;
@@ -45,24 +43,11 @@ public abstract class AbsService  extends Service {
     public abstract void onServicesUp();
 
 
-
-
-    public AbsService getService(Class<?> s) throws ServiceNotUpException {
-        return serviceLink.getService(s);
+    public ServiceContext getServiceContext() {
+        return serviceLink.getServiceContext(this);
     }
 
-
-    public CacheService getCacheService() throws ServiceNotUpException {
-        return (CacheService) getService(CacheService.class);
-    }
-
-
-    public BackgroundService getBackgroundService() throws ServiceNotUpException {
-        return (BackgroundService) getService(BackgroundService.class);
-    }
-
-
-
+    
     public class CommonBinder extends Binder {
         public AbsService getService() {
             return AbsService.this;

@@ -11,8 +11,8 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import ch.bailu.aat.helpers.AppBroadcaster;
+import ch.bailu.aat.services.MultiServiceLink.ServiceContext;
 import ch.bailu.aat.services.background.ProcessHandle;
-import ch.bailu.aat.services.cache.CacheService.SelfOn;
 import ch.bailu.aat.services.cache.TileObject.Source;
 
 public class TileStackObject extends ObjectHandle {
@@ -37,7 +37,7 @@ public class TileStackObject extends ObjectHandle {
     }
 
 
-    public TileStackObject(String s, SelfOn self,  TileContainer[] t, MapTile m) {
+    public TileStackObject(String s, ServiceContext cs,  TileContainer[] t, MapTile m) {
         super(s);
         tiles = t;
         mapTile=m;
@@ -51,14 +51,14 @@ public class TileStackObject extends ObjectHandle {
 
 
     @Override
-    public void onInsert(SelfOn self) {
-        self.broadcaster.put(this);
+    public void onInsert(ServiceContext cs) {
+        cs.getCacheService().addToBroadcaster(this);
         
         for (TileContainer tile: tiles) {
-            tile.lock(self);
+            tile.lock(cs);
         }
         
-        reupdate(self);
+        reupdate(cs);
         
     }
 
@@ -66,33 +66,33 @@ public class TileStackObject extends ObjectHandle {
 
 
     @Override
-    public void onRemove(SelfOn self) {
+    public void onRemove(ServiceContext cs) {
         for (TileContainer tile: tiles) {
             tile.free();
         }
     }
 
 
-    private void reupdate(SelfOn self) {
+    private void reupdate(ServiceContext cs) {
         ready=false;
         
         
         if (areSubtilesReady()) {
             pendingUpdate.stopLoading();
             pendingUpdate = new ReUpdate();
-            self.background.process(pendingUpdate);
+            cs.getBackgroundService().process(pendingUpdate);
         }
     }
 
 
     @Override
-    public void onDownloaded(String id, String u, SelfOn self) {}
+    public void onDownloaded(String id, String u, ServiceContext cs) {}
 
 
     @Override
-    public void onChanged(String id, SelfOn self) {
+    public void onChanged(String id, ServiceContext cs) {
         if (haveID(id)) {
-            reupdate(self);
+            reupdate(cs);
         }
     }
 
@@ -237,8 +237,8 @@ public class TileStackObject extends ObjectHandle {
 
 
 
-        public void lock(SelfOn self) {
-            handle = self.getObject(id, factory);
+        public void lock(ServiceContext cs) {
+            handle = cs.getCacheService().getObject(id, factory);
         }
 
 
@@ -288,8 +288,8 @@ public class TileStackObject extends ObjectHandle {
             return (s.getMaximumZoomLevel()>=z && s.getMinimumZoomLevel()<=z);
         }
         @Override
-        public ObjectHandle factory(String id, SelfOn self) {
-            return new TileStackObject(id, self, tiles, mapTile);
+        public ObjectHandle factory(String id, ServiceContext cs) {
+            return new TileStackObject(id, cs, tiles, mapTile);
         }
     }
 }

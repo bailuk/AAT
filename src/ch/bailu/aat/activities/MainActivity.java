@@ -174,8 +174,8 @@ implements AdapterView.OnItemSelectedListener, OnSharedPreferenceChangeListener 
             };
 
             ContentSource[] source = new ContentSource[] {
-                    new TrackerSource(getTrackerService()),
-                    new CurrentLocationSource(getTrackerService())
+                    new TrackerSource(getServiceContext().getTrackerService()),
+                    new CurrentLocationSource(getServiceContext().getTrackerService())
             };
 
             setDispatcher(new ContentDispatcher(this,source, target));

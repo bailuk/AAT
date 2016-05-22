@@ -116,9 +116,9 @@ public class TestActivity extends AbsDispatcher implements OnClickListener {
 
     
     private MultiView createMultiView() {
-        wayList = new NodeListView(this, SOLID_KEY, INFO_ID_OVERLAY);
+        wayList = new NodeListView(getServiceContext(), SOLID_KEY, INFO_ID_OVERLAY);
         
-        map=new OsmInteractiveView(this, SOLID_KEY);
+        map=new OsmInteractiveView(getServiceContext(), SOLID_KEY);
         ViewWrapper list = new ViewWrapper(new TestList(this));
         
         ContentDescription gpsData[] = new ContentDescription[] {
@@ -197,15 +197,12 @@ public class TestActivity extends AbsDispatcher implements OnClickListener {
     @Override
     public void onServicesUp() {
         try {
-            map.setServices(getCacheService());            
-
-            
             
             OsmOverlay overlayList[] = {
-                    new GpxOverlayListOverlay(map,getCacheService()),
-                    new GpxDynOverlay(map, getCacheService(), GpxInformation.ID.INFO_ID_TRACKER), 
+                    new GpxOverlayListOverlay(map,getServiceContext().getCacheService()),
+                    new GpxDynOverlay(map, getServiceContext().getCacheService(), GpxInformation.ID.INFO_ID_TRACKER), 
                     new GpxTestOverlay(map, GpxInformation.ID.INFO_ID_OVERLAY),
-                    new GridDynOverlay(map, getElevationService()),
+                    new GridDynOverlay(map, getServiceContext().getElevationService()),
                     new CurrentLocationOverlay(map),
                     new NavigationBarOverlay(map),
                     new InformationBarOverlay(map),
@@ -215,17 +212,16 @@ public class TestActivity extends AbsDispatcher implements OnClickListener {
             };
             map.setOverlayList(overlayList);
             
-            wayList.setService(getCacheService());
             
             DescriptionInterface[] target = new DescriptionInterface[] {
                     multiView,this
             };
 
             ContentSource[] source = new ContentSource[] {
-                    new EditorSource(getEditorService(),GpxInformation.ID.INFO_ID_EDITOR_DRAFT),
-                    new TrackerSource(getTrackerService()),
-                    new CurrentLocationSource(getTrackerService()),
-                    new OverlaySource((OverlayService)getService(OverlayService.class)),
+                    new EditorSource(getServiceContext().getEditorService(),GpxInformation.ID.INFO_ID_EDITOR_DRAFT),
+                    new TrackerSource(getServiceContext().getTrackerService()),
+                    new CurrentLocationSource(getServiceContext().getTrackerService()),
+                    new OverlaySource(getServiceContext().getOverlayService()),
             };
             setDispatcher(new ContentDispatcher(this,source, target));
         } catch (ServiceNotUpException e) {

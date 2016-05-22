@@ -92,7 +92,7 @@ public class MapFeaturesDownloader implements Closeable {
             try {
                 final File file = AppDirectory.getMapFeatureIndex(downloader);
                 request = new DownloadHandle(SOURCE_URL, file);
-                downloader.download(request);
+                downloader.getSelf().download(request);
 
             } catch (Exception e) {
                 AppLog.e(downloader, e);
@@ -134,7 +134,7 @@ public class MapFeaturesDownloader implements Closeable {
                 
                 File target = request.getFile();
                 if (target.exists()==false) {
-                    downloader.download(request);
+                    downloader.getSelf().download(request);
                 }
             }
         }

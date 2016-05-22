@@ -55,7 +55,7 @@ implements DescriptionInterface{
     public boolean onPrepareOptionsMenu(Menu menu) {
 
         try {
-            updateMenuText(getTrackerService().getState());
+            updateMenuText(getServiceContext().getTrackerService().getState());
         } catch (ServiceNotUpException e) {
             e.printStackTrace();
         }
@@ -70,10 +70,10 @@ implements DescriptionInterface{
         try {
 
             if (item == start) {
-                getTrackerService().getState().onStartStop();
+                getServiceContext().getTrackerService().getState().onStartStop();
 
             } else if (item == pause) {
-                getTrackerService().getState().onPauseResume();
+                getServiceContext().getTrackerService().getState().onPauseResume();
 
             } else if (item == backlight) {
                 new IndexListDialog(this, new SolidBacklight(this, new SolidPreset(this).getIndex()));
@@ -139,7 +139,7 @@ implements DescriptionInterface{
     private int getStartButtonTextResource(int state) {
 
         try {
-            return getTrackerService().getState().getStartPauseResumeTextID();
+            return getServiceContext().getTrackerService().getState().getStartPauseResumeTextID();
         } catch (ServiceNotUpException e) {
             return R.string.tracker_start;
         }
@@ -155,13 +155,6 @@ implements DescriptionInterface{
         pause.setTitle(state.getPauseResumeTextID());
         // FIXME: pause.setEnabled(false);
     }
-
-/*
-    @Override
-    public int getUpdatePriority() {
-        return 1;
-    }
-*/
 
 
 }

@@ -81,7 +81,7 @@ public class OverlayListActivity extends AbsGpxListActivity {
         super.onResume();
 
         try {
-            createDirectoryServiceHelper(getDirectoryService()).rescanDirectory();
+            createDirectoryServiceHelper(getServiceContext().getDirectoryService()).rescanDirectory();
         } catch (Exception e) {}
 
     }

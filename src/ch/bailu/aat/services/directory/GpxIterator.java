@@ -16,10 +16,10 @@ public class GpxIterator extends AbsIterator {
     private Cursor cursor;
     private FileListSummary listSummary;
     private ObjectHandle handle=ObjectHandle.NULL;
-    private final CacheService loader;
+    private final CacheService.Self loader;
 
 
-    public GpxIterator(Cursor c, CacheService fl) {
+    public GpxIterator(Cursor c, CacheService.Self fl) {
         loader=fl;
 
         cursor = c;
@@ -27,7 +27,7 @@ public class GpxIterator extends AbsIterator {
     }
 
 
-    public GpxIterator(Cursor c, CacheService fl, int position) {
+    public GpxIterator(Cursor c, CacheService.Self fl, int position) {
         this(c,fl);
         setPosition(position);
     }

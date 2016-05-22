@@ -35,7 +35,7 @@ public class ElevationService extends AbsService implements ElevationProvider {
     @Override
     public void onServicesUp() {
         try {
-            ElevationUpdater e=new ElevationUpdater( this.getCacheService(), this.getBackgroundService());
+            ElevationUpdater e=new ElevationUpdater(getServiceContext());
             toClose=e;
             elevation=e;
             

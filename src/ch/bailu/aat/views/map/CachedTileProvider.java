@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import ch.bailu.aat.helpers.AppBroadcaster;
+import ch.bailu.aat.services.MultiServiceLink.ServiceContext;
 import ch.bailu.aat.services.cache.TileObject;
 import ch.bailu.aat.services.cache.TileStackObject;
 
@@ -33,8 +34,9 @@ public class CachedTileProvider extends AbsOsmTileProvider {
 
     
     
-    public CachedTileProvider(Context c)  {
-        context = c;
+    public CachedTileProvider(ServiceContext sc)  {
+        super(sc);
+        context = sc.getContext();
 
         AppBroadcaster.register(context, onFileChanged, AppBroadcaster.FILE_CHANGED_INCACHE);
     }

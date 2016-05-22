@@ -7,12 +7,12 @@ import android.content.Context;
 import android.content.Intent;
 import ch.bailu.aat.gpx.GpxFileWrapper;
 import ch.bailu.aat.helpers.AppBroadcaster;
-import ch.bailu.aat.services.cache.CacheService;
+import ch.bailu.aat.services.MultiServiceLink.ServiceContext;
 import ch.bailu.aat.services.cache.GpxObject;
 import ch.bailu.aat.services.cache.GpxObjectStatic;
 
 public class CustomFileSource extends ContentSource {
-    private final CacheService cacheService;
+    private final ServiceContext scontext;
     private final GpxObject    gpxObject;
 
 
@@ -26,16 +26,16 @@ public class CustomFileSource extends ContentSource {
     };
 
 
-    public CustomFileSource(CacheService s, String fileID) {
-        cacheService = s;
+    public CustomFileSource(ServiceContext sc, String fileID) {
+        scontext=sc;
 
-        gpxObject = (GpxObject) cacheService.getObject(fileID, new GpxObjectStatic.Factory());
-        AppBroadcaster.register(cacheService, onChangedInCache, AppBroadcaster.FILE_CHANGED_INCACHE);
+        gpxObject = (GpxObject) scontext.getCacheService().getObject(fileID, new GpxObjectStatic.Factory());
+        AppBroadcaster.register(sc.getContext(), onChangedInCache, AppBroadcaster.FILE_CHANGED_INCACHE);
     }   
 
     @Override
     public void close() {
-        cacheService.unregisterReceiver(onChangedInCache);
+        scontext.getContext().unregisterReceiver(onChangedInCache);
         gpxObject.free();
     }
 

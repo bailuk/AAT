@@ -11,16 +11,16 @@ import ch.bailu.aat.views.map.overlay.MapTwoNodes.PixelNode;
 public class WayOverlay extends GpxOverlay {
     private static final int MAX_VISIBLE_NODES=500;
 
-    private final CacheService cache;
+    private final CacheService.Self cache;
 
-    public WayOverlay(AbsOsmView osm, CacheService c, int id) {
+    public WayOverlay(AbsOsmView osm, CacheService.Self c, int id) {
         this(osm, c, id, AppTheme.getHighlightColor2());
 
     }
 
 
 
-    public WayOverlay(AbsOsmView osm, CacheService c, int id, int color) {
+    public WayOverlay(AbsOsmView osm, CacheService.Self c, int id, int color) {
         super(osm, id, color);
         cache = c;
     }

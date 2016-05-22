@@ -4,7 +4,7 @@ import java.io.File;
 
 import ch.bailu.aat.coordinates.SrtmCoordinates;
 import ch.bailu.aat.helpers.Timer;
-import ch.bailu.aat.services.background.BackgroundService;
+import ch.bailu.aat.services.MultiServiceLink.ServiceContext;
 import ch.bailu.aat.services.background.DownloadHandle;
 
 
@@ -38,7 +38,7 @@ public class Dem3Tiles {
                 Dem3Tile slot = getOldestProcessed();
                 
                 if (slot != null) {
-                    slot.load(background, c);
+                    slot.load(serviceContext, c);
                 }
             }
             
@@ -61,10 +61,10 @@ public class Dem3Tiles {
         }
         
         private void download(SrtmCoordinates c) {
-            File target = c.toFile(background);
+            File target = c.toFile(serviceContext.getContext());
             if (target.exists()==false) {
                 DownloadHandle handle = new DownloadHandle(c.toURL(), target);
-                background.download(handle);
+                serviceContext.getBackgroundService().download(handle);
             }
         }
     }
@@ -74,10 +74,10 @@ public class Dem3Tiles {
     private final static int NUM_TILES=1;
     
     private final Dem3Tile tiles[];
-    private final BackgroundService background;
+    private final ServiceContext serviceContext;
     
-    public Dem3Tiles(BackgroundService c) {
-        background=c;
+    public Dem3Tiles(ServiceContext c) {
+        serviceContext=c;
         tiles = new Dem3Tile[NUM_TILES];
         for (int i=0; i< NUM_TILES; i++) tiles[i]=new Dem3Tile();
     }

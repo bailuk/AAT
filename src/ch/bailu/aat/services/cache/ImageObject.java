@@ -6,8 +6,8 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import ch.bailu.aat.helpers.AppBroadcaster;
+import ch.bailu.aat.services.MultiServiceLink.ServiceContext;
 import ch.bailu.aat.services.background.FileHandle;
-import ch.bailu.aat.services.cache.CacheService.SelfOn;
 
 public class ImageObject extends ObjectHandle {
     public final static ImageObject NULL=new ImageObject();
@@ -19,20 +19,20 @@ public class ImageObject extends ObjectHandle {
         super("");
     }
     
-    public ImageObject(String id, SelfOn self) {
+    public ImageObject(String id, ServiceContext sc) {
         super(id);
     }
     
     @Override
-    public void onInsert(SelfOn self){
-        load(self);
+    public void onInsert(ServiceContext sc){
+        load(sc);
         
-        self.broadcaster.put(this);
+        sc.getCacheService().addToBroadcaster(this);
     }
 
 
     
-    private void load(SelfOn self) {
+    private void load(ServiceContext sc) {
         FileHandle l=new FileHandle(toString()) {
 
             @Override
@@ -49,7 +49,7 @@ public class ImageObject extends ObjectHandle {
             }
 
         };
-        self.background.load(l);
+        sc.getBackgroundService().load(l);
     }
     
     
@@ -75,20 +75,20 @@ public class ImageObject extends ObjectHandle {
 
     public static class Factory extends ObjectHandle.Factory {
         @Override
-        public ObjectHandle factory(String id, SelfOn self) {
-            return new ImageObject(id, self);
+        public ObjectHandle factory(String id, ServiceContext sc) {
+            return new ImageObject(id, sc);
         }
     }
 
 
     @Override
-    public void onDownloaded(String id, String url, SelfOn self) {
+    public void onDownloaded(String id, String url, ServiceContext sc) {
         if (id.equals(toString())) {
-            load(self);
+            load(sc);
         }
     }
 
     
     @Override
-    public void onChanged(String id, SelfOn self) {}
+    public void onChanged(String id, ServiceContext sc) {}
 }

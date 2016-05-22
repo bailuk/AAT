@@ -13,7 +13,7 @@ import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.GpxList;
 import ch.bailu.aat.helpers.AppBroadcaster;
 import ch.bailu.aat.preferences.SolidOverlayFile;
-import ch.bailu.aat.services.cache.CacheService;
+import ch.bailu.aat.services.MultiServiceLink.ServiceContext;
 import ch.bailu.aat.services.cache.GpxObject;
 import ch.bailu.aat.services.cache.GpxObjectStatic;
 import ch.bailu.aat.services.cache.ObjectHandle;
@@ -22,21 +22,19 @@ public class OverlayInformation extends GpxInformation implements Closeable {
         private final int updateID;
 
         private final SolidOverlayFile soverlay;
-        private final CacheService loader;
-        private final Context context;
+        private final ServiceContext serviceContext;
 
         private GpxObject handle = GpxObjectStatic.NULL;
         private BoundingBox bounding = BoundingBox.NULL_BOX;
 
 
-        public OverlayInformation(int id, CacheService l) {
-            context = l;
-            loader = l;
+        public OverlayInformation(int id, ServiceContext sc) {
+            serviceContext = sc;
             updateID = id;
 
-            soverlay = new SolidOverlayFile(l, id-ID.INFO_ID_OVERLAY);
+            soverlay = new SolidOverlayFile(serviceContext.getContext(), id-ID.INFO_ID_OVERLAY);
             soverlay.register(onPreferencesChanged);
-            AppBroadcaster.register(context, onFileProcessed, AppBroadcaster.FILE_CHANGED_INCACHE);
+            AppBroadcaster.register(serviceContext.getContext(), onFileProcessed, AppBroadcaster.FILE_CHANGED_INCACHE);
             
             initOverlay();
         }
@@ -80,14 +78,14 @@ public class OverlayInformation extends GpxInformation implements Closeable {
             } else {
                 disableOverlay();
             }
-            AppBroadcaster.broadcast(context, AppBroadcaster.OVERLAY_CHANGED, updateID);
+            AppBroadcaster.broadcast(serviceContext.getContext(), AppBroadcaster.OVERLAY_CHANGED, updateID);
         }
 
 
         private void enableOverlay(String fileId) {
             final ObjectHandle oldHandle = handle;
 
-            handle = (GpxObject)loader.getObject(fileId, new GpxObjectStatic.Factory());
+            handle = (GpxObject)serviceContext.getCacheService().getObject(fileId, new GpxObjectStatic.Factory());
             oldHandle.free();
             setBounding();
         }
@@ -141,6 +139,6 @@ public class OverlayInformation extends GpxInformation implements Closeable {
             handle.free();
             handle = GpxObjectStatic.NULL;
             soverlay.unregister(onPreferencesChanged);
-            context.unregisterReceiver(onFileProcessed);
+            serviceContext.getContext().unregisterReceiver(onFileProcessed);
         }
 }

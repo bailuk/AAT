@@ -2,7 +2,7 @@ package ch.bailu.aat.services.cache;
 
 import org.osmdroid.tileprovider.MapTile;
 
-import ch.bailu.aat.services.cache.CacheService.SelfOn;
+import ch.bailu.aat.services.MultiServiceLink.ServiceContext;
 import ch.bailu.aat.services.dem.DemDimension;
 import ch.bailu.aat.services.dem.DemGeoToIndex;
 import ch.bailu.aat.services.dem.DemProvider;
@@ -12,8 +12,8 @@ import ch.bailu.aat.services.dem.MultiCell8;
 
 public class Hillshade8 extends NewHillshade {
 
-    public Hillshade8(String id, SelfOn self, MapTile t) {
-        super(id, self, t);
+    public Hillshade8(String id, ServiceContext sc, MapTile t) {
+        super(id, sc, t);
     }
 
     
@@ -41,8 +41,8 @@ public class Hillshade8 extends NewHillshade {
         }
 
         @Override
-        public ObjectHandle factory(String id, SelfOn self) {
-            return  new Hillshade8(id, self, mapTile);
+        public ObjectHandle factory(String id, ServiceContext sc) {
+            return  new Hillshade8(id, sc, mapTile);
         }
         
     } 

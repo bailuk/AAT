@@ -7,7 +7,7 @@ import org.osmdroid.tileprovider.MapTile;
 
 import android.graphics.drawable.Drawable;
 import android.os.Handler;
-import ch.bailu.aat.services.cache.CacheService;
+import ch.bailu.aat.services.MultiServiceLink.ServiceContext;
 import ch.bailu.aat.services.cache.TileStackObject;
 
 public class PreviewTileProvider extends AbsOsmTileProvider implements Closeable  {
@@ -15,8 +15,8 @@ public class PreviewTileProvider extends AbsOsmTileProvider implements Closeable
     private ArrayList<TileStackObject> tiles = new ArrayList<TileStackObject>(10);
     
 
-    public PreviewTileProvider(CacheService l) {
-        super(l);
+    public PreviewTileProvider(ServiceContext sc) {
+        super(sc);
     }
 
     

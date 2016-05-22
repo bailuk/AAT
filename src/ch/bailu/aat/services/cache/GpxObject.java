@@ -1,7 +1,7 @@
 package ch.bailu.aat.services.cache;
 
 import ch.bailu.aat.gpx.GpxList;
-import ch.bailu.aat.services.cache.CacheService.SelfOn;
+import ch.bailu.aat.services.MultiServiceLink.ServiceContext;
 
 
 public abstract class GpxObject extends ObjectHandle {
@@ -16,10 +16,10 @@ public abstract class GpxObject extends ObjectHandle {
     public static final GpxObject NULL = new GpxObject(GpxObject.class.getSimpleName()) {
 
         @Override
-        public void onChanged(String id, SelfOn self) {}
+        public void onChanged(String id, ServiceContext sc) {}
 
         @Override
-        public void onDownloaded(String id, String url, SelfOn self) {}
+        public void onDownloaded(String id, String url, ServiceContext sc) {}
 
         @Override
         public GpxList getGpxList() {
