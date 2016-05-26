@@ -1,6 +1,6 @@
 package ch.bailu.aat.services.cache;
 
-import ch.bailu.aat.services.MultiServiceLink.ServiceContext;
+import ch.bailu.aat.services.ServiceContext;
 
 public interface ObjectBroadcastReceiver {
     void onDownloaded(String id, String url, ServiceContext sc);

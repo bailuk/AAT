@@ -6,7 +6,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import ch.bailu.aat.helpers.AppBroadcaster;
-import ch.bailu.aat.services.MultiServiceLink.ServiceContext;
+import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.background.FileHandle;
 
 public class ImageObject extends ObjectHandle {

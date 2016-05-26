@@ -17,6 +17,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import ch.bailu.aat.R;
 import ch.bailu.aat.description.DescriptionInterface;
 import ch.bailu.aat.description.GpsStateDescription;
 import ch.bailu.aat.description.TrackerStateDescription;
@@ -30,12 +31,11 @@ import ch.bailu.aat.helpers.AppLog;
 import ch.bailu.aat.helpers.AppTheme;
 import ch.bailu.aat.preferences.SolidPreset;
 import ch.bailu.aat.preferences.Storage;
-import ch.bailu.aat.services.MultiServiceLink.ServiceNotUpException;
+import ch.bailu.aat.services.ServiceContext.ServiceNotUpException;
 import ch.bailu.aat.services.cache.CacheService;
 import ch.bailu.aat.services.tracker.TrackerService;
 import ch.bailu.aat.views.ContentView;
 import ch.bailu.aat.views.NumberView;
-import ch.bailu.aat.R;
 
 
 

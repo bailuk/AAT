@@ -49,9 +49,8 @@ import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.helpers.AppLayout;
 import ch.bailu.aat.helpers.AppLog;
 import ch.bailu.aat.helpers.AppTheme;
-import ch.bailu.aat.services.MultiServiceLink;
-import ch.bailu.aat.services.MultiServiceLink.ServiceNotUpException;
-import ch.bailu.aat.services.overlay.OverlayService;
+import ch.bailu.aat.services.ServiceContext.ServiceNotUpException;
+import ch.bailu.aat.services.ServiceLink;
 import ch.bailu.aat.test.TestCoordinates;
 import ch.bailu.aat.test.TestGpx;
 import ch.bailu.aat.test.TestGpxLogRecovery;
@@ -103,7 +102,7 @@ public class TestActivity extends AbsDispatcher implements OnClickListener {
         
 
         setContentView(contentView);
-        connectToServices(MultiServiceLink.ALL_SERVICES);
+        connectToServices(ServiceLink.ALL_SERVICES);
     }
 
 

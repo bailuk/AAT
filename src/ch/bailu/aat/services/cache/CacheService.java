@@ -7,7 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import ch.bailu.aat.helpers.AppBroadcaster;
 import ch.bailu.aat.services.AbsService;
-import ch.bailu.aat.services.MultiServiceLink.ServiceContext;
+import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.ServiceLink;
 import ch.bailu.aat.services.background.BackgroundService;
 import ch.bailu.aat.services.cache.ObjectHandle.Factory;
@@ -154,4 +154,8 @@ public class CacheService extends AbsService {
             }
         };
     }
+
+
+    @Override
+    public void onServicesUp() {}
 }

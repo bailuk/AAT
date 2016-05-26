@@ -11,7 +11,7 @@ import org.osmdroid.util.GeoPoint;
 import android.content.Context;
 import ch.bailu.aat.coordinates.SrtmCoordinates;
 import ch.bailu.aat.helpers.AppBroadcaster;
-import ch.bailu.aat.services.MultiServiceLink.ServiceContext;
+import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.background.FileHandle;
 import ch.bailu.aat.services.background.ProcessHandle;
 

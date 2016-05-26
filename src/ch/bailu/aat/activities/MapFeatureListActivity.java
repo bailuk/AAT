@@ -5,7 +5,7 @@ import java.io.File;
 import android.content.Intent;
 import android.os.Bundle;
 import ch.bailu.aat.helpers.AppBroadcaster;
-import ch.bailu.aat.services.MultiServiceLink.ServiceNotUpException;
+import ch.bailu.aat.services.ServiceContext.ServiceNotUpException;
 import ch.bailu.aat.services.icons.IconMapService;
 import ch.bailu.aat.views.FeaturesList;
 

@@ -26,7 +26,7 @@ import ch.bailu.aat.helpers.AppDialog;
 import ch.bailu.aat.helpers.AppLayout;
 import ch.bailu.aat.helpers.AppLog;
 import ch.bailu.aat.helpers.Timer;
-import ch.bailu.aat.services.MultiServiceLink.ServiceNotUpException;
+import ch.bailu.aat.services.ServiceContext.ServiceNotUpException;
 import ch.bailu.aat.services.cache.CacheService;
 import ch.bailu.aat.services.dem.ElevationService;
 import ch.bailu.aat.services.directory.DirectoryService;

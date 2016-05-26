@@ -12,8 +12,8 @@ import ch.bailu.aat.description.ContentDescription;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.helpers.AppBroadcaster;
 import ch.bailu.aat.helpers.AppTheme;
-import ch.bailu.aat.services.MultiServiceLink.ServiceContext;
-import ch.bailu.aat.services.MultiServiceLink.ServiceNotUpException;
+import ch.bailu.aat.services.ServiceContext;
+import ch.bailu.aat.services.ServiceContext.ServiceNotUpException;
 
 public class GpxListView extends ListView {
 

@@ -7,7 +7,7 @@ import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.helpers.AppLog;
 import ch.bailu.aat.preferences.SolidOverlayFileList;
 import ch.bailu.aat.services.AbsService;
-import ch.bailu.aat.services.MultiServiceLink.ServiceNotUpException;
+import ch.bailu.aat.services.ServiceContext.ServiceNotUpException;
 import ch.bailu.aat.services.background.BackgroundService;
 import ch.bailu.aat.services.cache.CacheService;
 

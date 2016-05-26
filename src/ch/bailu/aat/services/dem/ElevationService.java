@@ -4,7 +4,7 @@ import java.io.Closeable;
 import java.io.IOException;
 
 import ch.bailu.aat.services.AbsService;
-import ch.bailu.aat.services.MultiServiceLink.ServiceNotUpException;
+import ch.bailu.aat.services.ServiceContext.ServiceNotUpException;
 import ch.bailu.aat.services.background.BackgroundService;
 import ch.bailu.aat.services.cache.CacheService;
 

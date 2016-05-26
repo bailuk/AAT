@@ -1,24 +1,35 @@
 package ch.bailu.aat.activities;
 
 
+import android.os.Bundle;
 import ch.bailu.aat.gpx.GpxInformation;
-import ch.bailu.aat.services.MultiServiceLink;
-import ch.bailu.aat.services.MultiServiceLink.ServiceContext;
-import ch.bailu.aat.services.MultiServiceLink.ServiceNotUpException;
+import ch.bailu.aat.services.ServiceContext;
+import ch.bailu.aat.services.ServiceContext.ServiceNotUpException;
+import ch.bailu.aat.services.ServiceLink;
 
 public abstract class AbsServiceLink extends AbsActivity implements GpxInformation.ID{
 
 
-    private MultiServiceLink serviceLink=new MultiServiceLink() {
-        @Override
-        public void onServicesUp() {
-            AbsServiceLink.this.onServicesUp();
-        }
-    };
+    private ServiceLink serviceLink=null;
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        
+        serviceLink = new ServiceLink(this) {
 
+            @Override
+            public void onServicesUp() {
+                AbsServiceLink.this.onServicesUp();
+            }
+            
+        };
+            
+        
+        
+    }
 
     public void connectToServices(Class<?>[] services) {
-        serviceLink.connectToServices(this, services);
+        serviceLink.up(services);
     }
 
     public abstract void onServicesUp();
@@ -33,7 +44,7 @@ public abstract class AbsServiceLink extends AbsActivity implements GpxInformati
 
 
     public ServiceContext getServiceContext() {
-        return serviceLink.getServiceContext(this);
+        return serviceLink;
     }
     
     

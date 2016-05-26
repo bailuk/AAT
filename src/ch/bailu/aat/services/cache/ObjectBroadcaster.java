@@ -7,7 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.SparseArray;
 import ch.bailu.aat.helpers.AppBroadcaster;
-import ch.bailu.aat.services.MultiServiceLink.ServiceContext;
+import ch.bailu.aat.services.ServiceContext;
 
 public class ObjectBroadcaster implements Closeable {
     

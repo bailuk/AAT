@@ -8,8 +8,7 @@ import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import ch.bailu.aat.helpers.AppBroadcaster;
-import ch.bailu.aat.helpers.AppLog;
-import ch.bailu.aat.services.MultiServiceLink.ServiceContext;
+import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.cache.TileObject;
 import ch.bailu.aat.services.cache.TileStackObject;
 

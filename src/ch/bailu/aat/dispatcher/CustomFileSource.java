@@ -7,7 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import ch.bailu.aat.gpx.GpxFileWrapper;
 import ch.bailu.aat.helpers.AppBroadcaster;
-import ch.bailu.aat.services.MultiServiceLink.ServiceContext;
+import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.cache.GpxObject;
 import ch.bailu.aat.services.cache.GpxObjectStatic;
 

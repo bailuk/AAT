@@ -2,7 +2,7 @@ package ch.bailu.aat.services.cache;
 
 import org.osmdroid.tileprovider.MapTile;
 
-import ch.bailu.aat.services.MultiServiceLink.ServiceContext;
+import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.dem.DemProvider;
 import ch.bailu.aat.views.graph.ColorTable;
 

@@ -1,7 +1,7 @@
 package ch.bailu.aat.services.cache;
 
 import android.graphics.Bitmap;
-import ch.bailu.aat.services.MultiServiceLink.ServiceContext;
+import ch.bailu.aat.services.ServiceContext;
 
 public class EmptyTileObject extends TileObject {
     public static final SynchronizedBitmap NULL_BITMAP=createBitmap();

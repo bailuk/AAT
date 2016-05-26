@@ -11,8 +11,8 @@ import ch.bailu.aat.helpers.AppBroadcaster;
 import ch.bailu.aat.helpers.AppDirectory;
 import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat.services.AbsService;
-import ch.bailu.aat.services.MultiServiceLink.ServiceContext;
-import ch.bailu.aat.services.MultiServiceLink.ServiceNotUpException;
+import ch.bailu.aat.services.ServiceContext;
+import ch.bailu.aat.services.ServiceContext.ServiceNotUpException;
 import ch.bailu.aat.services.background.BackgroundService;
 import ch.bailu.aat.services.cache.CacheService;
 

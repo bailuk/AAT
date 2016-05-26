@@ -1,7 +1,7 @@
 package ch.bailu.aat.services.cache;
 
 import ch.bailu.aat.gpx.GpxList;
-import ch.bailu.aat.services.MultiServiceLink.ServiceContext;
+import ch.bailu.aat.services.ServiceContext;
 
 
 public abstract class GpxObject extends ObjectHandle {

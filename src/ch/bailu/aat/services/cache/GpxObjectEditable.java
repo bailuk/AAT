@@ -13,7 +13,7 @@ import ch.bailu.aat.gpx.writer.GpxListWriter;
 import ch.bailu.aat.helpers.AppBroadcaster;
 import ch.bailu.aat.helpers.AppDirectory;
 import ch.bailu.aat.helpers.AppLog;
-import ch.bailu.aat.services.MultiServiceLink.ServiceContext;
+import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.editor.EditorInterface;
 import ch.bailu.aat.services.editor.GpxEditor;
 

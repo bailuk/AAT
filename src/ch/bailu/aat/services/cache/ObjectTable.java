@@ -3,7 +3,7 @@ package ch.bailu.aat.services.cache;
 import android.content.Intent;
 import android.util.SparseArray;
 import ch.bailu.aat.helpers.AppBroadcaster;
-import ch.bailu.aat.services.MultiServiceLink.ServiceContext;
+import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.cache.CacheService.SelfOn;
 import ch.bailu.aat.services.cache.ObjectHandle.Factory;
 

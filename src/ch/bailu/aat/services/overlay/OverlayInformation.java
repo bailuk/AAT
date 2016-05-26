@@ -13,7 +13,7 @@ import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.GpxList;
 import ch.bailu.aat.helpers.AppBroadcaster;
 import ch.bailu.aat.preferences.SolidOverlayFile;
-import ch.bailu.aat.services.MultiServiceLink.ServiceContext;
+import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.cache.GpxObject;
 import ch.bailu.aat.services.cache.GpxObjectStatic;
 import ch.bailu.aat.services.cache.ObjectHandle;

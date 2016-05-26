@@ -1,7 +1,7 @@
 package ch.bailu.aat.services.dem;
 
 import ch.bailu.aat.coordinates.SrtmCoordinates;
-import ch.bailu.aat.services.MultiServiceLink.ServiceContext;
+import ch.bailu.aat.services.ServiceContext;
 
 public interface ElevationUpdaterClient  {
     public SrtmCoordinates[] getSrtmTileCoordinates();

@@ -5,7 +5,7 @@ import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import ch.bailu.aat.preferences.SolidMapTileStack;
 import ch.bailu.aat.preferences.SolidPreset;
 import ch.bailu.aat.preferences.Storage;
-import ch.bailu.aat.services.MultiServiceLink.ServiceContext;
+import ch.bailu.aat.services.ServiceContext;
 
 
 public class DynTileProvider extends CachedTileProvider implements OnSharedPreferenceChangeListener {

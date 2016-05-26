@@ -3,9 +3,8 @@ package ch.bailu.aat.views.map;
 import org.osmdroid.tileprovider.MapTile;
 import org.osmdroid.tileprovider.tilesource.ITileSource;
 
-import ch.bailu.aat.helpers.AppLog;
 import ch.bailu.aat.preferences.SolidMapTileStack;
-import ch.bailu.aat.services.MultiServiceLink.ServiceContext;
+import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.cache.ObjectHandle;
 import ch.bailu.aat.services.cache.TileObject.Source;
 import ch.bailu.aat.services.cache.TileStackObject;

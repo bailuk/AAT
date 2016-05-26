@@ -2,7 +2,7 @@ package ch.bailu.aat.services.cache;
 
 import org.osmdroid.tileprovider.MapTile;
 
-import ch.bailu.aat.services.MultiServiceLink.ServiceContext;
+import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.dem.DemDimension;
 import ch.bailu.aat.services.dem.DemGeoToIndex;
 import ch.bailu.aat.services.dem.DemProvider;

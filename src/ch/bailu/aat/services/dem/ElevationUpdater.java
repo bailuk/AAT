@@ -8,8 +8,8 @@ import android.content.Intent;
 import android.util.SparseArray;
 import ch.bailu.aat.coordinates.SrtmCoordinates;
 import ch.bailu.aat.helpers.AppBroadcaster;
-import ch.bailu.aat.services.MultiServiceLink.ServiceContext;
-import ch.bailu.aat.services.MultiServiceLink.ServiceNotUpException;
+import ch.bailu.aat.services.ServiceContext;
+import ch.bailu.aat.services.ServiceContext.ServiceNotUpException;
 
 
 public class ElevationUpdater implements Closeable, ElevationProvider{

@@ -7,7 +7,7 @@ import android.widget.TextView;
 import ch.bailu.aat.coordinates.BoundingBox;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.GpxPointNode;
-import ch.bailu.aat.services.MultiServiceLink.ServiceContext;
+import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.views.map.AbsOsmTileProvider;
 import ch.bailu.aat.views.map.CachedTileProvider;
 import ch.bailu.aat.views.map.OsmPreviewGenerator;

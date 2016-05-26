@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
+import ch.bailu.aat.R;
 import ch.bailu.aat.description.DescriptionInterface;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.helpers.AppLog;
@@ -18,9 +19,8 @@ import ch.bailu.aat.preferences.SolidBacklight;
 import ch.bailu.aat.preferences.SolidMapTileStack;
 import ch.bailu.aat.preferences.SolidOverlayFileList;
 import ch.bailu.aat.preferences.SolidPreset;
-import ch.bailu.aat.services.MultiServiceLink.ServiceNotUpException;
+import ch.bailu.aat.services.ServiceContext.ServiceNotUpException;
 import ch.bailu.aat.services.tracker.State;
-import ch.bailu.aat.R;
 
 public abstract class AbsMenu extends AbsServiceLink 
 implements DescriptionInterface{

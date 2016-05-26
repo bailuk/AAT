@@ -14,6 +14,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import ch.bailu.aat.R;
 import ch.bailu.aat.description.DescriptionInterface;
 import ch.bailu.aat.dispatcher.ContentDispatcher;
 import ch.bailu.aat.dispatcher.ContentSource;
@@ -27,7 +28,7 @@ import ch.bailu.aat.helpers.AppTheme;
 import ch.bailu.aat.helpers.OsmApiHelper;
 import ch.bailu.aat.helpers.ToolTip;
 import ch.bailu.aat.preferences.AddOverlayDialog;
-import ch.bailu.aat.services.MultiServiceLink.ServiceNotUpException;
+import ch.bailu.aat.services.ServiceContext.ServiceNotUpException;
 import ch.bailu.aat.services.background.BackgroundService;
 import ch.bailu.aat.services.background.DownloadHandle;
 import ch.bailu.aat.services.background.ProcessHandle;
@@ -38,7 +39,6 @@ import ch.bailu.aat.views.ControlBar;
 import ch.bailu.aat.views.DownloadButton;
 import ch.bailu.aat.views.NodeListView;
 import ch.bailu.aat.views.TagEditor;
-import ch.bailu.aat.R;
 
 
 public abstract class AbsOsmApiActivity extends AbsDispatcher implements OnClickListener {

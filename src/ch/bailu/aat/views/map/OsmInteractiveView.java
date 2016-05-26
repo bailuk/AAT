@@ -17,7 +17,7 @@ import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.preferences.SolidPositionLock;
 import ch.bailu.aat.preferences.SolidTileSize;
 import ch.bailu.aat.preferences.Storage;
-import ch.bailu.aat.services.MultiServiceLink.ServiceContext;
+import ch.bailu.aat.services.ServiceContext;
 
 public class OsmInteractiveView extends AbsOsmView 
 implements MapListener, OnSharedPreferenceChangeListener, OnTouchListener {

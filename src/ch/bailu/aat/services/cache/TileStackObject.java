@@ -12,7 +12,7 @@ import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import ch.bailu.aat.helpers.AppBroadcaster;
 import ch.bailu.aat.helpers.AppLog;
-import ch.bailu.aat.services.MultiServiceLink.ServiceContext;
+import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.background.ProcessHandle;
 import ch.bailu.aat.services.cache.TileObject.Source;
 

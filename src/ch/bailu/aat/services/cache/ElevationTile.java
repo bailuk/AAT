@@ -15,7 +15,7 @@ import android.graphics.Rect;
 import android.util.SparseArray;
 import ch.bailu.aat.coordinates.SrtmCoordinates;
 import ch.bailu.aat.helpers.AppBroadcaster;
-import ch.bailu.aat.services.MultiServiceLink.ServiceContext;
+import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.background.ProcessHandle;
 import ch.bailu.aat.services.dem.Dem3Tile;
 import ch.bailu.aat.services.dem.DemDimension;

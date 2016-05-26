@@ -10,7 +10,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import ch.bailu.aat.helpers.AppBroadcaster;
 import ch.bailu.aat.helpers.AppDirectory;
-import ch.bailu.aat.services.MultiServiceLink.ServiceContext;
+import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.background.DownloadHandle;
 import ch.bailu.aat.services.background.FileHandle;
 

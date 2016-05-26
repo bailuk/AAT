@@ -83,7 +83,7 @@ public abstract class ServiceContext implements ContextWrapperInterface {
 
 
     public void appendStatusText(StringBuilder content) {
-        for (Class<?> s: MultiServiceLink.ALL_SERVICES) {
+        for (Class<?> s: ServiceLink.ALL_SERVICES) {
             try {
                 getService(s).appendStatusText(content);
             } catch (ServiceNotUpException e) {

@@ -7,7 +7,7 @@ import org.osmdroid.tileprovider.MapTile;
 
 import android.graphics.drawable.Drawable;
 import android.os.Handler;
-import ch.bailu.aat.services.MultiServiceLink.ServiceContext;
+import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.cache.TileStackObject;
 
 public class PreviewTileProvider extends AbsOsmTileProvider implements Closeable  {
