@@ -15,7 +15,14 @@ public abstract class AbsService  extends Service {
     
     
     private long startTime;
-    private MultiServiceLink serviceLink=MultiServiceLink.NULL_SERVICE_LINK;
+    private MultiServiceLink serviceLink=new MultiServiceLink() {
+
+        @Override
+        public void onServicesUp() {
+            AbsService.this.onServicesUp();
+        }
+    };
+
 
     
     public AbsService() {
@@ -31,13 +38,7 @@ public abstract class AbsService  extends Service {
     
     
     public void connectToServices(Class<?>[] services) {
-        serviceLink=new MultiServiceLink(this,services) {
-
-            @Override
-            public void onServicesUp() {
-                AbsService.this.onServicesUp();
-            }
-        };
+        serviceLink.connectToServices(this, services);
     }
 
     public abstract void onServicesUp();
@@ -58,7 +59,6 @@ public abstract class AbsService  extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        //AppLog.d(this, "onCreate()");
         allcreations++;
         creations++;
         
@@ -68,8 +68,6 @@ public abstract class AbsService  extends Service {
     
     @Override
     public void onDestroy() {
-        //AppLog.d(this, "onDestroy()");
-
         
         serviceLink.close();
         serviceLink=null;

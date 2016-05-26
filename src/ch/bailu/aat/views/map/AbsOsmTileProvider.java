@@ -3,6 +3,7 @@ package ch.bailu.aat.views.map;
 import org.osmdroid.tileprovider.MapTile;
 import org.osmdroid.tileprovider.tilesource.ITileSource;
 
+import ch.bailu.aat.helpers.AppLog;
 import ch.bailu.aat.preferences.SolidMapTileStack;
 import ch.bailu.aat.services.MultiServiceLink.ServiceContext;
 import ch.bailu.aat.services.cache.ObjectHandle;
@@ -10,43 +11,38 @@ import ch.bailu.aat.services.cache.TileObject.Source;
 import ch.bailu.aat.services.cache.TileStackObject;
 
 public abstract class AbsOsmTileProvider extends AbsTileProvider {
-    
-    
+
     private final ServiceContext scontext;
-    
     private Source sources[] = new Source[]{SolidMapTileStack.MAPNIK};
-    
-    
     private final StringBuilder builder = new StringBuilder();    
-    
+
+
     public AbsOsmTileProvider(ServiceContext sc) {
         scontext = sc;
     }
 
-    
-
-
-
-   
     public TileStackObject getTileHandle(MapTile mapTile) {
-          final String id = generateTileID(mapTile);
-          ObjectHandle handle = scontext.getCacheService().getObject(
-                  id, 
-                  new TileStackObject.Factory(scontext.getContext(), mapTile, sources)
-                  );
-          
-          if (TileStackObject.class.isInstance(handle)) {
+        String id = generateTileID(mapTile);
+        ObjectHandle handle = scontext.getCacheService().getObject(
+                id, 
+                new TileStackObject.Factory(scontext.getContext(), mapTile, sources)
+                );
+
+
+        if (TileStackObject.class.isInstance(handle)) {
             return (TileStackObject) handle;
+
         } else  {
             return TileStackObject.NULL;
+
         }
     }
-    
-    
-    
+
+
+
     private String generateTileID(MapTile mapTile) {
         builder.setLength(0);
-        
+
         builder.append(mapTile.getZoomLevel());
         builder.append('/');
         builder.append(mapTile.getX());
@@ -78,15 +74,15 @@ public abstract class AbsOsmTileProvider extends AbsTileProvider {
         return SolidMapTileStack.MAX_ZOOM;
     }
 
-    
-    
+
+
 
     public void setSubTileSource(Source[] s) {
         sources=s;
     }
-    
+
     @Override
     public void setTileSource(ITileSource s) {};
-    
+
 
 }

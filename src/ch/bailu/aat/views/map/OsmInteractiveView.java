@@ -40,7 +40,7 @@ implements MapListener, OnSharedPreferenceChangeListener, OnTouchListener {
     private float motionX=0f, motionY=0f;
     
     
-    private final DynTileProvider provider;
+    //private final DynTileProvider provider;
     
       
     public OsmInteractiveView(ServiceContext context, String key) {
@@ -55,12 +55,14 @@ implements MapListener, OnSharedPreferenceChangeListener, OnTouchListener {
     private OsmInteractiveView(Context context, String key, DynTileProvider p, int tileSize) {
         super(context, key, p, tileSize);
 
-        provider = p;
+        //provider = p;
         
         storage = Storage.global(context);
         storage.register(this);
 
         slock = new SolidPositionLock(context, key);
+        
+
         
         map.setMapListener(this);
         map.setOnTouchListener(this);

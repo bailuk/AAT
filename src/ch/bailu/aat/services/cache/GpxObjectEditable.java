@@ -38,7 +38,13 @@ public class GpxObjectEditable extends  GpxObject {
 
     @Override
     public void onInsert(ServiceContext sc) {
-        currentHandle = (GpxObject)sc.getCacheService().getObject(path, new GpxObjectStatic.Factory());
+        ObjectHandle handle = sc.getCacheService().getObject(path, new GpxObjectStatic.Factory());
+        
+        if (GpxObject.class.isInstance(handle)) {
+        currentHandle = (GpxObject) handle;
+        } else {
+            currentHandle = GpxObject.NULL;
+        }
         editor.loadIntoEditor(currentHandle.getGpxList());
     }
     

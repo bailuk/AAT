@@ -46,6 +46,7 @@ public class SynchronizedBitmap {
         
         public synchronized void set(Bitmap b) {
             if (b != null) {
+
                 bitmap = b;
                 drawable = new BitmapDrawable(b);
                 size=b.getHeight()*b.getRowBytes();

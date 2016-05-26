@@ -64,11 +64,7 @@ public class PreferencesActivity extends PreferenceActivity {
         addPreference(new IndexListPreference(this, new SolidTileSize(this)));
         addPreference(new IndexListPreference(this, new SolidTileCacheDirectory(this)));
         addPreference(new IndexListPreference(this, new SolidDataDirectory(this)));
-        //addPreference(new IndexListPreference(this, new SolidMapTileShade(this)));
-
-        
     }
-    
 
     @Override
     public void onDestroy() {

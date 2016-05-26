@@ -11,6 +11,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import ch.bailu.aat.helpers.AppBroadcaster;
+import ch.bailu.aat.helpers.AppLog;
 import ch.bailu.aat.services.MultiServiceLink.ServiceContext;
 import ch.bailu.aat.services.background.ProcessHandle;
 import ch.bailu.aat.services.cache.TileObject.Source;
@@ -51,14 +52,14 @@ public class TileStackObject extends ObjectHandle {
 
 
     @Override
-    public void onInsert(ServiceContext cs) {
-        cs.getCacheService().addToBroadcaster(this);
+    public void onInsert(ServiceContext sc) {
+        sc.getCacheService().addToBroadcaster(this);
         
         for (TileContainer tile: tiles) {
-            tile.lock(cs);
+            tile.lock(sc);
         }
         
-        reupdate(cs);
+        reupdate(sc);
         
     }
 
@@ -181,7 +182,6 @@ public class TileStackObject extends ObjectHandle {
         @Override
         public void broadcast(Context context) {
             AppBroadcaster.broadcast(context, AppBroadcaster.FILE_CHANGED_INCACHE, TileStackObject.this.toString());
-
         }
     }
 
@@ -239,6 +239,9 @@ public class TileStackObject extends ObjectHandle {
 
         public void lock(ServiceContext cs) {
             handle = cs.getCacheService().getObject(id, factory);
+            AppLog.d(this, handle.getClass().getName());
+            AppLog.d(this, factory.getClass().getName());
+
         }
 
 

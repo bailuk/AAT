@@ -30,16 +30,9 @@ public abstract class MultiServiceLink implements Closeable {
         EditorService.class};
 
 
-    public static final Class<?> LOADER_SERVICES[] = {
-        CacheService.class
-    };
-
-
-
     public static final MultiServiceLink NULL_SERVICE_LINK= new MultiServiceLink() {
         @Override
         public void onServicesUp() {}
-
     };
 
 
@@ -54,7 +47,7 @@ public abstract class MultiServiceLink implements Closeable {
 
     private class Connection implements ServiceConnection, Closeable {
         private AbsService service=null;
-        private Context context;
+        private final Context context;
 
         public Connection(Context c, Class<?> serviceClass) {
             context = c;
@@ -93,13 +86,13 @@ public abstract class MultiServiceLink implements Closeable {
     };
 
 
-    private Hashtable<Class<?>, Connection> serviceTable = 
+    private final Hashtable<Class<?>, Connection> serviceTable = 
             new Hashtable<Class<?>, Connection>();
 
 
-    private MultiServiceLink() {	}
+    public MultiServiceLink() {	}
 
-    public MultiServiceLink(Context context, Class<?>[] services) {
+    public void connectToServices(Context context, Class<?>[] services) {
         for (Class<?> s: services) {
             serviceTable.put(s, new Connection(context, s));
         }
@@ -162,14 +155,14 @@ public abstract class MultiServiceLink implements Closeable {
 
 
         public BackgroundService.Self getBackgroundService() {
+            BackgroundService.Self s;
             try {
-                final BackgroundService bg = 
-                        (BackgroundService) getService(BackgroundService.class);
-                return bg.getSelf();
+                s=((BackgroundService) getService(BackgroundService.class)).getSelf();
 
             } catch (ServiceNotUpException e) {
-                return BackgroundService.NULL_SELF;
+                s= BackgroundService.NULL_SELF;
             }
+            return s;
         }
 
         public OverlayService getOverlayService() throws ServiceNotUpException {
@@ -183,14 +176,16 @@ public abstract class MultiServiceLink implements Closeable {
 
 
         public CacheService.Self getCacheService()  {
+            CacheService.Self s;
             try {
-                final CacheService s = 
-                        (CacheService) getService(CacheService.class);
-                return s.getSelf();
-
+                s = ((CacheService)getService(CacheService.class)).getSelf();
+                
             } catch (ServiceNotUpException e) {
-                return CacheService.NULL_SELF;
+                s = CacheService.NULL_SELF;
+                
             }
+            return s;
+
         }
 
 
@@ -228,5 +223,4 @@ public abstract class MultiServiceLink implements Closeable {
         }
 
     }
-
 }

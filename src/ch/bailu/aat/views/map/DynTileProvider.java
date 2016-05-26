@@ -16,10 +16,10 @@ public class DynTileProvider extends CachedTileProvider implements OnSharedPrefe
 
 
 
-    public DynTileProvider(ServiceContext context, String key) {
-        super(context);
-        storage = Storage.preset(context.getContext()); 
-        spreset = new SolidPreset(context.getContext());
+    public DynTileProvider(ServiceContext sc, String key) {
+        super(sc);
+        storage = Storage.preset(sc.getContext()); 
+        spreset = new SolidPreset(sc.getContext());
 
         createSolid(spreset);
 

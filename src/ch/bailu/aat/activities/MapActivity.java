@@ -62,12 +62,14 @@ public class MapActivity extends AbsDispatcher implements OnClickListener{
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+
+        
         LinearLayout contentView=new ContentView(this);
         map = createMap();
         contentView.addView(map);
         setContentView(contentView);
 
-        connectToServices(SERVICES);
+        connectToServices(SERVICES);        
     }
 
 

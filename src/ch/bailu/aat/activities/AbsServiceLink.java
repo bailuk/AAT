@@ -9,16 +9,16 @@ import ch.bailu.aat.services.MultiServiceLink.ServiceNotUpException;
 public abstract class AbsServiceLink extends AbsActivity implements GpxInformation.ID{
 
 
-    private MultiServiceLink serviceLink=MultiServiceLink.NULL_SERVICE_LINK;
+    private MultiServiceLink serviceLink=new MultiServiceLink() {
+        @Override
+        public void onServicesUp() {
+            AbsServiceLink.this.onServicesUp();
+        }
+    };
+
 
     public void connectToServices(Class<?>[] services) {
-        serviceLink=new MultiServiceLink(this,services) {
-
-            @Override
-            public void onServicesUp() {
-                AbsServiceLink.this.onServicesUp();
-            }
-        };
+        serviceLink.connectToServices(this, services);
     }
 
     public abstract void onServicesUp();
