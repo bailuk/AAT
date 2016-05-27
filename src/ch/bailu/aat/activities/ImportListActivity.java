@@ -54,18 +54,16 @@ public class ImportListActivity extends AbsGpxListActivity {
     }
 
     @Override
-    public DirectoryServiceHelper createDirectoryServiceHelper(
-            DirectoryService service) throws IOException {
+    public DirectoryServiceHelper createDirectoryServiceHelper() throws IOException {
 
         File directory=AppDirectory.getDataDirectory(this, AppDirectory.DIR_IMPORT); 
 
-        return new DirectoryServiceHelper(service, directory, "");
+        return new DirectoryServiceHelper(getServiceContext().getDirectoryService(), directory, "");
     }
 
 
     @Override
-    public void createSummaryView(LinearLayout layout,
-            DirectoryService directory) {
+    public void createSummaryView(LinearLayout layout) {
     }
 
 
@@ -90,7 +88,7 @@ public class ImportListActivity extends AbsGpxListActivity {
         super.onResume();
 
         try {
-            createDirectoryServiceHelper(getServiceContext().getDirectoryService()).rescanDirectory();
+            createDirectoryServiceHelper().rescanDirectory();
         } catch (Exception e) {}
 
     }

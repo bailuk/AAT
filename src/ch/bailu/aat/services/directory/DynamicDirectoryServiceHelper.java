@@ -4,12 +4,12 @@ import java.io.IOException;
 
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
-
 import ch.bailu.aat.preferences.SolidFilterFrom;
 import ch.bailu.aat.preferences.SolidFilterTo;
 import ch.bailu.aat.preferences.SolidPreset;
 import ch.bailu.aat.preferences.SolidTrackListFilter;
 import ch.bailu.aat.preferences.Storage;
+import ch.bailu.aat.services.ServiceContext;
 
 public class DynamicDirectoryServiceHelper
                             extends DirectoryServiceHelper 
@@ -22,16 +22,16 @@ public class DynamicDirectoryServiceHelper
     private final Storage storage;
 
     
-    public DynamicDirectoryServiceHelper(DirectoryService s) throws IOException {
-        super(s,new SolidPreset(s).getDirectory());
+    public DynamicDirectoryServiceHelper(ServiceContext sc) throws IOException {
+        super(sc.getDirectoryService(),new SolidPreset(sc.getContext()).getDirectory());
 
-        int preset = new SolidPreset(s).getIndex();
+        int preset = new SolidPreset(sc.getContext()).getIndex();
 
-        sfilter = new SolidTrackListFilter(s, preset);
-        sfrom = new SolidFilterFrom(s, preset);;
-        sto = new SolidFilterTo(s, preset);;
+        sfilter = new SolidTrackListFilter(sc.getContext(), preset);
+        sfrom = new SolidFilterFrom(sc.getContext(), preset);;
+        sto = new SolidFilterTo(sc.getContext(), preset);;
 
-        storage = Storage.preset(s);
+        storage = Storage.preset(sc.getContext());
         storage.register(this);
 
         setSelection(createSelectionString());

@@ -5,7 +5,6 @@ import java.io.File;
 import android.content.Intent;
 import android.os.Bundle;
 import ch.bailu.aat.helpers.AppBroadcaster;
-import ch.bailu.aat.services.ServiceContext.ServiceNotUpException;
 import ch.bailu.aat.services.icons.IconMapService;
 import ch.bailu.aat.views.FeaturesList;
 
@@ -31,17 +30,9 @@ public class MapFeatureListActivity extends AbsDispatcher {
 
     @Override
     public void onServicesUp() {
-        Intent intent = getIntent();
-        
-        String file = AppBroadcaster.getFile(intent);
-        
-        IconMapService.Self iconMap;
-        try {
-            iconMap = getServiceContext().getIconMapService();
-        } catch (ServiceNotUpException e) {
-            iconMap=null;
-            e.printStackTrace();
-        }
+        final Intent intent = getIntent();
+        final String file = AppBroadcaster.getFile(intent);
+        final IconMapService.Self iconMap = getServiceContext().getIconMapService();
         
         list = new FeaturesList(this, iconMap, new File(file));
         setContentView(list);

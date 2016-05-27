@@ -36,7 +36,8 @@ public class TrackListActivity extends AbsGpxListActivity {
     }
 
 
-    public void createSummaryView(LinearLayout layout, DirectoryService directory) {
+    @Override
+    public void createSummaryView(LinearLayout layout) {
         ContentDescription data[] = new ContentDescription[] {
                 new MaximumSpeedDescription(this),
                 new DistanceDescription(this),
@@ -44,7 +45,7 @@ public class TrackListActivity extends AbsGpxListActivity {
                 new TimeDescription(this)
         };   
 
-        summaryView = new GpxListSummaryView(this, directory,  data);
+        summaryView = new GpxListSummaryView(this, getServiceContext().getDirectoryService(),  data);
         
         layout.addView(summaryView, AppLayout.getScreenSmallSide(this), AppLayout.getScreenSmallSide(this) /3);
     }
@@ -56,9 +57,8 @@ public class TrackListActivity extends AbsGpxListActivity {
     }
 
     @Override
-    public DirectoryServiceHelper createDirectoryServiceHelper(
-            DirectoryService directory) throws IOException {
-        return new DynamicDirectoryServiceHelper(directory);
+    public DirectoryServiceHelper createDirectoryServiceHelper() throws IOException {
+        return new DynamicDirectoryServiceHelper(getServiceContext());
     }
 
     @Override

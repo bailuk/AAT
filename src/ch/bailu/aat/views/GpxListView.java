@@ -13,7 +13,6 @@ import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.helpers.AppBroadcaster;
 import ch.bailu.aat.helpers.AppTheme;
 import ch.bailu.aat.services.ServiceContext;
-import ch.bailu.aat.services.ServiceContext.ServiceNotUpException;
 
 public class GpxListView extends ListView {
 
@@ -22,7 +21,7 @@ public class GpxListView extends ListView {
 
     private final ContentDescription data[];
 
-    
+
     public GpxListView(ServiceContext c, 
             ContentDescription cd[]) {
         super(c.getContext());
@@ -59,11 +58,7 @@ public class GpxListView extends ListView {
 
         @Override
         public int getCount() {
-            try {
-                return scontext.getDirectoryService().size();
-            } catch (ServiceNotUpException e) {
-                return 0;
-            }
+            return scontext.getDirectoryService().size();
         }
 
         @Override
@@ -90,14 +85,10 @@ public class GpxListView extends ListView {
             } 
 
             GpxInformation info;
-            try {
-                scontext.getDirectoryService().setPosition(position);
-                info = scontext.getDirectoryService().getCurrent();
+            scontext.getDirectoryService().setPosition(position);
+            info = scontext.getDirectoryService().getCurrent();
 
-            } catch (ServiceNotUpException e) {
-                info = GpxInformation.NULL;
-            }
-            
+
             entry.updateGpxContent(info);
 
             return entry;

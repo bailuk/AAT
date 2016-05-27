@@ -17,7 +17,6 @@ import ch.bailu.aat.gpx.linked_list.Node;
 import ch.bailu.aat.gpx.parser.GpxListReader;
 import ch.bailu.aat.helpers.AppBroadcaster;
 import ch.bailu.aat.services.ServiceContext;
-import ch.bailu.aat.services.ServiceContext.ServiceNotUpException;
 import ch.bailu.aat.services.background.FileHandle;
 import ch.bailu.aat.services.dem.Dem3Tile;
 import ch.bailu.aat.services.dem.ElevationProvider;
@@ -126,12 +125,7 @@ public class GpxObjectStatic extends GpxObject implements ElevationUpdaterClient
     @Override
     public void onChanged(String id, ServiceContext sc) {
         if (id.equals(toString()))
-            try {
-                sc.getIconMapService().iconify(gpxList);
-            } catch (ServiceNotUpException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
+            sc.getIconMapService().iconify(gpxList);
     }
 
 

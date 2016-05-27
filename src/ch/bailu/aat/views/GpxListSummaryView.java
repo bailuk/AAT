@@ -12,7 +12,7 @@ public class GpxListSummaryView
 extends SummaryListView  {
     private static final String SOLID_KEY=GpxListSummaryView.class.getSimpleName();
 
-    private final DirectoryService directory;
+    private final DirectoryService.Self directory;
 
 
     private BroadcastReceiver onCursorChanged = new BroadcastReceiver () {
@@ -23,14 +23,14 @@ extends SummaryListView  {
 
     };
 
-    public GpxListSummaryView(Context context, DirectoryService d,
+    public GpxListSummaryView(Context context, DirectoryService.Self d,
             ContentDescription[] data) {
         super(context, SOLID_KEY, GpxInformation.ID.INFO_ID_LIST_SUMMARY, data);
 
 
         directory = d;
         updateGpxContent(directory.getListSummary());
-        AppBroadcaster.register(directory, onCursorChanged, AppBroadcaster.DB_CURSOR_CHANGED);
+        AppBroadcaster.register(getContext(), onCursorChanged, AppBroadcaster.DB_CURSOR_CHANGED);
     }
 
 
@@ -39,7 +39,7 @@ extends SummaryListView  {
 
     @Override
     public void onDetachedFromWindow() {
-        directory.unregisterReceiver(onCursorChanged);
+        getContext().unregisterReceiver(onCursorChanged);
         super.onDetachedFromWindow();
     }
 

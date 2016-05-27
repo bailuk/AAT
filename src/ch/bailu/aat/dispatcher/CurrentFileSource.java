@@ -6,17 +6,17 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import ch.bailu.aat.helpers.AppBroadcaster;
-import ch.bailu.aat.services.directory.DirectoryService;
+import ch.bailu.aat.services.ServiceContext;
 
 public class CurrentFileSource extends ContentSource {
 
-    private final DirectoryService directoryService;
+    private final ServiceContext scontext;
 
 
     private BroadcastReceiver onFileProcessed = new BroadcastReceiver () {
         @Override
         public void onReceive(Context context, Intent intent) {
-            File file = new File(directoryService.getCurrent().getPath());
+            File file = new File(scontext.getDirectoryService().getCurrent().getPath());
 
             if (AppBroadcaster.hasFile(intent, file.getAbsolutePath())) {
                 forceUpdate();
@@ -25,19 +25,19 @@ public class CurrentFileSource extends ContentSource {
 
     };
 
-    public CurrentFileSource (DirectoryService d) {
-        directoryService = d;
-        AppBroadcaster.register(directoryService, onFileProcessed, AppBroadcaster.FILE_CHANGED_INCACHE);
+    public CurrentFileSource (ServiceContext sc) {
+        scontext = sc;
+        AppBroadcaster.register(sc.getContext(), onFileProcessed, AppBroadcaster.FILE_CHANGED_INCACHE);
     }
 
 
     @Override
     public void close() {
-        directoryService.unregisterReceiver(onFileProcessed);
+        scontext.getContext().unregisterReceiver(onFileProcessed);
     }
 
     @Override
     public void forceUpdate() {
-        updateGpxContent(directoryService.getCurrent());
+        updateGpxContent(scontext.getDirectoryService().getCurrent());
     }
 }

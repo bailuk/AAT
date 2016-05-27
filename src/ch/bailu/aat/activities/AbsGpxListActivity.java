@@ -33,7 +33,7 @@ public abstract class AbsGpxListActivity extends AbsMenu implements OnItemClickL
         DirectoryService.class,
         CacheService.class,
     };
-    
+
 
     private GpxListView                 listView;
     private DbSynchronizerBusyIndicator busyIndicator;
@@ -57,9 +57,9 @@ public abstract class AbsGpxListActivity extends AbsMenu implements OnItemClickL
     }        
 
 
- 
 
- 
+
+
 
     public abstract LinearLayout createHeader(LinearLayout contentView);
 
@@ -76,10 +76,10 @@ public abstract class AbsGpxListActivity extends AbsMenu implements OnItemClickL
     public void onServicesUp() {
         ServiceContext sc=getServiceContext();
         try {
-            directoryServiceHelper = createDirectoryServiceHelper(sc.getDirectoryService());
+            directoryServiceHelper = createDirectoryServiceHelper();
 
 
-            createSummaryView(contentView, sc.getDirectoryService());
+            createSummaryView(contentView);
             createListView(contentView, sc);
 
             listView.setSelection(sc.getDirectoryService().getStoredPosition());
@@ -93,10 +93,9 @@ public abstract class AbsGpxListActivity extends AbsMenu implements OnItemClickL
 
 
 
-    public abstract DirectoryServiceHelper 
-    createDirectoryServiceHelper(DirectoryService directory) throws IOException;
+    public abstract DirectoryServiceHelper createDirectoryServiceHelper() throws IOException;
 
-    public abstract void createSummaryView(LinearLayout layout, DirectoryService directory);
+    public abstract void createSummaryView(LinearLayout layout);
 
 
     private void createListView(LinearLayout contentView, ServiceContext sc) {
@@ -119,14 +118,7 @@ public abstract class AbsGpxListActivity extends AbsMenu implements OnItemClickL
     public void onDestroy() {
 
 
-        if (listView != null) {
-            try {
-                getServiceContext().getDirectoryService().storePosition(listView.getFirstVisiblePosition());
-            } catch (ServiceNotUpException e) {
-                AppLog.e(this, e);
-            }
-            //listView.close();
-        }
+        getServiceContext().getDirectoryService().storePosition(listView.getFirstVisiblePosition());
         if (directoryServiceHelper != null) directoryServiceHelper.close();
 
         super.onDestroy();
@@ -136,14 +128,7 @@ public abstract class AbsGpxListActivity extends AbsMenu implements OnItemClickL
     @Override
     public void onResume() {
         super.onResume();
-        //AppLog.d(this, "onResume()");
-        if (listView != null) {
-            try {
-                listView.setSelection(getServiceContext().getDirectoryService().getStoredPosition());
-            } catch (ServiceNotUpException e) {
-                AppLog.e(this, e);
-            }
-        }
+        listView.setSelection(getServiceContext().getDirectoryService().getStoredPosition());
     }
 
     @Override
@@ -169,20 +154,15 @@ public abstract class AbsGpxListActivity extends AbsMenu implements OnItemClickL
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
 
-        try {
-            int position = 
-                    ((AdapterView.AdapterContextMenuInfo)menuInfo).position;
+        int position = 
+                ((AdapterView.AdapterContextMenuInfo)menuInfo).position;
 
-            displayContextMenu(getServiceContext().getDirectoryService(), menu, position);
+        displayContextMenu(getServiceContext().getDirectoryService(), menu, position);
 
-        } catch (ServiceNotUpException e) {
-            AppLog.e(this, e);
-            e.printStackTrace();
-        }
     }
 
 
-    private void displayContextMenu(DirectoryService directory, ContextMenu menu, int position) {
+    private void displayContextMenu(DirectoryService.Self directory, ContextMenu menu, int position) {
 
         directory.setPosition(position);
 
@@ -210,13 +190,13 @@ public abstract class AbsGpxListActivity extends AbsMenu implements OnItemClickL
             } else if (item.getItemId() == R.id.m_file_mock) {
                 SolidMockLocationFile smock = new SolidMockLocationFile(this);
                 smock.setValue(getServiceContext().getDirectoryService().getCurrent().getPath());
-                
+
             } else if (item.getItemId() == R.id.m_file_send) {
                 AppFile.send(this, new File(getServiceContext().getDirectoryService().getCurrent().getPath()));
-                
+
             } else if (item.getItemId() == R.id.m_file_copy) {
                 AppFile.copyTo(this, new File(getServiceContext().getDirectoryService().getCurrent().getPath()));
-                
+
             }
 
         } catch (Exception e) {

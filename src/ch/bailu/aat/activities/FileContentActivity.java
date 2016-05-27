@@ -65,8 +65,8 @@ public class FileContentActivity extends AbsDispatcher implements OnClickListene
         CacheService.class,
         DirectoryService.class
     };
-    
-    
+
+
     private static final String SOLID_KEY="file_content";
 
     private ImageButton nextView, nextFile, previousFile;
@@ -144,12 +144,7 @@ public class FileContentActivity extends AbsDispatcher implements OnClickListene
 
     @Override
     public void onPause() {
-        try {
-            getServiceContext().getDirectoryService().storePosition();
-        } catch (ServiceNotUpException e) {
-            AppLog.e(this, e);
-        }
-
+        getServiceContext().getDirectoryService().storePosition();
         super.onPause();
     }
 
@@ -193,7 +188,7 @@ public class FileContentActivity extends AbsDispatcher implements OnClickListene
                     new TrackerSource(getServiceContext().getTrackerService()),
                     new CurrentLocationSource(getServiceContext().getTrackerService()),
                     new OverlaySource(getServiceContext().getOverlayService()),
-                    new CurrentFileSource(getServiceContext().getDirectoryService())
+                    new CurrentFileSource(getServiceContext())
             };
 
             setDispatcher(new ContentDispatcher(this,source, target));
@@ -207,24 +202,20 @@ public class FileContentActivity extends AbsDispatcher implements OnClickListene
 
     @Override
     public void onClick(View v) {
-        try {
-            if (v ==nextView) {
-                multiView.setNext();
+        if (v ==nextView) {
+            multiView.setNext();
 
-            } else {
-                if (v == previousFile) {
-                    getServiceContext().getDirectoryService().toPrevious();
+        } else {
+            if (v == previousFile) {
+                getServiceContext().getDirectoryService().toPrevious();
 
-                } else if (v ==nextFile) {
-                    getServiceContext().getDirectoryService().toNext();
-                }
-                map.frameBoundingBox(getServiceContext().getDirectoryService().
-                        getCurrent().getBoundingBox());
-                getDispatcher().forceUpdate();
-
+            } else if (v ==nextFile) {
+                getServiceContext().getDirectoryService().toNext();
             }
-        } catch (ServiceNotUpException e) {
-            AppLog.e(this, e);
+            map.frameBoundingBox(getServiceContext().getDirectoryService().
+                    getCurrent().getBoundingBox());
+            getDispatcher().forceUpdate();
+
         }
     }
 

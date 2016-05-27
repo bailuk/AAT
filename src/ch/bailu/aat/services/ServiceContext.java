@@ -65,7 +65,7 @@ public abstract class ServiceContext implements ContextWrapperInterface {
     }
 
 
-    public IconMapService.Self getIconMapService() throws ServiceNotUpException {
+    public IconMapService.Self getIconMapService() {
         IconMapService.Self s;
         try {
             s = ((IconMapService)getService(IconMapService.class)).getSelf();
@@ -76,6 +76,20 @@ public abstract class ServiceContext implements ContextWrapperInterface {
         }
         return s;
     }
+    
+    
+    public DirectoryService.Self getDirectoryService() {
+        DirectoryService.Self s;
+        try {
+            s = ((DirectoryService)getService(DirectoryService.class)).getSelf();
+
+        } catch (ServiceNotUpException e) {
+            s = new DirectoryService.Self();
+
+        }
+        return s;
+    }
+
     public OverlayService getOverlayService() throws ServiceNotUpException {
         return (OverlayService) getService(OverlayService.class);
     }
@@ -92,9 +106,6 @@ public abstract class ServiceContext implements ContextWrapperInterface {
         return (TrackerService) getService(TrackerService.class);
     }
 
-    public DirectoryService getDirectoryService() throws ServiceNotUpException {
-        return (DirectoryService)getService(DirectoryService.class);
-    }
 
 
 

@@ -161,11 +161,8 @@ implements OnClickListener,  Runnable {
 
     @Override
     public void onPause() {
-        try {
-            getServiceContext().getDirectoryService().storePosition();
-        } catch (ServiceNotUpException e) {
-            AppLog.e(this, e);
-        }
+
+        getServiceContext().getDirectoryService().storePosition();
 
         super.onPause();
     }
@@ -195,7 +192,7 @@ implements OnClickListener,  Runnable {
                     new CurrentLocationSource(getServiceContext().getTrackerService()),
                     new TrackerSource(getServiceContext().getTrackerService()),
                     new OverlaySource(getServiceContext().getOverlayService()), 
-                    new CurrentFileSource(getServiceContext().getDirectoryService())
+                    new CurrentFileSource(getServiceContext())
             };
 
             setDispatcher(new ContentDispatcher(this,source, target));

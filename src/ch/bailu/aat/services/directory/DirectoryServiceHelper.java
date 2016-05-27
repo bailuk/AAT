@@ -12,11 +12,11 @@ import ch.bailu.aat.helpers.AppLog;
 
 public class DirectoryServiceHelper implements Closeable {
 
-    private final DirectoryService service;
+    private final DirectoryService.Self service;
     private final File directory;
     private String selection;
 
-    public DirectoryServiceHelper(DirectoryService s, File d, String sel) throws IOException {
+    public DirectoryServiceHelper(DirectoryService.Self s, File d, String sel) throws IOException {
         service = s;
         directory = d;
         selection=sel;
@@ -27,7 +27,7 @@ public class DirectoryServiceHelper implements Closeable {
 
 
 
-    public DirectoryServiceHelper(DirectoryService  s, File d) throws IOException {
+    public DirectoryServiceHelper(DirectoryService.Self  s, File d) throws IOException {
         service = s;
         directory = d;
     }
