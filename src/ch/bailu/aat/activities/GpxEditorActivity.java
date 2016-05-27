@@ -96,7 +96,7 @@ implements OnClickListener,  Runnable {
                 new GpxDynOverlay(mapView, getServiceContext().getCacheService(), GpxInformation.ID.INFO_ID_TRACKER), 
                 new GridDynOverlay(mapView, getServiceContext().getElevationService()),
                 new CurrentLocationOverlay(mapView),
-                new EditorOverlay(mapView, getServiceContext().getCacheService(), INFO_ID_EDITOR_OVERLAY, getServiceContext().getEditorService().editor, getServiceContext().getElevationService()),
+                new EditorOverlay(mapView, getServiceContext().getCacheService(), INFO_ID_EDITOR_OVERLAY, getServiceContext().getEditorService().getOverlayEditor(), getServiceContext().getElevationService()),
                 new NavigationBarOverlay(mapView),
                 new InformationBarOverlay(mapView)
         };
@@ -188,7 +188,7 @@ implements OnClickListener,  Runnable {
 
 
             ContentSource[] source = new ContentSource[] {
-                    new EditorSource(getServiceContext().getEditorService(), INFO_ID_EDITOR_OVERLAY),
+                    new EditorSource(getServiceContext(), INFO_ID_EDITOR_OVERLAY),
                     new CurrentLocationSource(getServiceContext().getTrackerService()),
                     new TrackerSource(getServiceContext().getTrackerService()),
                     new OverlaySource(getServiceContext().getOverlayService()), 
@@ -224,7 +224,7 @@ implements OnClickListener,  Runnable {
     @Override
     public void onBackPressed() {
         try {
-            final EditorInterface editor = getServiceContext().getEditorService().editor;
+            final EditorInterface editor = getServiceContext().getEditorService().getOverlayEditor();
 
             if (editor.isModified()) {
                 new AppDialog() {
@@ -263,7 +263,7 @@ implements OnClickListener,  Runnable {
     @Override
     public void onClick(final View v) {
         try {
-            final EditorInterface editor = getServiceContext().getEditorService().editor;
+            final EditorInterface editor = getServiceContext().getEditorService().getOverlayEditor();
 
             if (v == previousFile || v ==nextFile) {
                 if (editor.isModified()) {

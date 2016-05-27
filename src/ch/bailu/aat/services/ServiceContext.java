@@ -90,14 +90,25 @@ public abstract class ServiceContext implements ContextWrapperInterface {
         return s;
     }
 
+    
+    public EditorService.Self getEditorService()  {
+        EditorService.Self s;
+        try {
+            s = ((EditorService)getService(EditorService.class)).getSelf();
+
+        } catch (ServiceNotUpException e) {
+            s = new EditorService.Self();
+
+        }
+        return s;
+    }
+
+    
     public OverlayService getOverlayService() throws ServiceNotUpException {
         return (OverlayService) getService(OverlayService.class);
     }
 
 
-    public EditorService getEditorService() throws ServiceNotUpException {
-        return (EditorService) getService(EditorService.class);
-    }
 
 
 

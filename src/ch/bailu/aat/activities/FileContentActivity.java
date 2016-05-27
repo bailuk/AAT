@@ -184,7 +184,7 @@ public class FileContentActivity extends AbsDispatcher implements OnClickListene
             };
 
             ContentSource[] source = new ContentSource[] {
-                    new EditorSource(getServiceContext().getEditorService(),GpxInformation.ID.INFO_ID_EDITOR_DRAFT),
+                    new EditorSource(getServiceContext(),GpxInformation.ID.INFO_ID_EDITOR_DRAFT),
                     new TrackerSource(getServiceContext().getTrackerService()),
                     new CurrentLocationSource(getServiceContext().getTrackerService()),
                     new OverlaySource(getServiceContext().getOverlayService()),
