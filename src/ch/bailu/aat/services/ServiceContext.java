@@ -28,18 +28,54 @@ public abstract class ServiceContext implements ContextWrapperInterface {
 
     public BackgroundService.Self getBackgroundService() {
         BackgroundService.Self s;
-
         try {
             s=((BackgroundService) getService(BackgroundService.class)).getSelf();
 
         } catch (Exception e) {
-            s= BackgroundService.NULL_SELF;
-            
+            s= new BackgroundService.Self();
+
         }
         return s;
     }
 
 
+    public CacheService.Self getCacheService()  {
+        CacheService.Self s;
+        try {
+            s = ((CacheService)getService(CacheService.class)).getSelf();
+
+        } catch (ServiceNotUpException e) {
+            s = new CacheService.Self();
+
+        }
+        return s;
+    }
+
+
+    public ElevationService.Self getElevationService() {
+        ElevationService.Self s;
+        try {
+            s = ((ElevationService)getService(ElevationService.class)).getSelf();
+
+        } catch (ServiceNotUpException e) {
+            s = new ElevationService.Self();
+
+        }
+        return s;
+    }
+
+
+    public IconMapService.Self getIconMapService() throws ServiceNotUpException {
+        IconMapService.Self s;
+        try {
+            s = ((IconMapService)getService(IconMapService.class)).getSelf();
+
+        } catch (ServiceNotUpException e) {
+            s = new IconMapService.Self();
+
+        }
+        return s;
+    }
     public OverlayService getOverlayService() throws ServiceNotUpException {
         return (OverlayService) getService(OverlayService.class);
     }
@@ -50,18 +86,6 @@ public abstract class ServiceContext implements ContextWrapperInterface {
     }
 
 
-    public CacheService.Self getCacheService()  {
-        CacheService.Self s;
-        try {
-            s = ((CacheService)getService(CacheService.class)).getSelf();
-
-        } catch (ServiceNotUpException e) {
-            s = CacheService.NULL_SELF;
-
-        }
-        return s;
-
-    }
 
 
     public TrackerService getTrackerService() throws ServiceNotUpException {
@@ -73,13 +97,8 @@ public abstract class ServiceContext implements ContextWrapperInterface {
     }
 
 
-    public ElevationService getElevationService() throws ServiceNotUpException {
-        return (ElevationService)getService(ElevationService.class);
-    }
 
-    public IconMapService getIconMapService() throws ServiceNotUpException {
-        return (IconMapService)getService(IconMapService.class);
-    }
+  
 
 
     public void appendStatusText(StringBuilder content) {

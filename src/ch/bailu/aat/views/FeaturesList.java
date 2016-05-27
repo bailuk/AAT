@@ -37,7 +37,7 @@ OnHaveFeature {
 
     private DataSetObserver observer=null;
 
-    private final IconMapService iconMap;
+    private final IconMapService.Self iconMap;
 
     private class ListData {
         public String name, key, value;
@@ -48,13 +48,13 @@ OnHaveFeature {
     private final ArrayList<ListData> data = new ArrayList<ListData>();
 
 
-    public FeaturesList(Context c, IconMapService map, File file) {
+    public FeaturesList(Context c, IconMapService.Self map, File file) {
         this(c, map);
 
         loadList(file, map);
     }
 
-    public FeaturesList(Context c, IconMapService map) {
+    public FeaturesList(Context c, IconMapService.Self map) {
         super(c);
 
         iconMap=map;
@@ -90,7 +90,7 @@ OnHaveFeature {
 
 
 
-    public void loadList(File file, IconMapService map) {
+    public void loadList(File file, IconMapService.Self map) {
         try {
             new MapFeaturesParser(this, file);
             if (observer != null) observer.onChanged();

@@ -9,7 +9,6 @@ import android.util.SparseArray;
 import ch.bailu.aat.coordinates.SrtmCoordinates;
 import ch.bailu.aat.helpers.AppBroadcaster;
 import ch.bailu.aat.services.ServiceContext;
-import ch.bailu.aat.services.ServiceContext.ServiceNotUpException;
 
 
 public class ElevationUpdater implements Closeable, ElevationProvider{
@@ -19,7 +18,7 @@ public class ElevationUpdater implements Closeable, ElevationProvider{
 
     private final Dem3Tiles tiles;
 
-    protected ElevationUpdater(ServiceContext cs) throws ServiceNotUpException {
+    protected ElevationUpdater(ServiceContext cs) {
         scontext=cs;
         tiles =new Dem3Tiles(cs);
         serviceContext = cs;

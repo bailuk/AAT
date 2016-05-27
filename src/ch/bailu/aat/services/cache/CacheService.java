@@ -26,8 +26,7 @@ public class CacheService extends AbsService {
 
 
     
-    public final static Self NULL_SELF=new Self();
-    private             Self self = NULL_SELF;
+    private Self self = new Self();;
 
     public Self getSelf() {
         return self;
@@ -73,7 +72,7 @@ public class CacheService extends AbsService {
     @Override
     public void onDestroy() {
         self.close();
-        self = NULL_SELF;
+        self = new Self();
         
         serviceLink.close();
         serviceLink=null;
