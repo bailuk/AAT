@@ -15,7 +15,6 @@ import ch.bailu.aat.services.dem.ElevationService;
 import ch.bailu.aat.services.directory.DirectoryService;
 import ch.bailu.aat.services.editor.EditorService;
 import ch.bailu.aat.services.icons.IconMapService;
-import ch.bailu.aat.services.overlay.OverlayService;
 import ch.bailu.aat.services.tracker.TrackerService;
 
 public abstract class ServiceLink extends ServiceContext implements Closeable {
@@ -25,7 +24,6 @@ public abstract class ServiceLink extends ServiceContext implements Closeable {
         DirectoryService.class, 
         CacheService.class,
         BackgroundService.class,
-        OverlayService.class,
         ElevationService.class,
         IconMapService.class,
         EditorService.class};

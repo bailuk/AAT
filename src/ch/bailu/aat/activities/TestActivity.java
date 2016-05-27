@@ -220,7 +220,7 @@ public class TestActivity extends AbsDispatcher implements OnClickListener {
                     new EditorSource(getServiceContext(),GpxInformation.ID.INFO_ID_EDITOR_DRAFT),
                     new TrackerSource(getServiceContext().getTrackerService()),
                     new CurrentLocationSource(getServiceContext().getTrackerService()),
-                    new OverlaySource(getServiceContext().getOverlayService()),
+                    new OverlaySource(getServiceContext()),
             };
             setDispatcher(new ContentDispatcher(this,source, target));
         } catch (ServiceNotUpException e) {

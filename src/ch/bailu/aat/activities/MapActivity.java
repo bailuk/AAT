@@ -24,7 +24,6 @@ import ch.bailu.aat.services.ServiceContext.ServiceNotUpException;
 import ch.bailu.aat.services.cache.CacheService;
 import ch.bailu.aat.services.dem.ElevationService;
 import ch.bailu.aat.services.editor.EditorService;
-import ch.bailu.aat.services.overlay.OverlayService;
 import ch.bailu.aat.services.tracker.TrackerService;
 import ch.bailu.aat.views.ContentView;
 import ch.bailu.aat.views.ControlBar;
@@ -43,7 +42,6 @@ import ch.bailu.aat.views.map.overlay.grid.GridDynOverlay;
 public class MapActivity extends AbsDispatcher implements OnClickListener{
     private static final Class<?> SERVICES[] = {
         TrackerService.class, 
-        OverlayService.class,
         ElevationService.class,
         CacheService.class,
         EditorService.class
@@ -151,7 +149,7 @@ public class MapActivity extends AbsDispatcher implements OnClickListener{
                     new EditorSource(getServiceContext(),GpxInformation.ID.INFO_ID_EDITOR_DRAFT),
                     new TrackerSource(getServiceContext().getTrackerService()),
                     new CurrentLocationSource(getServiceContext().getTrackerService()),
-                    new OverlaySource(getServiceContext().getOverlayService())};
+                    new OverlaySource(getServiceContext())};
 
             setDispatcher(new ContentDispatcher(this,source, target));
 

@@ -16,7 +16,6 @@ import ch.bailu.aat.helpers.AppDirectory;
 import ch.bailu.aat.helpers.AppFile;
 import ch.bailu.aat.helpers.AppLayout;
 import ch.bailu.aat.helpers.AppTheme;
-import ch.bailu.aat.services.directory.DirectoryService;
 import ch.bailu.aat.services.directory.DirectoryServiceHelper;
 import ch.bailu.aat.views.ControlBar;
 

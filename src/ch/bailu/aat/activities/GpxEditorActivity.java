@@ -32,7 +32,6 @@ import ch.bailu.aat.services.dem.ElevationService;
 import ch.bailu.aat.services.directory.DirectoryService;
 import ch.bailu.aat.services.editor.EditorInterface;
 import ch.bailu.aat.services.editor.EditorService;
-import ch.bailu.aat.services.overlay.OverlayService;
 import ch.bailu.aat.services.tracker.TrackerService;
 import ch.bailu.aat.views.BusyIndicator;
 import ch.bailu.aat.views.ContentView;
@@ -59,7 +58,6 @@ implements OnClickListener,  Runnable {
     private static final Class<?> SERVICES[] = {
         TrackerService.class, 
         DirectoryService.class, 
-        OverlayService.class,
         ElevationService.class,
         EditorService.class,
         CacheService.class,
@@ -191,7 +189,7 @@ implements OnClickListener,  Runnable {
                     new EditorSource(getServiceContext(), INFO_ID_EDITOR_OVERLAY),
                     new CurrentLocationSource(getServiceContext().getTrackerService()),
                     new TrackerSource(getServiceContext().getTrackerService()),
-                    new OverlaySource(getServiceContext().getOverlayService()), 
+                    new OverlaySource(getServiceContext()), 
                     new CurrentFileSource(getServiceContext())
             };
 

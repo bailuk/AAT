@@ -34,7 +34,6 @@ import ch.bailu.aat.services.cache.CacheService;
 import ch.bailu.aat.services.dem.ElevationService;
 import ch.bailu.aat.services.directory.DirectoryService;
 import ch.bailu.aat.services.editor.EditorService;
-import ch.bailu.aat.services.overlay.OverlayService;
 import ch.bailu.aat.services.tracker.TrackerService;
 import ch.bailu.aat.views.BusyIndicator;
 import ch.bailu.aat.views.ContentView;
@@ -59,7 +58,6 @@ import ch.bailu.aat.views.map.overlay.grid.GridDynOverlay;
 public class FileContentActivity extends AbsDispatcher implements OnClickListener{
     public static final Class<?> SERVICES[] = {
         TrackerService.class, 
-        OverlayService.class,
         ElevationService.class,
         EditorService.class,
         CacheService.class,
@@ -187,7 +185,7 @@ public class FileContentActivity extends AbsDispatcher implements OnClickListene
                     new EditorSource(getServiceContext(),GpxInformation.ID.INFO_ID_EDITOR_DRAFT),
                     new TrackerSource(getServiceContext().getTrackerService()),
                     new CurrentLocationSource(getServiceContext().getTrackerService()),
-                    new OverlaySource(getServiceContext().getOverlayService()),
+                    new OverlaySource(getServiceContext()),
                     new CurrentFileSource(getServiceContext())
             };
 

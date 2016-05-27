@@ -12,7 +12,6 @@ import ch.bailu.aat.description.MaximumSpeedDescription;
 import ch.bailu.aat.description.NameDescription;
 import ch.bailu.aat.description.TimeDescription;
 import ch.bailu.aat.helpers.AppLayout;
-import ch.bailu.aat.services.directory.DirectoryService;
 import ch.bailu.aat.services.directory.DirectoryServiceHelper;
 import ch.bailu.aat.services.directory.DynamicDirectoryServiceHelper;
 import ch.bailu.aat.views.DateFilterView;

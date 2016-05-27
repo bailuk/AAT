@@ -33,7 +33,6 @@ import ch.bailu.aat.services.background.BackgroundService;
 import ch.bailu.aat.services.background.DownloadHandle;
 import ch.bailu.aat.services.background.ProcessHandle;
 import ch.bailu.aat.services.cache.CacheService;
-import ch.bailu.aat.services.overlay.OverlayService;
 import ch.bailu.aat.views.ContentView;
 import ch.bailu.aat.views.ControlBar;
 import ch.bailu.aat.views.DownloadButton;
@@ -47,7 +46,6 @@ public abstract class AbsOsmApiActivity extends AbsDispatcher implements OnClick
     private static final Class<?> SERVICES[] = {
         BackgroundService.class,
         CacheService.class,
-        OverlayService.class
     };    
 
     private TagEditor          tagEditor;

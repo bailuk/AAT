@@ -6,6 +6,7 @@ import java.io.IOException;
 import android.content.Intent;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import ch.bailu.aat.R;
 import ch.bailu.aat.description.ContentDescription;
 import ch.bailu.aat.description.DateDescription;
 import ch.bailu.aat.description.DistanceDescription;
@@ -13,10 +14,8 @@ import ch.bailu.aat.description.NameDescription;
 import ch.bailu.aat.helpers.AppDirectory;
 import ch.bailu.aat.helpers.AppLayout;
 import ch.bailu.aat.helpers.AppTheme;
-import ch.bailu.aat.services.directory.DirectoryService;
 import ch.bailu.aat.services.directory.DirectoryServiceHelper;
 import ch.bailu.aat.views.ControlBar;
-import ch.bailu.aat.R;
 
 
 

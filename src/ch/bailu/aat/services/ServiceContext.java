@@ -8,7 +8,6 @@ import ch.bailu.aat.services.dem.ElevationService;
 import ch.bailu.aat.services.directory.DirectoryService;
 import ch.bailu.aat.services.editor.EditorService;
 import ch.bailu.aat.services.icons.IconMapService;
-import ch.bailu.aat.services.overlay.OverlayService;
 import ch.bailu.aat.services.tracker.TrackerService;
 
 public abstract class ServiceContext implements ContextWrapperInterface {
@@ -104,13 +103,6 @@ public abstract class ServiceContext implements ContextWrapperInterface {
     }
 
     
-    public OverlayService getOverlayService() throws ServiceNotUpException {
-        return (OverlayService) getService(OverlayService.class);
-    }
-
-
-
-
 
 
     public TrackerService getTrackerService() throws ServiceNotUpException {
