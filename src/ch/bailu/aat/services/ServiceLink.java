@@ -20,13 +20,20 @@ import ch.bailu.aat.services.tracker.TrackerService;
 public abstract class ServiceLink extends ServiceContext implements Closeable {
 
     public static final Class<?> ALL_SERVICES[] = {
-        TrackerService.class, 
-        DirectoryService.class, 
-        CacheService.class,
-        BackgroundService.class,
-        ElevationService.class,
-        IconMapService.class,
-        EditorService.class};
+        // Service:                Dependencies:
+        TrackerService.class,   // none
+
+        BackgroundService.class,// none
+        IconMapService.class,   // none
+
+        CacheService.class,     // background and iconmap
+
+        DirectoryService.class, // cache and background
+
+        ElevationService.class, // cache and background
+
+        EditorService.class,    // cache
+    }; 
 
 
     private class Connection implements ServiceConnection, Closeable {
@@ -86,7 +93,7 @@ public abstract class ServiceLink extends ServiceContext implements Closeable {
     public Context getContext() {
         return context;
     }
-    
+
     public void up(Class<?>[] services) {
         for (Class<?> s: services) {
             serviceTable.put(s, new Connection(context, s));
@@ -125,7 +132,7 @@ public abstract class ServiceLink extends ServiceContext implements Closeable {
             throw new ServiceNotUpException(s);
     }
 
-    
+
 
 
     public void down() {
@@ -137,7 +144,7 @@ public abstract class ServiceLink extends ServiceContext implements Closeable {
         }
         serviceTable.clear();
     }
-  
+
     @Override
     public void close() {
         down();

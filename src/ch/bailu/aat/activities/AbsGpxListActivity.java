@@ -17,7 +17,6 @@ import ch.bailu.aat.helpers.AppFile;
 import ch.bailu.aat.helpers.AppLog;
 import ch.bailu.aat.preferences.AddOverlayDialog;
 import ch.bailu.aat.preferences.SolidMockLocationFile;
-import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.ServiceContext.ServiceNotUpException;
 import ch.bailu.aat.services.cache.CacheService;
 import ch.bailu.aat.services.directory.DirectoryService;
@@ -51,14 +50,13 @@ public abstract class AbsGpxListActivity extends AbsMenu implements OnItemClickL
         LinearLayout header = createHeader(contentView);
 
         createBusyIndicator(header);
+        
+        createSummaryView(contentView);
+        createListView(contentView);
         setContentView(contentView);
 
         setServiceDependencies(SERVICES);
     }        
-
-
-
-
 
 
     public abstract LinearLayout createHeader(LinearLayout contentView);
@@ -72,22 +70,19 @@ public abstract class AbsGpxListActivity extends AbsMenu implements OnItemClickL
 
 
 
+
     @Override
     public void onServicesUp() {
-        ServiceContext sc=getServiceContext();
-        try {
-            directoryServiceHelper = createDirectoryServiceHelper();
+        AppLog.d(this, "services up");
+            try {
+                directoryServiceHelper = createDirectoryServiceHelper();
+                listView.setAdapter(getServiceContext());
+                listView.setSelection(getServiceContext().getDirectoryService().getStoredPosition());
 
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
 
-            createSummaryView(contentView);
-            createListView(contentView, sc);
-
-            listView.setSelection(sc.getDirectoryService().getStoredPosition());
-
-        } catch (Exception e) {
-            AppLog.e(this, e);
-            e.printStackTrace();
-        } 
     }
 
 
@@ -98,11 +93,11 @@ public abstract class AbsGpxListActivity extends AbsMenu implements OnItemClickL
     public abstract void createSummaryView(LinearLayout layout);
 
 
-    private void createListView(LinearLayout contentView, ServiceContext sc) {
+    private void createListView(LinearLayout contentView) {
 
         ContentDescription data[] = getGpxListItemData();
 
-        listView = new GpxListView(sc, data);
+        listView = new GpxListView(this, data);
         listView.setOnItemClickListener(this);
         registerForContextMenu(listView);
 

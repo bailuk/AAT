@@ -102,4 +102,11 @@ public class ImportListActivity extends AbsGpxListActivity {
 
     }
 
+
+    @Override
+    public void onServicesUp() {
+        // TODO Auto-generated method stub
+        
+    }
+
 }

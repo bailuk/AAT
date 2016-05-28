@@ -35,6 +35,8 @@ public class CacheService extends AbsService {
 
     @Override
     public void onCreate() {
+        super.onCreate();
+        
         serviceLink = new ServiceLink(this) {
             @Override
             public Self getCacheService() {
@@ -49,7 +51,6 @@ public class CacheService extends AbsService {
         };
 
         serviceLink.up(SERVICES);
-        super.onCreate();
     }
 
 

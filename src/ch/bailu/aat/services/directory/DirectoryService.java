@@ -10,6 +10,7 @@ import android.content.Intent;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.helpers.AppBroadcaster;
 import ch.bailu.aat.helpers.AppDirectory;
+import ch.bailu.aat.helpers.AppLog;
 import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat.services.AbsService;
 import ch.bailu.aat.services.ServiceContext;
@@ -20,7 +21,7 @@ import ch.bailu.aat.services.cache.CacheService;
 public class DirectoryService extends AbsService	{
 
 
-    private static final Class<?> SERVICES[] = {CacheService.class, BackgroundService.class};
+    private static final Class<?> SERVICES[] = {BackgroundService.class, CacheService.class};
 
 
     private Self self = new Self();
@@ -53,7 +54,10 @@ public class DirectoryService extends AbsService	{
 
     
     public static class Self implements Closeable{
-        public void setDirectory(final File directory, final String selection) {};
+        public void setDirectory(final File directory, final String selection) {
+            AppLog.d(this, "fuck you!!");
+
+        };
         public void setSelection(String selection) {}
 
         public void deleteCurrentTrackFromDb()  {}

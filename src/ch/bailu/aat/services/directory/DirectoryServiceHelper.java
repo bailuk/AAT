@@ -21,6 +21,7 @@ public class DirectoryServiceHelper implements Closeable {
         directory = d;
         selection=sel;
 
+        
 
         service.setDirectory(directory, selection);
     }

@@ -60,13 +60,13 @@ public class MapActivity extends AbsDispatcher implements OnClickListener{
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
-
         LinearLayout contentView=new ContentView(this);
         map = createMap();
         contentView.addView(map);
         setContentView(contentView);
-
+        
+        createDispatcher();
+        
         setServiceDependencies(SERVICES);        
     }
 
@@ -122,8 +122,8 @@ public class MapActivity extends AbsDispatcher implements OnClickListener{
 
     }
 
-    @Override
-    public void onServicesUp() {
+    
+    private void createDispatcher() {
         OsmOverlay overlayList[] = {
 
                 new GpxOverlayListOverlay(map, getServiceContext()),

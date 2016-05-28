@@ -47,7 +47,7 @@ public abstract class AbsDispatcher extends AbsMenu {
     @Override
     public void onDestroy() {
     	dispatcher.close();
-    	dispatcher = null;
+    	dispatcher = ContentDispatcher.NULL;
         super.onDestroy();
     }
 

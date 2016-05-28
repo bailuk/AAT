@@ -76,6 +76,12 @@ public class TrackListActivity extends AbsGpxListActivity {
         Intent intent=new Intent(this,FileContentActivity.class);
         startActivity(intent);
     }
+
+    @Override
+    public void onServicesUp() {
+        // TODO Auto-generated method stub
+        
+    }
     
    
 

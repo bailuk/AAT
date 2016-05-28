@@ -2,49 +2,45 @@ package ch.bailu.aat.services.editor;
 
 import java.io.Closeable;
 import java.io.File;
-import java.io.IOException;
 
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.helpers.AppDirectory;
-import ch.bailu.aat.helpers.AppLog;
+import ch.bailu.aat.helpers.AppFile;
 import ch.bailu.aat.services.AbsService;
-import ch.bailu.aat.services.ServiceContext.ServiceNotUpException;
 import ch.bailu.aat.services.cache.CacheService;
 import ch.bailu.aat.services.cache.GpxObjectEditable;
+import ch.bailu.aat.services.cache.ObjectHandle;
 
 
 public class EditorService extends AbsService {
     public static final Class<?> SERVICES[] = {
         CacheService.class
     };    
-    
-    
+
+
     private Self self = new Self();
     public Self getSelf() {
         return self;
     }
-    
-    
+
+
     @Override
     public void onCreate() {
         super.onCreate();
-        
+
         connectToServices(SERVICES);
     }
-    
+
 
     @Override
     public void onServicesUp() {
-        try {
-            self = new SelfOn();
-        } catch (Exception e) {
-            AppLog.e(EditorService.this, e);
-        }
+        self.close();
+        self = new SelfOn();
     }
-    
-    
 
-    
+
+
+
     @Override
     public void onDestroy() {
         self.close();
@@ -52,105 +48,107 @@ public class EditorService extends AbsService {
         super.onDestroy();
     }
 
-    
-    
-    
+
+
+
     public static class Self implements Closeable {
 
         public void editOverlay(File file) {}
 
-        public GpxInformation getOverlayInformation() {
+        public GpxInformation getInformation(int id) {
             return GpxInformation.NULL;
         }
 
-        public GpxInformation getDraftInformation() {
-            return GpxInformation.NULL;
-        }
 
-        
-        // TODO: getEditor(id);
-        public EditorInterface getDraftEditor() {
+        public EditorInterface getEditor(int id) {
             return EditorInterface.NULL;
         }
 
-        public EditorInterface getOverlayEditor() {
-            return EditorInterface.NULL;
-        }
 
         @Override
         public void close() {}
-        
+
     };
 
-    
+
     public class SelfOn extends Self {
-        private final GpxObjectEditable draft;
-        private GpxObjectEditable overlay;
+        private ObjectHandle draft = ObjectHandle.NULL;
+        private ObjectHandle overlay = ObjectHandle.NULL;
+        private File file = AppFile.NULL_FILE;
         
-        public SelfOn () throws SecurityException, ServiceNotUpException, IOException {
-            draft=GpxObjectEditable.loadEditor(getServiceContext(), 
-                    AppDirectory.getEditorDraft(EditorService.this).getAbsolutePath(), 
-                    GpxInformation.ID.INFO_ID_EDITOR_DRAFT);
+        @Override
+        public void editOverlay(File f) {
+            file = f;
         }
-        
+
+
+        private ObjectHandle lockHandle(int id) {
+            ObjectHandle handle;
+            
+            if (id == GpxInformation.ID.INFO_ID_EDITOR_DRAFT) {
+                
+                handle = GpxObjectEditable.loadEditor(getServiceContext(), 
+                        
+                        AppDirectory.getEditorDraft(EditorService.this).getAbsolutePath(), 
+                        GpxInformation.ID.INFO_ID_EDITOR_DRAFT);
+                
+                draft.free();
+                draft = handle;
+                return draft;
+
+                
+            } else {
+                handle = GpxObjectEditable.loadEditor(getServiceContext(), 
+                        
+                        file.getAbsolutePath(), 
+                        GpxInformation.ID.INFO_ID_EDITOR_OVERLAY);
+                
+                overlay.free();
+                overlay = handle;
+                return overlay;
+            }
+        }
+
 
         @Override
-        public void editOverlay(File file) {
-            freeOverlay();
-            overlay = GpxObjectEditable.loadEditor(
-                    getServiceContext(), 
-                    file.getAbsolutePath(), 
-                    GpxInformation.ID.INFO_ID_EDITOR_OVERLAY);
-
-
+        public GpxInformation getInformation(int id) {
+            ObjectHandle handle = lockHandle(id);
+            
+            if (GpxObjectEditable.class.isInstance(handle)) {
+                return ((GpxObjectEditable)handle).editor;
+            }
+            return GpxInformation.NULL;
+        }
+        
+        
+        @Override
+        public EditorInterface getEditor(int id) {
+            ObjectHandle handle = lockHandle(id);
+            
+            if (GpxObjectEditable.class.isInstance(handle)) {
+                return ((GpxObjectEditable)handle).editor;
+            }
+            return EditorInterface.NULL;
         }
 
-        
-         
-        private void freeOverlay() {
-            if (overlay != null)
-                overlay.free();
-            overlay = null;
-        }
 
         
-        
+
         @Override
         public void close() {
-            if (getDraftEditor().isModified()) { 
-                getDraftEditor().save();
+            EditorInterface draftE = getEditor(GpxInformation.ID.INFO_ID_EDITOR_DRAFT);
+            if (draftE.isModified()) { 
+                draftE.save();
             }
-            freeOverlay();
+            
+            
             draft.free();
+            overlay.free();
+            
+            draft = ObjectHandle.NULL;
+            overlay = ObjectHandle.NULL;
         }
 
-        @Override
-        public GpxInformation getOverlayInformation() {
-            if (overlay != null) 
-                return overlay.editor;
-            return super.getOverlayInformation();
-        }
-
-        @Override
-        public GpxInformation getDraftInformation() {
-            if (draft != null) 
-                return draft.editor;
-            return super.getDraftInformation();
-        }
-
-        @Override
-        public EditorInterface getDraftEditor() {
-            if (draft != null)
-                return draft.editor;
         
-            return super.getDraftEditor();
-        }
-
-        public EditorInterface getOverlayEditor() {
-            if (overlay != null)
-                return overlay.editor;
-        
-            return super.getOverlayEditor();
-        }
     };
 }

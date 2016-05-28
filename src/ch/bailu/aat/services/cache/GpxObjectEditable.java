@@ -280,8 +280,8 @@ public class GpxObjectEditable extends  GpxObject {
 
     }
     
-    public static GpxObjectEditable loadEditor(ServiceContext c, String path, int iID) {
-        return (GpxObjectEditable) c.getCacheService().getObject(getVirtualID(path), new Factory(path, iID));
+    public static ObjectHandle loadEditor(ServiceContext c, String path, int iID) {
+        return c.getCacheService().getObject(getVirtualID(path), new Factory(path, iID));
     }
 
     private static String getVirtualID(String cID) {

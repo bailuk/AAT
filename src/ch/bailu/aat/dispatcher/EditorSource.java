@@ -16,8 +16,8 @@ public class EditorSource extends ContentSource {
     private BroadcastReceiver onFileEdited = new BroadcastReceiver () {
         @Override
         public void onReceive(Context context, Intent intent) {
-            GpxInformation info_a = scontext.getEditorService().getOverlayInformation();
-            GpxInformation info_b = scontext.getEditorService().getDraftInformation();
+            GpxInformation info_a = scontext.getEditorService().getInformation(GpxInformation.ID.INFO_ID_EDITOR_OVERLAY);
+            GpxInformation info_b = scontext.getEditorService().getInformation(GpxInformation.ID.INFO_ID_EDITOR_DRAFT);
 
             update(intent, info_a);
             update(intent, info_b);
@@ -50,8 +50,8 @@ public class EditorSource extends ContentSource {
     
     @Override
     public void forceUpdate() {
-        updateIfRequested(scontext.getEditorService().getDraftInformation());
-        updateIfRequested(scontext.getEditorService().getOverlayInformation());
+        updateIfRequested(scontext.getEditorService().getInformation(GpxInformation.ID.INFO_ID_EDITOR_DRAFT));
+        updateIfRequested(scontext.getEditorService().getInformation(GpxInformation.ID.INFO_ID_EDITOR_OVERLAY));
     }
     
     private void updateIfRequested(GpxInformation info) {

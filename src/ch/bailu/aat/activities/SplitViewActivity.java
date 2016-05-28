@@ -72,7 +72,9 @@ public class SplitViewActivity extends AbsDispatcher implements OnClickListener{
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
+        setContentView(createContentView());
+        createDispatcher();
+        
         setServiceDependencies(SERVICES);
     }
 
@@ -185,9 +187,8 @@ public class SplitViewActivity extends AbsDispatcher implements OnClickListener{
     }
 
 
-    @Override
-    public void onServicesUp() {
-            setContentView(createContentView());
+    
+    private void createDispatcher() {
             
             OsmOverlay overlayList[] = {
                     new GpxOverlayListOverlay(mapView, getServiceContext()),

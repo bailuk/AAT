@@ -209,14 +209,14 @@ implements OnClickListener,  Runnable {
 
 
     private GpxInformation getEditorInfo() {
-        return getServiceContext().getEditorService().getOverlayInformation();
+        return getServiceContext().getEditorService().getInformation(GpxInformation.ID.INFO_ID_EDITOR_OVERLAY);
     }
 
 
     @Override
     public void onBackPressed() {
         try {
-            final EditorInterface editor = getServiceContext().getEditorService().getOverlayEditor();
+            final EditorInterface editor = getServiceContext().getEditorService().getEditor(GpxInformation.ID.INFO_ID_EDITOR_OVERLAY);
 
             if (editor.isModified()) {
                 new AppDialog() {
@@ -255,7 +255,7 @@ implements OnClickListener,  Runnable {
     @Override
     public void onClick(final View v) {
         try {
-            final EditorInterface editor = getServiceContext().getEditorService().getOverlayEditor();
+            final EditorInterface editor = getServiceContext().getEditorService().getEditor(GpxInformation.ID.INFO_ID_EDITOR_OVERLAY);
 
             if (v == previousFile || v ==nextFile) {
                 if (editor.isModified()) {

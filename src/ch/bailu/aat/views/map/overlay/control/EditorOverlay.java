@@ -102,7 +102,7 @@ public class EditorOverlay extends ControlBarOverlay {
     public void onClick(View v) {
         super.onClick(v);
         
-        final EditorInterface editor = scontext.getEditorService().getDraftEditor();
+        final EditorInterface editor = scontext.getEditorService().getEditor(GpxInformation.ID.INFO_ID_EDITOR_OVERLAY);
         
              if (v==save)    editor.save();
         else if (v==saveAs)  editor.saveAs();

@@ -10,8 +10,8 @@ import ch.bailu.aat.services.cache.CacheService;
 public class ElevationService extends AbsService {
 
     public static final Class<?> SERVICES[] = {
+        BackgroundService.class,
         CacheService.class,
-        BackgroundService.class
     };
 
     private Self self = new Self();
