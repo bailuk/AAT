@@ -62,7 +62,7 @@ public class MapFeaturesActivity extends AbsDispatcher implements OnClickListene
 
         setContentView(contentView);
 
-        connectToServices(SERVICES);
+        setServiceDependencies(SERVICES);
         
         AppBroadcaster.register(this, onFileProcessed, AppBroadcaster.FILE_CHANGED_ONDISK);
 

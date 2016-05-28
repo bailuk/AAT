@@ -21,7 +21,7 @@ public class MapFeatureListActivity extends AbsDispatcher {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         
-        connectToServices(SERVICES);
+        setServiceDependencies(SERVICES);
         
 
 

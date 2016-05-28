@@ -27,6 +27,12 @@ public abstract class AbsDispatcher extends AbsMenu {
     
 
     @Override
+    public void onServicesUp() {
+        dispatcher.forceUpdate();
+    }
+    
+    
+    @Override
     public void onResume() {
     	super.onResume();
     	dispatcher.resume();

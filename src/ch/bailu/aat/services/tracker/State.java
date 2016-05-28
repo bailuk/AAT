@@ -16,6 +16,10 @@ public abstract class State implements GpxInformation.ID {
 
     }
     
+    public State() {
+        internal = null;
+    }
+    
     
     public void onTimer() {}
     public void preferencesChanged() {}

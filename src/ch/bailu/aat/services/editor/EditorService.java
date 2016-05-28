@@ -67,6 +67,8 @@ public class EditorService extends AbsService {
             return GpxInformation.NULL;
         }
 
+        
+        // TODO: getEditor(id);
         public EditorInterface getDraftEditor() {
             return EditorInterface.NULL;
         }

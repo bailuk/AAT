@@ -81,7 +81,7 @@ implements OnClickListener,  Runnable {
 
         timer = new Timer(this,50);
 
-        connectToServices(SERVICES);
+        setServiceDependencies(SERVICES);
     }
 
 
@@ -89,11 +89,11 @@ implements OnClickListener,  Runnable {
         mapView = new OsmInteractiveView(getServiceContext(), SOLID_KEY);
 
         OsmOverlay overlayList[] = {
-                new GpxOverlayListOverlay(mapView, getServiceContext().getCacheService()),
-                new GpxDynOverlay(mapView, getServiceContext().getCacheService(), GpxInformation.ID.INFO_ID_TRACKER), 
-                new GridDynOverlay(mapView, getServiceContext().getElevationService()),
+                new GpxOverlayListOverlay(mapView, getServiceContext()),
+                new GpxDynOverlay(mapView, getServiceContext(), GpxInformation.ID.INFO_ID_TRACKER), 
+                new GridDynOverlay(mapView, getServiceContext()),
                 new CurrentLocationOverlay(mapView),
-                new EditorOverlay(mapView, getServiceContext().getCacheService(), INFO_ID_EDITOR_OVERLAY, getServiceContext().getEditorService().getOverlayEditor(), getServiceContext().getElevationService()),
+                new EditorOverlay(mapView, getServiceContext(), INFO_ID_EDITOR_OVERLAY),
                 new NavigationBarOverlay(mapView),
                 new InformationBarOverlay(mapView)
         };

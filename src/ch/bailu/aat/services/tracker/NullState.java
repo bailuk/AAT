@@ -4,10 +4,6 @@ import ch.bailu.aat.R;
 
 public class NullState extends State {
 
-    public NullState() {
-        super(null);
-    }
-
     @Override
     public int getStateID() {
         return STATE_OFF;

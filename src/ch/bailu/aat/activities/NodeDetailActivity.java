@@ -79,7 +79,7 @@ public class NodeDetailActivity extends AbsDispatcher implements OnClickListener
         setContentView(contentView);
 
 
-        connectToServices(SERVICES);
+        setServiceDependencies(SERVICES);
     }
 
 
@@ -131,10 +131,10 @@ public class NodeDetailActivity extends AbsDispatcher implements OnClickListener
     public void onServicesUp() {
 
         OsmOverlay overlayList[] = {
-                new GpxDynOverlay(map, getServiceContext().getCacheService(), GpxInformation.ID.INFO_ID_TRACKER), 
-                new GpxDynOverlay(map, getServiceContext().getCacheService(), GpxInformation.ID.INFO_ID_FILEVIEW),
+                new GpxDynOverlay(map, getServiceContext(), GpxInformation.ID.INFO_ID_TRACKER), 
+                new GpxDynOverlay(map, getServiceContext(), GpxInformation.ID.INFO_ID_FILEVIEW),
                 new CurrentLocationOverlay(map),
-                new GridDynOverlay(map, getServiceContext().getElevationService()),
+                new GridDynOverlay(map, getServiceContext()),
                 new NavigationBarOverlay(map),
                 new InformationBarOverlay(map),
 

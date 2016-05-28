@@ -34,7 +34,7 @@ public class OsmPreviewGenerator implements Closeable {
         map.setDrawingCacheEnabled(true);
         
         final OsmOverlay[] overlays = new OsmOverlay[] {
-                new GpxDynOverlay(map, sc.getCacheService(), GpxInformation.ID.INFO_ID_FILEVIEW)
+                new GpxDynOverlay(map, sc, GpxInformation.ID.INFO_ID_FILEVIEW)
         };
         map.setOverlayList(overlays);
         

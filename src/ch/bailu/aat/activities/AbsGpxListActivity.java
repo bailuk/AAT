@@ -53,7 +53,7 @@ public abstract class AbsGpxListActivity extends AbsMenu implements OnItemClickL
         createBusyIndicator(header);
         setContentView(contentView);
 
-        connectToServices(SERVICES);
+        setServiceDependencies(SERVICES);
     }        
 
 

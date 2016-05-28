@@ -1,5 +1,6 @@
 package ch.bailu.aat.gpx.writer;
 
+import java.io.Closeable;
 import java.io.File;
 import java.io.IOException;
 
@@ -7,7 +8,7 @@ import ch.bailu.aat.gpx.GpxList;
 import ch.bailu.aat.gpx.GpxListIterator;
 
 
-public class GpxListWriter implements GpxConstants {
+public class GpxListWriter implements GpxConstants, Closeable {
 
 
     private GpxListIterator iterator;
@@ -21,7 +22,8 @@ public class GpxListWriter implements GpxConstants {
         writer.writeHeader(System.currentTimeMillis());
     }
 
-
+    
+    @Override
     public void close() throws IOException {
         flushOutput();
         writer.writeFooter();

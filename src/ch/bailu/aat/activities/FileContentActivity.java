@@ -85,7 +85,7 @@ public class FileContentActivity extends AbsDispatcher implements OnClickListene
         contentView.addView(multiView);
         setContentView(contentView);
 
-        connectToServices(SERVICES);
+        setServiceDependencies(SERVICES);
     }
 
 
@@ -156,15 +156,14 @@ public class FileContentActivity extends AbsDispatcher implements OnClickListene
     public void onServicesUp() {
 
         OsmOverlay overlayList[] = {
-                new GpxOverlayListOverlay(map, getServiceContext().getCacheService()),
-                new GpxDynOverlay(map, getServiceContext().getCacheService(), GpxInformation.ID.INFO_ID_TRACKER), 
-                new GpxDynOverlay(map, getServiceContext().getCacheService(), GpxInformation.ID.INFO_ID_FILEVIEW),
+                new GpxOverlayListOverlay(map, getServiceContext()),
+                new GpxDynOverlay(map, getServiceContext(), GpxInformation.ID.INFO_ID_TRACKER), 
+                new GpxDynOverlay(map, getServiceContext(), GpxInformation.ID.INFO_ID_FILEVIEW),
                 new CurrentLocationOverlay(map),
-                new GridDynOverlay(map, getServiceContext().getElevationService()),
+                new GridDynOverlay(map, getServiceContext()),
                 new NavigationBarOverlay(map),
                 new InformationBarOverlay(map),
-                new EditorOverlay(map, getServiceContext().getCacheService(),  GpxInformation.ID.INFO_ID_EDITOR_DRAFT, 
-                        getServiceContext().getEditorService().getDraftEditor(), getServiceContext().getElevationService()),
+                new EditorOverlay(map, getServiceContext(),  GpxInformation.ID.INFO_ID_EDITOR_DRAFT),
 
         };
         map.setOverlayList(overlayList);

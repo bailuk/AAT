@@ -6,7 +6,7 @@ import org.osmdroid.util.constants.GeoConstants;
 import android.graphics.Point;
 import ch.bailu.aat.coordinates.WGS84Sexagesimal;
 import ch.bailu.aat.description.AltitudeDescription;
-import ch.bailu.aat.services.dem.ElevationProvider;
+import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.views.map.AbsOsmView;
 import ch.bailu.aat.views.map.overlay.MapPainter;
 import ch.bailu.aat.views.map.overlay.OsmOverlay;
@@ -14,12 +14,12 @@ import ch.bailu.aat.views.map.overlay.OsmOverlay;
 public class WGS84Overlay extends OsmOverlay implements GeoConstants{
     private final static int MIN_ZOOM_LEVEL=7;
     
-    private final ElevationProvider elevation;
+    private final ServiceContext scontext;
     private final AltitudeDescription altitudeDescription;
     
-    public WGS84Overlay(AbsOsmView osmPreview, ElevationProvider e) {
+    public WGS84Overlay(AbsOsmView osmPreview, ServiceContext sc) {
         super(osmPreview);
-        elevation=e;
+        scontext=sc;
         altitudeDescription= new AltitudeDescription(getContext());
     }
 
@@ -52,7 +52,7 @@ public class WGS84Overlay extends OsmOverlay implements GeoConstants{
     
     private void drawElevation(MapPainter painter, IGeoPoint point) {
         if (getMapView().getZoomLevel() > MIN_ZOOM_LEVEL) {
-            final short ele = elevation.getElevation(point.getLatitudeE6(), point.getLongitudeE6());
+            final short ele = scontext.getElevationService().getElevation(point.getLatitudeE6(), point.getLongitudeE6());
             painter.canvas.drawTextBottom(altitudeDescription.getValueUnit(ele),3);
         }
     }

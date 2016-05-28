@@ -78,7 +78,9 @@ public class TrackerActivity extends AbsDispatcher implements OnClickListener{
         contentView.addView(multiView);
         setContentView(contentView);
 
-        connectToServices(SERVICES);
+        createDispatcher();
+        
+        setServiceDependencies(SERVICES);
     }
 
 
@@ -149,17 +151,16 @@ public class TrackerActivity extends AbsDispatcher implements OnClickListener{
         }
     }
 
-    @Override
-    public void onServicesUp() {
+    
+    private void createDispatcher() {
             OsmOverlay overlayList[] = {
-                    new GpxOverlayListOverlay(map, getServiceContext().getCacheService()),
-                    new GpxDynOverlay(map, getServiceContext().getCacheService(), GpxInformation.ID.INFO_ID_TRACKER), 
+                    new GpxOverlayListOverlay(map, getServiceContext()),
+                    new GpxDynOverlay(map, getServiceContext(), GpxInformation.ID.INFO_ID_TRACKER), 
                     new CurrentLocationOverlay(map),
-                    new GridDynOverlay(map, getServiceContext().getElevationService()),
+                    new GridDynOverlay(map, getServiceContext()),
                     new NavigationBarOverlay(map),
                     new InformationBarOverlay(map),
-                    new EditorOverlay(map, getServiceContext().getCacheService(), GpxInformation.ID.INFO_ID_EDITOR_DRAFT, 
-                            getServiceContext().getEditorService().getDraftEditor(), getServiceContext().getElevationService()),
+                    new EditorOverlay(map, getServiceContext(), GpxInformation.ID.INFO_ID_EDITOR_DRAFT),
             };
             map.setOverlayList(overlayList);
             

@@ -10,13 +10,14 @@ public class TrackerService extends AbsService {
     private Self self = new Self();
     
     public Self getSelf() {
-        return new Self();
+        return self;
     }
 
     
     @Override
     public void onCreate() {
         super.onCreate();
+        self.close();
         self = new SelfOn();
     }
 
@@ -53,20 +54,22 @@ public class TrackerService extends AbsService {
     
     public class SelfOn extends Self {
         private final TrackerInternals internal;
+        
         public SelfOn() {
             internal = new TrackerInternals(TrackerService.this);
         }
         
+        @Override
         public State getState() {
             return internal.state;
         }
 
-        
+        @Override
         public GpxInformation getTrackerInformation() {
             return internal.logger;
         }
 
-
+        @Override
         public GpxInformation getLocation() {
             return internal.location.getLocationInformation();
         }

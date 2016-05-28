@@ -11,6 +11,9 @@ public abstract class AbsServiceLink extends AbsActivity implements GpxInformati
 
 
     private ServiceLink serviceLink=null;
+    private Class<?>[] services=ServiceLink.ALL_SERVICES;
+    
+    
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,13 +28,28 @@ public abstract class AbsServiceLink extends AbsActivity implements GpxInformati
         };
             
         
-        
     }
 
-    public void connectToServices(Class<?>[] services) {
+    public void setServiceDependencies(Class<?>[] s) {
+        //serviceLink.up(services);
+        services=s;
+    }
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
         serviceLink.up(services);
     }
 
+    
+    @Override
+    public void onPause() {
+        serviceLink.down();
+        super.onPause();
+    }
+    
+    
     public abstract void onServicesUp();
 
 

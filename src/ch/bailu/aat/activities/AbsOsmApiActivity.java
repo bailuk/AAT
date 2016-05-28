@@ -69,7 +69,7 @@ public abstract class AbsOsmApiActivity extends AbsDispatcher implements OnClick
         try {
             osmApi = createUrlGenerator(AppBroadcaster.getBoundingBox(getIntent()));
             AppBroadcaster.register(this, onFileDownloaded, AppBroadcaster.FILE_CHANGED_ONDISK);
-            connectToServices(SERVICES);
+            setServiceDependencies(SERVICES);
         } catch (Exception e) {
             AppLog.e(this,e);
         }

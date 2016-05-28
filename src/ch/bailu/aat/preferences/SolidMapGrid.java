@@ -2,7 +2,7 @@ package ch.bailu.aat.preferences;
 
 import android.content.Context;
 import ch.bailu.aat.R;
-import ch.bailu.aat.services.dem.ElevationProvider;
+import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.views.map.AbsOsmView;
 import ch.bailu.aat.views.map.overlay.NullOverlay;
 import ch.bailu.aat.views.map.overlay.OsmOverlay;
@@ -35,9 +35,9 @@ public class SolidMapGrid extends SolidStaticIndexList {
         return new NullOverlay(osmPreview);
     }
     
-    public OsmOverlay createGridOverlay(AbsOsmView osmPreview, ElevationProvider e) {
+    public OsmOverlay createGridOverlay(AbsOsmView osmPreview, ServiceContext sc) {
         if (this.getIndex()==0) {
-            return new WGS84Overlay(osmPreview, e);
+            return new WGS84Overlay(osmPreview, sc);
         }
         
         if (this.getIndex()==1) {

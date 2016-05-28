@@ -27,7 +27,7 @@ public class NodeEntryView extends ViewGroup {
         map = new OsmViewStatic(sc.getContext(), provider);
         
         final OsmOverlay[] overlays = new OsmOverlay[] {
-                new GpxDynOverlay(map, sc.getCacheService() ,id)
+                new GpxDynOverlay(map, sc ,id)
         };
         map.setOverlayList(overlays);
 

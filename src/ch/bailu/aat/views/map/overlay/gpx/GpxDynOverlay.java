@@ -4,7 +4,7 @@ import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.GpxList;
 import ch.bailu.aat.gpx.interfaces.GpxBigDeltaInterface;
 import ch.bailu.aat.preferences.SolidLegend;
-import ch.bailu.aat.services.cache.CacheService;
+import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.views.map.AbsOsmView;
 import ch.bailu.aat.views.map.overlay.MapPainter;
 import ch.bailu.aat.views.map.overlay.NullOverlay;
@@ -18,21 +18,21 @@ public class GpxDynOverlay extends OsmOverlay {
     private final int ID;
     private final int color;
 
-    private final CacheService.Self cache;
+    private final ServiceContext scontext;
     
     private final SolidLegend slegend;
     
     private GpxInformation info;
     
     
-    public GpxDynOverlay(AbsOsmView map, CacheService.Self cs, int id) {
-        this(map,cs, id,-1);
+    public GpxDynOverlay(AbsOsmView map, ServiceContext sc, int id) {
+        this(map,sc, id,-1);
     }
 
-    public GpxDynOverlay(AbsOsmView map, CacheService.Self cs,  int id, int c) {
+    public GpxDynOverlay(AbsOsmView map, ServiceContext sc,  int id, int c) {
         super(map);
         color=c;
-        cache = cs;
+        scontext =sc;
         ID = id;
         gpx = new NullOverlay(map);
         legend = new NullOverlay(map);
@@ -66,8 +66,8 @@ public class GpxDynOverlay extends OsmOverlay {
     public void setTrack(GpxList gpxList) {
 
         if (gpxList.getDelta().getType()==GpxBigDeltaInterface.WAY) {
-            if (color == -1) gpx = new WayOverlay(getOsmView(), cache, ID);
-            else gpx = new WayOverlay(getOsmView(), cache, ID, color);
+            if (color == -1) gpx = new WayOverlay(getOsmView(), scontext, ID);
+            else gpx = new WayOverlay(getOsmView(), scontext, ID, color);
             legend = slegend.createWayLegendOverlay(getOsmView(), ID);
 
         } else if (gpxList.getDelta().getType()==GpxBigDeltaInterface.RTE) {

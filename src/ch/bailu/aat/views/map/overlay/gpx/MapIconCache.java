@@ -5,7 +5,7 @@ import java.io.Closeable;
 import android.graphics.drawable.Drawable;
 import ch.bailu.aat.gpx.GpxAttributes;
 import ch.bailu.aat.gpx.interfaces.GpxPointInterface;
-import ch.bailu.aat.services.cache.CacheService;
+import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.cache.FreeLater;
 import ch.bailu.aat.services.cache.ImageObject;
 import ch.bailu.aat.services.icons.IconMapService;
@@ -26,7 +26,7 @@ public class MapIconCache implements Closeable {
     }
 
     
-    public Drawable getIcon(CacheService.Self cache, GpxPointInterface point) {
+    public Drawable getIcon(ServiceContext scontext, GpxPointInterface point) {
         
         Drawable drawable=null;
         
@@ -35,17 +35,17 @@ public class MapIconCache implements Closeable {
             
             String fileID = a.get(IconMapService.KEY_ICON_SMALL);
             if (fileID != null) {
-                drawable = getIcon(cache, fileID);
+                drawable = getIcon(scontext, fileID);
             }
         }
         return drawable;
     }
     
     
-    public Drawable getIcon(CacheService.Self cache, String fileID) {
+    public Drawable getIcon(ServiceContext scontext, String fileID) {
         Drawable drawable=null;
         
-        ImageObject imageObject =  (ImageObject) cache.getObject(fileID, new ImageObject.Factory());
+        ImageObject imageObject =  (ImageObject) scontext.getCacheService().getObject(fileID, new ImageObject.Factory());
         if (imageObject != null) {
             
             drawable = imageObject.getDrawable();

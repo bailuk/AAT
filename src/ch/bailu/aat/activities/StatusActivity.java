@@ -10,7 +10,7 @@ public class StatusActivity extends AbsHtmlViewActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        connectToServices(ServiceLink.ALL_SERVICES);
+        setServiceDependencies(ServiceLink.ALL_SERVICES);
     }
 
 

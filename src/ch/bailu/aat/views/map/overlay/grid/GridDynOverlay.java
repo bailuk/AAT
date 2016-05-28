@@ -1,7 +1,7 @@
 package ch.bailu.aat.views.map.overlay.grid;
 
 import ch.bailu.aat.preferences.SolidMapGrid;
-import ch.bailu.aat.services.dem.ElevationProvider;
+import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.views.map.OsmInteractiveView;
 import ch.bailu.aat.views.map.overlay.MapPainter;
 import ch.bailu.aat.views.map.overlay.OsmOverlay;
@@ -11,16 +11,16 @@ public class GridDynOverlay extends OsmOverlay {
     private OsmOverlay gridOverlay;
     private SolidMapGrid    sgrid;
     
-    private final ElevationProvider elevation;
+    private final ServiceContext scontext;
 
 
 
-    public GridDynOverlay(OsmInteractiveView osm, ElevationProvider e) {
+    public GridDynOverlay(OsmInteractiveView osm, ServiceContext sc) {
         super(osm);
         
-        elevation =e;
+        scontext = sc;
         sgrid = new SolidMapGrid(osm.getContext(), osm.solidKey);
-        gridOverlay = sgrid.createGridOverlay(getOsmView(), elevation);
+        gridOverlay = sgrid.createGridOverlay(getOsmView(), scontext);
     }
 
     
@@ -34,7 +34,7 @@ public class GridDynOverlay extends OsmOverlay {
     @Override
     public void onSharedPreferenceChanged(String key) {
         if (sgrid.hasKey(key)) {
-            gridOverlay = sgrid.createGridOverlay(getOsmView(), elevation);
+            gridOverlay = sgrid.createGridOverlay(getOsmView(), scontext);
             getMapView().invalidate();
         }
     }

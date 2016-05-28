@@ -101,7 +101,7 @@ public class TestActivity extends AbsDispatcher implements OnClickListener {
 
 
         setContentView(contentView);
-        connectToServices(ServiceLink.ALL_SERVICES);
+        setServiceDependencies(ServiceLink.ALL_SERVICES);
     }
 
 
@@ -195,10 +195,10 @@ public class TestActivity extends AbsDispatcher implements OnClickListener {
     @Override
     public void onServicesUp() {
         OsmOverlay overlayList[] = {
-                new GpxOverlayListOverlay(map,getServiceContext().getCacheService()),
-                new GpxDynOverlay(map, getServiceContext().getCacheService(), GpxInformation.ID.INFO_ID_TRACKER), 
+                new GpxOverlayListOverlay(map,getServiceContext()),
+                new GpxDynOverlay(map, getServiceContext(), GpxInformation.ID.INFO_ID_TRACKER), 
                 new GpxTestOverlay(map, GpxInformation.ID.INFO_ID_OVERLAY),
-                new GridDynOverlay(map, getServiceContext().getElevationService()),
+                new GridDynOverlay(map, getServiceContext()),
                 new CurrentLocationOverlay(map),
                 new NavigationBarOverlay(map),
                 new InformationBarOverlay(map),

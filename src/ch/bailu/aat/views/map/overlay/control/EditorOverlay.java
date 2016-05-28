@@ -9,8 +9,7 @@ import ch.bailu.aat.gpx.GpxPoint;
 import ch.bailu.aat.helpers.AppLayout;
 import ch.bailu.aat.helpers.ToolTip;
 import ch.bailu.aat.preferences.SolidMapGrid;
-import ch.bailu.aat.services.cache.CacheService;
-import ch.bailu.aat.services.dem.ElevationProvider;
+import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.editor.EditorInterface;
 import ch.bailu.aat.views.ControlBar;
 import ch.bailu.aat.views.map.OsmInteractiveView;
@@ -25,7 +24,7 @@ public class EditorOverlay extends ControlBarOverlay {
     private final View  add, remove, up, down, 
                         save, saveAs, toggle, clear, 
                         undo, redo;
-    private final EditorInterface editor;
+//    private final EditorInterface editor;
     
     private final EditorNodeSelectorOverlay selector;
     private final OsmOverlay content;
@@ -33,23 +32,24 @@ public class EditorOverlay extends ControlBarOverlay {
     
     private OsmOverlay coordinates;
     
-    private final ElevationProvider elevation;
+//    private final ElevationProvider elevation;
+    
+    private final ServiceContext scontext;
     
     
-    public EditorOverlay(OsmInteractiveView osm, CacheService.Self c, int id, EditorInterface e, ElevationProvider ele) {
+    public EditorOverlay(OsmInteractiveView osm, ServiceContext sc, int id) {
         super(osm, new ControlBar(
                 osm.getContext(),
                 AppLayout.getOrientationAlongLargeSide(osm.getContext())));
 
-        elevation = ele;
+        scontext=sc;
+
         sgrid = new SolidMapGrid(osm.getContext(), osm.solidKey);
         coordinates = sgrid.createCenterCoordinatesOverlay(getOsmView());
         
-        content = new GpxDynOverlay(osm, c, id);
+        content = new GpxDynOverlay(osm, sc, id);
         //legend = new GpxLegendOverlay(osm,id, new PointIndexWalker());
-        selector = new EditorNodeSelectorOverlay(osm, id, e);
-        
-        editor = e;
+        selector = new EditorNodeSelectorOverlay(osm, id, sc);
         
         
         ControlBar bar = getBar();
@@ -102,11 +102,13 @@ public class EditorOverlay extends ControlBarOverlay {
     public void onClick(View v) {
         super.onClick(v);
         
+        final EditorInterface editor = scontext.getEditorService().getDraftEditor();
+        
              if (v==save)    editor.save();
         else if (v==saveAs)  editor.saveAs();
         else if (v==add)    {
             IGeoPoint p = getMapView().getBoundingBox(). getCenter(); 
-            editor.add(new GpxPoint(p, elevation.getElevation(p.getLatitudeE6(), p.getLongitudeE6()), 0));
+            editor.add(new GpxPoint(p, scontext.getElevationService().getElevation(p.getLatitudeE6(), p.getLongitudeE6()), 0));
         }
         else if (v==remove) editor.remove();
         

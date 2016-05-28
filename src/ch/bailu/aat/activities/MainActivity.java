@@ -53,12 +53,20 @@ implements AdapterView.OnItemSelectedListener, OnSharedPreferenceChangeListener 
     private ListView        actionList;
     private MyListAdapter   actionAdapter;
 
-    private Storage storage;
+    private Storage storage; 
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        createViews();
+        createDispatcher();
+
+        setServiceDependencies(SERVICES);
+    }
+
+
+    private void createViews() {
         storage = Storage.global(this);
         storage.register(this);
 
@@ -69,13 +77,26 @@ implements AdapterView.OnItemSelectedListener, OnSharedPreferenceChangeListener 
         contentView.addView(presetSpinner);
         actionList = createActionList();
         contentView.addView(actionList);
-
+    }
+    
+    
+    private void createDispatcher() {
         setContentView(contentView);
 
-        connectToServices(SERVICES);
+
+        DescriptionInterface[] target = new DescriptionInterface[] {
+                gpsState, trackerState, this
+        };
+
+        ContentSource[] source = new ContentSource[] {
+                new TrackerSource(getServiceContext()),
+                new CurrentLocationSource(getServiceContext())
+        };
+
+        setDispatcher(new ContentDispatcher(this,source, target));
     }
-
-
+    
+    
     private ListView createActionList() {
         actionAdapter = new MyListAdapter(this);
         actionList = new ListView(this);
@@ -162,20 +183,6 @@ implements AdapterView.OnItemSelectedListener, OnSharedPreferenceChangeListener 
     public void onDestroy() {
         storage.unregister(this);
         super.onDestroy();
-    }
-
-    @Override
-    public void onServicesUp() {
-            DescriptionInterface[] target = new DescriptionInterface[] {
-                    gpsState, trackerState, this
-            };
-
-            ContentSource[] source = new ContentSource[] {
-                    new TrackerSource(getServiceContext()),
-                    new CurrentLocationSource(getServiceContext())
-            };
-
-            setDispatcher(new ContentDispatcher(this,source, target));
     }
 
     private class MyListAdapter extends BaseAdapter implements OnItemClickListener {

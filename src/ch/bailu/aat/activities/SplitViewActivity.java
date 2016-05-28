@@ -73,7 +73,7 @@ public class SplitViewActivity extends AbsDispatcher implements OnClickListener{
         super.onCreate(savedInstanceState);
 
 
-        connectToServices(SERVICES);
+        setServiceDependencies(SERVICES);
     }
 
 
@@ -112,8 +112,8 @@ public class SplitViewActivity extends AbsDispatcher implements OnClickListener{
         mapViewAlt=new OsmInteractiveView(getServiceContext(), SOLID_KEY);
 
         OsmOverlay overlayList[] = {
-                new GpxOverlayListOverlay(mapViewAlt,getServiceContext().getCacheService()),
-                new GpxDynOverlay(mapViewAlt, getServiceContext().getCacheService(), GpxInformation.ID.INFO_ID_TRACKER), 
+                new GpxOverlayListOverlay(mapViewAlt,getServiceContext()),
+                new GpxDynOverlay(mapViewAlt, getServiceContext(), GpxInformation.ID.INFO_ID_TRACKER), 
                 new CurrentLocationOverlay(mapViewAlt),
                 new NavigationBarOverlay(mapViewAlt,6),
         };
@@ -190,15 +190,14 @@ public class SplitViewActivity extends AbsDispatcher implements OnClickListener{
             setContentView(createContentView());
             
             OsmOverlay overlayList[] = {
-                    new GpxOverlayListOverlay(mapView, getServiceContext().getCacheService()),
-                    new GpxDynOverlay(mapView, getServiceContext().getCacheService(), GpxInformation.ID.INFO_ID_TRACKER), 
+                    new GpxOverlayListOverlay(mapView, getServiceContext()),
+                    new GpxDynOverlay(mapView, getServiceContext(), GpxInformation.ID.INFO_ID_TRACKER), 
                     new CurrentLocationOverlay(mapView),
-                    new GridDynOverlay(mapView, getServiceContext().getElevationService()),
+                    new GridDynOverlay(mapView, getServiceContext()),
                     new NavigationBarOverlay(mapView),
                     new InformationBarOverlay(mapView),
                     new CustomBarOverlay(mapView, createButtonBar()),
-                    new EditorOverlay(mapView, getServiceContext().getCacheService(),  GpxInformation.ID.INFO_ID_EDITOR_DRAFT, 
-                            getServiceContext().getEditorService().getDraftEditor(), getServiceContext().getElevationService()),
+                    new EditorOverlay(mapView, getServiceContext(),  GpxInformation.ID.INFO_ID_EDITOR_DRAFT),
 
             };
             mapView.setOverlayList(overlayList);
