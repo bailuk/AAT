@@ -4,36 +4,36 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import ch.bailu.aat.helpers.AppBroadcaster;
-import ch.bailu.aat.services.tracker.TrackerService;
+import ch.bailu.aat.services.ServiceContext;
 
 public class CurrentLocationSource extends ContentSource {
-    private TrackerService service;
+    private final ServiceContext scontext;
 
     private BroadcastReceiver onLocationChange = new BroadcastReceiver () {
         @Override
         public void onReceive(Context context, Intent intent) {
-            updateGpxContent(service.getLocation());
+            updateGpxContent(scontext.getTrackerService().getLocation());
         }
 
     };
 
 
 
-    public CurrentLocationSource(TrackerService s) {
-        service = s;
-        AppBroadcaster.register(service, onLocationChange, AppBroadcaster.LOCATION_CHANGED);
+    public CurrentLocationSource(ServiceContext sc) {
+        scontext=sc;
+        AppBroadcaster.register(scontext.getContext(), onLocationChange, AppBroadcaster.LOCATION_CHANGED);
 
     }
 
     @Override
     public void close() {
-        service.unregisterReceiver(onLocationChange);
+        scontext.getContext().unregisterReceiver(onLocationChange);
     }
 
 
 
     @Override
     public void forceUpdate() {
-        updateGpxContent(service.getLocation());
+        updateGpxContent(scontext.getTrackerService().getLocation());
     }
 }

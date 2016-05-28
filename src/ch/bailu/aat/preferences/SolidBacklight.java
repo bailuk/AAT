@@ -8,6 +8,7 @@ public class SolidBacklight extends SolidStaticIndexList {
 
     private final static String KEY="backlight";
     
+    @SuppressWarnings("deprecation")
     private final static int LOCK_MODE[] = {
         PowerManager.PARTIAL_WAKE_LOCK, 
         PowerManager.SCREEN_DIM_WAKE_LOCK, 

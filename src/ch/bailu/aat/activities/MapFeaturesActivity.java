@@ -54,7 +54,7 @@ public class MapFeaturesActivity extends AbsDispatcher implements OnClickListene
         text.setTextSize(25);
         bar.addViewIgnoreSize(text);
 
-        list = new FeaturesList(this,null);
+        list = new FeaturesList(getServiceContext());
         list.loadList();
         
         contentView.addView(bar);

@@ -151,8 +151,6 @@ public class TrackerActivity extends AbsDispatcher implements OnClickListener{
 
     @Override
     public void onServicesUp() {
-        try {
-            
             OsmOverlay overlayList[] = {
                     new GpxOverlayListOverlay(map, getServiceContext().getCacheService()),
                     new GpxDynOverlay(map, getServiceContext().getCacheService(), GpxInformation.ID.INFO_ID_TRACKER), 
@@ -171,14 +169,11 @@ public class TrackerActivity extends AbsDispatcher implements OnClickListener{
 
             ContentSource[] source = new ContentSource[] {
                     new EditorSource(getServiceContext(),GpxInformation.ID.INFO_ID_EDITOR_DRAFT),
-                    new TrackerSource(getServiceContext().getTrackerService()),
-                    new CurrentLocationSource(getServiceContext().getTrackerService()),
+                    new TrackerSource(getServiceContext()),
+                    new CurrentLocationSource(getServiceContext()),
                     new OverlaySource(getServiceContext()),
             };
             setDispatcher(new ContentDispatcher(this,source, target));
-        } catch (ServiceNotUpException e) {
-            AppLog.e(this, e);
-        }
     }
 
 

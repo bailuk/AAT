@@ -35,6 +35,7 @@ public class StatusIcon  {
     }
 
 
+    @SuppressWarnings("deprecation")
     private Notification createNotification(PendingIntent intent, int status_id) {
         String appName = service.getString(R.string.app_name);
         String appInfo = service.getString(status_id);

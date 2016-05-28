@@ -32,9 +32,8 @@ public class MapFeatureListActivity extends AbsDispatcher {
     public void onServicesUp() {
         final Intent intent = getIntent();
         final String file = AppBroadcaster.getFile(intent);
-        final IconMapService.Self iconMap = getServiceContext().getIconMapService();
         
-        list = new FeaturesList(this, iconMap, new File(file));
+        list = new FeaturesList(getServiceContext(), new File(file));
         setContentView(list);
 
     }

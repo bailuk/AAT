@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 
-import android.content.Context;
 import android.database.DataSetObserver;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -30,6 +29,7 @@ import ch.bailu.aat.helpers.AppLog;
 import ch.bailu.aat.helpers.AppTheme;
 import ch.bailu.aat.osm_features.MapFeaturesParser;
 import ch.bailu.aat.osm_features.MapFeaturesParser.OnHaveFeature;
+import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.icons.IconMapService;
 
 public class FeaturesList extends ListView implements 
@@ -37,7 +37,7 @@ OnHaveFeature {
 
     private DataSetObserver observer=null;
 
-    private final IconMapService.Self iconMap;
+    private final ServiceContext scontext;
 
     private class ListData {
         public String name, key, value;
@@ -48,17 +48,16 @@ OnHaveFeature {
     private final ArrayList<ListData> data = new ArrayList<ListData>();
 
 
-    public FeaturesList(Context c, IconMapService.Self map, File file) {
-        this(c, map);
+    public FeaturesList(ServiceContext sc, File file) {
+        this(sc);
 
-        loadList(file, map);
+        loadList(file, sc.getIconMapService());
     }
 
-    public FeaturesList(Context c, IconMapService.Self map) {
-        super(c);
+    public FeaturesList(ServiceContext sc) {
+        super(sc.getContext());
 
-        iconMap=map;
-
+        scontext = sc;
         AppTheme.themify(this, AppTheme.getHighlightColor());
 
         setAdapter(listAdapter);
@@ -111,8 +110,7 @@ OnHaveFeature {
         d.value = parser.getValue();
 
         StringBuilder html=new StringBuilder();
-        if (iconMap != null) 
-            iconMap.iconify(html,parser.getKey(), parser.getValue());
+        scontext.getIconMapService().iconify(html,parser.getKey(), parser.getValue());
         parser.toHtml(html);
 
         d.paragraph = Html.fromHtml(html.toString(), new Html.ImageGetter() {
@@ -139,7 +137,7 @@ OnHaveFeature {
 
 
 
-  
+
 
 
     private void broadcastKeyValue(CharSequence key, CharSequence value) {

@@ -26,7 +26,6 @@ import ch.bailu.aat.helpers.AppDialog;
 import ch.bailu.aat.helpers.AppLayout;
 import ch.bailu.aat.helpers.AppLog;
 import ch.bailu.aat.helpers.Timer;
-import ch.bailu.aat.services.ServiceContext.ServiceNotUpException;
 import ch.bailu.aat.services.cache.CacheService;
 import ch.bailu.aat.services.dem.ElevationService;
 import ch.bailu.aat.services.directory.DirectoryService;
@@ -86,7 +85,7 @@ implements OnClickListener,  Runnable {
     }
 
 
-    private MultiView createMultiView() throws ServiceNotUpException {
+    private MultiView createMultiView() {
         mapView = new OsmInteractiveView(getServiceContext(), SOLID_KEY);
 
         OsmOverlay overlayList[] = {
@@ -168,43 +167,38 @@ implements OnClickListener,  Runnable {
 
     @Override
     public void onServicesUp() {
-        try {
-            ContentView contentView = new ContentView(this);
-            contentView.addView(createButtonBar(), layout);
+        ContentView contentView = new ContentView(this);
+        contentView.addView(createButtonBar(), layout);
 
 
-            multiView = createMultiView();
-            contentView.addView(multiView, layout);
+        multiView = createMultiView();
+        contentView.addView(multiView, layout);
 
-            setContentView(contentView);
-
-
-
-            DescriptionInterface[] target = new DescriptionInterface[] {
-                    multiView,this, busyIndicator
-            };
+        setContentView(contentView);
 
 
-            ContentSource[] source = new ContentSource[] {
-                    new EditorSource(getServiceContext(), INFO_ID_EDITOR_OVERLAY),
-                    new CurrentLocationSource(getServiceContext().getTrackerService()),
-                    new TrackerSource(getServiceContext().getTrackerService()),
-                    new OverlaySource(getServiceContext()), 
-                    new CurrentFileSource(getServiceContext())
-            };
 
-            setDispatcher(new ContentDispatcher(this,source, target));
+        DescriptionInterface[] target = new DescriptionInterface[] {
+                multiView,this, busyIndicator
+        };
 
-            timer.kick();
 
-        } catch (ServiceNotUpException e) {
-            AppLog.e(this, e);
-        }
+        ContentSource[] source = new ContentSource[] {
+                new EditorSource(getServiceContext(), INFO_ID_EDITOR_OVERLAY),
+                new CurrentLocationSource(getServiceContext()),
+                new TrackerSource(getServiceContext()),
+                new OverlaySource(getServiceContext()), 
+                new CurrentFileSource(getServiceContext())
+        };
+
+        setDispatcher(new ContentDispatcher(this,source, target));
+
+        timer.kick();
     }
 
 
 
-    private void showCurrentFile() throws ServiceNotUpException {
+    private void showCurrentFile() {
         getServiceContext().getEditorService().editOverlay(
                 new File(getServiceContext().getDirectoryService().getCurrent().getPath()));
         mapView.frameBoundingBox(getServiceContext().getDirectoryService().getCurrent().getBoundingBox());
@@ -214,7 +208,7 @@ implements OnClickListener,  Runnable {
 
 
 
-    private GpxInformation getEditorInfo() throws ServiceNotUpException {
+    private GpxInformation getEditorInfo() {
         return getServiceContext().getEditorService().getOverlayInformation();
     }
 
@@ -296,25 +290,17 @@ implements OnClickListener,  Runnable {
 
 
     private void switchFile(View v) {
-        try {
-            if (v==nextFile)
-                getServiceContext().getDirectoryService().toNext();
-            else if (v==previousFile)
-                getServiceContext().getDirectoryService().toPrevious();
+        if (v==nextFile)
+            getServiceContext().getDirectoryService().toNext();
+        else if (v==previousFile)
+            getServiceContext().getDirectoryService().toPrevious();
 
-            showCurrentFile();
-        } catch (ServiceNotUpException e) {
-            AppLog.e(this, e);
-        }
+        showCurrentFile();
     }
 
 
     @Override
     public void run() {
-        try {
-            showCurrentFile();
-        } catch (ServiceNotUpException e) {
-            AppLog.e(this, e);
-        }
+        showCurrentFile();
     }
 }

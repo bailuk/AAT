@@ -71,7 +71,7 @@ public class OverlaySource extends ContentSource implements GpxInformation.ID {
 
 
         public OverlayInformation(int id) {
-            
+
             updateID = id;
 
             soverlay = new SolidOverlayFile(scontext.getContext(), id-ID.INFO_ID_OVERLAY);
@@ -94,11 +94,10 @@ public class OverlaySource extends ContentSource implements GpxInformation.ID {
 
         private final OnSharedPreferenceChangeListener onPreferencesChanged = new OnSharedPreferenceChangeListener() {
             @Override
-            public void onSharedPreferenceChanged(SharedPreferences sharedPreferences,
-                    String key) {
-
-                // TODO: filter
-                initAndUpdateOverlay();
+            public void onSharedPreferenceChanged(SharedPreferences sp, String key) {
+                if (soverlay.hasKey(key)) {
+                    initAndUpdateOverlay();
+                }
             }       
         };
 
@@ -133,7 +132,7 @@ public class OverlaySource extends ContentSource implements GpxInformation.ID {
             setBounding();
         }
 
-        
+
         private GpxObject getObjectSave(String id) {
             ObjectHandle h = scontext.getCacheService().getObject(id, new GpxObjectStatic.Factory());
             if (GpxObject.class.isInstance(h)==false) {

@@ -10,7 +10,6 @@ import android.widget.Button;
 import ch.bailu.aat.R;
 import ch.bailu.aat.description.DescriptionInterface;
 import ch.bailu.aat.gpx.GpxInformation;
-import ch.bailu.aat.helpers.AppLog;
 import ch.bailu.aat.preferences.CheckListDialog;
 import ch.bailu.aat.preferences.IndexListDialog;
 import ch.bailu.aat.preferences.PreferenceLoadDefaults;
@@ -19,7 +18,6 @@ import ch.bailu.aat.preferences.SolidBacklight;
 import ch.bailu.aat.preferences.SolidMapTileStack;
 import ch.bailu.aat.preferences.SolidOverlayFileList;
 import ch.bailu.aat.preferences.SolidPreset;
-import ch.bailu.aat.services.ServiceContext.ServiceNotUpException;
 import ch.bailu.aat.services.tracker.State;
 
 public abstract class AbsMenu extends AbsServiceLink 
@@ -43,7 +41,7 @@ implements DescriptionInterface{
 
         overlays = menu.add(R.string.p_overlay);
         overlays.setIcon(R.drawable.view_paged);
-        
+
         backlight = menu.add(R.string.p_backlight_title);
 
 
@@ -54,11 +52,7 @@ implements DescriptionInterface{
     @Override 
     public boolean onPrepareOptionsMenu(Menu menu) {
 
-        try {
-            updateMenuText(getServiceContext().getTrackerService().getState());
-        } catch (ServiceNotUpException e) {
-            e.printStackTrace();
-        }
+        updateMenuText(getServiceContext().getTrackerService().getState());
 
         return true;
     }
@@ -67,40 +61,35 @@ implements DescriptionInterface{
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        try {
 
-            if (item == start) {
-                getServiceContext().getTrackerService().getState().onStartStop();
+        if (item == start) {
+            getServiceContext().getTrackerService().getState().onStartStop();
 
-            } else if (item == pause) {
-                getServiceContext().getTrackerService().getState().onPauseResume();
+        } else if (item == pause) {
+            getServiceContext().getTrackerService().getState().onPauseResume();
 
-            } else if (item == backlight) {
-                new IndexListDialog(this, new SolidBacklight(this, new SolidPreset(this).getIndex()));
+        } else if (item == backlight) {
+            new IndexListDialog(this, new SolidBacklight(this, new SolidPreset(this).getIndex()));
 
-            } else if (item == autopause) {
-                new IndexListDialog(this, new SolidAutopause(this, new SolidPreset(this).getIndex()));
+        } else if (item == autopause) {
+            new IndexListDialog(this, new SolidAutopause(this, new SolidPreset(this).getIndex()));
 
-            } else if (item == map) {
-                new CheckListDialog(this,new SolidMapTileStack(this, new SolidPreset(this).getIndex()));
+        } else if (item == map) {
+            new CheckListDialog(this,new SolidMapTileStack(this, new SolidPreset(this).getIndex()));
 
-            } else if (item == overlays) {
-                new CheckListDialog(this,new SolidOverlayFileList(this));
+        } else if (item == overlays) {
+            new CheckListDialog(this,new SolidOverlayFileList(this));
 
-            } else if (item == nominatim) {
-                ActivitySwitcher.start(this, NominatimActivity.class,new BoundingBoxE6(0,0,0,0));
-
-                
-            } else {
-                return false;
-
-            }
+        } else if (item == nominatim) {
+            ActivitySwitcher.start(this, NominatimActivity.class,new BoundingBoxE6(0,0,0,0));
 
 
-        } catch (ServiceNotUpException e) {
-            AppLog.e(this, e);
+        } else {
             return false;
+
         }
+
+
 
         return true;
     }
@@ -119,12 +108,6 @@ implements DescriptionInterface{
     @Override
     public void updateGpxContent(GpxInformation info) {}
 
-/*
-    @Override
-    public boolean update(GpxInformation info) {
-        return false;
-    }
-*/
 
 
     public void updateStartButtonText(Button v, GpxInformation info) {
@@ -138,11 +121,7 @@ implements DescriptionInterface{
 
     private int getStartButtonTextResource(int state) {
 
-        try {
-            return getServiceContext().getTrackerService().getState().getStartPauseResumeTextID();
-        } catch (ServiceNotUpException e) {
-            return R.string.tracker_start;
-        }
+        return getServiceContext().getTrackerService().getState().getStartPauseResumeTextID();
     }
 
 

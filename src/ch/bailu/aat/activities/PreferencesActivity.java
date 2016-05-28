@@ -35,6 +35,7 @@ public class PreferencesActivity extends PreferenceActivity {
 
     private AppLog logger;
     
+    @SuppressWarnings("deprecation")
     @Override
     public void onCreate (Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

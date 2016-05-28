@@ -49,7 +49,6 @@ import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.helpers.AppLayout;
 import ch.bailu.aat.helpers.AppLog;
 import ch.bailu.aat.helpers.AppTheme;
-import ch.bailu.aat.services.ServiceContext.ServiceNotUpException;
 import ch.bailu.aat.services.ServiceLink;
 import ch.bailu.aat.test.TestCoordinates;
 import ch.bailu.aat.test.TestGpx;
@@ -78,28 +77,28 @@ import ch.bailu.aat.views.map.overlay.grid.GridDynOverlay;
 
 public class TestActivity extends AbsDispatcher implements OnClickListener {
     private static final String SOLID_KEY="test";
-    
-    
+
+
     private LinearLayout         contentView;
     private ImageButton          multiCycleP, multiCycleN;
     private MultiView            multiView;
-    
+
     private OsmInteractiveView   map;
 
     private NodeListView          wayList;
     private SummaryListView gpsSummary, trackSummary;
-    
-    
+
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         contentView = new ContentView(this);
-        
+
         contentView.addView(createButtonBar());
         multiView = createMultiView();
         contentView.addView(multiView);
-        
+
 
         setContentView(contentView);
         connectToServices(ServiceLink.ALL_SERVICES);
@@ -110,16 +109,16 @@ public class TestActivity extends AbsDispatcher implements OnClickListener {
     public void onDestroy() {
         super.onDestroy();
     }
-    
-    
 
-    
+
+
+
     private MultiView createMultiView() {
         wayList = new NodeListView(getServiceContext(), SOLID_KEY, INFO_ID_OVERLAY);
-        
+
         map=new OsmInteractiveView(getServiceContext(), SOLID_KEY);
         ViewWrapper list = new ViewWrapper(new TestList(this));
-        
+
         ContentDescription gpsData[] = new ContentDescription[] {
                 new NameDescription(this),
                 new GpsStateDescription(this),
@@ -159,15 +158,15 @@ public class TestActivity extends AbsDispatcher implements OnClickListener {
                 wayList,
         };   
 
-        
+
         return new MultiView(this, SOLID_KEY, INFO_ID_ALL, viewData);
     }
 
 
 
-    
-    
-    
+
+
+
     private ControlBar createButtonBar() {
         ControlBar bar = new ControlBar(
                 this, 
@@ -175,7 +174,7 @@ public class TestActivity extends AbsDispatcher implements OnClickListener {
 
         multiCycleP = bar.addImageButton(R.drawable.go_previous_inverse);
         multiCycleN = bar.addImageButton(R.drawable.go_next_inverse);
-        
+
 
         bar.setOnClickListener1(this);
 
@@ -191,47 +190,42 @@ public class TestActivity extends AbsDispatcher implements OnClickListener {
         }
     }
 
-    
-    
+
+
     @Override
     public void onServicesUp() {
-        try {
-            
-            OsmOverlay overlayList[] = {
-                    new GpxOverlayListOverlay(map,getServiceContext().getCacheService()),
-                    new GpxDynOverlay(map, getServiceContext().getCacheService(), GpxInformation.ID.INFO_ID_TRACKER), 
-                    new GpxTestOverlay(map, GpxInformation.ID.INFO_ID_OVERLAY),
-                    new GridDynOverlay(map, getServiceContext().getElevationService()),
-                    new CurrentLocationOverlay(map),
-                    new NavigationBarOverlay(map),
-                    new InformationBarOverlay(map),
-                    new ZoomLevelOverlay(map),
-                    new RefreshLogOverlay(map),
-                    new Dem3NameOverlay(map)
-            };
-            map.setOverlayList(overlayList);
-            
-            
-            DescriptionInterface[] target = new DescriptionInterface[] {
-                    multiView,this
-            };
+        OsmOverlay overlayList[] = {
+                new GpxOverlayListOverlay(map,getServiceContext().getCacheService()),
+                new GpxDynOverlay(map, getServiceContext().getCacheService(), GpxInformation.ID.INFO_ID_TRACKER), 
+                new GpxTestOverlay(map, GpxInformation.ID.INFO_ID_OVERLAY),
+                new GridDynOverlay(map, getServiceContext().getElevationService()),
+                new CurrentLocationOverlay(map),
+                new NavigationBarOverlay(map),
+                new InformationBarOverlay(map),
+                new ZoomLevelOverlay(map),
+                new RefreshLogOverlay(map),
+                new Dem3NameOverlay(map)
+        };
+        map.setOverlayList(overlayList);
 
-            ContentSource[] source = new ContentSource[] {
-                    new EditorSource(getServiceContext(),GpxInformation.ID.INFO_ID_EDITOR_DRAFT),
-                    new TrackerSource(getServiceContext().getTrackerService()),
-                    new CurrentLocationSource(getServiceContext().getTrackerService()),
-                    new OverlaySource(getServiceContext()),
-            };
-            setDispatcher(new ContentDispatcher(this,source, target));
-        } catch (ServiceNotUpException e) {
-            AppLog.e(this, e);
-        }
+
+        DescriptionInterface[] target = new DescriptionInterface[] {
+                multiView,this
+        };
+
+        ContentSource[] source = new ContentSource[] {
+                new EditorSource(getServiceContext(),GpxInformation.ID.INFO_ID_EDITOR_DRAFT),
+                new TrackerSource(getServiceContext()),
+                new CurrentLocationSource(getServiceContext()),
+                new OverlaySource(getServiceContext()),
+        };
+        setDispatcher(new ContentDispatcher(this,source, target));
     }
 
 
-    
-    
-    
+
+
+
     private class TestList extends ListView 
     implements ListAdapter, android.widget.AdapterView.OnItemClickListener {
         private final ArrayList<UnitTest>  tests = new ArrayList<UnitTest>();
@@ -243,8 +237,8 @@ public class TestActivity extends AbsDispatcher implements OnClickListener {
             tests.add(new TestGpx(context));
             tests.add(new TestGpxLogRecovery(context));
             tests.add(new TestTest(context));
-            
-            
+
+
             setAdapter(this);
             setOnItemClickListener(this);
         }
@@ -258,7 +252,7 @@ public class TestActivity extends AbsDispatcher implements OnClickListener {
         public long getItemId(int position) {
             return 0;
         }
-        
+
         @Override
         public int getCount() {
             return tests.size();
@@ -272,19 +266,19 @@ public class TestActivity extends AbsDispatcher implements OnClickListener {
         @Override
         public View getView(int position, View recycle, ViewGroup parent) {
             TextView view = (TextView) recycle;
-            
+
             if (view == null) {
                 view = new TextView(getContext());
                 view.setTextSize(25);
             }
 
-            
+
             view.setText(tests.get(position).getClass().getSimpleName());
-            
+
             return view;
         }
 
-        
+
         @Override
         public int getViewTypeCount() {
             return 1;
@@ -323,15 +317,15 @@ public class TestActivity extends AbsDispatcher implements OnClickListener {
                 try {
                     tests.get(i).test();
                     AppLog.i(getContext(), "Test Sucessfull");
-                    
+
                 } catch (AssertionError e) {
                     AppLog.e(getContext(), e);
                 } catch (Exception e) {
                     AppLog.e(getContext(), e);
                 }
             }
-            
+
         }
-        
+
     }
 }

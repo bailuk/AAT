@@ -28,8 +28,6 @@ import ch.bailu.aat.dispatcher.OverlaySource;
 import ch.bailu.aat.dispatcher.TrackerSource;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.helpers.AppLayout;
-import ch.bailu.aat.helpers.AppLog;
-import ch.bailu.aat.services.ServiceContext.ServiceNotUpException;
 import ch.bailu.aat.services.cache.CacheService;
 import ch.bailu.aat.services.dem.ElevationService;
 import ch.bailu.aat.services.directory.DirectoryService;
@@ -156,44 +154,40 @@ public class FileContentActivity extends AbsDispatcher implements OnClickListene
 
     @Override
     public void onServicesUp() {
-        try {
 
-            OsmOverlay overlayList[] = {
-                    new GpxOverlayListOverlay(map, getServiceContext().getCacheService()),
-                    new GpxDynOverlay(map, getServiceContext().getCacheService(), GpxInformation.ID.INFO_ID_TRACKER), 
-                    new GpxDynOverlay(map, getServiceContext().getCacheService(), GpxInformation.ID.INFO_ID_FILEVIEW),
-                    new CurrentLocationOverlay(map),
-                    new GridDynOverlay(map, getServiceContext().getElevationService()),
-                    new NavigationBarOverlay(map),
-                    new InformationBarOverlay(map),
-                    new EditorOverlay(map, getServiceContext().getCacheService(),  GpxInformation.ID.INFO_ID_EDITOR_DRAFT, 
-                            getServiceContext().getEditorService().getDraftEditor(), getServiceContext().getElevationService()),
+        OsmOverlay overlayList[] = {
+                new GpxOverlayListOverlay(map, getServiceContext().getCacheService()),
+                new GpxDynOverlay(map, getServiceContext().getCacheService(), GpxInformation.ID.INFO_ID_TRACKER), 
+                new GpxDynOverlay(map, getServiceContext().getCacheService(), GpxInformation.ID.INFO_ID_FILEVIEW),
+                new CurrentLocationOverlay(map),
+                new GridDynOverlay(map, getServiceContext().getElevationService()),
+                new NavigationBarOverlay(map),
+                new InformationBarOverlay(map),
+                new EditorOverlay(map, getServiceContext().getCacheService(),  GpxInformation.ID.INFO_ID_EDITOR_DRAFT, 
+                        getServiceContext().getEditorService().getDraftEditor(), getServiceContext().getElevationService()),
 
-            };
-            map.setOverlayList(overlayList);
-
-
-            map.frameBoundingBox(getServiceContext().getDirectoryService().
-                    getCurrent().getBoundingBox());
+        };
+        map.setOverlayList(overlayList);
 
 
-            DescriptionInterface[] target = new DescriptionInterface[] {
-                    multiView, this, busyIndicator
-            };
+        map.frameBoundingBox(getServiceContext().getDirectoryService().
+                getCurrent().getBoundingBox());
 
-            ContentSource[] source = new ContentSource[] {
-                    new EditorSource(getServiceContext(),GpxInformation.ID.INFO_ID_EDITOR_DRAFT),
-                    new TrackerSource(getServiceContext().getTrackerService()),
-                    new CurrentLocationSource(getServiceContext().getTrackerService()),
-                    new OverlaySource(getServiceContext()),
-                    new CurrentFileSource(getServiceContext())
-            };
 
-            setDispatcher(new ContentDispatcher(this,source, target));
+        DescriptionInterface[] target = new DescriptionInterface[] {
+                multiView, this, busyIndicator
+        };
 
-        } catch (ServiceNotUpException e) {
-            AppLog.e(this, e);
-        }
+        ContentSource[] source = new ContentSource[] {
+                new EditorSource(getServiceContext(),GpxInformation.ID.INFO_ID_EDITOR_DRAFT),
+                new TrackerSource(getServiceContext()),
+                new CurrentLocationSource(getServiceContext()),
+                new OverlaySource(getServiceContext()),
+                new CurrentFileSource(getServiceContext())
+        };
+
+        setDispatcher(new ContentDispatcher(this,source, target));
+
     }
 
 

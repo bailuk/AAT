@@ -105,14 +105,19 @@ public abstract class ServiceContext implements ContextWrapperInterface {
     
 
 
-    public TrackerService getTrackerService() throws ServiceNotUpException {
-        return (TrackerService) getService(TrackerService.class);
+    public TrackerService.Self getTrackerService() {
+        TrackerService.Self s;
+        try {
+            s = ((TrackerService)getService(TrackerService.class)).getSelf();
+
+        } catch (ServiceNotUpException e) {
+            s = new TrackerService.Self();
+
+        }
+        return s;
     }
 
 
-
-
-  
 
 
     public void appendStatusText(StringBuilder content) {

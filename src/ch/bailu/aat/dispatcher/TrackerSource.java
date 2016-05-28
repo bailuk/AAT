@@ -4,37 +4,37 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import ch.bailu.aat.helpers.AppBroadcaster;
-import ch.bailu.aat.services.tracker.TrackerService;
+import ch.bailu.aat.services.ServiceContext;
 
 public class TrackerSource extends ContentSource {
 
-    private TrackerService service;
+    private ServiceContext scontext;
 
-    public TrackerSource (TrackerService s) {
-        service = s;
+    public TrackerSource (ServiceContext sc) {
+        scontext = sc;
 
-        AppBroadcaster.register(service, onStateChanged, AppBroadcaster.TRACKER_STATE);
-        AppBroadcaster.register(service, onTrackChanged, AppBroadcaster.TRACKER);
+        AppBroadcaster.register(scontext.getContext(), onStateChanged, AppBroadcaster.TRACKER_STATE);
+        AppBroadcaster.register(scontext.getContext(), onTrackChanged, AppBroadcaster.TRACKER);
     }
 
     @Override
     public void close() {
-        service.unregisterReceiver(onStateChanged);
-        service.unregisterReceiver(onTrackChanged);
+        scontext.getContext().unregisterReceiver(onStateChanged);
+        scontext.getContext().unregisterReceiver(onTrackChanged);
     }
 
 
     private BroadcastReceiver onStateChanged = new BroadcastReceiver () {
         @Override
         public void onReceive(Context context, Intent intent) {
-            updateGpxContent(service.getTrackerInformation());		}
+            updateGpxContent(scontext.getTrackerService().getTrackerInformation());		}
 
     };
 
     private BroadcastReceiver onTrackChanged = new BroadcastReceiver () {
         @Override
         public void onReceive(Context context, Intent intent) {
-            updateGpxContent(service.getTrackerInformation());
+            updateGpxContent(scontext.getTrackerService().getTrackerInformation());
         }
 
     };
@@ -42,7 +42,7 @@ public class TrackerSource extends ContentSource {
 
     @Override
     public void forceUpdate() {
-        updateGpxContent(service.getTrackerInformation());
+        updateGpxContent(scontext.getTrackerService().getTrackerInformation());
     }
 
 }

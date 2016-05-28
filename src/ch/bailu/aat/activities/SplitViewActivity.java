@@ -77,7 +77,7 @@ public class SplitViewActivity extends AbsDispatcher implements OnClickListener{
     }
 
 
-    private View createContentView() throws ServiceNotUpException {
+    private View createContentView() {
         LinearLayout v = new LinearLayout(this);
         v.setOrientation(LinearLayout.VERTICAL);
 
@@ -96,7 +96,7 @@ public class SplitViewActivity extends AbsDispatcher implements OnClickListener{
     }
 
 
-    private TrackDescriptionView createMultiView() throws ServiceNotUpException {
+    private TrackDescriptionView createMultiView() {
         ContentDescription[] cockpitA = new ContentDescription[] { 
                 new DistanceDescription(this),
                 new AltitudeDescription(this),
@@ -187,7 +187,6 @@ public class SplitViewActivity extends AbsDispatcher implements OnClickListener{
 
     @Override
     public void onServicesUp() {
-        try {
             setContentView(createContentView());
             
             OsmOverlay overlayList[] = {
@@ -211,16 +210,13 @@ public class SplitViewActivity extends AbsDispatcher implements OnClickListener{
 
             ContentSource[] source = new ContentSource[] {
                     new EditorSource(getServiceContext(),GpxInformation.ID.INFO_ID_EDITOR_DRAFT),
-                    new TrackerSource(getServiceContext().getTrackerService()),
-                    new CurrentLocationSource(getServiceContext().getTrackerService()),
+                    new TrackerSource(getServiceContext()),
+                    new CurrentLocationSource(getServiceContext()),
                     new OverlaySource(getServiceContext()),
             };
 
             setDispatcher(new ContentDispatcher(this,source, target));
 
-        } catch (ServiceNotUpException e) {
-            AppLog.e(this, e);
-        }
     }
 
 

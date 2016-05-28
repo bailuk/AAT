@@ -128,7 +128,7 @@ public abstract class AbsGpxListActivity extends AbsMenu implements OnItemClickL
     @Override
     public void onResume() {
         super.onResume();
-        listView.setSelection(getServiceContext().getDirectoryService().getStoredPosition());
+        //listView.setSelection(getServiceContext().getDirectoryService().getStoredPosition());
     }
 
     @Override

@@ -46,7 +46,7 @@ public class MapActivity extends AbsDispatcher implements OnClickListener{
         CacheService.class,
         EditorService.class
     };    
-    
+
     private static final String SOLID_KEY="map";
 
     private OsmInteractiveView      map;
@@ -61,7 +61,7 @@ public class MapActivity extends AbsDispatcher implements OnClickListener{
         super.onCreate(savedInstanceState);
 
 
-        
+
         LinearLayout contentView=new ContentView(this);
         map = createMap();
         contentView.addView(map);
@@ -124,38 +124,34 @@ public class MapActivity extends AbsDispatcher implements OnClickListener{
 
     @Override
     public void onServicesUp() {
-        try {
-            OsmOverlay overlayList[] = {
-                    
-                    new GpxOverlayListOverlay(map, getServiceContext().getCacheService()),
-                    new GpxDynOverlay(map, getServiceContext().getCacheService(), GpxInformation.ID.INFO_ID_TRACKER), 
-                    new GridDynOverlay(map, getServiceContext().getElevationService()),
-                    new CurrentLocationOverlay(map),
-                    new NavigationBarOverlay(map),
-                    new InformationBarOverlay(map),
-                    new EditorOverlay(map, getServiceContext().getCacheService(), GpxInformation.ID.INFO_ID_EDITOR_DRAFT, 
-                            getServiceContext().getEditorService().getDraftEditor(), getServiceContext().getElevationService()),
-                            
-                    new CustomBarOverlay(map, createButtonBar()),
-            };
-            map.setOverlayList(overlayList);
-            
-            
-            DescriptionInterface[] target = new DescriptionInterface[] {
-                    map,trackerState,gpsState, this
-            };
+        OsmOverlay overlayList[] = {
 
-            ContentSource[] source = new ContentSource[] {
-                    new EditorSource(getServiceContext(),GpxInformation.ID.INFO_ID_EDITOR_DRAFT),
-                    new TrackerSource(getServiceContext().getTrackerService()),
-                    new CurrentLocationSource(getServiceContext().getTrackerService()),
-                    new OverlaySource(getServiceContext())};
+                new GpxOverlayListOverlay(map, getServiceContext().getCacheService()),
+                new GpxDynOverlay(map, getServiceContext().getCacheService(), GpxInformation.ID.INFO_ID_TRACKER), 
+                new GridDynOverlay(map, getServiceContext().getElevationService()),
+                new CurrentLocationOverlay(map),
+                new NavigationBarOverlay(map),
+                new InformationBarOverlay(map),
+                new EditorOverlay(map, getServiceContext().getCacheService(), GpxInformation.ID.INFO_ID_EDITOR_DRAFT, 
+                        getServiceContext().getEditorService().getDraftEditor(), getServiceContext().getElevationService()),
 
-            setDispatcher(new ContentDispatcher(this,source, target));
+                        new CustomBarOverlay(map, createButtonBar()),
+        };
+        map.setOverlayList(overlayList);
 
-        } catch (ServiceNotUpException e) {
-            AppLog.e(this, e);
-        }
+
+        DescriptionInterface[] target = new DescriptionInterface[] {
+                map,trackerState,gpsState, this
+        };
+
+        ContentSource[] source = new ContentSource[] {
+                new EditorSource(getServiceContext(),GpxInformation.ID.INFO_ID_EDITOR_DRAFT),
+                new TrackerSource(getServiceContext()),
+                new CurrentLocationSource(getServiceContext()),
+                new OverlaySource(getServiceContext())};
+
+        setDispatcher(new ContentDispatcher(this,source, target));
+
     }
 
 

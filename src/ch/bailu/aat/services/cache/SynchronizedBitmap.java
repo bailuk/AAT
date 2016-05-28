@@ -44,6 +44,7 @@ public class SynchronizedBitmap {
             return size;
         }
         
+        @SuppressWarnings("deprecation")
         public synchronized void set(Bitmap b) {
             if (b != null) {
 

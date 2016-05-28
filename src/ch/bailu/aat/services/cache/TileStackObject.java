@@ -11,7 +11,6 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import ch.bailu.aat.helpers.AppBroadcaster;
-import ch.bailu.aat.helpers.AppLog;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.background.ProcessHandle;
 import ch.bailu.aat.services.cache.TileObject.Source;
@@ -239,9 +238,6 @@ public class TileStackObject extends ObjectHandle {
 
         public void lock(ServiceContext cs) {
             handle = cs.getCacheService().getObject(id, factory);
-            AppLog.d(this, handle.getClass().getName());
-            AppLog.d(this, factory.getClass().getName());
-
         }
 
 

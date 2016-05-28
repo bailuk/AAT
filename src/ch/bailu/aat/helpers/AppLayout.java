@@ -30,6 +30,7 @@ public class AppLayout {
     }
     
 
+    @SuppressWarnings("deprecation")
     public static void updateMeasurement(Context context) {
         if (height==0) height = ((WindowManager) context.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay().getHeight();
         if (width==0)  width = ((WindowManager) context.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay().getWidth();

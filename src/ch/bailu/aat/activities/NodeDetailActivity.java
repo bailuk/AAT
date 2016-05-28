@@ -22,9 +22,7 @@ import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.GpxList;
 import ch.bailu.aat.gpx.GpxListArray;
 import ch.bailu.aat.helpers.AppLayout;
-import ch.bailu.aat.helpers.AppLog;
 import ch.bailu.aat.helpers.AppTheme;
-import ch.bailu.aat.services.ServiceContext.ServiceNotUpException;
 import ch.bailu.aat.services.cache.CacheService;
 import ch.bailu.aat.services.dem.ElevationService;
 import ch.bailu.aat.services.editor.EditorService;
@@ -131,35 +129,31 @@ public class NodeDetailActivity extends AbsDispatcher implements OnClickListener
 
     @Override
     public void onServicesUp() {
-        try {
 
-            OsmOverlay overlayList[] = {
-                    new GpxDynOverlay(map, getServiceContext().getCacheService(), GpxInformation.ID.INFO_ID_TRACKER), 
-                    new GpxDynOverlay(map, getServiceContext().getCacheService(), GpxInformation.ID.INFO_ID_FILEVIEW),
-                    new CurrentLocationOverlay(map),
-                    new GridDynOverlay(map, getServiceContext().getElevationService()),
-                    new NavigationBarOverlay(map),
-                    new InformationBarOverlay(map),
+        OsmOverlay overlayList[] = {
+                new GpxDynOverlay(map, getServiceContext().getCacheService(), GpxInformation.ID.INFO_ID_TRACKER), 
+                new GpxDynOverlay(map, getServiceContext().getCacheService(), GpxInformation.ID.INFO_ID_FILEVIEW),
+                new CurrentLocationOverlay(map),
+                new GridDynOverlay(map, getServiceContext().getElevationService()),
+                new NavigationBarOverlay(map),
+                new InformationBarOverlay(map),
 
-            };
-            map.setOverlayList(overlayList);
+        };
+        map.setOverlayList(overlayList);
 
 
-            DescriptionInterface[] target = new DescriptionInterface[] {
-                    verticalView, this
-            };
+        DescriptionInterface[] target = new DescriptionInterface[] {
+                verticalView, this
+        };
 
-            ContentSource[] source = new ContentSource[] {
-                    new TrackerSource(getServiceContext().getTrackerService()),
-                    new CurrentLocationSource(getServiceContext().getTrackerService()),
-                    new CustomFileSource(getServiceContext(), fileID),
-            };
+        ContentSource[] source = new ContentSource[] {
+                new TrackerSource(getServiceContext()),
+                new CurrentLocationSource(getServiceContext()),
+                new CustomFileSource(getServiceContext(), fileID),
+        };
 
-            setDispatcher(new ContentDispatcher(this,source, target));
+        setDispatcher(new ContentDispatcher(this,source, target));
 
-        } catch (ServiceNotUpException e) {
-            AppLog.e(this, e);
-        }
     }
 
 

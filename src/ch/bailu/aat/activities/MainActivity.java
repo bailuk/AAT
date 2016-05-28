@@ -27,11 +27,9 @@ import ch.bailu.aat.dispatcher.CurrentLocationSource;
 import ch.bailu.aat.dispatcher.TrackerSource;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.helpers.AppLayout;
-import ch.bailu.aat.helpers.AppLog;
 import ch.bailu.aat.helpers.AppTheme;
 import ch.bailu.aat.preferences.SolidPreset;
 import ch.bailu.aat.preferences.Storage;
-import ch.bailu.aat.services.ServiceContext.ServiceNotUpException;
 import ch.bailu.aat.services.cache.CacheService;
 import ch.bailu.aat.services.tracker.TrackerService;
 import ch.bailu.aat.views.ContentView;
@@ -168,20 +166,16 @@ implements AdapterView.OnItemSelectedListener, OnSharedPreferenceChangeListener 
 
     @Override
     public void onServicesUp() {
-        try {
             DescriptionInterface[] target = new DescriptionInterface[] {
                     gpsState, trackerState, this
             };
 
             ContentSource[] source = new ContentSource[] {
-                    new TrackerSource(getServiceContext().getTrackerService()),
-                    new CurrentLocationSource(getServiceContext().getTrackerService())
+                    new TrackerSource(getServiceContext()),
+                    new CurrentLocationSource(getServiceContext())
             };
 
             setDispatcher(new ContentDispatcher(this,source, target));
-        } catch (ServiceNotUpException e) {
-            AppLog.e(this, e);
-        }
     }
 
     private class MyListAdapter extends BaseAdapter implements OnItemClickListener {
@@ -231,6 +225,4 @@ implements AdapterView.OnItemSelectedListener, OnSharedPreferenceChangeListener 
 
     @Override
     public void onNothingSelected(AdapterView<?> arg0) {}
-
-
 }
