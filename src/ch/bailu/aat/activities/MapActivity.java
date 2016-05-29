@@ -21,10 +21,6 @@ import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.helpers.AppLayout;
 import ch.bailu.aat.helpers.AppLog;
 import ch.bailu.aat.services.ServiceContext.ServiceNotUpException;
-import ch.bailu.aat.services.cache.CacheService;
-import ch.bailu.aat.services.dem.ElevationService;
-import ch.bailu.aat.services.editor.EditorService;
-import ch.bailu.aat.services.tracker.TrackerService;
 import ch.bailu.aat.views.ContentView;
 import ch.bailu.aat.views.ControlBar;
 import ch.bailu.aat.views.NumberView;
@@ -40,12 +36,6 @@ import ch.bailu.aat.views.map.overlay.gpx.GpxOverlayListOverlay;
 import ch.bailu.aat.views.map.overlay.grid.GridDynOverlay;
 
 public class MapActivity extends AbsDispatcher implements OnClickListener{
-    private static final Class<?> SERVICES[] = {
-        TrackerService.class, 
-        ElevationService.class,
-        CacheService.class,
-        EditorService.class
-    };    
 
     private static final String SOLID_KEY="map";
 
@@ -66,8 +56,6 @@ public class MapActivity extends AbsDispatcher implements OnClickListener{
         setContentView(contentView);
         
         createDispatcher();
-        
-        setServiceDependencies(SERVICES);        
     }
 
 

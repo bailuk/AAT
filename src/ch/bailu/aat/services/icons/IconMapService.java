@@ -11,35 +11,32 @@ import ch.bailu.aat.gpx.GpxSegmentNode;
 import ch.bailu.aat.gpx.interfaces.GpxType;
 import ch.bailu.aat.helpers.AppDirectory;
 import ch.bailu.aat.helpers.AppLog;
-import ch.bailu.aat.services.AbsService;
+import ch.bailu.aat.services.ServiceContext;
+import ch.bailu.aat.services.VirtualService;
 
-public class IconMapService extends AbsService {
+public class IconMapService extends VirtualService {
 
     public static final String KEY_ICON_SMALL = "icon:small";
     public static final String KEY_ICON_BIG = "icon:big";
 
-    private Self self = new Self();
+    private final Self self;
     
     public Self getSelf() {
         return self;
     }
 
 
-    @Override
-    public void onCreate() {
-        super.onCreate();
+    
+    public IconMapService(ServiceContext sc) {
+        super(sc);
         self = new SelfOn();
     }
 
-    @Override
-    public void onDestroy() {
-        self = new Self();
-        super.onDestroy();
+    
+    public void close() {
     }
 
     
-    @Override
-    public void onServicesUp() {}
 
     public static class Self {
         public void iconify(StringBuilder html, String key, String value) {}
@@ -61,7 +58,7 @@ public class IconMapService extends AbsService {
 
 
         public SelfOn() {
-            directory = AppDirectory.getDataDirectory(IconMapService.this, AppDirectory.DIR_OSM_FEATURES_ICONS);
+            directory = AppDirectory.getDataDirectory(getContext(), AppDirectory.DIR_OSM_FEATURES_ICONS);
 
             final File mapFile = new File(directory, MAP_FILE);
 
@@ -154,5 +151,12 @@ public class IconMapService extends AbsService {
                 }
             }
         }
+    }
+
+
+    @Override
+    public void appendStatusText(StringBuilder builder) {
+        // TODO Auto-generated method stub
+        
     }
 }

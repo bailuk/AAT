@@ -22,113 +22,123 @@ public abstract class ServiceContext implements ContextWrapperInterface {
     }
 
 
-    public abstract AbsService getService(Class<?> s) throws ServiceNotUpException;
+    public abstract OneService getService() throws ServiceNotUpException;
 
+    public abstract void lock(String s);
+    public abstract void free(String s);
 
     public BackgroundService.Self getBackgroundService() {
-        BackgroundService.Self s;
+        BackgroundService s=null;
         try {
-            s=((BackgroundService) getService(BackgroundService.class)).getSelf();
+            s=getService().background;
 
         } catch (Exception e) {
-            s= new BackgroundService.Self();
+            s=null;
 
         }
-        return s;
+
+        if (s==null) return new BackgroundService.Self();
+        return s.getSelf();
     }
 
 
     public CacheService.Self getCacheService()  {
-        CacheService.Self s;
+        CacheService s=null;
         try {
-            s = ((CacheService)getService(CacheService.class)).getSelf();
+            s=getService().cache;
 
-        } catch (ServiceNotUpException e) {
-            s = new CacheService.Self();
+        } catch (Exception e) {
+            s=null;
 
         }
-        return s;
+
+        if (s==null) return new CacheService.Self();
+        return s.getSelf(); 
     }
 
 
     public ElevationService.Self getElevationService() {
-        ElevationService.Self s;
+        ElevationService s=null;
         try {
-            s = ((ElevationService)getService(ElevationService.class)).getSelf();
+            s=getService().elevation;
 
-        } catch (ServiceNotUpException e) {
-            s = new ElevationService.Self();
+        } catch (Exception e) {
+            s=null;
 
         }
-        return s;
-    }
+
+        if (s==null) return new ElevationService.Self();
+        return s.getSelf();    }
 
 
     public IconMapService.Self getIconMapService() {
-        IconMapService.Self s;
+        IconMapService s=null;
         try {
-            s = ((IconMapService)getService(IconMapService.class)).getSelf();
+            s=getService().iconMap;
 
-        } catch (ServiceNotUpException e) {
-            s = new IconMapService.Self();
+        } catch (Exception e) {
+            s=null;
 
         }
-        return s;
-    }
-    
-    
+
+        if (s==null) return new IconMapService.Self();
+        return s.getSelf();    }
+
+
     public DirectoryService.Self getDirectoryService() {
-        DirectoryService.Self s;
+        DirectoryService s=null;
         try {
-            s = ((DirectoryService)getService(DirectoryService.class)).getSelf();
+            s=getService().directory;
 
-        } catch (ServiceNotUpException e) {
-            s = new DirectoryService.Self();
+        } catch (Exception e) {
+            s=null;
 
         }
-        return s;
-    }
 
-    
+        if (s==null) return new DirectoryService.Self();
+        return s.getSelf();    }
+
+
     public EditorService.Self getEditorService()  {
-        EditorService.Self s;
+        EditorService s=null;
         try {
-            s = ((EditorService)getService(EditorService.class)).getSelf();
+            s=getService().editor;
 
-        } catch (ServiceNotUpException e) {
-            s = new EditorService.Self();
+        } catch (Exception e) {
+            s=null;
 
         }
-        return s;
-    }
 
-    
+        if (s==null) return new EditorService.Self();
+        return s.getSelf();    }
+
+
 
 
     public TrackerService.Self getTrackerService() {
-        TrackerService.Self s;
+        TrackerService s=null;
         try {
-            s = ((TrackerService)getService(TrackerService.class)).getSelf();
+            s=getService().tracker;
 
-        } catch (ServiceNotUpException e) {
-            s = new TrackerService.Self();
+        } catch (Exception e) {
+            s=null;
 
         }
-        return s;
-    }
+
+        if (s==null) return new TrackerService.Self();
+        return s.getSelf();    }
 
 
 
 
     public void appendStatusText(StringBuilder content) {
-        for (Class<?> s: ServiceLink.ALL_SERVICES) {
-            try {
-                getService(s).appendStatusText(content);
-            } catch (ServiceNotUpException e) {
-                content.append("<p>ERROR*: ");
-                content.append(e.getMessage());
-                content.append("</p>");
-            }
+        try {
+            getService().appendStatusText(content);
+        } catch (ServiceNotUpException e) {
+            content.append("<p>ERROR*: ");
+            content.append(e.getMessage());
+            content.append("</p>");
         }
     }
+    
 }

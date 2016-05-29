@@ -1,25 +1,24 @@
 package ch.bailu.aat.services.tracker;
 
-import ch.bailu.aat.activities.TrackerActivity;
-
-import ch.bailu.aat.R;
-
 import android.app.Notification;
 import android.app.PendingIntent;
-import android.app.Service;
 import android.content.Intent;
+import ch.bailu.aat.R;
+import ch.bailu.aat.activities.TrackerActivity;
+import ch.bailu.aat.services.ServiceContext;
+import ch.bailu.aat.services.ServiceContext.ServiceNotUpException;
 
 public class StatusIcon  {
     private final static int MY_ID=5;
     
-    private Service service;
+    private ServiceContext scontext;
     private Notification pauseNotification, onNotification, autoPauseNotification;
     
     
-    public StatusIcon(Service s) {
+    public StatusIcon(ServiceContext s) {
         PendingIntent intent;
         
-        service=s;
+        scontext=s;
       
         intent = createShowActivityIntent();
         pauseNotification=createNotification(intent, R.string.status_paused);
@@ -29,40 +28,61 @@ public class StatusIcon  {
     }
     
     private PendingIntent createShowActivityIntent() {
-        Intent intent = new Intent(service, TrackerActivity.class);
+        Intent intent = new Intent(scontext.getContext(), TrackerActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-        return PendingIntent.getActivity(service, 0, intent, 0);
+        return PendingIntent.getActivity(scontext.getContext(), 0, intent, 0);
     }
 
 
     @SuppressWarnings("deprecation")
     private Notification createNotification(PendingIntent intent, int status_id) {
-        String appName = service.getString(R.string.app_name);
-        String appInfo = service.getString(status_id);
+        String appName = scontext.getContext().getString(R.string.app_name);
+        String appInfo = scontext.getContext().getString(status_id);
 
         Notification notification=new Notification(R.drawable.status,appInfo, System.currentTimeMillis());
         
-        notification.setLatestEventInfo(service, appName, appInfo, intent);
+        notification.setLatestEventInfo(scontext.getContext(), appName, appInfo, intent);
         notification.flags |= Notification.FLAG_NO_CLEAR;
         
         return notification;
     }
 
     public void showAutoPause() {
-        service.startForeground(MY_ID, autoPauseNotification);
+        
+        try {
+            scontext.getService().startForeground(MY_ID, autoPauseNotification);
+        } catch (ServiceNotUpException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
     
     public void showPause() {
-        service.startForeground(MY_ID, pauseNotification);
+        try {
+            scontext.getService().startForeground(MY_ID, pauseNotification);
+        } catch (ServiceNotUpException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
     
     
     public void showOn() {
-        service.startForeground(MY_ID, onNotification);
+        try {
+            scontext.getService().startForeground(MY_ID, onNotification);
+        } catch (ServiceNotUpException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
     
     
     public void hide() {
-        service.stopForeground(true);
+        try {
+            scontext.getService().stopForeground(true);
+        } catch (ServiceNotUpException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
 }

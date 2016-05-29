@@ -11,7 +11,6 @@ public abstract class AbsServiceLink extends AbsActivity implements GpxInformati
 
 
     private ServiceLink serviceLink=null;
-    private Class<?>[] services=ServiceLink.ALL_SERVICES;
     
     
     @Override
@@ -30,16 +29,11 @@ public abstract class AbsServiceLink extends AbsActivity implements GpxInformati
         
     }
 
-    public void setServiceDependencies(Class<?>[] s) {
-        //serviceLink.up(services);
-        services=s;
-    }
-
 
     @Override
     public void onResume() {
         super.onResume();
-        serviceLink.up(services);
+        serviceLink.up();
     }
 
     

@@ -12,19 +12,20 @@ import ch.bailu.aat.helpers.AppBroadcaster;
 import ch.bailu.aat.helpers.AppDirectory;
 import ch.bailu.aat.helpers.AppLog;
 import ch.bailu.aat.osm_features.MapFeaturesPreparser;
+import ch.bailu.aat.services.ServiceContext;
 
 public class MapFeaturesDownloader implements Closeable {
     private final static String SOURCE_URL = "http://wiki.openstreetmap.org/wiki/Map_Features";
 
-    private final BackgroundService downloader;
+    private final ServiceContext scontext;
     
 
     private ArrayList<DownloadHandle> pendingImages=new ArrayList<DownloadHandle>();
     
     
-    public MapFeaturesDownloader(BackgroundService d) {
-        downloader = d;
-        AppBroadcaster.register(downloader, onFileDownloaded, AppBroadcaster.FILE_CHANGED_ONDISK);
+    public MapFeaturesDownloader(ServiceContext sc) {
+        scontext=sc;
+        AppBroadcaster.register(sc.getContext(), onFileDownloaded, AppBroadcaster.FILE_CHANGED_ONDISK);
     }
 
 
@@ -47,7 +48,7 @@ public class MapFeaturesDownloader implements Closeable {
     
     @Override
     public void close() {
-        downloader.unregisterReceiver(onFileDownloaded);
+        scontext.getContext().unregisterReceiver(onFileDownloaded);
         terminate();
     }
 
@@ -90,12 +91,12 @@ public class MapFeaturesDownloader implements Closeable {
         public void start() {
 
             try {
-                final File file = AppDirectory.getMapFeatureIndex(downloader);
+                final File file = AppDirectory.getMapFeatureIndex(scontext.getContext());
                 request = new DownloadHandle(SOURCE_URL, file);
-                downloader.getSelf().download(request);
+                scontext.getBackgroundService().download(request);
 
             } catch (Exception e) {
-                AppLog.e(downloader, e);
+                AppLog.e(this, e);
                 terminate();
             }
 
@@ -105,10 +106,10 @@ public class MapFeaturesDownloader implements Closeable {
         public void ping(String url) {
             if (url.equals(request.toString())) {
                 try {
-                    pendingImages = new MapFeaturesPreparser(downloader).getImageList();
+                    pendingImages = new MapFeaturesPreparser(scontext.getContext()).getImageList();
                     setState(new StateDownloadPendingImage());
                 } catch (IOException e) {
-                    AppLog.e(downloader, e);
+                    AppLog.e(this, e);
                     terminate();
                 }
 
@@ -134,7 +135,7 @@ public class MapFeaturesDownloader implements Closeable {
                 
                 File target = request.getFile();
                 if (target.exists()==false) {
-                    downloader.getSelf().download(request);
+                    scontext.getBackgroundService().download(request);
                 }
             }
         }

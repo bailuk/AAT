@@ -49,7 +49,6 @@ import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.helpers.AppLayout;
 import ch.bailu.aat.helpers.AppLog;
 import ch.bailu.aat.helpers.AppTheme;
-import ch.bailu.aat.services.ServiceLink;
 import ch.bailu.aat.test.TestCoordinates;
 import ch.bailu.aat.test.TestGpx;
 import ch.bailu.aat.test.TestGpxLogRecovery;
@@ -104,7 +103,6 @@ public class TestActivity extends AbsDispatcher implements OnClickListener {
         
         createDispatcher();
         
-        setServiceDependencies(ServiceLink.ALL_SERVICES);
         
     }
 

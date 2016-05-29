@@ -8,6 +8,7 @@ import ch.bailu.aat.gpx.interfaces.GpxPointInterface;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.cache.FreeLater;
 import ch.bailu.aat.services.cache.ImageObject;
+import ch.bailu.aat.services.cache.ObjectHandle;
 import ch.bailu.aat.services.icons.IconMapService;
 
 public class MapIconCache implements Closeable {
@@ -45,11 +46,11 @@ public class MapIconCache implements Closeable {
     public Drawable getIcon(ServiceContext scontext, String fileID) {
         Drawable drawable=null;
         
-        ImageObject imageObject =  (ImageObject) scontext.getCacheService().getObject(fileID, new ImageObject.Factory());
-        if (imageObject != null) {
+        final ObjectHandle handle =  scontext.getCacheService().getObject(fileID, new ImageObject.Factory());
+        if (ImageObject.class.isInstance(handle) ) {
             
-            drawable = imageObject.getDrawable();
-            current.freeLater(imageObject);
+            drawable = ((ImageObject)handle).getDrawable();
+            current.freeLater(handle);
         }
         return drawable;
     }

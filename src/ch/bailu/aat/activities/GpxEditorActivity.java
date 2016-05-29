@@ -26,12 +26,7 @@ import ch.bailu.aat.helpers.AppDialog;
 import ch.bailu.aat.helpers.AppLayout;
 import ch.bailu.aat.helpers.AppLog;
 import ch.bailu.aat.helpers.Timer;
-import ch.bailu.aat.services.cache.CacheService;
-import ch.bailu.aat.services.dem.ElevationService;
-import ch.bailu.aat.services.directory.DirectoryService;
 import ch.bailu.aat.services.editor.EditorInterface;
-import ch.bailu.aat.services.editor.EditorService;
-import ch.bailu.aat.services.tracker.TrackerService;
 import ch.bailu.aat.views.BusyIndicator;
 import ch.bailu.aat.views.ContentView;
 import ch.bailu.aat.views.ControlBar;
@@ -54,15 +49,7 @@ import ch.bailu.aat.views.map.overlay.grid.GridDynOverlay;
 public class GpxEditorActivity extends AbsDispatcher
 implements OnClickListener,  Runnable {
 
-    private static final Class<?> SERVICES[] = {
-        TrackerService.class, 
-        DirectoryService.class, 
-        ElevationService.class,
-        EditorService.class,
-        CacheService.class,
-    };
-
-    private final LayoutParams layout= new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
+     private final LayoutParams layout= new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
 
     private static final String SOLID_KEY="gpx_editor";
 
@@ -81,7 +68,6 @@ implements OnClickListener,  Runnable {
 
         timer = new Timer(this,50);
 
-        setServiceDependencies(SERVICES);
     }
 
 

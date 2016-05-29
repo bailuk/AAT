@@ -6,46 +6,29 @@ import java.io.File;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.helpers.AppDirectory;
 import ch.bailu.aat.helpers.AppFile;
-import ch.bailu.aat.services.AbsService;
-import ch.bailu.aat.services.cache.CacheService;
+import ch.bailu.aat.services.ServiceContext;
+import ch.bailu.aat.services.VirtualService;
 import ch.bailu.aat.services.cache.GpxObjectEditable;
 import ch.bailu.aat.services.cache.ObjectHandle;
 
 
-public class EditorService extends AbsService {
-    public static final Class<?> SERVICES[] = {
-        CacheService.class
-    };    
+public class EditorService extends VirtualService {
 
-
-    private Self self = new Self();
+    private final Self self;
     public Self getSelf() {
         return self;
     }
 
 
-    @Override
-    public void onCreate() {
-        super.onCreate();
-
-        connectToServices(SERVICES);
-    }
-
-
-    @Override
-    public void onServicesUp() {
-        self.close();
+    public EditorService(ServiceContext sc) {
+        super(sc);
         self = new SelfOn();
     }
 
 
-
-
     @Override
-    public void onDestroy() {
+    public void close() {
         self.close();
-        self = new Self();
-        super.onDestroy();
     }
 
 
@@ -87,9 +70,9 @@ public class EditorService extends AbsService {
             
             if (id == GpxInformation.ID.INFO_ID_EDITOR_DRAFT) {
                 
-                handle = GpxObjectEditable.loadEditor(getServiceContext(), 
+                handle = GpxObjectEditable.loadEditor(getSContext(), 
                         
-                        AppDirectory.getEditorDraft(EditorService.this).getAbsolutePath(), 
+                        AppDirectory.getEditorDraft(getContext()).getAbsolutePath(), 
                         GpxInformation.ID.INFO_ID_EDITOR_DRAFT);
                 
                 draft.free();
@@ -98,7 +81,7 @@ public class EditorService extends AbsService {
 
                 
             } else {
-                handle = GpxObjectEditable.loadEditor(getServiceContext(), 
+                handle = GpxObjectEditable.loadEditor(getSContext(), 
                         
                         file.getAbsolutePath(), 
                         GpxInformation.ID.INFO_ID_EDITOR_OVERLAY);
@@ -149,6 +132,13 @@ public class EditorService extends AbsService {
             overlay = ObjectHandle.NULL;
         }
 
+        
+    }
+
+
+    @Override
+    public void appendStatusText(StringBuilder builder) {
+        // TODO Auto-generated method stub
         
     };
 }

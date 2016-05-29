@@ -9,18 +9,19 @@ import ch.bailu.aat.views.map.overlay.gpx.InfoViewNodeSelectorOverlay;
 public class EditorNodeSelectorOverlay extends InfoViewNodeSelectorOverlay {
 
     private final ServiceContext scontext;
-
+    private final int ID;
 
     public EditorNodeSelectorOverlay(OsmInteractiveView v, int id, ServiceContext sc) {
         super(v, id);
         scontext = sc;
+        ID=id;
     }
 
 
 
     @Override
     public GpxPointNode getSelectedNode() {
-        return scontext.getEditorService().getEditor(GpxInformation.ID.INFO_ID_EDITOR_DRAFT).getSelected();
+        return scontext.getEditorService().getEditor(ID).getSelected();
     }
 
 
@@ -28,7 +29,7 @@ public class EditorNodeSelectorOverlay extends InfoViewNodeSelectorOverlay {
 
     @Override
     public void setSelectedNode(GpxInformation info, GpxPointNode node, int index) {
-        scontext.getEditorService().getEditor(GpxInformation.ID.INFO_ID_EDITOR_DRAFT).select(node);
+        scontext.getEditorService().getEditor(ID).select(node);
         super.setSelectedNode(info,node, index);
     }
 

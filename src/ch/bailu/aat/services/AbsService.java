@@ -2,6 +2,11 @@ package ch.bailu.aat.services;
 
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
+
+import ch.bailu.aat.helpers.AppLog;
+import ch.bailu.aat.helpers.Timer;
 
 import android.app.Service;
 import android.content.Intent;
@@ -9,13 +14,46 @@ import android.os.Binder;
 import android.os.IBinder;
 
 public abstract class AbsService  extends Service {
-    private static int allbindings, allinstances, allcreations;
-    private int bindings, creations;
+    private static int allinstances, allcreations;
+    private int creations;
 
 
     private long startTime;
-    private ServiceLink serviceLink = null;
 
+
+
+    private final Set<String> locks = new HashSet<String>();
+
+    private final Timer lazyOff = new Timer(new Runnable() {
+        @Override
+        public void run() {
+            AppLog.d(this, "locked " + locks.size() + " times.");
+            if (locks.isEmpty()) {
+                AppLog.d(this, "turn off.");
+                stopSelf();
+            }
+        }
+
+    }, 15*1000); 
+
+
+    public void lock(String r) {
+        if (locks.add(r)) {
+            startService(new Intent(this,  OneService.class));
+            lazyOff.close();
+        }
+        
+        AppLog.d(this, "locked " + locks.size() + " times.");
+    }
+
+
+    public void free(String r) {
+        if (locks.remove(r) && locks.isEmpty()) {
+            lazyOff.kick();
+        }
+        AppLog.d(this, "locked " + locks.size() + " times.");
+    }
+    
 
     public AbsService() {
         allinstances++;
@@ -29,16 +67,7 @@ public abstract class AbsService  extends Service {
     }
 
 
-    public void connectToServices(Class<?>[] services) {
-        serviceLink.up(services);
-    }
 
-    public abstract void onServicesUp();
-
-
-    public ServiceContext getServiceContext() {
-        return serviceLink;
-    }
 
 
     public class CommonBinder extends Binder {
@@ -51,17 +80,11 @@ public abstract class AbsService  extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
+
+        AppLog.d(this, "onCreate()");
         allcreations++;
         creations++;
 
-        serviceLink = new ServiceLink(this) {
-
-            @Override
-            public void onServicesUp() {
-                AbsService.this.onServicesUp();
-            }
-
-        };
         startTime=System.currentTimeMillis();
     }
 
@@ -69,29 +92,22 @@ public abstract class AbsService  extends Service {
     @Override
     public void onDestroy() {
 
-        serviceLink.close();
-        serviceLink=null;
-
         creations--;
         allcreations--;
+
+        AppLog.d(this, "onDestroy()");
         super.onDestroy();
     }    
 
 
     @Override
     public IBinder onBind(Intent intent) {
-        allbindings++;
-        bindings++;
-
         return new CommonBinder();
     }
 
 
     @Override
     public boolean onUnbind(Intent intent) {
-        allbindings--;
-        bindings--;
-
         return false;
     }
 
@@ -113,8 +129,6 @@ public abstract class AbsService  extends Service {
         builder.append(formatTime(startTime));
         builder.append("<br>Created services: ");
         builder.append(creations);
-        builder.append("<br>Service bindings: ");
-        builder.append(bindings);
 
         builder.append("</p>");
     }
@@ -129,8 +143,6 @@ public abstract class AbsService  extends Service {
         builder.append(allinstances);
         builder.append("<br>Created services: ");
         builder.append(allcreations);
-        builder.append("<br>Service bindings: ");
-        builder.append(allbindings);
         builder.append("</p>");
     }
 

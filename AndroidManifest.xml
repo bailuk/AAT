@@ -104,19 +104,8 @@
         <activity android:name="ch.bailu.aat.activities.HtmlViewActivity" >
         </activity>
 
-        <service android:name="ch.bailu.aat.services.tracker.TrackerService" >
+        <service android:name="ch.bailu.aat.services.OneService" >
         </service>
-        <service android:name="ch.bailu.aat.services.directory.DirectoryService" >
-        </service>
-        <service android:name="ch.bailu.aat.services.editor.EditorService" >
-        </service>
-        <service android:name="ch.bailu.aat.services.dem.ElevationService" >
-        </service>
-        <service android:name="ch.bailu.aat.services.background.BackgroundService" >
-        </service>
-        <service android:name="ch.bailu.aat.services.cache.CacheService" >
-        </service>
-        <service android:name="ch.bailu.aat.services.icons.IconMapService"></service>
     </application>
 
 </manifest>

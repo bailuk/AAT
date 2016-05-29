@@ -11,42 +11,36 @@ import android.content.Intent;
 import android.util.SparseArray;
 import ch.bailu.aat.helpers.AppBroadcaster;
 import ch.bailu.aat.helpers.AppLog;
-import ch.bailu.aat.services.AbsService;
+import ch.bailu.aat.services.ServiceContext;
+import ch.bailu.aat.services.VirtualService;
 
-public class BackgroundService extends AbsService{
+public class BackgroundService extends VirtualService {
 
 
-    private Self self = new Self();
+    private final Self self;
 
     public Self getSelf() {
         return self;
     }
 
 
-    @Override
-    public void onCreate() {
-        super.onCreate();
+    public BackgroundService(ServiceContext sc) {
+        super(sc);
         self = new SelfOn();
     }
 
 
-    @Override
-    public void onDestroy() {
+    
+    public void close() {
         self.close();
-        self = new Self();
-
-        super.onDestroy();
     }
 
 
     @Override
     public void appendStatusText(StringBuilder builder) {
-        super.appendStatusText(builder);
         self.appendStatusText(builder);
     }
 
-    @Override
-    public void onServicesUp() {}
 
     
     public static class Self implements Closeable {
@@ -79,8 +73,8 @@ public class BackgroundService extends AbsService{
         };
 
         public SelfOn() {
-            mapFeaturesDownloader = new MapFeaturesDownloader(BackgroundService.this);
-            AppBroadcaster.register(BackgroundService.this, onFileDownloaded, AppBroadcaster.FILE_CHANGED_ONDISK);
+            mapFeaturesDownloader = new MapFeaturesDownloader(getSContext());
+            AppBroadcaster.register(getContext(), onFileDownloaded, AppBroadcaster.FILE_CHANGED_ONDISK);
 
 
             process =new ProcessThread(PROCESS_QUEUE_SIZE) {
@@ -91,7 +85,7 @@ public class BackgroundService extends AbsService{
                         handle.bgLock();
                         handle.bgOnProcess();
                         handle.bgUnlock();
-                        handle.broadcast(BackgroundService.this);
+                        handle.broadcast(getContext());
 
                     }
                 }
@@ -117,7 +111,7 @@ public class BackgroundService extends AbsService{
                 DownloaderThread downloader = downloaders.get(host.hashCode());
 
                 if (downloader == null) {
-                    downloader = new DownloaderThread(BackgroundService.this, host);
+                    downloader = new DownloaderThread(getContext(), host);
                     downloaders.put(host.hashCode(), downloader);
                 }
                 downloader.process(handle);
@@ -132,7 +126,7 @@ public class BackgroundService extends AbsService{
             LoaderThread loader = loaders.get(base.hashCode());
 
             if (loader == null) {
-                loader = new LoaderThread(BackgroundService.this, base);
+                loader = new LoaderThread(getContext(), base);
                 loaders.put(base.hashCode(), loader);
             }
             loader.process(handle);
@@ -144,7 +138,7 @@ public class BackgroundService extends AbsService{
         }
         @Override
         public void close() {
-            unregisterReceiver(onFileDownloaded);
+            getContext().unregisterReceiver(onFileDownloaded);
 
             mapFeaturesDownloader.close();
 

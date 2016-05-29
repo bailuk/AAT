@@ -32,7 +32,6 @@ import ch.bailu.aat.services.ServiceContext.ServiceNotUpException;
 import ch.bailu.aat.services.background.BackgroundService;
 import ch.bailu.aat.services.background.DownloadHandle;
 import ch.bailu.aat.services.background.ProcessHandle;
-import ch.bailu.aat.services.cache.CacheService;
 import ch.bailu.aat.views.ContentView;
 import ch.bailu.aat.views.ControlBar;
 import ch.bailu.aat.views.DownloadButton;
@@ -43,10 +42,6 @@ import ch.bailu.aat.views.TagEditor;
 public abstract class AbsOsmApiActivity extends AbsDispatcher implements OnClickListener {
     private static final String SOLID_KEY=AbsOsmApiActivity.class.getSimpleName();
     
-    private static final Class<?> SERVICES[] = {
-        BackgroundService.class,
-        CacheService.class,
-    };    
 
     private TagEditor          tagEditor;
     private DownloadButton     download;
@@ -69,7 +64,6 @@ public abstract class AbsOsmApiActivity extends AbsDispatcher implements OnClick
         try {
             osmApi = createUrlGenerator(AppBroadcaster.getBoundingBox(getIntent()));
             AppBroadcaster.register(this, onFileDownloaded, AppBroadcaster.FILE_CHANGED_ONDISK);
-            setServiceDependencies(SERVICES);
         } catch (Exception e) {
             AppLog.e(this,e);
         }

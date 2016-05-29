@@ -3,30 +3,28 @@ package ch.bailu.aat.services.tracker;
 import java.io.Closeable;
 
 import ch.bailu.aat.gpx.GpxInformation;
-import ch.bailu.aat.services.AbsService;
+import ch.bailu.aat.services.ServiceContext;
+import ch.bailu.aat.services.VirtualService;
 
-public class TrackerService extends AbsService {
+public class TrackerService extends VirtualService {
 
-    private Self self = new Self();
+    private final Self self;
     
     public Self getSelf() {
         return self;
     }
 
     
-    @Override
-    public void onCreate() {
-        super.onCreate();
-        self.close();
+    
+    public TrackerService(ServiceContext sc) {
+        super(sc);
         self = new SelfOn();
     }
 
 
     @Override
-    public void onDestroy() {
+    public void close() {
         self.close();
-        self = new Self();
-        super.onDestroy();
     }
     
     
@@ -56,7 +54,7 @@ public class TrackerService extends AbsService {
         private final TrackerInternals internal;
         
         public SelfOn() {
-            internal = new TrackerInternals(TrackerService.this);
+            internal = new TrackerInternals(getSContext());
         }
         
         @Override
@@ -98,11 +96,7 @@ public class TrackerService extends AbsService {
 
     @Override
     public void appendStatusText(StringBuilder builder) {
-        super.appendStatusText(builder);
         self.appendStatusText(builder);
     }
 
-
-    @Override
-    public void onServicesUp() {}
 }

@@ -13,7 +13,6 @@ import ch.bailu.aat.helpers.AppDirectory;
 import ch.bailu.aat.helpers.AppLog;
 import ch.bailu.aat.helpers.AppTheme;
 import ch.bailu.aat.helpers.ToolTip;
-import ch.bailu.aat.services.background.BackgroundService;
 import ch.bailu.aat.views.ContentView;
 import ch.bailu.aat.views.ControlBar;
 import ch.bailu.aat.views.DownloadButton;
@@ -22,10 +21,6 @@ import ch.bailu.aat.views.FeaturesList;
 
 public class MapFeaturesActivity extends AbsDispatcher implements OnClickListener {
     
-    private static final Class<?> SERVICES[] = {
-        BackgroundService.class
-    };    
-
     private FeaturesList list;
     
     private ControlBar bar;
@@ -62,7 +57,6 @@ public class MapFeaturesActivity extends AbsDispatcher implements OnClickListene
 
         setContentView(contentView);
 
-        setServiceDependencies(SERVICES);
         
         AppBroadcaster.register(this, onFileProcessed, AppBroadcaster.FILE_CHANGED_ONDISK);
 

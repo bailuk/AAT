@@ -44,7 +44,7 @@ public class TrackListActivity extends AbsGpxListActivity {
                 new TimeDescription(this)
         };   
 
-        summaryView = new GpxListSummaryView(this, getServiceContext().getDirectoryService(),  data);
+        summaryView = new GpxListSummaryView(getServiceContext(),  data);
         
         layout.addView(summaryView, AppLayout.getScreenSmallSide(this), AppLayout.getScreenSmallSide(this) /3);
     }
@@ -76,13 +76,4 @@ public class TrackListActivity extends AbsGpxListActivity {
         Intent intent=new Intent(this,FileContentActivity.class);
         startActivity(intent);
     }
-
-    @Override
-    public void onServicesUp() {
-        // TODO Auto-generated method stub
-        
-    }
-    
-   
-
 }

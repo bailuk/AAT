@@ -9,60 +9,46 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.IBinder;
-import ch.bailu.aat.services.background.BackgroundService;
-import ch.bailu.aat.services.cache.CacheService;
-import ch.bailu.aat.services.dem.ElevationService;
-import ch.bailu.aat.services.directory.DirectoryService;
-import ch.bailu.aat.services.editor.EditorService;
-import ch.bailu.aat.services.icons.IconMapService;
-import ch.bailu.aat.services.tracker.TrackerService;
 
 public abstract class ServiceLink extends ServiceContext implements Closeable {
 
-    public static final Class<?> ALL_SERVICES[] = {
-        // Service:                Dependencies:
-        TrackerService.class,   // none
-
-        BackgroundService.class,// none
-        IconMapService.class,   // none
-
-        CacheService.class,     // background and iconmap
-
-        DirectoryService.class, // cache and background
-
-        ElevationService.class, // cache and background
-
-        EditorService.class,    // cache
-    }; 
-
+    static int connections=0;
 
     private class Connection implements ServiceConnection, Closeable {
+        
         private AbsService service=null;
         private final Context context;
 
         public Connection(Context c, Class<?> serviceClass) {
+            connections++;
+            
             context = c;
-
             context.bindService(new Intent(context, 
                     serviceClass), this, Context.BIND_AUTO_CREATE);
         }
 
         @Override
         public void onServiceConnected(ComponentName className, IBinder binder) {
+            
             service =  ((AbsService.CommonBinder)binder).getService();
 
             if (areAllServicesUp()) {
                 onServicesUp();
+                service.lock(ServiceLink.class.getSimpleName());
             }
         }
 
         @Override
         public void onServiceDisconnected(ComponentName name) {
+            
             service = null;
         }
 
         @Override
         public void close() {
+            connections--;
+            if (connections==0) service.free(ServiceLink.class.getSimpleName());
+            
             context.unbindService(this);
             service=null;
         }
@@ -94,10 +80,9 @@ public abstract class ServiceLink extends ServiceContext implements Closeable {
         return context;
     }
 
-    public void up(Class<?>[] services) {
-        for (Class<?> s: services) {
-            serviceTable.put(s, new Connection(context, s));
-        }
+    public void up() {
+        serviceTable.put(OneService.class, new Connection(context, OneService.class));
+
     }
 
 
@@ -125,16 +110,30 @@ public abstract class ServiceLink extends ServiceContext implements Closeable {
     }
 
     @Override
-    public AbsService getService(Class<?> s) throws ServiceNotUpException {
-        if (isServiceUp(s))
-            return serviceTable.get(s).getService();
+    public OneService getService() throws ServiceNotUpException {
+        if (isServiceUp(OneService.class))
+            return (OneService)serviceTable.get(OneService.class).getService();
         else 
-            throw new ServiceNotUpException(s);
+            throw new ServiceNotUpException(OneService.class);
     }
 
-
-
-
+    
+    @Override
+    public void lock(String s) {
+        try {
+            getService().lock(s);
+        } catch (ServiceNotUpException e) {}
+    }
+    
+    
+    @Override
+    public void free(String s) {
+        try {
+            getService().free(s);
+        } catch (ServiceNotUpException e) {}
+    }
+    
+    
     public void down() {
         Iterator<Connection> iterator = serviceTable.values().iterator();
 

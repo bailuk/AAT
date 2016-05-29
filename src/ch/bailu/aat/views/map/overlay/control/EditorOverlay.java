@@ -24,19 +24,15 @@ public class EditorOverlay extends ControlBarOverlay {
     private final View  add, remove, up, down, 
                         save, saveAs, toggle, clear, 
                         undo, redo;
-//    private final EditorInterface editor;
     
-    private final EditorNodeSelectorOverlay selector;
-    private final OsmOverlay content;
-    //private final OsmOverlay legend;
-    
-    private OsmOverlay coordinates;
-    
-//    private final ElevationProvider elevation;
     
     private final ServiceContext scontext;
     
+    private final EditorNodeSelectorOverlay selector;
+    private final OsmOverlay content;
     
+    private OsmOverlay coordinates;
+
     public EditorOverlay(OsmInteractiveView osm, ServiceContext sc, int id) {
         super(osm, new ControlBar(
                 osm.getContext(),
@@ -48,7 +44,6 @@ public class EditorOverlay extends ControlBarOverlay {
         coordinates = sgrid.createCenterCoordinatesOverlay(getOsmView());
         
         content = new GpxDynOverlay(osm, sc, id);
-        //legend = new GpxLegendOverlay(osm,id, new PointIndexWalker());
         selector = new EditorNodeSelectorOverlay(osm, id, sc);
         
         
@@ -91,7 +86,6 @@ public class EditorOverlay extends ControlBarOverlay {
     public void draw(MapPainter p) {
         content.draw(p);
         if (isVisible()) {
-            //legend.draw(p);
             selector.draw(p);
             coordinates.draw(p);
         }
@@ -144,7 +138,6 @@ public class EditorOverlay extends ControlBarOverlay {
     public void updateGpxContent(GpxInformation info) {
         content.updateGpxContent(info);
         selector.updateGpxContent(info);
-        //legend.updateGpxContent(info);
     }
     
     

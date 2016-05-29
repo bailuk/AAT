@@ -42,21 +42,21 @@ public class ObjectTable {
     private final SparseArray<Container> table = new SparseArray<Container>(INITIAL_CAPACITY);
 
 
-    public synchronized ObjectHandle getHandle(String id, Factory factory, SelfOn self) {
+    public synchronized ObjectHandle getHandle(String id, Factory factory, SelfOn son) {
         ObjectHandle h=getFromCache(id);
 
         if (h == null) {
-            h = factory.factory(id, self.serviceContext);
+            h = factory.factory(id, son.scontext);
 
             putIntoCache(h);
 
-            h.lock(self.serviceContext);
-            h.onInsert(self.serviceContext);
+            h.lock(son.scontext);
+            h.onInsert(son.scontext);
 
-            trim(self);
+            trim(son);
 
         } else {
-            h.lock(self.serviceContext);
+            h.lock(son.scontext);
         }
         return h;
     }
@@ -155,7 +155,7 @@ public class ObjectTable {
             self.broadcaster.delete(remove.obj);
             table.remove(remove.hashCode());
             totalMemorySize -= remove.size;
-            remove.obj.onRemove(self.serviceContext);
+            remove.obj.onRemove(self.scontext);
             return true;
         }
         return false;

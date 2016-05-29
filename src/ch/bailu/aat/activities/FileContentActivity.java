@@ -85,7 +85,6 @@ public class FileContentActivity extends AbsDispatcher implements OnClickListene
         contentView.addView(multiView);
         setContentView(contentView);
 
-        setServiceDependencies(SERVICES);
     }
 
 

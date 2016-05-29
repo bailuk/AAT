@@ -30,8 +30,6 @@ import ch.bailu.aat.helpers.AppLayout;
 import ch.bailu.aat.helpers.AppTheme;
 import ch.bailu.aat.preferences.SolidPreset;
 import ch.bailu.aat.preferences.Storage;
-import ch.bailu.aat.services.cache.CacheService;
-import ch.bailu.aat.services.tracker.TrackerService;
 import ch.bailu.aat.views.ContentView;
 import ch.bailu.aat.views.NumberView;
 
@@ -39,13 +37,6 @@ import ch.bailu.aat.views.NumberView;
 
 public class MainActivity extends AbsDispatcher 
 implements AdapterView.OnItemSelectedListener, OnSharedPreferenceChangeListener {
-    
-    
-    private static final Class<?> SERVICES[] = {
-        TrackerService.class,
-        CacheService.class,
-    };
-    
     
     private NumberView      gpsState, trackerState;
     private LinearLayout    contentView;
@@ -62,7 +53,6 @@ implements AdapterView.OnItemSelectedListener, OnSharedPreferenceChangeListener 
         createViews();
         createDispatcher();
 
-        setServiceDependencies(SERVICES);
     }
 
 

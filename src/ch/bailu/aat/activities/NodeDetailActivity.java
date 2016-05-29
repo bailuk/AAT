@@ -79,7 +79,6 @@ public class NodeDetailActivity extends AbsDispatcher implements OnClickListener
         setContentView(contentView);
 
 
-        setServiceDependencies(SERVICES);
     }
 
 

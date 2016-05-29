@@ -2,7 +2,6 @@ package ch.bailu.aat.activities;
 
 import android.os.Bundle;
 import ch.bailu.aat.services.AbsService;
-import ch.bailu.aat.services.ServiceLink;
 
 public class StatusActivity extends AbsHtmlViewActivity {
 
@@ -10,7 +9,6 @@ public class StatusActivity extends AbsHtmlViewActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setServiceDependencies(ServiceLink.ALL_SERVICES);
     }
 
 

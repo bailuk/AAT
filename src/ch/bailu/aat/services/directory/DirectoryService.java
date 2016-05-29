@@ -10,21 +10,17 @@ import android.content.Intent;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.helpers.AppBroadcaster;
 import ch.bailu.aat.helpers.AppDirectory;
-import ch.bailu.aat.helpers.AppLog;
 import ch.bailu.aat.preferences.Storage;
-import ch.bailu.aat.services.AbsService;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.ServiceContext.ServiceNotUpException;
-import ch.bailu.aat.services.background.BackgroundService;
+import ch.bailu.aat.services.VirtualService;
 import ch.bailu.aat.services.cache.CacheService;
+import ch.bailu.aat.services.cache.CacheService.SelfOn;
 
-public class DirectoryService extends AbsService	{
-
-
-    private static final Class<?> SERVICES[] = {BackgroundService.class, CacheService.class};
+public class DirectoryService extends VirtualService{
 
 
-    private Self self = new Self();
+    private final Self self;
 
 
     public Self getSelf() {
@@ -32,32 +28,22 @@ public class DirectoryService extends AbsService	{
     }
 
 
-    @Override
-    public void onCreate() {
-        super.onCreate();
-
-        connectToServices(SERVICES);
-    }
-
-
-    @Override
-    public void onServicesUp() {
+    
+    public DirectoryService(ServiceContext sc) {
+        super(sc);
         self = new SelfOn();
     }
 
+
+
     @Override
-    public void onDestroy() {
+    public void close() {
         self.close();
-        self = new Self();
-        super.onDestroy();
     }
 
     
     public static class Self implements Closeable{
-        public void setDirectory(final File directory, final String selection) {
-            AppLog.d(this, "fuck you!!");
-
-        };
+        public void setDirectory(final File directory, final String selection) {};
         public void setSelection(String selection) {}
 
         public void deleteCurrentTrackFromDb()  {}
@@ -110,7 +96,7 @@ public class DirectoryService extends AbsService	{
 
 
         public SelfOn() {
-            AppBroadcaster.register(DirectoryService.this, onSyncChanged, AppBroadcaster.DB_SYNC_CHANGED);            
+            AppBroadcaster.register(getContext(), onSyncChanged, AppBroadcaster.DB_SYNC_CHANGED);            
             openPending();
         }
 
@@ -135,7 +121,7 @@ public class DirectoryService extends AbsService	{
 
         private void openPending() {
             try {
-                CacheService.Self objectCache = getServiceContext().getCacheService();
+                CacheService.Self objectCache = getSContext().getCacheService();
 
 
                 if (pendingSelection!=null) {
@@ -143,7 +129,7 @@ public class DirectoryService extends AbsService	{
                     if (pendingDirectory!=null) {
                         openDataBase(objectCache, AppDirectory.getCacheDb(pendingDirectory), pendingSelection);
 
-                        startSynchronizer(getServiceContext(), pendingDirectory);
+                        startSynchronizer(getSContext(), pendingDirectory);
                         positionKey = pendingDirectory.getName();
 
                     } else  {
@@ -152,7 +138,7 @@ public class DirectoryService extends AbsService	{
                 }
                 pendingDirectory=null;
                 pendingSelection=null;
-                AppBroadcaster.broadcast(DirectoryService.this, AppBroadcaster.DB_CURSOR_CHANGED);
+                AppBroadcaster.broadcast(getContext(), AppBroadcaster.DB_CURSOR_CHANGED);
 
             } catch (Exception e) {
 
@@ -170,7 +156,7 @@ public class DirectoryService extends AbsService	{
         private void openDataBase(CacheService.Self loader, File path, String selection) throws IOException, ServiceNotUpException {
             database.close();
             database = new GpxDatabase(
-                    DirectoryService.this,
+                    getContext(),
                     loader, 
                     path,
                     selection);
@@ -227,7 +213,7 @@ public class DirectoryService extends AbsService	{
 
 
         public int getStoredPosition() {
-            return Storage.global(DirectoryService.this).readInteger(positionKey); 
+            return Storage.global(getContext()).readInteger(positionKey); 
         }
 
         public void storePosition() {
@@ -238,12 +224,12 @@ public class DirectoryService extends AbsService	{
 
 
         public void storePosition(int position) {
-            Storage.global(DirectoryService.this).writeInteger(positionKey, position);
+            Storage.global(getContext()).writeInteger(positionKey, position);
         }
 
         @Override
         public void close() {
-            unregisterReceiver(onSyncChanged);
+            getContext().unregisterReceiver(onSyncChanged);
 
             database.close();
             stopSynchronizer();
@@ -252,8 +238,9 @@ public class DirectoryService extends AbsService	{
     }
 
 
-
-
-
-
+    @Override
+    public void appendStatusText(StringBuilder builder) {
+        // TODO Auto-generated method stub
+        
+    }
 }

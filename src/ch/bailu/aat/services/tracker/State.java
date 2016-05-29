@@ -11,8 +11,8 @@ public abstract class State implements GpxInformation.ID {
         internal = ti;
         
         internal.logger.setState(getStateID());
-        AppBroadcaster.broadcast(internal.serviceContext, AppBroadcaster.TRACKER);
-        AppBroadcaster.broadcast(internal.serviceContext, AppBroadcaster.TRACKER_STATE);
+        AppBroadcaster.broadcast(internal.scontext.getContext(), AppBroadcaster.TRACKER);
+        AppBroadcaster.broadcast(internal.scontext.getContext(), AppBroadcaster.TRACKER_STATE);
 
     }
     

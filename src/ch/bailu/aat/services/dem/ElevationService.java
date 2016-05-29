@@ -2,45 +2,29 @@ package ch.bailu.aat.services.dem;
 
 import java.io.Closeable;
 
-import ch.bailu.aat.services.AbsService;
 import ch.bailu.aat.services.ServiceContext;
-import ch.bailu.aat.services.background.BackgroundService;
-import ch.bailu.aat.services.cache.CacheService;
+import ch.bailu.aat.services.VirtualService;
 
-public class ElevationService extends AbsService {
+public class ElevationService extends VirtualService {
 
-    public static final Class<?> SERVICES[] = {
-        BackgroundService.class,
-        CacheService.class,
-    };
 
-    private Self self = new Self();
+    private final Self self;
 
     public Self getSelf() {
         return self;
     }
+
     
-    @Override
-    public void onCreate() {
-        super.onCreate();
-        connectToServices(SERVICES);
-    }
-
-
-    @Override
-    public void onServicesUp() {
-        self.close();
-        self = new SelfOn(getServiceContext());
+    public ElevationService(ServiceContext sc) {
+        super(sc);
+        self = new SelfOn();
     }
 
 
 
-
     @Override
-    public void onDestroy() {
+    public void close() {
         self.close();
-        self = new Self();
-        super.onDestroy();
     }
 
 
@@ -58,8 +42,8 @@ public class ElevationService extends AbsService {
     public class SelfOn extends Self {
         private final ElevationUpdater  elevationUpdater;
 
-        public SelfOn(ServiceContext sc) {
-            elevationUpdater = new ElevationUpdater(sc);
+        public SelfOn() {
+            elevationUpdater = new ElevationUpdater(getSContext());
         }
         @Override
         public short getElevation(int laE6, int loE6) {
@@ -71,6 +55,12 @@ public class ElevationService extends AbsService {
         public void close() {
             elevationUpdater.close();
         }
+    }
+
+    @Override
+    public void appendStatusText(StringBuilder builder) {
+        // TODO Auto-generated method stub
+        
     }
 
 

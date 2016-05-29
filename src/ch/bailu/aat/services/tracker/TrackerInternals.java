@@ -3,7 +3,6 @@ package ch.bailu.aat.services.tracker;
 import java.io.Closeable;
 import java.io.IOException;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import ch.bailu.aat.helpers.AppLog;
@@ -12,7 +11,7 @@ import ch.bailu.aat.preferences.SolidAutopause;
 import ch.bailu.aat.preferences.SolidBacklight;
 import ch.bailu.aat.preferences.SolidPreset;
 import ch.bailu.aat.preferences.Storage;
-import ch.bailu.aat.services.AbsService;
+import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.tracker.location.LocationStack;
 
 public class TrackerInternals 
@@ -22,7 +21,7 @@ implements OnSharedPreferenceChangeListener, Closeable ,Runnable {
     private Timer timer;
     
     
-    public final AbsService serviceContext;
+    public final ServiceContext scontext;
     public State state=null;
 
     
@@ -42,9 +41,9 @@ implements OnSharedPreferenceChangeListener, Closeable ,Runnable {
 
     
     public void rereadPreferences() {
-        presetIndex = new SolidPreset(serviceContext).getIndex();
-        sbacklight = new SolidBacklight(serviceContext, presetIndex);
-        sautopause = new SolidAutopause(serviceContext, presetIndex);
+        presetIndex = new SolidPreset(scontext.getContext()).getIndex();
+        sbacklight = new SolidBacklight(scontext.getContext(), presetIndex);
+        sautopause = new SolidAutopause(scontext.getContext(), presetIndex);
     }
 
         
@@ -52,7 +51,7 @@ implements OnSharedPreferenceChangeListener, Closeable ,Runnable {
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences,
             String key) {
 
-        location.preferencesChanged(serviceContext, presetIndex);
+        location.preferencesChanged(scontext.getContext(), presetIndex);
         state.preferencesChanged();
     }
 
@@ -61,17 +60,17 @@ implements OnSharedPreferenceChangeListener, Closeable ,Runnable {
     
     
     
-    public TrackerInternals(AbsService s) {
-        serviceContext = s;
+    public TrackerInternals(ServiceContext sc) {
+        scontext=sc;
         
-        backlight = new Backlight(serviceContext);
-        location = new LocationStack(serviceContext);
+        backlight = new Backlight(scontext.getContext());
+        location = new LocationStack(scontext.getContext());
 
-        storage = Storage.preset(serviceContext);
+        storage = Storage.preset(scontext.getContext());
         storage.register(this);
         rereadPreferences();
 
-        statusIcon = new StatusIcon(serviceContext);
+        statusIcon = new StatusIcon(scontext);
       
         try {
             logger = createLogger();
@@ -86,11 +85,19 @@ implements OnSharedPreferenceChangeListener, Closeable ,Runnable {
     
     
     public void lockService() {
-        serviceContext.startService(new Intent(serviceContext, TrackerService.class));
+        scontext.lock(this.getClass().getSimpleName());
+        //scontext.getContext().startService(new Intent(scontext.getContext(), OneService.class));
     }
 
     public void unlockService() {
-        serviceContext.stopSelf();
+        scontext.free(this.getClass().getSimpleName());
+
+        /*try {
+            scontext.getService().stopSelf();
+        } catch (ServiceNotUpException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }*/
     }    
     
     
@@ -98,7 +105,7 @@ implements OnSharedPreferenceChangeListener, Closeable ,Runnable {
  
     
     public  TrackLogger createLogger() throws IOException {
-        return new TrackLogger(serviceContext,new SolidPreset(serviceContext).getIndex());
+        return new TrackLogger(scontext.getContext(),new SolidPreset(scontext.getContext()).getIndex());
     }
     
     

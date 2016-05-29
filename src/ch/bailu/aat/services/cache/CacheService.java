@@ -6,78 +6,40 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import ch.bailu.aat.helpers.AppBroadcaster;
-import ch.bailu.aat.services.AbsService;
+import ch.bailu.aat.helpers.AppLog;
 import ch.bailu.aat.services.ServiceContext;
-import ch.bailu.aat.services.ServiceLink;
-import ch.bailu.aat.services.background.BackgroundService;
+import ch.bailu.aat.services.VirtualService;
 import ch.bailu.aat.services.cache.ObjectHandle.Factory;
-import ch.bailu.aat.services.icons.IconMapService;
 
 
 
-public class CacheService extends AbsService {
+public class CacheService extends VirtualService {
 
-    private ServiceLink serviceLink = null;    
-
-    public static final Class<?> SERVICES[] = {
-        BackgroundService.class,
-        IconMapService.class,
-    };    
-
-
-    
-    private Self self = new Self();;
+    private final Self self;
 
     public Self getSelf() {
         return self;
 
     }
 
-    @Override
-    public void onCreate() {
-        super.onCreate();
-        
-        serviceLink = new ServiceLink(this) {
-            @Override
-            public Self getCacheService() {
-                return getSelf();
-            }
-
-            @Override
-            public void onServicesUp() {
-                self.close();
-                self = new SelfOn(this);
-            }
-        };
-
-        serviceLink.up(SERVICES);
-    }
-
-
-
-    @Override
-    public void onLowMemory() {
-        self.onLowMemory();
-    }
-
     
+    public CacheService(ServiceContext sc) {
+        super(sc);
+        self = new SelfOn();
+    }
+
+
 
     @Override
     public void appendStatusText(StringBuilder builder) {
-        super.appendStatusText(builder);
         self.appendStatusText(builder);
     }
 
 
     
     @Override
-    public void onDestroy() {
+    public void close() {
         self.close();
-        self = new Self();
-        
-        serviceLink.close();
-        serviceLink=null;
-        super.onDestroy();
     }
     
     
@@ -89,10 +51,12 @@ public class CacheService extends AbsService {
         public void onLowMemory() {}
 
         public ObjectHandle getObject(String id) {
+            AppLog.d(this, id);
             return ObjectHandle.NULL;
         }
 
         public ObjectHandle getObject(String id, Factory factory) {
+            AppLog.d(this, id);
             return ObjectHandle.NULL;
         }
 
@@ -104,13 +68,15 @@ public class CacheService extends AbsService {
         public final ObjectTable table=new ObjectTable();
         public final ObjectBroadcaster broadcaster;
 
-        public final ServiceContext serviceContext;
+        public final ServiceContext scontext;
 
-        public SelfOn(ServiceContext sc) {
-            broadcaster = new ObjectBroadcaster(sc);
-            serviceContext=sc;
+        public SelfOn() {
+            
+            scontext = getSContext();
+            broadcaster = new ObjectBroadcaster(getSContext());
 
-            AppBroadcaster.register(sc.getContext(), onFileProcessed, AppBroadcaster.FILE_CHANGED_INCACHE);
+
+            AppBroadcaster.register(getContext(), onFileProcessed, AppBroadcaster.FILE_CHANGED_INCACHE);
         }
 
         @Override
@@ -120,12 +86,13 @@ public class CacheService extends AbsService {
 
         @Override
         public ObjectHandle getObject(String id, ObjectHandle.Factory factory) {
+            
             return table.getHandle(id, factory, this);
         }
 
         @Override
         public ObjectHandle getObject(String id) {
-            return table.getHandle(id, serviceContext);
+            return table.getHandle(id, getSContext());
         }
 
         @Override
@@ -137,7 +104,7 @@ public class CacheService extends AbsService {
 
         @Override
         public void close() {
-            unregisterReceiver(onFileProcessed);
+            getContext().unregisterReceiver(onFileProcessed);
             broadcaster.close();
         }
 
@@ -154,8 +121,4 @@ public class CacheService extends AbsService {
             }
         };
     }
-
-
-    @Override
-    public void onServicesUp() {}
 }
