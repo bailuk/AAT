@@ -23,10 +23,6 @@ import ch.bailu.aat.gpx.GpxList;
 import ch.bailu.aat.gpx.GpxListArray;
 import ch.bailu.aat.helpers.AppLayout;
 import ch.bailu.aat.helpers.AppTheme;
-import ch.bailu.aat.services.cache.CacheService;
-import ch.bailu.aat.services.dem.ElevationService;
-import ch.bailu.aat.services.editor.EditorService;
-import ch.bailu.aat.services.tracker.TrackerService;
 import ch.bailu.aat.views.ContentView;
 import ch.bailu.aat.views.ControlBar;
 import ch.bailu.aat.views.TrackDescriptionView;
@@ -41,13 +37,6 @@ import ch.bailu.aat.views.map.overlay.gpx.GpxDynOverlay;
 import ch.bailu.aat.views.map.overlay.grid.GridDynOverlay;
 
 public class NodeDetailActivity extends AbsDispatcher implements OnClickListener{
-
-    public static final Class<?> SERVICES[] = {
-        TrackerService.class, 
-        ElevationService.class,
-        EditorService.class,
-        CacheService.class,
-    };
 
 
     private static final String SOLID_KEY=NodeDetailActivity.class.getSimpleName();

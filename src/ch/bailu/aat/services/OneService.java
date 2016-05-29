@@ -4,7 +4,6 @@ import ch.bailu.aat.services.background.BackgroundService;
 import ch.bailu.aat.services.cache.CacheService;
 import ch.bailu.aat.services.dem.ElevationService;
 import ch.bailu.aat.services.directory.DirectoryService;
-import ch.bailu.aat.services.editor.EditorService;
 import ch.bailu.aat.services.icons.IconMapService;
 import ch.bailu.aat.services.tracker.TrackerService;
 
@@ -18,7 +17,6 @@ public class OneService extends AbsService  {
     public CacheService   cache;
     public DirectoryService directory;
     public ElevationService elevation;
-    public EditorService editor;
 
     private VirtualServiceLink scontext;
 
@@ -34,7 +32,6 @@ public class OneService extends AbsService  {
         cache = new CacheService(scontext);
         directory = new DirectoryService(scontext);
         elevation = new ElevationService(scontext);
-        editor = new EditorService(scontext);
     }
 
 
@@ -46,7 +43,6 @@ public class OneService extends AbsService  {
         cache.close();          cache=null;
         directory.close();      directory=null;
         elevation.close();      elevation=null;
-        editor.close();         editor=null;
 
         scontext=null;
         super.onDestroy();
@@ -62,7 +58,6 @@ public class OneService extends AbsService  {
         appendStatusText(iconMap, builder);
         appendStatusText(directory, builder);
         appendStatusText(elevation, builder);
-        appendStatusText(editor, builder);
     }
 
     public void appendStatusText(VirtualService service, StringBuilder builder) {

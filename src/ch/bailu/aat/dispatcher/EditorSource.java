@@ -6,38 +6,34 @@ import android.content.Intent;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.helpers.AppBroadcaster;
 import ch.bailu.aat.services.ServiceContext;
+import ch.bailu.aat.services.editor.EditorHelper;
 
 public class EditorSource extends ContentSource {
 
     private final ServiceContext scontext;
-    private final int ID;
+    private final EditorHelper edit;
 
 
     private BroadcastReceiver onFileEdited = new BroadcastReceiver () {
         @Override
         public void onReceive(Context context, Intent intent) {
-            GpxInformation info_a = scontext.getEditorService().getInformation(GpxInformation.ID.INFO_ID_EDITOR_OVERLAY);
-            GpxInformation info_b = scontext.getEditorService().getInformation(GpxInformation.ID.INFO_ID_EDITOR_DRAFT);
-
-            update(intent, info_a);
-            update(intent, info_b);
+            update(intent, edit.getInformation());
         }
 
         private void update(Intent intent, GpxInformation info) {
             String id=info.getPath();
             
             if (AppBroadcaster.hasFile(intent, id)) {
-                updateIfRequested(info);
+                forceUpdate();
             }
         }
 
-  
     };
 
     
-    public EditorSource (ServiceContext sc, int id) {
-        ID = id;
+    public EditorSource (ServiceContext sc, EditorHelper e) {
         scontext = sc;
+        edit = e;
         AppBroadcaster.register(scontext.getContext(), onFileEdited, AppBroadcaster.FILE_CHANGED_INCACHE);
     }
 
@@ -50,14 +46,6 @@ public class EditorSource extends ContentSource {
     
     @Override
     public void forceUpdate() {
-        updateIfRequested(scontext.getEditorService().getInformation(GpxInformation.ID.INFO_ID_EDITOR_DRAFT));
-        updateIfRequested(scontext.getEditorService().getInformation(GpxInformation.ID.INFO_ID_EDITOR_OVERLAY));
-    }
-    
-    private void updateIfRequested(GpxInformation info) {
-        if (info.getID()== ID) {
-            updateGpxContent(info);
-        }
-        
+        updateGpxContent(edit.getInformation());
     }
 }

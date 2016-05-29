@@ -25,7 +25,7 @@ import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.helpers.AppDialog;
 import ch.bailu.aat.helpers.AppLayout;
 import ch.bailu.aat.helpers.AppLog;
-import ch.bailu.aat.helpers.Timer;
+import ch.bailu.aat.services.editor.EditorHelper;
 import ch.bailu.aat.services.editor.EditorInterface;
 import ch.bailu.aat.views.BusyIndicator;
 import ch.bailu.aat.views.ContentView;
@@ -59,18 +59,48 @@ implements OnClickListener,  Runnable {
     private BusyIndicator busyIndicator;
     private MultiView     multiView;
     private OsmInteractiveView    mapView;
-    private Timer timer;
 
-
+    private EditorHelper edit;
+    
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        timer = new Timer(this,50);
-
+        edit = new EditorHelper(getServiceContext(), GpxInformation.ID.INFO_ID_EDITOR_OVERLAY);
+        
+        createViews();
+        createDispatcher();
     }
 
 
+    private void createDispatcher() {
+        DescriptionInterface[] target = new DescriptionInterface[] {
+                multiView,this, busyIndicator
+        };
+
+
+        ContentSource[] source = new ContentSource[] {
+                new EditorSource(getServiceContext(),edit),
+                new CurrentLocationSource(getServiceContext()),
+                new TrackerSource(getServiceContext()),
+                new OverlaySource(getServiceContext()), 
+                new CurrentFileSource(getServiceContext())
+        };
+
+        setDispatcher(new ContentDispatcher(this,source, target));
+    }
+    
+    private void createViews() {
+        ContentView contentView = new ContentView(this);
+        
+        multiView = createMultiView();
+        contentView.addView(createButtonBar(), layout);
+        contentView.addView(multiView, layout);
+        
+        
+        setContentView(contentView);
+    }
+    
     private MultiView createMultiView() {
         mapView = new OsmInteractiveView(getServiceContext(), SOLID_KEY);
 
@@ -79,7 +109,7 @@ implements OnClickListener,  Runnable {
                 new GpxDynOverlay(mapView, getServiceContext(), GpxInformation.ID.INFO_ID_TRACKER), 
                 new GridDynOverlay(mapView, getServiceContext()),
                 new CurrentLocationOverlay(mapView),
-                new EditorOverlay(mapView, getServiceContext(), INFO_ID_EDITOR_OVERLAY),
+                new EditorOverlay(mapView, getServiceContext(),GpxInformation.ID.INFO_ID_EDITOR_OVERLAY, edit),
                 new NavigationBarOverlay(mapView),
                 new InformationBarOverlay(mapView)
         };
@@ -137,7 +167,8 @@ implements OnClickListener,  Runnable {
 
     @Override
     public void onDestroy() {
-        timer.close();
+        edit.close();
+        //timer.close();
         super.onDestroy();
     }
 
@@ -151,76 +182,42 @@ implements OnClickListener,  Runnable {
     }
 
 
+
     @Override
     public void onServicesUp() {
-        ContentView contentView = new ContentView(this);
-        contentView.addView(createButtonBar(), layout);
-
-
-        multiView = createMultiView();
-        contentView.addView(multiView, layout);
-
-        setContentView(contentView);
-
-
-
-        DescriptionInterface[] target = new DescriptionInterface[] {
-                multiView,this, busyIndicator
-        };
-
-
-        ContentSource[] source = new ContentSource[] {
-                new EditorSource(getServiceContext(), INFO_ID_EDITOR_OVERLAY),
-                new CurrentLocationSource(getServiceContext()),
-                new TrackerSource(getServiceContext()),
-                new OverlaySource(getServiceContext()), 
-                new CurrentFileSource(getServiceContext())
-        };
-
-        setDispatcher(new ContentDispatcher(this,source, target));
-
-        timer.kick();
+        //super.onServicesUp();
+        showCurrentFile();
     }
 
 
-
     private void showCurrentFile() {
-        getServiceContext().getEditorService().editOverlay(
-                new File(getServiceContext().getDirectoryService().getCurrent().getPath()));
+        edit.edit(new File(getServiceContext().getDirectoryService().getCurrent().getPath()));
         mapView.frameBoundingBox(getServiceContext().getDirectoryService().getCurrent().getBoundingBox());
         getDispatcher().forceUpdate();
     }
 
 
 
-
-    private GpxInformation getEditorInfo() {
-        return getServiceContext().getEditorService().getInformation(GpxInformation.ID.INFO_ID_EDITOR_OVERLAY);
-    }
-
-
     @Override
     public void onBackPressed() {
         try {
-            final EditorInterface editor = getServiceContext().getEditorService().getEditor(GpxInformation.ID.INFO_ID_EDITOR_OVERLAY);
-
-            if (editor.isModified()) {
+            if (edit.getEditor().isModified()) {
                 new AppDialog() {
                     @Override
                     protected void onPositiveClick() {
 
-                        editor.save();
+                        edit.getEditor().save();
                         closeActivity();
                     }
 
                     @Override
                     public void onNeutralClick() {
-                        editor.discard();
+                        edit.getEditor().discard();
                         closeActivity();
                     }
 
 
-                }.displaySaveDiscardDialog(this, getEditorInfo().getName());
+                }.displaySaveDiscardDialog(this, edit.getInformation().getName());
             } else {
                 closeActivity();
             }
@@ -241,7 +238,7 @@ implements OnClickListener,  Runnable {
     @Override
     public void onClick(final View v) {
         try {
-            final EditorInterface editor = getServiceContext().getEditorService().getEditor(GpxInformation.ID.INFO_ID_EDITOR_OVERLAY);
+            final EditorInterface editor = edit.getEditor();
 
             if (v == previousFile || v ==nextFile) {
                 if (editor.isModified()) {
@@ -259,7 +256,7 @@ implements OnClickListener,  Runnable {
                         }
 
 
-                    }.displaySaveDiscardDialog(this, getEditorInfo().getName());
+                    }.displaySaveDiscardDialog(this, edit.getInformation().getName());
                 } else {
                     switchFile(v);
                 }
@@ -284,9 +281,8 @@ implements OnClickListener,  Runnable {
         showCurrentFile();
     }
 
-
     @Override
     public void run() {
-        showCurrentFile();
+        //showCurrentFile();
     }
 }

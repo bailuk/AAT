@@ -10,6 +10,7 @@ import ch.bailu.aat.helpers.AppLayout;
 import ch.bailu.aat.helpers.ToolTip;
 import ch.bailu.aat.preferences.SolidMapGrid;
 import ch.bailu.aat.services.ServiceContext;
+import ch.bailu.aat.services.editor.EditorHelper;
 import ch.bailu.aat.services.editor.EditorInterface;
 import ch.bailu.aat.views.ControlBar;
 import ch.bailu.aat.views.map.OsmInteractiveView;
@@ -32,19 +33,23 @@ public class EditorOverlay extends ControlBarOverlay {
     private final OsmOverlay content;
     
     private OsmOverlay coordinates;
+    
+    private final EditorHelper edit;
 
-    public EditorOverlay(OsmInteractiveView osm, ServiceContext sc, int id) {
+    public EditorOverlay(OsmInteractiveView osm, ServiceContext sc, int iid, EditorHelper e) {
         super(osm, new ControlBar(
                 osm.getContext(),
                 AppLayout.getOrientationAlongLargeSide(osm.getContext())));
 
+        edit = e;
+        
         scontext=sc;
 
         sgrid = new SolidMapGrid(osm.getContext(), osm.solidKey);
         coordinates = sgrid.createCenterCoordinatesOverlay(getOsmView());
         
-        content = new GpxDynOverlay(osm, sc, id);
-        selector = new EditorNodeSelectorOverlay(osm, id, sc);
+        content = new GpxDynOverlay(osm, sc, iid);
+        selector = new EditorNodeSelectorOverlay(osm, iid, e);
         
         
         ControlBar bar = getBar();
@@ -96,7 +101,7 @@ public class EditorOverlay extends ControlBarOverlay {
     public void onClick(View v) {
         super.onClick(v);
         
-        final EditorInterface editor = scontext.getEditorService().getEditor(GpxInformation.ID.INFO_ID_EDITOR_OVERLAY);
+        final EditorInterface editor = edit.getEditor();
         
              if (v==save)    editor.save();
         else if (v==saveAs)  editor.saveAs();

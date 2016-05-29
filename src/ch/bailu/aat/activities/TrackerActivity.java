@@ -26,6 +26,7 @@ import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.helpers.AppLayout;
 import ch.bailu.aat.helpers.AppLog;
 import ch.bailu.aat.services.ServiceContext.ServiceNotUpException;
+import ch.bailu.aat.services.editor.EditorHelper;
 import ch.bailu.aat.views.CockpitView;
 import ch.bailu.aat.views.ContentView;
 import ch.bailu.aat.views.ControlBar;
@@ -58,11 +59,14 @@ public class TrackerActivity extends AbsDispatcher implements OnClickListener{
     private MultiView    multiView;
     private OsmInteractiveView   map;
     
+    private EditorHelper edit;
+    
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        edit = new EditorHelper(getServiceContext());
         contentView = new ContentView(this);
         contentView.addView(createButtonBar());
         multiView = createMultiView();
@@ -76,6 +80,7 @@ public class TrackerActivity extends AbsDispatcher implements OnClickListener{
 
     @Override
     public void onDestroy() {
+        edit.close();
         super.onDestroy();
     }
 
@@ -150,7 +155,7 @@ public class TrackerActivity extends AbsDispatcher implements OnClickListener{
                     new GridDynOverlay(map, getServiceContext()),
                     new NavigationBarOverlay(map),
                     new InformationBarOverlay(map),
-                    new EditorOverlay(map, getServiceContext(), GpxInformation.ID.INFO_ID_EDITOR_DRAFT),
+                    new EditorOverlay(map, getServiceContext(), GpxInformation.ID.INFO_ID_EDITOR_DRAFT, edit),
             };
             map.setOverlayList(overlayList);
             
@@ -159,7 +164,7 @@ public class TrackerActivity extends AbsDispatcher implements OnClickListener{
             };
 
             ContentSource[] source = new ContentSource[] {
-                    new EditorSource(getServiceContext(),GpxInformation.ID.INFO_ID_EDITOR_DRAFT),
+                    new EditorSource(getServiceContext(), edit),
                     new TrackerSource(getServiceContext()),
                     new CurrentLocationSource(getServiceContext()),
                     new OverlaySource(getServiceContext()),

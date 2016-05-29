@@ -21,6 +21,7 @@ import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.helpers.AppLayout;
 import ch.bailu.aat.helpers.AppLog;
 import ch.bailu.aat.services.ServiceContext.ServiceNotUpException;
+import ch.bailu.aat.services.editor.EditorHelper;
 import ch.bailu.aat.views.ContentView;
 import ch.bailu.aat.views.ControlBar;
 import ch.bailu.aat.views.NumberView;
@@ -45,11 +46,13 @@ public class MapActivity extends AbsDispatcher implements OnClickListener{
     private ImageButton     cycleButton;
     private NumberView      trackerState, gpsState;
 
+    private EditorHelper    edit;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        edit = new EditorHelper(getServiceContext());
         LinearLayout contentView=new ContentView(this);
         map = createMap();
         contentView.addView(map);
@@ -68,6 +71,7 @@ public class MapActivity extends AbsDispatcher implements OnClickListener{
 
     @Override
     public void onDestroy() {
+        edit.close();
         super.onDestroy();
     }
 
@@ -120,7 +124,7 @@ public class MapActivity extends AbsDispatcher implements OnClickListener{
                 new CurrentLocationOverlay(map),
                 new NavigationBarOverlay(map),
                 new InformationBarOverlay(map),
-                new EditorOverlay(map, getServiceContext(), GpxInformation.ID.INFO_ID_EDITOR_DRAFT),
+                new EditorOverlay(map, getServiceContext(), GpxInformation.ID.INFO_ID_EDITOR_DRAFT, edit),
 
                         new CustomBarOverlay(map, createButtonBar()),
         };
@@ -132,7 +136,7 @@ public class MapActivity extends AbsDispatcher implements OnClickListener{
         };
 
         ContentSource[] source = new ContentSource[] {
-                new EditorSource(getServiceContext(),GpxInformation.ID.INFO_ID_EDITOR_DRAFT),
+                new EditorSource(getServiceContext(), edit),
                 new TrackerSource(getServiceContext()),
                 new CurrentLocationSource(getServiceContext()),
                 new OverlaySource(getServiceContext())};

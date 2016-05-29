@@ -27,6 +27,7 @@ import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.helpers.AppLayout;
 import ch.bailu.aat.helpers.AppLog;
 import ch.bailu.aat.services.ServiceContext.ServiceNotUpException;
+import ch.bailu.aat.services.editor.EditorHelper;
 import ch.bailu.aat.views.CockpitView;
 import ch.bailu.aat.views.ControlBar;
 import ch.bailu.aat.views.MultiView;
@@ -56,10 +57,14 @@ public class SplitViewActivity extends AbsDispatcher implements OnClickListener{
     private ImageButton     activityCycle, multiCycle;
     private NumberView      trackerState;
 
+    private EditorHelper          edit;
+    
+    
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        edit = new EditorHelper(getServiceContext());
         setContentView(createContentView());
         createDispatcher();
         
@@ -170,6 +175,7 @@ public class SplitViewActivity extends AbsDispatcher implements OnClickListener{
 
     @Override
     public void onDestroy() {
+        edit.close();
         super.onDestroy();
     }
 
@@ -185,7 +191,7 @@ public class SplitViewActivity extends AbsDispatcher implements OnClickListener{
                     new NavigationBarOverlay(mapView),
                     new InformationBarOverlay(mapView),
                     new CustomBarOverlay(mapView, createButtonBar()),
-                    new EditorOverlay(mapView, getServiceContext(),  GpxInformation.ID.INFO_ID_EDITOR_DRAFT),
+                    new EditorOverlay(mapView, getServiceContext(),  GpxInformation.ID.INFO_ID_EDITOR_DRAFT, edit),
 
             };
             mapView.setOverlayList(overlayList);
@@ -196,7 +202,7 @@ public class SplitViewActivity extends AbsDispatcher implements OnClickListener{
             };
 
             ContentSource[] source = new ContentSource[] {
-                    new EditorSource(getServiceContext(),GpxInformation.ID.INFO_ID_EDITOR_DRAFT),
+                    new EditorSource(getServiceContext(),edit),
                     new TrackerSource(getServiceContext()),
                     new CurrentLocationSource(getServiceContext()),
                     new OverlaySource(getServiceContext()),

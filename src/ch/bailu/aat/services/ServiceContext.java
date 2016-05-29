@@ -6,7 +6,6 @@ import ch.bailu.aat.services.background.BackgroundService;
 import ch.bailu.aat.services.cache.CacheService;
 import ch.bailu.aat.services.dem.ElevationService;
 import ch.bailu.aat.services.directory.DirectoryService;
-import ch.bailu.aat.services.editor.EditorService;
 import ch.bailu.aat.services.icons.IconMapService;
 import ch.bailu.aat.services.tracker.TrackerService;
 
@@ -97,21 +96,6 @@ public abstract class ServiceContext implements ContextWrapperInterface {
 
         if (s==null) return new DirectoryService.Self();
         return s.getSelf();    }
-
-
-    public EditorService.Self getEditorService()  {
-        EditorService s=null;
-        try {
-            s=getService().editor;
-
-        } catch (Exception e) {
-            s=null;
-
-        }
-
-        if (s==null) return new EditorService.Self();
-        return s.getSelf();    }
-
 
 
 
