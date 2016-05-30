@@ -47,7 +47,9 @@ public abstract class ServiceLink extends ServiceContext implements Closeable {
         @Override
         public void close() {
             connections--;
-            if (connections==0) service.free(ServiceLink.class.getSimpleName());
+            
+            if (connections==0 && service != null) 
+                service.free(ServiceLink.class.getSimpleName());
             
             context.unbindService(this);
             service=null;

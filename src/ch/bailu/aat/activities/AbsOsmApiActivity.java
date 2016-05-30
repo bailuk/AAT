@@ -28,7 +28,6 @@ import ch.bailu.aat.helpers.AppTheme;
 import ch.bailu.aat.helpers.OsmApiHelper;
 import ch.bailu.aat.helpers.ToolTip;
 import ch.bailu.aat.preferences.AddOverlayDialog;
-import ch.bailu.aat.services.ServiceContext.ServiceNotUpException;
 import ch.bailu.aat.services.background.BackgroundService;
 import ch.bailu.aat.services.background.DownloadHandle;
 import ch.bailu.aat.services.background.ProcessHandle;
@@ -67,9 +66,20 @@ public abstract class AbsOsmApiActivity extends AbsDispatcher implements OnClick
         } catch (Exception e) {
             AppLog.e(this,e);
         }
+        setContentView(createContentView());
+        
+        ContentSource[] source = new ContentSource[] {
+                new CustomFileSource(getServiceContext(),osmApi.getResultFile().toString()),};
+
+        DescriptionInterface[] target = new DescriptionInterface[] {
+                list
+        };
+
+        setDispatcher(new ContentDispatcher(this,source, target));
+
     }  
 
-    private LinearLayout createContentView() throws ServiceNotUpException {
+    private LinearLayout createContentView()  {
         ContentView view = new ContentView(this);
         ControlBar bar = createControlBar();
         view.addView(bar, layout);        
@@ -125,25 +135,6 @@ public abstract class AbsOsmApiActivity extends AbsDispatcher implements OnClick
         return bar;
     }
 
-    @Override
-    public void onServicesUp() {
-        try {
-            setContentView(createContentView());
-
-            ContentSource[] source = new ContentSource[] {
-                    new CustomFileSource(getServiceContext(),osmApi.getResultFile().toString()),};
-
-            DescriptionInterface[] target = new DescriptionInterface[] {
-                    list
-            };
-
-            setDispatcher(new ContentDispatcher(this,source, target));
-
-        } catch (ServiceNotUpException e) {
-            AppLog.e(this, e);
-        }
-
-    }
 
     public abstract OsmApiHelper createUrlGenerator(BoundingBoxE6 boundingBox) throws SecurityException, IOException;
     public abstract void addButtons(ControlBar bar);

@@ -62,5 +62,4 @@ public abstract class AbsActivity extends Activity {
         builder.append(PreferenceLoadDefaults.getStartCount(this));
         builder.append("</p>");
     }
-
 }

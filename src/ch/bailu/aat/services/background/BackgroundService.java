@@ -68,7 +68,7 @@ public class BackgroundService extends VirtualService {
         private BroadcastReceiver onFileDownloaded = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                AppLog.i(BackgroundService.this, AppBroadcaster.getFile(intent));
+                AppLog.i(context, AppBroadcaster.getFile(intent));
             }
         };
 
