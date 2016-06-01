@@ -20,6 +20,7 @@ import ch.bailu.aat.dispatcher.TrackerSource;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.helpers.AppLayout;
 import ch.bailu.aat.helpers.AppLog;
+import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.ServiceContext.ServiceNotUpException;
 import ch.bailu.aat.services.editor.EditorHelper;
 import ch.bailu.aat.views.ContentView;
@@ -53,6 +54,7 @@ public class MapActivity extends AbsDispatcher implements OnClickListener{
         super.onCreate(savedInstanceState);
 
         edit = new EditorHelper(getServiceContext());
+        
         LinearLayout contentView=new ContentView(this);
         map = createMap();
         contentView.addView(map);
@@ -63,7 +65,21 @@ public class MapActivity extends AbsDispatcher implements OnClickListener{
 
 
     private OsmInteractiveView createMap() {
-        OsmInteractiveView map=new OsmInteractiveView(getServiceContext(), SOLID_KEY);
+        final ServiceContext sc=getServiceContext();
+        final OsmInteractiveView map=new OsmInteractiveView(sc, SOLID_KEY);
+        
+        OsmOverlay overlayList[] = {
+                new GpxOverlayListOverlay(map, sc),
+                new GpxDynOverlay(map, sc, GpxInformation.ID.INFO_ID_TRACKER), 
+                new GridDynOverlay(map, sc),
+                new CurrentLocationOverlay(map),
+                new NavigationBarOverlay(map),
+                new InformationBarOverlay(map),
+                new EditorOverlay(map, sc, GpxInformation.ID.INFO_ID_EDITOR_DRAFT, edit),
+                new CustomBarOverlay(map, createButtonBar()),
+        };
+        map.setOverlayList(overlayList);
+        
         return map;
     }
 
@@ -75,7 +91,45 @@ public class MapActivity extends AbsDispatcher implements OnClickListener{
         super.onDestroy();
     }
 
+    
+    @Override
+    public void onServicesUp(boolean firstRun) {
+        edit.edit();
+        super.onServicesUp(firstRun);
+    }
 
+    
+    @Override
+    public void onClick(View v) {
+        if (v==startPause) {
+            try {
+                onStartPauseClick();
+            } catch (ServiceNotUpException e) {
+                AppLog.e(this, e);
+            }
+
+        } if (v==cycleButton) {
+            ActivitySwitcher.cycle(this);
+        }
+
+    }
+
+    
+    private void createDispatcher() {
+        DescriptionInterface[] target = new DescriptionInterface[] {
+                map,trackerState,gpsState, this
+        };
+
+        ContentSource[] source = new ContentSource[] {
+                new EditorSource(getServiceContext(), edit),
+                new TrackerSource(getServiceContext()),
+                new CurrentLocationSource(getServiceContext()),
+                new OverlaySource(getServiceContext())};
+
+        setDispatcher(new ContentDispatcher(this,source, target));
+    }
+
+    
     private ControlBar createButtonBar() {
         ControlBar bar = new ControlBar(
                 this, 
@@ -96,55 +150,6 @@ public class MapActivity extends AbsDispatcher implements OnClickListener{
 
         return bar;
     }
-
-
-
-    @Override
-    public void onClick(View v) {
-        if (v==startPause) {
-            try {
-                onStartPauseClick();
-            } catch (ServiceNotUpException e) {
-                AppLog.e(this, e);
-            }
-
-        } if (v==cycleButton) {
-            ActivitySwitcher.cycle(this);
-        }
-
-    }
-
-    
-    private void createDispatcher() {
-        OsmOverlay overlayList[] = {
-
-                new GpxOverlayListOverlay(map, getServiceContext()),
-                new GpxDynOverlay(map, getServiceContext(), GpxInformation.ID.INFO_ID_TRACKER), 
-                new GridDynOverlay(map, getServiceContext()),
-                new CurrentLocationOverlay(map),
-                new NavigationBarOverlay(map),
-                new InformationBarOverlay(map),
-                new EditorOverlay(map, getServiceContext(), GpxInformation.ID.INFO_ID_EDITOR_DRAFT, edit),
-
-                        new CustomBarOverlay(map, createButtonBar()),
-        };
-        map.setOverlayList(overlayList);
-
-
-        DescriptionInterface[] target = new DescriptionInterface[] {
-                map,trackerState,gpsState, this
-        };
-
-        ContentSource[] source = new ContentSource[] {
-                new EditorSource(getServiceContext(), edit),
-                new TrackerSource(getServiceContext()),
-                new CurrentLocationSource(getServiceContext()),
-                new OverlaySource(getServiceContext())};
-
-        setDispatcher(new ContentDispatcher(this,source, target));
-
-    }
-
 
     @Override
     public void updateGpxContent(GpxInformation info) {

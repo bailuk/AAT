@@ -116,7 +116,7 @@ public class NodeDetailActivity extends AbsDispatcher implements OnClickListener
 
 
     @Override
-    public void onServicesUp() {
+    public void onServicesUp(boolean firstRun) {
 
         OsmOverlay overlayList[] = {
                 new GpxDynOverlay(map, getServiceContext(), GpxInformation.ID.INFO_ID_TRACKER), 

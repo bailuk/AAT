@@ -21,7 +21,7 @@ public class MapFeatureListActivity extends AbsDispatcher {
     
 
     @Override
-    public void onServicesUp() {
+    public void onServicesUp(boolean firstRun) {
         final Intent intent = getIntent();
         final String file = AppBroadcaster.getFile(intent);
         

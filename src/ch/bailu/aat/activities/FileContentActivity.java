@@ -71,7 +71,7 @@ public class FileContentActivity extends AbsDispatcher implements OnClickListene
         super.onCreate(savedInstanceState);
 
         edit = new EditorHelper(getServiceContext());
-        
+
         contentView = new ContentView(this);
         contentView.addView(createButtonBar());
         multiView = createMultiView();
@@ -103,9 +103,21 @@ public class FileContentActivity extends AbsDispatcher implements OnClickListene
     private MultiView createMultiView() {
         map = new OsmInteractiveView(getServiceContext(), SOLID_KEY);
 
+        final OsmOverlay overlayList[] = {
+                new GpxOverlayListOverlay(map, getServiceContext()),
+                new GpxDynOverlay(map, getServiceContext(), GpxInformation.ID.INFO_ID_TRACKER), 
+                new GpxDynOverlay(map, getServiceContext(), GpxInformation.ID.INFO_ID_FILEVIEW),
+                new CurrentLocationOverlay(map),
+                new GridDynOverlay(map, getServiceContext()),
+                new NavigationBarOverlay(map),
+                new InformationBarOverlay(map),
+                new EditorOverlay(map, getServiceContext(),  GpxInformation.ID.INFO_ID_EDITOR_DRAFT, edit),
+
+        };
+        map.setOverlayList(overlayList);
 
 
-        ContentDescription summaryData[] = {
+        final ContentDescription summaryData[] = {
                 new NameDescription(this),
                 new PathDescription(this),
                 new TimeDescription(this),
@@ -119,12 +131,13 @@ public class FileContentActivity extends AbsDispatcher implements OnClickListene
                 new TrackSizeDescription(this),
         };
 
-        TrackDescriptionView viewData[] = {
+        final TrackDescriptionView viewData[] = {
                 new SummaryListView(this, SOLID_KEY, INFO_ID_FILEVIEW, summaryData), 
                 map,
                 new VerticalView(this, SOLID_KEY, INFO_ID_FILEVIEW, new TrackDescriptionView[] {
                         new DistanceAltitudeGraphView(this, SOLID_KEY),
-                        new DistanceSpeedGraphView(this, SOLID_KEY)})
+                        new DistanceSpeedGraphView(this, SOLID_KEY)
+                })
         };   
 
         return new MultiView(this, SOLID_KEY, INFO_ID_ALL, viewData);
@@ -147,25 +160,6 @@ public class FileContentActivity extends AbsDispatcher implements OnClickListene
 
 
     private void createDispatcher() {
-
-        OsmOverlay overlayList[] = {
-                new GpxOverlayListOverlay(map, getServiceContext()),
-                new GpxDynOverlay(map, getServiceContext(), GpxInformation.ID.INFO_ID_TRACKER), 
-                new GpxDynOverlay(map, getServiceContext(), GpxInformation.ID.INFO_ID_FILEVIEW),
-                new CurrentLocationOverlay(map),
-                new GridDynOverlay(map, getServiceContext()),
-                new NavigationBarOverlay(map),
-                new InformationBarOverlay(map),
-                new EditorOverlay(map, getServiceContext(),  GpxInformation.ID.INFO_ID_EDITOR_DRAFT, edit),
-
-        };
-        map.setOverlayList(overlayList);
-
-
-        map.frameBoundingBox(getServiceContext().getDirectoryService().
-                getCurrent().getBoundingBox());
-
-
         DescriptionInterface[] target = new DescriptionInterface[] {
                 multiView, this, busyIndicator
         };
@@ -182,14 +176,22 @@ public class FileContentActivity extends AbsDispatcher implements OnClickListene
     }
 
 
-    /*
+
     @Override
-    public void onServicesUp() {
+    public void onServicesUp(boolean firstRun) {
+        if (firstRun) frameCurrentFile();
+        
+        edit.edit();
+        super.onServicesUp(firstRun);
+    }
+
+
+    private void frameCurrentFile() {
         map.frameBoundingBox(getServiceContext().getDirectoryService().
                 getCurrent().getBoundingBox());
-        getDispatcher().forceUpdate();
     }
-*/
+
+
     @Override
     public void onClick(View v) {
         if (v ==nextView) {
@@ -202,11 +204,8 @@ public class FileContentActivity extends AbsDispatcher implements OnClickListene
             } else if (v ==nextFile) {
                 getServiceContext().getDirectoryService().toNext();
             }
-            map.frameBoundingBox(getServiceContext().getDirectoryService().
-                    getCurrent().getBoundingBox());
+            frameCurrentFile();
             getDispatcher().forceUpdate();
-
         }
     }
-
 }

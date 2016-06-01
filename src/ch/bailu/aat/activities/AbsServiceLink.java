@@ -19,10 +19,14 @@ public abstract class AbsServiceLink extends AbsActivity implements GpxInformati
         
         serviceLink = new ServiceLink(this) {
 
+            private boolean firstRun=true;
+            
             @Override
             public void onServicesUp() {
-                AbsServiceLink.this.onServicesUp();
+                AbsServiceLink.this.onServicesUp(firstRun);
+                firstRun=false;
             }
+            
             
         };
             
@@ -44,7 +48,7 @@ public abstract class AbsServiceLink extends AbsActivity implements GpxInformati
     }
     
     
-    public abstract void onServicesUp();
+    public abstract void onServicesUp(boolean firstRun);
 
 
     @Override

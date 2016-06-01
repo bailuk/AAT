@@ -46,10 +46,9 @@ import ch.bailu.aat.views.map.overlay.gpx.GpxDynOverlay;
 import ch.bailu.aat.views.map.overlay.gpx.GpxOverlayListOverlay;
 import ch.bailu.aat.views.map.overlay.grid.GridDynOverlay;
 
-public class GpxEditorActivity extends AbsDispatcher
-implements OnClickListener,  Runnable {
+public class GpxEditorActivity extends AbsDispatcher implements OnClickListener {
 
-     private final LayoutParams layout= new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
+    private final LayoutParams layout= new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
 
     private static final String SOLID_KEY="gpx_editor";
 
@@ -61,13 +60,14 @@ implements OnClickListener,  Runnable {
     private OsmInteractiveView    mapView;
 
     private EditorHelper edit;
-    
+
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         edit = new EditorHelper(getServiceContext(), GpxInformation.ID.INFO_ID_EDITOR_OVERLAY);
-        
+
         createViews();
         createDispatcher();
     }
@@ -89,18 +89,19 @@ implements OnClickListener,  Runnable {
 
         setDispatcher(new ContentDispatcher(this,source, target));
     }
-    
+
+
     private void createViews() {
         ContentView contentView = new ContentView(this);
-        
+
         multiView = createMultiView();
         contentView.addView(createButtonBar(), layout);
         contentView.addView(multiView, layout);
-        
-        
+
+
         setContentView(contentView);
     }
-    
+
     private MultiView createMultiView() {
         mapView = new OsmInteractiveView(getServiceContext(), SOLID_KEY);
 
@@ -168,25 +169,24 @@ implements OnClickListener,  Runnable {
     @Override
     public void onDestroy() {
         edit.close();
-        //timer.close();
         super.onDestroy();
     }
 
 
     @Override
     public void onPause() {
-
         getServiceContext().getDirectoryService().storePosition();
-
         super.onPause();
     }
 
 
 
     @Override
-    public void onServicesUp() {
-        //super.onServicesUp();
-        showCurrentFile();
+    public void onServicesUp(boolean firstRun) {
+        if (firstRun) {
+            showCurrentFile();
+        }
+        super.onServicesUp(firstRun);
     }
 
 
@@ -237,36 +237,32 @@ implements OnClickListener,  Runnable {
 
     @Override
     public void onClick(final View v) {
-        try {
-            final EditorInterface editor = edit.getEditor();
+        final EditorInterface editor = edit.getEditor();
 
-            if (v == previousFile || v ==nextFile) {
-                if (editor.isModified()) {
-                    new AppDialog() {
-                        @Override
-                        protected void onPositiveClick() {
-                            editor.save();
-                            switchFile(v);
-                        }
+        if (v == previousFile || v ==nextFile) {
+            if (editor.isModified()) {
+                new AppDialog() {
+                    @Override
+                    protected void onPositiveClick() {
+                        editor.save();
+                        switchFile(v);
+                    }
 
-                        @Override
-                        public void onNeutralClick() {
-                            editor.discard();
-                            switchFile(v);
-                        }
+                    @Override
+                    public void onNeutralClick() {
+                        editor.discard();
+                        switchFile(v);
+                    }
 
 
-                    }.displaySaveDiscardDialog(this, edit.getInformation().getName());
-                } else {
-                    switchFile(v);
-                }
-
-            } else if (v == nextView) {
-                multiView.setNext();
-
+                }.displaySaveDiscardDialog(this, edit.getInformation().getName());
+            } else {
+                switchFile(v);
             }
-        } catch (Exception e) {
-            AppLog.e(this, e);
+
+        } else if (v == nextView) {
+            multiView.setNext();
+
         }
     }
 
@@ -279,10 +275,5 @@ implements OnClickListener,  Runnable {
             getServiceContext().getDirectoryService().toPrevious();
 
         showCurrentFile();
-    }
-
-    @Override
-    public void run() {
-        //showCurrentFile();
     }
 }

@@ -15,6 +15,7 @@ public class EditorHelper implements Closeable {
     private ObjectHandle handle = ObjectHandle.NULL;
     private final int IID;
     
+    
     public EditorHelper(ServiceContext sc) {
         IID=GpxInformation.ID.INFO_ID_EDITOR_DRAFT;
         scontext = sc;
@@ -43,6 +44,10 @@ public class EditorHelper implements Closeable {
         edit(AppDirectory.getEditorDraft(scontext.getContext()));
     }
 
+
+    public int getIID() {
+        return IID;
+    }
     
     public GpxInformation getInformation() {
         if (GpxObjectEditable.class.isInstance(handle)) {

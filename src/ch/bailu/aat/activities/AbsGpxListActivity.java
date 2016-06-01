@@ -71,7 +71,7 @@ public abstract class AbsGpxListActivity extends AbsMenu implements OnItemClickL
 
 
     @Override
-    public void onServicesUp() {
+    public void onServicesUp(boolean firstRun) {
         try {
             directoryServiceHelper = createDirectoryServiceHelper();
             listView.setAdapter(getServiceContext());

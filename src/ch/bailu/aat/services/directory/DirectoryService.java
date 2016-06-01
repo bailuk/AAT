@@ -15,7 +15,6 @@ import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.ServiceContext.ServiceNotUpException;
 import ch.bailu.aat.services.VirtualService;
 import ch.bailu.aat.services.cache.CacheService;
-import ch.bailu.aat.services.cache.CacheService.SelfOn;
 
 public class DirectoryService extends VirtualService{
 

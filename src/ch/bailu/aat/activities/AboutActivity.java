@@ -15,7 +15,7 @@ public class AboutActivity extends AbsHtmlViewActivity {
 
     
     @Override
-    public void onServicesUp() {}
+    public void onServicesUp(boolean firstRun) {}
 
     
     @Override

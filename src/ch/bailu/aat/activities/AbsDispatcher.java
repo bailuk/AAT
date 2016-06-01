@@ -5,13 +5,13 @@ import ch.bailu.aat.dispatcher.ContentDispatcher;
 
 public abstract class AbsDispatcher extends AbsMenu {
     private ContentDispatcher dispatcher;
-
+  
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        dispatcher = ContentDispatcher.NULL;
+         dispatcher = ContentDispatcher.NULL;
     }
     
     
@@ -25,9 +25,10 @@ public abstract class AbsDispatcher extends AbsMenu {
     	dispatcher = d;
     }
     
+  
 
     @Override
-    public void onServicesUp() {
+    public void onServicesUp(boolean firstRun) {
         dispatcher.forceUpdate();
     }
     

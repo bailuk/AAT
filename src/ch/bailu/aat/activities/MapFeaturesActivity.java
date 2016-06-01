@@ -63,9 +63,7 @@ public class MapFeaturesActivity extends AbsDispatcher implements OnClickListene
     }
     
     @Override
-    public void onServicesUp() {
-        
-    }
+    public void onServicesUp(boolean firstRun) {}
 
     
     @Override

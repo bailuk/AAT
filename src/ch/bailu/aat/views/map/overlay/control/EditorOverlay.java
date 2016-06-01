@@ -42,7 +42,6 @@ public class EditorOverlay extends ControlBarOverlay {
                 AppLayout.getOrientationAlongLargeSide(osm.getContext())));
 
         edit = e;
-        
         scontext=sc;
 
         sgrid = new SolidMapGrid(osm.getContext(), osm.solidKey);
@@ -50,7 +49,7 @@ public class EditorOverlay extends ControlBarOverlay {
         
         content = new GpxDynOverlay(osm, sc, iid);
         selector = new EditorNodeSelectorOverlay(osm, iid, e);
-        
+
         
         ControlBar bar = getBar();
         

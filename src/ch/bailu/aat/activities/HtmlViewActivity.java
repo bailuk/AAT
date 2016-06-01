@@ -22,5 +22,5 @@ public class HtmlViewActivity extends AbsHtmlViewActivity {
 
     
     @Override
-    public void onServicesUp() {}
+    public void onServicesUp(boolean firstRun) {}
 }
