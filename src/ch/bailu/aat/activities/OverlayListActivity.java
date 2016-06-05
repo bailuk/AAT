@@ -1,7 +1,6 @@
 package ch.bailu.aat.activities;
 
 import java.io.File;
-import java.io.IOException;
 
 import android.content.Intent;
 import android.widget.LinearLayout;
@@ -44,11 +43,10 @@ public class OverlayListActivity extends AbsGpxListActivity {
     }
 
     @Override
-    public DirectoryServiceHelper createDirectoryServiceHelper() throws IOException {
-
+    public DirectoryServiceHelper createDirectoryServiceHelper() {
         File directory=AppDirectory.getDataDirectory(this, AppDirectory.DIR_OVERLAY); 
 
-        return new DirectoryServiceHelper(getServiceContext().getDirectoryService(), directory, "");
+        return new DirectoryServiceHelper(getServiceContext(), directory);
     }
     
 
@@ -73,16 +71,6 @@ public class OverlayListActivity extends AbsGpxListActivity {
     }
 
 
-    @Override
-    public void onResume() {
-        super.onResume();
-
-        try {
-            createDirectoryServiceHelper().rescanDirectory();
-        } catch (Exception e) {}
-
-    }
-    
     public void createLabel(ControlBar bar, String labelText) {
         TextView label = new TextView(this);
         

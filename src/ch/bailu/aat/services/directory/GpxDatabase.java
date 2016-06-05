@@ -6,7 +6,7 @@ import java.io.IOException;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import ch.bailu.aat.services.cache.CacheService;
+import ch.bailu.aat.services.ServiceContext;
 
 
 public class GpxDatabase extends AbsDatabase{
@@ -20,16 +20,16 @@ public class GpxDatabase extends AbsDatabase{
 
 
 
-    public GpxDatabase (Context c, CacheService.Self loader, File p, String s) throws IOException {
+    public GpxDatabase (ServiceContext sc, File p, String s) throws IOException {
 
         selection=s;
-        context=c;
+        context=sc.getContext();
         path=p;
 
         database = openDatabase(path);
 
 
-        iterator = new GpxIterator(openCursor(database, selection), loader);
+        iterator = new GpxIterator(openCursor(database, selection), sc);
     }
 
 

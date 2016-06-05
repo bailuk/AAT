@@ -19,7 +19,6 @@ import ch.bailu.aat.helpers.AppBroadcaster;
 import ch.bailu.aat.helpers.AppDirectory;
 import ch.bailu.aat.helpers.AppLog;
 import ch.bailu.aat.services.ServiceContext;
-import ch.bailu.aat.services.ServiceContext.ServiceNotUpException;
 import ch.bailu.aat.services.background.ProcessHandle;
 import ch.bailu.aat.services.cache.GpxObject;
 import ch.bailu.aat.services.cache.GpxObjectStatic;
@@ -45,7 +44,7 @@ public class DirectorySynchronizer  implements Closeable {
     private boolean canContinue=true;
     private State state;
 
-    public DirectorySynchronizer(ServiceContext cs, File d) throws ServiceNotUpException {
+    public DirectorySynchronizer(ServiceContext cs, File d) {
         scontext=cs;
         directory=d;
         

@@ -1,11 +1,10 @@
 package ch.bailu.aat.preferences;
 
 import java.io.File;
-import java.io.IOException;
 
-import ch.bailu.aat.helpers.AppDirectory;
-import ch.bailu.aat.R;
 import android.content.Context;
+import ch.bailu.aat.R;
+import ch.bailu.aat.helpers.AppDirectory;
 
 public class SolidPreset extends SolidStaticIndexList {
     final private static String KEY="preset";
@@ -40,16 +39,16 @@ public class SolidPreset extends SolidStaticIndexList {
     }
     
     
-    public File getDirectory() throws IOException {
+    public File getDirectory() {
     	return AppDirectory.getTrackListDirectory(getContext(),getIndex());
     }
     
     
-    public String getDirectoryName() throws IOException {
+    public String getDirectoryName() {
     	return getDirectory().toString();
     }
     
-    public String getCacheDbName() throws IOException {
+    public String getCacheDbName() {
     	return AppDirectory.getTrackListCacheDb(getContext(),getIndex()).toString();
     }
     

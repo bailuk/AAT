@@ -1,6 +1,6 @@
 package ch.bailu.aat.services.directory;
 
-import java.io.IOException;
+import java.io.File;
 
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
@@ -11,9 +11,8 @@ import ch.bailu.aat.preferences.SolidTrackListFilter;
 import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat.services.ServiceContext;
 
-public class DynamicDirectoryServiceHelper
-                            extends DirectoryServiceHelper 
-                            implements OnSharedPreferenceChangeListener{
+public class DynamicDirectoryServiceHelper extends DirectoryServiceHelper 
+    implements OnSharedPreferenceChangeListener {
 
 
     private final SolidTrackListFilter sfilter;
@@ -21,9 +20,9 @@ public class DynamicDirectoryServiceHelper
     private final SolidFilterTo sto;
     private final Storage storage;
 
-    
-    public DynamicDirectoryServiceHelper(ServiceContext sc) throws IOException {
-        super(sc.getDirectoryService(),new SolidPreset(sc.getContext()).getDirectory());
+
+    public DynamicDirectoryServiceHelper(ServiceContext sc)  {
+        super(sc,getDirectory(sc));
 
         int preset = new SolidPreset(sc.getContext()).getIndex();
 
@@ -33,19 +32,20 @@ public class DynamicDirectoryServiceHelper
 
         storage = Storage.preset(sc.getContext());
         storage.register(this);
-
-        setSelection(createSelectionString());
-        rescanDirectory();
-
+        
+        setSelectionString(createSelectionString());
     }
 
+    
+    private static File getDirectory(ServiceContext sc) {
+        return new SolidPreset(sc.getContext()).getDirectory();
+    }
 
     @Override
-    public void onSharedPreferenceChanged(
-            SharedPreferences sharedPreferences, String key) {
+    public void onSharedPreferenceChanged(SharedPreferences p, String key) {
 
         if (sfilter.hasKey(key) || sfrom.hasKey(key) || sto.hasKey(key)) {
-            setSelection(createSelectionString());
+            requery(createSelectionString());
         }
     }
 
@@ -67,7 +67,7 @@ public class DynamicDirectoryServiceHelper
 
     @Override
     public void close() {
-        super.close();
         storage.unregister(this);
+        super.close();
     }
 }

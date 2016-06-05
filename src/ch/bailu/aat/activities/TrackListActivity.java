@@ -1,7 +1,5 @@
 package ch.bailu.aat.activities;
 
-import java.io.IOException;
-
 import android.content.Intent;
 import android.widget.LinearLayout;
 import ch.bailu.aat.description.AverageSpeedDescription;
@@ -56,7 +54,7 @@ public class TrackListActivity extends AbsGpxListActivity {
     }
 
     @Override
-    public DirectoryServiceHelper createDirectoryServiceHelper() throws IOException {
+    public DirectoryServiceHelper createDirectoryServiceHelper() {
         return new DynamicDirectoryServiceHelper(getServiceContext());
     }
 

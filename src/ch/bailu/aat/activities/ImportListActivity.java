@@ -1,7 +1,6 @@
 package ch.bailu.aat.activities;
 
 import java.io.File;
-import java.io.IOException;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -20,10 +19,6 @@ import ch.bailu.aat.services.directory.DirectoryServiceHelper;
 import ch.bailu.aat.views.ControlBar;
 
 public class ImportListActivity extends AbsGpxListActivity {
-
-
-
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,8 +37,6 @@ public class ImportListActivity extends AbsGpxListActivity {
         createLabel(header,getLabelText());
         contentView.addView(header);
 
-
-
         return header;
     }
 
@@ -53,11 +46,9 @@ public class ImportListActivity extends AbsGpxListActivity {
     }
 
     @Override
-    public DirectoryServiceHelper createDirectoryServiceHelper() throws IOException {
-
+    public DirectoryServiceHelper createDirectoryServiceHelper() {
         File directory=AppDirectory.getDataDirectory(this, AppDirectory.DIR_IMPORT); 
-
-        return new DirectoryServiceHelper(getServiceContext().getDirectoryService(), directory, "");
+        return new DirectoryServiceHelper(getServiceContext(), directory);
     }
 
 
@@ -82,16 +73,6 @@ public class ImportListActivity extends AbsGpxListActivity {
     }
 
 
-    @Override
-    public void onResume() {
-        super.onResume();
-
-        try {
-            createDirectoryServiceHelper().rescanDirectory();
-        } catch (Exception e) {}
-
-    }
-
     public void createLabel(ControlBar bar, String labelText) {
         TextView label = new TextView(this);
 
@@ -101,7 +82,4 @@ public class ImportListActivity extends AbsGpxListActivity {
         bar.addViewIgnoreSize(label);
 
     }
-
-
- 
 }

@@ -2,7 +2,6 @@ package ch.bailu.aat.activities;
 
 
 import java.io.File;
-import java.io.IOException;
 
 import android.os.Bundle;
 import android.view.ContextMenu;
@@ -38,27 +37,31 @@ public abstract class AbsGpxListActivity extends AbsMenu implements OnItemClickL
     private DbSynchronizerBusyIndicator busyIndicator;
 
     private LinearLayout                contentView;
-    private DirectoryServiceHelper      directoryServiceHelper;
+    private DirectoryServiceHelper      directory;
 
 
+    public abstract LinearLayout           createHeader(LinearLayout contentView);
+    public abstract DirectoryServiceHelper createDirectoryServiceHelper();
+    public abstract void                   createSummaryView(LinearLayout layout);
+    public abstract ContentDescription[]   getGpxListItemData();
+
+    
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         contentView=new ContentView(this);
 
-        LinearLayout header = createHeader(contentView);
-
-        createBusyIndicator(header);
-
+        createBusyIndicator(createHeader(contentView));
+        
         createSummaryView(contentView);
         createListView(contentView);
         setContentView(contentView);
 
+        directory = createDirectoryServiceHelper();
     }        
 
 
-    public abstract LinearLayout createHeader(LinearLayout contentView);
 
 
     private void createBusyIndicator(LinearLayout layout) {
@@ -67,28 +70,17 @@ public abstract class AbsGpxListActivity extends AbsMenu implements OnItemClickL
     }
 
 
-
-
-
     @Override
     public void onServicesUp(boolean firstRun) {
-        try {
-            directoryServiceHelper = createDirectoryServiceHelper();
+        if (firstRun) {
+            directory.reopen();
             listView.setAdapter(getServiceContext());
-            listView.setSelection(getServiceContext().getDirectoryService().getStoredPosition());
-
-        } catch (IOException e) {
-            e.printStackTrace();
         }
-
+        
+        directory.rescan();
+        listView.setSelection(getServiceContext().getDirectoryService().getPosition());
     }
 
-
-
-
-    public abstract DirectoryServiceHelper createDirectoryServiceHelper() throws IOException;
-
-    public abstract void createSummaryView(LinearLayout layout);
 
 
     private void createListView(LinearLayout contentView) {
@@ -104,24 +96,19 @@ public abstract class AbsGpxListActivity extends AbsMenu implements OnItemClickL
     }
 
 
-    public abstract ContentDescription[] getGpxListItemData();
 
 
     @Override
     public void onDestroy() {
-
-
-        getServiceContext().getDirectoryService().storePosition(listView.getFirstVisiblePosition());
-        if (directoryServiceHelper != null) directoryServiceHelper.close();
-
+        directory.close();
         super.onDestroy();
     }
 
 
+    
     @Override
     public void onResume() {
         super.onResume();
-        //listView.setSelection(getServiceContext().getDirectoryService().getStoredPosition());
     }
 
     @Override
@@ -156,7 +143,6 @@ public abstract class AbsGpxListActivity extends AbsMenu implements OnItemClickL
 
 
     private void displayContextMenu(DirectoryService.Self directory, ContextMenu menu, int position) {
-
         directory.setPosition(position);
 
         getMenuInflater().inflate(R.menu.contextmenu, menu);
@@ -168,13 +154,13 @@ public abstract class AbsGpxListActivity extends AbsMenu implements OnItemClickL
     public boolean onContextItemSelected(MenuItem item) {
         try {
             if (item.getItemId()== R.id.m_file_delete) {
-                directoryServiceHelper.deleteSelectedFile(this);
+                directory.deleteSelected(this);
 
             } else if (item.getItemId() == R.id.m_file_reload) {
-                directoryServiceHelper.refreshSelectedEntry();
+                directory.refreshSelected();
 
             } else if (item.getItemId() == R.id.m_file_rename) {
-                directoryServiceHelper.renameSelectedFile(this);
+                directory.renameSelectedFile(this);
 
             } else if (item.getItemId() == R.id.m_file_overlay) {
                 new AddOverlayDialog(this,

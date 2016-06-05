@@ -2,56 +2,53 @@ package ch.bailu.aat.services.directory;
 
 import java.io.Closeable;
 import java.io.File;
-import java.io.IOException;
 
 import android.app.Activity;
 import android.widget.EditText;
 import ch.bailu.aat.R;
 import ch.bailu.aat.helpers.AppDialog;
 import ch.bailu.aat.helpers.AppLog;
+import ch.bailu.aat.services.ServiceContext;
 
 public class DirectoryServiceHelper implements Closeable {
 
-    private final DirectoryService.Self service;
+    private final ServiceContext scontext;
     private final File directory;
-    private String selection;
+    private String selection="";
 
-    public DirectoryServiceHelper(DirectoryService.Self s, File d, String sel) throws IOException {
-        service = s;
-        directory = d;
-        selection=sel;
-
-        
-
-        service.setDirectory(directory, selection);
-    }
-
-
-
-    public DirectoryServiceHelper(DirectoryService.Self  s, File d) throws IOException {
-        service = s;
+    public DirectoryServiceHelper(ServiceContext sc, File d) {
+        scontext = sc;
         directory = d;
     }
 
 
-    public void setSelection(String s) {
+
+    public void setSelectionString(String s) {
         selection = s;
-        service.setSelection(selection);
+    }
+    
+    public void reopen() {
+        scontext.getDirectoryService().reopen(directory, selection);
+    }
+
+    
+    public void requery(String s) {
+        selection = s;
+        scontext.getDirectoryService().reopen(directory, selection); // or requery ????
     }
 
 
-    public void rescanDirectory() {
-        service.setDirectory(directory, selection);
+    public void rescan() {
+        scontext.getDirectoryService().rescan();
     }
 
 
-    public void refreshSelectedEntry() {
-        service.deleteCurrentTrackFromDb();
-        rescanDirectory();
+    public void refreshSelected() {
+        scontext.getDirectoryService().deleteCurrentTrackFromDb();
     }
 
 
-    public void deleteSelectedFile(Activity activity) {
+    public void deleteSelected(Activity activity) {
         new FileDeletionDialog(activity);
     }
 
@@ -60,14 +57,14 @@ public class DirectoryServiceHelper implements Closeable {
         private String fileToDelete = null;
 
         public FileDeletionDialog(Activity activity) {
-            fileToDelete = service.getCurrent().getPath();
+            fileToDelete = scontext.getDirectoryService().getCurrent().getPath();
             displayYesNoDialog(activity, activity.getString(R.string.file_delete_ask), fileToDelete);
         }
 
         @Override
         protected void onPositiveClick() {
             new File(fileToDelete).delete();
-            service.setDirectory(directory, selection);
+            scontext.getDirectoryService().rescan();
         }
     }
 
@@ -91,7 +88,7 @@ public class DirectoryServiceHelper implements Closeable {
         public FileRenameDialog(Activity a) {
             activity = a;
             String title = activity.getString(R.string.file_rename);
-            file = service.getCurrent().getName();
+            file = scontext.getDirectoryService().getCurrent().getName();
             title = title + " " + file;
 
             edit = new EditText(activity);
@@ -109,7 +106,7 @@ public class DirectoryServiceHelper implements Closeable {
                     AppLog.i(activity, target.getName() + " allready exists!*");
                 } else {
                     source.renameTo(target);
-                    service.setDirectory(directory, selection);
+                    rescan();
                 }
             }
         }

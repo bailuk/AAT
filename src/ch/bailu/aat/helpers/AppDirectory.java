@@ -110,7 +110,7 @@ public class AppDirectory  {
     private static final String PRESET_PREFIX = "activity";
     private static final String PREVIEW_EXTENSION = ".preview";
 
-    static public File getTrackListDirectory(Context c, int i) throws IOException {
+    static public File getTrackListDirectory(Context c, int i) {
         return getDataDirectory(c,getPresetPrefix(i));
     }
     static private String getPresetPrefix(int i) {

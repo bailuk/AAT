@@ -146,7 +146,7 @@ public class FileContentActivity extends AbsDispatcher implements OnClickListene
 
     @Override
     public void onPause() {
-        getServiceContext().getDirectoryService().storePosition();
+        //getServiceContext().getDirectoryService().storePosition();
         super.onPause();
     }
 

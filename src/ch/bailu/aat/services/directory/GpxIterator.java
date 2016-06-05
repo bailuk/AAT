@@ -5,7 +5,7 @@ import ch.bailu.aat.coordinates.BoundingBox;
 import ch.bailu.aat.gpx.GpxBigDelta;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.GpxList;
-import ch.bailu.aat.services.cache.CacheService;
+import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.cache.GpxObject;
 import ch.bailu.aat.services.cache.GpxObjectStatic;
 import ch.bailu.aat.services.cache.ObjectHandle;
@@ -16,19 +16,19 @@ public class GpxIterator extends AbsIterator {
     private Cursor cursor;
     private FileListSummary listSummary;
     private ObjectHandle handle=ObjectHandle.NULL;
-    private final CacheService.Self loader;
+    private final ServiceContext scontext;
 
 
-    public GpxIterator(Cursor c, CacheService.Self fl) {
-        loader=fl;
+    public GpxIterator(Cursor c, ServiceContext sc) {
+        scontext = sc;
 
         cursor = c;
         listSummary = new FileListSummary();
     }
 
 
-    public GpxIterator(Cursor c, CacheService.Self fl, int position) {
-        this(c,fl);
+    public GpxIterator(Cursor c, ServiceContext sc, int position) {
+        this(c,sc);
         setPosition(position);
     }
 
@@ -75,7 +75,7 @@ public class GpxIterator extends AbsIterator {
     public boolean isLoaded() {
         ObjectHandle oldHandle = handle;
 
-        handle = loader.getObject( getPath(), new GpxObjectStatic.Factory() );
+        handle = scontext.getCacheService().getObject( getPath(), new GpxObjectStatic.Factory() );
         oldHandle.free();
         return handle.getSize()>0;
     }

@@ -10,11 +10,11 @@ import android.content.Intent;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.helpers.AppBroadcaster;
 import ch.bailu.aat.helpers.AppDirectory;
+import ch.bailu.aat.preferences.SolidInteger;
+import ch.bailu.aat.preferences.SolidString;
 import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat.services.ServiceContext;
-import ch.bailu.aat.services.ServiceContext.ServiceNotUpException;
 import ch.bailu.aat.services.VirtualService;
-import ch.bailu.aat.services.cache.CacheService;
 
 public class DirectoryService extends VirtualService{
 
@@ -27,7 +27,7 @@ public class DirectoryService extends VirtualService{
     }
 
 
-    
+
     public DirectoryService(ServiceContext sc) {
         super(sc);
         self = new SelfOn();
@@ -40,64 +40,55 @@ public class DirectoryService extends VirtualService{
         self.close();
     }
 
-    
-    public static class Self implements Closeable{
-        public void setDirectory(final File directory, final String selection) {};
-        public void setSelection(String selection) {}
 
+    public static class Self implements Closeable{
+        public void reopen(File f, String s) {}
+        public void rescan() {}
         public void deleteCurrentTrackFromDb()  {}
 
         public int size() {
             return 0;
         }
 
-
-
         public void setPosition(int i) {}
-        
         public void toNext() {}
         public void toPrevious() {}
-        
+
         public GpxInformation getCurrent() {
             return GpxInformation.NULL;  
         }
-
 
         public GpxInformation getListSummary() {
             return GpxInformation.NULL;
         }
 
-
-        public int getStoredPosition() {
-            return 0; 
+        public int getPosition() {
+            return 0;
         }
-
-        public void storePosition() {}
-
-
-
-        public void storePosition(int position) {}
-
 
         @Override
         public void close() {}
+        public void appendStatusText(StringBuilder builder) {}
     }
 
 
-    public class SelfOn extends Self {
-        private AbsDatabase database=AbsDatabase.NULL_DATABASE;
-        private String positionKey="directory_serivce";
 
-        private String pendingSelection=null;
-        private File   pendingDirectory=null;
+    public class SelfOn extends Self {
+
+        private final String KEY_DIR_DIRECTORY="DIR_DIRECTORY";
+        private final String KEY_DIR_SELECTION="DIR_SELECTION_"; // + directory
+        private final String KEY_DIR_INDEX="DIR_INDEX_"; // + directory
+
+
+        private AbsDatabase database=AbsDatabase.NULL_DATABASE;
+
+        private final SolidString  directory;
+        private       SolidString  selection;
+        private       SolidInteger index;
+
+
 
         private DirectorySynchronizer synchronizer=null;
-
-
-        public SelfOn() {
-            AppBroadcaster.register(getContext(), onSyncChanged, AppBroadcaster.DB_SYNC_CHANGED);            
-            openPending();
-        }
 
 
         private BroadcastReceiver           onSyncChanged = new BroadcastReceiver () {
@@ -109,66 +100,110 @@ public class DirectoryService extends VirtualService{
         };
 
 
-        public void setDirectory(final File directory, final String selection) {
-            pendingSelection=selection;
-            pendingDirectory=directory;
 
-            openPending();
-        };
+        public SelfOn() {
+            directory = new SolidString(Storage.global(getContext()), KEY_DIR_DIRECTORY);
+            AppBroadcaster.register(getContext(), onSyncChanged, AppBroadcaster.DB_SYNC_CHANGED);
 
-
-
-        private void openPending() {
-            try {
-                CacheService.Self objectCache = getSContext().getCacheService();
-
-
-                if (pendingSelection!=null) {
-
-                    if (pendingDirectory!=null) {
-                        openDataBase(objectCache, AppDirectory.getCacheDb(pendingDirectory), pendingSelection);
-
-                        startSynchronizer(getSContext(), pendingDirectory);
-                        positionKey = pendingDirectory.getName();
-
-                    } else  {
-                        database.reopenCursor(pendingSelection);
-                    }
-                }
-                pendingDirectory=null;
-                pendingSelection=null;
-                AppBroadcaster.broadcast(getContext(), AppBroadcaster.DB_CURSOR_CHANGED);
-
-            } catch (Exception e) {
-
+            if (setDirectory()) {
+                open();
+                rescan();
             }
         }
 
 
+        @Override
+        public void reopen(File dir, String sel) {
+            if (setDirectory(dir.getAbsolutePath(), sel)) {
+                open();
+                rescan();
+                AppBroadcaster.broadcast(getContext(), AppBroadcaster.DB_CURSOR_CHANGED);
+            }
+        }
+        
+        
+        private boolean setDirectory(String dir, String sel) {
+            directory.setValue(dir);
+            
+            if (setDirectory()) {
+                selection.setValue(sel);
+                return true;
+            }
+            return false;
+        }
+        
+        
+        private boolean setDirectory() {
+            if (isDirValid()) {
+                selection = new SolidString(Storage.global(getContext()), KEY_DIR_SELECTION+directory.getValue());
+                selection = new SolidString(Storage.global(getContext()), KEY_DIR_SELECTION+directory.getValue());
+                index     = new SolidInteger(Storage.global(getContext()), KEY_DIR_INDEX+directory.getValue());
+                return true;
+            }
+            return false;
+        }
+        
+        
+        
+        private void open() {
+            try {
+                final File db = AppDirectory.getCacheDb(getDir());
+                openDataBase(getSContext(), db, selection.getValue());
 
-        public void setSelection(String selection) {
-            pendingSelection=selection;
-            openPending();
+            } catch (IOException e) {
+                database=AbsDatabase.NULL_DATABASE;
+            } 
         }
 
 
-        private void openDataBase(CacheService.Self loader, File path, String selection) throws IOException, ServiceNotUpException {
+
+        private File getDir() {
+            return new File(directory.getValue());
+        }
+
+        private boolean isDirValid() {
+            return (getDir().exists());
+        }
+
+
+/*
+        private void requery(final String q) {
+            if (isDirValid()) {
+                selection.setValue(q);
+                requery();
+            }
+        }
+
+
+        private void requery() {
+            database.reopenCursor(selection.getValue());
+            AppBroadcaster.broadcast(getContext(), AppBroadcaster.DB_CURSOR_CHANGED);
+        }
+
+*/
+
+
+        private void openDataBase(ServiceContext sc, File path, String selection) throws IOException {
             database.close();
             database = new GpxDatabase(
-                    getContext(),
-                    loader, 
+                    sc, 
                     path,
                     selection);
         }
 
 
+        @Override
         public void deleteCurrentTrackFromDb()  {
             database.deleteEntry(getCurrent().getPath());
+            rescan();
         }
 
-        private void startSynchronizer(ServiceContext cs, File directory) throws IOException, ServiceNotUpException {
-            stopSynchronizer();
-            synchronizer = new DirectorySynchronizer(cs, directory);
+        @Override
+        public void rescan() {
+            if (isDirValid()) {
+                stopSynchronizer();
+                synchronizer = new DirectorySynchronizer(getSContext(), new File(directory.getValue()));
+            }
         }
 
 
@@ -180,51 +215,50 @@ public class DirectoryService extends VirtualService{
         }
 
 
+        @Override
         public int size() {
             return database.getIterator().size();
         }
 
 
-
+        @Override
         public void setPosition(int i) {
             database.getIterator().setPosition(i);
+            index.setValue(database.getIterator().getPosition());
         }
 
 
+        @Override
         public void toNext() {
             database.getIterator().setPosition(database.getIterator().getPosition()+1);
+            index.setValue(database.getIterator().getPosition());
         }
 
 
+        @Override
         public void toPrevious() {
             database.getIterator().setPosition(database.getIterator().getPosition()-1);
+            index.setValue(database.getIterator().getPosition());
         }
 
 
+        @Override
         public GpxInformation getCurrent() {
             return database.getIterator();  
         }
 
 
+        @Override
         public GpxInformation getListSummary() {
             return database.getIterator().getListSummary();
         }
 
 
-        public int getStoredPosition() {
-            return Storage.global(getContext()).readInteger(positionKey); 
+        @Override
+        public int getPosition() {
+            return index.getValue(); 
         }
 
-        public void storePosition() {
-            storePosition(database.getIterator().getPosition());
-
-        }
-
-
-
-        public void storePosition(int position) {
-            Storage.global(getContext()).writeInteger(positionKey, position);
-        }
 
         @Override
         public void close() {
@@ -234,12 +268,22 @@ public class DirectoryService extends VirtualService{
             stopSynchronizer();
         }
 
+
+        @Override
+        public void appendStatusText(StringBuilder builder) {
+            builder.append("<p>Directory: ");
+            builder.append(directory.getValue());
+            builder.append("<br>Selection: ");
+            builder.append(selection.getValue());
+            builder.append("<br>Index: ");
+            builder.append(index.getValue());
+            builder.append("</p>");                
+        }
     }
 
 
     @Override
     public void appendStatusText(StringBuilder builder) {
-        // TODO Auto-generated method stub
-        
+        self.appendStatusText(builder);
     }
 }
