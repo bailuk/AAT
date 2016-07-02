@@ -3,12 +3,10 @@ package ch.bailu.aat.dispatcher;
 import java.io.Closeable;
 
 import android.content.Context;
-import android.content.SharedPreferences;
-import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import ch.bailu.aat.description.DescriptionInterface;
 import ch.bailu.aat.gpx.GpxInformation;
 
-public class ContentDispatcher implements DescriptionInterface, Closeable, OnSharedPreferenceChangeListener {
+public class ContentDispatcher implements DescriptionInterface, Closeable {
     public static final DescriptionInterface NULL_LIST[] = new DescriptionInterface[]{};
     public static final ContentDispatcher NULL=new ContentDispatcher() {
         @Override
@@ -37,7 +35,6 @@ public class ContentDispatcher implements DescriptionInterface, Closeable, OnSha
         for (ContentSource source: sourceList) {
             source.setDispatcher(this);
         }
-        forceUpdate();
     }
 
     public void forceUpdate() {
@@ -68,12 +65,5 @@ public class ContentDispatcher implements DescriptionInterface, Closeable, OnSha
 
         for (ContentSource source: sourceList)
             source.close();
-    }
-
-    @Override
-    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences,
-            String key) {
-
-        forceUpdate();
     }
 }

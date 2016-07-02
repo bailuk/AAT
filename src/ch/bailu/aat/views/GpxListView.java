@@ -78,7 +78,7 @@ public class GpxListView extends ListView {
                 GpxListEntryView entry = (GpxListEntryView) convertView;
 
                 if (entry == null) {
-                    entry = new GpxListEntryView(scontext.getContext(), data, scontext.getCacheService());
+                    entry = new GpxListEntryView(scontext, data);
                 } 
 
                 GpxInformation info;

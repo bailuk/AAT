@@ -27,6 +27,7 @@ public abstract class AbsActivity extends Activity {
     @Override
     public void onDestroy() {
         created--;
+        AppLog.d(this, "onDestroy() - " + created);
         super.onDestroy();
     }
 

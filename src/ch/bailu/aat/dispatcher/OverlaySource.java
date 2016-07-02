@@ -24,8 +24,6 @@ public class OverlaySource extends ContentSource implements GpxInformation.ID {
     public static final int MAX_OVERLAYS=SolidOverlayFileList.MAX_OVERLAYS;
 
 
-
-
     private final ServiceContext scontext;
 
     private OverlayInformation[] overlayList = new OverlayInformation[MAX_OVERLAYS];
@@ -61,7 +59,7 @@ public class OverlaySource extends ContentSource implements GpxInformation.ID {
 
 
 
-    public class OverlayInformation extends GpxInformation implements Closeable {
+    private class OverlayInformation extends GpxInformation implements Closeable {
         private final int updateID;
 
         private final SolidOverlayFile soverlay;
@@ -78,7 +76,7 @@ public class OverlaySource extends ContentSource implements GpxInformation.ID {
             soverlay.register(onPreferencesChanged);
             AppBroadcaster.register(scontext.getContext(), onFileProcessed, AppBroadcaster.FILE_CHANGED_INCACHE);
 
-            initAndUpdateOverlay();
+            //initAndUpdateOverlay();
         }
 
 

@@ -16,7 +16,6 @@ import ch.bailu.aat.helpers.AppFile;
 import ch.bailu.aat.helpers.AppLog;
 import ch.bailu.aat.preferences.AddOverlayDialog;
 import ch.bailu.aat.preferences.SolidMockLocationFile;
-import ch.bailu.aat.services.ServiceContext.ServiceNotUpException;
 import ch.bailu.aat.services.cache.CacheService;
 import ch.bailu.aat.services.directory.DirectoryService;
 import ch.bailu.aat.services.directory.DirectoryServiceHelper;
@@ -105,25 +104,14 @@ public abstract class AbsGpxListActivity extends AbsMenu implements OnItemClickL
     }
 
 
-    
-    @Override
-    public void onResume() {
-        super.onResume();
-    }
-
     @Override
     public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
 
-        try {
             displayFileOnPosition(position);
-
-        } catch (ServiceNotUpException e) {
-            AppLog.e(this, e);
-        }
     }
 
 
-    private void displayFileOnPosition(int position) throws ServiceNotUpException {
+    private void displayFileOnPosition(int position) {
         getServiceContext().getDirectoryService().setPosition(position);
         displayFile();
     }

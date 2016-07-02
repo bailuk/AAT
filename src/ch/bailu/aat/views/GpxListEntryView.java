@@ -17,7 +17,7 @@ import ch.bailu.aat.helpers.AppDirectory;
 import ch.bailu.aat.helpers.AppLayout;
 import ch.bailu.aat.helpers.AppLog;
 import ch.bailu.aat.helpers.AppTheme;
-import ch.bailu.aat.services.cache.CacheService;
+import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.cache.ImageObject;
 import ch.bailu.aat.services.cache.ObjectHandle;
 import ch.bailu.aat.views.map.OsmPreviewGenerator;
@@ -28,7 +28,7 @@ public class GpxListEntryView extends  DescriptionViewGroup {
     private final static int SPACE=20;
 
     private final ImageView imageView;
-    private final CacheService.Self loader;
+    private final ServiceContext scontext;
 
     private ImageObject imageHandle=ImageObject.NULL;
 
@@ -36,22 +36,22 @@ public class GpxListEntryView extends  DescriptionViewGroup {
     private String imageToLoad=null;
 
 
-    public GpxListEntryView(Context context, ContentDescription[] description, CacheService.Self l) {
-        super(context, SOLID_KEY, INFO_ID_ALL);
+    public GpxListEntryView(ServiceContext sc, ContentDescription[] description) {
+        super(sc.getContext(), SOLID_KEY, INFO_ID_ALL);
 
-        loader = l;
+        scontext=sc;
 
-        imageView = new ImageView(context);
+        imageView = new ImageView(getContext());
         addView(imageView);
 
-        init(context,description);
+        init(getContext(),description);
     }
 
 
     private void init(Context context,
             ContentDescription[] d) {
 
-        SubEntryView v[] = new SubEntryView[d.length];
+        final SubEntryView v[] = new SubEntryView[d.length];
 
         for (int i=0; i<d.length; i++) {
             v[i] = new SubEntryView(context,solidKey, d[i]);
@@ -155,7 +155,7 @@ public class GpxListEntryView extends  DescriptionViewGroup {
             freeImageHandle();
             try {
                 final File file = AppDirectory.getPreviewFile(new File(imageToLoad));
-                final ObjectHandle  h=loader.getObject(file.getAbsolutePath(), new ImageObject.Factory());
+                final ObjectHandle  h=scontext.getCacheService().getObject(file.getAbsolutePath(), new ImageObject.Factory());
 
                 if (ImageObject.class.isInstance(h)) {
                     imageHandle = (ImageObject) h;
@@ -200,7 +200,6 @@ public class GpxListEntryView extends  DescriptionViewGroup {
 
     private void displayImage() {
         imageView.setImageDrawable(imageHandle.getDrawable());
-
     }
 
 
@@ -210,7 +209,7 @@ public class GpxListEntryView extends  DescriptionViewGroup {
             final String file = imageHandle.toString();
 
             if (AppBroadcaster.hasFile(intent, file)) displayImage();
+            
         }
     };
-
 }
