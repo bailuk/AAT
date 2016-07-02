@@ -54,6 +54,8 @@ public class NodeDetailActivity extends AbsDispatcher implements OnClickListener
 
     private GpxListArray       array = new GpxListArray(GpxList.NULL_ROUTE);
 
+    
+    
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,11 +67,13 @@ public class NodeDetailActivity extends AbsDispatcher implements OnClickListener
         contentView.addView(createButtonBar());
         verticalView = createVerticalView();
         contentView.addView(verticalView);
+        
+        createDispatcher();
+        
         setContentView(contentView);
-
-
     }
 
+    
 
     private ControlBar createButtonBar() {
         ControlBar bar = new ControlBar(
@@ -107,17 +111,7 @@ public class NodeDetailActivity extends AbsDispatcher implements OnClickListener
     }
 
 
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-    }
-
-
-
-    @Override
-    public void onServicesUp(boolean firstRun) {
-
+    private void createDispatcher() {
         OsmOverlay overlayList[] = {
                 new GpxDynOverlay(map, getServiceContext(), GpxInformation.ID.INFO_ID_TRACKER), 
                 new GpxDynOverlay(map, getServiceContext(), GpxInformation.ID.INFO_ID_FILEVIEW),
@@ -141,7 +135,6 @@ public class NodeDetailActivity extends AbsDispatcher implements OnClickListener
         };
 
         setDispatcher(new ContentDispatcher(this,source, target));
-
     }
 
 
