@@ -4,7 +4,6 @@ package ch.bailu.aat.activities;
 import android.os.Bundle;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.services.ServiceContext;
-import ch.bailu.aat.services.ServiceContext.ServiceNotUpException;
 import ch.bailu.aat.services.ServiceLink;
 
 public abstract class AbsServiceLink extends AbsActivity implements GpxInformation.ID{
@@ -64,7 +63,7 @@ public abstract class AbsServiceLink extends AbsActivity implements GpxInformati
     }
     
     
-    public void onStartPauseClick() throws ServiceNotUpException {
+    public void onStartPauseClick() {
         getServiceContext().getTrackerService().getState().onStartPauseResume();
     }
 }

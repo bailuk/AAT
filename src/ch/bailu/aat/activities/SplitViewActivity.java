@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -25,11 +24,10 @@ import ch.bailu.aat.dispatcher.OverlaySource;
 import ch.bailu.aat.dispatcher.TrackerSource;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.helpers.AppLayout;
-import ch.bailu.aat.helpers.AppLog;
-import ch.bailu.aat.services.ServiceContext.ServiceNotUpException;
 import ch.bailu.aat.services.editor.EditorHelper;
 import ch.bailu.aat.views.CockpitView;
 import ch.bailu.aat.views.ControlBar;
+import ch.bailu.aat.views.MainControlBar;
 import ch.bailu.aat.views.MultiView;
 import ch.bailu.aat.views.NumberView;
 import ch.bailu.aat.views.TrackDescriptionView;
@@ -53,7 +51,6 @@ public class SplitViewActivity extends AbsDispatcher implements OnClickListener{
 
     private MultiView       multiView;
     private OsmInteractiveView      mapView, mapViewAlt;
-    private Button     startPause;
     private ImageButton     activityCycle, multiCycle;
     private NumberView      trackerState;
 
@@ -134,11 +131,8 @@ public class SplitViewActivity extends AbsDispatcher implements OnClickListener{
 
 
     private ControlBar createButtonBar() {
-        ControlBar bar = new ControlBar(
-                this, 
-                AppLayout.getOrientationAlongSmallSide(this));
+        ControlBar bar = new MainControlBar(this);
 
-        startPause = bar.addButton("");
         activityCycle = bar.addImageButton(R.drawable.go_down_inverse);
         multiCycle = bar.addImageButton(R.drawable.go_next_inverse);
 
@@ -154,14 +148,9 @@ public class SplitViewActivity extends AbsDispatcher implements OnClickListener{
 
     @Override
     public void onClick(View v) {
-        if (v==startPause) {
-            try {
-                onStartPauseClick();
-            } catch (ServiceNotUpException e) {
-                AppLog.e(this, e);
-            }
-
-
+        if (v==trackerState) {
+            onStartPauseClick();
+            
         } else if (v == activityCycle) {
             ActivitySwitcher.cycle(this);
 
@@ -212,9 +201,4 @@ public class SplitViewActivity extends AbsDispatcher implements OnClickListener{
 
     }
 
-
-    @Override
-    public void updateGpxContent(GpxInformation info) {
-        updateStartButtonText(startPause, info);
-    }
 }

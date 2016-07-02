@@ -4,7 +4,6 @@ package ch.bailu.aat.activities;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import ch.bailu.aat.R;
@@ -18,13 +17,11 @@ import ch.bailu.aat.dispatcher.EditorSource;
 import ch.bailu.aat.dispatcher.OverlaySource;
 import ch.bailu.aat.dispatcher.TrackerSource;
 import ch.bailu.aat.gpx.GpxInformation;
-import ch.bailu.aat.helpers.AppLayout;
-import ch.bailu.aat.helpers.AppLog;
 import ch.bailu.aat.services.ServiceContext;
-import ch.bailu.aat.services.ServiceContext.ServiceNotUpException;
 import ch.bailu.aat.services.editor.EditorHelper;
 import ch.bailu.aat.views.ContentView;
 import ch.bailu.aat.views.ControlBar;
+import ch.bailu.aat.views.MainControlBar;
 import ch.bailu.aat.views.NumberView;
 import ch.bailu.aat.views.map.OsmInteractiveView;
 import ch.bailu.aat.views.map.overlay.CurrentLocationOverlay;
@@ -43,7 +40,7 @@ public class MapActivity extends AbsDispatcher implements OnClickListener{
 
     private OsmInteractiveView      map;
 
-    private Button          startPause;
+    private View          startPause;
     private ImageButton     cycleButton;
     private NumberView      trackerState, gpsState;
 
@@ -54,12 +51,12 @@ public class MapActivity extends AbsDispatcher implements OnClickListener{
         super.onCreate(savedInstanceState);
 
         edit = new EditorHelper(getServiceContext());
-        
+
         LinearLayout contentView=new ContentView(this);
         map = createMap();
         contentView.addView(map);
         setContentView(contentView);
-        
+
         createDispatcher();
     }
 
@@ -67,7 +64,7 @@ public class MapActivity extends AbsDispatcher implements OnClickListener{
     private OsmInteractiveView createMap() {
         final ServiceContext sc=getServiceContext();
         final OsmInteractiveView map=new OsmInteractiveView(sc, SOLID_KEY);
-        
+
         OsmOverlay overlayList[] = {
                 new GpxOverlayListOverlay(map, sc),
                 new GpxDynOverlay(map, sc, GpxInformation.ID.INFO_ID_TRACKER), 
@@ -79,7 +76,7 @@ public class MapActivity extends AbsDispatcher implements OnClickListener{
                 new CustomBarOverlay(map, createButtonBar()),
         };
         map.setOverlayList(overlayList);
-        
+
         return map;
     }
 
@@ -91,22 +88,18 @@ public class MapActivity extends AbsDispatcher implements OnClickListener{
         super.onDestroy();
     }
 
-    
+
     @Override
     public void onServicesUp(boolean firstRun) {
         edit.edit();
         super.onServicesUp(firstRun);
     }
 
-    
+
     @Override
     public void onClick(View v) {
         if (v==startPause) {
-            try {
-                onStartPauseClick();
-            } catch (ServiceNotUpException e) {
-                AppLog.e(this, e);
-            }
+            onStartPauseClick();
 
         } if (v==cycleButton) {
             ActivitySwitcher.cycle(this);
@@ -114,7 +107,7 @@ public class MapActivity extends AbsDispatcher implements OnClickListener{
 
     }
 
-    
+
     private void createDispatcher() {
         DescriptionInterface[] target = new DescriptionInterface[] {
                 map,trackerState,gpsState, this
@@ -129,19 +122,18 @@ public class MapActivity extends AbsDispatcher implements OnClickListener{
         setDispatcher(new ContentDispatcher(this,source, target));
     }
 
-    
-    private ControlBar createButtonBar() {
-        ControlBar bar = new ControlBar(
-                this, 
-                AppLayout.getOrientationAlongSmallSide(this));
 
-        startPause = bar.addButton("");
+    private ControlBar createButtonBar() {
+        ControlBar bar = new MainControlBar(this);
+
+        //startPause = bar.addButton("");
         cycleButton = bar.addImageButton(R.drawable.go_down_inverse);
 
         gpsState = new NumberView(new GpsStateDescription(this),
                 GpxInformation.ID.INFO_ID_LOCATION);
         trackerState = new NumberView(new TrackerStateDescription(this), 
                 GpxInformation.ID.INFO_ID_TRACKER);
+        startPause = trackerState;
 
         bar.addView(gpsState);
         bar.addView(trackerState);
@@ -153,6 +145,6 @@ public class MapActivity extends AbsDispatcher implements OnClickListener{
 
     @Override
     public void updateGpxContent(GpxInformation info) {
-        updateStartButtonText(startPause, info);
+        //updateStartButtonText(startPause, info);
     }
 }

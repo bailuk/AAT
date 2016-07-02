@@ -20,8 +20,10 @@ import ch.bailu.aat.services.cache.CacheService;
 import ch.bailu.aat.services.directory.DirectoryService;
 import ch.bailu.aat.services.directory.DirectoryServiceHelper;
 import ch.bailu.aat.views.ContentView;
+import ch.bailu.aat.views.ControlBar;
 import ch.bailu.aat.views.DbSynchronizerBusyIndicator;
 import ch.bailu.aat.views.GpxListView;
+import ch.bailu.aat.views.MainControlBar;
 
 
 
@@ -39,7 +41,7 @@ public abstract class AbsGpxListActivity extends AbsMenu implements OnItemClickL
     private DirectoryServiceHelper      directory;
 
 
-    public abstract LinearLayout           createHeader(LinearLayout contentView);
+    public abstract void                   createHeader(ControlBar bar);
     public abstract DirectoryServiceHelper createDirectoryServiceHelper();
     public abstract void                   createSummaryView(LinearLayout layout);
     public abstract ContentDescription[]   getGpxListItemData();
@@ -49,9 +51,14 @@ public abstract class AbsGpxListActivity extends AbsMenu implements OnItemClickL
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        
+        final ControlBar bar = new MainControlBar(this, 6);
+        
         contentView=new ContentView(this);
-
-        createBusyIndicator(createHeader(contentView));
+        
+        createBusyIndicator(bar);
+        createHeader(bar);
+        contentView.addView(bar);
         
         createSummaryView(contentView);
         createListView(contentView);
@@ -63,6 +70,7 @@ public abstract class AbsGpxListActivity extends AbsMenu implements OnItemClickL
 
 
 
+    
     private void createBusyIndicator(LinearLayout layout) {
         busyIndicator = new DbSynchronizerBusyIndicator(this);
         layout.addView(busyIndicator);

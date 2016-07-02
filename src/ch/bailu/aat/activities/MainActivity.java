@@ -31,13 +31,15 @@ import ch.bailu.aat.helpers.AppTheme;
 import ch.bailu.aat.preferences.SolidPreset;
 import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat.views.ContentView;
+import ch.bailu.aat.views.ControlBar;
+import ch.bailu.aat.views.MainControlBar;
 import ch.bailu.aat.views.NumberView;
 
 
 
 public class MainActivity extends AbsDispatcher 
-implements AdapterView.OnItemSelectedListener, OnSharedPreferenceChangeListener {
-    
+implements AdapterView.OnItemSelectedListener, OnSharedPreferenceChangeListener, OnClickListener {
+
     private NumberView      gpsState, trackerState;
     private LinearLayout    contentView;
     private Spinner         presetSpinner; 
@@ -68,8 +70,8 @@ implements AdapterView.OnItemSelectedListener, OnSharedPreferenceChangeListener 
         actionList = createActionList();
         contentView.addView(actionList);
     }
-    
-    
+
+
     private void createDispatcher() {
         setContentView(contentView);
 
@@ -85,15 +87,15 @@ implements AdapterView.OnItemSelectedListener, OnSharedPreferenceChangeListener 
 
         setDispatcher(new ContentDispatcher(this,source, target));
     }
-    
-    
+
+
     private ListView createActionList() {
         actionAdapter = new MyListAdapter(this);
         actionList = new ListView(this);
-        
+
         actionList.setOnItemClickListener(actionAdapter);
         actionList.setAdapter(actionAdapter);
-        
+
         AppTheme.themify(actionList, Color.BLACK);
 
         return actionList;
@@ -101,32 +103,25 @@ implements AdapterView.OnItemSelectedListener, OnSharedPreferenceChangeListener 
 
 
     private LinearLayout createButtonBar() {
-        LinearLayout bar = new LinearLayout(this);
-        int height = AppTheme.getBigButtonSize(this);
-        int width = AppTheme.getBigButtonSize(this)*2;
+        final ControlBar bar = new MainControlBar(this);
 
         gpsState = new NumberView(new GpsStateDescription(this),
                 GpxInformation.ID.INFO_ID_LOCATION);
         trackerState = new NumberView(new TrackerStateDescription(this), 
                 GpxInformation.ID.INFO_ID_TRACKER);
 
-        bar.addView(gpsState, width,height);
-        bar.addView(trackerState, width,height);
 
-        bar.setOnClickListener(new OnClickListener() {
-            
-            @Override
-            public void onClick(View v) {
-                openOptionsMenu();
-            }
-            
-        });
-        AppTheme.themify(bar);
+        bar.addView(new View(this));
+        bar.addView(gpsState);
+        bar.addView(trackerState);
+
+        bar.setOnClickListener1(this);
+
         return bar;
-        
+
     }
 
-    
+
     private Spinner createActivitySpinner() {
         Spinner spinner = new Spinner(this);
         initializeSpinner(spinner);
@@ -222,4 +217,13 @@ implements AdapterView.OnItemSelectedListener, OnSharedPreferenceChangeListener 
 
     @Override
     public void onNothingSelected(AdapterView<?> arg0) {}
+
+
+    @Override
+    public void onClick(View v) {
+        if (v==trackerState) {
+            onStartPauseClick();
+        }
+
+    }
 }

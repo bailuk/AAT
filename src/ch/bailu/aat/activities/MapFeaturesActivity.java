@@ -17,6 +17,7 @@ import ch.bailu.aat.views.ContentView;
 import ch.bailu.aat.views.ControlBar;
 import ch.bailu.aat.views.DownloadButton;
 import ch.bailu.aat.views.FeaturesList;
+import ch.bailu.aat.views.MainControlBar;
 
 
 public class MapFeaturesActivity extends AbsDispatcher implements OnClickListener {
@@ -37,7 +38,7 @@ public class MapFeaturesActivity extends AbsDispatcher implements OnClickListene
         download = new DownloadButton(this);
         ToolTip.set(download, R.string.tt_overpass_download_features);
         
-        bar = new ControlBar(this,ControlBar.HORIZONTAL,6);
+        bar = new MainControlBar(this,6);
         
         bar.setOnClickListener2(this);
         bar.addView(download);

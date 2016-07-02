@@ -12,6 +12,7 @@ import ch.bailu.aat.description.TimeDescription;
 import ch.bailu.aat.helpers.AppLayout;
 import ch.bailu.aat.services.directory.DirectoryServiceHelper;
 import ch.bailu.aat.services.directory.DynamicDirectoryServiceHelper;
+import ch.bailu.aat.views.ControlBar;
 import ch.bailu.aat.views.DateFilterView;
 import ch.bailu.aat.views.GpxListSummaryView;
 
@@ -21,15 +22,8 @@ public class TrackListActivity extends AbsGpxListActivity {
 
 
     @Override
-    public LinearLayout createHeader(LinearLayout contentView) {
-        return createDateFilter(contentView);
-    }
-
-    private LinearLayout createDateFilter(LinearLayout contentView) {
-        LinearLayout dateFilter = new DateFilterView(this);
-        contentView.addView(dateFilter);
-
-        return dateFilter;
+    public void createHeader(ControlBar bar) {
+        bar.addViewIgnoreSize(new DateFilterView(this));
     }
 
 

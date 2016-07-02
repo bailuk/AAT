@@ -22,7 +22,6 @@ import ch.bailu.aat.dispatcher.CustomFileSource;
 import ch.bailu.aat.helpers.AbsTextBackup;
 import ch.bailu.aat.helpers.AppBroadcaster;
 import ch.bailu.aat.helpers.AppDirectory;
-import ch.bailu.aat.helpers.AppLayout;
 import ch.bailu.aat.helpers.AppLog;
 import ch.bailu.aat.helpers.AppTheme;
 import ch.bailu.aat.helpers.OsmApiHelper;
@@ -34,6 +33,7 @@ import ch.bailu.aat.services.background.ProcessHandle;
 import ch.bailu.aat.views.ContentView;
 import ch.bailu.aat.views.ControlBar;
 import ch.bailu.aat.views.DownloadButton;
+import ch.bailu.aat.views.MainControlBar;
 import ch.bailu.aat.views.NodeListView;
 import ch.bailu.aat.views.TagEditor;
 
@@ -110,9 +110,7 @@ public abstract class AbsOsmApiActivity extends AbsDispatcher implements OnClick
 
     
     private ControlBar createControlBar() {
-        ControlBar bar = new ControlBar(
-                this,
-                AppLayout.getOrientationAlongSmallSide(this),5);      
+        ControlBar bar = new MainControlBar(this,6);      
 
         download = new DownloadButton(this);
         

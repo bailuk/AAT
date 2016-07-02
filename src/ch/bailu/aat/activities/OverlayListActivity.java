@@ -11,7 +11,6 @@ import ch.bailu.aat.description.DateDescription;
 import ch.bailu.aat.description.DistanceDescription;
 import ch.bailu.aat.description.NameDescription;
 import ch.bailu.aat.helpers.AppDirectory;
-import ch.bailu.aat.helpers.AppLayout;
 import ch.bailu.aat.helpers.AppTheme;
 import ch.bailu.aat.services.directory.DirectoryServiceHelper;
 import ch.bailu.aat.views.ControlBar;
@@ -23,18 +22,8 @@ public class OverlayListActivity extends AbsGpxListActivity {
     
 
     @Override
-    public LinearLayout createHeader(LinearLayout contentView) {
-        ControlBar header = new ControlBar(
-                this, 
-                AppLayout.getOrientationAlongSmallSide(this));
-
-        
-        createLabel(header,getLabelText());
-        contentView.addView(header);
-        
-        
-
-        return header;
+    public void createHeader(ControlBar bar) {
+        createLabel(bar,getLabelText());
     }
 
     

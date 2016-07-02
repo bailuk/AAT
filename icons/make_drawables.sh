@@ -81,6 +81,7 @@ INVERT "go-next"
 INVERT "go-previous" 
 INVERT "go-down" 
 INVERT "go-up" 
+INVERT "open-menu"
 
 
 

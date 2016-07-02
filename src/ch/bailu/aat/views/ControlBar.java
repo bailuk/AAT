@@ -16,7 +16,7 @@ import ch.bailu.aat.preferences.SolidIndexList;
 
 
 public class ControlBar extends LinearLayout {
-    private final  static int DEFAULT_VISIBLE_BUTTON_COUNT=4;
+    public final  static int DEFAULT_VISIBLE_BUTTON_COUNT=4;
     
     public final static int HORIZONTAL = LinearLayout.HORIZONTAL;
     public final static int VERTICAL = LinearLayout.VERTICAL;
@@ -54,10 +54,10 @@ public class ControlBar extends LinearLayout {
         
         scroller.addView(canvas);
         super.addView(scroller);
+
     }
 
 
-    
     public int getControlSize() {
         return controlSize;
     }
@@ -88,7 +88,7 @@ public class ControlBar extends LinearLayout {
         ImageButton button = new ImageButton(getContext());
         button.setImageResource(res);
         AppTheme.themify(button);
-        addView(button);
+        this.addView(button);
         return button;
     }    
     
@@ -97,7 +97,7 @@ public class ControlBar extends LinearLayout {
         Button button =  new Button(getContext());
         button.setText(text);
         AppTheme.themify(button);
-        addView(button);
+        this.addView(button);
         return button;
     }    
     
