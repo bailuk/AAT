@@ -9,7 +9,6 @@ import android.widget.LinearLayout;
 import ch.bailu.aat.R;
 import ch.bailu.aat.description.DescriptionInterface;
 import ch.bailu.aat.description.GpsStateDescription;
-import ch.bailu.aat.description.TrackerStateDescription;
 import ch.bailu.aat.dispatcher.ContentDispatcher;
 import ch.bailu.aat.dispatcher.ContentSource;
 import ch.bailu.aat.dispatcher.CurrentLocationSource;
@@ -23,6 +22,7 @@ import ch.bailu.aat.views.ContentView;
 import ch.bailu.aat.views.ControlBar;
 import ch.bailu.aat.views.MainControlBar;
 import ch.bailu.aat.views.NumberView;
+import ch.bailu.aat.views.TrackerStateButton;
 import ch.bailu.aat.views.map.OsmInteractiveView;
 import ch.bailu.aat.views.map.overlay.CurrentLocationOverlay;
 import ch.bailu.aat.views.map.overlay.OsmOverlay;
@@ -40,9 +40,9 @@ public class MapActivity extends AbsDispatcher implements OnClickListener{
 
     private OsmInteractiveView      map;
 
-    private View          startPause;
     private ImageButton     cycleButton;
-    private NumberView      trackerState, gpsState;
+    private NumberView      gpsState;
+    private TrackerStateButton trackerState;
 
     private EditorHelper    edit;
 
@@ -98,10 +98,7 @@ public class MapActivity extends AbsDispatcher implements OnClickListener{
 
     @Override
     public void onClick(View v) {
-        if (v==startPause) {
-            onStartPauseClick();
-
-        } if (v==cycleButton) {
+        if (v==cycleButton) {
             ActivitySwitcher.cycle(this);
         }
 
@@ -126,25 +123,19 @@ public class MapActivity extends AbsDispatcher implements OnClickListener{
     private ControlBar createButtonBar() {
         ControlBar bar = new MainControlBar(this);
 
-        //startPause = bar.addButton("");
         cycleButton = bar.addImageButton(R.drawable.go_down_inverse);
 
         gpsState = new NumberView(new GpsStateDescription(this),
                 GpxInformation.ID.INFO_ID_LOCATION);
-        trackerState = new NumberView(new TrackerStateDescription(this), 
-                GpxInformation.ID.INFO_ID_TRACKER);
-        startPause = trackerState;
+        trackerState = new TrackerStateButton(this.getServiceContext());
 
         bar.addView(gpsState);
         bar.addView(trackerState);
 
         bar.setOnClickListener1(this);
-
+        trackerState.setOnClickListener(trackerState);
+        
         return bar;
     }
 
-    @Override
-    public void updateGpxContent(GpxInformation info) {
-        //updateStartButtonText(startPause, info);
-    }
 }

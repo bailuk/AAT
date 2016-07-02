@@ -21,7 +21,7 @@ public class NumberView extends TrackDescriptionView {
         label = createLabel();
         unit = createLabel();
         unit.setBackgroundColor(Color.DKGRAY);
-
+        
         description=data;
 
         updateAllText();
@@ -47,6 +47,7 @@ public class NumberView extends TrackDescriptionView {
         addView(view);
         return view;
     }
+
 
 
     @Override

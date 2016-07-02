@@ -15,7 +15,6 @@ import ch.bailu.aat.description.CurrentSpeedDescription;
 import ch.bailu.aat.description.DescriptionInterface;
 import ch.bailu.aat.description.DistanceDescription;
 import ch.bailu.aat.description.TimeDescription;
-import ch.bailu.aat.description.TrackerStateDescription;
 import ch.bailu.aat.dispatcher.ContentDispatcher;
 import ch.bailu.aat.dispatcher.ContentSource;
 import ch.bailu.aat.dispatcher.CurrentLocationSource;
@@ -29,8 +28,8 @@ import ch.bailu.aat.views.CockpitView;
 import ch.bailu.aat.views.ControlBar;
 import ch.bailu.aat.views.MainControlBar;
 import ch.bailu.aat.views.MultiView;
-import ch.bailu.aat.views.NumberView;
 import ch.bailu.aat.views.TrackDescriptionView;
+import ch.bailu.aat.views.TrackerStateButton;
 import ch.bailu.aat.views.VerticalView;
 import ch.bailu.aat.views.graph.DistanceAltitudeGraphView;
 import ch.bailu.aat.views.graph.DistanceSpeedGraphView;
@@ -51,8 +50,8 @@ public class SplitViewActivity extends AbsDispatcher implements OnClickListener{
 
     private MultiView       multiView;
     private OsmInteractiveView      mapView, mapViewAlt;
-    private ImageButton     activityCycle, multiCycle;
-    private NumberView      trackerState;
+    private ImageButton             activityCycle, multiCycle;
+    private TrackerStateButton      trackerState;
 
     private EditorHelper          edit;
     
@@ -136,11 +135,11 @@ public class SplitViewActivity extends AbsDispatcher implements OnClickListener{
         activityCycle = bar.addImageButton(R.drawable.go_down_inverse);
         multiCycle = bar.addImageButton(R.drawable.go_next_inverse);
 
-        trackerState = new NumberView(new TrackerStateDescription(this), 
-                GpxInformation.ID.INFO_ID_TRACKER);
+        trackerState = new TrackerStateButton(this.getServiceContext());
         bar.addView(trackerState);
-
         bar.setOnClickListener1(this);
+        
+        trackerState.setOnClickListener(trackerState);
         return bar;
     }
 
@@ -148,10 +147,7 @@ public class SplitViewActivity extends AbsDispatcher implements OnClickListener{
 
     @Override
     public void onClick(View v) {
-        if (v==trackerState) {
-            onStartPauseClick();
-            
-        } else if (v == activityCycle) {
+        if (v == activityCycle) {
             ActivitySwitcher.cycle(this);
 
         } else if (v ==multiCycle) {

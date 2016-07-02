@@ -62,8 +62,8 @@ public abstract class AbsServiceLink extends AbsActivity implements GpxInformati
         return serviceLink;
     }
     
-    
+    /*
     public void onStartPauseClick() {
         getServiceContext().getTrackerService().getState().onStartPauseResume();
-    }
+    }*/
 }

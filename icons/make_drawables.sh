@@ -70,6 +70,11 @@ CONVERT "button_default.9"
 CONVERT "button_pressed.9"
 CONVERT "button_selected.9"
 
+cp button_alt.xml $DRAWABLES
+COPY "button_alt_default"
+COPY "button_alt_pressed"
+COPY "button_alt_selected"
+
 
 ####### Application
 CONVERT "icon" 

@@ -7,7 +7,6 @@ import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -20,7 +19,6 @@ import android.widget.TextView;
 import ch.bailu.aat.R;
 import ch.bailu.aat.description.DescriptionInterface;
 import ch.bailu.aat.description.GpsStateDescription;
-import ch.bailu.aat.description.TrackerStateDescription;
 import ch.bailu.aat.dispatcher.ContentDispatcher;
 import ch.bailu.aat.dispatcher.ContentSource;
 import ch.bailu.aat.dispatcher.CurrentLocationSource;
@@ -34,13 +32,15 @@ import ch.bailu.aat.views.ContentView;
 import ch.bailu.aat.views.ControlBar;
 import ch.bailu.aat.views.MainControlBar;
 import ch.bailu.aat.views.NumberView;
+import ch.bailu.aat.views.TrackerStateButton;
 
 
 
 public class MainActivity extends AbsDispatcher 
-implements AdapterView.OnItemSelectedListener, OnSharedPreferenceChangeListener, OnClickListener {
+implements AdapterView.OnItemSelectedListener, OnSharedPreferenceChangeListener {
 
-    private NumberView      gpsState, trackerState;
+    private NumberView      gpsState;
+    private TrackerStateButton trackerState;
     private LinearLayout    contentView;
     private Spinner         presetSpinner; 
     private ListView        actionList;
@@ -107,15 +107,14 @@ implements AdapterView.OnItemSelectedListener, OnSharedPreferenceChangeListener,
 
         gpsState = new NumberView(new GpsStateDescription(this),
                 GpxInformation.ID.INFO_ID_LOCATION);
-        trackerState = new NumberView(new TrackerStateDescription(this), 
-                GpxInformation.ID.INFO_ID_TRACKER);
-
+        trackerState = new TrackerStateButton(getServiceContext());
+        trackerState.setBackgroundResource(R.drawable.button_alt);
 
         bar.addView(new View(this));
         bar.addView(gpsState);
         bar.addView(trackerState);
 
-        bar.setOnClickListener1(this);
+        bar.setOnClickListener1(trackerState);
 
         return bar;
 
@@ -218,12 +217,4 @@ implements AdapterView.OnItemSelectedListener, OnSharedPreferenceChangeListener,
     @Override
     public void onNothingSelected(AdapterView<?> arg0) {}
 
-
-    @Override
-    public void onClick(View v) {
-        if (v==trackerState) {
-            onStartPauseClick();
-        }
-
-    }
 }
