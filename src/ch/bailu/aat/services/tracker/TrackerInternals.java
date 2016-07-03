@@ -64,7 +64,7 @@ implements OnSharedPreferenceChangeListener, Closeable ,Runnable {
         scontext=sc;
         
         backlight = new Backlight(scontext.getContext());
-        location = new LocationStack(scontext.getContext());
+        location = new LocationStack(scontext);
 
         storage = Storage.preset(scontext.getContext());
         storage.register(this);

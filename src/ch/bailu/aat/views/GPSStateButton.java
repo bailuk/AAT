@@ -20,7 +20,6 @@ public class GPSStateButton extends NumberButton implements OnClickListener, OnS
         
         
         storage=Storage.global(c);
-        storage.register(this);
         
         slock=new SolidGPSLock(storage);
         setOnClickListener(this);
@@ -39,13 +38,19 @@ public class GPSStateButton extends NumberButton implements OnClickListener, OnS
         if (slock.hasKey(key)) {
             updateAllText();
         }
-        
     }
+    
+    @Override
+    public void onAttachedToWindow() {
+        super.onAttachedToWindow();
+        storage.register(this);
+        updateAllText();
+    }
+    
     
     @Override
     public void onDetachedFromWindow() {
         super.onDetachedFromWindow();
         storage.unregister(this);
     }
-
 }

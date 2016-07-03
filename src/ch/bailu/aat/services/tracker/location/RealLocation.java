@@ -101,17 +101,20 @@ public class RealLocation extends LocationStackChainedItem implements LocationLi
     }
 
 
-    public RealLocation(LocationStackItem i, Context c, String p, int gpsInterval) {
+    public RealLocation(LocationStackItem i, Context c, String p) {
         super(i);
 
         context = c;
         provider = p;
         lastLocation = new LocationWrapper(new Location(provider));
-
+    }
+    
+    
+    public void init(int gpsInterval) {
         try {
             setState(STATE_WAIT);
 
-            final LocationManager lm = getLocationManager(c);
+            final LocationManager lm = getLocationManager(context);
 
             validateProvider(lm, provider);
             sendLastKnownLocation(lm, provider);
@@ -124,6 +127,7 @@ public class RealLocation extends LocationStackChainedItem implements LocationLi
         } catch (IllegalArgumentException ex) {
             setState(STATE_NOACCESS);
         }
+
     }
 
 
