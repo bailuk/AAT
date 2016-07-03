@@ -90,7 +90,7 @@ public class OnState extends State {
 
     @Override
     public int getStartStopIconID() {
-        return R.drawable.media_playback_stop;
+        return R.drawable.media_playback_stop_inverse;
     }
 
 }

@@ -4,7 +4,6 @@ import java.io.File;
 
 import android.content.Intent;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 import ch.bailu.aat.R;
 import ch.bailu.aat.description.ContentDescription;
 import ch.bailu.aat.description.DateDescription;
@@ -61,12 +60,7 @@ public class OverlayListActivity extends AbsGpxListActivity {
 
 
     public void createLabel(ControlBar bar, String labelText) {
-        TextView label = new TextView(this);
-        
-        label.setText(labelText);
-        label.setTextColor(AppTheme.getHighlightColor());
-        label.setTextSize(25);
-        bar.addViewIgnoreSize(label);
+        bar.addViewIgnoreSize(AppTheme.getTitleTextView(this, labelText));
         
     }
 

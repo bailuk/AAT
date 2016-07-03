@@ -124,4 +124,20 @@ public class AppTheme {
     public static void themify(LinearLayout bar) {
         bar.setBackgroundResource(R.drawable.button);
     }
+    
+    
+    public static TextView getTitleTextView(Context c, int res) {
+        return getTitleTextView(c, c.getResources().getText(res));
+    }
+
+
+    public static TextView getTitleTextView(Context c, CharSequence t) {
+        final TextView text = new TextView(c);
+        text.setText(t);
+        text.setTextColor(AppTheme.getHighlightColor());
+        text.setTextSize(25);
+        
+        return text;
+    }
+    
 }

@@ -116,12 +116,17 @@ COPY "view-refresh"
 
 
 ####### Tracker / Menu
-COPY "media-playback-pause" 
-COPY "media-playback-start" 
-COPY "media-playback-stop" 
+INVERT "media-playback-pause" 
+INVERT "media-playback-start" 
+INVERT "media-playback-stop" 
 
 
 
 ####### FileView / OsmApi Activities
-COPY "view-paged"
-COPY "content-loading"
+INVERT "view-paged"
+INVERT "content-loading"
+INVERT "go-bottom"  ## Overpass
+INVERT "edit-find"  ## Nominatim
+INVERT "edit-clear-all" 
+INVERT "document-save-as" 
+

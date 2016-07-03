@@ -115,10 +115,11 @@ public abstract class AbsOsmApiActivity extends AbsDispatcher implements OnClick
         download = new DownloadButton(this);
         
         bar.addView(download);
+        download.setOnClickListener(this);
         
-        erase = bar.addImageButton(R.drawable.edit_clear_all);
-        addLayer = bar.addImageButton(R.drawable.view_paged);
-        saveCopy = bar.addImageButton(R.drawable.document_save_as);
+        erase = bar.addImageButton(R.drawable.edit_clear_all_inverse);
+        addLayer = bar.addImageButton(R.drawable.view_paged_inverse);
+        saveCopy = bar.addImageButton(R.drawable.document_save_as_inverse);
 
         
         ToolTip.set(download, R.string.tt_nominatim_query);
@@ -129,6 +130,7 @@ public abstract class AbsOsmApiActivity extends AbsDispatcher implements OnClick
         addButtons(bar);
 
         bar.setOnClickListener1(this);
+        
 
         return bar;
     }

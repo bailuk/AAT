@@ -37,6 +37,9 @@ public class DirectoryServiceHelper implements Closeable {
         scontext.getDirectoryService().reopen(directory, selection); // or requery ????
     }
 
+    public File getDirectory() {
+        return directory;
+    }
 
     public void rescan() {
         scontext.getDirectoryService().rescan();

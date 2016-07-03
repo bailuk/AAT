@@ -6,9 +6,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.TextView;
 import ch.bailu.aat.R;
 import ch.bailu.aat.helpers.AppBroadcaster;
+import ch.bailu.aat.helpers.AppDialog;
 import ch.bailu.aat.helpers.AppDirectory;
 import ch.bailu.aat.helpers.AppLog;
 import ch.bailu.aat.helpers.AppTheme;
@@ -37,18 +37,12 @@ public class MapFeaturesActivity extends AbsDispatcher implements OnClickListene
         
         download = new DownloadButton(this);
         ToolTip.set(download, R.string.tt_overpass_download_features);
+        download.setOnClickListener(this);
         
         bar = new MainControlBar(this,6);
         
-        bar.setOnClickListener2(this);
         bar.addView(download);
-        
-        
-        TextView text = new TextView(this);
-        text.setText(R.string.query_features);
-        text.setTextColor(AppTheme.getHighlightColor());
-        text.setTextSize(25);
-        bar.addViewIgnoreSize(text);
+        bar.addViewIgnoreSize(AppTheme.getTitleTextView(this, R.string.query_features));
 
         list = new FeaturesList(getServiceContext());
         list.loadList();
@@ -77,8 +71,20 @@ public class MapFeaturesActivity extends AbsDispatcher implements OnClickListene
     @Override
     public void onClick(View v) {
         if (v==download) {
-            getServiceContext().getBackgroundService().downloadMapFeatures();
-            download.startWaiting();
+            new AppDialog() {
+                
+                @Override
+                protected void onPositiveClick() {
+                    getServiceContext().getBackgroundService().downloadMapFeatures();
+                    download.startWaiting();        
+                }
+                
+            }.displayYesNoDialog(MapFeaturesActivity.this, 
+                    getString(R.string.query_features), 
+                    "(Re)Download map features?*");
+
+            
+            
         }
     }
     

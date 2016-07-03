@@ -40,7 +40,7 @@ public class OverpassActivity extends AbsOsmApiActivity  {
 
     @Override
     public void addButtons(ControlBar bar) {
-        feature = bar.addImageButton(R.drawable.content_loading);
+        feature = bar.addImageButton(R.drawable.content_loading_inverse);
         ToolTip.set(feature, R.string.tt_overpass_mapfeatures);
     }
 

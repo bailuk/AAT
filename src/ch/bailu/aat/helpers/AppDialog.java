@@ -33,7 +33,7 @@ public abstract class AppDialog {
     protected abstract void onPositiveClick();
     public void onNeutralClick() {};
 
-    protected void displayYesNoDialog(Activity activity, String title, String text) {
+    public void displayYesNoDialog(Activity activity, String title, String text) {
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
         Dialog dialog;
 

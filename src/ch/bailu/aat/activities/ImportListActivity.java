@@ -5,7 +5,6 @@ import java.io.File;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 import ch.bailu.aat.R;
 import ch.bailu.aat.description.ContentDescription;
 import ch.bailu.aat.description.DateDescription;
@@ -28,13 +27,10 @@ public class ImportListActivity extends AbsGpxListActivity {
  
     @Override
     public void createHeader(ControlBar bar) {
-        createLabel(bar, getLabelText());
+        bar.addViewIgnoreSize(AppTheme.getTitleTextView(this, R.string.intro_import_list));
     }
 
 
-    public String getLabelText() {
-        return getString(R.string.intro_import_list);
-    }
 
     @Override
     public DirectoryServiceHelper createDirectoryServiceHelper() {
@@ -63,14 +59,4 @@ public class ImportListActivity extends AbsGpxListActivity {
         startActivity(intent);
     }
 
-
-    public void createLabel(ControlBar bar, String labelText) {
-        TextView label = new TextView(this);
-
-        label.setText(labelText);
-        label.setTextColor(AppTheme.getHighlightColor());
-        label.setTextSize(25);
-        bar.addViewIgnoreSize(label);
-
-    }
 }

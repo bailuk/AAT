@@ -29,18 +29,18 @@ implements DescriptionInterface{
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         start = menu.add(R.string.tracker_start);
-        start.setIcon(R.drawable.media_playback_start);
+        start.setIcon(R.drawable.media_playback_start_inverse);
 
         pause = menu.add(R.string.tracker_pause);
-        pause.setIcon(R.drawable.media_playback_pause);
+        pause.setIcon(R.drawable.media_playback_pause_inverse);
 
         nominatim = menu.add(R.string.intro_nominatim);
-        nominatim.setIcon(R.drawable.edit_find);
+        nominatim.setIcon(R.drawable.edit_find_inverse);
 
         map = menu.add(R.string.p_map);
 
         overlays = menu.add(R.string.p_overlay);
-        overlays.setIcon(R.drawable.view_paged);
+        overlays.setIcon(R.drawable.view_paged_inverse);
 
         backlight = menu.add(R.string.p_backlight_title);
 

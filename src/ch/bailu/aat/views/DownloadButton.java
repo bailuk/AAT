@@ -20,7 +20,7 @@ public class DownloadButton extends ViewGroup implements OnClickListener, OnLong
     public DownloadButton(Context context) {
         super(context);
         button = new ImageButton(context);
-        button.setImageResource(R.drawable.go_bottom);
+        button.setImageResource(R.drawable.go_bottom_inverse);
         button.setOnClickListener(this);
         button.setOnLongClickListener(this);
         

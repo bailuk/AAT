@@ -48,13 +48,13 @@ public class TrackerActivity extends AbsDispatcher implements OnClickListener{
     
     private static final String SOLID_KEY="tracker";
 
-    private LinearLayout contentView;
-    private ImageButton  activityCycle, multiCycle;
+    private LinearLayout         contentView;
+    private ImageButton          activityCycle, multiCycle;
     private TrackerStateButton   trackerState;
-    private MultiView    multiView;
+    private MultiView            multiView;
     private OsmInteractiveView   map;
     
-    private EditorHelper edit;
+    private EditorHelper         edit;
     
 
     @Override

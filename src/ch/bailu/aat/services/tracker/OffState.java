@@ -74,7 +74,7 @@ public class OffState extends State {
 
     @Override
     public int getStartStopIconID() {
-        return R.drawable.media_playback_start;
+        return R.drawable.media_playback_start_inverse;
     }
 
 }
