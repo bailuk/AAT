@@ -8,7 +8,6 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import ch.bailu.aat.R;
 import ch.bailu.aat.description.DescriptionInterface;
-import ch.bailu.aat.description.GpsStateDescription;
 import ch.bailu.aat.dispatcher.ContentDispatcher;
 import ch.bailu.aat.dispatcher.ContentSource;
 import ch.bailu.aat.dispatcher.CurrentLocationSource;
@@ -20,6 +19,7 @@ import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.editor.EditorHelper;
 import ch.bailu.aat.views.ContentView;
 import ch.bailu.aat.views.ControlBar;
+import ch.bailu.aat.views.GPSStateButton;
 import ch.bailu.aat.views.MainControlBar;
 import ch.bailu.aat.views.NumberView;
 import ch.bailu.aat.views.TrackerStateButton;
@@ -125,8 +125,7 @@ public class MapActivity extends AbsDispatcher implements OnClickListener{
 
         cycleButton = bar.addImageButton(R.drawable.go_down_inverse);
 
-        gpsState = new NumberView(new GpsStateDescription(this),
-                GpxInformation.ID.INFO_ID_LOCATION);
+        gpsState = new GPSStateButton(this);
         trackerState = new TrackerStateButton(this.getServiceContext());
 
         bar.addView(gpsState);

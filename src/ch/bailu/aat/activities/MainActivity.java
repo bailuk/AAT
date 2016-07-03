@@ -18,18 +18,17 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import ch.bailu.aat.R;
 import ch.bailu.aat.description.DescriptionInterface;
-import ch.bailu.aat.description.GpsStateDescription;
 import ch.bailu.aat.dispatcher.ContentDispatcher;
 import ch.bailu.aat.dispatcher.ContentSource;
 import ch.bailu.aat.dispatcher.CurrentLocationSource;
 import ch.bailu.aat.dispatcher.TrackerSource;
-import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.helpers.AppLayout;
 import ch.bailu.aat.helpers.AppTheme;
 import ch.bailu.aat.preferences.SolidPreset;
 import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat.views.ContentView;
 import ch.bailu.aat.views.ControlBar;
+import ch.bailu.aat.views.GPSStateButton;
 import ch.bailu.aat.views.MainControlBar;
 import ch.bailu.aat.views.NumberView;
 import ch.bailu.aat.views.TrackerStateButton;
@@ -105,8 +104,7 @@ implements AdapterView.OnItemSelectedListener, OnSharedPreferenceChangeListener 
     private LinearLayout createButtonBar() {
         final ControlBar bar = new MainControlBar(this);
 
-        gpsState = new NumberView(new GpsStateDescription(this),
-                GpxInformation.ID.INFO_ID_LOCATION);
+        gpsState = new GPSStateButton(this);
         trackerState = new TrackerStateButton(getServiceContext());
 
         bar.addView(new View(this));

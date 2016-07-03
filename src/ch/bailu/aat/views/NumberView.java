@@ -87,7 +87,7 @@ public class NumberView extends TrackDescriptionView {
         }
     }
 
-    private void updateAllText() {
+    public void updateAllText() {
         number.setText(description.getValue());
         label.setText(description.getLabel());
         unit.setText(description.getUnit());
