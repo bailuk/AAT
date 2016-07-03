@@ -108,13 +108,10 @@ implements AdapterView.OnItemSelectedListener, OnSharedPreferenceChangeListener 
         gpsState = new NumberView(new GpsStateDescription(this),
                 GpxInformation.ID.INFO_ID_LOCATION);
         trackerState = new TrackerStateButton(getServiceContext());
-        trackerState.setBackgroundResource(R.drawable.button_alt);
 
         bar.addView(new View(this));
         bar.addView(gpsState);
         bar.addView(trackerState);
-
-        bar.setOnClickListener1(trackerState);
 
         return bar;
 

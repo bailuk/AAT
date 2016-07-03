@@ -89,6 +89,7 @@ public class ControlBar extends LinearLayout {
         button.setImageResource(res);
         AppTheme.themify(button);
         this.addView(button);
+        button.setOnClickListener(onClickListener);
         return button;
     }    
     
@@ -98,6 +99,7 @@ public class ControlBar extends LinearLayout {
         button.setText(text);
         AppTheme.themify(button);
         this.addView(button);
+        button.setOnClickListener(onClickListener);
         return button;
     }    
     
@@ -105,13 +107,11 @@ public class ControlBar extends LinearLayout {
     @Override
     public void addView(View v) {
         canvas.addView(v, controlSize, controlSize);
-        v.setOnClickListener(onClickListener);
     }    
 
     
     public void addViewIgnoreSize(View v) {
         canvas.addView(v);
-        v.setOnClickListener(onClickListener);
     }
     
     
@@ -136,7 +136,7 @@ public class ControlBar extends LinearLayout {
     public ImageButton addSolidIndexButton(SolidIndexList sIndexList) {
         SolidImageButton button = new SolidImageButton(sIndexList);
         AppTheme.themify(button);
-        canvas.addView(button);
+        canvas.addView(button, controlSize, controlSize);
         solidButton.add(button);
         return button;
     }

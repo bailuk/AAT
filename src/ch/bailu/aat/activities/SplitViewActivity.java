@@ -139,7 +139,6 @@ public class SplitViewActivity extends AbsDispatcher implements OnClickListener{
         bar.addView(trackerState);
         bar.setOnClickListener1(this);
         
-        trackerState.setOnClickListener(trackerState);
         return bar;
     }
 

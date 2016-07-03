@@ -6,15 +6,17 @@ import ch.bailu.aat.description.TrackerStateDescription;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.services.ServiceContext;
 
-public class TrackerStateButton extends NumberView implements OnClickListener {
+public class TrackerStateButton extends NumberButton implements OnClickListener {
 
     final private ServiceContext scontext; 
+    
+    
     public TrackerStateButton(ServiceContext c) {
         super(new TrackerStateDescription(c.getContext()), 
                 GpxInformation.ID.INFO_ID_TRACKER);
         
         scontext=c;
-        setBackgroundResource(ch.bailu.aat.R.drawable.button_alt);
+
         setOnClickListener(this);
     }
 
