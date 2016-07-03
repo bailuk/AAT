@@ -134,13 +134,11 @@ public class DirectoryService extends VirtualService{
         
         
         private boolean setDirectory() {
-            if (isDirValid()) {
-                selection = new SolidString(Storage.global(getContext()), KEY_DIR_SELECTION+directory.getValue());
-                selection = new SolidString(Storage.global(getContext()), KEY_DIR_SELECTION+directory.getValue());
-                index     = new SolidInteger(Storage.global(getContext()), KEY_DIR_INDEX+directory.getValue());
-                return true;
-            }
-            return false;
+            selection = new SolidString(Storage.global(getContext()), KEY_DIR_SELECTION+directory.getValue());
+            selection = new SolidString(Storage.global(getContext()), KEY_DIR_SELECTION+directory.getValue());
+            index     = new SolidInteger(Storage.global(getContext()), KEY_DIR_INDEX+directory.getValue());
+
+            return isDirValid();
         }
         
         
