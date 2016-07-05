@@ -29,9 +29,10 @@ import ch.bailu.aat.dispatcher.TrackerSource;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.helpers.AppLayout;
 import ch.bailu.aat.services.editor.EditorHelper;
-import ch.bailu.aat.views.BusyIndicator;
+import ch.bailu.aat.views.BusyButton;
 import ch.bailu.aat.views.ContentView;
 import ch.bailu.aat.views.ControlBar;
+import ch.bailu.aat.views.MainControlBar;
 import ch.bailu.aat.views.MultiView;
 import ch.bailu.aat.views.SummaryListView;
 import ch.bailu.aat.views.TrackDescriptionView;
@@ -59,7 +60,7 @@ public class FileContentActivity extends AbsDispatcher implements OnClickListene
 
     private LinearLayout contentView;
 
-    private BusyIndicator      busyIndicator;
+    private BusyButton      busyButton;
     private MultiView          multiView;
     private OsmInteractiveView map;
 
@@ -83,16 +84,13 @@ public class FileContentActivity extends AbsDispatcher implements OnClickListene
 
 
     private ControlBar createButtonBar() {
-        ControlBar bar = new ControlBar(
-                this, 
-                AppLayout.getOrientationAlongSmallSide(this));
+        MainControlBar bar = new MainControlBar(this);
 
         nextView = bar.addImageButton(R.drawable.go_next_inverse);
         previousFile =  bar.addImageButton(R.drawable.go_up_inverse);
         nextFile = bar.addImageButton(R.drawable.go_down_inverse);
 
-        busyIndicator = new BusyIndicator(this, GpxInformation.ID.INFO_ID_FILEVIEW);
-        bar.addView(busyIndicator);
+        busyButton = bar.getMenu();
 
         bar.setOrientation(AppLayout.getOrientationAlongSmallSide(this));
         bar.setOnClickListener1(this);
@@ -161,7 +159,7 @@ public class FileContentActivity extends AbsDispatcher implements OnClickListene
 
     private void createDispatcher() {
         DescriptionInterface[] target = new DescriptionInterface[] {
-                multiView, this, busyIndicator
+                multiView, this, busyButton.getBusyControl(GpxInformation.ID.INFO_ID_FILEVIEW) 
         };
 
         ContentSource[] source = new ContentSource[] {

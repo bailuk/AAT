@@ -13,9 +13,9 @@ import ch.bailu.aat.helpers.AppDirectory;
 import ch.bailu.aat.helpers.AppLog;
 import ch.bailu.aat.helpers.AppTheme;
 import ch.bailu.aat.helpers.ToolTip;
+import ch.bailu.aat.views.BusyButton;
 import ch.bailu.aat.views.ContentView;
 import ch.bailu.aat.views.ControlBar;
-import ch.bailu.aat.views.DownloadButton;
 import ch.bailu.aat.views.FeaturesList;
 import ch.bailu.aat.views.MainControlBar;
 
@@ -25,7 +25,7 @@ public class MapFeaturesActivity extends AbsDispatcher implements OnClickListene
     private FeaturesList list;
     
     private ControlBar bar;
-    private DownloadButton download;
+    private BusyButton download;
 
     
     
@@ -35,7 +35,7 @@ public class MapFeaturesActivity extends AbsDispatcher implements OnClickListene
         
         ContentView contentView = new ContentView(this, ContentView.VERTICAL);
         
-        download = new DownloadButton(this);
+        download = new BusyButton(this,R.drawable.go_bottom_inverse);
         ToolTip.set(download, R.string.tt_overpass_download_features);
         download.setOnClickListener(this);
         

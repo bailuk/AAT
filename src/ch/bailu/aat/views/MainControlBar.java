@@ -6,15 +6,19 @@ import ch.bailu.aat.helpers.AppLayout;
 
 public class MainControlBar extends ControlBar {
 
+    private final BusyButton menu;
+    
     public MainControlBar(final Activity context) {
         this(context, DEFAULT_VISIBLE_BUTTON_COUNT);
+        
     }
     
     
     public MainControlBar(final Activity context, int button) {
         super(context, AppLayout.getOrientationAlongSmallSide(context), button);
-        
-        addImageButton(ch.bailu.aat.R.drawable.open_menu_inverse).setOnClickListener(new OnClickListener() {
+        menu = new BusyButton(context, ch.bailu.aat.R.drawable.open_menu_inverse);
+        this.addView(menu);
+        menu.setOnClickListener(new OnClickListener() {
 
             @Override
             public void onClick(View v) {
@@ -23,5 +27,7 @@ public class MainControlBar extends ControlBar {
         
     }
 
-    
+    public BusyButton getMenu() {
+        return menu;
+    }
 }

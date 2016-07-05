@@ -27,9 +27,10 @@ import ch.bailu.aat.helpers.AppLayout;
 import ch.bailu.aat.helpers.AppLog;
 import ch.bailu.aat.services.editor.EditorHelper;
 import ch.bailu.aat.services.editor.EditorInterface;
-import ch.bailu.aat.views.BusyIndicator;
+import ch.bailu.aat.views.BusyButton;
 import ch.bailu.aat.views.ContentView;
 import ch.bailu.aat.views.ControlBar;
+import ch.bailu.aat.views.MainControlBar;
 import ch.bailu.aat.views.MultiView;
 import ch.bailu.aat.views.NodeListView;
 import ch.bailu.aat.views.SummaryListView;
@@ -55,7 +56,7 @@ public class GpxEditorActivity extends AbsDispatcher implements OnClickListener 
     private ImageButton nextView, nextFile, previousFile;
 
 
-    private BusyIndicator busyIndicator;
+    private BusyButton busyButton;
     private MultiView     multiView;
     private OsmInteractiveView    mapView;
 
@@ -75,7 +76,7 @@ public class GpxEditorActivity extends AbsDispatcher implements OnClickListener 
 
     private void createDispatcher() {
         DescriptionInterface[] target = new DescriptionInterface[] {
-                multiView,this, busyIndicator
+                multiView,this, busyButton.getBusyControl(GpxInformation.ID.INFO_ID_FILEVIEW)
         };
 
 
@@ -148,16 +149,13 @@ public class GpxEditorActivity extends AbsDispatcher implements OnClickListener 
 
 
     private ControlBar createButtonBar() {
-        ControlBar bar = new ControlBar(
-                this, 
-                AppLayout.getOrientationAlongSmallSide(this));
+        final MainControlBar bar = new MainControlBar(this);
 
         nextView = bar.addImageButton(R.drawable.go_next_inverse);
         previousFile =  bar.addImageButton(R.drawable.go_up_inverse);
         nextFile = bar.addImageButton(R.drawable.go_down_inverse);
 
-        busyIndicator = new BusyIndicator(this, INFO_ID_EDITOR_OVERLAY);
-        bar.addView(busyIndicator);
+        busyButton = bar.getMenu();
 
         bar.setOrientation(AppLayout.getOrientationAlongSmallSide(this));
         bar.setOnClickListener1(this);

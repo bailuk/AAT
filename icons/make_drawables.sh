@@ -72,6 +72,7 @@ CONVERT "button_selected.9"
 
 ####### Application
 CONVERT "icon" 
+CONVERT "icon_test"
 CONVERT "status"
 
 

@@ -25,6 +25,7 @@ import ch.bailu.aat.helpers.AppLayout;
 import ch.bailu.aat.helpers.AppTheme;
 import ch.bailu.aat.views.ContentView;
 import ch.bailu.aat.views.ControlBar;
+import ch.bailu.aat.views.MainControlBar;
 import ch.bailu.aat.views.TrackDescriptionView;
 import ch.bailu.aat.views.VerticalView;
 import ch.bailu.aat.views.ViewWrapper;
@@ -76,9 +77,7 @@ public class NodeDetailActivity extends AbsDispatcher implements OnClickListener
     
 
     private ControlBar createButtonBar() {
-        ControlBar bar = new ControlBar(
-                this, 
-                AppLayout.getOrientationAlongSmallSide(this));
+        ControlBar bar = new MainControlBar(this);
 
         previousNode =  bar.addImageButton(R.drawable.go_up_inverse);
         nextNode = bar.addImageButton(R.drawable.go_down_inverse);

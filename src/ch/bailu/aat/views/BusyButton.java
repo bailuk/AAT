@@ -1,49 +1,41 @@
 package ch.bailu.aat.views;
 
 import android.content.Context;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.View.OnLongClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import ch.bailu.aat.R;
+import ch.bailu.aat.description.DescriptionInterface;
+import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.helpers.AppTheme;
 
-
-public class DownloadButton extends ViewGroup implements OnClickListener, OnLongClickListener {
-    private static final int PADDING=3;
+public class BusyButton extends ViewGroup   {
+    
     
     private final ImageButton button;
     private final BusyIndicator busy;
-    private OnClickListener listener;
     
-    public DownloadButton(Context context) {
+    public BusyButton(Context context, int image_res) {
         super(context);
+        
         button = new ImageButton(context);
-        button.setImageResource(R.drawable.go_bottom_inverse);
-        button.setOnClickListener(this);
-        button.setOnLongClickListener(this);
-        
+        button.setImageResource(image_res);
+        button.setClickable(false);
         AppTheme.themify(button);
-        addView(button);
+        addView(button);        
         
-        
+
         busy = new BusyIndicator(context);
-        busy.setPadding(PADDING, PADDING, PADDING, PADDING);
+        busy.setClickable(false);
+        busy.setBackgroundResource(R.drawable.button);
         addView(busy);
+
         stopWaiting();
+        setBackgroundResource(R.drawable.button);
     }
 
 
-    @Override
-    public void setOnClickListener(OnClickListener l) {
-        listener=l;
-    }
     
-    @Override
-    public void onClick(View v) {
-        if (listener != null) listener.onClick(this);
-    }    
+    
     
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
@@ -74,26 +66,43 @@ public class DownloadButton extends ViewGroup implements OnClickListener, OnLong
 
     
     public void startWaiting() {
-        button.setVisibility(INVISIBLE);
         busy.startWaiting();
-        
-
     }
 
+    
     public void stopWaiting() {
         busy.stopWaiting();
-        button.setVisibility(VISIBLE);
     }
 
     public boolean isWaiting() {
         return busy.isWaiting();
     }
 
+    
 
-    @Override
-    public boolean onLongClick(View v) {
-        return performLongClick();
+
+    public BusyControl getBusyControl(int id) {
+        return new BusyControl(id);
     }
+    
+    public class BusyControl implements DescriptionInterface {
+        private final int ID;
 
-
+        public BusyControl(int iid) {
+            ID=iid;
+        }
+        
+        
+        @Override
+        public void updateGpxContent(GpxInformation info) {
+            if (info.getID()==ID) {
+                if (info.isLoaded()) {
+                    stopWaiting();
+                } else {
+                    startWaiting();
+                }
+                
+            }
+        }
+    }
 }

@@ -1,34 +1,65 @@
 package ch.bailu.aat.views;
 
+import java.io.Closeable;
+
+import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.widget.ProgressBar;
+import android.content.Intent;
 import ch.bailu.aat.helpers.AppBroadcaster;
 
-public class DbSynchronizerBusyIndicator extends BusyIndicator {
+public class DbSynchronizerBusyIndicator implements Closeable {
 
-    private final OnSyncAction 
-    onSyncStart = new OnSyncAction(ProgressBar.VISIBLE),
-    onSyncChanged  = new OnSyncAction(ProgressBar.VISIBLE),
-    onSyncDone = new OnSyncAction(ProgressBar.INVISIBLE);
+    private final BusyButton busy;
+    
+    private final BroadcastReceiver  
+    onSyncStart = new BroadcastReceiver () {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            busy.startWaiting();
+            
+        }
+
+    },
+
+    onSyncChanged  =new BroadcastReceiver () {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            busy.startWaiting();
+            
+        }
+
+    },
+
+    onSyncDone = new BroadcastReceiver () {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            busy.stopWaiting();
+        }
+
+    };
 
 
-    public DbSynchronizerBusyIndicator(Context c) {
-        super(c);
+   
+    public DbSynchronizerBusyIndicator(BusyButton b) {
+        busy=b;
+        
 
-        setVisibility(ProgressBar.INVISIBLE);
-
-        AppBroadcaster.register(getContext(), onSyncStart,   AppBroadcaster.DBSYNC_START);
-        AppBroadcaster.register(getContext(), onSyncDone,    AppBroadcaster.DBSYNC_DONE);
-        AppBroadcaster.register(getContext(), onSyncChanged, AppBroadcaster.DB_SYNC_CHANGED);
+   
+        AppBroadcaster.register(busy.getContext(), onSyncStart,   AppBroadcaster.DBSYNC_START);
+        AppBroadcaster.register(busy.getContext(), onSyncDone,    AppBroadcaster.DBSYNC_DONE);
+        AppBroadcaster.register(busy.getContext(), onSyncChanged, AppBroadcaster.DB_SYNC_CHANGED);
 
     }
 
 
+
     @Override
-    public void onDetachedFromWindow() {
-        getContext().unregisterReceiver(onSyncChanged);
-        getContext().unregisterReceiver(onSyncDone);
-        getContext().unregisterReceiver(onSyncStart);
-        super.onDetachedFromWindow();
+    public void close() {
+        busy.getContext().unregisterReceiver(onSyncChanged);
+        busy.getContext().unregisterReceiver(onSyncDone);
+        busy.getContext().unregisterReceiver(onSyncStart);
     }
 }

@@ -30,9 +30,9 @@ import ch.bailu.aat.preferences.AddOverlayDialog;
 import ch.bailu.aat.services.background.BackgroundService;
 import ch.bailu.aat.services.background.DownloadHandle;
 import ch.bailu.aat.services.background.ProcessHandle;
+import ch.bailu.aat.views.BusyButton;
 import ch.bailu.aat.views.ContentView;
 import ch.bailu.aat.views.ControlBar;
-import ch.bailu.aat.views.DownloadButton;
 import ch.bailu.aat.views.MainControlBar;
 import ch.bailu.aat.views.NodeListView;
 import ch.bailu.aat.views.TagEditor;
@@ -43,7 +43,7 @@ public abstract class AbsOsmApiActivity extends AbsDispatcher implements OnClick
     
 
     private TagEditor          tagEditor;
-    private DownloadButton     download;
+    private BusyButton         download;
     private View               erase;
     private View               saveCopy;
     private View               addLayer;
@@ -111,8 +111,8 @@ public abstract class AbsOsmApiActivity extends AbsDispatcher implements OnClick
     
     private ControlBar createControlBar() {
         ControlBar bar = new MainControlBar(this,6);      
-
-        download = new DownloadButton(this);
+        
+        download = new BusyButton(this, R.drawable.go_bottom_inverse);
         
         bar.addView(download);
         download.setOnClickListener(this);

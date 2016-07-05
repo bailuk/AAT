@@ -37,7 +37,7 @@ public abstract class AbsGpxListActivity extends AbsMenu implements OnItemClickL
 
 
     private GpxListView                 listView;
-    private DbSynchronizerBusyIndicator busyIndicator;
+    private DbSynchronizerBusyIndicator busyControl;
 
     private LinearLayout                contentView;
     private DirectoryServiceHelper      directory;
@@ -54,7 +54,7 @@ public abstract class AbsGpxListActivity extends AbsMenu implements OnItemClickL
         super.onCreate(savedInstanceState);
 
         
-        final ControlBar bar = new MainControlBar(this, 6);
+        final MainControlBar bar = new MainControlBar(this, 6);
         
         contentView=new ContentView(this);
         
@@ -79,9 +79,8 @@ public abstract class AbsGpxListActivity extends AbsMenu implements OnItemClickL
 
 
     
-    private void createBusyIndicator(LinearLayout layout) {
-        busyIndicator = new DbSynchronizerBusyIndicator(this);
-        layout.addView(busyIndicator);
+    private void createBusyIndicator(MainControlBar layout) {
+        busyControl = new DbSynchronizerBusyIndicator(layout.getMenu());
     }
 
 
@@ -116,6 +115,7 @@ public abstract class AbsGpxListActivity extends AbsMenu implements OnItemClickL
     @Override
     public void onDestroy() {
         directory.close();
+        busyControl.close();
         super.onDestroy();
     }
 
