@@ -1,22 +1,26 @@
 package ch.bailu.aat.preferences;
 
-import ch.bailu.aat.helpers.ContextWrapperInterface;
+import java.io.File;
+import java.util.Map.Entry;
+
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
+import android.os.Environment;
+import ch.bailu.aat.helpers.AppFile;
+import ch.bailu.aat.helpers.ContextWrapperInterface;
 
 public class Storage  implements ContextWrapperInterface {
     private final static String DEF_VALUE="0";
-    
+
     private final static String GLOBAL_NAME="Preferences";
-    private final static String PRESET_NAME="preset";
 
     private final SharedPreferences preferences;
     private final SharedPreferences.Editor editor;
 
     private final Context context;
 
-    
+
     private Storage(Context c, String fileName) {
         context=c;
         preferences = context.getSharedPreferences(fileName,Context.MODE_PRIVATE);
@@ -27,33 +31,66 @@ public class Storage  implements ContextWrapperInterface {
     public static Storage global(Context c) {
         return new Storage(c, GLOBAL_NAME);
     }
-    
-    
+
+
     public static Storage map(Context context) {
         return global(context);  // TODO remove
     }
-    
-    
-    public static Storage activity(Context c, String mainKey) {
-        return new Storage(c, mainKey);
-    }
-    
-    
+
+
+
+
     public static Storage activity(Context c) {
         return global(c); // TODO remove
     }
-    
-    
+
+
     public static Storage preset(Context c) {
         return global(c); // TODO remove
     }
-    
-    
-    public static Storage preset(Context c, int i) {
-        return new Storage(c, PRESET_NAME + i);
+
+
+    public void backup() throws Exception {
+        final File source = new File("/data/data/ch.bailu.aat/shared_prefs/"+ GLOBAL_NAME + ".xml");
+        final File target = new File(Environment.getExternalStorageDirectory(), "aat_preferences.xml");
+
+        AppFile.copy(source, target);
     }
-    
-    
+
+
+
+
+    public void restore() throws Exception {
+        final File target = new File("/data/data/ch.bailu.aat/shared_prefs/"+ "restore.xml");
+        final File source = new File(Environment.getExternalStorageDirectory(), "aat_preferences.xml");
+
+        if (target.exists()) target.delete();
+
+        AppFile.copy(source, target);
+
+        final SharedPreferences restore = context.getSharedPreferences("restore", Context.MODE_PRIVATE);
+
+        for(Entry<String,?> entry : restore.getAll().entrySet()){ 
+            Object v = entry.getValue(); 
+            String key = entry.getKey();
+
+            if(v instanceof Boolean) 
+                editor.putBoolean(key, ((Boolean)v).booleanValue());
+            else if(v instanceof Float)
+                editor.putFloat(key, ((Float)v).floatValue());
+            else if(v instanceof Integer)
+                editor.putInt(key, ((Integer)v).intValue());
+            else if(v instanceof Long)
+                editor.putLong(key, ((Long)v).longValue());
+            else if(v instanceof String)
+                editor.putString(key, ((String)v));         
+        }
+        editor.commit();
+
+        if (target.exists()) target.delete();
+    }
+
+
     public String readString(String key) {
         return preferences.getString(key, DEF_VALUE);
     }
@@ -112,7 +149,4 @@ public class Storage  implements ContextWrapperInterface {
     public Context getContext() {
         return context;
     }
-
-
-    
 }

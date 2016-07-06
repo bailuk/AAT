@@ -50,6 +50,8 @@ import ch.bailu.aat.helpers.AppLayout;
 import ch.bailu.aat.helpers.AppLog;
 import ch.bailu.aat.helpers.AppTheme;
 import ch.bailu.aat.services.editor.EditorHelper;
+import ch.bailu.aat.test.PreferencesFromSdcard;
+import ch.bailu.aat.test.PreferencesToSdcard;
 import ch.bailu.aat.test.TestCoordinates;
 import ch.bailu.aat.test.TestGpx;
 import ch.bailu.aat.test.TestGpxLogRecovery;
@@ -243,6 +245,8 @@ public class TestActivity extends AbsDispatcher implements OnClickListener {
             tests.add(new TestGpx(context));
             tests.add(new TestGpxLogRecovery(context));
             tests.add(new TestTest(context));
+            tests.add(new PreferencesToSdcard(context));
+            tests.add(new PreferencesFromSdcard(context));
 
 
             setAdapter(this);
