@@ -50,7 +50,6 @@ public class MockLocation extends LocationStackChainedItem implements Runnable, 
     
     @Override
     public void run() {
-        
         if (sendLocation()) {
             timer.kick();
         } else {
