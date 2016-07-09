@@ -10,12 +10,10 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 import ch.bailu.aat.R;
 import ch.bailu.aat.description.ContentDescription;
 import ch.bailu.aat.helpers.AppFile;
 import ch.bailu.aat.helpers.AppLog;
-import ch.bailu.aat.helpers.AppTheme;
 import ch.bailu.aat.preferences.AddOverlayDialog;
 import ch.bailu.aat.preferences.SolidMockLocationFile;
 import ch.bailu.aat.services.cache.CacheService;
@@ -24,6 +22,7 @@ import ch.bailu.aat.services.directory.DirectoryServiceHelper;
 import ch.bailu.aat.views.ContentView;
 import ch.bailu.aat.views.ControlBar;
 import ch.bailu.aat.views.DbSynchronizerBusyIndicator;
+import ch.bailu.aat.views.DirectoryLinkView;
 import ch.bailu.aat.views.GpxListView;
 import ch.bailu.aat.views.MainControlBar;
 
@@ -68,10 +67,8 @@ public abstract class AbsGpxListActivity extends AbsMenu implements OnItemClickL
 
         directory = createDirectoryServiceHelper();
 
-        final TextView v=AppTheme.getTitleTextView(this, directory.getDirectory().getAbsolutePath());
-        v.setTextSize(v.getTextSize()/2);
         bar.addView(new View(this));
-        bar.addViewIgnoreSize(v);
+        bar.addViewIgnoreSize(new DirectoryLinkView(this, directory.getDirectory()));
 
     }        
 
