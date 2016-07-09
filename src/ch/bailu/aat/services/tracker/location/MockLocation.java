@@ -66,6 +66,7 @@ public class MockLocation extends LocationStackChainedItem implements Runnable, 
     private boolean sendLocation() {
         if (node != null) {
             
+            //AppLog. d(this, "sendLocation");
             sendLocation(new MockLocationInformation(node));
             
             node = (GpxPointNode)node.getNext();

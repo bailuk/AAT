@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.os.Environment;
 import ch.bailu.aat.helpers.AppFile;
+import ch.bailu.aat.helpers.AppLog;
 import ch.bailu.aat.helpers.ContextWrapperInterface;
 
 public class Storage  implements ContextWrapperInterface {
@@ -51,17 +52,23 @@ public class Storage  implements ContextWrapperInterface {
 
 
     public void backup() throws Exception {
-        final File source = new File("/data/data/ch.bailu.aat/shared_prefs/"+ GLOBAL_NAME + ".xml");
+        final File source =new File(getSharedPrefsDirectory(context),  GLOBAL_NAME + ".xml");
         final File target = new File(Environment.getExternalStorageDirectory(), "aat_preferences.xml");
 
         AppFile.copy(source, target);
     }
 
 
+    public static File getSharedPrefsDirectory(Context context) {
+        final File data = context.getFilesDir();
+        AppLog.d(data, data.toString());
+        
+        return new File(data.getParent(), "shared_prefs");
+    }
 
 
     public void restore() throws Exception {
-        final File target = new File("/data/data/ch.bailu.aat/shared_prefs/"+ "restore.xml");
+        final File target = new File(getSharedPrefsDirectory(context) +  "restore.xml");
         final File source = new File(Environment.getExternalStorageDirectory(), "aat_preferences.xml");
 
         if (target.exists()) target.delete();

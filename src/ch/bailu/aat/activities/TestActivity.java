@@ -46,7 +46,6 @@ import ch.bailu.aat.dispatcher.EditorSource;
 import ch.bailu.aat.dispatcher.OverlaySource;
 import ch.bailu.aat.dispatcher.TrackerSource;
 import ch.bailu.aat.gpx.GpxInformation;
-import ch.bailu.aat.helpers.AppLayout;
 import ch.bailu.aat.helpers.AppLog;
 import ch.bailu.aat.helpers.AppTheme;
 import ch.bailu.aat.services.editor.EditorHelper;
@@ -59,6 +58,7 @@ import ch.bailu.aat.test.TestTest;
 import ch.bailu.aat.test.UnitTest;
 import ch.bailu.aat.views.ContentView;
 import ch.bailu.aat.views.ControlBar;
+import ch.bailu.aat.views.MainControlBar;
 import ch.bailu.aat.views.MultiView;
 import ch.bailu.aat.views.NodeListView;
 import ch.bailu.aat.views.SummaryListView;
@@ -176,13 +176,10 @@ public class TestActivity extends AbsDispatcher implements OnClickListener {
 
 
     private ControlBar createButtonBar() {
-        ControlBar bar = new ControlBar(
-                this, 
-                AppLayout.getOrientationAlongSmallSide(this));
+        final ControlBar bar = new MainControlBar(this);
 
         multiCycleP = bar.addImageButton(R.drawable.go_previous_inverse);
         multiCycleN = bar.addImageButton(R.drawable.go_next_inverse);
-
 
         bar.setOnClickListener1(this);
 
