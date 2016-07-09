@@ -1,8 +1,6 @@
 package ch.bailu.aat.activities;
 
 
-import java.io.File;
-
 import android.os.Bundle;
 import android.view.ContextMenu;
 import android.view.MenuItem;
@@ -12,10 +10,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.LinearLayout;
 import ch.bailu.aat.R;
 import ch.bailu.aat.description.ContentDescription;
-import ch.bailu.aat.helpers.AppFile;
-import ch.bailu.aat.helpers.AppLog;
-import ch.bailu.aat.preferences.AddOverlayDialog;
-import ch.bailu.aat.preferences.SolidMockLocationFile;
+import ch.bailu.aat.helpers.FileAction;
 import ch.bailu.aat.services.cache.CacheService;
 import ch.bailu.aat.services.directory.DirectoryService;
 import ch.bailu.aat.services.directory.DirectoryServiceHelper;
@@ -138,51 +133,18 @@ public abstract class AbsGpxListActivity extends AbsMenu implements OnItemClickL
         int position = 
                 ((AdapterView.AdapterContextMenuInfo)menuInfo).position;
 
-        displayContextMenu(getServiceContext().getDirectoryService(), menu, position);
+        getServiceContext().getDirectoryService().setPosition(position);
+        
+        new FileAction(this).createFileMenu(menu);
 
     }
 
 
-    private void displayContextMenu(DirectoryService.Self directory, ContextMenu menu, int position) {
-        directory.setPosition(position);
-
-        getMenuInflater().inflate(R.menu.contextmenu, menu);
-        menu.setHeaderTitle(directory.getCurrent().getName());
-    }
 
 
     @Override
     public boolean onContextItemSelected(MenuItem item) {
-        try {
-            if (item.getItemId()== R.id.m_file_delete) {
-                directory.deleteSelected(this);
-
-            } else if (item.getItemId() == R.id.m_file_reload) {
-                directory.refreshSelected();
-
-            } else if (item.getItemId() == R.id.m_file_rename) {
-                directory.renameSelectedFile(this);
-
-            } else if (item.getItemId() == R.id.m_file_overlay) {
-                new AddOverlayDialog(this,
-                        new File(getServiceContext().getDirectoryService().getCurrent().getPath()));
-
-            } else if (item.getItemId() == R.id.m_file_mock) {
-                SolidMockLocationFile smock = new SolidMockLocationFile(this);
-                smock.setValue(getServiceContext().getDirectoryService().getCurrent().getPath());
-
-            } else if (item.getItemId() == R.id.m_file_send) {
-                AppFile.send(this, new File(getServiceContext().getDirectoryService().getCurrent().getPath()));
-
-            } else if (item.getItemId() == R.id.m_file_copy) {
-                AppFile.copyTo(this, new File(getServiceContext().getDirectoryService().getCurrent().getPath()));
-
-            }
-
-        } catch (Exception e) {
-            AppLog.e(this, e);
-        }
-        return true;
+        return new FileAction(this).onMenuItemClick(item);
     }
 }
 

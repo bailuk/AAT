@@ -29,28 +29,13 @@ public class DirectoryLinkView extends TextView implements OnClickListener {
         if (v==this) {
             File directory = new File(getText().toString());
             
-            if (directory.exists()) {
-            
-                final Uri uri = Uri.fromFile(directory);
+            if (directory.exists()) {  // this works (only?) with OI Filemanager
                 final Intent intent = new Intent(Intent.ACTION_VIEW);
-                intent.setData(uri);
-                //intent.setDataAndType(uri, "resource/folder");
-                //intent.setDataAndType(uri, "text/csv");
-
-                getContext().startActivity(Intent.createChooser(intent, directory.toString()));
+                final Uri uri = Uri.fromFile(directory);
                 
-                /*
-                if (intent.resolveActivityInfo(getContext().getPackageManager(), 0) != null) {
-                    getContext().startActivity(intent);
-                    
-                } else {
-                  // if you reach this place, it means there is no any file 
-                  // explorer app installed on your device
-                }
-                */
+                intent.setData(uri);
+                getContext().startActivity(Intent.createChooser(intent, directory.toString()));
             }
         }
     }
-    
-
 }

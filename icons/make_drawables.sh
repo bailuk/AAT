@@ -81,7 +81,7 @@ INVERT "go-previous"
 INVERT "go-down" 
 INVERT "go-up" 
 INVERT "open-menu"
-
+INVERT "edit-select-all"
 
 
 ####### Navigation-Bar
@@ -97,7 +97,6 @@ COPY "go-up"
 COPY "go-down" 
 COPY "document-save-as" 
 COPY "edit-clear-all" 
-COPY "document-new" 
 COPY "document-save" 
 COPY "edit-undo" 
 COPY "user-trash" 

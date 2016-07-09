@@ -49,7 +49,7 @@ public class TrackListActivity extends AbsGpxListActivity {
 
     @Override
     public DirectoryServiceHelper createDirectoryServiceHelper() {
-        return new DynamicDirectoryServiceHelper(getServiceContext());
+        return new DynamicDirectoryServiceHelper(this);
     }
 
     @Override

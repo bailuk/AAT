@@ -4,21 +4,21 @@ import java.io.Closeable;
 import java.io.File;
 
 import android.app.Activity;
-import android.widget.EditText;
-import ch.bailu.aat.R;
-import ch.bailu.aat.helpers.AppDialog;
-import ch.bailu.aat.helpers.AppLog;
+import ch.bailu.aat.activities.AbsServiceLink;
+import ch.bailu.aat.helpers.FileAction;
 import ch.bailu.aat.services.ServiceContext;
 
 public class DirectoryServiceHelper implements Closeable {
 
+    private final AbsServiceLink slink;
     private final ServiceContext scontext;
     private final File directory;
     private String selection="";
 
-    public DirectoryServiceHelper(ServiceContext sc, File d) {
-        scontext = sc;
+    public DirectoryServiceHelper(AbsServiceLink l, File d) {
+        scontext = l.getServiceContext();
         directory = d;
+        slink=l;
     }
 
 
@@ -26,6 +26,7 @@ public class DirectoryServiceHelper implements Closeable {
     public void setSelectionString(String s) {
         selection = s;
     }
+    
     
     public void reopen() {
         scontext.getDirectoryService().reopen(directory, selection);
@@ -47,29 +48,14 @@ public class DirectoryServiceHelper implements Closeable {
 
 
     public void refreshSelected() {
-        scontext.getDirectoryService().deleteCurrentTrackFromDb();
+        new FileAction(slink).reloadPreview();
     }
 
 
     public void deleteSelected(Activity activity) {
-        new FileDeletionDialog(activity);
+        new FileAction(slink).delete();
     }
 
-
-    private class FileDeletionDialog extends AppDialog {
-        private String fileToDelete = null;
-
-        public FileDeletionDialog(Activity activity) {
-            fileToDelete = scontext.getDirectoryService().getCurrent().getPath();
-            displayYesNoDialog(activity, activity.getString(R.string.file_delete_ask), fileToDelete);
-        }
-
-        @Override
-        protected void onPositiveClick() {
-            new File(fileToDelete).delete();
-            scontext.getDirectoryService().rescan();
-        }
-    }
 
 
     @Override
@@ -77,41 +63,8 @@ public class DirectoryServiceHelper implements Closeable {
 
 
 
-    public void renameSelectedFile(Activity activity) {
-        new FileRenameDialog(activity);
+    public void renameSelectedFile() {
+        new FileAction(slink).rename();
 
-    }
-
-    private class FileRenameDialog extends AppDialog {
-        private String file = null;
-        private EditText edit;
-        private Activity activity;
-
-
-        public FileRenameDialog(Activity a) {
-            activity = a;
-            String title = activity.getString(R.string.file_rename);
-            file = scontext.getDirectoryService().getCurrent().getName();
-            title = title + " " + file;
-
-            edit = new EditText(activity);
-            edit.setText(file);
-            displayTextDialog(activity, title, edit);
-        }
-
-        @Override
-        protected void onPositiveClick() {
-            File source = new File (directory, file);
-            File target = new File (directory, edit.getText().toString());
-
-            if (source.exists()) {
-                if (target.exists()) {
-                    AppLog.i(activity, target.getName() + " allready exists!*");
-                } else {
-                    source.renameTo(target);
-                    rescan();
-                }
-            }
-        }
     }
 }

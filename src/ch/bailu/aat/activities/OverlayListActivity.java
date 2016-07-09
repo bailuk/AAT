@@ -34,7 +34,7 @@ public class OverlayListActivity extends AbsGpxListActivity {
     public DirectoryServiceHelper createDirectoryServiceHelper() {
         File directory=AppDirectory.getDataDirectory(this, AppDirectory.DIR_OVERLAY); 
 
-        return new DirectoryServiceHelper(getServiceContext(), directory);
+        return new DirectoryServiceHelper(this, directory);
     }
     
 

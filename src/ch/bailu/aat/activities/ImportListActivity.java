@@ -35,7 +35,7 @@ public class ImportListActivity extends AbsGpxListActivity {
     @Override
     public DirectoryServiceHelper createDirectoryServiceHelper() {
         File directory=AppDirectory.getDataDirectory(this, AppDirectory.DIR_IMPORT); 
-        return new DirectoryServiceHelper(getServiceContext(), directory);
+        return new DirectoryServiceHelper(this, directory);
     }
 
 

@@ -28,6 +28,7 @@ import ch.bailu.aat.dispatcher.OverlaySource;
 import ch.bailu.aat.dispatcher.TrackerSource;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.helpers.AppLayout;
+import ch.bailu.aat.helpers.FileAction;
 import ch.bailu.aat.services.editor.EditorHelper;
 import ch.bailu.aat.views.BusyButton;
 import ch.bailu.aat.views.ContentView;
@@ -55,7 +56,7 @@ public class FileContentActivity extends AbsDispatcher implements OnClickListene
 
     private static final String SOLID_KEY="file_content";
 
-    private ImageButton nextView, nextFile, previousFile;
+    private ImageButton nextView, nextFile, previousFile, fileOperation;
 
 
     private LinearLayout contentView;
@@ -89,7 +90,8 @@ public class FileContentActivity extends AbsDispatcher implements OnClickListene
         nextView = bar.addImageButton(R.drawable.go_next_inverse);
         previousFile =  bar.addImageButton(R.drawable.go_up_inverse);
         nextFile = bar.addImageButton(R.drawable.go_down_inverse);
-
+        fileOperation = bar.addImageButton(R.drawable.edit_select_all_inverse);
+        
         busyButton = bar.getMenu();
 
         bar.setOrientation(AppLayout.getOrientationAlongSmallSide(this));
@@ -189,21 +191,28 @@ public class FileContentActivity extends AbsDispatcher implements OnClickListene
                 getCurrent().getBoundingBox());
     }
 
-
+    
+      
+    
+    
     @Override
     public void onClick(View v) {
-        if (v ==nextView) {
+        if (v == nextView) {
             multiView.setNext();
 
-        } else {
-            if (v == previousFile) {
-                getServiceContext().getDirectoryService().toPrevious();
-
-            } else if (v ==nextFile) {
-                getServiceContext().getDirectoryService().toNext();
-            }
+        } else if (v == previousFile) {
+            getServiceContext().getDirectoryService().toPrevious();
             frameCurrentFile();
             getDispatcher().forceUpdate();
+
+        } else if (v ==nextFile) {
+            getServiceContext().getDirectoryService().toNext();
+            frameCurrentFile();
+            getDispatcher().forceUpdate();
+
+        } else if (v == fileOperation) {
+            new FileAction(this).showPopupMenu(v);
         }
+        
     }
 }
