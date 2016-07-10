@@ -173,7 +173,6 @@ public class GpxEditorActivity extends AbsDispatcher implements OnClickListener 
 
     @Override
     public void onPause() {
-        //getServiceContext().getDirectoryService().storePosition();
         super.onPause();
     }
 

@@ -26,7 +26,8 @@ public class AppSelectDirectoryDialog  implements  DialogInterface.OnClickListen
                 AppDirectory.getTrackListDirectory(context, 2),
                 AppDirectory.getTrackListDirectory(context, 3),
                 AppDirectory.getTrackListDirectory(context, 4),
-                AppDirectory.getDataDirectory(context, AppDirectory.DIR_OVERLAY)
+                AppDirectory.getDataDirectory(context, AppDirectory.DIR_OVERLAY),
+                AppDirectory.getDataDirectory(context, AppDirectory.DIR_IMPORT)
                 };
 
         

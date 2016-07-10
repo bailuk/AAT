@@ -65,6 +65,8 @@ public class AppFile {
         }
     }
 
+
+
     public static void copy(Context context, Uri uri, File target) throws Exception {
         InputStream is = null;
         OutputStream os = null;
@@ -99,7 +101,7 @@ public class AppFile {
             throw e;
         }
     }
-    
+
     private static void closeStream(Closeable c) {
         try {
             if (c != null) c.close();
@@ -114,7 +116,7 @@ public class AppFile {
         }
     }
 
-    
+
     public static File fileFromIntent(Context context, Intent intent) throws IOException {
         File ret;
         final File dir = AppDirectory.getDataDirectory(context, AppDirectory.DIR_IMPORT);
@@ -135,26 +137,29 @@ public class AppFile {
 
     public static String fileNameFromIntent(Context context, Intent intent) {
 
-        Uri uri = intent.getData();
-        String scheme = uri.getScheme();
         String name = null;
+        Uri uri = intent.getData();
 
-        if (scheme.equals("file")) {
-            List<String> pathSegments = uri.getPathSegments();
-            if (pathSegments.size() > 0) {
-                name = pathSegments.get(pathSegments.size() - 1);
-            }
-        } else if (scheme.equals("content")) {
-            Cursor cursor = context.getContentResolver().query(uri, new String[] {
-                    MediaStore.MediaColumns.DISPLAY_NAME
-            }, null, null, null);
-            cursor.moveToFirst();
-            int nameIndex = cursor.getColumnIndex(MediaStore.MediaColumns.DISPLAY_NAME);
-            if (nameIndex >= 0) {
-                name = cursor.getString(nameIndex);
-            }
-        } 
+        if (uri != null) {
+            String scheme = uri.getScheme();
 
+
+            if ("file".equals(scheme)) {
+                List<String> pathSegments = uri.getPathSegments();
+                if (pathSegments.size() > 0) {
+                    name = pathSegments.get(pathSegments.size() - 1);
+                }
+            } else if ("content".equals(scheme)) {
+                Cursor cursor = context.getContentResolver().query(uri, new String[] {
+                        MediaStore.MediaColumns.DISPLAY_NAME
+                }, null, null, null);
+                cursor.moveToFirst();
+                int nameIndex = cursor.getColumnIndex(MediaStore.MediaColumns.DISPLAY_NAME);
+                if (nameIndex >= 0) {
+                    name = cursor.getString(nameIndex);
+                }
+            } 
+        }
         return name;
     }
 

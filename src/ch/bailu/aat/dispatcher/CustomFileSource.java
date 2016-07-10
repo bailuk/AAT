@@ -34,6 +34,7 @@ public class CustomFileSource extends ContentSource {
         AppBroadcaster.register(sc.getContext(), onChangedInCache, AppBroadcaster.FILE_CHANGED_INCACHE);
     }   
 
+    
     @Override
     public void close() {
         scontext.getContext().unregisterReceiver(onChangedInCache);
@@ -49,7 +50,7 @@ public class CustomFileSource extends ContentSource {
         handle.free();
         handle=h;
 
-        if (GpxObject.class.isInstance(h)) {
+        if (GpxObject.class.isInstance(h) && h.isReady()) {
             updateGpxContent(new GpxFileWrapper(new File(h.toString()), ((GpxObject)h).getGpxList()));
         }
 

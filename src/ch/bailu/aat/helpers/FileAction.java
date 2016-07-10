@@ -71,12 +71,7 @@ public class FileAction  implements OnMenuItemClickListener {
                 sendTo();
 
             } else if (item.getItemId() == R.id.m_file_copy) {
-                try {
-                    copyTo();
-                } catch (IOException e) {
-                    AppLog.e(activity, e);
-                    return false;
-                }
+                copyTo();
 
             } else  {
                 return false;
@@ -137,8 +132,12 @@ public class FileAction  implements OnMenuItemClickListener {
             AppFile.send(activity, file);
         }
         
-        public void copyTo() throws IOException {
-            AppFile.copyTo(activity, file);
+        public void copyTo() {
+            try {
+                AppFile.copyTo(activity, file);
+            } catch (IOException e) {
+                AppLog.e(activity, e);
+            }
         }
         
         public void rename() {
