@@ -10,13 +10,10 @@ import java.io.OutputStream;
 import java.nio.MappedByteBuffer;
 import java.nio.channels.FileChannel;
 import java.nio.charset.Charset;
-import java.util.List;
 
 import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
 import android.net.Uri;
-import android.provider.MediaStore;
 
 public class AppFile {
     public static final File NULL_FILE = new File("/dev/null");;
@@ -48,23 +45,6 @@ public class AppFile {
 
         context.startActivity(Intent.createChooser(emailIntent , file.getName()));
     }
-
-
-
-    public static void importFile(Context context, Intent intent) {
-        try {
-            if (Intent.ACTION_VIEW.equals(intent.getAction())) {
-                final Uri uri = intent.getData();
-                final File file =  fileFromIntent(context, intent);
-
-                copy(context, uri, file);
-                AppLog.i(context, file.getAbsolutePath());
-            }        
-        } catch (Exception e) {
-            AppLog.e(context, e);
-        }
-    }
-
 
 
     public static void copy(Context context, Uri uri, File target) throws Exception {
@@ -116,54 +96,7 @@ public class AppFile {
         }
     }
 
-
-    public static File fileFromIntent(Context context, Intent intent) throws IOException {
-        File ret;
-        final File dir = AppDirectory.getDataDirectory(context, AppDirectory.DIR_IMPORT);
-        String name = fileNameFromIntent(context, intent);
-
-        if (name == null) {
-            ret = AppDirectory.generateUniqueFilePath(dir, AppDirectory.generateDatePrefix(), "_imp.gpx");
-        } else {
-            ret = new File(dir, name);  // use original name if possible
-            if (ret.exists()) {
-                ret = AppDirectory.generateUniqueFilePath(dir, "imp", "_"+ name);
-            }
-        }
-
-        return ret;
-    }
-
-
-    public static String fileNameFromIntent(Context context, Intent intent) {
-
-        String name = null;
-        Uri uri = intent.getData();
-
-        if (uri != null) {
-            String scheme = uri.getScheme();
-
-
-            if ("file".equals(scheme)) {
-                List<String> pathSegments = uri.getPathSegments();
-                if (pathSegments.size() > 0) {
-                    name = pathSegments.get(pathSegments.size() - 1);
-                }
-            } else if ("content".equals(scheme)) {
-                Cursor cursor = context.getContentResolver().query(uri, new String[] {
-                        MediaStore.MediaColumns.DISPLAY_NAME
-                }, null, null, null);
-                cursor.moveToFirst();
-                int nameIndex = cursor.getColumnIndex(MediaStore.MediaColumns.DISPLAY_NAME);
-                if (nameIndex >= 0) {
-                    name = cursor.getString(nameIndex);
-                }
-            } 
-        }
-        return name;
-    }
-
-
+    
     public static void copyTo(Context context, File file) throws IOException {
         new AppSelectDirectoryDialog(context, file);
     }

@@ -1,7 +1,5 @@
 package ch.bailu.aat.dispatcher;
 
-import java.io.File;
-
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -12,13 +10,13 @@ public class CurrentFileSource extends ContentSource {
 
     private final ServiceContext scontext;
 
-
+    
     private BroadcastReceiver onFileProcessed = new BroadcastReceiver () {
         @Override
         public void onReceive(Context context, Intent intent) {
-            File file = new File(scontext.getDirectoryService().getCurrent().getPath());
+            final String path = scontext.getDirectoryService().getCurrent().getPath();
 
-            if (AppBroadcaster.hasFile(intent, file.getAbsolutePath())) {
+            if (AppBroadcaster.hasFile(intent, path)) {
                 forceUpdate();
             }
         }

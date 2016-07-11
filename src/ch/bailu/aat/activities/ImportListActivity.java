@@ -11,7 +11,6 @@ import ch.bailu.aat.description.DateDescription;
 import ch.bailu.aat.description.DistanceDescription;
 import ch.bailu.aat.description.NameDescription;
 import ch.bailu.aat.helpers.AppDirectory;
-import ch.bailu.aat.helpers.AppFile;
 import ch.bailu.aat.helpers.AppTheme;
 import ch.bailu.aat.services.directory.DirectoryServiceHelper;
 import ch.bailu.aat.views.ControlBar;
@@ -20,8 +19,6 @@ public class ImportListActivity extends AbsGpxListActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        
-        AppFile.importFile(this, getIntent());
     }        
 
  

@@ -144,12 +144,6 @@ public class FileContentActivity extends AbsDispatcher implements OnClickListene
     }
 
 
-    @Override
-    public void onPause() {
-        //getServiceContext().getDirectoryService().storePosition();
-        super.onPause();
-    }
-
 
     @Override
     public void onDestroy() {
@@ -192,9 +186,7 @@ public class FileContentActivity extends AbsDispatcher implements OnClickListene
     }
 
     
-      
-    
-    
+
     @Override
     public void onClick(View v) {
         if (v == nextView) {

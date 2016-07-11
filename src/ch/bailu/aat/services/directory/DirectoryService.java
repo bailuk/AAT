@@ -95,6 +95,8 @@ public class DirectoryService extends VirtualService{
             @Override
             public void onReceive(Context context, Intent intent) {
                 database.reopenCursor();
+                // indexFollowsFile();
+                // updateIfCantFollow();
                 AppBroadcaster.broadcast(context, AppBroadcaster.DB_CURSOR_CHANGED);
             }
         };
@@ -134,7 +136,6 @@ public class DirectoryService extends VirtualService{
         
         
         private boolean setDirectory() {
-            selection = new SolidString(Storage.global(getContext()), KEY_DIR_SELECTION+directory.getValue());
             selection = new SolidString(Storage.global(getContext()), KEY_DIR_SELECTION+directory.getValue());
             index     = new SolidInteger(Storage.global(getContext()), KEY_DIR_INDEX+directory.getValue());
 
@@ -193,6 +194,9 @@ public class DirectoryService extends VirtualService{
         @Override
         public void deleteCurrentTrackFromDb()  {
             database.deleteEntry(getCurrent().getPath());
+            
+            // indexCantFollowFile()
+            // updateView()
             rescan();
         }
 
@@ -223,6 +227,7 @@ public class DirectoryService extends VirtualService{
         public void setPosition(int i) {
             database.getIterator().setPosition(i);
             index.setValue(database.getIterator().getPosition());
+            // updateView()
         }
 
 
@@ -230,6 +235,7 @@ public class DirectoryService extends VirtualService{
         public void toNext() {
             database.getIterator().setPosition(database.getIterator().getPosition()+1);
             index.setValue(database.getIterator().getPosition());
+            // updateView()
         }
 
 
@@ -237,6 +243,7 @@ public class DirectoryService extends VirtualService{
         public void toPrevious() {
             database.getIterator().setPosition(database.getIterator().getPosition()-1);
             index.setValue(database.getIterator().getPosition());
+            // updateView()
         }
 
 

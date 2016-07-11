@@ -104,8 +104,6 @@ public class FileAction  implements OnMenuItemClickListener {
         }
         
         
-        
-        
         private class FileDeletionDialog extends AppDialog {
             public FileDeletionDialog() {
                 displayYesNoDialog(activity, activity.getString(R.string.file_delete_ask), file.toString());
