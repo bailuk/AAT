@@ -11,7 +11,7 @@ import ch.bailu.aat.services.cache.ObjectHandle;
 
 public class GpxInformationDbEntryAndFile extends GpxInformationDbEntry implements Closeable {
 
-    private ObjectHandle handle;
+    private ObjectHandle handle = ObjectHandle.NULL;
     private final ServiceContext scontext;
     
     public GpxInformationDbEntryAndFile(ServiceContext sc, Cursor c) {

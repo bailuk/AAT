@@ -28,21 +28,13 @@ public abstract class AbsDispatcher extends AbsMenu {
 
 
     @Override
-    public void onServicesUp(boolean firstRun) {
-        dispatcher.resume();
-    }
-
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        dispatcher.resume();
+    public void onResumeWithService() {
+        dispatcher.onResume();
     }
 
     @Override
-    public void onPause() {
-        dispatcher.pause();
-        super.onPause();
+    public void onPauseWithService() {
+        dispatcher.onPause();
     }
 
     @Override

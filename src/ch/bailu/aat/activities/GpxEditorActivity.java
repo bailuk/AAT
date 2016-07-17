@@ -16,9 +16,9 @@ import ch.bailu.aat.description.PathDescription;
 import ch.bailu.aat.description.TrackSizeDescription;
 import ch.bailu.aat.dispatcher.ContentDispatcher;
 import ch.bailu.aat.dispatcher.ContentSource;
-import ch.bailu.aat.dispatcher.CurrentFileSource;
 import ch.bailu.aat.dispatcher.CurrentLocationSource;
 import ch.bailu.aat.dispatcher.EditorSource;
+import ch.bailu.aat.dispatcher.IteratorSource;
 import ch.bailu.aat.dispatcher.OverlaySource;
 import ch.bailu.aat.dispatcher.TrackerSource;
 import ch.bailu.aat.gpx.GpxInformation;
@@ -55,6 +55,8 @@ public class GpxEditorActivity extends AbsDispatcher implements OnClickListener 
 
     private ImageButton nextView, nextFile, previousFile;
 
+    
+    private IteratorSource currentFile;
 
     private BusyButton busyButton;
     private MultiView     multiView;
@@ -75,6 +77,8 @@ public class GpxEditorActivity extends AbsDispatcher implements OnClickListener 
 
 
     private void createDispatcher() {
+        currentFile = new IteratorSource.FollowFile(getServiceContext());
+        
         DescriptionInterface[] target = new DescriptionInterface[] {
                 multiView,this, busyButton.getBusyControl(GpxInformation.ID.INFO_ID_FILEVIEW)
         };
@@ -85,7 +89,7 @@ public class GpxEditorActivity extends AbsDispatcher implements OnClickListener 
                 new CurrentLocationSource(getServiceContext()),
                 new TrackerSource(getServiceContext()),
                 new OverlaySource(getServiceContext()), 
-                new CurrentFileSource(getServiceContext())
+                currentFile
         };
 
         setDispatcher(new ContentDispatcher(this,source, target));
@@ -181,19 +185,17 @@ public class GpxEditorActivity extends AbsDispatcher implements OnClickListener 
     @Override
     public void onServicesUp(boolean firstRun) {
         if (firstRun) {
-            showCurrentFile();
+            mapView.frameBoundingBox(currentFile.getInfo().getBoundingBox());
         }
-        super.onServicesUp(firstRun);
     }
 
-
-    private void showCurrentFile() {
-        edit.edit(new File(getServiceContext().getDirectoryService().getCurrent().getPath()));
-        mapView.frameBoundingBox(getServiceContext().getDirectoryService().getCurrent().getBoundingBox());
-        getDispatcher().forceUpdate();
+    @Override
+    public void updateGpxContent(GpxInformation info) {
+        if (info.getID()== GpxInformation.ID.INFO_ID_FILEVIEW) {
+            edit.edit(new File(currentFile.getInfo().getPath()));    
+        }
     }
-
-
+    
 
     @Override
     public void onBackPressed() {
@@ -267,10 +269,10 @@ public class GpxEditorActivity extends AbsDispatcher implements OnClickListener 
 
     private void switchFile(View v) {
         if (v==nextFile)
-            getServiceContext().getDirectoryService().toNext();
+            currentFile.moveToNext();
         else if (v==previousFile)
-            getServiceContext().getDirectoryService().toPrevious();
+            currentFile.moveToPrevious();
 
-        showCurrentFile();
+        mapView.frameBoundingBox(currentFile.getInfo().getBoundingBox());
     }
 }

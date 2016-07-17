@@ -4,12 +4,13 @@ import android.database.Cursor;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.services.ServiceContext;
 
-public class IteratorSimple extends Iterator {
+public class IteratorSimple extends IteratorAbstract {
     private GpxInformation info = GpxInformation.NULL;
 
     
     public IteratorSimple(ServiceContext sc, String s) {
-        super(sc, s);
+        super(sc);
+        query(s);
     }
 
     

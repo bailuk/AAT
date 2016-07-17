@@ -21,14 +21,13 @@ import ch.bailu.aat.description.TimeDescription;
 import ch.bailu.aat.description.TrackSizeDescription;
 import ch.bailu.aat.dispatcher.ContentDispatcher;
 import ch.bailu.aat.dispatcher.ContentSource;
-import ch.bailu.aat.dispatcher.CurrentFileSource;
 import ch.bailu.aat.dispatcher.CurrentLocationSource;
 import ch.bailu.aat.dispatcher.EditorSource;
+import ch.bailu.aat.dispatcher.IteratorSource;
 import ch.bailu.aat.dispatcher.OverlaySource;
 import ch.bailu.aat.dispatcher.TrackerSource;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.helpers.AppLayout;
-import ch.bailu.aat.helpers.FileAction;
 import ch.bailu.aat.services.editor.EditorHelper;
 import ch.bailu.aat.views.BusyButton;
 import ch.bailu.aat.views.ContentView;
@@ -56,22 +55,25 @@ public class FileContentActivity extends AbsDispatcher implements OnClickListene
 
     private static final String SOLID_KEY="file_content";
 
+    private IteratorSource  currentFile;
     private ImageButton nextView, nextFile, previousFile, fileOperation;
 
+    private boolean            firstRun = true;
 
-    private LinearLayout contentView;
-
-    private BusyButton      busyButton;
+    private LinearLayout       contentView;
+    private BusyButton         busyButton;
     private MultiView          multiView;
     private OsmInteractiveView map;
 
     private EditorHelper edit;
 
 
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        firstRun = true;
+        
         edit = new EditorHelper(getServiceContext());
 
         contentView = new ContentView(this);
@@ -91,8 +93,9 @@ public class FileContentActivity extends AbsDispatcher implements OnClickListene
         previousFile =  bar.addImageButton(R.drawable.go_up_inverse);
         nextFile = bar.addImageButton(R.drawable.go_down_inverse);
         fileOperation = bar.addImageButton(R.drawable.edit_select_all_inverse);
-        
+
         busyButton = bar.getMenu();
+        busyButton.startWaiting();
 
         bar.setOrientation(AppLayout.getOrientationAlongSmallSide(this));
         bar.setOnClickListener1(this);
@@ -148,22 +151,25 @@ public class FileContentActivity extends AbsDispatcher implements OnClickListene
     @Override
     public void onDestroy() {
         edit.close();
+        
         super.onDestroy();
     }
 
 
 
     private void createDispatcher() {
-        DescriptionInterface[] target = new DescriptionInterface[] {
+        final DescriptionInterface[] target = new DescriptionInterface[] {
                 multiView, this, busyButton.getBusyControl(GpxInformation.ID.INFO_ID_FILEVIEW) 
         };
+
+        currentFile = new IteratorSource.FollowFile(getServiceContext());
 
         ContentSource[] source = new ContentSource[] {
                 new EditorSource(getServiceContext(), edit),
                 new TrackerSource(getServiceContext()),
                 new CurrentLocationSource(getServiceContext()),
                 new OverlaySource(getServiceContext()),
-                new CurrentFileSource(getServiceContext())
+                currentFile
         };
 
         setDispatcher(new ContentDispatcher(this,source, target));
@@ -172,20 +178,23 @@ public class FileContentActivity extends AbsDispatcher implements OnClickListene
 
 
     @Override
-    public void onServicesUp(boolean firstRun) {
-        if (firstRun) frameCurrentFile();
+    public void onResumeWithService() {
+        super.onResumeWithService();
+        
+        if (firstRun) {
+            frameCurrentFile();
+            firstRun = false;
+        }
         
         edit.edit();
-        super.onServicesUp(firstRun);
     }
 
 
     private void frameCurrentFile() {
-        map.frameBoundingBox(getServiceContext().getDirectoryService().
-                getCurrent().getBoundingBox());
+        map.frameBoundingBox(currentFile.getInfo().getBoundingBox());
     }
 
-    
+
 
     @Override
     public void onClick(View v) {
@@ -193,18 +202,18 @@ public class FileContentActivity extends AbsDispatcher implements OnClickListene
             multiView.setNext();
 
         } else if (v == previousFile) {
-            getServiceContext().getDirectoryService().toPrevious();
+            busyButton.startWaiting();
+            currentFile.moveToPrevious();
             frameCurrentFile();
-            getDispatcher().forceUpdate();
 
         } else if (v ==nextFile) {
-            getServiceContext().getDirectoryService().toNext();
+            busyButton.startWaiting();
+            currentFile.moveToNext();
             frameCurrentFile();
-            getDispatcher().forceUpdate();
 
         } else if (v == fileOperation) {
-            new FileAction(this).showPopupMenu(v);
+            currentFile.fileAction(this).showPopupMenu(v);
         }
-        
+
     }
 }

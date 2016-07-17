@@ -335,4 +335,8 @@ public class TestActivity extends AbsDispatcher implements OnClickListener {
         }
 
     }
+    
+    @Override
+    public void onServicesUp(boolean firstRun) {}
+
 }

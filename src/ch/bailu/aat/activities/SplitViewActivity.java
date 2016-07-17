@@ -195,5 +195,9 @@ public class SplitViewActivity extends AbsDispatcher implements OnClickListener{
             setDispatcher(new ContentDispatcher(this,source, target));
 
     }
+    
+    @Override
+    public void onServicesUp(boolean firstRun) {}
+
 
 }

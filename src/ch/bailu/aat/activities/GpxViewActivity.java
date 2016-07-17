@@ -179,4 +179,9 @@ public class GpxViewActivity extends AbsDispatcher implements OnClickListener {
         } 
 
     }
+
+
+
+    @Override
+    public void onServicesUp(boolean firstRun) {}
 }

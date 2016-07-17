@@ -34,18 +34,28 @@ public class EditorSource extends ContentSource {
     public EditorSource (ServiceContext sc, EditorHelper e) {
         scontext = sc;
         edit = e;
-        AppBroadcaster.register(scontext.getContext(), onFileEdited, AppBroadcaster.FILE_CHANGED_INCACHE);
     }
 
 
     @Override
     public void close() {
-        scontext.getContext().unregisterReceiver(onFileEdited);
     }
 
     
     @Override
     public void forceUpdate() {
         updateGpxContent(edit.getInformation());
+    }
+
+
+    @Override
+    public void onPause() {
+        scontext.getContext().unregisterReceiver(onFileEdited);
+    }
+
+
+    @Override
+    public void onResume() {
+        AppBroadcaster.register(scontext.getContext(), onFileEdited, AppBroadcaster.FILE_CHANGED_INCACHE);
     }
 }

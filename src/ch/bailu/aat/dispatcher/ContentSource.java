@@ -30,4 +30,8 @@ public abstract class ContentSource implements Closeable, DescriptionInterface {
         
     }
 
+
+    public abstract void onPause();
+    public abstract void onResume();
+
 }

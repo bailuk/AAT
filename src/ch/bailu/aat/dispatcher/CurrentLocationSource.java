@@ -21,19 +21,25 @@ public class CurrentLocationSource extends ContentSource {
 
     public CurrentLocationSource(ServiceContext sc) {
         scontext=sc;
-        AppBroadcaster.register(scontext.getContext(), onLocationChange, AppBroadcaster.LOCATION_CHANGED);
-
     }
 
     @Override
-    public void close() {
-        scontext.getContext().unregisterReceiver(onLocationChange);
-    }
+    public void close() {}
 
 
 
     @Override
     public void forceUpdate() {
         updateGpxContent(scontext.getTrackerService().getLocation());
+    }
+
+    @Override
+    public void onPause() {
+        scontext.getContext().unregisterReceiver(onLocationChange);
+    }
+
+    @Override
+    public void onResume() {
+        AppBroadcaster.register(scontext.getContext(), onLocationChange, AppBroadcaster.LOCATION_CHANGED);
     }
 }

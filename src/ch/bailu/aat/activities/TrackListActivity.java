@@ -1,5 +1,7 @@
 package ch.bailu.aat.activities;
 
+import java.io.File;
+
 import android.content.Intent;
 import android.widget.LinearLayout;
 import ch.bailu.aat.description.AverageSpeedDescription;
@@ -9,16 +11,13 @@ import ch.bailu.aat.description.DistanceDescription;
 import ch.bailu.aat.description.MaximumSpeedDescription;
 import ch.bailu.aat.description.NameDescription;
 import ch.bailu.aat.description.TimeDescription;
-import ch.bailu.aat.helpers.AppLayout;
-import ch.bailu.aat.services.directory.DirectoryServiceHelper;
-import ch.bailu.aat.services.directory.DynamicDirectoryServiceHelper;
+import ch.bailu.aat.preferences.SolidPreset;
 import ch.bailu.aat.views.ControlBar;
 import ch.bailu.aat.views.DateFilterView;
-import ch.bailu.aat.views.GpxListSummaryView;
 
 public class TrackListActivity extends AbsGpxListActivity {
 
-    private GpxListSummaryView summaryView;
+   // private GpxListSummaryView summaryView;
 
 
     @Override
@@ -36,9 +35,9 @@ public class TrackListActivity extends AbsGpxListActivity {
                 new TimeDescription(this)
         };   
 
-        summaryView = new GpxListSummaryView(getServiceContext(),  data);
+    //    summaryView = new GpxListSummaryView(getServiceContext(),  data);
         
-        layout.addView(summaryView, AppLayout.getScreenSmallSide(this), AppLayout.getScreenSmallSide(this) /3);
+   //     layout.addView(summaryView, AppLayout.getScreenSmallSide(this), AppLayout.getScreenSmallSide(this) /3);
     }
 
 
@@ -47,10 +46,7 @@ public class TrackListActivity extends AbsGpxListActivity {
         super.onDestroy();
     }
 
-    @Override
-    public DirectoryServiceHelper createDirectoryServiceHelper() {
-        return new DynamicDirectoryServiceHelper(this);
-    }
+   
 
     @Override
     public ContentDescription[] getGpxListItemData() {
@@ -68,4 +64,13 @@ public class TrackListActivity extends AbsGpxListActivity {
         Intent intent=new Intent(this,FileContentActivity.class);
         startActivity(intent);
     }
+
+
+    @Override
+    public File getDirectory() {
+        return new SolidPreset(this).getDirectory();
+    }
+
+
+  
 }

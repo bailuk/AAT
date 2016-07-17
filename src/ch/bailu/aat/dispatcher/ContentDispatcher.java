@@ -37,21 +37,32 @@ public class ContentDispatcher implements DescriptionInterface, Closeable {
         }
     }
 
+
+    public void onPause() {
+        targetList = NULL_LIST;
+        for (ContentSource source: sourceList) {
+            source.onPause();
+        }
+
+    }
+
+    public void onResume() {
+        targetList = TARGET_LIST;
+        
+        
+        for (ContentSource source: sourceList) {
+            source.onResume();
+        }
+
+        forceUpdate();
+    }
+
     public void forceUpdate() {
         for (ContentSource source: sourceList)
             source.forceUpdate();
     }
-
-
-    public void pause() {
-        targetList = NULL_LIST;
-    }
-
-    public void resume() {
-        targetList = TARGET_LIST;
-        forceUpdate();
-    }
-
+    
+    
     @Override
     public void updateGpxContent(GpxInformation info) {
         for (DescriptionInterface target: targetList)
@@ -61,8 +72,6 @@ public class ContentDispatcher implements DescriptionInterface, Closeable {
 
     @Override
     public void close() {
-        pause();
-
         for (ContentSource source: sourceList)
             source.close();
     }

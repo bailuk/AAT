@@ -30,25 +30,27 @@ public class OverlaySource extends ContentSource implements GpxInformation.ID {
 
     public OverlaySource(ServiceContext sc) {
         scontext=sc;
-        fillOverlayList();
     }	
 
 
-
-
-    private void fillOverlayList() {
-        for (int i=0; i<MAX_OVERLAYS; i++)
-            overlayList[i]= new OverlayInformation(INFO_ID_OVERLAY+i);
+    @Override
+    public void onPause() {
+        for (int i=0; i<overlayList.length; i++) 
+            overlayList[i].close();
     }
 
 
 
 
     @Override
-    public void close() {
-        for (int i=0; i<overlayList.length; i++) 
-            overlayList[i].close();
+    public void onResume() {
+        for (int i=0; i<MAX_OVERLAYS; i++)
+            overlayList[i]= new OverlayInformation(INFO_ID_OVERLAY+i);
     }
+
+
+    @Override
+    public void close() {}
 
 
     @Override
@@ -75,8 +77,6 @@ public class OverlaySource extends ContentSource implements GpxInformation.ID {
             soverlay = new SolidOverlayFile(scontext.getContext(), id-ID.INFO_ID_OVERLAY);
             soverlay.register(onPreferencesChanged);
             AppBroadcaster.register(scontext.getContext(), onFileProcessed, AppBroadcaster.FILE_CHANGED_INCACHE);
-
-            //initAndUpdateOverlay();
         }
 
 

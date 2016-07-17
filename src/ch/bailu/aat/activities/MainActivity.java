@@ -212,4 +212,8 @@ implements AdapterView.OnItemSelectedListener, OnSharedPreferenceChangeListener 
     @Override
     public void onNothingSelected(AdapterView<?> arg0) {}
 
+
+    @Override
+    public void onServicesUp(boolean firstRun) {}
+
 }

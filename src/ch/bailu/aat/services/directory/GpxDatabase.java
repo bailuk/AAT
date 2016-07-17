@@ -13,23 +13,16 @@ public class GpxDatabase extends AbsDatabase{
     private final Context context;
 
     private SQLiteDatabase database;
-    private final AbsIterator iterator;
 
     private final File path;
-    private String selection;
 
 
 
-    public GpxDatabase (ServiceContext sc, File p, String s) throws IOException {
-
-        selection=s;
+    public GpxDatabase (ServiceContext sc, File p) throws IOException {
         context=sc.getContext();
         path=p;
 
         database = openDatabase(path);
-
-
-        iterator = new GpxIterator(openCursor(database, selection), sc);
     }
 
 
@@ -38,39 +31,14 @@ public class GpxDatabase extends AbsDatabase{
         return new GpxDbOpenHelper(context, path).getReadableDatabase();    
     }
 
-    private Cursor openCursor(SQLiteDatabase database, String selection) {
+    @Override
+    public Cursor query(String selection) {
         return database.query(GpxDbConstants.DB_TABLE, GpxDbConstants.KEY_LIST, selection, null, null, null, GpxDbConstants.KEY_START_TIME+ " DESC");
-    }
-
-    public AbsIterator getIterator() {
-        return iterator;
-    }
-
-    public void reopenCursor(String s) {
-        selection = s;
-        reopenCursor();
-    }
-
-    public void reopenCursor() {
-        iterator.setCursor(openCursor(database, selection));
-    }
-
-
-    public void reopenDatabase(String s) throws IOException {
-        selection=s;
-        reopenDatabase();
-    }
-
-    public void reopenDatabase() throws IOException {
-        database.close();
-        database = openDatabase(path);
-        iterator.setCursor(openCursor(database, selection));
     }
 
 
     @Override
     public void close() {
-        iterator.close();
         database.close();
     }
 

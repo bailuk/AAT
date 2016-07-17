@@ -92,7 +92,6 @@ public class MapActivity extends AbsDispatcher implements OnClickListener{
     @Override
     public void onServicesUp(boolean firstRun) {
         edit.edit();
-        super.onServicesUp(firstRun);
     }
 
 
@@ -135,5 +134,7 @@ public class MapActivity extends AbsDispatcher implements OnClickListener{
         
         return bar;
     }
+
+ 
 
 }

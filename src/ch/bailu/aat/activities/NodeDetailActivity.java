@@ -187,4 +187,8 @@ public class NodeDetailActivity extends AbsDispatcher implements OnClickListener
         intent.putExtra("ID", fileId);
         ActivitySwitcher.start(context, NodeDetailActivity.class, intent);
     }
+    
+    @Override
+    public void onServicesUp(boolean firstRun) {}
+
 }

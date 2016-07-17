@@ -13,16 +13,7 @@ public class TrackerSource extends ContentSource {
     public TrackerSource (ServiceContext sc) {
         scontext = sc;
 
-        AppBroadcaster.register(scontext.getContext(), onStateChanged, AppBroadcaster.TRACKER_STATE);
-        AppBroadcaster.register(scontext.getContext(), onTrackChanged, AppBroadcaster.TRACKER);
     }
-
-    @Override
-    public void close() {
-        scontext.getContext().unregisterReceiver(onStateChanged);
-        scontext.getContext().unregisterReceiver(onTrackChanged);
-    }
-
 
     private BroadcastReceiver onStateChanged = new BroadcastReceiver () {
         @Override
@@ -45,4 +36,22 @@ public class TrackerSource extends ContentSource {
         updateGpxContent(scontext.getTrackerService().getTrackerInformation());
     }
 
+    
+    @Override
+    public void onPause() {
+        scontext.getContext().unregisterReceiver(onStateChanged);
+        scontext.getContext().unregisterReceiver(onTrackChanged);
+    }
+
+    
+    @Override
+    public void onResume() {
+        AppBroadcaster.register(scontext.getContext(), onStateChanged, AppBroadcaster.TRACKER_STATE);
+        AppBroadcaster.register(scontext.getContext(), onTrackChanged, AppBroadcaster.TRACKER);
+    }
+
+    
+    @Override
+    public void close() {}
+    
 }

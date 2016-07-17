@@ -11,7 +11,6 @@ import ch.bailu.aat.description.DistanceDescription;
 import ch.bailu.aat.description.NameDescription;
 import ch.bailu.aat.helpers.AppDirectory;
 import ch.bailu.aat.helpers.AppTheme;
-import ch.bailu.aat.services.directory.DirectoryServiceHelper;
 import ch.bailu.aat.views.ControlBar;
 
 
@@ -30,13 +29,7 @@ public class OverlayListActivity extends AbsGpxListActivity {
         return getString(R.string.intro_overlay_list);
     }
 
-    @Override
-    public DirectoryServiceHelper createDirectoryServiceHelper() {
-        File directory=AppDirectory.getDataDirectory(this, AppDirectory.DIR_OVERLAY); 
 
-        return new DirectoryServiceHelper(this, directory);
-    }
-    
 
     @Override
     public void createSummaryView(LinearLayout layout) {
@@ -64,6 +57,14 @@ public class OverlayListActivity extends AbsGpxListActivity {
         
     }
 
+
+    @Override
+    public File getDirectory() {
+        return AppDirectory.getDataDirectory(this, AppDirectory.DIR_OVERLAY); 
+    }
+
+
+  
 
  
 

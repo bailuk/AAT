@@ -12,7 +12,6 @@ import ch.bailu.aat.description.DistanceDescription;
 import ch.bailu.aat.description.NameDescription;
 import ch.bailu.aat.helpers.AppDirectory;
 import ch.bailu.aat.helpers.AppTheme;
-import ch.bailu.aat.services.directory.DirectoryServiceHelper;
 import ch.bailu.aat.views.ControlBar;
 
 public class ImportListActivity extends AbsGpxListActivity {
@@ -25,14 +24,6 @@ public class ImportListActivity extends AbsGpxListActivity {
     @Override
     public void createHeader(ControlBar bar) {
         bar.addViewIgnoreSize(AppTheme.getTitleTextView(this, R.string.intro_import_list));
-    }
-
-
-
-    @Override
-    public DirectoryServiceHelper createDirectoryServiceHelper() {
-        File directory=AppDirectory.getDataDirectory(this, AppDirectory.DIR_IMPORT); 
-        return new DirectoryServiceHelper(this, directory);
     }
 
 
@@ -56,4 +47,12 @@ public class ImportListActivity extends AbsGpxListActivity {
         startActivity(intent);
     }
 
+
+    @Override
+    public File getDirectory() {
+        return AppDirectory.getDataDirectory(this, AppDirectory.DIR_IMPORT); 
+    }
+
+
+   
 }

@@ -23,4 +23,8 @@ public class HtmlViewActivity extends AbsHtmlViewActivity {
     
     @Override
     public void onServicesUp(boolean firstRun) {}
+
+
+    @Override
+    public void onResumeWithService() {}
 }

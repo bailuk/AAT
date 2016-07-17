@@ -22,4 +22,11 @@ public class AboutActivity extends AbsHtmlViewActivity {
     public String getText() {
         return getString(R.string.README_about_html);
     }
+
+
+    @Override
+    public void onResumeWithService() {
+    }
+    
+
 }

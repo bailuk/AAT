@@ -23,4 +23,11 @@ public class ReadmeActivity extends AbsHtmlViewActivity {
         return getString(R.string.README_enduser_html);
     }
 
+
+    @Override
+    public void onResumeWithService() {
+        // TODO Auto-generated method stub
+        
+    }
+
 }

@@ -159,4 +159,8 @@ public class TrackerActivity extends AbsDispatcher implements OnClickListener{
             setDispatcher(new ContentDispatcher(this,source, target));
     }
 
+    
+    @Override
+    public void onServicesUp(boolean firstRun) {}
+
 }

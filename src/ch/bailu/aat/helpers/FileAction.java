@@ -14,8 +14,10 @@ import android.widget.PopupMenu.OnMenuItemClickListener;
 import ch.bailu.aat.R;
 import ch.bailu.aat.activities.AbsServiceLink;
 import ch.bailu.aat.preferences.AddOverlayDialog;
+import ch.bailu.aat.preferences.SolidDirectory;
 import ch.bailu.aat.preferences.SolidMockLocationFile;
 import ch.bailu.aat.services.ServiceContext;
+import ch.bailu.aat.services.directory.Iterator;
 
 public class FileAction  implements OnMenuItemClickListener {
         final File file;
@@ -23,10 +25,11 @@ public class FileAction  implements OnMenuItemClickListener {
         final ServiceContext scontext;
 
         
-        public FileAction(AbsServiceLink l) {
-            this(l, new File(l.getServiceContext().getDirectoryService().getCurrent().getPath()));
+        public FileAction(AbsServiceLink l, Iterator iterator) {
+            this(l, new File(iterator.getInfo().getPath()));
         }
-
+        
+        
         public FileAction(AbsServiceLink l, File f) {
             file = f;
             activity = l;
@@ -43,6 +46,7 @@ public class FileAction  implements OnMenuItemClickListener {
             popup.show();
         }
 
+        
         public void createFileMenu(ContextMenu menu) {
             activity.getMenuInflater().inflate(R.menu.contextmenu, menu);
             menu.setHeaderTitle(file.getName());
@@ -82,19 +86,15 @@ public class FileAction  implements OnMenuItemClickListener {
         
         
         public void rescanDirectory() {
-            final String directory = new File(scontext.getDirectoryService().getCurrent().getPath()).getParent();
-            
-            if (directory != null && directory.equals(file.getParent())) {
+            if (file.getParent().equals(new SolidDirectory(activity).getValue())) {
                 scontext.getDirectoryService().rescan();
             }
         }
         
         
         public void reloadPreview() {
-            final String sfile = scontext.getDirectoryService().getCurrent().getPath();
-            
-            if (sfile != null && sfile.equals(file)) {
-                scontext.getDirectoryService().deleteCurrentTrackFromDb();
+            if (file.getParent().equals(new SolidDirectory(activity).getValue())) {
+                scontext.getDirectoryService().deleteEntry(file.getAbsolutePath());
             }
         }
         

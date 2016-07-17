@@ -30,19 +30,9 @@ public class CustomFileSource extends ContentSource {
     public CustomFileSource(ServiceContext sc, String fID) {
         scontext=sc;
         fileID=fID;
-
-        AppBroadcaster.register(sc.getContext(), onChangedInCache, AppBroadcaster.FILE_CHANGED_INCACHE);
     }   
 
     
-    @Override
-    public void close() {
-        scontext.getContext().unregisterReceiver(onChangedInCache);
-        handle.free();
-    }
-
-
-
     @Override
     public void forceUpdate() {
         ObjectHandle h =  scontext.getCacheService().getObject(fileID, new GpxObjectStatic.Factory());
@@ -54,5 +44,21 @@ public class CustomFileSource extends ContentSource {
             updateGpxContent(new GpxFileWrapper(new File(h.toString()), ((GpxObject)h).getGpxList()));
         }
 
+    }
+
+    @Override
+    public void close() {}
+
+    @Override
+    public void onPause() {
+        scontext.getContext().unregisterReceiver(onChangedInCache);
+        handle.free();
+        handle = ObjectHandle.NULL;
+    }
+
+
+    @Override
+    public void onResume() {
+        AppBroadcaster.register(scontext.getContext(), onChangedInCache, AppBroadcaster.FILE_CHANGED_INCACHE);
     }
 }

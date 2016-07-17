@@ -1,18 +1,32 @@
 package ch.bailu.aat.services.directory;
 
+import java.io.Closeable;
+import java.io.IOException;
+
 import android.database.Cursor;
 import ch.bailu.aat.gpx.GpxInformation;
+import ch.bailu.aat.helpers.AppLog;
 import ch.bailu.aat.services.ServiceContext;
 
-public class IteratorFollowFile extends Iterator {
+public class IteratorFollowFile extends IteratorAbstract {
     private GpxInformation info = GpxInformation.NULL;
+    private Closeable toClose = new Closeable() {
+
+        @Override
+        public void close() {
+        }
+        
+    };
     
     private final ServiceContext scontext;
     
     public IteratorFollowFile(ServiceContext sc, String s) {
-        super(sc, s);
+        super(sc);
         scontext=sc;
+        query(s);
     }
+
+
 
 
 
@@ -25,8 +39,10 @@ public class IteratorFollowFile extends Iterator {
 
     @Override
     public void onCursorChanged(Cursor cursor, String fid) {
-        info = new GpxInformationDbEntryAndFile(scontext, cursor);
-
+        GpxInformationDbEntryAndFile info = new GpxInformationDbEntryAndFile(scontext, cursor);
+        toClose = info;
+        this.info = info;
+        
         findFile(fid);
     }
 
@@ -45,5 +61,16 @@ public class IteratorFollowFile extends Iterator {
         }
         moveToPosition(old_position);
         return false;
+    }
+    
+    
+    @Override
+    public void close() {
+        try {
+            toClose.close();
+        } catch (IOException e) {
+            AppLog.e(scontext.getContext(), e);
+        }
+        super.close();
     }
 }

@@ -258,4 +258,8 @@ public abstract class AbsOsmApiActivity extends AbsDispatcher implements OnClick
             return r;
         }
     }
+    
+    @Override
+    public void onServicesUp(boolean firstRun) {}
+
 }

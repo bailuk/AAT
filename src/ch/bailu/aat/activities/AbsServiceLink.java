@@ -23,31 +23,40 @@ public abstract class AbsServiceLink extends AbsActivity implements GpxInformati
             @Override
             public void onServicesUp() {
                 AbsServiceLink.this.onServicesUp(firstRun);
+                onResumeWithService();
                 firstRun=false;
             }
             
-            
         };
-            
-        
     }
 
 
+    
+    
     @Override
     public void onResume() {
         super.onResume();
         serviceLink.up();
+        
+        if (serviceLink.areAllServicesUp()) 
+            onResumeWithService();
     }
 
     
     @Override
     public void onPause() {
+        if (serviceLink.areAllServicesUp()) {
+            onPauseWithService();
+        }
         serviceLink.down();
+        
         super.onPause();
     }
     
     
-    public abstract void onServicesUp(boolean firstRun);
+    public void onResumeWithService() {};
+    public void onPauseWithService() {};
+    public void onServicesUp(boolean firstRun) {};
 
 
     @Override
@@ -62,8 +71,5 @@ public abstract class AbsServiceLink extends AbsActivity implements GpxInformati
         return serviceLink;
     }
     
-    /*
-    public void onStartPauseClick() {
-        getServiceContext().getTrackerService().getState().onStartPauseResume();
-    }*/
+  
 }

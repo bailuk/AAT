@@ -29,4 +29,11 @@ public class StatusActivity extends AbsHtmlViewActivity {
         return content.toString();
     }
 
+
+    @Override
+    public void onResumeWithService() {
+        // TODO Auto-generated method stub
+        
+    }
+
 }
