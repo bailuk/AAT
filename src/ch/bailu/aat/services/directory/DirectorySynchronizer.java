@@ -29,12 +29,12 @@ public class DirectorySynchronizer  implements Closeable {
 
     private GpxObject pendingHandle=null;
     private OsmPreviewGenerator pendingPreviewGenerator=null;
-    
+
     private FilesOnDisk filesToAdd=null;
     private final ArrayList<String> filesToRemove = new ArrayList<String>();;
 
     private SQLiteDatabase database;
-    
+
 
     private long dbAccessTime;
 
@@ -47,12 +47,12 @@ public class DirectorySynchronizer  implements Closeable {
     public DirectorySynchronizer(ServiceContext cs, File d) {
         scontext=cs;
         directory=d;
-        
+
         setState(new StateInit());
     }
 
-    
-    
+
+
     private BroadcastReceiver onFileChanged = new BroadcastReceiver () {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -70,8 +70,8 @@ public class DirectorySynchronizer  implements Closeable {
         public abstract void start();
         public abstract void ping();
     }
-    
-    
+
+
     private void setState(State s) {
         if (canContinue) { 
             state = s;
@@ -79,9 +79,9 @@ public class DirectorySynchronizer  implements Closeable {
         } else {
             terminate();
         }
-        
+
     }
-    
+
     private void terminate(Exception e) {
         state = new StateTerminate(e);
         state.start();
@@ -92,8 +92,8 @@ public class DirectorySynchronizer  implements Closeable {
         state.start();
     }
 
-    
-    
+
+
     /////////////////////////////////////////////////////////////////////////////////////////////    
     private class StateInit extends State {
         /**
@@ -109,7 +109,7 @@ public class DirectorySynchronizer  implements Closeable {
                 terminate(e);
             }
         }
-        
+
 
 
 
@@ -127,17 +127,17 @@ public class DirectorySynchronizer  implements Closeable {
         @Override
         public void ping() {}
     }
-    
-    
-    
-/*    
+
+
+
+    /*    
     /////////////////////////////////////////////////////////////////////////////////////////////
     private class StateIdle extends State {
         @Override
         public void start() {
             AppBroadcaster.broadcast(context, AppBroadcaster.DBSYNC_DONE);
         }
-        
+
         @Override
         public void ping() {
             if (doSync == true) {
@@ -146,47 +146,47 @@ public class DirectorySynchronizer  implements Closeable {
             }
         }
     }
-    
+
 
     public void synchronize() {
         doSync=true;
         state.ping();
     }
 
-  */  
-    
+     */  
+
     /////////////////////////////////////////////////////////////////////////////////////////////    
     private class StatePrepareSync extends State {
         /**
          * TODO: move into background
          */
         public Exception exception=null;
-        
+
         private ProcessHandle bgProcess = new ProcessHandle() {
 
-            
+
             @Override
             public long bgOnProcess() {
                 try {
-                filesToAdd = new FilesOnDisk(directory);
-                compareFileSystemWithDatabase();
-                removeFilesFromDatabase();
+                    filesToAdd = new FilesOnDisk(directory);
+                    compareFileSystemWithDatabase();
+                    removeFilesFromDatabase();
                 } catch (IOException e) {
                     exception = e;
                 }
-                
+
                 bgProcess = null;
                 return 100;
-                
+
             }
 
             @Override
             public void broadcast(Context context) {
                 AppBroadcaster.broadcast(context, AppBroadcaster.FILE_CHANGED_INCACHE, directory.toString());
             }
-            
+
         };
-        
+
         @Override
         public void start() {
             AppBroadcaster.broadcast(scontext.getContext(), AppBroadcaster.DBSYNC_START);        
@@ -206,7 +206,7 @@ public class DirectorySynchronizer  implements Closeable {
             }
         }
 
-         
+
 
         private void removeFilesFromDatabase() throws IOException {
             if (canContinue && filesToRemove.size()>0) {
@@ -270,34 +270,34 @@ public class DirectorySynchronizer  implements Closeable {
         }
 
     }
-    
-    
-    
+
+
+
 
     /////////////////////////////////////////////////////////////////////////////////////////////
     private class StateLoadNextGpx extends State {
 
         public void start() {
-            
+
             File file = filesToAdd.popItem();
             if (file==null) {
                 terminate();
-                
-                
+
+
             } else {
                 ObjectHandle h = scontext.getCacheService().getObject(file.getAbsolutePath(), new GpxObjectStatic.Factory());
                 if (GpxObject.class.isInstance(h)) {
-                    
+
                     setPendingGpxHandle((GpxObject)h);
                     state.ping();
-                    
+
                 } else {
                     h.free();
                     state.start();
                 }
             }
         }
-        
+
         @Override
         public void ping() {
             if (canContinue == false) {
@@ -312,7 +312,7 @@ public class DirectorySynchronizer  implements Closeable {
             } 
         }
 
-        
+
         private void addGpxSummaryToDatabase(String id, GpxList list) throws IOException {
             final File file = new File(id);
 
@@ -344,7 +344,7 @@ public class DirectorySynchronizer  implements Closeable {
         }
 
     }
-    
+
 
     private void setPendingGpxHandle(GpxObject h) {
         if (pendingHandle != null) {
@@ -354,27 +354,23 @@ public class DirectorySynchronizer  implements Closeable {
     }
 
 
-    
+
     /////////////////////////////////////////////////////////////////////////////////////////////    
     private class StateLoadPreview extends State {
 
         public void start() {
             File previewImageFile;
-            try {
-                previewImageFile = AppDirectory.getPreviewFile(new File(pendingHandle.toString()));
-                setPendingPreviewGenerator(
-                        new OsmPreviewGenerator(
-                                scontext, 
-                                pendingHandle.getGpxList(), 
-                                previewImageFile));
-                state.ping();
-                
-            } catch (IOException e) {
-                terminate(e);
-            }
-            
+            previewImageFile = AppDirectory.getPreviewFile(new File(pendingHandle.toString()));
+            setPendingPreviewGenerator(
+                    new OsmPreviewGenerator(
+                            scontext, 
+                            pendingHandle.getGpxList(), 
+                            previewImageFile));
+            state.ping();
+
+
         }
-        
+
         @Override
         public void ping() {
             if (canContinue==false) {
@@ -395,8 +391,8 @@ public class DirectorySynchronizer  implements Closeable {
         pendingPreviewGenerator=g;
     }
 
-    
-    
+
+
     /////////////////////////////////////////////////////////////////////////////////////////////
     private class StateTerminate extends State {
 
@@ -406,7 +402,7 @@ public class DirectorySynchronizer  implements Closeable {
         }
 
         public StateTerminate() {}
-        
+
         @Override
         public void ping() {}
 
@@ -417,15 +413,15 @@ public class DirectorySynchronizer  implements Closeable {
             if (database != null) {
                 database.close();
             }
-            
+
             setPendingGpxHandle(null);
             setPendingPreviewGenerator(null);
-            
+
             AppBroadcaster.broadcast(scontext.getContext(), AppBroadcaster.DBSYNC_DONE);
         }
     }
-    
-    
+
+
     @Override
     public synchronized void close() {
         canContinue=false;

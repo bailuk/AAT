@@ -27,21 +27,44 @@ public class MapIconCache implements Closeable {
     }
 
     
-    public Drawable getIcon(ServiceContext scontext, GpxPointInterface point) {
-        
-        Drawable drawable=null;
+    public Drawable getBigIcon(ServiceContext scontext, GpxPointInterface point) {
+        return getIcon(scontext, point, IconMapService.KEY_ICON_BIG);
+    }
+    
+    
+    public Drawable getSmallIcon(ServiceContext scontext, GpxPointInterface point) {
+        return getIcon(scontext, point, IconMapService.KEY_ICON_SMALL);
+    }
+    
+    
+    
+    public static String getBigIconFileName(GpxPointInterface point) {
+        return getIconFileName(point, IconMapService.KEY_ICON_BIG);
+    }
+    
+    public static String getIconFileName(GpxPointInterface point, String key) {
+        String fileID=null;
         
         GpxAttributes a = point.getAttributes();
         if (a != null) {
             
-            String fileID = a.get(IconMapService.KEY_ICON_SMALL);
-            if (fileID != null) {
-                drawable = getIcon(scontext, fileID);
-            }
+            fileID = a.get(key);
+        }
+        return fileID;
+    }
+    
+    
+    private Drawable getIcon(ServiceContext scontext, GpxPointInterface point, String key) {
+        
+        Drawable drawable=null;
+        
+        String fileID=getIconFileName(point, key);
+        if (fileID != null) {
+            drawable = getIcon(scontext, fileID);
         }
         return drawable;
     }
-    
+
     
     public Drawable getIcon(ServiceContext scontext, String fileID) {
         Drawable drawable=null;

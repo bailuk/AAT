@@ -27,7 +27,6 @@ public abstract class AbsService  extends Service {
     private final Timer lazyOff = new Timer(new Runnable() {
         @Override
         public void run() {
-            AppLog.d(this, "locked " + locks.size() + " times.");
             if (locks.isEmpty()) {
                 AppLog.d(this, "turn off.");
                 stopSelf();
@@ -51,7 +50,6 @@ public abstract class AbsService  extends Service {
         if (locks.remove(r) && locks.isEmpty()) {
             lazyOff.kick();
         }
-        AppLog.d(this, "locked " + locks.size() + " times.");
     }
     
 

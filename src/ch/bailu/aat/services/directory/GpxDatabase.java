@@ -33,7 +33,8 @@ public class GpxDatabase extends AbsDatabase{
 
     @Override
     public Cursor query(String selection) {
-        return database.query(GpxDbConstants.DB_TABLE, GpxDbConstants.KEY_LIST, selection, null, null, null, GpxDbConstants.KEY_START_TIME+ " DESC");
+        final Cursor cursor = database.query(GpxDbConstants.DB_TABLE, GpxDbConstants.KEY_LIST, selection, null, null, null, GpxDbConstants.KEY_START_TIME+ " DESC");
+        return cursor;
     }
 
 

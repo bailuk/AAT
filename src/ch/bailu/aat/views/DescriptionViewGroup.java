@@ -51,6 +51,4 @@ public abstract class DescriptionViewGroup extends TrackDescriptionView {
             for (int i=0; i<view.length; i++) view[i].updateGpxContent(info);
         }   
     }
-
-
 }

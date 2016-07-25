@@ -12,7 +12,7 @@ import ch.bailu.aat.helpers.AppTheme;
 import ch.bailu.aat.views.map.OsmInteractiveView;
 
 
-public class InfoViewNodeSelectorOverlay extends NodeSelectorOverlay {
+public class InfoViewNodeSelectorOverlay extends NodeSelectorOverlay implements OnLongClickListener {
     private static final int XMARGIN=10;
     private static final int YMARGIN=35;
 
@@ -31,24 +31,20 @@ public class InfoViewNodeSelectorOverlay extends NodeSelectorOverlay {
         infoView = new TextView(getContext());
         infoView.setBackgroundColor(Color.argb(0xcc, 0xff, 0xff, 0xff));
         infoView.setTextColor(Color.BLACK);
-        infoView.setOnLongClickListener(onClick);
+        infoView.setOnLongClickListener(this);
 
         v.addView(infoView);
 
     }
 
 
-    private OnLongClickListener onClick = new OnLongClickListener() {
-
-        @Override
-        public boolean onLongClick(View v) {
-
-            if (fileID != null) {
-                NodeDetailActivity.start(getContext(), fileID, index);
-            }
-            return true;
+    @Override
+    public boolean onLongClick(View v) {
+        if (fileID != null) {
+            NodeDetailActivity.start(getContext(), fileID, index);
         }
-    };
+        return true;
+    }
 
 
 
@@ -59,7 +55,7 @@ public class InfoViewNodeSelectorOverlay extends NodeSelectorOverlay {
 
         node.toHtml(getContext(), builder);
         infoView.setText(Html.fromHtml(builder.toString()));
-        
+
         fileID=info.getPath();
         index=i;
     }

@@ -4,33 +4,16 @@ import java.io.File;
 
 import android.os.Bundle;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.ViewGroup.LayoutParams;
-import android.widget.ImageButton;
-import ch.bailu.aat.R;
 import ch.bailu.aat.description.ContentDescription;
-import ch.bailu.aat.description.DescriptionInterface;
 import ch.bailu.aat.description.DistanceDescription;
 import ch.bailu.aat.description.NameDescription;
 import ch.bailu.aat.description.PathDescription;
 import ch.bailu.aat.description.TrackSizeDescription;
-import ch.bailu.aat.dispatcher.ContentDispatcher;
-import ch.bailu.aat.dispatcher.ContentSource;
-import ch.bailu.aat.dispatcher.CurrentLocationSource;
-import ch.bailu.aat.dispatcher.EditorSource;
-import ch.bailu.aat.dispatcher.IteratorSource;
-import ch.bailu.aat.dispatcher.OverlaySource;
-import ch.bailu.aat.dispatcher.TrackerSource;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.helpers.AppDialog;
-import ch.bailu.aat.helpers.AppLayout;
 import ch.bailu.aat.helpers.AppLog;
 import ch.bailu.aat.services.editor.EditorHelper;
 import ch.bailu.aat.services.editor.EditorInterface;
-import ch.bailu.aat.views.BusyButton;
-import ch.bailu.aat.views.ContentView;
-import ch.bailu.aat.views.ControlBar;
-import ch.bailu.aat.views.MainControlBar;
 import ch.bailu.aat.views.MultiView;
 import ch.bailu.aat.views.NodeListView;
 import ch.bailu.aat.views.SummaryListView;
@@ -47,22 +30,10 @@ import ch.bailu.aat.views.map.overlay.gpx.GpxDynOverlay;
 import ch.bailu.aat.views.map.overlay.gpx.GpxOverlayListOverlay;
 import ch.bailu.aat.views.map.overlay.grid.GridDynOverlay;
 
-public class GpxEditorActivity extends AbsDispatcher implements OnClickListener {
-
-    private final LayoutParams layout= new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
+public class GpxEditorActivity extends AbsFileContentActivity {
 
     private static final String SOLID_KEY="gpx_editor";
 
-    private ImageButton nextView, nextFile, previousFile;
-
-    
-    private IteratorSource currentFile;
-
-    private BusyButton busyButton;
-    private MultiView     multiView;
-    private OsmInteractiveView    mapView;
-
-    private EditorHelper edit;
 
 
     @Override
@@ -71,57 +42,28 @@ public class GpxEditorActivity extends AbsDispatcher implements OnClickListener 
 
         edit = new EditorHelper(getServiceContext(), GpxInformation.ID.INFO_ID_EDITOR_OVERLAY);
 
-        createViews();
+        createViews(SOLID_KEY);
         createDispatcher();
     }
 
 
-    private void createDispatcher() {
-        currentFile = new IteratorSource.FollowFile(getServiceContext());
-        
-        DescriptionInterface[] target = new DescriptionInterface[] {
-                multiView,this, busyButton.getBusyControl(GpxInformation.ID.INFO_ID_FILEVIEW)
-        };
 
 
-        ContentSource[] source = new ContentSource[] {
-                new EditorSource(getServiceContext(),edit),
-                new CurrentLocationSource(getServiceContext()),
-                new TrackerSource(getServiceContext()),
-                new OverlaySource(getServiceContext()), 
-                currentFile
-        };
-
-        setDispatcher(new ContentDispatcher(this,source, target));
-    }
-
-
-    private void createViews() {
-        ContentView contentView = new ContentView(this);
-
-        multiView = createMultiView();
-        contentView.addView(createButtonBar(), layout);
-        contentView.addView(multiView, layout);
-
-
-        setContentView(contentView);
-    }
-
-    private MultiView createMultiView() {
-        mapView = new OsmInteractiveView(getServiceContext(), SOLID_KEY);
+    @Override
+    protected MultiView createMultiView(final String SOLID_KEY) {
+        map = new OsmInteractiveView(getServiceContext(), SOLID_KEY);
 
         OsmOverlay overlayList[] = {
-                new GpxOverlayListOverlay(mapView, getServiceContext()),
-                new GpxDynOverlay(mapView, getServiceContext(), GpxInformation.ID.INFO_ID_TRACKER), 
-                new GridDynOverlay(mapView, getServiceContext()),
-                new CurrentLocationOverlay(mapView),
-                new EditorOverlay(mapView, getServiceContext(),GpxInformation.ID.INFO_ID_EDITOR_OVERLAY, edit),
-                new NavigationBarOverlay(mapView),
-                new InformationBarOverlay(mapView)
+                new GpxOverlayListOverlay(map, getServiceContext()),
+                new GpxDynOverlay(map, getServiceContext(), GpxInformation.ID.INFO_ID_TRACKER), 
+                new GridDynOverlay(map, getServiceContext()),
+                new CurrentLocationOverlay(map),
+                new EditorOverlay(map, getServiceContext(),GpxInformation.ID.INFO_ID_EDITOR_OVERLAY, edit),
+                new NavigationBarOverlay(map),
+                new InformationBarOverlay(map)
         };
 
-
-        mapView.setOverlayList(overlayList);
+        map.setOverlayList(overlayList);
 
 
         ContentDescription summaryData[] = {
@@ -140,7 +82,7 @@ public class GpxEditorActivity extends AbsDispatcher implements OnClickListener 
         TrackDescriptionView viewData[] = {
 
                 wayList,
-                mapView,
+                map,
 
                 new VerticalView(this, SOLID_KEY, INFO_ID_EDITOR_OVERLAY, new TrackDescriptionView[] {
                         new DistanceAltitudeGraphView(this, SOLID_KEY),
@@ -151,43 +93,7 @@ public class GpxEditorActivity extends AbsDispatcher implements OnClickListener 
     }
 
 
-
-    private ControlBar createButtonBar() {
-        final MainControlBar bar = new MainControlBar(this);
-
-        nextView = bar.addImageButton(R.drawable.go_next_inverse);
-        previousFile =  bar.addImageButton(R.drawable.go_up_inverse);
-        nextFile = bar.addImageButton(R.drawable.go_down_inverse);
-
-        busyButton = bar.getMenu();
-
-        bar.setOrientation(AppLayout.getOrientationAlongSmallSide(this));
-        bar.setOnClickListener1(this);
-
-        return bar;
-    }
-
-
-    @Override
-    public void onDestroy() {
-        edit.close();
-        super.onDestroy();
-    }
-
-
-    @Override
-    public void onPause() {
-        super.onPause();
-    }
-
-
-
-    @Override
-    public void onServicesUp(boolean firstRun) {
-        if (firstRun) {
-            mapView.frameBoundingBox(currentFile.getInfo().getBoundingBox());
-        }
-    }
+ 
 
     @Override
     public void updateGpxContent(GpxInformation info) {
@@ -195,7 +101,7 @@ public class GpxEditorActivity extends AbsDispatcher implements OnClickListener 
             edit.edit(new File(currentFile.getInfo().getPath()));    
         }
     }
-    
+
 
     @Override
     public void onBackPressed() {
@@ -259,20 +165,8 @@ public class GpxEditorActivity extends AbsDispatcher implements OnClickListener 
                 switchFile(v);
             }
 
-        } else if (v == nextView) {
-            multiView.setNext();
-
+        } else {
+            super.onClick(v);
         }
-    }
-
-
-
-    private void switchFile(View v) {
-        if (v==nextFile)
-            currentFile.moveToNext();
-        else if (v==previousFile)
-            currentFile.moveToPrevious();
-
-        mapView.frameBoundingBox(currentFile.getInfo().getBoundingBox());
     }
 }

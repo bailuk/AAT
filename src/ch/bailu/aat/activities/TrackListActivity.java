@@ -3,51 +3,19 @@ package ch.bailu.aat.activities;
 import java.io.File;
 
 import android.content.Intent;
-import android.widget.LinearLayout;
+import ch.bailu.aat.R;
 import ch.bailu.aat.description.AverageSpeedDescription;
 import ch.bailu.aat.description.ContentDescription;
 import ch.bailu.aat.description.DateDescription;
 import ch.bailu.aat.description.DistanceDescription;
 import ch.bailu.aat.description.MaximumSpeedDescription;
 import ch.bailu.aat.description.NameDescription;
+import ch.bailu.aat.description.PathDescription;
 import ch.bailu.aat.description.TimeDescription;
+import ch.bailu.aat.description.TrackSizeDescription;
 import ch.bailu.aat.preferences.SolidPreset;
-import ch.bailu.aat.views.ControlBar;
-import ch.bailu.aat.views.DateFilterView;
 
 public class TrackListActivity extends AbsGpxListActivity {
-
-   // private GpxListSummaryView summaryView;
-
-
-    @Override
-    public void createHeader(ControlBar bar) {
-        bar.addViewIgnoreSize(new DateFilterView(this));
-    }
-
-
-    @Override
-    public void createSummaryView(LinearLayout layout) {
-        ContentDescription data[] = new ContentDescription[] {
-                new MaximumSpeedDescription(this),
-                new DistanceDescription(this),
-                new AverageSpeedDescription(this),
-                new TimeDescription(this)
-        };   
-
-    //    summaryView = new GpxListSummaryView(getServiceContext(),  data);
-        
-   //     layout.addView(summaryView, AppLayout.getScreenSmallSide(this), AppLayout.getScreenSmallSide(this) /3);
-    }
-
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-    }
-
-   
-
     @Override
     public ContentDescription[] getGpxListItemData() {
         return new ContentDescription[] {
@@ -57,6 +25,19 @@ public class TrackListActivity extends AbsGpxListActivity {
                 new TimeDescription(this),
                 new NameDescription(this)
         };    		
+    }
+
+    @Override
+    public ContentDescription[] getSummaryData() {
+        return new ContentDescription[] {
+                new NameDescription(this),
+                new PathDescription(this),
+                new TrackSizeDescription(this),
+                new MaximumSpeedDescription(this),
+                new DistanceDescription(this),
+                new AverageSpeedDescription(this),
+                new TimeDescription(this)
+        };
     }
 
     @Override
@@ -71,6 +52,9 @@ public class TrackListActivity extends AbsGpxListActivity {
         return new SolidPreset(this).getDirectory();
     }
 
+    @Override
+    public String getLabel() {
+        return getString(R.string.intro_list);
+    }
 
-  
 }

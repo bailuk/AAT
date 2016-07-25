@@ -56,7 +56,7 @@ public class WayOverlay extends GpxOverlay {
         public void drawNode(PixelNode node) {
             if (node.isVisible() && count < MAX_VISIBLE_NODES) {
 
-                final Drawable nodeBitmap = getOsmView().mapIconCache.getIcon(scontext, node.point);
+                final Drawable nodeBitmap = getOsmView().mapIconCache.getSmallIcon(scontext, node.point);
 
                 if (nodeBitmap != null) {
                     painter.canvas.draw(nodeBitmap, node.pixel);

@@ -1,21 +1,18 @@
 package ch.bailu.aat.views;
 
-import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.Intent;
 import android.database.DataSetObserver;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import ch.bailu.aat.description.ContentDescription;
-import ch.bailu.aat.helpers.AppBroadcaster;
 import ch.bailu.aat.helpers.AppTheme;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.directory.Iterator;
-import ch.bailu.aat.services.directory.IteratorSimple;
+import ch.bailu.aat.services.directory.Iterator.OnCursorChangedListener;
 
-public class GpxListView extends ListView {
+public class GpxListView extends ListView implements OnCursorChangedListener {
 
 
     private DataSetObserver observer;
@@ -31,31 +28,20 @@ public class GpxListView extends ListView {
 
 
         AppTheme.themify(this, AppTheme.getHighlightColor());
-        AppBroadcaster.register(getContext(), onCursorChanged, AppBroadcaster.DB_CURSOR_CHANGED);
-
     }
 
-
-    @Override
-    public void onDetachedFromWindow() {
-        getContext().unregisterReceiver(onCursorChanged);
-        super.onDetachedFromWindow();
-    }
-
-
-    private BroadcastReceiver onCursorChanged = new BroadcastReceiver () {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            if (observer != null) observer.onChanged();
-        }
-
-    };
 
     public void setAdapter(ServiceContext scontext, Iterator iterator) {
+        iterator.setOnCursorChangedLinsener(this);
         setAdapter(new IteratorAdapter(scontext, iterator));
     };
     
-    
+
+    @Override
+    public void onCursorChanged() {
+        if (observer != null) observer.onChanged();
+    }
+
     public class IteratorAdapter implements ListAdapter {
         private final Iterator iterator;
         private final ServiceContext scontext;
@@ -137,5 +123,4 @@ public class GpxListView extends ListView {
 
 
     }
-
 }

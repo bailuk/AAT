@@ -6,13 +6,13 @@ public class GpxNodeFinder extends GpxListWalker {
 
     private final BoundingBox bounding;
     private GpxPointNode node;
-    private int index=-1;
-    
+    private int index=0;
+
     public GpxNodeFinder(BoundingBox b) {
         bounding = b;
     }
-    
-    
+
+
     @Override
     public boolean doList(GpxList s) {
         if (BoundingBox.doOverlap(s.getDelta().getBoundingBox(), bounding)) {
@@ -23,30 +23,34 @@ public class GpxNodeFinder extends GpxListWalker {
 
     @Override
     public boolean doSegment(GpxSegmentNode s) {
-        if (haveNode() == false && BoundingBox.doOverlap(s.getBoundingBox(), bounding)) {
+        if (haveNode()) {
+            return false;
+
+        } else if (BoundingBox.doOverlap(s.getBoundingBox(), bounding)) {
             return true;
+
+        } else {
+            index = index + s.getSegmentSize();
+            return false;
         }
-        return false;
     }
 
     @Override
     public boolean doMarker(GpxSegmentNode s) {
-        if (haveNode() == false && BoundingBox.doOverlap(s.getBoundingBox(), bounding)) {
-            return true;
-        }
-        return false;
+        return doSegment(s);
     }
 
     @Override
     public void doPoint(GpxPointNode point) {
         if (haveNode() == false) {
-            index++;
             if (bounding.contains(point)) {
                 node = point;
+            } else {
+                index++;
             }
         }
     }
-    
+
     public boolean haveNode() {
         return node != null;
     }
@@ -55,7 +59,7 @@ public class GpxNodeFinder extends GpxListWalker {
     public GpxPointNode getNode() {
         return node;
     }
-    
+
     public int getNodeIndex() {
         return index;
     }

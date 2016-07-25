@@ -1,5 +1,7 @@
 package ch.bailu.aat.services.directory;
 
+import java.io.File;
+
 import android.database.Cursor;
 import ch.bailu.aat.gpx.GpxAttributes;
 import ch.bailu.aat.gpx.GpxBigDelta;
@@ -10,19 +12,23 @@ import ch.bailu.aat.gpx.interfaces.GpxBigDeltaInterface;
 
 public class GpxInformationDbSummary extends GpxInformation {
     private final GpxList list;
+    private final File directory;
     
-    public GpxInformationDbSummary(Cursor cursor) {
+    public GpxInformationDbSummary(File dir, Cursor cursor) {
+        directory = dir;
         list = new GpxList(GpxBigDeltaInterface.WAY);
         
         GpxBigDelta summary=new GpxBigDelta();
         GpxInformation entry = new GpxInformationDbEntry(cursor);
         
+        cursor.moveToPosition(-1);
         while (cursor.moveToNext()) {
             addEntryToList(entry);
             summary.updateWithPause(entry);
-
         }
         setVisibleTrackSegment(summary);
+        
+        
     }
     
 
@@ -32,17 +38,34 @@ public class GpxInformationDbSummary extends GpxInformation {
                 0, entry.getTimeStamp());
 
         final GpxAttributes attr = new GpxAttributes();
-        attr.put("name", entry.getName());
-        attr.put("path", entry.getPath());
+        final File file = new File(entry.getPath());
+        attr.put("name", file.getName());
+        attr.put("path", file.getPath());
         
         list.appendToCurrentSegment(point, attr);
     }
     
     
+    @Override
+    public String getName() {
+        return directory.getName();
+    }
+
     
+    @Override
+    public String getPath() {
+        return directory.getAbsolutePath();
+    }
+
     @Override
     public GpxList getGpxList() {
         return list;
+    }
+    
+    
+    @Override
+    public boolean isLoaded() {
+        return true;
     }
     
     public int getID() {

@@ -34,6 +34,17 @@ public class AppFile {
     }
 
 
+    public static void sendDirectory(Context context, File directory) {
+        if (directory.exists()) {  // this works (only?) with OI Filemanager
+            final Intent intent = new Intent(Intent.ACTION_VIEW);
+            final Uri uri = Uri.fromFile(directory);
+            
+            intent.setData(uri);
+            context.startActivity(Intent.createChooser(intent, directory.toString()));
+        }
+    }
+    
+    
     public static void send(Context context, File file) {
         final Uri attachement = Uri.fromFile(file);
         final Intent emailIntent = new Intent(Intent.ACTION_SEND);

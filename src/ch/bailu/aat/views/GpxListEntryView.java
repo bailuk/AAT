@@ -1,25 +1,14 @@
 package ch.bailu.aat.views;
 
 
-import java.io.File;
-import java.io.IOException;
-
-import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
-import android.widget.ImageView;
 import android.widget.TextView;
 import ch.bailu.aat.description.ContentDescription;
 import ch.bailu.aat.gpx.GpxInformation;
-import ch.bailu.aat.helpers.AppBroadcaster;
-import ch.bailu.aat.helpers.AppDirectory;
 import ch.bailu.aat.helpers.AppLayout;
-import ch.bailu.aat.helpers.AppLog;
 import ch.bailu.aat.helpers.AppTheme;
 import ch.bailu.aat.services.ServiceContext;
-import ch.bailu.aat.services.cache.ImageObject;
-import ch.bailu.aat.services.cache.ObjectHandle;
 import ch.bailu.aat.views.map.OsmPreviewGenerator;
 
 
@@ -27,22 +16,18 @@ public class GpxListEntryView extends  DescriptionViewGroup {
     private static final String SOLID_KEY = GpxListEntryView.class.getSimpleName();   
     private final static int SPACE=20;
 
-    private final ImageView imageView;
+    private final PreviewView preview;
     private final ServiceContext scontext;
 
-    private ImageObject imageHandle=ImageObject.NULL;
 
-    private boolean isAttached=false;
-    private String imageToLoad=null;
-
-
+    
     public GpxListEntryView(ServiceContext sc, ContentDescription[] description) {
         super(sc.getContext(), SOLID_KEY, INFO_ID_ALL);
 
         scontext=sc;
 
-        imageView = new ImageView(getContext());
-        addView(imageView);
+        preview = new PreviewView(scontext);
+        addView(preview);
 
         init(getContext(),description);
     }
@@ -89,7 +74,7 @@ public class GpxListEntryView extends  DescriptionViewGroup {
             xpos+=(w+SPACE);
         }
 
-        imageView.layout(width, 0, width+OsmPreviewGenerator.BITMAP_SIZE, OsmPreviewGenerator.BITMAP_SIZE);
+        preview.layout(width, 0, width+OsmPreviewGenerator.BITMAP_SIZE, OsmPreviewGenerator.BITMAP_SIZE);
     }
 
 
@@ -131,8 +116,7 @@ public class GpxListEntryView extends  DescriptionViewGroup {
                 data.updateGpxContent(info);
                 updateText(data.getValue(), data.getUnit());
 
-                imageToLoad = info.getPath();
-                loadAndDisplayImage();
+                preview.setFilePath(info.getPath());
             }
         }
 
@@ -143,73 +127,6 @@ public class GpxListEntryView extends  DescriptionViewGroup {
             entry.setText(text);
         }
 
-       
+
     }
-
-
-
-
-    private void loadAndDisplayImage() {
-        if (imageToLoad != null && isAttached) {
-
-            freeImageHandle();
-            try {
-                final File file = AppDirectory.getPreviewFile(new File(imageToLoad));
-                final ObjectHandle  h=scontext.getCacheService().getObject(file.getAbsolutePath(), new ImageObject.Factory());
-
-                if (ImageObject.class.isInstance(h)) {
-                    imageHandle = (ImageObject) h;
-                    displayImage();
-                }
-
-            } catch (IOException e) {
-                AppLog.e(getContext(), e);
-            }
-            imageToLoad=null;
-        }
-    }
-
-
-    private void freeImageHandle() {
-        imageHandle.free();
-        imageHandle = ImageObject.NULL;
-    }
-
-
-    @Override
-    public void onAttachedToWindow() {
-        super.onAttachedToWindow();
-        isAttached=true;
-
-        AppBroadcaster.register(getContext(), 
-                onFileChanged, 
-                AppBroadcaster.FILE_CHANGED_INCACHE);
-        loadAndDisplayImage();
-    }
-
-
-    @Override
-    public void onDetachedFromWindow() {
-        getContext().unregisterReceiver(onFileChanged);
-        freeImageHandle();
-
-        isAttached=false;
-        super.onDetachedFromWindow();
-    }
-
-
-    private void displayImage() {
-        imageView.setImageDrawable(imageHandle.getDrawable());
-    }
-
-
-    private BroadcastReceiver onFileChanged = new BroadcastReceiver () {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            final String file = imageHandle.toString();
-
-            if (AppBroadcaster.hasFile(intent, file)) displayImage();
-            
-        }
-    };
 }

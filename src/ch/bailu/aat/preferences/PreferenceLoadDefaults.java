@@ -22,8 +22,6 @@ public class PreferenceLoadDefaults {
 
         for (int i=0; i<new SolidPreset(context).length(); i++) {
             new SolidMET(context,i).setIndex(i);
-            new SolidFilterFrom(context,i).setValue(System.currentTimeMillis());
-            new SolidFilterTo(context,i).setValue(System.currentTimeMillis());
         }
     }
     

@@ -6,17 +6,26 @@ import ch.bailu.aat.gpx.GpxInformation;
 
 public class Iterator implements Closeable {
     public static final Iterator NULL = new Iterator();
-    
-    
+
+
+    public interface OnCursorChangedListener {
+        void onCursorChanged();
+    };
+
+    public static final OnCursorChangedListener NULL_LISTENER = new OnCursorChangedListener() {
+        @Override
+        public void onCursorChanged() {}
+    };
+
     public boolean moveToPrevious() {return false;}
-    
-    
+
+
     public boolean moveToNext() {return false;}
-    
-    
+
+
     public boolean moveToPosition(int pos) {return false;}
 
-    
+
     public int getCount() {
         return 0;
     }
@@ -30,12 +39,15 @@ public class Iterator implements Closeable {
     public GpxInformation getInfo() {
         return GpxInformation.NULL;
     }
-    
-    
-    public void query(String s) {}
+
+
+    public void query() {}
 
 
     @Override
     public void close() {}
+
+
+    public void setOnCursorChangedLinsener(OnCursorChangedListener l) {}
 
 }

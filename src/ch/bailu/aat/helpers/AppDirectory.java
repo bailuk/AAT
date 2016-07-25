@@ -123,7 +123,7 @@ public class AppDirectory  {
     }
 
 
-    static public File getPreviewFile(File path) throws IOException {
+    static public File getPreviewFile(File path)  {
         String name = path.getName();
         String directory = path.getParent();
 
@@ -132,6 +132,9 @@ public class AppDirectory  {
         cdir.mkdirs();
         return new File(cdir, name+ PREVIEW_EXTENSION);
     }
+    
+    
+
     ////////////////////////////////////////////////////////////////////////////////////////
 
 
@@ -213,5 +216,6 @@ public class AppDirectory  {
         } else {
             throw new IOException("ERROR: " + source.getPath() + " does not exist.");
         }
-    }  
+    }
+
 }

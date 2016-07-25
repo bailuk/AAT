@@ -61,7 +61,6 @@ public class Storage  implements ContextWrapperInterface {
 
     public static File getSharedPrefsDirectory(Context context) {
         final File data = context.getFilesDir();
-        AppLog.d(data, data.toString());
         
         return new File(data.getParent(), "shared_prefs");
     }

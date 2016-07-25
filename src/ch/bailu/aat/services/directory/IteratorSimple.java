@@ -8,9 +8,9 @@ public class IteratorSimple extends IteratorAbstract {
     private GpxInformation info = GpxInformation.NULL;
 
     
-    public IteratorSimple(ServiceContext sc, String s) {
+    public IteratorSimple(ServiceContext sc) {
         super(sc);
-        query(s);
+        query();
     }
 
     
@@ -22,7 +22,11 @@ public class IteratorSimple extends IteratorAbstract {
     
     @Override
     public void onCursorChanged(Cursor cursor, String fid) {
-        info = new GpxInformationDbEntry(cursor);
+        if (cursor.getCount()>0) {
+            info = new GpxInformationDbEntry(cursor);
+        } else {
+            info = GpxInformation.NULL;
+        }
         
     }
 }

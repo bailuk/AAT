@@ -9,25 +9,23 @@ import ch.bailu.aat.helpers.AppLog;
 import ch.bailu.aat.services.ServiceContext;
 
 public class IteratorFollowFile extends IteratorAbstract {
-    private GpxInformation info = GpxInformation.NULL;
-    private Closeable toClose = new Closeable() {
-
+    private static Closeable NULL_CLOSEABLE = new Closeable() {
         @Override
-        public void close() {
-        }
-        
+        public void close() {}
+
     };
-    
+
+
+    private GpxInformation info = GpxInformation.NULL;
+    private Closeable toClose = NULL_CLOSEABLE;
+
     private final ServiceContext scontext;
-    
-    public IteratorFollowFile(ServiceContext sc, String s) {
+
+    public IteratorFollowFile(ServiceContext sc) {
         super(sc);
         scontext=sc;
-        query(s);
+        query();
     }
-
-
-
 
 
     @Override
@@ -39,31 +37,35 @@ public class IteratorFollowFile extends IteratorAbstract {
 
     @Override
     public void onCursorChanged(Cursor cursor, String fid) {
+        try {
+            toClose.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        
+        AppLog.d(this, "onCursorChanged");
         GpxInformationDbEntryAndFile info = new GpxInformationDbEntryAndFile(scontext, cursor);
         toClose = info;
         this.info = info;
-        
         findFile(fid);
     }
 
-    
+
     public boolean findFile(String fID) { 
         int old_position = getPosition();
-        
-        
-        if (moveToPosition(0)) {
-            do {
-                if (info.getPath().equals(fID)) {
-                    return true;
-                }
+
+        moveToPosition(-1);
+        while ( moveToNext()) {
+            if (info.getPath().equals(fID)) {
+                return true;
             }
-            while(moveToNext());
         }
+        
         moveToPosition(old_position);
         return false;
     }
-    
-    
+
+
     @Override
     public void close() {
         try {
@@ -73,4 +75,6 @@ public class IteratorFollowFile extends IteratorAbstract {
         }
         super.close();
     }
+
+
 }

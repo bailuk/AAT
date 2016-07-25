@@ -82,6 +82,7 @@ INVERT "go-down"
 INVERT "go-up" 
 INVERT "open-menu"
 INVERT "edit-select-all"
+INVERT "folder"
 
 
 ####### Navigation-Bar
@@ -90,6 +91,10 @@ COPY "zoom-in"
 COPY "zoom-out" 
 COPY "zoom-original" 
 INVERT "zoom-original"
+
+####### File-Bar
+COPY "edit-select-all"
+COPY "view-paged"
 
 
 ####### Edit-Bar
