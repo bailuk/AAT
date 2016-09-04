@@ -138,7 +138,7 @@ public abstract class AbsGpxListActivity extends AbsDispatcher implements OnItem
 
         final TrackDescriptionView summary[] = {
                 new ViewWrapper(label),
-                new ViewWrapper(new DirectorySelection(this)),
+                new ViewWrapper(new DirectorySelection(map.map)),
                 new SummaryListView(this, solid_key, INFO_ID_LIST_SUMMARY, summaryData),
         };
 

@@ -6,27 +6,27 @@ import ch.bailu.aat.gpx.GpxInformation;
 
 public class GpxInformationDbEntry extends GpxInformation {
     private final Cursor cursor;
-    
+
 
     public GpxInformationDbEntry(Cursor c) {
         cursor=c;
     }
 
-    
+
     @Override
     public boolean isLoaded() {
-        return (cursor.getPosition() > -1);
+        return isValid();
     }
 
 
     @Override
     public String getPath() {
-        return cursor.getString(cursor.getColumnIndex(GpxDbConstants.KEY_PATHNAME));
+        return getString(GpxDbConstants.KEY_PATHNAME);
     }
 
     @Override
     public String getName() {
-        return cursor.getString(cursor.getColumnIndex(GpxDbConstants.KEY_FILENAME));
+        return getString(GpxDbConstants.KEY_FILENAME);
     }
 
     @Override
@@ -51,13 +51,28 @@ public class GpxInformationDbEntry extends GpxInformation {
     }
 
 
+    public boolean isValid() {
+        return (cursor.getPosition() > -1 && cursor.getPosition() < cursor.getCount());
+    }
+
+    private String getString(String key) {
+        if (isValid())
+            return cursor.getString(cursor.getColumnIndex(key));
+        else return "";
+    }
+
+
     private long getLong(String key) {
-        return cursor.getLong(cursor.getColumnIndex(key));
+        if (isValid())
+            return cursor.getLong(cursor.getColumnIndex(key));
+        else return 0;
     }
 
 
     private float getFloat(String key) {
-        return cursor.getFloat(cursor.getColumnIndex(key));
+        if (isValid())
+            return cursor.getFloat(cursor.getColumnIndex(key));
+        else return 0f;
     }
 
 

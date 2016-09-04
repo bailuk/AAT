@@ -14,7 +14,8 @@ public class SolidDirectory extends SolidString {
 
     private final static String KEY_USE_GEO="USE_GEO_";
 
-
+    private final static String KEY_BOUNDING_BOX = "BOX_";
+    
 
     public SolidDirectory(Context c) {
         super(Storage.global(c), KEY_DIR_DIRECTORY);
@@ -54,9 +55,35 @@ public class SolidDirectory extends SolidString {
 
     }
 
+    public SolidBoundingBox getBoundingBox() {
+        return new SolidBoundingBox(getStorage(), KEY_BOUNDING_BOX+getValue());
+    }
 
-    private final static long DAY = 1000*60*60*24; // ms*sec*min*h = d
+    
+    
     public String createSelectionString() {
+        final String d = createSelectionStringDate();
+        final String b = createSelectionStringBounding(); 
+        
+        if (d.length()>0 && b.length()>0) {
+            return "(" + d + ") AND (" + b + ")";
+        } else {
+            return d + b;
+        }
+    }
+    
+    
+    public String createSelectionStringBounding() {
+        if (getUseGeo().getValue()) {
+            return getBoundingBox().createSelectionStringInside();
+        }
+        
+        return "";
+    }
+    
+    
+    private final static long DAY = 1000*60*60*24; // ms*sec*min*h = d
+    public String createSelectionStringDate() {
         String selection="";
 
 

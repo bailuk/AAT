@@ -63,7 +63,6 @@ implements MapListener, OnSharedPreferenceChangeListener, OnTouchListener {
         slock = new SolidPositionLock(context, key);
         
 
-        
         map.setMapListener(this);
         map.setOnTouchListener(this);
         
