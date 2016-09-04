@@ -3,6 +3,7 @@ package ch.bailu.aat.services.cache;
 import android.content.Intent;
 import android.util.SparseArray;
 import ch.bailu.aat.helpers.AppBroadcaster;
+import ch.bailu.aat.helpers.AppLog;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.cache.CacheService.SelfOn;
 import ch.bailu.aat.services.cache.ObjectHandle.Factory;
@@ -230,5 +231,19 @@ public class ObjectTable {
         builder.append("<br>TOTAL cache entries: ");
         builder.append(table.size());
         builder.append("</p>");     
+    }
+    
+    public void logLocked() {
+        ObjectHandle current = ObjectHandle.NULL;
+        int locked=0;
+
+        for (int i=0; i<table.size(); i++) {
+            current = table.valueAt(i).obj;
+
+            if (current.isLocked()){
+                locked++;
+            }
+        }
+        AppLog.d(this, "Still locked: " + locked);
     }
 }

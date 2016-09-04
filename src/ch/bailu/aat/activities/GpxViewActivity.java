@@ -2,11 +2,14 @@ package ch.bailu.aat.activities;
 
 import java.io.File;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import ch.bailu.aat.R;
 import ch.bailu.aat.description.AverageSpeedDescription;
 import ch.bailu.aat.description.CaloriesDescription;
@@ -67,16 +70,32 @@ public class GpxViewActivity extends AbsDispatcher implements OnClickListener {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        fileID = getIntent().getData().getEncodedPath();
+        final Intent intent = getIntent();
+        Uri uri = intent.getData();
         
-
-        contentView = new ContentView(this);
-        contentView.addView(createButtonBar());
-        multiView = createMultiView();
-        contentView.addView(multiView);
-        setContentView(contentView);
-
-        createDispatcher();
+        if (uri==null) {
+            
+            if (intent.hasExtra(Intent.EXTRA_STREAM)) {
+                uri = intent.getParcelableExtra(Intent.EXTRA_STREAM);
+            }
+        }
+            
+            
+        
+        
+        if (uri != null) {
+            fileID = uri.getEncodedPath();
+            
+            contentView = new ContentView(this);
+            contentView.addView(createButtonBar());
+            multiView = createMultiView();
+            contentView.addView(multiView);
+            setContentView(contentView);
+            createDispatcher();
+            
+        }
+        
+        
     }
 
 

@@ -2,6 +2,7 @@
 <menu
   xmlns:android="http://schemas.android.com/apk/res/android">
 <item android:id="@+id/m_file_send" android:title="@string/file_send"></item>
+<item android:id="@+id/m_file_view" android:title="@string/file_view"></item>
 <item android:id="@+id/m_file_rename" android:title="@string/file_rename"></item>
 <item android:id="@+id/m_file_copy" android:title="@string/file_copy"></item>
 <item android:id="@+id/m_file_delete" android:title="@string/file_delete"></item>

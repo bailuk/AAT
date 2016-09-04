@@ -117,6 +117,13 @@
 
         <service android:name="ch.bailu.aat.services.OneService" >
         </service>
+        
+        
+        <provider android:name="ch.bailu.aat.providers.GpxProvider"
+                  android:authorities="ch.bailu.aat.gpx"
+                  android:exported="true">
+        </provider>
+        
     </application>
 
 </manifest>

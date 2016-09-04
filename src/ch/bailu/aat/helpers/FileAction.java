@@ -16,6 +16,7 @@ import ch.bailu.aat.activities.AbsServiceLink;
 import ch.bailu.aat.preferences.AddOverlayDialog;
 import ch.bailu.aat.preferences.SolidDirectory;
 import ch.bailu.aat.preferences.SolidMockLocationFile;
+import ch.bailu.aat.providers.GpxProvider;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.directory.Iterator;
 
@@ -76,6 +77,9 @@ public class FileAction  implements OnMenuItemClickListener {
         } else if (item.getItemId() == R.id.m_file_send) {
             sendTo();
 
+        } else if (item.getItemId() == R.id.m_file_view) {
+            view();
+
         } else if (item.getItemId() == R.id.m_file_copy) {
             copyTo();
 
@@ -128,6 +132,12 @@ public class FileAction  implements OnMenuItemClickListener {
         new SolidMockLocationFile(scontext.getContext()).setValue(file.toString());
     }
 
+    
+    public void view() {
+        AppFile.view(scontext.getContext(), file);
+    }
+    
+    
     public void sendTo() {
         AppFile.send(scontext.getContext(), file);
     }

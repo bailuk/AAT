@@ -249,7 +249,7 @@ public abstract class AbsGpxListActivity extends AbsDispatcher implements OnItem
         } else if (v == prevView) {
             multiView.setPrevious();
         } else if (v == fileManager) {
-            AppFile.sendDirectory(this, new File(sdirectory.getValue()));
+            AppFile.viewDirectory(this, new File(sdirectory.getValue()));
         }
 
     }

@@ -34,30 +34,80 @@ public class AppFile {
     }
 
 
-    public static void sendDirectory(Context context, File directory) {
+    public static void viewDirectory(Context context, File directory) {
         if (directory.exists()) {  // this works (only?) with OI Filemanager
             final Intent intent = new Intent(Intent.ACTION_VIEW);
             final Uri uri = Uri.fromFile(directory);
-            
             intent.setData(uri);
             context.startActivity(Intent.createChooser(intent, directory.toString()));
         }
     }
     
+    public static void view(Context context, File file) {
+        viewPrivateFile(context, file);
+    }
+
     
+    public static void viewFile(Context context, File file) {
+        final Uri uri = Uri.fromFile(file);
+        final Intent intent = new Intent(Intent.ACTION_VIEW);
+        
+        intent.setDataAndType(uri, "application/gpx+xml");
+        context.startActivity(Intent.createChooser(intent , file.getName()));
+    }
+    
+    public static void viewPrivateFile(Context context, File file) {
+        final Uri uri = Uri.parse("content://ch.bailu.aat.gpx" + file.getAbsolutePath());
+        final Intent intent = new Intent(Intent.ACTION_VIEW);
+        
+        intent.setDataAndType(uri, "text/plain");
+        context.startActivity(Intent.createChooser(intent , file.getName()));
+    }
+    
+    
+    
+
     public static void send(Context context, File file) {
-        final Uri attachement = Uri.fromFile(file);
-        final Intent emailIntent = new Intent(Intent.ACTION_SEND);
+        sendAsExtraStream(context, file);
+    }
+    
 
-        emailIntent.putExtra(Intent.EXTRA_SUBJECT, file.getName());
-        emailIntent.putExtra(Intent.EXTRA_TEXT, file.getAbsolutePath());
-        emailIntent.setType("application/gpx+xml");
-        emailIntent.putExtra(Intent.EXTRA_STREAM, attachement);
+    public static void sendAsExtraStream(Context context, File file) {
+        /**
+         * This is the correct implementation for sending one file as an e-mail attachment.
+         * It does, however, not work with private files.
+         * 
+         */
+        final Uri uri = Uri.fromFile(file);
+        final Intent intent = new Intent(Intent.ACTION_SEND);
 
-        context.startActivity(Intent.createChooser(emailIntent , file.getName()));
+        intent.putExtra(Intent.EXTRA_SUBJECT, file.getName());
+        intent.putExtra(Intent.EXTRA_TEXT, file.getAbsolutePath());
+        intent.setType("application/gpx+xml");
+        intent.putExtra(Intent.EXTRA_STREAM, uri);
+
+        context.startActivity(Intent.createChooser(intent , file.getName()));
     }
 
 
+    
+    public static void sendAsPrivateData(Context context, File file) {
+        /**
+         * Does not work with Android/Google e-mail client. They call query(...) on the ContentProvider.
+         */
+        final Uri uri = Uri.parse("content://ch.bailu.aat.gpx" + file.getAbsolutePath());
+        
+        AppLog.d(uri, uri.toString());
+        final Intent intent = new Intent(Intent.ACTION_SEND);
+        
+        intent.putExtra(Intent.EXTRA_SUBJECT, file.getName());
+        intent.putExtra(Intent.EXTRA_TEXT, file.getAbsolutePath());
+        intent.setType("application/gpx+xml");
+        intent.putExtra(Intent.EXTRA_STREAM, uri);
+        context.startActivity(Intent.createChooser(intent , file.getName()));
+    }
+    
+    
     public static void copy(Context context, Uri uri, File target) throws Exception {
         InputStream is = null;
         OutputStream os = null;
