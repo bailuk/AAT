@@ -158,5 +158,9 @@ public class BoundingBox {
         return south;
     }
 
+    public boolean hasBounding() {
+        return (north > south && east > west);
+    }
+
 }
 

@@ -58,16 +58,31 @@ public class NavigationBarOverlay extends ControlBarOverlay implements GpxInform
             map.getController().zoomOut();
         } else if (v==buttonFrame && infoCache.size()>0) {
             
-            boundingCycle++;
-            if (boundingCycle >= infoCache.size()) 
-                boundingCycle=0;
-            
-            
-            osm.frameBoundingBox(infoCache.valueAt(boundingCycle).getBoundingBox());
-            AppLog.i(getContext(), infoCache.valueAt(boundingCycle).getName());
+            if (nextInBoundingCycle()) {
+                osm.frameBoundingBox(infoCache.valueAt(boundingCycle).getBoundingBox());
+                AppLog.i(getContext(), infoCache.valueAt(boundingCycle).getName());
+            }
         }
     }
 
+    
+    private boolean nextInBoundingCycle() {
+         int c = infoCache.size();
+         
+         while (c > 0) {
+             c--;
+             boundingCycle++;
+             
+             if (boundingCycle >= infoCache.size()) 
+                 boundingCycle=0;
+             
+             if (infoCache.valueAt(boundingCycle).getBoundingBox().hasBounding()) 
+                 return true;
+         }
+         return false;
+    }
+    
+    
     @Override
     public void bottomTap() {
         showBar();
