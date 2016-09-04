@@ -1,6 +1,10 @@
 package ch.bailu.aat.activities;
 
 
+import org.osmdroid.util.GeoPoint;
+
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -58,6 +62,29 @@ public class MapActivity extends AbsDispatcher implements OnClickListener{
         setContentView(contentView);
 
         createDispatcher();
+        
+        
+        setMapCenterFromIntent();
+    }
+
+
+    private void setMapCenterFromIntent() {
+        Intent intent = getIntent();
+        
+        Uri uri = intent.getData();
+        
+        if (intent.getAction()==Intent.ACTION_VIEW && uri != null) {
+            String s = uri.toString();
+            
+            String[] uri_parts = s.split("[:,?#]");
+            
+            if (uri_parts.length>=3) {
+                float la = Float.parseFloat(uri_parts[1]);
+                float lo = Float.parseFloat(uri_parts[2]);
+                
+                map.map.getController().setCenter(new GeoPoint(la, lo));
+            }
+        }
     }
 
 
