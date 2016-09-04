@@ -123,6 +123,8 @@
 <string name="file_view">View/Edit...</string>
 <string name="file_copy">Copy to...</string>
 
+<string name="location_view">View location...</string>
+<string name="location_send">Send location...</string>
 
 
 

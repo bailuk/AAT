@@ -117,6 +117,7 @@ COPY "dialog-question"
 COPY "go-bottom"  ## Overpass
 COPY "edit-find"  ## Nominatim
 COPY "view-refresh"  
+COPY "send-to"
 
 
 ####### Tracker / Menu
