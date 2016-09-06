@@ -110,7 +110,7 @@ public abstract class AbsOsmApiActivity extends AbsDispatcher implements OnClick
 
     
     private ControlBar createControlBar() {
-        ControlBar bar = new MainControlBar(this,6);      
+        ControlBar bar = new MainControlBar(getServiceContext(),6);      
         
         download = new BusyButton(this, R.drawable.go_bottom_inverse);
         

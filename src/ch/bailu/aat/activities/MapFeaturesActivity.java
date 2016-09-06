@@ -39,7 +39,7 @@ public class MapFeaturesActivity extends AbsDispatcher implements OnClickListene
         ToolTip.set(download, R.string.tt_overpass_download_features);
         download.setOnClickListener(this);
         
-        bar = new MainControlBar(this,6);
+        bar = new MainControlBar(getServiceContext(),6);
         
         bar.addView(download);
         bar.addViewIgnoreSize(AppTheme.getTitleTextView(this, R.string.query_features));

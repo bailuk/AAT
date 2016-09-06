@@ -24,6 +24,7 @@ import ch.bailu.aat.dispatcher.OverlaySource;
 import ch.bailu.aat.helpers.AppFile;
 import ch.bailu.aat.helpers.AppTheme;
 import ch.bailu.aat.helpers.FileAction;
+import ch.bailu.aat.menus.FileMenu;
 import ch.bailu.aat.preferences.SolidDirectory;
 import ch.bailu.aat.services.directory.Iterator;
 import ch.bailu.aat.services.directory.IteratorSimple;
@@ -52,7 +53,7 @@ import ch.bailu.aat.views.map.overlay.grid.GridDynOverlay;
 
 public abstract class AbsGpxListActivity extends AbsDispatcher implements OnItemClickListener, OnClickListener {
 
-
+    private FileMenu fileMenu;
     private String                      solid_key;
 
     private Iterator                    iteratorSimple = Iterator.NULL;
@@ -97,7 +98,7 @@ public abstract class AbsGpxListActivity extends AbsDispatcher implements OnItem
 
 
     private ControlBar createControlBar() {
-        final MainControlBar bar = new MainControlBar(this, 4);
+        final MainControlBar bar = new MainControlBar(getServiceContext(), 4);
 
         busyControl = new DbSynchronizerBusyIndicator(bar.getMenu());
         prevView = bar.addImageButton(R.drawable.go_previous_inverse);
@@ -222,7 +223,6 @@ public abstract class AbsGpxListActivity extends AbsDispatcher implements OnItem
     }
 
     
-
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
@@ -231,14 +231,16 @@ public abstract class AbsGpxListActivity extends AbsDispatcher implements OnItem
                 ((AdapterView.AdapterContextMenuInfo)menuInfo).position;
 
         iteratorSimple.moveToPosition(position);
-        new FileAction(this, iteratorSimple).createFileMenu(menu);
-
+        
+        fileMenu = new FileMenu(new FileAction(this, iteratorSimple));
+        fileMenu.inflate(menu);
+        fileMenu.prepare(menu);
     }
 
 
     @Override
     public boolean onContextItemSelected(MenuItem item) {
-        return new FileAction(this, iteratorSimple).onMenuItemClick(item);
+        return fileMenu.onItemClick(item);
     }
 
 

@@ -102,7 +102,7 @@ implements AdapterView.OnItemSelectedListener, OnSharedPreferenceChangeListener 
 
 
     private LinearLayout createButtonBar() {
-        final ControlBar bar = new MainControlBar(this);
+        final ControlBar bar = new MainControlBar(getServiceContext());
 
         gpsState = new GPSStateButton(this);
         trackerState = new TrackerStateButton(getServiceContext());

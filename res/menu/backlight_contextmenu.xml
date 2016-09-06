@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<menu
-  xmlns:android="http://schemas.android.com/apk/res/android">
-
-<item android:id="@+id/m_backlight_off" android:title="@string/p_backlight_off"></item>
-<item android:title="@string/p_backlight_dim" android:id="@+id/m_backlight_dim"></item>
-<item android:title="@string/p_backlight_bright" android:id="@+id/m_backlight_bright"></item>
-</menu>

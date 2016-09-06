@@ -1,28 +1,29 @@
 package ch.bailu.aat.views;
 
-import android.app.Activity;
 import android.view.View;
 import ch.bailu.aat.helpers.AppLayout;
+import ch.bailu.aat.menus.OptionsMenu;
+import ch.bailu.aat.services.ServiceContext;
 
 public class MainControlBar extends ControlBar {
 
     private final BusyButton menu;
     
-    public MainControlBar(final Activity context) {
+    public MainControlBar(final ServiceContext context) {
         this(context, DEFAULT_VISIBLE_BUTTON_COUNT);
         
     }
     
     
-    public MainControlBar(final Activity context, int button) {
-        super(context, AppLayout.getOrientationAlongSmallSide(context), button);
-        menu = new BusyButton(context, ch.bailu.aat.R.drawable.open_menu_inverse);
+    public MainControlBar(final ServiceContext scontext, int button) {
+        super(scontext.getContext(), AppLayout.getOrientationAlongSmallSide(scontext.getContext()), button);
+        menu = new BusyButton(scontext.getContext(), ch.bailu.aat.R.drawable.open_menu_inverse);
         this.addView(menu);
         menu.setOnClickListener(new OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                context.openOptionsMenu();
+                new OptionsMenu(scontext).showAsPopup(getContext(), menu);
             }});
         
     }

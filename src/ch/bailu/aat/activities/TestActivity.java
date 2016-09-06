@@ -176,7 +176,7 @@ public class TestActivity extends AbsDispatcher implements OnClickListener {
 
 
     private ControlBar createButtonBar() {
-        final ControlBar bar = new MainControlBar(this);
+        final ControlBar bar = new MainControlBar(getServiceContext());
 
         multiCycleP = bar.addImageButton(R.drawable.go_previous_inverse);
         multiCycleN = bar.addImageButton(R.drawable.go_next_inverse);

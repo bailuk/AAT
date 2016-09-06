@@ -77,7 +77,7 @@ public class NodeDetailActivity extends AbsDispatcher implements OnClickListener
     
 
     private ControlBar createButtonBar() {
-        ControlBar bar = new MainControlBar(this);
+        ControlBar bar = new MainControlBar(getServiceContext());
 
         previousNode =  bar.addImageButton(R.drawable.go_up_inverse);
         nextNode = bar.addImageButton(R.drawable.go_down_inverse);

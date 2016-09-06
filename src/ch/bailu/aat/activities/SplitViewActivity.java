@@ -130,7 +130,7 @@ public class SplitViewActivity extends AbsDispatcher implements OnClickListener{
 
 
     private ControlBar createButtonBar() {
-        ControlBar bar = new MainControlBar(this);
+        ControlBar bar = new MainControlBar(getServiceContext());
 
         activityCycle = bar.addImageButton(R.drawable.go_down_inverse);
         multiCycle = bar.addImageButton(R.drawable.go_next_inverse);

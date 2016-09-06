@@ -4,26 +4,21 @@ import java.io.File;
 import java.io.IOException;
 
 import android.app.Activity;
-import android.view.ContextMenu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.PopupMenu;
-import android.widget.PopupMenu.OnMenuItemClickListener;
 import ch.bailu.aat.R;
 import ch.bailu.aat.activities.AbsServiceLink;
+import ch.bailu.aat.menus.FileMenu;
 import ch.bailu.aat.preferences.AddOverlayDialog;
 import ch.bailu.aat.preferences.SolidDirectory;
 import ch.bailu.aat.preferences.SolidMockLocationFile;
-import ch.bailu.aat.providers.GpxProvider;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.directory.Iterator;
 
-public class FileAction  implements OnMenuItemClickListener {
-    final File file;
-    final Activity activity;
-    final ServiceContext scontext;
+public class FileAction   {
+    private final File file;
+    private final Activity activity;
+    private final ServiceContext scontext;
 
 
     public FileAction(AbsServiceLink l, Iterator iterator) {
@@ -38,59 +33,7 @@ public class FileAction  implements OnMenuItemClickListener {
     }
 
 
-    public void showPopupMenu(View v) {
-        final PopupMenu popup = new PopupMenu(activity, v);
-        final MenuInflater inflater = popup.getMenuInflater();
-
-        inflater.inflate(R.menu.contextmenu, popup.getMenu());
-        popup.setOnMenuItemClickListener(this);
-        popup.show();
-    }
-
-
-    public void createFileMenu(ContextMenu menu) {
-        if (activity != null) {
-            activity.getMenuInflater().inflate(R.menu.contextmenu, menu);
-            menu.setHeaderTitle(file.getName());
-        }
-    }
-
-
-    @Override
-    public boolean onMenuItemClick(MenuItem item) {
-        if (item.getItemId()== R.id.m_file_delete) {
-            delete();
-
-        } else if (item.getItemId() == R.id.m_file_reload) {
-            reloadPreview();
-
-        } else if (item.getItemId() == R.id.m_file_rename) {
-            rename();
-
-        } else if (item.getItemId() == R.id.m_file_overlay) {
-            useAsOverlay();
-
-
-        } else if (item.getItemId() == R.id.m_file_mock) {
-            useForMockLocation();
-
-        } else if (item.getItemId() == R.id.m_file_send) {
-            sendTo();
-
-        } else if (item.getItemId() == R.id.m_file_view) {
-            view();
-
-        } else if (item.getItemId() == R.id.m_file_copy) {
-            copyTo();
-
-        } else  {
-            return false;
-        }
-        return true;
-
-    }
-
-
+  
     public void rescanDirectory() {
         if (file.getParent().equals(new SolidDirectory(activity).getValue())) {
             scontext.getDirectoryService().rescan();
@@ -182,6 +125,16 @@ public class FileAction  implements OnMenuItemClickListener {
                 }
             }
         }
+    }
+
+
+    public CharSequence getName() {
+        return file.getName();
+    }
+
+
+    public void showPopupMenu(View v) {
+        new FileMenu(this).showAsPopup(activity, v);
     }
 
 }

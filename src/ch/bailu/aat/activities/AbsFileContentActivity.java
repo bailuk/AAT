@@ -28,6 +28,7 @@ import ch.bailu.aat.dispatcher.OverlaySource;
 import ch.bailu.aat.dispatcher.TrackerSource;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.helpers.AppLayout;
+import ch.bailu.aat.menus.FileMenu;
 import ch.bailu.aat.services.editor.EditorHelper;
 import ch.bailu.aat.views.BusyButton;
 import ch.bailu.aat.views.ContentView;
@@ -84,7 +85,7 @@ public class AbsFileContentActivity extends AbsDispatcher implements OnClickList
 
 
     private ControlBar createButtonBar() {
-        MainControlBar bar = new MainControlBar(this);
+        MainControlBar bar = new MainControlBar(getServiceContext());
 
         nextView = bar.addImageButton(R.drawable.go_next_inverse);
         previousFile =  bar.addImageButton(R.drawable.go_up_inverse);
@@ -206,7 +207,7 @@ public class AbsFileContentActivity extends AbsDispatcher implements OnClickList
             switchFile(v);
             
         } else if (v == fileOperation) {
-            currentFile.fileAction(this).showPopupMenu(v);
+            new FileMenu(currentFile.fileAction(this)).showAsPopup(this, v);
         }
 
     }

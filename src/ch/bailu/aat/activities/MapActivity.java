@@ -11,6 +11,7 @@ import android.view.View.OnClickListener;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import ch.bailu.aat.R;
+import ch.bailu.aat.coordinates.Coordinates;
 import ch.bailu.aat.description.DescriptionInterface;
 import ch.bailu.aat.dispatcher.ContentDispatcher;
 import ch.bailu.aat.dispatcher.ContentSource;
@@ -70,19 +71,13 @@ public class MapActivity extends AbsDispatcher implements OnClickListener{
 
     private void setMapCenterFromIntent() {
         Intent intent = getIntent();
-        
         Uri uri = intent.getData();
         
         if (intent.getAction()==Intent.ACTION_VIEW && uri != null) {
-            String s = uri.toString();
+            GeoPoint geo = new GeoPoint(0,0);
             
-            String[] uri_parts = s.split("[:,?#]");
-            
-            if (uri_parts.length>=3) {
-                float la = Float.parseFloat(uri_parts[1]);
-                float lo = Float.parseFloat(uri_parts[2]);
-                
-                map.map.getController().setCenter(new GeoPoint(la, lo));
+            if (Coordinates.stringToGeoPoint(uri.toString(), geo)) {
+                map.map.getController().setCenter(geo);
             }
         }
     }
@@ -147,7 +142,7 @@ public class MapActivity extends AbsDispatcher implements OnClickListener{
 
 
     private ControlBar createButtonBar() {
-        ControlBar bar = new MainControlBar(this);
+        ControlBar bar = new MainControlBar(getServiceContext());
 
         cycleButton = bar.addImageButton(R.drawable.go_down_inverse);
 

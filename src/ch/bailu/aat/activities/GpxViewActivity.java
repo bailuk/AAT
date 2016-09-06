@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 import ch.bailu.aat.R;
 import ch.bailu.aat.description.AverageSpeedDescription;
 import ch.bailu.aat.description.CaloriesDescription;
@@ -33,6 +32,7 @@ import ch.bailu.aat.dispatcher.TrackerSource;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.helpers.AppLayout;
 import ch.bailu.aat.helpers.FileAction;
+import ch.bailu.aat.menus.FileMenu;
 import ch.bailu.aat.views.BusyButton;
 import ch.bailu.aat.views.ContentView;
 import ch.bailu.aat.views.ControlBar;
@@ -101,7 +101,7 @@ public class GpxViewActivity extends AbsDispatcher implements OnClickListener {
 
 
     private ControlBar createButtonBar() {
-        MainControlBar bar = new MainControlBar(this);
+        MainControlBar bar = new MainControlBar(getServiceContext());
 
         nextView = bar.addImageButton(R.drawable.go_next_inverse);
         copyTo = bar.addImageButton(R.drawable.document_save_as_inverse);
@@ -194,7 +194,7 @@ public class GpxViewActivity extends AbsDispatcher implements OnClickListener {
             new FileAction(this, new File(fileID)).copyTo();
             
         } else if (v == fileOperation) {
-            new FileAction(this, new File(fileID)).showPopupMenu(v);
+            new FileMenu(new FileAction(this, new File(fileID))).showAsPopup(this, fileOperation);
         } 
 
     }
