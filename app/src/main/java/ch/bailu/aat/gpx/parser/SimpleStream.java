@@ -10,7 +10,7 @@ import java.io.StringReader;
 import java.io.UnsupportedEncodingException;
 
 import ch.bailu.aat.helpers.AppLog;
-import ch.bailu.aat.helpers.file.AbsContentAccess;
+import ch.bailu.aat.helpers.file.AbsAccess;
 
 
 public class SimpleStream implements Closeable {
@@ -21,7 +21,7 @@ public class SimpleStream implements Closeable {
     private final Reader reader;
     private int c=0;
 
-    public SimpleStream(AbsContentAccess file) throws FileNotFoundException, UnsupportedEncodingException {
+    public SimpleStream(AbsAccess file) throws FileNotFoundException, UnsupportedEncodingException {
         
         
         InputStream istream = file.open_r();//new FileInputStream(file);

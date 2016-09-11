@@ -8,7 +8,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 
-public class FileAccess extends AbsContentAccess {
+public class FileAccess extends AbsAccess {
     private final File file;
 
     

@@ -8,7 +8,7 @@ import java.io.OutputStream;
 import android.content.Context;
 import android.net.Uri;
 
-public class UriAccess extends AbsContentAccess {
+public class UriAccess extends AbsAccess {
     private final Uri uri;
     private final Context context;
 

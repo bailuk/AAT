@@ -9,7 +9,7 @@ import ch.bailu.aat.gpx.parser.SimpleGpxListReader;
 import ch.bailu.aat.gpx.writer.GpxListWriter;
 import ch.bailu.aat.helpers.AppDirectory;
 import ch.bailu.aat.helpers.AppLog;
-import ch.bailu.aat.helpers.file.AbsContentAccess;
+import ch.bailu.aat.helpers.file.AbsAccess;
 import ch.bailu.aat.helpers.file.FileAccess;
 
 
@@ -52,7 +52,7 @@ public class TrackCrashRestorer{
 
 
     
-    private GpxList readFile(AbsContentAccess remainingLogFile) throws IOException {
+    private GpxList readFile(AbsAccess remainingLogFile) throws IOException {
         SimpleGpxListReader reader = new SimpleGpxListReader(remainingLogFile);
         return reader.getGpxList();
     }

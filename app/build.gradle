@@ -4,6 +4,7 @@ android {
     compileSdkVersion 21
     buildToolsVersion "24.0.2"
 
+
     defaultConfig {
         applicationId "ch.bailu.aat"
         minSdkVersion 8
@@ -15,5 +16,10 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
         }
+    }
+
+    dexOptions {
+        incremental true
+        javaMaxHeapSize "1g"
     }
 }

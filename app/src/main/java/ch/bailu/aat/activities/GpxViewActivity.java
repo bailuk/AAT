@@ -85,7 +85,8 @@ public class GpxViewActivity extends AbsDispatcher implements OnClickListener {
         
         
         if (uri != null) {
-            fileID = uri.getEncodedPath();
+            fileID = uri.toString();
+
             AppLog.d(this, uri.toString());
             contentView = new ContentView(this);
             contentView.addView(createButtonBar());

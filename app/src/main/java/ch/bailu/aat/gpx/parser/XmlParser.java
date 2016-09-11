@@ -10,7 +10,7 @@ import android.util.SparseArray;
 import ch.bailu.aat.gpx.GpxAttributes;
 import ch.bailu.aat.gpx.GpxAttributes.Tag;
 import ch.bailu.aat.gpx.interfaces.GpxPointInterface;
-import ch.bailu.aat.helpers.file.AbsContentAccess;
+import ch.bailu.aat.helpers.file.AbsAccess;
 
 public class XmlParser implements Closeable, GpxPointInterface {
 
@@ -35,7 +35,7 @@ public class XmlParser implements Closeable, GpxPointInterface {
         public final SparseArray<GeoPoint> nodeMap = new SparseArray<GeoPoint>(50);
         public final ArrayList<GpxAttributes.Tag> tagList = new ArrayList<GpxAttributes.Tag>();
         
-        private ParserIO(AbsContentAccess file) throws IOException {
+        private ParserIO(AbsAccess file) throws IOException {
             stream = new SimpleStream(file);
 
             latitude = new DoubleParser(stream,6);
@@ -46,7 +46,7 @@ public class XmlParser implements Closeable, GpxPointInterface {
         }
     }
 
-    public XmlParser(AbsContentAccess file) throws IOException {
+    public XmlParser(AbsAccess file) throws IOException {
         io = new ParserIO(file);
     }
 

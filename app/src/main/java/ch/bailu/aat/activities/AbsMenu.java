@@ -19,7 +19,6 @@ implements DescriptionInterface{
         super.onCreate(savedInstanceState);
         
         menu = new OptionsMenu(getServiceContext());
-        new PreferenceLoadDefaults(this);
     }
 
     

@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 
 import android.content.Context;
+import android.net.Uri;
 import android.util.SparseArray;
 import ch.bailu.aat.coordinates.SrtmCoordinates;
 import ch.bailu.aat.gpx.GpxList;
@@ -16,6 +17,8 @@ import ch.bailu.aat.gpx.interfaces.GpxBigDeltaInterface;
 import ch.bailu.aat.gpx.linked_list.Node;
 import ch.bailu.aat.gpx.parser.GpxListReader;
 import ch.bailu.aat.helpers.AppBroadcaster;
+import ch.bailu.aat.helpers.AppLog;
+import ch.bailu.aat.helpers.file.AbsAccess;
 import ch.bailu.aat.helpers.file.UriAccess;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.background.FileHandle;
@@ -52,10 +55,10 @@ public class GpxObjectStatic extends GpxObject implements ElevationUpdaterClient
             public long bgOnProcess() {
                 locked=true;
                 try {
-                    final Context context = sc.getContext();
-                    final File file = new File(toString());
-                    
-                    GpxListReader reader = new GpxListReader(this, new UriAccess(context, file));
+                    final Context c = sc.getContext();
+                    final String id = toString();
+
+                    GpxListReader reader = new GpxListReader(this, AbsAccess.factory(c, id));
                     if (canContinue()) {
                         gpxList = reader.getGpxList();
                         ready=true;

@@ -1,5 +1,8 @@
 package ch.bailu.aat.helpers.file;
 
+import android.content.Context;
+import android.net.Uri;
+
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -10,10 +13,18 @@ import java.io.OutputStream;
 
 import ch.bailu.aat.helpers.AppLog;
 
-public abstract class AbsContentAccess {
+public abstract class AbsAccess {
     public abstract InputStream open_r() throws FileNotFoundException;
     public abstract OutputStream open_w() throws FileNotFoundException;
 
+
+    public static AbsAccess factory(Context c, String id) {
+        if (id.length()>0 && id.charAt(0) == '/') {
+            return new FileAccess(new File(id));
+        } else {
+            return new UriAccess(c, Uri.parse(id));
+        }
+    }
 
     public String contentToString() throws IOException {
         BufferedInputStream in = new BufferedInputStream(open_r());
