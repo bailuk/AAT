@@ -21,9 +21,9 @@ import ch.bailu.aat.dispatcher.ContentSource;
 import ch.bailu.aat.dispatcher.CurrentLocationSource;
 import ch.bailu.aat.dispatcher.IteratorSource;
 import ch.bailu.aat.dispatcher.OverlaySource;
-import ch.bailu.aat.helpers.AppFile;
 import ch.bailu.aat.helpers.AppTheme;
 import ch.bailu.aat.helpers.FileAction;
+import ch.bailu.aat.helpers.file.FileIntent;
 import ch.bailu.aat.menus.FileMenu;
 import ch.bailu.aat.preferences.SolidDirectory;
 import ch.bailu.aat.services.directory.Iterator;
@@ -251,7 +251,8 @@ public abstract class AbsGpxListActivity extends AbsDispatcher implements OnItem
         } else if (v == prevView) {
             multiView.setPrevious();
         } else if (v == fileManager) {
-            AppFile.viewDirectory(this, new File(sdirectory.getValue()));
+            File directory = new File(sdirectory.getValue()); 
+            new FileIntent(directory).view(this);
         }
 
     }

@@ -2,9 +2,15 @@ package ch.bailu.aat.menus;
 
 import org.osmdroid.util.BoundingBoxE6;
 
+import android.content.Context;
+import android.content.Intent;
+import android.view.ContextMenu;
+import android.view.Menu;
+import android.view.MenuItem;
 import ch.bailu.aat.R;
 import ch.bailu.aat.activities.ActivitySwitcher;
 import ch.bailu.aat.activities.NominatimActivity;
+import ch.bailu.aat.helpers.AppIntent;
 import ch.bailu.aat.preferences.CheckListDialog;
 import ch.bailu.aat.preferences.IndexListDialog;
 import ch.bailu.aat.preferences.SolidAutopause;
@@ -14,10 +20,6 @@ import ch.bailu.aat.preferences.SolidOverlayFileList;
 import ch.bailu.aat.preferences.SolidPreset;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.tracker.State;
-import android.content.Context;
-import android.view.ContextMenu;
-import android.view.Menu;
-import android.view.MenuItem;
 
 public class OptionsMenu extends AbsMenu {
     private MenuItem start, pause, backlight, autopause, map, overlays, nominatim;
@@ -92,7 +94,9 @@ public class OptionsMenu extends AbsMenu {
             new CheckListDialog(c,new SolidOverlayFileList(c));
 
         } else if (item == nominatim) {
-            ActivitySwitcher.start(c, NominatimActivity.class,new BoundingBoxE6(0,0,0,0));
+            Intent intent = new Intent();
+            AppIntent.setBoundingBox(intent, new BoundingBoxE6(0,0,0,0));
+            ActivitySwitcher.start(c, NominatimActivity.class);
 
 
         } else {

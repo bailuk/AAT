@@ -76,7 +76,8 @@ public class NavigationBarOverlay extends ControlBarOverlay implements GpxInform
              if (boundingCycle >= infoCache.size()) 
                  boundingCycle=0;
              
-             if (infoCache.valueAt(boundingCycle).getBoundingBox().hasBounding()) 
+             if (       infoCache.valueAt(boundingCycle).getBoundingBox().hasBounding() 
+                     || infoCache.valueAt(boundingCycle).getGpxList().getPointList().size()>0) 
                  return true;
          }
          return false;

@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 
 import ch.bailu.aat.gpx.parser.SimpleStream;
+import ch.bailu.aat.helpers.file.FileAccess;
 
 public abstract class AbsTextBackup  {
 
@@ -75,7 +76,7 @@ public abstract class AbsTextBackup  {
 
 
         private void readToBuffer(StringBuilder buffer) throws IOException  {
-            SimpleStream stream = new SimpleStream(file);
+            SimpleStream stream = new SimpleStream(new FileAccess(file));
 
             int count = MAX_FILE_SIZE;
 

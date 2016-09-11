@@ -2,7 +2,7 @@ package ch.bailu.aat.services.cache;
 
 import android.content.Intent;
 import android.util.SparseArray;
-import ch.bailu.aat.helpers.AppBroadcaster;
+import ch.bailu.aat.helpers.AppIntent;
 import ch.bailu.aat.helpers.AppLog;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.cache.CacheService.SelfOn;
@@ -119,7 +119,7 @@ public class ObjectTable {
 
 
     private ObjectHandle getHandle(Intent intent) {
-        String string = AppBroadcaster.getFile(intent);
+        String string = AppIntent.getFile(intent);
         Container c = table.get(string.hashCode());
 
         if (c == null) {

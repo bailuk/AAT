@@ -10,6 +10,7 @@ import android.content.Context;
 import android.content.Intent;
 import ch.bailu.aat.helpers.AppBroadcaster;
 import ch.bailu.aat.helpers.AppDirectory;
+import ch.bailu.aat.helpers.AppIntent;
 import ch.bailu.aat.helpers.AppLog;
 import ch.bailu.aat.osm_features.MapFeaturesPreparser;
 import ch.bailu.aat.services.ServiceContext;
@@ -41,7 +42,7 @@ public class MapFeaturesDownloader implements Closeable {
     private final BroadcastReceiver  onFileDownloaded = new BroadcastReceiver () {
         @Override
         public void onReceive(Context context, Intent intent) {
-            state.ping(AppBroadcaster.getUrl(intent));
+            state.ping(AppIntent.getUrl(intent));
         }
     };
 

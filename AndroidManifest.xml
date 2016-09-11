@@ -52,11 +52,59 @@
             android:screenOrientation="portrait" >
         </activity>
         
-        <activity
+       <activity
             android:name="ch.bailu.aat.activities.GpxViewActivity"
             android:screenOrientation="portrait" >
-        </activity>
+            <!-- Reference: http://stackoverflow.com/questions/1733195/android-intent-filter-for-a-particular-file-extension -->
+
+            <!-- Files from attachement / webbrowser ... -->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:mimeType="application/gpx+xml" />
+                <data android:scheme="content" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="content" />
+                <data android:mimeType="*/*" />
+                <data android:pathPattern=".*\\.gpx" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="content" />
+                <data android:mimeType="*/*" />
+                <data android:pathPattern=".*\\.osm" />
+            </intent-filter>
+
+
+            <!-- Files on filesystem -->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="file" />
+                <data android:mimeType="*/*" />
+                <data android:pathPattern=".*\\.gpx" />
+                <data android:host="*" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="file" />
+                <data android:mimeType="*/*" />
+                <data android:pathPattern=".*\\.osm" />
+                <data android:host="*" />
+            </intent-filter>
         
+            
+        </activity>
         
         <activity
             android:name="ch.bailu.aat.activities.TrackerActivity"
@@ -105,6 +153,7 @@
         </activity>
         <activity android:name="ch.bailu.aat.activities.HtmlViewActivity" >
         </activity>
+
 
         <service android:name="ch.bailu.aat.services.OneService" >
         </service>

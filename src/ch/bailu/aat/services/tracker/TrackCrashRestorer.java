@@ -9,6 +9,8 @@ import ch.bailu.aat.gpx.parser.SimpleGpxListReader;
 import ch.bailu.aat.gpx.writer.GpxListWriter;
 import ch.bailu.aat.helpers.AppDirectory;
 import ch.bailu.aat.helpers.AppLog;
+import ch.bailu.aat.helpers.file.AbsContentAccess;
+import ch.bailu.aat.helpers.file.FileAccess;
 
 
 public class TrackCrashRestorer{
@@ -23,7 +25,7 @@ public class TrackCrashRestorer{
 
         if (source.exists()) {
             
-            GpxList track = readFile(source);
+            GpxList track = readFile(new FileAccess(source));
             if (track.getPointList().size() > TrackLogger.MIN_TRACKPOINTS) { 
                 AppLog.i(context, "Restore track*");                
         
@@ -50,7 +52,7 @@ public class TrackCrashRestorer{
 
 
     
-    private GpxList readFile(File remainingLogFile) throws IOException {
+    private GpxList readFile(AbsContentAccess remainingLogFile) throws IOException {
         SimpleGpxListReader reader = new SimpleGpxListReader(remainingLogFile);
         return reader.getGpxList();
     }

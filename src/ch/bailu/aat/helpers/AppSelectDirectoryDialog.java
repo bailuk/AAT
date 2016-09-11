@@ -3,11 +3,11 @@ package ch.bailu.aat.helpers;
 import java.io.File;
 import java.io.IOException;
 
-import ch.bailu.aat.R;
-
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import ch.bailu.aat.R;
+import ch.bailu.aat.helpers.file.FileUI;
 
 public class AppSelectDirectoryDialog  implements  DialogInterface.OnClickListener {
     private final File file;
@@ -47,7 +47,7 @@ public class AppSelectDirectoryDialog  implements  DialogInterface.OnClickListen
     @Override
     public void onClick(DialogInterface dialog, int i) {
         try {
-            AppFile.copyTo(context, file, directories[i]);
+            new FileUI(file).copyTo(context, directories[i]);
         } catch (Exception e) {
             AppLog.e(context, e);
         }

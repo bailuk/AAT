@@ -7,8 +7,8 @@ import org.osmdroid.util.BoundingBoxE6;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import ch.bailu.aat.helpers.AppBroadcaster;
 import ch.bailu.aat.R;
+import ch.bailu.aat.helpers.AppIntent;
 
 public class ActivitySwitcher {
     public final static ActivitySwitcher list[] = {
@@ -53,7 +53,7 @@ public class ActivitySwitcher {
     public static void start(Context context, Class<?> activityClass, String string) {
         Intent intent = new Intent();
 
-        AppBroadcaster.setFile(intent, string);
+        AppIntent.setFile(intent, string);
         start(context, activityClass, intent);
     }
 
@@ -63,19 +63,12 @@ public class ActivitySwitcher {
     public static void start(Context context, Class<?> activityClass, File file) {
         Intent intent = new Intent();
 
-        AppBroadcaster.setFile(intent, file.getAbsolutePath());
+        AppIntent.setFile(intent, file.getAbsolutePath());
         start(context, activityClass, intent);
     }
 
 
-    public static void start(Context context, Class<?> activityClass, BoundingBoxE6 box) {
-        Intent intent = new Intent();
-        
-        AppBroadcaster.setBoundingBox(intent, box);
-        start(context, activityClass, intent);
-    }
-    
-    
+
     
     public static void start(Context context, Class<?> activityClass, Intent intent) {
         intent.setClass(context, activityClass); 
@@ -98,4 +91,12 @@ public class ActivitySwitcher {
             }
         }
     }
+
+    public static void start(Context context, Class<?> a, BoundingBoxE6 box) {
+        Intent intent = new Intent();
+        AppIntent.setBoundingBox(intent, box);
+        start(context, a, intent);
+        
+    }
+
 }

@@ -7,6 +7,7 @@ import android.content.Context;
 import ch.bailu.aat.gpx.GpxList;
 import ch.bailu.aat.gpx.parser.SimpleGpxListReader;
 import ch.bailu.aat.gpx.writer.GpxListWriter;
+import ch.bailu.aat.helpers.file.FileAccess;
 import ch.bailu.aat.preferences.SolidMockLocationFile;
 import ch.bailu.aat.preferences.SolidString;
 
@@ -42,15 +43,15 @@ public class TestGpx extends UnitTest {
 
 
     public void testFile(File fileA, File fileB) throws IOException, AssertionError {
-            GpxList listA= new SimpleGpxListReader(fileA).getGpxList();
-            GpxList listB=new SimpleGpxListReader(fileB).getGpxList();
+            GpxList listA= new SimpleGpxListReader(new FileAccess(fileA)).getGpxList();
+            GpxList listB=new SimpleGpxListReader(new FileAccess(fileB)).getGpxList();
             
             File fileCopy = new File(getTestDirectory(getContext()),"test_copy.gpx");
             GpxListWriter writer = new GpxListWriter(listA, fileCopy);
             writer.flushOutput();
             writer.close();
             
-            GpxList listC=new SimpleGpxListReader(fileCopy).getGpxList();
+            GpxList listC=new SimpleGpxListReader(new FileAccess(fileCopy)).getGpxList();
             
 
             assertListEquals(listA, listB);

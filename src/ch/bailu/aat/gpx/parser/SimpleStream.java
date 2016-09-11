@@ -1,8 +1,6 @@
 package ch.bailu.aat.gpx.parser;
 import java.io.BufferedReader;
 import java.io.Closeable;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -12,6 +10,7 @@ import java.io.StringReader;
 import java.io.UnsupportedEncodingException;
 
 import ch.bailu.aat.helpers.AppLog;
+import ch.bailu.aat.helpers.file.AbsContentAccess;
 
 
 public class SimpleStream implements Closeable {
@@ -22,10 +21,10 @@ public class SimpleStream implements Closeable {
     private final Reader reader;
     private int c=0;
 
-    public SimpleStream(File file) throws FileNotFoundException, UnsupportedEncodingException {
+    public SimpleStream(AbsContentAccess file) throws FileNotFoundException, UnsupportedEncodingException {
         
         
-        InputStream istream = new FileInputStream(file);
+        InputStream istream = file.open_r();//new FileInputStream(file);
         Reader ireader = new InputStreamReader(istream, CHARSET);
         reader = new BufferedReader(ireader, BUFFER_BYTES);            
     }

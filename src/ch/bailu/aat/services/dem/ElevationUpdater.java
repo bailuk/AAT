@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.util.SparseArray;
 import ch.bailu.aat.coordinates.SrtmCoordinates;
 import ch.bailu.aat.helpers.AppBroadcaster;
+import ch.bailu.aat.helpers.AppIntent;
 import ch.bailu.aat.services.ServiceContext;
 
 
@@ -34,7 +35,7 @@ public class ElevationUpdater implements Closeable, ElevationProvider{
     private BroadcastReceiver onRequestElevationUpdate = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            String id = AppBroadcaster.getFile(intent);
+            String id = AppIntent.getFile(intent);
             
             addObject(id);
             updateObject(id);
@@ -46,7 +47,7 @@ public class ElevationUpdater implements Closeable, ElevationProvider{
     private BroadcastReceiver onFileDownloaded = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            String id = AppBroadcaster.getFile(intent);
+            String id = AppIntent.getFile(intent);
             Dem3Tile tile = tiles.get(id);
             
             if (tile != null) {
@@ -58,7 +59,7 @@ public class ElevationUpdater implements Closeable, ElevationProvider{
     private BroadcastReceiver onFileChanged = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            String id = AppBroadcaster.getFile(intent);
+            String id = AppIntent.getFile(intent);
             
             if (tiles.have(id)){
                 updateObjects();

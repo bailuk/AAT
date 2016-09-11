@@ -1,9 +1,9 @@
 package ch.bailu.aat.services.icons;
 
-import java.io.File;
 import java.io.IOException;
 
 import ch.bailu.aat.gpx.parser.SimpleStream;
+import ch.bailu.aat.helpers.file.AbsContentAccess;
 
 public class IconMapParser {
     private final static int ICON=0, KEY=1, VALUE=2, END=3, MAX=4; 
@@ -13,7 +13,7 @@ public class IconMapParser {
     
     private final StringBuilder buffer = new StringBuilder();
     
-    IconMapParser(File file, IconMap map) throws IOException {
+    IconMapParser(AbsContentAccess file, IconMap map) throws IOException {
         SimpleStream stream = new SimpleStream(file);
 
         stream.read();

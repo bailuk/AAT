@@ -1,8 +1,8 @@
 package ch.bailu.aat.activities;
 
-import ch.bailu.aat.helpers.AppBroadcaster;
 import android.content.Intent;
 import android.os.Bundle;
+import ch.bailu.aat.helpers.AppIntent;
 
 public class HtmlViewActivity extends AbsHtmlViewActivity {
 
@@ -17,7 +17,7 @@ public class HtmlViewActivity extends AbsHtmlViewActivity {
     @Override
     public String getText() {
         Intent intent = getIntent();
-        return AppBroadcaster.getFile(intent);
+        return AppIntent.getFile(intent);
     }
 
     

@@ -24,9 +24,9 @@ import ch.bailu.aat.activities.HtmlViewActivity;
 import ch.bailu.aat.activities.MapFeatureListActivity;
 import ch.bailu.aat.helpers.AppBroadcaster;
 import ch.bailu.aat.helpers.AppDirectory;
-import ch.bailu.aat.helpers.AppFile;
 import ch.bailu.aat.helpers.AppLog;
 import ch.bailu.aat.helpers.AppTheme;
+import ch.bailu.aat.helpers.file.FileAccess;
 import ch.bailu.aat.osm_features.MapFeaturesParser;
 import ch.bailu.aat.osm_features.MapFeaturesParser.OnHaveFeature;
 import ch.bailu.aat.services.ServiceContext;
@@ -48,7 +48,7 @@ OnHaveFeature {
     private final ArrayList<ListData> data = new ArrayList<ListData>();
 
 
-    public FeaturesList(ServiceContext sc, File file) {
+    public FeaturesList(ServiceContext sc, FileAccess file) {
         this(sc);
 
         loadList(file, sc.getIconMapService());
@@ -89,7 +89,7 @@ OnHaveFeature {
 
 
 
-    public void loadList(File file, IconMapService.Self map) {
+    public void loadList(FileAccess file, IconMapService.Self map) {
         try {
             new MapFeaturesParser(this, file);
             if (observer != null) observer.onChanged();
@@ -204,7 +204,7 @@ OnHaveFeature {
                 File file;
                 try {
                     file = new File(AppDirectory.getDataDirectory(getContext(), AppDirectory.DIR_OSM_FEATURES_PREPARSED),d.name.toString());
-                    String content = AppFile.contentToString(file);
+                    String content = new FileAccess(file).contentToString();
                     ActivitySwitcher.start(getContext(), HtmlViewActivity.class, content);
 
                 } catch (Exception e) {

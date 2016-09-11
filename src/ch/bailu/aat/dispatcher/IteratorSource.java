@@ -6,6 +6,7 @@ import android.content.Intent;
 import ch.bailu.aat.activities.AbsServiceLink;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.helpers.AppBroadcaster;
+import ch.bailu.aat.helpers.AppIntent;
 import ch.bailu.aat.helpers.AppLog;
 import ch.bailu.aat.helpers.FileAction;
 import ch.bailu.aat.preferences.SolidDirectory;
@@ -107,7 +108,7 @@ public abstract class IteratorSource extends ContentSource implements OnCursorCh
         private final BroadcastReceiver  onChangedInCache = new BroadcastReceiver () {
             @Override
             public void onReceive(Context context, Intent intent) {
-                if (AppBroadcaster.hasFile(intent, getInfo().getPath())) {
+                if (AppIntent.hasFile(intent, getInfo().getPath())) {
                     forceUpdate();
                 }
             }

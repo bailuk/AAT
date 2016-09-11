@@ -16,6 +16,7 @@ import ch.bailu.aat.gpx.interfaces.GpxBigDeltaInterface;
 import ch.bailu.aat.gpx.linked_list.Node;
 import ch.bailu.aat.gpx.parser.GpxListReader;
 import ch.bailu.aat.helpers.AppBroadcaster;
+import ch.bailu.aat.helpers.file.UriAccess;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.background.FileHandle;
 import ch.bailu.aat.services.dem.Dem3Tile;
@@ -42,7 +43,7 @@ public class GpxObjectStatic extends GpxObject implements ElevationUpdaterClient
     }
     
 
-    private void reload(ServiceContext sc) {
+    private void reload(final ServiceContext sc) {
         final FileHandle f = new FileHandle(toString()) {
 
             private boolean locked=false;
@@ -51,7 +52,10 @@ public class GpxObjectStatic extends GpxObject implements ElevationUpdaterClient
             public long bgOnProcess() {
                 locked=true;
                 try {
-                    GpxListReader reader = new GpxListReader(this, new File(toString()));
+                    final Context context = sc.getContext();
+                    final File file = new File(toString());
+                    
+                    GpxListReader reader = new GpxListReader(this, new UriAccess(context, file));
                     if (canContinue()) {
                         gpxList = reader.getGpxList();
                         ready=true;

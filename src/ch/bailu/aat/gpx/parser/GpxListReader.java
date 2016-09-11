@@ -1,11 +1,11 @@
 package ch.bailu.aat.gpx.parser;
 
-import java.io.File;
 import java.io.IOException;
 
 import ch.bailu.aat.gpx.GpxBigDelta;
 import ch.bailu.aat.gpx.GpxList;
 import ch.bailu.aat.gpx.GpxPoint;
+import ch.bailu.aat.helpers.file.AbsContentAccess;
 import ch.bailu.aat.services.background.ThreadControl;
 
 public class GpxListReader {
@@ -20,7 +20,7 @@ public class GpxListReader {
     
     private XmlParser parser;
 
-    public GpxListReader (ThreadControl c, File f) throws IOException {
+    public GpxListReader (ThreadControl c, AbsContentAccess f) throws IOException {
         threadControl=c;
 
         parser = new XmlParser(f);

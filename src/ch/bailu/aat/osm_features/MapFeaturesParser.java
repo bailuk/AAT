@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 
 import ch.bailu.aat.gpx.parser.SimpleStream;
+import ch.bailu.aat.helpers.file.FileAccess;
 
 public class MapFeaturesParser {
     
@@ -21,7 +22,7 @@ public class MapFeaturesParser {
     }
     
     
-    public MapFeaturesParser(OnHaveFeature hf, File file) throws IOException {
+    public MapFeaturesParser(OnHaveFeature hf, FileAccess file) throws IOException {
         haveFeature = hf;
         
         parseFeatures(file);
@@ -34,7 +35,7 @@ public class MapFeaturesParser {
        
         for (int i=0; i< files.length; i++) {
             if (files[i].exists() && files[i].canRead() && files[i].isFile()) {
-                parseSummary(files[i]);
+                parseSummary(new FileAccess(files[i]));
             }
         }
     }
@@ -62,7 +63,7 @@ public class MapFeaturesParser {
     
 
     
-    private void parseSummary(File file) throws IOException {
+    private void parseSummary(FileAccess file) throws IOException {
         SimpleStream in = new SimpleStream(file);
         
         parseSummary(in);
@@ -72,7 +73,7 @@ public class MapFeaturesParser {
     }
     
     
-    private void parseFeatures(File file) throws IOException {
+    private void parseFeatures(FileAccess file) throws IOException {
         SimpleStream in = new SimpleStream(file); 
 
         parseSummary(in);

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.helpers.AppBroadcaster;
+import ch.bailu.aat.helpers.AppIntent;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.editor.EditorHelper;
 
@@ -23,7 +24,7 @@ public class EditorSource extends ContentSource {
         private void update(Intent intent, GpxInformation info) {
             String id=info.getPath();
             
-            if (AppBroadcaster.hasFile(intent, id)) {
+            if (AppIntent.hasFile(intent, id)) {
                 forceUpdate();
             }
         }

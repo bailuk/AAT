@@ -12,6 +12,7 @@ import ch.bailu.aat.gpx.interfaces.GpxBigDeltaInterface;
 import ch.bailu.aat.gpx.parser.SimpleGpxListReader;
 import ch.bailu.aat.helpers.AppLog;
 import ch.bailu.aat.helpers.Timer;
+import ch.bailu.aat.helpers.file.FileAccess;
 import ch.bailu.aat.preferences.SolidMockLocationFile;
 
 public class MockLocation extends LocationStackChainedItem implements Runnable, GpxInformation.ID{
@@ -31,7 +32,7 @@ public class MockLocation extends LocationStackChainedItem implements Runnable, 
         
         try {
         	File file = new File(new SolidMockLocationFile(c).getValue());
-        	mockData = new SimpleGpxListReader(file).getGpxList();
+        	mockData = new SimpleGpxListReader(new FileAccess(file)).getGpxList();
             
             timer.kick();
             sendState(STATE_WAIT);

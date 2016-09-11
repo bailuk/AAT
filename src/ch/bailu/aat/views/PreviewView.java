@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.widget.ImageView;
 import ch.bailu.aat.helpers.AppBroadcaster;
 import ch.bailu.aat.helpers.AppDirectory;
+import ch.bailu.aat.helpers.AppIntent;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.cache.ImageObject;
 import ch.bailu.aat.services.cache.ObjectHandle;
@@ -112,7 +113,7 @@ public class PreviewView extends ImageView {
         public void onReceive(Context context, Intent intent) {
             final String file = imageHandle.toString();
 
-            if (AppBroadcaster.hasFile(intent, file)) displayImage();
+            if (AppIntent.hasFile(intent, file)) displayImage();
         }
     };
 }

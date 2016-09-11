@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import ch.bailu.aat.helpers.AppBroadcaster;
+import ch.bailu.aat.helpers.AppIntent;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.cache.TileObject;
 import ch.bailu.aat.services.cache.TileStackObject;
@@ -23,7 +24,7 @@ public class CachedTileProvider extends AbsOsmTileProvider {
 
         @Override
         public void onReceive(Context context, Intent intent) {
-            String string = AppBroadcaster.getFile(intent);
+            String string = AppIntent.getFile(intent);
             if (cache.get((string)) != null) {
                 handler.sendEmptyMessage(MapTile.MAPTILE_SUCCESS_ID);
             }

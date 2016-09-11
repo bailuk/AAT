@@ -11,6 +11,7 @@ import ch.bailu.aat.gpx.GpxSegmentNode;
 import ch.bailu.aat.gpx.interfaces.GpxType;
 import ch.bailu.aat.helpers.AppDirectory;
 import ch.bailu.aat.helpers.AppLog;
+import ch.bailu.aat.helpers.file.FileAccess;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.VirtualService;
 
@@ -64,7 +65,7 @@ public class IconMapService extends VirtualService {
 
             if (mapFile.exists()) {
                 try {
-                    new IconMapParser(mapFile, map);
+                    new IconMapParser(new FileAccess(mapFile), map);
                 } catch (IOException e) {
                     AppLog.e(this, e);
                 }

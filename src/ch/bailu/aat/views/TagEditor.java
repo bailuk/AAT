@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import ch.bailu.aat.helpers.AbsTextBackup;
 import ch.bailu.aat.helpers.AppBroadcaster;
+import ch.bailu.aat.helpers.AppIntent;
 import ch.bailu.aat.helpers.AppLayout;
 import ch.bailu.aat.helpers.AppLog;
 
@@ -66,7 +67,7 @@ public class TagEditor extends LinearLayout {
 
         @Override
         public void onReceive(Context context, Intent intent) {
-            String text = AppBroadcaster.getFile(intent);
+            String text = AppIntent.getFile(intent);
             
             if (text != null) {
                 editor.append("\n");
@@ -116,5 +117,9 @@ public class TagEditor extends LinearLayout {
     
     public void erase() {
         editor.setText("");
+    }
+
+    public void setText(String query) {
+        editor.setText(query);
     }
 }

@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.SparseArray;
 import ch.bailu.aat.helpers.AppBroadcaster;
+import ch.bailu.aat.helpers.AppIntent;
 import ch.bailu.aat.services.ServiceContext;
 
 public class ObjectBroadcaster implements Closeable {
@@ -56,7 +57,7 @@ public class ObjectBroadcaster implements Closeable {
         @Override
         public void onReceive(Context context, Intent intent) {
             for (int i=0; i<table.size(); i++) {
-                table.valueAt(i).onChanged(AppBroadcaster.getFile(intent), serviceContext);
+                table.valueAt(i).onChanged(AppIntent.getFile(intent), serviceContext);
             }
         }
     };
@@ -66,7 +67,7 @@ public class ObjectBroadcaster implements Closeable {
         @Override
         public void onReceive(Context context, Intent intent) {
             for (int i=0; i<table.size(); i++) {
-                table.valueAt(i).onDownloaded(AppBroadcaster.getFile(intent),AppBroadcaster.getUrl(intent), serviceContext);
+                table.valueAt(i).onDownloaded(AppIntent.getFile(intent),AppIntent.getUrl(intent), serviceContext);
             }
         }
     };

@@ -1,6 +1,7 @@
 package ch.bailu.aat.activities;
 
 
+import org.osmdroid.util.BoundingBoxE6;
 import org.osmdroid.util.GeoPoint;
 
 import android.content.Intent;
@@ -20,6 +21,8 @@ import ch.bailu.aat.dispatcher.EditorSource;
 import ch.bailu.aat.dispatcher.OverlaySource;
 import ch.bailu.aat.dispatcher.TrackerSource;
 import ch.bailu.aat.gpx.GpxInformation;
+import ch.bailu.aat.helpers.AppIntent;
+import ch.bailu.aat.helpers.AppLog;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.editor.EditorHelper;
 import ch.bailu.aat.views.ContentView;
@@ -65,24 +68,42 @@ public class MapActivity extends AbsDispatcher implements OnClickListener{
         createDispatcher();
         
         
-        setMapCenterFromIntent();
+        handleIntent();
     }
 
 
-    private void setMapCenterFromIntent() {
+    private void handleIntent() {
         Intent intent = getIntent();
         Uri uri = intent.getData();
         
         if (intent.getAction()==Intent.ACTION_VIEW && uri != null) {
-            GeoPoint geo = new GeoPoint(0,0);
-            
-            if (Coordinates.stringToGeoPoint(uri.toString(), geo)) {
-                map.map.getController().setCenter(geo);
-            }
+            AppLog.d(uri, uri.toString());
+            setMapCenterFromUri(uri);
+            openQueryFromUri(uri);
         }
     }
 
+    private void setMapCenterFromUri(Uri uri) {
+        GeoPoint geo = new GeoPoint(0,0);
+        
+        if (Coordinates.stringToGeoPoint(uri.toString(), geo)) {
+            map.map.getController().setCenter(geo);
+        }
+    }
 
+    
+    private void openQueryFromUri(Uri uri) {
+        String query = AbsOsmApiActivity.queryFromUri(uri);
+
+        if (query != null) {
+            Intent intent = new Intent();
+            AppIntent.setBoundingBox(intent, new BoundingBoxE6(0,0,0,0));
+            intent.setData(uri);
+            ActivitySwitcher.start(this, NominatimActivity.class, intent);
+        }
+    }
+    
+    
     private OsmInteractiveView createMap() {
         final ServiceContext sc=getServiceContext();
         final OsmInteractiveView map=new OsmInteractiveView(sc, SOLID_KEY);

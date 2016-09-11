@@ -8,6 +8,7 @@ import org.osmdroid.util.BoundingBoxE6;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -22,6 +23,7 @@ import ch.bailu.aat.dispatcher.CustomFileSource;
 import ch.bailu.aat.helpers.AbsTextBackup;
 import ch.bailu.aat.helpers.AppBroadcaster;
 import ch.bailu.aat.helpers.AppDirectory;
+import ch.bailu.aat.helpers.AppIntent;
 import ch.bailu.aat.helpers.AppLog;
 import ch.bailu.aat.helpers.AppTheme;
 import ch.bailu.aat.helpers.OsmApiHelper;
@@ -40,34 +42,34 @@ import ch.bailu.aat.views.TagEditor;
 
 public abstract class AbsOsmApiActivity extends AbsDispatcher implements OnClickListener {
     private static final String SOLID_KEY=AbsOsmApiActivity.class.getSimpleName();
-    
+
 
     private TagEditor          tagEditor;
     private BusyButton         download;
     private View               erase;
     private View               saveCopy;
     private View               addLayer;
-    
+
     private NodeListView       list;
-    
+
     private OsmApiHelper       osmApi;
     private ProcessHandle      request=ProcessHandle.NULL;
-    
+
     private final LayoutParams layout= new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);;
-    
-    
+
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        
+
         try {
-            osmApi = createUrlGenerator(AppBroadcaster.getBoundingBox(getIntent()));
+            osmApi = createUrlGenerator(AppIntent.getBoundingBox(getIntent()));
             AppBroadcaster.register(this, onFileDownloaded, AppBroadcaster.FILE_CHANGED_ONDISK);
         } catch (Exception e) {
             AppLog.e(this,e);
         }
         setContentView(createContentView());
-        
+
         ContentSource[] source = new ContentSource[] {
                 new CustomFileSource(getServiceContext(),osmApi.getResultFile().toString()),};
 
@@ -77,14 +79,47 @@ public abstract class AbsOsmApiActivity extends AbsDispatcher implements OnClick
 
         setDispatcher(new ContentDispatcher(this,source, target));
 
+        setQueryTextFromIntent();
     }  
+
+    
+    private void setQueryTextFromIntent() {
+        String query = queryFromIntent(getIntent());
+        if (query != null) {
+            tagEditor.setText(query);
+        }
+    }
+
+
+    public static String queryFromIntent(Intent intent) {
+        Uri  uri = intent.getData();
+        if (uri != null) return queryFromUri(uri);
+        return null;
+    }
+
+
+    public static String queryFromUri(Uri uri) {
+
+        String query = uri.getEncodedQuery();
+        if (query != null) {
+            Uri n = Uri.parse("http://bailu.ch/query?"+uri.getEncodedQuery()); // we need a hierarchical url
+            String query_parameter = n.getQueryParameter("q");
+            if (query_parameter != null) {
+                query_parameter = query_parameter.replace('\n', ',');
+                return query_parameter;
+            }
+        }
+        return null;
+    }
+
+
 
     private LinearLayout createContentView()  {
         ContentView view = new ContentView(this);
         ControlBar bar = createControlBar();
         view.addView(bar, layout);        
-        
-        
+
+
         TextView urlLabel = new TextView(this);
         urlLabel.setText(osmApi.getUrlStart());
         view.addView(urlLabel, layout);
@@ -98,39 +133,39 @@ public abstract class AbsOsmApiActivity extends AbsDispatcher implements OnClick
         postLabel.setText(osmApi.getUrlEnd());
         view.addView(postLabel, layout);
         AppTheme.themify(postLabel);
-        
+
         list = new NodeListView(getServiceContext(),SOLID_KEY,
                 INFO_ID_FILEVIEW);
-        
-        
+
+
         view.addView(list,layout);
 
         return view;
     }
 
-    
+
     private ControlBar createControlBar() {
         ControlBar bar = new MainControlBar(getServiceContext(),6);      
-        
+
         download = new BusyButton(this, R.drawable.go_bottom_inverse);
-        
+
         bar.addView(download);
         download.setOnClickListener(this);
-        
+
         erase = bar.addImageButton(R.drawable.edit_clear_all_inverse);
         addLayer = bar.addImageButton(R.drawable.view_paged_inverse);
         saveCopy = bar.addImageButton(R.drawable.document_save_as_inverse);
 
-        
+
         ToolTip.set(download, R.string.tt_nominatim_query);
         ToolTip.set(erase, R.string.tt_nominatim_clear);
         ToolTip.set(addLayer, R.string.tt_nominatim_overlay);
         ToolTip.set(saveCopy, R.string.tt_nominatim_save);
-    
+
         addButtons(bar);
 
         bar.setOnClickListener1(this);
-        
+
 
         return bar;
     }
@@ -154,7 +189,7 @@ public abstract class AbsOsmApiActivity extends AbsDispatcher implements OnClick
             new AddOverlayDialog(this,osmApi.getResultFile());
         }
 
-        
+
     }
 
 
@@ -167,13 +202,13 @@ public abstract class AbsOsmApiActivity extends AbsDispatcher implements OnClick
 
             request.stopLoading();
             download.startWaiting();
-            
+
             request = new ApiQueryHandle(
                     osmApi.getUrl(query), 
                     osmApi.getResultFile(), 
                     query, 
                     osmApi.getQueryFile());
-            
+
             background.download(request);
 
         } catch (Exception e) {
@@ -189,14 +224,14 @@ public abstract class AbsOsmApiActivity extends AbsDispatcher implements OnClick
     private final BroadcastReceiver  onFileDownloaded = new BroadcastReceiver () {
         @Override
         public void onReceive(Context context, Intent intent) {
-            if (AppBroadcaster.hasUrl(intent, request.toString())) {
+            if (AppIntent.hasUrl(intent, request.toString())) {
                 download.stopWaiting();
                 request = ProcessHandle.NULL;
             }
         }
     };
 
-    
+
     private void saveCopy() {
         try {
             final File source = osmApi.getResultFile();
@@ -208,23 +243,23 @@ public abstract class AbsOsmApiActivity extends AbsDispatcher implements OnClick
                     AppBroadcaster.FILE_CHANGED_ONDISK, 
                     target.toString(), 
                     source.toString());
-            
+
         } catch (IOException e) {
             AppLog.e(this, e);
         }
     }
-    
+
 
     private File getOverlayFile() throws IOException {
         final String query = AbsTextBackup.read(osmApi.getQueryFile());
         final String prefix = OsmApiHelper.getFilePrefix(query);
         final String extension = osmApi.getFileExtension();
         final File directory = AppDirectory.getDataDirectory(this, AppDirectory.DIR_OVERLAY);
-        
+
         return AppDirectory.generateUniqueFilePath(directory, prefix, extension);
     }
-    
-    
+
+
 
 
     @Override
@@ -232,18 +267,18 @@ public abstract class AbsOsmApiActivity extends AbsDispatcher implements OnClick
         unregisterReceiver(onFileDownloaded);
         super.onDestroy();
     }
-    
-    
+
+
     private static class ApiQueryHandle extends DownloadHandle {
         private final String queryString;
         private final File queryFile;
-        
+
         public ApiQueryHandle(String source, File target, String qs, File qf) {
             super(source, target);
             queryString = qs;
             queryFile   = qf;
         }
-        
+
         @Override
         public long bgOnProcess() {
             long r=super.bgOnProcess();
@@ -254,11 +289,11 @@ public abstract class AbsOsmApiActivity extends AbsDispatcher implements OnClick
                     e.printStackTrace();
                 }
             }
-            
+
             return r;
         }
     }
-    
+
     @Override
     public void onServicesUp(boolean firstRun) {}
 

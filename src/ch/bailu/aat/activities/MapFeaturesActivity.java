@@ -10,6 +10,7 @@ import ch.bailu.aat.R;
 import ch.bailu.aat.helpers.AppBroadcaster;
 import ch.bailu.aat.helpers.AppDialog;
 import ch.bailu.aat.helpers.AppDirectory;
+import ch.bailu.aat.helpers.AppIntent;
 import ch.bailu.aat.helpers.AppLog;
 import ch.bailu.aat.helpers.AppTheme;
 import ch.bailu.aat.helpers.ToolTip;
@@ -93,7 +94,7 @@ public class MapFeaturesActivity extends AbsDispatcher implements OnClickListene
         @Override
         public void onReceive(Context context, Intent intent) {
             try {
-                if (AppBroadcaster.hasFile(intent, AppDirectory.getMapFeatureIndex(context).toString())) {
+                if (AppIntent.hasFile(intent, AppDirectory.getMapFeatureIndex(context).toString())) {
                     download.stopWaiting();
                     list.loadList();
                 }

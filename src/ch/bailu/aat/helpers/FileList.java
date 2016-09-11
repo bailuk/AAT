@@ -69,7 +69,7 @@ public class FileList {
         if (isIndexValid()) {
             return files[index];
         }
-        return AppFile.NULL_FILE;
+        return new File("/dev/null");
     }
     
     

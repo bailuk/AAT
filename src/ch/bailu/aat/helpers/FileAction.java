@@ -8,6 +8,8 @@ import android.view.View;
 import android.widget.EditText;
 import ch.bailu.aat.R;
 import ch.bailu.aat.activities.AbsServiceLink;
+import ch.bailu.aat.helpers.file.FileIntent;
+import ch.bailu.aat.helpers.file.FileUI;
 import ch.bailu.aat.menus.FileMenu;
 import ch.bailu.aat.preferences.AddOverlayDialog;
 import ch.bailu.aat.preferences.SolidDirectory;
@@ -77,17 +79,17 @@ public class FileAction   {
 
     
     public void view() {
-        AppFile.view(scontext.getContext(), file);
+        new FileIntent(file).view(scontext.getContext());
     }
     
     
     public void sendTo() {
-        AppFile.send(scontext.getContext(), file);
+        new FileIntent(file).send(scontext.getContext());
     }
 
     public void copyTo() {
         try {
-            AppFile.copyTo(scontext.getContext(), file);
+            new FileUI(file).copyTo(scontext.getContext());
         } catch (IOException e) {
             AppLog.e(scontext.getContext(), e);
         }

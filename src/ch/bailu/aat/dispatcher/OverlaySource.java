@@ -12,6 +12,7 @@ import ch.bailu.aat.coordinates.BoundingBox;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.GpxList;
 import ch.bailu.aat.helpers.AppBroadcaster;
+import ch.bailu.aat.helpers.AppIntent;
 import ch.bailu.aat.preferences.SolidOverlayFile;
 import ch.bailu.aat.preferences.SolidOverlayFileList;
 import ch.bailu.aat.services.ServiceContext;
@@ -83,7 +84,7 @@ public class OverlaySource extends ContentSource implements GpxInformation.ID {
         private final BroadcastReceiver  onFileProcessed = new BroadcastReceiver () {
             @Override
             public void onReceive(Context context, Intent intent) {
-                if (AppBroadcaster.hasFile(intent, handle.toString())) {
+                if (AppIntent.hasFile(intent, handle.toString())) {
                     initAndUpdateOverlay();
                 }
             }

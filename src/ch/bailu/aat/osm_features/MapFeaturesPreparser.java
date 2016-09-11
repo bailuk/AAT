@@ -11,6 +11,7 @@ import android.content.Context;
 import ch.bailu.aat.gpx.parser.SimpleStream;
 import ch.bailu.aat.helpers.AppBroadcaster;
 import ch.bailu.aat.helpers.AppDirectory;
+import ch.bailu.aat.helpers.file.FileAccess;
 import ch.bailu.aat.services.background.DownloadHandle;
 
 
@@ -37,7 +38,7 @@ public class MapFeaturesPreparser {
     
     
     public MapFeaturesPreparser(Context c) throws IOException {
-        in = new SimpleStream(AppDirectory.getMapFeatureIndex(c));
+        in = new SimpleStream(new FileAccess(AppDirectory.getMapFeatureIndex(c)));
         
         parseMapFeatures(c);
         AppBroadcaster.broadcast(c,

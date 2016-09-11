@@ -10,22 +10,23 @@ public abstract class Coordinates {
     public static boolean stringToGeoPoint(String src, GeoPoint dst) {
         String[] parts = src.split("[:,?#]");
 
-        int c=0;
+        int hit=0;
 
         double la=0, lo;
-        for (int x = 0; x < parts.length; x++) {
+        for (int x = 0; x < parts.length && hit < 2; x++) {
             try {
                 final double d = Double.parseDouble(parts[x]);
-                c++;
+                hit++;
 
-                if (c==1) {
+                if (hit==1) {
                     la = d;
-                } else if (c==2) {
+                } else if (hit==2) {
                     lo = d;
-
-                    dst.setLatitudeE6((int)(la*1E6));
-                    dst.setLongitudeE6((int)(lo*1E6));
-                    return true;
+                    if (lo != 0d && la !=0d) {
+                        dst.setLatitudeE6((int)(la*1E6));
+                        dst.setLongitudeE6((int)(lo*1E6));
+                        return true;
+                    }
                 }
 
             } catch (NumberFormatException  e) {
@@ -38,23 +39,23 @@ public abstract class Coordinates {
 
     public static String geoPointToGeoUri(IGeoPoint src) {
         StringBuilder b = new StringBuilder();
-        
+
         b.append("geo:");
         b.append(src.getLatitudeE6()/1e6d);
         b.append(',');
         b.append(src.getLongitudeE6()/1e6d);
-        
+
         return b.toString();
     }
 
 
     public static String geoPointToDescription(GeoPoint src) {
         StringBuilder b = new StringBuilder();
-        
+
         b.append("Coordinates:\nLatitude:");
         b.append(src.getLatitudeE6()/1e6d);
         b.append("Longitude:");
         b.append(src.getLongitudeE6()/1e6d);
-        
+
         return b.toString();    }
 }

@@ -31,6 +31,7 @@ import ch.bailu.aat.dispatcher.OverlaySource;
 import ch.bailu.aat.dispatcher.TrackerSource;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.helpers.AppLayout;
+import ch.bailu.aat.helpers.AppLog;
 import ch.bailu.aat.helpers.FileAction;
 import ch.bailu.aat.menus.FileMenu;
 import ch.bailu.aat.views.BusyButton;
@@ -85,14 +86,13 @@ public class GpxViewActivity extends AbsDispatcher implements OnClickListener {
         
         if (uri != null) {
             fileID = uri.getEncodedPath();
-            
+            AppLog.d(this, uri.toString());
             contentView = new ContentView(this);
             contentView.addView(createButtonBar());
             multiView = createMultiView();
             contentView.addView(multiView);
             setContentView(contentView);
             createDispatcher();
-            
         }
         
         
