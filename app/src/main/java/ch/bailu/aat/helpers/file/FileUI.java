@@ -29,7 +29,7 @@ public class FileUI {
         final File target = new File(targetDir, file.getName());
 
         if (target.exists()) {
-            AppLog.e(context, target.toString() + " allready exists.*");
+            AppLog.e(context, getExistsMsg(context, target));
         } else {
             new UriAccess(context, file).copy(target);
             AppLog.i(context, target.getAbsolutePath());
@@ -37,7 +37,15 @@ public class FileUI {
 
     }
     
-    
+
+    public static String getExistsMsg(Context c, File f) {
+        StringBuilder msg = new StringBuilder()
+                .append(f.getName())
+                .append(c.getString(R.string.file_exists));
+        return msg.toString();
+    }
+
+
     public void reloadPreview(ServiceContext scontext) {
         if (file.getParent().equals(new SolidDirectory(scontext.getContext()).getValue())) {
             scontext.getDirectoryService().deleteEntry(file.getAbsolutePath());

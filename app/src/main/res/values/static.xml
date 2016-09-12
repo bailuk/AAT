@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-<string name="app_name">Android Activity Tracker</string>
-<string name="app_sname">AAT</string>
+<string name="app_name" translatable="false">Android Activity Tracker</string>
+<string name="app_sname" translatable="false">AAT</string>
 
 </resources>

@@ -44,8 +44,6 @@ import ch.bailu.aat.views.map.overlay.grid.GridDynOverlay;
 
 public class TrackerActivity extends AbsDispatcher implements OnClickListener{
  
-    
-    
     private static final String SOLID_KEY="tracker";
 
     private LinearLayout         contentView;

@@ -120,7 +120,10 @@ public class FileAction   {
 
             if (source.exists()) {
                 if (target.exists()) {
-                    AppLog.i(activity, target.getName() + " allready exists!*");
+                    StringBuilder msg = new StringBuilder()
+                                    .append(target.getName())
+                                    .append(scontext.getContext().getString(R.string.file_exists));
+                    AppLog.i(activity, FileUI.getExistsMsg(scontext.getContext(), target));
                 } else {
                     source.renameTo(target);
                     rescanDirectory();

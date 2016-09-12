@@ -138,5 +138,18 @@
 <string name ="tt_nominatim_clear">Text für die Abfrage zurücksetzen.</string>
 <string name ="tt_nominatim_overlay">Abfrageresultat als Overlay anzeigen.</string>
 <string name ="tt_nominatim_save">Kopie des Abfrageresultats speichern.</string>
+    <string name="file_copy">Kopieren nach...</string>
+    <string name="file_exists"> ist bereits vorhanden!</string>
+    <string name="file_overlay">Als overlay verwenden</string>
+    <string name="file_reload">Vorschau neu laden</string>
+    <string name="file_rename">Datei umbenenen</string>
+    <string name="file_send">Senden...</string>
+    <string name="file_view">Anzeigen/Bearbeiten...</string>
+    <string name="intro_import_list"></string>
+    <string name="intro_test"></string>
+    <string name="location_copy">Position kopieren</string>
+    <string name="location_paste">Position einfügen</string>
+    <string name="location_send">Position senden...</string>
+    <string name="location_view">Position ansehen...</string>
 
 </resources>

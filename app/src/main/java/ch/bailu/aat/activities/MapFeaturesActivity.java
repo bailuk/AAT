@@ -82,7 +82,7 @@ public class MapFeaturesActivity extends AbsDispatcher implements OnClickListene
                 
             }.displayYesNoDialog(MapFeaturesActivity.this, 
                     getString(R.string.query_features), 
-                    "(Re)Download map features?*");
+                    getString(R.string.query_download_features));
 
             
             

@@ -40,7 +40,6 @@ public class InformationBarOverlay extends ControlBarOverlay {
         overpass = bar.addImageButton(R.drawable.go_bottom);
         nominatim = bar.addImageButton(R.drawable.edit_find);
         reload = bar.addImageButton(R.drawable.view_refresh);
-
         location = bar.addImageButton(R.drawable.find_location);
 
         selector = new InfoViewNodeSelectorOverlay(o, GpxInformation.ID.INFO_ID_ALL);
@@ -51,7 +50,7 @@ public class InformationBarOverlay extends ControlBarOverlay {
         ToolTip.set(nominatim,R.string.tt_info_nominatim);
         ToolTip.set(overpass,R.string.tt_info_overpass);
         ToolTip.set(reload,R.string.tt_info_reload);
-
+        ToolTip.set(location, R.string.tt_info_location);
     }
 
 
