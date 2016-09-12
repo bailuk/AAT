@@ -1,6 +1,6 @@
 #!/bin/bash
 
-DRAW="../res/drawable"
+DRAW="../app/src/main/res/drawable"
 
 DRAWABLES="$DRAW/"
 LDPI="$DRAW-ldpi/"
@@ -83,6 +83,8 @@ INVERT "go-up"
 INVERT "open-menu"
 INVERT "edit-select-all"
 INVERT "folder"
+INVERT "radio"
+INVERT "radio-checked"
 
 
 ####### Navigation-Bar

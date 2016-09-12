@@ -35,9 +35,16 @@ public class MultiView extends TrackDescriptionView {
         setActive(active-1);
     }
 
-    private void setActive(int a) {
-        data[active].setVisibility(GONE);
-        
+
+    public int getActive() {
+        return active;
+    }
+
+    public void setActive(int a) {
+        if (a != active) {
+            data[active].setVisibility(GONE);
+        }
+
         active=a;
         if (active >= data.length) active=0;
         else if (active < 0) active=data.length-1;

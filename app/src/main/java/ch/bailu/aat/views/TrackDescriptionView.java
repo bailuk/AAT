@@ -19,6 +19,9 @@ implements DescriptionInterface, GpxInformation.ID {
         solidKey=key;
     }
 
+
+
+
     public static class Filter {
         public final int id;
         

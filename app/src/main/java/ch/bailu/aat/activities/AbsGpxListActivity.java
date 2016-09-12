@@ -61,7 +61,7 @@ public abstract class AbsGpxListActivity extends AbsDispatcher implements OnItem
 
     private SolidDirectory              sdirectory;
 
-    private ImageButton                 nextView, prevView, fileManager;
+    private ImageButton                 selectView[] = new ImageButton[3], fileManager;
     private OsmInteractiveView          map;
     private MultiView                   multiView;
 
@@ -93,16 +93,18 @@ public abstract class AbsGpxListActivity extends AbsDispatcher implements OnItem
         contentView.addView(createMultiView());
         setContentView(contentView);
 
+        selectView(multiView.getActive());
         createDispatcher();
-    }        
+    }
 
 
     private ControlBar createControlBar() {
         final MainControlBar bar = new MainControlBar(getServiceContext(), 4);
 
         busyControl = new DbSynchronizerBusyIndicator(bar.getMenu());
-        prevView = bar.addImageButton(R.drawable.go_previous_inverse);
-        nextView = bar.addImageButton(R.drawable.go_next_inverse);
+        for (int i = 0; i< selectView.length; i++) {
+            selectView[i] = bar.addImageButton(R.drawable.radio_inverse);
+        }
         fileManager = bar.addImageButton(R.drawable.folder_inverse);
         bar.setOnClickListener1(this);
 
@@ -116,7 +118,7 @@ public abstract class AbsGpxListActivity extends AbsDispatcher implements OnItem
         final OsmOverlay overlayList[] = {
                 new GpxOverlayListOverlay(map, getServiceContext()),
                 new GpxDynOverlay(map, getServiceContext(), INFO_ID_LIST_SUMMARY),
-                new FileControlBar(map, this),                
+                new FileControlBar(map, this),
                 new CurrentLocationOverlay(map),
                 new GridDynOverlay(map, getServiceContext()),
                 new NavigationBarOverlay(map),
@@ -147,8 +149,8 @@ public abstract class AbsGpxListActivity extends AbsDispatcher implements OnItem
         final TrackDescriptionView viewData[] = {
                 new ViewWrapper(listView),
                 map,
-                new VerticalLayoutView(this, solid_key, INFO_ID_ALL, summary), 
-        };   
+                new VerticalLayoutView(this, solid_key, INFO_ID_ALL, summary),
+        };
 
 
         multiView = new MultiView(this, solid_key, INFO_ID_ALL, viewData);
@@ -162,7 +164,7 @@ public abstract class AbsGpxListActivity extends AbsDispatcher implements OnItem
 
 
         final DescriptionInterface[] target = new DescriptionInterface[] {
-                multiView, this 
+                multiView, this
         };
 
         summary = new IteratorSource.Summary(getServiceContext());
@@ -222,16 +224,16 @@ public abstract class AbsGpxListActivity extends AbsDispatcher implements OnItem
         displayFile();
     }
 
-    
+
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
 
-        int position = 
+        int position =
                 ((AdapterView.AdapterContextMenuInfo)menuInfo).position;
 
         iteratorSimple.moveToPosition(position);
-        
+
         fileMenu = new FileMenu(new FileAction(this, iteratorSimple));
         fileMenu.inflate(menu);
         fileMenu.prepare(menu);
@@ -246,15 +248,29 @@ public abstract class AbsGpxListActivity extends AbsDispatcher implements OnItem
 
     @Override
     public void onClick(View v) {
-        if (v == nextView) {
-            multiView.setNext();
-        } else if (v == prevView) {
-            multiView.setPrevious();
-        } else if (v == fileManager) {
-            File directory = new File(sdirectory.getValue()); 
+        if (v == fileManager) {
+            File directory = new File(sdirectory.getValue());
             new FileIntent(directory).view(this);
+        } else {
+            for (int i = 0; i < selectView.length; i++) {
+                if (v == selectView[i]) {
+                    setView(i);
+                }
+            }
         }
 
+    }
+
+    public void setView(int i) {
+        multiView.setActive(i);
+        selectView(i);
+    }
+
+    private void selectView(int s) {
+        for (int i=0; i<selectView.length; i++) {
+            if (i==s) selectView[i].setImageResource(R.drawable.radio_checked_inverse);
+            else selectView[i].setImageResource(R.drawable.radio_inverse);
+        }
     }
 }
 

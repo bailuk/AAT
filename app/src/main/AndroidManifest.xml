@@ -163,7 +163,7 @@
                   android:authorities="ch.bailu.aat.gpx"
                   android:exported="true">
         </provider>
-        
+
     </application>
 
 </manifest>
