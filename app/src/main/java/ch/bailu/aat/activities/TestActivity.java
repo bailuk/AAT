@@ -114,7 +114,6 @@ public class TestActivity extends AbsDispatcher implements OnClickListener {
 
     @Override
     public void onDestroy() {
-        edit.close();
         super.onDestroy();
     }
 

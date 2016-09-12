@@ -124,29 +124,6 @@ public class MapActivity extends AbsDispatcher implements OnClickListener{
     }
 
 
-
-    @Override
-    public void onDestroy() {
-        edit.close();
-        super.onDestroy();
-    }
-
-
-    @Override
-    public void onServicesUp(boolean firstRun) {
-        edit.edit();
-    }
-
-
-    @Override
-    public void onClick(View v) {
-        if (v==cycleButton) {
-            ActivitySwitcher.cycle(this);
-        }
-
-    }
-
-
     private void createDispatcher() {
         DescriptionInterface[] target = new DescriptionInterface[] {
                 map,trackerState,gpsState, this
@@ -160,6 +137,24 @@ public class MapActivity extends AbsDispatcher implements OnClickListener{
 
         setDispatcher(new ContentDispatcher(this,source, target));
     }
+
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+    }
+
+
+    @Override
+    public void onClick(View v) {
+        if (v==cycleButton) {
+            ActivitySwitcher.cycle(this);
+        }
+
+    }
+
+
+
 
 
     private ControlBar createButtonBar() {
@@ -177,7 +172,5 @@ public class MapActivity extends AbsDispatcher implements OnClickListener{
         
         return bar;
     }
-
- 
 
 }

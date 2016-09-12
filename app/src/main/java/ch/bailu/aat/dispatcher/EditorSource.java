@@ -52,11 +52,13 @@ public class EditorSource extends ContentSource {
     @Override
     public void onPause() {
         scontext.getContext().unregisterReceiver(onFileEdited);
+        edit.onPause();
     }
 
 
     @Override
     public void onResume() {
         AppBroadcaster.register(scontext.getContext(), onFileEdited, AppBroadcaster.FILE_CHANGED_INCACHE);
+        edit.onResume();
     }
 }

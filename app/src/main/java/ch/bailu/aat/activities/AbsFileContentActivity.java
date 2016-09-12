@@ -173,7 +173,6 @@ public class AbsFileContentActivity extends AbsDispatcher implements OnClickList
 
     @Override
     public void onDestroy() {
-        edit.close();
         super.onDestroy();
     }
 

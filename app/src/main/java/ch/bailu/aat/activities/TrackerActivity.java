@@ -3,6 +3,7 @@ package ch.bailu.aat.activities;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import ch.bailu.aat.R;
@@ -46,7 +47,6 @@ public class TrackerActivity extends AbsDispatcher implements OnClickListener{
  
     private static final String SOLID_KEY="tracker";
 
-    private LinearLayout         contentView;
     private ImageButton          activityCycle, multiCycle;
     private TrackerStateButton   trackerState;
     private MultiView            multiView;
@@ -60,21 +60,14 @@ public class TrackerActivity extends AbsDispatcher implements OnClickListener{
         super.onCreate(savedInstanceState);
 
         edit = new EditorHelper(getServiceContext());
-        contentView = new ContentView(this);
+
+        ViewGroup contentView = new ContentView(this);
         contentView.addView(createButtonBar());
         multiView = createMultiView();
         contentView.addView(multiView);
         setContentView(contentView);
 
         createDispatcher();
-        
-    }
-
-
-    @Override
-    public void onDestroy() {
-        edit.close();
-        super.onDestroy();
     }
 
 
@@ -157,8 +150,7 @@ public class TrackerActivity extends AbsDispatcher implements OnClickListener{
             setDispatcher(new ContentDispatcher(this,source, target));
     }
 
-    
-    @Override
-    public void onServicesUp(boolean firstRun) {}
+
+
 
 }

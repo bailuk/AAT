@@ -21,10 +21,4 @@ public class FileContentActivity extends AbsFileContentActivity{
         createDispatcher();
     }
     
-    
-    @Override
-    public void onResumeWithService() {
-        super.onResumeWithService();
-        edit.edit();
-    }
 }

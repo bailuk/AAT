@@ -9,40 +9,47 @@ import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.cache.GpxObjectEditable;
 import ch.bailu.aat.services.cache.ObjectHandle;
 
-public class EditorHelper implements Closeable {
-
+public class EditorHelper {
     private final ServiceContext scontext;
+
+
     private ObjectHandle handle = ObjectHandle.NULL;
-    private final int IID;
-    
-    
+
+    private int IID=GpxInformation.ID.INFO_ID_EDITOR_DRAFT;
+    private String ID;
+
+
+
     public EditorHelper(ServiceContext sc) {
-        IID=GpxInformation.ID.INFO_ID_EDITOR_DRAFT;
         scontext = sc;
+
+        IID = GpxInformation.ID.INFO_ID_EDITOR_DRAFT;
+        ID = AppDirectory.getEditorDraft(scontext.getContext()).getAbsolutePath();
     }
-    
-    
-    public EditorHelper(ServiceContext sc, int iid) {
-        IID=iid;
-        scontext = sc;
-    }
-    
+
 
     public void edit(File f) {
-        ObjectHandle new_handle = GpxObjectEditable.loadEditor(scontext, 
+        IID = GpxInformation.ID.INFO_ID_EDITOR_OVERLAY;
+        ID = f.getAbsolutePath();
+        onResume();
+    }
 
-                f.getAbsolutePath(), 
-                IID);
+
+    public void onResume() {
+        ObjectHandle new_handle = GpxObjectEditable.loadEditor(scontext, ID, IID);
 
         handle.free();
         handle = new_handle;
     }
 
+    public void onPause() {
+        if (IID==GpxInformation.ID.INFO_ID_EDITOR_DRAFT) save();
 
+        handle.free();
+        handle = ObjectHandle.NULL;
 
-    public void edit() {
-        edit(AppDirectory.getEditorDraft(scontext.getContext()));
     }
+
 
 
     public int getIID() {
@@ -73,10 +80,4 @@ public class EditorHelper implements Closeable {
 
     }
 
-    
-    @Override
-    public void close() {
-        handle.free();
-        handle = ObjectHandle.NULL;
-    }
 }

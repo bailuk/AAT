@@ -40,7 +40,7 @@ public class GpxEditorActivity extends AbsFileContentActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        edit = new EditorHelper(getServiceContext(), GpxInformation.ID.INFO_ID_EDITOR_OVERLAY);
+        edit = new EditorHelper(getServiceContext());
 
         createViews(SOLID_KEY);
         createDispatcher();

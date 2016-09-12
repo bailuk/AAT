@@ -159,7 +159,6 @@ public class SplitViewActivity extends AbsDispatcher implements OnClickListener{
 
     @Override
     public void onDestroy() {
-        edit.close();
         super.onDestroy();
     }
 
@@ -198,6 +197,5 @@ public class SplitViewActivity extends AbsDispatcher implements OnClickListener{
     
     @Override
     public void onServicesUp(boolean firstRun) {}
-
 
 }

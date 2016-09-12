@@ -1,155 +1,153 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    
-<string name="intro_about">Info</string>
-<string name="intro_list">Aufgezeichnete Aktivitäten</string>
-<string name="intro_settings">Einstellungen</string>
-<string name="intro_map">Kartenansicht</string>
-<string name="intro_detail">Detailansicht</string>
-<string name="intro_file">Letzte Aufzeichnung</string>
 
-<string name="gps_nogps">Kein GPS</string>
-<string name="gps_noaccess">Kein Zugriff</string>
+    <string name="intro_about">Info</string>
+    <string name="intro_list">Aufgezeichnete Aktivitäten</string>
+    <string name="intro_settings">Einstellungen</string>
+    <string name="intro_map">Kartenansicht</string>
+    <string name="intro_detail">Detailansicht</string>
+    <string name="intro_file">Letzte Aufzeichnung</string>
 
-<string name="tracker_start">Start</string>
-<string name="tracker_pause">Pause</string>
-<string name="tracker_stop">Stopp</string>
-<string name="tracker_resume">Weiter</string>
+    <string name="gps_nogps">Kein GPS</string>
+    <string name="gps_noaccess">Kein Zugriff</string>
 
-<string name="status_paused">Pause</string>
-<string name="status_autopaused">Autopause</string>
+    <string name="tracker_start">Start</string>
+    <string name="tracker_pause">Pause</string>
+    <string name="tracker_stop">Stopp</string>
+    <string name="tracker_resume">Weiter</string>
 
-<string name="on">An</string>
-<string name="off">Aus</string>
+    <string name="status_paused">Pause</string>
+    <string name="status_autopaused">Autopause</string>
 
-
-<string name="p_unit_title">Einheiten</string>
-<string-array name="p_unit_list">
-    <item>Metrisch (km, km/h)</item>h
-    <item>Britisch (mi, mph)</item>
-    <item>Nautisch (nm, kn)</item>
-    <item>SI-Einheiten</item>
-</string-array>
-
-<string name="p_general">Allgemein</string>
-<string name="p_preset">Voreinstellungen</string>
-<string-array name="p_met_list">
-   <!--
-     List is taken and modified from "Compendium of Physical Activities"
-     https://sites.google.com/site/compendiumofphysicalactivities/Activity-Categories
-   -->
-       <item> 6.8 Radfahren, mittlere Leistung</item>
-       <item> 8.5 MTB, allgemein</item>
-       <item> 6.0 Wandern, cross country</item>
-       <item> 7.0 Jogging, allgemein</item>
-       <item> 2.0 Test</item>
-   
-   
-       <item>14.0 MTB, uphill</item> 
-       <item>16.0 MTB, Wettbewerb</item>
-       <item> 5.8 Radfahren, wenig Leistung</item>
-       <item>10.0 Radfahren, hohe Leistung</item>
-       <item> 6.0 Rennen, langsam</item>
-       <item> 9.0 Rennen, cross country</item>
-       <item>10.0 Rennen, auf der Bahn</item>
-       <item>13.3 rennen, Marathon</item>
-       <item> 7.3 klettern mit wenig Gepäck</item>
-       <item> 8.3 klettern mit mittlerem Gepäck</item>
-       <item> 9.0 klettern mit viel Gepäck</item>
-       <item> 5.3 Wandern/Spazieren normale Geschwindigkeit</item>
-       <item> 2.0 Spazieren, sehr langsam</item>
-       <item> 3.5 Spazieren, normal</item>
-       <item> 4.8 Spazieren/Nordic walking mittelere Anstrengung</item>
-       <item> 6.8 Spazieren/Nordic walking hohe Anstrengung</item>
-</string-array>
+    <string name="on">An</string>
+    <string name="off">Aus</string>
 
 
-<string name="p_weight_title">Gewicht in kg</string>
-<string name="p_map">Karte</string>
-<string name="p_autopause_title">Autopause</string>
+    <string name="p_unit_title">Einheiten</string>
+    <string-array name="p_unit_list">
+        <item>Metrisch (km, km/h)</item>h
+        <item>Britisch (mi, mph)</item>
+        <item>Nautisch (nm, kn)</item>
+        <item>SI-Einheiten</item>
+    </string-array>
 
-<string name="p_backlight_title">Bildschirm</string>
-<string name="p_backlight_off">Aus</string>
-<string name="p_backlight_dim">Dunkel</string>
-<string name="p_backlight_bright">Hell</string>
-<string name="p_update_interval">Updates pro Minute</string>
-
-<string name="file_delete">Datei löschen</string>
-<string name="file_delete_ask">Datei löschen?</string>
-
-
-<!-- Dialog -->
-<string name="dialog_yes">Ja</string>
-<string name="dialog_no">Nein</string>
-<string name="dialog_cancel">Abbrechen</string>
-<string name="dialog_discard">Verwerfen</string>
-<string name="dialog_save">Speichern</string>
-<string name="dialog_modified">Datei wurde verändert</string>
-
+    <string name="p_general">Allgemein</string>
+    <string name="p_preset">Voreinstellungen</string>
+    <string-array name="p_met_list">
+        <!--
+          List is taken and modified from "Compendium of Physical Activities"
+          https://sites.google.com/site/compendiumofphysicalactivities/Activity-Categories
+        -->
+        <item> 6.8 Radfahren, mittlere Leistung</item>
+        <item> 8.5 MTB, allgemein</item>
+        <item> 6.0 Wandern, cross country</item>
+        <item> 7.0 Jogging, allgemein</item>
+        <item> 2.0 Test</item>
 
 
-<!-- Description -->
-<string name="d_longitude">Länge</string>
-<string name="d_latitude">Breite</string>
-<string name="d_accuracy">Genauigkeit</string>
-<string name="d_enddate">Ende</string>
-<string name="d_acceleration">Beschleunigung</string>
-<string name="d_bearing">Lage</string>
-<string name="d_path">Pfad</string>
-<string name="d_state">Status</string>
-<string name="d_size">Grösse</string>
+        <item>14.0 MTB, uphill</item>
+        <item>16.0 MTB, Wettbewerb</item>
+        <item> 5.8 Radfahren, wenig Leistung</item>
+        <item>10.0 Radfahren, hohe Leistung</item>
+        <item> 6.0 Rennen, langsam</item>
+        <item> 9.0 Rennen, cross country</item>
+        <item>10.0 Rennen, auf der Bahn</item>
+        <item>13.3 rennen, Marathon</item>
+        <item> 7.3 klettern mit wenig Gepäck</item>
+        <item> 8.3 klettern mit mittlerem Gepäck</item>
+        <item> 9.0 klettern mit viel Gepäck</item>
+        <item> 5.3 Wandern/Spazieren normale Geschwindigkeit</item>
+        <item> 2.0 Spazieren, sehr langsam</item>
+        <item> 3.5 Spazieren, normal</item>
+        <item> 4.8 Spazieren/Nordic walking mittelere Anstrengung</item>
+        <item> 6.8 Spazieren/Nordic walking hohe Anstrengung</item>
+    </string-array>
 
 
-<string name="speed">Geschwindigkeit</string>
-<string name="average">Durchschnitt</string>
-<string name="maximum">Maximum</string>
-<string name="distance">Distanz</string>
-<string name="altitude">Höhe</string>
-<string name="time">Zeit</string>
-<string name="calories">Kalorien</string>
+    <string name="p_weight_title">Gewicht in kg</string>
+    <string name="p_map">Karte</string>
+    <string name="p_autopause_title">Autopause</string>
+
+    <string name="p_backlight_title">Bildschirm</string>
+    <string name="p_backlight_off">Aus</string>
+    <string name="p_backlight_dim">Dunkel</string>
+    <string name="p_backlight_bright">Hell</string>
+    <string name="p_update_interval">Updates pro Minute</string>
+
+    <string name="file_delete">Datei löschen</string>
+    <string name="file_delete_ask">Datei löschen?</string>
 
 
-<!-- ToolTip -->
-<string name ="tt_edit_add">Am Ort in der Kartenmitte einen Punkt hinzufügen.</string>
-<string name ="tt_edit_remove">Ausgewählten Punkt entfernen.</string>
-<string name ="tt_edit_up">Ausgewählten Punkt in der Liste nach oben bewegen.</string>
-<string name ="tt_edit_down">Ausgewählten Punkt in der Liste nach unten bewegen.</string>
-<string name ="tt_edit_convert">Wechseln zwischen GPX Track oder GPX Way.</string>
-<string name ="tt_edit_clear">Liste löschen: alle Punkte entfernen.</string>
-<string name ="tt_edit_redo">Letzte rückgängig gemachte Aktion wiederherstellen.</string>
-<string name ="tt_edit_undo">Letzte Aktion rückgängig machen.</string>
-<string name ="tt_edit_save">GPX Liste speichern.</string>
-<string name ="tt_edit_save_as">Kopie der GPX Liste speichern.</string>
-
-<string name ="tt_info_grid">Zwischen verschiedenen Kartengitter wechseln.</string>
-<string name ="tt_info_legend">Zwischen Beschreibungsmodi wechseln.</string>
-<string name ="tt_info_nominatim">Suchabfrage über OSM-Nominatim.</string>
-<string name ="tt_info_overpass">Abfrage über OSM-Overpass.</string>
-<string name ="tt_info_reload">Sichtbare Kacheln neuladen.</string>
+    <!-- Dialog -->
+    <string name="dialog_yes">Ja</string>
+    <string name="dialog_no">Nein</string>
+    <string name="dialog_cancel">Abbrechen</string>
+    <string name="dialog_discard">Verwerfen</string>
+    <string name="dialog_save">Speichern</string>
+    <string name="dialog_modified">Datei wurde verändert</string>
 
 
-<string name ="tt_map_zoomin">Hineinzoomen.</string>
-<string name ="tt_map_zoomout">Heraus zoomen.</string>
-<string name ="tt_map_home">Karte im Bekannten Standort zentrieren.</string>
-<string name ="tt_map_frame">Zwischen der Gesamtansicht der Overlays wechseln.</string>
+
+    <!-- Description -->
+    <string name="d_longitude">Länge</string>
+    <string name="d_latitude">Breite</string>
+    <string name="d_accuracy">Genauigkeit</string>
+    <string name="d_enddate">Ende</string>
+    <string name="d_acceleration">Beschleunigung</string>
+    <string name="d_bearing">Lage</string>
+    <string name="d_path">Pfad</string>
+    <string name="d_state">Status</string>
+    <string name="d_size">Größe</string>
 
 
-<string name ="tt_nominatim_query">Abfrage starten...</string>
-<string name ="tt_nominatim_clear">Text für die Abfrage zurücksetzen.</string>
-<string name ="tt_nominatim_overlay">Abfrageresultat als Overlay anzeigen.</string>
-<string name ="tt_nominatim_save">Kopie des Abfrageresultats speichern.</string>
-    <string name="file_copy">Kopieren nach...</string>
+    <string name="speed">Geschwindigkeit</string>
+    <string name="average">Durchschnitt</string>
+    <string name="maximum">Maximum</string>
+    <string name="distance">Distanz</string>
+    <string name="altitude">Höhe</string>
+    <string name="time">Zeit</string>
+    <string name="calories">Kalorien</string>
+
+
+    <!-- ToolTip -->
+    <string name ="tt_edit_add">Am Ort in der Kartenmitte einen Punkt hinzufügen.</string>
+    <string name ="tt_edit_remove">Ausgewählten Punkt entfernen.</string>
+    <string name ="tt_edit_up">Ausgewählten Punkt in der Liste nach oben bewegen.</string>
+    <string name ="tt_edit_down">Ausgewählten Punkt in der Liste nach unten bewegen.</string>
+    <string name ="tt_edit_convert">Wechseln zwischen GPX Track oder GPX Way.</string>
+    <string name ="tt_edit_clear">Liste löschen: alle Punkte entfernen.</string>
+    <string name ="tt_edit_redo">Letzte rückgängig gemachte Aktion wiederherstellen.</string>
+    <string name ="tt_edit_undo">Letzte Aktion rückgängig machen.</string>
+    <string name ="tt_edit_save">GPX Liste speichern.</string>
+    <string name ="tt_edit_save_as">Kopie der GPX Liste speichern.</string>
+
+    <string name ="tt_info_grid">Zwischen verschiedenen Kartengitter wechseln.</string>
+    <string name ="tt_info_legend">Zwischen Beschreibungsmodi wechseln.</string>
+    <string name ="tt_info_nominatim">Suchabfrage über OSM-Nominatim.</string>
+    <string name ="tt_info_overpass">Abfrage über OSM-Overpass.</string>
+    <string name ="tt_info_reload">Sichtbare Kacheln neuladen.</string>
+
+
+    <string name ="tt_map_zoomin">Hineinzoomen.</string>
+    <string name ="tt_map_zoomout">Heraus zoomen.</string>
+    <string name ="tt_map_home">Karte im Bekannten Standort zentrieren.</string>
+    <string name ="tt_map_frame">Zwischen der Gesamtansicht der Overlays wechseln.</string>
+
+
+    <string name ="tt_nominatim_query">Abfrage starten…</string>
+    <string name ="tt_nominatim_clear">Text für die Abfrage zurücksetzen.</string>
+    <string name ="tt_nominatim_overlay">Abfrageresultat als Overlay anzeigen.</string>
+    <string name ="tt_nominatim_save">Kopie des Abfrageresultats speichern.</string>
+    <string name="file_copy">Kopieren nach…</string>
     <string name="file_exists"> ist bereits vorhanden!</string>
     <string name="file_overlay">Als overlay verwenden</string>
     <string name="file_reload">Vorschau neu laden</string>
     <string name="file_rename">Datei umbenenen</string>
-    <string name="file_send">Senden...</string>
-    <string name="file_view">Anzeigen/Bearbeiten...</string>
-    <string name="intro_import_list"></string>
-    <string name="intro_test"></string>
+    <string name="file_send">Senden…</string>
+    <string name="file_view">Anzeigen/Bearbeiten…</string>
     <string name="location_copy">Position kopieren</string>
     <string name="location_paste">Position einfügen</string>
-    <string name="location_send">Position senden...</string>
-    <string name="location_view">Position ansehen...</string>
+    <string name="location_send">Position senden…</string>
+    <string name="location_view">Position ansehen…</string>
 
 </resources>
