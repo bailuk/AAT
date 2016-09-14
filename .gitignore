@@ -38,9 +38,6 @@ proguard/
 # Windows clutter
 Thumbs.db
 
-# Intellij IDEA (see https://intellij-support.jetbrains.com/entries/23393067)
-.idea/workspace.xml
-.idea/tasks.xml
-.idea/datasources.xml
-.idea/dataSources.ids
+# Intellij IDEA 
+.idea/
 
