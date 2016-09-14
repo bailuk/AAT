@@ -33,6 +33,7 @@ import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.helpers.AppLayout;
 import ch.bailu.aat.helpers.AppLog;
 import ch.bailu.aat.helpers.FileAction;
+import ch.bailu.aat.helpers.ToolTip;
 import ch.bailu.aat.menus.FileMenu;
 import ch.bailu.aat.views.BusyButton;
 import ch.bailu.aat.views.ContentView;
@@ -108,6 +109,9 @@ public class GpxViewActivity extends AbsDispatcher implements OnClickListener {
         copyTo = bar.addImageButton(R.drawable.document_save_as_inverse);
         
         fileOperation = bar.addImageButton(R.drawable.edit_select_all_inverse);
+
+        ToolTip.set(copyTo, R.string.file_copy);
+        ToolTip.set(fileOperation, R.string.tt_menu_file);
 
         busyButton = bar.getMenu();
         busyButton.startWaiting();

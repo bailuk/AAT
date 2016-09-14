@@ -1,6 +1,7 @@
 package ch.bailu.aat.coordinates;
 
 import java.io.IOException;
+import java.util.Locale;
 
 import org.osmdroid.api.IGeoPoint;
 import org.osmdroid.util.BoundingBoxE6;
@@ -160,6 +161,15 @@ public class BoundingBox {
 
     public boolean hasBounding() {
         return (north > south && east > west);
+    }
+
+
+    @Override
+    public String toString() {
+        return String.format((Locale) null,
+                "%.2f,%.2f,%.2f,%.2f",
+                north/1e6f, west/1e6f, south/1e6f, east/1e6f);
+
     }
 
 }

@@ -33,4 +33,7 @@ public class AddOverlayDialog implements  DialogInterface.OnClickListener {
         slist.get(i).setPath(file);
         dialog.dismiss();
     }
+
+
+
 }

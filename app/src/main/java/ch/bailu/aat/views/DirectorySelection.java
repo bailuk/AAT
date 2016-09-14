@@ -18,6 +18,7 @@ import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.DatePicker;
 import android.widget.LinearLayout;
 import ch.bailu.aat.coordinates.BoundingBox;
+import ch.bailu.aat.helpers.AppLog;
 import ch.bailu.aat.helpers.AppTheme;
 import ch.bailu.aat.preferences.SolidBoolean;
 import ch.bailu.aat.preferences.SolidDirectory;
@@ -27,9 +28,9 @@ public class DirectorySelection extends LinearLayout implements OnClickListener 
 
 
     private final MapView map;
-    
+
     private final Button   getBox;
-    
+
     private final SolidDirectory sdirectory;
     
     
@@ -47,11 +48,11 @@ public class DirectorySelection extends LinearLayout implements OnClickListener 
         
         LinearLayout geo = new LinearLayout(map.getContext());
         applayGeo = new SolidCheckBox(geo, sdirectory.getUseGeo());
-        applayGeo.setText("Inside map*");
-        
+        applayGeo.setText("Inside bounding*");
+
         getBox = new Button(map.getContext());
         AppTheme.themify(getBox);
-        getBox.setText("pick area from map*");
+        getBox.setText("Get bounding from map*");
         geo.addView(getBox);
         getBox.setOnClickListener(this);
         addView(geo);
@@ -76,7 +77,10 @@ public class DirectorySelection extends LinearLayout implements OnClickListener 
     
     @Override
     public void onClick(View v) {
-        sdirectory.getBoundingBox().setValue(new BoundingBox(map.getBoundingBox()));        
+        BoundingBox bounding = new BoundingBox(map.getBoundingBox());
+
+        AppLog.i(getContext(), bounding.toString());
+        sdirectory.getBoundingBox().setValue(bounding);
     }
     
  
@@ -89,7 +93,7 @@ public class DirectorySelection extends LinearLayout implements OnClickListener 
             sboolean = s;
             
             parent.addView(this);
-            
+
             setChecked(sboolean.getValue());
             setOnCheckedChangeListener(this);
         }

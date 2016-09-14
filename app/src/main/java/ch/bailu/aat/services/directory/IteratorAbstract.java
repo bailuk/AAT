@@ -95,15 +95,17 @@ public abstract class IteratorAbstract extends Iterator implements OnSharedPrefe
 
     @Override
     public void query() {
-        final String fileOnOldPosition = getInfo().getPath();
+        String fileOnOldPosition = "";
         int oldPosition=0;
 
         selection = sdirectory.createSelectionString();
         AppLog.d(this, selection);
         if (cursor != null) {
             oldPosition = cursor.getPosition();
+            fileOnOldPosition = getInfo().getPath();
             cursor.close();
         }
+
         cursor = scontext.getDirectoryService().query(selection);
         cursor.moveToPosition(oldPosition);
 

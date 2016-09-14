@@ -40,7 +40,6 @@ public class LocationMenu extends AbsMenu{
     @Override
     public void inflateWithHeader(ContextMenu menu) {
         menu.setHeaderTitle("Center Location*");
-        
     }
 
     @Override

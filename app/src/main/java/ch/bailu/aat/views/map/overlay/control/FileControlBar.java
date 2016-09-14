@@ -9,6 +9,7 @@ import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.GpxPointNode;
 import ch.bailu.aat.helpers.AppLayout;
 import ch.bailu.aat.helpers.FileAction;
+import ch.bailu.aat.helpers.ToolTip;
 import ch.bailu.aat.preferences.SolidDirectory;
 import ch.bailu.aat.views.ControlBar;
 import ch.bailu.aat.views.PreviewView;
@@ -52,6 +53,12 @@ public class FileControlBar extends ControlBarOverlay{
         
         preview.setOnClickListener(this);
         preview.setOnLongClickListener(selector);
+
+
+        ToolTip.set(action, R.string.tt_menu_file);
+        ToolTip.set(overlay, R.string.file_overlay);
+        ToolTip.set(reloadPreview, R.string.file_reload);
+        ToolTip.set(delete, R.string.file_delete);
 
     }
 

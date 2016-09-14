@@ -210,4 +210,5 @@
     <string name ="tt_overpass_mapfeatures">Show list of map features.</string>
     <string name ="tt_overpass_download_features">Download map features.</string>
 
+    <string name="tt_menu_file">Display file operation menu.</string>
 </resources>

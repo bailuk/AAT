@@ -28,6 +28,7 @@ import ch.bailu.aat.dispatcher.OverlaySource;
 import ch.bailu.aat.dispatcher.TrackerSource;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.helpers.AppLayout;
+import ch.bailu.aat.helpers.ToolTip;
 import ch.bailu.aat.menus.FileMenu;
 import ch.bailu.aat.services.editor.EditorHelper;
 import ch.bailu.aat.views.BusyButton;
@@ -91,6 +92,8 @@ public class AbsFileContentActivity extends AbsDispatcher implements OnClickList
         previousFile =  bar.addImageButton(R.drawable.go_up_inverse);
         nextFile = bar.addImageButton(R.drawable.go_down_inverse);
         fileOperation = bar.addImageButton(R.drawable.edit_select_all_inverse);
+
+        ToolTip.set(fileOperation, R.string.tt_menu_file);
 
         busyButton = bar.getMenu();
         busyButton.startWaiting();
