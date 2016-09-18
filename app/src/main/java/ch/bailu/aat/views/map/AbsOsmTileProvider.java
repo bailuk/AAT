@@ -48,9 +48,9 @@ public abstract class AbsOsmTileProvider extends AbsTileProvider {
         builder.append('/');
         builder.append(mapTile.getY());
 
-        for (int i=0; i<sources.length; i++) {
+        for (Source source : sources) {
             builder.append('/');
-            builder.append(sources[i].getName()+sources[i].getBitmapFilter().toString());
+            builder.append(source.getName() + source.getBitmapFilter().toString());
         }
         return builder.toString();
     }
@@ -81,7 +81,7 @@ public abstract class AbsOsmTileProvider extends AbsTileProvider {
     }
 
     @Override
-    public void setTileSource(ITileSource s) {};
+    public void setTileSource(ITileSource s) {}
 
 
 }

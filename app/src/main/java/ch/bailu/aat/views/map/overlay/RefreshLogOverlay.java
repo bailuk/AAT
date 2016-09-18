@@ -1,5 +1,7 @@
 package ch.bailu.aat.views.map.overlay;
 
+import java.util.Locale;
+
 import ch.bailu.aat.views.map.OsmInteractiveView;
 
 public class RefreshLogOverlay extends OsmOverlay {
@@ -34,7 +36,7 @@ public class RefreshLogOverlay extends OsmOverlay {
                 ((double)refreshCounter)	 /	1000d;
         double currentTime = ((double)this.currentTime / 1000d);
 
-        painter.canvas.drawTextBottom(String.format("%d: %1.3f s / %1.3f s", 
+        painter.canvas.drawTextBottom(String.format((Locale)null,"%d: %1.3f s / %1.3f s",
                 refreshCounter, 
                 averageTime, 
                 currentTime),5);

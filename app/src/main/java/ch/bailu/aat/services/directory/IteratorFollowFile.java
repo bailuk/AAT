@@ -9,7 +9,7 @@ import ch.bailu.aat.helpers.AppLog;
 import ch.bailu.aat.services.ServiceContext;
 
 public class IteratorFollowFile extends IteratorAbstract {
-    private static Closeable NULL_CLOSEABLE = new Closeable() {
+    private static final Closeable NULL_CLOSEABLE = new Closeable() {
         @Override
         public void close() {}
 

@@ -76,7 +76,7 @@ public class MapActivity extends AbsDispatcher implements OnClickListener{
         Intent intent = getIntent();
         Uri uri = intent.getData();
         
-        if (intent.getAction()==Intent.ACTION_VIEW && uri != null) {
+        if (intent.getAction().equals(Intent.ACTION_VIEW) && uri != null) {
             AppLog.d(uri, uri.toString());
             setMapCenterFromUri(uri);
             openQueryFromUri(uri);

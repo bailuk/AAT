@@ -2,7 +2,7 @@ package ch.bailu.aat.views.map.overlay.gpx;
 
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.GpxList;
-import ch.bailu.aat.gpx.interfaces.GpxBigDeltaInterface;
+import ch.bailu.aat.gpx.interfaces.GpxType;
 import ch.bailu.aat.preferences.SolidLegend;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.views.map.AbsOsmView;
@@ -65,12 +65,12 @@ public class GpxDynOverlay extends OsmOverlay {
 
     public void setTrack(GpxList gpxList) {
 
-        if (gpxList.getDelta().getType()==GpxBigDeltaInterface.WAY) {
+        if (gpxList.getDelta().getType()== GpxType.WAY) {
             if (color == -1) gpx = new WayOverlay(getOsmView(), scontext, ID);
             else gpx = new WayOverlay(getOsmView(), scontext, ID, color);
             legend = slegend.createWayLegendOverlay(getOsmView(), ID);
 
-        } else if (gpxList.getDelta().getType()==GpxBigDeltaInterface.RTE) {
+        } else if (gpxList.getDelta().getType()==GpxType.RTE) {
             if (color == -1)  gpx = new RouteOverlay(getOsmView(), ID);
             else gpx = new RouteOverlay(getOsmView(), ID, color);
             legend = slegend.createRouteLegendOverlay(getOsmView(), ID);

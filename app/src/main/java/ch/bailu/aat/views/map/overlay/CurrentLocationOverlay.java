@@ -14,10 +14,10 @@ public class CurrentLocationOverlay extends OsmOverlay {
     private final static int STROKE_WIDTH=2;
 
     
-    private GeoPoint center = new GeoPoint(0,0);
+    private final GeoPoint center = new GeoPoint(0,0);
     private float accuracy=0f;
 
-    private Paint paint = new Paint();
+    private final Paint paint = new Paint();
 
 
     public CurrentLocationOverlay(OsmInteractiveView v) {

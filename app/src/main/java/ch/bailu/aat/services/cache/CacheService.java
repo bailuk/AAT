@@ -115,7 +115,7 @@ public class CacheService extends VirtualService {
             broadcaster.put(b);
         }
         
-        private BroadcastReceiver onFileProcessed = new BroadcastReceiver() {
+        private final BroadcastReceiver onFileProcessed = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
                 table.onObjectChanged(intent, SelfOn.this);

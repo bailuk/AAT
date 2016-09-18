@@ -3,6 +3,8 @@ package ch.bailu.aat.views.map.overlay.control;
 import java.io.File;
 
 import android.view.View;
+import android.widget.LinearLayout;
+
 import ch.bailu.aat.R;
 import ch.bailu.aat.activities.AbsGpxListActivity;
 import ch.bailu.aat.gpx.GpxInformation;
@@ -36,7 +38,7 @@ public class FileControlBar extends ControlBarOverlay{
     public FileControlBar(OsmInteractiveView osm, AbsGpxListActivity a) {
         super(osm, new ControlBar(
                 osm.getContext(),
-                AppLayout.getOrientationAlongLargeSide(osm.getContext())));
+                LinearLayout.VERTICAL));
 
         final ControlBar bar = getBar();
 

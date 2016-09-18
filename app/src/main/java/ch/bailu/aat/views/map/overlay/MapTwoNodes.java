@@ -11,7 +11,7 @@ public class MapTwoNodes {
     
     
     public class PixelNode {
-        public Point pixel=new Point();
+        public final Point pixel=new Point();
         public GpxPointInterface point=GpxPoint.NULL;
         
         public boolean isVisible() {

@@ -21,7 +21,7 @@ public class MapFeaturesDownloader implements Closeable {
     private final ServiceContext scontext;
     
 
-    private ArrayList<DownloadHandle> pendingImages=new ArrayList<DownloadHandle>();
+    private ArrayList<DownloadHandle> pendingImages= new ArrayList<>();
     
     
     public MapFeaturesDownloader(ServiceContext sc) {

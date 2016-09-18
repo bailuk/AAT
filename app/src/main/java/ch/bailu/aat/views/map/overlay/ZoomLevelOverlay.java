@@ -1,5 +1,7 @@
 package ch.bailu.aat.views.map.overlay;
 
+import java.util.Locale;
+
 import ch.bailu.aat.views.map.OsmInteractiveView;
 
 public class ZoomLevelOverlay extends OsmOverlay {
@@ -13,7 +15,7 @@ public class ZoomLevelOverlay extends OsmOverlay {
         int z = getMapView().getZoomLevel();
 
         
-        p.canvas.drawTextTop(String.format("Zoomlevel*: %d", z) ,2);
+        p.canvas.drawTextTop(String.format((Locale)null,"Zoomlevel*: %d", z) ,2);
 
     }
 

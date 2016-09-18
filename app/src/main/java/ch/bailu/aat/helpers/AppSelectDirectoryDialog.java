@@ -12,9 +12,7 @@ import ch.bailu.aat.helpers.file.FileUI;
 public class AppSelectDirectoryDialog  implements  DialogInterface.OnClickListener {
     private final File file;
     private final File directories[];
-    private final String names[];
-    
-    private final AlertDialog.Builder dialog;
+
 
     private final Context context;
     public AppSelectDirectoryDialog (Context c, File f) throws IOException {
@@ -30,13 +28,14 @@ public class AppSelectDirectoryDialog  implements  DialogInterface.OnClickListen
                 AppDirectory.getDataDirectory(context, AppDirectory.DIR_IMPORT)
                 };
 
-        
-        names = new String[directories.length];
+
+
+        final String[] names = new String[directories.length];
         
         for (int i=0; i< names.length; i++) names[i]=directories[i].getName();
 
 
-        dialog = new AlertDialog.Builder(context);
+        final AlertDialog.Builder dialog = new AlertDialog.Builder(context);
         dialog.setTitle(file.getName() + ": " + context.getString(R.string.file_copy));
         dialog.setItems(names, this);
         dialog.create();

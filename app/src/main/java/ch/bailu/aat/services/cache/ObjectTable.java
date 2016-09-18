@@ -38,9 +38,9 @@ public class ObjectTable {
         public int hashCode() {
             return obj.hashCode();
         }
-    };
+    }
 
-    private final SparseArray<Container> table = new SparseArray<Container>(INITIAL_CAPACITY);
+    private final SparseArray<Container> table = new SparseArray<>(INITIAL_CAPACITY);
 
 
     public synchronized ObjectHandle getHandle(String id, Factory factory, SelfOn son) {
@@ -137,7 +137,7 @@ public class ObjectTable {
 
     private synchronized void trim(SelfOn self) {
 
-        while ((totalMemorySize > limit) && removeOldest(self));
+        while ((totalMemorySize > limit) && removeOldest(self)) {}
     }
 
 

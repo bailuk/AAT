@@ -63,7 +63,7 @@ public class TagEditor extends LinearLayout {
     }
 
 
-    private BroadcastReceiver onSelectMapFeature = new BroadcastReceiver() {
+    private final BroadcastReceiver onSelectMapFeature = new BroadcastReceiver() {
 
         @Override
         public void onReceive(Context context, Intent intent) {

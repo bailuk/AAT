@@ -2,13 +2,13 @@ package ch.bailu.aat.gpx.interfaces;
 
 
 
-public interface GpxBigDeltaInterface extends GpxDeltaInterface, GpxType  {
+public interface GpxBigDeltaInterface extends GpxDeltaInterface  {
 
 
-    public float getMaximumSpeed();
-    public long getPause();
-    public long getStartTime();
-    public long getEndTime();
+    float getMaximumSpeed();
+    long getPause();
+    long getStartTime();
+    long getEndTime();
 
-    public int getType();
+    int getType();
 }

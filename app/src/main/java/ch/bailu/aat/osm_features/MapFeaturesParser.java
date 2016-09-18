@@ -31,11 +31,11 @@ public class MapFeaturesParser {
 
     public MapFeaturesParser(OnHaveFeature hf, File[] files) throws IOException {
         haveFeature = hf;
-     
-       
-        for (int i=0; i< files.length; i++) {
-            if (files[i].exists() && files[i].canRead() && files[i].isFile()) {
-                parseSummary(new FileAccess(files[i]));
+
+
+        for (File file : files) {
+            if (file.exists() && file.canRead() && file.isFile()) {
+                parseSummary(new FileAccess(file));
             }
         }
     }

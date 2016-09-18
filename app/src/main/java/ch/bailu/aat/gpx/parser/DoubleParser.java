@@ -18,11 +18,9 @@ public class DoubleParser  {
     
     private int output=0;
     
-    private int fraction;
-    private int exponent;
-    private int baseExponent;
+    private final int baseExponent;
     
-    SimpleStream stream;
+    final SimpleStream stream;
 
   
     
@@ -46,9 +44,9 @@ public class DoubleParser  {
     public void scan() throws IOException {
         boolean haveDecimal=false;
         boolean negative=false;
-        
-        exponent=baseExponent;
-        fraction=0;
+
+        int exponent=baseExponent;
+        int fraction=0;
         
         stream.read();
         stream.skipWhitespace();

@@ -6,8 +6,8 @@ import ch.bailu.aat.views.map.overlay.MapTwoNodes;
 import ch.bailu.aat.views.map.overlay.MapTwoNodes.PixelNode;
 
 public class MapViewContext {
-    public static int COLOR = 0x99ffffff;
-    public static int MIN_PIXEL_DISTANCE=100;
+    public static final int COLOR = 0x99ffffff;
+    public static final int MIN_PIXEL_DISTANCE=100;
 
     public final MapPainter painter;
     public final MapTwoNodes nodes;

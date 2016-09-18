@@ -1,12 +1,13 @@
 package ch.bailu.aat.services.tracker;
 
 import ch.bailu.aat.R;
+import ch.bailu.aat.gpx.GpxInformation;
 
 public class NullState extends State {
 
     @Override
     public int getStateID() {
-        return STATE_OFF;
+        return GpxInformation.ID.STATE_OFF;
     }
 
 

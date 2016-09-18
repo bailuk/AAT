@@ -55,7 +55,7 @@ public class IconMapService extends VirtualService {
 
         private final IconMap map = new IconMap();
 
-        private File directory;
+        private final File directory;
 
 
         public SelfOn() {

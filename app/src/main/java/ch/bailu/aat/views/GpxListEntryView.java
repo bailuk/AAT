@@ -22,7 +22,7 @@ public class GpxListEntryView extends  DescriptionViewGroup {
 
     
     public GpxListEntryView(ServiceContext sc, ContentDescription[] description) {
-        super(sc.getContext(), SOLID_KEY, INFO_ID_ALL);
+        super(sc.getContext(), SOLID_KEY, GpxInformation.ID.INFO_ID_ALL);
 
         scontext=sc;
 
@@ -80,11 +80,11 @@ public class GpxListEntryView extends  DescriptionViewGroup {
 
     private class SubEntryView extends TrackDescriptionView {
 
-        TextView entry;
-        ContentDescription data;
+        final TextView entry;
+        final ContentDescription data;
 
         public SubEntryView(Context context, String key, ContentDescription d) {
-            super(context, key,INFO_ID_ALL);
+            super(context, key,GpxInformation.ID.INFO_ID_ALL);
 
             data=d;
 

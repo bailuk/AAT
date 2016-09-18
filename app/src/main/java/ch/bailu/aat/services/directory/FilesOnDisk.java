@@ -25,19 +25,17 @@ public class FilesOnDisk {
     
     
     private static ArrayList<File> getFileList(File directory) throws IOException {
-        return new ArrayList<File>(Arrays.asList(directory.listFiles()));
+        return new ArrayList<>(Arrays.asList(directory.listFiles()));
     }
     
     
     public File findItem(String path) {
-        File file = null;
-        
         for (int i=0; i<files.size(); i++) {
             if (path.equalsIgnoreCase(files.get(i).getAbsolutePath())) {
                 return files.get(i);
             }
         }
-        return file;
+        return null;
     }
     
     

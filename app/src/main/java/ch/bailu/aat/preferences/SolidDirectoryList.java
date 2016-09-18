@@ -9,7 +9,7 @@ import android.os.Environment;
 public abstract class SolidDirectoryList extends SolidIndexList {
 
 
-    private final ArrayList<String> list = new ArrayList<String>(10);
+    private final ArrayList<String> list = new ArrayList<>(10);
 
 
 

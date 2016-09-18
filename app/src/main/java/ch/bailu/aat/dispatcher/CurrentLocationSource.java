@@ -9,7 +9,7 @@ import ch.bailu.aat.services.ServiceContext;
 public class CurrentLocationSource extends ContentSource {
     private final ServiceContext scontext;
 
-    private BroadcastReceiver onLocationChange = new BroadcastReceiver () {
+    private final BroadcastReceiver onLocationChange = new BroadcastReceiver () {
         @Override
         public void onReceive(Context context, Intent intent) {
             updateGpxContent(scontext.getTrackerService().getLocation());

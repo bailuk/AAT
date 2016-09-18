@@ -59,14 +59,14 @@ public class BackgroundService extends VirtualService {
     public class SelfOn extends Self {
         private final static int PROCESS_QUEUE_SIZE=500;
 
-        private final SparseArray<DownloaderThread> downloaders = new SparseArray<DownloaderThread>();
-        private final SparseArray<LoaderThread> loaders = new SparseArray<LoaderThread>();
+        private final SparseArray<DownloaderThread> downloaders = new SparseArray<>();
+        private final SparseArray<LoaderThread> loaders = new SparseArray<>();
         private ProcessThread process;
 
 
-        private MapFeaturesDownloader mapFeaturesDownloader;
+        private final MapFeaturesDownloader mapFeaturesDownloader;
 
-        private BroadcastReceiver onFileDownloaded = new BroadcastReceiver() {
+        private final BroadcastReceiver onFileDownloaded = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
                 AppLog.i(context, AppIntent.getFile(intent));

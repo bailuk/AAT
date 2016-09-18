@@ -16,7 +16,7 @@ public class ObjectBroadcaster implements Closeable {
 
     private final ServiceContext serviceContext;
 
-    private final SparseArray<ObjectBroadcastReceiver> table = new SparseArray<ObjectBroadcastReceiver>(INITIAL_CAPACITY);
+    private final SparseArray<ObjectBroadcastReceiver> table = new SparseArray<>(INITIAL_CAPACITY);
 
 
     public ObjectBroadcaster(ServiceContext sc) {
@@ -52,7 +52,7 @@ public class ObjectBroadcaster implements Closeable {
 
     }
 
-    private BroadcastReceiver onFileChanged = new BroadcastReceiver() {
+    private final BroadcastReceiver onFileChanged = new BroadcastReceiver() {
 
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -62,7 +62,7 @@ public class ObjectBroadcaster implements Closeable {
         }
     };
     
-    private BroadcastReceiver onFileDownloaded = new BroadcastReceiver() {
+    private final BroadcastReceiver onFileDownloaded = new BroadcastReceiver() {
 
         @Override
         public void onReceive(Context context, Intent intent) {

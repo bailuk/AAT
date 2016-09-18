@@ -8,11 +8,11 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.util.Locale;
 
-import ch.bailu.aat.gpx.GpxBigDelta;
 import ch.bailu.aat.gpx.interfaces.GpxPointInterface;
+import ch.bailu.aat.gpx.interfaces.GpxType;
 import ch.bailu.aat.helpers.AppTheme;
 
-public abstract class GpxWriter implements GpxConstants{
+public abstract class GpxWriter {
     private BufferedWriter output=null;
 
 
@@ -21,9 +21,9 @@ public abstract class GpxWriter implements GpxConstants{
 
     }
     public static GpxWriter factory(File file, int type) throws FileNotFoundException {
-        if (type == GpxBigDelta.TRK) {
+        if (type == GpxType.TRK) {
             return new TrackWriter(file);
-        } else if (type == GpxBigDelta.RTE) {
+        } else if (type == GpxType.RTE) {
             return new RouteWriter(file);
         }
         return new WayWriter(file);

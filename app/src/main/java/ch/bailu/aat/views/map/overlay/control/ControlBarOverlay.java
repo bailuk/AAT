@@ -19,7 +19,7 @@ public abstract class ControlBarOverlay extends OsmOverlay implements Runnable, 
 
     private final ControlBar bar;
     private boolean isVisible=false;
-    private Timer hideTimer = new Timer(this, HIDE_TIMER_MILLIS);
+    private final Timer hideTimer = new Timer(this, HIDE_TIMER_MILLIS);
 
     public ControlBarOverlay(OsmInteractiveView v, ControlBar b, int color) {
         super(v);
@@ -146,9 +146,9 @@ public abstract class ControlBarOverlay extends OsmOverlay implements Runnable, 
     }
 
 
-    public void topTap()   {hideBar();};
-    public void bottomTap(){hideBar();};
-    public void middleTap(){hideBar();};
+    public void topTap()   {hideBar();}
+    public void bottomTap(){hideBar();}
+    public void middleTap(){hideBar();}
     public void rightTab() {hideBar();}
-    public void leftTab()  {hideBar();};
+    public void leftTab()  {hideBar();}
 }

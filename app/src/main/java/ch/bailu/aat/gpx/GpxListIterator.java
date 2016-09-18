@@ -28,7 +28,7 @@ public class GpxListIterator {
         }
     }
     
-    private GpxList track;
+    private final GpxList track;
 
     private Node point = new PointPrimerNode();
     private Node segment = new SegmentPrimerNode();

@@ -45,7 +45,7 @@ OnHaveFeature {
     }
 
 
-    private final ArrayList<ListData> data = new ArrayList<ListData>();
+    private final ArrayList<ListData> data = new ArrayList<>();
 
 
     public FeaturesList(ServiceContext sc, FileAccess file) {
@@ -203,7 +203,7 @@ OnHaveFeature {
 
                 File file;
                 try {
-                    file = new File(AppDirectory.getDataDirectory(getContext(), AppDirectory.DIR_OSM_FEATURES_PREPARSED),d.name.toString());
+                    file = new File(AppDirectory.getDataDirectory(getContext(), AppDirectory.DIR_OSM_FEATURES_PREPARSED), d.name);
                     String content = new FileAccess(file).contentToString();
                     ActivitySwitcher.start(getContext(), HtmlViewActivity.class, content);
 

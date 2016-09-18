@@ -255,7 +255,7 @@ public class GpxObjectEditable extends  GpxObject {
             return editor.getList().getDelta().getBoundingBox();
         }
         
-    };
+    }
 
 
     public static class Factory extends ObjectHandle.Factory {

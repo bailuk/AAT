@@ -6,7 +6,7 @@ import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.cache.ObjectHandle;
 
 public class ElevationUpdaterEntry {
-    private final SparseArray <SrtmCoordinates> tiles = new SparseArray<SrtmCoordinates>(5);
+    private final SparseArray <SrtmCoordinates> tiles = new SparseArray<>(5);
     private final String id;
     private final ServiceContext scontext;
  
@@ -30,8 +30,8 @@ public class ElevationUpdaterEntry {
     
             ElevationUpdaterClient updatable =  (ElevationUpdaterClient) handle;
             SrtmCoordinates c[] = updatable.getSrtmTileCoordinates();
-            for (int i = 0; i< c.length; i++) {
-                addSRTMTile(c[i]);
+            for (SrtmCoordinates aC : c) {
+                addSRTMTile(aC);
             }
         }
         

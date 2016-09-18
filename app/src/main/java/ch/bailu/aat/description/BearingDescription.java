@@ -8,7 +8,7 @@ import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.R;
 
 public class BearingDescription extends DoubleDescription {
-    private Context context;
+    private final Context context;
     public BearingDescription(Context c) {
         super(c);
         context=c;

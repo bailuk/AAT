@@ -2,6 +2,8 @@ package ch.bailu.aat.views;
 
 import ch.bailu.aat.description.ContentDescription;
 import ch.bailu.aat.gpx.GpxInformation;
+import ch.bailu.aat.helpers.AppLog;
+
 import android.content.Context;
 import android.graphics.Color;
 import android.view.View;
@@ -9,6 +11,8 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import java.util.Locale;
 
 public class SummaryListView extends TrackDescriptionView {
     private final ListView list;
@@ -40,11 +44,11 @@ public class SummaryListView extends TrackDescriptionView {
                 data[i].updateGpxContent(info);
                 updateLabel(i);
             }
-        }   
+        }
     }
 
     private void updateLabel(int i) {
-        String text=String.format("%s:  %s%s", 
+        String text=String.format((Locale) null, "%s:  %s%s",
                 data[i].getLabel(), 
                 data[i].getValue(), 
                 data[i].getUnit());
@@ -54,17 +58,22 @@ public class SummaryListView extends TrackDescriptionView {
 
     @Override
     protected void onLayout(boolean c, int l, int t, int r, int b) {
-        if (c) list.layout(0, 0, r-l, b-t);
+        list.layout(0, 0, r-l, b-t);
     }
 
 
-    private int parentWidthHack=2000;
 
     @Override
-    protected void onMeasure(int w, int h) {
-        parentWidthHack=MeasureSpec.getSize(w);
-        super.onMeasure(w, h);
+    public void onMeasure(int w, int h) {
+        int width = MeasureSpec.getSize(w);
+        int height = MeasureSpec.getSize(h);
+
+        w = MeasureSpec.makeMeasureSpec(width, MeasureSpec.EXACTLY);
+        h = MeasureSpec.makeMeasureSpec(height, MeasureSpec.EXACTLY);
+        list.measure(w,h);
+        setMeasuredDimension(width, height);
     }
+
 
     private class MyTextView extends TextView {
 
@@ -75,7 +84,8 @@ public class SummaryListView extends TrackDescriptionView {
 
         @Override
         public void onMeasure(int w, int h) {
-            w = MeasureSpec.makeMeasureSpec(parentWidthHack, MeasureSpec.EXACTLY);
+            int width = MeasureSpec.getSize(w);
+            w = MeasureSpec.makeMeasureSpec(width, MeasureSpec.EXACTLY);
             super.onMeasure(w, h);
         }
     }
@@ -87,6 +97,7 @@ public class SummaryListView extends TrackDescriptionView {
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
+            AppLog.d(this, label[position].getText().toString());
             return label[position];
         }
 

@@ -2,58 +2,67 @@ package ch.bailu.aat.views;
 
 import android.content.Context;
 
-public class VerticalView extends DescriptionViewGroup {
-    
-    public VerticalView(Context context, String key, int filter, TrackDescriptionView[] viewList) {
+import ch.bailu.aat.gpx.GpxInformation;
+
+public class VerticalView extends TrackDescriptionView {
+
+    private final TrackDescriptionView[] viewList;
+
+
+    public VerticalView(Context context, String key, int filter, TrackDescriptionView[] vl) {
         super(context, key, filter);
-        init(viewList);
+        viewList = vl;
         
-        for (TrackDescriptionView view: viewList) 
+        for (TrackDescriptionView view: viewList) {
             addView(view);
+        }
     }
 
 
     
-    
+
     @Override
     protected void onMeasure(int wSpec, int hSpec) {
-        if (getDescriptionCount()>0) {
-            int width = MeasureSpec.getSize(wSpec);
-            int height=MeasureSpec.getSize(hSpec);
-        
-            int hSpecChild  = 
-                    MeasureSpec.makeMeasureSpec (height/getDescriptionCount(), MeasureSpec.EXACTLY);
-            
-            wSpec  = MeasureSpec.makeMeasureSpec (width,  MeasureSpec.EXACTLY);
-            hSpec  = MeasureSpec.makeMeasureSpec (height,  MeasureSpec.EXACTLY);
+        final int width = MeasureSpec.getSize(wSpec);
+        final int height = MeasureSpec.getSize(hSpec);
 
-            for (int i=0; i < getDescriptionCount(); i++) {
-                getDescriptionView(i).measure(wSpec, hSpecChild);
+        if (viewList.length > 0) {
+            wSpec = MeasureSpec.makeMeasureSpec (width,  MeasureSpec.EXACTLY);
+            hSpec = MeasureSpec.makeMeasureSpec (height/viewList.length, MeasureSpec.EXACTLY);
+
+            for (TrackDescriptionView view : viewList) {
+                view.measure(wSpec, hSpec);
             }
-
-            setMeasuredDimension(wSpec, hSpec);
         }
+
+        setMeasuredDimension(width, height);
     }    
 
     
     
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
-        if (getDescriptionCount()>0) {
-            int height=(b-t) / getDescriptionCount();
-            
+        if (viewList.length>0) {
+            final int height=(b-t) / viewList.length;
+
+            r=r-l;
             l=t=0;
-            
-            for (int i=0; i < getDescriptionCount(); i++) {
+
+            for (TrackDescriptionView view : viewList) {
                 b=t+height;
                 
-                getDescriptionView(i).layout(l, t, r, b);
+                view.layout(l, t, r, b);
                 
                 t+=height;
-
             }
         }
-
     }
 
+
+    @Override
+    public void updateGpxContent(GpxInformation info) {
+        if (filter.pass(info)) {
+            for (int i = 0; i< viewList.length; i++) viewList[i].updateGpxContent(info);
+        }
+    }
 }

@@ -3,6 +3,8 @@ package ch.bailu.aat.preferences;
 import ch.bailu.aat.R;
 import android.content.Context;
 
+import java.util.Locale;
+
 public class SolidDistanceFilter extends SolidIndexList {
     private static final String KEY="distance_filter_";
     
@@ -49,7 +51,7 @@ public class SolidDistanceFilter extends SolidIndexList {
         if (i==0) return getContext().getString(R.string.off);
         if (i==length()-1) getContext().getString(R.string.auto);
         
-        return String.format("%.2f%s", VALUE_LIST[i] * sunit.getAltitudeFactor(), sunit.getAltitudeUnit());
+        return String.format(String.format((Locale)null,"%.2f%s", VALUE_LIST[i] * sunit.getAltitudeFactor(), sunit.getAltitudeUnit()));
     }
     
     @Override

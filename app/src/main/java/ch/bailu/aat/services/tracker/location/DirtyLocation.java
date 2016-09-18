@@ -100,6 +100,6 @@ public class DirtyLocation extends LocationStackChainedItem {
             return state;
         }
         
-    };
+    }
 
 }

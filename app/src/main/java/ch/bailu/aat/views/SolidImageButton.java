@@ -33,7 +33,7 @@ public class SolidImageButton extends ImageButton {
     }
 
     
-    private OnClickListener onClick = new OnClickListener() {
+    private final OnClickListener onClick = new OnClickListener() {
         @Override
         public void onClick(View v) {
             sList.cycle();

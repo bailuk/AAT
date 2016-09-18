@@ -1,6 +1,5 @@
 package ch.bailu.aat.services.editor;
 
-import java.io.Closeable;
 import java.io.File;
 
 import ch.bailu.aat.gpx.GpxInformation;

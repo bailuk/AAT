@@ -8,7 +8,7 @@ import ch.bailu.aat.gpx.GpxInformation;
 
 import ch.bailu.aat.R;
 public class LongitudeDescription extends DoubleDescription {
-    public static String UNIT="\u00B0";
+    public static final String UNIT="\u00B0";
 
     public LongitudeDescription(Context context) {
         super(context);

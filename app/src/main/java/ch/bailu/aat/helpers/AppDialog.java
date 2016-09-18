@@ -29,9 +29,9 @@ public abstract class AppDialog {
         }
     }
 
-    protected void onNegativeClick() {};
+    protected void onNegativeClick() {}
     protected abstract void onPositiveClick();
-    public void onNeutralClick() {};
+    public void onNeutralClick() {}
 
     public void displayYesNoDialog(Activity activity, String title, String text) {
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);

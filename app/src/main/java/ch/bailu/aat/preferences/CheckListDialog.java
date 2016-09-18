@@ -8,12 +8,11 @@ import android.content.DialogInterface.OnMultiChoiceClickListener;
 public class CheckListDialog implements  OnMultiChoiceClickListener{
     private final SolidCheckList slist;
 
-    private final AlertDialog.Builder dialog;
 
     public CheckListDialog (Context context, SolidCheckList l) {
         slist=l;
 
-        dialog = new AlertDialog.Builder(context);
+        final AlertDialog.Builder dialog = new AlertDialog.Builder(context);
         dialog.setMultiChoiceItems(slist.getStringArray(), slist.getEnabledArray(), this);
         dialog.create();
         dialog.show();

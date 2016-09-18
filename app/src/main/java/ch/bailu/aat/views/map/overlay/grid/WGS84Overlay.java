@@ -4,6 +4,9 @@ import org.osmdroid.api.IGeoPoint;
 import org.osmdroid.util.constants.GeoConstants;
 
 import android.graphics.Point;
+
+import java.util.Locale;
+
 import ch.bailu.aat.coordinates.WGS84Sexagesimal;
 import ch.bailu.aat.description.AltitudeDescription;
 import ch.bailu.aat.services.ServiceContext;
@@ -44,7 +47,8 @@ public class WGS84Overlay extends OsmOverlay implements GeoConstants{
     
     private void drawCoordinates(MapPainter painter, IGeoPoint point) {
         painter.canvas.drawTextBottom(new WGS84Sexagesimal(point).toString(),2);
-        painter.canvas.drawTextBottom(String.format("%.6f/%.6f", 
+        painter.canvas.drawTextBottom(
+                String.format((Locale)null,"%.6f/%.6f",
                 ((double)point.getLatitudeE6()/1E6), 
                 ((double)point.getLongitudeE6()/1E6)),
                 1);

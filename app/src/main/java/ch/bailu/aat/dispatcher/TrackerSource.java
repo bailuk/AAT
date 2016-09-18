@@ -8,21 +8,21 @@ import ch.bailu.aat.services.ServiceContext;
 
 public class TrackerSource extends ContentSource {
 
-    private ServiceContext scontext;
+    private final ServiceContext scontext;
 
     public TrackerSource (ServiceContext sc) {
         scontext = sc;
 
     }
 
-    private BroadcastReceiver onStateChanged = new BroadcastReceiver () {
+    private final BroadcastReceiver onStateChanged = new BroadcastReceiver () {
         @Override
         public void onReceive(Context context, Intent intent) {
             updateGpxContent(scontext.getTrackerService().getTrackerInformation());		}
 
     };
 
-    private BroadcastReceiver onTrackChanged = new BroadcastReceiver () {
+    private final BroadcastReceiver onTrackChanged = new BroadcastReceiver () {
         @Override
         public void onReceive(Context context, Intent intent) {
             updateGpxContent(scontext.getTrackerService().getTrackerInformation());

@@ -1,6 +1,7 @@
 package ch.bailu.aat.gpx;
 
 import ch.bailu.aat.gpx.interfaces.GpxBigDeltaInterface;
+import ch.bailu.aat.gpx.interfaces.GpxType;
 import ch.bailu.aat.gpx.linked_list.List;
 import ch.bailu.aat.gpx.linked_list.Node;
 import ch.bailu.aat.gpx.segmented_list.SegmentNode;
@@ -8,8 +9,8 @@ import ch.bailu.aat.gpx.segmented_list.SegmentNodeFactory;
 import ch.bailu.aat.gpx.segmented_list.SegmentedList;
 
 public class GpxList {
-    public static final GpxList NULL_TRACK = new GpxList(GpxBigDeltaInterface.TRK);
-    public static final GpxList NULL_ROUTE = new GpxList(GpxBigDeltaInterface.RTE);
+    public static final GpxList NULL_TRACK = new GpxList(GpxType.TRK);
+    public static final GpxList NULL_ROUTE = new GpxList(GpxType.RTE);
 
     
     public GpxList(int type) {

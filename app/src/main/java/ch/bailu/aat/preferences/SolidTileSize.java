@@ -5,7 +5,7 @@ import android.content.Context;
 
 
 public class SolidTileSize extends SolidIndexList {
-    private static String KEY="tile_size";
+    private static final String KEY="tile_size";
 
     public static final int DEFAULT_TILESIZE=256;
     private static final int STEP=32;

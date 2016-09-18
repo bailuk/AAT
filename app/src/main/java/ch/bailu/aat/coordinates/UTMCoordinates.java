@@ -50,9 +50,10 @@ public class UTMCoordinates extends MeterCoordinates {
     private final static double UTM_SCALE_FACTOR = 0.9996;
 
     
-    private int nzone, ezone;
+    private int nzone;
+    private final int ezone;
     double easting, northing;
-    private boolean south;
+    private final boolean south;
     
     
     public UTMCoordinates(double la, double lo) {

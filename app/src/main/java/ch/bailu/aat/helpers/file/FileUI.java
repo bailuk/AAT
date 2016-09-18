@@ -39,10 +39,9 @@ public class FileUI {
     
 
     public static String getExistsMsg(Context c, File f) {
-        StringBuilder msg = new StringBuilder()
-                .append(f.getName())
-                .append(c.getString(R.string.file_exists));
-        return msg.toString();
+        String msg = f.getName() +
+                c.getString(R.string.file_exists);
+        return msg;
     }
 
 

@@ -70,9 +70,7 @@ public class GpxAttributes {
         if (index == size()) {
             Tag[] newTagList = new Tag[size()+1];
 
-            for (int i=0; i< tagList.length; i++) {
-                newTagList[i]=tagList[i];
-            }
+            System.arraycopy(tagList, 0, newTagList, 0, tagList.length);
             tagList=newTagList;
         }
 

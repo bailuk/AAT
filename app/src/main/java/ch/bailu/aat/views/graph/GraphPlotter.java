@@ -10,13 +10,14 @@ public class GraphPlotter {
     private static final int YLABEL_XOFFSET=50;
     private static final int YLABEL_YOFFSET=30;
     
-    private Scaler xscaler;
-    private InvertetOffsetScaler yscaler;
+    private final Scaler xscaler;
+    private final InvertetOffsetScaler yscaler;
     
-    private Paint paint;
-    private Canvas canvas;
+    private final Paint paint;
+    private final Canvas canvas;
     
-    private int width,height;
+    private final int width;
+    private final int height;
     
     private Point pointA=new Point(-5,-5), pointB = new Point(-5,-5);
     

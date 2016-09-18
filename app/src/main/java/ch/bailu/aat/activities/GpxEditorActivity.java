@@ -76,7 +76,7 @@ public class GpxEditorActivity extends AbsFileContentActivity {
 
         NodeListView wayList = new NodeListView(getServiceContext(),
                 SOLID_KEY,
-                INFO_ID_EDITOR_OVERLAY 
+                GpxInformation.ID.INFO_ID_EDITOR_OVERLAY
                 );
 
         TrackDescriptionView viewData[] = {
@@ -84,12 +84,13 @@ public class GpxEditorActivity extends AbsFileContentActivity {
                 wayList,
                 map,
 
-                new VerticalView(this, SOLID_KEY, INFO_ID_EDITOR_OVERLAY, new TrackDescriptionView[] {
+                new VerticalView(this, SOLID_KEY, GpxInformation.ID.INFO_ID_EDITOR_OVERLAY, new TrackDescriptionView[] {
+                        new SummaryListView(this, SOLID_KEY, GpxInformation.ID.INFO_ID_EDITOR_OVERLAY, summaryData),
                         new DistanceAltitudeGraphView(this, SOLID_KEY),
-                        new SummaryListView(this, SOLID_KEY, INFO_ID_EDITOR_OVERLAY, summaryData)})
+                        })
         };   
 
-        return new MultiView(this, SOLID_KEY, INFO_ID_ALL, viewData);
+        return new MultiView(this, SOLID_KEY, GpxInformation.ID.INFO_ID_ALL, viewData);
     }
 
 

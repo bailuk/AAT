@@ -1,9 +1,8 @@
 package ch.bailu.aat.services.tracker;
 
-import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.helpers.AppBroadcaster;
 
-public abstract class State implements GpxInformation.ID {
+public abstract class State  {
     protected final TrackerInternals internal;
     
     

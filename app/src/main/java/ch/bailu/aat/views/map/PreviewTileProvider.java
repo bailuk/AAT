@@ -12,7 +12,7 @@ import ch.bailu.aat.services.cache.TileStackObject;
 
 public class PreviewTileProvider extends AbsOsmTileProvider implements Closeable  {
 
-    private ArrayList<TileStackObject> tiles = new ArrayList<TileStackObject>(10);
+    private final ArrayList<TileStackObject> tiles = new ArrayList<>(10);
     
 
     public PreviewTileProvider(ServiceContext sc) {

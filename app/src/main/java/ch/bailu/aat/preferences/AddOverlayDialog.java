@@ -10,14 +10,12 @@ public class AddOverlayDialog implements  DialogInterface.OnClickListener {
     private final SolidOverlayFileList slist;
     private final File file;
 
-    private final AlertDialog.Builder dialog;
 
     public AddOverlayDialog (Context context, SolidOverlayFileList l, File f) {
         slist=l;
         file=f;
 
-
-        dialog = new AlertDialog.Builder(context);
+        final AlertDialog.Builder dialog = new AlertDialog.Builder(context);
         dialog.setItems(slist.getStringArray(), this);
         dialog.create();
         dialog.show();

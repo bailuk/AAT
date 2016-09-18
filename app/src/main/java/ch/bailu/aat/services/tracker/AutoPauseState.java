@@ -3,6 +3,7 @@ package ch.bailu.aat.services.tracker;
 import java.io.IOException;
 
 import ch.bailu.aat.R;
+import ch.bailu.aat.gpx.GpxInformation;
 
 
 public class AutoPauseState extends State {
@@ -22,7 +23,7 @@ public class AutoPauseState extends State {
 
     @Override
     public int getStateID() {
-        return STATE_AUTOPAUSED;
+        return GpxInformation.ID.STATE_AUTOPAUSED;
     }
 
     @Override

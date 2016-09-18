@@ -21,13 +21,13 @@ import ch.bailu.aat.services.cache.GpxObjectStatic;
 import ch.bailu.aat.services.cache.ObjectHandle;
 
 
-public class OverlaySource extends ContentSource implements GpxInformation.ID {
+public class OverlaySource extends ContentSource {
     public static final int MAX_OVERLAYS=SolidOverlayFileList.MAX_OVERLAYS;
 
 
     private final ServiceContext scontext;
 
-    private OverlayInformation[] overlayList = new OverlayInformation[MAX_OVERLAYS];
+    private final OverlayInformation[] overlayList = new OverlayInformation[MAX_OVERLAYS];
 
     public OverlaySource(ServiceContext sc) {
         scontext=sc;
@@ -36,8 +36,7 @@ public class OverlaySource extends ContentSource implements GpxInformation.ID {
 
     @Override
     public void onPause() {
-        for (int i=0; i<overlayList.length; i++) 
-            overlayList[i].close();
+        for (OverlayInformation anOverlayList : overlayList) anOverlayList.close();
     }
 
 
@@ -46,7 +45,7 @@ public class OverlaySource extends ContentSource implements GpxInformation.ID {
     @Override
     public void onResume() {
         for (int i=0; i<MAX_OVERLAYS; i++)
-            overlayList[i]= new OverlayInformation(INFO_ID_OVERLAY+i);
+            overlayList[i]= new OverlayInformation(GpxInformation.ID.INFO_ID_OVERLAY+i);
     }
 
 
@@ -141,7 +140,7 @@ public class OverlaySource extends ContentSource implements GpxInformation.ID {
         }
 
         private void setBounding() {
-            GpxList list = ((GpxObject)handle).getGpxList();
+            GpxList list = handle.getGpxList();
             bounding = list.getDelta().getBoundingBox();
         }
 

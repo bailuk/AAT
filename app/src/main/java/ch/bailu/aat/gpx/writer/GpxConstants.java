@@ -1,6 +1,6 @@
 package ch.bailu.aat.gpx.writer;
 
-public interface GpxConstants {
+public class GpxConstants {
     public static final String QNAME_GPX = "gpx";
     public static final String QNAME_TRACK = "trk";
     public static final String QNAME_TRACK_SEGMENT = "trkseg";

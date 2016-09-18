@@ -18,7 +18,7 @@ public class TrackerInternals
 implements OnSharedPreferenceChangeListener, Closeable ,Runnable {
 
     private final static int TIMEOUT = 1000;
-    private Timer timer;
+    private final Timer timer;
     
     
     public final ServiceContext scontext;
@@ -27,13 +27,13 @@ implements OnSharedPreferenceChangeListener, Closeable ,Runnable {
     
     
     public Logger logger;
-    public LocationStack location;
+    public final LocationStack location;
 
-    public StatusIcon statusIcon;
-    public Backlight backlight;
+    public final StatusIcon statusIcon;
+    public final Backlight backlight;
     
     
-    private Storage storage;
+    private final Storage storage;
     public SolidAutopause sautopause;
     public SolidBacklight sbacklight;
         

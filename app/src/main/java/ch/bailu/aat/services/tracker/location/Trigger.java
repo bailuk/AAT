@@ -5,8 +5,8 @@ public class Trigger {
     private static final int NEUTRAL = 0;
     private static final int HIGH = 1;
     
-    private int htrigger;
-    private int ltrigger;
+    private final int htrigger;
+    private final int ltrigger;
     
     private int trigger=NEUTRAL;
     

@@ -64,9 +64,10 @@ public class AbsFileContentActivity extends AbsDispatcher implements OnClickList
 
     protected EditorHelper edit;
 
+    /*
     public static class FileContent {
         
-    }
+    }*/
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -137,15 +138,15 @@ public class AbsFileContentActivity extends AbsDispatcher implements OnClickList
         };
 
         final TrackDescriptionView viewData[] = {
-                new SummaryListView(this, SOLID_KEY, INFO_ID_FILEVIEW, summaryData), 
+                new SummaryListView(this, SOLID_KEY, GpxInformation.ID.INFO_ID_FILEVIEW, summaryData),
                 map,
-                new VerticalView(this, SOLID_KEY, INFO_ID_FILEVIEW, new TrackDescriptionView[] {
+                new VerticalView(this, SOLID_KEY, GpxInformation.ID.INFO_ID_FILEVIEW, new TrackDescriptionView[] {
                         new DistanceAltitudeGraphView(this, SOLID_KEY),
                         new DistanceSpeedGraphView(this, SOLID_KEY)
                 })
         };   
 
-        return new MultiView(this, SOLID_KEY, INFO_ID_ALL, viewData);
+        return new MultiView(this, SOLID_KEY, GpxInformation.ID.INFO_ID_ALL, viewData);
     }
 
 
@@ -171,12 +172,6 @@ public class AbsFileContentActivity extends AbsDispatcher implements OnClickList
         };
 
         setDispatcher(new ContentDispatcher(this,source, target));
-    }
-
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
     }
 
 

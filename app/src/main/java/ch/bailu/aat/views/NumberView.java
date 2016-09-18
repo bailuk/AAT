@@ -29,7 +29,7 @@ public class NumberView extends TrackDescriptionView {
 
     
     public NumberView(ContentDescription data) {
-        this(data, INFO_ID_ALL);
+        this(data, GpxInformation.ID.INFO_ID_ALL);
     }
 
     private void setNumberFont(int size) {

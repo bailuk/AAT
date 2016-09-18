@@ -3,7 +3,7 @@ package ch.bailu.aat.views.graph;
 
 public class InvertetOffsetScaler {
 
-    private Scaler scaler;
+    private final Scaler scaler;
     private float min=Float.MAX_VALUE,max=0;
     public InvertetOffsetScaler(int pixel) {
         scaler=new Scaler(pixel);

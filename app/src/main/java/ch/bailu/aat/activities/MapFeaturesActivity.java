@@ -25,7 +25,6 @@ public class MapFeaturesActivity extends AbsDispatcher implements OnClickListene
     
     private FeaturesList list;
     
-    private ControlBar bar;
     private BusyButton download;
 
     
@@ -39,8 +38,8 @@ public class MapFeaturesActivity extends AbsDispatcher implements OnClickListene
         download = new BusyButton(this,R.drawable.go_bottom_inverse);
         ToolTip.set(download, R.string.tt_overpass_download_features);
         download.setOnClickListener(this);
-        
-        bar = new MainControlBar(getServiceContext(),6);
+
+        final ControlBar bar = new MainControlBar(getServiceContext(),6);
         
         bar.addView(download);
         bar.addViewIgnoreSize(AppTheme.getTitleTextView(this, R.string.query_features));
@@ -89,7 +88,7 @@ public class MapFeaturesActivity extends AbsDispatcher implements OnClickListene
         }
     }
     
-    private BroadcastReceiver onFileProcessed = new BroadcastReceiver() {
+    private final BroadcastReceiver onFileProcessed = new BroadcastReceiver() {
 
         @Override
         public void onReceive(Context context, Intent intent) {

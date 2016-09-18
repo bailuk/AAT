@@ -14,14 +14,11 @@ public class GpxDatabase extends AbsDatabase{
 
     private SQLiteDatabase database;
 
-    private final File path;
 
 
 
-    public GpxDatabase (ServiceContext sc, File p) throws IOException {
+    public GpxDatabase (ServiceContext sc, File path) throws IOException {
         context=sc.getContext();
-        path=p;
-
         database = openDatabase(path);
     }
 

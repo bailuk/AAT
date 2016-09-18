@@ -20,7 +20,7 @@ public class HillshadeColorTable extends ObjectHandle {
     private static final int COLOR=50;
     private static final int GRAY=(COLOR << 16) | (COLOR << 8) | COLOR;
     
-    private byte table[][]=new byte[TABLE_DIM][TABLE_DIM];
+    private final byte[][] table=new byte[TABLE_DIM][TABLE_DIM];
     
     public HillshadeColorTable() {
         super(ID);

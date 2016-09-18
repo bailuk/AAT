@@ -17,13 +17,13 @@ public class RouteWriter extends GpxWriter {
     @Override
     public void writeHeader(long timestamp) throws IOException {
         super.writeHeader(timestamp);
-        writeBeginElement(QNAME_ROUTE);
+        writeBeginElement(GpxConstants.QNAME_ROUTE);
     }
 
     @Override
     public void writeFooter() throws IOException {
-        writeEndElement(QNAME_ROUTE);
-        writeEndElement(QNAME_GPX);
+        writeEndElement(GpxConstants.QNAME_ROUTE);
+        writeEndElement(GpxConstants.QNAME_GPX);
     }
 
     @Override
@@ -35,18 +35,18 @@ public class RouteWriter extends GpxWriter {
     @Override
     public void writeTrackPoint(GpxPointInterface tp) throws IOException {
         writeString("\t");
-        writeBeginElementStart(QNAME_ROUTE_POINT);
-            writeParameter(QNAME_LATITUDE, String.format((Locale)null, "%.6f", tp.getLatitude()));
-            writeParameter(QNAME_LONGITUDE, String.format((Locale)null, "%.6f", tp.getLongitude()));
+        writeBeginElementStart(GpxConstants.QNAME_ROUTE_POINT);
+            writeParameter(GpxConstants.QNAME_LATITUDE, String.format((Locale)null, "%.6f", tp.getLatitude()));
+            writeParameter(GpxConstants.QNAME_LONGITUDE, String.format((Locale)null, "%.6f", tp.getLongitude()));
         writeBeginElementEnd();
         
         if (tp.getAltitude() != ElevationProvider.NULL_ALTITUDE) {
-            writeBeginElement(QNAME_ALTITUDE);
+            writeBeginElement(GpxConstants.QNAME_ALTITUDE);
             writeString(String.format((Locale)null, "%d",(int)tp.getAltitude()));
-            writeEndElement(QNAME_ALTITUDE);
+            writeEndElement(GpxConstants.QNAME_ALTITUDE);
         }
         
-        writeEndElement(QNAME_ROUTE_POINT);
+        writeEndElement(GpxConstants.QNAME_ROUTE_POINT);
         writeString("\n");
     }
 }

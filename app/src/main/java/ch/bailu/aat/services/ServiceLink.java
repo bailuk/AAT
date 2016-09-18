@@ -62,14 +62,14 @@ public abstract class ServiceLink extends ServiceContext implements Closeable {
         public AbsService getService() {
             return service;
         }
-    };
+    }
 
 
     public abstract void onServicesUp();
 
 
-    private final Hashtable<Class<?>, Connection> serviceTable = 
-            new Hashtable<Class<?>, Connection>();
+    private final Hashtable<Class<?>, Connection> serviceTable =
+            new Hashtable<>();
 
 
     private final Context context;

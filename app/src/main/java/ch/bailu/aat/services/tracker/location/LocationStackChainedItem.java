@@ -2,7 +2,7 @@ package ch.bailu.aat.services.tracker.location;
 
 
 public abstract class LocationStackChainedItem extends LocationStackItem {
-    private LocationStackItem next;
+    private final LocationStackItem next;
     
     public LocationStackChainedItem(LocationStackItem n) {
         next = n;

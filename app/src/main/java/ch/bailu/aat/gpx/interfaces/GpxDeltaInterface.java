@@ -8,5 +8,5 @@ public interface GpxDeltaInterface {
     float getSpeed();
     float getAcceleration();
     long  getTimeDelta();
-    public BoundingBox getBoundingBox();
+    BoundingBox getBoundingBox();
 }

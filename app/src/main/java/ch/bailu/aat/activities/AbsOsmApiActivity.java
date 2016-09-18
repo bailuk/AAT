@@ -20,6 +20,7 @@ import ch.bailu.aat.description.DescriptionInterface;
 import ch.bailu.aat.dispatcher.ContentDispatcher;
 import ch.bailu.aat.dispatcher.ContentSource;
 import ch.bailu.aat.dispatcher.CustomFileSource;
+import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.helpers.AbsTextBackup;
 import ch.bailu.aat.helpers.AppBroadcaster;
 import ch.bailu.aat.helpers.AppDirectory;
@@ -55,7 +56,8 @@ public abstract class AbsOsmApiActivity extends AbsDispatcher implements OnClick
     private OsmApiHelper       osmApi;
     private ProcessHandle      request=ProcessHandle.NULL;
 
-    private final LayoutParams layout= new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);;
+    private final LayoutParams layout =
+            new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
 
 
     @Override
@@ -135,7 +137,7 @@ public abstract class AbsOsmApiActivity extends AbsDispatcher implements OnClick
         AppTheme.themify(postLabel);
 
         list = new NodeListView(getServiceContext(),SOLID_KEY,
-                INFO_ID_FILEVIEW);
+                GpxInformation.ID.INFO_ID_FILEVIEW);
 
 
         view.addView(list,layout);
@@ -294,7 +296,6 @@ public abstract class AbsOsmApiActivity extends AbsDispatcher implements OnClick
         }
     }
 
-    @Override
-    public void onServicesUp(boolean firstRun) {}
+
 
 }

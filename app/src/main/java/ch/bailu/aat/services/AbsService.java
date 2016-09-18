@@ -22,7 +22,7 @@ public abstract class AbsService  extends Service {
 
 
 
-    private final Set<String> locks = new HashSet<String>();
+    private final Set<String> locks = new HashSet<>();
 
     private final Timer lazyOff = new Timer(new Runnable() {
         @Override

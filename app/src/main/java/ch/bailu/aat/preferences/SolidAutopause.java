@@ -3,6 +3,8 @@ package ch.bailu.aat.preferences;
 import ch.bailu.aat.R;
 import android.content.Context;
 
+import java.util.Locale;
+
 public class SolidAutopause extends SolidIndexList {
     private final static String KEY="autopause";
     private final Context context;
@@ -26,7 +28,7 @@ public class SolidAutopause extends SolidIndexList {
         20,20,20,20,20,20,
     };
     
-    private SolidUnit sunit;
+    private final SolidUnit sunit;
 
     public SolidAutopause(Context c, int i) {
         super(Storage.preset(c), KEY+i);
@@ -60,7 +62,7 @@ public class SolidAutopause extends SolidIndexList {
     private String getString(int i) {
         if (i==0) return getContext().getString(R.string.off);
         
-        return String.format("%.3f%s - %d", SPEED_VALUES[i] * sunit.getSpeedFactor(), sunit.getSpeedUnit(), TRIGGER_VALUES[i]);
+        return String.format((Locale)null,"%.3f%s - %d", SPEED_VALUES[i] * sunit.getSpeedFactor(), sunit.getSpeedUnit(), TRIGGER_VALUES[i]);
     }
     
     @Override

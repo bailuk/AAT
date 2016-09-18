@@ -30,7 +30,7 @@ public class RouteOverlay extends GpxOverlay {
 
     private class RoutePainter extends GpxListPainter {
 
-        private MapPainter painter;
+        private final MapPainter painter;
 
         public RoutePainter(MapPainter p) {
             super(p);

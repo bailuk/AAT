@@ -121,7 +121,7 @@ public class TestActivity extends AbsDispatcher implements OnClickListener {
 
 
     private MultiView createMultiView() {
-        wayList = new NodeListView(getServiceContext(), SOLID_KEY, INFO_ID_OVERLAY);
+        wayList = new NodeListView(getServiceContext(), SOLID_KEY, GpxInformation.ID.INFO_ID_OVERLAY);
 
         map=new OsmInteractiveView(getServiceContext(), SOLID_KEY);
         ViewWrapper list = new ViewWrapper(new TestList(this));
@@ -154,8 +154,8 @@ public class TestActivity extends AbsDispatcher implements OnClickListener {
                 new TrackSizeDescription(this),
         };   
 
-        gpsSummary= new SummaryListView(this, SOLID_KEY, INFO_ID_LOCATION, gpsData);
-        trackSummary = new SummaryListView(this, SOLID_KEY, INFO_ID_TRACKER, trackData);
+        gpsSummary= new SummaryListView(this, SOLID_KEY, GpxInformation.ID.INFO_ID_LOCATION, gpsData);
+        trackSummary = new SummaryListView(this, SOLID_KEY, GpxInformation.ID.INFO_ID_TRACKER, trackData);
 
         TrackDescriptionView viewData[] = {
                 map,
@@ -166,7 +166,7 @@ public class TestActivity extends AbsDispatcher implements OnClickListener {
         };   
 
 
-        return new MultiView(this, SOLID_KEY, INFO_ID_ALL, viewData);
+        return new MultiView(this, SOLID_KEY, GpxInformation.ID.INFO_ID_ALL, viewData);
     }
 
 
@@ -232,7 +232,7 @@ public class TestActivity extends AbsDispatcher implements OnClickListener {
 
     private class TestList extends ListView 
     implements ListAdapter, android.widget.AdapterView.OnItemClickListener {
-        private final ArrayList<UnitTest>  tests = new ArrayList<UnitTest>();
+        private final ArrayList<UnitTest>  tests = new ArrayList<>();
 
         public TestList(Context context) {
             super(context);

@@ -155,7 +155,7 @@ public class CH1903Coordinates extends MeterCoordinates {
     }
 
 
-    private static BoundingBox SWISS_AREA = new BoundingBox(48300000,11200000,45600000,5000000);
+    private static final BoundingBox SWISS_AREA = new BoundingBox(48300000,11200000,45600000,5000000);
     public static boolean inSwitzerland(GeoPoint point) {
         return SWISS_AREA.contains(point);
     }

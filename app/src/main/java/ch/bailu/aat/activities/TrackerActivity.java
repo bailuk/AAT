@@ -5,7 +5,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
+
 import ch.bailu.aat.R;
 import ch.bailu.aat.description.AltitudeDescription;
 import ch.bailu.aat.description.AverageSpeedDescription;
@@ -81,18 +81,18 @@ public class TrackerActivity extends AbsDispatcher implements OnClickListener{
                 new MaximumSpeedDescription(this),
         };
 
-        CockpitView cockpit = new CockpitView(this, SOLID_KEY, INFO_ID_TRACKER, data);
+        CockpitView cockpit = new CockpitView(this, SOLID_KEY, GpxInformation.ID.INFO_ID_TRACKER, data);
 
         map = new OsmInteractiveView(getServiceContext(), SOLID_KEY);
-        TrackDescriptionView viewData[] = {
-                cockpit, 
+        TrackDescriptionView multiViewLayout[] = {
+                cockpit,
                 map,
-                new VerticalView(this, SOLID_KEY, INFO_ID_TRACKER, new TrackDescriptionView[] {
+                new VerticalView(this, SOLID_KEY, GpxInformation.ID.INFO_ID_TRACKER, new TrackDescriptionView[] {
                         new DistanceAltitudeGraphView(this, SOLID_KEY),
                         new DistanceSpeedGraphView(this, SOLID_KEY)})
         };   
 
-        return new MultiView(this, SOLID_KEY, INFO_ID_ALL, viewData);
+        return new MultiView(this, SOLID_KEY, GpxInformation.ID.INFO_ID_ALL, multiViewLayout);
     }
 
     private ControlBar createButtonBar() {

@@ -14,7 +14,6 @@
     <string name="intro_resume">Cockpit A</string>
     <string name="intro_cockpit2">Cockpit B</string>
     <string name="intro_map">Map</string>
-    <string name="intro_overpass">Overpass</string>
     <string name="intro_nominatim">Nominatim</string>
     <string name="intro_test">Test</string>
     <string name="intro_status">Status</string>
@@ -23,7 +22,6 @@
     <string name="intro_list">Track list</string>
     <string name="intro_import_list">Imported files</string>
     <string name="intro_settings">Preferences</string>
-    <string name="intro_file">Latest track</string>
 
     <string name="gps">GPS</string>
     <string name="gps_wait">&#8230;</string>
@@ -101,7 +99,6 @@
     <string name="p_backlight_off">Off</string>
     <string name="p_backlight_dim">Dim</string>
     <string name="p_backlight_bright">Bright</string>
-    <string name="p_update_interval">Updates per minute</string>
     <string name="p_system">System</string>
     <string name="p_tile_size">Tile size</string>
     <string name="p_accuracy_filter">Accuracy filter</string>
@@ -119,13 +116,13 @@
     <string name="file_overlay">Use as overlay</string>
     <string name="file_mock">Use for mock location</string>
     <string name="file_delete_ask">Delete file?</string>
-    <string name="file_send">Send...</string>
+    <string name="file_send">Send…</string>
     <string name="file_view">View/Edit...</string>
-    <string name="file_copy">Copy to...</string>
-    <string name="file_exists"> allready exists!</string>
+    <string name="file_copy">Copy to…</string>
+    <string name="file_exists"> already exists!</string>
 
     <string name="location_view">View location...</string>
-    <string name="location_send">Send location...</string>
+    <string name="location_send">Send location…</string>
     <string name="location_copy">Copy location</string>
     <string name="location_paste">Paste location</string>
 
@@ -167,7 +164,10 @@
     <string name="calories">Calories</string>
 
 
-    <string name="filter">Filter</string>
+    <string name="filter_geo">Inside bounding</string>
+    <string name="filter_geo_update">Get bounding from map</string>
+    <string name="filter_date_start">Start date</string>
+    <string name="filter_date_to">End date</string>
 
 
     <!-- OSM API Query -->

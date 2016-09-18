@@ -16,7 +16,7 @@ public class XmlParser implements Closeable, GpxPointInterface {
 
 
     private ParserIO io;
-    private ParserState state = new StateXml();
+    private final ParserState state = new StateXml();
 
     public class ParserIO {
         public final SimpleStream stream;
@@ -32,8 +32,8 @@ public class XmlParser implements Closeable, GpxPointInterface {
         trackParsed	  = OnParsedInterface.NULL_ONPARSED, 
         parsed        = OnParsedInterface.NULL_ONPARSED;
 
-        public final SparseArray<GeoPoint> nodeMap = new SparseArray<GeoPoint>(50);
-        public final ArrayList<GpxAttributes.Tag> tagList = new ArrayList<GpxAttributes.Tag>();
+        public final SparseArray<GeoPoint> nodeMap = new SparseArray<>(50);
+        public final ArrayList<GpxAttributes.Tag> tagList = new ArrayList<>();
         
         private ParserIO(AbsAccess file) throws IOException {
             stream = new SimpleStream(file);

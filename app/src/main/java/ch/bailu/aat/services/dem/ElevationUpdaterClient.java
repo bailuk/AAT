@@ -4,12 +4,9 @@ import ch.bailu.aat.coordinates.SrtmCoordinates;
 import ch.bailu.aat.services.ServiceContext;
 
 public interface ElevationUpdaterClient  {
-    public SrtmCoordinates[] getSrtmTileCoordinates();
+    SrtmCoordinates[] getSrtmTileCoordinates();
     
-    public void updateFromSrtmTile(ServiceContext cs, Dem3Tile tile);
+    void updateFromSrtmTile(ServiceContext cs, Dem3Tile tile);
     
-    public boolean isUpdating();
-
-  
-    
+    boolean isUpdating();
 }

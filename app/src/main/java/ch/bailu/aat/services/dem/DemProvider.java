@@ -1,11 +1,11 @@
 package ch.bailu.aat.services.dem;
 
 public interface DemProvider {
-    public short getElevation(int index);
-    public DemDimension getDim();
+    short getElevation(int index);
+    DemDimension getDim();
     
-    public float getCellsize();
+    float getCellsize();
     
-    public boolean inverseLatitude();
-    public boolean inverseLongitude();
+    boolean inverseLatitude();
+    boolean inverseLongitude();
 }

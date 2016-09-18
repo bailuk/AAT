@@ -10,7 +10,7 @@ public class LoaderThread extends ProcessThread {
     private int total_bytes=0;
     
     
-    private static int SIZE=100;
+    private static final int SIZE=100;
 
     public LoaderThread(Context c, String d) {
         super(SIZE);

@@ -10,14 +10,14 @@ public class ContentDispatcher implements DescriptionInterface, Closeable {
     public static final DescriptionInterface NULL_LIST[] = new DescriptionInterface[]{};
     public static final ContentDispatcher NULL=new ContentDispatcher() {
         @Override
-        public void close(){};
+        public void close(){}
     };
 
 
     private final DescriptionInterface TARGET_LIST[];
     
     private DescriptionInterface targetList[];
-    private ContentSource sourceList[];
+    private final ContentSource[] sourceList;
 
 
 

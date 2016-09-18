@@ -41,7 +41,7 @@ public abstract class DescriptionViewGroup extends TrackDescriptionView {
         for (TrackDescriptionView child: view) {
             child.measure(w, h);
         }
-        setMeasuredDimension(w,h);
+        setMeasuredDimension(MeasureSpec.getSize(w),MeasureSpec.getSize(h));
     }
     
     

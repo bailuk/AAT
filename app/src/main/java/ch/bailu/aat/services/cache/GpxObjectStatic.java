@@ -1,10 +1,8 @@
 package ch.bailu.aat.services.cache;
 
-import java.io.File;
 import java.io.IOException;
 
 import android.content.Context;
-import android.net.Uri;
 import android.util.SparseArray;
 import ch.bailu.aat.coordinates.SrtmCoordinates;
 import ch.bailu.aat.gpx.GpxList;
@@ -13,13 +11,11 @@ import ch.bailu.aat.gpx.GpxPoint;
 import ch.bailu.aat.gpx.GpxPointLinkedNode;
 import ch.bailu.aat.gpx.GpxPointNode;
 import ch.bailu.aat.gpx.GpxSegmentNode;
-import ch.bailu.aat.gpx.interfaces.GpxBigDeltaInterface;
+import ch.bailu.aat.gpx.interfaces.GpxType;
 import ch.bailu.aat.gpx.linked_list.Node;
 import ch.bailu.aat.gpx.parser.GpxListReader;
 import ch.bailu.aat.helpers.AppBroadcaster;
-import ch.bailu.aat.helpers.AppLog;
 import ch.bailu.aat.helpers.file.AbsAccess;
-import ch.bailu.aat.helpers.file.UriAccess;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.background.FileHandle;
 import ch.bailu.aat.services.dem.Dem3Tile;
@@ -29,7 +25,7 @@ import ch.bailu.aat.services.dem.ElevationUpdaterClient;
 public class GpxObjectStatic extends GpxObject implements ElevationUpdaterClient {
     
 
-    private GpxList gpxList=new GpxList(GpxBigDeltaInterface.TRK);
+    private GpxList gpxList=new GpxList(GpxType.TRK);
 
     private boolean ready=false;
     
@@ -203,7 +199,7 @@ public class GpxObjectStatic extends GpxObject implements ElevationUpdaterClient
     }
     
     private class SrtmTileCollector extends GpxListWalker {
-        public final SparseArray<SrtmCoordinates> coordinates = new SparseArray<SrtmCoordinates>();
+        public final SparseArray<SrtmCoordinates> coordinates = new SparseArray<>();
         
         @Override
         public boolean doList(GpxList l) {

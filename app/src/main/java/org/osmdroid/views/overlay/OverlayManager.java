@@ -23,7 +23,7 @@ public class OverlayManager extends AbstractList<Overlay> {
 
 	public OverlayManager(final TilesOverlay tilesOverlay) {
 		setTilesOverlay(tilesOverlay);
-		mOverlayList = new CopyOnWriteArrayList<Overlay>();
+		mOverlayList = new CopyOnWriteArrayList<>();
 	}
 
 	@Override

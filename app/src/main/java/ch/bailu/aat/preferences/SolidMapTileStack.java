@@ -202,9 +202,8 @@ public class SolidMapTileStack extends SolidCheckList {
     
     public int getCountOfEnabled() {
         int c = 0;
-        
-        for (int i=0; i<enabledArray.length; i++)
-            if (enabledArray[i].isEnabled()) c++;
+
+        for (SolidBoolean anEnabledArray : enabledArray) if (anEnabledArray.isEnabled()) c++;
         
         return c;
     }

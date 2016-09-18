@@ -105,7 +105,7 @@ public class TileSourceFactory {
 
 	private static ArrayList<ITileSource> mTileSources;
 	static {
-		mTileSources = new ArrayList<ITileSource>();
+		mTileSources = new ArrayList<>();
 		mTileSources.add(OSMARENDER);
 		mTileSources.add(MAPNIK);
 		mTileSources.add(CYCLEMAP);

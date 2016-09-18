@@ -4,14 +4,14 @@ package ch.bailu.aat.views;
 import android.content.Context;
 
 import ch.bailu.aat.description.*;
-
+import ch.bailu.aat.gpx.GpxInformation;
 
 
 public class CockpitView extends DescriptionViewGroup {
 
 
     public CockpitView(Context context, String key,  ContentDescription d[]) {
-        this(context, key, INFO_ID_ALL, d);
+        this(context, key, GpxInformation.ID.INFO_ID_ALL, d);
     }    
     
     public CockpitView(Context context, String key, int filter, ContentDescription d[]) {
@@ -38,7 +38,8 @@ public class CockpitView extends DescriptionViewGroup {
     
     private class Layouter {
         private final int MAX_CHARS_PER_LINE=50;
-        private int parent_width, parent_height;
+        private final int parent_width;
+        private final int parent_height;
         
         public Layouter(int w, int h) {
             int chars=1;

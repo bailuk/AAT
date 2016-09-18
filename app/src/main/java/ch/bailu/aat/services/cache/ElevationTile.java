@@ -34,7 +34,7 @@ public abstract class ElevationTile extends TileObject implements ElevationUpdat
     
     private final SynchronizedBitmap bitmap=new SynchronizedBitmap();
 
-    private final SparseArray<TilePainter> tilePainterList = new SparseArray<TilePainter>(25);
+    private final SparseArray<TilePainter> tilePainterList = new SparseArray<>(25);
     
     private final int[] toLaRaster = new int[TileObject.TILE_SIZE]; // 1. pixel to latitude | 2. pixel to dem index 
     private final int[] toLoRaster = new int[TileObject.TILE_SIZE];
@@ -156,8 +156,8 @@ public abstract class ElevationTile extends TileObject implements ElevationUpdat
 
     private class SrtmTileRasterInitializer extends ProcessHandle {
 
-        final private ArrayList<Span> laSpan = new ArrayList<Span>(5);
-        final private ArrayList<Span> loSpan = new ArrayList<Span>(5);
+        final private ArrayList<Span> laSpan = new ArrayList<>(5);
+        final private ArrayList<Span> loSpan = new ArrayList<>(5);
 
 
         @Override

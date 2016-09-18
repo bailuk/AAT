@@ -14,7 +14,8 @@ import ch.bailu.aat.views.map.overlay.MapPainter;
 
 public class GpxTestOverlay extends GpxOverlay {
 
-    private Paint segmentPaint, markerPaint;
+    private final Paint segmentPaint;
+    private final Paint markerPaint;
     private int boxCount=0;
 
     public GpxTestOverlay(OsmInteractiveView map, int id) {
@@ -44,7 +45,7 @@ public class GpxTestOverlay extends GpxOverlay {
 
     private class Walker extends GpxListWalker {
         //private MapTwoNodes paintHelper;
-        private MapPainter painter;
+        private final MapPainter painter;
 
 
         public Walker(MapPainter p) {

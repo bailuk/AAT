@@ -15,10 +15,7 @@ public class GpxNodeFinder extends GpxListWalker {
 
     @Override
     public boolean doList(GpxList s) {
-        if (BoundingBox.doOverlap(s.getDelta().getBoundingBox(), bounding)) {
-            return true;
-        }
-        return false;
+        return BoundingBox.doOverlap(s.getDelta().getBoundingBox(), bounding);
     }
 
     @Override

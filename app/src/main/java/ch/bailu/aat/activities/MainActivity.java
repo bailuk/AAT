@@ -43,7 +43,6 @@ implements AdapterView.OnItemSelectedListener, OnSharedPreferenceChangeListener 
     private LinearLayout    contentView;
     private Spinner         presetSpinner; 
     private ListView        actionList;
-    private MyListAdapter   actionAdapter;
 
     private Storage storage; 
 
@@ -90,9 +89,8 @@ implements AdapterView.OnItemSelectedListener, OnSharedPreferenceChangeListener 
 
 
     private ListView createActionList() {
-        actionAdapter = new MyListAdapter(this);
+        final MyListAdapter   actionAdapter = new MyListAdapter(this);
         actionList = new ListView(this);
-
         actionList.setOnItemClickListener(actionAdapter);
         actionList.setAdapter(actionAdapter);
 
@@ -127,8 +125,8 @@ implements AdapterView.OnItemSelectedListener, OnSharedPreferenceChangeListener 
 
     private void initializeSpinner(Spinner spinner) {
         SolidPreset spreset = new SolidPreset(this);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, 
-                android.R.layout.simple_spinner_item, 
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
+                android.R.layout.simple_spinner_item,
                 spreset.getStringArray());
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
@@ -167,7 +165,7 @@ implements AdapterView.OnItemSelectedListener, OnSharedPreferenceChangeListener 
 
     private class MyListAdapter extends BaseAdapter implements OnItemClickListener {
         private static final float MARGIN = 15f;
-        private int margin;
+        private final int margin;
 
         public MyListAdapter(Context context) {
             margin=(int)AppLayout.toPixel(context, MARGIN);

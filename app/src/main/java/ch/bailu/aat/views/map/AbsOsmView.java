@@ -23,7 +23,7 @@ public abstract class AbsOsmView extends TrackDescriptionView {
     
     
     public AbsOsmView(Context context, String key, AbsTileProvider provider, int tileSize) {
-        super(context, key,INFO_ID_ALL);
+        super(context, key, GpxInformation.ID.INFO_ID_ALL);
         
         map = createMapView(provider, tileSize);
         addView(map);
@@ -55,15 +55,16 @@ public abstract class AbsOsmView extends TrackDescriptionView {
         hSpec  = MeasureSpec.makeMeasureSpec (MeasureSpec.getSize(hSpec),  MeasureSpec.EXACTLY);
 
         map.measure(wSpec, hSpec);
-        setMeasuredDimension(wSpec, hSpec);
+        setMeasuredDimension(map.getMeasuredWidth(), map.getMeasuredHeight());
     }
     
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
-        map.layout(0, 0, r-l, b-t);
-        
-        if (pendingFrameBounding != null) 
-            frameBoundingBox(pendingFrameBounding);
+        if (changed) {
+            map.layout(0, 0, r-l, b-t);
+            if (pendingFrameBounding != null)
+                frameBoundingBox(pendingFrameBounding);
+        }
     }
     
     

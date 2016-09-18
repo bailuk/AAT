@@ -44,7 +44,7 @@ public abstract class IteratorAbstract extends Iterator implements OnSharedPrefe
     }
 
     
-    private BroadcastReceiver  onSyncChanged = new BroadcastReceiver () {
+    private final BroadcastReceiver  onSyncChanged = new BroadcastReceiver () {
         @Override
         public void onReceive(Context context, Intent intent) {
             query();

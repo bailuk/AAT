@@ -2,18 +2,18 @@ package ch.bailu.aat.gpx.parser;
 
 import java.io.IOException;
 
-import ch.bailu.aat.gpx.GpxBigDelta;
 import ch.bailu.aat.gpx.GpxList;
 import ch.bailu.aat.gpx.GpxPoint;
+import ch.bailu.aat.gpx.interfaces.GpxType;
 import ch.bailu.aat.helpers.file.AbsAccess;
 import ch.bailu.aat.services.background.ThreadControl;
 
 public class GpxListReader {
-    private ThreadControl threadControl;
+    private final ThreadControl threadControl;
 
-    private OnParsed way = new OnParsed(GpxBigDelta.WAY), 
-            track = new OnParsed(GpxBigDelta.TRK), 
-            route = new OnParsed(GpxBigDelta.RTE);
+    private final OnParsed way = new OnParsed(GpxType.WAY);
+    private final OnParsed track = new OnParsed(GpxType.TRK);
+    private final OnParsed route = new OnParsed(GpxType.RTE);
 
 
 
@@ -42,7 +42,7 @@ public class GpxListReader {
 
     
     private class OnParsed implements OnParsedInterface {
-        private GpxList gpxList;
+        private final GpxList gpxList;
         private boolean  haveNewSegment=true;
 
         public OnParsed(int type) {

@@ -17,6 +17,8 @@ import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.DatePicker;
 import android.widget.LinearLayout;
+
+import ch.bailu.aat.R;
 import ch.bailu.aat.coordinates.BoundingBox;
 import ch.bailu.aat.helpers.AppLog;
 import ch.bailu.aat.helpers.AppTheme;
@@ -48,11 +50,11 @@ public class DirectorySelection extends LinearLayout implements OnClickListener 
         
         LinearLayout geo = new LinearLayout(map.getContext());
         applayGeo = new SolidCheckBox(geo, sdirectory.getUseGeo());
-        applayGeo.setText("Inside bounding*");
+        applayGeo.setText(R.string.filter_geo);
 
         getBox = new Button(map.getContext());
         AppTheme.themify(getBox);
-        getBox.setText("Get bounding from map*");
+        getBox.setText(R.string.filter_geo_update);
         geo.addView(getBox);
         getBox.setOnClickListener(this);
         addView(geo);
@@ -60,14 +62,14 @@ public class DirectorySelection extends LinearLayout implements OnClickListener 
         
         LinearLayout from = new LinearLayout(map.getContext());
         applayFrom = new SolidCheckBox(from, sdirectory.getUseDateStart());
-        applayFrom.setText("Start date*");
+        applayFrom.setText(R.string.filter_date_start);
 
         new DateSet(from, sdirectory.getDateStart());
         addView(from);
 
         LinearLayout to = new LinearLayout(map.getContext()); 
         applayTo = new SolidCheckBox(to, sdirectory.getUseDateEnd());
-        applayTo.setText("End date*");
+        applayTo.setText(R.string.filter_date_to);
 
         new DateSet(to, sdirectory.getDateEnd());
         addView(to);
@@ -107,12 +109,12 @@ public class DirectorySelection extends LinearLayout implements OnClickListener 
     
     
     public class DateSet implements OnClickListener, OnDateSetListener {
-        private Button        button;
-        private java.text.DateFormat  formater;
+        private final Button        button;
+        private final java.text.DateFormat  formater;
         
-        private GregorianCalendar calendar=new GregorianCalendar();
+        private final GregorianCalendar calendar=new GregorianCalendar();
         
-        private SolidLong slong;
+        private final SolidLong slong;
         
         public DateSet(ViewGroup parent, SolidLong l) {
             slong = l;
@@ -153,9 +155,4 @@ public class DirectorySelection extends LinearLayout implements OnClickListener 
         }
 
     }
-
-
-   
-
-    
 }

@@ -13,7 +13,7 @@ public class DemGeoToIndex {
     public DemGeoToIndex(DemDimension _dim, boolean doffset) {
         dim = _dim;
         
-        if (doffset=true) {
+        if (doffset) {
             DOFFSET=dim.OFFSET;
             LAST_INDEX=dim.DIM-1-dim.OFFSET-DOFFSET;
         } else {

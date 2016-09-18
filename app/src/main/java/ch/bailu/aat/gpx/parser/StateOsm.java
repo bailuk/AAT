@@ -6,9 +6,9 @@ import ch.bailu.aat.gpx.parser.XmlParser.ParserIO;
 
 public class StateOsm extends ParserState {
 
-    private ParserState node = new StateOsmNode(); 
-    private ParserState meta = new StateOsmMeta();
-    private ParserState relation = new StateOsmRelation();
+    private final ParserState node = new StateOsmNode();
+    private final ParserState meta = new StateOsmMeta();
+    private final ParserState relation = new StateOsmRelation();
 
 
     @Override

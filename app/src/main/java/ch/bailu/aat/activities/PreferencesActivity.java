@@ -30,8 +30,7 @@ public class PreferencesActivity extends PreferenceActivity {
     
     private PreferenceScreen screen;
     private PreferenceCategory category;
-    private SolidPreset spreset;
-    private ArrayList<Closeable> toClose=new ArrayList<Closeable>();
+    private final ArrayList<Closeable> toClose= new ArrayList<>();
 
     private AppLog logger;
     
@@ -48,8 +47,8 @@ public class PreferencesActivity extends PreferenceActivity {
         
         addPreference(new IndexListPreference(this, new SolidUnit(this)));
         addPreference(new IntegerPreference(this, new SolidWeight(this)));
-        
-        spreset = new SolidPreset(this);
+
+        final SolidPreset spreset= new SolidPreset(this);
         for (int i=0; i<spreset.length(); i++) {
             addCategory(getString(R.string.p_preset) + " " + (i+1));
             addPreference(new IndexListPreference(this, new SolidMET(this,i)));

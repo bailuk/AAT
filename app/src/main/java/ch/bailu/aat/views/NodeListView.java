@@ -39,7 +39,7 @@ public class NodeListView extends TrackDescriptionView {
         hSpec  = MeasureSpec.makeMeasureSpec (MeasureSpec.getSize(hSpec),  MeasureSpec.EXACTLY);
 
         list.measure(wSpec, hSpec);
-        setMeasuredDimension(wSpec, hSpec);
+        setMeasuredDimension(MeasureSpec.getSize(wSpec), MeasureSpec.getSize(hSpec));
     }
 
     @Override
@@ -57,7 +57,7 @@ public class NodeListView extends TrackDescriptionView {
 
     private class MyWayListView extends ListView
     implements ListAdapter, android.widget.AdapterView.OnItemClickListener {
-        private final SparseArray<DataSetObserver> observer=new SparseArray<DataSetObserver>(5);
+        private final SparseArray<DataSetObserver> observer= new SparseArray<>(5);
 
         private GpxListArray array = new GpxListArray(GpxList.NULL_ROUTE);
         private GpxInformation info = GpxInformation.NULL;

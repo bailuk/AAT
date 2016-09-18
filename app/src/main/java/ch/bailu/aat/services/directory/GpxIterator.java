@@ -5,6 +5,7 @@ import ch.bailu.aat.coordinates.BoundingBox;
 import ch.bailu.aat.gpx.GpxBigDelta;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.GpxList;
+import ch.bailu.aat.gpx.interfaces.GpxType;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.cache.GpxObject;
 import ch.bailu.aat.services.cache.GpxObjectStatic;
@@ -85,7 +86,7 @@ public class GpxIterator extends AbsIterator {
     public GpxList getGpxList() {
         if (isLoaded()) 
             return ((GpxObject)handle).getGpxList();
-        else return	new GpxList(GpxBigDelta.WAY);
+        else return	new GpxList(GpxType.WAY);
     }
 
 
@@ -98,7 +99,7 @@ public class GpxIterator extends AbsIterator {
 
 
     class FileListSummary extends GpxInformation {
-        private GpxBigDelta summary;
+        private final GpxBigDelta summary;
 
         public FileListSummary() {
             summary=new GpxBigDelta();

@@ -31,7 +31,6 @@ import ch.bailu.aat.dispatcher.OverlaySource;
 import ch.bailu.aat.dispatcher.TrackerSource;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.helpers.AppLayout;
-import ch.bailu.aat.helpers.AppLog;
 import ch.bailu.aat.helpers.FileAction;
 import ch.bailu.aat.helpers.ToolTip;
 import ch.bailu.aat.menus.FileMenu;
@@ -59,7 +58,6 @@ public class GpxViewActivity extends AbsDispatcher implements OnClickListener {
     private static final String SOLID_KEY=GpxViewActivity.class.getSimpleName();
 
 
-    private LinearLayout contentView;
 
     private ImageButton        nextView, fileOperation, copyTo;
     private BusyButton         busyButton;
@@ -88,8 +86,7 @@ public class GpxViewActivity extends AbsDispatcher implements OnClickListener {
         if (uri != null) {
             fileID = uri.toString();
 
-            AppLog.d(this, uri.toString());
-            contentView = new ContentView(this);
+            final LinearLayout contentView = new ContentView(this);
             contentView.addView(createButtonBar());
             multiView = createMultiView();
             contentView.addView(multiView);
@@ -152,15 +149,15 @@ public class GpxViewActivity extends AbsDispatcher implements OnClickListener {
         };
 
         final TrackDescriptionView viewData[] = {
-                new SummaryListView(this, SOLID_KEY, INFO_ID_FILEVIEW, summaryData), 
+                new SummaryListView(this, SOLID_KEY, GpxInformation.ID.INFO_ID_FILEVIEW, summaryData),
                 map,
-                new VerticalView(this, SOLID_KEY, INFO_ID_FILEVIEW, new TrackDescriptionView[] {
+                new VerticalView(this, SOLID_KEY, GpxInformation.ID.INFO_ID_FILEVIEW, new TrackDescriptionView[] {
                         new DistanceAltitudeGraphView(this, SOLID_KEY),
                         new DistanceSpeedGraphView(this, SOLID_KEY)
                 })
         };   
 
-        return new MultiView(this, SOLID_KEY, INFO_ID_ALL, viewData);
+        return new MultiView(this, SOLID_KEY, GpxInformation.ID.INFO_ID_ALL, viewData);
     }
 
 
@@ -184,7 +181,7 @@ public class GpxViewActivity extends AbsDispatcher implements OnClickListener {
 
     @Override
     public void updateGpxContent(GpxInformation info) {
-        if (info.getID()== INFO_ID_FILEVIEW) {
+        if (info.getID()== GpxInformation.ID.INFO_ID_FILEVIEW) {
             map.frameBoundingBox(info.getBoundingBox());
         }
     }

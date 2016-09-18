@@ -8,8 +8,8 @@ import ch.bailu.aat.gpx.GpxAttributes;
 import ch.bailu.aat.gpx.GpxList;
 import ch.bailu.aat.gpx.GpxPoint;
 import ch.bailu.aat.gpx.GpxPointNode;
-import ch.bailu.aat.gpx.interfaces.GpxBigDeltaInterface;
 import ch.bailu.aat.gpx.interfaces.GpxPointInterface;
+import ch.bailu.aat.gpx.interfaces.GpxType;
 import ch.bailu.aat.gpx.writer.GpxListWriter;
 import ch.bailu.aat.helpers.AppDirectory;
 import ch.bailu.aat.helpers.AppLog;
@@ -18,7 +18,7 @@ public class TrackLogger extends Logger {
     final public static int MIN_TRACKPOINTS=5;
 
     private boolean requestSegment=true;
-    private GpxList track=new GpxList(GpxBigDeltaInterface.TRK);
+    private final GpxList track=new GpxList(GpxType.TRK);
 
     final private File logFile;
     final private GpxListWriter writer;

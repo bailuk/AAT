@@ -4,7 +4,7 @@ import ch.bailu.aat.R;
 import android.content.Context;
 
 public class SolidAccelerationFilter extends SolidStaticIndexList {
-    private static String KEY="accel_filter";
+    private static final String KEY="accel_filter";
     
     private static final float[] VALUE_LIST = {
     99999f,

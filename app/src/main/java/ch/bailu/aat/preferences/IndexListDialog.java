@@ -5,8 +5,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 
 public class IndexListDialog implements  DialogInterface.OnClickListener {
-    private SolidIndexList slist;
-    AlertDialog.Builder dialog;
+    private final SolidIndexList slist;
+    final AlertDialog.Builder dialog;
     
     public IndexListDialog (Context context, SolidIndexList l) {
         slist=l;

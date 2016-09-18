@@ -8,7 +8,7 @@ import ch.bailu.aat.gpx.GpxBigDelta;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.GpxList;
 import ch.bailu.aat.gpx.GpxPoint;
-import ch.bailu.aat.gpx.interfaces.GpxBigDeltaInterface;
+import ch.bailu.aat.gpx.interfaces.GpxType;
 
 public class GpxInformationDbSummary extends GpxInformation {
     private final GpxList list;
@@ -16,7 +16,7 @@ public class GpxInformationDbSummary extends GpxInformation {
     
     public GpxInformationDbSummary(File dir, Cursor cursor) {
         directory = dir;
-        list = new GpxList(GpxBigDeltaInterface.WAY);
+        list = new GpxList(GpxType.WAY);
         
         GpxBigDelta summary=new GpxBigDelta();
         GpxInformation entry = new GpxInformationDbEntry(cursor);

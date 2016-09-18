@@ -2,6 +2,8 @@ package ch.bailu.aat.services.tracker.location;
 
 import android.content.Context;
 import android.location.LocationManager;
+
+import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.services.ServiceContext;
 
 public class SystemLocation extends RealLocation {
@@ -47,7 +49,7 @@ public class SystemLocation extends RealLocation {
     public void sendState(int s) {
         if (locker != null) locker.autoLock(s);
         
-        if (s==STATE_ON) disableNetworkLocation();
+        if (s== GpxInformation.ID.STATE_ON) disableNetworkLocation();
         else enableNetworkLocation();
         super.sendState(s);
     }

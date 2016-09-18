@@ -209,8 +209,8 @@ public class AppDirectory  {
             } catch( IOException ex ) {
                 throw new IOException("ERROR while copying " + source.getPath() + " to " + target.getPath());
             } finally {
-                if ( reader != null ) reader.close();
-                if ( writer != null ) writer.close();
+                reader.close();
+                writer.close();
             }
             
         } else {

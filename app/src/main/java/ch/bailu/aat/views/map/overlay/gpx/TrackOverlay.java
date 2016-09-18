@@ -9,7 +9,7 @@ import ch.bailu.aat.views.map.overlay.MapTwoNodes;
 import ch.bailu.aat.views.map.overlay.MapTwoNodes.PixelNode;
 
 public class TrackOverlay extends GpxOverlay{
-    private static int STROKE_WIDTH=5;
+    private static final int STROKE_WIDTH=5;
     private final Paint paint=new Paint();
 
 
@@ -34,7 +34,7 @@ public class TrackOverlay extends GpxOverlay{
 
 
     private class TrackPainter extends GpxListPainter {
-        private MapPainter painter;
+        private final MapPainter painter;
 
         public TrackPainter(MapPainter p) {
             super(p);

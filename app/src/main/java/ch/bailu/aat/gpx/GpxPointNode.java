@@ -55,11 +55,11 @@ public abstract class GpxPointNode extends Node implements GpxDeltaPointInterfac
     
     
     public int getIntValue(String key) {
-        return Integer.valueOf(getValue(key)).intValue();
+        return Integer.valueOf(getValue(key));
     }
     
     public double getDoubleValue(String key) {
-        return Double.valueOf(getValue(key)).doubleValue();
+        return Double.valueOf(getValue(key));
     }
 
 
@@ -150,7 +150,7 @@ public abstract class GpxPointNode extends Node implements GpxDeltaPointInterfac
 
     public StringBuilder toHtml(Context context, final StringBuilder builder) {
         final DistanceDescription distance= new DistanceDescription(context);
-        final SpeedDescription    speed = new CurrentSpeedDescription(context);;
+        final SpeedDescription    speed = new CurrentSpeedDescription(context);
         final AltitudeDescription altitude= new AltitudeDescription(context);
         
         attributes.toHtml(builder);

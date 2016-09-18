@@ -3,8 +3,6 @@ package ch.bailu.aat.menus;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
 
-import android.content.ClipData;
-import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -14,11 +12,13 @@ import android.view.MenuItem;
 import ch.bailu.aat.R;
 import ch.bailu.aat.coordinates.Coordinates;
 import ch.bailu.aat.helpers.AppLog;
+import ch.bailu.aat.helpers.Clipboard;
 
 public class LocationMenu extends AbsMenu{
 
     private final MapView map;
     private final Context context;
+    private final Clipboard clipboard;
 
     private MenuItem send, view, copy, paste;
     
@@ -26,6 +26,7 @@ public class LocationMenu extends AbsMenu{
     public LocationMenu(MapView m) {
         map = m;
         context = m.getContext();
+        clipboard = new Clipboard(context);
     }
     
     @Override
@@ -45,26 +46,9 @@ public class LocationMenu extends AbsMenu{
     @Override
     public void prepare(Menu menu) {
         
-        paste.setEnabled(getStringFromClipboard() != null);
+        paste.setEnabled(clipboard.getText() != null);
     }
 
-    
-    private String getStringFromClipboard() {
-        ClipboardManager clipboard = (ClipboardManager)
-                context.getSystemService(Context.CLIPBOARD_SERVICE);
-
-        ClipData clip = clipboard.getPrimaryClip();
-        if (clip != null) {
-            ClipData.Item i = clipboard.getPrimaryClip().getItemAt(0);
-            if (i!= null) {
-                CharSequence t = i.getText();
-                if (t != null) return t.toString();
-            }
-        }
-        return null; 
-    }
-        
-    
     
     @Override
     public boolean onItemClick(MenuItem item) {
@@ -87,21 +71,15 @@ public class LocationMenu extends AbsMenu{
 
     private void paste() {
         GeoPoint geo = new GeoPoint(0,0);
-        
-        String s = getStringFromClipboard();
-        if (s!=null  && Coordinates.stringToGeoPoint(s, geo)) {
+        final CharSequence s = clipboard.getText();
+
+        if (s != null  && Coordinates.stringToGeoPoint(s.toString(), geo)) {
             map.getController().setCenter(geo);
         }
-        
     }
 
     private void copy() {
-        ClipboardManager clipboard = (ClipboardManager)
-                context.getSystemService(Context.CLIPBOARD_SERVICE);
-
-        ClipData clip = ClipData.newPlainText("GEO location", Coordinates.geoPointToGeoUri(getCenter()));
-        clipboard.setPrimaryClip(clip);
-        
+        clipboard.setText("GEO location", Coordinates.geoPointToGeoUri(getCenter()));
     }
 
 

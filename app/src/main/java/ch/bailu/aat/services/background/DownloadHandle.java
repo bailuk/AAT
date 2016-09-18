@@ -152,4 +152,4 @@ public class DownloadHandle extends ProcessHandle {
                 AppBroadcaster.FILE_CHANGED_ONDISK, file.toString(),url);
     }
 
-};
+}

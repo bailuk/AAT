@@ -6,14 +6,15 @@ import java.util.GregorianCalendar;
 
 
 public class DateScanner {
-    private IntegerScanner minute,hour;
-    private DoubleParser seconds;
+    private final IntegerScanner minute;
+    private final IntegerScanner hour;
+    private final DoubleParser seconds;
     
     private long millis;
     private long dateBase;
     private int dateBuffer[] = new int[10];
 
-    private SimpleStream stream;
+    private final SimpleStream stream;
     
     public DateScanner(SimpleStream s, long l) {
         stream=s;
@@ -58,13 +59,13 @@ public class DateScanner {
         
         int list[]=new int[3];
         int x=0;
-        
-        for (int i=0; i<dateBuffer.length; i++) {
-            if (dateBuffer[i]=='-') {
+
+        for (int aDateBuffer : dateBuffer) {
+            if (aDateBuffer == '-') {
                 x++;
             } else {
-                list[x]*=10;
-                list[x]+=dateBuffer[i]-'0';
+                list[x] *= 10;
+                list[x] += aDateBuffer - '0';
             }
         }
         

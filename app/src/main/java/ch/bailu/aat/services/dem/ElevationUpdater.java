@@ -13,7 +13,7 @@ import ch.bailu.aat.services.ServiceContext;
 
 
 public class ElevationUpdater implements Closeable, ElevationProvider{
-    private final SparseArray <ElevationUpdaterEntry> pendingObjects = new SparseArray<ElevationUpdaterEntry>();
+    private final SparseArray <ElevationUpdaterEntry> pendingObjects = new SparseArray<>();
     private final ServiceContext scontext;
     private final ServiceContext serviceContext;
 
@@ -32,7 +32,7 @@ public class ElevationUpdater implements Closeable, ElevationProvider{
 
 
 
-    private BroadcastReceiver onRequestElevationUpdate = new BroadcastReceiver() {
+    private final BroadcastReceiver onRequestElevationUpdate = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             String id = AppIntent.getFile(intent);
@@ -44,7 +44,7 @@ public class ElevationUpdater implements Closeable, ElevationProvider{
     };
 
 
-    private BroadcastReceiver onFileDownloaded = new BroadcastReceiver() {
+    private final BroadcastReceiver onFileDownloaded = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             String id = AppIntent.getFile(intent);
@@ -56,7 +56,7 @@ public class ElevationUpdater implements Closeable, ElevationProvider{
         }
     };
 
-    private BroadcastReceiver onFileChanged = new BroadcastReceiver() {
+    private final BroadcastReceiver onFileChanged = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             String id = AppIntent.getFile(intent);

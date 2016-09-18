@@ -7,7 +7,6 @@ import android.view.MenuItem;
 import ch.bailu.aat.description.DescriptionInterface;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.menus.OptionsMenu;
-import ch.bailu.aat.preferences.PreferenceLoadDefaults;
 
 public abstract class AbsMenu extends AbsServiceLink 
 implements DescriptionInterface{

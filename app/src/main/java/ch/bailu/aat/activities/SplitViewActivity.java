@@ -111,9 +111,9 @@ public class SplitViewActivity extends AbsDispatcher implements OnClickListener{
 
 
         TrackDescriptionView viewData[] = {
-                new CockpitView(this, SOLID_KEY, INFO_ID_TRACKER, cockpitA),
-                new CockpitView(this, SOLID_KEY, INFO_ID_TRACKER, cockpitB),
-                new VerticalView(this, SOLID_KEY, INFO_ID_TRACKER, new TrackDescriptionView[] {
+                new CockpitView(this, SOLID_KEY, GpxInformation.ID.INFO_ID_TRACKER, cockpitA),
+                new CockpitView(this, SOLID_KEY, GpxInformation.ID.INFO_ID_TRACKER, cockpitB),
+                new VerticalView(this, SOLID_KEY, GpxInformation.ID.INFO_ID_TRACKER, new TrackDescriptionView[] {
                         new DistanceAltitudeGraphView(this, SOLID_KEY),
                         new DistanceSpeedGraphView(this, SOLID_KEY)}),   
                         mapViewAlt,
@@ -121,7 +121,7 @@ public class SplitViewActivity extends AbsDispatcher implements OnClickListener{
 
 
 
-        multiView = new MultiView(this, SOLID_KEY, INFO_ID_ALL, viewData);
+        multiView = new MultiView(this, SOLID_KEY, GpxInformation.ID.INFO_ID_ALL, viewData);
 
 
 

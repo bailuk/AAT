@@ -11,8 +11,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-import ch.bailu.aat.helpers.AppLog;
-
 public abstract class AbsAccess {
     public abstract InputStream open_r() throws FileNotFoundException;
     public abstract OutputStream open_w() throws FileNotFoundException;
@@ -30,7 +28,7 @@ public abstract class AbsAccess {
         BufferedInputStream in = new BufferedInputStream(open_r());
         StringBuilder out = new StringBuilder();
 
-        
+
         try {
             int c;
             while ((c = in.read()) > -1) {

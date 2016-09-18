@@ -44,7 +44,6 @@ public class NodeDetailActivity extends AbsDispatcher implements OnClickListener
 
     private ImageButton nextNode, previousNode;
 
-    private LinearLayout contentView;
 
     private VerticalView       verticalView;
     private OsmInteractiveView map;
@@ -64,7 +63,7 @@ public class NodeDetailActivity extends AbsDispatcher implements OnClickListener
 
         fileID = getIntent().getStringExtra("ID");
 
-        contentView = new ContentView(this);
+        final LinearLayout contentView = new ContentView(this);
         contentView.addView(createButtonBar());
         verticalView = createVerticalView();
         contentView.addView(verticalView);
@@ -106,7 +105,7 @@ public class NodeDetailActivity extends AbsDispatcher implements OnClickListener
                 map,
         };   
 
-        return new VerticalView(this, SOLID_KEY, INFO_ID_ALL, viewData);
+        return new VerticalView(this, SOLID_KEY, GpxInformation.ID.INFO_ID_ALL, viewData);
     }
 
 

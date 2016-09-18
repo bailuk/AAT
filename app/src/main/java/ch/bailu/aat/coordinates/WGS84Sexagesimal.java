@@ -40,7 +40,8 @@ public class WGS84Sexagesimal extends Coordinates {
     }
 
     
-    private Sexagesimal longitude,latitude;
+    private final Sexagesimal longitude;
+    private final Sexagesimal latitude;
     
     
     public WGS84Sexagesimal(double la, double lo) {

@@ -15,7 +15,7 @@ public class EditorSource extends ContentSource {
     private final EditorHelper edit;
 
 
-    private BroadcastReceiver onFileEdited = new BroadcastReceiver () {
+    private final BroadcastReceiver onFileEdited = new BroadcastReceiver () {
         @Override
         public void onReceive(Context context, Intent intent) {
             update(intent, edit.getInformation());

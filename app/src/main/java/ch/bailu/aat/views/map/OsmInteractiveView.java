@@ -141,7 +141,7 @@ implements MapListener, OnSharedPreferenceChangeListener, OnTouchListener {
 
     
     private void updateLocation(GpxInformation info) {
-        if (info.getID()==INFO_ID_LOCATION) {
+        if (info.getID()==GpxInformation.ID.INFO_ID_LOCATION) {
             location.setLatitudeE6(info.getLatitudeE6());
             location.setLongitudeE6(info.getLongitudeE6());
         }

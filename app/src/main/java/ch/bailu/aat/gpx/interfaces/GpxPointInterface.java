@@ -5,9 +5,9 @@ import org.osmdroid.api.IGeoPoint;
 import ch.bailu.aat.gpx.GpxAttributes;
 
 public interface GpxPointInterface extends IGeoPoint {
-    public short getAltitude();
-    public double getLongitude();
-    public double getLatitude();
-    public long getTimeStamp();
-    public GpxAttributes getAttributes();
+    short getAltitude();
+    double getLongitude();
+    double getLatitude();
+    long getTimeStamp();
+    GpxAttributes getAttributes();
 }

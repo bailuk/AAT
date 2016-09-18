@@ -11,7 +11,6 @@ import ch.bailu.aat.services.ServiceContext;
 
 public class ServiceLocker implements Closeable, OnSharedPreferenceChangeListener{
 
-    private final Storage storage;
     private final SolidGPSLock slock;
     private final ServiceContext scontext;
     private int gpsStatus=GpxInformation.ID.STATE_OFF;
@@ -19,7 +18,7 @@ public class ServiceLocker implements Closeable, OnSharedPreferenceChangeListene
     
     public ServiceLocker(ServiceContext sc) {
         scontext=sc;
-        storage=Storage.global(sc.getContext());
+        final Storage storage = Storage.global(sc.getContext());
         slock=new SolidGPSLock(storage);
         
         slock.register(this);

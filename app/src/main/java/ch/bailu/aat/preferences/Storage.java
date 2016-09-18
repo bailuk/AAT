@@ -8,7 +8,6 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.os.Environment;
 
-import ch.bailu.aat.helpers.AppLog;
 import ch.bailu.aat.helpers.ContextWrapperInterface;
 import ch.bailu.aat.helpers.file.FileAccess;
 import ch.bailu.aat.helpers.file.UriAccess;
@@ -89,13 +88,13 @@ public class Storage  implements ContextWrapperInterface {
             String key = entry.getKey();
 
             if(v instanceof Boolean)
-                editor.putBoolean(key, ((Boolean)v).booleanValue());
+                editor.putBoolean(key, (Boolean) v);
             else if(v instanceof Float)
-                editor.putFloat(key, ((Float)v).floatValue());
+                editor.putFloat(key, (Float) v);
             else if(v instanceof Integer)
-                editor.putInt(key, ((Integer)v).intValue());
+                editor.putInt(key, (Integer) v);
             else if(v instanceof Long)
-                editor.putLong(key, ((Long)v).longValue());
+                editor.putLong(key, (Long) v);
             else if(v instanceof String)
                 editor.putString(key, ((String)v));         
         }

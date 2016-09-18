@@ -10,7 +10,7 @@ public class Iterator implements Closeable {
 
     public interface OnCursorChangedListener {
         void onCursorChanged();
-    };
+    }
 
     public static final OnCursorChangedListener NULL_LISTENER = new OnCursorChangedListener() {
         @Override

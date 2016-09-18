@@ -20,7 +20,7 @@ public class MapFeaturesPreparser {
     private static final String WIKI_URL = "http://wiki.openstreetmap.org/";    
 
     
-    private final ArrayList<DownloadHandle> images = new ArrayList<DownloadHandle>();
+    private final ArrayList<DownloadHandle> images = new ArrayList<>();
     
     
     private final StringBuilder builder = new StringBuilder();

@@ -2,11 +2,11 @@ package ch.bailu.aat.activities;
 
 
 import android.os.Bundle;
-import ch.bailu.aat.gpx.GpxInformation;
+
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.ServiceLink;
 
-public abstract class AbsServiceLink extends AbsActivity implements GpxInformation.ID{
+public abstract class AbsServiceLink extends AbsActivity {
 
 
     private ServiceLink serviceLink=null;
@@ -54,9 +54,9 @@ public abstract class AbsServiceLink extends AbsActivity implements GpxInformati
     }
     
     
-    public void onResumeWithService() {};
-    public void onPauseWithService() {};
-    public void onServicesUp(boolean firstRun) {};
+    public void onResumeWithService() {}
+    public void onPauseWithService() {}
+    public void onServicesUp(boolean firstRun) {}
 
 
     @Override

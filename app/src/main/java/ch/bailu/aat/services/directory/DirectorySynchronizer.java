@@ -31,7 +31,7 @@ public class DirectorySynchronizer  implements Closeable {
     private OsmPreviewGenerator pendingPreviewGenerator=null;
 
     private FilesOnDisk filesToAdd=null;
-    private final ArrayList<String> filesToRemove = new ArrayList<String>();;
+    private final ArrayList<String> filesToRemove = new ArrayList<>();
 
     private SQLiteDatabase database;
 
@@ -53,7 +53,7 @@ public class DirectorySynchronizer  implements Closeable {
 
 
 
-    private BroadcastReceiver onFileChanged = new BroadcastReceiver () {
+    private final BroadcastReceiver onFileChanged = new BroadcastReceiver () {
         @Override
         public void onReceive(Context context, Intent intent) {
             state.ping();

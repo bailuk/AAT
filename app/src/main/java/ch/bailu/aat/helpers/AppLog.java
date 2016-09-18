@@ -48,7 +48,7 @@ public class AppLog implements Closeable {
     
     private class LogError extends Log {
         public final static String ACTION = NAME_SPACE + "LOG_ERROR";
-        private AlertDialog.Builder alertbox;
+        private final AlertDialog.Builder alertbox;
         
         public LogError(Context c) {
             super(c, ACTION);
@@ -74,7 +74,7 @@ public class AppLog implements Closeable {
     
     private class LogInfo extends Log {
         public final static String ACTION = NAME_SPACE + "LOG_INFO";
-        private Toast toast;
+        private final Toast toast;
         
         public LogInfo(Context c) {
             super(c, ACTION);

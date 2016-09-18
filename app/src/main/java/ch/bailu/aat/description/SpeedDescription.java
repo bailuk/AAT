@@ -8,7 +8,7 @@ import ch.bailu.aat.preferences.SolidUnit;
 
 public abstract class SpeedDescription extends FloatDescription{
 
-    private SolidUnit sunit;
+    private final SolidUnit sunit;
     
     public SpeedDescription(Context context) {
         super(context);

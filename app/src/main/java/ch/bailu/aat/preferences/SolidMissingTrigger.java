@@ -4,7 +4,7 @@ import ch.bailu.aat.R;
 import android.content.Context;
 
 public class SolidMissingTrigger extends SolidStaticIndexList {
-    private static String KEY="missing_trigger_";
+    private static final String KEY="missing_trigger_";
     
     private static final int[] VALUE_LIST = {
     999,

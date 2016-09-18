@@ -36,7 +36,7 @@ public class SegmentIndexWalker extends LegendWalker{
     @Override
     public void doPoint(GpxPointNode point) {
         if (point.getNext()==null) {
-            c.nodes.nodeB.set((GpxPointNode)point);
+            c.nodes.nodeB.set(point);
             drawLegendFromB();
         }
     }

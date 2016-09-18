@@ -52,20 +52,20 @@ public interface EditorInterface {
         @Override
         public void discard() {}
     };
-    public void save();
-    public void toggle();
-    public void remove();
-    public void add(GpxPoint point);
-    public void up();
-    public void down();
-    public boolean isModified();
+    void save();
+    void toggle();
+    void remove();
+    void add(GpxPoint point);
+    void up();
+    void down();
+    boolean isModified();
 
-    public GpxPointNode getSelected();
-    public void select(GpxPointNode p);
+    GpxPointNode getSelected();
+    void select(GpxPointNode p);
 
-    public void saveAs();
-    public void clear();
-    public void redo();
-    public void undo();
-    public void discard();
+    void saveAs();
+    void clear();
+    void redo();
+    void undo();
+    void discard();
 }

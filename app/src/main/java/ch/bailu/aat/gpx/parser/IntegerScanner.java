@@ -5,7 +5,7 @@ import java.io.IOException;
 
 public class IntegerScanner {
 	private int integer;
-	private SimpleStream stream;
+	private final SimpleStream stream;
 	
 	public IntegerScanner(SimpleStream s) {
 		stream = s;

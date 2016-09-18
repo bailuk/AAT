@@ -6,7 +6,7 @@ import ch.bailu.aat.description.DescriptionInterface;
 import ch.bailu.aat.gpx.GpxInformation;
 
 public abstract class TrackDescriptionView extends ViewGroup 
-implements DescriptionInterface, GpxInformation.ID {
+implements DescriptionInterface {
     public static final String DEFAULT_SOLID_KEY=TrackDescriptionView.class.getSimpleName();
     
     
@@ -30,7 +30,7 @@ implements DescriptionInterface, GpxInformation.ID {
         }
         
         public boolean pass(GpxInformation info) {
-            return (id==INFO_ID_ALL || id==info.getID());
+            return (id==GpxInformation.ID.INFO_ID_ALL || id==info.getID());
         }
     }
     

@@ -8,26 +8,26 @@ import ch.bailu.aat.coordinates.BoundingBox;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.GpxList;
 import ch.bailu.aat.gpx.GpxPointNode;
-import ch.bailu.aat.gpx.interfaces.GpxBigDeltaInterface;
+import ch.bailu.aat.gpx.interfaces.GpxType;
 import ch.bailu.aat.gpx.parser.SimpleGpxListReader;
 import ch.bailu.aat.helpers.AppLog;
 import ch.bailu.aat.helpers.Timer;
 import ch.bailu.aat.helpers.file.FileAccess;
 import ch.bailu.aat.preferences.SolidMockLocationFile;
 
-public class MockLocation extends LocationStackChainedItem implements Runnable, GpxInformation.ID{
+public class MockLocation extends LocationStackChainedItem implements Runnable{
 
-    private static long INTERVAL=1*1000;
+    private static final long INTERVAL=1*1000;
     
     private GpxList mockData;
     private GpxPointNode node;
-    private Timer timer;
+    private final Timer timer;
     private int state;
     
     public MockLocation(Context c, LocationStackItem i) {
         super(i);
         
-        mockData = new GpxList(GpxBigDeltaInterface.TRK);
+        mockData = new GpxList(GpxType.TRK);
         timer=new Timer(this, INTERVAL);
         
         try {
@@ -35,11 +35,11 @@ public class MockLocation extends LocationStackChainedItem implements Runnable, 
         	mockData = new SimpleGpxListReader(new FileAccess(file)).getGpxList();
             
             timer.kick();
-            sendState(STATE_WAIT);
+            sendState(GpxInformation.ID.STATE_WAIT);
             
         } catch (IOException e) {
             AppLog.e(c, e);
-            sendState(STATE_OFF);
+            sendState(GpxInformation.ID.STATE_OFF);
         }
     }
 
@@ -56,10 +56,10 @@ public class MockLocation extends LocationStackChainedItem implements Runnable, 
         } else {
             node = (GpxPointNode) mockData.getPointList().getFirst(); 
             if (sendLocation()) {
-                sendState(STATE_ON);
+                sendState(GpxInformation.ID.STATE_ON);
                 timer.kick();
             } else {
-                sendState(STATE_OFF);
+                sendState(GpxInformation.ID.STATE_OFF);
             }
         }
     }
@@ -79,8 +79,8 @@ public class MockLocation extends LocationStackChainedItem implements Runnable, 
 
     private class MockLocationInformation extends LocationInformation {
 
-        private GpxPointNode node;
-        private long creationTime = System.currentTimeMillis();
+        private final GpxPointNode node;
+        private final long creationTime = System.currentTimeMillis();
         
         public MockLocationInformation(GpxPointNode n) {
             setVisibleTrackPoint(n);

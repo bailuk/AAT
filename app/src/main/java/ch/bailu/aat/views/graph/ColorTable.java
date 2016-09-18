@@ -6,9 +6,9 @@ public class ColorTable {
     public final static int GRADIENT_SIZE=256;
     public final static int MAX=GRADIENT_SIZE-1;
     
-    private int color_table[];
+    private final int[] color_table;
 
-    public static ColorTable altitude = new AltitudeColorTable();
+    public static final ColorTable altitude = new AltitudeColorTable();
     
     public ColorTable(int spectrum, int gradients) {
         Scaler scaler=new Scaler(gradients*GRADIENT_SIZE, spectrum);

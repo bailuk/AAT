@@ -85,7 +85,7 @@ public class Dem3Tile implements ElevationProvider, DemProvider {
     
     private static final int DEM3_BUFFER_DIM=1201;
     private static final int DEM3_BUFFER_OFFSET=1;
-    private static DemDimension DIMENSION= 
+    private static final DemDimension DIMENSION=
             new DemDimension(DEM3_BUFFER_DIM, DEM3_BUFFER_OFFSET);
     
     private final byte data[]= new byte[DEM3_BUFFER_DIM*DEM3_BUFFER_DIM*2];
@@ -178,7 +178,7 @@ public class Dem3Tile implements ElevationProvider, DemProvider {
                 if (zip.size()>0) {
                     int total=0;
 
-                    final ZipEntry entry = (ZipEntry) zip.entries().nextElement();
+                    final ZipEntry entry = zip.entries().nextElement();
                     input = new BufferedInputStream(zip.getInputStream(entry));
                     
                     int count=0;

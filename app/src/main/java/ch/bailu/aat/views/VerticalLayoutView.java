@@ -16,7 +16,7 @@ public class VerticalLayoutView extends DescriptionViewGroup {
         
         for (TrackDescriptionView view: viewList) 
             layout.addView(view);
-        
+
         addView(layout);
     }
 
@@ -29,15 +29,15 @@ public class VerticalLayoutView extends DescriptionViewGroup {
         int height=MeasureSpec.getSize(hSpec);
         wSpec  = MeasureSpec.makeMeasureSpec (width,  MeasureSpec.EXACTLY);
         hSpec  = MeasureSpec.makeMeasureSpec (height,  MeasureSpec.EXACTLY);
-        setMeasuredDimension(wSpec, hSpec);
+        setMeasuredDimension(width, height);
         
         layout.measure(wSpec, hSpec);
-    }    
+    }
 
 
 
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
-        layout.layout(0, 0, r-l, b-t);
+        if (changed) layout.layout(l, t, r, b);
     }
 }

@@ -11,8 +11,10 @@ import ch.bailu.aat.services.ServiceContext.ServiceNotUpException;
 public class StatusIcon  {
     private final static int MY_ID=5;
     
-    private ServiceContext scontext;
-    private Notification pauseNotification, onNotification, autoPauseNotification;
+    private final ServiceContext scontext;
+    private final Notification pauseNotification;
+    private final Notification onNotification;
+    private final Notification autoPauseNotification;
     
     
     public StatusIcon(ServiceContext s) {

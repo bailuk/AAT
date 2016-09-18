@@ -16,7 +16,7 @@ public class AccuracyFilter extends LocationStackChainedItem {
 
     @Override
     public void newLocation(LocationInformation location) {
-        if (location.getAccuracy()>0f && 
+        if (//location.getAccuracy()>0f &&
                 location.getAccuracy() < minAccuracy) sendLocation(location);
     }
 

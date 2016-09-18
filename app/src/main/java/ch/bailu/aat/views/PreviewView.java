@@ -108,7 +108,7 @@ public class PreviewView extends ImageView {
     }
 
 
-    private BroadcastReceiver onFileChanged = new BroadcastReceiver () {
+    private final BroadcastReceiver onFileChanged = new BroadcastReceiver () {
         @Override
         public void onReceive(Context context, Intent intent) {
             final String file = imageHandle.toString();

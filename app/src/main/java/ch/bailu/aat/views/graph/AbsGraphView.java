@@ -11,15 +11,15 @@ public abstract class AbsGraphView extends TrackDescriptionView {
     
     public final static int SAMPLE_WIDTH_PIXEL=5;
     
-    private SolidUnit sunit;
-    private StringBuilder builder = new StringBuilder();
+    private final SolidUnit sunit;
+    private final StringBuilder builder = new StringBuilder();
     
     private boolean markerMode=false;
     
     private GpxList gpxList = GpxList.NULL_TRACK;
     
     public AbsGraphView(Context context, String key) {
-        super(context, key,INFO_ID_ALL);
+        super(context, key,GpxInformation.ID.INFO_ID_ALL);
         setWillNotDraw(false);
         sunit = new SolidUnit(context);
     }
@@ -43,8 +43,10 @@ public abstract class AbsGraphView extends TrackDescriptionView {
     
     @Override
     public void onDraw(Canvas c) {
-        markerMode = gpxList.getMarkerList().size() > getWidth() / SAMPLE_WIDTH_PIXEL;
-        plot(c, gpxList, sunit, markerMode);
+        if (getWidth() > 0 && getHeight() > 0) {
+            markerMode = gpxList.getMarkerList().size() > getWidth() / SAMPLE_WIDTH_PIXEL;
+            plot(c, gpxList, sunit, markerMode);
+        }
     }
 
     

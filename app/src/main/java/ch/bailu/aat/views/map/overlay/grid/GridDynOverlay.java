@@ -9,7 +9,7 @@ import ch.bailu.aat.views.map.overlay.OsmOverlay;
 public class GridDynOverlay extends OsmOverlay {
 
     private OsmOverlay gridOverlay;
-    private SolidMapGrid    sgrid;
+    private final SolidMapGrid    sgrid;
     
     private final ServiceContext scontext;
 

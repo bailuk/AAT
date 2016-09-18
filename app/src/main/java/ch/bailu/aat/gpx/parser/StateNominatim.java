@@ -6,7 +6,7 @@ import ch.bailu.aat.gpx.parser.XmlParser.ParserIO;
 
 public class StateNominatim extends ParserState {
 
-    private ParserState node = new StatePlaceNode(); 
+    private final ParserState node = new StatePlaceNode();
 
     @Override
     public void parse(ParserIO io) throws IOException {

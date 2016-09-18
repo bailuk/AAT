@@ -20,7 +20,7 @@ public class CachedTileProvider extends AbsOsmTileProvider {
     private final Context context;
 
 
-    private BroadcastReceiver onFileChanged = new BroadcastReceiver() {
+    private final BroadcastReceiver onFileChanged = new BroadcastReceiver() {
 
         @Override
         public void onReceive(Context context, Intent intent) {

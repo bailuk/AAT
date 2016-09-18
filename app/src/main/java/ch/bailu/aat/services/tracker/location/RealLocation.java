@@ -12,16 +12,16 @@ import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.helpers.AppLog;
 import ch.bailu.aat.helpers.ContextWrapperInterface;
 
-public class RealLocation extends LocationStackChainedItem implements LocationListener, GpxInformation.ID, ContextWrapperInterface{
+public class RealLocation extends LocationStackChainedItem implements LocationListener, ContextWrapperInterface{
 
-    private String provider;
-    private Context context;
+    private final String provider;
+    private final Context context;
     private int state=-99;
     private LocationInformation lastLocation; 
 
 
     private class LocationWrapper extends LocationInformation {
-        private Location location;
+        private final Location location;
 
         public LocationWrapper(Location l) {
             location = l;
@@ -94,7 +94,7 @@ public class RealLocation extends LocationStackChainedItem implements LocationLi
         public boolean hasBearing() {
             return location.hasBearing();
         }
-    };
+    }
 
     private class NoServiceException extends Exception {
         private static final long serialVersionUID = 5318663897402154115L;
@@ -112,7 +112,7 @@ public class RealLocation extends LocationStackChainedItem implements LocationLi
     
     public void init(int gpsInterval) {
         try {
-            setState(STATE_WAIT);
+            setState(GpxInformation.ID.STATE_WAIT);
 
             final LocationManager lm = getLocationManager(context);
 
@@ -121,11 +121,9 @@ public class RealLocation extends LocationStackChainedItem implements LocationLi
             requestLocationUpdates(lm, provider, gpsInterval);
 
         } catch (NoServiceException ex) {
-            setState(STATE_NOSERVICE);
-        } catch (SecurityException ex) {
-            setState(STATE_NOACCESS);
-        } catch (IllegalArgumentException ex) {
-            setState(STATE_NOACCESS);
+            setState(GpxInformation.ID.STATE_NOSERVICE);
+        } catch (SecurityException | IllegalArgumentException ex) {
+            setState(GpxInformation.ID.STATE_NOACCESS);
         }
 
     }
@@ -182,13 +180,13 @@ public class RealLocation extends LocationStackChainedItem implements LocationLi
         try {
             getLocationManager(context).removeUpdates(this);
         } catch (NoServiceException e) {
-            state=STATE_NOSERVICE;
+            state=GpxInformation.ID.STATE_NOSERVICE;
         }
     }
 
     @Override
     public void onLocationChanged(Location l) {
-        setState(STATE_ON);
+        setState(GpxInformation.ID.STATE_ON);
         sendLocation(l);
     }
 
@@ -201,12 +199,12 @@ public class RealLocation extends LocationStackChainedItem implements LocationLi
 
     @Override
     public void onProviderDisabled(String p) {
-        setState(STATE_OFF);
+        setState(GpxInformation.ID.STATE_OFF);
     }
 
     @Override
     public void onProviderEnabled(String p) {
-        setState(STATE_WAIT);
+        setState(GpxInformation.ID.STATE_WAIT);
     }
 
 
@@ -253,12 +251,12 @@ public class RealLocation extends LocationStackChainedItem implements LocationLi
         builder.append("<br>");
 
         switch (state) {
-        case STATE_NOACCESS: builder.append("STATE_NOACCESS"); break;
-        case STATE_NOSERVICE: builder.append("STATE_NOSERVICE"); break;
-        case STATE_ON: builder.append("STATE_ON"); break;
-        case STATE_OFF: builder.append("STATE_OFF"); break;
-        case STATE_PAUSE: builder.append("STATE_PAUSE"); break;
-        case STATE_AUTOPAUSED: builder.append("STATE_AUTOPAUSED"); break;
+        case GpxInformation.ID.STATE_NOACCESS: builder.append("STATE_NOACCESS"); break;
+        case GpxInformation.ID.STATE_NOSERVICE: builder.append("STATE_NOSERVICE"); break;
+        case GpxInformation.ID.STATE_ON: builder.append("STATE_ON"); break;
+        case GpxInformation.ID.STATE_OFF: builder.append("STATE_OFF"); break;
+        case GpxInformation.ID.STATE_PAUSE: builder.append("STATE_PAUSE"); break;
+        case GpxInformation.ID.STATE_AUTOPAUSED: builder.append("STATE_AUTOPAUSED"); break;
         default: builder.append("STATE_WAIT"); break;
         }
         builder.append("<br>");

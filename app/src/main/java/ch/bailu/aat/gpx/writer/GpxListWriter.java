@@ -8,7 +8,7 @@ import ch.bailu.aat.gpx.GpxList;
 import ch.bailu.aat.gpx.GpxListIterator;
 
 
-public class GpxListWriter implements GpxConstants, Closeable {
+public class GpxListWriter implements  Closeable {
 
 
     private GpxListIterator iterator;

@@ -4,13 +4,8 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 
-import java.io.File;
-
-import ch.bailu.aat.preferences.SolidOverlayFileList;
-
 
 public class MenuDialog implements  DialogInterface.OnClickListener {
-    private final AlertDialog.Builder dialog;
     private final AbsMenu menu;
     private final MenuArray array;
 
@@ -21,7 +16,7 @@ public class MenuDialog implements  DialogInterface.OnClickListener {
         menu.inflate(array);
         menu.prepare(array);
 
-        dialog = new AlertDialog.Builder(context);
+        final AlertDialog.Builder dialog = new AlertDialog.Builder(context);
         dialog.setItems(array.toStringArray(), this);
         dialog.create();
         dialog.show();

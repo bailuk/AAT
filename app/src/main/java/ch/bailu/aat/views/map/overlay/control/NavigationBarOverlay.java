@@ -4,6 +4,8 @@ import org.osmdroid.views.MapView;
 
 import android.util.SparseArray;
 import android.view.View;
+import android.widget.LinearLayout;
+
 import ch.bailu.aat.R;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.helpers.AppLayout;
@@ -15,10 +17,12 @@ import ch.bailu.aat.views.map.AbsOsmView;
 import ch.bailu.aat.views.map.OsmInteractiveView;
 
 
-public class NavigationBarOverlay extends ControlBarOverlay implements GpxInformation.ID {
-    private View buttonPlus, buttonMinus, buttonFrame;
+public class NavigationBarOverlay extends ControlBarOverlay {
+    private final View buttonPlus;
+    private final View buttonMinus;
+    private final View buttonFrame;
 
-    private final SparseArray<GpxInformation> infoCache = new SparseArray<GpxInformation>(10);
+    private final SparseArray<GpxInformation> infoCache = new SparseArray<>(10);
 
     private int boundingCycle=0;
 
@@ -29,8 +33,8 @@ public class NavigationBarOverlay extends ControlBarOverlay implements GpxInform
 
 
     public NavigationBarOverlay(OsmInteractiveView o, int i) {
-        super(o,new ControlBar(o.getContext(), 
-                AppLayout.getOrientationAlongSmallSide(o.getContext()), i));
+        super(o,new ControlBar(o.getContext(),
+                LinearLayout.HORIZONTAL, i));
 
         buttonPlus = getBar().addImageButton(R.drawable.zoom_in);
         buttonMinus = getBar().addImageButton(R.drawable.zoom_out);

@@ -11,8 +11,8 @@ import ch.bailu.aat.views.map.overlay.MapTwoNodes.PixelNode;
 
 
 public abstract class GpxListPainter extends GpxListWalker {
-    private static int MIN_PIXEL_SPACE=10;
-    private static int MAX_PIXEL_SPACE=100;
+    private static final int MIN_PIXEL_SPACE=10;
+    private static final int MAX_PIXEL_SPACE=100;
 
     private final static int START_PAINTING=0;
     private final static int CONTINUE_PAINTING=2;

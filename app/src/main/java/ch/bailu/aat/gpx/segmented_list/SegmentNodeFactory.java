@@ -3,7 +3,7 @@ package ch.bailu.aat.gpx.segmented_list;
 import ch.bailu.aat.gpx.linked_list.Node;
 
 public abstract class SegmentNodeFactory {
-    public static SegmentNodeFactory DEFAULT_FACTORY = new SegmentNodeFactory() {
+    public static final SegmentNodeFactory DEFAULT_FACTORY = new SegmentNodeFactory() {
 
         @Override
         public SegmentNode createMarker(Node n) {

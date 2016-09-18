@@ -15,7 +15,7 @@ import ch.bailu.aat.services.ServiceContext;
 public class LocationStack implements Closeable,  OnSharedPreferenceChangeListener, PresetDependent{
     private final SolidLocationProvider sprovider;
 
-    private ArrayList<LocationStackItem> itemList=new ArrayList<LocationStackItem>();
+    private final ArrayList<LocationStackItem> itemList= new ArrayList<>();
 
     private LocationStackItem provider;
     private CleanLocation clean;
@@ -51,7 +51,7 @@ public class LocationStack implements Closeable,  OnSharedPreferenceChangeListen
 
         itemList.add(new AccelerationFilter(lastItem()));
         itemList.add(new AccuracyFilter(lastItem()));
-        itemList.add(new InformationFilter(lastItem()));
+        //itemList.add(new InformationFilter(lastItem()));
 
         dirty = new DirtyLocation(lastItem(),scontext.getContext()); 
         itemList.add(dirty);

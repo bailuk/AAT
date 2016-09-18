@@ -26,8 +26,8 @@ public class ActivitySwitcher {
     };
 
 
-    private int      activityLabel;
-    private Class<?> activityClass;
+    private final int      activityLabel;
+    private final Class<?> activityClass;
 
     public final static int cycable = 3; 
 

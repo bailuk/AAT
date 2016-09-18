@@ -1,9 +1,9 @@
 package ch.bailu.aat.services.editor;
 
-import ch.bailu.aat.gpx.GpxBigDelta;
 import ch.bailu.aat.gpx.GpxList;
 import ch.bailu.aat.gpx.GpxPointNode;
 import ch.bailu.aat.gpx.interfaces.GpxPointInterface;
+import ch.bailu.aat.gpx.interfaces.GpxType;
 
 public class GpxEditor {
 
@@ -75,10 +75,10 @@ public class GpxEditor {
     public void toggleType() {
         int type = ring.get().getList().getDelta().getType();
 
-        if (type == GpxBigDelta.WAY) {
-            type = GpxBigDelta.RTE;
+        if (type == GpxType.WAY) {
+            type = GpxType.RTE;
         } else {
-            type = GpxBigDelta.WAY;
+            type = GpxType.WAY;
         }
         ring.get().getList().setType(type);
     }

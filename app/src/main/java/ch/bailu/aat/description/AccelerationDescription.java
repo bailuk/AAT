@@ -9,9 +9,9 @@ import ch.bailu.aat.R;
 
 public class AccelerationDescription extends FloatDescription {
 
-    private static String UNIT="m/s\u00B2";
+    private final static String UNIT="m/s\u00B2";
     
-    private Context context;
+    private final Context context;
     public AccelerationDescription(Context c) {
         super(c);
         context=c;

@@ -8,7 +8,7 @@ public class ViewWrapper extends TrackDescriptionView {
     private final View view;
     
     public ViewWrapper(View v) {
-        super(v.getContext(), DEFAULT_SOLID_KEY,INFO_ID_ALL);
+        super(v.getContext(), DEFAULT_SOLID_KEY,GpxInformation.ID.INFO_ID_ALL);
         view = v;
         addView(view);
     }
@@ -25,10 +25,13 @@ public class ViewWrapper extends TrackDescriptionView {
 
         
         view.measure(wSpec, hSpec);
+
+        /*
         wSpec  = MeasureSpec.makeMeasureSpec (view.getMeasuredWidth(),  MeasureSpec.EXACTLY);
         hSpec  = MeasureSpec.makeMeasureSpec (view.getMeasuredHeight(),  MeasureSpec.EXACTLY);
+        */
 
-        setMeasuredDimension(wSpec, hSpec);
+        setMeasuredDimension(view.getMeasuredWidth(), view.getMeasuredHeight());
     }
     
     

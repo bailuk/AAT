@@ -6,7 +6,7 @@ import android.util.SparseArray;
 
 public class FreeLater implements Closeable {
     private final static int INITIAL_CAPACITY=20;
-    private final SparseArray<ObjectHandle> table = new SparseArray<ObjectHandle>(INITIAL_CAPACITY);
+    private final SparseArray<ObjectHandle> table = new SparseArray<>(INITIAL_CAPACITY);
 
     
     public void freeLater(ObjectHandle handle) {

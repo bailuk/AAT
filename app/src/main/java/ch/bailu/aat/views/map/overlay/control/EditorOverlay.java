@@ -3,6 +3,8 @@ package ch.bailu.aat.views.map.overlay.control;
 import org.osmdroid.api.IGeoPoint;
 
 import android.view.View;
+import android.widget.LinearLayout;
+
 import ch.bailu.aat.R;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.GpxPoint;
@@ -39,7 +41,7 @@ public class EditorOverlay extends ControlBarOverlay {
     public EditorOverlay(OsmInteractiveView osm, ServiceContext sc, int iid, EditorHelper e) {
         super(osm, new ControlBar(
                 osm.getContext(),
-                AppLayout.getOrientationAlongLargeSide(osm.getContext())));
+                LinearLayout.VERTICAL));
 
         edit = e;
         scontext=sc;

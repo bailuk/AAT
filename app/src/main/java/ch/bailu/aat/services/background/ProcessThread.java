@@ -16,7 +16,7 @@ public abstract class ProcessThread extends Thread implements Closeable, ThreadC
 
     public ProcessThread(int size) {
         SIZE=size;
-        queue = new ArrayBlockingQueue<ProcessHandle>(SIZE, true);
+        queue = new ArrayBlockingQueue<>(SIZE, true);
         start();
     }
 

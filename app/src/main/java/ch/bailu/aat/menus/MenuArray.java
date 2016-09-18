@@ -16,7 +16,7 @@ import java.util.ArrayList;
 
 
 public class MenuArray implements Menu {
-    private final ArrayList<Item> item = new ArrayList<Item>();
+    private final ArrayList<Item> item = new ArrayList<>();
     private final Context context;
 
     public MenuArray(Context c) {

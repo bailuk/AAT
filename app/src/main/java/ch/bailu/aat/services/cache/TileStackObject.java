@@ -192,8 +192,8 @@ public class TileStackObject extends ObjectHandle {
 
 
     public void deleteFromDisk() {
-        for (int i=0; i<tiles.length; i++) {
-            new File(tiles[i].id).delete();
+        for (TileContainer tile : tiles) {
+            new File(tile.id).delete();
         }
     }
 
@@ -268,12 +268,12 @@ public class TileStackObject extends ObjectHandle {
             tiles = new TileContainer[count];
 
             int x=0;
-            for (int i=0; i<s.length; i++) {
-                if (isZoomLevelSupported(s[i])) {
-                    tiles[x]=new TileContainer(
-                            s[i].getID(mapTile, context),
-                            s[i].getBitmapFilter(),
-                            s[i].getFactory(mapTile));
+            for (Source value : s) {
+                if (isZoomLevelSupported(value)) {
+                    tiles[x] = new TileContainer(
+                            value.getID(mapTile, context),
+                            value.getBitmapFilter(),
+                            value.getFactory(mapTile));
                     x++;
                 }
             }
