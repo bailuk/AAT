@@ -62,7 +62,7 @@ public class MultiView extends TrackDescriptionView {
     public void updateGpxContent(GpxInformation info) {
         if (filter.pass(info)) {
             informationMap.put(info.getID(), info);
-            for (int i = 0; i< viewList.length; i++) viewList[i].updateGpxContent(info);
+            for (TrackDescriptionView aViewList : viewList) aViewList.updateGpxContent(info);
         }
     }
 

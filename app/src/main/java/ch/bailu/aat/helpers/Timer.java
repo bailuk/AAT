@@ -19,10 +19,7 @@ public class Timer implements Closeable {
         if (handler == null) {
             handler = new Handler();
         }
-
-        if (handler != null) {
-            handler.postDelayed(listener, interval);
-        }
+        handler.postDelayed(listener, interval);
     }
 
     public void close () {

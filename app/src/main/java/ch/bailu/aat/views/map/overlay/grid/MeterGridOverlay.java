@@ -13,8 +13,7 @@ public abstract class MeterGridOverlay extends OsmOverlay {
     private static final int MIN_ZOOM_LEVEL=5;
     
     private final GridMetricScaler grid = new GridMetricScaler();
-    private  Point centerPixel;
-    
+
     private final DistanceDescription distanceDescription;
     
     
@@ -31,7 +30,7 @@ public abstract class MeterGridOverlay extends OsmOverlay {
             if (grid.getOptimalScale() > 0) {
                 
                 MeterCoordinates coordinates = getRoundedCoordinates(painter, grid.getOptimalScale());
-                centerPixel = getCenterPixel(painter, coordinates);
+                final Point centerPixel = getCenterPixel(painter, coordinates);
                 
                 painter.canvas.drawGrid(centerPixel, 
                         painter.projection.getPixelFromDistance(grid.getOptimalScale()));

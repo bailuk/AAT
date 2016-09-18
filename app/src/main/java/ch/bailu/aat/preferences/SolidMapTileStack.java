@@ -250,8 +250,8 @@ public class SolidMapTileStack extends SolidCheckList {
     
     @Override
     public boolean hasKey(String s) {
-        for (int i=0; i<enabledArray.length; i++) {
-            if (enabledArray[i].hasKey(s)){
+        for (SolidBoolean anEnabledArray : enabledArray) {
+            if (anEnabledArray.hasKey(s)) {
                 return true;
             }
         }

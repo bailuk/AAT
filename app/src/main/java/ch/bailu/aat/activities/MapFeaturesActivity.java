@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.LinearLayout;
+
 import ch.bailu.aat.R;
 import ch.bailu.aat.helpers.AppBroadcaster;
 import ch.bailu.aat.helpers.AppDialog;
@@ -39,7 +41,7 @@ public class MapFeaturesActivity extends AbsDispatcher implements OnClickListene
         ToolTip.set(download, R.string.tt_overpass_download_features);
         download.setOnClickListener(this);
 
-        final ControlBar bar = new MainControlBar(getServiceContext(),6);
+        final ControlBar bar = new MainControlBar(getServiceContext(), LinearLayout.HORIZONTAL, 6);
         
         bar.addView(download);
         bar.addViewIgnoreSize(AppTheme.getTitleTextView(this, R.string.query_features));

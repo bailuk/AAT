@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import ch.bailu.aat.helpers.AppLog;
 import microsoft.mappoint.TileSystem;
 
 import org.osmdroid.DefaultResourceProxyImpl;

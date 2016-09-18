@@ -15,6 +15,9 @@ import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import org.w3c.dom.NodeList;
+
 import ch.bailu.aat.R;
 import ch.bailu.aat.description.AccelerationDescription;
 import ch.bailu.aat.description.AccuracyDescription;
@@ -80,15 +83,11 @@ import ch.bailu.aat.views.map.overlay.grid.GridDynOverlay;
 public class TestActivity extends AbsDispatcher implements OnClickListener {
     private static final String SOLID_KEY="test";
 
-
-    private LinearLayout         contentView;
     private ImageButton          multiCycleP, multiCycleN;
     private MultiView            multiView;
 
     private OsmInteractiveView   map;
 
-    private NodeListView          wayList;
-    private SummaryListView gpsSummary, trackSummary;
 
     private EditorHelper edit;
 
@@ -97,7 +96,7 @@ public class TestActivity extends AbsDispatcher implements OnClickListener {
         super.onCreate(savedInstanceState);
 
         edit = new EditorHelper(getServiceContext());
-        contentView = new ContentView(this);
+        final LinearLayout  contentView = new ContentView(this);
 
         contentView.addView(createButtonBar());
         multiView = createMultiView();
@@ -121,7 +120,7 @@ public class TestActivity extends AbsDispatcher implements OnClickListener {
 
 
     private MultiView createMultiView() {
-        wayList = new NodeListView(getServiceContext(), SOLID_KEY, GpxInformation.ID.INFO_ID_OVERLAY);
+        final NodeListView wayList = new NodeListView(getServiceContext(), SOLID_KEY, GpxInformation.ID.INFO_ID_OVERLAY);
 
         map=new OsmInteractiveView(getServiceContext(), SOLID_KEY);
         ViewWrapper list = new ViewWrapper(new TestList(this));
@@ -152,10 +151,14 @@ public class TestActivity extends AbsDispatcher implements OnClickListener {
                 new TimeDescription(this),
                 new PauseDescription(this),
                 new TrackSizeDescription(this),
-        };   
+        };
 
-        gpsSummary= new SummaryListView(this, SOLID_KEY, GpxInformation.ID.INFO_ID_LOCATION, gpsData);
-        trackSummary = new SummaryListView(this, SOLID_KEY, GpxInformation.ID.INFO_ID_TRACKER, trackData);
+
+        final TrackDescriptionView gpsSummary = new SummaryListView(
+                this, SOLID_KEY, GpxInformation.ID.INFO_ID_LOCATION, gpsData);
+
+        final TrackDescriptionView trackSummary = new SummaryListView(
+                this, SOLID_KEY, GpxInformation.ID.INFO_ID_TRACKER, trackData);
 
         TrackDescriptionView viewData[] = {
                 map,
@@ -324,9 +327,7 @@ public class TestActivity extends AbsDispatcher implements OnClickListener {
                     tests.get(i).test();
                     AppLog.i(getContext(), "Test Sucessfull");
 
-                } catch (AssertionError e) {
-                    AppLog.e(getContext(), e);
-                } catch (Exception e) {
+                } catch (AssertionError | Exception e) {
                     AppLog.e(getContext(), e);
                 }
             }

@@ -40,7 +40,7 @@ public class GpxEditorActivity extends AbsFileContentActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        edit = new EditorHelper(getServiceContext());
+        editor_helper = new EditorHelper(getServiceContext());
 
         createViews(SOLID_KEY);
         createDispatcher();
@@ -58,7 +58,10 @@ public class GpxEditorActivity extends AbsFileContentActivity {
                 new GpxDynOverlay(map, getServiceContext(), GpxInformation.ID.INFO_ID_TRACKER), 
                 new GridDynOverlay(map, getServiceContext()),
                 new CurrentLocationOverlay(map),
-                new EditorOverlay(map, getServiceContext(),GpxInformation.ID.INFO_ID_EDITOR_OVERLAY, edit),
+                new EditorOverlay(map,
+                        getServiceContext(),
+                        GpxInformation.ID.INFO_ID_EDITOR_OVERLAY,
+                        editor_helper),
                 new NavigationBarOverlay(map),
                 new InformationBarOverlay(map)
         };
@@ -99,7 +102,8 @@ public class GpxEditorActivity extends AbsFileContentActivity {
     @Override
     public void updateGpxContent(GpxInformation info) {
         if (info.getID()== GpxInformation.ID.INFO_ID_FILEVIEW) {
-            edit.edit(new File(currentFile.getInfo().getPath()));    
+            editor_helper.edit(new File(currentFile.getInfo().getPath()));
+            editor_source.forceUpdate();
         }
     }
 
@@ -107,23 +111,23 @@ public class GpxEditorActivity extends AbsFileContentActivity {
     @Override
     public void onBackPressed() {
         try {
-            if (edit.getEditor().isModified()) {
+            if (editor_helper.getEditor().isModified()) {
                 new AppDialog() {
                     @Override
                     protected void onPositiveClick() {
 
-                        edit.getEditor().save();
+                        editor_helper.getEditor().save();
                         closeActivity();
                     }
 
                     @Override
                     public void onNeutralClick() {
-                        edit.getEditor().discard();
+                        editor_helper.getEditor().discard();
                         closeActivity();
                     }
 
 
-                }.displaySaveDiscardDialog(this, edit.getInformation().getName());
+                }.displaySaveDiscardDialog(this, editor_helper.getInformation().getName());
             } else {
                 closeActivity();
             }
@@ -143,7 +147,7 @@ public class GpxEditorActivity extends AbsFileContentActivity {
 
     @Override
     public void onClick(final View v) {
-        final EditorInterface editor = edit.getEditor();
+        final EditorInterface editor = editor_helper.getEditor();
 
         if (v == previousFile || v ==nextFile) {
             if (editor.isModified()) {
@@ -161,7 +165,7 @@ public class GpxEditorActivity extends AbsFileContentActivity {
                     }
 
 
-                }.displaySaveDiscardDialog(this, edit.getInformation().getName());
+                }.displaySaveDiscardDialog(this, editor_helper.getInformation().getName());
             } else {
                 switchFile(v);
             }

@@ -5,6 +5,7 @@ import java.io.IOException;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteCantOpenDatabaseException;
 import android.database.sqlite.SQLiteDatabase;
 import ch.bailu.aat.services.ServiceContext;
 
@@ -17,13 +18,13 @@ public class GpxDatabase extends AbsDatabase{
 
 
 
-    public GpxDatabase (ServiceContext sc, File path) throws IOException {
+    public GpxDatabase (ServiceContext sc, File path) throws IOException, SQLiteCantOpenDatabaseException {
         context=sc.getContext();
         database = openDatabase(path);
     }
 
 
-    private SQLiteDatabase openDatabase(File path) throws IOException {
+    private SQLiteDatabase openDatabase(File path) throws IOException, SQLiteCantOpenDatabaseException {
         path.getParentFile().mkdirs();
         return new GpxDbOpenHelper(context, path).getReadableDatabase();    
     }

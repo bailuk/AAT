@@ -137,7 +137,7 @@ public class ObjectTable {
 
     private synchronized void trim(SelfOn self) {
 
-        while ((totalMemorySize > limit) && removeOldest(self)) {}
+        while ((totalMemorySize > limit) && removeOldest(self));
     }
 
 

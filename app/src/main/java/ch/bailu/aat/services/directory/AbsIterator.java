@@ -22,7 +22,7 @@ public abstract class AbsIterator extends GpxInformation implements Closeable{
 
     public abstract GpxInformation getListSummary();
 
-
+/*
     public static final AbsIterator NULL_ITERATOR = new AbsIterator() {
 
         @Override
@@ -52,7 +52,7 @@ public abstract class AbsIterator extends GpxInformation implements Closeable{
 
     };
 
-    
+  */
     @Override
     public void close() {}
 }

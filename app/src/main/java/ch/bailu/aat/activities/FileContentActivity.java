@@ -15,7 +15,7 @@ public class FileContentActivity extends AbsFileContentActivity{
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         
-        edit = new EditorHelper(getServiceContext());
+        editor_helper = new EditorHelper(getServiceContext());
 
         createViews(SOLID_KEY);
         createDispatcher();

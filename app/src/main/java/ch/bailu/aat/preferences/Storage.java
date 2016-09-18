@@ -3,6 +3,7 @@ package ch.bailu.aat.preferences;
 import java.io.File;
 import java.util.Map.Entry;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
@@ -23,6 +24,7 @@ public class Storage  implements ContextWrapperInterface {
     private final Context context;
 
 
+    @SuppressLint("CommitPrefEdits")
     private Storage(Context c, String fileName) {
         context=c;
         preferences = context.getSharedPreferences(fileName,Context.MODE_PRIVATE);

@@ -21,7 +21,6 @@ public class MapProjection {
     
     private Projection projection;
     private BoundingBox bounding;
-    private BoundingBoxE6 boundingE6;
 
     private float pixels_per_meter;
     private int sdistance;
@@ -42,7 +41,7 @@ public class MapProjection {
         
         projection = map.getProjection();
 
-        boundingE6 = map.getBoundingBox();
+        final BoundingBoxE6 boundingE6 = map.getBoundingBox();
         bounding = new BoundingBox(boundingE6);
 
 

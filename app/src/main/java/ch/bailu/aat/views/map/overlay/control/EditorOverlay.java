@@ -8,7 +8,6 @@ import android.widget.LinearLayout;
 import ch.bailu.aat.R;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.GpxPoint;
-import ch.bailu.aat.helpers.AppLayout;
 import ch.bailu.aat.helpers.ToolTip;
 import ch.bailu.aat.preferences.SolidMapGrid;
 import ch.bailu.aat.services.ServiceContext;

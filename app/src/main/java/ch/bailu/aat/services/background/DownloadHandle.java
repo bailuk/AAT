@@ -18,7 +18,7 @@ public class DownloadHandle extends ProcessHandle {
 
     private final static String USER_AGENT_KEY = "User-Agent";
     private final static String USER_AGENT_VALUE = 
-            AppTheme.getAppShortName() + "/" + AppTheme.getAppFullName() + " (aat@bailu.ch)";
+            AppTheme.APP_SHORT_NAME + "/" + AppTheme.APP_LONG_NAME + " (aat@bailu.ch)";
 
     private final static int IO_BUFFER_SIZE=8*1024;
 

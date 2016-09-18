@@ -153,5 +153,31 @@
     <string name="location_paste">Position einfügen</string>
     <string name="location_send">Position senden…</string>
     <string name="location_view">Position ansehen…</string>
+    <string name="d_name">Name</string>
+    <string name="d_startdate">Start</string>
+    <string name="auto">Auto</string>
+    <string name="file_mock">Für simulierten Standort verwenden</string>
+    <string name="filter_date_start">Start Datum</string>
+    <string name="filter_date_to">End Datum</string>
+    <string name="filter_geo">Innerhalb Bereich</string>
+    <string name="filter_geo_update">Bereich aus Karte verwenden</string>
+    <string name="intro_import_list">Importierte Dateien</string>
+    <string name="intro_overlay_list">Overlay Liste</string>
+    <string name="intro_status">Status</string>
+    <string name="none">Kein</string>
+    <string name="p_acceleration_filter">Beschleunigungsfilter</string>
+    <string name="p_accuracy_filter">Genauigkeitsfilter</string>
+    <string name="p_legend_fulldistance">Totaldistanz</string>
+    <string name="p_location_provider">Standortquelle</string>
+    <string name="p_missing_trigger">Auslöser für fehlendes Signal</string>
+    <string name="p_overlay">Overlays</string>
+    <string name="p_system">System</string>
+    <string name="p_tile_size">Kachelgrösse</string>
+    <string name="pause">Pause</string>
+    <string name="query_download_features">Map Features (neu) herunterladen?</string>
+    <string name="tt_info_location">Importieren/exportieren der Kartenmitte</string>
+    <string name="tt_menu_file">Menu für Dateioperationen anzeigen.</string>
+    <string name="tt_overpass_download_features">Map Features herunterladen.</string>
+    <string name="tt_overpass_mapfeatures">Map Features auflisten.</string>
 
 </resources>

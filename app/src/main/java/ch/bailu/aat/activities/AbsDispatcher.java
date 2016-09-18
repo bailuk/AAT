@@ -14,11 +14,11 @@ public abstract class AbsDispatcher extends AbsMenu {
         dispatcher = ContentDispatcher.NULL;
     }
 
-
+/*
     public ContentDispatcher getDispatcher() {
         return dispatcher;
     }
-
+*/
 
     public void setDispatcher(ContentDispatcher d) {
         dispatcher.close();

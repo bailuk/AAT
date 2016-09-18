@@ -15,7 +15,8 @@ import ch.bailu.aat.helpers.AppLog;
 
 
 public class GpxProvider extends ContentProvider {
-    private static final UnsupportedOperationException UNSUPORTED=new UnsupportedOperationException("Not supported by this provider");
+    private static final UnsupportedOperationException UNSUPORTED=
+            new UnsupportedOperationException("Not supported by this provider");
     
 
     @Override

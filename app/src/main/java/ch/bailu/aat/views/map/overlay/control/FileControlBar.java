@@ -9,7 +9,6 @@ import ch.bailu.aat.R;
 import ch.bailu.aat.activities.AbsGpxListActivity;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.GpxPointNode;
-import ch.bailu.aat.helpers.AppLayout;
 import ch.bailu.aat.helpers.FileAction;
 import ch.bailu.aat.helpers.ToolTip;
 import ch.bailu.aat.preferences.SolidDirectory;

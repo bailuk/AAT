@@ -15,7 +15,7 @@ public class AppSelectDirectoryDialog  implements  DialogInterface.OnClickListen
 
 
     private final Context context;
-    public AppSelectDirectoryDialog (Context c, File f) throws IOException {
+    public AppSelectDirectoryDialog (Context c, File f) {
         context=c;
         file=f;
         directories = new File[] {

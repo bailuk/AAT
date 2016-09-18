@@ -2,6 +2,7 @@ package ch.bailu.aat.helpers;
 
 import java.io.Closeable;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -76,6 +77,7 @@ public class AppLog implements Closeable {
         public final static String ACTION = NAME_SPACE + "LOG_INFO";
         private final Toast toast;
         
+        @SuppressLint("ShowToast")
         public LogInfo(Context c) {
             super(c, ACTION);
             toast =  Toast.makeText(c, getClass().getSimpleName(), Toast.LENGTH_LONG);

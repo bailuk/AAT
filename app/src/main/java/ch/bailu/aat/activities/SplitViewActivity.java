@@ -49,7 +49,7 @@ public class SplitViewActivity extends AbsDispatcher implements OnClickListener{
     private static final String SOLID_MAP_KEY="themap";
 
     private MultiView       multiView;
-    private OsmInteractiveView      mapView, mapViewAlt;
+    private OsmInteractiveView      mapView;
     private ImageButton             activityCycle, multiCycle;
     private TrackerStateButton      trackerState;
 
@@ -99,7 +99,7 @@ public class SplitViewActivity extends AbsDispatcher implements OnClickListener{
         };
 
 
-        mapViewAlt=new OsmInteractiveView(getServiceContext(), SOLID_KEY);
+        final OsmInteractiveView mapViewAlt=new OsmInteractiveView(getServiceContext(), SOLID_KEY);
 
         OsmOverlay overlayList[] = {
                 new GpxOverlayListOverlay(mapViewAlt,getServiceContext()),

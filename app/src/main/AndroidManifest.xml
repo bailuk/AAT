@@ -141,9 +141,13 @@
             android:name="ch.bailu.aat.activities.GpxEditorActivity"
             android:screenOrientation="portrait" >
         </activity>
-        <activity android:name="ch.bailu.aat.activities.OverpassActivity" >
+        <activity
+            android:name="ch.bailu.aat.activities.OverpassActivity"
+            android:screenOrientation="portrait" >
         </activity>
-        <activity android:name="ch.bailu.aat.activities.NominatimActivity" >
+        <activity
+            android:name="ch.bailu.aat.activities.NominatimActivity"
+            android:screenOrientation="portrait" >
         </activity>
         <activity android:name="ch.bailu.aat.activities.MapFeaturesActivity" >
         </activity>

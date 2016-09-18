@@ -4,18 +4,18 @@
     <!-- General -->
     <string name="on">On</string>
     <string name="off">Off</string>
-    <string name="auto" translatable="false">Auto</string>
+    <string name="auto">Auto</string>
     <string name="none">None</string>
 
 
     <!-- Main activity (Intro) -->
     <string name="intro_about">About</string>
-    <string name="intro_readme">README</string>
-    <string name="intro_resume">Cockpit A</string>
-    <string name="intro_cockpit2">Cockpit B</string>
+    <string name="intro_readme" translatable="false">README</string>
+    <string name="intro_resume" translatable="false">Cockpit A</string>
+    <string name="intro_cockpit2" translatable="false">Cockpit B</string>
     <string name="intro_map">Map</string>
-    <string name="intro_nominatim">Nominatim</string>
-    <string name="intro_test">Test</string>
+    <string name="intro_nominatim" translatable="false">Nominatim</string>
+    <string name="intro_test" translatable="false">Test</string>
     <string name="intro_status">Status</string>
 
     <string name="intro_overlay_list">Overlay list</string>
@@ -23,12 +23,12 @@
     <string name="intro_import_list">Imported files</string>
     <string name="intro_settings">Preferences</string>
 
-    <string name="gps">GPS</string>
-    <string name="gps_wait">&#8230;</string>
+    <string name="gps" translatable="false">GPS</string>
+    <string name="gps_wait" translatable="false">&#8230;</string>
     <string name="gps_nogps">No GPS</string>
     <string name="gps_noaccess">No access</string>
 
-    <string name="tracker">Tracker</string>
+    <string name="tracker" translatable="false">Tracker</string>
     <string name="tracker_start">Start</string>
     <string name="tracker_pause">Pause</string>
     <string name="tracker_stop">Stop</string>
@@ -51,7 +51,7 @@
 
     <string name="p_general">General</string>
     <string name="p_preset">Activity</string>
-    <string name="p_met">MET</string>
+    <string name="p_met" translatable="false">MET</string>
     <string-array name="p_met_list">
         <!--
           List is taken and modified from "Compendium of Physical Activities"
@@ -103,9 +103,9 @@
     <string name="p_tile_size">Tile size</string>
     <string name="p_accuracy_filter">Accuracy filter</string>
     <string name="p_acceleration_filter">Acceleration filter</string>
-    <string name="p_distance_filter">Distance filter</string>
-    <string name="p_directory_data">Data directory</string>
-    <string name="p_directory_tiles">Tile cache directory</string>
+    <string name="p_distance_filter" translatable="false">Distance filter</string>
+    <string name="p_directory_data" translatable="false">Data directory</string>
+    <string name="p_directory_tiles" translatable="false">Tile cache directory</string>
     <string name="p_legend_fulldistance">Distance continuous</string>
     <string name="p_missing_trigger">Missing trigger</string>
     <string name="p_location_provider">Location provider</string>
@@ -171,9 +171,9 @@
 
 
     <!-- OSM API Query -->
-    <string name="query_overpass">Overpass</string>
-    <string name="query_features">OSM Features</string>
-    <string name="query_download_features">"(Re)Download map features?"</string>
+    <string name="query_overpass" translatable="false">Overpass</string>
+    <string name="query_features" translatable="false">OSM Features</string>
+    <string name="query_download_features">(Re)Download map features?</string>
 
 
     <!-- ToolTip -->

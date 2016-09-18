@@ -37,7 +37,7 @@ public class TileStackObject extends ObjectHandle {
     }
 
 
-    public TileStackObject(String s, ServiceContext cs,  TileContainer[] t, MapTile m) {
+    public TileStackObject(String s,  TileContainer[] t, MapTile m) {
         super(s);
         tiles = t;
         mapTile=m;
@@ -259,8 +259,8 @@ public class TileStackObject extends ObjectHandle {
             mapTile = mt;
             int count=0;
 
-            for (int i=0; i<s.length; i++) {
-                if (isZoomLevelSupported(s[i])) {
+            for (Source value1 : s) {
+                if (isZoomLevelSupported(value1)) {
                     count++;
                 }
             }
@@ -288,7 +288,7 @@ public class TileStackObject extends ObjectHandle {
         }
         @Override
         public ObjectHandle factory(String id, ServiceContext cs) {
-            return new TileStackObject(id, cs, tiles, mapTile);
+            return new TileStackObject(id, tiles, mapTile);
         }
     }
 }

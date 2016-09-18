@@ -56,11 +56,11 @@ public abstract class AbsActivity extends Activity {
         builder.append("<h1>");
         builder.append(getClass().getSimpleName());
         builder.append("</h1>");
-        builder.append("<p>Instantiated activites: ");
+        builder.append("<p>Instantiated activities: ");
         builder.append(instantiated);
-        builder.append("<br>Created activites: ");
+        builder.append("<br>Created activities: ");
         builder.append(created);
-        builder.append("<br>Count of aplication starts: ");
+        builder.append("<br>Count of application starts: ");
         builder.append(PreferenceLoadDefaults.getStartCount(this));
         builder.append("</p>");
     }

@@ -107,10 +107,13 @@ public abstract class IteratorAbstract extends Iterator implements OnSharedPrefe
         }
 
         cursor = scontext.getDirectoryService().query(selection);
-        cursor.moveToPosition(oldPosition);
 
-        onCursorChanged(cursor, fileOnOldPosition);
-        onCursorChangedListener.onCursorChanged();
+        if (cursor != null) {
+            cursor.moveToPosition(oldPosition);
+
+            onCursorChanged(cursor, fileOnOldPosition);
+            onCursorChangedListener.onCursorChanged();
+        }
     }
 
 

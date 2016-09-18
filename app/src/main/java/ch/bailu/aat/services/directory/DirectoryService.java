@@ -7,6 +7,8 @@ import java.io.IOException;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteCantOpenDatabaseException;
+
 import ch.bailu.aat.helpers.AppDirectory;
 import ch.bailu.aat.preferences.SolidDirectory;
 import ch.bailu.aat.services.ServiceContext;
@@ -90,7 +92,7 @@ public class DirectoryService extends VirtualService{
                 final File db = AppDirectory.getCacheDb(getDir());
                 openDataBase(getSContext(), db);
 
-            } catch (IOException e) {
+            } catch (Exception e) {
                 database=AbsDatabase.NULL_DATABASE;
             } 
         }
@@ -108,7 +110,7 @@ public class DirectoryService extends VirtualService{
 
 
 
-        private void openDataBase(ServiceContext sc, File path) throws IOException {
+        private void openDataBase(ServiceContext sc, File path) throws IOException, SQLiteCantOpenDatabaseException {
             database.close();
             database = new GpxDatabase(
                     sc, 

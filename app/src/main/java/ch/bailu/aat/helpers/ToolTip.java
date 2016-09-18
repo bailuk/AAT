@@ -4,9 +4,7 @@ import android.view.View;
 import android.view.View.OnLongClickListener;
 
 public class ToolTip {
-    public static void set(View v, int toolTipResource) {
-        Integer id=Integer.valueOf(toolTipResource);
-        
+    public static void set(View v, Integer id) {
         v.setLongClickable(true);
         v.setOnLongClickListener(onLongClickListener);
         v.setTag(id);

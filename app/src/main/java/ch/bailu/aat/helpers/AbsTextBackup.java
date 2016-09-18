@@ -13,7 +13,7 @@ public abstract class AbsTextBackup  {
     public abstract void write(String t) throws IOException;
     public abstract String read() throws IOException;
 
-
+/*
     public static final AbsTextBackup NULL= new AbsTextBackup() {
 
         @Override
@@ -25,7 +25,7 @@ public abstract class AbsTextBackup  {
         }
         
     };
-    
+  */
     
     public static void write(File file, String text) throws IOException{
         AbsTextBackup b = new TextEditFileBackup(file);

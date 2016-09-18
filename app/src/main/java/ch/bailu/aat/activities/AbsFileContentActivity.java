@@ -1,5 +1,6 @@
 package ch.bailu.aat.activities;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -51,6 +52,7 @@ import ch.bailu.aat.views.map.overlay.gpx.GpxDynOverlay;
 import ch.bailu.aat.views.map.overlay.gpx.GpxOverlayListOverlay;
 import ch.bailu.aat.views.map.overlay.grid.GridDynOverlay;
 
+@SuppressLint("Registered")
 public class AbsFileContentActivity extends AbsDispatcher implements OnClickListener {
 
     protected IteratorSource  currentFile;
@@ -62,12 +64,9 @@ public class AbsFileContentActivity extends AbsDispatcher implements OnClickList
     private MultiView          multiView;
     protected OsmInteractiveView map;
 
-    protected EditorHelper edit;
+    protected EditorHelper editor_helper;
+    protected EditorSource editor_source;
 
-    /*
-    public static class FileContent {
-        
-    }*/
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -116,7 +115,11 @@ public class AbsFileContentActivity extends AbsDispatcher implements OnClickList
                 new GridDynOverlay(map, getServiceContext()),
                 new NavigationBarOverlay(map),
                 new InformationBarOverlay(map),
-                new EditorOverlay(map, getServiceContext(),  GpxInformation.ID.INFO_ID_EDITOR_DRAFT, edit),
+                new EditorOverlay(
+                        map,
+                        getServiceContext(),
+                        GpxInformation.ID.INFO_ID_EDITOR_DRAFT,
+                        editor_helper),
 
         };
         
@@ -161,10 +164,11 @@ public class AbsFileContentActivity extends AbsDispatcher implements OnClickList
         };
 
 
-        
+
+        editor_source = new EditorSource(getServiceContext(), editor_helper);
 
         ContentSource[] source = new ContentSource[] {
-                new EditorSource(getServiceContext(), edit),
+                editor_source,
                 new TrackerSource(getServiceContext()),
                 new CurrentLocationSource(getServiceContext()),
                 new OverlaySource(getServiceContext()),

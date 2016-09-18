@@ -1,13 +1,18 @@
 package ch.bailu.aat.helpers;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.Configuration;
+import android.graphics.Point;
+import android.os.Build;
+import android.view.Display;
 import android.view.View.MeasureSpec;
+import android.view.Window;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
 
 public class AppLayout {
-    private static int width=0,height=0;
+    private static Point size = new Point();
     
     public static int getDimension (int spec, int preferred) {
         
@@ -33,19 +38,43 @@ public class AppLayout {
 
 
     public static void updateMeasurement(Context context) {
-        if (height==0) height = ((WindowManager) context.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay().getHeight();
-        if (width==0)  width = ((WindowManager) context.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay().getWidth();
+
+        if (size.x==0 || size.y==0) {
+            WindowManager wm = (WindowManager)context.getSystemService(Context.WINDOW_SERVICE);
+
+            if (wm != null) {
+                Display disp = wm.getDefaultDisplay();
+                if (disp != null) {
+                    if (android.os.Build.VERSION.SDK_INT < 13) {
+                        getSizeSDK1(disp, size);
+                    } else {
+                        getSizeSDK13(disp, size);
+                    }
+                }
+            }
+        }
     }
 
-    
+
+    @TargetApi(13)
+    public static void getSizeSDK13(Display disp, Point size) {
+        disp.getSize(size);
+    }
+
+
+    @SuppressWarnings("deprecation")
+    public static void getSizeSDK1(Display disp, Point size) {
+        size.set(disp.getWidth(), disp.getHeight());
+    }
+
     public static int getScreenSmallSide(Context context) {
         updateMeasurement(context);
-        return Math.min(width, height);
+        return Math.min(size.x, size.y);
     }
     
     public static int getScreenLargeSide(Context context) {
         updateMeasurement(context);
-        return Math.max(width, height);
+        return Math.max(size.x, size.y);
     }
     
     
@@ -54,12 +83,6 @@ public class AppLayout {
         return c.getResources().getConfiguration().orientation;
     }
         
-    public static void reportMeasurement(int w, int h) {
-        width=w;
-        height=h;
-    }
-
-
     public static int getOrientationAlongSmallSide(Context context) {
         if (getOrientation(context) == Configuration.ORIENTATION_LANDSCAPE) return LinearLayout.VERTICAL;
         else return LinearLayout.HORIZONTAL;

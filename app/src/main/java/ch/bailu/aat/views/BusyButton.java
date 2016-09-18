@@ -6,7 +6,6 @@ import android.widget.ImageButton;
 import ch.bailu.aat.R;
 import ch.bailu.aat.description.DescriptionInterface;
 import ch.bailu.aat.gpx.GpxInformation;
-import ch.bailu.aat.helpers.AppLog;
 import ch.bailu.aat.helpers.AppTheme;
 
 public class BusyButton extends ViewGroup   {
@@ -36,8 +35,8 @@ public class BusyButton extends ViewGroup   {
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
         if (changed) {
-            button.layout(l, t, r, b);
-            busy.layout(l+SPACE, t+SPACE, r-SPACE, b-SPACE);
+            button.layout(0, 0, r-l, b-t);
+            busy.layout(SPACE, SPACE, r-SPACE-l, b-SPACE-t);
         }
     }
 

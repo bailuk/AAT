@@ -1,6 +1,7 @@
 package ch.bailu.aat.views;
 
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 
 import ch.bailu.aat.description.*;
@@ -28,6 +29,7 @@ public class CockpitView extends DescriptionViewGroup {
 
     }
     
+    @SuppressLint("DrawAllocation")
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
         if (changed) {

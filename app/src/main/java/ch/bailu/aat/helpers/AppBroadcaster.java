@@ -33,12 +33,12 @@ public class AppBroadcaster {
     /**
      * 
      */
-    public static final String OVERLAY_CHANGED = NAME_SPACE + "OVERLAY_CHANGED";
+    //public static final String OVERLAY_CHANGED = NAME_SPACE + "OVERLAY_CHANGED";
     
     
     
     public static final String LOCATION_CHANGED = NAME_SPACE + "LOCATION";
-    public static final String DB_CURSOR_CHANGED = NAME_SPACE + "CURSOR";
+    //public static final String DB_CURSOR_CHANGED = NAME_SPACE + "CURSOR";
     public static final String TRACKER = NAME_SPACE + "TRACKER";
     public static final String TRACKER_STATE = NAME_SPACE + "TRACKER_STATE";
 
