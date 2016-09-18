@@ -117,6 +117,7 @@ public abstract class IteratorAbstract extends Iterator implements OnSharedPrefe
     @Override
     public void close() {
         if (cursor!= null) cursor.close();
+        sdirectory.unregister(this);
         scontext.getContext().unregisterReceiver(onSyncChanged);
         onCursorChangedListener = NULL_LISTENER;
     }
