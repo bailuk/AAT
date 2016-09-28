@@ -17,7 +17,7 @@ public class IndexListPreference extends Preference implements OnPreferenceClick
 
         slist=l;
         setTitle(slist.getLabel());
-        setSummary(slist.getString());
+        setSummary(slist.getValueAsString());
 
         setOnPreferenceClickListener(this);
         slist.getStorage().register(this);
@@ -27,9 +27,7 @@ public class IndexListPreference extends Preference implements OnPreferenceClick
     @Override
     public boolean onPreferenceClick(Preference preference) {
         if (slist.length()<3) {
-            if (slist.getIndex()==0)
-                slist.setIndex(1);
-            else slist.setIndex(0);
+            slist.cycle();
         } else {
             new IndexListDialog(getContext(), slist);
         }
@@ -41,7 +39,7 @@ public class IndexListPreference extends Preference implements OnPreferenceClick
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences,
             String key) {
         if (slist.hasKey(key)) {
-            setSummary(slist.getString());
+            setSummary(slist.getValueAsString());
         }
     }
 

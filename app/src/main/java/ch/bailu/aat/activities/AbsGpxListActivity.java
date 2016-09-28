@@ -182,12 +182,12 @@ public abstract class AbsGpxListActivity extends AbsDispatcher implements OnItem
 
 
     @Override
-    public void onResumeWithService() {
+    public void onResumeWithServices() {
         iteratorSimple = new IteratorSimple(getServiceContext());
         listView.setAdapter(getServiceContext(), iteratorSimple);
         listView.setSelection(sdirectory.getPosition().getValue());
 
-        super.onResumeWithService();
+        super.onResumeWithServices();
     }
 
 

@@ -8,7 +8,7 @@ public class SolidGPSLock extends SolidBoolean {
     }
 
     @Override
-    public String getString() {
+    public String getValueAsString() {
         if (this.isEnabled()) return "lock*";
         else return "";
     }

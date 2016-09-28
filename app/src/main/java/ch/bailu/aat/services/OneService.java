@@ -5,6 +5,7 @@ import ch.bailu.aat.services.cache.CacheService;
 import ch.bailu.aat.services.dem.ElevationService;
 import ch.bailu.aat.services.directory.DirectoryService;
 import ch.bailu.aat.services.icons.IconMapService;
+import ch.bailu.aat.services.tileremover.TileRemoverService;
 import ch.bailu.aat.services.tracker.TrackerService;
 
 public class OneService extends AbsService  {
@@ -17,6 +18,8 @@ public class OneService extends AbsService  {
     public CacheService   cache;
     public DirectoryService directory;
     public ElevationService elevation;
+    public TileRemoverService tileRemover;
+
 
     private VirtualServiceLink scontext;
 
@@ -32,6 +35,8 @@ public class OneService extends AbsService  {
         cache = new CacheService(scontext);
         directory = new DirectoryService(scontext);
         elevation = new ElevationService(scontext);
+        tileRemover = new TileRemoverService(scontext);
+
     }
 
 
@@ -43,6 +48,7 @@ public class OneService extends AbsService  {
         cache.close();          cache=null;
         directory.close();      directory=null;
         elevation.close();      elevation=null;
+        tileRemover.close();   tileRemover=null;
 
         scontext=null;
         super.onDestroy();

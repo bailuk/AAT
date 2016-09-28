@@ -16,9 +16,9 @@ public class SolidPreset extends SolidStaticIndexList {
     }
 
     
-    public String getString() {
+    public String getValueAsString() {
         SolidMET smet = new SolidMET(getContext(), getIndex());
-        return smet.getString();
+        return smet.getValueAsString();
     }
     
     @Override
@@ -28,7 +28,7 @@ public class SolidPreset extends SolidStaticIndexList {
         
         for (int i=0; i< array.length; i++) {
             SolidMET smet = new SolidMET(getContext(), i);
-            array[i] = smet.getString(); 
+            array[i] = smet.getValueAsString();
         }
         return array;
     }

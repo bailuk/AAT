@@ -14,7 +14,7 @@ public class SolidMET extends SolidStaticIndexList {
     }
 
     public float getMETValue() {
-        return Float.valueOf(getString().substring(0, 4));
+        return Float.valueOf(getValueAsString().substring(0, 4));
     }
     
     @Override

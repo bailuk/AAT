@@ -46,8 +46,9 @@ public class SolidDistanceFilter extends SolidIndexList {
         return VALUE_LIST.length;
     }
 
-    
-    private String getString(int i) {
+
+    @Override
+    public String getValueAsString(int i) {
         if (i==0) return getContext().getString(R.string.off);
         if (i==length()-1) getContext().getString(R.string.auto);
         
@@ -57,18 +58,4 @@ public class SolidDistanceFilter extends SolidIndexList {
                 sunit.getAltitudeUnit());
     }
     
-    @Override
-    public String getString() {
-        return getString(getIndex());
-    }
-
-    @Override
-    public String[] getStringArray() {
-        String[] list = new String[length()];
-        for (int i=0; i<length(); i++){
-            list[i]=getString(i);
-        }
-        return list;
-    }
-
 }

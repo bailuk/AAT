@@ -59,24 +59,10 @@ public class SolidAutopause extends SolidIndexList {
     }
 
     
-    private String getString(int i) {
+    public String getValueAsString(int i) {
         if (i==0) return getContext().getString(R.string.off);
         
         return String.format((Locale)null,"%.3f%s - %d", SPEED_VALUES[i] * sunit.getSpeedFactor(), sunit.getSpeedUnit(), TRIGGER_VALUES[i]);
     }
     
-    @Override
-    public String getString() {
-        return getString(getIndex());
-    }
-
-    @Override
-    public String[] getStringArray() {
-        String[] list = new String[length()];
-        for (int i=0; i<length(); i++){
-            list[i]=getString(i);
-        }
-        
-        return list;
-    }
 }

@@ -47,7 +47,7 @@ public class Dem3Tiles {
         
         
         public void loadIfIdle(SrtmCoordinates c) {
-            if (toLoad == null) { // first request
+            if (toLoad == null) { // first Request
                 timer.close();
                 timer.kick();
             }

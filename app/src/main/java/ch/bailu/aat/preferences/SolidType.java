@@ -32,4 +32,5 @@ public abstract class SolidType implements SolidTypeInterface {
     public void unregister(OnSharedPreferenceChangeListener listener) {
         getStorage().unregister(listener);
     }
+
 }

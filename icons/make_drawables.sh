@@ -113,13 +113,18 @@ COPY "list-remove"
 COPY "gtk-convert" 
 
 
-####### Invormation-Bar
+####### Information-Bar
 COPY "view-grid" 
 COPY "dialog-question" 
 COPY "go-bottom"  ## Overpass
 COPY "edit-find"  ## Nominatim
 COPY "view-refresh"  
 COPY "find-location"
+
+
+####### Tile-Remover
+INVERT "view-refresh"
+INVERT "user-trash"
 
 
 ####### Tracker / Menu

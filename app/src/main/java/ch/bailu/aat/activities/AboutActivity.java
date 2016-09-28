@@ -25,7 +25,7 @@ public class AboutActivity extends AbsHtmlViewActivity {
 
 
     @Override
-    public void onResumeWithService() {
+    public void onResumeWithServices() {
     }
     
 

@@ -160,7 +160,7 @@ public class TilesOverlay extends Overlay implements IOverlayMenuProvider {
 		/* Draw all the MapTiles (from the upper left to the lower right). */
 		for (int y = upperLeft.y; y <= lowerRight.y; y++) {
 			for (int x = upperLeft.x; x <= lowerRight.x; x++) {
-				// Construct a MapTile to request from the tile provider.
+				// Construct a MapTile to Request from the tile provider.
 				final int tileY = MyMath.mod(y, mapTileUpperBound);
 				final int tileX = MyMath.mod(x, mapTileUpperBound);
 				final MapTile tile = new MapTile(zoomLevel, tileX, tileY);

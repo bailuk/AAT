@@ -31,7 +31,7 @@ public class StatusActivity extends AbsHtmlViewActivity {
 
 
     @Override
-    public void onResumeWithService() {
+    public void onResumeWithServices() {
         // TODO Auto-generated method stub
         
     }

@@ -25,7 +25,7 @@ public class ReadmeActivity extends AbsHtmlViewActivity {
 
 
     @Override
-    public void onResumeWithService() {
+    public void onResumeWithServices() {
         // TODO Auto-generated method stub
         
     }

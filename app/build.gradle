@@ -1,14 +1,14 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 21
+    compileSdkVersion 24
     buildToolsVersion "24.0.2"
 
 
     defaultConfig {
         applicationId "ch.bailu.aat"
         minSdkVersion 8
-        targetSdkVersion 21
+        targetSdkVersion 24
     }
 
     buildTypes {
@@ -22,4 +22,7 @@ android {
         incremental true
         javaMaxHeapSize "1g"
     }
+}
+
+dependencies {
 }

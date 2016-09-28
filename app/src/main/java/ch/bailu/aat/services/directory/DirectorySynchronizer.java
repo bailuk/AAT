@@ -132,7 +132,7 @@ public class DirectorySynchronizer  implements Closeable {
 
     /*    
     /////////////////////////////////////////////////////////////////////////////////////////////
-    private class StateIdle extends State {
+    private class StateIdle extends StateMachine {
         @Override
         public void start() {
             AppBroadcaster.broadcast(context, AppBroadcaster.DBSYNC_DONE);

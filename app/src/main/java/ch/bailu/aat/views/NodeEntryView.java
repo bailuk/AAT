@@ -42,7 +42,7 @@ public class NodeEntryView extends ViewGroup {
     @Override
     protected void onMeasure(int wspec, int hspec) {
         final int width  = MeasureSpec.getSize(wspec);
-        final int height = OsmPreviewGenerator.BITMAP_SIZE; // MeasureSpec.getSize(hspec);
+        final int height = OsmPreviewGenerator.BITMAP_SIZE; // MeasureSpec.getNewSize(hspec);
 
         final int wspecText = MeasureSpec.makeMeasureSpec(
                 width-OsmPreviewGenerator.BITMAP_SIZE, MeasureSpec.EXACTLY);

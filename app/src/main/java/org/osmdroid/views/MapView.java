@@ -893,7 +893,7 @@ public class MapView extends ViewGroup implements IMapView, MapViewConstants {
 			// - probably not a good idea because you'll repeat the animation
 		}
 
-		// reset scale
+		// clear_all scale
 		mMultiTouchScale = 1.0f;
 	}*/
 /*

@@ -23,7 +23,7 @@ public class AppDirectory  {
     }
 
     public static File getDataDirectory(Context c, String sub) {
-        final File p = new File(new SolidDataDirectory(c).getString(), sub);
+        final File p = new File(new SolidDataDirectory(c).getValueAsString(), sub);
         p.mkdirs();
         return p;
     }

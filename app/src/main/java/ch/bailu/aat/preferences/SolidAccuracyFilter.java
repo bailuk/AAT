@@ -47,25 +47,14 @@ public class SolidAccuracyFilter extends SolidIndexList {
         return VALUE_LIST.length;
     }
 
-    private String getString(int i) {
+    @Override
+    public String getValueAsString(int i) {
         if (i==0) return getContext().getString(R.string.off);
         return String.format((Locale)null,"%.3f%s", VALUE_LIST[i] * sunit.getAltitudeFactor(), sunit.getAltitudeUnit());
     }
     
-    @Override
-    public String getString() {
-        return getString(getIndex());
-    }
 
-    @Override
-    public String[] getStringArray() {
-        String[] list = new String[length()];
-        for (int i=0; i<length(); i++){
-            list[i]=getString(i);
-        }
-        
-        return list;
-    }
+
 
     
 

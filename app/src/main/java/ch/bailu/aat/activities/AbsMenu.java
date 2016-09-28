@@ -64,7 +64,7 @@ implements DescriptionInterface{
 
 
 
-    private void updateMenuText(State state) {
+    private void updateMenuText(StateMachine state) {
 
 
         start.setTitle(state.getStartStopTextID());

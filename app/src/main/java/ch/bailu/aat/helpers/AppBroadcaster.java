@@ -9,6 +9,9 @@ public class AppBroadcaster {
     public static final String NAME_SPACE="ch.bailu.aat.";
 
 
+    public static final String TILE_REMOVER_SCAN = NAME_SPACE+"TR_SCAN";
+    public static final String TILE_REMOVER_STOPPED = NAME_SPACE+"TR_STOPED";
+    public static final String TILE_REMOVER_REMOVE = NAME_SPACE +"TR_REMOVE";
 
     public static final String DBSYNC_START=NAME_SPACE+"SYNC_START";
     public static final String DBSYNC_DONE=NAME_SPACE+"SYNC_DONE";
@@ -24,7 +27,7 @@ public class AppBroadcaster {
     
 
     /**
-     *   Make a request to the elevation updater to add missing elevation information
+     *   Make a Request to the elevation updater to add missing elevation information
      *   to a specific file
      */
     public static final String REQUEST_ELEVATION_UPDATE = NAME_SPACE + "REQUEST_ELEVATION_UPDATE";
@@ -45,9 +48,6 @@ public class AppBroadcaster {
     
     
     public static final String SELECT_MAP_FEATURE = NAME_SPACE + "SELECT_MAP_FEATURE";
-    
-
-
 
 
 
@@ -88,9 +88,6 @@ public class AppBroadcaster {
         
         context.sendBroadcast(intent);
     }
-    
- 
 
 
-    
 }

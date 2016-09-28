@@ -109,6 +109,13 @@ public class ControlBar extends LinearLayout {
     }
 
 
+    public View addButton(View button) {
+        canvas.addView(button, controlSize, controlSize);
+        button.setOnClickListener(onClickListener);
+        return button;
+
+    }
+
     public void addViewIgnoreSize(View v) {
         canvas.addView(v);
     }

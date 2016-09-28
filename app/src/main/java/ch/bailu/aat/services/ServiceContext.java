@@ -7,6 +7,7 @@ import ch.bailu.aat.services.cache.CacheService;
 import ch.bailu.aat.services.dem.ElevationService;
 import ch.bailu.aat.services.directory.DirectoryService;
 import ch.bailu.aat.services.icons.IconMapService;
+import ch.bailu.aat.services.tileremover.TileRemoverService;
 import ch.bailu.aat.services.tracker.TrackerService;
 
 public abstract class ServiceContext implements ContextWrapperInterface {
@@ -110,9 +111,19 @@ public abstract class ServiceContext implements ContextWrapperInterface {
         }
 
         if (s==null) return new TrackerService.Self();
-        return s.getSelf();    }
+        return s.getSelf();
+    }
 
 
+    public TileRemoverService getTileRemoverService() {
+        try {
+            return getService().tileRemover;
+
+        } catch (Exception e) {
+            return null;
+
+        }
+    }
 
 
     public void appendStatusText(StringBuilder content) {

@@ -46,23 +46,9 @@ public class SolidTileSize extends SolidIndexList {
         return VALUE_LIST.length;
     }
 
-    private String getString(int i) {
+    @Override
+    public String getValueAsString(int i) {
         return String.valueOf(VALUE_LIST[i]);
-    }
-
-    @Override
-    public String getString() {
-        return getString(getIndex());
-    }
-
-
-    @Override
-    public String[] getStringArray() {
-        String[] list = new String[length()];
-        for (int i=0; i<length(); i++){
-            list[i]=getString(i);
-        }
-        return list;
     }
 
 }

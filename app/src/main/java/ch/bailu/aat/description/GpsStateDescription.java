@@ -21,6 +21,6 @@ public class GpsStateDescription extends StateDescription {
     
     @Override
     public String getUnit() {
-        return slock.getString();
+        return slock.getValueAsString();
     }
 }

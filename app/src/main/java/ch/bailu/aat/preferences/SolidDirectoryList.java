@@ -27,36 +27,22 @@ public abstract class SolidDirectoryList extends SolidIndexList {
     }
 
     @Override
-    public String getString() {
-        final int index = Math.min(list.size()-1, getIndex());
-        return list.get(index);
+    public String getValueAsString(int i) {
+        return list.get(i);
     }
     
     
     @Override
     public String toString() {
-        return getString();
+        return getValueAsString();
     }
 
     public File toFile() {
-        return new File(getString());
+        return new File(getValueAsString());
     }
     
 
-    @Override
-    public String[] getStringArray() {
-        return toStringArray(list);
-    }
 
-    private static String[] toStringArray(ArrayList<String> l) {
-        String[] r = new String[l.size()];
-        for (int i = 0; i<l.size(); i++)
-            r[i]=l.get(i);
-
-        return r;
-    }
-
-    
     public static void fillDirectoryList(ArrayList<String> list, String[] pf) {
         for (int i=0; i<pf.length; i++)
             fillList(list, pf[i]);

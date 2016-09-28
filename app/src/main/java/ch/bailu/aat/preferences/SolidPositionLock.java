@@ -23,7 +23,7 @@ public class SolidPositionLock extends SolidBoolean {
     }
     
     @Override
-    public String getString() {
+    public String getValueAsString() {
         return getContext().getString(R.string.tt_map_home);
     }
 }

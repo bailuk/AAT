@@ -16,25 +16,15 @@ public class SolidStaticIndexList extends SolidIndexList {
     }
 
     @Override
-    public String getString() {
-        return labelList[getIndex()];
+    public String getValueAsString(int i) {
+        return labelList[i];
     }
 
-    @Override
-    public void setIndex(int i) {
-        if (i < labelList.length) super.setIndex(i);
-    }
 
     @Override
     public String[] getStringArray() {
         return labelList;
     }
     
-    @Override
-    public int getIndex() {
-        if (super.getIndex() < length()) {
-            return super.getIndex();
-        }
-        return 0;
-    }
+
 }

@@ -12,21 +12,35 @@ public abstract class SolidIndexList extends SolidType {
     
     
     public abstract int length();
+    public abstract String getValueAsString(int i);
 
-    
-    public abstract String getString();
-
-    
+    public String getValueAsString() {
+        return getValueAsString(getIndex());
+    }
     public void setIndex(int i) {
-        sindex.setValue(i);
+        sindex.setValue(validate(i));
     }
 
-    
-    public abstract String[] getStringArray();
+
+    private int validate(int i) {
+        if (i < 0) i = length()-1;
+        else if (i >= length()) i=0;
+        return i;
+    }
+
+
+    public String[] getStringArray() {
+        String[] r = new String[length()];
+
+        for (int i=0; i<r.length; i++) {
+            r[i]=getValueAsString(i);
+        }
+        return r;
+    }
     
     
     public int getIndex() {
-        return sindex.getValue();
+        return validate(sindex.getValue());
     }
 
     
@@ -43,9 +57,7 @@ public abstract class SolidIndexList extends SolidType {
 
 
     public void cycle() {
-        int index=getIndex()+1;
-        if (index == length()) index=0;
-        setIndex(index);
+        setIndex(getIndex()+1);
     }
 
     

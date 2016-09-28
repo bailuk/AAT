@@ -23,7 +23,7 @@ public class SolidImageButton extends ImageButton {
     void onPreferencesChanged(String key) {
         if (sList.hasKey(key)) {
             setImage();
-            AppLog.i(getContext(), sList.getString());
+            AppLog.i(getContext(), sList.getValueAsString());
         }
     }
     
