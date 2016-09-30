@@ -7,13 +7,13 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import ch.bailu.aat.preferences.SolidTrimIndex;
-import ch.bailu.aat.services.tileremover.TilesSummaries;
-import ch.bailu.aat.services.tileremover.TilesSummaryInterface;
+import ch.bailu.aat.services.tileremover.MapSummaries;
+import ch.bailu.aat.services.tileremover.MapSummaryInterface;
 
 public class TilesSummaryView extends RadioGroup implements View.OnClickListener {
 
-    private final RadioButton[] radioButtons = new RadioButton[TilesSummaries.SUMMARY_SIZE];
-    private final TextView[] textViews = new TextView[TilesSummaries.SUMMARY_SIZE];
+    private final RadioButton[] radioButtons = new RadioButton[MapSummaries.SUMMARY_SIZE];
+    private final TextView[] textViews = new TextView[MapSummaries.SUMMARY_SIZE];
 
     private final StringBuilder builder = new StringBuilder(100);
 
@@ -24,7 +24,7 @@ public class TilesSummaryView extends RadioGroup implements View.OnClickListener
     }
 
 
-    public void updateInfo(final TilesSummaryInterface[] ts) {
+    public void updateInfo(final MapSummaryInterface[] ts) {
         for (int i = 0; i < ts.length; i++) {
             if (ts[i].isValid()) {
                 if (textViews[i] == null) {
@@ -65,7 +65,7 @@ public class TilesSummaryView extends RadioGroup implements View.OnClickListener
     }
 
 
-    private void updateInfo(TextView sv, TilesSummaryInterface ts) {
+    private void updateInfo(TextView sv, MapSummaryInterface ts) {
         builder.setLength(0);
         sv.setText(ts.buildReport(builder).toString());
     }

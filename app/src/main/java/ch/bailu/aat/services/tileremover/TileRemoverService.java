@@ -29,7 +29,7 @@ public class TileRemoverService extends VirtualService {
     }
 
 
-    public TilesSummaryInterface[] getSummaries() {
-        return state.summaries.getSummaries();
+    public MapSummaryInterface[] getSummaries() {
+        return state.summaries.getMapSummaries();
     }
 }

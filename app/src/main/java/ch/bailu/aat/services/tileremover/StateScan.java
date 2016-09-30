@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 
 import ch.bailu.aat.helpers.AppBroadcaster;
+import ch.bailu.aat.helpers.AppLog;
 import ch.bailu.aat.preferences.SolidTileCacheDirectory;
 
 
@@ -69,29 +70,37 @@ public class StateScan implements State, Runnable {
         AppBroadcaster.broadcast(state.context, AppBroadcaster.TILE_REMOVER_SCAN);
     }
 
+
     private void scanRootDirectory(File file) {
-        final File[] files = file.listFiles();
+        try {
+            file = file.getCanonicalFile();
 
-        if (files != null) {
-            int f = 0;
-            int s = 1;
+            final File[] files = file.listFiles();
 
-            while (f < files.length && s < TilesSummaries.SUMMARY_SIZE && keepUp()) {
-                if (doDirectory(files[f]) && keepUp()) {
+            if (files != null) {
+                int f = 0;
+                int s = 1;
+
+                while (f < files.length && s < MapSummaries.SUMMARY_SIZE && keepUp()) {
+                    if (doDirectory(files[f]) && keepUp()) {
 
 
-                    state.summaries.setName(s, files[f].getName());
-                    scanSubRootDirectory(files[f], s);
-                    s++;
+                        state.summaries.setName(s, files[f].getName());
+                        scanMapDirectory(files[f], s);
+                        s++;
+                    }
+
+                    f++;
                 }
-
-                f++;
             }
-        }
 
+        } catch (IOException e) {
+            AppLog.e(state.context, e);
+        }
     }
 
-    private void scanSubRootDirectory(File file, int summary) {
+    private void scanMapDirectory(File file, int summary) {
+
         final File[] files = file.listFiles();
 
         final int hash=TileFile.getBaseDirHash(file);
@@ -157,7 +166,6 @@ public class StateScan implements State, Runnable {
     private void processFile(File file, int hash, short zoom, int x, int summary) {
         final TileFile tile = new TileFile(hash, zoom, x, file);
         state.list.add(tile);
-        state.summaries.inc(summary, tile);
-
+        state.summaries.addFile(summary, tile);
     }
 }

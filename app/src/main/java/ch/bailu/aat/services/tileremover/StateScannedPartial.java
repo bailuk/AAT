@@ -10,7 +10,7 @@ public class StateScannedPartial implements State {
         state = s;
 
         state.list.resetToRemove();
-        state.summaries.reset_rm();
+        state.summaries.resetToRemove();
         AppBroadcaster.broadcast(state.context, AppBroadcaster.TILE_REMOVER_STOPPED);
     }
 

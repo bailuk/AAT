@@ -1,14 +1,12 @@
 package ch.bailu.aat.services.tileremover;
 
-import java.io.File;
-
 import ch.bailu.aat.helpers.AppLog;
 import ch.bailu.aat.preferences.SolidTrimSize;
 
-public class TilesSummary implements TilesSummaryInterface{
+public class MapSummary implements MapSummaryInterface {
     private String name = "";
     private int hash;
-    public long size, count, size_rm, count_rm, size_new, count_new;
+    public long size, count, size_rm, countToRemove, newSize, count_new;
 
 
 
@@ -23,36 +21,36 @@ public class TilesSummary implements TilesSummaryInterface{
     }
 
 
-    public void inc(long length) {
+    public void addFile(long length) {
         size += length;
-        size_new += length;
+        newSize += length;
         count++;
         count_new++;
     }
 
-    public void inc_rm(long length) {
+    public void addFileToRemove(long length) {
         size_rm += length;
-        count_rm++;
+        countToRemove++;
 
-        size_new -= length;
+        newSize -= length;
         count_new --;
     }
 
 
-    public void inc_removed(long length) {
+    public void addFileRemoved(long length) {
         size -= length;
         size_rm -= length;
 
         count --;
-        count_rm --;
+        countToRemove--;
     }
 
     public void clear_rm() {
-        size_new = size;
+        newSize = size;
         count_new = count;
 
         size_rm = 0;
-        count_rm = 0;
+        countToRemove = 0;
     }
 
     public void clear() {
@@ -85,21 +83,13 @@ public class TilesSummary implements TilesSummaryInterface{
         return name;
     }
 
-    @Override
-    public long getSize() {
-        return size;
-    }
 
-    @Override
-    public long getCount() {
-        return count;
-    }
 
     @Override
     public StringBuilder buildReport(StringBuilder builder) {
         builder.append(count);
         builder.append('-');
-        builder.append(count_rm);
+        builder.append(countToRemove);
         builder.append('=');
         builder.append(count_new);
 
@@ -109,7 +99,7 @@ public class TilesSummary implements TilesSummaryInterface{
         builder.append('-');
         SolidTrimSize.buildSizeText(builder, size_rm);
         builder.append('=');
-        SolidTrimSize.buildSizeText(builder, size_new);
+        SolidTrimSize.buildSizeText(builder, newSize);
 
         return builder;
     }

@@ -1,11 +1,9 @@
 package ch.bailu.aat.services.tileremover;
 
-public interface TilesSummaryInterface {
+public interface MapSummaryInterface {
     boolean isValid();
 
     String getName();
-    long getSize();
-    long getCount();
 
     StringBuilder buildReport(StringBuilder builder);
 }

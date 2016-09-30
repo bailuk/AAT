@@ -13,9 +13,10 @@ public class StateScanForRemoval implements State, Runnable {
     private Class nextState = StateScanned.class;
 
 
-    private final int trimMode, trimDirectoryHash;
+    private final int trimMode, trimDirectoryHash, trimIndex;
     private final long trimSize;
     private final long trimAge;
+
 
 
     public StateScanForRemoval(StateMachine s) {
@@ -25,10 +26,10 @@ public class StateScanForRemoval implements State, Runnable {
         trimSize = new SolidTrimSize(s.context).getValue();
         trimAge = System.currentTimeMillis() - new SolidTrimDate(s.context).getValue();
 
-        int index = new SolidTrimIndex(s.context).getValue();
+        trimIndex = new SolidTrimIndex(s.context).getValue();
 
-        if (index > 0) {
-            trimDirectoryHash = state.summaries.hashCode(index);
+        if (trimIndex > 0) {
+            trimDirectoryHash = state.summaries.hashCode(trimIndex);
         } else {
             trimDirectoryHash = 0;
         }
@@ -36,7 +37,7 @@ public class StateScanForRemoval implements State, Runnable {
 
 
 
-        state.summaries.reset_rm();
+        state.summaries.resetToRemove();
         state.list.resetToRemove();
 
         new Thread(this).start();
@@ -101,7 +102,7 @@ public class StateScanForRemoval implements State, Runnable {
     }
 
     private void addFile(TileFile file) {
-        state.summaries.inc_rm(file);
+        state.summaries.addFileToRemove(file);
         state.list.addToRemove(file);
     }
 
@@ -128,7 +129,7 @@ public class StateScanForRemoval implements State, Runnable {
 
 
     private boolean passSize() {
-        return state.summaries.getNewSize() > trimSize;
+        return state.summaries.getNewSize(trimIndex) > trimSize;
     }
 
     private boolean passAge(TileFile file) {

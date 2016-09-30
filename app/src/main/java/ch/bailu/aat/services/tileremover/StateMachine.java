@@ -9,7 +9,7 @@ public class StateMachine implements State {
     private State state;
 
     public final TilesList list = new TilesList();
-    public final TilesSummaries summaries = new TilesSummaries();
+    public final MapSummaries summaries = new MapSummaries();
 
     public File tileDirectory;
 
