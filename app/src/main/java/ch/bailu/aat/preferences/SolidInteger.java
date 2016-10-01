@@ -1,5 +1,9 @@
 package ch.bailu.aat.preferences;
 
+import android.text.Editable;
+
+import ch.bailu.aat.helpers.AppLog;
+
 public class SolidInteger extends SolidType {
     private final String key;
     private final Storage storage;
@@ -30,5 +34,18 @@ public class SolidInteger extends SolidType {
     public Storage getStorage() {
         return storage;
     }
-    
+
+    @Override
+    public String getValueAsString() {
+        return String.valueOf(getValue());
+    }
+
+    public void setValueFromString(String s) {
+        try {
+            setValue(Integer.valueOf(s));
+        } catch (NumberFormatException e) {
+            AppLog.e(getContext(), e);
+        }
+
+    }
 }

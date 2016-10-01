@@ -40,5 +40,11 @@ public abstract class SolidCheckList extends SolidType {
     public Context getContext() {
         return getStorage().getContext();
     }
+
+    @Override
+    public String getValueAsString() {
+        return null;
+    }
+
 }
 

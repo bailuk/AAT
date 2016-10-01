@@ -10,7 +10,8 @@ public class SolidString extends SolidType {
         key=k;
     }
 
-    public String getValue() {
+    @Override
+    public String getValueAsString() {
         return getStorage().readString(getKey());
     }
         

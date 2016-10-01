@@ -5,6 +5,8 @@ import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.widget.ScrollView;
 import android.widget.TextView;
+
+import ch.bailu.aat.helpers.AppHtml;
 import ch.bailu.aat.helpers.AppTheme;
 
 public abstract class AbsHtmlViewActivity extends AbsServiceLink {
@@ -37,7 +39,7 @@ public abstract class AbsHtmlViewActivity extends AbsServiceLink {
     
     
     public void setText() {
-        text.setText(Html.fromHtml(getText()));
+        text.setText(AppHtml.fromHtml(getText()));
     }
     
     public abstract String getText();

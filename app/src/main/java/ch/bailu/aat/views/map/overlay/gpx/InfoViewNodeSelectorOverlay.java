@@ -8,6 +8,7 @@ import android.widget.TextView;
 import ch.bailu.aat.activities.NodeDetailActivity;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.GpxPointNode;
+import ch.bailu.aat.helpers.AppHtml;
 import ch.bailu.aat.helpers.AppTheme;
 import ch.bailu.aat.views.map.OsmInteractiveView;
 
@@ -54,7 +55,7 @@ public class InfoViewNodeSelectorOverlay extends NodeSelectorOverlay implements 
         StringBuilder builder = new StringBuilder();
 
         node.toHtml(getContext(), builder);
-        infoView.setText(Html.fromHtml(builder.toString()));
+        infoView.setText(AppHtml.fromHtml(builder.toString()));
 
         fileID=info.getPath();
         index=i;

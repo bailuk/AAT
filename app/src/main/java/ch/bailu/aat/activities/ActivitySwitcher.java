@@ -12,24 +12,23 @@ import ch.bailu.aat.helpers.AppIntent;
 
 public class ActivitySwitcher {
     public final static ActivitySwitcher list[] = {
-        new ActivitySwitcher(R.string.intro_resume, TrackerActivity.class),
-        new ActivitySwitcher(R.string.intro_cockpit2, SplitViewActivity.class),
-        new ActivitySwitcher(R.string.intro_map, MapActivity.class),
-        new ActivitySwitcher(R.string.intro_list, TrackListActivity.class),
-        new ActivitySwitcher(R.string.intro_overlay_list, OverlayListActivity.class),
-        new ActivitySwitcher(R.string.intro_import_list, ImportListActivity.class),
-        new ActivitySwitcher(R.string.intro_settings, PreferencesActivity.class),
-        new ActivitySwitcher(R.string.intro_readme, ReadmeActivity.class),
-        new ActivitySwitcher(R.string.intro_about, AboutActivity.class),
-        new ActivitySwitcher(R.string.intro_status, StatusActivity.class),
-        new ActivitySwitcher(R.string.intro_test, TestActivity.class),
+            new ActivitySwitcher(R.string.intro_resume, TrackerActivity.class),
+            new ActivitySwitcher(R.string.intro_cockpit2, SplitViewActivity.class),
+            new ActivitySwitcher(R.string.intro_map, MapActivity.class),
+            new ActivitySwitcher(R.string.intro_list, TrackListActivity.class),
+            new ActivitySwitcher(R.string.intro_overlay_list, OverlayListActivity.class),
+            new ActivitySwitcher(R.string.intro_import_list, ImportListActivity.class),
+            new ActivitySwitcher(R.string.intro_settings, PreferencesActivity.class),
+            new ActivitySwitcher(R.string.intro_readme, ReadmeActivity.class),
+            new ActivitySwitcher(R.string.intro_about, AboutActivity.class),
+            new ActivitySwitcher(R.string.intro_test, TestActivity.class),
     };
 
 
     private final int      activityLabel;
     private final Class<?> activityClass;
 
-    public final static int cycable = 3; 
+    public final static int cycable = 3;
 
     public ActivitySwitcher(int label, Class<?> c) {
         activityLabel=label;
@@ -44,7 +43,7 @@ public class ActivitySwitcher {
         start(c, activityClass);
     }
 
-    
+
     public static void start(Context context, Class<?> activityClass) {
         start(context, activityClass, activityClass.getSimpleName());
     }
@@ -57,9 +56,9 @@ public class ActivitySwitcher {
         start(context, activityClass, intent);
     }
 
-    
-    
-    
+
+
+
     public static void start(Context context, Class<?> activityClass, File file) {
         Intent intent = new Intent();
 
@@ -69,15 +68,15 @@ public class ActivitySwitcher {
 
 
 
-    
+
     public static void start(Context context, Class<?> activityClass, Intent intent) {
-        intent.setClass(context, activityClass); 
+        intent.setClass(context, activityClass);
         intent.setAction(activityClass.getName());
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        context.startActivity(intent);         
+        context.startActivity(intent);
     }
 
-    
+
     public static void cycle(Activity a) {
         for (int i=0; i<list.length; i++) {
             if (list[i].activityClass.equals(a.getClass())) {
@@ -96,7 +95,7 @@ public class ActivitySwitcher {
         Intent intent = new Intent();
         AppIntent.setBoundingBox(intent, box);
         start(context, a, intent);
-        
+
     }
 
 }

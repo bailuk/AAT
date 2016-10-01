@@ -36,10 +36,4 @@ public abstract class AbsTileProvider implements OpenStreetMapTileProviderConsta
 
 
     public abstract void ensureCapacity(int numNeeded);
-
-
-
-
-
-    
 }

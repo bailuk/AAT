@@ -12,7 +12,7 @@ import android.view.WindowManager;
 import android.widget.LinearLayout;
 
 public class AppLayout {
-    private static Point size = new Point();
+    private static final Point size = new Point();
     
     public static int getDimension (int spec, int preferred) {
         

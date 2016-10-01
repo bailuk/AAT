@@ -118,15 +118,16 @@ public abstract class ElevationTile extends TileObject implements ElevationUpdat
 
     @Override
     public boolean isReady() {
-        return isUpdating()==false;
+        return updateLock == false;
     }
 
 
+    /*
     @Override
     public boolean isUpdating() {
         return updateLock;
     }
-
+*/
 
     @Override
     public SrtmCoordinates[] getSrtmTileCoordinates() {

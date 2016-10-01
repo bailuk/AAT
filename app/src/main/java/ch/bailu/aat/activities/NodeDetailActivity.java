@@ -21,6 +21,7 @@ import ch.bailu.aat.dispatcher.TrackerSource;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.GpxList;
 import ch.bailu.aat.gpx.GpxListArray;
+import ch.bailu.aat.helpers.AppHtml;
 import ch.bailu.aat.helpers.AppLayout;
 import ch.bailu.aat.helpers.AppTheme;
 import ch.bailu.aat.views.ContentView;
@@ -159,7 +160,7 @@ public class NodeDetailActivity extends AbsDispatcher implements OnClickListener
             map.frameBoundingBox(array.get(i).getBoundingBox());
 
             array.get(i).toHtml(this, builder);
-            text.setText(  Html.fromHtml(builder.toString())  );
+            text.setText(  AppHtml.fromHtml(builder.toString())  );
         }
     }
 

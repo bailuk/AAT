@@ -31,7 +31,7 @@ public class MockLocation extends LocationStackChainedItem implements Runnable{
         timer=new Timer(this, INTERVAL);
         
         try {
-        	File file = new File(new SolidMockLocationFile(c).getValue());
+        	File file = new File(new SolidMockLocationFile(c).getValueAsString());
         	mockData = new SimpleGpxListReader(new FileAccess(file)).getGpxList();
             
             timer.kick();

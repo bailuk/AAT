@@ -17,16 +17,13 @@ public class GpxListEntryView extends  DescriptionViewGroup {
     private final static int SPACE=20;
 
     private final PreviewView preview;
-    private final ServiceContext scontext;
 
 
     
     public GpxListEntryView(ServiceContext sc, ContentDescription[] description) {
         super(sc.getContext(), SOLID_KEY, GpxInformation.ID.INFO_ID_ALL);
 
-        scontext=sc;
-
-        preview = new PreviewView(scontext);
+        preview = new PreviewView(sc);
         addView(preview);
 
         init(getContext(),description);

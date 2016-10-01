@@ -6,22 +6,25 @@ import ch.bailu.aat.services.VirtualService;
 public class TileRemoverService extends VirtualService {
 
 
-    private StateMachine state;
+    final private StateMachine state;
 
     public TileRemoverService(ServiceContext sc) {
         super(sc);
 
-        state = new StateMachine(getContext());
+        state = new StateMachine(sc);
     }
+
 
     @Override
     public void appendStatusText(StringBuilder builder) {
 
     }
 
+
+
     @Override
     public void close() {
-
+        state.reset();
     }
 
     public State getState() {

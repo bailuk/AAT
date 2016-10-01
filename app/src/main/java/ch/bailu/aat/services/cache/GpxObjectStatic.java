@@ -158,10 +158,10 @@ public class GpxObjectStatic extends GpxObject implements ElevationUpdaterClient
 
 
 
-    @Override
-    public boolean isUpdating() {
-        return false;
-    }
+    //@Override
+    //public boolean isUpdating() {
+    //    return false;
+    //}
 
     
     private class ListUpdater extends GpxListWalker {

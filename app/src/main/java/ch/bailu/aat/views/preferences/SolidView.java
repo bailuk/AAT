@@ -1,35 +1,38 @@
-package ch.bailu.aat.views.tileremover;
+package ch.bailu.aat.views.preferences;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import ch.bailu.aat.helpers.AppTheme;
-import ch.bailu.aat.preferences.IndexListDialog;
-import ch.bailu.aat.preferences.SolidIndexList;
+import ch.bailu.aat.preferences.SolidType;
 
-public class SolidIndexListView extends LinearLayout implements SharedPreferences.OnSharedPreferenceChangeListener {
+public abstract class SolidView extends LinearLayout
+        implements SharedPreferences.OnSharedPreferenceChangeListener {
 
-    private final TextView label, value;
+    private final TextView value;
+    private final SolidType solid;
 
-    private final SolidIndexList solid;
-
-    public SolidIndexListView(final Context context, final SolidIndexList s) {
+    public SolidView(final Context context, final SolidType s) {
         super(context);
         setOrientation(VERTICAL);
 
         solid = s;
 
-        label = new TextView(context);
+        final TextView label = new TextView(context);
         label.setText(solid.getLabel());
         addView(label);
         AppTheme.themify(label);
 
         value = new TextView(context);
         value.setText(solid.getValueAsString());
+        value.setTextColor(Color.LTGRAY);
+
         addView(value);
+
 
         AppTheme.themify(this);
 
@@ -37,26 +40,19 @@ public class SolidIndexListView extends LinearLayout implements SharedPreference
         setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                selectOrCycle();
+                onRequestNewValue();
             }
         });
     }
 
+    public abstract void onRequestNewValue();
 
 
     @Override
     public void onAttachedToWindow() {
         super.onAttachedToWindow();
-        value.setText(solid.getValueAsString());
         solid.register(this);
-    }
 
-    private void selectOrCycle() {
-        if (solid.length()<3) {
-            solid.cycle();
-        } else {
-            new IndexListDialog(getContext(), solid);
-        }
     }
 
 
@@ -67,10 +63,10 @@ public class SolidIndexListView extends LinearLayout implements SharedPreference
         }
     }
 
-
     @Override
     public void onDetachedFromWindow() {
         super.onDetachedFromWindow();
         solid.unregister(this);
     }
 }
+

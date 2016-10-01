@@ -18,10 +18,11 @@ public class ElevationUpdaterEntry {
         fillSRTMTiles();
     }
 
+    /*
     public String getFileObjectID() {
         return id;
     }
-
+*/
     private void fillSRTMTiles() {
         ObjectHandle handle = scontext.getCacheService().getObject(id);
             

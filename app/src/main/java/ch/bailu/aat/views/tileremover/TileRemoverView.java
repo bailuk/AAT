@@ -6,34 +6,25 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 
 import ch.bailu.aat.R;
 import ch.bailu.aat.helpers.AppBroadcaster;
+import ch.bailu.aat.helpers.file.FileIntent;
 import ch.bailu.aat.preferences.SolidTileCacheDirectory;
-import ch.bailu.aat.preferences.SolidTrimDate;
-import ch.bailu.aat.preferences.SolidTrimMode;
-import ch.bailu.aat.preferences.SolidTrimSize;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.tileremover.TileRemoverService;
 import ch.bailu.aat.views.BusyButton;
-import ch.bailu.aat.views.ContentView;
 import ch.bailu.aat.views.ControlBar;
 
 
-public class TileRemoverContentView
-        extends ContentView
+public class TileRemoverView
+        extends LinearLayout
         implements View.OnClickListener, SharedPreferences.OnSharedPreferenceChangeListener {
 
 
-    private SolidIndexListView sdirectoryView;
     private TilesSummaryView summaryView;
-    private SolidIndexListView strimsizeView;
-    private SolidIndexListView strimdateView;
-
-
-
     private BusyButton scan, remove;
+    private View openFolder;
 
     private final SolidTileCacheDirectory sdirectory;
 
@@ -41,49 +32,31 @@ public class TileRemoverContentView
 
 
 
-    public TileRemoverContentView(ServiceContext sc) {
-        super(sc.getContext(), HORIZONTAL);
+    public TileRemoverView(ServiceContext sc) {
+        super(sc.getContext());
 
+        setOrientation(HORIZONTAL);
         scontext=sc;
 
         sdirectory = new SolidTileCacheDirectory(getContext());
 
         addView(createControlBar(getContext()));
-        addView(createFilterLayout(getContext()));
+        addView(createFilterLayout(getContext()), LayoutParams.MATCH_PARENT);
     }
 
 
     private View createFilterLayout(Context context) {
-        final ScrollView scrollView = new ScrollView(context);
-        final LinearLayout filter = new LinearLayout(context);
-
-        filter.setOrientation(LinearLayout.VERTICAL);
-
-        sdirectoryView = new SolidIndexListView(context, sdirectory);
-        filter.addView(sdirectoryView);
-
         summaryView = new TilesSummaryView(context);
-        filter.addView(summaryView);
-
-        filter.addView(new SolidIndexListView(context, new SolidTrimMode(context)));
-
-        strimsizeView = new SolidIndexListView(context, new SolidTrimSize(context));
-        filter.addView(strimsizeView);
-
-        strimdateView = new SolidIndexListView(context, new SolidTrimDate(context));
-        filter.addView(strimdateView);
-
-
-        scrollView.addView(filter);
-        return scrollView;
+        return summaryView;
     }
 
 
     private View createControlBar(Context context) {
         final ControlBar bar =  new ControlBar(context, LinearLayout.VERTICAL);
 
-        bar.addImageButton(R.drawable.folder_inverse);
 
+
+        openFolder = bar.addImageButton(R.drawable.folder_inverse);
 
         scan = new BusyButton(context, R.drawable.view_refresh_inverse);
         bar.addButton(scan);
@@ -122,7 +95,7 @@ public class TileRemoverContentView
         public void onReceive(Context context, Intent intent) {
             scan.stopWaiting();
             remove.stopWaiting();
-            updateInfo();
+            updateText();
         }
     };
 
@@ -133,7 +106,7 @@ public class TileRemoverContentView
         public void onReceive(Context context, Intent intent) {
             remove.startWaiting();
             scan.stopWaiting();
-            updateInfo();
+            updateText();
         }
     };
 
@@ -142,12 +115,12 @@ public class TileRemoverContentView
         public void onReceive(Context context, Intent intent) {
             scan.startWaiting();
             remove.stopWaiting();
-            updateInfo();
+            updateText();
         }
     };
 
 
-    public void updateInfo() {
+    public void updateText() {
         final TileRemoverService tr = scontext.getTileRemoverService();
         if (tr != null) {
             summaryView.updateInfo(tr.getSummaries());
@@ -166,6 +139,9 @@ public class TileRemoverContentView
                 tr.getState().stop();
             } else if (v == remove) {
                 tr.getState().remove();
+
+            } else if (v == openFolder) {
+                new FileIntent(sdirectory.toFile()).view(getContext());
             }
         }
     }
@@ -179,7 +155,7 @@ public class TileRemoverContentView
         final TileRemoverService tr = scontext.getTileRemoverService();
         if (tr != null) {
             if(sdirectory.hasKey(key)) {
-                tr.getState().reset();
+                tr.getState().resetAndRescan();
             } else if (key.contains("SolidTrim")) {
                 tr.getState().rescan();
             }
@@ -198,7 +174,5 @@ public class TileRemoverContentView
         getContext().unregisterReceiver(onTileRemoverStopped);
         getContext().unregisterReceiver(onTileRemoverScan);
         getContext().unregisterReceiver(onTileRemoverRemove);
-
     }
-
 }

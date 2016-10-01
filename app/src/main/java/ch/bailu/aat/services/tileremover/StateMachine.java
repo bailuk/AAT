@@ -4,20 +4,24 @@ import android.content.Context;
 
 import java.io.File;
 
+import ch.bailu.aat.services.ServiceContext;
+
 public class StateMachine implements State {
 
     private State state;
 
-    public final TilesList list = new TilesList();
+    public TilesList list = null;
     public final MapSummaries summaries = new MapSummaries();
 
     public File tileDirectory;
 
     public final Context context;
+    private final ServiceContext scontext;
 
 
-    public StateMachine(Context c) {
-        context = c;
+    public StateMachine(ServiceContext sc) {
+        context = sc.getContext();
+        scontext = sc;
         set(new StateUnscanned(this));
     }
 
@@ -39,6 +43,11 @@ public class StateMachine implements State {
     @Override
     public synchronized void reset() {
         state.reset();
+    }
+
+    @Override
+    public synchronized void resetAndRescan() {
+        state.resetAndRescan();
     }
 
     @Override
@@ -70,5 +79,15 @@ public class StateMachine implements State {
             set(new StateScan(this));
         }
 
+    }
+
+
+    public void freeService() {
+        scontext.free(TileRemoverService.class.getSimpleName());
+    }
+
+
+    public void lockService() {
+        scontext.lock(TileRemoverService.class.getSimpleName());
     }
 }

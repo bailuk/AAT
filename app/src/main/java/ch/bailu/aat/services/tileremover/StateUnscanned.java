@@ -13,9 +13,10 @@ public class StateUnscanned implements State {
     public StateUnscanned(StateMachine s) {
         state = s;
 
-        state.list.reset();
+        state.list = null;
         state.summaries.reset();
 
+        state.freeService();
         AppBroadcaster.broadcast(state.context, AppBroadcaster.TILE_REMOVER_STOPPED);
     }
 
@@ -32,7 +33,10 @@ public class StateUnscanned implements State {
     }
 
     @Override
-    public void reset() {
+    public void reset() {}
+
+    @Override
+    public void resetAndRescan() {
 
     }
 

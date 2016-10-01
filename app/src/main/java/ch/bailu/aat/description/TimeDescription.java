@@ -60,8 +60,10 @@ public class TimeDescription extends LongDescription {
         setCache(info.getTimeDelta());
     }
 
+    /*
     @Override
     public int getStrlen() {
         return 8;
     }
+    */
 }

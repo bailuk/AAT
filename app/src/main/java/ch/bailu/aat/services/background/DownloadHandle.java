@@ -119,8 +119,8 @@ public class DownloadHandle extends ProcessHandle {
 
             for (Map.Entry<String, List<String>> entry : map.entrySet()) {
                 AppLog.d(entry, entry.getKey());
-                for (int i=0; i< entry.getValue().size(); i++) {
-                    AppLog.d(entry, entry.getValue().get(i));
+                for (int i=0; i< entry.getValueAsString().size(); i++) {
+                    AppLog.d(entry, entry.getValueAsString().get(i));
                 }
             }*/
 

@@ -54,7 +54,8 @@ public class SolidOverlayFileList extends SolidCheckList {
     public Storage getStorage() {
         return list[0].getStorage();
     }
-    
+
+
     @Override
     public boolean hasKey(String s) {
         for (SolidOverlayFile aList : list) if (aList.hasKey(s)) return true;

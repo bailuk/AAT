@@ -59,6 +59,7 @@ import ch.bailu.aat.views.ContentView;
 import ch.bailu.aat.views.ControlBar;
 import ch.bailu.aat.views.MainControlBar;
 import ch.bailu.aat.views.MultiView;
+import ch.bailu.aat.views.StatusTextView;
 import ch.bailu.aat.views.SummaryListView;
 import ch.bailu.aat.views.TrackDescriptionView;
 import ch.bailu.aat.views.ViewWrapper;
@@ -74,7 +75,6 @@ import ch.bailu.aat.views.map.overlay.gpx.GpxDynOverlay;
 import ch.bailu.aat.views.map.overlay.gpx.GpxOverlayListOverlay;
 import ch.bailu.aat.views.map.overlay.gpx.GpxTestOverlay;
 import ch.bailu.aat.views.map.overlay.grid.GridDynOverlay;
-import ch.bailu.aat.views.tileremover.TileRemoverContentView;
 
 public class TestActivity extends AbsDispatcher implements OnClickListener {
     private static final String SOLID_KEY = "test";
@@ -83,7 +83,8 @@ public class TestActivity extends AbsDispatcher implements OnClickListener {
     private MultiView multiView;
 
     private OsmInteractiveView map;
-    private TileRemoverContentView tileRemover;
+
+    private StatusTextView statusTextView;
 
 
     @Override
@@ -149,14 +150,14 @@ public class TestActivity extends AbsDispatcher implements OnClickListener {
         final TrackDescriptionView trackSummary = new SummaryListView(
                 this, SOLID_KEY, GpxInformation.ID.INFO_ID_TRACKER, trackData);
 
-        tileRemover = new TileRemoverContentView(getServiceContext());
+        statusTextView = new StatusTextView(this);
 
         TrackDescriptionView viewData[] = {
                 map,
                 gpsSummary,
                 trackSummary,
                 list,
-                new ViewWrapper(tileRemover)
+                new ViewWrapper(statusTextView)
         };
 
 
@@ -223,6 +224,11 @@ public class TestActivity extends AbsDispatcher implements OnClickListener {
         super.onStop();
     }
 
+    @Override
+    public void onResumeWithService() {
+        super.onResumeWithService();
+        statusTextView.updateText(this);
+    }
 
     private class TestList extends ListView
             implements ListAdapter, AdapterView.OnItemClickListener {
@@ -327,12 +333,6 @@ public class TestActivity extends AbsDispatcher implements OnClickListener {
 
         }
 
-    }
-
-    @Override
-    public void onResumeWithServices() {
-        super.onResumeWithServices();
-        tileRemover.updateInfo();
     }
 
 }

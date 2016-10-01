@@ -48,12 +48,20 @@ public class OneService extends AbsService  {
         cache.close();          cache=null;
         directory.close();      directory=null;
         elevation.close();      elevation=null;
-        tileRemover.close();   tileRemover=null;
+        tileRemover.close();    tileRemover=null;
 
         scontext=null;
         super.onDestroy();
 
     }
+
+
+    @Override
+    public void onLowMemory() {
+        super.onLowMemory();
+        cache.getSelf().onLowMemory();
+    }
+
 
     @Override
     public void appendStatusText(StringBuilder builder) {

@@ -180,8 +180,8 @@ public class AbsFileContentActivity extends AbsDispatcher implements OnClickList
 
 
     @Override
-    public void onResumeWithServices() {
-        super.onResumeWithServices();
+    public void onResumeWithService() {
+        super.onResumeWithService();
         
         if (firstRun) {
             frameCurrentFile();

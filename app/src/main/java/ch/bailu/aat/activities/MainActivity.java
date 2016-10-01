@@ -2,21 +2,17 @@ package ch.bailu.aat.activities;
 
 
 import android.content.Context;
-import android.content.SharedPreferences;
-import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.Spinner;
 import android.widget.TextView;
-import ch.bailu.aat.R;
+
 import ch.bailu.aat.description.DescriptionInterface;
 import ch.bailu.aat.dispatcher.ContentDispatcher;
 import ch.bailu.aat.dispatcher.ContentSource;
@@ -25,26 +21,22 @@ import ch.bailu.aat.dispatcher.TrackerSource;
 import ch.bailu.aat.helpers.AppLayout;
 import ch.bailu.aat.helpers.AppTheme;
 import ch.bailu.aat.preferences.SolidPreset;
-import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat.views.ContentView;
 import ch.bailu.aat.views.ControlBar;
 import ch.bailu.aat.views.GPSStateButton;
 import ch.bailu.aat.views.MainControlBar;
 import ch.bailu.aat.views.NumberView;
 import ch.bailu.aat.views.TrackerStateButton;
+import ch.bailu.aat.views.preferences.SolidIndexListView;
 
 
-
-public class MainActivity extends AbsDispatcher 
-implements AdapterView.OnItemSelectedListener, OnSharedPreferenceChangeListener {
+public class MainActivity extends AbsDispatcher
+implements AdapterView.OnItemSelectedListener {
 
     private NumberView      gpsState;
     private TrackerStateButton trackerState;
-    private LinearLayout    contentView;
-    private Spinner         presetSpinner; 
     private ListView        actionList;
 
-    private Storage storage; 
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -53,28 +45,24 @@ implements AdapterView.OnItemSelectedListener, OnSharedPreferenceChangeListener 
         createViews();
         createDispatcher();
 
-        
     }
 
 
     private void createViews() {
-        storage = Storage.global(this);
-        storage.register(this);
-
-        contentView=new ContentView(this);
+        LinearLayout contentView = new ContentView(this);
         contentView.addView(createButtonBar());
 
-        presetSpinner = createActivitySpinner();
-        contentView.addView(presetSpinner);
+
+        contentView.addView(new SolidIndexListView(this, new SolidPreset(this)));
+
         actionList = createActionList();
         contentView.addView(actionList);
+
+        setContentView(contentView);
     }
 
 
     private void createDispatcher() {
-        setContentView(contentView);
-
-
         DescriptionInterface[] target = new DescriptionInterface[] {
                 gpsState, trackerState, this
         };
@@ -115,31 +103,6 @@ implements AdapterView.OnItemSelectedListener, OnSharedPreferenceChangeListener 
     }
 
 
-    private Spinner createActivitySpinner() {
-        Spinner spinner = new Spinner(this);
-        initializeSpinner(spinner);
-
-        return spinner;
-
-    }
-
-    private void initializeSpinner(Spinner spinner) {
-        SolidPreset spreset = new SolidPreset(this);
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
-                android.R.layout.simple_spinner_item,
-                spreset.getStringArray());
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-
-        spinner.setPromptId(R.string.p_preset);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(adapter);
-        spinner.setSelection(spreset.getIndex());
-        spinner.setOnItemSelectedListener(this);
-    }
-
-
-
 
     @Override
     public void onItemSelected(AdapterView<?> arg0, View arg1, int pos,
@@ -147,21 +110,6 @@ implements AdapterView.OnItemSelectedListener, OnSharedPreferenceChangeListener 
         new SolidPreset(this).setIndex(pos);
     }
 
-
-
-    @Override
-    public void onSharedPreferenceChanged(SharedPreferences pref, String key) { 
-        initializeSpinner(presetSpinner);
-    }
-
-
-
-
-    @Override
-    public void onDestroy() {
-        storage.unregister(this);
-        super.onDestroy();
-    }
 
     private class MyListAdapter extends BaseAdapter implements OnItemClickListener {
         private static final float MARGIN = 15f;

@@ -31,7 +31,6 @@ public class DirectorySelection extends LinearLayout implements OnClickListener 
 
     private final MapView map;
 
-    private final Button   getBox;
 
     private final SolidDirectory sdirectory;
     
@@ -52,7 +51,7 @@ public class DirectorySelection extends LinearLayout implements OnClickListener 
         applayGeo = new SolidCheckBox(geo, sdirectory.getUseGeo());
         applayGeo.setText(R.string.filter_geo);
 
-        getBox = new Button(map.getContext());
+        final Button getBox = new Button(map.getContext());
         AppTheme.themify(getBox);
         getBox.setText(R.string.filter_geo_update);
         geo.addView(getBox);

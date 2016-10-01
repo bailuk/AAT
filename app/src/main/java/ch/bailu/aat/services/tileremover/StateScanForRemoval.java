@@ -59,6 +59,12 @@ public class StateScanForRemoval implements State, Runnable {
 
     @Override
     public void reset() {
+        nextState = StateUnscanned.class;
+    }
+
+
+    @Override
+    public void resetAndRescan() {
         nextState = StateScan.class;
     }
 

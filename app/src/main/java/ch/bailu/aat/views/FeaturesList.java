@@ -24,6 +24,7 @@ import ch.bailu.aat.activities.HtmlViewActivity;
 import ch.bailu.aat.activities.MapFeatureListActivity;
 import ch.bailu.aat.helpers.AppBroadcaster;
 import ch.bailu.aat.helpers.AppDirectory;
+import ch.bailu.aat.helpers.AppHtml;
 import ch.bailu.aat.helpers.AppLog;
 import ch.bailu.aat.helpers.AppTheme;
 import ch.bailu.aat.helpers.file.FileAccess;
@@ -56,6 +57,8 @@ OnHaveFeature {
 
     public FeaturesList(ServiceContext sc) {
         super(sc.getContext());
+
+        final Adapter listAdapter = new Adapter();
 
         scontext = sc;
         AppTheme.themify(this, AppTheme.getHighlightColor());
@@ -113,7 +116,7 @@ OnHaveFeature {
         scontext.getIconMapService().iconify(html,parser.getKey(), parser.getValue());
         parser.toHtml(html);
 
-        d.paragraph = Html.fromHtml(html.toString(), new Html.ImageGetter() {
+        d.paragraph = AppHtml.fromHtml(html.toString(), new Html.ImageGetter() {
 
             @Override
             public Drawable getDrawable(String source) {
@@ -129,7 +132,7 @@ OnHaveFeature {
                 }
 
             }
-        }, null);
+        });
 
         data.add(d);        
     }
@@ -161,7 +164,6 @@ OnHaveFeature {
     }
 
 
-    private final Adapter listAdapter = new Adapter();
     private class Adapter implements ListAdapter, android.widget.AdapterView.OnItemClickListener,
     android.widget.AdapterView.OnItemLongClickListener{
 

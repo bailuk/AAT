@@ -50,11 +50,11 @@ public class EditorHelper {
     }
 
 
-
+/*
     public int getIID() {
         return IID;
     }
-    
+  */
     public GpxInformation getInformation() {
         if (GpxObjectEditable.class.isInstance(handle)) {
             return ((GpxObjectEditable)handle).editor;

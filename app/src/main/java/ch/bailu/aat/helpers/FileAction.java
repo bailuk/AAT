@@ -37,14 +37,14 @@ public class FileAction   {
 
   
     public void rescanDirectory() {
-        if (file.getParent().equals(new SolidDirectory(activity).getValue())) {
+        if (file.getParent().equals(new SolidDirectory(activity).getValueAsString())) {
             scontext.getDirectoryService().rescan();
         }
     }
 
 
     public void reloadPreview() {
-        if (file.getParent().equals(new SolidDirectory(scontext.getContext()).getValue())) {
+        if (file.getParent().equals(new SolidDirectory(scontext.getContext()).getValueAsString())) {
             scontext.getDirectoryService().deleteEntry(file.getAbsolutePath());
         }
     }

@@ -58,9 +58,7 @@ public class XmlParser implements Closeable, GpxPointInterface {
     public int getLatitudeE6() {return io.latitude.getInt();}
     public int getLongitudeE6() {return io.longitude.getInt();}
     public short getAltitude() {
-        short altitude = (short) io.altitude.getInt();
-        
-        return altitude;
+        return (short) io.altitude.getInt();
     }
     
     public long getTimeStamp() {return io.dateTime.getTimeMillis();}

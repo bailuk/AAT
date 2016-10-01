@@ -8,5 +8,5 @@ public interface ElevationUpdaterClient  {
     
     void updateFromSrtmTile(ServiceContext cs, Dem3Tile tile);
     
-    boolean isUpdating();
+    //boolean isUpdating();
 }

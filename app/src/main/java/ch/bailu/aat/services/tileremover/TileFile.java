@@ -15,17 +15,17 @@ public class TileFile {
     }
 
 
-    public static int getX(File file) {
+    public static int getX(File file)throws NumberFormatException {
         return Integer.valueOf(file.getName());
     }
 
 
-    public static short getZoom(File file) {
+    public static short getZoom(File file) throws NumberFormatException {
         return Short.valueOf(file.getName());
     }
 
 
-    public static int getY(File file) {
+    public static int getY(File file) throws NumberFormatException {
         final String name = file.getName();
         final String yname = name.substring(0, name.length()-4);
 

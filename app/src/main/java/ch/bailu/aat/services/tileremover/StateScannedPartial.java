@@ -32,6 +32,11 @@ public class StateScannedPartial implements State {
 
     @Override
     public void reset() {
+        state.set(new StateUnscanned(state));
+    }
+
+    @Override
+    public void resetAndRescan() {
         state.set(new StateScan(state));
     }
 

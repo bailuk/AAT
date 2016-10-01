@@ -29,10 +29,11 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="ch.bailu.aat.activities.PreferencesActivity"
-            android:label="@string/intro_settings"
-            android:screenOrientation="portrait" >
+            android:name="ch.bailu.aat.activities.PreferencesActivity">
         </activity>
+
+
+
         <activity
             android:name="ch.bailu.aat.activities.TrackListActivity"
             android:screenOrientation="portrait" >
@@ -128,8 +129,6 @@
         <activity android:name="ch.bailu.aat.activities.ReadmeActivity" >
         </activity>
        
-        <activity android:name="ch.bailu.aat.activities.StatusActivity" >
-        </activity>
         <activity android:name="ch.bailu.aat.activities.TestActivity" >
         </activity>
         <activity

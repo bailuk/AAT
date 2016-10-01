@@ -23,40 +23,40 @@ public class SolidDirectory extends SolidString {
     }
 
     public boolean containsKey(String s) {
-        return s.contains(getValue());
+        return s.contains(getValueAsString());
     }
     
     public SolidInteger getPosition() {
-        return new SolidInteger(getStorage(), KEY_DIR_INDEX+getValue());
+        return new SolidInteger(getStorage(), KEY_DIR_INDEX+ getValueAsString());
     }
 
 
     public SolidBoolean getUseDateStart() {
-        return new SolidBoolean(getStorage(), KEY_USE_DATE_START+getValue());
+        return new SolidBoolean(getStorage(), KEY_USE_DATE_START+ getValueAsString());
     }
 
 
     public SolidBoolean getUseDateEnd() {
-        return new SolidBoolean(getStorage(), KEY_USE_DATE_END+getValue());
+        return new SolidBoolean(getStorage(), KEY_USE_DATE_END+ getValueAsString());
     }
 
 
     public SolidLong getDateStart() {
-        return new SolidLong(getStorage(), KEY_DATE_START+getValue());
+        return new SolidLong(getStorage(), KEY_DATE_START+ getValueAsString());
     }
 
 
     public SolidLong getDateEnd() {
-        return new SolidLong(getStorage(), KEY_DATE_END+getValue());
+        return new SolidLong(getStorage(), KEY_DATE_END+ getValueAsString());
     }
 
     public SolidBoolean getUseGeo() {
-        return new SolidBoolean(getStorage(), KEY_USE_GEO+getValue());
+        return new SolidBoolean(getStorage(), KEY_USE_GEO+ getValueAsString());
 
     }
 
     public SolidBoundingBox getBoundingBox() {
-        return new SolidBoundingBox(getStorage(), KEY_BOUNDING_BOX+getValue());
+        return new SolidBoundingBox(getStorage(), KEY_BOUNDING_BOX+ getValueAsString());
     }
 
     

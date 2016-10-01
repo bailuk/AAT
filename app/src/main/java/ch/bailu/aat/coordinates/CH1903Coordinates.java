@@ -140,7 +140,8 @@ public class CH1903Coordinates extends MeterCoordinates {
         return String.format((Locale)null,"%3.3f/%3.3f", ((float)northing)/1000f, ((float)easting)/1000f);
     }
     
-    
+
+    /*
     public static float adjustAltitude(double la, double lo, float altitude) {
         la = getRelativeLatitude(la);
         lo = getRelativeLongitude(lo);
@@ -153,6 +154,7 @@ public class CH1903Coordinates extends MeterCoordinates {
             + 6.94f * la
          );
     }
+    */
 
 
     private static final BoundingBox SWISS_AREA = new BoundingBox(48300000,11200000,45600000,5000000);

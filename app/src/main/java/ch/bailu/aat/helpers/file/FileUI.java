@@ -9,9 +9,7 @@ import ch.bailu.aat.R;
 import ch.bailu.aat.helpers.AppDialog;
 import ch.bailu.aat.helpers.AppLog;
 import ch.bailu.aat.helpers.AppSelectDirectoryDialog;
-import ch.bailu.aat.preferences.AddOverlayDialog;
 import ch.bailu.aat.preferences.SolidDirectory;
-import ch.bailu.aat.preferences.SolidMockLocationFile;
 import ch.bailu.aat.services.ServiceContext;
 
 public class FileUI {
@@ -39,18 +37,17 @@ public class FileUI {
     
 
     public static String getExistsMsg(Context c, File f) {
-        String msg = f.getName() +
+        return f.getName() +
                 c.getString(R.string.file_exists);
-        return msg;
     }
 
-
+/*
     public void reloadPreview(ServiceContext scontext) {
-        if (file.getParent().equals(new SolidDirectory(scontext.getContext()).getValue())) {
+        if (file.getParent().equals(new SolidDirectory(scontext.getContext()).getValueAsString())) {
             scontext.getDirectoryService().deleteEntry(file.getAbsolutePath());
         }
     }
-
+*/
 
     public void delete(Activity a, ServiceContext sc) {
         new FileDeletionDialog(a, sc);
@@ -73,7 +70,7 @@ public class FileUI {
         }
     }
 
-
+/*
     public void useAsOverlay(Context context) {
         new AddOverlayDialog(context, file);
     }
@@ -81,11 +78,11 @@ public class FileUI {
     public void useForMockLocation(Context context) {
         new SolidMockLocationFile(context).setValue(file.toString());
     }
-
+*/
 
     
     public void rescanDirectory(ServiceContext scontext) {
-        if (file.getParent().equals(new SolidDirectory(scontext.getContext()).getValue())) {
+        if (file.getParent().equals(new SolidDirectory(scontext.getContext()).getValueAsString())) {
             scontext.getDirectoryService().rescan();
         }
     }

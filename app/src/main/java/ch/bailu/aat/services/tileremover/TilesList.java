@@ -6,10 +6,10 @@ import java.util.Iterator;
 import java.util.PriorityQueue;
 
 public class TilesList {
-    public final static int FILES_LIMIT=100000;
+    public final static int FILES_LIMIT=50000;
 
 
-    private PriorityQueue<TileFile> files = new PriorityQueue<>(
+    private final PriorityQueue<TileFile> files = new PriorityQueue<>(
             FILES_LIMIT,
             new Comparator<TileFile>() {
         @Override
@@ -20,10 +20,6 @@ public class TilesList {
 
     private  final ArrayList<TileFile> filesToRemove = new ArrayList<TileFile>(FILES_LIMIT);
 
-    public void reset() {
-        files.clear();
-        resetToRemove();
-    }
 
     public void resetToRemove() {
         filesToRemove.clear();

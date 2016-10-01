@@ -26,5 +26,5 @@ public class HtmlViewActivity extends AbsHtmlViewActivity {
 
 
     @Override
-    public void onResumeWithServices() {}
+    public void onResumeWithService() {}
 }

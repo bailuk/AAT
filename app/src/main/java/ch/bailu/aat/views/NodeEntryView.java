@@ -7,6 +7,7 @@ import android.widget.TextView;
 import ch.bailu.aat.coordinates.BoundingBox;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.GpxPointNode;
+import ch.bailu.aat.helpers.AppHtml;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.views.map.AbsOsmTileProvider;
 import ch.bailu.aat.views.map.CachedTileProvider;
@@ -66,7 +67,7 @@ public class NodeEntryView extends ViewGroup {
 
     
     public void update(GpxInformation info, GpxPointNode node) {
-        text.setText(Html.fromHtml(node.toHtml(getContext(), new StringBuilder()).toString()));
+        text.setText(AppHtml.fromHtml(node.toHtml(getContext(), new StringBuilder()).toString()));
         final BoundingBox bounding = node.getBoundingBox();
         map.frameBoundingBox(bounding);
         map.updateGpxContent(info);

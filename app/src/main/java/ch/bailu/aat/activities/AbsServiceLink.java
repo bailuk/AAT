@@ -21,9 +21,9 @@ public abstract class AbsServiceLink extends AbsActivity {
             private boolean firstRun=true;
             
             @Override
-            public void onServicesUp() {
+            public void onServiceUp() {
                 AbsServiceLink.this.onServicesUp(firstRun);
-                onResumeWithServices();
+                onResumeWithService();
                 firstRun=false;
             }
             
@@ -38,14 +38,14 @@ public abstract class AbsServiceLink extends AbsActivity {
         super.onResume();
         serviceLink.up();
         
-        if (serviceLink.areAllServicesUp()) 
-            onResumeWithServices();
+        if (serviceLink.isUp())
+            onResumeWithService();
     }
 
     
     @Override
     public void onPause() {
-        if (serviceLink.areAllServicesUp()) {
+        if (serviceLink.isUp()) {
             onPauseWithService();
         }
         serviceLink.down();
@@ -54,7 +54,7 @@ public abstract class AbsServiceLink extends AbsActivity {
     }
     
     
-    public void onResumeWithServices() {}
+    public void onResumeWithService() {}
     public void onPauseWithService() {}
     public void onServicesUp(boolean firstRun) {}
 

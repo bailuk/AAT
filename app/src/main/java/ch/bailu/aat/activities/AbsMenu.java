@@ -46,32 +46,4 @@ implements DescriptionInterface{
 
     @Override
     public void updateGpxContent(GpxInformation info) {}
-
-/*
-    public void updateStartButtonText(Button v, GpxInformation info) {
-        if (info.getID()== GpxInformation.ID.INFO_ID_TRACKER) {
-            v.setText(getStartButtonTextResource(info.getState()));
-        }
-    }
-*/
-
-
-/*
-    private int getStartButtonTextResource(int state) {
-
-        return getServiceContext().getTrackerService().getState().getStartPauseResumeTextID();
-    }
-
-
-
-    private void updateMenuText(StateMachine state) {
-
-
-        start.setTitle(state.getStartStopTextID());
-        start.setIcon(state.getStartStopIconID());
-        pause.setTitle(state.getPauseResumeTextID());
-        // FIXME: pause.setEnabled(false);
-    }
-
-*/
 }

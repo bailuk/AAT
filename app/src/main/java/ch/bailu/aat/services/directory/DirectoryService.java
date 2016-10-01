@@ -100,7 +100,7 @@ public class DirectoryService extends VirtualService{
 
 
         private File getDir() {
-            return new File(sdirectory.getValue());
+            return new File(sdirectory.getValueAsString());
         }
 
         
@@ -135,7 +135,7 @@ public class DirectoryService extends VirtualService{
         public void rescan() {
             if (isDirValid()) {
                 stopSynchronizer();
-                synchronizer = new DirectorySynchronizer(getSContext(), new File(sdirectory.getValue()));
+                synchronizer = new DirectorySynchronizer(getSContext(), new File(sdirectory.getValueAsString()));
             }
         }
 
@@ -158,7 +158,7 @@ public class DirectoryService extends VirtualService{
         @Override
         public void appendStatusText(StringBuilder builder) {
             builder.append("<p>Directory: ");
-            builder.append(sdirectory.getValue());
+            builder.append(sdirectory.getValueAsString());
             builder.append("</p>");                
         }
 

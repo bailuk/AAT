@@ -12,8 +12,9 @@ public abstract class SolidType implements SolidTypeInterface {
     public String getLabel() {
         return NULL_LABEL;
     }
-    
-    
+    public abstract String getValueAsString();
+
+
     public boolean hasKey(String s) {
         return s.equals(getKey());
     }    

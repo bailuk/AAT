@@ -1,114 +1,109 @@
 package ch.bailu.aat.activities;
 
-import java.io.Closeable;
-import java.io.IOException;
-import java.util.ArrayList;
-
 import android.os.Bundle;
-import android.preference.PreferenceActivity;
-import android.preference.PreferenceCategory;
-import android.preference.PreferenceScreen;
+import android.view.View;
+import android.widget.LinearLayout;
+
 import ch.bailu.aat.R;
-import ch.bailu.aat.helpers.AppLog;
-import ch.bailu.aat.preferences.IndexListPreference;
-import ch.bailu.aat.preferences.IntegerPreference;
-import ch.bailu.aat.preferences.SolidAccelerationFilter;
-import ch.bailu.aat.preferences.SolidAccuracyFilter;
-import ch.bailu.aat.preferences.SolidAutopause;
-import ch.bailu.aat.preferences.SolidDataDirectory;
-import ch.bailu.aat.preferences.SolidDistanceFilter;
-import ch.bailu.aat.preferences.SolidLocationProvider;
-import ch.bailu.aat.preferences.SolidMET;
-import ch.bailu.aat.preferences.SolidMissingTrigger;
-import ch.bailu.aat.preferences.SolidPreset;
-import ch.bailu.aat.preferences.SolidTileCacheDirectory;
-import ch.bailu.aat.preferences.SolidTileSize;
-import ch.bailu.aat.preferences.SolidUnit;
-import ch.bailu.aat.preferences.SolidWeight;
+import ch.bailu.aat.description.AltitudeDescription;
+import ch.bailu.aat.description.AverageSpeedDescription;
+import ch.bailu.aat.description.ContentDescription;
+import ch.bailu.aat.description.CurrentSpeedDescription;
+import ch.bailu.aat.description.DistanceDescription;
+import ch.bailu.aat.description.MaximumSpeedDescription;
+import ch.bailu.aat.description.TimeDescription;
+import ch.bailu.aat.gpx.GpxInformation;
+import ch.bailu.aat.services.tileremover.TileRemoverService;
+import ch.bailu.aat.views.ContentView;
+import ch.bailu.aat.views.ControlBar;
+import ch.bailu.aat.views.MainControlBar;
+import ch.bailu.aat.views.MultiView;
+import ch.bailu.aat.views.TrackDescriptionView;
+import ch.bailu.aat.views.ViewWrapper;
+import ch.bailu.aat.views.preferences.GeneralPreferencesView;
+import ch.bailu.aat.views.preferences.MapTilePreferencesView;
 
-public class PreferencesActivity extends PreferenceActivity {
-    
-    private PreferenceScreen screen;
-    private PreferenceCategory category;
-    private final ArrayList<Closeable> toClose= new ArrayList<>();
+public class PreferencesActivity extends AbsDispatcher implements View.OnClickListener {
 
-    private AppLog logger;
-    
-    @SuppressWarnings("deprecation")
+    private static String SOLID_KEY=PreferencesActivity.class.getSimpleName();
+
+    private View next, prev;
+    private MultiView multiView;
+    private MapTilePreferencesView mapTilePreferences;
+
+
     @Override
-    public void onCreate (Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        
-        
-        addPreferencesFromResource(R.xml.preferences);
-        screen = this.getPreferenceScreen();
 
-        addCategory(getString(R.string.p_general));
-        
-        addPreference(new IndexListPreference(this, new SolidUnit(this)));
-        addPreference(new IntegerPreference(this, new SolidWeight(this)));
+        createViews();
+    }
 
-        final SolidPreset spreset= new SolidPreset(this);
-        for (int i=0; i<spreset.length(); i++) {
-            addCategory(getString(R.string.p_preset) + " " + (i+1));
-            addPreference(new IndexListPreference(this, new SolidMET(this,i)));
-            addPreference(new IndexListPreference(this, new SolidAutopause(this,i)));
-            addPreference(new IndexListPreference(this, new SolidDistanceFilter(this,i)));
-            addPreference(new IndexListPreference(this, new SolidAccelerationFilter(this,i)));
-            addPreference(new IndexListPreference(this, new SolidAccuracyFilter(this,i)));
-            addPreference(new IndexListPreference(this, new SolidMissingTrigger(this,i)));
-        }
 
-        addCategory(getString(R.string.p_system));
-        addPreference(new IndexListPreference(this, new SolidLocationProvider(this)));
-        addPreference(new IndexListPreference(this, new SolidTileSize(this)));
-        addPreference(new IndexListPreference(this, new SolidTileCacheDirectory(this)));
-        addPreference(new IndexListPreference(this, new SolidDataDirectory(this)));
+    private void createViews() {
+        LinearLayout contentView = new ContentView(this);
+
+        contentView.addView(createButtonBar());
+        multiView = createMultiView();
+        contentView.addView(multiView);
+
+        setContentView(contentView);
+    }
+
+    private LinearLayout createButtonBar() {
+        final ControlBar bar = new MainControlBar(getServiceContext());
+
+        prev = bar.addImageButton(R.drawable.go_previous_inverse);
+        bar.addImageButton(R.drawable.content_loading_inverse);
+        next = bar.addImageButton(R.drawable.go_next_inverse);
+
+        bar.setOnClickListener1(this);
+
+        return bar;
+    }
+
+
+    private MultiView createMultiView() {
+        ContentDescription[] data = new ContentDescription[] {
+                new CurrentSpeedDescription(this),
+                new AltitudeDescription(this),
+                new TimeDescription(this),
+                new DistanceDescription(this),
+                new AverageSpeedDescription(this),
+                new MaximumSpeedDescription(this),
+        };
+
+        mapTilePreferences = new MapTilePreferencesView(getServiceContext());
+
+
+        TrackDescriptionView multiViewLayout[] = {
+                new ViewWrapper(mapTilePreferences),
+                new ViewWrapper(new GeneralPreferencesView(this)),
+        };
+
+        return new MultiView(this, SOLID_KEY, GpxInformation.ID.INFO_ID_ALL, multiViewLayout);
+    }
+
+
+    @Override
+    public void onResumeWithService() {
+        super.onResumeWithService();
+        mapTilePreferences.updateText();
     }
 
     @Override
     public void onDestroy() {
-        while (!toClose.isEmpty())
-            try {
-                toClose.remove(0).close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        
+        TileRemoverService ts = getServiceContext().getTileRemoverService();
+
+        if (ts != null) ts.getState().reset();
+
         super.onDestroy();
+
     }
-    
-    
+
     @Override
-    public void onResume() {
-        super.onResume();
-        logger=new AppLog(this);
-    }
-
-    
-    @Override
-    public void onPause() {
-        logger.close();
-        logger=null;
-        super.onPause();
-    }
-
-    
-    private void addPreference(IndexListPreference pref) {
-        toClose.add(pref);
-        category.addPreference(pref);
-    }
-    
-    
-    private void addPreference(IntegerPreference pref) {
-        toClose.add(pref);
-        category.addPreference(pref);
-    }
-    
-    private void addCategory(String title) {
-        category = new PreferenceCategory(this);
-        category.setTitle(title);
-        screen.addPreference(category);
-
+    public void onClick(View v) {
+        if (v == prev) multiView.setPrevious();
+        else if (v == next) multiView.setNext();
     }
 }

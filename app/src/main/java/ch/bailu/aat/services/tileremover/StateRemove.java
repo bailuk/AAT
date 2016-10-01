@@ -30,8 +30,14 @@ public class StateRemove implements State, Runnable {
         nextState = StateScanned.class;
     }
 
+
     @Override
     public void reset() {
+        nextState = StateUnscanned.class;
+    }
+
+    @Override
+    public void resetAndRescan() {
         nextState = StateScan.class;
     }
 

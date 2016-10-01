@@ -36,7 +36,7 @@ public class TestGpx extends UnitTest {
     public File getTestFile() {
         SolidString mockLocation = new SolidMockLocationFile(getContext());
         
-        File testFile = new File(mockLocation.getValue());
+        File testFile = new File(mockLocation.getValueAsString());
         assertTrue("Mock file not defined.", testFile.exists());
         return testFile;
     }

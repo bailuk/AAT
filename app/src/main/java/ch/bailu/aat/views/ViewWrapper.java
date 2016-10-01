@@ -20,8 +20,8 @@ public class ViewWrapper extends TrackDescriptionView {
     @Override
     protected void onMeasure(int wSpec, int hSpec) {
         // As big as possible
-        //wSpec  = MeasureSpec.makeMeasureSpec (MeasureSpec.getNewSize(wSpec),  MeasureSpec.AT_MOST);
-        //hSpec  = MeasureSpec.makeMeasureSpec (MeasureSpec.getNewSize(hSpec),  MeasureSpec.AT_MOST);
+        ///wSpec  = MeasureSpec.makeMeasureSpec (MeasureSpec.getSize(wSpec),  MeasureSpec.EXACTLY);
+        //hSpec  = MeasureSpec.makeMeasureSpec (MeasureSpec.getSize(hSpec),  MeasureSpec.EXACTLY);
 
         
         view.measure(wSpec, hSpec);

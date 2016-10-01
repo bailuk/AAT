@@ -16,9 +16,10 @@ public class StateScan implements State, Runnable {
         state = s;
         state.tileDirectory = new SolidTileCacheDirectory(s.context).toFile();
 
-        state.list.reset();
+        state.list = new TilesList();
         state.summaries.reset();
 
+        state.lockService();
         new Thread(this).start();
 
 
@@ -40,6 +41,12 @@ public class StateScan implements State, Runnable {
 
     @Override
     public void reset() {
+        nextState = StateUnscanned.class;
+    }
+
+
+    @Override
+    public void resetAndRescan() {
         nextState = StateScan.class;
     }
 
@@ -109,14 +116,17 @@ public class StateScan implements State, Runnable {
         if (files != null) {
             for (int i=0; i<files.length; i++) {
                 if (doDirectory(files[i]) && keepUp() ) {
-                    scanZoomDirectory(files[i], hash, summary);
+                    try {
+                        scanZoomDirectory(files[i], hash, summary);
+                    } catch (NumberFormatException e) {}
                 }
             }
         }
 
     }
 
-    private void scanZoomDirectory(File file, int hash, int summary) {
+    private void scanZoomDirectory(File file, int hash, int summary)
+            throws  NumberFormatException {
         final File[] files = file.listFiles();
 
         final short zoom = TileFile.getZoom(file);
@@ -131,7 +141,8 @@ public class StateScan implements State, Runnable {
         }
     }
 
-    private void scanTileDirectory(File file, int hash, short zoom, int summary) {
+    private void scanTileDirectory(File file, int hash, short zoom, int summary)
+            throws NumberFormatException{
 
         final File[] files = file.listFiles();
         final int x = TileFile.getX(file);
@@ -164,8 +175,10 @@ public class StateScan implements State, Runnable {
 
 
     private void processFile(File file, int hash, short zoom, int x, int summary) {
-        final TileFile tile = new TileFile(hash, zoom, x, file);
-        state.list.add(tile);
-        state.summaries.addFile(summary, tile);
+        try {
+            final TileFile tile = new TileFile(hash, zoom, x, file);
+            state.list.add(tile);
+            state.summaries.addFile(summary, tile);
+        } catch (NumberFormatException e) {}
     }
 }

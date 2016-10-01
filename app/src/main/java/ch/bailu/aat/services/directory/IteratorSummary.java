@@ -14,7 +14,7 @@ public class IteratorSummary extends IteratorAbstract {
 
     public IteratorSummary(ServiceContext sc) {
         super(sc);
-        directory = new File(new SolidDirectory(sc.getContext()).getValue());        
+        directory = new File(new SolidDirectory(sc.getContext()).getValueAsString());
         query();
     }
 

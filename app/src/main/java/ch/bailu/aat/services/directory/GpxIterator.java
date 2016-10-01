@@ -12,7 +12,7 @@ import ch.bailu.aat.services.cache.GpxObjectStatic;
 import ch.bailu.aat.services.cache.ObjectHandle;
 
 
-
+/*
 public class GpxIterator extends AbsIterator {
     private Cursor cursor;
     private FileListSummary listSummary;
@@ -207,3 +207,4 @@ public class GpxIterator extends AbsIterator {
         
     }
 }
+*/

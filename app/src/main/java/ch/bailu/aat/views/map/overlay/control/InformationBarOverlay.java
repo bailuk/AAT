@@ -21,7 +21,6 @@ public class InformationBarOverlay extends ControlBarOverlay {
     private final View reload;
 
     private final ImageButton overpass, nominatim, location;
-    private final SolidIndexList sgrid, slegend;
 
     private final InfoViewNodeSelectorOverlay selector;
 
@@ -29,6 +28,8 @@ public class InformationBarOverlay extends ControlBarOverlay {
 
     public InformationBarOverlay(OsmInteractiveView o) {
         super(o,new ControlBar(o.getContext(), ControlBar.VERTICAL));
+
+        final SolidIndexList sgrid, slegend;
 
         sgrid = new SolidMapGrid(o.getContext(), o.solidKey);
         slegend = new SolidLegend(o.getContext(), o.solidKey);

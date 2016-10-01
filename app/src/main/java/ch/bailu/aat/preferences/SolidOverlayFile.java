@@ -38,7 +38,7 @@ public class SolidOverlayFile  implements SolidTypeInterface {
     }
 
     public String getPath() {
-        return path.getValue();
+        return path.getValueAsString();
     }
 
 

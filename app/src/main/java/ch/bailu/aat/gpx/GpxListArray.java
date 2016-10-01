@@ -39,8 +39,8 @@ public class GpxListArray {
         return list.getPointList().size();
     }
     
-    
-    public GpxList getList() {
+
+        public GpxList getList() {
         return list;
     }
 

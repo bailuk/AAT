@@ -117,11 +117,11 @@
     <string name="file_mock">Use for mock location</string>
     <string name="file_delete_ask">Delete file?</string>
     <string name="file_send">Send…</string>
-    <string name="file_view">View/Edit...</string>
+    <string name="file_view">View/Edit…</string>
     <string name="file_copy">Copy to…</string>
     <string name="file_exists"> already exists!</string>
 
-    <string name="location_view">View location...</string>
+    <string name="location_view">View location…</string>
     <string name="location_send">Send location…</string>
     <string name="location_copy">Copy location</string>
     <string name="location_paste">Paste location</string>

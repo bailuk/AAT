@@ -18,9 +18,9 @@ import ch.bailu.aat.preferences.SolidTileCacheDirectory;
 public class AppDirectory  {
 
     //////////////////////////////////////////////////////////////////////////////////////
-    public static File getDataDirectory(Context c, File sub) {
+/*    public static File getDataDirectory(Context c, File sub) {
         return getDataDirectory(c, sub.toString());
-    }
+    }*/
 
     public static File getDataDirectory(Context c, String sub) {
         final File p = new File(new SolidDataDirectory(c).getValueAsString(), sub);
@@ -41,10 +41,10 @@ public class AppDirectory  {
     public static final String DIR_IMPORT = "import/";
     
     public static final String DIR_NOMINATIM = "nominatim/";
-    public static final String DIR_NOMINATIM_DRAFT = "nominatim/draft";
+    //public static final String DIR_NOMINATIM_DRAFT = "nominatim/draft";
     
     public static final String DIR_OVERPASS = "overpass/";
-    public static final String DIR_OVERPASS_DRAFT = "overpass/draft/";
+    //public static final String DIR_OVERPASS_DRAFT = "overpass/draft/";
     
     
     public static final String DIR_TEST = "test/";

@@ -123,8 +123,7 @@ public class TileStackObject extends ObjectHandle {
     }
 
     public Drawable getDrawable() {
-        Drawable r =  bitmap.getDrawable();
-        return r;
+        return  bitmap.getDrawable();
     }
 
     private class ReUpdate extends ProcessHandle {

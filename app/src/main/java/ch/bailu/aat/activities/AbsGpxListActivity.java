@@ -83,7 +83,7 @@ public abstract class AbsGpxListActivity extends AbsDispatcher implements OnItem
 
         sdirectory = new SolidDirectory(this);
         sdirectory.setValue(getDirectory().getAbsolutePath());
-        solid_key = AbsGpxListActivity.class.getSimpleName() +  "_" + sdirectory.getValue();
+        solid_key = AbsGpxListActivity.class.getSimpleName() +  "_" + sdirectory.getValueAsString();
 
 
         final LinearLayout contentView = new ContentView(this);
@@ -182,12 +182,12 @@ public abstract class AbsGpxListActivity extends AbsDispatcher implements OnItem
 
 
     @Override
-    public void onResumeWithServices() {
+    public void onResumeWithService() {
         iteratorSimple = new IteratorSimple(getServiceContext());
         listView.setAdapter(getServiceContext(), iteratorSimple);
         listView.setSelection(sdirectory.getPosition().getValue());
 
-        super.onResumeWithServices();
+        super.onResumeWithService();
     }
 
 
@@ -247,7 +247,7 @@ public abstract class AbsGpxListActivity extends AbsDispatcher implements OnItem
     @Override
     public void onClick(View v) {
         if (v == fileManager) {
-            File directory = new File(sdirectory.getValue());
+            File directory = new File(sdirectory.getValueAsString());
             new FileIntent(directory).view(this);
         } else {
             for (int i = 0; i < selectView.length; i++) {

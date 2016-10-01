@@ -6,7 +6,7 @@ public class MapSummaries {
 
 
     public final static int SUMMARY_SIZE = 20;
-    private MapSummary[] mapSummaries = new MapSummary[SUMMARY_SIZE];
+    private final MapSummary[] mapSummaries = new MapSummary[SUMMARY_SIZE];
 
 
     public void reset() {

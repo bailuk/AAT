@@ -30,4 +30,9 @@ public class SolidLong extends SolidType {
     public Storage getStorage() {
         return storage;
     }
+
+    @Override
+    public String getValueAsString() {
+        return String.valueOf(getValue());
+    }
 }

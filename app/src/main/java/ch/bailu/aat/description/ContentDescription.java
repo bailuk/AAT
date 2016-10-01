@@ -18,8 +18,8 @@ public abstract class ContentDescription extends ContextWrapper implements Descr
         return NULL_STRING;
     }
 
-    
+    /*
     public int getStrlen() {
         return 4;
-    }
+    }*/
 }
