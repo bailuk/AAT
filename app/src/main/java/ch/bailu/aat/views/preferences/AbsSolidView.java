@@ -10,13 +10,13 @@ import android.widget.TextView;
 import ch.bailu.aat.helpers.AppTheme;
 import ch.bailu.aat.preferences.SolidType;
 
-public abstract class SolidView extends LinearLayout
+public abstract class AbsSolidView extends LinearLayout
         implements SharedPreferences.OnSharedPreferenceChangeListener {
 
     private final TextView value;
     private final SolidType solid;
 
-    public SolidView(final Context context, final SolidType s) {
+    public AbsSolidView(final Context context, final SolidType s) {
         super(context);
         setOrientation(VERTICAL);
 

@@ -9,7 +9,7 @@ import ch.bailu.aat.R;
 import ch.bailu.aat.helpers.AppDialog;
 import ch.bailu.aat.helpers.AppLog;
 import ch.bailu.aat.helpers.AppSelectDirectoryDialog;
-import ch.bailu.aat.preferences.SolidDirectory;
+import ch.bailu.aat.preferences.SolidDirectoryQuery;
 import ch.bailu.aat.services.ServiceContext;
 
 public class FileUI {
@@ -43,7 +43,7 @@ public class FileUI {
 
 /*
     public void reloadPreview(ServiceContext scontext) {
-        if (file.getParent().equals(new SolidDirectory(scontext.getContext()).getValueAsString())) {
+        if (file.getParent().equals(new SolidDirectoryQuery(scontext.getContext()).getValueAsString())) {
             scontext.getDirectoryService().deleteEntry(file.getAbsolutePath());
         }
     }
@@ -82,7 +82,8 @@ public class FileUI {
 
     
     public void rescanDirectory(ServiceContext scontext) {
-        if (file.getParent().equals(new SolidDirectory(scontext.getContext()).getValueAsString())) {
+        if (file.getParent().equals(
+                new SolidDirectoryQuery(scontext.getContext()).getValueAsString())) {
             scontext.getDirectoryService().rescan();
         }
     }

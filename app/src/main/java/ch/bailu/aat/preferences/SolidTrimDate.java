@@ -57,7 +57,7 @@ public class SolidTrimDate extends SolidIndexList {
 
     @Override
     public String getLabel() {
-        return "Age*";
+        return "Trim Age*";
     }
 
 

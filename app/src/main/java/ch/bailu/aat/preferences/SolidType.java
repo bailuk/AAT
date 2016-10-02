@@ -8,12 +8,13 @@ import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 public abstract class SolidType implements SolidTypeInterface {
     public static final String NULL_LABEL=""; 
     
-    
+
+    public int getIconResource() {return 0;}
     public String getLabel() {
         return NULL_LABEL;
     }
     public abstract String getValueAsString();
-
+    public abstract void setValueFromString(String s);
 
     public boolean hasKey(String s) {
         return s.equals(getKey());
@@ -33,5 +34,6 @@ public abstract class SolidType implements SolidTypeInterface {
     public void unregister(OnSharedPreferenceChangeListener listener) {
         getStorage().unregister(listener);
     }
+
 
 }

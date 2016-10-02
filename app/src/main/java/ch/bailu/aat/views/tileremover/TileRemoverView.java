@@ -141,7 +141,7 @@ public class TileRemoverView
                 tr.getState().remove();
 
             } else if (v == openFolder) {
-                new FileIntent(sdirectory.toFile()).view(getContext());
+                new FileIntent(sdirectory.getValueAsFile()).view(getContext());
             }
         }
     }

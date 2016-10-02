@@ -14,11 +14,7 @@ public abstract class SolidCheckList extends SolidType {
  
 
     @Override
-    public String getLabel() {
-        return getKey();
-    }
-
-
+    public void setValueFromString(String s) {}
 
     
     public void register(OnSharedPreferenceChangeListener listener) {
@@ -27,8 +23,6 @@ public abstract class SolidCheckList extends SolidType {
     }
 
 
-
-    
     public void unregister(OnSharedPreferenceChangeListener listener) {
         getStorage().unregister(listener);
         

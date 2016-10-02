@@ -11,7 +11,7 @@ import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.GpxPointNode;
 import ch.bailu.aat.helpers.FileAction;
 import ch.bailu.aat.helpers.ToolTip;
-import ch.bailu.aat.preferences.SolidDirectory;
+import ch.bailu.aat.preferences.SolidDirectoryQuery;
 import ch.bailu.aat.views.ControlBar;
 import ch.bailu.aat.views.PreviewView;
 import ch.bailu.aat.views.map.OsmInteractiveView;
@@ -74,7 +74,7 @@ public class FileControlBar extends ControlBarOverlay{
         public void setSelectedNode(GpxInformation info, GpxPointNode node, int i) {
             super.setSelectedNode(info, node, i);
             preview.setFilePath(getPathFromNode(node));
-            new SolidDirectory(getContext()).getPosition().setValue(i);
+            new SolidDirectoryQuery(getContext()).getPosition().setValue(i);
         }
         
         @Override

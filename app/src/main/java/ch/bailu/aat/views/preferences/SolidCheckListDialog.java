@@ -1,18 +1,19 @@
-package ch.bailu.aat.preferences;
+package ch.bailu.aat.views.preferences;
 
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnMultiChoiceClickListener;
 
-public class CheckListDialog implements  OnMultiChoiceClickListener{
+import ch.bailu.aat.preferences.SolidCheckList;
+
+public class SolidCheckListDialog extends AbsSolidDialog implements  OnMultiChoiceClickListener{
     private final SolidCheckList slist;
 
 
-    public CheckListDialog (Context context, SolidCheckList l) {
+    public SolidCheckListDialog(SolidCheckList l) {
         slist=l;
 
-        final AlertDialog.Builder dialog = new AlertDialog.Builder(context);
+        final AlertDialog.Builder dialog = createDefaultDialog(l);
         dialog.setMultiChoiceItems(slist.getStringArray(), slist.getEnabledArray(), this);
         dialog.create();
         dialog.show();

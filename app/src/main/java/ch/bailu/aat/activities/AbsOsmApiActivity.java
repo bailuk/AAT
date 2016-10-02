@@ -29,7 +29,7 @@ import ch.bailu.aat.helpers.AppLog;
 import ch.bailu.aat.helpers.AppTheme;
 import ch.bailu.aat.helpers.OsmApiHelper;
 import ch.bailu.aat.helpers.ToolTip;
-import ch.bailu.aat.preferences.AddOverlayDialog;
+import ch.bailu.aat.views.preferences.AddOverlayDialog;
 import ch.bailu.aat.services.background.BackgroundService;
 import ch.bailu.aat.services.background.DownloadHandle;
 import ch.bailu.aat.services.background.ProcessHandle;

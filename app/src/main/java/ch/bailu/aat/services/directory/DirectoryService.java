@@ -10,7 +10,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteCantOpenDatabaseException;
 
 import ch.bailu.aat.helpers.AppDirectory;
-import ch.bailu.aat.preferences.SolidDirectory;
+import ch.bailu.aat.preferences.SolidDirectoryQuery;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.VirtualService;
 
@@ -57,12 +57,12 @@ public class DirectoryService extends VirtualService{
 
     public class SelfOn extends Self implements OnSharedPreferenceChangeListener {
         private AbsDatabase database=AbsDatabase.NULL_DATABASE;
-        private final SolidDirectory  sdirectory;
+        private final SolidDirectoryQuery sdirectory;
         private DirectorySynchronizer synchronizer=null;
 
 
         public SelfOn() {
-            sdirectory = new SolidDirectory(getContext());
+            sdirectory = new SolidDirectoryQuery(getContext());
             sdirectory.getStorage().register(this);
             
             openDir();

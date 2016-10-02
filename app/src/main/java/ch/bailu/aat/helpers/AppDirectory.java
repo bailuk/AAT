@@ -1,5 +1,10 @@
 package ch.bailu.aat.helpers;
 
+import android.content.Context;
+
+import org.osmdroid.tileprovider.MapTile;
+import org.osmdroid.tileprovider.tilesource.OnlineTileSourceBase;
+
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -8,10 +13,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Locale;
 
-import org.osmdroid.tileprovider.MapTile;
-import org.osmdroid.tileprovider.tilesource.OnlineTileSourceBase;
-
-import android.content.Context;
 import ch.bailu.aat.preferences.SolidDataDirectory;
 import ch.bailu.aat.preferences.SolidTileCacheDirectory;
 
@@ -22,12 +23,15 @@ public class AppDirectory  {
         return getDataDirectory(c, sub.toString());
     }*/
 
+
     public static File getDataDirectory(Context c, String sub) {
         final File p = new File(new SolidDataDirectory(c).getValueAsString(), sub);
         p.mkdirs();
         return p;
     }
-    
+
+    public static final String DIR_TILES = "tiles/";
+    public static final String DIR_TILES_OSMDROID = "osmdroid/tiles/";
 
     
     public static final String DIR_LOG = "log/";
@@ -97,7 +101,7 @@ public class AppDirectory  {
 
 
     private static File getTileCacheDirectory(Context c) {
-        final File p = new SolidTileCacheDirectory(c).toFile();
+        final File p = new SolidTileCacheDirectory(c).getValueAsFile();
         p.mkdirs();
         return p;
     }

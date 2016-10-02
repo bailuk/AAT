@@ -2,20 +2,22 @@ package ch.bailu.aat.views;
 
 import android.content.Context;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
+
+import ch.bailu.aat.views.preferences.VerticalScrollView;
 
 public class VerticalLayoutView extends DescriptionViewGroup {
 
-    private final LinearLayout layout;
+    private final VerticalScrollView layout;
 
     public VerticalLayoutView(Context context, String key, int filter, TrackDescriptionView[] viewList) {
         super(context, key, filter);
         init(viewList);
 
-        layout = new LinearLayout(context);
-        layout.setOrientation(LinearLayout.VERTICAL);
-        
+        layout = new VerticalScrollView(context);
+
         for (TrackDescriptionView view: viewList) 
-            layout.addView(view);
+            layout.add(view);
 
         addView(layout);
     }
@@ -38,6 +40,6 @@ public class VerticalLayoutView extends DescriptionViewGroup {
 
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
-        if (changed) layout.layout(l, t, r, b);
+        layout.layout(0, 0, r-l, b-t);
     }
 }

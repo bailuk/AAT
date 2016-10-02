@@ -9,7 +9,7 @@ import ch.bailu.aat.helpers.AppBroadcaster;
 import ch.bailu.aat.helpers.AppIntent;
 import ch.bailu.aat.helpers.AppLog;
 import ch.bailu.aat.helpers.FileAction;
-import ch.bailu.aat.preferences.SolidDirectory;
+import ch.bailu.aat.preferences.SolidDirectoryQuery;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.directory.Iterator;
 import ch.bailu.aat.services.directory.Iterator.OnCursorChangedListener;
@@ -19,7 +19,7 @@ import ch.bailu.aat.services.directory.IteratorSummary;
 public abstract class IteratorSource extends ContentSource implements OnCursorChangedListener {
 
     private final ServiceContext scontext;
-    private final SolidDirectory sdirectory;
+    private final SolidDirectoryQuery sdirectory;
     
     private Iterator iterator = Iterator.NULL;
 
@@ -32,7 +32,7 @@ public abstract class IteratorSource extends ContentSource implements OnCursorCh
 
     public IteratorSource(ServiceContext sc) {
         scontext = sc;
-        sdirectory = new SolidDirectory(sc.getContext());
+        sdirectory = new SolidDirectoryQuery(sc.getContext());
     }
 
     

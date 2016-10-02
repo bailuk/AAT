@@ -1,8 +1,10 @@
 package ch.bailu.aat.activities;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import ch.bailu.aat.helpers.AppLog;
+import ch.bailu.aat.helpers.file.FileIntent;
 import ch.bailu.aat.preferences.PreferenceLoadDefaults;
 
 public abstract class AbsActivity extends Activity {
@@ -63,5 +65,15 @@ public abstract class AbsActivity extends Activity {
         builder.append("<br>Count of application starts: ");
         builder.append(PreferenceLoadDefaults.getStartCount(this));
         builder.append("</p>");
+
     }
+
+
+    @Override
+    public void onActivityResult(int r, int id, Intent intent) {
+        if (r == RESULT_OK) {
+            FileIntent.pick(this, id, intent);
+        }
+    }
+
 }

@@ -1,11 +1,12 @@
 package ch.bailu.aat.coordinates;
 
-import java.io.File;
-import java.util.Locale;
+import android.content.Context;
 
 import org.osmdroid.api.IGeoPoint;
 
-import android.content.Context;
+import java.io.File;
+import java.util.Locale;
+
 import ch.bailu.aat.preferences.SolidDataDirectory;
 
 public class SrtmCoordinates extends Coordinates implements IGeoPoint {
@@ -89,7 +90,7 @@ public class SrtmCoordinates extends Coordinates implements IGeoPoint {
 
     
     public File toFile(Context context) {
-        return toFile(new SolidDataDirectory(context).toFile());
+        return toFile(new SolidDataDirectory(context).getValueAsFile());
     }
 
     

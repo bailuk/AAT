@@ -4,7 +4,7 @@ import java.io.File;
 
 import android.database.Cursor;
 import ch.bailu.aat.gpx.GpxInformation;
-import ch.bailu.aat.preferences.SolidDirectory;
+import ch.bailu.aat.preferences.SolidDirectoryQuery;
 import ch.bailu.aat.services.ServiceContext;
 
 public class IteratorSummary extends IteratorAbstract {
@@ -14,7 +14,7 @@ public class IteratorSummary extends IteratorAbstract {
 
     public IteratorSummary(ServiceContext sc) {
         super(sc);
-        directory = new File(new SolidDirectory(sc.getContext()).getValueAsString());
+        directory = new File(new SolidDirectoryQuery(sc.getContext()).getValueAsString());
         query();
     }
 

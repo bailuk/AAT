@@ -1,5 +1,7 @@
 package ch.bailu.aat.preferences;
 
+import ch.bailu.aat.helpers.AppLog;
+
 public class SolidLong extends SolidType {
 
 
@@ -19,7 +21,17 @@ public class SolidLong extends SolidType {
     public void setValue(long v) {
         getStorage().writeLong(getKey(),v);
     }
-        
+
+    @Override
+    public void setValueFromString(String s) {
+        try {
+            setValue(Long.valueOf(s));
+        } catch (NumberFormatException e) {
+            AppLog.e(getContext(), e);
+        }
+
+    }
+
 
     @Override
     public String getKey() {

@@ -63,7 +63,7 @@ public class SolidLegend extends SolidStaticIndexList {
 
     
     @Override
-    public int getImageResource() {
+    public int getIconResource() {
         return R.drawable.dialog_question;
     }
 }

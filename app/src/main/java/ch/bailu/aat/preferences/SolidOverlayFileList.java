@@ -2,6 +2,8 @@ package ch.bailu.aat.preferences;
 
 import android.content.Context;
 
+import ch.bailu.aat.R;
+
 public class SolidOverlayFileList extends SolidCheckList {
     public static final int MAX_OVERLAYS=4;
 
@@ -50,6 +52,7 @@ public class SolidOverlayFileList extends SolidCheckList {
     }
 
 
+
     @Override
     public Storage getStorage() {
         return list[0].getStorage();
@@ -60,6 +63,15 @@ public class SolidOverlayFileList extends SolidCheckList {
     public boolean hasKey(String s) {
         for (SolidOverlayFile aList : list) if (aList.hasKey(s)) return true;
         return false;
-    }   
+    }
+
+
+    @Override
+    public String getLabel() {
+        return getContext().getString(R.string.file_overlay);
+    }
+
+    @Override
+    public int getIconResource() {return R.drawable.view_paged_inverse;}
     
 }

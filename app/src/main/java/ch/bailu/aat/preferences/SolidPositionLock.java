@@ -13,7 +13,7 @@ public class SolidPositionLock extends SolidBoolean {
     
     
     @Override
-    public int getImageResource() {
+    public int getIconResource() {
         if (getValue()==true) {
             return R.drawable.zoom_original_inverse;
             

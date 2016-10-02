@@ -73,7 +73,7 @@ public class PreferencesActivity extends AbsDispatcher implements View.OnClickLi
                 new MaximumSpeedDescription(this),
         };
 
-        mapTilePreferences = new MapTilePreferencesView(getServiceContext());
+        mapTilePreferences = new MapTilePreferencesView(this, getServiceContext());
 
 
         TrackDescriptionView multiViewLayout[] = {

@@ -7,8 +7,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 
+import ch.bailu.aat.helpers.AppLog;
+import ch.bailu.aat.preferences.SolidTileCacheDirectory;
+
 public class FileIntent {
- 
+
+    public static final int PICK_SOLID_TILE_DIRECTORY = 0;
+    public static final int PICK_SOLID_DATA_DIRECTORY = 1;
+
     private final File file;
     private final Intent intent;
     
@@ -23,13 +29,14 @@ public class FileIntent {
         intent = new Intent();
     }
     
-    public static final int PICK_RESULT=1;
-    
-    public void pick(Activity context) {
-        if (file.exists() && file.isDirectory()) {
-            intent.setData(getFileUri());
-            context.startActivityForResult(Intent.createChooser(intent, file.getName()), PICK_RESULT);    
-        }
+
+
+    public void pick(String label, Activity context, int id) {
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        intent.putExtra(Intent.EXTRA_SUBJECT, label);
+        intent.putExtra(Intent.EXTRA_TEXT, file.getName());
+        intent.setDataAndType(getFileUri(), "resource/folder");
+        context.startActivityForResult(Intent.createChooser(intent, label), id);
     }
 
     
@@ -91,5 +98,19 @@ public class FileIntent {
         if (name.endsWith(".gpx")) return "application/gpx+xml";
         else if (name.endsWith(".osm")) return "application/xml";
         return null;
+    }
+
+    public static void pick(Context c, int id, Intent intent) {
+        if (id == PICK_SOLID_TILE_DIRECTORY) {
+            if (intent != null) {
+                Uri uri = intent.getData();
+                String file = uri.getPath();
+                AppLog.d(c, file);
+                //new SolidTileCacheDirectory(c).setValue(file);
+            }
+
+
+
+        }
     }
 }

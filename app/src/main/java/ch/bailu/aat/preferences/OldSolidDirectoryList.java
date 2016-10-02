@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import android.content.Context;
 import android.os.Environment;
 
-public abstract class SolidDirectoryList extends SolidIndexList {
+public abstract class OldSolidDirectoryList extends SolidIndexList {
 
 
     private final ArrayList<String> list = new ArrayList<>(10);
@@ -14,7 +14,7 @@ public abstract class SolidDirectoryList extends SolidIndexList {
 
 
 
-    public SolidDirectoryList(Context c, String k) {
+    public OldSolidDirectoryList(Context c, String k) {
         super(Storage.preset(c), k);
         initList(list);
     }

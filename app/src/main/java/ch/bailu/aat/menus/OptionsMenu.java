@@ -11,8 +11,8 @@ import ch.bailu.aat.R;
 import ch.bailu.aat.activities.ActivitySwitcher;
 import ch.bailu.aat.activities.NominatimActivity;
 import ch.bailu.aat.helpers.AppIntent;
-import ch.bailu.aat.preferences.CheckListDialog;
-import ch.bailu.aat.preferences.IndexListDialog;
+import ch.bailu.aat.views.preferences.SolidCheckListDialog;
+import ch.bailu.aat.views.preferences.SolidIndexListDialog;
 import ch.bailu.aat.preferences.SolidAutopause;
 import ch.bailu.aat.preferences.SolidBacklight;
 import ch.bailu.aat.preferences.SolidMapTileStack;
@@ -82,16 +82,16 @@ public class OptionsMenu extends AbsMenu {
             scontext.getTrackerService().getState().onPauseResume();
 
         } else if (item == backlight) {
-            new IndexListDialog(c, new SolidBacklight(c, new SolidPreset(c).getIndex()));
+            new SolidIndexListDialog(new SolidBacklight(c, new SolidPreset(c).getIndex()));
 
         } else if (item == autopause) {
-            new IndexListDialog(c, new SolidAutopause(c, new SolidPreset(c).getIndex()));
+            new SolidIndexListDialog(new SolidAutopause(c, new SolidPreset(c).getIndex()));
 
         } else if (item == map) {
-            new CheckListDialog(c,new SolidMapTileStack(c, new SolidPreset(c).getIndex()));
+            new SolidCheckListDialog(new SolidMapTileStack(c, new SolidPreset(c).getIndex()));
 
         } else if (item == overlays) {
-            new CheckListDialog(c,new SolidOverlayFileList(c));
+            new SolidCheckListDialog(new SolidOverlayFileList(c));
 
         } else if (item == nominatim) {
             Intent intent = new Intent();

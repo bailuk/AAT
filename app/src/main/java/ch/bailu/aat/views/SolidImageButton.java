@@ -29,7 +29,7 @@ public class SolidImageButton extends ImageButton {
     
     
     private void setImage() {
-        setImageResource(sList.getImageResource());
+        setImageResource(sList.getIconResource());
     }
 
     

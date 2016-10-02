@@ -9,7 +9,7 @@ import android.database.Cursor;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.helpers.AppBroadcaster;
 import ch.bailu.aat.helpers.AppLog;
-import ch.bailu.aat.preferences.SolidDirectory;
+import ch.bailu.aat.preferences.SolidDirectoryQuery;
 import ch.bailu.aat.services.ServiceContext;
 
 public abstract class IteratorAbstract extends Iterator implements OnSharedPreferenceChangeListener {
@@ -18,12 +18,12 @@ public abstract class IteratorAbstract extends Iterator implements OnSharedPrefe
    
     private OnCursorChangedListener onCursorChangedListener = NULL_LISTENER;
     private Cursor cursor = null;
-    private final SolidDirectory sdirectory;
+    private final SolidDirectoryQuery sdirectory;
     private String selection="";
     
 
     public IteratorAbstract (ServiceContext sc) {
-        sdirectory = new SolidDirectory(sc.getContext());
+        sdirectory = new SolidDirectoryQuery(sc.getContext());
         scontext = sc;
         sdirectory.register(this);
         AppBroadcaster.register(sc.getContext(), onSyncChanged, AppBroadcaster.DB_SYNC_CHANGED);

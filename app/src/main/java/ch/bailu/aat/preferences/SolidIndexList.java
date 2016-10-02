@@ -2,7 +2,6 @@ package ch.bailu.aat.preferences;
 
 public abstract class SolidIndexList extends SolidType {
 
-    private static final int DEFAULT_IMAGE_RESOURCE = 0;
     private final SolidInteger sindex;
     
     
@@ -14,12 +13,16 @@ public abstract class SolidIndexList extends SolidType {
     public abstract int length();
     public abstract String getValueAsString(int i);
 
+    @Override
     public String getValueAsString() {
         return getValueAsString(getIndex());
     }
     public void setIndex(int i) {
         sindex.setValue(validate(i));
     }
+
+    @Override
+    public void setValueFromString(String s) {}
 
 
     private int validate(int i) {
@@ -61,7 +64,4 @@ public abstract class SolidIndexList extends SolidType {
     }
 
     
-    public int getImageResource() {
-        return DEFAULT_IMAGE_RESOURCE;
-    }
 }

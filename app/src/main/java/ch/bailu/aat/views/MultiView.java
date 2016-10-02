@@ -2,29 +2,42 @@ package ch.bailu.aat.views;
 
 import android.content.Context;
 import android.util.SparseArray;
+import android.view.View;
+
+import ch.bailu.aat.description.DescriptionInterface;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.preferences.Storage;
 
 
 public class MultiView extends TrackDescriptionView {
 
+
     private final SparseArray<GpxInformation> informationMap =
             new SparseArray<>(5);
     
-    private final TrackDescriptionView[] viewList;
+    private final DescriptionInterface[] targets;
+    private final View[] views;
     private int active=0;
-    
-    public MultiView(Context context, String key, int filter, TrackDescriptionView[] d) {
+
+
+    public MultiView(Context context, String key, int filter,
+                     View[] v,
+                     DescriptionInterface[]t) {
         super(context, key, filter);
 
-        viewList = d;
+        views = v;
+        targets = t;
 
-        for (TrackDescriptionView aData : viewList) {
-            aData.setVisibility(GONE);
-            addView(aData);
+        for (View view : views) {
+            view.setVisibility(GONE);
+            addView(view);
         }
-        
+
         setActive(Storage.activity(context).readInteger(solidKey + "_index"));
+
+    }
+    public MultiView(Context context, String key, int filter, TrackDescriptionView[] d) {
+        this(context, key, filter, d, d);
     }
 
     public void setNext() {
@@ -42,19 +55,19 @@ public class MultiView extends TrackDescriptionView {
 
     public void setActive(int a) {
         if (a != active) {
-            viewList[active].setVisibility(GONE);
+            views[active].setVisibility(GONE);
         }
 
         active=a;
-        if (active >= viewList.length) active=0;
-        else if (active < 0) active= viewList.length-1;
+        if (active >= views.length) active=0;
+        else if (active < 0) active= views.length-1;
         
         
-        viewList[active].setVisibility(VISIBLE);
-        viewList[active].bringToFront();
+        views[active].setVisibility(VISIBLE);
+        views[active].bringToFront();
         
         for (int i=0; i< informationMap.size(); i++) 
-            viewList[active].updateGpxContent(informationMap.valueAt(i));
+            targets[active].updateGpxContent(informationMap.valueAt(i));
     }
     
     
@@ -62,7 +75,7 @@ public class MultiView extends TrackDescriptionView {
     public void updateGpxContent(GpxInformation info) {
         if (filter.pass(info)) {
             informationMap.put(info.getID(), info);
-            for (TrackDescriptionView aViewList : viewList) aViewList.updateGpxContent(info);
+            for (DescriptionInterface target : targets) target.updateGpxContent(info);
         }
     }
 
@@ -77,7 +90,7 @@ public class MultiView extends TrackDescriptionView {
         hSpec  = MeasureSpec.makeMeasureSpec (height,  MeasureSpec.EXACTLY);
 
         //int width=0,height=0;
-        for (TrackDescriptionView view : viewList) {
+        for (View view : views) {
             view.measure(wSpec, hSpec);
         }
         setMeasuredDimension(width, height);
@@ -85,7 +98,7 @@ public class MultiView extends TrackDescriptionView {
     
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
-        for (TrackDescriptionView view : viewList) {
+        for (View view : views) {
             view.layout(0, 0, r-l, b-t);
         }
     }

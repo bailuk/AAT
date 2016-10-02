@@ -53,7 +53,7 @@ public class SolidMapGrid extends SolidStaticIndexList {
 
     
     @Override
-    public int getImageResource() {
+    public int getIconResource() {
         return R.drawable.view_grid;
     }
 }

@@ -40,6 +40,7 @@ public class SolidInteger extends SolidType {
         return String.valueOf(getValue());
     }
 
+    @Override
     public void setValueFromString(String s) {
         try {
             setValue(Integer.valueOf(s));

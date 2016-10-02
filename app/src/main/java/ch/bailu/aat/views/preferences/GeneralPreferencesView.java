@@ -1,6 +1,6 @@
 package ch.bailu.aat.views.preferences;
 
-import android.content.Context;
+import android.app.Activity;
 
 import ch.bailu.aat.R;
 import ch.bailu.aat.preferences.SolidAccelerationFilter;
@@ -17,11 +17,12 @@ import ch.bailu.aat.preferences.SolidWeight;
 
 
 public class GeneralPreferencesView extends VerticalScrollView {
-    public GeneralPreferencesView(Context context) {
+
+    public GeneralPreferencesView(Activity context) {
         super(context);
 
         add(new TitleView(context, R.string.p_general));
-        add(new SolidIndexListView(context,new SolidUnit(context)));
+        add(new SolidIndexListView(new SolidUnit(context)));
         add(new SolidIntegerView(context,new SolidWeight(context)));
 
 
@@ -29,16 +30,16 @@ public class GeneralPreferencesView extends VerticalScrollView {
         for (int i=0; i<spreset.length(); i++) {
             add(new TitleView(context, context.getString(R.string.p_preset) + " " + (i+1)));
 
-            add(new SolidIndexListView(context,new SolidMET(context,i)));
-            add(new SolidIndexListView(context,new SolidAutopause(context,i)));
-            add(new SolidIndexListView(context,new SolidDistanceFilter(context,i)));
-            add(new SolidIndexListView(context,new SolidAccelerationFilter(context,i)));
-            add(new SolidIndexListView(context,new SolidAccuracyFilter(context,i)));
-            add(new SolidIndexListView(context,new SolidMissingTrigger(context,i)));
+            add(new SolidIndexListView(new SolidMET(context,i)));
+            add(new SolidIndexListView(new SolidAutopause(context,i)));
+            add(new SolidIndexListView(new SolidDistanceFilter(context,i)));
+            add(new SolidIndexListView(new SolidAccelerationFilter(context,i)));
+            add(new SolidIndexListView(new SolidAccuracyFilter(context,i)));
+            add(new SolidIndexListView(new SolidMissingTrigger(context,i)));
         }
 
         add(new TitleView(context, R.string.p_system));
-        add(new SolidIndexListView(context,new SolidLocationProvider(context)));
-        add(new SolidIndexListView(context,new SolidDataDirectory(context)));
+        add(new SolidIndexListView(new SolidLocationProvider(context)));
+        add(new SolidDirectoryView(context, new SolidDataDirectory(context)));
     }
 }

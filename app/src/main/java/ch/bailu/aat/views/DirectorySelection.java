@@ -23,7 +23,7 @@ import ch.bailu.aat.coordinates.BoundingBox;
 import ch.bailu.aat.helpers.AppLog;
 import ch.bailu.aat.helpers.AppTheme;
 import ch.bailu.aat.preferences.SolidBoolean;
-import ch.bailu.aat.preferences.SolidDirectory;
+import ch.bailu.aat.preferences.SolidDirectoryQuery;
 import ch.bailu.aat.preferences.SolidLong;
 
 public class DirectorySelection extends LinearLayout implements OnClickListener {
@@ -32,7 +32,7 @@ public class DirectorySelection extends LinearLayout implements OnClickListener 
     private final MapView map;
 
 
-    private final SolidDirectory sdirectory;
+    private final SolidDirectoryQuery sdirectory;
     
     
     public DirectorySelection(MapView m) {
@@ -42,7 +42,7 @@ public class DirectorySelection extends LinearLayout implements OnClickListener 
         final SolidCheckBox applayFrom, applayTo, applayGeo;
         map = m;
         
-        sdirectory = new SolidDirectory(map.getContext());
+        sdirectory = new SolidDirectoryQuery(map.getContext());
         
         setOrientation(VERTICAL);
         

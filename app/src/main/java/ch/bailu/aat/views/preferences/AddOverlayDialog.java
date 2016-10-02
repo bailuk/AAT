@@ -1,4 +1,4 @@
-package ch.bailu.aat.preferences;
+package ch.bailu.aat.views.preferences;
 
 import java.io.File;
 
@@ -6,16 +6,20 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 
-public class AddOverlayDialog implements  DialogInterface.OnClickListener {
+import ch.bailu.aat.preferences.SolidOverlayFileList;
+
+public class AddOverlayDialog extends AbsSolidDialog
+        implements  DialogInterface.OnClickListener {
+
     private final SolidOverlayFileList slist;
     private final File file;
 
 
-    public AddOverlayDialog (Context context, SolidOverlayFileList l, File f) {
+    public AddOverlayDialog (SolidOverlayFileList l, File f) {
         slist=l;
         file=f;
 
-        final AlertDialog.Builder dialog = new AlertDialog.Builder(context);
+        final AlertDialog.Builder dialog = createDefaultDialog(l);
         dialog.setItems(slist.getStringArray(), this);
         dialog.create();
         dialog.show();
@@ -23,7 +27,7 @@ public class AddOverlayDialog implements  DialogInterface.OnClickListener {
 
 
     public AddOverlayDialog(Context context, File f) {
-        this(context, new SolidOverlayFileList(context), f);
+        this(new SolidOverlayFileList(context), f);
     }
 
     @Override

@@ -14,7 +14,7 @@ public class StateScan implements State, Runnable {
 
     public StateScan(StateMachine s) {
         state = s;
-        state.tileDirectory = new SolidTileCacheDirectory(s.context).toFile();
+        state.tileDirectory = new SolidTileCacheDirectory(s.context).getValueAsFile();
 
         state.list = new TilesList();
         state.summaries.reset();

@@ -11,8 +11,8 @@ import ch.bailu.aat.activities.AbsServiceLink;
 import ch.bailu.aat.helpers.file.FileIntent;
 import ch.bailu.aat.helpers.file.FileUI;
 import ch.bailu.aat.menus.FileMenu;
-import ch.bailu.aat.preferences.AddOverlayDialog;
-import ch.bailu.aat.preferences.SolidDirectory;
+import ch.bailu.aat.views.preferences.AddOverlayDialog;
+import ch.bailu.aat.preferences.SolidDirectoryQuery;
 import ch.bailu.aat.preferences.SolidMockLocationFile;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.directory.Iterator;
@@ -37,14 +37,14 @@ public class FileAction   {
 
   
     public void rescanDirectory() {
-        if (file.getParent().equals(new SolidDirectory(activity).getValueAsString())) {
+        if (file.getParent().equals(new SolidDirectoryQuery(activity).getValueAsString())) {
             scontext.getDirectoryService().rescan();
         }
     }
 
 
     public void reloadPreview() {
-        if (file.getParent().equals(new SolidDirectory(scontext.getContext()).getValueAsString())) {
+        if (file.getParent().equals(new SolidDirectoryQuery(scontext.getContext()).getValueAsString())) {
             scontext.getDirectoryService().deleteEntry(file.getAbsolutePath());
         }
     }

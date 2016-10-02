@@ -14,7 +14,7 @@ import ch.bailu.aat.helpers.file.FileAccess;
 import ch.bailu.aat.helpers.file.UriAccess;
 
 public class Storage  implements ContextWrapperInterface {
-    private final static String DEF_VALUE="0";
+    public final static String DEF_VALUE="0";
 
     private final static String GLOBAL_NAME="Preferences";
 

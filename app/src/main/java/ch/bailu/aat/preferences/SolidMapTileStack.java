@@ -4,6 +4,8 @@ import org.osmdroid.tileprovider.MapTile;
 import org.osmdroid.tileprovider.tilesource.OnlineTileSourceBase;
 
 import android.content.Context;
+
+import ch.bailu.aat.R;
 import ch.bailu.aat.services.cache.BitmapTileObject;
 import ch.bailu.aat.services.cache.ElevationColorTile;
 import ch.bailu.aat.services.cache.Hillshade8;
@@ -233,6 +235,10 @@ public class SolidMapTileStack extends SolidCheckList {
         enabledArray[i].setValue(isChecked);
     }
 
+    @Override
+    public String getLabel() {
+        return getContext().getString(R.string.p_map);
+    }
 
 
     @Override

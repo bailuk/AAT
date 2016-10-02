@@ -1,9 +1,6 @@
 package ch.bailu.aat.services.tileremover;
 
-import java.io.File;
-
 import ch.bailu.aat.helpers.AppBroadcaster;
-import ch.bailu.aat.preferences.SolidTileCacheDirectory;
 
 public class StateRemoved implements State {
     private final StateMachine state;

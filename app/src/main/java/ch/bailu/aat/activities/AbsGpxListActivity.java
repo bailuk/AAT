@@ -26,7 +26,7 @@ import ch.bailu.aat.helpers.AppTheme;
 import ch.bailu.aat.helpers.FileAction;
 import ch.bailu.aat.helpers.file.FileIntent;
 import ch.bailu.aat.menus.FileMenu;
-import ch.bailu.aat.preferences.SolidDirectory;
+import ch.bailu.aat.preferences.SolidDirectoryQuery;
 import ch.bailu.aat.services.directory.Iterator;
 import ch.bailu.aat.services.directory.IteratorSimple;
 import ch.bailu.aat.views.ContentView;
@@ -37,9 +37,6 @@ import ch.bailu.aat.views.GpxListView;
 import ch.bailu.aat.views.MainControlBar;
 import ch.bailu.aat.views.MultiView;
 import ch.bailu.aat.views.SummaryListView;
-import ch.bailu.aat.views.TrackDescriptionView;
-import ch.bailu.aat.views.VerticalLayoutView;
-import ch.bailu.aat.views.ViewWrapper;
 import ch.bailu.aat.views.map.OsmInteractiveView;
 import ch.bailu.aat.views.map.overlay.CurrentLocationOverlay;
 import ch.bailu.aat.views.map.overlay.OsmOverlay;
@@ -49,7 +46,8 @@ import ch.bailu.aat.views.map.overlay.control.NavigationBarOverlay;
 import ch.bailu.aat.views.map.overlay.gpx.GpxDynOverlay;
 import ch.bailu.aat.views.map.overlay.gpx.GpxOverlayListOverlay;
 import ch.bailu.aat.views.map.overlay.grid.GridDynOverlay;
-
+import ch.bailu.aat.views.preferences.TitleView;
+import ch.bailu.aat.views.preferences.VerticalScrollView;
 
 
 public abstract class AbsGpxListActivity extends AbsDispatcher implements OnItemClickListener, OnClickListener {
@@ -59,7 +57,7 @@ public abstract class AbsGpxListActivity extends AbsDispatcher implements OnItem
 
     private Iterator                    iteratorSimple = Iterator.NULL;
 
-    private SolidDirectory              sdirectory;
+    private SolidDirectoryQuery sdirectory;
 
     private final ImageButton[]         selectView = new ImageButton[3];
     private ImageButton fileManager;
@@ -81,7 +79,7 @@ public abstract class AbsGpxListActivity extends AbsDispatcher implements OnItem
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        sdirectory = new SolidDirectory(this);
+        sdirectory = new SolidDirectoryQuery(this);
         sdirectory.setValue(getDirectory().getAbsolutePath());
         solid_key = AbsGpxListActivity.class.getSimpleName() +  "_" + sdirectory.getValueAsString();
 
@@ -137,22 +135,34 @@ public abstract class AbsGpxListActivity extends AbsDispatcher implements OnItem
         AppTheme.themify(label);
         label.setTextColor(AppTheme.getHighlightColor());
 
-        final TrackDescriptionView filterLayout[] = {
-                new ViewWrapper(label),
-                new ViewWrapper(new DirectorySelection(map.map)),
-                new SummaryListView(
-                        this, solid_key, GpxInformation.ID.INFO_ID_LIST_SUMMARY, summaryData),
-        };
+
+        VerticalScrollView scrollView= new VerticalScrollView(this);
+
+        SummaryListView summaryList = new SummaryListView(
+                this, solid_key, GpxInformation.ID.INFO_ID_LIST_SUMMARY, summaryData);
+
+        scrollView.add(new TitleView(this, getLabel()));
+        scrollView.add(new DirectorySelection(map.map));
+        scrollView.add(new TitleView(this, "Summary*"));
+        scrollView.add(summaryList);
 
 
-        final TrackDescriptionView multiViewLayout[] = {
-                new ViewWrapper(listView),
+
+        final DescriptionInterface targets[] = {
+                DescriptionInterface.NULL,
                 map,
-                new VerticalLayoutView(this, solid_key, GpxInformation.ID.INFO_ID_ALL, filterLayout),
+                summaryList
+        };
+
+        final View views[] = {
+                listView,
+                map,
+                scrollView,
         };
 
 
-        multiView = new MultiView(this, solid_key, GpxInformation.ID.INFO_ID_ALL, multiViewLayout);
+        multiView = new MultiView(this, solid_key, GpxInformation.ID.INFO_ID_ALL,
+                views, targets);
         return multiView;
     }
 

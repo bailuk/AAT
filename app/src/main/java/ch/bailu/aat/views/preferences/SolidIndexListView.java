@@ -2,14 +2,13 @@ package ch.bailu.aat.views.preferences;
 
 import android.content.Context;
 
-import ch.bailu.aat.preferences.IndexListDialog;
 import ch.bailu.aat.preferences.SolidIndexList;
 
-public class SolidIndexListView extends SolidView {
+public class SolidIndexListView extends AbsSolidView {
     private final SolidIndexList solid;
 
-    public SolidIndexListView(Context context, SolidIndexList s) {
-        super(context, s);
+    public SolidIndexListView(SolidIndexList s) {
+        super(s.getContext(), s);
         solid = s;
     }
 
@@ -18,7 +17,7 @@ public class SolidIndexListView extends SolidView {
         if (solid.length()<3) {
             solid.cycle();
         } else {
-            new IndexListDialog(getContext(), solid);
+            new SolidIndexListDialog(solid);
         }
     }
 }
