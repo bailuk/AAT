@@ -1,13 +1,14 @@
 package ch.bailu.aat.views.map.overlay;
 
+import android.graphics.Point;
+import android.graphics.Rect;
+
 import org.osmdroid.api.IGeoPoint;
 import org.osmdroid.util.BoundingBoxE6;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
 import org.osmdroid.views.MapView.Projection;
 
-import android.graphics.Point;
-import android.graphics.Rect;
 import ch.bailu.aat.coordinates.BoundingBox;
 import ch.bailu.aat.gpx.interfaces.GpxPointInterface;
 

@@ -1,9 +1,10 @@
 package ch.bailu.aat.preferences;
 
-import ch.bailu.aat.R;
 import android.content.Context;
 import android.os.PowerManager;
 import android.view.WindowManager;
+
+import ch.bailu.aat.R;
 
 public class SolidBacklight extends SolidStaticIndexList {
 

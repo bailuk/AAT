@@ -10,6 +10,7 @@ import android.graphics.Point;
 import android.graphics.PorterDuff;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
+
 import ch.bailu.aat.helpers.AppLayout;
 
 public class MapCanvas {

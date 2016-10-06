@@ -1,15 +1,16 @@
 package ch.bailu.aat.activities;
 
-import java.io.IOException;
+import android.view.View;
 
 import org.osmdroid.util.BoundingBoxE6;
 
-import android.view.View;
+import java.io.IOException;
+
+import ch.bailu.aat.R;
 import ch.bailu.aat.helpers.OsmApiHelper;
 import ch.bailu.aat.helpers.OverpassApi;
 import ch.bailu.aat.helpers.ToolTip;
 import ch.bailu.aat.views.ControlBar;
-import ch.bailu.aat.R;
 
 public class OverpassActivity extends AbsOsmApiActivity  {
     

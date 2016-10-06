@@ -1,11 +1,12 @@
 package ch.bailu.aat.helpers;
 
-import ch.bailu.aat.R;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.widget.EditText;
+
+import ch.bailu.aat.R;
 
 public abstract class AppDialog {
 

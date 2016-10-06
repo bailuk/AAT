@@ -1,17 +1,17 @@
 // Created by plusminus on 19:06:38 - 25.09.2008
 package org.osmdroid.util;
 
-import static org.osmdroid.util.MyMath.gudermann;
-import static org.osmdroid.util.MyMath.gudermannInverse;
+import android.graphics.PointF;
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import org.osmdroid.views.util.constants.MapViewConstants;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 
-import org.osmdroid.views.util.constants.MapViewConstants;
-
-import android.graphics.PointF;
-import android.os.Parcel;
-import android.os.Parcelable;
+import static org.osmdroid.util.MyMath.gudermann;
+import static org.osmdroid.util.MyMath.gudermannInverse;
 
 /**
  * 

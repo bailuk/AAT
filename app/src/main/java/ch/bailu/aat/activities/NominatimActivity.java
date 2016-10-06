@@ -1,8 +1,8 @@
 package ch.bailu.aat.activities;
 
-import java.io.IOException;
-
 import org.osmdroid.util.BoundingBoxE6;
+
+import java.io.IOException;
 
 import ch.bailu.aat.helpers.NominatimApi;
 import ch.bailu.aat.helpers.OsmApiHelper;

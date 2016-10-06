@@ -1,11 +1,11 @@
 package ch.bailu.aat.helpers;
 
-import java.io.File;
-import java.io.IOException;
-
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+
+import java.io.File;
+
 import ch.bailu.aat.R;
 import ch.bailu.aat.helpers.file.FileUI;
 

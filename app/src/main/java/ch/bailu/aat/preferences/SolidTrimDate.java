@@ -3,8 +3,6 @@ package ch.bailu.aat.preferences;
 import android.content.Context;
 import android.text.format.DateUtils;
 
-import java.util.Date;
-
 public class SolidTrimDate extends SolidIndexList {
 
 

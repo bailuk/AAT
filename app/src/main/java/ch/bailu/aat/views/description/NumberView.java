@@ -1,9 +1,10 @@
-package ch.bailu.aat.views;
+package ch.bailu.aat.views.description;
 
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.util.TypedValue;
 import android.widget.TextView;
+
 import ch.bailu.aat.description.ContentDescription;
 import ch.bailu.aat.gpx.GpxInformation;
 

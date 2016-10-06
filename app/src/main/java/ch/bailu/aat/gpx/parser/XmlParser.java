@@ -1,12 +1,13 @@
 package ch.bailu.aat.gpx.parser;
 
+import android.util.SparseArray;
+
+import org.osmdroid.util.GeoPoint;
+
 import java.io.Closeable;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import org.osmdroid.util.GeoPoint;
-
-import android.util.SparseArray;
 import ch.bailu.aat.gpx.GpxAttributes;
 import ch.bailu.aat.gpx.GpxAttributes.Tag;
 import ch.bailu.aat.gpx.interfaces.GpxPointInterface;

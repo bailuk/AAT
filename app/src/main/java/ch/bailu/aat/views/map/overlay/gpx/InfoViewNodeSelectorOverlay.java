@@ -1,10 +1,10 @@
 package ch.bailu.aat.views.map.overlay.gpx;
 
 import android.graphics.Color;
-import android.text.Html;
 import android.view.View;
 import android.view.View.OnLongClickListener;
 import android.widget.TextView;
+
 import ch.bailu.aat.activities.NodeDetailActivity;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.GpxPointNode;

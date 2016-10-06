@@ -1,6 +1,7 @@
 package ch.bailu.aat.views.map.overlay;
 
 import android.graphics.Point;
+
 import ch.bailu.aat.gpx.GpxPoint;
 import ch.bailu.aat.gpx.interfaces.GpxPointInterface;
 

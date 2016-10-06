@@ -1,6 +1,7 @@
 package ch.bailu.aat.services.tracker.location;
 
 import android.content.Context;
+
 import ch.bailu.aat.preferences.SolidAccuracyFilter;
 
 

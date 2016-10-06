@@ -1,7 +1,8 @@
 package ch.bailu.aat.services.tracker.location;
 
-import ch.bailu.aat.preferences.SolidMissingTrigger;
 import android.content.Context;
+
+import ch.bailu.aat.preferences.SolidMissingTrigger;
 
 public class MissingTrigger extends LocationStackChainedItem {
     private int triggerMillis=15000;

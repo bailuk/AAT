@@ -1,14 +1,13 @@
 package ch.bailu.aat.helpers.file;
 
-import java.io.File;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 
+import java.io.File;
+
 import ch.bailu.aat.helpers.AppLog;
-import ch.bailu.aat.preferences.SolidTileCacheDirectory;
 
 public class FileIntent {
 

@@ -1,7 +1,5 @@
 package ch.bailu.aat.preferences;
 
-import android.text.Editable;
-
 import ch.bailu.aat.helpers.AppLog;
 
 public class SolidInteger extends SolidType {

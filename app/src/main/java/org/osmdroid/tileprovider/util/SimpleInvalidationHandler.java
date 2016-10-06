@@ -1,10 +1,10 @@
 package org.osmdroid.tileprovider.util;
 
-import org.osmdroid.tileprovider.MapTile;
-
 import android.os.Handler;
 import android.os.Message;
 import android.view.View;
+
+import org.osmdroid.tileprovider.MapTile;
 
 public class SimpleInvalidationHandler extends Handler {
 	private final View mView;

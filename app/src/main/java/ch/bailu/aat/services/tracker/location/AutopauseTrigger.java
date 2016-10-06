@@ -1,7 +1,8 @@
 package ch.bailu.aat.services.tracker.location;
 
-import ch.bailu.aat.preferences.SolidAutopause;
 import android.content.Context;
+
+import ch.bailu.aat.preferences.SolidAutopause;
 
 
 public class AutopauseTrigger extends LocationStackChainedItem {

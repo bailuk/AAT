@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+
 import ch.bailu.aat.R;
 import ch.bailu.aat.description.AverageSpeedDescription;
 import ch.bailu.aat.description.CaloriesDescription;
@@ -20,12 +21,12 @@ import ch.bailu.aat.description.PathDescription;
 import ch.bailu.aat.description.PauseDescription;
 import ch.bailu.aat.description.TimeDescription;
 import ch.bailu.aat.description.TrackSizeDescription;
-import ch.bailu.aat.dispatcher.ContentDispatcher;
 import ch.bailu.aat.dispatcher.ContentSource;
 import ch.bailu.aat.dispatcher.CurrentLocationSource;
 import ch.bailu.aat.dispatcher.EditorSource;
 import ch.bailu.aat.dispatcher.IteratorSource;
 import ch.bailu.aat.dispatcher.OverlaySource;
+import ch.bailu.aat.dispatcher.RootDispatcher;
 import ch.bailu.aat.dispatcher.TrackerSource;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.helpers.AppLayout;
@@ -36,10 +37,9 @@ import ch.bailu.aat.views.BusyButton;
 import ch.bailu.aat.views.ContentView;
 import ch.bailu.aat.views.ControlBar;
 import ch.bailu.aat.views.MainControlBar;
-import ch.bailu.aat.views.MultiView;
-import ch.bailu.aat.views.SummaryListView;
-import ch.bailu.aat.views.TrackDescriptionView;
-import ch.bailu.aat.views.VerticalView;
+import ch.bailu.aat.views.description.MultiView;
+import ch.bailu.aat.views.description.TrackDescriptionView;
+import ch.bailu.aat.views.description.VerticalView;
 import ch.bailu.aat.views.graph.DistanceAltitudeGraphView;
 import ch.bailu.aat.views.graph.DistanceSpeedGraphView;
 import ch.bailu.aat.views.map.OsmInteractiveView;
@@ -51,6 +51,7 @@ import ch.bailu.aat.views.map.overlay.control.NavigationBarOverlay;
 import ch.bailu.aat.views.map.overlay.gpx.GpxDynOverlay;
 import ch.bailu.aat.views.map.overlay.gpx.GpxOverlayListOverlay;
 import ch.bailu.aat.views.map.overlay.grid.GridDynOverlay;
+import ch.bailu.aat.views.preferences.VerticalScrollView;
 
 @SuppressLint("Registered")
 public class AbsFileContentActivity extends AbsDispatcher implements OnClickListener {
@@ -80,7 +81,7 @@ public class AbsFileContentActivity extends AbsDispatcher implements OnClickList
         multiView = createMultiView(SOLID_KEY);
         contentView.addView(createButtonBar());
         contentView.addView(multiView);
-        
+
         setContentView(contentView);
     }
 
@@ -109,7 +110,7 @@ public class AbsFileContentActivity extends AbsDispatcher implements OnClickList
 
         final OsmOverlay overlayList[] = {
                 new GpxOverlayListOverlay(map, getServiceContext()),
-                new GpxDynOverlay(map, getServiceContext(), GpxInformation.ID.INFO_ID_TRACKER), 
+                new GpxDynOverlay(map, getServiceContext(), GpxInformation.ID.INFO_ID_TRACKER),
                 new GpxDynOverlay(map, getServiceContext(), GpxInformation.ID.INFO_ID_FILEVIEW),
                 new CurrentLocationOverlay(map),
                 new GridDynOverlay(map, getServiceContext()),
@@ -122,7 +123,7 @@ public class AbsFileContentActivity extends AbsDispatcher implements OnClickList
                         editor_helper),
 
         };
-        
+
         map.setOverlayList(overlayList);
 
 
@@ -140,16 +141,29 @@ public class AbsFileContentActivity extends AbsDispatcher implements OnClickList
                 new TrackSizeDescription(this),
         };
 
-        final TrackDescriptionView viewData[] = {
-                new SummaryListView(this, SOLID_KEY, GpxInformation.ID.INFO_ID_FILEVIEW, summaryData),
-                map,
-                new VerticalView(this, SOLID_KEY, GpxInformation.ID.INFO_ID_FILEVIEW, new TrackDescriptionView[] {
+        VerticalScrollView summary = new VerticalScrollView(this);
+        VerticalView graph = new VerticalView(this, SOLID_KEY,
+                GpxInformation.ID.INFO_ID_FILEVIEW,
+                new TrackDescriptionView[] {
                         new DistanceAltitudeGraphView(this, SOLID_KEY),
-                        new DistanceSpeedGraphView(this, SOLID_KEY)
-                })
-        };   
+                        new DistanceSpeedGraphView(this, SOLID_KEY)});
 
-        return new MultiView(this, SOLID_KEY, GpxInformation.ID.INFO_ID_ALL, viewData);
+
+
+        final View views[] = {
+                summary,
+                map,
+                graph,
+        };
+
+        final DescriptionInterface[] targets = {
+                summary.addAllContent(summaryData, GpxInformation.ID.INFO_ID_FILEVIEW),
+                map,
+                graph
+
+        };
+
+        return new MultiView(this, SOLID_KEY, GpxInformation.ID.INFO_ID_ALL, views, targets);
     }
 
 
@@ -158,9 +172,9 @@ public class AbsFileContentActivity extends AbsDispatcher implements OnClickList
 
     protected void createDispatcher() {
         currentFile = new IteratorSource.FollowFile(getServiceContext());
-        
+
         final DescriptionInterface[] target = new DescriptionInterface[] {
-                multiView, this, busyButton.getBusyControl(GpxInformation.ID.INFO_ID_FILEVIEW) 
+                multiView, this, busyButton.getBusyControl(GpxInformation.ID.INFO_ID_FILEVIEW)
         };
 
 
@@ -175,14 +189,14 @@ public class AbsFileContentActivity extends AbsDispatcher implements OnClickList
                 currentFile
         };
 
-        setDispatcher(new ContentDispatcher(this,source, target));
+        setDispatcher(new RootDispatcher(this,source, target));
     }
 
 
     @Override
     public void onResumeWithService() {
         super.onResumeWithService();
-        
+
         if (firstRun) {
             frameCurrentFile();
             firstRun = false;
@@ -206,7 +220,7 @@ public class AbsFileContentActivity extends AbsDispatcher implements OnClickList
 
         } else if (v ==nextFile) {
             switchFile(v);
-            
+
         } else if (v == fileOperation) {
             new FileMenu(currentFile.fileAction(this)).showAsPopup(this, v);
         }
@@ -216,7 +230,7 @@ public class AbsFileContentActivity extends AbsDispatcher implements OnClickList
     protected void switchFile(View v) {
         busyButton.startWaiting();
 
-        if (v==nextFile) 
+        if (v==nextFile)
             currentFile.moveToNext();
         else if (v==previousFile)
             currentFile.moveToPrevious();

@@ -1,10 +1,5 @@
 package ch.bailu.aat.activities;
 
-import java.io.File;
-import java.io.IOException;
-
-import org.osmdroid.util.BoundingBoxE6;
-
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -15,11 +10,17 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import org.osmdroid.util.BoundingBoxE6;
+
+import java.io.File;
+import java.io.IOException;
+
 import ch.bailu.aat.R;
 import ch.bailu.aat.description.DescriptionInterface;
-import ch.bailu.aat.dispatcher.ContentDispatcher;
 import ch.bailu.aat.dispatcher.ContentSource;
 import ch.bailu.aat.dispatcher.CustomFileSource;
+import ch.bailu.aat.dispatcher.RootDispatcher;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.helpers.AbsTextBackup;
 import ch.bailu.aat.helpers.AppBroadcaster;
@@ -29,7 +30,6 @@ import ch.bailu.aat.helpers.AppLog;
 import ch.bailu.aat.helpers.AppTheme;
 import ch.bailu.aat.helpers.OsmApiHelper;
 import ch.bailu.aat.helpers.ToolTip;
-import ch.bailu.aat.views.preferences.AddOverlayDialog;
 import ch.bailu.aat.services.background.BackgroundService;
 import ch.bailu.aat.services.background.DownloadHandle;
 import ch.bailu.aat.services.background.ProcessHandle;
@@ -39,6 +39,7 @@ import ch.bailu.aat.views.ControlBar;
 import ch.bailu.aat.views.MainControlBar;
 import ch.bailu.aat.views.NodeListView;
 import ch.bailu.aat.views.TagEditor;
+import ch.bailu.aat.views.preferences.AddOverlayDialog;
 
 
 public abstract class AbsOsmApiActivity extends AbsDispatcher implements OnClickListener {
@@ -79,7 +80,7 @@ public abstract class AbsOsmApiActivity extends AbsDispatcher implements OnClick
                 list
         };
 
-        setDispatcher(new ContentDispatcher(this,source, target));
+        setDispatcher(new RootDispatcher(this,source, target));
 
         setQueryTextFromIntent();
     }  

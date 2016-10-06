@@ -17,9 +17,7 @@ import ch.bailu.aat.services.tileremover.TileRemoverService;
 import ch.bailu.aat.views.ContentView;
 import ch.bailu.aat.views.ControlBar;
 import ch.bailu.aat.views.MainControlBar;
-import ch.bailu.aat.views.MultiView;
-import ch.bailu.aat.views.TrackDescriptionView;
-import ch.bailu.aat.views.ViewWrapper;
+import ch.bailu.aat.views.description.MultiView;
 import ch.bailu.aat.views.preferences.GeneralPreferencesView;
 import ch.bailu.aat.views.preferences.MapTilePreferencesView;
 
@@ -76,12 +74,12 @@ public class PreferencesActivity extends AbsDispatcher implements View.OnClickLi
         mapTilePreferences = new MapTilePreferencesView(this, getServiceContext());
 
 
-        TrackDescriptionView multiViewLayout[] = {
-                new ViewWrapper(mapTilePreferences),
-                new ViewWrapper(new GeneralPreferencesView(this)),
+        View views[] = {
+                mapTilePreferences,
+                new GeneralPreferencesView(this),
         };
 
-        return new MultiView(this, SOLID_KEY, GpxInformation.ID.INFO_ID_ALL, multiViewLayout);
+        return new MultiView(this, SOLID_KEY, GpxInformation.ID.INFO_ID_ALL, views);
     }
 
 

@@ -2,12 +2,11 @@ package ch.bailu.aat.description;
 
 import android.content.Context;
 
+import ch.bailu.aat.R;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.preferences.SolidMET;
 import ch.bailu.aat.preferences.SolidPreset;
 import ch.bailu.aat.preferences.SolidWeight;
-
-import ch.bailu.aat.R;
 
 public class CaloriesDescription extends LongDescription{
 

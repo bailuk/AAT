@@ -1,13 +1,14 @@
 package ch.bailu.aat.services.background;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+
 import java.io.Closeable;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
 import ch.bailu.aat.helpers.AppBroadcaster;
 import ch.bailu.aat.helpers.AppDirectory;
 import ch.bailu.aat.helpers.AppIntent;

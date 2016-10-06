@@ -1,9 +1,6 @@
 package ch.bailu.aat.activities;
 
 
-import org.osmdroid.util.BoundingBoxE6;
-import org.osmdroid.util.GeoPoint;
-
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -11,14 +8,18 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+
+import org.osmdroid.util.BoundingBoxE6;
+import org.osmdroid.util.GeoPoint;
+
 import ch.bailu.aat.R;
 import ch.bailu.aat.coordinates.Coordinates;
 import ch.bailu.aat.description.DescriptionInterface;
-import ch.bailu.aat.dispatcher.ContentDispatcher;
 import ch.bailu.aat.dispatcher.ContentSource;
 import ch.bailu.aat.dispatcher.CurrentLocationSource;
 import ch.bailu.aat.dispatcher.EditorSource;
 import ch.bailu.aat.dispatcher.OverlaySource;
+import ch.bailu.aat.dispatcher.RootDispatcher;
 import ch.bailu.aat.dispatcher.TrackerSource;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.helpers.AppIntent;
@@ -27,10 +28,10 @@ import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.editor.EditorHelper;
 import ch.bailu.aat.views.ContentView;
 import ch.bailu.aat.views.ControlBar;
-import ch.bailu.aat.views.GPSStateButton;
+import ch.bailu.aat.views.description.GPSStateButton;
 import ch.bailu.aat.views.MainControlBar;
-import ch.bailu.aat.views.NumberView;
-import ch.bailu.aat.views.TrackerStateButton;
+import ch.bailu.aat.views.description.TrackerStateButton;
+import ch.bailu.aat.views.description.NumberView;
 import ch.bailu.aat.views.map.OsmInteractiveView;
 import ch.bailu.aat.views.map.overlay.CurrentLocationOverlay;
 import ch.bailu.aat.views.map.overlay.OsmOverlay;
@@ -135,7 +136,7 @@ public class MapActivity extends AbsDispatcher implements OnClickListener{
                 new CurrentLocationSource(getServiceContext()),
                 new OverlaySource(getServiceContext())};
 
-        setDispatcher(new ContentDispatcher(this,source, target));
+        setDispatcher(new RootDispatcher(this,source, target));
     }
 
 

@@ -1,9 +1,9 @@
 package org.osmdroid.views.overlay;
 
-import org.osmdroid.views.MapView;
-
 import android.view.Menu;
 import android.view.MenuItem;
+
+import org.osmdroid.views.MapView;
 
 public interface IOverlayMenuProvider {
 	public boolean onCreateOptionsMenu(final Menu pMenu, final int pMenuIdOffset,

@@ -1,12 +1,12 @@
 package ch.bailu.aat.helpers.file;
 
+import android.content.Context;
+import android.net.Uri;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.io.OutputStream;
-
-import android.content.Context;
-import android.net.Uri;
 
 public class UriAccess extends AbsAccess {
     private final Uri uri;

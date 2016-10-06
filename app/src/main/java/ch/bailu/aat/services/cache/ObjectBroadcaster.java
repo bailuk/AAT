@@ -1,11 +1,12 @@
 package ch.bailu.aat.services.cache;
 
-import java.io.Closeable;
-
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.util.SparseArray;
+
+import java.io.Closeable;
+
 import ch.bailu.aat.helpers.AppBroadcaster;
 import ch.bailu.aat.helpers.AppIntent;
 import ch.bailu.aat.services.ServiceContext;

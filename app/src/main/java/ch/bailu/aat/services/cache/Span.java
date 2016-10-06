@@ -1,8 +1,8 @@
 package ch.bailu.aat.services.cache;
 
-import java.util.ArrayList;
-
 import android.graphics.Rect;
+
+import java.util.ArrayList;
 
 public class Span {
     private int _deg;

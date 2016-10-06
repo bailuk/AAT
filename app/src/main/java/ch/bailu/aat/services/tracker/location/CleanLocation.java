@@ -1,5 +1,7 @@
 package ch.bailu.aat.services.tracker.location;
+
 import android.content.Context;
+
 import ch.bailu.aat.gpx.GpxPoint;
 import ch.bailu.aat.gpx.interfaces.GpxPointInterface;
 

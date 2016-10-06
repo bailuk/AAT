@@ -1,10 +1,10 @@
 package ch.bailu.aat.preferences;
 
-import java.io.File;
-import java.util.ArrayList;
-
 import android.content.Context;
 import android.os.Environment;
+
+import java.io.File;
+import java.util.ArrayList;
 
 public abstract class OldSolidDirectoryList extends SolidIndexList {
 

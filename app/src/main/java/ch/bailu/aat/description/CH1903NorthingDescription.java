@@ -2,10 +2,9 @@ package ch.bailu.aat.description;
 
 import android.content.Context;
 
+import ch.bailu.aat.R;
 import ch.bailu.aat.coordinates.CH1903Coordinates;
 import ch.bailu.aat.gpx.GpxInformation;
-
-import ch.bailu.aat.R;
 public class CH1903NorthingDescription extends CH1903EastingDescription {
 
     public CH1903NorthingDescription(Context c) {

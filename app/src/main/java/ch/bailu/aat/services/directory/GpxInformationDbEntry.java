@@ -1,6 +1,7 @@
 package ch.bailu.aat.services.directory;
 
 import android.database.Cursor;
+
 import ch.bailu.aat.coordinates.BoundingBox;
 import ch.bailu.aat.gpx.GpxInformation;
 

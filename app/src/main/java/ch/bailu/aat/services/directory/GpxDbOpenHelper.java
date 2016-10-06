@@ -1,10 +1,10 @@
 package ch.bailu.aat.services.directory;
 
-import java.io.File;
-
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+
+import java.io.File;
 
 public class GpxDbOpenHelper extends SQLiteOpenHelper {
          public GpxDbOpenHelper(Context context, String name) {

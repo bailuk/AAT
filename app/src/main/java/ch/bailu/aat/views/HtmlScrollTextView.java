@@ -2,8 +2,6 @@ package ch.bailu.aat.views;
 
 import android.content.Context;
 
-import ch.bailu.aat.activities.AbsServiceLink;
-import ch.bailu.aat.services.AbsService;
 import ch.bailu.aat.views.preferences.VerticalScrollView;
 
 
@@ -29,7 +27,7 @@ public class HtmlScrollTextView extends VerticalScrollView {
     }
 
 
-    private void setHtmlText(String text) {
+    public void setHtmlText(String text) {
         textView.setHtmlText(text);
     }
 }

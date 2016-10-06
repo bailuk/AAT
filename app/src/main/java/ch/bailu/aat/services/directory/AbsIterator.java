@@ -1,8 +1,9 @@
 package ch.bailu.aat.services.directory;
 
+import android.database.Cursor;
+
 import java.io.Closeable;
 
-import android.database.Cursor;
 import ch.bailu.aat.gpx.GpxInformation;
 
 public abstract class AbsIterator extends GpxInformation implements Closeable{

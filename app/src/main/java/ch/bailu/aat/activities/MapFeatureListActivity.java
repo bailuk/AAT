@@ -1,9 +1,10 @@
 package ch.bailu.aat.activities;
 
-import java.io.File;
-
 import android.content.Intent;
 import android.os.Bundle;
+
+import java.io.File;
+
 import ch.bailu.aat.helpers.AppIntent;
 import ch.bailu.aat.helpers.file.FileAccess;
 import ch.bailu.aat.views.FeaturesList;

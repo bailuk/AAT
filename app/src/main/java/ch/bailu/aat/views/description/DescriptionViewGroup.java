@@ -1,10 +1,9 @@
-package ch.bailu.aat.views;
+package ch.bailu.aat.views.description;
+
+import android.content.Context;
 
 import ch.bailu.aat.description.ContentDescription;
 import ch.bailu.aat.gpx.GpxInformation;
-
-
-import android.content.Context;
 
 public abstract class DescriptionViewGroup extends TrackDescriptionView {
 

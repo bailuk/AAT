@@ -1,6 +1,7 @@
 package ch.bailu.aat.activities;
 
 import android.os.Bundle;
+
 import ch.bailu.aat.services.editor.EditorHelper;
 
 

@@ -1,14 +1,15 @@
 package ch.bailu.aat.dispatcher;
 
+import android.content.Context;
+
 import java.io.Closeable;
 
-import android.content.Context;
 import ch.bailu.aat.description.DescriptionInterface;
 import ch.bailu.aat.gpx.GpxInformation;
 
-public class ContentDispatcher implements DescriptionInterface, Closeable {
+public class RootDispatcher implements DescriptionInterface, Closeable {
     public static final DescriptionInterface NULL_LIST[] = new DescriptionInterface[]{};
-    public static final ContentDispatcher NULL=new ContentDispatcher() {
+    public static final RootDispatcher NULL=new RootDispatcher() {
         @Override
         public void close(){}
     };
@@ -21,13 +22,13 @@ public class ContentDispatcher implements DescriptionInterface, Closeable {
 
 
 
-    private ContentDispatcher() {
+    private RootDispatcher() {
         TARGET_LIST = NULL_LIST;
         targetList = NULL_LIST;
         sourceList = ContentSource.NULL_LIST;
     }
 
-    public ContentDispatcher(Context c, ContentSource s[],DescriptionInterface t[]) {
+    public RootDispatcher(Context c, ContentSource s[], DescriptionInterface t[]) {
         TARGET_LIST = t;
         targetList = t;
         sourceList = s;

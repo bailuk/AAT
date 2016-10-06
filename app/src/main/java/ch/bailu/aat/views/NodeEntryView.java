@@ -1,9 +1,9 @@
 package ch.bailu.aat.views;
 
 import android.graphics.Color;
-import android.text.Html;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
 import ch.bailu.aat.coordinates.BoundingBox;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.GpxPointNode;

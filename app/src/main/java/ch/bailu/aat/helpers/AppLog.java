@@ -1,7 +1,5 @@
 package ch.bailu.aat.helpers;
 
-import java.io.Closeable;
-
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
@@ -10,6 +8,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Looper;
 import android.widget.Toast;
+
+import java.io.Closeable;
 
 
 public class AppLog implements Closeable {

@@ -15,22 +15,22 @@ import ch.bailu.aat.description.DescriptionInterface;
 import ch.bailu.aat.description.DistanceDescription;
 import ch.bailu.aat.description.MaximumSpeedDescription;
 import ch.bailu.aat.description.TimeDescription;
-import ch.bailu.aat.dispatcher.ContentDispatcher;
 import ch.bailu.aat.dispatcher.ContentSource;
 import ch.bailu.aat.dispatcher.CurrentLocationSource;
 import ch.bailu.aat.dispatcher.EditorSource;
 import ch.bailu.aat.dispatcher.OverlaySource;
+import ch.bailu.aat.dispatcher.RootDispatcher;
 import ch.bailu.aat.dispatcher.TrackerSource;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.services.editor.EditorHelper;
-import ch.bailu.aat.views.CockpitView;
 import ch.bailu.aat.views.ContentView;
 import ch.bailu.aat.views.ControlBar;
 import ch.bailu.aat.views.MainControlBar;
-import ch.bailu.aat.views.MultiView;
-import ch.bailu.aat.views.TrackDescriptionView;
-import ch.bailu.aat.views.TrackerStateButton;
-import ch.bailu.aat.views.VerticalView;
+import ch.bailu.aat.views.description.MultiView;
+import ch.bailu.aat.views.description.TrackerStateButton;
+import ch.bailu.aat.views.description.VerticalView;
+import ch.bailu.aat.views.description.CockpitView;
+import ch.bailu.aat.views.description.TrackDescriptionView;
 import ch.bailu.aat.views.graph.DistanceAltitudeGraphView;
 import ch.bailu.aat.views.graph.DistanceSpeedGraphView;
 import ch.bailu.aat.views.map.OsmInteractiveView;
@@ -147,7 +147,7 @@ public class TrackerActivity extends AbsDispatcher implements OnClickListener{
                     new CurrentLocationSource(getServiceContext()),
                     new OverlaySource(getServiceContext()),
             };
-            setDispatcher(new ContentDispatcher(this,source, target));
+            setDispatcher(new RootDispatcher(this,source, target));
     }
 
 

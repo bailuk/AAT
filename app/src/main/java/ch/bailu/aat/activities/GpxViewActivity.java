@@ -1,7 +1,5 @@
 package ch.bailu.aat.activities;
 
-import java.io.File;
-
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -9,6 +7,9 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+
+import java.io.File;
+
 import ch.bailu.aat.R;
 import ch.bailu.aat.description.AverageSpeedDescription;
 import ch.bailu.aat.description.CaloriesDescription;
@@ -23,11 +24,11 @@ import ch.bailu.aat.description.PathDescription;
 import ch.bailu.aat.description.PauseDescription;
 import ch.bailu.aat.description.TimeDescription;
 import ch.bailu.aat.description.TrackSizeDescription;
-import ch.bailu.aat.dispatcher.ContentDispatcher;
 import ch.bailu.aat.dispatcher.ContentSource;
 import ch.bailu.aat.dispatcher.CurrentLocationSource;
 import ch.bailu.aat.dispatcher.CustomFileSource;
 import ch.bailu.aat.dispatcher.OverlaySource;
+import ch.bailu.aat.dispatcher.RootDispatcher;
 import ch.bailu.aat.dispatcher.TrackerSource;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.helpers.AppLayout;
@@ -38,10 +39,9 @@ import ch.bailu.aat.views.BusyButton;
 import ch.bailu.aat.views.ContentView;
 import ch.bailu.aat.views.ControlBar;
 import ch.bailu.aat.views.MainControlBar;
-import ch.bailu.aat.views.MultiView;
-import ch.bailu.aat.views.SummaryListView;
-import ch.bailu.aat.views.TrackDescriptionView;
-import ch.bailu.aat.views.VerticalView;
+import ch.bailu.aat.views.description.MultiView;
+import ch.bailu.aat.views.description.TrackDescriptionView;
+import ch.bailu.aat.views.description.VerticalView;
 import ch.bailu.aat.views.graph.DistanceAltitudeGraphView;
 import ch.bailu.aat.views.graph.DistanceSpeedGraphView;
 import ch.bailu.aat.views.map.OsmInteractiveView;
@@ -52,6 +52,7 @@ import ch.bailu.aat.views.map.overlay.control.NavigationBarOverlay;
 import ch.bailu.aat.views.map.overlay.gpx.GpxDynOverlay;
 import ch.bailu.aat.views.map.overlay.gpx.GpxOverlayListOverlay;
 import ch.bailu.aat.views.map.overlay.grid.GridDynOverlay;
+import ch.bailu.aat.views.preferences.VerticalScrollView;
 
 public class GpxViewActivity extends AbsDispatcher implements OnClickListener {
 
@@ -148,16 +149,27 @@ public class GpxViewActivity extends AbsDispatcher implements OnClickListener {
                 new TrackSizeDescription(this),
         };
 
-        final TrackDescriptionView viewData[] = {
-                new SummaryListView(this, SOLID_KEY, GpxInformation.ID.INFO_ID_FILEVIEW, summaryData),
-                map,
-                new VerticalView(this, SOLID_KEY, GpxInformation.ID.INFO_ID_FILEVIEW, new TrackDescriptionView[] {
-                        new DistanceAltitudeGraphView(this, SOLID_KEY),
-                        new DistanceSpeedGraphView(this, SOLID_KEY)
-                })
-        };   
+        VerticalScrollView summary = new VerticalScrollView(this);
+        VerticalView graph = new VerticalView(this, SOLID_KEY, GpxInformation.ID.INFO_ID_FILEVIEW,
+                new TrackDescriptionView[] {
+                new DistanceAltitudeGraphView(this, SOLID_KEY),
+                new DistanceSpeedGraphView(this, SOLID_KEY)
+            });
 
-        return new MultiView(this, SOLID_KEY, GpxInformation.ID.INFO_ID_ALL, viewData);
+
+        final View views[] = {
+                summary,
+                map,
+                graph
+        };
+
+        final DescriptionInterface targets[] = {
+                summary.addAllContent(summaryData, GpxInformation.ID.INFO_ID_FILEVIEW),
+                map,
+                graph
+        };
+
+        return new MultiView(this, SOLID_KEY, GpxInformation.ID.INFO_ID_ALL, views, targets);
     }
 
 
@@ -172,7 +184,7 @@ public class GpxViewActivity extends AbsDispatcher implements OnClickListener {
         final DescriptionInterface[] target = new DescriptionInterface[] {
                 multiView, this, busyButton.getBusyControl(GpxInformation.ID.INFO_ID_FILEVIEW) 
         };
-        setDispatcher(new ContentDispatcher(this,source, target));
+        setDispatcher(new RootDispatcher(this,source, target));
 
     }
 

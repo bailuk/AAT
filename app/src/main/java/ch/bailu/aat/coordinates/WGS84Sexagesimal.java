@@ -1,8 +1,8 @@
 package ch.bailu.aat.coordinates;
 
-import java.util.Locale;
-
 import org.osmdroid.api.IGeoPoint;
+
+import java.util.Locale;
 
 public class WGS84Sexagesimal extends Coordinates {
     

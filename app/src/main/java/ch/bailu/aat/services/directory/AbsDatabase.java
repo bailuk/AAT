@@ -1,8 +1,8 @@
 package ch.bailu.aat.services.directory;
 
-import java.io.Closeable;
-
 import android.database.Cursor;
+
+import java.io.Closeable;
 
 public abstract class AbsDatabase implements Closeable{
 

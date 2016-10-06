@@ -1,12 +1,13 @@
 package ch.bailu.aat.test;
 
+import android.content.Context;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.channels.FileChannel;
 
-import android.content.Context;
 import ch.bailu.aat.helpers.AppDirectory;
 import ch.bailu.aat.preferences.SolidPreset;
 import ch.bailu.aat.services.tracker.TrackLogger;

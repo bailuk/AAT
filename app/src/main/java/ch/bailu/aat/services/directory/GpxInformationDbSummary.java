@@ -1,8 +1,9 @@
 package ch.bailu.aat.services.directory;
 
+import android.database.Cursor;
+
 import java.io.File;
 
-import android.database.Cursor;
 import ch.bailu.aat.gpx.GpxAttributes;
 import ch.bailu.aat.gpx.GpxBigDelta;
 import ch.bailu.aat.gpx.GpxInformation;

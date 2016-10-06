@@ -1,7 +1,8 @@
 package ch.bailu.aat.preferences;
 
-import ch.bailu.aat.R;
 import android.content.Context;
+
+import ch.bailu.aat.R;
 
 public class SolidMissingTrigger extends SolidStaticIndexList {
     private static final String KEY="missing_trigger_";

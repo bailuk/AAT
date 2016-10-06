@@ -1,14 +1,15 @@
 package ch.bailu.aat.views.map;
 
+import android.content.Context;
+
 import org.osmdroid.DefaultResourceProxyImpl;
 import org.osmdroid.util.BoundingBoxE6;
 import org.osmdroid.views.MapView;
 
-import android.content.Context;
 import ch.bailu.aat.coordinates.BoundingBox;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.services.cache.TileObject;
-import ch.bailu.aat.views.TrackDescriptionView;
+import ch.bailu.aat.views.description.TrackDescriptionView;
 import ch.bailu.aat.views.map.overlay.OsmOverlay;
 import ch.bailu.aat.views.map.overlay.OverlayList;
 import ch.bailu.aat.views.map.overlay.gpx.MapIconCache;

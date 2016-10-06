@@ -4,10 +4,8 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.graphics.Point;
-import android.os.Build;
 import android.view.Display;
 import android.view.View.MeasureSpec;
-import android.view.Window;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
 

@@ -2,6 +2,7 @@ package ch.bailu.aat.views;
 
 import android.view.View;
 import android.widget.ImageButton;
+
 import ch.bailu.aat.helpers.AppLog;
 import ch.bailu.aat.preferences.SolidIndexList;
 

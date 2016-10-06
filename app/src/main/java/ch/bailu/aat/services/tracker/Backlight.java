@@ -1,13 +1,13 @@
 package ch.bailu.aat.services.tracker;
 
 
-import ch.bailu.aat.preferences.SolidBacklight;
-
 import android.app.Service;
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
+
+import ch.bailu.aat.preferences.SolidBacklight;
 
 public class  Backlight extends ContextWrapper {
 

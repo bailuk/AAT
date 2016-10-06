@@ -1,10 +1,10 @@
 package ch.bailu.aat.coordinates;
 
-import java.io.IOException;
-import java.util.Locale;
-
 import org.osmdroid.api.IGeoPoint;
 import org.osmdroid.util.BoundingBoxE6;
+
+import java.io.IOException;
+import java.util.Locale;
 
 import ch.bailu.aat.gpx.interfaces.GpxPointInterface;
 import ch.bailu.aat.gpx.parser.DoubleParser;

@@ -1,10 +1,10 @@
 package ch.bailu.aat.views.map;
 
-import org.osmdroid.tileprovider.MapTile;
-import org.osmdroid.tileprovider.tilesource.ITileSource;
-
 import android.graphics.drawable.Drawable;
 import android.os.Handler;
+
+import org.osmdroid.tileprovider.MapTile;
+import org.osmdroid.tileprovider.tilesource.ITileSource;
 
 public class NullTileProvider extends AbsTileProvider {
 

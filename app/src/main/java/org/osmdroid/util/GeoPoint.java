@@ -1,15 +1,15 @@
 // Created by plusminus on 21:28:12 - 25.09.2008
 package org.osmdroid.util;
 
-import java.io.Serializable;
+import android.location.Location;
+import android.os.Parcel;
+import android.os.Parcelable;
 
 import org.osmdroid.api.IGeoPoint;
 import org.osmdroid.util.constants.GeoConstants;
 import org.osmdroid.views.util.constants.MathConstants;
 
-import android.location.Location;
-import android.os.Parcel;
-import android.os.Parcelable;
+import java.io.Serializable;
 
 /**
  *

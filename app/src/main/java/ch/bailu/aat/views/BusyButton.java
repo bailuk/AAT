@@ -3,6 +3,7 @@ package ch.bailu.aat.views;
 import android.content.Context;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+
 import ch.bailu.aat.R;
 import ch.bailu.aat.description.DescriptionInterface;
 import ch.bailu.aat.gpx.GpxInformation;

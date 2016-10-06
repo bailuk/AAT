@@ -1,11 +1,5 @@
 package ch.bailu.aat.views;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
-
 import android.database.DataSetObserver;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -19,6 +13,13 @@ import android.widget.AdapterView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
+
 import ch.bailu.aat.activities.ActivitySwitcher;
 import ch.bailu.aat.activities.HtmlViewActivity;
 import ch.bailu.aat.activities.MapFeatureListActivity;

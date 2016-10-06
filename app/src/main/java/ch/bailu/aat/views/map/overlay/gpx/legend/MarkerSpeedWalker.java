@@ -1,6 +1,7 @@
 package ch.bailu.aat.views.map.overlay.gpx.legend;
 
 import android.content.Context;
+
 import ch.bailu.aat.description.CurrentSpeedDescription;
 import ch.bailu.aat.description.SpeedDescription;
 import ch.bailu.aat.gpx.GpxList;

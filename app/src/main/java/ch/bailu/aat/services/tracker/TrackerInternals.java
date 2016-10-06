@@ -1,10 +1,11 @@
 package ch.bailu.aat.services.tracker;
 
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
+
 import java.io.Closeable;
 import java.io.IOException;
 
-import android.content.SharedPreferences;
-import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import ch.bailu.aat.helpers.AppLog;
 import ch.bailu.aat.helpers.Timer;
 import ch.bailu.aat.preferences.SolidAutopause;

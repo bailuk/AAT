@@ -1,6 +1,8 @@
 package ch.bailu.aat.preferences;
 
 import android.content.Context;
+
+import ch.bailu.aat.R;
 import ch.bailu.aat.services.directory.GpxDbConstants;
 
 public class SolidDirectoryQuery extends SolidString {
@@ -41,13 +43,20 @@ public class SolidDirectoryQuery extends SolidString {
     }
 
 
-    public SolidLong getDateStart() {
-        return new SolidLong(getStorage(), KEY_DATE_START+ getValueAsString());
+    public SolidDate getDateStart() {
+        return new SolidDate(
+                getStorage(),
+                KEY_DATE_START+ getValueAsString(),
+                getContext().getString(R.string.filter_date_start));
+
     }
 
 
-    public SolidLong getDateEnd() {
-        return new SolidLong(getStorage(), KEY_DATE_END+ getValueAsString());
+    public SolidDate getDateTo() {
+        return new SolidDate(
+                getStorage(),
+                KEY_DATE_END+ getValueAsString(),
+                getContext().getString(R.string.filter_date_to));
     }
 
     public SolidBoolean getUseGeo() {
@@ -56,7 +65,10 @@ public class SolidDirectoryQuery extends SolidString {
     }
 
     public SolidBoundingBox getBoundingBox() {
-        return new SolidBoundingBox(getStorage(), KEY_BOUNDING_BOX+ getValueAsString());
+        return new SolidBoundingBox(
+                getStorage(),
+                KEY_BOUNDING_BOX+ getValueAsString(),
+                getContext().getString(R.string.filter_geo));
     }
 
     
@@ -97,7 +109,7 @@ public class SolidDirectoryQuery extends SolidString {
             }
 
             if (getUseDateEnd().getValue()) {
-                end = getDateEnd().getValue();
+                end = getDateTo().getValue();
             } else {
                 end = System.currentTimeMillis()/DAY;
                 end = end + 5;

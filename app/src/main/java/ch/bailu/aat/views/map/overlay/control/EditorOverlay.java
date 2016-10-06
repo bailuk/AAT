@@ -1,9 +1,9 @@
 package ch.bailu.aat.views.map.overlay.control;
 
-import org.osmdroid.api.IGeoPoint;
-
 import android.view.View;
 import android.widget.LinearLayout;
+
+import org.osmdroid.api.IGeoPoint;
 
 import ch.bailu.aat.R;
 import ch.bailu.aat.gpx.GpxInformation;

@@ -1,12 +1,11 @@
 package ch.bailu.aat.description;
 
-import java.util.Locale;
-
 import android.content.Context;
 
-import ch.bailu.aat.gpx.GpxInformation;
+import java.util.Locale;
 
 import ch.bailu.aat.R;
+import ch.bailu.aat.gpx.GpxInformation;
 public class LongitudeDescription extends DoubleDescription {
     public static final String UNIT="\u00B0";
 

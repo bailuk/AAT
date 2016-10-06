@@ -1,10 +1,12 @@
 package ch.bailu.aat.activities;
 
-import java.io.File;
-
 import android.os.Bundle;
 import android.view.View;
+
+import java.io.File;
+
 import ch.bailu.aat.description.ContentDescription;
+import ch.bailu.aat.description.DescriptionInterface;
 import ch.bailu.aat.description.DistanceDescription;
 import ch.bailu.aat.description.NameDescription;
 import ch.bailu.aat.description.PathDescription;
@@ -14,11 +16,10 @@ import ch.bailu.aat.helpers.AppDialog;
 import ch.bailu.aat.helpers.AppLog;
 import ch.bailu.aat.services.editor.EditorHelper;
 import ch.bailu.aat.services.editor.EditorInterface;
-import ch.bailu.aat.views.MultiView;
 import ch.bailu.aat.views.NodeListView;
-import ch.bailu.aat.views.SummaryListView;
-import ch.bailu.aat.views.TrackDescriptionView;
-import ch.bailu.aat.views.VerticalView;
+import ch.bailu.aat.views.description.MultiView;
+import ch.bailu.aat.views.description.TrackDescriptionView;
+import ch.bailu.aat.views.description.VerticalView;
 import ch.bailu.aat.views.graph.DistanceAltitudeGraphView;
 import ch.bailu.aat.views.map.OsmInteractiveView;
 import ch.bailu.aat.views.map.overlay.CurrentLocationOverlay;
@@ -29,6 +30,7 @@ import ch.bailu.aat.views.map.overlay.control.NavigationBarOverlay;
 import ch.bailu.aat.views.map.overlay.gpx.GpxDynOverlay;
 import ch.bailu.aat.views.map.overlay.gpx.GpxOverlayListOverlay;
 import ch.bailu.aat.views.map.overlay.grid.GridDynOverlay;
+import ch.bailu.aat.views.preferences.VerticalScrollView;
 
 public class GpxEditorActivity extends AbsFileContentActivity {
 
@@ -82,18 +84,22 @@ public class GpxEditorActivity extends AbsFileContentActivity {
                 GpxInformation.ID.INFO_ID_EDITOR_OVERLAY
                 );
 
-        TrackDescriptionView viewData[] = {
+        VerticalScrollView summary = new VerticalScrollView(this);
+        DistanceAltitudeGraphView graph =new DistanceAltitudeGraphView(this, SOLID_KEY);
+
+        TrackDescriptionView views[] = {
 
                 wayList,
                 map,
 
-                new VerticalView(this, SOLID_KEY, GpxInformation.ID.INFO_ID_EDITOR_OVERLAY, new TrackDescriptionView[] {
-                        new SummaryListView(this, SOLID_KEY, GpxInformation.ID.INFO_ID_EDITOR_OVERLAY, summaryData),
-                        new DistanceAltitudeGraphView(this, SOLID_KEY),
-                        })
-        };   
+                new VerticalView(this, SOLID_KEY, GpxInformation.ID.INFO_ID_EDITOR_OVERLAY,
+                        new View[] {summary, graph},
+                        new DescriptionInterface[]
+                                {summary.addAllContent(summaryData, GpxInformation.ID.INFO_ID_EDITOR_OVERLAY), graph}
+                        )
+        };
 
-        return new MultiView(this, SOLID_KEY, GpxInformation.ID.INFO_ID_ALL, viewData);
+        return new MultiView(this, SOLID_KEY, GpxInformation.ID.INFO_ID_ALL, views);
     }
 
 

@@ -1,17 +1,5 @@
 package ch.bailu.aat.services.directory;
 
-import android.database.Cursor;
-import ch.bailu.aat.coordinates.BoundingBox;
-import ch.bailu.aat.gpx.GpxBigDelta;
-import ch.bailu.aat.gpx.GpxInformation;
-import ch.bailu.aat.gpx.GpxList;
-import ch.bailu.aat.gpx.interfaces.GpxType;
-import ch.bailu.aat.services.ServiceContext;
-import ch.bailu.aat.services.cache.GpxObject;
-import ch.bailu.aat.services.cache.GpxObjectStatic;
-import ch.bailu.aat.services.cache.ObjectHandle;
-
-
 /*
 public class GpxIterator extends AbsIterator {
     private Cursor cursor;

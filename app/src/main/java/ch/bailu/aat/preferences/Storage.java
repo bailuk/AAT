@@ -1,13 +1,13 @@
 package ch.bailu.aat.preferences;
 
-import java.io.File;
-import java.util.Map.Entry;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.os.Environment;
+
+import java.io.File;
+import java.util.Map.Entry;
 
 import ch.bailu.aat.helpers.ContextWrapperInterface;
 import ch.bailu.aat.helpers.file.FileAccess;

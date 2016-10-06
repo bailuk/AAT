@@ -1,6 +1,7 @@
 package ch.bailu.aat.preferences;
 
 import android.content.Context;
+
 import ch.bailu.aat.R;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.views.map.AbsOsmView;

@@ -1,9 +1,10 @@
 package ch.bailu.aat.preferences;
 
-import ch.bailu.aat.R;
 import android.content.Context;
 
 import java.util.Locale;
+
+import ch.bailu.aat.R;
 
 public class SolidAutopause extends SolidIndexList {
     private final static String KEY="autopause";

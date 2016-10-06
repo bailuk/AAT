@@ -1,8 +1,9 @@
 package ch.bailu.aat.views;
 
-import ch.bailu.aat.helpers.AppLayout;
 import android.content.Context;
 import android.widget.LinearLayout;
+
+import ch.bailu.aat.helpers.AppLayout;
 
 public class ContentView extends LinearLayout {
 

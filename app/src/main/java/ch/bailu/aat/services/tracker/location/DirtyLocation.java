@@ -1,6 +1,7 @@
 package ch.bailu.aat.services.tracker.location;
 
 import android.content.Context;
+
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.helpers.AppBroadcaster;
 import ch.bailu.aat.preferences.Storage;

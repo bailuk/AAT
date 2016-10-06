@@ -1,6 +1,7 @@
 package ch.bailu.aat.services;
 
 import android.app.Service;
+
 import ch.bailu.aat.helpers.ContextWrapperInterface;
 import ch.bailu.aat.services.background.BackgroundService;
 import ch.bailu.aat.services.cache.CacheService;

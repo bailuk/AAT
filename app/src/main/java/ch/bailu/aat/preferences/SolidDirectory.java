@@ -1,7 +1,5 @@
 package ch.bailu.aat.preferences;
 
-import android.os.Environment;
-
 import java.io.File;
 import java.util.ArrayList;
 

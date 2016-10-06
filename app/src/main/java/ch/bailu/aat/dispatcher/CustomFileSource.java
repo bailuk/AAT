@@ -1,10 +1,11 @@
 package ch.bailu.aat.dispatcher;
 
-import java.io.File;
-
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+
+import java.io.File;
+
 import ch.bailu.aat.gpx.GpxFileWrapper;
 import ch.bailu.aat.helpers.AppBroadcaster;
 import ch.bailu.aat.helpers.AppIntent;

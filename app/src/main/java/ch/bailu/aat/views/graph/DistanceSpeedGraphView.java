@@ -2,13 +2,14 @@ package ch.bailu.aat.views.graph;
 
 import android.content.Context;
 import android.graphics.Canvas;
+
+import ch.bailu.aat.R;
 import ch.bailu.aat.gpx.GpxList;
 import ch.bailu.aat.gpx.GpxListWalker;
 import ch.bailu.aat.gpx.GpxPointNode;
 import ch.bailu.aat.gpx.GpxSegmentNode;
 import ch.bailu.aat.helpers.AppTheme;
 import ch.bailu.aat.preferences.SolidUnit;
-import ch.bailu.aat.R;
 
 
 public class DistanceSpeedGraphView extends AbsGraphView {

@@ -1,6 +1,7 @@
 package ch.bailu.aat.views.map.overlay.control;
 
 import android.graphics.Color;
+
 import ch.bailu.aat.helpers.AppLayout;
 import ch.bailu.aat.views.ControlBar;
 import ch.bailu.aat.views.map.OsmInteractiveView;

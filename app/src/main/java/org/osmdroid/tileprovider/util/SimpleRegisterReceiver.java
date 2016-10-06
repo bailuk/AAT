@@ -1,11 +1,11 @@
 package org.osmdroid.tileprovider.util;
 
-import org.osmdroid.tileprovider.IRegisterReceiver;
-
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+
+import org.osmdroid.tileprovider.IRegisterReceiver;
 
 public class SimpleRegisterReceiver implements IRegisterReceiver {
 

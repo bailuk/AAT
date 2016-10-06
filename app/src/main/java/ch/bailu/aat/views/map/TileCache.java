@@ -1,8 +1,8 @@
 package ch.bailu.aat.views.map;
 
-import java.io.Closeable;
-
 import org.osmdroid.tileprovider.MapTile;
+
+import java.io.Closeable;
 
 import ch.bailu.aat.services.cache.TileStackObject;
 

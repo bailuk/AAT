@@ -1,10 +1,11 @@
 package ch.bailu.aat.helpers.file;
 
+import android.app.Activity;
+import android.content.Context;
+
 import java.io.File;
 import java.io.IOException;
 
-import android.app.Activity;
-import android.content.Context;
 import ch.bailu.aat.R;
 import ch.bailu.aat.helpers.AppDialog;
 import ch.bailu.aat.helpers.AppLog;

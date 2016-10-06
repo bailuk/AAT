@@ -1,9 +1,10 @@
 package ch.bailu.aat.services.tracker;
 
+import android.content.Context;
+
 import java.io.File;
 import java.io.IOException;
 
-import android.content.Context;
 import ch.bailu.aat.gpx.GpxList;
 import ch.bailu.aat.gpx.parser.SimpleGpxListReader;
 import ch.bailu.aat.gpx.writer.GpxListWriter;

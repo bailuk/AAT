@@ -1,9 +1,10 @@
 package ch.bailu.aat.preferences;
 
-import ch.bailu.aat.R;
 import android.content.Context;
 
 import java.util.Locale;
+
+import ch.bailu.aat.R;
 
 public class SolidAccuracyFilter extends SolidIndexList {
     private static final String KEY="accuracy_filter_";

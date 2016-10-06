@@ -1,6 +1,7 @@
 package ch.bailu.aat.gpx;
 
 import android.content.Context;
+
 import ch.bailu.aat.coordinates.BoundingBox;
 import ch.bailu.aat.description.AltitudeDescription;
 import ch.bailu.aat.description.CurrentSpeedDescription;

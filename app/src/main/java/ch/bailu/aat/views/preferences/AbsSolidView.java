@@ -2,41 +2,22 @@ package ch.bailu.aat.views.preferences;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.view.View;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
-import ch.bailu.aat.helpers.AppTheme;
 import ch.bailu.aat.preferences.SolidType;
+import ch.bailu.aat.views.AbsLabelTextView;
 
-public abstract class AbsSolidView extends LinearLayout
+public abstract class AbsSolidView extends AbsLabelTextView
         implements SharedPreferences.OnSharedPreferenceChangeListener {
 
-    private final TextView value;
     private final SolidType solid;
 
-    public AbsSolidView(final Context context, final SolidType s) {
-        super(context);
-        setOrientation(VERTICAL);
+    public AbsSolidView(final SolidType s) {
+        super(s.getContext(), s.getLabel());
 
         solid = s;
 
-        final TextView label = new TextView(context);
-        label.setText(solid.getLabel());
-        addView(label);
-        AppTheme.themify(label);
-
-        value = new TextView(context);
-        value.setText(solid.getValueAsString());
-        value.setTextColor(Color.LTGRAY);
-
-        addView(value);
-
-
-        AppTheme.themify(this);
-
-
+        setText(solid.getValueAsString());
         setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -59,7 +40,7 @@ public abstract class AbsSolidView extends LinearLayout
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         if (solid.hasKey(key)) {
-            value.setText(solid.getValueAsString());
+            setText(solid.getValueAsString());
         }
     }
 

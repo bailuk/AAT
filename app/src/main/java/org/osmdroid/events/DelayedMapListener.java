@@ -1,6 +1,7 @@
 package org.osmdroid.events;
 
 import android.os.Handler;
+
 import ch.bailu.aat.helpers.Logger;
 import ch.bailu.aat.helpers.LoggerFactory;
 

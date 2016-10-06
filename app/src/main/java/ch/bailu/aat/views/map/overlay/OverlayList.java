@@ -1,8 +1,9 @@
 package ch.bailu.aat.views.map.overlay;
 
+import android.view.MotionEvent;
+
 import org.osmdroid.views.MapView;
 
-import android.view.MotionEvent;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.views.map.AbsOsmView;
 

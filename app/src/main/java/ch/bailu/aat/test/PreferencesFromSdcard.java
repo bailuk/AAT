@@ -1,7 +1,8 @@
 package ch.bailu.aat.test;
 
-import ch.bailu.aat.preferences.Storage;
 import android.content.Context;
+
+import ch.bailu.aat.preferences.Storage;
 
 public class PreferencesFromSdcard extends UnitTest {
 

@@ -1,10 +1,10 @@
 package ch.bailu.aat.views.map.overlay.control;
 
-import org.osmdroid.views.MapView;
-
 import android.util.SparseArray;
 import android.view.View;
 import android.widget.LinearLayout;
+
+import org.osmdroid.views.MapView;
 
 import ch.bailu.aat.R;
 import ch.bailu.aat.gpx.GpxInformation;

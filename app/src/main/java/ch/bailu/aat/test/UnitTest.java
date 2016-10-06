@@ -1,9 +1,11 @@
 package ch.bailu.aat.test;
 
+import android.content.Context;
+
+import junit.framework.Assert;
+
 import java.io.File;
 
-import android.content.Context;
-import junit.framework.Assert;
 import ch.bailu.aat.helpers.AppDirectory;
 import ch.bailu.aat.helpers.ContextWrapperInterface;
 

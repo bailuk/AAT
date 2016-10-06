@@ -1,16 +1,16 @@
 package ch.bailu.aat.helpers;
 
+import android.content.Context;
+
+import org.osmdroid.util.BoundingBoxE6;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.Locale;
 
-import org.osmdroid.util.BoundingBoxE6;
-
 import ch.bailu.aat.R;
-
-import android.content.Context;
 
 public class OverpassApi extends OsmApiHelper {
 

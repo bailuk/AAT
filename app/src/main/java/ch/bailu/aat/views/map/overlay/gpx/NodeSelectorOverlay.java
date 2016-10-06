@@ -3,6 +3,7 @@ package ch.bailu.aat.views.map.overlay.gpx;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.util.SparseArray;
+
 import ch.bailu.aat.coordinates.BoundingBox;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.GpxList;

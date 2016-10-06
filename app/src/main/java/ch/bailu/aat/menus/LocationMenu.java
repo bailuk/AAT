@@ -1,14 +1,15 @@
 package ch.bailu.aat.menus;
 
-import org.osmdroid.util.GeoPoint;
-import org.osmdroid.views.MapView;
-
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import org.osmdroid.util.GeoPoint;
+import org.osmdroid.views.MapView;
+
 import ch.bailu.aat.R;
 import ch.bailu.aat.coordinates.Coordinates;
 import ch.bailu.aat.helpers.AppLog;

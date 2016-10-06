@@ -1,9 +1,10 @@
 package ch.bailu.aat.services.cache;
 
-import java.io.IOException;
-
 import android.content.Context;
 import android.util.SparseArray;
+
+import java.io.IOException;
+
 import ch.bailu.aat.coordinates.SrtmCoordinates;
 import ch.bailu.aat.gpx.GpxList;
 import ch.bailu.aat.gpx.GpxListWalker;

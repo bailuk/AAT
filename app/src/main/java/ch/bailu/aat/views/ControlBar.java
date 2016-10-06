@@ -1,7 +1,5 @@
 package ch.bailu.aat.views;
 
-import java.util.ArrayList;
-
 import android.content.Context;
 import android.view.View;
 import android.widget.Button;
@@ -10,6 +8,8 @@ import android.widget.HorizontalScrollView;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
+
+import java.util.ArrayList;
 
 import ch.bailu.aat.helpers.AppTheme;
 import ch.bailu.aat.preferences.SolidIndexList;

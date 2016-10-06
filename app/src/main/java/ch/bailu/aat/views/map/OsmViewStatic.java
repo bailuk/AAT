@@ -3,6 +3,7 @@ package ch.bailu.aat.views.map;
 import android.content.Context;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
+
 import ch.bailu.aat.gpx.GpxInformation;
 
 public class OsmViewStatic extends AbsOsmView {

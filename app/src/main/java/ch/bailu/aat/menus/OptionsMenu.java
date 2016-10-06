@@ -1,18 +1,17 @@
 package ch.bailu.aat.menus;
 
-import org.osmdroid.util.BoundingBoxE6;
-
 import android.content.Context;
 import android.content.Intent;
 import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import org.osmdroid.util.BoundingBoxE6;
+
 import ch.bailu.aat.R;
 import ch.bailu.aat.activities.ActivitySwitcher;
 import ch.bailu.aat.activities.NominatimActivity;
 import ch.bailu.aat.helpers.AppIntent;
-import ch.bailu.aat.views.preferences.SolidCheckListDialog;
-import ch.bailu.aat.views.preferences.SolidIndexListDialog;
 import ch.bailu.aat.preferences.SolidAutopause;
 import ch.bailu.aat.preferences.SolidBacklight;
 import ch.bailu.aat.preferences.SolidMapTileStack;
@@ -20,6 +19,8 @@ import ch.bailu.aat.preferences.SolidOverlayFileList;
 import ch.bailu.aat.preferences.SolidPreset;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.tracker.State;
+import ch.bailu.aat.views.preferences.SolidCheckListDialog;
+import ch.bailu.aat.views.preferences.SolidIndexListDialog;
 
 public class OptionsMenu extends AbsMenu {
     private MenuItem start, pause, backlight, autopause, map, overlays, nominatim;

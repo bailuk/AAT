@@ -1,9 +1,10 @@
 package ch.bailu.aat.preferences;
 
+import android.content.Context;
+
 import java.util.ArrayList;
 
 import ch.bailu.aat.R;
-import android.content.Context;
 
 public class OldSolidDataDirectory extends OldSolidDirectoryList {
     private static final String KEY="TILE_DATA_DIR";

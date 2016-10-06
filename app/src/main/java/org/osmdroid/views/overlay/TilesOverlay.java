@@ -1,16 +1,5 @@
 package org.osmdroid.views.overlay;
 
-import microsoft.mappoint.TileSystem;
-
-import org.osmdroid.DefaultResourceProxyImpl;
-import org.osmdroid.ResourceProxy;
-import org.osmdroid.tileprovider.MapTile;
-import org.osmdroid.tileprovider.tilesource.ITileSource;
-import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
-import org.osmdroid.util.MyMath;
-import org.osmdroid.views.MapView;
-import org.osmdroid.views.MapView.Projection;
-
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -23,9 +12,20 @@ import android.graphics.drawable.Drawable;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.SubMenu;
+
+import org.osmdroid.DefaultResourceProxyImpl;
+import org.osmdroid.ResourceProxy;
+import org.osmdroid.tileprovider.MapTile;
+import org.osmdroid.tileprovider.tilesource.ITileSource;
+import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
+import org.osmdroid.util.MyMath;
+import org.osmdroid.views.MapView;
+import org.osmdroid.views.MapView.Projection;
+
 import ch.bailu.aat.helpers.Logger;
 import ch.bailu.aat.helpers.LoggerFactory;
 import ch.bailu.aat.views.map.AbsTileProvider;
+import microsoft.mappoint.TileSystem;
 
 /**
  * These objects are the principle consumer of map tiles.

@@ -1,8 +1,8 @@
 package org.osmdroid.tileprovider.constants;
 
-import java.io.File;
-
 import android.os.Environment;
+
+import java.io.File;
 
 /**
  * 

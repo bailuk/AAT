@@ -1,4 +1,4 @@
-package ch.bailu.aat.views;
+package ch.bailu.aat.views.description;
 
 import ch.bailu.aat.description.ContentDescription;
 

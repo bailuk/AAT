@@ -1,10 +1,10 @@
 package ch.bailu.aat.views.map.overlay;
 
-import org.osmdroid.views.MapView;
-
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.drawable.BitmapDrawable;
+
+import org.osmdroid.views.MapView;
 
 public class MapPainter {
 

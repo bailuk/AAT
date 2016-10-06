@@ -9,7 +9,7 @@ public class SolidDirectoryView extends AbsSolidView {
 
     private final Activity acontext;
     public SolidDirectoryView(Activity context, SolidDirectory s) {
-        super(context, s);
+        super(s);
 
         acontext = context;
         sdirectory = s;

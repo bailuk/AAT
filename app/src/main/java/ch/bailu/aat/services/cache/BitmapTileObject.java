@@ -1,13 +1,14 @@
 package ch.bailu.aat.services.cache;
 
-import java.io.File;
+import android.content.Context;
+import android.graphics.Bitmap;
 
 import org.osmdroid.ResourceProxy;
 import org.osmdroid.tileprovider.MapTile;
 import org.osmdroid.tileprovider.tilesource.XYTileSource;
 
-import android.content.Context;
-import android.graphics.Bitmap;
+import java.io.File;
+
 import ch.bailu.aat.helpers.AppBroadcaster;
 import ch.bailu.aat.helpers.AppDirectory;
 import ch.bailu.aat.services.ServiceContext;

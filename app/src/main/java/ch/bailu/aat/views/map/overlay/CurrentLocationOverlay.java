@@ -1,10 +1,11 @@
 package ch.bailu.aat.views.map.overlay;
 
-import org.osmdroid.util.GeoPoint;
-
 import android.graphics.Paint;
 import android.graphics.Paint.Style;
 import android.graphics.Point;
+
+import org.osmdroid.util.GeoPoint;
+
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.helpers.AppTheme;
 import ch.bailu.aat.views.map.OsmInteractiveView;

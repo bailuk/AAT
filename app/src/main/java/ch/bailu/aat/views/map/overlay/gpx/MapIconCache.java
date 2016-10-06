@@ -1,8 +1,9 @@
 package ch.bailu.aat.views.map.overlay.gpx;
 
+import android.graphics.drawable.Drawable;
+
 import java.io.Closeable;
 
-import android.graphics.drawable.Drawable;
 import ch.bailu.aat.gpx.GpxAttributes;
 import ch.bailu.aat.gpx.interfaces.GpxPointInterface;
 import ch.bailu.aat.services.ServiceContext;

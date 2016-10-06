@@ -1,13 +1,13 @@
 package ch.bailu.aat.services.directory;
 
-import java.io.Closeable;
-import java.io.File;
-import java.io.IOException;
-
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteCantOpenDatabaseException;
+
+import java.io.Closeable;
+import java.io.File;
+import java.io.IOException;
 
 import ch.bailu.aat.helpers.AppDirectory;
 import ch.bailu.aat.preferences.SolidDirectoryQuery;

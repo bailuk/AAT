@@ -1,8 +1,8 @@
 package ch.bailu.aat.gpx.parser;
 
-import java.io.IOException;
-
 import org.osmdroid.util.GeoPoint;
+
+import java.io.IOException;
 
 import ch.bailu.aat.gpx.parser.XmlParser.ParserIO;
 

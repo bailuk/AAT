@@ -2,6 +2,7 @@ package ch.bailu.aat.views.map.overlay.control;
 
 import android.view.View;
 import android.widget.ImageButton;
+
 import ch.bailu.aat.R;
 import ch.bailu.aat.activities.ActivitySwitcher;
 import ch.bailu.aat.activities.NominatimActivity;

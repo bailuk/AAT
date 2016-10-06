@@ -1,10 +1,11 @@
 package ch.bailu.aat.views.map;
 
+import android.graphics.Bitmap;
+
 import java.io.Closeable;
 import java.io.File;
 import java.io.FileOutputStream;
 
-import android.graphics.Bitmap;
 import ch.bailu.aat.gpx.GpxFileWrapper;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.GpxList;

@@ -1,8 +1,9 @@
 package ch.bailu.aat.views.map.overlay.grid;
 
+import android.graphics.Point;
+
 import org.osmdroid.util.GeoPoint;
 
-import android.graphics.Point;
 import ch.bailu.aat.coordinates.MeterCoordinates;
 import ch.bailu.aat.description.DistanceDescription;
 import ch.bailu.aat.views.map.AbsOsmView;

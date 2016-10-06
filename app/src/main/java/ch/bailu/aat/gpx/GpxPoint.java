@@ -1,9 +1,10 @@
 package ch.bailu.aat.gpx;
 
+import android.location.Location;
+
 import org.osmdroid.api.IGeoPoint;
 
 import ch.bailu.aat.gpx.interfaces.GpxPointInterface;
-import android.location.Location;
 
 
 public class GpxPoint implements GpxPointInterface {

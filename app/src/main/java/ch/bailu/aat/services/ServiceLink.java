@@ -1,12 +1,12 @@
 package ch.bailu.aat.services;
 
-import java.io.Closeable;
-
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.IBinder;
+
+import java.io.Closeable;
 
 public abstract class ServiceLink extends ServiceContext implements ServiceConnection, Closeable {
 

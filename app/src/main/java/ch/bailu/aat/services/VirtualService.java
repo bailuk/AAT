@@ -1,8 +1,8 @@
 package ch.bailu.aat.services;
 
-import java.io.Closeable;
-
 import android.content.Context;
+
+import java.io.Closeable;
 
 public abstract class VirtualService implements Closeable{
     

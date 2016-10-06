@@ -1,9 +1,9 @@
 package ch.bailu.aat.preferences;
 
-import java.io.File;
-
 import android.content.Context;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
+
+import java.io.File;
 
 public class SolidOverlayFile  implements SolidTypeInterface {
     private static final String KEY_NAME="overlay_path_";

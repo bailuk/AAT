@@ -3,33 +3,27 @@ package ch.bailu.aat.activities;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Html;
-import android.text.util.Linkify;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
-import android.widget.TextView;
+
 import ch.bailu.aat.R;
 import ch.bailu.aat.description.DescriptionInterface;
-import ch.bailu.aat.dispatcher.ContentDispatcher;
 import ch.bailu.aat.dispatcher.ContentSource;
 import ch.bailu.aat.dispatcher.CurrentLocationSource;
 import ch.bailu.aat.dispatcher.CustomFileSource;
+import ch.bailu.aat.dispatcher.RootDispatcher;
 import ch.bailu.aat.dispatcher.TrackerSource;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.GpxList;
 import ch.bailu.aat.gpx.GpxListArray;
-import ch.bailu.aat.helpers.AppHtml;
 import ch.bailu.aat.helpers.AppLayout;
-import ch.bailu.aat.helpers.AppTheme;
 import ch.bailu.aat.views.ContentView;
 import ch.bailu.aat.views.ControlBar;
+import ch.bailu.aat.views.HtmlScrollTextView;
 import ch.bailu.aat.views.MainControlBar;
-import ch.bailu.aat.views.TrackDescriptionView;
-import ch.bailu.aat.views.VerticalView;
-import ch.bailu.aat.views.ViewWrapper;
+import ch.bailu.aat.views.description.VerticalView;
 import ch.bailu.aat.views.map.OsmInteractiveView;
 import ch.bailu.aat.views.map.overlay.CurrentLocationOverlay;
 import ch.bailu.aat.views.map.overlay.OsmOverlay;
@@ -48,7 +42,7 @@ public class NodeDetailActivity extends AbsDispatcher implements OnClickListener
 
     private VerticalView       verticalView;
     private OsmInteractiveView map;
-    private TextView           text;
+    private HtmlScrollTextView           text;
 
     private String fileID="";
 
@@ -92,21 +86,20 @@ public class NodeDetailActivity extends AbsDispatcher implements OnClickListener
         map = new OsmInteractiveView(getServiceContext(), SOLID_KEY);
 
 
-        ScrollView scroll=new ScrollView(this);
+        text=new HtmlScrollTextView(this);
 
-        text = new TextView(this);
-        AppTheme.themify(text);
-        text.setTextSize(15f);
-        text.setAutoLinkMask(Linkify.ALL);
-        text.setLinkTextColor(AppTheme.getHighlightColor());
-        scroll.addView(text);
 
-        TrackDescriptionView viewData[] = {
-                new ViewWrapper(scroll), 
+        View views[] = {
+                text,
                 map,
-        };   
+        };
 
-        return new VerticalView(this, SOLID_KEY, GpxInformation.ID.INFO_ID_ALL, viewData);
+        DescriptionInterface targets[]  = {
+            DescriptionInterface.NULL,
+            map
+        };
+
+        return new VerticalView(this, SOLID_KEY, GpxInformation.ID.INFO_ID_ALL, views, targets);
     }
 
 
@@ -133,7 +126,7 @@ public class NodeDetailActivity extends AbsDispatcher implements OnClickListener
                 new CustomFileSource(getServiceContext(), fileID),
         };
 
-        setDispatcher(new ContentDispatcher(this,source, target));
+        setDispatcher(new RootDispatcher(this,source, target));
     }
 
 
@@ -160,7 +153,7 @@ public class NodeDetailActivity extends AbsDispatcher implements OnClickListener
             map.frameBoundingBox(array.get(i).getBoundingBox());
 
             array.get(i).toHtml(this, builder);
-            text.setText(  AppHtml.fromHtml(builder.toString())  );
+            text.setHtmlText(builder.toString());
         }
     }
 

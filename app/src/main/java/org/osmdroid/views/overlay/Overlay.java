@@ -1,13 +1,6 @@
 // Created by plusminus on 20:32:01 - 27.09.2008
 package org.osmdroid.views.overlay;
 
-import java.util.concurrent.atomic.AtomicInteger;
-
-import org.osmdroid.DefaultResourceProxyImpl;
-import org.osmdroid.ResourceProxy;
-import org.osmdroid.views.MapView;
-import org.osmdroid.views.util.constants.OverlayConstants;
-
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Point;
@@ -15,6 +8,13 @@ import android.graphics.Rect;
 import android.view.GestureDetector;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
+
+import org.osmdroid.DefaultResourceProxyImpl;
+import org.osmdroid.ResourceProxy;
+import org.osmdroid.views.MapView;
+import org.osmdroid.views.util.constants.OverlayConstants;
+
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Base class representing an overlay which may be displayed on top of a {@link MapView}. To add an

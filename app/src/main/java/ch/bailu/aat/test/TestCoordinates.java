@@ -1,8 +1,9 @@
 package ch.bailu.aat.test;
 
+import android.content.Context;
+
 import org.osmdroid.util.GeoPoint;
 
-import android.content.Context;
 import ch.bailu.aat.coordinates.CH1903Coordinates;
 import ch.bailu.aat.coordinates.UTMCoordinates;
 

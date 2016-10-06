@@ -1,10 +1,11 @@
 package ch.bailu.aat.description;
 
 import android.content.Context;
+
+import ch.bailu.aat.R;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.GpxList;
 import ch.bailu.aat.gpx.interfaces.GpxDeltaInterface;
-import ch.bailu.aat.R;
 public class CurrentSpeedDescription extends SpeedDescription {
 
     public CurrentSpeedDescription(Context context) {

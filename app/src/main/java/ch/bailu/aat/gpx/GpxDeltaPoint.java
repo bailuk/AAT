@@ -1,8 +1,5 @@
 package ch.bailu.aat.gpx;
 
-import ch.bailu.aat.coordinates.BoundingBox;
-import ch.bailu.aat.gpx.interfaces.GpxDeltaPointInterface;
-
 /*
 public class GpxDeltaPoint implements GpxDeltaPointInterface {
     private GpxPoint pointA = GpxPoint.NULL;

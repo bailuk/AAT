@@ -1,9 +1,9 @@
 package ch.bailu.aat.views.map.overlay.grid;
 
+import android.graphics.Point;
+
 import org.osmdroid.api.IGeoPoint;
 import org.osmdroid.util.constants.GeoConstants;
-
-import android.graphics.Point;
 
 import java.util.Locale;
 

@@ -1,9 +1,11 @@
 package ch.bailu.aat.views.map.overlay;
-import org.osmdroid.views.MapView;
-import org.osmdroid.views.overlay.Overlay;
 
 import android.content.Context;
 import android.graphics.Canvas;
+
+import org.osmdroid.views.MapView;
+import org.osmdroid.views.overlay.Overlay;
+
 import ch.bailu.aat.description.DescriptionInterface;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.views.map.AbsOsmView;

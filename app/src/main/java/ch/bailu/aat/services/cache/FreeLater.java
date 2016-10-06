@@ -1,8 +1,8 @@
 package ch.bailu.aat.services.cache;
 
-import java.io.Closeable;
-
 import android.util.SparseArray;
+
+import java.io.Closeable;
 
 public class FreeLater implements Closeable {
     private final static int INITIAL_CAPACITY=20;

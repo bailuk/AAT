@@ -1,13 +1,12 @@
 package ch.bailu.aat.description;
 
-import java.util.Locale;
-
 import android.content.Context;
 
-import ch.bailu.aat.gpx.GpxInformation;
-import ch.bailu.aat.preferences.SolidUnit;
+import java.util.Locale;
 
 import ch.bailu.aat.R;
+import ch.bailu.aat.gpx.GpxInformation;
+import ch.bailu.aat.preferences.SolidUnit;
 
 public class DistanceDescription extends FloatDescription {
     private final static String FORMAT_STRING[] = {"%.3f", "%.2f", "%.1f", "%.0f"}; 

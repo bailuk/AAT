@@ -1,8 +1,8 @@
 package ch.bailu.aat.helpers;
 
-import java.io.Closeable;
-
 import android.os.Handler;
+
+import java.io.Closeable;
 
 public class Timer implements Closeable {
     private Handler handler;

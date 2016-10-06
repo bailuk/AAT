@@ -1,14 +1,15 @@
 package ch.bailu.aat.services.dem;
 
+import android.content.Context;
+
+import org.osmdroid.util.GeoPoint;
+
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
-import org.osmdroid.util.GeoPoint;
-
-import android.content.Context;
 import ch.bailu.aat.coordinates.SrtmCoordinates;
 import ch.bailu.aat.helpers.AppBroadcaster;
 import ch.bailu.aat.services.ServiceContext;

@@ -1,7 +1,8 @@
-package ch.bailu.aat.views;
+package ch.bailu.aat.views.description;
 
 import android.content.Context;
 import android.view.ViewGroup;
+
 import ch.bailu.aat.description.DescriptionInterface;
 import ch.bailu.aat.gpx.GpxInformation;
 

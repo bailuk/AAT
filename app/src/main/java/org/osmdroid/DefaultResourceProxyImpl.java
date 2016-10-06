@@ -1,17 +1,17 @@
 package org.osmdroid;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.lang.reflect.Field;
-
-import org.osmdroid.views.util.constants.MapViewConstants;
-
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.util.DisplayMetrics;
+
+import org.osmdroid.views.util.constants.MapViewConstants;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.lang.reflect.Field;
 
 public class DefaultResourceProxyImpl implements ResourceProxy, MapViewConstants {
 

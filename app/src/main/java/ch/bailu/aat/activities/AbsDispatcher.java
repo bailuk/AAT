@@ -1,26 +1,27 @@
 package ch.bailu.aat.activities;
 
 import android.os.Bundle;
-import ch.bailu.aat.dispatcher.ContentDispatcher;
+
+import ch.bailu.aat.dispatcher.RootDispatcher;
 
 public abstract class AbsDispatcher extends AbsMenu {
-    private ContentDispatcher dispatcher;
+    private RootDispatcher dispatcher;
 
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        dispatcher = ContentDispatcher.NULL;
+        dispatcher = RootDispatcher.NULL;
     }
 
 /*
-    public ContentDispatcher getDispatcher() {
+    public RootDispatcher getDispatcher() {
         return dispatcher;
     }
 */
 
-    public void setDispatcher(ContentDispatcher d) {
+    public void setDispatcher(RootDispatcher d) {
         dispatcher.close();
         dispatcher = d;
     }
@@ -40,7 +41,7 @@ public abstract class AbsDispatcher extends AbsMenu {
     @Override
     public void onDestroy() {
         dispatcher.close();
-        dispatcher = ContentDispatcher.NULL;
+        dispatcher = RootDispatcher.NULL;
         super.onDestroy();
     }
 

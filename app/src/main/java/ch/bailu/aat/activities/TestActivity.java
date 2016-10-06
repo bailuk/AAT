@@ -1,20 +1,11 @@
 package ch.bailu.aat.activities;
 
 
-import android.content.Context;
-import android.database.DataSetObserver;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.ListAdapter;
-import android.widget.ListView;
-import android.widget.TextView;
-
-import java.util.ArrayList;
 
 import ch.bailu.aat.R;
 import ch.bailu.aat.description.AccelerationDescription;
@@ -40,14 +31,13 @@ import ch.bailu.aat.description.PauseDescription;
 import ch.bailu.aat.description.TimeDescription;
 import ch.bailu.aat.description.TrackSizeDescription;
 import ch.bailu.aat.description.TrackerStateDescription;
-import ch.bailu.aat.dispatcher.ContentDispatcher;
 import ch.bailu.aat.dispatcher.ContentSource;
 import ch.bailu.aat.dispatcher.CurrentLocationSource;
 import ch.bailu.aat.dispatcher.OverlaySource;
+import ch.bailu.aat.dispatcher.RootDispatcher;
 import ch.bailu.aat.dispatcher.TrackerSource;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.helpers.AppLog;
-import ch.bailu.aat.helpers.AppTheme;
 import ch.bailu.aat.test.PreferencesFromSdcard;
 import ch.bailu.aat.test.PreferencesToSdcard;
 import ch.bailu.aat.test.TestCoordinates;
@@ -55,14 +45,12 @@ import ch.bailu.aat.test.TestGpx;
 import ch.bailu.aat.test.TestGpxLogRecovery;
 import ch.bailu.aat.test.TestTest;
 import ch.bailu.aat.test.UnitTest;
+import ch.bailu.aat.views.AbsLabelTextView;
 import ch.bailu.aat.views.ContentView;
 import ch.bailu.aat.views.ControlBar;
 import ch.bailu.aat.views.MainControlBar;
-import ch.bailu.aat.views.MultiView;
 import ch.bailu.aat.views.StatusTextView;
-import ch.bailu.aat.views.SummaryListView;
-import ch.bailu.aat.views.TrackDescriptionView;
-import ch.bailu.aat.views.ViewWrapper;
+import ch.bailu.aat.views.description.MultiView;
 import ch.bailu.aat.views.map.OsmInteractiveView;
 import ch.bailu.aat.views.map.overlay.CurrentLocationOverlay;
 import ch.bailu.aat.views.map.overlay.Dem3NameOverlay;
@@ -75,6 +63,7 @@ import ch.bailu.aat.views.map.overlay.gpx.GpxDynOverlay;
 import ch.bailu.aat.views.map.overlay.gpx.GpxOverlayListOverlay;
 import ch.bailu.aat.views.map.overlay.gpx.GpxTestOverlay;
 import ch.bailu.aat.views.map.overlay.grid.GridDynOverlay;
+import ch.bailu.aat.views.preferences.VerticalScrollView;
 
 public class TestActivity extends AbsDispatcher implements OnClickListener {
     private static final String SOLID_KEY = "test";
@@ -113,9 +102,8 @@ public class TestActivity extends AbsDispatcher implements OnClickListener {
 
     private MultiView createMultiView() {
         map = new OsmInteractiveView(getServiceContext(), SOLID_KEY);
-        ViewWrapper list = new ViewWrapper(new TestList(this));
 
-        ContentDescription gpsData[] = new ContentDescription[]{
+        ContentDescription locationDescription[] = new ContentDescription[]{
                 new NameDescription(this),
                 new GpsStateDescription(this),
                 new AltitudeDescription(this),
@@ -129,7 +117,7 @@ public class TestActivity extends AbsDispatcher implements OnClickListener {
                 new BearingDescription(this),
         };
 
-        ContentDescription trackData[] = new ContentDescription[]{
+        ContentDescription trackerDescription[] = new ContentDescription[]{
                 new NameDescription(this),
                 new PathDescription(this),
                 new TrackerStateDescription(this),
@@ -144,24 +132,39 @@ public class TestActivity extends AbsDispatcher implements OnClickListener {
         };
 
 
-        final TrackDescriptionView gpsSummary = new SummaryListView(
-                this, SOLID_KEY, GpxInformation.ID.INFO_ID_LOCATION, gpsData);
+        VerticalScrollView locationView = new VerticalScrollView(this);
+        VerticalScrollView trackerView = new VerticalScrollView(this);
+        VerticalScrollView testsView = new VerticalScrollView(this);
 
-        final TrackDescriptionView trackSummary = new SummaryListView(
-                this, SOLID_KEY, GpxInformation.ID.INFO_ID_TRACKER, trackData);
+        testsView.add(new TestEntryView(new TestCoordinates(this)));
+        testsView.add(new TestEntryView(new TestGpx(this)));
+        testsView.add(new TestEntryView(new TestGpxLogRecovery(this)));
+        testsView.add(new TestEntryView(new TestTest(this)));
+        testsView.add(new TestEntryView(new PreferencesToSdcard(this)));
+        testsView.add(new TestEntryView(new PreferencesFromSdcard(this)));
+
 
         statusTextView = new StatusTextView(this);
 
-        TrackDescriptionView viewData[] = {
+
+        DescriptionInterface targets[] = {
                 map,
-                gpsSummary,
-                trackSummary,
-                list,
-                new ViewWrapper(statusTextView)
+                locationView.addAllContent(locationDescription, GpxInformation.ID.INFO_ID_LOCATION),
+                trackerView.addAllContent(trackerDescription, GpxInformation.ID.INFO_ID_TRACKER),
+                DescriptionInterface.NULL,
+                DescriptionInterface.NULL
+        };
+
+        View views[] = {
+                map,
+                locationView,
+                trackerView,
+                testsView,
+                statusTextView
         };
 
 
-        return new MultiView(this, SOLID_KEY, GpxInformation.ID.INFO_ID_ALL, viewData);
+        return new MultiView(this, SOLID_KEY, GpxInformation.ID.INFO_ID_ALL, views, targets);
     }
 
 
@@ -211,7 +214,7 @@ public class TestActivity extends AbsDispatcher implements OnClickListener {
                 new CurrentLocationSource(getServiceContext()),
                 new OverlaySource(getServiceContext()),
         };
-        setDispatcher(new ContentDispatcher(this, source, target));
+        setDispatcher(new RootDispatcher(this, source, target));
     }
 
     @Override
@@ -230,109 +233,29 @@ public class TestActivity extends AbsDispatcher implements OnClickListener {
         statusTextView.updateText(this);
     }
 
-    private class TestList extends ListView
-            implements ListAdapter, AdapterView.OnItemClickListener {
-        private final ArrayList<UnitTest> tests = new ArrayList<>();
 
-        public TestList(Context context) {
-            super(context);
-            AppTheme.themify(this, AppTheme.getHighlightColor());
-            tests.add(new TestCoordinates(context));
-            tests.add(new TestGpx(context));
-            tests.add(new TestGpxLogRecovery(context));
-            tests.add(new TestTest(context));
-            tests.add(new PreferencesToSdcard(context));
-            tests.add(new PreferencesFromSdcard(context));
+    private class TestEntryView extends AbsLabelTextView {
 
+        public TestEntryView(final UnitTest test) {
+            super(test.getContext(), test.getClass().getSimpleName());
 
-            setAdapter(this);
-            setOnItemClickListener(this);
+            setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                        try {
+                            test.test();
+                            setText("Test successfull");
+                            AppLog.i(getContext(), "Test sucessfull");
+
+                        } catch (AssertionError | Exception e) {
+                            setText("Test failed.");
+                            AppLog.e(getContext(), e);
+                        }
+                    }
+
+            });
         }
-
-        @Override
-        public Object getItem(int position) {
-            return null;
-        }
-
-        @Override
-        public long getItemId(int position) {
-            return 0;
-        }
-
-        @Override
-        public int getCount() {
-            return tests.size();
-        }
-
-        @Override
-        public int getItemViewType(int position) {
-            return 0;
-        }
-
-        @Override
-        public View getView(int position, View recycle, ViewGroup parent) {
-            TextView view = (TextView) recycle;
-
-            if (view == null) {
-                view = new TextView(getContext());
-                view.setTextSize(25);
-            }
-
-
-            view.setText(tests.get(position).getClass().getSimpleName());
-
-            return view;
-        }
-
-
-        @Override
-        public int getViewTypeCount() {
-            return 1;
-        }
-
-        @Override
-        public boolean hasStableIds() {
-            return false;
-        }
-
-        @Override
-        public boolean isEmpty() {
-            return false;
-        }
-
-        @Override
-        public void registerDataSetObserver(DataSetObserver observer) {
-        }
-
-        @Override
-        public void unregisterDataSetObserver(DataSetObserver observer) {
-        }
-
-        @Override
-        public boolean areAllItemsEnabled() {
-            return true;
-        }
-
-        @Override
-        public boolean isEnabled(int arg0) {
-            return true;
-        }
-
-        @Override
-        public void onItemClick(AdapterView<?> arg0, View v, int i,
-                                long arg3) {
-            if (i < tests.size()) {
-                try {
-                    tests.get(i).test();
-                    AppLog.i(getContext(), "Test Sucessfull");
-
-                } catch (AssertionError | Exception e) {
-                    AppLog.e(getContext(), e);
-                }
-            }
-
-        }
-
     }
+
 
 }

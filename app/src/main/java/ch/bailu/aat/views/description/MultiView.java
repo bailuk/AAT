@@ -1,4 +1,4 @@
-package ch.bailu.aat.views;
+package ch.bailu.aat.views.description;
 
 import android.content.Context;
 import android.util.SparseArray;
@@ -7,6 +7,7 @@ import android.view.View;
 import ch.bailu.aat.description.DescriptionInterface;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.preferences.Storage;
+import ch.bailu.aat.views.description.TrackDescriptionView;
 
 
 public class MultiView extends TrackDescriptionView {
@@ -39,6 +40,20 @@ public class MultiView extends TrackDescriptionView {
     public MultiView(Context context, String key, int filter, TrackDescriptionView[] d) {
         this(context, key, filter, d, d);
     }
+
+    public MultiView(Context context, String key, int filter, View[] v) {
+        this(context, key, filter, v, createNullDescription(v.length));
+    }
+
+    private static DescriptionInterface[] createNullDescription(int l) {
+        DescriptionInterface[] r = new DescriptionInterface[l];
+
+        for (int i = 0; i<r.length; i++) {
+            r[i] = DescriptionInterface.NULL;
+        }
+        return r;
+    }
+
 
     public void setNext() {
         setActive(active+1);
@@ -75,7 +90,7 @@ public class MultiView extends TrackDescriptionView {
     public void updateGpxContent(GpxInformation info) {
         if (filter.pass(info)) {
             informationMap.put(info.getID(), info);
-            for (DescriptionInterface target : targets) target.updateGpxContent(info);
+            targets[active].updateGpxContent(info);
         }
     }
 

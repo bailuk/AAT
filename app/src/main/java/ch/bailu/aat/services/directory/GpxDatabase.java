@@ -1,12 +1,13 @@
 package ch.bailu.aat.services.directory;
 
-import java.io.File;
-import java.io.IOException;
-
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteCantOpenDatabaseException;
 import android.database.sqlite.SQLiteDatabase;
+
+import java.io.File;
+import java.io.IOException;
+
 import ch.bailu.aat.services.ServiceContext;
 
 

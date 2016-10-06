@@ -1,12 +1,12 @@
 package org.osmdroid.tileprovider.tilesource;
 
-import java.io.InputStream;
+import android.graphics.drawable.Drawable;
 
 import org.osmdroid.ResourceProxy;
 import org.osmdroid.tileprovider.MapTile;
 import org.osmdroid.tileprovider.tilesource.BitmapTileSourceBase.LowMemoryException;
 
-import android.graphics.drawable.Drawable;
+import java.io.InputStream;
 
 public interface ITileSource {
 

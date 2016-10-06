@@ -1,11 +1,12 @@
 package ch.bailu.aat.services.tracker.location;
 
-import java.io.Closeable;
-import java.util.ArrayList;
-
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
+
+import java.io.Closeable;
+import java.util.ArrayList;
+
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.interfaces.GpxPointInterface;
 import ch.bailu.aat.preferences.PresetDependent;

@@ -1,8 +1,6 @@
 package ch.bailu.aat.activities;
 
 
-import java.io.File;
-
 import android.os.Bundle;
 import android.view.ContextMenu;
 import android.view.MenuItem;
@@ -13,14 +11,17 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import java.io.File;
+
 import ch.bailu.aat.R;
 import ch.bailu.aat.description.ContentDescription;
 import ch.bailu.aat.description.DescriptionInterface;
-import ch.bailu.aat.dispatcher.ContentDispatcher;
 import ch.bailu.aat.dispatcher.ContentSource;
 import ch.bailu.aat.dispatcher.CurrentLocationSource;
 import ch.bailu.aat.dispatcher.IteratorSource;
 import ch.bailu.aat.dispatcher.OverlaySource;
+import ch.bailu.aat.dispatcher.RootDispatcher;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.helpers.AppTheme;
 import ch.bailu.aat.helpers.FileAction;
@@ -32,11 +33,9 @@ import ch.bailu.aat.services.directory.IteratorSimple;
 import ch.bailu.aat.views.ContentView;
 import ch.bailu.aat.views.ControlBar;
 import ch.bailu.aat.views.DbSynchronizerBusyIndicator;
-import ch.bailu.aat.views.DirectorySelection;
 import ch.bailu.aat.views.GpxListView;
 import ch.bailu.aat.views.MainControlBar;
-import ch.bailu.aat.views.MultiView;
-import ch.bailu.aat.views.SummaryListView;
+import ch.bailu.aat.views.description.MultiView;
 import ch.bailu.aat.views.map.OsmInteractiveView;
 import ch.bailu.aat.views.map.overlay.CurrentLocationOverlay;
 import ch.bailu.aat.views.map.overlay.OsmOverlay;
@@ -123,7 +122,7 @@ public abstract class AbsGpxListActivity extends AbsDispatcher implements OnItem
         map.setOverlayList(overlayList);
 
 
-        ContentDescription summaryData[] = getSummaryData();
+
 
         ContentDescription listData[] = getGpxListItemData();
         listView = new GpxListView(this, listData);
@@ -135,23 +134,17 @@ public abstract class AbsGpxListActivity extends AbsDispatcher implements OnItem
         AppTheme.themify(label);
         label.setTextColor(AppTheme.getHighlightColor());
 
-
+        ContentDescription content[] = getSummaryData();
         VerticalScrollView scrollView= new VerticalScrollView(this);
 
-        SummaryListView summaryList = new SummaryListView(
-                this, solid_key, GpxInformation.ID.INFO_ID_LIST_SUMMARY, summaryData);
-
         scrollView.add(new TitleView(this, getLabel()));
-        scrollView.add(new DirectorySelection(map.map));
+        scrollView.addAllFilterViews(map.map);
         scrollView.add(new TitleView(this, "Summary*"));
-        scrollView.add(summaryList);
-
-
 
         final DescriptionInterface targets[] = {
                 DescriptionInterface.NULL,
                 map,
-                summaryList
+                scrollView.addAllContent(content, GpxInformation.ID.INFO_ID_LIST_SUMMARY)
         };
 
         final View views[] = {
@@ -184,7 +177,7 @@ public abstract class AbsGpxListActivity extends AbsDispatcher implements OnItem
                 summary
         };
 
-        setDispatcher(new ContentDispatcher(this,source, target));
+        setDispatcher(new RootDispatcher(this,source, target));
 
     }
 

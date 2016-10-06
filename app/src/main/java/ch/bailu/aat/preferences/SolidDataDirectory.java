@@ -11,7 +11,7 @@ import ch.bailu.aat.R;
 public class SolidDataDirectory extends SolidDirectory {
 
     public SolidDataDirectory(Context c) {
-        super(Storage.global(c), SolidTileCacheDirectory.class.getSimpleName());
+        super(Storage.global(c), SolidDataDirectory.class.getSimpleName());
     }
 
 

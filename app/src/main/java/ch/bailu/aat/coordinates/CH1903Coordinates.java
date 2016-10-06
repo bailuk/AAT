@@ -1,9 +1,9 @@
 package ch.bailu.aat.coordinates;
 
-import java.util.Locale;
-
 import org.osmdroid.api.IGeoPoint;
 import org.osmdroid.util.GeoPoint;
+
+import java.util.Locale;
 
 
 

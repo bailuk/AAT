@@ -1,6 +1,7 @@
 package ch.bailu.aat.preferences;
 
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
+
 import ch.bailu.aat.helpers.ContextWrapperInterface;
 
 public interface SolidTypeInterface extends ContextWrapperInterface {

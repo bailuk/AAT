@@ -1,11 +1,12 @@
 package ch.bailu.aat.views.map.overlay.control;
 
-import org.osmdroid.views.MapView;
-
 import android.graphics.Color;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+
+import org.osmdroid.views.MapView;
+
 import ch.bailu.aat.helpers.Timer;
 import ch.bailu.aat.views.ControlBar;
 import ch.bailu.aat.views.map.OsmInteractiveView;

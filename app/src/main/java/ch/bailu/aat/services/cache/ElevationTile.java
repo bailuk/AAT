@@ -1,18 +1,17 @@
 package ch.bailu.aat.services.cache;
 
-import java.util.ArrayList;
-
-import microsoft.mappoint.TileSystem;
-
-import org.osmdroid.tileprovider.MapTile;
-import org.osmdroid.util.GeoPoint;
-
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.util.SparseArray;
+
+import org.osmdroid.tileprovider.MapTile;
+import org.osmdroid.util.GeoPoint;
+
+import java.util.ArrayList;
+
 import ch.bailu.aat.coordinates.SrtmCoordinates;
 import ch.bailu.aat.helpers.AppBroadcaster;
 import ch.bailu.aat.services.ServiceContext;
@@ -23,6 +22,7 @@ import ch.bailu.aat.services.dem.DemGeoToIndex;
 import ch.bailu.aat.services.dem.DemProvider;
 import ch.bailu.aat.services.dem.DemSplitter;
 import ch.bailu.aat.services.dem.ElevationUpdaterClient;
+import microsoft.mappoint.TileSystem;
 
 public abstract class ElevationTile extends TileObject implements ElevationUpdaterClient{
 

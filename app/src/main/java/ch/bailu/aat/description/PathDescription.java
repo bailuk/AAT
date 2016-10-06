@@ -1,8 +1,9 @@
 package ch.bailu.aat.description;
 
+import android.content.Context;
+
 import ch.bailu.aat.R;
 import ch.bailu.aat.gpx.GpxInformation;
-import android.content.Context;
 
 public class PathDescription extends NameDescription {
     

@@ -2,14 +2,19 @@ package ch.bailu.aat.preferences;
 
 import android.content.Context;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
+
 import ch.bailu.aat.coordinates.BoundingBox;
 import ch.bailu.aat.services.directory.GpxDbConstants;
 
 public class SolidBoundingBox implements SolidTypeInterface {
     private final SolidInteger N, W, S, E;
 
+
+    private final String label;
     
-    public SolidBoundingBox(final Storage storage, final String key) {
+    public SolidBoundingBox(final Storage storage, final String key, String l) {
+        label = l;
+
         N = new SolidInteger(storage, key + "_N");
         E = new SolidInteger(storage, key + "_E");
         S = new SolidInteger(storage, key + "_S");
@@ -30,10 +35,17 @@ public class SolidBoundingBox implements SolidTypeInterface {
         S.setValue(b.getLatSouthE6());
         W.setValue(b.getLonWestE6());
     }
-    
+
+
     public boolean hasKey(String k) {
         return N.hasKey(k) || E.hasKey(k) || S.hasKey(k) || W.hasKey(k);
     }
+
+
+    public String getValueAsString() {
+        return getValue().toString();
+    }
+
 
     @Override
     public Context getContext() {
@@ -50,10 +62,12 @@ public class SolidBoundingBox implements SolidTypeInterface {
         return N.getStorage();
     }
 
+
     @Override
     public String getLabel() {
-        return SolidType.NULL_LABEL;
+        return label;
     }
+
 
     @Override
     public void register(OnSharedPreferenceChangeListener listener) {

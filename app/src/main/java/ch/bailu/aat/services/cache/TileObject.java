@@ -1,9 +1,9 @@
 package ch.bailu.aat.services.cache;
 
-import org.osmdroid.tileprovider.MapTile;
-
 import android.content.Context;
 import android.graphics.Bitmap;
+
+import org.osmdroid.tileprovider.MapTile;
 
 public abstract class TileObject extends ObjectHandle{
     public static final int TILE_SIZE=256;

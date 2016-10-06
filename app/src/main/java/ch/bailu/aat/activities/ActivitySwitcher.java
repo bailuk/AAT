@@ -1,12 +1,13 @@
 package ch.bailu.aat.activities;
 
-import java.io.File;
-
-import org.osmdroid.util.BoundingBoxE6;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+
+import org.osmdroid.util.BoundingBoxE6;
+
+import java.io.File;
+
 import ch.bailu.aat.R;
 import ch.bailu.aat.helpers.AppIntent;
 

@@ -1,12 +1,12 @@
 package ch.bailu.aat.helpers;
 
-import java.io.File;
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
+import android.content.Context;
 
 import org.osmdroid.util.BoundingBoxE6;
 
-import android.content.Context;
+import java.io.File;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 
 public class NominatimApi extends OsmApiHelper {
     public final static String NAME="Nominatim";

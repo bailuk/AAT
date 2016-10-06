@@ -1,15 +1,16 @@
 package ch.bailu.aat.services.cache;
 
-import java.io.File;
-
-import org.osmdroid.tileprovider.MapTile;
-
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
+
+import org.osmdroid.tileprovider.MapTile;
+
+import java.io.File;
+
 import ch.bailu.aat.helpers.AppBroadcaster;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.background.ProcessHandle;

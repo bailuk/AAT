@@ -1,14 +1,12 @@
 package ch.bailu.aat.views.preferences;
 
-import android.content.Context;
-
 import ch.bailu.aat.preferences.SolidIndexList;
 
 public class SolidIndexListView extends AbsSolidView {
     private final SolidIndexList solid;
 
     public SolidIndexListView(SolidIndexList s) {
-        super(s.getContext(), s);
+        super(s);
         solid = s;
     }
 

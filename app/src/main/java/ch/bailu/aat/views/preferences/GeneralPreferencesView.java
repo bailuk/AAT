@@ -23,7 +23,7 @@ public class GeneralPreferencesView extends VerticalScrollView {
 
         add(new TitleView(context, R.string.p_general));
         add(new SolidIndexListView(new SolidUnit(context)));
-        add(new SolidIntegerView(context,new SolidWeight(context)));
+        add(new SolidIntegerView(new SolidWeight(context)));
 
 
         final SolidPreset spreset= new SolidPreset(context);

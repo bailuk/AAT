@@ -8,10 +8,10 @@ import ch.bailu.aat.gpx.GpxInformation;
 public abstract class ContentSource implements Closeable, DescriptionInterface {
 
     public static final ContentSource NULL_LIST[] = new ContentSource[]{};
-    private ContentDispatcher dispatcher = ContentDispatcher.NULL; 
+    private RootDispatcher dispatcher = RootDispatcher.NULL;
 
 
-    public void setDispatcher(ContentDispatcher d) {
+    public void setDispatcher(RootDispatcher d) {
         dispatcher = d;
     }
 

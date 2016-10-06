@@ -4,15 +4,18 @@ package ch.bailu.aat.views;
 import android.content.Context;
 import android.graphics.Color;
 import android.widget.TextView;
+
 import ch.bailu.aat.description.ContentDescription;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.helpers.AppLayout;
 import ch.bailu.aat.helpers.AppTheme;
 import ch.bailu.aat.services.ServiceContext;
+import ch.bailu.aat.views.description.DescriptionViewGroup;
+import ch.bailu.aat.views.description.TrackDescriptionView;
 import ch.bailu.aat.views.map.OsmPreviewGenerator;
 
 
-public class GpxListEntryView extends  DescriptionViewGroup {
+public class GpxListEntryView extends DescriptionViewGroup {
     private static final String SOLID_KEY = GpxListEntryView.class.getSimpleName();   
     private final static int SPACE=20;
 

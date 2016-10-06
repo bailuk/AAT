@@ -8,9 +8,9 @@ package microsoft.mappoint;
  *
  */
 
-import org.osmdroid.util.GeoPoint;
-
 import android.graphics.Point;
+
+import org.osmdroid.util.GeoPoint;
 
 /**
  * This class provides methods to handle the Mercator projection that is used for the osmdroid tile

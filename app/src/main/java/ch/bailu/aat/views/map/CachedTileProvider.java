@@ -1,12 +1,13 @@
 package ch.bailu.aat.views.map;
 
-import org.osmdroid.tileprovider.MapTile;
-
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Handler;
+
+import org.osmdroid.tileprovider.MapTile;
+
 import ch.bailu.aat.helpers.AppBroadcaster;
 import ch.bailu.aat.helpers.AppIntent;
 import ch.bailu.aat.services.ServiceContext;

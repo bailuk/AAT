@@ -1,6 +1,7 @@
 package ch.bailu.aat.views.map.overlay.gpx;
 
 import android.graphics.drawable.Drawable;
+
 import ch.bailu.aat.helpers.AppTheme;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.views.map.AbsOsmView;

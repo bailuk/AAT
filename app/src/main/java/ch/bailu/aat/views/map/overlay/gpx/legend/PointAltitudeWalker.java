@@ -1,6 +1,7 @@
 package ch.bailu.aat.views.map.overlay.gpx.legend;
 
 import android.content.Context;
+
 import ch.bailu.aat.description.DistanceDescription;
 import ch.bailu.aat.gpx.GpxList;
 import ch.bailu.aat.gpx.GpxPointNode;

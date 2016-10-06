@@ -21,11 +21,11 @@ public class MapTilePreferencesView extends VerticalScrollView {
         final Context context = scontext.getContext();
 
         add(new TitleView(context, "Map Tiles*"));
-        add(new SolidIndexListView(context,  new SolidTileSize(context)));
+        add(new SolidIndexListView(new SolidTileSize(context)));
         add(new SolidDirectoryView(acontext, new SolidTileCacheDirectory(context)));
-        add(new SolidIndexListView(context,  new SolidTrimMode(context)));
-        add(new SolidIndexListView(context,  new SolidTrimSize(context)));
-        add(new SolidIndexListView(context,  new SolidTrimDate(context)));
+        add(new SolidIndexListView(new SolidTrimMode(context)));
+        add(new SolidIndexListView(new SolidTrimSize(context)));
+        add(new SolidIndexListView(new SolidTrimDate(context)));
 
         tileRemover = new TileRemoverView(scontext);
         add(tileRemover);

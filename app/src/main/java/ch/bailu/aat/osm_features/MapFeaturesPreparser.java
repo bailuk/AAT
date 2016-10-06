@@ -1,5 +1,7 @@
 package ch.bailu.aat.osm_features;
 
+import android.content.Context;
+
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -7,7 +9,6 @@ import java.io.IOException;
 import java.io.Writer;
 import java.util.ArrayList;
 
-import android.content.Context;
 import ch.bailu.aat.gpx.parser.SimpleStream;
 import ch.bailu.aat.helpers.AppBroadcaster;
 import ch.bailu.aat.helpers.AppDirectory;

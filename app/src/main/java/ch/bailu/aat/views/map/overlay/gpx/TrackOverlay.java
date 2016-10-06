@@ -2,6 +2,7 @@ package ch.bailu.aat.views.map.overlay.gpx;
 
 import android.graphics.Color;
 import android.graphics.Paint;
+
 import ch.bailu.aat.views.graph.ColorTable;
 import ch.bailu.aat.views.map.AbsOsmView;
 import ch.bailu.aat.views.map.overlay.MapPainter;

@@ -1,7 +1,8 @@
 package ch.bailu.aat.preferences;
 
-import ch.bailu.aat.R;
 import android.content.Context;
+
+import ch.bailu.aat.R;
 
 public class SolidMET extends SolidStaticIndexList {
     private final static String KEY="met";

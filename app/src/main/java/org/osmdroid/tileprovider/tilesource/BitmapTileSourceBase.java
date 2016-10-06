@@ -1,18 +1,19 @@
 package org.osmdroid.tileprovider.tilesource;
 
-import java.io.File;
-import java.io.InputStream;
-import java.util.Random;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 
 import org.osmdroid.ResourceProxy;
 import org.osmdroid.ResourceProxy.string;
 import org.osmdroid.tileprovider.MapTile;
 import org.osmdroid.tileprovider.constants.OpenStreetMapTileProviderConstants;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
+import java.io.File;
+import java.io.InputStream;
+import java.util.Random;
+
 import ch.bailu.aat.helpers.Logger;
 import ch.bailu.aat.helpers.LoggerFactory;
 

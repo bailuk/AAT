@@ -1,10 +1,12 @@
-package ch.bailu.aat.views;
+package ch.bailu.aat.views.description;
 
 import android.view.View;
 import android.view.View.OnClickListener;
+
 import ch.bailu.aat.description.TrackerStateDescription;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.services.ServiceContext;
+import ch.bailu.aat.views.description.NumberButton;
 
 public class TrackerStateButton extends NumberButton implements OnClickListener {
 
@@ -26,6 +28,4 @@ public class TrackerStateButton extends NumberButton implements OnClickListener 
             scontext.getTrackerService().getState().onStartPauseResume();
         }
     }
-
-    
 }

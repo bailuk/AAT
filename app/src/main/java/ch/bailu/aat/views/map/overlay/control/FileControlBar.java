@@ -1,9 +1,9 @@
 package ch.bailu.aat.views.map.overlay.control;
 
-import java.io.File;
-
 import android.view.View;
 import android.widget.LinearLayout;
+
+import java.io.File;
 
 import ch.bailu.aat.R;
 import ch.bailu.aat.activities.AbsGpxListActivity;

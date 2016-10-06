@@ -2,10 +2,11 @@ package ch.bailu.aat.views.graph;
 
 import android.content.Context;
 import android.graphics.Canvas;
+
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.GpxList;
 import ch.bailu.aat.preferences.SolidUnit;
-import ch.bailu.aat.views.TrackDescriptionView;
+import ch.bailu.aat.views.description.TrackDescriptionView;
 
 public abstract class AbsGraphView extends TrackDescriptionView {
     

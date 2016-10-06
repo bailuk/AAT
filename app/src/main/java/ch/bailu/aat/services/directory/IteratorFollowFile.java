@@ -1,9 +1,10 @@
 package ch.bailu.aat.services.directory;
 
+import android.database.Cursor;
+
 import java.io.Closeable;
 import java.io.IOException;
 
-import android.database.Cursor;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.helpers.AppLog;
 import ch.bailu.aat.services.ServiceContext;

@@ -1,19 +1,19 @@
 package org.osmdroid.views.overlay;
 
-import java.util.AbstractList;
-import java.util.Iterator;
-import java.util.ListIterator;
-import java.util.concurrent.CopyOnWriteArrayList;
-
-import org.osmdroid.views.MapView;
-import org.osmdroid.views.overlay.Overlay.Snappable;
-
 import android.graphics.Canvas;
 import android.graphics.Point;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
+
+import org.osmdroid.views.MapView;
+import org.osmdroid.views.overlay.Overlay.Snappable;
+
+import java.util.AbstractList;
+import java.util.Iterator;
+import java.util.ListIterator;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class OverlayManager extends AbstractList<Overlay> {
 

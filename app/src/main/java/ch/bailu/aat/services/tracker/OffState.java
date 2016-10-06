@@ -2,9 +2,9 @@ package ch.bailu.aat.services.tracker;
 
 import java.io.IOException;
 
+import ch.bailu.aat.R;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.helpers.AppLog;
-import ch.bailu.aat.R;
 
 
 public class OffState extends State {

@@ -1,6 +1,7 @@
 package ch.bailu.aat.views.map.overlay.gpx.legend;
 
 import android.graphics.Color;
+
 import ch.bailu.aat.views.map.AbsOsmView;
 import ch.bailu.aat.views.map.overlay.MapPainter;
 import ch.bailu.aat.views.map.overlay.MapTwoNodes;

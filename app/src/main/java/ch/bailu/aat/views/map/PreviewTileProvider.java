@@ -1,12 +1,13 @@
 package ch.bailu.aat.views.map;
 
-import java.io.Closeable;
-import java.util.ArrayList;
+import android.graphics.drawable.Drawable;
+import android.os.Handler;
 
 import org.osmdroid.tileprovider.MapTile;
 
-import android.graphics.drawable.Drawable;
-import android.os.Handler;
+import java.io.Closeable;
+import java.util.ArrayList;
+
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.cache.TileStackObject;
 

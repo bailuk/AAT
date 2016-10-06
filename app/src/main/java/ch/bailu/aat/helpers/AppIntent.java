@@ -1,8 +1,8 @@
 package ch.bailu.aat.helpers;
 
-import org.osmdroid.util.BoundingBoxE6;
-
 import android.content.Intent;
+
+import org.osmdroid.util.BoundingBoxE6;
 
 public class AppIntent {
     private static final String EXTRA_FILE="file";

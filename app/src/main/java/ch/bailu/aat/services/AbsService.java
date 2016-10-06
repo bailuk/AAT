@@ -1,17 +1,17 @@
 package ch.bailu.aat.services;
 
 
+import android.app.Service;
+import android.content.Intent;
+import android.os.Binder;
+import android.os.IBinder;
+
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
 import ch.bailu.aat.helpers.AppLog;
 import ch.bailu.aat.helpers.Timer;
-
-import android.app.Service;
-import android.content.Intent;
-import android.os.Binder;
-import android.os.IBinder;
 
 public abstract class AbsService  extends Service {
     private static int allinstances, allcreations;

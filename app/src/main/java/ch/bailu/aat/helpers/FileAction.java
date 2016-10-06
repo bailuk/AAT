@@ -1,21 +1,22 @@
 package ch.bailu.aat.helpers;
 
-import java.io.File;
-import java.io.IOException;
-
 import android.app.Activity;
 import android.view.View;
 import android.widget.EditText;
+
+import java.io.File;
+import java.io.IOException;
+
 import ch.bailu.aat.R;
 import ch.bailu.aat.activities.AbsServiceLink;
 import ch.bailu.aat.helpers.file.FileIntent;
 import ch.bailu.aat.helpers.file.FileUI;
 import ch.bailu.aat.menus.FileMenu;
-import ch.bailu.aat.views.preferences.AddOverlayDialog;
 import ch.bailu.aat.preferences.SolidDirectoryQuery;
 import ch.bailu.aat.preferences.SolidMockLocationFile;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.directory.Iterator;
+import ch.bailu.aat.views.preferences.AddOverlayDialog;
 
 public class FileAction   {
     private final File file;

@@ -1,6 +1,5 @@
 package ch.bailu.aat.helpers;
 
-import java.io.File;
 /*
 public class FileList {
     private final File directory;

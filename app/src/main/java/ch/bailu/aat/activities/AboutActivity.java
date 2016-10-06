@@ -17,12 +17,8 @@ import ch.bailu.aat.services.tileremover.TileRemoverService;
 import ch.bailu.aat.views.ContentView;
 import ch.bailu.aat.views.ControlBar;
 import ch.bailu.aat.views.HtmlScrollTextView;
-import ch.bailu.aat.views.HtmlTextView;
 import ch.bailu.aat.views.MainControlBar;
-import ch.bailu.aat.views.MultiView;
-import ch.bailu.aat.views.TrackDescriptionView;
-import ch.bailu.aat.views.ViewWrapper;
-import ch.bailu.aat.views.preferences.MapTilePreferencesView;
+import ch.bailu.aat.views.description.MultiView;
 
 
 public class AboutActivity extends AbsDispatcher implements View.OnClickListener {
@@ -75,12 +71,15 @@ public class AboutActivity extends AbsDispatcher implements View.OnClickListener
 
 
 
-        TrackDescriptionView multiViewLayout[] = {
-                new ViewWrapper(new HtmlScrollTextView(this, R.string.README_about_html)),
-                new ViewWrapper(new HtmlScrollTextView(this, R.string.README_enduser_html)),
+        View multiViewLayout[] = {
+                new HtmlScrollTextView(this, R.string.README_about_html),
+                new HtmlScrollTextView(this, R.string.README_enduser_html),
         };
 
-        return new MultiView(this, SOLID_KEY, GpxInformation.ID.INFO_ID_ALL, multiViewLayout);
+        return new MultiView(this,
+                SOLID_KEY,
+                GpxInformation.ID.INFO_ID_ALL,
+                multiViewLayout);
     }
 
 

@@ -1,9 +1,9 @@
 package org.osmdroid.util;
 
-import org.osmdroid.util.constants.UtilConstants;
-
 import android.location.Location;
 import android.location.LocationManager;
+
+import org.osmdroid.util.constants.UtilConstants;
 
 public class LocationUtils implements UtilConstants {
 

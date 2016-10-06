@@ -1,10 +1,10 @@
 package ch.bailu.aat.views.preferences;
 
-import java.io.File;
-
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+
+import java.io.File;
 
 import ch.bailu.aat.preferences.SolidOverlayFileList;
 

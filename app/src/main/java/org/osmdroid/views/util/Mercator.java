@@ -1,12 +1,12 @@
 // Created by plusminus on 17:53:07 - 25.09.2008
 package org.osmdroid.views.util;
 
+import android.graphics.Point;
+
 import org.osmdroid.api.IGeoPoint;
 import org.osmdroid.util.BoundingBoxE6;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.util.constants.MapViewConstants;
-
-import android.graphics.Point;
 
 /**
  * http://wiki.openstreetmap.org/index.php/Mercator
