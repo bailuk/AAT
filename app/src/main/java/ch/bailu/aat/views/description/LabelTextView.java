@@ -3,11 +3,11 @@ package ch.bailu.aat.views.description;
 import android.content.Context;
 
 import ch.bailu.aat.description.ContentDescription;
-import ch.bailu.aat.description.DescriptionInterface;
+import ch.bailu.aat.description.OnContentUpdatedInterface;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.views.AbsLabelTextView;
 
-public class LabelTextView extends AbsLabelTextView implements DescriptionInterface{
+public class LabelTextView extends AbsLabelTextView implements OnContentUpdatedInterface {
     private final ContentDescription description;
 
     public LabelTextView(Context context, ContentDescription d) {
@@ -25,6 +25,6 @@ public class LabelTextView extends AbsLabelTextView implements DescriptionInterf
 
 
     public void setText() {
-        setText(description.getValue()+" "+ description.getUnit());
+        setText(description.getValueAsString());
     }
 }

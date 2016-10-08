@@ -13,7 +13,7 @@ import ch.bailu.aat.description.AltitudeDescription;
 import ch.bailu.aat.description.AverageSpeedDescription;
 import ch.bailu.aat.description.ContentDescription;
 import ch.bailu.aat.description.CurrentSpeedDescription;
-import ch.bailu.aat.description.DescriptionInterface;
+import ch.bailu.aat.description.OnContentUpdatedInterface;
 import ch.bailu.aat.description.DistanceDescription;
 import ch.bailu.aat.description.TimeDescription;
 import ch.bailu.aat.dispatcher.ContentSource;
@@ -55,8 +55,8 @@ public class SplitViewActivity extends AbsDispatcher implements OnClickListener{
     private TrackerStateButton      trackerState;
 
     private EditorHelper          edit;
-    
-    
+
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,7 +64,7 @@ public class SplitViewActivity extends AbsDispatcher implements OnClickListener{
         edit = new EditorHelper(getServiceContext());
         setContentView(createContentView());
         createDispatcher();
-        
+
     }
 
 
@@ -88,13 +88,13 @@ public class SplitViewActivity extends AbsDispatcher implements OnClickListener{
 
 
     private TrackDescriptionView createMultiView() {
-        ContentDescription[] cockpitA = new ContentDescription[] { 
+        ContentDescription[] cockpitA = new ContentDescription[] {
                 new DistanceDescription(this),
                 new AltitudeDescription(this),
                 new TimeDescription(this),
         };
 
-        ContentDescription[] cockpitB = new ContentDescription[] { 
+        ContentDescription[] cockpitB = new ContentDescription[] {
                 new CurrentSpeedDescription(this),
                 new AverageSpeedDescription(this),
         };
@@ -104,25 +104,19 @@ public class SplitViewActivity extends AbsDispatcher implements OnClickListener{
 
         OsmOverlay overlayList[] = {
                 new GpxOverlayListOverlay(mapViewAlt,getServiceContext()),
-                new GpxDynOverlay(mapViewAlt, getServiceContext(), GpxInformation.ID.INFO_ID_TRACKER), 
+                new GpxDynOverlay(mapViewAlt, getServiceContext(), GpxInformation.ID.INFO_ID_TRACKER),
                 new CurrentLocationOverlay(mapViewAlt),
                 new NavigationBarOverlay(mapViewAlt,6),
         };
         mapViewAlt.setOverlayList(overlayList);
 
 
-        TrackDescriptionView viewData[] = {
-                new CockpitView(this, SOLID_KEY, GpxInformation.ID.INFO_ID_TRACKER, cockpitA),
-                new CockpitView(this, SOLID_KEY, GpxInformation.ID.INFO_ID_TRACKER, cockpitB),
-                new VerticalView(this, SOLID_KEY, GpxInformation.ID.INFO_ID_TRACKER, new TrackDescriptionView[] {
-                        new DistanceAltitudeGraphView(this, SOLID_KEY),
-                        new DistanceSpeedGraphView(this, SOLID_KEY)}),   
-                        mapViewAlt,
-        };   
-
-
-
-        multiView = new MultiView(this, SOLID_KEY, GpxInformation.ID.INFO_ID_ALL, viewData);
+        multiView = new MultiView(this, SOLID_KEY, GpxInformation.ID.INFO_ID_TRACKER);
+        multiView.addT(new CockpitView(this, SOLID_KEY, GpxInformation.ID.INFO_ID_TRACKER, cockpitA));
+        multiView.addT(new CockpitView(this, SOLID_KEY, GpxInformation.ID.INFO_ID_TRACKER, cockpitB));
+        multiView.addT(new DistanceAltitudeGraphView(this, SOLID_KEY));
+        multiView.addT(new DistanceSpeedGraphView(this, SOLID_KEY));
+        multiView.addT(mapViewAlt);
 
 
 
@@ -139,7 +133,7 @@ public class SplitViewActivity extends AbsDispatcher implements OnClickListener{
         trackerState = new TrackerStateButton(this.getServiceContext());
         bar.addView(trackerState);
         bar.setOnClickListener1(this);
-        
+
         return bar;
     }
 
@@ -164,38 +158,38 @@ public class SplitViewActivity extends AbsDispatcher implements OnClickListener{
     }
 
 
-    
+
     private void createDispatcher() {
-            
-            OsmOverlay overlayList[] = {
-                    new GpxOverlayListOverlay(mapView, getServiceContext()),
-                    new GpxDynOverlay(mapView, getServiceContext(), GpxInformation.ID.INFO_ID_TRACKER), 
-                    new CurrentLocationOverlay(mapView),
-                    new GridDynOverlay(mapView, getServiceContext()),
-                    new NavigationBarOverlay(mapView),
-                    new InformationBarOverlay(mapView),
-                    new CustomBarOverlay(mapView, createButtonBar()),
-                    new EditorOverlay(mapView, getServiceContext(),  GpxInformation.ID.INFO_ID_EDITOR_DRAFT, edit),
 
-            };
-            mapView.setOverlayList(overlayList);
+        OsmOverlay overlayList[] = {
+                new GpxOverlayListOverlay(mapView, getServiceContext()),
+                new GpxDynOverlay(mapView, getServiceContext(), GpxInformation.ID.INFO_ID_TRACKER),
+                new CurrentLocationOverlay(mapView),
+                new GridDynOverlay(mapView, getServiceContext()),
+                new NavigationBarOverlay(mapView),
+                new InformationBarOverlay(mapView),
+                new CustomBarOverlay(mapView, createButtonBar()),
+                new EditorOverlay(mapView, getServiceContext(),  GpxInformation.ID.INFO_ID_EDITOR_DRAFT, edit),
+
+        };
+        mapView.setOverlayList(overlayList);
 
 
-            DescriptionInterface[] target = new DescriptionInterface[] {
-                    multiView, trackerState, mapView, this
-            };
+        OnContentUpdatedInterface[] target = new OnContentUpdatedInterface[] {
+                multiView, trackerState, mapView, this
+        };
 
-            ContentSource[] source = new ContentSource[] {
-                    new EditorSource(getServiceContext(),edit),
-                    new TrackerSource(getServiceContext()),
-                    new CurrentLocationSource(getServiceContext()),
-                    new OverlaySource(getServiceContext()),
-            };
+        ContentSource[] source = new ContentSource[] {
+                new EditorSource(getServiceContext(),edit),
+                new TrackerSource(getServiceContext()),
+                new CurrentLocationSource(getServiceContext()),
+                new OverlaySource(getServiceContext()),
+        };
 
-            setDispatcher(new RootDispatcher(this,source, target));
+        setDispatcher(new RootDispatcher(this,source, target));
 
     }
-    
+
     @Override
     public void onServicesUp(boolean firstRun) {}
 

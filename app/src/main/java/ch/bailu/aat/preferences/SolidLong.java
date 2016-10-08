@@ -2,7 +2,7 @@ package ch.bailu.aat.preferences;
 
 import ch.bailu.aat.helpers.AppLog;
 
-public class SolidLong extends SolidType {
+public class SolidLong extends AbsSolidType {
 
 
     private final String key;

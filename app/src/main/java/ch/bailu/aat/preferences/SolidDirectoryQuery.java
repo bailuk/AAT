@@ -2,10 +2,12 @@ package ch.bailu.aat.preferences;
 
 import android.content.Context;
 
+import java.util.ArrayList;
+
 import ch.bailu.aat.R;
 import ch.bailu.aat.services.directory.GpxDbConstants;
 
-public class SolidDirectoryQuery extends SolidString {
+public class SolidDirectoryQuery extends SolidDirectory {
     private static final String KEY_DIR_DIRECTORY="DIR_DIRECTORY";
     private static final String KEY_DIR_INDEX="DIR_INDEX_";
 
@@ -125,6 +127,11 @@ public class SolidDirectoryQuery extends SolidString {
         }
 
         return selection;
+    }
+
+    @Override
+    public ArrayList<String> buildSelection(ArrayList<String> list) {
+        return null;
     }
 }
 

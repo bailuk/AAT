@@ -16,7 +16,9 @@ import java.io.File;
 
 import ch.bailu.aat.R;
 import ch.bailu.aat.description.ContentDescription;
-import ch.bailu.aat.description.DescriptionInterface;
+import ch.bailu.aat.description.DistanceDescription;
+import ch.bailu.aat.description.OnContentUpdatedInterface;
+import ch.bailu.aat.description.TrackSizeDescription;
 import ch.bailu.aat.dispatcher.ContentSource;
 import ch.bailu.aat.dispatcher.CurrentLocationSource;
 import ch.bailu.aat.dispatcher.IteratorSource;
@@ -25,7 +27,6 @@ import ch.bailu.aat.dispatcher.RootDispatcher;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.helpers.AppTheme;
 import ch.bailu.aat.helpers.FileAction;
-import ch.bailu.aat.helpers.file.FileIntent;
 import ch.bailu.aat.menus.FileMenu;
 import ch.bailu.aat.preferences.SolidDirectoryQuery;
 import ch.bailu.aat.services.directory.Iterator;
@@ -45,11 +46,13 @@ import ch.bailu.aat.views.map.overlay.control.NavigationBarOverlay;
 import ch.bailu.aat.views.map.overlay.gpx.GpxDynOverlay;
 import ch.bailu.aat.views.map.overlay.gpx.GpxOverlayListOverlay;
 import ch.bailu.aat.views.map.overlay.grid.GridDynOverlay;
+import ch.bailu.aat.views.preferences.SolidDirectoryMenuButton;
+import ch.bailu.aat.views.preferences.SolidExtendetDirectoryView;
 import ch.bailu.aat.views.preferences.TitleView;
 import ch.bailu.aat.views.preferences.VerticalScrollView;
 
 
-public abstract class AbsGpxListActivity extends AbsDispatcher implements OnItemClickListener, OnClickListener {
+public abstract class AbsGpxListActivity extends AbsDispatcher implements OnItemClickListener {
 
     private FileMenu fileMenu;
     private String                      solid_key;
@@ -58,8 +61,6 @@ public abstract class AbsGpxListActivity extends AbsDispatcher implements OnItem
 
     private SolidDirectoryQuery sdirectory;
 
-    private final ImageButton[]         selectView = new ImageButton[3];
-    private ImageButton fileManager;
     private MultiView                   multiView;
 
 
@@ -82,32 +83,44 @@ public abstract class AbsGpxListActivity extends AbsDispatcher implements OnItem
         sdirectory.setValue(getDirectory().getAbsolutePath());
         solid_key = AbsGpxListActivity.class.getSimpleName() +  "_" + sdirectory.getValueAsString();
 
+        multiView = createMultiView();
 
         final LinearLayout contentView = new ContentView(this);
-        contentView.addView(createControlBar());
-        contentView.addView(createMultiView());
+        contentView.addView(createControlBar(multiView));
+        contentView.addView(multiView);
         setContentView(contentView);
 
-        selectView(multiView.getActive());
         createDispatcher();
     }
 
 
-    private ControlBar createControlBar() {
-        final MainControlBar bar = new MainControlBar(getServiceContext(), 4);
+    private ControlBar createControlBar(MultiView multiView) {
+        final MainControlBar bar = new MainControlBar(getServiceContext());
 
         busyControl = new DbSynchronizerBusyIndicator(bar.getMenu());
-        for (int i = 0; i< selectView.length; i++) {
-            selectView[i] = bar.addImageButton(R.drawable.radio_inverse);
-        }
-        fileManager = bar.addImageButton(R.drawable.folder_inverse);
-        bar.setOnClickListener1(this);
+
+        bar.addAll(multiView);
+        bar.add(new SolidDirectoryMenuButton(sdirectory));
 
         return bar;
     }
 
 
     private MultiView createMultiView() {
+        final String summary_label = "Summary*";
+        final String filter_label = "Filter*";
+        final String map_label = getString(R.string.intro_map);
+        final String list_label = "File list*";
+
+        final ContentDescription summary_content[] = getSummaryData();
+        final ContentDescription filter_content[] = {
+                new TrackSizeDescription(this),
+                new DistanceDescription(this)
+        };
+
+        final VerticalScrollView filter= new VerticalScrollView(this);
+        final VerticalScrollView summary= new VerticalScrollView(this);
+
         final OsmInteractiveView map = new OsmInteractiveView(getServiceContext(), solid_key);
 
         final OsmOverlay overlayList[] = {
@@ -122,40 +135,28 @@ public abstract class AbsGpxListActivity extends AbsDispatcher implements OnItem
         map.setOverlayList(overlayList);
 
 
-
-
-        ContentDescription listData[] = getGpxListItemData();
-        listView = new GpxListView(this, listData);
+        listView = new GpxListView(this, getGpxListItemData());
         listView.setOnItemClickListener(this);
         registerForContextMenu(listView);
 
-        final TextView label = new TextView(this);
-        label.setText(getLabel());
-        AppTheme.themify(label);
-        label.setTextColor(AppTheme.getHighlightColor());
 
-        ContentDescription content[] = getSummaryData();
-        VerticalScrollView scrollView= new VerticalScrollView(this);
-
-        scrollView.add(new TitleView(this, getLabel()));
-        scrollView.addAllFilterViews(map.map);
-        scrollView.add(new TitleView(this, "Summary*"));
-
-        final DescriptionInterface targets[] = {
-                DescriptionInterface.NULL,
-                map,
-                scrollView.addAllContent(content, GpxInformation.ID.INFO_ID_LIST_SUMMARY)
-        };
-
-        final View views[] = {
-                listView,
-                map,
-                scrollView,
-        };
+        filter.add(new TitleView(this, getLabel()+ " - " + filter_label));
+        filter.addAllFilterViews(map.map);
 
 
-        multiView = new MultiView(this, solid_key, GpxInformation.ID.INFO_ID_ALL,
-                views, targets);
+        summary.add(new TitleView(this, getLabel() + " - " + summary_label));
+
+        multiView = new MultiView(this, solid_key, GpxInformation.ID.INFO_ID_ALL);
+
+        multiView.add(listView, list_label);
+        multiView.add(map, map, map_label);
+        multiView.add(filter,
+                filter.addAllContent(filter_content, GpxInformation.ID.INFO_ID_LIST_SUMMARY),
+                filter_label);
+        multiView.add(summary, summary.addAllContent(summary_content,
+                GpxInformation.ID.INFO_ID_LIST_SUMMARY),
+                summary_label);
+
         return multiView;
     }
 
@@ -165,7 +166,7 @@ public abstract class AbsGpxListActivity extends AbsDispatcher implements OnItem
     private void createDispatcher() {
 
 
-        final DescriptionInterface[] target = new DescriptionInterface[] {
+        final OnContentUpdatedInterface[] target = new OnContentUpdatedInterface[] {
                 multiView, this
         };
 
@@ -246,32 +247,5 @@ public abstract class AbsGpxListActivity extends AbsDispatcher implements OnItem
         return fileMenu.onItemClick(item);
     }
 
-
-    @Override
-    public void onClick(View v) {
-        if (v == fileManager) {
-            File directory = new File(sdirectory.getValueAsString());
-            new FileIntent(directory).view(this);
-        } else {
-            for (int i = 0; i < selectView.length; i++) {
-                if (v == selectView[i]) {
-                    setView(i);
-                }
-            }
-        }
-
-    }
-
-    public void setView(int i) {
-        multiView.setActive(i);
-        selectView(i);
-    }
-
-    private void selectView(int s) {
-        for (int i=0; i<selectView.length; i++) {
-            if (i==s) selectView[i].setImageResource(R.drawable.radio_checked_inverse);
-            else selectView[i].setImageResource(R.drawable.radio_inverse);
-        }
-    }
 }
 

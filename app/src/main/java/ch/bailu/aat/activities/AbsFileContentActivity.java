@@ -12,7 +12,7 @@ import ch.bailu.aat.description.AverageSpeedDescription;
 import ch.bailu.aat.description.CaloriesDescription;
 import ch.bailu.aat.description.ContentDescription;
 import ch.bailu.aat.description.DateDescription;
-import ch.bailu.aat.description.DescriptionInterface;
+import ch.bailu.aat.description.OnContentUpdatedInterface;
 import ch.bailu.aat.description.DistanceDescription;
 import ch.bailu.aat.description.EndDateDescription;
 import ch.bailu.aat.description.MaximumSpeedDescription;
@@ -149,21 +149,11 @@ public class AbsFileContentActivity extends AbsDispatcher implements OnClickList
                         new DistanceSpeedGraphView(this, SOLID_KEY)});
 
 
-
-        final View views[] = {
-                summary,
-                map,
-                graph,
-        };
-
-        final DescriptionInterface[] targets = {
-                summary.addAllContent(summaryData, GpxInformation.ID.INFO_ID_FILEVIEW),
-                map,
-                graph
-
-        };
-
-        return new MultiView(this, SOLID_KEY, GpxInformation.ID.INFO_ID_ALL, views, targets);
+        MultiView mv = new MultiView(this, SOLID_KEY, GpxInformation.ID.INFO_ID_ALL);
+        mv.add(summary, summary.addAllContent(summaryData, GpxInformation.ID.INFO_ID_FILEVIEW));
+        mv.addT(map);
+        mv.addT(graph);
+        return mv;
     }
 
 
@@ -173,7 +163,7 @@ public class AbsFileContentActivity extends AbsDispatcher implements OnClickList
     protected void createDispatcher() {
         currentFile = new IteratorSource.FollowFile(getServiceContext());
 
-        final DescriptionInterface[] target = new DescriptionInterface[] {
+        final OnContentUpdatedInterface[] target = new OnContentUpdatedInterface[] {
                 multiView, this, busyButton.getBusyControl(GpxInformation.ID.INFO_ID_FILEVIEW)
         };
 

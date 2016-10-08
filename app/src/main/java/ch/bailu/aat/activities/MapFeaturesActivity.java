@@ -44,7 +44,7 @@ public class MapFeaturesActivity extends AbsDispatcher implements OnClickListene
         final ControlBar bar = new MainControlBar(getServiceContext(), LinearLayout.HORIZONTAL, 6);
         
         bar.addView(download);
-        bar.addViewIgnoreSize(AppTheme.getTitleTextView(this, R.string.query_features));
+        bar.addIgnoreSize(AppTheme.getTitleTextView(this, R.string.query_features));
 
         list = new FeaturesList(getServiceContext());
         list.loadList();

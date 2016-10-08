@@ -49,6 +49,10 @@
         <item>International System of Units</item>
     </string-array>
 
+    <string name="p_tiles">Map Tiles</string>
+    <string name="p_trim_mode">Trim mode</string>
+    <string name="p_trim_size">Trim size</string>
+    <string name="p_trim_age">Trim age</string>
     <string name="p_general">General</string>
     <string name="p_preset">Activity</string>
     <string name="p_met" translatable="false">MET</string>
@@ -123,8 +127,9 @@
 
     <string name="location_view">View location…</string>
     <string name="location_send">Send location…</string>
-    <string name="location_copy">Copy location</string>
-    <string name="location_paste">Paste location</string>
+
+    <string name="clipboard_copy">Copy</string>
+    <string name="clipboard_paste">Paste</string>
 
 
     <!-- Dialog -->

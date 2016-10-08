@@ -15,7 +15,7 @@ import ch.bailu.aat.description.AverageSpeedDescription;
 import ch.bailu.aat.description.CaloriesDescription;
 import ch.bailu.aat.description.ContentDescription;
 import ch.bailu.aat.description.DateDescription;
-import ch.bailu.aat.description.DescriptionInterface;
+import ch.bailu.aat.description.OnContentUpdatedInterface;
 import ch.bailu.aat.description.DistanceDescription;
 import ch.bailu.aat.description.EndDateDescription;
 import ch.bailu.aat.description.MaximumSpeedDescription;
@@ -157,19 +157,12 @@ public class GpxViewActivity extends AbsDispatcher implements OnClickListener {
             });
 
 
-        final View views[] = {
-                summary,
-                map,
-                graph
-        };
+        MultiView mv = new MultiView(this, SOLID_KEY, GpxInformation.ID.INFO_ID_ALL);
+        mv.add(summary, summary.addAllContent(summaryData, GpxInformation.ID.INFO_ID_FILEVIEW));
+        mv.addT(map);
+        mv.addT(graph);
 
-        final DescriptionInterface targets[] = {
-                summary.addAllContent(summaryData, GpxInformation.ID.INFO_ID_FILEVIEW),
-                map,
-                graph
-        };
-
-        return new MultiView(this, SOLID_KEY, GpxInformation.ID.INFO_ID_ALL, views, targets);
+        return mv;
     }
 
 
@@ -181,7 +174,7 @@ public class GpxViewActivity extends AbsDispatcher implements OnClickListener {
                 new CustomFileSource(getServiceContext(), fileID)
         };
 
-        final DescriptionInterface[] target = new DescriptionInterface[] {
+        final OnContentUpdatedInterface[] target = new OnContentUpdatedInterface[] {
                 multiView, this, busyButton.getBusyControl(GpxInformation.ID.INFO_ID_FILEVIEW) 
         };
         setDispatcher(new RootDispatcher(this,source, target));

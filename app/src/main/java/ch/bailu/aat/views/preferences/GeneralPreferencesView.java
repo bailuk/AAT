@@ -25,21 +25,10 @@ public class GeneralPreferencesView extends VerticalScrollView {
         add(new SolidIndexListView(new SolidUnit(context)));
         add(new SolidIntegerView(new SolidWeight(context)));
 
-
-        final SolidPreset spreset= new SolidPreset(context);
-        for (int i=0; i<spreset.length(); i++) {
-            add(new TitleView(context, context.getString(R.string.p_preset) + " " + (i+1)));
-
-            add(new SolidIndexListView(new SolidMET(context,i)));
-            add(new SolidIndexListView(new SolidAutopause(context,i)));
-            add(new SolidIndexListView(new SolidDistanceFilter(context,i)));
-            add(new SolidIndexListView(new SolidAccelerationFilter(context,i)));
-            add(new SolidIndexListView(new SolidAccuracyFilter(context,i)));
-            add(new SolidIndexListView(new SolidMissingTrigger(context,i)));
-        }
-
         add(new TitleView(context, R.string.p_system));
         add(new SolidIndexListView(new SolidLocationProvider(context)));
-        add(new SolidDirectoryView(context, new SolidDataDirectory(context)));
+        add(new SolidExtendetDirectoryView(context, new SolidDataDirectory(context)));
     }
+
+
 }

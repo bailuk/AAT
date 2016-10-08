@@ -6,11 +6,11 @@ import android.graphics.Canvas;
 import org.osmdroid.views.MapView;
 import org.osmdroid.views.overlay.Overlay;
 
-import ch.bailu.aat.description.DescriptionInterface;
+import ch.bailu.aat.description.OnContentUpdatedInterface;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.views.map.AbsOsmView;
 
-public abstract class OsmOverlay extends Overlay implements DescriptionInterface {
+public abstract class OsmOverlay extends Overlay implements OnContentUpdatedInterface {
     private final AbsOsmView osm;
     private final MapPainter painter;
 

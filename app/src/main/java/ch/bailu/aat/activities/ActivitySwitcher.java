@@ -25,18 +25,14 @@ public class ActivitySwitcher {
     };
 
 
-    private final int      activityLabel;
-    private final Class<?> activityClass;
+    public final int      activityLabel;
+    public final Class<?> activityClass;
 
     public final static int cycable = 3;
 
     public ActivitySwitcher(int label, Class<?> c) {
         activityLabel=label;
         activityClass=c;
-    }
-
-    public int getLabel() {
-        return activityLabel;
     }
 
     public void start(Context c) {

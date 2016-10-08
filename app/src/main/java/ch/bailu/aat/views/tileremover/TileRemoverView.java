@@ -24,7 +24,6 @@ public class TileRemoverView
 
     private TilesSummaryView summaryView;
     private BusyButton scan, remove;
-    private View openFolder;
 
     private final SolidTileCacheDirectory sdirectory;
 
@@ -40,10 +39,18 @@ public class TileRemoverView
 
         sdirectory = new SolidTileCacheDirectory(getContext());
 
+        addW(createFilterLayout(getContext()));
         addView(createControlBar(getContext()));
-        addView(createFilterLayout(getContext()), LayoutParams.MATCH_PARENT);
+
     }
 
+    public void addW(View v) {
+        addView(v);
+
+        LinearLayout.LayoutParams l = (LinearLayout.LayoutParams) v.getLayoutParams();
+        l.weight = 1;
+        v.setLayoutParams(l);
+    }
 
     private View createFilterLayout(Context context) {
         summaryView = new TilesSummaryView(context);
@@ -53,10 +60,6 @@ public class TileRemoverView
 
     private View createControlBar(Context context) {
         final ControlBar bar =  new ControlBar(context, LinearLayout.VERTICAL);
-
-
-
-        openFolder = bar.addImageButton(R.drawable.folder_inverse);
 
         scan = new BusyButton(context, R.drawable.view_refresh_inverse);
         bar.addButton(scan);
@@ -140,8 +143,6 @@ public class TileRemoverView
             } else if (v == remove) {
                 tr.getState().remove();
 
-            } else if (v == openFolder) {
-                new FileIntent(sdirectory.getValueAsFile()).view(getContext());
             }
         }
     }

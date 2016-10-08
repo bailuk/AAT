@@ -1,44 +1,53 @@
 package ch.bailu.aat.views;
 
+import android.content.SharedPreferences;
 import android.view.View;
-import android.widget.ImageButton;
 
 import ch.bailu.aat.helpers.AppLog;
 import ch.bailu.aat.preferences.SolidIndexList;
 
 
-public class SolidImageButton extends ImageButton {
+public class SolidImageButton extends ImageButtonView implements SharedPreferences.OnSharedPreferenceChangeListener {
 
-    private final SolidIndexList sList;
+    private final SolidIndexList slist;
     
-    public SolidImageButton(SolidIndexList sgrid) {
-        super(sgrid.getContext());
+    public SolidImageButton(SolidIndexList s) {
+        super(s.getContext(), s.getIconResource());
         
-        sList = sgrid;
+        slist = s;
         setOnClickListener(onClick);
-        
-        setImage();
     }
 
 
-    void onPreferencesChanged(String key) {
-        if (sList.hasKey(key)) {
-            setImage();
-            AppLog.i(getContext(), sList.getValueAsString());
-        }
-    }
-    
-    
-    private void setImage() {
-        setImageResource(sList.getIconResource());
-    }
 
-    
     private final OnClickListener onClick = new OnClickListener() {
         @Override
         public void onClick(View v) {
-            sList.cycle();
+            slist.cycle();
         }
         
     };
+
+
+    @Override
+    public void onAttachedToWindow() {
+        super.onAttachedToWindow();
+
+        slist.register(this);
+    }
+
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        if (slist.hasKey(key)) {
+            setImageResource(slist.getIconResource());
+            AppLog.i(getContext(), slist.getValueAsString());
+        }
+    }
+
+    @Override
+    public void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+
+        slist.unregister(this);
+    }
 }

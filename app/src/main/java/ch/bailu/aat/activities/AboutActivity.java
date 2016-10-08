@@ -21,12 +21,10 @@ import ch.bailu.aat.views.MainControlBar;
 import ch.bailu.aat.views.description.MultiView;
 
 
-public class AboutActivity extends AbsDispatcher implements View.OnClickListener {
+public class AboutActivity extends AbsDispatcher {
 
-    private static String SOLID_KEY=AboutActivity.class.getSimpleName();
+    private static String SOLID_KEY = AboutActivity.class.getSimpleName();
 
-    private View next, prev;
-    private MultiView multiView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -37,65 +35,33 @@ public class AboutActivity extends AbsDispatcher implements View.OnClickListener
 
 
     private void createViews() {
+        MultiView multiView = createMultiView();
         LinearLayout contentView = new ContentView(this);
 
-        contentView.addView(createButtonBar());
-        multiView = createMultiView();
+        contentView.addView(createButtonBar(multiView));
         contentView.addView(multiView);
 
         setContentView(contentView);
     }
 
-    private LinearLayout createButtonBar() {
-        final ControlBar bar = new MainControlBar(getServiceContext());
+    private LinearLayout createButtonBar(MultiView mv) {
+        final MainControlBar bar = new MainControlBar(getServiceContext());
 
-        prev = bar.addImageButton(R.drawable.go_previous_inverse);
-        bar.addImageButton(R.drawable.content_loading_inverse);
-        next = bar.addImageButton(R.drawable.go_next_inverse);
-
-        bar.setOnClickListener1(this);
-
+        bar.addAll(mv);
         return bar;
     }
 
 
     private MultiView createMultiView() {
-        ContentDescription[] data = new ContentDescription[] {
-                new CurrentSpeedDescription(this),
-                new AltitudeDescription(this),
-                new TimeDescription(this),
-                new DistanceDescription(this),
-                new AverageSpeedDescription(this),
-                new MaximumSpeedDescription(this),
-        };
-
-
-
-        View multiViewLayout[] = {
-                new HtmlScrollTextView(this, R.string.README_about_html),
-                new HtmlScrollTextView(this, R.string.README_enduser_html),
-        };
-
-        return new MultiView(this,
+        MultiView mv = new MultiView(this,
                 SOLID_KEY,
-                GpxInformation.ID.INFO_ID_ALL,
-                multiViewLayout);
+                GpxInformation.ID.INFO_ID_ALL);
+        mv.add(new HtmlScrollTextView(this, R.string.README_about_html),
+                getString(R.string.intro_about));
+        mv.add(new HtmlScrollTextView(this, R.string.README_enduser_html),
+                getString(R.string.intro_readme));
+
+        return mv;
     }
 
-
-    @Override
-    public void onDestroy() {
-        TileRemoverService ts = getServiceContext().getTileRemoverService();
-
-        if (ts != null) ts.getState().reset();
-
-        super.onDestroy();
-
-    }
-
-    @Override
-    public void onClick(View v) {
-        if (v == prev) multiView.setPrevious();
-        else if (v == next) multiView.setNext();
-    }
 }

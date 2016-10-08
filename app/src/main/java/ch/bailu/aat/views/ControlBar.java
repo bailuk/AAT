@@ -19,17 +19,13 @@ import ch.bailu.aat.preferences.SolidIndexList;
 public class ControlBar extends LinearLayout {
     public final  static int DEFAULT_VISIBLE_BUTTON_COUNT=4;
 
-
     private final FrameLayout scroller;
-
     private final LinearLayout canvas;
 
     private final int orientation;
     private final int controlSize;
 
     private OnClickListener listener1, listener2;
-
-    private final ArrayList<SolidImageButton> solidButton = new ArrayList<>();
 
     public ControlBar(Context context, int orientation) {
         this(context, orientation, DEFAULT_VISIBLE_BUTTON_COUNT);
@@ -66,40 +62,37 @@ public class ControlBar extends LinearLayout {
         int large = length;
         int small = controlSize;
 
+        int large_spec = MeasureSpec.makeMeasureSpec(large, MeasureSpec.EXACTLY);
+        int small_spec = MeasureSpec.makeMeasureSpec(small, MeasureSpec.EXACTLY);
+
         if (orientation == HORIZONTAL) {
-            measure(large,small);
+            measure(large_spec, small_spec);
             layout(x, y, x+large, y+small);
         } else {
-            measure(small, large);
+            measure(small_spec, large_spec);
             layout(x, y, x+small, y+large);
         }
     }
 
-    
 
+/*
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
         if (changed) scroller.layout(0,0,r-l,b-t);
     }
-
+*/
 
     public ImageButton addImageButton(int res) {
-        ImageButton button = new ImageButton(getContext());
-        button.setImageResource(res);
-        AppTheme.themify(button);
-        this.addView(button);
+        ImageButton button = new ImageButtonView(getContext(), res);
+        add(button);
         button.setOnClickListener(onClickListener);
         return button;
     }
 
 
-    public Button addButton(String text) {
-        Button button =  new Button(getContext());
-        button.setText(text);
-        AppTheme.themify(button);
-        this.addView(button);
-        button.setOnClickListener(onClickListener);
-        return button;
+    public View add(View v) {
+        canvas.addView(v, controlSize, controlSize);
+        return v;
     }
 
 
@@ -116,10 +109,14 @@ public class ControlBar extends LinearLayout {
 
     }
 
-    public void addViewIgnoreSize(View v) {
+    public void addIgnoreSize(View v) {
         canvas.addView(v);
     }
 
+
+    public View addSolidIndexButton(SolidIndexList slist) {
+        return add(new SolidImageButton(slist));
+    }
 
     public void setOnClickListener1(OnClickListener l) {
         listener1 = l;
@@ -138,21 +135,6 @@ public class ControlBar extends LinearLayout {
         }
     };
 
-
-    public ImageButton addSolidIndexButton(SolidIndexList sIndexList) {
-        SolidImageButton button = new SolidImageButton(sIndexList);
-        AppTheme.themify(button);
-        addView(button);
-        solidButton.add(button);
-        return button;
-    }
-
-
-    public void onSharedPreferencesChanged(String key) {
-        for (int i=0; i<solidButton.size(); i++) {
-            solidButton.get(i).onPreferencesChanged(key);
-        }
-    }
 
 
 }

@@ -4,7 +4,8 @@ import android.content.Context;
 import android.content.ContextWrapper;
 
 
-public abstract class ContentDescription extends ContextWrapper implements DescriptionInterface {
+public abstract class ContentDescription extends ContextWrapper
+        implements ContentInterface, OnContentUpdatedInterface {
     
     protected static final String NULL_STRING="";
     public ContentDescription(Context c) {
@@ -18,8 +19,10 @@ public abstract class ContentDescription extends ContextWrapper implements Descr
         return NULL_STRING;
     }
 
-    /*
-    public int getStrlen() {
-        return 4;
-    }*/
+
+
+    @Override
+    public String getValueAsString() {
+        return getValue() + " " + getUnit();
+    }
 }

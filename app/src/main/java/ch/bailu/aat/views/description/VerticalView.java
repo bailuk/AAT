@@ -3,14 +3,13 @@ package ch.bailu.aat.views.description;
 import android.content.Context;
 import android.view.View;
 
-import ch.bailu.aat.description.DescriptionInterface;
+import ch.bailu.aat.description.OnContentUpdatedInterface;
 import ch.bailu.aat.gpx.GpxInformation;
-import ch.bailu.aat.views.description.TrackDescriptionView;
 
 public class VerticalView extends TrackDescriptionView {
 
     private final View[] views;
-    private final DescriptionInterface[] targets;
+    private final OnContentUpdatedInterface[] targets;
 
 
     public VerticalView(Context context, String key, int filter, TrackDescriptionView[] vl) {
@@ -21,7 +20,7 @@ public class VerticalView extends TrackDescriptionView {
                         String key,
                         int filter,
                         View[] v,
-                        DescriptionInterface[] t) {
+                        OnContentUpdatedInterface[] t) {
         super(context, key, filter);
         views = v;
         targets = t;

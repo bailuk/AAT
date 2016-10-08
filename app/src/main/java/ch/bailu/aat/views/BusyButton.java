@@ -5,7 +5,7 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 
 import ch.bailu.aat.R;
-import ch.bailu.aat.description.DescriptionInterface;
+import ch.bailu.aat.description.OnContentUpdatedInterface;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.helpers.AppTheme;
 
@@ -62,7 +62,7 @@ public class BusyButton extends ViewGroup   {
         return new BusyControl(id);
     }
     
-    public class BusyControl implements DescriptionInterface {
+    public class BusyControl implements OnContentUpdatedInterface {
         private final int ID;
 
         public BusyControl(int iid) {

@@ -19,7 +19,7 @@ import ch.bailu.aat.description.CaloriesDescription;
 import ch.bailu.aat.description.ContentDescription;
 import ch.bailu.aat.description.CurrentSpeedDescription;
 import ch.bailu.aat.description.DateDescription;
-import ch.bailu.aat.description.DescriptionInterface;
+import ch.bailu.aat.description.OnContentUpdatedInterface;
 import ch.bailu.aat.description.EndDateDescription;
 import ch.bailu.aat.description.GpsStateDescription;
 import ch.bailu.aat.description.LatitudeDescription;
@@ -65,10 +65,9 @@ import ch.bailu.aat.views.map.overlay.gpx.GpxTestOverlay;
 import ch.bailu.aat.views.map.overlay.grid.GridDynOverlay;
 import ch.bailu.aat.views.preferences.VerticalScrollView;
 
-public class TestActivity extends AbsDispatcher implements OnClickListener {
+public class TestActivity extends AbsDispatcher {
     private static final String SOLID_KEY = "test";
 
-    private ImageButton multiCycleP, multiCycleN;
     private MultiView multiView;
 
     private OsmInteractiveView map;
@@ -82,8 +81,10 @@ public class TestActivity extends AbsDispatcher implements OnClickListener {
 
         final LinearLayout contentView = new ContentView(this);
 
-        contentView.addView(createButtonBar());
+
         multiView = createMultiView();
+
+        contentView.addView(createButtonBar(multiView));
         contentView.addView(multiView);
 
 
@@ -147,46 +148,27 @@ public class TestActivity extends AbsDispatcher implements OnClickListener {
         statusTextView = new StatusTextView(this);
 
 
-        DescriptionInterface targets[] = {
-                map,
-                locationView.addAllContent(locationDescription, GpxInformation.ID.INFO_ID_LOCATION),
-                trackerView.addAllContent(trackerDescription, GpxInformation.ID.INFO_ID_TRACKER),
-                DescriptionInterface.NULL,
-                DescriptionInterface.NULL
-        };
+        MultiView mv = new MultiView(this, SOLID_KEY, GpxInformation.ID.INFO_ID_ALL);
 
-        View views[] = {
-                map,
-                locationView,
-                trackerView,
-                testsView,
-                statusTextView
-        };
+        mv.addT(map,"Map*");
+        mv.add(locationView, locationView.addAllContent(
+                locationDescription, GpxInformation.ID.INFO_ID_LOCATION), "Location*");
 
-
-        return new MultiView(this, SOLID_KEY, GpxInformation.ID.INFO_ID_ALL, views, targets);
+        mv.add(trackerView, trackerView.addAllContent(
+                trackerDescription, GpxInformation.ID.INFO_ID_TRACKER), "Tracker*");
+        mv.add(testsView, "Tests*");
+        mv.add(statusTextView, getString(R.string.intro_status));
+        return mv;
     }
 
 
-    private ControlBar createButtonBar() {
-        final ControlBar bar = new MainControlBar(getServiceContext());
+    private ControlBar createButtonBar(MultiView multiView) {
+        final MainControlBar bar = new MainControlBar(getServiceContext());
 
-        multiCycleP = bar.addImageButton(R.drawable.go_previous_inverse);
-        multiCycleN = bar.addImageButton(R.drawable.go_next_inverse);
-
-        bar.setOnClickListener1(this);
-
+        bar.addAll(multiView);
         return bar;
     }
 
-    @Override
-    public void onClick(View v) {
-        if (v == multiCycleN) {
-            multiView.setNext();
-        } else if (v == multiCycleP) {
-            multiView.setPrevious();
-        }
-    }
 
 
     private void createDispatcher() {
@@ -205,7 +187,7 @@ public class TestActivity extends AbsDispatcher implements OnClickListener {
         map.setOverlayList(overlayList);
 
 
-        DescriptionInterface[] target = new DescriptionInterface[]{
+        OnContentUpdatedInterface[] target = new OnContentUpdatedInterface[]{
                 multiView, this
         };
 

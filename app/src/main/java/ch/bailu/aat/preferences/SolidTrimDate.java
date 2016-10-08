@@ -3,6 +3,8 @@ package ch.bailu.aat.preferences;
 import android.content.Context;
 import android.text.format.DateUtils;
 
+import ch.bailu.aat.R;
+
 public class SolidTrimDate extends SolidIndexList {
 
 
@@ -55,7 +57,7 @@ public class SolidTrimDate extends SolidIndexList {
 
     @Override
     public String getLabel() {
-        return "Trim Age*";
+        return getContext().getString(R.string.p_trim_age);
     }
 
 

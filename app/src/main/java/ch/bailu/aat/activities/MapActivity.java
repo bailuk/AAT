@@ -14,7 +14,7 @@ import org.osmdroid.util.GeoPoint;
 
 import ch.bailu.aat.R;
 import ch.bailu.aat.coordinates.Coordinates;
-import ch.bailu.aat.description.DescriptionInterface;
+import ch.bailu.aat.description.OnContentUpdatedInterface;
 import ch.bailu.aat.dispatcher.ContentSource;
 import ch.bailu.aat.dispatcher.CurrentLocationSource;
 import ch.bailu.aat.dispatcher.EditorSource;
@@ -126,7 +126,7 @@ public class MapActivity extends AbsDispatcher implements OnClickListener{
 
 
     private void createDispatcher() {
-        DescriptionInterface[] target = new DescriptionInterface[] {
+        OnContentUpdatedInterface[] target = new OnContentUpdatedInterface[] {
                 map,trackerState,gpsState, this
         };
 

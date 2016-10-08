@@ -5,6 +5,7 @@ import android.view.View;
 import ch.bailu.aat.helpers.AppLayout;
 import ch.bailu.aat.menus.OptionsMenu;
 import ch.bailu.aat.services.ServiceContext;
+import ch.bailu.aat.views.description.MultiView;
 
 public class MainControlBar extends ControlBar {
 
@@ -12,7 +13,11 @@ public class MainControlBar extends ControlBar {
     
     public MainControlBar(final ServiceContext context) {
         this(context, DEFAULT_VISIBLE_BUTTON_COUNT);
-        
+    }
+
+    public MainControlBar(final ServiceContext context, final MultiView mv) {
+        this(context);
+        addAll(mv);
     }
 
     public MainControlBar(final ServiceContext scontext, int button) {
@@ -37,5 +42,11 @@ public class MainControlBar extends ControlBar {
 
     public BusyButton getMenu() {
         return menu;
+    }
+
+    public void addAll(MultiView mv) {
+        add(new MvPreviousButton(mv));
+        add(new MvListButton(mv));
+        add(new MvNextButton(mv));
     }
 }

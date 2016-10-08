@@ -11,7 +11,7 @@ import ch.bailu.aat.description.AltitudeDescription;
 import ch.bailu.aat.description.AverageSpeedDescription;
 import ch.bailu.aat.description.ContentDescription;
 import ch.bailu.aat.description.CurrentSpeedDescription;
-import ch.bailu.aat.description.DescriptionInterface;
+import ch.bailu.aat.description.OnContentUpdatedInterface;
 import ch.bailu.aat.description.DistanceDescription;
 import ch.bailu.aat.description.MaximumSpeedDescription;
 import ch.bailu.aat.description.TimeDescription;
@@ -26,6 +26,7 @@ import ch.bailu.aat.services.editor.EditorHelper;
 import ch.bailu.aat.views.ContentView;
 import ch.bailu.aat.views.ControlBar;
 import ch.bailu.aat.views.MainControlBar;
+import ch.bailu.aat.views.MvNextButton;
 import ch.bailu.aat.views.description.MultiView;
 import ch.bailu.aat.views.description.TrackerStateButton;
 import ch.bailu.aat.views.description.VerticalView;
@@ -47,7 +48,7 @@ public class TrackerActivity extends AbsDispatcher implements OnClickListener{
  
     private static final String SOLID_KEY="tracker";
 
-    private ImageButton          activityCycle, multiCycle;
+    private ImageButton          activityCycle;
     private TrackerStateButton   trackerState;
     private MultiView            multiView;
     private OsmInteractiveView   map;
@@ -62,8 +63,9 @@ public class TrackerActivity extends AbsDispatcher implements OnClickListener{
         edit = new EditorHelper(getServiceContext());
 
         ViewGroup contentView = new ContentView(this);
-        contentView.addView(createButtonBar());
+
         multiView = createMultiView();
+        contentView.addView(createButtonBar(multiView));
         contentView.addView(multiView);
         setContentView(contentView);
 
@@ -84,22 +86,21 @@ public class TrackerActivity extends AbsDispatcher implements OnClickListener{
         CockpitView cockpit = new CockpitView(this, SOLID_KEY, GpxInformation.ID.INFO_ID_TRACKER, data);
 
         map = new OsmInteractiveView(getServiceContext(), SOLID_KEY);
-        TrackDescriptionView multiViewLayout[] = {
-                cockpit,
-                map,
-                new VerticalView(this, SOLID_KEY, GpxInformation.ID.INFO_ID_TRACKER, new TrackDescriptionView[] {
-                        new DistanceAltitudeGraphView(this, SOLID_KEY),
-                        new DistanceSpeedGraphView(this, SOLID_KEY)})
-        };   
 
-        return new MultiView(this, SOLID_KEY, GpxInformation.ID.INFO_ID_ALL, multiViewLayout);
+        MultiView mv = new MultiView(this, SOLID_KEY, GpxInformation.ID.INFO_ID_ALL);
+        mv.addT(cockpit);
+        mv.addT(map);
+        mv.addT(new VerticalView(this, SOLID_KEY, GpxInformation.ID.INFO_ID_TRACKER, new TrackDescriptionView[] {
+                new DistanceAltitudeGraphView(this, SOLID_KEY),
+                new DistanceSpeedGraphView(this, SOLID_KEY)}));
+        return mv;
     }
 
-    private ControlBar createButtonBar() {
+    private ControlBar createButtonBar(MultiView mv) {
         ControlBar bar = new MainControlBar(getServiceContext());
 
         activityCycle = bar.addImageButton(R.drawable.go_down_inverse);
-        multiCycle = bar.addImageButton(R.drawable.go_next_inverse);
+        bar.add(new MvNextButton(mv));
 
         trackerState = new TrackerStateButton(this.getServiceContext());
         
@@ -119,8 +120,6 @@ public class TrackerActivity extends AbsDispatcher implements OnClickListener{
         if (v == activityCycle) {
             ActivitySwitcher.cycle(this);
 
-        } else if (v ==multiCycle) {
-            multiView.setNext();
         }
     }
 
@@ -137,7 +136,7 @@ public class TrackerActivity extends AbsDispatcher implements OnClickListener{
             };
             map.setOverlayList(overlayList);
             
-            DescriptionInterface[] target = new DescriptionInterface[] {
+            OnContentUpdatedInterface[] target = new OnContentUpdatedInterface[] {
                     multiView,trackerState,this
             };
 

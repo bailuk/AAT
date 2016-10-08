@@ -3,8 +3,8 @@ package ch.bailu.aat.description;
 import ch.bailu.aat.gpx.GpxInformation;
 
 
-public interface DescriptionInterface {
-    static final DescriptionInterface NULL = new DescriptionInterface() {
+public interface OnContentUpdatedInterface {
+    static final OnContentUpdatedInterface NULL = new OnContentUpdatedInterface() {
         @Override
         public void updateGpxContent(GpxInformation info) {
 

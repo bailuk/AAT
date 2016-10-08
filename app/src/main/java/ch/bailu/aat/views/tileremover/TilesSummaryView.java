@@ -6,6 +6,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import ch.bailu.aat.helpers.AppTheme;
 import ch.bailu.aat.preferences.SolidTrimIndex;
 import ch.bailu.aat.services.tileremover.MapSummaries;
 import ch.bailu.aat.services.tileremover.MapSummaryInterface;
@@ -40,6 +41,7 @@ public class TilesSummaryView extends RadioGroup implements View.OnClickListener
 
     private void addViews(int i, String name) {
         radioButtons[i] = new RadioButton(getContext());
+        AppTheme.themify(radioButtons[i]);
         radioButtons[i].setText(name);
 
         radioButtons[i].setOnClickListener(this);

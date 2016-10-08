@@ -1,6 +1,6 @@
 package ch.bailu.aat.preferences;
 
-public class SolidString extends SolidType {
+public class SolidString extends AbsSolidType {
     private final String key;
     private final Storage storage;
 

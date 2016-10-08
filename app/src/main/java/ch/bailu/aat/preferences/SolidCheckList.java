@@ -4,7 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 
 
-public abstract class SolidCheckList extends SolidType {
+public abstract class SolidCheckList extends AbsSolidType {
 
     public abstract CharSequence[] getStringArray();
     public abstract boolean[] getEnabledArray();

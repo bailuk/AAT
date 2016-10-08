@@ -64,7 +64,7 @@ public class FileList {
 
 
     
-    public File getFile() {
+    public File toFile() {
         if (isIndexValid()) {
             return files[index];
         }
@@ -73,7 +73,7 @@ public class FileList {
     
     
     public String getFileName() {
-        return getFile().getName();
+        return toFile().getName();
     }
 
 

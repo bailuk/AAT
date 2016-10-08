@@ -1,16 +1,16 @@
 package ch.bailu.aat.dispatcher;
 
-import ch.bailu.aat.description.DescriptionInterface;
+import ch.bailu.aat.description.OnContentUpdatedInterface;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.views.description.TrackDescriptionView;
 
-public class SubDispatcher implements DescriptionInterface {
+public class SubDispatcher implements OnContentUpdatedInterface {
 
     private final TrackDescriptionView.Filter filter;
-    private final DescriptionInterface targetList[];
+    private final OnContentUpdatedInterface targetList[];
 
 
-    public SubDispatcher(DescriptionInterface t[], int f) {
+    public SubDispatcher(OnContentUpdatedInterface t[], int f) {
         filter = new TrackDescriptionView.Filter(f);
         targetList = t;
     }
@@ -19,7 +19,7 @@ public class SubDispatcher implements DescriptionInterface {
     @Override
     public void updateGpxContent(GpxInformation info) {
         if (filter.pass(info)) {
-            for (DescriptionInterface target : targetList)
+            for (OnContentUpdatedInterface target : targetList)
                 target.updateGpxContent(info);
         }
     }

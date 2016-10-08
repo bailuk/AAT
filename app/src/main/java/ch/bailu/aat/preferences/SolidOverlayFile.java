@@ -29,17 +29,28 @@ public class SolidOverlayFile  implements SolidTypeInterface {
     }
 
 
-    public File getFile() {
+    public File toFile() {
         return new File(getPath());
     }
 
     public String getName() {
-        return getFile().getName();
+        return toFile().getName();
+    }
+    public String getPath() {
+        return getValueAsString();
     }
 
-    public String getPath() {
+    @Override
+    public String getLabel() {
+        return getName();
+    }
+
+
+    @Override
+    public String getValueAsString() {
         return path.getValueAsString();
     }
+
 
 
     public boolean isEnabled() {
@@ -48,7 +59,7 @@ public class SolidOverlayFile  implements SolidTypeInterface {
 
 
     public boolean exists() {
-        return getFile().exists();
+        return toFile().exists();
     }
 
 
@@ -72,12 +83,6 @@ public class SolidOverlayFile  implements SolidTypeInterface {
     @Override
     public Storage getStorage() {
         return storage;
-    }
-
-
-    @Override
-    public String getLabel() {
-        return "";
     }
 
 

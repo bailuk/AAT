@@ -17,7 +17,7 @@ import java.io.File;
 import java.io.IOException;
 
 import ch.bailu.aat.R;
-import ch.bailu.aat.description.DescriptionInterface;
+import ch.bailu.aat.description.OnContentUpdatedInterface;
 import ch.bailu.aat.dispatcher.ContentSource;
 import ch.bailu.aat.dispatcher.CustomFileSource;
 import ch.bailu.aat.dispatcher.RootDispatcher;
@@ -76,7 +76,7 @@ public abstract class AbsOsmApiActivity extends AbsDispatcher implements OnClick
         ContentSource[] source = new ContentSource[] {
                 new CustomFileSource(getServiceContext(),osmApi.getResultFile().toString()),};
 
-        DescriptionInterface[] target = new DescriptionInterface[] {
+        OnContentUpdatedInterface[] target = new OnContentUpdatedInterface[] {
                 list
         };
 

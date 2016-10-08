@@ -11,11 +11,11 @@ import java.util.ArrayList;
 import ch.bailu.aat.helpers.Clipboard;
 import ch.bailu.aat.helpers.file.FileIntent;
 import ch.bailu.aat.preferences.SolidDirectory;
-import ch.bailu.aat.preferences.SolidType;
+import ch.bailu.aat.preferences.AbsSolidType;
 
 public class SolidDirectoryDialog extends AbsSolidDialog
         implements  DialogInterface.OnClickListener {
-    private final SolidType solid;
+    private final AbsSolidType solid;
     private final AlertDialog.Builder dialog;
     private final String[] preselect;
 

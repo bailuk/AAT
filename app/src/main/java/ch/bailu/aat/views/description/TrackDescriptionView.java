@@ -3,11 +3,11 @@ package ch.bailu.aat.views.description;
 import android.content.Context;
 import android.view.ViewGroup;
 
-import ch.bailu.aat.description.DescriptionInterface;
+import ch.bailu.aat.description.OnContentUpdatedInterface;
 import ch.bailu.aat.gpx.GpxInformation;
 
 public abstract class TrackDescriptionView extends ViewGroup 
-implements DescriptionInterface {
+implements OnContentUpdatedInterface {
     public static final String DEFAULT_SOLID_KEY=TrackDescriptionView.class.getSimpleName();
     
     
@@ -19,9 +19,6 @@ implements DescriptionInterface {
         filter = new Filter(infoID);
         solidKey=key;
     }
-
-
-
 
     public static class Filter {
         public final int id;

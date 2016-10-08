@@ -1,6 +1,6 @@
 package ch.bailu.aat.preferences;
 
-public abstract class SolidIndexList extends SolidType {
+public abstract class SolidIndexList extends AbsSolidType {
 
     private final SolidInteger sindex;
     

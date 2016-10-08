@@ -6,11 +6,11 @@ import android.content.DialogInterface;
 import android.widget.EditText;
 
 import ch.bailu.aat.R;
-import ch.bailu.aat.preferences.SolidType;
+import ch.bailu.aat.preferences.AbsSolidType;
 
 public class SolidStringInputDialog extends AbsSolidDialog {
 
-    public SolidStringInputDialog(final SolidType s) {
+    public SolidStringInputDialog(final AbsSolidType s) {
 
         final Context context = s.getContext();
 

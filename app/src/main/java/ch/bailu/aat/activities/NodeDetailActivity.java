@@ -9,7 +9,7 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
 import ch.bailu.aat.R;
-import ch.bailu.aat.description.DescriptionInterface;
+import ch.bailu.aat.description.OnContentUpdatedInterface;
 import ch.bailu.aat.dispatcher.ContentSource;
 import ch.bailu.aat.dispatcher.CurrentLocationSource;
 import ch.bailu.aat.dispatcher.CustomFileSource;
@@ -94,8 +94,8 @@ public class NodeDetailActivity extends AbsDispatcher implements OnClickListener
                 map,
         };
 
-        DescriptionInterface targets[]  = {
-            DescriptionInterface.NULL,
+        OnContentUpdatedInterface targets[]  = {
+            OnContentUpdatedInterface.NULL,
             map
         };
 
@@ -116,7 +116,7 @@ public class NodeDetailActivity extends AbsDispatcher implements OnClickListener
         map.setOverlayList(overlayList);
 
 
-        DescriptionInterface[] target = new DescriptionInterface[] {
+        OnContentUpdatedInterface[] target = new OnContentUpdatedInterface[] {
                 verticalView, this
         };
 

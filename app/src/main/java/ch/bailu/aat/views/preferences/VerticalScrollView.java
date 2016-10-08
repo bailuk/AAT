@@ -60,7 +60,4 @@ public class VerticalScrollView extends ScrollView {
         to.addView(new SolidDateView(sdirectory.getDateTo()));
         layout.addView(to);
     }
-
-
-
 }

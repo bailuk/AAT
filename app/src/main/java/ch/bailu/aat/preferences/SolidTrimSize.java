@@ -2,6 +2,8 @@ package ch.bailu.aat.preferences;
 
 import android.content.Context;
 
+import ch.bailu.aat.R;
+
 public class SolidTrimSize extends SolidIndexList {
 
     public final static long KB=1024;
@@ -76,7 +78,7 @@ public class SolidTrimSize extends SolidIndexList {
 
     @Override
     public String getLabel() {
-        return "Size*";
+        return getContext().getString(R.string.p_trim_size);
     }
 
     @Override

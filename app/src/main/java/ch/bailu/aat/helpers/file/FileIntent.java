@@ -30,6 +30,16 @@ public class FileIntent {
     
 
 
+    public void pick(Context context) {
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        intent.putExtra(Intent.EXTRA_TEXT, file.getName());
+        intent.setDataAndType(getFileUri(), "resource/folder");
+        context.startActivity(Intent.createChooser(intent, file.getName()));
+
+
+    }
+
+
     public void pick(String label, Activity context, int id) {
         intent.setAction(Intent.ACTION_GET_CONTENT);
         intent.putExtra(Intent.EXTRA_SUBJECT, label);

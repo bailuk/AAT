@@ -113,7 +113,7 @@ public class OverlaySource extends ContentSource {
         public void initAndUpdateOverlay() {
 
             if (soverlay.isEnabled()) {
-                File file = soverlay.getFile();
+                File file = soverlay.toFile();
                 enableOverlay(file.getAbsolutePath());
 
             } else {

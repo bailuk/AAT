@@ -4,20 +4,20 @@ import android.content.Context;
 
 import java.io.Closeable;
 
-import ch.bailu.aat.description.DescriptionInterface;
+import ch.bailu.aat.description.OnContentUpdatedInterface;
 import ch.bailu.aat.gpx.GpxInformation;
 
-public class RootDispatcher implements DescriptionInterface, Closeable {
-    public static final DescriptionInterface NULL_LIST[] = new DescriptionInterface[]{};
+public class RootDispatcher implements OnContentUpdatedInterface, Closeable {
+    public static final OnContentUpdatedInterface NULL_LIST[] = new OnContentUpdatedInterface[]{};
     public static final RootDispatcher NULL=new RootDispatcher() {
         @Override
         public void close(){}
     };
 
 
-    private final DescriptionInterface TARGET_LIST[];
+    private final OnContentUpdatedInterface TARGET_LIST[];
     
-    private DescriptionInterface targetList[];
+    private OnContentUpdatedInterface targetList[];
     private final ContentSource[] sourceList;
 
 
@@ -28,7 +28,7 @@ public class RootDispatcher implements DescriptionInterface, Closeable {
         sourceList = ContentSource.NULL_LIST;
     }
 
-    public RootDispatcher(Context c, ContentSource s[], DescriptionInterface t[]) {
+    public RootDispatcher(Context c, ContentSource s[], OnContentUpdatedInterface t[]) {
         TARGET_LIST = t;
         targetList = t;
         sourceList = s;
@@ -66,7 +66,7 @@ public class RootDispatcher implements DescriptionInterface, Closeable {
     
     @Override
     public void updateGpxContent(GpxInformation info) {
-        for (DescriptionInterface target: targetList)
+        for (OnContentUpdatedInterface target: targetList)
             target.updateGpxContent(info);
     }
 

@@ -140,11 +140,6 @@ public abstract class ControlBarOverlay extends OsmOverlay implements Runnable, 
         showBar();
     }
 
-    @Override
-    public void onSharedPreferenceChanged(String key) {
-        super.onSharedPreferenceChanged(key);
-        bar.onSharedPreferencesChanged(key);
-    }
 
 
     public void topTap()   {hideBar();}

@@ -6,7 +6,7 @@ import android.view.View;
 import java.io.File;
 
 import ch.bailu.aat.description.ContentDescription;
-import ch.bailu.aat.description.DescriptionInterface;
+import ch.bailu.aat.description.OnContentUpdatedInterface;
 import ch.bailu.aat.description.DistanceDescription;
 import ch.bailu.aat.description.NameDescription;
 import ch.bailu.aat.description.PathDescription;
@@ -87,19 +87,17 @@ public class GpxEditorActivity extends AbsFileContentActivity {
         VerticalScrollView summary = new VerticalScrollView(this);
         DistanceAltitudeGraphView graph =new DistanceAltitudeGraphView(this, SOLID_KEY);
 
-        TrackDescriptionView views[] = {
 
-                wayList,
-                map,
+        MultiView mv = new MultiView(this, SOLID_KEY, GpxInformation.ID.INFO_ID_ALL);
 
-                new VerticalView(this, SOLID_KEY, GpxInformation.ID.INFO_ID_EDITOR_OVERLAY,
-                        new View[] {summary, graph},
-                        new DescriptionInterface[]
-                                {summary.addAllContent(summaryData, GpxInformation.ID.INFO_ID_EDITOR_OVERLAY), graph}
-                        )
-        };
-
-        return new MultiView(this, SOLID_KEY, GpxInformation.ID.INFO_ID_ALL, views);
+        mv.addT(wayList);
+        mv.addT(map);
+        mv.addT(new VerticalView(this, SOLID_KEY, GpxInformation.ID.INFO_ID_EDITOR_OVERLAY,
+                new View[] {summary, graph},
+                new OnContentUpdatedInterface[]
+                        {summary.addAllContent(summaryData, GpxInformation.ID.INFO_ID_EDITOR_OVERLAY), graph}
+        ));
+        return mv;
     }
 
 
