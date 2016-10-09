@@ -46,5 +46,5 @@ implements OnContentUpdatedInterface {
 
 
     @Override
-    public void updateGpxContent(GpxInformation info) {}
+    public void onContentUpdated(GpxInformation info) {}
 }

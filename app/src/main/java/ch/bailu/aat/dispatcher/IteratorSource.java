@@ -41,7 +41,7 @@ public abstract class IteratorSource extends ContentSource implements OnCursorCh
     @Override
     public void forceUpdate() {
         AppLog.d(this, "forceUpdate - "+ iterator.getInfo().getPath() + " " + iterator.getCount()+ "/"+ getInfo().getID());
-        updateGpxContent(iterator.getInfo());
+        onContentUpdated(iterator.getInfo());
     }
 
 

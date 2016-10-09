@@ -13,7 +13,8 @@ import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.helpers.AppLog;
 import ch.bailu.aat.helpers.ContextWrapperInterface;
 
-public class RealLocation extends LocationStackChainedItem implements LocationListener, ContextWrapperInterface{
+public class RealLocation extends LocationStackChainedItem
+        implements LocationListener, ContextWrapperInterface{
 
     private final String provider;
     private final Context context;
@@ -172,7 +173,8 @@ public class RealLocation extends LocationStackChainedItem implements LocationLi
         }
     }
 
-    private void requestLocationUpdates(LocationManager lm, String provider, long interval) throws SecurityException, IllegalArgumentException {
+    private void requestLocationUpdates(LocationManager lm, String provider, long interval)
+            throws SecurityException, IllegalArgumentException {
         lm.requestLocationUpdates(provider , interval, 0, this);
     }
 
@@ -200,34 +202,41 @@ public class RealLocation extends LocationStackChainedItem implements LocationLi
 
     @Override
     public void onProviderDisabled(String p) {
-        setState(GpxInformation.ID.STATE_OFF);
+
+        if (provider.equals(p)) {
+            setState(GpxInformation.ID.STATE_OFF);
+        }
     }
 
     @Override
     public void onProviderEnabled(String p) {
-        setState(GpxInformation.ID.STATE_WAIT);
+
+        if (provider.equals(p)) {
+            setState(GpxInformation.ID.STATE_WAIT);
+        }
     }
 
 
     @Override
-    public void onStatusChanged(String provider, int status, Bundle extras) {
-        if (status == LocationProvider.AVAILABLE) {
-            onProviderEnabled(provider);
-        } else if (status == LocationProvider.TEMPORARILY_UNAVAILABLE)  {
-            onProviderEnabled(provider);
-        } else {
-            onProviderDisabled(provider);
+    public void onStatusChanged(String p, int status, Bundle extras) {
+
+        if (provider.equals(p)) {
+
+            if (status == LocationProvider.AVAILABLE) {
+                onProviderEnabled(p);
+            } else if (status == LocationProvider.TEMPORARILY_UNAVAILABLE) {
+                onProviderEnabled(p);
+            } else {
+                onProviderDisabled(p);
+            }
         }
     }
 
     public void setState(int s) {
-        if (state != s) sendState(s);
-    }
-
-    @Override
-    public void sendState(int s) {
-        state=s;
-        super.sendState(state);
+        if (state != s) {
+            state = s;
+            sendState(s);
+        }
     }
 
 

@@ -36,7 +36,7 @@ public abstract class StateDescription extends ContentDescription {
     }
 
     @Override
-    public void updateGpxContent(GpxInformation info) {
+    public void onContentUpdated(GpxInformation info) {
         state=info.getState();
     }
 }

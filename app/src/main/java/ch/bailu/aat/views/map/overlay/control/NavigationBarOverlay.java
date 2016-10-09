@@ -100,7 +100,7 @@ public class NavigationBarOverlay extends ControlBarOverlay {
 
 
     @Override
-    public void updateGpxContent(GpxInformation info) {
+    public void onContentUpdated(GpxInformation info) {
         if (info.isLoaded()) {
             infoCache.put(info.getID(), info);
 

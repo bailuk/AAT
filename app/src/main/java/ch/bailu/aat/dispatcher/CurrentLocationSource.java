@@ -13,7 +13,7 @@ public class CurrentLocationSource extends ContentSource {
     private final BroadcastReceiver onLocationChange = new BroadcastReceiver () {
         @Override
         public void onReceive(Context context, Intent intent) {
-            updateGpxContent(scontext.getTrackerService().getLocation());
+            onContentUpdated(scontext.getTrackerService().getLocation());
         }
 
     };
@@ -31,7 +31,7 @@ public class CurrentLocationSource extends ContentSource {
 
     @Override
     public void forceUpdate() {
-        updateGpxContent(scontext.getTrackerService().getLocation());
+        onContentUpdated(scontext.getTrackerService().getLocation());
     }
 
     @Override

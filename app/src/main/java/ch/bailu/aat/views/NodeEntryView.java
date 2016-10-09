@@ -70,7 +70,7 @@ public class NodeEntryView extends ViewGroup {
         text.setText(AppHtml.fromHtml(node.toHtml(getContext(), new StringBuilder()).toString()));
         final BoundingBox bounding = node.getBoundingBox();
         map.frameBoundingBox(bounding);
-        map.updateGpxContent(info);
+        map.onContentUpdated(info);
 
     }
 }

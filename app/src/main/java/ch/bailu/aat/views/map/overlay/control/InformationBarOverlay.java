@@ -103,8 +103,8 @@ public class InformationBarOverlay extends ControlBarOverlay {
     }
 
     @Override
-    public void updateGpxContent(GpxInformation info) {
-        selector.updateGpxContent(info);
+    public void onContentUpdated(GpxInformation info) {
+        selector.onContentUpdated(info);
 
     }
 

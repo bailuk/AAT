@@ -20,7 +20,7 @@ public abstract class GpxOverlay extends OsmOverlay {
     }
 
     @Override
-    public void updateGpxContent(GpxInformation info) {
+    public void onContentUpdated(GpxInformation info) {
         if (info.getID() == ID) {
             setTrack(info.getGpxList());
         }

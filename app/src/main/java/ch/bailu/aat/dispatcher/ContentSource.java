@@ -17,8 +17,8 @@ public abstract class ContentSource implements Closeable, OnContentUpdatedInterf
 
 
     @Override
-    public void updateGpxContent(GpxInformation info) {
-        dispatcher.updateGpxContent(info);
+    public void onContentUpdated(GpxInformation info) {
+        dispatcher.onContentUpdated(info);
     }
 
 

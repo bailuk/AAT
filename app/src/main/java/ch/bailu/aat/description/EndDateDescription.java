@@ -19,7 +19,7 @@ public class EndDateDescription extends DateDescription {
     }
 
     @Override
-    public void updateGpxContent(GpxInformation info) {
+    public void onContentUpdated(GpxInformation info) {
         setCache(info.getEndTime());
     }
 }

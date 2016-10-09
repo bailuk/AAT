@@ -122,8 +122,8 @@ implements MapListener, OnSharedPreferenceChangeListener, OnTouchListener {
 
     
     @Override
-    public void updateGpxContent(GpxInformation info) {
-        super.updateGpxContent(info);
+    public void onContentUpdated(GpxInformation info) {
+        super.onContentUpdated(info);
         updateLocation(info);
         
         if (filter.pass(info)) {

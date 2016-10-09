@@ -129,7 +129,7 @@ public abstract class NodeSelectorOverlay extends OsmOverlay {
 
 
     @Override
-    public void updateGpxContent(GpxInformation info) {
+    public void onContentUpdated(GpxInformation info) {
         if (GpxInformation.ID.INFO_ID_ALL == ID || info.getID() == ID) {
             if (info.isLoaded()) {
                 gpxHash.put(info.getID(), info);

@@ -30,7 +30,7 @@ public abstract class AbsGraphView extends TrackDescriptionView {
 
     
     @Override
-    public void updateGpxContent(GpxInformation info) {
+    public void onContentUpdated(GpxInformation info) {
         if (filter.pass(info)) {
             gpxList = info.getGpxList();
             invalidate();

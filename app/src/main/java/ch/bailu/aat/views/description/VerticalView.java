@@ -71,9 +71,9 @@ public class VerticalView extends TrackDescriptionView {
 
 
     @Override
-    public void updateGpxContent(GpxInformation info) {
+    public void onContentUpdated(GpxInformation info) {
         if (filter.pass(info)) {
-            for (int i = 0; i< targets.length; i++) targets[i].updateGpxContent(info);
+            for (int i = 0; i< targets.length; i++) targets[i].onContentUpdated(info);
         }
     }
 }

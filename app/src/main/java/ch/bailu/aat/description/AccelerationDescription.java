@@ -32,7 +32,7 @@ public class AccelerationDescription extends FloatDescription {
     }
 
     @Override
-    public void updateGpxContent(GpxInformation info) {
+    public void onContentUpdated(GpxInformation info) {
         setCache(info.getAcceleration());
     }
 }

@@ -10,8 +10,6 @@ import ch.bailu.aat.services.tracker.TrackerService;
 
 public class OneService extends AbsService  {
 
-
-
     public TrackerService tracker;
     public BackgroundService background;
     public IconMapService iconMap;
@@ -19,7 +17,6 @@ public class OneService extends AbsService  {
     public DirectoryService directory;
     public ElevationService elevation;
     public TileRemoverService tileRemover;
-
 
     private VirtualServiceLink scontext;
 
@@ -83,5 +80,4 @@ public class OneService extends AbsService  {
         service.appendStatusText(builder);
         builder.append("</p>");
     }
-
 }

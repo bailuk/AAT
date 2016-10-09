@@ -12,7 +12,7 @@ public class PathDescription extends NameDescription {
     }
 
     @Override
-    public void updateGpxContent(GpxInformation info) {
+    public void onContentUpdated(GpxInformation info) {
         updateName(info.getPath());
     }
     

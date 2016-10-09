@@ -148,8 +148,4 @@ public class TrackerActivity extends AbsDispatcher implements OnClickListener{
             };
             setDispatcher(new RootDispatcher(this,source, target));
     }
-
-
-
-
 }

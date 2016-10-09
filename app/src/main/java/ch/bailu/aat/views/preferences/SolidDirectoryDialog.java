@@ -25,8 +25,6 @@ public class SolidDirectoryDialog extends AbsSolidDialog
     public SolidDirectoryDialog (Activity context, SolidDirectory d) {
         ArrayList<String> sel = d.buildSelection(new ArrayList<String>(5));
 
-        sel = buildFromClopboard(context, sel);
-
         acontext = context;
         preselect = sel.toArray(new String[sel.size()+2]);
         preselect[preselect.length-2]="Browse...*";
@@ -40,16 +38,6 @@ public class SolidDirectoryDialog extends AbsSolidDialog
         dialog.show();
     }
 
-
-    private static ArrayList<String> buildFromClopboard(Context context, ArrayList<String> sel) {
-        final CharSequence t = new Clipboard(context).getText();
-        if (t != null && t.length()>2) {
-            final String s = t.toString();
-            if (s.charAt(0)=='/') sel.add(s);
-        }
-
-        return sel;
-    }
 
 
     @Override

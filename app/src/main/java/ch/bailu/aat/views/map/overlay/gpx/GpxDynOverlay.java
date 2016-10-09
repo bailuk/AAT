@@ -51,12 +51,12 @@ public class GpxDynOverlay extends OsmOverlay {
 
 
     @Override
-    public void updateGpxContent(GpxInformation i) {
+    public void onContentUpdated(GpxInformation i) {
         if (i.getID()== ID) {
             info=i;
             setTrack(info.getGpxList());
-            gpx.updateGpxContent(info);
-            legend.updateGpxContent(info);
+            gpx.onContentUpdated(info);
+            legend.onContentUpdated(info);
         }
 
     }
@@ -84,6 +84,6 @@ public class GpxDynOverlay extends OsmOverlay {
     
     @Override
     public void onSharedPreferenceChanged(String key) {
-        if (slegend.hasKey(key) && info != null) updateGpxContent(info);
+        if (slegend.hasKey(key) && info != null) onContentUpdated(info);
     }
 }

@@ -32,7 +32,7 @@ public class CH1903EastingDescription extends DoubleDescription {
     }
 
     @Override
-    public void updateGpxContent(GpxInformation info) {
+    public void onContentUpdated(GpxInformation info) {
         if (setCache(info.getLongitude())) setCH1903_y(info);
     }
 

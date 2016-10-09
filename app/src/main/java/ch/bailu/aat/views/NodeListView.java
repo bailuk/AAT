@@ -51,7 +51,7 @@ public class NodeListView extends TrackDescriptionView {
 
 
     @Override
-    public void updateGpxContent(GpxInformation info) {
+    public void onContentUpdated(GpxInformation info) {
         list.update(info);
     }
 

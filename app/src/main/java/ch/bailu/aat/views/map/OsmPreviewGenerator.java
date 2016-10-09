@@ -41,7 +41,7 @@ public class OsmPreviewGenerator implements Closeable {
         
         map.layout(0, 0, BITMAP_SIZE, BITMAP_SIZE);
 
-        map.updateGpxContent(new GpxFileWrapper(o,gpxList));      
+        map.onContentUpdated(new GpxFileWrapper(o,gpxList));
         map.frameBoundingBox(gpxList.getDelta().getBoundingBox());
         
         map.getDrawingCache(false);

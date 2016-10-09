@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import ch.bailu.aat.description.OnContentUpdatedInterface;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.preferences.Storage;
-import ch.bailu.aat.views.map.OsmInteractiveView;
 
 
 public class MultiView extends TrackDescriptionView {
@@ -106,15 +105,15 @@ public class MultiView extends TrackDescriptionView {
         pages.get(active).view.bringToFront();
         
         for (int i=0; i< informationMap.size(); i++) 
-            pages.get(active).target.updateGpxContent(informationMap.valueAt(i));
+            pages.get(active).target.onContentUpdated(informationMap.valueAt(i));
     }
     
     
     @Override
-    public void updateGpxContent(GpxInformation info) {
+    public void onContentUpdated(GpxInformation info) {
         if (filter.pass(info)) {
             informationMap.put(info.getID(), info);
-            pages.get(active).target.updateGpxContent(info);
+            pages.get(active).target.onContentUpdated(info);
         }
     }
 

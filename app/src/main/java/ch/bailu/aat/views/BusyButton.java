@@ -71,7 +71,7 @@ public class BusyButton extends ViewGroup   {
         
         
         @Override
-        public void updateGpxContent(GpxInformation info) {
+        public void onContentUpdated(GpxInformation info) {
             if (info.getID()==ID) {
                 if (info.isLoaded()) {
                     stopWaiting();

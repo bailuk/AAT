@@ -116,9 +116,9 @@ public abstract class AbsOsmView extends TrackDescriptionView {
     }
     
     @Override
-    public void updateGpxContent(GpxInformation info) {
+    public void onContentUpdated(GpxInformation info) {
         if (filter.pass(info)) {
-            overlayList.updateGpxContent(info);
+            overlayList.onContentUpdated(info);
         }
     }
     

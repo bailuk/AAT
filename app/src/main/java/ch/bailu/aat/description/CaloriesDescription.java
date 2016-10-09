@@ -32,7 +32,7 @@ public class CaloriesDescription extends LongDescription{
 
     
     @Override
-    public void updateGpxContent(GpxInformation info) {
+    public void onContentUpdated(GpxInformation info) {
         setCache((long)calculateCalories(info));
     }
     

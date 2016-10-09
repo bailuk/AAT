@@ -44,7 +44,7 @@ public class DistanceDescription extends FloatDescription {
 
 
     @Override
-    public void updateGpxContent(GpxInformation info) {
+    public void onContentUpdated(GpxInformation info) {
         setCache(info.getDistance());
     }
 

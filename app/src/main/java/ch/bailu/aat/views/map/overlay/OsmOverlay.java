@@ -48,7 +48,7 @@ public abstract class OsmOverlay extends Overlay implements OnContentUpdatedInte
     }
 
     @Override
-    public void updateGpxContent(GpxInformation info) {}
+    public void onContentUpdated(GpxInformation info) {}
 
     public void onSharedPreferenceChanged(String key) {
     }

@@ -111,9 +111,9 @@ public class GpxListEntryView extends DescriptionViewGroup {
         }
 
         @Override
-        public void updateGpxContent(GpxInformation info) {
+        public void onContentUpdated(GpxInformation info) {
             if (filter.pass(info)) {
-                data.updateGpxContent(info);
+                data.onContentUpdated(info);
                 updateText(data.getValue(), data.getUnit());
 
                 preview.setFilePath(info.getPath());

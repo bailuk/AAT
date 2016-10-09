@@ -140,9 +140,9 @@ public class EditorOverlay extends ControlBarOverlay {
     
     
     @Override
-    public void updateGpxContent(GpxInformation info) {
-        content.updateGpxContent(info);
-        selector.updateGpxContent(info);
+    public void onContentUpdated(GpxInformation info) {
+        content.onContentUpdated(info);
+        selector.onContentUpdated(info);
     }
     
     

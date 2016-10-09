@@ -45,9 +45,9 @@ public abstract class DescriptionViewGroup extends TrackDescriptionView {
     
     
     @Override
-    public void updateGpxContent(GpxInformation info) {
+    public void onContentUpdated(GpxInformation info) {
         if (filter.pass(info)) {
-            for (TrackDescriptionView aView : view) aView.updateGpxContent(info);
+            for (TrackDescriptionView aView : view) aView.onContentUpdated(info);
         }   
     }
 }

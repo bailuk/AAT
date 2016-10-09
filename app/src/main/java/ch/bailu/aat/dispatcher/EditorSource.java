@@ -46,7 +46,7 @@ public class EditorSource extends ContentSource {
     
     @Override
     public void forceUpdate() {
-        updateGpxContent(edit.getInformation());
+        onContentUpdated(edit.getInformation());
     }
 
 

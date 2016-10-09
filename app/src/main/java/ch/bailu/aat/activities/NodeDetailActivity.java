@@ -131,7 +131,7 @@ public class NodeDetailActivity extends AbsDispatcher implements OnClickListener
 
 
     @Override
-    public void updateGpxContent(GpxInformation info) {
+    public void onContentUpdated(GpxInformation info) {
 
         if (info.getID()==GpxInformation.ID.INFO_ID_FILEVIEW) {
             array = new GpxListArray(info.getGpxList());

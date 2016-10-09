@@ -31,9 +31,9 @@ public class GpxOverlayListOverlay extends OsmOverlay {
 
 
     @Override
-    public void updateGpxContent(GpxInformation info) {
+    public void onContentUpdated(GpxInformation info) {
         for (int i=0; i<list.length; i++)
-            list[i].updateGpxContent(info);
+            list[i].onContentUpdated(info);
     }
 
 

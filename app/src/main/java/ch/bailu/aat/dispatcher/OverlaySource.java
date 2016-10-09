@@ -119,7 +119,7 @@ public class OverlaySource extends ContentSource {
             } else {
                 disableOverlay();
             }
-            updateGpxContent(this);
+            onContentUpdated(this);
         }
 
 

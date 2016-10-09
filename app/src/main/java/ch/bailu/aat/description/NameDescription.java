@@ -35,7 +35,7 @@ public class NameDescription extends ContentDescription {
     }
     
     @Override
-    public void updateGpxContent(GpxInformation info) {
+    public void onContentUpdated(GpxInformation info) {
         updateName(info.getName());
     }
 

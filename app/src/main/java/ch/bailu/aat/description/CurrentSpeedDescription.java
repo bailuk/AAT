@@ -18,7 +18,7 @@ public class CurrentSpeedDescription extends SpeedDescription {
     }
 
     @Override
-    public void updateGpxContent(GpxInformation info) {
+    public void onContentUpdated(GpxInformation info) {
 
         GpxList track=info.getGpxList();
 

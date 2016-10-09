@@ -104,7 +104,7 @@ public class GpxEditorActivity extends AbsFileContentActivity {
  
 
     @Override
-    public void updateGpxContent(GpxInformation info) {
+    public void onContentUpdated(GpxInformation info) {
         if (info.getID()== GpxInformation.ID.INFO_ID_FILEVIEW) {
             editor_helper.edit(new File(currentFile.getInfo().getPath()));
             editor_source.forceUpdate();

@@ -65,9 +65,9 @@ public class RootDispatcher implements OnContentUpdatedInterface, Closeable {
     
     
     @Override
-    public void updateGpxContent(GpxInformation info) {
+    public void onContentUpdated(GpxInformation info) {
         for (OnContentUpdatedInterface target: targetList)
-            target.updateGpxContent(info);
+            target.onContentUpdated(info);
     }
 
 

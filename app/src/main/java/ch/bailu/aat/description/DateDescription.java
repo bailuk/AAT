@@ -23,7 +23,7 @@ public class DateDescription extends LongDescription {
     }
 
     @Override
-    public void updateGpxContent(GpxInformation info) {
+    public void onContentUpdated(GpxInformation info) {
         setCache(info.getStartTime());
     }
 

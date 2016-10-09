@@ -20,8 +20,11 @@ public class NumberView extends TrackDescriptionView {
         number.setIncludeFontPadding(false);
 
         label = createLabel();
+        label.setTextColor(Color.LTGRAY);
+
         unit = createLabel();
         unit.setBackgroundColor(Color.DKGRAY);
+        unit.setTextColor(Color.LTGRAY);
         
         description=data;
 
@@ -81,18 +84,17 @@ public class NumberView extends TrackDescriptionView {
 
     
     @Override
-    public void updateGpxContent(GpxInformation info) {
+    public void onContentUpdated(GpxInformation info) {
         if (filter.pass(info)) {
-            description.updateGpxContent(info);
+            description.onContentUpdated(info);
             updateAllText();
         }
     }
+
 
     public void updateAllText() {
         number.setText(description.getValue());
         label.setText(description.getLabel());
         unit.setText(description.getUnit());
     }
-
-   
 }

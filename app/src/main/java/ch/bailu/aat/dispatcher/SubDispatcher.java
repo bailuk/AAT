@@ -17,10 +17,10 @@ public class SubDispatcher implements OnContentUpdatedInterface {
 
 
     @Override
-    public void updateGpxContent(GpxInformation info) {
+    public void onContentUpdated(GpxInformation info) {
         if (filter.pass(info)) {
             for (OnContentUpdatedInterface target : targetList)
-                target.updateGpxContent(info);
+                target.onContentUpdated(info);
         }
     }
 }

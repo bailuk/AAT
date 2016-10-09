@@ -69,9 +69,7 @@ public class TestActivity extends AbsDispatcher {
     private static final String SOLID_KEY = "test";
 
     private MultiView multiView;
-
     private OsmInteractiveView map;
-
     private StatusTextView statusTextView;
 
 
@@ -80,7 +78,6 @@ public class TestActivity extends AbsDispatcher {
         super.onCreate(savedInstanceState);
 
         final LinearLayout contentView = new ContentView(this);
-
 
         multiView = createMultiView();
 
@@ -200,16 +197,6 @@ public class TestActivity extends AbsDispatcher {
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-    }
-
-    @Override
     public void onResumeWithService() {
         super.onResumeWithService();
         statusTextView.updateText(this);
@@ -238,6 +225,4 @@ public class TestActivity extends AbsDispatcher {
             });
         }
     }
-
-
 }

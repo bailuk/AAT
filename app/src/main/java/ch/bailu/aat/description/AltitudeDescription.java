@@ -49,7 +49,7 @@ public class AltitudeDescription extends FloatDescription {
     }
     
     @Override
-    public void updateGpxContent(GpxInformation info) {
+    public void onContentUpdated(GpxInformation info) {
         setCache( ((float)info.getAltitude()) );
     }
     

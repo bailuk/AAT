@@ -19,14 +19,14 @@ public class TrackerSource extends ContentSource {
     private final BroadcastReceiver onStateChanged = new BroadcastReceiver () {
         @Override
         public void onReceive(Context context, Intent intent) {
-            updateGpxContent(scontext.getTrackerService().getTrackerInformation());		}
+            onContentUpdated(scontext.getTrackerService().getTrackerInformation());		}
 
     };
 
     private final BroadcastReceiver onTrackChanged = new BroadcastReceiver () {
         @Override
         public void onReceive(Context context, Intent intent) {
-            updateGpxContent(scontext.getTrackerService().getTrackerInformation());
+            onContentUpdated(scontext.getTrackerService().getTrackerInformation());
         }
 
     };
@@ -34,7 +34,7 @@ public class TrackerSource extends ContentSource {
 
     @Override
     public void forceUpdate() {
-        updateGpxContent(scontext.getTrackerService().getTrackerInformation());
+        onContentUpdated(scontext.getTrackerService().getTrackerInformation());
     }
 
     
