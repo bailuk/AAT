@@ -2,8 +2,8 @@
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="ch.bailu.aat"
-    android:versionCode="12"
-    android:versionName="v1.2-beta">
+    android:versionCode="13"
+    android:versionName="v1.3-beta">
 
 
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" >  </uses-permission>
