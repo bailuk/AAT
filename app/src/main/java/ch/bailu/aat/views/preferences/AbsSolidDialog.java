@@ -4,7 +4,7 @@ import android.app.AlertDialog;
 
 import ch.bailu.aat.preferences.AbsSolidType;
 
-public abstract class AbsSolidDialog {
+public abstract class AbsSolidDialog  {
 
     public static AlertDialog.Builder createDefaultDialog(AbsSolidType s) {
         AlertDialog.Builder dialog = new AlertDialog.Builder(s.getContext());

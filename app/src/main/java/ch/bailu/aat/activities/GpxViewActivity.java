@@ -177,7 +177,7 @@ public class GpxViewActivity extends AbsDispatcher implements OnClickListener {
         final OnContentUpdatedInterface[] target = new OnContentUpdatedInterface[] {
                 multiView, this, busyButton.getBusyControl(GpxInformation.ID.INFO_ID_FILEVIEW) 
         };
-        setDispatcher(new RootDispatcher(this,source, target));
+        setDispatcher(new RootDispatcher(source, target));
 
     }
 
@@ -208,6 +208,4 @@ public class GpxViewActivity extends AbsDispatcher implements OnClickListener {
 
 
 
-    @Override
-    public void onServicesUp(boolean firstRun) {}
 }

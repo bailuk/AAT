@@ -15,24 +15,20 @@ public class SolidImageButton extends ImageButtonView implements SharedPreferenc
         super(s.getContext(), s.getIconResource());
         
         slist = s;
-        setOnClickListener(onClick);
+        setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                slist.cycle();
+            }
+
+        });
     }
-
-
-
-    private final OnClickListener onClick = new OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            slist.cycle();
-        }
-        
-    };
 
 
     @Override
     public void onAttachedToWindow() {
         super.onAttachedToWindow();
-
+        setImageResource(slist.getIconResource());
         slist.register(this);
     }
 

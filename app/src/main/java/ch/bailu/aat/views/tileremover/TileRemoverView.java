@@ -9,7 +9,6 @@ import android.widget.LinearLayout;
 
 import ch.bailu.aat.R;
 import ch.bailu.aat.helpers.AppBroadcaster;
-import ch.bailu.aat.helpers.file.FileIntent;
 import ch.bailu.aat.preferences.SolidTileCacheDirectory;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.tileremover.TileRemoverService;

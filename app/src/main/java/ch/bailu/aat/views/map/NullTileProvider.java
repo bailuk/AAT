@@ -28,15 +28,6 @@ public class NullTileProvider extends AbsTileProvider {
     }
 
     @Override
-    public void setTileSource(ITileSource pTileSource) {
-    }
-
-    @Override
-    public ITileSource getTileSource() {
-        return null;
-    }
-
-    @Override
     public void setTileRequestCompleteHandler(Handler handler) {
     }
 

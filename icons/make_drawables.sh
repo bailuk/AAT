@@ -83,8 +83,6 @@ INVERT "go-up"
 INVERT "open-menu"
 INVERT "edit-select-all"
 INVERT "folder"
-INVERT "radio"
-INVERT "radio-checked"
 
 
 ####### Navigation-Bar

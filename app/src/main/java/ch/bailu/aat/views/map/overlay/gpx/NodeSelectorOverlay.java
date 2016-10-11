@@ -18,8 +18,8 @@ public abstract class NodeSelectorOverlay extends OsmOverlay {
     
     private final int ID;
 
-    private final int SQUARE_SIZE=30;
-    private final int SQUARE_HSIZE=SQUARE_SIZE/2;
+    public final int SQUARE_SIZE=30;
+    public final int SQUARE_HSIZE=SQUARE_SIZE/2;
 
     private final SparseArray<GpxInformation> gpxHash =
             new SparseArray<>(5);

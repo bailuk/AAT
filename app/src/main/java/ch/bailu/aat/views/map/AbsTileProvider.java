@@ -9,14 +9,19 @@ import org.osmdroid.tileprovider.tilesource.ITileSource;
 
 public abstract class AbsTileProvider implements OpenStreetMapTileProviderConstants  {
 
+    /** Osmdroid compability **/
+    public ITileSource getTileSource() {
+        return null;
+    }
 
-    public abstract void setTileSource(ITileSource s);
+    /** Osmdroid compability **/
+    public void setTileSource(ITileSource s) {}
+
 
 
     
     
     public abstract void deleteVisibleTilesFromDisk();
-    public abstract ITileSource getTileSource();
     public abstract int  getMinimumZoomLevel();
     public abstract int getMaximumZoomLevel();
     public abstract Drawable getMapTile(MapTile pTile);

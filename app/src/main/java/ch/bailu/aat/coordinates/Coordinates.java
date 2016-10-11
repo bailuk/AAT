@@ -38,14 +38,12 @@ public abstract class Coordinates {
     }
 
     public static String geoPointToGeoUri(IGeoPoint src) {
-        StringBuilder b = new StringBuilder();
+        String b = "geo:" +
+                src.getLatitudeE6() / 1e6d +
+                ',' +
+                src.getLongitudeE6() / 1e6d;
 
-        b.append("geo:");
-        b.append(src.getLatitudeE6()/1e6d);
-        b.append(',');
-        b.append(src.getLongitudeE6()/1e6d);
-
-        return b.toString();
+        return b;
     }
 
 

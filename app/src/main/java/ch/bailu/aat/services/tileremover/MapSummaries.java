@@ -1,6 +1,10 @@
 package ch.bailu.aat.services.tileremover;
 
+import android.content.Context;
+
 import java.io.File;
+
+import ch.bailu.aat.R;
 
 public class MapSummaries {
 
@@ -9,11 +13,11 @@ public class MapSummaries {
     private final MapSummary[] mapSummaries = new MapSummary[SUMMARY_SIZE];
 
 
-    public void reset() {
+    public void reset(Context c) {
         for(int i = 0; i< mapSummaries.length; i++) {
             mapSummaries[i] = new MapSummary();
         }
-        mapSummaries[0].setName("Total*");
+        mapSummaries[0].setName(c.getString(R.string.p_trim_total));
     }
 
     public void setName(int s, String name) {
@@ -27,8 +31,8 @@ public class MapSummaries {
     }
 
     public void resetToRemove() {
-        for (int i = 0; i< mapSummaries.length; i++) {
-            mapSummaries[i].clear_rm();
+        for (MapSummary mapSummary : mapSummaries) {
+            mapSummary.clear_rm();
         }
     }
 

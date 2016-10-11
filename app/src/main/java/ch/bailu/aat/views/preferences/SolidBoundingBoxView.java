@@ -1,6 +1,5 @@
 package ch.bailu.aat.views.preferences;
 
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.view.View;
 

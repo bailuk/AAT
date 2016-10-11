@@ -47,4 +47,9 @@ public class OverlayList extends OsmOverlay {
             overlay.onSharedPreferenceChanged(key);
     }
 
+    @Override
+    public void onLayout(boolean changed, int l, int t, int r, int b) {
+        for (OsmOverlay overlay: overlayList)
+            overlay.onLayout(changed, l, t, r, b);
+    }
 }

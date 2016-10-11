@@ -30,7 +30,7 @@ public abstract class MeterGridOverlay extends OsmOverlay {
             grid.findOptimalScale(painter.projection.getShortDistance()/2);
             if (grid.getOptimalScale() > 0) {
                 
-                MeterCoordinates coordinates = getRoundedCoordinates(painter, grid.getOptimalScale());
+                MeterCoordinates coordinates = getRoundedCoordinates(painter);
                 final Point centerPixel = getCenterPixel(painter, coordinates);
                 
                 painter.canvas.drawGrid(centerPixel, 
@@ -50,7 +50,7 @@ public abstract class MeterGridOverlay extends OsmOverlay {
         return painter.projection.toMapPixels(c.toGeoPoint());
     }
     
-    private MeterCoordinates getRoundedCoordinates(MapPainter painter, int space) {
+    private MeterCoordinates getRoundedCoordinates(MapPainter painter) {
         GeoPoint center=painter.projection.getCenterPoint();
         MeterCoordinates c=getCoordinates(center);
         c.round(grid.getOptimalScale());

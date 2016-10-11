@@ -40,7 +40,7 @@ public class EditorOverlay extends ControlBarOverlay {
     public EditorOverlay(OsmInteractiveView osm, ServiceContext sc, int iid, EditorHelper e) {
         super(osm, new ControlBar(
                 osm.getContext(),
-                LinearLayout.VERTICAL));
+                getOrientation(LEFT)), LEFT);
 
         edit = e;
         scontext=sc;
@@ -120,21 +120,14 @@ public class EditorOverlay extends ControlBarOverlay {
     }
     
     
+
     @Override
-    public void leftTab() {
-        showBar();
-    }
-    
-    
-    @Override
-    public void showBar() {
-        showBarAtLeft();
+    public void onShowBar() {
         selector.showAtRight();
     }
 
     @Override
-    public void hideBar() {
-        super.hideBar();
+    public void onHideBar() {
         selector.hide();
     }
     

@@ -11,7 +11,7 @@ public class StateUnscanned implements State {
         state = s;
 
         state.list = null;
-        state.summaries.reset();
+        state.summaries.reset(s.context);
 
         state.freeService();
         AppBroadcaster.broadcast(state.context, AppBroadcaster.TILE_REMOVER_STOPPED);

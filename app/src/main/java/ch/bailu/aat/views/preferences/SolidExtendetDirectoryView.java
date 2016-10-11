@@ -9,11 +9,11 @@ import ch.bailu.aat.preferences.SolidDirectory;
 import ch.bailu.aat.views.description.LabelTextView;
 
 public class SolidExtendetDirectoryView extends LinearLayout{
-    public SolidExtendetDirectoryView(Activity context, SolidDirectory s) {
+    public SolidExtendetDirectoryView(SolidDirectory s) {
         super(s.getContext());
         setOrientation(HORIZONTAL);
 
-        addW(new SolidDirectoryView(context, s));
+        addW(new SolidStringView(s));
         addView(new SolidDirectoryMenuButton(s));
     }
 

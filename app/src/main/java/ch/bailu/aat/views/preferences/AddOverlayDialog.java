@@ -8,8 +8,7 @@ import java.io.File;
 
 import ch.bailu.aat.preferences.SolidOverlayFileList;
 
-public class AddOverlayDialog extends AbsSolidDialog
-        implements  DialogInterface.OnClickListener {
+public class AddOverlayDialog extends AbsSolidDialog implements  DialogInterface.OnClickListener{
 
     private final SolidOverlayFileList slist;
     private final File file;

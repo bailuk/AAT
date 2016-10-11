@@ -1,7 +1,6 @@
 package ch.bailu.aat.activities;
 
 import android.os.Bundle;
-import android.view.View;
 import android.widget.LinearLayout;
 
 import ch.bailu.aat.R;
@@ -9,19 +8,15 @@ import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.preferences.SolidPreset;
 import ch.bailu.aat.services.tileremover.TileRemoverService;
 import ch.bailu.aat.views.ContentView;
-import ch.bailu.aat.views.ControlBar;
 import ch.bailu.aat.views.MainControlBar;
-import ch.bailu.aat.views.MvListButton;
-import ch.bailu.aat.views.MvNextButton;
 import ch.bailu.aat.views.description.MultiView;
 import ch.bailu.aat.views.preferences.GeneralPreferencesView;
 import ch.bailu.aat.views.preferences.MapTilePreferencesView;
 import ch.bailu.aat.views.preferences.PresetPreferencesView;
-import ch.bailu.aat.views.MvPreviousButton;
 
 public class PreferencesActivity extends AbsDispatcher {
 
-    private static String SOLID_KEY=PreferencesActivity.class.getSimpleName();
+    private final static String SOLID_KEY=PreferencesActivity.class.getSimpleName();
 
     private MapTilePreferencesView mapTilePreferences;
 
@@ -51,7 +46,7 @@ public class PreferencesActivity extends AbsDispatcher {
 
         final int l = new SolidPreset(this).length();
 
-        mapTilePreferences = new MapTilePreferencesView(this, getServiceContext());
+        mapTilePreferences = new MapTilePreferencesView(getServiceContext());
         mv.add(new GeneralPreferencesView(this),
                 getString(R.string.p_general)+ "/"+ getString(R.string.p_system));
         mv.add(mapTilePreferences,

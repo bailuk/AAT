@@ -31,7 +31,7 @@ public abstract class GpxWriter {
 
     public abstract void writeFooter() throws IOException;
     public abstract void writeSegment() throws IOException;
-    public abstract void writeFirstSegment(long timestamp) throws IOException; 
+    public abstract void writeFirstSegment() throws IOException;
     public abstract void writeTrackPoint(GpxPointInterface tp) throws IOException;
 
     public void close() throws IOException {

@@ -25,8 +25,7 @@ public class GpxOverlayListOverlay extends OsmOverlay {
 
     @Override
     public void draw(MapPainter p) {
-        for (int i=0; i<list.length; i++)
-            list[i].draw(p);
+        for (OsmOverlay aList : list) aList.draw(p);
     }
 
 
@@ -39,7 +38,6 @@ public class GpxOverlayListOverlay extends OsmOverlay {
 
     @Override
     public void onSharedPreferenceChanged(String key) {
-        for (int i=0; i<list.length; i++)
-            list[i].onSharedPreferenceChanged(key);
+        for (OsmOverlay aList : list) aList.onSharedPreferenceChanged(key);
     }
 }

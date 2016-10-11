@@ -7,33 +7,48 @@ import java.io.File;
 import ch.bailu.aat.R;
 import ch.bailu.aat.helpers.AppDirectory;
 
-public class SolidPreset extends SolidStaticIndexList {
+public class SolidPreset extends SolidIndexList {
+    public final int PRESET_COUNT=5;
+
     final private static String KEY="preset";
-    final private static String[] NAMES={"A0", "A1", "A2", "A3", "A4"};
-   
-    
+
+
     public SolidPreset(Context c) {
-        super(Storage.global(c), KEY, NAMES);
+        super(Storage.global(c), KEY);
+    }
+
+    @Override
+    public int length() {
+        return PRESET_COUNT;
+    }
+
+    @Override
+    public String getValueAsString(int i) {
+        return smet(i).getValueAsString();
+    }
+
+    @Override
+    public String getValueAsString() {
+        return smet().getValueAsString();
+    }
+
+
+    public SolidMET smet() {
+        return smet(getIndex());
+    }
+
+    private SolidMET smet(int i) {
+        return new SolidMET(getContext(), i);
+    }
+
+
+    @Override
+    public boolean hasKey(String key) {
+        return super.hasKey(key) || smet().hasKey(key);
     }
 
     
-    public String getValueAsString() {
-        SolidMET smet = new SolidMET(getContext(), getIndex());
-        return smet.getValueAsString();
-    }
-    
-    @Override
-    public String[] getStringArray() {
-        
-        String[] array = new String[length()];
-        
-        for (int i=0; i< array.length; i++) {
-            SolidMET smet = new SolidMET(getContext(), i);
-            array[i] = smet.getValueAsString();
-        }
-        return array;
-    }
-    
+
     @Override
     public String getLabel() {
         return getContext().getString(R.string.p_preset);
@@ -52,6 +67,4 @@ public class SolidPreset extends SolidStaticIndexList {
     public String getCacheDbName() {
     	return AppDirectory.getTrackListCacheDb(getContext(),getIndex()).toString();
     }
-    
-    
 }

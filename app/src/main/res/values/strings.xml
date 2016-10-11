@@ -6,6 +6,7 @@
     <string name="off">Off</string>
     <string name="auto">Auto</string>
     <string name="none">None</string>
+    <string name="enter">Enter...</string>
 
 
     <!-- Main activity (Intro) -->
@@ -23,19 +24,29 @@
     <string name="intro_import_list">Imported files</string>
     <string name="intro_settings">Preferences</string>
 
+    <!-- MultiView label -->
+    <string name="label_summary">Summary</string>
+    <string name="label_filter">Filter</string>
+    <string name="label_list">List</string>
+
+
     <string name="gps" translatable="false">GPS</string>
     <string name="gps_wait" translatable="false">&#8230;</string>
     <string name="gps_nogps">No GPS</string>
     <string name="gps_noaccess">No access</string>
+    <string name="gps_lock">Lock</string>
 
-    <string name="tracker" translatable="false">Tracker</string>
+    <string name="tracker">Tracker</string>
     <string name="tracker_start">Start</string>
     <string name="tracker_pause">Pause</string>
     <string name="tracker_stop">Stop</string>
     <string name="tracker_resume">Resume</string>
+    <string name="tracker_restore">Restore track</string>
 
     <string name="status_paused">Paused</string>
     <string name="status_autopaused">A-Paused</string>
+
+
 
 
 
@@ -49,12 +60,29 @@
         <item>International System of Units</item>
     </string-array>
 
+    <!-- Map-Tiles settings -->
     <string name="p_tiles">Map Tiles</string>
     <string name="p_trim_mode">Trim mode</string>
     <string name="p_trim_size">Trim size</string>
     <string name="p_trim_age">Trim age</string>
+    <string name="p_trim_month">Month</string>
+    <string name="p_trim_months">Months</string>
+    <string name="p_trim_year">Year</string>
+    <string name="p_trim_years">Years</string>
+    <string name="p_trim_days">Days</string>
+    <string name="p_trim_total">Total</string>
+
+    <string-array name="p_trim_modes">
+        <item>Trim to size</item>
+        <item>Trim to size and age</item>
+        <item>Trim to age</item>
+        <item>Trim to size or age</item>
+    </string-array>
+
+
     <string name="p_general">General</string>
     <string name="p_preset">Activity</string>
+
     <string name="p_met" translatable="false">MET</string>
     <string-array name="p_met_list">
         <!--
@@ -112,7 +140,11 @@
     <string name="p_directory_tiles" translatable="false">Tile cache directory</string>
     <string name="p_legend_fulldistance">Distance continuous</string>
     <string name="p_missing_trigger">Missing trigger</string>
+
     <string name="p_location_provider">Location provider</string>
+    <string name="p_location_gps">System GPS</string>
+    <string name="p_location_mock">Mock location</string>
+    <string name="p_location_old">Old location</string>
 
     <string name="file_reload">Reload preview</string>
     <string name="file_delete">Delete file</string>
@@ -125,11 +157,12 @@
     <string name="file_copy">Copy to…</string>
     <string name="file_exists"> already exists!</string>
 
+    <string name="location_title">Center location</string>
     <string name="location_view">View location…</string>
     <string name="location_send">Send location…</string>
 
-    <string name="clipboard_copy">Copy</string>
-    <string name="clipboard_paste">Paste</string>
+    <string name="clipboard_copy">Copy to CB</string>
+    <string name="clipboard_paste">Paste from CB</string>
 
 
     <!-- Dialog -->
@@ -170,7 +203,6 @@
 
 
     <string name="filter_geo">Inside bounding</string>
-    <string name="filter_geo_update">Get bounding from map</string>
     <string name="filter_date_start">Start date</string>
     <string name="filter_date_to">End date</string>
 

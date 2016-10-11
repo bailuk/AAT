@@ -22,8 +22,7 @@ public class FileControlBar extends ControlBarOverlay{
 
 
     @Override
-    public void showBar() {
-        showBarAtLeft();
+    public void onShowBar() {
         selector.showAtRight();
     }
 
@@ -37,7 +36,7 @@ public class FileControlBar extends ControlBarOverlay{
     public FileControlBar(OsmInteractiveView osm, AbsGpxListActivity a) {
         super(osm, new ControlBar(
                 osm.getContext(),
-                LinearLayout.VERTICAL));
+                getOrientation(LEFT)), LEFT);
 
         final ControlBar bar = getBar();
 
@@ -130,15 +129,9 @@ public class FileControlBar extends ControlBarOverlay{
     }
 
 
-    @Override
-    public void leftTab() {
-        showBar();
-    }
-
 
     @Override
-    public void hideBar() {
-        super.hideBar();
+    public void onHideBar() {
         selector.hide();
     }
 

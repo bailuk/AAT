@@ -4,7 +4,6 @@ package ch.bailu.aat.activities;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
 import ch.bailu.aat.R;
@@ -92,12 +91,6 @@ public class TestActivity extends AbsDispatcher {
     }
 
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-    }
-
-
     private MultiView createMultiView() {
         map = new OsmInteractiveView(getServiceContext(), SOLID_KEY);
 
@@ -147,12 +140,12 @@ public class TestActivity extends AbsDispatcher {
 
         MultiView mv = new MultiView(this, SOLID_KEY, GpxInformation.ID.INFO_ID_ALL);
 
-        mv.addT(map,"Map*");
+        mv.addT(map,getString(R.string.intro_map));
         mv.add(locationView, locationView.addAllContent(
-                locationDescription, GpxInformation.ID.INFO_ID_LOCATION), "Location*");
+                locationDescription, GpxInformation.ID.INFO_ID_LOCATION), getString(R.string.gps));
 
         mv.add(trackerView, trackerView.addAllContent(
-                trackerDescription, GpxInformation.ID.INFO_ID_TRACKER), "Tracker*");
+                trackerDescription, GpxInformation.ID.INFO_ID_TRACKER), getString(R.string.tracker));
         mv.add(testsView, "Tests*");
         mv.add(statusTextView, getString(R.string.intro_status));
         return mv;
@@ -193,7 +186,7 @@ public class TestActivity extends AbsDispatcher {
                 new CurrentLocationSource(getServiceContext()),
                 new OverlaySource(getServiceContext()),
         };
-        setDispatcher(new RootDispatcher(this, source, target));
+        setDispatcher(new RootDispatcher(source, target));
     }
 
     @Override
@@ -211,16 +204,16 @@ public class TestActivity extends AbsDispatcher {
             setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                        try {
-                            test.test();
-                            setText("Test successfull");
-                            AppLog.i(getContext(), "Test sucessfull");
+                    try {
+                        test.test();
+                        setText("Test successfull");
+                        AppLog.i(getContext(), "Test sucessfull");
 
-                        } catch (AssertionError | Exception e) {
-                            setText("Test failed.");
-                            AppLog.e(getContext(), e);
-                        }
+                    } catch (AssertionError | Exception e) {
+                        setText("Test failed.");
+                        AppLog.e(getContext(), e);
                     }
+                }
 
             });
         }

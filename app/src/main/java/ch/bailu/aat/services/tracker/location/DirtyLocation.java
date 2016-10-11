@@ -2,6 +2,7 @@ package ch.bailu.aat.services.tracker.location;
 
 import android.content.Context;
 
+import ch.bailu.aat.R;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.helpers.AppBroadcaster;
 import ch.bailu.aat.preferences.Storage;
@@ -64,7 +65,7 @@ public class DirtyLocation extends LocationStackChainedItem {
         
         @Override
         public String getName() {
-            return "old location*";
+            return storage.getContext().getString(R.string.p_location_old);
         }
         @Override
         public int getID() {

@@ -16,15 +16,20 @@ public class MapFeatureListActivity extends AbsDispatcher {
 
 
     }
-    
+
+    private boolean contentViewSet = false;
 
     @Override
-    public void onServicesUp(boolean firstRun) {
-        final Intent intent = getIntent();
-        final String file = AppIntent.getFile(intent);
+    public void onResumeWithService() {
+        if (contentViewSet==false) {
+            final Intent intent = getIntent();
+            final String file = AppIntent.getFile(intent);
 
-        FeaturesList list = new FeaturesList(getServiceContext(), new FileAccess(new File(file)));
-        setContentView(list);
+            FeaturesList list = new FeaturesList(getServiceContext(), new FileAccess(new File(file)));
+            setContentView(list);
+
+            contentViewSet=true;
+        }
 
     }
     

@@ -136,14 +136,9 @@ public class MapActivity extends AbsDispatcher implements OnClickListener{
                 new CurrentLocationSource(getServiceContext()),
                 new OverlaySource(getServiceContext())};
 
-        setDispatcher(new RootDispatcher(this,source, target));
+        setDispatcher(new RootDispatcher(source, target));
     }
 
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-    }
 
 
     @Override

@@ -149,8 +149,10 @@
     <string name="file_rename">Datei umbenenen</string>
     <string name="file_send">Senden…</string>
     <string name="file_view">Anzeigen/Bearbeiten…</string>
-    <string name="location_copy">Position kopieren</string>
-    <string name="location_paste">Position einfügen</string>
+
+    <string name="clipboard_copy">Kopieren</string>
+    <string name="clipboard_paste">Einfügen</string>
+
     <string name="location_send">Position senden…</string>
     <string name="location_view">Position ansehen…</string>
     <string name="d_name">Name</string>

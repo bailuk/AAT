@@ -24,7 +24,7 @@ public class WayWriter extends GpxWriter {
     }
 
     @Override
-    public void writeFirstSegment(long timestamp) throws IOException {
+    public void writeFirstSegment() throws IOException {
     }
 
     @Override

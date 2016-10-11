@@ -28,7 +28,7 @@ public class InformationBarOverlay extends ControlBarOverlay {
 
 
     public InformationBarOverlay(OsmInteractiveView o) {
-        super(o,new ControlBar(o.getContext(), ControlBar.VERTICAL));
+        super(o,new ControlBar(o.getContext(), getOrientation(RIGHT)), RIGHT);
 
         final SolidIndexList sgrid, slegend;
 
@@ -82,14 +82,9 @@ public class InformationBarOverlay extends ControlBarOverlay {
         if (isVisible()) selector.draw(p);
     }
 
-    @Override
-    public void rightTab() {
-        showBar();
-    }
 
     @Override
-    public void showBar() {
-        showBarAtRight();
+    public void onShowBar() {
         selector.showAtLeft();
     }
 
@@ -97,8 +92,7 @@ public class InformationBarOverlay extends ControlBarOverlay {
     public void run() {}
 
     @Override
-    public void hideBar() {
-        super.hideBar();
+    public void onHideBar() {
         selector.hide();
     }
 

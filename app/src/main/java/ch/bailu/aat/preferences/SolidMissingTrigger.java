@@ -20,21 +20,24 @@ public class SolidMissingTrigger extends SolidStaticIndexList {
     200,
     };
     
-    private static final String[] LABEL_LIST = {
-    "off*",
-    "10s",
-    "15s",
-    "20s",
-    "25s",
-    "30s",
-    "40s",
-    "50s",
-    "100s",
-    "200s",
-    };
+
+    private static String[] label_list = null;
+    private static String[] generateLabelList(Context c) {
+        if (label_list == null) {
+
+            label_list = new String[VALUE_LIST.length];
+
+            label_list[0] = c.getString(R.string.off);
+            for (int i = 1; i < label_list.length; i++) {
+                label_list[i] = String.valueOf(VALUE_LIST[i]) + "s";
+            }
+        }
+        return label_list;
+    }
 
     public SolidMissingTrigger(Context c, int i) {
-        super(Storage.preset(c), KEY+i, LABEL_LIST);
+
+        super(Storage.preset(c), KEY+i, generateLabelList(c));
     }
     
     public int getTriggerSeconds() {

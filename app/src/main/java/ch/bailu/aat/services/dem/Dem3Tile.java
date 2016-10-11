@@ -123,6 +123,7 @@ public class Dem3Tile implements ElevationProvider, DemProvider {
     }
     
     public boolean isProcessed() {
+
         return (!loading && !isLocked());
     }
     

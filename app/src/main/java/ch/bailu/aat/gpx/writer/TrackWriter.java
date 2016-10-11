@@ -46,7 +46,7 @@ public class TrackWriter extends GpxWriter {
     }
 
     @Override
-    public void writeFirstSegment(long timestamp) throws IOException {
+    public void writeFirstSegment() throws IOException {
         writeBeginElement(GpxConstants.QNAME_TRACK_SEGMENT);
         writeString("\n");
     }

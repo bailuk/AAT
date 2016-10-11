@@ -19,5 +19,7 @@ cat $1 \
 | sed 's/<body>//'     \
 | sed 's/<\/body>//'   \
 | sed 's/</\&lt;/g' \
-| sed 's/'\''/\\'\''/' 
+| sed 's/\"/\\\"/g' \
+| sed 's/(c)/\\u00A9/g'\
+| sed 's/'\''/\\'\''/g' 
 echo '</string>'

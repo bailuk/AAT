@@ -52,13 +52,13 @@ public class ObjectTable {
 
             putIntoCache(h);
 
-            h.lock(son.scontext);
+            h.lock();
             h.onInsert(son.scontext);
 
             trim(son);
 
         } else {
-            h.lock(son.scontext);
+            h.lock();
         }
         return h;
     }
@@ -86,7 +86,7 @@ public class ObjectTable {
             h = ObjectHandle.NULL;
         } 
 
-        h.lock(sc);
+        h.lock();
         return h;
     }
 

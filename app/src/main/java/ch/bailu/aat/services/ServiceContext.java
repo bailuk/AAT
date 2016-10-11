@@ -18,7 +18,7 @@ public abstract class ServiceContext implements ContextWrapperInterface {
         private static final long serialVersionUID = 5632759660184034845L;
 
         public ServiceNotUpException(Class<?> service)  {
-            super("Service '" + Service.class.getSimpleName() + "' is not running.*");
+            super("Service '" + service.getSimpleName() + "' is not running.*");
         }
     }
 

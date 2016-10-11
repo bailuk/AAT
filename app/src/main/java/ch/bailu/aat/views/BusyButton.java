@@ -10,7 +10,7 @@ import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.helpers.AppTheme;
 
 public class BusyButton extends ViewGroup   {
-    private final int SPACE=16;
+    public final int SPACE=16;
     
     private final ImageButton button;
     private final BusyIndicator busy;

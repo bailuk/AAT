@@ -75,7 +75,7 @@ public class MainActivity extends AbsDispatcher {
                 new CurrentLocationSource(getServiceContext())
         };
 
-        setDispatcher(new RootDispatcher(this,source, target));
+        setDispatcher(new RootDispatcher(source, target));
     }
 
 

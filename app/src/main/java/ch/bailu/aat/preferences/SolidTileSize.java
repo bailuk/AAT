@@ -12,15 +12,19 @@ public class SolidTileSize extends SolidIndexList {
     private static final int STEP=32;
 
     private static final int[] VALUE_LIST = {
-        DEFAULT_TILESIZE + STEP *8,
-        DEFAULT_TILESIZE + STEP *7,
-        DEFAULT_TILESIZE + STEP *6,
-        DEFAULT_TILESIZE + STEP *5,
-        DEFAULT_TILESIZE + STEP *4,
-        DEFAULT_TILESIZE + STEP *3,
-        DEFAULT_TILESIZE + STEP *2,
-        DEFAULT_TILESIZE + STEP *1,
-        DEFAULT_TILESIZE + STEP *0
+            DEFAULT_TILESIZE + STEP *8,
+            DEFAULT_TILESIZE + STEP *7,
+            DEFAULT_TILESIZE + STEP *6,
+            DEFAULT_TILESIZE + STEP *5,
+            DEFAULT_TILESIZE + STEP *4,
+            DEFAULT_TILESIZE + STEP *3,
+            DEFAULT_TILESIZE + STEP *2,
+            DEFAULT_TILESIZE + STEP *1,
+            DEFAULT_TILESIZE + STEP *0,
+            DEFAULT_TILESIZE + STEP *16,
+            DEFAULT_TILESIZE + STEP *32,
+            DEFAULT_TILESIZE + STEP *64,
+
     };
 
     public SolidTileSize(Storage s) {

@@ -59,10 +59,7 @@ public class MapFeaturesActivity extends AbsDispatcher implements OnClickListene
 
     }
     
-    @Override
-    public void onServicesUp(boolean firstRun) {}
 
-    
     @Override
     public void onDestroy() {
         unregisterReceiver(onFileProcessed);

@@ -33,7 +33,7 @@ public class NavigationBarOverlay extends ControlBarOverlay {
 
     public NavigationBarOverlay(OsmInteractiveView o, int i) {
         super(o,new ControlBar(o.getContext(),
-                LinearLayout.HORIZONTAL, i));
+                getOrientation(BOTTOM), i), BOTTOM);
 
         buttonPlus = getBar().addImageButton(R.drawable.zoom_in);
         buttonMinus = getBar().addImageButton(R.drawable.zoom_out);
@@ -87,17 +87,6 @@ public class NavigationBarOverlay extends ControlBarOverlay {
     }
     
     
-    @Override
-    public void bottomTap() {
-        showBar();
-    }
-
-
-    @Override
-    public void showBar() {
-        showBarAtBottom();
-    }
-
 
     @Override
     public void onContentUpdated(GpxInformation info) {

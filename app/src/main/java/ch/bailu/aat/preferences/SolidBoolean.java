@@ -1,15 +1,28 @@
 package ch.bailu.aat.preferences;
 
 
+import android.content.Context;
+
+import ch.bailu.aat.R;
 
 public class SolidBoolean extends SolidStaticIndexList {
 
 
+    private static String[] label;
+
+
+    private static String[] generateLabel(Context c) {
+        if (label == null) {
+            label = new String[] {
+                    c.getString(R.string.on),
+                    c.getString(R.string.off),
+            };
+        }
+        return label;
+    }
+
     public SolidBoolean(Storage s, String k) {
-        super(s, k, new String[] {
-            "Disabled*",
-            "Enabled*",
-        });
+        super(s, k, generateLabel(s.getContext()));
     }
 
     public boolean isEnabled() {

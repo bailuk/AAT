@@ -126,7 +126,7 @@ public class NodeDetailActivity extends AbsDispatcher implements OnClickListener
                 new CustomFileSource(getServiceContext(), fileID),
         };
 
-        setDispatcher(new RootDispatcher(this,source, target));
+        setDispatcher(new RootDispatcher(source, target));
     }
 
 
@@ -181,7 +181,4 @@ public class NodeDetailActivity extends AbsDispatcher implements OnClickListener
         ActivitySwitcher.start(context, NodeDetailActivity.class, intent);
     }
     
-    @Override
-    public void onServicesUp(boolean firstRun) {}
-
 }

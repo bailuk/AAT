@@ -146,6 +146,6 @@ public class TrackerActivity extends AbsDispatcher implements OnClickListener{
                     new CurrentLocationSource(getServiceContext()),
                     new OverlaySource(getServiceContext()),
             };
-            setDispatcher(new RootDispatcher(this,source, target));
+            setDispatcher(new RootDispatcher(source, target));
     }
 }

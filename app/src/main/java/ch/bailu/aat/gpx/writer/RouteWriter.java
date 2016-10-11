@@ -30,7 +30,7 @@ public class RouteWriter extends GpxWriter {
     public void writeSegment() throws IOException {}
 
     @Override
-    public void writeFirstSegment(long timestamp) throws IOException {}
+    public void writeFirstSegment() throws IOException {}
 
     @Override
     public void writeTrackPoint(GpxPointInterface tp) throws IOException {

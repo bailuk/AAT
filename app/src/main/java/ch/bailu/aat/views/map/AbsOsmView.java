@@ -61,11 +61,14 @@ public abstract class AbsOsmView extends TrackDescriptionView {
     
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
+
         if (changed) {
             map.layout(0, 0, r-l, b-t);
             if (pendingFrameBounding != null)
                 frameBoundingBox(pendingFrameBounding);
         }
+
+        overlayList.onLayout(changed, l, t, r, b);
     }
     
     

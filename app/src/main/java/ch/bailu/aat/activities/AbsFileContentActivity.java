@@ -179,7 +179,7 @@ public class AbsFileContentActivity extends AbsDispatcher implements OnClickList
                 currentFile
         };
 
-        setDispatcher(new RootDispatcher(this,source, target));
+        setDispatcher(new RootDispatcher(source, target));
     }
 
 

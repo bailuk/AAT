@@ -15,10 +15,6 @@ public class PointAltitudeWalker  extends LegendWalker {
         description = new DistanceDescription(context);
     }
 
-    @Override
-    public boolean doList(GpxList l) {
-        return super.doList(l);
-    }
 
     @Override
     public boolean doMarker(GpxSegmentNode marker) {

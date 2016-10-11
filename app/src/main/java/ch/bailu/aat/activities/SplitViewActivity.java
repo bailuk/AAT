@@ -29,7 +29,6 @@ import ch.bailu.aat.views.ControlBar;
 import ch.bailu.aat.views.MainControlBar;
 import ch.bailu.aat.views.description.MultiView;
 import ch.bailu.aat.views.description.TrackerStateButton;
-import ch.bailu.aat.views.description.VerticalView;
 import ch.bailu.aat.views.description.CockpitView;
 import ch.bailu.aat.views.description.TrackDescriptionView;
 import ch.bailu.aat.views.graph.DistanceAltitudeGraphView;
@@ -152,10 +151,6 @@ public class SplitViewActivity extends AbsDispatcher implements OnClickListener{
 
 
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-    }
 
 
 
@@ -186,11 +181,7 @@ public class SplitViewActivity extends AbsDispatcher implements OnClickListener{
                 new OverlaySource(getServiceContext()),
         };
 
-        setDispatcher(new RootDispatcher(this,source, target));
+        setDispatcher(new RootDispatcher(source, target));
 
     }
-
-    @Override
-    public void onServicesUp(boolean firstRun) {}
-
 }

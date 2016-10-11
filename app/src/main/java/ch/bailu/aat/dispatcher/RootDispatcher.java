@@ -28,7 +28,7 @@ public class RootDispatcher implements OnContentUpdatedInterface, Closeable {
         sourceList = ContentSource.NULL_LIST;
     }
 
-    public RootDispatcher(Context c, ContentSource s[], OnContentUpdatedInterface t[]) {
+    public RootDispatcher(ContentSource s[], OnContentUpdatedInterface t[]) {
         TARGET_LIST = t;
         targetList = t;
         sourceList = s;

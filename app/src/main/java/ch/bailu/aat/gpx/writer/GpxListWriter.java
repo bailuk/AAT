@@ -35,7 +35,7 @@ public class GpxListWriter implements  Closeable {
         while (iterator.nextPoint()) {
             if (iterator.isFirstInSegment()) {
                 if (iterator.isFirstInTrack()) {
-                    writer.writeFirstSegment(iterator.getPoint().getTimeStamp());  
+                    writer.writeFirstSegment();
                 } else {
                     writer.writeSegment();
                 }

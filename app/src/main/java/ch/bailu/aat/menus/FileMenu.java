@@ -5,12 +5,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import ch.bailu.aat.R;
+import ch.bailu.aat.helpers.Clipboard;
 import ch.bailu.aat.helpers.FileAction;
 
 public class FileMenu extends AbsMenu {
     private final  FileAction file;
     
-    private MenuItem send, view, rename, copy, delete, overlay, reload, mock;
+    private MenuItem send, view, rename, copy, delete, overlay, reload, mock, clipboard;
     
     
     public FileMenu(FileAction f) {
@@ -28,6 +29,7 @@ public class FileMenu extends AbsMenu {
         overlay = menu.add(R.string.file_overlay);
         reload = menu.add(R.string.file_reload);
         mock = menu.add(R.string.file_mock);
+        clipboard = menu.add(R.string.clipboard_copy);
     }
 
     @Override
@@ -68,6 +70,8 @@ public class FileMenu extends AbsMenu {
         } else if (item == copy) {
             file.copyTo();
 
+        } else if (item == clipboard) {
+            file.copyToClipboard();
         } else  {
             return false;
         }

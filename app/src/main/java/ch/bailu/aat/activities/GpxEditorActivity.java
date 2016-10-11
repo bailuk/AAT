@@ -18,7 +18,6 @@ import ch.bailu.aat.services.editor.EditorHelper;
 import ch.bailu.aat.services.editor.EditorInterface;
 import ch.bailu.aat.views.NodeListView;
 import ch.bailu.aat.views.description.MultiView;
-import ch.bailu.aat.views.description.TrackDescriptionView;
 import ch.bailu.aat.views.description.VerticalView;
 import ch.bailu.aat.views.graph.DistanceAltitudeGraphView;
 import ch.bailu.aat.views.map.OsmInteractiveView;

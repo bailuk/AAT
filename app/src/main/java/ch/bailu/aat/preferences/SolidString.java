@@ -1,5 +1,7 @@
 package ch.bailu.aat.preferences;
 
+import java.util.ArrayList;
+
 public class SolidString extends AbsSolidType {
     private final String key;
     private final Storage storage;
@@ -35,4 +37,8 @@ public class SolidString extends AbsSolidType {
         return storage;
     }
 
+
+    public ArrayList<String> buildSelection(ArrayList<String> strings) {
+        return strings;
+    }
 }

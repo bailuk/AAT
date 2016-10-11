@@ -161,7 +161,7 @@ public class OverlaySource extends ContentSource {
 
         @Override
         public GpxList getGpxList() {
-            GpxList list = ((GpxObject)handle).getGpxList();
+            GpxList list = handle.getGpxList();
 
             return list;
         }

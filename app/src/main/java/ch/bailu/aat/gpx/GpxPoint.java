@@ -21,7 +21,7 @@ public class GpxPoint implements GpxPointInterface {
 
     
     public GpxPoint (GpxPointInterface tp) {
-        altitude=(short)tp.getAltitude();
+        altitude= tp.getAltitude();
         longitude=tp.getLongitudeE6();
         latitude=tp.getLatitudeE6();
         timestamp=tp.getTimeStamp();
@@ -45,12 +45,12 @@ public class GpxPoint implements GpxPointInterface {
 
     @Override
     public double getLatitude() {
-        return ((double)getLatitudeE6())/((double)1E6);
+        return ((double)getLatitudeE6())/ 1E6;
     }
 
     @Override
     public double getLongitude() {
-        return ((double)getLongitudeE6())/((double)1E6);
+        return ((double)getLongitudeE6())/ 1E6;
     }
 
     @Override

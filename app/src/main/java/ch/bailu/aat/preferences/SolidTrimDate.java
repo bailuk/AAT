@@ -8,7 +8,7 @@ import ch.bailu.aat.R;
 public class SolidTrimDate extends SolidIndexList {
 
 
-    private static class Entry {
+    private class Entry {
         public final long age;
         public final String name;
 
@@ -18,19 +18,27 @@ public class SolidTrimDate extends SolidIndexList {
         }
     }
 
-    public static String describe(long size) {
+    public String describe(long size) {
         String s;
 
         if (size >= DateUtils.YEAR_IN_MILLIS) {
-            s="Years*";
             size=size/ DateUtils.YEAR_IN_MILLIS;
+            if (size == 1)
+                s = getContext().getString(R.string.p_trim_year);
+            else
+                s = getContext().getString(R.string.p_trim_years);
+
         } else if (size >= DateUtils.DAY_IN_MILLIS*30) {
-            s="Months*";
             size =size / (DateUtils.DAY_IN_MILLIS*30);
+            if (size == 1)
+                s = getContext().getString(R.string.p_trim_month);
+            else
+                s = getContext().getString(R.string.p_trim_months);
 
         } else  {
-            s="Days*";
             size=size / DateUtils.DAY_IN_MILLIS;
+            s = getContext().getString(R.string.p_trim_days);
+
         }
 
         return size + " " + s;

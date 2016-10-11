@@ -5,6 +5,7 @@ import android.content.Context;
 import java.io.File;
 import java.io.IOException;
 
+import ch.bailu.aat.R;
 import ch.bailu.aat.gpx.GpxList;
 import ch.bailu.aat.gpx.parser.SimpleGpxListReader;
 import ch.bailu.aat.gpx.writer.GpxListWriter;
@@ -28,7 +29,7 @@ public class TrackCrashRestorer{
             
             GpxList track = readFile(new FileAccess(source));
             if (track.getPointList().size() > TrackLogger.MIN_TRACKPOINTS) { 
-                AppLog.i(context, "Restore track*");                
+                AppLog.i(context, context.getString(R.string.tracker_restore));
         
                 retstoreFile(context,track, presetIndex);
                 

@@ -80,7 +80,7 @@ public abstract class AbsOsmApiActivity extends AbsDispatcher implements OnClick
                 list
         };
 
-        setDispatcher(new RootDispatcher(this,source, target));
+        setDispatcher(new RootDispatcher(source, target));
 
         setQueryTextFromIntent();
     }  

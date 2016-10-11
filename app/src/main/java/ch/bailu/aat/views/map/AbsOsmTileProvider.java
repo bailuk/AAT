@@ -57,10 +57,6 @@ public abstract class AbsOsmTileProvider extends AbsTileProvider {
 
 
 
-    @Override
-    public ITileSource getTileSource() {
-        return null;
-    }
 
 
 
@@ -79,9 +75,5 @@ public abstract class AbsOsmTileProvider extends AbsTileProvider {
     public void setSubTileSource(Source[] s) {
         sources=s;
     }
-
-    @Override
-    public void setTileSource(ITileSource s) {}
-
 
 }

@@ -34,14 +34,15 @@ public class LocationMenu extends AbsMenu{
     public void inflate(Menu menu) {
         send = menu.add(R.string.location_send);
         view = menu.add(R.string.location_view);
-        copy = menu.add(R.string.location_copy);
-        paste = menu.add(R.string.location_paste);
+        copy = menu.add(R.string.clipboard_copy);
+        paste = menu.add(R.string.clipboard_paste);
         
     }
 
     @Override
     public void inflateWithHeader(ContextMenu menu) {
-        menu.setHeaderTitle("Center Location*");
+        menu.setHeaderTitle(R.string.location_title);
+        inflate(menu);
     }
 
     @Override

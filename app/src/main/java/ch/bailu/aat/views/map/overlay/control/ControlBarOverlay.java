@@ -4,6 +4,7 @@ import android.graphics.Color;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.LinearLayout;
 
 import org.osmdroid.views.MapView;
 
@@ -15,22 +16,39 @@ import ch.bailu.aat.views.map.overlay.OsmOverlay;
 
 
 public abstract class ControlBarOverlay extends OsmOverlay implements Runnable, OnClickListener{
+    public final static int TOP=0;
+    public final static int LEFT=1;
+    public final static int BOTTOM=2;
+    public final static int RIGHT=3;
+
     private final static int HIDE_TIMER_MILLIS=5000;
     private final static int TRANSPARENT = Color.argb(50, 0, 0, 0);
 
     private final ControlBar bar;
-    private boolean isVisible=false;
-    private final Timer hideTimer = new Timer(this, HIDE_TIMER_MILLIS);
+//    private final Timer hideTimer = new Timer(this, HIDE_TIMER_MILLIS);
 
-    public ControlBarOverlay(OsmInteractiveView v, ControlBar b, int color) {
+    private final int placement;
+
+    public static int getOrientation(int placement) {
+        if (placement == TOP || placement == BOTTOM) {
+            return LinearLayout.HORIZONTAL;
+        }
+        return LinearLayout.VERTICAL;
+    }
+
+    public ControlBarOverlay(OsmInteractiveView v, ControlBar b, int p, int color) {
         super(v);
+        placement = p;
         bar=b;
         bar.setBackgroundColor(color);
         bar.setOnClickListener2(this);
+        bar.setVisibility(View.GONE);
+        getOsmView().addView(bar);
+
     }
     
-    public ControlBarOverlay(OsmInteractiveView v, ControlBar b) {
-        this(v,b,TRANSPARENT);
+    public ControlBarOverlay(OsmInteractiveView v, ControlBar b, int p) {
+        this(v,b,p, TRANSPARENT);
     }
 
 
@@ -40,56 +58,43 @@ public abstract class ControlBarOverlay extends OsmOverlay implements Runnable, 
     }
 
     public boolean isVisible() {
-        return isVisible;
-    }
-
-    public abstract void showBar();
-
-
-    public void showBarAtTop() {
-        int left=0;
-        int top=0;
-        
-        
-        showBar(left, top, getOsmView().getWidth());
-    }
-
-    public void showBarAtRight() {
-        int left=getMapView().getWidth()-bar.getControlSize();
-        int top=0;
-
-        showBar(left, top, getOsmView().getHeight());
-    }
-
-    
-    public void showBarAtLeft() {
-        int left=0;
-        int top=0;
-
-        showBar(left, top, getOsmView().getHeight());
-    }
-
-    
-    public void showBarAtBottom() {
-        
-        int left=0;
-        int top=getMapView().getHeight()-bar.getControlSize();
-        showBar(left,top, getOsmView().getWidth());
+        return bar.getVisibility() == View.VISIBLE;
     }
 
 
-    private void showBar(int left, int top, int length) {
-        if (length < 5) length = 1000;
-        
-        if (bar!=null && !isVisible && getMapView() != null) {
-            getOsmView().addView(bar);
-            bar.place(left, top, length);
-            isVisible=true;
+    @Override
+    public void onLayout(boolean changed, int l, int t, int r, int b) {
+        if (changed) {
+
+            final int w = r - l;
+            final int h = b - t;
+            final int cs = bar.getControlSize();
+
+
+            if (placement == TOP) {
+                bar.place(0, 0, w);
+            } else if (placement == LEFT) {
+                bar.place(0, 0, h);
+            } else if (placement == BOTTOM) {
+                bar.place(0, h - cs, w);
+            } else if (placement == RIGHT) {
+                bar.place(w - cs, 0, h);
+            }
+        }
+    }
+
+
+    public void showBar() {
+        if (!isVisible()) {
+            bar.setVisibility(View.VISIBLE);
+            onShowBar();
         }
 
-        hideTimer.close();
-        hideTimer.kick();
+        //hideTimer.close();
+        //hideTimer.kick();
     }
+
+    public void onShowBar(){};
 
 
     @Override
@@ -98,11 +103,15 @@ public abstract class ControlBarOverlay extends OsmOverlay implements Runnable, 
     }
 
     public void hideBar() {
-        if (bar!=null && isVisible) {
-            getOsmView().removeView(bar);
-            isVisible=false;
+        if (bar!=null && isVisible()) {
+            bar.setVisibility(View.GONE);
+
+            onHideBar();
         }
     }
+
+
+    public void onHideBar() {}
 
     @Override
     public void draw(MapPainter painter) {}
@@ -142,9 +151,18 @@ public abstract class ControlBarOverlay extends OsmOverlay implements Runnable, 
 
 
 
-    public void topTap()   {hideBar();}
-    public void bottomTap(){hideBar();}
+    public void topTap()   {
+        showHideBar(TOP); }
+    public void bottomTap(){
+        showHideBar(BOTTOM);}
     public void middleTap(){hideBar();}
-    public void rightTab() {hideBar();}
-    public void leftTab()  {hideBar();}
+    public void rightTab() {
+        showHideBar(RIGHT);}
+    public void leftTab()  {
+        showHideBar(LEFT);}
+
+    private void showHideBar(int p) {
+        if (p==placement) showBar();
+        else hideBar();
+    }
 }

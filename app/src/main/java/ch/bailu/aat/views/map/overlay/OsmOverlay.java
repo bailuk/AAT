@@ -53,4 +53,5 @@ public abstract class OsmOverlay extends Overlay implements OnContentUpdatedInte
     public void onSharedPreferenceChanged(String key) {
     }
 
+    public void onLayout(boolean changed, int l, int t, int r, int b) {}
 }

@@ -4,6 +4,7 @@ import org.osmdroid.tileprovider.MapTile;
 
 import java.io.Closeable;
 
+import ch.bailu.aat.helpers.AppLog;
 import ch.bailu.aat.services.cache.TileStackObject;
 
 public class TileCache implements Closeable {
@@ -23,9 +24,9 @@ public class TileCache implements Closeable {
 
     
     public TileStackObject get(String string) {
-        for (int i = 0; i<tiles.length; i++) {
-            if (tiles[i].toString().equals(string)) {
-                return tiles[i];
+        for (TileStackObject tile : tiles) {
+            if (tile.toString().equals(string)) {
+                return tile;
             }
         }
         return null;
@@ -33,9 +34,9 @@ public class TileCache implements Closeable {
 
 
     public TileStackObject getFromSubTile(String id) {
-        for (int i = 0; i<tiles.length; i++) {
-            if (tiles[i].isInStack(id)) {
-                return tiles[i];
+        for (TileStackObject tile : tiles) {
+            if (tile.isInStack(id)) {
+                return tile;
             }
         }
         return null;
@@ -43,10 +44,10 @@ public class TileCache implements Closeable {
     
 
     public TileStackObject get(MapTile tile) {
-        for (int i = 0; i<tiles.length; i++) {
-            if (tile.equals(tiles[i].getTile())) {
-                tiles[i].access();
-                return tiles[i];
+        for (TileStackObject t : tiles) {
+            if (tile.equals(t.getTile())) {
+                t.access();
+                return t;
             }
         }
         return null;
@@ -121,5 +122,7 @@ public class TileCache implements Closeable {
             tiles[x].free();
         }
         tiles=newTiles;
+
+        AppLog.d(this, "Capacity: " + capacity);
     }
 }

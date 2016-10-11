@@ -3,6 +3,9 @@ package ch.bailu.aat.helpers;
 import java.io.IOException;
 
 public class Logger {
+    /** Osmdroid compability **/
+
+
     private final String source;
 
     public Logger(Class<?> s) {
@@ -17,7 +20,7 @@ public class Logger {
         AppLog.e(source,  string);
     }
 
-    public void error(String string, Throwable e) {
+    public void error(String s, Throwable e) {
         AppLog.e(source, e);
     }
 

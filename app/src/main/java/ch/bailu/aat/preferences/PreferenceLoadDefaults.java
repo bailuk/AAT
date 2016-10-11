@@ -21,7 +21,7 @@ public class PreferenceLoadDefaults {
         new SolidWeight(context).setValue(75);
 
         for (int i=0; i<new SolidPreset(context).length(); i++) {
-            new SolidMET(context,i).setIndex(i);
+            new OldSolidMET(context,i).setIndex(i);
         }
     }
     

@@ -5,12 +5,9 @@ import android.os.Bundle;
 import android.view.ContextMenu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import java.io.File;
 
@@ -25,7 +22,6 @@ import ch.bailu.aat.dispatcher.IteratorSource;
 import ch.bailu.aat.dispatcher.OverlaySource;
 import ch.bailu.aat.dispatcher.RootDispatcher;
 import ch.bailu.aat.gpx.GpxInformation;
-import ch.bailu.aat.helpers.AppTheme;
 import ch.bailu.aat.helpers.FileAction;
 import ch.bailu.aat.menus.FileMenu;
 import ch.bailu.aat.preferences.SolidDirectoryQuery;
@@ -47,7 +43,6 @@ import ch.bailu.aat.views.map.overlay.gpx.GpxDynOverlay;
 import ch.bailu.aat.views.map.overlay.gpx.GpxOverlayListOverlay;
 import ch.bailu.aat.views.map.overlay.grid.GridDynOverlay;
 import ch.bailu.aat.views.preferences.SolidDirectoryMenuButton;
-import ch.bailu.aat.views.preferences.SolidExtendetDirectoryView;
 import ch.bailu.aat.views.preferences.TitleView;
 import ch.bailu.aat.views.preferences.VerticalScrollView;
 
@@ -107,10 +102,10 @@ public abstract class AbsGpxListActivity extends AbsDispatcher implements OnItem
 
 
     private MultiView createMultiView() {
-        final String summary_label = "Summary*";
-        final String filter_label = "Filter*";
+        final String summary_label = getString(R.string.label_summary);
+        final String filter_label = getString(R.string.label_filter);
         final String map_label = getString(R.string.intro_map);
-        final String list_label = "File list*";
+        final String list_label = getString(R.string.label_list);
 
         final ContentDescription summary_content[] = getSummaryData();
         final ContentDescription filter_content[] = {
@@ -178,7 +173,7 @@ public abstract class AbsGpxListActivity extends AbsDispatcher implements OnItem
                 summary
         };
 
-        setDispatcher(new RootDispatcher(this,source, target));
+        setDispatcher(new RootDispatcher(source, target));
 
     }
 

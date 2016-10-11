@@ -20,7 +20,7 @@ public class ImageObject extends ObjectHandle {
         super("");
     }
     
-    public ImageObject(String id, ServiceContext sc) {
+    public ImageObject(String id) {
         super(id);
     }
     
@@ -77,7 +77,7 @@ public class ImageObject extends ObjectHandle {
     public static class Factory extends ObjectHandle.Factory {
         @Override
         public ObjectHandle factory(String id, ServiceContext sc) {
-            return new ImageObject(id, sc);
+            return new ImageObject(id);
         }
     }
 

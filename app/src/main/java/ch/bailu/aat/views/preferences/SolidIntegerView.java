@@ -1,7 +1,5 @@
 package ch.bailu.aat.views.preferences;
 
-import android.content.Context;
-
 import ch.bailu.aat.preferences.SolidInteger;
 
 public class SolidIntegerView extends AbsSolidView {

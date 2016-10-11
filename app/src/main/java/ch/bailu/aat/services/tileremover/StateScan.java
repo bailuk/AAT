@@ -17,7 +17,7 @@ public class StateScan implements State, Runnable {
         state.tileDirectory = new SolidTileCacheDirectory(s.context).getValueAsFile();
 
         state.list = new TilesList();
-        state.summaries.reset();
+        state.summaries.reset(s.context);
 
         state.lockService();
         new Thread(this).start();
@@ -114,11 +114,12 @@ public class StateScan implements State, Runnable {
 
 
         if (files != null) {
-            for (int i=0; i<files.length; i++) {
-                if (doDirectory(files[i]) && keepUp() ) {
+            for (File file1 : files) {
+                if (doDirectory(file1) && keepUp()) {
                     try {
-                        scanZoomDirectory(files[i], hash, summary);
-                    } catch (NumberFormatException e) {}
+                        scanZoomDirectory(file1, hash, summary);
+                    } catch (NumberFormatException e) {
+                    }
                 }
             }
         }
@@ -148,8 +149,8 @@ public class StateScan implements State, Runnable {
         final int x = TileFile.getX(file);
 
         if (files != null) {
-            for (int i = 0; i < files.length; i++) {
-                processFile(files[i], hash, zoom, x, summary);
+            for (File f : files) {
+                processFile(f, hash, zoom, x, summary);
             }
         }
     }

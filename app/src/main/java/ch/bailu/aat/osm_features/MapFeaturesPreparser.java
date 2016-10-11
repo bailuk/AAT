@@ -18,7 +18,11 @@ import ch.bailu.aat.services.background.DownloadHandle;
 
 public class MapFeaturesPreparser {
     private static final int TARGET_LENGTH=30;
-    private static final String WIKI_URL = "http://wiki.openstreetmap.org/";    
+    private static final String WIKI_URL = "http://wiki.openstreetmap.org/";
+
+    private final static boolean ENABLE_LINKS = false;
+
+    private boolean enableImages = false;
 
     
     private final ArrayList<DownloadHandle> images = new ArrayList<>();
@@ -34,8 +38,8 @@ public class MapFeaturesPreparser {
     private int tableDataCount=0;
     
     
-    private final boolean enableLinks=false;
-    private boolean enableImages=false;
+
+
     
     
     public MapFeaturesPreparser(Context c) throws IOException {
@@ -109,13 +113,13 @@ public class MapFeaturesPreparser {
                 
                 
             } else  if (in.haveA('p') && in.nextIs('>') && out != null) { //<p>
-                //enableLinks=true;
+                //ENABLE_LINKS=true;
                 
                 out.append("\n<p>");
                 parseParagraph(c);
                 out.append("</p>\n");
                 
-                //enableLinks=false;
+                //ENABLE_LINKS=false;
                 
             } else if (in.haveA('t') && in.nextIs("able")&& out != null) { // <table ...
                 parseTable(c);
@@ -197,7 +201,7 @@ public class MapFeaturesPreparser {
     
     private void parseTableData(Context c) throws IOException {
         if (tableDataCount==0) {
-            enableImages=true;
+            enableImages =true;
             
             out.append("\n<p>[<b>");
             parseParagraph(c);
@@ -210,7 +214,7 @@ public class MapFeaturesPreparser {
         } else {
             
             if (tableDataCount == 4) {
-                enableImages=false;
+                enableImages =false;
             }
             parseParagraph(c);
         }
@@ -255,7 +259,7 @@ public class MapFeaturesPreparser {
                             break;
                         }
                     } else if (in.haveA('a')) {
-                        if (enableLinks) out.append("</a>");
+                        if (ENABLE_LINKS) out.append("</a>");
                     }
             
                 }
@@ -353,7 +357,7 @@ public class MapFeaturesPreparser {
             in.to('h');
             
             if (in.nextIs("ref=")) {
-                if (enableLinks) {
+                if (ENABLE_LINKS) {
                     String url = parseQuotedUrl();
                     out.append("<a href=\"");
                     out.append(url);

@@ -21,7 +21,7 @@ public class NodeEntryView extends ViewGroup {
     private final OsmViewStatic map;
     private final TextView text;
     
-    public NodeEntryView(ServiceContext sc, String key, int id) {
+    public NodeEntryView(ServiceContext sc, int id) {
         super(sc.getContext());
 
         AbsOsmTileProvider provider = new CachedTileProvider(sc);

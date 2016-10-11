@@ -1,6 +1,5 @@
 package ch.bailu.aat.views.preferences;
 
-import android.app.Activity;
 import android.content.Context;
 
 import ch.bailu.aat.R;
@@ -16,14 +15,14 @@ public class MapTilePreferencesView extends VerticalScrollView {
     private final TileRemoverView tileRemover;
 
 
-    public MapTilePreferencesView(Activity acontext, ServiceContext scontext) {
+    public MapTilePreferencesView(ServiceContext scontext) {
         super(scontext.getContext());
 
         final Context context = scontext.getContext();
 
         add(new TitleView(context, context.getString(R.string.p_tiles)));
         add(new SolidIndexListView(new SolidTileSize(context)));
-        add(new SolidExtendetDirectoryView(acontext, new SolidTileCacheDirectory(context)));
+        add(new SolidExtendetDirectoryView(new SolidTileCacheDirectory(context)));
         add(new SolidIndexListView(new SolidTrimMode(context)));
         add(new SolidIndexListView(new SolidTrimSize(context)));
         add(new SolidIndexListView(new SolidTrimDate(context)));

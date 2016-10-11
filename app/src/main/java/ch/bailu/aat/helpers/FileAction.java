@@ -55,6 +55,12 @@ public class FileAction   {
         new FileDeletionDialog();
     }
 
+    public void copyToClipboard() {
+        new Clipboard(scontext.getContext()).setText(file.getName(),
+                file.getAbsolutePath());
+
+    }
+
 
     private class FileDeletionDialog extends AppDialog {
         public FileDeletionDialog() {

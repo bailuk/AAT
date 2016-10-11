@@ -108,7 +108,7 @@ public class NodeListView extends TrackDescriptionView {
             NodeEntryView entry = (NodeEntryView) recycle;
 
             if (entry == null) {
-                entry = new NodeEntryView(scontext, solidKey, filter.id);
+                entry = new NodeEntryView(scontext, filter.id);
             } 
 
             entry.update(info, array.get(position));

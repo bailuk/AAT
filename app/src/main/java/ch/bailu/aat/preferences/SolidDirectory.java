@@ -16,10 +16,7 @@ public abstract class SolidDirectory extends SolidString {
     public File getValueAsFile() {
         return new File(getValueAsString());
     }
-
     public int getIconResource() {return R.drawable.folder_inverse;}
 
     public abstract ArrayList<String> buildSelection(ArrayList<String> list);
-
-
 }
