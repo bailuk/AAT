@@ -65,6 +65,14 @@ public class BitmapTileObject extends TileObject {
         else if (isDownloadable()) sc.getBackgroundService().download(download);
     }
 
+    @Override
+    public void reDownload(ServiceContext sc) {
+        if (download.isLocked()==false) {
+            toFile().delete();
+            if (isDownloadable()) sc.getBackgroundService().download(download);
+        }
+    }
+
 
     private boolean isLoadable() {
         return new File(toString()).exists();

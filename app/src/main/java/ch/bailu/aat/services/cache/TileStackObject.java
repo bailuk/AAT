@@ -191,9 +191,9 @@ public class TileStackObject extends ObjectHandle {
     }
 
 
-    public void deleteFromDisk() {
+    public void reDownload(ServiceContext sc) {
         for (TileContainer tile : tiles) {
-            new File(tile.id).delete();
+            tile.reDownload(sc);
         }
     }
 
@@ -236,14 +236,20 @@ public class TileStackObject extends ObjectHandle {
 
 
 
-        public void lock(ServiceContext cs) {
-            handle = cs.getCacheService().getObject(id, factory);
+        public void lock(ServiceContext sc) {
+            handle = sc.getCacheService().getObject(id, factory);
         }
 
 
         public void free() {
             handle.free();
             handle = ObjectHandle.NULL;
+        }
+
+        public void reDownload(ServiceContext sc) {
+            if (TileObject.class.isInstance(handle)) {
+                ((TileObject)handle).reDownload(sc);
+            }
         }
     }
 

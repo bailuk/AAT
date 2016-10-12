@@ -21,7 +21,7 @@ public abstract class AbsTileProvider implements OpenStreetMapTileProviderConsta
 
     
     
-    public abstract void deleteVisibleTilesFromDisk();
+    public abstract void reDownloadTiles();
     public abstract int  getMinimumZoomLevel();
     public abstract int getMaximumZoomLevel();
     public abstract Drawable getMapTile(MapTile pTile);

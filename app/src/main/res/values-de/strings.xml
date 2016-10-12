@@ -162,7 +162,6 @@
     <string name="filter_date_start">Start Datum</string>
     <string name="filter_date_to">End Datum</string>
     <string name="filter_geo">Innerhalb Bereich</string>
-    <string name="filter_geo_update">Bereich aus Karte verwenden</string>
     <string name="intro_import_list">Importierte Dateien</string>
     <string name="intro_overlay_list">Overlay Liste</string>
     <string name="intro_status">Status</string>

@@ -61,7 +61,7 @@ public class InformationBarOverlay extends ControlBarOverlay {
         super.onClick(v);
 
         if (v==reload) {
-            getMapView().getTileProvider().deleteVisibleTilesFromDisk();
+            getMapView().getTileProvider().reDownloadTiles();
 
 
         } else if (v==overpass) {

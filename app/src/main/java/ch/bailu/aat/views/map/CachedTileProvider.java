@@ -19,6 +19,7 @@ public class CachedTileProvider extends AbsOsmTileProvider {
     private final TileCache cache = new TileCache(10);
 
     private final Context context;
+    private final ServiceContext scontext;
 
 
     private final BroadcastReceiver onFileChanged = new BroadcastReceiver() {
@@ -39,6 +40,7 @@ public class CachedTileProvider extends AbsOsmTileProvider {
     public CachedTileProvider(ServiceContext sc)  {
         super(sc);
         context = sc.getContext();
+        scontext = sc;
 
         AppBroadcaster.register(context, onFileChanged, AppBroadcaster.FILE_CHANGED_INCACHE);
     }
@@ -89,9 +91,9 @@ public class CachedTileProvider extends AbsOsmTileProvider {
 
 
     @Override
-    public void deleteVisibleTilesFromDisk() {
-        cache.deleteFromDisk();
-        handler.sendEmptyMessage(MapTile.MAPTILE_SUCCESS_ID);
+    public void reDownloadTiles() {
+        cache.reDownloadTiles(scontext);
+        //handler.sendEmptyMessage(MapTile.MAPTILE_SUCCESS_ID);
     }
 }  
 

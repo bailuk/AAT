@@ -4,7 +4,7 @@ import org.osmdroid.tileprovider.MapTile;
 
 import java.io.Closeable;
 
-import ch.bailu.aat.helpers.AppLog;
+import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.cache.TileStackObject;
 
 public class TileCache implements Closeable {
@@ -81,12 +81,11 @@ public class TileCache implements Closeable {
     }
 
 
-    public void deleteFromDisk() {
+    public void reDownloadTiles(ServiceContext sc) {
         for (int i=0; i<tiles.length; i++) {
             
-            tiles[i].deleteFromDisk();
+            tiles[i].reDownload(sc);
         }
-        reset();
     }
     
     
@@ -100,12 +99,12 @@ public class TileCache implements Closeable {
 
     public void setCapacity(int capacity) {
         if (capacity > tiles.length) {
-            createCache(capacity);
+            resizeCache(capacity);
         }
         
     }
     
-    private void createCache(int capacity) {
+    private void resizeCache(int capacity) {
         final TileStackObject[] newTiles=new TileStackObject[capacity];
         final int l = Math.min(newTiles.length, tiles.length);
         int x,i;
@@ -122,7 +121,5 @@ public class TileCache implements Closeable {
             tiles[x].free();
         }
         tiles=newTiles;
-
-        AppLog.d(this, "Capacity: " + capacity);
     }
 }

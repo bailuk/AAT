@@ -43,7 +43,7 @@ public class PreviewTileProvider extends AbsOsmTileProvider implements Closeable
     public void ensureCapacity(int numNeeded) {}
 
     @Override
-    public void deleteVisibleTilesFromDisk() {}
+    public void reDownloadTiles() {}
 
 
     public boolean isReady() {

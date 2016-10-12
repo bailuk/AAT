@@ -361,6 +361,10 @@ public abstract class ElevationTile extends TileObject implements ElevationUpdat
 
     }
 
+    @Override
+    public void reDownload(ServiceContext sc) {
+
+    }
 
 
 }

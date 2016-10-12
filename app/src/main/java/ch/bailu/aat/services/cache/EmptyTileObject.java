@@ -30,4 +30,9 @@ public class EmptyTileObject extends TileObject {
         return NULL_BITMAP.get();
     }
 
+    @Override
+    public void reDownload(ServiceContext sc) {
+
+    }
+
 }

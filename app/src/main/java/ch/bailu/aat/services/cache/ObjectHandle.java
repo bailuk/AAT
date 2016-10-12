@@ -1,5 +1,7 @@
 package ch.bailu.aat.services.cache;
 
+import java.io.File;
+
 import ch.bailu.aat.services.ServiceContext;
 
 
@@ -29,6 +31,7 @@ public abstract class ObjectHandle implements ObjectBroadcastReceiver{
     public String toString() {
         return ID;
     }
+    public File toFile() {return new File(ID);}
     
     
     public boolean isLocked() {

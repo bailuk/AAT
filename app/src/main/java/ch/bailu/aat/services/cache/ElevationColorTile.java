@@ -61,7 +61,8 @@ public class ElevationColorTile extends ElevationTile {
             cd++;
         }
     }
-    
+
+
 
     public static class Factory extends ObjectHandle.Factory {
         private static final int SPLIT=0;

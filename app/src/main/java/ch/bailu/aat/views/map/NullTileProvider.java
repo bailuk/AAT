@@ -36,7 +36,7 @@ public class NullTileProvider extends AbsTileProvider {
     }
 
     @Override
-    public void deleteVisibleTilesFromDisk() {
+    public void reDownloadTiles() {
     }
 
 

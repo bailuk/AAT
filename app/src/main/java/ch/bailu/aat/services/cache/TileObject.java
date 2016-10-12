@@ -5,6 +5,8 @@ import android.graphics.Bitmap;
 
 import org.osmdroid.tileprovider.MapTile;
 
+import ch.bailu.aat.services.ServiceContext;
+
 public abstract class TileObject extends ObjectHandle{
     public static final int TILE_SIZE=256;
     
@@ -16,6 +18,7 @@ public abstract class TileObject extends ObjectHandle{
 
     
     public abstract Bitmap getBitmap();
+    public abstract void reDownload(ServiceContext sc);
 
     public static abstract class  Source {
         public abstract TileBitmapFilter getBitmapFilter();
