@@ -31,6 +31,12 @@ public class MenuArray implements Menu {
         return i;
     }
 
+    @Override
+    public MenuItem add(int i0, int id, int i2, CharSequence charSequence) {
+        Item i = new Item(charSequence, id);
+        item.add(i);
+        return i;
+    }
 
     @Override
     public int size() {
@@ -61,14 +67,11 @@ public class MenuArray implements Menu {
     }
 
 
-    @Override
-    public MenuItem add(int i, int i1, int i2, CharSequence charSequence) {
-        return null;
-    }
+
 
     @Override
-    public MenuItem add(int i, int i1, int i2, int i3) {
-        return null;
+    public MenuItem add(int i, int id, int i2, int res) {
+        return add(i, id, i2, context.getString(res));
     }
 
     @Override
@@ -166,10 +169,16 @@ public class MenuArray implements Menu {
 
     private class Item implements MenuItem {
         private CharSequence title;
+        private final int id;
 
 
         public Item(CharSequence t) {
+            this (t, 0);
+        }
+
+        public Item(CharSequence t, int i) {
             title = t;
+            id = i;
         }
 
 
@@ -193,7 +202,7 @@ public class MenuArray implements Menu {
 
         @Override
         public int getItemId() {
-            return 0;
+            return id;
         }
 
         @Override
