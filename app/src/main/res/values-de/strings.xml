@@ -1,24 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!-- General -->
+    <string name="on">An</string>
+    <string name="off">Aus</string>
+    <string name="enter">Eingabe...</string>
+
+
     <string name="intro_about">Info</string>
     <string name="intro_list">Aufgezeichnete Aktivitäten</string>
     <string name="intro_settings">Einstellungen</string>
     <string name="intro_map">Kartenansicht</string>
 
+
+    <!-- MultiView label -->
+    <string name="label_summary">Zusammenfassung</string>
+    <string name="label_filter">Filter</string>
+    <string name="label_list">Liste</string>
+
     <string name="gps_nogps">Kein GPS</string>
     <string name="gps_noaccess">Kein Zugriff</string>
+
+
 
     <string name="tracker_start">Start</string>
     <string name="tracker_pause">Pause</string>
     <string name="tracker_stop">Stopp</string>
     <string name="tracker_resume">Weiter</string>
+    <string name="tracker_restore">Track wiederherstellen</string>
+
 
     <string name="status_paused">Pause</string>
     <string name="status_autopaused">Autopause</string>
 
-    <string name="on">An</string>
-    <string name="off">Aus</string>
 
 
     <string name="p_unit_title">Einheiten</string>
