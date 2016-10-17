@@ -16,16 +16,14 @@ public abstract class OsmOverlay extends Overlay implements OnContentUpdatedInte
 
     
     public OsmOverlay(AbsOsmView absOsmView) {
-        super(absOsmView.getContext());
         painter = new MapPainter(absOsmView.getContext());
         osm = absOsmView;
     }
 
 
     @Override
-    public void draw(Canvas c, MapView m, boolean shadow) {
-        
-        if (!shadow && !m.isAnimating()) {
+    public void draw(Canvas c, MapView m) {
+        if (!m.isAnimating()) {
             osm.mapIconCache.newPass();
             painter.init(c,m);
             draw(painter);

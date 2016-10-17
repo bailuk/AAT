@@ -13,7 +13,6 @@ import java.io.File;
  */
 public interface OpenStreetMapTileProviderConstants {
 
-	public static final boolean DEBUGMODE = false;
 
 	/** Minimum Zoom Level */
 	public static final int MINIMUM_ZOOMLEVEL = 0;

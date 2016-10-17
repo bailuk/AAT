@@ -7,7 +7,7 @@ import org.osmdroid.views.MapView;
  *
  * @author Theodore Hong
  */
-public class ZoomEvent implements MapEvent {
+public class ZoomEvent  {
 	protected MapView source;
 	protected int zoomLevel;
 

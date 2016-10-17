@@ -7,7 +7,6 @@ import org.osmdroid.api.IGeoPoint;
 import org.osmdroid.util.BoundingBoxE6;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
-import org.osmdroid.views.MapView.Projection;
 
 import ch.bailu.aat.coordinates.BoundingBox;
 import ch.bailu.aat.gpx.interfaces.GpxPointInterface;
@@ -20,7 +19,7 @@ public class MapProjection {
     private final Rect cachedRect=new Rect();
     private final GeoPoint cachedPoint = new GeoPoint(0,0);
     
-    private Projection projection;
+    private MapView.Projection projection;
     private BoundingBox bounding;
 
     private float pixels_per_meter;
@@ -92,7 +91,7 @@ public class MapProjection {
     }
 
 
-    public Point toMapPixels(GeoPoint center) {
+    public Point toMapPixels(IGeoPoint center) {
         return projection.toMapPixels(center, cachedPixel);
     }
 

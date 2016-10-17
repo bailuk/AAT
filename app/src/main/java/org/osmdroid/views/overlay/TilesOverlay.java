@@ -9,39 +9,18 @@ import android.graphics.Point;
 import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.SubMenu;
 
-import org.osmdroid.DefaultResourceProxyImpl;
-import org.osmdroid.ResourceProxy;
 import org.osmdroid.tileprovider.MapTile;
-import org.osmdroid.tileprovider.tilesource.ITileSource;
-import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
 import org.osmdroid.util.MyMath;
 import org.osmdroid.views.MapView;
-import org.osmdroid.views.MapView.Projection;
 
-import ch.bailu.aat.helpers.Logger;
-import ch.bailu.aat.helpers.LoggerFactory;
+import ch.bailu.aat.helpers.AppLog;
 import ch.bailu.aat.views.map.AbsTileProvider;
 import microsoft.mappoint.TileSystem;
 
-/**
- * These objects are the principle consumer of map tiles.
- * 
- * see {@link MapTile} for an overview of how tiles are acquired by this overlay.
- * 
- */
 
-public class TilesOverlay extends Overlay implements IOverlayMenuProvider {
+public class TilesOverlay extends Overlay  {
 
-	private static final Logger logger = LoggerFactory.getLogger(TilesOverlay.class);
-
-	public static final int MENU_MAP_MODE = getSafeMenuId();
-	public static final int MENU_TILE_SOURCE_STARTING_ID = getSafeMenuIdSequence(TileSourceFactory
-			.getTileSources().size());
-	public static final int MENU_OFFLINE = getSafeMenuId();
 
 	/** Current tile source */
 	protected final AbsTileProvider mTileProvider;
@@ -51,8 +30,6 @@ public class TilesOverlay extends Overlay implements IOverlayMenuProvider {
 	private final Rect mTileRect = new Rect();
 	private final Rect mViewPort = new Rect();
 
-	private boolean mOptionsMenuEnabled = true;
-
 	private int mWorldSize_2;
 
 	/** A drawable loading tile **/
@@ -60,17 +37,9 @@ public class TilesOverlay extends Overlay implements IOverlayMenuProvider {
 	private int mLoadingBackgroundColor = Color.rgb(216, 208, 208);
 	private int mLoadingLineColor = Color.rgb(200, 192, 192);
 
-	public TilesOverlay(final AbsTileProvider aTileProvider, final Context aContext) {
-		this(aTileProvider, new DefaultResourceProxyImpl(aContext));
-	}
 
-	public TilesOverlay(final AbsTileProvider aTileProvider, final ResourceProxy pResourceProxy) {
-		super(pResourceProxy);
-		if (aTileProvider == null) {
-			throw new IllegalArgumentException(
-					"You must pass a valid tile provider to the tiles overlay.");
-		}
-		this.mTileProvider = aTileProvider;
+	public TilesOverlay(Context c, final AbsTileProvider aTileProvider) {
+		mTileProvider = aTileProvider;
 	}
 
 	@Override
@@ -78,50 +47,21 @@ public class TilesOverlay extends Overlay implements IOverlayMenuProvider {
 		this.mTileProvider.detach();
 	}
 
-	public void setAlpha(final int a) {
-		this.mPaint.setAlpha(a);
-	}
 
 	public int getMinimumZoomLevel() {
 		return mTileProvider.getMinimumZoomLevel();
 	}
-
 	public int getMaximumZoomLevel() {
 		return mTileProvider.getMaximumZoomLevel();
 	}
 
-	/**
-	 * Whether to use the network connection if it's available.
-	 */
-	public boolean useDataConnection() {
-		return true;
-	}
-
-	/**
-	 * Set whether to use the network connection if it's available.
-	 * 
-	 * @param aMode
-	 *            if true use the network connection if it's available. if false don't use the
-	 *            network connection even if it's available.
-	 */
-	public void setUseDataConnection(final boolean aMode) {
-		//mTileProvider.setUseDataConnection(aMode);
-	}
 
 	@Override
-	protected void draw(final Canvas c, final MapView osmv, final boolean shadow) {
+	protected void draw(final Canvas c, final MapView osmv) {
 		
-		if (DEBUGMODE) {
-			logger.trace("onDraw(" + shadow + ")");
-		}
-
-		if (shadow) {
-			return;
-		}
-
 		mTileProvider.setStartTime();
 		// Calculate the half-world size
-		final Projection pj = osmv.getProjection();
+		final MapView.Projection pj = osmv.getProjection();
 		final int zoomLevel = pj.getZoomLevel();
 		mWorldSize_2 = osmv.tileSystem.MapSize(zoomLevel) / 2;
 
@@ -132,7 +72,7 @@ public class TilesOverlay extends Overlay implements IOverlayMenuProvider {
 		mViewPort.offset(mWorldSize_2, mWorldSize_2);
 
 		// Draw the tiles!
-		drawTiles(c, pj.getZoomLevel(), osmv.tileSystem, mViewPort);
+		drawTiles(c, pj.getZoomLevel(), osmv.tileSystem, mViewPort, osmv.getContext());
 	}
 
 	/**
@@ -141,7 +81,7 @@ public class TilesOverlay extends Overlay implements IOverlayMenuProvider {
 	 * than the upper-left corner).
 	 */
 	public void drawTiles(final Canvas c, final int zoomLevel, final TileSystem tileSystem,
-			final Rect viewPort) {
+			final Rect viewPort, final Context context) {
 
 	    final int tileSizePx = tileSystem.getTileSize();
 		
@@ -167,7 +107,7 @@ public class TilesOverlay extends Overlay implements IOverlayMenuProvider {
 
 				Drawable currentMapTile = mTileProvider.getMapTile(tile);
 				if (currentMapTile == null) {
-					currentMapTile = getLoadingTile();
+					currentMapTile = getLoadingTile(context);
 				}
 
 				if (currentMapTile != null) {
@@ -176,26 +116,7 @@ public class TilesOverlay extends Overlay implements IOverlayMenuProvider {
 					onTileReadyToDraw(c, currentMapTile, mTileRect);
 				}
 
-				if (DEBUGMODE) {
-					mTileRect.set(x * tileSizePx, y * tileSizePx, x * tileSizePx + tileSizePx, y
-							* tileSizePx + tileSizePx);
-					c.drawText(tile.toString(), mTileRect.left + 1,
-							mTileRect.top + mPaint.getTextSize(), mPaint);
-					c.drawLine(mTileRect.left, mTileRect.top, mTileRect.right, mTileRect.top,
-							mPaint);
-					c.drawLine(mTileRect.left, mTileRect.top, mTileRect.left, mTileRect.bottom,
-							mPaint);
-				}
 			}
-		}
-
-		// draw a cross at center in debug mode
-		if (DEBUGMODE) {
-			// final GeoPoint center = osmv.getMapCenter();
-			final Point centerPoint = new Point(viewPort.centerX() - mWorldSize_2,
-					viewPort.centerY() - mWorldSize_2);
-			c.drawLine(centerPoint.x, centerPoint.y - 9, centerPoint.x, centerPoint.y + 9, mPaint);
-			c.drawLine(centerPoint.x - 9, centerPoint.y, centerPoint.x + 9, centerPoint.y, mPaint);
 		}
 
 	}
@@ -207,80 +128,6 @@ public class TilesOverlay extends Overlay implements IOverlayMenuProvider {
 		currentMapTile.draw(c);
 	}
 
-	@Override
-	public void setOptionsMenuEnabled(final boolean pOptionsMenuEnabled) {
-		this.mOptionsMenuEnabled = pOptionsMenuEnabled;
-	}
-
-	@Override
-	public boolean isOptionsMenuEnabled() {
-		return this.mOptionsMenuEnabled;
-	}
-
-	@Override
-	public boolean onCreateOptionsMenu(final Menu pMenu, final int pMenuIdOffset,
-			final MapView pMapView) {
-		final SubMenu mapMenu = pMenu.addSubMenu(0, MENU_MAP_MODE + pMenuIdOffset, Menu.NONE,
-				mResourceProxy.getString(ResourceProxy.string.map_mode)).setIcon(
-				mResourceProxy.getDrawable(ResourceProxy.bitmap.ic_menu_mapmode));
-
-		for (int a = 0; a < TileSourceFactory.getTileSources().size(); a++) {
-			final ITileSource tileSource = TileSourceFactory.getTileSources().get(a);
-			mapMenu.add(MENU_MAP_MODE + pMenuIdOffset, MENU_TILE_SOURCE_STARTING_ID + a
-					+ pMenuIdOffset, Menu.NONE, tileSource.localizedName(mResourceProxy));
-		}
-		mapMenu.setGroupCheckable(MENU_MAP_MODE + pMenuIdOffset, true, true);
-
-		final String title = pMapView.getResourceProxy().getString(
-				pMapView.useDataConnection() ? ResourceProxy.string.offline_mode
-						: ResourceProxy.string.online_mode);
-		final Drawable icon = pMapView.getResourceProxy().getDrawable(
-				ResourceProxy.bitmap.ic_menu_offline);
-		pMenu.add(0, MENU_OFFLINE + pMenuIdOffset, Menu.NONE, title).setIcon(icon);
-
-		return true;
-	}
-
-	@Override
-	public boolean onPrepareOptionsMenu(final Menu pMenu, final int pMenuIdOffset,
-			final MapView pMapView) {
-		final int index = TileSourceFactory.getTileSources().indexOf(
-				pMapView.getTileProvider().getTileSource());
-		if (index >= 0) {
-			pMenu.findItem(MENU_TILE_SOURCE_STARTING_ID + index + pMenuIdOffset).setChecked(true);
-		}
-
-		pMenu.findItem(MENU_OFFLINE + pMenuIdOffset).setTitle(
-				pMapView.getResourceProxy().getString(
-						pMapView.useDataConnection() ? ResourceProxy.string.offline_mode
-								: ResourceProxy.string.online_mode));
-
-		return true;
-	}
-
-	@Override
-	public boolean onOptionsItemSelected(final MenuItem pItem, final int pMenuIdOffset,
-			final MapView pMapView) {
-
-		final int menuId = pItem.getItemId() - pMenuIdOffset;
-		if ((menuId >= MENU_TILE_SOURCE_STARTING_ID)
-				&& (menuId < MENU_TILE_SOURCE_STARTING_ID
-						+ TileSourceFactory.getTileSources().size())) {
-			pMapView.setTileSource(TileSourceFactory.getTileSources().get(
-					menuId - MENU_TILE_SOURCE_STARTING_ID));
-			return true;
-		} else if (menuId == MENU_OFFLINE) {
-			final boolean useDataConnection = !pMapView.useDataConnection();
-			pMapView.setUseDataConnection(useDataConnection);
-			return true;
-		} else {
-			return false;
-		}
-	}
-
-	public int getLoadingBackgroundColor() {
-		return mLoadingBackgroundColor;
-	}
 
 	/**
 	 * Set the color to use to draw the background while we're waiting for the tile to load.
@@ -296,18 +143,8 @@ public class TilesOverlay extends Overlay implements IOverlayMenuProvider {
 		}
 	}
 
-	public int getLoadingLineColor() {
-		return mLoadingLineColor;
-	}
 
-	public void setLoadingLineColor(final int pLoadingLineColor) {
-		if (mLoadingLineColor != pLoadingLineColor) {
-			mLoadingLineColor = pLoadingLineColor;
-			clearLoadingTile();
-		}
-	}
-
-	private Drawable getLoadingTile() {
+	private Drawable getLoadingTile(Context context) {
 		if (mLoadingTile == null && mLoadingBackgroundColor != Color.TRANSPARENT) {
 			try {
 				final int tileSize = mTileProvider.getTileSource() != null ? mTileProvider
@@ -324,9 +161,9 @@ public class TilesOverlay extends Overlay implements IOverlayMenuProvider {
 					canvas.drawLine(0, a, tileSize, a, paint);
 					canvas.drawLine(a, 0, a, tileSize, paint);
 				}
-				mLoadingTile = new BitmapDrawable(bitmap);
+				mLoadingTile = new BitmapDrawable(context.getResources(), bitmap);
 			} catch (final OutOfMemoryError e) {
-				logger.error("OutOfMemoryError getting loading tile");
+				AppLog.e(context, e);
 				System.gc();
 			}
 		}

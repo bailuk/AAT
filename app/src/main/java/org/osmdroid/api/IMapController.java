@@ -1,5 +1,6 @@
 package org.osmdroid.api;
 
+import org.osmdroid.util.BoundingBoxE6;
 import org.osmdroid.views.MapController;
 
 /**
@@ -11,13 +12,10 @@ import org.osmdroid.views.MapController;
  */
 public interface IMapController {
 
-	void animateTo(IGeoPoint geoPoint);
 	void setCenter(IGeoPoint point);
 	int setZoom(int zoomLevel);
 	boolean zoomIn();
-	boolean zoomInFixing(int xPixel, int yPixel);
 	boolean zoomOut();
-	boolean zoomOutFixing(int xPixel, int yPixel);
 	void zoomToSpan(int latSpanE6, int lonSpanE6);
-
+	void zoomToSpan(BoundingBoxE6 bounding);
 }

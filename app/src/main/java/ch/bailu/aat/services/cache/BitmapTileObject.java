@@ -3,7 +3,6 @@ package ch.bailu.aat.services.cache;
 import android.content.Context;
 import android.graphics.Bitmap;
 
-import org.osmdroid.ResourceProxy;
 import org.osmdroid.tileprovider.MapTile;
 import org.osmdroid.tileprovider.tilesource.XYTileSource;
 
@@ -149,7 +148,7 @@ public class BitmapTileObject extends TileObject {
         
         
         public Source (String sourceName, TileBitmapFilter f, int minZ, int maxZ, final String... url) {
-            osmdroidSource = new XYTileSource(sourceName, ResourceProxy.string.mapnik, minZ, maxZ, 256, ".png", url);
+            osmdroidSource = new XYTileSource(sourceName, minZ, maxZ, 256, ".png", url);
             filter = f;
         }
         

@@ -5,8 +5,6 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 
-import org.osmdroid.ResourceProxy;
-import org.osmdroid.ResourceProxy.string;
 import org.osmdroid.tileprovider.MapTile;
 import org.osmdroid.tileprovider.constants.OpenStreetMapTileProviderConstants;
 
@@ -34,12 +32,10 @@ public abstract class BitmapTileSourceBase implements ITileSource,
 
 	private final int mTileSizePixels;
 
-	private final string mResourceId;
 
-	public BitmapTileSourceBase(final String aName, final string aResourceId,
+	public BitmapTileSourceBase(final String aName,
 			final int aZoomMinLevel, final int aZoomMaxLevel, final int aTileSizePixels,
 			final String aImageFilenameEnding) {
-		mResourceId = aResourceId;
 		mOrdinal = globalOrdinal++;
 		mName = aName;
 		mMinimumZoomLevel = aZoomMinLevel;
@@ -81,10 +77,6 @@ public abstract class BitmapTileSourceBase implements ITileSource,
 		return mTileSizePixels;
 	}
 
-	@Override
-	public String localizedName(final ResourceProxy proxy) {
-		return proxy.getString(mResourceId);
-	}
 
 	@Override
 	public Drawable getDrawable(final String aFilePath) {

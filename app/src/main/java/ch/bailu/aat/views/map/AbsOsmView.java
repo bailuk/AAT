@@ -2,7 +2,6 @@ package ch.bailu.aat.views.map;
 
 import android.content.Context;
 
-import org.osmdroid.DefaultResourceProxyImpl;
 import org.osmdroid.util.BoundingBoxE6;
 import org.osmdroid.views.MapView;
 
@@ -36,12 +35,7 @@ public abstract class AbsOsmView extends TrackDescriptionView {
     
     
     private MapView createMapView(AbsTileProvider provider, int tileSize) {
-        MapView map = new MapView(
-                getContext(),
-                tileSize, 
-                new DefaultResourceProxyImpl(getContext()),
-                provider
-                );
+        MapView map = new MapView(getContext(), tileSize, provider);
         map.getOverlays().add(overlayList);
         return map;
     }

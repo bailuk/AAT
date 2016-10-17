@@ -7,7 +7,7 @@ import org.osmdroid.views.MapView;
  *
  * @author Theodore Hong
  */
-public class ScrollEvent implements MapEvent {
+public class ScrollEvent {
 	protected MapView source;
 	protected int x;
 	protected int y;
