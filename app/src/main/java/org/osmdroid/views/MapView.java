@@ -91,7 +91,7 @@ public class MapView extends ViewGroup implements IMapView, MapViewConstants {
         mTileProvider = tileProvider;
         mTileProvider.setTileRequestCompleteHandler(mTileRequestCompleteHandler);
 
-        this.mMapOverlay = new TilesOverlay(context, mTileProvider);
+        this.mMapOverlay = new TilesOverlay(mTileProvider);
         mOverlayManager = new OverlayManager(mMapOverlay);
 
 
@@ -482,11 +482,6 @@ public class MapView extends ViewGroup implements IMapView, MapViewConstants {
         }
     }
 
-    @Override
-    public void setBackgroundColor(final int pColor) {
-        mMapOverlay.setLoadingBackgroundColor(pColor);
-        invalidate();
-    }
 
     @SuppressLint("WrongCall")
     @Override

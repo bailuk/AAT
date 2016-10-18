@@ -32,13 +32,7 @@ public class TilesOverlay extends Overlay  {
 
 	private int mWorldSize_2;
 
-	/** A drawable loading tile **/
-	private BitmapDrawable mLoadingTile = null;
-	private int mLoadingBackgroundColor = Color.rgb(216, 208, 208);
-	private int mLoadingLineColor = Color.rgb(200, 192, 192);
-
-
-	public TilesOverlay(Context c, final AbsTileProvider aTileProvider) {
+	public TilesOverlay(final AbsTileProvider aTileProvider) {
 		mTileProvider = aTileProvider;
 	}
 
@@ -107,7 +101,7 @@ public class TilesOverlay extends Overlay  {
 
 				Drawable currentMapTile = mTileProvider.getMapTile(tile);
 				if (currentMapTile == null) {
-					currentMapTile = getLoadingTile(context);
+					currentMapTile = LoadingTile.get(context);
 				}
 
 				if (currentMapTile != null) {
@@ -126,55 +120,5 @@ public class TilesOverlay extends Overlay  {
 		tileRect.offset(-mWorldSize_2, -mWorldSize_2);
 		currentMapTile.setBounds(tileRect);
 		currentMapTile.draw(c);
-	}
-
-
-	/**
-	 * Set the color to use to draw the background while we're waiting for the tile to load.
-	 * 
-	 * @param pLoadingBackgroundColor
-	 *            the color to use. If the value is {@link Color.TRANSPARENT} then there will be no
-	 *            loading tile.
-	 */
-	public void setLoadingBackgroundColor(final int pLoadingBackgroundColor) {
-		if (mLoadingBackgroundColor != pLoadingBackgroundColor) {
-			mLoadingBackgroundColor = pLoadingBackgroundColor;
-			clearLoadingTile();
-		}
-	}
-
-
-	private Drawable getLoadingTile(Context context) {
-		if (mLoadingTile == null && mLoadingBackgroundColor != Color.TRANSPARENT) {
-			try {
-				final int tileSize = mTileProvider.getTileSource() != null ? mTileProvider
-						.getTileSource().getTileSizePixels() : 256;
-				final Bitmap bitmap = Bitmap.createBitmap(tileSize, tileSize,
-						Bitmap.Config.ARGB_8888);
-				final Canvas canvas = new Canvas(bitmap);
-				final Paint paint = new Paint();
-				canvas.drawColor(mLoadingBackgroundColor);
-				paint.setColor(mLoadingLineColor);
-				paint.setStrokeWidth(0);
-				final int lineSize = tileSize / 16;
-				for (int a = 0; a < tileSize; a += lineSize) {
-					canvas.drawLine(0, a, tileSize, a, paint);
-					canvas.drawLine(a, 0, a, tileSize, paint);
-				}
-				mLoadingTile = new BitmapDrawable(context.getResources(), bitmap);
-			} catch (final OutOfMemoryError e) {
-				AppLog.e(context, e);
-				System.gc();
-			}
-		}
-		return mLoadingTile;
-	}
-
-	private void clearLoadingTile() {
-		final BitmapDrawable bitmapDrawable = mLoadingTile;
-		mLoadingTile = null;
-		if (bitmapDrawable != null) {
-			bitmapDrawable.getBitmap().recycle();
-		}
 	}
 }
