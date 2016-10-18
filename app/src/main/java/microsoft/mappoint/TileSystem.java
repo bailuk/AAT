@@ -18,7 +18,7 @@ import org.osmdroid.util.GeoPoint;
  */
 public final class TileSystem {
 
-    protected int mTileSize = 256;
+    private  int mTileSize = 256;
     private static final double EarthRadius = 6378137;
     private static final double MinLatitude = -85.05112878;
     private static final double MaxLatitude = 85.05112878;

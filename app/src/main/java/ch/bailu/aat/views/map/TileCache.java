@@ -4,6 +4,7 @@ import org.osmdroid.tileprovider.MapTile;
 
 import java.io.Closeable;
 
+import ch.bailu.aat.helpers.AppLog;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.cache.TileStackObject;
 
