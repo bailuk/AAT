@@ -8,9 +8,9 @@ import ch.bailu.aat.R;
 public class SolidUnit extends SolidStaticIndexList {
     private static final String KEY="unit";
 
-    static private final float DIST_FACTOR[]  = {1f/1000f, 1.6093f/1000f, 1f, 1f};
-    static private final float ALT_FACTOR[]   = {1, 1f/30.48f, 1f, 1f};
-    static private final float SPEED_FACTOR[] = {3.6f, (3.6f * 1.6053f), 1f, 1f};
+    static private final float DIST_FACTOR[]  = {1f/1000f, 0.000621371f, 1f, 1f};
+    static private final float ALT_FACTOR[]   = {1, 3.28084f, 1f, 1f};
+    static private final float SPEED_FACTOR[] = {3.6f, 2.23694f, 1f, 1f};
     static private final String DIST_UNIT[]   = {"km", "miles", "m", "m"};
     static private final String SPEED_UNIT[]  = {"km/h", "mph", "m/s", "m/s"};
     static private final String ALT_UNIT[]    = {"m", "f", "m", "m"};
