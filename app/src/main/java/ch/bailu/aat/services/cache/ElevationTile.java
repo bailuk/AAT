@@ -122,6 +122,12 @@ public abstract class ElevationTile extends TileObject implements ElevationUpdat
     }
 
 
+    @Override
+    public boolean isLoaded() {
+        return isReady() && tilePainterList.size() == 0;
+    }
+
+
     /*
     @Override
     public boolean isUpdating() {

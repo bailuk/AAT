@@ -1,5 +1,7 @@
 package ch.bailu.aat.services.cache;
 
+import android.content.Context;
+
 import org.osmdroid.tileprovider.MapTile;
 
 import ch.bailu.aat.services.ServiceContext;
@@ -78,5 +80,41 @@ public class ElevationColorTile extends ElevationTile {
             return  new ElevationColorTile(id, cs, mapTile,SPLIT);
         }
     }
+
+
+
+    public final static Source ELEVATION_COLOR =
+            new Source() {
+
+                @Override
+                public String getName() {
+                    return "ElevationColor*";
+                }
+
+                @Override
+                public String getID(MapTile t, Context x) {
+                    return getName() + "/" + t.getZoomLevel() + "/" + t.getX() + "/" + t.getY();
+                }
+
+                @Override
+                public int getMinimumZoomLevel() {
+                    return 5;
+                }
+
+                @Override
+                public int getMaximumZoomLevel() {
+                    return 18;
+                }
+
+                @Override
+                public ObjectHandle.Factory getFactory(MapTile mt) {
+                    return  new ElevationColorTile.Factory(mt);
+                }
+
+                @Override
+                public TileBitmapFilter getBitmapFilter() {
+                    return TileBitmapFilter.OVERLAY_FILTER;
+                }
+            };
 
 }

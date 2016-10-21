@@ -13,7 +13,7 @@ import java.io.OutputStream;
 
 public abstract class AbsAccess {
     public abstract InputStream open_r() throws FileNotFoundException;
-    public abstract OutputStream open_w() throws FileNotFoundException;
+    public abstract OutputStream open_w() throws IOException;
 
 
     public static AbsAccess factory(Context c, String id) {

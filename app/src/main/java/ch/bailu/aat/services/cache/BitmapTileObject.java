@@ -72,6 +72,11 @@ public class BitmapTileObject extends TileObject {
         }
     }
 
+    @Override
+    public boolean isLoaded() {
+        return bitmap.getDrawable()!=null;
+    }
+
 
     private boolean isLoadable() {
         return new File(toString()).exists();
@@ -189,4 +194,57 @@ public class BitmapTileObject extends TileObject {
             return filter;
         }
     }
+
+
+    public static final int MIN_ZOOM = 1;
+    public static final int MAX_ZOOM=17; // 18 takes way too much space for the gain.
+
+
+    public final static BitmapTileObject.Source MAPNIK_GRAY =
+            new BitmapTileObject.Source("Mapnik", TileBitmapFilter.GRAYSCALE_FILTER,
+                    MIN_ZOOM, MAX_ZOOM,
+                    "http://a.tile.openstreetmap.org/",
+                    "http://b.tile.openstreetmap.org/",
+                    "http://c.tile.openstreetmap.org/");
+
+
+    public final static BitmapTileObject.Source MAPNIK =
+            new BitmapTileObject.Source("Mapnik", TileBitmapFilter.OVERLAY_FILTER,
+                    MIN_ZOOM, MAX_ZOOM,
+                    "http://a.tile.openstreetmap.org/",
+                    "http://b.tile.openstreetmap.org/",
+                    "http://c.tile.openstreetmap.org/");
+
+
+    public final static TileObject.Source TRAIL_MTB =
+            new BitmapTileObject.Source("TrailMTB",  TileBitmapFilter.OVERLAY_FILTER, MIN_ZOOM, MAX_ZOOM,
+                    "http://tile.waymarkedtrails.org/mtb/");
+
+    public final static TileObject.Source TRAIL_SKATING =
+            new BitmapTileObject.Source("TrailSkating",TileBitmapFilter.OVERLAY_FILTER, MIN_ZOOM, MAX_ZOOM,
+                    "http://tile.waymarkedtrails.org/skating/");
+
+
+    public final static TileObject.Source TRAIL_HIKING =
+            new BitmapTileObject.Source("TrailHiking", TileBitmapFilter.OVERLAY_FILTER, MIN_ZOOM, MAX_ZOOM,
+                    "http://tile.waymarkedtrails.org/hiking/");
+
+
+    public final static TileObject.Source TRAIL_CYCLING =
+            new BitmapTileObject.Source("TrailCycling", TileBitmapFilter.OVERLAY_FILTER, MIN_ZOOM, MAX_ZOOM,
+                    "http://tile.waymarkedtrails.org/cycling/");
+
+
+
+    public final static TileObject.Source TRANSPORT_OVERLAY =
+            new BitmapTileObject.Source("OpenPtMap", TileBitmapFilter.OVERLAY_FILTER, 5, 16,
+                    "http://openptmap.org/tiles/");
+
+
+    public final static BitmapTileObject.Source HILLSHADE_CACHED =
+            new BitmapTileObject.Source("HillShade", TileBitmapFilter.COPY_FILTER,
+                    NewHillshade.ELEVATION_HILLSHADE8.getMinimumZoomLevel(),
+                    NewHillshade.ELEVATION_HILLSHADE8.getMaximumZoomLevel(),
+                    "http://bailu.ch/");
+
 }

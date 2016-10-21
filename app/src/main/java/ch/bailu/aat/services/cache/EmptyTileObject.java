@@ -35,4 +35,9 @@ public class EmptyTileObject extends TileObject {
 
     }
 
+    @Override
+    public boolean isLoaded() {
+        return true;
+    }
+
 }

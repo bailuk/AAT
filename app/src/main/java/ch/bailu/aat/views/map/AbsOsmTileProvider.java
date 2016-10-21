@@ -1,10 +1,9 @@
 package ch.bailu.aat.views.map;
 
 import org.osmdroid.tileprovider.MapTile;
-import org.osmdroid.tileprovider.tilesource.ITileSource;
 
-import ch.bailu.aat.preferences.SolidMapTileStack;
 import ch.bailu.aat.services.ServiceContext;
+import ch.bailu.aat.services.cache.BitmapTileObject;
 import ch.bailu.aat.services.cache.ObjectHandle;
 import ch.bailu.aat.services.cache.TileObject.Source;
 import ch.bailu.aat.services.cache.TileStackObject;
@@ -12,7 +11,7 @@ import ch.bailu.aat.services.cache.TileStackObject;
 public abstract class AbsOsmTileProvider extends AbsTileProvider {
 
     private final ServiceContext scontext;
-    private Source sources[] = new Source[]{SolidMapTileStack.MAPNIK};
+    private Source sources[] = new Source[]{BitmapTileObject.MAPNIK};
     private final StringBuilder builder = new StringBuilder();    
 
 
@@ -61,12 +60,12 @@ public abstract class AbsOsmTileProvider extends AbsTileProvider {
 
 
     public int getMinimumZoomLevel() {
-        return SolidMapTileStack.MIN_ZOOM;
+        return BitmapTileObject.MIN_ZOOM;
     }
 
 
     public int getMaximumZoomLevel() {
-        return SolidMapTileStack.MAX_ZOOM;
+        return BitmapTileObject.MAX_ZOOM;
     }
 
 

@@ -20,6 +20,8 @@ public abstract class TileObject extends ObjectHandle{
     public abstract Bitmap getBitmap();
     public abstract void reDownload(ServiceContext sc);
 
+    public abstract boolean isLoaded();
+
     public static abstract class  Source {
         public abstract TileBitmapFilter getBitmapFilter();
         public abstract String getName();

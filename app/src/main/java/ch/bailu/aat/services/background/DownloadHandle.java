@@ -2,9 +2,7 @@ package ch.bailu.aat.services.background;
 
 import android.content.Context;
 
-import java.io.Closeable;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -13,6 +11,7 @@ import java.net.URL;
 
 import ch.bailu.aat.helpers.AppBroadcaster;
 import ch.bailu.aat.helpers.AppTheme;
+import ch.bailu.aat.helpers.file.FileAccess;
 
 public class DownloadHandle extends ProcessHandle {
 
@@ -75,7 +74,7 @@ public class DownloadHandle extends ProcessHandle {
             input = openInput(connection);
 
             downloadLock=true;
-            output = openOutput(file);
+            output = FileAccess.openOutput(file);
 
             while (( count = input.read(buffer)) != -1) {
                 total+=count;
@@ -84,10 +83,10 @@ public class DownloadHandle extends ProcessHandle {
 
 
         } finally {    
-            close(output);
+            FileAccess.close(output);
             downloadLock=false;
 
-            close(input);
+            FileAccess.close(input);
             if (connection!=null) connection.disconnect();
         }
 
@@ -96,15 +95,7 @@ public class DownloadHandle extends ProcessHandle {
 
 
 
-    private static void close(Closeable c) {
-        if (c != null) {
-            try {
-                c.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
+
 
 
     private static HttpURLConnection openConnection(URL url) throws IOException {
@@ -131,15 +122,11 @@ public class DownloadHandle extends ProcessHandle {
 
     }
 
-    private static InputStream openInput(HttpURLConnection connection) throws IOException {
+    public static InputStream openInput(HttpURLConnection connection) throws IOException {
         return connection.getInputStream();
 
     }
 
-    private static OutputStream openOutput(File file) throws IOException {
-        new File(file.getParent()).mkdirs();
-        return new FileOutputStream(file);
-    }
 
 
     public File getFile() {
