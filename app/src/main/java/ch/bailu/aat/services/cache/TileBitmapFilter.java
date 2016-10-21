@@ -78,7 +78,6 @@ public abstract class TileBitmapFilter {
 
             ColorMatrixColorFilter f = new ColorMatrixColorFilter(cm);
             paint.setColorFilter(f);        
-            //paint.setAlpha(50);
             return paint;
         }
     }

@@ -686,7 +686,7 @@ public class MapView extends ViewGroup implements IMapView, MapViewConstants {
 
         /**
          * Performs only the first computationally heavy part of the projection. Call
-         * toMapPixelsTranslated to get the final position.
+         * toMapPixelsTranslated to getDrawable the final position.
          *
          * @param latituteE6
          *            the latitute of the point

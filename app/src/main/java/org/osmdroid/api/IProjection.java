@@ -34,7 +34,7 @@ public interface IProjection {
 	/**
 	 * Converts a distance in meters (along the equator) to one in (horizontal) pixels at the
 	 * current zoomlevel. In the default Mercator projection, the actual number of pixels for a
-	 * given distance will get higher as you move away from the equator.
+	 * given distance will getDrawable higher as you move away from the equator.
 	 *
 	 * @param meters
 	 *            the distance in meters

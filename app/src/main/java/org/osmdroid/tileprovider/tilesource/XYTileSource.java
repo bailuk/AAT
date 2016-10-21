@@ -5,9 +5,9 @@ import org.osmdroid.tileprovider.MapTile;
 public class XYTileSource extends OnlineTileSourceBase {
 
 	public XYTileSource(final String aName, final int aZoomMinLevel,
-			final int aZoomMaxLevel, final int aTileSizePixels, final String aImageFilenameEnding,
+			final int aZoomMaxLevel, final String aImageFilenameEnding,
 			final String... aBaseUrl) {
-		super(aName, aZoomMinLevel, aZoomMaxLevel, aTileSizePixels,
+		super(aName, aZoomMinLevel, aZoomMaxLevel,
 				aImageFilenameEnding, aBaseUrl);
 	}
 

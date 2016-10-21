@@ -1,52 +1,30 @@
 package org.osmdroid.tileprovider.tilesource;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
-
 import org.osmdroid.tileprovider.MapTile;
 import org.osmdroid.tileprovider.constants.OpenStreetMapTileProviderConstants;
 
-import java.io.File;
-import java.io.InputStream;
 import java.util.Random;
-
-import ch.bailu.aat.helpers.Logger;
-import ch.bailu.aat.helpers.LoggerFactory;
 
 public abstract class BitmapTileSourceBase implements ITileSource,
 		OpenStreetMapTileProviderConstants {
 
-	private static final Logger logger = LoggerFactory.getLogger(BitmapTileSourceBase.class);
-
-	private static int globalOrdinal = 0;
 
 	private final int mMinimumZoomLevel;
 	private final int mMaximumZoomLevel;
 
-	private final int mOrdinal;
 	protected final String mName;
 	protected final String mImageFilenameEnding;
 	protected final Random random = new Random();
 
-	private final int mTileSizePixels;
 
 
 	public BitmapTileSourceBase(final String aName,
-			final int aZoomMinLevel, final int aZoomMaxLevel, final int aTileSizePixels,
+			final int aZoomMinLevel, final int aZoomMaxLevel,
 			final String aImageFilenameEnding) {
-		mOrdinal = globalOrdinal++;
 		mName = aName;
 		mMinimumZoomLevel = aZoomMinLevel;
 		mMaximumZoomLevel = aZoomMaxLevel;
-		mTileSizePixels = aTileSizePixels;
 		mImageFilenameEnding = aImageFilenameEnding;
-	}
-
-	@Override
-	public int ordinal() {
-		return mOrdinal;
 	}
 
 	@Override
@@ -72,34 +50,8 @@ public abstract class BitmapTileSourceBase implements ITileSource,
 		return mMaximumZoomLevel;
 	}
 
-	@Override
-	public int getTileSizePixels() {
-		return mTileSizePixels;
-	}
 
 
-	@Override
-	public Drawable getDrawable(final String aFilePath) {
-		try {
-			// default implementation will load the file as a bitmap and create
-			// a BitmapDrawable from it
-			final Bitmap bitmap = BitmapFactory.decodeFile(aFilePath);
-			if (bitmap != null) {
-				return new BitmapDrawable(bitmap);
-			} else {
-				// if we couldn't load it then it's invalid - delete it
-				try {
-					new File(aFilePath).delete();
-				} catch (final Throwable e) {
-					logger.error("Error deleting invalid file: " + aFilePath, e);
-				}
-			}
-		} catch (final OutOfMemoryError e) {
-			logger.error("OutOfMemoryError loading bitmap: " + aFilePath);
-			System.gc();
-		}
-		return null;
-	}
 
 	@Override
 	public String getTileRelativeFilenameString(final MapTile tile) {
@@ -115,32 +67,4 @@ public abstract class BitmapTileSourceBase implements ITileSource,
 		return sb.toString();
 	}
 
-	@Override
-	public Drawable getDrawable(final InputStream aFileInputStream) throws LowMemoryException {
-		try {
-			// default implementation will load the file as a bitmap and create
-			// a BitmapDrawable from it
-			final Bitmap bitmap = BitmapFactory.decodeStream(aFileInputStream);
-			if (bitmap != null) {
-				return new BitmapDrawable(bitmap);
-			}
-		} catch (final OutOfMemoryError e) {
-			logger.error("OutOfMemoryError loading bitmap");
-			System.gc();
-			throw new LowMemoryException(e);
-		}
-		return null;
-	}
-
-	public final class LowMemoryException extends Exception {
-		private static final long serialVersionUID = 146526524087765134L;
-
-		public LowMemoryException(final String pDetailMessage) {
-			super(pDetailMessage);
-		}
-
-		public LowMemoryException(final Throwable pThrowable) {
-			super(pThrowable);
-		}
-	}
 }

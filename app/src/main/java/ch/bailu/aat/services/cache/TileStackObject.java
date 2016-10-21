@@ -8,8 +8,7 @@ import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 
 import org.osmdroid.tileprovider.MapTile;
-
-import java.io.File;
+import org.osmdroid.views.overlay.LoadingTile;
 
 import ch.bailu.aat.helpers.AppBroadcaster;
 import ch.bailu.aat.services.ServiceContext;
@@ -30,7 +29,7 @@ public class TileStackObject extends ObjectHandle {
     private final MapTile mapTile;
 
     private boolean ready=false;
-    
+
     private TileStackObject() {
         super(TileStackObject.class.getSimpleName());
         tiles = new TileContainer[]{};
@@ -46,7 +45,7 @@ public class TileStackObject extends ObjectHandle {
         paint.setColor(Color.WHITE);
         paint.setStyle(Paint.Style.FILL);
 
-        
+
     }
 
 
@@ -54,13 +53,13 @@ public class TileStackObject extends ObjectHandle {
     @Override
     public void onInsert(ServiceContext sc) {
         sc.getCacheService().addToBroadcaster(this);
-        
+
         for (TileContainer tile: tiles) {
             tile.lock(sc);
         }
-        
+
         reupdate(sc);
-        
+
     }
 
 
@@ -76,8 +75,8 @@ public class TileStackObject extends ObjectHandle {
 
     private void reupdate(ServiceContext cs) {
         ready=false;
-        
-        
+
+
         if (areSubtilesReady()) {
             pendingUpdate.stopLoading();
             pendingUpdate = new ReUpdate();
@@ -128,11 +127,17 @@ public class TileStackObject extends ObjectHandle {
     }
 
     private class ReUpdate extends ProcessHandle {
+        private final static int OVERLAY_ALPHA=100;
+        private final static int NULL_ALPHA=255;
+
+        public ReUpdate() {
+            super();
+        }
 
         @Override
         public long bgOnProcess() {
             Bitmap b = bgReupdate();
-            
+
             if (canContinue()) {
                 bitmap.set(b);
                 ready=true;
@@ -142,21 +147,24 @@ public class TileStackObject extends ObjectHandle {
         }
 
 
+
         private Bitmap bgReupdate() {
-            final int OVERLAY_ALPHA=180;
+
 
             Bitmap destination=null;
-            Bitmap source=null;
             Canvas canvas=null;
-            int alpha=255;
+            int alpha=NULL_ALPHA;
 
             for (int i=0; i<tiles.length && canContinue(); i++) {
                 TileContainer tile=tiles[i];
 
-                source=tile.getBitmap();
+                Bitmap source=tile.getBitmap();
+
+                if (alpha == NULL_ALPHA && source == null) {
+                    source = LoadingTile.getBitmap();
+                }
 
                 if (source != null) {
-
                     if (canvas == null) {
                         final int w = source.getWidth();
                         final int h = source.getHeight();
@@ -166,7 +174,7 @@ public class TileStackObject extends ObjectHandle {
                     }
                     tile.filter.applayFilter(canvas, source, alpha);
                     alpha=OVERLAY_ALPHA;
-                }           
+                }
             }
             return destination;
         }
@@ -180,7 +188,8 @@ public class TileStackObject extends ObjectHandle {
 
         @Override
         public void broadcast(Context context) {
-            AppBroadcaster.broadcast(context, AppBroadcaster.FILE_CHANGED_INCACHE, TileStackObject.this.toString());
+            AppBroadcaster.broadcast(context, AppBroadcaster.FILE_CHANGED_INCACHE,
+                    TileStackObject.this.toString());
         }
     }
 
@@ -206,7 +215,7 @@ public class TileStackObject extends ObjectHandle {
             if (tile.id.equals(id)) return true;
         }
         return false;
-    }    
+    }
 
 
 

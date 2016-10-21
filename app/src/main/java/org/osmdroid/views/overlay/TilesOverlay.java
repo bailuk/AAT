@@ -99,7 +99,7 @@ public class TilesOverlay extends Overlay  {
 
 				Drawable currentMapTile = mTileProvider.getMapTile(tile);
 				if (currentMapTile == null) {
-					currentMapTile = LoadingTile.get(context);
+					currentMapTile = LoadingTile.getDrawable(context);
 				}
 
 				if (currentMapTile != null) {

@@ -34,8 +34,8 @@ public class HillShadeCached extends TileObject {
         demID = NewHillshade.ELEVATION_HILLSHADE8.getID(t, cs.getContext());
         demFactory = NewHillshade.ELEVATION_HILLSHADE8.getFactory(t);
 
-        bitmapID = BitmapTileObject.HILLSHADE_CACHED.getID(t, cs.getContext());
-        bitmapFactory = BitmapTileObject.HILLSHADE_CACHED.getFactory(t);
+        bitmapID = BitmapTileObject.HILLSHADE_CACHE.getID(t, cs.getContext());
+        bitmapFactory = BitmapTileObject.HILLSHADE_CACHE.getFactory(t);
 
         cs.getCacheService().addToBroadcaster(this);
 
@@ -49,7 +49,7 @@ public class HillShadeCached extends TileObject {
 
                 try {
                     out = FileAccess.openOutput(new File(bitmapID));
-                    tile.getBitmap().compress(Bitmap.CompressFormat.PNG, 100, out);
+                    tile.getBitmap().compress(Bitmap.CompressFormat.PNG, 0, out);
 
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -177,7 +177,8 @@ public class HillShadeCached extends TileObject {
 
                 @Override
                 public String getID(MapTile t, Context x) {
-                    return HillShadeCached.class.getSimpleName() + "/" + t.getZoomLevel() + "/" + t.getX() + "/" + t.getY();
+                    return HillShadeCached.class.getSimpleName() +
+                            "/" + t.getZoomLevel() + "/" + t.getX() + "/" + t.getY();
                 }
 
                 @Override

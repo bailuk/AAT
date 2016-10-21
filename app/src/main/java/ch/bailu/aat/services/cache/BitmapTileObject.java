@@ -153,7 +153,7 @@ public class BitmapTileObject extends TileObject {
         
         
         public Source (String sourceName, TileBitmapFilter f, int minZ, int maxZ, final String... url) {
-            osmdroidSource = new XYTileSource(sourceName, minZ, maxZ, 256, ".png", url);
+            osmdroidSource = new XYTileSource(sourceName, minZ, maxZ, ".png", url);
             filter = f;
         }
         
@@ -241,7 +241,7 @@ public class BitmapTileObject extends TileObject {
                     "http://openptmap.org/tiles/");
 
 
-    public final static BitmapTileObject.Source HILLSHADE_CACHED =
+    public final static BitmapTileObject.Source HILLSHADE_CACHE =
             new BitmapTileObject.Source("HillShade", TileBitmapFilter.COPY_FILTER,
                     NewHillshade.ELEVATION_HILLSHADE8.getMinimumZoomLevel(),
                     NewHillshade.ELEVATION_HILLSHADE8.getMaximumZoomLevel(),

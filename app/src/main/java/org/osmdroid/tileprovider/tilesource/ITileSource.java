@@ -1,20 +1,9 @@
 package org.osmdroid.tileprovider.tilesource;
 
-import android.graphics.drawable.Drawable;
-
 import org.osmdroid.tileprovider.MapTile;
-import org.osmdroid.tileprovider.tilesource.BitmapTileSourceBase.LowMemoryException;
-
-import java.io.InputStream;
 
 public interface ITileSource {
 
-	/**
-	 * An ordinal identifier for this tile source
-	 * 
-	 * @return the ordinal value
-	 */
-	int ordinal();
 
 	/**
 	 * A human-friendly name for this tile source
@@ -36,24 +25,6 @@ public interface ITileSource {
 	String getTileRelativeFilenameString(MapTile aTile);
 
 	/**
-	 * Get a rendered Drawable from the specified file path.
-	 * 
-	 * @param aFilePath
-	 *            a file path
-	 * @return the rendered Drawable
-	 */
-	Drawable getDrawable(String aFilePath) throws LowMemoryException;
-
-	/**
-	 * Get a rendered Drawable from the specified InputStream.
-	 * 
-	 * @param aTileInputStream
-	 *            an InputStream
-	 * @return the rendered Drawable
-	 */
-	Drawable getDrawable(InputStream aTileInputStream) throws LowMemoryException;
-
-	/**
 	 * Get the minimum zoom level this tile source can provide.
 	 * 
 	 * @return the minimum zoom level
@@ -67,10 +38,4 @@ public interface ITileSource {
 	 */
 	public int getMaximumZoomLevel();
 
-	/**
-	 * Get the tile size in pixels this tile source provides.
-	 * 
-	 * @return the tile size in pixels
-	 */
-	public int getTileSizePixels();
 }

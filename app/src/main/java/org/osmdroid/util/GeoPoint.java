@@ -320,7 +320,7 @@ public class GeoPoint implements IGeoPoint, MathConstants, GeoConstants, Parcela
 		// convert bearing to radians
 		final float brng = DEG2RAD * aBearingInDegrees;
 
-		// get current location in radians
+		// getDrawable current location in radians
 		final double lat1 = DEG2RAD * getLatitudeE6() / 1E6;
 		final double lon1 = DEG2RAD * getLongitudeE6() / 1E6;
 
