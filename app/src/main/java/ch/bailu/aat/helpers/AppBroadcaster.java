@@ -5,8 +5,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 
+import ch.bailu.aat.BuildConfig;
+
 public class AppBroadcaster {
-    public static final String NAME_SPACE="ch.bailu.aat.";
+    public static final String NAME_SPACE= BuildConfig.APPLICATION_ID + ".";
 
 
     public static final String TILE_REMOVER_SCAN = NAME_SPACE+"TR_SCAN";
