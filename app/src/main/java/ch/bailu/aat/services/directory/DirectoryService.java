@@ -4,6 +4,7 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteCantOpenDatabaseException;
+import android.database.sqlite.SQLiteReadOnlyDatabaseException;
 
 import java.io.Closeable;
 import java.io.File;
@@ -150,8 +151,12 @@ public class DirectoryService extends VirtualService{
 
         @Override
         public void deleteEntry(File file)  {
-            database.deleteEntry(file);
-            rescan();
+            if (isDirWriteable()) {
+                database.deleteEntry(file);
+                rescan();
+            } else {
+                logReadOnly();
+            }
         }
 
         

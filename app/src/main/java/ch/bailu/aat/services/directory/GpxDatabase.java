@@ -5,6 +5,8 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteCantOpenDatabaseException;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
+import android.database.sqlite.SQLiteReadOnlyDatabaseException;
 
 import java.io.File;
 import java.io.IOException;
@@ -59,7 +61,7 @@ public class GpxDatabase extends AbsDatabase{
     }
 
     @Override
-    public void deleteEntry(File file) {
+    public void deleteEntry(File file) throws SQLiteException {
         final String where = GpxDbConstants.KEY_FILENAME + "=\'" + file.getName() + "\'";
         database.delete(GpxDbConstants.DB_TABLE, where, null);
     }

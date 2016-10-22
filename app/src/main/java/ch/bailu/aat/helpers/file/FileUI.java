@@ -1,13 +1,11 @@
 package ch.bailu.aat.helpers.file;
 
-import android.app.Activity;
 import android.content.Context;
 
 import java.io.File;
 import java.io.IOException;
 
 import ch.bailu.aat.R;
-import ch.bailu.aat.helpers.AppDialog;
 import ch.bailu.aat.helpers.AppLog;
 import ch.bailu.aat.helpers.AppSelectDirectoryDialog;
 import ch.bailu.aat.preferences.SolidDirectoryQuery;
@@ -28,7 +26,7 @@ public class FileUI {
         final File target = new File(targetDir, file.getName());
 
         if (target.exists()) {
-            AppLog.e(context, getExistsMsg(context, target));
+            logExists(context, file);
         } else {
             new UriAccess(context, file).copy(target);
             AppLog.i(context, target.getAbsolutePath());
@@ -37,19 +35,31 @@ public class FileUI {
     }
     
 
-    public static String getExistsMsg(Context c, File f) {
-        return f.getName() +
-                c.getString(R.string.file_exists);
+    public static void logExists(Context c, File f) {
+        AppLog.e(c, f.getAbsolutePath() + c.getString(R.string.file_exists));
     }
 
-/*
-    public void reloadPreview(ServiceContext scontext) {
-        if (file.getParent().equals(new SolidDirectoryQuery(scontext.getContext()).getValueAsString())) {
-            scontext.getDirectoryService().deleteEntry(file.getAbsolutePath());
+    public static void logReadOnly(Context c, File f) {
+        AppLog.e(c, f.getAbsolutePath() + " is read only.*");
+    }
+
+    public void logNoAccess(Context c, File f) {
+        AppLog.e(c, f.getAbsolutePath() + " no access.*");
+    }
+
+    public boolean logPermission(Context c, File f) {
+        if (f.canWrite() == false) {
+            if (f.canRead() == false) {
+                logNoAccess(c, f);
+            } else {
+                logReadOnly(c, f);
+            }
+            return true;
         }
+        return false;
     }
-*/
 
+    /*
     public void delete(Activity a, ServiceContext sc) {
         new FileDeletionDialog(a, sc);
     }
@@ -70,7 +80,7 @@ public class FileUI {
             rescanDirectory(scontext);
         }
     }
-
+*/
 /*
     public void useAsOverlay(Context context) {
         new AddOverlayDialog(context, file);

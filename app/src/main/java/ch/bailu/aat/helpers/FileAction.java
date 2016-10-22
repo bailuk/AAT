@@ -38,7 +38,11 @@ public class FileAction   {
 
   
     public void rescanDirectory() {
-        if (file.getParent().equals(new SolidDirectoryQuery(activity).getValueAsString())) {
+        final File dir = file.getParentFile();
+
+        if (dir.canWrite() &&
+                dir.toString().equals(new SolidDirectoryQuery(activity).getValueAsString())) {
+
             scontext.getDirectoryService().rescan();
         }
     }
@@ -52,7 +56,11 @@ public class FileAction   {
 
 
     public void delete() {
-        new FileDeletionDialog();
+        if (file.canWrite()) {
+            new FileDeletionDialog();
+        } else {
+            FileUI.logReadOnly(scontext.getContext(), file);
+        }
     }
 
     public void copyToClipboard() {
@@ -103,9 +111,16 @@ public class FileAction   {
     }
 
     public void rename() {
-        new FileRenameDialog();
-
+        if (file.canWrite()) {
+            new FileRenameDialog();
+        } else {
+            FileUI.logReadOnly(scontext.getContext(), file);
+        }
     }
+
+
+
+
 
     private class FileRenameDialog extends AppDialog {
         private final EditText edit;
@@ -127,7 +142,7 @@ public class FileAction   {
 
             if (source.exists()) {
                 if (target.exists()) {
-                    AppLog.i(activity, FileUI.getExistsMsg(scontext.getContext(), target));
+                    FileUI.logExists(activity, target);
                 } else {
                     source.renameTo(target);
                     rescanDirectory();
