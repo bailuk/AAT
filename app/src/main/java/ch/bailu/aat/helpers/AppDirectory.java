@@ -18,6 +18,7 @@ import ch.bailu.aat.preferences.SolidTileCacheDirectory;
 
 public class AppDirectory  {
 
+
     //////////////////////////////////////////////////////////////////////////////////////
 /*    public static File getDataDirectory(Context c, File sub) {
         return getDataDirectory(c, sub.toString());
@@ -29,6 +30,8 @@ public class AppDirectory  {
         p.mkdirs();
         return p;
     }
+
+    public static final String DIR_AAT_DATA = "aat_data/";
 
     public static final String DIR_TILES = "tiles/";
     public static final String DIR_TILES_OSMDROID = "osmdroid/tiles/";

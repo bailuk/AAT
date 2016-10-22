@@ -7,6 +7,8 @@ import java.io.File;
 import java.util.ArrayList;
 
 import ch.bailu.aat.R;
+import ch.bailu.aat.helpers.AppDirectory;
+import ch.bailu.aat.helpers.AppLog;
 
 public class SolidDataDirectory extends SolidDirectory {
 
@@ -25,10 +27,29 @@ public class SolidDataDirectory extends SolidDirectory {
     public String getValueAsString() {
         String r = super.getValueAsString();
 
+
         if (r.equals(Storage.DEF_VALUE)) {
-            r = new OldSolidDataDirectory(getContext()).getValueAsString();
+            r = getDefaultValue();
+
+            setValue(r);
         }
         return r;
+    }
+
+    private String getDefaultValue() {
+        final File f = new OldSolidDataDirectory(getContext()).toFile();
+
+        ArrayList<String> list = new ArrayList<>(5);
+
+        add(list, f);
+
+        if (list.size()==0)
+            list = buildSelection(list);
+
+        if (list.size()==0)
+            list.add(f.getAbsolutePath());
+
+        return list.get(0);
     }
 
 
@@ -37,13 +58,16 @@ public class SolidDataDirectory extends SolidDirectory {
 
         File internal = getContext().getFilesDir();
         File external = getContext().getExternalFilesDir(null);
-        File aat_data = new File(Environment.getExternalStorageDirectory(),"aat_data/");
+        File sdcard   = Environment.getExternalStorageDirectory();
+        File aat_data = new File(sdcard, AppDirectory.DIR_AAT_DATA);
 
-        list.add(internal.getAbsolutePath());
-        list.add(external.getAbsolutePath());
-        list.add(aat_data.getAbsolutePath());
+        add(list, external);
+        add(list, sdcard, aat_data);
+        add(list, internal);
 
         return list;
     }
+
+
 }
 

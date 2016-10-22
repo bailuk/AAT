@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.ArrayList;
 
 import ch.bailu.aat.R;
+import ch.bailu.aat.helpers.AppLog;
 
 
 public abstract class SolidDirectory extends SolidString {
@@ -19,4 +20,26 @@ public abstract class SolidDirectory extends SolidString {
     public int getIconResource() {return R.drawable.folder_inverse;}
 
     public abstract ArrayList<String> buildSelection(ArrayList<String> list);
+
+
+    public static void add(ArrayList<String> list, File file) {
+        add(list, file, file);
+
+    }
+
+    public static void add(ArrayList<String> list, File check, File file) {
+        if (canWrite(check))  {
+            list.add(file.getAbsolutePath());
+        }
+    }
+
+    public static boolean canWrite(File check) {
+        try {
+            return check.canWrite();
+        } catch (SecurityException e) {
+            AppLog.d(check, "Access denied");
+            return false;
+        }
+    }
+
 }
