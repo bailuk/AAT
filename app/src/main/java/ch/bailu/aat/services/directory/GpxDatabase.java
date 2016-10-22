@@ -1,5 +1,6 @@
 package ch.bailu.aat.services.directory;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteCantOpenDatabaseException;
@@ -12,16 +13,27 @@ import ch.bailu.aat.services.ServiceContext;
 
 
 public class GpxDatabase extends AbsDatabase{
+
     private final Context context;
+
+    private final String[] keys;
 
     private SQLiteDatabase database;
 
 
 
+    public GpxDatabase (ServiceContext sc, File path, String[] k)
+            throws IOException, SQLiteCantOpenDatabaseException{
 
-    public GpxDatabase (ServiceContext sc, File path) throws IOException, SQLiteCantOpenDatabaseException {
+        keys = k;
         context=sc.getContext();
         database = openDatabase(path);
+    }
+
+    public GpxDatabase (ServiceContext sc, File path)
+            throws IOException, SQLiteCantOpenDatabaseException {
+
+        this(sc, path, GpxDbConstants.KEY_LIST);
     }
 
 
@@ -34,7 +46,7 @@ public class GpxDatabase extends AbsDatabase{
     public Cursor query(String selection) {
         return database.query(
                 GpxDbConstants.DB_TABLE,
-                GpxDbConstants.KEY_LIST,
+                keys,
                 selection,
                 null, null, null,
                 GpxDbConstants.KEY_START_TIME+ " DESC");
@@ -47,9 +59,12 @@ public class GpxDatabase extends AbsDatabase{
     }
 
     @Override
-    public void deleteEntry(String pathName) {
-        String where = GpxDbConstants.KEY_PATHNAME + "=\'" + pathName + "\'"; 
+    public void deleteEntry(File file) {
+        final String where = GpxDbConstants.KEY_FILENAME + "=\'" + file.getName() + "\'";
         database.delete(GpxDbConstants.DB_TABLE, where, null);
     }
 
+    public void insert(ContentValues content) {
+        database.insert(GpxDbConstants.DB_TABLE, null, content);
+    }
 }

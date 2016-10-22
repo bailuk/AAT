@@ -34,7 +34,7 @@ public class DirectorySynchronizer  implements Closeable {
     private FilesOnDisk filesToAdd=null;
     private final ArrayList<String> filesToRemove = new ArrayList<>();
 
-    private SQLiteDatabase database;
+    private GpxDatabase database;
 
 
     private long dbAccessTime;
@@ -114,15 +114,12 @@ public class DirectorySynchronizer  implements Closeable {
 
 
 
-        private SQLiteDatabase openDatabase()  throws Exception {
-            SQLiteDatabase database=null;
-
-            File file =  AppDirectory.getCacheDb(directory);
+        private GpxDatabase openDatabase()  throws Exception {
+            final File file = AppDirectory.getCacheDb(directory);
+            final String query[] = {GpxDbConstants.KEY_FILENAME};
 
             dbAccessTime = file.lastModified();
-            database = new GpxDbOpenHelper(scontext.getContext(), file).getReadableDatabase();
-
-            return database;
+            return new GpxDatabase(scontext, file, query);
         }
 
         @Override
@@ -212,6 +209,7 @@ public class DirectorySynchronizer  implements Closeable {
         private void removeFilesFromDatabase() throws IOException {
             if (canContinue && filesToRemove.size()>0) {
                 for (int i=0; canContinue && i<filesToRemove.size(); i++) {
+
                     removeFileFromDatabase(filesToRemove.get(i));
                 }
                 AppBroadcaster.broadcast(scontext.getContext(), AppBroadcaster.DB_SYNC_CHANGED);
@@ -219,47 +217,37 @@ public class DirectorySynchronizer  implements Closeable {
         }
 
 
-        private void removeFileFromDatabase(String filePath) throws IOException {
-            AppDirectory.getPreviewFile(new File(filePath)).delete();
+        private void removeFileFromDatabase(String name) throws IOException {
+            final File file = new File(directory, name);
 
-            database.delete(GpxDbConstants.DB_TABLE, GpxDbConstants.KEY_PATHNAME + "=\'" + filePath + "\'", null);
+            AppDirectory.getPreviewFile(file).delete();
+            database.deleteEntry(file);
         }
 
 
 
         private void compareFileSystemWithDatabase() throws IOException {
-            Cursor cursor = openCursor(database);
+            final Cursor cursor = database.query(null);
 
             for (boolean r=cursor.moveToFirst(); canContinue && r; r=cursor.moveToNext()) {
-                String path = getTrackFilePath(cursor);
-                File file = filesToAdd.findItem(path);
+                final String name = getFileName(cursor);
+                final File file = filesToAdd.findItem(name);
 
                 if (file == null) {
-                    filesToRemove.add(path);
+                    filesToRemove.add(name);
 
                 } else if (isFileInSync(file)) {
                     filesToAdd.popItem(file);
 
                 } else {
-                    filesToRemove.add(path);
+                    filesToRemove.add(name);
                 }
             }
             cursor.close();
         }
 
-        private String getTrackFilePath(Cursor cursor) {
-            return cursor.getString(cursor.getColumnIndex(GpxDbConstants.KEY_PATHNAME));
-        }
-
-        private Cursor openCursor(SQLiteDatabase database) {
-            return database.query(
-                    GpxDbConstants.DB_TABLE, 
-                    new String[] { GpxDbConstants.KEY_PATHNAME }, 
-                    null, 
-                    null, 
-                    null, 
-                    null, 
-                    null);
+        private String getFileName(Cursor cursor) {
+            return cursor.getString(cursor.getColumnIndex(GpxDbConstants.KEY_FILENAME));
         }
 
 
@@ -318,7 +306,7 @@ public class DirectorySynchronizer  implements Closeable {
             final File file = new File(id);
 
             ContentValues content = createContentValues(file.getPath(), file.getName(), list.getDelta());
-            database.insert(GpxDbConstants.DB_TABLE, null, content);
+            database.insert(content);
         }
 
         private ContentValues createContentValues(String pathname, String filename, 
@@ -327,7 +315,7 @@ public class DirectorySynchronizer  implements Closeable {
             BoundingBoxE6 box = summary.getBoundingBox().toBoundingBoxE6();
 
             ContentValues content = new ContentValues();
-            content.put(GpxDbConstants.KEY_PATHNAME,   pathname);
+            content.put(GpxDbConstants.KEY_PATHNAME_OLD,   pathname);
             content.put(GpxDbConstants.KEY_FILENAME,   filename);
             content.put(GpxDbConstants.KEY_AVG_SPEED,  summary.getSpeed());
             content.put(GpxDbConstants.KEY_MAX_SPEED,  summary.getMaximumSpeed());

@@ -29,9 +29,9 @@ public class FilesOnDisk {
     }
     
     
-    public File findItem(String path) {
+    public File findItem(String name) {
         for (int i=0; i<files.size(); i++) {
-            if (path.equalsIgnoreCase(files.get(i).getAbsolutePath())) {
+            if (name.equalsIgnoreCase(files.get(i).getName())) {
                 return files.get(i);
             }
         }

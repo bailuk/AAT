@@ -11,11 +11,11 @@ import ch.bailu.aat.services.ServiceContext;
 public class IteratorSummary extends IteratorAbstract {
 
     private GpxInformation info = GpxInformation.NULL;
-    private final File directory;
+    //private final File directory;
 
     public IteratorSummary(ServiceContext sc) {
         super(sc);
-        directory = new File(new SolidDirectoryQuery(sc.getContext()).getValueAsString());
+        //directory = new File(new SolidDirectoryQuery(sc.getContext()).getValueAsString());
         query();
     }
 
@@ -25,7 +25,7 @@ public class IteratorSummary extends IteratorAbstract {
     }
 
     @Override
-    public void onCursorChanged(Cursor cursor, String fid) {
+    public void onCursorChanged(Cursor cursor, File directory,  String fid) {
         //if (cursor.getCount()>0) {
             info = new GpxInformationDbSummary(directory, cursor);
         //} else {

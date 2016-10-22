@@ -3,6 +3,7 @@ package ch.bailu.aat.services.directory;
 import android.database.Cursor;
 
 import java.io.Closeable;
+import java.io.File;
 
 import ch.bailu.aat.gpx.GpxList;
 import ch.bailu.aat.services.ServiceContext;
@@ -15,8 +16,8 @@ public class GpxInformationDbEntryAndFile extends GpxInformationDbEntry implemen
     private ObjectHandle handle = ObjectHandle.NULL;
     private final ServiceContext scontext;
     
-    public GpxInformationDbEntryAndFile(ServiceContext sc, Cursor c) {
-        super(c);
+    public GpxInformationDbEntryAndFile(ServiceContext sc, File p, Cursor c) {
+        super(c, p);
         scontext=sc;
     }
 

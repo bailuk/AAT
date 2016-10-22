@@ -46,7 +46,7 @@ public class FileAction   {
 
     public void reloadPreview() {
         if (file.getParent().equals(new SolidDirectoryQuery(scontext.getContext()).getValueAsString())) {
-            scontext.getDirectoryService().deleteEntry(file.getAbsolutePath());
+            scontext.getDirectoryService().deleteEntry(file);
         }
     }
 

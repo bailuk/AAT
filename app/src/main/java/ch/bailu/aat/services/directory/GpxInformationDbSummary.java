@@ -20,7 +20,7 @@ public class GpxInformationDbSummary extends GpxInformation {
         list = new GpxList(GpxType.WAY);
         
         GpxBigDelta summary=new GpxBigDelta();
-        GpxInformation entry = new GpxInformationDbEntry(cursor);
+        GpxInformation entry = new GpxInformationDbEntry(cursor, dir);
         
         cursor.moveToPosition(-1);
         while (cursor.moveToNext()) {

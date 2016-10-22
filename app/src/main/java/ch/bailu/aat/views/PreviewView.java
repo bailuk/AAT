@@ -60,7 +60,7 @@ public class PreviewView extends ImageView {
 
 
     private boolean loadImage(File f) {
-        if (f.exists()) {
+        if (f.canRead()) {
             final ObjectHandle  h=scontext.getCacheService().getObject(f.getAbsolutePath(), new ImageObject.Factory());
 
             if (ImageObject.class.isInstance(h)) {

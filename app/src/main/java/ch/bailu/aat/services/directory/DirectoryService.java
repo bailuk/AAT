@@ -10,6 +10,7 @@ import java.io.File;
 import java.io.IOException;
 
 import ch.bailu.aat.helpers.AppDirectory;
+import ch.bailu.aat.helpers.AppLog;
 import ch.bailu.aat.preferences.SolidDirectoryQuery;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.VirtualService;
@@ -41,7 +42,7 @@ public class DirectoryService extends VirtualService{
 
     public static class Self implements Closeable{
         public void rescan() {}
-        public void deleteEntry(String fileID)  {}
+        public void deleteEntry(File file)  {}
 
 
         @Override
@@ -80,16 +81,34 @@ public class DirectoryService extends VirtualService{
         
         
         private void openDir() {
-            if (isDirValid()) {
+            if (isDirReadable()) {
                 open();
-                rescan();
+                if (isDirWriteable()) {
+                    rescan();
+                } else {
+                    logReadOnly();
+                }
+            } else {
+                logNoAccess();
             }
         }
-        
+
+
+        private void logReadOnly() {
+            AppLog.e(getContext(), getDir().getAbsolutePath() + " is read only.*");
+        }
+
+
+        private void logNoAccess() {
+            AppLog.e(getContext(), getDir().getAbsolutePath() + " no access.*");
+        }
+
+
         
         private void open() {
+            final File db = AppDirectory.getCacheDb(getDir());
+
             try {
-                final File db = AppDirectory.getCacheDb(getDir());
                 openDataBase(getSContext(), db);
 
             } catch (Exception e) {
@@ -103,10 +122,15 @@ public class DirectoryService extends VirtualService{
             return new File(sdirectory.getValueAsString());
         }
 
-        
-        private boolean isDirValid() {
-            return (getDir().exists());
+
+        private boolean isDirReadable() {
+            return getDir().canRead();
         }
+
+        private boolean isDirWriteable() {
+            return getDir().canWrite();
+        }
+
 
 
 
@@ -125,15 +149,15 @@ public class DirectoryService extends VirtualService{
         
 
         @Override
-        public void deleteEntry(String fileID)  {
-            database.deleteEntry(fileID);
+        public void deleteEntry(File file)  {
+            database.deleteEntry(file);
             rescan();
         }
 
         
         @Override
         public void rescan() {
-            if (isDirValid()) {
+            if (isDirReadable()) {
                 stopSynchronizer();
                 synchronizer = new DirectorySynchronizer(getSContext(), new File(sdirectory.getValueAsString()));
             }

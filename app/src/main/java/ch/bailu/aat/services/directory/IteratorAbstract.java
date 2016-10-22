@@ -7,6 +7,8 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.database.Cursor;
 
+import java.io.File;
+
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.helpers.AppBroadcaster;
 import ch.bailu.aat.helpers.AppLog;
@@ -91,7 +93,7 @@ public abstract class IteratorAbstract extends Iterator implements OnSharedPrefe
     @Override
     public abstract GpxInformation getInfo();
 
-    public abstract void onCursorChanged(Cursor cursor, String fid);
+    public abstract void onCursorChanged(Cursor cursor, File directory, String fid);
 
 
     @Override
@@ -112,7 +114,7 @@ public abstract class IteratorAbstract extends Iterator implements OnSharedPrefe
         if (cursor != null) {
             cursor.moveToPosition(oldPosition);
 
-            onCursorChanged(cursor, fileOnOldPosition);
+            onCursorChanged(cursor, sdirectory.getValueAsFile(), fileOnOldPosition);
             onCursorChangedListener.onCursorChanged();
         }
     }

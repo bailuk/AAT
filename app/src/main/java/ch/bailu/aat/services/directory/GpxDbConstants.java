@@ -6,7 +6,7 @@ public class GpxDbConstants {
     public final static String DB_TABLE="summary";
     
     
-    public final static String KEY_PATHNAME="pathname";
+    public final static String KEY_PATHNAME_OLD="pathname";
     public final static String KEY_FILENAME="filename";
     public final static String KEY_DISTANCE="distance";
     public final static String KEY_MAX_SPEED="max_speed";
@@ -28,11 +28,30 @@ public class GpxDbConstants {
     public final static String TYPE_FLOAT="REAL";
     public final static String TYPE_LONG="INT";
     public final static String TYPE_STRING = "TEXT";
-    public final static String TYPE_ID = "INTEGER PRIMARY KEY"; 
-    
-    public static final String[] KEY_LIST= new String[] { 
+    public final static String TYPE_ID = "INTEGER PRIMARY KEY";
+
+
+    public static final String[] KEY_LIST = new String[] {
+            KEY_ID,
+            KEY_FILENAME,
+            KEY_AVG_SPEED,
+            KEY_MAX_SPEED,
+            KEY_DISTANCE,
+            KEY_START_TIME,
+            KEY_TOTAL_TIME,
+            KEY_END_TIME,
+            KEY_PAUSE,
+            KEY_EAST_BOUNDING,
+            KEY_WEST_BOUNDING,
+            KEY_NORTH_BOUNDING,
+            KEY_SOUTH_BOUNDING,
+            KEY_TYPE_ID
+    };
+
+
+    public static final String[] KEY_LIST_OLD = new String[] {
         KEY_ID, 
-        KEY_PATHNAME, 
+        KEY_PATHNAME_OLD,
         KEY_FILENAME, 
         KEY_AVG_SPEED, 
         KEY_MAX_SPEED, 

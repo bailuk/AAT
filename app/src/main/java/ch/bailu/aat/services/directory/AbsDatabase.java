@@ -3,13 +3,14 @@ package ch.bailu.aat.services.directory;
 import android.database.Cursor;
 
 import java.io.Closeable;
+import java.io.File;
 
 public abstract class AbsDatabase implements Closeable{
 
     public abstract Cursor query(String selection);
 
 
-    public abstract void deleteEntry(String pathName);
+    public abstract void deleteEntry(File file);
 
 
     public static final AbsDatabase NULL_DATABASE = new AbsDatabase(){
@@ -19,7 +20,7 @@ public abstract class AbsDatabase implements Closeable{
         public Cursor query(String selection) {return null;}
 
         @Override
-        public void deleteEntry(String pathName) {}
+        public void deleteEntry(File file) {}
 
         @Override
         public void close() {}

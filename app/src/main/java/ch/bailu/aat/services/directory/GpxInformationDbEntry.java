@@ -2,17 +2,25 @@ package ch.bailu.aat.services.directory;
 
 import android.database.Cursor;
 
+import java.io.File;
+
 import ch.bailu.aat.coordinates.BoundingBox;
 import ch.bailu.aat.gpx.GpxInformation;
 
 public class GpxInformationDbEntry extends GpxInformation {
     private final Cursor cursor;
+    private final File parent;
 
-
-    public GpxInformationDbEntry(Cursor c) {
-        cursor=c;
+    public GpxInformationDbEntry(Cursor c, File p) {
+        parent = p;
+        cursor = c;
     }
 
+
+    /*public GpxInformationDbEntry(Cursor c) {
+        cursor=c;
+    }
+*/
 
     @Override
     public boolean isLoaded() {
@@ -22,7 +30,8 @@ public class GpxInformationDbEntry extends GpxInformation {
 
     @Override
     public String getPath() {
-        return getString(GpxDbConstants.KEY_PATHNAME);
+        return new File(parent, getName()).getAbsolutePath();
+        //return getString(GpxDbConstants.KEY_PATHNAME);
     }
 
     @Override

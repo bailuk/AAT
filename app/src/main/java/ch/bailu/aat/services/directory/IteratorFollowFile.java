@@ -3,6 +3,7 @@ package ch.bailu.aat.services.directory;
 import android.database.Cursor;
 
 import java.io.Closeable;
+import java.io.File;
 import java.io.IOException;
 
 import ch.bailu.aat.gpx.GpxInformation;
@@ -37,7 +38,7 @@ public class IteratorFollowFile extends IteratorAbstract {
 
 
     @Override
-    public void onCursorChanged(Cursor cursor, String fid) {
+    public void onCursorChanged(Cursor cursor, File directory, String fid) {
         try {
             toClose.close();
         } catch (IOException e) {
@@ -45,7 +46,8 @@ public class IteratorFollowFile extends IteratorAbstract {
         }
         
         AppLog.d(this, "onCursorChanged");
-        GpxInformationDbEntryAndFile info = new GpxInformationDbEntryAndFile(scontext, cursor);
+        GpxInformationDbEntryAndFile info
+                = new GpxInformationDbEntryAndFile(scontext, directory, cursor);
         toClose = info;
         this.info = info;
         findFile(fid);
