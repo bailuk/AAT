@@ -18,8 +18,8 @@
     <string name="label_filter">Filter</string>
     <string name="label_list">Liste</string>
 
-    <string name="gps_nogps">Kein GPS</string>
-    <string name="gps_noaccess">Kein Zugriff</string>
+    <string name="gps_nogps">Kein</string>
+    <string name="gps_noaccess">Verweigert</string>
 
 
 

@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 import ch.bailu.aat.gpx.GpxInformation;
 
-public class NewDispatcher implements DispatcherInterface, OnContentUpdatedInterface {
+public class Dispatcher implements DispatcherInterface, OnContentUpdatedInterface {
 
 
     private final SparseArray<TargetList>

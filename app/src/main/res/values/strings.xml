@@ -34,8 +34,8 @@
 
     <string name="gps" translatable="false">GPS</string>
     <string name="gps_wait" translatable="false">&#8230;</string>
-    <string name="gps_nogps">No GPS</string>
-    <string name="gps_noaccess">No access</string>
+    <string name="gps_nogps">No</string>
+    <string name="gps_noaccess">Denied</string>
     <string name="gps_lock">Lock</string>
 
     <string name="tracker">Tracker</string>

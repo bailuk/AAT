@@ -4,21 +4,21 @@ import android.os.Bundle;
 
 import ch.bailu.aat.dispatcher.ContentSource;
 import ch.bailu.aat.dispatcher.DispatcherInterface;
-import ch.bailu.aat.dispatcher.NewDispatcher;
+import ch.bailu.aat.dispatcher.Dispatcher;
 import ch.bailu.aat.dispatcher.OnContentUpdatedInterface;
 import ch.bailu.aat.gpx.GpxInformation;
 
 public abstract class AbsDispatcher extends AbsMenu
         implements GpxInformation.ID, DispatcherInterface {
 
-    private NewDispatcher dispatcher = null;
+    private Dispatcher dispatcher = null;
 
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        dispatcher = new NewDispatcher();
+        dispatcher = new Dispatcher();
     }
 
 
