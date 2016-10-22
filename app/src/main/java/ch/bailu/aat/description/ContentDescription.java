@@ -3,6 +3,8 @@ package ch.bailu.aat.description;
 import android.content.Context;
 import android.content.ContextWrapper;
 
+import ch.bailu.aat.dispatcher.OnContentUpdatedInterface;
+
 
 public abstract class ContentDescription extends ContextWrapper
         implements ContentInterface, OnContentUpdatedInterface {

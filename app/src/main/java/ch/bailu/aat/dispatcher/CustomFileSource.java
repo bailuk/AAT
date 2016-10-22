@@ -23,7 +23,7 @@ public class CustomFileSource extends ContentSource {
         @Override
         public void onReceive(Context context, Intent intent) {
             if (AppIntent.hasFile(intent, handle.toString())) {
-                forceUpdate();
+                requestUpdate();
             }
         }
     };
@@ -36,20 +36,19 @@ public class CustomFileSource extends ContentSource {
 
     
     @Override
-    public void forceUpdate() {
+    public void requestUpdate() {
         ObjectHandle h =  scontext.getCacheService().getObject(fileID, new GpxObjectStatic.Factory());
 
         handle.free();
         handle=h;
 
         if (GpxObject.class.isInstance(h) && h.isReady()) {
-            onContentUpdated(new GpxFileWrapper(new File(h.toString()), ((GpxObject)h).getGpxList()));
+            sendUpdate(new GpxFileWrapper(new File(h.toString()), ((GpxObject)h).getGpxList()));
         }
 
     }
 
-    @Override
-    public void close() {}
+
 
     @Override
     public void onPause() {

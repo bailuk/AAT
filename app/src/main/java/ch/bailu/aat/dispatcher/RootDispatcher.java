@@ -1,12 +1,6 @@
 package ch.bailu.aat.dispatcher;
 
-import android.content.Context;
-
-import java.io.Closeable;
-
-import ch.bailu.aat.description.OnContentUpdatedInterface;
-import ch.bailu.aat.gpx.GpxInformation;
-
+/*
 public class RootDispatcher implements OnContentUpdatedInterface, Closeable {
     public static final OnContentUpdatedInterface NULL_LIST[] = new OnContentUpdatedInterface[]{};
     public static final RootDispatcher NULL=new RootDispatcher() {
@@ -34,7 +28,7 @@ public class RootDispatcher implements OnContentUpdatedInterface, Closeable {
         sourceList = s;
 
         for (ContentSource source: sourceList) {
-            source.setDispatcher(this);
+            source.setTarget(this);
         }
     }
 
@@ -60,7 +54,7 @@ public class RootDispatcher implements OnContentUpdatedInterface, Closeable {
 
     public void forceUpdate() {
         for (ContentSource source: sourceList)
-            source.forceUpdate();
+            source.requestUpdate();
     }
     
     
@@ -77,3 +71,4 @@ public class RootDispatcher implements OnContentUpdatedInterface, Closeable {
             source.close();
     }
 }
+*/

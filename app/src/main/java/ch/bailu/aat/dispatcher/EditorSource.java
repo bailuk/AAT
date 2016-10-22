@@ -26,7 +26,7 @@ public class EditorSource extends ContentSource {
             String id=info.getPath();
             
             if (AppIntent.hasFile(intent, id)) {
-                forceUpdate();
+                requestUpdate();
             }
         }
 
@@ -39,14 +39,10 @@ public class EditorSource extends ContentSource {
     }
 
 
-    @Override
-    public void close() {
-    }
 
-    
     @Override
-    public void forceUpdate() {
-        onContentUpdated(edit.getInformation());
+    public void requestUpdate() {
+        sendUpdate(edit.getInformation());
     }
 
 

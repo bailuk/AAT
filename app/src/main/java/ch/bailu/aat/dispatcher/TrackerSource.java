@@ -19,22 +19,22 @@ public class TrackerSource extends ContentSource {
     private final BroadcastReceiver onStateChanged = new BroadcastReceiver () {
         @Override
         public void onReceive(Context context, Intent intent) {
-            onContentUpdated(scontext.getTrackerService().getTrackerInformation());		}
+            sendUpdate(scontext.getTrackerService().getTrackerInformation());		}
 
     };
 
     private final BroadcastReceiver onTrackChanged = new BroadcastReceiver () {
         @Override
         public void onReceive(Context context, Intent intent) {
-            onContentUpdated(scontext.getTrackerService().getTrackerInformation());
+            sendUpdate(scontext.getTrackerService().getTrackerInformation());
         }
 
     };
 
 
     @Override
-    public void forceUpdate() {
-        onContentUpdated(scontext.getTrackerService().getTrackerInformation());
+    public void requestUpdate() {
+        sendUpdate(scontext.getTrackerService().getTrackerInformation());
     }
 
     
@@ -52,7 +52,5 @@ public class TrackerSource extends ContentSource {
     }
 
     
-    @Override
-    public void close() {}
-    
+
 }

@@ -14,12 +14,11 @@ public class FileContentActivity extends AbsFileContentActivity{
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        
-        editor_helper = new EditorHelper(getServiceContext());
-
-        createViews(SOLID_KEY);
-        createDispatcher();
+        super.onCreate(savedInstanceState, SOLID_KEY);
     }
-    
+
+    @Override
+    protected EditorHelper createEditorHelper() {
+        return new EditorHelper(getServiceContext());
+    }
 }

@@ -1,6 +1,6 @@
 package ch.bailu.aat.dispatcher;
 
-import ch.bailu.aat.description.OnContentUpdatedInterface;
+
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.views.description.TrackDescriptionView;
 

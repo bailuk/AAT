@@ -4,6 +4,8 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
+import java.io.IOException;
+
 import ch.bailu.aat.activities.AbsServiceLink;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.helpers.AppBroadcaster;
@@ -21,27 +23,27 @@ public abstract class IteratorSource extends ContentSource implements OnCursorCh
 
     private final ServiceContext scontext;
     private final SolidDirectoryQuery sdirectory;
-    
+
     private Iterator iterator = Iterator.NULL;
 
 
     @Override
     public void onCursorChanged() {
-        forceUpdate();
+        requestUpdate();
     }
-    
+
 
     public IteratorSource(ServiceContext sc) {
         scontext = sc;
         sdirectory = new SolidDirectoryQuery(sc.getContext());
     }
 
-    
-    
+
+
     @Override
-    public void forceUpdate() {
-        AppLog.d(this, "forceUpdate - "+ iterator.getInfo().getPath() + " " + iterator.getCount()+ "/"+ getInfo().getID());
-        onContentUpdated(iterator.getInfo());
+    public void requestUpdate() {
+        AppLog.d(this, "requestUpdate - "+ iterator.getInfo().getPath() + " " + iterator.getCount()+ "/"+ getInfo().getID());
+        sendUpdate(iterator.getInfo());
     }
 
 
@@ -58,46 +60,46 @@ public abstract class IteratorSource extends ContentSource implements OnCursorCh
         iterator.moveToPosition(sdirectory.getPosition().getValue());
         iterator.setOnCursorChangedLinsener(this);
     }
-    
+
 
     public abstract Iterator factoryIterator(ServiceContext scontext);
 
     public GpxInformation getInfo() {
         return iterator.getInfo();
     }
-    
+
     public Iterator getIterator() {
         return iterator;
     }
 
     public void moveToPrevious() {
-        if (iterator.moveToPrevious() == false) 
+        if (iterator.moveToPrevious() == false)
             iterator.moveToPosition(iterator.getCount()-1);
-        
+
         sdirectory.getPosition().setValue(iterator.getPosition());
-        forceUpdate();
+        requestUpdate();
     }
 
     public void moveToNext() {
-        if (iterator.moveToNext() == false) 
+        if (iterator.moveToNext() == false)
             iterator.moveToPosition(0);
-        
+
         sdirectory.getPosition().setValue(iterator.getPosition());
-        forceUpdate();
+        requestUpdate();
     }
 
     public FileAction fileAction(AbsServiceLink activity) {
         return new FileAction(activity, iterator);
     }
-    
-    
-    
+
+
+
     public static class FollowFile extends IteratorSource {
         private final Context context;
-        
+
         public FollowFile(ServiceContext sc) {
             super(sc);
-            context = sc.getContext(); 
+            context = sc.getContext();
         }
 
         @Override
@@ -105,16 +107,16 @@ public abstract class IteratorSource extends ContentSource implements OnCursorCh
             return new IteratorFollowFile(scontext);
         }
 
-        
+
         private final BroadcastReceiver  onChangedInCache = new BroadcastReceiver () {
             @Override
             public void onReceive(Context context, Intent intent) {
                 if (AppIntent.hasFile(intent, getInfo().getPath())) {
-                    forceUpdate();
+                    requestUpdate();
                 }
             }
         };
-        
+
         @Override
         public void onPause() {
             context.unregisterReceiver(onChangedInCache);
@@ -130,7 +132,7 @@ public abstract class IteratorSource extends ContentSource implements OnCursorCh
 
     }
 
-    
+
     public static class Summary extends IteratorSource {
         public Summary(ServiceContext sc) {
             super(sc);
@@ -140,7 +142,8 @@ public abstract class IteratorSource extends ContentSource implements OnCursorCh
         public Iterator factoryIterator(ServiceContext scontext) {
             return new IteratorSummary(scontext);
         }
-        
+
+
     }
 
 }

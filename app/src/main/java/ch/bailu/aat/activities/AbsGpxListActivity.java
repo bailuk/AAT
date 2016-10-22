@@ -14,13 +14,10 @@ import java.io.File;
 import ch.bailu.aat.R;
 import ch.bailu.aat.description.ContentDescription;
 import ch.bailu.aat.description.DistanceDescription;
-import ch.bailu.aat.description.OnContentUpdatedInterface;
 import ch.bailu.aat.description.TrackSizeDescription;
-import ch.bailu.aat.dispatcher.ContentSource;
 import ch.bailu.aat.dispatcher.CurrentLocationSource;
 import ch.bailu.aat.dispatcher.IteratorSource;
 import ch.bailu.aat.dispatcher.OverlaySource;
-import ch.bailu.aat.dispatcher.RootDispatcher;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.helpers.FileAction;
 import ch.bailu.aat.menus.FileMenu;
@@ -141,12 +138,12 @@ public abstract class AbsGpxListActivity extends AbsDispatcher implements OnItem
 
         summary.add(new TitleView(this, getLabel() + " - " + summary_label));
 
-        multiView = new MultiView(this, solid_key, GpxInformation.ID.INFO_ID_ALL);
+        multiView = new MultiView(this, solid_key, INFO_ID_ALL);
 
         multiView.add(listView, list_label);
         multiView.add(map, map, map_label);
         multiView.add(filter,
-                filter.addAllContent(filter_content, GpxInformation.ID.INFO_ID_LIST_SUMMARY),
+                filter.addAllContent(filter_content, INFO_ID_LIST_SUMMARY),
                 filter_label);
         multiView.add(summary, summary.addAllContent(summary_content,
                 GpxInformation.ID.INFO_ID_LIST_SUMMARY),
@@ -160,20 +157,11 @@ public abstract class AbsGpxListActivity extends AbsDispatcher implements OnItem
 
     private void createDispatcher() {
 
+        addTarget(multiView);
 
-        final OnContentUpdatedInterface[] target = new OnContentUpdatedInterface[] {
-                multiView, this
-        };
-
-        final IteratorSource summary = new IteratorSource.Summary(getServiceContext());
-
-        ContentSource[] source = new ContentSource[] {
-                new OverlaySource(getServiceContext()),
-                new CurrentLocationSource(getServiceContext()),
-                summary
-        };
-
-        setDispatcher(new RootDispatcher(source, target));
+        addSource(new IteratorSource.Summary(getServiceContext()));
+        addSource(new OverlaySource(getServiceContext()));
+        addSource(new CurrentLocationSource(getServiceContext()));
 
     }
 

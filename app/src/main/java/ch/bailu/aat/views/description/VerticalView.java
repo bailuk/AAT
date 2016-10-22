@@ -3,7 +3,7 @@ package ch.bailu.aat.views.description;
 import android.content.Context;
 import android.view.View;
 
-import ch.bailu.aat.description.OnContentUpdatedInterface;
+import ch.bailu.aat.dispatcher.OnContentUpdatedInterface;
 import ch.bailu.aat.gpx.GpxInformation;
 
 public class VerticalView extends TrackDescriptionView {

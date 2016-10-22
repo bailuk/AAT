@@ -6,10 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
 
-import ch.bailu.aat.description.OnContentUpdatedInterface;
-import ch.bailu.aat.dispatcher.ContentSource;
 import ch.bailu.aat.dispatcher.CurrentLocationSource;
-import ch.bailu.aat.dispatcher.RootDispatcher;
 import ch.bailu.aat.dispatcher.TrackerSource;
 import ch.bailu.aat.helpers.AppDirectory;
 import ch.bailu.aat.preferences.SolidDataDirectory;
@@ -38,7 +35,6 @@ public class MainActivity extends AbsDispatcher {
 
         createViews();
         createDispatcher();
-
     }
 
 
@@ -66,17 +62,13 @@ public class MainActivity extends AbsDispatcher {
 
 
     private void createDispatcher() {
-        OnContentUpdatedInterface[] target = new OnContentUpdatedInterface[] {
-                gpsState, trackerState, this
-        };
+        addTarget(gpsState, INFO_ID_LOCATION);
+        addTarget(trackerState, INFO_ID_TRACKER);
 
-        ContentSource[] source = new ContentSource[] {
-                new TrackerSource(getServiceContext()),
-                new CurrentLocationSource(getServiceContext())
-        };
-
-        setDispatcher(new RootDispatcher(source, target));
+        addSource(new TrackerSource(getServiceContext()));
+        addSource(new CurrentLocationSource(getServiceContext()));
     }
+
 
 
     private LinearLayout createButtonBar() {

@@ -50,12 +50,10 @@ public class OverlaySource extends ContentSource {
     }
 
 
-    @Override
-    public void close() {}
 
 
     @Override
-    public void forceUpdate() {
+    public void requestUpdate() {
         for (int i=0; i<MAX_OVERLAYS; i++) 
             overlayList[i].initAndUpdateOverlay();
     }
@@ -119,7 +117,7 @@ public class OverlaySource extends ContentSource {
             } else {
                 disableOverlay();
             }
-            onContentUpdated(this);
+            sendUpdate(this);
         }
 
 

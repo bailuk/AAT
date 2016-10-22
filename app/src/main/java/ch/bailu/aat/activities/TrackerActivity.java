@@ -11,15 +11,12 @@ import ch.bailu.aat.description.AltitudeDescription;
 import ch.bailu.aat.description.AverageSpeedDescription;
 import ch.bailu.aat.description.ContentDescription;
 import ch.bailu.aat.description.CurrentSpeedDescription;
-import ch.bailu.aat.description.OnContentUpdatedInterface;
 import ch.bailu.aat.description.DistanceDescription;
 import ch.bailu.aat.description.MaximumSpeedDescription;
 import ch.bailu.aat.description.TimeDescription;
-import ch.bailu.aat.dispatcher.ContentSource;
 import ch.bailu.aat.dispatcher.CurrentLocationSource;
 import ch.bailu.aat.dispatcher.EditorSource;
 import ch.bailu.aat.dispatcher.OverlaySource;
-import ch.bailu.aat.dispatcher.RootDispatcher;
 import ch.bailu.aat.dispatcher.TrackerSource;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.services.editor.EditorHelper;
@@ -27,11 +24,11 @@ import ch.bailu.aat.views.ContentView;
 import ch.bailu.aat.views.ControlBar;
 import ch.bailu.aat.views.MainControlBar;
 import ch.bailu.aat.views.MvNextButton;
+import ch.bailu.aat.views.description.CockpitView;
 import ch.bailu.aat.views.description.MultiView;
+import ch.bailu.aat.views.description.TrackDescriptionView;
 import ch.bailu.aat.views.description.TrackerStateButton;
 import ch.bailu.aat.views.description.VerticalView;
-import ch.bailu.aat.views.description.CockpitView;
-import ch.bailu.aat.views.description.TrackDescriptionView;
 import ch.bailu.aat.views.graph.DistanceAltitudeGraphView;
 import ch.bailu.aat.views.graph.DistanceSpeedGraphView;
 import ch.bailu.aat.views.map.OsmInteractiveView;
@@ -45,16 +42,16 @@ import ch.bailu.aat.views.map.overlay.gpx.GpxOverlayListOverlay;
 import ch.bailu.aat.views.map.overlay.grid.GridDynOverlay;
 
 public class TrackerActivity extends AbsDispatcher implements OnClickListener{
- 
+
     private static final String SOLID_KEY="tracker";
 
     private ImageButton          activityCycle;
     private TrackerStateButton   trackerState;
     private MultiView            multiView;
     private OsmInteractiveView   map;
-    
+
     private EditorHelper         edit;
-    
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -74,7 +71,7 @@ public class TrackerActivity extends AbsDispatcher implements OnClickListener{
 
 
     private MultiView createMultiView() {
-        ContentDescription[] data = new ContentDescription[] { 
+        ContentDescription[] data = new ContentDescription[] {
                 new CurrentSpeedDescription(this),
                 new AltitudeDescription(this),
                 new TimeDescription(this),
@@ -103,10 +100,10 @@ public class TrackerActivity extends AbsDispatcher implements OnClickListener{
         bar.add(new MvNextButton(mv));
 
         trackerState = new TrackerStateButton(this.getServiceContext());
-        
+
         bar.addView(trackerState);
         bar.setOnClickListener1(this);
-        
+
         trackerState.setOnClickListener(trackerState);
 
         return bar;
@@ -123,29 +120,26 @@ public class TrackerActivity extends AbsDispatcher implements OnClickListener{
         }
     }
 
-    
-    private void createDispatcher() {
-            OsmOverlay overlayList[] = {
-                    new GpxOverlayListOverlay(map, getServiceContext()),
-                    new GpxDynOverlay(map, getServiceContext(), GpxInformation.ID.INFO_ID_TRACKER), 
-                    new CurrentLocationOverlay(map),
-                    new GridDynOverlay(map, getServiceContext()),
-                    new NavigationBarOverlay(map),
-                    new InformationBarOverlay(map),
-                    new EditorOverlay(map, getServiceContext(), GpxInformation.ID.INFO_ID_EDITOR_DRAFT, edit),
-            };
-            map.setOverlayList(overlayList);
-            
-            OnContentUpdatedInterface[] target = new OnContentUpdatedInterface[] {
-                    multiView,trackerState,this
-            };
 
-            ContentSource[] source = new ContentSource[] {
-                    new EditorSource(getServiceContext(), edit),
-                    new TrackerSource(getServiceContext()),
-                    new CurrentLocationSource(getServiceContext()),
-                    new OverlaySource(getServiceContext()),
-            };
-            setDispatcher(new RootDispatcher(source, target));
+    private void createDispatcher() {
+        OsmOverlay overlayList[] = {
+                new GpxOverlayListOverlay(map, getServiceContext()),
+                new GpxDynOverlay(map, getServiceContext(), INFO_ID_TRACKER),
+                new CurrentLocationOverlay(map),
+                new GridDynOverlay(map, getServiceContext()),
+                new NavigationBarOverlay(map),
+                new InformationBarOverlay(map),
+                new EditorOverlay(map, getServiceContext(), INFO_ID_EDITOR_DRAFT, edit),
+        };
+        map.setOverlayList(overlayList);
+
+        addTarget(multiView);
+        addTarget(trackerState, INFO_ID_TRACKER);
+
+
+        addSource(new EditorSource(getServiceContext(), edit));
+        addSource(new TrackerSource(getServiceContext()));
+        addSource(new CurrentLocationSource(getServiceContext()));
+        addSource(new OverlaySource(getServiceContext()));
     }
 }

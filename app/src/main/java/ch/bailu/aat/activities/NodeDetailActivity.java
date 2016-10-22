@@ -9,11 +9,9 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
 import ch.bailu.aat.R;
-import ch.bailu.aat.description.OnContentUpdatedInterface;
-import ch.bailu.aat.dispatcher.ContentSource;
 import ch.bailu.aat.dispatcher.CurrentLocationSource;
 import ch.bailu.aat.dispatcher.CustomFileSource;
-import ch.bailu.aat.dispatcher.RootDispatcher;
+import ch.bailu.aat.dispatcher.OnContentUpdatedInterface;
 import ch.bailu.aat.dispatcher.TrackerSource;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.GpxList;
@@ -32,7 +30,8 @@ import ch.bailu.aat.views.map.overlay.control.NavigationBarOverlay;
 import ch.bailu.aat.views.map.overlay.gpx.GpxDynOverlay;
 import ch.bailu.aat.views.map.overlay.grid.GridDynOverlay;
 
-public class NodeDetailActivity extends AbsDispatcher implements OnClickListener{
+public class NodeDetailActivity extends AbsDispatcher
+        implements OnClickListener, OnContentUpdatedInterface {
 
 
     private static final String SOLID_KEY=NodeDetailActivity.class.getSimpleName();
@@ -49,8 +48,8 @@ public class NodeDetailActivity extends AbsDispatcher implements OnClickListener
 
     private GpxListArray       array = new GpxListArray(GpxList.NULL_ROUTE);
 
-    
-    
+
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,13 +61,13 @@ public class NodeDetailActivity extends AbsDispatcher implements OnClickListener
         contentView.addView(createButtonBar());
         verticalView = createVerticalView();
         contentView.addView(verticalView);
-        
+
         createDispatcher();
-        
+
         setContentView(contentView);
     }
 
-    
+
 
     private ControlBar createButtonBar() {
         ControlBar bar = new MainControlBar(getServiceContext());
@@ -95,8 +94,8 @@ public class NodeDetailActivity extends AbsDispatcher implements OnClickListener
         };
 
         OnContentUpdatedInterface targets[]  = {
-            OnContentUpdatedInterface.NULL,
-            map
+                OnContentUpdatedInterface.NULL,
+                map
         };
 
         return new VerticalView(this, SOLID_KEY, GpxInformation.ID.INFO_ID_ALL, views, targets);
@@ -105,7 +104,7 @@ public class NodeDetailActivity extends AbsDispatcher implements OnClickListener
 
     private void createDispatcher() {
         OsmOverlay overlayList[] = {
-                new GpxDynOverlay(map, getServiceContext(), GpxInformation.ID.INFO_ID_TRACKER), 
+                new GpxDynOverlay(map, getServiceContext(), GpxInformation.ID.INFO_ID_TRACKER),
                 new GpxDynOverlay(map, getServiceContext(), GpxInformation.ID.INFO_ID_FILEVIEW),
                 new CurrentLocationOverlay(map),
                 new GridDynOverlay(map, getServiceContext()),
@@ -115,31 +114,21 @@ public class NodeDetailActivity extends AbsDispatcher implements OnClickListener
         };
         map.setOverlayList(overlayList);
 
-
-        OnContentUpdatedInterface[] target = new OnContentUpdatedInterface[] {
-                verticalView, this
-        };
-
-        ContentSource[] source = new ContentSource[] {
-                new TrackerSource(getServiceContext()),
-                new CurrentLocationSource(getServiceContext()),
-                new CustomFileSource(getServiceContext(), fileID),
-        };
-
-        setDispatcher(new RootDispatcher(source, target));
+        addTarget(verticalView);
+        addTarget(this, INFO_ID_FILEVIEW);
+        addTarget(map);
+        addSource(new CurrentLocationSource(getServiceContext()));
+        addSource(new CustomFileSource(getServiceContext(), fileID));
     }
 
 
     @Override
     public void onContentUpdated(GpxInformation info) {
 
-        if (info.getID()==GpxInformation.ID.INFO_ID_FILEVIEW) {
-            array = new GpxListArray(info.getGpxList());
+        array = new GpxListArray(info.getGpxList());
 
-            int index = getIntent().getIntExtra("I", 0);
-            updateToIndex(index);
-
-        }
+        int index = getIntent().getIntExtra("I", 0);
+        updateToIndex(index);
     }
 
 
@@ -180,5 +169,5 @@ public class NodeDetailActivity extends AbsDispatcher implements OnClickListener
         intent.putExtra("ID", fileId);
         ActivitySwitcher.start(context, NodeDetailActivity.class, intent);
     }
-    
+
 }

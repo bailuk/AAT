@@ -5,7 +5,7 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 
 import ch.bailu.aat.R;
-import ch.bailu.aat.description.OnContentUpdatedInterface;
+import ch.bailu.aat.dispatcher.OnContentUpdatedInterface;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.helpers.AppTheme;
 

@@ -17,10 +17,7 @@ import java.io.File;
 import java.io.IOException;
 
 import ch.bailu.aat.R;
-import ch.bailu.aat.description.OnContentUpdatedInterface;
-import ch.bailu.aat.dispatcher.ContentSource;
 import ch.bailu.aat.dispatcher.CustomFileSource;
-import ch.bailu.aat.dispatcher.RootDispatcher;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.helpers.AbsTextBackup;
 import ch.bailu.aat.helpers.AppBroadcaster;
@@ -73,14 +70,8 @@ public abstract class AbsOsmApiActivity extends AbsDispatcher implements OnClick
         }
         setContentView(createContentView());
 
-        ContentSource[] source = new ContentSource[] {
-                new CustomFileSource(getServiceContext(),osmApi.getResultFile().toString()),};
-
-        OnContentUpdatedInterface[] target = new OnContentUpdatedInterface[] {
-                list
-        };
-
-        setDispatcher(new RootDispatcher(source, target));
+        addSource(new CustomFileSource(getServiceContext(),osmApi.getResultFile().toString()));
+        addTarget(list);
 
         setQueryTextFromIntent();
     }  

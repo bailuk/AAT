@@ -3,7 +3,6 @@ package ch.bailu.aat.activities;
 
 import android.os.Bundle;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.LinearLayout;
 
 import ch.bailu.aat.R;
@@ -18,7 +17,6 @@ import ch.bailu.aat.description.CaloriesDescription;
 import ch.bailu.aat.description.ContentDescription;
 import ch.bailu.aat.description.CurrentSpeedDescription;
 import ch.bailu.aat.description.DateDescription;
-import ch.bailu.aat.description.OnContentUpdatedInterface;
 import ch.bailu.aat.description.EndDateDescription;
 import ch.bailu.aat.description.GpsStateDescription;
 import ch.bailu.aat.description.LatitudeDescription;
@@ -30,10 +28,8 @@ import ch.bailu.aat.description.PauseDescription;
 import ch.bailu.aat.description.TimeDescription;
 import ch.bailu.aat.description.TrackSizeDescription;
 import ch.bailu.aat.description.TrackerStateDescription;
-import ch.bailu.aat.dispatcher.ContentSource;
 import ch.bailu.aat.dispatcher.CurrentLocationSource;
 import ch.bailu.aat.dispatcher.OverlaySource;
-import ch.bailu.aat.dispatcher.RootDispatcher;
 import ch.bailu.aat.dispatcher.TrackerSource;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.helpers.AppLog;
@@ -177,16 +173,15 @@ public class TestActivity extends AbsDispatcher {
         map.setOverlayList(overlayList);
 
 
-        OnContentUpdatedInterface[] target = new OnContentUpdatedInterface[]{
-                multiView, this
-        };
+        addTarget(multiView);
 
-        ContentSource[] source = new ContentSource[]{
-                new TrackerSource(getServiceContext()),
-                new CurrentLocationSource(getServiceContext()),
-                new OverlaySource(getServiceContext()),
-        };
-        setDispatcher(new RootDispatcher(source, target));
+
+
+        addSource(new TrackerSource(getServiceContext()));
+        addSource(new CurrentLocationSource(getServiceContext()));
+        addSource(new OverlaySource(getServiceContext()));
+
+
     }
 
     @Override

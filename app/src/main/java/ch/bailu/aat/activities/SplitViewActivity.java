@@ -13,24 +13,21 @@ import ch.bailu.aat.description.AltitudeDescription;
 import ch.bailu.aat.description.AverageSpeedDescription;
 import ch.bailu.aat.description.ContentDescription;
 import ch.bailu.aat.description.CurrentSpeedDescription;
-import ch.bailu.aat.description.OnContentUpdatedInterface;
 import ch.bailu.aat.description.DistanceDescription;
 import ch.bailu.aat.description.TimeDescription;
-import ch.bailu.aat.dispatcher.ContentSource;
 import ch.bailu.aat.dispatcher.CurrentLocationSource;
 import ch.bailu.aat.dispatcher.EditorSource;
 import ch.bailu.aat.dispatcher.OverlaySource;
-import ch.bailu.aat.dispatcher.RootDispatcher;
 import ch.bailu.aat.dispatcher.TrackerSource;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.helpers.AppLayout;
 import ch.bailu.aat.services.editor.EditorHelper;
 import ch.bailu.aat.views.ControlBar;
 import ch.bailu.aat.views.MainControlBar;
-import ch.bailu.aat.views.description.MultiView;
-import ch.bailu.aat.views.description.TrackerStateButton;
 import ch.bailu.aat.views.description.CockpitView;
+import ch.bailu.aat.views.description.MultiView;
 import ch.bailu.aat.views.description.TrackDescriptionView;
+import ch.bailu.aat.views.description.TrackerStateButton;
 import ch.bailu.aat.views.graph.DistanceAltitudeGraphView;
 import ch.bailu.aat.views.graph.DistanceSpeedGraphView;
 import ch.bailu.aat.views.map.OsmInteractiveView;
@@ -169,19 +166,14 @@ public class SplitViewActivity extends AbsDispatcher implements OnClickListener{
         };
         mapView.setOverlayList(overlayList);
 
+        addTarget(multiView);
+        addTarget(trackerState, INFO_ID_TRACKER);
+        addTarget(mapView);
 
-        OnContentUpdatedInterface[] target = new OnContentUpdatedInterface[] {
-                multiView, trackerState, mapView, this
-        };
-
-        ContentSource[] source = new ContentSource[] {
-                new EditorSource(getServiceContext(),edit),
-                new TrackerSource(getServiceContext()),
-                new CurrentLocationSource(getServiceContext()),
-                new OverlaySource(getServiceContext()),
-        };
-
-        setDispatcher(new RootDispatcher(source, target));
+        addSource(new EditorSource(getServiceContext(),edit));
+        addSource(new TrackerSource(getServiceContext()));
+        addSource(new CurrentLocationSource(getServiceContext()));
+        addSource(new OverlaySource(getServiceContext()));
 
     }
 }

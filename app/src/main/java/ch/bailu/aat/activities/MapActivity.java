@@ -14,12 +14,9 @@ import org.osmdroid.util.GeoPoint;
 
 import ch.bailu.aat.R;
 import ch.bailu.aat.coordinates.Coordinates;
-import ch.bailu.aat.description.OnContentUpdatedInterface;
-import ch.bailu.aat.dispatcher.ContentSource;
 import ch.bailu.aat.dispatcher.CurrentLocationSource;
 import ch.bailu.aat.dispatcher.EditorSource;
 import ch.bailu.aat.dispatcher.OverlaySource;
-import ch.bailu.aat.dispatcher.RootDispatcher;
 import ch.bailu.aat.dispatcher.TrackerSource;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.helpers.AppIntent;
@@ -28,10 +25,10 @@ import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.editor.EditorHelper;
 import ch.bailu.aat.views.ContentView;
 import ch.bailu.aat.views.ControlBar;
-import ch.bailu.aat.views.description.GPSStateButton;
 import ch.bailu.aat.views.MainControlBar;
-import ch.bailu.aat.views.description.TrackerStateButton;
+import ch.bailu.aat.views.description.GPSStateButton;
 import ch.bailu.aat.views.description.NumberView;
+import ch.bailu.aat.views.description.TrackerStateButton;
 import ch.bailu.aat.views.map.OsmInteractiveView;
 import ch.bailu.aat.views.map.overlay.CurrentLocationOverlay;
 import ch.bailu.aat.views.map.overlay.OsmOverlay;
@@ -67,8 +64,8 @@ public class MapActivity extends AbsDispatcher implements OnClickListener{
         setContentView(contentView);
 
         createDispatcher();
-        
-        
+
+
         handleIntent();
     }
 
@@ -76,7 +73,7 @@ public class MapActivity extends AbsDispatcher implements OnClickListener{
     private void handleIntent() {
         Intent intent = getIntent();
         Uri uri = intent.getData();
-        
+
         if (intent.getAction().equals(Intent.ACTION_VIEW) && uri != null) {
             AppLog.d(uri, uri.toString());
             setMapCenterFromUri(uri);
@@ -86,13 +83,13 @@ public class MapActivity extends AbsDispatcher implements OnClickListener{
 
     private void setMapCenterFromUri(Uri uri) {
         GeoPoint geo = new GeoPoint(0,0);
-        
+
         if (Coordinates.stringToGeoPoint(uri.toString(), geo)) {
             map.map.getController().setCenter(geo);
         }
     }
 
-    
+
     private void openQueryFromUri(Uri uri) {
         String query = AbsOsmApiActivity.queryFromUri(uri);
 
@@ -103,15 +100,15 @@ public class MapActivity extends AbsDispatcher implements OnClickListener{
             ActivitySwitcher.start(this, NominatimActivity.class, intent);
         }
     }
-    
-    
+
+
     private OsmInteractiveView createMap() {
         final ServiceContext sc=getServiceContext();
         final OsmInteractiveView map=new OsmInteractiveView(sc, SOLID_KEY);
 
         OsmOverlay overlayList[] = {
                 new GpxOverlayListOverlay(map, sc),
-                new GpxDynOverlay(map, sc, GpxInformation.ID.INFO_ID_TRACKER), 
+                new GpxDynOverlay(map, sc, GpxInformation.ID.INFO_ID_TRACKER),
                 new GridDynOverlay(map, sc),
                 new CurrentLocationOverlay(map),
                 new NavigationBarOverlay(map),
@@ -126,17 +123,14 @@ public class MapActivity extends AbsDispatcher implements OnClickListener{
 
 
     private void createDispatcher() {
-        OnContentUpdatedInterface[] target = new OnContentUpdatedInterface[] {
-                map,trackerState,gpsState, this
-        };
+        addTarget(map);
+        addTarget(trackerState);
+        addTarget(gpsState);
 
-        ContentSource[] source = new ContentSource[] {
-                new EditorSource(getServiceContext(), edit),
-                new TrackerSource(getServiceContext()),
-                new CurrentLocationSource(getServiceContext()),
-                new OverlaySource(getServiceContext())};
-
-        setDispatcher(new RootDispatcher(source, target));
+        addSource(new EditorSource(getServiceContext(), edit));
+        addSource(new TrackerSource(getServiceContext()));
+        addSource(new CurrentLocationSource(getServiceContext()));
+        addSource(new OverlaySource(getServiceContext()));
     }
 
 
@@ -148,9 +142,6 @@ public class MapActivity extends AbsDispatcher implements OnClickListener{
         }
 
     }
-
-
-
 
 
     private ControlBar createButtonBar() {
@@ -165,7 +156,7 @@ public class MapActivity extends AbsDispatcher implements OnClickListener{
         bar.addView(trackerState);
 
         bar.setOnClickListener1(this);
-        
+
         return bar;
     }
 

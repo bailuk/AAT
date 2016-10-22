@@ -5,12 +5,11 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import ch.bailu.aat.description.OnContentUpdatedInterface;
+import ch.bailu.aat.dispatcher.OnContentUpdatedInterface;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.menus.OptionsMenu;
 
-public abstract class AbsMenu extends AbsServiceLink 
-implements OnContentUpdatedInterface {
+public abstract class AbsMenu extends AbsServiceLink  {
 
     private OptionsMenu menu;
 
@@ -43,8 +42,4 @@ implements OnContentUpdatedInterface {
         return menu.onItemClick(item);
     }
 
-
-
-    @Override
-    public void onContentUpdated(GpxInformation info) {}
 }

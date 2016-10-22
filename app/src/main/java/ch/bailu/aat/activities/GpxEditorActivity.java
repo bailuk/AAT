@@ -6,11 +6,12 @@ import android.view.View;
 import java.io.File;
 
 import ch.bailu.aat.description.ContentDescription;
-import ch.bailu.aat.description.OnContentUpdatedInterface;
 import ch.bailu.aat.description.DistanceDescription;
 import ch.bailu.aat.description.NameDescription;
 import ch.bailu.aat.description.PathDescription;
 import ch.bailu.aat.description.TrackSizeDescription;
+import ch.bailu.aat.dispatcher.EditorSource;
+import ch.bailu.aat.dispatcher.OnContentUpdatedInterface;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.helpers.AppDialog;
 import ch.bailu.aat.helpers.AppLog;
@@ -31,24 +32,26 @@ import ch.bailu.aat.views.map.overlay.gpx.GpxOverlayListOverlay;
 import ch.bailu.aat.views.map.overlay.grid.GridDynOverlay;
 import ch.bailu.aat.views.preferences.VerticalScrollView;
 
-public class GpxEditorActivity extends AbsFileContentActivity {
+public class GpxEditorActivity extends AbsFileContentActivity
+        implements OnContentUpdatedInterface {
 
     private static final String SOLID_KEY="gpx_editor";
 
 
 
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+        super.onCreate(savedInstanceState, SOLID_KEY);
 
-        editor_helper = new EditorHelper(getServiceContext());
 
-        createViews(SOLID_KEY);
-        createDispatcher();
+        addTarget(this, INFO_ID_FILEVIEW);
     }
 
-
-
+    @Override
+    protected EditorHelper createEditorHelper() {
+        return new EditorHelper(getServiceContext());
+    }
 
     @Override
     protected MultiView createMultiView(final String SOLID_KEY) {
@@ -100,14 +103,12 @@ public class GpxEditorActivity extends AbsFileContentActivity {
     }
 
 
- 
+
 
     @Override
     public void onContentUpdated(GpxInformation info) {
-        if (info.getID()== GpxInformation.ID.INFO_ID_FILEVIEW) {
-            editor_helper.edit(new File(currentFile.getInfo().getPath()));
-            editor_source.forceUpdate();
-        }
+        editor_helper.edit(new File(currentFile.getInfo().getPath()));
+        editor_source.requestUpdate();
     }
 
 

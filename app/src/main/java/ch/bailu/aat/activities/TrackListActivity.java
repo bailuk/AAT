@@ -17,6 +17,7 @@ import ch.bailu.aat.description.TrackSizeDescription;
 import ch.bailu.aat.preferences.SolidPreset;
 
 public class TrackListActivity extends AbsGpxListActivity {
+
     @Override
     public ContentDescription[] getGpxListItemData() {
         return new ContentDescription[] {

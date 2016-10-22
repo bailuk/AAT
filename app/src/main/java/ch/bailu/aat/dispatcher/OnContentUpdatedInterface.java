@@ -1,4 +1,4 @@
-package ch.bailu.aat.description;
+package ch.bailu.aat.dispatcher;
 
 import ch.bailu.aat.gpx.GpxInformation;
 

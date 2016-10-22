@@ -7,7 +7,7 @@ public class GpxInformation extends GpxDataWrapper  {
     private final static String NULL_NAME="";
 
     
-    public class ID {
+    public interface ID {
         public final static int INFO_ID_ALL = 0;
         
         public final static int INFO_ID_LOCATION = 1;

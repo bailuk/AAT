@@ -1,6 +1,5 @@
 package ch.bailu.aat.activities;
 
-import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -12,7 +11,6 @@ import ch.bailu.aat.description.AverageSpeedDescription;
 import ch.bailu.aat.description.CaloriesDescription;
 import ch.bailu.aat.description.ContentDescription;
 import ch.bailu.aat.description.DateDescription;
-import ch.bailu.aat.description.OnContentUpdatedInterface;
 import ch.bailu.aat.description.DistanceDescription;
 import ch.bailu.aat.description.EndDateDescription;
 import ch.bailu.aat.description.MaximumSpeedDescription;
@@ -21,12 +19,10 @@ import ch.bailu.aat.description.PathDescription;
 import ch.bailu.aat.description.PauseDescription;
 import ch.bailu.aat.description.TimeDescription;
 import ch.bailu.aat.description.TrackSizeDescription;
-import ch.bailu.aat.dispatcher.ContentSource;
 import ch.bailu.aat.dispatcher.CurrentLocationSource;
 import ch.bailu.aat.dispatcher.EditorSource;
 import ch.bailu.aat.dispatcher.IteratorSource;
 import ch.bailu.aat.dispatcher.OverlaySource;
-import ch.bailu.aat.dispatcher.RootDispatcher;
 import ch.bailu.aat.dispatcher.TrackerSource;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.helpers.AppLayout;
@@ -53,8 +49,7 @@ import ch.bailu.aat.views.map.overlay.gpx.GpxOverlayListOverlay;
 import ch.bailu.aat.views.map.overlay.grid.GridDynOverlay;
 import ch.bailu.aat.views.preferences.VerticalScrollView;
 
-@SuppressLint("Registered")
-public class AbsFileContentActivity extends AbsDispatcher implements OnClickListener {
+public abstract class AbsFileContentActivity extends AbsDispatcher implements OnClickListener {
 
     protected IteratorSource  currentFile;
     protected ImageButton nextView, nextFile, previousFile, fileOperation;
@@ -65,24 +60,34 @@ public class AbsFileContentActivity extends AbsDispatcher implements OnClickList
     private MultiView          multiView;
     protected OsmInteractiveView map;
 
-    protected EditorHelper editor_helper;
-    protected EditorSource editor_source;
+
+    protected EditorHelper editor_helper = null;
+    protected EditorSource editor_source= null;
 
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState, final String KEY) {
         super.onCreate(savedInstanceState);
+
         firstRun = true;
+
+        editor_helper = createEditorHelper();
+
+        createViews(KEY);
+        createDispatcher();
     }
 
-    protected void createViews(final String SOLID_KEY) {
+    protected abstract EditorHelper createEditorHelper();
+
+    private void createViews(final String SOLID_KEY) {
         final ViewGroup contentView = new ContentView(this);
 
         multiView = createMultiView(SOLID_KEY);
         contentView.addView(createButtonBar());
         contentView.addView(multiView);
 
+
         setContentView(contentView);
+
     }
 
 
@@ -160,26 +165,19 @@ public class AbsFileContentActivity extends AbsDispatcher implements OnClickList
 
 
 
-    protected void createDispatcher() {
+    private void createDispatcher() {
         currentFile = new IteratorSource.FollowFile(getServiceContext());
-
-        final OnContentUpdatedInterface[] target = new OnContentUpdatedInterface[] {
-                multiView, this, busyButton.getBusyControl(GpxInformation.ID.INFO_ID_FILEVIEW)
-        };
-
-
-
         editor_source = new EditorSource(getServiceContext(), editor_helper);
 
-        ContentSource[] source = new ContentSource[] {
-                editor_source,
-                new TrackerSource(getServiceContext()),
-                new CurrentLocationSource(getServiceContext()),
-                new OverlaySource(getServiceContext()),
-                currentFile
-        };
+        addSource(new TrackerSource(getServiceContext()));
+        addSource(new CurrentLocationSource(getServiceContext()));
+        addSource(new OverlaySource(getServiceContext()));
+        addSource(currentFile);
+        addSource(editor_source);
 
-        setDispatcher(new RootDispatcher(source, target));
+        addTarget(multiView);
+        addTarget(busyButton.getBusyControl(GpxInformation.ID.INFO_ID_FILEVIEW), INFO_ID_FILEVIEW);
+
     }
 
 
