@@ -21,11 +21,13 @@ public class GpxListEntryView extends DescriptionViewGroup {
 
     private final PreviewView preview;
 
+    private final int previewSize;
 
     
     public GpxListEntryView(ServiceContext sc, ContentDescription[] description) {
         super(sc.getContext(), SOLID_KEY, GpxInformation.ID.INFO_ID_ALL);
 
+        previewSize = AppTheme.getBigButtonSize(sc.getContext());
         preview = new PreviewView(sc);
         addView(preview);
 
@@ -54,7 +56,7 @@ public class GpxListEntryView extends DescriptionViewGroup {
         measureChildren(wspec,hspec);
 
         width = AppLayout.getDimension(wspec, AppLayout.getScreenSmallSide(getContext()));
-        height= AppLayout.getDimension(hspec, OsmPreviewGenerator.BITMAP_SIZE);
+        height= AppLayout.getDimension(hspec, previewSize);
         setMeasuredDimension(width, height);
     }
 
@@ -62,7 +64,7 @@ public class GpxListEntryView extends DescriptionViewGroup {
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
         int xpos=0; int ypos=0;
-        final int width=r-l-OsmPreviewGenerator.BITMAP_SIZE;
+        final int width=r-l-previewSize;
 
         for (int i=0; i<getDescriptionCount(); i++) {
             int w=getDescriptionView(i).getMeasuredWidth();
@@ -74,7 +76,7 @@ public class GpxListEntryView extends DescriptionViewGroup {
             xpos+=(w+SPACE);
         }
 
-        preview.layout(width, 0, width+OsmPreviewGenerator.BITMAP_SIZE, OsmPreviewGenerator.BITMAP_SIZE);
+        preview.layout(width, 0, width+previewSize, previewSize);
     }
 
 

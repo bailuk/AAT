@@ -8,6 +8,7 @@ import ch.bailu.aat.coordinates.BoundingBox;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.GpxPointNode;
 import ch.bailu.aat.helpers.AppHtml;
+import ch.bailu.aat.helpers.AppTheme;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.views.map.AbsOsmTileProvider;
 import ch.bailu.aat.views.map.CachedTileProvider;
@@ -20,9 +21,13 @@ public class NodeEntryView extends ViewGroup {
 
     private final OsmViewStatic map;
     private final TextView text;
-    
+
+    private final int previewSize;
+
     public NodeEntryView(ServiceContext sc, int id) {
         super(sc.getContext());
+
+        previewSize = AppTheme.getBigButtonSize(sc.getContext());
 
         AbsOsmTileProvider provider = new CachedTileProvider(sc);
         map = new OsmViewStatic(sc.getContext(), provider);
@@ -43,12 +48,12 @@ public class NodeEntryView extends ViewGroup {
     @Override
     protected void onMeasure(int wspec, int hspec) {
         final int width  = MeasureSpec.getSize(wspec);
-        final int height = OsmPreviewGenerator.BITMAP_SIZE; // MeasureSpec.getNewSize(hspec);
+        final int height = previewSize;
 
         final int wspecText = MeasureSpec.makeMeasureSpec(
-                width-OsmPreviewGenerator.BITMAP_SIZE, MeasureSpec.EXACTLY);
+                width-previewSize, MeasureSpec.EXACTLY);
 
-        hspec = MeasureSpec.makeMeasureSpec(OsmPreviewGenerator.BITMAP_SIZE, MeasureSpec.EXACTLY);
+        hspec = MeasureSpec.makeMeasureSpec(previewSize, MeasureSpec.EXACTLY);
 
         map.measure(hspec, hspec);
         text.measure(wspecText, hspec);
