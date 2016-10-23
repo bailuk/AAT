@@ -50,6 +50,14 @@ public class GpxInformationDbEntryAndFile extends GpxInformationDbEntry implemen
         handle.free();
     }
 
-    
+
+    @Override
+    public float getMaximumSpeed() {
+
+        if (isLoaded()) {
+            return ((GpxObject)handle).getGpxList().getDelta().getMaximumSpeed();
+        }
+        return super.getMaximumSpeed();
+    }
 
 }

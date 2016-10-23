@@ -8,7 +8,7 @@ import ch.bailu.aat.gpx.interfaces.GpxBigDeltaInterface;
 public class GpxBigDelta implements GpxBigDeltaInterface {
     public final static GpxBigDelta NULL= new GpxBigDelta();
 
-    private float maximumSpeed=0;
+    private final MaxSpeed maximumSpeed=new MaxSpeed();
     private float distance=0;
 
     private long startTime=0;
@@ -69,7 +69,7 @@ public class GpxBigDelta implements GpxBigDeltaInterface {
     }
 
     private void setMaximumSpeed(float speed) {
-        maximumSpeed = Math.max(speed, maximumSpeed);
+        maximumSpeed.add(speed);
     }
 
     private void incPause(long p) {
@@ -114,7 +114,7 @@ public class GpxBigDelta implements GpxBigDeltaInterface {
     }
 
     public float getMaximumSpeed() { 
-        return maximumSpeed; 
+        return maximumSpeed.get();
     }
 
     public float getDistance() { 
