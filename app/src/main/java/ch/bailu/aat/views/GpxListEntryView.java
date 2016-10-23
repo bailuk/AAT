@@ -1,134 +1,94 @@
 package ch.bailu.aat.views;
 
-
-import android.content.Context;
 import android.graphics.Color;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AbsListView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import ch.bailu.aat.description.ContentDescription;
+import ch.bailu.aat.dispatcher.OnContentUpdatedInterface;
 import ch.bailu.aat.gpx.GpxInformation;
-import ch.bailu.aat.helpers.AppLayout;
 import ch.bailu.aat.helpers.AppTheme;
 import ch.bailu.aat.services.ServiceContext;
-import ch.bailu.aat.views.description.DescriptionViewGroup;
-import ch.bailu.aat.views.description.TrackDescriptionView;
-import ch.bailu.aat.views.map.OsmPreviewGenerator;
 
-
-public class GpxListEntryView extends DescriptionViewGroup {
-    private static final String SOLID_KEY = GpxListEntryView.class.getSimpleName();   
-    private final static int SPACE=20;
-
-    private final PreviewView preview;
+public class GpxListEntryView extends LinearLayout implements OnContentUpdatedInterface {
+    private final LinearLayout textLayout;
 
     private final int previewSize;
+    private final PreviewView preview;
+    private final TextView title, text;
 
-    
-    public GpxListEntryView(ServiceContext sc, ContentDescription[] description) {
-        super(sc.getContext(), SOLID_KEY, GpxInformation.ID.INFO_ID_ALL);
+    private final ContentDescription[] descriptions;
+
+
+    public GpxListEntryView(ServiceContext sc, ContentDescription[] d) {
+        super(sc.getContext());
+
+        descriptions = d;
+
+        setOrientation(HORIZONTAL);
+
+        AbsListView.LayoutParams p = new AbsListView.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT);
+
+        setLayoutParams(p);
+
+
+        textLayout = new LinearLayout(sc.getContext());
+        textLayout.setOrientation(VERTICAL);
+        addViewWeight(textLayout);
 
         previewSize = AppTheme.getBigButtonSize(sc.getContext());
         preview = new PreviewView(sc);
-        addView(preview);
+        addView(preview, previewSize, previewSize);
 
-        init(getContext(),description);
+        title = new TextView(getContext());
+        title.setTextColor(Color.WHITE);
+        textLayout.addView(title);
+
+        text = new TextView(getContext());
+        text.setTextColor(Color.LTGRAY);
+        textLayout.addView(text);
+
     }
 
 
-    private void init(Context context,
-            ContentDescription[] d) {
+    private void addViewWeight(View v) {
+        addView(v);
 
-        final SubEntryView v[] = new SubEntryView[d.length];
-
-        for (int i=0; i<d.length; i++) {
-            v[i] = new SubEntryView(context,solidKey, d[i]);
-            if (i==0) v[i].highlight();
-            addView(v[i]);
-        }
-        init(d,v);
+        LinearLayout.LayoutParams l = (LinearLayout.LayoutParams) v.getLayoutParams();
+        l.weight = 1;
+        v.setLayoutParams(l);
     }
-
 
     @Override
-    protected void onMeasure(int wspec, int hspec) {
-        int width,height;
+    public void onContentUpdated(GpxInformation info) {
 
-        measureChildren(wspec,hspec);
 
-        width = AppLayout.getDimension(wspec, AppLayout.getScreenSmallSide(getContext()));
-        height= AppLayout.getDimension(hspec, previewSize);
-        setMeasuredDimension(width, height);
+        for (ContentDescription description : descriptions) {
+            description.onContentUpdated(info);
+        }
+        updateText();
+        preview.setFilePath(info.getPath());
     }
 
 
-    @Override
-    protected void onLayout(boolean changed, int l, int t, int r, int b) {
-        int xpos=0; int ypos=0;
-        final int width=r-l-previewSize;
+    private final StringBuilder builder = new StringBuilder(20);
+    private void updateText() {
 
-        for (int i=0; i<getDescriptionCount(); i++) {
-            int w=getDescriptionView(i).getMeasuredWidth();
-            int h=getDescriptionView(i).getMeasuredHeight();
-            if ((xpos > 0) && ((w+xpos) > width)) {
-                ypos+=h; xpos=0;
-            }
-            getDescriptionView(i).layout(xpos, ypos, xpos+w, ypos+h);
-            xpos+=(w+SPACE);
-        }
-
-        preview.layout(width, 0, width+previewSize, previewSize);
-    }
-
-
-    private class SubEntryView extends TrackDescriptionView {
-
-        final TextView entry;
-        final ContentDescription data;
-
-        public SubEntryView(Context context, String key, ContentDescription d) {
-            super(context, key,GpxInformation.ID.INFO_ID_ALL);
-
-            data=d;
-
-            entry = new TextView(context);
-            entry.setTextColor(Color.WHITE);
-            addView(entry);
-        }
-
-        public void highlight() {
-            entry.setTypeface(entry.getTypeface(), 1);
-            entry.setBackgroundColor(AppTheme.getAltBackgroundColor());
-        }
-
-
-        @Override 
-        protected void onMeasure(int w, int h) {
-            entry.measure(w, h);
-            setMeasuredDimension(entry.getMeasuredWidth(), entry.getMeasuredHeight());
-        }
-
-        @Override
-        protected void onLayout(boolean changed, int l, int t, int r, int b) {
-            entry.layout(0,0,r-l,b-t);
-        }
-
-        @Override
-        public void onContentUpdated(GpxInformation info) {
-            if (filter.pass(info)) {
-                data.onContentUpdated(info);
-                updateText(data.getValue(), data.getUnit());
-
-                preview.setFilePath(info.getPath());
+        builder.setLength(0);
+        for (int i=0; i< descriptions.length; i++) {
+            if (i==0) {
+                title.setText(descriptions[i].getValueAsString());
+            } else {
+                if (i > 1) builder.append(" - ");
+                builder.append(descriptions[i].getValueAsString());
             }
         }
 
-        private void updateText(String value, String unit) {
-            String text;
-            if (unit.length()>0) text = value + " " + unit;
-            else text=value;
-            entry.setText(text);
-        }
-
-
+        text.setText(builder);
     }
 }

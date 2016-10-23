@@ -84,6 +84,7 @@ public class GpxListView extends ListView implements OnCursorChangedListener {
             iterator.moveToPosition(position);
             entry.onContentUpdated(iterator.getInfo());
 
+
             return entry;
         }
 
