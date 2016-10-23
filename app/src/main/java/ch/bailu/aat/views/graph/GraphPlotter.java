@@ -4,16 +4,29 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
+import android.util.DisplayMetrics;
 
 public class GraphPlotter {
-    private static final int TEXT_SIZE=20;
+    private static final int TEXT_SIZE=15;
+    private final int text_size;
+
     private static final int YLABEL_XOFFSET=50;
+    private final int ylabel_xoffset;
+
     private static final int YLABEL_YOFFSET=30;
-    
+    private final int ylabel_yoffset;
+
+
     private final Scaler xscaler;
     private final InvertetOffsetScaler yscaler;
-    
-    private final Paint paint;
+
+    private final DisplayMetrics metrics;
+
+    private final Paint paintFont;
+    private final Paint paintPlotLines;
+    private final Paint paintLines;
+
+
     private final Canvas canvas;
     
     private final int width;
@@ -21,20 +34,48 @@ public class GraphPlotter {
     
     private Point pointA=new Point(-5,-5), pointB = new Point(-5,-5);
     
-    public GraphPlotter(Canvas c, int width, int height, float xScale) {
-        this.width=width;
-        this.height=height;
-        
+    public GraphPlotter(Canvas c, int w, int h, float xScale, DisplayMetrics m) {
+        width=w;
+        height=h;
+
+        metrics = m;
         canvas = c;
-        paint = new Paint();
-        paint.setAntiAlias(true);
-        paint.setDither(true);
-        paint.setTextSize(TEXT_SIZE);
-        
+
+
+        paintFont = new Paint();
+        paintFont.setAntiAlias(true);
+        paintFont.setDither(false);
+        paintFont.setColor(Color.WHITE);
+        paintFont.setTextSize(toSDP(TEXT_SIZE));
+
+
+        paintPlotLines = new Paint();
+        paintPlotLines.setAntiAlias(true);
+        paintPlotLines.setDither(false);
+        paintPlotLines.setStrokeWidth(toDP(2));
+
+        paintLines = new Paint();
+        paintLines.setAntiAlias(true);
+        paintLines.setDither(false);
+        paintLines.setStrokeWidth(0);
+        paintLines.setColor(Color.GRAY);
+
+        text_size = (int)paintFont.getTextSize();
+        ylabel_xoffset = toDP(YLABEL_XOFFSET);
+        ylabel_yoffset = toDP(YLABEL_YOFFSET);
+
         xscaler = new Scaler(width, xScale);
         yscaler = new InvertetOffsetScaler(height);
     }
-    
+
+
+    private float toSDP(float p) {
+        return p * metrics.scaledDensity;
+    }
+
+    private int toDP(float p) {
+        return (int) Math.max(1f, p * metrics.density);
+    }
     
     
     public void roundYScale(int roundTo) {
@@ -52,8 +93,8 @@ public class GraphPlotter {
             drawHorizontalLine(x,factor);
         }
 
-        paint.setColor(Color.WHITE);        
-        canvas.drawText(label,YLABEL_XOFFSET , YLABEL_YOFFSET, paint);
+
+        canvas.drawText(label,ylabel_xoffset , ylabel_yoffset, paintFont);
 
     }
 
@@ -62,24 +103,25 @@ public class GraphPlotter {
         
         drawScaleLine(0, pixel, width, pixel);
         
-        pixel=Math.min(height-TEXT_SIZE, pixel);
-        drawScaleText(0,pixel,Color.WHITE, String.valueOf((int) (value*factor)) );
+        pixel=Math.min(height-text_size, pixel);
+        drawScaleText(0,pixel, String.valueOf((int) (value*factor)) );
     }
     
     
     private void drawScaleLine(int x1, int y1, int x2, int y2) {
-        paint.setColor(Color.DKGRAY);
-        canvas.drawLine(x1, y1 , x2, y2,  paint);
+        canvas.drawLine(x1, y1 , x2, y2,  paintLines);
     }
         
-    private void drawScaleText(int x,int y, int color, String value) {
-        if ((x+6) > width) x = width - 30;
+    private void drawScaleText(int x,int y, String value) {
+        /**/
+        int space = text_size/2;
+
+        if ((x+space) > width) x = width - space*5;
             
-        if ((y+6) > height) y=height;    
-        else if ((y-6) < 0) y=12;
+        if ((y+space) > height) y=height;
+        else if ((y-space) < space) y=space*2;
             
-        paint.setColor(color);                
-        canvas.drawText(value, x, y, paint);
+        canvas.drawText(value, x, y, paintFont);
     }
         
         
@@ -92,15 +134,14 @@ public class GraphPlotter {
             drawVerticalLine(x, factor);
         }
 
-        paint.setColor(Color.WHITE);
-        canvas.drawText(label, width/2, height-20, paint);
+        canvas.drawText(label, width/2, height-text_size, paintFont);
     }
         
     private void drawVerticalLine(float value, float factor) {
         int pixel = (int)xscaler.scale(value);
             
         drawScaleLine(pixel, 0 , pixel, height);
-        drawScaleText(pixel,height, Color.WHITE, String.valueOf((int) (value*factor)));
+        drawScaleText(pixel,height, String.valueOf((int) (value*factor)));
     }
     
     
@@ -125,9 +166,8 @@ public class GraphPlotter {
     
 
     private void plotLine(Point pA, Point pB, int color) {
-        paint.setStrokeWidth(3);
-        paint.setColor(color);
-        canvas.drawLine(pA.x, pA.y, pB.x, pB.y, paint);
+        paintPlotLines.setColor(color);
+        canvas.drawLine(pA.x, pA.y, pB.x, pB.y, paintPlotLines);
     }
 
     private void switchPoints() {

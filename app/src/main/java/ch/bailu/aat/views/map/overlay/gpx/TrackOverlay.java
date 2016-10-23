@@ -3,6 +3,7 @@ package ch.bailu.aat.views.map.overlay.gpx;
 import android.graphics.Color;
 import android.graphics.Paint;
 
+import ch.bailu.aat.helpers.AppLayout;
 import ch.bailu.aat.views.graph.ColorTable;
 import ch.bailu.aat.views.map.AbsOsmView;
 import ch.bailu.aat.views.map.overlay.MapPainter;
@@ -10,15 +11,16 @@ import ch.bailu.aat.views.map.overlay.MapTwoNodes;
 import ch.bailu.aat.views.map.overlay.MapTwoNodes.PixelNode;
 
 public class TrackOverlay extends GpxOverlay{
-    private static final int STROKE_WIDTH=5;
+    private static final int STROKE_WIDTH=3;
     private final Paint paint=new Paint();
 
 
 
-    public TrackOverlay(AbsOsmView osmPreview, int id) {
-        super(osmPreview, id, Color.BLACK);
-        
-        paint.setStrokeWidth(STROKE_WIDTH);
+    public TrackOverlay(AbsOsmView osm, int id) {
+        super(osm, id, Color.BLACK);
+
+
+        paint.setStrokeWidth(AppLayout.toDP(osm.getContext(),STROKE_WIDTH));
         paint.setStrokeCap(Paint.Cap.ROUND);
         paint.setStrokeJoin(Paint.Join.ROUND);
     }
@@ -28,8 +30,8 @@ public class TrackOverlay extends GpxOverlay{
 
     @Override
     public void draw(MapPainter painter) {
-        paint.setStrokeWidth(Math.max(STROKE_WIDTH, 
-                painter.projection.getPixelFromDistance(5)));
+        /*paint.setStrokeWidth(Math.max(STROKE_WIDTH,
+                painter.projection.getPixelFromDistance(5)));*/
         new TrackPainter(painter).walkTrack(getGpxList());
     }
 

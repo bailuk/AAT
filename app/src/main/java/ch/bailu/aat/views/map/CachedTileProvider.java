@@ -58,7 +58,7 @@ public class CachedTileProvider extends AbsOsmTileProvider {
 
             cache.put(handle);
         } 
-        return handle.getDrawable();
+        return handle.getDrawable(context.getResources());
     }
 
 

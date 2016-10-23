@@ -4,6 +4,7 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.graphics.Point;
+import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.View.MeasureSpec;
 import android.view.WindowManager;
@@ -90,10 +91,24 @@ public class AppLayout {
         if (getOrientationAlongSmallSide(context) == LinearLayout.VERTICAL) return LinearLayout.HORIZONTAL;
         return LinearLayout.VERTICAL;
     }
-    
-    public static float toPixel(Context context, float pixel) {
-        return context.getResources().getDisplayMetrics().density*pixel;
+
+
+    public static float toDP(Context context, float pixel) {
+        return toDP(context.getResources().getDisplayMetrics(), pixel);
     }
-    
+
+    public static float toDP(DisplayMetrics m, float pixel) {
+        return m.density*pixel;
+    }
+
+
+    public static float toSDP(Context context, float pixel) {
+        return toSDP(context.getResources().getDisplayMetrics(), pixel);
+    }
+
+    public static float toSDP(DisplayMetrics m, float pixel) {
+        return m.scaledDensity*pixel;
+    }
+
 }
  

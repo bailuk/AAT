@@ -10,6 +10,7 @@ import ch.bailu.aat.gpx.GpxList;
 import ch.bailu.aat.gpx.GpxNodeFinder;
 import ch.bailu.aat.gpx.GpxPointNode;
 import ch.bailu.aat.gpx.InfoID;
+import ch.bailu.aat.helpers.AppLayout;
 import ch.bailu.aat.views.map.OsmInteractiveView;
 import ch.bailu.aat.views.map.overlay.MapPainter;
 import ch.bailu.aat.views.map.overlay.OsmOverlay;
@@ -21,6 +22,8 @@ public abstract class NodeSelectorOverlay extends OsmOverlay {
 
     public final int SQUARE_SIZE=30;
     public final int SQUARE_HSIZE=SQUARE_SIZE/2;
+
+    public final int square_size, square_hsize;
 
     private final SparseArray<GpxInformation> gpxHash =
             new SparseArray<>(5);
@@ -42,11 +45,12 @@ public abstract class NodeSelectorOverlay extends OsmOverlay {
 
     public NodeSelectorOverlay(OsmInteractiveView v, int id) {
         super(v);
-
+        square_size = (int) (AppLayout.toDP(v.getContext(), SQUARE_SIZE) + 0.5f);
+        square_hsize = (int) (AppLayout.toDP(v.getContext(), SQUARE_HSIZE) + 0.5f);
         centerRect.left=0;
-        centerRect.right=SQUARE_SIZE;
+        centerRect.right=square_size;
         centerRect.top=0;
-        centerRect.bottom=SQUARE_SIZE;
+        centerRect.bottom=square_size;
 
         ID=id;
     }
@@ -54,8 +58,9 @@ public abstract class NodeSelectorOverlay extends OsmOverlay {
 
     @Override
     public void draw(MapPainter p) {
-        centerRect.offsetTo(getOsmView().getWidth()/2  - SQUARE_HSIZE, 
-                getOsmView().getHeight()/2 - SQUARE_HSIZE);
+
+        centerRect.offsetTo(getOsmView().getWidth()/2  - square_hsize,
+                getOsmView().getHeight()/2 - square_hsize);
 
         BoundingBox centerBounding = new BoundingBox();
         centerBounding.add(p.projection.fromPixels(centerRect.left, centerRect.top));

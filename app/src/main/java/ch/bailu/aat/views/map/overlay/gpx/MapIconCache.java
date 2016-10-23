@@ -6,6 +6,7 @@ import java.io.Closeable;
 
 import ch.bailu.aat.gpx.GpxAttributes;
 import ch.bailu.aat.gpx.interfaces.GpxPointInterface;
+import ch.bailu.aat.helpers.AppLog;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.cache.FreeLater;
 import ch.bailu.aat.services.cache.ImageObject;
@@ -28,20 +29,10 @@ public class MapIconCache implements Closeable {
     }
 
     
-    public Drawable getBigIcon(ServiceContext scontext, GpxPointInterface point) {
+    public Drawable getIcon(ServiceContext scontext, GpxPointInterface point) {
         return getIcon(scontext, point, IconMapService.KEY_ICON_BIG);
     }
     
-    
-    public Drawable getSmallIcon(ServiceContext scontext, GpxPointInterface point) {
-        return getIcon(scontext, point, IconMapService.KEY_ICON_SMALL);
-    }
-    
-    
-    
-    public static String getBigIconFileName(GpxPointInterface point) {
-        return getIconFileName(point, IconMapService.KEY_ICON_BIG);
-    }
     
     public static String getIconFileName(GpxPointInterface point, String key) {
         String fileID=null;
@@ -73,7 +64,7 @@ public class MapIconCache implements Closeable {
         final ObjectHandle handle =  scontext.getCacheService().getObject(fileID, new ImageObject.Factory());
         if (ImageObject.class.isInstance(handle) ) {
             
-            drawable = ((ImageObject)handle).getDrawable();
+            drawable = ((ImageObject)handle).getDrawable(scontext.getContext().getResources());
             current.freeLater(handle);
         }
         return drawable;

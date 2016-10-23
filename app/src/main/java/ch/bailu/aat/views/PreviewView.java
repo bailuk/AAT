@@ -104,7 +104,7 @@ public class PreviewView extends ImageView {
 
     private void displayImage() {
         if (imageHandle.isReady()) { 
-            setImageDrawable(imageHandle.getDrawable());
+            setImageDrawable(imageHandle.getDrawable(getResources()));
         }
     }
 

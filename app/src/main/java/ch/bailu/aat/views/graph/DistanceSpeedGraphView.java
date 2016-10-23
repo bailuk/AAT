@@ -27,7 +27,8 @@ public class DistanceSpeedGraphView extends AbsGraphView {
         GraphPlotter plotter[] = new GraphPlotter[3];
 
         for (int i=0; i<plotter.length; i++) {
-            plotter[i] = new GraphPlotter(canvas,getWidth(), getHeight(), 1000 * km_factor);
+            plotter[i] = new GraphPlotter(canvas,getWidth(), getHeight(), 1000 * km_factor,
+                    getContext().getResources().getDisplayMetrics());
         }
 
         plotter[0].drawXScale(5, 

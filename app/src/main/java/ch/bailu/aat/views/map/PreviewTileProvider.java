@@ -1,5 +1,6 @@
 package ch.bailu.aat.views.map;
 
+import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.Handler;
 
@@ -15,9 +16,11 @@ public class PreviewTileProvider extends AbsOsmTileProvider implements Closeable
 
     private final ArrayList<TileStackObject> tiles = new ArrayList<>(10);
     
+    private final Context context;
 
     public PreviewTileProvider(ServiceContext sc) {
         super(sc);
+        context = sc.getContext();
     }
 
     
@@ -27,7 +30,7 @@ public class PreviewTileProvider extends AbsOsmTileProvider implements Closeable
         
         tiles.add(handle);
        
-        return handle.getDrawable();
+        return handle.getDrawable(context.getResources());
     }
 
 

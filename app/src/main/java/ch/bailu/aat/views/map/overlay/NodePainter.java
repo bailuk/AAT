@@ -10,13 +10,19 @@ import android.graphics.drawable.BitmapDrawable;
 
 public class NodePainter {
     private static final int STROKE_WIDTH=MapCanvas.EDGE_WIDTH;
-    private static final int RADIUS=7;
-    private static final int HSIZE = (RADIUS+STROKE_WIDTH);
-    private static final int SIZE = HSIZE*2;
+    private static final int RADIUS=5;
+
 
     public static BitmapDrawable createNode(Resources res) {
         final int color = Color.WHITE;
-        Bitmap bitmap = Bitmap.createBitmap(SIZE, SIZE, Bitmap.Config.ARGB_8888);
+
+        int stroke_width=(int)(res.getDisplayMetrics().density*STROKE_WIDTH + 0.5f);
+        int radius = (int)(res.getDisplayMetrics().density*RADIUS + 0.5f);
+        int hsize = (radius+ stroke_width);
+        int size = hsize * 2;
+
+
+        Bitmap bitmap = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(bitmap);
         Paint stroke = MapCanvas.createEdgePaint();
         stroke.setAntiAlias(true);
@@ -26,8 +32,8 @@ public class NodePainter {
         fill.setStyle(Style.FILL);
         fill.setColor(color);
         
-        canvas.drawCircle(HSIZE, HSIZE, RADIUS, fill);
-        canvas.drawCircle(HSIZE, HSIZE, RADIUS, stroke);
+        canvas.drawCircle(hsize,hsize, radius, fill);
+        canvas.drawCircle(hsize, hsize, radius, stroke);
 
         
         return new BitmapDrawable(res, bitmap);

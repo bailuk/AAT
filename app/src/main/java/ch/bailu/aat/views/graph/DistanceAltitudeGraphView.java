@@ -20,7 +20,8 @@ public class DistanceAltitudeGraphView extends AbsGraphView {
     @Override
     public void plot(Canvas canvas, GpxList list, SolidUnit sunit, boolean markerMode) {
         int km_factor = (int) (list.getDelta().getDistance()/1000) + 1;
-        GraphPlotter plotter = new GraphPlotter(canvas,getWidth(), getHeight(), 1000 * km_factor);
+        GraphPlotter plotter = new GraphPlotter(canvas,getWidth(), getHeight(), 1000 * km_factor,
+                getContext().getResources().getDisplayMetrics());
         GpxListWalker painter, scaleGenerator;
         
         if (markerMode) {

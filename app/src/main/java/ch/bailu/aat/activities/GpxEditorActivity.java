@@ -65,7 +65,7 @@ public class GpxEditorActivity extends AbsFileContentActivity
                 new CurrentLocationOverlay(map),
                 new EditorOverlay(map,
                         getServiceContext(),
-                        InfoID.OVERLAY,
+                        InfoID.EDITOR_OVERLAY,
                         editor_helper),
                 new NavigationBarOverlay(map),
                 new InformationBarOverlay(map)

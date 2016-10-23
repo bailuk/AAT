@@ -10,6 +10,7 @@ import android.graphics.Point;
 import android.graphics.PorterDuff;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
+import android.util.DisplayMetrics;
 
 import ch.bailu.aat.helpers.AppLayout;
 
@@ -19,19 +20,31 @@ public class MapCanvas {
     private final static int POINT_RADIUS=3;
     private final static int MARGIN=5;
     private final static float TEXT_SIZE=20;
-    private final static int ALPHA=200;
-    private final static int BG_ALPHA=150;
+    private final static int ALPHA=150;
+    private final static int BG_ALPHA=125;
 
 
     private final Paint gridPaint, legendTextPaint, statusTextPaint, edgePaint, pointPaint, backgroundPaint;
     private final FontMetrics legendMetrics;
+    private final DisplayMetrics metrics;
 
     public Canvas canvas;
     private final MapProjection projection;
     
 
+    public float toDP(float pixel) {
+        return metrics.density*pixel;
+    }
+
+    public float toSDP(float pixel) {
+        return metrics.scaledDensity*pixel;
+    }
+
+
     public MapCanvas(Context context, MapProjection p) {
         projection=p;
+        metrics = context.getResources().getDisplayMetrics();
+
         gridPaint=createGridPaint();
         statusTextPaint=createTextPaint(context, TEXT_SIZE);
         legendTextPaint=createTextPaint(context, TEXT_SIZE/3*2);
@@ -41,6 +54,8 @@ public class MapCanvas {
         edgePaint=createEdgePaint();
         pointPaint=createEdgePaint();
         pointPaint.setStyle(Style.FILL);
+
+
         
         backgroundPaint=createBackgroundPaint();
     }
@@ -58,13 +73,14 @@ public class MapCanvas {
         return p;
     }
     
-    public static Paint  createGridPaint() {
+    public Paint  createGridPaint() {
         Paint p=new Paint();
         p.setColor(Color.DKGRAY);
         p.setAlpha(ALPHA);
         p.setStyle(Style.STROKE);
         p.setAntiAlias(false);
-        p.setStrokeWidth(0f);
+        p.setDither(false);
+        p.setStrokeWidth(Math.max(1, toDP(1)));
         return p;
     }
 
@@ -72,7 +88,7 @@ public class MapCanvas {
         Paint p=new Paint();
         p.setColor(Color.BLACK);
 
-        p.setTextSize(AppLayout.toPixel(context, size));
+        p.setTextSize(toSDP(size));
         p.setFakeBoldText(true);
         p.setStyle(Style.FILL);
         p.setAntiAlias(true);
@@ -86,7 +102,7 @@ public class MapCanvas {
         edge.setStrokeWidth(EDGE_WIDTH);
 
         edge.setAntiAlias(false);
-        edge.setColor(Color.BLACK);
+        edge.setColor(Color.DKGRAY);
         edge.setStyle(Style.STROKE);
         return edge;
     }
@@ -146,7 +162,7 @@ public class MapCanvas {
 
     public void drawPoint(Point pixel) {
         canvas.drawCircle(pixel.x, pixel.y, 
-                POINT_RADIUS, 
+                toDP(POINT_RADIUS),
                 pointPaint);
     }
 
@@ -184,7 +200,15 @@ public class MapCanvas {
                 pixel.y + legendMetrics.bottom + MARGIN, 
                 backgroundPaint);
     }
-    
+
+    public void drawSize(Drawable node, Point pixel, int size) {
+        int hsize = size/2;
+
+        node.setBounds(pixel.x-hsize, pixel.y-hsize,
+                pixel.x+hsize, pixel.y+hsize);
+        node.draw(canvas);
+    }
+
     public void draw(Drawable node, Point pixel) {
         centerBounds(node, pixel);
         node.draw(canvas);

@@ -1,5 +1,6 @@
 package ch.bailu.aat.services.cache;
 
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -18,7 +19,11 @@ public class SynchronizedBitmap {
         }
         
         
-        public synchronized Drawable getDrawable() {
+        public synchronized Drawable getDrawable(Resources r) {
+
+            if (drawable == null && bitmap != null) {
+                drawable = new BitmapDrawable(r, bitmap);
+            }
             return drawable;
         }
         
@@ -31,7 +36,6 @@ public class SynchronizedBitmap {
         
         public boolean load(String file) {
             Bitmap b = BitmapFactory.decodeFile(file);
-            
             if (b != null) {
                 set(b);
             }
@@ -44,12 +48,12 @@ public class SynchronizedBitmap {
             return size;
         }
         
-        @SuppressWarnings("deprecation")
+
         public synchronized void set(Bitmap b) {
             if (b != null) {
 
                 bitmap = b;
-                drawable = new BitmapDrawable(b);
+                drawable = null;
                 size=b.getHeight()*b.getRowBytes();
             }
         }

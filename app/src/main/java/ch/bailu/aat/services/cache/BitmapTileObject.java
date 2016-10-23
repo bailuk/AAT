@@ -74,7 +74,7 @@ public class BitmapTileObject extends TileObject {
 
     @Override
     public boolean isLoaded() {
-        return bitmap.getDrawable()!=null;
+        return bitmap.get()!=null;
     }
 
 
@@ -106,7 +106,7 @@ public class BitmapTileObject extends TileObject {
 
     @Override
     public boolean isReady() {
-        boolean d = bitmap.getDrawable()!=null;
+        boolean d = bitmap.get()!=null;
         boolean l = isLoadable()==false;
         
         return  d || l;

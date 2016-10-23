@@ -1,6 +1,7 @@
 package ch.bailu.aat.services.cache;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -122,8 +123,8 @@ public class TileStackObject extends ObjectHandle {
         return true;
     }
 
-    public Drawable getDrawable() {
-        return  bitmap.getDrawable();
+    public Drawable getDrawable(Resources res) {
+        return  bitmap.getDrawable(res);
     }
 
     private class ReUpdate extends ProcessHandle {

@@ -1,6 +1,7 @@
 package ch.bailu.aat.services.cache;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 
@@ -64,15 +65,15 @@ public class ImageObject extends ObjectHandle {
     
     @Override
     public boolean isReady() {
-        return bitmap.getDrawable() != null;
+        return bitmap.get() != null;
     }
 
     public synchronized Bitmap getBitmap() {
         return bitmap.get();
     }
 
-    public synchronized Drawable getDrawable() {
-        return bitmap.getDrawable();
+    public synchronized Drawable getDrawable(Resources res) {
+        return bitmap.getDrawable(res);
     }
 
 
