@@ -26,7 +26,7 @@ public class GpxFileWrapper extends GpxInformation {
 
     @Override
     public int getID() {
-        return ID.INFO_ID_FILEVIEW;
+        return InfoID.FILEVIEW;
     }
 
     @Override

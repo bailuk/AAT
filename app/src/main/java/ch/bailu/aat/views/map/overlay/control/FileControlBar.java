@@ -9,6 +9,7 @@ import ch.bailu.aat.R;
 import ch.bailu.aat.activities.AbsGpxListActivity;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.GpxPointNode;
+import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.helpers.FileAction;
 import ch.bailu.aat.helpers.ToolTip;
 import ch.bailu.aat.preferences.SolidDirectoryQuery;
@@ -42,7 +43,7 @@ public class FileControlBar extends ControlBarOverlay{
 
         activity = a;
 
-        selector = new Selector(osm, GpxInformation.ID.INFO_ID_LIST_SUMMARY);
+        selector = new Selector(osm, InfoID.LIST_SUMMARY);
         preview = new PreviewView(a.getServiceContext());
 
         bar.addView(preview);

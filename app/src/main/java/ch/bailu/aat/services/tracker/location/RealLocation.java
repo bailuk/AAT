@@ -10,6 +10,8 @@ import android.os.Bundle;
 import java.util.List;
 
 import ch.bailu.aat.gpx.GpxInformation;
+import ch.bailu.aat.gpx.InfoID;
+import ch.bailu.aat.gpx.StateID;
 import ch.bailu.aat.helpers.AppLog;
 import ch.bailu.aat.helpers.ContextWrapperInterface;
 
@@ -31,7 +33,7 @@ public class RealLocation extends LocationStackChainedItem
         }
         @Override
         public int getID() {
-            return ID.INFO_ID_LOCATION;
+            return InfoID.LOCATION;
         }
         @Override
         public int getState() {
@@ -114,7 +116,7 @@ public class RealLocation extends LocationStackChainedItem
     
     public void init(int gpsInterval) {
         try {
-            setState(GpxInformation.ID.STATE_WAIT);
+            setState(StateID.WAIT);
 
             final LocationManager lm = getLocationManager(context);
 
@@ -123,9 +125,9 @@ public class RealLocation extends LocationStackChainedItem
             requestLocationUpdates(lm, provider, gpsInterval);
 
         } catch (NoServiceException ex) {
-            setState(GpxInformation.ID.STATE_NOSERVICE);
+            setState(StateID.NOSERVICE);
         } catch (SecurityException | IllegalArgumentException ex) {
-            setState(GpxInformation.ID.STATE_NOACCESS);
+            setState(StateID.NOACCESS);
         }
 
     }
@@ -183,13 +185,13 @@ public class RealLocation extends LocationStackChainedItem
         try {
             getLocationManager(context).removeUpdates(this);
         } catch (NoServiceException e) {
-            state=GpxInformation.ID.STATE_NOSERVICE;
+            state=StateID.NOSERVICE;
         }
     }
 
     @Override
     public void onLocationChanged(Location l) {
-        setState(GpxInformation.ID.STATE_ON);
+        setState(StateID.ON);
         sendLocation(l);
     }
 
@@ -204,7 +206,7 @@ public class RealLocation extends LocationStackChainedItem
     public void onProviderDisabled(String p) {
 
         if (provider.equals(p)) {
-            setState(GpxInformation.ID.STATE_OFF);
+            setState(StateID.OFF);
         }
     }
 
@@ -212,7 +214,7 @@ public class RealLocation extends LocationStackChainedItem
     public void onProviderEnabled(String p) {
 
         if (provider.equals(p)) {
-            setState(GpxInformation.ID.STATE_WAIT);
+            setState(StateID.WAIT);
         }
     }
 
@@ -261,12 +263,12 @@ public class RealLocation extends LocationStackChainedItem
         builder.append("<br>");
 
         switch (state) {
-        case GpxInformation.ID.STATE_NOACCESS: builder.append("STATE_NOACCESS"); break;
-        case GpxInformation.ID.STATE_NOSERVICE: builder.append("STATE_NOSERVICE"); break;
-        case GpxInformation.ID.STATE_ON: builder.append("STATE_ON"); break;
-        case GpxInformation.ID.STATE_OFF: builder.append("STATE_OFF"); break;
-        case GpxInformation.ID.STATE_PAUSE: builder.append("STATE_PAUSE"); break;
-        case GpxInformation.ID.STATE_AUTOPAUSED: builder.append("STATE_AUTOPAUSED"); break;
+        case StateID.NOACCESS: builder.append("STATE_NOACCESS"); break;
+        case StateID.NOSERVICE: builder.append("STATE_NOSERVICE"); break;
+        case StateID.ON: builder.append("STATE_ON"); break;
+        case StateID.OFF: builder.append("STATE_OFF"); break;
+        case StateID.PAUSE: builder.append("STATE_PAUSE"); break;
+        case StateID.AUTOPAUSED: builder.append("STATE_AUTOPAUSED"); break;
         default: builder.append("STATE_WAIT"); break;
         }
         builder.append("<br>");

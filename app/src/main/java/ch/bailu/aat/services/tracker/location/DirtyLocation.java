@@ -4,6 +4,8 @@ import android.content.Context;
 
 import ch.bailu.aat.R;
 import ch.bailu.aat.gpx.GpxInformation;
+import ch.bailu.aat.gpx.InfoID;
+import ch.bailu.aat.gpx.StateID;
 import ch.bailu.aat.helpers.AppBroadcaster;
 import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat.views.map.OsmInteractiveView;
@@ -13,7 +15,7 @@ public class DirtyLocation extends LocationStackChainedItem {
 
     
     private GpxInformation locationInformation;
-    private int state = GpxInformation.ID.STATE_OFF;
+    private int state = StateID.OFF;
 
     private final Storage storage;
     
@@ -69,7 +71,7 @@ public class DirtyLocation extends LocationStackChainedItem {
         }
         @Override
         public int getID() {
-            return ID.INFO_ID_LOCATION;
+            return InfoID.LOCATION;
         }
 
         private void readPosition(Storage storage) {

@@ -29,6 +29,7 @@ import ch.bailu.aat.dispatcher.OnContentUpdatedInterface;
 import ch.bailu.aat.dispatcher.OverlaySource;
 import ch.bailu.aat.dispatcher.TrackerSource;
 import ch.bailu.aat.gpx.GpxInformation;
+import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.helpers.AppLayout;
 import ch.bailu.aat.helpers.FileAction;
 import ch.bailu.aat.helpers.ToolTip;
@@ -124,7 +125,7 @@ public class GpxViewActivity extends AbsDispatcher
 
         final OsmOverlay overlayList[] = {
                 new GpxOverlayListOverlay(map, getServiceContext()),
-                new GpxDynOverlay(map, getServiceContext(), GpxInformation.ID.INFO_ID_FILEVIEW),
+                new GpxDynOverlay(map, getServiceContext(), InfoID.FILEVIEW),
                 new CurrentLocationOverlay(map),
                 new GridDynOverlay(map, getServiceContext()),
                 new NavigationBarOverlay(map),
@@ -149,15 +150,15 @@ public class GpxViewActivity extends AbsDispatcher
         };
 
         VerticalScrollView summary = new VerticalScrollView(this);
-        VerticalView graph = new VerticalView(this, SOLID_KEY, GpxInformation.ID.INFO_ID_FILEVIEW,
+        VerticalView graph = new VerticalView(this, SOLID_KEY, InfoID.FILEVIEW,
                 new TrackDescriptionView[] {
                         new DistanceAltitudeGraphView(this, SOLID_KEY),
                         new DistanceSpeedGraphView(this, SOLID_KEY)
                 });
 
 
-        MultiView mv = new MultiView(this, SOLID_KEY, GpxInformation.ID.INFO_ID_ALL);
-        mv.add(summary, summary.addAllContent(summaryData, GpxInformation.ID.INFO_ID_FILEVIEW));
+        MultiView mv = new MultiView(this, SOLID_KEY, InfoID.ALL);
+        mv.add(summary, summary.addAllContent(summaryData, InfoID.FILEVIEW));
         mv.addT(map);
         mv.addT(graph);
 
@@ -172,8 +173,8 @@ public class GpxViewActivity extends AbsDispatcher
         addSource(new CustomFileSource(getServiceContext(), fileID));
 
         addTarget(multiView);
-        addTarget(this, INFO_ID_FILEVIEW);
-        addTarget(busyButton.getBusyControl(INFO_ID_FILEVIEW), INFO_ID_FILEVIEW);
+        addTarget(this, InfoID.FILEVIEW);
+        addTarget(busyButton.getBusyControl(InfoID.FILEVIEW), InfoID.FILEVIEW);
     }
 
 

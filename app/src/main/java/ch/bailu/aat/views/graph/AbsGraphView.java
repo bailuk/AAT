@@ -5,6 +5,7 @@ import android.graphics.Canvas;
 
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.GpxList;
+import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.preferences.SolidUnit;
 import ch.bailu.aat.views.description.TrackDescriptionView;
 
@@ -20,7 +21,7 @@ public abstract class AbsGraphView extends TrackDescriptionView {
     private GpxList gpxList = GpxList.NULL_TRACK;
     
     public AbsGraphView(Context context, String key) {
-        super(context, key,GpxInformation.ID.INFO_ID_ALL);
+        super(context, key, InfoID.ALL);
         setWillNotDraw(false);
         sunit = new SolidUnit(context);
     }

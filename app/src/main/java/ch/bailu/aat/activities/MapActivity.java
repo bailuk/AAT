@@ -19,6 +19,7 @@ import ch.bailu.aat.dispatcher.EditorSource;
 import ch.bailu.aat.dispatcher.OverlaySource;
 import ch.bailu.aat.dispatcher.TrackerSource;
 import ch.bailu.aat.gpx.GpxInformation;
+import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.helpers.AppIntent;
 import ch.bailu.aat.helpers.AppLog;
 import ch.bailu.aat.services.ServiceContext;
@@ -108,12 +109,12 @@ public class MapActivity extends AbsDispatcher implements OnClickListener{
 
         OsmOverlay overlayList[] = {
                 new GpxOverlayListOverlay(map, sc),
-                new GpxDynOverlay(map, sc, GpxInformation.ID.INFO_ID_TRACKER),
+                new GpxDynOverlay(map, sc, InfoID.TRACKER),
                 new GridDynOverlay(map, sc),
                 new CurrentLocationOverlay(map),
                 new NavigationBarOverlay(map),
                 new InformationBarOverlay(map),
-                new EditorOverlay(map, sc, GpxInformation.ID.INFO_ID_EDITOR_DRAFT, edit),
+                new EditorOverlay(map, sc, InfoID.EDITOR_DRAFT, edit),
                 new CustomBarOverlay(map, createButtonBar()),
         };
         map.setOverlayList(overlayList);
@@ -124,8 +125,8 @@ public class MapActivity extends AbsDispatcher implements OnClickListener{
 
     private void createDispatcher() {
         addTarget(map);
-        addTarget(trackerState);
-        addTarget(gpsState);
+        addTarget(trackerState, InfoID.TRACKER);
+        addTarget(gpsState, InfoID.LOCATION);
 
         addSource(new EditorSource(getServiceContext(), edit));
         addSource(new TrackerSource(getServiceContext()));

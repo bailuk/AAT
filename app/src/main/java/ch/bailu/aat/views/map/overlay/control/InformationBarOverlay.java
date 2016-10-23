@@ -8,6 +8,7 @@ import ch.bailu.aat.activities.ActivitySwitcher;
 import ch.bailu.aat.activities.NominatimActivity;
 import ch.bailu.aat.activities.OverpassActivity;
 import ch.bailu.aat.gpx.GpxInformation;
+import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.helpers.ToolTip;
 import ch.bailu.aat.menus.LocationMenu;
 import ch.bailu.aat.preferences.SolidIndexList;
@@ -44,7 +45,7 @@ public class InformationBarOverlay extends ControlBarOverlay {
         reload = bar.addImageButton(R.drawable.view_refresh);
         location = bar.addImageButton(R.drawable.find_location);
 
-        selector = new InfoViewNodeSelectorOverlay(o, GpxInformation.ID.INFO_ID_ALL);
+        selector = new InfoViewNodeSelectorOverlay(o, InfoID.ALL);
 
 
         ToolTip.set(grid,R.string.tt_info_grid);

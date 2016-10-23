@@ -5,6 +5,7 @@ import android.view.ViewGroup;
 
 import ch.bailu.aat.dispatcher.OnContentUpdatedInterface;
 import ch.bailu.aat.gpx.GpxInformation;
+import ch.bailu.aat.gpx.InfoID;
 
 public abstract class TrackDescriptionView extends ViewGroup 
 implements OnContentUpdatedInterface {
@@ -28,7 +29,7 @@ implements OnContentUpdatedInterface {
         }
         
         public boolean pass(GpxInformation info) {
-            return (id==GpxInformation.ID.INFO_ID_ALL || id==info.getID());
+            return (id== InfoID.ALL || id==info.getID());
         }
     }
     

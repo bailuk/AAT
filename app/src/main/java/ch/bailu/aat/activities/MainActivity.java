@@ -8,6 +8,7 @@ import android.widget.LinearLayout;
 
 import ch.bailu.aat.dispatcher.CurrentLocationSource;
 import ch.bailu.aat.dispatcher.TrackerSource;
+import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.helpers.AppDirectory;
 import ch.bailu.aat.preferences.SolidDataDirectory;
 import ch.bailu.aat.preferences.SolidDirectory;
@@ -62,8 +63,8 @@ public class MainActivity extends AbsDispatcher {
 
 
     private void createDispatcher() {
-        addTarget(gpsState, INFO_ID_LOCATION);
-        addTarget(trackerState, INFO_ID_TRACKER);
+        addTarget(gpsState, InfoID.LOCATION);
+        addTarget(trackerState, InfoID.TRACKER);
 
         addSource(new TrackerSource(getServiceContext()));
         addSource(new CurrentLocationSource(getServiceContext()));

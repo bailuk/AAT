@@ -15,6 +15,7 @@ import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapController;
 
 import ch.bailu.aat.gpx.GpxInformation;
+import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.preferences.SolidPositionLock;
 import ch.bailu.aat.preferences.SolidTileSize;
 import ch.bailu.aat.preferences.Storage;
@@ -142,7 +143,7 @@ implements MapListener, OnSharedPreferenceChangeListener, OnTouchListener {
 
     
     private void updateLocation(GpxInformation info) {
-        if (info.getID()==GpxInformation.ID.INFO_ID_LOCATION) {
+        if (info.getID()== InfoID.LOCATION) {
             location.setLatitudeE6(info.getLatitudeE6());
             location.setLongitudeE6(info.getLongitudeE6());
         }

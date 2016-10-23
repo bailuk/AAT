@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import ch.bailu.aat.R;
 import ch.bailu.aat.gpx.GpxInformation;
+import ch.bailu.aat.gpx.StateID;
 import ch.bailu.aat.helpers.AppLog;
 
 
@@ -21,7 +22,7 @@ public class OffState extends State {
 
     @Override
     public int getStateID() {
-        return GpxInformation.ID.STATE_OFF;
+        return StateID.OFF;
     }
 
 
@@ -43,7 +44,7 @@ public class OffState extends State {
             internal.state = new OnState(internal);
             
         } catch (IOException e) {
-            AppLog.e(internal, e);
+            AppLog.e(internal.scontext.getContext(), e);
             internal.logger = Logger.createNullLogger();
         }
     }

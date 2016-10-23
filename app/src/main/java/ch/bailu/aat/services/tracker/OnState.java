@@ -3,7 +3,7 @@ package ch.bailu.aat.services.tracker;
 import java.io.IOException;
 
 import ch.bailu.aat.R;
-import ch.bailu.aat.gpx.GpxInformation;
+import ch.bailu.aat.gpx.StateID;
 import ch.bailu.aat.helpers.AppBroadcaster;
 
 public class OnState extends State {
@@ -23,7 +23,7 @@ public class OnState extends State {
 
     @Override
     public int getStateID() {
-        return GpxInformation.ID.STATE_ON;
+        return StateID.ON;
     }
 
     @Override

@@ -8,6 +8,7 @@ import android.view.View.OnClickListener;
 
 import ch.bailu.aat.description.GpsStateDescription;
 import ch.bailu.aat.gpx.GpxInformation;
+import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.preferences.SolidGPSLock;
 import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat.views.description.NumberButton;
@@ -18,7 +19,7 @@ public class GPSStateButton extends NumberButton implements OnClickListener, OnS
     private final SolidGPSLock slock;
     
     public GPSStateButton(Context c) {
-        super(new GpsStateDescription(c), GpxInformation.ID.INFO_ID_LOCATION);
+        super(new GpsStateDescription(c), InfoID.LOCATION);
         
         
         storage=Storage.global(c);

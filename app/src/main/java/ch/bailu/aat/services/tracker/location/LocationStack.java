@@ -52,7 +52,7 @@ public class LocationStack implements Closeable,  OnSharedPreferenceChangeListen
 
         itemList.add(new AccelerationFilter(lastItem()));
         itemList.add(new AccuracyFilter(lastItem()));
-        //itemList.add(new InformationFilter(lastItem()));
+        itemList.add(new InformationFilter(lastItem()));
 
         dirty = new DirtyLocation(lastItem(),scontext.getContext()); 
         itemList.add(dirty);

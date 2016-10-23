@@ -19,6 +19,7 @@ import java.io.IOException;
 import ch.bailu.aat.R;
 import ch.bailu.aat.dispatcher.CustomFileSource;
 import ch.bailu.aat.gpx.GpxInformation;
+import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.helpers.AbsTextBackup;
 import ch.bailu.aat.helpers.AppBroadcaster;
 import ch.bailu.aat.helpers.AppDirectory;
@@ -129,7 +130,7 @@ public abstract class AbsOsmApiActivity extends AbsDispatcher implements OnClick
         AppTheme.themify(postLabel);
 
         list = new NodeListView(getServiceContext(),SOLID_KEY,
-                GpxInformation.ID.INFO_ID_FILEVIEW);
+                InfoID.FILEVIEW);
 
 
         view.addView(list,layout);

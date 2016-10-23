@@ -5,6 +5,7 @@ import android.content.Context;
 
 import ch.bailu.aat.description.ContentDescription;
 import ch.bailu.aat.gpx.GpxInformation;
+import ch.bailu.aat.gpx.InfoID;
 
 
 public class CockpitView extends DescriptionViewGroup {
@@ -12,7 +13,7 @@ public class CockpitView extends DescriptionViewGroup {
     private final Layouter layouter = new Layouter();
 
     public CockpitView(Context context, String key,  ContentDescription d[]) {
-        this(context, key, GpxInformation.ID.INFO_ID_ALL, d);
+        this(context, key, InfoID.ALL, d);
     }
 
     public CockpitView(Context context, String key, int filter, ContentDescription d[]) {

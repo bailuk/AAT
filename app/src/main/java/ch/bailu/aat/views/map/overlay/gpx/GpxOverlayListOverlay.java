@@ -2,6 +2,7 @@ package ch.bailu.aat.views.map.overlay.gpx;
 
 import ch.bailu.aat.dispatcher.OverlaySource;
 import ch.bailu.aat.gpx.GpxInformation;
+import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.helpers.AppTheme;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.views.map.OsmInteractiveView;
@@ -19,7 +20,7 @@ public class GpxOverlayListOverlay extends OsmOverlay {
         list = new GpxDynOverlay[OverlaySource.MAX_OVERLAYS];
 
         for (int i=0; i<list.length; i++) 
-            list[i] = new GpxDynOverlay(v, sc, GpxInformation.ID.INFO_ID_OVERLAY+i, 
+            list[i] = new GpxDynOverlay(v, sc, InfoID.OVERLAY+i,
                     AppTheme.OVERLAY_COLOR[i+4]);
     }
 

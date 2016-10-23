@@ -5,6 +5,7 @@ import android.view.View.OnClickListener;
 
 import ch.bailu.aat.description.TrackerStateDescription;
 import ch.bailu.aat.gpx.GpxInformation;
+import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.views.description.NumberButton;
 
@@ -14,8 +15,8 @@ public class TrackerStateButton extends NumberButton implements OnClickListener 
     
     
     public TrackerStateButton(ServiceContext c) {
-        super(new TrackerStateDescription(c.getContext()), 
-                GpxInformation.ID.INFO_ID_TRACKER);
+        super(new TrackerStateDescription(c.getContext()),
+                InfoID.TRACKER);
         
         scontext=c;
 

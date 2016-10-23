@@ -7,6 +7,7 @@ import android.widget.TextView;
 
 import ch.bailu.aat.description.ContentDescription;
 import ch.bailu.aat.gpx.GpxInformation;
+import ch.bailu.aat.gpx.InfoID;
 
 public class NumberView extends TrackDescriptionView {
 
@@ -33,7 +34,7 @@ public class NumberView extends TrackDescriptionView {
 
     
     public NumberView(ContentDescription data) {
-        this(data, GpxInformation.ID.INFO_ID_ALL);
+        this(data, InfoID.ALL);
     }
 
     private void setNumberFont(int size) {

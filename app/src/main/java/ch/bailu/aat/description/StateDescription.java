@@ -4,6 +4,7 @@ import android.content.Context;
 
 import ch.bailu.aat.R;
 import ch.bailu.aat.gpx.GpxInformation;
+import ch.bailu.aat.gpx.StateID;
 
 public abstract class StateDescription extends ContentDescription {
 
@@ -12,7 +13,7 @@ public abstract class StateDescription extends ContentDescription {
 		super(c);
 	}
 
-	private int state=GpxInformation.ID.STATE_OFF;
+	private int state= StateID.OFF;
 
     @Override
     public String getLabel() {
@@ -24,12 +25,12 @@ public abstract class StateDescription extends ContentDescription {
         String value;
         
         switch (state) {
-        case GpxInformation.ID.STATE_NOACCESS: value=getString(R.string.gps_noaccess); break;
-        case GpxInformation.ID.STATE_NOSERVICE: value=getString(R.string.gps_nogps); break;
-        case GpxInformation.ID.STATE_ON: value=getString(R.string.on); break;
-        case GpxInformation.ID.STATE_OFF: value=getString(R.string.off); break;
-        case GpxInformation.ID.STATE_PAUSE: value=getString(R.string.status_paused); break;
-        case GpxInformation.ID.STATE_AUTOPAUSED: value=getString(R.string.status_autopaused); break;
+        case StateID.NOACCESS: value=getString(R.string.gps_noaccess); break;
+        case StateID.NOSERVICE: value=getString(R.string.gps_nogps); break;
+        case StateID.ON: value=getString(R.string.on); break;
+        case StateID.OFF: value=getString(R.string.off); break;
+        case StateID.PAUSE: value=getString(R.string.status_paused); break;
+        case StateID.AUTOPAUSED: value=getString(R.string.status_autopaused); break;
         default: value=getString(R.string.gps_wait); break;
         }
         return value;

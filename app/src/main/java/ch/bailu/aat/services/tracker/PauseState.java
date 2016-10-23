@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import ch.bailu.aat.R;
 import ch.bailu.aat.gpx.GpxInformation;
+import ch.bailu.aat.gpx.StateID;
 
 
 public class PauseState extends State {
@@ -23,7 +24,7 @@ public class PauseState extends State {
 
     @Override
     public int getStateID() {
-        return GpxInformation.ID.STATE_PAUSE;
+        return StateID.PAUSE;
     }
 
 

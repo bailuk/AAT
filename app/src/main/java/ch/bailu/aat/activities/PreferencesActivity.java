@@ -5,6 +5,7 @@ import android.widget.LinearLayout;
 
 import ch.bailu.aat.R;
 import ch.bailu.aat.gpx.GpxInformation;
+import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.preferences.SolidPreset;
 import ch.bailu.aat.services.tileremover.TileRemoverService;
 import ch.bailu.aat.views.ContentView;
@@ -42,7 +43,7 @@ public class PreferencesActivity extends AbsDispatcher {
 
 
     private MultiView createMultiView() {
-        MultiView mv = new MultiView(this, SOLID_KEY, GpxInformation.ID.INFO_ID_ALL);
+        MultiView mv = new MultiView(this, SOLID_KEY, InfoID.ALL);
 
         final int l = new SolidPreset(this).length();
 

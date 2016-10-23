@@ -19,6 +19,7 @@ import ch.bailu.aat.dispatcher.CurrentLocationSource;
 import ch.bailu.aat.dispatcher.IteratorSource;
 import ch.bailu.aat.dispatcher.OverlaySource;
 import ch.bailu.aat.gpx.GpxInformation;
+import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.helpers.FileAction;
 import ch.bailu.aat.menus.FileMenu;
 import ch.bailu.aat.preferences.SolidDirectoryQuery;
@@ -117,7 +118,7 @@ public abstract class AbsGpxListActivity extends AbsDispatcher implements OnItem
 
         final OsmOverlay overlayList[] = {
                 new GpxOverlayListOverlay(map, getServiceContext()),
-                new GpxDynOverlay(map, getServiceContext(), GpxInformation.ID.INFO_ID_LIST_SUMMARY),
+                new GpxDynOverlay(map, getServiceContext(), InfoID.LIST_SUMMARY),
                 new FileControlBar(map, this),
                 new CurrentLocationOverlay(map),
                 new GridDynOverlay(map, getServiceContext()),
@@ -138,15 +139,15 @@ public abstract class AbsGpxListActivity extends AbsDispatcher implements OnItem
 
         summary.add(new TitleView(this, getLabel() + " - " + summary_label));
 
-        multiView = new MultiView(this, solid_key, INFO_ID_ALL);
+        multiView = new MultiView(this, solid_key, InfoID.ALL);
 
         multiView.add(listView, list_label);
         multiView.add(map, map, map_label);
         multiView.add(filter,
-                filter.addAllContent(filter_content, INFO_ID_LIST_SUMMARY),
+                filter.addAllContent(filter_content, InfoID.LIST_SUMMARY),
                 filter_label);
         multiView.add(summary, summary.addAllContent(summary_content,
-                GpxInformation.ID.INFO_ID_LIST_SUMMARY),
+                InfoID.LIST_SUMMARY),
                 summary_label);
 
         return multiView;

@@ -12,6 +12,7 @@ import java.io.File;
 import ch.bailu.aat.coordinates.BoundingBox;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.GpxList;
+import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.helpers.AppBroadcaster;
 import ch.bailu.aat.helpers.AppIntent;
 import ch.bailu.aat.preferences.SolidOverlayFile;
@@ -46,7 +47,7 @@ public class OverlaySource extends ContentSource {
     @Override
     public void onResume() {
         for (int i=0; i<MAX_OVERLAYS; i++)
-            overlayList[i]= new OverlayInformation(GpxInformation.ID.INFO_ID_OVERLAY+i);
+            overlayList[i]= new OverlayInformation(InfoID.OVERLAY+i);
     }
 
 
@@ -73,7 +74,7 @@ public class OverlaySource extends ContentSource {
 
             updateID = id;
 
-            soverlay = new SolidOverlayFile(scontext.getContext(), id-ID.INFO_ID_OVERLAY);
+            soverlay = new SolidOverlayFile(scontext.getContext(), id-InfoID.OVERLAY);
             soverlay.register(onPreferencesChanged);
             AppBroadcaster.register(scontext.getContext(), onFileProcessed, AppBroadcaster.FILE_CHANGED_INCACHE);
         }

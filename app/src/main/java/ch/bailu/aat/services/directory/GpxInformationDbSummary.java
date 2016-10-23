@@ -9,6 +9,7 @@ import ch.bailu.aat.gpx.GpxBigDelta;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.GpxList;
 import ch.bailu.aat.gpx.GpxPoint;
+import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.gpx.interfaces.GpxType;
 
 public class GpxInformationDbSummary extends GpxInformation {
@@ -70,7 +71,7 @@ public class GpxInformationDbSummary extends GpxInformation {
     }
     
     public int getID() {
-        return GpxInformation.ID.INFO_ID_LIST_SUMMARY;
+        return InfoID.LIST_SUMMARY;
     }
 
 }

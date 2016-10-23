@@ -13,6 +13,7 @@ import ch.bailu.aat.description.TrackSizeDescription;
 import ch.bailu.aat.dispatcher.EditorSource;
 import ch.bailu.aat.dispatcher.OnContentUpdatedInterface;
 import ch.bailu.aat.gpx.GpxInformation;
+import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.helpers.AppDialog;
 import ch.bailu.aat.helpers.AppLog;
 import ch.bailu.aat.services.editor.EditorHelper;
@@ -45,7 +46,7 @@ public class GpxEditorActivity extends AbsFileContentActivity
         super.onCreate(savedInstanceState, SOLID_KEY);
 
 
-        addTarget(this, INFO_ID_FILEVIEW);
+        addTarget(this, InfoID.FILEVIEW);
     }
 
     @Override
@@ -59,12 +60,12 @@ public class GpxEditorActivity extends AbsFileContentActivity
 
         OsmOverlay overlayList[] = {
                 new GpxOverlayListOverlay(map, getServiceContext()),
-                new GpxDynOverlay(map, getServiceContext(), GpxInformation.ID.INFO_ID_TRACKER), 
+                new GpxDynOverlay(map, getServiceContext(), InfoID.TRACKER),
                 new GridDynOverlay(map, getServiceContext()),
                 new CurrentLocationOverlay(map),
                 new EditorOverlay(map,
                         getServiceContext(),
-                        GpxInformation.ID.INFO_ID_EDITOR_OVERLAY,
+                        InfoID.OVERLAY,
                         editor_helper),
                 new NavigationBarOverlay(map),
                 new InformationBarOverlay(map)
@@ -83,21 +84,21 @@ public class GpxEditorActivity extends AbsFileContentActivity
 
         NodeListView wayList = new NodeListView(getServiceContext(),
                 SOLID_KEY,
-                GpxInformation.ID.INFO_ID_EDITOR_OVERLAY
+                InfoID.EDITOR_OVERLAY
                 );
 
         VerticalScrollView summary = new VerticalScrollView(this);
         DistanceAltitudeGraphView graph =new DistanceAltitudeGraphView(this, SOLID_KEY);
 
 
-        MultiView mv = new MultiView(this, SOLID_KEY, GpxInformation.ID.INFO_ID_ALL);
+        MultiView mv = new MultiView(this, SOLID_KEY, InfoID.ALL);
 
         mv.addT(wayList);
         mv.addT(map);
-        mv.addT(new VerticalView(this, SOLID_KEY, GpxInformation.ID.INFO_ID_EDITOR_OVERLAY,
+        mv.addT(new VerticalView(this, SOLID_KEY, InfoID.EDITOR_OVERLAY,
                 new View[] {summary, graph},
                 new OnContentUpdatedInterface[]
-                        {summary.addAllContent(summaryData, GpxInformation.ID.INFO_ID_EDITOR_OVERLAY), graph}
+                        {summary.addAllContent(summaryData, InfoID.EDITOR_OVERLAY), graph}
         ));
         return mv;
     }

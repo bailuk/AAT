@@ -25,6 +25,7 @@ import ch.bailu.aat.dispatcher.IteratorSource;
 import ch.bailu.aat.dispatcher.OverlaySource;
 import ch.bailu.aat.dispatcher.TrackerSource;
 import ch.bailu.aat.gpx.GpxInformation;
+import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.helpers.AppLayout;
 import ch.bailu.aat.helpers.ToolTip;
 import ch.bailu.aat.menus.FileMenu;
@@ -115,8 +116,8 @@ public abstract class AbsFileContentActivity extends AbsDispatcher implements On
 
         final OsmOverlay overlayList[] = {
                 new GpxOverlayListOverlay(map, getServiceContext()),
-                new GpxDynOverlay(map, getServiceContext(), GpxInformation.ID.INFO_ID_TRACKER),
-                new GpxDynOverlay(map, getServiceContext(), GpxInformation.ID.INFO_ID_FILEVIEW),
+                new GpxDynOverlay(map, getServiceContext(), InfoID.TRACKER),
+                new GpxDynOverlay(map, getServiceContext(), InfoID.FILEVIEW),
                 new CurrentLocationOverlay(map),
                 new GridDynOverlay(map, getServiceContext()),
                 new NavigationBarOverlay(map),
@@ -124,7 +125,7 @@ public abstract class AbsFileContentActivity extends AbsDispatcher implements On
                 new EditorOverlay(
                         map,
                         getServiceContext(),
-                        GpxInformation.ID.INFO_ID_EDITOR_DRAFT,
+                        InfoID.EDITOR_DRAFT,
                         editor_helper),
 
         };
@@ -148,14 +149,14 @@ public abstract class AbsFileContentActivity extends AbsDispatcher implements On
 
         VerticalScrollView summary = new VerticalScrollView(this);
         VerticalView graph = new VerticalView(this, SOLID_KEY,
-                GpxInformation.ID.INFO_ID_FILEVIEW,
+                InfoID.FILEVIEW,
                 new TrackDescriptionView[] {
                         new DistanceAltitudeGraphView(this, SOLID_KEY),
                         new DistanceSpeedGraphView(this, SOLID_KEY)});
 
 
-        MultiView mv = new MultiView(this, SOLID_KEY, GpxInformation.ID.INFO_ID_ALL);
-        mv.add(summary, summary.addAllContent(summaryData, GpxInformation.ID.INFO_ID_FILEVIEW));
+        MultiView mv = new MultiView(this, SOLID_KEY, InfoID.ALL);
+        mv.add(summary, summary.addAllContent(summaryData, InfoID.FILEVIEW));
         mv.addT(map);
         mv.addT(graph);
         return mv;
@@ -176,7 +177,7 @@ public abstract class AbsFileContentActivity extends AbsDispatcher implements On
         addSource(editor_source);
 
         addTarget(multiView);
-        addTarget(busyButton.getBusyControl(GpxInformation.ID.INFO_ID_FILEVIEW), INFO_ID_FILEVIEW);
+        addTarget(busyButton.getBusyControl(InfoID.FILEVIEW), InfoID.FILEVIEW);
 
     }
 

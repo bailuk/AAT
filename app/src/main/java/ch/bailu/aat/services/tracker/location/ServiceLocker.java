@@ -6,6 +6,7 @@ import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import java.io.Closeable;
 
 import ch.bailu.aat.gpx.GpxInformation;
+import ch.bailu.aat.gpx.StateID;
 import ch.bailu.aat.preferences.SolidGPSLock;
 import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat.services.ServiceContext;
@@ -14,7 +15,7 @@ public class ServiceLocker implements Closeable, OnSharedPreferenceChangeListene
 
     private final SolidGPSLock slock;
     private final ServiceContext scontext;
-    private int gpsStatus=GpxInformation.ID.STATE_OFF;
+    private int gpsStatus= StateID.OFF;
     
     
     public ServiceLocker(ServiceContext sc) {
@@ -49,13 +50,13 @@ public class ServiceLocker implements Closeable, OnSharedPreferenceChangeListene
     
     
     public void free() {
-        autoLock(GpxInformation.ID.STATE_OFF);
+        autoLock(StateID.OFF);
     }
     
     
     private void autoLock() {
         if (slock.isEnabled() && 
-                (gpsStatus == GpxInformation.ID.STATE_ON || gpsStatus== GpxInformation.ID.STATE_WAIT)) {
+                (gpsStatus == StateID.ON || gpsStatus== StateID.WAIT)) {
             scontext.lock(slock.getKey());
             
         } else {

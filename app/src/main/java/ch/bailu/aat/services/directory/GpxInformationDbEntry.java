@@ -6,6 +6,7 @@ import java.io.File;
 
 import ch.bailu.aat.coordinates.BoundingBox;
 import ch.bailu.aat.gpx.GpxInformation;
+import ch.bailu.aat.gpx.InfoID;
 
 public class GpxInformationDbEntry extends GpxInformation {
     private final Cursor cursor;
@@ -122,6 +123,6 @@ public class GpxInformationDbEntry extends GpxInformation {
 
     @Override
     public int getID() {
-        return ID.INFO_ID_FILEVIEW;
+        return InfoID.FILEVIEW;
     }
 }

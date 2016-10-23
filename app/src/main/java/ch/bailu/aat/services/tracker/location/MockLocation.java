@@ -9,6 +9,8 @@ import ch.bailu.aat.coordinates.BoundingBox;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.GpxList;
 import ch.bailu.aat.gpx.GpxPointNode;
+import ch.bailu.aat.gpx.InfoID;
+import ch.bailu.aat.gpx.StateID;
 import ch.bailu.aat.gpx.interfaces.GpxType;
 import ch.bailu.aat.gpx.parser.SimpleGpxListReader;
 import ch.bailu.aat.helpers.AppLog;
@@ -36,11 +38,11 @@ public class MockLocation extends LocationStackChainedItem implements Runnable{
         	mockData = new SimpleGpxListReader(new FileAccess(file)).getGpxList();
             
             timer.kick();
-            sendState(GpxInformation.ID.STATE_WAIT);
+            sendState(StateID.WAIT);
             
         } catch (IOException e) {
             AppLog.e(c, e);
-            sendState(GpxInformation.ID.STATE_OFF);
+            sendState(StateID.OFF);
         }
     }
 
@@ -57,10 +59,10 @@ public class MockLocation extends LocationStackChainedItem implements Runnable{
         } else {
             node = (GpxPointNode) mockData.getPointList().getFirst(); 
             if (sendLocation()) {
-                sendState(GpxInformation.ID.STATE_ON);
+                sendState(StateID.ON);
                 timer.kick();
             } else {
-                sendState(GpxInformation.ID.STATE_OFF);
+                sendState(StateID.OFF);
             }
         }
     }
@@ -89,7 +91,7 @@ public class MockLocation extends LocationStackChainedItem implements Runnable{
         }
         @Override
         public int getID() {
-            return ID.INFO_ID_LOCATION;
+            return InfoID.LOCATION;
         }
         @Override
         public int getState() {

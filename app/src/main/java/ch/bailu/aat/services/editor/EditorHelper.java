@@ -3,6 +3,7 @@ package ch.bailu.aat.services.editor;
 import java.io.File;
 
 import ch.bailu.aat.gpx.GpxInformation;
+import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.helpers.AppDirectory;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.cache.GpxObjectEditable;
@@ -14,7 +15,7 @@ public class EditorHelper {
 
     private ObjectHandle handle = ObjectHandle.NULL;
 
-    private int IID=GpxInformation.ID.INFO_ID_EDITOR_DRAFT;
+    private int IID= InfoID.EDITOR_DRAFT;
     private String ID;
 
 
@@ -22,13 +23,13 @@ public class EditorHelper {
     public EditorHelper(ServiceContext sc) {
         scontext = sc;
 
-        IID = GpxInformation.ID.INFO_ID_EDITOR_DRAFT;
+        IID = InfoID.EDITOR_DRAFT;
         ID = AppDirectory.getEditorDraft(scontext.getContext()).getAbsolutePath();
     }
 
 
     public void edit(File f) {
-        IID = GpxInformation.ID.INFO_ID_EDITOR_OVERLAY;
+        IID = InfoID.EDITOR_OVERLAY;
         ID = f.getAbsolutePath();
         onResume();
     }
@@ -42,7 +43,7 @@ public class EditorHelper {
     }
 
     public void onPause() {
-        if (IID==GpxInformation.ID.INFO_ID_EDITOR_DRAFT) save();
+        if (IID==InfoID.EDITOR_DRAFT) save();
 
         handle.free();
         handle = ObjectHandle.NULL;
@@ -50,11 +51,6 @@ public class EditorHelper {
     }
 
 
-/*
-    public int getIID() {
-        return IID;
-    }
-  */
     public GpxInformation getInformation() {
         if (GpxObjectEditable.class.isInstance(handle)) {
             return ((GpxObjectEditable)handle).editor;

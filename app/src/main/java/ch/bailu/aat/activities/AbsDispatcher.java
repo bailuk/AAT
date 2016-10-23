@@ -3,13 +3,13 @@ package ch.bailu.aat.activities;
 import android.os.Bundle;
 
 import ch.bailu.aat.dispatcher.ContentSource;
-import ch.bailu.aat.dispatcher.DispatcherInterface;
 import ch.bailu.aat.dispatcher.Dispatcher;
+import ch.bailu.aat.dispatcher.DispatcherInterface;
 import ch.bailu.aat.dispatcher.OnContentUpdatedInterface;
-import ch.bailu.aat.gpx.GpxInformation;
+import ch.bailu.aat.gpx.InfoID;
 
 public abstract class AbsDispatcher extends AbsMenu
-        implements GpxInformation.ID, DispatcherInterface {
+        implements DispatcherInterface {
 
     private Dispatcher dispatcher = null;
 
@@ -23,7 +23,7 @@ public abstract class AbsDispatcher extends AbsMenu
 
 
     public void addTarget(OnContentUpdatedInterface target) {
-        addTarget(target, GpxInformation.ID.INFO_ID_ALL);
+        addTarget(target, InfoID.ALL);
     }
 
     @Override

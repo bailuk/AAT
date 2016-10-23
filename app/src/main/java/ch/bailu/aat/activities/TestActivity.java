@@ -32,6 +32,7 @@ import ch.bailu.aat.dispatcher.CurrentLocationSource;
 import ch.bailu.aat.dispatcher.OverlaySource;
 import ch.bailu.aat.dispatcher.TrackerSource;
 import ch.bailu.aat.gpx.GpxInformation;
+import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.helpers.AppLog;
 import ch.bailu.aat.test.PreferencesFromSdcard;
 import ch.bailu.aat.test.PreferencesToSdcard;
@@ -134,14 +135,14 @@ public class TestActivity extends AbsDispatcher {
         statusTextView = new StatusTextView(this);
 
 
-        MultiView mv = new MultiView(this, SOLID_KEY, GpxInformation.ID.INFO_ID_ALL);
+        MultiView mv = new MultiView(this, SOLID_KEY, InfoID.ALL);
 
         mv.addT(map,getString(R.string.intro_map));
         mv.add(locationView, locationView.addAllContent(
-                locationDescription, GpxInformation.ID.INFO_ID_LOCATION), getString(R.string.gps));
+                locationDescription, InfoID.LOCATION), getString(R.string.gps));
 
         mv.add(trackerView, trackerView.addAllContent(
-                trackerDescription, GpxInformation.ID.INFO_ID_TRACKER), getString(R.string.tracker));
+                trackerDescription, InfoID.TRACKER), getString(R.string.tracker));
         mv.add(testsView, "Tests*");
         mv.add(statusTextView, getString(R.string.intro_status));
         return mv;
@@ -160,8 +161,8 @@ public class TestActivity extends AbsDispatcher {
     private void createDispatcher() {
         OsmOverlay overlayList[] = {
                 new GpxOverlayListOverlay(map, getServiceContext()),
-                new GpxDynOverlay(map, getServiceContext(), GpxInformation.ID.INFO_ID_TRACKER),
-                new GpxTestOverlay(map, GpxInformation.ID.INFO_ID_OVERLAY),
+                new GpxDynOverlay(map, getServiceContext(), InfoID.TRACKER),
+                new GpxTestOverlay(map, InfoID.OVERLAY),
                 new GridDynOverlay(map, getServiceContext()),
                 new CurrentLocationOverlay(map),
                 new NavigationBarOverlay(map),

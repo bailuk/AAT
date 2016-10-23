@@ -20,6 +20,7 @@ import ch.bailu.aat.dispatcher.EditorSource;
 import ch.bailu.aat.dispatcher.OverlaySource;
 import ch.bailu.aat.dispatcher.TrackerSource;
 import ch.bailu.aat.gpx.GpxInformation;
+import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.helpers.AppLayout;
 import ch.bailu.aat.services.editor.EditorHelper;
 import ch.bailu.aat.views.ControlBar;
@@ -79,6 +80,20 @@ public class SplitViewActivity extends AbsDispatcher implements OnClickListener{
 
     private View createMapView() {
         mapView = new OsmInteractiveView(getServiceContext(), SOLID_MAP_KEY);
+
+        OsmOverlay overlayList[] = {
+                new GpxOverlayListOverlay(mapView, getServiceContext()),
+                new GpxDynOverlay(mapView, getServiceContext(), InfoID.TRACKER),
+                new CurrentLocationOverlay(mapView),
+                new GridDynOverlay(mapView, getServiceContext()),
+                new NavigationBarOverlay(mapView),
+                new InformationBarOverlay(mapView),
+                new CustomBarOverlay(mapView, createButtonBar()),
+                new EditorOverlay(mapView, getServiceContext(),  InfoID.EDITOR_DRAFT, edit),
+
+        };
+        mapView.setOverlayList(overlayList);
+
         return mapView;
     }
 
@@ -100,16 +115,16 @@ public class SplitViewActivity extends AbsDispatcher implements OnClickListener{
 
         OsmOverlay overlayList[] = {
                 new GpxOverlayListOverlay(mapViewAlt,getServiceContext()),
-                new GpxDynOverlay(mapViewAlt, getServiceContext(), GpxInformation.ID.INFO_ID_TRACKER),
+                new GpxDynOverlay(mapViewAlt, getServiceContext(), InfoID.TRACKER),
                 new CurrentLocationOverlay(mapViewAlt),
                 new NavigationBarOverlay(mapViewAlt,6),
         };
         mapViewAlt.setOverlayList(overlayList);
 
 
-        multiView = new MultiView(this, SOLID_KEY, GpxInformation.ID.INFO_ID_TRACKER);
-        multiView.addT(new CockpitView(this, SOLID_KEY, GpxInformation.ID.INFO_ID_TRACKER, cockpitA));
-        multiView.addT(new CockpitView(this, SOLID_KEY, GpxInformation.ID.INFO_ID_TRACKER, cockpitB));
+        multiView = new MultiView(this, SOLID_KEY, InfoID.TRACKER);
+        multiView.addT(new CockpitView(this, SOLID_KEY, InfoID.TRACKER, cockpitA));
+        multiView.addT(new CockpitView(this, SOLID_KEY, InfoID.TRACKER, cockpitB));
         multiView.addT(new DistanceAltitudeGraphView(this, SOLID_KEY));
         multiView.addT(new DistanceSpeedGraphView(this, SOLID_KEY));
         multiView.addT(mapViewAlt);
@@ -152,22 +167,8 @@ public class SplitViewActivity extends AbsDispatcher implements OnClickListener{
 
 
     private void createDispatcher() {
-
-        OsmOverlay overlayList[] = {
-                new GpxOverlayListOverlay(mapView, getServiceContext()),
-                new GpxDynOverlay(mapView, getServiceContext(), GpxInformation.ID.INFO_ID_TRACKER),
-                new CurrentLocationOverlay(mapView),
-                new GridDynOverlay(mapView, getServiceContext()),
-                new NavigationBarOverlay(mapView),
-                new InformationBarOverlay(mapView),
-                new CustomBarOverlay(mapView, createButtonBar()),
-                new EditorOverlay(mapView, getServiceContext(),  GpxInformation.ID.INFO_ID_EDITOR_DRAFT, edit),
-
-        };
-        mapView.setOverlayList(overlayList);
-
         addTarget(multiView);
-        addTarget(trackerState, INFO_ID_TRACKER);
+        addTarget(trackerState, InfoID.TRACKER);
         addTarget(mapView);
 
         addSource(new EditorSource(getServiceContext(),edit));

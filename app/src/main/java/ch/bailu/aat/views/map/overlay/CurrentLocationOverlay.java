@@ -7,6 +7,7 @@ import android.graphics.Point;
 import org.osmdroid.util.GeoPoint;
 
 import ch.bailu.aat.gpx.GpxInformation;
+import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.helpers.AppTheme;
 import ch.bailu.aat.views.map.OsmInteractiveView;
 
@@ -47,7 +48,7 @@ public class CurrentLocationOverlay extends OsmOverlay {
 
     @Override
     public void onContentUpdated(GpxInformation info) {
-        if (info.getID()==GpxInformation.ID.INFO_ID_LOCATION) {
+        if (info.getID()== InfoID.LOCATION) {
             center.setLatitudeE6(info.getLatitudeE6());
             center.setLongitudeE6(info.getLongitudeE6());
             accuracy=info.getAccuracy();

@@ -9,6 +9,7 @@ import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.GpxList;
 import ch.bailu.aat.gpx.GpxNodeFinder;
 import ch.bailu.aat.gpx.GpxPointNode;
+import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.views.map.OsmInteractiveView;
 import ch.bailu.aat.views.map.overlay.MapPainter;
 import ch.bailu.aat.views.map.overlay.OsmOverlay;
@@ -130,7 +131,7 @@ public abstract class NodeSelectorOverlay extends OsmOverlay {
 
     @Override
     public void onContentUpdated(GpxInformation info) {
-        if (GpxInformation.ID.INFO_ID_ALL == ID || info.getID() == ID) {
+        if (InfoID.ALL == ID || info.getID() == ID) {
             if (info.isLoaded()) {
                 gpxHash.put(info.getID(), info);
 

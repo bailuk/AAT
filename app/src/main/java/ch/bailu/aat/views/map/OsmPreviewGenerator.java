@@ -9,6 +9,7 @@ import java.io.FileOutputStream;
 import ch.bailu.aat.gpx.GpxFileWrapper;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.GpxList;
+import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.helpers.AppBroadcaster;
 import ch.bailu.aat.helpers.AppLog;
 import ch.bailu.aat.services.ServiceContext;
@@ -35,7 +36,7 @@ public class OsmPreviewGenerator implements Closeable {
         map.setDrawingCacheEnabled(true);
         
         final OsmOverlay[] overlays = new OsmOverlay[] {
-                new GpxDynOverlay(map, sc, GpxInformation.ID.INFO_ID_FILEVIEW)
+                new GpxDynOverlay(map, sc, InfoID.FILEVIEW)
         };
         map.setOverlayList(overlays);
         

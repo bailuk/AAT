@@ -5,6 +5,7 @@ import android.util.SparseArray;
 import java.util.ArrayList;
 
 import ch.bailu.aat.gpx.GpxInformation;
+import ch.bailu.aat.gpx.InfoID;
 
 public class Dispatcher implements DispatcherInterface, OnContentUpdatedInterface {
 
@@ -98,7 +99,7 @@ public class Dispatcher implements DispatcherInterface, OnContentUpdatedInterfac
         @Override
         public void onContentUpdated(GpxInformation info) {
             update(info.getID(), info);
-            update(GpxInformation.ID.INFO_ID_ALL, info);
+            update(InfoID.ALL, info);
         }
 
 

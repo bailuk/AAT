@@ -16,6 +16,7 @@ import ch.bailu.aat.dispatcher.TrackerSource;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.GpxList;
 import ch.bailu.aat.gpx.GpxListArray;
+import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.helpers.AppLayout;
 import ch.bailu.aat.views.ContentView;
 import ch.bailu.aat.views.ControlBar;
@@ -98,14 +99,14 @@ public class NodeDetailActivity extends AbsDispatcher
                 map
         };
 
-        return new VerticalView(this, SOLID_KEY, GpxInformation.ID.INFO_ID_ALL, views, targets);
+        return new VerticalView(this, SOLID_KEY, InfoID.ALL, views, targets);
     }
 
 
     private void createDispatcher() {
         OsmOverlay overlayList[] = {
-                new GpxDynOverlay(map, getServiceContext(), GpxInformation.ID.INFO_ID_TRACKER),
-                new GpxDynOverlay(map, getServiceContext(), GpxInformation.ID.INFO_ID_FILEVIEW),
+                new GpxDynOverlay(map, getServiceContext(), InfoID.TRACKER),
+                new GpxDynOverlay(map, getServiceContext(), InfoID.FILEVIEW),
                 new CurrentLocationOverlay(map),
                 new GridDynOverlay(map, getServiceContext()),
                 new NavigationBarOverlay(map),
@@ -115,7 +116,7 @@ public class NodeDetailActivity extends AbsDispatcher
         map.setOverlayList(overlayList);
 
         addTarget(verticalView);
-        addTarget(this, INFO_ID_FILEVIEW);
+        addTarget(this, InfoID.FILEVIEW);
         addTarget(map);
         addSource(new CurrentLocationSource(getServiceContext()));
         addSource(new CustomFileSource(getServiceContext(), fileID));
