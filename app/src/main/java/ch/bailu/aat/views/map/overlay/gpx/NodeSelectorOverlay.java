@@ -10,7 +10,6 @@ import ch.bailu.aat.gpx.GpxList;
 import ch.bailu.aat.gpx.GpxNodeFinder;
 import ch.bailu.aat.gpx.GpxPointNode;
 import ch.bailu.aat.gpx.InfoID;
-import ch.bailu.aat.helpers.AppLayout;
 import ch.bailu.aat.views.map.OsmInteractiveView;
 import ch.bailu.aat.views.map.overlay.MapPainter;
 import ch.bailu.aat.views.map.overlay.OsmOverlay;
@@ -45,8 +44,8 @@ public abstract class NodeSelectorOverlay extends OsmOverlay {
 
     public NodeSelectorOverlay(OsmInteractiveView v, int id) {
         super(v);
-        square_size = (int) (AppLayout.toDP(v.getContext(), SQUARE_SIZE) + 0.5f);
-        square_hsize = (int) (AppLayout.toDP(v.getContext(), SQUARE_HSIZE) + 0.5f);
+        square_size = getOsmView().res.toDPi(SQUARE_SIZE);
+        square_hsize = getOsmView().res.toDPi(SQUARE_HSIZE);
         centerRect.left=0;
         centerRect.right=square_size;
         centerRect.top=0;

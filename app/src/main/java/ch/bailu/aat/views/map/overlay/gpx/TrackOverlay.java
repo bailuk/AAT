@@ -3,7 +3,6 @@ package ch.bailu.aat.views.map.overlay.gpx;
 import android.graphics.Color;
 import android.graphics.Paint;
 
-import ch.bailu.aat.helpers.AppLayout;
 import ch.bailu.aat.views.graph.ColorTable;
 import ch.bailu.aat.views.map.AbsOsmView;
 import ch.bailu.aat.views.map.overlay.MapPainter;
@@ -20,7 +19,7 @@ public class TrackOverlay extends GpxOverlay{
         super(osm, id, Color.BLACK);
 
 
-        paint.setStrokeWidth(AppLayout.toDP(osm.getContext(),STROKE_WIDTH));
+        paint.setStrokeWidth(getOsmView().res.toDPf(STROKE_WIDTH));
         paint.setStrokeCap(Paint.Cap.ROUND);
         paint.setStrokeJoin(Paint.Join.ROUND);
     }

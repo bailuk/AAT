@@ -6,6 +6,8 @@ import android.graphics.drawable.BitmapDrawable;
 
 import org.osmdroid.views.MapView;
 
+import ch.bailu.aat.helpers.AppDensity;
+
 public class MapPainter {
 
     public final MapProjection  projection;
@@ -14,11 +16,11 @@ public class MapPainter {
     public final BitmapDrawable nodeBitmap;
 
     
-    public MapPainter(Context context) {
+    public MapPainter(Context context, AppDensity res) {
         projection=new MapProjection();
         nodes=new MapTwoNodes(this);
-        canvas=new MapCanvas(context, projection);
-        nodeBitmap = NodePainter.createNode(context.getResources());
+        canvas=new MapCanvas(context, projection, res);
+        nodeBitmap = NodePainter.createNode(res, context.getResources());
     }
 
     public void init(Canvas c, MapView map) {

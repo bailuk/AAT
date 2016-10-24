@@ -15,9 +15,9 @@ public abstract class OsmOverlay extends Overlay implements OnContentUpdatedInte
     private final MapPainter painter;
 
     
-    public OsmOverlay(AbsOsmView absOsmView) {
-        painter = new MapPainter(absOsmView.getContext());
-        osm = absOsmView;
+    public OsmOverlay(AbsOsmView o) {
+        painter = new MapPainter(o.getContext(), o.res);
+        osm = o;
     }
 
 

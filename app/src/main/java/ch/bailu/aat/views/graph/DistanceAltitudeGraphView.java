@@ -8,6 +8,7 @@ import ch.bailu.aat.gpx.GpxList;
 import ch.bailu.aat.gpx.GpxListWalker;
 import ch.bailu.aat.gpx.GpxPointNode;
 import ch.bailu.aat.gpx.GpxSegmentNode;
+import ch.bailu.aat.helpers.AppDensity;
 import ch.bailu.aat.preferences.SolidUnit;
 
 public class DistanceAltitudeGraphView extends AbsGraphView {
@@ -21,7 +22,7 @@ public class DistanceAltitudeGraphView extends AbsGraphView {
     public void plot(Canvas canvas, GpxList list, SolidUnit sunit, boolean markerMode) {
         int km_factor = (int) (list.getDelta().getDistance()/1000) + 1;
         GraphPlotter plotter = new GraphPlotter(canvas,getWidth(), getHeight(), 1000 * km_factor,
-                getContext().getResources().getDisplayMetrics());
+                new AppDensity(getContext()));
         GpxListWalker painter, scaleGenerator;
         
         if (markerMode) {

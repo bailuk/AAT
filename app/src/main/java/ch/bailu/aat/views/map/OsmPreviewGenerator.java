@@ -11,6 +11,7 @@ import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.GpxList;
 import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.helpers.AppBroadcaster;
+import ch.bailu.aat.helpers.AppLayout;
 import ch.bailu.aat.helpers.AppLog;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.views.map.overlay.OsmOverlay;
@@ -18,6 +19,7 @@ import ch.bailu.aat.views.map.overlay.gpx.GpxDynOverlay;
 
 public class OsmPreviewGenerator implements Closeable {
     public static final int BITMAP_SIZE=128;
+
 
     private final OsmViewStatic map;
     private final ServiceContext serviceContext;
@@ -31,6 +33,8 @@ public class OsmPreviewGenerator implements Closeable {
         serviceContext=sc;
         imageFile=o;
         tileProvider = new PreviewTileProvider(sc);
+
+
 
         map = new OsmViewStatic(serviceContext.getContext(), tileProvider);
         map.setDrawingCacheEnabled(true);

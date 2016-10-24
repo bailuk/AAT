@@ -8,16 +8,19 @@ import android.graphics.Paint;
 import android.graphics.Paint.Style;
 import android.graphics.drawable.BitmapDrawable;
 
+import ch.bailu.aat.helpers.AppDensity;
+
 public class NodePainter {
     private static final int STROKE_WIDTH=MapCanvas.EDGE_WIDTH;
     private static final int RADIUS=5;
 
 
-    public static BitmapDrawable createNode(Resources res) {
+    public static BitmapDrawable createNode(AppDensity res, Resources r) {
         final int color = Color.WHITE;
 
-        int stroke_width=(int)(res.getDisplayMetrics().density*STROKE_WIDTH + 0.5f);
-        int radius = (int)(res.getDisplayMetrics().density*RADIUS + 0.5f);
+
+        int stroke_width=res.toDPi(STROKE_WIDTH);
+        int radius = res.toDPi(RADIUS);
         int hsize = (radius+ stroke_width);
         int size = hsize * 2;
 
@@ -36,6 +39,6 @@ public class NodePainter {
         canvas.drawCircle(hsize, hsize, radius, stroke);
 
         
-        return new BitmapDrawable(res, bitmap);
+        return new BitmapDrawable(r, bitmap);
     }
 }

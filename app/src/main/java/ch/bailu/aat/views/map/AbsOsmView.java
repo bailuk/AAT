@@ -8,6 +8,7 @@ import org.osmdroid.views.MapView;
 import ch.bailu.aat.coordinates.BoundingBox;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.InfoID;
+import ch.bailu.aat.helpers.AppDensity;
 import ch.bailu.aat.services.cache.TileObject;
 import ch.bailu.aat.views.description.TrackDescriptionView;
 import ch.bailu.aat.views.map.overlay.OsmOverlay;
@@ -16,22 +17,29 @@ import ch.bailu.aat.views.map.overlay.gpx.MapIconCache;
 
 public abstract class AbsOsmView extends TrackDescriptionView {
     private BoundingBox pendingFrameBounding=null;
-    
+
+    public final AppDensity res;
     public final MapView map;
     public final MapIconCache mapIconCache = new MapIconCache();
     
-    private OverlayList overlayList = new OverlayList(this, new OsmOverlay[] {});
-    
-    
+    private OverlayList overlayList;
+
     public AbsOsmView(Context context, String key, AbsTileProvider provider, int tileSize) {
+        this(context, key, provider, tileSize, new AppDensity(context));
+    }
+
+    public AbsOsmView(Context context, String key, AbsTileProvider provider, int tileSize,
+                      AppDensity r) {
         super(context, key, InfoID.ALL);
-        
+
+        res = r;
+        overlayList = new OverlayList(this, new OsmOverlay[] {});
         map = createMapView(provider, tileSize);
         addView(map);
     }
 
     public AbsOsmView(Context context, AbsTileProvider provider) {
-        this(context, DEFAULT_SOLID_KEY, provider, TileObject.TILE_SIZE);
+        this(context, DEFAULT_SOLID_KEY, provider, TileObject.TILE_SIZE, new AppDensity());
     }
     
     

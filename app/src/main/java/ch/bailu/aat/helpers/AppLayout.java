@@ -92,23 +92,23 @@ public class AppLayout {
         return LinearLayout.VERTICAL;
     }
 
-
-    public static float toDP(Context context, float pixel) {
-        return toDP(context.getResources().getDisplayMetrics(), pixel);
+/*
+    public static float toDPf(Context context, float pixel) {
+        return toDPf(context.getResources().getDisplayMetrics(), pixel);
     }
 
-    public static float toDP(DisplayMetrics m, float pixel) {
+    public static float toDPf(DisplayMetrics m, float pixel) {
         return m.density*pixel;
     }
 
 
-    public static float toSDP(Context context, float pixel) {
-        return toSDP(context.getResources().getDisplayMetrics(), pixel);
+    public static float toSDPf(Context context, float pixel) {
+        return toSDPf(context.getResources().getDisplayMetrics(), pixel);
     }
 
-    public static float toSDP(DisplayMetrics m, float pixel) {
+    public static float toSDPf(DisplayMetrics m, float pixel) {
         return m.scaledDensity*pixel;
     }
-
+*/
 }
  

@@ -8,6 +8,7 @@ import ch.bailu.aat.gpx.GpxList;
 import ch.bailu.aat.gpx.GpxListWalker;
 import ch.bailu.aat.gpx.GpxPointNode;
 import ch.bailu.aat.gpx.GpxSegmentNode;
+import ch.bailu.aat.helpers.AppDensity;
 import ch.bailu.aat.helpers.AppTheme;
 import ch.bailu.aat.preferences.SolidUnit;
 
@@ -28,7 +29,7 @@ public class DistanceSpeedGraphView extends AbsGraphView {
 
         for (int i=0; i<plotter.length; i++) {
             plotter[i] = new GraphPlotter(canvas,getWidth(), getHeight(), 1000 * km_factor,
-                    getContext().getResources().getDisplayMetrics());
+                    new AppDensity(getContext()));
         }
 
         plotter[0].drawXScale(5, 

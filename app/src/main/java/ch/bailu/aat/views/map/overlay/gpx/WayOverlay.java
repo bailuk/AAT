@@ -2,7 +2,6 @@ package ch.bailu.aat.views.map.overlay.gpx;
 
 import android.graphics.drawable.Drawable;
 
-import ch.bailu.aat.helpers.AppLayout;
 import ch.bailu.aat.helpers.AppTheme;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.views.map.AbsOsmView;
@@ -28,7 +27,7 @@ public class WayOverlay extends GpxOverlay {
         super(osm, id, color);
         scontext = sc;
 
-        icon_size = (int)AppLayout.toDP(sc.getContext(), ICON_SIZE);
+        icon_size = getOsmView().res.toDPi(ICON_SIZE);
     }
 
 

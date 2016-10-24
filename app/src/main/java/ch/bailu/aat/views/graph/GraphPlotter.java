@@ -4,7 +4,8 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
-import android.util.DisplayMetrics;
+
+import ch.bailu.aat.helpers.AppDensity;
 
 public class GraphPlotter {
     private static final int TEXT_SIZE=15;
@@ -20,7 +21,7 @@ public class GraphPlotter {
     private final Scaler xscaler;
     private final InvertetOffsetScaler yscaler;
 
-    private final DisplayMetrics metrics;
+    private final AppDensity res;
 
     private final Paint paintFont;
     private final Paint paintPlotLines;
@@ -34,11 +35,11 @@ public class GraphPlotter {
     
     private Point pointA=new Point(-5,-5), pointB = new Point(-5,-5);
     
-    public GraphPlotter(Canvas c, int w, int h, float xScale, DisplayMetrics m) {
+    public GraphPlotter(Canvas c, int w, int h, float xScale, AppDensity r) {
+        res = r;
         width=w;
         height=h;
 
-        metrics = m;
         canvas = c;
 
 
@@ -46,13 +47,13 @@ public class GraphPlotter {
         paintFont.setAntiAlias(true);
         paintFont.setDither(false);
         paintFont.setColor(Color.WHITE);
-        paintFont.setTextSize(toSDP(TEXT_SIZE));
+        paintFont.setTextSize(res.toSDPf(TEXT_SIZE));
 
 
         paintPlotLines = new Paint();
         paintPlotLines.setAntiAlias(true);
         paintPlotLines.setDither(false);
-        paintPlotLines.setStrokeWidth(toDP(2));
+        paintPlotLines.setStrokeWidth(res.toDPf(2));
 
         paintLines = new Paint();
         paintLines.setAntiAlias(true);
@@ -61,23 +62,15 @@ public class GraphPlotter {
         paintLines.setColor(Color.GRAY);
 
         text_size = (int)paintFont.getTextSize();
-        ylabel_xoffset = toDP(YLABEL_XOFFSET);
-        ylabel_yoffset = toDP(YLABEL_YOFFSET);
+        ylabel_xoffset = res.toDPi(YLABEL_XOFFSET);
+        ylabel_yoffset = res.toDPi(YLABEL_YOFFSET);
 
         xscaler = new Scaler(width, xScale);
         yscaler = new InvertetOffsetScaler(height);
     }
 
 
-    private float toSDP(float p) {
-        return p * metrics.scaledDensity;
-    }
 
-    private int toDP(float p) {
-        return (int) Math.max(1f, p * metrics.density);
-    }
-    
-    
     public void roundYScale(int roundTo) {
         yscaler.round(roundTo);
     }
