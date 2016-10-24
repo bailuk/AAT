@@ -9,6 +9,7 @@ HDPI="$DRAW-hdpi/"
 XHDPI="$DRAW-xhdpi/"
 
 
+
 function COPY {
     TARGET="${1//-/_}".png
 
@@ -73,6 +74,7 @@ CONVERT "button_selected.9"
 ####### Application
 CONVERT "icon" 
 CONVERT "status"
+CONVERT "icon_status"
 
 
 ####### Top-Bar

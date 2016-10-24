@@ -13,6 +13,7 @@ import java.lang.reflect.Method;
 import ch.bailu.aat.R;
 import ch.bailu.aat.activities.TrackerActivity;
 import ch.bailu.aat.helpers.AppLog;
+import ch.bailu.aat.helpers.AppTheme;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.ServiceContext.ServiceNotUpException;
 
@@ -51,8 +52,10 @@ public class StatusIcon  {
         } else if (Build.VERSION.SDK_INT < 16) {
             return createNotificationSDK11(intent, status_id);
 
-        } else {
+        } else if (Build.VERSION.SDK_INT < 21){
             return createNotificationSDK16(intent, status_id);
+        } else {
+            return createNotificationSDK21(intent, status_id);
         }
     }
 
@@ -123,7 +126,7 @@ public class StatusIcon  {
 
         Notification.Builder builder = new Notification.Builder(scontext.getContext())
                 .setContentIntent(intent)
-                .setSmallIcon(R.drawable.status)
+                .setSmallIcon(R.drawable.icon_status)
                 .setContentTitle(appName)
                 .setContentText(appInfo);
 
@@ -134,6 +137,25 @@ public class StatusIcon  {
         return notification;
     }
 
+
+    @TargetApi(21)
+    private Notification createNotificationSDK21(PendingIntent intent, int status_id) {
+        String appName = scontext.getContext().getString(R.string.app_name);
+        String appInfo = scontext.getContext().getString(status_id);
+
+        Notification.Builder builder = new Notification.Builder(scontext.getContext())
+                .setContentIntent(intent)
+                .setSmallIcon(R.drawable.icon_status)
+                .setColor(AppTheme.getHighlightColor())
+                .setContentTitle(appName)
+                .setContentText(appInfo);
+
+        Notification notification = builder.build();
+
+        notification.flags |= Notification.FLAG_NO_CLEAR;
+
+        return notification;
+    }
 
     public void showAutoPause() {
         
