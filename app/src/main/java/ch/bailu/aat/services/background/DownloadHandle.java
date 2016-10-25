@@ -41,6 +41,7 @@ public class DownloadHandle extends ProcessHandle {
             return r;
             
         } catch (IOException e) {
+            file.delete();
             return 0;
         }
     }
