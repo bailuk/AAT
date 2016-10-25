@@ -3,13 +3,18 @@ package ch.bailu.aat.preferences;
 import android.content.Context;
 
 import ch.bailu.aat.R;
+import ch.bailu.aat.helpers.AppDensity;
+import ch.bailu.aat.services.cache.TileObject;
 
 
 public class SolidTileSize extends SolidIndexList {
     private static final String KEY="tile_size";
 
-    public static final int DEFAULT_TILESIZE=256;
+    public static final int DEFAULT_TILESIZE= TileObject.TILE_SIZE;
     private static final int STEP=32;
+
+    private final int tileSizeDP;
+
 
     private static final int[] VALUE_LIST = {
             DEFAULT_TILESIZE + STEP *8,
@@ -21,6 +26,7 @@ public class SolidTileSize extends SolidIndexList {
             DEFAULT_TILESIZE + STEP *2,
             DEFAULT_TILESIZE + STEP *1,
             DEFAULT_TILESIZE + STEP *0,
+            DEFAULT_TILESIZE + STEP *8,
             DEFAULT_TILESIZE + STEP *16,
             DEFAULT_TILESIZE + STEP *32,
             DEFAULT_TILESIZE + STEP *64,
@@ -29,6 +35,7 @@ public class SolidTileSize extends SolidIndexList {
 
     public SolidTileSize(Storage s) {
         super(s, KEY);
+        tileSizeDP = new AppDensity(s.getContext()).toDPi(DEFAULT_TILESIZE);
     }
 
 
@@ -38,6 +45,10 @@ public class SolidTileSize extends SolidIndexList {
 
 
     public int getTileSize() {
+        final int i = getIndex();
+        if (i==0) {
+            return tileSizeDP;
+        }
         return VALUE_LIST[getIndex()];
     }
 
@@ -53,7 +64,8 @@ public class SolidTileSize extends SolidIndexList {
 
     @Override
     public String getValueAsString(int i) {
+        if (i==0)  return "Default: " + tileSizeDP + "*";
+
         return String.valueOf(VALUE_LIST[i]);
     }
-
 }

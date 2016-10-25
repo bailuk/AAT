@@ -36,7 +36,7 @@ public class OsmPreviewGenerator implements Closeable {
 
 
 
-        map = new OsmViewStatic(serviceContext.getContext(), tileProvider);
+        map = new OsmViewStatic(serviceContext.getContext(), tileProvider, new MapDensity());
         map.setDrawingCacheEnabled(true);
         
         final OsmOverlay[] overlays = new OsmOverlay[] {

@@ -12,6 +12,7 @@ import ch.bailu.aat.helpers.AppTheme;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.views.map.AbsOsmTileProvider;
 import ch.bailu.aat.views.map.CachedTileProvider;
+import ch.bailu.aat.views.map.MapDensity;
 import ch.bailu.aat.views.map.OsmPreviewGenerator;
 import ch.bailu.aat.views.map.OsmViewStatic;
 import ch.bailu.aat.views.map.overlay.OsmOverlay;
@@ -30,7 +31,7 @@ public class NodeEntryView extends ViewGroup {
         previewSize = AppTheme.getBigButtonSize(sc.getContext());
 
         AbsOsmTileProvider provider = new CachedTileProvider(sc);
-        map = new OsmViewStatic(sc.getContext(), provider);
+        map = new OsmViewStatic(sc.getContext(), provider, new MapDensity(sc.getContext()));
         
         final OsmOverlay[] overlays = new OsmOverlay[] {
                 new GpxDynOverlay(map, sc ,id)

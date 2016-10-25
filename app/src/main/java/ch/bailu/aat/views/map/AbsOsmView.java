@@ -18,37 +18,36 @@ import ch.bailu.aat.views.map.overlay.gpx.MapIconCache;
 public abstract class AbsOsmView extends TrackDescriptionView {
     private BoundingBox pendingFrameBounding=null;
 
-    public final AppDensity res;
+    public final MapDensity res;
     public final MapView map;
     public final MapIconCache mapIconCache = new MapIconCache();
     
     private OverlayList overlayList;
 
-    public AbsOsmView(Context context, String key, AbsTileProvider provider, int tileSize) {
-        this(context, key, provider, tileSize, new AppDensity(context));
+
+    public AbsOsmView(Context context, AbsTileProvider provider, MapDensity density) {
+        this(context, DEFAULT_SOLID_KEY, provider, density);
     }
 
-    public AbsOsmView(Context context, String key, AbsTileProvider provider, int tileSize,
-                      AppDensity r) {
+    public AbsOsmView(Context context, String key, AbsTileProvider provider,
+                       MapDensity r) {
         super(context, key, InfoID.ALL);
 
         res = r;
         overlayList = new OverlayList(this, new OsmOverlay[] {});
-        map = createMapView(provider, tileSize);
+        map = createMapView(provider);
         addView(map);
     }
 
-    public AbsOsmView(Context context, AbsTileProvider provider) {
-        this(context, DEFAULT_SOLID_KEY, provider, TileObject.TILE_SIZE, new AppDensity());
-    }
-    
-    
-    private MapView createMapView(AbsTileProvider provider, int tileSize) {
-        MapView map = new MapView(getContext(), tileSize, provider);
+
+    private MapView createMapView(AbsTileProvider provider) {
+        MapView map = new MapView(getContext(), res.getTileSize(), provider);
         map.getOverlays().add(overlayList);
         return map;
     }
-    
+
+
+
     
     
 

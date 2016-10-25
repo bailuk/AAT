@@ -49,13 +49,12 @@ implements MapListener, OnSharedPreferenceChangeListener, OnTouchListener {
         this(
                 context.getContext(), 
                 key, 
-                new DynTileProvider(context,key), 
-                new SolidTileSize(context.getContext()).getTileSize());
+                new DynTileProvider(context,key));
     }
     
     
-    private OsmInteractiveView(Context context, String key, DynTileProvider p, int tileSize) {
-        super(context, key, p, tileSize);
+    private OsmInteractiveView(Context context, String key, DynTileProvider p) {
+        super(context, key, p, new MapDensity(context));
 
         //provider = p;
         

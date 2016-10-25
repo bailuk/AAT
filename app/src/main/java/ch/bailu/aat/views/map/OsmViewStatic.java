@@ -10,8 +10,8 @@ public class OsmViewStatic extends AbsOsmView {
 
 
 
-    public OsmViewStatic(Context context, AbsTileProvider provider) {
-        super(context, provider);
+    public OsmViewStatic(Context context, AbsTileProvider provider, MapDensity res) {
+        super(context, provider, res);
     }
 
 
