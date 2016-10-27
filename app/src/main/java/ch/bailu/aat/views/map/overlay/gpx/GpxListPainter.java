@@ -5,6 +5,7 @@ import ch.bailu.aat.gpx.GpxListWalker;
 import ch.bailu.aat.gpx.GpxPointNode;
 import ch.bailu.aat.gpx.GpxSegmentNode;
 import ch.bailu.aat.gpx.interfaces.GpxPointInterface;
+import ch.bailu.aat.helpers.AppDensity;
 import ch.bailu.aat.views.map.overlay.MapPainter;
 import ch.bailu.aat.views.map.overlay.MapTwoNodes;
 import ch.bailu.aat.views.map.overlay.MapTwoNodes.PixelNode;
@@ -27,10 +28,10 @@ public abstract class GpxListPainter extends GpxListWalker {
     private int action = START_PAINTING; 
 
 
-    public GpxListPainter (MapPainter p) {
+    public GpxListPainter (MapPainter p, AppDensity res) {
         painter=p;
-        minDistance = painter.projection.getDistanceFromPixel(MIN_PIXEL_SPACE);
-        maxDistance = painter.projection.getDistanceFromPixel(MAX_PIXEL_SPACE);
+        minDistance = painter.projection.getDistanceFromPixel(res.toDPf(MIN_PIXEL_SPACE));
+        maxDistance = painter.projection.getDistanceFromPixel(res.toDPf(MAX_PIXEL_SPACE));
         
     }
 

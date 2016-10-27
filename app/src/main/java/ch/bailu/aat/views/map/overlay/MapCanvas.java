@@ -15,7 +15,7 @@ import android.graphics.drawable.Drawable;
 import ch.bailu.aat.helpers.AppDensity;
 
 public class MapCanvas {
-    public static final int EDGE_WIDTH=2;
+    public static final int EDGE_WIDTH=1;
 
     private final static int POINT_RADIUS=3;
     private final static int MARGIN=5;
@@ -50,8 +50,8 @@ public class MapCanvas {
         legendTextPaint.setColor(Color.DKGRAY);
         legendMetrics = legendTextPaint.getFontMetrics();
                         
-        edgePaint=createEdgePaint();
-        pointPaint=createEdgePaint();
+        edgePaint=createEdgePaint(res);
+        pointPaint=createEdgePaint(res);
         pointPaint.setStyle(Style.FILL);
 
 
@@ -95,10 +95,10 @@ public class MapCanvas {
     }
 
 
-    public static Paint createEdgePaint() {
+    public static Paint createEdgePaint(AppDensity res) {
         Paint edge = new Paint();
 
-        edge.setStrokeWidth(EDGE_WIDTH);
+        edge.setStrokeWidth(res.toDPf(EDGE_WIDTH));
 
         edge.setAntiAlias(false);
         edge.setColor(Color.DKGRAY);

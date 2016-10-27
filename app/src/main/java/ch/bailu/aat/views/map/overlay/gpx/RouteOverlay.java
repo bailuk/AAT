@@ -33,7 +33,7 @@ public class RouteOverlay extends GpxOverlay {
         private final MapPainter painter;
 
         public RoutePainter(MapPainter p) {
-            super(p);
+            super(p, getOsmView().res);
             painter = p;
         }
 

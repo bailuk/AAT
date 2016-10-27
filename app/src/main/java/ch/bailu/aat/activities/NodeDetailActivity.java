@@ -87,7 +87,7 @@ public class NodeDetailActivity extends AbsDispatcher
 
 
         text=new HtmlScrollTextView(this);
-
+        text.enableAutoLink();
 
         View views[] = {
                 text,

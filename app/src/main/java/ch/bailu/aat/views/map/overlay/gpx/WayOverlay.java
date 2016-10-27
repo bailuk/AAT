@@ -44,7 +44,7 @@ public class WayOverlay extends GpxOverlay {
         private int count=0;
 
         public WayPainter(MapPainter p) {
-            super(p);
+            super(p, getOsmView().res);
             painter = p;
         }
 

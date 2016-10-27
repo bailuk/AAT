@@ -29,8 +29,6 @@ public class TrackOverlay extends GpxOverlay{
 
     @Override
     public void draw(MapPainter painter) {
-        /*paint.setStrokeWidth(Math.max(STROKE_WIDTH,
-                painter.projection.getPixelFromDistance(5)));*/
         new TrackPainter(painter).walkTrack(getGpxList());
     }
 
@@ -39,7 +37,7 @@ public class TrackOverlay extends GpxOverlay{
         private final MapPainter painter;
 
         public TrackPainter(MapPainter p) {
-            super(p);
+            super(p, getOsmView().res);
             painter = p;
         }
 

@@ -90,6 +90,7 @@ public class OneService extends AbsService  implements ServiceContext {
     public CacheService getCacheService() {
         if (isUp() && cache == null) {
             cache = new CacheService(this);
+            getElevationService();
         }
         return cache;
     }

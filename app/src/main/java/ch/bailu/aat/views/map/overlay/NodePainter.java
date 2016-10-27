@@ -27,7 +27,7 @@ public class NodePainter {
 
         Bitmap bitmap = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(bitmap);
-        Paint stroke = MapCanvas.createEdgePaint();
+        Paint stroke = MapCanvas.createEdgePaint(res);
         stroke.setAntiAlias(true);
 
         Paint fill = new Paint();
