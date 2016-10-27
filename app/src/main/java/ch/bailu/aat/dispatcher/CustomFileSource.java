@@ -60,6 +60,7 @@ public class CustomFileSource extends ContentSource {
 
     @Override
     public void onResume() {
-        AppBroadcaster.register(scontext.getContext(), onChangedInCache, AppBroadcaster.FILE_CHANGED_INCACHE);
+        AppBroadcaster.register(scontext.getContext(), onChangedInCache,
+                AppBroadcaster.FILE_CHANGED_INCACHE);
     }
 }

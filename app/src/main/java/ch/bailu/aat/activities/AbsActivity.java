@@ -70,11 +70,6 @@ public abstract class AbsActivity extends Activity {
     }
 
 
-    @Override
-    public void onActivityResult(int r, int id, Intent intent) {
-        if (r == RESULT_OK) {
-            FileIntent.pick(this, id, intent);
-        }
-    }
+
 
 }

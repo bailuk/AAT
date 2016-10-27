@@ -1,125 +1,113 @@
 package ch.bailu.aat.helpers.file;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 
 import java.io.File;
 
-import ch.bailu.aat.helpers.AppLog;
-
 public class FileIntent {
 
-    public static final int PICK_SOLID_TILE_DIRECTORY = 0;
-    public static final int PICK_SOLID_DATA_DIRECTORY = 1;
 
-    private final File file;
-    private final Intent intent;
-    
-    public FileIntent (File f, Intent i) {
-        file = f;
-        intent = i;
-    }
-    
-    
-    public FileIntent(File f) {
-        file = f;
-        intent = new Intent();
-    }
-    
+    public static void browse(Context context, Intent intent, Uri uri) {
+        final String name = uri.getLastPathSegment();
 
-
-    public void pick(Context context) {
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        intent.putExtra(Intent.EXTRA_TEXT, file.getName());
-        intent.setDataAndType(getFileUri(), "resource/folder");
-        context.startActivity(Intent.createChooser(intent, file.getName()));
-
-
+        if (name != null) {
+            intent.setAction(Intent.ACTION_GET_CONTENT);
+            intent.putExtra(Intent.EXTRA_SUBJECT, name);
+            intent.putExtra(Intent.EXTRA_TEXT, name);
+            intent.setDataAndType(uri, "resource/folder");
+            context.startActivity(Intent.createChooser(intent, name));
+        }
     }
 
 
-    public void pick(String label, Activity context, int id) {
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        intent.putExtra(Intent.EXTRA_SUBJECT, label);
-        intent.putExtra(Intent.EXTRA_TEXT, file.getName());
-        intent.setDataAndType(getFileUri(), "resource/folder");
-        context.startActivityForResult(Intent.createChooser(intent, label), id);
-    }
-
-    
-    public void view(Context context) {
-        if (file.exists()) {
-            
+    public static void view(Context context, Intent intent, File file) {
+        if (file.canRead()) {
             
             intent.setAction(Intent.ACTION_VIEW);
             
             if (file.isDirectory()) {
-                intent.setData(getFileUri());
+                intent.setData(toUri(file));
             } else {
-                intent.setData(getContentUri());
+                intent.setData(toContentUri(file));
             }
+            context.startActivity(Intent.createChooser(intent, file.getName()));
         }
-        context.startActivity(Intent.createChooser(intent, file.getName()));
     }
-    
-    
-    private Uri getFileUri() {
+
+
+    public static void view(Context context, Intent intent, Uri uri) {
+        intent.setAction(Intent.ACTION_VIEW);
+        intent.setData(uri);
+        context.startActivity(Intent.createChooser(intent, uri.getLastPathSegment()));
+    }
+
+
+    public static Uri toUri(File file) {
         return Uri.fromFile(file);
     }
     
     
-    private Uri getContentUri() {
+    public static Uri toContentUri(File file) {
         return Uri.parse("content://ch.bailu.aat.gpx" + file.getAbsolutePath());
     }
 
     
-   public void send(Context context) {
+   public static void send(Context context, Intent intent, File file) {
         /**
          * This is the correct implementation for sending one file as an e-mail attachment.
          * It does, however, not work with private files.
          * 
          */
         //final Uri uri = Uri.fromFile(file);
-        final Uri uri = getContentUri(); 
+        final Uri uri = toContentUri(file);
         
         intent.setAction(Intent.ACTION_SEND);
         intent.putExtra(Intent.EXTRA_SUBJECT, file.getName());
         intent.putExtra(Intent.EXTRA_TEXT, file.getAbsolutePath());
         intent.putExtra(Intent.EXTRA_STREAM, uri);
-        setType(); // only works with type set (gmail and android mail)
+        setType(intent, file); // only works with type set (gmail and android mail)
         
         context.startActivity(Intent.createChooser(intent , file.getName()));
     }
 
 
-    private void setType() {
-        String type = mimeTypeFromFileName(file.toString());
+    public static void send(Context context, Intent intent, Uri uri) {
+
+        final String name = uri.getLastPathSegment();
+
+        if (name != null) {
+            intent.setAction(Intent.ACTION_SEND);
+            intent.putExtra(Intent.EXTRA_SUBJECT, name);
+            intent.putExtra(Intent.EXTRA_TEXT, uri.toString());
+            intent.putExtra(Intent.EXTRA_STREAM, uri);
+            setType(intent, name); // only works with type set (gmail and android mail)
+
+            context.startActivity(Intent.createChooser(intent, name));
+        }
+    }
+
+
+    private static void setType(Intent intent, File file) {
+        String type = mimeTypeFromFileName(file.getName());
         
         if (type != null) {
             intent.setType(type);
         }
     }
-    
+
+    private static void setType(Intent intent, String name) {
+        String type = mimeTypeFromFileName(name);
+
+        if (type != null) {
+            intent.setType(type);
+        }
+    }
     
     public static String mimeTypeFromFileName(String name) {
         if (name.endsWith(".gpx")) return "application/gpx+xml";
         else if (name.endsWith(".osm")) return "application/xml";
         return null;
-    }
-
-    public static void pick(Context c, int id, Intent intent) {
-        if (id == PICK_SOLID_TILE_DIRECTORY) {
-            if (intent != null) {
-                Uri uri = intent.getData();
-                String file = uri.getPath();
-                AppLog.d(c, file);
-                //new SolidTileCacheDirectory(c).setValue(file);
-            }
-
-
-
-        }
     }
 }

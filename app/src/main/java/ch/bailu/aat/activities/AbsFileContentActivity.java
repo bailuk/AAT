@@ -6,6 +6,8 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 
+import java.io.File;
+
 import ch.bailu.aat.R;
 import ch.bailu.aat.description.AverageSpeedDescription;
 import ch.bailu.aat.description.CaloriesDescription;
@@ -211,7 +213,7 @@ public abstract class AbsFileContentActivity extends AbsDispatcher implements On
             switchFile(v);
 
         } else if (v == fileOperation) {
-            new FileMenu(currentFile.fileAction(this)).showAsPopup(this, v);
+            new FileMenu(this, new File(currentFile.getInfo().getPath())).showAsPopup(this, v);
         }
 
     }

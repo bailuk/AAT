@@ -1,7 +1,6 @@
 package ch.bailu.aat.views.map.overlay.control;
 
 import android.view.View;
-import android.widget.LinearLayout;
 
 import java.io.File;
 
@@ -10,8 +9,9 @@ import ch.bailu.aat.activities.AbsGpxListActivity;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.GpxPointNode;
 import ch.bailu.aat.gpx.InfoID;
-import ch.bailu.aat.helpers.FileAction;
+import ch.bailu.aat.helpers.file.FileAction;
 import ch.bailu.aat.helpers.ToolTip;
+import ch.bailu.aat.menus.FileMenu;
 import ch.bailu.aat.preferences.SolidDirectoryQuery;
 import ch.bailu.aat.views.ControlBar;
 import ch.bailu.aat.views.PreviewView;
@@ -113,13 +113,13 @@ public class FileControlBar extends ControlBarOverlay{
 
             if (file.exists()) {
                 if        (v == action) {
-                    new FileAction(activity, file).showPopupMenu(v);
+                    new FileMenu(activity, file).showAsPopup(activity, v);
                 } else if (v == overlay) {
-                    new FileAction(activity, file).useAsOverlay();
+                    FileAction.useAsOverlay(activity, file);
                 } else if (v == reloadPreview) {
-                    new FileAction(activity, file).reloadPreview();
+                    FileAction.reloadPreview(activity.getServiceContext(), file);
                 } else if (v == delete) {
-                    new FileAction(activity, file).delete();
+                    FileAction.delete(activity.getServiceContext(), activity, file);
                 } else if (v == preview) {
                     activity.displayFile();
                 }

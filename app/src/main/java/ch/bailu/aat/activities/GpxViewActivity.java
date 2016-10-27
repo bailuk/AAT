@@ -31,8 +31,10 @@ import ch.bailu.aat.dispatcher.TrackerSource;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.helpers.AppLayout;
-import ch.bailu.aat.helpers.FileAction;
+import ch.bailu.aat.helpers.AppLog;
+import ch.bailu.aat.helpers.file.FileAction;
 import ch.bailu.aat.helpers.ToolTip;
+import ch.bailu.aat.menus.ContentMenu;
 import ch.bailu.aat.menus.FileMenu;
 import ch.bailu.aat.views.BusyButton;
 import ch.bailu.aat.views.ContentView;
@@ -66,13 +68,14 @@ public class GpxViewActivity extends AbsDispatcher
     private OsmInteractiveView map;
 
     private String fileID;
+    private Uri uri;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         final Intent intent = getIntent();
-        Uri uri = intent.getData();
+        uri = intent.getData();
 
         if (uri==null) {
 
@@ -87,6 +90,7 @@ public class GpxViewActivity extends AbsDispatcher
         if (uri != null) {
             fileID = uri.toString();
 
+            AppLog.d(this, fileID);
             final LinearLayout contentView = new ContentView(this);
             contentView.addView(createButtonBar());
             multiView = createMultiView();
@@ -191,11 +195,12 @@ public class GpxViewActivity extends AbsDispatcher
         if (v == nextView) {
             multiView.setNext();
 
-        } else if (v == copyTo) {
-            new FileAction(this, new File(fileID)).copyTo();
+        } else if (v == copyTo && uri != null) {
+            FileAction.copyTo(this,uri);
 
-        } else if (v == fileOperation) {
-            new FileMenu(new FileAction(this, new File(fileID))).showAsPopup(this, fileOperation);
+        } else if (v == fileOperation && uri != null) {
+
+            new ContentMenu(getServiceContext(), uri).showAsPopup(this, fileOperation);
         }
 
     }

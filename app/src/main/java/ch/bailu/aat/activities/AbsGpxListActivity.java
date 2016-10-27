@@ -18,9 +18,8 @@ import ch.bailu.aat.description.TrackSizeDescription;
 import ch.bailu.aat.dispatcher.CurrentLocationSource;
 import ch.bailu.aat.dispatcher.IteratorSource;
 import ch.bailu.aat.dispatcher.OverlaySource;
-import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.InfoID;
-import ch.bailu.aat.helpers.FileAction;
+import ch.bailu.aat.helpers.file.FileAction;
 import ch.bailu.aat.menus.FileMenu;
 import ch.bailu.aat.preferences.SolidDirectoryQuery;
 import ch.bailu.aat.services.directory.Iterator;
@@ -220,7 +219,7 @@ public abstract class AbsGpxListActivity extends AbsDispatcher implements OnItem
 
         iteratorSimple.moveToPosition(position);
 
-        fileMenu = new FileMenu(new FileAction(this, iteratorSimple));
+        fileMenu = new FileMenu(this, new File(iteratorSimple.getInfo().getPath()));
         fileMenu.inflateWithHeader(menu);
         fileMenu.prepare(menu);
     }

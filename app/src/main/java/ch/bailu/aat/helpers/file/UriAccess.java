@@ -5,8 +5,12 @@ import android.net.Uri;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+
+import ch.bailu.aat.helpers.AppLog;
+import ch.bailu.aat.helpers.AppSelectDirectoryDialog;
 
 public class UriAccess extends AbsAccess {
     private final Uri uri;
@@ -35,7 +39,6 @@ public class UriAccess extends AbsAccess {
 
 
 
-
     @Override
     public File toFile() {
         String path = uri.getPath();
@@ -47,7 +50,4 @@ public class UriAccess extends AbsAccess {
         }
         return null;
     }
-    
-    
-
 }

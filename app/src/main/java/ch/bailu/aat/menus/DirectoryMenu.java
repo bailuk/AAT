@@ -1,6 +1,8 @@
 package ch.bailu.aat.menus;
 
 
+import android.content.Intent;
+import android.net.Uri;
 import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -41,13 +43,14 @@ public class DirectoryMenu extends AbsMenu {
 
     @Override
     public boolean onItemClick(MenuItem item) {
-        FileIntent intent = new FileIntent(sdirectory.getValueAsFile());
+
 
         if (item == view) {
-            intent.view(sdirectory.getContext());
+            FileIntent.view(sdirectory.getContext(), new Intent(), sdirectory.getValueAsFile());
 
         } else if (item == get) {
-            intent.pick(sdirectory.getContext());
+            FileIntent.browse(sdirectory.getContext(), new Intent(),
+                    Uri.fromFile(sdirectory.getValueAsFile()));
 
         } else if (item == clipboard) {
             new Clipboard(sdirectory.getContext()).setText(sdirectory.getLabel(),

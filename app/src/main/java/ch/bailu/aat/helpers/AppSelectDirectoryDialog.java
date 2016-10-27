@@ -3,21 +3,23 @@ package ch.bailu.aat.helpers;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.net.Uri;
 
 import java.io.File;
 
 import ch.bailu.aat.R;
+import ch.bailu.aat.helpers.file.FileAction;
 import ch.bailu.aat.helpers.file.FileUI;
 
 public class AppSelectDirectoryDialog  implements  DialogInterface.OnClickListener {
-    private final File file;
+    private final Uri uri;
     private final File directories[];
 
 
     private final Context context;
-    public AppSelectDirectoryDialog (Context c, File f) {
+    public AppSelectDirectoryDialog (Context c, Uri u) {
         context=c;
-        file=f;
+        uri = u;
         directories = new File[] {
                 AppDirectory.getTrackListDirectory(context, 0), 
                 AppDirectory.getTrackListDirectory(context, 1),
@@ -36,7 +38,7 @@ public class AppSelectDirectoryDialog  implements  DialogInterface.OnClickListen
 
 
         final AlertDialog.Builder dialog = new AlertDialog.Builder(context);
-        dialog.setTitle(file.getName() + ": " + context.getString(R.string.file_copy));
+        dialog.setTitle(uri.getLastPathSegment() + ": " + context.getString(R.string.file_copy));
         dialog.setItems(names, this);
         dialog.create();
         dialog.show();
@@ -46,7 +48,7 @@ public class AppSelectDirectoryDialog  implements  DialogInterface.OnClickListen
     @Override
     public void onClick(DialogInterface dialog, int i) {
         try {
-            new FileUI(file).copyTo(context, directories[i]);
+            FileAction.copyTo(context, uri, directories[i]);
         } catch (Exception e) {
             AppLog.e(context, e);
         }

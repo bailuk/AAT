@@ -1,21 +1,30 @@
 package ch.bailu.aat.menus;
 
+import android.app.Activity;
+import android.net.Uri;
 import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import java.io.File;
+
 import ch.bailu.aat.R;
-import ch.bailu.aat.helpers.Clipboard;
-import ch.bailu.aat.helpers.FileAction;
+import ch.bailu.aat.activities.AbsServiceLink;
+import ch.bailu.aat.helpers.file.FileAction;
+import ch.bailu.aat.services.ServiceContext;
 
 public class FileMenu extends AbsMenu {
-    private final  FileAction file;
+    private final File file;
+    private final Activity activity;
+    private final ServiceContext scontext;
     
     private MenuItem send, view, rename, copy, delete, overlay, reload, mock, clipboard;
     
     
-    public FileMenu(FileAction f) {
+    public FileMenu(AbsServiceLink a, File f) {
         file = f;
+        scontext = a.getServiceContext();
+        activity = a;
     }
     
     
@@ -46,32 +55,32 @@ public class FileMenu extends AbsMenu {
     @Override
     public boolean onItemClick(MenuItem item) {
         if (item == delete) {
-            file.delete();
+            FileAction.delete(scontext, activity, file);
 
         } else if (item == reload) {
-            file.reloadPreview();
+            FileAction.reloadPreview(scontext, file);
 
         } else if (item == rename) {
-            file.rename();
+            FileAction.rename(scontext, activity, file);
 
         } else if (item == overlay) {
-            file.useAsOverlay();
+            FileAction.useAsOverlay(scontext.getContext(), file);
 
 
         } else if (item == mock) {
-            file.useForMockLocation();
+            FileAction.useAsOverlay(scontext.getContext(), file);
 
         } else if (item == send) {
-            file.sendTo();
+            FileAction.sendTo(scontext.getContext(), Uri.fromFile(file));
 
         } else if (item == view) {
-            file.view();
+            FileAction.view(scontext.getContext(), file);
 
         } else if (item == copy) {
-            file.copyTo();
+            FileAction.copyTo(scontext.getContext(), Uri.fromFile(file));
 
         } else if (item == clipboard) {
-            file.copyToClipboard();
+            FileAction.copyToClipboard(scontext.getContext(), file);
         } else  {
             return false;
         }
