@@ -95,7 +95,7 @@ implements OnSharedPreferenceChangeListener, Closeable ,Runnable {
 
         /*try {
             scontext.getService().stopSelf();
-        } catch (ServiceNotUpException e) {
+        } catch (ServiceNotUpError e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }*/

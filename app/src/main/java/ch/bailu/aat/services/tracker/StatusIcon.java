@@ -15,29 +15,29 @@ import ch.bailu.aat.activities.TrackerActivity;
 import ch.bailu.aat.helpers.AppLog;
 import ch.bailu.aat.helpers.AppTheme;
 import ch.bailu.aat.services.ServiceContext;
-import ch.bailu.aat.services.ServiceContext.ServiceNotUpException;
+
 
 public class StatusIcon  {
     private final static int MY_ID=5;
-    
+
     private final ServiceContext scontext;
     private final Notification pauseNotification;
     private final Notification onNotification;
     private final Notification autoPauseNotification;
-    
-    
+
+
     public StatusIcon(ServiceContext s) {
         PendingIntent intent;
-        
+
         scontext=s;
-      
+
         intent = createShowActivityIntent();
         pauseNotification=createNotification(intent, R.string.status_paused);
         onNotification=createNotification(intent, R.string.on);
         autoPauseNotification=createNotification(intent, R.string.status_autopaused);
-        
+
     }
-    
+
     private PendingIntent createShowActivityIntent() {
         Intent intent = new Intent(scontext.getContext(), TrackerActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
@@ -66,10 +66,10 @@ public class StatusIcon  {
         String appInfo = scontext.getContext().getString(status_id);
 
         Notification notification=new Notification(R.drawable.status,appInfo, System.currentTimeMillis());
-        
+
         setLatestEventInfoSDK1(notification, scontext.getContext(), appName, appInfo, intent);
         notification.flags |= Notification.FLAG_NO_CLEAR;
-        
+
         return notification;
     }
 
@@ -83,11 +83,11 @@ public class StatusIcon  {
 
         try {
             Method deprecatedMethod = notification.getClass().getMethod(
-                            "setLatestEventInfo",
-                            Context.class,
-                            CharSequence.class,
-                            CharSequence.class,
-                            PendingIntent.class);
+                    "setLatestEventInfo",
+                    Context.class,
+                    CharSequence.class,
+                    CharSequence.class,
+                    PendingIntent.class);
             deprecatedMethod.invoke(notification, context, appName, appInfo, intent);
         } catch (NoSuchMethodException |
                 IllegalAccessException |
@@ -158,41 +158,21 @@ public class StatusIcon  {
     }
 
     public void showAutoPause() {
-        
-        try {
-            scontext.getService().startForeground(MY_ID, autoPauseNotification);
-        } catch (ServiceNotUpException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+
+        scontext.startForeground(MY_ID, autoPauseNotification);
     }
-    
+
     public void showPause() {
-        try {
-            scontext.getService().startForeground(MY_ID, pauseNotification);
-        } catch (ServiceNotUpException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+        scontext.startForeground(MY_ID, pauseNotification);
     }
-    
-    
+
+
     public void showOn() {
-        try {
-            scontext.getService().startForeground(MY_ID, onNotification);
-        } catch (ServiceNotUpException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+        scontext.startForeground(MY_ID, onNotification);
     }
-    
-    
+
+
     public void hide() {
-        try {
-            scontext.getService().stopForeground(true);
-        } catch (ServiceNotUpException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+        scontext.stopForeground(true);
     }
 }

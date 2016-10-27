@@ -93,7 +93,7 @@ OnHaveFeature {
 
 
 
-    public void loadList(FileAccess file, IconMapService.Self map) {
+    public void loadList(FileAccess file, IconMapService map) {
         try {
             new MapFeaturesParser(this, file);
             if (observer != null) observer.onChanged();

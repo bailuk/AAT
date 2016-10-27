@@ -11,7 +11,6 @@ public class StateRemoved implements State {
         state = s;
         state.list=null;
 
-        state.freeService();
         AppBroadcaster.broadcast(state.context, AppBroadcaster.TILE_REMOVER_STOPPED);
     }
 

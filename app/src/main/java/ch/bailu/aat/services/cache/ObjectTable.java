@@ -6,7 +6,6 @@ import android.util.SparseArray;
 import ch.bailu.aat.helpers.AppIntent;
 import ch.bailu.aat.helpers.AppLog;
 import ch.bailu.aat.services.ServiceContext;
-import ch.bailu.aat.services.cache.CacheService.SelfOn;
 import ch.bailu.aat.services.cache.ObjectHandle.Factory;
 
 
@@ -44,7 +43,7 @@ public class ObjectTable {
     private final SparseArray<Container> table = new SparseArray<>(INITIAL_CAPACITY);
 
 
-    public synchronized ObjectHandle getHandle(String id, Factory factory, SelfOn son) {
+    public synchronized ObjectHandle getHandle(String id, Factory factory, CacheService son) {
         ObjectHandle h=getFromCache(id);
 
         if (h == null) {
@@ -104,13 +103,13 @@ public class ObjectTable {
     }
 
 
-    public synchronized void onObjectChanged(Intent intent, SelfOn self) {
+    public synchronized void onObjectChanged(Intent intent, CacheService self) {
         ObjectHandle handle = getHandle(intent);
         onObjectChanged(handle, self);
     }
 
 
-    public synchronized void onObjectChanged(ObjectHandle handle, SelfOn self) {
+    public synchronized void onObjectChanged(ObjectHandle handle, CacheService self) {
         updateSize(handle);
         trim(self);
     }
@@ -130,27 +129,27 @@ public class ObjectTable {
     }
 
 
-    public synchronized void onLowMemory(SelfOn self) {
+    public synchronized void onLowMemory(CacheService self) {
         limit = MIN_SIZE;
         trim(self);            
     }
 
 
-    private synchronized void trim(SelfOn self) {
+    private synchronized void trim(CacheService self) {
 
         while ((totalMemorySize > limit) && removeOldest(self));
     }
 
 
 
-    private boolean removeOldest(SelfOn self) {
+    private boolean removeOldest(CacheService self) {
         final Container oldest = findOldest();
         return removeFromTable(oldest, self);
     }
 
 
 
-    private boolean removeFromTable(Container remove, SelfOn self) {
+    private boolean removeFromTable(Container remove, CacheService self) {
         remove = table.get(remove.hashCode());
 
         if (remove !=null) {

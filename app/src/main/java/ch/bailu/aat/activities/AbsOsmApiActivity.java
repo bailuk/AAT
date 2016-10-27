@@ -192,7 +192,7 @@ public abstract class AbsOsmApiActivity extends AbsDispatcher implements OnClick
         try {
             String query = tagEditor.getText();
 
-            BackgroundService.Self background = getServiceContext().getBackgroundService();
+            BackgroundService background = getServiceContext().getBackgroundService();
 
 
             request.stopLoading();

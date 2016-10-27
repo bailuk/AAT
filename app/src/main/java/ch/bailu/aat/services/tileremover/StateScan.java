@@ -19,7 +19,6 @@ public class StateScan implements State, Runnable {
         state.list = new TilesList();
         state.summaries.reset(s.context);
 
-        state.lockService();
         new Thread(this).start();
 
 

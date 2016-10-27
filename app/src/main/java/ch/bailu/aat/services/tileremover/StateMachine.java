@@ -82,12 +82,7 @@ public class StateMachine implements State {
     }
 
 
-    public void freeService() {
-        scontext.free(TileRemoverService.class.getSimpleName());
-    }
 
 
-    public void lockService() {
-        scontext.lock(TileRemoverService.class.getSimpleName());
-    }
+
 }
