@@ -60,12 +60,14 @@ public class MapIconCache implements Closeable {
     
     public Drawable getIcon(ServiceContext scontext, String fileID) {
         Drawable drawable=null;
-        
-        final ObjectHandle handle =  scontext.getCacheService().getObject(fileID, new ImageObject.Factory());
-        if (ImageObject.class.isInstance(handle) ) {
-            
-            drawable = ((ImageObject)handle).getDrawable(scontext.getContext().getResources());
-            current.freeLater(handle);
+
+        if (scontext.isUp()) {
+            final ObjectHandle handle = scontext.getCacheService().getObject(fileID, new ImageObject.Factory());
+            if (ImageObject.class.isInstance(handle)) {
+
+                drawable = ((ImageObject) handle).getDrawable(scontext.getContext().getResources());
+                current.freeLater(handle);
+            }
         }
         return drawable;
     }

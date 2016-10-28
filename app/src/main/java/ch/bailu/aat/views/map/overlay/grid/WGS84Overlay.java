@@ -55,7 +55,7 @@ public class WGS84Overlay extends OsmOverlay implements GeoConstants{
     }
     
     private void drawElevation(MapPainter painter, IGeoPoint point) {
-        if (getMapView().getZoomLevel() > MIN_ZOOM_LEVEL) {
+        if (getMapView().getZoomLevel() > MIN_ZOOM_LEVEL && scontext.isUp()) {
             final short ele = scontext.getElevationService().getElevation(point.getLatitudeE6(), point.getLongitudeE6());
             painter.canvas.drawTextBottom(altitudeDescription.getValueUnit(ele),3);
         }

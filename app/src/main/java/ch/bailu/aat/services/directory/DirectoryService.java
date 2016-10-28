@@ -44,11 +44,6 @@ public class DirectoryService extends VirtualService implements OnSharedPreferen
     private void openDir() {
         if (isDirReadable()) {
             open();
-            if (isDirWriteable()) {
-                rescan();
-            } else {
-                logReadOnly();
-            }
         } else {
             logNoAccess();
         }

@@ -27,8 +27,8 @@ public class OneService extends AbsService  implements ServiceContext {
 
     @Override 
     public void onCreate() {
-        up = true;
         super.onCreate();
+        up = true;
     }
 
 
@@ -54,6 +54,10 @@ public class OneService extends AbsService  implements ServiceContext {
             cache = null;
         }
 
+        if (directory != null) {
+            directory.close();
+            directory = null;
+        }
 
         if (elevation != null) {
             elevation.close();
@@ -65,9 +69,8 @@ public class OneService extends AbsService  implements ServiceContext {
             tileRemover = null;
         }
 
-        up = false;
         super.onDestroy();
-
+        up = false;
     }
 
 
@@ -80,7 +83,7 @@ public class OneService extends AbsService  implements ServiceContext {
 
     @Override
     public BackgroundService getBackgroundService() {
-        if (isUp() && background == null) {
+        if (forceUp() && background == null) {
             background = new BackgroundService(this);
         }
         return background;
@@ -88,7 +91,7 @@ public class OneService extends AbsService  implements ServiceContext {
 
     @Override
     public CacheService getCacheService() {
-        if (isUp() && cache == null) {
+        if (forceUp() && cache == null) {
             cache = new CacheService(this);
             getElevationService();
         }
@@ -97,35 +100,35 @@ public class OneService extends AbsService  implements ServiceContext {
 
     @Override
     public ElevationService getElevationService() {
-        if (isUp() && elevation == null)
+        if (forceUp() && elevation == null)
             elevation = new ElevationService(this);
         return elevation;
     }
 
     @Override
     public IconMapService getIconMapService() {
-        if (isUp() && iconMap == null)
+        if (forceUp() && iconMap == null)
             iconMap = new IconMapService(this);
         return iconMap;
     }
 
     @Override
     public DirectoryService getDirectoryService() {
-        if (isUp() && directory == null)
+        if (forceUp() && directory == null)
             directory = new DirectoryService(this);
         return directory;
     }
 
     @Override
     public TrackerService getTrackerService() {
-        if (isUp() && tracker == null)
+        if (forceUp() && tracker == null)
             tracker = new TrackerService(this);
         return tracker;
     }
 
     @Override
     public TileRemoverService getTileRemoverService() {
-        if (isUp() && tileRemover == null)
+        if (forceUp() && tileRemover == null)
             tileRemover = new TileRemoverService(this);
         return tileRemover;
     }
@@ -133,7 +136,7 @@ public class OneService extends AbsService  implements ServiceContext {
 
     @Override
     public void appendStatusText(StringBuilder builder) {
-        if (isUp()) {
+        if (forceUp()) {
             super.appendStatusText(builder);
             appendStatusText(tracker, builder);
             appendStatusText(background, builder);
@@ -145,7 +148,7 @@ public class OneService extends AbsService  implements ServiceContext {
     }
 
     public void appendStatusText(VirtualService service, StringBuilder builder) {
-        if (isUp()) {
+        if (forceUp()) {
             builder.append("<h1>");
             builder.append(service.getClass().getSimpleName());
             builder.append("</h1>");
@@ -158,12 +161,17 @@ public class OneService extends AbsService  implements ServiceContext {
 
     @Override
     public Context getContext() {
-        isUp(); return this;
+        forceUp(); return this;
     }
 
+    @Override
     public boolean isUp() {
+        return up;
+    }
+
+    private boolean forceUp() {
         if (!up) {
-            new ServiceNotUpError(OneService.class);
+            throw new ServiceNotUpError(OneService.class);
         }
         return up;
     }

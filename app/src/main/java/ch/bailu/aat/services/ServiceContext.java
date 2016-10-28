@@ -16,6 +16,8 @@ public interface ServiceContext extends ContextWrapperInterface {
     void lock(String s);
     void free(String s);
 
+    boolean isUp();
+
     BackgroundService getBackgroundService();
     CacheService getCacheService();
     ElevationService getElevationService();

@@ -164,8 +164,9 @@
     <string name="file_send">Senden…</string>
     <string name="file_view">Anzeigen/Bearbeiten…</string>
 
-    <string name="clipboard_copy">Kopieren</string>
-    <string name="clipboard_paste">Einfügen</string>
+
+    <string name="clipboard_copy">\u21d2 Zwischenablage</string>
+    <string name="clipboard_paste">\u21d0 Zwischenablage</string>
 
     <string name="location_send">Position senden…</string>
     <string name="location_view">Position ansehen…</string>

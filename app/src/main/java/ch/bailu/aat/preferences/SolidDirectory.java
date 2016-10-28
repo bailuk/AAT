@@ -37,7 +37,6 @@ public abstract class SolidDirectory extends SolidString {
         try {
             return check.canWrite();
         } catch (SecurityException e) {
-            AppLog.d(check, "Access denied");
             return false;
         }
     }

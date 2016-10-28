@@ -2,6 +2,7 @@ package ch.bailu.aat.activities;
 
 
 import android.app.Notification;
+import android.content.ComponentName;
 import android.os.Bundle;
 
 import ch.bailu.aat.helpers.AppLog;
@@ -36,6 +37,7 @@ public abstract class AbsServiceLink extends AbsActivity {
         state = State.created;
         
         serviceLink = new ServiceLink(this) {
+
 
 
             @Override

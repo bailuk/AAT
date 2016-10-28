@@ -9,6 +9,7 @@ import android.os.IBinder;
 
 import java.io.Closeable;
 
+import ch.bailu.aat.helpers.AppLog;
 import ch.bailu.aat.services.background.BackgroundService;
 import ch.bailu.aat.services.cache.CacheService;
 import ch.bailu.aat.services.dem.ElevationService;
@@ -83,11 +84,13 @@ public abstract class ServiceLink implements
 
         if (bound) {
             bound = false;
+            service = null;
             context.unbindService(this);
         }
     }
 
 
+    @Override
     public boolean isUp() {
         return service != null;
     }

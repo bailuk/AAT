@@ -68,13 +68,5 @@ public class PreferencesActivity extends AbsDispatcher {
         mapTilePreferences.updateText();
     }
 
-    @Override
-    public void onDestroy() {
-        TileRemoverService ts = getServiceContext().getTileRemoverService();
 
-        if (ts != null) ts.getState().reset();
-
-        super.onDestroy();
-
-    }
 }

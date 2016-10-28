@@ -90,7 +90,6 @@ public class GpxViewActivity extends AbsDispatcher
         if (uri != null) {
             fileID = uri.toString();
 
-            AppLog.d(this, fileID);
             final LinearLayout contentView = new ContentView(this);
             contentView.addView(createButtonBar());
             multiView = createMultiView();

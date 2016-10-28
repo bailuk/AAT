@@ -174,6 +174,8 @@ public abstract class AbsGpxListActivity extends AbsDispatcher implements OnItem
         listView.setAdapter(getServiceContext(), iteratorSimple);
         listView.setSelection(sdirectory.getPosition().getValue());
 
+        getServiceContext().getDirectoryService().rescan();
+
         super.onResumeWithService();
     }
 

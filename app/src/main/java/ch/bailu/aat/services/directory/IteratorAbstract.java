@@ -11,7 +11,6 @@ import java.io.File;
 
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.helpers.AppBroadcaster;
-import ch.bailu.aat.helpers.AppLog;
 import ch.bailu.aat.preferences.SolidDirectoryQuery;
 import ch.bailu.aat.services.ServiceContext;
 
@@ -102,7 +101,6 @@ public abstract class IteratorAbstract extends Iterator implements OnSharedPrefe
         int oldPosition=0;
 
         selection = sdirectory.createSelectionString();
-        AppLog.d(this, selection);
         if (cursor != null) {
             oldPosition = cursor.getPosition();
             fileOnOldPosition = getInfo().getPath();
