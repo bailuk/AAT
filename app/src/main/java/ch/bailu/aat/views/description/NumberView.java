@@ -14,14 +14,22 @@ public class NumberView extends TrackDescriptionView {
     private final TextView    label, number, unit;
     private final ContentDescription description;
 
+    private final float defaultTextSize;
+
 
     public NumberView(ContentDescription data, int filter) {
         super(data, TrackDescriptionView.DEFAULT_SOLID_KEY,filter);
+
+
         number = createLabel();
         number.setIncludeFontPadding(false);
+        number.setTextColor(Color.WHITE);
+        number.setTypeface(Typeface.create((String) null, Typeface.BOLD));
+
 
         label = createLabel();
         label.setTextColor(Color.LTGRAY);
+        defaultTextSize = label.getTextSize();
 
         unit = createLabel();
         unit.setBackgroundColor(Color.DKGRAY);
@@ -37,13 +45,9 @@ public class NumberView extends TrackDescriptionView {
         this(data, InfoID.ALL);
     }
 
-    private void setNumberFont(int size) {
-        if (size != 0) {
-            number.setTextColor(Color.WHITE);
-            number.setTypeface(Typeface.create((String)null, Typeface.BOLD));
-            number.setTextSize(TypedValue.COMPLEX_UNIT_PX, size);
-        }
-    }
+
+
+
     private TextView createLabel() {
         TextView view = new TextView(getContext());
 
@@ -58,6 +62,8 @@ public class NumberView extends TrackDescriptionView {
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
         if (changed) {
+
+
             int height=(b-t);
             int width=(r-l);
 
@@ -67,7 +73,14 @@ public class NumberView extends TrackDescriptionView {
 
             height-=margin*2;
 
-            label.measure(width,height); 
+            final float textSizeLimit = height /4;
+            final float textSize = Math.min(defaultTextSize, textSizeLimit);
+
+            setTextSize(label, textSize);
+            setTextSize(unit, textSize);
+
+
+            label.measure(width,height);
             label.layout(l, t+margin, r, label.getMeasuredHeight()+margin);
             height-=label.getMeasuredHeight();
 
@@ -75,7 +88,7 @@ public class NumberView extends TrackDescriptionView {
             unit.layout(l, b-unit.getMeasuredHeight()-margin, r, b-margin);
             height-=unit.getMeasuredHeight();
 
-            setNumberFont(height);
+            setTextSize(number, height);
 
             number.measure(width, height);
             number.layout(l, label.getMeasuredHeight()+margin, r, b-unit.getMeasuredHeight()-margin);
@@ -83,7 +96,13 @@ public class NumberView extends TrackDescriptionView {
     }
 
 
-    
+    private static void setTextSize(TextView v, float s) {
+        if (s > 0) {
+            v.setTextSize(TypedValue.COMPLEX_UNIT_PX, s);
+        }
+    }
+
+
     @Override
     public void onContentUpdated(GpxInformation info) {
         if (filter.pass(info)) {
