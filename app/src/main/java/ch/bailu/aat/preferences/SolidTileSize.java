@@ -64,7 +64,7 @@ public class SolidTileSize extends SolidIndexList {
 
     @Override
     public String getValueAsString(int i) {
-        if (i==0)  return "Default: " + tileSizeDP + "*";
+        if (i==0)  return tileSizeDP + " Auto*";
 
         return String.valueOf(VALUE_LIST[i]);
     }

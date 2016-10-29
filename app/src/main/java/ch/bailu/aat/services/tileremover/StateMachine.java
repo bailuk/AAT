@@ -16,12 +16,12 @@ public class StateMachine implements State {
     public File tileDirectory;
 
     public final Context context;
-    private final ServiceContext scontext;
+    //private final ServiceContext scontext;
 
 
     public StateMachine(ServiceContext sc) {
         context = sc.getContext();
-        scontext = sc;
+        //scontext = sc;
         set(new StateUnscanned(this));
     }
 

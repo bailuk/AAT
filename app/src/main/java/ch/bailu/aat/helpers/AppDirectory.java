@@ -153,7 +153,7 @@ public class AppDirectory  {
 
     public static File generateUniqueFilePath(File directory, String prefix, String extension) 
             throws IOException {
-        File file = null;
+        File file;
 
         int x=0;
         do {

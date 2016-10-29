@@ -1,20 +1,10 @@
 package ch.bailu.aat.activities;
 
 
-import android.app.Notification;
-import android.content.ComponentName;
 import android.os.Bundle;
 
-import ch.bailu.aat.helpers.AppLog;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.ServiceLink;
-import ch.bailu.aat.services.background.BackgroundService;
-import ch.bailu.aat.services.cache.CacheService;
-import ch.bailu.aat.services.dem.ElevationService;
-import ch.bailu.aat.services.directory.DirectoryService;
-import ch.bailu.aat.services.icons.IconMapService;
-import ch.bailu.aat.services.tileremover.TileRemoverService;
-import ch.bailu.aat.services.tracker.TrackerService;
 
 public abstract class AbsServiceLink extends AbsActivity {
 
@@ -37,8 +27,6 @@ public abstract class AbsServiceLink extends AbsActivity {
         state = State.created;
         
         serviceLink = new ServiceLink(this) {
-
-
 
             @Override
             public void onServiceUp() {

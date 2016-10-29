@@ -68,7 +68,7 @@ public class FileMenu extends AbsMenu {
 
 
         } else if (item == mock) {
-            FileAction.useAsOverlay(scontext.getContext(), file);
+            FileAction.useForMockLocation(scontext.getContext(), file);
 
         } else if (item == send) {
             FileAction.sendTo(scontext.getContext(), Uri.fromFile(file));

@@ -4,37 +4,13 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.graphics.Point;
-import android.util.DisplayMetrics;
 import android.view.Display;
-import android.view.View.MeasureSpec;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
 
 public class AppLayout {
     private static final Point size = new Point();
     
-    public static int getDimension (int spec, int preferred) {
-        
-        int specSize = MeasureSpec.getSize(spec);
-        int measurement = 0;
-        
-        switch(MeasureSpec.getMode(spec))
-        {
-            case MeasureSpec.EXACTLY:
-                measurement = specSize;
-                break;
-            case MeasureSpec.AT_MOST:
-                measurement = Math.min(preferred, specSize);
-                break;
-            case MeasureSpec.UNSPECIFIED:
-            default:
-                measurement = preferred;
-                break;
-        }
-        return measurement;
-    }
-    
-
 
     public static void updateMeasurement(Context context) {
 
@@ -91,24 +67,5 @@ public class AppLayout {
         if (getOrientationAlongSmallSide(context) == LinearLayout.VERTICAL) return LinearLayout.HORIZONTAL;
         return LinearLayout.VERTICAL;
     }
-
-/*
-    public static float toDPf(Context context, float pixel) {
-        return toDPf(context.getResources().getDisplayMetrics(), pixel);
-    }
-
-    public static float toDPf(DisplayMetrics m, float pixel) {
-        return m.density*pixel;
-    }
-
-
-    public static float toSDPf(Context context, float pixel) {
-        return toSDPf(context.getResources().getDisplayMetrics(), pixel);
-    }
-
-    public static float toSDPf(DisplayMetrics m, float pixel) {
-        return m.scaledDensity*pixel;
-    }
-*/
 }
  

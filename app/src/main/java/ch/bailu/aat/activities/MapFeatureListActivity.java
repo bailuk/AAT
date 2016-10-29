@@ -10,14 +10,7 @@ import ch.bailu.aat.helpers.file.FileAccess;
 import ch.bailu.aat.views.FeaturesList;
 
 public class MapFeatureListActivity extends AbsDispatcher {
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-
-    }
-
-    private boolean contentViewSet = false;
+     private boolean contentViewSet = false;
 
     @Override
     public void onResumeWithService() {
@@ -25,12 +18,15 @@ public class MapFeatureListActivity extends AbsDispatcher {
             final Intent intent = getIntent();
             final String file = AppIntent.getFile(intent);
 
-            FeaturesList list = new FeaturesList(getServiceContext(), new FileAccess(new File(file)));
+            final FeaturesList list = new FeaturesList(this);
+
+            list.loadList(
+                    new FileAccess(new File(file)),
+                    getServiceContext().getIconMapService() );
             setContentView(list);
 
             contentViewSet=true;
         }
-
     }
-    
+
 }

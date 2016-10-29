@@ -13,7 +13,6 @@ import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.views.map.AbsOsmTileProvider;
 import ch.bailu.aat.views.map.CachedTileProvider;
 import ch.bailu.aat.views.map.MapDensity;
-import ch.bailu.aat.views.map.OsmPreviewGenerator;
 import ch.bailu.aat.views.map.OsmViewStatic;
 import ch.bailu.aat.views.map.overlay.OsmOverlay;
 import ch.bailu.aat.views.map.overlay.gpx.GpxDynOverlay;

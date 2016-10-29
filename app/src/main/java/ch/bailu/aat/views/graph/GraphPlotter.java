@@ -21,8 +21,6 @@ public class GraphPlotter {
     private final Scaler xscaler;
     private final InvertetOffsetScaler yscaler;
 
-    private final AppDensity res;
-
     private final Paint paintFont;
     private final Paint paintPlotLines;
     private final Paint paintLines;
@@ -35,8 +33,7 @@ public class GraphPlotter {
     
     private Point pointA=new Point(-5,-5), pointB = new Point(-5,-5);
     
-    public GraphPlotter(Canvas c, int w, int h, float xScale, AppDensity r) {
-        res = r;
+    public GraphPlotter(Canvas c, int w, int h, float xScale, AppDensity res) {
         width=w;
         height=h;
 

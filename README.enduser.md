@@ -1,7 +1,7 @@
 # README
 
 ## Map Tiles
-AAT does not automaticly remove downloaded map tiles. This is to...
+AAT does not automatically remove downloaded map tiles. This is to...
 
 - reduce network traffic as much as possible.
 - reduce battery drain.

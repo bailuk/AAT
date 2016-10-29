@@ -7,11 +7,9 @@ import java.io.File;
 import java.io.FileOutputStream;
 
 import ch.bailu.aat.gpx.GpxFileWrapper;
-import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.GpxList;
 import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.helpers.AppBroadcaster;
-import ch.bailu.aat.helpers.AppLayout;
 import ch.bailu.aat.helpers.AppLog;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.views.map.overlay.OsmOverlay;

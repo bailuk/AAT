@@ -9,7 +9,6 @@ import android.os.IBinder;
 
 import java.io.Closeable;
 
-import ch.bailu.aat.helpers.AppLog;
 import ch.bailu.aat.services.background.BackgroundService;
 import ch.bailu.aat.services.cache.CacheService;
 import ch.bailu.aat.services.dem.ElevationService;
@@ -33,9 +32,8 @@ public abstract class ServiceLink implements
     }
 
 
-    private OneService service=null;
-    private boolean bound =false;
-
+    private ServiceContext service= null;
+    private boolean bound = false;
 
     private final Context context;
 
@@ -52,20 +50,14 @@ public abstract class ServiceLink implements
 
 
     public void up() {
-        if (bound == false) {
-            bound = true;
-            context.bindService(new Intent(context,
-                    OneService.class), this, Context.BIND_AUTO_CREATE);
-        }
+        bindService();
     }
 
 
 
     @Override
     public void onServiceConnected(ComponentName className, IBinder binder) {
-
-        service =  (OneService)((AbsService.CommonBinder)binder).getService();
-        service.lock(ServiceLink.class.getSimpleName());
+        grabService(binder);
         onServiceUp();
     }
 
@@ -78,13 +70,36 @@ public abstract class ServiceLink implements
 
 
     public void down() {
+        releaseService();
+        unbindService();
+    }
+
+
+    private void grabService(IBinder binder) {
+        service = (ServiceContext)((AbsService.CommonBinder)binder).getService();
+        service.lock(ServiceLink.class.getSimpleName());
+    }
+
+    private void releaseService() {
         if (service != null) {
             service.free(ServiceLink.class.getSimpleName());
+            service = null;
         }
+    }
 
+
+    private void bindService() {
+        if (bound == false) {
+            bound = true;
+            context.bindService(new Intent(context,
+                    OneService.class), this, Context.BIND_AUTO_CREATE);
+        }
+    }
+
+
+    private void unbindService() {
         if (bound) {
             bound = false;
-            service = null;
             context.unbindService(this);
         }
     }
@@ -99,7 +114,7 @@ public abstract class ServiceLink implements
 
 
 
-    private OneService getService()  {
+    private ServiceContext getService()  {
         if (isUp())
             return service;
         else

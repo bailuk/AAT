@@ -5,7 +5,6 @@ import android.database.Cursor;
 import java.io.File;
 
 import ch.bailu.aat.gpx.GpxInformation;
-import ch.bailu.aat.preferences.SolidDirectoryQuery;
 import ch.bailu.aat.services.ServiceContext;
 
 public class IteratorSummary extends IteratorAbstract {

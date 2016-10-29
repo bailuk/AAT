@@ -10,7 +10,6 @@ import ch.bailu.aat.description.DistanceDescription;
 import ch.bailu.aat.description.NameDescription;
 import ch.bailu.aat.description.PathDescription;
 import ch.bailu.aat.description.TrackSizeDescription;
-import ch.bailu.aat.dispatcher.EditorSource;
 import ch.bailu.aat.dispatcher.OnContentUpdatedInterface;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.InfoID;
@@ -43,8 +42,8 @@ public class GpxEditorActivity extends AbsFileContentActivity
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState, SOLID_KEY);
-
+        super.onCreate(savedInstanceState);
+        super.onCreate(SOLID_KEY);
 
         addTarget(this, InfoID.FILEVIEW);
     }

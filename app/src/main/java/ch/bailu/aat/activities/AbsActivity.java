@@ -1,11 +1,9 @@
 package ch.bailu.aat.activities;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 
 import ch.bailu.aat.helpers.AppLog;
-import ch.bailu.aat.helpers.file.FileIntent;
 import ch.bailu.aat.preferences.PreferenceLoadDefaults;
 
 public abstract class AbsActivity extends Activity {

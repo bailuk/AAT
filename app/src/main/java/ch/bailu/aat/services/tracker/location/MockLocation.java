@@ -6,7 +6,6 @@ import java.io.File;
 import java.io.IOException;
 
 import ch.bailu.aat.coordinates.BoundingBox;
-import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.GpxList;
 import ch.bailu.aat.gpx.GpxPointNode;
 import ch.bailu.aat.gpx.InfoID;

@@ -8,7 +8,6 @@ import android.graphics.drawable.Drawable;
 import java.io.File;
 
 import ch.bailu.aat.helpers.AppBroadcaster;
-import ch.bailu.aat.helpers.AppLog;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.background.FileHandle;
 

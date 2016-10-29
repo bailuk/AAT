@@ -2,7 +2,6 @@ package ch.bailu.aat.services.tracker.location;
 
 import android.location.LocationManager;
 
-import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.StateID;
 import ch.bailu.aat.services.ServiceContext;
 

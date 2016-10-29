@@ -20,7 +20,7 @@ public class DemSplitterSE extends DemSplitter {
         final int row_mode=row % 2; 
         final int col_mode=col % 2;
 
-        float sum=0;
+        float sum;
         final float div=2;
 
         /**

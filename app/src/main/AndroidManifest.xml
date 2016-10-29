@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="ch.bailu.aat"
-    android:versionCode="13"
-    android:versionName="v1.3-beta">
+    package="ch.bailu.aat">
 
 
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" >  </uses-permission>
@@ -47,8 +45,8 @@
             android:name="ch.bailu.aat.activities.ImportListActivity"
             android:screenOrientation="portrait" >
         </activity>
-        
-       <activity
+
+        <activity
             android:name="ch.bailu.aat.activities.GpxViewActivity"
             android:screenOrientation="portrait" >
             <!-- Reference: http://stackoverflow.com/questions/1733195/android-intent-filter-for-a-particular-file-extension -->
@@ -58,14 +56,45 @@
                 <action android:name="android.intent.action.VIEW"/>
                 <category android:name="android.intent.category.DEFAULT"/>
                 <category android:name="android.intent.category.BROWSABLE" />
-                <data android:mimeType="application/gpx+xml" />
                 <data android:scheme="content" />
+                <data android:mimeType="application/gpx" />
             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.VIEW"/>
                 <category android:name="android.intent.category.DEFAULT"/>
                 <category android:name="android.intent.category.BROWSABLE" />
                 <data android:scheme="content" />
+                <data android:mimeType="application/xml" />
+            </intent-filter>
+            <!-- data android:mimeType="application/gpx+xml" /-->
+
+
+            <!-- Files from filemanager without mime type set -->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="file" />
+                <data android:host="*" />
+                <data android:pathPattern=".*\\.gpx" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="file" />
+                <data android:host="*" />
+                <data android:pathPattern=".*\\.osm" />
+            </intent-filter>
+
+
+            <!-- Files from filemanager with mime type set -->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="file" />
+                <data android:host="*" />
                 <data android:mimeType="*/*" />
                 <data android:pathPattern=".*\\.gpx" />
             </intent-filter>
@@ -73,35 +102,15 @@
                 <action android:name="android.intent.action.VIEW"/>
                 <category android:name="android.intent.category.DEFAULT"/>
                 <category android:name="android.intent.category.BROWSABLE" />
-                <data android:scheme="content" />
+                <data android:scheme="file" />
+                <data android:host="*" />
                 <data android:mimeType="*/*" />
                 <data android:pathPattern=".*\\.osm" />
             </intent-filter>
 
 
-            <!-- Files on filesystem -->
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-                <data android:scheme="file" />
-                <data android:mimeType="*/*" />
-                <data android:pathPattern=".*\\.gpx" />
-                <data android:host="*" />
-            </intent-filter>
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-                <data android:scheme="file" />
-                <data android:mimeType="*/*" />
-                <data android:pathPattern=".*\\.osm" />
-                <data android:host="*" />
-            </intent-filter>
-        
-            
         </activity>
-        
+
         <activity
             android:name="ch.bailu.aat.activities.TrackerActivity"
             android:screenOrientation="portrait" >
@@ -118,7 +127,7 @@
                 <data android:scheme="geo" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
-            
+
         </activity>
 
         <activity android:name="ch.bailu.aat.activities.FileContentActivity" >
@@ -153,11 +162,11 @@
 
         <service android:name="ch.bailu.aat.services.OneService" >
         </service>
-        
-        
+
+
         <provider android:name="ch.bailu.aat.providers.GpxProvider"
-                  android:authorities="${applicationId}.gpx"
-                  android:exported="true">
+            android:authorities="${applicationId}.gpx"
+            android:exported="true">
         </provider>
     </application>
 

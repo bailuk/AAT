@@ -4,10 +4,8 @@ import android.os.Bundle;
 import android.widget.LinearLayout;
 
 import ch.bailu.aat.R;
-import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.preferences.SolidPreset;
-import ch.bailu.aat.services.tileremover.TileRemoverService;
 import ch.bailu.aat.views.ContentView;
 import ch.bailu.aat.views.MainControlBar;
 import ch.bailu.aat.views.description.MultiView;

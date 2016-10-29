@@ -11,7 +11,7 @@ public class StateSimpleTag extends ParserState {
     
     @Override
     public void parse(ParserIO io) throws IOException {
-        String key="", value="";
+        String key="";
         
         while (true) {
             if (io.stream.haveQuotation()) {
@@ -21,7 +21,7 @@ public class StateSimpleTag extends ParserState {
                     io.longitude.scan();
                 } else {
                     parseQuotedString(io);
-                    value = io.builder.toString();
+                    final String value = io.builder.toString();
                     io.tagList.add(new Tag(key, value));
                 }
                 break;

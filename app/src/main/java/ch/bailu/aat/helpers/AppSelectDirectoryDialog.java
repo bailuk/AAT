@@ -9,7 +9,6 @@ import java.io.File;
 
 import ch.bailu.aat.R;
 import ch.bailu.aat.helpers.file.FileAction;
-import ch.bailu.aat.helpers.file.FileUI;
 
 public class AppSelectDirectoryDialog  implements  DialogInterface.OnClickListener {
     private final Uri uri;

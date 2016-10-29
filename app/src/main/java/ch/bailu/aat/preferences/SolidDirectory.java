@@ -4,7 +4,6 @@ import java.io.File;
 import java.util.ArrayList;
 
 import ch.bailu.aat.R;
-import ch.bailu.aat.helpers.AppLog;
 
 
 public abstract class SolidDirectory extends SolidString {
@@ -40,5 +39,4 @@ public abstract class SolidDirectory extends SolidString {
             return false;
         }
     }
-
 }

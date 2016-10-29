@@ -1,5 +1,6 @@
 package ch.bailu.aat.views;
 
+import android.content.Context;
 import android.database.DataSetObserver;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -31,37 +32,25 @@ import ch.bailu.aat.helpers.AppTheme;
 import ch.bailu.aat.helpers.file.FileAccess;
 import ch.bailu.aat.osm_features.MapFeaturesParser;
 import ch.bailu.aat.osm_features.MapFeaturesParser.OnHaveFeature;
-import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.icons.IconMapService;
 
-public class FeaturesList extends ListView implements 
-OnHaveFeature { 
+public class FeaturesList extends ListView  {
 
     private DataSetObserver observer=null;
 
-    private final ServiceContext scontext;
-
-    private class ListData {
+    private static class ListData {
         public String name, key, value;
         public Spanned paragraph;
     }
 
-
     private final ArrayList<ListData> data = new ArrayList<>();
 
 
-    public FeaturesList(ServiceContext sc, FileAccess file) {
-        this(sc);
-
-        loadList(file, sc.getIconMapService());
-    }
-
-    public FeaturesList(ServiceContext sc) {
-        super(sc.getContext());
+    public FeaturesList(Context context) {
+        super(context);
 
         final Adapter listAdapter = new Adapter();
 
-        scontext = sc;
         AppTheme.themify(this, AppTheme.getHighlightColor());
 
         setAdapter(listAdapter);
@@ -71,9 +60,19 @@ OnHaveFeature {
     }
 
 
-    public void loadList() {
-        try {
-            File[] files=AppDirectory.getDataDirectory(getContext(), AppDirectory.DIR_OSM_FEATURES_PREPARSED).listFiles();
+
+
+
+    public class ListLoader implements OnHaveFeature {
+        private final IconMapService map;
+
+        public ListLoader(IconMapService m) {
+            map = m;
+        }
+
+
+        public void loadList() throws IOException {
+            File[] files = AppDirectory.getDataDirectory(getContext(), AppDirectory.DIR_OSM_FEATURES_PREPARSED).listFiles();
 
             if (files != null) {
                 Arrays.sort(files, new Comparator<File>() {
@@ -83,9 +82,54 @@ OnHaveFeature {
                 });
 
                 new MapFeaturesParser(this, files);
-
-                if (observer != null) observer.onChanged();
             }
+        }
+
+        public void loadList(FileAccess file) throws IOException {
+            new MapFeaturesParser(this, file);
+        }
+
+
+        @Override
+        public void onHaveFeature(MapFeaturesParser parser) {
+            ListData d = new ListData();
+
+            d.name = parser.getName();
+            d.key = parser.getKey();
+            d.value = parser.getValue();
+
+            StringBuilder html=new StringBuilder();
+            map.iconify(html,parser.getKey(), parser.getValue());
+            parser.toHtml(html);
+
+            d.paragraph = AppHtml.fromHtml(html.toString(), new Html.ImageGetter() {
+
+                @Override
+                public Drawable getDrawable(String source) {
+
+                    Bitmap bitmap = BitmapFactory.decodeFile(source);
+                    if (bitmap != null) {
+                        Drawable drawable = new BitmapDrawable(getResources(),bitmap);
+                        drawable.setBounds(0, 0, bitmap.getWidth(), bitmap.getHeight());
+                        return drawable;
+
+                    } else {
+                        return null;
+                    }
+
+                }
+            });
+
+            data.add(d);
+        }
+
+    }
+
+
+    public void loadList(IconMapService map) {
+        try {
+            new ListLoader(map).loadList();
+            if (observer != null) observer.onChanged();
         } catch (IOException e) {
             AppLog.e(getContext(), this, e);
         }
@@ -95,9 +139,8 @@ OnHaveFeature {
 
     public void loadList(FileAccess file, IconMapService map) {
         try {
-            new MapFeaturesParser(this, file);
+            new ListLoader(map).loadList(file);
             if (observer != null) observer.onChanged();
-
         } catch (IOException e) {
             AppLog.e(getContext(), this, e);
         }
@@ -105,38 +148,6 @@ OnHaveFeature {
     }
 
 
-    @Override
-    public void onHaveFeature(MapFeaturesParser parser) {
-        ListData d = new ListData();
-
-        d.name = parser.getName();
-        d.key = parser.getKey();
-        d.value = parser.getValue();
-
-        StringBuilder html=new StringBuilder();
-        scontext.getIconMapService().iconify(html,parser.getKey(), parser.getValue());
-        parser.toHtml(html);
-
-        d.paragraph = AppHtml.fromHtml(html.toString(), new Html.ImageGetter() {
-
-            @Override
-            public Drawable getDrawable(String source) {
-
-                Bitmap bitmap = BitmapFactory.decodeFile(source);
-                if (bitmap != null) {
-                    Drawable drawable = new BitmapDrawable(getResources(),bitmap);
-                    drawable.setBounds(0, 0, bitmap.getWidth(), bitmap.getHeight());
-                    return drawable;
-
-                } else {
-                    return null;
-                }
-
-            }
-        });
-
-        data.add(d);        
-    }
 
 
 
@@ -166,7 +177,7 @@ OnHaveFeature {
 
 
     private class Adapter implements ListAdapter, android.widget.AdapterView.OnItemClickListener,
-    android.widget.AdapterView.OnItemLongClickListener{
+            android.widget.AdapterView.OnItemLongClickListener{
 
 
         @Override
@@ -199,7 +210,7 @@ OnHaveFeature {
 
         @Override
         public boolean onItemLongClick(AdapterView<?> v, View v1, int index,
-                long id) {
+                                       long id) {
             ListData d = data.get(index);
 
             if (d.name.length()>1) {
@@ -225,7 +236,7 @@ OnHaveFeature {
             if (d.name.length()>1) {
                 startFeatureListActivity(d.name);
 
-            } else if (d.key.length()>1 
+            } else if (d.key.length()>1
                     && d.value.length()>1) {
                 broadcastKeyValue(d.key, d.value);
             }

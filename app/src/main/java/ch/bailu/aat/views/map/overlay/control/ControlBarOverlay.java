@@ -8,7 +8,6 @@ import android.widget.LinearLayout;
 
 import org.osmdroid.views.MapView;
 
-import ch.bailu.aat.helpers.Timer;
 import ch.bailu.aat.views.ControlBar;
 import ch.bailu.aat.views.map.OsmInteractiveView;
 import ch.bailu.aat.views.map.overlay.MapPainter;
@@ -94,7 +93,7 @@ public abstract class ControlBarOverlay extends OsmOverlay implements Runnable, 
         //hideTimer.kick();
     }
 
-    public void onShowBar(){};
+    public void onShowBar(){}
 
 
     @Override

@@ -15,8 +15,6 @@ public class PresetPreferencesView extends VerticalScrollView {
     public PresetPreferencesView(Context context, int i) {
         super(context);
 
-
-        final SolidPreset spreset = new SolidPreset(context);
         add(new TitleView(context, context.getString(R.string.p_preset) + " " + (i + 1)));
 
         add(new SolidStringView(new SolidMET(context, i)));

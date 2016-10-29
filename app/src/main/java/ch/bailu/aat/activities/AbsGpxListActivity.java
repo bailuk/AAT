@@ -19,7 +19,6 @@ import ch.bailu.aat.dispatcher.CurrentLocationSource;
 import ch.bailu.aat.dispatcher.IteratorSource;
 import ch.bailu.aat.dispatcher.OverlaySource;
 import ch.bailu.aat.gpx.InfoID;
-import ch.bailu.aat.helpers.file.FileAction;
 import ch.bailu.aat.menus.FileMenu;
 import ch.bailu.aat.preferences.SolidDirectoryQuery;
 import ch.bailu.aat.services.directory.Iterator;
@@ -170,6 +169,7 @@ public abstract class AbsGpxListActivity extends AbsDispatcher implements OnItem
 
     @Override
     public void onResumeWithService() {
+
         iteratorSimple = new IteratorSimple(getServiceContext());
         listView.setAdapter(getServiceContext(), iteratorSimple);
         listView.setSelection(sdirectory.getPosition().getValue());
@@ -231,6 +231,5 @@ public abstract class AbsGpxListActivity extends AbsDispatcher implements OnItem
     public boolean onContextItemSelected(MenuItem item) {
         return fileMenu.onItemClick(item);
     }
-
 }
 

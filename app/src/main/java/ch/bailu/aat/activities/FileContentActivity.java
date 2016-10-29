@@ -14,7 +14,8 @@ public class FileContentActivity extends AbsFileContentActivity{
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState, SOLID_KEY);
+        super.onCreate(savedInstanceState);
+        super.onCreate(SOLID_KEY);
     }
 
     @Override

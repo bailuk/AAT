@@ -1,50 +1,39 @@
 apply plugin: 'com.android.application'
 
-def debugSuffix = System.
-        getProperty('debugsuffix', project.getProperties().get('debugsuffix', ""))
-
-def final applicationBaseId = 'ch.bailu.aat'
-
-
-
 android {
     compileSdkVersion 24
-
-
     buildToolsVersion "24.0.2"
 
 
     defaultConfig {
+        applicationId "ch.bailu.aat"
+
         minSdkVersion 8
         targetSdkVersion 24
 
-        applicationId = applicationBaseId
+        versionCode 13
+        versionName "v1.3-beta"
+
+
         resValue "string", "app_sname", "AAT"
     }
 
-
-    productFlavors {
-        dev {
-            minSdkVersion 8
-            targetSdkVersion 24
-
-            resValue "string", "app_sname", "AAT_dev"
-            applicationId = applicationBaseId + ".dev" + debugSuffix
-        }
-    }
 
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
         }
-    }
 
-    dexOptions {
-        incremental true
-        javaMaxHeapSize "1g"
+        debug {
+            resValue "string", "app_sname", "AAT.debug"
+            applicationIdSuffix = ".debug"
+
+
+        }
     }
 }
+
 
 dependencies {
 }

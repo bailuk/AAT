@@ -123,16 +123,17 @@ public class TileRemoverView
 
 
     public void updateText() {
-        final TileRemoverService tr = scontext.getTileRemoverService();
-        if (tr != null) {
+        if (scontext.isUp()) {
+            final TileRemoverService tr = scontext.getTileRemoverService();
             summaryView.updateInfo(tr.getSummaries());
         }
     }
 
     @Override
     public void onClick(View v) {
-        final TileRemoverService tr = scontext.getTileRemoverService();
-        if (tr != null) {
+        if (scontext.isUp()) {
+
+            final TileRemoverService tr = scontext.getTileRemoverService();
             if (v == scan && scan.isWaiting()) {
                 tr.getState().stop();
             } else if (v == scan) {
@@ -152,9 +153,9 @@ public class TileRemoverView
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-        final TileRemoverService tr = scontext.getTileRemoverService();
-        if (tr != null) {
-            if(sdirectory.hasKey(key)) {
+        if (scontext.isUp()) {
+            final TileRemoverService tr = scontext.getTileRemoverService();
+            if (sdirectory.hasKey(key)) {
                 tr.getState().resetAndRescan();
             } else if (key.contains("SolidTrim")) {
                 tr.getState().rescan();

@@ -5,7 +5,6 @@ import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 
 import java.io.Closeable;
 
-import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.StateID;
 import ch.bailu.aat.preferences.SolidGPSLock;
 import ch.bailu.aat.preferences.Storage;

@@ -72,7 +72,7 @@ public class ObjectTable {
 
     private ObjectHandle getFromCache(String id) {
         Container c = table.get(id.hashCode());
-        if (c != null) 
+        if (c != null)
             return c.obj;
 
         return null;
@@ -83,7 +83,7 @@ public class ObjectTable {
 
         if (h == null) {
             h = ObjectHandle.NULL;
-        } 
+        }
 
         h.lock();
         return h;
@@ -131,7 +131,7 @@ public class ObjectTable {
 
     public synchronized void onLowMemory(CacheService self) {
         limit = MIN_SIZE;
-        trim(self);            
+        trim(self);
     }
 
 
@@ -211,11 +211,10 @@ public class ObjectTable {
         builder.append("</p>");
 
 
-        ObjectHandle current = ObjectHandle.NULL;
         int locked=0,free=0;
 
-
         for (int i=0; i<table.size(); i++) {
+            ObjectHandle current;
             current = table.valueAt(i).obj;
 
             if (current.isLocked()) locked++;
@@ -230,9 +229,9 @@ public class ObjectTable {
 
         builder.append("<br>TOTAL cache entries: ");
         builder.append(table.size());
-        builder.append("</p>");     
+        builder.append("</p>");
     }
-    
+
     public void logLocked() {
         ObjectHandle current = ObjectHandle.NULL;
         int locked=0;

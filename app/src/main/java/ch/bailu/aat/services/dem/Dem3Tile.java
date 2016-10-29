@@ -183,7 +183,7 @@ public class Dem3Tile implements ElevationProvider, DemProvider {
                     final ZipEntry entry = zip.entries().nextElement();
                     input = new BufferedInputStream(zip.getInputStream(entry));
                     
-                    int count=0;
+                    int count;
 
                     do {
                         count = input.read(data, total, data.length-total);

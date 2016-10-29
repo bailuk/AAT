@@ -165,7 +165,7 @@ public class StateScan implements State, Runnable {
             final String c = file.getCanonicalPath();
             final String a = file.getAbsolutePath();
 
-            return c != null &&  c.equals(a);
+            return c.equals(a);
 
         } catch (IOException e) {
             return false;

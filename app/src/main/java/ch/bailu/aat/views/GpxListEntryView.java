@@ -14,7 +14,6 @@ import ch.bailu.aat.helpers.AppTheme;
 import ch.bailu.aat.services.ServiceContext;
 
 public class GpxListEntryView extends LinearLayout implements OnContentUpdatedInterface {
-    private final LinearLayout textLayout;
 
     private final int previewSize;
     private final PreviewView preview;
@@ -36,7 +35,7 @@ public class GpxListEntryView extends LinearLayout implements OnContentUpdatedIn
 
         setLayoutParams(p);
 
-
+        final LinearLayout textLayout;
         textLayout = new LinearLayout(sc.getContext());
         textLayout.setOrientation(VERTICAL);
         addViewWeight(textLayout);

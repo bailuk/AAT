@@ -18,7 +18,6 @@ import java.io.IOException;
 
 import ch.bailu.aat.R;
 import ch.bailu.aat.dispatcher.CustomFileSource;
-import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.helpers.AbsTextBackup;
 import ch.bailu.aat.helpers.AppBroadcaster;

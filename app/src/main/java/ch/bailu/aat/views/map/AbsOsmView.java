@@ -8,8 +8,6 @@ import org.osmdroid.views.MapView;
 import ch.bailu.aat.coordinates.BoundingBox;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.InfoID;
-import ch.bailu.aat.helpers.AppDensity;
-import ch.bailu.aat.services.cache.TileObject;
 import ch.bailu.aat.views.description.TrackDescriptionView;
 import ch.bailu.aat.views.map.overlay.OsmOverlay;
 import ch.bailu.aat.views.map.overlay.OverlayList;

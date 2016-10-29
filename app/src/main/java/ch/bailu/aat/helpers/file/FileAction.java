@@ -4,25 +4,20 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.view.View;
 import android.widget.EditText;
 
 import java.io.File;
-import java.io.IOException;
 
 import ch.bailu.aat.R;
-import ch.bailu.aat.activities.AbsServiceLink;
 import ch.bailu.aat.helpers.AppDialog;
 import ch.bailu.aat.helpers.AppLog;
 import ch.bailu.aat.helpers.AppSelectDirectoryDialog;
 import ch.bailu.aat.helpers.Clipboard;
 import ch.bailu.aat.helpers.file.FileIntent;
 import ch.bailu.aat.helpers.file.FileUI;
-import ch.bailu.aat.menus.FileMenu;
 import ch.bailu.aat.preferences.SolidDirectoryQuery;
 import ch.bailu.aat.preferences.SolidMockLocationFile;
 import ch.bailu.aat.services.ServiceContext;
-import ch.bailu.aat.services.directory.Iterator;
 import ch.bailu.aat.views.preferences.AddOverlayDialog;
 
 public class FileAction   {

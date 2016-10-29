@@ -1,16 +1,11 @@
 package ch.bailu.aat.helpers.file;
 
 import android.content.Context;
-import android.net.Uri;
 
 import java.io.File;
-import java.io.IOException;
 
 import ch.bailu.aat.R;
 import ch.bailu.aat.helpers.AppLog;
-import ch.bailu.aat.helpers.AppSelectDirectoryDialog;
-import ch.bailu.aat.preferences.SolidDirectoryQuery;
-import ch.bailu.aat.services.ServiceContext;
 
 public class FileUI {
     public static void logExists(Context c, File f) {

@@ -49,7 +49,8 @@ public abstract class AbsOsmTileProvider extends AbsTileProvider {
 
         for (Source source : sources) {
             builder.append('/');
-            builder.append(source.getName() + source.getBitmapFilter().toString());
+            builder.append(source.getName());
+            builder.append(source.getBitmapFilter().toString());
         }
         return builder.toString();
     }

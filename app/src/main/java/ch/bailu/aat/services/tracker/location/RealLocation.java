@@ -1,20 +1,26 @@
 package ch.bailu.aat.services.tracker.location;
 
+import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.location.LocationProvider;
+import android.os.Build;
 import android.os.Bundle;
 
 import java.util.List;
 
-import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.gpx.StateID;
 import ch.bailu.aat.helpers.AppLog;
+import ch.bailu.aat.helpers.AppPermission;
 import ch.bailu.aat.helpers.ContextWrapperInterface;
 
+
+@SuppressLint("MissingPermission")
 public class RealLocation extends LocationStackChainedItem
         implements LocationListener, ContextWrapperInterface{
 
@@ -134,9 +140,16 @@ public class RealLocation extends LocationStackChainedItem
 
 
     private void sendLastKnownLocation(LocationManager lm, String provider) {
-        final Location loc = lm.getLastKnownLocation(provider);
-        if (loc != null) sendLocation(loc);
+        if (AppPermission.checkLocation(context)) {
+            final Location loc = lm.getLastKnownLocation(provider);
+            if (loc != null) sendLocation(loc);
+        }
     }
+
+
+
+
+
 
     private void validateProvider(LocationManager lm, String provider) throws NoServiceException {
         /* 
@@ -166,13 +179,16 @@ public class RealLocation extends LocationStackChainedItem
 
     }
     private LocationManager getLocationManager(Context c) throws NoServiceException {
-        final Object r = c.getSystemService(Context.LOCATION_SERVICE);
+        if (AppPermission.checkLocation(c)) {
+            final Object r = c.getSystemService(Context.LOCATION_SERVICE);
 
-        if (r==null || LocationManager.class.isInstance(r)==false) {
-            throw new NoServiceException();
-        } else {
-            return (LocationManager) r;
+            if (r == null || LocationManager.class.isInstance(r) == false) {
+                throw new NoServiceException();
+            } else {
+                return (LocationManager) r;
+            }
         }
+        throw new NoServiceException();
     }
 
     private void requestLocationUpdates(LocationManager lm, String provider, long interval)

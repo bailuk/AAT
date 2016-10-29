@@ -8,7 +8,6 @@ import java.util.ArrayList;
 
 import ch.bailu.aat.R;
 import ch.bailu.aat.helpers.AppDirectory;
-import ch.bailu.aat.helpers.AppLog;
 
 public class SolidDataDirectory extends SolidDirectory {
 

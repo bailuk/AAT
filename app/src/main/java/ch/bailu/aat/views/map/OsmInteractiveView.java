@@ -17,7 +17,6 @@ import org.osmdroid.views.MapController;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.preferences.SolidPositionLock;
-import ch.bailu.aat.preferences.SolidTileSize;
 import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat.services.ServiceContext;
 

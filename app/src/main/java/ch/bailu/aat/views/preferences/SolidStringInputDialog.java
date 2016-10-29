@@ -17,7 +17,6 @@ public class SolidStringInputDialog extends AbsSolidDialog {
         final AlertDialog.Builder dialog = createDefaultDialog(s);
         final EditText input = new EditText(context);
 
-        input.setHint(s.getValueAsString());
         input.setText(s.getValueAsString());
 
         dialog.setView(input);

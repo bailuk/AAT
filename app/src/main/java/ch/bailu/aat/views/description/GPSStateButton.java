@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 
 import ch.bailu.aat.description.GpsStateDescription;
-import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.preferences.SolidGPSLock;
 import ch.bailu.aat.preferences.Storage;

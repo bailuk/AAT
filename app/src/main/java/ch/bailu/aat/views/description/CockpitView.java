@@ -4,7 +4,6 @@ package ch.bailu.aat.views.description;
 import android.content.Context;
 
 import ch.bailu.aat.description.ContentDescription;
-import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.InfoID;
 
 

@@ -4,7 +4,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 
 import ch.bailu.aat.description.TrackerStateDescription;
-import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.views.description.NumberButton;

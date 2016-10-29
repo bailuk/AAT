@@ -62,7 +62,7 @@ public class DownloadHandle extends ProcessHandle {
 
 
     private long download(URL url, File file) throws IOException {
-        int count=0;
+        int count;
         long total=0;
         InputStream input = null;
         OutputStream output = null;

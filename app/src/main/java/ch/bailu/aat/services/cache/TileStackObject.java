@@ -128,7 +128,7 @@ public class TileStackObject extends ObjectHandle {
     }
 
     private class ReUpdate extends ProcessHandle {
-        private final static int OVERLAY_ALPHA=100;
+        private final static int OVERLAY_ALPHA=150;
         private final static int NULL_ALPHA=255;
 
         public ReUpdate() {

@@ -46,9 +46,8 @@ public class MapFeaturesActivity extends AbsDispatcher implements OnClickListene
         bar.addView(download);
         bar.addIgnoreSize(AppTheme.getTitleTextView(this, R.string.query_features));
 
-        list = new FeaturesList(getServiceContext());
-        list.loadList();
-        
+        list = new FeaturesList(this);
+
         contentView.addView(bar);
         contentView.addView(list);
 
@@ -65,8 +64,15 @@ public class MapFeaturesActivity extends AbsDispatcher implements OnClickListene
         unregisterReceiver(onFileProcessed);
         super.onDestroy();
     }
-    
-    
+
+
+    @Override
+    public void onResumeWithService() {
+        super.onResumeWithService();
+        loadList();
+    }
+
+
     @Override
     public void onClick(View v) {
         if (v==download) {
@@ -86,7 +92,9 @@ public class MapFeaturesActivity extends AbsDispatcher implements OnClickListene
             
         }
     }
-    
+
+
+
     private final BroadcastReceiver onFileProcessed = new BroadcastReceiver() {
 
         @Override
@@ -94,13 +102,19 @@ public class MapFeaturesActivity extends AbsDispatcher implements OnClickListene
             try {
                 if (AppIntent.hasFile(intent, AppDirectory.getMapFeatureIndex(context).toString())) {
                     download.stopWaiting();
-                    list.loadList();
-                }
+                    loadList();                }
             } catch (Exception e) {
+                loadList();
                 download.stopWaiting();
-                list.loadList();
                 AppLog.e(MapFeaturesActivity.this, this,e);
             }
         }
     };
+
+
+    private void loadList() {
+        if (getServiceContext().isUp())
+            list.loadList(getServiceContext().getIconMapService());
+    }
+
 }

@@ -26,7 +26,6 @@ import ch.bailu.aat.dispatcher.EditorSource;
 import ch.bailu.aat.dispatcher.IteratorSource;
 import ch.bailu.aat.dispatcher.OverlaySource;
 import ch.bailu.aat.dispatcher.TrackerSource;
-import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.helpers.AppLayout;
 import ch.bailu.aat.helpers.ToolTip;
@@ -68,9 +67,11 @@ public abstract class AbsFileContentActivity extends AbsDispatcher implements On
     protected EditorSource editor_source= null;
 
 
-    public void onCreate(Bundle savedInstanceState, final String KEY) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+    }
 
+    public void onCreate(final String KEY) {
         firstRun = true;
 
         editor_helper = createEditorHelper();
@@ -78,6 +79,7 @@ public abstract class AbsFileContentActivity extends AbsDispatcher implements On
         createViews(KEY);
         createDispatcher();
     }
+
 
     protected abstract EditorHelper createEditorHelper();
 

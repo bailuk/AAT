@@ -1,7 +1,6 @@
 package ch.bailu.aat.views.map.overlay.control;
 
 import android.view.View;
-import android.widget.LinearLayout;
 
 import org.osmdroid.api.IGeoPoint;
 
