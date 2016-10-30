@@ -11,9 +11,8 @@ android {
         minSdkVersion 8
         targetSdkVersion 24
 
-        versionCode 13
-        versionName "v1.3-beta"
-
+        versionCode 14
+        versionName "v1.4-beta"
 
         resValue "string", "app_sname", "AAT"
     }
@@ -28,9 +27,8 @@ android {
         debug {
             resValue "string", "app_sname", "AAT.debug"
             applicationIdSuffix = ".debug"
-
-
         }
+
     }
 }
 

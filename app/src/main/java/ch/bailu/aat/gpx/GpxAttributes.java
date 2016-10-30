@@ -79,8 +79,6 @@ public class GpxAttributes {
 
 
     private int getIndex(String key) {
-        key.toLowerCase();
-
         for (int i=0; i<size(); i++) {
             if (tagList[i].key.equals(key)) return i;
         }
