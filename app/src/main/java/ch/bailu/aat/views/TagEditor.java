@@ -111,7 +111,7 @@ public class TagEditor extends LinearLayout {
         try {
             AbsTextBackup.write(backup, getText());
         } catch (IOException e) {
-            AppLog.e(TagEditor.this, e);
+            AppLog.e(getContext(), TagEditor.this, e);
             
         }
     }

@@ -149,6 +149,7 @@ public class OneService extends AbsService  implements ServiceContext {
 
     public void appendStatusText(VirtualService service, StringBuilder builder) {
         if (forceUp() && service != null) {
+
             builder.append("<h1>");
             builder.append(service.getClass().getSimpleName());
             builder.append("</h1>");

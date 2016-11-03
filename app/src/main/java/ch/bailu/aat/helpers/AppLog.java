@@ -11,6 +11,8 @@ import android.widget.Toast;
 
 import java.io.Closeable;
 
+import ch.bailu.aat.BuildConfig;
+
 
 public class AppLog implements Closeable {
     private final static String UNKNOWN = "";
@@ -101,60 +103,57 @@ public class AppLog implements Closeable {
     }
     
     public static void i(Context c, String m) {
-        sendBroadcast(LogInfo.ACTION, c, safeString(m));
+        sendBroadcast(LogInfo.ACTION, c, toSaveString(m));
     }
 
-    public static void i(Object o, String m) {
+    private static void i(Object o, String m) {
         i(o.getClass().getSimpleName(), m);
     }
     
-    public static void i(String a, String b) {
-        android.util.Log.i(safeString(a), safeString(b));
+    private static void i(String a, String b) {
+        android.util.Log.i(toSaveString(a), toSaveString(b));
     }
 
     
     public static void e(Context c, Throwable e) {
-        e(c,safeString(e));
-        e.printStackTrace();
+        e(c, toStringAndPrintStackTrace(e));
     }
 
 
     public static void e(Context c, Object o, Throwable e) {
-        e(c, o.getClass().getSimpleName(), safeString(e));
-        e.printStackTrace();
+        e(c, o.getClass().getSimpleName(), toStringAndPrintStackTrace(e));
     }
 
     
     
-    public static void e(Object o, Throwable e) {
-        e(o,safeString(e));
-        e.printStackTrace();
+    private static void e(Object o, Throwable e) {
+        e(o, toStringAndPrintStackTrace(e));
     }
 
 
-    public static void e(Object o, String m) {
+    private static void e(Object o, String m) {
         e(o.getClass().getSimpleName(), m);
     }
 
     
-    public static void e(String a, Throwable e) {
-        e(a, e.getMessage());
-        e.printStackTrace();
+    private static void e(String a, Throwable e) {
+        e(a, toStringAndPrintStackTrace(e));
     }
     
     
-    public static void e(String a, String b) {
-        android.util.Log.e(safeString(a), safeString(b));
+    private static void e(String a, String b) {
+        android.util.Log.e(toSaveString(a), toSaveString(b));
+
     }
   
     
     public static void e(Context c, String m) {
-        sendBroadcast(LogError.ACTION, c, safeString(m));
+        sendBroadcast(LogError.ACTION, c, toSaveString(m));
     }
 
     
     public static void e(Context c, String a, String b) {
-        sendBroadcast(LogError.ACTION, c, safeString(a), safeString(b));
+        sendBroadcast(LogError.ACTION, c, toSaveString(a), toSaveString(b));
     }
     
     
@@ -163,7 +162,9 @@ public class AppLog implements Closeable {
     }
     
     public static void d(String a, String b) {
-        android.util.Log.d(safeString(a), safeString(b));
+        if (BuildConfig.DEBUG) {
+            android.util.Log.d(toSaveString(a), toSaveString(b));
+        }
     }
     
 
@@ -180,18 +181,25 @@ public class AppLog implements Closeable {
     }
 
 
-    private static String safeString(String s) {
+    private static String toSaveString(String s) {
         if (s == null) return UNKNOWN;
         return s;
     }
 
-    private static String safeString(Throwable e) {
-        if (e == null) 
+    private static String toStringAndPrintStackTrace(Throwable e) {
+        if (e == null) {
             return UNKNOWN;
-        else if (e.getMessage() == null) 
-            return e.getClass().getSimpleName();
-        else 
-            return e.getClass().getSimpleName() +": " + e.getMessage();
+        } else {
+            if (BuildConfig.DEBUG) {
+                e.printStackTrace();
+            }
+
+            if (e.getMessage() == null) {
+                return e.getClass().getSimpleName();
+            } else {
+                return e.getClass().getSimpleName() + ": " + e.getMessage();
+            }
+        }
     }
     
     

@@ -43,7 +43,7 @@ public class IconMapService extends VirtualService {
             try {
                 new IconMapParser(new FileAccess(mapFile), map);
             } catch (IOException e) {
-                AppLog.e(this, e);
+                AppLog.e(getContext(), this, e);
             }
         }
     }

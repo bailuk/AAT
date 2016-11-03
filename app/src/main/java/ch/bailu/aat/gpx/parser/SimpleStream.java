@@ -104,12 +104,8 @@ public class SimpleStream implements Closeable {
     }
 
     @Override
-    public void close() {
-        try {
-            reader.close();
-        } catch (IOException e) {
-            AppLog.e(this, e);
-        }
+    public void close() throws IOException {
+        reader.close();
     }
 
     public boolean haveQuotation() {

@@ -119,7 +119,7 @@ implements OnSharedPreferenceChangeListener, Closeable ,Runnable {
 
     
     public void emergencyOff(Exception e) {
-        AppLog.e(this,e);
+        AppLog.e(scontext.getContext(), this,e);
         logger.close();
         logger = Logger.createNullLogger();
         state = new OffState(this);

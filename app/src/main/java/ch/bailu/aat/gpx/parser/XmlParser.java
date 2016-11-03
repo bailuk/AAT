@@ -82,7 +82,7 @@ public class XmlParser implements Closeable, GpxPointInterface {
 
     
     @Override
-    public void close() {
+    public void close() throws IOException {
         io.stream.close();
     }
 

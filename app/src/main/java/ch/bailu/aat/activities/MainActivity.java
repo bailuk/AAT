@@ -55,7 +55,8 @@ public class MainActivity extends AbsDispatcher {
         final VerticalScrollView list = new VerticalScrollView(this);
         list.add(new SolidIndexListView(new SolidPreset(this)));
 
-        for (int i = 0; i < ActivitySwitcher.list.length; i++) {
+        final int accessibleCount = ActivitySwitcher.getAccessibleActivitesCount();
+        for (int i = 0; i < accessibleCount; i++) {
             list.add(labelFactory(ActivitySwitcher.list[i]));
         }
         return list;

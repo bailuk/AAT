@@ -8,6 +8,7 @@ import org.osmdroid.util.BoundingBoxE6;
 
 import java.io.File;
 
+import ch.bailu.aat.BuildConfig;
 import ch.bailu.aat.R;
 import ch.bailu.aat.helpers.AppIntent;
 
@@ -29,6 +30,12 @@ public class ActivitySwitcher {
     public final Class<?> activityClass;
 
     public final static int cycable = 3;
+
+
+    public final static int getAccessibleActivitesCount() {
+        if (BuildConfig.DEBUG) return list.length-1;
+        return list.length;
+    }
 
     public ActivitySwitcher(int label, Class<?> c) {
         activityLabel=label;

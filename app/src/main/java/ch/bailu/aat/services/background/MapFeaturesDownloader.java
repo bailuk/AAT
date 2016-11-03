@@ -98,7 +98,7 @@ public class MapFeaturesDownloader implements Closeable {
                 scontext.getBackgroundService().download(request);
 
             } catch (Exception e) {
-                AppLog.e(this, e);
+                AppLog.e(scontext.getContext(), this, e);
                 terminate();
             }
 
@@ -111,7 +111,7 @@ public class MapFeaturesDownloader implements Closeable {
                     pendingImages = new MapFeaturesPreparser(scontext.getContext()).getImageList();
                     setState(new StateDownloadPendingImage());
                 } catch (IOException e) {
-                    AppLog.e(this, e);
+                    AppLog.e(scontext.getContext(), this, e);
                     terminate();
                 }
 
