@@ -19,7 +19,7 @@ public class GridDynOverlay extends OsmOverlay {
         super(osm);
         
         scontext = sc;
-        sgrid = new SolidMapGrid(osm.getContext(), osm.solidKey);
+        sgrid = new SolidMapGrid(osm.getContext(), osm.getSolidKey());
         gridOverlay = sgrid.createGridOverlay(getOsmView(), scontext);
     }
 
@@ -35,7 +35,7 @@ public class GridDynOverlay extends OsmOverlay {
     public void onSharedPreferenceChanged(String key) {
         if (sgrid.hasKey(key)) {
             gridOverlay = sgrid.createGridOverlay(getOsmView(), scontext);
-            getMapView().invalidate();
+            getOsmView().requestRedraw();
         }
     }
 }

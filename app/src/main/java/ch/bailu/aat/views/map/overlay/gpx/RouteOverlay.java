@@ -12,15 +12,20 @@ import ch.bailu.aat.views.map.overlay.MapTwoNodes.PixelNode;
 public class RouteOverlay extends GpxOverlay {
 
     
-    public RouteOverlay(AbsOsmView osmPreview, int id) {
-        this(osmPreview, id,  AppTheme.getHighlightColor3());
+    public RouteOverlay(AbsOsmView o) {
+        this(o,  -1);
     }
 
 
-    public RouteOverlay(AbsOsmView osmPreview, int id, int color) {
-        super(osmPreview, id, color);
+    public RouteOverlay(AbsOsmView o, int color) {
+        super(o, toColor(color));
     }
 
+
+    private static int toColor(int c) {
+        if (c < 0) return AppTheme.getHighlightColor3();
+        return c;
+    }
 
     @Override
     public void draw(MapPainter painter) {

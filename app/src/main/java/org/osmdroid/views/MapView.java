@@ -486,11 +486,9 @@ public class MapView extends ViewGroup implements IMapView, MapViewConstants {
     @SuppressLint("WrongCall")
     @Override
     protected void dispatchDraw(final Canvas c) {
-        final long startMs = System.currentTimeMillis();
 
         mProjection = new Projection();
 
-        // Save the current canvas matrix
         c.save();
 
         if (mMultiTouchScale == 1.0f) {
@@ -503,16 +501,13 @@ public class MapView extends ViewGroup implements IMapView, MapViewConstants {
         }
 
 
-		/* Draw all Overlays. */
-        mOverlayManager.onDraw(c, this);
+      mOverlayManager.onDraw(c, this);
 
-        // Restore the canvas matrix
         c.restore();
 
         super.dispatchDraw(c);
-
-        final long endMs = System.currentTimeMillis();
     }
+
 
     @Override
     protected void onDetachedFromWindow() {

@@ -40,15 +40,8 @@ import ch.bailu.aat.views.description.TrackDescriptionView;
 import ch.bailu.aat.views.description.VerticalView;
 import ch.bailu.aat.views.graph.DistanceAltitudeGraphView;
 import ch.bailu.aat.views.graph.DistanceSpeedGraphView;
+import ch.bailu.aat.views.map.MapFactory;
 import ch.bailu.aat.views.map.OsmInteractiveView;
-import ch.bailu.aat.views.map.overlay.CurrentLocationOverlay;
-import ch.bailu.aat.views.map.overlay.OsmOverlay;
-import ch.bailu.aat.views.map.overlay.control.EditorOverlay;
-import ch.bailu.aat.views.map.overlay.control.InformationBarOverlay;
-import ch.bailu.aat.views.map.overlay.control.NavigationBarOverlay;
-import ch.bailu.aat.views.map.overlay.gpx.GpxDynOverlay;
-import ch.bailu.aat.views.map.overlay.gpx.GpxOverlayListOverlay;
-import ch.bailu.aat.views.map.overlay.grid.GridDynOverlay;
 import ch.bailu.aat.views.preferences.VerticalScrollView;
 
 public abstract class AbsFileContentActivity extends AbsDispatcher implements OnClickListener {
@@ -115,56 +108,7 @@ public abstract class AbsFileContentActivity extends AbsDispatcher implements On
     }
 
 
-    protected MultiView createMultiView(final String SOLID_KEY) {
-        map = new OsmInteractiveView(getServiceContext(), SOLID_KEY);
-
-        final OsmOverlay overlayList[] = {
-                new GpxOverlayListOverlay(map, getServiceContext()),
-                new GpxDynOverlay(map, getServiceContext(), InfoID.TRACKER),
-                new GpxDynOverlay(map, getServiceContext(), InfoID.FILEVIEW),
-                new CurrentLocationOverlay(map),
-                new GridDynOverlay(map, getServiceContext()),
-                new NavigationBarOverlay(map),
-                new InformationBarOverlay(map),
-                new EditorOverlay(
-                        map,
-                        getServiceContext(),
-                        InfoID.EDITOR_DRAFT,
-                        editor_helper),
-
-        };
-
-        map.setOverlayList(overlayList);
-
-
-        final ContentDescription summaryData[] = {
-                new NameDescription(this),
-                new PathDescription(this),
-                new TimeDescription(this),
-                new DateDescription(this),
-                new EndDateDescription(this),
-                new PauseDescription(this),
-                new DistanceDescription(this),
-                new AverageSpeedDescription(this),
-                new MaximumSpeedDescription(this),
-                new CaloriesDescription(this),
-                new TrackSizeDescription(this),
-        };
-
-        VerticalScrollView summary = new VerticalScrollView(this);
-        VerticalView graph = new VerticalView(this, SOLID_KEY,
-                InfoID.FILEVIEW,
-                new TrackDescriptionView[] {
-                        new DistanceAltitudeGraphView(this, SOLID_KEY),
-                        new DistanceSpeedGraphView(this, SOLID_KEY)});
-
-
-        MultiView mv = new MultiView(this, SOLID_KEY, InfoID.ALL);
-        mv.add(summary, summary.addAllContent(summaryData, InfoID.FILEVIEW));
-        mv.addT(map);
-        mv.addT(graph);
-        return mv;
-    }
+    protected abstract MultiView createMultiView(final String SOLID_KEY);
 
 
 

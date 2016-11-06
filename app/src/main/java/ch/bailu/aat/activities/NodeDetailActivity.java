@@ -82,7 +82,7 @@ public class NodeDetailActivity extends AbsDispatcher
 
 
     private VerticalView createVerticalView() {
-        map = new OsmInteractiveView(getServiceContext(), SOLID_KEY);
+        map = new OsmInteractiveView(getServiceContext(), this, SOLID_KEY);
 
 
         text=new HtmlScrollTextView(this);
@@ -106,13 +106,13 @@ public class NodeDetailActivity extends AbsDispatcher
         OsmOverlay overlayList[] = {
                 new GpxDynOverlay(map, getServiceContext(), InfoID.TRACKER),
                 new GpxDynOverlay(map, getServiceContext(), InfoID.FILEVIEW),
-                new CurrentLocationOverlay(map),
+                new CurrentLocationOverlay(map, this),
                 new GridDynOverlay(map, getServiceContext()),
-                new NavigationBarOverlay(map),
-                new InformationBarOverlay(map),
+                new NavigationBarOverlay(map, this),
+                new InformationBarOverlay(map, this),
 
         };
-        map.setOverlayList(overlayList);
+        map.add(overlayList);
 
         addTarget(verticalView);
         addTarget(this, InfoID.FILEVIEW);

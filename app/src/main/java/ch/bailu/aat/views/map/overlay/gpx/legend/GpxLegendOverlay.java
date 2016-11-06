@@ -11,8 +11,8 @@ public class GpxLegendOverlay extends GpxOverlay {
 
     private final LegendWalker walker;
     
-    public GpxLegendOverlay(AbsOsmView osmPreview, int id, LegendWalker w) {
-        super(osmPreview, id, Color.DKGRAY);
+    public GpxLegendOverlay(AbsOsmView o, LegendWalker w) {
+        super(o, Color.DKGRAY);
         walker=w;
     }
 

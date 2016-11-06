@@ -87,13 +87,13 @@ public class CachedTileProvider extends AbsOsmTileProvider {
     public void setSubTileSource(TileObject.Source[] s) {
         super.setSubTileSource(s);
         cache.reset();
+        handler.sendEmptyMessage(MapTile.MAPTILE_SUCCESS_ID);
     }
 
 
     @Override
     public void reDownloadTiles() {
         cache.reDownloadTiles(scontext);
-        //handler.sendEmptyMessage(MapTile.MAPTILE_SUCCESS_ID);
     }
 }  
 

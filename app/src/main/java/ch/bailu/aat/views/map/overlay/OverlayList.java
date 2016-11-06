@@ -4,22 +4,30 @@ import android.view.MotionEvent;
 
 import org.osmdroid.views.MapView;
 
+import java.util.ArrayList;
+
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.views.map.AbsOsmView;
 
 public class OverlayList extends OsmOverlay {
-    private OsmOverlay[] overlayList=new OsmOverlay[]{};
+    private final ArrayList<OsmOverlay> overlays = new ArrayList(10);
 
-
-    public OverlayList(AbsOsmView absOsmView, OsmOverlay[] list) {
+    public OverlayList(AbsOsmView absOsmView) {
         super(absOsmView);
-        overlayList = list;
     }
+
+
+
+    public OsmOverlay add(OsmOverlay o) {
+        overlays.add(o);
+        return o;
+    }
+
 
 
     @Override
     public boolean onSingleTapConfirmed(MotionEvent e, MapView map) {
-        for (OsmOverlay overlay: overlayList) 
+        for (OsmOverlay overlay: overlays)
             overlay.onSingleTapConfirmed(e, map);
 
         return false;
@@ -28,28 +36,20 @@ public class OverlayList extends OsmOverlay {
 
     @Override
     public void draw(MapPainter painter) {
-        for (OsmOverlay overlay: overlayList) 
+        for (OsmOverlay overlay: overlays)
             overlay.draw(painter);
     }
 
 
     @Override
-    public void onContentUpdated(GpxInformation info) {
-        for (OsmOverlay overlay: overlayList) 
-            overlay.onContentUpdated(info);
-    }
-
-
-
-    @Override
     public void onSharedPreferenceChanged(String key) {
-        for (OsmOverlay overlay: overlayList) 
+        for (OsmOverlay overlay: overlays)
             overlay.onSharedPreferenceChanged(key);
     }
 
     @Override
     public void onLayout(boolean changed, int l, int t, int r, int b) {
-        for (OsmOverlay overlay: overlayList)
+        for (OsmOverlay overlay: overlays)
             overlay.onLayout(changed, l, t, r, b);
     }
 }

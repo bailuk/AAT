@@ -49,8 +49,8 @@ import ch.bailu.aat.views.description.MultiView;
 import ch.bailu.aat.views.map.OsmInteractiveView;
 import ch.bailu.aat.views.map.overlay.CurrentLocationOverlay;
 import ch.bailu.aat.views.map.overlay.Dem3NameOverlay;
-import ch.bailu.aat.views.map.overlay.OsmOverlay;
-import ch.bailu.aat.views.map.overlay.RefreshLogOverlay;
+import ch.bailu.aat.views.map.overlay.EndLogOverlay;
+import ch.bailu.aat.views.map.overlay.StartLogOverlay;
 import ch.bailu.aat.views.map.overlay.ZoomLevelOverlay;
 import ch.bailu.aat.views.map.overlay.control.InformationBarOverlay;
 import ch.bailu.aat.views.map.overlay.control.NavigationBarOverlay;
@@ -88,7 +88,7 @@ public class TestActivity extends AbsDispatcher {
 
 
     private MultiView createMultiView() {
-        map = new OsmInteractiveView(getServiceContext(), SOLID_KEY);
+        map = new OsmInteractiveView(getServiceContext(), this, SOLID_KEY);
 
         ContentDescription locationDescription[] = new ContentDescription[]{
                 new NameDescription(this),
@@ -136,7 +136,7 @@ public class TestActivity extends AbsDispatcher {
 
         MultiView mv = new MultiView(this, SOLID_KEY, InfoID.ALL);
 
-        mv.addT(map,getString(R.string.intro_map));
+        mv.add(map,getString(R.string.intro_map));
         mv.add(locationView, locationView.addAllContent(
                 locationDescription, InfoID.LOCATION), getString(R.string.gps));
 
@@ -158,24 +158,24 @@ public class TestActivity extends AbsDispatcher {
 
 
     private void createDispatcher() {
-        OsmOverlay overlayList[] = {
-                new GpxOverlayListOverlay(map, getServiceContext()),
-                new GpxDynOverlay(map, getServiceContext(), InfoID.TRACKER),
-                new GpxTestOverlay(map, InfoID.OVERLAY),
-                new GridDynOverlay(map, getServiceContext()),
-                new CurrentLocationOverlay(map),
-                new NavigationBarOverlay(map),
-                new InformationBarOverlay(map),
-                new ZoomLevelOverlay(map),
-                new RefreshLogOverlay(map),
-                new Dem3NameOverlay(map)
-        };
-        map.setOverlayList(overlayList);
+        StartLogOverlay start =new StartLogOverlay(map);
 
+        map.add(start);
+        map.add(new GpxOverlayListOverlay(map, this, getServiceContext()));
+        map.add(new EndLogOverlay(map, start));
+
+        map.add(new GpxTestOverlay(map, this, InfoID.OVERLAY));
+        map.add(new GpxDynOverlay(map, getServiceContext(), this, InfoID.TRACKER));
+//        map.add(new CurrentLocationOverlay(map, this));
+
+        map.add(new GridDynOverlay(map, getServiceContext()));
+
+        map.add(new NavigationBarOverlay(map, this));
+        map.add(new InformationBarOverlay(map, this));
+        map.add(new ZoomLevelOverlay(map));
+        map.add(new Dem3NameOverlay(map));
 
         addTarget(multiView);
-
-
 
         addSource(new TrackerSource(getServiceContext()));
         addSource(new CurrentLocationSource(getServiceContext()));

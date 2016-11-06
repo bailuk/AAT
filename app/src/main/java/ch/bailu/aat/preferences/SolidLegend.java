@@ -4,8 +4,7 @@ import android.content.Context;
 
 import ch.bailu.aat.R;
 import ch.bailu.aat.views.map.AbsOsmView;
-import ch.bailu.aat.views.map.overlay.NullOverlay;
-import ch.bailu.aat.views.map.overlay.OsmOverlay;
+import ch.bailu.aat.views.map.overlay.gpx.GpxOverlay;
 import ch.bailu.aat.views.map.overlay.gpx.legend.GpxLegendOverlay;
 import ch.bailu.aat.views.map.overlay.gpx.legend.MarkerAltitudeWalker;
 import ch.bailu.aat.views.map.overlay.gpx.legend.MarkerDistanceWalker;
@@ -32,34 +31,31 @@ public class SolidLegend extends SolidStaticIndexList {
     }
 
     
-    public OsmOverlay createTrackLegendOverlay(AbsOsmView osmPreview, int id) {
-        if (getIndex()==0) return new GpxLegendOverlay(osmPreview,id,new SegmentIndexWalker());
-        if (getIndex()==1) return new GpxLegendOverlay(osmPreview,id,new MarkerDistanceWalker(getContext(), false));
-        if (getIndex()==2) return new GpxLegendOverlay(osmPreview,id,new MarkerDistanceWalker(getContext(), true));
-        if (getIndex()==3) return new GpxLegendOverlay(osmPreview,id,new MarkerAltitudeWalker(getContext()));
-        if (getIndex()==4) return new GpxLegendOverlay(osmPreview,id,new MarkerSpeedWalker(getContext()));
-        
-        return new NullOverlay(osmPreview);
+    public GpxOverlay createTrackLegendOverlay(AbsOsmView osmPreview) {
+        if (getIndex()==0) return new GpxLegendOverlay(osmPreview,new SegmentIndexWalker());
+        if (getIndex()==1) return new GpxLegendOverlay(osmPreview,new MarkerDistanceWalker(getContext(), false));
+        if (getIndex()==2) return new GpxLegendOverlay(osmPreview,new MarkerDistanceWalker(getContext(), true));
+        if (getIndex()==3) return new GpxLegendOverlay(osmPreview,new MarkerAltitudeWalker(getContext()));
+
+        return new GpxLegendOverlay(osmPreview,new MarkerSpeedWalker(getContext()));
     }
     
     
-    public OsmOverlay createWayLegendOverlay(AbsOsmView osmPreview, int id) {
-        if (getIndex()==1) return new GpxLegendOverlay(osmPreview,id,new PointNameWalker());
-        if (getIndex()==2) return new GpxLegendOverlay(osmPreview,id,new PointNameWalker());
-        if (getIndex()==3) return new GpxLegendOverlay(osmPreview,id,new PointAltitudeWalker(getContext()));
-        if (getIndex()==4) return new GpxLegendOverlay(osmPreview,id,new PointIndexWalker());
+    public GpxOverlay createWayLegendOverlay(AbsOsmView osmPreview) {
+        if (getIndex()==1) return new GpxLegendOverlay(osmPreview,new PointNameWalker());
+        if (getIndex()==2) return new GpxLegendOverlay(osmPreview,new PointNameWalker());
+        if (getIndex()==3) return new GpxLegendOverlay(osmPreview,new PointAltitudeWalker(getContext()));
 
-        return new NullOverlay(osmPreview);
+        return new GpxLegendOverlay(osmPreview,new PointIndexWalker());
     }
 
     
-    public OsmOverlay createRouteLegendOverlay(AbsOsmView osmPreview, int id) {
-        if (getIndex()==1) return new GpxLegendOverlay(osmPreview,id,new PointDistanceWalker(getContext(), false));
-        if (getIndex()==2) return new GpxLegendOverlay(osmPreview,id,new PointDistanceWalker(getContext(), true));
-        if (getIndex()==3) return new GpxLegendOverlay(osmPreview,id,new PointAltitudeWalker(getContext()));
-        if (getIndex()==4) return new GpxLegendOverlay(osmPreview,id,new PointIndexWalker());
-        
-        return new NullOverlay(osmPreview);
+    public GpxOverlay createRouteLegendOverlay(AbsOsmView osmPreview) {
+        if (getIndex()==1) return new GpxLegendOverlay(osmPreview,new PointDistanceWalker(getContext(), false));
+        if (getIndex()==2) return new GpxLegendOverlay(osmPreview,new PointDistanceWalker(getContext(), true));
+        if (getIndex()==3) return new GpxLegendOverlay(osmPreview,new PointAltitudeWalker(getContext()));
+
+        return new GpxLegendOverlay(osmPreview,new PointIndexWalker());
     }
 
     

@@ -10,7 +10,7 @@ import ch.bailu.aat.dispatcher.OnContentUpdatedInterface;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.views.map.AbsOsmView;
 
-public abstract class OsmOverlay extends Overlay implements OnContentUpdatedInterface {
+public abstract class OsmOverlay extends Overlay {
     private final AbsOsmView osm;
     private final MapPainter painter;
 
@@ -44,9 +44,6 @@ public abstract class OsmOverlay extends Overlay implements OnContentUpdatedInte
     public Context getContext() {
         return osm.getContext();
     }
-
-    @Override
-    public void onContentUpdated(GpxInformation info) {}
 
     public void onSharedPreferenceChanged(String key) {
     }

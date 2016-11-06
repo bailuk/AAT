@@ -37,16 +37,13 @@ public class OsmPreviewGenerator implements Closeable {
         map = new OsmViewStatic(serviceContext.getContext(), tileProvider, new MapDensity());
         map.setDrawingCacheEnabled(true);
         
-        final OsmOverlay[] overlays = new OsmOverlay[] {
-                new GpxDynOverlay(map, sc, InfoID.FILEVIEW)
-        };
-        map.setOverlayList(overlays);
-        
+        GpxDynOverlay overlay = new GpxDynOverlay(map, sc, InfoID.FILEVIEW);
+        map.add(overlay);
+
         map.layout(0, 0, BITMAP_SIZE, BITMAP_SIZE);
 
-        map.onContentUpdated(new GpxFileWrapper(o,gpxList));
+        overlay.onContentUpdated(new GpxFileWrapper(o,gpxList));
         map.frameBoundingBox(gpxList.getDelta().getBoundingBox());
-        
         map.getDrawingCache(false);
     }
 

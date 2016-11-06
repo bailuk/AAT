@@ -7,6 +7,7 @@ import ch.bailu.aat.R;
 import ch.bailu.aat.activities.ActivitySwitcher;
 import ch.bailu.aat.activities.NominatimActivity;
 import ch.bailu.aat.activities.OverpassActivity;
+import ch.bailu.aat.dispatcher.DispatcherInterface;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.helpers.ToolTip;
@@ -28,13 +29,13 @@ public class InformationBarOverlay extends ControlBarOverlay {
 
 
 
-    public InformationBarOverlay(OsmInteractiveView o) {
+    public InformationBarOverlay(OsmInteractiveView o, DispatcherInterface d) {
         super(o,new ControlBar(o.getContext(), getOrientation(RIGHT)), RIGHT);
 
         final SolidIndexList sgrid, slegend;
 
-        sgrid = new SolidMapGrid(o.getContext(), o.solidKey);
-        slegend = new SolidLegend(o.getContext(), o.solidKey);
+        sgrid = new SolidMapGrid(o.getContext(), o.getSolidKey());
+        slegend = new SolidLegend(o.getContext(), o.getSolidKey());
 
         ControlBar bar = getBar();
         View grid=bar.addSolidIndexButton(sgrid);
@@ -45,7 +46,7 @@ public class InformationBarOverlay extends ControlBarOverlay {
         reload = bar.addImageButton(R.drawable.view_refresh);
         location = bar.addImageButton(R.drawable.find_location);
 
-        selector = new InfoViewNodeSelectorOverlay(o, InfoID.ALL);
+        selector = new InfoViewNodeSelectorOverlay(o);
 
 
         ToolTip.set(grid,R.string.tt_info_grid);
@@ -54,6 +55,8 @@ public class InformationBarOverlay extends ControlBarOverlay {
         ToolTip.set(overpass,R.string.tt_info_overpass);
         ToolTip.set(reload,R.string.tt_info_reload);
         ToolTip.set(location, R.string.tt_info_location);
+
+        d.addTarget(selector, InfoID.ALL);
     }
 
 
@@ -97,11 +100,6 @@ public class InformationBarOverlay extends ControlBarOverlay {
         selector.hide();
     }
 
-    @Override
-    public void onContentUpdated(GpxInformation info) {
-        selector.onContentUpdated(info);
-
-    }
 
 
 }

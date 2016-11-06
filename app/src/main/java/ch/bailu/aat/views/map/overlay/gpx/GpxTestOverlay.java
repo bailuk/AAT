@@ -6,6 +6,7 @@ import android.graphics.Paint.Style;
 import android.graphics.Rect;
 
 import ch.bailu.aat.coordinates.BoundingBox;
+import ch.bailu.aat.dispatcher.DispatcherInterface;
 import ch.bailu.aat.gpx.GpxList;
 import ch.bailu.aat.gpx.GpxListWalker;
 import ch.bailu.aat.gpx.GpxPointNode;
@@ -19,11 +20,13 @@ public class GpxTestOverlay extends GpxOverlay {
     private final Paint markerPaint;
     private int boxCount=0;
 
-    public GpxTestOverlay(OsmInteractiveView map, int id) {
-        super(map, id, Color.DKGRAY);
+    public GpxTestOverlay(OsmInteractiveView map, DispatcherInterface d, int iid) {
+        super(map, Color.DKGRAY);
 
         segmentPaint = createPaint(Color.BLACK);
         markerPaint = createPaint(Color.DKGRAY);
+
+        d.addTarget(this, iid);
     }
 
     private Paint createPaint(int color) {

@@ -9,8 +9,8 @@ import ch.bailu.aat.activities.AbsGpxListActivity;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.GpxPointNode;
 import ch.bailu.aat.gpx.InfoID;
-import ch.bailu.aat.helpers.file.FileAction;
 import ch.bailu.aat.helpers.ToolTip;
+import ch.bailu.aat.helpers.file.FileAction;
 import ch.bailu.aat.menus.FileMenu;
 import ch.bailu.aat.preferences.SolidDirectoryQuery;
 import ch.bailu.aat.views.ControlBar;
@@ -29,7 +29,7 @@ public class FileControlBar extends ControlBarOverlay{
 
 
     private final PreviewView        preview;
-    private final AbsGpxListActivity activity;
+    private final AbsGpxListActivity acontext;
     private final Selector           selector;
 
     private final View           action, overlay, reloadPreview, delete;
@@ -41,9 +41,9 @@ public class FileControlBar extends ControlBarOverlay{
 
         final ControlBar bar = getBar();
 
-        activity = a;
+        acontext = a;
 
-        selector = new Selector(osm, InfoID.LIST_SUMMARY);
+        selector = new Selector(osm);
         preview = new PreviewView(a.getServiceContext());
 
         bar.addView(preview);
@@ -61,13 +61,14 @@ public class FileControlBar extends ControlBarOverlay{
         ToolTip.set(reloadPreview, R.string.file_reload);
         ToolTip.set(delete, R.string.file_delete);
 
+        acontext.addTarget(selector, InfoID.LIST_SUMMARY);
     }
 
 
     
     private class Selector extends InfoViewNodeSelectorOverlay {
-        public Selector(OsmInteractiveView v, int id) {
-            super(v, id);
+        public Selector(OsmInteractiveView v) {
+            super(v);
         }
 
         @Override
@@ -79,7 +80,7 @@ public class FileControlBar extends ControlBarOverlay{
         
         @Override
         public boolean onLongClick(View v) {
-            activity.displayFile();
+            acontext.displayFile();
             return true;
         }
     }
@@ -113,15 +114,15 @@ public class FileControlBar extends ControlBarOverlay{
 
             if (file.exists()) {
                 if        (v == action) {
-                    new FileMenu(activity, file).showAsPopup(activity, v);
+                    new FileMenu(acontext, file).showAsPopup(acontext, v);
                 } else if (v == overlay) {
-                    FileAction.useAsOverlay(activity, file);
+                    FileAction.useAsOverlay(acontext, file);
                 } else if (v == reloadPreview) {
-                    FileAction.reloadPreview(activity.getServiceContext(), file);
+                    FileAction.reloadPreview(acontext.getServiceContext(), file);
                 } else if (v == delete) {
-                    FileAction.delete(activity.getServiceContext(), activity, file);
+                    FileAction.delete(acontext.getServiceContext(), acontext, file);
                 } else if (v == preview) {
-                    activity.displayFile();
+                    acontext.displayFile();
                 }
             }
         }
@@ -134,12 +135,6 @@ public class FileControlBar extends ControlBarOverlay{
     @Override
     public void onHideBar() {
         selector.hide();
-    }
-
-
-    @Override
-    public void onContentUpdated(GpxInformation info) {
-        selector.onContentUpdated(info);
     }
 
 

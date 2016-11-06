@@ -25,8 +25,8 @@ public class InfoViewNodeSelectorOverlay extends NodeSelectorOverlay implements 
     private final TextView infoView;
 
 
-    public InfoViewNodeSelectorOverlay(OsmInteractiveView v, int id) {
-        super(v, id);
+    public InfoViewNodeSelectorOverlay(OsmInteractiveView v) {
+        super(v);
         big_margin = AppTheme.getBigButtonSize(getContext()) + XMARGIN;
 
         infoView = new TextView(getContext());
@@ -68,6 +68,8 @@ public class InfoViewNodeSelectorOverlay extends NodeSelectorOverlay implements 
                 getOsmView().getHeight() / 3);
 
         infoView.setVisibility(View.VISIBLE);
+
+        getOsmView().requestRedraw();
     }
 
 
@@ -76,9 +78,13 @@ public class InfoViewNodeSelectorOverlay extends NodeSelectorOverlay implements 
                 getOsmView().getWidth() - XMARGIN,
                 getOsmView().getHeight() / 3);
         infoView.setVisibility(View.VISIBLE);
+
+        getOsmView().requestRedraw();
     }
 
     public void hide() {
         infoView.setVisibility(View.INVISIBLE);
+
+        getOsmView().requestRedraw();
     }
 }

@@ -120,18 +120,16 @@ public class GpxViewActivity extends AbsDispatcher
 
 
     private MultiView createMultiView() {
-        map = new OsmInteractiveView(getServiceContext(), SOLID_KEY);
+        map = new OsmInteractiveView(getServiceContext(), this, SOLID_KEY);
 
-        final OsmOverlay overlayList[] = {
-                new GpxOverlayListOverlay(map, getServiceContext()),
-                new GpxDynOverlay(map, getServiceContext(), InfoID.FILEVIEW),
-                new CurrentLocationOverlay(map),
-                new GridDynOverlay(map, getServiceContext()),
-                new NavigationBarOverlay(map),
-                new InformationBarOverlay(map),
 
-        };
-        map.setOverlayList(overlayList);
+        map.add(new GpxOverlayListOverlay(map, this, getServiceContext()));
+        map.add(new GpxDynOverlay(map, getServiceContext(), InfoID.FILEVIEW));
+        map.add(new CurrentLocationOverlay(map, this));
+        map.add(new GridDynOverlay(map, getServiceContext()));
+        map.add(new NavigationBarOverlay(map, this));
+        map.add(new InformationBarOverlay(map, this));
+
 
 
         final ContentDescription summaryData[] = {
@@ -158,7 +156,7 @@ public class GpxViewActivity extends AbsDispatcher
 
         MultiView mv = new MultiView(this, SOLID_KEY, InfoID.ALL);
         mv.add(summary, summary.addAllContent(summaryData, InfoID.FILEVIEW));
-        mv.addT(map);
+        mv.add(map);
         mv.addT(graph);
 
         return mv;

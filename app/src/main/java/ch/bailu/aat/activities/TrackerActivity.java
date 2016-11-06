@@ -31,6 +31,7 @@ import ch.bailu.aat.views.description.TrackerStateButton;
 import ch.bailu.aat.views.description.VerticalView;
 import ch.bailu.aat.views.graph.DistanceAltitudeGraphView;
 import ch.bailu.aat.views.graph.DistanceSpeedGraphView;
+import ch.bailu.aat.views.map.MapFactory;
 import ch.bailu.aat.views.map.OsmInteractiveView;
 import ch.bailu.aat.views.map.overlay.CurrentLocationOverlay;
 import ch.bailu.aat.views.map.overlay.OsmOverlay;
@@ -82,11 +83,11 @@ public class TrackerActivity extends AbsDispatcher implements OnClickListener{
 
         CockpitView cockpit = new CockpitView(this, SOLID_KEY, InfoID.TRACKER, data);
 
-        map = new OsmInteractiveView(getServiceContext(), SOLID_KEY);
+        map = new MapFactory(this, SOLID_KEY).tracker(edit);
 
         MultiView mv = new MultiView(this, SOLID_KEY, InfoID.ALL);
         mv.addT(cockpit);
-        mv.addT(map);
+        mv.add(map);
         mv.addT(new VerticalView(this, SOLID_KEY, InfoID.TRACKER, new TrackDescriptionView[] {
                 new DistanceAltitudeGraphView(this, SOLID_KEY),
                 new DistanceSpeedGraphView(this, SOLID_KEY)}));
@@ -122,20 +123,8 @@ public class TrackerActivity extends AbsDispatcher implements OnClickListener{
 
 
     private void createDispatcher() {
-        OsmOverlay overlayList[] = {
-                new GpxOverlayListOverlay(map, getServiceContext()),
-                new GpxDynOverlay(map, getServiceContext(), InfoID.TRACKER),
-                new CurrentLocationOverlay(map),
-                new GridDynOverlay(map, getServiceContext()),
-                new NavigationBarOverlay(map),
-                new InformationBarOverlay(map),
-                new EditorOverlay(map, getServiceContext(), InfoID.EDITOR_DRAFT, edit),
-        };
-        map.setOverlayList(overlayList);
-
         addTarget(multiView);
         addTarget(trackerState, InfoID.TRACKER);
-
 
         addSource(new EditorSource(getServiceContext(), edit));
         addSource(new TrackerSource(getServiceContext()));

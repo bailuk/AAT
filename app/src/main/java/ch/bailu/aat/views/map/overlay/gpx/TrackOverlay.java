@@ -15,8 +15,8 @@ public class TrackOverlay extends GpxOverlay{
 
 
 
-    public TrackOverlay(AbsOsmView osm, int id) {
-        super(osm, id, Color.BLACK);
+    public TrackOverlay(AbsOsmView osm) {
+        super(osm, Color.BLACK);
 
 
         paint.setStrokeWidth(getOsmView().res.toDPf(STROKE_WIDTH));

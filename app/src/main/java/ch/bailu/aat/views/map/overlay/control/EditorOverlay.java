@@ -5,6 +5,7 @@ import android.view.View;
 import org.osmdroid.api.IGeoPoint;
 
 import ch.bailu.aat.R;
+import ch.bailu.aat.dispatcher.DispatcherInterface;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.GpxPoint;
 import ch.bailu.aat.helpers.ToolTip;
@@ -30,13 +31,14 @@ public class EditorOverlay extends ControlBarOverlay {
     private final ServiceContext scontext;
     
     private final EditorNodeSelectorOverlay selector;
-    private final OsmOverlay content;
+    private final GpxDynOverlay content;
     
     private OsmOverlay coordinates;
     
     private final EditorHelper edit;
 
-    public EditorOverlay(OsmInteractiveView osm, ServiceContext sc, int iid, EditorHelper e) {
+    public EditorOverlay(OsmInteractiveView osm, ServiceContext sc, DispatcherInterface d,
+                         int iid, EditorHelper e) {
         super(osm, new ControlBar(
                 osm.getContext(),
                 getOrientation(LEFT)), LEFT);
@@ -44,11 +46,11 @@ public class EditorOverlay extends ControlBarOverlay {
         edit = e;
         scontext=sc;
 
-        sgrid = new SolidMapGrid(osm.getContext(), osm.solidKey);
+        sgrid = new SolidMapGrid(osm.getContext(), osm.getSolidKey());
         coordinates = sgrid.createCenterCoordinatesOverlay(getOsmView());
         
-        content = new GpxDynOverlay(osm, sc, iid);
-        selector = new EditorNodeSelectorOverlay(osm, iid, e);
+        content = new GpxDynOverlay(osm, sc, -1);
+        selector = new EditorNodeSelectorOverlay(osm, e);
 
         
         ControlBar bar = getBar();
@@ -82,6 +84,9 @@ public class EditorOverlay extends ControlBarOverlay {
         
         saveAs = bar.addImageButton(R.drawable.document_save_as);
         ToolTip.set(saveAs, R.string.tt_edit_save_as);
+
+        d.addTarget(selector, iid);
+        d.addTarget(content, iid);
     }
     
     
@@ -128,13 +133,6 @@ public class EditorOverlay extends ControlBarOverlay {
     @Override
     public void onHideBar() {
         selector.hide();
-    }
-    
-    
-    @Override
-    public void onContentUpdated(GpxInformation info) {
-        content.onContentUpdated(info);
-        selector.onContentUpdated(info);
     }
     
     

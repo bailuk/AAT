@@ -4,15 +4,17 @@ import java.util.Locale;
 
 import ch.bailu.aat.views.map.OsmInteractiveView;
 
-public class RefreshLogOverlay extends OsmOverlay {
+public class EndLogOverlay extends OsmOverlay {
     private long refreshTimeCounter=0;
     private long refreshCounter=0;
 
     private long currentTime=0;
 
+    private final StartLogOverlay start;
 
-    public RefreshLogOverlay(OsmInteractiveView v) {
+    public EndLogOverlay(OsmInteractiveView v, StartLogOverlay s) {
         super(v);
+        start = s;
     }
 
     @Override
@@ -24,7 +26,7 @@ public class RefreshLogOverlay extends OsmOverlay {
 
     private void increment() {
         refreshCounter++;
-        currentTime= System.currentTimeMillis()-getOsmView().getDrawStartTime();
+        currentTime= System.currentTimeMillis()- start.getStartTime();
         refreshTimeCounter += currentTime;
 
     }

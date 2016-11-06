@@ -1,7 +1,7 @@
 package ch.bailu.aat.views.map.overlay.gpx;
 
+import ch.bailu.aat.dispatcher.DispatcherInterface;
 import ch.bailu.aat.dispatcher.OverlaySource;
-import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.helpers.AppTheme;
 import ch.bailu.aat.services.ServiceContext;
@@ -11,34 +11,30 @@ import ch.bailu.aat.views.map.overlay.OsmOverlay;
 
 
 public class GpxOverlayListOverlay extends OsmOverlay {
-    private final OsmOverlay[] list;
+    private final GpxDynOverlay[] overlays;
 
 
-    public GpxOverlayListOverlay(OsmInteractiveView v, ServiceContext sc) {
+    public GpxOverlayListOverlay(OsmInteractiveView v, DispatcherInterface d, ServiceContext sc) {
         super(v);
         
-        list = new GpxDynOverlay[OverlaySource.MAX_OVERLAYS];
+        overlays = new GpxDynOverlay[OverlaySource.MAX_OVERLAYS];
 
-        for (int i=0; i<list.length; i++) 
-            list[i] = new GpxDynOverlay(v, sc, InfoID.OVERLAY+i,
-                    AppTheme.OVERLAY_COLOR[i+4]);
+        for (int i = 0; i< overlays.length; i++) {
+            overlays[i] = new GpxDynOverlay(v, sc, AppTheme.OVERLAY_COLOR[i + 4]);
+            d.addTarget(overlays[i], InfoID.OVERLAY + i);
+        }
     }
 
     @Override
     public void draw(MapPainter p) {
-        for (OsmOverlay aList : list) aList.draw(p);
+        for (OsmOverlay o : overlays) o.draw(p);
     }
 
 
-    @Override
-    public void onContentUpdated(GpxInformation info) {
-        for (int i=0; i<list.length; i++)
-            list[i].onContentUpdated(info);
-    }
 
 
     @Override
     public void onSharedPreferenceChanged(String key) {
-        for (OsmOverlay aList : list) aList.onSharedPreferenceChanged(key);
+        for (OsmOverlay o : overlays) o.onSharedPreferenceChanged(key);
     }
 }

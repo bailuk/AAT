@@ -6,28 +6,16 @@ import android.view.MotionEvent;
 
 import ch.bailu.aat.gpx.GpxInformation;
 
+
 public class OsmViewStatic extends AbsOsmView {
-
-
-
     public OsmViewStatic(Context context, AbsTileProvider provider, MapDensity res) {
         super(context, provider, res);
     }
 
-
-
-
     @Override
-    public void onContentUpdated(GpxInformation info) {
-        if (filter.pass(info)) {
-            super.onContentUpdated(info);
-            map.invalidate();
-        }
+    public String getSolidKey() {
+        return OsmViewStatic.class.getSimpleName();
     }
-
-
- 
-
 
 
     @Override
@@ -46,6 +34,4 @@ public class OsmViewStatic extends AbsOsmView {
     public boolean dispatchTouchEvent(final MotionEvent event) {
         return false;
     }
-
-
 }

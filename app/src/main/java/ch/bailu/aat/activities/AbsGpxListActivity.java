@@ -29,15 +29,8 @@ import ch.bailu.aat.views.DbSynchronizerBusyIndicator;
 import ch.bailu.aat.views.GpxListView;
 import ch.bailu.aat.views.MainControlBar;
 import ch.bailu.aat.views.description.MultiView;
+import ch.bailu.aat.views.map.MapFactory;
 import ch.bailu.aat.views.map.OsmInteractiveView;
-import ch.bailu.aat.views.map.overlay.CurrentLocationOverlay;
-import ch.bailu.aat.views.map.overlay.OsmOverlay;
-import ch.bailu.aat.views.map.overlay.control.FileControlBar;
-import ch.bailu.aat.views.map.overlay.control.InformationBarOverlay;
-import ch.bailu.aat.views.map.overlay.control.NavigationBarOverlay;
-import ch.bailu.aat.views.map.overlay.gpx.GpxDynOverlay;
-import ch.bailu.aat.views.map.overlay.gpx.GpxOverlayListOverlay;
-import ch.bailu.aat.views.map.overlay.grid.GridDynOverlay;
 import ch.bailu.aat.views.preferences.SolidDirectoryMenuButton;
 import ch.bailu.aat.views.preferences.TitleView;
 import ch.bailu.aat.views.preferences.VerticalScrollView;
@@ -111,20 +104,7 @@ public abstract class AbsGpxListActivity extends AbsDispatcher implements OnItem
 
         final VerticalScrollView filter= new VerticalScrollView(this);
         final VerticalScrollView summary= new VerticalScrollView(this);
-
-        final OsmInteractiveView map = new OsmInteractiveView(getServiceContext(), solid_key);
-
-        final OsmOverlay overlayList[] = {
-                new GpxOverlayListOverlay(map, getServiceContext()),
-                new GpxDynOverlay(map, getServiceContext(), InfoID.LIST_SUMMARY),
-                new FileControlBar(map, this),
-                new CurrentLocationOverlay(map),
-                new GridDynOverlay(map, getServiceContext()),
-                new NavigationBarOverlay(map),
-                new InformationBarOverlay(map),
-        };
-        map.setOverlayList(overlayList);
-
+        final OsmInteractiveView map = new MapFactory(this, solid_key).list(this);
 
         listView = new GpxListView(this, getGpxListItemData());
         listView.setOnItemClickListener(this);

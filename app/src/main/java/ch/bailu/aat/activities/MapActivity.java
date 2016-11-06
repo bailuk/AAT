@@ -29,6 +29,7 @@ import ch.bailu.aat.views.MainControlBar;
 import ch.bailu.aat.views.description.GPSStateButton;
 import ch.bailu.aat.views.description.NumberView;
 import ch.bailu.aat.views.description.TrackerStateButton;
+import ch.bailu.aat.views.map.MapFactory;
 import ch.bailu.aat.views.map.OsmInteractiveView;
 import ch.bailu.aat.views.map.overlay.CurrentLocationOverlay;
 import ch.bailu.aat.views.map.overlay.OsmOverlay;
@@ -103,22 +104,7 @@ public class MapActivity extends AbsDispatcher implements OnClickListener{
 
 
     private OsmInteractiveView createMap() {
-        final ServiceContext sc=getServiceContext();
-        final OsmInteractiveView map=new OsmInteractiveView(sc, SOLID_KEY);
-
-        OsmOverlay overlayList[] = {
-                new GpxOverlayListOverlay(map, sc),
-                new GpxDynOverlay(map, sc, InfoID.TRACKER),
-                new GridDynOverlay(map, sc),
-                new CurrentLocationOverlay(map),
-                new NavigationBarOverlay(map),
-                new InformationBarOverlay(map),
-                new EditorOverlay(map, sc, InfoID.EDITOR_DRAFT, edit),
-                new CustomBarOverlay(map, createButtonBar()),
-        };
-        map.setOverlayList(overlayList);
-
-        return map;
+        return new MapFactory(this, SOLID_KEY).map(edit, createButtonBar());
     }
 
 

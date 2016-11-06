@@ -21,15 +21,7 @@ import ch.bailu.aat.views.NodeListView;
 import ch.bailu.aat.views.description.MultiView;
 import ch.bailu.aat.views.description.VerticalView;
 import ch.bailu.aat.views.graph.DistanceAltitudeGraphView;
-import ch.bailu.aat.views.map.OsmInteractiveView;
-import ch.bailu.aat.views.map.overlay.CurrentLocationOverlay;
-import ch.bailu.aat.views.map.overlay.OsmOverlay;
-import ch.bailu.aat.views.map.overlay.control.EditorOverlay;
-import ch.bailu.aat.views.map.overlay.control.InformationBarOverlay;
-import ch.bailu.aat.views.map.overlay.control.NavigationBarOverlay;
-import ch.bailu.aat.views.map.overlay.gpx.GpxDynOverlay;
-import ch.bailu.aat.views.map.overlay.gpx.GpxOverlayListOverlay;
-import ch.bailu.aat.views.map.overlay.grid.GridDynOverlay;
+import ch.bailu.aat.views.map.MapFactory;
 import ch.bailu.aat.views.preferences.VerticalScrollView;
 
 public class GpxEditorActivity extends AbsFileContentActivity
@@ -55,23 +47,7 @@ public class GpxEditorActivity extends AbsFileContentActivity
 
     @Override
     protected MultiView createMultiView(final String SOLID_KEY) {
-        map = new OsmInteractiveView(getServiceContext(), SOLID_KEY);
-
-        OsmOverlay overlayList[] = {
-                new GpxOverlayListOverlay(map, getServiceContext()),
-                new GpxDynOverlay(map, getServiceContext(), InfoID.TRACKER),
-                new GridDynOverlay(map, getServiceContext()),
-                new CurrentLocationOverlay(map),
-                new EditorOverlay(map,
-                        getServiceContext(),
-                        InfoID.EDITOR_OVERLAY,
-                        editor_helper),
-                new NavigationBarOverlay(map),
-                new InformationBarOverlay(map)
-        };
-
-        map.setOverlayList(overlayList);
-
+        map = new MapFactory(this, SOLID_KEY).editor(editor_helper);
 
         ContentDescription summaryData[] = {
                 new NameDescription(this),
@@ -93,7 +69,7 @@ public class GpxEditorActivity extends AbsFileContentActivity
         MultiView mv = new MultiView(this, SOLID_KEY, InfoID.ALL);
 
         mv.addT(wayList);
-        mv.addT(map);
+        mv.add(map);
         mv.addT(new VerticalView(this, SOLID_KEY, InfoID.EDITOR_OVERLAY,
                 new View[] {summary, graph},
                 new OnContentUpdatedInterface[]

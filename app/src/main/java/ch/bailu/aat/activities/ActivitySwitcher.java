@@ -33,8 +33,8 @@ public class ActivitySwitcher {
 
 
     public final static int getAccessibleActivitesCount() {
-        if (BuildConfig.DEBUG) return list.length-1;
-        return list.length;
+        if (BuildConfig.DEBUG) return list.length;
+        return list.length-1;
     }
 
     public ActivitySwitcher(int label, Class<?> c) {

@@ -16,20 +16,24 @@ public class WayOverlay extends GpxOverlay {
     private final ServiceContext scontext;
     private final int icon_size;
 
-    public WayOverlay(AbsOsmView osm, ServiceContext scontext, int id) {
-        this(osm, scontext, id, AppTheme.getHighlightColor2());
 
+
+    public WayOverlay(AbsOsmView osm, ServiceContext scontext) {
+        this(osm, scontext, -1);
     }
 
-
-
-    public WayOverlay(AbsOsmView osm, ServiceContext sc, int id, int color) {
-        super(osm, id, color);
+    public WayOverlay(AbsOsmView osm, ServiceContext sc, int color) {
+        super(osm, toColor(color));
         scontext = sc;
 
         icon_size = getOsmView().res.toDPi(ICON_SIZE);
     }
 
+
+    private static int toColor(int c) {
+        if (c < 0) return AppTheme.getHighlightColor2();
+        return c;
+    }
 
 
     @Override

@@ -10,8 +10,8 @@ public class EditorNodeSelectorOverlay extends InfoViewNodeSelectorOverlay {
 
     private final EditorHelper edit;
 
-    public EditorNodeSelectorOverlay(OsmInteractiveView v, int iid, EditorHelper e) {
-        super(v, iid);
+    public EditorNodeSelectorOverlay(OsmInteractiveView v, EditorHelper e) {
+        super(v);
         edit=e;
     }
 

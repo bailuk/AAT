@@ -5,6 +5,7 @@ import android.graphics.Rect;
 import android.util.SparseArray;
 
 import ch.bailu.aat.coordinates.BoundingBox;
+import ch.bailu.aat.dispatcher.OnContentUpdatedInterface;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.GpxList;
 import ch.bailu.aat.gpx.GpxNodeFinder;
@@ -14,10 +15,9 @@ import ch.bailu.aat.views.map.OsmInteractiveView;
 import ch.bailu.aat.views.map.overlay.MapPainter;
 import ch.bailu.aat.views.map.overlay.OsmOverlay;
 
-public abstract class NodeSelectorOverlay extends OsmOverlay {
+public abstract class NodeSelectorOverlay extends OsmOverlay implements OnContentUpdatedInterface {
     private final static int COLOR = 0xccffffff;
-    
-    private final int ID;
+
 
     public final int SQUARE_SIZE=30;
     public final int SQUARE_HSIZE=SQUARE_SIZE/2;
@@ -35,14 +35,14 @@ public abstract class NodeSelectorOverlay extends OsmOverlay {
 
     private final Point    selectedPixel = new Point();
 
-    
+
 
 
     private int  foundID, foundIndex;
     private GpxPointNode foundNode;
 
 
-    public NodeSelectorOverlay(OsmInteractiveView v, int id) {
+    public NodeSelectorOverlay(OsmInteractiveView v) {
         super(v);
         square_size = getOsmView().res.toDPi(SQUARE_SIZE);
         square_hsize = getOsmView().res.toDPi(SQUARE_HSIZE);
@@ -51,7 +51,6 @@ public abstract class NodeSelectorOverlay extends OsmOverlay {
         centerRect.top=0;
         centerRect.bottom=square_size;
 
-        ID=id;
     }
 
 
@@ -81,7 +80,7 @@ public abstract class NodeSelectorOverlay extends OsmOverlay {
             if (findNode(centerBounding)) {
                 setSelectedNode(gpxHash.get(foundID), foundNode, foundIndex);
             }
-        } 
+        }
     }
 
 
@@ -112,7 +111,7 @@ public abstract class NodeSelectorOverlay extends OsmOverlay {
     }
 
 
-    public abstract void setSelectedNode(GpxInformation info, GpxPointNode node, int index);    
+    public abstract void setSelectedNode(GpxInformation info, GpxPointNode node, int index);
 
     private void drawSelectedNode(MapPainter painter) {
         GpxPointNode node = getSelectedNode();
@@ -135,13 +134,11 @@ public abstract class NodeSelectorOverlay extends OsmOverlay {
 
     @Override
     public void onContentUpdated(GpxInformation info) {
-        if (InfoID.ALL == ID || info.getID() == ID) {
-            if (info.isLoaded()) {
-                gpxHash.put(info.getID(), info);
+        if (info.isLoaded()) {
+            gpxHash.put(info.getID(), info);
 
-            } else {
-                gpxHash.remove(info.getID());
-            }
+        } else {
+            gpxHash.remove(info.getID());
         }
     }
 }

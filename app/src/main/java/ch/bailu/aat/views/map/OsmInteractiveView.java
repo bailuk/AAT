@@ -14,14 +14,19 @@ import org.osmdroid.events.ZoomEvent;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapController;
 
+import ch.bailu.aat.dispatcher.DispatcherInterface;
+import ch.bailu.aat.dispatcher.OnContentUpdatedInterface;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.preferences.SolidPositionLock;
 import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat.services.ServiceContext;
 
-public class OsmInteractiveView extends AbsOsmView 
-implements MapListener, OnSharedPreferenceChangeListener, OnTouchListener {
+public class OsmInteractiveView extends AbsOsmView implements
+        MapListener,
+        OnSharedPreferenceChangeListener,
+        OnTouchListener,
+        OnContentUpdatedInterface {
 
     
     private static final float UNLOCK_TRIGGER_SIZE = 50;
@@ -39,28 +44,29 @@ implements MapListener, OnSharedPreferenceChangeListener, OnTouchListener {
 
 
     private float motionX=0f, motionY=0f;
+
+    private final String solidKey;
     
-    
-    //private final DynTileProvider provider;
-    
+
       
-    public OsmInteractiveView(ServiceContext context, String key) {
+    public OsmInteractiveView(ServiceContext context, DispatcherInterface disp, String key) {
         this(
-                context.getContext(), 
+                context.getContext(),
+                disp,
                 key, 
                 new DynTileProvider(context,key));
     }
     
     
-    private OsmInteractiveView(Context context, String key, DynTileProvider p) {
-        super(context, key, p, new MapDensity(context));
+    private OsmInteractiveView(Context context, DispatcherInterface dispatcher, String key, DynTileProvider p) {
+        super(context, p, new MapDensity(context));
 
         //provider = p;
-        
-        storage = Storage.global(context);
-        storage.register(this);
 
-        slock = new SolidPositionLock(context, key);
+        solidKey = key;
+
+        storage = Storage.global(context);
+        slock = new SolidPositionLock(context, solidKey);
         
 
         map.setMapListener(this);
@@ -68,6 +74,8 @@ implements MapListener, OnSharedPreferenceChangeListener, OnTouchListener {
         
         
         loadState();
+
+        dispatcher.addTarget(this, InfoID.LOCATION);
     }
 
 
@@ -103,6 +111,17 @@ implements MapListener, OnSharedPreferenceChangeListener, OnTouchListener {
 
 
     @Override
+    public void onAttachedToWindow() {
+        super.onAttachedToWindow();
+        storage.register(this);
+    }
+
+    @Override
+    public String getSolidKey() {
+        return solidKey;
+    }
+
+    @Override
     public void onDetachedFromWindow() {
         saveState();
         storage.unregister(this);
@@ -122,20 +141,14 @@ implements MapListener, OnSharedPreferenceChangeListener, OnTouchListener {
     
     @Override
     public void onContentUpdated(GpxInformation info) {
-        super.onContentUpdated(info);
         updateLocation(info);
-        
-        if (filter.pass(info)) {
-            refreshMap();
-        }
+        refreshMap();
     }
 
 
     private void refreshMap() {
         if (slock.isEnabled()) {
             map.getController().setCenter(location);
-        } else {
-            map.invalidate();
         }
     }
 

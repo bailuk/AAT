@@ -1,29 +1,37 @@
 package ch.bailu.aat.views.map.overlay.gpx;
 
+import ch.bailu.aat.dispatcher.DispatcherInterface;
+import ch.bailu.aat.dispatcher.OnContentUpdatedInterface;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.GpxList;
 import ch.bailu.aat.views.map.AbsOsmView;
 import ch.bailu.aat.views.map.overlay.OsmOverlay;
 
 
-public abstract class GpxOverlay extends OsmOverlay {
-    private final int ID;
+public abstract class GpxOverlay extends OsmOverlay implements OnContentUpdatedInterface {
     private final int color;
 
     private GpxList gpxList=GpxList.NULL_ROUTE;
 
-    public GpxOverlay(AbsOsmView osmPreview, int id,  int c) {
+/*
+    public GpxOverlay(AbsOsmView o, DispatcherInterface d, int iid, int c) {
+        this(o, c);
+
+        d.addTarget(this, iid);
+    }
+*/
+
+    public GpxOverlay(AbsOsmView osmPreview, int c) {
         super(osmPreview);
 
+
         color = c;
-        ID = id;
     }
+
 
     @Override
     public void onContentUpdated(GpxInformation info) {
-        if (info.getID() == ID) {
-            setTrack(info.getGpxList());
-        }
+        setTrack(info.getGpxList());
     }
 
     private void setTrack(GpxList gpx) {
@@ -40,6 +48,4 @@ public abstract class GpxOverlay extends OsmOverlay {
     public int getColor() {
         return color;
     }
-
-
 }

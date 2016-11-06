@@ -30,27 +30,19 @@ import ch.bailu.aat.views.description.TrackDescriptionView;
 import ch.bailu.aat.views.description.TrackerStateButton;
 import ch.bailu.aat.views.graph.DistanceAltitudeGraphView;
 import ch.bailu.aat.views.graph.DistanceSpeedGraphView;
+import ch.bailu.aat.views.map.MapFactory;
 import ch.bailu.aat.views.map.OsmInteractiveView;
-import ch.bailu.aat.views.map.overlay.CurrentLocationOverlay;
-import ch.bailu.aat.views.map.overlay.OsmOverlay;
-import ch.bailu.aat.views.map.overlay.control.CustomBarOverlay;
-import ch.bailu.aat.views.map.overlay.control.EditorOverlay;
-import ch.bailu.aat.views.map.overlay.control.InformationBarOverlay;
-import ch.bailu.aat.views.map.overlay.control.NavigationBarOverlay;
-import ch.bailu.aat.views.map.overlay.gpx.GpxDynOverlay;
-import ch.bailu.aat.views.map.overlay.gpx.GpxOverlayListOverlay;
-import ch.bailu.aat.views.map.overlay.grid.GridDynOverlay;
 
 public class SplitViewActivity extends AbsDispatcher implements OnClickListener{
     private static final String SOLID_KEY="split";
     private static final String SOLID_MAP_KEY="themap";
 
-    private MultiView       multiView;
+    private MultiView               multiView;
     private OsmInteractiveView      mapView;
     private ImageButton             activityCycle, multiCycle;
     private TrackerStateButton      trackerState;
 
-    private EditorHelper          edit;
+    private EditorHelper            edit;
 
 
     @Override
@@ -78,21 +70,7 @@ public class SplitViewActivity extends AbsDispatcher implements OnClickListener{
 
 
     private View createMapView() {
-        mapView = new OsmInteractiveView(getServiceContext(), SOLID_MAP_KEY);
-
-        OsmOverlay overlayList[] = {
-                new GpxOverlayListOverlay(mapView, getServiceContext()),
-                new GpxDynOverlay(mapView, getServiceContext(), InfoID.TRACKER),
-                new CurrentLocationOverlay(mapView),
-                new GridDynOverlay(mapView, getServiceContext()),
-                new NavigationBarOverlay(mapView),
-                new InformationBarOverlay(mapView),
-                new CustomBarOverlay(mapView, createButtonBar()),
-                new EditorOverlay(mapView, getServiceContext(),  InfoID.EDITOR_DRAFT, edit),
-
-        };
-        mapView.setOverlayList(overlayList);
-
+        mapView = new MapFactory(this, SOLID_MAP_KEY).map(edit, createButtonBar());
         return mapView;
     }
 
@@ -110,25 +88,14 @@ public class SplitViewActivity extends AbsDispatcher implements OnClickListener{
         };
 
 
-        final OsmInteractiveView mapViewAlt=new OsmInteractiveView(getServiceContext(), SOLID_KEY);
-
-        OsmOverlay overlayList[] = {
-                new GpxOverlayListOverlay(mapViewAlt,getServiceContext()),
-                new GpxDynOverlay(mapViewAlt, getServiceContext(), InfoID.TRACKER),
-                new CurrentLocationOverlay(mapViewAlt),
-                new NavigationBarOverlay(mapViewAlt,6),
-        };
-        mapViewAlt.setOverlayList(overlayList);
-
+        final OsmInteractiveView mapViewAlt = new MapFactory(this, SOLID_KEY).split();
 
         multiView = new MultiView(this, SOLID_KEY, InfoID.TRACKER);
         multiView.addT(new CockpitView(this, SOLID_KEY, InfoID.TRACKER, cockpitA));
         multiView.addT(new CockpitView(this, SOLID_KEY, InfoID.TRACKER, cockpitB));
         multiView.addT(new DistanceAltitudeGraphView(this, SOLID_KEY));
         multiView.addT(new DistanceSpeedGraphView(this, SOLID_KEY));
-        multiView.addT(mapViewAlt);
-
-
+        multiView.add(mapViewAlt);
 
         return multiView;
     }
@@ -148,23 +115,6 @@ public class SplitViewActivity extends AbsDispatcher implements OnClickListener{
     }
 
 
-
-    @Override
-    public void onClick(View v) {
-        if (v == activityCycle) {
-            ActivitySwitcher.cycle(this);
-
-        } else if (v ==multiCycle) {
-            multiView.setNext();
-        }
-    }
-
-
-
-
-
-
-
     private void createDispatcher() {
         addTarget(multiView);
         addTarget(trackerState, InfoID.TRACKER);
@@ -175,5 +125,15 @@ public class SplitViewActivity extends AbsDispatcher implements OnClickListener{
         addSource(new CurrentLocationSource(getServiceContext()));
         addSource(new OverlaySource(getServiceContext()));
 
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (v == activityCycle) {
+            ActivitySwitcher.cycle(this);
+
+        } else if (v ==multiCycle) {
+            multiView.setNext();
+        }
     }
 }

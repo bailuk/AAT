@@ -8,6 +8,7 @@ import android.widget.LinearLayout;
 
 import org.osmdroid.views.MapView;
 
+import ch.bailu.aat.helpers.AppLog;
 import ch.bailu.aat.views.ControlBar;
 import ch.bailu.aat.views.map.OsmInteractiveView;
 import ch.bailu.aat.views.map.overlay.MapPainter;
@@ -42,7 +43,7 @@ public abstract class ControlBarOverlay extends OsmOverlay implements Runnable, 
         bar.setBackgroundColor(color);
         bar.setOnClickListener2(this);
         bar.setVisibility(View.GONE);
-        getOsmView().addView(bar);
+        v.addView(bar);
 
     }
     
@@ -85,6 +86,7 @@ public abstract class ControlBarOverlay extends OsmOverlay implements Runnable, 
 
     public void showBar() {
         if (!isVisible()) {
+            AppLog.d(this, "show bar");
             bar.setVisibility(View.VISIBLE);
             onShowBar();
         }
@@ -113,7 +115,9 @@ public abstract class ControlBarOverlay extends OsmOverlay implements Runnable, 
     public void onHideBar() {}
 
     @Override
-    public void draw(MapPainter painter) {}
+    public void draw(MapPainter painter) {
+
+    }
 
 
     @Override

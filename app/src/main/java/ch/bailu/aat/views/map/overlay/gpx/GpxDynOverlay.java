@@ -1,43 +1,45 @@
 package ch.bailu.aat.views.map.overlay.gpx;
 
+import ch.bailu.aat.dispatcher.DispatcherInterface;
+import ch.bailu.aat.dispatcher.OnContentUpdatedInterface;
 import ch.bailu.aat.gpx.GpxInformation;
-import ch.bailu.aat.gpx.GpxList;
 import ch.bailu.aat.gpx.interfaces.GpxType;
 import ch.bailu.aat.preferences.SolidLegend;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.views.map.AbsOsmView;
 import ch.bailu.aat.views.map.overlay.MapPainter;
-import ch.bailu.aat.views.map.overlay.NullOverlay;
 import ch.bailu.aat.views.map.overlay.OsmOverlay;
 
-public class GpxDynOverlay extends OsmOverlay {
+public class GpxDynOverlay extends OsmOverlay implements OnContentUpdatedInterface {
 
-    private OsmOverlay gpx;
-    private OsmOverlay legend;
-    
-    private final int ID;
-    private final int color;
+    private GpxInformation infoCache = GpxInformation.NULL;
+    private GpxOverlay gpxOverlay;
+    private GpxOverlay legendOverlay;
+
+    private final SolidLegend slegend;
 
     private final ServiceContext scontext;
-    
-    private final SolidLegend slegend;
-    
-    private GpxInformation info;
-    
-    
-    public GpxDynOverlay(AbsOsmView map, ServiceContext sc, int id) {
-        this(map,sc, id,-1);
+    private final int color;
+
+
+
+    public GpxDynOverlay(AbsOsmView map, ServiceContext sc, int c) {
+        super(map);
+
+        scontext = sc;
+        color = c;
+
+        slegend = new SolidLegend(map.getContext(), map.getSolidKey());
+
+        createLegendOverlay();
+        createGpxOverlay();
     }
 
-    public GpxDynOverlay(AbsOsmView map, ServiceContext sc,  int id, int c) {
-        super(map);
-        color=c;
-        scontext =sc;
-        ID = id;
-        gpx = new NullOverlay(map);
-        legend = new NullOverlay(map);
-        
-        slegend = new SolidLegend(map.getContext(), map.solidKey);
+
+    public GpxDynOverlay(AbsOsmView map, ServiceContext sc,
+                         DispatcherInterface dispatcher, int iid) {
+        this(map, sc, -1);
+        dispatcher.addTarget(this, iid);
     }
 
 
@@ -45,45 +47,76 @@ public class GpxDynOverlay extends OsmOverlay {
 
     @Override
     public void draw(MapPainter p) {
-        gpx.draw(p);
-        legend.draw(p);
+        gpxOverlay.draw(p);
+        legendOverlay.draw(p);
     }
 
 
     @Override
     public void onContentUpdated(GpxInformation i) {
-        if (i.getID()== ID) {
-            info=i;
-            setTrack(info.getGpxList());
-            gpx.onContentUpdated(info);
-            legend.onContentUpdated(info);
+
+        int oldType = toType(infoCache);
+        int newType = toType(i);
+
+        infoCache = i;
+
+        if (oldType != newType) {
+            createGpxOverlay();
+            createLegendOverlay();
         }
 
+        gpxOverlay.onContentUpdated(infoCache);
+        legendOverlay.onContentUpdated(infoCache);
+
+        getOsmView().requestRedraw();
     }
 
 
 
-    public void setTrack(GpxList gpxList) {
-
-        if (gpxList.getDelta().getType()== GpxType.WAY) {
-            if (color == -1) gpx = new WayOverlay(getOsmView(), scontext, ID);
-            else gpx = new WayOverlay(getOsmView(), scontext, ID, color);
-            legend = slegend.createWayLegendOverlay(getOsmView(), ID);
-
-        } else if (gpxList.getDelta().getType()==GpxType.RTE) {
-            if (color == -1)  gpx = new RouteOverlay(getOsmView(), ID);
-            else gpx = new RouteOverlay(getOsmView(), ID, color);
-            legend = slegend.createRouteLegendOverlay(getOsmView(), ID);
-                
-        } else {
-            gpx = new TrackOverlay(getOsmView(), ID);
-            legend = slegend.createTrackLegendOverlay(getOsmView(), ID);
-        }
-    }
-
-    
     @Override
     public void onSharedPreferenceChanged(String key) {
-        if (slegend.hasKey(key) && info != null) onContentUpdated(info);
+        if (slegend.hasKey(key)) {
+            createLegendOverlay();
+            legendOverlay.onContentUpdated(infoCache);
+            getOsmView().requestRedraw();
+        }
+    }
+
+    private static int toType(GpxInformation i) {
+        if (i != null && i.getGpxList() != null) {
+            return i.getGpxList().getDelta().getType();
+        }
+        return GpxType.NONE;
+    }
+
+
+
+
+    private void createGpxOverlay() {
+        int type = toType(infoCache);
+
+        if (type == GpxType.WAY)
+            gpxOverlay = new WayOverlay(getOsmView(), scontext, color);
+
+        else if (type == GpxType.RTE)
+            gpxOverlay = new RouteOverlay(getOsmView(), color);
+
+        else
+            gpxOverlay = new TrackOverlay(getOsmView());
+
+    }
+
+
+    private void createLegendOverlay() {
+        int type = toType(infoCache);
+
+        if (type == GpxType.WAY)
+            legendOverlay = slegend.createWayLegendOverlay(getOsmView());
+
+        else if (type == GpxType.RTE)
+            legendOverlay = slegend.createRouteLegendOverlay(getOsmView());
+
+        else
+            legendOverlay = slegend.createTrackLegendOverlay(getOsmView());
     }
 }

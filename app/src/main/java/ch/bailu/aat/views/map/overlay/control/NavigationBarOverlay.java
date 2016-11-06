@@ -6,7 +6,10 @@ import android.view.View;
 import org.osmdroid.views.MapView;
 
 import ch.bailu.aat.R;
+import ch.bailu.aat.dispatcher.DispatcherInterface;
+import ch.bailu.aat.dispatcher.OnContentUpdatedInterface;
 import ch.bailu.aat.gpx.GpxInformation;
+import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.helpers.AppLog;
 import ch.bailu.aat.helpers.ToolTip;
 import ch.bailu.aat.preferences.SolidPositionLock;
@@ -15,7 +18,7 @@ import ch.bailu.aat.views.map.AbsOsmView;
 import ch.bailu.aat.views.map.OsmInteractiveView;
 
 
-public class NavigationBarOverlay extends ControlBarOverlay {
+public class NavigationBarOverlay extends ControlBarOverlay implements OnContentUpdatedInterface {
     private final View buttonPlus;
     private final View buttonMinus;
     private final View buttonFrame;
@@ -25,25 +28,27 @@ public class NavigationBarOverlay extends ControlBarOverlay {
     private int boundingCycle=0;
 
 
-    public NavigationBarOverlay(OsmInteractiveView o) {
-        this(o, 4);
+    public NavigationBarOverlay(OsmInteractiveView o, DispatcherInterface d) {
+        this(o, d, 4);
     }
 
 
-    public NavigationBarOverlay(OsmInteractiveView o, int i) {
+    public NavigationBarOverlay(OsmInteractiveView o, DispatcherInterface d, int i) {
         super(o,new ControlBar(o.getContext(),
                 getOrientation(BOTTOM), i), BOTTOM);
 
         buttonPlus = getBar().addImageButton(R.drawable.zoom_in);
         buttonMinus = getBar().addImageButton(R.drawable.zoom_out);
-        View lock = getBar().addSolidIndexButton(new SolidPositionLock(getMapView().getContext(),o.solidKey));
+        View lock = getBar().addSolidIndexButton(
+                new SolidPositionLock(o.getContext(),o.getSolidKey()));
         buttonFrame = getBar().addImageButton(R.drawable.zoom_fit_best);
 
         ToolTip.set(buttonPlus, R.string.tt_map_zoomin);
         ToolTip.set(buttonMinus,R.string.tt_map_zoomout);
         ToolTip.set(buttonFrame,  R.string.tt_map_frame);
         ToolTip.set(lock, R.string.tt_map_home);
-        
+
+        d.addTarget(this, InfoID.ALL);
     }
 
 

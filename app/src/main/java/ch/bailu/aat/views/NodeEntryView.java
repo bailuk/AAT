@@ -32,10 +32,7 @@ public class NodeEntryView extends ViewGroup {
         AbsOsmTileProvider provider = new CachedTileProvider(sc);
         map = new OsmViewStatic(sc.getContext(), provider, new MapDensity(sc.getContext()));
         
-        final OsmOverlay[] overlays = new OsmOverlay[] {
-                new GpxDynOverlay(map, sc ,id)
-        };
-        map.setOverlayList(overlays);
+        map.add(new GpxDynOverlay(map, sc ,id));
 
         text=new TextView(sc.getContext());
         text.setTextColor(Color.WHITE);
@@ -75,7 +72,7 @@ public class NodeEntryView extends ViewGroup {
         text.setText(AppHtml.fromHtml(node.toHtml(getContext(), new StringBuilder()).toString()));
         final BoundingBox bounding = node.getBoundingBox();
         map.frameBoundingBox(bounding);
-        map.onContentUpdated(info);
+        // TODO send update to gpx overlay .onContentUpdated(info);
 
     }
 }
