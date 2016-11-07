@@ -2,14 +2,15 @@ package ch.bailu.aat.views.graph;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.view.ViewGroup;
 
+import ch.bailu.aat.dispatcher.DispatcherInterface;
+import ch.bailu.aat.dispatcher.OnContentUpdatedInterface;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.GpxList;
-import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.preferences.SolidUnit;
-import ch.bailu.aat.views.description.TrackDescriptionView;
 
-public abstract class AbsGraphView extends TrackDescriptionView {
+public abstract class AbsGraphView extends ViewGroup implements OnContentUpdatedInterface {
     
     public final static int SAMPLE_WIDTH_PIXEL=5;
     
@@ -18,10 +19,11 @@ public abstract class AbsGraphView extends TrackDescriptionView {
     
     private boolean markerMode=false;
     
-    private GpxList gpxList = GpxList.NULL_TRACK;
+    private GpxList gpxCache = GpxList.NULL_TRACK;
     
-    public AbsGraphView(Context context, String key) {
-        super(context, key, InfoID.ALL);
+    public AbsGraphView(Context context, DispatcherInterface di, int iid) {
+        super(context);
+        di.addTarget(this, iid);
         setWillNotDraw(false);
         sunit = new SolidUnit(context);
     }
@@ -32,10 +34,8 @@ public abstract class AbsGraphView extends TrackDescriptionView {
     
     @Override
     public void onContentUpdated(GpxInformation info) {
-        if (filter.pass(info)) {
-            gpxList = info.getGpxList();
-            invalidate();
-        }
+        gpxCache = info.getGpxList();
+        invalidate();
     }
     
     
@@ -46,8 +46,8 @@ public abstract class AbsGraphView extends TrackDescriptionView {
     @Override
     public void onDraw(Canvas c) {
         if (getWidth() > 0 && getHeight() > 0) {
-            markerMode = gpxList.getMarkerList().size() > getWidth() / SAMPLE_WIDTH_PIXEL;
-            plot(c, gpxList, sunit, markerMode);
+            markerMode = gpxCache.getMarkerList().size() > getWidth() / SAMPLE_WIDTH_PIXEL;
+            plot(c, gpxCache, sunit, markerMode);
         }
     }
 

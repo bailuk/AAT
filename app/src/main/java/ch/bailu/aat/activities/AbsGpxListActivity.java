@@ -110,23 +110,19 @@ public abstract class AbsGpxListActivity extends AbsDispatcher implements OnItem
         listView.setOnItemClickListener(this);
         registerForContextMenu(listView);
 
-
         filter.add(new TitleView(this, getLabel()+ " - " + filter_label));
         filter.addAllFilterViews(map.map);
-
+        filter.addAllContent(this, filter_content, InfoID.LIST_SUMMARY);
 
         summary.add(new TitleView(this, getLabel() + " - " + summary_label));
+        summary.addAllContent(this, summary_content, InfoID.LIST_SUMMARY);
 
-        multiView = new MultiView(this, solid_key, InfoID.ALL);
+        multiView = new MultiView(this, solid_key);
 
         multiView.add(listView, list_label);
-        multiView.add(map, map, map_label);
-        multiView.add(filter,
-                filter.addAllContent(filter_content, InfoID.LIST_SUMMARY),
-                filter_label);
-        multiView.add(summary, summary.addAllContent(summary_content,
-                InfoID.LIST_SUMMARY),
-                summary_label);
+        multiView.add(map, map_label);
+        multiView.add(filter, filter_label);
+        multiView.add(summary, summary_label);
 
         return multiView;
     }
@@ -135,9 +131,6 @@ public abstract class AbsGpxListActivity extends AbsDispatcher implements OnItem
 
 
     private void createDispatcher() {
-
-        addTarget(multiView);
-
         addSource(new IteratorSource.Summary(getServiceContext()));
         addSource(new OverlaySource(getServiceContext()));
         addSource(new CurrentLocationSource(getServiceContext()));

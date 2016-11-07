@@ -71,7 +71,7 @@ public abstract class AbsOsmApiActivity extends AbsDispatcher implements OnClick
         setContentView(createContentView());
 
         addSource(new CustomFileSource(getServiceContext(),osmApi.getResultFile().toString()));
-        addTarget(list);
+        addTarget(list, InfoID.FILEVIEW);
 
         setQueryTextFromIntent();
     }  
@@ -128,10 +128,7 @@ public abstract class AbsOsmApiActivity extends AbsDispatcher implements OnClick
         view.addView(postLabel, layout);
         AppTheme.themify(postLabel);
 
-        list = new NodeListView(getServiceContext(),SOLID_KEY,
-                InfoID.FILEVIEW);
-
-
+        list = new NodeListView(getServiceContext());
         view.addView(list,layout);
 
         return view;

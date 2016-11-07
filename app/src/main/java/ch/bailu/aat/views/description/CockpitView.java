@@ -2,32 +2,48 @@ package ch.bailu.aat.views.description;
 
 
 import android.content.Context;
+import android.view.View;
+import android.view.ViewGroup;
 
 import ch.bailu.aat.description.ContentDescription;
+import ch.bailu.aat.dispatcher.DispatcherInterface;
 import ch.bailu.aat.gpx.InfoID;
 
 
-public class CockpitView extends DescriptionViewGroup {
+public class CockpitView extends ViewGroup {
 
     private final Layouter layouter = new Layouter();
 
-    public CockpitView(Context context, String key,  ContentDescription d[]) {
-        this(context, key, InfoID.ALL, d);
+
+    public CockpitView(Context context) {
+        super(context);
     }
 
-    public CockpitView(Context context, String key, int filter, ContentDescription d[]) {
-        super(context, key, filter);
 
-        TrackDescriptionView v[] = new TrackDescriptionView[d.length];
+    public CockpitView(Context c, DispatcherInterface di, ContentDescription[] des) {
+        super(c);
+        addAll(di, des);
+    }
 
-        for (int i=0; i<d.length; i++) {
-            v[i] = new NumberView(d[i]);
-            addView(v[i]);
+
+    public void addAll(DispatcherInterface di, ContentDescription[] des) {
+        for (ContentDescription de : des) {
+            add(di, de);
         }
-
-        init(d,v);
-
     }
+
+    public void add(DispatcherInterface di, ContentDescription de) {
+        add(di, de, InfoID.TRACKER);
+    }
+
+
+    public void add(DispatcherInterface di, ContentDescription de, int iid) {
+        final NumberView v = new NumberView(de);
+
+        addView(v);
+        di.addTarget(v, iid);
+    }
+
 
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
@@ -76,7 +92,8 @@ public class CockpitView extends DescriptionViewGroup {
         private boolean placeItems(Placer p) {
             boolean works=true;
 
-            for (int i=0; i<getDescriptionCount() && works; i++) {
+            final int size = getChildCount();
+            for (int i=0; i< size && works; i++) {
                 works = p.placeItem(i);
             }
             return works;
@@ -131,8 +148,11 @@ public class CockpitView extends DescriptionViewGroup {
                 return ((char_height + ypos) <= parent_height);
             }
 
+
             private int getWidthOfView(int index) {
-                int len= getDescription(index).getValue().length();
+                final NumberView child = (NumberView) getChildAt(index);
+
+                int len= child.getDescription().getValue().length();
                 len = Math.max(len, MIN_CHARS);
                 return len*char_width;
             }
@@ -144,7 +164,9 @@ public class CockpitView extends DescriptionViewGroup {
 
             @Override
             protected void setGeometry(int index, int width, int height) {
-                getDescriptionView(index).layout(getXPos(),getYPos(), getXPos()+width, getYPos()+height);
+                final View child = getChildAt(index);
+
+                child.layout(getXPos(),getYPos(), getXPos()+width, getYPos()+height);
             }
         }
 

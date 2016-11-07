@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.widget.LinearLayout;
 
 import ch.bailu.aat.R;
-import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.preferences.SolidPreset;
 import ch.bailu.aat.views.ContentView;
 import ch.bailu.aat.views.MainControlBar;
@@ -41,7 +40,7 @@ public class PreferencesActivity extends AbsDispatcher {
 
 
     private MultiView createMultiView() {
-        MultiView mv = new MultiView(this, SOLID_KEY, InfoID.ALL);
+        MultiView mv = new MultiView(this, SOLID_KEY);
 
         final int l = new SolidPreset(this).length();
 

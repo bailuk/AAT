@@ -8,7 +8,7 @@ import android.widget.ScrollView;
 import org.osmdroid.views.MapView;
 
 import ch.bailu.aat.description.ContentDescription;
-import ch.bailu.aat.dispatcher.SubDispatcher;
+import ch.bailu.aat.dispatcher.DispatcherInterface;
 import ch.bailu.aat.preferences.SolidDirectoryQuery;
 import ch.bailu.aat.views.description.LabelTextView;
 
@@ -30,13 +30,16 @@ public class VerticalScrollView extends ScrollView {
     }
 
 
-    public SubDispatcher addAllContent(ContentDescription[] content, int id) {
-        final LabelTextView views[] = new LabelTextView[content.length];
-        for (int i=0; i< content.length; i++) {
-            views[i] = new LabelTextView(getContext(),content[i]);
+    public void addAllContent(DispatcherInterface di,
+                              ContentDescription[] descriptions,
+                              int iid) {
+        final LabelTextView views[] = new LabelTextView[descriptions.length];
+        for (int i=0; i< descriptions.length; i++) {
+            views[i] = new LabelTextView(getContext(),descriptions[i]);
             add(views[i]);
+
+            di.addTarget(views[i], iid);
         }
-        return new SubDispatcher(views, id);
     }
 
 

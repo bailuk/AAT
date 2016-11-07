@@ -29,21 +29,19 @@ import ch.bailu.aat.dispatcher.TrackerSource;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.helpers.AppLayout;
-import ch.bailu.aat.helpers.file.FileAction;
 import ch.bailu.aat.helpers.ToolTip;
+import ch.bailu.aat.helpers.file.FileAction;
 import ch.bailu.aat.menus.ContentMenu;
 import ch.bailu.aat.views.BusyButton;
 import ch.bailu.aat.views.ContentView;
 import ch.bailu.aat.views.ControlBar;
 import ch.bailu.aat.views.MainControlBar;
 import ch.bailu.aat.views.description.MultiView;
-import ch.bailu.aat.views.description.TrackDescriptionView;
 import ch.bailu.aat.views.description.VerticalView;
 import ch.bailu.aat.views.graph.DistanceAltitudeGraphView;
 import ch.bailu.aat.views.graph.DistanceSpeedGraphView;
 import ch.bailu.aat.views.map.OsmInteractiveView;
 import ch.bailu.aat.views.map.overlay.CurrentLocationOverlay;
-import ch.bailu.aat.views.map.overlay.OsmOverlay;
 import ch.bailu.aat.views.map.overlay.control.InformationBarOverlay;
 import ch.bailu.aat.views.map.overlay.control.NavigationBarOverlay;
 import ch.bailu.aat.views.map.overlay.gpx.GpxDynOverlay;
@@ -122,14 +120,12 @@ public class GpxViewActivity extends AbsDispatcher
     private MultiView createMultiView() {
         map = new OsmInteractiveView(getServiceContext(), this, SOLID_KEY);
 
-
         map.add(new GpxOverlayListOverlay(map, this, getServiceContext()));
         map.add(new GpxDynOverlay(map, getServiceContext(), InfoID.FILEVIEW));
         map.add(new CurrentLocationOverlay(map, this));
         map.add(new GridDynOverlay(map, getServiceContext()));
         map.add(new NavigationBarOverlay(map, this));
         map.add(new InformationBarOverlay(map, this));
-
 
 
         final ContentDescription summaryData[] = {
@@ -145,21 +141,20 @@ public class GpxViewActivity extends AbsDispatcher
                 new CaloriesDescription(this),
                 new TrackSizeDescription(this),
         };
-
         VerticalScrollView summary = new VerticalScrollView(this);
-        VerticalView graph = new VerticalView(this, SOLID_KEY, InfoID.FILEVIEW,
-                new TrackDescriptionView[] {
-                        new DistanceAltitudeGraphView(this, SOLID_KEY),
-                        new DistanceSpeedGraphView(this, SOLID_KEY)
-                });
+        summary.addAllContent(this, summaryData, InfoID.FILEVIEW);
 
+        View graph = new VerticalView(this, new View[] {
+                new DistanceAltitudeGraphView(this, this, InfoID.FILEVIEW),
+                new DistanceSpeedGraphView(this, this, InfoID.FILEVIEW)
+        });
 
-        MultiView mv = new MultiView(this, SOLID_KEY, InfoID.ALL);
-        mv.add(summary, summary.addAllContent(summaryData, InfoID.FILEVIEW));
-        mv.add(map);
-        mv.addT(graph);
+        multiView = new MultiView(this, SOLID_KEY);
+        multiView.add(summary);
+        multiView.add(map);
+        multiView.add(graph);
 
-        return mv;
+        return multiView;
     }
 
 
@@ -169,7 +164,6 @@ public class GpxViewActivity extends AbsDispatcher
         addSource(new OverlaySource(getServiceContext()));
         addSource(new CustomFileSource(getServiceContext(), fileID));
 
-        addTarget(multiView);
         addTarget(this, InfoID.FILEVIEW);
         addTarget(busyButton.getBusyControl(InfoID.FILEVIEW), InfoID.FILEVIEW);
     }

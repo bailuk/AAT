@@ -47,7 +47,6 @@ import ch.bailu.aat.views.MainControlBar;
 import ch.bailu.aat.views.StatusTextView;
 import ch.bailu.aat.views.description.MultiView;
 import ch.bailu.aat.views.map.OsmInteractiveView;
-import ch.bailu.aat.views.map.overlay.CurrentLocationOverlay;
 import ch.bailu.aat.views.map.overlay.Dem3NameOverlay;
 import ch.bailu.aat.views.map.overlay.EndLogOverlay;
 import ch.bailu.aat.views.map.overlay.StartLogOverlay;
@@ -120,7 +119,11 @@ public class TestActivity extends AbsDispatcher {
 
 
         VerticalScrollView locationView = new VerticalScrollView(this);
+        locationView.addAllContent(this, locationDescription, InfoID.LOCATION);
+
         VerticalScrollView trackerView = new VerticalScrollView(this);
+        trackerView.addAllContent(this, trackerDescription, InfoID.TRACKER);
+
         VerticalScrollView testsView = new VerticalScrollView(this);
 
         testsView.add(new TestEntryView(new TestCoordinates(this)));
@@ -133,15 +136,12 @@ public class TestActivity extends AbsDispatcher {
 
         statusTextView = new StatusTextView(this);
 
-
-        MultiView mv = new MultiView(this, SOLID_KEY, InfoID.ALL);
+        MultiView mv = new MultiView(this, SOLID_KEY);
 
         mv.add(map,getString(R.string.intro_map));
-        mv.add(locationView, locationView.addAllContent(
-                locationDescription, InfoID.LOCATION), getString(R.string.gps));
+        mv.add(locationView, getString(R.string.gps));
 
-        mv.add(trackerView, trackerView.addAllContent(
-                trackerDescription, InfoID.TRACKER), getString(R.string.tracker));
+        mv.add(trackerView, getString(R.string.tracker));
         mv.add(testsView, "Tests*");
         mv.add(statusTextView, getString(R.string.intro_status));
         return mv;
@@ -175,7 +175,6 @@ public class TestActivity extends AbsDispatcher {
         map.add(new ZoomLevelOverlay(map));
         map.add(new Dem3NameOverlay(map));
 
-        addTarget(multiView);
 
         addSource(new TrackerSource(getServiceContext()));
         addSource(new CurrentLocationSource(getServiceContext()));

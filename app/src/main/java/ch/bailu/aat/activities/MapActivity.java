@@ -109,7 +109,6 @@ public class MapActivity extends AbsDispatcher implements OnClickListener{
 
 
     private void createDispatcher() {
-        addTarget(map);
         addTarget(trackerState, InfoID.TRACKER);
         addTarget(gpsState, InfoID.LOCATION);
 

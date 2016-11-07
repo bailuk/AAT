@@ -57,25 +57,21 @@ public class GpxEditorActivity extends AbsFileContentActivity
         };
 
 
-        NodeListView wayList = new NodeListView(getServiceContext(),
-                SOLID_KEY,
-                InfoID.EDITOR_OVERLAY
-                );
+        NodeListView nodeList = new NodeListView(getServiceContext());
+        addTarget(nodeList, InfoID.EDITOR_OVERLAY);
 
         VerticalScrollView summary = new VerticalScrollView(this);
-        DistanceAltitudeGraphView graph =new DistanceAltitudeGraphView(this, SOLID_KEY);
+        summary.addAllContent(this, summaryData, InfoID.EDITOR_OVERLAY);
 
+        DistanceAltitudeGraphView graph = new DistanceAltitudeGraphView(this, this, InfoID.EDITOR_OVERLAY);
 
-        MultiView mv = new MultiView(this, SOLID_KEY, InfoID.ALL);
+        MultiView multiView = new MultiView(this, SOLID_KEY);
 
-        mv.addT(wayList);
-        mv.add(map);
-        mv.addT(new VerticalView(this, SOLID_KEY, InfoID.EDITOR_OVERLAY,
-                new View[] {summary, graph},
-                new OnContentUpdatedInterface[]
-                        {summary.addAllContent(summaryData, InfoID.EDITOR_OVERLAY), graph}
-        ));
-        return mv;
+        multiView.add(nodeList);
+        multiView.add(map);
+        multiView.add(new VerticalView(this, new View[] {summary, graph}));
+
+        return multiView;
     }
 
 

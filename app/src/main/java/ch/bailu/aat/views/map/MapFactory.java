@@ -8,7 +8,6 @@ import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.editor.EditorHelper;
 import ch.bailu.aat.views.ControlBar;
 import ch.bailu.aat.views.map.overlay.CurrentLocationOverlay;
-import ch.bailu.aat.views.map.overlay.OsmOverlay;
 import ch.bailu.aat.views.map.overlay.control.CustomBarOverlay;
 import ch.bailu.aat.views.map.overlay.control.EditorOverlay;
 import ch.bailu.aat.views.map.overlay.control.FileControlBar;
@@ -45,7 +44,7 @@ public class MapFactory {
     private OsmInteractiveView split(int size) {
         base(size);
         m.add(new GpxOverlayListOverlay(m,d, sc));
-        m.add(new GpxDynOverlay(m, sc, InfoID.TRACKER));
+        m.add(new GpxDynOverlay(m, sc, d, InfoID.TRACKER));
 
         return m;
     }
@@ -99,4 +98,16 @@ public class MapFactory {
 
         return m;
     }
+
+    public OsmInteractiveView node() {
+        base(4);
+
+        m.add(new GpxDynOverlay(m, sc, InfoID.TRACKER));
+        m.add(new GpxDynOverlay(m, sc, InfoID.FILEVIEW));
+        m.add(new GridDynOverlay(m, sc));
+        m.add(new NavigationBarOverlay(m, d));
+
+        return m;
+    }
+
 }

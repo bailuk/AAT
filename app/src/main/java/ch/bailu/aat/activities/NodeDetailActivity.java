@@ -22,13 +22,8 @@ import ch.bailu.aat.views.ControlBar;
 import ch.bailu.aat.views.HtmlScrollTextView;
 import ch.bailu.aat.views.MainControlBar;
 import ch.bailu.aat.views.description.VerticalView;
+import ch.bailu.aat.views.map.MapFactory;
 import ch.bailu.aat.views.map.OsmInteractiveView;
-import ch.bailu.aat.views.map.overlay.CurrentLocationOverlay;
-import ch.bailu.aat.views.map.overlay.OsmOverlay;
-import ch.bailu.aat.views.map.overlay.control.InformationBarOverlay;
-import ch.bailu.aat.views.map.overlay.control.NavigationBarOverlay;
-import ch.bailu.aat.views.map.overlay.gpx.GpxDynOverlay;
-import ch.bailu.aat.views.map.overlay.grid.GridDynOverlay;
 
 public class NodeDetailActivity extends AbsDispatcher
         implements OnClickListener, OnContentUpdatedInterface {
@@ -82,41 +77,17 @@ public class NodeDetailActivity extends AbsDispatcher
 
 
     private VerticalView createVerticalView() {
-        map = new OsmInteractiveView(getServiceContext(), this, SOLID_KEY);
-
+        map = new MapFactory(this, SOLID_KEY).node();
 
         text=new HtmlScrollTextView(this);
         text.enableAutoLink();
 
-        View views[] = {
-                text,
-                map,
-        };
-
-        OnContentUpdatedInterface targets[]  = {
-                OnContentUpdatedInterface.NULL,
-                map
-        };
-
-        return new VerticalView(this, SOLID_KEY, InfoID.ALL, views, targets);
+        return new VerticalView(this, new View[] {text, map});
     }
 
 
     private void createDispatcher() {
-        OsmOverlay overlayList[] = {
-                new GpxDynOverlay(map, getServiceContext(), InfoID.TRACKER),
-                new GpxDynOverlay(map, getServiceContext(), InfoID.FILEVIEW),
-                new CurrentLocationOverlay(map, this),
-                new GridDynOverlay(map, getServiceContext()),
-                new NavigationBarOverlay(map, this),
-                new InformationBarOverlay(map, this),
-
-        };
-        map.add(overlayList);
-
-        addTarget(verticalView);
         addTarget(this, InfoID.FILEVIEW);
-        addTarget(map);
         addSource(new CurrentLocationSource(getServiceContext()));
         addSource(new CustomFileSource(getServiceContext(), fileID));
     }

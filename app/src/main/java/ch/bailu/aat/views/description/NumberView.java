@@ -3,13 +3,14 @@ package ch.bailu.aat.views.description;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.util.TypedValue;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
 import ch.bailu.aat.description.ContentDescription;
+import ch.bailu.aat.dispatcher.OnContentUpdatedInterface;
 import ch.bailu.aat.gpx.GpxInformation;
-import ch.bailu.aat.gpx.InfoID;
 
-public class NumberView extends TrackDescriptionView {
+public class NumberView extends ViewGroup implements OnContentUpdatedInterface {
 
     private final TextView    label, number, unit;
     private final ContentDescription description;
@@ -17,9 +18,8 @@ public class NumberView extends TrackDescriptionView {
     private final float defaultTextSize;
 
 
-    public NumberView(ContentDescription data, int filter) {
-        super(data, TrackDescriptionView.DEFAULT_SOLID_KEY,filter);
-
+    public NumberView(ContentDescription data) {
+        super(data);
 
         number = createLabel();
         number.setIncludeFontPadding(false);
@@ -40,12 +40,10 @@ public class NumberView extends TrackDescriptionView {
         updateAllText();
     }
 
-    
-    public NumberView(ContentDescription data) {
-        this(data, InfoID.ALL);
+
+    public ContentDescription getDescription() {
+        return description;
     }
-
-
 
 
     private TextView createLabel() {
@@ -105,10 +103,8 @@ public class NumberView extends TrackDescriptionView {
 
     @Override
     public void onContentUpdated(GpxInformation info) {
-        if (filter.pass(info)) {
-            description.onContentUpdated(info);
-            updateAllText();
-        }
+        description.onContentUpdated(info);
+        updateAllText();
     }
 
 

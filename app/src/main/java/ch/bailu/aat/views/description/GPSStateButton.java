@@ -18,7 +18,7 @@ public class GPSStateButton extends NumberButton implements OnClickListener, OnS
     private final SolidGPSLock slock;
     
     public GPSStateButton(Context c) {
-        super(new GpsStateDescription(c), InfoID.LOCATION);
+        super(new GpsStateDescription(c));
         
         
         storage=Storage.global(c);

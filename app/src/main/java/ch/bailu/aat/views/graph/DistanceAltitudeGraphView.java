@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 
 import ch.bailu.aat.R;
+import ch.bailu.aat.dispatcher.DispatcherInterface;
 import ch.bailu.aat.gpx.GpxList;
 import ch.bailu.aat.gpx.GpxListWalker;
 import ch.bailu.aat.gpx.GpxPointNode;
@@ -14,8 +15,8 @@ import ch.bailu.aat.preferences.SolidUnit;
 public class DistanceAltitudeGraphView extends AbsGraphView {
 
     
-    public DistanceAltitudeGraphView(Context context, String key) {
-        super(context, key);
+    public DistanceAltitudeGraphView(Context context, DispatcherInterface di, int iid) {
+        super(context, di, iid);
     }
 
     @Override

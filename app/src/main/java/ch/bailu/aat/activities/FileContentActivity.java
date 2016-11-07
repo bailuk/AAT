@@ -1,6 +1,7 @@
 package ch.bailu.aat.activities;
 
 import android.os.Bundle;
+import android.view.View;
 
 import ch.bailu.aat.description.AverageSpeedDescription;
 import ch.bailu.aat.description.CaloriesDescription;
@@ -17,7 +18,6 @@ import ch.bailu.aat.description.TrackSizeDescription;
 import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.services.editor.EditorHelper;
 import ch.bailu.aat.views.description.MultiView;
-import ch.bailu.aat.views.description.TrackDescriptionView;
 import ch.bailu.aat.views.description.VerticalView;
 import ch.bailu.aat.views.graph.DistanceAltitudeGraphView;
 import ch.bailu.aat.views.graph.DistanceSpeedGraphView;
@@ -57,17 +57,16 @@ public class FileContentActivity extends AbsFileContentActivity{
         };
 
         VerticalScrollView summary = new VerticalScrollView(this);
-        VerticalView graph = new VerticalView(this, SOLID_KEY,
-                InfoID.FILEVIEW,
-                new TrackDescriptionView[] {
-                        new DistanceAltitudeGraphView(this, SOLID_KEY),
-                        new DistanceSpeedGraphView(this, SOLID_KEY)});
+        summary.addAllContent(this, summaryData, InfoID.FILEVIEW);
 
+        View graph = new VerticalView(this, new View[] {
+                        new DistanceAltitudeGraphView(this, this, InfoID.FILEVIEW),
+                        new DistanceSpeedGraphView(this, this, InfoID.FILEVIEW)});
 
-        MultiView mv = new MultiView(this, SOLID_KEY, InfoID.ALL);
-        mv.add(summary, summary.addAllContent(summaryData, InfoID.FILEVIEW));
+        MultiView mv = new MultiView(this, SOLID_KEY);
+        mv.add(summary);
         mv.add(map);
-        mv.addT(graph);
+        mv.add(graph);
         return mv;
     }
 

@@ -26,21 +26,12 @@ import ch.bailu.aat.views.MainControlBar;
 import ch.bailu.aat.views.MvNextButton;
 import ch.bailu.aat.views.description.CockpitView;
 import ch.bailu.aat.views.description.MultiView;
-import ch.bailu.aat.views.description.TrackDescriptionView;
 import ch.bailu.aat.views.description.TrackerStateButton;
 import ch.bailu.aat.views.description.VerticalView;
 import ch.bailu.aat.views.graph.DistanceAltitudeGraphView;
 import ch.bailu.aat.views.graph.DistanceSpeedGraphView;
 import ch.bailu.aat.views.map.MapFactory;
 import ch.bailu.aat.views.map.OsmInteractiveView;
-import ch.bailu.aat.views.map.overlay.CurrentLocationOverlay;
-import ch.bailu.aat.views.map.overlay.OsmOverlay;
-import ch.bailu.aat.views.map.overlay.control.EditorOverlay;
-import ch.bailu.aat.views.map.overlay.control.InformationBarOverlay;
-import ch.bailu.aat.views.map.overlay.control.NavigationBarOverlay;
-import ch.bailu.aat.views.map.overlay.gpx.GpxDynOverlay;
-import ch.bailu.aat.views.map.overlay.gpx.GpxOverlayListOverlay;
-import ch.bailu.aat.views.map.overlay.grid.GridDynOverlay;
 
 public class TrackerActivity extends AbsDispatcher implements OnClickListener{
 
@@ -63,8 +54,10 @@ public class TrackerActivity extends AbsDispatcher implements OnClickListener{
         ViewGroup contentView = new ContentView(this);
 
         multiView = createMultiView();
+
         contentView.addView(createButtonBar(multiView));
         contentView.addView(multiView);
+
         setContentView(contentView);
 
         createDispatcher();
@@ -72,7 +65,23 @@ public class TrackerActivity extends AbsDispatcher implements OnClickListener{
 
 
     private MultiView createMultiView() {
-        ContentDescription[] data = new ContentDescription[] {
+        map = new MapFactory(this, SOLID_KEY).tracker(edit);
+
+        multiView = new MultiView(this, SOLID_KEY);
+        multiView.add(createCockpit());
+        multiView.add(map);
+        multiView.add(new VerticalView(this,
+                new View[] {
+                    new DistanceAltitudeGraphView(this, this, InfoID.TRACKER),
+                    new DistanceSpeedGraphView(this, this, InfoID.TRACKER)
+                }));
+
+        return multiView;
+    }
+
+
+    private CockpitView createCockpit() {
+        final ContentDescription[] data = new ContentDescription[] {
                 new CurrentSpeedDescription(this),
                 new AltitudeDescription(this),
                 new TimeDescription(this),
@@ -81,18 +90,9 @@ public class TrackerActivity extends AbsDispatcher implements OnClickListener{
                 new MaximumSpeedDescription(this),
         };
 
-        CockpitView cockpit = new CockpitView(this, SOLID_KEY, InfoID.TRACKER, data);
-
-        map = new MapFactory(this, SOLID_KEY).tracker(edit);
-
-        MultiView mv = new MultiView(this, SOLID_KEY, InfoID.ALL);
-        mv.addT(cockpit);
-        mv.add(map);
-        mv.addT(new VerticalView(this, SOLID_KEY, InfoID.TRACKER, new TrackDescriptionView[] {
-                new DistanceAltitudeGraphView(this, SOLID_KEY),
-                new DistanceSpeedGraphView(this, SOLID_KEY)}));
-        return mv;
+        return new CockpitView(this, this, data);
     }
+
 
     private ControlBar createButtonBar(MultiView mv) {
         ControlBar bar = new MainControlBar(getServiceContext());
@@ -107,10 +107,20 @@ public class TrackerActivity extends AbsDispatcher implements OnClickListener{
 
         trackerState.setOnClickListener(trackerState);
 
+
+
         return bar;
     }
 
 
+    private void createDispatcher() {
+        addTarget(trackerState, InfoID.TRACKER);
+
+        addSource(new EditorSource(getServiceContext(), edit));
+        addSource(new TrackerSource(getServiceContext()));
+        addSource(new CurrentLocationSource(getServiceContext()));
+        addSource(new OverlaySource(getServiceContext()));
+    }
 
 
     @Override
@@ -119,16 +129,5 @@ public class TrackerActivity extends AbsDispatcher implements OnClickListener{
             ActivitySwitcher.cycle(this);
 
         }
-    }
-
-
-    private void createDispatcher() {
-        addTarget(multiView);
-        addTarget(trackerState, InfoID.TRACKER);
-
-        addSource(new EditorSource(getServiceContext(), edit));
-        addSource(new TrackerSource(getServiceContext()));
-        addSource(new CurrentLocationSource(getServiceContext()));
-        addSource(new OverlaySource(getServiceContext()));
     }
 }

@@ -9,18 +9,6 @@ import android.widget.ImageButton;
 import java.io.File;
 
 import ch.bailu.aat.R;
-import ch.bailu.aat.description.AverageSpeedDescription;
-import ch.bailu.aat.description.CaloriesDescription;
-import ch.bailu.aat.description.ContentDescription;
-import ch.bailu.aat.description.DateDescription;
-import ch.bailu.aat.description.DistanceDescription;
-import ch.bailu.aat.description.EndDateDescription;
-import ch.bailu.aat.description.MaximumSpeedDescription;
-import ch.bailu.aat.description.NameDescription;
-import ch.bailu.aat.description.PathDescription;
-import ch.bailu.aat.description.PauseDescription;
-import ch.bailu.aat.description.TimeDescription;
-import ch.bailu.aat.description.TrackSizeDescription;
 import ch.bailu.aat.dispatcher.CurrentLocationSource;
 import ch.bailu.aat.dispatcher.EditorSource;
 import ch.bailu.aat.dispatcher.IteratorSource;
@@ -36,13 +24,7 @@ import ch.bailu.aat.views.ContentView;
 import ch.bailu.aat.views.ControlBar;
 import ch.bailu.aat.views.MainControlBar;
 import ch.bailu.aat.views.description.MultiView;
-import ch.bailu.aat.views.description.TrackDescriptionView;
-import ch.bailu.aat.views.description.VerticalView;
-import ch.bailu.aat.views.graph.DistanceAltitudeGraphView;
-import ch.bailu.aat.views.graph.DistanceSpeedGraphView;
-import ch.bailu.aat.views.map.MapFactory;
 import ch.bailu.aat.views.map.OsmInteractiveView;
-import ch.bailu.aat.views.preferences.VerticalScrollView;
 
 public abstract class AbsFileContentActivity extends AbsDispatcher implements OnClickListener {
 
@@ -124,7 +106,6 @@ public abstract class AbsFileContentActivity extends AbsDispatcher implements On
         addSource(currentFile);
         addSource(editor_source);
 
-        addTarget(multiView);
         addTarget(busyButton.getBusyControl(InfoID.FILEVIEW), InfoID.FILEVIEW);
 
     }

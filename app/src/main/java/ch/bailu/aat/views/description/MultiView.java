@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.SparseArray;
 import android.view.Menu;
 import android.view.View;
+import android.view.ViewGroup;
 
 import java.util.ArrayList;
 
@@ -12,8 +13,9 @@ import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.preferences.Storage;
 
 
-public class MultiView extends TrackDescriptionView {
+public class MultiView extends ViewGroup {
 
+    private final String solidKey;
 
     private final SparseArray<GpxInformation> informationMap =
             new SparseArray<>(5);
@@ -21,12 +23,11 @@ public class MultiView extends TrackDescriptionView {
 
 
     public class Page {
-        final public OnContentUpdatedInterface target;
         final public View view;
         final public String label;
 
-        public Page(View v, OnContentUpdatedInterface t, String l) {
-            target = t; view = v; label = l;
+        public Page(View v, String l) {
+            view = v; label = l;
 
             view.setVisibility(GONE);
             addView(view);
@@ -39,8 +40,9 @@ public class MultiView extends TrackDescriptionView {
     private int active=0;
 
 
-    public MultiView(Context context, String key, int infoID) {
-        super(context, key, infoID);
+    public MultiView(Context context, String key) {
+        super(context);
+        solidKey = key;
     }
 
 
@@ -50,33 +52,15 @@ public class MultiView extends TrackDescriptionView {
         }
     }
 
-    public void add(View view, OnContentUpdatedInterface target, String label) {
-        pages.add(new Page(view, target, label));
-    }
-
-
-    public void add(View view, OnContentUpdatedInterface target) {
-        pages.add(new Page(view, target, ""));
-    }
-
-
     public void add(View view, String label) {
-        pages.add(new Page(view, OnContentUpdatedInterface.NULL, label));
+        pages.add(new Page(view, label));
     }
 
 
-    public void add(View view) {
-        pages.add(new Page(view, OnContentUpdatedInterface.NULL, ""));
+    public void add(View view ) {
+        pages.add(new Page(view, ""));
     }
 
-
-    public void addT(TrackDescriptionView view) {
-        add(view, view);
-    }
-
-    public void addT(TrackDescriptionView view, String s) {
-        add(view, view, s);
-    }
 
     public void setNext() {
         setActive(active+1);
@@ -103,20 +87,9 @@ public class MultiView extends TrackDescriptionView {
         
         pages.get(active).view.setVisibility(VISIBLE);
         pages.get(active).view.bringToFront();
-        
-        for (int i=0; i< informationMap.size(); i++) 
-            pages.get(active).target.onContentUpdated(informationMap.valueAt(i));
     }
     
     
-    @Override
-    public void onContentUpdated(GpxInformation info) {
-        if (filter.pass(info)) {
-            informationMap.put(info.getID(), info);
-            pages.get(active).target.onContentUpdated(info);
-        }
-    }
-
     @Override
     protected void onMeasure(int wSpec, int hSpec) {
         int width = MeasureSpec.getSize(wSpec);

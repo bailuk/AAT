@@ -2,34 +2,23 @@ package ch.bailu.aat.views.description;
 
 import android.content.Context;
 import android.view.View;
+import android.view.ViewGroup;
 
-import ch.bailu.aat.dispatcher.OnContentUpdatedInterface;
-import ch.bailu.aat.gpx.GpxInformation;
-
-public class VerticalView extends TrackDescriptionView {
+public class VerticalView extends ViewGroup {
 
     private final View[] views;
-    private final OnContentUpdatedInterface[] targets;
 
 
-    public VerticalView(Context context, String key, int filter, TrackDescriptionView[] vl) {
-        this(context, key, filter, vl, vl);
-    }
 
-    public VerticalView(Context context,
-                        String key,
-                        int filter,
-                        View[] v,
-                        OnContentUpdatedInterface[] t) {
-        super(context, key, filter);
-        views = v;
-        targets = t;
+    public VerticalView(Context context, View[] children) {
+        super(context);
+        views = children;
 
         for (View view: views) {
             addView(view);
         }
-
     }
+
 
 
     @Override
@@ -66,14 +55,6 @@ public class VerticalView extends TrackDescriptionView {
                 
                 t+=height;
             }
-        }
-    }
-
-
-    @Override
-    public void onContentUpdated(GpxInformation info) {
-        if (filter.pass(info)) {
-            for (OnContentUpdatedInterface target : targets) target.onContentUpdated(info);
         }
     }
 }
