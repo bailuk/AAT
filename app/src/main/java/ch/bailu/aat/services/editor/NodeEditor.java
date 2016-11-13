@@ -1,12 +1,13 @@
 package ch.bailu.aat.services.editor;
 
-import ch.bailu.aat.gpx.GpxAttributes;
+import ch.bailu.aat.gpx.GpxAttributesStatic;
 import ch.bailu.aat.gpx.GpxList;
 import ch.bailu.aat.gpx.GpxListWalker;
 import ch.bailu.aat.gpx.GpxPoint;
 import ch.bailu.aat.gpx.GpxPointFirstNode;
 import ch.bailu.aat.gpx.GpxPointNode;
 import ch.bailu.aat.gpx.GpxSegmentNode;
+import ch.bailu.aat.gpx.MaxSpeed;
 import ch.bailu.aat.gpx.interfaces.GpxPointInterface;
 import ch.bailu.aat.gpx.interfaces.GpxType;
 
@@ -20,8 +21,8 @@ public class NodeEditor {
     }
 
     public NodeEditor(int t) {
-        gpxList = new GpxList(t);
-        node = new GpxPointFirstNode(GpxPoint.NULL, GpxAttributes.NULL_ATTRIBUTES);
+        gpxList = new GpxList(t, new MaxSpeed.Raw());
+        node = new GpxPointFirstNode(GpxPoint.NULL, GpxAttributesStatic.NULL_ATTRIBUTES);
     }
 
     public NodeEditor(GpxPointNode n, GpxList l) {
@@ -73,7 +74,7 @@ public class NodeEditor {
 
 
     private class Unlinker extends GpxListWalker {
-        private final GpxList newList = new GpxList(gpxList.getDelta().getType());
+        private final GpxList newList = new GpxList(gpxList.getDelta().getType(), new MaxSpeed.Raw());
         private boolean startSegment=false;
         private NodeEditor newNode = null;
 
@@ -125,7 +126,7 @@ public class NodeEditor {
 
 
     private class Inserter extends GpxListWalker {
-        private final GpxList newList = new GpxList(gpxList.getDelta().getType());
+        private final GpxList newList = new GpxList(gpxList.getDelta().getType(), new MaxSpeed.Raw());
         private NodeEditor newNode = new NodeEditor(gpxList.getDelta().getType());
         private boolean startSegment=false;
         private final GpxPointInterface newPoint;
@@ -162,7 +163,7 @@ public class NodeEditor {
 
             if (point == node) {
                 newList.appendToCurrentSegment(new GpxPoint(newPoint), 
-                        GpxAttributes.NULL_ATTRIBUTES);
+                        GpxAttributesStatic.NULL_ATTRIBUTES);
                 newNode = insertNewPoint();
             }
         }
@@ -170,7 +171,7 @@ public class NodeEditor {
         public NodeEditor getNewNode() {
             if (newList.getPointList().size() == 0) {
                 newList.appendToCurrentSegment(new GpxPoint(newPoint), 
-                        GpxAttributes.NULL_ATTRIBUTES);
+                        GpxAttributesStatic.NULL_ATTRIBUTES);
                 newNode = insertNewPoint();
             }
             return newNode;

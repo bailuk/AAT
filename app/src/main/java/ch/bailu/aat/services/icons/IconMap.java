@@ -2,29 +2,52 @@ package ch.bailu.aat.services.icons;
 
 import android.util.SparseArray;
 
-public class IconMap {
-    private final SparseArray<SparseArray<String>> key_list = new SparseArray<>(50);
-    
+import java.io.File;
 
-    public void add(String key, String value, String file) {
-        SparseArray<String>  value_list = key_list.get(key.hashCode());
+public class IconMap {
+    private final static String ICON_SUFFIX_BIG=".n.64.png";
+    private final static String ICON_SUFFIX_SMALL=".n.48.png";
+
+
+    public class Icon {
+        public final String big;
+        public final String small;
+
+        public Icon(String file_name) {
+            big   = new File(new File(directory,"png"), file_name+ICON_SUFFIX_SMALL).toString();
+            small = new File(new File(directory,"png"), file_name+ICON_SUFFIX_BIG).toString();
+        }
+    }
+
+
+    private final SparseArray<SparseArray<Icon>> key_list = new SparseArray<>(50);
+    private final String directory;
+
+
+    public IconMap(String d) {
+        directory = d;
+    }
+
+
+    public void add(String key, String value, String file_name) {
+        SparseArray<Icon>  value_list = key_list.get(key.hashCode());
         
         if (value_list == null) {
             value_list = new SparseArray<>(10);
         }
         
-        value_list.put(value.hashCode(), file);
+        value_list.put(value.hashCode(), new Icon(file_name));
         key_list.put(key.hashCode(), value_list);
     }
 
 
-    public String get(String key, String value) {
-        final SparseArray<String> value_list=key_list.get(key.hashCode());
+    public Icon get(String key, String value) {
+        final SparseArray<Icon> value_list=key_list.get(key.hashCode());
 
         if (value_list == null) {
             return null;
         }
         return value_list.get(value.hashCode());
     }
-    
+
 }

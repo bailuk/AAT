@@ -6,9 +6,9 @@ import ch.bailu.aat.gpx.interfaces.GpxBigDeltaInterface;
 
 
 public class GpxBigDelta implements GpxBigDeltaInterface {
-    public final static GpxBigDelta NULL= new GpxBigDelta();
+    public final static GpxBigDelta NULL= new GpxBigDelta(new MaxSpeed.Raw());
 
-    private final MaxSpeed maximumSpeed=new MaxSpeed();
+    private final MaxSpeed maximumSpeed;
     private float distance=0;
 
     private long startTime=0;
@@ -20,6 +20,9 @@ public class GpxBigDelta implements GpxBigDeltaInterface {
     private BoundingBox boundingBox = null;
 
 
+    public GpxBigDelta(MaxSpeed max) {
+        maximumSpeed=max;
+    }
 
 
 

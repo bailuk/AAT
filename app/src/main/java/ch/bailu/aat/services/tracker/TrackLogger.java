@@ -5,10 +5,11 @@ import android.content.Context;
 import java.io.File;
 import java.io.IOException;
 
-import ch.bailu.aat.gpx.GpxAttributes;
+import ch.bailu.aat.gpx.GpxAttributesStatic;
 import ch.bailu.aat.gpx.GpxList;
 import ch.bailu.aat.gpx.GpxPoint;
 import ch.bailu.aat.gpx.GpxPointNode;
+import ch.bailu.aat.gpx.MaxSpeed;
 import ch.bailu.aat.gpx.interfaces.GpxPointInterface;
 import ch.bailu.aat.gpx.interfaces.GpxType;
 import ch.bailu.aat.gpx.writer.GpxListWriter;
@@ -19,7 +20,7 @@ public class TrackLogger extends Logger {
     final public static int MIN_TRACKPOINTS=5;
 
     private boolean requestSegment=true;
-    private final GpxList track=new GpxList(GpxType.TRK);
+    private final GpxList track=new GpxList(GpxType.TRK, new MaxSpeed.Samples());
 
     final private File logFile;
     final private GpxListWriter writer;
@@ -89,10 +90,10 @@ public class TrackLogger extends Logger {
     public void log(GpxPointInterface tp) throws IOException {
         if (requestSegment) {
             requestSegment=false;
-            track.appendToNewSegment(new GpxPoint(tp), GpxAttributes.NULL_ATTRIBUTES);
+            track.appendToNewSegment(new GpxPoint(tp), GpxAttributesStatic.NULL_ATTRIBUTES);
 
         } else {
-            track.appendToCurrentSegment(new GpxPoint(tp), GpxAttributes.NULL_ATTRIBUTES);
+            track.appendToCurrentSegment(new GpxPoint(tp), GpxAttributesStatic.NULL_ATTRIBUTES);
         }
 
         setVisibleTrackPoint((GpxPointNode)track.getPointList().getLast());

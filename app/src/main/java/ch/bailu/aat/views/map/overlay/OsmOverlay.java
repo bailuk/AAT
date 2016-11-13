@@ -24,7 +24,6 @@ public abstract class OsmOverlay extends Overlay {
     @Override
     public void draw(Canvas c, MapView m) {
         if (!m.isAnimating()) {
-            osm.mapIconCache.newPass();
             painter.init(c,m);
             draw(painter);
         }

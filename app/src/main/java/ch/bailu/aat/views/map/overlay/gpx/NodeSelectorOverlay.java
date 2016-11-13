@@ -27,16 +27,8 @@ public abstract class NodeSelectorOverlay extends OsmOverlay implements OnConten
     private final SparseArray<GpxInformation> gpxHash =
             new SparseArray<>(5);
 
-
-
-
     private final Rect centerRect = new Rect();
-
-
-    private final Point    selectedPixel = new Point();
-
-
-
+    private final Point selectedPixel = new Point();
 
     private int  foundID, foundIndex;
     private GpxPointNode foundNode;

@@ -37,7 +37,7 @@ import ch.bailu.aat.views.ContentView;
 import ch.bailu.aat.views.ControlBar;
 import ch.bailu.aat.views.MainControlBar;
 import ch.bailu.aat.views.description.MultiView;
-import ch.bailu.aat.views.description.VerticalView;
+import ch.bailu.aat.views.description.VSplitView;
 import ch.bailu.aat.views.graph.DistanceAltitudeGraphView;
 import ch.bailu.aat.views.graph.DistanceSpeedGraphView;
 import ch.bailu.aat.views.map.OsmInteractiveView;
@@ -144,7 +144,7 @@ public class GpxViewActivity extends AbsDispatcher
         VerticalScrollView summary = new VerticalScrollView(this);
         summary.addAllContent(this, summaryData, InfoID.FILEVIEW);
 
-        View graph = new VerticalView(this, new View[] {
+        View graph = new VSplitView(this, new View[] {
                 new DistanceAltitudeGraphView(this, this, InfoID.FILEVIEW),
                 new DistanceSpeedGraphView(this, this, InfoID.FILEVIEW)
         });

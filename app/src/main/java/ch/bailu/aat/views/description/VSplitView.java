@@ -4,13 +4,13 @@ import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class VerticalView extends ViewGroup {
+public class VSplitView extends ViewGroup {
 
     private final View[] views;
 
 
 
-    public VerticalView(Context context, View[] children) {
+    public VSplitView(Context context, View[] children) {
         super(context);
         views = children;
 

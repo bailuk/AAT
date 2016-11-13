@@ -10,6 +10,7 @@ import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.GpxPointNode;
 import ch.bailu.aat.helpers.AppHtml;
 import ch.bailu.aat.helpers.AppTheme;
+import ch.bailu.aat.helpers.HtmlBuilderGpx;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.views.map.CachedTileProvider;
 import ch.bailu.aat.views.map.MapDensity;
@@ -57,7 +58,12 @@ public class NodeEntryView extends LinearLayout {
 
 
     public void update(GpxInformation info, GpxPointNode node) {
-        text.setText(AppHtml.fromHtml(node.toHtml(getContext(), new StringBuilder()).toString()));
+        HtmlBuilderGpx html = new HtmlBuilderGpx(getContext());
+        html.appendNode(node, info);
+        html.appendAttributes(node.getAttributes());
+
+        text.setText(AppHtml.fromHtml(html.toString()));
+
         final BoundingBox bounding = node.getBoundingBox();
         map.frameBoundingBox(bounding);
         gpxOverlay.onContentUpdated(info);

@@ -18,7 +18,7 @@ import ch.bailu.aat.description.TrackSizeDescription;
 import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.services.editor.EditorHelper;
 import ch.bailu.aat.views.description.MultiView;
-import ch.bailu.aat.views.description.VerticalView;
+import ch.bailu.aat.views.description.VSplitView;
 import ch.bailu.aat.views.graph.DistanceAltitudeGraphView;
 import ch.bailu.aat.views.graph.DistanceSpeedGraphView;
 import ch.bailu.aat.views.map.MapFactory;
@@ -59,7 +59,7 @@ public class FileContentActivity extends AbsFileContentActivity{
         VerticalScrollView summary = new VerticalScrollView(this);
         summary.addAllContent(this, summaryData, InfoID.FILEVIEW);
 
-        View graph = new VerticalView(this, new View[] {
+        View graph = new VSplitView(this, new View[] {
                         new DistanceAltitudeGraphView(this, this, InfoID.FILEVIEW),
                         new DistanceSpeedGraphView(this, this, InfoID.FILEVIEW)});
 

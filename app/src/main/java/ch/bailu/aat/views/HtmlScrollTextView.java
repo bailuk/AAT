@@ -35,4 +35,8 @@ public class HtmlScrollTextView extends VerticalScrollView {
     public void enableAutoLink() {
         textView.setAutoLinkMask(Linkify.ALL);
     }
+
+    public HtmlTextView getTextView() {
+        return textView;
+    }
 }

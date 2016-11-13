@@ -81,7 +81,7 @@ public class GpxPoint implements GpxPointInterface {
 
     @Override
     public GpxAttributes getAttributes() {
-        return GpxAttributes.NULL_ATTRIBUTES;
+        return GpxAttributesStatic.NULL_ATTRIBUTES;
     }
 
 

@@ -1,42 +1,76 @@
 package ch.bailu.aat.gpx;
 
-public class MaxSpeed {
-    private final static int SAMPLES=5;
+public abstract class MaxSpeed {
 
-    private final float speeds[] = new float[SAMPLES];
-    private int i=0;
-
-    private float maxSpeed=0f;
-
-    public void add(float speed) {
-        insert(speed);
-        set();
-    }
+    public abstract float get();
+    public abstract void add(float speed);
 
 
-    private void set() {
-        float s = getSmallest();
-        maxSpeed = Math.max(maxSpeed, s);
-    }
 
+    public static class Raw extends MaxSpeed {
 
-    private void insert(float speed) {
-        speeds[i] = speed;
-        i = (++i) % SAMPLES;
-    }
+        private float maximum=0f;
 
-
-    private float getSmallest() {
-        float r=speeds[0];
-
-        for (int i=1; i<speeds.length; i++) {
-            r = Math.min(r, speeds[i]);
+        @Override
+        public float get() {
+            return maximum;
         }
-        return r;
+
+        @Override
+        public void add(float speed) {
+            maximum=Math.max(speed, maximum);
+        }
     }
 
 
-    public float get() {
-        return maxSpeed;
+    public static class Samples extends MaxSpeed {
+        private final float speeds[];
+        private int i = 0;
+
+        private float maximum = 0f;
+
+
+        public Samples() {
+            this(5);
+        }
+
+
+        public Samples(int samples) {
+            samples = Math.max(samples, 1);
+            speeds = new float[samples];
+        }
+
+        @Override
+        public float get() {
+            return maximum;
+        }
+
+        @Override
+        public void add(float speed) {
+            insert(speed);
+            set();
+        }
+
+
+        private void set() {
+            float s = getSmallest();
+            maximum = Math.max(maximum, s);
+        }
+
+
+        private void insert(float speed) {
+            speeds[i] = speed;
+            i = (++i) % speeds.length;
+        }
+
+
+        private float getSmallest() {
+            float r = speeds[0];
+
+            for (int i = 1; i < speeds.length; i++) {
+                r = Math.min(r, speeds[i]);
+            }
+            return r;
+        }
     }
 }

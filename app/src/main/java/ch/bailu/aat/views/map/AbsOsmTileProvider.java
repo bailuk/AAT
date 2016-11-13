@@ -12,7 +12,7 @@ public abstract class AbsOsmTileProvider extends AbsTileProvider {
 
     private final ServiceContext scontext;
     private Source sources[] = new Source[]{BitmapTileObject.MAPNIK};
-    private final StringBuilder builder = new StringBuilder();    
+    private final StringBuilder builder = new StringBuilder();
 
 
     public AbsOsmTileProvider(ServiceContext sc) {
@@ -20,20 +20,22 @@ public abstract class AbsOsmTileProvider extends AbsTileProvider {
     }
 
     public TileStackObject getTileHandle(MapTile mapTile) {
-        String id = generateTileID(mapTile);
-        ObjectHandle handle = scontext.getCacheService().getObject(
-                id, 
-                new TileStackObject.Factory(scontext.getContext(), mapTile, sources)
-                );
+        if (scontext.isUp()) {
+            String id = generateTileID(mapTile);
+            ObjectHandle handle = scontext.getCacheService().getObject(
+                    id,
+                    new TileStackObject.Factory(scontext.getContext(), mapTile, sources)
+            );
 
 
-        if (TileStackObject.class.isInstance(handle)) {
-            return (TileStackObject) handle;
-
-        } else  {
-            return TileStackObject.NULL;
-
+            if (TileStackObject.class.isInstance(handle)) {
+                return (TileStackObject) handle;
+            }
         }
+
+        return TileStackObject.NULL;
+
+
     }
 
 

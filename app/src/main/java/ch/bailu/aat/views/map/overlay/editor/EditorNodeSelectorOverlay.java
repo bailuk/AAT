@@ -1,12 +1,15 @@
 package ch.bailu.aat.views.map.overlay.editor;
 
+import android.view.View;
+
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.GpxPointNode;
+import ch.bailu.aat.helpers.HtmlBuilderGpx;
 import ch.bailu.aat.services.editor.EditorHelper;
 import ch.bailu.aat.views.map.OsmInteractiveView;
-import ch.bailu.aat.views.map.overlay.gpx.InfoViewNodeSelectorOverlay;
+import ch.bailu.aat.views.map.overlay.gpx.NodeViewOverlay;
 
-public class EditorNodeSelectorOverlay extends InfoViewNodeSelectorOverlay {
+public class EditorNodeSelectorOverlay extends NodeViewOverlay {
 
     private final EditorHelper edit;
 
@@ -28,10 +31,17 @@ public class EditorNodeSelectorOverlay extends InfoViewNodeSelectorOverlay {
     @Override
     public void setSelectedNode(GpxInformation info, GpxPointNode node, int index) {
         edit.getEditor().select(node);
-        super.setSelectedNode(info,node, index);
+
+        HtmlBuilderGpx h = new HtmlBuilderGpx(getContext());
+
+        h.appendInfo(info, index);
+        h.appendNode(node, info);
+        setHtmlText(h.toString());
     }
 
 
-
-
+    @Override
+    public boolean onLongClick(View v) {
+        return false;
+    }
 }

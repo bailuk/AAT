@@ -9,72 +9,69 @@ import ch.bailu.aat.gpx.interfaces.GpxPointInterface;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.cache.FreeLater;
 import ch.bailu.aat.services.cache.ImageObject;
+import ch.bailu.aat.services.cache.LockCache;
 import ch.bailu.aat.services.cache.ObjectHandle;
 import ch.bailu.aat.services.icons.IconMapService;
 
 public class MapIconCache implements Closeable {
-    private FreeLater current = new FreeLater();
-    private FreeLater old = new FreeLater();
-    
-    // TODO add SparseArray with non existing files (for speed)
-    
-    
-    public void newPass() {
-        FreeLater _old = old;
-        old = current;
-        
-        current=_old;
-        current.freeAll();
-    }
+    private final LockCache<ImageObject> icons = new LockCache(20);
 
-    
+
     public Drawable getIcon(ServiceContext scontext, GpxPointInterface point) {
-        return getIcon(scontext, point, IconMapService.KEY_ICON_BIG);
-    }
-    
-    
-    public static String getIconFileName(GpxPointInterface point, String key) {
-        String fileID=null;
-        
-        GpxAttributes a = point.getAttributes();
-        if (a != null) {
-            
-            fileID = a.get(key);
-        }
-        return fileID;
-    }
-    
-    
-    private Drawable getIcon(ServiceContext scontext, GpxPointInterface point, String key) {
-        
-        Drawable drawable=null;
-        
-        String fileID=getIconFileName(point, key);
-        if (fileID != null) {
-            drawable = getIcon(scontext, fileID);
-        }
-        return drawable;
-    }
-
-    
-    public Drawable getIcon(ServiceContext scontext, String fileID) {
-        Drawable drawable=null;
-
         if (scontext.isUp()) {
-            final ObjectHandle handle = scontext.getCacheService().getObject(fileID, new ImageObject.Factory());
-            if (ImageObject.class.isInstance(handle)) {
+            GpxAttributes attr = point.getAttributes();
+            String iconFile = scontext.getIconMapService().getIconPath(attr);
 
-                drawable = ((ImageObject) handle).getDrawable(scontext.getContext().getResources());
-                current.freeLater(handle);
+            ImageObject icon = null;
+
+
+            if (iconFile != null && attr != null && scontext.isUp()) {
+
+                icon = get(iconFile);
+
+                if (icon == null) {
+                    icon = add(scontext, iconFile);
+                }
+            }
+
+            if (icon != null) {
+                return icon.getDrawable(scontext.getContext().getResources());
             }
         }
-        return drawable;
+        return null;
     }
+
+
+    private ImageObject get(String id) {
+        for (int i = 0; i < icons.size(); i++) {
+            if (id.equals(icons.get(i).toString())) {
+                return icons.use(i);
+            }
+        }
+        return null;
+    }
+
+
+    private ImageObject add(ServiceContext scontext, String id) {
+        if (scontext.isUp()) {
+            final ObjectHandle handle = scontext.getCacheService().
+                    getObject(id, new ImageObject.Factory());
+
+            if (ImageObject.class.isInstance(handle)) {
+                final ImageObject imageHandle = ((ImageObject) handle);
+
+                icons.add(imageHandle);
+                return imageHandle;
+            }
+        }
+        return null;
+    }
+
+
 
 
     @Override
     public void close() {
-        current.close();
-        old.close();
+        icons.close();
     }
 }

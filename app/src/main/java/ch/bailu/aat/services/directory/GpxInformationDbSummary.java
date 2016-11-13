@@ -4,12 +4,13 @@ import android.database.Cursor;
 
 import java.io.File;
 
-import ch.bailu.aat.gpx.GpxAttributes;
+import ch.bailu.aat.gpx.GpxAttributesStatic;
 import ch.bailu.aat.gpx.GpxBigDelta;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.GpxList;
 import ch.bailu.aat.gpx.GpxPoint;
 import ch.bailu.aat.gpx.InfoID;
+import ch.bailu.aat.gpx.MaxSpeed;
 import ch.bailu.aat.gpx.interfaces.GpxType;
 
 public class GpxInformationDbSummary extends GpxInformation {
@@ -18,36 +19,30 @@ public class GpxInformationDbSummary extends GpxInformation {
     
     public GpxInformationDbSummary(File dir, Cursor cursor) {
         directory = dir;
-        list = new GpxList(GpxType.WAY);
+        list = new GpxList(GpxType.WAY, new MaxSpeed.Raw());
         
-        GpxBigDelta summary=new GpxBigDelta();
+        GpxBigDelta summary=new GpxBigDelta(new MaxSpeed.Raw());
         GpxInformation entry = new GpxInformationDbEntry(cursor, dir);
         
         cursor.moveToPosition(-1);
         while (cursor.moveToNext()) {
-            addEntryToList(entry);
+            addEntryToList(entry, cursor);
             summary.updateWithPause(entry);
         }
         setVisibleTrackSegment(summary);
         
         
     }
-    
 
-    private void addEntryToList(GpxInformation entry) {
+    private void addEntryToList(GpxInformation entry, Cursor cursor) {
         final GpxPoint point = new GpxPoint(
-                entry.getBoundingBox().toBoundingBoxE6().getCenter(), 
+                entry.getBoundingBox().toBoundingBoxE6().getCenter(),
                 0, entry.getTimeStamp());
 
-        final GpxAttributes attr = new GpxAttributes();
-        final File file = new File(entry.getPath());
-        attr.put("name", file.getName());
-        attr.put("path", file.getPath());
-        
-        list.appendToCurrentSegment(point, attr);
+        list.appendToCurrentSegment(point, GpxAttributesStatic.NULL_ATTRIBUTES);
     }
-    
-    
+
+
     @Override
     public String getName() {
         return directory.getName();

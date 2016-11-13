@@ -66,7 +66,7 @@ public class GpxIterator extends AbsIterator {
 
         handle = scontext.getCacheService().getObject( getPath(), new GpxObjectStatic.Factory() );
         oldHandle.free();
-        return handle.getSize()>0;
+        return handle.size()>0;
     }
 
 

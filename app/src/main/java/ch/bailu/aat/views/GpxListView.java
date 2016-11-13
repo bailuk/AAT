@@ -32,7 +32,7 @@ public class GpxListView extends ListView implements OnCursorChangedListener {
     }
 
 
-    public void setAdapter(ServiceContext scontext, Iterator iterator) {
+    public void setIterator(ServiceContext scontext, Iterator iterator) {
         iterator.setOnCursorChangedLinsener(this);
         setAdapter(new IteratorAdapter(scontext, iterator));
     }

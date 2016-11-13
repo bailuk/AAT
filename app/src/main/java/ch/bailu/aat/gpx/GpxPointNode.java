@@ -14,7 +14,7 @@ import ch.bailu.aat.gpx.linked_list.Node;
 public abstract class GpxPointNode extends Node implements GpxDeltaPointInterface {
     private final static String NULL_VALUE="0";
 
-    private GpxAttributes attributes = GpxAttributes.NULL_ATTRIBUTES;
+    private GpxAttributes attributes = GpxAttributesStatic.NULL_ATTRIBUTES;
     private final GpxPoint     point;
     
     
@@ -94,8 +94,8 @@ public abstract class GpxPointNode extends Node implements GpxDeltaPointInterfac
     
     
     private void initMap() {
-        if (attributes == GpxAttributes.NULL_ATTRIBUTES) {
-            attributes = new GpxAttributes();
+        if (attributes == GpxAttributesStatic.NULL_ATTRIBUTES) {
+            attributes = new GpxAttributesStatic();
         }
     }
 
@@ -108,7 +108,7 @@ public abstract class GpxPointNode extends Node implements GpxDeltaPointInterfac
     
     private void releaseMap() {
         if (attributes.size() == 0) {
-            attributes = GpxAttributes.NULL_ATTRIBUTES;
+            attributes = GpxAttributesStatic.NULL_ATTRIBUTES;
         }
     }
 
@@ -148,27 +148,4 @@ public abstract class GpxPointNode extends Node implements GpxDeltaPointInterfac
         
         return box;
     }
-
-    public StringBuilder toHtml(Context context, final StringBuilder builder) {
-        final DistanceDescription distance= new DistanceDescription(context);
-        final SpeedDescription    speed = new CurrentSpeedDescription(context);
-        final AltitudeDescription altitude= new AltitudeDescription(context);
-        
-        attributes.toHtml(builder);
-        
-        if (getTimeStamp() != 0 ) {
-            builder.append(speed.getLabel());
-            builder.append(" = ");
-            builder.append(speed.getSpeedDescription(getSpeed()));
-            builder.append("<br>");
-        }
-        
-        builder.append(altitude.getLabel());
-        builder.append("=");
-        builder.append(distance.getAltitudeDescription(getAltitude()));
-        
-        return builder;        
-    }
-    
-
 }

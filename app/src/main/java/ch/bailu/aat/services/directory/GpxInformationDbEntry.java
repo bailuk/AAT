@@ -18,11 +18,6 @@ public class GpxInformationDbEntry extends GpxInformation {
     }
 
 
-    /*public GpxInformationDbEntry(Cursor c) {
-        cursor=c;
-    }
-*/
-
     @Override
     public boolean isLoaded() {
         return isValid();
@@ -32,7 +27,6 @@ public class GpxInformationDbEntry extends GpxInformation {
     @Override
     public String getPath() {
         return new File(parent, getName()).getAbsolutePath();
-        //return getString(GpxDbConstants.KEY_PATHNAME);
     }
 
     @Override
@@ -63,7 +57,9 @@ public class GpxInformationDbEntry extends GpxInformation {
 
 
     public boolean isValid() {
-        return (cursor.getPosition() > -1 && cursor.getPosition() < cursor.getCount());
+        return (cursor.isClosed() == false &&
+                cursor.getPosition() > -1 &&
+                cursor.getPosition() < cursor.getCount());
     }
 
     private String getString(String key) {

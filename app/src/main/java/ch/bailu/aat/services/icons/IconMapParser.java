@@ -8,7 +8,7 @@ import ch.bailu.aat.helpers.file.AbsAccess;
 public class IconMapParser {
     private final static int ICON=0, KEY=1, VALUE=2, END=3, MAX=4; 
     
-    private final String[]  entries= new String[MAX];
+    private final String[] entries = new String[MAX];
     private int entry=0;
     
     private final StringBuilder buffer = new StringBuilder();

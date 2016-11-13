@@ -66,8 +66,9 @@ public class GpxDbConstants {
         KEY_SOUTH_BOUNDING,
         KEY_TYPE_ID
     };
-    
-    public static final String[] TYPE_LIST = new String[] {
+
+
+    public static final String[] TYPE_LIST_OLD = new String[] {
         TYPE_ID, 
         TYPE_STRING, 
         TYPE_STRING, 
@@ -83,5 +84,22 @@ public class GpxDbConstants {
         TYPE_LONG,
         TYPE_LONG,
         TYPE_LONG
+    };
+
+    public static final String[] TYPE_LIST = new String[] {
+            TYPE_ID,
+            TYPE_STRING,
+            TYPE_FLOAT,
+            TYPE_FLOAT,
+            TYPE_FLOAT,
+            TYPE_LONG,
+            TYPE_LONG,
+            TYPE_LONG,
+            TYPE_LONG,
+            TYPE_LONG,
+            TYPE_LONG,
+            TYPE_LONG,
+            TYPE_LONG,
+            TYPE_LONG
     };
 }

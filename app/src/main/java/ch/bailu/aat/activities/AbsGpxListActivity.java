@@ -31,6 +31,7 @@ import ch.bailu.aat.views.MainControlBar;
 import ch.bailu.aat.views.description.MultiView;
 import ch.bailu.aat.views.map.MapFactory;
 import ch.bailu.aat.views.map.OsmInteractiveView;
+import ch.bailu.aat.views.map.overlay.control.FileControlBar;
 import ch.bailu.aat.views.preferences.SolidDirectoryMenuButton;
 import ch.bailu.aat.views.preferences.TitleView;
 import ch.bailu.aat.views.preferences.VerticalScrollView;
@@ -49,6 +50,7 @@ public abstract class AbsGpxListActivity extends AbsDispatcher implements OnItem
 
 
     private GpxListView                 listView;
+    private FileControlBar              fileControlBar;
     private DbSynchronizerBusyIndicator busyControl;
 
 
@@ -105,6 +107,8 @@ public abstract class AbsGpxListActivity extends AbsDispatcher implements OnItem
         final VerticalScrollView filter= new VerticalScrollView(this);
         final VerticalScrollView summary= new VerticalScrollView(this);
         final OsmInteractiveView map = new MapFactory(this, solid_key).list(this);
+        fileControlBar = new FileControlBar(map, this);
+        map.add(fileControlBar);
 
         listView = new GpxListView(this, getGpxListItemData());
         listView.setOnItemClickListener(this);
@@ -144,7 +148,8 @@ public abstract class AbsGpxListActivity extends AbsDispatcher implements OnItem
     public void onResumeWithService() {
 
         iteratorSimple = new IteratorSimple(getServiceContext());
-        listView.setAdapter(getServiceContext(), iteratorSimple);
+        listView.setIterator(getServiceContext(), iteratorSimple);
+        fileControlBar.setIterator(iteratorSimple);
         listView.setSelection(sdirectory.getPosition().getValue());
 
         getServiceContext().getDirectoryService().rescan();
@@ -159,7 +164,8 @@ public abstract class AbsGpxListActivity extends AbsDispatcher implements OnItem
 
         iteratorSimple.close();
         iteratorSimple = Iterator.NULL;
-        listView.setAdapter(getServiceContext(), iteratorSimple);
+        listView.setIterator(getServiceContext(), iteratorSimple);
+        fileControlBar.setIterator(iteratorSimple);
 
         super.onPauseWithService();
     }

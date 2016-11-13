@@ -30,7 +30,7 @@ public class GpxDbOpenHelper extends SQLiteOpenHelper {
             
             for (int i = 0; i<GpxDbConstants.KEY_LIST_OLD.length; i++) {
                 if (i> 0) expression.append(", ");
-                expression.append(GpxDbConstants.KEY_LIST_OLD[i]).append(" ").append(GpxDbConstants.TYPE_LIST[i]);
+                expression.append(GpxDbConstants.KEY_LIST_OLD[i]).append(" ").append(GpxDbConstants.TYPE_LIST_OLD[i]);
             }
             expression.append(")");
             return expression.toString();

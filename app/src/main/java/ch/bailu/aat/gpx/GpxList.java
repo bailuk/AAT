@@ -9,13 +9,10 @@ import ch.bailu.aat.gpx.segmented_list.SegmentNodeFactory;
 import ch.bailu.aat.gpx.segmented_list.SegmentedList;
 
 public class GpxList {
-    public static final GpxList NULL_TRACK = new GpxList(GpxType.TRK);
-    public static final GpxList NULL_ROUTE = new GpxList(GpxType.RTE);
+    public static final GpxList NULL_TRACK = new GpxList(GpxType.TRK, new MaxSpeed.Raw());
+    public static final GpxList NULL_ROUTE = new GpxList(GpxType.RTE, new MaxSpeed.Raw());
 
     
-    public GpxList(int type) {
-        delta.setType(type);
-    }
 
 
     private final static SegmentNodeFactory GPX_SEGMENT_FACTORY = new SegmentNodeFactory () {
@@ -34,8 +31,13 @@ public class GpxList {
 
 
     private final SegmentedList list = new SegmentedList(GPX_SEGMENT_FACTORY);
-    private final GpxBigDelta delta=new GpxBigDelta();
-    
+    private final GpxBigDelta delta;
+
+    public GpxList(int type, MaxSpeed max) {
+        delta = new GpxBigDelta(max);
+        delta.setType(type);
+    }
+
 
     public void appendToCurrentSegment(GpxPoint tp, GpxAttributes at) {
         if (list.getSegmentList().size()==0) {

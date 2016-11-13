@@ -12,6 +12,7 @@ import ch.bailu.aat.gpx.GpxPoint;
 import ch.bailu.aat.gpx.GpxPointLinkedNode;
 import ch.bailu.aat.gpx.GpxPointNode;
 import ch.bailu.aat.gpx.GpxSegmentNode;
+import ch.bailu.aat.gpx.MaxSpeed;
 import ch.bailu.aat.gpx.interfaces.GpxType;
 import ch.bailu.aat.gpx.linked_list.Node;
 import ch.bailu.aat.gpx.parser.GpxListReader;
@@ -26,7 +27,7 @@ import ch.bailu.aat.services.dem.ElevationUpdaterClient;
 public class GpxObjectStatic extends GpxObject implements ElevationUpdaterClient {
     
 
-    private GpxList gpxList=new GpxList(GpxType.TRK);
+    private GpxList gpxList=new GpxList(GpxType.TRK, new MaxSpeed.Samples());
 
     private boolean ready=false;
     
@@ -126,10 +127,11 @@ public class GpxObjectStatic extends GpxObject implements ElevationUpdaterClient
         
     }
 
+
     @Override
     public void onChanged(String id, ServiceContext sc) {
-        if (id.equals(toString()))
-            sc.getIconMapService().iconify(gpxList);
+//        if (id.equals(toString()))
+  //          sc.getIconMapService().iconify(gpxList);
     }
 
 

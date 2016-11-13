@@ -9,6 +9,7 @@ import ch.bailu.aat.coordinates.BoundingBox;
 import ch.bailu.aat.gpx.GpxList;
 import ch.bailu.aat.gpx.GpxPointNode;
 import ch.bailu.aat.gpx.InfoID;
+import ch.bailu.aat.gpx.MaxSpeed;
 import ch.bailu.aat.gpx.StateID;
 import ch.bailu.aat.gpx.interfaces.GpxType;
 import ch.bailu.aat.gpx.parser.SimpleGpxListReader;
@@ -29,7 +30,7 @@ public class MockLocation extends LocationStackChainedItem implements Runnable{
     public MockLocation(Context c, LocationStackItem i) {
         super(i);
         
-        mockData = new GpxList(GpxType.TRK);
+        mockData = new GpxList(GpxType.TRK, new MaxSpeed.Raw());
         timer=new Timer(this, INTERVAL);
         
         try {

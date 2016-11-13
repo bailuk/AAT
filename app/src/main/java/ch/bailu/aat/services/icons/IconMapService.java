@@ -4,11 +4,6 @@ import java.io.File;
 import java.io.IOException;
 
 import ch.bailu.aat.gpx.GpxAttributes;
-import ch.bailu.aat.gpx.GpxList;
-import ch.bailu.aat.gpx.GpxListWalker;
-import ch.bailu.aat.gpx.GpxPointNode;
-import ch.bailu.aat.gpx.GpxSegmentNode;
-import ch.bailu.aat.gpx.interfaces.GpxType;
 import ch.bailu.aat.helpers.AppDirectory;
 import ch.bailu.aat.helpers.AppLog;
 import ch.bailu.aat.helpers.file.FileAccess;
@@ -17,25 +12,22 @@ import ch.bailu.aat.services.VirtualService;
 
 public class IconMapService extends VirtualService {
 
-    public static final String KEY_ICON_SMALL = "icon:small";
-    public static final String KEY_ICON_BIG = "icon:big";
+    //public static final String KEY_ICON_SMALL = "icon:small";
+    //public static final String KEY_ICON_BIG = "icon:big";
 
-
-
-
-    private final static String ICON_SUFFIX_BIG=".n.64.png";
-    private final static String ICON_SUFFIX_SMALL=".n.48.png";
     private final static String MAP_FILE="iconmap.txt";
 
 
-    private final IconMap map = new IconMap();
+    private final IconMap map;
 
     private final File directory;
 
 
     public IconMapService(ServiceContext sc) {
         super(sc);
+
         directory = AppDirectory.getDataDirectory(getContext(), AppDirectory.DIR_OSM_FEATURES_ICONS);
+        map = new IconMap(directory.toString());
 
         final File mapFile = new File(directory, MAP_FILE);
 
@@ -48,29 +40,38 @@ public class IconMapService extends VirtualService {
         }
     }
 
-    private String getSmallIconPath(String key, String value) {
-        String prefix = getIconName(key,value);
 
-        if (prefix == null) {
+    public String getIconPath(GpxAttributes attr) {
+        String icon = null;
+        for (int i=0; i<attr.size(); i++) {
+            icon = getBigIconPath(attr.getKey(i), attr.getValue(i));
+            if (icon != null) return icon;
+        }
+        return icon;
+    }
+
+
+    private String getSmallIconPath(String key, String value) {
+        final IconMap.Icon icon = map.get(key,value);
+
+        if (icon == null) {
             return null;
         }
-        return new File(new File(directory,"png"), prefix+ICON_SUFFIX_SMALL).toString();
+
+        return icon.small;
     }
 
 
     private String getBigIconPath(String key, String value) {
-        String prefix = getIconName(key,value);
+        final IconMap.Icon icon = map.get(key,value);
 
-        if (prefix == null) {
+        if (icon == null) {
             return null;
         }
-        return new File(new File(directory,"png"), prefix+ICON_SUFFIX_BIG).toString();
+
+        return icon.big;
     }
 
-
-    private String getIconName(String key, String value) {
-        return map.get(key, value);
-    }
 
 
     public void iconify(StringBuilder html, String key, String value) {
@@ -84,16 +85,18 @@ public class IconMapService extends VirtualService {
     }
 
 
+    /*
     public void iconify(GpxList list) {
         new GpxIconifier().walkTrack(list);
     }
+    */
 
     @Override
     public void close() {
 
     }
 
-
+/*
     private class GpxIconifier extends GpxListWalker {
 
         @Override
@@ -131,7 +134,7 @@ public class IconMapService extends VirtualService {
         }
     }
 
-
+*/
 
     @Override
     public void appendStatusText(StringBuilder builder) {

@@ -17,11 +17,12 @@ import ch.bailu.aat.gpx.GpxList;
 import ch.bailu.aat.gpx.GpxListArray;
 import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.helpers.AppLayout;
+import ch.bailu.aat.helpers.HtmlBuilderGpx;
 import ch.bailu.aat.views.ContentView;
 import ch.bailu.aat.views.ControlBar;
 import ch.bailu.aat.views.HtmlScrollTextView;
 import ch.bailu.aat.views.MainControlBar;
-import ch.bailu.aat.views.description.VerticalView;
+import ch.bailu.aat.views.description.VSplitView;
 import ch.bailu.aat.views.map.MapFactory;
 import ch.bailu.aat.views.map.OsmInteractiveView;
 
@@ -34,22 +35,25 @@ public class NodeDetailActivity extends AbsDispatcher
     private ImageButton nextNode, previousNode;
 
 
-    private VerticalView       verticalView;
-    private OsmInteractiveView map;
-    private HtmlScrollTextView           text;
+    private VSplitView verticalView;
+    private OsmInteractiveView mapView;
+    private HtmlScrollTextView htmlView;
 
     private String fileID="";
 
 
-    private GpxListArray       array = new GpxListArray(GpxList.NULL_ROUTE);
+    private GpxListArray arrayCache = new GpxListArray(GpxList.NULL_ROUTE);
+    private GpxInformation infoCache = GpxInformation.NULL;
 
+
+    private HtmlBuilderGpx htmlBuilder;
 
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
+        htmlBuilder = new HtmlBuilderGpx(this);
         fileID = getIntent().getStringExtra("ID");
 
         final LinearLayout contentView = new ContentView(this);
@@ -76,13 +80,13 @@ public class NodeDetailActivity extends AbsDispatcher
     }
 
 
-    private VerticalView createVerticalView() {
-        map = new MapFactory(this, SOLID_KEY).node();
+    private VSplitView createVerticalView() {
+        mapView = new MapFactory(this, SOLID_KEY).node();
 
-        text=new HtmlScrollTextView(this);
-        text.enableAutoLink();
+        htmlView =new HtmlScrollTextView(this);
+        htmlView.enableAutoLink();
 
-        return new VerticalView(this, new View[] {text, map});
+        return new VSplitView(this, new View[] {htmlView, mapView});
     }
 
 
@@ -90,13 +94,16 @@ public class NodeDetailActivity extends AbsDispatcher
         addTarget(this, InfoID.FILEVIEW);
         addSource(new CurrentLocationSource(getServiceContext()));
         addSource(new CustomFileSource(getServiceContext(), fileID));
+
+
     }
 
 
     @Override
     public void onContentUpdated(GpxInformation info) {
 
-        array = new GpxListArray(info.getGpxList());
+        arrayCache = new GpxListArray(info.getGpxList());
+        infoCache = info;
 
         int index = getIntent().getIntExtra("I", 0);
         updateToIndex(index);
@@ -104,23 +111,25 @@ public class NodeDetailActivity extends AbsDispatcher
 
 
     private void updateToIndex(int i) {
-        if (array.size()>0) {
-            final StringBuilder builder=new StringBuilder();
+        if (arrayCache.size()>0) {
 
-            if (i<0) i = array.size()-1;
-            if (i>=array.size()) i=0;
+            if (i < 0) i = arrayCache.size()-1;
+            if (i >= arrayCache.size()) i=0;
 
-            map.frameBoundingBox(array.get(i).getBoundingBox());
+            mapView.frameBoundingBox(arrayCache.get(i).getBoundingBox());
 
-            array.get(i).toHtml(this, builder);
-            text.setHtmlText(builder.toString());
+            htmlBuilder.clear();
+            htmlBuilder.appendInfo(infoCache, i);
+            htmlBuilder.appendNode(arrayCache.get(i), infoCache);
+            htmlBuilder.appendAttributes(arrayCache.get(i).getAttributes());
+            htmlView.setHtmlText(htmlBuilder.toString());
         }
     }
 
     @Override
     public void onClick(View v) {
-        if (array.size()>0) {
-            int i = array.getIndex();
+        if (arrayCache.size()>0) {
+            int i = arrayCache.getIndex();
 
             if (v == previousNode) {
                 i--;

@@ -43,24 +43,21 @@ public class GpxDynOverlay extends OsmOverlay implements OnContentUpdatedInterfa
     }
 
 
-
-
     @Override
     public void draw(MapPainter p) {
         gpxOverlay.draw(p);
         legendOverlay.draw(p);
     }
 
+    private int type = GpxType.NONE;
 
     @Override
     public void onContentUpdated(GpxInformation i) {
-
-        int oldType = toType(infoCache);
-        int newType = toType(i);
-
         infoCache = i;
 
-        if (oldType != newType) {
+        if (type != toType(i)) {
+            type = toType(i);
+
             createGpxOverlay();
             createLegendOverlay();
         }

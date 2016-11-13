@@ -2,7 +2,7 @@ package ch.bailu.aat.gpx.parser;
 
 import java.io.IOException;
 
-import ch.bailu.aat.gpx.GpxAttributes.Tag;
+import ch.bailu.aat.gpx.GpxAttributesStatic.Tag;
 import ch.bailu.aat.gpx.parser.XmlParser.ParserIO;
 
 public class StateOsmTag extends ParserState {

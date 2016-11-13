@@ -8,7 +8,6 @@ import ch.bailu.aat.activities.ActivitySwitcher;
 import ch.bailu.aat.activities.NominatimActivity;
 import ch.bailu.aat.activities.OverpassActivity;
 import ch.bailu.aat.dispatcher.DispatcherInterface;
-import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.helpers.ToolTip;
 import ch.bailu.aat.menus.LocationMenu;
@@ -18,14 +17,15 @@ import ch.bailu.aat.preferences.SolidMapGrid;
 import ch.bailu.aat.views.ControlBar;
 import ch.bailu.aat.views.map.OsmInteractiveView;
 import ch.bailu.aat.views.map.overlay.MapPainter;
-import ch.bailu.aat.views.map.overlay.gpx.InfoViewNodeSelectorOverlay;
+import ch.bailu.aat.views.map.overlay.gpx.AutoNodeViewOverlay;
+import ch.bailu.aat.views.map.overlay.gpx.NodeViewOverlay;
 
 public class InformationBarOverlay extends ControlBarOverlay {
     private final View reload;
 
     private final ImageButton overpass, nominatim, location;
 
-    private final InfoViewNodeSelectorOverlay selector;
+    private final NodeViewOverlay selector;
 
 
 
@@ -46,7 +46,7 @@ public class InformationBarOverlay extends ControlBarOverlay {
         reload = bar.addImageButton(R.drawable.view_refresh);
         location = bar.addImageButton(R.drawable.find_location);
 
-        selector = new InfoViewNodeSelectorOverlay(o);
+        selector = new AutoNodeViewOverlay(o);
 
 
         ToolTip.set(grid,R.string.tt_info_grid);

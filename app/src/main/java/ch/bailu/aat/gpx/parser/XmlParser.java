@@ -9,7 +9,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import ch.bailu.aat.gpx.GpxAttributes;
-import ch.bailu.aat.gpx.GpxAttributes.Tag;
+import ch.bailu.aat.gpx.GpxAttributesStatic;
+import ch.bailu.aat.gpx.GpxAttributesStatic.Tag;
 import ch.bailu.aat.gpx.interfaces.GpxPointInterface;
 import ch.bailu.aat.helpers.file.AbsAccess;
 
@@ -34,7 +35,7 @@ public class XmlParser implements Closeable, GpxPointInterface {
         parsed        = OnParsedInterface.NULL_ONPARSED;
 
         public final SparseArray<GeoPoint> nodeMap = new SparseArray<>(50);
-        public final ArrayList<GpxAttributes.Tag> tagList = new ArrayList<>();
+        public final ArrayList<GpxAttributesStatic.Tag> tagList = new ArrayList<>();
         
         private ParserIO(AbsAccess file) throws IOException {
             stream = new SimpleStream(file);
@@ -77,7 +78,7 @@ public class XmlParser implements Closeable, GpxPointInterface {
 
     
     public GpxAttributes getAttributes() {
-        return new GpxAttributes(io.tagList.toArray(new Tag[]{}));
+        return new GpxAttributesStatic(io.tagList.toArray(new Tag[]{}));
     }
 
     
