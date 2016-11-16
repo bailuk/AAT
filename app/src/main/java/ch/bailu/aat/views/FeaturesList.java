@@ -110,7 +110,7 @@ public class FeaturesList extends ListView  {
                     Bitmap bitmap = BitmapFactory.decodeFile(source);
                     if (bitmap != null) {
                         Drawable drawable = new BitmapDrawable(getResources(),bitmap);
-                        drawable.setBounds(0, 0, bitmap.getWidth(), bitmap.getHeight());
+                        drawable.setBounds(0, 0, bitmap.getWidth()*2, bitmap.getHeight()*2);
                         return drawable;
 
                     } else {

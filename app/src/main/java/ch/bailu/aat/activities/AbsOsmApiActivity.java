@@ -117,7 +117,7 @@ public abstract class AbsOsmApiActivity extends AbsDispatcher implements OnClick
         TextView urlLabel = new TextView(this);
         urlLabel.setText(osmApi.getUrlStart());
         view.addView(urlLabel, layout);
-        AppTheme.themify(urlLabel);
+        //AppTheme.themify(urlLabel);
 
         tagEditor = new TagEditor(this, osmApi.getBaseDirectory());
         view.addView(tagEditor, layout);
@@ -126,7 +126,7 @@ public abstract class AbsOsmApiActivity extends AbsDispatcher implements OnClick
         TextView postLabel = new TextView(this);
         postLabel.setText(osmApi.getUrlEnd());
         view.addView(postLabel, layout);
-        AppTheme.themify(postLabel);
+        //AppTheme.themify(postLabel);
 
         list = new NodeListView(getServiceContext());
         view.addView(list,layout);
