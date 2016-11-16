@@ -37,6 +37,10 @@ public class TilesOverlay extends Overlay  {
 		this.mTileProvider.detach();
 	}
 
+	@Override
+	public void onAttach(final MapView pMapView) {
+		this.mTileProvider.attach();
+	}
 
 	public int getMinimumZoomLevel() {
 		return mTileProvider.getMinimumZoomLevel();

@@ -411,6 +411,11 @@ public class MapView extends ViewGroup implements IMapView, MapViewConstants {
     }
 
 
+    public void onAttach() {
+        mOverlayManager.onAttach(this);
+    }
+
+
     public void onDetach() {
         mOverlayManager.onDetach(this);
     }
@@ -515,6 +520,14 @@ public class MapView extends ViewGroup implements IMapView, MapViewConstants {
         this.onDetach();
         super.onDetachedFromWindow();
     }
+
+
+    @Override
+    protected void onAttachedToWindow() {
+        super.onAttachedToWindow();
+        this.onAttach();
+    }
+
 
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {

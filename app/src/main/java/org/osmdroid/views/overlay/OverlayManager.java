@@ -102,6 +102,17 @@ public class OverlayManager extends AbstractList<Overlay> {
     }
 
 
+    public void onAttach(final MapView pMapView) {
+        if (mTilesOverlay != null) {
+            mTilesOverlay.onAttach(pMapView);
+        }
+
+        for (final Overlay overlay : this.overlaysReversed()) {
+            overlay.onAttach(pMapView);
+        }
+    }
+
+
     public boolean onTouchEvent(final MotionEvent event, final MapView pMapView) {
         for (final Overlay overlay : this.overlaysReversed()) {
             if (overlay.onTouchEvent(event, pMapView)) {

@@ -40,7 +40,7 @@ import ch.bailu.aat.views.preferences.AddOverlayDialog;
 
 
 public abstract class AbsOsmApiActivity extends AbsDispatcher implements OnClickListener {
-    private static final String SOLID_KEY=AbsOsmApiActivity.class.getSimpleName();
+    //private static final String SOLID_KEY=AbsOsmApiActivity.class.getSimpleName();
 
 
     private TagEditor          tagEditor;
@@ -185,28 +185,30 @@ public abstract class AbsOsmApiActivity extends AbsDispatcher implements OnClick
 
 
     private void download() {
-        try {
-            String query = tagEditor.getText();
+        if (getServiceContext().isUp()) {
+            try {
+                String query = tagEditor.getText();
 
-            BackgroundService background = getServiceContext().getBackgroundService();
+                BackgroundService background = getServiceContext().getBackgroundService();
 
 
-            request.stopLoading();
-            download.startWaiting();
+                request.stopLoading();
+                download.startWaiting();
 
-            request = new ApiQueryHandle(
-                    osmApi.getUrl(query), 
-                    osmApi.getResultFile(), 
-                    query, 
-                    osmApi.getQueryFile());
+                request = new ApiQueryHandle(
+                        osmApi.getUrl(query),
+                        osmApi.getResultFile(),
+                        query,
+                        osmApi.getQueryFile());
 
-            background.download(request);
+                background.download(request);
 
-        } catch (Exception e) {
-            download.stopWaiting();
-            request = DownloadHandle.NULL;
+            } catch (Exception e) {
+                download.stopWaiting();
+                request = DownloadHandle.NULL;
 
-            AppLog.e(this, e);
+                AppLog.e(this, e);
+            }
         }
     }
 

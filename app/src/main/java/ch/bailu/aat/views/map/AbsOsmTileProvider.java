@@ -34,8 +34,6 @@ public abstract class AbsOsmTileProvider extends AbsTileProvider {
         }
 
         return TileStackObject.NULL;
-
-
     }
 
 
@@ -58,24 +56,14 @@ public abstract class AbsOsmTileProvider extends AbsTileProvider {
     }
 
 
-
-
-
-
     public int getMinimumZoomLevel() {
         return BitmapTileObject.MIN_ZOOM;
     }
-
-
     public int getMaximumZoomLevel() {
         return BitmapTileObject.MAX_ZOOM;
     }
 
-
-
-
     public void setSubTileSource(Source[] s) {
         sources=s;
     }
-
 }

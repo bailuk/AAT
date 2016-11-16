@@ -16,7 +16,7 @@ import ch.bailu.aat.services.cache.TileStackObject;
 
 public class CachedTileProvider extends AbsOsmTileProvider {
     private Handler handler = new Handler();
-    private final TileCache cache = new TileCache(10);
+    private TileCache cache = TileCache.NULL;
 
     private final Context context;
     private final ServiceContext scontext;
@@ -42,7 +42,6 @@ public class CachedTileProvider extends AbsOsmTileProvider {
         context = sc.getContext();
         scontext = sc;
 
-        AppBroadcaster.register(context, onFileChanged, AppBroadcaster.FILE_CHANGED_INCACHE);
     }
 
 
@@ -62,13 +61,21 @@ public class CachedTileProvider extends AbsOsmTileProvider {
     }
 
 
+    @Override
+    public void attach() {
+        AppBroadcaster.register(context, onFileChanged, AppBroadcaster.FILE_CHANGED_INCACHE);
+        cache = new LockTileCache();
+    }
+
 
     @Override
     public void detach() {
 
         context.unregisterReceiver(onFileChanged);
         cache.close();
+        cache = TileCache.NULL;
     }
+
 
 
     @Override

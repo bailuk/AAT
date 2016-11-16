@@ -29,8 +29,8 @@ public abstract class Overlay implements OverlayConstants {
 	// Methods
 	// ===========================================================
 
-	public void onDetach(final MapView mapView) {
-	}
+	public void onAttach(final MapView mapView) {}
+	public void onDetach(final MapView mapView) {}
 
 
 	/**
@@ -143,6 +143,7 @@ public abstract class Overlay implements OverlayConstants {
 	public boolean onSingleTapUp(final MotionEvent e, final MapView mapView) {
 		return false;
 	}
+
 
 
 }

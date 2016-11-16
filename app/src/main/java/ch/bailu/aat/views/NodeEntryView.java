@@ -9,6 +9,7 @@ import ch.bailu.aat.coordinates.BoundingBox;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.GpxPointNode;
 import ch.bailu.aat.helpers.AppHtml;
+import ch.bailu.aat.helpers.AppLog;
 import ch.bailu.aat.helpers.AppTheme;
 import ch.bailu.aat.helpers.HtmlBuilderGpx;
 import ch.bailu.aat.services.ServiceContext;
@@ -26,10 +27,15 @@ public class NodeEntryView extends LinearLayout {
 
     private final int previewSize;
 
+    private static int count=0;
+    private int id;
+
     public NodeEntryView(ServiceContext sc) {
         super(sc.getContext());
         setOrientation(HORIZONTAL);
 
+        id = count;
+        count++;
         previewSize = AppTheme.getBigButtonSize(sc.getContext());
 
 
@@ -45,6 +51,7 @@ public class NodeEntryView extends LinearLayout {
         addViewWeight(text);
         addView(map, previewSize, previewSize);
 
+        AppLog.d(this, "construct " + id);
     }
 
 
@@ -54,6 +61,20 @@ public class NodeEntryView extends LinearLayout {
         LinearLayout.LayoutParams l = (LinearLayout.LayoutParams) v.getLayoutParams();
         l.weight = 1;
         v.setLayoutParams(l);
+    }
+
+
+    @Override
+    public void onAttachedToWindow() {
+        super.onAttachedToWindow();
+        AppLog.d(this, "onAttachedToWindow " + id);
+    }
+
+
+    @Override
+    public void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+        AppLog.d(this, "onDetachedFromWindow " + id);
     }
 
 
@@ -67,5 +88,7 @@ public class NodeEntryView extends LinearLayout {
         final BoundingBox bounding = node.getBoundingBox();
         map.frameBoundingBox(bounding);
         gpxOverlay.onContentUpdated(info);
+
+        AppLog.d(this, "update " + id);
     }
 }

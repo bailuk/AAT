@@ -26,6 +26,7 @@ public abstract class AbsTileProvider implements OpenStreetMapTileProviderConsta
     public abstract int getMaximumZoomLevel();
     public abstract Drawable getMapTile(MapTile pTile);
     public abstract void detach();
+    public abstract void attach();
     public abstract void  setTileRequestCompleteHandler(Handler handler);
 
 
@@ -41,4 +42,6 @@ public abstract class AbsTileProvider implements OpenStreetMapTileProviderConsta
 
 
     public abstract void ensureCapacity(int numNeeded);
+
+
 }

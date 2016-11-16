@@ -38,6 +38,9 @@ public class PreviewTileProvider extends AbsOsmTileProvider implements Closeable
     public void detach() {}
 
     @Override
+    public void attach() {}
+
+    @Override
     public void setTileRequestCompleteHandler(Handler handler) {
 
     }
