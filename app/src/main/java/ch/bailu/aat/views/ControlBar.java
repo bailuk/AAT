@@ -10,7 +10,7 @@ import android.widget.ScrollView;
 
 import ch.bailu.aat.helpers.AppTheme;
 import ch.bailu.aat.preferences.SolidIndexList;
-
+import ch.bailu.aat.views.preferences.SolidImageButton;
 
 
 public class ControlBar extends LinearLayout {

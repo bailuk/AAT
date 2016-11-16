@@ -1,24 +1,31 @@
-package ch.bailu.aat.views;
+package ch.bailu.aat.views.preferences;
 
 import android.content.SharedPreferences;
 import android.view.View;
 
 import ch.bailu.aat.helpers.AppLog;
 import ch.bailu.aat.preferences.SolidIndexList;
+import ch.bailu.aat.views.ImageButtonView;
+import ch.bailu.aat.views.preferences.SolidIndexListDialog;
 
 
 public class SolidImageButton extends ImageButtonView implements SharedPreferences.OnSharedPreferenceChangeListener {
 
-    private final SolidIndexList slist;
+    private final SolidIndexList solid;
     
     public SolidImageButton(SolidIndexList s) {
         super(s.getContext(), s.getIconResource());
-        
-        slist = s;
+
+        solid = s;
         setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                slist.cycle();
+                if (solid.length()<3) {
+                    solid.cycle();
+                } else {
+                    new SolidIndexListDialog(solid);
+                }
+
             }
 
         });
@@ -28,15 +35,15 @@ public class SolidImageButton extends ImageButtonView implements SharedPreferenc
     @Override
     public void onAttachedToWindow() {
         super.onAttachedToWindow();
-        setImageResource(slist.getIconResource());
-        slist.register(this);
+        setImageResource(solid.getIconResource());
+        solid.register(this);
     }
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-        if (slist.hasKey(key)) {
-            setImageResource(slist.getIconResource());
-            AppLog.i(getContext(), slist.getValueAsString());
+        if (solid.hasKey(key)) {
+            setImageResource(solid.getIconResource());
+            AppLog.i(getContext(), solid.getValueAsString());
         }
     }
 
@@ -44,6 +51,6 @@ public class SolidImageButton extends ImageButtonView implements SharedPreferenc
     public void onDetachedFromWindow() {
         super.onDetachedFromWindow();
 
-        slist.unregister(this);
+        solid.unregister(this);
     }
 }
