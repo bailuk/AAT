@@ -1,4 +1,4 @@
-package ch.bailu.aat.services.tracker.location;
+package ch.bailu.aat.services.location;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -12,8 +12,11 @@ import ch.bailu.aat.gpx.interfaces.GpxPointInterface;
 import ch.bailu.aat.preferences.PresetDependent;
 import ch.bailu.aat.preferences.SolidLocationProvider;
 import ch.bailu.aat.services.ServiceContext;
+import ch.bailu.aat.services.VirtualService;
 
-public class LocationStack implements Closeable,  OnSharedPreferenceChangeListener, PresetDependent{
+public class LocationService extends VirtualService
+        implements Closeable,  OnSharedPreferenceChangeListener, PresetDependent {
+
     private final SolidLocationProvider sprovider;
 
     private final ArrayList<LocationStackItem> itemList= new ArrayList<>();
@@ -24,10 +27,9 @@ public class LocationStack implements Closeable,  OnSharedPreferenceChangeListen
     private MissingTrigger missing;
     private AutopauseTrigger autopause;
 
-    private final ServiceContext scontext;
 
-    public LocationStack(ServiceContext c) {
-        scontext=c;
+    public LocationService(ServiceContext c) {
+        super(c);
 
         sprovider = new SolidLocationProvider(c.getContext());
         sprovider.register(this);
@@ -54,7 +56,7 @@ public class LocationStack implements Closeable,  OnSharedPreferenceChangeListen
         itemList.add(new AccuracyFilter(lastItem()));
         itemList.add(new InformationFilter(lastItem()));
 
-        dirty = new DirtyLocation(lastItem(),scontext.getContext()); 
+        dirty = new DirtyLocation(lastItem(), getContext());
         itemList.add(dirty);
     }
 
@@ -67,10 +69,10 @@ public class LocationStack implements Closeable,  OnSharedPreferenceChangeListen
             provider.close();
         }
 
-        if      (sprovider.getIndex()==0) provider = new SystemLocation(lastItem(), scontext);
-        else if (sprovider.getIndex()==1) provider = new SystemLocation(lastItem(), scontext, 2000);
-        else if (sprovider.getIndex()==2) provider = new SystemLocation(lastItem(), scontext, 3000);
-        else                              provider = new MockLocation(scontext.getContext(), lastItem());
+        if      (sprovider.getIndex()==0) provider = new SystemLocation(lastItem(), getSContext());
+        else if (sprovider.getIndex()==1) provider = new SystemLocation(lastItem(), getSContext(), 2000);
+        else if (sprovider.getIndex()==2) provider = new SystemLocation(lastItem(), getSContext(), 3000);
+        else                              provider = new MockLocation(getContext(), lastItem());
 
         itemList.add(provider);
     }

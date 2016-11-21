@@ -1,4 +1,4 @@
-package ch.bailu.aat.services.tracker.location;
+package ch.bailu.aat.services.location;
 
 import ch.bailu.aat.gpx.GpxInformation;
 

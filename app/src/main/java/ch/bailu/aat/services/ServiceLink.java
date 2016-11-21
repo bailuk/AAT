@@ -14,6 +14,7 @@ import ch.bailu.aat.services.cache.CacheService;
 import ch.bailu.aat.services.dem.ElevationService;
 import ch.bailu.aat.services.directory.DirectoryService;
 import ch.bailu.aat.services.icons.IconMapService;
+import ch.bailu.aat.services.location.LocationService;
 import ch.bailu.aat.services.tileremover.TileRemoverService;
 import ch.bailu.aat.services.tracker.TrackerService;
 
@@ -141,6 +142,13 @@ public abstract class ServiceLink implements
     }
 
 
+    @Override
+    public TrackerService getTrackerService() {
+        return getService().getTrackerService();
+    }
+
+    @Override
+    public LocationService getLocationService() {return getService().getLocationService(); }
 
     @Override
     public BackgroundService getBackgroundService() {
@@ -167,10 +175,6 @@ public abstract class ServiceLink implements
         return getService().getDirectoryService();
     }
 
-    @Override
-    public TrackerService getTrackerService() {
-        return getService().getTrackerService();
-    }
 
     @Override
     public TileRemoverService getTileRemoverService() {

@@ -8,6 +8,7 @@ import ch.bailu.aat.services.cache.CacheService;
 import ch.bailu.aat.services.dem.ElevationService;
 import ch.bailu.aat.services.directory.DirectoryService;
 import ch.bailu.aat.services.icons.IconMapService;
+import ch.bailu.aat.services.location.LocationService;
 import ch.bailu.aat.services.tileremover.TileRemoverService;
 import ch.bailu.aat.services.tracker.TrackerService;
 
@@ -18,12 +19,13 @@ public interface ServiceContext extends ContextWrapperInterface {
 
     boolean isUp();
 
+    LocationService getLocationService();
+    TrackerService getTrackerService();
     BackgroundService getBackgroundService();
     CacheService getCacheService();
     ElevationService getElevationService();
     IconMapService getIconMapService();
     DirectoryService getDirectoryService();
-    TrackerService getTrackerService();
     TileRemoverService getTileRemoverService();
 
     void startForeground(int id, Notification notification);

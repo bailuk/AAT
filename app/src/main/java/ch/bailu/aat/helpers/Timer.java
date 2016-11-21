@@ -5,28 +5,29 @@ import android.os.Handler;
 import java.io.Closeable;
 
 public class Timer implements Closeable {
-    private Handler handler;
+    private final Handler handler;
     private final Runnable listener;
-    private final long interval;
+    private final long defaultInterval;
 
 
     public Timer(Runnable l, long i) {
         listener=l;
-        interval=i;
+        defaultInterval =i;
+        handler = new Handler();
     }
 
     public void kick() {
-        if (handler == null) {
-            handler = new Handler();
-        }
+        kick(defaultInterval);
+    }
+
+    public void kick(long interval) {
+        handler.removeCallbacks(listener);
         handler.postDelayed(listener, interval);
     }
 
     public void close () {
-        if (handler != null) {
-            handler.removeCallbacks(listener);
-            handler=null;
-        }
+        handler.removeCallbacks(listener);
     }
+
 }
 

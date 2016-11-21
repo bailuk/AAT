@@ -8,7 +8,6 @@ import ch.bailu.aat.description.ContentDescription;
 import ch.bailu.aat.description.CurrentSpeedDescription;
 import ch.bailu.aat.description.DistanceDescription;
 import ch.bailu.aat.description.SpeedDescription;
-import ch.bailu.aat.description.TrackSizeDescription;
 import ch.bailu.aat.gpx.GpxAttributes;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.GpxPointNode;
@@ -28,8 +27,10 @@ public class HtmlBuilderGpx extends HtmlBuilder {
     }
 
     public void appendInfo(GpxInformation info, int index) {
-        appendH3(info.getName());
-        append("<b>" + index + "</b>/" + info.getGpxList().getPointList().size() + "<br>");
+        final int count=index+1, total = info.getGpxList().getPointList().size();
+
+        appendHeader(info.getName());
+        append("<b>" + count + "</b>/" + total + "<br>");
     }
 
     public void appendNode(GpxPointNode n, GpxInformation i) {

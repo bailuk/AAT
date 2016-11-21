@@ -7,6 +7,7 @@ import ch.bailu.aat.services.cache.CacheService;
 import ch.bailu.aat.services.dem.ElevationService;
 import ch.bailu.aat.services.directory.DirectoryService;
 import ch.bailu.aat.services.icons.IconMapService;
+import ch.bailu.aat.services.location.LocationService;
 import ch.bailu.aat.services.tileremover.TileRemoverService;
 import ch.bailu.aat.services.tracker.TrackerService;
 
@@ -14,6 +15,7 @@ import static ch.bailu.aat.services.ServiceLink.ServiceNotUpError;
 
 public class OneService extends AbsService  implements ServiceContext {
 
+    private LocationService location;
     private TrackerService tracker;
     private BackgroundService background;
     private IconMapService iconMap;
@@ -37,6 +39,11 @@ public class OneService extends AbsService  implements ServiceContext {
         if (tracker != null) {
             tracker.close();
             tracker = null;
+        }
+
+        if (location != null) {
+            location.close();
+            location = null;
         }
 
         if (background != null) {
@@ -80,6 +87,14 @@ public class OneService extends AbsService  implements ServiceContext {
         super.onLowMemory();
     }
 
+
+    @Override
+    public LocationService getLocationService() {
+        if (forceUp() && location == null) {
+            location = new LocationService(this);
+        }
+        return location;
+    }
 
     @Override
     public BackgroundService getBackgroundService() {
@@ -138,6 +153,7 @@ public class OneService extends AbsService  implements ServiceContext {
     public void appendStatusText(StringBuilder builder) {
         if (forceUp()) {
             super.appendStatusText(builder);
+            appendStatusText(location, builder);
             appendStatusText(tracker, builder);
             appendStatusText(background, builder);
             appendStatusText(cache, builder);

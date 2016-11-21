@@ -1,4 +1,4 @@
-package ch.bailu.aat.services.tracker.location;
+package ch.bailu.aat.services.location;
 
 import android.content.Context;
 
@@ -26,7 +26,10 @@ public class MockLocation extends LocationStackChainedItem implements Runnable{
     private GpxPointNode node;
     private final Timer timer;
     private int state;
-    
+
+    private long nextInterval = INTERVAL;
+
+
     public MockLocation(Context c, LocationStackItem i) {
         super(i);
         
@@ -55,12 +58,12 @@ public class MockLocation extends LocationStackChainedItem implements Runnable{
     @Override
     public void run() {
         if (sendLocation()) {
-            timer.kick();
+            kickTimer();
         } else {
             node = (GpxPointNode) mockData.getPointList().getFirst(); 
             if (sendLocation()) {
                 sendState(StateID.ON);
-                timer.kick();
+                kickTimer();
             } else {
                 sendState(StateID.OFF);
             }
@@ -69,16 +72,30 @@ public class MockLocation extends LocationStackChainedItem implements Runnable{
 
     private boolean sendLocation() {
         if (node != null) {
-            
-            //AppLog. d(this, "sendLocation");
             sendLocation(new MockLocationInformation(node));
             
             node = (GpxPointNode)node.getNext();
+            if (node != null) {
+                nextInterval=node.getTimeDelta();
+            }
             return true;
         }
+
         return false;
     }
-    
+
+    private void kickTimer() {
+        if (nextInterval <= 0 || nextInterval > 10*INTERVAL) {
+            timer.kick();
+
+        } else {
+            timer.kick(nextInterval);
+
+        }
+
+        nextInterval = INTERVAL;
+    }
+
 
     private class MockLocationInformation extends LocationInformation {
 

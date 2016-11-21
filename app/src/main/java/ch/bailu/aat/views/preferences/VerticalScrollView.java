@@ -29,16 +29,20 @@ public class VerticalScrollView extends ScrollView {
         layout.addView(view);
     }
 
+    public void add(DispatcherInterface di, ContentDescription d, int iid) {
+        final LabelTextView v = new LabelTextView(getContext(), d);
+
+        add(v);
+        di.addTarget(v, iid);
+
+    }
+
 
     public void addAllContent(DispatcherInterface di,
                               ContentDescription[] descriptions,
                               int iid) {
-        final LabelTextView views[] = new LabelTextView[descriptions.length];
         for (int i=0; i< descriptions.length; i++) {
-            views[i] = new LabelTextView(getContext(),descriptions[i]);
-            add(views[i]);
-
-            di.addTarget(views[i], iid);
+            add(di, descriptions[i], iid);
         }
     }
 

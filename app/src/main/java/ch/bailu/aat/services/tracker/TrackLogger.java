@@ -28,11 +28,6 @@ public class TrackLogger extends Logger {
     final private Context context;
 
 
-/*    public static File getLogFile() throws IOException {
-        return new File(AppDirectory.getLogFile(context));
-    }
-*/
-    
     public TrackLogger(Context c, int preset) throws IOException {
         context=c;
         presetIndex=preset;
@@ -80,8 +75,6 @@ public class TrackLogger extends Logger {
 
     public void logPause() throws IOException {
         if (track.getPointList().size()>0) {
-            //requestSegment=false; FIXME ?????
-            //log(new LastTrackPoint());
             requestSegment=true;
         }
     }
@@ -125,20 +118,4 @@ public class TrackLogger extends Logger {
                 AppDirectory.generateDatePrefix(),
                 AppDirectory.GPX_EXTENSION);
     }
-
-/*
-    private class LastTrackPoint implements GpxPointInterface {
-        @Override
-        public int getLatitudeE6()   {return TrackLogger.this.getLatitudeE6();}
-        @Override
-        public int getLongitudeE6()  {return TrackLogger.this.getLongitudeE6();}
-        @Override
-        public short getAltitude()   {return TrackLogger.this.getAltitude();}
-        @Override
-        public double getLongitude() {return TrackLogger.this.getLongitude();}
-        @Override
-        public double getLatitude()  {return TrackLogger.this.getLatitude();}
-        @Override
-        public long getTimeStamp()   {return System.currentTimeMillis();}
-    }*/
 }

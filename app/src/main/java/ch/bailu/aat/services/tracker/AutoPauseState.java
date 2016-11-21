@@ -34,7 +34,7 @@ public class AutoPauseState extends State {
     }
 
     @Override
-    public void onTimer() {
+    public void updateTrack() {
         if (! internal.isReadyForAutoPause() ) {
             internal.state = new OnState(internal);
         }

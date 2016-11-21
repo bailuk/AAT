@@ -133,17 +133,27 @@ public class TestActivity extends AbsDispatcher {
         testsView.add(new TestEntryView(new PreferencesToSdcard(this)));
         testsView.add(new TestEntryView(new PreferencesFromSdcard(this)));
 
+        VerticalScrollView speedView = new VerticalScrollView(this);
+
+        speedView.add(this, new CurrentSpeedDescription(this), InfoID.LOCATION);
+        speedView.add(this, new CurrentSpeedDescription(this), InfoID.TRACKER);
+
 
         statusTextView = new StatusTextView(this);
 
         MultiView mv = new MultiView(this, SOLID_KEY);
 
+
         mv.add(map,getString(R.string.intro_map));
         mv.add(locationView, getString(R.string.gps));
 
         mv.add(trackerView, getString(R.string.tracker));
+        mv.add(speedView, "GPS vs Tracker*");
+
         mv.add(testsView, "Tests*");
         mv.add(statusTextView, getString(R.string.intro_status));
+
+
         return mv;
     }
 

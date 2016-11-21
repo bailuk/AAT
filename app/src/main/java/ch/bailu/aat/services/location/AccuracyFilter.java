@@ -1,4 +1,4 @@
-package ch.bailu.aat.services.tracker.location;
+package ch.bailu.aat.services.location;
 
 import android.content.Context;
 
@@ -7,7 +7,7 @@ import ch.bailu.aat.preferences.SolidAccuracyFilter;
 
 public class AccuracyFilter extends LocationStackChainedItem {
     private float minAccuracy=99f;
-    
+
     public AccuracyFilter(LocationStackItem n) {
         super(n);
     }
@@ -17,8 +17,7 @@ public class AccuracyFilter extends LocationStackChainedItem {
 
     @Override
     public void newLocation(LocationInformation location) {
-        if (//location.getAccuracy()>0f &&
-                location.getAccuracy() < minAccuracy) sendLocation(location);
+        if (location.getAccuracy() < minAccuracy) sendLocation(location);
     }
 
     @Override

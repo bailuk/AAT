@@ -1,4 +1,4 @@
-package ch.bailu.aat.services.tracker.location;
+package ch.bailu.aat.services.location;
 
 import android.content.Context;
 
@@ -42,8 +42,8 @@ public class DirtyLocation extends LocationStackChainedItem {
     @Override
     public void newLocation(LocationInformation location) {
         locationInformation=location;
-        AppBroadcaster.broadcast(storage.getContext(), AppBroadcaster.LOCATION_CHANGED);
         sendLocation(location);
+        AppBroadcaster.broadcast(storage.getContext(), AppBroadcaster.LOCATION_CHANGED);
     }
     
     @Override

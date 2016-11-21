@@ -5,6 +5,7 @@ import java.io.IOException;
 import ch.bailu.aat.R;
 import ch.bailu.aat.gpx.StateID;
 import ch.bailu.aat.helpers.AppBroadcaster;
+import ch.bailu.aat.services.location.LocationService;
 
 public class OnState extends State {
 
@@ -34,14 +35,16 @@ public class OnState extends State {
 
     
     @Override
-    public void onTimer() {
+    public void updateTrack() {
         if (internal.isReadyForAutoPause()) {
             internal.state = new AutoPauseState(internal);
 
         } else  {
-            if (internal.location.hasLoggableLocation()) {
+            final LocationService l = internal.scontext.getLocationService();
+
+            if (l.hasLoggableLocation()) {
                 try {
-                    internal.logger.log(internal.location.getCleanLocation());
+                    internal.logger.log(l.getCleanLocation());
                 } catch (IOException e) {
                     internal.emergencyOff(e);
                 }

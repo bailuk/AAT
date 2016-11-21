@@ -13,7 +13,7 @@ public class CurrentLocationSource extends ContentSource {
     private final BroadcastReceiver onLocationChange = new BroadcastReceiver () {
         @Override
         public void onReceive(Context context, Intent intent) {
-            sendUpdate(scontext.getTrackerService().getLocation());
+            sendUpdate(scontext.getLocationService().getLocationInformation());
         }
 
     };
@@ -30,7 +30,7 @@ public class CurrentLocationSource extends ContentSource {
 
     @Override
     public void requestUpdate() {
-        sendUpdate(scontext.getTrackerService().getLocation());
+        sendUpdate(scontext.getLocationService().getLocationInformation());
     }
 
     @Override
@@ -40,6 +40,7 @@ public class CurrentLocationSource extends ContentSource {
 
     @Override
     public void onResume() {
-        AppBroadcaster.register(scontext.getContext(), onLocationChange, AppBroadcaster.LOCATION_CHANGED);
+        AppBroadcaster.register(scontext.getContext(), onLocationChange,
+                AppBroadcaster.LOCATION_CHANGED);
     }
 }

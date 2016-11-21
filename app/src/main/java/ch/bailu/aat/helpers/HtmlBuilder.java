@@ -10,20 +10,7 @@ public class HtmlBuilder {
     }
 
 
-    public void appendH1(String s) {
-        append("<h1>");
-        append(s);
-        append("</h1>");
-    }
-
-
-    public void appendH2(String s) {
-        append("<h2>");
-        append(s);
-        append("</h2>");
-    }
-
-    public void appendH3(String s) {
+    public void appendHeader(String s) {
         append("<h3>");
         append(s);
         append("</h3>");

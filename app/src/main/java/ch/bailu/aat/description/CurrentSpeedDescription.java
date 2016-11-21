@@ -19,17 +19,25 @@ public class CurrentSpeedDescription extends SpeedDescription {
 
     @Override
     public void onContentUpdated(GpxInformation info) {
+        if (setSpeedFromLastPoint(info) == false) {
+            setCache(info.getSpeed());
+        }
+    }
 
-        GpxList track=info.getGpxList();
+    private boolean setSpeedFromLastPoint(GpxInformation info) {
+        final GpxList track = info.getGpxList();
 
         if (track != null) {
-            GpxDeltaInterface delta = ((GpxDeltaInterface)info.getGpxList().getPointList().getLast());
-            if (delta != null) {
-                setCache(delta.getSpeed());
+            if (track.getPointList().size() > 0) {
+                final GpxDeltaInterface delta = ((GpxDeltaInterface) info.getGpxList().getPointList().getLast());
+                if (delta != null) {
+                    setCache(delta.getSpeed());
+                    return true;
+                }
             }
-        } else {
-            setCache(info.getSpeed());  
+
         }
+        return false;
     }
 
 }

@@ -115,7 +115,7 @@ public class FileControlBar extends ControlBarOverlay{
             preview.setFilePath(selectedFile);
 
             builder.clear();
-            builder.appendH3(iterator.getInfo().getName());
+            builder.appendHeader(iterator.getInfo().getName());
             for (ContentDescription d: summaryData) {
                 d.onContentUpdated(iterator.getInfo());
                 builder.append(d);

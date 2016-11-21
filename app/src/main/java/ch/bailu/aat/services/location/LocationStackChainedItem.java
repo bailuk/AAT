@@ -1,4 +1,4 @@
-package ch.bailu.aat.services.tracker.location;
+package ch.bailu.aat.services.location;
 
 
 public abstract class LocationStackChainedItem extends LocationStackItem {

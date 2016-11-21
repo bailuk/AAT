@@ -20,7 +20,7 @@ public abstract class State  {
     }
     
     
-    public void onTimer() {}
+    public void updateTrack() {}
     public void preferencesChanged() {}
 
     
