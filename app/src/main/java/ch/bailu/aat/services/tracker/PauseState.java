@@ -8,9 +8,12 @@ import ch.bailu.aat.gpx.StateID;
 
 public class PauseState extends State {
 
+
+
     public PauseState(TrackerInternals ti) {
         super(ti);
-        
+
+
         try {
             internal.logger.logPause();
             internal.statusIcon.showPause();
@@ -20,6 +23,9 @@ public class PauseState extends State {
         }
         
     }
+
+    @Override
+    public void updateTrack() {}
 
     @Override
     public int getStateID() {

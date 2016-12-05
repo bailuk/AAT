@@ -9,11 +9,10 @@ import android.widget.ImageButton;
 import ch.bailu.aat.R;
 import ch.bailu.aat.description.AltitudeDescription;
 import ch.bailu.aat.description.AverageSpeedDescription;
-import ch.bailu.aat.description.ContentDescription;
 import ch.bailu.aat.description.CurrentSpeedDescription;
 import ch.bailu.aat.description.DistanceDescription;
 import ch.bailu.aat.description.MaximumSpeedDescription;
-import ch.bailu.aat.description.TimeDescription;
+import ch.bailu.aat.description.PredictiveTimeDescription;
 import ch.bailu.aat.dispatcher.CurrentLocationSource;
 import ch.bailu.aat.dispatcher.EditorSource;
 import ch.bailu.aat.dispatcher.OverlaySource;
@@ -72,8 +71,8 @@ public class TrackerActivity extends AbsDispatcher implements OnClickListener{
         multiView.add(map);
         multiView.add(new VSplitView(this,
                 new View[] {
-                    new DistanceAltitudeGraphView(this, this, InfoID.TRACKER),
-                    new DistanceSpeedGraphView(this, this, InfoID.TRACKER)
+                        new DistanceAltitudeGraphView(this, this, InfoID.TRACKER),
+                        new DistanceSpeedGraphView(this, this, InfoID.TRACKER)
                 }));
 
         return multiView;
@@ -81,16 +80,17 @@ public class TrackerActivity extends AbsDispatcher implements OnClickListener{
 
 
     private CockpitView createCockpit() {
-        final ContentDescription[] data = new ContentDescription[] {
-                new CurrentSpeedDescription(this),
-                new AltitudeDescription(this),
-                new TimeDescription(this),
-                new DistanceDescription(this),
-                new AverageSpeedDescription(this),
-                new MaximumSpeedDescription(this),
-        };
 
-        return new CockpitView(this, this, data);
+        CockpitView c = new CockpitView(this);
+
+        c.add(this, new CurrentSpeedDescription(this), InfoID.LOCATION);
+        c.add(this, new AltitudeDescription(this), InfoID.LOCATION);
+        c.add(this, new PredictiveTimeDescription(this), InfoID.TRACKER);
+        c.add(this, new DistanceDescription(this), InfoID.TRACKER);
+        c.add(this, new AverageSpeedDescription(this), InfoID.TRACKER);
+        c.add(this, new MaximumSpeedDescription(this), InfoID.TRACKER);
+
+        return c;
     }
 
 

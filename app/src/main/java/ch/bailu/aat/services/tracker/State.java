@@ -11,7 +11,7 @@ public abstract class State  {
         
         internal.logger.setState(getStateID());
         AppBroadcaster.broadcast(internal.scontext.getContext(), AppBroadcaster.TRACKER);
-        AppBroadcaster.broadcast(internal.scontext.getContext(), AppBroadcaster.TRACKER_STATE);
+        //AppBroadcaster.broadcast(internal.scontext.getContext(), AppBroadcaster.TRACKER_STATE);
 
     }
     
@@ -20,7 +20,7 @@ public abstract class State  {
     }
     
     
-    public void updateTrack() {}
+    public abstract void updateTrack();
     public void preferencesChanged() {}
 
     
@@ -31,7 +31,6 @@ public abstract class State  {
     
     public abstract int getStateID();
 
-    
     public abstract int getStatusTextID();
     public abstract int getStartStopTextID();
     public abstract int getPauseResumeTextID();

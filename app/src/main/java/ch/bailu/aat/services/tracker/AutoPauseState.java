@@ -8,13 +8,15 @@ import ch.bailu.aat.gpx.StateID;
 
 public class AutoPauseState extends State {
 
+
     public AutoPauseState(TrackerInternals ti) {
         super(ti);
-        
+
         try {
             internal.logger.logPause();
             internal.statusIcon.showAutoPause();
             internal.backlight.setToOff();
+
         } catch (IOException e) {
             internal.emergencyOff(e);
         }

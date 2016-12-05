@@ -23,46 +23,47 @@ public class TimeDescription extends LongDescription {
 
     @Override
     public String getValue() {
-        StringBuilder builder = new StringBuilder();
+        return getValue(getCache());
+    }
+
+    @Override
+    public void onContentUpdated(GpxInformation info) {
+        setCache(info.getTimeDelta());
+    }
+
+
+
+    private static final StringBuilder builder = new StringBuilder(10);
+
+    public static String getValue(long time) {
+        builder.setLength(0);
+
         int seconds, hours, minutes;
-        
+
         // 1. calculate milliseconds to unit
-        seconds = (int) (getCache() / 1000);
+        seconds = (int) (time / 1000);
         minutes = seconds / 60;
         hours = minutes / 60;
-        
+
         // 2. cut away values that belong to a higher unit
         seconds -= minutes * 60;
         minutes -= hours * 60;
 
         appendValueAndDelimer(builder, hours);
         appendValueAndDelimer(builder, minutes);
-        appendValue(builder, seconds); 
+        appendValue(builder, seconds);
         return builder.toString();
-        
     }
 
-    private void appendValueAndDelimer(StringBuilder builder, int value) {
+    private static void appendValueAndDelimer(StringBuilder builder, int value) {
         appendValue(builder,value);
         builder.append(":");
     }
     
-    private void appendValue(StringBuilder builder, int value) {
+    private static void appendValue(StringBuilder builder, int value) {
         if (value < 10) {
             builder.append("0");
         }
         builder.append(value);
     }
-    
-    @Override
-    public void onContentUpdated(GpxInformation info) {
-        setCache(info.getTimeDelta());
-    }
-
-    /*
-    @Override
-    public int getStrlen() {
-        return 8;
-    }
-    */
 }

@@ -3,15 +3,18 @@ package ch.bailu.aat.services.tracker;
 import java.io.IOException;
 
 import ch.bailu.aat.R;
+import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.StateID;
 import ch.bailu.aat.helpers.AppBroadcaster;
 import ch.bailu.aat.services.location.LocationService;
 
 public class OnState extends State {
 
+
     public OnState(TrackerInternals tracker) {
         super(tracker);
-        
+
+
         if (tracker.isReadyForAutoPause()) {
             tracker.state = new AutoPauseState(tracker);
             
@@ -26,6 +29,7 @@ public class OnState extends State {
     public int getStateID() {
         return StateID.ON;
     }
+
 
     @Override
     public void preferencesChanged() {

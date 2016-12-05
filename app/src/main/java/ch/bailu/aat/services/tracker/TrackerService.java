@@ -6,8 +6,6 @@ import android.content.Intent;
 
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.helpers.AppBroadcaster;
-import ch.bailu.aat.helpers.AppLog;
-import ch.bailu.aat.helpers.Timer;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.VirtualService;
 
@@ -29,14 +27,10 @@ public class TrackerService extends VirtualService {
     }
 
 
-    /**
-     *
-     * @return Unfiltered track infromation. Exactly the way it is logged.
-     */
-    public GpxInformation getTrackerInformation() {
+
+    public GpxInformation getLoggerInformation() {
         return internal.logger;
     }
-
 
 
     private final BroadcastReceiver onLocation = new BroadcastReceiver() {

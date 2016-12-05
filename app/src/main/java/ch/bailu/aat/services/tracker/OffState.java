@@ -9,9 +9,9 @@ import ch.bailu.aat.helpers.AppLog;
 
 public class OffState extends State {
 
-   public OffState(TrackerInternals ti) {
+    public OffState(TrackerInternals ti) {
         super(ti);
-        
+
         internal.logger.close();
         internal.statusIcon.hide();
         internal.backlight.unlock();
@@ -20,11 +20,12 @@ public class OffState extends State {
     }
 
     @Override
+    public void updateTrack() {}
+
+    @Override
     public int getStateID() {
         return StateID.OFF;
     }
-
-
 
     @Override
     public void onStartPauseResume() {
