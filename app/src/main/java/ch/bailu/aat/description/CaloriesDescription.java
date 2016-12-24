@@ -25,14 +25,13 @@ public class CaloriesDescription extends LongDescription{
         return "kcal";
     }
 
-    @Override
-    public String getValue() {
+    public String getTime() {
         return String.valueOf(getCache());
     }
 
     
     @Override
-    public void onContentUpdated(GpxInformation info) {
+    public void onContentUpdated(int iid, GpxInformation info) {
         setCache((long)calculateCalories(info));
     }
     

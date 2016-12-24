@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 
 import ch.bailu.aat.gpx.GpxInformation;
+import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.helpers.AppBroadcaster;
 import ch.bailu.aat.helpers.AppIntent;
 import ch.bailu.aat.services.ServiceContext;
@@ -42,7 +43,7 @@ public class EditorSource extends ContentSource {
 
     @Override
     public void requestUpdate() {
-        sendUpdate(edit.getInformation());
+        sendUpdate(edit.getInfoID(), edit.getInformation());
     }
 
 

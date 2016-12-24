@@ -6,9 +6,9 @@ package ch.bailu.aat.gpx;
 public class GpxInformation extends GpxDataWrapper  {
     private final static String NULL_NAME="";
 
-    public int getID() {
-        return InfoID.UNSPECIFIED;
-    }
+    //public int getID() {
+    //    return InfoID.UNSPECIFIED;
+    //}
 
 
 

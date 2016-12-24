@@ -63,8 +63,8 @@ public class Dispatcher implements DispatcherInterface, OnContentUpdatedInterfac
 
 
     @Override
-    public void onContentUpdated(GpxInformation info) {
-        updater.onContentUpdated(info);
+    public void onContentUpdated(int iid, GpxInformation info) {
+        updater.onContentUpdated(iid, info);
     }
 
 
@@ -76,9 +76,9 @@ public class Dispatcher implements DispatcherInterface, OnContentUpdatedInterfac
 
 
         @Override
-        public void onContentUpdated(GpxInformation info) {
+        public void onContentUpdated(int iid, GpxInformation info) {
             for (OnContentUpdatedInterface target: targets) {
-                target.onContentUpdated(info);
+                target.onContentUpdated(iid, info);
             }
         }
 
@@ -90,22 +90,22 @@ public class Dispatcher implements DispatcherInterface, OnContentUpdatedInterfac
     private static final OnContentUpdatedInterface
             OFF = new OnContentUpdatedInterface() {
         @Override
-        public void onContentUpdated(GpxInformation info) {}
+        public void onContentUpdated(int iid, GpxInformation info) {}
     };
 
 
     private final OnContentUpdatedInterface
             ON = new  OnContentUpdatedInterface () {
         @Override
-        public void onContentUpdated(GpxInformation info) {
-            update(info.getID(), info);
+        public void onContentUpdated(int iid, GpxInformation info) {
+            update(iid, info);
             update(InfoID.ALL, info);
         }
 
 
         public void update(int iid, GpxInformation info) {
             final TargetList l = targets.get(iid, TargetList.NULL_LIST);
-             l.onContentUpdated(info);
+             l.onContentUpdated(iid, info);
         }
     };
 }

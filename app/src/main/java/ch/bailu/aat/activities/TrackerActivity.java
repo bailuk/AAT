@@ -16,6 +16,7 @@ import ch.bailu.aat.description.PredictiveTimeDescription;
 import ch.bailu.aat.dispatcher.CurrentLocationSource;
 import ch.bailu.aat.dispatcher.EditorSource;
 import ch.bailu.aat.dispatcher.OverlaySource;
+import ch.bailu.aat.dispatcher.TrackerTimerSource;
 import ch.bailu.aat.dispatcher.TrackerSource;
 import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.services.editor.EditorHelper;
@@ -85,7 +86,7 @@ public class TrackerActivity extends AbsDispatcher implements OnClickListener{
 
         c.add(this, new CurrentSpeedDescription(this), InfoID.LOCATION);
         c.add(this, new AltitudeDescription(this), InfoID.LOCATION);
-        c.add(this, new PredictiveTimeDescription(this), InfoID.TRACKER);
+        c.add(this, new PredictiveTimeDescription(this), InfoID.TRACKER_TIMER);
         c.add(this, new DistanceDescription(this), InfoID.TRACKER);
         c.add(this, new AverageSpeedDescription(this), InfoID.TRACKER);
         c.add(this, new MaximumSpeedDescription(this), InfoID.TRACKER);
@@ -118,8 +119,10 @@ public class TrackerActivity extends AbsDispatcher implements OnClickListener{
 
         addSource(new EditorSource(getServiceContext(), edit));
         addSource(new TrackerSource(getServiceContext()));
+        addSource(new TrackerTimerSource(getServiceContext()));
         addSource(new CurrentLocationSource(getServiceContext()));
         addSource(new OverlaySource(getServiceContext()));
+
     }
 
 

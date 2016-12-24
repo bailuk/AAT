@@ -13,8 +13,10 @@ import ch.bailu.aat.activities.ActivitySwitcher;
 import ch.bailu.aat.activities.NodeDetailActivity;
 import ch.bailu.aat.dispatcher.OnContentUpdatedInterface;
 import ch.bailu.aat.gpx.GpxInformation;
+import ch.bailu.aat.gpx.GpxInformationCache;
 import ch.bailu.aat.gpx.GpxList;
 import ch.bailu.aat.gpx.GpxListArray;
+import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.helpers.AppTheme;
 import ch.bailu.aat.services.ServiceContext;
 
@@ -27,7 +29,8 @@ public class NodeListView extends ListView implements
     private final SparseArray<DataSetObserver> observer= new SparseArray<>(5);
 
     private GpxListArray array = new GpxListArray(GpxList.NULL_ROUTE);
-    private GpxInformation cachedInfo = GpxInformation.NULL;
+
+    private final GpxInformationCache cachedInfo = new GpxInformationCache();
 
     private final ServiceContext scontext;
 
@@ -44,9 +47,9 @@ public class NodeListView extends ListView implements
     }
 
     @Override
-    public void onContentUpdated(GpxInformation info) {
+    public void onContentUpdated(int iid, GpxInformation info) {
         array = new GpxListArray(info.getGpxList());
-        cachedInfo = info;
+        cachedInfo.set(iid, info);
         notifyDataSetChanged();
 
     }
@@ -73,7 +76,7 @@ public class NodeListView extends ListView implements
             entry = new NodeEntryView(scontext);
         }
 
-        entry.update(cachedInfo, array.get(position));
+        entry.update(cachedInfo.infoID, cachedInfo.info, array.get(position));
         return entry;
     }
 
@@ -95,7 +98,7 @@ public class NodeListView extends ListView implements
     public void onItemClick(AdapterView<?> arg0, View arg1, int pos, long arg3) {
         final Intent intent = new Intent();
         intent.putExtra("I", pos);
-        intent.putExtra("ID", cachedInfo.getPath());
+        intent.putExtra("ID", cachedInfo.info.getPath());
         ActivitySwitcher.start(getContext(), NodeDetailActivity.class, intent);
 
     }

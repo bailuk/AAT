@@ -26,13 +26,12 @@ public class AccelerationDescription extends FloatDescription {
         return UNIT; 
     }
     
-    @Override
-    public String getValue() {
+    public String getTime() {
         return String.format(Locale.getDefault(),"%.2f", getCache());
     }
 
     @Override
-    public void onContentUpdated(GpxInformation info) {
+    public void onContentUpdated(int iid, GpxInformation info) {
         setCache(info.getAcceleration());
     }
 }

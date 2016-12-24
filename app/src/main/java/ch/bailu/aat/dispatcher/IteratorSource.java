@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 
 import ch.bailu.aat.gpx.GpxInformation;
+import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.helpers.AppBroadcaster;
 import ch.bailu.aat.helpers.AppIntent;
 import ch.bailu.aat.helpers.AppLog;
@@ -38,8 +39,7 @@ public abstract class IteratorSource extends ContentSource implements OnCursorCh
 
     @Override
     public void requestUpdate() {
-        AppLog.d(this, "requestUpdate - "+ iterator.getInfo().getPath() + " " + iterator.getCount()+ "/"+ getInfo().getID());
-        sendUpdate(iterator.getInfo());
+        sendUpdate(iterator.getInfoID(), iterator.getInfo());
     }
 
 

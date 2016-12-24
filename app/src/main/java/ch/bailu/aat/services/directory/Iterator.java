@@ -3,6 +3,7 @@ package ch.bailu.aat.services.directory;
 import java.io.Closeable;
 
 import ch.bailu.aat.gpx.GpxInformation;
+import ch.bailu.aat.gpx.InfoID;
 
 public class Iterator implements Closeable {
     public static final Iterator NULL = new Iterator();
@@ -16,6 +17,12 @@ public class Iterator implements Closeable {
         @Override
         public void onCursorChanged() {}
     };
+
+
+    public int getInfoID() {
+        return InfoID.FILEVIEW;
+    }
+
 
     public boolean moveToPrevious() {return false;}
 

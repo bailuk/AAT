@@ -18,7 +18,7 @@ public class CurrentSpeedDescription extends SpeedDescription {
     }
 
     @Override
-    public void onContentUpdated(GpxInformation info) {
+    public void onContentUpdated(int iid, GpxInformation info) {
         if (setSpeedFromLastPoint(info) == false) {
             setCache(info.getSpeed());
         }

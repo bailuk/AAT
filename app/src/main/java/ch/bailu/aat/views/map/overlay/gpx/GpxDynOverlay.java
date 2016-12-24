@@ -3,6 +3,8 @@ package ch.bailu.aat.views.map.overlay.gpx;
 import ch.bailu.aat.dispatcher.DispatcherInterface;
 import ch.bailu.aat.dispatcher.OnContentUpdatedInterface;
 import ch.bailu.aat.gpx.GpxInformation;
+import ch.bailu.aat.gpx.GpxInformationCache;
+import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.gpx.interfaces.GpxType;
 import ch.bailu.aat.preferences.SolidLegend;
 import ch.bailu.aat.services.ServiceContext;
@@ -12,7 +14,8 @@ import ch.bailu.aat.views.map.overlay.OsmOverlay;
 
 public class GpxDynOverlay extends OsmOverlay implements OnContentUpdatedInterface {
 
-    private GpxInformation infoCache = GpxInformation.NULL;
+    private final GpxInformationCache infoCache = new GpxInformationCache();
+
     private GpxOverlay gpxOverlay;
     private GpxOverlay legendOverlay;
 
@@ -52,8 +55,8 @@ public class GpxDynOverlay extends OsmOverlay implements OnContentUpdatedInterfa
     private int type = GpxType.NONE;
 
     @Override
-    public void onContentUpdated(GpxInformation i) {
-        infoCache = i;
+    public void onContentUpdated(int iid, GpxInformation i) {
+        infoCache.set(iid, i);
 
         if (type != toType(i)) {
             type = toType(i);
@@ -62,8 +65,8 @@ public class GpxDynOverlay extends OsmOverlay implements OnContentUpdatedInterfa
             createLegendOverlay();
         }
 
-        gpxOverlay.onContentUpdated(infoCache);
-        legendOverlay.onContentUpdated(infoCache);
+        infoCache.letUpdate(gpxOverlay);
+        infoCache.letUpdate(legendOverlay);
 
         getOsmView().requestRedraw();
     }
@@ -74,7 +77,7 @@ public class GpxDynOverlay extends OsmOverlay implements OnContentUpdatedInterfa
     public void onSharedPreferenceChanged(String key) {
         if (slegend.hasKey(key)) {
             createLegendOverlay();
-            legendOverlay.onContentUpdated(infoCache);
+            infoCache.letUpdate(legendOverlay);
             getOsmView().requestRedraw();
         }
     }
@@ -90,7 +93,7 @@ public class GpxDynOverlay extends OsmOverlay implements OnContentUpdatedInterfa
 
 
     private void createGpxOverlay() {
-        int type = toType(infoCache);
+        int type = toType(infoCache.info);
 
         if (type == GpxType.WAY)
             gpxOverlay = new WayOverlay(getOsmView(), scontext, color);
@@ -105,7 +108,7 @@ public class GpxDynOverlay extends OsmOverlay implements OnContentUpdatedInterfa
 
 
     private void createLegendOverlay() {
-        int type = toType(infoCache);
+        int type = toType(infoCache.info);
 
         if (type == GpxType.WAY)
             legendOverlay = slegend.createWayLegendOverlay(getOsmView());

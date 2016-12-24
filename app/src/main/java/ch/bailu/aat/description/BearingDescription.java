@@ -19,8 +19,7 @@ public class BearingDescription extends DoubleDescription {
         return context.getString(R.string.d_bearing);
     }
 
-    @Override
-    public String getValue() {
+    public String getTime() {
         return String.format((Locale)null, "%.3f",  getCache());
     }
     
@@ -30,7 +29,7 @@ public class BearingDescription extends DoubleDescription {
     }
 
     @Override
-    public void onContentUpdated(GpxInformation info) {
+    public void onContentUpdated(int iid, GpxInformation info) {
         setCache(info.getBearing());
     }
 

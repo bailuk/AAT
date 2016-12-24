@@ -14,11 +14,13 @@ import ch.bailu.aat.description.AverageSpeedDescription;
 import ch.bailu.aat.description.ContentDescription;
 import ch.bailu.aat.description.CurrentSpeedDescription;
 import ch.bailu.aat.description.DistanceDescription;
+import ch.bailu.aat.description.PredictiveTimeDescription;
 import ch.bailu.aat.description.TimeDescription;
 import ch.bailu.aat.dispatcher.CurrentLocationSource;
 import ch.bailu.aat.dispatcher.EditorSource;
 import ch.bailu.aat.dispatcher.OverlaySource;
 import ch.bailu.aat.dispatcher.TrackerSource;
+import ch.bailu.aat.dispatcher.TrackerTimerSource;
 import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.helpers.AppLayout;
 import ch.bailu.aat.services.editor.EditorHelper;
@@ -75,24 +77,22 @@ public class SplitViewActivity extends AbsDispatcher implements OnClickListener{
 
 
     private View createMultiView() {
-        ContentDescription[] cockpitA = new ContentDescription[] {
-                new DistanceDescription(this),
-                new AltitudeDescription(this),
-                new TimeDescription(this),
-        };
-
-        ContentDescription[] cockpitB = new ContentDescription[] {
-                new CurrentSpeedDescription(this),
-                new AverageSpeedDescription(this),
-        };
-
-
         final OsmInteractiveView mapViewAlt = new MapFactory(this, SOLID_KEY).split();
+        final CockpitView cockpitA = new CockpitView(this);
+        final CockpitView cockpitB = new CockpitView(this);
+
+
+        cockpitA.add(this, new DistanceDescription(this), InfoID.TRACKER);
+        cockpitA.add(this, new AltitudeDescription(this), InfoID.LOCATION);
+        cockpitA.add(this, new PredictiveTimeDescription(this), InfoID.TRACKER_TIMER);
+
+        cockpitB.add(this, new CurrentSpeedDescription(this), InfoID.LOCATION);
+        cockpitB.add(this, new AverageSpeedDescription(this), InfoID.TRACKER);
+
 
         multiView = new MultiView(this, SOLID_KEY);
-
-        multiView.add(new CockpitView(this, this, cockpitA));
-        multiView.add(new CockpitView(this, this, cockpitB));
+        multiView.add(cockpitA);
+        multiView.add(cockpitB);
         multiView.add(new DistanceAltitudeGraphView(this, this, InfoID.TRACKER));
         multiView.add(new DistanceSpeedGraphView(this, this, InfoID.TRACKER));
         multiView.add(mapViewAlt);
@@ -121,6 +121,7 @@ public class SplitViewActivity extends AbsDispatcher implements OnClickListener{
     private void createDispatcher() {
         addSource(new EditorSource(getServiceContext(),edit));
         addSource(new TrackerSource(getServiceContext()));
+        addSource(new TrackerTimerSource(getServiceContext()));
         addSource(new CurrentLocationSource(getServiceContext()));
         addSource(new OverlaySource(getServiceContext()));
 

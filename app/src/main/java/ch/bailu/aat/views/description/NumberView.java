@@ -102,14 +102,14 @@ public class NumberView extends ViewGroup implements OnContentUpdatedInterface {
 
 
     @Override
-    public void onContentUpdated(GpxInformation info) {
-        description.onContentUpdated(info);
+    public void onContentUpdated(int iid, GpxInformation info) {
+        description.onContentUpdated(iid, info);
         updateAllText();
     }
 
 
     public void updateAllText() {
-        number.setText(description.getValue());
+        number.setText(description.getTime());
         label.setText(description.getLabel());
         unit.setText(description.getUnit());
     }

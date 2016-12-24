@@ -17,13 +17,12 @@ public class DateDescription extends LongDescription {
     public String getLabel() {
         return getString(R.string.d_startdate);
     }
-    @Override
-    public String getValue()   { 
+    public String getTime()   {
         return String.format((Locale) null, "%tF - %tT",getCache(), getCache());
     }
 
     @Override
-    public void onContentUpdated(GpxInformation info) {
+    public void onContentUpdated(int iid, GpxInformation info) {
         setCache(info.getStartTime());
     }
 

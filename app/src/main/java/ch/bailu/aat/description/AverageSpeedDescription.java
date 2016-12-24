@@ -17,7 +17,7 @@ public class AverageSpeedDescription extends SpeedDescription {
     }
 
     @Override
-    public void onContentUpdated(GpxInformation info) {
+    public void onContentUpdated(int iid, GpxInformation info) {
         setCache(info.getSpeed());
     }
 }

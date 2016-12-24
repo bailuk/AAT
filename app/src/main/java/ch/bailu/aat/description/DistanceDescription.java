@@ -31,8 +31,7 @@ public class DistanceDescription extends FloatDescription {
     }
 
     
-    @Override
-    public String getValue() {
+    public String getTime() {
         float dist = unit.getDistanceFactor() * getCache();
         
         int format=0;
@@ -44,7 +43,7 @@ public class DistanceDescription extends FloatDescription {
 
 
     @Override
-    public void onContentUpdated(GpxInformation info) {
+    public void onContentUpdated(int iid, GpxInformation info) {
         setCache(info.getDistance());
     }
 

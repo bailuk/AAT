@@ -21,13 +21,12 @@ public class TimeDescription extends LongDescription {
         return "";
     }
 
-    @Override
-    public String getValue() {
+    public String getTime() {
         return getValue(getCache());
     }
 
     @Override
-    public void onContentUpdated(GpxInformation info) {
+    public void onContentUpdated(int iid, GpxInformation info) {
         setCache(info.getTimeDelta());
     }
 

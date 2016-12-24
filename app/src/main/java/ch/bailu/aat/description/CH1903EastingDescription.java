@@ -26,13 +26,12 @@ public class CH1903EastingDescription extends DoubleDescription {
         return "km";
     }
 
-    @Override
-    public String getValue() {
+    public String getTime() {
         return String.format((Locale)null,"%.3f",  ( (float)(coordinate) ) / 1000 );
     }
 
     @Override
-    public void onContentUpdated(GpxInformation info) {
+    public void onContentUpdated(int iid, GpxInformation info) {
         if (setCache(info.getLongitude())) setCH1903_y(info);
     }
 

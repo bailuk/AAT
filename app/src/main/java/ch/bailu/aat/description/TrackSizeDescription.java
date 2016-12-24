@@ -17,7 +17,7 @@ public class TrackSizeDescription extends ContentDescription {
     }
 
     @Override
-    public void onContentUpdated(GpxInformation info) {
+    public void onContentUpdated(int iid, GpxInformation info) {
 
         GpxList track =  info.getGpxList();
         if (track != null && size != track.getPointList().size()) {
@@ -31,8 +31,7 @@ public class TrackSizeDescription extends ContentDescription {
     }
 
 
-    @Override
-    public String getValue() {
+    public String getTime() {
         return value;
     }
 

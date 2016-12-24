@@ -172,7 +172,7 @@ public class GpxViewActivity extends AbsDispatcher
 
 
     @Override
-    public void onContentUpdated(GpxInformation info) {
+    public void onContentUpdated(int iid, GpxInformation info) {
         map.frameBoundingBox(info.getBoundingBox());
     }
 

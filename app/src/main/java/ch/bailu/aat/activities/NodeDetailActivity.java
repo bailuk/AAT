@@ -100,7 +100,7 @@ public class NodeDetailActivity extends AbsDispatcher
 
 
     @Override
-    public void onContentUpdated(GpxInformation info) {
+    public void onContentUpdated(int iid, GpxInformation info) {
 
         arrayCache = new GpxListArray(info.getGpxList());
         infoCache = info;

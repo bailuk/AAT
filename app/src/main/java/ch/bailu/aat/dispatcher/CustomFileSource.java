@@ -7,6 +7,7 @@ import android.content.Intent;
 import java.io.File;
 
 import ch.bailu.aat.gpx.GpxFileWrapper;
+import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.helpers.AppBroadcaster;
 import ch.bailu.aat.helpers.AppIntent;
 import ch.bailu.aat.services.ServiceContext;
@@ -43,7 +44,7 @@ public class CustomFileSource extends ContentSource {
         handle=h;
 
         if (GpxObject.class.isInstance(h) && h.isReady()) {
-            sendUpdate(new GpxFileWrapper(new File(h.toString()), ((GpxObject)h).getGpxList()));
+            sendUpdate(InfoID.FILEVIEW, new GpxFileWrapper(new File(h.toString()), ((GpxObject)h).getGpxList()));
         }
 
     }

@@ -14,7 +14,7 @@ public abstract class ContentDescription extends ContextWrapper
         super(c);
     }
     
-    public abstract String getValue(); 
+    public abstract String getTime();
     public abstract String getLabel(); 
     
     public String getUnit() {
@@ -25,6 +25,6 @@ public abstract class ContentDescription extends ContextWrapper
 
     @Override
     public String getValueAsString() {
-        return getValue() + " " + getUnit();
+        return getTime() + " " + getUnit();
     }
 }

@@ -21,8 +21,7 @@ public abstract class SpeedDescription extends FloatDescription{
         return sunit.getSpeedUnit();
     }
 
-    @Override
-    public String getValue() {
+    public String getTime() {
         float speed = getCache();
         float speedFactor = sunit.getSpeedFactor();
         speed = speed * speedFactor;
@@ -33,6 +32,6 @@ public abstract class SpeedDescription extends FloatDescription{
     
     public String getSpeedDescription(float value) {
         setCache(value);
-        return String.format(Locale.getDefault(),"%s%s", getValue(), getUnit());
+        return String.format(Locale.getDefault(),"%s%s", getTime(), getUnit());
     }
 }

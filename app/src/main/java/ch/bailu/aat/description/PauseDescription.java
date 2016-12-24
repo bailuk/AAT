@@ -19,7 +19,7 @@ public class PauseDescription extends TimeDescription {
     }
 
     @Override
-    public void onContentUpdated(GpxInformation info) {
+    public void onContentUpdated(int iid, GpxInformation info) {
         setCache(info.getPause());
     }
 }

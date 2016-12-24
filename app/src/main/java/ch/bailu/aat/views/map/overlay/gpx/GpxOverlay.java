@@ -1,6 +1,5 @@
 package ch.bailu.aat.views.map.overlay.gpx;
 
-import ch.bailu.aat.dispatcher.DispatcherInterface;
 import ch.bailu.aat.dispatcher.OnContentUpdatedInterface;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.GpxList;
@@ -30,7 +29,7 @@ public abstract class GpxOverlay extends OsmOverlay implements OnContentUpdatedI
 
 
     @Override
-    public void onContentUpdated(GpxInformation info) {
+    public void onContentUpdated(int iid, GpxInformation info) {
         setTrack(info.getGpxList());
     }
 

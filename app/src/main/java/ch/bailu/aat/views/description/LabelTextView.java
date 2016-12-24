@@ -18,8 +18,8 @@ public class LabelTextView extends AbsLabelTextView implements OnContentUpdatedI
     }
 
     @Override
-    public void onContentUpdated(GpxInformation info) {
-        description.onContentUpdated(info);
+    public void onContentUpdated(int iid, GpxInformation info) {
+        description.onContentUpdated(iid, info);
         setText();
     }
 

@@ -12,7 +12,6 @@ import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.helpers.AppBroadcaster;
 import ch.bailu.aat.helpers.AppLog;
 import ch.bailu.aat.services.ServiceContext;
-import ch.bailu.aat.views.map.overlay.OsmOverlay;
 import ch.bailu.aat.views.map.overlay.gpx.GpxDynOverlay;
 
 public class OsmPreviewGenerator implements Closeable {
@@ -42,7 +41,7 @@ public class OsmPreviewGenerator implements Closeable {
 
         map.layout(0, 0, BITMAP_SIZE, BITMAP_SIZE);
 
-        overlay.onContentUpdated(new GpxFileWrapper(o,gpxList));
+        overlay.onContentUpdated(InfoID.FILEVIEW, new GpxFileWrapper(o,gpxList));
         map.frameBoundingBox(gpxList.getDelta().getBoundingBox());
         map.getDrawingCache(false);
     }

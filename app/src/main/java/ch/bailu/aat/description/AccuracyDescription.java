@@ -17,7 +17,7 @@ public class AccuracyDescription extends AltitudeDescription {
     }
 
     @Override
-    public void onContentUpdated(GpxInformation info) {
+    public void onContentUpdated(int iid, GpxInformation info) {
         setCache(info.getAccuracy());
     }
 }

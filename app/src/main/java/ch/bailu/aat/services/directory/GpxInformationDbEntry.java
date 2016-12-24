@@ -116,9 +116,10 @@ public class GpxInformationDbEntry extends GpxInformation {
         return (int) getLong(GpxDbConstants.KEY_TYPE_ID);
     }
 
-
+/*
     @Override
     public int getID() {
         return InfoID.FILEVIEW;
     }
+    */
 }

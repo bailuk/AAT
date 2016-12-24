@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
+import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.helpers.AppBroadcaster;
 import ch.bailu.aat.services.ServiceContext;
 
@@ -13,7 +14,7 @@ public class CurrentLocationSource extends ContentSource {
     private final BroadcastReceiver onLocationChange = new BroadcastReceiver () {
         @Override
         public void onReceive(Context context, Intent intent) {
-            sendUpdate(scontext.getLocationService().getLocationInformation());
+            sendUpdate(InfoID.LOCATION, scontext.getLocationService().getLocationInformation());
         }
 
     };
@@ -30,7 +31,7 @@ public class CurrentLocationSource extends ContentSource {
 
     @Override
     public void requestUpdate() {
-        sendUpdate(scontext.getLocationService().getLocationInformation());
+        sendUpdate(InfoID.LOCATION, scontext.getLocationService().getLocationInformation());
     }
 
     @Override

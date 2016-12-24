@@ -120,7 +120,7 @@ public class IconMapService extends VirtualService {
 
             for(int i = 0; a != null && i< a.size(); i++) {
                 final String key = a.getKey(i);
-                final String value = a.getValue(i);
+                final String value = a.getTime(i);
 
                 final String sicon = getSmallIconPath(key,value);
                 final String bicon = getBigIconPath(key,value);

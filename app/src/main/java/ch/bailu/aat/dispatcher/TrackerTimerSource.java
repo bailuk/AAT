@@ -5,27 +5,29 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
+import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.helpers.AppBroadcaster;
 import ch.bailu.aat.helpers.Timer;
 import ch.bailu.aat.services.ServiceContext;
 
-public class TrackerLiveSource extends ContentSource {
-    private static final int INTERVAL=1000;
+public class TrackerTimerSource extends ContentSource {
+    private static final int INTERVAL=500;
 
     private final ServiceContext scontext;
     private final Timer timer;
 
-    public TrackerLiveSource (ServiceContext sc) {
+    public TrackerTimerSource(ServiceContext sc) {
         timer = new Timer(new Runnable() {
             @Override
             public void run() {
                 requestUpdate();
             }
         }, INTERVAL);
+
         scontext = sc;
     }
 
-
+/*
      private final BroadcastReceiver onTrackChanged = new BroadcastReceiver () {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -33,29 +35,28 @@ public class TrackerLiveSource extends ContentSource {
         }
 
     };
-
+*/
 
 
     @Override
     public void requestUpdate() {
-        sendUpdate(scontext.getTrackerService().getLoggerInformation());
+        sendUpdate(InfoID.TRACKER_TIMER,
+                scontext.getTrackerService().getLoggerInformation());
         timer.kick();
     }
 
 
     @Override
     public void onPause() {
-        scontext.getContext().unregisterReceiver(onTrackChanged);
-        timer.close();
+  //      scontext.getContext().unregisterReceiver(onTrackChanged);
+        timer.cancel();
 
     }
 
 
     @Override
     public void onResume() {
-        AppBroadcaster.register(scontext.getContext(), onTrackChanged, AppBroadcaster.TRACKER);
+    //    AppBroadcaster.register(scontext.getContext(), onTrackChanged, AppBroadcaster.TRACKER);
+        timer.kick();
     }
-
-
-
 }

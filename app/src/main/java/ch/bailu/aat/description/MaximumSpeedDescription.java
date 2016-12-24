@@ -17,7 +17,7 @@ public class MaximumSpeedDescription  extends SpeedDescription {
     }
 
     @Override
-    public void onContentUpdated(GpxInformation info) {
+    public void onContentUpdated(int iid, GpxInformation info) {
         setCache(info.getMaximumSpeed());
     }
 

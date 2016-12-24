@@ -27,15 +27,11 @@ public class NodeEntryView extends LinearLayout {
 
     private final int previewSize;
 
-    private static int count=0;
-    private int id;
 
     public NodeEntryView(ServiceContext sc) {
         super(sc.getContext());
         setOrientation(HORIZONTAL);
 
-        id = count;
-        count++;
         previewSize = AppTheme.getBigButtonSize(sc.getContext());
 
 
@@ -50,8 +46,6 @@ public class NodeEntryView extends LinearLayout {
 
         addViewWeight(text);
         addView(map, previewSize, previewSize);
-
-        AppLog.d(this, "construct " + id);
     }
 
 
@@ -64,21 +58,8 @@ public class NodeEntryView extends LinearLayout {
     }
 
 
-    @Override
-    public void onAttachedToWindow() {
-        super.onAttachedToWindow();
-        AppLog.d(this, "onAttachedToWindow " + id);
-    }
 
-
-    @Override
-    public void onDetachedFromWindow() {
-        super.onDetachedFromWindow();
-        AppLog.d(this, "onDetachedFromWindow " + id);
-    }
-
-
-    public void update(GpxInformation info, GpxPointNode node) {
+    public void update(int iid, GpxInformation info, GpxPointNode node) {
         HtmlBuilderGpx html = new HtmlBuilderGpx(getContext());
         html.appendNode(node, info);
         html.appendAttributes(node.getAttributes());
@@ -87,8 +68,6 @@ public class NodeEntryView extends LinearLayout {
 
         final BoundingBox bounding = node.getBoundingBox();
         map.frameBoundingBox(bounding);
-        gpxOverlay.onContentUpdated(info);
-
-        AppLog.d(this, "update " + id);
+        gpxOverlay.onContentUpdated(iid, info);
     }
 }

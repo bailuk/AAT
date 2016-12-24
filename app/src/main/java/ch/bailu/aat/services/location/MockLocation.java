@@ -106,10 +106,12 @@ public class MockLocation extends LocationStackChainedItem implements Runnable{
             setVisibleTrackPoint(n);
             node=n;
         }
+        /*
         @Override
         public int getID() {
             return InfoID.LOCATION;
         }
+        */
         @Override
         public int getState() {
             return state;

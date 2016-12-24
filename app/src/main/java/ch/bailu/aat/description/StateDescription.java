@@ -20,8 +20,7 @@ public abstract class StateDescription extends ContentDescription {
         return getString(R.string.d_state);
     }
 
-    @Override
-    public String getValue() {
+    public String getTime() {
         String value;
         
         switch (state) {
@@ -37,7 +36,7 @@ public abstract class StateDescription extends ContentDescription {
     }
 
     @Override
-    public void onContentUpdated(GpxInformation info) {
+    public void onContentUpdated(int iid, GpxInformation info) {
         state=info.getState();
     }
 }

@@ -34,10 +34,11 @@ public class RealLocation extends LocationStackChainedItem
             location = l;
             location.setTime(System.currentTimeMillis());
         }
-        @Override
+        /*@Override
         public int getID() {
             return InfoID.LOCATION;
         }
+        */
         @Override
         public int getState() {
             return state;

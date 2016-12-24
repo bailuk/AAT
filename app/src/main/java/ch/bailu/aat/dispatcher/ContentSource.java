@@ -11,8 +11,8 @@ public abstract class ContentSource  {
 
     public abstract void requestUpdate();
 
-    public void sendUpdate(GpxInformation info) {
-        target.onContentUpdated(info);
+    public void sendUpdate(int iid, GpxInformation info) {
+        target.onContentUpdated(iid, info);
     }
 
     

@@ -69,10 +69,13 @@ public class DirtyLocation extends LocationStackChainedItem {
         public String getName() {
             return storage.getContext().getString(R.string.p_location_old);
         }
+
+        /*
         @Override
         public int getID() {
             return InfoID.LOCATION;
         }
+*/
 
         private void readPosition(Storage storage) {
             longitude=storage.readInteger(SOLID_KEY + OsmInteractiveView.LONGITUDE_SUFFIX);

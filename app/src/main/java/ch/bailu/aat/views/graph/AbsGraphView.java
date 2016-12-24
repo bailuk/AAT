@@ -33,7 +33,7 @@ public abstract class AbsGraphView extends ViewGroup implements OnContentUpdated
 
     
     @Override
-    public void onContentUpdated(GpxInformation info) {
+    public void onContentUpdated(int iid, GpxInformation info) {
         gpxCache = info.getGpxList();
         invalidate();
     }

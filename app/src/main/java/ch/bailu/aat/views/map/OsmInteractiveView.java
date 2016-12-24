@@ -140,8 +140,8 @@ public class OsmInteractiveView extends AbsOsmView implements
 
     
     @Override
-    public void onContentUpdated(GpxInformation info) {
-        updateLocation(info);
+    public void onContentUpdated(int iid, GpxInformation info) {
+        updateLocation(iid, info);
         refreshMap();
     }
 
@@ -153,8 +153,8 @@ public class OsmInteractiveView extends AbsOsmView implements
     }
 
     
-    private void updateLocation(GpxInformation info) {
-        if (info.getID()== InfoID.LOCATION) {
+    private void updateLocation(int iid, GpxInformation info) {
+        if (iid == InfoID.LOCATION) {
             location.setLatitudeE6(info.getLatitudeE6());
             location.setLongitudeE6(info.getLongitudeE6());
         }

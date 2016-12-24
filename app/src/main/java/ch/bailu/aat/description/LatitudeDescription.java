@@ -16,7 +16,7 @@ public class LatitudeDescription extends LongitudeDescription {
     }
 
     @Override
-    public void onContentUpdated(GpxInformation info) {
+    public void onContentUpdated(int iid, GpxInformation info) {
         setCache(info.getLatitude());
     }
 

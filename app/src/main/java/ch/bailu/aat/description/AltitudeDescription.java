@@ -30,8 +30,7 @@ public class AltitudeDescription extends FloatDescription {
         return unit.getAltitudeUnit();
     }
 
-    @Override
-    public String getValue() {
+    public String getTime() {
         return getValue(getCache());
     }
 
@@ -49,7 +48,7 @@ public class AltitudeDescription extends FloatDescription {
     }
     
     @Override
-    public void onContentUpdated(GpxInformation info) {
+    public void onContentUpdated(int iid, GpxInformation info) {
         setCache( ((float)info.getAltitude()) );
     }
     

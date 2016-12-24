@@ -23,8 +23,7 @@ public class NameDescription extends ContentDescription {
         return "";
     }
 
-    @Override
-    public String getValue() {
+    public String getTime() {
         return name;
     }
 
@@ -35,7 +34,7 @@ public class NameDescription extends ContentDescription {
     }
     
     @Override
-    public void onContentUpdated(GpxInformation info) {
+    public void onContentUpdated(int iid, GpxInformation info) {
         updateName(info.getName());
     }
 

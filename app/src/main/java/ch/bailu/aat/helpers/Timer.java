@@ -21,11 +21,16 @@ public class Timer implements Closeable {
     }
 
     public void kick(long interval) {
-        handler.removeCallbacks(listener);
+        cancel();
         handler.postDelayed(listener, interval);
     }
 
     public void close () {
+        cancel();
+    }
+
+
+    public void cancel() {
         handler.removeCallbacks(listener);
     }
 

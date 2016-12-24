@@ -118,7 +118,7 @@ public class OverlaySource extends ContentSource {
             } else {
                 disableOverlay();
             }
-            sendUpdate(this);
+            sendUpdate(updateID, this);
         }
 
 
@@ -174,13 +174,6 @@ public class OverlaySource extends ContentSource {
         public boolean isLoaded() {
             return handle.isReady() && handle.getGpxList().getPointList().size()>0;
         }
-
-
-        @Override 
-        public int getID() {
-            return updateID;
-        }
-
 
         @Override
         public void close() {

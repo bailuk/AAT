@@ -17,7 +17,7 @@ public class CH1903NorthingDescription extends CH1903EastingDescription {
     }
 
     @Override
-    public void onContentUpdated(GpxInformation info) {
+    public void onContentUpdated(int iid, GpxInformation info) {
         if (setCache(info.getLatitude())) setCH1903_x(info);
     }
     

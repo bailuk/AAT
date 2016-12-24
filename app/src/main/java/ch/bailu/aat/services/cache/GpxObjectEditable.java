@@ -226,12 +226,12 @@ public class GpxObjectEditable extends  GpxObject {
             return editor.getList();
         }
 
-
+/*
         @Override
         public int getID() {
             return ID;
         }
-
+*/
 
         @Override
         public String getName() {

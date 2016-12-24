@@ -18,16 +18,11 @@ public class GpxFileWrapper extends GpxInformation {
         this.setVisibleTrackSegment(list.getDelta());
     }
 
-
     @Override
     public boolean isLoaded() {
         return true;
     }
 
-    @Override
-    public int getID() {
-        return InfoID.FILEVIEW;
-    }
 
     @Override
     public GpxList getGpxList() {

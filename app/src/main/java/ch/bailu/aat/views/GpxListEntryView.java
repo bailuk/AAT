@@ -64,11 +64,11 @@ public class GpxListEntryView extends LinearLayout implements OnContentUpdatedIn
     }
 
     @Override
-    public void onContentUpdated(GpxInformation info) {
+    public void onContentUpdated(int iid, GpxInformation info) {
 
 
         for (ContentDescription description : descriptions) {
-            description.onContentUpdated(info);
+            description.onContentUpdated(iid, info);
         }
         updateText();
         preview.setFilePath(info.getPath());

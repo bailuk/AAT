@@ -37,7 +37,7 @@ public class CurrentLocationOverlay extends OsmOverlay implements OnContentUpdat
 
 
     @Override
-    public void onContentUpdated(GpxInformation info) {
+    public void onContentUpdated(int iid, GpxInformation info) {
         center.setLatitudeE6(info.getLatitudeE6());
         center.setLongitudeE6(info.getLongitudeE6());
         accuracy=info.getAccuracy();

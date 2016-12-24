@@ -78,7 +78,7 @@ public class GpxEditorActivity extends AbsFileContentActivity
 
 
     @Override
-    public void onContentUpdated(GpxInformation info) {
+    public void onContentUpdated(int iid, GpxInformation info) {
         editor_helper.edit(new File(currentFile.getInfo().getPath()));
         editor_source.requestUpdate();
     }
