@@ -62,7 +62,6 @@ import ch.bailu.aat.views.preferences.VerticalScrollView;
 public class TestActivity extends AbsDispatcher {
     private static final String SOLID_KEY = "test";
 
-    private MultiView multiView;
     private OsmInteractiveView map;
     private StatusTextView statusTextView;
 
@@ -73,7 +72,7 @@ public class TestActivity extends AbsDispatcher {
 
         final LinearLayout contentView = new ContentView(this);
 
-        multiView = createMultiView();
+        MultiView multiView = createMultiView();
 
         contentView.addView(createButtonBar(multiView));
         contentView.addView(multiView);
@@ -176,7 +175,7 @@ public class TestActivity extends AbsDispatcher {
 
         map.add(new GpxTestOverlay(map, this, InfoID.OVERLAY));
         map.add(new GpxDynOverlay(map, getServiceContext(), this, InfoID.TRACKER));
-//        map.add(new CurrentLocationOverlay(map, this));
+//        map.setTarget(new CurrentLocationOverlay(map, this));
 
         map.add(new GridDynOverlay(map, getServiceContext()));
 

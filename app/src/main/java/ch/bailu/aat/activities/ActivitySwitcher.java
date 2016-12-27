@@ -32,7 +32,7 @@ public class ActivitySwitcher {
     public final static int cycable = 3;
 
 
-    public final static int getAccessibleActivitesCount() {
+    public static int getAccessibleActivitesCount() {
         if (BuildConfig.DEBUG) return list.length;
         return list.length-1;
     }

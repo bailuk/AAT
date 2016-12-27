@@ -8,7 +8,6 @@ import java.io.IOException;
 import ch.bailu.aat.coordinates.BoundingBox;
 import ch.bailu.aat.gpx.GpxList;
 import ch.bailu.aat.gpx.GpxPointNode;
-import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.gpx.MaxSpeed;
 import ch.bailu.aat.gpx.StateID;
 import ch.bailu.aat.gpx.interfaces.GpxType;

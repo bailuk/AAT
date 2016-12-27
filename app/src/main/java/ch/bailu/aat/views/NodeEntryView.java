@@ -9,7 +9,6 @@ import ch.bailu.aat.coordinates.BoundingBox;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.GpxPointNode;
 import ch.bailu.aat.helpers.AppHtml;
-import ch.bailu.aat.helpers.AppLog;
 import ch.bailu.aat.helpers.AppTheme;
 import ch.bailu.aat.helpers.HtmlBuilderGpx;
 import ch.bailu.aat.services.ServiceContext;
@@ -25,14 +24,11 @@ public class NodeEntryView extends LinearLayout {
 
     private final GpxDynOverlay gpxOverlay;
 
-    private final int previewSize;
-
-
     public NodeEntryView(ServiceContext sc) {
         super(sc.getContext());
         setOrientation(HORIZONTAL);
 
-        previewSize = AppTheme.getBigButtonSize(sc.getContext());
+        int previewSize = AppTheme.getBigButtonSize(sc.getContext());
 
 
         map = new OsmViewStatic(sc.getContext(),

@@ -24,7 +24,6 @@ import ch.bailu.aat.helpers.AppBroadcaster;
 import ch.bailu.aat.helpers.AppDirectory;
 import ch.bailu.aat.helpers.AppIntent;
 import ch.bailu.aat.helpers.AppLog;
-import ch.bailu.aat.helpers.AppTheme;
 import ch.bailu.aat.helpers.OsmApiHelper;
 import ch.bailu.aat.helpers.ToolTip;
 import ch.bailu.aat.services.background.BackgroundService;

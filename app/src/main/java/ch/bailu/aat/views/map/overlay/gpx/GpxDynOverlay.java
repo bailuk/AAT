@@ -4,7 +4,6 @@ import ch.bailu.aat.dispatcher.DispatcherInterface;
 import ch.bailu.aat.dispatcher.OnContentUpdatedInterface;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.GpxInformationCache;
-import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.gpx.interfaces.GpxType;
 import ch.bailu.aat.preferences.SolidLegend;
 import ch.bailu.aat.services.ServiceContext;

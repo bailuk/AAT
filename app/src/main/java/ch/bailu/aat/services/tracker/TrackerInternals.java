@@ -7,13 +7,11 @@ import java.io.Closeable;
 import java.io.IOException;
 
 import ch.bailu.aat.helpers.AppLog;
-import ch.bailu.aat.helpers.Timer;
 import ch.bailu.aat.preferences.SolidAutopause;
 import ch.bailu.aat.preferences.SolidBacklight;
 import ch.bailu.aat.preferences.SolidPreset;
 import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat.services.ServiceContext;
-import ch.bailu.aat.services.location.LocationService;
 
 public class TrackerInternals 
 implements OnSharedPreferenceChangeListener, Closeable {

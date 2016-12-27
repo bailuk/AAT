@@ -13,8 +13,6 @@ import ch.bailu.aat.helpers.AppDialog;
 import ch.bailu.aat.helpers.AppLog;
 import ch.bailu.aat.helpers.AppSelectDirectoryDialog;
 import ch.bailu.aat.helpers.Clipboard;
-import ch.bailu.aat.helpers.file.FileIntent;
-import ch.bailu.aat.helpers.file.FileUI;
 import ch.bailu.aat.preferences.SolidDirectoryQuery;
 import ch.bailu.aat.preferences.SolidMockLocationFile;
 import ch.bailu.aat.services.ServiceContext;

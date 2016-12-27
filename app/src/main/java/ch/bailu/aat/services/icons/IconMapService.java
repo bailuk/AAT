@@ -20,13 +20,13 @@ public class IconMapService extends VirtualService {
 
     private final IconMap map;
 
-    private final File directory;
+
 
 
     public IconMapService(ServiceContext sc) {
         super(sc);
 
-        directory = AppDirectory.getDataDirectory(getContext(), AppDirectory.DIR_OSM_FEATURES_ICONS);
+        File directory = AppDirectory.getDataDirectory(getContext(), AppDirectory.DIR_OSM_FEATURES_ICONS);
         map = new IconMap(directory.toString());
 
         final File mapFile = new File(directory, MAP_FILE);

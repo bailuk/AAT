@@ -35,7 +35,6 @@ public class NodeDetailActivity extends AbsDispatcher
     private ImageButton nextNode, previousNode;
 
 
-    private VSplitView verticalView;
     private OsmInteractiveView mapView;
     private HtmlScrollTextView htmlView;
 
@@ -58,8 +57,7 @@ public class NodeDetailActivity extends AbsDispatcher
 
         final LinearLayout contentView = new ContentView(this);
         contentView.addView(createButtonBar());
-        verticalView = createVerticalView();
-        contentView.addView(verticalView);
+        contentView.addView(createVerticalView());
 
         createDispatcher();
 

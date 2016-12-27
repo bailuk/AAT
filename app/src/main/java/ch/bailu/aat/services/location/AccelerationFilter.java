@@ -1,10 +1,6 @@
 package ch.bailu.aat.services.location;
 
-import android.content.Context;
-
-import ch.bailu.aat.gpx.GpxDeltaHelper;
-import ch.bailu.aat.preferences.SolidAccelerationFilter;
-
+/*
 public class AccelerationFilter extends LocationStackChainedItem {
     private float maxAcceleration=99f;
     private LocationInformation oldLocation=null;
@@ -36,3 +32,4 @@ public class AccelerationFilter extends LocationStackChainedItem {
 
 	    
 }
+*/

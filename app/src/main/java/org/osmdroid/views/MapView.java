@@ -140,7 +140,7 @@ public class MapView extends ViewGroup implements IMapView, MapViewConstants {
     }
 
     /**
-     * You can add/remove/reorder your Overlays using the List of {@link Overlay}. The first (index
+     * You can setTarget/remove/reorder your Overlays using the List of {@link Overlay}. The first (index
      * 0) Overlay gets drawn first, the one with the highest as the last one.
      */
     public List<Overlay> getOverlays() {

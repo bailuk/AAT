@@ -1,12 +1,7 @@
 package ch.bailu.aat.dispatcher;
 
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-
 import ch.bailu.aat.gpx.InfoID;
-import ch.bailu.aat.helpers.AppBroadcaster;
 import ch.bailu.aat.helpers.Timer;
 import ch.bailu.aat.services.ServiceContext;
 

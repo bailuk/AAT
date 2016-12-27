@@ -9,8 +9,8 @@ import org.osmdroid.views.MapView;
 import org.osmdroid.views.util.constants.OverlayConstants;
 
 /**
- * Base class representing an overlay which may be displayed on top of a {@link MapView}. To add an
- * overlay, subclass this class, create an instance, and add it to the list obtained from
+ * Base class representing an overlay which may be displayed on top of a {@link MapView}. To setTarget an
+ * overlay, subclass this class, create an instance, and setTarget it to the list obtained from
  * getOverlays() of {@link MapView}.
  * 
  * This class implements a form of Gesture Handling similar to

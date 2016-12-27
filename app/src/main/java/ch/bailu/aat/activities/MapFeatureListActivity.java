@@ -1,7 +1,6 @@
 package ch.bailu.aat.activities;
 
 import android.content.Intent;
-import android.os.Bundle;
 
 import java.io.File;
 

@@ -6,7 +6,6 @@ import java.io.File;
 
 import ch.bailu.aat.coordinates.BoundingBox;
 import ch.bailu.aat.gpx.GpxInformation;
-import ch.bailu.aat.gpx.InfoID;
 
 public class GpxInformationDbEntry extends GpxInformation {
     private final Cursor cursor;

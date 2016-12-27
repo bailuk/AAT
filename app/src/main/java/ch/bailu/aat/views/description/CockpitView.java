@@ -37,6 +37,14 @@ public class CockpitView extends ViewGroup {
     }
 
 
+    public void addC(DispatcherInterface di, ContentDescription de, int iid) {
+        final NumberView v = new ColorNumberView(de);
+
+        addView(v);
+        di.addTarget(v, iid);
+    }
+
+
     public void add(DispatcherInterface di, ContentDescription de, int iid) {
         final NumberView v = new NumberView(de);
 

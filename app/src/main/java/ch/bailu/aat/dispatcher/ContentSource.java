@@ -5,7 +5,7 @@ import ch.bailu.aat.gpx.GpxInformation;
 public abstract class ContentSource  {
     private OnContentUpdatedInterface target = OnContentUpdatedInterface.NULL;
 
-    public void add(OnContentUpdatedInterface t) {
+    public void setTarget(OnContentUpdatedInterface t) {
         target = t;
     }
 

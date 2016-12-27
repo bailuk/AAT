@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 
 import java.util.ArrayList;
 
-import ch.bailu.aat.dispatcher.OnContentUpdatedInterface;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.preferences.Storage;
 

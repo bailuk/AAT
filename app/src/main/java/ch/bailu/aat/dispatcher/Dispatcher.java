@@ -11,7 +11,7 @@ public class Dispatcher implements DispatcherInterface, OnContentUpdatedInterfac
 
 
     private final SparseArray<TargetList>
-        targets = new SparseArray(10);
+            targets = new SparseArray(10);
 
     private final ArrayList<ContentSource> sources = new ArrayList(5);
 
@@ -34,7 +34,7 @@ public class Dispatcher implements DispatcherInterface, OnContentUpdatedInterfac
     @Override
     public void addSource(ContentSource s) {
         sources.add(s);
-        s.add(this);
+        s.setTarget(this);
     }
 
 
@@ -68,7 +68,7 @@ public class Dispatcher implements DispatcherInterface, OnContentUpdatedInterfac
     }
 
 
-      private static class TargetList implements OnContentUpdatedInterface{
+    private static class TargetList implements OnContentUpdatedInterface{
         public final static TargetList NULL_LIST = new TargetList();
 
         private final ArrayList<OnContentUpdatedInterface> targets =
@@ -97,15 +97,15 @@ public class Dispatcher implements DispatcherInterface, OnContentUpdatedInterfac
     private final OnContentUpdatedInterface
             ON = new  OnContentUpdatedInterface () {
         @Override
-        public void onContentUpdated(int iid, GpxInformation info) {
-            update(iid, info);
-            update(InfoID.ALL, info);
+        public void onContentUpdated(int infoID, GpxInformation info) {
+            update(infoID,     infoID, info);
+            update(InfoID.ALL, infoID, info);
         }
 
 
-        public void update(int iid, GpxInformation info) {
-            final TargetList l = targets.get(iid, TargetList.NULL_LIST);
-             l.onContentUpdated(iid, info);
+        public void update(int listID, int infoID, GpxInformation info) {
+            final TargetList l = targets.get(listID, TargetList.NULL_LIST);
+            l.onContentUpdated(infoID, info);
         }
     };
 }

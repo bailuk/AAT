@@ -16,7 +16,6 @@ import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.GpxInformationCache;
 import ch.bailu.aat.gpx.GpxList;
 import ch.bailu.aat.gpx.GpxListArray;
-import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.helpers.AppTheme;
 import ch.bailu.aat.services.ServiceContext;
 

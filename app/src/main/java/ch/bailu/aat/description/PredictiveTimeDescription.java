@@ -33,15 +33,15 @@ public class PredictiveTimeDescription extends TimeDescription {
     public void onContentUpdated(int iid, GpxInformation info) {
         super.onContentUpdated(iid, info);
 
+        final long endTime = info.getEndTime();
         time = info.getTimeDelta();
+
 
         if (info.getState() != StateID.ON) {
             time_paused = time;
 
-        } else if (time_paused != time) {
-            final long missing = System.currentTimeMillis() - info.getEndTime();
-
-            time += missing;
+        } else if (time_paused != time && endTime > 0) {
+            time += (System.currentTimeMillis() - endTime);
         }
     }
 }

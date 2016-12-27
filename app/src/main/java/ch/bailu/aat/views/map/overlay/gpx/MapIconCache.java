@@ -7,11 +7,9 @@ import java.io.Closeable;
 import ch.bailu.aat.gpx.GpxAttributes;
 import ch.bailu.aat.gpx.interfaces.GpxPointInterface;
 import ch.bailu.aat.services.ServiceContext;
-import ch.bailu.aat.services.cache.FreeLater;
 import ch.bailu.aat.services.cache.ImageObject;
 import ch.bailu.aat.services.cache.LockCache;
 import ch.bailu.aat.services.cache.ObjectHandle;
-import ch.bailu.aat.services.icons.IconMapService;
 
 public class MapIconCache implements Closeable {
     private final LockCache<ImageObject> icons = new LockCache(20);

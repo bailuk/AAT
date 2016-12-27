@@ -6,7 +6,6 @@ import org.osmdroid.views.MapView;
 
 import java.util.ArrayList;
 
-import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.views.map.AbsOsmView;
 
 public class OverlayList extends OsmOverlay {

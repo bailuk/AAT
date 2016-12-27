@@ -9,6 +9,7 @@ import android.widget.TextView;
 import ch.bailu.aat.description.ContentDescription;
 import ch.bailu.aat.dispatcher.OnContentUpdatedInterface;
 import ch.bailu.aat.gpx.GpxInformation;
+import ch.bailu.aat.helpers.AppTheme;
 
 public class NumberView extends ViewGroup implements OnContentUpdatedInterface {
 
@@ -32,14 +33,23 @@ public class NumberView extends ViewGroup implements OnContentUpdatedInterface {
         defaultTextSize = label.getTextSize();
 
         unit = createLabel();
-        unit.setBackgroundColor(Color.DKGRAY);
-        unit.setTextColor(Color.LTGRAY);
-        
+        setDefaultUnitLabelColor();
+
         description=data;
 
         updateAllText();
     }
 
+    public void setDefaultUnitLabelColor() {
+        unit.setBackgroundColor(Color.DKGRAY);
+        unit.setTextColor(Color.LTGRAY);
+    }
+
+
+    public void setHighlightUnitLabelColor() {
+        unit.setBackgroundColor(AppTheme.getHighlightColor());
+        unit.setTextColor(Color.BLACK);
+    }
 
     public ContentDescription getDescription() {
         return description;

@@ -16,8 +16,8 @@ import ch.bailu.aat.description.PredictiveTimeDescription;
 import ch.bailu.aat.dispatcher.CurrentLocationSource;
 import ch.bailu.aat.dispatcher.EditorSource;
 import ch.bailu.aat.dispatcher.OverlaySource;
-import ch.bailu.aat.dispatcher.TrackerTimerSource;
 import ch.bailu.aat.dispatcher.TrackerSource;
+import ch.bailu.aat.dispatcher.TrackerTimerSource;
 import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.services.editor.EditorHelper;
 import ch.bailu.aat.views.ContentView;
@@ -31,7 +31,6 @@ import ch.bailu.aat.views.description.VSplitView;
 import ch.bailu.aat.views.graph.DistanceAltitudeGraphView;
 import ch.bailu.aat.views.graph.DistanceSpeedGraphView;
 import ch.bailu.aat.views.map.MapFactory;
-import ch.bailu.aat.views.map.OsmInteractiveView;
 
 public class TrackerActivity extends AbsDispatcher implements OnClickListener{
 
@@ -40,7 +39,6 @@ public class TrackerActivity extends AbsDispatcher implements OnClickListener{
     private ImageButton          activityCycle;
     private TrackerStateButton   trackerState;
     private MultiView            multiView;
-    private OsmInteractiveView   map;
 
     private EditorHelper         edit;
 
@@ -65,11 +63,9 @@ public class TrackerActivity extends AbsDispatcher implements OnClickListener{
 
 
     private MultiView createMultiView() {
-        map = new MapFactory(this, SOLID_KEY).tracker(edit);
-
         multiView = new MultiView(this, SOLID_KEY);
         multiView.add(createCockpit());
-        multiView.add(map);
+        multiView.add(new MapFactory(this, SOLID_KEY).tracker(edit));
         multiView.add(new VSplitView(this,
                 new View[] {
                         new DistanceAltitudeGraphView(this, this, InfoID.TRACKER),
@@ -87,8 +83,8 @@ public class TrackerActivity extends AbsDispatcher implements OnClickListener{
         c.add(this, new CurrentSpeedDescription(this), InfoID.LOCATION);
         c.add(this, new AltitudeDescription(this), InfoID.LOCATION);
         c.add(this, new PredictiveTimeDescription(this), InfoID.TRACKER_TIMER);
-        c.add(this, new DistanceDescription(this), InfoID.TRACKER);
-        c.add(this, new AverageSpeedDescription(this), InfoID.TRACKER);
+        c.addC(this, new DistanceDescription(this), InfoID.TRACKER);
+        c.addC(this, new AverageSpeedDescription(this), InfoID.TRACKER);
         c.add(this, new MaximumSpeedDescription(this), InfoID.TRACKER);
 
         return c;

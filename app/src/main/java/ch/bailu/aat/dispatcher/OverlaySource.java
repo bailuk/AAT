@@ -15,6 +15,7 @@ import ch.bailu.aat.gpx.GpxList;
 import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.helpers.AppBroadcaster;
 import ch.bailu.aat.helpers.AppIntent;
+import ch.bailu.aat.helpers.AppLog;
 import ch.bailu.aat.preferences.SolidOverlayFile;
 import ch.bailu.aat.preferences.SolidOverlayFileList;
 import ch.bailu.aat.services.ServiceContext;
@@ -29,7 +30,7 @@ public class OverlaySource extends ContentSource {
 
     private final ServiceContext scontext;
 
-    private final OverlayInformation[] overlayList = new OverlayInformation[MAX_OVERLAYS];
+    private final OverlayInformation[] overlays = new OverlayInformation[MAX_OVERLAYS];
 
     public OverlaySource(ServiceContext sc) {
         scontext=sc;
@@ -38,7 +39,7 @@ public class OverlaySource extends ContentSource {
 
     @Override
     public void onPause() {
-        for (OverlayInformation anOverlayList : overlayList) anOverlayList.close();
+        for (OverlayInformation o : overlays) o.close();
     }
 
 
@@ -47,7 +48,7 @@ public class OverlaySource extends ContentSource {
     @Override
     public void onResume() {
         for (int i=0; i<MAX_OVERLAYS; i++)
-            overlayList[i]= new OverlayInformation(InfoID.OVERLAY+i);
+            overlays[i]= new OverlayInformation(i);
     }
 
 
@@ -55,14 +56,13 @@ public class OverlaySource extends ContentSource {
 
     @Override
     public void requestUpdate() {
-        for (int i=0; i<MAX_OVERLAYS; i++) 
-            overlayList[i].initAndUpdateOverlay();
+        for (OverlayInformation o: overlays) o.initAndUpdateOverlay();
     }
 
 
 
     private class OverlayInformation extends GpxInformation implements Closeable {
-        private final int updateID;
+        private final int infoID;
 
         private final SolidOverlayFile soverlay;
 
@@ -70,11 +70,10 @@ public class OverlaySource extends ContentSource {
         private BoundingBox bounding = BoundingBox.NULL_BOX;
 
 
-        public OverlayInformation(int id) {
+        public OverlayInformation(int index) {
+            infoID = InfoID.OVERLAY+index;
 
-            updateID = id;
-
-            soverlay = new SolidOverlayFile(scontext.getContext(), id-InfoID.OVERLAY);
+            soverlay = new SolidOverlayFile(scontext.getContext(), index);
             soverlay.register(onPreferencesChanged);
             AppBroadcaster.register(scontext.getContext(), onFileProcessed, AppBroadcaster.FILE_CHANGED_INCACHE);
         }
@@ -118,7 +117,8 @@ public class OverlaySource extends ContentSource {
             } else {
                 disableOverlay();
             }
-            sendUpdate(updateID, this);
+            AppLog.d(this, "send " + infoID);
+            sendUpdate(infoID, this);
         }
 
 
@@ -160,9 +160,7 @@ public class OverlaySource extends ContentSource {
 
         @Override
         public GpxList getGpxList() {
-            GpxList list = handle.getGpxList();
-
-            return list;
+            return handle.getGpxList();
         }
 
         @Override

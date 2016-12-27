@@ -52,7 +52,7 @@ public class LocationService extends VirtualService
         missing = new MissingTrigger(lastItem()); 
         itemList.add(missing);
 
-        itemList.add(new AccelerationFilter(lastItem()));
+        //itemList.setTarget(new AccelerationFilter(lastItem()));
         itemList.add(new AccuracyFilter(lastItem()));
         itemList.add(new InformationFilter(lastItem()));
 

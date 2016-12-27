@@ -10,7 +10,6 @@ import android.os.Bundle;
 
 import java.util.List;
 
-import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.gpx.StateID;
 import ch.bailu.aat.helpers.AppLog;
 import ch.bailu.aat.helpers.AppPermission;

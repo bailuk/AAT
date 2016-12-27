@@ -4,8 +4,6 @@ import android.content.Context;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 
-import ch.bailu.aat.gpx.GpxInformation;
-
 
 public class OsmViewStatic extends AbsOsmView {
     public OsmViewStatic(Context context, AbsTileProvider provider, MapDensity res) {

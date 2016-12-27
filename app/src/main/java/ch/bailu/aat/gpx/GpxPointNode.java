@@ -1,12 +1,6 @@
 package ch.bailu.aat.gpx;
 
-import android.content.Context;
-
 import ch.bailu.aat.coordinates.BoundingBox;
-import ch.bailu.aat.description.AltitudeDescription;
-import ch.bailu.aat.description.CurrentSpeedDescription;
-import ch.bailu.aat.description.DistanceDescription;
-import ch.bailu.aat.description.SpeedDescription;
 import ch.bailu.aat.gpx.interfaces.GpxDeltaPointInterface;
 import ch.bailu.aat.gpx.linked_list.Node;
 

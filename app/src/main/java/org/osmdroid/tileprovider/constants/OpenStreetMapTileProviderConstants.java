@@ -30,7 +30,7 @@ public interface OpenStreetMapTileProviderConstants {
 	/** Base path for tiles. */
 	public static final File TILE_PATH_BASE = new File(OSMDROID_PATH, "tiles");
 
-	/** add an extension to files on sdcard so that gallery doesn't index them */
+	/** setTarget an extension to files on sdcard so that gallery doesn't index them */
 	public static final String TILE_PATH_EXTENSION = ".tile";
 
 	/**

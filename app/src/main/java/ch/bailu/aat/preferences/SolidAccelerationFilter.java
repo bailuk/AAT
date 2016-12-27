@@ -4,6 +4,7 @@ import android.content.Context;
 
 import ch.bailu.aat.R;
 
+/*
 public class SolidAccelerationFilter extends SolidStaticIndexList {
     private static final String KEY="accel_filter";
 
@@ -53,3 +54,4 @@ public class SolidAccelerationFilter extends SolidStaticIndexList {
         return getContext().getString(R.string.p_acceleration_filter);
     }
 }
+*/

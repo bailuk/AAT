@@ -5,10 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 
 import ch.bailu.aat.gpx.GpxInformation;
-import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.helpers.AppBroadcaster;
 import ch.bailu.aat.helpers.AppIntent;
-import ch.bailu.aat.helpers.AppLog;
 import ch.bailu.aat.preferences.SolidDirectoryQuery;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.directory.Iterator;

@@ -15,7 +15,6 @@ import ch.bailu.aat.services.ServiceContext;
 
 public class GpxListEntryView extends LinearLayout implements OnContentUpdatedInterface {
 
-    private final int previewSize;
     private final PreviewView preview;
     private final TextView title, text;
 
@@ -40,7 +39,7 @@ public class GpxListEntryView extends LinearLayout implements OnContentUpdatedIn
         textLayout.setOrientation(VERTICAL);
         addViewWeight(textLayout);
 
-        previewSize = AppTheme.getBigButtonSize(sc.getContext());
+        int previewSize = AppTheme.getBigButtonSize(sc.getContext());
         preview = new PreviewView(sc);
         addView(preview, previewSize, previewSize);
 

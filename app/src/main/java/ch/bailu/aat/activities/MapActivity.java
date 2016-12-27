@@ -21,7 +21,6 @@ import ch.bailu.aat.dispatcher.TrackerSource;
 import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.helpers.AppIntent;
 import ch.bailu.aat.helpers.AppLog;
-import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.editor.EditorHelper;
 import ch.bailu.aat.views.ContentView;
 import ch.bailu.aat.views.ControlBar;
@@ -31,15 +30,6 @@ import ch.bailu.aat.views.description.NumberView;
 import ch.bailu.aat.views.description.TrackerStateButton;
 import ch.bailu.aat.views.map.MapFactory;
 import ch.bailu.aat.views.map.OsmInteractiveView;
-import ch.bailu.aat.views.map.overlay.CurrentLocationOverlay;
-import ch.bailu.aat.views.map.overlay.OsmOverlay;
-import ch.bailu.aat.views.map.overlay.control.CustomBarOverlay;
-import ch.bailu.aat.views.map.overlay.control.EditorOverlay;
-import ch.bailu.aat.views.map.overlay.control.InformationBarOverlay;
-import ch.bailu.aat.views.map.overlay.control.NavigationBarOverlay;
-import ch.bailu.aat.views.map.overlay.gpx.GpxDynOverlay;
-import ch.bailu.aat.views.map.overlay.gpx.GpxOverlayListOverlay;
-import ch.bailu.aat.views.map.overlay.grid.GridDynOverlay;
 
 public class MapActivity extends AbsDispatcher implements OnClickListener{
 
