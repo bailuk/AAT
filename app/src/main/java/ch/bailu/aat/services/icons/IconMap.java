@@ -41,13 +41,19 @@ public class IconMap {
     }
 
 
-    public Icon get(String key, String value) {
-        final SparseArray<Icon> value_list=key_list.get(key.hashCode());
+    public Icon get(int keyHash, int valueHash) {
+        final SparseArray<Icon> value_list=key_list.get(keyHash);
 
         if (value_list == null) {
             return null;
         }
-        return value_list.get(value.hashCode());
+        return value_list.get(valueHash);
     }
+
+
+    public Icon get(String key, String value) {
+        return get(key.hashCode(), value.hashCode());
+    }
+
 
 }

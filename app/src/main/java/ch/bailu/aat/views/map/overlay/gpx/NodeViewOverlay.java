@@ -38,22 +38,20 @@ public abstract class NodeViewOverlay extends NodeSelectorOverlay implements OnL
 
     public void setHtmlText(String text) {
         infoView.setHtmlText(text);
-        layout();
+
         measure();
         layout();
-        measure();
+        infoView.invalidate();
     }
 
     public void showAtLeft() {
         toLeft();
-        layout();
         show();
     }
 
 
     public void showAtRight() {
         toRight();
-        layout();
         show();
     }
 
@@ -65,7 +63,10 @@ public abstract class NodeViewOverlay extends NodeSelectorOverlay implements OnL
 
 
     private void show() {
+        measure();
+        layout();
         infoView.setVisibility(View.VISIBLE);
+
         getOsmView().requestRedraw();
 
     }

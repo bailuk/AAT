@@ -11,9 +11,8 @@ import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.VirtualService;
 
 public class IconMapService extends VirtualService {
-
-    //public static final String KEY_ICON_SMALL = "icon:small";
-    //public static final String KEY_ICON_BIG = "icon:big";
+    private final String NKEY_KEY = "class";
+    private final String NKEY_VALUE = "type";
 
     private final static String MAP_FILE="iconmap.txt";
 
@@ -42,13 +41,26 @@ public class IconMapService extends VirtualService {
 
 
     public String getIconPath(GpxAttributes attr) {
-        String icon = null;
+
         for (int i=0; i<attr.size(); i++) {
-            icon = getBigIconPath(attr.getKey(i), attr.getValue(i));
+            final String icon = getBigIconPath(attr.getKey(i), attr.getValue(i));
             if (icon != null) return icon;
         }
-        return icon;
+        return getIconPathFromNominatimTypeAttributes(attr);
     }
+
+
+    public String getIconPathFromNominatimTypeAttributes(GpxAttributes attr) {
+        String key = attr.get(NKEY_KEY);
+
+        if (key != null) {
+            String value = attr.get(NKEY_VALUE);
+            if (value != null)
+                return getBigIconPath(key, value);
+        }
+        return null;
+    }
+
 
 
     private String getSmallIconPath(String key, String value) {
