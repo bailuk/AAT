@@ -34,4 +34,19 @@ android {
 
 
 dependencies {
+    /*
+        Automatic MapsForge integration as described here: 
+        https://github.com/mapsforge/mapsforge/raw/master/docs/Integration.md
+    */
+
+    // Core
+    compile 'org.mapsforge:mapsforge-core:0.7.0-rc2'
+    compile 'org.mapsforge:mapsforge-map:0.7.0-rc2'
+    compile 'org.mapsforge:mapsforge-map-reader:0.7.0-rc2'
+    compile 'org.mapsforge:mapsforge-themes:0.7.0-rc2'
+    compile 'net.sf.kxml:kxml2:2.3.0'
+
+    // Android
+    compile 'org.mapsforge:mapsforge-map-android:0.7.0-rc2'
+    compile 'com.caverock:androidsvg:1.2.2-beta-1'
 }

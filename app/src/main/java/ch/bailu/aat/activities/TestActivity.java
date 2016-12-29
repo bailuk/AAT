@@ -2,8 +2,20 @@ package ch.bailu.aat.activities;
 
 
 import android.os.Bundle;
+import android.os.Environment;
 import android.view.View;
 import android.widget.LinearLayout;
+
+import org.mapsforge.core.model.LatLong;
+import org.mapsforge.map.android.graphics.AndroidGraphicFactory;
+import org.mapsforge.map.android.util.AndroidUtil;
+import org.mapsforge.map.datastore.MapDataStore;
+import org.mapsforge.map.layer.cache.TileCache;
+import org.mapsforge.map.layer.renderer.TileRendererLayer;
+import org.mapsforge.map.reader.MapFile;
+import org.mapsforge.map.rendertheme.InternalRenderTheme;
+
+import java.io.File;
 
 import ch.bailu.aat.R;
 import ch.bailu.aat.description.AccelerationDescription;
@@ -140,9 +152,42 @@ public class TestActivity extends AbsDispatcher {
 
         statusTextView = new StatusTextView(this);
 
+
+
+        // init graphics
+        AndroidGraphicFactory.createInstance(this.getApplication());
+
         MultiView mv = new MultiView(this, SOLID_KEY);
 
 
+
+        org.mapsforge.map.android.view.MapView mapsForge = new org.mapsforge.map.android.view.MapView(this);
+
+        mapsForge.setClickable(true);
+        mapsForge.getMapScaleBar().setVisible(true);
+        mapsForge.setBuiltInZoomControls(true);
+        mapsForge.setZoomLevelMin((byte) 10);
+        mapsForge.setZoomLevelMax((byte) 20);
+
+        TileCache tileCache = AndroidUtil.createTileCache(
+                this,
+                "mapcache",
+                mapsForge.getModel().displayModel.getTileSize(),
+                1f,
+                mapsForge.getModel().frameBufferModel.getOverdrawFactor());
+
+        MapDataStore mapDataStore = new MapFile(new File("/storage/emulated/0/berlin.map"));
+        TileRendererLayer tileRendererLayer = new TileRendererLayer(tileCache, mapDataStore, mapsForge.getModel().mapViewPosition, AndroidGraphicFactory.INSTANCE);
+        tileRendererLayer.setXmlRenderTheme(InternalRenderTheme.DEFAULT);
+
+
+        mapsForge.getLayerManager().getLayers().add(tileRendererLayer);
+
+        mapsForge.setCenter(new LatLong(52.517037, 13.38886));
+        mapsForge.setZoomLevel((byte) 12);
+
+
+        mv.add(mapsForge, "MapsForge");
         mv.add(map,getString(R.string.intro_map));
         mv.add(locationView, getString(R.string.gps));
 
