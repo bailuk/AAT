@@ -1,5 +1,7 @@
 package ch.bailu.aat.services.cache;
 
+import org.mapsforge.core.graphics.TileBitmap;
+
 import java.io.File;
 
 import ch.bailu.aat.services.ServiceContext;
@@ -82,8 +84,9 @@ public abstract class ObjectHandle implements ObjectBroadcastReceiver{
     public int hashCode() {
         return toString().hashCode();
     }
-    
-    
+
+
+
     public static class Factory {
         public ObjectHandle factory(String id, ServiceContext cs) {
             return NULL;

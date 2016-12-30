@@ -7,7 +7,10 @@ import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 
+import org.mapsforge.map.android.graphics.AndroidTileBitmap;
+
 public class SynchronizedBitmap {
+
         private Bitmap bitmap=null;
         private Drawable drawable = null;
         
@@ -65,7 +68,9 @@ public class SynchronizedBitmap {
                     h, 
                     Bitmap.Config.ARGB_8888);
             r.eraseColor(Color.WHITE);
+
+
             return r;
         }
-        
+
 }

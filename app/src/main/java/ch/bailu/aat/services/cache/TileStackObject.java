@@ -8,10 +8,13 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 
+import org.mapsforge.core.graphics.TileBitmap;
+import org.mapsforge.map.android.graphics.AndroidTileBitmap;
 import org.osmdroid.tileprovider.MapTile;
 import org.osmdroid.views.overlay.LoadingTile;
 
 import ch.bailu.aat.helpers.AppBroadcaster;
+import ch.bailu.aat.mapsforge.MapsForgeBitmap;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.background.ProcessHandle;
 import ch.bailu.aat.services.cache.TileObject.Source;
@@ -21,13 +24,15 @@ public class TileStackObject extends ObjectHandle {
     public final static TileStackObject NULL=new TileStackObject();
 
     private final TileContainer[] tiles;
-    private final SynchronizedBitmap bitmap=new SynchronizedBitmap();
+    private final SynchronizedTileBitmap bitmap=new SynchronizedTileBitmap();
+
     private final static Paint paint = new Paint();
 
     private ProcessHandle pendingUpdate=ProcessHandle.NULL;
 
 
     private final MapTile mapTile;
+    private final int tileSize;
 
     private boolean ready=false;
 
@@ -35,13 +40,15 @@ public class TileStackObject extends ObjectHandle {
         super(TileStackObject.class.getSimpleName());
         tiles = new TileContainer[]{};
         mapTile = new MapTile(0, 0, 0);
+        tileSize=256;
     }
 
 
-    public TileStackObject(String s,  TileContainer[] t, MapTile m) {
+    public TileStackObject(String s,  TileContainer[] t, MapTile m, int size) {
         super(s);
         tiles = t;
         mapTile=m;
+        tileSize = size;
 
         paint.setColor(Color.WHITE);
         paint.setStyle(Paint.Style.FILL);
@@ -123,6 +130,13 @@ public class TileStackObject extends ObjectHandle {
         return true;
     }
 
+    public Bitmap getBitmap() {
+        return bitmap.getBitmap();
+    };
+    public TileBitmap getTileBitmap() {
+        return bitmap.getTileBitmap();
+    }
+
     public Drawable getDrawable(Resources res) {
         return  bitmap.getDrawable(res);
     }
@@ -137,7 +151,7 @@ public class TileStackObject extends ObjectHandle {
 
         @Override
         public long bgOnProcess() {
-            Bitmap b = bgReupdate();
+            MapsForgeBitmap b = bgReupdate();
 
             if (canContinue()) {
                 bitmap.set(b);
@@ -149,10 +163,10 @@ public class TileStackObject extends ObjectHandle {
 
 
 
-        private Bitmap bgReupdate() {
+        private MapsForgeBitmap bgReupdate() {
 
 
-            Bitmap destination=null;
+            MapsForgeBitmap destination=null;
             Canvas canvas=null;
             int alpha=NULL_ALPHA;
 
@@ -167,11 +181,11 @@ public class TileStackObject extends ObjectHandle {
 
                 if (source != null) {
                     if (canvas == null) {
-                        final int w = source.getWidth();
-                        final int h = source.getHeight();
+                        //final int w = source.getWidth();
+                        //final int h = source.getHeight();
 
-                        destination = SynchronizedBitmap.createBitmap(w, h);
-                        canvas = new Canvas(destination);
+                        destination = new MapsForgeBitmap(tileSize);
+                        canvas = destination.getCanvas();
                     }
                     tile.filter.applayFilter(canvas, source, alpha);
                     alpha=OVERLAY_ALPHA;
@@ -268,12 +282,13 @@ public class TileStackObject extends ObjectHandle {
     public static class Factory extends ObjectHandle.Factory {
         private final TileContainer[] tiles;
         private final MapTile mapTile;
+        private final int size;
 
 
-
-        public Factory(Context context, MapTile mt, Source s[]) {
+        public Factory(Context context, MapTile mt, int size, Source s[]) {
             mapTile = mt;
             int count=0;
+            this.size = size;
 
             for (Source value1 : s) {
                 if (isZoomLevelSupported(value1)) {
@@ -304,7 +319,7 @@ public class TileStackObject extends ObjectHandle {
         }
         @Override
         public ObjectHandle factory(String id, ServiceContext cs) {
-            return new TileStackObject(id, tiles, mapTile);
+            return new TileStackObject(id, tiles, mapTile, size);
         }
     }
 }

@@ -5,9 +5,16 @@ import android.graphics.Canvas;
 import android.graphics.ColorMatrix;
 import android.graphics.ColorMatrixColorFilter;
 import android.graphics.Paint;
+import android.graphics.Rect;
 
 public abstract class TileBitmapFilter {
-    public abstract void applayFilter(Canvas dst, Bitmap src, int alpha);    
+    public abstract void applayFilter(Canvas dst, Bitmap src, int alpha);
+
+    public void applayFilter(Canvas dst, Bitmap src, Paint paint) {
+        Rect s = new Rect(0,0, src.getWidth(), src.getHeight());
+        Rect d = new Rect(0,0, dst.getWidth(), dst.getHeight());
+        dst.drawBitmap(src, s, d, paint);
+    }
     
     @Override
     public String toString() {
@@ -101,7 +108,8 @@ public abstract class TileBitmapFilter {
         
         public void applayFilter(Canvas canvas, Bitmap overlayBitmap, int alpha) {
             paint.setAlpha(alpha);
-            canvas.drawBitmap(overlayBitmap, 0, 0, paint);
+            super.applayFilter(canvas, overlayBitmap, paint);
+
         }
     }
     public static final OverlayFilter OVERLAY_FILTER=new OverlayFilter();
@@ -127,7 +135,9 @@ public abstract class TileBitmapFilter {
             inter.eraseColor(Color.TRANSPARENT);
             Canvas interc = new Canvas(inter);
             interc.drawBitmap(overlayBitmap, 0, 0, paint);*/
-            canvas.drawBitmap(overlayBitmap, 0, 0, paint);
+
+            super.applayFilter(canvas, overlayBitmap, paint);
+
         }
         
         

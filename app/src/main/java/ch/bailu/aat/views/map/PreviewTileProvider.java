@@ -26,7 +26,7 @@ public class PreviewTileProvider extends AbsOsmTileProvider implements Closeable
     
     @Override
     public Drawable getMapTile(MapTile tile) {
-        final TileStackObject handle = getTileHandle(tile);
+        final TileStackObject handle = getTileHandle(tile, 256);
         
         tiles.add(handle);
        

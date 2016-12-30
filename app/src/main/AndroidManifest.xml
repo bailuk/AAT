@@ -12,6 +12,7 @@
 
 
     <application
+        android:name="ch.bailu.aat.App"
         android:allowBackup="true"
         android:icon="@drawable/icon"
         android:label="@string/app_sname"

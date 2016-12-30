@@ -2,20 +2,10 @@ package ch.bailu.aat.activities;
 
 
 import android.os.Bundle;
-import android.os.Environment;
 import android.view.View;
 import android.widget.LinearLayout;
 
 import org.mapsforge.core.model.LatLong;
-import org.mapsforge.map.android.graphics.AndroidGraphicFactory;
-import org.mapsforge.map.android.util.AndroidUtil;
-import org.mapsforge.map.datastore.MapDataStore;
-import org.mapsforge.map.layer.cache.TileCache;
-import org.mapsforge.map.layer.renderer.TileRendererLayer;
-import org.mapsforge.map.reader.MapFile;
-import org.mapsforge.map.rendertheme.InternalRenderTheme;
-
-import java.io.File;
 
 import ch.bailu.aat.R;
 import ch.bailu.aat.description.AccelerationDescription;
@@ -44,7 +34,13 @@ import ch.bailu.aat.dispatcher.CurrentLocationSource;
 import ch.bailu.aat.dispatcher.OverlaySource;
 import ch.bailu.aat.dispatcher.TrackerSource;
 import ch.bailu.aat.gpx.InfoID;
+import ch.bailu.aat.helpers.AppDensity;
 import ch.bailu.aat.helpers.AppLog;
+import ch.bailu.aat.mapsforge.MapsForgeView;
+import ch.bailu.aat.mapsforge.layer.ZoomLevel;
+import ch.bailu.aat.mapsforge.layer.control.InformationBar;
+import ch.bailu.aat.mapsforge.layer.control.NavigationBar;
+import ch.bailu.aat.mapsforge.layer.grid.GridDynLayer;
 import ch.bailu.aat.test.PreferencesFromSdcard;
 import ch.bailu.aat.test.PreferencesToSdcard;
 import ch.bailu.aat.test.TestCoordinates;
@@ -154,21 +150,25 @@ public class TestActivity extends AbsDispatcher {
 
 
 
-        // init graphics
-        AndroidGraphicFactory.createInstance(this.getApplication());
-
         MultiView mv = new MultiView(this, SOLID_KEY);
 
 
 
-        org.mapsforge.map.android.view.MapView mapsForge = new org.mapsforge.map.android.view.MapView(this);
+        MapsForgeView mapsForge = new MapsForgeView(getServiceContext(), SOLID_KEY);
+
+        mapsForge.add(new NavigationBar(mapsForge, this));
+        mapsForge.add(new ZoomLevel(mapsForge.getContextLayer(), new AppDensity(getServiceContext())));
+        mapsForge.add(new GridDynLayer(mapsForge.getContextLayer()));
+        mapsForge.add(new InformationBar(mapsForge.getContextLayer(), this));
 
         mapsForge.setClickable(true);
-        mapsForge.getMapScaleBar().setVisible(true);
-        mapsForge.setBuiltInZoomControls(true);
+        mapsForge.getMapScaleBar().setVisible(false);
+        mapsForge.setBuiltInZoomControls(false);
         mapsForge.setZoomLevelMin((byte) 10);
         mapsForge.setZoomLevelMax((byte) 20);
 
+
+/*
         TileCache tileCache = AndroidUtil.createTileCache(
                 this,
                 "mapcache",
@@ -176,12 +176,13 @@ public class TestActivity extends AbsDispatcher {
                 1f,
                 mapsForge.getModel().frameBufferModel.getOverdrawFactor());
 
+
         MapDataStore mapDataStore = new MapFile(new File("/storage/emulated/0/berlin.map"));
-        TileRendererLayer tileRendererLayer = new TileRendererLayer(tileCache, mapDataStore, mapsForge.getModel().mapViewPosition, AndroidGraphicFactory.INSTANCE);
-        tileRendererLayer.setXmlRenderTheme(InternalRenderTheme.DEFAULT);
+        TileRendererLayer tileLayer = new TileRendererLayer(tileCache, mapDataStore, mapsForge.getModel().mapViewPosition, AndroidGraphicFactory.INSTANCE);
+        tileLayer.setXmlRenderTheme(InternalRenderTheme.DEFAULT);
+*/
 
 
-        mapsForge.getLayerManager().getLayers().add(tileRendererLayer);
 
         mapsForge.setCenter(new LatLong(52.517037, 13.38886));
         mapsForge.setZoomLevel((byte) 12);

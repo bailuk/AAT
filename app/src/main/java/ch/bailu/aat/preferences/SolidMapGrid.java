@@ -3,6 +3,9 @@ package ch.bailu.aat.preferences;
 import android.content.Context;
 
 import ch.bailu.aat.R;
+import ch.bailu.aat.mapsforge.layer.ContextLayer;
+import ch.bailu.aat.mapsforge.layer.MapsForgeLayer;
+import ch.bailu.aat.mapsforge.layer.grid.WGS84Layer;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.views.map.AbsOsmView;
 import ch.bailu.aat.views.map.overlay.NullOverlay;
@@ -56,5 +59,9 @@ public class SolidMapGrid extends SolidStaticIndexList {
     @Override
     public int getIconResource() {
         return R.drawable.view_grid;
+    }
+
+    public MapsForgeLayer createGridOverlay(ContextLayer cl) {
+        return new WGS84Layer(cl);
     }
 }

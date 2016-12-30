@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 
+import org.mapsforge.core.model.BoundingBox;
 import org.osmdroid.util.BoundingBoxE6;
 
 import java.io.File;
@@ -101,4 +102,10 @@ public class ActivitySwitcher {
 
     }
 
+    public static void start(Context context, Class<?> a, BoundingBox box) {
+        Intent intent = new Intent();
+        AppIntent.setBoundingBox(intent, box);
+        start(context, a, intent);
+
+    }
 }

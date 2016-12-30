@@ -6,10 +6,12 @@ import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Handler;
 
+import org.mapsforge.core.model.Tile;
 import org.osmdroid.tileprovider.MapTile;
 
 import ch.bailu.aat.helpers.AppBroadcaster;
 import ch.bailu.aat.helpers.AppIntent;
+import ch.bailu.aat.helpers.AppLog;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.cache.TileObject;
 import ch.bailu.aat.services.cache.TileStackObject;
@@ -45,19 +47,30 @@ public class CachedTileProvider extends AbsOsmTileProvider {
     }
 
 
-
-    @Override
-    public Drawable getMapTile(MapTile tile) {
+    public TileStackObject getMapTileStack(MapTile tile, int size) {
         TileStackObject handle = cache.get(tile);
 
 
-
         if (handle == null) {
-            handle = getTileHandle(tile);
+            handle = getTileHandle(tile, size);
 
             cache.put(handle);
-        } 
-        return handle.getDrawable(context.getResources());
+        }
+
+        if (handle != null) {
+            //AppLog.d(this, handle.toString());
+            if (handle.getTileBitmap() == null) AppLog.d(this, "not yet created");
+            else if (handle.getTileBitmap().isDestroyed()) AppLog.d(this, "is destroyed");
+        }
+        return handle;
+    }
+
+
+
+
+    @Override
+    public Drawable getMapTile(MapTile tile) {
+        return getMapTileStack(tile, 256).getDrawable(context.getResources());
     }
 
 

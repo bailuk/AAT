@@ -1,6 +1,7 @@
 package ch.bailu.aat.helpers;
 
 import android.os.Handler;
+import android.os.Looper;
 
 import java.io.Closeable;
 
@@ -13,6 +14,10 @@ public class Timer implements Closeable {
     public Timer(Runnable l, long i) {
         listener=l;
         defaultInterval =i;
+
+        if (Looper.myLooper() == null) {
+            Looper.prepare();
+        }
         handler = new Handler();
     }
 

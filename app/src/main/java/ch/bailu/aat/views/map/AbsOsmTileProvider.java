@@ -19,12 +19,12 @@ public abstract class AbsOsmTileProvider extends AbsTileProvider {
         scontext = sc;
     }
 
-    public TileStackObject getTileHandle(MapTile mapTile) {
+    public TileStackObject getTileHandle(MapTile mapTile, int size) {
         if (scontext.isUp()) {
             String id = generateTileID(mapTile);
             ObjectHandle handle = scontext.getCacheService().getObject(
                     id,
-                    new TileStackObject.Factory(scontext.getContext(), mapTile, sources)
+                    new TileStackObject.Factory(scontext.getContext(), mapTile, size, sources)
             );
 
 
