@@ -17,7 +17,7 @@ public class DynTileProvider extends CachedTileProvider implements OnSharedPrefe
 
 
 
-    public DynTileProvider(ServiceContext sc, String key) {
+    public DynTileProvider(ServiceContext sc) {
         super(sc);
         storage = Storage.preset(sc.getContext()); 
         spreset = new SolidPreset(sc.getContext());
@@ -26,7 +26,7 @@ public class DynTileProvider extends CachedTileProvider implements OnSharedPrefe
 
         storage.register(this);
 
-        setSourceList();
+        setSubTileSource(soverlay.getSourceList());
     }
 
 
@@ -39,9 +39,9 @@ public class DynTileProvider extends CachedTileProvider implements OnSharedPrefe
 
 
     @Override
-    public void detach() {
+    public void onDetached() {
         storage.unregister(this);
-        super.detach();
+        super.onDetached();
 
     }
 
@@ -64,5 +64,6 @@ public class DynTileProvider extends CachedTileProvider implements OnSharedPrefe
 
     private void setSourceList() {
         setSubTileSource(soverlay.getSourceList());
+        onCacheChanged();
     }
 }

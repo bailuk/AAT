@@ -96,11 +96,11 @@ public class NavigationBarOverlay extends ControlBarOverlay implements OnContent
     public void onContentUpdated(int iid, GpxInformation info) {
         if (info.isLoaded()) {
 
-            AppLog.d(this, "add " + iid);
+            //AppLog.d(this, "add " + iid);
             infoCache.put(iid, info);
 
         } else {
-            AppLog.d(this, "remove " + iid);
+            //AppLog.d(this, "remove " + iid);
             infoCache.remove(iid);
         }
     }

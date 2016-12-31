@@ -31,4 +31,8 @@ public class MapsForgeBitmap {
     public TileBitmap getTileBitmap() {
         return bitmap;
     }
+
+    public void free() {
+        bitmap.decrementRefCount();
+    }
 }

@@ -3,7 +3,7 @@ package ch.bailu.aat.helpers;
 import android.content.Intent;
 
 import org.mapsforge.core.model.BoundingBox;
-import org.osmdroid.util.BoundingBoxE6;
+import org.osmdroid.util.BoundingBoxOsm;
 
 public class AppIntent {
     private static final String EXTRA_FILE="file";
@@ -48,7 +48,7 @@ public class AppIntent {
 
 
 
-    public static void setBoundingBox(Intent intent, BoundingBoxE6 box) {
+    public static void setBoundingBox(Intent intent, BoundingBoxOsm box) {
         intent.putExtra("N", box.getLatNorthE6());
         intent.putExtra("E", box.getLonEastE6());
         intent.putExtra("S", box.getLatSouthE6());
@@ -56,8 +56,8 @@ public class AppIntent {
 
     }
 
-    public static BoundingBoxE6 getBoundingBox(Intent intent) {
-        return new BoundingBoxE6(
+    public static BoundingBoxOsm getBoundingBox(Intent intent) {
+        return new BoundingBoxOsm(
                 intent.getIntExtra("N",0),
                 intent.getIntExtra("E",0),
                 intent.getIntExtra("S",0),

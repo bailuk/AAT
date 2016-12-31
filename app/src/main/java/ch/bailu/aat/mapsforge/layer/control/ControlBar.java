@@ -1,5 +1,6 @@
 package ch.bailu.aat.mapsforge.layer.control;
 
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -61,11 +62,6 @@ public class ControlBar extends MapsForgeLayer implements View.OnClickListener {
         return bar.getVisibility() == View.VISIBLE;
     }
 
-
-    @Override
-    public void onSharedPreferenceChanged(String key) {
-
-    }
 
     @Override
     public void onLayout(boolean changed, int l, int t, int r, int b) {
@@ -174,13 +170,14 @@ public class ControlBar extends MapsForgeLayer implements View.OnClickListener {
 
 
 
+
     @Override
-    public void onContentUpdated(int iid, GpxInformation info) {
+    public void draw(BoundingBox boundingBox, byte zoomLevel, Canvas canvas, Point topLeftPoint) {
 
     }
 
     @Override
-    public void draw(BoundingBox boundingBox, byte zoomLevel, Canvas canvas, Point topLeftPoint) {
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
 
     }
 }

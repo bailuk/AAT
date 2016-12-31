@@ -2,7 +2,7 @@ package ch.bailu.aat.gpx;
 
 import org.osmdroid.util.GeoPoint;
 
-import ch.bailu.aat.coordinates.BoundingBox;
+import ch.bailu.aat.coordinates.BoundingBoxE6;
 import ch.bailu.aat.gpx.interfaces.GpxDeltaPointInterface;
 import ch.bailu.aat.gpx.interfaces.GpxPointInterface;
 
@@ -54,8 +54,8 @@ public class GpxDeltaHelper  {
         return deltaT / 1000f;
     }
 
-    public static BoundingBox getBoundingBoxE6(GpxPointInterface a, GpxPointInterface b) {
-        return new BoundingBox(a, b);
+    public static BoundingBoxE6 getBoundingBoxE6(GpxPointInterface a, GpxPointInterface b) {
+        return new BoundingBoxE6(a, b);
     }
     
 }

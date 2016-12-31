@@ -6,7 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 
-import org.osmdroid.util.BoundingBoxE6;
+import org.osmdroid.util.BoundingBoxOsm;
 
 import java.io.Closeable;
 import java.io.File;
@@ -311,7 +311,7 @@ public class DirectorySynchronizer  implements Closeable {
         private ContentValues createContentValues(String pathname, String filename, 
                 GpxBigDeltaInterface summary) {
 
-            BoundingBoxE6 box = summary.getBoundingBox().toBoundingBoxE6();
+            BoundingBoxOsm box = summary.getBoundingBox().toBoundingBoxE6();
 
             ContentValues content = new ContentValues();
             content.put(GpxDbConstants.KEY_PATHNAME_OLD,   pathname);

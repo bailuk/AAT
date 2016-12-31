@@ -78,6 +78,7 @@ public class TileStackObject extends ObjectHandle {
         for (TileContainer tile: tiles) {
             tile.free();
         }
+        bitmap.free();
     }
 
 
@@ -181,9 +182,6 @@ public class TileStackObject extends ObjectHandle {
 
                 if (source != null) {
                     if (canvas == null) {
-                        //final int w = source.getWidth();
-                        //final int h = source.getHeight();
-
                         destination = new MapsForgeBitmap(tileSize);
                         canvas = destination.getCanvas();
                     }

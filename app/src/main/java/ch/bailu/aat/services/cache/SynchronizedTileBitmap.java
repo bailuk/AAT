@@ -10,11 +10,10 @@ import org.mapsforge.core.graphics.TileBitmap;
 import ch.bailu.aat.mapsforge.MapsForgeBitmap;
 
 public class SynchronizedTileBitmap {
-    private MapsForgeBitmap bitmap=null;
+    private MapsForgeBitmap bitmap = null;
     private Drawable drawable = null;
 
     private long size=ObjectHandle.MIN_SIZE;
-
 
     public synchronized Bitmap getBitmap() {
         if (bitmap != null)
@@ -37,21 +36,36 @@ public class SynchronizedTileBitmap {
     }
 
 
+    public synchronized void setSize() {
+        Bitmap b = getBitmap();
+
+        if (b == null) {
+            size = ObjectHandle.MIN_SIZE;
+        } else {
+            size = b.getHeight() * b.getRowBytes();
+        }
+
+    }
+
     public synchronized long getSize() {
         return size;
     }
 
 
     public synchronized void set(MapsForgeBitmap b) {
-        if (b != null && b.getBitmap() != null) {
-
-            bitmap = b;
-            drawable = null;
-
-            Bitmap bmp = b.getBitmap();
-            size = bmp.getHeight() * bmp.getRowBytes();
-        }
+        free();
+        bitmap = b;
+        setSize();
     }
 
 
+    public synchronized void free() {
+        if (bitmap != null) {
+            bitmap.free();
+        }
+
+        bitmap = null;
+        drawable = null;
+        setSize();
+    }
 }

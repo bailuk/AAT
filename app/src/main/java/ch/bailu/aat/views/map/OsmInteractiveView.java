@@ -54,7 +54,7 @@ public class OsmInteractiveView extends AbsOsmView implements
                 context.getContext(),
                 disp,
                 key, 
-                new DynTileProvider(context,key));
+                new DynTileProvider(context));
     }
     
     

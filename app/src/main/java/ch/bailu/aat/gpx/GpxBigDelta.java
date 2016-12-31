@@ -1,6 +1,6 @@
 package ch.bailu.aat.gpx;
 
-import ch.bailu.aat.coordinates.BoundingBox;
+import ch.bailu.aat.coordinates.BoundingBoxE6;
 import ch.bailu.aat.gpx.interfaces.GpxBigDeltaInterface;
 
 
@@ -17,7 +17,7 @@ public class GpxBigDelta implements GpxBigDeltaInterface {
 
     private int type;
 
-    private BoundingBox boundingBox = null;
+    private BoundingBoxE6 boundingBox = null;
 
 
     public GpxBigDelta(MaxSpeed max) {
@@ -83,9 +83,9 @@ public class GpxBigDelta implements GpxBigDeltaInterface {
         distance += d;
     }
 
-    private void setBounding(BoundingBox b) {
+    private void setBounding(BoundingBoxE6 b) {
         if (boundingBox == null) {
-            boundingBox = new BoundingBox(b);
+            boundingBox = new BoundingBoxE6(b);
         } else {
             boundingBox.add(b);
         }
@@ -93,15 +93,15 @@ public class GpxBigDelta implements GpxBigDeltaInterface {
 
     private void addBounding(int la, int lo) {
         if (boundingBox == null) {
-            boundingBox = new BoundingBox(la,lo);
+            boundingBox = new BoundingBoxE6(la,lo);
         } else {
             boundingBox.add(la,lo);
         }
     }
 
 
-    public BoundingBox getBoundingBox() {
-        if (boundingBox==null) return BoundingBox.NULL_BOX;
+    public BoundingBoxE6 getBoundingBox() {
+        if (boundingBox==null) return BoundingBoxE6.NULL_BOX;
         return boundingBox;
     }
 

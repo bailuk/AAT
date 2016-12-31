@@ -1,6 +1,6 @@
 package ch.bailu.aat.gpx.interfaces;
 
-import ch.bailu.aat.coordinates.BoundingBox;
+import ch.bailu.aat.coordinates.BoundingBoxE6;
 
 public interface GpxDeltaInterface {
     double getBearing();
@@ -8,5 +8,5 @@ public interface GpxDeltaInterface {
     float getSpeed();
     float getAcceleration();
     long  getTimeDelta();
-    BoundingBox getBoundingBox();
+    BoundingBoxE6 getBoundingBox();
 }

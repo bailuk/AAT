@@ -4,7 +4,7 @@ package org.osmdroid.views.util;
 import android.graphics.Point;
 
 import org.osmdroid.api.IGeoPoint;
-import org.osmdroid.util.BoundingBoxE6;
+import org.osmdroid.util.BoundingBoxOsm;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.util.constants.MapViewConstants;
 
@@ -117,9 +117,9 @@ public class Mercator implements MapViewConstants {
 	 * @param zoom
 	 * @return
 	 */
-	public static BoundingBoxE6 getBoundingBoxFromCoords(final int left, final int top,
-			final int right, final int bottom, final int zoom) {
-		return new BoundingBoxE6(tile2lat(top, zoom), tile2lon(right, zoom),
+	public static BoundingBoxOsm getBoundingBoxFromCoords(final int left, final int top,
+														  final int right, final int bottom, final int zoom) {
+		return new BoundingBoxOsm(tile2lat(top, zoom), tile2lon(right, zoom),
 				tile2lat(bottom, zoom), tile2lon(left, zoom));
 	}
 
@@ -130,9 +130,9 @@ public class Mercator implements MapViewConstants {
 	 * @param aZoom
 	 * @return
 	 */
-	public static BoundingBoxE6 getBoundingBoxFromPointInMapTile(final Point aMapTile,
-			final int aZoom) {
-		return new BoundingBoxE6(tile2lat(aMapTile.y, aZoom), tile2lon(aMapTile.x + 1, aZoom),
+	public static BoundingBoxOsm getBoundingBoxFromPointInMapTile(final Point aMapTile,
+																  final int aZoom) {
+		return new BoundingBoxOsm(tile2lat(aMapTile.y, aZoom), tile2lon(aMapTile.x + 1, aZoom),
 				tile2lat(aMapTile.y + 1, aZoom), tile2lon(aMapTile.x, aZoom));
 	}
 

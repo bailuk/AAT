@@ -6,17 +6,15 @@ import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Handler;
 
-import org.mapsforge.core.model.Tile;
 import org.osmdroid.tileprovider.MapTile;
 
 import ch.bailu.aat.helpers.AppBroadcaster;
 import ch.bailu.aat.helpers.AppIntent;
-import ch.bailu.aat.helpers.AppLog;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.cache.TileObject;
 import ch.bailu.aat.services.cache.TileStackObject;
 
-public class CachedTileProvider extends AbsOsmTileProvider {
+public class CachedTileProvider extends AbsOsmTileProvider  {
     private Handler handler = new Handler();
     private TileCache cache = TileCache.NULL;
 
@@ -30,14 +28,16 @@ public class CachedTileProvider extends AbsOsmTileProvider {
         public void onReceive(Context context, Intent intent) {
             String string = AppIntent.getFile(intent);
             if (cache.get((string)) != null) {
-                handler.sendEmptyMessage(MapTile.MAPTILE_SUCCESS_ID);
+                onCacheChanged();
             }
         }
 
     };
 
 
-
+    public void onCacheChanged() {
+        handler.sendEmptyMessage(MapTile.MAPTILE_SUCCESS_ID);
+    }
 
     public CachedTileProvider(ServiceContext sc)  {
         super(sc);
@@ -57,11 +57,6 @@ public class CachedTileProvider extends AbsOsmTileProvider {
             cache.put(handle);
         }
 
-        if (handle != null) {
-            //AppLog.d(this, handle.toString());
-            if (handle.getTileBitmap() == null) AppLog.d(this, "not yet created");
-            else if (handle.getTileBitmap().isDestroyed()) AppLog.d(this, "is destroyed");
-        }
         return handle;
     }
 
@@ -75,14 +70,14 @@ public class CachedTileProvider extends AbsOsmTileProvider {
 
 
     @Override
-    public void attach() {
+    public void onAttached() {
         AppBroadcaster.register(context, onFileChanged, AppBroadcaster.FILE_CHANGED_INCACHE);
         cache = new LockTileCache();
     }
 
 
     @Override
-    public void detach() {
+    public void onDetached() {
 
         context.unregisterReceiver(onFileChanged);
         cache.close();
@@ -107,7 +102,6 @@ public class CachedTileProvider extends AbsOsmTileProvider {
     public void setSubTileSource(TileObject.Source[] s) {
         super.setSubTileSource(s);
         cache.reset();
-        handler.sendEmptyMessage(MapTile.MAPTILE_SUCCESS_ID);
     }
 
 

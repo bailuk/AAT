@@ -1,5 +1,6 @@
 package ch.bailu.aat.coordinates;
 
+import org.mapsforge.core.model.LatLong;
 import org.osmdroid.api.IGeoPoint;
 import org.osmdroid.util.GeoPoint;
 
@@ -23,6 +24,7 @@ public class CH1903Coordinates extends MeterCoordinates {
     
     private int easting, northing;
 
+
     @Override
     public int getEasting() {
         return easting;
@@ -34,15 +36,21 @@ public class CH1903Coordinates extends MeterCoordinates {
         return northing;
     }
 
+
     public CH1903Coordinates(int e, int n) {
         easting=e;
         northing=n;
     }
-    
+
+
     public CH1903Coordinates(double la, double lo) {
         toCH1903(la, lo);
     }
-    
+
+    public CH1903Coordinates(LatLong p) {
+        this(p.getLatitude(), p.getLongitude());
+    }
+
     public CH1903Coordinates(IGeoPoint point) {
         toCH1903(((double)point.getLatitudeE6())/1e6d, 
         		((double)point.getLongitudeE6())/1e6d);
@@ -93,7 +101,13 @@ public class CH1903Coordinates extends MeterCoordinates {
         easting=round(easting,c);
         northing=round(northing,c);
     }
-    
+
+
+    @Override
+    public LatLong toLatLong() {
+        GeoPoint p = toGeoPoint();
+        return new LatLong(p.getLatitudeE6()/1e6d, p.getLongitudeE6()/1e6d);
+    }
 
     public GeoPoint toGeoPoint() {
         double x = getRelativeX(northing);
@@ -121,6 +135,7 @@ public class CH1903Coordinates extends MeterCoordinates {
                 - 0.0436d   * y3)
         );
     }
+
 
     private static double toDecimalDegree(double c) {
         return c * 100d / 36d;
@@ -157,7 +172,11 @@ public class CH1903Coordinates extends MeterCoordinates {
     */
 
 
-    private static final BoundingBox SWISS_AREA = new BoundingBox(48300000,11200000,45600000,5000000);
+    private static final BoundingBoxE6 SWISS_AREA = new BoundingBoxE6(48300000,11200000,45600000,5000000);
+
+    public static boolean inSwitzerland(LatLong point) {
+        return SWISS_AREA.contains(point);
+    }
     public static boolean inSwitzerland(GeoPoint point) {
         return SWISS_AREA.contains(point);
     }

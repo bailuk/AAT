@@ -1,21 +1,21 @@
 package ch.bailu.aat.gpx;
 
-import ch.bailu.aat.coordinates.BoundingBox;
+import ch.bailu.aat.coordinates.BoundingBoxE6;
 
 public class GpxNodeFinder extends GpxListWalker {
 
-    private final BoundingBox bounding;
+    private final BoundingBoxE6 bounding;
     private GpxPointNode node;
     private int index=0;
 
-    public GpxNodeFinder(BoundingBox b) {
+    public GpxNodeFinder(BoundingBoxE6 b) {
         bounding = b;
     }
 
 
     @Override
     public boolean doList(GpxList s) {
-        return BoundingBox.doOverlap(s.getDelta().getBoundingBox(), bounding);
+        return BoundingBoxE6.doOverlap(s.getDelta().getBoundingBox(), bounding);
     }
 
     @Override
@@ -23,7 +23,7 @@ public class GpxNodeFinder extends GpxListWalker {
         if (haveNode()) {
             return false;
 
-        } else if (BoundingBox.doOverlap(s.getBoundingBox(), bounding)) {
+        } else if (BoundingBoxE6.doOverlap(s.getBoundingBox(), bounding)) {
             return true;
 
         } else {

@@ -3,7 +3,7 @@ package ch.bailu.aat.preferences;
 import android.content.Context;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 
-import ch.bailu.aat.coordinates.BoundingBox;
+import ch.bailu.aat.coordinates.BoundingBoxE6;
 import ch.bailu.aat.services.directory.GpxDbConstants;
 
 public class SolidBoundingBox implements SolidTypeInterface {
@@ -21,15 +21,15 @@ public class SolidBoundingBox implements SolidTypeInterface {
         W = new SolidInteger(storage, key + "_W");
     }
     
-    public BoundingBox getValue() {
-        return new BoundingBox(
+    public BoundingBoxE6 getValue() {
+        return new BoundingBoxE6(
                 N.getValue(),
                 E.getValue(),
                 S.getValue(),
                 W.getValue());
     }
     
-    public void setValue(BoundingBox b) {
+    public void setValue(BoundingBoxE6 b) {
         N.setValue(b.getLatNorthE6());
         E.setValue(b.getLonEastE6());
         S.setValue(b.getLatSouthE6());

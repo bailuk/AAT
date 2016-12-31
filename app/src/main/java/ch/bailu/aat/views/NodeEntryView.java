@@ -5,7 +5,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import ch.bailu.aat.coordinates.BoundingBox;
+import ch.bailu.aat.coordinates.BoundingBoxE6;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.GpxPointNode;
 import ch.bailu.aat.helpers.AppHtml;
@@ -62,7 +62,7 @@ public class NodeEntryView extends LinearLayout {
 
         text.setText(AppHtml.fromHtml(html.toString()));
 
-        final BoundingBox bounding = node.getBoundingBox();
+        final BoundingBoxE6 bounding = node.getBoundingBox();
         map.frameBoundingBox(bounding);
         gpxOverlay.onContentUpdated(iid, info);
     }

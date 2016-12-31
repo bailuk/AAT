@@ -19,8 +19,9 @@ import ch.bailu.aat.helpers.AppLog;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.cache.TileStackObject;
 import ch.bailu.aat.views.map.CachedTileProvider;
+import ch.bailu.aat.views.map.DynTileProvider;
 
-public class MapsForgeTileCache extends CachedTileProvider implements TileCache, Attachable {
+public class MapsForgeTileCache extends DynTileProvider implements TileCache {
 
     final private ArrayList<Observer> observers = new ArrayList<Observer>(2);
 
@@ -28,22 +29,11 @@ public class MapsForgeTileCache extends CachedTileProvider implements TileCache,
 
     public MapsForgeTileCache(ServiceContext sc) {
         super(sc);
+    }
 
-        if (Looper.myLooper() == null) {
-            Looper.prepare();
-        }
-
-        setTileRequestCompleteHandler(new Handler() {
-            @Override
-            public void handleMessage (Message msg) {
-                if (msg.equals(MapTile.MAPTILE_SUCCESS_ID)) {
-                    for (Observer observer : observers) {
-                        AppLog.d(this, "observer.onChange()");
-                        observer.onChange();
-                    }
-                }
-            }
-        });
+    @Override
+    public void onCacheChanged() {
+        for(Observer o: observers) o.onChange();
     }
 
     @Override
@@ -54,8 +44,8 @@ public class MapsForgeTileCache extends CachedTileProvider implements TileCache,
     @Override
     public void destroy() {
         AppLog.d(this, "destroy()");
-        detach();
         observers.clear();
+        onDetached();
     }
 
 
@@ -68,10 +58,7 @@ public class MapsForgeTileCache extends CachedTileProvider implements TileCache,
         if (tileStackObject != null) {
 
             TileBitmap r = tileStackObject.getTileBitmap();
-
-            if (r == null) AppLog.d(this, "tilebitmap is null");
-            else if (AndroidGraphicFactory.getBitmap(r) == null) AppLog.d(this, "bitmap is null");
-            else {
+            if (r != null && !r.isDestroyed()) {
                 r.incrementRefCount();
                 return  r;
             }
@@ -118,7 +105,7 @@ public class MapsForgeTileCache extends CachedTileProvider implements TileCache,
 
     @Override
     public void setWorkingSet(Set<Job> set) {
-        AppLog.d(this, "setWorkingSet()");
+        //AppLog.d(this, "setWorkingSet()");
         if (set.size()*2 > capacity) {
             capacity = set.size()*2;
             ensureCapacity(set.size());
@@ -141,13 +128,5 @@ public class MapsForgeTileCache extends CachedTileProvider implements TileCache,
         observers.remove(observer);
     }
 
-    @Override
-    public void onAttached() {
-        super.attach();
-    }
 
-    @Override
-    public void onDetached() {
-        super.detach();
-    }
 }

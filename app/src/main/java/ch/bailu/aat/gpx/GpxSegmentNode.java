@@ -1,6 +1,6 @@
 package ch.bailu.aat.gpx;
 
-import ch.bailu.aat.coordinates.BoundingBox;
+import ch.bailu.aat.coordinates.BoundingBoxE6;
 import ch.bailu.aat.gpx.interfaces.GpxBigDeltaInterface;
 import ch.bailu.aat.gpx.linked_list.Node;
 import ch.bailu.aat.gpx.segmented_list.SegmentNode;
@@ -66,7 +66,7 @@ public class GpxSegmentNode extends SegmentNode implements GpxBigDeltaInterface 
     }
 
 
-    public BoundingBox getBoundingBox() {
+    public BoundingBoxE6 getBoundingBox() {
         return delta.getBoundingBox();
     }
 

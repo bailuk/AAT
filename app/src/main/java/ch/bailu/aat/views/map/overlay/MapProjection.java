@@ -4,11 +4,11 @@ import android.graphics.Point;
 import android.graphics.Rect;
 
 import org.osmdroid.api.IGeoPoint;
-import org.osmdroid.util.BoundingBoxE6;
+import org.osmdroid.util.BoundingBoxOsm;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
 
-import ch.bailu.aat.coordinates.BoundingBox;
+import ch.bailu.aat.coordinates.BoundingBoxE6;
 import ch.bailu.aat.gpx.interfaces.GpxPointInterface;
 
 public class MapProjection {
@@ -20,7 +20,7 @@ public class MapProjection {
     private final GeoPoint cachedPoint = new GeoPoint(0,0);
     
     private MapView.Projection projection;
-    private BoundingBox bounding;
+    private BoundingBoxE6 bounding;
 
     private float pixels_per_meter;
     private int sdistance;
@@ -41,8 +41,8 @@ public class MapProjection {
         
         projection = map.getProjection();
 
-        final BoundingBoxE6 boundingE6 = map.getBoundingBox();
-        bounding = new BoundingBox(boundingE6);
+        final BoundingBoxOsm boundingE6 = map.getBoundingBox();
+        bounding = new BoundingBoxE6(boundingE6);
 
 
 
@@ -106,12 +106,12 @@ public class MapProjection {
     }
 
 
-    public boolean isVisible(BoundingBox b) {
-        return BoundingBox.doOverlap(b, bounding);
+    public boolean isVisible(BoundingBoxE6 b) {
+        return BoundingBoxE6.doOverlap(b, bounding);
     }
 
 
-    public Rect toMapPixels(BoundingBox b) {
+    public Rect toMapPixels(BoundingBoxE6 b) {
         cachedPoint.setCoordsE6(b.getLatNorthE6(), b.getLonWestE6());
         
         projection.toMapPixels(cachedPoint, cachedPixel);

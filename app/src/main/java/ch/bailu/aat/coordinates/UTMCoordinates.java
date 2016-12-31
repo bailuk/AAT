@@ -1,13 +1,15 @@
 package ch.bailu.aat.coordinates;
 
+import org.mapsforge.core.model.LatLong;
 import org.osmdroid.api.IGeoPoint;
 import org.osmdroid.util.GeoPoint;
 
 import java.util.Locale;
 
 public class UTMCoordinates extends MeterCoordinates {
-    
-    
+
+
+
     private static class EastingZones {
         private final static double WIDTH_DEG=6d;
         //private static final int MIDDLE_ZONE=31;
@@ -54,8 +56,11 @@ public class UTMCoordinates extends MeterCoordinates {
     private final int ezone;
     double easting, northing;
     private final boolean south;
-    
-    
+
+    public UTMCoordinates(LatLong p) {
+        this(p.getLatitude(), p.getLongitude());
+    }
+
     public UTMCoordinates(double la, double lo) {
         ezone=EastingZones.getZone(lo);
         nzone=NorthingZones.getZone(la);
@@ -112,7 +117,13 @@ public class UTMCoordinates extends MeterCoordinates {
     public GeoPoint toGeoPoint() {
         return toGeoPoint(easting, northing, ezone, south);
     }
-    
+
+    @Override
+    public LatLong toLatLong() {
+        GeoPoint point = toGeoPoint();
+        return new LatLong(point.getLatitudeE6()/1e6d, point.getLongitudeE6()/1e6d);
+    }
+
 
     @Override
     public String toString() {

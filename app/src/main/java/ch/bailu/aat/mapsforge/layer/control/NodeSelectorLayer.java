@@ -6,15 +6,16 @@ import android.util.SparseArray;
 
 import org.mapsforge.core.graphics.Canvas;
 
-import ch.bailu.aat.coordinates.BoundingBox;
+import ch.bailu.aat.coordinates.BoundingBoxE6;
+import ch.bailu.aat.dispatcher.OnContentUpdatedInterface;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.GpxList;
 import ch.bailu.aat.gpx.GpxNodeFinder;
 import ch.bailu.aat.gpx.GpxPointNode;
-import ch.bailu.aat.mapsforge.layer.ContextLayer;
+import ch.bailu.aat.mapsforge.layer.context.MapContext;
 import ch.bailu.aat.mapsforge.layer.MapsForgeLayer;
 
-public abstract class NodeSelectorLayer extends MapsForgeLayer {
+public abstract class NodeSelectorLayer extends MapsForgeLayer implements OnContentUpdatedInterface {
 
     private final static int COLOR = 0xccffffff;
 
@@ -33,14 +34,14 @@ public abstract class NodeSelectorLayer extends MapsForgeLayer {
     private int foundID, foundIndex;
     private GpxPointNode foundNode;
 
-    private final ContextLayer clayer;
+    private final MapContext clayer;
 
-    public NodeSelectorLayer(ContextLayer cl) {
+    public NodeSelectorLayer(MapContext cl) {
 
         clayer = cl;
 
-        square_size = cl.getDenisity().toDPi(SQUARE_SIZE);
-        square_hsize = cl.getDenisity().toDPi(SQUARE_HSIZE);
+        square_size = cl.metrics.density.toDPi(SQUARE_SIZE);
+        square_hsize = cl.metrics.density.toDPi(SQUARE_HSIZE);
         centerRect.left = 0;
         centerRect.right = square_size;
         centerRect.top = 0;
@@ -56,7 +57,7 @@ public abstract class NodeSelectorLayer extends MapsForgeLayer {
         centerRect.offsetTo(w().getWidth() / 2 - square_hsize,
                 getOsmView().getHeight() / 2 - square_hsize);
 
-        BoundingBox centerBounding = new BoundingBox();
+        BoundingBoxOsm centerBounding = new BoundingBoxOsm();
         centerBounding.add(p.projection.fromPixels(centerRect.left, centerRect.top));
         centerBounding.add(p.projection.fromPixels(centerRect.right, centerRect.bottom));
 
@@ -72,7 +73,7 @@ public abstract class NodeSelectorLayer extends MapsForgeLayer {
 
 
 
-    private void findNodeAndNotify(BoundingBox centerBounding) {
+    private void findNodeAndNotify(BoundingBoxE6 centerBounding) {
         if (foundNode == null || centerBounding.contains(foundNode) == false) {
 
             if (findNode(centerBounding)) {
@@ -82,7 +83,7 @@ public abstract class NodeSelectorLayer extends MapsForgeLayer {
     }
 
 
-    private boolean findNode(BoundingBox centerBounding) {
+    private boolean findNode(BoundingBoxE6 centerBounding) {
         boolean found = false;
 
         for (int i = 0; i < gpxHash.size() && found == false; i++) {
@@ -121,7 +122,7 @@ public abstract class NodeSelectorLayer extends MapsForgeLayer {
     public void drawCenterSquare() {
         /*
         clayer.drawRect(centerRect);
-        clayer.drawPoint(clayer.getCenter());
+        clayer.point(clayer.getCenter());
         */
     }
 
@@ -136,10 +137,6 @@ public abstract class NodeSelectorLayer extends MapsForgeLayer {
         }
     }
 
-    @Override
-    public void onSharedPreferenceChanged(String key) {
-
-    }
 
     @Override
     public void onLayout(boolean changed, int l, int t, int r, int b) {

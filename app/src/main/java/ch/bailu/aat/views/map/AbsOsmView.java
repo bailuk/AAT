@@ -3,10 +3,10 @@ package ch.bailu.aat.views.map;
 import android.content.Context;
 import android.view.ViewGroup;
 
-import org.osmdroid.util.BoundingBoxE6;
+import org.osmdroid.util.BoundingBoxOsm;
 import org.osmdroid.views.MapView;
 
-import ch.bailu.aat.coordinates.BoundingBox;
+import ch.bailu.aat.coordinates.BoundingBoxE6;
 import ch.bailu.aat.views.map.overlay.OsmOverlay;
 import ch.bailu.aat.views.map.overlay.OverlayList;
 import ch.bailu.aat.views.map.overlay.gpx.MapIconCache;
@@ -18,7 +18,7 @@ public abstract class AbsOsmView extends ViewGroup {
     public final MapIconCache mapIconCache = new MapIconCache();
 
 
-    private BoundingBox pendingFrameBounding=null;
+    private BoundingBoxE6 pendingFrameBounding=null;
 
     private final OverlayList overlayList;
 
@@ -54,17 +54,17 @@ public abstract class AbsOsmView extends ViewGroup {
 
 
 
-    public void frameBoundingBox(BoundingBox boundingBox)  {
+    public void frameBoundingBox(BoundingBoxE6 boundingBox)  {
         if (this.getWidth()==0 || this.getHeight()==0) {
             pendingFrameBounding=boundingBox;
         } else {
-            BoundingBoxE6 bounding = boundingBox.toBoundingBoxE6();
+            BoundingBoxOsm bounding = boundingBox.toBoundingBoxE6();
             frameBoundingE6(bounding);
         }
     }
 
 
-    private void frameBoundingE6(BoundingBoxE6 bounding) {
+    private void frameBoundingE6(BoundingBoxOsm bounding) {
         if (bounding.getDiagonalLengthInMeters()<5) {
             map.getController().setZoom(14);
         } else {

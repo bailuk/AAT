@@ -1,6 +1,6 @@
 package ch.bailu.aat.views.map.overlay.gpx.legend;
 
-import ch.bailu.aat.coordinates.BoundingBox;
+import ch.bailu.aat.coordinates.BoundingBoxE6;
 import ch.bailu.aat.views.map.overlay.MapPainter;
 import ch.bailu.aat.views.map.overlay.MapTwoNodes;
 import ch.bailu.aat.views.map.overlay.MapTwoNodes.PixelNode;
@@ -18,7 +18,7 @@ public class MapViewContext {
         nodes=n;
     }
     
-    public boolean isVisible(BoundingBox bounding) {
+    public boolean isVisible(BoundingBoxE6 bounding) {
         return painter.projection.isVisible(bounding);
         
     }

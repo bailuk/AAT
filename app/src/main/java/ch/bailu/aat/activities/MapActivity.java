@@ -9,7 +9,7 @@ import android.view.View.OnClickListener;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
-import org.osmdroid.util.BoundingBoxE6;
+import org.osmdroid.util.BoundingBoxOsm;
 import org.osmdroid.util.GeoPoint;
 
 import ch.bailu.aat.R;
@@ -86,7 +86,7 @@ public class MapActivity extends AbsDispatcher implements OnClickListener{
 
         if (query != null) {
             Intent intent = new Intent();
-            AppIntent.setBoundingBox(intent, new BoundingBoxE6(0,0,0,0));
+            AppIntent.setBoundingBox(intent, new BoundingBoxOsm(0,0,0,0));
             intent.setData(uri);
             ActivitySwitcher.start(this, NominatimActivity.class, intent);
         }

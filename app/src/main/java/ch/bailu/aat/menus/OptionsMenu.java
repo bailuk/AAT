@@ -6,7 +6,7 @@ import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import org.osmdroid.util.BoundingBoxE6;
+import org.osmdroid.util.BoundingBoxOsm;
 
 import ch.bailu.aat.R;
 import ch.bailu.aat.activities.ActivitySwitcher;
@@ -96,7 +96,7 @@ public class OptionsMenu extends AbsMenu {
 
         } else if (item == nominatim) {
             Intent intent = new Intent();
-            AppIntent.setBoundingBox(intent, new BoundingBoxE6(0,0,0,0));
+            AppIntent.setBoundingBox(intent, new BoundingBoxOsm(0,0,0,0));
             ActivitySwitcher.start(c, NominatimActivity.class);
 
 

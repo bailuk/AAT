@@ -18,7 +18,7 @@ import static org.osmdroid.util.MyMath.gudermannInverse;
  * @author Nicolas Gramlich
  * 
  */
-public class BoundingBoxE6 implements Parcelable, Serializable, MapViewConstants {
+public class BoundingBoxOsm implements Parcelable, Serializable, MapViewConstants {
 
 	// ===========================================================
 	// Constants
@@ -39,15 +39,15 @@ public class BoundingBoxE6 implements Parcelable, Serializable, MapViewConstants
 	// Constructors
 	// ===========================================================
 
-	public BoundingBoxE6(final int northE6, final int eastE6, final int southE6, final int westE6) {
+	public BoundingBoxOsm(final int northE6, final int eastE6, final int southE6, final int westE6) {
 		this.mLatNorthE6 = northE6;
 		this.mLonEastE6 = eastE6;
 		this.mLatSouthE6 = southE6;
 		this.mLonWestE6 = westE6;
 	}
 
-	public BoundingBoxE6(final double north, final double east, final double south,
-			final double west) {
+	public BoundingBoxOsm(final double north, final double east, final double south,
+						  final double west) {
 		this.mLatNorthE6 = (int) (north * 1E6);
 		this.mLonEastE6 = (int) (east * 1E6);
 		this.mLatSouthE6 = (int) (south * 1E6);
@@ -59,7 +59,7 @@ public class BoundingBoxE6 implements Parcelable, Serializable, MapViewConstants
 	// ===========================================================
 
 	/**
-	 * @return GeoPoint center of this BoundingBox
+	 * @return GeoPoint center of this BoundingBoxOsm
 	 */
 	public GeoPoint getCenter() {
 		return new GeoPoint((this.mLatNorthE6 + this.mLatSouthE6) / 2,
@@ -169,12 +169,12 @@ public class BoundingBoxE6 implements Parcelable, Serializable, MapViewConstants
 		return new GeoPoint(lat, lon);
 	}
 
-	public BoundingBoxE6 increaseByScale(final float pBoundingboxPaddingRelativeScale) {
+	public BoundingBoxOsm increaseByScale(final float pBoundingboxPaddingRelativeScale) {
 		final GeoPoint pCenter = this.getCenter();
 		final int mLatSpanE6Padded_2 = (int) ((this.getLatitudeSpanE6() * pBoundingboxPaddingRelativeScale) / 2);
 		final int mLonSpanE6Padded_2 = (int) ((this.getLongitudeSpanE6() * pBoundingboxPaddingRelativeScale) / 2);
 
-		return new BoundingBoxE6(pCenter.getLatitudeE6() + mLatSpanE6Padded_2,
+		return new BoundingBoxOsm(pCenter.getLatitudeE6() + mLatSpanE6Padded_2,
 				pCenter.getLongitudeE6() + mLonSpanE6Padded_2, pCenter.getLatitudeE6()
 						- mLatSpanE6Padded_2, pCenter.getLongitudeE6() - mLonSpanE6Padded_2);
 	}
@@ -199,7 +199,7 @@ public class BoundingBoxE6 implements Parcelable, Serializable, MapViewConstants
 				Math.max(this.mLonWestE6, Math.min(this.mLonEastE6, aLongitudeE6)));
 	}
 
-	public static BoundingBoxE6 fromGeoPoints(final ArrayList<? extends GeoPoint> partialPolyLine) {
+	public static BoundingBoxOsm fromGeoPoints(final ArrayList<? extends GeoPoint> partialPolyLine) {
 		int minLat = Integer.MAX_VALUE;
 		int minLon = Integer.MAX_VALUE;
 		int maxLat = Integer.MIN_VALUE;
@@ -214,7 +214,7 @@ public class BoundingBoxE6 implements Parcelable, Serializable, MapViewConstants
 			maxLon = Math.max(maxLon, longitudeE6);
 		}
 
-		return new BoundingBoxE6(minLat, minLon, maxLat, maxLon);
+		return new BoundingBoxOsm(minLat, minLon, maxLat, maxLon);
 	}
 
 	public boolean contains(final GeoPoint pGeoPoint) {
@@ -234,15 +234,15 @@ public class BoundingBoxE6 implements Parcelable, Serializable, MapViewConstants
 	// Parcelable
 	// ===========================================================
 
-	public static final Parcelable.Creator<BoundingBoxE6> CREATOR = new Parcelable.Creator<BoundingBoxE6>() {
+	public static final Parcelable.Creator<BoundingBoxOsm> CREATOR = new Parcelable.Creator<BoundingBoxOsm>() {
 		@Override
-		public BoundingBoxE6 createFromParcel(final Parcel in) {
+		public BoundingBoxOsm createFromParcel(final Parcel in) {
 			return readFromParcel(in);
 		}
 
 		@Override
-		public BoundingBoxE6[] newArray(final int size) {
-			return new BoundingBoxE6[size];
+		public BoundingBoxOsm[] newArray(final int size) {
+			return new BoundingBoxOsm[size];
 		}
 	};
 
@@ -259,11 +259,11 @@ public class BoundingBoxE6 implements Parcelable, Serializable, MapViewConstants
 		out.writeInt(this.mLonWestE6);
 	}
 
-	private static BoundingBoxE6 readFromParcel(final Parcel in) {
+	private static BoundingBoxOsm readFromParcel(final Parcel in) {
 		final int latNorthE6 = in.readInt();
 		final int lonEastE6 = in.readInt();
 		final int latSouthE6 = in.readInt();
 		final int lonWestE6 = in.readInt();
-		return new BoundingBoxE6(latNorthE6, lonEastE6, latSouthE6, lonWestE6);
+		return new BoundingBoxOsm(latNorthE6, lonEastE6, latSouthE6, lonWestE6);
 	}
 }

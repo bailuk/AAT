@@ -11,7 +11,7 @@ import android.view.ViewGroup.LayoutParams;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import org.osmdroid.util.BoundingBoxE6;
+import org.osmdroid.util.BoundingBoxOsm;
 
 import java.io.File;
 import java.io.IOException;
@@ -161,7 +161,7 @@ public abstract class AbsOsmApiActivity extends AbsDispatcher implements OnClick
     }
 
 
-    public abstract OsmApiHelper createUrlGenerator(BoundingBoxE6 boundingBox) throws SecurityException, IOException;
+    public abstract OsmApiHelper createUrlGenerator(BoundingBoxOsm boundingBox) throws SecurityException, IOException;
     public abstract void addButtons(ControlBar bar);
 
 

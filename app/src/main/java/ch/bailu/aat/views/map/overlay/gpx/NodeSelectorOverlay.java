@@ -4,7 +4,7 @@ import android.graphics.Point;
 import android.graphics.Rect;
 import android.util.SparseArray;
 
-import ch.bailu.aat.coordinates.BoundingBox;
+import ch.bailu.aat.coordinates.BoundingBoxE6;
 import ch.bailu.aat.dispatcher.OnContentUpdatedInterface;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.GpxList;
@@ -51,7 +51,7 @@ public abstract class NodeSelectorOverlay extends OsmOverlay implements OnConten
         centerRect.offsetTo(getOsmView().getWidth()/2  - square_hsize,
                 getOsmView().getHeight()/2 - square_hsize);
 
-        BoundingBox centerBounding = new BoundingBox();
+        BoundingBoxE6 centerBounding = new BoundingBoxE6();
         centerBounding.add(p.projection.fromPixels(centerRect.left, centerRect.top));
         centerBounding.add(p.projection.fromPixels(centerRect.right, centerRect.bottom));
 
@@ -65,7 +65,7 @@ public abstract class NodeSelectorOverlay extends OsmOverlay implements OnConten
     }
 
 
-    private void findNodeAndNotify(BoundingBox centerBounding) {
+    private void findNodeAndNotify(BoundingBoxE6 centerBounding) {
         if (foundNode == null || centerBounding.contains(foundNode) == false) {
 
             if (findNode(centerBounding)) {
@@ -78,7 +78,7 @@ public abstract class NodeSelectorOverlay extends OsmOverlay implements OnConten
 
 
 
-    private boolean findNode(BoundingBox centerBounding) {
+    private boolean findNode(BoundingBoxE6 centerBounding) {
         boolean found=false;
 
         for (int i=0; i < gpxHash.size() && found==false; i++) {

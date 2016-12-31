@@ -1,6 +1,6 @@
 package ch.bailu.aat.gpx;
 
-import ch.bailu.aat.coordinates.BoundingBox;
+import ch.bailu.aat.coordinates.BoundingBoxE6;
 import ch.bailu.aat.gpx.interfaces.GpxDeltaPointInterface;
 import ch.bailu.aat.gpx.linked_list.Node;
 
@@ -130,8 +130,8 @@ public abstract class GpxPointNode extends Node implements GpxDeltaPointInterfac
     
         
     @Override
-    public BoundingBox getBoundingBox() {
-        final BoundingBox  box = new BoundingBox();
+    public BoundingBoxE6 getBoundingBox() {
+        final BoundingBoxE6 box = new BoundingBoxE6();
         
         String bounding = attributes.get("boundingbox");
         if (bounding != null) {

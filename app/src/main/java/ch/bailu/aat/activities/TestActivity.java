@@ -37,9 +37,13 @@ import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.helpers.AppDensity;
 import ch.bailu.aat.helpers.AppLog;
 import ch.bailu.aat.mapsforge.MapsForgeView;
+import ch.bailu.aat.mapsforge.layer.CurrentLocationLayer;
+import ch.bailu.aat.mapsforge.layer.Dem3NameLayer;
 import ch.bailu.aat.mapsforge.layer.ZoomLevel;
 import ch.bailu.aat.mapsforge.layer.control.InformationBar;
 import ch.bailu.aat.mapsforge.layer.control.NavigationBar;
+import ch.bailu.aat.mapsforge.layer.gpx.GpxTestLayer;
+import ch.bailu.aat.mapsforge.layer.gpx.WayLayer;
 import ch.bailu.aat.mapsforge.layer.grid.GridDynLayer;
 import ch.bailu.aat.test.PreferencesFromSdcard;
 import ch.bailu.aat.test.PreferencesToSdcard;
@@ -154,16 +158,17 @@ public class TestActivity extends AbsDispatcher {
 
 
 
-        MapsForgeView mapsForge = new MapsForgeView(getServiceContext(), SOLID_KEY);
+        MapsForgeView mapsForge = new MapsForgeView(getServiceContext(), this, SOLID_KEY);
 
-        mapsForge.add(new NavigationBar(mapsForge, this));
-        mapsForge.add(new ZoomLevel(mapsForge.getContextLayer(), new AppDensity(getServiceContext())));
-        mapsForge.add(new GridDynLayer(mapsForge.getContextLayer()));
-        mapsForge.add(new InformationBar(mapsForge.getContextLayer(), this));
 
-        mapsForge.setClickable(true);
-        mapsForge.getMapScaleBar().setVisible(false);
-        mapsForge.setBuiltInZoomControls(false);
+        mapsForge.add(new NavigationBar(mapsForge.mcontext, this));
+        mapsForge.add(new ZoomLevel(mapsForge.mcontext, new AppDensity(getServiceContext())));
+        mapsForge.add(new GridDynLayer(mapsForge.mcontext));
+        mapsForge.add(new InformationBar(mapsForge.mcontext, this));
+        mapsForge.add(new CurrentLocationLayer(mapsForge.mcontext, this));
+        mapsForge.add(new Dem3NameLayer(mapsForge.mcontext));
+        mapsForge.add(new GpxTestLayer(mapsForge.mcontext, this, InfoID.OVERLAY));
+
         mapsForge.setZoomLevelMin((byte) 10);
         mapsForge.setZoomLevelMax((byte) 20);
 
@@ -182,10 +187,6 @@ public class TestActivity extends AbsDispatcher {
         tileLayer.setXmlRenderTheme(InternalRenderTheme.DEFAULT);
 */
 
-
-
-        mapsForge.setCenter(new LatLong(52.517037, 13.38886));
-        mapsForge.setZoomLevel((byte) 12);
 
 
         mv.add(mapsForge, "MapsForge");
@@ -229,6 +230,7 @@ public class TestActivity extends AbsDispatcher {
         map.add(new InformationBarOverlay(map, this));
         map.add(new ZoomLevelOverlay(map));
         map.add(new Dem3NameOverlay(map));
+
 
 
         addSource(new TrackerSource(getServiceContext()));

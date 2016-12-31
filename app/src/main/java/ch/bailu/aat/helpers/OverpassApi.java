@@ -2,7 +2,7 @@ package ch.bailu.aat.helpers;
 
 import android.content.Context;
 
-import org.osmdroid.util.BoundingBoxE6;
+import org.osmdroid.util.BoundingBoxOsm;
 
 import java.io.File;
 import java.io.IOException;
@@ -25,7 +25,7 @@ public class OverpassApi extends OsmApiHelper {
 
 
     
-    public OverpassApi(Context context, BoundingBoxE6 b) throws SecurityException, IOException {
+    public OverpassApi(Context context, BoundingBoxOsm b) throws SecurityException, IOException {
         NAME=context.getString(R.string.query_overpass);
         bounding = toString(b);
         directory = AppDirectory.getDataDirectory(context, AppDirectory.DIR_OVERPASS);
@@ -39,7 +39,7 @@ public class OverpassApi extends OsmApiHelper {
 
     
     
-    private static String toString(BoundingBoxE6 bounding) {
+    private static String toString(BoundingBoxOsm bounding) {
         final double lo1 = bounding.getLonWestE6()/1E6;
         final double la1 = bounding.getLatSouthE6()/1E6;
         final double lo2 = bounding.getLonEastE6()/1E6;

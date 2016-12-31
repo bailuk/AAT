@@ -165,8 +165,8 @@ public class GpxIterator extends AbsIterator {
 
 
     @Override
-    public BoundingBox getBoundingBox() {
-        return new BoundingBox(
+    public BoundingBoxOsm getBoundingBox() {
+        return new BoundingBoxOsm(
                 (int)getLong(GpxDbConstants.KEY_NORTH_BOUNDING),
                 (int)getLong(GpxDbConstants.KEY_EAST_BOUNDING),
                 (int)getLong(GpxDbConstants.KEY_SOUTH_BOUNDING),

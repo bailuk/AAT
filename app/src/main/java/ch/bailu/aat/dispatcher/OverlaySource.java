@@ -9,13 +9,12 @@ import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import java.io.Closeable;
 import java.io.File;
 
-import ch.bailu.aat.coordinates.BoundingBox;
+import ch.bailu.aat.coordinates.BoundingBoxE6;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.GpxList;
 import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.helpers.AppBroadcaster;
 import ch.bailu.aat.helpers.AppIntent;
-import ch.bailu.aat.helpers.AppLog;
 import ch.bailu.aat.preferences.SolidOverlayFile;
 import ch.bailu.aat.preferences.SolidOverlayFileList;
 import ch.bailu.aat.services.ServiceContext;
@@ -67,7 +66,7 @@ public class OverlaySource extends ContentSource {
         private final SolidOverlayFile soverlay;
 
         private GpxObject handle = GpxObjectStatic.NULL;
-        private BoundingBox bounding = BoundingBox.NULL_BOX;
+        private BoundingBoxE6 bounding = BoundingBoxE6.NULL_BOX;
 
 
         public OverlayInformation(int index) {
@@ -102,7 +101,7 @@ public class OverlaySource extends ContentSource {
         private void disableOverlay() {
             handle.free();
             handle = GpxObjectStatic.NULL;
-            bounding = BoundingBox.NULL_BOX;
+            bounding = BoundingBoxE6.NULL_BOX;
         }
 
 
@@ -117,7 +116,7 @@ public class OverlaySource extends ContentSource {
             } else {
                 disableOverlay();
             }
-            AppLog.d(this, "send " + infoID);
+            //AppLog.d(this, "send " + infoID);
             sendUpdate(infoID, this);
         }
 
@@ -164,7 +163,7 @@ public class OverlaySource extends ContentSource {
         }
 
         @Override
-        public BoundingBox getBoundingBox() {
+        public BoundingBoxE6 getBoundingBox() {
             return bounding;
         }
 

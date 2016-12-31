@@ -24,7 +24,7 @@ import org.osmdroid.events.MapListener;
 import org.osmdroid.events.ScrollEvent;
 import org.osmdroid.events.ZoomEvent;
 import org.osmdroid.tileprovider.util.SimpleInvalidationHandler;
-import org.osmdroid.util.BoundingBoxE6;
+import org.osmdroid.util.BoundingBoxOsm;
 import org.osmdroid.util.constants.GeoConstants;
 import org.osmdroid.views.overlay.Overlay;
 import org.osmdroid.views.overlay.OverlayManager;
@@ -173,11 +173,11 @@ public class MapView extends ViewGroup implements IMapView, MapViewConstants {
         return this.getBoundingBox().getLongitudeSpanE6();
     }
 
-    public BoundingBoxE6 getBoundingBox() {
+    public BoundingBoxOsm getBoundingBox() {
         return getBoundingBox(getWidth(), getHeight());
     }
 
-    public BoundingBoxE6 getBoundingBox(final int pViewWidth, final int pViewHeight) {
+    public BoundingBoxOsm getBoundingBox(final int pViewWidth, final int pViewHeight) {
 
         final int world_2 = tileSystem.MapSize(mZoomLevel) / 2;
         final Rect screenRect = getScreenRect(null);
@@ -188,7 +188,7 @@ public class MapView extends ViewGroup implements IMapView, MapViewConstants {
         final IGeoPoint swGeoPoint = tileSystem.PixelXYToLatLong(screenRect.left, screenRect.bottom,
                 mZoomLevel, null);
 
-        return new BoundingBoxE6(neGeoPoint.getLatitudeE6(), neGeoPoint.getLongitudeE6(),
+        return new BoundingBoxOsm(neGeoPoint.getLatitudeE6(), neGeoPoint.getLongitudeE6(),
                 swGeoPoint.getLatitudeE6(), swGeoPoint.getLongitudeE6());
     }
 
@@ -607,7 +607,7 @@ public class MapView extends ViewGroup implements IMapView, MapViewConstants {
         private final int offsetX = -worldSize_2;
         private final int offsetY = -worldSize_2;
 
-        private final BoundingBoxE6 mBoundingBoxProjection;
+        private final BoundingBoxOsm mBoundingBoxProjection;
         private final int mZoomLevelProjection;
         private final Rect mScreenRectProjection;
 
@@ -625,7 +625,7 @@ public class MapView extends ViewGroup implements IMapView, MapViewConstants {
             return mZoomLevelProjection;
         }
 
-        public BoundingBoxE6 getBoundingBox() {
+        public BoundingBoxOsm getBoundingBox() {
             return mBoundingBoxProjection;
         }
 

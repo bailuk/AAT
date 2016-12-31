@@ -8,7 +8,10 @@ import android.graphics.Paint;
 import android.graphics.Paint.Style;
 import android.graphics.drawable.BitmapDrawable;
 
+import org.mapsforge.map.android.graphics.AndroidGraphicFactory;
+
 import ch.bailu.aat.helpers.AppDensity;
+import ch.bailu.aat.mapsforge.MapsForgeBitmap;
 
 public class NodePainter {
     private static final int STROKE_WIDTH=MapCanvas.EDGE_WIDTH;
@@ -16,6 +19,11 @@ public class NodePainter {
 
 
     public static BitmapDrawable createNode(AppDensity res, Resources r) {
+        return new BitmapDrawable(r, createNodeMF(res).getBitmap());
+    }
+
+
+    public static MapsForgeBitmap createNodeMF(AppDensity res) {
         final int color = Color.WHITE;
 
 
@@ -24,8 +32,10 @@ public class NodePainter {
         int hsize = (radius+ stroke_width);
         int size = hsize * 2;
 
+        MapsForgeBitmap bmp = new MapsForgeBitmap(size);
 
-        Bitmap bitmap = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888);
+
+        Bitmap bitmap = bmp.getBitmap();
         Canvas canvas = new Canvas(bitmap);
         Paint stroke = MapCanvas.createEdgePaint(res);
         stroke.setAntiAlias(true);
@@ -34,11 +44,12 @@ public class NodePainter {
         fill.setAntiAlias(false);
         fill.setStyle(Style.FILL);
         fill.setColor(color);
-        
+
         canvas.drawCircle(hsize,hsize, radius, fill);
         canvas.drawCircle(hsize, hsize, radius, stroke);
 
-        
-        return new BitmapDrawable(r, bitmap);
+
+        return bmp;
     }
+
 }

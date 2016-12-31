@@ -5,7 +5,7 @@ import android.graphics.Paint;
 import android.graphics.Paint.Style;
 import android.graphics.Rect;
 
-import ch.bailu.aat.coordinates.BoundingBox;
+import ch.bailu.aat.coordinates.BoundingBoxE6;
 import ch.bailu.aat.dispatcher.DispatcherInterface;
 import ch.bailu.aat.gpx.GpxList;
 import ch.bailu.aat.gpx.GpxListWalker;
@@ -78,7 +78,7 @@ public class GpxTestOverlay extends GpxOverlay {
         @Override
         public void doPoint(GpxPointNode point) {}
 
-        private boolean drawBoxIfVisible(BoundingBox box, Paint paint) {
+        private boolean drawBoxIfVisible(BoundingBoxE6 box, Paint paint) {
             if (painter.projection.isVisible(box)) {
                 boxCount++;
                 drawRect(rectFromBox(box), paint);
@@ -88,7 +88,7 @@ public class GpxTestOverlay extends GpxOverlay {
         }
 
 
-        private Rect rectFromBox(BoundingBox box) {
+        private Rect rectFromBox(BoundingBoxE6 box) {
             return painter.projection.toMapPixels(box);
         }
 

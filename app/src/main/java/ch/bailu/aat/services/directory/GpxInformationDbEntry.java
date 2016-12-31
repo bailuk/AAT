@@ -4,7 +4,7 @@ import android.database.Cursor;
 
 import java.io.File;
 
-import ch.bailu.aat.coordinates.BoundingBox;
+import ch.bailu.aat.coordinates.BoundingBoxE6;
 import ch.bailu.aat.gpx.GpxInformation;
 
 public class GpxInformationDbEntry extends GpxInformation {
@@ -100,8 +100,8 @@ public class GpxInformationDbEntry extends GpxInformation {
 
 
     @Override
-    public BoundingBox getBoundingBox() {
-        return new BoundingBox(
+    public BoundingBoxE6 getBoundingBox() {
+        return new BoundingBoxE6(
                 (int)getLong(GpxDbConstants.KEY_NORTH_BOUNDING),
                 (int)getLong(GpxDbConstants.KEY_EAST_BOUNDING),
                 (int)getLong(GpxDbConstants.KEY_SOUTH_BOUNDING),

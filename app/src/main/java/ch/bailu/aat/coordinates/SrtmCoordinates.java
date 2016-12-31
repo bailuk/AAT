@@ -2,6 +2,7 @@ package ch.bailu.aat.coordinates;
 
 import android.content.Context;
 
+import org.mapsforge.core.model.LatLong;
 import org.osmdroid.api.IGeoPoint;
 
 import java.io.File;
@@ -47,8 +48,11 @@ public class SrtmCoordinates extends Coordinates implements IGeoPoint {
         this(p.getLatitudeE6(), p.getLongitudeE6());
     }
 
-    
-    
+    public SrtmCoordinates(LatLong p) {
+        this(p.getLatitude(), p.getLongitude());
+    }
+
+
     public String toLaString() {
         return String.format((Locale)null,"%c%02d", 
                 WGS84Sexagesimal.getLatitudeChar(la),  Math.abs(la));

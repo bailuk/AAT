@@ -1,32 +1,34 @@
 package ch.bailu.aat.mapsforge.layer.grid;
 
+import android.content.SharedPreferences;
+import android.graphics.Point;
+
 import org.mapsforge.core.graphics.Canvas;
 import org.mapsforge.core.model.BoundingBox;
 import org.mapsforge.core.model.LatLong;
-import org.mapsforge.core.model.Point;
 
 import java.util.Locale;
 
 import ch.bailu.aat.coordinates.WGS84Sexagesimal;
 import ch.bailu.aat.description.AltitudeDescription;
-import ch.bailu.aat.gpx.GpxInformation;
-import ch.bailu.aat.mapsforge.layer.ContextLayer;
+import ch.bailu.aat.mapsforge.layer.context.MapContext;
 import ch.bailu.aat.mapsforge.layer.MapsForgeLayer;
 
 public class WGS84Layer extends MapsForgeLayer {
     private final static int MIN_ZOOM_LEVEL=7;
 
-    private final ContextLayer clayer;
+    private final MapContext clayer;
     private final AltitudeDescription altitudeDescription;
 
-    public WGS84Layer(ContextLayer cl) {
+    public WGS84Layer(MapContext cl) {
         clayer = cl;
-        altitudeDescription= new AltitudeDescription(cl.getContext());
+        altitudeDescription= new AltitudeDescription(cl.context);
     }
 
 
     @Override
-    public void draw(BoundingBox boundingBox, byte zoomLevel, Canvas canvas, Point topLeftPoint) {
+    public void draw(BoundingBox boundingBox, byte zoomLevel, Canvas canvas,
+                     org.mapsforge.core.model.Point topLeftPoint) {
         final LatLong point = boundingBox.getCenterPoint();
 
         drawGrid();
@@ -37,17 +39,17 @@ public class WGS84Layer extends MapsForgeLayer {
 
 
     private void drawGrid() {
-        final Point pixel = clayer.getCenter();
+        final Point pixel = clayer.metrics.getCenterPixel();
 
-        clayer.drawVLine((int)pixel.x);
-        clayer.drawHLine((int)pixel.y);
-        clayer.drawPoint(pixel);
+        clayer.draw.vLine(pixel.x);
+        clayer.draw.hLine(pixel.y);
+        clayer.draw.point(pixel);
     }
 
 
     private void drawCoordinates(LatLong point) {
-        clayer.drawTextBottom(new WGS84Sexagesimal(point.getLatitude(), point.getLongitude()).toString(),2);
-        clayer.drawTextBottom(
+        clayer.draw.textBottom(new WGS84Sexagesimal(point.getLatitude(), point.getLongitude()).toString(),2);
+        clayer.draw.textBottom(
                 String.format((Locale)null,"%.6f/%.6f",
                         ((double)point.getLatitude()),
                         ((double)point.getLongitude())),
@@ -55,25 +57,23 @@ public class WGS84Layer extends MapsForgeLayer {
     }
 
     private void drawElevation(int zoom, LatLong point) {
-        if (zoom > MIN_ZOOM_LEVEL && clayer.getServiceContext().isUp()) {
-            final short ele = clayer.getServiceContext().getElevationService().getElevation(point.getLatitudeE6(), point.getLongitudeE6());
-            clayer.drawTextBottom(altitudeDescription.getValueUnit(ele),3);
+        if (zoom > MIN_ZOOM_LEVEL && clayer.scontext.isUp()) {
+            final short ele = clayer.scontext.getElevationService().getElevation(point.getLatitudeE6(), point.getLongitudeE6());
+            clayer.draw.textBottom(altitudeDescription.getValueUnit(ele),3);
         }
     }
 
-    @Override
-    public void onSharedPreferenceChanged(String key) {
 
-    }
 
     @Override
     public void onLayout(boolean changed, int l, int t, int r, int b) {
 
     }
 
+
+
     @Override
-    public void onContentUpdated(int iid, GpxInformation info) {
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
 
     }
-
 }

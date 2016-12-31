@@ -7,7 +7,9 @@ import org.osmdroid.tileprovider.MapTile;
 import org.osmdroid.tileprovider.constants.OpenStreetMapTileProviderConstants;
 import org.osmdroid.tileprovider.tilesource.ITileSource;
 
-public abstract class AbsTileProvider implements OpenStreetMapTileProviderConstants  {
+import ch.bailu.aat.mapsforge.Attachable;
+
+public abstract class AbsTileProvider implements OpenStreetMapTileProviderConstants, Attachable {
 
     /** Osmdroid compability **/
     public ITileSource getTileSource() {
@@ -17,16 +19,19 @@ public abstract class AbsTileProvider implements OpenStreetMapTileProviderConsta
     /** Osmdroid compability **/
     public void setTileSource(ITileSource s) {}
 
+    public void attach() {
+        this.onAttached();
+    }
 
-
+    public void detach() {
+        this.onDetached();
+    }
     
     
     public abstract void reDownloadTiles();
     public abstract int  getMinimumZoomLevel();
     public abstract int getMaximumZoomLevel();
     public abstract Drawable getMapTile(MapTile pTile);
-    public abstract void detach();
-    public abstract void attach();
     public abstract void  setTileRequestCompleteHandler(Handler handler);
 
 

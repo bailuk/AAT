@@ -1,5 +1,6 @@
 package ch.bailu.aat.mapsforge.layer.control;
 
+import android.content.SharedPreferences;
 import android.view.View;
 
 import java.io.File;
@@ -8,7 +9,7 @@ import ch.bailu.aat.activities.NodeDetailActivity;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.GpxPointNode;
 import ch.bailu.aat.helpers.HtmlBuilderGpx;
-import ch.bailu.aat.mapsforge.layer.ContextLayer;
+import ch.bailu.aat.mapsforge.layer.context.MapContext;
 
 public class AutoNodeViewLayer extends NodeViewLayer {
 
@@ -17,20 +18,20 @@ public class AutoNodeViewLayer extends NodeViewLayer {
     private String fileID = null;
     private int index = 0;
 
-    private final ContextLayer clayer;
+    private final MapContext clayer;
 
-    public AutoNodeViewLayer(ContextLayer cl) {
+    public AutoNodeViewLayer(MapContext cl) {
         super(cl);
         clayer = cl;
 
-        html = new HtmlBuilderGpx(cl.getContext());
+        html = new HtmlBuilderGpx(cl.context);
     }
 
     @Override
     public boolean onLongClick(View v) {
         if (fileID != null && new File(fileID).isFile()) {
 
-            NodeDetailActivity.start(clayer.getContext(), fileID, index);
+            NodeDetailActivity.start(clayer.context, fileID, index);
             return true;
         }
         return false;
@@ -49,6 +50,11 @@ public class AutoNodeViewLayer extends NodeViewLayer {
         html.appendAttributes(node.getAttributes());
 
         setHtmlText(html.toString());
+
+    }
+
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
 
     }
 }

@@ -4,7 +4,7 @@ import android.graphics.Color;
 import android.view.View;
 
 import ch.bailu.aat.helpers.AppTheme;
-import ch.bailu.aat.mapsforge.layer.ContextLayer;
+import ch.bailu.aat.mapsforge.layer.context.MapContext;
 import ch.bailu.aat.views.HtmlScrollTextView;
 
 public abstract class NodeViewLayer extends NodeSelectorLayer implements View.OnLongClickListener {
@@ -17,21 +17,21 @@ public abstract class NodeViewLayer extends NodeSelectorLayer implements View.On
 
     private int xoffset, yoffset;
 
-    private final ContextLayer clayer;
+    private final MapContext clayer;
 
 
-    public NodeViewLayer(ContextLayer cl) {
+    public NodeViewLayer(MapContext cl) {
         super(cl);
         clayer = cl;
-        big_margin = AppTheme.getBigButtonSize(cl.getContext()) + XMARGIN;
+        big_margin = AppTheme.getBigButtonSize(cl.context) + XMARGIN;
 
-        infoView = new HtmlScrollTextView(cl.getContext());
+        infoView = new HtmlScrollTextView(cl.context);
         infoView.setBackgroundColor(Color.argb(0xcc, 0xff, 0xff, 0xff));
         infoView.getTextView().setTextColor(Color.BLACK);
         infoView.getTextView().setOnLongClickListener(this);
         infoView.setVisibility(View.GONE);
 
-        cl.getMapView().addView(infoView);
+        cl.mapView.addView(infoView);
 
     }
 
@@ -59,7 +59,7 @@ public abstract class NodeViewLayer extends NodeSelectorLayer implements View.On
 
     public void hide() {
         infoView.setVisibility(View.GONE);
-        clayer.getMapView().requestRedraw();
+        requestRedraw();
     }
 
 
@@ -68,7 +68,7 @@ public abstract class NodeViewLayer extends NodeSelectorLayer implements View.On
         layout();
         infoView.setVisibility(View.VISIBLE);
 
-        clayer.getMapView().requestRedraw();
+        requestRedraw();
 
     }
 
@@ -104,10 +104,10 @@ public abstract class NodeViewLayer extends NodeSelectorLayer implements View.On
     }
 
     private int getHeight() {
-        return clayer.getMapView().getHeight() / 3;
+        return clayer.mapView.getHeight() / 3;
     }
 
     private int getWidth() {
-        return clayer.getMapView().getWidth() - big_margin;
+        return clayer.mapView.getWidth() - big_margin;
     }
 }

@@ -35,12 +35,6 @@ public class PreviewTileProvider extends AbsOsmTileProvider implements Closeable
 
 
     @Override
-    public void detach() {}
-
-    @Override
-    public void attach() {}
-
-    @Override
     public void setTileRequestCompleteHandler(Handler handler) {
 
     }
@@ -67,6 +61,16 @@ public class PreviewTileProvider extends AbsOsmTileProvider implements Closeable
             tiles.get(i).free();
         }
         tiles.clear();
+    }
+
+    @Override
+    public void onAttached() {
+
+    }
+
+    @Override
+    public void onDetached() {
+
     }
 }
 

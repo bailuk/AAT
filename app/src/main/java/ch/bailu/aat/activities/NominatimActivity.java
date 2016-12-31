@@ -1,6 +1,6 @@
 package ch.bailu.aat.activities;
 
-import org.osmdroid.util.BoundingBoxE6;
+import org.osmdroid.util.BoundingBoxOsm;
 
 import java.io.IOException;
 
@@ -11,7 +11,7 @@ import ch.bailu.aat.views.ControlBar;
 public class NominatimActivity extends AbsOsmApiActivity {
 
     @Override
-    public OsmApiHelper createUrlGenerator(BoundingBoxE6 boundingBox) throws SecurityException, IOException {
+    public OsmApiHelper createUrlGenerator(BoundingBoxOsm boundingBox) throws SecurityException, IOException {
         return new NominatimApi(this, boundingBox);
     }
 

@@ -1,6 +1,6 @@
 package org.osmdroid.api;
 
-import org.osmdroid.util.BoundingBoxE6;
+import org.osmdroid.util.BoundingBoxOsm;
 import org.osmdroid.views.MapController;
 
 /**
@@ -17,5 +17,5 @@ public interface IMapController {
 	boolean zoomIn();
 	boolean zoomOut();
 	void zoomToSpan(int latSpanE6, int lonSpanE6);
-	void zoomToSpan(BoundingBoxE6 bounding);
+	void zoomToSpan(BoundingBoxOsm bounding);
 }

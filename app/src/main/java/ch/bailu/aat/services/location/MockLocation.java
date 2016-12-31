@@ -5,7 +5,7 @@ import android.content.Context;
 import java.io.File;
 import java.io.IOException;
 
-import ch.bailu.aat.coordinates.BoundingBox;
+import ch.bailu.aat.coordinates.BoundingBoxE6;
 import ch.bailu.aat.gpx.GpxList;
 import ch.bailu.aat.gpx.GpxPointNode;
 import ch.bailu.aat.gpx.MaxSpeed;
@@ -140,7 +140,7 @@ public class MockLocation extends LocationStackChainedItem implements Runnable{
             return node.getTimeDelta();
         }
         @Override
-        public BoundingBox getBoundingBox() {
+        public BoundingBoxE6 getBoundingBox() {
             return node.getBoundingBox();
         }
         @Override

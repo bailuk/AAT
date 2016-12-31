@@ -5,7 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 
 import org.mapsforge.core.model.BoundingBox;
-import org.osmdroid.util.BoundingBoxE6;
+import org.osmdroid.util.BoundingBoxOsm;
 
 import java.io.File;
 
@@ -95,7 +95,7 @@ public class ActivitySwitcher {
         }
     }
 
-    public static void start(Context context, Class<?> a, BoundingBoxE6 box) {
+    public static void start(Context context, Class<?> a, BoundingBoxOsm box) {
         Intent intent = new Intent();
         AppIntent.setBoundingBox(intent, box);
         start(context, a, intent);

@@ -5,7 +5,7 @@ import android.content.Context;
 import java.io.File;
 import java.io.IOException;
 
-import ch.bailu.aat.coordinates.BoundingBox;
+import ch.bailu.aat.coordinates.BoundingBoxE6;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.GpxList;
 import ch.bailu.aat.gpx.GpxPoint;
@@ -252,7 +252,7 @@ public class GpxObjectEditable extends  GpxObject {
 
 
         @Override
-        public BoundingBox getBoundingBox() {
+        public BoundingBoxE6 getBoundingBox() {
             return editor.getList().getDelta().getBoundingBox();
         }
         

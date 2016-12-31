@@ -10,7 +10,7 @@ import ch.bailu.aat.activities.OverpassActivity;
 import ch.bailu.aat.dispatcher.DispatcherInterface;
 import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.helpers.ToolTip;
-import ch.bailu.aat.mapsforge.layer.ContextLayer;
+import ch.bailu.aat.mapsforge.layer.context.MapContext;
 import ch.bailu.aat.preferences.SolidIndexList;
 import ch.bailu.aat.preferences.SolidLegend;
 import ch.bailu.aat.preferences.SolidMapGrid;
@@ -22,18 +22,18 @@ public class InformationBar extends ControlBar {
 
     private final NodeViewLayer selector;
 
-    private final ContextLayer clayer;
+    private final MapContext mcontext;
 
 
 
-    public InformationBar(ContextLayer cl, DispatcherInterface d) {
-        super(cl.getMapView(),new ch.bailu.aat.views.ControlBar(cl.getContext(), getOrientation(RIGHT)), RIGHT);
+    public InformationBar(MapContext cl, DispatcherInterface d) {
+        super(cl.mapView,new ch.bailu.aat.views.ControlBar(cl.context, getOrientation(RIGHT)), RIGHT);
 
-        clayer = cl;
+        mcontext = cl;
         final SolidIndexList sgrid, slegend;
 
-        sgrid = new SolidMapGrid(cl.getContext(), cl.getMapView().getSolidKey());
-        slegend = new SolidLegend(cl.getContext(), cl.getMapView().getSolidKey());
+        sgrid = new SolidMapGrid(cl.context, cl.skey);
+        slegend = new SolidLegend(cl.context, cl.skey);
 
         ch.bailu.aat.views.ControlBar bar = getBar();
         View grid=bar.addSolidIndexButton(sgrid);
@@ -67,9 +67,9 @@ public class InformationBar extends ControlBar {
 
 
         } else if (v==overpass) {
-            ActivitySwitcher.start(clayer.getContext(), OverpassActivity.class, clayer.getMapView().getBoundingBox());
+            ActivitySwitcher.start(mcontext.context, OverpassActivity.class, mcontext.mapView.getBoundingBox());
         } else if (v==nominatim) {
-            ActivitySwitcher.start(clayer.getContext(), NominatimActivity.class, clayer.getMapView().getBoundingBox());
+            ActivitySwitcher.start(mcontext.context, NominatimActivity.class, mcontext.mapView.getBoundingBox());
         } else if (v==location) {
             //new LocationMenu(getMapView()).showAsPopup(getContext(), location);
         }

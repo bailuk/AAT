@@ -5,7 +5,7 @@ import android.graphics.Point;
 
 import org.osmdroid.api.IGeoPoint;
 import org.osmdroid.api.IMapController;
-import org.osmdroid.util.BoundingBoxE6;
+import org.osmdroid.util.BoundingBoxOsm;
 import org.osmdroid.views.util.MyMath;
 import org.osmdroid.views.util.constants.MapViewConstants;
 
@@ -24,7 +24,7 @@ public class MapController implements IMapController, MapViewConstants {
     }
 
 
-    public void zoomToSpan(final BoundingBoxE6 bb) {
+    public void zoomToSpan(final BoundingBoxOsm bb) {
         zoomToSpan(bb.getLatitudeSpanE6(), bb.getLongitudeSpanE6());
     }
 
@@ -35,7 +35,7 @@ public class MapController implements IMapController, MapViewConstants {
             return;
         }
 
-        final BoundingBoxE6 bb = this.mOsmv.getBoundingBox();
+        final BoundingBoxOsm bb = this.mOsmv.getBoundingBox();
         final int curZoomLevel = this.mOsmv.getZoomLevel();
 
         final int curLatSpan = bb.getLatitudeSpanE6();
