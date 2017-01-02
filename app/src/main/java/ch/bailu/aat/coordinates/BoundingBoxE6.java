@@ -91,6 +91,9 @@ public class BoundingBoxE6 {
     }
 
 
+    public void add(LatLong latLong) {
+        add(latLong.getLatitudeE6(), latLong.getLongitudeE6());
+    }
     public void add(IGeoPoint point) {
         add(point.getLatitudeE6(), point.getLongitudeE6());
     }
@@ -192,6 +195,7 @@ public class BoundingBoxE6 {
                 north/1e6f, west/1e6f, south/1e6f, east/1e6f);
 
     }
+
 
 }
 

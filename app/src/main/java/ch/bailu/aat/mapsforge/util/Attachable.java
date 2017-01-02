@@ -1,4 +1,4 @@
-package ch.bailu.aat.mapsforge;
+package ch.bailu.aat.mapsforge.util;
 
 public interface Attachable {
 

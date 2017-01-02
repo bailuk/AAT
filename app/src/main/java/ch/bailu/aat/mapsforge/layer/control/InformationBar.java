@@ -3,6 +3,10 @@ package ch.bailu.aat.mapsforge.layer.control;
 import android.view.View;
 import android.widget.ImageButton;
 
+import org.mapsforge.core.graphics.Canvas;
+import org.mapsforge.core.model.BoundingBox;
+import org.mapsforge.core.model.Point;
+
 import ch.bailu.aat.R;
 import ch.bailu.aat.activities.ActivitySwitcher;
 import ch.bailu.aat.activities.NominatimActivity;
@@ -15,7 +19,7 @@ import ch.bailu.aat.preferences.SolidIndexList;
 import ch.bailu.aat.preferences.SolidLegend;
 import ch.bailu.aat.preferences.SolidMapGrid;
 
-public class InformationBar extends ControlBar {
+public class InformationBar extends ControlBarLayer {
     private final View reload;
 
     private final ImageButton overpass, nominatim, location;
@@ -89,4 +93,8 @@ public class InformationBar extends ControlBar {
         selector.hide();
     }
 
+    @Override
+    public void draw(BoundingBox b, byte z, Canvas c, Point t) {
+        if (isBarVisible()) selector.draw(b, z, c, t);
+    }
 }

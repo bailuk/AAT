@@ -38,11 +38,13 @@ public abstract class NodeViewLayer extends NodeSelectorLayer implements View.On
 
 
     public void setHtmlText(String text) {
+        // FIXME not inside UI thread
+        /*
         infoView.setHtmlText(text);
 
         measure();
         layout();
-        infoView.invalidate();
+        infoView.invalidate();*/
     }
 
     public void showAtLeft() {

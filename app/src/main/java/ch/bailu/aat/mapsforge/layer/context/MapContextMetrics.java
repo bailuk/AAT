@@ -13,6 +13,7 @@ import ch.bailu.aat.coordinates.BoundingBoxE6;
 import ch.bailu.aat.coordinates.LatLongE6;
 import ch.bailu.aat.gpx.interfaces.GpxPointInterface;
 import ch.bailu.aat.helpers.AppDensity;
+import ch.bailu.aat.mapsforge.util.Pixel;
 import ch.bailu.aat.services.ServiceContext;
 
 public class MapContextMetrics {
@@ -85,18 +86,17 @@ public class MapContextMetrics {
     public int getLeft() {
         return l;
     }
-
     public int getRight() {
         return r;
     }
-
     public int getTop() {
         return t;
     }
-
     public int getBottom() {
         return b;
     }
+    public int getWidth() {  return w; }
+    public int getHeight() { return h; }
 
 
     public float pixelToDistance(int pixel) {
@@ -119,8 +119,8 @@ public class MapContextMetrics {
         return mapView.getMapViewProjection().toPixels(p);
     }
 
-    public Point getCenterPixel() {
-        return toPixel(bounding.getCenterPoint());
+    public Pixel getCenterPixel() {
+        return new Pixel(centerX, centerY);//toPixel(bounding.getCenterPoint());
     }
 
     public boolean isVisible(BoundingBoxE6 box) {
@@ -143,14 +143,18 @@ public class MapContextMetrics {
         return rect;
     }
 
-    public Point toPixel(GpxPointInterface tp) {
+    public Pixel toPixel(GpxPointInterface tp) {
         return toPixel(new LatLong(tp.getLatitude(), tp.getLongitude()));
     }
 
 
-    public Point toPixel(LatLong p) {
+    public Pixel toPixel(LatLong p) {
         org.mapsforge.core.model.Point doublePoint = _toPixel(p);
-        return new Point(l+(int)doublePoint.x, t+(int)doublePoint.y);
+        return new Pixel(l+(int)doublePoint.x, t+(int)doublePoint.y);
     }
 
+
+    public LatLong fromPixel(int x, int y) {
+       return mapView.getMapViewProjection().fromPixels(x, y);
+    }
 }

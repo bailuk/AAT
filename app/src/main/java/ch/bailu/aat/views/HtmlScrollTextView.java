@@ -30,6 +30,7 @@ public class HtmlScrollTextView extends VerticalScrollView {
 
 
     public void setHtmlText(String text) {
+
         textView.setHtmlText(text);
     }
 

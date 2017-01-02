@@ -3,7 +3,9 @@ package ch.bailu.aat.mapsforge.layer.control;
 import android.util.SparseArray;
 import android.view.View;
 
-import org.mapsforge.core.model.LatLong;
+import org.mapsforge.core.graphics.Canvas;
+import org.mapsforge.core.model.BoundingBox;
+import org.mapsforge.core.model.Point;
 
 import ch.bailu.aat.R;
 import ch.bailu.aat.dispatcher.DispatcherInterface;
@@ -15,7 +17,7 @@ import ch.bailu.aat.helpers.ToolTip;
 import ch.bailu.aat.mapsforge.layer.context.MapContext;
 import ch.bailu.aat.preferences.SolidPositionLock;
 
-public class NavigationBar extends ControlBar implements OnContentUpdatedInterface {
+public class NavigationBar extends ControlBarLayer implements OnContentUpdatedInterface {
 
     private final MapContext mcontext;
     private final View buttonPlus;
@@ -67,13 +69,7 @@ public class NavigationBar extends ControlBar implements OnContentUpdatedInterfa
         } else if (v==buttonFrame && infoCache.size()>0) {
 
             if (nextInBoundingCycle()) {
-
-
-                LatLong c =
-                        infoCache.valueAt(boundingCycle).getBoundingBox().toBoundingBox()
-                                .getCenterPoint();
-
-                mcontext.mapView.setCenter(c);
+                mcontext.mapView.frameBounding(infoCache.valueAt(boundingCycle).getBoundingBox());
                 AppLog.i(mcontext.context, infoCache.valueAt(boundingCycle).getName());
 
             }
@@ -111,4 +107,8 @@ public class NavigationBar extends ControlBar implements OnContentUpdatedInterfa
         }
     }
 
+    @Override
+    public void draw(BoundingBox boundingBox, byte zoomLevel, Canvas canvas, Point topLeftPoint) {
+
+    }
 }

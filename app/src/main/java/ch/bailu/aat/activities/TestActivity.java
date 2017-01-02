@@ -42,6 +42,8 @@ import ch.bailu.aat.mapsforge.layer.Dem3NameLayer;
 import ch.bailu.aat.mapsforge.layer.ZoomLevel;
 import ch.bailu.aat.mapsforge.layer.control.InformationBar;
 import ch.bailu.aat.mapsforge.layer.control.NavigationBar;
+import ch.bailu.aat.mapsforge.layer.gpx.GpxDynLayer;
+import ch.bailu.aat.mapsforge.layer.gpx.GpxOverlayListLayer;
 import ch.bailu.aat.mapsforge.layer.gpx.GpxTestLayer;
 import ch.bailu.aat.mapsforge.layer.gpx.WayLayer;
 import ch.bailu.aat.mapsforge.layer.grid.GridDynLayer;
@@ -168,6 +170,8 @@ public class TestActivity extends AbsDispatcher {
         mapsForge.add(new CurrentLocationLayer(mapsForge.mcontext, this));
         mapsForge.add(new Dem3NameLayer(mapsForge.mcontext));
         mapsForge.add(new GpxTestLayer(mapsForge.mcontext, this, InfoID.OVERLAY));
+        mapsForge.add(new GpxDynLayer(mapsForge.mcontext, this, InfoID.TRACKER));
+        mapsForge.add(new GpxOverlayListLayer(mapsForge.mcontext, this));
 
         mapsForge.setZoomLevelMin((byte) 10);
         mapsForge.setZoomLevelMax((byte) 20);

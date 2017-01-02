@@ -2,17 +2,23 @@ package ch.bailu.aat.mapsforge;
 
 import android.content.SharedPreferences;
 
+import org.mapsforge.core.model.BoundingBox;
+import org.mapsforge.core.model.Dimension;
+import org.mapsforge.core.model.MapPosition;
+import org.mapsforge.core.util.LatLongUtils;
 import org.mapsforge.map.android.graphics.AndroidGraphicFactory;
 import org.mapsforge.map.android.view.MapView;
 import org.mapsforge.map.layer.Layer;
 
 import java.util.ArrayList;
 
+import ch.bailu.aat.coordinates.BoundingBoxE6;
 import ch.bailu.aat.dispatcher.DispatcherInterface;
 import ch.bailu.aat.mapsforge.layer.context.MapContext;
 import ch.bailu.aat.mapsforge.layer.MapPositionLayer;
 import ch.bailu.aat.mapsforge.layer.MapsForgeLayer;
 import ch.bailu.aat.mapsforge.layer.MapsForgeLayerInterface;
+import ch.bailu.aat.mapsforge.util.Attachable;
 import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat.services.ServiceContext;
 
@@ -65,6 +71,23 @@ public class MapsForgeView extends MapView implements
 
     public void add(MapsForgeLayer layer) {
         add(layer, layer);
+    }
+
+
+    public void frameBounding(BoundingBoxE6 boundingBox) {
+        frameBounding(boundingBox.toBoundingBox());
+    }
+
+    public void frameBounding(BoundingBox bounding) {
+        Dimension dimension = getModel().mapViewDimension.getDimension();
+        byte zoom = LatLongUtils.zoomForBounds(
+                dimension,
+                bounding,
+                getModel().displayModel.getTileSize());
+
+        MapPosition position = new MapPosition(bounding.getCenterPoint(), zoom);
+
+        getModel().mapViewPosition.setMapPosition(position);
     }
 
 

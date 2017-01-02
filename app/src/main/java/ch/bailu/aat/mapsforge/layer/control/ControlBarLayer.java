@@ -5,18 +5,14 @@ import android.graphics.Color;
 import android.view.View;
 import android.widget.LinearLayout;
 
-import org.mapsforge.core.graphics.Canvas;
-import org.mapsforge.core.model.BoundingBox;
 import org.mapsforge.core.model.LatLong;
 import org.mapsforge.core.model.Point;
 
-import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.helpers.AppLog;
 import ch.bailu.aat.mapsforge.MapsForgeView;
 import ch.bailu.aat.mapsforge.layer.MapsForgeLayer;
-import ch.bailu.aat.views.map.OsmInteractiveView;
 
-public class ControlBar extends MapsForgeLayer implements View.OnClickListener {
+public abstract class ControlBarLayer extends MapsForgeLayer implements View.OnClickListener {
     public final static int TOP=0;
     public final static int LEFT=1;
     public final static int BOTTOM=2;
@@ -36,7 +32,7 @@ public class ControlBar extends MapsForgeLayer implements View.OnClickListener {
         return LinearLayout.VERTICAL;
     }
 
-    public ControlBar(MapsForgeView v, ch.bailu.aat.views.ControlBar b, int p, int color) {
+    public ControlBarLayer(MapsForgeView v, ch.bailu.aat.views.ControlBar b, int p, int color) {
         map = v;
         placement = p;
         bar=b;
@@ -47,7 +43,7 @@ public class ControlBar extends MapsForgeLayer implements View.OnClickListener {
 
     }
 
-    public ControlBar(MapsForgeView v, ch.bailu.aat.views.ControlBar b, int p) {
+    public ControlBarLayer(MapsForgeView v, ch.bailu.aat.views.ControlBar b, int p) {
         this(v,b,p, TRANSPARENT);
     }
 
@@ -171,10 +167,7 @@ public class ControlBar extends MapsForgeLayer implements View.OnClickListener {
 
 
 
-    @Override
-    public void draw(BoundingBox boundingBox, byte zoomLevel, Canvas canvas, Point topLeftPoint) {
 
-    }
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {

@@ -7,7 +7,7 @@ import org.osmdroid.tileprovider.MapTile;
 import org.osmdroid.tileprovider.constants.OpenStreetMapTileProviderConstants;
 import org.osmdroid.tileprovider.tilesource.ITileSource;
 
-import ch.bailu.aat.mapsforge.Attachable;
+import ch.bailu.aat.mapsforge.util.Attachable;
 
 public abstract class AbsTileProvider implements OpenStreetMapTileProviderConstants, Attachable {
 

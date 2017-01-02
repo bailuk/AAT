@@ -1,6 +1,7 @@
 package ch.bailu.aat.mapsforge.layer.context;
 
 
+import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.Rect;
 
@@ -18,7 +19,10 @@ public class MapContextDraw {
 
     private Canvas canvas=null;
 
-    private final Paint textPaint = AndroidGraphicFactory.INSTANCE.createPaint();
+    public final Paint textPaint = AndroidGraphicFactory.INSTANCE.createPaint();
+    public final Paint gridPaint = AndroidGraphicFactory.INSTANCE.createPaint();
+    public final Paint legendPaint = AndroidGraphicFactory.INSTANCE.createPaint();
+
     private final int textHeight;
 
     private int left=0, top=0, bottom=0;
@@ -27,7 +31,14 @@ public class MapContextDraw {
     public MapsForgeBitmap nodeBitmap;
 
     public MapContextDraw(AppDensity res) {
-        textPaint.setTextSize(70);
+        legendPaint.setColor(Color.BLUE);
+        legendPaint.setTextSize(res.toDPi(15));
+
+
+        gridPaint.setColor(Color.DKGRAY);
+
+
+        textPaint.setTextSize(res.toDPi(20));
         textHeight = textPaint.getTextHeight("X")+5;
 
         nodeBitmap = NodePainter.createNodeMF(res);
@@ -110,5 +121,9 @@ public class MapContextDraw {
                 nodes.nodeB.pixel.x,
                 nodes.nodeB.pixel.y,
                 paint);
+    }
+
+    public void text(String text, Point pixel) {
+        canvas.drawText(text, pixel.x, pixel.y, textPaint);
     }
 }

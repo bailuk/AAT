@@ -2,8 +2,7 @@ package ch.bailu.aat.mapsforge.layer;
 
 import android.content.SharedPreferences;
 
-import ch.bailu.aat.dispatcher.OnContentUpdatedInterface;
-import ch.bailu.aat.mapsforge.Attachable;
+import ch.bailu.aat.mapsforge.util.Attachable;
 
 public interface MapsForgeLayerInterface extends
         Attachable,
