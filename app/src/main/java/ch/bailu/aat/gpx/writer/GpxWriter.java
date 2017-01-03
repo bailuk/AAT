@@ -10,7 +10,7 @@ import java.util.Locale;
 
 import ch.bailu.aat.gpx.interfaces.GpxPointInterface;
 import ch.bailu.aat.gpx.interfaces.GpxType;
-import ch.bailu.aat.helpers.AppTheme;
+import ch.bailu.aat.util.ui.AppTheme;
 
 public abstract class GpxWriter {
     private BufferedWriter output=null;

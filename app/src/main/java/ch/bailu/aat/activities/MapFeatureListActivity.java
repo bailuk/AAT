@@ -4,8 +4,8 @@ import android.content.Intent;
 
 import java.io.File;
 
-import ch.bailu.aat.helpers.AppIntent;
-import ch.bailu.aat.helpers.file.FileAccess;
+import ch.bailu.aat.util.AppIntent;
+import ch.bailu.aat.util.fs.FileAccess;
 import ch.bailu.aat.views.FeaturesList;
 
 public class MapFeatureListActivity extends AbsDispatcher {

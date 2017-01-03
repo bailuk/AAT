@@ -16,15 +16,15 @@ import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.GpxList;
 import ch.bailu.aat.gpx.GpxListArray;
 import ch.bailu.aat.gpx.InfoID;
-import ch.bailu.aat.helpers.AppLayout;
-import ch.bailu.aat.helpers.HtmlBuilderGpx;
+import ch.bailu.aat.util.ui.AppLayout;
+import ch.bailu.aat.util.HtmlBuilderGpx;
 import ch.bailu.aat.views.ContentView;
 import ch.bailu.aat.views.ControlBar;
 import ch.bailu.aat.views.HtmlScrollTextView;
 import ch.bailu.aat.views.MainControlBar;
 import ch.bailu.aat.views.description.VSplitView;
-import ch.bailu.aat.views.map.MapFactory;
-import ch.bailu.aat.views.map.OsmInteractiveView;
+import ch.bailu.aat.map.osm.MapFactory;
+import ch.bailu.aat.map.osm.OsmInteractiveView;
 
 public class NodeDetailActivity extends AbsDispatcher
         implements OnClickListener, OnContentUpdatedInterface {

@@ -12,7 +12,7 @@ import ch.bailu.aat.gpx.GpxAttributes;
 import ch.bailu.aat.gpx.GpxAttributesStatic;
 import ch.bailu.aat.gpx.GpxAttributesStatic.Tag;
 import ch.bailu.aat.gpx.interfaces.GpxPointInterface;
-import ch.bailu.aat.helpers.file.AbsAccess;
+import ch.bailu.aat.util.fs.AbsAccess;
 
 public class XmlParser implements Closeable, GpxPointInterface {
 

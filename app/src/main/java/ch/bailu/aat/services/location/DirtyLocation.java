@@ -5,9 +5,9 @@ import android.content.Context;
 import ch.bailu.aat.R;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.StateID;
-import ch.bailu.aat.helpers.AppBroadcaster;
+import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.preferences.Storage;
-import ch.bailu.aat.views.map.OsmInteractiveView;
+import ch.bailu.aat.map.osm.OsmInteractiveView;
 
 public class DirtyLocation extends LocationStackChainedItem {
     private final static String SOLID_KEY="DirtyLocation_";

@@ -5,7 +5,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
 
-import ch.bailu.aat.helpers.AppDensity;
+import ch.bailu.aat.util.ui.AppDensity;
 
 public class GraphPlotter {
     private static final int TEXT_SIZE=15;

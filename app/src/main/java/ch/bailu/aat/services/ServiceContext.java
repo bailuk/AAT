@@ -2,7 +2,8 @@ package ch.bailu.aat.services;
 
 import android.app.Notification;
 
-import ch.bailu.aat.helpers.ContextWrapperInterface;
+import ch.bailu.aat.services.render.RenderService;
+import ch.bailu.aat.util.ContextWrapperInterface;
 import ch.bailu.aat.services.background.BackgroundService;
 import ch.bailu.aat.services.cache.CacheService;
 import ch.bailu.aat.services.dem.ElevationService;
@@ -27,6 +28,7 @@ public interface ServiceContext extends ContextWrapperInterface {
     IconMapService getIconMapService();
     DirectoryService getDirectoryService();
     TileRemoverService getTileRemoverService();
+    RenderService getRenderService();
 
     void startForeground(int id, Notification notification);
     void stopForeground(boolean b);

@@ -3,7 +3,7 @@ package ch.bailu.aat.preferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 
 import ch.bailu.aat.description.ContentInterface;
-import ch.bailu.aat.helpers.ContextWrapperInterface;
+import ch.bailu.aat.util.ContextWrapperInterface;
 
 public interface SolidTypeInterface extends
         ContextWrapperInterface,

@@ -12,8 +12,8 @@ import java.lang.reflect.Method;
 
 import ch.bailu.aat.R;
 import ch.bailu.aat.activities.TrackerActivity;
-import ch.bailu.aat.helpers.AppLog;
-import ch.bailu.aat.helpers.AppTheme;
+import ch.bailu.aat.util.ui.AppLog;
+import ch.bailu.aat.util.ui.AppTheme;
 import ch.bailu.aat.services.ServiceContext;
 
 

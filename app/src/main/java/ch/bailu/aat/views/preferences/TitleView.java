@@ -3,7 +3,7 @@ package ch.bailu.aat.views.preferences;
 import android.content.Context;
 import android.widget.TextView;
 
-import ch.bailu.aat.helpers.AppTheme;
+import ch.bailu.aat.util.ui.AppTheme;
 
 public class TitleView extends TextView {
     public TitleView(Context context, int res) {

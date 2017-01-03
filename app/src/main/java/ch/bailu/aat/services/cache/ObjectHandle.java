@@ -1,7 +1,5 @@
 package ch.bailu.aat.services.cache;
 
-import org.mapsforge.core.graphics.TileBitmap;
-
 import java.io.File;
 
 import ch.bailu.aat.services.ServiceContext;
@@ -11,7 +9,12 @@ public abstract class ObjectHandle implements ObjectBroadcastReceiver{
     public static final int MIN_SIZE=10;
 
     public static final ObjectHandle NULL = new ObjectHandle(""){
-        
+
+        @Override
+        public long getSize() {
+            return MIN_SIZE;
+        }
+
         @Override
         public void onDownloaded(String id, String url, ServiceContext cs) {}
 
@@ -59,10 +62,7 @@ public abstract class ObjectHandle implements ObjectBroadcastReceiver{
         return true;
     }
     
-    public long getSize() {
-        return MIN_SIZE;
-    }
-
+    public abstract long getSize();
     
     public synchronized void access() {
         accessTime=System.currentTimeMillis();

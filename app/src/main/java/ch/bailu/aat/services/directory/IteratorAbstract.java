@@ -10,7 +10,7 @@ import android.database.Cursor;
 import java.io.File;
 
 import ch.bailu.aat.gpx.GpxInformation;
-import ch.bailu.aat.helpers.AppBroadcaster;
+import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.preferences.SolidDirectoryQuery;
 import ch.bailu.aat.services.ServiceContext;
 

@@ -6,7 +6,7 @@ import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import java.io.Closeable;
 import java.io.IOException;
 
-import ch.bailu.aat.helpers.AppLog;
+import ch.bailu.aat.util.ui.AppLog;
 import ch.bailu.aat.preferences.SolidAutopause;
 import ch.bailu.aat.preferences.SolidBacklight;
 import ch.bailu.aat.preferences.SolidPreset;

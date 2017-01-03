@@ -2,6 +2,7 @@ package ch.bailu.aat.services.cache;
 
 import android.content.Context;
 
+import org.mapsforge.core.model.Tile;
 import org.osmdroid.tileprovider.MapTile;
 
 import ch.bailu.aat.services.ServiceContext;
@@ -16,8 +17,8 @@ public class NewHillshade extends ElevationTile {
 
     private HillshadeColorTable table;
 
-    public NewHillshade(String id, ServiceContext sc, MapTile t) {
-        super(id, sc, t, splitFromZoom(t.getZoomLevel()));
+    public NewHillshade(String id, ServiceContext sc, Tile t) {
+        super(id, sc, t, splitFromZoom(t.zoomLevel));
     }
 
 
@@ -34,6 +35,11 @@ public class NewHillshade extends ElevationTile {
     public void onRemove(ServiceContext sc) {
         super.onRemove(sc);
         table.free();
+    }
+
+    @Override
+    public long getSize() {
+        return getBytesHack(TILE_SIZE);
     }
 
     @Override
@@ -118,9 +124,9 @@ public class NewHillshade extends ElevationTile {
     }
 
     public static class Factory extends ObjectHandle.Factory {
-        private final MapTile mapTile;
+        private final Tile mapTile;
 
-        public Factory(MapTile t) {
+        public Factory(Tile t) {
             mapTile=t;
         }
 
@@ -141,8 +147,8 @@ public class NewHillshade extends ElevationTile {
                 }
 
                 @Override
-                public String getID(MapTile t, Context x) {
-                    return NewHillshade.class.getSimpleName() + "/" + t.getZoomLevel() + "/" + t.getX() + "/" + t.getY();
+                public String getID(Tile t, Context x) {
+                    return genID(t, NewHillshade.class.getSimpleName());
                 }
 
                 @Override
@@ -156,7 +162,7 @@ public class NewHillshade extends ElevationTile {
                 }
 
                 @Override
-                public ObjectHandle.Factory getFactory(MapTile mt) {
+                public ObjectHandle.Factory getFactory(Tile mt) {
                     return  new NewHillshade.Factory(mt);
                 }
 

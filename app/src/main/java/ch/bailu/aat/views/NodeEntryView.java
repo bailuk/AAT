@@ -8,14 +8,14 @@ import android.widget.TextView;
 import ch.bailu.aat.coordinates.BoundingBoxE6;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.GpxPointNode;
-import ch.bailu.aat.helpers.AppHtml;
-import ch.bailu.aat.helpers.AppTheme;
-import ch.bailu.aat.helpers.HtmlBuilderGpx;
+import ch.bailu.aat.util.AppHtml;
+import ch.bailu.aat.util.ui.AppTheme;
+import ch.bailu.aat.util.HtmlBuilderGpx;
 import ch.bailu.aat.services.ServiceContext;
-import ch.bailu.aat.views.map.CachedTileProvider;
-import ch.bailu.aat.views.map.MapDensity;
-import ch.bailu.aat.views.map.OsmViewStatic;
-import ch.bailu.aat.views.map.overlay.gpx.GpxDynOverlay;
+import ch.bailu.aat.map.osm.CachedTileProvider;
+import ch.bailu.aat.map.osm.MapDensity;
+import ch.bailu.aat.map.osm.OsmViewStatic;
+import ch.bailu.aat.map.osm.overlay.gpx.GpxDynOverlay;
 
 public class NodeEntryView extends LinearLayout {
 

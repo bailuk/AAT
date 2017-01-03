@@ -19,8 +19,8 @@ import ch.bailu.aat.dispatcher.EditorSource;
 import ch.bailu.aat.dispatcher.OverlaySource;
 import ch.bailu.aat.dispatcher.TrackerSource;
 import ch.bailu.aat.gpx.InfoID;
-import ch.bailu.aat.helpers.AppIntent;
-import ch.bailu.aat.helpers.AppLog;
+import ch.bailu.aat.util.AppIntent;
+import ch.bailu.aat.util.ui.AppLog;
 import ch.bailu.aat.services.editor.EditorHelper;
 import ch.bailu.aat.views.ContentView;
 import ch.bailu.aat.views.ControlBar;
@@ -28,8 +28,8 @@ import ch.bailu.aat.views.MainControlBar;
 import ch.bailu.aat.views.description.GPSStateButton;
 import ch.bailu.aat.views.description.NumberView;
 import ch.bailu.aat.views.description.TrackerStateButton;
-import ch.bailu.aat.views.map.MapFactory;
-import ch.bailu.aat.views.map.OsmInteractiveView;
+import ch.bailu.aat.map.osm.MapFactory;
+import ch.bailu.aat.map.osm.OsmInteractiveView;
 
 public class MapActivity extends AbsDispatcher implements OnClickListener{
 

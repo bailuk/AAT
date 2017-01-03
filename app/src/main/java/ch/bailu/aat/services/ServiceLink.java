@@ -15,6 +15,7 @@ import ch.bailu.aat.services.dem.ElevationService;
 import ch.bailu.aat.services.directory.DirectoryService;
 import ch.bailu.aat.services.icons.IconMapService;
 import ch.bailu.aat.services.location.LocationService;
+import ch.bailu.aat.services.render.RenderService;
 import ch.bailu.aat.services.tileremover.TileRemoverService;
 import ch.bailu.aat.services.tracker.TrackerService;
 
@@ -174,6 +175,9 @@ public abstract class ServiceLink implements
     public DirectoryService getDirectoryService() {
         return getService().getDirectoryService();
     }
+
+    @Override
+    public RenderService getRenderService() { return getService().getRenderService();}
 
 
     @Override

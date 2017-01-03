@@ -6,7 +6,7 @@ import android.content.Intent;
 
 import java.io.Closeable;
 
-import ch.bailu.aat.helpers.AppBroadcaster;
+import ch.bailu.aat.util.AppBroadcaster;
 
 public class DbSynchronizerBusyIndicator implements Closeable {
 

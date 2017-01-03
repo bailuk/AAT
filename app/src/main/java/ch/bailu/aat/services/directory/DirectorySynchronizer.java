@@ -15,15 +15,15 @@ import java.util.ArrayList;
 
 import ch.bailu.aat.gpx.GpxList;
 import ch.bailu.aat.gpx.interfaces.GpxBigDeltaInterface;
-import ch.bailu.aat.helpers.AppBroadcaster;
-import ch.bailu.aat.helpers.AppDirectory;
-import ch.bailu.aat.helpers.AppLog;
+import ch.bailu.aat.util.AppBroadcaster;
+import ch.bailu.aat.util.fs.AppDirectory;
+import ch.bailu.aat.util.ui.AppLog;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.background.ProcessHandle;
 import ch.bailu.aat.services.cache.GpxObject;
 import ch.bailu.aat.services.cache.GpxObjectStatic;
 import ch.bailu.aat.services.cache.ObjectHandle;
-import ch.bailu.aat.views.map.OsmPreviewGenerator;
+import ch.bailu.aat.map.osm.OsmPreviewGenerator;
 
 public class DirectorySynchronizer  implements Closeable {
 

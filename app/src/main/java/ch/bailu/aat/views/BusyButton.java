@@ -7,7 +7,7 @@ import android.widget.ImageButton;
 import ch.bailu.aat.R;
 import ch.bailu.aat.dispatcher.OnContentUpdatedInterface;
 import ch.bailu.aat.gpx.GpxInformation;
-import ch.bailu.aat.helpers.AppTheme;
+import ch.bailu.aat.util.ui.AppTheme;
 
 public class BusyButton extends ViewGroup   {
     public final int SPACE=16;

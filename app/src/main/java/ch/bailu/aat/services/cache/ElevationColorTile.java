@@ -2,6 +2,7 @@ package ch.bailu.aat.services.cache;
 
 import android.content.Context;
 
+import org.mapsforge.core.model.Tile;
 import org.osmdroid.tileprovider.MapTile;
 
 import ch.bailu.aat.services.ServiceContext;
@@ -10,7 +11,7 @@ import ch.bailu.aat.views.graph.ColorTable;
 
 public class ElevationColorTile extends ElevationTile {
 
-    public ElevationColorTile(String id, ServiceContext cs, MapTile t, int _split) {
+    public ElevationColorTile(String id, ServiceContext cs, Tile t, int _split) {
         super(id, cs, t, _split);
     }
 
@@ -64,13 +65,17 @@ public class ElevationColorTile extends ElevationTile {
         }
     }
 
+    @Override
+    public long getSize() {
+        return getBytesHack(TILE_SIZE);
+    }
 
 
     public static class Factory extends ObjectHandle.Factory {
         private static final int SPLIT=0;
-        private final MapTile mapTile;
+        private final Tile mapTile;
 
-        public Factory(MapTile t) {
+        public Factory(Tile t) {
             mapTile=t;
         }
 
@@ -92,8 +97,8 @@ public class ElevationColorTile extends ElevationTile {
                 }
 
                 @Override
-                public String getID(MapTile t, Context x) {
-                    return getName() + "/" + t.getZoomLevel() + "/" + t.getX() + "/" + t.getY();
+                public String getID(Tile t, Context x) {
+                    return Source.genID(t, ElevationColorTile.class.getSimpleName());
                 }
 
                 @Override
@@ -107,7 +112,7 @@ public class ElevationColorTile extends ElevationTile {
                 }
 
                 @Override
-                public ObjectHandle.Factory getFactory(MapTile mt) {
+                public ObjectHandle.Factory getFactory(Tile mt) {
                     return  new ElevationColorTile.Factory(mt);
                 }
 

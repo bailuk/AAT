@@ -5,7 +5,7 @@ import android.content.Context;
 import java.io.File;
 
 import ch.bailu.aat.R;
-import ch.bailu.aat.helpers.AppDirectory;
+import ch.bailu.aat.util.fs.AppDirectory;
 
 public class SolidPreset extends SolidIndexList {
     public final int PRESET_COUNT=5;

@@ -4,14 +4,15 @@ package ch.bailu.aat.services.cache;
 import android.content.Context;
 import android.graphics.Bitmap;
 
+import org.mapsforge.core.model.Tile;
 import org.osmdroid.tileprovider.MapTile;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 
-import ch.bailu.aat.helpers.AppBroadcaster;
-import ch.bailu.aat.helpers.file.FileAccess;
+import ch.bailu.aat.util.AppBroadcaster;
+import ch.bailu.aat.util.fs.FileAccess;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.background.FileHandle;
 
@@ -26,7 +27,7 @@ public class HillShadeCached extends TileObject {
 
 
 
-    public HillShadeCached(String id, ServiceContext cs,  MapTile t) {
+    public HillShadeCached(String id, ServiceContext cs,  Tile t) {
         super(id);
 
 
@@ -49,7 +50,11 @@ public class HillShadeCached extends TileObject {
 
                 try {
                     out = FileAccess.openOutput(new File(bitmapID));
-                    tile.getBitmap().compress(Bitmap.CompressFormat.PNG, 0, out);
+
+                    Bitmap bitmap = tile.getBitmap();
+                    if (bitmap != null) {
+                        bitmap.compress(Bitmap.CompressFormat.PNG, 0, out);
+                    }
 
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -154,10 +159,10 @@ public class HillShadeCached extends TileObject {
 
 
     public static class Factory extends ObjectHandle.Factory {
-        private final MapTile mapTile;
+        private final Tile mapTile;
 
 
-        public Factory(MapTile mt) {
+        public Factory(Tile mt) {
             mapTile=mt;
         }
 
@@ -177,9 +182,8 @@ public class HillShadeCached extends TileObject {
                 }
 
                 @Override
-                public String getID(MapTile t, Context x) {
-                    return HillShadeCached.class.getSimpleName() +
-                            "/" + t.getZoomLevel() + "/" + t.getX() + "/" + t.getY();
+                public String getID(Tile t, Context x) {
+                    return genID(t, HillShadeCached.class.getSimpleName());
                 }
 
                 @Override
@@ -193,7 +197,7 @@ public class HillShadeCached extends TileObject {
                 }
 
                 @Override
-                public ObjectHandle.Factory getFactory(MapTile mt) {
+                public ObjectHandle.Factory getFactory(Tile mt) {
                     return  new HillShadeCached.Factory(mt);
                 }
 

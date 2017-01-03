@@ -16,6 +16,11 @@ public abstract class GpxObject extends ObjectHandle {
     public static final GpxObject NULL = new GpxObject(GpxObject.class.getSimpleName()) {
 
         @Override
+        public long getSize() {
+            return MIN_SIZE;
+        }
+
+        @Override
         public void onChanged(String id, ServiceContext sc) {}
 
         @Override

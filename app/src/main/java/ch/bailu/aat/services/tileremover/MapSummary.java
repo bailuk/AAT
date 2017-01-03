@@ -1,6 +1,6 @@
 package ch.bailu.aat.services.tileremover;
 
-import ch.bailu.aat.helpers.AppLog;
+import ch.bailu.aat.util.ui.AppLog;
 import ch.bailu.aat.preferences.SolidTrimSize;
 
 public class MapSummary implements MapSummaryInterface {

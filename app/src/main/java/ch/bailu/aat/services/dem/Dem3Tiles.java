@@ -3,7 +3,7 @@ package ch.bailu.aat.services.dem;
 import java.io.File;
 
 import ch.bailu.aat.coordinates.SrtmCoordinates;
-import ch.bailu.aat.helpers.Timer;
+import ch.bailu.aat.util.Timer;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.background.DownloadHandle;
 

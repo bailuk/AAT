@@ -11,7 +11,7 @@ import android.provider.OpenableColumns;
 import java.io.File;
 import java.io.FileNotFoundException;
 
-import ch.bailu.aat.helpers.AppLog;
+import ch.bailu.aat.util.ui.AppLog;
 
 
 

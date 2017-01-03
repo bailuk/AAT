@@ -8,8 +8,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import ch.bailu.aat.R;
-import ch.bailu.aat.helpers.Clipboard;
-import ch.bailu.aat.helpers.file.FileIntent;
+import ch.bailu.aat.util.Clipboard;
+import ch.bailu.aat.util.fs.FileIntent;
 import ch.bailu.aat.preferences.SolidDirectory;
 
 public class DirectoryMenu extends AbsMenu {

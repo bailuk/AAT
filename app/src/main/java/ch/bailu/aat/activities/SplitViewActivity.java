@@ -20,7 +20,7 @@ import ch.bailu.aat.dispatcher.OverlaySource;
 import ch.bailu.aat.dispatcher.TrackerSource;
 import ch.bailu.aat.dispatcher.TrackerTimerSource;
 import ch.bailu.aat.gpx.InfoID;
-import ch.bailu.aat.helpers.AppLayout;
+import ch.bailu.aat.util.ui.AppLayout;
 import ch.bailu.aat.services.editor.EditorHelper;
 import ch.bailu.aat.views.ControlBar;
 import ch.bailu.aat.views.MainControlBar;
@@ -29,8 +29,8 @@ import ch.bailu.aat.views.description.MultiView;
 import ch.bailu.aat.views.description.TrackerStateButton;
 import ch.bailu.aat.views.graph.DistanceAltitudeGraphView;
 import ch.bailu.aat.views.graph.DistanceSpeedGraphView;
-import ch.bailu.aat.views.map.MapFactory;
-import ch.bailu.aat.views.map.OsmInteractiveView;
+import ch.bailu.aat.map.osm.MapFactory;
+import ch.bailu.aat.map.osm.OsmInteractiveView;
 
 public class SplitViewActivity extends AbsDispatcher implements OnClickListener{
     private static final String SOLID_KEY="split";

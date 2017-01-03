@@ -10,8 +10,8 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-import ch.bailu.aat.helpers.AppLog;
-import ch.bailu.aat.helpers.Timer;
+import ch.bailu.aat.util.ui.AppLog;
+import ch.bailu.aat.util.Timer;
 
 public abstract class AbsService  extends Service {
     private static int allinstances, allcreations;

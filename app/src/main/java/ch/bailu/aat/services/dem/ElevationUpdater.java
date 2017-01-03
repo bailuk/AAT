@@ -8,8 +8,8 @@ import android.util.SparseArray;
 import java.io.Closeable;
 
 import ch.bailu.aat.coordinates.SrtmCoordinates;
-import ch.bailu.aat.helpers.AppBroadcaster;
-import ch.bailu.aat.helpers.AppIntent;
+import ch.bailu.aat.util.AppBroadcaster;
+import ch.bailu.aat.util.AppIntent;
 import ch.bailu.aat.services.ServiceContext;
 
 

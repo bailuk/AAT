@@ -6,8 +6,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-import ch.bailu.aat.helpers.Logger;
-import ch.bailu.aat.helpers.LoggerFactory;
+import ch.bailu.aat.util.ui.Logger;
+import ch.bailu.aat.util.ui.LoggerFactory;
 
 public class StreamUtils {
 

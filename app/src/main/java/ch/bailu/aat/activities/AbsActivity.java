@@ -3,7 +3,7 @@ package ch.bailu.aat.activities;
 import android.app.Activity;
 import android.os.Bundle;
 
-import ch.bailu.aat.helpers.AppLog;
+import ch.bailu.aat.util.ui.AppLog;
 import ch.bailu.aat.preferences.PreferenceLoadDefaults;
 
 public abstract class AbsActivity extends Activity {

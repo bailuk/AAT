@@ -2,7 +2,7 @@ package ch.bailu.aat.dispatcher;
 
 
 import ch.bailu.aat.gpx.InfoID;
-import ch.bailu.aat.helpers.Timer;
+import ch.bailu.aat.util.Timer;
 import ch.bailu.aat.services.ServiceContext;
 
 public class TrackerTimerSource extends ContentSource {

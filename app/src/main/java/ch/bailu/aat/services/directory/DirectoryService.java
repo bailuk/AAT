@@ -8,8 +8,8 @@ import android.database.sqlite.SQLiteCantOpenDatabaseException;
 import java.io.File;
 import java.io.IOException;
 
-import ch.bailu.aat.helpers.AppDirectory;
-import ch.bailu.aat.helpers.AppLog;
+import ch.bailu.aat.util.fs.AppDirectory;
+import ch.bailu.aat.util.ui.AppLog;
 import ch.bailu.aat.preferences.SolidDirectoryQuery;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.VirtualService;

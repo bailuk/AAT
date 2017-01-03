@@ -12,8 +12,8 @@ import org.osmdroid.views.MapView;
 
 import ch.bailu.aat.R;
 import ch.bailu.aat.coordinates.Coordinates;
-import ch.bailu.aat.helpers.AppLog;
-import ch.bailu.aat.helpers.Clipboard;
+import ch.bailu.aat.util.ui.AppLog;
+import ch.bailu.aat.util.Clipboard;
 
 public class LocationMenu extends AbsMenu{
 

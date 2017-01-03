@@ -1,6 +1,6 @@
 package ch.bailu.aat.preferences;
 
-import ch.bailu.aat.helpers.AppLog;
+import ch.bailu.aat.util.ui.AppLog;
 
 public class SolidLong extends AbsSolidType {
 

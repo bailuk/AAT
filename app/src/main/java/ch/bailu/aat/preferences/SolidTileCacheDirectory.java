@@ -7,7 +7,7 @@ import java.io.File;
 import java.util.ArrayList;
 
 import ch.bailu.aat.R;
-import ch.bailu.aat.helpers.AppDirectory;
+import ch.bailu.aat.util.fs.AppDirectory;
 
 
 public class SolidTileCacheDirectory extends SolidDirectory {

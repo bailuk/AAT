@@ -5,7 +5,16 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
 
-import org.mapsforge.core.model.LatLong;
+import org.mapsforge.map.android.graphics.AndroidGraphicFactory;
+import org.mapsforge.map.android.util.AndroidUtil;
+import org.mapsforge.map.datastore.MapDataStore;
+import org.mapsforge.map.layer.cache.TileCache;
+import org.mapsforge.map.layer.renderer.TileRendererLayer;
+import org.mapsforge.map.reader.MapFile;
+import org.mapsforge.map.rendertheme.InternalRenderTheme;
+import org.mapsforge.map.view.MapView;
+
+import java.io.File;
 
 import ch.bailu.aat.R;
 import ch.bailu.aat.description.AccelerationDescription;
@@ -34,19 +43,18 @@ import ch.bailu.aat.dispatcher.CurrentLocationSource;
 import ch.bailu.aat.dispatcher.OverlaySource;
 import ch.bailu.aat.dispatcher.TrackerSource;
 import ch.bailu.aat.gpx.InfoID;
-import ch.bailu.aat.helpers.AppDensity;
-import ch.bailu.aat.helpers.AppLog;
-import ch.bailu.aat.mapsforge.MapsForgeView;
-import ch.bailu.aat.mapsforge.layer.CurrentLocationLayer;
-import ch.bailu.aat.mapsforge.layer.Dem3NameLayer;
-import ch.bailu.aat.mapsforge.layer.ZoomLevel;
-import ch.bailu.aat.mapsforge.layer.control.InformationBar;
-import ch.bailu.aat.mapsforge.layer.control.NavigationBar;
-import ch.bailu.aat.mapsforge.layer.gpx.GpxDynLayer;
-import ch.bailu.aat.mapsforge.layer.gpx.GpxOverlayListLayer;
-import ch.bailu.aat.mapsforge.layer.gpx.GpxTestLayer;
-import ch.bailu.aat.mapsforge.layer.gpx.WayLayer;
-import ch.bailu.aat.mapsforge.layer.grid.GridDynLayer;
+import ch.bailu.aat.util.ui.AppDensity;
+import ch.bailu.aat.util.ui.AppLog;
+import ch.bailu.aat.map.mapsforge.MapsForgeView;
+import ch.bailu.aat.map.mapsforge.layer.CurrentLocationLayer;
+import ch.bailu.aat.map.mapsforge.layer.Dem3NameLayer;
+import ch.bailu.aat.map.mapsforge.layer.ZoomLevel;
+import ch.bailu.aat.map.mapsforge.layer.control.InformationBar;
+import ch.bailu.aat.map.mapsforge.layer.control.NavigationBar;
+import ch.bailu.aat.map.mapsforge.layer.gpx.GpxDynLayer;
+import ch.bailu.aat.map.mapsforge.layer.gpx.GpxOverlayListLayer;
+import ch.bailu.aat.map.mapsforge.layer.gpx.GpxTestLayer;
+import ch.bailu.aat.map.mapsforge.layer.grid.GridDynLayer;
 import ch.bailu.aat.test.PreferencesFromSdcard;
 import ch.bailu.aat.test.PreferencesToSdcard;
 import ch.bailu.aat.test.TestCoordinates;
@@ -60,17 +68,17 @@ import ch.bailu.aat.views.ControlBar;
 import ch.bailu.aat.views.MainControlBar;
 import ch.bailu.aat.views.StatusTextView;
 import ch.bailu.aat.views.description.MultiView;
-import ch.bailu.aat.views.map.OsmInteractiveView;
-import ch.bailu.aat.views.map.overlay.Dem3NameOverlay;
-import ch.bailu.aat.views.map.overlay.EndLogOverlay;
-import ch.bailu.aat.views.map.overlay.StartLogOverlay;
-import ch.bailu.aat.views.map.overlay.ZoomLevelOverlay;
-import ch.bailu.aat.views.map.overlay.control.InformationBarOverlay;
-import ch.bailu.aat.views.map.overlay.control.NavigationBarOverlay;
-import ch.bailu.aat.views.map.overlay.gpx.GpxDynOverlay;
-import ch.bailu.aat.views.map.overlay.gpx.GpxOverlayListOverlay;
-import ch.bailu.aat.views.map.overlay.gpx.GpxTestOverlay;
-import ch.bailu.aat.views.map.overlay.grid.GridDynOverlay;
+import ch.bailu.aat.map.osm.OsmInteractiveView;
+import ch.bailu.aat.map.osm.overlay.Dem3NameOverlay;
+import ch.bailu.aat.map.osm.overlay.EndLogOverlay;
+import ch.bailu.aat.map.osm.overlay.StartLogOverlay;
+import ch.bailu.aat.map.osm.overlay.ZoomLevelOverlay;
+import ch.bailu.aat.map.osm.overlay.control.InformationBarOverlay;
+import ch.bailu.aat.map.osm.overlay.control.NavigationBarOverlay;
+import ch.bailu.aat.map.osm.overlay.gpx.GpxDynOverlay;
+import ch.bailu.aat.map.osm.overlay.gpx.GpxOverlayListOverlay;
+import ch.bailu.aat.map.osm.overlay.gpx.GpxTestOverlay;
+import ch.bailu.aat.map.osm.overlay.grid.GridDynOverlay;
 import ch.bailu.aat.views.preferences.VerticalScrollView;
 
 public class TestActivity extends AbsDispatcher {
@@ -177,19 +185,6 @@ public class TestActivity extends AbsDispatcher {
         mapsForge.setZoomLevelMax((byte) 20);
 
 
-/*
-        TileCache tileCache = AndroidUtil.createTileCache(
-                this,
-                "mapcache",
-                mapsForge.getModel().displayModel.getTileSize(),
-                1f,
-                mapsForge.getModel().frameBufferModel.getOverdrawFactor());
-
-
-        MapDataStore mapDataStore = new MapFile(new File("/storage/emulated/0/berlin.map"));
-        TileRendererLayer tileLayer = new TileRendererLayer(tileCache, mapDataStore, mapsForge.getModel().mapViewPosition, AndroidGraphicFactory.INSTANCE);
-        tileLayer.setXmlRenderTheme(InternalRenderTheme.DEFAULT);
-*/
 
 
 
@@ -208,6 +203,27 @@ public class TestActivity extends AbsDispatcher {
     }
 
 
+    private void testMe() {
+
+        MapView mapsForge = null;
+
+        TileCache tileCache = AndroidUtil.createTileCache(
+                this,
+                "mapcache",
+                mapsForge.getModel().displayModel.getTileSize(),
+                1f,
+                mapsForge.getModel().frameBufferModel.getOverdrawFactor());
+
+
+        MapDataStore mapDataStore = new MapFile(new File("/storage/emulated/0/berlin.map"));
+        TileRendererLayer tileLayer = new TileRendererLayer(tileCache,
+                mapDataStore,
+                mapsForge.getModel().mapViewPosition,
+                AndroidGraphicFactory.INSTANCE);
+
+        tileLayer.setXmlRenderTheme(InternalRenderTheme.DEFAULT);
+
+    }
     private ControlBar createButtonBar(MultiView multiView) {
         final MainControlBar bar = new MainControlBar(getServiceContext());
 

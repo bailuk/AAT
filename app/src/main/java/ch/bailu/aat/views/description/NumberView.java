@@ -9,7 +9,7 @@ import android.widget.TextView;
 import ch.bailu.aat.description.ContentDescription;
 import ch.bailu.aat.dispatcher.OnContentUpdatedInterface;
 import ch.bailu.aat.gpx.GpxInformation;
-import ch.bailu.aat.helpers.AppTheme;
+import ch.bailu.aat.util.ui.AppTheme;
 
 public class NumberView extends ViewGroup implements OnContentUpdatedInterface {
 

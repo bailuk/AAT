@@ -10,7 +10,7 @@ import java.io.File;
 
 import ch.bailu.aat.R;
 import ch.bailu.aat.activities.AbsServiceLink;
-import ch.bailu.aat.helpers.file.FileAction;
+import ch.bailu.aat.util.fs.FileAction;
 import ch.bailu.aat.services.ServiceContext;
 
 public class FileMenu extends AbsMenu {

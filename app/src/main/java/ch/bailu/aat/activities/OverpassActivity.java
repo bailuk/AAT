@@ -7,9 +7,9 @@ import org.osmdroid.util.BoundingBoxOsm;
 import java.io.IOException;
 
 import ch.bailu.aat.R;
-import ch.bailu.aat.helpers.OsmApiHelper;
-import ch.bailu.aat.helpers.OverpassApi;
-import ch.bailu.aat.helpers.ToolTip;
+import ch.bailu.aat.util.OsmApiHelper;
+import ch.bailu.aat.util.OverpassApi;
+import ch.bailu.aat.util.ui.ToolTip;
 import ch.bailu.aat.views.ControlBar;
 
 public class OverpassActivity extends AbsOsmApiActivity  {

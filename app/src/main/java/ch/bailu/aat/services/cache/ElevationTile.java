@@ -7,13 +7,14 @@ import android.graphics.Point;
 import android.graphics.Rect;
 import android.util.SparseArray;
 
+import org.mapsforge.core.model.Tile;
 import org.osmdroid.tileprovider.MapTile;
 import org.osmdroid.util.GeoPoint;
 
 import java.util.ArrayList;
 
 import ch.bailu.aat.coordinates.SrtmCoordinates;
-import ch.bailu.aat.helpers.AppBroadcaster;
+import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.background.ProcessHandle;
 import ch.bailu.aat.services.dem.Dem3Tile;
@@ -22,11 +23,12 @@ import ch.bailu.aat.services.dem.DemGeoToIndex;
 import ch.bailu.aat.services.dem.DemProvider;
 import ch.bailu.aat.services.dem.DemSplitter;
 import ch.bailu.aat.services.dem.ElevationUpdaterClient;
+import ch.bailu.aat.util.graphic.SynchronizedBitmap;
 import microsoft.mappoint.TileSystem;
 
 public abstract class ElevationTile extends TileObject implements ElevationUpdaterClient{
 
-    private final MapTile map_tile;
+    private final Tile map_tile;
     private final int split;
     
     private boolean updateLock=false;
@@ -42,7 +44,7 @@ public abstract class ElevationTile extends TileObject implements ElevationUpdat
     
 
     
-    public ElevationTile(String id, ServiceContext cs, MapTile _map_tile, int _split) {
+    public ElevationTile(String id, ServiceContext cs, Tile _map_tile, int _split) {
         super(id);
         map_tile=_map_tile;
         split=_split;
@@ -225,7 +227,7 @@ public abstract class ElevationTile extends TileObject implements ElevationUpdat
             return TileSystem.PixelXYToLatLong(
                     x, 
                     y,
-                    map_tile.getZoomLevel(), 
+                    map_tile.zoomLevel,
                     TileObject.TILE_SIZE, 
                     null);
         }        
@@ -272,7 +274,7 @@ public abstract class ElevationTile extends TileObject implements ElevationUpdat
 
 
         private Point tileToPixel() {
-            return new Point(map_tile.getX()*TileObject.TILE_SIZE, map_tile.getY()*TileObject.TILE_SIZE);
+            return new Point(map_tile.tileX*TileObject.TILE_SIZE, map_tile.tileY*TileObject.TILE_SIZE);
         }
 
 

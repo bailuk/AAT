@@ -11,7 +11,7 @@ import java.io.File;
 
 import ch.bailu.aat.BuildConfig;
 import ch.bailu.aat.R;
-import ch.bailu.aat.helpers.AppIntent;
+import ch.bailu.aat.util.AppIntent;
 
 public class ActivitySwitcher {
     public final static ActivitySwitcher list[] = {

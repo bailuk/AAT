@@ -10,7 +10,7 @@ import org.osmdroid.tileprovider.MapTile;
 import org.osmdroid.util.MyMath;
 import org.osmdroid.views.MapView;
 
-import ch.bailu.aat.views.map.AbsTileProvider;
+import ch.bailu.aat.map.osm.AbsTileProvider;
 import microsoft.mappoint.TileSystem;
 
 

@@ -9,9 +9,9 @@ import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import ch.bailu.aat.helpers.AppBroadcaster;
-import ch.bailu.aat.helpers.AppIntent;
-import ch.bailu.aat.helpers.AppLog;
+import ch.bailu.aat.util.AppBroadcaster;
+import ch.bailu.aat.util.AppIntent;
+import ch.bailu.aat.util.ui.AppLog;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.VirtualService;
 

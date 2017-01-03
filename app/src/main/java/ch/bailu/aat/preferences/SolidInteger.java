@@ -1,6 +1,6 @@
 package ch.bailu.aat.preferences;
 
-import ch.bailu.aat.helpers.AppLog;
+import ch.bailu.aat.util.ui.AppLog;
 
 public class SolidInteger extends AbsSolidType {
     private final String key;

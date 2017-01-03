@@ -3,7 +3,7 @@ package ch.bailu.aat.views.preferences;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 
-import ch.bailu.aat.helpers.AppTheme;
+import ch.bailu.aat.util.ui.AppTheme;
 import ch.bailu.aat.preferences.SolidBoolean;
 
 

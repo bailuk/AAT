@@ -4,7 +4,7 @@ import java.io.File;
 import java.io.IOException;
 
 import ch.bailu.aat.gpx.parser.SimpleStream;
-import ch.bailu.aat.helpers.file.FileAccess;
+import ch.bailu.aat.util.fs.FileAccess;
 
 public class MapFeaturesParser {
     

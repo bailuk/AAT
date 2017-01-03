@@ -9,9 +9,9 @@ import android.os.Environment;
 import java.io.File;
 import java.util.Map.Entry;
 
-import ch.bailu.aat.helpers.ContextWrapperInterface;
-import ch.bailu.aat.helpers.file.FileAccess;
-import ch.bailu.aat.helpers.file.UriAccess;
+import ch.bailu.aat.util.ContextWrapperInterface;
+import ch.bailu.aat.util.fs.FileAccess;
+import ch.bailu.aat.util.fs.UriAccess;
 
 public class Storage  implements ContextWrapperInterface {
     public final static String DEF_VALUE="0";

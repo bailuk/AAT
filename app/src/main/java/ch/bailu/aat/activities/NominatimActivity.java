@@ -4,8 +4,8 @@ import org.osmdroid.util.BoundingBoxOsm;
 
 import java.io.IOException;
 
-import ch.bailu.aat.helpers.NominatimApi;
-import ch.bailu.aat.helpers.OsmApiHelper;
+import ch.bailu.aat.util.NominatimApi;
+import ch.bailu.aat.util.OsmApiHelper;
 import ch.bailu.aat.views.ControlBar;
 
 public class NominatimActivity extends AbsOsmApiActivity {

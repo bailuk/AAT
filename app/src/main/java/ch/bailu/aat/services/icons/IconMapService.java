@@ -4,9 +4,9 @@ import java.io.File;
 import java.io.IOException;
 
 import ch.bailu.aat.gpx.GpxAttributes;
-import ch.bailu.aat.helpers.AppDirectory;
-import ch.bailu.aat.helpers.AppLog;
-import ch.bailu.aat.helpers.file.FileAccess;
+import ch.bailu.aat.util.fs.AppDirectory;
+import ch.bailu.aat.util.ui.AppLog;
+import ch.bailu.aat.util.fs.FileAccess;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.VirtualService;
 

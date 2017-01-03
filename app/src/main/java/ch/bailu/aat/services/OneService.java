@@ -8,6 +8,7 @@ import ch.bailu.aat.services.dem.ElevationService;
 import ch.bailu.aat.services.directory.DirectoryService;
 import ch.bailu.aat.services.icons.IconMapService;
 import ch.bailu.aat.services.location.LocationService;
+import ch.bailu.aat.services.render.RenderService;
 import ch.bailu.aat.services.tileremover.TileRemoverService;
 import ch.bailu.aat.services.tracker.TrackerService;
 
@@ -23,6 +24,7 @@ public class OneService extends AbsService  implements ServiceContext {
     private DirectoryService directory;
     private ElevationService elevation;
     private TileRemoverService tileRemover;
+    private RenderService render;
 
 
     private boolean up = false;
@@ -36,6 +38,7 @@ public class OneService extends AbsService  implements ServiceContext {
 
     @Override
     public void onDestroy() {
+
         if (tracker != null) {
             tracker.close();
             tracker = null;
@@ -76,6 +79,10 @@ public class OneService extends AbsService  implements ServiceContext {
             tileRemover = null;
         }
 
+        if (render != null) {
+            render.close();
+            render = null;
+        }
         super.onDestroy();
         up = false;
     }
@@ -111,6 +118,14 @@ public class OneService extends AbsService  implements ServiceContext {
             getElevationService();
         }
         return cache;
+    }
+
+    @Override
+    public RenderService getRenderService() {
+        if (forceUp() && render == null) {
+            render = new RenderService(this);
+        }
+        return render;
     }
 
     @Override

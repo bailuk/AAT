@@ -3,7 +3,7 @@ package ch.bailu.aat.views;
 import android.content.Context;
 import android.widget.LinearLayout;
 
-import ch.bailu.aat.helpers.AppLayout;
+import ch.bailu.aat.util.ui.AppLayout;
 
 public class ContentView extends LinearLayout {
 

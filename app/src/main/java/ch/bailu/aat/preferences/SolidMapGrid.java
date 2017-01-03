@@ -9,14 +9,14 @@ import ch.bailu.aat.mapsforge.layer.grid.CH1903GridLayer;
 import ch.bailu.aat.mapsforge.layer.grid.UTMGridLayer;
 import ch.bailu.aat.mapsforge.layer.grid.WGS84Layer;
 import ch.bailu.aat.services.ServiceContext;
-import ch.bailu.aat.views.map.AbsOsmView;
-import ch.bailu.aat.views.map.overlay.NullOverlay;
-import ch.bailu.aat.views.map.overlay.OsmOverlay;
-import ch.bailu.aat.views.map.overlay.grid.CH1903CenterCoordinatesOverlay;
-import ch.bailu.aat.views.map.overlay.grid.CH1903GridOverlay;
-import ch.bailu.aat.views.map.overlay.grid.UTMCenterCoordinatesOverlay;
-import ch.bailu.aat.views.map.overlay.grid.UTMGridOverlay;
-import ch.bailu.aat.views.map.overlay.grid.WGS84Overlay;
+import ch.bailu.aat.map.osm.AbsOsmView;
+import ch.bailu.aat.map.osm.overlay.NullOverlay;
+import ch.bailu.aat.map.osm.overlay.OsmOverlay;
+import ch.bailu.aat.map.osm.overlay.grid.CH1903CenterCoordinatesOverlay;
+import ch.bailu.aat.map.osm.overlay.grid.CH1903GridOverlay;
+import ch.bailu.aat.map.osm.overlay.grid.UTMCenterCoordinatesOverlay;
+import ch.bailu.aat.map.osm.overlay.grid.UTMGridOverlay;
+import ch.bailu.aat.map.osm.overlay.grid.WGS84Overlay;
 
 public class SolidMapGrid extends SolidStaticIndexList {
 

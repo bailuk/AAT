@@ -3,21 +3,20 @@ package ch.bailu.aat.preferences;
 import android.content.Context;
 
 import ch.bailu.aat.R;
-import ch.bailu.aat.mapsforge.layer.MapsForgeLayer;
-import ch.bailu.aat.mapsforge.layer.context.MapContext;
-import ch.bailu.aat.mapsforge.layer.gpx.GpxLayer;
-import ch.bailu.aat.mapsforge.layer.gpx.legend.GpxLegendLayer;
-import ch.bailu.aat.views.map.AbsOsmView;
-import ch.bailu.aat.views.map.overlay.gpx.GpxOverlay;
-import ch.bailu.aat.views.map.overlay.gpx.legend.GpxLegendOverlay;
-import ch.bailu.aat.views.map.overlay.gpx.legend.MarkerAltitudeWalker;
-import ch.bailu.aat.views.map.overlay.gpx.legend.MarkerDistanceWalker;
-import ch.bailu.aat.views.map.overlay.gpx.legend.MarkerSpeedWalker;
-import ch.bailu.aat.views.map.overlay.gpx.legend.PointAltitudeWalker;
-import ch.bailu.aat.views.map.overlay.gpx.legend.PointDistanceWalker;
-import ch.bailu.aat.views.map.overlay.gpx.legend.PointIndexWalker;
-import ch.bailu.aat.views.map.overlay.gpx.legend.PointNameWalker;
-import ch.bailu.aat.views.map.overlay.gpx.legend.SegmentIndexWalker;
+import ch.bailu.aat.map.mapsforge.layer.context.MapContext;
+import ch.bailu.aat.map.mapsforge.layer.gpx.GpxLayer;
+import ch.bailu.aat.map.mapsforge.layer.gpx.legend.GpxLegendLayer;
+import ch.bailu.aat.map.osm.AbsOsmView;
+import ch.bailu.aat.map.osm.overlay.gpx.GpxOverlay;
+import ch.bailu.aat.map.osm.overlay.gpx.legend.GpxLegendOverlay;
+import ch.bailu.aat.map.osm.overlay.gpx.legend.MarkerAltitudeWalker;
+import ch.bailu.aat.map.osm.overlay.gpx.legend.MarkerDistanceWalker;
+import ch.bailu.aat.map.osm.overlay.gpx.legend.MarkerSpeedWalker;
+import ch.bailu.aat.map.osm.overlay.gpx.legend.PointAltitudeWalker;
+import ch.bailu.aat.map.osm.overlay.gpx.legend.PointDistanceWalker;
+import ch.bailu.aat.map.osm.overlay.gpx.legend.PointIndexWalker;
+import ch.bailu.aat.map.osm.overlay.gpx.legend.PointNameWalker;
+import ch.bailu.aat.map.osm.overlay.gpx.legend.SegmentIndexWalker;
 
 public class SolidLegend extends SolidStaticIndexList {
 

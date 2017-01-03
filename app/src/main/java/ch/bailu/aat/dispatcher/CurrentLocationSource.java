@@ -5,7 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 
 import ch.bailu.aat.gpx.InfoID;
-import ch.bailu.aat.helpers.AppBroadcaster;
+import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.services.ServiceContext;
 
 public class CurrentLocationSource extends ContentSource {

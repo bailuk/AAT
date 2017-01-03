@@ -10,9 +10,9 @@ import java.io.Writer;
 import java.util.ArrayList;
 
 import ch.bailu.aat.gpx.parser.SimpleStream;
-import ch.bailu.aat.helpers.AppBroadcaster;
-import ch.bailu.aat.helpers.AppDirectory;
-import ch.bailu.aat.helpers.file.FileAccess;
+import ch.bailu.aat.util.AppBroadcaster;
+import ch.bailu.aat.util.fs.AppDirectory;
+import ch.bailu.aat.util.fs.FileAccess;
 import ch.bailu.aat.services.background.DownloadHandle;
 
 

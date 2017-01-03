@@ -8,7 +8,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.channels.FileChannel;
 
-import ch.bailu.aat.helpers.AppDirectory;
+import ch.bailu.aat.util.fs.AppDirectory;
 import ch.bailu.aat.preferences.SolidPreset;
 import ch.bailu.aat.services.tracker.TrackLogger;
 

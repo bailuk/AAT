@@ -1,6 +1,6 @@
 package ch.bailu.aat.services.tracker;
 
-import ch.bailu.aat.helpers.AppBroadcaster;
+import ch.bailu.aat.util.AppBroadcaster;
 
 public abstract class State  {
     protected final TrackerInternals internal;

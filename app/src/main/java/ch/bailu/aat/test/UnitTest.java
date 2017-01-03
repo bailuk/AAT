@@ -6,8 +6,8 @@ import junit.framework.Assert;
 
 import java.io.File;
 
-import ch.bailu.aat.helpers.AppDirectory;
-import ch.bailu.aat.helpers.ContextWrapperInterface;
+import ch.bailu.aat.util.fs.AppDirectory;
+import ch.bailu.aat.util.ContextWrapperInterface;
 
 public abstract class UnitTest extends Assert implements ContextWrapperInterface {
     private final Context context;

@@ -9,15 +9,17 @@ import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 
 import org.mapsforge.core.graphics.TileBitmap;
-import org.mapsforge.map.android.graphics.AndroidTileBitmap;
+import org.mapsforge.core.model.Tile;
 import org.osmdroid.tileprovider.MapTile;
 import org.osmdroid.views.overlay.LoadingTile;
 
-import ch.bailu.aat.helpers.AppBroadcaster;
-import ch.bailu.aat.mapsforge.MapsForgeBitmap;
+import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.background.ProcessHandle;
 import ch.bailu.aat.services.cache.TileObject.Source;
+import ch.bailu.aat.util.graphic.AppTileBitmap;
+import ch.bailu.aat.util.graphic.SynchronizedTileBitmap;
+import ch.bailu.aat.util.ui.AppLog;
 
 public class TileStackObject extends ObjectHandle {
 
@@ -31,24 +33,22 @@ public class TileStackObject extends ObjectHandle {
     private ProcessHandle pendingUpdate=ProcessHandle.NULL;
 
 
-    private final MapTile mapTile;
-    private final int tileSize;
+    private final Tile mapTile;
+
 
     private boolean ready=false;
 
     private TileStackObject() {
         super(TileStackObject.class.getSimpleName());
         tiles = new TileContainer[]{};
-        mapTile = new MapTile(0, 0, 0);
-        tileSize=256;
+        mapTile = new Tile(0,0,(byte)0,TileObject.TILE_SIZE);
     }
 
 
-    public TileStackObject(String s,  TileContainer[] t, MapTile m, int size) {
+    public TileStackObject(String s,  TileContainer[] t, Tile m) {
         super(s);
         tiles = t;
         mapTile=m;
-        tileSize = size;
 
         paint.setColor(Color.WHITE);
         paint.setStyle(Paint.Style.FILL);
@@ -152,7 +152,7 @@ public class TileStackObject extends ObjectHandle {
 
         @Override
         public long bgOnProcess() {
-            MapsForgeBitmap b = bgReupdate();
+            AppTileBitmap b = bgReupdate();
 
             if (canContinue()) {
                 bitmap.set(b);
@@ -164,10 +164,10 @@ public class TileStackObject extends ObjectHandle {
 
 
 
-        private MapsForgeBitmap bgReupdate() {
+        private AppTileBitmap bgReupdate() {
 
 
-            MapsForgeBitmap destination=null;
+            AppTileBitmap destination=null;
             Canvas canvas=null;
             int alpha=NULL_ALPHA;
 
@@ -182,7 +182,8 @@ public class TileStackObject extends ObjectHandle {
 
                 if (source != null) {
                     if (canvas == null) {
-                        destination = new MapsForgeBitmap(tileSize);
+                        destination = new AppTileBitmap(mapTile.tileSize);
+                        destination.erase();
                         canvas = destination.getCanvas();
                     }
                     tile.filter.applayFilter(canvas, source, alpha);
@@ -219,7 +220,7 @@ public class TileStackObject extends ObjectHandle {
         }
     }
 
-    public MapTile getTile() {
+    public Tile getTile() {
         return mapTile;
     }
 
@@ -279,14 +280,14 @@ public class TileStackObject extends ObjectHandle {
 
     public static class Factory extends ObjectHandle.Factory {
         private final TileContainer[] tiles;
-        private final MapTile mapTile;
-        private final int size;
+        private final Tile mapTile;
 
 
-        public Factory(Context context, MapTile mt, int size, Source s[]) {
+
+        public Factory(Context context, Tile mt, Source s[]) {
             mapTile = mt;
             int count=0;
-            this.size = size;
+
 
             for (Source value1 : s) {
                 if (isZoomLevelSupported(value1)) {
@@ -312,12 +313,15 @@ public class TileStackObject extends ObjectHandle {
 
 
         boolean isZoomLevelSupported(Source s) {
-            final int z = mapTile.getZoomLevel();
+            final int z = mapTile.zoomLevel;
             return (s.getMaximumZoomLevel()>=z && s.getMinimumZoomLevel()<=z);
         }
         @Override
         public ObjectHandle factory(String id, ServiceContext cs) {
-            return new TileStackObject(id, tiles, mapTile, size);
+            return new TileStackObject(id, tiles, mapTile);
         }
     }
+
+
+
 }

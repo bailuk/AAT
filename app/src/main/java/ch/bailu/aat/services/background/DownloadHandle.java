@@ -9,9 +9,9 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-import ch.bailu.aat.helpers.AppBroadcaster;
-import ch.bailu.aat.helpers.AppTheme;
-import ch.bailu.aat.helpers.file.FileAccess;
+import ch.bailu.aat.util.AppBroadcaster;
+import ch.bailu.aat.util.ui.AppTheme;
+import ch.bailu.aat.util.fs.FileAccess;
 
 public class DownloadHandle extends ProcessHandle {
 

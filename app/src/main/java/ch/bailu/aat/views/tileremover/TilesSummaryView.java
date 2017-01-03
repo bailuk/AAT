@@ -6,7 +6,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
-import ch.bailu.aat.helpers.AppTheme;
+import ch.bailu.aat.util.ui.AppTheme;
 import ch.bailu.aat.preferences.SolidTrimIndex;
 import ch.bailu.aat.services.tileremover.MapSummaries;
 import ch.bailu.aat.services.tileremover.MapSummaryInterface;

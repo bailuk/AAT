@@ -4,7 +4,7 @@ import java.io.IOException;
 
 import ch.bailu.aat.R;
 import ch.bailu.aat.gpx.StateID;
-import ch.bailu.aat.helpers.AppLog;
+import ch.bailu.aat.util.ui.AppLog;
 
 
 public class OffState extends State {

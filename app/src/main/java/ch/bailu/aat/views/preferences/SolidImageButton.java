@@ -3,7 +3,7 @@ package ch.bailu.aat.views.preferences;
 import android.content.SharedPreferences;
 import android.view.View;
 
-import ch.bailu.aat.helpers.AppLog;
+import ch.bailu.aat.util.ui.AppLog;
 import ch.bailu.aat.preferences.SolidIndexList;
 import ch.bailu.aat.views.ImageButtonView;
 

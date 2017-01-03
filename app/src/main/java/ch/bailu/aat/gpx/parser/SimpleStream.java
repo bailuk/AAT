@@ -10,7 +10,7 @@ import java.io.Reader;
 import java.io.StringReader;
 import java.io.UnsupportedEncodingException;
 
-import ch.bailu.aat.helpers.file.AbsAccess;
+import ch.bailu.aat.util.fs.AbsAccess;
 
 
 public class SimpleStream implements Closeable {

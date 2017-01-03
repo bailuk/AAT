@@ -3,7 +3,7 @@ package ch.bailu.aat.services.tileremover;
 import java.io.File;
 import java.util.Iterator;
 
-import ch.bailu.aat.helpers.AppBroadcaster;
+import ch.bailu.aat.util.AppBroadcaster;
 
 public class StateRemove implements State, Runnable {
     private static final int BROADCAST_INTERVAL =5;

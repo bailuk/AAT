@@ -7,9 +7,10 @@ import android.graphics.drawable.Drawable;
 
 import java.io.File;
 
-import ch.bailu.aat.helpers.AppBroadcaster;
+import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.background.FileHandle;
+import ch.bailu.aat.util.graphic.SynchronizedBitmap;
 
 public class ImageObject extends ObjectHandle {
     public final static ImageObject NULL=new ImageObject();

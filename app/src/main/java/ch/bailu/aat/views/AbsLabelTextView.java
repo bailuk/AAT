@@ -5,7 +5,7 @@ import android.graphics.Color;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import ch.bailu.aat.helpers.AppTheme;
+import ch.bailu.aat.util.ui.AppTheme;
 
 public abstract class AbsLabelTextView extends LinearLayout{
 

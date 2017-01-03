@@ -3,7 +3,7 @@ package ch.bailu.aat.preferences;
 import android.app.Activity;
 import android.content.Context;
 
-import ch.bailu.aat.helpers.AppPermission;
+import ch.bailu.aat.util.AppPermission;
 
 public class PreferenceLoadDefaults {
     private static final String KEY_STARTCOUNT="start_count";

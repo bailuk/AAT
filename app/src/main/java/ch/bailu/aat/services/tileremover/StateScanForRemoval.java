@@ -2,7 +2,7 @@ package ch.bailu.aat.services.tileremover;
 
 import java.util.Iterator;
 
-import ch.bailu.aat.helpers.AppBroadcaster;
+import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.preferences.SolidTrimDate;
 import ch.bailu.aat.preferences.SolidTrimIndex;
 import ch.bailu.aat.preferences.SolidTrimMode;

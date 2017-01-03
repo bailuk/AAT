@@ -11,7 +11,7 @@ import org.osmdroid.util.BoundingBoxOsm;
 import ch.bailu.aat.R;
 import ch.bailu.aat.activities.ActivitySwitcher;
 import ch.bailu.aat.activities.NominatimActivity;
-import ch.bailu.aat.helpers.AppIntent;
+import ch.bailu.aat.util.AppIntent;
 import ch.bailu.aat.preferences.SolidAutopause;
 import ch.bailu.aat.preferences.SolidBacklight;
 import ch.bailu.aat.preferences.SolidMapTileStack;

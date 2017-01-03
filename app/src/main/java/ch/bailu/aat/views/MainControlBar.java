@@ -2,7 +2,7 @@ package ch.bailu.aat.views;
 
 import android.view.View;
 
-import ch.bailu.aat.helpers.AppLayout;
+import ch.bailu.aat.util.ui.AppLayout;
 import ch.bailu.aat.menus.OptionsMenu;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.views.description.MultiView;

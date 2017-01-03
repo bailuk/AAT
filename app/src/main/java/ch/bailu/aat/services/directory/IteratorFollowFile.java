@@ -7,7 +7,7 @@ import java.io.File;
 import java.io.IOException;
 
 import ch.bailu.aat.gpx.GpxInformation;
-import ch.bailu.aat.helpers.AppLog;
+import ch.bailu.aat.util.ui.AppLog;
 import ch.bailu.aat.services.ServiceContext;
 
 public class IteratorFollowFile extends IteratorAbstract {

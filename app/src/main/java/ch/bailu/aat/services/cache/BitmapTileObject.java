@@ -3,21 +3,23 @@ package ch.bailu.aat.services.cache;
 import android.content.Context;
 import android.graphics.Bitmap;
 
+import org.mapsforge.core.model.Tile;
 import org.osmdroid.tileprovider.MapTile;
 import org.osmdroid.tileprovider.tilesource.XYTileSource;
 
 import java.io.File;
 
-import ch.bailu.aat.helpers.AppBroadcaster;
-import ch.bailu.aat.helpers.AppDirectory;
+import ch.bailu.aat.util.AppBroadcaster;
+import ch.bailu.aat.util.fs.AppDirectory;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.background.DownloadHandle;
 import ch.bailu.aat.services.background.FileHandle;
+import ch.bailu.aat.util.graphic.SynchronizedBitmap;
 
 
 public class BitmapTileObject extends TileObject {
     private final Source source;
-    private final MapTile tile;
+    private final Tile tile;
 
 
     private final FileHandle load;
@@ -28,7 +30,7 @@ public class BitmapTileObject extends TileObject {
     private final SynchronizedBitmap bitmap=new SynchronizedBitmap();
 
 
-    public BitmapTileObject(String id, ServiceContext cs,  MapTile t, Source s) {
+    public BitmapTileObject(String id, ServiceContext cs,  Tile t, Source s) {
         super(id);
         
         tile = t;
@@ -85,8 +87,8 @@ public class BitmapTileObject extends TileObject {
     private boolean isDownloadable() {
         return (
                 !new File(toString()).exists() &&
-                source.getMaximumZoomLevel() >= tile.getZoomLevel() &&
-                source.getMinimumZoomLevel() <= tile.getZoomLevel());
+                source.getMaximumZoomLevel() >= tile.zoomLevel &&
+                source.getMinimumZoomLevel() <= tile.zoomLevel);
     }
     
     
@@ -130,11 +132,11 @@ public class BitmapTileObject extends TileObject {
 
 
     public static class Factory extends ObjectHandle.Factory {
-        private final MapTile mapTile;
+        private final Tile mapTile;
         private final Source source;
 
         
-        public Factory(MapTile mt, Source s) {
+        public Factory(Tile mt, Source s) {
             mapTile=mt;
             source = s;
         }
@@ -165,7 +167,7 @@ public class BitmapTileObject extends TileObject {
         
         
         @Override
-        public String getID(MapTile mt, Context context) {
+        public String getID(Tile mt, Context context) {
             return AppDirectory.getTileFile(mt, osmdroidSource, context).getAbsolutePath();
         }
 
@@ -180,12 +182,12 @@ public class BitmapTileObject extends TileObject {
         }
 
         @Override
-        public Factory getFactory(MapTile mt) {
+        public Factory getFactory(Tile mt) {
             return new BitmapTileObject.Factory(mt, this);
         }
 
-        public String getTileURLString(MapTile tile) {
-            return osmdroidSource.getTileURLString(tile);
+        public String getTileURLString(Tile tile) {
+            return osmdroidSource.getTileURLString(new MapTile(tile.zoomLevel, tile.tileX, tile.tileY));
         }
 
 

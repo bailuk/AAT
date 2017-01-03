@@ -4,7 +4,7 @@ import java.io.IOException;
 
 import ch.bailu.aat.R;
 import ch.bailu.aat.gpx.StateID;
-import ch.bailu.aat.helpers.AppBroadcaster;
+import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.services.location.LocationService;
 
 public class OnState extends State {

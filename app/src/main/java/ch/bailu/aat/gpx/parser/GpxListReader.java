@@ -6,7 +6,7 @@ import ch.bailu.aat.gpx.GpxList;
 import ch.bailu.aat.gpx.GpxPoint;
 import ch.bailu.aat.gpx.MaxSpeed;
 import ch.bailu.aat.gpx.interfaces.GpxType;
-import ch.bailu.aat.helpers.file.AbsAccess;
+import ch.bailu.aat.util.fs.AbsAccess;
 import ch.bailu.aat.services.background.ThreadControl;
 
 public class GpxListReader {

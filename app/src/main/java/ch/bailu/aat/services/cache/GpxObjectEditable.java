@@ -11,9 +11,9 @@ import ch.bailu.aat.gpx.GpxList;
 import ch.bailu.aat.gpx.GpxPoint;
 import ch.bailu.aat.gpx.GpxPointNode;
 import ch.bailu.aat.gpx.writer.GpxListWriter;
-import ch.bailu.aat.helpers.AppBroadcaster;
-import ch.bailu.aat.helpers.AppDirectory;
-import ch.bailu.aat.helpers.AppLog;
+import ch.bailu.aat.util.AppBroadcaster;
+import ch.bailu.aat.util.fs.AppDirectory;
+import ch.bailu.aat.util.ui.AppLog;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.editor.EditorInterface;
 import ch.bailu.aat.services.editor.GpxEditor;
@@ -62,7 +62,12 @@ public class GpxObjectEditable extends  GpxObject {
         return currentHandle.isReady();
     }
 
-    
+    @Override
+    public long getSize() {
+        return MIN_SIZE;
+    }
+
+
     @Override
     public void onDownloaded(String id, String url, ServiceContext sc) {}
 

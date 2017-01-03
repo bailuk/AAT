@@ -1,6 +1,6 @@
 package ch.bailu.aat.views.graph;
 
-import ch.bailu.aat.helpers.AppTheme;
+import ch.bailu.aat.util.ui.AppTheme;
 
 public class ColorTable {
     public final static int GRADIENT_SIZE=256;

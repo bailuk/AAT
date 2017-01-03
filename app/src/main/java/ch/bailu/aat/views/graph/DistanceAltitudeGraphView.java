@@ -9,7 +9,7 @@ import ch.bailu.aat.gpx.GpxList;
 import ch.bailu.aat.gpx.GpxListWalker;
 import ch.bailu.aat.gpx.GpxPointNode;
 import ch.bailu.aat.gpx.GpxSegmentNode;
-import ch.bailu.aat.helpers.AppDensity;
+import ch.bailu.aat.util.ui.AppDensity;
 import ch.bailu.aat.preferences.SolidUnit;
 
 public class DistanceAltitudeGraphView extends AbsGraphView {

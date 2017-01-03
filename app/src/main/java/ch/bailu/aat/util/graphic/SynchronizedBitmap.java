@@ -1,0 +1,78 @@
+package ch.bailu.aat.util.graphic;
+
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+
+import org.mapsforge.map.android.graphics.AndroidTileBitmap;
+
+import ch.bailu.aat.services.cache.ObjectHandle;
+
+public class SynchronizedBitmap {
+
+        private Bitmap bitmap=null;
+        private Drawable drawable = null;
+        
+        private long size= ObjectHandle.MIN_SIZE;
+        
+        
+        public synchronized Bitmap get() {
+            return bitmap;
+        }
+        
+        
+        public synchronized Drawable getDrawable(Resources r) {
+
+            if (drawable == null && bitmap != null) {
+                drawable = new BitmapDrawable(r, bitmap);
+            }
+            return drawable;
+        }
+        
+        
+        public boolean load(String file, Bitmap def) {
+            Boolean r = load(file);
+            if (r == false) set(def);
+            return r;
+        }
+        
+        public boolean load(String file) {
+            Bitmap b = BitmapFactory.decodeFile(file);
+            if (b != null) {
+                set(b);
+            }
+
+            return b != null;
+        }
+
+        
+        public synchronized long getSize() {
+            return size;
+        }
+        
+
+        public synchronized void set(Bitmap b) {
+            if (b != null) {
+
+                bitmap = b;
+                drawable = null;
+                size=b.getHeight()*b.getRowBytes();
+            }
+        }
+
+
+        public static Bitmap createBitmap(int w, int h) {
+            final Bitmap r = Bitmap.createBitmap(
+                    w, 
+                    h, 
+                    Bitmap.Config.ARGB_8888);
+            r.eraseColor(Color.WHITE);
+
+
+            return r;
+        }
+
+}

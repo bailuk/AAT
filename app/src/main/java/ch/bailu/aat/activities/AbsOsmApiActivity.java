@@ -19,13 +19,13 @@ import java.io.IOException;
 import ch.bailu.aat.R;
 import ch.bailu.aat.dispatcher.CustomFileSource;
 import ch.bailu.aat.gpx.InfoID;
-import ch.bailu.aat.helpers.AbsTextBackup;
-import ch.bailu.aat.helpers.AppBroadcaster;
-import ch.bailu.aat.helpers.AppDirectory;
-import ch.bailu.aat.helpers.AppIntent;
-import ch.bailu.aat.helpers.AppLog;
-import ch.bailu.aat.helpers.OsmApiHelper;
-import ch.bailu.aat.helpers.ToolTip;
+import ch.bailu.aat.util.TextBackup;
+import ch.bailu.aat.util.AppBroadcaster;
+import ch.bailu.aat.util.fs.AppDirectory;
+import ch.bailu.aat.util.AppIntent;
+import ch.bailu.aat.util.ui.AppLog;
+import ch.bailu.aat.util.OsmApiHelper;
+import ch.bailu.aat.util.ui.ToolTip;
 import ch.bailu.aat.services.background.BackgroundService;
 import ch.bailu.aat.services.background.DownloadHandle;
 import ch.bailu.aat.services.background.ProcessHandle;
@@ -243,7 +243,7 @@ public abstract class AbsOsmApiActivity extends AbsDispatcher implements OnClick
 
 
     private File getOverlayFile() throws IOException {
-        final String query = AbsTextBackup.read(osmApi.getQueryFile());
+        final String query = TextBackup.read(osmApi.getQueryFile());
         final String prefix = OsmApiHelper.getFilePrefix(query);
         final String extension = osmApi.getFileExtension();
         final File directory = AppDirectory.getDataDirectory(this, AppDirectory.DIR_OVERLAY);
@@ -276,7 +276,7 @@ public abstract class AbsOsmApiActivity extends AbsDispatcher implements OnClick
             long r=super.bgOnProcess();
             if (r>0) {
                 try {
-                    AbsTextBackup.write(queryFile, queryString);
+                    TextBackup.write(queryFile, queryString);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

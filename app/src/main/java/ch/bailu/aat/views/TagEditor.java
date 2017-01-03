@@ -12,11 +12,11 @@ import android.widget.LinearLayout;
 import java.io.File;
 import java.io.IOException;
 
-import ch.bailu.aat.helpers.AbsTextBackup;
-import ch.bailu.aat.helpers.AppBroadcaster;
-import ch.bailu.aat.helpers.AppIntent;
-import ch.bailu.aat.helpers.AppLayout;
-import ch.bailu.aat.helpers.AppLog;
+import ch.bailu.aat.util.TextBackup;
+import ch.bailu.aat.util.AppBroadcaster;
+import ch.bailu.aat.util.AppIntent;
+import ch.bailu.aat.util.ui.AppLayout;
+import ch.bailu.aat.util.ui.AppLog;
 
 
 public class TagEditor extends LinearLayout {
@@ -97,7 +97,7 @@ public class TagEditor extends LinearLayout {
     private void showFile() {
         String text;
         try {
-            text = AbsTextBackup.read(backup);
+            text = TextBackup.read(backup);
             
         } catch (IOException e) {
             text = "";
@@ -109,7 +109,7 @@ public class TagEditor extends LinearLayout {
     
     private void saveFile() {
         try {
-            AbsTextBackup.write(backup, getText());
+            TextBackup.write(backup, getText());
         } catch (IOException e) {
             AppLog.e(getContext(), TagEditor.this, e);
             

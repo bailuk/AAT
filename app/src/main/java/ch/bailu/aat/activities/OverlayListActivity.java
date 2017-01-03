@@ -11,7 +11,7 @@ import ch.bailu.aat.description.DistanceDescription;
 import ch.bailu.aat.description.NameDescription;
 import ch.bailu.aat.description.PathDescription;
 import ch.bailu.aat.description.TrackSizeDescription;
-import ch.bailu.aat.helpers.AppDirectory;
+import ch.bailu.aat.util.fs.AppDirectory;
 
 
 

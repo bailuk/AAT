@@ -3,7 +3,7 @@ package ch.bailu.aat.preferences;
 import android.content.Context;
 
 import ch.bailu.aat.R;
-import ch.bailu.aat.helpers.AppDensity;
+import ch.bailu.aat.util.ui.AppDensity;
 import ch.bailu.aat.services.cache.TileObject;
 
 

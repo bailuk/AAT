@@ -3,7 +3,7 @@ package ch.bailu.aat.views;
 import android.content.Context;
 import android.widget.ImageButton;
 
-import ch.bailu.aat.helpers.AppTheme;
+import ch.bailu.aat.util.ui.AppTheme;
 
 
 public class ImageButtonView extends ImageButton {

@@ -8,8 +8,8 @@ import java.io.File;
 
 import ch.bailu.aat.gpx.GpxFileWrapper;
 import ch.bailu.aat.gpx.InfoID;
-import ch.bailu.aat.helpers.AppBroadcaster;
-import ch.bailu.aat.helpers.AppIntent;
+import ch.bailu.aat.util.AppBroadcaster;
+import ch.bailu.aat.util.AppIntent;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.cache.GpxObject;
 import ch.bailu.aat.services.cache.GpxObjectStatic;
