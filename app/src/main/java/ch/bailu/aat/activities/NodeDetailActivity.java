@@ -23,8 +23,8 @@ import ch.bailu.aat.views.ControlBar;
 import ch.bailu.aat.views.HtmlScrollTextView;
 import ch.bailu.aat.views.MainControlBar;
 import ch.bailu.aat.views.description.VSplitView;
-import ch.bailu.aat.map.osm.MapFactory;
-import ch.bailu.aat.map.osm.OsmInteractiveView;
+import ch.bailu.aat.map.osmdroid.MapFactory;
+import ch.bailu.aat.map.osmdroid.OsmInteractiveView;
 
 public class NodeDetailActivity extends AbsDispatcher
         implements OnClickListener, OnContentUpdatedInterface {

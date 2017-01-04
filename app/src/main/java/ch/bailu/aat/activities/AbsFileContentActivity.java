@@ -24,7 +24,7 @@ import ch.bailu.aat.views.ContentView;
 import ch.bailu.aat.views.ControlBar;
 import ch.bailu.aat.views.MainControlBar;
 import ch.bailu.aat.views.description.MultiView;
-import ch.bailu.aat.map.osm.OsmInteractiveView;
+import ch.bailu.aat.map.osmdroid.OsmInteractiveView;
 
 public abstract class AbsFileContentActivity extends AbsDispatcher implements OnClickListener {
 

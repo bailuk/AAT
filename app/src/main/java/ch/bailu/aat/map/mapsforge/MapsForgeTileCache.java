@@ -13,7 +13,7 @@ import java.util.Set;
 import ch.bailu.aat.util.ui.AppLog;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.cache.TileStackObject;
-import ch.bailu.aat.map.osm.DynTileProvider;
+import ch.bailu.aat.map.osmdroid.DynTileProvider;
 
 public class MapsForgeTileCache extends DynTileProvider implements TileCache {
 

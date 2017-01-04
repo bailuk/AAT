@@ -28,8 +28,8 @@ import ch.bailu.aat.views.MainControlBar;
 import ch.bailu.aat.views.description.GPSStateButton;
 import ch.bailu.aat.views.description.NumberView;
 import ch.bailu.aat.views.description.TrackerStateButton;
-import ch.bailu.aat.map.osm.MapFactory;
-import ch.bailu.aat.map.osm.OsmInteractiveView;
+import ch.bailu.aat.map.osmdroid.MapFactory;
+import ch.bailu.aat.map.osmdroid.OsmInteractiveView;
 
 public class MapActivity extends AbsDispatcher implements OnClickListener{
 

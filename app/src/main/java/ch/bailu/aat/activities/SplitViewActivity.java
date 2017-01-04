@@ -29,8 +29,8 @@ import ch.bailu.aat.views.description.MultiView;
 import ch.bailu.aat.views.description.TrackerStateButton;
 import ch.bailu.aat.views.graph.DistanceAltitudeGraphView;
 import ch.bailu.aat.views.graph.DistanceSpeedGraphView;
-import ch.bailu.aat.map.osm.MapFactory;
-import ch.bailu.aat.map.osm.OsmInteractiveView;
+import ch.bailu.aat.map.osmdroid.MapFactory;
+import ch.bailu.aat.map.osmdroid.OsmInteractiveView;
 
 public class SplitViewActivity extends AbsDispatcher implements OnClickListener{
     private static final String SOLID_KEY="split";

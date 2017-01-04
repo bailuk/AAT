@@ -21,7 +21,7 @@ import ch.bailu.aat.views.description.MultiView;
 import ch.bailu.aat.views.description.VSplitView;
 import ch.bailu.aat.views.graph.DistanceAltitudeGraphView;
 import ch.bailu.aat.views.graph.DistanceSpeedGraphView;
-import ch.bailu.aat.map.osm.MapFactory;
+import ch.bailu.aat.map.osmdroid.MapFactory;
 import ch.bailu.aat.views.preferences.VerticalScrollView;
 
 

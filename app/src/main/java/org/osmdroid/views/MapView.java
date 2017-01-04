@@ -35,7 +35,7 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import ch.bailu.aat.map.osm.AbsTileProvider;
+import ch.bailu.aat.map.osmdroid.AbsTileProvider;
 import microsoft.mappoint.TileSystem;
 
 public class MapView extends ViewGroup implements IMapView, MapViewConstants {

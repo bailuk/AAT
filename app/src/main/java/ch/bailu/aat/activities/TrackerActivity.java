@@ -30,7 +30,7 @@ import ch.bailu.aat.views.description.TrackerStateButton;
 import ch.bailu.aat.views.description.VSplitView;
 import ch.bailu.aat.views.graph.DistanceAltitudeGraphView;
 import ch.bailu.aat.views.graph.DistanceSpeedGraphView;
-import ch.bailu.aat.map.osm.MapFactory;
+import ch.bailu.aat.map.osmdroid.MapFactory;
 
 public class TrackerActivity extends AbsDispatcher implements OnClickListener{
 

@@ -12,10 +12,10 @@ import ch.bailu.aat.util.AppHtml;
 import ch.bailu.aat.util.ui.AppTheme;
 import ch.bailu.aat.util.HtmlBuilderGpx;
 import ch.bailu.aat.services.ServiceContext;
-import ch.bailu.aat.map.osm.CachedTileProvider;
-import ch.bailu.aat.map.osm.MapDensity;
-import ch.bailu.aat.map.osm.OsmViewStatic;
-import ch.bailu.aat.map.osm.overlay.gpx.GpxDynOverlay;
+import ch.bailu.aat.map.osmdroid.CachedTileProvider;
+import ch.bailu.aat.map.osmdroid.MapDensity;
+import ch.bailu.aat.map.osmdroid.OsmViewStatic;
+import ch.bailu.aat.map.osmdroid.overlay.gpx.GpxDynOverlay;
 
 public class NodeEntryView extends LinearLayout {
 

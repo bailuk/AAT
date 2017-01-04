@@ -105,7 +105,7 @@ public class LocationMenu extends AbsMenu{
         final String body = desc+ "\n\n" + url;   
 
 
-        intent.setType("text/plain");
+        intent.setType("label/plain");
         intent.putExtra(android.content.Intent.EXTRA_SUBJECT, url);
         intent.putExtra(android.content.Intent.EXTRA_TEXT, body);
         context.startActivity(Intent.createChooser(intent, url));

@@ -10,11 +10,11 @@ import org.mapsforge.map.layer.queue.Job;
 import org.mapsforge.map.model.MapViewPosition;
 import org.mapsforge.map.model.common.Observer;
 
-import ch.bailu.aat.gpx.GpxInformation;
-import ch.bailu.aat.map.mapsforge.layer.MapsForgeLayerInterface;
+import ch.bailu.aat.map.MapContext;
+import ch.bailu.aat.map.layer.MapLayerInterface;
 import ch.bailu.aat.services.ServiceContext;
 
-public class MapsForgeTileLayer extends TileLayer implements MapsForgeLayerInterface, Observer {
+public class MapsForgeTileLayer extends TileLayer implements MapLayerInterface, Observer {
 
     private  final MapsForgeTileCache cache;
 
@@ -58,6 +58,11 @@ public class MapsForgeTileLayer extends TileLayer implements MapsForgeLayerInter
 
     @Override
     public void onLayout(boolean changed, int l, int t, int r, int b) {
+
+    }
+
+    @Override
+    public void draw(MapContext mcontext) {
 
     }
 

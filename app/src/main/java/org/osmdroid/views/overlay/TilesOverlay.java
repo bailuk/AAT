@@ -10,7 +10,7 @@ import org.osmdroid.tileprovider.MapTile;
 import org.osmdroid.util.MyMath;
 import org.osmdroid.views.MapView;
 
-import ch.bailu.aat.map.osm.AbsTileProvider;
+import ch.bailu.aat.map.osmdroid.AbsTileProvider;
 import microsoft.mappoint.TileSystem;
 
 
@@ -65,7 +65,7 @@ public class TilesOverlay extends Overlay  {
 		// Translate the Canvas coordinates into Mercator coordinates
 		mViewPort.offset(mWorldSize_2, mWorldSize_2);
 
-		// Draw the tiles!
+		// MapDraw the tiles!
 		drawTiles(c, projection.getZoomLevel(), osmv.tileSystem, mViewPort, osmv.getContext());
 	}
 
@@ -93,7 +93,7 @@ public class TilesOverlay extends Overlay  {
 		final int capacity = (mLowerRight.y - mUpperLeft.y + 1) * (mLowerRight.x - mUpperLeft.x + 1);
 		mTileProvider.ensureCapacity(capacity);
 
-		/* Draw all the MapTiles (from the upper left to the lower right). */
+		/* MapDraw all the MapTiles (from the upper left to the lower right). */
 		for (int y = mUpperLeft.y; y <= mLowerRight.y; y++) {
 			for (int x = mUpperLeft.x; x <= mLowerRight.x; x++) {
 				// Construct a MapTile to Request from the tile provider.

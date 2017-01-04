@@ -3,20 +3,20 @@ package ch.bailu.aat.preferences;
 import android.content.Context;
 
 import ch.bailu.aat.R;
-import ch.bailu.aat.mapsforge.layer.context.MapContext;
-import ch.bailu.aat.mapsforge.layer.MapsForgeLayer;
-import ch.bailu.aat.mapsforge.layer.grid.CH1903GridLayer;
-import ch.bailu.aat.mapsforge.layer.grid.UTMGridLayer;
-import ch.bailu.aat.mapsforge.layer.grid.WGS84Layer;
+import ch.bailu.aat.map.MapContext;
+import ch.bailu.aat.map.layer.MapLayerInterface;
+import ch.bailu.aat.map.layer.grid.CH1903GridLayer;
+import ch.bailu.aat.map.layer.grid.UTMGridLayer;
+import ch.bailu.aat.map.layer.grid.WGS84Layer;
+import ch.bailu.aat.map.osmdroid.AbsOsmView;
+import ch.bailu.aat.map.osmdroid.overlay.NullOverlay;
+import ch.bailu.aat.map.osmdroid.overlay.OsmOverlay;
+import ch.bailu.aat.map.osmdroid.overlay.grid.CH1903CenterCoordinatesOverlay;
+import ch.bailu.aat.map.osmdroid.overlay.grid.CH1903GridOverlay;
+import ch.bailu.aat.map.osmdroid.overlay.grid.UTMCenterCoordinatesOverlay;
+import ch.bailu.aat.map.osmdroid.overlay.grid.UTMGridOverlay;
+import ch.bailu.aat.map.osmdroid.overlay.grid.WGS84Overlay;
 import ch.bailu.aat.services.ServiceContext;
-import ch.bailu.aat.map.osm.AbsOsmView;
-import ch.bailu.aat.map.osm.overlay.NullOverlay;
-import ch.bailu.aat.map.osm.overlay.OsmOverlay;
-import ch.bailu.aat.map.osm.overlay.grid.CH1903CenterCoordinatesOverlay;
-import ch.bailu.aat.map.osm.overlay.grid.CH1903GridOverlay;
-import ch.bailu.aat.map.osm.overlay.grid.UTMCenterCoordinatesOverlay;
-import ch.bailu.aat.map.osm.overlay.grid.UTMGridOverlay;
-import ch.bailu.aat.map.osm.overlay.grid.WGS84Overlay;
 
 public class SolidMapGrid extends SolidStaticIndexList {
 
@@ -63,7 +63,7 @@ public class SolidMapGrid extends SolidStaticIndexList {
         return R.drawable.view_grid;
     }
 
-    public MapsForgeLayer createGridOverlay(MapContext cl) {
+    public MapLayerInterface createGridOverlay(MapContext cl) {
         if (this.getIndex()==0) {
             return new WGS84Layer(cl);
         }
@@ -76,6 +76,6 @@ public class SolidMapGrid extends SolidStaticIndexList {
             return new UTMGridLayer(cl);
         }
 
-        return MapsForgeLayer.NULL;
+        return null;
     }
 }

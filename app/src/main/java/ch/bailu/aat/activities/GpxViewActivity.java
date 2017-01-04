@@ -40,13 +40,13 @@ import ch.bailu.aat.views.description.MultiView;
 import ch.bailu.aat.views.description.VSplitView;
 import ch.bailu.aat.views.graph.DistanceAltitudeGraphView;
 import ch.bailu.aat.views.graph.DistanceSpeedGraphView;
-import ch.bailu.aat.map.osm.OsmInteractiveView;
-import ch.bailu.aat.map.osm.overlay.CurrentLocationOverlay;
-import ch.bailu.aat.map.osm.overlay.control.InformationBarOverlay;
-import ch.bailu.aat.map.osm.overlay.control.NavigationBarOverlay;
-import ch.bailu.aat.map.osm.overlay.gpx.GpxDynOverlay;
-import ch.bailu.aat.map.osm.overlay.gpx.GpxOverlayListOverlay;
-import ch.bailu.aat.map.osm.overlay.grid.GridDynOverlay;
+import ch.bailu.aat.map.osmdroid.OsmInteractiveView;
+import ch.bailu.aat.map.osmdroid.overlay.CurrentLocationOverlay;
+import ch.bailu.aat.map.osmdroid.overlay.control.InformationBarOverlay;
+import ch.bailu.aat.map.osmdroid.overlay.control.NavigationBarOverlay;
+import ch.bailu.aat.map.osmdroid.overlay.gpx.GpxDynOverlay;
+import ch.bailu.aat.map.osmdroid.overlay.gpx.GpxOverlayListOverlay;
+import ch.bailu.aat.map.osmdroid.overlay.grid.GridDynOverlay;
 import ch.bailu.aat.views.preferences.VerticalScrollView;
 
 public class GpxViewActivity extends AbsDispatcher

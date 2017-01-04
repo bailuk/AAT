@@ -23,7 +23,7 @@ import ch.bailu.aat.services.background.ProcessHandle;
 import ch.bailu.aat.services.cache.GpxObject;
 import ch.bailu.aat.services.cache.GpxObjectStatic;
 import ch.bailu.aat.services.cache.ObjectHandle;
-import ch.bailu.aat.map.osm.OsmPreviewGenerator;
+import ch.bailu.aat.map.osmdroid.OsmPreviewGenerator;
 
 public class DirectorySynchronizer  implements Closeable {
 

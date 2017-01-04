@@ -156,10 +156,10 @@ public class BoundingBoxE6 {
 
     public BoundingBox toBoundingBox() {
         return new BoundingBox(
-                LatLongE6.toD(south),
-                LatLongE6.toD(west),
-                LatLongE6.toD(north),
-                LatLongE6.toD(east));
+                LatLongE6.toD(Math.min(south, north)),
+                LatLongE6.toD(Math.min(west, east)),
+                LatLongE6.toD(Math.max(south, north)),
+                LatLongE6.toD(Math.max(west, east)));
     }
 
     public BoundingBoxOsm toBoundingBoxE6() {

@@ -5,16 +5,15 @@ import android.content.Context;
 import android.graphics.Bitmap;
 
 import org.mapsforge.core.model.Tile;
-import org.osmdroid.tileprovider.MapTile;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 
-import ch.bailu.aat.util.AppBroadcaster;
-import ch.bailu.aat.util.fs.FileAccess;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.background.FileHandle;
+import ch.bailu.aat.util.AppBroadcaster;
+import ch.bailu.aat.util.fs.FileAccess;
 
 public class HillShadeCached extends TileObject {
 
@@ -27,18 +26,17 @@ public class HillShadeCached extends TileObject {
 
 
 
-    public HillShadeCached(String id, ServiceContext cs,  Tile t) {
+    public HillShadeCached(String id, ServiceContext sc,  Tile t) {
         super(id);
 
 
 
-        demID = NewHillshade.ELEVATION_HILLSHADE8.getID(t, cs.getContext());
+        demID = NewHillshade.ELEVATION_HILLSHADE8.getID(t, sc.getContext());
         demFactory = NewHillshade.ELEVATION_HILLSHADE8.getFactory(t);
 
-        bitmapID = BitmapTileObject.HILLSHADE_CACHE.getID(t, cs.getContext());
+        bitmapID = BitmapTileObject.HILLSHADE_CACHE.getID(t, sc.getContext());
         bitmapFactory = BitmapTileObject.HILLSHADE_CACHE.getFactory(t);
 
-        cs.getCacheService().addToBroadcaster(this);
 
 
         save = new FileHandle(id) {
@@ -83,6 +81,8 @@ public class HillShadeCached extends TileObject {
         } else {
             tile = (TileObject) sc.getCacheService().getObject(demID, demFactory);
         }
+        sc.getCacheService().addToBroadcaster(this);
+
     }
 
 

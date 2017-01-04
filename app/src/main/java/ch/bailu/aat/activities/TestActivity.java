@@ -43,18 +43,28 @@ import ch.bailu.aat.dispatcher.CurrentLocationSource;
 import ch.bailu.aat.dispatcher.OverlaySource;
 import ch.bailu.aat.dispatcher.TrackerSource;
 import ch.bailu.aat.gpx.InfoID;
-import ch.bailu.aat.util.ui.AppDensity;
-import ch.bailu.aat.util.ui.AppLog;
+import ch.bailu.aat.map.MapViewInterface;
+import ch.bailu.aat.map.layer.CurrentLocationLayer;
+import ch.bailu.aat.map.layer.Dem3NameLayer;
+import ch.bailu.aat.map.layer.ZoomLevel;
+import ch.bailu.aat.map.layer.control.InformationBar;
+import ch.bailu.aat.map.layer.control.NavigationBar;
+import ch.bailu.aat.map.layer.gpx.GpxDynLayer;
+import ch.bailu.aat.map.layer.gpx.GpxOverlayListLayer;
+import ch.bailu.aat.map.layer.gpx.GpxTestLayer;
+import ch.bailu.aat.map.layer.grid.GridDynLayer;
 import ch.bailu.aat.map.mapsforge.MapsForgeView;
-import ch.bailu.aat.map.mapsforge.layer.CurrentLocationLayer;
-import ch.bailu.aat.map.mapsforge.layer.Dem3NameLayer;
-import ch.bailu.aat.map.mapsforge.layer.ZoomLevel;
-import ch.bailu.aat.map.mapsforge.layer.control.InformationBar;
-import ch.bailu.aat.map.mapsforge.layer.control.NavigationBar;
-import ch.bailu.aat.map.mapsforge.layer.gpx.GpxDynLayer;
-import ch.bailu.aat.map.mapsforge.layer.gpx.GpxOverlayListLayer;
-import ch.bailu.aat.map.mapsforge.layer.gpx.GpxTestLayer;
-import ch.bailu.aat.map.mapsforge.layer.grid.GridDynLayer;
+import ch.bailu.aat.map.osmdroid.NewOsmInteractiveView;
+import ch.bailu.aat.map.osmdroid.overlay.Dem3NameOverlay;
+import ch.bailu.aat.map.osmdroid.overlay.EndLogOverlay;
+import ch.bailu.aat.map.osmdroid.overlay.StartLogOverlay;
+import ch.bailu.aat.map.osmdroid.overlay.ZoomLevelOverlay;
+import ch.bailu.aat.map.osmdroid.overlay.control.InformationBarOverlay;
+import ch.bailu.aat.map.osmdroid.overlay.control.NavigationBarOverlay;
+import ch.bailu.aat.map.osmdroid.overlay.gpx.GpxDynOverlay;
+import ch.bailu.aat.map.osmdroid.overlay.gpx.GpxOverlayListOverlay;
+import ch.bailu.aat.map.osmdroid.overlay.gpx.GpxTestOverlay;
+import ch.bailu.aat.map.osmdroid.overlay.grid.GridDynOverlay;
 import ch.bailu.aat.test.PreferencesFromSdcard;
 import ch.bailu.aat.test.PreferencesToSdcard;
 import ch.bailu.aat.test.TestCoordinates;
@@ -62,29 +72,18 @@ import ch.bailu.aat.test.TestGpx;
 import ch.bailu.aat.test.TestGpxLogRecovery;
 import ch.bailu.aat.test.TestTest;
 import ch.bailu.aat.test.UnitTest;
+import ch.bailu.aat.util.ui.AppLog;
 import ch.bailu.aat.views.AbsLabelTextView;
 import ch.bailu.aat.views.ContentView;
 import ch.bailu.aat.views.ControlBar;
 import ch.bailu.aat.views.MainControlBar;
 import ch.bailu.aat.views.StatusTextView;
 import ch.bailu.aat.views.description.MultiView;
-import ch.bailu.aat.map.osm.OsmInteractiveView;
-import ch.bailu.aat.map.osm.overlay.Dem3NameOverlay;
-import ch.bailu.aat.map.osm.overlay.EndLogOverlay;
-import ch.bailu.aat.map.osm.overlay.StartLogOverlay;
-import ch.bailu.aat.map.osm.overlay.ZoomLevelOverlay;
-import ch.bailu.aat.map.osm.overlay.control.InformationBarOverlay;
-import ch.bailu.aat.map.osm.overlay.control.NavigationBarOverlay;
-import ch.bailu.aat.map.osm.overlay.gpx.GpxDynOverlay;
-import ch.bailu.aat.map.osm.overlay.gpx.GpxOverlayListOverlay;
-import ch.bailu.aat.map.osm.overlay.gpx.GpxTestOverlay;
-import ch.bailu.aat.map.osm.overlay.grid.GridDynOverlay;
 import ch.bailu.aat.views.preferences.VerticalScrollView;
 
 public class TestActivity extends AbsDispatcher {
     private static final String SOLID_KEY = "test";
 
-    private OsmInteractiveView map;
     private StatusTextView statusTextView;
 
 
@@ -108,8 +107,6 @@ public class TestActivity extends AbsDispatcher {
 
 
     private MultiView createMultiView() {
-        map = new OsmInteractiveView(getServiceContext(), this, SOLID_KEY);
-
         ContentDescription locationDescription[] = new ContentDescription[]{
                 new NameDescription(this),
                 new GpsStateDescription(this),
@@ -164,32 +161,17 @@ public class TestActivity extends AbsDispatcher {
 
 
 
-        MultiView mv = new MultiView(this, SOLID_KEY);
+        final MultiView mv = new MultiView(this, SOLID_KEY);
 
 
+        final NewOsmInteractiveView osm = new NewOsmInteractiveView(getServiceContext(), this, SOLID_KEY);
+        final MapsForgeView mf = new MapsForgeView(getServiceContext(), this, SOLID_KEY);
 
-        MapsForgeView mapsForge = new MapsForgeView(getServiceContext(), this, SOLID_KEY);
+        fillMap(mf);
+        fillMap(osm);
 
-
-        mapsForge.add(new NavigationBar(mapsForge.mcontext, this));
-        mapsForge.add(new ZoomLevel(mapsForge.mcontext, new AppDensity(getServiceContext())));
-        mapsForge.add(new GridDynLayer(mapsForge.mcontext));
-        mapsForge.add(new InformationBar(mapsForge.mcontext, this));
-        mapsForge.add(new CurrentLocationLayer(mapsForge.mcontext, this));
-        mapsForge.add(new Dem3NameLayer(mapsForge.mcontext));
-        mapsForge.add(new GpxTestLayer(mapsForge.mcontext, this, InfoID.OVERLAY));
-        mapsForge.add(new GpxDynLayer(mapsForge.mcontext, this, InfoID.TRACKER));
-        mapsForge.add(new GpxOverlayListLayer(mapsForge.mcontext, this));
-
-        mapsForge.setZoomLevelMin((byte) 10);
-        mapsForge.setZoomLevelMax((byte) 20);
-
-
-
-
-
-        mv.add(mapsForge, "MapsForge");
-        mv.add(map,getString(R.string.intro_map));
+        mv.add(mf, "MapsForge");
+        mv.add(osm,getString(R.string.intro_map));
         mv.add(locationView, getString(R.string.gps));
 
         mv.add(trackerView, getString(R.string.tracker));
@@ -203,27 +185,19 @@ public class TestActivity extends AbsDispatcher {
     }
 
 
-    private void testMe() {
-
-        MapView mapsForge = null;
-
-        TileCache tileCache = AndroidUtil.createTileCache(
-                this,
-                "mapcache",
-                mapsForge.getModel().displayModel.getTileSize(),
-                1f,
-                mapsForge.getModel().frameBufferModel.getOverdrawFactor());
-
-
-        MapDataStore mapDataStore = new MapFile(new File("/storage/emulated/0/berlin.map"));
-        TileRendererLayer tileLayer = new TileRendererLayer(tileCache,
-                mapDataStore,
-                mapsForge.getModel().mapViewPosition,
-                AndroidGraphicFactory.INSTANCE);
-
-        tileLayer.setXmlRenderTheme(InternalRenderTheme.DEFAULT);
-
+    private void fillMap(MapViewInterface m) {
+        m.add(new NavigationBar(m.getMContext(), this));
+        m.add(new ZoomLevel());
+        m.add(new GridDynLayer(m.getMContext()));
+        m.add(new InformationBar(m.getMContext(), this));
+        m.add(new CurrentLocationLayer(m.getMContext(), this));
+        m.add(new Dem3NameLayer());
+        m.add(new GpxTestLayer(m.getMContext(), this, InfoID.OVERLAY));
+        m.add(new GpxDynLayer(m.getMContext(), this, InfoID.TRACKER));
+        m.add(new GpxOverlayListLayer(m.getMContext(), this));
     }
+
+
     private ControlBar createButtonBar(MultiView multiView) {
         final MainControlBar bar = new MainControlBar(getServiceContext());
 
@@ -234,30 +208,9 @@ public class TestActivity extends AbsDispatcher {
 
 
     private void createDispatcher() {
-        StartLogOverlay start =new StartLogOverlay(map);
-
-        map.add(start);
-        map.add(new GpxOverlayListOverlay(map, this, getServiceContext()));
-        map.add(new EndLogOverlay(map, start));
-
-        map.add(new GpxTestOverlay(map, this, InfoID.OVERLAY));
-        map.add(new GpxDynOverlay(map, getServiceContext(), this, InfoID.TRACKER));
-//        map.setTarget(new CurrentLocationOverlay(map, this));
-
-        map.add(new GridDynOverlay(map, getServiceContext()));
-
-        map.add(new NavigationBarOverlay(map, this));
-        map.add(new InformationBarOverlay(map, this));
-        map.add(new ZoomLevelOverlay(map));
-        map.add(new Dem3NameOverlay(map));
-
-
-
         addSource(new TrackerSource(getServiceContext()));
         addSource(new CurrentLocationSource(getServiceContext()));
         addSource(new OverlaySource(getServiceContext()));
-
-
     }
 
     @Override
