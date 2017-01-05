@@ -17,7 +17,7 @@ public class NodePainter {
 
 
     public static BitmapDrawable createNode(AppDensity res, Resources r) {
-        return new BitmapDrawable(r, createNodeMF(res).getBitmap());
+        return new BitmapDrawable(r, createNodeMF(res).getAndroidBitmap());
     }
 
 
@@ -33,7 +33,7 @@ public class NodePainter {
         AppTileBitmap bmp = new AppTileBitmap(size, true);
 
 
-        Bitmap bitmap = bmp.getBitmap();
+        Bitmap bitmap = bmp.getAndroidBitmap();
         Canvas canvas = new Canvas(bitmap);
         Paint stroke = MapCanvas.createEdgePaint(res);
         stroke.setAntiAlias(true);

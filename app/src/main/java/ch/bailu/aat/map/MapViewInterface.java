@@ -6,7 +6,6 @@ import org.mapsforge.core.model.LatLong;
 
 import ch.bailu.aat.coordinates.BoundingBoxE6;
 import ch.bailu.aat.map.layer.MapLayerInterface;
-import ch.bailu.aat.views.ControlBar;
 
 public interface MapViewInterface {
     void frameBounding(BoundingBoxE6 boundingBox);
@@ -27,4 +26,6 @@ public interface MapViewInterface {
     void setCenter(LatLong gpsLocation);
 
     void addView(View view);
+
+    View toView();
 }

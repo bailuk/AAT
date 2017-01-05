@@ -12,6 +12,7 @@ import org.osmdroid.api.IGeoPoint;
 
 import ch.bailu.aat.coordinates.BoundingBoxE6;
 import ch.bailu.aat.coordinates.LatLongE6;
+import ch.bailu.aat.map.MapDistances;
 import ch.bailu.aat.map.MapMetrics;
 import ch.bailu.aat.util.ui.AppDensity;
 import ch.bailu.aat.util.graphic.Pixel;
@@ -20,18 +21,13 @@ import ch.bailu.aat.services.ServiceContext;
 public class MapsForgeMetrics implements MapMetrics {
 
     private final MapView mapView;
-
     private int l,r,b,t, centerX, centerY, w, h;
 
     private BoundingBox bounding;
 
     private final AppDensity density;
 
-    private float meterPerOnePixel = 1;
-    private float pixelPerOneMeter = 1;
-    private int shortDistance = 1;
-
-
+    private MapDistances distances = new MapDistances();
     public MapsForgeMetrics(ServiceContext sc, MapView v) {
         bounding = v.getBoundingBox();
         density = new AppDensity(sc);
@@ -39,35 +35,10 @@ public class MapsForgeMetrics implements MapMetrics {
     }
 
     public void init(BoundingBox boundingBox, Canvas canvas) {
-
         bounding = boundingBox;
-
-        setDistances(boundingBox, canvas);
-
+        distances.init(boundingBox, canvas);
     }
 
-
-    private void setDistances(BoundingBox box, Canvas canvas) {
-        if (canvas.getHeight() < canvas.getWidth()) {
-            LatLong a = new LatLong(box.minLatitude, box.maxLongitude);
-            LatLong b = new LatLong(box.maxLatitude, box.maxLongitude);
-
-            setDistances(a,b, canvas.getHeight());
-        } else {
-            LatLong a = new LatLong(box.maxLatitude, box.minLongitude);
-            LatLong b = new LatLong(box.maxLatitude, box.maxLongitude);
-
-            setDistances(a,b, canvas.getWidth());
-        }
-    }
-
-    private void setDistances(LatLong a, LatLong b, float pixel) {
-        float meter = (float)LatLongUtils.sphericalDistance(a, b);
-        meterPerOnePixel = meter / pixel;
-        pixelPerOneMeter = pixel / meter;
-
-        shortDistance = (int) this.pixelToDistance(w);
-    }
 
     public void init(MapView mapView, Canvas canvas) {
 
@@ -105,21 +76,20 @@ public class MapsForgeMetrics implements MapMetrics {
     public int getWidth() {  return w; }
     public int getHeight() { return h; }
 
-
+    @Override
     public float pixelToDistance(int pixel) {
-        return pixel * meterPerOnePixel;
+        return distances.toDistance(pixel);
     }
+
+    @Override
     public int distanceToPixel(float meter) {
-        return (int)(meter * pixelPerOneMeter);
+        return (int)distances.toPixel(meter);
     }
 
-
+    @Override
     public int getShortDistance() {
-        return shortDistance;
+        return (int)distances.getShortDistance();
     }
-
-
-
 
 
     private org.mapsforge.core.model.Point _toPixel(LatLong p) {

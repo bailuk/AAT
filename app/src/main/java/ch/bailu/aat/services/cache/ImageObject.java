@@ -10,6 +10,7 @@ import java.io.File;
 import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.background.FileHandle;
+import ch.bailu.aat.util.graphic.AppBitmap;
 import ch.bailu.aat.util.graphic.SynchronizedBitmap;
 
 public class ImageObject extends ObjectHandle {
@@ -69,11 +70,15 @@ public class ImageObject extends ObjectHandle {
     }
 
     public synchronized Bitmap getBitmap() {
-        return bitmap.get();
+        return bitmap.getAndroidBitmap();
     }
 
     public synchronized Drawable getDrawable(Resources res) {
         return bitmap.getDrawable(res);
+    }
+
+    public AppBitmap getAppBitmap() {
+        return bitmap.get();
     }
 
 

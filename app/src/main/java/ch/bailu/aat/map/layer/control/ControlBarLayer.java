@@ -65,25 +65,29 @@ public abstract class ControlBarLayer implements MapLayerInterface, View.OnClick
 
     @Override
     public void onLayout(boolean changed, int l, int t, int r, int b) {
-        final int w = r - l;
-        final int h = b - t;
-        final int cs = bar.getControlSize();
+        if (changed) {
+            final int w = r - l;
+            final int h = b - t;
+            final int cs = bar.getControlSize();
 
 
-        if (placement == TOP) {
-            bar.place(0, 0, w);
-        } else if (placement == LEFT) {
-            bar.place(0, 0, h);
-        } else if (placement == BOTTOM) {
+            if (placement == TOP) {
+                bar.place(0, 0, w);
+            } else if (placement == LEFT) {
+                bar.place(0, 0, h);
+            } else if (placement == BOTTOM) {
 
-            bar.place(0, h - cs, w);
-        } else if (placement == RIGHT) {
-            bar.place(w - cs, 0, h);
+                bar.place(0, h - cs, w);
+            } else if (placement == RIGHT) {
+                bar.place(w - cs, 0, h);
+            }
+
+            AppLog.d(this, "p: " + placement);
+            AppLog.d(this, "w1: " + w + ", w2:" + mcontext.getMetrics().getWidth());
+            AppLog.d(this, "w: " + bar.getWidth() + ", h: " + bar.getHeight());
+
+            //AppLog.d(this, "w1: " + w + ", w2:" + mcontext.getMetrics().getWidth());
         }
-
-        AppLog.d(this, "w1: " + w + ", w2:" + mcontext.getMetrics().getWidth());
-
-        //AppLog.d(this, "w1: " + w + ", w2:" + mcontext.getMetrics().getWidth());
     }
 
 
@@ -91,6 +95,8 @@ public abstract class ControlBarLayer implements MapLayerInterface, View.OnClick
         if (!isBarVisible()) {
             AppLog.d(this, "show bar");
             bar.setVisibility(View.VISIBLE);
+            AppLog.d(this, "w: " + bar.getWidth() + ", h: " + bar.getHeight() );
+            //AppLog.d(this, "x: " + bar.getX() + ", y: " + bar.getY());
             onShowBar();
         }
     }

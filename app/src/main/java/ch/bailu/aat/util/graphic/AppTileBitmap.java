@@ -1,14 +1,16 @@
 package ch.bailu.aat.util.graphic;
 
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 
 import org.mapsforge.core.graphics.TileBitmap;
 import org.mapsforge.map.android.graphics.AndroidGraphicFactory;
 
-public class AppTileBitmap {
-    private final TileBitmap bitmap;
+public class AppTileBitmap extends AppBitmap {
 
     public AppTileBitmap(int size) {
         this(size, false);
@@ -16,29 +18,12 @@ public class AppTileBitmap {
 
 
     public AppTileBitmap(int size, boolean isTransparent) {
-        bitmap = AndroidGraphicFactory.INSTANCE.createTileBitmap(size, isTransparent);
+        super(AndroidGraphicFactory.INSTANCE.createTileBitmap(size, isTransparent));
     }
 
-
-    public Bitmap getBitmap() {
-        return AndroidGraphicFactory.getBitmap(bitmap);
-    }
-    public Canvas getCanvas() {
-        return new Canvas(getBitmap());
-    }
-
+    @Override
     public TileBitmap getTileBitmap() {
-        return bitmap;
+        return (TileBitmap) this.getBitmap();
     }
 
-    public void free() {
-        bitmap.decrementRefCount();
-    }
-
-    public void erase() {
-        Bitmap bitmap = getBitmap();
-        if (bitmap != null) {
-            bitmap.eraseColor(Color.WHITE);
-        }
-    }
 }

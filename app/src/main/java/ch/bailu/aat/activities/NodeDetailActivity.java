@@ -16,15 +16,15 @@ import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.GpxList;
 import ch.bailu.aat.gpx.GpxListArray;
 import ch.bailu.aat.gpx.InfoID;
-import ch.bailu.aat.util.ui.AppLayout;
+import ch.bailu.aat.map.MFactory;
+import ch.bailu.aat.map.MapViewInterface;
 import ch.bailu.aat.util.HtmlBuilderGpx;
+import ch.bailu.aat.util.ui.AppLayout;
 import ch.bailu.aat.views.ContentView;
 import ch.bailu.aat.views.ControlBar;
 import ch.bailu.aat.views.HtmlScrollTextView;
 import ch.bailu.aat.views.MainControlBar;
 import ch.bailu.aat.views.description.VSplitView;
-import ch.bailu.aat.map.osmdroid.MapFactory;
-import ch.bailu.aat.map.osmdroid.OsmInteractiveView;
 
 public class NodeDetailActivity extends AbsDispatcher
         implements OnClickListener, OnContentUpdatedInterface {
@@ -35,7 +35,7 @@ public class NodeDetailActivity extends AbsDispatcher
     private ImageButton nextNode, previousNode;
 
 
-    private OsmInteractiveView mapView;
+    private MapViewInterface mapView;
     private HtmlScrollTextView htmlView;
 
     private String fileID="";
@@ -79,12 +79,12 @@ public class NodeDetailActivity extends AbsDispatcher
 
 
     private VSplitView createVerticalView() {
-        mapView = new MapFactory(this, SOLID_KEY).node();
+        mapView = MFactory.DEF(this, SOLID_KEY).node();
 
         htmlView =new HtmlScrollTextView(this);
         htmlView.enableAutoLink();
 
-        return new VSplitView(this, new View[] {htmlView, mapView});
+        return new VSplitView(this, new View[] {htmlView, mapView.toView()});
     }
 
 
@@ -114,7 +114,7 @@ public class NodeDetailActivity extends AbsDispatcher
             if (i < 0) i = arrayCache.size()-1;
             if (i >= arrayCache.size()) i=0;
 
-            mapView.frameBoundingBox(arrayCache.get(i).getBoundingBox());
+            mapView.frameBounding(arrayCache.get(i).getBoundingBox());
 
             htmlBuilder.clear();
             htmlBuilder.appendInfo(infoCache, i);

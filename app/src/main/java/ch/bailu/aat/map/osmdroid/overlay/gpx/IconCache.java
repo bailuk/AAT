@@ -10,12 +10,13 @@ import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.cache.ImageObject;
 import ch.bailu.aat.services.cache.LockCache;
 import ch.bailu.aat.services.cache.ObjectHandle;
+import ch.bailu.aat.util.graphic.AppBitmap;
 
-public class MapIconCache implements Closeable {
+public class IconCache implements Closeable {
     private final LockCache<ImageObject> icons = new LockCache(20);
 
 
-    public Drawable getIcon(ServiceContext scontext, GpxPointInterface point) {
+    public AppBitmap getIcon(ServiceContext scontext, GpxPointInterface point) {
         if (scontext.isUp()) {
             GpxAttributes attr = point.getAttributes();
             String iconFile = scontext.getIconMapService().getIconPath(attr);
@@ -33,7 +34,7 @@ public class MapIconCache implements Closeable {
             }
 
             if (icon != null) {
-                return icon.getDrawable(scontext.getContext().getResources());
+                return icon.getAppBitmap();
             }
         }
         return null;

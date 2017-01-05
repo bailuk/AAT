@@ -7,6 +7,7 @@ import org.mapsforge.core.model.Point;
 
 import ch.bailu.aat.map.MapContext;
 import ch.bailu.aat.map.TwoNodes;
+import ch.bailu.aat.util.graphic.AppBitmap;
 import ch.bailu.aat.util.ui.AppTheme;
 
 public class WayLayer extends GpxLayer {
@@ -67,7 +68,7 @@ public class WayLayer extends GpxLayer {
     private class WayPainter extends GpxListPainter {
 
 
-        private int count=0;
+        private int count = 0;
 
         public WayPainter() {
             super(mcontext);
@@ -82,19 +83,29 @@ public class WayLayer extends GpxLayer {
         }
 
 
-
-
         @Override
         public void drawNode(TwoNodes.PixelNode node) {
             if (node.isVisible() && count < MAX_VISIBLE_NODES) {
 
-                //final Drawable nodeBitmap = mcontext.scontext.getIconMapService().mapIconCache.getIcon(scontext, node.point);
+                AppBitmap nodeBitmap = null;
+                if (mcontext.getSContext().isUp()) {
 
-                //if (nodeBitmap != null) {
-                //    mcontext.canvas.drawSize(nodeBitmap, node.pixel, icon_size);
-                //} else {
-                mcontext.draw().bitmap(mcontext.draw().getNodeBitmap(), node.pixel, getColor());
-                //}
+
+                    nodeBitmap =
+                            mcontext.getSContext().getIconMapService().getIcon(node.point);
+                }
+
+                if (nodeBitmap != null) {
+                    mcontext.draw().bitmap(
+                            nodeBitmap.getDrawable(mcontext.getContext().getResources()),
+                            node.pixel);
+                } else {
+                    mcontext.draw().bitmap(
+                            mcontext.draw().getNodeBitmap(),
+                            node.pixel,
+                            getColor());
+                }
+
                 count++;
 
             }

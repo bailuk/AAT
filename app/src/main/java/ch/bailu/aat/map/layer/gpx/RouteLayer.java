@@ -14,7 +14,7 @@ import ch.bailu.aat.views.graph.ColorTable;
 public class RouteLayer extends GpxLayer {
 
     private final MapContext mcontext;
-    public RouteLayer(MapContext o) {
+    private RouteLayer(MapContext o) {
         this(o,  -1);
     }
 

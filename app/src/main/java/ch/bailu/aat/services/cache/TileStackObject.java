@@ -10,23 +10,21 @@ import android.graphics.drawable.Drawable;
 
 import org.mapsforge.core.graphics.TileBitmap;
 import org.mapsforge.core.model.Tile;
-import org.osmdroid.tileprovider.MapTile;
 import org.osmdroid.views.overlay.LoadingTile;
 
-import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.background.ProcessHandle;
 import ch.bailu.aat.services.cache.TileObject.Source;
+import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.util.graphic.AppTileBitmap;
-import ch.bailu.aat.util.graphic.SynchronizedTileBitmap;
-import ch.bailu.aat.util.ui.AppLog;
+import ch.bailu.aat.util.graphic.SynchronizedBitmap;
 
 public class TileStackObject extends ObjectHandle {
 
     public final static TileStackObject NULL=new TileStackObject();
 
     private final TileContainer[] tiles;
-    private final SynchronizedTileBitmap bitmap=new SynchronizedTileBitmap();
+    private final SynchronizedBitmap bitmap=new SynchronizedBitmap();
 
     private final static Paint paint = new Paint();
 
@@ -132,7 +130,7 @@ public class TileStackObject extends ObjectHandle {
     }
 
     public Bitmap getBitmap() {
-        return bitmap.getBitmap();
+        return bitmap.getAndroidBitmap();
     };
     public TileBitmap getTileBitmap() {
         return bitmap.getTileBitmap();
@@ -184,7 +182,7 @@ public class TileStackObject extends ObjectHandle {
                     if (canvas == null) {
                         destination = new AppTileBitmap(mapTile.tileSize);
                         destination.erase();
-                        canvas = destination.getCanvas();
+                        canvas = destination.getAndroidCanvas();
                     }
                     tile.filter.applayFilter(canvas, source, alpha);
                     alpha=OVERLAY_ALPHA;

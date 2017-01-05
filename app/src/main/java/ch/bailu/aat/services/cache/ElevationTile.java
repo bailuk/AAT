@@ -114,7 +114,7 @@ public abstract class ElevationTile extends TileObject implements ElevationUpdat
 
     @Override
     public Bitmap getBitmap() {
-        return bitmap.get();
+        return bitmap.getAndroidBitmap();
     }
 
 
@@ -335,7 +335,7 @@ public abstract class ElevationTile extends TileObject implements ElevationUpdat
             fillBitmap(buffer,toLaRaster, toLoRaster, laSpan, loSpan, split(tile));
 
 
-            Bitmap tile = bitmap.get();
+            Bitmap tile = bitmap.getAndroidBitmap();
 
             if (tile == null) {
                 tile = SynchronizedBitmap.createBitmap(TILE_SIZE, TILE_SIZE);

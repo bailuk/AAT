@@ -11,14 +11,16 @@ import ch.bailu.aat.map.MapDraw;
 import ch.bailu.aat.map.MapMetrics;
 import ch.bailu.aat.map.MapViewInterface;
 import ch.bailu.aat.map.TwoNodes;
+import ch.bailu.aat.map.osmdroid.AndroidDraw;
 import ch.bailu.aat.map.osmdroid.NewOsmView;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.util.ui.AppDensity;
 
 public class OsmContext extends Overlay implements MapContext  {
+
     private final OsmMetrics metrics;
     private final TwoNodes nodes;
-    private final OsmDraw draw;
+    private final AndroidDraw draw;
 
     private final ServiceContext scontext;
 
@@ -29,14 +31,14 @@ public class OsmContext extends Overlay implements MapContext  {
         scontext = sc;
         metrics =new OsmMetrics(res, v.map);
         nodes=new TwoNodes(metrics);
-        draw =new OsmDraw(metrics, this);
+        draw =new AndroidDraw(res, sc.getContext().getResources());
         mapView = v;
         skey=s;
     }
 
     public void init(Canvas c, MapView map) {
         metrics.init(map);
-        draw.init(c);
+        draw.init(c, metrics);
     }
 
     @Override
@@ -73,6 +75,8 @@ public class OsmContext extends Overlay implements MapContext  {
     public MapViewInterface getMapView() {
         return mapView;
     }
+
+
 
     @Override
     protected void draw(Canvas c, MapView osmv) {

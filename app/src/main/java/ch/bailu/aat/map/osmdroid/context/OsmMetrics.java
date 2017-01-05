@@ -11,6 +11,7 @@ import org.osmdroid.views.MapView;
 
 import ch.bailu.aat.coordinates.BoundingBoxE6;
 import ch.bailu.aat.coordinates.LatLongE6;
+import ch.bailu.aat.map.MapDistances;
 import ch.bailu.aat.map.MapMetrics;
 import ch.bailu.aat.util.graphic.Pixel;
 import ch.bailu.aat.util.ui.AppDensity;
@@ -30,16 +31,9 @@ public class OsmMetrics implements MapMetrics {
     private BoundingBoxE6 boundingE6;
     private BoundingBox bounding;
 
-    private float pixelsPerOneMeter;
-    private float meterPerOnePixel;
+    private final MapDistances distances = new MapDistances();
 
-    private int sdistance;
-    private int spixels;
 
-    private final GeoPoint
-            nw=new GeoPoint(0,0),
-            sw=new GeoPoint(0,0),
-            ne=new GeoPoint(0,0);
 
     public OsmMetrics(AppDensity d, MapView map) {
         density = d;
@@ -60,32 +54,11 @@ public class OsmMetrics implements MapMetrics {
         bounding = boundingE6.toBoundingBox();
 
 
-
-        nw.setCoordsE6(boundingBoxOsm.getLatNorthE6(), boundingBoxOsm.getLonWestE6());
-
-        if (screen.width() < screen.height()) {
-            ne.setCoordsE6(boundingBoxOsm.getLatNorthE6(), boundingBoxOsm.getLonEastE6());
-            sdistance = nw.distanceTo(ne);
-            spixels = screen.width();
-
-        } else {
-            sw.setCoordsE6(boundingBoxOsm.getLatSouthE6(), boundingBoxOsm.getLonWestE6());
-            sdistance = nw.distanceTo(sw);
-            spixels = screen.height();
-        }
-
-        float pixel = (float) spixels;
-        float meter = (float) sdistance;
-
-        pixelsPerOneMeter = pixel / meter;
-        meterPerOnePixel = meter / pixel;
+        distances.init(boundingBoxOsm, screen);
 
     }
 
 
-    private int getShortPixels() {
-        return spixels;
-    }
 
     @Override
     public AppDensity getDensity() {
@@ -125,19 +98,19 @@ public class OsmMetrics implements MapMetrics {
 
     @Override
     public float pixelToDistance(int pixel) {
-        return pixel * meterPerOnePixel;
+        return distances.toDistance(pixel);
     }
 
 
     @Override
     public int distanceToPixel(float meter) {
-        return (int)(meter * pixelsPerOneMeter);
+        return (int)distances.toPixel(meter);
     }
 
 
     @Override
     public int getShortDistance() {
-        return sdistance;
+        return (int)distances.getShortDistance();
     }
 
 
@@ -165,6 +138,7 @@ public class OsmMetrics implements MapMetrics {
         return new LatLongE6(fromPixels(x,y)).toLatLong();
     }
 
+
     private IGeoPoint fromPixels(int x, int y) {
         return projection.fromPixels(x, y);
     }
@@ -176,12 +150,13 @@ public class OsmMetrics implements MapMetrics {
     }
 
 
+    @Override
     public boolean isVisible(BoundingBoxE6 b) {
         return BoundingBoxE6.doOverlap(b, boundingE6);
     }
 
 
-
+    @Override
     public Rect toMapPixels(BoundingBoxE6 b) {
         cachedPoint.setCoordsE6(b.getLatNorthE6(), b.getLonWestE6());
 
@@ -200,7 +175,6 @@ public class OsmMetrics implements MapMetrics {
     }
 
 
-
     @Override
     public BoundingBox getBoundingBox() {
         return bounding;
@@ -211,13 +185,4 @@ public class OsmMetrics implements MapMetrics {
         return zoom;
     }
 
-
-
-
-    private GeoPoint getCenterPoint() {
-        cachedPoint.setCoordsE6(
-                (boundingE6.getLatNorthE6() + boundingE6.getLatSouthE6()) / 2,
-                (boundingE6.getLonEastE6() + boundingE6.getLonWestE6()) / 2);
-        return cachedPoint;
-    }
 }

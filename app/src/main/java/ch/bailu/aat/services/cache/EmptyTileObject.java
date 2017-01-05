@@ -3,6 +3,7 @@ package ch.bailu.aat.services.cache;
 import android.graphics.Bitmap;
 
 import ch.bailu.aat.services.ServiceContext;
+import ch.bailu.aat.util.graphic.AppTileBitmap;
 import ch.bailu.aat.util.graphic.SynchronizedBitmap;
 
 
@@ -21,7 +22,7 @@ public class EmptyTileObject extends TileObject {
 
     private static SynchronizedBitmap createBitmap() {
         SynchronizedBitmap bitmap = new SynchronizedBitmap();
-        bitmap.set(SynchronizedBitmap.createBitmap(TILE_SIZE, TILE_SIZE));
+        bitmap.set(new AppTileBitmap(TILE_SIZE));
 
         return bitmap;
     }
@@ -34,7 +35,7 @@ public class EmptyTileObject extends TileObject {
 
     @Override
     public Bitmap getBitmap() {
-        return NULL_BITMAP.get();
+        return NULL_BITMAP.getAndroidBitmap();
     }
 
     @Override

@@ -1,10 +1,8 @@
 package ch.bailu.aat.map;
 
-import android.graphics.Point;
-
 import ch.bailu.aat.gpx.GpxPoint;
 import ch.bailu.aat.gpx.interfaces.GpxPointInterface;
-import ch.bailu.aat.map.MapMetrics;
+import ch.bailu.aat.util.graphic.Pixel;
 
 public class TwoNodes {
     private final MapMetrics metrics;
@@ -15,7 +13,7 @@ public class TwoNodes {
 
 
     public class PixelNode {
-        public Point pixel=new Point();
+        public Pixel pixel=new Pixel();
         public GpxPointInterface point= GpxPoint.NULL;
 
         public boolean isVisible() {
@@ -24,7 +22,7 @@ public class TwoNodes {
 
         public void set(GpxPointInterface tp) {
             point=tp;
-            pixel = metrics.toPixel(tp);
+            pixel.setCopy(metrics.toPixel(tp));
         }
     }
 
@@ -38,7 +36,9 @@ public class TwoNodes {
 
     public boolean arePointsTooClose(int distance) {
         return (  Math.abs(nodeA.pixel.x - nodeB.pixel.x) +
-                Math.abs(nodeA.pixel.y - nodeB.pixel.y) < distance);
+                  Math.abs(nodeA.pixel.y - nodeB.pixel.y) < distance);
+
+
     }
 
 

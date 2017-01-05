@@ -15,16 +15,16 @@ import ch.bailu.aat.dispatcher.IteratorSource;
 import ch.bailu.aat.dispatcher.OverlaySource;
 import ch.bailu.aat.dispatcher.TrackerSource;
 import ch.bailu.aat.gpx.InfoID;
-import ch.bailu.aat.util.ui.AppLayout;
-import ch.bailu.aat.util.ui.ToolTip;
+import ch.bailu.aat.map.MapViewInterface;
 import ch.bailu.aat.menus.FileMenu;
 import ch.bailu.aat.services.editor.EditorHelper;
+import ch.bailu.aat.util.ui.AppLayout;
+import ch.bailu.aat.util.ui.ToolTip;
 import ch.bailu.aat.views.BusyButton;
 import ch.bailu.aat.views.ContentView;
 import ch.bailu.aat.views.ControlBar;
 import ch.bailu.aat.views.MainControlBar;
 import ch.bailu.aat.views.description.MultiView;
-import ch.bailu.aat.map.osmdroid.OsmInteractiveView;
 
 public abstract class AbsFileContentActivity extends AbsDispatcher implements OnClickListener {
 
@@ -35,7 +35,7 @@ public abstract class AbsFileContentActivity extends AbsDispatcher implements On
 
     private BusyButton         busyButton;
     private MultiView          multiView;
-    protected OsmInteractiveView map;
+    protected MapViewInterface map;
 
 
     protected EditorHelper editor_helper = null;
@@ -123,7 +123,7 @@ public abstract class AbsFileContentActivity extends AbsDispatcher implements On
 
 
     private void frameCurrentFile() {
-        map.frameBoundingBox(currentFile.getInfo().getBoundingBox());
+        map.frameBounding(currentFile.getInfo().getBoundingBox());
     }
 
 

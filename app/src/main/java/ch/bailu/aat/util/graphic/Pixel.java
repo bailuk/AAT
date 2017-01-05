@@ -12,4 +12,9 @@ public class Pixel extends Point {
     public Pixel() {
         super();
     }
+
+    public void setCopy(Pixel pixel) {
+        this.x = pixel.x;
+        this.y = pixel.y;
+    }
 }

@@ -1,6 +1,10 @@
-package ch.bailu.aat.map.osmdroid.overlay.control;
+package ch.bailu.aat.map.layer.control;
 
+import android.content.SharedPreferences;
 import android.view.View;
+
+import org.mapsforge.core.model.LatLong;
+import org.mapsforge.core.model.Point;
 
 import java.io.File;
 
@@ -16,19 +20,18 @@ import ch.bailu.aat.description.TimeDescription;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.GpxPointNode;
 import ch.bailu.aat.gpx.InfoID;
-import ch.bailu.aat.util.HtmlBuilderGpx;
-import ch.bailu.aat.util.ui.ToolTip;
-import ch.bailu.aat.util.fs.FileAction;
+import ch.bailu.aat.map.MapContext;
 import ch.bailu.aat.menus.FileMenu;
 import ch.bailu.aat.preferences.SolidDirectoryQuery;
 import ch.bailu.aat.services.directory.Iterator;
+import ch.bailu.aat.util.HtmlBuilderGpx;
+import ch.bailu.aat.util.fs.FileAction;
+import ch.bailu.aat.util.ui.ToolTip;
 import ch.bailu.aat.views.ControlBar;
 import ch.bailu.aat.views.PreviewView;
-import ch.bailu.aat.map.osmdroid.OsmInteractiveView;
-import ch.bailu.aat.map.osmdroid.overlay.MapPainter;
-import ch.bailu.aat.map.osmdroid.overlay.gpx.NodeViewOverlay;
 
-public class FileControlBar extends ControlBarOverlay{
+public class FileControlBar extends ControlBarLayer {
+
 
 
     @Override
@@ -48,9 +51,9 @@ public class FileControlBar extends ControlBarOverlay{
     private String selectedFile = null;
 
 
-    public FileControlBar(OsmInteractiveView osm, AbsGpxListActivity a) {
-        super(osm, new ControlBar(
-                osm.getContext(),
+    public FileControlBar(MapContext mc, AbsGpxListActivity a) {
+        super(mc, new ControlBar(
+                mc.getContext(),
                 getOrientation(LEFT)), LEFT);
 
         final ControlBar bar = getBar();
@@ -59,7 +62,7 @@ public class FileControlBar extends ControlBarOverlay{
 
 
 
-        selector = new Selector(osm);
+        selector = new Selector(mc);
         preview = new PreviewView(a.getServiceContext());
 
         bar.addView(preview);
@@ -84,29 +87,39 @@ public class FileControlBar extends ControlBarOverlay{
         iterator = i;
     }
 
+    @Override
+    public void onAttached() {
 
-    private class Selector extends NodeViewOverlay {
-        public Selector(OsmInteractiveView v) {
-            super(v);
+    }
+
+    @Override
+    public void onDetached() {
+
+    }
+
+
+    private class Selector extends NodeViewLayer {
+        public Selector(MapContext mc) {
+            super(mc);
         }
 
-        final HtmlBuilderGpx builder = new HtmlBuilderGpx(getContext());
+        final HtmlBuilderGpx builder = new HtmlBuilderGpx(acontext);
 
 
         final ContentDescription summaryData[] = {
 
-                new DateDescription(getContext()),
-                new TimeDescription(getContext()),
+                new DateDescription(acontext),
+                new TimeDescription(acontext),
 
-                new DistanceDescription(getContext()),
-                new AverageSpeedDescription(getContext()),
-                new MaximumSpeedDescription(getContext()),
-                new CaloriesDescription(getContext()),
+                new DistanceDescription(acontext),
+                new AverageSpeedDescription(acontext),
+                new MaximumSpeedDescription(acontext),
+                new CaloriesDescription(acontext),
         };
 
         @Override
         public void setSelectedNode(GpxInformation info, GpxPointNode node, int i) {
-            new SolidDirectoryQuery(getContext()).getPosition().setValue(i);
+            new SolidDirectoryQuery(acontext).getPosition().setValue(i);
 
             iterator.moveToPosition(i);
 
@@ -131,15 +144,35 @@ public class FileControlBar extends ControlBarOverlay{
             acontext.displayFile();
             return true;
         }
+
+        @Override
+        public boolean onTap(LatLong tapLatLong, Point layerXY, Point tapXY) {
+            return false;
+        }
+
+        @Override
+        public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+
+        }
+
+        @Override
+        public void onAttached() {
+
+        }
+
+        @Override
+        public void onDetached() {
+
+        }
     }
 
 
 
 
     @Override
-    public void draw(MapPainter p) {
-        if (isVisible()) {
-            selector.draw(p);
+    public void draw(MapContext mc) {
+        if (isBarVisible()) {
+            selector.draw(mc);
         }
     }
 
@@ -176,7 +209,5 @@ public class FileControlBar extends ControlBarOverlay{
     }
 
 
-    @Override
-    public void run() {}
 }
 

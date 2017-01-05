@@ -72,6 +72,11 @@ public class MapsForgeView extends MapView implements
         return mcontext;
     }
 
+    @Override
+    public View toView() {
+        return this;
+    }
+
     public void add(Layer mfLayer, MapLayerInterface layer) {
         this.addLayer(mfLayer);
         layers.add(layer);

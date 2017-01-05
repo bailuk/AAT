@@ -19,6 +19,9 @@ import ch.bailu.aat.dispatcher.CurrentLocationSource;
 import ch.bailu.aat.dispatcher.IteratorSource;
 import ch.bailu.aat.dispatcher.OverlaySource;
 import ch.bailu.aat.gpx.InfoID;
+import ch.bailu.aat.map.MFactory;
+import ch.bailu.aat.map.MapViewInterface;
+import ch.bailu.aat.map.layer.control.FileControlBar;
 import ch.bailu.aat.menus.FileMenu;
 import ch.bailu.aat.preferences.SolidDirectoryQuery;
 import ch.bailu.aat.services.directory.Iterator;
@@ -29,9 +32,6 @@ import ch.bailu.aat.views.DbSynchronizerBusyIndicator;
 import ch.bailu.aat.views.GpxListView;
 import ch.bailu.aat.views.MainControlBar;
 import ch.bailu.aat.views.description.MultiView;
-import ch.bailu.aat.map.osmdroid.MapFactory;
-import ch.bailu.aat.map.osmdroid.OsmInteractiveView;
-import ch.bailu.aat.map.osmdroid.overlay.control.FileControlBar;
 import ch.bailu.aat.views.preferences.SolidDirectoryMenuButton;
 import ch.bailu.aat.views.preferences.TitleView;
 import ch.bailu.aat.views.preferences.VerticalScrollView;
@@ -106,8 +106,8 @@ public abstract class AbsGpxListActivity extends AbsDispatcher implements OnItem
 
         final VerticalScrollView filter= new VerticalScrollView(this);
         final VerticalScrollView summary= new VerticalScrollView(this);
-        final OsmInteractiveView map = new MapFactory(this, solid_key).list(this);
-        fileControlBar = new FileControlBar(map, this);
+        final MapViewInterface map = MFactory.DEF(this, solid_key).list(this);
+        fileControlBar = new FileControlBar(map.getMContext(), this);
         map.add(fileControlBar);
 
         listView = new GpxListView(this, getGpxListItemData());
@@ -115,7 +115,7 @@ public abstract class AbsGpxListActivity extends AbsDispatcher implements OnItem
         registerForContextMenu(listView);
 
         filter.add(new TitleView(this, getLabel()+ " - " + filter_label));
-        filter.addAllFilterViews(map.map);
+        filter.addAllFilterViews(map.getMContext());
         filter.addAllContent(this, filter_content, InfoID.LIST_SUMMARY);
 
         summary.add(new TitleView(this, getLabel() + " - " + summary_label));
@@ -124,7 +124,7 @@ public abstract class AbsGpxListActivity extends AbsDispatcher implements OnItem
         multiView = new MultiView(this, solid_key);
 
         multiView.add(listView, list_label);
-        multiView.add(map, map_label);
+        multiView.add(map.toView(), map_label);
         multiView.add(filter, filter_label);
         multiView.add(summary, summary_label);
 

@@ -122,7 +122,7 @@ public class BitmapTileObject extends TileObject {
 
     @Override
     public Bitmap getBitmap() {
-        return bitmap.get();
+        return bitmap.getAndroidBitmap();
     }
 
 

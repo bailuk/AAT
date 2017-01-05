@@ -20,8 +20,10 @@ import ch.bailu.aat.dispatcher.OverlaySource;
 import ch.bailu.aat.dispatcher.TrackerSource;
 import ch.bailu.aat.dispatcher.TrackerTimerSource;
 import ch.bailu.aat.gpx.InfoID;
-import ch.bailu.aat.util.ui.AppLayout;
+import ch.bailu.aat.map.MFactory;
+import ch.bailu.aat.map.MapViewInterface;
 import ch.bailu.aat.services.editor.EditorHelper;
+import ch.bailu.aat.util.ui.AppLayout;
 import ch.bailu.aat.views.ControlBar;
 import ch.bailu.aat.views.MainControlBar;
 import ch.bailu.aat.views.description.CockpitView;
@@ -29,8 +31,6 @@ import ch.bailu.aat.views.description.MultiView;
 import ch.bailu.aat.views.description.TrackerStateButton;
 import ch.bailu.aat.views.graph.DistanceAltitudeGraphView;
 import ch.bailu.aat.views.graph.DistanceSpeedGraphView;
-import ch.bailu.aat.map.osmdroid.MapFactory;
-import ch.bailu.aat.map.osmdroid.OsmInteractiveView;
 
 public class SplitViewActivity extends AbsDispatcher implements OnClickListener{
     private static final String SOLID_KEY="split";
@@ -57,7 +57,7 @@ public class SplitViewActivity extends AbsDispatcher implements OnClickListener{
         v.setOrientation(LinearLayout.VERTICAL);
 
 
-        v.addView(new MapFactory(this, SOLID_MAP_KEY).map(edit, createButtonBar()),
+        v.addView(MFactory.DEF(this, SOLID_MAP_KEY).map(edit, createButtonBar()).toView(),
                 LayoutParams.MATCH_PARENT,
                 AppLayout.getScreenSmallSide(this));
 
@@ -70,7 +70,7 @@ public class SplitViewActivity extends AbsDispatcher implements OnClickListener{
 
 
     private View createMultiView() {
-        final OsmInteractiveView mapViewAlt = new MapFactory(this, SOLID_KEY).split();
+        final MapViewInterface mapViewAlt = MFactory.DEF(this, SOLID_KEY).split();
         final CockpitView cockpitA = new CockpitView(this);
         final CockpitView cockpitB = new CockpitView(this);
 
@@ -88,7 +88,7 @@ public class SplitViewActivity extends AbsDispatcher implements OnClickListener{
         multiView.add(cockpitB);
         multiView.add(new DistanceAltitudeGraphView(this, this, InfoID.TRACKER));
         multiView.add(new DistanceSpeedGraphView(this, this, InfoID.TRACKER));
-        multiView.add(mapViewAlt);
+        multiView.add(mapViewAlt.toView());
 
         return multiView;
     }

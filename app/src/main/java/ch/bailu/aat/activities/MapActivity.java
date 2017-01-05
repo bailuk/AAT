@@ -14,28 +14,29 @@ import org.osmdroid.util.GeoPoint;
 
 import ch.bailu.aat.R;
 import ch.bailu.aat.coordinates.Coordinates;
+import ch.bailu.aat.coordinates.LatLongE6;
 import ch.bailu.aat.dispatcher.CurrentLocationSource;
 import ch.bailu.aat.dispatcher.EditorSource;
 import ch.bailu.aat.dispatcher.OverlaySource;
 import ch.bailu.aat.dispatcher.TrackerSource;
 import ch.bailu.aat.gpx.InfoID;
+import ch.bailu.aat.map.MFactory;
+import ch.bailu.aat.map.MapViewInterface;
+import ch.bailu.aat.services.editor.EditorHelper;
 import ch.bailu.aat.util.AppIntent;
 import ch.bailu.aat.util.ui.AppLog;
-import ch.bailu.aat.services.editor.EditorHelper;
 import ch.bailu.aat.views.ContentView;
 import ch.bailu.aat.views.ControlBar;
 import ch.bailu.aat.views.MainControlBar;
 import ch.bailu.aat.views.description.GPSStateButton;
 import ch.bailu.aat.views.description.NumberView;
 import ch.bailu.aat.views.description.TrackerStateButton;
-import ch.bailu.aat.map.osmdroid.MapFactory;
-import ch.bailu.aat.map.osmdroid.OsmInteractiveView;
 
 public class MapActivity extends AbsDispatcher implements OnClickListener{
 
     private static final String SOLID_KEY="map";
 
-    private OsmInteractiveView      map;
+    private MapViewInterface      map;
 
     private ImageButton     cycleButton;
     private NumberView      gpsState;
@@ -51,7 +52,7 @@ public class MapActivity extends AbsDispatcher implements OnClickListener{
 
         LinearLayout contentView=new ContentView(this);
         map = createMap();
-        contentView.addView(map);
+        contentView.addView(map.toView());
         setContentView(contentView);
 
         createDispatcher();
@@ -76,7 +77,7 @@ public class MapActivity extends AbsDispatcher implements OnClickListener{
         GeoPoint geo = new GeoPoint(0,0);
 
         if (Coordinates.stringToGeoPoint(uri.toString(), geo)) {
-            map.map.getController().setCenter(geo);
+            map.setCenter(new LatLongE6(geo).toLatLong());
         }
     }
 
@@ -93,8 +94,8 @@ public class MapActivity extends AbsDispatcher implements OnClickListener{
     }
 
 
-    private OsmInteractiveView createMap() {
-        return new MapFactory(this, SOLID_KEY).map(edit, createButtonBar());
+    private MapViewInterface createMap() {
+        return MFactory.DEF(this, SOLID_KEY).map(edit, createButtonBar());
     }
 
 

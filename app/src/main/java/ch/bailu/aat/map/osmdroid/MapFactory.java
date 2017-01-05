@@ -16,6 +16,7 @@ import ch.bailu.aat.map.osmdroid.overlay.gpx.GpxDynOverlay;
 import ch.bailu.aat.map.osmdroid.overlay.gpx.GpxOverlayListOverlay;
 import ch.bailu.aat.map.osmdroid.overlay.grid.GridDynOverlay;
 
+/*
 public class MapFactory {
     private final OsmInteractiveView m;
     private final ServiceContext sc;
@@ -107,3 +108,4 @@ public class MapFactory {
     }
 
 }
+*/

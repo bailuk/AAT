@@ -9,13 +9,13 @@ import org.osmdroid.views.MapView;
 import ch.bailu.aat.coordinates.BoundingBoxE6;
 import ch.bailu.aat.map.osmdroid.overlay.OsmOverlay;
 import ch.bailu.aat.map.osmdroid.overlay.OverlayList;
-import ch.bailu.aat.map.osmdroid.overlay.gpx.MapIconCache;
+import ch.bailu.aat.map.osmdroid.overlay.gpx.IconCache;
 
 
 public abstract class AbsOsmView extends ViewGroup {
     public final MapView map;
     public final MapDensity res;
-    public final MapIconCache mapIconCache = new MapIconCache();
+    public final IconCache mapIconCache = new IconCache();
 
 
     private BoundingBoxE6 pendingFrameBounding=null;

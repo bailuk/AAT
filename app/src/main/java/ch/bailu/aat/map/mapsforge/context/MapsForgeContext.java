@@ -15,6 +15,7 @@ import ch.bailu.aat.map.MapMetrics;
 import ch.bailu.aat.map.TwoNodes;
 import ch.bailu.aat.map.layer.MapLayerInterface;
 import ch.bailu.aat.map.mapsforge.MapsForgeView;
+import ch.bailu.aat.map.osmdroid.AndroidDraw;
 import ch.bailu.aat.services.ServiceContext;
 
 public class MapsForgeContext extends Layer implements MapContext, MapLayerInterface {
@@ -24,7 +25,7 @@ public class MapsForgeContext extends Layer implements MapContext, MapLayerInter
 
     private final String skey;
 
-    private final MapsForgeDraw draw;
+    private final AndroidDraw draw;
     private final MapsForgeMetrics metrics;
     private final TwoNodes nodes;
 
@@ -37,13 +38,12 @@ public class MapsForgeContext extends Layer implements MapContext, MapLayerInter
 
     public MapsForgeContext(MapsForgeView map, ServiceContext sc, String key) {
         metrics = new MapsForgeMetrics(sc, map);
-        draw = new MapsForgeDraw(metrics.getDensity());
+        draw = new AndroidDraw(metrics.getDensity(), sc.getContext().getResources());
         nodes = new TwoNodes(metrics);
         skey = key;
         mapView = map;
         scontext = sc;
         context = sc.getContext();
-
     }
 
 
@@ -115,6 +115,7 @@ public class MapsForgeContext extends Layer implements MapContext, MapLayerInter
     public MapViewInterface getMapView() {
         return mapView;
     }
+
 
     @Override
     public void onAttached() {

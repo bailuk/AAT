@@ -1,6 +1,5 @@
 package ch.bailu.aat.map;
 
-import android.content.Context;
 import android.graphics.Color;
 
 import org.mapsforge.core.graphics.Paint;
@@ -18,19 +17,19 @@ public class MapPaint {
     private final static int BG_ALPHA=125;
 
     public static Paint createBackgroundPaint() {
-        org.mapsforge.core.graphics.Paint p= AndroidGraphicFactory.INSTANCE.createPaint();
+        Paint p= AndroidGraphicFactory.INSTANCE.createPaint();
         p.setColor(Color.WHITE);
-        //p.setAlpha(BG_ALPHA);
+
+        AndroidGraphicFactory.getPaint(p).setAlpha(BG_ALPHA);
         p.setStyle(Style.FILL);
-        //p.setAntiAlias(false);
         return p;
     }
 
     public static Paint  createGridPaint(AppDensity res) {
-        org.mapsforge.core.graphics.Paint p=AndroidGraphicFactory.INSTANCE.createPaint();
+        Paint p=AndroidGraphicFactory.INSTANCE.createPaint();
         p.setColor(Color.GREEN);
         //p..setAlpha(ALPHA);
-        p.setStyle(Style.STROKE);
+        p.setStyle(Style.FILL);
         //p.setAntiAlias(false);
         //p.setDither(false);
         p.setStrokeWidth(Math.max(1, res.toDPf(1)));
@@ -39,16 +38,19 @@ public class MapPaint {
 
 
     public static Paint createStatusTextPaint(AppDensity res) {
-        return createTextPaint(res, TEXT_SIZE);
+        Paint p = createTextPaint(res, TEXT_SIZE);
+        return p;
     }
 
     public static Paint createLegendTextPaint(AppDensity res) {
-        return createTextPaint(res, TEXT_SIZE/3*2);
+        Paint p =  createTextPaint(res, TEXT_SIZE/3*2);
+        p.setColor(Color.RED);
+        return p;
     }
 
 
     public static Paint  createTextPaint(AppDensity res, float size) {
-        org.mapsforge.core.graphics.Paint p=AndroidGraphicFactory.INSTANCE.createPaint();
+        Paint p=AndroidGraphicFactory.INSTANCE.createPaint();
         p.setColor(Color.BLUE);
 
         p.setTextSize(res.toSDPf(size));
@@ -61,13 +63,14 @@ public class MapPaint {
 
 
     public static Paint createEdgePaint(AppDensity res) {
-        org.mapsforge.core.graphics.Paint edge = AndroidGraphicFactory.INSTANCE.createPaint();
+        Paint edge = AndroidGraphicFactory.INSTANCE.createPaint();
 
         edge.setStrokeWidth(res.toDPf(EDGE_WIDTH));
-
         //edge.setAntiAlias(false);
         edge.setColor(Color.CYAN);
         edge.setStyle(Style.STROKE);
+
+
         return edge;
     }
 

@@ -5,7 +5,10 @@ import android.content.Context;
 import ch.bailu.aat.R;
 import ch.bailu.aat.map.MapContext;
 import ch.bailu.aat.map.layer.MapLayerInterface;
+import ch.bailu.aat.map.layer.NullLayer;
+import ch.bailu.aat.map.layer.grid.CH1903CenterCoordinatesLayer;
 import ch.bailu.aat.map.layer.grid.CH1903GridLayer;
+import ch.bailu.aat.map.layer.grid.UTMCenterCoordinatesLayer;
 import ch.bailu.aat.map.layer.grid.UTMGridLayer;
 import ch.bailu.aat.map.layer.grid.WGS84Layer;
 import ch.bailu.aat.map.osmdroid.AbsOsmView;
@@ -27,6 +30,19 @@ public class SolidMapGrid extends SolidStaticIndexList {
     
     public SolidMapGrid(Context context, String k) {
         super(Storage.map(context), k + POSTFIX, LABEL);
+    }
+
+    public MapLayerInterface createCenterCoordinatesLayer() {
+        if (this.getIndex()==1) {
+            return new CH1903CenterCoordinatesLayer();
+        }
+
+        if (this.getIndex()==2) {
+            return new UTMCenterCoordinatesLayer();
+        }
+
+        return new NullLayer();
+
     }
 
     public OsmOverlay createCenterCoordinatesOverlay(AbsOsmView osmPreview) {
@@ -76,6 +92,7 @@ public class SolidMapGrid extends SolidStaticIndexList {
             return new UTMGridLayer(cl);
         }
 
-        return null;
+        return new NullLayer();
     }
+
 }

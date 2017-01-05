@@ -9,6 +9,7 @@ import org.osmdroid.views.MapView;
 
 import ch.bailu.aat.description.ContentDescription;
 import ch.bailu.aat.dispatcher.DispatcherInterface;
+import ch.bailu.aat.map.MapContext;
 import ch.bailu.aat.preferences.SolidDirectoryQuery;
 import ch.bailu.aat.views.description.LabelTextView;
 
@@ -47,23 +48,24 @@ public class VerticalScrollView extends ScrollView {
     }
 
 
-    public void addAllFilterViews(MapView map) {
-        final SolidDirectoryQuery sdirectory = new SolidDirectoryQuery(map.getContext());
+    public void addAllFilterViews(MapContext mc) {
+        final SolidDirectoryQuery sdirectory = new SolidDirectoryQuery(mc.getContext());
 
-        LinearLayout geo = new LinearLayout(map.getContext());
+        LinearLayout geo = new LinearLayout(mc.getContext());
         geo.addView(new SolidCheckBox(sdirectory.getUseGeo()));
-        geo.addView(new SolidBoundingBoxView(sdirectory.getBoundingBox(), map));
+        geo.addView(new SolidBoundingBoxView(sdirectory.getBoundingBox(), mc));
         layout.addView(geo);
 
 
-        LinearLayout from = new LinearLayout(map.getContext());
+        LinearLayout from = new LinearLayout(mc.getContext());
         from.addView(new SolidCheckBox(sdirectory.getUseDateStart()));
         from.addView(new SolidDateView(sdirectory.getDateStart()));
         layout.addView(from);
 
-        LinearLayout to = new LinearLayout(map.getContext());
+        LinearLayout to = new LinearLayout(mc.getContext());
         to.addView(new SolidCheckBox(sdirectory.getUseDateEnd()));
         to.addView(new SolidDateView(sdirectory.getDateTo()));
         layout.addView(to);
     }
+
 }

@@ -1,10 +1,16 @@
 package ch.bailu.aat.services.icons;
 
+import android.graphics.drawable.Drawable;
+
 import java.io.File;
 import java.io.IOException;
 
 import ch.bailu.aat.gpx.GpxAttributes;
+import ch.bailu.aat.gpx.GpxPoint;
+import ch.bailu.aat.gpx.interfaces.GpxPointInterface;
+import ch.bailu.aat.map.osmdroid.overlay.gpx.IconCache;
 import ch.bailu.aat.util.fs.AppDirectory;
+import ch.bailu.aat.util.graphic.AppBitmap;
 import ch.bailu.aat.util.ui.AppLog;
 import ch.bailu.aat.util.fs.FileAccess;
 import ch.bailu.aat.services.ServiceContext;
@@ -18,8 +24,7 @@ public class IconMapService extends VirtualService {
 
 
     private final IconMap map;
-
-
+    private final IconCache cache = new IconCache();
 
 
     public IconMapService(ServiceContext sc) {
@@ -37,6 +42,12 @@ public class IconMapService extends VirtualService {
                 AppLog.e(getContext(), this, e);
             }
         }
+
+
+    }
+
+    public AppBitmap getIcon(GpxPointInterface point) {
+        return cache.getIcon(getSContext(), point);
     }
 
 
@@ -97,56 +108,12 @@ public class IconMapService extends VirtualService {
     }
 
 
-    /*
-    public void iconify(GpxList list) {
-        new GpxIconifier().walkTrack(list);
-    }
-    */
 
     @Override
     public void close() {
-
+        cache.close();
     }
 
-/*
-    private class GpxIconifier extends GpxListWalker {
-
-        @Override
-        public boolean doList(GpxList track) {
-            return track.getDelta().getType()==GpxType.WAY;
-        }
-
-        @Override
-        public boolean doSegment(GpxSegmentNode segment) {
-            return true;
-        }
-
-        @Override
-        public boolean doMarker(GpxSegmentNode marker) {
-            return true;
-        }
-
-        @Override
-        public void doPoint(GpxPointNode point) {
-            GpxAttributes a = point.getAttributes();
-
-            for(int i = 0; a != null && i< a.size(); i++) {
-                final String key = a.getKey(i);
-                final String value = a.getTime(i);
-
-                final String sicon = getSmallIconPath(key,value);
-                final String bicon = getBigIconPath(key,value);
-
-                if (sicon != null && bicon != null) {
-                    a.put(KEY_ICON_SMALL, sicon);
-                    a.put(KEY_ICON_BIG, bicon);
-                    break;
-                }
-            }
-        }
-    }
-
-*/
 
     @Override
     public void appendStatusText(StringBuilder builder) {

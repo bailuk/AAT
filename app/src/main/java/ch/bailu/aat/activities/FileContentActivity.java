@@ -16,12 +16,12 @@ import ch.bailu.aat.description.PauseDescription;
 import ch.bailu.aat.description.TimeDescription;
 import ch.bailu.aat.description.TrackSizeDescription;
 import ch.bailu.aat.gpx.InfoID;
+import ch.bailu.aat.map.MFactory;
 import ch.bailu.aat.services.editor.EditorHelper;
 import ch.bailu.aat.views.description.MultiView;
 import ch.bailu.aat.views.description.VSplitView;
 import ch.bailu.aat.views.graph.DistanceAltitudeGraphView;
 import ch.bailu.aat.views.graph.DistanceSpeedGraphView;
-import ch.bailu.aat.map.osmdroid.MapFactory;
 import ch.bailu.aat.views.preferences.VerticalScrollView;
 
 
@@ -39,7 +39,7 @@ public class FileContentActivity extends AbsFileContentActivity{
     }
 
     protected MultiView createMultiView(final String SOLID_KEY) {
-        map = new MapFactory(this, SOLID_KEY).content(editor_helper);
+        map = MFactory.DEF(this, SOLID_KEY).content(editor_helper);
 
 
         final ContentDescription summaryData[] = {
@@ -65,7 +65,7 @@ public class FileContentActivity extends AbsFileContentActivity{
 
         MultiView mv = new MultiView(this, SOLID_KEY);
         mv.add(summary);
-        mv.add(map);
+        mv.add(map.toView());
         mv.add(graph);
         return mv;
     }

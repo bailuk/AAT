@@ -13,15 +13,15 @@ import ch.bailu.aat.description.TrackSizeDescription;
 import ch.bailu.aat.dispatcher.OnContentUpdatedInterface;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.InfoID;
-import ch.bailu.aat.util.ui.AppDialog;
-import ch.bailu.aat.util.ui.AppLog;
+import ch.bailu.aat.map.MFactory;
 import ch.bailu.aat.services.editor.EditorHelper;
 import ch.bailu.aat.services.editor.EditorInterface;
+import ch.bailu.aat.util.ui.AppDialog;
+import ch.bailu.aat.util.ui.AppLog;
 import ch.bailu.aat.views.NodeListView;
 import ch.bailu.aat.views.description.MultiView;
 import ch.bailu.aat.views.description.VSplitView;
 import ch.bailu.aat.views.graph.DistanceAltitudeGraphView;
-import ch.bailu.aat.map.osmdroid.MapFactory;
 import ch.bailu.aat.views.preferences.VerticalScrollView;
 
 public class GpxEditorActivity extends AbsFileContentActivity
@@ -47,7 +47,7 @@ public class GpxEditorActivity extends AbsFileContentActivity
 
     @Override
     protected MultiView createMultiView(final String SOLID_KEY) {
-        map = new MapFactory(this, SOLID_KEY).editor(editor_helper);
+        map = MFactory.DEF(this, SOLID_KEY).editor(editor_helper);
 
         ContentDescription summaryData[] = {
                 new NameDescription(this),
@@ -68,7 +68,7 @@ public class GpxEditorActivity extends AbsFileContentActivity
         MultiView multiView = new MultiView(this, SOLID_KEY);
 
         multiView.add(nodeList);
-        multiView.add(map);
+        multiView.add(map.toView());
         multiView.add(new VSplitView(this, new View[] {summary, graph}));
 
         return multiView;

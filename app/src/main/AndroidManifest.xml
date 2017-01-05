@@ -70,7 +70,7 @@
             <!-- data android:mimeType="application/gpx+xml" /-->
 
 
-            <!-- Files from filemanager without mime type set -->
+            <!-- Files from filemanager without mime type setCopy -->
             <intent-filter>
                 <action android:name="android.intent.action.VIEW"/>
                 <category android:name="android.intent.category.DEFAULT"/>
@@ -89,7 +89,7 @@
             </intent-filter>
 
 
-            <!-- Files from filemanager with mime type set -->
+            <!-- Files from filemanager with mime type setCopy -->
             <intent-filter>
                 <action android:name="android.intent.action.VIEW"/>
                 <category android:name="android.intent.category.DEFAULT"/>

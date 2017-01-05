@@ -6,6 +6,7 @@ import android.view.ViewGroup;
 
 import org.mapsforge.core.model.LatLong;
 import org.osmdroid.util.BoundingBoxOsm;
+import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
 
 import java.util.ArrayList;
@@ -16,38 +17,32 @@ import ch.bailu.aat.map.MapViewInterface;
 import ch.bailu.aat.map.layer.MapLayerInterface;
 import ch.bailu.aat.map.osmdroid.context.OsmContext;
 import ch.bailu.aat.map.osmdroid.overlay.OverlayWrapper;
-import ch.bailu.aat.map.osmdroid.overlay.gpx.MapIconCache;
+import ch.bailu.aat.map.osmdroid.overlay.gpx.IconCache;
 import ch.bailu.aat.services.ServiceContext;
 
 public class NewOsmView extends ViewGroup implements MapViewInterface, SharedPreferences.OnSharedPreferenceChangeListener {
 
-    private final ArrayList<MapLayerInterface> overlays = new ArrayList(10);
 
     public final MapView map;
 
-    private final MapIconCache mapIconCache = new MapIconCache();
-
+    private final ArrayList<MapLayerInterface> overlays = new ArrayList(10);
+    private final IconCache mapIconCache = new IconCache();
 
     private BoundingBoxE6 pendingFrameBounding=null;
 
-
     private final OsmContext mcontext;
-
-
 
 
     public NewOsmView(ServiceContext sc, AbsTileProvider provider, MapDensity r, String skey) {
         super(sc.getContext());
 
         map = new MapView(sc.getContext(), r.getTileSize(), provider);
-        addView(map);
+        addView(map, 0);
 
         mcontext = new OsmContext(this, sc, r, skey);
-
         map.getOverlayManager().add(mcontext);
-
-
     }
+
 
 
     @Override
@@ -68,6 +63,8 @@ public class NewOsmView extends ViewGroup implements MapViewInterface, SharedPre
     @Override
     public void add(MapLayerInterface l) {
         map.getOverlayManager().add(new OverlayWrapper(l, mcontext));
+        overlays.add(l);
+
     }
 
     @Override
@@ -77,14 +74,18 @@ public class NewOsmView extends ViewGroup implements MapViewInterface, SharedPre
 
     @Override
     public void setZoomLevel(byte z) {
-
+        map.getController().setZoom(z);
     }
 
     @Override
-    public void setCenter(LatLong gpsLocation) {
-
+    public void setCenter(LatLong l) {
+        map.getController().setCenter(new GeoPoint(l.getLatitude(), l.getLongitude()));
     }
 
+    @Override
+    public View toView() {
+        return this;
+    }
 
 
     @Override

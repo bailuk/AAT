@@ -67,7 +67,7 @@ public class FileIntent {
         intent.putExtra(Intent.EXTRA_SUBJECT, file.getName());
         intent.putExtra(Intent.EXTRA_TEXT, file.getAbsolutePath());
         intent.putExtra(Intent.EXTRA_STREAM, uri);
-        setType(intent, file); // only works with type set (gmail and android mail)
+        setType(intent, file); // only works with type setCopy (gmail and android mail)
         
         context.startActivity(Intent.createChooser(intent , file.getName()));
     }
@@ -82,7 +82,7 @@ public class FileIntent {
             intent.putExtra(Intent.EXTRA_SUBJECT, name);
             intent.putExtra(Intent.EXTRA_TEXT, uri.toString());
             intent.putExtra(Intent.EXTRA_STREAM, uri);
-            setType(intent, name); // only works with type set (gmail and android mail)
+            setType(intent, name); // only works with type setCopy (gmail and android mail)
 
             context.startActivity(Intent.createChooser(intent, name));
         }

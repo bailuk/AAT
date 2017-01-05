@@ -3,9 +3,8 @@ package ch.bailu.aat.views.preferences;
 import android.content.SharedPreferences;
 import android.view.View;
 
-import org.osmdroid.views.MapView;
-
 import ch.bailu.aat.coordinates.BoundingBoxE6;
+import ch.bailu.aat.map.MapContext;
 import ch.bailu.aat.preferences.SolidBoundingBox;
 import ch.bailu.aat.views.AbsLabelTextView;
 
@@ -14,7 +13,7 @@ public class SolidBoundingBoxView extends AbsLabelTextView implements SharedPref
     private final SolidBoundingBox sbounding;
 
 
-    public SolidBoundingBoxView(SolidBoundingBox bounding, final MapView map) {
+    public SolidBoundingBoxView(SolidBoundingBox bounding, final MapContext map) {
         super(bounding.getContext(), bounding.getLabel());
 
         sbounding = bounding;
@@ -24,7 +23,7 @@ public class SolidBoundingBoxView extends AbsLabelTextView implements SharedPref
         this.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                sbounding.setValue(new BoundingBoxE6(map.getBoundingBox()));
+                sbounding.setValue(new BoundingBoxE6(map.getMetrics().getBoundingBox()));
             }
         });
     }
