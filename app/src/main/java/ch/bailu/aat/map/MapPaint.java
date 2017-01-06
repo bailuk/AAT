@@ -7,14 +7,15 @@ import org.mapsforge.core.graphics.Style;
 import org.mapsforge.map.android.graphics.AndroidGraphicFactory;
 
 import ch.bailu.aat.util.ui.AppDensity;
+import ch.bailu.aat.util.ui.AppTheme;
 
 public class MapPaint {
 
 
-    public static final int EDGE_WIDTH=1;
+    public static final int EDGE_WIDTH=2;
     private final static float TEXT_SIZE=20;
     private final static int ALPHA=150;
-    private final static int BG_ALPHA=125;
+    private final static int BG_ALPHA=150;
 
     public static Paint createBackgroundPaint() {
         Paint p= AndroidGraphicFactory.INSTANCE.createPaint();
@@ -27,11 +28,8 @@ public class MapPaint {
 
     public static Paint  createGridPaint(AppDensity res) {
         Paint p=AndroidGraphicFactory.INSTANCE.createPaint();
-        p.setColor(Color.GREEN);
-        //p..setAlpha(ALPHA);
+        p.setColor(Color.GRAY);
         p.setStyle(Style.FILL);
-        //p.setAntiAlias(false);
-        //p.setDither(false);
         p.setStrokeWidth(Math.max(1, res.toDPf(1)));
         return p;
     }
@@ -44,19 +42,18 @@ public class MapPaint {
 
     public static Paint createLegendTextPaint(AppDensity res) {
         Paint p =  createTextPaint(res, TEXT_SIZE/3*2);
-        p.setColor(Color.RED);
+        p.setColor(AppTheme.getAltBackgroundColor());
         return p;
     }
 
 
     public static Paint  createTextPaint(AppDensity res, float size) {
         Paint p=AndroidGraphicFactory.INSTANCE.createPaint();
-        p.setColor(Color.BLUE);
+        p.setColor(Color.BLACK);
 
         p.setTextSize(res.toSDPf(size));
-        //p.setFakeBoldText(true);
+        AndroidGraphicFactory.getPaint(p).setFakeBoldText(true);
         p.setStyle(Style.FILL);
-        //p.setAntiAlias(true);
 
         return p;
     }
@@ -66,8 +63,7 @@ public class MapPaint {
         Paint edge = AndroidGraphicFactory.INSTANCE.createPaint();
 
         edge.setStrokeWidth(res.toDPf(EDGE_WIDTH));
-        //edge.setAntiAlias(false);
-        edge.setColor(Color.CYAN);
+        edge.setColor(AppTheme.getAltBackgroundColor());
         edge.setStyle(Style.STROKE);
 
 

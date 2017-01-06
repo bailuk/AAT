@@ -56,10 +56,6 @@ public class EditorNodeSelectorLayer extends NodeViewLayer {
         return false;
     }
 
-    @Override
-    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-
-    }
 
     @Override
     public void onAttached() {

@@ -1,12 +1,15 @@
 package ch.bailu.aat.services.cache;
 
 import android.content.Context;
+import android.content.res.Resources;
+import android.graphics.drawable.Drawable;
 
 import org.mapsforge.core.model.Tile;
 import org.osmdroid.tileprovider.MapTile;
 
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.dem.DemProvider;
+import ch.bailu.aat.util.graphic.AppBitmap;
 import ch.bailu.aat.views.graph.ColorTable;
 
 public class ElevationColorTile extends ElevationTile {
@@ -68,6 +71,16 @@ public class ElevationColorTile extends ElevationTile {
     @Override
     public long getSize() {
         return getBytesHack(TILE_SIZE);
+    }
+
+    @Override
+    public Drawable getDrawable(Resources res) {
+        return null;
+    }
+
+    @Override
+    public AppBitmap getAppBitmap() {
+        return null;
     }
 
 

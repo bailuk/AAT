@@ -9,9 +9,7 @@ import ch.bailu.aat.R;
 import ch.bailu.aat.dispatcher.DispatcherInterface;
 import ch.bailu.aat.gpx.GpxPoint;
 import ch.bailu.aat.map.MapContext;
-import ch.bailu.aat.map.layer.MapLayerInterface;
 import ch.bailu.aat.map.layer.gpx.GpxDynLayer;
-import ch.bailu.aat.preferences.SolidMapGrid;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.editor.EditorHelper;
 import ch.bailu.aat.services.editor.EditorInterface;
@@ -19,7 +17,6 @@ import ch.bailu.aat.util.ui.ToolTip;
 import ch.bailu.aat.views.ControlBar;
 
 public class EditorLayer extends ControlBarLayer {
-    private final SolidMapGrid sgrid;
 
     private final View add, remove, up, down,
             save, saveAs, toggle, clear,
@@ -32,7 +29,6 @@ public class EditorLayer extends ControlBarLayer {
     private final EditorNodeSelectorLayer selector;
     private final GpxDynLayer content;
 
-    private MapLayerInterface coordinates;
 
     private final EditorHelper edit;
 
@@ -46,8 +42,6 @@ public class EditorLayer extends ControlBarLayer {
         scontext=mc.getSContext();
         mcontext=mc;
 
-        sgrid = new SolidMapGrid(mc.getContext(), mc.getSolidKey());
-        coordinates = sgrid.createCenterCoordinatesLayer();
 
         content = new GpxDynLayer(mc, -1);
         selector = new EditorNodeSelectorLayer(mc, e);
@@ -96,7 +90,6 @@ public class EditorLayer extends ControlBarLayer {
         content.draw(p);
         if (isBarVisible()) {
             selector.draw(p);
-            coordinates.draw(p);
         }
     }
 
@@ -138,13 +131,10 @@ public class EditorLayer extends ControlBarLayer {
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences p, String key) {
-        if (sgrid.hasKey(key)) {
-            coordinates = sgrid.createCenterCoordinatesLayer();
-        } else {
-            content.onSharedPreferenceChanged(p, key);
-        }
-
+        content.onSharedPreferenceChanged(p, key);
+        selector.onSharedPreferenceChanged(p, key);
     }
+
 
     @Override
     public void onAttached() {

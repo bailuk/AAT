@@ -1,6 +1,7 @@
 package ch.bailu.aat.map.layer.gpx;
 
 import android.content.SharedPreferences;
+import android.graphics.Color;
 
 import org.mapsforge.core.model.LatLong;
 import org.mapsforge.core.model.Point;
@@ -92,13 +93,12 @@ public class WayLayer extends GpxLayer {
 
 
                     nodeBitmap =
-                            mcontext.getSContext().getIconMapService().getIcon(node.point);
+                            mcontext.getSContext().getIconMapService().getIconSVG(node.point,
+                                    mcontext.getMetrics().getDensity().toDPi(32));
                 }
 
                 if (nodeBitmap != null) {
-                    mcontext.draw().bitmap(
-                            nodeBitmap.getDrawable(mcontext.getContext().getResources()),
-                            node.pixel);
+                    mcontext.draw().bitmap(nodeBitmap.getBitmap(), node.pixel);
                 } else {
                     mcontext.draw().bitmap(
                             mcontext.draw().getNodeBitmap(),

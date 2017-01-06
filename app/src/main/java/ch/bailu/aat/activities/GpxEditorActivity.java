@@ -13,7 +13,7 @@ import ch.bailu.aat.description.TrackSizeDescription;
 import ch.bailu.aat.dispatcher.OnContentUpdatedInterface;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.InfoID;
-import ch.bailu.aat.map.MFactory;
+import ch.bailu.aat.map.MapFactory;
 import ch.bailu.aat.services.editor.EditorHelper;
 import ch.bailu.aat.services.editor.EditorInterface;
 import ch.bailu.aat.util.ui.AppDialog;
@@ -47,7 +47,7 @@ public class GpxEditorActivity extends AbsFileContentActivity
 
     @Override
     protected MultiView createMultiView(final String SOLID_KEY) {
-        map = MFactory.DEF(this, SOLID_KEY).editor(editor_helper);
+        map = MapFactory.DEF(this, SOLID_KEY).editor(editor_helper);
 
         ContentDescription summaryData[] = {
                 new NameDescription(this),

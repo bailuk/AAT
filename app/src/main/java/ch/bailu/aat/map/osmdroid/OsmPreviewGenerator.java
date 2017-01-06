@@ -9,10 +9,12 @@ import java.io.FileOutputStream;
 import ch.bailu.aat.gpx.GpxFileWrapper;
 import ch.bailu.aat.gpx.GpxList;
 import ch.bailu.aat.gpx.InfoID;
+import ch.bailu.aat.map.MapDensity;
+import ch.bailu.aat.map.layer.gpx.GpxDynLayer;
+import ch.bailu.aat.map.tile.TileProviderPreview;
+import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.util.ui.AppLog;
-import ch.bailu.aat.services.ServiceContext;
-import ch.bailu.aat.map.osmdroid.overlay.gpx.GpxDynOverlay;
 
 public class OsmPreviewGenerator implements Closeable {
     public static final int BITMAP_SIZE=128;
@@ -21,7 +23,7 @@ public class OsmPreviewGenerator implements Closeable {
     private final OsmViewStatic map;
     private final ServiceContext serviceContext;
     
-    private final PreviewTileProvider tileProvider;
+    private final TileProviderPreview tileProvider;
     
     private final File imageFile;
 
@@ -29,20 +31,20 @@ public class OsmPreviewGenerator implements Closeable {
     public OsmPreviewGenerator(ServiceContext sc, GpxList gpxList, File o)  {
         serviceContext=sc;
         imageFile=o;
-        tileProvider = new PreviewTileProvider(sc);
+        tileProvider = new TileProviderPreview(sc);
 
 
 
-        map = new OsmViewStatic(serviceContext.getContext(), tileProvider, new MapDensity());
+        map = new OsmViewStatic(serviceContext, tileProvider, new MapDensity());
         map.setDrawingCacheEnabled(true);
         
-        GpxDynOverlay overlay = new GpxDynOverlay(map, sc, InfoID.FILEVIEW);
+        GpxDynLayer overlay = new GpxDynLayer(map.getMContext(), InfoID.FILEVIEW);
         map.add(overlay);
 
         map.layout(0, 0, BITMAP_SIZE, BITMAP_SIZE);
 
         overlay.onContentUpdated(InfoID.FILEVIEW, new GpxFileWrapper(o,gpxList));
-        map.frameBoundingBox(gpxList.getDelta().getBoundingBox());
+        map.frameBounding(gpxList.getDelta().getBoundingBox());
         map.getDrawingCache(false);
     }
 

@@ -19,7 +19,7 @@ import ch.bailu.aat.dispatcher.OverlaySource;
 import ch.bailu.aat.dispatcher.TrackerSource;
 import ch.bailu.aat.dispatcher.TrackerTimerSource;
 import ch.bailu.aat.gpx.InfoID;
-import ch.bailu.aat.map.MFactory;
+import ch.bailu.aat.map.MapFactory;
 import ch.bailu.aat.services.editor.EditorHelper;
 import ch.bailu.aat.views.ContentView;
 import ch.bailu.aat.views.ControlBar;
@@ -65,7 +65,7 @@ public class TrackerActivity extends AbsDispatcher implements OnClickListener{
     private MultiView createMultiView() {
         multiView = new MultiView(this, SOLID_KEY);
         multiView.add(createCockpit());
-        multiView.add(MFactory.DEF(this, SOLID_KEY).tracker(edit).toView());
+        multiView.add(MapFactory.DEF(this, SOLID_KEY).tracker(edit).toView());
         multiView.add(new VSplitView(this,
                 new View[] {
                         new DistanceAltitudeGraphView(this, this, InfoID.TRACKER),

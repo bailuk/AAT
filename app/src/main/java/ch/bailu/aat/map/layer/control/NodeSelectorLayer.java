@@ -1,5 +1,6 @@
 package ch.bailu.aat.map.layer.control;
 
+import android.content.SharedPreferences;
 import android.graphics.Rect;
 import android.util.SparseArray;
 
@@ -13,6 +14,7 @@ import ch.bailu.aat.gpx.GpxNodeFinder;
 import ch.bailu.aat.gpx.GpxPointNode;
 import ch.bailu.aat.map.MapContext;
 import ch.bailu.aat.map.layer.MapLayerInterface;
+import ch.bailu.aat.preferences.SolidMapGrid;
 import ch.bailu.aat.util.graphic.Pixel;
 
 public abstract class NodeSelectorLayer implements MapLayerInterface, OnContentUpdatedInterface {
@@ -36,16 +38,24 @@ public abstract class NodeSelectorLayer implements MapLayerInterface, OnContentU
 
     private final MapContext mcontext;
 
-    public NodeSelectorLayer(MapContext cl) {
 
-        mcontext = cl;
+    private final SolidMapGrid sgrid;
+    private MapLayerInterface coordinates;
 
-        square_size = cl.getMetrics().getDensity().toDPi(SQUARE_SIZE);
-        square_hsize = cl.getMetrics().getDensity().toDPi(SQUARE_HSIZE);
+
+    public NodeSelectorLayer(MapContext mc) {
+
+        mcontext = mc;
+
+        square_size = mc.getMetrics().getDensity().toDPi(SQUARE_SIZE);
+        square_hsize = mc.getMetrics().getDensity().toDPi(SQUARE_HSIZE);
         centerRect.left = 0;
         centerRect.right = square_size;
         centerRect.top = 0;
         centerRect.bottom = square_size;
+
+        sgrid = new SolidMapGrid(mc.getContext(), mc.getSolidKey());
+        coordinates = sgrid.createCenterCoordinatesLayer();
 
     }
 
@@ -75,6 +85,7 @@ public abstract class NodeSelectorLayer implements MapLayerInterface, OnContentU
         centerRect.offset(mcontext.getMetrics().getLeft(), mcontext.getMetrics().getTop());
         drawSelectedNode();
         drawCenterSquare();
+        coordinates.draw(mcontext);
 
     }
 
@@ -149,5 +160,13 @@ public abstract class NodeSelectorLayer implements MapLayerInterface, OnContentU
     @Override
     public void onLayout(boolean changed, int l, int t, int r, int b) {
 
+    }
+
+
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences p, String key) {
+        if (sgrid.hasKey(key)) {
+            coordinates = sgrid.createCenterCoordinatesLayer();
+        }
     }
 }

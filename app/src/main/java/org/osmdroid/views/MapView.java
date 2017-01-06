@@ -35,7 +35,7 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import ch.bailu.aat.map.osmdroid.AbsTileProvider;
+import ch.bailu.aat.map.osmdroid.OsmTileProviderAbstract;
 import microsoft.mappoint.TileSystem;
 
 public class MapView extends ViewGroup implements IMapView, MapViewConstants {
@@ -67,7 +67,7 @@ public class MapView extends ViewGroup implements IMapView, MapViewConstants {
 
     // for speed (avoiding allocations)
     private final Matrix mMatrix = new Matrix();
-    private final AbsTileProvider mTileProvider;
+    private final OsmTileProviderAbstract mTileProvider;
 
     private final Handler mTileRequestCompleteHandler;
 
@@ -79,7 +79,7 @@ public class MapView extends ViewGroup implements IMapView, MapViewConstants {
 
 
     private MapView(final Context context, final int tileSizePixels,
-                    AbsTileProvider tileProvider,
+                    OsmTileProviderAbstract tileProvider,
                     final Handler tileRequestCompleteHandler, final AttributeSet attrs) {
         super(context, attrs);
         this.mController = new MapController(this);
@@ -119,12 +119,12 @@ public class MapView extends ViewGroup implements IMapView, MapViewConstants {
 
 
     public MapView(final Context context, final int tileSizePixels,
-                   final AbsTileProvider aTileProvider) {
+                   final OsmTileProviderAbstract aTileProvider) {
         this(context, tileSizePixels, aTileProvider, null);
     }
 
     public MapView(final Context context, final int tileSizePixels,
-                   final AbsTileProvider aTileProvider,
+                   final OsmTileProviderAbstract aTileProvider,
                    final Handler tileRequestCompleteHandler) {
         this(context, tileSizePixels, aTileProvider, tileRequestCompleteHandler,
                 null);
@@ -151,7 +151,7 @@ public class MapView extends ViewGroup implements IMapView, MapViewConstants {
         return mOverlayManager;
     }
 
-    public AbsTileProvider getTileProvider() {
+    public OsmTileProviderAbstract getTileProvider() {
         return mTileProvider;
     }
 

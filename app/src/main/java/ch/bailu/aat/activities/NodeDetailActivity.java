@@ -16,7 +16,7 @@ import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.GpxList;
 import ch.bailu.aat.gpx.GpxListArray;
 import ch.bailu.aat.gpx.InfoID;
-import ch.bailu.aat.map.MFactory;
+import ch.bailu.aat.map.MapFactory;
 import ch.bailu.aat.map.MapViewInterface;
 import ch.bailu.aat.util.HtmlBuilderGpx;
 import ch.bailu.aat.util.ui.AppLayout;
@@ -79,7 +79,7 @@ public class NodeDetailActivity extends AbsDispatcher
 
 
     private VSplitView createVerticalView() {
-        mapView = MFactory.DEF(this, SOLID_KEY).node();
+        mapView = MapFactory.DEF(this, SOLID_KEY).node();
 
         htmlView =new HtmlScrollTextView(this);
         htmlView.enableAutoLink();

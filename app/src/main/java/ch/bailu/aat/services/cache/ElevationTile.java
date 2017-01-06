@@ -87,6 +87,12 @@ public abstract class ElevationTile extends TileObject implements ElevationUpdat
     }
 
 
+    public void onRemove(ServiceContext sc) {
+        super.onRemove(sc);
+        bitmap.free();
+    }
+
+
     @Override
     public void onChanged(String id, ServiceContext sc) {}
 

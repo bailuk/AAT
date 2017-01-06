@@ -1,6 +1,5 @@
 package ch.bailu.aat.map.layer.control;
 
-import android.content.SharedPreferences;
 import android.view.View;
 
 import org.mapsforge.core.model.LatLong;
@@ -56,10 +55,6 @@ public class AutoNodeViewLayer extends NodeViewLayer {
 
     }
 
-    @Override
-    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-
-    }
 
     @Override
     public boolean onTap(LatLong tapLatLong, Point layerXY, Point tapXY) {

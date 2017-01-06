@@ -5,9 +5,9 @@ import android.content.Context;
 import ch.bailu.aat.R;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.StateID;
-import ch.bailu.aat.util.AppBroadcaster;
+import ch.bailu.aat.map.layer.MapPositionLayer;
 import ch.bailu.aat.preferences.Storage;
-import ch.bailu.aat.map.osmdroid.OsmInteractiveView;
+import ch.bailu.aat.util.AppBroadcaster;
 
 public class DirtyLocation extends LocationStackChainedItem {
     private final static String SOLID_KEY="DirtyLocation_";
@@ -33,8 +33,8 @@ public class DirtyLocation extends LocationStackChainedItem {
     
     @Override
     public void close() {
-        storage.writeInteger(SOLID_KEY + OsmInteractiveView.LONGITUDE_SUFFIX, locationInformation.getLongitudeE6());
-        storage.writeInteger(SOLID_KEY + OsmInteractiveView.LATITUDE_SUFFIX, locationInformation.getLatitudeE6());
+        storage.writeInteger(SOLID_KEY + MapPositionLayer.LONGITUDE_SUFFIX, locationInformation.getLongitudeE6());
+        storage.writeInteger(SOLID_KEY + MapPositionLayer.LATITUDE_SUFFIX, locationInformation.getLatitudeE6());
     }
 
     
@@ -77,8 +77,8 @@ public class DirtyLocation extends LocationStackChainedItem {
 */
 
         private void readPosition(Storage storage) {
-            longitude=storage.readInteger(SOLID_KEY + OsmInteractiveView.LONGITUDE_SUFFIX);
-            latitude=storage.readInteger(SOLID_KEY + OsmInteractiveView.LATITUDE_SUFFIX);
+            longitude=storage.readInteger(SOLID_KEY + MapPositionLayer.LONGITUDE_SUFFIX);
+            latitude=storage.readInteger(SOLID_KEY + MapPositionLayer.LATITUDE_SUFFIX);
         }
         
         @Override

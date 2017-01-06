@@ -28,10 +28,12 @@ import ch.bailu.aat.dispatcher.OverlaySource;
 import ch.bailu.aat.dispatcher.TrackerSource;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.InfoID;
+import ch.bailu.aat.map.MapFactory;
+import ch.bailu.aat.map.MapViewInterface;
+import ch.bailu.aat.menus.ContentMenu;
+import ch.bailu.aat.util.fs.FileAction;
 import ch.bailu.aat.util.ui.AppLayout;
 import ch.bailu.aat.util.ui.ToolTip;
-import ch.bailu.aat.util.fs.FileAction;
-import ch.bailu.aat.menus.ContentMenu;
 import ch.bailu.aat.views.BusyButton;
 import ch.bailu.aat.views.ContentView;
 import ch.bailu.aat.views.ControlBar;
@@ -40,13 +42,6 @@ import ch.bailu.aat.views.description.MultiView;
 import ch.bailu.aat.views.description.VSplitView;
 import ch.bailu.aat.views.graph.DistanceAltitudeGraphView;
 import ch.bailu.aat.views.graph.DistanceSpeedGraphView;
-import ch.bailu.aat.map.osmdroid.OsmInteractiveView;
-import ch.bailu.aat.map.osmdroid.overlay.CurrentLocationOverlay;
-import ch.bailu.aat.map.osmdroid.overlay.control.InformationBarOverlay;
-import ch.bailu.aat.map.osmdroid.overlay.control.NavigationBarOverlay;
-import ch.bailu.aat.map.osmdroid.overlay.gpx.GpxDynOverlay;
-import ch.bailu.aat.map.osmdroid.overlay.gpx.GpxOverlayListOverlay;
-import ch.bailu.aat.map.osmdroid.overlay.grid.GridDynOverlay;
 import ch.bailu.aat.views.preferences.VerticalScrollView;
 
 public class GpxViewActivity extends AbsDispatcher
@@ -59,7 +54,7 @@ public class GpxViewActivity extends AbsDispatcher
     private ImageButton        nextView, fileOperation, copyTo;
     private BusyButton         busyButton;
     private MultiView          multiView;
-    private OsmInteractiveView map;
+    private MapViewInterface   map;
 
     private String fileID;
     private Uri uri;
@@ -118,14 +113,8 @@ public class GpxViewActivity extends AbsDispatcher
 
 
     private MultiView createMultiView() {
-        map = new OsmInteractiveView(getServiceContext(), this, SOLID_KEY);
 
-        map.add(new GpxOverlayListOverlay(map, this, getServiceContext()));
-        map.add(new GpxDynOverlay(map, getServiceContext(), InfoID.FILEVIEW));
-        map.add(new CurrentLocationOverlay(map, this));
-        map.add(new GridDynOverlay(map, getServiceContext()));
-        map.add(new NavigationBarOverlay(map, this));
-        map.add(new InformationBarOverlay(map, this));
+        map = MapFactory.DEF(this, SOLID_KEY).externalContent();
 
 
         final ContentDescription summaryData[] = {
@@ -151,7 +140,7 @@ public class GpxViewActivity extends AbsDispatcher
 
         multiView = new MultiView(this, SOLID_KEY);
         multiView.add(summary);
-        multiView.add(map);
+        multiView.add(map.toView());
         multiView.add(graph);
 
         return multiView;
@@ -173,7 +162,7 @@ public class GpxViewActivity extends AbsDispatcher
 
     @Override
     public void onContentUpdated(int iid, GpxInformation info) {
-        map.frameBoundingBox(info.getBoundingBox());
+        map.frameBounding(info.getBoundingBox());
     }
 
 

@@ -17,7 +17,7 @@ public class Dem3NameLayer implements MapLayerInterface {
     public void draw(MapContext mcontext) {
 
         final SrtmCoordinates c = new SrtmCoordinates(mcontext.getMetrics().getBoundingBox().getCenterPoint());
-        mcontext.draw().textBottom(c.toString(),4);
+        mcontext.draw().textBottom(c.toString(),3);
     }
 
     @Override

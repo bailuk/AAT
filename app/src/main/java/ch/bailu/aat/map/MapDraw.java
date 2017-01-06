@@ -31,7 +31,7 @@ public interface MapDraw {
 
     void rect(Rect rect, Paint paint);
 
-    void bitmap(Drawable drawable, Point pixel);
+    void bitmap(Bitmap b, Point pixel);
     void bitmap(Bitmap b, Point pixel, int color);
 
     public void edge(TwoNodes nodes);

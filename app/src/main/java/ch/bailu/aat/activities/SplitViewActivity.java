@@ -20,7 +20,7 @@ import ch.bailu.aat.dispatcher.OverlaySource;
 import ch.bailu.aat.dispatcher.TrackerSource;
 import ch.bailu.aat.dispatcher.TrackerTimerSource;
 import ch.bailu.aat.gpx.InfoID;
-import ch.bailu.aat.map.MFactory;
+import ch.bailu.aat.map.MapFactory;
 import ch.bailu.aat.map.MapViewInterface;
 import ch.bailu.aat.services.editor.EditorHelper;
 import ch.bailu.aat.util.ui.AppLayout;
@@ -57,7 +57,7 @@ public class SplitViewActivity extends AbsDispatcher implements OnClickListener{
         v.setOrientation(LinearLayout.VERTICAL);
 
 
-        v.addView(MFactory.DEF(this, SOLID_MAP_KEY).map(edit, createButtonBar()).toView(),
+        v.addView(MapFactory.DEF(this, SOLID_MAP_KEY).map(edit, createButtonBar()).toView(),
                 LayoutParams.MATCH_PARENT,
                 AppLayout.getScreenSmallSide(this));
 
@@ -70,7 +70,7 @@ public class SplitViewActivity extends AbsDispatcher implements OnClickListener{
 
 
     private View createMultiView() {
-        final MapViewInterface mapViewAlt = MFactory.DEF(this, SOLID_KEY).split();
+        final MapViewInterface mapViewAlt = MapFactory.DEF(this, SOLID_KEY).split();
         final CockpitView cockpitA = new CockpitView(this);
         final CockpitView cockpitB = new CockpitView(this);
 

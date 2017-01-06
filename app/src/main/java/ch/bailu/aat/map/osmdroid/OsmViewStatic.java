@@ -1,18 +1,16 @@
 package ch.bailu.aat.map.osmdroid;
 
-import android.content.Context;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 
+import ch.bailu.aat.map.MapDensity;
+import ch.bailu.aat.map.tile.TileProviderInterface;
+import ch.bailu.aat.map.tile.TileProviderPreview;
+import ch.bailu.aat.services.ServiceContext;
 
-public class OsmViewStatic extends AbsOsmView {
-    public OsmViewStatic(Context context, AbsTileProvider provider, MapDensity res) {
-        super(context, provider, res);
-    }
-
-    @Override
-    public String getSolidKey() {
-        return OsmViewStatic.class.getSimpleName();
+public class OsmViewStatic extends OsmViewAbstract {
+    public OsmViewStatic(ServiceContext sc, TileProviderInterface provider, MapDensity r) {
+        super(sc, new OsmTileProvider(provider, r.getTileSize()), r, OsmViewStatic.class.getSimpleName());
     }
 
 
@@ -24,7 +22,6 @@ public class OsmViewStatic extends AbsOsmView {
 
     @Override
     public boolean onTrackballEvent(final MotionEvent event) {
-
         return false;
     }
 

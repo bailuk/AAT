@@ -13,7 +13,7 @@ import ch.bailu.aat.services.background.FileHandle;
 import ch.bailu.aat.util.graphic.AppBitmap;
 import ch.bailu.aat.util.graphic.SynchronizedBitmap;
 
-public class ImageObject extends ObjectHandle {
+public class ImageObject extends ImageObjectAbstract {
     public final static ImageObject NULL=new ImageObject();
     
     private final SynchronizedBitmap bitmap=new SynchronizedBitmap();
@@ -35,7 +35,13 @@ public class ImageObject extends ObjectHandle {
     }
 
 
-    
+    public void onRemove(ServiceContext sc) {
+        super.onRemove(sc);
+        bitmap.free();
+    }
+
+
+
     private void load(ServiceContext sc) {
         FileHandle l=new FileHandle(toString()) {
 
@@ -69,14 +75,17 @@ public class ImageObject extends ObjectHandle {
         return bitmap.get() != null;
     }
 
+    @Override
     public synchronized Bitmap getBitmap() {
         return bitmap.getAndroidBitmap();
     }
 
+    @Override
     public synchronized Drawable getDrawable(Resources res) {
         return bitmap.getDrawable(res);
     }
 
+    @Override
     public AppBitmap getAppBitmap() {
         return bitmap.get();
     }

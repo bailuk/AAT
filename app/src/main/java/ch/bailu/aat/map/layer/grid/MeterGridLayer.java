@@ -10,7 +10,6 @@ import ch.bailu.aat.coordinates.MeterCoordinates;
 import ch.bailu.aat.description.DistanceDescription;
 import ch.bailu.aat.map.MapContext;
 import ch.bailu.aat.map.layer.MapLayerInterface;
-import ch.bailu.aat.map.osmdroid.overlay.grid.GridMetricScaler;
 
 public abstract class MeterGridLayer implements MapLayerInterface {
 
@@ -43,7 +42,7 @@ public abstract class MeterGridLayer implements MapLayerInterface {
                 mcontext.draw().grid(centerPixel, mcontext.getMetrics().distanceToPixel(grid.getOptimalScale()));
                 mcontext.draw().point(centerPixel);
                 mcontext.draw().textTop(distanceDescription.getDistanceDescriptionRounded(grid.getOptimalScale()), 1);
-                mcontext.draw().textBottom(coordinates.toString(), 1);
+                mcontext.draw().textBottom(coordinates.toString(), 0);
             }
         }
 

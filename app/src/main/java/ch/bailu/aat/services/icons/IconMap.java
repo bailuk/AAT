@@ -4,20 +4,46 @@ import android.util.SparseArray;
 
 import java.io.File;
 
+import ch.bailu.aat.util.ui.AppLog;
+
 public class IconMap {
     private final static String ICON_SUFFIX_BIG=".n.64.png";
     private final static String ICON_SUFFIX_SMALL=".n.48.png";
 
+    private final static String SVG_PREFIX="symbols/";
+    private final static String SVG_SUFFIX=".svg";
 
-    public class Icon {
+
+   public class Icon {
         public final String big;
         public final String small;
+        public final String svg;
 
         public Icon(String file_name) {
             big   = new File(new File(directory,"png"), file_name+ICON_SUFFIX_SMALL).toString();
             small = new File(new File(directory,"png"), file_name+ICON_SUFFIX_BIG).toString();
+            svg = toSymbolAssetPath(file_name);
         }
     }
+
+    private static String toSymbolAssetPath(String source) {
+
+        StringBuffer copy = new StringBuffer();
+
+        copy.append(SVG_PREFIX);
+        copy.append(source);
+        copy.append(SVG_SUFFIX);
+
+        int index = source.indexOf('_');
+        if (index > 0) {
+            index +=SVG_PREFIX.length();
+            copy.setCharAt(index, '/');
+        }
+
+        return copy.toString();
+
+    }
+
 
 
     private final SparseArray<SparseArray<Icon>> key_list = new SparseArray<>(50);

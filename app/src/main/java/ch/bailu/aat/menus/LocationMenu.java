@@ -7,29 +7,33 @@ import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import org.mapsforge.core.model.LatLong;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
 
 import ch.bailu.aat.R;
 import ch.bailu.aat.coordinates.Coordinates;
+import ch.bailu.aat.coordinates.LatLongE6;
+import ch.bailu.aat.map.MapViewInterface;
 import ch.bailu.aat.util.ui.AppLog;
 import ch.bailu.aat.util.Clipboard;
 
 public class LocationMenu extends AbsMenu{
 
-    private final MapView map;
+    private final MapViewInterface map;
     private final Context context;
     private final Clipboard clipboard;
 
     private MenuItem send, view, copy, paste;
     
     
-    public LocationMenu(MapView m) {
+    public LocationMenu(MapViewInterface m) {
         map = m;
-        context = m.getContext();
+        context = m.getMContext().getContext();
         clipboard = new Clipboard(context);
     }
-    
+
+
     @Override
     public void inflate(Menu menu) {
         send = menu.add(R.string.location_send);
@@ -76,7 +80,7 @@ public class LocationMenu extends AbsMenu{
         final CharSequence s = clipboard.getText();
 
         if (s != null  && Coordinates.stringToGeoPoint(s.toString(), geo)) {
-            map.getController().setCenter(geo);
+            map.setCenter(new LatLongE6(geo).toLatLong());
         }
     }
 
@@ -100,6 +104,7 @@ public class LocationMenu extends AbsMenu{
         final Intent intent = new Intent(Intent.ACTION_SEND);
         final GeoPoint center = getCenter();
 
+
         final String url = Coordinates.geoPointToGeoUri(center);
         final String desc = Coordinates.geoPointToDescription(center);
         final String body = desc+ "\n\n" + url;   
@@ -112,7 +117,8 @@ public class LocationMenu extends AbsMenu{
     }
     
     private GeoPoint getCenter() {
-        return map.getBoundingBox().getCenter();
+        LatLong c = map.getMContext().getMetrics().getBoundingBox().getCenterPoint();
+        return new GeoPoint(c.getLatitudeE6(), c.getLongitudeE6());
     }
     
 }

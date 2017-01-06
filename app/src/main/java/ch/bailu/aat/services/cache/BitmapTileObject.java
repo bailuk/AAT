@@ -1,7 +1,9 @@
 package ch.bailu.aat.services.cache;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 
 import org.mapsforge.core.model.Tile;
 import org.osmdroid.tileprovider.MapTile;
@@ -14,6 +16,7 @@ import ch.bailu.aat.util.fs.AppDirectory;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.background.DownloadHandle;
 import ch.bailu.aat.services.background.FileHandle;
+import ch.bailu.aat.util.graphic.AppBitmap;
 import ch.bailu.aat.util.graphic.SynchronizedBitmap;
 
 
@@ -64,6 +67,12 @@ public class BitmapTileObject extends TileObject {
     public void onInsert(ServiceContext sc) {
         if (isLoadable()) sc.getBackgroundService().load(load);
         else if (isDownloadable()) sc.getBackgroundService().download(download);
+    }
+
+
+    public void onRemove(ServiceContext sc) {
+        super.onRemove(sc);
+        bitmap.free();
     }
 
     @Override
@@ -125,10 +134,15 @@ public class BitmapTileObject extends TileObject {
         return bitmap.getAndroidBitmap();
     }
 
+    @Override
+    public Drawable getDrawable(Resources res) {
+        return bitmap.getDrawable(res);
+    }
 
-  
-
-
+    @Override
+    public AppBitmap getAppBitmap() {
+        return bitmap.get();
+    }
 
 
     public static class Factory extends ObjectHandle.Factory {

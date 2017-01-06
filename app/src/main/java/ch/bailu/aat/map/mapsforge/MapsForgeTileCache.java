@@ -1,88 +1,63 @@
 package ch.bailu.aat.map.mapsforge;
 
 import org.mapsforge.core.graphics.TileBitmap;
-import org.mapsforge.core.model.Tile;
 import org.mapsforge.map.layer.cache.TileCache;
 import org.mapsforge.map.layer.queue.Job;
 import org.mapsforge.map.model.common.Observer;
-import org.osmdroid.tileprovider.MapTile;
 
-import java.util.ArrayList;
 import java.util.Set;
 
+import ch.bailu.aat.map.Attachable;
+import ch.bailu.aat.map.tile.TileProviderInterface;
 import ch.bailu.aat.util.ui.AppLog;
-import ch.bailu.aat.services.ServiceContext;
-import ch.bailu.aat.services.cache.TileStackObject;
-import ch.bailu.aat.map.osmdroid.DynTileProvider;
 
-public class MapsForgeTileCache extends DynTileProvider implements TileCache {
+public class MapsForgeTileCache  implements TileCache, Attachable {
 
-    final private ArrayList<Observer> observers = new ArrayList<Observer>(2);
+    private TileProviderInterface tileProvider;
 
-    private int capacity;
-
-    public MapsForgeTileCache(ServiceContext sc) {
-        super(sc);
+    public MapsForgeTileCache(TileProviderInterface p) {
+        tileProvider=p;
     }
 
-    @Override
-    public void onCacheChanged() {
-        for(Observer o: observers) o.onChange();
-    }
 
     @Override
     public boolean containsKey(Job job) {
-        return false;
+        return tileProvider.contains(job.tile);
     }
 
     @Override
     public void destroy() {
-        AppLog.d(this, "destroy()");
-        observers.clear();
-        onDetached();
+        tileProvider.onDetached();
     }
 
 
 
     @Override
     public TileBitmap get(Job job) {
-        //AppLog.d(this, "get()");
-        TileStackObject tileStackObject = getMapTileStack(convert(job.tile));
+        TileBitmap r = tileProvider.get(job.tile);
+        if (r != null && !r.isDestroyed()) {
+            r.incrementRefCount();
 
-        if (tileStackObject != null) {
-
-            TileBitmap r = tileStackObject.getTileBitmap();
-            if (r != null && !r.isDestroyed()) {
-                r.incrementRefCount();
-                return  r;
-            }
         }
-        return null;
+        return  r;
     }
 
 
-    public static MapTile convert(Tile tile) {
-        //AppLog.d(tile, "Size: " +tile.tileSize);
-        return new MapTile(tile.zoomLevel, tile.tileX, tile.tileY);
-    }
 
 
     @Override
     public int getCapacity() {
-        AppLog.d(this, "getCapacity()");
-        return capacity;
+        return tileProvider.getCapacity();
     }
 
     @Override
     public int getCapacityFirstLevel() {
-        AppLog.d(this, "getCapacityFirstLevel()");
-        return 50;
+        return tileProvider.getCapacity();
     }
 
 
     @Override
     public TileBitmap getImmediately(Job job) {
-        //AppLog.d(this, "getImmediately()");
         return get(job);
     }
 
@@ -99,28 +74,32 @@ public class MapsForgeTileCache extends DynTileProvider implements TileCache {
 
     @Override
     public void setWorkingSet(Set<Job> set) {
-        //AppLog.d(this, "setWorkingSet()");
-        if (set.size()*2 > capacity) {
-            capacity = set.size()*2;
-            ensureCapacity(set.size());
-        }
+
+        tileProvider.setCapacity(set.size());
 
         for (Job j: set) {
-            get(j);
+            if (tileProvider.contains(j.tile)) tileProvider.get(j.tile);
         }
     }
 
+
     @Override
     public void addObserver(Observer observer) {
-        AppLog.d(this, "lockToCache()");
-        observers.add(observer);
+        tileProvider.addObserver(observer);
     }
 
     @Override
     public void removeObserver(Observer observer) {
-        AppLog.d(this, "freeFromCache()");
-        observers.remove(observer);
+        tileProvider.removeObserver(observer);
     }
 
+    @Override
+    public void onAttached() {
+        tileProvider.onAttached();
+    }
 
+    @Override
+    public void onDetached() {
+        tileProvider.onDetached();
+    }
 }

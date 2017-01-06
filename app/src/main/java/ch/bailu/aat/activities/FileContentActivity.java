@@ -16,7 +16,7 @@ import ch.bailu.aat.description.PauseDescription;
 import ch.bailu.aat.description.TimeDescription;
 import ch.bailu.aat.description.TrackSizeDescription;
 import ch.bailu.aat.gpx.InfoID;
-import ch.bailu.aat.map.MFactory;
+import ch.bailu.aat.map.MapFactory;
 import ch.bailu.aat.services.editor.EditorHelper;
 import ch.bailu.aat.views.description.MultiView;
 import ch.bailu.aat.views.description.VSplitView;
@@ -39,7 +39,7 @@ public class FileContentActivity extends AbsFileContentActivity{
     }
 
     protected MultiView createMultiView(final String SOLID_KEY) {
-        map = MFactory.DEF(this, SOLID_KEY).content(editor_helper);
+        map = MapFactory.DEF(this, SOLID_KEY).content(editor_helper);
 
 
         final ContentDescription summaryData[] = {

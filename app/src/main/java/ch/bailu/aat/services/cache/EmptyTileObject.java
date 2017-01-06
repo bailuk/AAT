@@ -1,8 +1,11 @@
 package ch.bailu.aat.services.cache;
 
+import android.content.res.Resources;
 import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 
 import ch.bailu.aat.services.ServiceContext;
+import ch.bailu.aat.util.graphic.AppBitmap;
 import ch.bailu.aat.util.graphic.AppTileBitmap;
 import ch.bailu.aat.util.graphic.SynchronizedBitmap;
 
@@ -36,6 +39,16 @@ public class EmptyTileObject extends TileObject {
     @Override
     public Bitmap getBitmap() {
         return NULL_BITMAP.getAndroidBitmap();
+    }
+
+    @Override
+    public Drawable getDrawable(Resources res) {
+        return null;
+    }
+
+    @Override
+    public AppBitmap getAppBitmap() {
+        return null;
     }
 
     @Override

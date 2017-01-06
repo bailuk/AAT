@@ -54,18 +54,18 @@ public class WGS84Layer implements MapLayerInterface {
 
 
     private void drawCoordinates(LatLong point) {
-        clayer.draw().textBottom(new WGS84Sexagesimal(point.getLatitude(), point.getLongitude()).toString(),2);
+        clayer.draw().textBottom(new WGS84Sexagesimal(point.getLatitude(), point.getLongitude()).toString(),1);
         clayer.draw().textBottom(
                 String.format((Locale)null,"%.6f/%.6f",
                         ((double)point.getLatitude()),
                         ((double)point.getLongitude())),
-                1);
+                0);
     }
 
     private void drawElevation(int zoom, LatLong point) {
         if (zoom > MIN_ZOOM_LEVEL && clayer.getSContext().isUp()) {
             final short ele = clayer.getSContext().getElevationService().getElevation(point.getLatitudeE6(), point.getLongitudeE6());
-            clayer.draw().textBottom(altitudeDescription.getValueUnit(ele),3);
+            clayer.draw().textBottom(altitudeDescription.getValueUnit(ele),2);
         }
     }
 

@@ -10,7 +10,7 @@ import org.osmdroid.tileprovider.MapTile;
 
 import ch.bailu.aat.services.ServiceContext;
 
-public abstract class TileObject extends ObjectHandle{
+public abstract class TileObject extends ImageObjectAbstract{
     public static final int TILE_SIZE=256;
     
     

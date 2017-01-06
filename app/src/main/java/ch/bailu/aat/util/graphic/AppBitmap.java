@@ -56,7 +56,7 @@ public class AppBitmap implements BitmapContainer {
 
     @Override
     public Drawable getDrawable(Resources r) {
-        return new BitmapDrawable(r, getAndroidBitmap());
+        return new BitmapDrawable(/*r,*/ getAndroidBitmap());
     }
 
     @Override

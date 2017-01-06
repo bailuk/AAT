@@ -2,7 +2,9 @@ package ch.bailu.aat.services.cache;
 
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 
 import org.mapsforge.core.model.Tile;
 
@@ -14,6 +16,7 @@ import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.background.FileHandle;
 import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.util.fs.FileAccess;
+import ch.bailu.aat.util.graphic.AppBitmap;
 
 public class HillShadeCached extends TileObject {
 
@@ -156,6 +159,15 @@ public class HillShadeCached extends TileObject {
         return tile.getBitmap();
     }
 
+    @Override
+    public Drawable getDrawable(Resources res) {
+        return null;
+    }
+
+    @Override
+    public AppBitmap getAppBitmap() {
+        return null;
+    }
 
 
     public static class Factory extends ObjectHandle.Factory {

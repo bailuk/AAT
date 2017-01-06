@@ -4,6 +4,8 @@ import android.content.Context;
 
 import java.io.Closeable;
 
+import ch.bailu.aat.gpx.GpxAttributes;
+
 public abstract class VirtualService implements Closeable {
     
     
@@ -21,4 +23,6 @@ public abstract class VirtualService implements Closeable {
     public Context getContext() {
         return scontext.getContext();
     }
+
+
 }

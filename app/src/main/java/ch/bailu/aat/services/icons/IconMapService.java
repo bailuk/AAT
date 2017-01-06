@@ -1,14 +1,11 @@
 package ch.bailu.aat.services.icons;
 
-import android.graphics.drawable.Drawable;
-
 import java.io.File;
 import java.io.IOException;
 
 import ch.bailu.aat.gpx.GpxAttributes;
 import ch.bailu.aat.gpx.GpxPoint;
 import ch.bailu.aat.gpx.interfaces.GpxPointInterface;
-import ch.bailu.aat.map.osmdroid.overlay.gpx.IconCache;
 import ch.bailu.aat.util.fs.AppDirectory;
 import ch.bailu.aat.util.graphic.AppBitmap;
 import ch.bailu.aat.util.ui.AppLog;
@@ -24,11 +21,13 @@ public class IconMapService extends VirtualService {
 
 
     private final IconMap map;
-    private final IconCache cache = new IconCache();
+    private final IconCache cache;
 
 
     public IconMapService(ServiceContext sc) {
         super(sc);
+
+        cache = new IconCache(sc);
 
         File directory = AppDirectory.getDataDirectory(getContext(), AppDirectory.DIR_OSM_FEATURES_ICONS);
         map = new IconMap(directory.toString());
@@ -46,45 +45,56 @@ public class IconMapService extends VirtualService {
 
     }
 
-    public AppBitmap getIcon(GpxPointInterface point) {
-        return cache.getIcon(getSContext(), point);
+
+    public AppBitmap getIconSVG(GpxPointInterface point, int size) {
+        return cache.getIcon(point, size);
+    }
+
+    public String getSVGIconPath(GpxAttributes attr) {
+        final IconMap.Icon icon = getIconEntry(attr);
+
+        if (icon != null) return icon.svg;
+        return null;
     }
 
 
-    public String getIconPath(GpxAttributes attr) {
+    /*
+    public AppBitmap getIcon(GpxPointInterface point) {
+        return cache.getIcon(point);
+    }
+*/
 
+    private IconMap.Icon getIconEntry(GpxAttributes attr) {
         for (int i=0; i<attr.size(); i++) {
-            final String icon = getBigIconPath(attr.getKey(i), attr.getValue(i));
+            IconMap.Icon icon = map.get(attr.getKey(i), attr.getValue(i));
             if (icon != null) return icon;
         }
-        return getIconPathFromNominatimTypeAttributes(attr);
+        return getIconEntryNominatimType(attr);
+
     }
 
 
-    public String getIconPathFromNominatimTypeAttributes(GpxAttributes attr) {
+    private IconMap.Icon getIconEntryNominatimType(GpxAttributes attr) {
         String key = attr.get(NKEY_KEY);
 
         if (key != null) {
             String value = attr.get(NKEY_VALUE);
             if (value != null)
-                return getBigIconPath(key, value);
+                return map.get(key, value);
         }
         return null;
     }
 
+  /*
+    public String getIconPath(GpxAttributes attr) {
+        IconMap.Icon i= getIconEntry(attr);
 
-
-    private String getSmallIconPath(String key, String value) {
-        final IconMap.Icon icon = map.get(key,value);
-
-        if (icon == null) {
-            return null;
-        }
-
-        return icon.small;
+        if (i != null) return i.big;
+        return null;
     }
 
 
+*/
     private String getBigIconPath(String key, String value) {
         final IconMap.Icon icon = map.get(key,value);
 
@@ -120,4 +130,5 @@ public class IconMapService extends VirtualService {
         // TODO Auto-generated method stub
 
     }
+
 }

@@ -19,9 +19,9 @@ import ch.bailu.aat.dispatcher.CurrentLocationSource;
 import ch.bailu.aat.dispatcher.IteratorSource;
 import ch.bailu.aat.dispatcher.OverlaySource;
 import ch.bailu.aat.gpx.InfoID;
-import ch.bailu.aat.map.MFactory;
+import ch.bailu.aat.map.MapFactory;
 import ch.bailu.aat.map.MapViewInterface;
-import ch.bailu.aat.map.layer.control.FileControlBar;
+import ch.bailu.aat.map.layer.control.FileControlBarLayer;
 import ch.bailu.aat.menus.FileMenu;
 import ch.bailu.aat.preferences.SolidDirectoryQuery;
 import ch.bailu.aat.services.directory.Iterator;
@@ -50,7 +50,7 @@ public abstract class AbsGpxListActivity extends AbsDispatcher implements OnItem
 
 
     private GpxListView                 listView;
-    private FileControlBar              fileControlBar;
+    private FileControlBarLayer fileControlBar;
     private DbSynchronizerBusyIndicator busyControl;
 
 
@@ -106,8 +106,8 @@ public abstract class AbsGpxListActivity extends AbsDispatcher implements OnItem
 
         final VerticalScrollView filter= new VerticalScrollView(this);
         final VerticalScrollView summary= new VerticalScrollView(this);
-        final MapViewInterface map = MFactory.DEF(this, solid_key).list(this);
-        fileControlBar = new FileControlBar(map.getMContext(), this);
+        final MapViewInterface map = MapFactory.DEF(this, solid_key).list(this);
+        fileControlBar = new FileControlBarLayer(map.getMContext(), this);
         map.add(fileControlBar);
 
         listView = new GpxListView(this, getGpxListItemData());

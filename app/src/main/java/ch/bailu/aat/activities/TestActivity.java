@@ -5,17 +5,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
 
-import org.mapsforge.map.android.graphics.AndroidGraphicFactory;
-import org.mapsforge.map.android.util.AndroidUtil;
-import org.mapsforge.map.datastore.MapDataStore;
-import org.mapsforge.map.layer.cache.TileCache;
-import org.mapsforge.map.layer.renderer.TileRendererLayer;
-import org.mapsforge.map.reader.MapFile;
-import org.mapsforge.map.rendertheme.InternalRenderTheme;
-import org.mapsforge.map.view.MapView;
-
-import java.io.File;
-
 import ch.bailu.aat.R;
 import ch.bailu.aat.description.AccelerationDescription;
 import ch.bailu.aat.description.AccuracyDescription;
@@ -47,24 +36,14 @@ import ch.bailu.aat.map.MapViewInterface;
 import ch.bailu.aat.map.layer.CurrentLocationLayer;
 import ch.bailu.aat.map.layer.Dem3NameLayer;
 import ch.bailu.aat.map.layer.ZoomLevel;
-import ch.bailu.aat.map.layer.control.InformationBar;
-import ch.bailu.aat.map.layer.control.NavigationBar;
+import ch.bailu.aat.map.layer.control.InformationBarLayer;
+import ch.bailu.aat.map.layer.control.NavigationBarLayer;
 import ch.bailu.aat.map.layer.gpx.GpxDynLayer;
 import ch.bailu.aat.map.layer.gpx.GpxOverlayListLayer;
 import ch.bailu.aat.map.layer.gpx.GpxTestLayer;
 import ch.bailu.aat.map.layer.grid.GridDynLayer;
 import ch.bailu.aat.map.mapsforge.MapsForgeView;
-import ch.bailu.aat.map.osmdroid.NewOsmInteractiveView;
-import ch.bailu.aat.map.osmdroid.overlay.Dem3NameOverlay;
-import ch.bailu.aat.map.osmdroid.overlay.EndLogOverlay;
-import ch.bailu.aat.map.osmdroid.overlay.StartLogOverlay;
-import ch.bailu.aat.map.osmdroid.overlay.ZoomLevelOverlay;
-import ch.bailu.aat.map.osmdroid.overlay.control.InformationBarOverlay;
-import ch.bailu.aat.map.osmdroid.overlay.control.NavigationBarOverlay;
-import ch.bailu.aat.map.osmdroid.overlay.gpx.GpxDynOverlay;
-import ch.bailu.aat.map.osmdroid.overlay.gpx.GpxOverlayListOverlay;
-import ch.bailu.aat.map.osmdroid.overlay.gpx.GpxTestOverlay;
-import ch.bailu.aat.map.osmdroid.overlay.grid.GridDynOverlay;
+import ch.bailu.aat.map.osmdroid.OsmViewInteractive;
 import ch.bailu.aat.test.PreferencesFromSdcard;
 import ch.bailu.aat.test.PreferencesToSdcard;
 import ch.bailu.aat.test.TestCoordinates;
@@ -164,7 +143,7 @@ public class TestActivity extends AbsDispatcher {
         final MultiView mv = new MultiView(this, SOLID_KEY);
 
 
-        final NewOsmInteractiveView osm = new NewOsmInteractiveView(getServiceContext(), this, SOLID_KEY);
+        final OsmViewInteractive osm = new OsmViewInteractive(getServiceContext(), this, SOLID_KEY);
         final MapsForgeView mf = new MapsForgeView(getServiceContext(), this, SOLID_KEY);
 
         fillMap(mf);
@@ -186,10 +165,10 @@ public class TestActivity extends AbsDispatcher {
 
 
     private void fillMap(MapViewInterface m) {
-        m.add(new NavigationBar(m.getMContext(), this));
+        m.add(new NavigationBarLayer(m.getMContext(), this));
         m.add(new ZoomLevel());
         m.add(new GridDynLayer(m.getMContext()));
-        m.add(new InformationBar(m.getMContext(), this));
+        m.add(new InformationBarLayer(m.getMContext(), this));
         m.add(new CurrentLocationLayer(m.getMContext(), this));
         m.add(new Dem3NameLayer());
         m.add(new GpxTestLayer(m.getMContext(), this, InfoID.OVERLAY));

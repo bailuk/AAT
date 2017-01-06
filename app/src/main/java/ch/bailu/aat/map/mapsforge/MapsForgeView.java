@@ -20,7 +20,6 @@ import ch.bailu.aat.map.MapViewInterface;
 import ch.bailu.aat.map.MapContext;
 import ch.bailu.aat.map.layer.MapLayerInterface;
 import ch.bailu.aat.map.layer.MapPositionLayer;
-import ch.bailu.aat.map.mapsforge.context.MapsForgeContext;
 import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat.services.ServiceContext;
 
@@ -75,6 +74,11 @@ public class MapsForgeView extends MapView implements
     @Override
     public View toView() {
         return this;
+    }
+
+    @Override
+    public void reDownloadTiles() {
+
     }
 
     public void add(Layer mfLayer, MapLayerInterface layer) {

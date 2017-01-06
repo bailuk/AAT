@@ -28,4 +28,6 @@ public interface MapViewInterface {
     void addView(View view);
 
     View toView();
+
+    void reDownloadTiles();
 }

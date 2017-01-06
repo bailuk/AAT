@@ -10,7 +10,7 @@ import org.osmdroid.tileprovider.MapTile;
 import org.osmdroid.util.MyMath;
 import org.osmdroid.views.MapView;
 
-import ch.bailu.aat.map.osmdroid.AbsTileProvider;
+import ch.bailu.aat.map.osmdroid.OsmTileProviderAbstract;
 import microsoft.mappoint.TileSystem;
 
 
@@ -18,7 +18,7 @@ public class TilesOverlay extends Overlay  {
 
 
 	/** Current tile source */
-	private final AbsTileProvider mTileProvider;
+	private final OsmTileProviderAbstract mTileProvider;
 
 	/* to avoid allocations during draw */
 	private final Rect mTileRect = new Rect();
@@ -28,7 +28,7 @@ public class TilesOverlay extends Overlay  {
 
 	private int mWorldSize_2;
 
-	public TilesOverlay(final AbsTileProvider aTileProvider) {
+	public TilesOverlay(final OsmTileProviderAbstract aTileProvider) {
 		mTileProvider = aTileProvider;
 	}
 

@@ -1,7 +1,9 @@
 package ch.bailu.aat.services.cache;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 
 import org.mapsforge.core.graphics.TileBitmap;
 import org.mapsforge.core.model.Tile;
@@ -10,6 +12,7 @@ import org.mapsforge.map.model.common.Observer;
 
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.util.AppBroadcaster;
+import ch.bailu.aat.util.graphic.AppBitmap;
 
 public class MapsForgeTileObject extends TileObject implements Observer {
     private final ServiceContext scontext;
@@ -40,6 +43,16 @@ public class MapsForgeTileObject extends TileObject implements Observer {
         if (bitmap != null) {
             return AndroidGraphicFactory.getBitmap(bitmap);
         }
+        return null;
+    }
+
+    @Override
+    public Drawable getDrawable(Resources res) {
+        return null;
+    }
+
+    @Override
+    public AppBitmap getAppBitmap() {
         return null;
     }
 

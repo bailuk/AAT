@@ -19,7 +19,7 @@ public class GridDynLayer implements MapLayerInterface {
     public GridDynLayer(MapContext cl) {
         mcontext = cl;
         sgrid = new SolidMapGrid(cl.getContext(), cl.getSolidKey());
-        gridLayer = sgrid.createGridOverlay(cl);
+        gridLayer = sgrid.createGridLayer(cl);
     }
 
 
@@ -45,7 +45,7 @@ public class GridDynLayer implements MapLayerInterface {
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         if (sgrid.hasKey(key)) {
-            gridLayer = sgrid.createGridOverlay(mcontext);
+            gridLayer = sgrid.createGridLayer(mcontext);
             mcontext.getMapView().requestRedraw();
         }
 

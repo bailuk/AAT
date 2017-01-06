@@ -12,6 +12,7 @@ import org.mapsforge.map.model.common.Observer;
 
 import ch.bailu.aat.map.MapContext;
 import ch.bailu.aat.map.layer.MapLayerInterface;
+import ch.bailu.aat.map.tile.TileProviderDyn;
 import ch.bailu.aat.services.ServiceContext;
 
 public class MapsForgeTileLayer extends TileLayer implements MapLayerInterface, Observer {
@@ -19,7 +20,7 @@ public class MapsForgeTileLayer extends TileLayer implements MapLayerInterface, 
     private  final MapsForgeTileCache cache;
 
     public MapsForgeTileLayer(ServiceContext sc, MapViewPosition mapViewPosition, Matrix matrix) {
-        this(new MapsForgeTileCache(sc), mapViewPosition, matrix);
+        this(new MapsForgeTileCache(new TileProviderDyn(sc)), mapViewPosition, matrix);
 
     }
 
