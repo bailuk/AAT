@@ -131,7 +131,8 @@ public class TileStackObject extends ObjectHandle {
 
     public Bitmap getBitmap() {
         return bitmap.getAndroidBitmap();
-    };
+    }
+
     public TileBitmap getTileBitmap() {
         return bitmap.getTileBitmap();
     }

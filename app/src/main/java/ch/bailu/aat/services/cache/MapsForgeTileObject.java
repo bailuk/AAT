@@ -129,12 +129,12 @@ public class MapsForgeTileObject extends TileObject implements Observer {
 
                 @Override
                 public int getMinimumZoomLevel() {
-                    return 8;
+                    return 0;
                 }
 
                 @Override
                 public int getMaximumZoomLevel() {
-                    return 20;
+                    return 17;
                 }
 
                 @Override

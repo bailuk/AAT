@@ -1,7 +1,6 @@
 package ch.bailu.aat.map.layer.control;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.view.View;
 
 import org.mapsforge.core.model.LatLong;

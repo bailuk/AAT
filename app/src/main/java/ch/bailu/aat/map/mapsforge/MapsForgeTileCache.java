@@ -13,7 +13,7 @@ import ch.bailu.aat.util.ui.AppLog;
 
 public class MapsForgeTileCache  implements TileCache, Attachable {
 
-    private TileProviderInterface tileProvider;
+    private final TileProviderInterface tileProvider;
 
     public MapsForgeTileCache(TileProviderInterface p) {
         tileProvider=p;

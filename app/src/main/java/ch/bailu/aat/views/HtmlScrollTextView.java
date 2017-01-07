@@ -2,7 +2,6 @@ package ch.bailu.aat.views;
 
 import android.content.Context;
 import android.text.util.Linkify;
-import android.widget.ScrollView;
 
 import ch.bailu.aat.views.preferences.VerticalScrollView;
 

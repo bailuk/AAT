@@ -2,12 +2,9 @@ package ch.bailu.aat.map.layer;
 
 import android.content.SharedPreferences;
 import android.view.MotionEvent;
-import android.view.View;
 
 import org.mapsforge.core.model.LatLong;
 import org.mapsforge.core.model.Point;
-import org.mapsforge.map.android.view.MapView;
-import org.mapsforge.map.model.common.Observer;
 
 import ch.bailu.aat.coordinates.LatLongE6;
 import ch.bailu.aat.dispatcher.DispatcherInterface;

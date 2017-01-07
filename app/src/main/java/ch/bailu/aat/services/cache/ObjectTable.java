@@ -233,7 +233,7 @@ public class ObjectTable {
     }
 
     public void logLocked() {
-        ObjectHandle current = ObjectHandle.NULL;
+        ObjectHandle current;
         int locked=0;
 
         for (int i=0; i<table.size(); i++) {

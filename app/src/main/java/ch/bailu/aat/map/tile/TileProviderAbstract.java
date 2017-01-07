@@ -2,7 +2,6 @@ package ch.bailu.aat.map.tile;
 
 import org.mapsforge.core.model.Tile;
 import org.mapsforge.map.model.common.Observer;
-import org.osmdroid.tileprovider.MapTile;
 
 import java.util.ArrayList;
 

@@ -5,7 +5,6 @@ import android.view.MotionEvent;
 
 import ch.bailu.aat.map.MapDensity;
 import ch.bailu.aat.map.tile.TileProviderInterface;
-import ch.bailu.aat.map.tile.TileProviderPreview;
 import ch.bailu.aat.services.ServiceContext;
 
 public class OsmViewStatic extends OsmViewAbstract {

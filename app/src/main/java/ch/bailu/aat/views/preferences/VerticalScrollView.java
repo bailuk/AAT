@@ -5,8 +5,6 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 
-import org.osmdroid.views.MapView;
-
 import ch.bailu.aat.description.ContentDescription;
 import ch.bailu.aat.dispatcher.DispatcherInterface;
 import ch.bailu.aat.map.MapContext;

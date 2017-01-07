@@ -4,9 +4,6 @@ import android.content.Context;
 import android.graphics.Bitmap;
 
 import org.mapsforge.core.model.Tile;
-import org.mapsforge.map.layer.queue.JobQueue;
-import org.mapsforge.map.model.MapViewPosition;
-import org.osmdroid.tileprovider.MapTile;
 
 import ch.bailu.aat.services.ServiceContext;
 

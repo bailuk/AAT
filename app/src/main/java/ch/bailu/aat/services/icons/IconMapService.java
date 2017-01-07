@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.IOException;
 
 import ch.bailu.aat.gpx.GpxAttributes;
-import ch.bailu.aat.gpx.GpxPoint;
 import ch.bailu.aat.gpx.interfaces.GpxPointInterface;
 import ch.bailu.aat.util.fs.AppDirectory;
 import ch.bailu.aat.util.graphic.AppBitmap;

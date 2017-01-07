@@ -4,8 +4,6 @@ import android.util.SparseArray;
 
 import java.io.File;
 
-import ch.bailu.aat.util.ui.AppLog;
-
 public class IconMap {
     private final static String ICON_SUFFIX_BIG=".n.64.png";
     private final static String ICON_SUFFIX_SMALL=".n.48.png";
@@ -28,7 +26,7 @@ public class IconMap {
 
     private static String toSymbolAssetPath(String source) {
 
-        StringBuffer copy = new StringBuffer();
+        StringBuilder copy = new StringBuilder();
 
         copy.append(SVG_PREFIX);
         copy.append(source);

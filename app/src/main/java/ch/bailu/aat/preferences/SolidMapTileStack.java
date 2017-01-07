@@ -7,7 +7,6 @@ import org.osmdroid.tileprovider.tilesource.OnlineTileSourceBase;
 
 import ch.bailu.aat.R;
 import ch.bailu.aat.services.cache.BitmapTileObject;
-import ch.bailu.aat.services.cache.ElevationColorTile;
 import ch.bailu.aat.services.cache.HillShadeCached;
 import ch.bailu.aat.services.cache.MapsForgeTileObject;
 import ch.bailu.aat.services.cache.NewHillshade;

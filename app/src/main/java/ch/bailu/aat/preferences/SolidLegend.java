@@ -6,6 +6,14 @@ import ch.bailu.aat.R;
 import ch.bailu.aat.map.MapContext;
 import ch.bailu.aat.map.layer.gpx.GpxLayer;
 import ch.bailu.aat.map.layer.gpx.legend.GpxLegendLayer;
+import ch.bailu.aat.map.layer.gpx.legend.MarkerAltitudeWalker;
+import ch.bailu.aat.map.layer.gpx.legend.MarkerDistanceWalker;
+import ch.bailu.aat.map.layer.gpx.legend.MarkerSpeedWalker;
+import ch.bailu.aat.map.layer.gpx.legend.PointAltitudeWalker;
+import ch.bailu.aat.map.layer.gpx.legend.PointDistanceWalker;
+import ch.bailu.aat.map.layer.gpx.legend.PointIndexWalker;
+import ch.bailu.aat.map.layer.gpx.legend.PointNameWalker;
+import ch.bailu.aat.map.layer.gpx.legend.SegmentIndexWalker;
 
 public class SolidLegend extends SolidStaticIndexList {
 
@@ -25,31 +33,31 @@ public class SolidLegend extends SolidStaticIndexList {
     
 
 
-    public GpxLayer createTrackLegendOverlayMF(MapContext mc) {
-        if (getIndex()==0) return new GpxLegendLayer(mc,new ch.bailu.aat.map.layer.gpx.legend.SegmentIndexWalker());
-        if (getIndex()==1) return new GpxLegendLayer(mc,new ch.bailu.aat.map.layer.gpx.legend.MarkerDistanceWalker(getContext(), false));
-        if (getIndex()==2) return new GpxLegendLayer(mc,new ch.bailu.aat.map.layer.gpx.legend.MarkerDistanceWalker(getContext(), true));
-        if (getIndex()==3) return new GpxLegendLayer(mc,new ch.bailu.aat.map.layer.gpx.legend.MarkerAltitudeWalker(getContext()));
+    public GpxLayer createTrackLegendLayer() {
+        if (getIndex()==0) return new GpxLegendLayer(new SegmentIndexWalker());
+        if (getIndex()==1) return new GpxLegendLayer(new MarkerDistanceWalker(getContext(), false));
+        if (getIndex()==2) return new GpxLegendLayer(new MarkerDistanceWalker(getContext(), true));
+        if (getIndex()==3) return new GpxLegendLayer(new MarkerAltitudeWalker(getContext()));
 
-        return new GpxLegendLayer(mc,new ch.bailu.aat.map.layer.gpx.legend.MarkerSpeedWalker(getContext()));
+        return new GpxLegendLayer(new MarkerSpeedWalker(getContext()));
     }
 
 
-    public GpxLayer createWayLegendOverlayMF(MapContext mc) {
-        if (getIndex()==1) return new GpxLegendLayer(mc,new ch.bailu.aat.map.layer.gpx.legend.PointNameWalker());
-        if (getIndex()==2) return new GpxLegendLayer(mc,new ch.bailu.aat.map.layer.gpx.legend.PointNameWalker());
-        if (getIndex()==3) return new GpxLegendLayer(mc,new ch.bailu.aat.map.layer.gpx.legend.PointAltitudeWalker(getContext()));
+    public GpxLayer createWayLegendLayer() {
+        if (getIndex()==1) return new GpxLegendLayer(new PointNameWalker());
+        if (getIndex()==2) return new GpxLegendLayer(new PointNameWalker());
+        if (getIndex()==3) return new GpxLegendLayer(new PointAltitudeWalker(getContext()));
 
-        return new GpxLegendLayer(mc,new ch.bailu.aat.map.layer.gpx.legend.PointIndexWalker());
+        return new GpxLegendLayer(new PointIndexWalker());
     }
 
 
-    public GpxLayer createRouteLegendOverlayMF(MapContext mc) {
-        if (getIndex()==1) return new GpxLegendLayer(mc,new ch.bailu.aat.map.layer.gpx.legend.PointDistanceWalker(getContext(), false));
-        if (getIndex()==2) return new GpxLegendLayer(mc,new ch.bailu.aat.map.layer.gpx.legend.PointDistanceWalker(getContext(), true));
-        if (getIndex()==3) return new GpxLegendLayer(mc,new ch.bailu.aat.map.layer.gpx.legend.PointAltitudeWalker(getContext()));
+    public GpxLayer createRouteLegendLayer() {
+        if (getIndex()==1) return new GpxLegendLayer(new PointDistanceWalker(getContext(), false));
+        if (getIndex()==2) return new GpxLegendLayer(new PointDistanceWalker(getContext(), true));
+        if (getIndex()==3) return new GpxLegendLayer(new PointAltitudeWalker(getContext()));
 
-        return new GpxLegendLayer(mc,new ch.bailu.aat.map.layer.gpx.legend.PointIndexWalker());
+        return new GpxLegendLayer(new PointIndexWalker());
     }
 
     @Override

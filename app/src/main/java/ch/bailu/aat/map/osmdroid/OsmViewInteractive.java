@@ -12,7 +12,6 @@ import ch.bailu.aat.map.MapDensity;
 import ch.bailu.aat.map.layer.MapPositionLayer;
 import ch.bailu.aat.map.tile.TileProviderDyn;
 import ch.bailu.aat.map.tile.TileProviderInterface;
-import ch.bailu.aat.preferences.SolidTileSize;
 import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat.services.ServiceContext;
 

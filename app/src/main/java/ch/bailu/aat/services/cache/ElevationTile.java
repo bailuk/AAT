@@ -8,7 +8,6 @@ import android.graphics.Rect;
 import android.util.SparseArray;
 
 import org.mapsforge.core.model.Tile;
-import org.osmdroid.tileprovider.MapTile;
 import org.osmdroid.util.GeoPoint;
 
 import java.util.ArrayList;

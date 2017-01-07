@@ -85,6 +85,7 @@ public class MapsForgeView extends MapView implements
         this.addLayer(mfLayer);
         layers.add(layer);
         if (attached) layer.onAttached();
+
     }
 
 

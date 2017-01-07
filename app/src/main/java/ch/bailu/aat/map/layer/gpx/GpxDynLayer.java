@@ -13,7 +13,6 @@ import ch.bailu.aat.gpx.interfaces.GpxType;
 import ch.bailu.aat.map.MapContext;
 import ch.bailu.aat.map.layer.MapLayerInterface;
 import ch.bailu.aat.preferences.SolidLegend;
-import ch.bailu.aat.services.ServiceContext;
 
 public class GpxDynLayer implements MapLayerInterface, OnContentUpdatedInterface {
     private final GpxInformationCache infoCache = new GpxInformationCache();
@@ -23,7 +22,6 @@ public class GpxDynLayer implements MapLayerInterface, OnContentUpdatedInterface
 
     private final SolidLegend slegend;
 
-    private final ServiceContext scontext;
     private final MapContext mcontext;
     private final int color;
 
@@ -31,10 +29,7 @@ public class GpxDynLayer implements MapLayerInterface, OnContentUpdatedInterface
 
     public GpxDynLayer(MapContext mc, int c) {
         mcontext = mc;
-        scontext = mc.getSContext();
-
         color = c;
-
         slegend = new SolidLegend(mcontext.getContext(), mcontext.getSolidKey());
 
         createLegendOverlay();
@@ -119,13 +114,13 @@ public class GpxDynLayer implements MapLayerInterface, OnContentUpdatedInterface
         int type = toType(infoCache.info);
 
         if (type == GpxType.WAY)
-            legendOverlay = slegend.createWayLegendOverlayMF(mcontext);
+            legendOverlay = slegend.createWayLegendLayer();
 
         else if (type == GpxType.RTE)
-            legendOverlay = slegend.createRouteLegendOverlayMF(mcontext);
+            legendOverlay = slegend.createRouteLegendLayer();
 
         else
-            legendOverlay = slegend.createTrackLegendOverlayMF(mcontext);
+            legendOverlay = slegend.createTrackLegendLayer();
     }
 
     @Override

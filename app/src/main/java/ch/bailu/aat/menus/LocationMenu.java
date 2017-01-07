@@ -9,7 +9,6 @@ import android.view.MenuItem;
 
 import org.mapsforge.core.model.LatLong;
 import org.osmdroid.util.GeoPoint;
-import org.osmdroid.views.MapView;
 
 import ch.bailu.aat.R;
 import ch.bailu.aat.coordinates.Coordinates;

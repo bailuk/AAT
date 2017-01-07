@@ -1,7 +1,6 @@
 package ch.bailu.aat.map.tile;
 
 import org.mapsforge.core.model.Tile;
-import org.osmdroid.tileprovider.MapTile;
 
 import java.io.Closeable;
 
@@ -34,5 +33,5 @@ public class TileCache implements Closeable {
     public void reset() {}
     public void setCapacity(int capacity) {}
 
-    public int size() {return 0;};
+    public int size() {return 0;}
 }

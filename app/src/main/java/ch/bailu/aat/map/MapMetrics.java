@@ -7,7 +7,6 @@ import org.mapsforge.core.model.LatLong;
 import org.osmdroid.api.IGeoPoint;
 
 import ch.bailu.aat.coordinates.BoundingBoxE6;
-import ch.bailu.aat.gpx.interfaces.GpxPointInterface;
 import ch.bailu.aat.util.graphic.Pixel;
 import ch.bailu.aat.util.ui.AppDensity;
 

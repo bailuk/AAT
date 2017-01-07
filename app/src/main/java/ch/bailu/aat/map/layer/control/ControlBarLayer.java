@@ -8,8 +8,8 @@ import android.widget.LinearLayout;
 import org.mapsforge.core.model.LatLong;
 import org.mapsforge.core.model.Point;
 
-import ch.bailu.aat.map.MapViewInterface;
 import ch.bailu.aat.map.MapContext;
+import ch.bailu.aat.map.MapViewInterface;
 import ch.bailu.aat.map.layer.MapLayerInterface;
 import ch.bailu.aat.util.ui.AppLog;
 
@@ -25,7 +25,6 @@ public abstract class ControlBarLayer implements MapLayerInterface, View.OnClick
 
     private final int placement;
 
-    private final MapViewInterface map;
     private final MapContext mcontext;
 
     public static int getOrientation(int placement) {
@@ -36,7 +35,7 @@ public abstract class ControlBarLayer implements MapLayerInterface, View.OnClick
     }
 
     public ControlBarLayer(MapContext mc, ch.bailu.aat.views.ControlBar b, int p, int color) {
-        map = mc.getMapView();
+        MapViewInterface map = mc.getMapView();
         mcontext = mc;
         placement = p;
         bar=b;
@@ -81,12 +80,6 @@ public abstract class ControlBarLayer implements MapLayerInterface, View.OnClick
             } else if (placement == RIGHT) {
                 bar.place(w - cs, 0, h);
             }
-
-            AppLog.d(this, "p: " + placement);
-            AppLog.d(this, "w1: " + w + ", w2:" + mcontext.getMetrics().getWidth());
-            AppLog.d(this, "w: " + bar.getWidth() + ", h: " + bar.getHeight());
-
-            //AppLog.d(this, "w1: " + w + ", w2:" + mcontext.getMetrics().getWidth());
         }
     }
 
@@ -95,8 +88,6 @@ public abstract class ControlBarLayer implements MapLayerInterface, View.OnClick
         if (!isBarVisible()) {
             AppLog.d(this, "show bar");
             bar.setVisibility(View.VISIBLE);
-            AppLog.d(this, "w: " + bar.getWidth() + ", h: " + bar.getHeight() );
-            //AppLog.d(this, "x: " + bar.getX() + ", y: " + bar.getY());
             onShowBar();
         }
     }
@@ -119,11 +110,10 @@ public abstract class ControlBarLayer implements MapLayerInterface, View.OnClick
 
     @Override
     public boolean onTap(LatLong tapLatLong, Point layerXY, Point tapXY) {
-        AppLog.d(this, "onTap() " +tapXY.toString());
         int size=bar.getControlSize();
 
         int y=(int)tapXY.y;
-        int x=(int)tapXY.x;;
+        int x=(int)tapXY.x;
 
         int h = mcontext.getMetrics().getHeight();
         int w = mcontext.getMetrics().getWidth();
@@ -133,15 +123,12 @@ public abstract class ControlBarLayer implements MapLayerInterface, View.OnClick
             topTap();
 
         } else if (y > h - size) {
-            AppLog.d(this, "bottom");
             bottomTap();
 
         } else if (x < size) {
-            AppLog.d(this, "left");
             leftTab();
 
         } else if (x > w-size){
-            AppLog.d(this, "right");
             rightTab();
 
         } else {

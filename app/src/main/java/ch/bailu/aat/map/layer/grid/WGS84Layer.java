@@ -57,8 +57,8 @@ public class WGS84Layer implements MapLayerInterface {
         clayer.draw().textBottom(new WGS84Sexagesimal(point.getLatitude(), point.getLongitude()).toString(),1);
         clayer.draw().textBottom(
                 String.format((Locale)null,"%.6f/%.6f",
-                        ((double)point.getLatitude()),
-                        ((double)point.getLongitude())),
+                        (point.getLatitude()),
+                        (point.getLongitude())),
                 0);
     }
 

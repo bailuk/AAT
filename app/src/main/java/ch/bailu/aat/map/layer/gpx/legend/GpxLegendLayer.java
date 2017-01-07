@@ -12,11 +12,10 @@ import ch.bailu.aat.map.layer.gpx.GpxLayer;
 
 public class GpxLegendLayer extends GpxLayer {
     private final LegendWalker walker;
-    private final MapContext mcontext;
 
-    public GpxLegendLayer(MapContext c, LegendWalker w) {
+
+    public GpxLegendLayer(LegendWalker w) {
         super(Color.DKGRAY);
-        mcontext = c;
         walker=w;
     }
 

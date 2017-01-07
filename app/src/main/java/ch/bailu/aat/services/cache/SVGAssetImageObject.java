@@ -3,12 +3,10 @@ package ch.bailu.aat.services.cache;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Picture;
 import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
 
-import com.caverock.androidsvg.PreserveAspectRatio;
 import com.caverock.androidsvg.SVG;
 import com.caverock.androidsvg.SVGParseException;
 
@@ -27,9 +25,8 @@ public class SVGAssetImageObject extends ImageObjectAbstract {
     public SVGAssetImageObject(ServiceContext sc, String id, String name, int size) {
         super(id);
 
-        SVG svg = null;
         try {
-            svg = SVG.getFromAsset(sc.getContext().getAssets(), name);
+            SVG svg = SVG.getFromAsset(sc.getContext().getAssets(), name);
 
             AppBitmap b = new AppBitmap(size, size, true);
             Picture p = svg.renderToPicture();
@@ -43,8 +40,6 @@ public class SVGAssetImageObject extends ImageObjectAbstract {
         } catch (IOException e) {
             AppLog.e(sc.getContext(), e);
         }
-
-
     }
 
     @Override

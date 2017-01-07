@@ -4,8 +4,6 @@ import android.content.Context;
 
 import java.io.Closeable;
 
-import ch.bailu.aat.gpx.GpxAttributes;
-
 public abstract class VirtualService implements Closeable {
     
     

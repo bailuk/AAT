@@ -6,7 +6,6 @@ import android.graphics.Rect;
 import org.mapsforge.core.graphics.Canvas;
 import org.mapsforge.core.model.BoundingBox;
 import org.mapsforge.core.model.LatLong;
-import org.mapsforge.core.util.LatLongUtils;
 import org.mapsforge.map.android.view.MapView;
 import org.osmdroid.api.IGeoPoint;
 
@@ -27,7 +26,7 @@ public class MapsForgeMetrics implements MapMetrics {
 
     private final AppDensity density;
 
-    private MapDistances distances = new MapDistances();
+    private final MapDistances distances = new MapDistances();
     public MapsForgeMetrics(ServiceContext sc, MapView v) {
         bounding = v.getBoundingBox();
         density = new AppDensity(sc);

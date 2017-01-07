@@ -1,12 +1,5 @@
 package ch.bailu.aat.util.graphic;
 
-import android.content.res.Resources;
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
-
 import org.mapsforge.core.graphics.TileBitmap;
 import org.mapsforge.map.android.graphics.AndroidGraphicFactory;
 

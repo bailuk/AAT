@@ -5,7 +5,6 @@ import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 
 import org.mapsforge.core.model.Tile;
-import org.osmdroid.tileprovider.MapTile;
 
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.dem.DemDimension;
