@@ -8,7 +8,7 @@ android {
     defaultConfig {
         applicationId "ch.bailu.aat"
 
-        minSdkVersion 8
+        minSdkVersion 10
         targetSdkVersion 24
 
         versionCode 15
