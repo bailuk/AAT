@@ -64,5 +64,9 @@ public class CacheService extends VirtualService {
             table.onObjectChanged(intent, CacheService.this);
         }
     };
+
+    public void log() {
+        table.log();
+    }
 }
 

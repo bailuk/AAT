@@ -18,6 +18,7 @@ import ch.bailu.aat.services.cache.TileObject.Source;
 import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.util.graphic.AppTileBitmap;
 import ch.bailu.aat.util.graphic.SynchronizedBitmap;
+import ch.bailu.aat.util.ui.AppLog;
 
 public class TileStackObject extends ObjectHandle {
 
@@ -59,11 +60,6 @@ public class TileStackObject extends ObjectHandle {
     @Override
     public void onInsert(ServiceContext sc) {
         sc.getCacheService().addToBroadcaster(this);
-
-        for (TileContainer tile: tiles) {
-            tile.lock(sc);
-        }
-
         reupdate(sc);
 
     }
@@ -73,10 +69,24 @@ public class TileStackObject extends ObjectHandle {
 
     @Override
     public void onRemove(ServiceContext cs) {
+        bitmap.free();
+    }
+
+
+    @Override
+    public void lock(ServiceContext sc) {
+        super.lock(sc);
+        for (TileContainer tile: tiles) {
+            tile.lock(sc);
+        }
+    }
+
+
+    public void free() {
         for (TileContainer tile: tiles) {
             tile.free();
         }
-        bitmap.free();
+        super.free();
     }
 
 

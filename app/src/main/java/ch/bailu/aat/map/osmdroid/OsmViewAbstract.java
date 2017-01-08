@@ -90,6 +90,11 @@ public class OsmViewAbstract extends ViewGroup implements MapViewInterface, Shar
         tileProvider.reDownloadTiles();
     }
 
+    @Override
+    public void close() {
+
+    }
+
 
     @Override
     public void frameBounding(BoundingBoxE6 boundingBox) {

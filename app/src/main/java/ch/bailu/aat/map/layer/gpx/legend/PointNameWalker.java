@@ -23,11 +23,11 @@ public class PointNameWalker extends LegendWalker{
     @Override
     public void doPoint(GpxPointNode point) {
         if (displayed < LIMIT) {
-            c.nodes.nodeB.set(point);
+            c.setB(point);
 
             if (c.arePointsTooClose()==false) {
                 drawLegendFromB();
-                c.nodes.switchNodes();
+                c.switchNodes();
 
             }
         }
@@ -35,10 +35,10 @@ public class PointNameWalker extends LegendWalker{
 
     private void drawLegendFromB() {
 
-        if (c.isVisible(c.nodes.nodeB)) {
+        if (c.isBVisible()) {
             String name = getNameFromB();
             if (name != null) {
-                c.drawLegend(c.nodes.nodeB, getNameFromB());
+                c.drawLabelB(getNameFromB());
                 displayed++;
             }
         }

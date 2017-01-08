@@ -54,8 +54,13 @@ public class AndroidDraw implements MapDraw {
         right  = metric.getRight();
     }
 
-    public void init(Canvas c) {
+    public void nit(Canvas c) {
         canvas = c;
+    }
+
+    public void init(Canvas c, MapMetrics metric) {
+        canvas = c;
+        init(metric);
     }
 
     public void init(android.graphics.Canvas c, MapMetrics metric) {

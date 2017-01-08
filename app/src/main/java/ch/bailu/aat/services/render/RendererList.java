@@ -78,7 +78,7 @@ public class RendererList {
 
         for (Entry e: renderer) {
             if (e.hasSameFiles(files)) {
-                AppLog.d(this, "have renderer");
+                //AppLog.d(this, "have renderer");
                 return e.renderer;
             }
         }

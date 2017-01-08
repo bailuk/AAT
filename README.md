@@ -7,12 +7,16 @@ AAT - Android Activity Tracker is a GPS-tracking application for tracking sporti
 (c) [OpenStreetMap, CC-BY-SA 2.0](http://wiki.openstreetmap.org/wiki/Legal_FAQ)    
 (c) [Waymarked Trails, CC BY-SA 3.0 DE](http://waymarkedtrails.org/en/help/legal)
 
+## Mapsforge
+(c) [Mapsforge project](https://github.com/mapsforge/mapsforge)
+license: [GNU Lesser GPL v3](http://www.gnu.org/licenses/lgpl.html)
+
 ## osmdroid
 (c) [the osmdroid project](https://github.com/osmdroid/osmdroid)   
 license: [GNU Lesser GPL](http://www.gnu.org/licenses/lgpl.html)
 
 ## AAT
-(c) 2011-2016 Lukas Bai bailu@bailu.ch   
+(c) 2011-2017 Lukas Bai bailu@bailu.ch
 license: [GNU GPLv3 or later](http://www.gnu.org/licenses/gpl.html)
 
 # Availability

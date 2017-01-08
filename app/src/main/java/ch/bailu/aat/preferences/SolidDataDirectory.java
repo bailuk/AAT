@@ -55,14 +55,22 @@ public class SolidDataDirectory extends SolidDirectory {
     @Override
     public ArrayList<String> buildSelection(ArrayList<String> list) {
 
-        File internal = getContext().getFilesDir();
-        File external = getContext().getExternalFilesDir(null);
-        File sdcard   = Environment.getExternalStorageDirectory();
-        File aat_data = new File(sdcard, AppDirectory.DIR_AAT_DATA);
 
-        add(list, external);
-        add(list, sdcard, aat_data);
-        add(list, internal);
+        File external = getContext().getExternalFilesDir(null);
+        if (external != null) {
+            add(list, external);
+        }
+
+        File sdcard   = Environment.getExternalStorageDirectory();
+        if (sdcard != null) {
+            File aat_data = new File(sdcard, AppDirectory.DIR_AAT_DATA);
+            add(list, sdcard, aat_data);
+        }
+
+        File internal = getContext().getFilesDir();
+        if (internal != null) {
+            add(list, internal);
+        }
 
         return list;
     }

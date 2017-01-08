@@ -2,6 +2,10 @@ package ch.bailu.aat.activities;
 
 import android.os.Bundle;
 
+import java.io.Closeable;
+import java.io.IOException;
+import java.util.ArrayList;
+
 import ch.bailu.aat.dispatcher.ContentSource;
 import ch.bailu.aat.dispatcher.Dispatcher;
 import ch.bailu.aat.dispatcher.DispatcherInterface;
@@ -13,14 +17,22 @@ public abstract class AbsDispatcher extends AbsMenu
 
     private Dispatcher dispatcher = null;
 
+    private ArrayList<Closeable> toClose;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         dispatcher = new Dispatcher();
+
+        toClose = new ArrayList(10);
     }
 
+
+    public void toClose(Closeable c) {
+        toClose.add(c);
+    }
 
     public void addTarget(OnContentUpdatedInterface target) {
         addTarget(target, InfoID.ALL);
@@ -50,8 +62,17 @@ public abstract class AbsDispatcher extends AbsMenu
 
     @Override
     public void onDestroy() {
+        for (Closeable c: toClose)
+            try {
+                c.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        toClose.clear();
         dispatcher = null;
         super.onDestroy();
+
     }
 
 }

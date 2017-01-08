@@ -25,8 +25,11 @@ public class MarkerDistanceWalker extends LegendWalker {
     public boolean doList(GpxList l) {
         if (super.doList(l)) {
             distance=0;
-            c.nodes.nodeA.set((GpxPointNode)l.getPointList().getFirst());
-            c.drawNodeIfVisible(c.nodes.nodeA);
+            c.setA((GpxPointNode)l.getPointList().getFirst());
+
+            if (c.isAVisible())
+                c.drawNodeA();
+
 
             return true;
         }
@@ -38,11 +41,11 @@ public class MarkerDistanceWalker extends LegendWalker {
         boolean isLast = marker.getNext() == null;
 
         if (!isLast) {
-            c.nodes.nodeB.set((GpxPointNode)marker.getFirstNode());
+            c.setB((GpxPointNode)marker.getFirstNode());
             drawLegendFromB();
 
             if (!c.arePointsTooClose()) {
-                c.nodes.switchNodes();
+                c.switchNodes();
                 if (resetAfterDraw) distance=0;
             }
 
@@ -55,17 +58,17 @@ public class MarkerDistanceWalker extends LegendWalker {
     @Override
     public void doPoint(GpxPointNode point) {
         if (point.getNext()==null) {
-            c.nodes.nodeB.set(point);
+            c.setB(point);
             drawLegendFromB();
         }
     }
 
 
     private void drawLegendFromB() {
-        if (c.isVisible(c.nodes.nodeB)) {
+        if (c.isBVisible()) {
             if (!c.arePointsTooClose()) {
-                c.drawNode(c.nodes.nodeB);
-                c.drawLegend(c.nodes.nodeB, description.getDistanceDescription(distance));
+                c.drawNodeB();
+                c.drawLabelB(description.getDistanceDescription(distance));
             }
         }
     }

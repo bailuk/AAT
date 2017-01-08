@@ -21,13 +21,7 @@ public class GpxLegendLayer extends GpxLayer {
 
     @Override
     public void draw(MapContext mcontext) {
-
-        // TODO move to constructor
-        LegendContext context = new LegendContext(
-                mcontext,
-                new TwoNodes(mcontext.getMetrics()));
-
-        walker.init(context);
+        walker.init(mcontext);
         walker.walkTrack(getGpxList());
     }
 

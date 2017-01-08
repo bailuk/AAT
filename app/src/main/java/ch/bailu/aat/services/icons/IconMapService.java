@@ -52,7 +52,10 @@ public class IconMapService extends VirtualService {
     public String getSVGIconPath(GpxAttributes attr) {
         final IconMap.Icon icon = getIconEntry(attr);
 
-        if (icon != null) return icon.svg;
+        if (icon != null) {
+
+            return icon.svg;
+        }
         return null;
     }
 

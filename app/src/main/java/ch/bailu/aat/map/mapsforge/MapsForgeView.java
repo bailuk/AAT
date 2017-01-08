@@ -22,6 +22,7 @@ import ch.bailu.aat.map.layer.MapLayerInterface;
 import ch.bailu.aat.map.layer.MapPositionLayer;
 import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat.services.ServiceContext;
+import ch.bailu.aat.util.ui.AppLog;
 
 public class MapsForgeView extends MapView implements
         MapViewInterface,
@@ -79,6 +80,12 @@ public class MapsForgeView extends MapView implements
     @Override
     public void reDownloadTiles() {
 
+    }
+
+    @Override
+    public void close() {
+        AppLog.d(this, "destroyAll()");
+        destroyAll();
     }
 
     public void add(Layer mfLayer, MapLayerInterface layer) {
@@ -150,7 +157,6 @@ public class MapsForgeView extends MapView implements
 
     @Override
     public void onLayout(boolean c, int l, int t, int r, int b) {
-        super.onLayout(c,l,t,r,b);
         for (MapLayerInterface layer: layers) layer.onLayout(c,l,t,r,b);
     }
 

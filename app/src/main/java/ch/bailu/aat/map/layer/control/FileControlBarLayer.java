@@ -1,6 +1,8 @@
 package ch.bailu.aat.map.layer.control;
 
 import android.content.SharedPreferences;
+import android.os.Handler;
+import android.os.Message;
 import android.view.View;
 
 import org.mapsforge.core.model.LatLong;
@@ -50,6 +52,26 @@ public class FileControlBarLayer extends ControlBarLayer {
     private Iterator iterator = Iterator.NULL;
     private String selectedFile = null;
 
+    private final DrawToUIHandler drawToUI = new DrawToUIHandler();
+    private class DrawToUIHandler extends Handler {
+        private String path=null;
+
+        @Override
+        public void handleMessage(Message m) {
+            dispatch();
+        }
+
+        private synchronized void dispatch() {
+            if (path != null){
+                preview.setFilePath(path);
+            }
+            path = null;
+        }
+
+        public synchronized void setPreviewImage(String t) {
+            path=t;
+        }
+    };
 
     public FileControlBarLayer(MapContext mc, AbsGpxListActivity a) {
         super(mc, new ControlBar(
@@ -125,7 +147,8 @@ public class FileControlBarLayer extends ControlBarLayer {
 
             selectedFile = iterator.getInfo().getPath();
 
-            preview.setFilePath(selectedFile);
+            drawToUI.setPreviewImage(selectedFile);
+            drawToUI.sendEmptyMessage(0);
 
             builder.clear();
             builder.appendHeader(iterator.getInfo().getName());

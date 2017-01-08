@@ -31,8 +31,8 @@ public class PointIndexWalker extends LegendWalker{
     }
 
     private void drawLegendFromB() {
-        if (c.isVisible(c.nodes.nodeB)) {
-            c.drawLegend(c.nodes.nodeB, String.valueOf(index));
+        if (c.isBVisible()) {
+            c.drawLabelB(String.valueOf(index));
         }
     }
 }

@@ -27,7 +27,7 @@ public abstract class SolidDirectory extends SolidString {
     }
 
     public static void add(ArrayList<String> list, File check, File file) {
-        if (canWrite(check))  {
+        if (check != null && file != null && canWrite(check))  {
             list.add(file.getAbsolutePath());
         }
     }

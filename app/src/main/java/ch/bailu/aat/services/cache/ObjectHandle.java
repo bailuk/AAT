@@ -48,7 +48,7 @@ public abstract class ObjectHandle implements ObjectBroadcastReceiver{
     public void onRemove(ServiceContext sc) {}
 
     
-    public synchronized void lock() {
+    public synchronized void lock(ServiceContext sc) {
         lock++;
         access();
     }

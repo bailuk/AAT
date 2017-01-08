@@ -23,6 +23,7 @@ public class ObjectTable {
     private long totalMemorySize=0;
 
 
+
     private static class Container {
         public static final Container NULL = new Container(ObjectHandle.NULL);
 
@@ -51,13 +52,13 @@ public class ObjectTable {
 
             putIntoCache(h);
 
-            h.lock();
+            h.lock(son.scontext);
             h.onInsert(son.scontext);
 
             trim(son);
 
         } else {
-            h.lock();
+            h.lock(son.scontext);
         }
         return h;
     }
@@ -67,6 +68,7 @@ public class ObjectTable {
         table.put(h.hashCode(),new Container(h));
         totalMemorySize+=h.getSize();
 
+        log();
     }
 
 
@@ -85,7 +87,7 @@ public class ObjectTable {
             h = ObjectHandle.NULL;
         }
 
-        h.lock();
+        h.lock(sc);
         return h;
     }
 
@@ -240,9 +242,31 @@ public class ObjectTable {
             current = table.valueAt(i).obj;
 
             if (current.isLocked()){
+                AppLog.d(this, current.toString());
                 locked++;
             }
         }
         AppLog.d(this, "Still locked: " + locked);
     }
+
+    public void log() {
+        int locked=0;
+        ObjectHandle current;
+        for (int i=0; i<table.size(); i++) {
+            current = table.valueAt(i).obj;
+
+            if (current.isLocked()){
+                locked++;
+            }
+        }
+
+
+        AppLog.d(this,
+                        "T" + totalMemorySize/MB +
+                        " L " + limit/MB +
+                        " t " + table.size() +
+                        " l " + locked +
+                        " f " + (table.size()-locked));
+    }
+
 }

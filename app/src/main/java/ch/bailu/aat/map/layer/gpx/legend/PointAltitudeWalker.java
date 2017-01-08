@@ -21,18 +21,18 @@ public class PointAltitudeWalker extends LegendWalker {
 
     @Override
     public void doPoint(GpxPointNode point) {
-        c.nodes.nodeB.set(point);
+        c.setB(point);
 
         if (!c.arePointsTooClose()) {
             drawLegendFromB();
-            c.nodes.switchNodes();
+            c.switchNodes();
 
         }
     }
 
     private void drawLegendFromB() {
-        if (c.isVisible(c.nodes.nodeB)) {
-            c.drawLegend(c.nodes.nodeB, description.getAltitudeDescription(c.nodes.nodeB.point.getAltitude()));
+        if (c.isBVisible()) {
+            c.drawLabelB(description.getAltitudeDescription(c.nodes.nodeB.point.getAltitude()));
         }
     }
 }

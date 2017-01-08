@@ -31,10 +31,6 @@ public class MapsForgeContext extends Layer implements MapContext, MapLayerInter
     private final MapsForgeView mapView;
 
 
-    private boolean changed = true;
-
-
-
     public MapsForgeContext(MapsForgeView map, ServiceContext sc, String key) {
         metrics = new MapsForgeMetrics(sc, map);
         draw = new AndroidDraw(metrics.getDensity(), sc.getContext().getResources());
@@ -46,10 +42,8 @@ public class MapsForgeContext extends Layer implements MapContext, MapLayerInter
     }
 
 
-
     @Override
     public void onLayout(boolean changed, int l, int t, int r, int b) {
-        this.changed = true;
 
     }
 
@@ -61,17 +55,8 @@ public class MapsForgeContext extends Layer implements MapContext, MapLayerInter
 
     @Override
     public void draw(BoundingBox boundingBox, byte zoomLevel, Canvas canvas, Point topLeftPoint) {
-
-        draw.init(canvas);
-        metrics.init(boundingBox, canvas);
-
-
-        if (changed) {
-            changed = false;
-
-            metrics.init(mapView, canvas);
-            draw.init(metrics);
-        }
+        metrics.init(boundingBox, zoomLevel, canvas, topLeftPoint);
+        draw.init(canvas, metrics);
     }
 
 

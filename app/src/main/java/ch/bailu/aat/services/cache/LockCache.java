@@ -79,6 +79,7 @@ public class LockCache<E extends ObjectHandle>  implements Closeable {
 
 
     public void ensureCapacity(int capacity) {
+        AppLog.d(this, "new: " + capacity + " now: " + array.length);
         if (capacity > array.length) {
             resizeCache(capacity);
         }

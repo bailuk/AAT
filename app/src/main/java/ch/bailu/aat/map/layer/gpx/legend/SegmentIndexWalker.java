@@ -42,10 +42,10 @@ public class SegmentIndexWalker extends LegendWalker{
     }
 
     private void drawLegendFromB() {
-        if (c.isVisible(c.nodes.nodeB)) {
-            c.drawNode(c.nodes.nodeB);
+        if (c.isBVisible()) {
+            c.drawNodeB();
             if (!c.arePointsTooClose())
-                c.drawLegend(c.nodes.nodeB, String.valueOf(index));
+                c.drawLabelB(String.valueOf(index));
         }
     }
 }

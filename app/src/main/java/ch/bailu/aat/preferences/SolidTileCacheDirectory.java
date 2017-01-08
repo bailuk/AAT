@@ -56,25 +56,32 @@ public class SolidTileCacheDirectory extends SolidDirectory {
     public ArrayList<String> buildSelection(ArrayList<String> list) {
 
         final File external_cache = getContext().getExternalCacheDir();
-        final File external_tiles = new File(external_cache, AppDirectory.DIR_TILES);
 
-        add(list, external_cache, external_tiles);
+        if (external_cache != null) {
+            final File external_tiles = new File(external_cache, AppDirectory.DIR_TILES);
 
+            add(list, external_cache, external_tiles);
+        }
 
         final File sdcard = Environment.getExternalStorageDirectory();
-        final File sdcard_osmdroid = new File(sdcard, AppDirectory.DIR_TILES_OSMDROID);
-        final File sdcard_aat = new File(sdcard,
-                AppDirectory.DIR_AAT_DATA+ "/" + AppDirectory.DIR_TILES);
 
-        add(list, sdcard_osmdroid);
-        add(list, sdcard, sdcard_aat);
+        if (sdcard != null) {
+            final File sdcard_osmdroid = new File(sdcard, AppDirectory.DIR_TILES_OSMDROID);
+            final File sdcard_aat = new File(sdcard,
+                    AppDirectory.DIR_AAT_DATA + "/" + AppDirectory.DIR_TILES);
+
+            add(list, sdcard_osmdroid);
+            add(list, sdcard, sdcard_aat);
+        }
 
 
         final File internal_cache = getContext().getCacheDir();
-        final File internal_tiles = new File(internal_cache, AppDirectory.DIR_TILES);
 
-        add(list, internal_cache, internal_tiles);
+        if (internal_cache != null) {
+            final File internal_tiles = new File(internal_cache, AppDirectory.DIR_TILES);
 
+            add(list, internal_cache, internal_tiles);
+        }
 
         return list;
     }

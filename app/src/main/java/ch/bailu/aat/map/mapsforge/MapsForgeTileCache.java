@@ -27,7 +27,7 @@ public class MapsForgeTileCache  implements TileCache, Attachable {
 
     @Override
     public void destroy() {
-        tileProvider.onDetached();
+        //tileProvider.onDetached();
     }
 
 

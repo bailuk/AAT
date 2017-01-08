@@ -6,6 +6,7 @@ import android.graphics.Rect;
 import org.mapsforge.core.graphics.Canvas;
 import org.mapsforge.core.model.BoundingBox;
 import org.mapsforge.core.model.LatLong;
+import org.mapsforge.core.util.MercatorProjection;
 import org.mapsforge.map.android.view.MapView;
 import org.osmdroid.api.IGeoPoint;
 
@@ -16,44 +17,55 @@ import ch.bailu.aat.map.MapMetrics;
 import ch.bailu.aat.util.ui.AppDensity;
 import ch.bailu.aat.util.graphic.Pixel;
 import ch.bailu.aat.services.ServiceContext;
+import ch.bailu.aat.util.ui.AppLog;
 
 public class MapsForgeMetrics implements MapMetrics {
 
+    private org.mapsforge.core.model.Point tl;
+    private byte zoom = 0;
+
     private final MapView mapView;
-    private int l,r,b,t, centerX, centerY, w, h;
+    private int l,r,b,t, w, h;
+    private Pixel center;
+
 
     private BoundingBox bounding;
 
     private final AppDensity density;
 
     private final MapDistances distances = new MapDistances();
+
+
+
     public MapsForgeMetrics(ServiceContext sc, MapView v) {
         bounding = v.getBoundingBox();
         density = new AppDensity(sc);
         mapView = v;
     }
 
-    public void init(BoundingBox boundingBox, Canvas canvas) {
-        bounding = boundingBox;
-        distances.init(boundingBox, canvas);
-    }
 
 
-    public void init(MapView mapView, Canvas canvas) {
+    public void init(BoundingBox bb, byte z, Canvas c, org.mapsforge.core.model.Point tlp) {
+        zoom = z;
+        bounding = bb;
+        distances.init(bb, c);
+
+        tl = tlp;
 
         w=mapView.getWidth();
         h=mapView.getHeight();
+        center = new Pixel(c.getWidth()/2, c.getHeight()/2);//toPixel(bounding.getCenterPoint());
 
-        l=(canvas.getWidth() - w) / 2;
-        t=(canvas.getHeight() - h) / 2;
+        final int hw = w / 2;
+        final int hh = h / 2;
 
-        r = l+w;
-        b = t+h;
-
-        centerX=canvas.getWidth()/2;
-        centerY=canvas.getHeight()/2;
-
+        l = center.x - hw;
+        r = center.y + hw;
+        b = center.x + hh;
+        t = center.y - hh;
     }
+
+
 
     @Override
     public AppDensity getDensity() {
@@ -96,7 +108,7 @@ public class MapsForgeMetrics implements MapMetrics {
     }
     @Override
     public Pixel getCenterPixel() {
-        return new Pixel(centerX, centerY);//toPixel(bounding.getCenterPoint());
+        return center;
     }
     @Override
     public boolean isVisible(BoundingBoxE6 box) {
@@ -128,8 +140,15 @@ public class MapsForgeMetrics implements MapMetrics {
 
     @Override
     public Pixel toPixel(LatLong p) {
-        org.mapsforge.core.model.Point doublePoint = _toPixel(p);
-        return new Pixel(l+(int)doublePoint.x, t+(int)doublePoint.y);
+        final byte zoom = (byte)getZoomLevel();
+        final int tilesize = mapView.getModel().displayModel.getTileSize();
+
+
+        double y = MercatorProjection.latitudeToPixelY(p.getLatitude(), zoom, tilesize);
+        double x = MercatorProjection.longitudeToPixelX(p.getLongitude(), zoom, tilesize);
+
+
+        return new Pixel((int)(x-tl.x), (int)(y-tl.y));
     }
 
     @Override
@@ -144,6 +163,6 @@ public class MapsForgeMetrics implements MapMetrics {
 
     @Override
     public int getZoomLevel() {
-        return mapView.getModel().mapViewPosition.getZoomLevel();
+        return zoom;
     }
 }

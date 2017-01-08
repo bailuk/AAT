@@ -1,6 +1,8 @@
 package ch.bailu.aat.map.layer.control;
 
 import android.graphics.Color;
+import android.os.Handler;
+import android.os.Message;
 import android.view.View;
 
 import ch.bailu.aat.map.MapContext;
@@ -18,6 +20,31 @@ public abstract class NodeViewLayer extends NodeSelectorLayer implements View.On
     private int xoffset, yoffset;
 
     private final MapContext mcontext;
+
+    private class DrawToUIHandler extends Handler{
+        private String text=null;
+
+        @Override
+        public void handleMessage(Message m) {
+            dispatchText();
+        }
+
+        private synchronized void dispatchText() {
+            if (text != null){
+                infoView.setHtmlText(text);
+                measure();
+                layout();
+                infoView.invalidate();
+            }
+            text = null;
+        }
+
+        public synchronized void setText(String t) {
+            text=t;
+        }
+    };
+
+    private final DrawToUIHandler drawToUI = new DrawToUIHandler();
 
 
     public NodeViewLayer(MapContext cl) {
@@ -38,13 +65,8 @@ public abstract class NodeViewLayer extends NodeSelectorLayer implements View.On
 
 
     public void setHtmlText(String text) {
-        // FIXME not inside UI thread
-
-        infoView.setHtmlText(text);
-
-        measure();
-        layout();
-        infoView.invalidate();
+        drawToUI.setText(text);
+        drawToUI.sendEmptyMessage(1);
     }
 
     public void showAtLeft() {

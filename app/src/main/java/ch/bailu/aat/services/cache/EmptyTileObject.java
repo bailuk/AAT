@@ -9,7 +9,7 @@ import ch.bailu.aat.util.graphic.AppBitmap;
 import ch.bailu.aat.util.graphic.AppTileBitmap;
 import ch.bailu.aat.util.graphic.SynchronizedBitmap;
 
-
+/*
 public class EmptyTileObject extends TileObject {
     public static final SynchronizedBitmap NULL_BITMAP=createBitmap();
     
@@ -17,6 +17,12 @@ public class EmptyTileObject extends TileObject {
         super(id);
         
     }
+
+
+    private static class StaticBitmap extends SynchronizedBitmap {
+
+    }
+
 
     @Override
     public long getSize() {
@@ -62,3 +68,4 @@ public class EmptyTileObject extends TileObject {
     }
 
 }
+*/

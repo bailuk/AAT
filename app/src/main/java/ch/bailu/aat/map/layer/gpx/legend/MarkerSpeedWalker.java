@@ -32,13 +32,13 @@ public class MarkerSpeedWalker extends LegendWalker {
         boolean isLast = marker.getNext() == null;
 
         if (!isLast) {
-            c.nodes.nodeB.set((GpxPointNode)marker.getFirstNode());
+            c.setB((GpxPointNode)marker.getFirstNode());
 
             if (!c.arePointsTooClose()) {
                 if (samples >0) speed = speed / samples;
 
                 drawLegendFromB();
-                c.nodes.switchNodes();
+                c.switchNodes();
 
                 speed=0;
                 samples=0;
@@ -57,7 +57,7 @@ public class MarkerSpeedWalker extends LegendWalker {
     @Override
     public void doPoint(GpxPointNode point) {
         if (point.getNext()==null) {
-            c.nodes.nodeB.set(point);
+            c.setB(point);
 
             if (!c.arePointsTooClose()) {
                 speed = speed / samples;
@@ -67,10 +67,10 @@ public class MarkerSpeedWalker extends LegendWalker {
     }
 
     private void drawLegendFromB() {
-        if (c.isVisible(c.nodes.nodeB)) {
-            c.drawNode(c.nodes.nodeB);
+        if (c.isBVisible()) {
+            c.drawNodeB();
             if (!c.arePointsTooClose()) {
-                c.drawLegend(c.nodes.nodeB, description.getSpeedDescription(speed));
+                c.drawLabelB(description.getSpeedDescription(speed));
             }
         }
     }

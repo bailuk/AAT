@@ -101,12 +101,12 @@
     </content>
     <orderEntry type="jdk" jdkName="Android API 24 Platform" jdkType="Android SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" exported="" name="mapsforge-map-reader-0.7.0-rc2" level="project" />
+    <orderEntry type="library" exported="" name="mapsforge-themes-0.7.0" level="project" />
     <orderEntry type="library" exported="" name="androidsvg-1.2.2-beta-1" level="project" />
-    <orderEntry type="library" exported="" name="mapsforge-themes-0.7.0-rc2" level="project" />
-    <orderEntry type="library" exported="" name="mapsforge-core-0.7.0-rc2" level="project" />
-    <orderEntry type="library" exported="" name="mapsforge-map-0.7.0-rc2" level="project" />
-    <orderEntry type="library" exported="" name="mapsforge-map-android-0.7.0-rc2" level="project" />
+    <orderEntry type="library" exported="" name="mapsforge-map-android-0.7.0" level="project" />
+    <orderEntry type="library" exported="" name="mapsforge-map-0.7.0" level="project" />
+    <orderEntry type="library" exported="" name="mapsforge-map-reader-0.7.0" level="project" />
+    <orderEntry type="library" exported="" name="mapsforge-core-0.7.0" level="project" />
     <orderEntry type="library" exported="" name="kxml2-2.3.0" level="project" />
   </component>
 </module>

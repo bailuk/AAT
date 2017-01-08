@@ -3,6 +3,7 @@ package ch.bailu.aat.views.preferences;
 import android.content.Context;
 
 import ch.bailu.aat.R;
+import ch.bailu.aat.preferences.SolidMapsForgeDirectory;
 import ch.bailu.aat.preferences.SolidTileCacheDirectory;
 import ch.bailu.aat.preferences.SolidTileSize;
 import ch.bailu.aat.preferences.SolidTrimDate;
@@ -20,6 +21,8 @@ public class MapTilePreferencesView extends VerticalScrollView {
 
         final Context context = scontext.getContext();
 
+        add(new TitleView(context, "Mapsforge*"));
+        add(new SolidExtendetDirectoryView(new SolidMapsForgeDirectory(context)));
         add(new TitleView(context, context.getString(R.string.p_tiles)));
         add(new SolidIndexListView(new SolidTileSize(context)));
         add(new SolidExtendetDirectoryView(new SolidTileCacheDirectory(context)));

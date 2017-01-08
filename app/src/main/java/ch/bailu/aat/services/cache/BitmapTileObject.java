@@ -48,7 +48,7 @@ public class BitmapTileObject extends TileObject {
             @Override
             public long bgOnProcess() {
                 if (download.isLocked()==false) {
-                    bitmap.load(toString(),EmptyTileObject.NULL_BITMAP.get());
+                    bitmap.load(toString());//,EmptyTileObject.NULL_BITMAP.get());
                     return bitmap.getSize();
                 }
                 return 0;

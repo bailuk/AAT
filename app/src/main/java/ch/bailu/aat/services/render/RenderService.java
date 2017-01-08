@@ -1,25 +1,36 @@
 package ch.bailu.aat.services.render;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+
 import org.mapsforge.core.graphics.TileBitmap;
 import org.mapsforge.core.model.Tile;
 
 import java.io.File;
 import java.util.ArrayList;
 
+import ch.bailu.aat.preferences.SolidMapsForgeDirectory;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.VirtualService;
 import ch.bailu.aat.services.cache.MapsForgeTileObject;
 
-public class RenderService  extends VirtualService {
+public class RenderService  extends VirtualService
+        implements SharedPreferences.OnSharedPreferenceChangeListener {
+
     private final Cache cache = new Cache();
     private final RendererList rendererList = new RendererList(cache);
+    private final SolidMapsForgeDirectory sdirectory;
 
-    private final MapList mapList = new MapList(new File("/storage/C973-F26F/mapsforge"));
+    private MapList mapList;
 
 
 
     public RenderService(ServiceContext sc) {
         super(sc);
+        sdirectory = new SolidMapsForgeDirectory(sc.getContext());
+        mapList = new MapList(sdirectory.getValueAsFile());
+
+        sdirectory.getStorage().register(this);
     }
 
 
@@ -46,7 +57,16 @@ public class RenderService  extends VirtualService {
 
     @Override
     public void close() {
+        sdirectory.getStorage().unregister(this);
         rendererList.destroy();
         cache.destroy();
+    }
+
+
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        if (sdirectory.hasKey(key)) {
+            mapList = new MapList(sdirectory.getValueAsFile());
+        }
     }
 }

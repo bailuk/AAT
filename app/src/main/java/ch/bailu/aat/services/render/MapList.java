@@ -59,16 +59,27 @@ public class MapList {
     }
 
     private File[] getFiles(File d) {
-        return d.listFiles(new FileFilter() {
-            @Override
-            public boolean accept(File f) {
-                return (
-                                f.exists() &&
-                                f.isFile() &&
-                                f.length() > MIN_SIZE &&
-                                f.getName().endsWith(".map"));
-            }
-        });
+        File[] files;
+
+        try {
+            files = d.listFiles(new FileFilter() {
+                @Override
+                public boolean accept(File f) {
+                    return (
+                            f.exists() &&
+                                    f.isFile() &&
+                                    f.length() > MIN_SIZE &&
+                                    f.getName().endsWith(".map"));
+                }
+            });
+        } catch (SecurityException e) {
+            files = null;
+        }
+
+        if (files == null) {
+            files = new File[0];
+        }
+        return files;
     }
 
     private void fillList(File[] files) {
@@ -139,7 +150,7 @@ public class MapList {
                         files.add(e.file);
 
                         log += " W " + files.size();
-                        AppLog.d(this, log);
+                        //AppLog.d(this, log);
                         return files;
                     }
                     log += " wrong order!!";
@@ -156,7 +167,7 @@ public class MapList {
         }
 
         log += files.size();
-        AppLog.d(this, log);
+        //AppLog.d(this, log);
         return files;
     }
 }

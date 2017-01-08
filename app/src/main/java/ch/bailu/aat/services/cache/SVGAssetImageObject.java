@@ -25,6 +25,7 @@ public class SVGAssetImageObject extends ImageObjectAbstract {
     public SVGAssetImageObject(ServiceContext sc, String id, String name, int size) {
         super(id);
 
+
         try {
             SVG svg = SVG.getFromAsset(sc.getContext().getAssets(), name);
 
@@ -97,8 +98,10 @@ public class SVGAssetImageObject extends ImageObjectAbstract {
 
 
     public static String toID(String name, int size) {
-        return SVGAssetImageObject.class.getSimpleName() + "/" + name + "/" + size;
+        if (name != null && name.length()>0)
+            return SVGAssetImageObject.class.getSimpleName() + "/" + name + "/" + size;
 
+        return null;
     }
 
 }

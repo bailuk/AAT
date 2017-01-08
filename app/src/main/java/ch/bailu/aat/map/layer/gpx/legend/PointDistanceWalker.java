@@ -37,14 +37,14 @@ public class PointDistanceWalker extends LegendWalker {
 
     @Override
     public void doPoint(GpxPointNode point) {
-        c.nodes.nodeB.set(point);
+        c.setB(point);
 
         distance += point.getDistance();
 
         if (!c.arePointsTooClose()) {
             drawLegendFromB();
 
-            c.nodes.switchNodes();
+            c.switchNodes();
 
             if (resetAfterDraw)
                 distance=0;
@@ -53,8 +53,8 @@ public class PointDistanceWalker extends LegendWalker {
 
 
     private void drawLegendFromB() {
-        if (c.isVisible(c.nodes.nodeB)) {
-            c.drawLegend(c.nodes.nodeB, description.getDistanceDescription(distance));
+        if (c.isBVisible()) {
+            c.drawLabelB(description.getDistanceDescription(distance));
         }
     }
 }

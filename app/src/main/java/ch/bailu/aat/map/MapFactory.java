@@ -27,7 +27,8 @@ public class MapFactory {
 
 
     public static MapFactory DEF(AbsDispatcher d, String skey) {
-        return OSM(d.getServiceContext(),d,skey);
+        //return OSM(d.getServiceContext(),d,skey);
+        return MF(d.getServiceContext(), d, skey);
     }
 
     public static MapFactory MF(ServiceContext sc, AbsDispatcher d, String skey) {
@@ -43,6 +44,7 @@ public class MapFactory {
         d = dispatcher;
         m = map;
         mc = m.getMContext();
+        dispatcher.toClose(m);
     }
 
 
