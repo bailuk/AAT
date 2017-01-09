@@ -32,7 +32,9 @@ public class StateGpx extends ParserState {
                     }
 
                 } else if (io.stream.haveA('e')) {
-                    parseAltitude(io);
+                    io.stream.read();
+                    if (io.stream.haveA('l'))
+                        parseAltitude(io);
 
                 } else if (io.stream.haveA('n')) {
                     io.stream.read();
@@ -106,7 +108,7 @@ public class StateGpx extends ParserState {
 
 
     private void parseAltitude(ParserIO io) throws IOException {
-        io.stream.skip(3);
+        io.stream.skip(2);
         io.altitude.scan();
     }
 
