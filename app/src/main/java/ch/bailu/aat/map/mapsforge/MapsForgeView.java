@@ -10,7 +10,6 @@ import org.mapsforge.core.util.LatLongUtils;
 import org.mapsforge.map.android.graphics.AndroidGraphicFactory;
 import org.mapsforge.map.android.view.MapView;
 import org.mapsforge.map.layer.Layer;
-import org.osmdroid.util.BoundingBoxOsm;
 
 import java.util.ArrayList;
 
@@ -29,6 +28,8 @@ public class MapsForgeView extends MapView implements
         MapViewInterface,
         SharedPreferences.OnSharedPreferenceChangeListener {
 
+    private final static byte ZOOM_MAX = 14;
+    private final static byte ZOOM_MIN = 4;
 
     private BoundingBox pendingFrameBounding=null;
 
@@ -60,6 +61,9 @@ public class MapsForgeView extends MapView implements
         setClickable(true);
         getMapScaleBar().setVisible(false);
         setBuiltInZoomControls(false);
+
+        setZoomLevelMax(ZOOM_MAX);
+        setZoomLevelMin(ZOOM_MIN);
     }
 
 
@@ -135,6 +139,9 @@ public class MapsForgeView extends MapView implements
                     dimension,
                     bounding,
                     getModel().displayModel.getTileSize());
+
+            if (zoom > ZOOM_MAX) zoom = ZOOM_MAX;
+            if (zoom < ZOOM_MIN) zoom = ZOOM_MIN;
 
             MapPosition position = new MapPosition(bounding.getCenterPoint(), zoom);
             getModel().mapViewPosition.setMapPosition(position);
