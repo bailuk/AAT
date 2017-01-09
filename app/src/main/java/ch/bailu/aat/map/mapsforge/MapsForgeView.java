@@ -10,6 +10,7 @@ import org.mapsforge.core.util.LatLongUtils;
 import org.mapsforge.map.android.graphics.AndroidGraphicFactory;
 import org.mapsforge.map.android.view.MapView;
 import org.mapsforge.map.layer.Layer;
+import org.osmdroid.util.BoundingBoxOsm;
 
 import java.util.ArrayList;
 
@@ -28,6 +29,8 @@ public class MapsForgeView extends MapView implements
         MapViewInterface,
         SharedPreferences.OnSharedPreferenceChangeListener {
 
+
+    private BoundingBox pendingFrameBounding=null;
 
     private boolean attached=false;
     private final MapsForgeContext mcontext;
@@ -98,9 +101,6 @@ public class MapsForgeView extends MapView implements
 
 
 
-    public void frameBounding(BoundingBoxE6 boundingBox) {
-        frameBounding(boundingBox.toBoundingBox());
-    }
 
     @Override
     public void zoomOut() {
@@ -117,17 +117,43 @@ public class MapsForgeView extends MapView implements
         getLayerManager().redrawLayers();
     }
 
+
+    @Override
+    public void frameBounding(BoundingBoxE6 boundingBox) {
+        frameBounding(boundingBox.toBoundingBox());
+    }
+
+
     public void frameBounding(BoundingBox bounding) {
         Dimension dimension = getModel().mapViewDimension.getDimension();
-        byte zoom = LatLongUtils.zoomForBounds(
-                dimension,
-                bounding,
-                getModel().displayModel.getTileSize());
 
-        MapPosition position = new MapPosition(bounding.getCenterPoint(), zoom);
 
-        getModel().mapViewPosition.setMapPosition(position);
+        if (dimension == null) {
+            pendingFrameBounding=bounding;
+        } else {
+            byte zoom = LatLongUtils.zoomForBounds(
+                    dimension,
+                    bounding,
+                    getModel().displayModel.getTileSize());
+
+            MapPosition position = new MapPosition(bounding.getCenterPoint(), zoom);
+            getModel().mapViewPosition.setMapPosition(position);
+
+            pendingFrameBounding=null;
+        }
     }
+
+
+
+    @Override
+    public void onSizeChanged(int nw, int nh, int ow, int oh) {
+        super.onSizeChanged(nw, nh, ow, oh);
+
+        if (pendingFrameBounding != null) {
+            frameBounding(pendingFrameBounding);
+        }
+    }
+
 
 
     @Override
