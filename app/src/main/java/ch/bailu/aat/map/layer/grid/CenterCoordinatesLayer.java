@@ -18,10 +18,14 @@ public abstract class CenterCoordinatesLayer implements MapLayerInterface {
     }
 
     @Override
-    public void draw(MapContext mc) {
+    public void drawOnTop(MapContext mc) {
         final LatLong point = mc.getMetrics().getBoundingBox().getCenterPoint();
 
         mc.draw().textBottom(getCoordinates(point).toString(), 1);
+    }
+
+    @Override
+    public void drawInside(MapContext mc) {
 
     }
 

@@ -21,7 +21,7 @@ public class OverlayWrapper extends Overlay {
 
     @Override
     protected void draw(Canvas c, MapView osmv) {
-        overlay.draw(mcontext);
+        overlay.drawInside(mcontext);
     }
 
     @Override

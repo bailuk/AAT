@@ -113,12 +113,17 @@ public class MapPositionLayer implements MapLayerInterface, OnContentUpdatedInte
 
 
     @Override
-    public void draw(MapContext mcontext) {
+    public void drawInside(MapContext mcontext) {
     }
 
     @Override
     public boolean onTap(LatLong tapLatLong, Point layerXY, Point tapXY) {
         return false;
+    }
+
+    @Override
+    public void drawOnTop(MapContext mcontext) {
+
     }
 
     public void onTouch(MotionEvent event) {

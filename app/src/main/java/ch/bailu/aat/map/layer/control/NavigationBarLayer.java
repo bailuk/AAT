@@ -104,7 +104,7 @@ public class NavigationBarLayer extends ControlBarLayer implements OnContentUpda
     }
 
     @Override
-    public void draw(MapContext mcontext) {
+    public void drawInside(MapContext mcontext) {
 
     }
 

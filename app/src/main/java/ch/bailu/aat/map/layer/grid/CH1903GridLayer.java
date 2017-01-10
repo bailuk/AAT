@@ -11,7 +11,7 @@ import ch.bailu.aat.map.MapContext;
 
 public class CH1903GridLayer extends MeterGridLayer {
     public CH1903GridLayer(MapContext cl) {
-        super(cl);
+        super(cl.getContext());
     }
 
     @Override
@@ -21,9 +21,9 @@ public class CH1903GridLayer extends MeterGridLayer {
 
 
     @Override
-    public void draw(MapContext c) {
+    public void drawInside(MapContext c) {
         if (CH1903Coordinates.inSwitzerland(c.getMetrics().getBoundingBox().getCenterPoint()))
-            super.draw(c);
+            super.drawInside(c);
     }
 
 

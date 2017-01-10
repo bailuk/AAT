@@ -11,7 +11,7 @@ import ch.bailu.aat.map.MapContext;
 
 public class UTMGridLayer extends MeterGridLayer{
     public UTMGridLayer(MapContext cl) {
-        super(cl);
+        super(cl.getContext());
     }
 
     @Override

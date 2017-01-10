@@ -79,7 +79,7 @@
 //            synchronized (this.layers) {
 //                for (Layer layer : this.layers) {
 //                    if (layer.isVisible()) {
-//                        layer.draw(boundingBox, mapPosition.zoomLevel, this.drawingCanvas, topLeftPoint);
+//                        layer.drawInside(boundingBox, mapPosition.zoomLevel, this.drawingCanvas, topLeftPoint);
 //                    }
 //                }
 //            }

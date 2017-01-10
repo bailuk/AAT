@@ -17,34 +17,20 @@ public abstract class NodeViewLayer extends NodeSelectorLayer implements View.On
 
     private final HtmlScrollTextView infoView;
 
-    private int xoffset, yoffset;
+    private int xoffset, yoffset, width, height;
 
     private final MapContext mcontext;
 
-    private class DrawToUIHandler extends Handler{
-        private String text=null;
 
-        @Override
-        public void handleMessage(Message m) {
-            dispatchText();
-        }
 
-        private synchronized void dispatchText() {
-            if (text != null){
-                infoView.setHtmlText(text);
-                measure();
-                layout();
-                infoView.invalidate();
-            }
-            text = null;
-        }
 
-        public synchronized void setText(String t) {
-            text=t;
-        }
-    };
 
-    private final DrawToUIHandler drawToUI = new DrawToUIHandler();
+    public void drawOnTop(MapContext cl) {
+        super.drawOnTop(cl);
+
+        width = cl.getMetrics().getWidth();
+        height = cl.getMetrics().getHeight();
+    }
 
 
     public NodeViewLayer(MapContext cl) {
@@ -65,8 +51,10 @@ public abstract class NodeViewLayer extends NodeSelectorLayer implements View.On
 
 
     public void setHtmlText(String text) {
-        drawToUI.setText(text);
-        drawToUI.sendEmptyMessage(1);
+        infoView.setHtmlText(text);
+        measure();
+        layout();
+        infoView.invalidate();
     }
 
     public void showAtLeft() {
@@ -96,7 +84,12 @@ public abstract class NodeViewLayer extends NodeSelectorLayer implements View.On
 
     }
 
+    @Override
+    public void onLayout(boolean changed, int l, int t, int r, int b) {
+        width = r-l;
+        height = b-t;
 
+    }
     private void layout() {
         infoView.layout(
                 xoffset,
@@ -128,10 +121,10 @@ public abstract class NodeViewLayer extends NodeSelectorLayer implements View.On
     }
 
     private int getHeight() {
-        return mcontext.getMetrics().getHeight() / 3;
+        return height / 3;
     }
 
     private int getWidth() {
-        return mcontext.getMetrics().getWidth() - big_margin;
+        return width - big_margin;
     }
 }

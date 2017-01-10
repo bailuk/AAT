@@ -27,8 +27,11 @@ public class GpxOverlayListLayer implements MapLayerInterface {
     }
 
     @Override
-    public void draw(MapContext mcontext) {
-        for (MapLayerInterface o : overlays) o.draw(mcontext);
+    public void drawOnTop(MapContext mcontext) {}
+
+    @Override
+    public void drawInside(MapContext mcontext) {
+        for (MapLayerInterface o : overlays) o.drawInside(mcontext);
     }
 
     @Override

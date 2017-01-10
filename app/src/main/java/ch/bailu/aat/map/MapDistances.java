@@ -2,8 +2,8 @@ package ch.bailu.aat.map;
 
 import android.graphics.Rect;
 
-import org.mapsforge.core.graphics.Canvas;
 import org.mapsforge.core.model.BoundingBox;
+import org.mapsforge.core.model.Dimension;
 import org.mapsforge.core.model.LatLong;
 import org.mapsforge.core.util.LatLongUtils;
 import org.osmdroid.util.BoundingBoxOsm;
@@ -44,17 +44,17 @@ public class MapDistances {
         shortDistance = meter;
     }
 
-    public void init(BoundingBox box, Canvas canvas) {
-        if (canvas.getHeight() < canvas.getWidth()) {
+    public void init(BoundingBox box, Dimension dim) {
+        if (dim.height < dim.width) {
             LatLong a = new LatLong(box.minLatitude, box.maxLongitude);
             LatLong b = new LatLong(box.maxLatitude, box.maxLongitude);
 
-            set(a,b, canvas.getHeight());
+            set(a,b, dim.height);
         } else {
             LatLong a = new LatLong(box.maxLatitude, box.minLongitude);
             LatLong b = new LatLong(box.maxLatitude, box.maxLongitude);
 
-            set(a,b, canvas.getWidth());
+            set(a,b, dim.width);
         }
     }
 

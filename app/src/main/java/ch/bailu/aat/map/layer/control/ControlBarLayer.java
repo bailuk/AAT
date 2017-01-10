@@ -27,6 +27,7 @@ public abstract class ControlBarLayer implements MapLayerInterface, View.OnClick
 
     private final MapContext mcontext;
 
+    private int w, h;
     public static int getOrientation(int placement) {
         if (placement == TOP || placement == BOTTOM) {
             return LinearLayout.HORIZONTAL;
@@ -65,8 +66,8 @@ public abstract class ControlBarLayer implements MapLayerInterface, View.OnClick
     @Override
     public void onLayout(boolean changed, int l, int t, int r, int b) {
         if (changed) {
-            final int w = r - l;
-            final int h = b - t;
+            w = r - l;
+            h = b - t;
             final int cs = bar.getControlSize();
 
 
@@ -115,9 +116,6 @@ public abstract class ControlBarLayer implements MapLayerInterface, View.OnClick
         int y=(int)tapXY.y;
         int x=(int)tapXY.x;
 
-        int h = mcontext.getMetrics().getHeight();
-        int w = mcontext.getMetrics().getWidth();
-
         if (y < size) {
             AppLog.d(this, "top");
             topTap();
@@ -163,6 +161,8 @@ public abstract class ControlBarLayer implements MapLayerInterface, View.OnClick
 
 
 
+    @Override
+    public void drawOnTop(MapContext mcontext) {}
 
 
 

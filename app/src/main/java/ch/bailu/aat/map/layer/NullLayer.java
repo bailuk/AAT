@@ -16,13 +16,18 @@ public class NullLayer implements MapLayerInterface {
     }
 
     @Override
-    public void draw(MapContext mcontext) {
+    public void drawInside(MapContext mcontext) {
 
     }
 
     @Override
     public boolean onTap(LatLong tapLatLong, Point layerXY, Point tapXY) {
         return false;
+    }
+
+    @Override
+    public void drawOnTop(MapContext mcontext) {
+
     }
 
     @Override

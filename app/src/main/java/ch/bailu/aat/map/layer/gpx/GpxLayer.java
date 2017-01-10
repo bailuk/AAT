@@ -3,6 +3,7 @@ package ch.bailu.aat.map.layer.gpx;
 import ch.bailu.aat.dispatcher.OnContentUpdatedInterface;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.GpxList;
+import ch.bailu.aat.map.MapContext;
 import ch.bailu.aat.map.layer.MapLayerInterface;
 
 public abstract class GpxLayer implements MapLayerInterface, OnContentUpdatedInterface {
@@ -15,6 +16,8 @@ public abstract class GpxLayer implements MapLayerInterface, OnContentUpdatedInt
         color = c;
     }
 
+    @Override
+    public void drawOnTop(MapContext mcontext) {}
 
     @Override
     public void onContentUpdated(int iid, GpxInformation info) {

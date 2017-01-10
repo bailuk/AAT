@@ -45,14 +45,19 @@ public class GpxDynLayer implements MapLayerInterface, OnContentUpdatedInterface
 
 
     @Override
-    public void draw(MapContext mcontext) {
-        gpxOverlay.draw(mcontext);
-        legendOverlay.draw(mcontext);
+    public void drawInside(MapContext mcontext) {
+        gpxOverlay.drawInside(mcontext);
+        legendOverlay.drawInside(mcontext);
     }
 
     @Override
     public boolean onTap(LatLong tapLatLong, Point layerXY, Point tapXY) {
         return false;
+    }
+
+    @Override
+    public void drawOnTop(MapContext mcontext) {
+
     }
 
     private int type = GpxType.NONE;

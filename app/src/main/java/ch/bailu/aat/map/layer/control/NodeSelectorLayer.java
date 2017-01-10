@@ -36,7 +36,6 @@ public abstract class NodeSelectorLayer implements MapLayerInterface, OnContentU
     private int foundID, foundIndex;
     private GpxPointNode foundNode;
 
-    private final MapContext mcontext;
 
 
     private final SolidMapGrid sgrid;
@@ -44,8 +43,6 @@ public abstract class NodeSelectorLayer implements MapLayerInterface, OnContentU
 
 
     public NodeSelectorLayer(MapContext mc) {
-
-        mcontext = mc;
 
         square_size = mc.getMetrics().getDensity().toDPi(SQUARE_SIZE);
         square_hsize = mc.getMetrics().getDensity().toDPi(SQUARE_HSIZE);
@@ -61,11 +58,7 @@ public abstract class NodeSelectorLayer implements MapLayerInterface, OnContentU
 
 
     @Override
-    public void draw(MapContext mcontext) {
-
-        //boundingBox.maxLatitude/2;
-
-        //Pixel center = mcontext.metrics.getCenterPixel();
+    public void drawOnTop(MapContext mcontext) {
         centerRect.offsetTo(
                 mcontext.getMetrics().getWidth()/2 - square_hsize,
                 mcontext.getMetrics().getHeight()/2 - square_hsize);
@@ -83,9 +76,18 @@ public abstract class NodeSelectorLayer implements MapLayerInterface, OnContentU
         }
 
         centerRect.offset(mcontext.getMetrics().getLeft(), mcontext.getMetrics().getTop());
-        drawSelectedNode();
-        drawCenterSquare();
-        coordinates.draw(mcontext);
+        drawSelectedNode(mcontext);
+        drawCenterSquare(mcontext);
+        coordinates.drawOnTop(mcontext);
+    }
+
+    @Override
+    public void drawInside(MapContext mcontext) {
+
+        //boundingBox.maxLatitude/2;
+
+        //Pixel center = mcontext.metrics.getCenterPixel();
+        coordinates.drawInside(mcontext);
 
     }
 
@@ -128,7 +130,7 @@ public abstract class NodeSelectorLayer implements MapLayerInterface, OnContentU
 
     public abstract void setSelectedNode(GpxInformation info, GpxPointNode node, int index);
 
-    private void drawSelectedNode() {
+    private void drawSelectedNode(MapContext mcontext) {
         GpxPointNode node = getSelectedNode();
 
         if (node != null) {
@@ -138,7 +140,7 @@ public abstract class NodeSelectorLayer implements MapLayerInterface, OnContentU
     }
 
 
-    public void drawCenterSquare() {
+    public void drawCenterSquare(MapContext mcontext) {
 
         mcontext.draw().rect(centerRect, mcontext.draw().getGridPaint());
         mcontext.draw().point(mcontext.getMetrics().getCenterPixel());
@@ -157,10 +159,7 @@ public abstract class NodeSelectorLayer implements MapLayerInterface, OnContentU
     }
 
 
-    @Override
-    public void onLayout(boolean changed, int l, int t, int r, int b) {
 
-    }
 
 
     @Override

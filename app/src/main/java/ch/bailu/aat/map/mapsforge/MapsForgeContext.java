@@ -48,14 +48,19 @@ public class MapsForgeContext extends Layer implements MapContext, MapLayerInter
     }
 
     @Override
-    public void draw(MapContext mcontext) {
+    public void drawInside(MapContext mcontext) {
+
+    }
+
+    @Override
+    public void drawOnTop(MapContext mcontext) {
 
     }
 
 
     @Override
     public void draw(BoundingBox boundingBox, byte zoomLevel, Canvas canvas, Point topLeftPoint) {
-        metrics.init(boundingBox, zoomLevel, canvas, topLeftPoint);
+        metrics.init(canvas.getDimension());
         draw.init(canvas, metrics);
     }
 

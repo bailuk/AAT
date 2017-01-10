@@ -1,6 +1,7 @@
 package ch.bailu.aat.map.layer.grid;
 
 
+import android.content.Context;
 import android.graphics.Point;
 
 import org.mapsforge.core.model.BoundingBox;
@@ -19,16 +20,22 @@ public abstract class MeterGridLayer implements MapLayerInterface {
 
     private final DistanceDescription distanceDescription;
 
-    private final MapContext mcontext;
+    private String ttext = "";
+    private String btext = "";
 
-    public MeterGridLayer(MapContext cl) {
-        mcontext = cl;
-        distanceDescription = new DistanceDescription(cl.getContext());
+    public MeterGridLayer(Context c) {
+        distanceDescription = new DistanceDescription(c);
+    }
+
+    @Override
+    public void drawOnTop(MapContext mcontext) {
+        mcontext.draw().textTop(ttext, 1);
+        mcontext.draw().textBottom(btext, 0);
     }
 
 
     @Override
-    public void draw(MapContext mcontext) {
+    public void drawInside(MapContext mcontext) {
 
         if (mcontext.getMetrics().getZoomLevel() > MIN_ZOOM_LEVEL) {
 
@@ -37,12 +44,13 @@ public abstract class MeterGridLayer implements MapLayerInterface {
             if (grid.getOptimalScale() > 0) {
 
                 MeterCoordinates coordinates = getRoundedCoordinates(mcontext.getMetrics().getBoundingBox());
-                Point centerPixel = getCenterPixel(coordinates);
+                Point centerPixel = getCenterPixel(mcontext, coordinates);
 
                 mcontext.draw().grid(centerPixel, mcontext.getMetrics().distanceToPixel(grid.getOptimalScale()));
                 mcontext.draw().point(centerPixel);
-                mcontext.draw().textTop(distanceDescription.getDistanceDescriptionRounded(grid.getOptimalScale()), 1);
-                mcontext.draw().textBottom(coordinates.toString(), 0);
+
+                ttext = distanceDescription.getDistanceDescriptionRounded(grid.getOptimalScale());
+                btext = coordinates.toString();
             }
         }
 
@@ -52,8 +60,8 @@ public abstract class MeterGridLayer implements MapLayerInterface {
 
 
 
-    private Point getCenterPixel(MeterCoordinates c) {
-        return mcontext.getMetrics().toPixel(c.toLatLong());
+    private Point getCenterPixel(MapContext mc, MeterCoordinates c) {
+        return mc.getMetrics().toPixel(c.toLatLong());
     }
 
 

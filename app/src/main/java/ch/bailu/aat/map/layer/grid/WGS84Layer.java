@@ -16,25 +16,29 @@ import ch.bailu.aat.map.layer.MapLayerInterface;
 public class WGS84Layer implements MapLayerInterface {
     private final static int MIN_ZOOM_LEVEL=7;
 
-    private final MapContext clayer;
+    //private final MapContext clayer;
     private final AltitudeDescription altitudeDescription;
 
     public WGS84Layer(MapContext cl) {
-        clayer = cl;
+        //clayer = cl;
         altitudeDescription= new AltitudeDescription(cl.getContext());
     }
 
-
     @Override
-    public void draw(MapContext mcontext) {
+    public void drawOnTop(MapContext mcontext) {
         byte zoomLevel = (byte)mcontext.getMetrics().getZoomLevel();
         BoundingBox boundingBox = mcontext.getMetrics().getBoundingBox();
 
         final LatLong point = boundingBox.getCenterPoint();
 
-        drawGrid();
-        drawCoordinates(point);
-        drawElevation(zoomLevel, point);
+        drawGrid(mcontext);
+        drawCoordinates(mcontext, point);
+        drawElevation(mcontext, zoomLevel, point);
+    }
+
+    @Override
+    public void drawInside(MapContext mcontext) {
+
 
     }
 
@@ -44,7 +48,7 @@ public class WGS84Layer implements MapLayerInterface {
     }
 
 
-    private void drawGrid() {
+    private void drawGrid(MapContext clayer) {
         final Point pixel = clayer.getMetrics().getCenterPixel();
 
         clayer.draw().vLine(pixel.x);
@@ -53,7 +57,7 @@ public class WGS84Layer implements MapLayerInterface {
     }
 
 
-    private void drawCoordinates(LatLong point) {
+    private void drawCoordinates(MapContext clayer,LatLong point) {
         clayer.draw().textBottom(new WGS84Sexagesimal(point.getLatitude(), point.getLongitude()).toString(),1);
         clayer.draw().textBottom(
                 String.format((Locale)null,"%.6f/%.6f",
@@ -62,7 +66,7 @@ public class WGS84Layer implements MapLayerInterface {
                 0);
     }
 
-    private void drawElevation(int zoom, LatLong point) {
+    private void drawElevation(MapContext clayer, int zoom, LatLong point) {
         if (zoom > MIN_ZOOM_LEVEL && clayer.getSContext().isUp()) {
             final short ele = clayer.getSContext().getElevationService().getElevation(point.getLatitudeE6(), point.getLongitudeE6());
             clayer.draw().textBottom(altitudeDescription.getValueUnit(ele),2);

@@ -39,7 +39,7 @@ public class TrackLayer  extends GpxLayer{
     }
 
     @Override
-    public void draw(MapContext mcontext) {
+    public void drawInside(MapContext mcontext) {
         new TrackPainter().walkTrack(getGpxList());
     }
 

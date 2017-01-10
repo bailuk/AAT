@@ -12,7 +12,10 @@ public interface MapLayerInterface extends Attachable,
         SharedPreferences.OnSharedPreferenceChangeListener{
 
     void onLayout(boolean changed, int l, int t, int r, int b);
-    void draw(MapContext mcontext);
+    void drawInside(MapContext mcontext);
+    void drawOnTop(MapContext mcontext);
 
     boolean onTap(LatLong tapLatLong, Point layerXY, Point tapXY);
+
+
 }

@@ -16,7 +16,7 @@ public class CustomBarLayer extends ControlBarLayer {
     }
 
     @Override
-    public void draw(MapContext mcontext) {
+    public void drawInside(MapContext mcontext) {
 
     }
 

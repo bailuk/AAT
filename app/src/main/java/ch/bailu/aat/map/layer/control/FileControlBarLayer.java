@@ -193,9 +193,9 @@ public class FileControlBarLayer extends ControlBarLayer {
 
 
     @Override
-    public void draw(MapContext mc) {
+    public void drawInside(MapContext mc) {
         if (isBarVisible()) {
-            selector.draw(mc);
+            selector.drawInside(mc);
         }
     }
 

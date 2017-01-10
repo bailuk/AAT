@@ -59,7 +59,7 @@ public class CurrentLocationLayer implements OnContentUpdatedInterface, MapLayer
     }
 
     @Override
-    public void draw(MapContext mcontext) {
+    public void drawInside(MapContext mcontext) {
         if (mcontext.getMetrics().getBoundingBox().contains(center) && accuracy > 0) {
             Point pixel = mcontext.getMetrics().toPixel(center);
             int radius = Math.max(MIN_RADIUS, mcontext.getMetrics().distanceToPixel(accuracy));
@@ -71,6 +71,11 @@ public class CurrentLocationLayer implements OnContentUpdatedInterface, MapLayer
     @Override
     public boolean onTap(LatLong tapLatLong, org.mapsforge.core.model.Point layerXY, org.mapsforge.core.model.Point tapXY) {
         return false;
+    }
+
+    @Override
+    public void drawOnTop(MapContext mcontext) {
+
     }
 
 

@@ -22,7 +22,7 @@ public class LayerWrapper extends Layer {
 
     @Override
     public void draw(BoundingBox boundingBox, byte zoomLevel, Canvas canvas, Point topLeftPoint) {
-        layer.draw(mcontext);
+        layer.drawInside(mcontext);
 
     }
 

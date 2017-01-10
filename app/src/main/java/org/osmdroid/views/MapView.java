@@ -208,11 +208,11 @@ public class MapView extends ViewGroup implements IMapView, MapViewConstants {
 
     /**
      * Get a projection for converting between screen-pixel coordinates and latitude/longitude
-     * coordinates. You should not hold on to this object for more than one draw, since the
+     * coordinates. You should not hold on to this object for more than one drawInside, since the
      * projection of the map could change.
      *
      * @return The Projection of the map in its current state. You should not hold on to this object
-     *         for more than one draw, since the projection of the map could change.
+     *         for more than one drawInside, since the projection of the map could change.
      */
     @Override
     public Projection getProjection() {
@@ -582,10 +582,10 @@ public class MapView extends ViewGroup implements IMapView, MapViewConstants {
      * A Projection serves to translate between the coordinate system of x/y on-screen pixel
      * coordinates and that of latitude/longitude points on the surface of the earth. You obtain a
      * Projection from MapView.getProjection(). You should not hold on to this object for more than
-     * one draw, since the projection of the map could change. <br />
+     * one drawInside, since the projection of the map could change. <br />
      * <br />
      * <I>Screen coordinates</I> are in the coordinate system of the screen's Canvas. The origin is
-     * in the center of the plane. <I>Screen coordinates</I> are appropriate for using to draw to
+     * in the center of the plane. <I>Screen coordinates</I> are appropriate for using to drawInside to
      * the screen.<br />
      * <br />
      * <I>Map coordinates</I> are in the coordinate system of the standard Mercator projection. The

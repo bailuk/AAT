@@ -28,7 +28,7 @@ public class MapsForgeView extends MapView implements
         MapViewInterface,
         SharedPreferences.OnSharedPreferenceChangeListener {
 
-    private final static byte ZOOM_MAX = 14;
+    private final static byte ZOOM_MAX = 18;
     private final static byte ZOOM_MIN = 4;
 
     private BoundingBox pendingFrameBounding=null;
@@ -37,6 +37,7 @@ public class MapsForgeView extends MapView implements
     private final MapsForgeContext mcontext;
     private final Storage storage;
 
+    private final MapsForgeOnTopView overmap;
 
     private final ArrayList<MapLayerInterface> layers = new ArrayList(10);
 
@@ -62,6 +63,9 @@ public class MapsForgeView extends MapView implements
         getMapScaleBar().setVisible(false);
         setBuiltInZoomControls(false);
 
+
+        overmap = new MapsForgeOnTopView(this, mcontext, layers);
+        addView(overmap);
         setZoomLevelMax(ZOOM_MAX);
         setZoomLevelMin(ZOOM_MIN);
     }
@@ -119,6 +123,13 @@ public class MapsForgeView extends MapView implements
     @Override
     public void requestRedraw() {
         getLayerManager().redrawLayers();
+    }
+
+
+    @Override
+    public void repaint() {
+        if (overmap != null)overmap.repaint();
+        super.repaint();
     }
 
 
@@ -190,6 +201,8 @@ public class MapsForgeView extends MapView implements
 
     @Override
     public void onLayout(boolean c, int l, int t, int r, int b) {
+        overmap.layout(0,0,r-l, b-t);
+
         for (MapLayerInterface layer: layers) layer.onLayout(c,l,t,r,b);
     }
 

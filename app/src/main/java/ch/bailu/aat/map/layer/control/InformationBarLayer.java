@@ -89,9 +89,21 @@ public class InformationBarLayer extends ControlBarLayer {
         selector.hide();
     }
 
+
     @Override
-    public void draw(MapContext mcontext) {
-        if (isBarVisible()) selector.draw(mcontext);
+    public void onLayout(boolean c, int l, int t, int r, int b) {
+        super.onLayout(c, l, t, r, b);
+        selector.onLayout(c, l, t, r,b);
+    }
+
+    @Override
+    public void drawOnTop(MapContext mcontext) {
+        if (isBarVisible()) selector.drawOnTop(mcontext);
+    }
+
+    @Override
+    public void drawInside(MapContext mcontext) {
+        if (isBarVisible()) selector.drawInside(mcontext);
     }
 
     @Override

@@ -17,7 +17,11 @@ public class ZoomLevel implements MapLayerInterface {
     }
 
     @Override
-    public void draw(MapContext mcontext) {
+    public void drawOnTop(MapContext mcontext) {
+
+    }
+    @Override
+    public void drawInside(MapContext mcontext) {
         mcontext.draw().textTop(String.format((Locale)null,"Zoomlevel*: %d", mcontext.getMetrics().getZoomLevel()), 2);
     }
 

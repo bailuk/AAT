@@ -20,7 +20,7 @@ public class GpxLegendLayer extends GpxLayer {
     }
 
     @Override
-    public void draw(MapContext mcontext) {
+    public void drawInside(MapContext mcontext) {
         walker.init(mcontext);
         walker.walkTrack(getGpxList());
     }

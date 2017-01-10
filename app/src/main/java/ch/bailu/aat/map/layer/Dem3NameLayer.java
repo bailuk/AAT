@@ -11,10 +11,12 @@ import ch.bailu.aat.map.MapContext;
 public class Dem3NameLayer implements MapLayerInterface {
 
 
+    @Override
+    public void drawOnTop(MapContext mcontext) {}
 
 
     @Override
-    public void draw(MapContext mcontext) {
+    public void drawInside(MapContext mcontext) {
 
         final SrtmCoordinates c = new SrtmCoordinates(mcontext.getMetrics().getBoundingBox().getCenterPoint());
         mcontext.draw().textBottom(c.toString(),3);

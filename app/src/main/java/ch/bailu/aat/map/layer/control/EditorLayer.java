@@ -83,13 +83,26 @@ public class EditorLayer extends ControlBarLayer {
         d.addTarget(content, iid);
     }
 
+    @Override
+    public void onLayout(boolean c, int l, int t, int r, int b) {
+        super.onLayout(c, l, t, r, b);
+        selector.onLayout(c, l, t, r,b);
+    }
+
+    @Override
+    public void drawInside(MapContext p) {
+        content.drawInside(p);
+        if (isBarVisible()) {
+            selector.drawInside(p);
+        }
+    }
 
 
     @Override
-    public void draw(MapContext p) {
-        content.draw(p);
+    public void drawOnTop(MapContext p) {
+        content.drawOnTop(p);
         if (isBarVisible()) {
-            selector.draw(p);
+            selector.drawOnTop(p);
         }
     }
 

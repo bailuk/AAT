@@ -32,13 +32,18 @@ public class GridDynLayer implements MapLayerInterface {
     }
 
     @Override
-    public void draw(MapContext mcontext) {
-        gridLayer.draw(mcontext);
+    public void drawInside(MapContext mcontext) {
+        gridLayer.drawInside(mcontext);
     }
 
     @Override
     public boolean onTap(LatLong tapLatLong, Point layerXY, Point tapXY) {
         return false;
+    }
+
+    @Override
+    public void drawOnTop(MapContext mcontext) {
+        gridLayer.drawOnTop(mcontext);
     }
 
 

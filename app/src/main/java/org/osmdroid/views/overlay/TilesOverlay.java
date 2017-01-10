@@ -20,7 +20,7 @@ public class TilesOverlay extends Overlay  {
 	/** Current tile source */
 	private final OsmTileProviderAbstract mTileProvider;
 
-	/* to avoid allocations during draw */
+	/* to avoid allocations during drawInside */
 	private final Rect mTileRect = new Rect();
 	private final Rect mViewPort = new Rect();
     private final Point mUpperLeft = new Point();

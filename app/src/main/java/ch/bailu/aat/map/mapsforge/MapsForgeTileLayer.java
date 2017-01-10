@@ -62,8 +62,16 @@ public class MapsForgeTileLayer extends TileLayer implements MapLayerInterface, 
 
     }
 
+
+
+
     @Override
-    public void draw(MapContext mcontext) {
+    public void drawInside(MapContext mcontext) {
+
+    }
+
+    @Override
+    public void drawOnTop(MapContext mcontext) {
 
     }
 
