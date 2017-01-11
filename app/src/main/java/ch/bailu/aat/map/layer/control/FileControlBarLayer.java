@@ -52,26 +52,6 @@ public class FileControlBarLayer extends ControlBarLayer {
     private Iterator iterator = Iterator.NULL;
     private String selectedFile = null;
 
-    private final DrawToUIHandler drawToUI = new DrawToUIHandler();
-    private class DrawToUIHandler extends Handler {
-        private String path=null;
-
-        @Override
-        public void handleMessage(Message m) {
-            dispatch();
-        }
-
-        private synchronized void dispatch() {
-            if (path != null){
-                preview.setFilePath(path);
-            }
-            path = null;
-        }
-
-        public synchronized void setPreviewImage(String t) {
-            path=t;
-        }
-    };
 
     public FileControlBarLayer(MapContext mc, AbsGpxListActivity a) {
         super(mc, new ControlBar(
@@ -147,8 +127,7 @@ public class FileControlBarLayer extends ControlBarLayer {
 
             selectedFile = iterator.getInfo().getPath();
 
-            drawToUI.setPreviewImage(selectedFile);
-            drawToUI.sendEmptyMessage(0);
+            preview.setFilePath(selectedFile);
 
             builder.clear();
             builder.appendHeader(iterator.getInfo().getName());
@@ -190,6 +169,12 @@ public class FileControlBarLayer extends ControlBarLayer {
     }
 
 
+    @Override
+    public void drawOnTop(MapContext mc) {
+        if (isBarVisible()) {
+            selector.drawOnTop(mc);
+        }
+    }
 
 
     @Override

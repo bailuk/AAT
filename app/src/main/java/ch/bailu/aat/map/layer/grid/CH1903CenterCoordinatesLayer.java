@@ -4,6 +4,7 @@ import org.mapsforge.core.model.LatLong;
 
 import ch.bailu.aat.coordinates.CH1903Coordinates;
 import ch.bailu.aat.coordinates.MeterCoordinates;
+import ch.bailu.aat.map.MapContext;
 
 public class CH1903CenterCoordinatesLayer extends CenterCoordinatesLayer {
     @Override
@@ -12,5 +13,9 @@ public class CH1903CenterCoordinatesLayer extends CenterCoordinatesLayer {
     }
 
 
-
+    @Override
+    public void drawOnTop(MapContext c) {
+        if (CH1903Coordinates.inSwitzerland(c.getMetrics().getBoundingBox().getCenterPoint()))
+            super.drawOnTop(c);
+    }
 }

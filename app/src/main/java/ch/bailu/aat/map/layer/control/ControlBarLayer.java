@@ -25,8 +25,6 @@ public abstract class ControlBarLayer implements MapLayerInterface, View.OnClick
 
     private final int placement;
 
-    private final MapContext mcontext;
-
     private int w, h;
     public static int getOrientation(int placement) {
         if (placement == TOP || placement == BOTTOM) {
@@ -37,7 +35,6 @@ public abstract class ControlBarLayer implements MapLayerInterface, View.OnClick
 
     public ControlBarLayer(MapContext mc, ch.bailu.aat.views.ControlBar b, int p, int color) {
         MapViewInterface map = mc.getMapView();
-        mcontext = mc;
         placement = p;
         bar=b;
         bar.setBackgroundColor(color);
