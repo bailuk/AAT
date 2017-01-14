@@ -28,10 +28,10 @@ public class MapsForgeContext extends Layer implements MapContext, MapLayerInter
     private final MapsForgeMetrics metrics;
     private final TwoNodes nodes;
 
-    private final MapsForgeView mapView;
+    private final MapsForgeViewBase mapView;
 
 
-    public MapsForgeContext(MapsForgeView map, ServiceContext sc, String key) {
+    public MapsForgeContext(MapsForgeViewBase map, ServiceContext sc, String key) {
         metrics = new MapsForgeMetrics(sc, map);
         draw = new AndroidDraw(metrics.getDensity(), sc.getContext().getResources());
         nodes = new TwoNodes(metrics);

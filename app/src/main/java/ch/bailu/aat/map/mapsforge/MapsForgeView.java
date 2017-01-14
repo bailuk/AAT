@@ -20,179 +20,30 @@ import ch.bailu.aat.map.MapViewInterface;
 import ch.bailu.aat.map.layer.MapLayerInterface;
 import ch.bailu.aat.map.layer.MapPositionLayer;
 import ch.bailu.aat.map.tile.TileProvider;
+import ch.bailu.aat.preferences.SolidTileSize;
 import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.cache.BitmapTileObject;
 import ch.bailu.aat.util.ui.AppLog;
 
-public class MapsForgeView extends MapView implements
-        MapViewInterface,
-        SharedPreferences.OnSharedPreferenceChangeListener {
-
-    private final static byte ZOOM_MAX = 18;
-    private final static byte ZOOM_MIN = 4;
-
-    private BoundingBox pendingFrameBounding=null;
-
-    private boolean attached=false;
-    private final MapsForgeContext mcontext;
-    private final Storage storage;
+public class MapsForgeView extends MapsForgeViewBase {
 
     private final MapsForgeOnTopView overmap;
 
-    private final ArrayList<MapLayerInterface> layers = new ArrayList(10);
-
 
     public MapsForgeView(ServiceContext sc, DispatcherInterface dispatcher, String key) {
-        super(sc.getContext());
-        mcontext = new MapsForgeContext(this, sc, key);
-        add(mcontext, mcontext);
+        super(sc, key, new SolidTileSize(sc.getContext()).getTileSize());
 
-        MapPositionLayer pos = new MapPositionLayer(mcontext, dispatcher);
+        MapPositionLayer pos = new MapPositionLayer(getMContext(), dispatcher);
         add(pos);
-
-        storage = Storage.global(mcontext.getContext());
 
         MapsForgeTileLayerStack stack = new MapsForgeTileLayerStack(this);
         add(stack);
 
         setClickable(true);
-        getMapScaleBar().setVisible(false);
-        setBuiltInZoomControls(false);
 
-
-        overmap = new MapsForgeOnTopView(this, mcontext, layers);
+        overmap = new MapsForgeOnTopView(this, getMContext(), getLayers());
         addView(overmap);
-        setZoomLevelMax(ZOOM_MAX);
-        setZoomLevelMin(ZOOM_MIN);
-    }
-
-
-
-
-    public void add(MapLayerInterface layer) {
-        LayerWrapper wrapper = new LayerWrapper(mcontext, layer);
-        add(wrapper, layer);
-    }
-
-    @Override
-    public MapContext getMContext() {
-        return mcontext;
-    }
-
-    @Override
-    public View toView() {
-        return this;
-    }
-
-    @Override
-    public void reDownloadTiles() {
-
-    }
-
-    @Override
-    public void close() {
-        AppLog.d(this, "destroyAll()");
-        destroyAll();
-    }
-
-    public void add(Layer mfLayer, MapLayerInterface layer) {
-        this.addLayer(mfLayer);
-        layers.add(layer);
-        if (attached) layer.onAttached();
-
-    }
-
-
-
-
-
-    @Override
-    public void zoomOut() {
-        getModel().mapViewPosition.zoomOut();
-    }
-
-    @Override
-    public void zoomIn() {
-        getModel().mapViewPosition.zoomIn();
-    }
-
-    @Override
-    public void requestRedraw() {
-        getLayerManager().redrawLayers();
-    }
-
-
-    @Override
-    public void repaint() {
-        if (overmap != null)overmap.repaint();
-        super.repaint();
-    }
-
-
-    @Override
-    public void frameBounding(BoundingBoxE6 boundingBox) {
-        frameBounding(boundingBox.toBoundingBox());
-    }
-
-
-    public void frameBounding(BoundingBox bounding) {
-        Dimension dimension = getModel().mapViewDimension.getDimension();
-
-
-        if (dimension == null) {
-            pendingFrameBounding=bounding;
-        } else {
-            byte zoom = LatLongUtils.zoomForBounds(
-                    dimension,
-                    bounding,
-                    getModel().displayModel.getTileSize());
-
-            if (zoom > ZOOM_MAX) zoom = ZOOM_MAX;
-            if (zoom < ZOOM_MIN) zoom = ZOOM_MIN;
-
-            MapPosition position = new MapPosition(bounding.getCenterPoint(), zoom);
-            getModel().mapViewPosition.setMapPosition(position);
-
-            pendingFrameBounding=null;
-        }
-    }
-
-
-
-    @Override
-    public void onSizeChanged(int nw, int nh, int ow, int oh) {
-        super.onSizeChanged(nw, nh, ow, oh);
-
-        if (pendingFrameBounding != null) {
-            frameBounding(pendingFrameBounding);
-        }
-    }
-
-
-
-    @Override
-    public void onSharedPreferenceChanged(SharedPreferences p, String key) {
-        for(SharedPreferences.OnSharedPreferenceChangeListener l: layers)
-            l.onSharedPreferenceChanged(p, key);
-    }
-
-    @Override
-    public void onAttachedToWindow() {
-        super.onAttachedToWindow();
-        attached = true;
-        storage.register(this);
-        for (Attachable layer: layers) layer.onAttached();
-    }
-
-    @Override
-    public void onDetachedFromWindow() {
-        super.onDetachedFromWindow();
-        attached = false;
-
-        storage.unregister(this);
-
-        for (Attachable layer: layers) layer.onDetached();
     }
 
 
@@ -200,6 +51,6 @@ public class MapsForgeView extends MapView implements
     public void onLayout(boolean c, int l, int t, int r, int b) {
         overmap.layout(0,0,r-l, b-t);
 
-        for (MapLayerInterface layer: layers) layer.onLayout(c,l,t,r,b);
+        super.onLayout(c,l,t,r,b);
     }
 }
