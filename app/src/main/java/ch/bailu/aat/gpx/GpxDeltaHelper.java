@@ -1,8 +1,8 @@
 package ch.bailu.aat.gpx;
 
-import org.osmdroid.util.GeoPoint;
+import org.mapsforge.core.model.LatLong;
+import org.mapsforge.core.util.LatLongUtils;
 
-import ch.bailu.aat.coordinates.BoundingBoxE6;
 import ch.bailu.aat.gpx.interfaces.GpxDeltaPointInterface;
 import ch.bailu.aat.gpx.interfaces.GpxPointInterface;
 
@@ -13,16 +13,22 @@ public class GpxDeltaHelper  {
 
     public static float getDistance(GpxPointInterface a, GpxPointInterface b) {
     	
-        return GeoPoint.distanceBetween(a.getLatitude(), a.getLongitude(), 
-                b.getLatitude(), b.getLongitude());
+        return getDistance(
+                new LatLong(a.getLatitude(), a.getLongitude()),
+                new LatLong(b.getLatitude(), b.getLongitude()));
 
         
     }
-    
-    public static double getBearing(GpxPointInterface a, GpxPointInterface b) {
-        GeoPoint p = new GeoPoint(a);
-        return p.bearingTo(b);
+
+
+    public static float getDistance(LatLong a, LatLong b) {
+        return (float) LatLongUtils.sphericalDistance(a, b);
     }
+
+//    public static double getBearing(GpxPointInterface a, GpxPointInterface b) {
+//        GeoPoint p = new GeoPoint(a);
+//        return p.bearingTo(b);
+//    }
 
     
     public static float getAcceleration(GpxDeltaPointInterface a, GpxDeltaPointInterface b) {
@@ -54,8 +60,8 @@ public class GpxDeltaHelper  {
         return deltaT / 1000f;
     }
 
-    public static BoundingBoxE6 getBoundingBoxE6(GpxPointInterface a, GpxPointInterface b) {
-        return new BoundingBoxE6(a, b);
-    }
+//    public static BoundingBoxE6 getBoundingBoxE6(GpxPointInterface a, GpxPointInterface b) {
+//        return new BoundingBoxE6(a, b);
+//    }
     
 }

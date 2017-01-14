@@ -3,8 +3,8 @@ package ch.bailu.aat.gpx;
 import android.location.Location;
 
 import org.mapsforge.core.model.LatLong;
-import org.osmdroid.api.IGeoPoint;
 
+import ch.bailu.aat.coordinates.LatLongE6Interface;
 import ch.bailu.aat.gpx.interfaces.GpxPointInterface;
 
 
@@ -44,7 +44,7 @@ public class GpxPoint implements GpxPointInterface {
         timestamp=time;
     }
 
-    public GpxPoint(IGeoPoint gp, int a, long time) {
+    public GpxPoint(LatLongE6Interface gp, int a, long time) {
         latitude = gp.getLatitudeE6();
         longitude = gp.getLongitudeE6();
         altitude = (short)a;

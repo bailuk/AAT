@@ -2,7 +2,8 @@ package ch.bailu.aat.services.dem;
 
 import android.content.Context;
 
-import org.osmdroid.util.GeoPoint;
+import org.mapsforge.core.model.LatLong;
+import org.mapsforge.core.util.LatLongUtils;
 
 import java.io.BufferedInputStream;
 import java.io.IOException;
@@ -11,10 +12,10 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
 import ch.bailu.aat.coordinates.SrtmCoordinates;
-import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.background.FileHandle;
 import ch.bailu.aat.services.background.ProcessHandle;
+import ch.bailu.aat.util.AppBroadcaster;
 
 public class Dem3Tile implements ElevationProvider, DemProvider {
     
@@ -246,9 +247,11 @@ public class Dem3Tile implements ElevationProvider, DemProvider {
     
     @Override
     public float getCellsize() {
-        final float fdistance = GeoPoint.distanceBetween(
-                coordinates.getLatitudeE6()/1e6, REF_LO_1, 
-                coordinates.getLatitudeE6()/1e6, REF_LO_2);
+
+
+        final float fdistance = (float) LatLongUtils.sphericalDistance(
+                new LatLong(coordinates.getLatitudeE6()/1e6, REF_LO_1),
+                new LatLong(coordinates.getLatitudeE6()/1e6, REF_LO_2));
         
         float idistance = fdistance / (DIMENSION.DIM-DIMENSION.OFFSET);
 

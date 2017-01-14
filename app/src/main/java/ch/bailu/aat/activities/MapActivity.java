@@ -9,12 +9,11 @@ import android.view.View.OnClickListener;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
-import org.osmdroid.util.BoundingBoxOsm;
-import org.osmdroid.util.GeoPoint;
+import org.mapsforge.core.model.LatLong;
 
 import ch.bailu.aat.R;
+import ch.bailu.aat.coordinates.BoundingBoxE6;
 import ch.bailu.aat.coordinates.Coordinates;
-import ch.bailu.aat.coordinates.LatLongE6;
 import ch.bailu.aat.dispatcher.CurrentLocationSource;
 import ch.bailu.aat.dispatcher.EditorSource;
 import ch.bailu.aat.dispatcher.OverlaySource;
@@ -74,10 +73,13 @@ public class MapActivity extends AbsDispatcher implements OnClickListener{
     }
 
     private void setMapCenterFromUri(Uri uri) {
-        GeoPoint geo = new GeoPoint(0,0);
 
-        if (Coordinates.stringToGeoPoint(uri.toString(), geo)) {
-            map.setCenter(new LatLongE6(geo).toLatLong());
+        try {
+            LatLong c = Coordinates.stringToGeoPoint(uri.toString());
+            map.setCenter(c);
+
+        } catch (NumberFormatException e) {
+            AppLog.d(this, uri.toString());
         }
     }
 
@@ -87,7 +89,7 @@ public class MapActivity extends AbsDispatcher implements OnClickListener{
 
         if (query != null) {
             Intent intent = new Intent();
-            AppIntent.setBoundingBox(intent, new BoundingBoxOsm(0,0,0,0));
+            AppIntent.setBoundingBox(intent, new BoundingBoxE6(0,0,0,0));
             intent.setData(uri);
             ActivitySwitcher.start(this, NominatimActivity.class, intent);
         }

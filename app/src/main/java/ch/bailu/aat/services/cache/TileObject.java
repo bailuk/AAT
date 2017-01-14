@@ -25,7 +25,6 @@ public abstract class TileObject extends ObjectHandle {
     public abstract boolean isLoaded();
 
     public static abstract class  Source {
-        public abstract TileBitmapFilter getBitmapFilter();
         public abstract String getName();
         public abstract String getID(Tile aTile, Context context);
 

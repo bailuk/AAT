@@ -137,9 +137,11 @@ public class MapsForgeTileObject extends TileObject implements Observer {
                     return  new Factory(mt);
                 }
 
+                /*
                 @Override
                 public TileBitmapFilter getBitmapFilter() {
                     return TileBitmapFilter.COPY_FILTER;
                 }
+                */
             };
 }

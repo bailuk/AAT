@@ -69,10 +69,10 @@ public class RealLocation extends LocationStackChainedItem
             return location.getLongitude();
         }
 
-        @Override
-        public double getBearing() {
-            return location.getBearing();
-        }
+//        @Override
+//        public double getBearing() {
+//            return location.getBearing();
+//        }
         @Override
         public long getTimeStamp() {
             return location.getTime();

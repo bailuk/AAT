@@ -1,8 +1,6 @@
 package ch.bailu.aat.coordinates;
 
 import org.mapsforge.core.model.LatLong;
-import org.osmdroid.api.IGeoPoint;
-import org.osmdroid.util.GeoPoint;
 
 import java.util.Locale;
 
@@ -51,7 +49,7 @@ public class CH1903Coordinates extends MeterCoordinates {
         this(p.getLatitude(), p.getLongitude());
     }
 
-    public CH1903Coordinates(IGeoPoint point) {
+    public CH1903Coordinates(LatLongE6Interface point) {
         toCH1903(((double)point.getLatitudeE6())/1e6d, 
         		((double)point.getLongitudeE6())/1e6d);
     }
@@ -105,11 +103,11 @@ public class CH1903Coordinates extends MeterCoordinates {
 
     @Override
     public LatLong toLatLong() {
-        GeoPoint p = toGeoPoint();
-        return new LatLong(p.getLatitudeE6()/1e6d, p.getLongitudeE6()/1e6d);
+        return toLatLongE6().toLatLong();
+
     }
 
-    public GeoPoint toGeoPoint() {
+    public LatLongE6 toLatLongE6() {
         double x = getRelativeX(northing);
         double y = getRelativeY(easting);
             
@@ -118,7 +116,7 @@ public class CH1903Coordinates extends MeterCoordinates {
         double x3=x2*x;
         double y2=y*y;
             
-        return new GeoPoint(
+        return new LatLongE6(
                 toDecimalDegree(
                   16.9023892d
                 +  3.238272d     *x
@@ -177,7 +175,7 @@ public class CH1903Coordinates extends MeterCoordinates {
     public static boolean inSwitzerland(LatLong point) {
         return SWISS_AREA.contains(point);
     }
-    public static boolean inSwitzerland(GeoPoint point) {
+    public static boolean inSwitzerland(LatLongE6Interface point) {
         return SWISS_AREA.contains(point);
     }
 

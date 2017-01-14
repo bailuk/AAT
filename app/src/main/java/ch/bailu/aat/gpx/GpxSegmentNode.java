@@ -77,10 +77,10 @@ public class GpxSegmentNode extends SegmentNode implements GpxBigDeltaInterface 
     }
 
 
-    @Override
-    public double getBearing() {
-        return 0;
-    }
+//    @Override
+//    public double getBearing() {
+//        return 0;
+//    }
 
 
 	@Override

@@ -33,8 +33,8 @@ public class GpxPointFirstNode extends GpxPointNode {
     }
 
 
-    @Override
-    public double getBearing() {
-        return 0;
-    }
+//    @Override
+//    public double getBearing() {
+//        return 0;
+//    }
 }

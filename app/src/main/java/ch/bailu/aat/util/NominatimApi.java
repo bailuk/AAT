@@ -2,12 +2,11 @@ package ch.bailu.aat.util;
 
 import android.content.Context;
 
-import org.osmdroid.util.BoundingBoxOsm;
-
 import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
+import ch.bailu.aat.coordinates.BoundingBoxE6;
 import ch.bailu.aat.util.fs.AppDirectory;
 
 public class NominatimApi extends OsmApiHelper {
@@ -20,14 +19,14 @@ public class NominatimApi extends OsmApiHelper {
     private final File directory;
     private final String bounding;
     
-    public NominatimApi(Context context, BoundingBoxOsm boundingBox) {
+    public NominatimApi(Context context, BoundingBoxE6 boundingBox) {
         directory = AppDirectory.getDataDirectory(context, AppDirectory.DIR_NOMINATIM);
         bounding = toString(boundingBox);
     }
     
     
 
-    private static String toString(BoundingBoxOsm b) {
+    private static String toString(BoundingBoxE6 b) {
         if (b.getLatitudeSpanE6()>0 && b.getLongitudeSpanE6() > 0) {
             return 
                     "&bounded=1&viewbox=" + 

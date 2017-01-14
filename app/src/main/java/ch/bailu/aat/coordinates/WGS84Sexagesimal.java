@@ -1,7 +1,5 @@
 package ch.bailu.aat.coordinates;
 
-import org.osmdroid.api.IGeoPoint;
-
 import java.util.Locale;
 
 public class WGS84Sexagesimal extends Coordinates {
@@ -49,9 +47,9 @@ public class WGS84Sexagesimal extends Coordinates {
         longitude=new Sexagesimal(lo);
     }
     
-    public WGS84Sexagesimal(IGeoPoint p) {
-        this(((double)p.getLatitudeE6())/1e6d, ((double)p.getLongitudeE6())/1e6d);
-    }
+//    public WGS84Sexagesimal(IGeoPoint p) {
+//        this(((double)p.getLatitudeE6())/1e6d, ((double)p.getLongitudeE6())/1e6d);
+//    }
 
     public Sexagesimal getLongitude() {
         return longitude;

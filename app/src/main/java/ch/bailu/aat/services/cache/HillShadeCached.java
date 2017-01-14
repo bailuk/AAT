@@ -213,9 +213,9 @@ public class HillShadeCached extends TileObject {
                     return  new HillShadeCached.Factory(mt);
                 }
 
-                @Override
-                public TileBitmapFilter getBitmapFilter() {
-                    return TileBitmapFilter.COPY_FILTER;
-                }
+//                @Override
+//                public TileBitmapFilter getBitmapFilter() {
+//                    return TileBitmapFilter.COPY_FILTER;
+//                }
             };
 }

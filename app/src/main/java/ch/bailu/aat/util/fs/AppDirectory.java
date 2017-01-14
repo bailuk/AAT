@@ -3,8 +3,6 @@ package ch.bailu.aat.util.fs;
 import android.content.Context;
 
 import org.mapsforge.core.model.Tile;
-import org.osmdroid.tileprovider.MapTile;
-import org.osmdroid.tileprovider.tilesource.OnlineTileSourceBase;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -98,9 +96,8 @@ public class AppDirectory  {
 
     
     /////////////////////////////////////////////////////////////////////////////////////////////////
-    public static File getTileFile(Tile tile, OnlineTileSourceBase source, Context context) {
-        String tileName = source.getTileRelativeFilenameString(new MapTile(tile.zoomLevel, tile.tileX, tile.tileY));
-        return new File(getTileCacheDirectory(context), tileName);
+    public static File getTileFile(Tile tile, String tilePath, Context context) {
+        return new File(getTileCacheDirectory(context), tilePath);
     }
 
 

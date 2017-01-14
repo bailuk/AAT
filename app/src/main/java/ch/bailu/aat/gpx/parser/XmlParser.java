@@ -2,12 +2,11 @@ package ch.bailu.aat.gpx.parser;
 
 import android.util.SparseArray;
 
-import org.osmdroid.util.GeoPoint;
-
 import java.io.Closeable;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import ch.bailu.aat.coordinates.LatLongE6;
 import ch.bailu.aat.gpx.GpxAttributes;
 import ch.bailu.aat.gpx.GpxAttributesStatic;
 import ch.bailu.aat.gpx.GpxAttributesStatic.Tag;
@@ -34,7 +33,7 @@ public class XmlParser implements Closeable, GpxPointInterface {
         trackParsed	  = OnParsedInterface.NULL_ONPARSED, 
         parsed        = OnParsedInterface.NULL_ONPARSED;
 
-        public final SparseArray<GeoPoint> nodeMap = new SparseArray<>(50);
+        public final SparseArray<LatLongE6> nodeMap = new SparseArray<>(50);
         public final ArrayList<GpxAttributesStatic.Tag> tagList = new ArrayList<>();
         
         private ParserIO(AbsAccess file) throws IOException {

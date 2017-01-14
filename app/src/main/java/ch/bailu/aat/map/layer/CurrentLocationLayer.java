@@ -43,7 +43,7 @@ public class CurrentLocationLayer implements OnContentUpdatedInterface, MapLayer
 
     @Override
     public void onContentUpdated(int iid, GpxInformation info) {
-        center = new LatLongE6(info).toLatLong();
+        center = LatLongE6.toLatLong(info);
         accuracy=info.getAccuracy();
 
         if (mcontext.getMetrics().getBoundingBox().contains(center))

@@ -166,9 +166,9 @@ public class NewHillshade extends ElevationTile {
                     return  new NewHillshade.Factory(mt);
                 }
 
-                @Override
-                public TileBitmapFilter getBitmapFilter() {
-                    return TileBitmapFilter.COPY_FILTER;
-                }
+//                @Override
+//                public TileBitmapFilter getBitmapFilter() {
+//                    return TileBitmapFilter.COPY_FILTER;
+//                }
             };
 }

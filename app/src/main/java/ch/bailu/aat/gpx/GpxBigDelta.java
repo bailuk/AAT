@@ -148,10 +148,10 @@ public class GpxBigDelta implements GpxBigDeltaInterface {
         return endTime;
     }
 
-    @Override
-    public double getBearing() {
-        return 0;
-    }
+//    @Override
+//    public double getBearing() {
+//        return 0;
+//    }
 
 
     public void setType(int t) {

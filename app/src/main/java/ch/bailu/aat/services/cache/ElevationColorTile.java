@@ -117,10 +117,10 @@ public class ElevationColorTile extends ElevationTile {
                     return  new ElevationColorTile.Factory(mt);
                 }
 
-                @Override
-                public TileBitmapFilter getBitmapFilter() {
-                    return TileBitmapFilter.OVERLAY_FILTER;
-                }
+//                @Override
+//                public TileBitmapFilter getBitmapFilter() {
+//                    return TileBitmapFilter.OVERLAY_FILTER;
+//                }
             };
 
 }

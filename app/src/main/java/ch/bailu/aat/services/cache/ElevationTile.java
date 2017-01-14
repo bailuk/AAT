@@ -8,8 +8,9 @@ import android.graphics.Rect;
 import android.util.SparseArray;
 
 import org.mapsforge.core.graphics.TileBitmap;
+import org.mapsforge.core.model.LatLong;
 import org.mapsforge.core.model.Tile;
-import org.osmdroid.util.GeoPoint;
+import org.mapsforge.core.util.MercatorProjection;
 
 import java.util.ArrayList;
 
@@ -24,7 +25,6 @@ import ch.bailu.aat.services.dem.DemSplitter;
 import ch.bailu.aat.services.dem.ElevationUpdaterClient;
 import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.util.graphic.SyncTileBitmap;
-import microsoft.mappoint.TileSystem;
 
 public abstract class ElevationTile extends TileObject implements ElevationUpdaterClient{
 
@@ -197,11 +197,11 @@ public abstract class ElevationTile extends TileObject implements ElevationUpdat
         private void initializeWGS84Raster() {
             final Rect tileR = getTileR();
 
-            final GeoPoint tl=pixelToGeo(
+            final LatLong tl=pixelToGeo(
                     tileR.left, 
                     tileR.top);
 
-            final GeoPoint br=pixelToGeo(
+            final LatLong br=pixelToGeo(
                     tileR.right, 
                     tileR.bottom);
 
@@ -239,13 +239,17 @@ public abstract class ElevationTile extends TileObject implements ElevationUpdat
         }
 
  
-        private GeoPoint pixelToGeo(int x, int y) {
-            return TileSystem.PixelXYToLatLong(
-                    x, 
-                    y,
-                    map_tile.zoomLevel,
-                    TileObject.TILE_SIZE, 
-                    null);
+        private LatLong pixelToGeo(int x, int y) {
+            final long mapSize = MercatorProjection.getMapSize(map_tile.zoomLevel, TileObject.TILE_SIZE);
+
+            return MercatorProjection.fromPixels(x, y, mapSize);
+
+//            return MercatorProjection.TileSystem.PixelXYToLatLong(
+//                    x,
+//                    y,
+//                    map_tile.zoomLevel,
+//                    TileObject.TILE_SIZE,
+//                    null);
         }        
         
         private void initializeIndexRaster() {

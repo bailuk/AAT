@@ -30,7 +30,7 @@ public class BearingDescription extends DoubleDescription {
 
     @Override
     public void onContentUpdated(int iid, GpxInformation info) {
-        setCache(info.getBearing());
+//        setCache(info.getBearing());
     }
 
    

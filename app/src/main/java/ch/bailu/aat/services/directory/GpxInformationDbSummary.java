@@ -36,7 +36,7 @@ public class GpxInformationDbSummary extends GpxInformation {
 
     private void addEntryToList(GpxInformation entry, Cursor cursor) {
         final GpxPoint point = new GpxPoint(
-                entry.getBoundingBox().toBoundingBoxE6().getCenter(),
+                entry.getBoundingBox().getCenter(),
                 0, entry.getTimeStamp());
 
         list.appendToCurrentSegment(point, GpxAttributesStatic.NULL_ATTRIBUTES);

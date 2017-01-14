@@ -10,13 +10,12 @@ import org.mapsforge.core.model.MapPosition;
 import org.mapsforge.core.util.MercatorProjection;
 import org.mapsforge.map.android.view.MapView;
 import org.mapsforge.map.util.MapPositionUtil;
-import org.osmdroid.api.IGeoPoint;
 
 import ch.bailu.aat.coordinates.BoundingBoxE6;
 import ch.bailu.aat.coordinates.LatLongE6;
+import ch.bailu.aat.coordinates.LatLongE6Interface;
 import ch.bailu.aat.map.MapDistances;
 import ch.bailu.aat.map.MapMetrics;
-import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.util.graphic.Pixel;
 import ch.bailu.aat.util.ui.AppDensity;
 
@@ -106,7 +105,7 @@ public class MapsForgeMetrics implements MapMetrics {
         return BoundingBoxE6.doOverlap(box, new BoundingBoxE6(bounding));
     }
     @Override
-    public boolean isVisible(IGeoPoint point) {
+    public boolean isVisible(LatLongE6Interface point) {
         return bounding.contains(
                 LatLongE6.toD(point.getLatitudeE6()),
                 LatLongE6.toD(point.getLongitudeE6()));
@@ -125,8 +124,8 @@ public class MapsForgeMetrics implements MapMetrics {
         return rect;
     }
     @Override
-    public Pixel toPixel(IGeoPoint tp) {
-        return toPixel(new LatLongE6(tp).toLatLong());
+    public Pixel toPixel(LatLongE6Interface tp) {
+        return toPixel(LatLongE6.toLatLong(tp));
     }
 
     @Override

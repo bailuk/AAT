@@ -6,13 +6,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 
-import org.osmdroid.util.BoundingBoxOsm;
-
 import java.io.Closeable;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import ch.bailu.aat.coordinates.BoundingBoxE6;
 import ch.bailu.aat.gpx.GpxList;
 import ch.bailu.aat.gpx.interfaces.GpxBigDeltaInterface;
 import ch.bailu.aat.map.mapsforge.MapsForgePreview;
@@ -311,7 +310,7 @@ public class DirectorySynchronizer  implements Closeable {
         private ContentValues createContentValues(String pathname, String filename, 
                 GpxBigDeltaInterface summary) {
 
-            BoundingBoxOsm box = summary.getBoundingBox().toBoundingBoxE6();
+            BoundingBoxE6 box = summary.getBoundingBox();
 
             ContentValues content = new ContentValues();
             content.put(GpxDbConstants.KEY_PATHNAME_OLD,   pathname);

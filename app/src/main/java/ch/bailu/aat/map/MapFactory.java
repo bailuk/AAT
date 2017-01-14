@@ -13,7 +13,6 @@ import ch.bailu.aat.map.layer.gpx.GpxDynLayer;
 import ch.bailu.aat.map.layer.gpx.GpxOverlayListLayer;
 import ch.bailu.aat.map.layer.grid.GridDynLayer;
 import ch.bailu.aat.map.mapsforge.MapsForgeView;
-import ch.bailu.aat.map.osmdroid.OsmViewInteractive;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.editor.EditorHelper;
 import ch.bailu.aat.views.ControlBar;
@@ -35,9 +34,9 @@ public class MapFactory {
         return new MapFactory(new MapsForgeView(sc, d, skey), d);
     }
 
-    public static MapFactory OSM(ServiceContext sc, AbsDispatcher d, String skey) {
-        return new MapFactory(new OsmViewInteractive(sc, d, skey), d);
-    }
+//    public static MapFactory OSM(ServiceContext sc, AbsDispatcher d, String skey) {
+//        return new MapFactory(new OsmViewInteractive(sc, d, skey), d);
+//    }
 
 
     public MapFactory(MapViewInterface map, final AbsDispatcher dispatcher) {

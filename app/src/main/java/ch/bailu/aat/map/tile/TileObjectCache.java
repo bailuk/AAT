@@ -1,7 +1,6 @@
 package ch.bailu.aat.map.tile;
 
 import org.mapsforge.core.model.Tile;
-import org.osmdroid.tileprovider.MapTile;
 
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.cache.LockCache;
@@ -36,9 +35,9 @@ public class TileObjectCache extends TileCache<TileObject> {
         return null;
     }
 
-    public static boolean compare(MapTile a, Tile b) {
-        return a.getX() == b.tileX && a.getY() == b.tileY && a.getZoomLevel() == b.zoomLevel;
-    }
+//    public static boolean compare(MapTile a, Tile b) {
+//        return a.getX() == b.tileX && a.getY() == b.tileY && a.getZoomLevel() == b.zoomLevel;
+//    }
 
 
     public static boolean compare(Tile a, Tile b) {

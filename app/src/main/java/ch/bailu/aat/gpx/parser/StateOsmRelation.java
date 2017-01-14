@@ -1,11 +1,9 @@
 package ch.bailu.aat.gpx.parser;
 
-import org.osmdroid.util.BoundingBoxOsm;
-import org.osmdroid.util.GeoPoint;
-
 import java.io.IOException;
 
 import ch.bailu.aat.coordinates.BoundingBoxE6;
+import ch.bailu.aat.coordinates.LatLongE6;
 import ch.bailu.aat.gpx.parser.XmlParser.ParserIO;
 
 public class StateOsmRelation extends StateOsmPoint {
@@ -59,9 +57,9 @@ public class StateOsmRelation extends StateOsmPoint {
     }
 
     private void rememberRelation(ParserIO io) throws IOException {
-        BoundingBoxOsm b = bounding.toBoundingBoxE6();
+        BoundingBoxE6 b = bounding;
 
-        GeoPoint c = b.getCenter();
+        LatLongE6 c = b.getCenter();
 
         io.latitude.setInt(c.getLatitudeE6());
         io.longitude.setInt(c.getLongitudeE6());
@@ -76,7 +74,7 @@ public class StateOsmRelation extends StateOsmPoint {
         io.stream.to('=');
         io.stream.to('"');
         io.id.scan();
-        GeoPoint point = io.nodeMap.get(io.id.getInt());
+        LatLongE6 point = io.nodeMap.get(io.id.getInt());
 
         if (point != null) {
             bounding.add(point);

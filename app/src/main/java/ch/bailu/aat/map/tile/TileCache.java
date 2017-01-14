@@ -5,12 +5,11 @@ import org.mapsforge.core.model.Tile;
 import java.io.Closeable;
 
 import ch.bailu.aat.services.ServiceContext;
-import ch.bailu.aat.services.cache.TileStackObject;
 
 public class TileCache<T> implements Closeable {
 
 
-    public static final TileCache NULL = new TileCache<TileStackObject>();
+    //public static final TileCache NULL = new TileCache<TileStackObject>();
 
 
     public T get(String string) {

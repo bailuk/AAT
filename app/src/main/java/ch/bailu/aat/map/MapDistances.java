@@ -1,13 +1,9 @@
 package ch.bailu.aat.map;
 
-import android.graphics.Rect;
-
 import org.mapsforge.core.model.BoundingBox;
 import org.mapsforge.core.model.Dimension;
 import org.mapsforge.core.model.LatLong;
 import org.mapsforge.core.util.LatLongUtils;
-import org.osmdroid.util.BoundingBoxOsm;
-import org.osmdroid.util.GeoPoint;
 
 public class MapDistances {
 
@@ -17,32 +13,32 @@ public class MapDistances {
     private float shortDistance;
 
 
-    private final GeoPoint
-            nw=new GeoPoint(0,0),
-            sw=new GeoPoint(0,0),
-            ne=new GeoPoint(0,0);
-
-    public void init(BoundingBoxOsm boundingBoxOsm, Rect screen) {
-        float meter, pixel;
-
-        nw.setCoordsE6(boundingBoxOsm.getLatNorthE6(), boundingBoxOsm.getLonWestE6());
-
-        if (screen.width() < screen.height()) {
-            ne.setCoordsE6(boundingBoxOsm.getLatNorthE6(), boundingBoxOsm.getLonEastE6());
-            meter = nw.distanceTo(ne);
-            pixel = screen.width();
-
-        } else {
-            sw.setCoordsE6(boundingBoxOsm.getLatSouthE6(), boundingBoxOsm.getLonWestE6());
-            meter = nw.distanceTo(sw);
-            pixel = screen.height();
-        }
-
-        meterPerOnePixel = meter / pixel;
-        pixelPerOneMeter = pixel / meter;
-
-        shortDistance = meter;
-    }
+//    private final GeoPoint
+//            nw=new GeoPoint(0,0),
+//            sw=new GeoPoint(0,0),
+//            ne=new GeoPoint(0,0);
+//
+//    public void init(BoundingBoxOsm boundingBoxOsm, Rect screen) {
+//        float meter, pixel;
+//
+//        nw.setCoordsE6(boundingBoxOsm.getLatNorthE6(), boundingBoxOsm.getLonWestE6());
+//
+//        if (screen.width() < screen.height()) {
+//            ne.setCoordsE6(boundingBoxOsm.getLatNorthE6(), boundingBoxOsm.getLonEastE6());
+//            meter = nw.distanceTo(ne);
+//            pixel = screen.width();
+//
+//        } else {
+//            sw.setCoordsE6(boundingBoxOsm.getLatSouthE6(), boundingBoxOsm.getLonWestE6());
+//            meter = nw.distanceTo(sw);
+//            pixel = screen.height();
+//        }
+//
+//        meterPerOnePixel = meter / pixel;
+//        pixelPerOneMeter = pixel / meter;
+//
+//        shortDistance = meter;
+//    }
 
     public void init(BoundingBox box, Dimension dim) {
         if (dim.height < dim.width) {

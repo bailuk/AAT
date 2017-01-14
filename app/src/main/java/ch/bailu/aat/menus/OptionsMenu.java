@@ -6,12 +6,10 @@ import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import org.osmdroid.util.BoundingBoxOsm;
-
 import ch.bailu.aat.R;
 import ch.bailu.aat.activities.ActivitySwitcher;
 import ch.bailu.aat.activities.NominatimActivity;
-import ch.bailu.aat.util.AppIntent;
+import ch.bailu.aat.coordinates.BoundingBoxE6;
 import ch.bailu.aat.preferences.SolidAutopause;
 import ch.bailu.aat.preferences.SolidBacklight;
 import ch.bailu.aat.preferences.SolidMapTileStack;
@@ -19,6 +17,7 @@ import ch.bailu.aat.preferences.SolidOverlayFileList;
 import ch.bailu.aat.preferences.SolidPreset;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.tracker.State;
+import ch.bailu.aat.util.AppIntent;
 import ch.bailu.aat.views.preferences.SolidCheckListDialog;
 import ch.bailu.aat.views.preferences.SolidIndexListDialog;
 
@@ -96,7 +95,7 @@ public class OptionsMenu extends AbsMenu {
 
         } else if (item == nominatim) {
             Intent intent = new Intent();
-            AppIntent.setBoundingBox(intent, new BoundingBoxOsm(0,0,0,0));
+            AppIntent.setBoundingBox(intent, new BoundingBoxE6(0,0,0,0));
             ActivitySwitcher.start(c, NominatimActivity.class);
 
 

@@ -1,8 +1,6 @@
 package ch.bailu.aat.coordinates;
 
 import org.mapsforge.core.model.LatLong;
-import org.osmdroid.api.IGeoPoint;
-import org.osmdroid.util.GeoPoint;
 
 import java.util.Locale;
 
@@ -77,7 +75,7 @@ public class UTMCoordinates extends MeterCoordinates {
     }
     
     
-    public UTMCoordinates(IGeoPoint point) {
+    public UTMCoordinates(LatLongE6Interface point) {
         this(((double)point.getLatitudeE6())/1e6d, ((double)point.getLongitudeE6())/1e6d);
     }
 
@@ -114,14 +112,14 @@ public class UTMCoordinates extends MeterCoordinates {
     }
     
     
-    public GeoPoint toGeoPoint() {
-        return toGeoPoint(easting, northing, ezone, south);
+    public LatLongE6 toLatLongE6() {
+        return new LatLongE6(toLatLong());
     }
 
     @Override
     public LatLong toLatLong() {
-        GeoPoint point = toGeoPoint();
-        return new LatLong(point.getLatitudeE6()/1e6d, point.getLongitudeE6()/1e6d);
+        return toLatLongE6(easting, northing, ezone, south);
+
     }
 
 
@@ -350,7 +348,7 @@ public class UTMCoordinates extends MeterCoordinates {
     */
     
     
-    private static GeoPoint MapXYToLatLon (double e, double n, double lambda0)
+    private static LatLong MapXYToLatLon (double e, double n, double lambda0)
     {
         double phif, Nf, Nfpow, nuf2, ep2, tf, tf2, tf4, cf;
         double x1frac, x2frac, x3frac, x4frac, x5frac, x6frac, x7frac, x8frac;
@@ -418,7 +416,7 @@ public class UTMCoordinates extends MeterCoordinates {
         
         /* Calculate latitude */
         
-        return new GeoPoint( Math.toDegrees( phif + x2frac * x2poly * (e * e)
+        return new LatLong( Math.toDegrees( phif + x2frac * x2poly * (e * e)
         + x4frac * x4poly * Math.pow (e, 4.0)
         + x6frac * x6poly * Math.pow (e, 6.0)
         + x8frac * x8poly * Math.pow (e, 8.0) ),
@@ -475,7 +473,7 @@ public class UTMCoordinates extends MeterCoordinates {
     *
     */
     
-    private static GeoPoint toGeoPoint (double easting, double northing, int zone, boolean southhemi)
+    private static LatLong toLatLongE6(double easting, double northing, int zone, boolean southhemi)
     {
         double cmeridian;
         

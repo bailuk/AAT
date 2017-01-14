@@ -5,10 +5,9 @@ import android.graphics.Bitmap;
 
 import org.mapsforge.core.graphics.TileBitmap;
 import org.mapsforge.core.model.Tile;
-import org.osmdroid.tileprovider.MapTile;
-import org.osmdroid.tileprovider.tilesource.XYTileSource;
 
 import java.io.File;
+import java.util.Random;
 
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.background.DownloadHandle;
@@ -161,37 +160,44 @@ public class BitmapTileObject extends TileObject {
     }
     
     public static class Source extends TileObject.Source {
+        public final static String EXT = ".png";
 
-        private final XYTileSource osmdroidSource;
-        private final TileBitmapFilter filter;
+        private final Random random = new Random();
+        private final int minZoom, maxZoom;
 
+        private final String name;
+
+        private final String[] urls;
         
-        
-        public Source (String sourceName, TileBitmapFilter f, int minZ, int maxZ, final String... url) {
-            osmdroidSource = new XYTileSource(sourceName, minZ, maxZ, ".png", url);
-            filter = f;
+        public Source (String sourceName, int minZ, int maxZ, final String... url) {
+            name = sourceName;
+            minZoom = minZ;
+            maxZoom = maxZ;
+            urls = url;
+
         }
         
 
         @Override
         public String getName() {
-            return osmdroidSource.name();
+            return name;
         }
         
         
         @Override
-        public String getID(Tile mt, Context context) {
-            return AppDirectory.getTileFile(mt, osmdroidSource, context).getAbsolutePath();
+        public String getID(Tile tile, Context context) {
+            return AppDirectory.getTileFile(tile,
+                    getTileRelativeFilenameString(tile), context).getAbsolutePath();
         }
 
         @Override
         public int getMinimumZoomLevel() {
-            return osmdroidSource.getMinimumZoomLevel();
+            return minZoom;
         }
 
         @Override
         public int getMaximumZoomLevel() {
-            return osmdroidSource.getMaximumZoomLevel();
+            return maxZoom;
         }
 
         @Override
@@ -200,14 +206,28 @@ public class BitmapTileObject extends TileObject {
         }
 
         public String getTileURLString(Tile tile) {
-            return osmdroidSource.getTileURLString(new MapTile(tile.zoomLevel, tile.tileX, tile.tileY));
+            return getBaseUrl() + tile.zoomLevel + "/" + tile.tileX + "/" + tile.tileY + EXT;
+        }
+
+        private String getBaseUrl() {
+            return urls[random.nextInt(urls.length)];
         }
 
 
-        @Override
-        public TileBitmapFilter getBitmapFilter() {
-            return filter;
+
+        private String getTileRelativeFilenameString(final Tile tile) {
+            final StringBuilder sb = new StringBuilder();
+            sb.append(name);
+            sb.append('/');
+            sb.append(tile.zoomLevel);
+            sb.append('/');
+            sb.append(tile.tileX);
+            sb.append('/');
+            sb.append(tile.tileY);
+            sb.append(EXT);
+            return sb.toString();
         }
+
     }
 
 
@@ -215,16 +235,8 @@ public class BitmapTileObject extends TileObject {
     public static final int MAX_ZOOM=17; // 18 takes way too much space for the gain.
 
 
-    public final static BitmapTileObject.Source MAPNIK_GRAY =
-            new BitmapTileObject.Source("Mapnik", TileBitmapFilter.GRAYSCALE_FILTER,
-                    MIN_ZOOM, MAX_ZOOM,
-                    "http://a.tile.openstreetmap.org/",
-                    "http://b.tile.openstreetmap.org/",
-                    "http://c.tile.openstreetmap.org/");
-
-
     public final static BitmapTileObject.Source MAPNIK =
-            new BitmapTileObject.Source("Mapnik", TileBitmapFilter.OVERLAY_FILTER,
+            new BitmapTileObject.Source("Mapnik",
                     MIN_ZOOM, MAX_ZOOM,
                     "http://a.tile.openstreetmap.org/",
                     "http://b.tile.openstreetmap.org/",
@@ -232,32 +244,32 @@ public class BitmapTileObject extends TileObject {
 
 
     public final static TileObject.Source TRAIL_MTB =
-            new BitmapTileObject.Source("TrailMTB",  TileBitmapFilter.OVERLAY_FILTER, MIN_ZOOM, MAX_ZOOM,
+            new BitmapTileObject.Source("TrailMTB", MIN_ZOOM, MAX_ZOOM,
                     "http://tile.waymarkedtrails.org/mtb/");
 
     public final static TileObject.Source TRAIL_SKATING =
-            new BitmapTileObject.Source("TrailSkating",TileBitmapFilter.OVERLAY_FILTER, MIN_ZOOM, MAX_ZOOM,
+            new BitmapTileObject.Source("TrailSkating", MIN_ZOOM, MAX_ZOOM,
                     "http://tile.waymarkedtrails.org/skating/");
 
 
     public final static TileObject.Source TRAIL_HIKING =
-            new BitmapTileObject.Source("TrailHiking", TileBitmapFilter.OVERLAY_FILTER, MIN_ZOOM, MAX_ZOOM,
+            new BitmapTileObject.Source("TrailHiking",  MIN_ZOOM, MAX_ZOOM,
                     "http://tile.waymarkedtrails.org/hiking/");
 
 
     public final static TileObject.Source TRAIL_CYCLING =
-            new BitmapTileObject.Source("TrailCycling", TileBitmapFilter.OVERLAY_FILTER, MIN_ZOOM, MAX_ZOOM,
+            new BitmapTileObject.Source("TrailCycling",  MIN_ZOOM, MAX_ZOOM,
                     "http://tile.waymarkedtrails.org/cycling/");
 
 
 
     public final static TileObject.Source TRANSPORT_OVERLAY =
-            new BitmapTileObject.Source("OpenPtMap", TileBitmapFilter.OVERLAY_FILTER, 5, 16,
+            new BitmapTileObject.Source("OpenPtMap",  5, 16,
                     "http://openptmap.org/tiles/");
 
 
     public final static BitmapTileObject.Source HILLSHADE_CACHE =
-            new BitmapTileObject.Source("HillShade", TileBitmapFilter.COPY_FILTER,
+            new BitmapTileObject.Source("HillShade",
                     NewHillshade.ELEVATION_HILLSHADE8.getMinimumZoomLevel(),
                     NewHillshade.ELEVATION_HILLSHADE8.getMaximumZoomLevel(),
                     "http://bailu.ch/");

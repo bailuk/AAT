@@ -2,11 +2,10 @@ package ch.bailu.aat.activities;
 
 import android.view.View;
 
-import org.osmdroid.util.BoundingBoxOsm;
-
 import java.io.IOException;
 
 import ch.bailu.aat.R;
+import ch.bailu.aat.coordinates.BoundingBoxE6;
 import ch.bailu.aat.util.OsmApiHelper;
 import ch.bailu.aat.util.OverpassApi;
 import ch.bailu.aat.util.ui.ToolTip;
@@ -33,7 +32,7 @@ public class OverpassActivity extends AbsOsmApiActivity  {
 
 
     @Override
-    public OsmApiHelper createUrlGenerator(BoundingBoxOsm boundingBox) throws SecurityException, IOException {
+    public OsmApiHelper createUrlGenerator(BoundingBoxE6 boundingBox) throws SecurityException, IOException {
         return new OverpassApi(this,boundingBox);
     }
 

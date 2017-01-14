@@ -2,9 +2,6 @@ package ch.bailu.aat.preferences;
 
 import android.content.Context;
 
-import org.osmdroid.tileprovider.MapTile;
-import org.osmdroid.tileprovider.tilesource.OnlineTileSourceBase;
-
 import ch.bailu.aat.R;
 import ch.bailu.aat.services.cache.BitmapTileObject;
 import ch.bailu.aat.services.cache.HillShadeCached;
@@ -47,12 +44,12 @@ public class SolidMapTileStack extends SolidCheckList {
         }
     }
 
-
-    public static boolean isZoomLevelSupported(OnlineTileSourceBase source ,MapTile tile) {
-        return
-                tile.getZoomLevel() <= source.getMaximumZoomLevel() &&
-                        tile.getZoomLevel() >= source.getMinimumZoomLevel();
-    }
+//
+//    public static boolean isZoomLevelSupported(OnlineTileSourceBase source ,MapTile tile) {
+//        return
+//                tile.getZoomLevel() <= source.getMaximumZoomLevel() &&
+//                        tile.getZoomLevel() >= source.getMinimumZoomLevel();
+//    }
 
     public int getCountOfEnabled() {
         int c = 0;

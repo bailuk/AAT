@@ -43,7 +43,6 @@ import ch.bailu.aat.map.layer.gpx.GpxOverlayListLayer;
 import ch.bailu.aat.map.layer.gpx.GpxTestLayer;
 import ch.bailu.aat.map.layer.grid.GridDynLayer;
 import ch.bailu.aat.map.mapsforge.MapsForgeView;
-import ch.bailu.aat.map.osmdroid.OsmViewInteractive;
 import ch.bailu.aat.test.PreferencesFromSdcard;
 import ch.bailu.aat.test.PreferencesToSdcard;
 import ch.bailu.aat.test.TestCoordinates;
@@ -143,14 +142,14 @@ public class TestActivity extends AbsDispatcher {
         final MultiView mv = new MultiView(this, SOLID_KEY);
 
 
-        final OsmViewInteractive osm = new OsmViewInteractive(getServiceContext(), this, SOLID_KEY);
+//        final OsmViewInteractive osm = new OsmViewInteractive(getServiceContext(), this, SOLID_KEY);
         final MapsForgeView mf = new MapsForgeView(getServiceContext(), this, SOLID_KEY);
 
         fillMap(mf);
-        fillMap(osm);
+//        fillMap(osm);
 
         mv.add(mf, "MapsForge");
-        mv.add(osm,getString(R.string.intro_map));
+//        mv.add(osm,getString(R.string.intro_map));
         mv.add(locationView, getString(R.string.gps));
 
         mv.add(trackerView, getString(R.string.tracker));

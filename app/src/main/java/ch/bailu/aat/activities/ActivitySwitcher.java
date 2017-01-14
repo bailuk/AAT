@@ -5,12 +5,12 @@ import android.content.Context;
 import android.content.Intent;
 
 import org.mapsforge.core.model.BoundingBox;
-import org.osmdroid.util.BoundingBoxOsm;
 
 import java.io.File;
 
 import ch.bailu.aat.BuildConfig;
 import ch.bailu.aat.R;
+import ch.bailu.aat.coordinates.BoundingBoxE6;
 import ch.bailu.aat.util.AppIntent;
 
 public class ActivitySwitcher {
@@ -95,7 +95,7 @@ public class ActivitySwitcher {
         }
     }
 
-    public static void start(Context context, Class<?> a, BoundingBoxOsm box) {
+    public static void start(Context context, Class<?> a, BoundingBoxE6 box) {
         Intent intent = new Intent();
         AppIntent.setBoundingBox(intent, box);
         start(context, a, intent);

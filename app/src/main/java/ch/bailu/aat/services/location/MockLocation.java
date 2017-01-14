@@ -163,10 +163,10 @@ public class MockLocation extends LocationStackChainedItem implements Runnable{
         public float getAccuracy() {
             return 5f;
         }
-        @Override
-        public double getBearing() {
-            return node.getBearing();
-        }
+//        @Override
+//        public double getBearing() {
+//            return node.getBearing();
+//        }
     }
     
     @Override

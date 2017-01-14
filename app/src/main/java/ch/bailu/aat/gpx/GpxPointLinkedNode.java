@@ -44,8 +44,8 @@ public class GpxPointLinkedNode extends GpxPointNode {
     }
 
 
-    @Override
-    public double getBearing() {
-        return GpxDeltaHelper.getBearing((GpxPointNode)getPrevious(), this);
-    }
+//    @Override
+//    public double getBearing() {
+//        return GpxDeltaHelper.getBearing((GpxPointNode)getPrevious(), this);
+//    }
 }

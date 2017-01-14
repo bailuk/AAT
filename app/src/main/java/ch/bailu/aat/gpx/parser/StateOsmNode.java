@@ -1,9 +1,8 @@
 package ch.bailu.aat.gpx.parser;
 
-import org.osmdroid.util.GeoPoint;
-
 import java.io.IOException;
 
+import ch.bailu.aat.coordinates.LatLongE6;
 import ch.bailu.aat.gpx.parser.XmlParser.ParserIO;
 
 public class StateOsmNode extends StateOsmPoint {
@@ -64,7 +63,7 @@ public class StateOsmNode extends StateOsmPoint {
 
     private void rememberNode(ParserIO io) throws IOException {
         io.nodeMap.put(io.id.getInt(), 
-                new GeoPoint(io.latitude.getInt(), io.longitude.getInt()));
+                new LatLongE6(io.latitude.getInt(), io.longitude.getInt()));
     }
 
     

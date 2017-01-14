@@ -107,7 +107,7 @@ public class MapPositionLayer implements MapLayerInterface, OnContentUpdatedInte
 
     @Override
     public void onContentUpdated(int iid, GpxInformation info) {
-        gpsLocation = new LatLongE6(info).toLatLong();
+        gpsLocation = LatLongE6.toLatLong(info);
         refreshMap();
     }
 

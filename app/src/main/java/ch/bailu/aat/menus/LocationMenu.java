@@ -8,14 +8,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import org.mapsforge.core.model.LatLong;
-import org.osmdroid.util.GeoPoint;
 
 import ch.bailu.aat.R;
 import ch.bailu.aat.coordinates.Coordinates;
-import ch.bailu.aat.coordinates.LatLongE6;
 import ch.bailu.aat.map.MapViewInterface;
-import ch.bailu.aat.util.ui.AppLog;
 import ch.bailu.aat.util.Clipboard;
+import ch.bailu.aat.util.ui.AppLog;
 
 public class LocationMenu extends AbsMenu{
 
@@ -75,12 +73,15 @@ public class LocationMenu extends AbsMenu{
     
 
     private void paste() {
-        GeoPoint geo = new GeoPoint(0,0);
-        final CharSequence s = clipboard.getText();
+        final String s = clipboard.getText().toString();
 
-        if (s != null  && Coordinates.stringToGeoPoint(s.toString(), geo)) {
-            map.setCenter(new LatLongE6(geo).toLatLong());
+        try {
+            LatLong p = Coordinates.stringToGeoPoint(s.toString());
+            map.setCenter(p);
+        } catch (NumberFormatException e) {
+            AppLog.d(this, s);
         }
+
     }
 
     private void copy() {
@@ -90,7 +91,7 @@ public class LocationMenu extends AbsMenu{
 
     private void view() {
         final Intent intent = new Intent(Intent.ACTION_VIEW);
-        final GeoPoint center = getCenter();
+        final LatLong center = getCenter();
         final Uri uri = Uri.parse(Coordinates.geoPointToGeoUri(center));
         AppLog.d(this, uri.toString());
 
@@ -101,7 +102,7 @@ public class LocationMenu extends AbsMenu{
 
     private void send() {
         final Intent intent = new Intent(Intent.ACTION_SEND);
-        final GeoPoint center = getCenter();
+        final LatLong center = getCenter();
 
 
         final String url = Coordinates.geoPointToGeoUri(center);
@@ -115,9 +116,8 @@ public class LocationMenu extends AbsMenu{
         context.startActivity(Intent.createChooser(intent, url));
     }
     
-    private GeoPoint getCenter() {
-        LatLong c = map.getMContext().getMetrics().getBoundingBox().getCenterPoint();
-        return new GeoPoint(c.getLatitudeE6(), c.getLongitudeE6());
+    private LatLong getCenter() {
+        return map.getMContext().getMetrics().getBoundingBox().getCenterPoint();
     }
     
 }
