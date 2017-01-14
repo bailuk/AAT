@@ -5,16 +5,19 @@ import org.osmdroid.tileprovider.MapTile;
 
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.cache.LockCache;
-import ch.bailu.aat.services.cache.TileStackObject;
+import ch.bailu.aat.services.cache.TileObject;
 
-public class LockTileCache extends TileCache<TileStackObject> {
+public class TileObjectCache extends TileCache<TileObject> {
     private final static int INITIAL_CAPACITY = 5;
 
-    private final LockCache<TileStackObject> tiles = new LockCache(INITIAL_CAPACITY);
+    private final LockCache<TileObject> tiles = new LockCache(INITIAL_CAPACITY);
+
+    public static final TileCache<TileObject> NULL_TILE_OBJECT_CACHE
+            = new TileCache<TileObject>() {};
 
 
     @Override
-    public TileStackObject get(String string) {
+    public TileObject get(String string) {
         for (int i = 0; i<tiles.size(); i++) {
             if (tiles.get(i).toString().equals(string)) {
                 return tiles.use(i);
@@ -24,7 +27,7 @@ public class LockTileCache extends TileCache<TileStackObject> {
     }
 
     @Override
-    public TileStackObject get(Tile mt) {
+    public TileObject get(Tile mt) {
         for (int i = 0; i<tiles.size(); i++) {
             if (compare(mt, tiles.get(i).getTile())) {
                 return tiles.use(i);
@@ -43,7 +46,7 @@ public class LockTileCache extends TileCache<TileStackObject> {
     }
 
     @Override
-    public void put(TileStackObject handle) {
+    public void put(TileObject handle) {
         tiles.add(handle);
     }
 
@@ -68,4 +71,6 @@ public class LockTileCache extends TileCache<TileStackObject> {
     public void setCapacity(int capacity) {
         tiles.ensureCapacity(capacity);
     }
+
+
 }

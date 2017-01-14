@@ -4,8 +4,6 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 
-import ch.bailu.aat.util.graphic.AppBitmap;
-
 public abstract class ImageObjectAbstract extends ObjectHandle {
     public ImageObjectAbstract(String id) {
         super(id);
@@ -16,5 +14,4 @@ public abstract class ImageObjectAbstract extends ObjectHandle {
 
     public abstract Drawable getDrawable(Resources res);
 
-    public abstract AppBitmap getAppBitmap();
 }

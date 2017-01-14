@@ -3,13 +3,16 @@ package ch.bailu.aat.services.cache;
 import android.content.Intent;
 import android.util.SparseArray;
 
+import java.io.Closeable;
+import java.io.IOException;
+
 import ch.bailu.aat.util.AppIntent;
 import ch.bailu.aat.util.ui.AppLog;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.cache.ObjectHandle.Factory;
 
 
-public class ObjectTable {
+public class ObjectTable  {
     private final static int INITIAL_CAPACITY=2000;
 
     private final static int MB = 1024*1024;
@@ -150,6 +153,13 @@ public class ObjectTable {
     }
 
 
+    public void close(CacheService self)  {
+        for (int i=0; i<table.size(); i++) {
+            final Container current = table.valueAt(i);
+            current.obj.onRemove(self.scontext);
+        }
+    }
+
 
     private boolean removeFromTable(Container remove, CacheService self) {
         remove = table.get(remove.hashCode());
@@ -163,6 +173,8 @@ public class ObjectTable {
         }
         return false;
     }
+
+
 
 
     private Container findOldest() {

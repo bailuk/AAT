@@ -51,6 +51,7 @@ public class CacheService extends VirtualService {
         table.logLocked();
         getContext().unregisterReceiver(onFileProcessed);
         broadcaster.close();
+        table.close(this);
     }
 
 

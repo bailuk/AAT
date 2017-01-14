@@ -1,16 +1,17 @@
 package ch.bailu.aat.services.icons;
 
+import android.graphics.Bitmap;
+
 import java.io.File;
 import java.io.IOException;
 
 import ch.bailu.aat.gpx.GpxAttributes;
 import ch.bailu.aat.gpx.interfaces.GpxPointInterface;
-import ch.bailu.aat.util.fs.AppDirectory;
-import ch.bailu.aat.util.graphic.AppBitmap;
-import ch.bailu.aat.util.ui.AppLog;
-import ch.bailu.aat.util.fs.FileAccess;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.VirtualService;
+import ch.bailu.aat.util.fs.AppDirectory;
+import ch.bailu.aat.util.fs.FileAccess;
+import ch.bailu.aat.util.ui.AppLog;
 
 public class IconMapService extends VirtualService {
     private final String NKEY_KEY = "class";
@@ -45,7 +46,7 @@ public class IconMapService extends VirtualService {
     }
 
 
-    public AppBitmap getIconSVG(GpxPointInterface point, int size) {
+    public Bitmap getIconSVG(GpxPointInterface point, int size) {
         return cache.getIcon(point, size);
     }
 

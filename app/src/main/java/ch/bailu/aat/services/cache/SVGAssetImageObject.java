@@ -2,9 +2,6 @@ package ch.bailu.aat.services.cache;
 
 import android.content.res.Resources;
 import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.Picture;
-import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
 
 import com.caverock.androidsvg.SVG;
@@ -13,14 +10,12 @@ import com.caverock.androidsvg.SVGParseException;
 import java.io.IOException;
 
 import ch.bailu.aat.services.ServiceContext;
-import ch.bailu.aat.util.graphic.AppBitmap;
-import ch.bailu.aat.util.graphic.SynchronizedBitmap;
+import ch.bailu.aat.util.graphic.SyncTileBitmap;
 import ch.bailu.aat.util.ui.AppLog;
 
 public class SVGAssetImageObject extends ImageObjectAbstract {
 
-    private final SynchronizedBitmap bitmap = new SynchronizedBitmap();
-
+    private final SyncTileBitmap bitmap = new SyncTileBitmap();
 
     public SVGAssetImageObject(ServiceContext sc, String id, String name, int size) {
         super(id);
@@ -29,12 +24,7 @@ public class SVGAssetImageObject extends ImageObjectAbstract {
         try {
             SVG svg = SVG.getFromAsset(sc.getContext().getAssets(), name);
 
-            AppBitmap b = new AppBitmap(size, size, true);
-            Picture p = svg.renderToPicture();
-            Canvas c = b.getAndroidCanvas();
-            c.drawPicture(p, new RectF(0,0,size, size));
-
-            bitmap.set(b);
+            bitmap.set(svg, size);
 
         } catch (SVGParseException e) {
             AppLog.e(sc.getContext(), e);
@@ -53,10 +43,6 @@ public class SVGAssetImageObject extends ImageObjectAbstract {
         return bitmap.getDrawable(res);
     }
 
-    @Override
-    public AppBitmap getAppBitmap() {
-        return bitmap.get();
-    }
 
     @Override
     public long getSize() {

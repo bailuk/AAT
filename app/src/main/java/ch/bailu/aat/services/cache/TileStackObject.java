@@ -16,16 +16,14 @@ import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.background.ProcessHandle;
 import ch.bailu.aat.services.cache.TileObject.Source;
 import ch.bailu.aat.util.AppBroadcaster;
-import ch.bailu.aat.util.graphic.AppTileBitmap;
-import ch.bailu.aat.util.graphic.SynchronizedBitmap;
-import ch.bailu.aat.util.ui.AppLog;
+import ch.bailu.aat.util.graphic.SyncTileBitmap;
 
 public class TileStackObject extends ObjectHandle {
 
     public final static TileStackObject NULL=new TileStackObject();
 
     private final TileContainer[] tiles;
-    private final SynchronizedBitmap bitmap=new SynchronizedBitmap();
+    private final SyncTileBitmap bitmap=new SyncTileBitmap();
 
     private final static Paint paint = new Paint();
 
@@ -86,6 +84,7 @@ public class TileStackObject extends ObjectHandle {
         for (TileContainer tile: tiles) {
             tile.free();
         }
+        bitmap.free();
         super.free();
     }
 
@@ -161,22 +160,18 @@ public class TileStackObject extends ObjectHandle {
 
         @Override
         public long bgOnProcess() {
-            AppTileBitmap b = bgReupdate();
-
-            if (canContinue()) {
-                bitmap.set(b);
-                ready=true;
-                return bitmap.getSize();
-            }
-            return 0;
+            TileBitmap b = bgReupdate();
+            bitmap.set(b);
+            ready=true;
+            return bitmap.getSize();
         }
 
 
 
-        private AppTileBitmap bgReupdate() {
+        private TileBitmap bgReupdate() {
 
 
-            AppTileBitmap destination=null;
+            SyncTileBitmap destination=new SyncTileBitmap();
             Canvas canvas=null;
             int alpha=NULL_ALPHA;
 
@@ -191,15 +186,15 @@ public class TileStackObject extends ObjectHandle {
 
                 if (source != null) {
                     if (canvas == null) {
-                        destination = new AppTileBitmap(mapTile.tileSize);
-                        destination.erase();
+                        destination.set(mapTile.tileSize, false);
+                        //destination.erase();
                         canvas = destination.getAndroidCanvas();
                     }
                     tile.filter.applayFilter(canvas, source, alpha);
                     alpha=OVERLAY_ALPHA;
                 }
             }
-            return destination;
+            return destination.getTileBitmap();
         }
 
         @Override
@@ -274,6 +269,7 @@ public class TileStackObject extends ObjectHandle {
 
 
         public void free() {
+
             handle.free();
             handle = ObjectHandle.NULL;
         }

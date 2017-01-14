@@ -1,5 +1,7 @@
 package ch.bailu.aat.services.icons;
 
+import android.graphics.Bitmap;
+
 import java.io.Closeable;
 
 import ch.bailu.aat.gpx.GpxAttributes;
@@ -10,7 +12,6 @@ import ch.bailu.aat.services.cache.ImageObjectAbstract;
 import ch.bailu.aat.services.cache.LockCache;
 import ch.bailu.aat.services.cache.ObjectHandle;
 import ch.bailu.aat.services.cache.SVGAssetImageObject;
-import ch.bailu.aat.util.graphic.AppBitmap;
 
 public class IconCache implements Closeable {
     private final LockCache<ImageObjectAbstract> icons = new LockCache(20);
@@ -23,7 +24,7 @@ public class IconCache implements Closeable {
     }
 
 
-    public AppBitmap getIcon(GpxPointInterface point, int size) {
+    public Bitmap getIcon(GpxPointInterface point, int size) {
         if (scontext.isUp()) {
             GpxAttributes attr = point.getAttributes();
             String path = scontext.getIconMapService().getSVGIconPath(attr);
@@ -42,7 +43,7 @@ public class IconCache implements Closeable {
             }
 
             if (icon != null) {
-                return icon.getAppBitmap();
+                return icon.getBitmap();
             }
         }
         return null;

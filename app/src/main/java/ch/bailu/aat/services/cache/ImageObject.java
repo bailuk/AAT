@@ -7,16 +7,15 @@ import android.graphics.drawable.Drawable;
 
 import java.io.File;
 
-import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.background.FileHandle;
-import ch.bailu.aat.util.graphic.AppBitmap;
-import ch.bailu.aat.util.graphic.SynchronizedBitmap;
+import ch.bailu.aat.util.AppBroadcaster;
+import ch.bailu.aat.util.graphic.SyncBitmap;
 
 public class ImageObject extends ImageObjectAbstract {
     public final static ImageObject NULL=new ImageObject();
     
-    private final SynchronizedBitmap bitmap=new SynchronizedBitmap();
+    private final SyncBitmap bitmap=new SyncBitmap();
 
 
     private ImageObject() {
@@ -50,7 +49,7 @@ public class ImageObject extends ImageObjectAbstract {
                 File file = new File(toString());
 
                 if (file.canRead())
-                    bitmap.load(toString());
+                    bitmap.set(new File(toString()));
                 return bitmap.getSize();
             }
 
@@ -72,7 +71,7 @@ public class ImageObject extends ImageObjectAbstract {
     
     @Override
     public boolean isReady() {
-        return bitmap.get() != null;
+        return getBitmap() != null;
     }
 
     @Override
@@ -85,10 +84,7 @@ public class ImageObject extends ImageObjectAbstract {
         return bitmap.getDrawable(res);
     }
 
-    @Override
-    public AppBitmap getAppBitmap() {
-        return bitmap.get();
-    }
+
 
 
     public static class Factory extends ObjectHandle.Factory {

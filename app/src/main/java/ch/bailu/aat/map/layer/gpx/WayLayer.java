@@ -2,12 +2,13 @@ package ch.bailu.aat.map.layer.gpx;
 
 import android.content.SharedPreferences;
 
+import org.mapsforge.core.graphics.Bitmap;
 import org.mapsforge.core.model.LatLong;
 import org.mapsforge.core.model.Point;
+import org.mapsforge.map.android.graphics.AndroidBitmap;
 
 import ch.bailu.aat.map.MapContext;
 import ch.bailu.aat.map.TwoNodes;
-import ch.bailu.aat.util.graphic.AppBitmap;
 import ch.bailu.aat.util.ui.AppTheme;
 
 public class WayLayer extends GpxLayer {
@@ -87,17 +88,19 @@ public class WayLayer extends GpxLayer {
         public void drawNode(TwoNodes.PixelNode node) {
             if (node.isVisible() && count < MAX_VISIBLE_NODES) {
 
-                AppBitmap nodeBitmap = null;
+                Bitmap nodeBitmap = null;
                 if (mcontext.getSContext().isUp()) {
 
+                    android.graphics.Bitmap b = mcontext.getSContext().getIconMapService().getIconSVG(node.point,
+                            icon_size);
 
-                    nodeBitmap =
-                            mcontext.getSContext().getIconMapService().getIconSVG(node.point,
-                                    icon_size);
+                    if (b != null)
+                        nodeBitmap = new AndroidBitmap(b);
+
                 }
 
                 if (nodeBitmap != null) {
-                    mcontext.draw().bitmap(nodeBitmap.getBitmap(), node.pixel);
+                    mcontext.draw().bitmap(nodeBitmap, node.pixel);
                 } else {
                     mcontext.draw().bitmap(
                             mcontext.draw().getNodeBitmap(),

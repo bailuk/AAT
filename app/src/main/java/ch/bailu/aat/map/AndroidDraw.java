@@ -12,7 +12,7 @@ import org.mapsforge.core.graphics.Canvas;
 import org.mapsforge.core.graphics.Paint;
 import org.mapsforge.map.android.graphics.AndroidGraphicFactory;
 
-import ch.bailu.aat.util.graphic.AppTileBitmap;
+import ch.bailu.aat.util.graphic.SyncTileBitmap;
 import ch.bailu.aat.util.ui.AppDensity;
 
 public class AndroidDraw implements MapDraw {
@@ -31,7 +31,7 @@ public class AndroidDraw implements MapDraw {
     private int left=0, top=0, bottom=0, right = 0;
 
 
-    private final AppTileBitmap nodeBitmap;
+    private final SyncTileBitmap nodeBitmap = new SyncTileBitmap();
     private final Resources resources;
 
 
@@ -43,7 +43,7 @@ public class AndroidDraw implements MapDraw {
         textHeight  = textPaint.getTextHeight("X")+5;
         backgroundPaint = MapPaint.createBackgroundPaint();
 
-        nodeBitmap = NodePainter.createNodeMF(res);
+        nodeBitmap.set(NodePainter.createNodeMF(res));
         resources = r;
     }
 

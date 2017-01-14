@@ -19,7 +19,7 @@ public class SolidMapTileStack extends SolidCheckList {
 
 
 
-    private final static Source[] SOURCES = new Source[] {
+    public final static Source[] SOURCES = new Source[] {
             //ElevationColorTile.ELEVATION_COLOR,
             MapsForgeTileObject.MAPSFORGE,
             // MAPNIK_GRAY,

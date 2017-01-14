@@ -1,23 +1,21 @@
 package ch.bailu.aat.services.cache;
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
 
+import org.mapsforge.core.graphics.TileBitmap;
 import org.mapsforge.core.model.Tile;
 import org.osmdroid.tileprovider.MapTile;
 import org.osmdroid.tileprovider.tilesource.XYTileSource;
 
 import java.io.File;
 
-import ch.bailu.aat.util.AppBroadcaster;
-import ch.bailu.aat.util.fs.AppDirectory;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.background.DownloadHandle;
 import ch.bailu.aat.services.background.FileHandle;
-import ch.bailu.aat.util.graphic.AppBitmap;
-import ch.bailu.aat.util.graphic.SynchronizedBitmap;
+import ch.bailu.aat.util.AppBroadcaster;
+import ch.bailu.aat.util.fs.AppDirectory;
+import ch.bailu.aat.util.graphic.SyncTileBitmap;
 
 
 public class BitmapTileObject extends TileObject {
@@ -30,12 +28,11 @@ public class BitmapTileObject extends TileObject {
     private final String url;
 
 
-    private final SynchronizedBitmap bitmap=new SynchronizedBitmap();
+    private final SyncTileBitmap bitmap=new SyncTileBitmap();
 
 
     public BitmapTileObject(String id, ServiceContext cs,  Tile t, Source s) {
         super(id);
-        
         tile = t;
         source=s;
         url = source.getTileURLString(tile);
@@ -48,10 +45,12 @@ public class BitmapTileObject extends TileObject {
             @Override
             public long bgOnProcess() {
                 if (download.isLocked()==false) {
-                    bitmap.load(toString());//,EmptyTileObject.NULL_BITMAP.get());
-                    return bitmap.getSize();
+
+                    File file = new File(toString());
+                    bitmap.set(file, TILE_SIZE, true);
+
                 }
-                return 0;
+                return bitmap.getSize();
             }
 
             @Override
@@ -62,6 +61,15 @@ public class BitmapTileObject extends TileObject {
         
     }
 
+    @Override
+    public TileBitmap getTileBitmap() {
+        return bitmap.getTileBitmap();
+    }
+
+    @Override
+    public Tile getTile() {
+        return tile;
+    }
     
     @Override
     public void onInsert(ServiceContext sc) {
@@ -85,7 +93,7 @@ public class BitmapTileObject extends TileObject {
 
     @Override
     public boolean isLoaded() {
-        return bitmap.get()!=null;
+        return bitmap!=null;
     }
 
 
@@ -117,7 +125,7 @@ public class BitmapTileObject extends TileObject {
 
     @Override
     public boolean isReady() {
-        boolean d = bitmap.get()!=null;
+        boolean d = bitmap!=null;
         boolean l = isLoadable()==false;
         
         return  d || l;
@@ -126,7 +134,7 @@ public class BitmapTileObject extends TileObject {
     
     @Override
     public long getSize() {
-        return bitmap.getSize();
+        return getBytesHack(TILE_SIZE);
     }
 
     @Override
@@ -134,15 +142,6 @@ public class BitmapTileObject extends TileObject {
         return bitmap.getAndroidBitmap();
     }
 
-    @Override
-    public Drawable getDrawable(Resources res) {
-        return bitmap.getDrawable(res);
-    }
-
-    @Override
-    public AppBitmap getAppBitmap() {
-        return bitmap.get();
-    }
 
 
     public static class Factory extends ObjectHandle.Factory {

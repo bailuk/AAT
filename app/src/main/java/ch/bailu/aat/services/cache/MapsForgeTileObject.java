@@ -1,24 +1,23 @@
 package ch.bailu.aat.services.cache;
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
 
 import org.mapsforge.core.graphics.TileBitmap;
 import org.mapsforge.core.model.Tile;
-import org.mapsforge.map.android.graphics.AndroidGraphicFactory;
 import org.mapsforge.map.model.common.Observer;
 
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.util.AppBroadcaster;
-import ch.bailu.aat.util.graphic.AppBitmap;
+import ch.bailu.aat.util.graphic.SyncTileBitmap;
 
 public class MapsForgeTileObject extends TileObject implements Observer {
     private final ServiceContext scontext;
     private final Tile tile;
 
-    private TileBitmap bitmap = null;
+    private final SyncTileBitmap bitmap = new SyncTileBitmap();
+
+
     public MapsForgeTileObject(String id, ServiceContext sc, Tile t) {
         super(id);
         scontext = sc;
@@ -31,7 +30,7 @@ public class MapsForgeTileObject extends TileObject implements Observer {
         TileBitmap b = scontext.getRenderService().getTile(tile);
 
         if (b != null) {
-            bitmap = b;
+            bitmap.set(b);
             AppBroadcaster.broadcast(scontext.getContext(),
                     AppBroadcaster.FILE_CHANGED_INCACHE,
                     toString());
@@ -40,21 +39,11 @@ public class MapsForgeTileObject extends TileObject implements Observer {
 
     @Override
     public Bitmap getBitmap() {
-        if (bitmap != null) {
-            return AndroidGraphicFactory.getBitmap(bitmap);
-        }
-        return null;
+        return bitmap.getAndroidBitmap();
     }
 
-    @Override
-    public Drawable getDrawable(Resources res) {
-        return null;
-    }
 
-    @Override
-    public AppBitmap getAppBitmap() {
-        return null;
-    }
+
 
     @Override
     public void reDownload(ServiceContext sc) {
@@ -85,6 +74,7 @@ public class MapsForgeTileObject extends TileObject implements Observer {
     @Override
     public void onRemove(ServiceContext sc) {
         sc.getRenderService().freeFromCache(this);
+        bitmap.free();
         super.onRemove(sc);
     }
 
@@ -92,6 +82,11 @@ public class MapsForgeTileObject extends TileObject implements Observer {
     @Override
     public long getSize() {
         return getBytesHack(tile.tileSize);
+    }
+
+    @Override
+    public TileBitmap getTileBitmap() {
+        return bitmap.getTileBitmap();
     }
 
     public Tile getTile() {

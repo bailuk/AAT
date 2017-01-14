@@ -7,13 +7,13 @@ import android.graphics.Point;
 import android.graphics.Rect;
 import android.util.SparseArray;
 
+import org.mapsforge.core.graphics.TileBitmap;
 import org.mapsforge.core.model.Tile;
 import org.osmdroid.util.GeoPoint;
 
 import java.util.ArrayList;
 
 import ch.bailu.aat.coordinates.SrtmCoordinates;
-import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.background.ProcessHandle;
 import ch.bailu.aat.services.dem.Dem3Tile;
@@ -22,7 +22,8 @@ import ch.bailu.aat.services.dem.DemGeoToIndex;
 import ch.bailu.aat.services.dem.DemProvider;
 import ch.bailu.aat.services.dem.DemSplitter;
 import ch.bailu.aat.services.dem.ElevationUpdaterClient;
-import ch.bailu.aat.util.graphic.SynchronizedBitmap;
+import ch.bailu.aat.util.AppBroadcaster;
+import ch.bailu.aat.util.graphic.SyncTileBitmap;
 import microsoft.mappoint.TileSystem;
 
 public abstract class ElevationTile extends TileObject implements ElevationUpdaterClient{
@@ -33,7 +34,7 @@ public abstract class ElevationTile extends TileObject implements ElevationUpdat
     private boolean updateLock=false;
     
     
-    private final SynchronizedBitmap bitmap=new SynchronizedBitmap();
+    private final SyncTileBitmap bitmap=new SyncTileBitmap();
 
     private final SparseArray<TilePainter> tilePainterList = new SparseArray<>(25);
     
@@ -49,8 +50,18 @@ public abstract class ElevationTile extends TileObject implements ElevationUpdat
         split=_split;
     }
 
-    
-    
+
+    @Override
+    public TileBitmap getTileBitmap() {
+        return bitmap.getTileBitmap();
+    }
+
+    @Override
+    public Tile getTile() {
+        return map_tile;
+    }
+
+
     public DemProvider split(DemProvider dem) {
         int i=split;
         while(i>0) {
@@ -343,7 +354,8 @@ public abstract class ElevationTile extends TileObject implements ElevationUpdat
             Bitmap tile = bitmap.getAndroidBitmap();
 
             if (tile == null) {
-                tile = SynchronizedBitmap.createBitmap(TILE_SIZE, TILE_SIZE);
+                bitmap.set(TILE_SIZE, true);
+                tile = bitmap.getAndroidBitmap();
                 tile.eraseColor(Color.TRANSPARENT);
             }
 
@@ -357,7 +369,6 @@ public abstract class ElevationTile extends TileObject implements ElevationUpdat
                     interR.height());
 
 
-            bitmap.set(tile);
             updateLock=false;
 
             return interR.width()*interR.height()*2;

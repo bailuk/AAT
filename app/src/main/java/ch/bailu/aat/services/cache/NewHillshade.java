@@ -1,8 +1,6 @@
 package ch.bailu.aat.services.cache;
 
 import android.content.Context;
-import android.content.res.Resources;
-import android.graphics.drawable.Drawable;
 
 import org.mapsforge.core.model.Tile;
 
@@ -13,7 +11,6 @@ import ch.bailu.aat.services.dem.DemProvider;
 import ch.bailu.aat.services.dem.DemSplitter;
 import ch.bailu.aat.services.dem.MultiCell;
 import ch.bailu.aat.services.dem.MultiCell8;
-import ch.bailu.aat.util.graphic.AppBitmap;
 
 public class NewHillshade extends ElevationTile {
 
@@ -125,15 +122,6 @@ public class NewHillshade extends ElevationTile {
         return split;
     }
 
-    @Override
-    public Drawable getDrawable(Resources res) {
-        return null;
-    }
-
-    @Override
-    public AppBitmap getAppBitmap() {
-        return null;
-    }
 
     public static class Factory extends ObjectHandle.Factory {
         private final Tile mapTile;

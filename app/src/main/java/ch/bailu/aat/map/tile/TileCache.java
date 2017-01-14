@@ -7,23 +7,23 @@ import java.io.Closeable;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.cache.TileStackObject;
 
-public class TileCache implements Closeable {
+public class TileCache<T> implements Closeable {
 
 
-    public static final TileCache NULL = new TileCache();
+    public static final TileCache NULL = new TileCache<TileStackObject>();
 
 
-    public TileStackObject get(String string) {
+    public T get(String string) {
         return null;
     }
 
 
-    public TileStackObject get(Tile mt) {
+    public T get(Tile mt) {
         return null;
     }
 
 
-    public void put(TileStackObject handle) {}
+    public void put(T handle) {}
 
     @Override
     public void close() {}

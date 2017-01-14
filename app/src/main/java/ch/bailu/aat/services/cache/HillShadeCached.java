@@ -2,10 +2,9 @@ package ch.bailu.aat.services.cache;
 
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
 
+import org.mapsforge.core.graphics.TileBitmap;
 import org.mapsforge.core.model.Tile;
 
 import java.io.File;
@@ -16,7 +15,6 @@ import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.background.FileHandle;
 import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.util.fs.FileAccess;
-import ch.bailu.aat.util.graphic.AppBitmap;
 
 public class HillShadeCached extends TileObject {
 
@@ -28,11 +26,12 @@ public class HillShadeCached extends TileObject {
     private final String bitmapID, demID;
 
 
+    private final Tile mapTile;
 
     public HillShadeCached(String id, ServiceContext sc,  Tile t) {
         super(id);
 
-
+        mapTile = t;
 
         demID = NewHillshade.ELEVATION_HILLSHADE8.getID(t, sc.getContext());
         demFactory = NewHillshade.ELEVATION_HILLSHADE8.getFactory(t);
@@ -76,6 +75,16 @@ public class HillShadeCached extends TileObject {
 
     }
 
+    @Override
+    public TileBitmap getTileBitmap() {
+        if (tile != null) return tile.getTileBitmap();
+        return null;
+    }
+
+    @Override
+    public Tile getTile() {
+        return mapTile;
+    }
 
     @Override
     public void onInsert(ServiceContext sc) {
@@ -159,15 +168,6 @@ public class HillShadeCached extends TileObject {
         return tile.getBitmap();
     }
 
-    @Override
-    public Drawable getDrawable(Resources res) {
-        return null;
-    }
-
-    @Override
-    public AppBitmap getAppBitmap() {
-        return null;
-    }
 
 
     public static class Factory extends ObjectHandle.Factory {

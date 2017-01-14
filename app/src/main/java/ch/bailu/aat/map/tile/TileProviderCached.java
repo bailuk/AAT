@@ -17,7 +17,7 @@ import ch.bailu.aat.services.cache.TileStackObject;
 public class TileProviderCached extends TileProviderAbstract {
 
 
-    private TileCache cache = TileCache.NULL;
+    private TileCache<TileStackObject> cache = TileCache.NULL;
 
     private final Context context;
     private final ServiceContext scontext;
