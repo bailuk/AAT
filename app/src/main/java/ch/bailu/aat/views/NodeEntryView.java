@@ -9,6 +9,7 @@ import ch.bailu.aat.coordinates.BoundingBoxE6;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.GpxPointNode;
 import ch.bailu.aat.map.layer.gpx.GpxDynLayer;
+import ch.bailu.aat.map.mapsforge.MapsForgeViewStatic;
 import ch.bailu.aat.map.tile.TileProviderCached;
 import ch.bailu.aat.map.MapDensity;
 import ch.bailu.aat.map.osmdroid.OsmViewStatic;
@@ -19,7 +20,7 @@ import ch.bailu.aat.util.ui.AppTheme;
 
 public class NodeEntryView extends LinearLayout {
 
-    private final OsmViewStatic map;
+    private final MapsForgeViewStatic map;
     private final TextView text;
 
     private final GpxDynLayer gpxOverlay;
@@ -31,9 +32,8 @@ public class NodeEntryView extends LinearLayout {
         int previewSize = AppTheme.getBigButtonSize(sc.getContext());
 
 
-        map = new OsmViewStatic(sc,
-                new TileProviderCached(sc),
-                new MapDensity(sc.getContext()));
+        map =  new MapsForgeViewStatic(sc);
+
         gpxOverlay = new GpxDynLayer(map.getMContext() ,-1);
         map.add(gpxOverlay);
 

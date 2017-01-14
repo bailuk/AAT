@@ -18,6 +18,7 @@ import ch.bailu.aat.map.MapViewInterface;
 import ch.bailu.aat.map.TwoNodes;
 import ch.bailu.aat.map.layer.MapLayerInterface;
 import ch.bailu.aat.services.ServiceContext;
+import ch.bailu.aat.util.ui.AppDensity;
 
 public class MapsForgeOnTopView extends View implements MapContext {
 
@@ -28,7 +29,7 @@ public class MapsForgeOnTopView extends View implements MapContext {
 
     private final ArrayList<MapLayerInterface> layers;
 
-    public MapsForgeOnTopView(MapView mapView, MapContext mc, ArrayList<MapLayerInterface> l) {
+    public MapsForgeOnTopView(MapView mapView, MapContext mc, AppDensity d, ArrayList<MapLayerInterface> l) {
         super(mc.getContext());
 
         setWillNotDraw(false);
@@ -36,7 +37,7 @@ public class MapsForgeOnTopView extends View implements MapContext {
         mcontext = mc;
         layers = l;
 
-        metrics = new MapsForgeMetrics(mc.getSContext(), mapView);
+        metrics = new MapsForgeMetrics(mapView, d);
         draw = new AndroidDraw(mc.getMetrics().getDensity(), mc.getContext().getResources());
     }
 

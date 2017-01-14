@@ -16,6 +16,7 @@ import ch.bailu.aat.map.TwoNodes;
 import ch.bailu.aat.map.layer.MapLayerInterface;
 import ch.bailu.aat.map.AndroidDraw;
 import ch.bailu.aat.services.ServiceContext;
+import ch.bailu.aat.util.ui.AppDensity;
 
 public class MapsForgeContext extends Layer implements MapContext, MapLayerInterface {
 
@@ -31,8 +32,11 @@ public class MapsForgeContext extends Layer implements MapContext, MapLayerInter
     private final MapsForgeViewBase mapView;
 
 
-    public MapsForgeContext(MapsForgeViewBase map, ServiceContext sc, String key) {
-        metrics = new MapsForgeMetrics(sc, map);
+    public MapsForgeContext(MapsForgeViewBase map,
+                            ServiceContext sc,
+                            String key,
+                            AppDensity d) {
+        metrics = new MapsForgeMetrics(map, d);
         draw = new AndroidDraw(metrics.getDensity(), sc.getContext().getResources());
         nodes = new TwoNodes(metrics);
         skey = key;

@@ -47,6 +47,11 @@ public class MapsForgeTileLayer extends Layer implements MapLayerInterface, Obse
 
     @Override
     public void draw(BoundingBox box, byte z, Canvas c, Point tlp) {
+        if (z > provider.getMaximumZoomLevel() || z < provider.getMinimumZoomLevel()) {
+            return;
+        }
+
+
         final int tileSize =  displayModel.getTileSize();
         android.graphics.Canvas canvas = AndroidGraphicFactory.getCanvas(c);
 

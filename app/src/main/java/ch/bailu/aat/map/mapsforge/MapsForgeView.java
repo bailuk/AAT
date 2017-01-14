@@ -16,6 +16,7 @@ import ch.bailu.aat.coordinates.BoundingBoxE6;
 import ch.bailu.aat.dispatcher.DispatcherInterface;
 import ch.bailu.aat.map.Attachable;
 import ch.bailu.aat.map.MapContext;
+import ch.bailu.aat.map.MapDensity;
 import ch.bailu.aat.map.MapViewInterface;
 import ch.bailu.aat.map.layer.MapLayerInterface;
 import ch.bailu.aat.map.layer.MapPositionLayer;
@@ -32,7 +33,7 @@ public class MapsForgeView extends MapsForgeViewBase {
 
 
     public MapsForgeView(ServiceContext sc, DispatcherInterface dispatcher, String key) {
-        super(sc, key, new SolidTileSize(sc.getContext()).getTileSize());
+        super(sc, key, new MapDensity(sc.getContext()));
 
         MapPositionLayer pos = new MapPositionLayer(getMContext(), dispatcher);
         add(pos);
@@ -42,7 +43,12 @@ public class MapsForgeView extends MapsForgeViewBase {
 
         setClickable(true);
 
-        overmap = new MapsForgeOnTopView(this, getMContext(), getLayers());
+
+        overmap = new MapsForgeOnTopView(this,
+                getMContext(),
+                new MapDensity(sc.getContext()),
+                getLayers());
+
         addView(overmap);
     }
 

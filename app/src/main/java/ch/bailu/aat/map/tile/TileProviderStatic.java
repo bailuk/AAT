@@ -17,8 +17,8 @@ import ch.bailu.aat.util.ui.AppLog;
 public class TileProviderStatic implements TileProviderInterface, Closeable {
 
     private final ArrayList<TileObject> tiles = new ArrayList<>(10);
-    private final TileObject.Source source;
 
+    private final TileObject.Source source;
     private final ServiceContext scontext;
 
     public TileProviderStatic(ServiceContext sc, TileObject.Source s) {
@@ -35,12 +35,12 @@ public class TileProviderStatic implements TileProviderInterface, Closeable {
 
     @Override
     public int getMaximumZoomLevel() {
-        return 0;
+        return source.getMaximumZoomLevel();
     }
 
     @Override
     public int getMinimumZoomLevel() {
-        return 0;
+        return source.getMinimumZoomLevel();
     }
 
 
@@ -48,20 +48,21 @@ public class TileProviderStatic implements TileProviderInterface, Closeable {
     public TileBitmap get(Tile tile) {
         final TileObject handle = getTileHandle(tile);
 
-        tiles.add(handle);
+        if (handle != null)
+            return handle.getTileBitmap();
 
-        return handle.getTileBitmap();
+        return null;
     }
 
 
     private TileObject getTileHandle(Tile tile) {
         TileObject handle = getTileHandleLevel1(tile);
 
-
         if (handle == null) {
             handle = getTileHandleLevel2(tile);
 
-            if (handle != null) tiles.add(handle);
+            if (handle != null)
+                tiles.add(handle);
         }
 
         return handle;
@@ -126,9 +127,10 @@ public class TileProviderStatic implements TileProviderInterface, Closeable {
 
 
     public boolean isReady() {
+        AppLog.d(this, "Ready?: " + tiles.size());
 
-        for (int i=0; i<tiles.size(); i++) {
-            if (tiles.get(i).isReady()==false) return false;
+        for (TileObject tile: tiles) {
+            if (tile.isReady()==false) return false;
         }
         return true;
     }
@@ -136,8 +138,9 @@ public class TileProviderStatic implements TileProviderInterface, Closeable {
 
     @Override
     public void close() {
-        for (int i=0; i<tiles.size(); i++) {
-            tiles.get(i).free();
+
+        for (TileObject tile: tiles) {
+            tile.free();
         }
         tiles.clear();
     }

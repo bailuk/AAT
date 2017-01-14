@@ -36,8 +36,8 @@ public class MapsForgeMetrics implements MapMetrics {
 
     private int tileSize;
 
-    public MapsForgeMetrics(ServiceContext sc, MapView v) {
-        density = new AppDensity(sc);
+    public MapsForgeMetrics(MapView v, AppDensity d) {
+        density = d;
         mapView = v;
         bounding = v.getBoundingBox();
     }

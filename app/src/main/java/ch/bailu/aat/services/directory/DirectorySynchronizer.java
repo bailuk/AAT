@@ -15,20 +15,20 @@ import java.util.ArrayList;
 
 import ch.bailu.aat.gpx.GpxList;
 import ch.bailu.aat.gpx.interfaces.GpxBigDeltaInterface;
-import ch.bailu.aat.util.AppBroadcaster;
-import ch.bailu.aat.util.fs.AppDirectory;
-import ch.bailu.aat.util.ui.AppLog;
+import ch.bailu.aat.map.mapsforge.MapsForgePreview;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.background.ProcessHandle;
 import ch.bailu.aat.services.cache.GpxObject;
 import ch.bailu.aat.services.cache.GpxObjectStatic;
 import ch.bailu.aat.services.cache.ObjectHandle;
-import ch.bailu.aat.map.osmdroid.OsmPreviewGenerator;
+import ch.bailu.aat.util.AppBroadcaster;
+import ch.bailu.aat.util.fs.AppDirectory;
+import ch.bailu.aat.util.ui.AppLog;
 
 public class DirectorySynchronizer  implements Closeable {
 
     private GpxObject pendingHandle=null;
-    private OsmPreviewGenerator pendingPreviewGenerator=null;
+    private MapsForgePreview pendingPreviewGenerator=null;
 
     private FilesOnDisk filesToAdd=null;
     private final ArrayList<String> filesToRemove = new ArrayList<>();
@@ -350,10 +350,14 @@ public class DirectorySynchronizer  implements Closeable {
             File previewImageFile;
             previewImageFile = AppDirectory.getPreviewFile(new File(pendingHandle.toString()));
             setPendingPreviewGenerator(
+                    new MapsForgePreview(scontext,
+                            pendingHandle.getGpxList(),
+                            previewImageFile)
+                    /*
                     new OsmPreviewGenerator(
                             scontext, 
                             pendingHandle.getGpxList(), 
-                            previewImageFile));
+                            previewImageFile)*/);
             state.ping();
 
 
@@ -372,7 +376,7 @@ public class DirectorySynchronizer  implements Closeable {
     }
 
 
-    private void setPendingPreviewGenerator(OsmPreviewGenerator g) {
+    private void setPendingPreviewGenerator(MapsForgePreview g) {
         if (pendingPreviewGenerator != null) {
             pendingPreviewGenerator.close();
         }

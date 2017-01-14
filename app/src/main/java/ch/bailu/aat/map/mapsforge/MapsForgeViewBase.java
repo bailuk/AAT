@@ -16,6 +16,7 @@ import ch.bailu.aat.coordinates.BoundingBoxE6;
 import ch.bailu.aat.dispatcher.DispatcherInterface;
 import ch.bailu.aat.map.Attachable;
 import ch.bailu.aat.map.MapContext;
+import ch.bailu.aat.map.MapDensity;
 import ch.bailu.aat.map.MapViewInterface;
 import ch.bailu.aat.map.layer.MapLayerInterface;
 import ch.bailu.aat.preferences.Storage;
@@ -26,7 +27,7 @@ public class MapsForgeViewBase extends MapView implements
         MapViewInterface,
         SharedPreferences.OnSharedPreferenceChangeListener {
 
-    private final static byte ZOOM_MAX = 18;
+    private final static byte ZOOM_MAX = 17;
     private final static byte ZOOM_MIN = 4;
 
     private BoundingBox pendingFrameBounding=null;
@@ -38,11 +39,11 @@ public class MapsForgeViewBase extends MapView implements
     private final ArrayList<MapLayerInterface> layers = new ArrayList(10);
 
 
-    public MapsForgeViewBase(ServiceContext sc, String key, int tileSize) {
+    public MapsForgeViewBase(ServiceContext sc, String key, MapDensity d) {
         super(sc.getContext());
-        getModel().displayModel.setFixedTileSize(tileSize);
+        getModel().displayModel.setFixedTileSize(d.getTileSize());
 
-        mcontext = new MapsForgeContext(this, sc, key);
+        mcontext = new MapsForgeContext(this, sc, key, d);
         add(mcontext, mcontext);
 
         storage = Storage.global(mcontext.getContext());
