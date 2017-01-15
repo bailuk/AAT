@@ -377,7 +377,7 @@ public class DirectorySynchronizer  implements Closeable {
 
     private void setPendingPreviewGenerator(MapsForgePreview g) {
         if (pendingPreviewGenerator != null) {
-            pendingPreviewGenerator.close();
+            pendingPreviewGenerator.onDestroy();
         }
         pendingPreviewGenerator=g;
     }

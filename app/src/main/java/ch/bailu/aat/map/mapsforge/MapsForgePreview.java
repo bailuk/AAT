@@ -119,8 +119,8 @@ public class MapsForgePreview extends MapsForgeViewBase {
 
 
     @Override
-    public void close() {
-        super.close();
+    public void onDestroy() {
         provider.close();
+        super.onDestroy();
     }
 }

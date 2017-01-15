@@ -13,15 +13,12 @@ import org.mapsforge.map.layer.Layer;
 import java.util.ArrayList;
 
 import ch.bailu.aat.coordinates.BoundingBoxE6;
-import ch.bailu.aat.dispatcher.DispatcherInterface;
-import ch.bailu.aat.map.Attachable;
 import ch.bailu.aat.map.MapContext;
 import ch.bailu.aat.map.MapDensity;
 import ch.bailu.aat.map.MapViewInterface;
 import ch.bailu.aat.map.layer.MapLayerInterface;
 import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat.services.ServiceContext;
-import ch.bailu.aat.util.ui.AppLog;
 
 public class MapsForgeViewBase extends MapView implements
         MapViewInterface,
@@ -70,11 +67,6 @@ public class MapsForgeViewBase extends MapView implements
     @Override
     public void reDownloadTiles() {}
 
-    @Override
-    public void close() {
-        AppLog.d(this, "destroyAll()");
-        destroyAll();
-    }
 
     public void add(Layer mfLayer, MapLayerInterface layer) {
         this.addLayer(mfLayer);
@@ -148,24 +140,6 @@ public class MapsForgeViewBase extends MapView implements
             l.onSharedPreferenceChanged(p, key);
     }
 
-    @Override
-    public void onAttachedToWindow() {
-        super.onAttachedToWindow();
-        attached = true;
-        storage.register(this);
-        for (Attachable layer: layers) layer.onAttached();
-    }
-
-    @Override
-    public void onDetachedFromWindow() {
-        super.onDetachedFromWindow();
-        attached = false;
-
-        storage.unregister(this);
-
-        for (Attachable layer: layers) layer.onDetached();
-    }
-
 
     @Override
     public void onLayout(boolean c, int l, int t, int r, int b) {
@@ -174,5 +148,24 @@ public class MapsForgeViewBase extends MapView implements
 
     public ArrayList<MapLayerInterface> getLayers() {
         return layers;
+    }
+
+    @Override
+    public void onResumeWithService() {
+        storage.register(this);
+        for(MapLayerInterface l: layers) l.onAttached();
+        attached=true;
+    }
+
+    @Override
+    public void onPauseWithService() {
+        storage.unregister(this);
+        for(MapLayerInterface l: layers) l.onDetached();
+        attached=false;
+    }
+
+    @Override
+    public void onDestroy() {
+        destroyAll();
     }
 }

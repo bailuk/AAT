@@ -43,7 +43,7 @@ public class MapFactory {
         d = dispatcher;
         m = map;
         mc = m.getMContext();
-        dispatcher.toClose(m);
+        dispatcher.addLC(m);
     }
 
 

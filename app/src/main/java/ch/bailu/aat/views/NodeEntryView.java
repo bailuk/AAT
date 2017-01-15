@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import ch.bailu.aat.activities.AbsDispatcher;
 import ch.bailu.aat.coordinates.BoundingBoxE6;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.GpxPointNode;
@@ -22,7 +23,7 @@ public class NodeEntryView extends LinearLayout {
 
     private final GpxDynLayer gpxOverlay;
 
-    public NodeEntryView(ServiceContext sc) {
+    public NodeEntryView(ServiceContext sc, AbsDispatcher d) {
         super(sc.getContext());
         setOrientation(HORIZONTAL);
 
@@ -30,6 +31,7 @@ public class NodeEntryView extends LinearLayout {
 
 
         map =  new MapsForgeViewStatic(sc);
+        d.addLC(map);
 
         gpxOverlay = new GpxDynLayer(map.getMContext() ,-1);
         map.add(gpxOverlay);

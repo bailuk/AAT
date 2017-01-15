@@ -57,7 +57,7 @@ public class GpxEditorActivity extends AbsFileContentActivity
         };
 
 
-        NodeListView nodeList = new NodeListView(getServiceContext());
+        NodeListView nodeList = new NodeListView(getServiceContext(), this);
         addTarget(nodeList, InfoID.EDITOR_OVERLAY);
 
         VerticalScrollView summary = new VerticalScrollView(this);

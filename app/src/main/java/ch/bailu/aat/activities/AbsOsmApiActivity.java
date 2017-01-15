@@ -126,7 +126,7 @@ public abstract class AbsOsmApiActivity extends AbsDispatcher implements OnClick
         view.addView(postLabel, layout);
         //AppTheme.themify(postLabel);
 
-        list = new NodeListView(getServiceContext());
+        list = new NodeListView(getServiceContext(), this);
         view.addView(list,layout);
 
         return view;

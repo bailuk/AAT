@@ -8,9 +8,10 @@ import java.io.Closeable;
 import java.io.IOException;
 
 import ch.bailu.aat.coordinates.BoundingBoxE6;
+import ch.bailu.aat.dispatcher.LifeCycleInterface;
 import ch.bailu.aat.map.layer.MapLayerInterface;
 
-public interface MapViewInterface extends Closeable {
+public interface MapViewInterface extends LifeCycleInterface {
     void frameBounding(BoundingBoxE6 boundingBox);
 
     void zoomOut();
@@ -33,7 +34,4 @@ public interface MapViewInterface extends Closeable {
     View toView();
 
     void reDownloadTiles();
-
-    @Override
-    void close();
 }

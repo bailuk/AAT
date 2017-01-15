@@ -158,7 +158,6 @@ public class TileProvider implements TileProviderInterface {
 
 
             if (handle instanceof TileObject) {
-                AppLog.d(this, id);
                 return (TileObject) handle;
             }
         }

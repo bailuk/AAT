@@ -2,13 +2,11 @@ package ch.bailu.aat.activities;
 
 import android.os.Bundle;
 
-import java.io.Closeable;
-import java.io.IOException;
-import java.util.ArrayList;
-
 import ch.bailu.aat.dispatcher.ContentSource;
 import ch.bailu.aat.dispatcher.Dispatcher;
 import ch.bailu.aat.dispatcher.DispatcherInterface;
+import ch.bailu.aat.dispatcher.LifeCycleDispatcher;
+import ch.bailu.aat.dispatcher.LifeCycleInterface;
 import ch.bailu.aat.dispatcher.OnContentUpdatedInterface;
 import ch.bailu.aat.gpx.InfoID;
 
@@ -16,8 +14,7 @@ public abstract class AbsDispatcher extends AbsMenu
         implements DispatcherInterface {
 
     private Dispatcher dispatcher = null;
-
-    private ArrayList<Closeable> toClose;
+    private LifeCycleDispatcher lifeCycle = null;
 
 
     @Override
@@ -25,13 +22,12 @@ public abstract class AbsDispatcher extends AbsMenu
         super.onCreate(savedInstanceState);
 
         dispatcher = new Dispatcher();
-
-        toClose = new ArrayList(10);
+        lifeCycle = new LifeCycleDispatcher();
     }
 
 
-    public void toClose(Closeable c) {
-        toClose.add(c);
+    public void addLC(LifeCycleInterface t) {
+        lifeCycle.add(t);
     }
 
     public void addTarget(OnContentUpdatedInterface target) {
@@ -52,24 +48,20 @@ public abstract class AbsDispatcher extends AbsMenu
 
     @Override
     public void onResumeWithService() {
+        lifeCycle.onResumeWithService();
         dispatcher.onResume();
     }
 
     @Override
     public void onPauseWithService() {
+        lifeCycle.onPauseWithService();
         dispatcher.onPause();
     }
 
     @Override
     public void onDestroy() {
-        for (Closeable c: toClose)
-            try {
-                c.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-        toClose.clear();
+        lifeCycle.onDestroy();
+        lifeCycle = null;
         dispatcher = null;
         super.onDestroy();
 

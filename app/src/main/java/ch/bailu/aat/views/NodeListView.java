@@ -9,6 +9,7 @@ import android.widget.AdapterView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
+import ch.bailu.aat.activities.AbsDispatcher;
 import ch.bailu.aat.activities.ActivitySwitcher;
 import ch.bailu.aat.activities.NodeDetailActivity;
 import ch.bailu.aat.dispatcher.OnContentUpdatedInterface;
@@ -32,11 +33,13 @@ public class NodeListView extends ListView implements
     private final GpxInformationCache cachedInfo = new GpxInformationCache();
 
     private final ServiceContext scontext;
+    private final AbsDispatcher dispatcher;
 
 
-    public NodeListView(ServiceContext sc) {
+    public NodeListView(ServiceContext sc, AbsDispatcher d) {
         super(sc.getContext());
         scontext = sc;
+        dispatcher = d;
 
         AppTheme.themify(this, AppTheme.getHighlightColor());
 
@@ -72,7 +75,7 @@ public class NodeListView extends ListView implements
         NodeEntryView entry = (NodeEntryView) recycle;
 
         if (entry == null) {
-            entry = new NodeEntryView(scontext);
+            entry = new NodeEntryView(scontext, dispatcher);
         }
 
         entry.update(cachedInfo.infoID, cachedInfo.info, array.get(position));
