@@ -25,7 +25,10 @@ public class MapsForgeTileLayerStack implements MapLayerInterface {
             new ArrayList(SolidMapTileStack.SOURCES.length);
 
 
-    public MapsForgeTileLayerStack(MapsForgeView mapView) {
+    private final MapsForgeView mapView;
+
+    public MapsForgeTileLayerStack(MapsForgeView v) {
+        mapView = v;
         Context context = mapView.getContext();
         ServiceContext scontext = mapView.getMContext().getSContext();
 
@@ -55,11 +58,21 @@ public class MapsForgeTileLayerStack implements MapLayerInterface {
 
 
     private void setEnabled() {
+        int minZoom=8, maxZoom = 10;
+
         boolean[] enabled = stiles.getEnabledArray();
 
         for (int i=0; i<enabled.length; i++) {
             layers.get(i).setVisible(enabled[i]);
+
+            if (enabled[i]) {
+                maxZoom = Math.max(SolidMapTileStack.SOURCES[i].getMaximumZoomLevel(), maxZoom);
+                minZoom = Math.min(SolidMapTileStack.SOURCES[i].getMinimumZoomLevel(), minZoom);
+            }
         }
+
+        mapView.setZoomLevelMin((byte)minZoom);
+        mapView.setZoomLevelMax((byte)maxZoom);
     }
 
 
