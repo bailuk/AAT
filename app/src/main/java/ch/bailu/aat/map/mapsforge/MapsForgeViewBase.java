@@ -27,9 +27,6 @@ public class MapsForgeViewBase extends MapView implements
         MapViewInterface,
         SharedPreferences.OnSharedPreferenceChangeListener {
 
-//    private final static byte ZOOM_MAX = 17;
-//    private final static byte ZOOM_MIN = 4;
-
     private BoundingBox pendingFrameBounding=null;
 
     private boolean attached=false;
@@ -50,9 +47,6 @@ public class MapsForgeViewBase extends MapView implements
 
         getMapScaleBar().setVisible(false);
         setBuiltInZoomControls(false);
-
-//        setZoomLevelMax(ZOOM_MAX);
-//        setZoomLevelMin(ZOOM_MIN);
     }
 
 
@@ -181,5 +175,4 @@ public class MapsForgeViewBase extends MapView implements
     public ArrayList<MapLayerInterface> getLayers() {
         return layers;
     }
-
 }
