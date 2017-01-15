@@ -27,8 +27,8 @@ public class MapsForgeViewBase extends MapView implements
         MapViewInterface,
         SharedPreferences.OnSharedPreferenceChangeListener {
 
-    private final static byte ZOOM_MAX = 17;
-    private final static byte ZOOM_MIN = 4;
+//    private final static byte ZOOM_MAX = 17;
+//    private final static byte ZOOM_MIN = 4;
 
     private BoundingBox pendingFrameBounding=null;
 
@@ -51,8 +51,8 @@ public class MapsForgeViewBase extends MapView implements
         getMapScaleBar().setVisible(false);
         setBuiltInZoomControls(false);
 
-        setZoomLevelMax(ZOOM_MAX);
-        setZoomLevelMin(ZOOM_MIN);
+//        setZoomLevelMax(ZOOM_MAX);
+//        setZoomLevelMin(ZOOM_MIN);
     }
 
 
@@ -74,9 +74,7 @@ public class MapsForgeViewBase extends MapView implements
     }
 
     @Override
-    public void reDownloadTiles() {
-
-    }
+    public void reDownloadTiles() {}
 
     @Override
     public void close() {
@@ -127,8 +125,8 @@ public class MapsForgeViewBase extends MapView implements
                     bounding,
                     getModel().displayModel.getTileSize());
 
-            if (zoom > ZOOM_MAX) zoom = ZOOM_MAX;
-            if (zoom < ZOOM_MIN) zoom = ZOOM_MIN;
+            zoom = (byte) Math.min(zoom, getModel().mapViewPosition.getZoomLevelMax());
+            zoom = (byte) Math.max(zoom, getModel().mapViewPosition.getZoomLevelMin());
 
             MapPosition position = new MapPosition(bounding.getCenterPoint(), zoom);
             getModel().mapViewPosition.setMapPosition(position);

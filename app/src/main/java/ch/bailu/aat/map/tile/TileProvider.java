@@ -26,7 +26,7 @@ public class TileProvider implements TileProviderInterface {
     private final ArrayList<Observer> observers = new ArrayList(2);
     private final TileObject.Source source;
 
-    private TileCache<TileObject> cache = TileObjectCache.NULL_TILE_OBJECT_CACHE;
+    private TileCache<TileObject> cache = TileObjectCache.NULL;
 
 
     public TileProvider(ServiceContext sc, TileObject.Source s) {
@@ -110,7 +110,7 @@ public class TileProvider implements TileProviderInterface {
 
     @Override
     public void reDownloadTiles() {
-
+        cache.reDownloadTiles(scontext);
     }
 
     @Override
@@ -128,7 +128,7 @@ public class TileProvider implements TileProviderInterface {
 
         scontext.getContext().unregisterReceiver(onFileChanged);
         cache.reset();
-        cache = TileObjectCache.NULL_TILE_OBJECT_CACHE;
+        cache = TileObjectCache.NULL;
     }
 
 

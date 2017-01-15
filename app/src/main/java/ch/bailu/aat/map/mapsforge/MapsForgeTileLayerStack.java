@@ -72,6 +72,11 @@ public class MapsForgeTileLayerStack implements MapLayerInterface {
         mapView.setZoomLevelMax((byte)maxZoom);
     }
 
+    public void reDownloadTiles() {
+        for(MapsForgeTileLayer l: layers) {
+            if (l.isVisible()) l.reDownloadTiles();
+        }
+    }
 
     @Override
     public void onLayout(boolean changed, int l, int t, int r, int b) {
@@ -103,4 +108,5 @@ public class MapsForgeTileLayerStack implements MapLayerInterface {
     public void onDetached() {
 
     }
+
 }

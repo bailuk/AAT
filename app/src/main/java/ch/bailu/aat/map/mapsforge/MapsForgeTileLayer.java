@@ -24,8 +24,8 @@ import ch.bailu.aat.services.cache.TileObject;
 import ch.bailu.aat.util.ui.AppLog;
 
 public class MapsForgeTileLayer extends Layer implements MapLayerInterface, Observer {
-    public final static int TRANSPARENT = 150;
-    public final static int OPAQUE = 255;
+//    public final static int TRANSPARENT = 150;
+//    public final static int OPAQUE = 255;
 
     private final TileProviderInterface provider;
 
@@ -37,11 +37,7 @@ public class MapsForgeTileLayer extends Layer implements MapLayerInterface, Obse
 
     public MapsForgeTileLayer(TileProviderInterface p, int alpha) {
         provider = p;
-
         tilePaint.setAlpha(alpha);
-
-
-
     }
 
 
@@ -128,6 +124,11 @@ public class MapsForgeTileLayer extends Layer implements MapLayerInterface, Obse
     private void detach() {
         provider.removeObserver(this);
         provider.onDetached();
+    }
+
+
+    public void reDownloadTiles() {
+        provider.reDownloadTiles();
     }
 
 

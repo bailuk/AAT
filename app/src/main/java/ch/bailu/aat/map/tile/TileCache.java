@@ -8,10 +8,6 @@ import ch.bailu.aat.services.ServiceContext;
 
 public class TileCache<T> implements Closeable {
 
-
-    //public static final TileCache NULL = new TileCache<TileStackObject>();
-
-
     public T get(String string) {
         return null;
     }

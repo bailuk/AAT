@@ -7,12 +7,14 @@ import ch.bailu.aat.services.cache.LockCache;
 import ch.bailu.aat.services.cache.TileObject;
 
 public class TileObjectCache extends TileCache<TileObject> {
-    private final static int INITIAL_CAPACITY = 5;
+    public static final TileCache<TileObject> NULL
+            = new TileCache<TileObject>() {};
+
+
+    private final static int INITIAL_CAPACITY = 20;
+
 
     private final LockCache<TileObject> tiles = new LockCache(INITIAL_CAPACITY);
-
-    public static final TileCache<TileObject> NULL_TILE_OBJECT_CACHE
-            = new TileCache<TileObject>() {};
 
 
     @Override
@@ -34,11 +36,6 @@ public class TileObjectCache extends TileCache<TileObject> {
         }
         return null;
     }
-
-//    public static boolean compare(MapTile a, Tile b) {
-//        return a.getX() == b.tileX && a.getY() == b.tileY && a.getZoomLevel() == b.zoomLevel;
-//    }
-
 
     public static boolean compare(Tile a, Tile b) {
         return a.tileX == b.tileX && a.tileY == b.tileY && a.zoomLevel == b.zoomLevel;
