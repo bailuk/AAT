@@ -142,14 +142,11 @@ public class TestActivity extends AbsDispatcher {
         final MultiView mv = new MultiView(this, SOLID_KEY);
 
 
-//        final OsmViewInteractive osm = new OsmViewInteractive(getServiceContext(), this, SOLID_KEY);
         final MapsForgeView mf = new MapsForgeView(getServiceContext(), this, SOLID_KEY);
 
         fillMap(mf);
-//        fillMap(osm);
 
         mv.add(mf, "MapsForge");
-//        mv.add(osm,getString(R.string.intro_map));
         mv.add(locationView, getString(R.string.gps));
 
         mv.add(trackerView, getString(R.string.tracker));
@@ -157,7 +154,6 @@ public class TestActivity extends AbsDispatcher {
 
         mv.add(testsView, "Tests*");
         mv.add(statusTextView, getString(R.string.intro_status));
-
 
         return mv;
     }

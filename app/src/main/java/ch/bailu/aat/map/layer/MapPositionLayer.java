@@ -14,6 +14,7 @@ import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.map.MapContext;
 import ch.bailu.aat.preferences.SolidPositionLock;
 import ch.bailu.aat.preferences.Storage;
+import ch.bailu.aat.util.ui.AppLog;
 
 public class MapPositionLayer implements MapLayerInterface, OnContentUpdatedInterface {
 
@@ -35,7 +36,6 @@ public class MapPositionLayer implements MapLayerInterface, OnContentUpdatedInte
         slock = new SolidPositionLock(mcontext.getContext(), mcontext.getSolidKey());
 
         loadState();
-
         d.addTarget(this, InfoID.LOCATION);
     }
 
@@ -59,9 +59,9 @@ public class MapPositionLayer implements MapLayerInterface, OnContentUpdatedInte
                 .toLatLong();
 
         byte z = (byte) storage.readInteger(mcontext.getSolidKey() + ZOOM_SUFFIX);
-        mcontext.getMapView().setZoomLevel(z);
 
-        setMapCenter();
+        mcontext.getMapView().setZoomLevel(z);
+        mcontext.getMapView().setCenter(gpsLocation);
     }
 
 
@@ -72,11 +72,11 @@ public class MapPositionLayer implements MapLayerInterface, OnContentUpdatedInte
     }
 
     private void saveState() {
-        LatLongE6 point = new LatLongE6(mcontext.getMetrics().getBoundingBox().getCenterPoint());
+        LatLongE6 center = new LatLongE6(mcontext.getMetrics().getBoundingBox().getCenterPoint());
         int zoom = mcontext.getMetrics().getZoomLevel();
 
-        storage.writeInteger(mcontext.getSolidKey() + LONGITUDE_SUFFIX, point.lo);
-        storage.writeInteger(mcontext.getSolidKey() + LATITUDE_SUFFIX, point.la);
+        storage.writeInteger(mcontext.getSolidKey() + LATITUDE_SUFFIX, center.la);
+        storage.writeInteger(mcontext.getSolidKey() + LONGITUDE_SUFFIX, center.lo);
         storage.writeInteger(mcontext.getSolidKey() + ZOOM_SUFFIX, zoom);
     }
 
@@ -93,7 +93,9 @@ public class MapPositionLayer implements MapLayerInterface, OnContentUpdatedInte
 
 
     @Override
-    public void onAttached() {}
+    public void onAttached() {
+       // loadState();
+    }
 
     @Override
     public void onDetached() {

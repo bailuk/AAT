@@ -55,4 +55,9 @@ public class LatLongE6 implements LatLongE6Interface {
         return new LatLong(toD(tp.getLatitudeE6()), toD(tp.getLongitudeE6()));
 
     }
+
+    @Override
+    public String toString() {
+        return toLatLong().toString();
+    }
 }

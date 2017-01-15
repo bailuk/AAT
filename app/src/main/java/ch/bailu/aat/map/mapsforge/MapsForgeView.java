@@ -56,8 +56,15 @@ public class MapsForgeView extends MapsForgeViewBase {
 
     @Override
     public void onLayout(boolean c, int l, int t, int r, int b) {
-        overmap.layout(0,0,r-l, b-t);
-        super.onLayout(c,l,t,r,b);
+        overmap.layout(0, 0, r - l, b - t);
+        super.onLayout(c, l, t, r, b);
+    }
+
+
+    @Override
+    public void repaint() {
+        if (overmap != null) overmap.repaint();
+        super.repaint();
     }
 
 }

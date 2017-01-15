@@ -14,8 +14,8 @@ public class SolidBoolean extends SolidStaticIndexList {
     private static String[] generateLabel(Context c) {
         if (label == null) {
             label = new String[] {
-                    c.getString(R.string.on),
                     c.getString(R.string.off),
+                    c.getString(R.string.on),
             };
         }
         return label;
