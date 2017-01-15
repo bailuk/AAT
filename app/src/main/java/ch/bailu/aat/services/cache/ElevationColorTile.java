@@ -112,6 +112,16 @@ public class ElevationColorTile extends ElevationTile {
                     return 18;
                 }
 
+//                @Override
+//                public boolean isTransparent() {
+//                    return false;
+//                }
+
+                @Override
+                public int getAlpha() {
+                    return TRANSPARENT;
+                }
+
                 @Override
                 public ObjectHandle.Factory getFactory(Tile mt) {
                     return  new ElevationColorTile.Factory(mt);

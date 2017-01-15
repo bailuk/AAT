@@ -46,7 +46,7 @@ public class BitmapTileObject extends TileObject {
                 if (download.isLocked()==false) {
 
                     File file = new File(toString());
-                    bitmap.set(file, TILE_SIZE, true);
+                    bitmap.set(file, TILE_SIZE, source.isTransparent());
 
                 }
                 return bitmap.getSize();
@@ -158,7 +158,11 @@ public class BitmapTileObject extends TileObject {
             return new BitmapTileObject(id, cs, mapTile, source);
         }
     }
-    
+
+
+    public static final int MIN_ZOOM = 1;
+    public static final int MAX_ZOOM =17; // 18 takes way too much space for the gain.
+
     public static class Source extends TileObject.Source {
         public final static String EXT = ".png";
 
@@ -168,15 +172,28 @@ public class BitmapTileObject extends TileObject {
         private final String name;
 
         private final String[] urls;
-        
-        public Source (String sourceName, int minZ, int maxZ, final String... url) {
-            name = sourceName;
+
+        private final int alpha;
+        private boolean transparent;
+
+
+        public Source (String n, int a, final String... url) {
+            this(n, MIN_ZOOM, MAX_ZOOM, a, (a != OPAQUE), url);
+        }
+
+        public Source (String n, int minZ, int maxZ, int a, final String... url) {
+            this(n, minZ, maxZ, a, (a != OPAQUE), url);
+        }
+
+        public Source(String n, int minZ, int maxZ, int a, boolean t, String... u) {
+            name = n;
             minZoom = minZ;
             maxZoom = maxZ;
-            urls = url;
-
+            urls = u;
+            alpha = a;
+            transparent = (a != OPAQUE);
         }
-        
+
 
         @Override
         public String getName() {
@@ -187,7 +204,7 @@ public class BitmapTileObject extends TileObject {
         @Override
         public String getID(Tile tile, Context context) {
             return AppDirectory.getTileFile(tile,
-                    getTileRelativeFilenameString(tile), context).getAbsolutePath();
+                    getTileRelativeFilename(tile), context).getAbsolutePath();
         }
 
         @Override
@@ -198,6 +215,15 @@ public class BitmapTileObject extends TileObject {
         @Override
         public int getMaximumZoomLevel() {
             return maxZoom;
+        }
+
+        public boolean isTransparent() {
+            return transparent;
+        }
+
+        @Override
+        public int getAlpha() {
+            return alpha;
         }
 
         @Override
@@ -215,7 +241,7 @@ public class BitmapTileObject extends TileObject {
 
 
 
-        private String getTileRelativeFilenameString(final Tile tile) {
+        private String getTileRelativeFilename(final Tile tile) {
             final StringBuilder sb = new StringBuilder();
             sb.append(name);
             sb.append('/');
@@ -231,40 +257,44 @@ public class BitmapTileObject extends TileObject {
     }
 
 
-    public static final int MIN_ZOOM = 1;
-    public static final int MAX_ZOOM=17; // 18 takes way too much space for the gain.
 
 
     public final static BitmapTileObject.Source MAPNIK =
             new BitmapTileObject.Source("Mapnik",
-                    MIN_ZOOM, MAX_ZOOM,
+                    TileObject.Source.OPAQUE,
                     "http://a.tile.openstreetmap.org/",
                     "http://b.tile.openstreetmap.org/",
                     "http://c.tile.openstreetmap.org/");
 
 
     public final static TileObject.Source TRAIL_MTB =
-            new BitmapTileObject.Source("TrailMTB", MIN_ZOOM, MAX_ZOOM,
+            new BitmapTileObject.Source("TrailMTB",
+                    TileObject.Source.TRANSPARENT,
                     "http://tile.waymarkedtrails.org/mtb/");
 
     public final static TileObject.Source TRAIL_SKATING =
-            new BitmapTileObject.Source("TrailSkating", MIN_ZOOM, MAX_ZOOM,
+            new BitmapTileObject.Source("TrailSkating",
+                    TileObject.Source.TRANSPARENT,
                     "http://tile.waymarkedtrails.org/skating/");
 
 
     public final static TileObject.Source TRAIL_HIKING =
-            new BitmapTileObject.Source("TrailHiking",  MIN_ZOOM, MAX_ZOOM,
+            new BitmapTileObject.Source("TrailHiking",
+                    TileObject.Source.TRANSPARENT,
                     "http://tile.waymarkedtrails.org/hiking/");
 
 
     public final static TileObject.Source TRAIL_CYCLING =
-            new BitmapTileObject.Source("TrailCycling",  MIN_ZOOM, MAX_ZOOM,
+            new BitmapTileObject.Source("TrailCycling",
+                    TileObject.Source.TRANSPARENT,
                     "http://tile.waymarkedtrails.org/cycling/");
 
 
 
     public final static TileObject.Source TRANSPORT_OVERLAY =
-            new BitmapTileObject.Source("OpenPtMap",  5, 16,
+            new BitmapTileObject.Source("OpenPtMap",
+                    5, 16,
+                    TileObject.Source.TRANSPARENT,
                     "http://openptmap.org/tiles/");
 
 
@@ -272,6 +302,7 @@ public class BitmapTileObject extends TileObject {
             new BitmapTileObject.Source("HillShade",
                     NewHillshade.ELEVATION_HILLSHADE8.getMinimumZoomLevel(),
                     NewHillshade.ELEVATION_HILLSHADE8.getMaximumZoomLevel(),
+                    NewHillshade.ELEVATION_HILLSHADE8.getAlpha(),
+                    true,
                     "http://bailu.ch/");
-
 }

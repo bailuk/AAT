@@ -190,7 +190,7 @@ public class HillShadeCached extends TileObject {
 
                 @Override
                 public String getName() {
-                    return "Hillshade Cached*";
+                    return "Hillshade Cached";
                 }
 
                 @Override
@@ -208,14 +208,20 @@ public class HillShadeCached extends TileObject {
                     return NewHillshade.ELEVATION_HILLSHADE8.getMaximumZoomLevel();
                 }
 
+//                @Override
+//                public boolean isTransparent() {
+//                    return NewHillshade.ELEVATION_HILLSHADE8.isTransparent();
+//                }
+
                 @Override
-                public ObjectHandle.Factory getFactory(Tile mt) {
-                    return  new HillShadeCached.Factory(mt);
+                public int getAlpha() {
+                    return NewHillshade.ELEVATION_HILLSHADE8.getAlpha();
                 }
 
-//                @Override
-//                public TileBitmapFilter getBitmapFilter() {
-//                    return TileBitmapFilter.COPY_FILTER;
-//                }
+                @Override
+                public ObjectHandle.Factory getFactory(Tile t) {
+                    return  new HillShadeCached.Factory(t);
+                }
+
             };
 }

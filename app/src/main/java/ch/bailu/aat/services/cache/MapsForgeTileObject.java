@@ -110,11 +110,12 @@ public class MapsForgeTileObject extends TileObject implements Observer {
 
 
     public final static Source MAPSFORGE =
+
             new Source() {
 
                 @Override
                 public String getName() {
-                    return "MapsForge*";
+                    return "MapsForge";
                 }
 
                 @Override
@@ -124,7 +125,7 @@ public class MapsForgeTileObject extends TileObject implements Observer {
 
                 @Override
                 public int getMinimumZoomLevel() {
-                    return 0;
+                    return 3;
                 }
 
                 @Override
@@ -132,16 +133,21 @@ public class MapsForgeTileObject extends TileObject implements Observer {
                     return 17;
                 }
 
+//                @Override
+//                public boolean isTransparent() {
+//                    return false;
+//                }
+
                 @Override
-                public ObjectHandle.Factory getFactory(Tile mt) {
-                    return  new Factory(mt);
+                public int getAlpha() {
+                    return OPAQUE;
                 }
 
-                /*
                 @Override
-                public TileBitmapFilter getBitmapFilter() {
-                    return TileBitmapFilter.COPY_FILTER;
+                public ObjectHandle.Factory getFactory(Tile t) {
+                    return  new Factory(t);
                 }
-                */
+
+
             };
 }

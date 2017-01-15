@@ -35,15 +35,12 @@ public class MapsForgeTileLayerStack implements MapLayerInterface {
         int preset = new SolidPreset(context).getIndex();
         stiles = new SolidMapTileStack(context, preset);
 
-        int alpha = MapsForgeTileLayer.OPAQUE;
         for (TileObject.Source s: SolidMapTileStack.SOURCES) {
             MapsForgeTileLayer layer =
-                    new MapsForgeTileLayer(new TileProvider(scontext,s), alpha);
+                    new MapsForgeTileLayer(new TileProvider(scontext,s), s.getAlpha());
 
             layers.add(layer);
             mapView.add(layer, layer);
-
-            if (layers.size() == 2) alpha = MapsForgeTileLayer.TRANSPARENT;
         }
         setEnabled();
     }
@@ -58,7 +55,7 @@ public class MapsForgeTileLayerStack implements MapLayerInterface {
 
 
     private void setEnabled() {
-        int minZoom=8, maxZoom = 10;
+        int minZoom=6, maxZoom = 10;
 
         boolean[] enabled = stiles.getEnabledArray();
 

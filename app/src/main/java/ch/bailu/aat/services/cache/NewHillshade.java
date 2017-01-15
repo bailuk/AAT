@@ -143,7 +143,7 @@ public class NewHillshade extends ElevationTile {
 
                 @Override
                 public String getName() {
-                    return "Hillshade 8*";
+                    return "Hillshade";
                 }
 
                 @Override
@@ -161,14 +161,16 @@ public class NewHillshade extends ElevationTile {
                     return 14;
                 }
 
+
+                @Override
+                public int getAlpha() {
+                    return OPAQUE;
+                }
+
                 @Override
                 public ObjectHandle.Factory getFactory(Tile mt) {
                     return  new NewHillshade.Factory(mt);
                 }
 
-//                @Override
-//                public TileBitmapFilter getBitmapFilter() {
-//                    return TileBitmapFilter.COPY_FILTER;
-//                }
             };
 }
