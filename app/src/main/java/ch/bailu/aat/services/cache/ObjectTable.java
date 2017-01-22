@@ -1,19 +1,17 @@
 package ch.bailu.aat.services.cache;
 
 import android.content.Intent;
-import android.util.SparseArray;
 
-import java.io.Closeable;
-import java.io.IOException;
+import java.util.HashMap;
 
-import ch.bailu.aat.util.AppIntent;
-import ch.bailu.aat.util.ui.AppLog;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.cache.ObjectHandle.Factory;
+import ch.bailu.aat.util.AppIntent;
+import ch.bailu.aat.util.ui.AppLog;
 
 
 public class ObjectTable  {
-    private final static int INITIAL_CAPACITY=2000;
+    private final static int INITIAL_CAPACITY=1000;
 
     private final static int MB = 1024*1024;
     private final static long MIN_SIZE=MB*3;
@@ -26,7 +24,6 @@ public class ObjectTable  {
     private long totalMemorySize=0;
 
 
-
     private static class Container {
         public static final Container NULL = new Container(ObjectHandle.NULL);
 
@@ -34,17 +31,12 @@ public class ObjectTable  {
         public long size;
 
         public Container(ObjectHandle o) {
-            obj= o;
+            obj = o;
             size = o.getSize();
-        }
-
-        @Override
-        public int hashCode() {
-            return obj.hashCode();
         }
     }
 
-    private final SparseArray<Container> table = new SparseArray<>(INITIAL_CAPACITY);
+    private final HashMap<String, Container> hashMap = new HashMap(INITIAL_CAPACITY);
 
 
     public synchronized ObjectHandle getHandle(String id, Factory factory, CacheService son) {
@@ -67,55 +59,56 @@ public class ObjectTable  {
     }
 
 
-    private void putIntoCache(ObjectHandle h) {
-        table.put(h.hashCode(),new Container(h));
-        totalMemorySize+=h.getSize();
+    private void putIntoCache(ObjectHandle obj) {
+
+        hashMap.put(obj.toString(),new Container(obj));
+        totalMemorySize += obj.getSize();
 
         log();
     }
 
 
-    private ObjectHandle getFromCache(String id) {
-        Container c = table.get(id.hashCode());
+    private ObjectHandle getFromCache(String key) {
+        Container c = hashMap.get(key);
         if (c != null)
             return c.obj;
 
         return null;
     }
 
-    public synchronized ObjectHandle getHandle(String id, ServiceContext sc) {
-        ObjectHandle h=getFromCache(id);
+    public synchronized ObjectHandle getHandle(String key, ServiceContext sc) {
+        ObjectHandle obj=getFromCache(key);
 
-        if (h == null) {
-            h = ObjectHandle.NULL;
+        if (obj == null) {
+            obj = ObjectHandle.NULL;
         }
 
-        h.lock(sc);
-        return h;
+        obj.lock(sc);
+        return obj;
     }
 
 
 
 
-    private void updateSize(ObjectHandle handle) {
-        Container c = table.get(handle.hashCode());
+    private void updateSize(ObjectHandle obj) {
+        Container c = hashMap.get(obj.toString());
 
         if (c != null) {
             totalMemorySize -= c.size;
-            c.size=handle.getSize();
+            c.size=obj.getSize();
             totalMemorySize += c.size;
         }
     }
 
 
     public synchronized void onObjectChanged(Intent intent, CacheService self) {
-        ObjectHandle handle = getHandle(intent);
-        onObjectChanged(handle, self);
+        ObjectHandle obj = getHandle(intent);
+        onObjectChanged(obj, self);
     }
 
 
-    public synchronized void onObjectChanged(ObjectHandle handle, CacheService self) {
-        updateSize(handle);
+    public synchronized void onObjectChanged(ObjectHandle obj, CacheService self) {
+        updateSize(obj);
         trim(self);
     }
 
@@ -124,8 +117,8 @@ public class ObjectTable  {
 
 
     private ObjectHandle getHandle(Intent intent) {
-        String string = AppIntent.getFile(intent);
-        Container c = table.get(string.hashCode());
+        String key = AppIntent.getFile(intent);
+        Container c = hashMap.get(key);
 
         if (c == null) {
             c=Container.NULL;
@@ -154,19 +147,20 @@ public class ObjectTable  {
 
 
     public void close(CacheService self)  {
-        for (int i=0; i<table.size(); i++) {
-            final Container current = table.valueAt(i);
+        for (Container current : hashMap.values()) {
             current.obj.onRemove(self.scontext);
         }
+        hashMap.clear();
     }
 
 
     private boolean removeFromTable(Container remove, CacheService self) {
-        remove = table.get(remove.hashCode());
+        final String key = remove.obj.toString();
+        remove = hashMap.get(key);
 
         if (remove !=null) {
             self.broadcaster.delete(remove.obj);
-            table.remove(remove.hashCode());
+            hashMap.remove(key);
             totalMemorySize -= remove.size;
             remove.obj.onRemove(self.scontext);
             return true;
@@ -182,12 +176,12 @@ public class ObjectTable  {
         oldest.obj.access();
 
 
-        for (int i=0; i<table.size(); i++) {
-            final Container current = table.valueAt(i);
+        for (Container current : hashMap.values()) {
             if ((!current.obj.isLocked()) && (current.obj.getAccessTime() < oldest.obj.getAccessTime())) {
                 oldest = current;
             }
         }
+
         return oldest;
     }
 
@@ -227,11 +221,8 @@ public class ObjectTable  {
 
         int locked=0,free=0;
 
-        for (int i=0; i<table.size(); i++) {
-            ObjectHandle current;
-            current = table.valueAt(i).obj;
-
-            if (current.isLocked()) locked++;
+        for (Container current : hashMap.values()) {
+            if (current.obj.isLocked()) locked++;
             else free++;
         }
 
@@ -242,19 +233,16 @@ public class ObjectTable  {
         builder.append(free);
 
         builder.append("<br>TOTAL cache entries: ");
-        builder.append(table.size());
+        builder.append(hashMap.size());
         builder.append("</p>");
     }
 
     public void logLocked() {
-        ObjectHandle current;
         int locked=0;
 
-        for (int i=0; i<table.size(); i++) {
-            current = table.valueAt(i).obj;
-
-            if (current.isLocked()){
-                AppLog.d(this, current.toString());
+        for (Container current : hashMap.values()) {
+            if (current.obj.isLocked()){
+                AppLog.d(this, current.obj.toString());
                 locked++;
             }
         }
@@ -274,11 +262,10 @@ public class ObjectTable  {
 
 
         int locked=0;
-        ObjectHandle current;
-        for (int i=0; i<table.size(); i++) {
-            current = table.valueAt(i).obj;
 
-            if (current.isLocked()){
+        for (Container current : hashMap.values()) {
+
+            if (current.obj.isLocked()){
                 locked++;
             }
         }
@@ -287,8 +274,7 @@ public class ObjectTable  {
         AppLog.d(this,
                         totalMemorySize/MB + "/" +
                         limit/MB + "MB - l:" + locked +
-                        " f:" + (table.size()-locked)
+                        " f:" + (hashMap.size()-locked)
                         );
     }
-
 }
