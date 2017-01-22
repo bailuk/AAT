@@ -1,5 +1,7 @@
 package ch.bailu.aat.map.mapsforge;
 
+import android.graphics.Canvas;
+
 import org.mapsforge.core.model.LatLong;
 import org.mapsforge.map.model.common.Observer;
 
@@ -10,7 +12,7 @@ import ch.bailu.aat.services.ServiceContext;
 
 public class MapsForgeView extends MapsForgeViewBase {
 
-    private final MapsForgeOnTopView overmap;
+    private final MapsForgeForeground foreground;
     private final MapsForgeTileLayerStack stack;
     private final MapPositionLayer pos;
 
@@ -23,11 +25,10 @@ public class MapsForgeView extends MapsForgeViewBase {
         stack = new MapsForgeTileLayerStack(this);
         add(stack);
 
-        overmap = new MapsForgeOnTopView(this,
+        foreground = new MapsForgeForeground(this,
                 getMContext(),
                 new MapDensity(sc.getContext()),
                 getLayers());
-        addView(overmap);
 
         setClickable(true);
 
@@ -55,16 +56,8 @@ public class MapsForgeView extends MapsForgeViewBase {
 
 
     @Override
-    public void onLayout(boolean c, int l, int t, int r, int b) {
-        overmap.layout(0, 0, r - l, b - t);
-        super.onLayout(c, l, t, r, b);
+    public void onDraw(Canvas canvas) {
+        super.onDraw(canvas);
+        foreground.dispatchDraw(canvas);
     }
-
-
-    @Override
-    public void repaint() {
-        if (overmap != null) overmap.repaint();
-        super.repaint();
-    }
-
 }

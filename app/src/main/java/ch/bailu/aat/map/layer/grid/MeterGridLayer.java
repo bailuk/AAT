@@ -28,7 +28,7 @@ public abstract class MeterGridLayer implements MapLayerInterface {
     }
 
     @Override
-    public void drawOnTop(MapContext mcontext) {
+    public void drawForeground(MapContext mcontext) {
         mcontext.draw().textTop(ttext, 1);
         mcontext.draw().textBottom(btext, 0);
     }

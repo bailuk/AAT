@@ -15,7 +15,7 @@ public class ZoomLevel implements MapLayerInterface {
     public void onLayout(boolean changed, int l, int t, int r, int b) {}
 
     @Override
-    public void drawOnTop(MapContext mcontext) {
+    public void drawForeground(MapContext mcontext) {
         int zoomLevel = mcontext.getMetrics().getZoomLevel();
         String text = String.format((Locale)null,"Zoomlevel*: %d", zoomLevel);
 

@@ -12,7 +12,7 @@ public class Dem3NameLayer implements MapLayerInterface {
 
 
     @Override
-    public void drawOnTop(MapContext mcontext) {}
+    public void drawForeground(MapContext mcontext) {}
 
 
     @Override

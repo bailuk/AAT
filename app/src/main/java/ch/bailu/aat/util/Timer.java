@@ -33,8 +33,6 @@ public class Timer implements Closeable {
     public void close () {
         cancel();
     }
-
-
     public void cancel() {
         handler.removeCallbacks(listener);
     }

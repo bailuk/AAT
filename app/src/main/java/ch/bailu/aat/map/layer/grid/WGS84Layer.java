@@ -25,7 +25,7 @@ public class WGS84Layer implements MapLayerInterface {
     }
 
     @Override
-    public void drawOnTop(MapContext mcontext) {
+    public void drawForeground(MapContext mcontext) {
         byte zoomLevel = (byte)mcontext.getMetrics().getZoomLevel();
         BoundingBox boundingBox = mcontext.getMetrics().getBoundingBox();
 
@@ -66,10 +66,10 @@ public class WGS84Layer implements MapLayerInterface {
                 0);
     }
 
-    private void drawElevation(MapContext clayer, int zoom, LatLong point) {
-        if (zoom > MIN_ZOOM_LEVEL && clayer.getSContext().isUp()) {
-            final short ele = clayer.getSContext().getElevationService().getElevation(point.getLatitudeE6(), point.getLongitudeE6());
-            clayer.draw().textBottom(altitudeDescription.getValueUnit(ele),2);
+    private void drawElevation(MapContext mc, int zoom, LatLong point) {
+        if (zoom > MIN_ZOOM_LEVEL && mc.getSContext().isUp()) {
+            final short ele = mc.getSContext().getElevationService().getElevation(point.getLatitudeE6(), point.getLongitudeE6());
+            mc.draw().textBottom(altitudeDescription.getValueUnit(ele),2);
         }
     }
 

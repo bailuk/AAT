@@ -7,7 +7,7 @@ import org.mapsforge.core.graphics.Bitmap;
 import org.mapsforge.core.graphics.Paint;
 
 public interface MapDraw {
-    final static int POINT_RADIUS=10;
+    final static int POINT_RADIUS=3;
     final static int MARGIN=5;
 
     Paint getTextPaint();

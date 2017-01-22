@@ -2,8 +2,22 @@ package ch.bailu.aat.activities;
 
 
 import android.os.Bundle;
+import android.os.Environment;
 import android.view.View;
 import android.widget.LinearLayout;
+
+import org.mapsforge.core.model.LatLong;
+import org.mapsforge.map.android.graphics.AndroidGraphicFactory;
+import org.mapsforge.map.android.util.AndroidUtil;
+import org.mapsforge.map.android.view.MapView;
+import org.mapsforge.map.datastore.MapDataStore;
+import org.mapsforge.map.layer.cache.InMemoryTileCache;
+import org.mapsforge.map.layer.cache.TileCache;
+import org.mapsforge.map.layer.renderer.TileRendererLayer;
+import org.mapsforge.map.reader.MapFile;
+import org.mapsforge.map.rendertheme.InternalRenderTheme;
+
+import java.io.File;
 
 import ch.bailu.aat.R;
 import ch.bailu.aat.description.AccelerationDescription;
@@ -43,6 +57,8 @@ import ch.bailu.aat.map.layer.gpx.GpxOverlayListLayer;
 import ch.bailu.aat.map.layer.gpx.GpxTestLayer;
 import ch.bailu.aat.map.layer.grid.GridDynLayer;
 import ch.bailu.aat.map.mapsforge.MapsForgeView;
+import ch.bailu.aat.services.render.Cache;
+import ch.bailu.aat.services.render.Renderer;
 import ch.bailu.aat.test.PreferencesFromSdcard;
 import ch.bailu.aat.test.PreferencesToSdcard;
 import ch.bailu.aat.test.TestCoordinates;
@@ -142,6 +158,34 @@ public class TestActivity extends AbsDispatcher {
         final MultiView mv = new MultiView(this, SOLID_KEY);
 
 
+        ////////////////////////////////////////////////////////////
+        MapView mapView = new MapView(this);
+
+        mapView.setClickable(true);
+        mapView.getMapScaleBar().setVisible(true);
+        mapView.setBuiltInZoomControls(true);
+        mapView.setZoomLevelMin((byte) 10);
+        mapView.setZoomLevelMax((byte) 20);
+
+        // create a tile cache of suitable size
+        TileCache tileCache = AndroidUtil.createTileCache(this, "mapcache",
+                mapView.getModel().displayModel.getTileSize(), 1f,
+                mapView.getModel().frameBufferModel.getOverdrawFactor());
+
+        // tile renderer layer using internal render theme
+        MapDataStore mapDataStore = new MapFile(new File("/storage/C973-F26F/maps/berlin.map"));
+        TileRendererLayer tileRendererLayer = new TileRendererLayer(tileCache, mapDataStore,
+                mapView.getModel().mapViewPosition, AndroidGraphicFactory.INSTANCE);
+        tileRendererLayer.setXmlRenderTheme(InternalRenderTheme.DEFAULT);
+
+        // only once a layer is associated with a mapView the rendering starts
+        mapView.getLayerManager().getLayers().add(tileRendererLayer);
+
+        mapView.setCenter(new LatLong(52.517037, 13.38886));
+        mapView.setZoomLevel((byte) 12);
+
+        mv.add(mapView);
+        /////////////////////////////////////////////////////////////
         final MapsForgeView mf = new MapsForgeView(getServiceContext(), this, SOLID_KEY);
 
         fillMap(mf);

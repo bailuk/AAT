@@ -13,7 +13,7 @@ public interface MapLayerInterface extends Attachable,
 
     void onLayout(boolean changed, int l, int t, int r, int b);
     void drawInside(MapContext mcontext);
-    void drawOnTop(MapContext mcontext);
+    void drawForeground(MapContext mcontext);
 
     boolean onTap(LatLong tapLatLong, Point layerXY, Point tapXY);
 

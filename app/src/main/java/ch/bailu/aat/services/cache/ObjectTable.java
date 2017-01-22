@@ -261,7 +261,18 @@ public class ObjectTable  {
         AppLog.d(this, "Still locked: " + locked);
     }
 
+
+    private int logCount=0;
     public void log() {
+        logCount++;
+
+        if (logCount > 10) {
+            logCount = 0;
+        } else {
+            return;
+        }
+
+
         int locked=0;
         ObjectHandle current;
         for (int i=0; i<table.size(); i++) {
@@ -274,11 +285,10 @@ public class ObjectTable  {
 
 
         AppLog.d(this,
-                        "T" + totalMemorySize/MB +
-                        " L " + limit/MB +
-                        " t " + table.size() +
-                        " l " + locked +
-                        " f " + (table.size()-locked));
+                        totalMemorySize/MB + "/" +
+                        limit/MB + "MB - l:" + locked +
+                        " f:" + (table.size()-locked)
+                        );
     }
 
 }

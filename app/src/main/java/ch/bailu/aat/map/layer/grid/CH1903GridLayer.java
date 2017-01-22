@@ -29,9 +29,9 @@ public class CH1903GridLayer extends MeterGridLayer {
 
 
     @Override
-    public void drawOnTop(MapContext c) {
+    public void drawForeground(MapContext c) {
         if (CH1903Coordinates.inSwitzerland(c.getMetrics().getBoundingBox().getCenterPoint()))
-            super.drawOnTop(c);
+            super.drawForeground(c);
     }
 
 

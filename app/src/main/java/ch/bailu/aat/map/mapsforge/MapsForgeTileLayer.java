@@ -1,6 +1,7 @@
 package ch.bailu.aat.map.mapsforge;
 
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 
@@ -20,59 +21,68 @@ import java.util.List;
 import ch.bailu.aat.map.MapContext;
 import ch.bailu.aat.map.layer.MapLayerInterface;
 import ch.bailu.aat.map.tile.TileProviderInterface;
-import ch.bailu.aat.services.cache.TileObject;
 import ch.bailu.aat.util.ui.AppLog;
 
 public class MapsForgeTileLayer extends Layer implements MapLayerInterface, Observer {
-//    public final static int TRANSPARENT = 150;
-//    public final static int OPAQUE = 255;
 
     private final TileProviderInterface provider;
 
-    private final Paint tilePaint = new Paint();
-    private final Rect rect = new Rect();
+    private final Paint paint = new Paint();
 
-    private boolean isMapAttached = false;
+    private boolean isAttached = false, isVisible = true, isZoomSupported = false;
+    private boolean isProviderAttached = false;
+
 
 
     public MapsForgeTileLayer(TileProviderInterface p, int alpha) {
         provider = p;
-        tilePaint.setAlpha(alpha);
+        paint.setAlpha(alpha);
+        paint.setAntiAlias(true);
     }
 
 
     @Override
-    public void draw(BoundingBox box, byte z, Canvas c, Point tlp) {
-        if (z > provider.getMaximumZoomLevel() || z < provider.getMinimumZoomLevel()) {
-            return;
+    public void draw(BoundingBox box, byte zoom, Canvas c, Point tlp) {
+        isZoomSupported =
+                (zoom <= provider.getMaximumZoomLevel() && zoom >= provider.getMinimumZoomLevel());
+
+        if (detachAttach()) {
+            draw(
+                    box,
+                    zoom,
+                    AndroidGraphicFactory.getCanvas(c),
+                    tlp,
+                    displayModel.getTileSize());
         }
+    }
 
 
-        final int tileSize =  displayModel.getTileSize();
-        android.graphics.Canvas canvas = AndroidGraphicFactory.getCanvas(c);
-
+    private void draw (BoundingBox box, byte z, android.graphics.Canvas canvas, Point tlp, int tileSize) {
         List<TilePosition> tilePositions = LayerUtil.getTilePositions(box, z, tlp, tileSize);
 
         provider.setCapacity(tilePositions.size());
 
-
         for (TilePosition tilePosition : tilePositions) {
-            if (provider.contains(tilePosition.tile)) provider.get(tilePosition.tile);
+            if (provider.contains(tilePosition.tile)) {
+                provider.get(tilePosition.tile);
+            }
         }
 
 
+
         for (TilePosition tilePosition : tilePositions) {
-            final Point p = tilePosition.point;
-
-            rect.left   = (int) Math.round(p.x);
-            rect.top    = (int) Math.round(p.y);
-            rect.right  = rect.left + tileSize;
-            rect.bottom = rect.top + tileSize;
-
             final TileBitmap bitmap = provider.get(tilePosition.tile);
 
             if (bitmap != null) {
-                canvas.drawBitmap(AndroidGraphicFactory.getBitmap(bitmap), null, rect, tilePaint);
+                final Point p = tilePosition.point;
+                final Rect r=new Rect();
+
+                r.left = (int) Math.round(p.x);
+                r.top = (int) Math.round(p.y);
+                r.right = r.left + tileSize;
+                r.bottom = r.top + tileSize;
+
+                canvas.drawBitmap(AndroidGraphicFactory.getBitmap(bitmap), null, r, paint);
             }
         }
     }
@@ -83,16 +93,11 @@ public class MapsForgeTileLayer extends Layer implements MapLayerInterface, Obse
         requestRedraw();
     }
 
+
     @Override
     public void setVisible(boolean requestVisible, boolean redraw) {
-        if (isMapAttached && (requestVisible != isVisible())) {
-
-            if (requestVisible) {
-                attach();
-            } else {
-                detach();
-            }
-        }
+        isVisible = requestVisible;
+        detachAttach();
 
         super.setVisible(requestVisible, redraw);
     }
@@ -100,30 +105,31 @@ public class MapsForgeTileLayer extends Layer implements MapLayerInterface, Obse
 
     @Override
     public void onAttached() {
-        isMapAttached = true;
-        if (isVisible()) {
-            attach();
-        }
+        isAttached = true;
+        detachAttach();
     }
+
 
     @Override
     public void onDetached() {
-        AppLog.d(this, "onDetached()");
-        isMapAttached = false;
-        if (isVisible()) {
-            detach();
+        isAttached = false;
+        detachAttach();
+    }
+
+
+    private synchronized boolean detachAttach() {
+        if (isVisible && isZoomSupported && isAttached) {
+            if (isProviderAttached == false) {
+                provider.onAttached();
+                provider.addObserver(this);
+                isProviderAttached = true;
+            }
+        } else if (isProviderAttached) {
+            provider.removeObserver(this);
+            provider.onDetached();
+            isProviderAttached = false;
         }
-    }
-
-
-    private void attach() {
-        provider.onAttached();
-        provider.addObserver(this);
-    }
-
-    private void detach() {
-        provider.removeObserver(this);
-        provider.onDetached();
+        return isProviderAttached;
     }
 
 
@@ -139,7 +145,7 @@ public class MapsForgeTileLayer extends Layer implements MapLayerInterface, Obse
     public void drawInside(MapContext mcontext) {}
 
     @Override
-    public void drawOnTop(MapContext mcontext) {}
+    public void drawForeground(MapContext mcontext) {}
 
 
     @Override

@@ -99,10 +99,10 @@ public class EditorLayer extends ControlBarLayer {
 
 
     @Override
-    public void drawOnTop(MapContext p) {
-        content.drawOnTop(p);
+    public void drawForeground(MapContext p) {
+        content.drawForeground(p);
         if (isBarVisible()) {
-            selector.drawOnTop(p);
+            selector.drawForeground(p);
         }
     }
 

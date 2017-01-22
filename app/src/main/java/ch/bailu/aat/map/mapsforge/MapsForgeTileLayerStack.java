@@ -42,7 +42,6 @@ public class MapsForgeTileLayerStack implements MapLayerInterface {
             layers.add(layer);
             mapView.add(layer, layer);
         }
-        setEnabled();
     }
 
 
@@ -89,7 +88,7 @@ public class MapsForgeTileLayerStack implements MapLayerInterface {
     }
 
     @Override
-    public void drawOnTop(MapContext mcontext) {
+    public void drawForeground(MapContext mcontext) {
 
     }
 
@@ -101,6 +100,7 @@ public class MapsForgeTileLayerStack implements MapLayerInterface {
 
     @Override
     public void onAttached() {
+        setEnabled();
 
     }
 

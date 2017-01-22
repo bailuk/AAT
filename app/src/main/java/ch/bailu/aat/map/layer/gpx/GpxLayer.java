@@ -17,7 +17,7 @@ public abstract class GpxLayer implements MapLayerInterface, OnContentUpdatedInt
     }
 
     @Override
-    public void drawOnTop(MapContext mcontext) {}
+    public void drawForeground(MapContext mcontext) {}
 
     @Override
     public void onContentUpdated(int iid, GpxInformation info) {

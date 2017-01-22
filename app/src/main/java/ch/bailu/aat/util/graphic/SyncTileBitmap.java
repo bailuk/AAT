@@ -35,7 +35,7 @@ public class SyncTileBitmap implements Closeable {
     }
 
 
-    public Bitmap getAndroidBitmap() {
+    public synchronized Bitmap getAndroidBitmap() {
         if (bitmap != null) return AndroidGraphicFactory.getBitmap(bitmap);
         return null;
     }

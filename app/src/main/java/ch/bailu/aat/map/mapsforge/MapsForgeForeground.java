@@ -1,9 +1,7 @@
 package ch.bailu.aat.map.mapsforge;
 
+import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.Color;
-import android.os.Looper;
-import android.view.View;
 
 import org.mapsforge.core.model.Dimension;
 import org.mapsforge.map.android.view.MapView;
@@ -20,8 +18,7 @@ import ch.bailu.aat.map.layer.MapLayerInterface;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.util.ui.AppDensity;
 
-public class MapsForgeOnTopView extends View implements MapContext {
-
+public class MapsForgeForeground implements MapContext {
 
     private final MapContext mcontext;
     private final AndroidDraw draw;
@@ -29,44 +26,25 @@ public class MapsForgeOnTopView extends View implements MapContext {
 
     private final ArrayList<MapLayerInterface> layers;
 
-    public MapsForgeOnTopView(MapView mapView, MapContext mc, AppDensity d, ArrayList<MapLayerInterface> l) {
-        super(mc.getContext());
-
-        setWillNotDraw(false);
-
+    public MapsForgeForeground(MapView mapView, MapContext mc, AppDensity d, ArrayList<MapLayerInterface> l) {
         mcontext = mc;
         layers = l;
 
         metrics = new MapsForgeMetrics(mapView, d);
         draw = new AndroidDraw(mc.getMetrics().getDensity(), mc.getContext().getResources());
-    }
 
-    boolean attached=false;
-
-    @Override
-    public void onAttachedToWindow() {
-        attached = true;
-    }
-
-    public void repaint() {
-        if (attached)
-            if (Thread.currentThread() == Looper.getMainLooper().getThread()) {
-                invalidate();
-            } else {
-                postInvalidate();
-            }
     }
 
 
-    @Override
-    public void onDraw(Canvas canvas) {
+    public void dispatchDraw(Canvas canvas) {
         metrics.init(new Dimension(canvas.getWidth(), canvas.getHeight()));
         draw.init(canvas, metrics);
 
-        canvas.drawColor(Color.TRANSPARENT);
-        for (MapLayerInterface l: layers) l.drawOnTop(this);
-    }
+        for (MapLayerInterface l: layers) {
+            l.drawForeground(this);
+        }
 
+    }
 
 
     @Override
@@ -83,6 +61,12 @@ public class MapsForgeOnTopView extends View implements MapContext {
     public ServiceContext getSContext() {
         return mcontext.getSContext();
     }
+
+    @Override
+    public Context getContext() {
+        return mcontext.getContext();
+    }
+
 
     @Override
     public String getSolidKey() {

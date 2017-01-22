@@ -11,7 +11,7 @@ public class TileObjectCache extends TileCache<TileObject> {
             = new TileCache<TileObject>() {};
 
 
-    private final static int INITIAL_CAPACITY = 20;
+    private final static int INITIAL_CAPACITY = 5;
 
 
     private final LockCache<TileObject> tiles = new LockCache(INITIAL_CAPACITY);
@@ -28,9 +28,9 @@ public class TileObjectCache extends TileCache<TileObject> {
     }
 
     @Override
-    public TileObject get(Tile mt) {
+    public TileObject get(Tile tile) {
         for (int i = 0; i<tiles.size(); i++) {
-            if (compare(mt, tiles.get(i).getTile())) {
+            if (compare(tile, tiles.get(i).getTile())) {
                 return tiles.use(i);
             }
         }

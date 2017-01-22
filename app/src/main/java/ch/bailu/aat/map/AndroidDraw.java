@@ -30,6 +30,7 @@ public class AndroidDraw implements MapDraw {
 
     private int left=0, top=0, bottom=0, right = 0;
 
+    private int point_radius;
 
     private final SyncTileBitmap nodeBitmap = new SyncTileBitmap();
     private final Resources resources;
@@ -45,6 +46,8 @@ public class AndroidDraw implements MapDraw {
 
         nodeBitmap.set(NodePainter.createNodeMF(res));
         resources = r;
+
+        point_radius = res.toDPi(POINT_RADIUS);
     }
 
     public void init(MapMetrics metric) {
@@ -54,9 +57,9 @@ public class AndroidDraw implements MapDraw {
         right  = metric.getRight();
     }
 
-    public void nit(Canvas c) {
-        canvas = c;
-    }
+//    public void nit(Canvas c) {
+//        canvas = c;
+//    }
 
     public void init(Canvas c, MapMetrics metric) {
         canvas = c;
@@ -68,6 +71,10 @@ public class AndroidDraw implements MapDraw {
         init(metric);
     }
 
+
+    public Canvas getCanvas() {
+        return canvas;
+    }
 
     @Override
     public Paint getTextPaint() {
@@ -118,7 +125,7 @@ public class AndroidDraw implements MapDraw {
 
     @Override
     public void point(Point pixel) {
-        circle(pixel, POINT_RADIUS, gridPaint);
+        circle(pixel, point_radius, gridPaint);
     }
 
 

@@ -58,7 +58,7 @@ public abstract class NodeSelectorLayer implements MapLayerInterface, OnContentU
 
 
     @Override
-    public void drawOnTop(MapContext mcontext) {
+    public void drawForeground(MapContext mcontext) {
         centerRect.offsetTo(
                 mcontext.getMetrics().getWidth()/2 - square_hsize,
                 mcontext.getMetrics().getHeight()/2 - square_hsize);
@@ -78,7 +78,7 @@ public abstract class NodeSelectorLayer implements MapLayerInterface, OnContentU
         centerRect.offset(mcontext.getMetrics().getLeft(), mcontext.getMetrics().getTop());
         drawSelectedNode(mcontext);
         drawCenterSquare(mcontext);
-        coordinates.drawOnTop(mcontext);
+        coordinates.drawForeground(mcontext);
     }
 
     @Override

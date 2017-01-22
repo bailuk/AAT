@@ -56,7 +56,7 @@ public class GpxDynLayer implements MapLayerInterface, OnContentUpdatedInterface
     }
 
     @Override
-    public void drawOnTop(MapContext mcontext) {
+    public void drawForeground(MapContext mcontext) {
 
     }
 

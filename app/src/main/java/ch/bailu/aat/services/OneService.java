@@ -30,14 +30,14 @@ public class OneService extends AbsService  implements ServiceContext {
     private boolean up = false;
 
     @Override 
-    public void onCreate() {
+    public  synchronized void onCreate() {
         super.onCreate();
         up = true;
     }
 
 
     @Override
-    public void onDestroy() {
+    public  synchronized void onDestroy() {
 
         if (tracker != null) {
             tracker.close();
@@ -89,14 +89,14 @@ public class OneService extends AbsService  implements ServiceContext {
 
 
     @Override
-    public void onLowMemory() {
+    public  synchronized void onLowMemory() {
         cache.onLowMemory();
         super.onLowMemory();
     }
 
 
     @Override
-    public LocationService getLocationService() {
+    public  synchronized LocationService getLocationService() {
         if (forceUp() && location == null) {
             location = new LocationService(this);
         }
@@ -104,7 +104,7 @@ public class OneService extends AbsService  implements ServiceContext {
     }
 
     @Override
-    public BackgroundService getBackgroundService() {
+    public  synchronized BackgroundService getBackgroundService() {
         if (forceUp() && background == null) {
             background = new BackgroundService(this);
         }
@@ -112,7 +112,7 @@ public class OneService extends AbsService  implements ServiceContext {
     }
 
     @Override
-    public CacheService getCacheService() {
+    public synchronized CacheService getCacheService() {
         if (forceUp() && cache == null) {
             cache = new CacheService(this);
             getElevationService();
@@ -121,7 +121,7 @@ public class OneService extends AbsService  implements ServiceContext {
     }
 
     @Override
-    public RenderService getRenderService() {
+    public synchronized  RenderService getRenderService() {
         if (forceUp() && render == null) {
             render = new RenderService(this);
         }
@@ -129,35 +129,35 @@ public class OneService extends AbsService  implements ServiceContext {
     }
 
     @Override
-    public ElevationService getElevationService() {
+    public synchronized  ElevationService getElevationService() {
         if (forceUp() && elevation == null)
             elevation = new ElevationService(this);
         return elevation;
     }
 
     @Override
-    public IconMapService getIconMapService() {
+    public  synchronized IconMapService getIconMapService() {
         if (forceUp() && iconMap == null)
             iconMap = new IconMapService(this);
         return iconMap;
     }
 
     @Override
-    public DirectoryService getDirectoryService() {
+    public synchronized  DirectoryService getDirectoryService() {
         if (forceUp() && directory == null)
             directory = new DirectoryService(this);
         return directory;
     }
 
     @Override
-    public TrackerService getTrackerService() {
+    public synchronized  TrackerService getTrackerService() {
         if (forceUp() && tracker == null)
             tracker = new TrackerService(this);
         return tracker;
     }
 
     @Override
-    public TileRemoverService getTileRemoverService() {
+    public synchronized  TileRemoverService getTileRemoverService() {
         if (forceUp() && tileRemover == null)
             tileRemover = new TileRemoverService(this);
         return tileRemover;
@@ -165,7 +165,7 @@ public class OneService extends AbsService  implements ServiceContext {
 
 
     @Override
-    public void appendStatusText(StringBuilder builder) {
+    public synchronized  void appendStatusText(StringBuilder builder) {
         if (forceUp()) {
             super.appendStatusText(builder);
             appendStatusText(location, builder);
@@ -178,7 +178,7 @@ public class OneService extends AbsService  implements ServiceContext {
         }
     }
 
-    public void appendStatusText(VirtualService service, StringBuilder builder) {
+    public synchronized  void appendStatusText(VirtualService service, StringBuilder builder) {
         if (forceUp() && service != null) {
 
             builder.append("<h1>");
@@ -192,12 +192,12 @@ public class OneService extends AbsService  implements ServiceContext {
     }
 
     @Override
-    public Context getContext() {
+    public  synchronized Context getContext() {
         forceUp(); return this;
     }
 
     @Override
-    public boolean isUp() {
+    public  synchronized boolean isUp() {
         return up;
     }
 

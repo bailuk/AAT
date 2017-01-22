@@ -3,6 +3,7 @@ package ch.bailu.aat.map.mapsforge;
 import android.graphics.Point;
 import android.graphics.Rect;
 
+import org.mapsforge.core.graphics.Canvas;
 import org.mapsforge.core.model.BoundingBox;
 import org.mapsforge.core.model.Dimension;
 import org.mapsforge.core.model.LatLong;
@@ -33,26 +34,39 @@ public class MapsForgeMetrics implements MapMetrics {
     private final MapDistances distances = new MapDistances();
 
 
-    private int tileSize;
+    private final int tileSize;
+
 
     public MapsForgeMetrics(MapView v, AppDensity d) {
         density = d;
         mapView = v;
         bounding = v.getBoundingBox();
+        tileSize = mapView.getModel().displayModel.getTileSize();
     }
 
 
-     public void init(Dimension d) {
+    public void init(Dimension d, org.mapsforge.core.model.Point p, BoundingBox b, byte z) {
         dim = d;
-        MapPosition pos = mapView.getModel().mapViewPosition.getMapPosition();
 
-        tileSize = mapView.getModel().displayModel.getTileSize();
-        bounding = MapPositionUtil.getBoundingBox(pos, dim, tileSize);
-        tl = MapPositionUtil.getTopLeftPoint(pos, dim, tileSize);
-        zoom= mapView.getModel().mapViewPosition.getZoomLevel();
+        bounding = b;
+        tl = p;
+        zoom=z;
 
         distances.init(bounding, dim);
-        center = new Pixel(dim.width/2, dim.height/2);//toPixel(bounding.getCenterPoint());
+        center = new Pixel(dim.width/2, dim.height/2);
+    }
+
+    public void init(BoundingBox b, byte z, Canvas c, org.mapsforge.core.model.Point p) {
+        init(c.getDimension(), p, b, z);
+    }
+
+     public void init(Dimension d) {
+         MapPosition pos = mapView.getModel().mapViewPosition.getMapPosition();
+        init(
+                d,
+                MapPositionUtil.getTopLeftPoint(pos, d, tileSize),
+                MapPositionUtil.getBoundingBox(pos, d, tileSize),
+                mapView.getModel().mapViewPosition.getZoomLevel());
     }
 
 
@@ -93,9 +107,7 @@ public class MapsForgeMetrics implements MapMetrics {
     }
 
 
-    private org.mapsforge.core.model.Point _toPixel(LatLong p) {
-        return mapView.getMapViewProjection().toPixels(p);
-    }
+
     @Override
     public Pixel getCenterPixel() {
         return center;

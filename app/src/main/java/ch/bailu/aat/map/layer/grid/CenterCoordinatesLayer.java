@@ -18,7 +18,7 @@ public abstract class CenterCoordinatesLayer implements MapLayerInterface {
     }
 
     @Override
-    public void drawOnTop(MapContext mc) {
+    public void drawForeground(MapContext mc) {
         final LatLong point = mc.getMetrics().getBoundingBox().getCenterPoint();
 
         mc.draw().textBottom(getCoordinates(point).toString(), 1);

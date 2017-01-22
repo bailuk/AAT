@@ -84,7 +84,6 @@ public abstract class ControlBarLayer implements MapLayerInterface, View.OnClick
 
     public void showBar() {
         if (!isBarVisible()) {
-            AppLog.d(this, "show bar");
             bar.setVisibility(View.VISIBLE);
             onShowBar();
         }
@@ -114,7 +113,6 @@ public abstract class ControlBarLayer implements MapLayerInterface, View.OnClick
         int x=(int)tapXY.x;
 
         if (y < size) {
-            AppLog.d(this, "top");
             topTap();
 
         } else if (y > h - size) {
@@ -159,7 +157,7 @@ public abstract class ControlBarLayer implements MapLayerInterface, View.OnClick
 
 
     @Override
-    public void drawOnTop(MapContext mcontext) {}
+    public void drawForeground(MapContext mcontext) {}
 
 
 

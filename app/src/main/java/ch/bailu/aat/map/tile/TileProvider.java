@@ -113,6 +113,7 @@ public class TileProvider implements TileProviderInterface {
         cache.reDownloadTiles(scontext);
     }
 
+
     @Override
     public synchronized void onAttached() {
         cache.reset();
@@ -122,10 +123,9 @@ public class TileProvider implements TileProviderInterface {
 
     }
 
+
     @Override
     public synchronized void onDetached() {
-        AppLog.d(this, "onDetached()");
-
         scontext.getContext().unregisterReceiver(onFileChanged);
         cache.reset();
         cache = TileObjectCache.NULL;

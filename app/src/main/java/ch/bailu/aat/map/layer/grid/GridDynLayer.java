@@ -42,8 +42,8 @@ public class GridDynLayer implements MapLayerInterface {
     }
 
     @Override
-    public void drawOnTop(MapContext mcontext) {
-        gridLayer.drawOnTop(mcontext);
+    public void drawForeground(MapContext mcontext) {
+        gridLayer.drawForeground(mcontext);
     }
 
 

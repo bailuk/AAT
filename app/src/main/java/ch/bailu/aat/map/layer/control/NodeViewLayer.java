@@ -1,8 +1,6 @@
 package ch.bailu.aat.map.layer.control;
 
 import android.graphics.Color;
-import android.os.Handler;
-import android.os.Message;
 import android.view.View;
 
 import ch.bailu.aat.map.MapContext;
@@ -25,8 +23,8 @@ public abstract class NodeViewLayer extends NodeSelectorLayer implements View.On
 
 
 
-    public void drawOnTop(MapContext cl) {
-        super.drawOnTop(cl);
+    public void drawForeground(MapContext cl) {
+        super.drawForeground(cl);
 
         width = cl.getMetrics().getWidth();
         height = cl.getMetrics().getHeight();

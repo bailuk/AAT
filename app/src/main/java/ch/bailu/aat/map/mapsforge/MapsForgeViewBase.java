@@ -26,7 +26,9 @@ public class MapsForgeViewBase extends MapView implements
 
     private BoundingBox pendingFrameBounding=null;
 
-    private boolean attached=false;
+    private boolean areLayersAttached=false, areServicesUp=false, isVisible=false;
+
+
     private final MapsForgeContext mcontext;
     private final Storage storage;
 
@@ -50,7 +52,7 @@ public class MapsForgeViewBase extends MapView implements
 
 
     public void add(MapLayerInterface layer) {
-        LayerWrapper wrapper = new LayerWrapper(mcontext, layer);
+        LayerWrapper wrapper = new LayerWrapper(mcontext, layer, this);
         add(wrapper, layer);
     }
 
@@ -71,7 +73,7 @@ public class MapsForgeViewBase extends MapView implements
     public void add(Layer mfLayer, MapLayerInterface layer) {
         this.addLayer(mfLayer);
         layers.add(layer);
-        if (attached) layer.onAttached();
+        if (areLayersAttached) layer.onAttached();
 
     }
 
@@ -151,21 +153,56 @@ public class MapsForgeViewBase extends MapView implements
     }
 
     @Override
+    protected void onWindowVisibilityChanged(int v) {
+        super.onWindowVisibilityChanged(v);
+
+        isVisible = (v == VISIBLE);
+        attachDetachLayers();
+    }
+
+
+    protected void enableLayers() {
+        isVisible = true;
+        areServicesUp = true;
+        attachDetachLayers();
+    }
+
+    private void disableLayers() {
+        isVisible = false;
+        attachDetachLayers();
+    }
+
+    @Override
     public void onResumeWithService() {
         storage.register(this);
-        for(MapLayerInterface l: layers) l.onAttached();
-        attached=true;
+        areServicesUp = true;
+
+        attachDetachLayers();
     }
 
     @Override
     public void onPauseWithService() {
         storage.unregister(this);
-        for(MapLayerInterface l: layers) l.onDetached();
-        attached=false;
+        areServicesUp = false;
+
+        attachDetachLayers();
+    }
+
+    private void attachDetachLayers() {
+        if (areLayersAttached != (isVisible && areServicesUp)) {
+            areLayersAttached = (isVisible && areServicesUp);
+
+            if (areLayersAttached) {
+                for (MapLayerInterface l : layers) l.onAttached();
+            } else {
+                for (MapLayerInterface l : layers) l.onDetached();
+            }
+        }
     }
 
     @Override
     public void onDestroy() {
+        disableLayers();
         destroyAll();
     }
 }

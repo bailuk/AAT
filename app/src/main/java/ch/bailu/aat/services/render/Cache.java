@@ -87,7 +87,6 @@ public class Cache implements TileCache {
 
     public void lockToCache(MapsForgeTileObject t) {
         cache.put(toKey(t), new Entry(t));
-        AppLog.d(this, "Size: " + cache.size());
     }
 
 

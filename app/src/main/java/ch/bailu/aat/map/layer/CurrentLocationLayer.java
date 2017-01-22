@@ -74,7 +74,7 @@ public class CurrentLocationLayer implements OnContentUpdatedInterface, MapLayer
     }
 
     @Override
-    public void drawOnTop(MapContext mcontext) {
+    public void drawForeground(MapContext mcontext) {
 
     }
 

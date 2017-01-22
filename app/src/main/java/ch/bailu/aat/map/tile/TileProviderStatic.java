@@ -46,6 +46,8 @@ public class TileProviderStatic implements TileProviderInterface, Closeable {
 
     @Override
     public TileBitmap get(Tile tile) {
+        AppLog.d(this, tile.toString());
+
         final TileObject handle = getTileHandle(tile);
 
         if (handle != null)
@@ -56,10 +58,10 @@ public class TileProviderStatic implements TileProviderInterface, Closeable {
 
 
     private TileObject getTileHandle(Tile tile) {
-        TileObject handle = getTileHandleLevel1(tile);
+        TileObject handle = getHandleFromList(tile);
 
         if (handle == null) {
-            handle = getTileHandleLevel2(tile);
+            handle = loadHandle(tile);
 
             if (handle != null)
                 tiles.add(handle);
@@ -69,7 +71,7 @@ public class TileProviderStatic implements TileProviderInterface, Closeable {
     }
 
 
-    private TileObject getTileHandleLevel1(Tile tile) {
+    private TileObject getHandleFromList(Tile tile) {
         for (TileObject handle: tiles) {
             if (TileObjectCache.compare(handle.getTile(), tile)) {
                 return handle;
@@ -79,7 +81,7 @@ public class TileProviderStatic implements TileProviderInterface, Closeable {
     }
 
 
-    private TileObject getTileHandleLevel2(Tile mapTile) {
+    private TileObject loadHandle(Tile mapTile) {
         if (scontext.isUp()) {
             String id = source.getID(mapTile, scontext.getContext());
 
@@ -101,7 +103,7 @@ public class TileProviderStatic implements TileProviderInterface, Closeable {
 
     @Override
     public boolean contains(Tile tile) {
-        return getTileHandleLevel1(tile) != null;
+        return getHandleFromList(tile) != null;
     }
 
     @Override

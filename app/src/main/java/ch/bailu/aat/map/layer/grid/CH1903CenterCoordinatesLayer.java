@@ -14,8 +14,8 @@ public class CH1903CenterCoordinatesLayer extends CenterCoordinatesLayer {
 
 
     @Override
-    public void drawOnTop(MapContext c) {
+    public void drawForeground(MapContext c) {
         if (CH1903Coordinates.inSwitzerland(c.getMetrics().getBoundingBox().getCenterPoint()))
-            super.drawOnTop(c);
+            super.drawForeground(c);
     }
 }

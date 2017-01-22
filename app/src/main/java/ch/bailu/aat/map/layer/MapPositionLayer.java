@@ -119,5 +119,5 @@ public class MapPositionLayer implements MapLayerInterface, OnContentUpdatedInte
     }
 
     @Override
-    public void drawOnTop(MapContext mcontext) {}
+    public void drawForeground(MapContext mcontext) {}
 }

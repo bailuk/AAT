@@ -92,12 +92,14 @@ public class BitmapTileObject extends TileObject {
 
     @Override
     public boolean isLoaded() {
-        return bitmap!=null;
+        return getBitmap() != null;
     }
 
 
     private boolean isLoadable() {
-        return new File(toString()).exists();
+        File file =  new File(toString());
+
+        return file.isFile() && file.canRead();
     }
     
     private boolean isDownloadable() {
@@ -124,10 +126,10 @@ public class BitmapTileObject extends TileObject {
 
     @Override
     public boolean isReady() {
-        boolean d = bitmap!=null;
-        boolean l = isLoadable()==false;
+        boolean loaded = isLoaded();
+        boolean notLoadable = isLoadable()==false;
         
-        return  d || l;
+        return loaded || notLoadable;
     }
 
     

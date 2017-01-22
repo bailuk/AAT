@@ -137,7 +137,6 @@ public class HillShadeCached extends TileObject {
 
     @Override
     public void onChanged(String id, ServiceContext sc) {
-        // FIXME gets called when tile is NULL
         if (id.equals(tile.toString())) {
             AppBroadcaster.broadcast(sc.getContext(),
                     AppBroadcaster.FILE_CHANGED_INCACHE,

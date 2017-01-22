@@ -97,8 +97,8 @@ public class InformationBarLayer extends ControlBarLayer {
     }
 
     @Override
-    public void drawOnTop(MapContext mcontext) {
-        if (isBarVisible()) selector.drawOnTop(mcontext);
+    public void drawForeground(MapContext mcontext) {
+        if (isBarVisible()) selector.drawForeground(mcontext);
     }
 
     @Override

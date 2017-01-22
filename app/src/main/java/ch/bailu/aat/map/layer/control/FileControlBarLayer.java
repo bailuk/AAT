@@ -1,8 +1,6 @@
 package ch.bailu.aat.map.layer.control;
 
 import android.content.SharedPreferences;
-import android.os.Handler;
-import android.os.Message;
 import android.view.View;
 
 import org.mapsforge.core.model.LatLong;
@@ -170,9 +168,9 @@ public class FileControlBarLayer extends ControlBarLayer {
 
 
     @Override
-    public void drawOnTop(MapContext mc) {
+    public void drawForeground(MapContext mc) {
         if (isBarVisible()) {
-            selector.drawOnTop(mc);
+            selector.drawForeground(mc);
         }
     }
 

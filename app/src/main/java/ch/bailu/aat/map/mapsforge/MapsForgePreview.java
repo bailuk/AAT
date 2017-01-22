@@ -51,7 +51,7 @@ public class MapsForgePreview extends MapsForgeViewBase {
         GpxDynLayer overlay = new GpxDynLayer(getMContext(), InfoID.FILEVIEW);
         add(overlay);
 
-        onAttachedToWindow(); // TODO ???
+        enableLayers();
         layout(0, 0, BITMAP_SIZE, BITMAP_SIZE);
 
         overlay.onContentUpdated(InfoID.FILEVIEW, new GpxFileWrapper(o,gpxList));
