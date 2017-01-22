@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.DataSetObserver;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.text.Html;
@@ -14,6 +15,9 @@ import android.widget.AdapterView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import com.caverock.androidsvg.SVG;
+import com.caverock.androidsvg.SVGParseException;
 
 import java.io.File;
 import java.io.IOException;
@@ -27,6 +31,8 @@ import ch.bailu.aat.activities.MapFeatureListActivity;
 import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.util.fs.AppDirectory;
 import ch.bailu.aat.util.AppHtml;
+import ch.bailu.aat.util.graphic.SyncTileBitmap;
+import ch.bailu.aat.util.ui.AppDensity;
 import ch.bailu.aat.util.ui.AppLog;
 import ch.bailu.aat.util.ui.AppTheme;
 import ch.bailu.aat.util.fs.FileAccess;
@@ -38,6 +44,10 @@ public class FeaturesList extends ListView  {
 
     private DataSetObserver observer=null;
 
+    private final int icon_size, sicon_size;
+
+    private final Drawable way, node, area, relation;
+
     private static class ListData {
         public String name, key, value;
         public Spanned paragraph;
@@ -48,6 +58,14 @@ public class FeaturesList extends ListView  {
 
     public FeaturesList(Context context) {
         super(context);
+
+        icon_size = new AppDensity(context).toDPi(64);
+        sicon_size = new AppDensity(context).toDPi(24);
+
+        way = toDrawable("symbols/way.svg", sicon_size, Color.WHITE);
+        node = toDrawable("symbols/node.svg", sicon_size, Color.WHITE);
+        area = toDrawable("symbols/area.svg", sicon_size, Color.WHITE);
+        relation = toDrawable("symbols/relation.svg", sicon_size, Color.WHITE);
 
         final Adapter listAdapter = new Adapter();
 
@@ -107,16 +125,27 @@ public class FeaturesList extends ListView  {
                 @Override
                 public Drawable getDrawable(String source) {
 
-                    Bitmap bitmap = BitmapFactory.decodeFile(source);
-                    if (bitmap != null) {
-                        Drawable drawable = new BitmapDrawable(getResources(),bitmap);
-                        drawable.setBounds(0, 0, bitmap.getWidth()*2, bitmap.getHeight()*2);
-                        return drawable;
+                    if (source.endsWith(".svg")) {
+                        return toDrawable(source, icon_size, Color.TRANSPARENT);
+
+                    } else if (source.contains("way")) {
+                        return way;
+
+                    } else if (source.contains("node")) {
+                        return node;
+
+                    } else if (source.contains("area")) {
+                        return area;
+
+                    } else if (source.contains("relation")) {
+                        return relation;
 
                     } else {
-                        return null;
+                        AppLog.d(this, source);
                     }
 
+
+                    return null;
                 }
             });
 
@@ -125,6 +154,18 @@ public class FeaturesList extends ListView  {
 
     }
 
+    private Drawable toDrawable(String asset, int size, int color) {
+        try {
+            SVG svg = SVG.getFromAsset(getContext().getAssets(), asset);
+            return SyncTileBitmap.toDrawable(svg, size, getResources(), color);
+
+        } catch (SVGParseException e) {
+            AppLog.d(this, asset);
+        } catch (IOException e) {
+            AppLog.d(this, asset);
+        }
+        return null;
+    }
 
     public void loadList(IconMapService map) {
         try {

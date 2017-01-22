@@ -3,6 +3,7 @@ package ch.bailu.aat.util.graphic;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Picture;
 import android.graphics.RectF;
 import android.graphics.drawable.BitmapDrawable;
@@ -113,6 +114,23 @@ public class SyncTileBitmap implements Closeable {
         if (c != null) {
             c.drawPicture(p, new RectF(0, 0, size, size));
         }
+    }
+
+
+    public static Drawable toDrawable(SVG svg, int size, Resources r, int color) {
+        Bitmap bitmap = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888);
+
+        Picture p = svg.renderToPicture();
+        Canvas c = new Canvas(bitmap);
+
+        c.drawColor(color);
+        c.drawPicture(p, new RectF(0,0,size,size));
+
+        Drawable d = new BitmapDrawable(r, bitmap);
+
+        d.setBounds(0,0,size,size);
+
+        return d;
     }
 
 

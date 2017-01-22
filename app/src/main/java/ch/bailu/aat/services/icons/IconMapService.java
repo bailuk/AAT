@@ -58,11 +58,6 @@ public class IconMapService extends VirtualService {
     }
 
 
-    /*
-    public AppBitmap getIcon(GpxPointInterface point) {
-        return cache.getIcon(point);
-    }
-*/
 
     private IconMap.Icon getIconEntry(GpxAttributes attr) {
         for (int i=0; i<attr.size(); i++) {
@@ -85,20 +80,13 @@ public class IconMapService extends VirtualService {
         return null;
     }
 
-  /*
-    public String getIconPath(GpxAttributes attr) {
-        IconMap.Icon i= getIconEntry(attr);
-
-        if (i != null) return i.big;
-        return null;
-    }
-
-
-*/
-
-
-
     public void iconify(StringBuilder html, String key, String value) {
+        IconMap.Icon icon = map.get(key, value);
+        if (icon != null) {
+            html.append("<p><img src=\"");
+            html.append(icon.svg);
+            html.append("\"/></p>");
+        }
     }
 
 
