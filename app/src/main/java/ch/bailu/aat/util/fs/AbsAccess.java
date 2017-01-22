@@ -12,7 +12,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 public abstract class AbsAccess {
-    public abstract InputStream open_r() throws FileNotFoundException;
+    public abstract InputStream open_r() throws IOException;
     public abstract OutputStream open_w() throws IOException;
 
 

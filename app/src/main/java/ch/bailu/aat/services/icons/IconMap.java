@@ -5,21 +5,14 @@ import android.util.SparseArray;
 import java.io.File;
 
 public class IconMap {
-    private final static String ICON_SUFFIX_BIG=".n.64.png";
-    private final static String ICON_SUFFIX_SMALL=".n.48.png";
-
     private final static String SVG_PREFIX="symbols/";
     private final static String SVG_SUFFIX=".svg";
 
 
    public class Icon {
-        public final String big;
-        public final String small;
         public final String svg;
 
         public Icon(String file_name) {
-            big   = new File(new File(directory,"png"), file_name+ICON_SUFFIX_SMALL).toString();
-            small = new File(new File(directory,"png"), file_name+ICON_SUFFIX_BIG).toString();
             svg = toSymbolAssetPath(file_name);
         }
     }
@@ -45,12 +38,6 @@ public class IconMap {
 
 
     private final SparseArray<SparseArray<Icon>> key_list = new SparseArray<>(50);
-    private final String directory;
-
-
-    public IconMap(String d) {
-        directory = d;
-    }
 
 
     public void add(String key, String value, String file_name) {

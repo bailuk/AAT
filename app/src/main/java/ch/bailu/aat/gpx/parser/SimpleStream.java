@@ -21,10 +21,10 @@ public class SimpleStream implements Closeable {
     private final Reader reader;
     private int c=0;
 
-    public SimpleStream(AbsAccess file) throws FileNotFoundException, UnsupportedEncodingException {
+    public SimpleStream(AbsAccess file) throws IOException {
         
         
-        InputStream istream = file.open_r();//new FileInputStream(file);
+        InputStream istream = file.open_r();
         Reader ireader = new InputStreamReader(istream, CHARSET);
         reader = new BufferedReader(ireader, BUFFER_BYTES);            
     }

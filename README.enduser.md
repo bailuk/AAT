@@ -33,14 +33,6 @@ AAT lets you query the [Overpass API](http://wiki.openstreetmap.org/wiki/Overpas
 ### Example
 `[amenity=restaurant]` will get you list of all restaurants located inside the area that was visible on the map-view before opening the Overpass dialog. 
 
-### Map Icons
-Instead of the default symbol you can use the [map icons from SJJB Management](http://www.sjjb.co.uk/mapicons/):
-
-- Download the [PNG Icons Set](http://www.sjjb.co.uk/mapicons/downloads/)
-- Extract the icon set to `aat_data/osm_features/icons`.
-- Download [iconmap.txt from GitHUB](https://raw.githubusercontent.com/bailuk/AAT/master/iconmap/iconmap.txt)
-- Copy `iconmap.txt` to `aat_data/osm_features/icons`.
-
 
 ## Issues and feedback
 For questions, feedback and bugreports send an e-mail to aat@bailu.ch

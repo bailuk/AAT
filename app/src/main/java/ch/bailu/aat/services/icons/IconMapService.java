@@ -9,7 +9,9 @@ import ch.bailu.aat.gpx.GpxAttributes;
 import ch.bailu.aat.gpx.interfaces.GpxPointInterface;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.VirtualService;
+import ch.bailu.aat.util.fs.AbsAccess;
 import ch.bailu.aat.util.fs.AppDirectory;
+import ch.bailu.aat.util.fs.AssetAccess;
 import ch.bailu.aat.util.fs.FileAccess;
 import ch.bailu.aat.util.ui.AppLog;
 
@@ -17,7 +19,7 @@ public class IconMapService extends VirtualService {
     private final String NKEY_KEY = "class";
     private final String NKEY_VALUE = "type";
 
-    private final static String MAP_FILE="iconmap.txt";
+    private final static String MAP_FILE="symbols/iconmap.txt";
 
 
     private final IconMap map;
@@ -28,18 +30,13 @@ public class IconMapService extends VirtualService {
         super(sc);
 
         cache = new IconCache(sc);
+        map = new IconMap();
 
-        File directory = AppDirectory.getDataDirectory(getContext(), AppDirectory.DIR_OSM_FEATURES_ICONS);
-        map = new IconMap(directory.toString());
-
-        final File mapFile = new File(directory, MAP_FILE);
-
-        if (mapFile.exists()) {
-            try {
-                new IconMapParser(new FileAccess(mapFile), map);
-            } catch (IOException e) {
-                AppLog.e(getContext(), this, e);
-            }
+        try {
+            AbsAccess map_file = new AssetAccess(sc.getContext().getAssets(), MAP_FILE);
+            new IconMapParser(map_file, map);
+        } catch (IOException e) {
+            AppLog.e(getContext(), this, e);
         }
 
 
@@ -98,26 +95,10 @@ public class IconMapService extends VirtualService {
 
 
 */
-    private String getBigIconPath(String key, String value) {
-        final IconMap.Icon icon = map.get(key,value);
-
-        if (icon == null) {
-            return null;
-        }
-
-        return icon.big;
-    }
 
 
 
     public void iconify(StringBuilder html, String key, String value) {
-        String icon = getBigIconPath(key, value);
-
-        if (icon != null) {
-            html.append("<p><img src=\"");
-            html.append(icon);
-            html.append("\"/></p>");
-        }
     }
 
 

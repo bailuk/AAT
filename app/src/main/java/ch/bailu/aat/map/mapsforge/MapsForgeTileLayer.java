@@ -1,7 +1,6 @@
 package ch.bailu.aat.map.mapsforge;
 
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 
@@ -21,7 +20,6 @@ import java.util.List;
 import ch.bailu.aat.map.MapContext;
 import ch.bailu.aat.map.layer.MapLayerInterface;
 import ch.bailu.aat.map.tile.TileProviderInterface;
-import ch.bailu.aat.util.ui.AppLog;
 
 public class MapsForgeTileLayer extends Layer implements MapLayerInterface, Observer {
 
@@ -50,14 +48,14 @@ public class MapsForgeTileLayer extends Layer implements MapLayerInterface, Obse
             draw(
                     box,
                     zoom,
-                    AndroidGraphicFactory.getCanvas(c),
+                    c,
                     tlp,
                     displayModel.getTileSize());
         }
     }
 
 
-    private void draw (BoundingBox box, byte z, android.graphics.Canvas canvas, Point tlp, int tileSize) {
+    private void draw (BoundingBox box, byte z, Canvas canvas, Point tlp, int tileSize) {
         List<TilePosition> tilePositions = LayerUtil.getTilePositions(box, z, tlp, tileSize);
 
         provider.setCapacity(tilePositions.size());
@@ -82,7 +80,8 @@ public class MapsForgeTileLayer extends Layer implements MapLayerInterface, Obse
                 r.right = r.left + tileSize;
                 r.bottom = r.top + tileSize;
 
-                canvas.drawBitmap(AndroidGraphicFactory.getBitmap(bitmap), null, r, paint);
+                AndroidGraphicFactory.getCanvas(canvas).
+                drawBitmap(AndroidGraphicFactory.getBitmap(bitmap), null, r, paint);
             }
         }
     }
