@@ -4,7 +4,7 @@ import android.content.Context;
 
 import ch.bailu.aat.R;
 import ch.bailu.aat.services.cache.BitmapTileObject;
-import ch.bailu.aat.services.cache.HillShadeCached;
+import ch.bailu.aat.services.cache.CachedTileObject;
 import ch.bailu.aat.services.cache.MapsForgeTileObject;
 import ch.bailu.aat.services.cache.NewHillshade;
 import ch.bailu.aat.services.cache.TileObject.Source;
@@ -21,13 +21,15 @@ public class SolidMapTileStack extends SolidCheckList {
             MapsForgeTileObject.MAPSFORGE,
             // MAPNIK_GRAY,
             BitmapTileObject.MAPNIK,
-            HillShadeCached.ELEVATION_HILLSHADE_CACHED,
+//            HillShadeCached.ELEVATION_HILLSHADE_CACHED,
+            CachedTileObject.CACHED_HILLSHADE,
             NewHillshade.ELEVATION_HILLSHADE8,
             BitmapTileObject.TRANSPORT_OVERLAY,
             BitmapTileObject.TRAIL_SKATING,
             BitmapTileObject.TRAIL_HIKING,
             BitmapTileObject.TRAIL_MTB,
             BitmapTileObject.TRAIL_CYCLING,
+            CachedTileObject.CACHED_MAPSFORGE
     };
 
 
