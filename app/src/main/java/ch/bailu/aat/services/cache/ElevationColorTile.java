@@ -1,7 +1,5 @@
 package ch.bailu.aat.services.cache;
 
-import android.content.Context;
-
 import org.mapsforge.core.model.Tile;
 
 import ch.bailu.aat.services.ServiceContext;
@@ -89,48 +87,5 @@ public class ElevationColorTile extends ElevationTile {
 
 
 
-    public final static Source ELEVATION_COLOR =
-            new Source() {
-
-                @Override
-                public String getName() {
-                    return "ElevationColor*";
-                }
-
-                @Override
-                public String getID(Tile t, Context x) {
-                    return Source.genID(t, ElevationColorTile.class.getSimpleName());
-                }
-
-                @Override
-                public int getMinimumZoomLevel() {
-                    return 5;
-                }
-
-                @Override
-                public int getMaximumZoomLevel() {
-                    return 18;
-                }
-
-//                @Override
-//                public boolean isTransparent() {
-//                    return false;
-//                }
-
-                @Override
-                public int getAlpha() {
-                    return TRANSPARENT;
-                }
-
-                @Override
-                public ObjectHandle.Factory getFactory(Tile mt) {
-                    return  new ElevationColorTile.Factory(mt);
-                }
-
-//                @Override
-//                public TileBitmapFilter getBitmapFilter() {
-//                    return TileBitmapFilter.OVERLAY_FILTER;
-//                }
-            };
 
 }

@@ -10,6 +10,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 
+import ch.bailu.aat.map.tile.source.Source;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.background.FileHandle;
 import ch.bailu.aat.util.AppBroadcaster;
@@ -174,48 +175,8 @@ public class CachedTileObject extends TileObject {
     }
 
 
-    public final static Source CACHED_HILLSHADE = new MySource(NewHillshade.ELEVATION_HILLSHADE8);
-    public final static Source CACHED_MAPSFORGE = new MySource(MapsForgeTileObject.MAPSFORGE);
 
-    private static class MySource extends TileObject.Source {
-        private final Source source;
-
-        public MySource(Source s) {
-            source = s;
-        }
-
-        @Override
-        public String getName() {
-            return "Cached" + source.getName();
-        }
-
-        @Override
-        public String getID(Tile aTile, Context context) {
-            return genID(aTile, getName());
-        }
-
-        @Override
-        public int getMinimumZoomLevel() {
-            return source.getMinimumZoomLevel();
-        }
-
-        @Override
-        public int getMaximumZoomLevel() {
-            return source.getMaximumZoomLevel();
-        }
-
-        @Override
-        public int getAlpha() {
-            return source.getAlpha();
-        }
-
-        @Override
-        public Factory getFactory(Tile tile) {
-            return new CachedTileObject.Factory(tile, source);
-        }
-    }
-
-    private static class Factory extends ObjectHandle.Factory {
+    public static class Factory extends ObjectHandle.Factory {
         private final Source source;
         private final Tile tile;
 
@@ -230,7 +191,7 @@ public class CachedTileObject extends TileObject {
         }
     }
 
-    private static class CachedSource extends TileObject.Source {
+    private static class CachedSource extends Source {
         public final static String EXT = ".png";
 
         private final Source generated;
@@ -280,7 +241,12 @@ public class CachedTileObject extends TileObject {
 
         @Override
         public TileObject.Factory getFactory(Tile tile) {
-            return new LoadableBitmapTileObject.Factory(tile, false);
+            return new LoadableBitmapTileObject.Factory(tile, generated.isTransparent());
+        }
+
+        @Override
+        public boolean isTransparent() {
+            return generated.isTransparent();
         }
     }
 }

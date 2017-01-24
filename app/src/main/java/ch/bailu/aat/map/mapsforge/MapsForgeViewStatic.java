@@ -2,12 +2,13 @@ package ch.bailu.aat.map.mapsforge;
 
 import ch.bailu.aat.map.MapDensity;
 import ch.bailu.aat.map.tile.TileProvider;
+import ch.bailu.aat.map.tile.source.DownloadSource;
+import ch.bailu.aat.map.tile.source.Source;
 import ch.bailu.aat.services.ServiceContext;
-import ch.bailu.aat.services.cache.BitmapTileObject;
 
 public class MapsForgeViewStatic extends MapsForgeViewBase {
 
-    private final static BitmapTileObject.Source SOURCE = BitmapTileObject.MAPNIK;
+    private final static Source SOURCE = DownloadSource.MAPNIK;
 
     public MapsForgeViewStatic(ServiceContext sc) {
         super(sc, MapsForgeViewStatic.class.getSimpleName(),

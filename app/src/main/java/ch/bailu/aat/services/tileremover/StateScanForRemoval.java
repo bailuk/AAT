@@ -130,7 +130,7 @@ public class StateScanForRemoval implements State, Runnable {
 
 
     private boolean passDirectory(TileFile file) {
-        return trimDirectoryHash == 0 || file.hashCode() == trimDirectoryHash;
+        return trimDirectoryHash == 0 || file.directoryHashCode() == trimDirectoryHash;
     }
 
 

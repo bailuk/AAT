@@ -13,23 +13,23 @@ import org.mapsforge.map.model.common.Observer;
 
 import java.util.ArrayList;
 
+import ch.bailu.aat.map.tile.source.Source;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.cache.ObjectHandle;
 import ch.bailu.aat.services.cache.TileObject;
 import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.util.AppIntent;
-import ch.bailu.aat.util.ui.AppLog;
 
 public class TileProvider implements TileProviderInterface {
 
     private final ServiceContext scontext;
     private final ArrayList<Observer> observers = new ArrayList(2);
-    private final TileObject.Source source;
+    private final Source source;
 
     private TileCache<TileObject> cache = TileObjectCache.NULL;
 
 
-    public TileProvider(ServiceContext sc, TileObject.Source s) {
+    public TileProvider(ServiceContext sc, Source s) {
         scontext =sc;
         source = s;
     }

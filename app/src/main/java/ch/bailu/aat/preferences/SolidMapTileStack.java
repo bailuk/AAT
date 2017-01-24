@@ -3,11 +3,10 @@ package ch.bailu.aat.preferences;
 import android.content.Context;
 
 import ch.bailu.aat.R;
-import ch.bailu.aat.services.cache.BitmapTileObject;
-import ch.bailu.aat.services.cache.CachedTileObject;
-import ch.bailu.aat.services.cache.MapsForgeTileObject;
-import ch.bailu.aat.services.cache.NewHillshade;
-import ch.bailu.aat.services.cache.TileObject.Source;
+import ch.bailu.aat.map.tile.source.CachedSource;
+import ch.bailu.aat.map.tile.source.DownloadSource;
+import ch.bailu.aat.map.tile.source.Source;
+
 
 public class SolidMapTileStack extends SolidCheckList {
 
@@ -17,19 +16,24 @@ public class SolidMapTileStack extends SolidCheckList {
 
 
     public final static Source[] SOURCES = new Source[] {
-            //ElevationColorTile.ELEVATION_COLOR,
-            MapsForgeTileObject.MAPSFORGE,
-            // MAPNIK_GRAY,
-            BitmapTileObject.MAPNIK,
-//            HillShadeCached.ELEVATION_HILLSHADE_CACHED,
-            CachedTileObject.CACHED_HILLSHADE,
-            NewHillshade.ELEVATION_HILLSHADE8,
-            BitmapTileObject.TRANSPORT_OVERLAY,
-            BitmapTileObject.TRAIL_SKATING,
-            BitmapTileObject.TRAIL_HIKING,
-            BitmapTileObject.TRAIL_MTB,
-            BitmapTileObject.TRAIL_CYCLING,
-            CachedTileObject.CACHED_MAPSFORGE
+
+            Source.MAPSFORGE,
+            CachedSource.CACHED_MAPSFORGE,
+
+            DownloadSource.MAPNIK,
+
+            Source.ELEVATION_COLOR,
+            CachedSource.CACHED_ELEVATION_COLOR,
+
+            CachedSource.CACHED_ELEVATION_HILLSHADE,
+            Source.ELEVATION_HILLSHADE,
+
+            DownloadSource.TRANSPORT_OVERLAY,
+            DownloadSource.TRAIL_SKATING,
+            DownloadSource.TRAIL_HIKING,
+            DownloadSource.TRAIL_MTB,
+            DownloadSource.TRAIL_CYCLING,
+
     };
 
 
@@ -46,12 +50,6 @@ public class SolidMapTileStack extends SolidCheckList {
         }
     }
 
-//
-//    public static boolean isZoomLevelSupported(OnlineTileSourceBase source ,MapTile tile) {
-//        return
-//                tile.getZoomLevel() <= source.getMaximumZoomLevel() &&
-//                        tile.getZoomLevel() >= source.getMinimumZoomLevel();
-//    }
 
     public int getCountOfEnabled() {
         int c = 0;

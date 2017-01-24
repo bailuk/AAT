@@ -104,7 +104,7 @@ public class LoadableBitmapTileObject extends TileObject {
 
     @Override
     public long getSize() {
-        return getBytesHack(TILE_SIZE);
+        return bitmap.getSize();
     }
 
     @Override

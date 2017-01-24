@@ -33,8 +33,8 @@
 //
 //        mapTile = t;
 //
-//        demID = NewHillshade.ELEVATION_HILLSHADE8.getID(t, sc.getContext());
-//        demFactory = NewHillshade.ELEVATION_HILLSHADE8.getFactory(t);
+//        demID = NewHillshade.ELEVATION_HILLSHADE.getID(t, sc.getContext());
+//        demFactory = NewHillshade.ELEVATION_HILLSHADE.getFactory(t);
 //
 //        bitmapID = BitmapTileObject.HILLSHADE_CACHE.getID(t, sc.getContext());
 //        bitmapFactory = BitmapTileObject.HILLSHADE_CACHE.getFactory(t);
@@ -199,22 +199,22 @@
 //
 //                @Override
 //                public int getMinimumZoomLevel() {
-//                    return NewHillshade.ELEVATION_HILLSHADE8.getMinimumZoomLevel();
+//                    return NewHillshade.ELEVATION_HILLSHADE.getMinimumZoomLevel();
 //                }
 //
 //                @Override
 //                public int getMaximumZoomLevel() {
-//                    return NewHillshade.ELEVATION_HILLSHADE8.getMaximumZoomLevel();
+//                    return NewHillshade.ELEVATION_HILLSHADE.getMaximumZoomLevel();
 //                }
 //
 ////                @Override
 ////                public boolean isTransparent() {
-////                    return NewHillshade.ELEVATION_HILLSHADE8.isTransparent();
+////                    return NewHillshade.ELEVATION_HILLSHADE.isTransparent();
 ////                }
 //
 //                @Override
 //                public int getAlpha() {
-//                    return NewHillshade.ELEVATION_HILLSHADE8.getAlpha();
+//                    return NewHillshade.ELEVATION_HILLSHADE.getAlpha();
 //                }
 //
 //                @Override

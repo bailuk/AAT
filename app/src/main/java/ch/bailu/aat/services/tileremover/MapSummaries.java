@@ -40,7 +40,7 @@ public class MapSummaries {
         final long l = f.length();
 
         mapSummaries[0].addFileToRemove(f.length());
-        mapSummaries[indexFromHashCode(f.hashCode())].addFileToRemove(l);
+        mapSummaries[indexFromHashCode(f.directoryHashCode())].addFileToRemove(l);
     }
 
 
@@ -48,7 +48,7 @@ public class MapSummaries {
         final long length = f.length();
 
         mapSummaries[0].addFileRemoved(length);
-        mapSummaries[indexFromHashCode(f.hashCode())].addFileRemoved(length);
+        mapSummaries[indexFromHashCode(f.directoryHashCode())].addFileRemoved(length);
     }
 
     public int indexFromHashCode(int hashCode) {

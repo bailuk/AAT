@@ -7,18 +7,17 @@ import org.mapsforge.core.graphics.TileBitmap;
 import org.mapsforge.core.model.Tile;
 
 import java.io.File;
-import java.util.Random;
 
+import ch.bailu.aat.map.tile.source.DownloadSource;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.background.DownloadHandle;
 import ch.bailu.aat.services.background.FileHandle;
 import ch.bailu.aat.util.AppBroadcaster;
-import ch.bailu.aat.util.fs.AppDirectory;
 import ch.bailu.aat.util.graphic.SyncTileBitmap;
 
 
 public class BitmapTileObject extends TileObject {
-    private final Source source;
+    private final DownloadSource source;
     private final Tile tile;
 
 
@@ -30,7 +29,7 @@ public class BitmapTileObject extends TileObject {
     private final SyncTileBitmap bitmap=new SyncTileBitmap();
 
 
-    public BitmapTileObject(String id, ServiceContext cs,  Tile t, Source s) {
+    public BitmapTileObject(String id, ServiceContext cs,  Tile t, DownloadSource s) {
         super(id);
         tile = t;
         source=s;
@@ -147,10 +146,10 @@ public class BitmapTileObject extends TileObject {
 
     public static class Factory extends ObjectHandle.Factory {
         private final Tile mapTile;
-        private final Source source;
+        private final DownloadSource source;
 
         
-        public Factory(Tile mt, Source s) {
+        public Factory(Tile mt, DownloadSource s) {
             mapTile=mt;
             source = s;
         }
@@ -160,151 +159,4 @@ public class BitmapTileObject extends TileObject {
             return new BitmapTileObject(id, cs, mapTile, source);
         }
     }
-
-
-    public static final int MIN_ZOOM = 1;
-    public static final int MAX_ZOOM =17; // 18 takes way too much space for the gain.
-
-    public static class Source extends TileObject.Source {
-        public final static String EXT = ".png";
-
-        private final Random random = new Random();
-        private final int minZoom, maxZoom;
-
-        private final String name;
-
-        private final String[] urls;
-
-        private final int alpha;
-        private boolean transparent;
-
-
-        public Source (String n, int a, final String... url) {
-            this(n, MIN_ZOOM, MAX_ZOOM, a, (a != OPAQUE), url);
-        }
-
-        public Source (String n, int minZ, int maxZ, int a, final String... url) {
-            this(n, minZ, maxZ, a, (a != OPAQUE), url);
-        }
-
-        public Source(String n, int minZ, int maxZ, int a, boolean t, String... u) {
-            name = n;
-            minZoom = minZ;
-            maxZoom = maxZ;
-            urls = u;
-            alpha = a;
-            transparent = (a != OPAQUE);
-        }
-
-
-        @Override
-        public String getName() {
-            return name;
-        }
-        
-        
-        @Override
-        public String getID(Tile tile, Context context) {
-            return AppDirectory.getTileFile(tile,
-                    getTileRelativeFilename(tile), context).getAbsolutePath();
-        }
-
-        @Override
-        public int getMinimumZoomLevel() {
-            return minZoom;
-        }
-
-        @Override
-        public int getMaximumZoomLevel() {
-            return maxZoom;
-        }
-
-        public boolean isTransparent() {
-            return transparent;
-        }
-
-        @Override
-        public int getAlpha() {
-            return alpha;
-        }
-
-        @Override
-        public Factory getFactory(Tile mt) {
-            return new BitmapTileObject.Factory(mt, this);
-        }
-
-        public String getTileURLString(Tile tile) {
-            return getBaseUrl() + tile.zoomLevel + "/" + tile.tileX + "/" + tile.tileY + EXT;
-        }
-
-        private String getBaseUrl() {
-            return urls[random.nextInt(urls.length)];
-        }
-
-
-
-        private String getTileRelativeFilename(final Tile tile) {
-            final StringBuilder sb = new StringBuilder();
-            sb.append(name);
-            sb.append('/');
-            sb.append(tile.zoomLevel);
-            sb.append('/');
-            sb.append(tile.tileX);
-            sb.append('/');
-            sb.append(tile.tileY);
-            sb.append(EXT);
-            return sb.toString();
-        }
-
-    }
-
-
-
-
-    public final static BitmapTileObject.Source MAPNIK =
-            new BitmapTileObject.Source("Mapnik",
-                    TileObject.Source.OPAQUE,
-                    "http://a.tile.openstreetmap.org/",
-                    "http://b.tile.openstreetmap.org/",
-                    "http://c.tile.openstreetmap.org/");
-
-
-    public final static TileObject.Source TRAIL_MTB =
-            new BitmapTileObject.Source("TrailMTB",
-                    TileObject.Source.TRANSPARENT,
-                    "http://tile.waymarkedtrails.org/mtb/");
-
-    public final static TileObject.Source TRAIL_SKATING =
-            new BitmapTileObject.Source("TrailSkating",
-                    TileObject.Source.TRANSPARENT,
-                    "http://tile.waymarkedtrails.org/skating/");
-
-
-    public final static TileObject.Source TRAIL_HIKING =
-            new BitmapTileObject.Source("TrailHiking",
-                    TileObject.Source.TRANSPARENT,
-                    "http://tile.waymarkedtrails.org/hiking/");
-
-
-    public final static TileObject.Source TRAIL_CYCLING =
-            new BitmapTileObject.Source("TrailCycling",
-                    TileObject.Source.TRANSPARENT,
-                    "http://tile.waymarkedtrails.org/cycling/");
-
-
-
-    public final static TileObject.Source TRANSPORT_OVERLAY =
-            new BitmapTileObject.Source("OpenPtMap",
-                    5, 16,
-                    TileObject.Source.TRANSPARENT,
-                    "http://openptmap.org/tiles/");
-
-
-    public final static BitmapTileObject.Source HILLSHADE_CACHE =
-            new BitmapTileObject.Source("HillShade",
-                    NewHillshade.ELEVATION_HILLSHADE8.getMinimumZoomLevel(),
-                    NewHillshade.ELEVATION_HILLSHADE8.getMaximumZoomLevel(),
-                    NewHillshade.ELEVATION_HILLSHADE8.getAlpha(),
-                    true,
-                    "http://bailu.ch/");
 }

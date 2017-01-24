@@ -1,6 +1,5 @@
 package ch.bailu.aat.services.cache;
 
-import android.content.Context;
 import android.graphics.Bitmap;
 
 import org.mapsforge.core.graphics.TileBitmap;
@@ -81,7 +80,7 @@ public class MapsForgeTileObject extends TileObject implements Observer {
 
     @Override
     public long getSize() {
-        return getBytesHack(tile.tileSize);
+        return bitmap.getSize();
     }
 
     @Override
@@ -109,45 +108,5 @@ public class MapsForgeTileObject extends TileObject implements Observer {
     }
 
 
-    public final static Source MAPSFORGE =
 
-            new Source() {
-
-                @Override
-                public String getName() {
-                    return "MapsForge";
-                }
-
-                @Override
-                public String getID(Tile t, Context x) {
-                    return genID(t, MapsForgeTileObject.class.getSimpleName());
-                }
-
-                @Override
-                public int getMinimumZoomLevel() {
-                    return 3;
-                }
-
-                @Override
-                public int getMaximumZoomLevel() {
-                    return 17;
-                }
-
-//                @Override
-//                public boolean isTransparent() {
-//                    return false;
-//                }
-
-                @Override
-                public int getAlpha() {
-                    return OPAQUE;
-                }
-
-                @Override
-                public ObjectHandle.Factory getFactory(Tile t) {
-                    return  new Factory(t);
-                }
-
-
-            };
 }

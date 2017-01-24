@@ -9,6 +9,7 @@ import org.mapsforge.map.model.common.Observer;
 import java.io.Closeable;
 import java.util.ArrayList;
 
+import ch.bailu.aat.map.tile.source.Source;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.cache.ObjectHandle;
 import ch.bailu.aat.services.cache.TileObject;
@@ -18,10 +19,10 @@ public class TileProviderStatic implements TileProviderInterface, Closeable {
 
     private final ArrayList<TileObject> tiles = new ArrayList<>(10);
 
-    private final TileObject.Source source;
+    private final Source source;
     private final ServiceContext scontext;
 
-    public TileProviderStatic(ServiceContext sc, TileObject.Source s) {
+    public TileProviderStatic(ServiceContext sc, Source s) {
         scontext = sc;
         source = s;
 

@@ -22,9 +22,9 @@ import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.map.MapDensity;
 import ch.bailu.aat.map.layer.gpx.GpxDynLayer;
 import ch.bailu.aat.map.tile.TileProviderStatic;
+import ch.bailu.aat.map.tile.source.DownloadSource;
+import ch.bailu.aat.map.tile.source.Source;
 import ch.bailu.aat.services.ServiceContext;
-import ch.bailu.aat.services.cache.BitmapTileObject;
-import ch.bailu.aat.services.cache.TileObject;
 import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.util.graphic.SyncTileBitmap;
 import ch.bailu.aat.util.ui.AppLog;
@@ -32,7 +32,7 @@ import ch.bailu.aat.util.ui.AppLog;
 public class MapsForgePreview extends MapsForgeViewBase {
     public static final int BITMAP_SIZE=128;
 
-    private final TileObject.Source SOURCE = BitmapTileObject.MAPNIK;
+    private final Source SOURCE = DownloadSource.MAPNIK;
 
     private final File imageFile;
     private final TileProviderStatic provider;

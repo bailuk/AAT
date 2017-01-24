@@ -11,10 +11,10 @@ import java.util.ArrayList;
 import ch.bailu.aat.map.MapContext;
 import ch.bailu.aat.map.layer.MapLayerInterface;
 import ch.bailu.aat.map.tile.TileProvider;
+import ch.bailu.aat.map.tile.source.Source;
 import ch.bailu.aat.preferences.SolidMapTileStack;
 import ch.bailu.aat.preferences.SolidPreset;
 import ch.bailu.aat.services.ServiceContext;
-import ch.bailu.aat.services.cache.TileObject;
 
 public class MapsForgeTileLayerStack implements MapLayerInterface {
 
@@ -35,7 +35,7 @@ public class MapsForgeTileLayerStack implements MapLayerInterface {
         int preset = new SolidPreset(context).getIndex();
         stiles = new SolidMapTileStack(context, preset);
 
-        for (TileObject.Source s: SolidMapTileStack.SOURCES) {
+        for (Source s: SolidMapTileStack.SOURCES) {
             MapsForgeTileLayer layer =
                     new MapsForgeTileLayer(new TileProvider(scontext,s), s.getAlpha());
 

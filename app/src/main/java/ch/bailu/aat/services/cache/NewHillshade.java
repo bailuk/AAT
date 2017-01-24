@@ -4,6 +4,7 @@ import android.content.Context;
 
 import org.mapsforge.core.model.Tile;
 
+import ch.bailu.aat.map.tile.source.Source;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.dem.DemDimension;
 import ch.bailu.aat.services.dem.DemGeoToIndex;
@@ -138,39 +139,5 @@ public class NewHillshade extends ElevationTile {
     }
 
 
-    public final static Source ELEVATION_HILLSHADE8 =
-            new Source() {
 
-                @Override
-                public String getName() {
-                    return "Hillshade";
-                }
-
-                @Override
-                public String getID(Tile t, Context x) {
-                    return genID(t, NewHillshade.class.getSimpleName());
-                }
-
-                @Override
-                public int getMinimumZoomLevel() {
-                    return 8;
-                }
-
-                @Override
-                public int getMaximumZoomLevel() {
-                    return 14;
-                }
-
-
-                @Override
-                public int getAlpha() {
-                    return OPAQUE;
-                }
-
-                @Override
-                public ObjectHandle.Factory getFactory(Tile mt) {
-                    return  new NewHillshade.Factory(mt);
-                }
-
-            };
 }

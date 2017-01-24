@@ -59,8 +59,8 @@ public class TileFile {
         return size;
     }
 
-    @Override
-    public int hashCode() {
+
+    public int directoryHashCode() {
         return hash;
     }
 }

@@ -4,17 +4,24 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.PriorityQueue;
+import java.util.TreeSet;
 
 public class TilesList {
-    public final static int FILES_LIMIT=50000;
+    private final static int FILES_LIMIT=100000;
 
 
-    private final PriorityQueue<TileFile> files = new PriorityQueue<>(
-            FILES_LIMIT,
+    private final TreeSet<TileFile> files = new TreeSet<>(
+
             new Comparator<TileFile>() {
         @Override
         public int compare(TileFile o1, TileFile o2) {
-            return (int) (o2.lastModified()-o1.lastModified());
+            if (o2.lastModified() > o1.lastModified())
+                return -1;
+
+            else if (o2.lastModified() < o1.lastModified())
+                return 1;
+
+            else return 0;
         }
     });
 
@@ -27,9 +34,9 @@ public class TilesList {
 
     public void add(TileFile file) {
         files.add(file);
-        if (files.size()>= FILES_LIMIT) {
-            files.poll();
-        }
+//        if (files.size()>= FILES_LIMIT) {
+//            files.pollLast();
+//        }
     }
 
     public void addToRemove(TileFile file) {
