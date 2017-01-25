@@ -1,6 +1,6 @@
 package ch.bailu.aat.services.tileremover;
 
-public interface MapSummaryInterface {
+public interface SourceSummaryInterface {
     boolean isValid();
 
     String getName();

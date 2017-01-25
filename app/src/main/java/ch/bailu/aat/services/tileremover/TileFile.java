@@ -5,14 +5,9 @@ import java.io.File;
 public class TileFile {
 
     private final short zoom;
-    private final int x, y, hash;
+    private final int x, y, source;
     private final long age;
     private final long size;
-
-
-    public static int getBaseDirHash(File file) {
-        return file.getName().hashCode();
-    }
 
 
     public static int getX(File file)throws NumberFormatException {
@@ -33,8 +28,8 @@ public class TileFile {
     }
 
 
-    public TileFile(int hash, short zoom, int x, File file) {
-        this.hash = hash;
+    public TileFile(int summary, short zoom, int x, File file) {
+        this.source = summary;
         this.zoom = zoom;
         this.x = x;
         this.y = getY(file);
@@ -44,13 +39,16 @@ public class TileFile {
 
 
     public File toFile(File base_dir) {
-        return new File(base_dir,
-                String.valueOf(zoom)+"/" +
-                        String.valueOf(x) +
-                        "/" +
-                        String.valueOf(y)+ ".png");
+        return new File(base_dir, toString());
     }
 
+    @Override
+    public String toString() {
+        return String.valueOf(zoom)+"/" +
+                String.valueOf(x) +
+                "/" +
+                String.valueOf(y)+ ".png";
+    }
     public long lastModified() {
         return age;
     }
@@ -60,7 +58,22 @@ public class TileFile {
     }
 
 
-    public int directoryHashCode() {
-        return hash;
+    public int getSource() {
+        return source;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null) return false;
+        if (o == this) return true;
+
+        if (o instanceof TileFile) {
+            return (((TileFile) o).x == x &&
+                    ((TileFile) o).y == y &&
+                    ((TileFile) o).zoom == zoom &&
+                    ((TileFile) o).source == source
+            );
+        }
+        return false;
     }
 }

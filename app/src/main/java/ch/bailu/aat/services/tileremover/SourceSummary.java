@@ -3,7 +3,7 @@ package ch.bailu.aat.services.tileremover;
 import ch.bailu.aat.util.ui.AppLog;
 import ch.bailu.aat.preferences.SolidTrimSize;
 
-public class MapSummary implements MapSummaryInterface {
+public class SourceSummary implements SourceSummaryInterface {
     private String name = "";
     private int hash;
     public long size, count, size_rm, countToRemove, newSize, count_new;

@@ -6,6 +6,8 @@ import java.util.Iterator;
 import java.util.PriorityQueue;
 import java.util.TreeSet;
 
+import ch.bailu.aat.util.ui.AppLog;
+
 public class TilesList {
     private final static int FILES_LIMIT=100000;
 
@@ -15,13 +17,14 @@ public class TilesList {
             new Comparator<TileFile>() {
         @Override
         public int compare(TileFile o1, TileFile o2) {
+
+            //if (o1.equals(o2)) return 0;
+
             if (o2.lastModified() > o1.lastModified())
                 return -1;
 
-            else if (o2.lastModified() < o1.lastModified())
+            else
                 return 1;
-
-            else return 0;
         }
     });
 
@@ -33,7 +36,9 @@ public class TilesList {
     }
 
     public void add(TileFile file) {
-        files.add(file);
+        if (!files.add(file)) {
+            AppLog.d(this, file.getSource() +"/"+ file.toString());
+        }
 //        if (files.size()>= FILES_LIMIT) {
 //            files.pollLast();
 //        }
@@ -51,5 +56,9 @@ public class TilesList {
 
     public Iterator<TileFile> iterator() {
         return files.iterator();
+    }
+
+    public void log() {
+        AppLog.d(this, "Files: " + files.size());
     }
 }

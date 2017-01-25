@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.Iterator;
 
 import ch.bailu.aat.util.AppBroadcaster;
+import ch.bailu.aat.util.ui.AppLog;
 
 public class StateRemove implements State, Runnable {
     private static final int BROADCAST_INTERVAL =5;
@@ -69,10 +70,15 @@ public class StateRemove implements State, Runnable {
         state.setFromClass(nextState);
     }
 
-    private void delete(File f, TileFile t) {
-        f.delete();
-        //AppLog.d(this, f.toString());
-        state.summaries.addFileRemoved(t);
+    private boolean delete(File f, TileFile t) {
+        if (f.delete()) {
+            state.summaries.addFileRemoved(t);
+            return true;
+        }
+
+
+        AppLog.d(this, "Failed to delete: " + f.toString());
+        return false;
     }
 
 

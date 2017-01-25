@@ -6,16 +6,16 @@ import java.io.File;
 
 import ch.bailu.aat.R;
 
-public class MapSummaries {
+public class SourceSummaries {
 
 
     public final static int SUMMARY_SIZE = 20;
-    private final MapSummary[] mapSummaries = new MapSummary[SUMMARY_SIZE];
+    private final SourceSummary[] mapSummaries = new SourceSummary[SUMMARY_SIZE];
 
 
     public void reset(Context c) {
         for(int i = 0; i< mapSummaries.length; i++) {
-            mapSummaries[i] = new MapSummary();
+            mapSummaries[i] = new SourceSummary();
         }
         mapSummaries[0].setName(c.getString(R.string.p_trim_total));
     }
@@ -31,7 +31,7 @@ public class MapSummaries {
     }
 
     public void resetToRemove() {
-        for (MapSummary mapSummary : mapSummaries) {
+        for (SourceSummary mapSummary : mapSummaries) {
             mapSummary.clear_rm();
         }
     }
@@ -40,7 +40,7 @@ public class MapSummaries {
         final long l = f.length();
 
         mapSummaries[0].addFileToRemove(f.length());
-        mapSummaries[indexFromHashCode(f.directoryHashCode())].addFileToRemove(l);
+        mapSummaries[f.getSource()].addFileToRemove(l);
     }
 
 
@@ -48,24 +48,15 @@ public class MapSummaries {
         final long length = f.length();
 
         mapSummaries[0].addFileRemoved(length);
-        mapSummaries[indexFromHashCode(f.directoryHashCode())].addFileRemoved(length);
+        mapSummaries[f.getSource()].addFileRemoved(length);
     }
 
-    public int indexFromHashCode(int hashCode) {
-        for (int i = 1; i<mapSummaries.length; i++) {
-            if (mapSummaries[i].hashCode() == hashCode) {
-                return i;
-            }
-        }
-        return 0;
-    }
-
-    public long getNewSize(int i) {
+     public long getNewSize(int i) {
         return mapSummaries[i].newSize;
     }
 
 
-    public MapSummaryInterface[] getMapSummaries() {
+    public SourceSummaryInterface[] getMapSummary() {
         return mapSummaries;
     }
 
@@ -80,11 +71,11 @@ public class MapSummaries {
 
 
     public File toFile(File tileDirectory, TileFile t) {
-        return t.toFile(new File(tileDirectory, getMapDirectory(t.hashCode())));
+        return t.toFile(new File(tileDirectory, getMapDirectory(t.getSource())));
     }
 
-    public String getMapDirectory(int hashCode) {
-        return mapSummaries[indexFromHashCode(hashCode)].getName();
+    public String getMapDirectory(int source) {
+        return mapSummaries[source].getName();
     }
 
 }

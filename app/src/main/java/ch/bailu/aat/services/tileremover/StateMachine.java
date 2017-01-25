@@ -11,17 +11,15 @@ public class StateMachine implements State {
     private State state;
 
     public TilesList list = null;
-    public final MapSummaries summaries = new MapSummaries();
+    public final SourceSummaries summaries = new SourceSummaries();
 
     public File tileDirectory;
 
     public final Context context;
-    //private final ServiceContext scontext;
 
 
     public StateMachine(ServiceContext sc) {
         context = sc.getContext();
-        //scontext = sc;
         set(new StateUnscanned(this));
     }
 
@@ -80,9 +78,4 @@ public class StateMachine implements State {
         }
 
     }
-
-
-
-
-
 }
