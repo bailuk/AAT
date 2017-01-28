@@ -11,7 +11,9 @@ import java.util.ArrayList;
 import ch.bailu.aat.map.MapContext;
 import ch.bailu.aat.map.layer.MapLayerInterface;
 import ch.bailu.aat.map.tile.TileProvider;
+import ch.bailu.aat.map.tile.source.CachedSource;
 import ch.bailu.aat.map.tile.source.Source;
+import ch.bailu.aat.preferences.SolidEnableTileCache;
 import ch.bailu.aat.preferences.SolidMapTileStack;
 import ch.bailu.aat.preferences.SolidPreset;
 import ch.bailu.aat.services.ServiceContext;
@@ -36,12 +38,30 @@ public class MapsForgeTileLayerStack implements MapLayerInterface {
         stiles = new SolidMapTileStack(context, preset);
 
         for (Source s: SolidMapTileStack.SOURCES) {
+            Source source = s;
+            if (s == Source.MAPSFORGE) {
+                source =
+                        new SolidEnableTileCache(
+                                context,
+                                CachedSource.CACHED_MAPSFORGE).getSource();
+
+            } else if (s == Source.ELEVATION_HILLSHADE) {
+                source =
+                        new SolidEnableTileCache(
+                                context,
+                                CachedSource.CACHED_ELEVATION_HILLSHADE).getSource();
+            }
+
+
             MapsForgeTileLayer layer =
-                    new MapsForgeTileLayer(new TileProvider(scontext,s), s.getAlpha());
+                    new MapsForgeTileLayer(
+                            new TileProvider(scontext, source),
+                            source.getAlpha());
 
             layers.add(layer);
             mapView.add(layer, layer);
         }
+
     }
 
 

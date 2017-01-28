@@ -16,24 +16,15 @@ public class SolidMapTileStack extends SolidCheckList {
 
 
     public final static Source[] SOURCES = new Source[] {
-
             Source.MAPSFORGE,
-            CachedSource.CACHED_MAPSFORGE,
-
             DownloadSource.MAPNIK,
-
             Source.ELEVATION_COLOR,
-            CachedSource.CACHED_ELEVATION_COLOR,
-
-            CachedSource.CACHED_ELEVATION_HILLSHADE,
             Source.ELEVATION_HILLSHADE,
-
             DownloadSource.TRANSPORT_OVERLAY,
             DownloadSource.TRAIL_SKATING,
             DownloadSource.TRAIL_HIKING,
             DownloadSource.TRAIL_MTB,
             DownloadSource.TRAIL_CYCLING,
-
     };
 
 
@@ -48,15 +39,6 @@ public class SolidMapTileStack extends SolidCheckList {
         for (int i=0; i<enabledArray.length; i++) {
             enabledArray[i]=new SolidBoolean(s, KEY+preset+"_"+i);
         }
-    }
-
-
-    public int getCountOfEnabled() {
-        int c = 0;
-
-        for (SolidBoolean anEnabledArray : enabledArray) if (anEnabledArray.isEnabled()) c++;
-
-        return c;
     }
 
 
@@ -113,21 +95,5 @@ public class SolidMapTileStack extends SolidCheckList {
         return false;
     }
 
-
-
-    public Source[] getSourceList() {
-        Source[]  array = new Source[getCountOfEnabled()];
-
-        int index=0;
-
-        for (int i=0; i<enabledArray.length; i++) {
-            if (enabledArray[i].isEnabled()) {
-                array[index] = SOURCES[i];
-                index++;
-            }
-        }
-
-        return array;
-    }
 
 }

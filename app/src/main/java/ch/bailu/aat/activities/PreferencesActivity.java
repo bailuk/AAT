@@ -44,7 +44,7 @@ public class PreferencesActivity extends AbsDispatcher {
 
         final int l = new SolidPreset(this).length();
 
-        mapTilePreferences = new MapTilePreferencesView(getServiceContext());
+        mapTilePreferences = new MapTilePreferencesView(this, getServiceContext());
         mv.add(new GeneralPreferencesView(this),
                 getString(R.string.p_general)+ "/"+ getString(R.string.p_system));
         mv.add(mapTilePreferences,

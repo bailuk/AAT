@@ -13,7 +13,7 @@
 //public abstract class OsmTileProviderAbstract implements OpenStreetMapTileProviderConstants, Attachable {
 //
 //    /** Osmdroid compability **/
-//    public ITileSource getTileSource() {
+//    public ITileSource getSource() {
 //        return null;
 //    }
 //

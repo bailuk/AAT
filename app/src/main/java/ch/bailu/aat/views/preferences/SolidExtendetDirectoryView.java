@@ -14,15 +14,8 @@ public class SolidExtendetDirectoryView extends LinearLayout{
         addView(new SolidDirectoryMenuButton(s));
     }
 
-    /*
-    public SolidExtendetDirectoryView(Activity context, SolidDirectory s, ContentDescription d) {
-        super(s.getContext());
-        setOrientation(HORIZONTAL);
 
-        addW(new LabelTextView(context, d));
-        addView(new SolidDirectoryMenuButton(s));
-    }
-*/
+
     public void addW(View v) {
         addView(v);
 

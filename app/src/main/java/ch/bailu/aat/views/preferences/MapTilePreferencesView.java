@@ -1,8 +1,13 @@
 package ch.bailu.aat.views.preferences;
 
+import android.app.Activity;
 import android.content.Context;
 
 import ch.bailu.aat.R;
+import ch.bailu.aat.map.tile.source.CachedSource;
+import ch.bailu.aat.map.tile.source.Source;
+import ch.bailu.aat.preferences.SolidEnableTileCache;
+import ch.bailu.aat.preferences.SolidMapViewAcceleration;
 import ch.bailu.aat.preferences.SolidMapsForgeDirectory;
 import ch.bailu.aat.preferences.SolidTileCacheDirectory;
 import ch.bailu.aat.preferences.SolidTileSize;
@@ -16,16 +21,28 @@ public class MapTilePreferencesView extends VerticalScrollView {
     private final TileRemoverView tileRemover;
 
 
-    public MapTilePreferencesView(ServiceContext scontext) {
+    public MapTilePreferencesView(Activity acontext, ServiceContext scontext) {
         super(scontext.getContext());
 
         final Context context = scontext.getContext();
 
-        add(new TitleView(context, "Mapsforge*"));
-        add(new SolidExtendetDirectoryView(new SolidMapsForgeDirectory(context)));
         add(new TitleView(context, context.getString(R.string.p_tiles)));
         add(new SolidIndexListView(new SolidTileSize(context)));
         add(new SolidExtendetDirectoryView(new SolidTileCacheDirectory(context)));
+        add(new SolidIndexListView(new SolidMapViewAcceleration(context)));
+
+        add(new TitleView(context, Source.MAPSFORGE.getName()));
+        add(new SolidExtendetDirectoryView(new SolidMapsForgeDirectory(context)));
+        add(new SolidEnableTileCacheView(
+                acontext,
+                new SolidEnableTileCache(context, CachedSource.CACHED_MAPSFORGE)));
+
+        add(new TitleView(context, Source.ELEVATION_HILLSHADE.getName()));
+        add(new SolidEnableTileCacheView(
+                acontext,
+                new SolidEnableTileCache(context, CachedSource.CACHED_ELEVATION_HILLSHADE)));
+
+        add(new TitleView(context, "Trim tile caches*"));
         add(new SolidIndexListView(new SolidTrimMode(context)));
         add(new SolidIndexListView(new SolidTrimSize(context)));
         add(new SolidIndexListView(new SolidTrimDate(context)));

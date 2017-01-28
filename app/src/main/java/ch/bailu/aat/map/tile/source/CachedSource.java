@@ -39,6 +39,10 @@ public class CachedSource extends Source {
         return source.getAlpha();
     }
 
+    public Source getSource() {
+        return source;
+    }
+
     @Override
     public ObjectHandle.Factory getFactory(Tile tile) {
         return new CachedTileObject.Factory(tile, source);
@@ -50,9 +54,8 @@ public class CachedSource extends Source {
     }
 
 
-    public final static Source CACHED_ELEVATION_COLOR = new CachedSource(Source.ELEVATION_COLOR);
-    public final static Source CACHED_ELEVATION_HILLSHADE = new CachedSource(Source.ELEVATION_HILLSHADE);
-    public final static Source CACHED_MAPSFORGE = new CachedSource(Source.MAPSFORGE);
-
+    public final static CachedSource CACHED_ELEVATION_COLOR = new CachedSource(Source.ELEVATION_COLOR);
+    public final static CachedSource CACHED_ELEVATION_HILLSHADE = new CachedSource(Source.ELEVATION_HILLSHADE);
+    public final static CachedSource CACHED_MAPSFORGE = new CachedSource(Source.MAPSFORGE);
 }
 

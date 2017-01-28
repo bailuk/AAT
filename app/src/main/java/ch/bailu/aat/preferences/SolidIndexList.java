@@ -11,7 +11,7 @@ public abstract class SolidIndexList extends AbsSolidType {
     
     
     public abstract int length();
-    public abstract String getValueAsString(int i);
+    protected abstract String getValueAsString(int i);
 
     @Override
     public String getValueAsString() {

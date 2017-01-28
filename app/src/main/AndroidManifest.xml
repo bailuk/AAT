@@ -18,7 +18,6 @@
         android:label="@string/app_sname"
         android:theme="@android:style/Theme.NoTitleBar">
 
-
         <activity
             android:name="ch.bailu.aat.activities.MainActivity"
             android:screenOrientation="portrait" >
