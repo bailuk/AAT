@@ -9,6 +9,7 @@ import org.mapsforge.map.android.graphics.AndroidBitmap;
 
 import ch.bailu.aat.map.MapContext;
 import ch.bailu.aat.map.TwoNodes;
+import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.util.ui.AppTheme;
 
 public class WayLayer extends GpxLayer {
@@ -88,15 +89,17 @@ public class WayLayer extends GpxLayer {
         public void drawNode(TwoNodes.PixelNode node) {
             if (node.isVisible() && count < MAX_VISIBLE_NODES) {
 
+                final ServiceContext scontext = mcontext.getSContext();
                 Bitmap nodeBitmap = null;
-                if (mcontext.getSContext().isUp()) {
+                if (scontext.lock()) {
 
-                    android.graphics.Bitmap b = mcontext.getSContext().getIconMapService().getIconSVG(node.point,
+                    android.graphics.Bitmap b = scontext.getIconMapService().getIconSVG(node.point,
                             icon_size);
 
                     if (b != null)
                         nodeBitmap = new AndroidBitmap(b);
 
+                    scontext.free();
                 }
 
                 if (nodeBitmap != null) {

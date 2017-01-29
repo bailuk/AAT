@@ -134,15 +134,14 @@ public abstract class ElevationTile extends TileObject implements ElevationUpdat
     }
 
 
-    @Override
-    public boolean isReady() {
+    public boolean isReadyAndLoaded() {
         return updateLock == false;
     }
 
 
     @Override
     public boolean isLoaded() {
-        return isReady() && tilePainterList.size() == 0;
+        return isReadyAndLoaded() && tilePainterList.size() == 0;
     }
 
 

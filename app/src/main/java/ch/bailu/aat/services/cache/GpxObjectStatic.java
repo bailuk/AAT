@@ -29,7 +29,7 @@ public class GpxObjectStatic extends GpxObject implements ElevationUpdaterClient
 
     private GpxList gpxList=new GpxList(GpxType.TRK, new MaxSpeed.Samples());
 
-    private boolean ready=false;
+    private boolean readyAndLoaded = false;
     
     
     public GpxObjectStatic(String id, ServiceContext sc) {
@@ -47,31 +47,35 @@ public class GpxObjectStatic extends GpxObject implements ElevationUpdaterClient
     private void reload(final ServiceContext sc) {
         final FileHandle f = new FileHandle(toString()) {
 
-            private boolean locked=false;
-            
+
             @Override
             public long bgOnProcess() {
-                locked=true;
-                try {
-                    final Context c = sc.getContext();
-                    final String id = toString();
+                long size = 0;
 
-                    GpxListReader reader = new GpxListReader(this, AbsAccess.factory(c, id));
-                    if (canContinue()) {
-                        gpxList = reader.getGpxList();
-                        ready=true;
+                ObjectHandle handle =
+                        sc.getCacheService().getObject(GpxObjectStatic.this.toString());
+                try {
+                    if (handle instanceof GpxObjectStatic) {
+
+                        final Context c = sc.getContext();
+                        final String id = toString();
+
+                        GpxListReader reader =
+                                new GpxListReader(this, AbsAccess.factory(c, id));
+                        if (canContinue()) {
+                            gpxList = reader.getGpxList();
+                            readyAndLoaded = true;
+                        }
+                        size = getSize();
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
+                } finally {
+                    handle.free();
                 }
-                locked=false;
-                return getSize();
+                return size;
             }
 
-            @Override
-            public boolean isLocked() {
-                return locked;
-            }
 
             @Override
             public void broadcast(Context context) {
@@ -79,18 +83,12 @@ public class GpxObjectStatic extends GpxObject implements ElevationUpdaterClient
                 AppBroadcaster.broadcast(context, AppBroadcaster.REQUEST_ELEVATION_UPDATE, GpxObjectStatic.this.toString());
             }
         };
-
-        sc.getBackgroundService().load(f);        
-    }
-
-    public GpxObjectStatic() {
-        super("");
+        sc.getBackgroundService().load(f);
     }
 
 
-    @Override
-    public boolean isReady() {
-        return ready;
+    public boolean isReadyAndLoaded() {
+        return readyAndLoaded;
     }
     
 
@@ -124,17 +122,10 @@ public class GpxObjectStatic extends GpxObject implements ElevationUpdaterClient
         if (id.equals(toString())) {
             reload(sc);
         }
-        
     }
-
 
     @Override
-    public void onChanged(String id, ServiceContext sc) {
-//        if (id.equals(toString()))
-  //          sc.getIconMapService().iconify(gpxList);
-    }
-
-
+    public void onChanged(String id, ServiceContext sc) {}
 
 
     @Override
@@ -161,12 +152,6 @@ public class GpxObjectStatic extends GpxObject implements ElevationUpdaterClient
 
 
 
-    //@Override
-    //public boolean isUpdating() {
-    //    return false;
-    //}
-
-    
     private class ListUpdater extends GpxListWalker {
         private final Dem3Tile tile;
         private SrtmCoordinates coordinates=new SrtmCoordinates(0,0);

@@ -33,7 +33,7 @@ public class BackgroundService extends VirtualService {
         }
     };
 
-    public BackgroundService(ServiceContext sc) {
+    public BackgroundService(final ServiceContext sc) {
         super(sc);
         mapFeaturesDownloader = new MapFeaturesDownloader(getSContext());
         AppBroadcaster.register(getContext(), onFileDownloaded, AppBroadcaster.FILE_CHANGED_ONDISK);
@@ -43,12 +43,13 @@ public class BackgroundService extends VirtualService {
 
             @Override
             public void bgOnHaveHandle(ProcessHandle handle) {
-                if (handle.canContinue()) {
+                if (handle.canContinue() && sc.lock()) {
                     handle.bgLock();
                     handle.bgOnProcess();
                     handle.bgUnlock();
                     handle.broadcast(getContext());
 
+                    sc.free();
                 }
             }
         };

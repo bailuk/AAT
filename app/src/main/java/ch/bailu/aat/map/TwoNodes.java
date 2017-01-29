@@ -13,8 +13,8 @@ public class TwoNodes {
 
 
     public class PixelNode {
-        public Pixel pixel=new Pixel();
-        public GpxPointInterface point= GpxPoint.NULL;
+        public Pixel pixel = new Pixel();
+        public GpxPointInterface point = GpxPoint.NULL;
 
         public boolean isVisible() {
             return metrics.isVisible(point);
@@ -37,8 +37,6 @@ public class TwoNodes {
     public boolean arePointsTooClose(int distance) {
         return (  Math.abs(nodeA.pixel.x - nodeB.pixel.x) +
                   Math.abs(nodeA.pixel.y - nodeB.pixel.y) < distance);
-
-
     }
 
 

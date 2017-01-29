@@ -169,7 +169,7 @@ public class OverlaySource extends ContentSource {
 
         @Override
         public boolean isLoaded() {
-            return handle.isReady() && handle.getGpxList().getPointList().size()>0;
+            return handle.isReadyAndLoaded() && handle.getGpxList().getPointList().size()>0;
         }
 
         @Override

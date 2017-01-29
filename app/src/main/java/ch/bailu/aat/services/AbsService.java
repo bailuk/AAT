@@ -20,6 +20,40 @@ public abstract class AbsService  extends Service {
 
     private long startTime;
 
+    private boolean up = false;
+    private int lock = 0;
+
+
+
+    public synchronized boolean lock() {
+        if (up) {
+            lock++;
+            if (lock == 1) {
+                startService(new Intent(this,  OneService.class));
+                lazyOff.close();
+            }
+
+
+            AppLog.d(this, "locked " + lock + " times.");
+
+        }
+        return up;
+    }
+
+
+
+    public synchronized void free() {
+        if (up) {
+            lock--;
+            if (lock == 0) {
+                lazyOff.kick();
+            }
+
+            AppLog.d(this, "locked " + lock + " times.");
+
+        }
+    }
+
 
 
     private final Set<String> locks = new HashSet<>();
@@ -27,31 +61,32 @@ public abstract class AbsService  extends Service {
     private final Timer lazyOff = new Timer(new Runnable() {
         @Override
         public void run() {
-            if (locks.isEmpty()) {
-                AppLog.d(this, "turn off.");
-                stopSelf();
-            }
+            stopService();
         }
 
     }, 15*1000); 
 
 
-    public void lock(String r) {
+    private synchronized void stopService() {
+        if (lock == 0) {
+            up = false;
+            AppLog.d(this, "turn off.");
+            stopSelf();
+        } else if (lock < 0) {
+            AppLog.d(this, "lock < 0 !!!");
+        }
+    }
+
+    public synchronized void lock(String r) {
         if (locks.add(r)) {
-            startService(new Intent(this,  OneService.class));
-            lazyOff.close();
-        }
-        
-        AppLog.d(this, "locked " + locks.size() + " times.");
-    }
-
-
-    public void free(String r) {
-        if (locks.remove(r) && locks.isEmpty()) {
-            lazyOff.kick();
+            lock();
         }
     }
-    
+
+    public synchronized void free(String r) {
+        if (locks.remove(r)) free();
+    }
+
 
     public AbsService() {
         allinstances++;
@@ -76,10 +111,12 @@ public abstract class AbsService  extends Service {
 
 
     @Override
-    public void onCreate() {
+    public synchronized void onCreate() {
         super.onCreate();
 
+
         AppLog.d(this, "onCreate()");
+        up = true;
         allcreations++;
         creations++;
 
@@ -88,8 +125,9 @@ public abstract class AbsService  extends Service {
 
 
     @Override
-    public void onDestroy() {
+    public synchronized void onDestroy() {
 
+        up = false;
         creations--;
         allcreations--;
 

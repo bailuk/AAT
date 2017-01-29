@@ -57,9 +57,8 @@ public class GpxObjectEditable extends  GpxObject {
     }
 
 
-    @Override
-    public boolean isReady() {
-        return currentHandle.isReady();
+    public boolean isReadyAndLoaded() {
+        return currentHandle.isReadyAndLoaded();
     }
 
     @Override

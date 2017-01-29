@@ -39,7 +39,7 @@ public class GpxInformationDbEntryAndFile extends GpxInformationDbEntry implemen
         oldHandle.free();
         
         if (GpxObject.class.isInstance(handle))
-            return handle.isReady();
+            return handle.isReadyAndLoaded();
         
         return false;
     }

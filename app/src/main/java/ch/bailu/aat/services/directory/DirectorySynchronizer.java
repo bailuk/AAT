@@ -12,6 +12,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import ch.bailu.aat.coordinates.BoundingBoxE6;
+import ch.bailu.aat.gpx.GpxFileWrapper;
+import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.GpxList;
 import ch.bailu.aat.gpx.interfaces.GpxBigDeltaInterface;
 import ch.bailu.aat.map.mapsforge.MapsForgePreview;
@@ -63,9 +65,7 @@ public class DirectorySynchronizer  implements Closeable {
 
     /////////////////////////////////////////////////////////////////////////////////////////////
     private abstract class State {
-        public State() {
-            //AppLog.d(this, "start");
-        }
+        public State() {}
         public abstract void start();
         public abstract void ping();
     }
@@ -126,40 +126,12 @@ public class DirectorySynchronizer  implements Closeable {
 
 
 
-    /*    
-    /////////////////////////////////////////////////////////////////////////////////////////////
-    private class StateIdle extends StateMachine {
-        @Override
-        public void start() {
-            AppBroadcaster.broadcast(context, AppBroadcaster.DBSYNC_DONE);
-        }
-
-        @Override
-        public void ping() {
-            if (doSync == true) {
-                doSync = false;
-                setState(new StatePrepareSync());
-            }
-        }
-    }
-
-
-    public void synchronize() {
-        doSync=true;
-        state.ping();
-    }
-
-     */  
 
     /////////////////////////////////////////////////////////////////////////////////////////////    
     private class StatePrepareSync extends State {
-        /**
-         * TODO: move into background
-         */
         public Exception exception=null;
 
         private ProcessHandle bgProcess = new ProcessHandle() {
-
 
             @Override
             public long bgOnProcess() {
@@ -289,7 +261,7 @@ public class DirectorySynchronizer  implements Closeable {
         public void ping() {
             if (canContinue == false) {
                 terminate();
-            } else if (pendingHandle.isReady()) {
+            } else if (pendingHandle.isReadyAndLoaded()) {
                 try {
                     addGpxSummaryToDatabase(pendingHandle.toString(),pendingHandle.getGpxList());
                     setState(new StateLoadPreview());
@@ -346,17 +318,16 @@ public class DirectorySynchronizer  implements Closeable {
     private class StateLoadPreview extends State {
 
         public void start() {
-            File previewImageFile;
-            previewImageFile = AppDirectory.getPreviewFile(new File(pendingHandle.toString()));
-            setPendingPreviewGenerator(
-                    new MapsForgePreview(scontext,
-                            pendingHandle.getGpxList(),
-                            previewImageFile)
-                    /*
-                    new OsmPreviewGenerator(
-                            scontext, 
-                            pendingHandle.getGpxList(), 
-                            previewImageFile)*/);
+            File previewImageFile =
+                    AppDirectory.getPreviewFile(new File(pendingHandle.toString()));
+            File gpxFile =
+                    new File(pendingHandle.toString());
+            GpxInformation info =
+                    new GpxFileWrapper(gpxFile, pendingHandle.getGpxList());
+
+            MapsForgePreview p = new MapsForgePreview(scontext, info, previewImageFile);
+
+            setPendingPreviewGenerator(p);
             state.ping();
 
 

@@ -103,7 +103,7 @@ public class PreviewView extends ImageView {
 
 
     private void displayImage() {
-        if (imageHandle.isReady()) { 
+        if (imageHandle.isReadyAndLoaded()) {
             setImageDrawable(imageHandle.getDrawable(getResources()));
         }
     }

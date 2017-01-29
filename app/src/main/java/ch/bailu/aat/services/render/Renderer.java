@@ -25,7 +25,7 @@ import ch.bailu.aat.util.ui.AppLog;
 public class Renderer extends RendererBase<RendererJob> {
     private final static boolean TRANSPARENT = false;
     private final static boolean RENDER_LABELS = true;
-    private final static boolean CACHE_LABELS = false;
+    private final static boolean CACHE_LABELS = true;
     private final static float TEXT_SCALE = 1f;
 
     private final GraphicFactory graphicFactory;

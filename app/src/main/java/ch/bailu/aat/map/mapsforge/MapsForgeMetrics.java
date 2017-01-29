@@ -45,7 +45,7 @@ public class MapsForgeMetrics implements MapMetrics {
     }
 
 
-    public void init(Dimension d, org.mapsforge.core.model.Point p, BoundingBox b, byte z) {
+    private void init(Dimension d, org.mapsforge.core.model.Point p, BoundingBox b, byte z) {
         dim = d;
 
         bounding = b;
@@ -60,8 +60,8 @@ public class MapsForgeMetrics implements MapMetrics {
         init(c.getDimension(), p, b, z);
     }
 
-     public void init(Dimension d) {
-         MapPosition pos = mapView.getModel().mapViewPosition.getMapPosition();
+    public void init(Dimension d) {
+        MapPosition pos = mapView.getModel().mapViewPosition.getMapPosition();
         init(
                 d,
                 MapPositionUtil.getTopLeftPoint(pos, d, tileSize),
@@ -142,8 +142,6 @@ public class MapsForgeMetrics implements MapMetrics {
 
     @Override
     public Pixel toPixel(LatLong p) {
-        final byte zoom = (byte)getZoomLevel();
-
         double y = MercatorProjection.latitudeToPixelY(p.getLatitude(), zoom, tileSize);
         double x = MercatorProjection.longitudeToPixelX(p.getLongitude(), zoom, tileSize);
 
@@ -153,7 +151,7 @@ public class MapsForgeMetrics implements MapMetrics {
 
     @Override
     public LatLong fromPixel(int x, int y) {
-       return mapView.getMapViewProjection().fromPixels(x, y);
+        return mapView.getMapViewProjection().fromPixels(x, y);
     }
 
     @Override

@@ -13,6 +13,7 @@ import ch.bailu.aat.gpx.interfaces.GpxType;
 import ch.bailu.aat.map.MapContext;
 import ch.bailu.aat.map.layer.MapLayerInterface;
 import ch.bailu.aat.preferences.SolidLegend;
+import ch.bailu.aat.util.ui.AppLog;
 
 public class GpxDynLayer implements MapLayerInterface, OnContentUpdatedInterface {
     private final GpxInformationCache infoCache = new GpxInformationCache();
@@ -66,9 +67,9 @@ public class GpxDynLayer implements MapLayerInterface, OnContentUpdatedInterface
     public void onContentUpdated(int iid, GpxInformation i) {
         infoCache.set(iid, i);
 
+
         if (type != toType(i)) {
             type = toType(i);
-
             createGpxOverlay();
             createLegendOverlay();
         }

@@ -113,8 +113,10 @@ public class MapFeaturesActivity extends AbsDispatcher implements OnClickListene
 
 
     private void loadList() {
-        if (getServiceContext().isUp())
+        if (getServiceContext().lock()) {
             list.loadList(getServiceContext().getIconMapService());
+            getServiceContext().free();
+        }
     }
 
 }

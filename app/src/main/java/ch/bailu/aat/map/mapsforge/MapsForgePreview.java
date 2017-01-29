@@ -3,8 +3,11 @@ package ch.bailu.aat.map.mapsforge;
 
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.os.Build;
 
 import org.mapsforge.core.graphics.Canvas;
+import org.mapsforge.core.graphics.Paint;
+import org.mapsforge.core.graphics.Style;
 import org.mapsforge.core.model.BoundingBox;
 import org.mapsforge.core.model.Dimension;
 import org.mapsforge.core.model.MapPosition;
@@ -16,8 +19,7 @@ import org.mapsforge.map.util.MapPositionUtil;
 import java.io.File;
 import java.io.FileOutputStream;
 
-import ch.bailu.aat.gpx.GpxFileWrapper;
-import ch.bailu.aat.gpx.GpxList;
+import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.map.MapDensity;
 import ch.bailu.aat.map.layer.gpx.GpxDynLayer;
@@ -30,70 +32,76 @@ import ch.bailu.aat.util.graphic.SyncTileBitmap;
 import ch.bailu.aat.util.ui.AppLog;
 
 public class MapsForgePreview extends MapsForgeViewBase {
-    public static final int BITMAP_SIZE=128;
+    private static final int BITMAP_SIZE=128;
+    private static final Dimension DIM = new Dimension(BITMAP_SIZE, BITMAP_SIZE);
+    private static final Source SOURCE = DownloadSource.MAPNIK;
 
-    private final Source SOURCE = DownloadSource.MAPNIK;
-
-    private final File imageFile;
+    private final File               imageFile;
     private final TileProviderStatic provider;
 
 
+    private final int tileSize;
+    private final MapPosition mapPosition;
+    private final BoundingBox bounding;
+    private final Point tlPoint;
 
-    public MapsForgePreview(ServiceContext sc, GpxList gpxList, File o) {
-        super(sc, MapsForgePreview.class.getSimpleName(), new MapDensity());
+    public MapsForgePreview(ServiceContext scontext, GpxInformation info, File out) {
+        super(scontext, MapsForgePreview.class.getSimpleName(), new MapDensity());
 
-        imageFile = o;
+        layout(0, 0, BITMAP_SIZE, BITMAP_SIZE);
+        getModel().mapViewDimension.setDimension(DIM);
 
-        provider = new TileProviderStatic(sc, SOURCE);
+        imageFile = out;
+        provider = new TileProviderStatic(scontext, SOURCE);
+
         MapsForgeTileLayer tileLayer = new MapsForgeTileLayer(provider, SOURCE.getAlpha());
         add(tileLayer, tileLayer);
 
-        GpxDynLayer overlay = new GpxDynLayer(getMContext(), InfoID.FILEVIEW);
-        add(overlay);
+        GpxDynLayer gpxLayer = new GpxDynLayer(getMContext(), InfoID.FILEVIEW);
+        add(gpxLayer);
 
         enableLayers();
-        layout(0, 0, BITMAP_SIZE, BITMAP_SIZE);
 
-        overlay.onContentUpdated(InfoID.FILEVIEW, new GpxFileWrapper(o,gpxList));
-        frameBounding(gpxList.getDelta().getBoundingBox());
 
-        generateBitmap(BITMAP_SIZE).free();
+        gpxLayer.onContentUpdated(InfoID.FILEVIEW, info);
+        frameBounding(info.getGpxList().getDelta().getBoundingBox());
+
+        mapPosition = getModel().mapViewPosition.getMapPosition();
+        tileSize    = getModel().displayModel.getTileSize();
+        bounding    = MapPositionUtil.getBoundingBox(mapPosition, DIM, tileSize);
+        tlPoint     = MapPositionUtil.getTopLeftPoint(mapPosition, DIM, tileSize);
+
+        tileLayer.preLoadTiles(bounding, mapPosition.zoomLevel, tlPoint);
     }
 
+    @Override
+    public void repaint() {}
 
-    public SyncTileBitmap generateBitmap(int size) {
+
+    public SyncTileBitmap generateBitmap() {
         SyncTileBitmap bitmap = new SyncTileBitmap();
 
-        bitmap.set(size, false);
+        bitmap.set(BITMAP_SIZE, false);
         bitmap.getAndroidBitmap().eraseColor(Color.BLACK);
 
-
+        android.graphics.Canvas canvas = bitmap.getAndroidCanvas();
         Canvas drawingCanvas =
-                AndroidGraphicFactory.createGraphicContext(bitmap.getAndroidCanvas());
+                AndroidGraphicFactory.createGraphicContext(canvas);
 
-
-        MapPosition mapPosition = getModel().mapViewPosition.getMapPosition();
-        Dimension canvasDimension = drawingCanvas.getDimension();
-        int tileSize = getModel().displayModel.getTileSize();
-
-        BoundingBox boundingBox =
-                MapPositionUtil.getBoundingBox(mapPosition, canvasDimension, tileSize);
-        Point topLeftPoint =
-                MapPositionUtil.getTopLeftPoint(mapPosition, canvasDimension, tileSize);
+        AppLog.d(this, "Generate");
 
         for (Layer layer : getLayerManager().getLayers()) {
-            if (layer.isVisible()) {
-                layer.draw(boundingBox, mapPosition.zoomLevel, drawingCanvas, topLeftPoint);
-            }
+            AppLog.d(this, "L draw");
+            layer.draw(bounding, mapPosition.zoomLevel, drawingCanvas, tlPoint);
         }
 
-
+        drawingCanvas.destroy();
         return bitmap;
     }
 
-    public void generateBitmapFile() {
-        SyncTileBitmap bitmap = generateBitmap(BITMAP_SIZE);
 
+    public void generateBitmapFile() {
+        SyncTileBitmap bitmap = generateBitmap();
 
         try {
             final FileOutputStream outStream = new FileOutputStream(imageFile);

@@ -183,7 +183,7 @@ public abstract class AbsOsmApiActivity extends AbsDispatcher implements OnClick
 
 
     private void download() {
-        if (getServiceContext().isUp()) {
+        if (getServiceContext().lock()) {
             try {
                 String query = tagEditor.getText();
 
@@ -207,6 +207,7 @@ public abstract class AbsOsmApiActivity extends AbsDispatcher implements OnClick
 
                 AppLog.e(this, e);
             }
+            getServiceContext().free();
         }
     }
 

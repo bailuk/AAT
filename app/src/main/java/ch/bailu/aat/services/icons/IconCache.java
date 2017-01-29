@@ -25,7 +25,9 @@ public class IconCache implements Closeable {
 
 
     public Bitmap getIcon(GpxPointInterface point, int size) {
-        if (scontext.isUp()) {
+        Bitmap r = null;
+
+        if (scontext.lock()) {
             GpxAttributes attr = point.getAttributes();
             String path = scontext.getIconMapService().getSVGIconPath(attr);
             String iconFileID = SVGAssetImageObject.toID(path, size);
@@ -33,7 +35,7 @@ public class IconCache implements Closeable {
             ImageObjectAbstract icon = null;
 
 
-            if (iconFileID != null && attr != null && scontext.isUp()) {
+            if (iconFileID != null && attr != null) {
 
                 icon = get(iconFileID);
 
@@ -43,38 +45,14 @@ public class IconCache implements Closeable {
             }
 
             if (icon != null) {
-                return icon.getBitmap();
+                r = icon.getBitmap();
             }
+            scontext.free();
         }
-        return null;
+        return r;
     }
 
 
-/*
-    public AppBitmap getIcon(GpxPointInterface point) {
-        if (scontext.isUp()) {
-            GpxAttributes attr = point.getAttributes();
-            String iconFile = scontext.getIconMapService().getIconPath(attr);
-
-            ImageObjectAbstract icon = null;
-
-
-            if (iconFile != null && attr != null && scontext.isUp()) {
-
-                icon = get(iconFile);
-
-                if (icon == null) {
-                    icon = add(iconFile);
-                }
-            }
-
-            if (icon != null) {
-                return icon.getAppBitmap();
-            }
-        }
-        return null;
-    }
-*/
 
 
     private ImageObjectAbstract get(String id) {
@@ -88,7 +66,10 @@ public class IconCache implements Closeable {
 
 
     private ImageObjectAbstract add(String id, String path, int size) {
-        if (scontext.isUp()) {
+
+        ImageObjectAbstract r=null;
+
+        if (scontext.lock()) {
             final ObjectHandle handle = scontext.getCacheService().
                     getObject(id, new SVGAssetImageObject.Factory(path, size));
 
@@ -96,29 +77,30 @@ public class IconCache implements Closeable {
                 final SVGAssetImageObject imageHandle = ((SVGAssetImageObject) handle);
 
                 icons.add(imageHandle);
-                return imageHandle;
+                r = imageHandle;
             }
+            scontext.free();
         }
-        return null;
+        return r;
 
     }
 
 
-    private ImageObjectAbstract add(String id) {
-
-        if (scontext.isUp()) {
-            final ObjectHandle handle = scontext.getCacheService().
-                    getObject(id, new ImageObject.Factory());
-
-            if (ImageObject.class.isInstance(handle)) {
-                final ImageObject imageHandle = ((ImageObject) handle);
-
-                icons.add(imageHandle);
-                return imageHandle;
-            }
-        }
-        return null;
-    }
+//    private ImageObjectAbstract add(String id) {
+//
+//        if (scontext.isUp()) {
+//            final ObjectHandle handle = scontext.getCacheService().
+//                    getObject(id, new ImageObject.Factory());
+//
+//            if (ImageObject.class.isInstance(handle)) {
+//                final ImageObject imageHandle = ((ImageObject) handle);
+//
+//                icons.add(imageHandle);
+//                return imageHandle;
+//            }
+//        }
+//        return null;
+//    }
 
 
 

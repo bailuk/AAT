@@ -14,6 +14,7 @@ import org.mapsforge.map.android.graphics.AndroidGraphicFactory;
 
 import ch.bailu.aat.util.graphic.SyncTileBitmap;
 import ch.bailu.aat.util.ui.AppDensity;
+import ch.bailu.aat.util.ui.AppLog;
 
 public class AndroidDraw implements MapDraw {
     private final static int SPACE=5;
@@ -50,16 +51,12 @@ public class AndroidDraw implements MapDraw {
         point_radius = res.toDPi(POINT_RADIUS);
     }
 
-    public void init(MapMetrics metric) {
+    private void init(MapMetrics metric) {
         left   = metric.getLeft();
         top    = metric.getTop();
         bottom = metric.getBottom();
         right  = metric.getRight();
     }
-
-//    public void nit(Canvas c) {
-//        canvas = c;
-//    }
 
     public void init(Canvas c, MapMetrics metric) {
         canvas = c;
@@ -67,8 +64,7 @@ public class AndroidDraw implements MapDraw {
     }
 
     public void init(android.graphics.Canvas c, MapMetrics metric) {
-        canvas = AndroidGraphicFactory.createGraphicContext(c);
-        init(metric);
+        init(AndroidGraphicFactory.createGraphicContext(c),metric);
     }
 
 
@@ -157,14 +153,11 @@ public class AndroidDraw implements MapDraw {
 
     @Override
     public void bitmap(Bitmap b, Point p, int c) {
-        //canvas.drawBitmap(b, p.x -b.getWidth()/2, p.y -b.getHeight()/2);
-
         Drawable drawable = new BitmapDrawable(resources ,AndroidGraphicFactory.getBitmap(b));
 
         _center(drawable, p);
         drawable.setColorFilter(c, PorterDuff.Mode.MULTIPLY);
         drawable.draw(AndroidGraphicFactory.getCanvas(canvas));
-
     }
 
     private static void _center(Drawable drawable, Point pixel) {

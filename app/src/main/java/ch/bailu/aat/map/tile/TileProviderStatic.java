@@ -46,9 +46,7 @@ public class TileProviderStatic implements TileProviderInterface, Closeable {
 
 
     @Override
-    public TileBitmap get(Tile tile) {
-        AppLog.d(this, tile.toString());
-
+    public synchronized TileBitmap get(Tile tile) {
         final TileObject handle = getTileHandle(tile);
 
         if (handle != null)
@@ -83,7 +81,9 @@ public class TileProviderStatic implements TileProviderInterface, Closeable {
 
 
     private TileObject loadHandle(Tile mapTile) {
-        if (scontext.isUp()) {
+        TileObject r = null;
+
+        if (scontext.lock()) {
             String id = source.getID(mapTile, scontext.getContext());
 
 
@@ -95,10 +95,11 @@ public class TileProviderStatic implements TileProviderInterface, Closeable {
 
             if (handle instanceof TileObject) {
                 AppLog.d(this, id);
-                return (TileObject) handle;
+                r = (TileObject) handle;
             }
+            scontext.free();
         }
-        return null;
+        return r;
     }
 
 
@@ -118,7 +119,7 @@ public class TileProviderStatic implements TileProviderInterface, Closeable {
     }
 
     @Override
-    public int getCapacity() {
+    public synchronized int getCapacity() {
         return tiles.size();
     }
 
@@ -129,19 +130,18 @@ public class TileProviderStatic implements TileProviderInterface, Closeable {
     public void reDownloadTiles() {}
 
 
-    public boolean isReady() {
+    public synchronized boolean isReady() {
         AppLog.d(this, "Ready?: " + tiles.size());
 
         for (TileObject tile: tiles) {
-            if (tile.isReady()==false) return false;
+            if (tile.isReadyAndLoaded()==false) return false;
         }
         return true;
     }
 
 
     @Override
-    public void close() {
-
+    public synchronized void close() {
         for (TileObject tile: tiles) {
             tile.free();
         }

@@ -69,8 +69,7 @@ public class ImageObject extends ImageObjectAbstract {
     }
 
     
-    @Override
-    public boolean isReady() {
+    public boolean isReadyAndLoaded() {
         return getBitmap() != null;
     }
 

@@ -46,7 +46,7 @@
 //
 //    @Override
 //    public boolean contains(Tile tile) {
-//        return isReady();
+//        return isReadyAndLoaded();
 //    }
 //
 //    @Override
@@ -61,10 +61,10 @@
 //    public void reDownloadTiles() {}
 //
 //
-//    public boolean isReady() {
+//    public boolean isReadyAndLoaded() {
 //
 //        for (int i=0; i<tiles.size(); i++) {
-//            if (tiles.get(i).isReady()==false) return false;
+//            if (tiles.get(i).isReadyAndLoaded()==false) return false;
 //        }
 //        return true;
 //    }

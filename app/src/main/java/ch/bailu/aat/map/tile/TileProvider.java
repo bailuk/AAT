@@ -147,7 +147,9 @@ public class TileProvider implements TileProviderInterface {
     }
 
     private TileObject getTileHandleLevel2(Tile mapTile) {
-        if (scontext.isUp()) {
+        TileObject r = null;
+
+        if (scontext.lock()) {
             String id = source.getID(mapTile, scontext.getContext());
 
 
@@ -158,9 +160,10 @@ public class TileProvider implements TileProviderInterface {
 
 
             if (handle instanceof TileObject) {
-                return (TileObject) handle;
+                r = (TileObject) handle;
             }
+            scontext.free();
         }
-        return null;
+        return r;
     }
 }

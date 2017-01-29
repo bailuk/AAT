@@ -55,8 +55,9 @@ public class MapsForgeTileLayer extends Layer implements MapLayerInterface, Obse
     }
 
 
-    private void draw (BoundingBox box, byte z, Canvas canvas, Point tlp, int tileSize) {
-        List<TilePosition> tilePositions = LayerUtil.getTilePositions(box, z, tlp, tileSize);
+    private void draw (BoundingBox box, byte zoom, Canvas canvas, Point tlp, int tileSize) {
+
+        List<TilePosition> tilePositions = LayerUtil.getTilePositions(box, zoom, tlp, tileSize);
 
         provider.setCapacity(tilePositions.size());
 
@@ -65,7 +66,6 @@ public class MapsForgeTileLayer extends Layer implements MapLayerInterface, Obse
                 provider.get(tilePosition.tile);
             }
         }
-
 
 
         for (TilePosition tilePosition : tilePositions) {
@@ -83,6 +83,18 @@ public class MapsForgeTileLayer extends Layer implements MapLayerInterface, Obse
                 AndroidGraphicFactory.getCanvas(canvas).
                 drawBitmap(AndroidGraphicFactory.getBitmap(bitmap), null, r, paint);
             }
+        }
+    }
+
+
+    public void preLoadTiles(BoundingBox box, byte zoom, Point tlp) {
+        List<TilePosition> tilePositions = LayerUtil.getTilePositions(box, zoom, tlp,
+                getDisplayModel().getTileSize());
+
+        provider.setCapacity(tilePositions.size());
+
+        for (TilePosition tilePosition : tilePositions) {
+                provider.get(tilePosition.tile);
         }
     }
 

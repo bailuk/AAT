@@ -67,9 +67,10 @@ public class WGS84Layer implements MapLayerInterface {
     }
 
     private void drawElevation(MapContext mc, int zoom, LatLong point) {
-        if (zoom > MIN_ZOOM_LEVEL && mc.getSContext().isUp()) {
+        if (zoom > MIN_ZOOM_LEVEL && mc.getSContext().lock()) {
             final short ele = mc.getSContext().getElevationService().getElevation(point.getLatitudeE6(), point.getLongitudeE6());
             mc.draw().textBottom(altitudeDescription.getValueUnit(ele),2);
+            mc.getSContext().free();
         }
     }
 

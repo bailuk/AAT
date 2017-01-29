@@ -93,8 +93,7 @@ public class LoadableBitmapTileObject extends TileObject {
     }
 
 
-    @Override
-    public boolean isReady() {
+    public boolean isReadyAndLoaded() {
         boolean loaded = isLoaded();
         boolean notLoadable = isLoadable() == false;
 

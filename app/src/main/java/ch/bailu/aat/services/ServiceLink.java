@@ -107,8 +107,8 @@ public abstract class ServiceLink implements
     }
 
 
-    @Override
-    public boolean isUp() {
+
+    private boolean isUp() {
         return service != null;
     }
 
@@ -121,6 +121,17 @@ public abstract class ServiceLink implements
             return service;
         else
             throw new ServiceNotUpError(OneService.class);
+    }
+
+
+    @Override
+    public boolean lock() {
+        return isUp() && getService().lock();
+    }
+
+    @Override
+    public void free() {
+        if (isUp()) getService().free();
     }
 
 

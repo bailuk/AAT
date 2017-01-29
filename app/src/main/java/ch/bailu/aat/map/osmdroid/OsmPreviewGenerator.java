@@ -72,8 +72,8 @@
 //        return map.getDrawingCache(false);
 //    }
 //
-//    public boolean isReady() {
-//        return tileProvider.isReady();
+//    public boolean isReadyAndLoaded() {
+//        return tileProvider.isReadyAndLoaded();
 //    }
 //
 //

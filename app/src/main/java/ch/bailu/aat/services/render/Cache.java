@@ -77,7 +77,7 @@ public class Cache implements TileCache {
 
             if (e != null) {
                 bitmap.incrementRefCount();
-                e.bitmap = bitmap;
+                e.bitmap = bitmap; // FIXME old bitmap decrementRefCount ???
                 e.observer.onChange();
             }
         }

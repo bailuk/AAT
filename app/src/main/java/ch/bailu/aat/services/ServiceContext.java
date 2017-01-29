@@ -18,7 +18,8 @@ public interface ServiceContext extends ContextWrapperInterface {
     void lock(String s);
     void free(String s);
 
-    boolean isUp();
+    boolean lock();
+    void    free();
 
     LocationService getLocationService();
     TrackerService getTrackerService();

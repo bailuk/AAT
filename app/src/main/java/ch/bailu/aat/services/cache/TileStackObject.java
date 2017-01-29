@@ -125,14 +125,14 @@
 //     * Sub-tiles are either loaded _and_ painted or not yet downloaded
 //     */
 //    @Override
-//    public boolean isReady() {
+//    public boolean isReadyAndLoaded() {
 //        return ready;
 //    }
 //
 //
 //    private boolean areSubtilesReady() {
 //        for (TileContainer tile: tiles) {
-//            if (tile.handle.isReady() == false) return false;
+//            if (tile.handle.isReadyAndLoaded() == false) return false;
 //        }
 //
 //        return true;

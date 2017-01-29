@@ -152,8 +152,8 @@
 //
 //
 //    @Override
-//    public boolean isReady() {
-//        return tile.isReady();
+//    public boolean isReadyAndLoaded() {
+//        return tile.isReadyAndLoaded();
 //    }
 //
 //

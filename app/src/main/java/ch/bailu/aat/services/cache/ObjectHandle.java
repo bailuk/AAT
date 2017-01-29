@@ -58,7 +58,7 @@ public abstract class ObjectHandle implements ObjectBroadcastReceiver{
     }
     
 
-    public boolean isReady() {
+    public boolean isReadyAndLoaded() {
         return true;
     }
     

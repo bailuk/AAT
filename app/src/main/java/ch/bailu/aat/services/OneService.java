@@ -11,6 +11,7 @@ import ch.bailu.aat.services.location.LocationService;
 import ch.bailu.aat.services.render.RenderService;
 import ch.bailu.aat.services.tileremover.TileRemoverService;
 import ch.bailu.aat.services.tracker.TrackerService;
+import ch.bailu.aat.util.ui.AppLog;
 
 import static ch.bailu.aat.services.ServiceLink.ServiceNotUpError;
 
@@ -27,13 +28,11 @@ public class OneService extends AbsService  implements ServiceContext {
     private RenderService render;
 
 
-    private boolean up = false;
-
-    @Override 
-    public  synchronized void onCreate() {
+    @Override
+    public  void onCreate() {
         super.onCreate();
-        up = true;
     }
+
 
 
     @Override
@@ -84,7 +83,6 @@ public class OneService extends AbsService  implements ServiceContext {
             render = null;
         }
         super.onDestroy();
-        up = false;
     }
 
 
@@ -97,7 +95,7 @@ public class OneService extends AbsService  implements ServiceContext {
 
     @Override
     public  synchronized LocationService getLocationService() {
-        if (forceUp() && location == null) {
+        if (location == null) {
             location = new LocationService(this);
         }
         return location;
@@ -105,7 +103,7 @@ public class OneService extends AbsService  implements ServiceContext {
 
     @Override
     public  synchronized BackgroundService getBackgroundService() {
-        if (forceUp() && background == null) {
+        if (background == null) {
             background = new BackgroundService(this);
         }
         return background;
@@ -113,7 +111,7 @@ public class OneService extends AbsService  implements ServiceContext {
 
     @Override
     public synchronized CacheService getCacheService() {
-        if (forceUp() && cache == null) {
+        if (cache == null) {
             cache = new CacheService(this);
             getElevationService();
         }
@@ -122,7 +120,7 @@ public class OneService extends AbsService  implements ServiceContext {
 
     @Override
     public synchronized  RenderService getRenderService() {
-        if (forceUp() && render == null) {
+        if (render == null) {
             render = new RenderService(this);
         }
         return render;
@@ -130,35 +128,35 @@ public class OneService extends AbsService  implements ServiceContext {
 
     @Override
     public synchronized  ElevationService getElevationService() {
-        if (forceUp() && elevation == null)
+        if (elevation == null)
             elevation = new ElevationService(this);
         return elevation;
     }
 
     @Override
     public  synchronized IconMapService getIconMapService() {
-        if (forceUp() && iconMap == null)
+        if (iconMap == null)
             iconMap = new IconMapService(this);
         return iconMap;
     }
 
     @Override
     public synchronized  DirectoryService getDirectoryService() {
-        if (forceUp() && directory == null)
+        if (directory == null)
             directory = new DirectoryService(this);
         return directory;
     }
 
     @Override
     public synchronized  TrackerService getTrackerService() {
-        if (forceUp() && tracker == null)
+        if (tracker == null)
             tracker = new TrackerService(this);
         return tracker;
     }
 
     @Override
     public synchronized  TileRemoverService getTileRemoverService() {
-        if (forceUp() && tileRemover == null)
+        if (tileRemover == null)
             tileRemover = new TileRemoverService(this);
         return tileRemover;
     }
@@ -166,7 +164,6 @@ public class OneService extends AbsService  implements ServiceContext {
 
     @Override
     public synchronized  void appendStatusText(StringBuilder builder) {
-        if (forceUp()) {
             super.appendStatusText(builder);
             appendStatusText(location, builder);
             appendStatusText(tracker, builder);
@@ -175,11 +172,10 @@ public class OneService extends AbsService  implements ServiceContext {
             appendStatusText(iconMap, builder);
             appendStatusText(directory, builder);
             appendStatusText(elevation, builder);
-        }
     }
 
     public synchronized  void appendStatusText(VirtualService service, StringBuilder builder) {
-        if (forceUp() && service != null) {
+        if (service != null) {
 
             builder.append("<h1>");
             builder.append(service.getClass().getSimpleName());
@@ -193,18 +189,7 @@ public class OneService extends AbsService  implements ServiceContext {
 
     @Override
     public  synchronized Context getContext() {
-        forceUp(); return this;
+        return this;
     }
 
-    @Override
-    public  synchronized boolean isUp() {
-        return up;
-    }
-
-    private boolean forceUp() {
-        if (!up) {
-            throw new ServiceNotUpError(OneService.class);
-        }
-        return up;
-    }
 }
