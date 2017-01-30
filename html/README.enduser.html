@@ -8,11 +8,20 @@
 <li>reduce network traffic as much as possible.</li>
 <li>reduce battery drain.</li>
 <li>speed up the map view.</li>
-<li>(theoretically) share map tiles with other applications.</li>
 </ul>
 
 <p>This means that you have to remove old tiles manually from time to time.
-Go to 'Settings->Map Tiles' to remove old map tiles.</p>
+Go to <code>Settings-&gt;Map Tiles</code> to remove old map tiles.</p>
+
+<h2>Offline Maps</h2>
+
+<p>Enable offline map rendering:</p>
+
+<ul>
+<li>Download map files from the <a href="http://download.mapsforge.org/">Mapsforge download server</a>.</li>
+<li>Provide the directory that contains the map files in the settings dialog (<code>Settings-&gt;Map Tiles</code>).</li>
+<li>Disable Mapnik and enable Mapsforge in <code>Menu-&gt;Map</code>.</li>
+</ul>
 
 <h2>Where to find files?</h2>
 
@@ -39,17 +48,6 @@ The structure of the data directory is as follows: </p>
 <h3>Example</h3>
 
 <p><code>[amenity=restaurant]</code> will get you list of all restaurants located inside the area that was visible on the map-view before opening the Overpass dialog. </p>
-
-<h3>Map Icons</h3>
-
-<p>Instead of the default symbol you can use the <a href="http://www.sjjb.co.uk/mapicons/">map icons from SJJB Management</a>:</p>
-
-<ul>
-<li>Download the <a href="http://www.sjjb.co.uk/mapicons/downloads/">PNG Icons Set</a></li>
-<li>Extract the icon set to <code>aat_data/osm_features/icons</code>.</li>
-<li>Download <a href="https://raw.githubusercontent.com/bailuk/AAT/master/iconmap/iconmap.txt">iconmap.txt from GitHUB</a></li>
-<li>Copy <code>iconmap.txt</code> to <code>aat_data/osm_features/icons</code>.</li>
-</ul>
 
 <h2>Issues and feedback</h2>
 

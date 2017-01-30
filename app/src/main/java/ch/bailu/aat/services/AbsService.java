@@ -10,8 +10,8 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-import ch.bailu.aat.util.ui.AppLog;
 import ch.bailu.aat.util.Timer;
+import ch.bailu.aat.util.ui.AppLog;
 
 public abstract class AbsService  extends Service {
     private static int allinstances, allcreations;
@@ -34,7 +34,7 @@ public abstract class AbsService  extends Service {
             }
 
 
-            AppLog.d(this, "locked " + lock + " times.");
+//            AppLog.d(this, "locked " + lock + " times.");
 
         }
         return up;
@@ -49,7 +49,7 @@ public abstract class AbsService  extends Service {
                 lazyOff.kick();
             }
 
-            AppLog.d(this, "locked " + lock + " times.");
+//            AppLog.d(this, "locked " + lock + " times.");
 
         }
     }

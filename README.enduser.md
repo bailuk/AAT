@@ -6,10 +6,17 @@ AAT does not automatically remove downloaded map tiles. This is to...
 - reduce network traffic as much as possible.
 - reduce battery drain.
 - speed up the map view.
-- (theoretically) share map tiles with other applications.
 
 This means that you have to remove old tiles manually from time to time.
-Go to 'Settings->Map Tiles' to remove old map tiles.
+Go to `Settings->Map Tiles` to remove old map tiles.
+
+
+## Offline Maps
+Enable offline map rendering:
+
+- Download map files from the [Mapsforge download server](http://download.mapsforge.org/).
+- Provide the directory that contains the map files in the settings dialog (`Settings->Map Tiles`).
+- Disable Mapnik and enable Mapsforge in `Menu->Map`.
 
 
 ## Where to find files?
