@@ -1,10 +1,6 @@
 package ch.bailu.aat.map.mapsforge;
 
-import android.annotation.TargetApi;
 import android.content.SharedPreferences;
-import android.graphics.Canvas;
-import android.os.Build;
-import android.os.Looper;
 import android.view.View;
 
 import org.mapsforge.core.model.BoundingBox;
@@ -21,10 +17,8 @@ import ch.bailu.aat.map.MapContext;
 import ch.bailu.aat.map.MapDensity;
 import ch.bailu.aat.map.MapViewInterface;
 import ch.bailu.aat.map.layer.MapLayerInterface;
-import ch.bailu.aat.preferences.SolidMapViewAcceleration;
 import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat.services.ServiceContext;
-import ch.bailu.aat.util.ui.AppLog;
 
 public class MapsForgeViewBase extends MapView implements
         MapViewInterface,
@@ -53,17 +47,13 @@ public class MapsForgeViewBase extends MapView implements
         getMapScaleBar().setVisible(false);
         setBuiltInZoomControls(false);
 
-        if (Build.VERSION.SDK_INT >= 11) {
-            setLayerType(new SolidMapViewAcceleration(getContext()).getValue(), null);
-        }
-
     }
 
 
 
 
     public void add(MapLayerInterface layer) {
-        LayerWrapper wrapper = new LayerWrapper(mcontext, layer, this);
+        LayerWrapper wrapper = new LayerWrapper(mcontext, layer);
         add(wrapper, layer);
     }
 
@@ -82,7 +72,7 @@ public class MapsForgeViewBase extends MapView implements
 
 
     public void add(Layer mfLayer, MapLayerInterface layer) {
-        this.addLayer(mfLayer);
+        addLayer(mfLayer);
         layers.add(layer);
         if (areLayersAttached) layer.onAttached();
 

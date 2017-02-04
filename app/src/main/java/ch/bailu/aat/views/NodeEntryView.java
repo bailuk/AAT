@@ -33,7 +33,7 @@ public class NodeEntryView extends LinearLayout {
         map =  new MapsForgeViewStatic(sc);
         d.addLC(map);
 
-        gpxOverlay = new GpxDynLayer(map.getMContext() ,-1);
+        gpxOverlay = new GpxDynLayer(map.getMContext());
         map.add(gpxOverlay);
 
         text=new TextView(sc.getContext());

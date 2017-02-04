@@ -3,6 +3,7 @@ package ch.bailu.aat.map.layer.gpx.legend;
 import ch.bailu.aat.gpx.GpxList;
 import ch.bailu.aat.gpx.GpxPointNode;
 import ch.bailu.aat.gpx.GpxSegmentNode;
+import ch.bailu.aat.util.ui.AppLog;
 
 public class PointIndexWalker extends LegendWalker{
     private int index=1;

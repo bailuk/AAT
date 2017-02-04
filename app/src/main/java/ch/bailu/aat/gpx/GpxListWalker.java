@@ -2,21 +2,23 @@ package ch.bailu.aat.gpx;
 
 import ch.bailu.aat.gpx.linked_list.Node;
 import ch.bailu.aat.gpx.segmented_list.SegmentNode;
+import ch.bailu.aat.util.ui.AppLog;
 
 
 public abstract class GpxListWalker {
     private int increment=0;
     private int count=0;
-    
+
+
     public void walkTrack(GpxList track, int inc) {
         increment = inc-1;
         
         walkTrack(track);
     }
-    
+
+
     public void walkTrack(GpxList track) {
         increment=0;
-        
         if (doList(track)) {
                 
             Node segment = track.getSegmentList().getFirst();

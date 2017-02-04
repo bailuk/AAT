@@ -43,7 +43,7 @@ public class EditorLayer extends ControlBarLayer {
         mcontext=mc;
 
 
-        content = new GpxDynLayer(mc, -1);
+        content = new GpxDynLayer(mc);
         selector = new EditorNodeSelectorLayer(mc, e);
 
 

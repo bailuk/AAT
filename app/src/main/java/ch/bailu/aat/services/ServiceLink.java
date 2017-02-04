@@ -25,6 +25,7 @@ public abstract class ServiceLink implements
         Closeable {
 
 
+
     public static class ServiceNotUpError extends Error {
         private static final long serialVersionUID = 5632759660184034845L;
 
@@ -34,10 +35,13 @@ public abstract class ServiceLink implements
     }
 
 
+    private int lock = 0;
+
     private ServiceContext service= null;
     private boolean bound = false;
 
     private final Context context;
+
 
 
     public ServiceLink(Context c) {
@@ -82,10 +86,20 @@ public abstract class ServiceLink implements
         service.lock(ServiceLink.class.getSimpleName());
     }
 
-    private void releaseService() {
-        if (service != null) {
-            service.free(ServiceLink.class.getSimpleName());
-            service = null;
+    private synchronized void releaseService() {
+        try {
+            while (service != null) {
+
+                if (lock == 0) {
+                    service.free(ServiceLink.class.getSimpleName());
+                    service = null;
+
+                } else {
+                    wait();
+                }
+            }
+        } catch (InterruptedException e) {
+                e.printStackTrace();
         }
     }
 
@@ -125,24 +139,34 @@ public abstract class ServiceLink implements
 
 
     @Override
-    public boolean lock() {
-        return isUp() && getService().lock();
+    public synchronized boolean lock() {
+        if (isUp() && getService().lock()) {
+            lock++;
+            return true;
+        }
+
+        return false;
     }
 
+
     @Override
-    public void free() {
-        if (isUp()) getService().free();
+    public synchronized void free() {
+        if (isUp()) {
+            getService().free();
+            lock--;
+            if (lock == 0) notifyAll();
+        }
     }
 
 
     @Override
-    public void lock(String s) {
+    public synchronized void lock(String s) {
         if (isUp()) getService().lock(s);
     }
 
 
     @Override
-    public void free(String s) {
+    public synchronized void free(String s) {
         if (isUp()) getService().free(s);
     }
 

@@ -20,6 +20,7 @@ import java.util.List;
 import ch.bailu.aat.map.MapContext;
 import ch.bailu.aat.map.layer.MapLayerInterface;
 import ch.bailu.aat.map.tile.TileProviderInterface;
+import ch.bailu.aat.services.ServiceContext;
 
 public class MapsForgeTileLayer extends Layer implements MapLayerInterface, Observer {
 
@@ -31,26 +32,31 @@ public class MapsForgeTileLayer extends Layer implements MapLayerInterface, Obse
     private boolean isProviderAttached = false;
 
 
+    private final ServiceContext scontext;
 
-    public MapsForgeTileLayer(TileProviderInterface p, int alpha) {
+    public MapsForgeTileLayer(ServiceContext sc, TileProviderInterface p) {
+        scontext = sc;
         provider = p;
-        paint.setAlpha(alpha);
-        paint.setAntiAlias(true);
+        paint.setAlpha(p.getSource().getAlpha());
+        paint.setFlags(p.getSource().getPaintFlags());
     }
 
 
     @Override
     public void draw(BoundingBox box, byte zoom, Canvas c, Point tlp) {
-        isZoomSupported =
-                (zoom <= provider.getMaximumZoomLevel() && zoom >= provider.getMinimumZoomLevel());
+        if (scontext.lock()) {
+            isZoomSupported =
+                    (zoom <= provider.getMaximumZoomLevel() && zoom >= provider.getMinimumZoomLevel());
 
-        if (detachAttach()) {
-            draw(
-                    box,
-                    zoom,
-                    c,
-                    tlp,
-                    displayModel.getTileSize());
+            if (detachAttach()) {
+                draw(
+                        box,
+                        zoom,
+                        c,
+                        tlp,
+                        displayModel.getTileSize());
+            }
+            scontext.free();
         }
     }
 
@@ -79,6 +85,7 @@ public class MapsForgeTileLayer extends Layer implements MapLayerInterface, Obse
                 r.top = (int) Math.round(p.y);
                 r.right = r.left + tileSize;
                 r.bottom = r.top + tileSize;
+
 
                 AndroidGraphicFactory.getCanvas(canvas).
                 drawBitmap(AndroidGraphicFactory.getBitmap(bitmap), null, r, paint);

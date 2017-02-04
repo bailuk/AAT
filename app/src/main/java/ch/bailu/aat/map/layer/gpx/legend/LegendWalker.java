@@ -6,14 +6,11 @@ import ch.bailu.aat.gpx.GpxSegmentNode;
 import ch.bailu.aat.map.MapContext;
 
 public abstract class LegendWalker extends GpxListWalker {
-    public static final int COLOR = 0x99ffffff;
-    public static final int MIN_PIXEL_DISTANCE=100;
-
 
     public LegendContext c;
 
-    public void init(MapContext lc) {
-        c=new LegendContext(lc);
+    public void init(MapContext mc) {
+        c=new LegendContext(mc);
     }
 
 

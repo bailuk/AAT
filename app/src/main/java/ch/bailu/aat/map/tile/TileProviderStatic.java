@@ -94,7 +94,6 @@ public class TileProviderStatic implements TileProviderInterface, Closeable {
 
 
             if (handle instanceof TileObject) {
-                AppLog.d(this, id);
                 r = (TileObject) handle;
             }
             scontext.free();
@@ -129,10 +128,13 @@ public class TileProviderStatic implements TileProviderInterface, Closeable {
     @Override
     public void reDownloadTiles() {}
 
+    @Override
+    public Source getSource() {
+        return source;
+    }
+
 
     public synchronized boolean isReady() {
-        AppLog.d(this, "Ready?: " + tiles.size());
-
         for (TileObject tile: tiles) {
             if (tile.isReadyAndLoaded()==false) return false;
         }

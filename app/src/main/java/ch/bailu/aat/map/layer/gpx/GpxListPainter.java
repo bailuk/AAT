@@ -14,7 +14,7 @@ public abstract class GpxListPainter extends GpxListWalker {
     private static final int MAX_PIXEL_SPACE=100;
 
     private final static int START_PAINTING=0;
-    private final static int CONTINUE_PAINTING=2;
+    private final static int CONTINUE_PAINTING =2;
 
 
     private final MapContext mcontext;

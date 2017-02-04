@@ -39,6 +39,11 @@ public class CachedSource extends Source {
         return source.getAlpha();
     }
 
+    @Override
+    public int getPaintFlags() {
+        return source.getPaintFlags();
+    }
+
     public Source getSource() {
         return source;
     }

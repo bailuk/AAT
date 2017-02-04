@@ -160,7 +160,7 @@ public abstract class AbsGpxListActivity extends AbsDispatcher implements OnItem
 
     @Override
     public void onPauseWithService() {
-        //sdirectory.setPosition(iteratorSimple.getPosition());
+//        sdirectory.setPosition(iteratorSimple.getPosition());
 
         iteratorSimple.close();
         iteratorSimple = Iterator.NULL;

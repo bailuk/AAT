@@ -9,6 +9,7 @@ import org.mapsforge.core.model.Point;
 import ch.bailu.aat.map.MapContext;
 import ch.bailu.aat.map.TwoNodes;
 import ch.bailu.aat.map.layer.gpx.GpxLayer;
+import ch.bailu.aat.util.ui.AppLog;
 
 public class GpxLegendLayer extends GpxLayer {
     private final LegendWalker walker;

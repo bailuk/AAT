@@ -19,6 +19,7 @@ import ch.bailu.aat.util.fs.FileAccess;
 import ch.bailu.aat.util.ui.AppLog;
 
 public class CachedTileObject extends TileObject {
+    private final static int MIN_SAVE_ZOOM_LEVEL = 16;
 
     private final Tile mapTile;
 
@@ -113,9 +114,9 @@ public class CachedTileObject extends TileObject {
 
 
             if (
+                    mapTile.zoomLevel <= MIN_SAVE_ZOOM_LEVEL &&
                     id.equals(sourceID) &&
-                            tile.isLoaded() /*&&
-                            toFile().exists()==false*/) {
+                            tile.isLoaded()) {
 
                 sc.getBackgroundService().process(save);
             }
@@ -237,6 +238,11 @@ public class CachedTileObject extends TileObject {
         @Override
         public int getAlpha() {
             return generated.getAlpha();
+        }
+
+        @Override
+        public int getPaintFlags() {
+            return generated.getPaintFlags();
         }
 
         @Override

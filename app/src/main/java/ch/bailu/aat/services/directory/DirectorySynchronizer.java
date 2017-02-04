@@ -36,7 +36,6 @@ public class DirectorySynchronizer  implements Closeable {
 
     private GpxDatabase database;
 
-
     private long dbAccessTime;
 
     private final File directory;
@@ -49,7 +48,8 @@ public class DirectorySynchronizer  implements Closeable {
         scontext=cs;
         directory=d;
 
-        setState(new StateInit());
+        if (scontext.lock());
+            setState(new StateInit());
     }
 
 
@@ -244,8 +244,9 @@ public class DirectorySynchronizer  implements Closeable {
 
 
             } else {
-                ObjectHandle h = scontext.getCacheService().getObject(file.getAbsolutePath(), new GpxObjectStatic.Factory());
-                if (GpxObject.class.isInstance(h)) {
+                ObjectHandle h = scontext.getCacheService().getObject(
+                        file.getAbsolutePath(), new GpxObjectStatic.Factory());
+                if (h instanceof GpxObject) {
 
                     setPendingGpxHandle((GpxObject)h);
                     state.ping();
@@ -339,6 +340,7 @@ public class DirectorySynchronizer  implements Closeable {
                 terminate();
             } else if (pendingPreviewGenerator.isReady()) {
                 pendingPreviewGenerator.generateBitmapFile();
+
                 AppBroadcaster.broadcast(scontext.getContext(), AppBroadcaster.DB_SYNC_CHANGED);
                 setState(new StateLoadNextGpx());
             }
@@ -380,6 +382,7 @@ public class DirectorySynchronizer  implements Closeable {
             setPendingPreviewGenerator(null);
 
             AppBroadcaster.broadcast(scontext.getContext(), AppBroadcaster.DBSYNC_DONE);
+            scontext.free();
         }
     }
 

@@ -15,8 +15,8 @@ public class MapsForgeViewStatic extends MapsForgeViewBase {
                 new MapDensity(sc.getContext()));
 
         MapsForgeTileLayer tiles = new MapsForgeTileLayer(
-                new TileProvider(sc, SOURCE),
-                SOURCE.getAlpha());
+                sc,
+                new TileProvider(sc, SOURCE));
 
         add(tiles, tiles);
 

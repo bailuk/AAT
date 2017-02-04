@@ -54,9 +54,8 @@ public class MapsForgeTileLayerStack implements MapLayerInterface {
 
 
             MapsForgeTileLayer layer =
-                    new MapsForgeTileLayer(
-                            new TileProvider(scontext, source),
-                            source.getAlpha());
+                    new MapsForgeTileLayer(scontext,
+                            new TileProvider(scontext, source));
 
             layers.add(layer);
             mapView.add(layer, layer);

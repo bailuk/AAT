@@ -47,7 +47,6 @@ public class MapsForgeMetrics implements MapMetrics {
 
     private void init(Dimension d, org.mapsforge.core.model.Point p, BoundingBox b, byte z) {
         dim = d;
-
         bounding = b;
         tl = p;
         zoom=z;
@@ -55,6 +54,7 @@ public class MapsForgeMetrics implements MapMetrics {
         distances.init(bounding, dim);
         center = new Pixel(dim.width/2, dim.height/2);
     }
+
 
     public void init(BoundingBox b, byte z, Canvas c, org.mapsforge.core.model.Point p) {
         init(c.getDimension(), p, b, z);
@@ -135,10 +135,13 @@ public class MapsForgeMetrics implements MapMetrics {
         rect.top = tl.y;
         return rect;
     }
+
+
     @Override
     public Pixel toPixel(LatLongE6Interface tp) {
         return toPixel(LatLongE6.toLatLong(tp));
     }
+
 
     @Override
     public Pixel toPixel(LatLong p) {
@@ -149,10 +152,12 @@ public class MapsForgeMetrics implements MapMetrics {
         return new Pixel((int)(x-tl.x), (int)(y-tl.y));
     }
 
+
     @Override
     public LatLong fromPixel(int x, int y) {
         return mapView.getMapViewProjection().fromPixels(x, y);
     }
+
 
     @Override
     public BoundingBox getBoundingBox() {

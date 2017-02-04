@@ -3,6 +3,7 @@ package ch.bailu.aat.map.layer.gpx.legend;
 import ch.bailu.aat.gpx.GpxList;
 import ch.bailu.aat.gpx.GpxPointNode;
 import ch.bailu.aat.gpx.GpxSegmentNode;
+import ch.bailu.aat.util.ui.AppLog;
 
 public class SegmentIndexWalker extends LegendWalker{
 
@@ -11,6 +12,7 @@ public class SegmentIndexWalker extends LegendWalker{
     @Override
     public boolean doList(GpxList l) {
         index=1;
+
         return super.doList(l);
     }
 

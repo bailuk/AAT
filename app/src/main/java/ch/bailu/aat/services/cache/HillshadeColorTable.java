@@ -1,6 +1,7 @@
 package ch.bailu.aat.services.cache;
 
 import android.content.Context;
+import android.graphics.Color;
 
 import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.services.ServiceContext;
@@ -10,7 +11,8 @@ import ch.bailu.aat.services.dem.MultiCell;
 public class HillshadeColorTable extends ObjectHandle {
 
     public final static String ID=HillshadeColorTable.class.getSimpleName();
-    
+
+    private final static int MAX_DARKNES=50;
     private final static int TABLE_DIM=500;
     private final static int TABLE_HDIM=TABLE_DIM/2;
     private final static int TABLE_SIZE=TABLE_DIM*TABLE_DIM;
@@ -116,9 +118,11 @@ public class HillshadeColorTable extends ObjectHandle {
             int 
             shade = (int) (255d * (( ZENITH_COS * Math.cos(slope) ) + 
                     ( ZENITH_SIN * Math.sin(slope) * Math.cos(AZIMUTH_RAD - aspect_rad(dzx, dzy)) ) ));
-            
-            shade = 255-Math.max(0, shade); 
-                    
+
+
+            shade = 255-Math.max(MAX_DARKNES, shade);
+
+
             return (byte) shade;
         }
         

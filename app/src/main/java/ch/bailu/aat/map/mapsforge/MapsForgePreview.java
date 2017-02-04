@@ -3,11 +3,8 @@ package ch.bailu.aat.map.mapsforge;
 
 import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.os.Build;
 
 import org.mapsforge.core.graphics.Canvas;
-import org.mapsforge.core.graphics.Paint;
-import org.mapsforge.core.graphics.Style;
 import org.mapsforge.core.model.BoundingBox;
 import org.mapsforge.core.model.Dimension;
 import org.mapsforge.core.model.MapPosition;
@@ -15,6 +12,7 @@ import org.mapsforge.core.model.Point;
 import org.mapsforge.map.android.graphics.AndroidGraphicFactory;
 import org.mapsforge.map.layer.Layer;
 import org.mapsforge.map.util.MapPositionUtil;
+import org.mapsforge.map.view.FrameBuffer;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -54,14 +52,13 @@ public class MapsForgePreview extends MapsForgeViewBase {
         imageFile = out;
         provider = new TileProviderStatic(scontext, SOURCE);
 
-        MapsForgeTileLayer tileLayer = new MapsForgeTileLayer(provider, SOURCE.getAlpha());
+        MapsForgeTileLayer tileLayer = new MapsForgeTileLayer(scontext, provider);
         add(tileLayer, tileLayer);
 
-        GpxDynLayer gpxLayer = new GpxDynLayer(getMContext(), InfoID.FILEVIEW);
+        GpxDynLayer gpxLayer = new GpxDynLayer(getMContext());
         add(gpxLayer);
 
         enableLayers();
-
 
         gpxLayer.onContentUpdated(InfoID.FILEVIEW, info);
         frameBounding(info.getGpxList().getDelta().getBoundingBox());
@@ -74,28 +71,52 @@ public class MapsForgePreview extends MapsForgeViewBase {
         tileLayer.preLoadTiles(bounding, mapPosition.zoomLevel, tlPoint);
     }
 
+
+    /**
+     *
+     * Begin of "prevent MapView from drawing" hack
+     * FIXME:
+     *   This hack prevents the map view from calling the layers draw() function.
+     *   The correct implementation would be to port the preview generator away from the MapView and
+     *   just use the MapViews model.
+     */
+
+    @Override
+    public FrameBuffer getFrameBuffer() {
+        return new FrameBuffer(getModel().frameBufferModel, getModel().displayModel, AndroidGraphicFactory.INSTANCE) {
+            @Override
+            public org.mapsforge.core.graphics.Bitmap getDrawingBitmap() {
+                return null;
+            }
+        };
+    }
+
     @Override
     public void repaint() {}
 
+    @Override
+    public void requestRedraw() {}
+    /**
+     * End of "prevent MapView from drawing" hack
+     */
 
-    public SyncTileBitmap generateBitmap() {
-        SyncTileBitmap bitmap = new SyncTileBitmap();
+
+    private SyncTileBitmap generateBitmap() {
+        final SyncTileBitmap bitmap = new SyncTileBitmap();
 
         bitmap.set(BITMAP_SIZE, false);
-        bitmap.getAndroidBitmap().eraseColor(Color.BLACK);
+        if (bitmap.getAndroidBitmap() != null) {
+            final android.graphics.Canvas c = bitmap.getAndroidCanvas();
+            final Canvas canvas = AndroidGraphicFactory.createGraphicContext(c);
 
-        android.graphics.Canvas canvas = bitmap.getAndroidCanvas();
-        Canvas drawingCanvas =
-                AndroidGraphicFactory.createGraphicContext(canvas);
+            bitmap.getAndroidBitmap().eraseColor(Color.BLACK);
 
-        AppLog.d(this, "Generate");
+            for (Layer layer : getLayerManager().getLayers()) {
+                layer.draw(bounding, mapPosition.zoomLevel, canvas, tlPoint);
+            }
 
-        for (Layer layer : getLayerManager().getLayers()) {
-            AppLog.d(this, "L draw");
-            layer.draw(bounding, mapPosition.zoomLevel, drawingCanvas, tlPoint);
         }
-
-        drawingCanvas.destroy();
+        //drawingCanvas.destroy();
         return bitmap;
     }
 
@@ -103,8 +124,9 @@ public class MapsForgePreview extends MapsForgeViewBase {
     public void generateBitmapFile() {
         SyncTileBitmap bitmap = generateBitmap();
 
+
         try {
-            final FileOutputStream outStream = new FileOutputStream(imageFile);
+            FileOutputStream outStream = new FileOutputStream(imageFile);
             bitmap.getAndroidBitmap().compress(Bitmap.CompressFormat.PNG, 90, outStream);
             outStream.close();
             AppBroadcaster.broadcast(getContext(),

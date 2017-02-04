@@ -113,6 +113,11 @@ public class TileProvider implements TileProviderInterface {
         cache.reDownloadTiles(scontext);
     }
 
+    @Override
+    public Source getSource() {
+        return source;
+    }
+
 
     @Override
     public synchronized void onAttached() {

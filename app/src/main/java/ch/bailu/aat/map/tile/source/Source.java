@@ -1,6 +1,7 @@
 package ch.bailu.aat.map.tile.source;
 
 import android.content.Context;
+import android.graphics.Paint;
 
 import org.mapsforge.core.model.Tile;
 
@@ -21,6 +22,7 @@ public abstract class Source {
 
     public abstract boolean isTransparent();
     public abstract int getAlpha();
+    public abstract int getPaintFlags();
     public abstract ObjectHandle.Factory getFactory(Tile tile);
 
 
@@ -45,7 +47,7 @@ public abstract class Source {
 
                 @Override
                 public int getMinimumZoomLevel() {
-                    return 3;
+                    return 0;
                 }
 
                 @Override
@@ -61,6 +63,11 @@ public abstract class Source {
                 @Override
                 public int getAlpha() {
                     return OPAQUE;
+                }
+
+                @Override
+                public int getPaintFlags() {
+                    return 0;
                 }
 
                 @Override
@@ -106,6 +113,11 @@ public abstract class Source {
                 }
 
                 @Override
+                public int getPaintFlags() {
+                    return 0;
+                }
+
+                @Override
                 public ObjectHandle.Factory getFactory(Tile mt) {
                     return  new NewHillshade.Factory(mt);
                 }
@@ -143,6 +155,11 @@ public abstract class Source {
                 @Override
                 public int getAlpha() {
                     return 50;
+                }
+
+                @Override
+                public int getPaintFlags() {
+                    return 0;
                 }
 
                 @Override

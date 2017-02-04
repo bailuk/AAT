@@ -9,7 +9,7 @@ import java.util.TreeSet;
 import ch.bailu.aat.util.ui.AppLog;
 
 public class TilesList {
-    private final static int FILES_LIMIT=100000;
+    private final static int FILES_LIMIT=50000;
 
 
     private final TreeSet<TileFile> files = new TreeSet<>(
@@ -39,9 +39,9 @@ public class TilesList {
         if (!files.add(file)) {
             AppLog.d(this, file.getSource() +"/"+ file.toString());
         }
-//        if (files.size()>= FILES_LIMIT) {
-//            files.pollLast();
-//        }
+        if (files.size()>= FILES_LIMIT) {
+            files.pollLast();
+        }
     }
 
     public void addToRemove(TileFile file) {

@@ -1,6 +1,7 @@
 package ch.bailu.aat.map.mapsforge;
 
 import android.graphics.Canvas;
+import android.os.Build;
 
 import org.mapsforge.core.model.LatLong;
 import org.mapsforge.map.model.common.Observer;
@@ -8,6 +9,7 @@ import org.mapsforge.map.model.common.Observer;
 import ch.bailu.aat.dispatcher.DispatcherInterface;
 import ch.bailu.aat.map.MapDensity;
 import ch.bailu.aat.map.layer.MapPositionLayer;
+import ch.bailu.aat.preferences.SolidMapViewAcceleration;
 import ch.bailu.aat.services.ServiceContext;
 
 public class MapsForgeView extends MapsForgeViewBase {
@@ -46,6 +48,9 @@ public class MapsForgeView extends MapsForgeViewBase {
             }
         });
 
+        if (Build.VERSION.SDK_INT >= 11) {
+            setLayerType(new SolidMapViewAcceleration(getContext()).getValue(), null);
+        }
     }
 
 

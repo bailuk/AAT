@@ -1,6 +1,7 @@
 package ch.bailu.aat.map.tile.source;
 
 import android.content.Context;
+import android.graphics.Paint;
 
 import org.mapsforge.core.model.Tile;
 
@@ -34,6 +35,7 @@ public class DownloadSource extends Source {
         this(n, minZ, maxZ, a, (a != OPAQUE), url);
     }
 
+
     public DownloadSource(String n, int minZ, int maxZ, int a, boolean t, String... u) {
         name = n;
         minZoom = minZ;
@@ -57,6 +59,12 @@ public class DownloadSource extends Source {
     }
 
     @Override
+    public int getPaintFlags() {
+        return 0;
+    }
+
+
+    @Override
     public int getMinimumZoomLevel() {
         return minZoom;
     }
@@ -74,6 +82,8 @@ public class DownloadSource extends Source {
     public int getAlpha() {
         return alpha;
     }
+
+
 
     @Override
     public BitmapTileObject.Factory getFactory(Tile mt) {
@@ -109,7 +119,12 @@ public class DownloadSource extends Source {
                     OPAQUE,
                     "http://a.tile.openstreetmap.org/",
                     "http://b.tile.openstreetmap.org/",
-                    "http://c.tile.openstreetmap.org/");
+                    "http://c.tile.openstreetmap.org/") {
+                @Override
+                public int getPaintFlags() {
+                    return Paint.FILTER_BITMAP_FLAG;
+                }
+            };
 
 
     public final static DownloadSource TRAIL_MTB =
@@ -142,12 +157,4 @@ public class DownloadSource extends Source {
                     TRANSPARENT,
                     "http://openptmap.org/tiles/");
 
-
-//    public final static BitmapTileObject.Source HILLSHADE_CACHE =
-//            new BitmapTileObject.Source("HillShade",
-//                    NewHillshade.ELEVATION_HILLSHADE.getMinimumZoomLevel(),
-//                    NewHillshade.ELEVATION_HILLSHADE.getMaximumZoomLevel(),
-//                    NewHillshade.ELEVATION_HILLSHADE.getAlpha(),
-//                    true,
-//                    "http://bailu.ch/");
 }

@@ -45,7 +45,6 @@ public class IteratorFollowFile extends IteratorAbstract {
             e.printStackTrace();
         }
         
-        AppLog.d(this, "onCursorChanged");
         GpxInformationDbEntryAndFile info
                 = new GpxInformationDbEntryAndFile(scontext, directory, cursor);
         toClose = info;

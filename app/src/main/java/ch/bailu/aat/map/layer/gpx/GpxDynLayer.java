@@ -28,6 +28,10 @@ public class GpxDynLayer implements MapLayerInterface, OnContentUpdatedInterface
 
 
 
+    public GpxDynLayer(MapContext mc) {
+        this(mc, -1);
+    }
+
     public GpxDynLayer(MapContext mc, int c) {
         mcontext = mc;
         color = c;
@@ -40,9 +44,10 @@ public class GpxDynLayer implements MapLayerInterface, OnContentUpdatedInterface
 
     public GpxDynLayer(MapContext mc,
                          DispatcherInterface dispatcher, int iid) {
-        this(mc, -1);
+        this(mc);
         dispatcher.addTarget(this, iid);
     }
+
 
 
     @Override
@@ -64,12 +69,12 @@ public class GpxDynLayer implements MapLayerInterface, OnContentUpdatedInterface
     private int type = GpxType.NONE;
 
     @Override
-    public void onContentUpdated(int iid, GpxInformation i) {
-        infoCache.set(iid, i);
+    public void onContentUpdated(int iid, GpxInformation info) {
+        infoCache.set(iid, info);
 
 
-        if (type != toType(i)) {
-            type = toType(i);
+        if (type != toType(info)) {
+            type = toType(info);
             createGpxOverlay();
             createLegendOverlay();
         }

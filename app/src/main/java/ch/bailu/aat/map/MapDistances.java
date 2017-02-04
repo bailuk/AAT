@@ -13,32 +13,6 @@ public class MapDistances {
     private float shortDistance;
 
 
-//    private final GeoPoint
-//            nw=new GeoPoint(0,0),
-//            sw=new GeoPoint(0,0),
-//            ne=new GeoPoint(0,0);
-//
-//    public void init(BoundingBoxOsm boundingBoxOsm, Rect screen) {
-//        float meter, pixel;
-//
-//        nw.setCoordsE6(boundingBoxOsm.getLatNorthE6(), boundingBoxOsm.getLonWestE6());
-//
-//        if (screen.width() < screen.height()) {
-//            ne.setCoordsE6(boundingBoxOsm.getLatNorthE6(), boundingBoxOsm.getLonEastE6());
-//            meter = nw.distanceTo(ne);
-//            pixel = screen.width();
-//
-//        } else {
-//            sw.setCoordsE6(boundingBoxOsm.getLatSouthE6(), boundingBoxOsm.getLonWestE6());
-//            meter = nw.distanceTo(sw);
-//            pixel = screen.height();
-//        }
-//
-//        meterPerOnePixel = meter / pixel;
-//        pixelPerOneMeter = pixel / meter;
-//
-//        shortDistance = meter;
-//    }
 
     public void init(BoundingBox box, Dimension dim) {
         if (dim.height < dim.width) {
@@ -71,11 +45,8 @@ public class MapDistances {
         return meter * pixelPerOneMeter;
     }
 
-
     public float getShortDistance() {
         return shortDistance;
     }
-
-
 
 }
