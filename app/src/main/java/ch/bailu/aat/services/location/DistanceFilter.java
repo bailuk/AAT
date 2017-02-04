@@ -4,6 +4,7 @@ import android.content.Context;
 
 import ch.bailu.aat.gpx.GpxDeltaHelper;
 import ch.bailu.aat.preferences.SolidDistanceFilter;
+import ch.bailu.aat.util.ui.AppLog;
 
 public class DistanceFilter extends LocationStackChainedItem {
     private LocationInformation oldLocation=null;
@@ -19,8 +20,10 @@ public class DistanceFilter extends LocationStackChainedItem {
 
     @Override
     public void newLocation(LocationInformation location) {
+        AppLog.d(this, "newLocation()");
         if (oldLocation==null || notTooClose(oldLocation,location)) {
             oldLocation=location;
+            AppLog.d(this, "send");
             sendLocation(location);
         }
     }

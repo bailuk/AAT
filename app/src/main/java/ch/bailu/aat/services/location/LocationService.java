@@ -11,6 +11,7 @@ import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.interfaces.GpxPointInterface;
 import ch.bailu.aat.preferences.PresetDependent;
 import ch.bailu.aat.preferences.SolidLocationProvider;
+import ch.bailu.aat.preferences.SolidPreset;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.VirtualService;
 
@@ -28,6 +29,8 @@ public class LocationService extends VirtualService
     private AutopauseTrigger autopause;
 
 
+    private int presetIndex;
+
     public LocationService(ServiceContext c) {
         super(c);
 
@@ -36,8 +39,15 @@ public class LocationService extends VirtualService
 
         createLocationStack();
         createLocationProvider();
+
+        setPresetIndex(new SolidPreset(c.getContext()).getIndex());
     }
 
+
+    public void setPresetIndex(int i) {
+        presetIndex = i;
+        preferencesChanged(getContext(), presetIndex);
+    }
 
 
     private void createLocationStack() {
@@ -46,7 +56,7 @@ public class LocationService extends VirtualService
 
         itemList.add(new DistanceFilter(lastItem()));
 
-        autopause=new AutopauseTrigger(lastItem());
+        autopause=new AutopauseTrigger(getContext(),lastItem());
         itemList.add(autopause);
 
         missing = new MissingTrigger(lastItem()); 
@@ -120,6 +130,8 @@ public class LocationService extends VirtualService
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences,
             String key) {
         if (sprovider.hasKey(key)) createLocationProvider();
+
+        preferencesChanged(getContext(), presetIndex);
     }
 
 
@@ -136,4 +148,5 @@ public class LocationService extends VirtualService
         builder.append("</p>");
 
     }
+
 }

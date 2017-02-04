@@ -4,6 +4,7 @@ import android.content.Context;
 
 import ch.bailu.aat.gpx.GpxPoint;
 import ch.bailu.aat.gpx.interfaces.GpxPointInterface;
+import ch.bailu.aat.util.ui.AppLog;
 
 public class CleanLocation extends LocationStackItem {
     private static final long LOCATION_LIFETIME_MILLIS=5*1000;
@@ -24,6 +25,8 @@ public class CleanLocation extends LocationStackItem {
 
     @Override
     public void newLocation(LocationInformation location) {
+        AppLog.d(this, "newLocation()");
+        if (hasLoggableLocation()) AppLog.d(this, "hsLoggableLocation()");
         currentLocation=location;
     }
 

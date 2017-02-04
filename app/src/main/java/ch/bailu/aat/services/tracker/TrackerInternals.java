@@ -59,6 +59,8 @@ implements OnSharedPreferenceChangeListener, Closeable {
         presetIndex = new SolidPreset(scontext.getContext()).getIndex();
         sbacklight = new SolidBacklight(scontext.getContext(), presetIndex);
         sautopause = new SolidAutopause(scontext.getContext(), presetIndex);
+
+        scontext.getLocationService().setPresetIndex(presetIndex);
     }
 
         
