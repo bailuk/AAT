@@ -44,8 +44,7 @@ public abstract class OldSolidDirectoryList extends SolidIndexList {
 
 
     public static void fillDirectoryList(ArrayList<String> list, String[] pf) {
-        for (int i=0; i<pf.length; i++)
-            fillList(list, pf[i]);
+        for (String aPf : pf) fillList(list, aPf);
     }
 
 
@@ -59,8 +58,7 @@ public abstract class OldSolidDirectoryList extends SolidIndexList {
     public static void addPathToList(ArrayList<String> l, String p, String pf) {
         File files[] = new File(p).listFiles();
         if (files != null) {
-            for (int i=0; i<files.length; i++)
-                addFileToList(l, files[i], pf);
+            for (File file : files) addFileToList(l, file, pf);
         }
     }
 

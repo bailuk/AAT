@@ -9,7 +9,9 @@ markdown --html4tags ../README.md > README.about.html
 
 
 echo "<?xml version=\"1.0\" encoding=\"utf-8\"?>" > $RES/values/generated.xml
-echo "<resources>"                               >> $RES/values/generated.xml
+echo "<resources"                                >> $RES/values/generated.xml
+echo "   xmlns:tools=\"http://schemas.android.com/tools\"" >> $RES/values/generated.xml
+echo "   tools:ignore=\"MissingTranslation\" >"  >> $RES/values/generated.xml
 bash htmlAsResource.bash README.about.html       >> $RES/values/generated.xml
 bash htmlAsResource.bash README.enduser.html     >> $RES/values/generated.xml
 echo "</resources>"                              >> $RES/values/generated.xml

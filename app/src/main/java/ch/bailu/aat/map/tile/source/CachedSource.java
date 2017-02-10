@@ -59,7 +59,7 @@ public class CachedSource extends Source {
     }
 
 
-    public final static CachedSource CACHED_ELEVATION_COLOR = new CachedSource(Source.ELEVATION_COLOR);
+//    public final static CachedSource CACHED_ELEVATION_COLOR = new CachedSource(Source.ELEVATION_COLOR);
     public final static CachedSource CACHED_ELEVATION_HILLSHADE = new CachedSource(Source.ELEVATION_HILLSHADE);
     public final static CachedSource CACHED_MAPSFORGE = new CachedSource(Source.MAPSFORGE);
 }

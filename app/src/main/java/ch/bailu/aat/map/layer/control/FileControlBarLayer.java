@@ -3,7 +3,6 @@ package ch.bailu.aat.map.layer.control;
 import android.content.SharedPreferences;
 import android.view.View;
 
-import org.mapsforge.core.model.LatLong;
 import org.mapsforge.core.model.Point;
 
 import java.io.File;
@@ -146,7 +145,7 @@ public class FileControlBarLayer extends ControlBarLayer {
         }
 
         @Override
-        public boolean onTap(LatLong tapLatLong, Point layerXY, Point tapXY) {
+        public boolean onTap(Point tapXY) {
             return false;
         }
 

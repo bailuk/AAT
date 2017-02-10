@@ -2,7 +2,6 @@ package ch.bailu.aat.map.layer.gpx;
 
 import android.content.SharedPreferences;
 
-import org.mapsforge.core.model.LatLong;
 import org.mapsforge.core.model.Point;
 
 import ch.bailu.aat.dispatcher.DispatcherInterface;
@@ -13,7 +12,6 @@ import ch.bailu.aat.gpx.interfaces.GpxType;
 import ch.bailu.aat.map.MapContext;
 import ch.bailu.aat.map.layer.MapLayerInterface;
 import ch.bailu.aat.preferences.SolidLegend;
-import ch.bailu.aat.util.ui.AppLog;
 
 public class GpxDynLayer implements MapLayerInterface, OnContentUpdatedInterface {
     private final GpxInformationCache infoCache = new GpxInformationCache();
@@ -57,7 +55,7 @@ public class GpxDynLayer implements MapLayerInterface, OnContentUpdatedInterface
     }
 
     @Override
-    public boolean onTap(LatLong tapLatLong, Point layerXY, Point tapXY) {
+    public boolean onTap(Point tapXY) {
         return false;
     }
 

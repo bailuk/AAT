@@ -5,13 +5,11 @@ import android.graphics.Color;
 import android.view.View;
 import android.widget.LinearLayout;
 
-import org.mapsforge.core.model.LatLong;
 import org.mapsforge.core.model.Point;
 
 import ch.bailu.aat.map.MapContext;
 import ch.bailu.aat.map.MapViewInterface;
 import ch.bailu.aat.map.layer.MapLayerInterface;
-import ch.bailu.aat.util.ui.AppLog;
 
 public abstract class ControlBarLayer implements MapLayerInterface, View.OnClickListener {
     public final static int TOP=0;
@@ -106,7 +104,7 @@ public abstract class ControlBarLayer implements MapLayerInterface, View.OnClick
 
 
     @Override
-    public boolean onTap(LatLong tapLatLong, Point layerXY, Point tapXY) {
+    public boolean onTap(Point tapXY) {
         int size=bar.getControlSize();
 
         int y=(int)tapXY.y;

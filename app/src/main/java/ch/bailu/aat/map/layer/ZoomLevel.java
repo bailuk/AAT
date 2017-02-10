@@ -2,7 +2,6 @@ package ch.bailu.aat.map.layer;
 
 import android.content.SharedPreferences;
 
-import org.mapsforge.core.model.LatLong;
 import org.mapsforge.core.model.Point;
 
 import java.util.Locale;
@@ -26,7 +25,7 @@ public class ZoomLevel implements MapLayerInterface {
     public void drawInside(MapContext mcontext) {}
 
     @Override
-    public boolean onTap(LatLong tapLatLong, Point layerXY, Point tapXY) {
+    public boolean onTap(Point tapXY) {
         return false;
     }
 

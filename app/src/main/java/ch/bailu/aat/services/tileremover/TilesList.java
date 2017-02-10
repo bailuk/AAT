@@ -3,7 +3,6 @@ package ch.bailu.aat.services.tileremover;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Iterator;
-import java.util.PriorityQueue;
 import java.util.TreeSet;
 
 import ch.bailu.aat.util.ui.AppLog;

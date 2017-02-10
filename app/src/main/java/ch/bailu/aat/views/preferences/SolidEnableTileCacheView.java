@@ -1,14 +1,12 @@
 package ch.bailu.aat.views.preferences;
 
 import android.app.Activity;
-import android.content.Context;
 import android.view.View;
 import android.widget.LinearLayout;
 
 import java.io.File;
 
 import ch.bailu.aat.R;
-import ch.bailu.aat.map.tile.source.Source;
 import ch.bailu.aat.preferences.SolidEnableTileCache;
 import ch.bailu.aat.preferences.SolidTileCacheDirectory;
 import ch.bailu.aat.util.ui.AppDialog;

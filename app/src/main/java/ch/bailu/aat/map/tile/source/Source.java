@@ -1,7 +1,6 @@
 package ch.bailu.aat.map.tile.source;
 
 import android.content.Context;
-import android.graphics.Paint;
 
 import org.mapsforge.core.model.Tile;
 

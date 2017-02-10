@@ -175,9 +175,9 @@ public class CH1903Coordinates extends MeterCoordinates {
     public static boolean inSwitzerland(LatLong point) {
         return SWISS_AREA.contains(point);
     }
-    public static boolean inSwitzerland(LatLongE6Interface point) {
-        return SWISS_AREA.contains(point);
-    }
+//    public static boolean inSwitzerland(LatLongE6Interface point) {
+//        return SWISS_AREA.contains(point);
+//    }
 
 
 }

@@ -4,9 +4,6 @@ import android.view.View;
 
 import org.mapsforge.core.model.LatLong;
 
-import java.io.Closeable;
-import java.io.IOException;
-
 import ch.bailu.aat.coordinates.BoundingBoxE6;
 import ch.bailu.aat.dispatcher.LifeCycleInterface;
 import ch.bailu.aat.map.layer.MapLayerInterface;

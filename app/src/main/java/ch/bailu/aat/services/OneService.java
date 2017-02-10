@@ -11,9 +11,6 @@ import ch.bailu.aat.services.location.LocationService;
 import ch.bailu.aat.services.render.RenderService;
 import ch.bailu.aat.services.tileremover.TileRemoverService;
 import ch.bailu.aat.services.tracker.TrackerService;
-import ch.bailu.aat.util.ui.AppLog;
-
-import static ch.bailu.aat.services.ServiceLink.ServiceNotUpError;
 
 public class OneService extends AbsService  implements ServiceContext {
 

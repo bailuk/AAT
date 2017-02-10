@@ -30,7 +30,7 @@ public abstract class CenterCoordinatesLayer implements MapLayerInterface {
     }
 
     @Override
-    public boolean onTap(LatLong tapLatLong, Point layerXY, Point tapXY) {
+    public boolean onTap(Point tapXY) {
         return false;
     }
 

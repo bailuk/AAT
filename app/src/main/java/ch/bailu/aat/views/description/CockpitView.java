@@ -20,10 +20,10 @@ public class CockpitView extends ViewGroup {
     }
 
 
-    public CockpitView(Context c, DispatcherInterface di, ContentDescription[] des) {
-        super(c);
-        addAll(di, des);
-    }
+//    public CockpitView(Context c, DispatcherInterface di, ContentDescription[] des) {
+//        super(c);
+//        addAll(di, des);
+//    }
 
 
     public void addAll(DispatcherInterface di, ContentDescription[] des) {

@@ -3,7 +3,6 @@ package ch.bailu.aat.map.mapsforge;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import org.mapsforge.core.model.LatLong;
 import org.mapsforge.core.model.Point;
 
 import java.util.ArrayList;
@@ -112,7 +111,7 @@ public class MapsForgeTileLayerStack implements MapLayerInterface {
     }
 
     @Override
-    public boolean onTap(LatLong tapLatLong, Point layerXY, Point tapXY) {
+    public boolean onTap(Point tapXY) {
         return false;
     }
 

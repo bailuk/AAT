@@ -78,9 +78,14 @@ public abstract class AbsService  extends Service {
     }
 
     public synchronized void lock(String r) {
+        // FIXME: if (lock()) {
         if (locks.add(r)) {
             lock();
         }
+
+        // free();
+        // }
+
     }
 
     public synchronized void free(String r) {

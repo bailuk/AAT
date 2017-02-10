@@ -2,7 +2,6 @@ package ch.bailu.aat.map.layer;
 
 import android.content.SharedPreferences;
 
-import org.mapsforge.core.model.LatLong;
 import org.mapsforge.core.model.Point;
 
 import ch.bailu.aat.map.MapContext;
@@ -15,7 +14,5 @@ public interface MapLayerInterface extends Attachable,
     void drawInside(MapContext mcontext);
     void drawForeground(MapContext mcontext);
 
-    boolean onTap(LatLong tapLatLong, Point layerXY, Point tapXY);
-
-
+    boolean onTap(Point tapPos);
 }

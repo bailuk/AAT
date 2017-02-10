@@ -1,7 +1,6 @@
 package ch.bailu.aat.services.cache;
 
 import android.content.Context;
-import android.graphics.Color;
 
 import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.services.ServiceContext;

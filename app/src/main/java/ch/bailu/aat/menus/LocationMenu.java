@@ -76,7 +76,7 @@ public class LocationMenu extends AbsMenu{
         final String s = clipboard.getText().toString();
 
         try {
-            LatLong p = Coordinates.stringToGeoPoint(s.toString());
+            LatLong p = Coordinates.stringToGeoPoint(s);
             map.setCenter(p);
         } catch (NumberFormatException e) {
             AppLog.d(this, s);

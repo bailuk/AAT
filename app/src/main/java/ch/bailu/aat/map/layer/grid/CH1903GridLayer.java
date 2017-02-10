@@ -46,7 +46,7 @@ public class CH1903GridLayer extends MeterGridLayer {
     }
 
     @Override
-    public boolean onTap(LatLong tapLatLong, Point layerXY, Point tapXY) {
+    public boolean onTap(Point tapXY) {
         return false;
     }
 

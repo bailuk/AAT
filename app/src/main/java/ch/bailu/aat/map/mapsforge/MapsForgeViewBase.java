@@ -1,14 +1,23 @@
 package ch.bailu.aat.map.mapsforge;
 
 import android.content.SharedPreferences;
+import android.graphics.Canvas;
+import android.view.GestureDetector;
+import android.view.GestureDetector.SimpleOnGestureListener;
+import android.view.MotionEvent;
 import android.view.View;
 
+import org.mapsforge.core.graphics.GraphicContext;
 import org.mapsforge.core.model.BoundingBox;
 import org.mapsforge.core.model.Dimension;
 import org.mapsforge.core.model.MapPosition;
+import org.mapsforge.core.model.Point;
 import org.mapsforge.core.util.LatLongUtils;
+import org.mapsforge.map.android.graphics.AndroidGraphicFactory;
 import org.mapsforge.map.android.view.MapView;
+import org.mapsforge.map.controller.FrameBufferController;
 import org.mapsforge.map.layer.Layer;
+import org.mapsforge.map.view.FrameBuffer;
 
 import java.util.ArrayList;
 
@@ -19,6 +28,7 @@ import ch.bailu.aat.map.MapViewInterface;
 import ch.bailu.aat.map.layer.MapLayerInterface;
 import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat.services.ServiceContext;
+import ch.bailu.aat.util.ui.AppLog;
 
 public class MapsForgeViewBase extends MapView implements
         MapViewInterface,
@@ -26,13 +36,18 @@ public class MapsForgeViewBase extends MapView implements
 
     private BoundingBox pendingFrameBounding=null;
 
-    private boolean areLayersAttached=false, areServicesUp=false, isVisible=false;
+    private boolean areLayersAttached=false, areServicesUp=false, isVisible=true;
 
 
     private final MapsForgeContext mcontext;
     private final Storage storage;
 
+
+    private final FrameBufferHack frameBufferHack;
+    private final FrameBufferController frameBufferControllerHack;
+
     private final ArrayList<MapLayerInterface> layers = new ArrayList(10);
+
 
 
     public MapsForgeViewBase(ServiceContext sc, String key, MapDensity d) {
@@ -47,10 +62,37 @@ public class MapsForgeViewBase extends MapView implements
         getMapScaleBar().setVisible(false);
         setBuiltInZoomControls(false);
 
+        this.setGestureDetector(new GestureDetector(getContext(), new SimpleOnGestureListener(){
+            @Override
+            public boolean onSingleTapConfirmed(MotionEvent e) {
+                for(MapLayerInterface layer: layers) layer.onTap(new Point(e.getX(), e.getY()));
+                return false;
+            }
+        }));
+
+        FrameBufferController.setUseSquareFrameBuffer(false);
+        frameBufferHack = new FrameBufferHack(getModel());
+        frameBufferControllerHack = FrameBufferController.create(this.frameBufferHack, getModel());
     }
 
 
 
+
+    @Override
+    public FrameBuffer getFrameBuffer() {
+        if (frameBufferHack == null) return super.getFrameBuffer();
+
+        super.getFrameBuffer().destroy();
+        return frameBufferHack;
+    }
+
+    @Override
+    protected void onDraw(Canvas androidCanvas) {
+        org.mapsforge.core.graphics.Canvas gc = AndroidGraphicFactory.createGraphicContext(androidCanvas);
+        frameBufferHack.draw(gc);
+        gc.destroy();
+
+    }
 
     public void add(MapLayerInterface layer) {
         LayerWrapper wrapper = new LayerWrapper(mcontext, layer);
@@ -95,6 +137,11 @@ public class MapsForgeViewBase extends MapView implements
     }
 
 
+/*    @Override
+    public void repaint() {
+        postInvalidateDelayed(15);
+    }
+*/
 
     @Override
     public void frameBounding(BoundingBoxE6 boundingBox) {
@@ -154,10 +201,23 @@ public class MapsForgeViewBase extends MapView implements
     }
 
     @Override
-    protected void onWindowVisibilityChanged(int v) {
-        super.onWindowVisibilityChanged(v);
+    public void setVisibility(int v) {
+        super.setVisibility(v);
+        changeVisibility(v);
+    }
+
+    private void changeVisibility(int v) {
 
         isVisible = (v == VISIBLE);
+
+        if (isVisible)
+            AppLog.d(this, "is visible");
+        else AppLog.d(this, "is NOT visible");
+
+        if (isShown())
+            AppLog.d(this, "is shown");
+        else AppLog.d(this, "is NOT shown");
+
         attachDetachLayers();
     }
 
@@ -206,5 +266,7 @@ public class MapsForgeViewBase extends MapView implements
     public void onDestroy() {
         disableLayers();
         destroyAll();
+        frameBufferControllerHack.destroy();
+        frameBufferHack.destroy();
     }
 }

@@ -1,23 +1,30 @@
 package ch.bailu.aat.preferences;
 
 import android.content.Context;
+import android.os.Build;
 import android.view.View;
+
+import ch.bailu.aat.map.mapsforge.MapsForgeView;
 
 public class SolidMapViewAcceleration extends SolidIndexList {
 
-    private static int[] values = {
-            View.LAYER_TYPE_HARDWARE,
-            View.LAYER_TYPE_SOFTWARE,
-            View.LAYER_TYPE_NONE
-    };
-
-    private static String[] labels = {
+     private static final String[] labels = {
             "Hardware*",
             "Software*",
             "None*"
     };
 
+    public void setLayerType(MapsForgeView v) {
+        if (Build.VERSION.SDK_INT >= 11) {
+            final int[] values = {
+                    View.LAYER_TYPE_HARDWARE,
+                    View.LAYER_TYPE_SOFTWARE,
+                    View.LAYER_TYPE_NONE
+            };
+            v.setLayerType(values[getIndex()], null);
+        }
 
+    }
     public SolidMapViewAcceleration(Context c) {
         super(  Storage.global(c),
                 SolidMapViewAcceleration.class.getSimpleName());
@@ -25,7 +32,7 @@ public class SolidMapViewAcceleration extends SolidIndexList {
 
     @Override
     public int length() {
-        return values.length;
+        return labels.length;
     }
 
     @Override
@@ -33,12 +40,11 @@ public class SolidMapViewAcceleration extends SolidIndexList {
         return labels[i];
     }
 
-    public int getValue() {
-        return values[getIndex()];
-    }
 
     @Override
     public String getLabel() {
         return "Acceleration*";
     }
+
+
 }

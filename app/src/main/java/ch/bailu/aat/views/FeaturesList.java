@@ -2,10 +2,7 @@ package ch.bailu.aat.views;
 
 import android.content.Context;
 import android.database.DataSetObserver;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.text.Html;
 import android.text.Spanned;
@@ -44,7 +41,7 @@ public class FeaturesList extends ListView  {
 
     private DataSetObserver observer=null;
 
-    private final int icon_size, sicon_size;
+    private final int icon_size;//, sicon_size;
 
     private final Drawable way, node, area, relation;
 
@@ -60,7 +57,7 @@ public class FeaturesList extends ListView  {
         super(context);
 
         icon_size = new AppDensity(context).toDPi(64);
-        sicon_size = new AppDensity(context).toDPi(24);
+        int sicon_size = new AppDensity(context).toDPi(24);
 
         way = toDrawable("symbols/way.svg", sicon_size, Color.WHITE);
         node = toDrawable("symbols/node.svg", sicon_size, Color.WHITE);
@@ -159,9 +156,7 @@ public class FeaturesList extends ListView  {
             SVG svg = SVG.getFromAsset(getContext().getAssets(), asset);
             return SyncTileBitmap.toDrawable(svg, size, getResources(), color);
 
-        } catch (SVGParseException e) {
-            AppLog.d(this, asset);
-        } catch (IOException e) {
+        } catch (SVGParseException | IOException e) {
             AppLog.d(this, asset);
         }
         return null;

@@ -3,13 +3,10 @@ package ch.bailu.aat.map.layer.gpx.legend;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 
-import org.mapsforge.core.model.LatLong;
 import org.mapsforge.core.model.Point;
 
 import ch.bailu.aat.map.MapContext;
-import ch.bailu.aat.map.TwoNodes;
 import ch.bailu.aat.map.layer.gpx.GpxLayer;
-import ch.bailu.aat.util.ui.AppLog;
 
 public class GpxLegendLayer extends GpxLayer {
     private final LegendWalker walker;
@@ -27,7 +24,7 @@ public class GpxLegendLayer extends GpxLayer {
     }
 
     @Override
-    public boolean onTap(LatLong tapLatLong, Point layerXY, Point tapXY) {
+    public boolean onTap(Point tapXY) {
         return false;
     }
 

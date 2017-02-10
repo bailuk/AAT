@@ -40,8 +40,8 @@ public class VerticalScrollView extends ScrollView {
     public void addAllContent(DispatcherInterface di,
                               ContentDescription[] descriptions,
                               int iid) {
-        for (int i=0; i< descriptions.length; i++) {
-            add(di, descriptions[i], iid);
+        for (ContentDescription description : descriptions) {
+            add(di, description, iid);
         }
     }
 

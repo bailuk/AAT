@@ -14,7 +14,6 @@ import org.mapsforge.map.android.graphics.AndroidGraphicFactory;
 
 import ch.bailu.aat.util.graphic.SyncTileBitmap;
 import ch.bailu.aat.util.ui.AppDensity;
-import ch.bailu.aat.util.ui.AppLog;
 
 public class AndroidDraw implements MapDraw {
     private final static int SPACE=5;
@@ -31,7 +30,7 @@ public class AndroidDraw implements MapDraw {
 
     private int left=0, top=0, bottom=0, right = 0;
 
-    private int point_radius;
+    private final int point_radius;
 
     private final SyncTileBitmap nodeBitmap = new SyncTileBitmap();
     private final Resources resources;

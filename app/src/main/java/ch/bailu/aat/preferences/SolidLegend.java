@@ -3,7 +3,6 @@ package ch.bailu.aat.preferences;
 import android.content.Context;
 
 import ch.bailu.aat.R;
-import ch.bailu.aat.map.MapContext;
 import ch.bailu.aat.map.layer.gpx.GpxLayer;
 import ch.bailu.aat.map.layer.gpx.legend.GpxLegendLayer;
 import ch.bailu.aat.map.layer.gpx.legend.MarkerAltitudeWalker;

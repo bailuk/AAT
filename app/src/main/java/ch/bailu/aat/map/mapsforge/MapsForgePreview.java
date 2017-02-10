@@ -38,7 +38,7 @@ public class MapsForgePreview extends MapsForgeViewBase {
     private final TileProviderStatic provider;
 
 
-    private final int tileSize;
+    //private final int tileSize;
     private final MapPosition mapPosition;
     private final BoundingBox bounding;
     private final Point tlPoint;
@@ -63,10 +63,10 @@ public class MapsForgePreview extends MapsForgeViewBase {
         gpxLayer.onContentUpdated(InfoID.FILEVIEW, info);
         frameBounding(info.getGpxList().getDelta().getBoundingBox());
 
-        mapPosition = getModel().mapViewPosition.getMapPosition();
-        tileSize    = getModel().displayModel.getTileSize();
-        bounding    = MapPositionUtil.getBoundingBox(mapPosition, DIM, tileSize);
-        tlPoint     = MapPositionUtil.getTopLeftPoint(mapPosition, DIM, tileSize);
+        mapPosition  = getModel().mapViewPosition.getMapPosition();
+        int tileSize = getModel().displayModel.getTileSize();
+        bounding     = MapPositionUtil.getBoundingBox(mapPosition, DIM, tileSize);
+        tlPoint      = MapPositionUtil.getTopLeftPoint(mapPosition, DIM, tileSize);
 
         tileLayer.preLoadTiles(bounding, mapPosition.zoomLevel, tlPoint);
     }

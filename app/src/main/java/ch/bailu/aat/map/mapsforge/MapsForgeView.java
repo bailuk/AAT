@@ -48,9 +48,7 @@ public class MapsForgeView extends MapsForgeViewBase {
             }
         });
 
-        if (Build.VERSION.SDK_INT >= 11) {
-            setLayerType(new SolidMapViewAcceleration(getContext()).getValue(), null);
-        }
+        new SolidMapViewAcceleration(getContext()).setLayerType(this);
     }
 
 

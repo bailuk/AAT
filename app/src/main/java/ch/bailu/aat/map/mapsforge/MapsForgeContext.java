@@ -61,6 +61,11 @@ public class MapsForgeContext extends Layer implements MapContext, MapLayerInter
 
     }
 
+    @Override
+    public boolean onTap(Point tapPos) {
+        return false;
+    }
+
 
     @Override
     public void draw(BoundingBox boundingBox, byte zoomLevel, Canvas canvas, Point topLeftPoint) {

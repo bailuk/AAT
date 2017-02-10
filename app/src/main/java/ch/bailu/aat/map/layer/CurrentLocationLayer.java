@@ -69,7 +69,7 @@ public class CurrentLocationLayer implements OnContentUpdatedInterface, MapLayer
     }
 
     @Override
-    public boolean onTap(LatLong tapLatLong, org.mapsforge.core.model.Point layerXY, org.mapsforge.core.model.Point tapXY) {
+    public boolean onTap( org.mapsforge.core.model.Point tapXY) {
         return false;
     }
 

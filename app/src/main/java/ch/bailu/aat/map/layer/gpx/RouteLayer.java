@@ -2,7 +2,6 @@ package ch.bailu.aat.map.layer.gpx;
 
 import android.content.SharedPreferences;
 
-import org.mapsforge.core.model.LatLong;
 import org.mapsforge.core.model.Point;
 
 import ch.bailu.aat.map.MapContext;
@@ -43,7 +42,7 @@ public class RouteLayer extends GpxLayer {
     }
 
     @Override
-    public boolean onTap(LatLong tapLatLong, Point layerXY, Point tapXY) {
+    public boolean onTap(Point tapXY) {
         return false;
     }
 

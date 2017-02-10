@@ -60,7 +60,7 @@ public class AppDirectory  {
     public static final String DIR_OSM_FEATURES = "osm_features/";
     public static final String DIR_OSM_FEATURES_PREPARSED = "osm_features/preparsed/";
     public static final String DIR_OSM_FEATURES_IMAGES = "osm_features/images/";
-    public static final String DIR_OSM_FEATURES_ICONS = "osm_features/icons/";
+//    public static final String DIR_OSM_FEATURES_ICONS = "osm_features/icons/";
 
     public static final String FILE_OSM_FEATURES_INDEX = "index.html";
     

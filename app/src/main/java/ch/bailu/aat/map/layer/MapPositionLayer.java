@@ -1,7 +1,6 @@
 package ch.bailu.aat.map.layer;
 
 import android.content.SharedPreferences;
-import android.view.MotionEvent;
 
 import org.mapsforge.core.model.LatLong;
 import org.mapsforge.core.model.Point;
@@ -14,7 +13,6 @@ import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.map.MapContext;
 import ch.bailu.aat.preferences.SolidPositionLock;
 import ch.bailu.aat.preferences.Storage;
-import ch.bailu.aat.util.ui.AppLog;
 
 public class MapPositionLayer implements MapLayerInterface, OnContentUpdatedInterface {
 
@@ -114,7 +112,7 @@ public class MapPositionLayer implements MapLayerInterface, OnContentUpdatedInte
     public void drawInside(MapContext mcontext) {}
 
     @Override
-    public boolean onTap(LatLong tapLatLong, Point layerXY, Point tapXY) {
+    public boolean onTap(Point tapXY) {
         return false;
     }
 

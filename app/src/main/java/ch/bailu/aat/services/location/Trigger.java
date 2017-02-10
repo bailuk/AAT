@@ -55,10 +55,10 @@ public class Trigger {
     }
 
     public void log(Context c) {
-        String  t="Neutral";;
-        if (trigger==HIGH) t="Hight";
+        String  t="Neutral";
+        if (trigger==HIGH) t="High";
         else if (trigger==LOW) t="Low";
 
-        AppLog.i(c, t + ": " + level);
+        AppLog.d(this, t + ": " + level);
     }
 }

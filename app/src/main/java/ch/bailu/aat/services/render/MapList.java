@@ -149,7 +149,7 @@ public class MapList {
                     if (files.size() == 0) {
                         files.add(e.file);
 
-                        log += " W " + files.size();
+//                        log += " W " + files.size();
                         //AppLog.d(this, log);
                         return files;
                     }
@@ -166,7 +166,7 @@ public class MapList {
 
         }
 
-        log += files.size();
+//        log += files.size();
         //AppLog.d(this, log);
         return files;
     }

@@ -27,7 +27,7 @@ public abstract class ProcessThread extends Thread implements Closeable, ThreadC
 
             try {
                 ProcessHandle newHandle = queue.take();
-
+                // FIXME: Synchronization on a non-final field
                 if (newHandle.canContinue()) {
                     synchronized(currentHandle) {
                         currentHandle=newHandle;

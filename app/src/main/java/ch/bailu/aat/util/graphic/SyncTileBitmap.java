@@ -3,7 +3,6 @@ package ch.bailu.aat.util.graphic;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Picture;
 import android.graphics.RectF;
 import android.graphics.drawable.BitmapDrawable;
@@ -70,9 +69,7 @@ public class SyncTileBitmap implements Closeable {
             bitmap = AndroidGraphicFactory.INSTANCE.createTileBitmap(inputStream, size, transparent);
             bitmap.setTimestamp(file.lastModified());
 
-        } catch (CorruptedInputStreamException e) {
-            bitmap = null;
-        } catch (IOException e) {
+        } catch (CorruptedInputStreamException | IOException e) {
             bitmap = null;
         } finally {
             IOUtils.closeQuietly(inputStream);

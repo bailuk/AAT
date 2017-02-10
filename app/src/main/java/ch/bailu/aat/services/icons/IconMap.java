@@ -2,8 +2,6 @@ package ch.bailu.aat.services.icons;
 
 import android.util.SparseArray;
 
-import java.io.File;
-
 public class IconMap {
     private final static String SVG_PREFIX="symbols/";
     private final static String SVG_SUFFIX=".svg";

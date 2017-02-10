@@ -2,7 +2,6 @@ package ch.bailu.aat.map.layer.control;
 
 import android.view.View;
 
-import org.mapsforge.core.model.LatLong;
 import org.mapsforge.core.model.Point;
 
 import java.io.File;
@@ -57,7 +56,7 @@ public class AutoNodeViewLayer extends NodeViewLayer {
 
 
     @Override
-    public boolean onTap(LatLong tapLatLong, Point layerXY, Point tapXY) {
+    public boolean onTap(Point tapXY) {
         return false;
     }
 

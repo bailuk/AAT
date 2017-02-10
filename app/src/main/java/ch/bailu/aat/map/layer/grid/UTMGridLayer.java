@@ -27,7 +27,7 @@ public class UTMGridLayer extends MeterGridLayer{
     }
 
     @Override
-    public boolean onTap(LatLong tapLatLong, Point layerXY, Point tapXY) {
+    public boolean onTap(Point tapXY) {
         return false;
     }
 

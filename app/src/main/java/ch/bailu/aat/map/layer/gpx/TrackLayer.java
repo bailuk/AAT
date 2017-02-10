@@ -6,7 +6,6 @@ import android.graphics.Color;
 import org.mapsforge.core.graphics.Cap;
 import org.mapsforge.core.graphics.Join;
 import org.mapsforge.core.graphics.Paint;
-import org.mapsforge.core.model.LatLong;
 import org.mapsforge.core.model.Point;
 import org.mapsforge.map.android.graphics.AndroidGraphicFactory;
 
@@ -44,7 +43,7 @@ public class TrackLayer  extends GpxLayer{
     }
 
     @Override
-    public boolean onTap(LatLong tapLatLong, Point layerXY, Point tapXY) {
+    public boolean onTap(Point tapXY) {
         return false;
     }
 

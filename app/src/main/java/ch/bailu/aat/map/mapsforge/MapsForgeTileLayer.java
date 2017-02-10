@@ -44,6 +44,9 @@ public class MapsForgeTileLayer extends Layer implements MapLayerInterface, Obse
 
     @Override
     public void draw(BoundingBox box, byte zoom, Canvas c, Point tlp) {
+
+
+
         if (scontext.lock()) {
             isZoomSupported =
                     (zoom <= provider.getMaximumZoomLevel() && zoom >= provider.getMinimumZoomLevel());
@@ -62,6 +65,7 @@ public class MapsForgeTileLayer extends Layer implements MapLayerInterface, Obse
 
 
     private void draw (BoundingBox box, byte zoom, Canvas canvas, Point tlp, int tileSize) {
+
 
         List<TilePosition> tilePositions = LayerUtil.getTilePositions(box, zoom, tlp, tileSize);
 
@@ -88,7 +92,7 @@ public class MapsForgeTileLayer extends Layer implements MapLayerInterface, Obse
 
 
                 AndroidGraphicFactory.getCanvas(canvas).
-                drawBitmap(AndroidGraphicFactory.getBitmap(bitmap), null, r, paint);
+                    drawBitmap(AndroidGraphicFactory.getBitmap(bitmap), null, r, paint);
             }
         }
     }
@@ -164,6 +168,11 @@ public class MapsForgeTileLayer extends Layer implements MapLayerInterface, Obse
 
     @Override
     public void drawForeground(MapContext mcontext) {}
+
+    @Override
+    public boolean onTap(Point tapPos) {
+        return false;
+    }
 
 
     @Override

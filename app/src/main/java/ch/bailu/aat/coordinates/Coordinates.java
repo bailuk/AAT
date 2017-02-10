@@ -29,12 +29,10 @@ public abstract class Coordinates {
     }
 
     public static String geoPointToGeoUri(LatLong src) {
-        String b = "geo:" +
+        return  "geo:" +
                 src.getLatitude() +
                 ',' +
                 src.getLongitude();
-
-        return b;
     }
 
 

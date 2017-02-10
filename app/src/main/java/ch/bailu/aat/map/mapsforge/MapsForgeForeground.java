@@ -37,11 +37,15 @@ public class MapsForgeForeground implements MapContext {
 
 
     public void dispatchDraw(Canvas canvas) {
-        metrics.init(new Dimension(canvas.getWidth(), canvas.getHeight()));
-        draw.init(canvas, metrics);
 
-        for (MapLayerInterface l: layers) {
-            l.drawForeground(this);
+        if (mcontext.getSContext().lock()) {
+            metrics.init(new Dimension(canvas.getWidth(), canvas.getHeight()));
+            draw.init(canvas, metrics);
+
+            for (MapLayerInterface l : layers) {
+                l.drawForeground(this);
+            }
+            mcontext.getSContext().free();
         }
 
     }

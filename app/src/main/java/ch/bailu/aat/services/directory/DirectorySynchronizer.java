@@ -48,8 +48,9 @@ public class DirectorySynchronizer  implements Closeable {
         scontext=cs;
         directory=d;
 
-        if (scontext.lock());
+        if (scontext.lock()) {
             setState(new StateInit());
+        }
     }
 
 

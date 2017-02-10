@@ -3,7 +3,6 @@ package ch.bailu.aat.map.layer.control;
 import android.content.Context;
 import android.view.View;
 
-import org.mapsforge.core.model.LatLong;
 import org.mapsforge.core.model.Point;
 
 import ch.bailu.aat.gpx.GpxInformation;
@@ -51,7 +50,7 @@ public class EditorNodeSelectorLayer extends NodeViewLayer {
     }
 
     @Override
-    public boolean onTap(LatLong tapLatLong, Point layerXY, Point tapXY) {
+    public boolean onTap(Point tapXY) {
         return false;
     }
 
