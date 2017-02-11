@@ -3,7 +3,7 @@ package ch.bailu.aat.services.background;
 import android.content.Context;
 
 public class DownloaderThread  extends ProcessThread {
-    private final static int DOWNLOAD_QUEUE_SIZE=10;
+    private final static int DOWNLOAD_QUEUE_SIZE=100;
     private final String server;
     private final Context context;
     private final DownloadStatistics statistics = new DownloadStatistics();

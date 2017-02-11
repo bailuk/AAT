@@ -21,42 +21,23 @@ public class BitmapTileObject extends TileObject {
     private final Tile tile;
 
 
-    private final FileHandle load;
-    private final DownloadHandle download;
     private final String url;
 
 
     private final SyncTileBitmap bitmap=new SyncTileBitmap();
 
 
-    public BitmapTileObject(String id, ServiceContext cs,  Tile t, DownloadSource s) {
+    private final DownloadHandle download;
+
+
+    public BitmapTileObject(String id, final ServiceContext sc,  Tile t, DownloadSource s) {
         super(id);
         tile = t;
         source=s;
         url = source.getTileURLString(tile);
+        download = new FileDownloader(url, new File(toString()), sc);
 
-        cs.getCacheService().addToBroadcaster(this);
-        download = new DownloadHandle(url, new File(id) );
-        
-        load = new FileHandle(id) {
-
-            @Override
-            public long bgOnProcess() {
-                if (download.isLocked()==false) {
-
-                    File file = new File(toString());
-                    bitmap.set(file, TILE_SIZE, source.isTransparent());
-
-                }
-                return bitmap.getSize();
-            }
-
-            @Override
-            public void broadcast(Context context) {
-                AppBroadcaster.broadcast(context, AppBroadcaster.FILE_CHANGED_INCACHE, BitmapTileObject.this.toString());
-            }
-        };
-        
+        sc.getCacheService().addToBroadcaster(this);
     }
 
     @Override
@@ -68,11 +49,12 @@ public class BitmapTileObject extends TileObject {
     public Tile getTile() {
         return tile;
     }
-    
+
     @Override
     public void onInsert(ServiceContext sc) {
-        if (isLoadable()) sc.getBackgroundService().load(load);
-        else if (isDownloadable()) sc.getBackgroundService().download(download);
+        if (isLoadable()) sc.getBackgroundService().load(new FileLoader(toString(), sc));
+        else if (isDownloadable())
+            sc.getBackgroundService().download(download);
     }
 
 
@@ -81,6 +63,7 @@ public class BitmapTileObject extends TileObject {
         bitmap.free();
     }
 
+
     @Override
     public void reDownload(ServiceContext sc) {
         if (download.isLocked()==false) {
@@ -88,6 +71,7 @@ public class BitmapTileObject extends TileObject {
             if (isDownloadable()) sc.getBackgroundService().download(download);
         }
     }
+
 
     @Override
     public boolean isLoaded() {
@@ -100,37 +84,37 @@ public class BitmapTileObject extends TileObject {
 
         return file.isFile() && file.canRead();
     }
-    
+
     private boolean isDownloadable() {
         return (
                 !new File(toString()).exists() &&
-                source.getMaximumZoomLevel() >= tile.zoomLevel &&
-                source.getMinimumZoomLevel() <= tile.zoomLevel);
+                        source.getMaximumZoomLevel() >= tile.zoomLevel &&
+                        source.getMinimumZoomLevel() <= tile.zoomLevel);
     }
-    
-    
+
+
     @Override
     public void onDownloaded(String id, String u, ServiceContext sc) {
         if (u.equals(url) && isLoadable()) {
-            sc.getBackgroundService().load(load);
+            sc.getBackgroundService().load(new FileLoader(toString(), sc));
         }
-        
+
     }
 
 
     @Override
     public void onChanged(String id, ServiceContext sc) {}
-    
-    
+
+
 
     public boolean isReadyAndLoaded() {
         boolean loaded = isLoaded();
         boolean notLoadable = isLoadable()==false;
-        
+
         return loaded || notLoadable;
     }
 
-    
+
     @Override
     public long getSize() {
         return getBytesHack(TILE_SIZE);
@@ -147,7 +131,7 @@ public class BitmapTileObject extends TileObject {
         private final Tile mapTile;
         private final DownloadSource source;
 
-        
+
         public Factory(Tile mt, DownloadSource s) {
             mapTile=mt;
             source = s;
@@ -156,6 +140,74 @@ public class BitmapTileObject extends TileObject {
         @Override
         public ObjectHandle factory(String id, ServiceContext cs) {
             return new BitmapTileObject(id, cs, mapTile, source);
+        }
+    }
+
+
+
+    private static class FileLoader extends FileHandle {
+        private final ServiceContext scontext;
+
+        public FileLoader(String f, ServiceContext sc) {
+            super(f);
+            scontext = sc;
+        }
+
+        @Override
+        public long bgOnProcess() {
+            long size = 0;
+            if (scontext.lock()) {
+                File file = new File(toString());
+
+                ObjectHandle obj = scontext.getCacheService().getObject(toString());
+
+                if (obj instanceof BitmapTileObject) {
+                    BitmapTileObject bmp = (BitmapTileObject) obj;
+                    bmp.bitmap.set(file, TILE_SIZE, bmp.source.isTransparent());
+                    size = bmp.getSize();
+
+                }
+                obj.free();
+                scontext.free();
+            }
+            return size;
+        }
+
+
+        @Override
+        public void broadcast(Context context) {
+            AppBroadcaster.broadcast(context, AppBroadcaster.FILE_CHANGED_INCACHE, toString());
+        }
+    }
+
+    private static class FileDownloader extends DownloadHandle {
+
+        private final ServiceContext scontext;
+
+        public FileDownloader(String source, File target, ServiceContext sc) {
+            super(source, target);
+            scontext = sc;
+        }
+
+
+
+        @Override
+        public long bgOnProcess() {
+            if (isInCache()) {
+                    return super.bgOnProcess();
+            }
+            return 0;
+        }
+
+        private boolean isInCache() {
+            boolean inCache = false;
+            if (scontext.lock()) {
+                ObjectHandle obj = scontext.getCacheService().getObject(getFile().getAbsolutePath());
+                inCache = obj instanceof BitmapTileObject;
+                obj.free();
+                scontext.free();
+            }
+            return inCache;
         }
     }
 }

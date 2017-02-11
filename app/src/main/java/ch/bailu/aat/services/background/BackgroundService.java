@@ -17,7 +17,7 @@ import ch.bailu.aat.services.VirtualService;
 
 public class BackgroundService extends VirtualService {
 
-    private final static int PROCESS_QUEUE_SIZE=500;
+    private final static int PROCESS_QUEUE_SIZE=5000;
 
     private final SparseArray<DownloaderThread> downloaders = new SparseArray<>();
     private final SparseArray<LoaderThread> loaders = new SparseArray<>();

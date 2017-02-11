@@ -34,7 +34,7 @@ public abstract class AbsService  extends Service {
             }
 
 
-//            AppLog.d(this, "locked " + lock + " times.");
+//            AppLog.d(this, "locked " + lockWhenSwapped + " times.");
 
         }
         return up;
@@ -49,7 +49,7 @@ public abstract class AbsService  extends Service {
                 lazyOff.kick();
             }
 
-//            AppLog.d(this, "locked " + lock + " times.");
+//            AppLog.d(this, "locked " + lockWhenSwapped + " times.");
 
         }
     }
@@ -78,7 +78,7 @@ public abstract class AbsService  extends Service {
     }
 
     public synchronized void lock(String r) {
-        // FIXME: if (lock()) {
+        // FIXME: if (lockWhenSwapped()) {
         if (locks.add(r)) {
             lock();
         }

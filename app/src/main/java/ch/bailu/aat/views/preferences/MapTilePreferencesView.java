@@ -7,7 +7,6 @@ import ch.bailu.aat.R;
 import ch.bailu.aat.map.tile.source.CachedSource;
 import ch.bailu.aat.map.tile.source.Source;
 import ch.bailu.aat.preferences.SolidEnableTileCache;
-import ch.bailu.aat.preferences.SolidMapViewAcceleration;
 import ch.bailu.aat.preferences.SolidMapsForgeDirectory;
 import ch.bailu.aat.preferences.SolidTileCacheDirectory;
 import ch.bailu.aat.preferences.SolidTileSize;
@@ -29,7 +28,6 @@ public class MapTilePreferencesView extends VerticalScrollView {
         add(new TitleView(context, context.getString(R.string.p_tiles)));
         add(new SolidIndexListView(new SolidTileSize(context)));
         add(new SolidExtendetDirectoryView(new SolidTileCacheDirectory(context)));
-        add(new SolidIndexListView(new SolidMapViewAcceleration(context)));
 
         add(new TitleView(context, Source.MAPSFORGE.getName()));
         add(new SolidExtendetDirectoryView(new SolidMapsForgeDirectory(context)));

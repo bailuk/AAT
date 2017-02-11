@@ -14,30 +14,20 @@ import org.mapsforge.map.model.Model;
 import org.mapsforge.map.view.FrameBuffer;
 
 public class FrameBufferHack extends FrameBuffer {
-    private static final boolean IS_TRANSPARENT = false;
 
-    /**
-     * odBitmap: onDraw bitmap  -
-     *           the bitmap that gets displayed by the MapView.onDraw() function from the UI thread
-     * lmBitmap: layerManager bitmap -
-     *           the bitmap that gets drawn by the LayerManager.doWork() thread
-     */
+    private final FrameBufferBitmap odBitmap = new FrameBufferBitmap();
+    private final FrameBufferBitmap lmBitmap = new FrameBufferBitmap();
 
-
-    private Bitmap odBitmap;
-    private Bitmap lmBitmap;
     private MapPosition lmMapPosition;
-
-    private final Object lmBitmapLock = new Object();
-
-    private boolean allowBitmapSwap = true;
-
 
     private Dimension dimension;
     private final DisplayModel displayModel;
     private final FrameBufferModel frameBufferModel;
     private final GraphicFactory graphicFactory;
     private final Matrix matrix;
+
+    private final Object dimLock = new Object();
+
 
     public FrameBufferHack(Model model) {
         super(model.frameBufferModel, model.displayModel, AndroidGraphicFactory.INSTANCE);
@@ -51,36 +41,30 @@ public class FrameBufferHack extends FrameBuffer {
     // this is called from MapView.onDraw()
     public void draw(GraphicContext graphicContext) {
 
+
         graphicContext.fillColor(this.displayModel.getBackgroundColor());
 
-        /**
-         * swap bitmaps right before the canvas.drawBitmap function to prevent flickering as much
-         * as possible
-         */
+        //odBitmap.release(); // now we allow swap because we asume that the last drawing is finished
+
         swapBitmaps();
-        if (this.odBitmap != null) {
-            graphicContext.drawBitmap(this.odBitmap, this.matrix);
+
+        Bitmap b = odBitmap.lock(); // lock next frame (start drawing again)
+        if (b != null) {
+            synchronized(dimLock) {
+                graphicContext.drawBitmap(b, this.matrix);
+            }
         }
+        odBitmap.release();
     }
 
 
     private void swapBitmaps() {
-        synchronized (lmBitmapLock) {
-            /**
-             * Swap bitmaps only if the layerManager is currently not working and
-             * has drawn a new bitmap since the last swap
-             */
-            if (allowBitmapSwap) {
-                Bitmap bitmapTemp = this.odBitmap;
-                this.odBitmap = this.lmBitmap;
-                this.lmBitmap = bitmapTemp;
-
-
-                this.frameBufferModel.setMapPosition(lmMapPosition);
-
-                allowBitmapSwap = false;
-                lmBitmapLock.notify();
-            }
+        /**
+         * Swap bitmaps only if the layerManager is currently not working and
+         * has drawn a new bitmap since the last swap
+         */
+        if (FrameBufferBitmap.swap(odBitmap, lmBitmap)) {
+            frameBufferModel.setMapPosition(lmMapPosition);
         }
     }
 
@@ -88,65 +72,45 @@ public class FrameBufferHack extends FrameBuffer {
     // this is called from layer manager when drawing starts
     public Bitmap getDrawingBitmap() {
 
-        lockLmBitmap();
+        Bitmap b = lmBitmap.lockWhenSwapped();
 
-
-        if (this.lmBitmap != null) {
-            this.lmBitmap.setBackgroundColor(this.displayModel.getBackgroundColor());
+        if (b != null) {
+            b.setBackgroundColor(this.displayModel.getBackgroundColor());
         }
 
-        return this.lmBitmap;
+        return b;
     }
 
-
-    private void lockLmBitmap() {
-        synchronized (lmBitmapLock) {
-            if (this.lmBitmap != null) {
-                if (allowBitmapSwap) { // not yet swapped by onDraw()
-                    try {
-                        lmBitmapLock.wait(); // wait until swapped
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-            allowBitmapSwap = false;
-        }
-    }
 
     // this is called from layer manager when drawing is finished
-    public void frameFinished(MapPosition frameMapPosition) {
-        freeLmBitmap(frameMapPosition);
-    }
-
-
-    private void freeLmBitmap(MapPosition frameMapPosition) {
-        synchronized (lmBitmapLock) {
-            lmMapPosition = frameMapPosition;
-            allowBitmapSwap = true;
-        }
+    public void frameFinished(MapPosition framePosition) {
+        lmBitmap.release(); // allow swap
+        lmMapPosition = framePosition;
     }
 
 
 
-
-     public synchronized void adjustMatrix(float diffX, float diffY, float scaleFactor, Dimension mapViewDimension,
+    public synchronized void adjustMatrix(float diffX, float diffY, float scaleFactor, Dimension mapViewDimension,
                                           float pivotDistanceX, float pivotDistanceY) {
-        if (this.dimension == null) {
-            return;
-        }
-        this.matrix.reset();
-        centerFrameBufferToMapView(mapViewDimension);
-        if (pivotDistanceX == 0 && pivotDistanceY == 0) {
-            // only translate the matrix if we are not zooming around a pivot,
-            // the translation happens only once the zoom is finished.
-            this.matrix.translate(diffX, diffY);
-        }
 
-        scale(scaleFactor, pivotDistanceX, pivotDistanceY);
+        synchronized(dimLock) {
+            if (this.dimension == null) {
+                return;
+            }
+            this.matrix.reset();
+            centerFrameBufferToMapView(mapViewDimension);
+            if (pivotDistanceX == 0 && pivotDistanceY == 0) {
+                // only translate the matrix if we are not zooming around a pivot,
+                // the translation happens only once the zoom is finished.
+                this.matrix.translate(diffX, diffY);
+            }
+
+            scale(scaleFactor, pivotDistanceX, pivotDistanceY);
+        }
     }
 
     public synchronized void destroy() {
+
         destroyBitmaps();
     }
 
@@ -160,17 +124,19 @@ public class FrameBufferHack extends FrameBuffer {
     }
 
 
-    public synchronized void setDimension(Dimension dimension) {
-        if (this.dimension != null && this.dimension.equals(dimension)) {
-            return;
-        }
-        this.dimension = dimension;
+    public void setDimension(Dimension dimension) {
+        synchronized (dimLock) {
+            if (this.dimension != null && this.dimension.equals(dimension)) {
+                return;
+            }
+            this.dimension = dimension;
 
-        destroyBitmaps();
+            destroyBitmaps();
 
-        if (dimension.width > 0 && dimension.height > 0) {
-            this.odBitmap = this.graphicFactory.createBitmap(dimension.width, dimension.height, IS_TRANSPARENT);
-            this.lmBitmap = this.graphicFactory.createBitmap(dimension.width, dimension.height, IS_TRANSPARENT);
+            if (dimension.width > 0 && dimension.height > 0) {
+                odBitmap.create(dimension.width, dimension.height);
+                lmBitmap.create(dimension.width, dimension.height);
+            }
         }
     }
 
@@ -180,15 +146,11 @@ public class FrameBufferHack extends FrameBuffer {
         this.matrix.translate(dx, dy);
     }
 
+
     private void destroyBitmaps() {
-        if (this.odBitmap != null) {
-            this.odBitmap.decrementRefCount();
-            this.odBitmap = null;
-        }
-        if (this.lmBitmap != null) {
-            this.lmBitmap.decrementRefCount();
-            this.lmBitmap = null;
-        }
+
+       odBitmap.destroy();
+       lmBitmap.destroy();
     }
 
     private void scale(float scaleFactor, float pivotDistanceX, float pivotDistanceY) {
