@@ -49,4 +49,8 @@ public class AppDensity {
     public int toDPi(float pixel, int min) {
         return Math.max(min, toDPi(pixel));
     }
+
+    public int fromDP(float dpixel) {
+        return (int) (dpixel / density);
+    }
 }

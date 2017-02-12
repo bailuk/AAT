@@ -19,8 +19,7 @@
         android:theme="@android:style/Theme.NoTitleBar">
 
         <activity
-            android:name="ch.bailu.aat.activities.MainActivity"
-            android:screenOrientation="portrait" >
+            android:name="ch.bailu.aat.activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -33,22 +32,18 @@
 
 
         <activity
-            android:name="ch.bailu.aat.activities.TrackListActivity"
-            android:screenOrientation="portrait" >
+            android:name="ch.bailu.aat.activities.TrackListActivity">
         </activity>
         <activity
-            android:name="ch.bailu.aat.activities.OverlayListActivity"
-            android:screenOrientation="portrait" >
+            android:name="ch.bailu.aat.activities.OverlayListActivity">
         </activity>
 
         <activity
-            android:name="ch.bailu.aat.activities.ImportListActivity"
-            android:screenOrientation="portrait" >
+            android:name="ch.bailu.aat.activities.ImportListActivity">
         </activity>
 
         <activity
-            android:name="ch.bailu.aat.activities.GpxViewActivity"
-            android:screenOrientation="portrait" >
+            android:name="ch.bailu.aat.activities.GpxViewActivity">
             <!-- Reference: http://stackoverflow.com/questions/1733195/android-intent-filter-for-a-particular-file-extension -->
 
             <!-- Files from attachement / webbrowser ... -->
@@ -112,16 +107,13 @@
         </activity>
 
         <activity
-            android:name="ch.bailu.aat.activities.TrackerActivity"
-            android:screenOrientation="portrait" >
+            android:name="ch.bailu.aat.activities.TrackerActivity">
         </activity>
         <activity
-            android:name="ch.bailu.aat.activities.SplitViewActivity"
-            android:screenOrientation="portrait" >
+            android:name="ch.bailu.aat.activities.SplitViewActivity">
         </activity>
         <activity
-            android:name="ch.bailu.aat.activities.MapActivity"
-            android:screenOrientation="portrait" >
+            android:name="ch.bailu.aat.activities.MapActivity">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <data android:scheme="geo" />
@@ -139,16 +131,13 @@
         <activity android:name="ch.bailu.aat.activities.TestActivity" >
         </activity>
         <activity
-            android:name="ch.bailu.aat.activities.GpxEditorActivity"
-            android:screenOrientation="portrait" >
+            android:name="ch.bailu.aat.activities.GpxEditorActivity">
         </activity>
         <activity
-            android:name="ch.bailu.aat.activities.OverpassActivity"
-            android:screenOrientation="portrait" >
+            android:name="ch.bailu.aat.activities.OverpassActivity">
         </activity>
         <activity
-            android:name="ch.bailu.aat.activities.NominatimActivity"
-            android:screenOrientation="portrait" >
+            android:name="ch.bailu.aat.activities.NominatimActivity">
         </activity>
         <activity android:name="ch.bailu.aat.activities.MapFeaturesActivity" >
         </activity>

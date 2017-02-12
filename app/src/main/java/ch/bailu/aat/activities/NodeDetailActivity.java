@@ -24,7 +24,7 @@ import ch.bailu.aat.views.ContentView;
 import ch.bailu.aat.views.ControlBar;
 import ch.bailu.aat.views.HtmlScrollTextView;
 import ch.bailu.aat.views.MainControlBar;
-import ch.bailu.aat.views.description.VSplitView;
+import ch.bailu.aat.views.PercentageLayout;
 
 public class NodeDetailActivity extends AbsDispatcher
         implements OnClickListener, OnContentUpdatedInterface {
@@ -67,24 +67,34 @@ public class NodeDetailActivity extends AbsDispatcher
 
 
     private ControlBar createButtonBar() {
-        ControlBar bar = new MainControlBar(getServiceContext());
+        ControlBar bar = new MainControlBar(this);
 
         previousNode =  bar.addImageButton(R.drawable.go_up_inverse);
         nextNode = bar.addImageButton(R.drawable.go_down_inverse);
 
-        bar.setOrientation(AppLayout.getOrientationAlongSmallSide(this));
+        bar.setOrientation(LinearLayout.HORIZONTAL);
         bar.setOnClickListener1(this);
         return bar;
     }
 
 
-    private VSplitView createVerticalView() {
+    private View createVerticalView() {
+
+        PercentageLayout view =
+                new PercentageLayout(this);
+
+        view.setOrientation(AppLayout.getOrientationAlongLargeSide(this));
+
+
         mapView = MapFactory.DEF(this, SOLID_KEY).node();
 
         htmlView =new HtmlScrollTextView(this);
         htmlView.enableAutoLink();
 
-        return new VSplitView(this, new View[] {htmlView, mapView.toView()});
+        view.add(htmlView, 40);
+        view.add(mapView.toView(), 60);
+
+        return view;
     }
 
 

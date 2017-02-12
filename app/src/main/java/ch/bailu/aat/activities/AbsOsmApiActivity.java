@@ -52,8 +52,6 @@ public abstract class AbsOsmApiActivity extends AbsDispatcher implements OnClick
     private OsmApiHelper       osmApi;
     private ProcessHandle      request=ProcessHandle.NULL;
 
-    private final LayoutParams layout =
-            new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
 
 
     @Override
@@ -107,34 +105,42 @@ public abstract class AbsOsmApiActivity extends AbsDispatcher implements OnClick
 
 
     private LinearLayout createContentView()  {
+//        private final LayoutParams layout =
+//                new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
+
+
         ContentView view = new ContentView(this);
         ControlBar bar = createControlBar();
-        view.addView(bar, layout);        
+        view.addView(bar);
 
 
         TextView urlLabel = new TextView(this);
         urlLabel.setText(osmApi.getUrlStart());
-        view.addView(urlLabel, layout);
+        view.addView(urlLabel);
         //AppTheme.themify(urlLabel);
 
         tagEditor = new TagEditor(this, osmApi.getBaseDirectory());
-        view.addView(tagEditor, layout);
+        view.addView(tagEditor,
+                new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT,
+                        LayoutParams.MATCH_PARENT,0.5f));
 
 
         TextView postLabel = new TextView(this);
         postLabel.setText(osmApi.getUrlEnd());
-        view.addView(postLabel, layout);
+        view.addView(postLabel);
         //AppTheme.themify(postLabel);
 
         list = new NodeListView(getServiceContext(), this);
-        view.addView(list,layout);
+        view.addView(list,
+                new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT,
+                        LayoutParams.MATCH_PARENT,0.5f));
 
         return view;
     }
 
 
     private ControlBar createControlBar() {
-        ControlBar bar = new MainControlBar(getServiceContext(),6);      
+        ControlBar bar = new MainControlBar(this,6);
 
         download = new BusyButton(this, R.drawable.go_bottom_inverse);
 

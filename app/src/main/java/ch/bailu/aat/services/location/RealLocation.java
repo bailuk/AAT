@@ -158,10 +158,10 @@ public class RealLocation extends LocationStackChainedItem
             List <String> list = lm.getAllProviders();
 
             if (list==null) {
-                AppLog.d(this, "No providers");
+//                AppLog.d(this, "No providers");
                 throw new NoServiceException();
             } else {
-                AppLog.d(this, list.size() +" providers");
+//                AppLog.d(this, list.size() +" providers");
                 for (int i=0; i<list.size(); i++) {
                     AppLog.d(this, list.get(i));
                 }

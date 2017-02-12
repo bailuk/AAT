@@ -8,7 +8,7 @@ import ch.bailu.aat.views.ContentView;
 import ch.bailu.aat.views.HtmlScrollTextView;
 import ch.bailu.aat.views.MainControlBar;
 
-public class HtmlViewActivity extends AbsServiceLink {
+public class HtmlViewActivity extends AbsDispatcher {
 
     
     @Override
@@ -17,7 +17,7 @@ public class HtmlViewActivity extends AbsServiceLink {
 
         ContentView contentView = new ContentView(this);
 
-        contentView.addView(new MainControlBar(getServiceContext()));
+        contentView.addView(new MainControlBar(this));
         contentView.addView(new HtmlScrollTextView(this, getTextFromIntent()));
 
         setContentView(contentView);

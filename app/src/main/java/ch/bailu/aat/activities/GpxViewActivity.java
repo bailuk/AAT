@@ -32,14 +32,13 @@ import ch.bailu.aat.map.MapFactory;
 import ch.bailu.aat.map.MapViewInterface;
 import ch.bailu.aat.menus.ContentMenu;
 import ch.bailu.aat.util.fs.FileAction;
-import ch.bailu.aat.util.ui.AppLayout;
 import ch.bailu.aat.util.ui.ToolTip;
 import ch.bailu.aat.views.BusyButton;
 import ch.bailu.aat.views.ContentView;
 import ch.bailu.aat.views.ControlBar;
 import ch.bailu.aat.views.MainControlBar;
+import ch.bailu.aat.views.PercentageLayout;
 import ch.bailu.aat.views.description.MultiView;
-import ch.bailu.aat.views.description.VSplitView;
 import ch.bailu.aat.views.graph.DistanceAltitudeGraphView;
 import ch.bailu.aat.views.graph.DistanceSpeedGraphView;
 import ch.bailu.aat.views.preferences.VerticalScrollView;
@@ -93,7 +92,7 @@ public class GpxViewActivity extends AbsDispatcher
 
 
     private ControlBar createButtonBar() {
-        MainControlBar bar = new MainControlBar(getServiceContext());
+        MainControlBar bar = new MainControlBar(this);
 
         nextView = bar.addImageButton(R.drawable.go_next_inverse);
         copyTo = bar.addImageButton(R.drawable.document_save_as_inverse);
@@ -106,7 +105,7 @@ public class GpxViewActivity extends AbsDispatcher
         busyButton = bar.getMenu();
         busyButton.startWaiting();
 
-        bar.setOrientation(AppLayout.getOrientationAlongSmallSide(this));
+        bar.setOrientation(LinearLayout.HORIZONTAL);
         bar.setOnClickListener1(this);
         return bar;
     }
@@ -133,10 +132,11 @@ public class GpxViewActivity extends AbsDispatcher
         VerticalScrollView summary = new VerticalScrollView(this);
         summary.addAllContent(this, summaryData, InfoID.FILEVIEW);
 
-        View graph = new VSplitView(this, new View[] {
-                new DistanceAltitudeGraphView(this, this, InfoID.FILEVIEW),
-                new DistanceSpeedGraphView(this, this, InfoID.FILEVIEW)
-        });
+        PercentageLayout graph = new PercentageLayout(this);
+
+        graph.add(new DistanceAltitudeGraphView(this, this, InfoID.FILEVIEW),50);
+        graph.add(new DistanceSpeedGraphView(this, this, InfoID.FILEVIEW),50);
+
 
         multiView = new MultiView(this, SOLID_KEY);
         multiView.add(summary);

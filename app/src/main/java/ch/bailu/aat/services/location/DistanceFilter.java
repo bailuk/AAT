@@ -20,10 +20,10 @@ public class DistanceFilter extends LocationStackChainedItem {
 
     @Override
     public void newLocation(LocationInformation location) {
-        AppLog.d(this, "newLocation()");
+//        AppLog.d(this, "newLocation()");
         if (oldLocation==null || notTooClose(oldLocation,location)) {
             oldLocation=location;
-            AppLog.d(this, "send");
+//            AppLog.d(this, "send");
             sendLocation(location);
         }
     }

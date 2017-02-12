@@ -18,10 +18,10 @@ public class AccuracyFilter extends LocationStackChainedItem {
 
     @Override
     public void newLocation(LocationInformation location) {
-        AppLog.d(this, "newLocation()");
+//        AppLog.d(this, "newLocation()");
 
         if (location.getAccuracy() < minAccuracy) {
-            AppLog.d(this, "send");
+//            AppLog.d(this, "send");
             sendLocation(location);
         }
     }

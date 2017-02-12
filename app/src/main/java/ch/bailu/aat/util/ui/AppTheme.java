@@ -14,8 +14,7 @@ import ch.bailu.aat.R;
 
 public class AppTheme {
     private static final float TEXT_SIZE=20f;
-    private static final int BIG_BUTTON_SIZE=60;
-    
+
     private static final int COLOR_ORANGE=Color.rgb(0xff, 0x66, 0x00);
     private static final int COLOR_GREEN=Color.rgb(0xcc,0xff,0x00);
     private static final int COLOR_BLUE=Color.rgb(0x00,0xd8,0xff);
@@ -96,25 +95,18 @@ public class AppTheme {
         label.setTextSize(TEXT_SIZE);
         label.setTextColor(Color.WHITE);
     }
-    
-    public static int getBigButtonSize(Context context, int buttonCount) {
-        return Math.max(AppLayout.getScreenSmallSide(context) / buttonCount, BIG_BUTTON_SIZE);
-    }
 
-    public static int getBigButtonSize(Context context) {
-        return getBigButtonSize(context, 4);
-    }
+
+
 
     public static void themify(ImageButton w) {
         w.setBackgroundResource(R.drawable.button);
     }
 
-
     public static void themify(ListView list, int color) {
         int height = list.getDividerHeight();
         list.setDivider(new ColorDrawable(color));
         list.setDividerHeight(height);
-        //list.setBackgroundColor(COLOR_BLUEGRAY);
     }
 
 

@@ -8,26 +8,22 @@ import android.widget.LinearLayout;
 
 import ch.bailu.aat.dispatcher.CurrentLocationSource;
 import ch.bailu.aat.dispatcher.TrackerSource;
-import ch.bailu.aat.gpx.InfoID;
-import ch.bailu.aat.util.fs.AppDirectory;
 import ch.bailu.aat.preferences.SolidDataDirectory;
 import ch.bailu.aat.preferences.SolidDirectory;
 import ch.bailu.aat.preferences.SolidPreset;
+import ch.bailu.aat.util.fs.AppDirectory;
+import ch.bailu.aat.util.ui.AppLayout;
 import ch.bailu.aat.views.AbsLabelTextView;
 import ch.bailu.aat.views.ContentView;
-import ch.bailu.aat.views.ControlBar;
 import ch.bailu.aat.views.MainControlBar;
-import ch.bailu.aat.views.description.GPSStateButton;
-import ch.bailu.aat.views.description.NumberView;
-import ch.bailu.aat.views.description.TrackerStateButton;
 import ch.bailu.aat.views.preferences.SolidIndexListView;
 import ch.bailu.aat.views.preferences.VerticalScrollView;
 
 
 public class MainActivity extends AbsDispatcher {
 
-    private NumberView      gpsState;
-    private TrackerStateButton trackerState;
+//    private NumberView      gpsState;
+//    private TrackerStateButton trackerState;
 
 
     @Override
@@ -64,9 +60,6 @@ public class MainActivity extends AbsDispatcher {
 
 
     private void createDispatcher() {
-        addTarget(gpsState, InfoID.LOCATION);
-        addTarget(trackerState, InfoID.TRACKER);
-
         addSource(new TrackerSource(getServiceContext()));
         addSource(new CurrentLocationSource(getServiceContext()));
     }
@@ -74,14 +67,15 @@ public class MainActivity extends AbsDispatcher {
 
 
     private LinearLayout createButtonBar() {
-        final ControlBar bar = new MainControlBar(getServiceContext());
+        final MainControlBar bar = new MainControlBar(this);
 
-        gpsState = new GPSStateButton(this);
-        trackerState = new TrackerStateButton(getServiceContext());
+        bar.addSpace();
+        if (AppLayout.haveExtraSpaceGps(this)) {
+            bar.addSpace();
+        }
 
-        bar.addView(new View(this));
-        bar.addView(gpsState);
-        bar.addView(trackerState);
+        bar.addGpsState(this);
+        bar.addTrackerState(this);
 
         return bar;
 

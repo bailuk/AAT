@@ -213,7 +213,7 @@ public class TestActivity extends AbsDispatcher {
 
 
     private ControlBar createButtonBar(MultiView multiView) {
-        final MainControlBar bar = new MainControlBar(getServiceContext());
+        final MainControlBar bar = new MainControlBar(this);
 
         bar.addAll(multiView);
         return bar;

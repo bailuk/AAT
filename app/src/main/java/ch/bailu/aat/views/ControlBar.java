@@ -8,13 +8,14 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 
-import ch.bailu.aat.util.ui.AppTheme;
+import ch.bailu.aat.activities.TrackerActivity;
 import ch.bailu.aat.preferences.SolidIndexList;
+import ch.bailu.aat.util.ui.AppLayout;
+import ch.bailu.aat.util.ui.AppLog;
 import ch.bailu.aat.views.preferences.SolidImageButton;
 
 
 public class ControlBar extends LinearLayout {
-    public final  static int DEFAULT_VISIBLE_BUTTON_COUNT=4;
 
     private final LinearLayout canvas;
 
@@ -24,7 +25,7 @@ public class ControlBar extends LinearLayout {
     private OnClickListener listener1, listener2;
 
     public ControlBar(Context context, int orientation) {
-        this(context, orientation, DEFAULT_VISIBLE_BUTTON_COUNT);
+        this(context, orientation, AppLayout.DEFAULT_VISIBLE_BUTTON_COUNT);
     }
 
 
@@ -34,7 +35,7 @@ public class ControlBar extends LinearLayout {
         final FrameLayout scroller;
 
         orientation = orient;
-        controlSize = AppTheme.getBigButtonSize(context, visibleButtonCount);
+        controlSize = AppLayout.getBigButtonSize(context, visibleButtonCount);
 
         canvas = new LinearLayout(context);
         canvas.setOrientation(orientation);
@@ -91,7 +92,12 @@ public class ControlBar extends LinearLayout {
 
     @Override
     public void addView(View v) {
+        AppLog.d(this, "Wrong call! use \'add(View)\'");
         canvas.addView(v, controlSize, controlSize);
+    }
+
+    public void addSpace() {
+        add(new View(getContext()));
     }
 
 
@@ -127,7 +133,6 @@ public class ControlBar extends LinearLayout {
             if (listener2 != null) listener2.onClick(v);
         }
     };
-
 
 
 }

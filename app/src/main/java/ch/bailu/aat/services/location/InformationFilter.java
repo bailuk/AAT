@@ -15,9 +15,9 @@ public class InformationFilter extends LocationStackChainedItem {
 
     @Override
     public void newLocation(LocationInformation location) {
-        AppLog.d(this, "newLocation()");
+//        AppLog.d(this, "newLocation()");
         if (location.hasAltitude() /*&& location.hasBearing() && location.hasSpeed()*/) {
-            AppLog.d(this, "-> send");
+//            AppLog.d(this, "-> send");
             sendLocation(location);
         }
     }

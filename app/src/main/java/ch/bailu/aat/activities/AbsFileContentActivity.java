@@ -5,6 +5,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 
 import java.io.File;
 
@@ -72,7 +73,7 @@ public abstract class AbsFileContentActivity extends AbsDispatcher implements On
 
 
     private ControlBar createButtonBar() {
-        MainControlBar bar = new MainControlBar(getServiceContext());
+        MainControlBar bar = new MainControlBar(this);
 
         nextView = bar.addImageButton(R.drawable.go_next_inverse);
         previousFile =  bar.addImageButton(R.drawable.go_up_inverse);
@@ -84,7 +85,7 @@ public abstract class AbsFileContentActivity extends AbsDispatcher implements On
         busyButton = bar.getMenu();
         busyButton.startWaiting();
 
-        bar.setOrientation(AppLayout.getOrientationAlongSmallSide(this));
+        bar.setOrientation(LinearLayout.HORIZONTAL);
         bar.setOnClickListener1(this);
         return bar;
     }

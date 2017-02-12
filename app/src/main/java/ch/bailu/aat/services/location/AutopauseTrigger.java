@@ -3,7 +3,6 @@ package ch.bailu.aat.services.location;
 import android.content.Context;
 
 import ch.bailu.aat.preferences.SolidAutopause;
-import ch.bailu.aat.util.ui.AppLog;
 
 
 public class AutopauseTrigger extends LocationStackChainedItem {
@@ -21,7 +20,7 @@ public class AutopauseTrigger extends LocationStackChainedItem {
 
     @Override
     public void newLocation(LocationInformation location) {
-        AppLog.d(this, "newLocation() -> send");
+//        AppLog.d(this, "newLocation() -> send");
 
         float speed = location.getSpeed();
         if (speed < triggerSpeed) {
@@ -29,8 +28,8 @@ public class AutopauseTrigger extends LocationStackChainedItem {
         } else {
             trigger.up();
         }
-        trigger.log(context);
-        if (isAutopaused()) AppLog.d(this, "isAutopaused");
+//        trigger.log(context);
+//        if (isAutopaused()) AppLog.d(this, "isAutopaused");
         sendLocation(location);
     }
 

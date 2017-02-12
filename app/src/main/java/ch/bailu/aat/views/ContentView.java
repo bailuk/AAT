@@ -8,7 +8,7 @@ import ch.bailu.aat.util.ui.AppLayout;
 public class ContentView extends LinearLayout {
 
     public ContentView(Context context) {
-        this(context, AppLayout.getOrientationAlongLargeSide(context));
+        this(context, LinearLayout.VERTICAL);
     }
 
     

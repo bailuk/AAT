@@ -10,8 +10,8 @@ import android.widget.TextView;
 import ch.bailu.aat.description.ContentDescription;
 import ch.bailu.aat.dispatcher.OnContentUpdatedInterface;
 import ch.bailu.aat.gpx.GpxInformation;
-import ch.bailu.aat.util.ui.AppTheme;
 import ch.bailu.aat.services.ServiceContext;
+import ch.bailu.aat.util.ui.AppLayout;
 
 public class GpxListEntryView extends LinearLayout implements OnContentUpdatedInterface {
 
@@ -39,7 +39,7 @@ public class GpxListEntryView extends LinearLayout implements OnContentUpdatedIn
         textLayout.setOrientation(VERTICAL);
         addViewWeight(textLayout);
 
-        int previewSize = AppTheme.getBigButtonSize(sc.getContext());
+        int previewSize = AppLayout.getBigButtonSize(sc.getContext());
         preview = new PreviewView(sc);
         addView(preview, previewSize, previewSize);
 

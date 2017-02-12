@@ -18,18 +18,15 @@ import ch.bailu.aat.dispatcher.CurrentLocationSource;
 import ch.bailu.aat.dispatcher.EditorSource;
 import ch.bailu.aat.dispatcher.OverlaySource;
 import ch.bailu.aat.dispatcher.TrackerSource;
-import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.map.MapFactory;
 import ch.bailu.aat.map.MapViewInterface;
 import ch.bailu.aat.services.editor.EditorHelper;
 import ch.bailu.aat.util.AppIntent;
+import ch.bailu.aat.util.ui.AppLayout;
 import ch.bailu.aat.util.ui.AppLog;
 import ch.bailu.aat.views.ContentView;
 import ch.bailu.aat.views.ControlBar;
 import ch.bailu.aat.views.MainControlBar;
-import ch.bailu.aat.views.description.GPSStateButton;
-import ch.bailu.aat.views.description.NumberView;
-import ch.bailu.aat.views.description.TrackerStateButton;
 
 public class MapActivity extends AbsDispatcher implements OnClickListener{
 
@@ -38,8 +35,6 @@ public class MapActivity extends AbsDispatcher implements OnClickListener{
     private MapViewInterface      map;
 
     private ImageButton     cycleButton;
-    private NumberView      gpsState;
-    private TrackerStateButton trackerState;
 
     private EditorHelper    edit;
 
@@ -102,9 +97,6 @@ public class MapActivity extends AbsDispatcher implements OnClickListener{
 
 
     private void createDispatcher() {
-        addTarget(trackerState, InfoID.TRACKER);
-        addTarget(gpsState, InfoID.LOCATION);
-
         addSource(new EditorSource(getServiceContext(), edit));
         addSource(new TrackerSource(getServiceContext()));
         addSource(new CurrentLocationSource(getServiceContext()));
@@ -123,15 +115,15 @@ public class MapActivity extends AbsDispatcher implements OnClickListener{
 
 
     private ControlBar createButtonBar() {
-        ControlBar bar = new MainControlBar(getServiceContext());
+        MainControlBar bar = new MainControlBar(this);
 
         cycleButton = bar.addImageButton(R.drawable.go_down_inverse);
 
-        gpsState = new GPSStateButton(this);
-        trackerState = new TrackerStateButton(this.getServiceContext());
-
-        bar.addView(gpsState);
-        bar.addView(trackerState);
+        if (AppLayout.haveExtraSpaceGps(this)) {
+            bar.addSpace();
+        }
+        bar.addGpsState(this);
+        bar.addTrackerState(this);
 
         bar.setOnClickListener1(this);
 

@@ -14,7 +14,7 @@ import ch.bailu.aat.map.mapsforge.MapsForgeViewStatic;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.util.AppHtml;
 import ch.bailu.aat.util.HtmlBuilderGpx;
-import ch.bailu.aat.util.ui.AppTheme;
+import ch.bailu.aat.util.ui.AppLayout;
 
 public class NodeEntryView extends LinearLayout {
 
@@ -27,7 +27,7 @@ public class NodeEntryView extends LinearLayout {
         super(sc.getContext());
         setOrientation(HORIZONTAL);
 
-        int previewSize = AppTheme.getBigButtonSize(sc.getContext());
+        int previewSize = AppLayout.getBigButtonSize(sc.getContext());
 
 
         map =  new MapsForgeViewStatic(sc);

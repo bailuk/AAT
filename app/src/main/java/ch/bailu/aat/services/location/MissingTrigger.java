@@ -16,8 +16,8 @@ public class MissingTrigger extends LocationStackChainedItem {
     
     @Override
     public void newLocation(LocationInformation location) {
-        AppLog.d(this, "newLocation() -> send");
-        if (isMissingUpdates()) AppLog.d(this, "isMissingUpdates");
+//        AppLog.d(this, "newLocation() -> send");
+//        if (isMissingUpdates()) AppLog.d(this, "isMissingUpdates");
         stamp=location.getTimeStamp();
         sendLocation(location);
 

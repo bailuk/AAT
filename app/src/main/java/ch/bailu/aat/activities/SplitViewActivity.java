@@ -26,6 +26,7 @@ import ch.bailu.aat.services.editor.EditorHelper;
 import ch.bailu.aat.util.ui.AppLayout;
 import ch.bailu.aat.views.ControlBar;
 import ch.bailu.aat.views.MainControlBar;
+import ch.bailu.aat.views.PercentageLayout;
 import ch.bailu.aat.views.description.CockpitView;
 import ch.bailu.aat.views.description.MultiView;
 import ch.bailu.aat.views.description.TrackerStateButton;
@@ -53,17 +54,11 @@ public class SplitViewActivity extends AbsDispatcher implements OnClickListener{
 
 
     private View createContentView() {
-        LinearLayout v = new LinearLayout(this);
-        v.setOrientation(LinearLayout.VERTICAL);
+        return
+                new PercentageLayout(this)
+                        .add(MapFactory.DEF(this, SOLID_MAP_KEY).map(edit, createButtonBar()).toView(), 70)
+                        .add(createMultiView(),30);
 
-
-        v.addView(MapFactory.DEF(this, SOLID_MAP_KEY).map(edit, createButtonBar()).toView(),
-                LayoutParams.MATCH_PARENT,
-                AppLayout.getScreenSmallSide(this));
-
-        v.addView(new TextView(this), LayoutParams.MATCH_PARENT, 3);
-        v.addView(createMultiView());
-        return v;
     }
 
 
@@ -95,16 +90,17 @@ public class SplitViewActivity extends AbsDispatcher implements OnClickListener{
 
 
     private ControlBar createButtonBar() {
-        ControlBar bar = new MainControlBar(getServiceContext());
+        MainControlBar bar = new MainControlBar(this);
 
         activityCycle = bar.addImageButton(R.drawable.go_down_inverse);
         multiCycle = bar.addImageButton(R.drawable.go_next_inverse);
 
-        TrackerStateButton trackerState = new TrackerStateButton(this.getServiceContext());
-        bar.addView(trackerState);
+        if (AppLayout.haveExtraSpaceGps(this)) {
+            bar.addGpsState(this);
+        }
+        bar.addTrackerState(this);
         bar.setOnClickListener1(this);
 
-        addTarget(trackerState, InfoID.TRACKER);
 
 
         return bar;

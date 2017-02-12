@@ -19,8 +19,8 @@ import ch.bailu.aat.services.editor.EditorInterface;
 import ch.bailu.aat.util.ui.AppDialog;
 import ch.bailu.aat.util.ui.AppLog;
 import ch.bailu.aat.views.NodeListView;
+import ch.bailu.aat.views.PercentageLayout;
 import ch.bailu.aat.views.description.MultiView;
-import ch.bailu.aat.views.description.VSplitView;
 import ch.bailu.aat.views.graph.DistanceAltitudeGraphView;
 import ch.bailu.aat.views.preferences.VerticalScrollView;
 
@@ -69,7 +69,11 @@ public class GpxEditorActivity extends AbsFileContentActivity
 
         multiView.add(nodeList);
         multiView.add(map.toView());
-        multiView.add(new VSplitView(this, new View[] {summary, graph}));
+
+        PercentageLayout p = new PercentageLayout(this);
+        p.add(summary,60);
+        p.add(graph,40);
+        multiView.add(p);
 
         return multiView;
     }

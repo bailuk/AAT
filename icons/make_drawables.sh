@@ -7,36 +7,46 @@ LDPI="$DRAW-ldpi/"
 MDPI="$DRAW-mdpi/"
 HDPI="$DRAW-hdpi/"
 XHDPI="$DRAW-xhdpi/"
-
+XXHDPI="$DRAW-xxhdpi/"
+XXXHDPI="$DRAW-xxxhdpi/"
 
 
 function COPY {
     TARGET="${1//-/_}".png
 
-	convert $1.png -scale "36x36" $LDPI/$TARGET
-	convert $1.png -scale "48x48" $MDPI/$TARGET
-	convert $1.png -scale "72x72" $HDPI/$TARGET
-	convert $1.png -scale "96x96" $XHDPI/$TARGET
+	convert $1.png -scale "36x36"   $LDPI/$TARGET
+	convert $1.png -scale "48x48"   $MDPI/$TARGET
+	convert $1.png -scale "72x72"   $HDPI/$TARGET
+	convert $1.png -scale "96x96"   $XHDPI/$TARGET
+	convert $1.png -scale "144x144" $XXHDPI/$TARGET
+	convert $1.png -scale "192x192" $XXXHDPI/$TARGET
+
 }
 
 
 function INVERT {
 	TARGET="${1//-/_}_inverse.png"
 
-	convert $1.png -negate -scale "36x36" $LDPI/$TARGET
-	convert $1.png -negate -scale "48x48" $MDPI/$TARGET
-	convert $1.png -negate -scale "72x72" $HDPI/$TARGET
-	convert $1.png -negate -scale "96x96" $XHDPI/$TARGET
+	convert $1.png -negate -scale "36x36"   $LDPI/$TARGET
+	convert $1.png -negate -scale "48x48"   $MDPI/$TARGET
+	convert $1.png -negate -scale "72x72"   $HDPI/$TARGET
+	convert $1.png -negate -scale "96x96"   $XHDPI/$TARGET
+	convert $1.png -negate -scale "144x144" $XXHDPI/$TARGET
+	convert $1.png -negate -scale "192x192" $XXXHDPI/$TARGET
+
 }
 
 
 function HIGHLIGHT {
 	TARGET="${1//-/_}_highlight.png"
 
-	convert $1.png -negate -scale "36x36" $LDPI/$TARGET
-	convert $1.png -negate -scale "48x48" $MDPI/$TARGET
-	convert $1.png -negate -scale "72x72" $HDPI/$TARGET
-	convert $1.png -negate -scale "96x96" $XHDPI/$TARGET
+	convert $1.png -negate -scale "36x36"   $LDPI/$TARGET
+	convert $1.png -negate -scale "48x48"   $MDPI/$TARGET
+	convert $1.png -negate -scale "72x72"   $HDPI/$TARGET
+	convert $1.png -negate -scale "96x96"   $XHDPI/$TARGET
+	convert $1.png -negate -scale "144x144" $XXHDPI/$TARGET
+	convert $1.png -negate -scale "192x192" $XXXHDPI/$TARGET
+
 }
 
 
@@ -78,6 +88,7 @@ CONVERT "icon_status"
 
 
 ####### Top-Bar
+INVERT "edit-undo" 
 INVERT "go-next" 
 INVERT "go-previous" 
 INVERT "go-down" 

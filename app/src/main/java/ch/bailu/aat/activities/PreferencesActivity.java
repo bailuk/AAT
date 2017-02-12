@@ -31,7 +31,7 @@ public class PreferencesActivity extends AbsDispatcher {
         LinearLayout contentView = new ContentView(this);
 
         MultiView multiView = createMultiView();
-        contentView.addView(new MainControlBar(getServiceContext(), multiView));
+        contentView.addView(new MainControlBar(this, multiView));
         contentView.addView(multiView);
 
         setContentView(contentView);

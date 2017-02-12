@@ -81,7 +81,7 @@ public abstract class AbsGpxListActivity extends AbsDispatcher implements OnItem
 
 
     private ControlBar createControlBar(MultiView multiView) {
-        final MainControlBar bar = new MainControlBar(getServiceContext());
+        final MainControlBar bar = new MainControlBar(this);
 
         busyControl = new DbSynchronizerBusyIndicator(bar.getMenu());
 

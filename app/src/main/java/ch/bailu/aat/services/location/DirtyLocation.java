@@ -41,7 +41,7 @@ public class DirtyLocation extends LocationStackChainedItem {
     
     @Override
     public void newLocation(LocationInformation location) {
-        AppLog.d(this, "newLocation() -> send");
+//        AppLog.d(this, "newLocation() -> send");
         locationInformation=location;
         sendLocation(location);
         AppBroadcaster.broadcast(storage.getContext(), AppBroadcaster.LOCATION_CHANGED);

@@ -25,8 +25,8 @@ public class CleanLocation extends LocationStackItem {
 
     @Override
     public void newLocation(LocationInformation location) {
-        AppLog.d(this, "newLocation()");
-        if (hasLoggableLocation()) AppLog.d(this, "hsLoggableLocation()");
+//        AppLog.d(this, "newLocation()");
+//        if (hasLoggableLocation()) AppLog.d(this, "hsLoggableLocation()");
         currentLocation=location;
     }
 

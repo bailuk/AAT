@@ -34,7 +34,7 @@ public class AboutActivity extends AbsDispatcher {
     }
 
     private LinearLayout createButtonBar(MultiView mv) {
-        final MainControlBar bar = new MainControlBar(getServiceContext());
+        final MainControlBar bar = new MainControlBar(this);
 
         bar.addAll(mv);
         return bar;
