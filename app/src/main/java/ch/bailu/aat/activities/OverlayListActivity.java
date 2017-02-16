@@ -28,8 +28,7 @@ public class OverlayListActivity extends AbsGpxListActivity {
     @Override
     public ContentDescription[] getSummaryData() {
         return new ContentDescription[] {
-                new NameDescription(this),
-                new PathDescription(this),
+
                 new TrackSizeDescription(this),
         };
     }

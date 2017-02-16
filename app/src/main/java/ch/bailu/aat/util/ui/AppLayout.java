@@ -14,6 +14,7 @@ public class AppLayout {
     public final static int DEFAULT_VISIBLE_BUTTON_COUNT = 4;
     private final static int GPS_EXTRA_BUTTON_COUNT = DEFAULT_VISIBLE_BUTTON_COUNT +1;
     private final static int BACK_EXTRA_BUTTON_COUNT = GPS_EXTRA_BUTTON_COUNT+1;
+    private final static int TABLET_BUTTON_COUNT=BACK_EXTRA_BUTTON_COUNT;
 
     private static final Point size = new Point();
 
@@ -99,6 +100,10 @@ public class AppLayout {
         int button_size = getBigButtonSize(context);
 
         return screen_size / button_size;
+    }
+
+    public static boolean isTablet(Context context) {
+        return getVisibleButtonCount(context)>=TABLET_BUTTON_COUNT;
     }
 }
  

@@ -56,7 +56,7 @@ public class CockpitView extends ViewGroup {
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
         if (changed) {
-            layouter.layout(r,b);
+            layouter.layout(r-l,b-t);
         }
 
     }

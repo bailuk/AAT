@@ -3,6 +3,7 @@ package ch.bailu.aat.map;
 import android.view.View;
 
 import org.mapsforge.core.model.LatLong;
+import org.mapsforge.map.model.MapViewPosition;
 
 import ch.bailu.aat.coordinates.BoundingBoxE6;
 import ch.bailu.aat.dispatcher.LifeCycleInterface;
@@ -31,4 +32,6 @@ public interface MapViewInterface extends LifeCycleInterface {
     View toView();
 
     void reDownloadTiles();
+
+    MapViewPosition getMapViewPosition();
 }

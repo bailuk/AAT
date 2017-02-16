@@ -107,11 +107,15 @@
         </activity>
 
         <activity
-            android:name="ch.bailu.aat.activities.TrackerActivity">
+            android:name="ch.bailu.aat.activities.CockpitActivity">
         </activity>
         <activity
-            android:name="ch.bailu.aat.activities.SplitViewActivity">
+            android:name="ch.bailu.aat.activities.CockpitSplitActivity">
         </activity>
+        <activity
+            android:name="ch.bailu.aat.activities.CockpitTabletActivity">
+        </activity>
+
         <activity
             android:name="ch.bailu.aat.activities.MapActivity">
             <intent-filter>

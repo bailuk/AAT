@@ -111,7 +111,7 @@ public abstract class NodeViewLayer extends NodeSelectorLayer implements View.On
         }
 
         private void setSize(int w, int h) {
-            height = Math.min(h / 2, button_space * 3);
+            height = Math.min(h / 3, button_space * 3);
             width = Math.min(w - button_space, button_space * 5);
 
             right_space = w - width - button_space;

@@ -32,8 +32,7 @@ public class TrackListActivity extends AbsGpxListActivity {
     @Override
     public ContentDescription[] getSummaryData() {
         return new ContentDescription[] {
-                new NameDescription(this),
-                new PathDescription(this),
+
                 new TrackSizeDescription(this),
                 new MaximumSpeedDescription(this),
                 new DistanceDescription(this),

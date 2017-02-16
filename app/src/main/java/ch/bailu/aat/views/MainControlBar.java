@@ -1,16 +1,17 @@
 package ch.bailu.aat.views;
 
+import android.app.Activity;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
 import ch.bailu.aat.R;
 import ch.bailu.aat.activities.AbsDispatcher;
-import ch.bailu.aat.activities.TrackerActivity;
+import ch.bailu.aat.activities.ActivitySwitcher;
 import ch.bailu.aat.gpx.InfoID;
+import ch.bailu.aat.menus.MultiViewMenu;
 import ch.bailu.aat.util.ui.AppLayout;
 import ch.bailu.aat.menus.OptionsMenu;
-import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.views.description.GPSStateButton;
 import ch.bailu.aat.views.description.MultiView;
 import ch.bailu.aat.views.description.TrackerStateButton;
@@ -18,7 +19,7 @@ import ch.bailu.aat.views.description.TrackerStateButton;
 public class MainControlBar extends ControlBar {
 
     private final BusyButton menu;
-    
+
     public MainControlBar(final AbsDispatcher acontext) {
         this(acontext, AppLayout.DEFAULT_VISIBLE_BUTTON_COUNT);
     }
@@ -72,10 +73,41 @@ public class MainControlBar extends ControlBar {
         return menu;
     }
 
-    public void addAll(MultiView mv) {
-        add(new MvPreviousButton(mv));
-        add(new MvListButton(mv));
-        add(new MvNextButton(mv));
+
+    public void addAll(final MultiView mv) {
+        addMvPrevious(mv);
+        addMvList(mv);
+        addMvNext(mv);
+    }
+
+    public void addMvList(final MultiView mv) {
+        final MultiViewMenu menu = new MultiViewMenu(mv);
+        final ImageButton b = addImageButton(R.drawable.content_loading_inverse);
+
+        b.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                menu.showAsPopup(mv.getContext(), b);
+            }
+        });
+    }
+    public void addMvNext(final MultiView mv) {
+        addImageButton(R.drawable.go_next_inverse).setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mv.setNext();
+            }
+        });
+    }
+
+
+    public void addMvPrevious(final MultiView mv) {
+        addImageButton(R.drawable.go_previous_inverse).setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mv.setPrevious();
+            }
+        });
     }
 
     public MainControlBar addGpsState(AbsDispatcher acontext) {
@@ -94,4 +126,13 @@ public class MainControlBar extends ControlBar {
         return this;
     }
 
+    public void addActivityCycle(final Activity acontext) {
+        ImageButton cb = addImageButton(R.drawable.go_down_inverse);
+        cb.setOnClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                new ActivitySwitcher(acontext).cycle();
+            }});
+    }
 }

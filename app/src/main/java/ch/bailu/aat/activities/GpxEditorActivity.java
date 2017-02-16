@@ -1,7 +1,9 @@
 package ch.bailu.aat.activities;
 
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.LinearLayout;
 
 import java.io.File;
 
@@ -17,7 +19,9 @@ import ch.bailu.aat.map.MapFactory;
 import ch.bailu.aat.services.editor.EditorHelper;
 import ch.bailu.aat.services.editor.EditorInterface;
 import ch.bailu.aat.util.ui.AppDialog;
+import ch.bailu.aat.util.ui.AppLayout;
 import ch.bailu.aat.util.ui.AppLog;
+import ch.bailu.aat.views.MainControlBar;
 import ch.bailu.aat.views.NodeListView;
 import ch.bailu.aat.views.PercentageLayout;
 import ch.bailu.aat.views.description.MultiView;
@@ -35,7 +39,7 @@ public class GpxEditorActivity extends AbsFileContentActivity
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        super.onCreate(SOLID_KEY);
+//        super.onCreate(SOLID_KEY);
 
         addTarget(this, InfoID.FILEVIEW);
     }
@@ -45,9 +49,13 @@ public class GpxEditorActivity extends AbsFileContentActivity
         return new EditorHelper(getServiceContext());
     }
 
+
+
+
     @Override
-    protected MultiView createMultiView(final String SOLID_KEY) {
-        map = MapFactory.DEF(this, SOLID_KEY).editor(editor_helper);
+    protected View createLayout(MainControlBar bar) {
+        map = MapFactory.DEF(this, SOLID_KEY).content(editor_helper);
+
 
         ContentDescription summaryData[] = {
                 new NameDescription(this),
@@ -55,7 +63,6 @@ public class GpxEditorActivity extends AbsFileContentActivity
                 new DistanceDescription(this),
                 new TrackSizeDescription(this),
         };
-
 
         NodeListView nodeList = new NodeListView(getServiceContext(), this);
         addTarget(nodeList, InfoID.EDITOR_OVERLAY);
@@ -65,20 +72,66 @@ public class GpxEditorActivity extends AbsFileContentActivity
 
         DistanceAltitudeGraphView graph = new DistanceAltitudeGraphView(this, this, InfoID.EDITOR_OVERLAY);
 
-        MultiView multiView = new MultiView(this, SOLID_KEY);
 
-        multiView.add(nodeList);
-        multiView.add(map.toView());
+        if (AppLayout.isTablet(this)) {
+            return createPercentageLayout(summary, graph, nodeList);
+        } else {
+            return createMultiView(bar, summary, graph, nodeList);
+        }
+
+    }
+
+    protected View createMultiView(MainControlBar bar,
+                                   View summary, View graph, View nodeList) {
+
+        MultiView mv = new MultiView(this, SOLID_KEY);
+
+        mv.add(nodeList);
+        mv.add(map.toView());
 
         PercentageLayout p = new PercentageLayout(this);
         p.add(summary,60);
         p.add(graph,40);
-        multiView.add(p);
-
-        return multiView;
+        mv.add(p);
+        bar.addMvNext(mv);
+        return mv;
     }
 
 
+    private View createPercentageLayout(
+            View summary, View graph, View nodeList) {
+
+        if (AppLayout.getOrientation(this) == Configuration.ORIENTATION_LANDSCAPE) {
+            PercentageLayout a = new PercentageLayout(this);
+            a.setOrientation(AppLayout.getOrientationAlongLargeSide(this));
+
+            a.add(map.toView(), 40);
+            a.add(summary, 30);
+            a.add(nodeList, 30);
+
+            PercentageLayout b = new PercentageLayout(this);
+            b.add(a, 85);
+            b.add(graph, 15);
+
+            return b;
+        } else {
+            PercentageLayout a = new PercentageLayout(this);
+            a.setOrientation(LinearLayout.HORIZONTAL);
+            a.add(map.toView(),70);
+            a.add(nodeList, 30);
+
+            PercentageLayout b = new PercentageLayout(this);
+            b.add(a, 70);
+            b.add(summary, 30);
+
+
+            PercentageLayout c = new PercentageLayout(this);
+            c.add(b, 85);
+            c.add(graph,15);
+
+            return c;
+        }
+    }
 
 
     @Override

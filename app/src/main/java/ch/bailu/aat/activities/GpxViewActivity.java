@@ -32,6 +32,7 @@ import ch.bailu.aat.map.MapFactory;
 import ch.bailu.aat.map.MapViewInterface;
 import ch.bailu.aat.menus.ContentMenu;
 import ch.bailu.aat.util.fs.FileAction;
+import ch.bailu.aat.util.ui.AppLayout;
 import ch.bailu.aat.util.ui.ToolTip;
 import ch.bailu.aat.views.BusyButton;
 import ch.bailu.aat.views.ContentView;
@@ -50,9 +51,8 @@ public class GpxViewActivity extends AbsDispatcher
 
 
 
-    private ImageButton        nextView, fileOperation, copyTo;
+    private ImageButton        fileOperation, copyTo;
     private BusyButton         busyButton;
-    private MultiView          multiView;
     private MapViewInterface   map;
 
     private String fileID;
@@ -79,9 +79,14 @@ public class GpxViewActivity extends AbsDispatcher
             fileID = uri.toString();
 
             final LinearLayout contentView = new ContentView(this);
-            contentView.addView(createButtonBar());
-            multiView = createMultiView();
-            contentView.addView(multiView);
+
+            MainControlBar bar = new MainControlBar(this);
+
+            contentView.addView(bar);
+            View view = createLayout(bar);
+            initButtonBar(bar);
+
+            contentView.addView(view);
             setContentView(contentView);
             createDispatcher();
         }
@@ -90,29 +95,7 @@ public class GpxViewActivity extends AbsDispatcher
     }
 
 
-
-    private ControlBar createButtonBar() {
-        MainControlBar bar = new MainControlBar(this);
-
-        nextView = bar.addImageButton(R.drawable.go_next_inverse);
-        copyTo = bar.addImageButton(R.drawable.document_save_as_inverse);
-
-        fileOperation = bar.addImageButton(R.drawable.edit_select_all_inverse);
-
-        ToolTip.set(copyTo, R.string.file_copy);
-        ToolTip.set(fileOperation, R.string.tt_menu_file);
-
-        busyButton = bar.getMenu();
-        busyButton.startWaiting();
-
-        bar.setOrientation(LinearLayout.HORIZONTAL);
-        bar.setOnClickListener1(this);
-        return bar;
-    }
-
-
-    private MultiView createMultiView() {
-
+    private View createLayout(MainControlBar bar) {
         map = MapFactory.DEF(this, SOLID_KEY).externalContent();
 
 
@@ -129,22 +112,69 @@ public class GpxViewActivity extends AbsDispatcher
                 new CaloriesDescription(this),
                 new TrackSizeDescription(this),
         };
+
         VerticalScrollView summary = new VerticalScrollView(this);
         summary.addAllContent(this, summaryData, InfoID.FILEVIEW);
 
-        PercentageLayout graph = new PercentageLayout(this);
+        View graph = PercentageLayout.add(this,
+                new DistanceAltitudeGraphView(this, this, InfoID.FILEVIEW),
+                new DistanceSpeedGraphView(this, this, InfoID.FILEVIEW));
 
-        graph.add(new DistanceAltitudeGraphView(this, this, InfoID.FILEVIEW),50);
-        graph.add(new DistanceSpeedGraphView(this, this, InfoID.FILEVIEW),50);
 
+        if (AppLayout.isTablet(this)) {
+            return createPercentageLayout(summary, graph);
+        } else {
+            return createMultiView(bar, summary, graph);
+        }
 
-        multiView = new MultiView(this, SOLID_KEY);
-        multiView.add(summary);
-        multiView.add(map.toView());
-        multiView.add(graph);
-
-        return multiView;
     }
+
+    protected View createMultiView(MainControlBar bar,
+                                   View summary, View graph) {
+
+        MultiView mv = new MultiView(this, SOLID_KEY);
+        mv.add(summary);
+        mv.add(map.toView());
+        mv.add(graph);
+
+        bar.addMvNext(mv);
+        return mv;
+    }
+
+
+    private View createPercentageLayout(
+            View summary, View graph) {
+
+        PercentageLayout a = new PercentageLayout(this);
+        a.setOrientation(AppLayout.getOrientationAlongLargeSide(this));
+        a.add(map.toView(), 60);
+        a.add(summary, 40);
+
+        PercentageLayout b = new PercentageLayout(this);
+        b.add(a, 80);
+        b.add(graph, 20);
+
+        return b;
+    }
+
+    private ControlBar initButtonBar(MainControlBar bar) {
+
+
+        copyTo = bar.addImageButton(R.drawable.document_save_as_inverse);
+
+        fileOperation = bar.addImageButton(R.drawable.edit_select_all_inverse);
+
+        ToolTip.set(copyTo, R.string.file_copy);
+        ToolTip.set(fileOperation, R.string.tt_menu_file);
+
+        busyButton = bar.getMenu();
+        busyButton.startWaiting();
+
+        bar.setOrientation(LinearLayout.HORIZONTAL);
+        bar.setOnClickListener1(this);
+        return bar;
+    }
+
 
 
     private void createDispatcher() {
@@ -168,10 +198,7 @@ public class GpxViewActivity extends AbsDispatcher
 
     @Override
     public void onClick(View v) {
-        if (v == nextView) {
-            multiView.setNext();
-
-        } else if (v == copyTo && uri != null) {
+        if (v == copyTo && uri != null) {
             FileAction.copyTo(this,uri);
 
         } else if (v == fileOperation && uri != null) {

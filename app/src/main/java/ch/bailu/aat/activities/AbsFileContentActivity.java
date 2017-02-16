@@ -30,12 +30,11 @@ import ch.bailu.aat.views.description.MultiView;
 public abstract class AbsFileContentActivity extends AbsDispatcher implements OnClickListener {
 
     protected IteratorSource  currentFile;
-    protected ImageButton nextView, nextFile, previousFile, fileOperation;
+    protected ImageButton nextFile, previousFile, fileOperation;
 
     private boolean            firstRun = true;
 
     private BusyButton         busyButton;
-    private MultiView          multiView;
     protected MapViewInterface map;
 
 
@@ -44,38 +43,34 @@ public abstract class AbsFileContentActivity extends AbsDispatcher implements On
 
 
     public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
 
-    public void onCreate(final String KEY) {
+        super.onCreate(savedInstanceState);
         firstRun = true;
 
         editor_helper = createEditorHelper();
 
-        createViews(KEY);
+        createViews();
         createDispatcher();
     }
 
 
     protected abstract EditorHelper createEditorHelper();
 
-    private void createViews(final String SOLID_KEY) {
+    private void createViews() {
         final ViewGroup contentView = new ContentView(this);
 
-        multiView = createMultiView(SOLID_KEY);
-        contentView.addView(createButtonBar());
-        contentView.addView(multiView);
+        MainControlBar bar = new MainControlBar(this);
+        contentView.addView(bar);
+        contentView.addView(createLayout(bar));
 
+        initButtonBar(bar);
 
         setContentView(contentView);
 
     }
 
 
-    private ControlBar createButtonBar() {
-        MainControlBar bar = new MainControlBar(this);
-
-        nextView = bar.addImageButton(R.drawable.go_next_inverse);
+    private void initButtonBar(MainControlBar bar) {
         previousFile =  bar.addImageButton(R.drawable.go_up_inverse);
         nextFile = bar.addImageButton(R.drawable.go_down_inverse);
         fileOperation = bar.addImageButton(R.drawable.edit_select_all_inverse);
@@ -87,11 +82,10 @@ public abstract class AbsFileContentActivity extends AbsDispatcher implements On
 
         bar.setOrientation(LinearLayout.HORIZONTAL);
         bar.setOnClickListener1(this);
-        return bar;
     }
 
 
-    protected abstract MultiView createMultiView(final String SOLID_KEY);
+    protected abstract View createLayout(MainControlBar bar);
 
 
 
@@ -131,10 +125,8 @@ public abstract class AbsFileContentActivity extends AbsDispatcher implements On
 
     @Override
     public void onClick(View v) {
-        if (v == nextView) {
-            multiView.setNext();
 
-        } else if (v == previousFile) {
+        if (v == previousFile) {
             switchFile(v);
 
         } else if (v ==nextFile) {
@@ -156,4 +148,8 @@ public abstract class AbsFileContentActivity extends AbsDispatcher implements On
 
         frameCurrentFile();
     }
+
+
+
+
 }

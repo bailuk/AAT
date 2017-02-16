@@ -18,6 +18,8 @@ import ch.bailu.aat.description.TrackSizeDescription;
 import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.map.MapFactory;
 import ch.bailu.aat.services.editor.EditorHelper;
+import ch.bailu.aat.util.ui.AppLayout;
+import ch.bailu.aat.views.MainControlBar;
 import ch.bailu.aat.views.PercentageLayout;
 import ch.bailu.aat.views.description.MultiView;
 import ch.bailu.aat.views.graph.DistanceAltitudeGraphView;
@@ -27,7 +29,6 @@ import ch.bailu.aat.views.preferences.VerticalScrollView;
 
 public class FileContentActivity extends AbsFileContentActivity{
 
-
     private static final String SOLID_KEY="file_content";
 
 
@@ -35,10 +36,10 @@ public class FileContentActivity extends AbsFileContentActivity{
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        super.onCreate(SOLID_KEY);
     }
 
-    protected MultiView createMultiView(final String SOLID_KEY) {
+    @Override
+    protected View createLayout(MainControlBar bar) {
         map = MapFactory.DEF(this, SOLID_KEY).content(editor_helper);
 
 
@@ -60,15 +61,46 @@ public class FileContentActivity extends AbsFileContentActivity{
         summary.addAllContent(this, summaryData, InfoID.FILEVIEW);
 
         View graph = PercentageLayout.add(this,
-                        new DistanceAltitudeGraphView(this, this, InfoID.FILEVIEW),
-                        new DistanceSpeedGraphView(this, this, InfoID.FILEVIEW));
+                new DistanceAltitudeGraphView(this, this, InfoID.FILEVIEW),
+                new DistanceSpeedGraphView(this, this, InfoID.FILEVIEW));
+
+
+        if (AppLayout.isTablet(this)) {
+            return createPercentageLayout(summary, graph);
+        } else {
+            return createMultiView(bar, summary, graph);
+        }
+
+    }
+
+    protected View createMultiView(MainControlBar bar,
+                                        View summary, View graph) {
 
         MultiView mv = new MultiView(this, SOLID_KEY);
         mv.add(summary);
         mv.add(map.toView());
         mv.add(graph);
+
+        bar.addMvNext(mv);
         return mv;
     }
+
+
+    private View createPercentageLayout(
+            View summary, View graph) {
+
+        PercentageLayout a = new PercentageLayout(this);
+        a.setOrientation(AppLayout.getOrientationAlongLargeSide(this));
+        a.add(map.toView(), 60);
+        a.add(summary, 40);
+
+        PercentageLayout b = new PercentageLayout(this);
+        b.add(a, 80);
+        b.add(graph, 20);
+
+        return b;
+    }
+
 
     @Override
     protected EditorHelper createEditorHelper() {

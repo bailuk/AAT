@@ -17,6 +17,7 @@ import org.mapsforge.map.android.graphics.AndroidGraphicFactory;
 import org.mapsforge.map.android.view.MapView;
 import org.mapsforge.map.controller.FrameBufferController;
 import org.mapsforge.map.layer.Layer;
+import org.mapsforge.map.model.MapViewPosition;
 import org.mapsforge.map.view.FrameBuffer;
 
 import java.util.ArrayList;
@@ -111,6 +112,11 @@ public class MapsForgeViewBase extends MapView implements
 
     @Override
     public void reDownloadTiles() {}
+
+    @Override
+    public MapViewPosition getMapViewPosition() {
+        return getModel().mapViewPosition;
+    }
 
 
     public void add(Layer mfLayer, MapLayerInterface layer) {

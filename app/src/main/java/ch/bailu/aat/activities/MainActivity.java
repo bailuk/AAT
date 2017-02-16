@@ -22,8 +22,6 @@ import ch.bailu.aat.views.preferences.VerticalScrollView;
 
 public class MainActivity extends AbsDispatcher {
 
-//    private NumberView      gpsState;
-//    private TrackerStateButton trackerState;
 
 
     @Override
@@ -51,9 +49,9 @@ public class MainActivity extends AbsDispatcher {
         final VerticalScrollView list = new VerticalScrollView(this);
         list.add(new SolidIndexListView(new SolidPreset(this)));
 
-        final int accessibleCount = ActivitySwitcher.getAccessibleActivitesCount();
+        final int accessibleCount = new ActivitySwitcher(this).getActivityCount();
         for (int i = 0; i < accessibleCount; i++) {
-            list.add(labelFactory(ActivitySwitcher.list[i]));
+            list.add(labelFactory(new ActivitySwitcher(this).getActivity(i)));
         }
         return list;
     }
@@ -82,7 +80,7 @@ public class MainActivity extends AbsDispatcher {
     }
 
 
-    private ActivityLabel labelFactory(ActivitySwitcher s) {
+    private ActivityLabel labelFactory(ActivitySwitcher.Entry s) {
         if (s.activityClass == TrackListActivity.class) {
             return new PresetDirectoryLabel(s);
         } else if (s.activityClass == OverlayListActivity.class) {
@@ -96,7 +94,7 @@ public class MainActivity extends AbsDispatcher {
     }
 
     private class ActivityLabel extends AbsLabelTextView {
-        public ActivityLabel(final ActivitySwitcher s) {
+        public ActivityLabel(final ActivitySwitcher.Entry s) {
             super(MainActivity.this, getString(s.activityLabel));
 
             setOnClickListener(new OnClickListener() {
@@ -116,7 +114,7 @@ public class MainActivity extends AbsDispatcher {
         private final SolidPreset spreset;
 
 
-        public PresetDirectoryLabel(ActivitySwitcher s) {
+        public PresetDirectoryLabel(ActivitySwitcher.Entry s) {
             super(s);
             sdirectory = new SolidDataDirectory(getContext());
             spreset = new SolidPreset(getContext());
@@ -158,7 +156,7 @@ public class MainActivity extends AbsDispatcher {
         private final String directory;
 
 
-        public DirectoryLabel(ActivitySwitcher s, String d) {
+        public DirectoryLabel(ActivitySwitcher.Entry s, String d) {
             super(s);
             sdirectory = new SolidDataDirectory(getContext());
             directory = d;

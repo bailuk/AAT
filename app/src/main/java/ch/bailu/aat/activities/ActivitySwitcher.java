@@ -12,39 +12,98 @@ import ch.bailu.aat.BuildConfig;
 import ch.bailu.aat.R;
 import ch.bailu.aat.coordinates.BoundingBoxE6;
 import ch.bailu.aat.util.AppIntent;
+import ch.bailu.aat.util.ui.AppLayout;
 
 public class ActivitySwitcher {
-    public final static ActivitySwitcher list[] = {
-            new ActivitySwitcher(R.string.intro_resume, TrackerActivity.class),
-            new ActivitySwitcher(R.string.intro_cockpit2, SplitViewActivity.class),
-            new ActivitySwitcher(R.string.intro_map, MapActivity.class),
-            new ActivitySwitcher(R.string.intro_list, TrackListActivity.class),
-            new ActivitySwitcher(R.string.intro_overlay_list, OverlayListActivity.class),
-            new ActivitySwitcher(R.string.intro_import_list, ImportListActivity.class),
-            new ActivitySwitcher(R.string.intro_settings, PreferencesActivity.class),
-            new ActivitySwitcher(R.string.intro_about, AboutActivity.class),
-            new ActivitySwitcher(R.string.intro_test, TestActivity.class),
+
+    private final static Entry PHONE_LIST[] = {
+            new Entry(R.string.intro_resume, CockpitActivity.class),
+            new Entry(R.string.intro_cockpit2, CockpitSplitActivity.class),
+            new Entry(R.string.intro_map, MapActivity.class),
+            new Entry(R.string.intro_list, TrackListActivity.class),
+            new Entry(R.string.intro_overlay_list, OverlayListActivity.class),
+            new Entry(R.string.intro_import_list, ImportListActivity.class),
+            new Entry(R.string.intro_settings, PreferencesActivity.class),
+            new Entry(R.string.intro_about, AboutActivity.class),
+            new Entry(R.string.intro_test, TestActivity.class),
     };
 
-
-    public final int      activityLabel;
-    public final Class<?> activityClass;
-
-    public final static int cycable = 3;
+    private final static int PHONE_CYCABLE = 3;
 
 
-    public static int getAccessibleActivitesCount() {
-        if (BuildConfig.DEBUG) return list.length;
-        return list.length-1;
+    private final static Entry TABLET_LIST[] = {
+            new Entry(R.string.intro_resume, CockpitTabletActivity.class),
+            new Entry(R.string.intro_map, MapActivity.class),
+            new Entry(R.string.intro_list, TrackListActivity.class),
+            new Entry(R.string.intro_overlay_list, OverlayListActivity.class),
+            new Entry(R.string.intro_import_list, ImportListActivity.class),
+            new Entry(R.string.intro_settings, PreferencesActivity.class),
+            new Entry(R.string.intro_about, AboutActivity.class),
+            new Entry(R.string.intro_test, TestActivity.class),
+    };
+    private final static int TABLET_CYCABLE = 2;
+
+
+    private static int cycable=0;
+    private static Entry[] entries=null;
+
+    public static class Entry {
+        public final int activityLabel;
+        public final Class<?> activityClass;
+
+        public Entry(int label, Class<?> c) {
+            activityLabel=label;
+            activityClass=c;
+        }
+
+        public void start(Context c) {
+            ActivitySwitcher.start(c, activityClass);
+        }
+
     }
 
-    public ActivitySwitcher(int label, Class<?> c) {
-        activityLabel=label;
-        activityClass=c;
+
+    private final Activity callingActivity;
+
+    public ActivitySwitcher(Activity acontext) {
+        init(acontext);
+        callingActivity = acontext;
     }
 
-    public void start(Context c) {
-        start(c, activityClass);
+    private static void init(Context context) {
+        if (entries==null) {
+            if (AppLayout.isTablet(context)) {
+                entries = TABLET_LIST;
+                cycable = TABLET_CYCABLE;
+            } else {
+                entries = PHONE_LIST;
+                cycable = PHONE_CYCABLE;
+            }
+        }
+    }
+
+    public int getActivityCount() {
+        if (BuildConfig.DEBUG) return entries.length;
+        return entries.length-1;
+    }
+
+
+    public Entry getActivity(int i) {
+        return entries[i];
+    }
+
+    public void cycle() {
+        for (int i=0; i<entries.length; i++) {
+            if (entries[i].activityClass.equals(callingActivity.getClass())) {
+                if (i+1 > cycable-1) {
+                    entries[0].start(callingActivity);
+                } else {
+                    entries[i+1].start(callingActivity);
+                }
+                callingActivity.finish();
+                break;
+            }
+        }
     }
 
 
@@ -80,20 +139,6 @@ public class ActivitySwitcher {
         context.startActivity(intent);
     }
 
-
-    public static void cycle(Activity a) {
-        for (int i=0; i<list.length; i++) {
-            if (list[i].activityClass.equals(a.getClass())) {
-                if (i+1 > cycable-1) {
-                    list[0].start(a);
-                } else {
-                    list[i+1].start(a);
-                }
-                a.finish();
-                break;
-            }
-        }
-    }
 
     public static void start(Context context, Class<?> a, BoundingBoxE6 box) {
         Intent intent = new Intent();

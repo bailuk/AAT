@@ -4,14 +4,10 @@ package ch.bailu.aat.activities;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
 import org.mapsforge.core.model.LatLong;
 
-import ch.bailu.aat.R;
 import ch.bailu.aat.coordinates.BoundingBoxE6;
 import ch.bailu.aat.coordinates.Coordinates;
 import ch.bailu.aat.dispatcher.CurrentLocationSource;
@@ -28,46 +24,40 @@ import ch.bailu.aat.views.ContentView;
 import ch.bailu.aat.views.ControlBar;
 import ch.bailu.aat.views.MainControlBar;
 
-public class MapActivity extends AbsDispatcher implements OnClickListener{
+public class MapActivity extends AbsDispatcher{
 
     private static final String SOLID_KEY="map";
-
-    private MapViewInterface      map;
-
-    private ImageButton     cycleButton;
-
-    private EditorHelper    edit;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        edit = new EditorHelper(getServiceContext());
+        EditorHelper edit = new EditorHelper(getServiceContext());
 
         LinearLayout contentView=new ContentView(this);
-        map = createMap();
+        MapViewInterface map = createMap(edit);
         contentView.addView(map.toView());
         setContentView(contentView);
 
-        createDispatcher();
+        createDispatcher(edit);
 
 
-        handleIntent();
+        handleIntent(map);
     }
 
 
-    private void handleIntent() {
+    private void handleIntent(MapViewInterface map) {
         Intent intent = getIntent();
         Uri uri = intent.getData();
 
         if (intent.getAction().equals(Intent.ACTION_VIEW) && uri != null) {
             AppLog.d(uri, uri.toString());
-            setMapCenterFromUri(uri);
+            setMapCenterFromUri(map, uri);
             openQueryFromUri(uri);
         }
     }
 
-    private void setMapCenterFromUri(Uri uri) {
+    private void setMapCenterFromUri(MapViewInterface map, Uri uri) {
 
         try {
             LatLong c = Coordinates.stringToGeoPoint(uri.toString());
@@ -91,12 +81,12 @@ public class MapActivity extends AbsDispatcher implements OnClickListener{
     }
 
 
-    private MapViewInterface createMap() {
+    private MapViewInterface createMap(EditorHelper edit) {
         return MapFactory.DEF(this, SOLID_KEY).map(edit, createButtonBar());
     }
 
 
-    private void createDispatcher() {
+    private void createDispatcher(EditorHelper edit) {
         addSource(new EditorSource(getServiceContext(), edit));
         addSource(new TrackerSource(getServiceContext()));
         addSource(new CurrentLocationSource(getServiceContext()));
@@ -105,27 +95,16 @@ public class MapActivity extends AbsDispatcher implements OnClickListener{
 
 
 
-    @Override
-    public void onClick(View v) {
-        if (v==cycleButton) {
-            ActivitySwitcher.cycle(this);
-        }
-
-    }
-
-
     private ControlBar createButtonBar() {
         MainControlBar bar = new MainControlBar(this);
 
-        cycleButton = bar.addImageButton(R.drawable.go_down_inverse);
+        bar.addActivityCycle(this);
 
         if (AppLayout.haveExtraSpaceGps(this)) {
             bar.addSpace();
         }
         bar.addGpsState(this);
         bar.addTrackerState(this);
-
-        bar.setOnClickListener1(this);
 
         return bar;
     }

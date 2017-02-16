@@ -1,12 +1,8 @@
 package ch.bailu.aat.activities;
 
 import android.os.Bundle;
-import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 
-import ch.bailu.aat.R;
 import ch.bailu.aat.description.AltitudeDescription;
 import ch.bailu.aat.description.AverageSpeedDescription;
 import ch.bailu.aat.description.CurrentSpeedDescription;
@@ -25,46 +21,36 @@ import ch.bailu.aat.util.ui.AppLayout;
 import ch.bailu.aat.views.ContentView;
 import ch.bailu.aat.views.ControlBar;
 import ch.bailu.aat.views.MainControlBar;
-import ch.bailu.aat.views.MvNextButton;
 import ch.bailu.aat.views.PercentageLayout;
 import ch.bailu.aat.views.description.CockpitView;
-import ch.bailu.aat.views.description.GPSStateButton;
 import ch.bailu.aat.views.description.MultiView;
-import ch.bailu.aat.views.description.TrackerStateButton;
 import ch.bailu.aat.views.graph.DistanceAltitudeGraphView;
 import ch.bailu.aat.views.graph.DistanceSpeedGraphView;
 
-public class TrackerActivity extends AbsDispatcher implements OnClickListener{
+public class CockpitActivity extends AbsDispatcher{
 
     private static final String SOLID_KEY="tracker";
-
-    private ImageButton          activityCycle;
-    private MultiView            multiView;
-
-    private EditorHelper         edit;
 
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        edit = new EditorHelper(getServiceContext());
-
+        EditorHelper edit = new EditorHelper(getServiceContext());
         ViewGroup contentView = new ContentView(this);
-
-        multiView = createMultiView();
+        MultiView multiView = createMultiView(edit);
 
         contentView.addView(createButtonBar(multiView));
         contentView.addView(multiView);
 
         setContentView(contentView);
 
-        createDispatcher();
+        createDispatcher(edit);
     }
 
 
-    private MultiView createMultiView() {
-        multiView = new MultiView(this, SOLID_KEY);
+    private MultiView createMultiView(EditorHelper edit) {
+        MultiView multiView = new MultiView(this, SOLID_KEY);
         multiView.add(createCockpit());
         multiView.add(MapFactory.DEF(this, SOLID_KEY).tracker(edit).toView());
         multiView.add(PercentageLayout.add(this,
@@ -76,7 +62,6 @@ public class TrackerActivity extends AbsDispatcher implements OnClickListener{
 
 
     private CockpitView createCockpit() {
-
         CockpitView c = new CockpitView(this);
 
         c.add(this, new CurrentSpeedDescription(this), InfoID.LOCATION);
@@ -93,40 +78,22 @@ public class TrackerActivity extends AbsDispatcher implements OnClickListener{
     private ControlBar createButtonBar(MultiView mv) {
         MainControlBar bar = new MainControlBar(this);
 
-        activityCycle = bar.addImageButton(R.drawable.go_down_inverse);
-        bar.add(new MvNextButton(mv));
-
-
-
+        bar.addActivityCycle(this);
+        bar.addMvNext(mv);
         if (AppLayout.haveExtraSpaceGps(this)) {
             bar.addGpsState(this);
         }
-
-
         bar.addTrackerState(this);
-        bar.setOnClickListener1(this);
 
         return bar;
     }
 
 
-    private void createDispatcher() {
-
-
+    private void createDispatcher(EditorHelper edit) {
         addSource(new EditorSource(getServiceContext(), edit));
         addSource(new TrackerSource(getServiceContext()));
         addSource(new TrackerTimerSource(getServiceContext()));
         addSource(new CurrentLocationSource(getServiceContext()));
         addSource(new OverlaySource(getServiceContext()));
-
-    }
-
-
-    @Override
-    public void onClick(View v) {
-        if (v == activityCycle) {
-            ActivitySwitcher.cycle(this);
-
-        }
     }
 }
