@@ -1,0 +1,69 @@
+<h1>Leisure</h1>
+
+<p>This is used to tag leisure and sports facilities. See the page titled Leisure for an introduction on its usage.</p>
+
+<p>[<b>leisure</b>=<b>adult_gaming_centre</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>A venue with pay-to-play games, such as video games, driving simulators, pinball machines, merchandisers, etc. With a set age limit. As opposed to leisure=amusement_arcade.</p>
+
+<p>[<b>leisure</b>=<b>amusement_arcade</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>A venue with pay-to-play games, such as video games, driving simulators, pinball machines, merchandisers, etc. Without a set age limit. As opposed to leisure=adult_gaming_centre.</p>
+
+<p>[<b>leisure</b>=<b>beach_resort</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>To mark the boundary of a managed beach.</p>
+
+<p>[<b>leisure</b>=<b>bandstand</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>An open structure where musical bands can perform concerts.</p>
+
+<p>[<b>leisure</b>=<b>bird_hide</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>A place to observe birds.</p>
+
+<p>[<b>leisure</b>=<b>common</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>A common land.</p>
+
+<p>[<b>leisure</b>=<b>dance</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>A place to go dancing.</p>
+
+<p>[<b>leisure</b>=<b>dog_park</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Designated area, with or without a fenced boundary, where dog-owners are permitted to exercise their pets unrestrained.</p>
+
+<p>[<b>leisure</b>=<b>firepit</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>A permanent location or structure to host campfires, bonfires, etc.</p>
+
+<p>[<b>leisure</b>=<b>fishing</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>A place for fishing.</p>
+
+<p>[<b>leisure</b>=<b>fitness_centre</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>A place with exercise machines and/or fitness/dance classes.</p>
+
+<p>[<b>leisure</b>=<b>garden</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Place where flowers and other plants are grown in a decorative and structured manner or for scientific purposes.</p>
+
+<p>[<b>leisure</b>=<b>golf_course</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>The outline of a golf course.  The node form may be used to place an icon within the course. This tag implies sport=golf.</p>
+
+<p>[<b>leisure</b>=<b>hackerspace</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>A place where people with common interests, often in computers, technology, science, digital art or electronic art, can meet, socialize and/or collaborate.</p>
+
+<p>[<b>leisure</b>=<b>horse_riding</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>A facility where people practice horse riding, usually in their spare time.</p>
+
+<p>[<b>leisure</b>=<b>ice_rink</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>A place where you can skate or play ice hockey.</p>
+
+<p>[<b>leisure</b>=<b>marina</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>For mooring leisure yachts and motor boats.</p>
+
+<p>[<b>leisure</b>=<b>miniature_golf</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>A place or area that you can play miniature golf.</p>
+
+<p>[<b>leisure</b>=<b>nature_reserve</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Protected area of importance for wildlife, flora, fauna or features of geological or other special interest.</p>
+
+<p>[<b>leisure</b>=<b>park</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Open, green area for recreation, usually municipal.</p>
+
+<p>[<b>leisure</b>=<b>picnic_table</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>A picnic table</p>
+
+<p>[<b>leisure</b>=<b>pitch</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>e.g. a field for playing football/soccer, cricket, baseball sports, and skate parks. To describe what kind of sport(s) use sport=*.</p>
+
+<p>[<b>leisure</b>=<b>playground</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Playground for little children.</p>
+
+<p>[<b>leisure</b>=<b>slipway</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/g___px_Osm_element_way.svg.png"/>Boats can be launched here.</p>
+
+<p>[<b>leisure</b>=<b>sports_centre</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>A distinct facility where a range of sports take place within an enclosed area. To describe what kind of sport(s) use sport=*.</p>
+
+<p>[<b>leisure</b>=<b>stadium</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>A major sports arena with substantial tiered seating. To describe what kind of sport(s) use sport=*.</p>
+
+<p>[<b>leisure</b>=<b>summer_camp</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Summer camp is a supervised program for children or teenagers conducted during the summer months in some countries. Children and adolescents who attend summer camp are known as campers.</p>
+
+<p>[<b>leisure</b>=<b>swimming_area</b>]<img src="images/___px_Osm_element_area.svg.png"/>A swimming area - place over river, lake or other water reservoir where swimming is allowed.</p>
+
+<p>[<b>leisure</b>=<b>swimming_pool</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>A swimming pool.</p>
+
+<p>[<b>leisure</b>=<b>track</b>]<img src="images/g___px_Osm_element_way.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>e.g. running, cycle-racing, greyhound, horses. To describe what kind of sport(s) use sport=*.</p>
+
+<p>[<b>leisure</b>=<b>water_park</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Amusement area with water slides, recreational swimming pools and dressing rooms.</p>
+
+<p>[<b>leisure</b>=<b>wildlife_hide</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>A place to observe wildlife. See also leisure=bird_hide.</p>
+
+<p>[<b>leisure</b>=<b>user defined</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/g___px_Osm_element_way.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>All commonly used values according to Taginfo</p>

@@ -1,0 +1,27 @@
+<h1>Boundary</h1>
+
+<p>These are used to describe administrative and other boundaries. See the page Boundaries for an introduction on its usage.</p>
+
+<p>[<b>boundary</b>=<b>administrative</b>]<img src="images/___px_Osm_element_area.svg.png"/>An administrative boundary. Subdivisions of areas/territories/jurisdictions recognised by governments or other organisations for administrative purposes.  These range from large groups of nation states right down to small administrative districts and suburbs, as indicated by the 'admin_level=*' combo tag</p>
+
+<p>[<b>boundary</b>=<b>historic</b>]<img src="images/g___px_Osm_element_way.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Historic</p>
+
+<p>[<b>boundary</b>=<b>maritime</b>]<img src="images/___px_Osm_element_area.svg.png"/>Maritime boundaries</p>
+
+<p>[<b>boundary</b>=<b>national_park</b>]<img src="images/___px_Osm_element_area.svg.png"/>Area of outstanding natural beauty, set aside for conservation and for recreation (Other languages)</p>
+
+<p>[<b>boundary</b>=<b>political</b>]<img src="images/___px_Osm_element_area.svg.png"/>Electoral boundaries</p>
+
+<p>[<b>boundary</b>=<b>postal_code</b>]<img src="images/___px_Osm_element_area.svg.png"/>Postal code boundaries</p>
+
+<p>[<b>boundary</b>=<b>religious_administration</b>]<img src="images/___px_Osm_element_area.svg.png"/>An religious administrative boundary.See: Talk:Key:boundary#Religious authority boundaries</p>
+
+<p>[<b>boundary</b>=<b>protected_area</b>]<img src="images/___px_Osm_element_area.svg.png"/>Protected areas, such as for national-parks, water protection areas or indigenous areas.</p>
+
+<p>[<b>border_type</b>=<b>*</b>]<img src="images/g___px_Osm_element_way.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>To distinguish between types of boundary where admin_level isn't enough. Used in several different ways e.g in maritime contexts</p>
+
+<p>[<b>fire_boundary</b>=<b>yes</b>]<img src="images/g___px_Osm_element_way.svg.png"/>Tag fire_boundary used to mark the boundaries of the areas of fire brigades out within the project Karta01.</p>
+
+<p>[<b>boundary</b>=<b>user defined</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/g___px_Osm_element_way.svg.png"/>All commonly used values according to Taginfo</p>
+
+<p>[<b>admin_level</b>=<b>Number</b>]<img src="images/___px_Osm_element_area.svg.png"/>Applies to boundary=administrative and is usually in the range 1 to 10, except for Germany where it might be 11 – see  boundary.</p>

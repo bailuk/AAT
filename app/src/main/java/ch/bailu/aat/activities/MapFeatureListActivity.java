@@ -2,10 +2,8 @@ package ch.bailu.aat.activities;
 
 import android.content.Intent;
 
-import java.io.File;
-
 import ch.bailu.aat.util.AppIntent;
-import ch.bailu.aat.util.fs.FileAccess;
+import ch.bailu.aat.util.fs.AssetAccess;
 import ch.bailu.aat.views.FeaturesList;
 
 public class MapFeatureListActivity extends AbsDispatcher {
@@ -20,7 +18,7 @@ public class MapFeatureListActivity extends AbsDispatcher {
             final FeaturesList list = new FeaturesList(this);
 
             list.loadList(
-                    new FileAccess(new File(file)),
+                    new AssetAccess(this.getAssets(), file),
                     getServiceContext().getIconMapService() );
             setContentView(list);
 

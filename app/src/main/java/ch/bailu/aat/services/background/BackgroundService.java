@@ -9,11 +9,11 @@ import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import ch.bailu.aat.services.ServiceContext;
+import ch.bailu.aat.services.VirtualService;
 import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.util.AppIntent;
 import ch.bailu.aat.util.ui.AppLog;
-import ch.bailu.aat.services.ServiceContext;
-import ch.bailu.aat.services.VirtualService;
 
 public class BackgroundService extends VirtualService {
 
@@ -24,7 +24,7 @@ public class BackgroundService extends VirtualService {
     private ProcessThread process;
 
 
-    private final MapFeaturesDownloader mapFeaturesDownloader;
+//    private final MapFeaturesDownloader mapFeaturesDownloader;
 
     private final BroadcastReceiver onFileDownloaded = new BroadcastReceiver() {
         @Override
@@ -35,7 +35,7 @@ public class BackgroundService extends VirtualService {
 
     public BackgroundService(final ServiceContext sc) {
         super(sc);
-        mapFeaturesDownloader = new MapFeaturesDownloader(getSContext());
+//        mapFeaturesDownloader = new MapFeaturesDownloader(getSContext());
         AppBroadcaster.register(getContext(), onFileDownloaded, AppBroadcaster.FILE_CHANGED_ONDISK);
 
 
@@ -96,16 +96,16 @@ public class BackgroundService extends VirtualService {
     }
 
 
-    public void downloadMapFeatures() {
-        mapFeaturesDownloader.download();
-    }
+//    public void downloadMapFeatures() {
+//        mapFeaturesDownloader.download();
+//    }
 
 
     @Override
     public void close() {
         getContext().unregisterReceiver(onFileDownloaded);
 
-        mapFeaturesDownloader.close();
+//        mapFeaturesDownloader.close();
 
         for (int i=0; i<loaders.size(); i++)
             loaders.valueAt(i).close();

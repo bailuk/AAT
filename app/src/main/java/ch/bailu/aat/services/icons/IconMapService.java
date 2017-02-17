@@ -8,9 +8,9 @@ import ch.bailu.aat.gpx.GpxAttributes;
 import ch.bailu.aat.gpx.interfaces.GpxPointInterface;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.VirtualService;
-import ch.bailu.aat.util.fs.AbsAccess;
 import ch.bailu.aat.util.fs.AssetAccess;
 import ch.bailu.aat.util.ui.AppLog;
+import ch.bailu.simpleparser.AbsAccess;
 
 public class IconMapService extends VirtualService {
     private final static String NKEY_KEY = "class";

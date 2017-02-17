@@ -2,8 +2,9 @@ package ch.bailu.aat.services.icons;
 
 import java.io.IOException;
 
-import ch.bailu.aat.gpx.parser.SimpleStream;
-import ch.bailu.aat.util.fs.AbsAccess;
+import ch.bailu.simpleparser.AbsAccess;
+import ch.bailu.simpleparser.SimpleStream;
+
 
 public class IconMapParser {
     private final static int ICON=0, KEY=1, VALUE=2, END=3, MAX=4; 

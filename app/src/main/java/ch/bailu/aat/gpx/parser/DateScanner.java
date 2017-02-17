@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
+import ch.bailu.simpleparser.SimpleStream;
+
 
 public class DateScanner {
     private final IntegerScanner minute;

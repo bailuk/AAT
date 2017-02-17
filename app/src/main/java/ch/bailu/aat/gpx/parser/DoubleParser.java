@@ -1,6 +1,7 @@
 package ch.bailu.aat.gpx.parser;
 import java.io.IOException;
 
+import ch.bailu.simpleparser.SimpleStream;
 
 
 public class DoubleParser  {

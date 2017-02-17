@@ -8,6 +8,9 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
+import ch.bailu.simpleparser.AbsAccess;
+import ch.bailu.simpleparser.FileAccess;
+
 public class UriAccess extends AbsAccess {
     private final Uri uri;
     private final Context context;
@@ -21,6 +24,16 @@ public class UriAccess extends AbsAccess {
     public UriAccess(Context c, File f) {
         this (c, Uri.fromFile(f));
     }
+
+
+    public static AbsAccess factory(Context c, String id) {
+        if (id.length()>0 && id.charAt(0) == '/') {
+            return new FileAccess(new File(id));
+        } else {
+            return new UriAccess(c, Uri.parse(id));
+        }
+    }
+
 
     @Override
     public InputStream open_r() throws FileNotFoundException {

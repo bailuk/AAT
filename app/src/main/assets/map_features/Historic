@@ -1,0 +1,65 @@
+<h1>Historic</h1>
+
+<p>This is used to describe various historic places. For example: archeological sites, wrecks, ruins, castles and ancient buildings. See the page titled Historic for an introduction on its usage.</p>
+
+<p>[<b>historic</b>=<b>aircraft</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>A decommissioned aircraft which generally remains in one place</p>
+
+<p>[<b>historic</b>=<b>archaeological_site</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>A place in which evidence of past activity is preserved</p>
+
+<p>[<b>historic</b>=<b>battlefield</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>The site of a battle or military skirmish in the past. This could be on land or at sea.</p>
+
+<p>[<b>historic</b>=<b>boundary_stone</b>]<img src="images/___px_Osm_element_node.svg.png"/>A historic boundary stone usually found along the way.</p>
+
+<p>[<b>historic</b>=<b>building</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>If it's not clear what type a historic building has, it can be tagged as a generic building.</p>
+
+<p>[<b>historic</b>=<b>cannon</b>]<img src="images/___px_Osm_element_node.svg.png"/>A historic/retired cannon. Usually found at on forts or battlefields.</p>
+
+<p>[<b>historic</b>=<b>castle</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Castles are (often fortified) buildings from medieval and modern times. Other languages</p>
+
+<p>[<b>historic</b>=<b>city_gate</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>A <img src="images/images______Wikipedia___px.png"/>&#160;city gate (or town gate) is a gate within a city wall.</p>
+
+<p>[<b>historic</b>=<b>citywalls</b>]<img src="images/g___px_Osm_element_way.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>A <img src="images/images______Wikipedia___px.png"/>&#160;defensive wall is a fortification used to protect a city or settlement from potential aggressors.</p>
+
+<p>[<b>historic</b>=<b>farm</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>A historical farm, kept in it's original state.</p>
+
+<p>[<b>historic</b>=<b>fort</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>A military fort – distinct from a castle as it is generally more modern</p>
+
+<p>[<b>historic</b>=<b>gallows</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/x_Osm_element_relation.svg.png"/>A structure designed for capital punishment by hanging.</p>
+
+<p>[<b>historic</b>=<b>highwater_mark</b>]<img src="images/___px_Osm_element_node.svg.png"/>A marker for indicating past flood.</p>
+
+<p>[<b>historic</b>=<b>locomotive</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>A decommissioned locomotive which generally remains in one place.</p>
+
+<p>[<b>historic</b>=<b>manor</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Historic <img src="images/images______Wikipedia___px.png"/>&#160;manors / <img src="images/images______Wikipedia___px.png"/>&#160;mansions</p>
+
+<p>[<b>historic</b>=<b>memorial</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Much like a monument, but smaller. Might range from a WWII memorial to a simple plate on a wall.</p>
+
+<p>[<b>historic</b>=<b>milestone</b>]<img src="images/___px_Osm_element_node.svg.png"/>A historic marker that shows the distance to important destinations.</p>
+
+<p>[<b>historic</b>=<b>monastery</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>An historic monastery. See Also amenity=monastery.</p>
+
+<p>[<b>historic</b>=<b>monument</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>A memorial object, wich is especially large (one can go inside, walk on or through it) or high enough (see the examples), built to remember, show respect to a person or group of people or to commemorate an event.  Other languages</p>
+
+<p>[<b>historic</b>=<b>optical_telegraph</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Historic optical telegraph</p>
+
+<p>[<b>historic</b>=<b>pillory</b>]<img src="images/___px_Osm_element_node.svg.png"/>A construction designed to immobilitate and humiliate a person who was convicted in lower courts.</p>
+
+<p>[<b>historic</b>=<b>ruins</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Remains of structures that were once complete, but have fallen into partial or complete disrepair. If the type of original structure is known or apparent it can be described using ruins=*, e.g. ruins=castle.Alternative tagging is historic=castle, ruins=yes.See the proposal and discussion at Proposed features/ruins for ruins of historic buildings. </p>
+
+<p>[<b>historic</b>=<b>rune_stone</b>]<img src="images/___px_Osm_element_node.svg.png"/>A <img src="images/images______Wikipedia___px.png"/>&#160;runestone is typically a raised stone with a runic inscription.</p>
+
+<p>[<b>historic</b>=<b>ship</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>A decommissioned ship or submarine</p>
+
+<p>[<b>historic</b>=<b>tomb</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Historic tomb</p>
+
+<p>[<b>historic</b>=<b>tree_shrine</b>]<img src="images/___px_Osm_element_node.svg.png"/>A single tree of a religious figure mounted onto a tree. Use natural=tree + historic=wayside_shrine instead.</p>
+
+<p>[<b>historic</b>=<b>wayside_cross</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>A historical (usually christian) cross. Frequently found along the way in Southern Germany, Austria and probably elsewhere.</p>
+
+<p>[<b>historic</b>=<b>wayside_shrine</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>A historical shrine often showing a religious depiction. Frequently found along the way in Southern Germany, Austria and probably elsewhere.</p>
+
+<p>[<b>historic</b>=<b>wreck</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Nautical craft that has unintentionally been sunk or destroyed.</p>
+
+<p>[<b>historic</b>=<b>yes</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Used to add the historic significance of the objects described by other tags.</p>
+
+<p>[<b>historic</b>=<b>user defined</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>All commonly used values according to Taginfo</p>

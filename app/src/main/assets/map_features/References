@@ -1,0 +1,27 @@
+<h1>References</h1>
+
+<p>This is used to add reference information for an element.</p>
+
+<p>[<b>iata</b>=<b>User Defined</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/g___px_Osm_element_way.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>IATA International airport codes</p>
+
+<p>[<b>icao</b>=<b>User Defined</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/g___px_Osm_element_way.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>ICAO International airport codes</p>
+
+<p>[<b>int_ref</b>=<b>User Defined</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/g___px_Osm_element_way.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>International reference (eg E 30)</p>
+
+<p>[<b>lcn_ref</b>=<b>User Defined</b>]<img src="images/g___px_Osm_element_way.svg.png"/>The number of the local cycle network</p>
+
+<p>[<b>loc_ref</b>=<b>User Defined</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/g___px_Osm_element_way.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Local reference</p>
+
+<p>[<b>nat_ref</b>=<b>User Defined</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/g___px_Osm_element_way.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>National reference</p>
+
+<p>[<b>ncn_ref</b>=<b>User Defined</b>]<img src="images/g___px_Osm_element_way.svg.png"/>The number reference (eg 54) of a National Cycle Network route.</p>
+
+<p>[<b>old_ref</b>=<b>User Defined</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/g___px_Osm_element_way.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Historical reference</p>
+
+<p>[<b>rcn_ref</b>=<b>User Defined</b>]<img src="images/g___px_Osm_element_way.svg.png"/>The number of the regional cycle network.</p>
+
+<p>[<b>ref</b>=<b>User Defined</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/g___px_Osm_element_way.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/><img src="images/x_Osm_element_relation.svg.png"/>The common default reference (eg M25, in Germany always with space eg A 5)</p>
+
+<p>[<b>reg_ref</b>=<b>User Defined</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/g___px_Osm_element_way.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Regional reference</p>
+
+<p>[<b>source_ref</b>=<b>User Defined</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/g___px_Osm_element_way.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>To record the URI, source reference (eg Landsat) or other link to physical sources.</p>

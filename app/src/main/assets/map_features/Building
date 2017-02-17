@@ -1,0 +1,129 @@
+<h1>Building</h1>
+
+<p>This is used to identify individual buildings or groups of connected buildings. See the page Buildings for further details on the usage of this tag and man_made=* for tagging of various other structures.</p>
+
+<p>[<b>building</b>=<b>apartments</b>]<img src="images/___px_Osm_element_area.svg.png"/>A building arranged into individual dwellings, often on separate floors. May also have retail outlets on the ground floor.</p>
+
+<p>[<b>building</b>=<b>farm</b>]<img src="images/___px_Osm_element_area.svg.png"/>A residential building on a farm (farmhouse). For other buildings see below building=farm_auxiliary, building=barn, … If in your country farmhouse looks same as general residential house then you can tag as building=house as well. See also landuse=farmyard</p>
+
+<p>[<b>building</b>=<b>hotel</b>]<img src="images/___px_Osm_element_area.svg.png"/>A building designed with separate rooms available for overnight accommodation. Normally used in conjunction with tourism=hotel for the hotel grounds including recreation areas and parking.</p>
+
+<p>[<b>building</b>=<b>house</b>]<img src="images/___px_Osm_element_area.svg.png"/>A dwelling unit inhabited by a single household (a family or small group sharing facilities such as a kitchen). Houses forming half of a semi-detached pair, or one of a row of terraced houses, should share at least two nodes with joined neighbours, thereby defining the party wall between the properties.</p>
+
+<p>[<b>building</b>=<b>detached</b>]<img src="images/___px_Osm_element_area.svg.png"/>A single dwelling unit inhabited by family or small group sharing facilities such as a kitchen.</p>
+
+<p>[<b>building</b>=<b>residential</b>]<img src="images/___px_Osm_element_area.svg.png"/>A general tag for a building used primarily for residential purposes. Where additional detail is available consider using 'apartments', 'terrace', 'house' or 'detached'.</p>
+
+<p>[<b>building</b>=<b>dormitory</b>]<img src="images/___px_Osm_element_area.svg.png"/>For a shared building, as used by college/university students (not a share room for multiple occupants as implied by the term in British English). Alternatively, use building=residential plus residential=university.</p>
+
+<p>[<b>building</b>=<b>terrace</b>]<img src="images/___px_Osm_element_area.svg.png"/>A single way used to define the outline of a linear row of residential dwellings, each of which normally has its own entrance, which form a terrace (row-house in North American English). Consider defining each dwelling separately using 'house'.</p>
+
+<p>[<b>building</b>=<b>houseboat</b>]<img src="images/___px_Osm_element_area.svg.png"/>A boat used primarily as a home</p>
+
+<p>[<b>building</b>=<b>bungalow</b>]<img src="images/___px_Osm_element_area.svg.png"/>A single-storey detached small house, Dacha.</p>
+
+<p>[<b>building</b>=<b>static_caravan</b>]<img src="images/___px_Osm_element_area.svg.png"/>A mobile home (semi)permanently left on a single site</p>
+
+<p>[<b>building</b>=<b>commercial</b>]<img src="images/___px_Osm_element_area.svg.png"/>A building where non-specific commercial activities take place; use office=* to describe the type of office. Consider tagging the area using landuse=commercial. Use 'retail' if the building consists primarily of shops.</p>
+
+<p>[<b>building</b>=<b>office</b>]<img src="images/___px_Osm_element_area.svg.png"/>Use building=commercial with office=* to describe the type of office. Consider tagging the area using landuse=commercial. Use 'retail' if the building consists primarily of shops.</p>
+
+<p>[<b>building</b>=<b>industrial</b>]<img src="images/___px_Osm_element_area.svg.png"/>A building where some industrial process takes place. Use warehouse if the purpose is known to be primarily for storage/distribution. Consider using landuse=industrial for the surrounding area and the proposed industrial=* tag to describe the industrial activity.</p>
+
+<p>[<b>building</b>=<b>retail</b>]<img src="images/___px_Osm_element_area.svg.png"/>A building primarily used for selling goods that are sold to the public; use shop=* to identify the sort of goods sold. Consider use landuse=retail for the surrounding area.</p>
+
+<p>[<b>building</b>=<b>warehouse</b>]<img src="images/___px_Osm_element_area.svg.png"/>A building primarily used for the storage or goods or as part of a distribution system.</p>
+
+<p>[<b>building</b>=<b>bakehouse</b>]<img src="images/___px_Osm_element_area.svg.png"/>A building that was built as a bakehouse (i.e. for baking bread). Often used in conjunction with another node amenity=baking_oven and oven=wood_fired.</p>
+
+<p>[<b>building</b>=<b>cathedral</b>]<img src="images/___px_Osm_element_area.svg.png"/>A building that was built as a cathedral. Used in conjunction with amenity=place_of_worship, religion=*, denomination=* and landuse=religious for the cathedral grounds where it is in current use.</p>
+
+<p>[<b>building</b>=<b>chapel</b>]<img src="images/___px_Osm_element_area.svg.png"/>A building that was built as a chapel. Used in conjunction with amenity=place_of_worship, religion=*, denomination=* and landuse=religious for the chapel grounds where it is in current use.</p>
+
+<p>[<b>building</b>=<b>church</b>]<img src="images/___px_Osm_element_area.svg.png"/>A building that was built as a church. Used in conjunction with amenity=place_of_worship, religion=* , denomination=* and landuse=religious for the church grounds where it is in current use.</p>
+
+<p>[<b>building</b>=<b>mosque</b>]<img src="images/___px_Osm_element_area.svg.png"/>A mosque. Used in conjunction with amenity=place_of_worship, religion=*,  denomination=*  and landuse=religious for the grounds where it is in current use.</p>
+
+<p>[<b>building</b>=<b>temple</b>]<img src="images/___px_Osm_element_area.svg.png"/>A building that was built as a temple. Used in conjunction with amenity=place_of_worship, religion=*, denomination=* and landuse=religious for the grounds where it is in current use.</p>
+
+<p>[<b>building</b>=<b>synagogue</b>]<img src="images/___px_Osm_element_area.svg.png"/>A building that was built as a synagogue. Used in conjunction with amenity=place_of_worship, religion=*, denomination=* and landuse=religious for the grounds where it is in current use.</p>
+
+<p>[<b>building</b>=<b>shrine</b>]<img src="images/___px_Osm_element_area.svg.png"/>A building that was built as a shrine. Used in conjunction with amenity=place_of_worship, religion=*, denomination=* and landuse=religious for the grounds where it is in current use. Small buildings should consider historic=wayside_shrine.</p>
+
+<p>[<b>building</b>=<b>civic</b>]<img src="images/___px_Osm_element_area.svg.png"/>For any civic amenity, for example amenity=community_centre, amenity=library, amenity=toilets, leisure=sports_centre, leisure=swimming_pool, amenity=townhall etc. Use amenity=* or leisure=* etc. to provide further details. See building=public as well.</p>
+
+<p>[<b>building</b>=<b>hospital</b>]<img src="images/___px_Osm_element_area.svg.png"/>A building which forms part of a hospital. Use amenity=hospital for the hospital grounds.</p>
+
+<p>[<b>building</b>=<b>school</b>]<img src="images/___px_Osm_element_area.svg.png"/>For any generic school buildings. Buildings for specific uses (sports halls etc.) should be tagged for their purpose. Use amenity=school for the perimeter of the school grounds.</p>
+
+<p>[<b>building</b>=<b>stadium</b>]<img src="images/___px_Osm_element_area.svg.png"/>A stadium building.</p>
+
+<p>[<b>building</b>=<b>train_station</b>]<img src="images/___px_Osm_element_area.svg.png"/>A train station building.</p>
+
+<p>[<b>building</b>=<b>transportation</b>]<img src="images/___px_Osm_element_area.svg.png"/>A building related to public transport. You will probably want to tag it with proper transport related tag as well, such as public_transport=station. Note that there is a special tag for train station buildings - building=train_station.</p>
+
+<p>[<b>building</b>=<b>university</b>]<img src="images/___px_Osm_element_area.svg.png"/>A university building. Use amenity=university for the whole university area.</p>
+
+<p>[<b>building</b>=<b>public</b>]<img src="images/___px_Osm_element_area.svg.png"/>A public building. Don't use amenity=public_building.</p>
+
+<p>[<b>building</b>=<b>barn</b>]<img src="images/___px_Osm_element_area.svg.png"/>An agricultural building used for storage and as a covered workplace.</p>
+
+<p>[<b>building</b>=<b>bridge</b>]<img src="images/___px_Osm_element_area.svg.png"/>A building used as a bridge. Can also represent a gatehouse for drawbridges. See also bridge=yes for highway=*. Don't use this tag just for marking bridges (their outlines). For such purposes use man_made=bridge.</p>
+
+<p>[<b>building</b>=<b>bunker</b>]<img src="images/___px_Osm_element_area.svg.png"/>A hardened military building. Also use military=bunker.</p>
+
+<p>[<b>building</b>=<b>cabin</b>]<img src="images/___px_Osm_element_area.svg.png"/>A cabin is a small, roughly built house usually with a wood exterior and typically found in rural areas.</p>
+
+<p>[<b>building</b>=<b>construction</b>]<img src="images/___px_Osm_element_area.svg.png"/>Used for buildings under construction. Use construction=* to hold the value for the completed building.</p>
+
+<p>[<b>building</b>=<b>cowshed</b>]<img src="images/___px_Osm_element_area.svg.png"/>A cowshed (cow barn, cow house) is a building for housing cows, usually found on farms.</p>
+
+<p>[<b>building</b>=<b>digester</b>]<img src="images/___px_Osm_element_area.svg.png"/>A digester is a bioreactor for the production of inflatable biogas from biomass.</p>
+
+<p>[<b>building</b>=<b>farm_auxiliary</b>]<img src="images/___px_Osm_element_area.svg.png"/>A building on a farm that is not a dwelling (use 'farm' or 'house' for the farm house).</p>
+
+<p>[<b>building</b>=<b>garage</b>]<img src="images/___px_Osm_element_area.svg.png"/>A garage is a building suitable for the storage of one or possibly more motor vehicle or similar. See building=garages for larger shared buildings.</p>
+
+<p>[<b>building</b>=<b>garages</b>]<img src="images/___px_Osm_element_area.svg.png"/>A building that consists of a number of discrete storage spaces for different owners/tenants. See also building=garage.</p>
+
+<p>[<b>building</b>=<b>greenhouse</b>]<img src="images/___px_Osm_element_area.svg.png"/>A greenhouse is a glass or plastic covered building used to grow plants. Use landuse=greenhouse_horticulture for the area</p>
+
+<p>[<b>building</b>=<b>hangar</b>]<img src="images/___px_Osm_element_area.svg.png"/>A hangar is a building used for the storage of airplanes, helicopters or space-craft. Consider adding aeroway=hangar, when appropriate.</p>
+
+<p>[<b>building</b>=<b>hut</b>]<img src="images/___px_Osm_element_area.svg.png"/>A hut is a small and crude shelter.</p>
+
+<p>[<b>building</b>=<b>roof</b>]<img src="images/___px_Osm_element_area.svg.png"/>A structure that consists of a roof with open sides, such as a rain shelter, and also gas stations</p>
+
+<p>[<b>building</b>=<b>shed</b>]<img src="images/___px_Osm_element_area.svg.png"/>A shed is a simple, single-storey structure in a back garden or on an allotment that is used for storage, hobbies, or as a workshop.</p>
+
+<p>[<b>building</b>=<b>stable</b>]<img src="images/___px_Osm_element_area.svg.png"/>A stable is a building where horses are kept.</p>
+
+<p>[<b>building</b>=<b>sty</b>]<img src="images/___px_Osm_element_area.svg.png"/>A sty (pigsty, pig ark, pig-shed) is a building for raising domestic pigs, usually found on farms.</p>
+
+<p>[<b>building</b>=<b>transformer_tower</b>]<img src="images/___px_Osm_element_area.svg.png"/>A transformer tower is a characteristic tall building comprising a distribution transformer and constructed to connect directly  to a medium voltage overhead power line. Quite often the power line has since been undergrounded but the building may still serve as a substation. If the building is still in use as a substation it should additionally be tagged as power=substation + substation=minor_distribution.</p>
+
+<p>[<b>building</b>=<b>service</b>]<img src="images/___px_Osm_element_area.svg.png"/>Service building usually is a small unmanned building with certain machinery (like pumps or transformers).</p>
+
+<p>[<b>building</b>=<b>kiosk</b>]<img src="images/___px_Osm_element_area.svg.png"/>Small retail building.</p>
+
+<p>[<b>building</b>=<b>carport</b>]<img src="images/___px_Osm_element_area.svg.png"/>A carport is a covered structure used to offer limited protection to vehicles, primarily cars, from the elements. Unlike most structures a carport does not have four walls, and usually has one or two.</p>
+
+<p>[<b>building</b>=<b>ruins</b>]<img src="images/___px_Osm_element_area.svg.png"/>A house, a village or other building abandoned.</p>
+
+<p>[<b>building</b>=<b>yes</b>]<img src="images/___px_Osm_element_area.svg.png"/>Use this value where it is not possible to determine a more specific value.</p>
+
+<p>[<b>building</b>=<b>user defined </b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>All commonly used values according to Taginfo, generally building types</p>
+
+<p>[<b>entrance</b>=<b>yes / main / exit / service / emergency</b>]<img src="images/___px_Osm_element_node.svg.png"/>An entrance in a building. Replaces the deprecated tag building=entrance.</p>
+
+<p>[<b>height</b>=<b>number</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>The height of the building in meters.</p>
+
+<p>[<b>building:levels</b>=<b>number</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>The number of visible levels (floors) in the building as used in the Simple 3D buildings scheme</p>
+
+<p>[<b>building:fireproof</b>=<b>yes/no</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Fire-resistance information.</p>
+
+<p>[<b>min_level</b>=<b>number</b>]<img src="images/___px_Osm_element_area.svg.png"/>minimum indoor level (floors) in the building as used in the Simple Indoor Tagging scheme</p>
+
+<p>[<b>max_level</b>=<b>number</b>]<img src="images/___px_Osm_element_area.svg.png"/>maximum indoor level (floors) in the building as used in the Simple Indoor Tagging scheme</p>
+
+<p>[<b>non_existent_levels</b>=<b>number</b>]<img src="images/___px_Osm_element_area.svg.png"/>optional list of indoor levels (floors) that do not exists in the building as used in the Simple Indoor Tagging scheme</p>

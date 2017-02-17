@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.util.Locale;
 
 import ch.bailu.aat.gpx.parser.DoubleParser;
-import ch.bailu.aat.gpx.parser.SimpleStream;
+import ch.bailu.simpleparser.SimpleStream;
 
 public class BoundingBoxE6 {
 

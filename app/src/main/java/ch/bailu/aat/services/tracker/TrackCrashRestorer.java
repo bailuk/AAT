@@ -11,8 +11,8 @@ import ch.bailu.aat.gpx.parser.SimpleGpxListReader;
 import ch.bailu.aat.gpx.writer.GpxListWriter;
 import ch.bailu.aat.util.fs.AppDirectory;
 import ch.bailu.aat.util.ui.AppLog;
-import ch.bailu.aat.util.fs.AbsAccess;
-import ch.bailu.aat.util.fs.FileAccess;
+import ch.bailu.simpleparser.AbsAccess;
+import ch.bailu.simpleparser.FileAccess;
 
 
 public class TrackCrashRestorer{

@@ -15,8 +15,8 @@ import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.background.FileHandle;
 import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.util.fs.AppDirectory;
-import ch.bailu.aat.util.fs.FileAccess;
 import ch.bailu.aat.util.ui.AppLog;
+import ch.bailu.simpleparser.FileAccess;
 
 public class CachedTileObject extends TileObject {
     private final static int MIN_SAVE_ZOOM_LEVEL = 16;

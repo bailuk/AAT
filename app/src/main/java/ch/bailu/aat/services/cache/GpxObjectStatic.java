@@ -16,13 +16,13 @@ import ch.bailu.aat.gpx.MaxSpeed;
 import ch.bailu.aat.gpx.interfaces.GpxType;
 import ch.bailu.aat.gpx.linked_list.Node;
 import ch.bailu.aat.gpx.parser.GpxListReader;
-import ch.bailu.aat.util.AppBroadcaster;
-import ch.bailu.aat.util.fs.AbsAccess;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.background.FileHandle;
 import ch.bailu.aat.services.dem.Dem3Tile;
 import ch.bailu.aat.services.dem.ElevationProvider;
 import ch.bailu.aat.services.dem.ElevationUpdaterClient;
+import ch.bailu.aat.util.AppBroadcaster;
+import ch.bailu.aat.util.fs.UriAccess;
 
 public class GpxObjectStatic extends GpxObject implements ElevationUpdaterClient {
     
@@ -61,7 +61,7 @@ public class GpxObjectStatic extends GpxObject implements ElevationUpdaterClient
                         final String id = toString();
 
                         GpxListReader reader =
-                                new GpxListReader(this, AbsAccess.factory(c, id));
+                                new GpxListReader(this, UriAccess.factory(c, id));
                         if (canContinue()) {
                             gpxList = reader.getGpxList();
                             readyAndLoaded = true;

@@ -1,0 +1,193 @@
+<h1>Sport</h1>
+
+<p>This is used to provide information about which sports are placed on a facility such as a pitch or stadium. It is intended to be used in conjunction with tags landuse=* or leisure=*. See the page titled Sport for an introduction on its usage.</p>
+
+<p>[<b>sport</b>=<b>9pin</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/><img src="images/images______Wikipedia___px.png"/>&#32;Nine-pin bowling (Also known as kegeln in German) is a bowling game played primarily in Europe with only nine pins.Useful combination: amenity=bar;pub;restaurant and leisure=bowling_alleySee Also: sport=10pin;bowls;horseshoes</p>
+
+<p>[<b>sport</b>=<b>10pin</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/><img src="images/images______Wikipedia___px.png"/>&#32;Ten-pin bowling is a sport in which a player, or "bowler" rolls a bowling ball down a lane with the objective of scoring points by knocking down as many pins as possible. In Canada, the United States, United Kingdom and Australia, the game is commonly referred to as just "Bowling".Useful combination: amenity=bar;pub;restaurant and leisure=bowling_alleySee Also: sport=9pin;bowls;horseshoes</p>
+
+<p>[<b>sport</b>=<b>american_football</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/><img src="images/images______Wikipedia___px.png"/>&#32;American football is a sport played by two teams of eleven players on a rectangular field with goalposts at each end.Useful combination: leisure=pitch;stadium;sports_centreSee Also: sport=rugby_league;rugby_union;soccer, or sport=australian_football;canadian_footballThe ambiguous sport=football tag is sometimes confused with this one.</p>
+
+<p>[<b>sport</b>=<b>aikido</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/><img src="images/images______Wikipedia___px.png"/>&#32;Aikido is a Japanese martial art by blending with the motion of the attacker and redirecting the force of the attack rather than opposing it head-on.Useful combination: amenity=dojoSee Also: sport=judo;taekwondo</p>
+
+<p>[<b>sport</b>=<b>archery</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/g___px_Osm_element_way.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/><img src="images/images______Wikipedia___px.png"/>&#32;Archery is the art, practice, or skill of propelling arrows with the use of a bow.Useful combination: leisure=pitch;stadium;sports_centre - Indicating that Archery is the sport the facility or area is intended for.See Also: sport=shooting;fencing</p>
+
+<p>[<b>sport</b>=<b>athletics</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/g___px_Osm_element_way.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/><img src="images/images______Wikipedia___px.png"/>&#32;Track and field athletics is a collection of sports which combines various athletic contests based on the skills of running, jumping, and throwing.Track and field is often categorised under the umbrella sport of athletics, which also includes road running, cross country running, and race walking.Useful combination: leisure=track;pitch;stadiumSee Also: sport=running;cycling</p>
+
+<p>[<b>sport</b>=<b>australian_football</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/><img src="images/images______Wikipedia___px.png"/>&#32;Australian rules football, officially known as Australian football, also called football, footy, Aussie rules, or AFL is a sport played between two teams of eighteen players on the field of either an Australian football ground, a modified cricket field, or a similarly sized sports venue.Useful combination: leisure=pitch;stadium;sports_centreSee Also: sport=soccer;american_football;canadian_football</p>
+
+<p>[<b>sport</b>=<b>badminton</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/><img src="images/images______Wikipedia___px.png"/>&#32;Badminton is a racquet sport played by singles or in teams of two, who take positions on opposite halves of a rectangular court (pitch) divided by a net. Players score points by striking a shuttlecock with their racquet so that it passes over the net.Useful combination: leisure=pitch;sports_centreSee Also: sport=tennis;paddle_tennis;table_tennis</p>
+
+<p>[<b>sport</b>=<b>bandy</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/><img src="images/images______Wikipedia___px.png"/>&#32;Bandy is a team winter sport played on ice, in which skaters use sticks to direct a ball into the opposing team's goal. The sport has common background with association football, ice hockey and field hockey. The bandy field is about the same size as a football pitch. It is played on ice like ice hockey.Useful combination: leisure=pitch;stadium;sports_centre, surface=*See Also: sport=ice_hockey;soccer;field_hockey</p>
+
+<p>[<b>sport</b>=<b>base</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/g___px_Osm_element_way.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/><img src="images/images______Wikipedia___px.png"/>&#32;BASE jumping, is an activity that employs an initially packed parachute to jump from fixed objects. "B.A.S.E." is an acronym that stands for four categories of fixed objects: buildings, antennas, spans, and earth. A more down to earth approach to parachuting.Useful combination: building=*, man_made=*, bridge=*, natural=cliffSee Also: sport=cliff_diving;free_flying;paragliding</p>
+
+<p>[<b>sport</b>=<b>baseball</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/><img src="images/images______Wikipedia___px.png"/>&#32;Baseball is a bat-and-ball game played between two teams of nine players on a field (pitch or stadium) each who take turns batting and fielding.Useful combination: leisure=pitch;stadium;sports_centre, surface=*See Also: sport=cricket</p>
+
+<p>[<b>sport</b>=<b>basketball</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/><img src="images/images______Wikipedia___px.png"/>&#32;Basketball is a sport played by two teams of five players on a rectangular court. Played indoors or outdoorsUseful combination: leisure=pitch;stadium;sports_centre, surface=*See Also: sport=volleyball;handball</p>
+
+<p>[<b>sport</b>=<b>beachvolleyball</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/><img src="images/images______Wikipedia___px.png"/>&#32;Beach volleyball is a team sport played by two teams of two players on a sand court divided by a net.Useful combination: leisure=pitch;beach_resort;sports_centre, natural=sand;beach, surface=sandSee Also: sport=volleyball;handball</p>
+
+<p>[<b>sport</b>=<b>billiards</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/><img src="images/images______Wikipedia___px.png"/>&#32;Cue sports, also known as billiard sports, are a wide variety of games of skill generally played with a cue stick which is used to strike billiard balls, moving them around a cloth-covered billiards table bounded by rubber cushions.Useful combination: leisure=bowling_alley, amenity=bar;pub;restaurantSee Also: sport=darts;10pin;horseshoes</p>
+
+<p>[<b>sport</b>=<b>bmx</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/g___px_Osm_element_way.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/><img src="images/images______Wikipedia___px.png"/>&#32;BMX or Bicycle motocross is a cycle sport performed on BMX bikes, either in competitive BMX racing or freestyle BMX, or else in general on- or off-road recreation.Useful combination: leisure=track;pitch;sports_centre, surface=earth, length=*, lanes=*, surface=*See Also: sport=cycling</p>
+
+<p>[<b>sport</b>=<b>bobsleigh</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/g___px_Osm_element_way.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/><img src="images/images______Wikipedia___px.png"/>&#32;Bobsleigh, Luge, or Bobslede is a winter sport in which teams of two or four make timed runs down narrow, twisting, banked, iced tracks in a gravity-powered sled.Useful combination: leisure=track;sports_centre, surface=*See Also: sport=toboggan, Piste Maps, Winter sports</p>
+
+<p>[<b>sport</b>=<b>boules</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/><img src="images/images______Wikipedia___px.png"/>&#32;Boules (Pétanque, lyonnaise, bocce, and bocce volo) is a group of games in which the objective is to throw or roll heavy balls as close as possible to a small target ball.DO NOT USE this old style combined with the tag type=* when describing the type of game. This is meant to specify the type of relations.Useful combination: leisure=pitch;sports_centre, surface=*, For game type use boules=petanque;lyonnaise;bocceSee Also: sport=bowls;pelota;10pin, sport=9pin;horseshoes</p>
+
+<p>[<b>sport</b>=<b>bowls</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/><img src="images/images______Wikipedia___px.png"/>&#32;Bowls or lawn bowls is a sport in which the objective is to roll biased balls so that they stop close to a smaller ball called a  "jack" or "kitty". It is played on a pitch which may be flat (for "flat-green bowls") or convex or uneven (for "crown-green bowls"). It is normally played outdoors (although there are many indoor venues) and the outdoor surface is either natural grass, artificial turf, or cotula (in New Zealand).Useful combination: leisure=pitch;stadium;sports_centre, surface=*See Also: sport=boules;pelota;10pin, sport=9pin;horseshoes</p>
+
+<p>[<b>sport</b>=<b>boxing</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/><img src="images/images______Wikipedia___px.png"/>&#32;Boxing (pugilism, prize fighting, the sweet science or in Greek pygmachia) is a combat sport played in a boxing ring in which two people engage in a contest of strength, speed, reflexes, endurance, and will, by throwing punches  with gloved hands against each other.Useful combination: leisure=stadium;sports_centre;pitch, surface=*See Also: sport=aikido;fencing;athletics</p>
+
+<p>[<b>sport</b>=<b>canadian_football</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/><img src="images/images______Wikipedia___px.png"/>&#32;Canadian football (CFL) is a form of gridiron football played in Canada in which two teams of 12 players each compete for territorial control of a field of play called a pitch. In Canada, the term football may refer to Canadian football and American football collectively, or either sport specifically, depending on context.Useful combination: leisure=pitch;stadium;sports_centre and surface=*See Also: sport=american_football;australian_football;rugby_league, sport=soccer;rugby_union</p>
+
+<p>[<b>sport</b>=<b>canoe</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/g___px_Osm_element_way.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/><img src="images/images______Wikipedia___px.png"/>&#32;Canoe and <img src="images/images______Wikipedia___px.png"/>&#32;Kayak are a narrow human-powered boats, primarily designed to be manually propelled by means of a paddle for the use of racing, whitewater canoeing, touring and camping, freestyle, and general recreation. The intended use of the canoe dictates its hull shape and construction material.Useful combination: landuse=recreation_ground, leisure=sports_centre, amenity=canoe_hire;boat_rental, club=*, shop=*See Also: sport=water_ski;swimming;surfing</p>
+
+<p>[<b>sport</b>=<b>chess</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/><img src="images/images______Wikipedia___px.png"/>&#32;Chess is a two-player strategy board game played on a chessboard.The intended use is for big chess-boards in the open air.Useful combination: leisure=pitch;picnic_tableSee Also: club=chess</p>
+
+<p>[<b>sport</b>=<b>cliff_diving</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/images______Wikipedia___px.png"/>&#32;Non-competitive diving is jumping from a cliff or a rock into water. Such non-competitive diving can occur indoors and outdoors.  Outdoor diving typically takes place from cliffs or other rock formations either into fresh or salt water.  However, man-made diving platforms are sometimes constructed in popular swimming destinations.  Outdoor diving requires knowledge of the water depth and currents as conditions can be dangerous.Useful combination: natural=cliff, height=*, depth=*, tidal=*, surface=*, note=*See Also: sport=climbing;swimming</p>
+
+<p>[<b>sport</b>=<b>climbing</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/><img src="images/images______Wikipedia___px.png"/>&#32;Rock climbing marks elements to represent natural climbing sites (climbing areas, sectors, crags, halls, frozen waterfalls, etc.) or artificial climbs (Climbing walls, Indoor climbing, etc.).Useful combination: landuse=recreation_ground, leisure=sports_centre, surface=*See Also: name=*, ele=*, website=*, url=*, opening_hours=*, fee=*</p>
+
+<p>[<b>sport</b>=<b>climbing_adventure</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/><img src="images/images______Wikipedia___px.png"/>&#32;Climbing Adventure often called "Adventure Park", "Ropes Courses", "Climbing Adventure", "Zip-line", or "Treetop Adventure", can be used for the recreational sport when people get mountain hiking accessories and try to climb, walk or otherwise move on prebuilt wires and other objects high above on the trees using continuous safety measures. These are usually open for everyone including kids and do not require special abilities apart from good physical condition.Useful combination: landuse=recreation_ground, leisure=sports_centreSee Also: sport=climbing</p>
+
+<p>[<b>sport</b>=<b>cockfighting</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/><img src="images/images______Wikipedia___px.png"/>&#32;Cockfighting is a common spectator sport in many countries between two roosters (cocks), held in a ring called a cockpit.Useful combination: leisure=pitch for informal rings.</p>
+
+<p>[<b>sport</b>=<b>cricket</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/><img src="images/images______Wikipedia___px.png"/>&#32;Cricket is a bat-and-ball sport contested by two teams, usually of eleven players, each on a large grass Cricket pitch. Played on a large circular or oval-shaped grassy Cricket field ground.Useful combination: leisure=pitch;stadium;sports_centre, landuse=recreation_ground, surface=*See Also: sport=baseball</p>
+
+<p>[<b>sport</b>=<b>cricket_nets</b>]This is not a sport! No not use this tag.Instead consider using leisure=pitch, sport=cricket, barrier=fence</p>
+
+<p>[<b>sport</b>=<b>croquet</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/><img src="images/images______Wikipedia___px.png"/>&#32;Croquet is a sport or game that is played between two or more players embedded on a small grass playing court or pitch which involves hitting plastic or wooden balls with a mallet through hoops (often called "wickets" in the United States).Useful combination: leisure=pitch;stadium;sports_centre, landuse=recreation_ground, surface=*See Also: sport=field_hockey</p>
+
+<p>[<b>sport</b>=<b>curling</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/><img src="images/images______Wikipedia___px.png"/>&#32;Curling is a sport in which players slide stones on a sheet of ice towards a target area which is segmented into four concentric rings. It is related to bowls, boules and shuffleboard. Indicating that curling is the sport the facility is intended for.Useful combination: leisure=pitch;stadium;sports_centreSee Also: sport=ice_stock;bowls;boules, surface=*</p>
+
+<p>[<b>sport</b>=<b>cycling</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/g___px_Osm_element_way.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/><img src="images/images______Wikipedia___px.png"/>&#32;Cycling, also called bicycling, Mountain biking or biking, is the use of bicycles for transport, recreation, or for sport.Useful combination: leisure=track;stadium;sports_centre, surface=*</p>
+
+<p>[<b>sport</b>=<b>darts</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/><img src="images/images______Wikipedia___px.png"/>&#32;Darts is a form of throwing game in which small missiles are thrown at a circular target (dartboard) fixed to a wall.Useful combination: amenity=bar;pub;restaurant, leisure=bowling_alleySee Also: sport=billiards;10pin;horseshoes</p>
+
+<p>[<b>sport</b>=<b>diving</b>]DO NOT USE THIS TAG, as it is ambiguous. See: sport=divingInstead use: sport=cliff_diving is the means for "jumping from a rock" or the Olympic discipline Diving.sport=scuba_diving is the means for "swimming under the water".</p>
+
+<p>[<b>sport</b>=<b>dog_racing</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/g___px_Osm_element_way.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/><img src="images/images______Wikipedia___px.png"/>&#32;Greyhound racing being the most common type of this sport. There are other sports that involves dog racing, such as Dogsled, Dachshund, Dog scootering, Lure coursing, and Skijoring racing.Useful combination: leisure=track;stadium;sports_centre, surface=*See Also: sport=horse_racing</p>
+
+<p>[<b>sport</b>=<b>equestrian</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/g___px_Osm_element_way.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/><img src="images/images______Wikipedia___px.png"/>&#32;Equestrianism sports involving the skill of riding horses. See also Riding.Often associated internationally with show jumping and dressage, but also including endurance riding, eventing, reining, tent pegging, vaulting, polo, horse racing, driving, rodeo and more.See also sport=horse_racing</p>
+
+<p>[<b>sport</b>=<b>fencing</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/><img src="images/images______Wikipedia___px.png"/>&#32;Fencing is the martial art of fighting with blades. The most common version of fencing today, also called olympic fencing or competitive fencing, is divided into three weapon categories: foil, sabre (spelled saber in the United States) and épée. Classical fencing uses the same three weapons, but approaches fencing as a martial art.Useful combination: leisure=pitch;stadium;sports_centre, surface=*See Also: sport=boxing;wrestling</p>
+
+<p>[<b>sport</b>=<b>field_hockey</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/><img src="images/images______Wikipedia___px.png"/>&#32;Field hockey is a team sport of the hockey family. Players use sticks made out of wood or fiber glass to hit a round, hard, rubber like ball. The game can be played on a grass field or a turf field as well as an indoor board surface.Useful combination: leisure=pitch;sports_centre;stadiumSee Also: sport=ice_hockey;ice_skating</p>
+
+<p>[<b>sport</b>=<b>football</b>]DO NOT USE THIS TAG, as it is ambiguous. See: FootballInstead use: sport=soccer;rugby_league;rugby_union, or sport=american_football;australian_football;canadian_football, etc...</p>
+
+<p>[<b>sport</b>=<b>free_flying</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/><img src="images/images______Wikipedia___px.png"/>&#32;Hang gliding and/or <img src="images/images______Wikipedia___px.png"/>&#32;Paragliding that is a foot launched aircraft, without motorisation. Paragliding/Hanggliding/... takeoff, landings, towing, etc. and related amenities and properties</p>
+
+<p>[<b>sport</b>=<b>gaelic_games</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/><img src="images/images______Wikipedia___px.png"/>&#32;Gaelic games such as Hurling, Gaelic Football, Camogie, predominantly played in Ireland.For tagging individual games under this category see the tag page.  </p>
+
+<p>[<b>sport</b>=<b>golf</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/g___px_Osm_element_way.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/><img src="images/images______Wikipedia___px.png"/>&#32;Golf for golf courses, use leisure=golf_course</p>
+
+<p>[<b>sport</b>=<b>gymnastics</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/><img src="images/images______Wikipedia___px.png"/>&#32;Gymnastics</p>
+
+<p>[<b>sport</b>=<b>handball</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/><img src="images/images______Wikipedia___px.png"/>&#32;Handball</p>
+
+<p>[<b>sport</b>=<b>hapkido</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/><img src="images/images______Wikipedia___px.png"/>&#32;Hapkido is a dynamic and highly eclectic Korean martial art. It is a form of self-defense that employs joint locks, grappling and throwing techniques of other martial arts, as well as kicks, punches, and other striking attacks.Useful combination: amenity=dojoSee Also: sport=aikido;judo;taekwondo</p>
+
+<p>[<b>sport</b>=<b>hockey</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/><img src="images/images______Wikipedia___px.png"/>&#32;HockeyDisambiguous. See sport=hockey. Instead consider other tags. For example:For <img src="images/images______Wikipedia___px.png"/>&#32;Ice hockey Use: sport=ice_hockeyFor <img src="images/images______Wikipedia___px.png"/>&#32;Field hockey Use: sport=field_hockeyFor <img src="images/images______Wikipedia___px.png"/>&#32;Roller hockey Use: sport=roller_hockey Join the Talk:Tag:sport=hockey discussion about how to indicate the type of hockey.For <img src="images/images______Wikipedia___px.png"/>&#32;Street hockey Use: sport=street_hockey Join the Talk:Tag:sport=hockey discussion about how to indicate the type of hockey.</p>
+
+<p>[<b>sport</b>=<b>horseshoes</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/><img src="images/images______Wikipedia___px.png"/>&#32;Horseshoes</p>
+
+<p>[<b>sport</b>=<b>horse_racing</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/g___px_Osm_element_way.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/><img src="images/images______Wikipedia___px.png"/>&#32;Horse racing.</p>
+
+<p>[<b>sport</b>=<b>ice_hockey</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/><img src="images/images______Wikipedia___px.png"/>&#32;Ice Hockey is a team sport played on ice in which two teams of skaters use sticks to shoot a hard rubber hockey puck into their opponent's net to score points.Useful combination: leisure=ice_rink;stadium;sports_centreSee Also: sport=field_hockey;ice_skating</p>
+
+<p>[<b>sport</b>=<b>ice_skating</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/><img src="images/images______Wikipedia___px.png"/>&#32;Ice skating is a sport or pastime by moving on ice while using ice skates.Useful combination: leisure=ice_rink;sports_centre;pitchSee Also: sport=ice_hockey;roller_skatingThe disambiguous sport=skating tag is sometimes confused with this one.</p>
+
+<p>[<b>sport</b>=<b>ice_stock</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/><img src="images/images______Wikipedia___px.png"/>&#32;Ice stock sport, also known as Bavarian Curling, is a winter sport, somewhat similar to <img src="images/images______Wikipedia___px.png"/>&#32;Curling. In German, it is known as <img src="images/images______Wikipedia___px.png"/>&#32;EisstockschießenUseful combination: leisure=pitch;stadium;sports_centreSee Also: sport=curling</p>
+
+<p>[<b>sport</b>=<b>judo</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/><img src="images/images______Wikipedia___px.png"/>&#32;Judo</p>
+
+<p>[<b>sport</b>=<b>karting</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/g___px_Osm_element_way.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/><img src="images/images______Wikipedia___px.png"/>&#32;Kart racing. When used together with highway=raceway then please add also area=no, otherwise the raceway is not rendered.See also sport=motor;motocross</p>
+
+<p>[<b>sport</b>=<b>kitesurfing</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/><img src="images/images______Wikipedia___px.png"/>&#32;Kitesurfing</p>
+
+<p>[<b>sport</b>=<b>korfball</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/><img src="images/images______Wikipedia___px.png"/>&#32;Korfball</p>
+
+<p>[<b>sport</b>=<b>model_aerodrome</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/><img src="images/images______Wikipedia___px.png"/>&#32;Radio-controlled aircraft</p>
+
+<p>[<b>sport</b>=<b>motocross</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/g___px_Osm_element_way.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/><img src="images/images______Wikipedia___px.png"/>&#32;Motocross is a form of motorcycle racing held on enclosed off-road circuits.See also sport=motor;karting</p>
+
+<p>[<b>sport</b>=<b>motor</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/g___px_Osm_element_way.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/><img src="images/images______Wikipedia___px.png"/>&#32;Motorsport.See also sport=karting;motocross</p>
+
+<p>[<b>sport</b>=<b>multi</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/g___px_Osm_element_way.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Use this to indicate that that this pitch can be used to practise different kinds of sport.This is a shortcut to indicate that several unspecified sports are catered for, while you might instead use a semi-colon separated list of sports as a value (to be more precise)</p>
+
+<p>[<b>sport</b>=<b>netball</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/><img src="images/images______Wikipedia___px.png"/>&#160;Netball is a sport played by two teams on a rectangular court.</p>
+
+<p>[<b>sport</b>=<b>obstacle_course</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/g___px_Osm_element_way.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/><img src="images/images______Wikipedia___px.png"/>&#32;Obstacle course. A series of challenging physical obstacles an individual or team must navigate usually while being timed.</p>
+
+<p>[<b>sport</b>=<b>orienteering</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/g___px_Osm_element_way.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/><img src="images/images______Wikipedia___px.png"/>&#32;Orienteering. Navigation sport with Map and compass.</p>
+
+<p>[<b>sport</b>=<b>paddle_tennis</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/><img src="images/images______Wikipedia___px.png"/>&#32;Paddle tennis</p>
+
+<p>[<b>sport</b>=<b>parachuting</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/><img src="images/images______Wikipedia___px.png"/>&#32;Parachuting or skydiving take-off or landing site</p>
+
+<p>[<b>sport</b>=<b>paragliding</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/><img src="images/images______Wikipedia___px.png"/>&#32;Paragliding. Paragliding take-off or landing site</p>
+
+<p>[<b>sport</b>=<b>pelota</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/><img src="images/images______Wikipedia___px.png"/>&#32;Pelota. Spanish Group name for a number of ball games (Baseball, Basque pelota, Bocce, Jai alai, Valencian pilota).</p>
+
+<p>[<b>sport</b>=<b>racquet</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/g___px_Osm_element_way.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/><img src="images/images______Wikipedia___px.png"/>&#32;Racquetball. Group name of sports that are played with a racquet</p>
+
+<p>[<b>sport</b>=<b>rc_car</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/g___px_Osm_element_way.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/><img src="images/images______Wikipedia___px.png"/>&#32;Radio-controlled car</p>
+
+<p>[<b>sport</b>=<b>roller_skating</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/g___px_Osm_element_way.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/><img src="images/images______Wikipedia___px.png"/>&#32;Roller skating is a sport or recreational activity by travelling on surfaces with roller skates.See Also: sport=ice_skating;skateboard;field_hockeyThe disambiguous sport=skating tag is sometimes confused with this one.</p>
+
+<p>[<b>sport</b>=<b>rowing</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/g___px_Osm_element_way.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/><img src="images/images______Wikipedia___px.png"/>&#32;Rowing</p>
+
+<p>[<b>sport</b>=<b>rugby_league</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/><img src="images/images______Wikipedia___px.png"/>&#32;Rugby league. One of the two codes of rugby football, split from rugby union in 1895, along with subsequent rule changes</p>
+
+<p>[<b>sport</b>=<b>rugby_union</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/><img src="images/images______Wikipedia___px.png"/>&#32;Rugby union. Rugby union is a full contact team sport, a form of football which originated in England in the early 19th century.</p>
+
+<p>[<b>sport</b>=<b>running</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/><img src="images/images______Wikipedia___px.png"/>&#32;Running</p>
+
+<p>[<b>sport</b>=<b>safety_training</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Safety Training. To ensure that people are aware of their surrounding hazards and can respond appropriately in an emergency. The definition of this tag is unclear (self defense training? workplace health and safety training? vehicle driving training?,...) and the classification as 'sport' is questionable. See also this poll.</p>
+
+<p>[<b>sport</b>=<b>sailing</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/g___px_Osm_element_way.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/><img src="images/images______Wikipedia___px.png"/>&#32;Sailing</p>
+
+<p>[<b>sport</b>=<b>scuba_diving</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/g___px_Osm_element_way.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/><img src="images/images______Wikipedia___px.png"/>&#32;Scuba diving</p>
+
+<p>[<b>sport</b>=<b>shooting</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/g___px_Osm_element_way.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/><img src="images/images______Wikipedia___px.png"/>&#32;Shooting sportSee also sport=archery</p>
+
+<p>[<b>sport</b>=<b>skating</b>]Disambiguous. See sport=skating. Instead consider other tags.For <img src="images/images______Wikipedia___px.png"/>&#32;Ice skating Use: sport=ice_skatingFor <img src="images/images______Wikipedia___px.png"/>&#32;Roller skating Use: sport=roller_skating</p>
+
+<p>[<b>sport</b>=<b>skateboard</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/g___px_Osm_element_way.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/><img src="images/images______Wikipedia___px.png"/>&#32;Skateboard</p>
+
+<p>[<b>sport</b>=<b>skiing</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/g___px_Osm_element_way.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/><img src="images/images______Wikipedia___px.png"/>&#32;Skiing. This tag isn't well documented, and it's usage is unclear. It is recommended to use the tags piste:type=*, piste:difficulty=* and piste:grooming=*, see Piste Maps.</p>
+
+<p>[<b>sport</b>=<b>soccer</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/><img src="images/images______Wikipedia___px.png"/>&#32;Soccer. Association football, more commonly known as football or soccer, a team sport played between two teams of eleven players. Note: While called "football" (fussball, fotball, …) in many countries, and by the International Olympic Committee, it is best to tag it as "soccer" to avoid confusion with other usages of "football"</p>
+
+<p>[<b>sport</b>=<b>sumo</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/><img src="images/images______Wikipedia___px.png"/>&#32;Sumo. A traditional martial arts of Japan.</p>
+
+<p>[<b>sport</b>=<b>surfing</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/g___px_Osm_element_way.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/><img src="images/images______Wikipedia___px.png"/>&#32;Surfing</p>
+
+<p>[<b>sport</b>=<b>swimming</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/g___px_Osm_element_way.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/><img src="images/images______Wikipedia___px.png"/>&#32;Swimming</p>
+
+<p>[<b>sport</b>=<b>table_tennis</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/><img src="images/images______Wikipedia___px.png"/>&#32;Table tennis</p>
+
+<p>[<b>sport</b>=<b>table_soccer</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/><img src="images/images______Wikipedia___px.png"/>&#32;Table Soccer or Table Football, also known as Foosball, Fussball, Kicker, or Tecball, is a table-top game and sport based off association football (soccer).Useful combination: amenity=pub;bar;restaurantSee Also: sport=soccer;table_tennis;billiards, leisure=amusement_arcade;adult_gaming_centre, club=table_soccer</p>
+
+<p>[<b>sport</b>=<b>taekwondo</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/><img src="images/images______Wikipedia___px.png"/>&#32;Taekwondo</p>
+
+<p>[<b>sport</b>=<b>tennis</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/><img src="images/images______Wikipedia___px.png"/>&#32;Tennis</p>
+
+<p>[<b>sport</b>=<b>toboggan</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/g___px_Osm_element_way.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/><img src="images/images______Wikipedia___px.png"/>&#32;Toboggan. public sledding run; see also Piste Maps (piste:type=sled, piste:difficulty=advanced, piste:lit=yes)</p>
+
+<p>[<b>sport</b>=<b>volleyball</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/><img src="images/images______Wikipedia___px.png"/>&#32;Volleyball</p>
+
+<p>[<b>sport</b>=<b>water_polo</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/><img src="images/images______Wikipedia___px.png"/>&#32;Water polo. It can happen in a leisure=swimming_pool or in a multi-purpose water body (s.a. a canal).</p>
+
+<p>[<b>sport</b>=<b>water_ski</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/g___px_Osm_element_way.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/><img src="images/images______Wikipedia___px.png"/>&#32;Waterskiing either on a cable ski course, or pulled by a boat. Requires area=yes/no on closed ways, to distinguish between closed-loop cables and areas.</p>
+
+<p>[<b>sport</b>=<b>weightlifting</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/><img src="images/images______Wikipedia___px.png"/>&#32;Olympic weightlifting</p>
+
+<p>[<b>sport</b>=<b>wrestling</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/><img src="images/images______Wikipedia___px.png"/>&#32;Wrestling</p>
+
+<p>[<b>sport</b>=<b>yoga</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/><img src="images/images______Wikipedia___px.png"/>&#32;Yoga</p>
+
+<p>[<b>sport</b>=<b>user defined</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>All commonly used values according to Taginfo</p>

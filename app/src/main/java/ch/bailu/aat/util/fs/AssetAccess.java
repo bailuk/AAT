@@ -6,6 +6,9 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
+
+import ch.bailu.simpleparser.AbsAccess;
 
 public class AssetAccess extends AbsAccess {
 
@@ -32,4 +35,21 @@ public class AssetAccess extends AbsAccess {
     public File toFile() {
         return new File(asset);
     }
+
+
+    public static ArrayList<String> listAssets(AssetManager am, String path) {
+        ArrayList<String> r = new ArrayList();
+
+        try {
+            String [] files = am.list(path);
+            for (String f: files) {
+                r.add(path+ "/" + f);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return r;
+    }
+
 }

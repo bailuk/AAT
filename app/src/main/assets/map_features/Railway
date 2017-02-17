@@ -1,0 +1,93 @@
+<h1>Railway</h1>
+
+<p>This tag includes all kinds of railways ranging from heavily used mainline railways to an abandoned rail line. See the page titled Railways for an introduction on its usage.</p>
+
+<p>[<b>railway</b>=<b>abandoned</b>]<img src="images/g___px_Osm_element_way.svg.png"/>The course of a former railway which has been abandoned and the track and infrastucture removed. The course may be still recognized through embankments, cuttings, bridges, tunnel and rolling or straight ways.currently not rendered by mapnik</p>
+
+<p>[<b>railway</b>=<b>construction</b>]<img src="images/g___px_Osm_element_way.svg.png"/>Railway under construction.</p>
+
+<p>[<b>railway</b>=<b>disused</b>]<img src="images/g___px_Osm_element_way.svg.png"/>A section of railway which is no longer used but where the track and infrastructure remains in place. See disused:railway=* for alternative tagging.</p>
+
+<p>[<b>railway</b>=<b>funicular</b>]<img src="images/g___px_Osm_element_way.svg.png"/>Cable driven inclined railways. In many cases they serve touristic interest, giving easy access to spectacular mountain views.</p>
+
+<p>[<b>railway</b>=<b>light_rail</b>]<img src="images/g___px_Osm_element_way.svg.png"/>A higher-standard tram system, normally in its own right-of-way. Often it connects towns and thus reaches a considerable length (tens of kilometer).</p>
+
+<p>[<b>railway</b>=<b>miniature</b>]<img src="images/g___px_Osm_element_way.svg.png"/>Miniature railways are narrower than narrow gauge and carry passengers. They can be found in parks.</p>
+
+<p>[<b>railway</b>=<b>monorail</b>]<img src="images/g___px_Osm_element_way.svg.png"/>A railway with only a single rail. A monorail can run above the rail like in Las Vegas and Disneyland or can suspend below the rail like the Wuppertal Schwebebahn (Germany).</p>
+
+<p>[<b>railway</b>=<b>narrow_gauge</b>]<img src="images/g___px_Osm_element_way.svg.png"/>Narrow-gauge passenger or freight trains. Narrow gauge railways can have mainline railway service like the Rhaetian Railway in Switzerland or can be a small light industrial railway. Use gauge=* to specify the actual width of rails.</p>
+
+<p>[<b>railway</b>=<b>preserved</b>]<img src="images/g___px_Osm_element_way.svg.png"/>A railway running historic trains, usually a tourist attraction (changed to preserved from preserved_rail as "rail" is redundant). Using railway:preserved=yes is an alternate method to mark railway as preserved.</p>
+
+<p>[<b>railway</b>=<b>rail</b>]<img src="images/g___px_Osm_element_way.svg.png"/>Full sized passenger or freight trains in the standard gauge for the country or state.</p>
+
+<p>[<b>railway</b>=<b>subway</b>]<img src="images/g___px_Osm_element_way.svg.png"/>A city passenger rail service running mostly grade separated (see Wikipedia:rapid transit).</p>
+
+<p>[<b>railway</b>=<b>tram</b>]<img src="images/g___px_Osm_element_way.svg.png"/>One or two carriage rail vehicles, usually sharing motor road (Other languages).</p>
+
+<p>[<b>bridge</b>=<b>yes</b>]<img src="images/g___px_Osm_element_way.svg.png"/>If the railway goes over a street, waterway or other railway.</p>
+
+<p>[<b>cutting</b>=<b>yes</b>]<img src="images/g___px_Osm_element_way.svg.png"/>A section where the railway is significantly lower than ground level.</p>
+
+<p>[<b>electrified</b>=<b>contact_line railyesno</b>]<img src="images/g___px_Osm_element_way.svg.png"/>contact_line: a power line over the train headrail: a third rail near the track supplying the train with poweryes: electrified track, but no details availableno: track with no power supply.</p>
+
+<p>[<b>embankment</b>=<b>yes</b>]<img src="images/g___px_Osm_element_way.svg.png"/>A section where the railway is raised significantly higher than ground level.</p>
+
+<p>[<b>frequency</b>=<b>number [Hz]</b>]<img src="images/g___px_Osm_element_way.svg.png"/>The frequency with which a line is electrified. Use 0 for DC. Also see the voltage tag.</p>
+
+<p>[<b>railway:track_ref</b>=<b>number</b>]<img src="images/g___px_Osm_element_way.svg.png"/>Track number</p>
+
+<p>[<b>service</b>=<b>siding</b>]<img src="images/g___px_Osm_element_way.svg.png"/>Relatively short lengths of track, running parallel to (and connected to) a main route</p>
+
+<p>[<b>service</b>=<b>spur</b>]<img src="images/g___px_Osm_element_way.svg.png"/>Relatively short lengths of track, built to give one company or entity access to a main or branch line.</p>
+
+<p>[<b>service</b>=<b>yard</b>]<img src="images/g___px_Osm_element_way.svg.png"/>Tracks within railway company operated marshaling or maintenance yards.</p>
+
+<p>[<b>tracks</b>=<b>number</b>]<img src="images/g___px_Osm_element_way.svg.png"/>Number of parallel tracks in close proximity when mapped as one single way representing all tracks. If not given means unknown and defaults to 1. In many parts of the world the tracks are being drawn out separately so that there is more detail, in which case this tag isn't used.</p>
+
+<p>[<b>tunnel</b>=<b>yes</b>]<img src="images/g___px_Osm_element_way.svg.png"/>If the railway goes below ground. Should be always present on subways.</p>
+
+<p>[<b>usage</b>=<b>mainbranchfreightindustrialmilitarytourism</b>]<img src="images/g___px_Osm_element_way.svg.png"/>main line: heavy trafficbranch line: connecting places with a mainlinefreight: freight service onlyindustrial:  servicing large plants (iron, chemical etc.), surface mining, …military: servicing military area tourism: most mountain rails (rack-rails, funicular) and preserved railways.</p>
+
+<p>[<b>voltage</b>=<b>number</b>]<img src="images/g___px_Osm_element_way.svg.png"/>The voltage with which a line is electrified. Also see the frequency tag.</p>
+
+<p>[<b>railway</b>=<b>halt</b>]<img src="images/___px_Osm_element_node.svg.png"/>A small station without switches</p>
+
+<p>[<b>public_transport</b>=<b>stop_position</b>]<img src="images/___px_Osm_element_node.svg.png"/>The position on the railway track where the train (its center) stops at a platform. This is useful for routing on long platforms where also short trains stop and on long platforms where multiple trains stop behind each other. See also public_transport=stop_area.</p>
+
+<p>[<b>public_transport</b>=<b>platform</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/g___px_Osm_element_way.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>This is parallel to the rail line for showing where the actual platforms are. It is also to know where you can change platform and enter the station, so use footpaths to connect them. This is really useful for routing too. Use only if the platform is served by public transport.</p>
+
+<p>[<b>railway</b>=<b>platform</b>]<img src="images/g___px_Osm_element_way.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>This is parallel to the rail line for showing where the actual platforms are. It is also to know where you can change platform and enter the station, so use footpaths to connect them. This is really useful for routing too. Use in addition to public_transport=platform.</p>
+
+<p>[<b>public_transport</b>=<b>station</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Railway passenger only station.</p>
+
+<p>[<b>railway</b>=<b>station</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Railway passenger and/or cargo station. Use in addition to public_transport=station.</p>
+
+<p>[<b>railway</b>=<b>subway_entrance</b>]<img src="images/___px_Osm_element_node.svg.png"/>The entrance to a subway station, usually going from surface to underground.</p>
+
+<p>[<b>railway</b>=<b>tram_stop</b>]<img src="images/___px_Osm_element_node.svg.png"/>A tram stop is a place where a passenger can embark / disembark a tram.</p>
+
+<p>[<b>railway</b>=<b>buffer_stop</b>]<img src="images/___px_Osm_element_node.svg.png"/>stops the train at the end of a track. see Buffer_stop.currently not rendered by mapnik</p>
+
+<p>[<b>railway</b>=<b>derail</b>]<img src="images/___px_Osm_element_node.svg.png"/>a device used to prevent fouling of a rail track by unauthorized movements of trains or unattended rolling stock. See Derail_(railroad).currently not rendered by mapnik</p>
+
+<p>[<b>railway</b>=<b>crossing</b>]<img src="images/___px_Osm_element_node.svg.png"/>A point where pedestrians may cross.</p>
+
+<p>[<b>railway</b>=<b>level_crossing</b>]<img src="images/___px_Osm_element_node.svg.png"/>A point where rails and roads cross.</p>
+
+<p>[<b>landuse</b>=<b>railway</b>]<img src="images/___px_Osm_element_area.svg.png"/>Ground used around railways and railway-stations.same rendering as landuse=industrial, but without border (see above)</p>
+
+<p>[<b>railway</b>=<b>signal</b>]<img src="images/___px_Osm_element_node.svg.png"/>Any kind of railway signal.currently not rendered by mapnik</p>
+
+<p>[<b>railway</b>=<b>switch</b>]<img src="images/___px_Osm_element_node.svg.png"/>Full Connections between railways (aka 'points').currently not rendered by mapnik</p>
+
+<p>[<b>railway</b>=<b>railway_crossing</b>]<img src="images/___px_Osm_element_node.svg.png"/>Crossing rails with no interconnection.currently not rendered by mapnik</p>
+
+<p>[<b>railway</b>=<b>turntable</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>These are used for changing the direction that part of a train is pointing in.: currently not rendered by mapnik: </p>
+
+<p>[<b>railway</b>=<b>roundhouse</b>]<img src="images/___px_Osm_element_area.svg.png"/>A semicircular building with many stalls for servicing engines.Without building=*: currently not rendered by mapnikWith building=*: same as building=*</p>
+
+<p>[<b>railway</b>=<b>traverser</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>These are used for changing trains between railways. Also known as transfer table.: currently not rendered by mapnik: currently not rendered by mapnik</p>
+
+<p>[<b>railway</b>=<b>user defined</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/g___px_Osm_element_way.svg.png"/>All commonly used values according to Taginfo– – –– – –</p>

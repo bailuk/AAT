@@ -1,0 +1,29 @@
+<h1>Name</h1>
+
+<p>The name tag is the primary tag used for naming an Element. See the page titled Names for an introduction on its usage.</p>
+
+<p>[<b>name</b>=<b>User defined</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/g___px_Osm_element_way.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>The common default name. (Note: For disputed areas, please use the name as displayed on, e.g., street signs for the name tag. Put all alternatives into either localized name tags (e.g., name:tr/name:el) or the variants (e.g., loc_name/old_name/alt_name). Thank you.)</p>
+
+<p>[<b>name:&lt;lg&gt;</b>=<b>User defined</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/g___px_Osm_element_way.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Name in different language; e.g., name:fr=Londres. Note that all key variants below can use a language suffix. See: Multilingual names.</p>
+
+<p>[<b>name:left and  name:right</b>=<b>User defined</b>]<img src="images/g___px_Osm_element_way.svg.png"/>Used when a way has different names for different sides (e.g., a street that's forming the boundary between two municipalities).</p>
+
+<p>[<b>int_name</b>=<b>User defined</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/g___px_Osm_element_way.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>International name (note: consider using language specific names instead; e.g., name:en=... - see above – International does not (necessarily) mean English).</p>
+
+<p>[<b>loc_name</b>=<b>User defined</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/g___px_Osm_element_way.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Local name.</p>
+
+<p>[<b>nat_name</b>=<b>User defined</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/g___px_Osm_element_way.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>National name.</p>
+
+<p>[<b>official_name</b>=<b>User defined</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/g___px_Osm_element_way.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>It has been created for country names but we need a clarification for other cases between "name", "int_name", "loc_name" and "official_name". Example: official_name=Principat d'Andorra (where "name" is name=Andorra).</p>
+
+<p>[<b>old_name</b>=<b>User defined</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/g___px_Osm_element_way.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Historical/old name.</p>
+
+<p>[<b>reg_name</b>=<b>User defined</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/g___px_Osm_element_way.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Regional name.</p>
+
+<p>[<b>short_name</b>=<b>User defined</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/g___px_Osm_element_way.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Common abbreviation, useful for searching (recognized by Nominatim).</p>
+
+<p>[<b>sorting_name</b>=<b>User defined</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/g___px_Osm_element_way.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>name, used for correct sorting of names — This is only needed when sorting names cannot be based only on their orthography (using the Unicode Collation Algorithm with collation tables tailored by language and script, or when sorted lists of names are including names written in multiple languages and/or scripts) but requires ignoring some parts such as: ignoring leading articles, or lowering the relative importance of first names cited before a last name, ignoring the generic part of a street name when it occurs before the specific name (e.g., in French with "rue", "boulevard", "place", etc.),all of them being ignored at the primary sort level and not easily inferable by a preprocessing algorithm.</p>
+
+<p>[<b>alt_name</b>=<b>User defined</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/g___px_Osm_element_way.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Alternative name by which the feature is known; e.g., name=Field Fare Road and alt_name=Fieldfare Road, or name=University Centre and alt_name=Grad Pad. Optionally combined with a semantic prefix as above. See Multiple values.</p>
+
+<p>[<b>name_1...</b>=<b></b>]Do not use this tag, suffixed name tagging for multiple values is deprecated.</p>

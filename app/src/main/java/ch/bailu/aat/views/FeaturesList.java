@@ -1,6 +1,7 @@
 package ch.bailu.aat.views;
 
 import android.content.Context;
+import android.content.res.AssetManager;
 import android.database.DataSetObserver;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
@@ -16,29 +17,27 @@ import android.widget.TextView;
 import com.caverock.androidsvg.SVG;
 import com.caverock.androidsvg.SVGParseException;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
+import java.util.Collections;
 
 import ch.bailu.aat.activities.ActivitySwitcher;
-import ch.bailu.aat.activities.HtmlViewActivity;
 import ch.bailu.aat.activities.MapFeatureListActivity;
+import ch.bailu.aat.osm_features.MapFeaturesParser;
+import ch.bailu.aat.osm_features.MapFeaturesParser.OnHaveFeature;
+import ch.bailu.aat.services.icons.IconMapService;
 import ch.bailu.aat.util.AppBroadcaster;
-import ch.bailu.aat.util.fs.AppDirectory;
 import ch.bailu.aat.util.AppHtml;
+import ch.bailu.aat.util.fs.AssetAccess;
 import ch.bailu.aat.util.graphic.SyncTileBitmap;
 import ch.bailu.aat.util.ui.AppDensity;
 import ch.bailu.aat.util.ui.AppLog;
 import ch.bailu.aat.util.ui.AppTheme;
-import ch.bailu.aat.util.fs.FileAccess;
-import ch.bailu.aat.osm_features.MapFeaturesParser;
-import ch.bailu.aat.osm_features.MapFeaturesParser.OnHaveFeature;
-import ch.bailu.aat.services.icons.IconMapService;
+import ch.bailu.simpleparser.AbsAccess;
 
 public class FeaturesList extends ListView  {
 
+    private static final String MAP_FEATURES_ASSET = "map_features";
     private DataSetObserver observer=null;
 
     private final int icon_size;//, sicon_size;
@@ -70,7 +69,7 @@ public class FeaturesList extends ListView  {
 
         setAdapter(listAdapter);
         setOnItemClickListener(listAdapter);
-        setOnItemLongClickListener(listAdapter);
+        //setOnItemLongClickListener(listAdapter);
 
     }
 
@@ -86,21 +85,15 @@ public class FeaturesList extends ListView  {
         }
 
 
-        public void loadList() throws IOException {
-            File[] files = AppDirectory.getDataDirectory(getContext(), AppDirectory.DIR_OSM_FEATURES_PREPARSED).listFiles();
+        public void loadList(AssetManager assets) throws IOException {
+            ArrayList<String> files = AssetAccess.listAssets(assets, MAP_FEATURES_ASSET);
 
-            if (files != null) {
-                Arrays.sort(files, new Comparator<File>() {
-                    public int compare(File a, File b) {
-                        return a.getName().compareTo(b.getName());
-                    }
-                });
-
-                new MapFeaturesParser(this, files);
-            }
+            Collections.sort(files);
+            new MapFeaturesParser(assets, this, files);
         }
 
-        public void loadList(FileAccess file) throws IOException {
+
+        public void loadList(AbsAccess file) throws IOException {
             new MapFeaturesParser(this, file);
         }
 
@@ -162,9 +155,9 @@ public class FeaturesList extends ListView  {
         return null;
     }
 
-    public void loadList(IconMapService map) {
+    public void loadList(AssetManager assets, IconMapService map) {
         try {
-            new ListLoader(map).loadList();
+            new ListLoader(map).loadList(assets);
             if (observer != null) observer.onChanged();
         } catch (IOException e) {
             AppLog.e(getContext(), this, e);
@@ -173,7 +166,7 @@ public class FeaturesList extends ListView  {
 
 
 
-    public void loadList(FileAccess file, IconMapService map) {
+    public void loadList(AbsAccess file, IconMapService map) {
         try {
             new ListLoader(map).loadList(file);
             if (observer != null) observer.onChanged();
@@ -198,22 +191,12 @@ public class FeaturesList extends ListView  {
 
 
     private void startFeatureListActivity(CharSequence name) {
-        try {
-            File file = new File(AppDirectory.getDataDirectory(getContext(), AppDirectory.DIR_OSM_FEATURES_PREPARSED),name.toString());
-
-            if (file.exists()) {
-                ActivitySwitcher.start(getContext(), MapFeatureListActivity.class, file);
-            }
-
-        } catch (Exception e) {
-            AppLog.e(getContext(), this, e);
-        }
-
+            ActivitySwitcher.start(getContext(), MapFeatureListActivity.class, name.toString());
     }
 
 
-    private class Adapter implements ListAdapter, android.widget.AdapterView.OnItemClickListener,
-            android.widget.AdapterView.OnItemLongClickListener{
+    private class Adapter implements ListAdapter, android.widget.AdapterView.OnItemClickListener{
+//            android.widget.AdapterView.OnItemLongClickListener{
 
 
         @Override
@@ -244,33 +227,33 @@ public class FeaturesList extends ListView  {
 
 
 
-        @Override
-        public boolean onItemLongClick(AdapterView<?> v, View v1, int index,
-                                       long id) {
-            ListData d = data.get(index);
-
-            if (d.name.length()>1) {
-
-                File file;
-                try {
-                    file = new File(AppDirectory.getDataDirectory(getContext(), AppDirectory.DIR_OSM_FEATURES_PREPARSED), d.name);
-                    String content = new FileAccess(file).contentToString();
-                    ActivitySwitcher.start(getContext(), HtmlViewActivity.class, content);
-
-                } catch (Exception e) {
-                    AppLog.e(getContext(), this, e);
-                }
-            }
-
-            return false;
-        }
+//        @Override
+//        public boolean onItemLongClick(AdapterView<?> v, View v1, int index,
+//                                       long id) {
+//            ListData d = data.get(index);
+//
+//            if (d.name.length()>1) {
+//
+//                String file;
+//                try {
+//                    file = MAP_FEATURES_ASSET+ "/"+d.name;
+//                    String content = new AssetAccess(file).contentToString();
+//                    ActivitySwitcher.start(getContext(), HtmlViewActivity.class, content);
+//
+//                } catch (Exception e) {
+//                    AppLog.e(getContext(), this, e);
+//                }
+//            }
+//
+//            return false;
+//        }
 
         @Override
         public void onItemClick(AdapterView<?> arg0, View arg1, int index, long arg3) {
             ListData d = data.get(index);
 
             if (d.name.length()>1) {
-                startFeatureListActivity(d.name);
+                startFeatureListActivity(MAP_FEATURES_ASSET+ "/"+d.name);
 
             } else if (d.key.length()>1
                     && d.value.length()>1) {

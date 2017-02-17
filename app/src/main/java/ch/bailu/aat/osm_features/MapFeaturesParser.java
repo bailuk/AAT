@@ -1,10 +1,15 @@
 package ch.bailu.aat.osm_features;
 
+import android.content.res.AssetManager;
+
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
-import ch.bailu.aat.gpx.parser.SimpleStream;
-import ch.bailu.aat.util.fs.FileAccess;
+import ch.bailu.aat.util.fs.AssetAccess;
+import ch.bailu.simpleparser.AbsAccess;
+import ch.bailu.simpleparser.FileAccess;
+import ch.bailu.simpleparser.SimpleStream;
 
 public class MapFeaturesParser {
     
@@ -22,21 +27,21 @@ public class MapFeaturesParser {
     }
     
     
-    public MapFeaturesParser(OnHaveFeature hf, FileAccess file) throws IOException {
+    public MapFeaturesParser(OnHaveFeature hf, AbsAccess file) throws IOException {
         haveFeature = hf;
         
         parseFeatures(file);
     }
     
 
-    public MapFeaturesParser(OnHaveFeature hf, File[] files) throws IOException {
+    public MapFeaturesParser(AssetManager assets,
+                             OnHaveFeature hf,
+                             ArrayList<String> files) throws IOException {
         haveFeature = hf;
 
 
-        for (File file : files) {
-            if (file.exists() && file.canRead() && file.isFile()) {
-                parseSummary(new FileAccess(file));
-            }
+        for (String file : files) {
+            parseSummary(new AssetAccess(assets, file));
         }
     }
     
@@ -63,7 +68,7 @@ public class MapFeaturesParser {
     
 
     
-    private void parseSummary(FileAccess file) throws IOException {
+    private void parseSummary(AbsAccess file) throws IOException {
         SimpleStream in = new SimpleStream(file);
         
         parseSummary(in);
@@ -73,7 +78,7 @@ public class MapFeaturesParser {
     }
     
     
-    private void parseFeatures(FileAccess file) throws IOException {
+    private void parseFeatures(AbsAccess file) throws IOException {
         SimpleStream in = new SimpleStream(file); 
 
         parseSummary(in);

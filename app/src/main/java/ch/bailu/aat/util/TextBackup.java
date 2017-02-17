@@ -5,8 +5,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 
-import ch.bailu.aat.gpx.parser.SimpleStream;
-import ch.bailu.aat.util.fs.FileAccess;
+import ch.bailu.simpleparser.FileAccess;
+import ch.bailu.simpleparser.SimpleStream;
+
 
 public abstract class TextBackup {
 

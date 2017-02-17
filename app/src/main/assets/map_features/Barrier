@@ -1,0 +1,87 @@
+<h1>Barrier</h1>
+
+<p>These are used to describe barriers and obstacles that are usually involved by traveling. See the page Barriers for an introduction on its usage.</p>
+
+<p>[<b>barrier</b>=<b>cable_barrier</b>]<img src="images/g___px_Osm_element_way.svg.png"/>Also called guard cable. This is a road side or median barrier made of steel wire ropes mounted on weak posts. See also the more extensive wikipedia description.</p>
+
+<p>[<b>barrier</b>=<b>city_wall</b>]<img src="images/g___px_Osm_element_way.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>A fortification used to defend a city or settlement from potential aggressors.From ancient to modern times, they are used to enclose settlements.</p>
+
+<p>[<b>barrier</b>=<b>ditch</b>]<img src="images/g___px_Osm_element_way.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>A trench, ditch or ravine, usually with a stream at the bottom, that is not easily crossed, especially if not on foot.Can be used in combination with waterway=stream or waterway=drain.</p>
+
+<p>[<b>barrier</b>=<b>fence</b>]<img src="images/g___px_Osm_element_way.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>A structure supported by posts driven into the ground and designed to prevent movement across a boundary. It is distinguished from a wall by the lightness of its construction. Use fence_type=* to add details.</p>
+
+<p>[<b>barrier</b>=<b>guard_rail</b>]<img src="images/g___px_Osm_element_way.svg.png"/>A guard_rail, also called a crash barrier. Right side is inner, left side is outer.</p>
+
+<p>[<b>barrier</b>=<b>handrail</b>]<img src="images/g___px_Osm_element_way.svg.png"/>Is designed to be grasped by the hand so as to provide stability or support.</p>
+
+<p>[<b>barrier</b>=<b>hedge</b>]<img src="images/g___px_Osm_element_way.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Is a line of closely spaced shrubs and bushes, planted and trained in such a way as to form a barrier or to mark the boundary of an area.</p>
+
+<p>[<b>barrier</b>=<b>kerb</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/g___px_Osm_element_way.svg.png"/>A (for example footway) kerb is a barrier for vehicles and wheelchair drivers. The height of the kerb is important and with this information, the usage by different groups can be determined. The height of the kerb is tagged additionally as height=*, if available. Right side is bottom, left side is top.</p>
+
+<p>[<b>barrier</b>=<b>retaining_wall</b>]<img src="images/g___px_Osm_element_way.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Retaining walls serve to retain the lateral pressure of soil. Right side is bottom, left side is top.</p>
+
+<p>[<b>barrier</b>=<b>tank_trap</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/g___px_Osm_element_way.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Static anti-tank obstacle defences may take a number of forms, such as Czech hedgehog (barrier=tank_trap; tank_trap=czech_hedgehog).</p>
+
+<p>[<b>barrier</b>=<b>wall</b>]<img src="images/g___px_Osm_element_way.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>A freestanding solid structure designed to restrict or prevent movement across a boundary.  Usually made from solid brick, concrete or stone and almost always built so that it is opaque to vision.</p>
+
+<p>[<b>barrier</b>=<b>block</b>]<img src="images/___px_Osm_element_node.svg.png"/>A large, solid, immobile block that can be moved only with heavy machinery or great effort.Typically big solid things made of concrete for stopping larger vehicles.</p>
+
+<p>[<b>barrier</b>=<b>bollard</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/g___px_Osm_element_way.svg.png"/>Solid (usually concrete or metal) pillar or pillars in the middle of the road to prevent passage by some traffic.</p>
+
+<p>[<b>barrier</b>=<b>border_control</b>]<img src="images/___px_Osm_element_node.svg.png"/>This is a control point at an international border between two countries.  Passports or other forms of ID will be checked.</p>
+
+<p>[<b>barrier</b>=<b>bump_gate</b>]<img src="images/___px_Osm_element_node.svg.png"/>See wikipedia:Bump gate.[1]</p>
+
+<p>[<b>barrier</b>=<b>bus_trap</b>]<img src="images/___px_Osm_element_node.svg.png"/>See wikipedia:Bus trap.</p>
+
+<p>[<b>barrier</b>=<b>cattle_grid</b>]<img src="images/___px_Osm_element_node.svg.png"/>Bars in the road surface that allow wheeled vehicles but not animals to cross.Sometimes known as a Texas Gate, even outside of Texas.</p>
+
+<p>[<b>barrier</b>=<b>chain</b>]<img src="images/___px_Osm_element_node.svg.png"/>A chain used to prevent motorised vehicles.</p>
+
+<p>[<b>barrier</b>=<b>cycle_barrier</b>]<img src="images/___px_Osm_element_node.svg.png"/>Barriers to bicycle traffic, most typically a pair of staggered steel bars perpendicular to the way itself whose gaps allow pedestrians to pass.</p>
+
+<p>[<b>barrier</b>=<b>debris</b>]<img src="images/___px_Osm_element_node.svg.png"/>A road is blocked by debris with or without ground. This might be for short or long time. Often used as first step in blocking an abandoned road.</p>
+
+<p>[<b>barrier</b>=<b>entrance</b>]<img src="images/___px_Osm_element_node.svg.png"/>A gap in a linear barrier with nothing that limits passing through.access=yes is implied.</p>
+
+<p>[<b>barrier</b>=<b>full-height_turnstile</b>]<img src="images/___px_Osm_element_node.svg.png"/>A full-height turnstile, also called HEET-turnstile (high entrance/exit turnstile), like the ones to access security areas. Note the mix of hyphen and underscore.</p>
+
+<p>[<b>barrier</b>=<b>gate</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/g___px_Osm_element_way.svg.png"/>An entrance that can be opened or closed to get through the barrier. For a permanent opening in the barrier, see barrier=entrance.Combine with access=* where appropriate.</p>
+
+<p>[<b>barrier</b>=<b>hampshire_gate</b>]<img src="images/___px_Osm_element_node.svg.png"/>A section of wire fence which can be removed temporarily.Combine with access=* where appropriate.</p>
+
+<p>[<b>barrier</b>=<b>height_restrictor</b>]<img src="images/___px_Osm_element_node.svg.png"/>Combine with maxheight=*.</p>
+
+<p>[<b>barrier</b>=<b>horse_stile</b>]<img src="images/___px_Osm_element_node.svg.png"/>A horse stile allows pedestrians and horses to cross a gap through a fence, but prevents or makes it very difficult for motorcycles and live stock to cross.</p>
+
+<p>[<b>barrier</b>=<b>jersey_barrier</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/g___px_Osm_element_way.svg.png"/>A Jersey barrier consists of heavy prefabricated blocks to create a barrier. Use material=plastic or material=concrete to express the used material.</p>
+
+<p>[<b>barrier</b>=<b>kent_carriage_gap</b>]<img src="images/___px_Osm_element_node.svg.png"/>A Kent carriage gap is used by local authorities in the UK to prevent motorised vehicles from accessing public rights of way whilst allowing most horse drawn carriages to pass. These are now becoming common on byways in the UK</p>
+
+<p>[<b>barrier</b>=<b>kissing_gate</b>]<img src="images/___px_Osm_element_node.svg.png"/>A gate which allows people to cross, but not livestock.</p>
+
+<p>[<b>barrier</b>=<b>lift_gate</b>]<img src="images/___px_Osm_element_node.svg.png"/>A lift gate (boom barrier) is a bar, or pole pivoted in such a way as to allow the boom to block vehicular access through a controlled point.Combine with access=* where appropriate.</p>
+
+<p>[<b>barrier</b>=<b>log</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/g___px_Osm_element_way.svg.png"/>Use this when the passage is closed by lumber (trunk of a tree). This kind of barrier is often useful to sit on. This barrier is a penalty to cyclists but can be crossed by lifting the bike over.</p>
+
+<p>[<b>barrier</b>=<b>motorcycle_barrier</b>]<img src="images/___px_Osm_element_node.svg.png"/>Barriers along paths that prevent access by motorcycles.</p>
+
+<p>[<b>barrier</b>=<b>rope</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/g___px_Osm_element_way.svg.png"/>A flexible barrier made of fibres, twisted or braided together to improve strength. As a barrier it is often more symbolic than actually physically preventing pedestrians from accessing.</p>
+
+<p>[<b>barrier</b>=<b>sally_port</b>]<img src="images/___px_Osm_element_node.svg.png"/>A sally port is used to pass through thick or city walls, and is a type of covered gate with two doors.</p>
+
+<p>[<b>barrier</b>=<b>spikes</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/g___px_Osm_element_way.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Spikes on the ground that prevent unauthorized access. Can also be removable; e.g., after payment in a garage.</p>
+
+<p>[<b>barrier</b>=<b>stile</b>]<img src="images/___px_Osm_element_node.svg.png"/>A stile allows pedestrians to cross a wall or fence, but never actually "opens" the barrier(Unlike a gate, a stile has few or no moving parts).</p>
+
+<p>[<b>barrier</b>=<b>sump_buster</b>]<img src="images/___px_Osm_element_node.svg.png"/>A sump buster is a concrete slab or steel structure that prevents passing of two-tracked vehicles with less than a minimum track and ground clearance. (Typically stops normal cars.)</p>
+
+<p>[<b>barrier</b>=<b>swing_gate</b>]<img src="images/___px_Osm_element_node.svg.png"/>Similar to a lift gate but rotates sidewards to open. It is usually made out of metal bars (wood or other material possible) and is intended to prevent cars from access but can usually be crossed by pedestrians and cyclists.</p>
+
+<p>[<b>barrier</b>=<b>toll_booth</b>]<img src="images/___px_Osm_element_node.svg.png"/>A road usage toll or fee is collected here. Used with toll=* and charge=*.</p>
+
+<p>[<b>barrier</b>=<b>turnstile</b>]<img src="images/___px_Osm_element_node.svg.png"/>A turnstile (also called baffle gate) is used to allow one person at a time to pass. Use this for small turnstiles like the ones in supermarkets or some subways.</p>
+
+<p>[<b>barrier</b>=<b>yes</b>]<img src="images/g___px_Osm_element_way.svg.png"/>A barrier which nature cannot be determined; typically only used in mapping using aerial imagery. Should be replaced by a specific value.</p>
+
+<p>[<b>barrier</b>=<b>user defined</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/g___px_Osm_element_way.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>All commonly used values according to Taginfo</p>

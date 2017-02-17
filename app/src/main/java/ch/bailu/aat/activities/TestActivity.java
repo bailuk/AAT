@@ -154,39 +154,39 @@ public class TestActivity extends AbsDispatcher {
         final MultiView mv = new MultiView(this, SOLID_KEY);
 
 
-        ////////////////////////////////////////////////////////////
-        MapView mapView = new MapView(this);
+//        ////////////////////////////////////////////////////////////
+//        MapView mapView = new MapView(this);
+//
+//        mapView.setClickable(true);
+//        mapView.getMapScaleBar().setVisible(true);
+//        mapView.setBuiltInZoomControls(true);
+//        mapView.setZoomLevelMin((byte) 10);
+//        mapView.setZoomLevelMax((byte) 20);
+//
+//        // create a tile cache of suitable size
+//        TileCache tileCache = AndroidUtil.createTileCache(this, "mapcache",
+//                mapView.getModel().displayModel.getTileSize(), 1f,
+//                mapView.getModel().frameBufferModel.getOverdrawFactor());
+//
+//        // tile renderer layer using internal render theme
+//        MapDataStore mapDataStore = new MapFile(new File("/storage/C973-F26F/maps/berlin.map"));
+//        TileRendererLayer tileRendererLayer = new TileRendererLayer(tileCache, mapDataStore,
+//                mapView.getModel().mapViewPosition, AndroidGraphicFactory.INSTANCE);
+//        tileRendererLayer.setXmlRenderTheme(InternalRenderTheme.DEFAULT);
+//
+//        // only once a layer is associated with a mapView the rendering starts
+//        mapView.getLayerManager().getLayers().add(tileRendererLayer);
+//
+//        mapView.setCenter(new LatLong(52.517037, 13.38886));
+//        mapView.setZoomLevel((byte) 12);
 
-        mapView.setClickable(true);
-        mapView.getMapScaleBar().setVisible(true);
-        mapView.setBuiltInZoomControls(true);
-        mapView.setZoomLevelMin((byte) 10);
-        mapView.setZoomLevelMax((byte) 20);
-
-        // create a tile cache of suitable size
-        TileCache tileCache = AndroidUtil.createTileCache(this, "mapcache",
-                mapView.getModel().displayModel.getTileSize(), 1f,
-                mapView.getModel().frameBufferModel.getOverdrawFactor());
-
-        // tile renderer layer using internal render theme
-        MapDataStore mapDataStore = new MapFile(new File("/storage/C973-F26F/maps/berlin.map"));
-        TileRendererLayer tileRendererLayer = new TileRendererLayer(tileCache, mapDataStore,
-                mapView.getModel().mapViewPosition, AndroidGraphicFactory.INSTANCE);
-        tileRendererLayer.setXmlRenderTheme(InternalRenderTheme.DEFAULT);
-
-        // only once a layer is associated with a mapView the rendering starts
-        mapView.getLayerManager().getLayers().add(tileRendererLayer);
-
-        mapView.setCenter(new LatLong(52.517037, 13.38886));
-        mapView.setZoomLevel((byte) 12);
-
-        mv.add(mapView);
+//        mv.add(mapView);
         /////////////////////////////////////////////////////////////
-        final MapsForgeView mf = new MapsForgeView(getServiceContext(), this, SOLID_KEY);
+//        final MapsForgeView mf = new MapsForgeView(getServiceContext(), this, SOLID_KEY);
 
-        fillMap(mf);
+//        fillMap(mf);
 
-        mv.add(mf, "MapsForge");
+//        mv.add(mf, "MapsForge");
         mv.add(locationView, getString(R.string.gps));
 
         mv.add(trackerView, getString(R.string.tracker));

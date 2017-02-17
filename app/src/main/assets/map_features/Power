@@ -1,0 +1,43 @@
+<h1>Power</h1>
+
+<p>These are used to map electrical power generation and distributions systems. See the page titled Power for an introduction on its usage.</p>
+
+<p>[<b>power</b>=<b>plant</b>]<img src="images/___px_Osm_element_area.svg.png"/><img src="images/x_Osm_element_relation.svg.png"/>A place/industrial facility where power is generated. Individual generating units within the facility should be tagged as power=generator.</p>
+
+<p>[<b>power</b>=<b>cable</b>]<img src="images/g___px_Osm_element_way.svg.png"/>A way following the path of underground cables, such as the local 0.4 kV network between transformer stations, distribution boxes and cable connection points, or sea cables. Not to be confused with non-power supply cables such as cables for telecommunication. May be combined with voltage=*, circuits=* and location=*.</p>
+
+<p>[<b>power</b>=<b>compensator</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Several kind of power devices used to insure of power quality and network resilience.</p>
+
+<p>[<b>power</b>=<b>converter</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>An HVDC converter converts electric power from high voltage alternating current (AC) to high-voltage direct current (HVDC), or vice-versa.</p>
+
+<p>[<b>power</b>=<b>generator</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>A device used to convert power from one form to another. Use in combination with generator:source=*, generator:method=* and generator:output=*.Depends on generator type</p>
+
+<p>[<b>power</b>=<b>heliostat</b>]<img src="images/___px_Osm_element_node.svg.png"/>A mirror of a heliostat device.</p>
+
+<p>[<b>power</b>=<b>insulator</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/g___px_Osm_element_way.svg.png"/>A device to protect a power line from grounding on supports</p>
+
+<p>[<b>power</b>=<b>line</b>]<img src="images/g___px_Osm_element_way.svg.png"/>A way following the path of (overground) power cables. For minor power lines with poles and not towers, you may want to use power=minor_line. Useful combinations: voltage=*, cables=* and wires=*. Please see the respective feature pages for details.</p>
+
+<p>[<b>line</b>=<b>busbar</b>]<img src="images/g___px_Osm_element_way.svg.png"/>Determines a power=line to a busbar.</p>
+
+<p>[<b>line</b>=<b>bay</b>]<img src="images/g___px_Osm_element_way.svg.png"/>A bay connects an incoming circuit to a busbar assembly.</p>
+
+<p>[<b>power</b>=<b>minor_line</b>]<img src="images/g___px_Osm_element_way.svg.png"/>A way following the path of (overground) minor power cables, supported by poles and not towers/pylons. (This isn't quite so simple, as sometimes larger towers are replaced by smaller poles made with a stronger material; a better distinction might be based on voltage).</p>
+
+<p>[<b>power</b>=<b>pole</b>]<img src="images/___px_Osm_element_node.svg.png"/>For single (often wooden or concrete) poles carrying medium/low voltage electricity cables.</p>
+
+<p>[<b>power</b>=<b>portal</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/g___px_Osm_element_way.svg.png"/>Power supporting structure composed of vertical legs with cables between them attached to a horizontal crossarm</p>
+
+<p>[<b>power</b>=<b>catenary_mast</b>]<img src="images/___px_Osm_element_node.svg.png"/>A catenary mast supports system of overhead wires used to supply electricity to electricaly powered vehicle equipped with a pantograph.</p>
+
+<p>[<b>power</b>=<b>substation</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>A tag for electricity substations. These provide voltage step-up/step-down, switching, conditioning, etc. Substations may be large facilities (up to several acres) for very high voltage transmission lines or just small buildings or kiosks near the street for low voltage distribution lines. Useful combinations: voltage=*, substation=* and location=*, see the feature page for details.</p>
+
+<p>[<b>power</b>=<b>switch</b>]<img src="images/___px_Osm_element_node.svg.png"/>A tag for electricity switches which are devices which allow operators to power up &amp; down lines and transformer in substations or outside.</p>
+
+<p>[<b>power</b>=<b>terminal</b>]<img src="images/___px_Osm_element_node.svg.png"/>Point of connection between overhead power lines to buildings or walls</p>
+
+<p>[<b>power</b>=<b>tower</b>]<img src="images/___px_Osm_element_node.svg.png"/>For towers or pylons carrying high voltage electricity cables. Normally constructed from steel latticework but tubular or solid pylons are also commonly used. Should not be used for medium or low voltage electricity conductors carried on single wooden poles which might be tagged power=pole. See power=tower for detailed tagging of tower types.</p>
+
+<p>[<b>power</b>=<b>transformer</b>]<img src="images/___px_Osm_element_node.svg.png"/>A static device for transferring electric energy by inductive coupling between its windings. Large power transformers are typically located inside substations.</p>
+
+<p>[<b>power</b>=<b>User Defined</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/g___px_Osm_element_way.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>All commonly used values according to Taginfo</p>
