@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="20"
+   height="20"
+   id="svg2"
+   sodipodi:version="0.32"
+   inkscape:version="0.46"
+   version="1.0"
+   sodipodi:docname="Way symbol.svg"
+   inkscape:output_extension="org.inkscape.output.svg.inkscape">
+  <defs
+     id="defs4">
+    <inkscape:perspective
+       sodipodi:type="inkscape:persp3d"
+       inkscape:vp_x="0 : 526.18109 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_z="744.09448 : 526.18109 : 1"
+       inkscape:persp3d-origin="372.04724 : 350.78739 : 1"
+       id="perspective10" />
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="1"
+     inkscape:cx="8.5999507"
+     inkscape:cy="11.114157"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:showpageshadow="false"
+     inkscape:window-width="1012"
+     inkscape:window-height="684"
+     inkscape:window-x="260"
+     inkscape:window-y="226" />
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Ebene 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1.5;stroke-linecap:square;stroke-linejoin:miter;marker-start:none;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:4.59999999999999964;stroke-opacity:0.31372549000000000"
+       d="M 6.2855816,8.8969681 L 11.232191,5.1174073"
+       id="path3371"
+       inkscape:connector-type="polyline"
+       inkscape:connection-start="#path3187"
+       inkscape:connection-end="#use3189" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1.5;stroke-linecap:square;stroke-linejoin:miter;stroke-opacity:0.31372549000000000;stroke-miterlimit:4;stroke-dasharray:none"
+       d="M 6.2855816,11.116045 L 13.26243,13.818625"
+       id="path3968"
+       inkscape:connector-type="polyline"
+       inkscape:connection-start="#path3187"
+       inkscape:connection-end="#use3966" />
+    <use
+       x="0"
+       y="0"
+       xlink:href="#path3187"
+       id="use3189"
+       transform="translate(8.8563363,-6.7668697)"
+       width="20"
+       height="20" />
+    <path
+       sodipodi:type="arc"
+       style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       id="path3187"
+       sodipodi:cx="16.667517"
+       sodipodi:cy="18.484772"
+       sodipodi:rx="132.83505"
+       sodipodi:ry="110.6117"
+       d="M 149.50257,18.484772 A 132.83505,110.6117 0 1 1 -116.16754,18.484772 A 132.83505,110.6117 0 1 1 149.50257,18.484772 z"
+       transform="matrix(1.4454016e-2,0,0,1.7416028e-2,4.1174421,10.047575)" />
+    <use
+       x="0"
+       y="0"
+       xlink:href="#path3187"
+       id="use3966"
+       transform="translate(10.886575,4.217068)"
+       width="20"
+       height="20" />
+    <rect
+       style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.98591548;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:1;stroke-dasharray:none;stroke-dashoffset:4.6;stroke-opacity:1"
+       id="rect3970"
+       width="19.014084"
+       height="19.014084"
+       x="0.49295774"
+       y="0.49295774"
+       ry="2.7025516" />
+  </g>
+</svg>
