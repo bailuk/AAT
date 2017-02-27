@@ -56,12 +56,9 @@ public class MapFactory {
 
 
     public MapViewInterface split() {
-        return split(6);
-    }
-
-    private MapViewInterface split(int size) {
-        base(size);
+        m.add(new CurrentLocationLayer(mc, d));
         m.add(new GpxOverlayListLayer(mc,d));
+        m.add(new GpxDynLayer(mc, d, InfoID.EDITOR_DRAFT));
         m.add(new GpxDynLayer(mc, d, InfoID.TRACKER));
 
         return m;
@@ -72,8 +69,9 @@ public class MapFactory {
     }
 
     private MapViewInterface tracker(EditorHelper e, int iid) {
-        split(4);
-
+        base(4);
+        m.add(new GpxOverlayListLayer(mc,d));
+        m.add(new GpxDynLayer(mc, d, InfoID.TRACKER));
         m.add(new GridDynLayer(mc));
         m.add(new InformationBarLayer(mc, d));
         m.add(new EditorLayer(mc, d, iid, e));
