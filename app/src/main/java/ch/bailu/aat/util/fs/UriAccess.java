@@ -8,8 +8,8 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-import ch.bailu.simpleparser.AbsAccess;
-import ch.bailu.simpleparser.FileAccess;
+import ch.bailu.simpleio.io.AbsAccess;
+import ch.bailu.simpleio.io.FileAccess;
 
 public class UriAccess extends AbsAccess {
     private final Uri uri;

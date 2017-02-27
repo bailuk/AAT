@@ -138,10 +138,12 @@
             android:name="ch.bailu.aat.activities.GpxEditorActivity">
         </activity>
         <activity
-            android:name="ch.bailu.aat.activities.OverpassActivity">
+            android:name="ch.bailu.aat.activities.OverpassActivity"
+            android:windowSoftInputMode="adjustPan">
         </activity>
         <activity
-            android:name="ch.bailu.aat.activities.NominatimActivity">
+            android:name="ch.bailu.aat.activities.NominatimActivity"
+            android:windowSoftInputMode="adjustPan">
         </activity>
         <activity android:name="ch.bailu.aat.activities.MapFeaturesActivity" >
         </activity>

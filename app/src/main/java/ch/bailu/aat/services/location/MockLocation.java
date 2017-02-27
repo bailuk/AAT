@@ -15,7 +15,7 @@ import ch.bailu.aat.gpx.parser.SimpleGpxListReader;
 import ch.bailu.aat.util.ui.AppLog;
 import ch.bailu.aat.util.Timer;
 import ch.bailu.aat.preferences.SolidMockLocationFile;
-import ch.bailu.simpleparser.FileAccess;
+import ch.bailu.simpleio.io.FileAccess;
 
 public class MockLocation extends LocationStackChainedItem implements Runnable{
 

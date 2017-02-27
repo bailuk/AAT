@@ -8,7 +8,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
 
-import ch.bailu.simpleparser.AbsAccess;
+import ch.bailu.simpleio.io.AbsAccess;
 
 public class AssetAccess extends AbsAccess {
 

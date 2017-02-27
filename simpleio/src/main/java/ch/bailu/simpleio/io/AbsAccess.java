@@ -1,4 +1,4 @@
-package ch.bailu.simpleparser;
+package ch.bailu.simpleio.io;
 
 import java.io.BufferedInputStream;
 import java.io.File;

@@ -1,10 +1,13 @@
-package ch.bailu.simpleparser;
+package ch.bailu.simpleio.parser;
 
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
+
+import ch.bailu.simpleio.io.FileAccess;
+import ch.bailu.simpleio.io.SimpleStream;
 
 public class MapFeaturesPreparser {
     private static final int TARGET_LENGTH=30;
@@ -20,7 +23,7 @@ public class MapFeaturesPreparser {
     private final StringBuilder targetBuilder = new StringBuilder();
 
 
-    private final SimpleStream  in;
+    private final SimpleStream in;
     private BufferedWriter out=null;
 
     private int tableDataCount=0;

@@ -1,7 +1,7 @@
 package ch.bailu.aat.gpx.parser;
 import java.io.IOException;
 
-import ch.bailu.simpleparser.SimpleStream;
+import ch.bailu.simpleio.io.SimpleStream;
 
 
 public class IntegerScanner {

@@ -22,19 +22,17 @@ public class HtmlBuilder {
     }
 
     public void appendKeyValueBold(String k, String v) {
-        append("<li><b>");
+        append("<b>");
         append(k);
         append("=");
         append(v);
-        append("</b></li>");
+        append("</b>");
     }
 
     public void appendKeyValue(String k, String v) {
-        append("<li>");
         append(k);
         append("=");
         append(v);
-        append("</li>");
     }
 
     public void append(String l, String v) {

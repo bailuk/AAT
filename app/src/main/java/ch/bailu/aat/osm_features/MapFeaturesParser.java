@@ -2,14 +2,12 @@ package ch.bailu.aat.osm_features;
 
 import android.content.res.AssetManager;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
 import ch.bailu.aat.util.fs.AssetAccess;
-import ch.bailu.simpleparser.AbsAccess;
-import ch.bailu.simpleparser.FileAccess;
-import ch.bailu.simpleparser.SimpleStream;
+import ch.bailu.simpleio.io.AbsAccess;
+import ch.bailu.simpleio.io.SimpleStream;
 
 public class MapFeaturesParser {
     

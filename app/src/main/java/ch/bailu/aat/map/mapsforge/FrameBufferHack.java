@@ -28,7 +28,6 @@ public class FrameBufferHack extends FrameBuffer {
 
     private final Object dimLock = new Object();
 
-
     public FrameBufferHack(Model model) {
         super(model.frameBufferModel, model.displayModel, AndroidGraphicFactory.INSTANCE);
         this.frameBufferModel = model.frameBufferModel;
@@ -90,10 +89,11 @@ public class FrameBufferHack extends FrameBuffer {
 
 
 
-    public synchronized void adjustMatrix(float diffX, float diffY, float scaleFactor, Dimension mapViewDimension,
+    public void adjustMatrix(float diffX, float diffY, float scaleFactor, Dimension mapViewDimension,
                                           float pivotDistanceX, float pivotDistanceY) {
 
         synchronized(dimLock) {
+
             if (this.dimension == null) {
                 return;
             }
@@ -107,6 +107,7 @@ public class FrameBufferHack extends FrameBuffer {
 
             scale(scaleFactor, pivotDistanceX, pivotDistanceY);
         }
+
     }
 
     public synchronized void destroy() {
@@ -119,12 +120,14 @@ public class FrameBufferHack extends FrameBuffer {
 
 
 
-    public synchronized Dimension getDimension() {
+    public Dimension getDimension() {
+
         return this.dimension;
     }
 
 
     public void setDimension(Dimension dimension) {
+
         synchronized (dimLock) {
             if (this.dimension != null && this.dimension.equals(dimension)) {
                 return;

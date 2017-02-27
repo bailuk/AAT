@@ -9,8 +9,10 @@ import java.util.ArrayList;
 
 public class PercentageLayout  extends ViewGroup {
 
+    private final static int SPACE=2;
 
     private static class Entry {
+
         public final View view;
         private final int percentage;
 
@@ -20,7 +22,7 @@ public class PercentageLayout  extends ViewGroup {
         }
 
         public int getSize(int parent_size) {
-            return (parent_size * percentage) / 100;
+            return ((parent_size * percentage) / 100);
         }
     }
 
@@ -113,6 +115,7 @@ public class PercentageLayout  extends ViewGroup {
         if (list.size() > 0) {
             int parent_height=b-t;
             int parent_width =r-l;
+            int s=0;
 
             r=parent_width;
             l=t=0;
@@ -122,9 +125,10 @@ public class PercentageLayout  extends ViewGroup {
 
                 b=t+view_height;
 
-                e.view.layout(l, t, r, b);
+                e.view.layout(l, t+s, r, b);
 
                 t+=view_height;
+                s=SPACE;
             }
         }
     }
@@ -133,6 +137,7 @@ public class PercentageLayout  extends ViewGroup {
         if (list.size() > 0) {
             int parent_height=b-t;
             int parent_width =r-l;
+            int s = 0;
 
 
             t=l=0;
@@ -144,13 +149,11 @@ public class PercentageLayout  extends ViewGroup {
 
                 r=l+view_width;
 
-                e.view.layout(l, t, r, b);
+                e.view.layout(l+s, t, r, b);
 
                 l+=view_width;
+                s = SPACE;
             }
         }
     }
-
-
-
 }

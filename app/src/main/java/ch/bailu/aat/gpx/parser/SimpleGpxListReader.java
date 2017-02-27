@@ -3,7 +3,7 @@ package ch.bailu.aat.gpx.parser;
 import java.io.IOException;
 
 import ch.bailu.aat.services.background.ThreadControl;
-import ch.bailu.simpleparser.AbsAccess;
+import ch.bailu.simpleio.io.AbsAccess;
 
 
 public class SimpleGpxListReader extends GpxListReader {

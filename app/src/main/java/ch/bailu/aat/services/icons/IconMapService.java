@@ -10,7 +10,7 @@ import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.VirtualService;
 import ch.bailu.aat.util.fs.AssetAccess;
 import ch.bailu.aat.util.ui.AppLog;
-import ch.bailu.simpleparser.AbsAccess;
+import ch.bailu.simpleio.io.AbsAccess;
 
 public class IconMapService extends VirtualService {
     private final static String NKEY_KEY = "class";

@@ -108,6 +108,6 @@
     <orderEntry type="library" exported="" name="mapsforge-map-reader-0.7.0" level="project" />
     <orderEntry type="library" exported="" name="mapsforge-core-0.7.0" level="project" />
     <orderEntry type="library" exported="" name="kxml2-2.3.0" level="project" />
-    <orderEntry type="module" module-name="simpleparser" exported="" />
+    <orderEntry type="module" module-name="simpleio" exported="" />
   </component>
 </module>

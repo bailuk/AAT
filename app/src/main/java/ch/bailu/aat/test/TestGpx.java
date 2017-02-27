@@ -10,7 +10,7 @@ import ch.bailu.aat.gpx.parser.SimpleGpxListReader;
 import ch.bailu.aat.gpx.writer.GpxListWriter;
 import ch.bailu.aat.preferences.SolidMockLocationFile;
 import ch.bailu.aat.preferences.SolidString;
-import ch.bailu.simpleparser.FileAccess;
+import ch.bailu.simpleio.io.FileAccess;
 
 public class TestGpx extends UnitTest {
 

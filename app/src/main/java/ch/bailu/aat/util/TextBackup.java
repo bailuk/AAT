@@ -5,8 +5,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 
-import ch.bailu.simpleparser.FileAccess;
-import ch.bailu.simpleparser.SimpleStream;
+import ch.bailu.simpleio.io.FileAccess;
+import ch.bailu.simpleio.io.SimpleStream;
 
 
 public abstract class TextBackup {

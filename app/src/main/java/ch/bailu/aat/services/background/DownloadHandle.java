@@ -11,7 +11,7 @@ import java.net.URL;
 
 import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.util.ui.AppTheme;
-import ch.bailu.simpleparser.FileAccess;
+import ch.bailu.simpleio.io.FileAccess;
 
 public class DownloadHandle extends ProcessHandle {
 

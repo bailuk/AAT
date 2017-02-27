@@ -2,8 +2,8 @@ package ch.bailu.aat.services.icons;
 
 import java.io.IOException;
 
-import ch.bailu.simpleparser.AbsAccess;
-import ch.bailu.simpleparser.SimpleStream;
+import ch.bailu.simpleio.io.AbsAccess;
+import ch.bailu.simpleio.io.SimpleStream;
 
 
 public class IconMapParser {

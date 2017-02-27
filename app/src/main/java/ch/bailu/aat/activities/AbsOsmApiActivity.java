@@ -7,7 +7,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.ViewGroup.LayoutParams;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -33,6 +33,7 @@ import ch.bailu.aat.views.ContentView;
 import ch.bailu.aat.views.ControlBar;
 import ch.bailu.aat.views.MainControlBar;
 import ch.bailu.aat.views.NodeListView;
+import ch.bailu.aat.views.PercentageLayout;
 import ch.bailu.aat.views.TagEditor;
 import ch.bailu.aat.views.preferences.AddOverlayDialog;
 
@@ -109,33 +110,36 @@ public abstract class AbsOsmApiActivity extends AbsDispatcher implements OnClick
 //                new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
 
 
-        ContentView view = new ContentView(this);
+        ContentView contentView = new ContentView(this);
         ControlBar bar = createControlBar();
-        view.addView(bar);
+        contentView.addView(bar);
 
+
+        LinearLayout input = new LinearLayout(this);
+        input.setOrientation(LinearLayout.VERTICAL);
 
         TextView urlLabel = new TextView(this);
         urlLabel.setText(osmApi.getUrlStart());
-        view.addView(urlLabel);
-        //AppTheme.themify(urlLabel);
+        input.addView(urlLabel);
 
         tagEditor = new TagEditor(this, osmApi.getBaseDirectory());
-        view.addView(tagEditor,
-                new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT,
-                        LayoutParams.MATCH_PARENT,0.5f));
+
+        input.addView(tagEditor, new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT, 1f));
 
 
         TextView postLabel = new TextView(this);
         postLabel.setText(osmApi.getUrlEnd());
-        view.addView(postLabel);
+        input.addView(postLabel);
         //AppTheme.themify(postLabel);
 
         list = new NodeListView(getServiceContext(), this);
-        view.addView(list,
-                new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT,
-                        LayoutParams.MATCH_PARENT,0.5f));
 
-        return view;
+        PercentageLayout percentage = new PercentageLayout(this);
+        percentage.add(input, 30);
+        percentage.add(list, 70);
+
+        contentView.addView(percentage);
+        return contentView;
     }
 
 
@@ -191,7 +195,7 @@ public abstract class AbsOsmApiActivity extends AbsDispatcher implements OnClick
     private void download() {
         if (getServiceContext().lock()) {
             try {
-                String query = tagEditor.getText();
+                String query = tagEditor.getText().toString();
 
                 BackgroundService background = getServiceContext().getBackgroundService();
 

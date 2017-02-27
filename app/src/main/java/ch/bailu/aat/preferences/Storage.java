@@ -11,7 +11,7 @@ import java.util.Map.Entry;
 
 import ch.bailu.aat.util.ContextWrapperInterface;
 import ch.bailu.aat.util.fs.UriAccess;
-import ch.bailu.simpleparser.FileAccess;
+import ch.bailu.simpleio.io.FileAccess;
 
 public class Storage  implements ContextWrapperInterface {
     public final static String DEF_VALUE="0";
