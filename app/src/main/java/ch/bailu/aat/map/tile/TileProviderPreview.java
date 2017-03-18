@@ -28,7 +28,7 @@
 //    public Drawable getDrawable(Tile tile) {
 //        final TileStackObject handle = getTileHandle(tile);
 //
-//        tiles.add(handle);
+//        tiles.add_w(handle);
 //
 //        return handle.getDrawable(context.getResources());
 //    }
@@ -38,7 +38,7 @@
 //    public TileBitmap get(Tile tile) {
 //        final TileStackObject handle = getTileHandle(tile);
 //
-//        tiles.add(handle);
+//        tiles.add_w(handle);
 //
 //        return handle.getTileBitmap();
 //    }

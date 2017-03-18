@@ -83,7 +83,7 @@ public class RendererList {
             }
         }
 
-        AppLog.d(this, "add renderer");
+        AppLog.d(this, "add_w renderer");
         Entry e = add(files);
         e.use();
         return e.renderer;

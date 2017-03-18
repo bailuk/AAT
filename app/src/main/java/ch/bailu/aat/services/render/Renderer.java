@@ -48,7 +48,7 @@ public class Renderer extends RendererBase<RendererJob> {
             MultiMapDataStore store= new MultiMapDataStore(MultiMapDataStore.DataPolicy.RETURN_ALL);
 
             for (File f: files) {
-                AppLog.d(this, f.toString() + ": add to renderer");
+                AppLog.d(this, f.toString() + ": add_w to renderer");
                 store.addMapDataStore(new MapFile(f), true, true);
             }
 

@@ -43,7 +43,7 @@
 //
 //    @Override
 //    public void put(TileStackObject handle) {
-//        tiles.add(handle);
+//        tiles.add_w(handle);
 //    }
 //
 //    @Override

@@ -78,7 +78,7 @@
 //
 //    @Override
 //    public void addObserver(Observer observer) {
-//        observers.add(observer);
+//        observers.add_w(observer);
 //    }
 //
 //    @Override

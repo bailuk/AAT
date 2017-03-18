@@ -1,13 +1,13 @@
 package ch.bailu.aat.preferences;
 
 import android.content.Context;
-import android.os.Environment;
 
 import java.io.File;
 import java.util.ArrayList;
 
 import ch.bailu.aat.R;
 import ch.bailu.aat.util.fs.AppDirectory;
+import ch.bailu.aat.util.fs.AndroidVolumes;
 
 
 public class SolidTileCacheDirectory extends SolidDirectory {
@@ -40,7 +40,7 @@ public class SolidTileCacheDirectory extends SolidDirectory {
 
         ArrayList<String> list = new ArrayList<>(5);
 
-        add(list, f);
+        add_w(list, f);
 
         if (list.size()==0)
             list = buildSelection(list);
@@ -54,33 +54,39 @@ public class SolidTileCacheDirectory extends SolidDirectory {
 
     @Override
     public ArrayList<String> buildSelection(ArrayList<String> list) {
+        AndroidVolumes volumes = new AndroidVolumes(getContext());
 
-        final File external_cache = getContext().getExternalCacheDir();
-
-        if (external_cache != null) {
-            final File external_tiles = new File(external_cache, AppDirectory.DIR_TILES);
-
-            add(list, external_cache, external_tiles);
+        for (File cache : volumes.getCaches()) {
+            final File tiles = new File(cache, AppDirectory.DIR_TILES);
+            add_w(list, cache, tiles);
         }
 
-        final File sdcard = Environment.getExternalStorageDirectory();
 
-        if (sdcard != null) {
-            final File sdcard_osmdroid = new File(sdcard, AppDirectory.DIR_TILES_OSMDROID);
-            final File sdcard_aat = new File(sdcard,
+        for (File vol : volumes.getVolumes()) {
+            final File osmdroid = new File(vol, AppDirectory.DIR_TILES_OSMDROID);
+            final File aat = new File(vol,
                     AppDirectory.DIR_AAT_DATA + "/" + AppDirectory.DIR_TILES);
 
-            add(list, sdcard_osmdroid);
-            add(list, sdcard, sdcard_aat);
+            add_w(list, osmdroid);
+            add_w(list, aat);
         }
 
 
-        final File internal_cache = getContext().getCacheDir();
+        for (File vol : volumes.getVolumes()) {
+            final File osmdroid = new File(vol, AppDirectory.DIR_TILES_OSMDROID);
+            final File aat = new File(vol,
+                    AppDirectory.DIR_AAT_DATA + "/" + AppDirectory.DIR_TILES);
 
-        if (internal_cache != null) {
-            final File internal_tiles = new File(internal_cache, AppDirectory.DIR_TILES);
+            add_ro(list, osmdroid);
+            add_ro(list, aat);
+        }
 
-            add(list, internal_cache, internal_tiles);
+        for (File vol : volumes.getVolumes()) {
+            final File aat = new File(vol,
+                    AppDirectory.DIR_AAT_DATA + "/" + AppDirectory.DIR_TILES);
+
+            if (aat.exists()==false)
+                add_ro(list, vol, aat);
         }
 
         return list;

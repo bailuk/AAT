@@ -50,7 +50,7 @@
 //
 //
 //        pos = new MapPositionLayer(getMContext(), d);
-//        add(pos);
+//        add_w(pos);
 //    }
 //
 //

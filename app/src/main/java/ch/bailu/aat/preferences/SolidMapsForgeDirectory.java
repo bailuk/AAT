@@ -1,12 +1,12 @@
 package ch.bailu.aat.preferences;
 
 import android.content.Context;
-import android.os.Environment;
 
 import java.io.File;
 import java.util.ArrayList;
 
 import ch.bailu.aat.util.fs.AppDirectory;
+import ch.bailu.aat.util.fs.AndroidVolumes;
 
 public class SolidMapsForgeDirectory extends SolidDirectory {
     public final static String MAPS_DIR="maps";
@@ -44,7 +44,7 @@ public class SolidMapsForgeDirectory extends SolidDirectory {
 
         list = buildSelection(list);
 
-        add(list, getContext().getExternalFilesDir(null));
+        add_w(list, getContext().getExternalFilesDir(null));
 
         if (list.size()>0) {
             return list.get(0);
@@ -56,21 +56,16 @@ public class SolidMapsForgeDirectory extends SolidDirectory {
     @Override
     public ArrayList<String> buildSelection(ArrayList<String> list) {
 
-        File external = getContext().getExternalFilesDir(null);
-        if (external != null) {
-            final File external_maps = new File(external, MAPS_DIR);
-            add(list, external_maps);
-        }
+        AndroidVolumes volumes = new AndroidVolumes(getContext());
 
-
-        final File sdcard = Environment.getExternalStorageDirectory();
-        if (sdcard != null) {
-            final File sdcard_maps1 = new File(sdcard, MAPS_DIR);
-            final File sdcard_maps2 = new File(sdcard,
+        for (File f : volumes.getVolumes()) {
+            final File maps1 = new File(f, MAPS_DIR);
+            final File maps2 = new File(f,
                     AppDirectory.DIR_AAT_DATA + "/" + MAPS_DIR);
 
-            add(list, sdcard_maps1);
-            add(list, sdcard_maps2);
+
+            add_r(list, maps1);
+            add_r(list, maps2);
         }
 
         return list;

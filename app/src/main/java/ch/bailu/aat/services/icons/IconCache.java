@@ -85,7 +85,7 @@ public class IconCache implements Closeable {
     }
 
 
-//    private ImageObjectAbstract add(String id) {
+//    private ImageObjectAbstract add_w(String id) {
 //
 //        if (scontext.isUp()) {
 //            final ObjectHandle handle = scontext.getCacheService().
@@ -94,7 +94,7 @@ public class IconCache implements Closeable {
 //            if (ImageObject.class.isInstance(handle)) {
 //                final ImageObject imageHandle = ((ImageObject) handle);
 //
-//                icons.add(imageHandle);
+//                icons.add_w(imageHandle);
 //                return imageHandle;
 //            }
 //        }

@@ -39,7 +39,7 @@
 //        map.setDrawingCacheEnabled(true);
 //
 //        GpxDynLayer overlay = new GpxDynLayer(map.getMContext(), InfoID.FILEVIEW);
-//        map.add(overlay);
+//        map.add_w(overlay);
 //
 //        map.layout(0, 0, BITMAP_SIZE, BITMAP_SIZE);
 //

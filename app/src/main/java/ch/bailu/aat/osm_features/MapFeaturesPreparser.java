@@ -341,7 +341,7 @@
 //        }
 //
 //        DownloadHandle handle = new DownloadHandle(source, file);
-//        images.add(handle);
+//        images.add_w(handle);
 //
 //
 //    }

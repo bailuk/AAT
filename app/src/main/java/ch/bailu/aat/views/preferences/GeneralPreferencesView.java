@@ -20,7 +20,7 @@ public class GeneralPreferencesView extends VerticalScrollView {
 
         add(new TitleView(context, R.string.p_system));
         add(new SolidIndexListView(new SolidLocationProvider(context)));
-        add(new SolidExtendetDirectoryView(new SolidDataDirectory(context)));
+        add(new SolidExtendetDirectoryView(context, new SolidDataDirectory(context)));
 
     }
 

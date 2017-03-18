@@ -190,7 +190,7 @@ public abstract class AbsGpxListActivity extends AbsDispatcher implements OnItem
             contentView.addView(bar);
             contentView.addView(createLayout(map, summary, bar));
 
-            bar.add(new SolidDirectoryMenuButton(sdirectory));
+            bar.add(new SolidDirectoryMenuButton(acontext, sdirectory));
         }
 
 

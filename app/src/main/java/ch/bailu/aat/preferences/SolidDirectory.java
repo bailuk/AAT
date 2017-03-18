@@ -1,9 +1,17 @@
 package ch.bailu.aat.preferences;
 
+import android.content.Context;
+import android.os.Build;
+import android.os.storage.StorageManager;
+import android.os.storage.StorageVolume;
+
 import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 
 import ch.bailu.aat.R;
+import ch.bailu.aat.util.fs.JFile;
+import ch.bailu.aat.util.ui.AppLog;
 
 
 public abstract class SolidDirectory extends SolidString {
@@ -21,22 +29,34 @@ public abstract class SolidDirectory extends SolidString {
     public abstract ArrayList<String> buildSelection(ArrayList<String> list);
 
 
-    public static void add(ArrayList<String> list, File file) {
-        add(list, file, file);
-
+    public static void add_ro(ArrayList<String> list, File file) {
+        add_ro(list, file, file);
     }
 
-    public static void add(ArrayList<String> list, File check, File file) {
-        if (check != null && file != null && canWrite(check))  {
+    public static void add_ro(ArrayList<String> list, File check, File file) {
+        if (JFile.canOnlyRead(check)) {
             list.add(file.getAbsolutePath());
         }
     }
 
-    public static boolean canWrite(File check) {
-        try {
-            return check.canWrite();
-        } catch (SecurityException e) {
-            return false;
+    public static void add_r(ArrayList<String> list, File file) {
+        if (JFile.canRead(file))
+            list.add(file.getAbsolutePath());
+    }
+
+
+    public static void add_w(ArrayList<String> list, File file) {
+        add_w(list, file, file);
+
+    }
+
+
+    public static void add_w(ArrayList<String> list, File check, File file) {
+        if (file != null && JFile.canWrite(check))  {
+            list.add(file.getAbsolutePath());
         }
     }
+
+
+
 }

@@ -1,17 +1,18 @@
 package ch.bailu.aat.views.preferences;
 
+import android.app.Activity;
 import android.view.View;
 import android.widget.LinearLayout;
 
 import ch.bailu.aat.preferences.SolidDirectory;
 
 public class SolidExtendetDirectoryView extends LinearLayout{
-    public SolidExtendetDirectoryView(SolidDirectory s) {
+    public SolidExtendetDirectoryView(Activity a, SolidDirectory s) {
         super(s.getContext());
         setOrientation(HORIZONTAL);
 
         addW(new SolidStringView(s));
-        addView(new SolidDirectoryMenuButton(s));
+        addView(new SolidDirectoryMenuButton(a,s));
     }
 
 

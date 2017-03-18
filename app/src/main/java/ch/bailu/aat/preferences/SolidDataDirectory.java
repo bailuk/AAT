@@ -1,13 +1,13 @@
 package ch.bailu.aat.preferences;
 
 import android.content.Context;
-import android.os.Environment;
 
 import java.io.File;
 import java.util.ArrayList;
 
 import ch.bailu.aat.R;
 import ch.bailu.aat.util.fs.AppDirectory;
+import ch.bailu.aat.util.fs.AndroidVolumes;
 
 public class SolidDataDirectory extends SolidDirectory {
 
@@ -40,7 +40,7 @@ public class SolidDataDirectory extends SolidDirectory {
 
         ArrayList<String> list = new ArrayList<>(5);
 
-        add(list, f);
+        add_w(list, f);
 
         if (list.size()==0)
             list = buildSelection(list);
@@ -55,23 +55,35 @@ public class SolidDataDirectory extends SolidDirectory {
     @Override
     public ArrayList<String> buildSelection(ArrayList<String> list) {
 
+        AndroidVolumes volumes = new AndroidVolumes(getContext());
 
-        File external = getContext().getExternalFilesDir(null);
-        if (external != null) {
-            add(list, external);
+        for (File vol : volumes.getVolumes()) {
+            File aat_data = new File(vol, AppDirectory.DIR_AAT_DATA);
+            add_w(list, aat_data);
         }
 
-        File sdcard   = Environment.getExternalStorageDirectory();
-        if (sdcard != null) {
-            File aat_data = new File(sdcard, AppDirectory.DIR_AAT_DATA);
-            add(list, sdcard, aat_data);
+        for (File vol : volumes.getVolumes()) {
+            File aat_data = new File(vol, AppDirectory.DIR_AAT_DATA);
+            if (aat_data.exists()==false)
+                add_w(list, vol, aat_data);
         }
 
-        File internal = getContext().getFilesDir();
-        if (internal != null) {
-            add(list, internal);
+        File[] files = volumes.getFiles();
+        for (int i=1; i<files.length; i++) {
+            add_w(list, files[i]);
         }
 
+        for (int i=1; i<files.length; i++) {
+            add_ro(list, files[i]);
+        }
+
+        for (File vol : volumes.getVolumes()) {
+            File aat_data = new File(vol, AppDirectory.DIR_AAT_DATA);
+            if (aat_data.exists()==false)
+                add_ro(list, vol, aat_data);
+        }
+
+        if (files.length>0) add_w(list, files[0]);
         return list;
     }
 

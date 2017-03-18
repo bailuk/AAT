@@ -47,12 +47,12 @@ public class BoundingBoxE6 {
     }
 
 //    public BoundingBoxE6(GpxPointInterface a, GpxPointInterface b) {
-//        add(a.getLatitudeE6(), a.getLongitudeE6(), b.getLatitudeE6(), b.getLongitudeE6());
+//        add_w(a.getLatitudeE6(), a.getLongitudeE6(), b.getLatitudeE6(), b.getLongitudeE6());
 //    }
 //
 //
 //    public BoundingBoxE6(BoundingBoxOsm b) {
-//        add(b);
+//        add_w(b);
 //    }
 
 
@@ -111,8 +111,8 @@ public class BoundingBoxE6 {
         west  = Math.min(w,west);
     }
 
-//    public void add(BoundingBoxOsm b) {
-//        add(b.getLatNorthE6(), b.getLonEastE6(),
+//    public void add_w(BoundingBoxOsm b) {
+//        add_w(b.getLatNorthE6(), b.getLonEastE6(),
 //            b.getLatSouthE6(), b.getLonWestE6());
 //    }
 

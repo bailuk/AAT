@@ -38,7 +38,7 @@
 //        addView(map);
 //
 //        mcontext = new OsmContext(this, sc, r, skey);
-//        map.getOverlayManager().add(mcontext);
+//        map.getOverlayManager().add_w(mcontext);
 //    }
 //
 //
@@ -59,9 +59,9 @@
 //    }
 //
 //    @Override
-//    public void add(MapLayerInterface l) {
-//        map.getOverlayManager().add(new OverlayWrapper(l, mcontext));
-//        overlays.add(l);
+//    public void add_w(MapLayerInterface l) {
+//        map.getOverlayManager().add_w(new OverlayWrapper(l, mcontext));
+//        overlays.add_w(l);
 //
 //    }
 //

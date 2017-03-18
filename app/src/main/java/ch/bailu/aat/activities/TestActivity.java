@@ -175,18 +175,18 @@ public class TestActivity extends AbsDispatcher {
 //        tileRendererLayer.setXmlRenderTheme(InternalRenderTheme.DEFAULT);
 //
 //        // only once a layer is associated with a mapView the rendering starts
-//        mapView.getLayerManager().getLayers().add(tileRendererLayer);
+//        mapView.getLayerManager().getLayers().add_w(tileRendererLayer);
 //
 //        mapView.setCenter(new LatLong(52.517037, 13.38886));
 //        mapView.setZoomLevel((byte) 12);
 
-//        mv.add(mapView);
+//        mv.add_w(mapView);
         /////////////////////////////////////////////////////////////
 //        final MapsForgeView mf = new MapsForgeView(getServiceContext(), this, SOLID_KEY);
 
 //        fillMap(mf);
 
-//        mv.add(mf, "MapsForge");
+//        mv.add_w(mf, "MapsForge");
         mv.add(locationView, getString(R.string.gps));
 
         mv.add(trackerView, getString(R.string.tracker));
