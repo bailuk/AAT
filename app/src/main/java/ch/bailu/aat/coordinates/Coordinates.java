@@ -2,6 +2,8 @@ package ch.bailu.aat.coordinates;
 
 import org.mapsforge.core.model.LatLong;
 
+import ch.bailu.aat.util.ui.AppLog;
+
 public abstract class Coordinates {
     public abstract String toString();
 
@@ -9,21 +11,24 @@ public abstract class Coordinates {
     public static LatLong stringToGeoPoint(String src) throws NumberFormatException{
         String[] parts = src.split("[:,?#]");
 
-        int hit=0;
+        boolean scanLa=true;
 
-        double la=0, lo;
-        for (int x = 0; x < parts.length && hit < 2; x++) {
-            final double d = Double.parseDouble(parts[x]);
-            hit++;
-
-            if (hit==1) {
-                la = d;
-            } else if (hit==2) {
-                lo = d;
-                if (lo != 0d && la !=0d) {
-                    return new LatLong(la, lo);
+        double la=0;
+        for (String p : parts) {
+            try  {
+                final double d = Double.parseDouble(p);
+                if (scanLa) {
+                    la = d;
+                    scanLa=false;
+                } else {
+                    return new LatLong(la, d);
                 }
+
+            } catch (NumberFormatException e){
+                AppLog.d(src, p);
             }
+
+
         }
         throw new NumberFormatException();
     }
