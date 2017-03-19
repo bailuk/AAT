@@ -79,8 +79,7 @@ public class SolidDataDirectory extends SolidDirectory {
 
         for (File vol : volumes.getVolumes()) {
             File aat_data = new File(vol, AppDirectory.DIR_AAT_DATA);
-            if (aat_data.exists()==false)
-                add_ro(list, vol, aat_data);
+            add_ro(list, vol, aat_data);
         }
 
         if (files.length>0) add_w(list, files[0]);

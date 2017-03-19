@@ -14,10 +14,8 @@ public abstract class RendererBase<T extends Job> extends Layer {
     protected final JobQueue<T> jobQueue;
 
     private final TileCache cache;
-    protected final Model model = new Model();
 
-
-    public RendererBase(TileCache c) {
+    public RendererBase(TileCache c, Model model) {
         cache = c;
         displayModel=model.displayModel;
         jobQueue = new JobQueue<>(model.mapViewPosition, model.displayModel);

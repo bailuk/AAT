@@ -2,8 +2,11 @@ package ch.bailu.aat.services.render;
 
 import org.mapsforge.core.graphics.TileBitmap;
 import org.mapsforge.core.model.Tile;
+import org.mapsforge.map.android.graphics.AndroidGraphicFactory;
 import org.mapsforge.map.layer.cache.TileCache;
+import org.mapsforge.map.model.Model;
 import org.mapsforge.map.rendertheme.InternalRenderTheme;
+import org.mapsforge.map.rendertheme.rule.RenderThemeFuture;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -15,10 +18,15 @@ public class RendererList {
 
     private final ArrayList<Entry> renderer = new ArrayList(LIMIT);
     private final TileCache cache;
-
+    private final RenderThemeFuture theme;
 
     public RendererList(TileCache c) {
         cache = c;
+        theme = new RenderThemeFuture(
+                AndroidGraphicFactory.INSTANCE,   // TODO: move to context
+                InternalRenderTheme.DEFAULT,      // TODO: move to constructor or context
+                new Model().displayModel);        // TODO: move to context
+        new Thread(theme).start();
     }
 
 
@@ -30,9 +38,7 @@ public class RendererList {
 
         public Entry(ArrayList<File> f) {
             files = f;
-
-            renderer = new Renderer(cache, files);
-            renderer.setXmlRenderTheme(InternalRenderTheme.DEFAULT);
+            renderer = new Renderer(theme, cache, files);
             use();
         }
 
@@ -78,7 +84,6 @@ public class RendererList {
 
         for (Entry e: renderer) {
             if (e.hasSameFiles(files)) {
-                //AppLog.d(this, "have renderer");
                 return e.renderer;
             }
         }
@@ -119,5 +124,6 @@ public class RendererList {
             e.renderer.destroy();
         }
         renderer.clear();
+        theme.decrementRefCount();
     }
 }

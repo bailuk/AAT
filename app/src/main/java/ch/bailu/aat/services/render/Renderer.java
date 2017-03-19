@@ -13,6 +13,7 @@ import org.mapsforge.map.layer.cache.TileCache;
 import org.mapsforge.map.layer.renderer.DatabaseRenderer;
 import org.mapsforge.map.layer.renderer.MapWorkerPool;
 import org.mapsforge.map.layer.renderer.RendererJob;
+import org.mapsforge.map.model.Model;
 import org.mapsforge.map.reader.MapFile;
 import org.mapsforge.map.rendertheme.XmlRenderTheme;
 import org.mapsforge.map.rendertheme.rule.RenderThemeFuture;
@@ -28,18 +29,14 @@ public class Renderer extends RendererBase<RendererJob> {
     private final static boolean CACHE_LABELS = true;
     private final static float TEXT_SCALE = 1f;
 
-    private final GraphicFactory graphicFactory;
-
     private final MapDataStore mapDataStore;
     private final MapWorkerPool mapWorkerPool;
-    private RenderThemeFuture renderThemeFuture;
+    private final RenderThemeFuture renderThemeFuture;
 
-    private XmlRenderTheme xmlRenderTheme;
+    public Renderer(RenderThemeFuture rt, TileCache cache, ArrayList<File> files) {
+        super(cache, new Model()); // TODO: move model to context
 
-    public Renderer(TileCache cache, ArrayList<File> files) {
-        super(cache);
-
-        graphicFactory = AndroidGraphicFactory.INSTANCE;
+        renderThemeFuture = rt;
 
         if (files.size()==1) {
             mapDataStore = new MapFile(files.get(0));
@@ -58,14 +55,13 @@ public class Renderer extends RendererBase<RendererJob> {
 
         final  DatabaseRenderer databaseRenderer = new DatabaseRenderer(
                 mapDataStore,
-                graphicFactory,
+                AndroidGraphicFactory.INSTANCE, // TODO: move to context
                 cache,
                 null,
                 RENDER_LABELS,
                 CACHE_LABELS);
 
 
-        compileRenderTheme();
 
         mapWorkerPool = new MapWorkerPool(
                 cache,
@@ -82,31 +78,17 @@ public class Renderer extends RendererBase<RendererJob> {
 
     public void destroy() {
         mapWorkerPool.stop();
-        if (renderThemeFuture != null) {
-            renderThemeFuture.decrementRefCount();
-        }
         mapDataStore.close();
     }
 
-    public void setXmlRenderTheme(XmlRenderTheme xmlRenderTheme) {
-        this.xmlRenderTheme = xmlRenderTheme;
-        compileRenderTheme();
-    }
 
-    protected void compileRenderTheme() {
-        this.renderThemeFuture = new RenderThemeFuture(
-                graphicFactory,
-                xmlRenderTheme,
-                model.displayModel);
-        new Thread(this.renderThemeFuture).start();
-    }
 
 
     @Override
     protected RendererJob createJob(Tile tile) {
         return new RendererJob(tile, mapDataStore,
                 renderThemeFuture,
-                model.displayModel,
+                displayModel,
                 TEXT_SCALE,
                 TRANSPARENT, false);
     }
