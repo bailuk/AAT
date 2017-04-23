@@ -6,31 +6,12 @@ public class IconMap {
     private final static String SVG_PREFIX="symbols/";
     private final static String SVG_SUFFIX=".svg";
 
-
    public class Icon {
         public final String svg;
 
         public Icon(String file_name) {
-            svg = toSymbolAssetPath(file_name);
+            svg = SVG_PREFIX + file_name + SVG_SUFFIX;
         }
-    }
-
-    private static String toSymbolAssetPath(String source) {
-
-        StringBuilder copy = new StringBuilder();
-
-        copy.append(SVG_PREFIX);
-        copy.append(source);
-        copy.append(SVG_SUFFIX);
-
-        int index = source.indexOf('_');
-        if (index > 0) {
-            index +=SVG_PREFIX.length();
-            copy.setCharAt(index, '/');
-        }
-
-        return copy.toString();
-
     }
 
 

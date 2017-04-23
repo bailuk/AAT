@@ -41,7 +41,12 @@ public class IconMapParser {
     private void parseSubEntry(SimpleStream stream) throws IOException {
         buffer.setLength(0);
         
-        while(stream.haveA('_') || stream.haveCharacter() || stream.haveDigit()) {
+        while(
+                stream.haveA('_') ||
+                stream.haveA('/') ||
+                stream.haveCharacter() ||
+                stream.haveDigit())
+        {
             buffer.append((char)stream.get());
             stream.read();
         }
