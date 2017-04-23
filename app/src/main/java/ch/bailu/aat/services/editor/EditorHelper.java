@@ -4,10 +4,10 @@ import java.io.File;
 
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.InfoID;
-import ch.bailu.aat.util.fs.AppDirectory;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.cache.GpxObjectEditable;
 import ch.bailu.aat.services.cache.ObjectHandle;
+import ch.bailu.aat.util.fs.AppDirectory;
 
 public class EditorHelper {
     private final ServiceContext scontext;

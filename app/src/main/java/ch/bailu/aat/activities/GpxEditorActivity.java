@@ -39,22 +39,15 @@ public class GpxEditorActivity extends AbsFileContentActivity
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        super.onCreate(SOLID_KEY);
 
         addTarget(this, InfoID.FILEVIEW);
     }
-
-    @Override
-    protected EditorHelper createEditorHelper() {
-        return new EditorHelper(getServiceContext());
-    }
-
 
 
 
     @Override
     protected View createLayout(MainControlBar bar) {
-        map = MapFactory.DEF(this, SOLID_KEY).content(editor_helper);
+        map = MapFactory.DEF(this, SOLID_KEY).editor(editor_helper);
 
 
         ContentDescription summaryData[] = {

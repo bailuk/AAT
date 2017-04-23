@@ -47,14 +47,13 @@ public abstract class AbsFileContentActivity extends AbsDispatcher implements On
         super.onCreate(savedInstanceState);
         firstRun = true;
 
-        editor_helper = createEditorHelper();
+        editor_helper = new EditorHelper(getServiceContext());
 
         createViews();
         createDispatcher();
     }
 
 
-    protected abstract EditorHelper createEditorHelper();
 
     private void createViews() {
         final ViewGroup contentView = new ContentView(this);

@@ -100,10 +100,4 @@ public class FileContentActivity extends AbsFileContentActivity{
 
         return b;
     }
-
-
-    @Override
-    protected EditorHelper createEditorHelper() {
-        return new EditorHelper(getServiceContext());
-    }
 }
