@@ -103,6 +103,10 @@ public class SimpleStream implements Closeable {
         reader.close();
     }
 
+    public boolean haveDoubleQuote() {
+        return c=='"';
+    }
+
     public boolean haveQuotation() {
         return (c=='\'' || c=='"');
     }

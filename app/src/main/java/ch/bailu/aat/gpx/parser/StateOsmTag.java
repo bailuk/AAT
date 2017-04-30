@@ -32,7 +32,7 @@ public class StateOsmTag extends ParserState {
         while(true) {
             io.stream.read();
 
-            if (io.stream.haveEOF() || io.stream.haveQuotation()) break;
+            if (io.stream.haveEOF() || io.stream.haveDoubleQuote()) break;
 
             io.builder.append((char)io.stream.get());
         }
