@@ -8,7 +8,7 @@ public class SolidTrimSize extends SolidIndexList {
 
     public final static long KB=1024;
     public final static long MB=KB*KB;
-    public final static long GB=MB*MB;
+    public final static long GB=KB*MB;
 
     public final static String sKB="KB";
     public final static String sMB="MB";
