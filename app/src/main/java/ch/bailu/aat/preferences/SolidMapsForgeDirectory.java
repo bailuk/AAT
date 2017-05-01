@@ -8,8 +8,9 @@ import java.util.ArrayList;
 import ch.bailu.aat.util.fs.AppDirectory;
 import ch.bailu.aat.util.fs.AndroidVolumes;
 
-public class SolidMapsForgeDirectory extends SolidDirectory {
-    public final static String MAPS_DIR="maps";
+public class SolidMapsForgeDirectory extends SolidFile {
+    public final static String MAPS_DIR = "maps";
+    public final static String ORUX_MAPS_DIR = "oruxmaps/mapfiles";
 
     private final static String KEY = SolidMapsForgeDirectory.class.getSimpleName();
 
@@ -62,10 +63,15 @@ public class SolidMapsForgeDirectory extends SolidDirectory {
             final File maps1 = new File(f, MAPS_DIR);
             final File maps2 = new File(f,
                     AppDirectory.DIR_AAT_DATA + "/" + MAPS_DIR);
-
+            final File maps3 = new File(f, ORUX_MAPS_DIR);
 
             add_r(list, maps1);
+            add_subdirectories_r(list, maps1);
+
             add_r(list, maps2);
+            add_subdirectories_r(list, maps2);
+
+            add_r(list, maps3);
         }
 
         return list;

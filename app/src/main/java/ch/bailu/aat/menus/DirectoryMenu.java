@@ -11,7 +11,7 @@ import android.view.MenuItem;
 import ch.bailu.aat.R;
 import ch.bailu.aat.util.Clipboard;
 import ch.bailu.aat.util.fs.FileIntent;
-import ch.bailu.aat.preferences.SolidDirectory;
+import ch.bailu.aat.preferences.SolidFile;
 import ch.bailu.aat.util.fs.AndroidVolumes;
 
 public class DirectoryMenu extends AbsMenu {
@@ -19,8 +19,8 @@ public class DirectoryMenu extends AbsMenu {
 
     private final Activity acontext;
 
-    private final SolidDirectory sdirectory;
-    public DirectoryMenu(Activity c, SolidDirectory d) {
+    private final SolidFile sdirectory;
+    public DirectoryMenu(Activity c, SolidFile d) {
         acontext = c;
         sdirectory = d;
     }

@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import ch.bailu.aat.R;
 import ch.bailu.aat.services.directory.GpxDbConstants;
 
-public class SolidDirectoryQuery extends SolidDirectory {
+public class SolidDirectoryQuery extends SolidFile {
     private static final String KEY_DIR_DIRECTORY="DIR_DIRECTORY";
     private static final String KEY_DIR_INDEX="DIR_INDEX_";
 

@@ -9,7 +9,7 @@ import android.widget.LinearLayout;
 import ch.bailu.aat.dispatcher.CurrentLocationSource;
 import ch.bailu.aat.dispatcher.TrackerSource;
 import ch.bailu.aat.preferences.SolidDataDirectory;
-import ch.bailu.aat.preferences.SolidDirectory;
+import ch.bailu.aat.preferences.SolidFile;
 import ch.bailu.aat.preferences.SolidPreset;
 import ch.bailu.aat.util.fs.AppDirectory;
 import ch.bailu.aat.util.ui.AppLayout;
@@ -110,7 +110,7 @@ public class MainActivity extends AbsDispatcher {
 
     private class PresetDirectoryLabel extends ActivityLabel implements SharedPreferences.OnSharedPreferenceChangeListener {
 
-        private final SolidDirectory sdirectory;
+        private final SolidFile sdirectory;
         private final SolidPreset spreset;
 
 
@@ -152,7 +152,7 @@ public class MainActivity extends AbsDispatcher {
 
     private class DirectoryLabel extends ActivityLabel implements SharedPreferences.OnSharedPreferenceChangeListener {
 
-        private final SolidDirectory sdirectory;
+        private final SolidFile sdirectory;
         private final String directory;
 
 

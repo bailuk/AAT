@@ -1,22 +1,16 @@
 package ch.bailu.aat.preferences;
 
-import android.content.Context;
-import android.os.Build;
-import android.os.storage.StorageManager;
-import android.os.storage.StorageVolume;
-
 import java.io.File;
+import java.io.FileFilter;
 import java.util.ArrayList;
-import java.util.List;
 
 import ch.bailu.aat.R;
 import ch.bailu.aat.util.fs.JFile;
-import ch.bailu.aat.util.ui.AppLog;
 
 
-public abstract class SolidDirectory extends SolidString {
+public abstract class SolidFile extends SolidString {
 
-    public SolidDirectory(Storage s, String k) {
+    public SolidFile(Storage s, String k) {
         super(s, k);
     }
 
@@ -42,6 +36,16 @@ public abstract class SolidDirectory extends SolidString {
     public static void add_r(ArrayList<String> list, File file) {
         if (JFile.canRead(file))
             list.add(file.getAbsolutePath());
+    }
+
+    public static void add_subdirectories_r(final ArrayList<String> list, File directory) {
+        directory.listFiles(new FileFilter() {
+            @Override
+            public boolean accept(File f) {
+                if (f.isDirectory()) add_r(list, f);
+                return false;
+            }
+        });
     }
 
 

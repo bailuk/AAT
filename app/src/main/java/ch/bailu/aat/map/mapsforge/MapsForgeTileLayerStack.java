@@ -1,6 +1,5 @@
 package ch.bailu.aat.map.mapsforge;
 
-import android.content.Context;
 import android.content.SharedPreferences;
 
 import org.mapsforge.core.model.Point;
@@ -22,6 +21,7 @@ public class MapsForgeTileLayerStack implements MapLayerInterface {
     private final SolidMapTileStack stiles;
 
 
+
     private final ArrayList<MapsForgeTileLayer> layers =
             new ArrayList(SolidMapTileStack.SOURCES.length);
 
@@ -29,37 +29,40 @@ public class MapsForgeTileLayerStack implements MapLayerInterface {
     private final MapsForgeView mapView;
 
     public MapsForgeTileLayerStack(MapsForgeView v) {
+        final ServiceContext sc = v.getMContext().getSContext();
+        final int preset = new SolidPreset(sc.getContext()).getIndex();
+
         mapView = v;
-        Context context = mapView.getContext();
-        ServiceContext scontext = mapView.getMContext().getSContext();
+        stiles = new SolidMapTileStack(sc.getContext(), preset);
 
-        int preset = new SolidPreset(context).getIndex();
-        stiles = new SolidMapTileStack(context, preset);
+        init(sc);
+    }
 
+
+    private void init(ServiceContext sc) {
         for (Source s: SolidMapTileStack.SOURCES) {
             Source source = s;
             if (s == Source.MAPSFORGE) {
                 source =
                         new SolidEnableTileCache(
-                                context,
+                                sc.getContext(),
                                 CachedSource.CACHED_MAPSFORGE).getSource();
 
             } else if (s == Source.ELEVATION_HILLSHADE) {
                 source =
                         new SolidEnableTileCache(
-                                context,
+                                sc.getContext(),
                                 CachedSource.CACHED_ELEVATION_HILLSHADE).getSource();
             }
 
 
             MapsForgeTileLayer layer =
-                    new MapsForgeTileLayer(scontext,
-                            new TileProvider(scontext, source));
+                    new MapsForgeTileLayer(sc,
+                            new TileProvider(sc, source));
 
             layers.add(layer);
             mapView.add(layer, layer);
         }
-
     }
 
 

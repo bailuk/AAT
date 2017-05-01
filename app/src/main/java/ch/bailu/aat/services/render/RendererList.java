@@ -5,7 +5,7 @@ import org.mapsforge.core.model.Tile;
 import org.mapsforge.map.android.graphics.AndroidGraphicFactory;
 import org.mapsforge.map.layer.cache.TileCache;
 import org.mapsforge.map.model.Model;
-import org.mapsforge.map.rendertheme.InternalRenderTheme;
+import org.mapsforge.map.rendertheme.XmlRenderTheme;
 import org.mapsforge.map.rendertheme.rule.RenderThemeFuture;
 
 import java.io.File;
@@ -20,11 +20,14 @@ public class RendererList {
     private final TileCache cache;
     private final RenderThemeFuture theme;
 
-    public RendererList(TileCache c) {
+    public RendererList(TileCache c, XmlRenderTheme xmlTheme) {
+
+        AppLog.d(this, xmlTheme.toString());
+
         cache = c;
         theme = new RenderThemeFuture(
                 AndroidGraphicFactory.INSTANCE,   // TODO: move to context
-                InternalRenderTheme.DEFAULT,      // TODO: move to constructor or context
+                xmlTheme,
                 new Model().displayModel);        // TODO: move to context
         new Thread(theme).start();
     }

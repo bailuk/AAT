@@ -10,7 +10,7 @@ import ch.bailu.aat.util.fs.AppDirectory;
 import ch.bailu.aat.util.fs.AndroidVolumes;
 
 
-public class SolidTileCacheDirectory extends SolidDirectory {
+public class SolidTileCacheDirectory extends SolidFile {
 
     public SolidTileCacheDirectory(Context c) {
         super(Storage.global(c), SolidTileCacheDirectory.class.getSimpleName());

@@ -9,6 +9,7 @@ import java.io.File;
 import java.util.ArrayList;
 
 import ch.bailu.aat.preferences.SolidMapsForgeDirectory;
+import ch.bailu.aat.preferences.SolidRenderTheme;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.VirtualService;
 import ch.bailu.aat.services.cache.MapsForgeTileObject;
@@ -17,16 +18,23 @@ public class RenderService  extends VirtualService
         implements SharedPreferences.OnSharedPreferenceChangeListener {
 
     private final Cache cache = new Cache();
-    private final RendererList rendererList = new RendererList(cache);
+
     private final SolidMapsForgeDirectory sdirectory;
+    private final SolidRenderTheme stheme;
 
     private MapList mapList;
-
+    private RendererList rendererList;
 
 
     public RenderService(ServiceContext sc) {
         super(sc);
+
         sdirectory = new SolidMapsForgeDirectory(sc.getContext());
+        stheme = new SolidRenderTheme(sc.getContext());
+
+        rendererList = new RendererList(cache, stheme.getValueAsRenderTheme());
+
+
         mapList = new MapList(sdirectory.getValueAsFile());
 
         sdirectory.getStorage().register(this);
@@ -66,6 +74,11 @@ public class RenderService  extends VirtualService
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         if (sdirectory.hasKey(key)) {
             mapList = new MapList(sdirectory.getValueAsFile());
+        }
+
+        else if (stheme.hasKey(key)) {
+            rendererList.destroy();
+            rendererList = new RendererList(cache, stheme.getValueAsRenderTheme());
         }
     }
 }

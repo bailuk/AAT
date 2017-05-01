@@ -4,10 +4,10 @@ import android.app.Activity;
 import android.view.View;
 import android.widget.LinearLayout;
 
-import ch.bailu.aat.preferences.SolidDirectory;
+import ch.bailu.aat.preferences.SolidFile;
 
 public class SolidExtendetDirectoryView extends LinearLayout{
-    public SolidExtendetDirectoryView(Activity a, SolidDirectory s) {
+    public SolidExtendetDirectoryView(Activity a, SolidFile s) {
         super(s.getContext());
         setOrientation(HORIZONTAL);
 

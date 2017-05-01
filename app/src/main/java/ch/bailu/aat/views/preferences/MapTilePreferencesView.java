@@ -8,6 +8,7 @@ import ch.bailu.aat.map.tile.source.CachedSource;
 import ch.bailu.aat.map.tile.source.Source;
 import ch.bailu.aat.preferences.SolidEnableTileCache;
 import ch.bailu.aat.preferences.SolidMapsForgeDirectory;
+import ch.bailu.aat.preferences.SolidRenderTheme;
 import ch.bailu.aat.preferences.SolidTileCacheDirectory;
 import ch.bailu.aat.preferences.SolidTileSize;
 import ch.bailu.aat.preferences.SolidTrimDate;
@@ -31,6 +32,7 @@ public class MapTilePreferencesView extends VerticalScrollView {
 
         add(new TitleView(context, Source.MAPSFORGE.getName()));
         add(new SolidExtendetDirectoryView(acontext, new SolidMapsForgeDirectory(context)));
+        add(new SolidStringView(new SolidRenderTheme(context)));
         add(new SolidEnableTileCacheView(
                 acontext,
                 new SolidEnableTileCache(context, CachedSource.CACHED_MAPSFORGE)));

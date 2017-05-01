@@ -9,7 +9,7 @@ import ch.bailu.aat.R;
 import ch.bailu.aat.util.fs.AppDirectory;
 import ch.bailu.aat.util.fs.AndroidVolumes;
 
-public class SolidDataDirectory extends SolidDirectory {
+public class SolidDataDirectory extends SolidFile {
 
     public SolidDataDirectory(Context c) {
         super(Storage.global(c), SolidDataDirectory.class.getSimpleName());
