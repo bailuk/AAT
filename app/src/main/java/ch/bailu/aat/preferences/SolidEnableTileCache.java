@@ -3,17 +3,14 @@ package ch.bailu.aat.preferences;
 import android.content.Context;
 
 import ch.bailu.aat.map.tile.source.CachedSource;
+import ch.bailu.aat.map.tile.source.MapsForgeSource;
 import ch.bailu.aat.map.tile.source.Source;
 
-public class SolidEnableTileCache extends SolidBoolean {
-    private final CachedSource source;
+public abstract class SolidEnableTileCache extends SolidBoolean {
 
-    public SolidEnableTileCache(Context c, CachedSource s) {
+    public SolidEnableTileCache(Context c, String key) {
         super(Storage.global(c),
-                SolidEnableTileCache.class.getSimpleName() + s.getSource().getName());
-
-        source = s;
-
+                SolidEnableTileCache.class.getSimpleName() + key);
     }
 
 
@@ -24,17 +21,16 @@ public class SolidEnableTileCache extends SolidBoolean {
     }
 
 
-    public Source getSourceCached() {
-        return source;
+    public static class Hillshade extends SolidEnableTileCache {
+
+        public Hillshade(Context c) {
+            super(c,Source.ELEVATION_HILLSHADE.getName());
+        }
     }
 
-    public Source getSourceNotCached() {
-        return source.getSource();
-    }
-
-
-    public Source getSource() {
-        if (isEnabled()) return getSourceCached();
-        return getSourceNotCached();
+    public static class MapsForge extends SolidEnableTileCache {
+        public MapsForge(Context c) {
+            super(c, MapsForgeSource.NAME);
+        }
     }
 }

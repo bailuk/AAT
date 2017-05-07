@@ -4,6 +4,7 @@ import android.content.Context;
 
 import ch.bailu.aat.R;
 import ch.bailu.aat.map.tile.source.DownloadSource;
+import ch.bailu.aat.map.tile.source.MapsForgeSource;
 import ch.bailu.aat.map.tile.source.Source;
 
 
@@ -15,7 +16,7 @@ public class SolidMapTileStack extends SolidCheckList {
 
 
     public final static Source[] SOURCES = new Source[] {
-            Source.MAPSFORGE,
+            MapsForgeSource.MAPSFORGE,
             DownloadSource.MAPNIK,
             Source.ELEVATION_COLOR,
             Source.ELEVATION_HILLSHADE,

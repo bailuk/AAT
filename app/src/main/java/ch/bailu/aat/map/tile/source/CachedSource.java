@@ -14,14 +14,13 @@ public class CachedSource extends Source {
         source = s;
     }
 
-    @Override
     public String getName() {
         return "Cached" + source.getName();
     }
 
     @Override
     public String getID(Tile aTile, Context context) {
-        return genID(aTile, getName());
+        return "Cached" + source.getID(aTile, context);
     }
 
     @Override
@@ -61,6 +60,6 @@ public class CachedSource extends Source {
 
 //    public final static CachedSource CACHED_ELEVATION_COLOR = new CachedSource(Source.ELEVATION_COLOR);
     public final static CachedSource CACHED_ELEVATION_HILLSHADE = new CachedSource(Source.ELEVATION_HILLSHADE);
-    public final static CachedSource CACHED_MAPSFORGE = new CachedSource(Source.MAPSFORGE);
+    //public final static CachedSource CACHED_MAPSFORGE = new CachedSource(Source.MAPSFORGE);
 }
 

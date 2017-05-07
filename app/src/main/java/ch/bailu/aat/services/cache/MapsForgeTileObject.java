@@ -5,7 +5,9 @@ import android.graphics.Bitmap;
 import org.mapsforge.core.graphics.TileBitmap;
 import org.mapsforge.core.model.Tile;
 import org.mapsforge.map.model.common.Observer;
+import org.mapsforge.map.rendertheme.XmlRenderTheme;
 
+import ch.bailu.aat.preferences.SolidRenderTheme;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.util.graphic.SyncTileBitmap;
@@ -16,17 +18,20 @@ public class MapsForgeTileObject extends TileObject implements Observer {
 
     private final SyncTileBitmap bitmap = new SyncTileBitmap();
 
+    private final XmlRenderTheme renderTheme;
 
-    public MapsForgeTileObject(String id, ServiceContext sc, Tile t) {
+    public MapsForgeTileObject(String id, ServiceContext sc, Tile t, XmlRenderTheme theme) {
         super(id);
         scontext = sc;
         tile = t;
+        renderTheme = theme;
+
         sc.getRenderService().lockToCache(this);
         retreiveBitmap();
     }
 
     private void retreiveBitmap() {
-        TileBitmap b = scontext.getRenderService().getTile(tile);
+        TileBitmap b = scontext.getRenderService().getTile(tile, renderTheme);
 
         if (b != null) {
             bitmap.set(b);
@@ -95,14 +100,17 @@ public class MapsForgeTileObject extends TileObject implements Observer {
 
     public static class Factory extends ObjectHandle.Factory {
         private final Tile mapTile;
+        private final XmlRenderTheme renderTheme;
 
-        public Factory(Tile t) {
+        public Factory(Tile t, String theme) {
+
+            renderTheme = SolidRenderTheme.toRenderTheme(theme);
             mapTile=t;
         }
 
         @Override
         public ObjectHandle factory(String id, ServiceContext sc) {
-            return  new MapsForgeTileObject(id, sc, mapTile);
+            return  new MapsForgeTileObject(id, sc, mapTile, renderTheme);
         }
 
     }

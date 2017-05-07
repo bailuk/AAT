@@ -14,13 +14,11 @@ public class StateScan implements State, Runnable {
 
     public StateScan(StateMachine s) {
         state = s;
-        state.tileDirectory = new SolidTileCacheDirectory(s.context).getValueAsFile();
+        state.baseDirectory = new SolidTileCacheDirectory(s.context).getValueAsFile();
 
         state.list = new TilesList();
-
-        state.summaries.reset(s.context);
-
         new Thread(this).start();
+
     }
 
 
@@ -32,7 +30,6 @@ public class StateScan implements State, Runnable {
     @Override
     public void stop() {
         nextState = StateUnscanned.class;
-
     }
 
     @Override
@@ -42,22 +39,23 @@ public class StateScan implements State, Runnable {
 
 
     @Override
-    public void resetAndRescan() {
-        nextState = StateScan.class;
-    }
+    public void remove() {}
 
     @Override
-    public void remove() {}
+    public void removeAll() {
+        nextState = StateRemoveAll.class;
+    }
 
     @Override
     public void rescan() {}
 
+
     @Override
     public void run() {
-        scanRootDirectoryTree(state.tileDirectory);
+        scanSourceContainer(state.baseDirectory);
 
         if(keepUp()) {
-            broadcast();
+            state.broadcast(AppBroadcaster.TILE_REMOVER_SCAN);
         }
         state.list.log();
         state.setFromClass(nextState);
@@ -69,24 +67,19 @@ public class StateScan implements State, Runnable {
         return (nextState == StateScanForRemoval.class);
     }
 
-    private void broadcast() {
-        AppBroadcaster.broadcast(state.context, AppBroadcaster.TILE_REMOVER_SCAN);
-    }
 
-
-
-
-    private void scanRootDirectoryTree(File file) {
+    private void scanSourceContainer(File sourceContainer) {
         try {
-            scanRootDirectories(file, state.summaries);
-            for (int i=1; i< SourceSummaries.SUMMARY_SIZE; i++) {
-                String name = state.summaries.getMapSummary()[i].getName();
+            sourceContainer = sourceContainer.getCanonicalFile();
 
-                if (name != null && name.length()>0 ) {
-                    File directory = new File(file.getCanonicalFile(), name);
-                    if (doDirectory(directory) && keepUp()) {
-                        scanMapDirectory(directory, i);
-                    }
+            state.summaries.rescan(state.context, sourceContainer);
+
+            for (int summaryIndex=1; summaryIndex< state.summaries.size(); summaryIndex++) {
+                String sourceName = state.summaries.get(summaryIndex).getName();
+
+                if (sourceName != null && sourceName.length()>0 ) {
+                    File zoomContainer = new File(sourceContainer, sourceName);
+                    scanZoomContainer(zoomContainer, summaryIndex);
                 } else {
                     break;
                 }
@@ -97,99 +90,40 @@ public class StateScan implements State, Runnable {
         }
     }
 
-    private void scanMapDirectory(File directory, int summary) {
 
-        final File[] files = directory.listFiles();
+    private void scanZoomContainer(File zoomContainer, final int summaryIndex) {
+        new TileScanner(zoomContainer) {
 
+            @Override
+            protected boolean doSourceContainer(File dir) {
+                return keepUp();
 
-
-
-        if (files != null) {
-            for (File file : files) {
-                if (doDirectory(file) && keepUp()) {
-                    try {
-                        scanZoomDirectory(file, summary);
-                    } catch (NumberFormatException e) {
-                    }
-                }
             }
-        }
 
-    }
-
-    private void scanZoomDirectory(File directory, int summary)
-            throws  NumberFormatException {
-        final File[] files = directory.listFiles();
-
-        final short zoom = TileFile.getZoom(directory);
-
-        if (files != null) {
-            for (File file: files) {
-                if (doDirectory(file) && keepUp() ) {
-                    broadcast();
-                    scanTileDirectory(file, zoom, summary);
-                }
+            @Override
+            protected boolean doZoomContainer(File dir) {
+                return keepUp();
             }
-        }
-    }
 
-    private void scanTileDirectory(File directory, short zoom, int summary)
-            throws NumberFormatException{
-
-        final File[] files = directory.listFiles();
-        final int x = TileFile.getX(directory);
-
-        if (files != null) {
-            for (File file : files) {
-                processFile(file, zoom, x, summary);
+            @Override
+            protected boolean doXContainer(File dir) {
+                return keepUp();
             }
-        }
-    }
 
-    public static void scanRootDirectories(File tileCacheDirectory, SourceSummaries summaries) throws IOException {
-        tileCacheDirectory = tileCacheDirectory.getCanonicalFile();
 
-        final File[] files = tileCacheDirectory.listFiles();
-
-        if (files != null) {
-            int f = 0;
-            int summaryIndex = 1;
-
-            while (f < files.length && summaryIndex < SourceSummaries.SUMMARY_SIZE) {
-                if (doDirectory(files[f])) {
-                    summaries.setName(summaryIndex, files[f].getName());
-                    summaryIndex++;
-                }
-
-                f++;
+            @Override
+            protected boolean doYContainer(File dir) {
+                state.broadcastLimited(AppBroadcaster.TILE_REMOVER_SCAN);
+                return keepUp();
             }
-        }
-    }
-
-    private static boolean doDirectory(File file) {
-        return file.isDirectory() && !file.isHidden() && isReal(file);
-    }
 
 
-    private static boolean isReal(File file) {
-        try {
-            final String c = file.getCanonicalPath();
-            final String a = file.getAbsolutePath();
-
-            return c.equals(a);
-
-        } catch (IOException e) {
-            return false;
-        }
-    }
-
-
-
-    private void processFile(File file, short zoom, int x, int summary) {
-        try {
-            final TileFile tile = new TileFile(summary, zoom, x, file);
-            state.list.add(tile);
-            state.summaries.addFile(summary, tile);
-        } catch (NumberFormatException e) {}
+            @Override
+            protected void doFile(File file) {
+                TileFile tile = new TileFile(summaryIndex, zoom, x, file);
+                state.list.add(tile);
+                state.summaries.addFile(tile);
+            }
+        }.scanZoomContainer();
     }
 }

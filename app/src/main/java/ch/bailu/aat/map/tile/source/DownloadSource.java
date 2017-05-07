@@ -46,7 +46,6 @@ public class DownloadSource extends Source {
     }
 
 
-    @Override
     public String getName() {
         return name;
     }
@@ -54,8 +53,7 @@ public class DownloadSource extends Source {
 
     @Override
     public String getID(Tile tile, Context context) {
-        return AppDirectory.getTileFile(tile,
-                getTileRelativeFilename(tile), context).getAbsolutePath();
+        return AppDirectory.getTileFile(getTileRelativeFilename(tile), context).getAbsolutePath();
     }
 
     @Override

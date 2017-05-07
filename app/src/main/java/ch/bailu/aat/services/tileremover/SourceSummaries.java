@@ -3,79 +3,118 @@ package ch.bailu.aat.services.tileremover;
 import android.content.Context;
 
 import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
 
 import ch.bailu.aat.R;
 
 public class SourceSummaries {
-
-
     public final static int SUMMARY_SIZE = 20;
-    private final SourceSummary[] mapSummaries = new SourceSummary[SUMMARY_SIZE];
 
+    private final ArrayList<SourceSummary>
+            sourceSummaries = new ArrayList<>(SUMMARY_SIZE);
 
-    public void reset(Context c) {
-        for(int i = 0; i< mapSummaries.length; i++) {
-            mapSummaries[i] = new SourceSummary();
+    private final static SourceSummary NULL_SUMMARY = new SourceSummary("NULL");
+
+    public SourceSummaries(Context c) {
+        reset(c);
+    }
+
+    private void reset(Context c) {
+        sourceSummaries.clear();
+        sourceSummaries.add(new SourceSummary(c.getString(R.string.p_trim_total)));
+    }
+
+    public void rescanKeep(Context c, File tileCacheDirectory) throws IOException {
+        ArrayList<SourceSummary> old = new ArrayList<>(sourceSummaries);
+
+        rescan(c, tileCacheDirectory);
+        replaceFromList(old);
+    }
+
+    private void replaceFromList(ArrayList<SourceSummary> list) {
+        for (int index=0; index < size(); index++) {
+            int foundIndex = findInList(list, get(index).getName());
+
+            if (foundIndex > -1) {
+                sourceSummaries.set(index, list.get(foundIndex));
+            }
         }
-        mapSummaries[0].setName(c.getString(R.string.p_trim_total));
     }
 
-    public void setName(int s, String name) {
-        mapSummaries[s].setName(name);
+    public int findIndex(String name) {
+        return findInList(sourceSummaries, name);
     }
 
-    public void addFile(int s, TileFile file) {
+
+    private static int findInList(ArrayList<SourceSummary> old, String name) {
+        for (int i=0; i<old.size(); i++) {
+            if (old.get(i).getName().equals(name)) return i;
+        }
+        return -1;
+    }
+
+
+    public void rescan(Context c, File tileCacheDirectory) throws IOException {
+        tileCacheDirectory = tileCacheDirectory.getCanonicalFile();
+
+        reset(c);
+
+        File[] files = tileCacheDirectory.listFiles();
+
+        if (files != null) {
+            for (File file: files) {
+                if (TileScanner.doDirectory(file)) {
+                    sourceSummaries.add(new SourceSummary(file.getName()));
+                }
+
+            }
+        }
+    }
+
+
+    public void addFile(TileFile file) {
         long length = file.length();
-        mapSummaries[0].addFile(length);
-        mapSummaries[s].addFile(length);
+
+        get(0).addFile(length);
+        get(file.getSource()).addFile(length);
     }
+
 
     public void resetToRemove() {
-        for (SourceSummary mapSummary : mapSummaries) {
-            mapSummary.clear_rm();
+        for (SourceSummary summary : sourceSummaries) {
+            summary.clear_rm();
         }
     }
 
     public void addFileToRemove(TileFile f) {
         final long l = f.length();
 
-        mapSummaries[0].addFileToRemove(f.length());
-        mapSummaries[f.getSource()].addFileToRemove(l);
+        get(0).addFileToRemove(f.length());
+        get(f.getSource()).addFileToRemove(l);
     }
 
 
     public void addFileRemoved(TileFile f) {
         final long length = f.length();
 
-        mapSummaries[0].addFileRemoved(length);
-        mapSummaries[f.getSource()].addFileRemoved(length);
+        get(0).addFileRemoved(length);
+        get(f.getSource()).addFileRemoved(length);
     }
 
-     public long getNewSize(int i) {
-        return mapSummaries[i].newSize;
+    public SourceSummary get(int index) {
+        if (index < sourceSummaries.size())
+            return sourceSummaries.get(index);
+
+        return NULL_SUMMARY;
     }
 
-
-    public SourceSummaryInterface[] getMapSummary() {
-        return mapSummaries;
-    }
-
-    public long getRemoveCount() {
-        return mapSummaries[0].countToRemove;
-    }
-
-
-    public int hashCode(int i) {
-        return mapSummaries[i].hashCode();
+    public int size() {
+        return sourceSummaries.size();
     }
 
 
-    public File toFile(File tileDirectory, TileFile t) {
-        return t.toFile(new File(tileDirectory, getMapDirectory(t.getSource())));
+    public File toFile(File baseDirectory, TileFile t) {
+        return t.toFile(new File(baseDirectory, get(t.getSource()).getName()));
     }
-
-    public String getMapDirectory(int source) {
-        return mapSummaries[source].getName();
-    }
-
 }

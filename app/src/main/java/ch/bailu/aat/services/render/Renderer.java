@@ -33,10 +33,10 @@ public class Renderer extends RendererBase<RendererJob> {
     private final MapWorkerPool mapWorkerPool;
     private final RenderThemeFuture renderThemeFuture;
 
-    public Renderer(RenderThemeFuture rt, TileCache cache, ArrayList<File> files) {
+    public Renderer(XmlRenderTheme t, TileCache cache, ArrayList<File> files) {
         super(cache, new Model()); // TODO: move model to context
 
-        renderThemeFuture = rt;
+        renderThemeFuture = createTheme(t);
 
         if (files.size()==1) {
             mapDataStore = new MapFile(files.get(0));
@@ -75,10 +75,19 @@ public class Renderer extends RendererBase<RendererJob> {
     }
 
 
+    private static RenderThemeFuture createTheme(XmlRenderTheme t) {
+        RenderThemeFuture theme = new RenderThemeFuture(
+                AndroidGraphicFactory.INSTANCE,   // TODO: move to context
+                t,
+                new Model().displayModel);        // TODO: move to context
+        new Thread(theme).start();
+        return theme;
+    }
 
     public void destroy() {
         mapWorkerPool.stop();
         mapDataStore.close();
+        renderThemeFuture.decrementRefCount();
     }
 
 

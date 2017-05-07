@@ -47,31 +47,15 @@ public class AppDirectory  {
     public static final String DIR_IMPORT = "import/";
     
     public static final String DIR_NOMINATIM = "nominatim/";
-    //public static final String DIR_NOMINATIM_DRAFT = "nominatim/draft";
-    
+
     public static final String DIR_OVERPASS = "overpass/";
-    //public static final String DIR_OVERPASS_DRAFT = "overpass/draft/";
-    
+
     
     public static final String DIR_TEST = "test/";
     
     
     
-    public static final String DIR_OSM_FEATURES = "osm_features/";
-    public static final String DIR_OSM_FEATURES_PREPARSED = "osm_features/preparsed/";
-    public static final String DIR_OSM_FEATURES_IMAGES = "osm_features/images/";
-//    public static final String DIR_OSM_FEATURES_ICONS = "osm_features/icons/";
 
-    public static final String FILE_OSM_FEATURES_INDEX = "index.html";
-    
-    public static File getMapFeatureIndex(Context c) {
-        return new File(
-                AppDirectory.getDataDirectory(c,  AppDirectory.DIR_OSM_FEATURES), 
-                AppDirectory.FILE_OSM_FEATURES_INDEX
-                );
-                
-    }
-    
     
     public static final String DIR_CACHE = "cache/";
     public static final String FILE_CACHE_DB="summary.db";
@@ -96,8 +80,8 @@ public class AppDirectory  {
 
     
     /////////////////////////////////////////////////////////////////////////////////////////////////
-    public static File getTileFile(Tile tile, String tilePath, Context context) {
-        return new File(getTileCacheDirectory(context), tilePath);
+    public static File getTileFile(String tilePath, Context context) {
+        return new File(getTileCacheDirectory(context),tilePath);
     }
 
 

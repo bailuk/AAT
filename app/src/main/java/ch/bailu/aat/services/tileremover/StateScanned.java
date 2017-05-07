@@ -7,8 +7,7 @@ public class StateScanned implements State {
 
     public StateScanned(StateMachine s) {
         state = s;
-        AppBroadcaster.broadcast(state.context, AppBroadcaster.TILE_REMOVER_STOPPED);
-
+        state.broadcast(AppBroadcaster.TILE_REMOVER_STOPPED);
     }
 
 
@@ -23,6 +22,7 @@ public class StateScanned implements State {
         state.set(new StateScanForRemoval(state));
     }
 
+
     @Override
     public void stop() {}
 
@@ -31,16 +31,18 @@ public class StateScanned implements State {
         state.set(new StateUnscanned(state));
     }
 
-    @Override
-    public void resetAndRescan() {
-        state.set(new StateScan(state));
-    }
+
 
     @Override
     public void remove() {
-        if (state.summaries.getRemoveCount() > 0) {
+        if (state.summaries.get(0).countToRemove > 0) {
             state.set(new StateRemove(state));
         }
+    }
+
+    @Override
+    public void removeAll() {
+        state.set(new StateRemoveAll(state));
     }
 
 }

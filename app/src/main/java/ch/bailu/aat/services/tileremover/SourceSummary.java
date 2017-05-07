@@ -1,55 +1,47 @@
 package ch.bailu.aat.services.tileremover;
 
-import ch.bailu.aat.util.ui.AppLog;
-import ch.bailu.aat.preferences.SolidTrimSize;
+import ch.bailu.aat.util.fs.JFile;
 
 public class SourceSummary implements SourceSummaryInterface {
-    private String name = "";
-    private int hash;
-    public long size, count, size_rm, countToRemove, newSize, count_new;
+    private final String name;
+    public int count, countToRemove, countNew;
+    public long size, sizeToRemove, sizeNew;
 
 
-
-    public void clear_all() {
-        setName("");
-        clear();
-        clear_rm();
-    }
-
-    public void log() {
-        AppLog.d(this, name + " "+ count + " "+ size / (1024*1024) + "MB");
+    public SourceSummary(String n) {
+        name = n;
     }
 
 
     public void addFile(long length) {
         size += length;
-        newSize += length;
+        sizeNew += length;
         count++;
-        count_new++;
+        countNew++;
     }
 
     public void addFileToRemove(long length) {
-        size_rm += length;
+        sizeToRemove += length;
         countToRemove++;
 
-        newSize -= length;
-        count_new --;
+        sizeNew -= length;
+        countNew--;
     }
 
 
     public void addFileRemoved(long length) {
         size -= length;
-        size_rm -= length;
+        sizeToRemove -= length;
 
         count --;
         countToRemove--;
     }
 
     public void clear_rm() {
-        newSize = size;
-        count_new = count;
+        sizeNew = size;
+        countNew = count;
 
-        size_rm = 0;
+        sizeToRemove = 0;
         countToRemove = 0;
     }
 
@@ -59,23 +51,9 @@ public class SourceSummary implements SourceSummaryInterface {
         clear_rm();
     }
 
-
-    public synchronized void setName(String n) {
-        name = n;
-        hash = name.hashCode();
-    }
-
-
     @Override
     public int hashCode() {
-        return hash;
-    }
-
-
-
-    @Override
-    public synchronized boolean isValid() {
-        return name.length()>0;
+        return name.hashCode();
     }
 
     @Override
@@ -83,23 +61,21 @@ public class SourceSummary implements SourceSummaryInterface {
         return name;
     }
 
-
-
     @Override
     public StringBuilder buildReport(StringBuilder builder) {
         builder.append(count);
         builder.append('-');
         builder.append(countToRemove);
         builder.append('=');
-        builder.append(count_new);
+        builder.append(countNew);
 
         builder.append('\n');
 
-        SolidTrimSize.buildSizeText(builder, size);
+        JFile.reportFileSize(builder, (double)size);
         builder.append('-');
-        SolidTrimSize.buildSizeText(builder, size_rm);
+        JFile.reportFileSize(builder, (double)sizeToRemove);
         builder.append('=');
-        SolidTrimSize.buildSizeText(builder, newSize);
+        JFile.reportFileSize(builder, (double)sizeNew);
 
         return builder;
     }

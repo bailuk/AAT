@@ -11,7 +11,7 @@ public class StateScannedPartial implements State {
 
         state.list.resetToRemove();
         state.summaries.resetToRemove();
-        AppBroadcaster.broadcast(state.context, AppBroadcaster.TILE_REMOVER_STOPPED);
+        state.broadcast(AppBroadcaster.TILE_REMOVER_STOPPED);
     }
 
 
@@ -35,12 +35,10 @@ public class StateScannedPartial implements State {
         state.set(new StateUnscanned(state));
     }
 
-    @Override
-    public void resetAndRescan() {
-        state.set(new StateScan(state));
-    }
 
     @Override
     public void remove() {}
 
+    @Override
+    public void removeAll() {state.set(new StateRemoveAll(state));}
 }

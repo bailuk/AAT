@@ -5,6 +5,7 @@ import android.content.Context;
 import org.mapsforge.map.rendertheme.ExternalRenderTheme;
 import org.mapsforge.map.rendertheme.InternalRenderTheme;
 import org.mapsforge.map.rendertheme.XmlRenderTheme;
+import org.mapsforge.map.rendertheme.rule.RenderTheme;
 
 import java.io.File;
 import java.io.FileFilter;
@@ -27,7 +28,12 @@ public class SolidRenderTheme extends SolidFile {
 
 
     public XmlRenderTheme getValueAsRenderTheme() {
-        String name = getValueAsString();
+        return toRenderTheme(getValueAsString());
+    }
+
+
+    public static XmlRenderTheme toRenderTheme(String name) {
+
         XmlRenderTheme theme = InternalRenderTheme.DEFAULT;
 
         if (name.equals(InternalRenderTheme.DEFAULT.toString())) {
@@ -42,6 +48,7 @@ public class SolidRenderTheme extends SolidFile {
             }
         }
         return theme;
+
     }
 
 

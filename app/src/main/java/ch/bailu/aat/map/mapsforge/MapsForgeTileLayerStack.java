@@ -10,10 +10,12 @@ import ch.bailu.aat.map.MapContext;
 import ch.bailu.aat.map.layer.MapLayerInterface;
 import ch.bailu.aat.map.tile.TileProvider;
 import ch.bailu.aat.map.tile.source.CachedSource;
+import ch.bailu.aat.map.tile.source.MapsForgeSource;
 import ch.bailu.aat.map.tile.source.Source;
 import ch.bailu.aat.preferences.SolidEnableTileCache;
 import ch.bailu.aat.preferences.SolidMapTileStack;
 import ch.bailu.aat.preferences.SolidPreset;
+import ch.bailu.aat.preferences.SolidRenderTheme;
 import ch.bailu.aat.services.ServiceContext;
 
 public class MapsForgeTileLayerStack implements MapLayerInterface {
@@ -42,17 +44,23 @@ public class MapsForgeTileLayerStack implements MapLayerInterface {
     private void init(ServiceContext sc) {
         for (Source s: SolidMapTileStack.SOURCES) {
             Source source = s;
-            if (s == Source.MAPSFORGE) {
-                source =
-                        new SolidEnableTileCache(
-                                sc.getContext(),
-                                CachedSource.CACHED_MAPSFORGE).getSource();
+            if (s == MapsForgeSource.MAPSFORGE) {
+                String theme =
+                        new SolidRenderTheme(sc.getContext()).getValueAsString();
+
+                if (new SolidEnableTileCache.MapsForge(sc.getContext()).isEnabled()) {
+                    source = new CachedSource(new MapsForgeSource(theme));
+                } else {
+                    source = new MapsForgeSource(theme);
+                }
 
             } else if (s == Source.ELEVATION_HILLSHADE) {
-                source =
-                        new SolidEnableTileCache(
-                                sc.getContext(),
-                                CachedSource.CACHED_ELEVATION_HILLSHADE).getSource();
+
+                if (new SolidEnableTileCache.Hillshade(sc.getContext()).isEnabled()) {
+                    source = CachedSource.CACHED_ELEVATION_HILLSHADE;
+                } else {
+                    source = Source.ELEVATION_HILLSHADE;
+                }
             }
 
 

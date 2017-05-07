@@ -12,7 +12,7 @@ import ch.bailu.aat.preferences.SolidTileCacheDirectory;
 import ch.bailu.aat.util.ui.AppDialog;
 import ch.bailu.aat.util.ui.AppLog;
 import ch.bailu.aat.views.ImageButtonView;
-
+/*
 public class SolidEnableTileCacheView extends LinearLayout {
 
     private final Activity acontext;
@@ -39,7 +39,7 @@ public class SolidEnableTileCacheView extends LinearLayout {
         public SolidEmptyCacheButton(final SolidEnableTileCache s) {
             super(s.getContext(), R.drawable.user_trash_inverse);
 
-            final String name = s.getSourceNotCached().getName();
+            final String name = s.getKey();
             final File file = getCacheDirectory(name);
 
             setOnClickListener(new OnClickListener() {
@@ -79,3 +79,4 @@ public class SolidEnableTileCacheView extends LinearLayout {
     }
 
 }
+*/

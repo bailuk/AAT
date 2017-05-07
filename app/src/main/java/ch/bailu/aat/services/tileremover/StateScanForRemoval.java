@@ -59,14 +59,11 @@ public class StateScanForRemoval implements State, Runnable {
 
 
     @Override
-    public void resetAndRescan() {
-        nextState = StateScan.class;
-    }
+    public void remove() {}
 
     @Override
-    public void remove() {
+    public void removeAll() { nextState = StateRemoveAll.class; }
 
-    }
 
     @Override
     public void rescan() {
@@ -78,36 +75,13 @@ public class StateScanForRemoval implements State, Runnable {
     public void run() {
         final Iterator<TileFile> iterator = state.list.iterator();
 
-        int c=0;
-
-
-        TileFile old = null;
-        while (iterator.hasNext()) {
+        while (iterator.hasNext() && keepUp()) {
             TileFile file = iterator.next();
-
-
-            if (old != null) {
-                if (old.lastModified() > file.lastModified())
-                    AppLog.d(this, "wrong order");
-            }
-
-            old = file;
-
-            if (c > 0) {
-                c--;
-            } else if (keepUp()){
-                c=500;
-                broadcast();
-            } else {
-                AppLog.d(this, "not keep up");
-                break;
-            }
 
             if (passFilter(file)) {
                 if (passDirectory(file)) addFile(file);
-
+                state.broadcastLimited(AppBroadcaster.TILE_REMOVER_SCAN);
             } else {
-                AppLog.d(this, "not pass");
                 break;
             }
 
@@ -145,7 +119,7 @@ public class StateScanForRemoval implements State, Runnable {
 
 
     private boolean passSize() {
-        return state.summaries.getNewSize(trimSummaryIndex) > trimSize;
+        return state.summaries.get(trimSummaryIndex).sizeNew > trimSize;
     }
 
     private boolean passAge(TileFile file) {
@@ -156,7 +130,4 @@ public class StateScanForRemoval implements State, Runnable {
         return (nextState == StateScanned.class);
     }
 
-    private void broadcast() {
-        AppBroadcaster.broadcast(state.context, AppBroadcaster.TILE_REMOVER_SCAN);
-    }
 }

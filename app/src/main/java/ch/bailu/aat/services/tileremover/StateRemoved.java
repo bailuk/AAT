@@ -1,8 +1,14 @@
 package ch.bailu.aat.services.tileremover;
 
-import ch.bailu.aat.util.AppBroadcaster;
+public class StateRemoved extends StateUnscanned {
+    public StateRemoved(StateMachine s) {
+        super(s);
+    }
+}
 
-public class StateRemoved implements State {
+
+/*    implements
+} State {
     private final StateMachine state;
 
 
@@ -22,9 +28,7 @@ public class StateRemoved implements State {
     }
 
     @Override
-    public void stop() {
-
-    }
+    public void stop() {}
 
 
     @Override
@@ -33,17 +37,12 @@ public class StateRemoved implements State {
     }
 
     @Override
-    public void resetAndRescan() {
-        state.set(new StateScan(state));
-    }
+    public void remove() {}
 
     @Override
-    public void remove() {
-
-    }
+    public void removeAll() {}
 
     @Override
-    public void rescan() {
-
-    }
+    public void rescan() {}
 }
+*/

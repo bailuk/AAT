@@ -113,6 +113,7 @@ public class CachedTileObject extends TileObject {
                     toString());
 
 
+
             if (
                     mapTile.zoomLevel <= MIN_SAVE_ZOOM_LEVEL &&
                     id.equals(sourceID) &&
@@ -201,29 +202,16 @@ public class CachedTileObject extends TileObject {
             generated = gen;
         }
 
-        @Override
         public String getName() {
             return generated.getName();
         }
 
         @Override
         public String getID(Tile tile, Context context) {
-            return AppDirectory.getTileFile(tile,
-                    getTileRelativeFilename(tile), context).getAbsolutePath();
+            final String relativePath = generated.getID(tile, context) + EXT;
+            return AppDirectory.getTileFile(relativePath, context).getAbsolutePath();
         }
 
-        private String getTileRelativeFilename(final Tile tile) {
-            final StringBuilder sb = new StringBuilder();
-            sb.append(getName());
-            sb.append('/');
-            sb.append(tile.zoomLevel);
-            sb.append('/');
-            sb.append(tile.tileX);
-            sb.append('/');
-            sb.append(tile.tileY);
-            sb.append(EXT);
-            return sb.toString();
-        }
 
         @Override
         public int getMinimumZoomLevel() {

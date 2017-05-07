@@ -1,5 +1,6 @@
 package ch.bailu.aat.views.tileremover;
 
+import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -8,6 +9,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 import ch.bailu.aat.R;
+import ch.bailu.aat.menus.RemoveTilesMenu;
 import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.preferences.SolidTileCacheDirectory;
 import ch.bailu.aat.services.ServiceContext;
@@ -21,24 +23,26 @@ public class TileRemoverView
         implements View.OnClickListener, SharedPreferences.OnSharedPreferenceChangeListener {
 
 
-    private TilesSummaryView summaryView;
+    private TileSummariesView summaryView;
     private BusyButton scan, remove;
 
     private final SolidTileCacheDirectory sdirectory;
 
     private final ServiceContext scontext;
+    private final Activity acontext;
 
 
 
-    public TileRemoverView(ServiceContext sc) {
+    public TileRemoverView(ServiceContext sc, Activity ac) {
         super(sc.getContext());
 
         setOrientation(HORIZONTAL);
-        scontext=sc;
+        scontext = sc;
+        acontext = ac;
 
         sdirectory = new SolidTileCacheDirectory(getContext());
 
-        addW(createFilterLayout(getContext()));
+        addW(createFilterLayout(ac));
         addView(createControlBar(getContext()));
 
     }
@@ -51,8 +55,8 @@ public class TileRemoverView
         v.setLayoutParams(l);
     }
 
-    private View createFilterLayout(Context context) {
-        summaryView = new TilesSummaryView(context);
+    private View createFilterLayout(Activity acontext) {
+        summaryView = new TileSummariesView(acontext);
         return summaryView;
     }
 
@@ -142,9 +146,8 @@ public class TileRemoverView
                 tr.getState().scan();
             } else if (v == remove && remove.isWaiting()) {
                 tr.getState().stop();
-            } else if (v == remove) {
-                tr.getState().remove();
-
+            } else if (v == remove) { // show menu
+                new RemoveTilesMenu(scontext, acontext).showAsDialog(scontext.getContext());
             }
 
             scontext.free();
@@ -160,7 +163,7 @@ public class TileRemoverView
         if (scontext.lock()) {
             final TileRemoverService tr = scontext.getTileRemoverService();
             if (sdirectory.hasKey(key)) {
-                tr.getState().resetAndRescan();
+                tr.getState().reset();
             } else if (key.contains("SolidTrim")) {
                 tr.getState().rescan();
             }

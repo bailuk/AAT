@@ -2,11 +2,8 @@ package ch.bailu.aat.services.render;
 
 import org.mapsforge.core.graphics.TileBitmap;
 import org.mapsforge.core.model.Tile;
-import org.mapsforge.map.android.graphics.AndroidGraphicFactory;
 import org.mapsforge.map.layer.cache.TileCache;
-import org.mapsforge.map.model.Model;
 import org.mapsforge.map.rendertheme.XmlRenderTheme;
-import org.mapsforge.map.rendertheme.rule.RenderThemeFuture;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -18,32 +15,30 @@ public class RendererList {
 
     private final ArrayList<Entry> renderer = new ArrayList(LIMIT);
     private final TileCache cache;
-    private final RenderThemeFuture theme;
 
-    public RendererList(TileCache c, XmlRenderTheme xmlTheme) {
-
-        AppLog.d(this, xmlTheme.toString());
+    public RendererList(TileCache c) {
 
         cache = c;
-        theme = new RenderThemeFuture(
-                AndroidGraphicFactory.INSTANCE,   // TODO: move to context
-                xmlTheme,
-                new Model().displayModel);        // TODO: move to context
-        new Thread(theme).start();
+
     }
 
 
     private class Entry {
         public final Renderer renderer;
+        public final XmlRenderTheme theme;
         public final ArrayList<File> files;
         private long stamp;
 
 
-        public Entry(ArrayList<File> f) {
+        public Entry(ArrayList<File> f, XmlRenderTheme t) {
+            theme = t;
             files = f;
             renderer = new Renderer(theme, cache, files);
             use();
         }
+
+
+
 
         public void use() {
             stamp = System.currentTimeMillis();
@@ -69,12 +64,16 @@ public class RendererList {
             }
             return false;
         }
+
+        public boolean hasSameTheme(XmlRenderTheme t) {
+            return theme.equals(t);
+        }
     }
 
 
-    public TileBitmap getTile(ArrayList<File> files, Tile tile) {
+    public TileBitmap getTile(ArrayList<File> files, Tile tile, XmlRenderTheme theme) {
         if (files.size() > 0) {
-            Renderer r = get(files);
+            Renderer r = get(files, theme);
             if (r != null) {
                 return r.getTile(tile);
             }
@@ -83,25 +82,25 @@ public class RendererList {
     }
 
 
-    private Renderer get(ArrayList<File> files) {
+    private Renderer get(ArrayList<File> files, XmlRenderTheme theme) {
 
         for (Entry e: renderer) {
-            if (e.hasSameFiles(files)) {
+            if (e.hasSameTheme(theme) && e.hasSameFiles(files)) {
                 return e.renderer;
             }
         }
 
         AppLog.d(this, "add_w renderer");
-        Entry e = add(files);
+        Entry e = add(files, theme);
         e.use();
         return e.renderer;
     }
 
-    private Entry add(ArrayList<File> files) {
+    private Entry add(ArrayList<File> files, XmlRenderTheme theme) {
         if (renderer.size() == LIMIT) {
             removeOldest();
         }
-        Entry e = new Entry(files);
+        Entry e = new Entry(files, theme);
         renderer.add(e);
         return e;
     }
@@ -127,6 +126,5 @@ public class RendererList {
             e.renderer.destroy();
         }
         renderer.clear();
-        theme.decrementRefCount();
     }
 }

@@ -12,20 +12,8 @@ public class StateUnscanned implements State {
 
     public StateUnscanned(StateMachine s) {
         state = s;
-
-        state.list = null;
-        state.summaries.reset(s.context);
-        state.tileDirectory = new SolidTileCacheDirectory(s.context).getValueAsFile();
-        try {
-            StateScan.scanRootDirectories(state.tileDirectory, state.summaries);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        AppBroadcaster.broadcast(state.context, AppBroadcaster.TILE_REMOVER_STOPPED);
+        reset();
     }
-
-
 
     @Override
     public void scan() {
@@ -33,24 +21,30 @@ public class StateUnscanned implements State {
     }
 
     @Override
-    public void stop() {
+    public void stop() {}
 
+    @Override
+    public void reset() {
+        state.list = null;
+        state.baseDirectory = new SolidTileCacheDirectory(state.context).getValueAsFile();
+        try {
+            state.summaries.rescanKeep(state.context, state.baseDirectory);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        state.broadcast(AppBroadcaster.TILE_REMOVER_STOPPED);
+    }
+
+
+    @Override
+    public void remove() { state.set(new StateScan(state));}
+
+    @Override
+    public void removeAll() {
+        state.set(new StateRemoveAll(state));
     }
 
     @Override
-    public void reset() {}
-
-    @Override
-    public void resetAndRescan() {
-
-    }
-
-    @Override
-    public void remove() {
-
-    }
-
-    @Override
-    public void rescan() {
-    }
+    public void rescan() {}
 }

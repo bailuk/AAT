@@ -75,7 +75,13 @@ public class TileRemoverService extends VirtualService {
     }
 
 
-    public SourceSummaryInterface[] getSummaries() {
-        return state.summaries.getMapSummary();
+    public SelectedTileDirectoryInfo getInfo() {
+       return state.getInfo();
+    }
+
+
+
+    public SourceSummaries getSummaries() {
+        return state.summaries;
     }
 }

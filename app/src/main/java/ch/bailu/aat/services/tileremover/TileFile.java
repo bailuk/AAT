@@ -28,13 +28,39 @@ public class TileFile {
     }
 
 
-    public TileFile(int summary, short zoom, int x, File file) {
+    public static TileFile toTileFile(File file, int source) {
+
+        try {
+            File pX = file.getParentFile();
+
+            if (pX != null) {
+                File pZoom = pX.getParentFile();
+
+                if (pZoom != null) {
+                    int x = getX(pX);
+                    short zoom = getZoom(pZoom);
+
+                    return new TileFile(source, zoom, x, file);
+                }
+            }
+        } catch (NumberFormatException e) {
+            return null;
+        }
+        return null;
+
+    }
+
+    public TileFile(int summary, short zoom, int x, int y, File file) {
         this.source = summary;
         this.zoom = zoom;
         this.x = x;
-        this.y = getY(file);
-        this.age = file.lastModified();
-        this.size = file.length();
+        this.y = y;
+        age = file.lastModified();
+        size = file.length();
+    }
+
+    public TileFile(int summary, short zoom, int x, File file) {
+        this(summary, zoom, x, getY(file), file);
     }
 
 

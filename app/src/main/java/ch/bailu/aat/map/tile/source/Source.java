@@ -5,7 +5,6 @@ import android.content.Context;
 import org.mapsforge.core.model.Tile;
 
 import ch.bailu.aat.services.cache.ElevationColorTile;
-import ch.bailu.aat.services.cache.MapsForgeTileObject;
 import ch.bailu.aat.services.cache.NewHillshade;
 import ch.bailu.aat.services.cache.ObjectHandle;
 
@@ -30,59 +29,17 @@ public abstract class Source {
 
     }
 
-    public final static Source MAPSFORGE =
 
-            new Source() {
 
-                @Override
-                public String getName() {
-                    return "MapsForge";
-                }
-
-                @Override
-                public String getID(Tile t, Context x) {
-                    return genID(t, MapsForgeTileObject.class.getSimpleName());
-                }
-
-                @Override
-                public int getMinimumZoomLevel() {
-                    return 0;
-                }
-
-                @Override
-                public int getMaximumZoomLevel() {
-                    return 18;
-                }
-
-                @Override
-                public boolean isTransparent() {
-                    return false;
-                }
-
-                @Override
-                public int getAlpha() {
-                    return OPAQUE;
-                }
-
-                @Override
-                public int getPaintFlags() {
-                    return 0;
-                }
-
-                @Override
-                public ObjectHandle.Factory getFactory(Tile t) {
-                    return  new MapsForgeTileObject.Factory(t);
-                }
-
-            };
 
 
     public final static Source ELEVATION_HILLSHADE =
             new Source() {
 
-                @Override
+                public static final String NAME ="Hillshade";
+
                 public String getName() {
-                    return "Hillshade";
+                    return NAME;
                 }
 
                 @Override
@@ -126,7 +83,6 @@ public abstract class Source {
     public final static Source ELEVATION_COLOR =
             new Source() {
 
-                @Override
                 public String getName() {
                     return "ElevationColor";
                 }

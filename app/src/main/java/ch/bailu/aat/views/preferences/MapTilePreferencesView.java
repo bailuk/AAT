@@ -5,6 +5,7 @@ import android.content.Context;
 
 import ch.bailu.aat.R;
 import ch.bailu.aat.map.tile.source.CachedSource;
+import ch.bailu.aat.map.tile.source.MapsForgeSource;
 import ch.bailu.aat.map.tile.source.Source;
 import ch.bailu.aat.preferences.SolidEnableTileCache;
 import ch.bailu.aat.preferences.SolidMapsForgeDirectory;
@@ -30,24 +31,20 @@ public class MapTilePreferencesView extends VerticalScrollView {
         add(new SolidIndexListView(new SolidTileSize(context)));
         add(new SolidExtendetDirectoryView(acontext, new SolidTileCacheDirectory(context)));
 
-        add(new TitleView(context, Source.MAPSFORGE.getName()));
+        add(new TitleView(context, MapsForgeSource.NAME));
         add(new SolidExtendetDirectoryView(acontext, new SolidMapsForgeDirectory(context)));
         add(new SolidStringView(new SolidRenderTheme(context)));
-        add(new SolidEnableTileCacheView(
-                acontext,
-                new SolidEnableTileCache(context, CachedSource.CACHED_MAPSFORGE)));
+        add(new SolidCheckBox(new SolidEnableTileCache.MapsForge(context)));
 
         add(new TitleView(context, Source.ELEVATION_HILLSHADE.getName()));
-        add(new SolidEnableTileCacheView(
-                acontext,
-                new SolidEnableTileCache(context, CachedSource.CACHED_ELEVATION_HILLSHADE)));
+        add(new SolidCheckBox(new SolidEnableTileCache.Hillshade(context)));
 
         add(new TitleView(context, "Trim tile caches*"));
         add(new SolidIndexListView(new SolidTrimMode(context)));
         add(new SolidIndexListView(new SolidTrimSize(context)));
         add(new SolidIndexListView(new SolidTrimDate(context)));
 
-        tileRemover = new TileRemoverView(scontext);
+        tileRemover = new TileRemoverView(scontext, acontext);
         add(tileRemover);
     }
 
