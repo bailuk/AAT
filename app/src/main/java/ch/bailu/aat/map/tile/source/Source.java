@@ -44,7 +44,7 @@ public abstract class Source {
 
                 @Override
                 public String getID(Tile t, Context x) {
-                    return genID(t, NewHillshade.class.getSimpleName());
+                    return genID(t, NAME);
                 }
 
                 @Override
