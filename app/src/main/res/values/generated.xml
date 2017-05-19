@@ -47,7 +47,7 @@ Go to &lt;b>Settings-&gt;Map Tiles&lt;/b> to remove old map tiles.&lt;/p>
 
 &lt;h2>Offline Maps&lt;/h2>
 
-&lt;h3>Download and store maps and themes:&lt;/h3>
+&lt;h3>Download and store maps:&lt;/h3>
 
 &lt;ol>
 &lt;br>-Download maps and render themes from one of these map providers: &lt;br>
@@ -92,6 +92,14 @@ The structure of the data directory is as follows: &lt;/p>
 &lt;h3>Example&lt;/h3>
 
 &lt;p>&lt;b>[amenity=restaurant]&lt;/b> will get you list of all restaurants located inside the area that was visible on the map-view before opening the Overpass dialog. &lt;/p>
+
+&lt;h2>Calculating calories&lt;/h2>
+
+&lt;p>AAT uses the formula &lt;b>hours * MET * weight&lt;/b> to calculate the kcal used for a specific activity.
+MET stands for &lt;a href=\"https://en.wikipedia.org/wiki/Metabolic_equivalent\">metabolic equivalent&lt;/a>. The higher the value, the more energy you would use
+for this specific activity. A complete list of activities and MET values can be found &lt;a href=\"https://sites.google.com/site/compendiumofphysicalactivities/Activity-Categories\">here&lt;/a>.&lt;/p>
+
+&lt;p>Both MET and weight can be provided in the settings dialog. The MET value is leading the activity\'s name. For example: &lt;b>6.8 bicycling, leisure, moderate effort&lt;/b>&lt;/p>
 
 &lt;h2>Issues and feedback&lt;/h2>
 
