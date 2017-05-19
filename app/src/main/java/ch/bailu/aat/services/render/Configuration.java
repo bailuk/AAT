@@ -28,12 +28,11 @@ public class Configuration {
         return renderer != null;     }
 
 
-    public boolean configure(File mapDir, Caches caches, XmlRenderTheme theme, String tID) {
+    public void configure(File mapDir, Caches caches, XmlRenderTheme theme, String tID) {
         if (isConfigured() == false && configureMapList(mapDir)) {
             themeID = tID;
             renderer = new Renderer(theme, caches.get(themeID), mapFiles);
         }
-        return isConfigured();
     }
 
     public void destroy() {

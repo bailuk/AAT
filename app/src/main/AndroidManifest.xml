@@ -16,7 +16,8 @@
         android:allowBackup="true"
         android:icon="@drawable/icon"
         android:label="@string/app_sname"
-        android:theme="@android:style/Theme.NoTitleBar">
+        android:theme="@android:style/Theme.NoTitleBar"
+        android:fullBackupContent="@xml/backup_descriptor">
 
         <activity
             android:name="ch.bailu.aat.activities.MainActivity">

@@ -4,7 +4,7 @@ import org.mapsforge.core.model.Tile;
 
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.dem.DemProvider;
-import ch.bailu.aat.views.graph.ColorTable;
+import ch.bailu.aat.views.graph.AltitudeColorTable;
 
 public class ElevationColorTile extends ElevationTile {
 
@@ -38,7 +38,7 @@ public class ElevationColorTile extends ElevationTile {
                     if (new_offset != offset) {
                         offset=new_offset;
 
-                        color=ColorTable.altitude.getColor(dem.getElevation(line + offset));
+                        color= AltitudeColorTable.INSTANCE.getColor(dem.getElevation(line + offset));
                     }
 
                     buffer[c]=color;

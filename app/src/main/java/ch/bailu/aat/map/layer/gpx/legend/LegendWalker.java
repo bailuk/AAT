@@ -16,10 +16,9 @@ public abstract class LegendWalker extends GpxListWalker {
 
     @Override
     public boolean doList(GpxList track) {
-        if (track.getPointList().size() > 0 && c.isVisible(track.getDelta().getBoundingBox())) {
-            return true;
-        }
-        return false;
+        return
+                track.getPointList().size() > 0 &&
+                        c.isVisible(track.getDelta().getBoundingBox());
     }
 
 

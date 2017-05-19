@@ -8,7 +8,6 @@ import ch.bailu.aat.gpx.StateID;
 import ch.bailu.aat.map.layer.MapPositionLayer;
 import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat.util.AppBroadcaster;
-import ch.bailu.aat.util.ui.AppLog;
 
 public class DirtyLocation extends LocationStackChainedItem {
     private final static String SOLID_KEY="DirtyLocation_";

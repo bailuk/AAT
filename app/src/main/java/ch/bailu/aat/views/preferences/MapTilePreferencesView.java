@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 
 import ch.bailu.aat.R;
-import ch.bailu.aat.map.tile.source.CachedSource;
 import ch.bailu.aat.map.tile.source.MapsForgeSource;
 import ch.bailu.aat.map.tile.source.Source;
 import ch.bailu.aat.preferences.SolidEnableTileCache;

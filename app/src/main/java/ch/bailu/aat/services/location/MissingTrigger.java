@@ -3,7 +3,6 @@ package ch.bailu.aat.services.location;
 import android.content.Context;
 
 import ch.bailu.aat.preferences.SolidMissingTrigger;
-import ch.bailu.aat.util.ui.AppLog;
 
 public class MissingTrigger extends LocationStackChainedItem {
     private int triggerMillis=15000;

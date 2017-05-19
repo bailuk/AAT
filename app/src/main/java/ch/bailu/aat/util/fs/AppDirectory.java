@@ -2,8 +2,6 @@ package ch.bailu.aat.util.fs;
 
 import android.content.Context;
 
-import org.mapsforge.core.model.Tile;
-
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;

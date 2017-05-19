@@ -139,7 +139,7 @@ public class DistanceAltitudeGraphView extends AbsGraphView {
                 distance+=summaryDistance;
                 summaryDistance=0;
                 
-                plotter.plotData(distance, altitude, ColorTable.altitude.getColor(altitude));
+                plotter.plotData(distance, altitude, AltitudeColorTable.INSTANCE.getColor(altitude));
             }
         }
 

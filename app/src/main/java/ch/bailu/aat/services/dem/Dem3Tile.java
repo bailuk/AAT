@@ -119,7 +119,7 @@ public class Dem3Tile implements ElevationProvider, DemProvider {
     }
     
     
-    public boolean isLocked() {
+    private boolean isLocked() {
         return lock != 0;
     }
     

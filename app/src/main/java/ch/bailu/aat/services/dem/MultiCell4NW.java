@@ -1,7 +1,7 @@
 package ch.bailu.aat.services.dem;
 
 public class MultiCell4NW extends MultiCell {
-    /**
+    /*
      *      a  b
      *      c  D
      */

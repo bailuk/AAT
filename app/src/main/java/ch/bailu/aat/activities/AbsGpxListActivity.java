@@ -14,10 +14,7 @@ import java.io.File;
 
 import ch.bailu.aat.R;
 import ch.bailu.aat.description.ContentDescription;
-import ch.bailu.aat.description.DistanceDescription;
-import ch.bailu.aat.description.NameDescription;
 import ch.bailu.aat.description.PathDescription;
-import ch.bailu.aat.description.TrackSizeDescription;
 import ch.bailu.aat.dispatcher.CurrentLocationSource;
 import ch.bailu.aat.dispatcher.IteratorSource;
 import ch.bailu.aat.dispatcher.OverlaySource;
@@ -31,7 +28,6 @@ import ch.bailu.aat.services.directory.Iterator;
 import ch.bailu.aat.services.directory.IteratorSimple;
 import ch.bailu.aat.util.ui.AppLayout;
 import ch.bailu.aat.views.ContentView;
-import ch.bailu.aat.views.ControlBar;
 import ch.bailu.aat.views.DbSynchronizerBusyIndicator;
 import ch.bailu.aat.views.GpxListView;
 import ch.bailu.aat.views.MainControlBar;

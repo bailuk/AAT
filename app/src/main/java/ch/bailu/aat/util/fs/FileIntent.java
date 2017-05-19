@@ -55,10 +55,10 @@ public class FileIntent {
 
     
    public static void send(Context context, Intent intent, File file) {
-        /**
-         * This is the correct implementation for sending one file as an e-mail attachment.
-         * It does, however, not work with private files.
-         * 
+        /*
+          This is the correct implementation for sending one file as an e-mail attachment.
+          It does, however, not work with private files.
+
          */
         //final Uri uri = Uri.fromFile(file);
         final Uri uri = toContentUri(file);

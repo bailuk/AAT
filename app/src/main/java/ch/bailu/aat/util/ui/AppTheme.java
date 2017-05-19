@@ -1,7 +1,6 @@
 package ch.bailu.aat.util.ui;
 
 import android.content.Context;
-import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.widget.Button;
@@ -42,7 +41,7 @@ public class AppTheme {
         0x993fff7d,
         0x99fcff3f,
     }; 
-    
+    /*
     static public float getTextSize(Context context) {
         if ((context.getResources().getConfiguration().screenLayout &
                 Configuration.SCREENLAYOUT_SIZE_MASK) == Configuration.SCREENLAYOUT_SIZE_LARGE) {     
@@ -62,7 +61,7 @@ public class AppTheme {
             return 20f;
         }
     }
-    
+    */
     
     static public int getHighlightColor (){
         return COLOR_ORANGE;

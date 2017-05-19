@@ -11,7 +11,6 @@ import ch.bailu.aat.description.DateDescription;
 import ch.bailu.aat.description.DistanceDescription;
 import ch.bailu.aat.description.MaximumSpeedDescription;
 import ch.bailu.aat.description.NameDescription;
-import ch.bailu.aat.description.PathDescription;
 import ch.bailu.aat.description.TimeDescription;
 import ch.bailu.aat.description.TrackSizeDescription;
 import ch.bailu.aat.preferences.SolidPreset;

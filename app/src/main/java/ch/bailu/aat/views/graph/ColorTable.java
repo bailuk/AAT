@@ -8,8 +8,7 @@ public class ColorTable {
     
     private final int[] color_table;
 
-    public static final ColorTable altitude = new AltitudeColorTable();
-    
+
     public ColorTable(int spectrum, int gradients) {
         Scaler scaler=new Scaler(gradients*GRADIENT_SIZE, spectrum);
         color_table = new int[spectrum];

@@ -2,8 +2,6 @@ package ch.bailu.aat.services.location;
 
 import android.content.Context;
 
-import ch.bailu.aat.util.ui.AppLog;
-
 public class InformationFilter extends LocationStackChainedItem {
 
     public InformationFilter(LocationStackItem n) {

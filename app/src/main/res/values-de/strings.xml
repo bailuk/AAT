@@ -181,7 +181,6 @@
     <string name="intro_overlay_list">Overlay Liste</string>
     <string name="intro_status">Status</string>
     <string name="none">Kein</string>
-    <string name="p_acceleration_filter">Beschleunigungsfilter</string>
     <string name="p_accuracy_filter">Genauigkeitsfilter</string>
     <string name="p_legend_fulldistance">Totaldistanz</string>
     <string name="p_location_provider">Standortquelle</string>
@@ -190,10 +189,8 @@
     <string name="p_system">System</string>
     <string name="p_tile_size">Kachelgrösse</string>
     <string name="pause">Pause</string>
-    <string name="query_download_features">Map Features (neu) herunterladen?</string>
     <string name="tt_info_location">Importieren/exportieren der Kartenmitte</string>
     <string name="tt_menu_file">Menu für Dateioperationen anzeigen.</string>
-    <string name="tt_overpass_download_features">Map Features herunterladen.</string>
     <string name="tt_overpass_mapfeatures">Map Features auflisten.</string>
 
 </resources>

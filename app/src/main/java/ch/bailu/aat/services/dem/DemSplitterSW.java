@@ -22,13 +22,13 @@ public class DemSplitterSW extends DemSplitter {
         float sum;
         final float div=2;
 
-        /**
-         *  a b
-         *  C d
-         *  
-         *  [0,0] [0,1]
-         *  [1,0] [1,1]
-         *  
+        /*
+           a b
+           C d
+
+           [0,0] [0,1]
+           [1,0] [1,1]
+
          */
 
         final int B = parent.getElevation(parent_index);

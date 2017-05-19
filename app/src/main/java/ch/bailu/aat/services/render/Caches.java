@@ -6,7 +6,7 @@ import ch.bailu.aat.services.cache.MapsForgeTileObject;
 import ch.bailu.aat.util.ui.AppLog;
 
 public class Caches {
-    private HashMap<String, Cache> caches = new HashMap<>(5);
+    private final HashMap<String, Cache> caches = new HashMap<>(5);
 
 
     public void lockToCache(MapsForgeTileObject o) {

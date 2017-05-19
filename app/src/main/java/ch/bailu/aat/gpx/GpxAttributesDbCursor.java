@@ -1,10 +1,7 @@
 package ch.bailu.aat.gpx;
 
 
-import android.database.Cursor;
-
-import ch.bailu.aat.services.directory.GpxDbConstants;
-
+/*
 public class GpxAttributesDbCursor extends GpxAttributes {
     private final Cursor cursor;
     private final int position;
@@ -17,7 +14,7 @@ public class GpxAttributesDbCursor extends GpxAttributes {
 
     @Override
     public int size() {
-        return GpxDbConstants.KEY_LIST.length;
+        return GpxDbConstants.KEY_LIST_NEW.length;
     }
 
     @Override
@@ -26,7 +23,7 @@ public class GpxAttributesDbCursor extends GpxAttributes {
 
     @Override
     public String getKey(int i) {
-        return GpxDbConstants.KEY_LIST[i];
+        return GpxDbConstants.KEY_LIST_NEW[i];
     }
 
     @Override
@@ -58,3 +55,4 @@ public class GpxAttributesDbCursor extends GpxAttributes {
         return cursor.getString(column);
     }
 }
+*/

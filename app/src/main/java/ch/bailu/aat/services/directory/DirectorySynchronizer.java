@@ -287,7 +287,7 @@ public class DirectorySynchronizer  implements Closeable {
             BoundingBoxE6 box = summary.getBoundingBox();
 
             ContentValues content = new ContentValues();
-            content.put(GpxDbConstants.KEY_PATHNAME_OLD,   pathname);
+            //content.put(GpxDbConstants.KEY_PATHNAME_OLD,   pathname);
             content.put(GpxDbConstants.KEY_FILENAME,   filename);
             content.put(GpxDbConstants.KEY_AVG_SPEED,  summary.getSpeed());
             content.put(GpxDbConstants.KEY_MAX_SPEED,  summary.getMaximumSpeed());

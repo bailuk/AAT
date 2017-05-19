@@ -283,8 +283,8 @@ public class MapFeaturesPreparser {
     }
 
     private void parseImage() throws IOException {
-        /**
-         *  <img alt="Node" src="/w/images/b/b5/Mf_node.png" width="20" height="20" />
+        /*
+           <img alt="Node" src="/w/images/b/b5/Mf_node.png" width="20" height="20" />
          */
 
         while(true) {
@@ -336,8 +336,8 @@ public class MapFeaturesPreparser {
 
 
     private void parseLink() throws IOException {
-        /**
-         *  <a href="/wiki/Elements#Node" title="Node">
+        /*
+           <a href="/wiki/Elements#Node" title="Node">
          */
 
         while(true) {

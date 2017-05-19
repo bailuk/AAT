@@ -7,7 +7,6 @@ import ch.bailu.aat.preferences.SolidTrimIndex;
 import ch.bailu.aat.preferences.SolidTrimMode;
 import ch.bailu.aat.preferences.SolidTrimSize;
 import ch.bailu.aat.util.AppBroadcaster;
-import ch.bailu.aat.util.ui.AppLog;
 
 public class StateScanForRemoval implements State, Runnable {
     private final StateMachine state;

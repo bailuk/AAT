@@ -11,7 +11,7 @@ import org.mapsforge.map.android.graphics.AndroidGraphicFactory;
 
 import ch.bailu.aat.map.MapContext;
 import ch.bailu.aat.map.TwoNodes;
-import ch.bailu.aat.views.graph.ColorTable;
+import ch.bailu.aat.views.graph.AltitudeColorTable;
 
 public class TrackLayer  extends GpxLayer{
     private static final int STROKE_WIDTH=3;
@@ -76,7 +76,7 @@ public class TrackLayer  extends GpxLayer{
         @Override
         public void drawNode(TwoNodes.PixelNode node) {
             int altitude=node.point.getAltitude();
-            int color= ColorTable.altitude.getColor(altitude);
+            int color= AltitudeColorTable.INSTANCE.getColor(altitude);
             paint.setColor(color);
         }
     }

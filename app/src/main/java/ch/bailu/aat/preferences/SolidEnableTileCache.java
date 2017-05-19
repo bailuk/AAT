@@ -2,7 +2,6 @@ package ch.bailu.aat.preferences;
 
 import android.content.Context;
 
-import ch.bailu.aat.map.tile.source.CachedSource;
 import ch.bailu.aat.map.tile.source.MapsForgeSource;
 import ch.bailu.aat.map.tile.source.Source;
 

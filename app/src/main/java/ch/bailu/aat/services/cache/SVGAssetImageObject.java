@@ -26,9 +26,7 @@ public class SVGAssetImageObject extends ImageObjectAbstract {
 
             bitmap.set(svg, size);
 
-        } catch (SVGParseException e) {
-            AppLog.e(sc.getContext(), e);
-        } catch (IOException e) {
+        } catch (SVGParseException | IOException e) {
             AppLog.e(sc.getContext(), e);
         }
     }

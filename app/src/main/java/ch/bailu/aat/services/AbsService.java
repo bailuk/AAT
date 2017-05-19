@@ -32,10 +32,6 @@ public abstract class AbsService  extends Service {
                 startService(new Intent(this,  OneService.class));
                 lazyOff.close();
             }
-
-
-//            AppLog.d(this, "locked " + lockWhenSwapped + " times.");
-
         }
         return up;
     }
@@ -48,9 +44,6 @@ public abstract class AbsService  extends Service {
             if (lock == 0) {
                 lazyOff.kick();
             }
-
-//            AppLog.d(this, "locked " + lockWhenSwapped + " times.");
-
         }
     }
 

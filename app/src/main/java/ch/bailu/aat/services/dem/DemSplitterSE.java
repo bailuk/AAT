@@ -23,13 +23,13 @@ public class DemSplitterSE extends DemSplitter {
         float sum;
         final float div=2;
 
-        /**
-         *  a b
-         *  C d
-         *  
-         *  [0,0] [0,1]
-         *  [1,0] [1,1]
-         *  
+        /*
+           a b
+           C d
+
+           [0,0] [0,1]
+           [1,0] [1,1]
+
          */
         final int A = parent.getElevation(parent_index);
         if (row_mode+col_mode == 0) { // a

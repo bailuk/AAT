@@ -42,12 +42,9 @@ public abstract class Coordinates {
 
 
     public static String geoPointToDescription(LatLong src) {
-        StringBuilder b = new StringBuilder();
-
-        b.append("Coordinates:\nLatitude:");
-        b.append(src.getLatitude());
-        b.append("Longitude:");
-        b.append(src.getLongitude());
-
-        return b.toString();    }
+        return "Coordinates:\nLatitude:" +
+                src.getLatitude() +
+                "Longitude:" +
+                src.getLongitude();
+    }
 }

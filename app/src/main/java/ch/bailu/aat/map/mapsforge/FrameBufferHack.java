@@ -23,7 +23,6 @@ public class FrameBufferHack extends FrameBuffer {
     private Dimension dimension;
     private final DisplayModel displayModel;
     private final FrameBufferModel frameBufferModel;
-    private final GraphicFactory graphicFactory;
     private final Matrix matrix;
 
     private final Object dimLock = new Object();
@@ -32,7 +31,7 @@ public class FrameBufferHack extends FrameBuffer {
         super(model.frameBufferModel, model.displayModel, AndroidGraphicFactory.INSTANCE);
         this.frameBufferModel = model.frameBufferModel;
         this.displayModel = model.displayModel;
-        this.graphicFactory = AndroidGraphicFactory.INSTANCE;
+        GraphicFactory graphicFactory = AndroidGraphicFactory.INSTANCE;
         this.matrix = graphicFactory.createMatrix();
     }
 
@@ -58,9 +57,9 @@ public class FrameBufferHack extends FrameBuffer {
 
 
     private void swapBitmaps() {
-        /**
-         * Swap bitmaps only if the layerManager is currently not working and
-         * has drawn a new bitmap since the last swap
+        /*
+          Swap bitmaps only if the layerManager is currently not working and
+          has drawn a new bitmap since the last swap
          */
         if (FrameBufferBitmap.swap(odBitmap, lmBitmap)) {
             frameBufferModel.setMapPosition(lmMapPosition);

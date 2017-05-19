@@ -4,7 +4,6 @@ import android.content.Context;
 
 import ch.bailu.aat.gpx.GpxPoint;
 import ch.bailu.aat.gpx.interfaces.GpxPointInterface;
-import ch.bailu.aat.util.ui.AppLog;
 
 public class CleanLocation extends LocationStackItem {
     private static final long LOCATION_LIFETIME_MILLIS=5*1000;

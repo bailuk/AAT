@@ -6,8 +6,6 @@ import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import java.io.File;
-
 import ch.bailu.aat.R;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.tileremover.SelectedTileDirectoryInfo;

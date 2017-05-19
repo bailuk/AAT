@@ -8,7 +8,7 @@ import ch.bailu.aat.map.MapContext;
 import ch.bailu.aat.map.TwoNodes;
 import ch.bailu.aat.services.dem.ElevationProvider;
 import ch.bailu.aat.util.ui.AppTheme;
-import ch.bailu.aat.views.graph.ColorTable;
+import ch.bailu.aat.views.graph.AltitudeColorTable;
 
 public class RouteLayer extends GpxLayer {
 
@@ -79,7 +79,7 @@ public class RouteLayer extends GpxLayer {
             int altitude=node.point.getAltitude();
 
             if (altitude == ElevationProvider.NULL_ALTITUDE) c=getColor();
-            else c= ColorTable.altitude.getColor(altitude);
+            else c= AltitudeColorTable.INSTANCE.getColor(altitude);
 
             mcontext.draw().bitmap(mcontext.draw().getNodeBitmap(), node.pixel, c);
         }

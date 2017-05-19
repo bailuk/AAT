@@ -5,7 +5,6 @@ import android.content.Context;
 import org.mapsforge.map.rendertheme.ExternalRenderTheme;
 import org.mapsforge.map.rendertheme.InternalRenderTheme;
 import org.mapsforge.map.rendertheme.XmlRenderTheme;
-import org.mapsforge.map.rendertheme.rule.RenderTheme;
 
 import java.io.File;
 import java.io.FileFilter;

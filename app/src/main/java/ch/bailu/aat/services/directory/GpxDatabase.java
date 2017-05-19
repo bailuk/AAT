@@ -34,7 +34,7 @@ public class GpxDatabase extends AbsDatabase{
     public GpxDatabase (ServiceContext sc, File path)
             throws IOException, SQLiteCantOpenDatabaseException {
 
-        this(sc, path, GpxDbConstants.KEY_LIST);
+        this(sc, path, GpxDbConstants.KEY_LIST_NEW);
     }
 
 

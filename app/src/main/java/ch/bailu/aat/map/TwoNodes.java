@@ -13,7 +13,7 @@ public class TwoNodes {
 
 
     public class PixelNode {
-        public Pixel pixel = new Pixel();
+        public final Pixel pixel = new Pixel();
         public GpxPointInterface point = GpxPoint.NULL;
 
         public boolean isVisible() {

@@ -4,14 +4,33 @@ import java.io.Closeable;
 import java.util.concurrent.ArrayBlockingQueue;
 
 public abstract class ProcessThread extends Thread implements Closeable, ThreadControl {
-    
+
     private boolean continueThread=true;
     
     private final ArrayBlockingQueue<ProcessHandle> queue;
 
     private final int SIZE;
     
-    private ProcessHandle currentHandle=ProcessHandle.NULL;
+    private final BackgroundHandle background = new BackgroundHandle();
+    private class BackgroundHandle {
+        private ProcessHandle handle = ProcessHandle.NULL;
+
+        public void process(ProcessHandle h) {
+            if (h.canContinue()) {
+                synchronized(this) {
+                    handle = h;
+                }
+                bgOnHaveHandle(handle);
+            }
+        }
+
+
+        public void stop() {
+            synchronized(this) {
+                handle.stopLoading();
+            }
+        }
+    }
 
 
     public ProcessThread(int size) {
@@ -27,13 +46,7 @@ public abstract class ProcessThread extends Thread implements Closeable, ThreadC
 
             try {
                 ProcessHandle newHandle = queue.take();
-                // FIXME: Synchronization on a non-final field
-                if (newHandle.canContinue()) {
-                    synchronized(currentHandle) {
-                        currentHandle=newHandle;
-                    }
-                    bgOnHaveHandle(currentHandle);
-                }
+                background.process(newHandle);
 
             } catch (InterruptedException e) {
                 continueThread=false;
@@ -57,9 +70,7 @@ public abstract class ProcessThread extends Thread implements Closeable, ThreadC
 
         queue.clear();
 
-        synchronized(currentHandle) {
-            currentHandle.stopLoading();
-        }
+        background.stop();
 
         process(ProcessHandle.NULL);
     }

@@ -7,7 +7,10 @@ public class AltitudeColorTable extends ColorTable{
     private final static int ALTITUDE_OFFSET=500;
     private final static int MAX_ALTITUDE=3000;
     private final static int GRADIENTS=12;
-    
+
+    public static final ColorTable INSTANCE = new AltitudeColorTable();
+
+
     public AltitudeColorTable() {
         super(MAX_ALTITUDE, GRADIENTS);
     }

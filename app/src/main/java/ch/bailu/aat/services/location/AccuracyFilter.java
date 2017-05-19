@@ -3,7 +3,6 @@ package ch.bailu.aat.services.location;
 import android.content.Context;
 
 import ch.bailu.aat.preferences.SolidAccuracyFilter;
-import ch.bailu.aat.util.ui.AppLog;
 
 
 public class AccuracyFilter extends LocationStackChainedItem {

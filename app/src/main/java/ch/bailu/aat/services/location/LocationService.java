@@ -56,7 +56,7 @@ public class LocationService extends VirtualService
 
         itemList.add(new DistanceFilter(lastItem()));
 
-        autopause=new AutopauseTrigger(getContext(),lastItem());
+        autopause=new AutopauseTrigger(lastItem());
         itemList.add(autopause);
 
         missing = new MissingTrigger(lastItem()); 

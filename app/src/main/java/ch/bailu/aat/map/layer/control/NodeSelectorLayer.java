@@ -31,7 +31,6 @@ public abstract class NodeSelectorLayer implements MapLayerInterface, OnContentU
             new SparseArray<>(5);
 
     private final Rect centerRect = new Rect();
-    private Pixel selectedPixel = new Pixel();
 
     private int foundID, foundIndex;
     private GpxPointNode foundNode;
@@ -83,12 +82,7 @@ public abstract class NodeSelectorLayer implements MapLayerInterface, OnContentU
 
     @Override
     public void drawInside(MapContext mcontext) {
-
-        //boundingBox.maxLatitude/2;
-
-        //Pixel center = mcontext.metrics.getCenterPixel();
         coordinates.drawInside(mcontext);
-
     }
 
 
@@ -134,7 +128,7 @@ public abstract class NodeSelectorLayer implements MapLayerInterface, OnContentU
         GpxPointNode node = getSelectedNode();
 
         if (node != null) {
-            selectedPixel = mcontext.getMetrics().toPixel(node);
+            Pixel selectedPixel = mcontext.getMetrics().toPixel(node);
             mcontext.draw().bitmap(mcontext.draw().getNodeBitmap(), selectedPixel, COLOR);
         }
     }

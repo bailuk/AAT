@@ -42,7 +42,7 @@ public class StateOsm extends ParserState {
 
 
     // <gpx oder <osm
-    /**
+    /*
     <osm version="0.6" generator="Overpass API">
     <note>The data included in this document is from www.openstreetmap.org. The data is made available under ODbL.</note>
     <meta osm_base="2012-11-29T14:56:02Z"/>

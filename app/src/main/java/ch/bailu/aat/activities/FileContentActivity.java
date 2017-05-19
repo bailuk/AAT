@@ -17,7 +17,6 @@ import ch.bailu.aat.description.TimeDescription;
 import ch.bailu.aat.description.TrackSizeDescription;
 import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.map.MapFactory;
-import ch.bailu.aat.services.editor.EditorHelper;
 import ch.bailu.aat.util.ui.AppLayout;
 import ch.bailu.aat.views.MainControlBar;
 import ch.bailu.aat.views.PercentageLayout;

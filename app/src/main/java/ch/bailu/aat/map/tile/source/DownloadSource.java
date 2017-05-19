@@ -24,7 +24,7 @@ public class DownloadSource extends Source {
     private final String[] urls;
 
     private final int alpha;
-    private boolean transparent;
+    private final boolean transparent;
 
 
     public DownloadSource(String n, int a, final String... url) {
@@ -99,16 +99,15 @@ public class DownloadSource extends Source {
 
 
     private String getTileRelativeFilename(final Tile tile) {
-        final StringBuilder sb = new StringBuilder();
-        sb.append(name);
-        sb.append('/');
-        sb.append(tile.zoomLevel);
-        sb.append('/');
-        sb.append(tile.tileX);
-        sb.append('/');
-        sb.append(tile.tileY);
-        sb.append(EXT);
-        return sb.toString();
+        return  name +
+                '/' +
+                tile.zoomLevel +
+                '/' +
+                tile.tileX +
+                '/' +
+                tile.tileY +
+                EXT;
+
     }
 
 

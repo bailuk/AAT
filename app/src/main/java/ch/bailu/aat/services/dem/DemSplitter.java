@@ -57,16 +57,16 @@ public class DemSplitter implements DemProvider {
 
         
 
-        /**
-         * Kernel:
-         *  a b c
-         *  d E f
-         *  g h i
-         *   
-         *    
-         * Splitted E: 
-         *   A B 
-         *   C D
+        /*
+          Kernel:
+           a b c
+           d E f
+           g h i
+
+
+          Splitted E:
+            A B
+            C D
          */
 
         final int e = parent_index;

@@ -1,9 +1,6 @@
 package ch.bailu.aat.services.cache;
 
-import android.util.SparseArray;
-
-import java.io.Closeable;
-
+/*
 public class FreeLater implements Closeable {
     private final static int INITIAL_CAPACITY=20;
     private final SparseArray<ObjectHandle> table = new SparseArray<>(INITIAL_CAPACITY);
@@ -33,3 +30,4 @@ public class FreeLater implements Closeable {
         freeAll();
     }
 }
+*/

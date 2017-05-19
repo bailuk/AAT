@@ -136,7 +136,6 @@
     <string name="p_system">System</string>
     <string name="p_tile_size">Tile size</string>
     <string name="p_accuracy_filter">Accuracy filter</string>
-    <string name="p_acceleration_filter">Acceleration filter</string>
     <string name="p_distance_filter" translatable="false">Distance filter</string>
     <string name="p_directory_data" translatable="false">Data directory</string>
     <string name="p_directory_tiles" translatable="false">Tile cache directory</string>
@@ -212,7 +211,6 @@
     <!-- OSM API Query -->
     <string name="query_overpass" translatable="false">Overpass</string>
     <string name="query_features" translatable="false">OSM Features</string>
-    <string name="query_download_features">(Re)Download map features?</string>
 
 
     <!-- ToolTip -->
@@ -247,7 +245,6 @@
     <string name ="tt_nominatim_save">Save a copy of the result.</string>
 
     <string name ="tt_overpass_mapfeatures">Show list of map features.</string>
-    <string name ="tt_overpass_download_features">Download map features.</string>
 
     <string name="tt_menu_file">Display file operation menu.</string>
 </resources>

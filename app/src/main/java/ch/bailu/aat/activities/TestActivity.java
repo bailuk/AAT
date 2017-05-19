@@ -5,18 +5,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
 
-import org.mapsforge.core.model.LatLong;
-import org.mapsforge.map.android.graphics.AndroidGraphicFactory;
-import org.mapsforge.map.android.util.AndroidUtil;
-import org.mapsforge.map.android.view.MapView;
-import org.mapsforge.map.datastore.MapDataStore;
-import org.mapsforge.map.layer.cache.TileCache;
-import org.mapsforge.map.layer.renderer.TileRendererLayer;
-import org.mapsforge.map.reader.MapFile;
-import org.mapsforge.map.rendertheme.InternalRenderTheme;
-
-import java.io.File;
-
 import ch.bailu.aat.R;
 import ch.bailu.aat.description.AccelerationDescription;
 import ch.bailu.aat.description.AccuracyDescription;
@@ -54,7 +42,6 @@ import ch.bailu.aat.map.layer.gpx.GpxDynLayer;
 import ch.bailu.aat.map.layer.gpx.GpxOverlayListLayer;
 import ch.bailu.aat.map.layer.gpx.GpxTestLayer;
 import ch.bailu.aat.map.layer.grid.GridDynLayer;
-import ch.bailu.aat.map.mapsforge.MapsForgeView;
 import ch.bailu.aat.test.PreferencesFromSdcard;
 import ch.bailu.aat.test.PreferencesToSdcard;
 import ch.bailu.aat.test.TestCoordinates;
