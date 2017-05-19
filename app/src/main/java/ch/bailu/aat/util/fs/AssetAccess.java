@@ -2,15 +2,14 @@ package ch.bailu.aat.util.fs;
 
 import android.content.res.AssetManager;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
 
-import ch.bailu.simpleio.io.AbsAccess;
+import ch.bailu.simpleio.io.Access;
 
-public class AssetAccess extends AbsAccess {
+public class AssetAccess extends Access {
 
     private final String asset;
     private final AssetManager manager;
@@ -32,8 +31,8 @@ public class AssetAccess extends AbsAccess {
     }
 
     @Override
-    public File toFile() {
-        return new File(asset);
+    public long lastModified() {
+        return System.currentTimeMillis();
     }
 
 

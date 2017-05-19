@@ -7,7 +7,8 @@ import ch.bailu.aat.gpx.GpxPoint;
 import ch.bailu.aat.gpx.MaxSpeed;
 import ch.bailu.aat.gpx.interfaces.GpxType;
 import ch.bailu.aat.services.background.ThreadControl;
-import ch.bailu.simpleio.io.AbsAccess;
+import ch.bailu.simpleio.io.Access;
+import ch.bailu.simpleio.parser.OnParsedInterface;
 
 public class GpxListReader {
     private final ThreadControl threadControl;
@@ -16,21 +17,23 @@ public class GpxListReader {
     private final OnParsed track = new OnParsed(GpxType.TRK);
     private final OnParsed route = new OnParsed(GpxType.RTE);
 
+    private final XmlParser parser;
 
 
-    
-    private XmlParser parser;
+    public GpxListReader(Access in) throws IOException {
+        this(ThreadControl.KEEP_ON, in);
+    }
 
-    public GpxListReader (ThreadControl c, AbsAccess f) throws IOException {
+
+    public GpxListReader (ThreadControl c, Access in) throws IOException {
         threadControl=c;
 
-        parser = new XmlParser(f);
+        parser = new XmlParser(in);
         parser.setOnRouteParsed(route);
         parser.setOnTrackParsed(track);
         parser.setOnWayParsed(way);
         parser.parse();
         parser.close();
-
     }
 
 

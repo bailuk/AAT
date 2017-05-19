@@ -1,13 +1,14 @@
-package ch.bailu.aat.gpx.parser;
+package ch.bailu.aat.gpx.parser.state;
 
 import java.io.IOException;
 import java.util.Collections;
 
-import ch.bailu.aat.gpx.parser.XmlParser.ParserIO;
+import ch.bailu.aat.gpx.parser.scanner.Scanner;
 
-public abstract class StateOsmPoint extends ParserState {
 
-    public void havePoint(ParserIO io) throws IOException {
+public abstract class StateOsmPoint extends State {
+
+    public void havePoint(Scanner io) throws IOException {
         
         
         

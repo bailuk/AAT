@@ -33,7 +33,7 @@ import ch.bailu.aat.util.graphic.SyncTileBitmap;
 import ch.bailu.aat.util.ui.AppDensity;
 import ch.bailu.aat.util.ui.AppLog;
 import ch.bailu.aat.util.ui.AppTheme;
-import ch.bailu.simpleio.io.AbsAccess;
+import ch.bailu.simpleio.io.Access;
 
 public class FeaturesList extends ListView  {
 
@@ -93,7 +93,7 @@ public class FeaturesList extends ListView  {
         }
 
 
-        public void loadList(AbsAccess file) throws IOException {
+        public void loadList(Access file) throws IOException {
             new MapFeaturesParser(this, file);
         }
 
@@ -166,7 +166,7 @@ public class FeaturesList extends ListView  {
 
 
 
-    public void loadList(AbsAccess file, IconMapService map) {
+    public void loadList(Access file, IconMapService map) {
         try {
             new ListLoader(map).loadList(file);
             if (observer != null) observer.onChanged();

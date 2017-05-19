@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.io.Writer;
 
 import ch.bailu.simpleio.io.FileAccess;
-import ch.bailu.simpleio.io.SimpleStream;
+import ch.bailu.simpleio.io.Stream;
 
 public class MapFeaturesPreparser {
     private static final int TARGET_LENGTH=30;
@@ -23,7 +23,7 @@ public class MapFeaturesPreparser {
     private final StringBuilder targetBuilder = new StringBuilder();
 
 
-    private final SimpleStream in;
+    private final Stream in;
     private BufferedWriter out=null;
 
     private int tableDataCount=0;
@@ -50,7 +50,7 @@ public class MapFeaturesPreparser {
     }
 
     public MapFeaturesPreparser(File in, File outDir, File imageDir) throws IOException {
-        this.in = new SimpleStream(new FileAccess(in));
+        this.in = new Stream(new FileAccess(in));
         this.outDir = outDir;
         this.imageDir = imageDir;
         parseMapFeatures();
@@ -179,7 +179,7 @@ public class MapFeaturesPreparser {
         }
     }
 
-    private void parseTableRow(SimpleStream in) throws IOException {
+    private void parseTableRow(Stream in) throws IOException {
         while(true) {
             in.to('<');
             in.read();

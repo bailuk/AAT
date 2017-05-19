@@ -2,8 +2,8 @@ package ch.bailu.aat.services.icons;
 
 import java.io.IOException;
 
-import ch.bailu.simpleio.io.AbsAccess;
-import ch.bailu.simpleio.io.SimpleStream;
+import ch.bailu.simpleio.io.Access;
+import ch.bailu.simpleio.io.Stream;
 
 
 public class IconMapParser {
@@ -14,8 +14,8 @@ public class IconMapParser {
     
     private final StringBuilder buffer = new StringBuilder();
     
-    IconMapParser(AbsAccess file, IconMap map) throws IOException {
-        SimpleStream stream = new SimpleStream(file);
+    IconMapParser(Access file, IconMap map) throws IOException {
+        Stream stream = new Stream(file);
 
         stream.read();
 
@@ -38,7 +38,7 @@ public class IconMapParser {
         }
     }
 
-    private void parseSubEntry(SimpleStream stream) throws IOException {
+    private void parseSubEntry(Stream stream) throws IOException {
         buffer.setLength(0);
         
         while(

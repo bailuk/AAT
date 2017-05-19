@@ -1,16 +1,17 @@
-package ch.bailu.aat.gpx.parser;
+package ch.bailu.aat.gpx.parser.state;
 
 import java.io.IOException;
 import java.util.Collections;
 
-import ch.bailu.aat.gpx.parser.XmlParser.ParserIO;
+import ch.bailu.aat.gpx.parser.scanner.Scanner;
 
-public class StatePlaceNode extends ParserState {
 
-    private final ParserState tag = new StateSimpleTag();
+public class StatePlaceNode extends State {
+
+    private final State tag = new StateSimpleTag();
     
     @Override
-    public void parse(ParserIO io) throws IOException {
+    public void parse(Scanner io) throws IOException {
         io.stream.to(' ');
         io.tagList.clear();
         parseSubtags(io);
@@ -26,7 +27,7 @@ public class StatePlaceNode extends ParserState {
     
 
 
-    private void parseSubtags(ParserIO io) throws IOException {
+    private void parseSubtags(Scanner io) throws IOException {
 
         
         

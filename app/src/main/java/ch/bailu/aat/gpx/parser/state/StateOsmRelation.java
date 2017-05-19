@@ -1,20 +1,20 @@
-package ch.bailu.aat.gpx.parser;
+package ch.bailu.aat.gpx.parser.state;
 
 import java.io.IOException;
 
 import ch.bailu.aat.coordinates.BoundingBoxE6;
 import ch.bailu.aat.coordinates.LatLongE6;
-import ch.bailu.aat.gpx.parser.XmlParser.ParserIO;
+import ch.bailu.aat.gpx.parser.scanner.Scanner;
 
 public class StateOsmRelation extends StateOsmPoint {
-    private final ParserState tag = new StateOsmTag();
+    private final State tag = new StateOsmTag();
     
     private BoundingBoxE6 bounding = BoundingBoxE6.NULL_BOX;
     private int myId=0;
     private int dereferenced;
     
     @Override
-    public void parse(ParserIO io) throws IOException {
+    public void parse(Scanner io) throws IOException {
         bounding = new BoundingBoxE6();
 
         io.tagList.clear();
@@ -50,13 +50,13 @@ public class StateOsmRelation extends StateOsmPoint {
     }
 
     
-    private void parseId(ParserIO io) throws IOException {
+    private void parseId(Scanner io) throws IOException {
         io.stream.to('"');
         io.id.scan();
         myId=io.id.getInt();
     }
 
-    private void rememberRelation(ParserIO io) throws IOException {
+    private void rememberRelation(Scanner io) throws IOException {
         BoundingBoxE6 b = bounding;
 
         LatLongE6 c = b.getCenter();
@@ -67,7 +67,7 @@ public class StateOsmRelation extends StateOsmPoint {
         io.nodeMap.put(myId, c);
     }
     
-    private void parseRef(ParserIO io) throws IOException {
+    private void parseRef(Scanner io) throws IOException {
         io.stream.to('r');
         io.stream.to('e');
         io.stream.to('f');

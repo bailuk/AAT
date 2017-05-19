@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-public class FileAccess extends AbsAccess {
+public class FileAccess extends Access {
     private final File file;
 
 
@@ -30,9 +30,12 @@ public class FileAccess extends AbsAccess {
         return openOutput(file);
     }
 
-    public File toFile() {
-        return file;
+
+    @Override
+    public long lastModified() {
+        return file.lastModified();
     }
+
 
     public static OutputStream openOutput(File file) throws IOException {
         new File(file.getParent()).mkdirs();

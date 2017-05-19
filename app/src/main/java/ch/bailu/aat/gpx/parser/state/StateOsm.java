@@ -1,18 +1,19 @@
-package ch.bailu.aat.gpx.parser;
+package ch.bailu.aat.gpx.parser.state;
 
 import java.io.IOException;
 
-import ch.bailu.aat.gpx.parser.XmlParser.ParserIO;
+import ch.bailu.aat.gpx.parser.scanner.Scanner;
 
-public class StateOsm extends ParserState {
 
-    private final ParserState node = new StateOsmNode();
-    private final ParserState meta = new StateOsmMeta();
-    private final ParserState relation = new StateOsmRelation();
+public class StateOsm extends State {
+
+    private final State node = new StateOsmNode();
+    private final State meta = new StateOsmMeta();
+    private final State relation = new StateOsmRelation();
 
 
     @Override
-    public void parse(ParserIO io) throws IOException {
+    public void parse(Scanner io) throws IOException {
 
         while (true) {
             io.stream.to('<');

@@ -8,7 +8,7 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringReader;
 
-public class SimpleStream implements Closeable {
+public class Stream implements Closeable {
     private final static String CHARSET="UTF-8";
     private final static int BUFFER_BYTES=1024*10;
 
@@ -16,7 +16,7 @@ public class SimpleStream implements Closeable {
     private final Reader reader;
     private int c=0;
 
-    public SimpleStream(AbsAccess file) throws IOException {
+    public Stream(Access file) throws IOException {
 
 
         InputStream istream = file.open_r();
@@ -25,7 +25,7 @@ public class SimpleStream implements Closeable {
     }
 
 
-    public SimpleStream(String string) {
+    public Stream(String string) {
         reader = new StringReader(string);
     }
 

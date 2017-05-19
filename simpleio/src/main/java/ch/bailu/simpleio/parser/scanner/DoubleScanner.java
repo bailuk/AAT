@@ -1,10 +1,10 @@
-package ch.bailu.aat.gpx.parser;
+package ch.bailu.simpleio.parser.scanner;
 import java.io.IOException;
 
-import ch.bailu.simpleio.io.SimpleStream;
+import ch.bailu.simpleio.io.Stream;
 
 
-public class DoubleParser  {
+public class DoubleScanner {
     private static final int exp_table[] = {
         1,
         10,
@@ -21,12 +21,12 @@ public class DoubleParser  {
     
     private final int baseExponent;
     
-    final SimpleStream stream;
+    final Stream stream;
 
   
     
     
-    public DoubleParser(SimpleStream s, int be) {
+    public DoubleScanner(Stream s, int be) {
         stream = s;
         baseExponent=be;
     }

@@ -1,15 +1,16 @@
-package ch.bailu.aat.gpx.parser;
+package ch.bailu.aat.gpx.parser.state;
 
 import java.io.IOException;
 
-import ch.bailu.aat.gpx.parser.XmlParser.ParserIO;
+import ch.bailu.aat.gpx.parser.scanner.Scanner;
 
-public class StateNominatim extends ParserState {
 
-    private final ParserState node = new StatePlaceNode();
+public class StateNominatim extends State {
+
+    private final State node = new StatePlaceNode();
 
     @Override
-    public void parse(ParserIO io) throws IOException {
+    public void parse(Scanner io) throws IOException {
         //io.stream.to('p');  // timestamp='
         //io.stream.to('=');
         //io.stream.toQuotation();

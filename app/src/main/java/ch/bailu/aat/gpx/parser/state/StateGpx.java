@@ -1,15 +1,17 @@
-package ch.bailu.aat.gpx.parser;
+package ch.bailu.aat.gpx.parser.state;
 
 import java.io.IOException;
 
-import ch.bailu.aat.gpx.parser.XmlParser.ParserIO;
+import ch.bailu.aat.gpx.parser.scanner.Scanner;
+import ch.bailu.simpleio.parser.OnParsedInterface;
+import ch.bailu.simpleio.parser.scanner.DoubleScanner;
 
 
-public class StateGpx extends ParserState {
+public class StateGpx extends State {
 
 
     @Override
-    public void parse(ParserIO io) throws IOException {
+    public void parse(Scanner io) throws IOException {
         while (true) {
             io.stream.read();
 
@@ -66,19 +68,19 @@ public class StateGpx extends ParserState {
     }
 
 
-    private void parseDateTime(ParserIO io) throws IOException {
+    private void parseDateTime(Scanner io) throws IOException {
         io.stream.skip(1);
         io.dateTime.parse();
     }
 
 
-    private void parsePoint(ParserIO io, OnParsedInterface p) throws IOException {
+    private void parsePoint(Scanner io, OnParsedInterface p) throws IOException {
         io.parsed.onHavePoint();
         io.parsed=p;
 
         io.stream.skip(3);
 
-        DoubleParser parser=null;
+        DoubleScanner parser=null;
 
         while (true)  {
 
@@ -97,9 +99,9 @@ public class StateGpx extends ParserState {
         }
     }
 
-    private void parseSegment(ParserIO io,OnParsedInterface p) throws IOException {
+    private void parseSegment(Scanner io, OnParsedInterface p) throws IOException {
         io.parsed.onHavePoint();
-        io.parsed=OnParsedInterface.NULL_ONPARSED;
+        io.parsed=OnParsedInterface.NULL;
         p.onHaveSegment();
 
         io.stream.skip(3);
@@ -107,12 +109,12 @@ public class StateGpx extends ParserState {
     }
 
 
-    private void parseAltitude(ParserIO io) throws IOException {
+    private void parseAltitude(Scanner io) throws IOException {
         io.stream.skip(2);
         io.altitude.scan();
     }
 
-    private void parseName(ParserIO io) throws IOException {
+    private void parseName(Scanner io) throws IOException {
         io.stream.skip(4);
 
         io.builder.setLength(0);

@@ -1,30 +1,30 @@
-package ch.bailu.aat.gpx.parser;
+package ch.bailu.simpleio.parser.scanner;
 
 import java.io.IOException;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
-import ch.bailu.simpleio.io.SimpleStream;
+import ch.bailu.simpleio.io.Stream;
 
 
 public class DateScanner {
     private final IntegerScanner minute;
     private final IntegerScanner hour;
-    private final DoubleParser seconds;
+    private final DoubleScanner seconds;
     
     private long millis;
     private long dateBase;
     private int dateBuffer[] = new int[10];
 
-    private final SimpleStream stream;
+    private final Stream stream;
     
-    public DateScanner(SimpleStream s, long l) {
+    public DateScanner(Stream s, long l) {
         stream=s;
         
         millis=l;
         minute=new IntegerScanner(s);
         hour=new IntegerScanner(s);
-        seconds = new DoubleParser(s,3);
+        seconds = new DoubleScanner(s,3);
         
         dateBase=0;
         

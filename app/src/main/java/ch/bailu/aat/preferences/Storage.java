@@ -58,7 +58,7 @@ public class Storage  implements ContextWrapperInterface {
         final File source =new File(getSharedPrefsDirectory(context),  GLOBAL_NAME + ".xml");
         final File target = new File(Environment.getExternalStorageDirectory(), "aat_preferences.xml");
 
-        new UriAccess(context, source).copy(target);
+        new UriAccess(context, source).copyTo(target);
     }
 
 
@@ -75,7 +75,7 @@ public class Storage  implements ContextWrapperInterface {
 
         if (target.exists()) target.delete();
 
-        new FileAccess(source).copy(target);
+        new FileAccess(source).copyTo(target);
 
 
 

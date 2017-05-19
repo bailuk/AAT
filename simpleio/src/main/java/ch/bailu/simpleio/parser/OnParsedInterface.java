@@ -1,4 +1,4 @@
-package ch.bailu.aat.gpx.parser;
+package ch.bailu.simpleio.parser;
 
 import java.io.IOException;
 
@@ -8,7 +8,7 @@ public interface OnParsedInterface {
     public void onHavePoint() throws IOException;
     
     
-    public final static OnParsedInterface  NULL_ONPARSED = new OnParsedInterface() {
+    public final static OnParsedInterface NULL = new OnParsedInterface() {
 		@Override
 		public void onHaveSegment() {}
 		@Override

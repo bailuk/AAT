@@ -6,8 +6,8 @@ import org.mapsforge.core.model.LatLong;
 import java.io.IOException;
 import java.util.Locale;
 
-import ch.bailu.aat.gpx.parser.DoubleParser;
-import ch.bailu.simpleio.io.SimpleStream;
+import ch.bailu.simpleio.parser.scanner.DoubleScanner;
+import ch.bailu.simpleio.io.Stream;
 
 public class BoundingBoxE6 {
 
@@ -57,8 +57,8 @@ public class BoundingBoxE6 {
 
 
     public void add(String bounding) {
-        final SimpleStream stream = new SimpleStream(bounding);
-        final DoubleParser parser = new DoubleParser(stream,6);
+        final Stream stream = new Stream(bounding);
+        final DoubleScanner parser = new DoubleScanner(stream,6);
 
         try {
             parser.scan();

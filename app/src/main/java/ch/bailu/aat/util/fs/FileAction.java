@@ -118,7 +118,7 @@ public class FileAction   {
         if (target.exists()) {
             AFile.logErrorExists(context, target);
         } else {
-            new UriAccess(context, uri).copy(target);
+            new UriAccess(context, uri).copyTo(target);
             AppLog.i(context, target.getAbsolutePath());
         }
     }

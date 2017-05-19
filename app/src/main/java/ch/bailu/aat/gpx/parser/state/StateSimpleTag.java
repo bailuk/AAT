@@ -1,16 +1,16 @@
-package ch.bailu.aat.gpx.parser;
+package ch.bailu.aat.gpx.parser.state;
 
 import java.io.IOException;
 
 import ch.bailu.aat.gpx.GpxAttributesStatic.Tag;
-import ch.bailu.aat.gpx.parser.XmlParser.ParserIO;
+import ch.bailu.aat.gpx.parser.scanner.Scanner;
 
-public class StateSimpleTag extends ParserState {
+public class StateSimpleTag extends State {
     
     
     
     @Override
-    public void parse(ParserIO io) throws IOException {
+    public void parse(Scanner io) throws IOException {
         String key="";
         
         while (true) {
@@ -40,7 +40,7 @@ public class StateSimpleTag extends ParserState {
 
 
 
-    private void parseSimpleString(ParserIO io) throws IOException {
+    private void parseSimpleString(Scanner io) throws IOException {
         io.builder.setLength(0);
         while(true) {
             if (io.stream.haveCharacter() || io.stream.haveDigit()) {
@@ -53,7 +53,7 @@ public class StateSimpleTag extends ParserState {
     }
 
     
-    private void parseQuotedString(ParserIO io) throws IOException {
+    private void parseQuotedString(Scanner io) throws IOException {
         io.builder.setLength(0);
         
         while(true) {

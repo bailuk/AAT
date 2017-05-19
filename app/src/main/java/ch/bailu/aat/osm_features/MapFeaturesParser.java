@@ -6,8 +6,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import ch.bailu.aat.util.fs.AssetAccess;
-import ch.bailu.simpleio.io.AbsAccess;
-import ch.bailu.simpleio.io.SimpleStream;
+import ch.bailu.simpleio.io.Access;
+import ch.bailu.simpleio.io.Stream;
 
 public class MapFeaturesParser {
     
@@ -25,7 +25,7 @@ public class MapFeaturesParser {
     }
     
     
-    public MapFeaturesParser(OnHaveFeature hf, AbsAccess file) throws IOException {
+    public MapFeaturesParser(OnHaveFeature hf, Access file) throws IOException {
         haveFeature = hf;
         
         parseFeatures(file);
@@ -66,8 +66,8 @@ public class MapFeaturesParser {
     
 
     
-    private void parseSummary(AbsAccess file) throws IOException {
-        SimpleStream in = new SimpleStream(file);
+    private void parseSummary(Access file) throws IOException {
+        Stream in = new Stream(file);
         
         parseSummary(in);
         haveFeature();
@@ -76,8 +76,8 @@ public class MapFeaturesParser {
     }
     
     
-    private void parseFeatures(AbsAccess file) throws IOException {
-        SimpleStream in = new SimpleStream(file); 
+    private void parseFeatures(Access file) throws IOException {
+        Stream in = new Stream(file);
 
         parseSummary(in);
         resetFeature();
@@ -93,20 +93,20 @@ public class MapFeaturesParser {
     
     
     
-    private void parseFeature(SimpleStream in) throws IOException {
+    private void parseFeature(Stream in) throws IOException {
         parseKeyValue(in);
         parseToEndOfParagraph(in);
     }
 
 
-    private void parseKeyValue(SimpleStream in) throws IOException {
+    private void parseKeyValue(Stream in) throws IOException {
         // <b><a ...>key</a></b>=<a ...>value</a>
         parseBoldName(in, outKey);
         parseBoldName(in, outValue);
     }
 
 
-    private void parseBoldName(SimpleStream in, StringBuilder outString) throws IOException {
+    private void parseBoldName(Stream in, StringBuilder outString) throws IOException {
         int state=0;
         
         while(state<4) {
@@ -132,7 +132,7 @@ public class MapFeaturesParser {
     }
 
 
-    private void parseName(SimpleStream in, StringBuilder outString) throws IOException {
+    private void parseName(Stream in, StringBuilder outString) throws IOException {
         int state=0;
         int lock=0;
         
@@ -168,7 +168,7 @@ public class MapFeaturesParser {
     }
 
 
-    private void parseString(SimpleStream in, StringBuilder outString) throws IOException {
+    private void parseString(Stream in, StringBuilder outString) throws IOException {
         
         while (true) {
             if (in.haveEOF() || in.haveA('<')) {
@@ -185,7 +185,7 @@ public class MapFeaturesParser {
     }
 
 
-    private void parseSummary(SimpleStream in) throws IOException {
+    private void parseSummary(Stream in) throws IOException {
         parseSummaryHeading(in);
         parseToEndOfParagraph(in);
         
@@ -209,7 +209,7 @@ public class MapFeaturesParser {
     }
     
     
-    private void parseToEndOfParagraph(SimpleStream in) throws IOException {
+    private void parseToEndOfParagraph(Stream in) throws IOException {
         int state=0;
         
         while(state < 4) {
@@ -240,7 +240,7 @@ public class MapFeaturesParser {
     }
 
 
-    private void parseSummaryHeading(SimpleStream in) throws IOException {
+    private void parseSummaryHeading(Stream in) throws IOException {
         int state=0;
         
         while(state<2) {

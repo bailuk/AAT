@@ -7,19 +7,15 @@ import java.io.IOException;
 
 import ch.bailu.aat.R;
 import ch.bailu.aat.gpx.GpxList;
-import ch.bailu.aat.gpx.parser.SimpleGpxListReader;
+import ch.bailu.aat.gpx.parser.GpxListReader;
 import ch.bailu.aat.gpx.writer.GpxListWriter;
 import ch.bailu.aat.util.fs.AppDirectory;
 import ch.bailu.aat.util.ui.AppLog;
-import ch.bailu.simpleio.io.AbsAccess;
+import ch.bailu.simpleio.io.Access;
 import ch.bailu.simpleio.io.FileAccess;
 
 
 public class TrackCrashRestorer{
-    
-
-        
-    
     
     public TrackCrashRestorer (Context context, int presetIndex) throws IOException {
         
@@ -54,8 +50,8 @@ public class TrackCrashRestorer{
 
 
     
-    private GpxList readFile(AbsAccess remainingLogFile) throws IOException {
-        SimpleGpxListReader reader = new SimpleGpxListReader(remainingLogFile);
+    private GpxList readFile(Access remainingLogFile) throws IOException {
+        GpxListReader reader = new GpxListReader(remainingLogFile);
         return reader.getGpxList();
     }
 }

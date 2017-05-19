@@ -1,14 +1,14 @@
-package ch.bailu.aat.gpx.parser;
+package ch.bailu.simpleio.parser.scanner;
 import java.io.IOException;
 
-import ch.bailu.simpleio.io.SimpleStream;
+import ch.bailu.simpleio.io.Stream;
 
 
 public class IntegerScanner {
 	private int integer;
-	private final SimpleStream stream;
+	private final Stream stream;
 	
-	public IntegerScanner(SimpleStream s) {
+	public IntegerScanner(Stream s) {
 		stream = s;
 	}
 	

@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 
 import ch.bailu.simpleio.io.FileAccess;
-import ch.bailu.simpleio.io.SimpleStream;
+import ch.bailu.simpleio.io.Stream;
 
 
 public abstract class TextBackup {
@@ -77,7 +77,7 @@ public abstract class TextBackup {
 
 
         private void readToBuffer(StringBuilder buffer) throws IOException  {
-            SimpleStream stream = new SimpleStream(new FileAccess(file));
+            Stream stream = new Stream(new FileAccess(file));
 
             int count = MAX_FILE_SIZE;
 

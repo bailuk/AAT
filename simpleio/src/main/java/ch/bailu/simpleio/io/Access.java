@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-public abstract class AbsAccess {
+public abstract class Access {
     public abstract InputStream open_r() throws IOException;
     public abstract OutputStream open_w() throws IOException;
 
@@ -32,24 +32,32 @@ public abstract class AbsAccess {
 
 
 
-    public void copy(File dest) throws Exception {
-        InputStream in = null;
+    public void copyTo(File fout) throws Exception {
         OutputStream out = null;
 
         try {
-
-            in = open_r();
-            out = new FileOutputStream(dest);
-            copy(in, out);
+            out = new FileOutputStream(fout);
+            copyTo(out);
 
         } finally {
-            if (in != null) in.close();
             if (out != null) out.close();
         }
     }
 
+    public void copyTo(OutputStream out) throws Exception {
+        InputStream in = null;
 
-    private static void copy(InputStream in, OutputStream out) throws IOException {
+        try {
+            in = open_r();
+            copy(in, out);
+
+        } finally {
+            if (in != null) in.close();
+        }
+    }
+
+
+    public static void copy(InputStream in, OutputStream out) throws IOException {
         byte[] buffer = new byte[4096];
         int count;
         while ((count = in.read(buffer)) > 0) {
@@ -58,14 +66,5 @@ public abstract class AbsAccess {
     }
 
 
-    public abstract File toFile();
-
-
-    public long lastModified() {
-        File file = toFile();
-        if (file != null) {
-            return file.lastModified();
-        }
-        return System.currentTimeMillis();
-    }
+    public abstract long lastModified();
 }

@@ -10,7 +10,7 @@ import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.VirtualService;
 import ch.bailu.aat.util.fs.AssetAccess;
 import ch.bailu.aat.util.ui.AppLog;
-import ch.bailu.simpleio.io.AbsAccess;
+import ch.bailu.simpleio.io.Access;
 
 public class IconMapService extends VirtualService {
     private final static String NKEY_KEY = "class";
@@ -30,7 +30,7 @@ public class IconMapService extends VirtualService {
         map = new IconMap();
 
         try {
-            AbsAccess map_file = new AssetAccess(sc.getContext().getAssets(), MAP_FILE);
+            Access map_file = new AssetAccess(sc.getContext().getAssets(), MAP_FILE);
             new IconMapParser(map_file, map);
         } catch (IOException e) {
             AppLog.e(getContext(), this, e);

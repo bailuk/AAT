@@ -8,10 +8,10 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-import ch.bailu.simpleio.io.AbsAccess;
+import ch.bailu.simpleio.io.Access;
 import ch.bailu.simpleio.io.FileAccess;
 
-public class UriAccess extends AbsAccess {
+public class UriAccess extends Access {
     private final Uri uri;
     private final Context context;
 
@@ -20,13 +20,11 @@ public class UriAccess extends AbsAccess {
         context = c;
     }
 
-
     public UriAccess(Context c, File f) {
         this (c, Uri.fromFile(f));
     }
 
-
-    public static AbsAccess factory(Context c, String id) {
+    public static Access factory(Context c, String id) {
         if (id.length()>0 && id.charAt(0) == '/') {
             return new FileAccess(new File(id));
         } else {
@@ -46,17 +44,8 @@ public class UriAccess extends AbsAccess {
         return context.getContentResolver().openOutputStream(uri);
     }
 
-
-
     @Override
-    public File toFile() {
-        String path = uri.getPath();
-        if (path != null) {
-            final File file = new File(path);
-            if (file.exists()) {
-                return file;
-            }
-        }
-        return null;
+    public long lastModified() {
+        return System.currentTimeMillis();
     }
 }

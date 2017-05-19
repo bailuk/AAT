@@ -24,8 +24,6 @@ public class BackgroundService extends VirtualService {
     private ProcessThread process;
 
 
-//    private final MapFeaturesDownloader mapFeaturesDownloader;
-
     private final BroadcastReceiver onFileDownloaded = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -35,7 +33,7 @@ public class BackgroundService extends VirtualService {
 
     public BackgroundService(final ServiceContext sc) {
         super(sc);
-//        mapFeaturesDownloader = new MapFeaturesDownloader(getSContext());
+
         AppBroadcaster.register(getContext(), onFileDownloaded, AppBroadcaster.FILE_CHANGED_ONDISK);
 
 

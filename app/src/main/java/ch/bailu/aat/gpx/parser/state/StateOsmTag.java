@@ -1,14 +1,14 @@
-package ch.bailu.aat.gpx.parser;
+package ch.bailu.aat.gpx.parser.state;
 
 import java.io.IOException;
 
 import ch.bailu.aat.gpx.GpxAttributesStatic.Tag;
-import ch.bailu.aat.gpx.parser.XmlParser.ParserIO;
+import ch.bailu.aat.gpx.parser.scanner.Scanner;
 
-public class StateOsmTag extends ParserState {
+public class StateOsmTag extends State {
 
     @Override
-    public void parse(ParserIO io) throws IOException {
+    public void parse(Scanner io) throws IOException {
         
         parseString(io, 'k');
         final String key=io.builder.toString();
@@ -22,7 +22,7 @@ public class StateOsmTag extends ParserState {
 
     }
 
-    private void parseString(ParserIO io, int c) throws IOException {
+    private void parseString(Scanner io, int c) throws IOException {
         io.stream.to(c);
         io.stream.to('=');
         io.stream.toQuotation();

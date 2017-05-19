@@ -1,24 +1,25 @@
-package ch.bailu.aat.gpx.parser;
+package ch.bailu.aat.gpx.parser.state;
 
 import java.io.IOException;
 
 import ch.bailu.aat.coordinates.LatLongE6;
-import ch.bailu.aat.gpx.parser.XmlParser.ParserIO;
+import ch.bailu.aat.gpx.parser.scanner.Scanner;
+
 
 public class StateOsmNode extends StateOsmPoint {
 
-    private final ParserState tag = new StateOsmTag();
+    private final State tag = new StateOsmTag();
 
     
     @Override
-    public void parse(ParserIO io) throws IOException {
+    public void parse(Scanner io) throws IOException {
         parseNode(io);
         rememberNode(io);
         parseSubtags(io);
     }
 
 
-    private void parseSubtags(ParserIO io) throws IOException {
+    private void parseSubtags(Scanner io) throws IOException {
 
         io.tagList.clear();
         
@@ -46,7 +47,7 @@ public class StateOsmNode extends StateOsmPoint {
         havePoint(io);
     }
 
-    private void parseNode(ParserIO io) throws IOException {
+    private void parseNode(Scanner io) throws IOException {
         io.stream.to('=');
         io.stream.to('"');
         io.id.scan();
@@ -61,7 +62,7 @@ public class StateOsmNode extends StateOsmPoint {
     }
 
 
-    private void rememberNode(ParserIO io) throws IOException {
+    private void rememberNode(Scanner io) throws IOException {
         io.nodeMap.put(io.id.getInt(), 
                 new LatLongE6(io.latitude.getInt(), io.longitude.getInt()));
     }

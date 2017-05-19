@@ -49,5 +49,8 @@ dependencies {
     // Android
     compile 'org.mapsforge:mapsforge-map-android:0.7.0'
     compile 'com.caverock:androidsvg:1.2.2-beta-1'
+
     compile project(path: ':simpleio')
+
+
 }
