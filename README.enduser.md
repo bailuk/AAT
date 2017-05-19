@@ -54,7 +54,7 @@ AAT uses the formula `hours * MET * weight` to calculate the kcal used for a spe
 MET stands for (metabolic equivalent)[https://en.wikipedia.org/wiki/Metabolic_equivalent]. The higher the value, the more energy you would use
 for this specific activity. A complete list of activities and MET values can be found (here)[https://sites.google.com/site/compendiumofphysicalactivities/Activity-Categories].
 
-Both MET and weight can be provided in the settings dialog. In AAT the MET value is leading the activity's name. For example: ` 6.8 bicycling, leisure, moderate effort`
+Both MET and weight can be provided in the settings dialog. The MET value is leading the activity's name. For example: ` 6.8 bicycling, leisure, moderate effort`
 
 
 ## Issues and feedback
