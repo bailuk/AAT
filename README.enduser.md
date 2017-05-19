@@ -12,11 +12,19 @@ Go to `Settings->Map Tiles` to remove old map tiles.
 
 
 ## Offline Maps
-Enable offline map rendering:
+### Download and store maps:
+1. Download maps and render themes from one of these map providers:  
+[OpenAndroMaps](http://www.openandromaps.org),[Freizeitkarte](http://www.freizeitkarte-osm.de/android/en/index.html) or [Mapsforge](http://download.mapsforge.org/)
+2. Store extracted maps in the directory `maps` or in one of its subdirectories.  
+Example: `maps/OAM/` contains `Alps.map`
+3. Store extracted themes in a subdirectory of the directory containing the corresponding maps.  
+Example: `maps/OAM/OAM/` contains `andromaps_cycle.xml`, `symbols/`, `patterns/` and other files.
 
-- Download map files from the [Mapsforge download server](http://download.mapsforge.org/).
-- Provide the directory that contains the map files in the settings dialog (`Settings->Map Tiles`).
-- Disable Mapnik and enable Mapsforge in `Menu->Map`.
+### Enable offline maps
+1. Inside AAT open the map settings dialog. (`Settings->Map Tiles`).
+2. Select the directory that contains the map files (In this example `maps/OAM/` will be listed). 
+3. Select a render theme.
+4. Disable Mapnik and enable Mapsforge in `Menu->Map`.
 
 
 ## Where to find files?
@@ -42,5 +50,5 @@ AAT lets you query the [Overpass API](http://wiki.openstreetmap.org/wiki/Overpas
 
 
 ## Issues and feedback
-For questions, feedback and bugreports send an e-mail to aat@bailu.ch
+For questions, feedback and bugreports [report an issue](https://github.com/bailuk/AAT/issues) or send an e-mail to aat@bailu.ch
 

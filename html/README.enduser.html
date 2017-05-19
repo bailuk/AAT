@@ -15,13 +15,25 @@ Go to <code>Settings-&gt;Map Tiles</code> to remove old map tiles.</p>
 
 <h2>Offline Maps</h2>
 
-<p>Enable offline map rendering:</p>
+<h3>Download and store maps and themes:</h3>
 
-<ul>
-<li>Download map files from the <a href="http://download.mapsforge.org/">Mapsforge download server</a>.</li>
-<li>Provide the directory that contains the map files in the settings dialog (<code>Settings-&gt;Map Tiles</code>).</li>
+<ol>
+<li>Download maps and render themes from one of these map providers: <br>
+<a href="http://www.openandromaps.org">OpenAndroMaps</a>,<a href="http://www.freizeitkarte-osm.de/android/en/index.html">Freizeitkarte</a> or <a href="http://download.mapsforge.org/">Mapsforge</a></li>
+<li>Store extracted maps in the directory <code>maps</code> or in one of its subdirectories. <br>
+Example: <code>maps/OAM/</code> contains <code>Alps.map</code></li>
+<li>Store extracted themes in a subdirectory of the directory containing the corresponding maps. <br>
+Example: <code>maps/OAM/OAM/</code> contains <code>andromaps_cycle.xml</code>, <code>symbols/</code>, <code>patterns/</code> and other files.</li>
+</ol>
+
+<h3>Enable offline maps</h3>
+
+<ol>
+<li>Inside AAT open the map settings dialog. (<code>Settings-&gt;Map Tiles</code>).</li>
+<li>Select the directory that contains the map files (In this example <code>maps/OAM/</code> will be listed). </li>
+<li>Select a render theme.</li>
 <li>Disable Mapnik and enable Mapsforge in <code>Menu-&gt;Map</code>.</li>
-</ul>
+</ol>
 
 <h2>Where to find files?</h2>
 
@@ -51,4 +63,4 @@ The structure of the data directory is as follows: </p>
 
 <h2>Issues and feedback</h2>
 
-<p>For questions, feedback and bugreports send an e-mail to aat@bailu.ch</p>
+<p>For questions, feedback and bugreports <a href="https://github.com/bailuk/AAT/issues">report an issue</a> or send an e-mail to aat@bailu.ch</p>
