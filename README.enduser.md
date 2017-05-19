@@ -49,6 +49,14 @@ AAT lets you query the [Overpass API](http://wiki.openstreetmap.org/wiki/Overpas
 `[amenity=restaurant]` will get you list of all restaurants located inside the area that was visible on the map-view before opening the Overpass dialog. 
 
 
+## Calculating calories
+AAT uses the formula `hours * MET * weight` to calculate the kcal used for a specific activity.
+MET stands for (metabolic equivalent)[https://en.wikipedia.org/wiki/Metabolic_equivalent]. The higher the value, the more energy you would use
+for this specific activity. A complete list of activities and MET values can be found (here)[https://sites.google.com/site/compendiumofphysicalactivities/Activity-Categories].
+
+Both MET and weight can be provided in the settings dialog. In AAT the MET value is leading the activity's name. For example: ` 6.8 bicycling, leisure, moderate effort`
+
+
 ## Issues and feedback
 For questions, feedback and bugreports [report an issue](https://github.com/bailuk/AAT/issues) or send an e-mail to aat@bailu.ch
 

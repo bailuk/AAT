@@ -85,7 +85,7 @@
     <string name="p_general">General</string>
     <string name="p_preset">Activity</string>
 
-    <string name="p_met" translatable="false">MET</string>
+    <string name="p_met">MET and name</string>
     <string-array name="p_met_list">
         <!--
           List is taken and modified from "Compendium of Physical Activities"
