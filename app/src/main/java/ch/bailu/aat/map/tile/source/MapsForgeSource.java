@@ -15,12 +15,12 @@ public class MapsForgeSource extends Source {
 
     public static final String NAME = "MapsForge";
     private final String themeFile;
-    private final String idName;
+    private final String themeIdName;
 
 
     public MapsForgeSource(String xmlThemeFileName) {
         themeFile = xmlThemeFileName;
-        idName = "MF_" + new File(themeFile).getName().replace(".xml", "");
+        themeIdName = "MF_" + new File(themeFile).getName().replace(".xml", "");
     }
 
     public String getName() {
@@ -29,7 +29,7 @@ public class MapsForgeSource extends Source {
 
     @Override
     public String getID(Tile t, Context x) {
-        return genID(t, idName);
+        return genID(t, themeIdName);
     }
 
     @Override

@@ -1,6 +1,7 @@
 package ch.bailu.aat.map.mapsforge;
 
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.graphics.Paint;
 import android.graphics.Rect;
 
@@ -21,6 +22,7 @@ import ch.bailu.aat.map.MapContext;
 import ch.bailu.aat.map.layer.MapLayerInterface;
 import ch.bailu.aat.map.tile.TileProviderInterface;
 import ch.bailu.aat.services.ServiceContext;
+import ch.bailu.aat.util.ui.AppLog;
 
 public class MapsForgeTileLayer extends Layer implements MapLayerInterface, Observer {
 
@@ -44,8 +46,6 @@ public class MapsForgeTileLayer extends Layer implements MapLayerInterface, Obse
 
     @Override
     public void draw(BoundingBox box, byte zoom, Canvas c, Point tlp) {
-
-
 
         if (scontext.lock()) {
             isZoomSupported =
@@ -90,9 +90,14 @@ public class MapsForgeTileLayer extends Layer implements MapLayerInterface, Obse
                 r.right = r.left + tileSize;
                 r.bottom = r.top + tileSize;
 
+                Bitmap androidbitmap = AndroidGraphicFactory.getBitmap(bitmap);
+                if (androidbitmap == null) {
+                    AppLog.d(this, provider.getSource().getName());
+                } else {
 
-                AndroidGraphicFactory.getCanvas(canvas).
-                    drawBitmap(AndroidGraphicFactory.getBitmap(bitmap), null, r, paint);
+                    AndroidGraphicFactory.getCanvas(canvas).
+                            drawBitmap(androidbitmap, null, r, paint);
+                }
             }
         }
     }

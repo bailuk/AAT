@@ -10,7 +10,6 @@ import ch.bailu.aat.R;
 import ch.bailu.aat.activities.ActivitySwitcher;
 import ch.bailu.aat.activities.NominatimActivity;
 import ch.bailu.aat.coordinates.BoundingBoxE6;
-import ch.bailu.aat.preferences.SolidAutopause;
 import ch.bailu.aat.preferences.SolidBacklight;
 import ch.bailu.aat.preferences.SolidMapTileStack;
 import ch.bailu.aat.preferences.SolidOverlayFileList;
@@ -22,7 +21,7 @@ import ch.bailu.aat.views.preferences.SolidCheckListDialog;
 import ch.bailu.aat.views.preferences.SolidIndexListDialog;
 
 public class OptionsMenu extends AbsMenu {
-    private MenuItem start, pause, backlight, autopause, map, overlays, nominatim;
+    private MenuItem start, pause, backlight, map, overlays, nominatim;
 
     private final ServiceContext scontext;
     
@@ -84,9 +83,6 @@ public class OptionsMenu extends AbsMenu {
         } else if (item == backlight) {
             new SolidIndexListDialog(new SolidBacklight(c, new SolidPreset(c).getIndex()));
 
-        } else if (item == autopause) {
-            new SolidIndexListDialog(new SolidAutopause(c, new SolidPreset(c).getIndex()));
-
         } else if (item == map) {
             new SolidCheckListDialog(new SolidMapTileStack(c, new SolidPreset(c).getIndex()));
 
@@ -108,5 +104,4 @@ public class OptionsMenu extends AbsMenu {
 
         return true;
     }
-
 }

@@ -157,7 +157,6 @@ public class TileProvider implements TileProviderInterface {
         if (scontext.lock()) {
             String id = source.getID(mapTile, scontext.getContext());
 
-
             ObjectHandle handle = scontext.getCacheService().getObject(
                     id,
                     source.getFactory(mapTile)

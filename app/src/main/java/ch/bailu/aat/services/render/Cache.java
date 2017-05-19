@@ -49,6 +49,10 @@ public class Cache implements TileCache {
         return cache.size();
     }
 
+    public boolean isEmpty() {
+        return cache.size()==0;
+    }
+
     @Override
     public int getCapacityFirstLevel() {
         return getCapacity();
@@ -61,6 +65,7 @@ public class Cache implements TileCache {
 
     @Override
     public void purge() {
+        AppLog.d(this, "Purge " + cache.size() + " files. (FIXME)");
         for (int i = 0; i< cache.size(); i++) {
             Entry e = cache.valueAt(i);
             if (e != null && e.bitmap != null) {
@@ -77,7 +82,12 @@ public class Cache implements TileCache {
 
             if (e != null) {
                 bitmap.incrementRefCount();
-                e.bitmap = bitmap; // FIXME old bitmap decrementRefCount ???
+
+                if (e.bitmap != null) {
+                    AppLog.d(this, "bitmap is NOT NULL (FIXME: needs decrementRefcount?) ");
+                }
+                e.bitmap = bitmap;
+
                 e.observer.onChange();
             }
         }

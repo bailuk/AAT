@@ -1,7 +1,6 @@
 package ch.bailu.aat.services.render;
 
 import org.mapsforge.core.graphics.Canvas;
-import org.mapsforge.core.graphics.GraphicFactory;
 import org.mapsforge.core.graphics.TileBitmap;
 import org.mapsforge.core.model.BoundingBox;
 import org.mapsforge.core.model.Point;
@@ -34,7 +33,7 @@ public class Renderer extends RendererBase<RendererJob> {
     private final RenderThemeFuture renderThemeFuture;
 
     public Renderer(XmlRenderTheme t, TileCache cache, ArrayList<File> files) {
-        super(cache, new Model()); // TODO: move model to context
+        super(cache, new Model());
 
         renderThemeFuture = createTheme(t);
 
@@ -55,7 +54,7 @@ public class Renderer extends RendererBase<RendererJob> {
 
         final  DatabaseRenderer databaseRenderer = new DatabaseRenderer(
                 mapDataStore,
-                AndroidGraphicFactory.INSTANCE, // TODO: move to context
+                AndroidGraphicFactory.INSTANCE,
                 cache,
                 null,
                 RENDER_LABELS,
@@ -77,9 +76,9 @@ public class Renderer extends RendererBase<RendererJob> {
 
     private static RenderThemeFuture createTheme(XmlRenderTheme t) {
         RenderThemeFuture theme = new RenderThemeFuture(
-                AndroidGraphicFactory.INSTANCE,   // TODO: move to context
+                AndroidGraphicFactory.INSTANCE,
                 t,
-                new Model().displayModel);        // TODO: move to context
+                new Model().displayModel);
         new Thread(theme).start();
         return theme;
     }

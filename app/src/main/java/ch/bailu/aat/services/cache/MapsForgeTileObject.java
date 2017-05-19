@@ -5,9 +5,7 @@ import android.graphics.Bitmap;
 import org.mapsforge.core.graphics.TileBitmap;
 import org.mapsforge.core.model.Tile;
 import org.mapsforge.map.model.common.Observer;
-import org.mapsforge.map.rendertheme.XmlRenderTheme;
 
-import ch.bailu.aat.preferences.SolidRenderTheme;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.util.graphic.SyncTileBitmap;
@@ -18,20 +16,20 @@ public class MapsForgeTileObject extends TileObject implements Observer {
 
     private final SyncTileBitmap bitmap = new SyncTileBitmap();
 
-    private final XmlRenderTheme renderTheme;
+    private final String themeID;
 
-    public MapsForgeTileObject(String id, ServiceContext sc, Tile t, XmlRenderTheme theme) {
+    public MapsForgeTileObject(String id, ServiceContext sc, Tile t, String tID) {
         super(id);
         scontext = sc;
         tile = t;
-        renderTheme = theme;
+        themeID = tID;
 
         sc.getRenderService().lockToCache(this);
         retreiveBitmap();
     }
 
     private void retreiveBitmap() {
-        TileBitmap b = scontext.getRenderService().getTile(tile, renderTheme);
+        TileBitmap b = scontext.getRenderService().getTile(this);
 
         if (b != null) {
             bitmap.set(b);
@@ -41,10 +39,18 @@ public class MapsForgeTileObject extends TileObject implements Observer {
         }
     }
 
+
+    public String getThemeID() {
+        return themeID;
+    }
+
+
     @Override
     public Bitmap getBitmap() {
         return bitmap.getAndroidBitmap();
     }
+
+
 
 
 
@@ -100,17 +106,17 @@ public class MapsForgeTileObject extends TileObject implements Observer {
 
     public static class Factory extends ObjectHandle.Factory {
         private final Tile mapTile;
-        private final XmlRenderTheme renderTheme;
+        private final String themeID;
 
-        public Factory(Tile t, String theme) {
+        public Factory(Tile t, String tID) {
 
-            renderTheme = SolidRenderTheme.toRenderTheme(theme);
+            themeID = tID;
             mapTile=t;
         }
 
         @Override
         public ObjectHandle factory(String id, ServiceContext sc) {
-            return  new MapsForgeTileObject(id, sc, mapTile, renderTheme);
+            return  new MapsForgeTileObject(id, sc, mapTile, themeID);
         }
 
     }

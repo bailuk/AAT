@@ -3,13 +3,9 @@ package ch.bailu.aat.services.render;
 import android.content.SharedPreferences;
 
 import org.mapsforge.core.graphics.TileBitmap;
-import org.mapsforge.core.model.Tile;
-import org.mapsforge.map.rendertheme.XmlRenderTheme;
-
-import java.io.File;
-import java.util.ArrayList;
 
 import ch.bailu.aat.preferences.SolidMapsForgeDirectory;
+import ch.bailu.aat.preferences.SolidRenderTheme;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.VirtualService;
 import ch.bailu.aat.services.cache.MapsForgeTileObject;
@@ -17,40 +13,47 @@ import ch.bailu.aat.services.cache.MapsForgeTileObject;
 public class RenderService  extends VirtualService
         implements SharedPreferences.OnSharedPreferenceChangeListener {
 
-    private final Cache cache = new Cache();
 
     private final SolidMapsForgeDirectory sdirectory;
+    private final SolidRenderTheme stheme;
 
-    private MapList mapList;
-    private RendererList rendererList;
+    private final Configuration configuration = new Configuration();
+    private final Caches caches= new Caches();
 
 
     public RenderService(ServiceContext sc) {
         super(sc);
 
         sdirectory = new SolidMapsForgeDirectory(sc.getContext());
-
-        rendererList = new RendererList(cache);
-
-
-        mapList = new MapList(sdirectory.getValueAsFile());
+        stheme = new SolidRenderTheme(sc.getContext());
 
         sdirectory.getStorage().register(this);
+        reconfigureRenderer();
     }
 
 
+    private void reconfigureRenderer() {
+        configuration.destroy();
+        configuration.configure(
+                sdirectory.getValueAsFile(),
+                caches,
+                stheme.getValueAsRenderTheme(),
+                stheme.getValueAsThemeID());
+    }
 
-    public TileBitmap getTile(Tile tile, XmlRenderTheme theme) {
-        ArrayList<File> files = mapList.getFiles(tile);
-        return rendererList.getTile(files, tile, theme);
+
+    public TileBitmap getTile(MapsForgeTileObject o) {
+        return configuration.getTile(o);
     }
 
 
     public void lockToCache(MapsForgeTileObject o) {
-        cache.lockToCache(o);
+        caches.lockToCache(o);
     }
+
+
     public void freeFromCache(MapsForgeTileObject o) {
-        cache.freeFromCache(o);
+        caches.freeFromCache(o);
     }
 
 
@@ -63,15 +66,14 @@ public class RenderService  extends VirtualService
     @Override
     public void close() {
         sdirectory.getStorage().unregister(this);
-        rendererList.destroy();
-        cache.destroy();
+        configuration.destroy();
     }
 
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-        if (sdirectory.hasKey(key)) {
-            mapList = new MapList(sdirectory.getValueAsFile());
+        if (sdirectory.hasKey(key) || stheme.hasKey(key)) {
+            reconfigureRenderer();
         }
     }
 }
