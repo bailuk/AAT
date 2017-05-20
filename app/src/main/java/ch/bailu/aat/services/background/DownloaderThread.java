@@ -8,7 +8,6 @@ public class DownloaderThread  extends ProcessThread {
     private final Context context;
     private final DownloadStatistics statistics = new DownloadStatistics();
 
-    
     public DownloaderThread(Context c, String s) {
         super(DOWNLOAD_QUEUE_SIZE);
         context = c;
@@ -19,7 +18,6 @@ public class DownloaderThread  extends ProcessThread {
     
     @Override
     public void bgOnHaveHandle(ProcessHandle handle) {
-        
         if (statistics.isReady()) {
             handle.bgLock();
             final long size = handle.bgOnProcess();
@@ -28,9 +26,9 @@ public class DownloaderThread  extends ProcessThread {
             if (size > 0) {
                 statistics.success(size);
                 handle.broadcast(context);
+            } else {
+                statistics.failure();
             }
-            
-            
         }
     }
 

@@ -3,17 +3,17 @@ package ch.bailu.aat.services.background;
 import android.content.Context;
 
 public class LoaderThread extends ProcessThread {
+    private static final int LOADER_QUEUE_SIZE = 100;
+
     private final Context context;
     private final String directory;
     
     private int total_loads=0;
-    private int total_bytes=0;
+    private long total_bytes=0;
     
     
-    private static final int SIZE=100;
-
     public LoaderThread(Context c, String d) {
-        super(SIZE);
+        super(LOADER_QUEUE_SIZE);
         directory=d;
         context = c;
     }

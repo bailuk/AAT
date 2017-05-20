@@ -6,10 +6,8 @@ import java.util.concurrent.ArrayBlockingQueue;
 public abstract class ProcessThread extends Thread implements Closeable, ThreadControl {
 
     private boolean continueThread=true;
-    
-    private final ArrayBlockingQueue<ProcessHandle> queue;
+    private final HandleQueue queue;
 
-    private final int SIZE;
     
     private final BackgroundHandle background = new BackgroundHandle();
     private class BackgroundHandle {
@@ -33,10 +31,14 @@ public abstract class ProcessThread extends Thread implements Closeable, ThreadC
     }
 
 
-    public ProcessThread(int size) {
-        SIZE=size;
-        queue = new ArrayBlockingQueue<>(SIZE, true);
+    public ProcessThread(HandleQueue q) {
+        queue = q;
         start();
+    }
+
+
+    public ProcessThread(int limit) {
+        this(new HandleQueue(limit));
     }
 
 
@@ -59,7 +61,6 @@ public abstract class ProcessThread extends Thread implements Closeable, ThreadC
     public abstract void bgOnHaveHandle(ProcessHandle handle);
     
     public void process(ProcessHandle handle) {
-        while (queue.size()>=SIZE) queue.poll();
         queue.offer(handle);
     }
 

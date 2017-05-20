@@ -18,11 +18,7 @@ public abstract class ProcessHandle implements ThreadControl {
     };
 
 
-
     private boolean lock=false;
-    
-    
-    
     private boolean continueLoading=true;
     
     

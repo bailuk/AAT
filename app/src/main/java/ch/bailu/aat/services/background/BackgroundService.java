@@ -3,11 +3,11 @@ package ch.bailu.aat.services.background;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.util.SparseArray;
 
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.HashMap;
 
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.VirtualService;
@@ -17,11 +17,9 @@ import ch.bailu.aat.util.ui.AppLog;
 
 public class BackgroundService extends VirtualService {
 
-    private final static int PROCESS_QUEUE_SIZE=5000;
-
-    private final SparseArray<DownloaderThread> downloaders = new SparseArray<>();
-    private final SparseArray<LoaderThread> loaders = new SparseArray<>();
-    private ProcessThread process;
+    private final HashMap<String, DownloaderThread> downloaders = new HashMap<>(5);
+    private final HashMap<String, LoaderThread> loaders = new HashMap<>(5);
+    private final WorkerThread workers[] = new WorkerThread[1];
 
 
     private final BroadcastReceiver onFileDownloaded = new BroadcastReceiver() {
@@ -36,26 +34,15 @@ public class BackgroundService extends VirtualService {
 
         AppBroadcaster.register(getContext(), onFileDownloaded, AppBroadcaster.FILE_CHANGED_ONDISK);
 
+        HandleQueue queue = new HandleQueue();
+        for (int i=0; i< workers.length; i++)
+            workers[i] =new WorkerThread(sc, queue);
 
-        process =new ProcessThread(PROCESS_QUEUE_SIZE) {
-
-            @Override
-            public void bgOnHaveHandle(ProcessHandle handle) {
-                if (handle.canContinue() && sc.lock()) {
-                    handle.bgLock();
-                    handle.bgOnProcess();
-                    handle.bgUnlock();
-                    handle.broadcast(getContext());
-
-                    sc.free();
-                }
-            }
-        };
 
     }
 
     public void process(ProcessHandle handle) {
-        process.process(handle);
+        workers[0].process(handle);
     }
 
 
@@ -69,11 +56,11 @@ public class BackgroundService extends VirtualService {
 
         if (url != null) {
             String host = url.getHost();
-            DownloaderThread downloader = downloaders.get(host.hashCode());
+            DownloaderThread downloader = downloaders.get(host);
 
             if (downloader == null) {
                 downloader = new DownloaderThread(getContext(), host);
-                downloaders.put(host.hashCode(), downloader);
+                downloaders.put(host, downloader);
             }
             downloader.process(handle);
         }
@@ -84,38 +71,32 @@ public class BackgroundService extends VirtualService {
     public void load(ProcessHandle handle) {
         final String base = getBaseDirectory(handle.toString());
 
-        LoaderThread loader = loaders.get(base.hashCode());
+        LoaderThread loader = loaders.get(base);
 
         if (loader == null) {
             loader = new LoaderThread(getContext(), base);
-            loaders.put(base.hashCode(), loader);
+            loaders.put(base, loader);
         }
         loader.process(handle);
     }
-
-
-//    public void downloadMapFeatures() {
-//        mapFeaturesDownloader.download();
-//    }
 
 
     @Override
     public void close() {
         getContext().unregisterReceiver(onFileDownloaded);
 
-//        mapFeaturesDownloader.close();
-
-        for (int i=0; i<loaders.size(); i++)
-            loaders.valueAt(i).close();
+        for(ProcessThread p: loaders.values())
+            p.close();
         loaders.clear();
 
-        for (int i=0; i<downloaders.size(); i++)
-            downloaders.valueAt(i).close();
+        for (DownloaderThread downloader: downloaders.values())
+            downloader.close();
         downloaders.clear();
 
-        process.close();
-        process=null;
+        for (WorkerThread w: workers)
+            w.close();
     }
+
 
     private String getBaseDirectory(String id) {
         File p1 = new File (id);
@@ -143,11 +124,11 @@ public class BackgroundService extends VirtualService {
     @Override
     public void appendStatusText(StringBuilder builder) {
 
-        for (int i=0; i<loaders.size(); i++)
-            loaders.valueAt(i).appendStatusText(builder);
+        for (LoaderThread p: loaders.values())
+            p.appendStatusText(builder);
 
-        for (int i=0; i<downloaders.size(); i++)
-            downloaders.valueAt(i).appendStatusText(builder);
+        for (DownloaderThread p: downloaders.values())
+            p.appendStatusText(builder);
     }
 }
 

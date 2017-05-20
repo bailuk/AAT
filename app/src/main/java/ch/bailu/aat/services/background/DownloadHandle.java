@@ -85,10 +85,10 @@ public class DownloadHandle extends ProcessHandle {
 
         } finally {    
             FileAccess.close(output);
-            downloadLock=false;
+            downloadLock = false;
 
             FileAccess.close(input);
-            if (connection!=null) connection.disconnect();
+            if (connection != null) connection.disconnect();
         }
 
         return total;
@@ -103,29 +103,12 @@ public class DownloadHandle extends ProcessHandle {
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 
         connection.setRequestProperty(USER_AGENT_KEY, USER_AGENT_VALUE);
-
-
-        //AppLog.d(connection, connection.getRequestProperties().toString());
-        /*
-            Map<String, List<String>> map = connection.getRequestProperties();
-
-
-            for (Map.Entry<String, List<String>> entry : map.entrySet()) {
-                AppLog.d(entry, entry.getKey());
-                for (int i=0; i< entry.getValueAsString().size(); i++) {
-                    AppLog.d(entry, entry.getValueAsString().getDrawable(i));
-                }
-            }*/
-
-
-
         return (HttpURLConnection) url.openConnection();
 
     }
 
     public static InputStream openInput(HttpURLConnection connection) throws IOException {
         return connection.getInputStream();
-
     }
 
 
