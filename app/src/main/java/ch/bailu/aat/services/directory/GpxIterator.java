@@ -38,7 +38,7 @@ public class GpxIterator extends AbsIterator {
 
     @Override
     public void setPosition(int index) {
-        if (index >= size()) {
+        if (index >= pixelCount()) {
             cursor.moveToFirst();
         } else if (index < 0) {
             cursor.moveToLast();
@@ -55,7 +55,7 @@ public class GpxIterator extends AbsIterator {
 
 
     @Override
-    public int size() {
+    public int pixelCount() {
         return cursor.getCount();
     }
 
@@ -66,7 +66,7 @@ public class GpxIterator extends AbsIterator {
 
         handle = scontext.getCacheService().getObject( getPath(), new GpxObjectStatic.Factory() );
         oldHandle.free();
-        return handle.size()>0;
+        return handle.pixelCount()>0;
     }
 
 
@@ -92,7 +92,7 @@ public class GpxIterator extends AbsIterator {
         public FileListSummary() {
             summary=new GpxBigDelta();
 
-            for (int i=0; i<GpxIterator.this.size(); i++) {
+            for (int i=0; i<GpxIterator.this.pixelCount(); i++) {
                 GpxIterator.this.setPosition(i);
                 summary.updateWithPause(GpxIterator.this);
             }

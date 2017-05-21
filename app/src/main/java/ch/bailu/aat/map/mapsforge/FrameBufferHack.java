@@ -46,7 +46,7 @@ public class FrameBufferHack extends FrameBuffer {
 
         swapBitmaps();
 
-        Bitmap b = odBitmap.lock(); // lock next frame (start drawing again)
+        Bitmap b = odBitmap.lock(); // lock next frame (firstPixelIndex drawing again)
         if (b != null) {
             synchronized(dimLock) {
                 graphicContext.drawBitmap(b, this.matrix);

@@ -18,9 +18,9 @@ import ch.bailu.aat.gpx.linked_list.Node;
 import ch.bailu.aat.gpx.parser.GpxListReader;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.background.FileHandle;
-import ch.bailu.aat.services.dem.Dem3Tile;
-import ch.bailu.aat.services.dem.ElevationProvider;
-import ch.bailu.aat.services.dem.ElevationUpdaterClient;
+import ch.bailu.aat.services.dem.tile.Dem3Tile;
+import ch.bailu.aat.services.dem.tile.ElevationProvider;
+import ch.bailu.aat.services.dem.updater.ElevationUpdaterClient;
 import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.util.fs.UriAccess;
 

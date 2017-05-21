@@ -5,70 +5,69 @@ import android.graphics.Rect;
 import java.util.ArrayList;
 
 public class Span {
-    private int _deg;
-    private int _start;
-    private int _end;
+    private int deg;
+    private int firstPixel;
+    private int lastPixel;
 
     public Span(int d) {
-        _deg = d; 
-        _start = _end = 0;
+        deg = d;
+        firstPixel = lastPixel = 0;
     }
     
     
 
     public Span(Span s) {
-        _deg = s._deg;
-        _start = s._start;
-        _end = s._end;
+        deg = s.deg;
+        firstPixel = s.firstPixel;
+        lastPixel = s.lastPixel;
     }
 
     
-    public int start() {
-        return _start;
+    public int firstPixelIndex() {
+        return firstPixel;
     }
-    
-    
-    public int end() {
-        return _end;
+    public int lastPixelIndex() {
+        return lastPixel;
     }
     
     public int deg() {
-        return _deg;
+        return deg;
     }
     
     
-    public int size() {
-        return _end - _start;
+    public int pixelCount() {
+        return lastPixel - firstPixel;
     }
 
     
-    public void takeSpan(ArrayList<Span> span_array, int pixel_index, int deg) {
-        _end = pixel_index;
+    public void copyIntoArray(ArrayList<Span> span_array, int pixel_index, int deg) {
+        lastPixel = pixel_index;
 
-        if (deg != _deg) {
-            takeSpan(span_array);
+        if (deg != this.deg) {
+            copyIntoArray(span_array);
 
-            _deg = deg;
-            _start=pixel_index;
+            this.deg = deg;
+            firstPixel = pixel_index;
         }
     }
 
-    public void takeSpan(ArrayList<Span> span_array, int pixel_index) {
-        _end = pixel_index;
-        takeSpan(span_array);
+    public void copyIntoArray(ArrayList<Span> span_array, int pixel_index) {
+        lastPixel = pixel_index;
+        copyIntoArray(span_array);
     }
 
-    private void takeSpan(ArrayList<Span> l) {
-        if (size() >0) l.add(new Span(this));
+    private void copyIntoArray(ArrayList<Span> l) {
+        if (pixelCount() >0) l.add(new Span(this));
     }
-
 
     public static Rect toRect(Span laSpan, Span loSpan) {
         Rect r = new Rect();
-        r.top=laSpan._start;
-        r.bottom=laSpan._end;
-        r.left=loSpan._start;
-        r.right=loSpan._end;
+        r.top=laSpan.firstPixel;
+        r.bottom=laSpan.lastPixel;
+        r.left=loSpan.firstPixel;
+        r.right=loSpan.lastPixel;
         return r;
     }
+
+
 }

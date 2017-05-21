@@ -1,4 +1,4 @@
-package ch.bailu.aat.services.dem;
+package ch.bailu.aat.services.dem.tile;
 
 import android.content.Context;
 
@@ -15,6 +15,10 @@ import ch.bailu.aat.coordinates.SrtmCoordinates;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.background.FileHandle;
 import ch.bailu.aat.services.background.ProcessHandle;
+import ch.bailu.aat.services.dem.tile.DemDimension;
+import ch.bailu.aat.services.dem.tile.DemGeoToIndex;
+import ch.bailu.aat.services.dem.tile.DemProvider;
+import ch.bailu.aat.services.dem.tile.ElevationProvider;
 import ch.bailu.aat.util.AppBroadcaster;
 
 public class Dem3Tile implements ElevationProvider, DemProvider {

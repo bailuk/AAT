@@ -1,39 +1,41 @@
-package ch.bailu.aat.services.cache;
+package ch.bailu.aat.services.cache.elevation;
 
 import org.mapsforge.core.model.Tile;
 
 import ch.bailu.aat.services.ServiceContext;
-import ch.bailu.aat.services.dem.DemProvider;
+import ch.bailu.aat.services.cache.ObjectHandle;
+import ch.bailu.aat.services.cache.TileObject;
+import ch.bailu.aat.services.dem.tile.DemProvider;
 import ch.bailu.aat.views.graph.AltitudeColorTable;
 
 public class ElevationColorTile extends ElevationTile {
 
 
-    public ElevationColorTile(String id, ServiceContext cs, Tile t, int _split) {
-        super(id, cs, t, _split);
+    public ElevationColorTile(String id, Tile t, int _split) {
+        super(id,  t, _split);
     }
 
    
 
     @Override
-    public void fillBitmap(int[] buffer, int[] toLaRaster, int[] toLoRaster, Span laSpan, Span loSpan, DemProvider dem) {
+    public void fillBuffer(int[] buffer, Raster raster, SubTile subTile, DemProvider dem) {
         final int dim = dem.getDim().DIM;
-        final int bitmap_dim = loSpan.size();
+        final int bitmap_dim = subTile.pixelDim();
 
         int c=0;
         int old_line=-1;
         int color=0;
         
-        for (int la=laSpan.start(); la< laSpan.end(); la++) {
+        for (int la = subTile.laSpan.firstPixelIndex(); la< subTile.laSpan.lastPixelIndex(); la++) {
 
-            final int line = toLaRaster[la]*dim;
+            final int line = raster.toLaRaster[la]*dim;
             int offset = -1; 
 
             if (old_line != line) {
 
                 
-                for (int lo=loSpan.start(); lo<loSpan.end(); lo++) {
-                    final int new_offset=toLoRaster[lo];
+                for (int lo = subTile.loSpan.firstPixelIndex(); lo<subTile.loSpan.lastPixelIndex(); lo++) {
+                    final int new_offset=raster.toLoRaster[lo];
 
                     if (new_offset != offset) {
                         offset=new_offset;
@@ -65,7 +67,7 @@ public class ElevationColorTile extends ElevationTile {
 
     @Override
     public long getSize() {
-        return getBytesHack(TILE_SIZE);
+        return TileObject.getBytesHack(TileObject.TILE_SIZE);
     }
 
 
@@ -81,7 +83,7 @@ public class ElevationColorTile extends ElevationTile {
         
         @Override
         public ObjectHandle factory(String id, ServiceContext cs) {
-            return  new ElevationColorTile(id, cs, mapTile,SPLIT);
+            return  new ElevationColorTile(id, mapTile,SPLIT);
         }
     }
 

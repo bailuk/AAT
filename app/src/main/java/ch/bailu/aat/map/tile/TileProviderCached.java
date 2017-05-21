@@ -98,7 +98,7 @@
 //
 //    @Override
 //    public int getCapacity() {
-//        return cache.size();
+//        return cache.pixelCount();
 //    }
 //
 //    @Override

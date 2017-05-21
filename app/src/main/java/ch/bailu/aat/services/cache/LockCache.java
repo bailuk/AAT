@@ -100,6 +100,6 @@ public class LockCache<E extends ObjectHandle>  implements Closeable {
         array = newArray;
         size = Math.min(size, array.length);
 
-        AppLog.d(this, "size is: " + size + ", capacity is: " + array.length);
+        AppLog.d(this, "pixelCount is: " + size + ", capacity is: " + array.length);
     }
 }

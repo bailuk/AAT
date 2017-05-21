@@ -11,7 +11,7 @@ import ch.bailu.aat.preferences.SolidDataDirectory;
 
 public class SrtmCoordinates extends Coordinates implements LatLongE6Interface {
     /**
-     * # Dem3:
+     * # Dem3Loader:
      * Digital Elevation Models in 3 arc / second resolution. 
      * 
      * # Source:

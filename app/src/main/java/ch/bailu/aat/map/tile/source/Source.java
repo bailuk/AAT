@@ -4,8 +4,8 @@ import android.content.Context;
 
 import org.mapsforge.core.model.Tile;
 
-import ch.bailu.aat.services.cache.ElevationColorTile;
-import ch.bailu.aat.services.cache.NewHillshade;
+import ch.bailu.aat.services.cache.elevation.ElevationColorTile;
+import ch.bailu.aat.services.cache.elevation.HillshadeTile;
 import ch.bailu.aat.services.cache.ObjectHandle;
 
 public abstract class Source {
@@ -75,7 +75,7 @@ public abstract class Source {
 
                 @Override
                 public ObjectHandle.Factory getFactory(Tile mt) {
-                    return  new NewHillshade.Factory(mt);
+                    return  new HillshadeTile.Factory(mt);
                 }
 
             };

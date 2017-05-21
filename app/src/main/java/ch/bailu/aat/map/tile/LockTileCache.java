@@ -14,7 +14,7 @@
 //
 //    @Override
 //    public TileStackObject get(String string) {
-//        for (int i = 0; i<tiles.size(); i++) {
+//        for (int i = 0; i<tiles.pixelCount(); i++) {
 //            if (tiles.get(i).toString().equals(string)) {
 //                return tiles.use(i);
 //            }
@@ -24,7 +24,7 @@
 //
 //    @Override
 //    public TileStackObject get(Tile mt) {
-//        for (int i = 0; i<tiles.size(); i++) {
+//        for (int i = 0; i<tiles.pixelCount(); i++) {
 //            if (compare(mt, tiles.get(i).getTile())) {
 //                return tiles.use(i);
 //            }
@@ -53,7 +53,7 @@
 //
 //    @Override
 //    public void reDownloadTiles(ServiceContext sc) {
-//        for (int i = 0; i<tiles.size(); i++) {
+//        for (int i = 0; i<tiles.pixelCount(); i++) {
 //            tiles.get(i).reDownload(sc);
 //        }
 //    }

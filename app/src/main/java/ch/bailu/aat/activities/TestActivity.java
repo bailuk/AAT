@@ -150,7 +150,7 @@ public class TestActivity extends AbsDispatcher {
 //        mapView.setZoomLevelMin((byte) 10);
 //        mapView.setZoomLevelMax((byte) 20);
 //
-//        // create a tile cache of suitable size
+//        // create a tile cache of suitable pixelCount
 //        TileCache tileCache = AndroidUtil.createTileCache(this, "mapcache",
 //                mapView.getModel().displayModel.getTileSize(), 1f,
 //                mapView.getModel().frameBufferModel.getOverdrawFactor());

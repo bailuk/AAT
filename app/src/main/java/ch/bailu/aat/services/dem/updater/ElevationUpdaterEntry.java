@@ -1,10 +1,11 @@
-package ch.bailu.aat.services.dem;
+package ch.bailu.aat.services.dem.updater;
 
 import android.util.SparseArray;
 
 import ch.bailu.aat.coordinates.SrtmCoordinates;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.cache.ObjectHandle;
+import ch.bailu.aat.services.dem.tile.Dem3Tile;
 
 public class ElevationUpdaterEntry {
     private final SparseArray <SrtmCoordinates> tiles = new SparseArray<>(5);
@@ -19,18 +20,13 @@ public class ElevationUpdaterEntry {
         fillSRTMTiles();
     }
 
-    /*
-    public String getFileObjectID() {
-        return id;
-    }
-*/
+
     private void fillSRTMTiles() {
         ObjectHandle handle = scontext.getCacheService().getObject(id);
             
-            
         if (ElevationUpdaterClient.class.isInstance(handle)) {
     
-            ElevationUpdaterClient updatable =  (ElevationUpdaterClient) handle;
+            ElevationUpdaterClient updatable = (ElevationUpdaterClient) handle;
             SrtmCoordinates c[] = updatable.getSrtmTileCoordinates();
             for (SrtmCoordinates aC : c) {
                 addSRTMTile(aC);
@@ -65,8 +61,6 @@ public class ElevationUpdaterEntry {
         if (c != null) {
             
             final ObjectHandle handle = scontext.getCacheService().getObject(id);
-            
-            
 
             if (ElevationUpdaterClient.class.isInstance(handle)) {
                 ((ElevationUpdaterClient) handle).updateFromSrtmTile(sc, tile);
@@ -78,8 +72,5 @@ public class ElevationUpdaterEntry {
             
             handle.free();
         }
-        
     }
-
-  
 }

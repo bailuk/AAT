@@ -6,7 +6,7 @@ import org.mapsforge.core.model.Point;
 
 import ch.bailu.aat.map.MapContext;
 import ch.bailu.aat.map.TwoNodes;
-import ch.bailu.aat.services.dem.ElevationProvider;
+import ch.bailu.aat.services.dem.tile.ElevationProvider;
 import ch.bailu.aat.util.ui.AppTheme;
 import ch.bailu.aat.views.graph.AltitudeColorTable;
 

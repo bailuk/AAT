@@ -1,8 +1,9 @@
-package ch.bailu.aat.services.dem;
+package ch.bailu.aat.services.dem.tile;
 
-public class DemSplitterNW extends DemSplitter {
+public class DemSplitterSE extends DemSplitter {
 
-    public DemSplitterNW(DemProvider p) {
+
+    public DemSplitterSE(DemProvider p) {
         super(p);
     }
 
@@ -30,19 +31,18 @@ public class DemSplitterNW extends DemSplitter {
            [1,0] [1,1]
 
          */
-
-        final int D = parent.getElevation(parent_index);
+        final int A = parent.getElevation(parent_index);
         if (row_mode+col_mode == 0) { // a
-            final int a = parent.getElevation(parent_index - parent_dim-1);
-            sum = D+a;
+            sum = A+A;
         } else if (row_mode==0) {    // b
-            final int b = parent.getElevation(parent_index - parent_dim);
-            sum = D+b;
+            final int b = parent.getElevation(parent_index + 1);
+            sum = A + b;
         } else if (col_mode==0) {    // c
-            final int c = parent.getElevation(parent_index - 1);
-            sum=D+c;
+            final int c = parent.getElevation(parent_index+parent_dim);
+            sum=A+c;
         } else {                     // d
-            sum = D+D;
+            final int d = parent.getElevation(parent_index +parent_dim+ 1);
+            sum = A+d;
         }
 
         return (short)Math.round(sum / div);

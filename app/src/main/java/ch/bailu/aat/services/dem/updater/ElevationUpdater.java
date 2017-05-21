@@ -1,4 +1,4 @@
-package ch.bailu.aat.services.dem;
+package ch.bailu.aat.services.dem.updater;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -8,27 +8,30 @@ import android.util.SparseArray;
 import java.io.Closeable;
 
 import ch.bailu.aat.coordinates.SrtmCoordinates;
+import ch.bailu.aat.services.dem.loader.Dem3Loader;
+import ch.bailu.aat.services.dem.tile.Dem3Tile;
+import ch.bailu.aat.services.dem.loader.Dem3Tiles;
 import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.util.AppIntent;
 import ch.bailu.aat.services.ServiceContext;
 
 
-public class ElevationUpdater implements Closeable, ElevationProvider{
+public class ElevationUpdater implements Closeable {
     private final SparseArray <ElevationUpdaterEntry> pendingObjects = new SparseArray<>();
     private final ServiceContext scontext;
-    private final ServiceContext serviceContext;
 
+    private final Dem3Loader loader;
     private final Dem3Tiles tiles;
 
-    protected ElevationUpdater(ServiceContext cs) {
+    public ElevationUpdater(ServiceContext cs, Dem3Loader d, Dem3Tiles t) {
         scontext=cs;
-        tiles =new Dem3Tiles(cs);
-        serviceContext = cs;
+        tiles = t;
+        loader = d;
 
         final Context c = cs.getContext();
+
         AppBroadcaster.register(c, onRequestElevationUpdate, AppBroadcaster.REQUEST_ELEVATION_UPDATE);
         AppBroadcaster.register(c, onFileChanged, AppBroadcaster.FILE_CHANGED_INCACHE);
-        AppBroadcaster.register(c, onFileDownloaded, AppBroadcaster.FILE_CHANGED_ONDISK);
     }
 
 
@@ -45,17 +48,6 @@ public class ElevationUpdater implements Closeable, ElevationProvider{
     };
 
 
-    private final BroadcastReceiver onFileDownloaded = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            String id = AppIntent.getFile(intent);
-            Dem3Tile tile = tiles.get(id);
-            
-            if (tile != null) {
-                tile.reload(serviceContext);
-            }
-        }
-    };
 
     private final BroadcastReceiver onFileChanged = new BroadcastReceiver() {
         @Override
@@ -81,16 +73,14 @@ public class ElevationUpdater implements Closeable, ElevationProvider{
         for (int i = pendingObjects.size()-1; i>-1; i--) {
             int x=0;
             while((c = pendingObjects.valueAt(i).getTile(x)) != null) {
-                if (tiles.want(c)==null) return;
+                if (loader.requestDem3Tile(c) == null) return;
                 x++;
             }
         }
     }
     
 
-    
 
-    
     private void updateObjects() {
         int t=0;
         Dem3Tile tile;
@@ -149,16 +139,10 @@ public class ElevationUpdater implements Closeable, ElevationProvider{
     
     @Override
     public void close() {
-        final Context c = serviceContext.getContext();
+        final Context c = scontext.getContext();
 
         c.unregisterReceiver(onRequestElevationUpdate);
         c.unregisterReceiver(onFileChanged);
-        c.unregisterReceiver(onFileDownloaded);
     }
 
-
-    @Override
-    public short getElevation(int laE6, int loE6) {
-        return tiles.getElevation(laE6, loE6);
-    }
 }

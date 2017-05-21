@@ -51,7 +51,7 @@
 //
 //    @Override
 //    public int getCapacity() {
-//        return tiles.size();
+//        return tiles.pixelCount();
 //    }
 //
 //    @Override
@@ -63,7 +63,7 @@
 //
 //    public boolean isReadyAndLoaded() {
 //
-//        for (int i=0; i<tiles.size(); i++) {
+//        for (int i=0; i<tiles.pixelCount(); i++) {
 //            if (tiles.get(i).isReadyAndLoaded()==false) return false;
 //        }
 //        return true;
@@ -72,7 +72,7 @@
 //
 //    @Override
 //    public void close() {
-//        for (int i=0; i<tiles.size(); i++) {
+//        for (int i=0; i<tiles.pixelCount(); i++) {
 //            tiles.get(i).free();
 //        }
 //        tiles.clear();

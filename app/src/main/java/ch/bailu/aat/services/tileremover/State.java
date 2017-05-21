@@ -2,7 +2,7 @@ package ch.bailu.aat.services.tileremover;
 
 public interface State {
 
-    /** start scanning **/
+    /** firstPixelIndex scanning **/
     void scan();
 
     /** chancel **/
@@ -11,7 +11,7 @@ public interface State {
     /** set to initial state **/
     void reset();
 
-    /** start removing **/
+    /** firstPixelIndex removing **/
     void remove();
 
     /** rebuild list of files to remove

@@ -38,7 +38,7 @@ public abstract class AbsIterator extends GpxInformation implements Closeable{
         }
 
         @Override
-        public int size() {
+        public int pixelCount() {
             return 0;
         }
 

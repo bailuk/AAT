@@ -57,7 +57,7 @@ public class DownloadStatistics {
         builder.append(" bytes");
 
         if (success > 0) {
-            builder.append("<br>Average file size: ");
+            builder.append("<br>Average file pixelCount: ");
             builder.append(Math.round(bytes / success));
             builder.append(" bytes");
         }

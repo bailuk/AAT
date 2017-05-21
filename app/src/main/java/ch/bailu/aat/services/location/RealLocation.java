@@ -161,7 +161,7 @@ public class RealLocation extends LocationStackChainedItem
 //                AppLog.d(this, "No providers");
                 throw new NoServiceException();
             } else {
-//                AppLog.d(this, list.size() +" providers");
+//                AppLog.d(this, list.pixelCount() +" providers");
                 for (int i=0; i<list.size(); i++) {
                     AppLog.d(this, list.get(i));
                 }

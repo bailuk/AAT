@@ -1,21 +1,22 @@
-package ch.bailu.aat.services.cache;
+package ch.bailu.aat.services.cache.elevation;
 
 import org.mapsforge.core.model.Tile;
 
 import ch.bailu.aat.services.ServiceContext;
-import ch.bailu.aat.services.dem.DemDimension;
-import ch.bailu.aat.services.dem.DemGeoToIndex;
-import ch.bailu.aat.services.dem.DemProvider;
-import ch.bailu.aat.services.dem.DemSplitter;
-import ch.bailu.aat.services.dem.MultiCell;
-import ch.bailu.aat.services.dem.MultiCell8;
+import ch.bailu.aat.services.cache.ObjectHandle;
+import ch.bailu.aat.services.dem.tile.DemDimension;
+import ch.bailu.aat.services.dem.tile.DemGeoToIndex;
+import ch.bailu.aat.services.dem.tile.DemProvider;
+import ch.bailu.aat.services.dem.tile.DemSplitter;
+import ch.bailu.aat.services.dem.tile.MultiCell;
+import ch.bailu.aat.services.dem.tile.MultiCell8;
 
-public class NewHillshade extends ElevationTile {
+public class HillshadeTile extends ElevationTile {
 
     private HillshadeColorTable table;
 
-    public NewHillshade(String id, ServiceContext sc, Tile t) {
-        super(id, sc, t, splitFromZoom(t.zoomLevel));
+    public HillshadeTile(String id, Tile t) {
+        super(id, t, splitFromZoom(t.zoomLevel));
     }
 
 
@@ -56,10 +57,9 @@ public class NewHillshade extends ElevationTile {
 
 
     @Override
-    public void fillBitmap(int[] bitmap, int[] toLaRaster, int[] toLoRaster,
-                           Span laSpan, Span loSpan, DemProvider demtile) {
+    public void fillBuffer(int[] bitmap, Raster raster, SubTile subTile, DemProvider demtile) {
         final int demtile_dim = demtile.getDim().DIM;
-        final int bitmap_dim = loSpan.size();
+        final int bitmap_dim = subTile.pixelDim();
 
         int color=0;
         int index=0;
@@ -67,14 +67,14 @@ public class NewHillshade extends ElevationTile {
 
         final MultiCell mcell = factoryMultiCell(demtile);
 
-        for (int la=laSpan.start(); la< laSpan.end(); la++) {
-            final int line = toLaRaster[la]*demtile_dim;
+        for (int la = subTile.laSpan.firstPixelIndex(); la< subTile.laSpan.lastPixelIndex(); la++) {
+            final int line = raster.toLaRaster[la]*demtile_dim;
 
             if (old_line != line) {
                 int old_offset = -1;
 
-                for (int lo=loSpan.start(); lo<loSpan.end(); lo++) {
-                    final int offset=toLoRaster[lo];
+                for (int lo = subTile.loSpan.firstPixelIndex(); lo<subTile.loSpan.lastPixelIndex(); lo++) {
+                    final int offset=raster.toLoRaster[lo];
 
                     if (old_offset != offset) {
                         old_offset = offset;
@@ -130,11 +130,8 @@ public class NewHillshade extends ElevationTile {
 
         @Override
         public ObjectHandle factory(String id, ServiceContext sc) {
-            return  new NewHillshade(id, sc, mapTile);
+            return  new HillshadeTile(id, mapTile);
         }
 
     }
-
-
-
 }

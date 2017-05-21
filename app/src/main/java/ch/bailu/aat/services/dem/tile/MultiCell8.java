@@ -1,4 +1,4 @@
-package ch.bailu.aat.services.dem;
+package ch.bailu.aat.services.dem.tile;
 
 public class MultiCell8 extends MultiCell {
     /**

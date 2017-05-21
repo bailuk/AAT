@@ -238,7 +238,7 @@ public class FeaturesList extends ListView  {
 //                try {
 //                    file = MAP_FEATURES_ASSET+ "/"+d.name;
 //                    String content = new AssetAccess(file).contentToString();
-//                    ActivitySwitcher.start(getContext(), HtmlViewActivity.class, content);
+//                    ActivitySwitcher.firstPixelIndex(getContext(), HtmlViewActivity.class, content);
 //
 //                } catch (Exception e) {
 //                    AppLog.e(getContext(), this, e);

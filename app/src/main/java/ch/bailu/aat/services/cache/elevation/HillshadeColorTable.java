@@ -1,11 +1,12 @@
-package ch.bailu.aat.services.cache;
+package ch.bailu.aat.services.cache.elevation;
 
 import android.content.Context;
 
+import ch.bailu.aat.services.cache.ObjectHandle;
 import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.background.ProcessHandle;
-import ch.bailu.aat.services.dem.MultiCell;
+import ch.bailu.aat.services.dem.tile.MultiCell;
 
 public class HillshadeColorTable extends ObjectHandle {
 
@@ -28,7 +29,9 @@ public class HillshadeColorTable extends ObjectHandle {
         super(ID);
     }
 
-    
+
+    private boolean isInitialized=false;
+
     @Override
     public void onInsert(ServiceContext sc) {
         sc.getBackgroundService().process(new TableInitializer());
@@ -44,7 +47,12 @@ public class HillshadeColorTable extends ObjectHandle {
 
     }
 
-    
+    @Override
+    public boolean isReadyAndLoaded() {
+        return isInitialized;
+    }
+
+
     public long getSize() {
         return TABLE_SIZE;
     }
@@ -156,6 +164,7 @@ public class HillshadeColorTable extends ObjectHandle {
 
         @Override
         public void broadcast(Context context) {
+            isInitialized = true;
             AppBroadcaster.broadcast(context, AppBroadcaster.FILE_CHANGED_INCACHE, ID);
         }
      }
