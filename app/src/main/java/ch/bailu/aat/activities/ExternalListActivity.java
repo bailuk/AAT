@@ -10,9 +10,9 @@ import ch.bailu.aat.description.DateDescription;
 import ch.bailu.aat.description.DistanceDescription;
 import ch.bailu.aat.description.NameDescription;
 import ch.bailu.aat.description.TrackSizeDescription;
-import ch.bailu.aat.util.fs.AppDirectory;
+import ch.bailu.aat.preferences.SolidExternalDirectory;
 
-public class ImportListActivity extends AbsGpxListActivity {
+public class ExternalListActivity extends AbsGpxListActivity {
 
     @Override
     public ContentDescription[] getGpxListItemData() {
@@ -41,15 +41,13 @@ public class ImportListActivity extends AbsGpxListActivity {
 
     @Override
     public File getDirectory() {
-        return AppDirectory.getDataDirectory(this, AppDirectory.DIR_IMPORT); 
+        return new SolidExternalDirectory(this).getValueAsFile();
     }
 
 
     @Override
     public String getLabel() {
-        return getString(R.string.intro_import_list);
+        return getString(R.string.intro_external_list);
     }
 
-
-   
 }

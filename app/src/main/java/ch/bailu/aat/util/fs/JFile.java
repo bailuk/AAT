@@ -70,6 +70,7 @@ public class JFile {
         }
     }
 
+
     public static boolean canRead(File f) {
         try {
             return f != null && f.canRead();

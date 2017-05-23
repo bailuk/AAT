@@ -9,9 +9,11 @@ import android.widget.LinearLayout;
 import ch.bailu.aat.dispatcher.CurrentLocationSource;
 import ch.bailu.aat.dispatcher.TrackerSource;
 import ch.bailu.aat.preferences.SolidDataDirectory;
+import ch.bailu.aat.preferences.SolidExternalDirectory;
 import ch.bailu.aat.preferences.SolidFile;
 import ch.bailu.aat.preferences.SolidPreset;
 import ch.bailu.aat.util.fs.AppDirectory;
+import ch.bailu.aat.util.fs.JFile;
 import ch.bailu.aat.util.ui.AppLayout;
 import ch.bailu.aat.views.AbsLabelTextView;
 import ch.bailu.aat.views.ContentView;
@@ -84,9 +86,9 @@ public class MainActivity extends AbsDispatcher {
         if (s.activityClass == TrackListActivity.class) {
             return new PresetDirectoryLabel(s);
         } else if (s.activityClass == OverlayListActivity.class) {
-            return new DirectoryLabel(s, AppDirectory.DIR_OVERLAY);
-        } else if (s.activityClass == ImportListActivity.class) {
-            return new DirectoryLabel(s, AppDirectory.DIR_IMPORT);
+            return new InternalDirectoryLabel(s, AppDirectory.DIR_OVERLAY);
+        } else if (s.activityClass == ExternalListActivity.class) {
+            return new ExternalDirectoryLabel(s);
         }
 
         return new ActivityLabel(s);
@@ -106,6 +108,50 @@ public class MainActivity extends AbsDispatcher {
         }
 
     }
+
+    private class ExternalDirectoryLabel extends ActivityLabel implements SharedPreferences.OnSharedPreferenceChangeListener {
+        private final SolidExternalDirectory sdirectory;
+
+        public ExternalDirectoryLabel(final ActivitySwitcher.Entry s) {
+            super(s);
+            sdirectory = new SolidExternalDirectory(MainActivity.this);
+            setText();
+        }
+
+        public void setText() {
+
+            if (JFile.canRead(sdirectory.getValueAsFile())) {
+                setVisibility(VISIBLE);
+            } else {
+                setVisibility(GONE);
+            }
+
+            setText(sdirectory.getValueAsString());
+        }
+
+        @Override
+        public void onAttachedToWindow() {
+            super.onAttachedToWindow();
+
+            sdirectory.register(this);
+        }
+
+
+        @Override
+        public void onDetachedFromWindow() {
+            super.onDetachedFromWindow();
+
+            sdirectory.unregister(this);
+        }
+
+        @Override
+        public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+            if (sdirectory.hasKey(key)) {
+                setText();
+            }
+        }
+    }
+
 
 
     private class PresetDirectoryLabel extends ActivityLabel implements SharedPreferences.OnSharedPreferenceChangeListener {
@@ -150,13 +196,13 @@ public class MainActivity extends AbsDispatcher {
     }
 
 
-    private class DirectoryLabel extends ActivityLabel implements SharedPreferences.OnSharedPreferenceChangeListener {
+    private class InternalDirectoryLabel extends ActivityLabel implements SharedPreferences.OnSharedPreferenceChangeListener {
 
         private final SolidFile sdirectory;
         private final String directory;
 
 
-        public DirectoryLabel(ActivitySwitcher.Entry s, String d) {
+        public InternalDirectoryLabel(ActivitySwitcher.Entry s, String d) {
             super(s);
             sdirectory = new SolidDataDirectory(getContext());
             directory = d;

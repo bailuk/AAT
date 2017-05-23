@@ -1,0 +1,50 @@
+package ch.bailu.aat.preferences;
+
+import android.content.Context;
+
+import java.io.File;
+import java.util.ArrayList;
+
+import ch.bailu.aat.R;
+import ch.bailu.aat.util.fs.AndroidVolumes;
+import ch.bailu.aat.util.fs.AppDirectory;
+
+public class SolidExternalDirectory extends SolidFile {
+    public SolidExternalDirectory(Context c) {
+        super(Storage.global(c), "ExternalDirectory");
+    }
+
+    private final static String[] KNOWN_DIRS = {
+            AppDirectory.DIR_AAT_DATA + AppDirectory.DIR_IMPORT,
+            "MyTracks/gpx"
+    };
+
+
+    @Override
+    public String getLabel() {
+        return getContext().getString(R.string.intro_external_list);
+    }
+
+    @Override
+    public ArrayList<String> buildSelection(ArrayList<String> list) {
+        AndroidVolumes volumes = new AndroidVolumes(getContext());
+
+        list.add(getContext().getString(R.string.none));
+
+
+
+        for (String dir : KNOWN_DIRS) {
+            for (File vol : volumes.getVolumes()) {
+                add_w(list, new File(vol, dir));
+            }
+        }
+
+        for (String dir : KNOWN_DIRS) {
+            for (File vol : volumes.getVolumes()) {
+                add_ro(list, new File(vol, dir));
+            }
+        }
+
+        return list;
+    }
+}

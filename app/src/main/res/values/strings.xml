@@ -23,7 +23,7 @@
 
     <string name="intro_overlay_list">Overlay list</string>
     <string name="intro_list">Track list</string>
-    <string name="intro_import_list">Imported files</string>
+    <string name="intro_external_list">External files</string>
     <string name="intro_settings">Preferences</string>
 
     <!-- MultiView label -->

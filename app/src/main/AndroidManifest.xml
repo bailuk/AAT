@@ -40,7 +40,7 @@
         </activity>
 
         <activity
-            android:name="ch.bailu.aat.activities.ImportListActivity">
+            android:name="ch.bailu.aat.activities.ExternalListActivity">
         </activity>
 
         <activity
