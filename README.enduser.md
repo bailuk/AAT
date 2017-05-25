@@ -57,7 +57,7 @@ AAT lets you query the [Overpass API](http://wiki.openstreetmap.org/wiki/Overpas
 
 
 ## Calculating calories
-AAT uses the formula `hours * MET * weight` to calculate the kcal used for a specific activity.
+AAT uses the formula `time[hours] * MET * weight[kg]` to calculate the kcal used for a specific activity.
 MET stands for [metabolic equivalent](https://en.wikipedia.org/wiki/Metabolic_equivalent). The higher the value, the more energy you would use
 for this specific activity. A complete list of activities and MET values can be found [here](https://sites.google.com/site/compendiumofphysicalactivities/Activity-Categories).
 
