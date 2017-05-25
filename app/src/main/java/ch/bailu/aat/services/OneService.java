@@ -85,7 +85,8 @@ public class OneService extends AbsService  implements ServiceContext {
 
     @Override
     public  synchronized void onLowMemory() {
-        cache.onLowMemory();
+        if  (cache != null)
+            cache.onLowMemory();
         super.onLowMemory();
     }
 
