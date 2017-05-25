@@ -11,8 +11,8 @@ android {
         minSdkVersion 10
         targetSdkVersion 25
 
-        versionCode 17
-        versionName "v1.7-beta"
+        versionCode 18
+        versionName "v1.8-beta"
 
         resValue "string", "app_sname", "AAT"
     }
@@ -50,6 +50,8 @@ dependencies {
     compile 'org.mapsforge:mapsforge-map-android:0.7.0'
     compile 'com.caverock:androidsvg:1.2.2-beta-1'
 
+
+    // Local
     compile project(path: ':simpleio')
 
 
