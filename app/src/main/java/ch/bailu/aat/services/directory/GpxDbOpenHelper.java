@@ -6,6 +6,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import java.io.File;
 
+import ch.bailu.aat.util.fs.AndroidVolumes;
+
 public class GpxDbOpenHelper extends SQLiteOpenHelper {
          public GpxDbOpenHelper(Context context, String name) {
            super(context, name, null, GpxDbConstants.DB_VERSION);

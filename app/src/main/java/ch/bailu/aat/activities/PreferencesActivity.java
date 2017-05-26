@@ -1,10 +1,12 @@
 package ch.bailu.aat.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.LinearLayout;
 
 import ch.bailu.aat.R;
 import ch.bailu.aat.preferences.SolidPreset;
+import ch.bailu.aat.util.ui.AppLog;
 import ch.bailu.aat.views.ContentView;
 import ch.bailu.aat.views.MainControlBar;
 import ch.bailu.aat.views.description.MultiView;
@@ -59,6 +61,16 @@ public class PreferencesActivity extends AbsDispatcher {
     }
 
 
+    @Override
+    protected void onActivityResult(int requestCode,
+                                    int resultCode,
+                                    Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (data != null)
+            AppLog.d(this, data.toString());
+
+    }
     @Override
     public void onResumeWithService() {
         super.onResumeWithService();

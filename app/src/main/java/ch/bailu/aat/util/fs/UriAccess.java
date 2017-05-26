@@ -33,6 +33,13 @@ public class UriAccess extends Access {
     }
 
 
+    /*
+    public static UriAccess toScopedUri(Context c, File f) {
+
+    }
+    */
+
+
     @Override
     public InputStream open_r() throws FileNotFoundException {
         return context.getContentResolver().openInputStream(uri);
@@ -48,4 +55,7 @@ public class UriAccess extends Access {
     public long lastModified() {
         return System.currentTimeMillis();
     }
+
+
+
 }

@@ -13,6 +13,7 @@ import ch.bailu.aat.util.Clipboard;
 import ch.bailu.aat.util.fs.FileIntent;
 import ch.bailu.aat.preferences.SolidFile;
 import ch.bailu.aat.util.fs.AndroidVolumes;
+import ch.bailu.aat.util.ui.AppLog;
 
 public class DirectoryMenu extends AbsMenu {
     private MenuItem view, get, clipboard, permission;
@@ -31,7 +32,7 @@ public class DirectoryMenu extends AbsMenu {
         view = menu.add(R.string.file_view);
         get = menu.add(R.string.file_view);
         clipboard = menu.add(R.string.clipboard_copy);
-        permission = menu.add("Ask for permission*");
+        //permission = menu.add("Ask for permission*");
     }
 
     @Override
@@ -64,6 +65,9 @@ public class DirectoryMenu extends AbsMenu {
         } else if (item == permission) {
             new AndroidVolumes(sdirectory.getContext()).
                     askForPermission(acontext, sdirectory.getValueAsFile());
+            AppLog.d(this,
+                    new AndroidVolumes(sdirectory.getContext()).toScopedContentUriHack(sdirectory.getValueAsFile()).toString());
+
         } else {
             return false;
         }

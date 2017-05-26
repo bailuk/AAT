@@ -4,6 +4,7 @@ import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
 import android.os.storage.StorageManager;
@@ -130,7 +131,6 @@ public class AndroidVolumes {
     }
 
 
-
     public void askForPermission(Activity c, File f) {
         AFile.logInfoAcess(c,f);
 
@@ -170,11 +170,37 @@ public class AndroidVolumes {
                     final String id = v.getUuid();
                     if (id != null && vol.contains(id)) {
                         Intent intent = v.createAccessIntent(null);
-                        if (intent != null) c.startActivityForResult(intent, 5);
+                        if (intent != null) {
+                            c.startActivityForResult(intent, 5);
+                            AppLog.d(this, intent.toString());
+                        }
                         break;
                     }
                 }
             }
         }
+    }
+
+
+    private static final String PROVIDER_PART =
+            "content://com.android.externalstorage.documents/tree/";
+
+    public Uri toScopedContentUriHack(File file) {
+        String volPart = volumePathFromFile(file);
+
+        if (volPart != null) {
+            String docPart = file.getAbsolutePath().replace(volPart, "");
+
+            if (docPart != null) {
+                String volName = new File(volPart).getName();
+
+                if (volName != null) {
+                    return Uri.parse(
+                            PROVIDER_PART + volName + docPart);
+                }
+            }
+        }
+
+        return null;
     }
 }
