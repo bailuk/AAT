@@ -9,10 +9,12 @@ import android.os.Build;
 import android.os.Environment;
 import android.os.storage.StorageManager;
 import android.os.storage.StorageVolume;
+import android.provider.DocumentsContract;
 
 import java.io.File;
 import java.util.List;
 
+import ch.bailu.aat.util.fs.foc.FocAndroid;
 import ch.bailu.aat.util.ui.AppLog;
 import ch.bailu.simpleio.foc.Foc;
 import ch.bailu.simpleio.foc.FocFile;
@@ -197,18 +199,18 @@ public class AndroidVolumes {
     private static final String PROVIDER_PART =
             "content://com.android.externalstorage.documents/tree/";
 
-    public Uri toScopedContentUriHack(Foc file) {
+    public Foc toScopedContentHack(Context c, Foc file) {
         String volPart = volumePathFromFile(file);
 
         if (volPart != null) {
             String docPart = file.toString().replace(volPart, "");
 
             if (docPart != null) {
+
                 String volName = new File(volPart).getName();
 
                 if (volName != null) {
-                    return Uri.parse(
-                            PROVIDER_PART + volName + docPart);
+                    return FocAndroid.factory(c, PROVIDER_PART + volName + docPart);
                 }
             }
         }

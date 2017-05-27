@@ -70,13 +70,13 @@ public class FileMenu extends AbsMenu {
             FileAction.useForMockLocation(scontext.getContext(), file);
 
         } else if (item == send) {
-            FileAction.sendTo(scontext.getContext(), Uri.parse(file.toString()));
+            FileAction.sendTo(scontext.getContext(), file);
 
         } else if (item == view) {
             FileAction.view(scontext.getContext(), file);
 
         } else if (item == copy) {
-            FileAction.copyTo(scontext.getContext(), Uri.parse(file.toString()));
+            FileAction.copyToDir(scontext.getContext(), file);
 
         } else if (item == clipboard) {
             FileAction.copyToClipboard(scontext.getContext(), file);

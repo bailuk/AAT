@@ -108,18 +108,18 @@ public class FileAction   {
     }
 
 
-    public static void copyTo(Context context, Uri uri) {
-        new AppSelectDirectoryDialog(context, uri);
+    public static void copyToDir(Context context, Foc src) {
+        new AppSelectDirectoryDialog(context, src);
     }
 
-    public static void copyTo(Context context, Uri uri, Foc targetDir) throws Exception {
-        final Foc target = targetDir.child(uri.getLastPathSegment());
+    public static void copyToDir(Context context, Foc src, Foc destDir) throws Exception {
+        final Foc dest = destDir.child(src.getName());
 
-        if (target.isReachable()) {
-            AFile.logErrorExists(context, target);
+        if (dest == null || dest.isReachable()) {
+            AFile.logErrorExists(context, dest);
         } else {
-            new FocContent(context.getContentResolver(), uri).cp(target);
-            AppLog.i(context, target.toString());
+            src.cp(dest);
+            AppLog.i(context, dest.toString());
         }
     }
 

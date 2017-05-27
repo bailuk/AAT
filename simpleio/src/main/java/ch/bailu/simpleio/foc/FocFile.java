@@ -24,7 +24,11 @@ public class FocFile extends Foc {
 
     @Override
     public boolean rm() {
-        return file.delete();
+        try {
+            return file.delete();
+        } catch (SecurityException e) {
+            return false;
+        }
     }
 
 

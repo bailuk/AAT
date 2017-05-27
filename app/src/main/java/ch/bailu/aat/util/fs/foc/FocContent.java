@@ -9,6 +9,7 @@ import java.io.OutputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
 
+import ch.bailu.aat.util.ui.AppLog;
 import ch.bailu.simpleio.foc.Foc;
 
 public class FocContent extends Foc {
@@ -43,6 +44,8 @@ public class FocContent extends Foc {
                 parent = uri.resolve(".");
             }
 
+            AppLog.d(this, uri.toString());
+            AppLog.d(this, parent.toString());
             if (parent == null || uri.equals(parent)) {
                 return null;
             } else {
@@ -60,12 +63,17 @@ public class FocContent extends Foc {
 
     @Override
     public Foc child(String name) {
-        return null;
+        return new FocContent(resolver, Uri.parse(this.toString() + "/" + name));
     }
 
     @Override
     public String getName() {
-        return null;
+        return uri.getLastPathSegment();
+    }
+
+    @Override
+    public String toString() {
+        return uri.toString();
     }
 
     @Override

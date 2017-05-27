@@ -2,6 +2,7 @@ package ch.bailu.aat.menus;
 
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.view.ContextMenu;
@@ -14,6 +15,7 @@ import ch.bailu.aat.util.fs.FileIntent;
 import ch.bailu.aat.preferences.SolidFile;
 import ch.bailu.aat.util.fs.AndroidVolumes;
 import ch.bailu.aat.util.ui.AppLog;
+import ch.bailu.simpleio.foc.Foc;
 
 public class DirectoryMenu extends AbsMenu {
     private MenuItem view, get, clipboard, permission;
@@ -32,7 +34,7 @@ public class DirectoryMenu extends AbsMenu {
         view = menu.add(R.string.file_view);
         get = menu.add(R.string.file_view);
         clipboard = menu.add(R.string.clipboard_copy);
-        //permission = menu.add("Ask for permission*");
+        permission = menu.add("Ask for permission*");
     }
 
     @Override
@@ -49,24 +51,28 @@ public class DirectoryMenu extends AbsMenu {
 
     @Override
     public boolean onItemClick(MenuItem item) {
-
+        Context c = sdirectory.getContext();
 
         if (item == view) {
-            FileIntent.view(sdirectory.getContext(), new Intent(), sdirectory.getValueAsFile());
+            FileIntent.view(c, new Intent(), sdirectory.getValueAsFile());
 
         } else if (item == get) {
-            FileIntent.browse(sdirectory.getContext(), new Intent(),
+            FileIntent.browse(c, new Intent(),
                     Uri.parse(sdirectory.getValueAsFile().toString()));
 
         } else if (item == clipboard) {
-            new Clipboard(sdirectory.getContext()).setText(sdirectory.getLabel(),
+            new Clipboard(c).setText(sdirectory.getLabel(),
                     sdirectory.getValueAsString());
 
         } else if (item == permission) {
             new AndroidVolumes(sdirectory.getContext()).
                     askForPermission(acontext, sdirectory.getValueAsFile());
-            AppLog.d(this,
-                    new AndroidVolumes(sdirectory.getContext()).toScopedContentUriHack(sdirectory.getValueAsFile()).toString());
+
+            Foc content = new AndroidVolumes(c).toScopedContentHack(c, sdirectory.getValueAsFile());
+            AppLog.d(this, content.toString());
+
+
+            sdirectory.setValue(content.toString());
 
         } else {
             return false;

@@ -32,6 +32,7 @@ import ch.bailu.aat.map.MapFactory;
 import ch.bailu.aat.map.MapViewInterface;
 import ch.bailu.aat.menus.ContentMenu;
 import ch.bailu.aat.util.fs.FileAction;
+import ch.bailu.aat.util.fs.foc.FocAndroid;
 import ch.bailu.aat.util.ui.AppLayout;
 import ch.bailu.aat.util.ui.ToolTip;
 import ch.bailu.aat.views.BusyButton;
@@ -43,6 +44,7 @@ import ch.bailu.aat.views.description.MultiView;
 import ch.bailu.aat.views.graph.DistanceAltitudeGraphView;
 import ch.bailu.aat.views.graph.DistanceSpeedGraphView;
 import ch.bailu.aat.views.preferences.VerticalScrollView;
+import ch.bailu.simpleio.foc.Foc;
 
 public class GpxViewActivity extends AbsDispatcher
         implements OnClickListener, OnContentUpdatedInterface {
@@ -56,14 +58,14 @@ public class GpxViewActivity extends AbsDispatcher
     private MapViewInterface   map;
 
     private String fileID;
-    private Uri uri;
+    private Foc content;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         final Intent intent = getIntent();
-        uri = intent.getData();
+        Uri uri = intent.getData();
 
         if (uri==null) {
 
@@ -76,7 +78,9 @@ public class GpxViewActivity extends AbsDispatcher
 
 
         if (uri != null) {
-            fileID = uri.toString();
+            content = FocAndroid.factory(this, uri.toString());
+
+            fileID = content.toString();
 
             final LinearLayout contentView = new ContentView(this);
 
@@ -198,12 +202,12 @@ public class GpxViewActivity extends AbsDispatcher
 
     @Override
     public void onClick(View v) {
-        if (v == copyTo && uri != null) {
-            FileAction.copyTo(this,uri);
+        if (v == copyTo && content != null) {
+            FileAction.copyToDir(this, content);
 
-        } else if (v == fileOperation && uri != null) {
+        } else if (v == fileOperation && content != null) {
 
-            new ContentMenu(getServiceContext(), uri).showAsPopup(this, fileOperation);
+            new ContentMenu(getServiceContext(), content).showAsPopup(this, fileOperation);
         }
 
     }
