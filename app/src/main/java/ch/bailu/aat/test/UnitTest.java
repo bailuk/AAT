@@ -4,8 +4,6 @@ import android.content.Context;
 
 import junit.framework.Assert;
 
-import java.io.File;
-
 import ch.bailu.aat.util.fs.AppDirectory;
 import ch.bailu.aat.util.ContextWrapperInterface;
 import ch.bailu.simpleio.foc.Foc;

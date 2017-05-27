@@ -1,10 +1,8 @@
 package ch.bailu.aat.preferences;
 
-import java.io.File;
 import java.util.ArrayList;
 
 import ch.bailu.aat.R;
-import ch.bailu.aat.util.fs.JFile;
 import ch.bailu.aat.util.fs.foc.FocAndroid;
 import ch.bailu.simpleio.foc.Foc;
 

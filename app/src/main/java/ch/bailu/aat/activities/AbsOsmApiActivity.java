@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import java.io.File;
 import java.io.IOException;
 
 import ch.bailu.aat.R;

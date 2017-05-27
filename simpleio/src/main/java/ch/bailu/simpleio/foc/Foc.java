@@ -7,7 +7,16 @@ import java.io.OutputStream;
 
 public abstract class Foc {
 
-    public abstract boolean rm();
+    public abstract boolean remove() throws IOException, SecurityException;
+
+    public boolean rm() {
+        try {
+            return remove();
+        } catch (IOException e) {
+            return false;
+        }
+    }
+
     public boolean rmdir() {
         return isDir() && rm();
     }
@@ -33,15 +42,13 @@ public abstract class Foc {
     }
 
 
+
     public abstract boolean mkdir();
     public boolean mkdirs() {
-        if (isReachable() == false) {
-            Foc parent = parent();
-            if (parent != null && parent.mkdirs())
-                return mkdir();
-        }
+        if (exists()) return isDir();
 
-        return isDir();
+        Foc parent = parent();
+        return parent != null && parent.mkdirs() && mkdir();
     }
 
     public boolean mkParents() {
@@ -51,31 +58,48 @@ public abstract class Foc {
 
     public abstract Foc parent();
 
-    public abstract boolean mv(Foc target);
 
-    public boolean cp(Foc copy) {
-        try {
-            copy(copy);
-        } catch (Exception e) {
-            return false;
-        }
-        return true;
+
+    public boolean move(Foc target) throws IOException , SecurityException {
+        return copy(target) && remove();
     }
 
 
-    public void copy(Foc copy) throws Exception {
+    public boolean mv(Foc target) {
+        try {
+            return move(target);
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+
+
+
+    public boolean copy(Foc copy) throws IOException, SecurityException {
         OutputStream out = null;
 
         try {
             out = copy.openW();
             copy(out);
+            return true;
 
         } finally {
             if (out != null) out.close();
         }
     }
 
-    private void copy(OutputStream out) throws Exception {
+    public boolean cp(Foc copy) {
+        try {
+            return copy(copy);
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+
+
+    private void copy(OutputStream out) throws IOException, SecurityException {
         InputStream in = null;
 
         try {
@@ -97,16 +121,7 @@ public abstract class Foc {
     }
 
     public abstract Foc child(String name);
-
     public abstract String getName();
-
-    public boolean canOnlyRead() {
-        return canRead() && ! canWrite();
-    }
-
-    public abstract long length();
-
-
 
     public abstract static class Execute {
         public abstract void execute(Foc child);
@@ -119,16 +134,19 @@ public abstract class Foc {
 
     public abstract boolean isDir();
     public abstract boolean isFile();
-    public abstract boolean isReachable();
+    public abstract boolean exists();
 
+    public boolean canOnlyRead() {
+        return canRead() && ! canWrite();
+    }
     public abstract boolean canRead();
     public abstract boolean canWrite();
 
+    public abstract long length();
     public abstract long lastModified();
 
     public abstract InputStream openR() throws IOException;
     public abstract OutputStream openW() throws IOException;
-
 
     public static void close(Closeable toClose) {
         try {
@@ -139,4 +157,9 @@ public abstract class Foc {
         }
     }
 
+
+    @Override
+    public int hashCode() {
+        return toString().hashCode();
+    }
 }

@@ -3,7 +3,6 @@ package ch.bailu.aat.services.directory;
 import android.database.Cursor;
 
 import java.io.Closeable;
-import java.io.File;
 
 import ch.bailu.aat.gpx.GpxList;
 import ch.bailu.aat.services.ServiceContext;

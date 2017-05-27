@@ -1,6 +1,5 @@
 package ch.bailu.aat.gpx.writer;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Locale;
 

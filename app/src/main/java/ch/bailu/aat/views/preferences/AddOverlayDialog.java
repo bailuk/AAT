@@ -4,8 +4,6 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 
-import java.io.File;
-
 import ch.bailu.aat.preferences.SolidOverlayFileList;
 import ch.bailu.simpleio.foc.Foc;
 

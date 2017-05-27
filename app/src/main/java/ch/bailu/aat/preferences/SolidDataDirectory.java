@@ -2,7 +2,6 @@ package ch.bailu.aat.preferences;
 
 import android.content.Context;
 
-import java.io.File;
 import java.util.ArrayList;
 
 import ch.bailu.aat.R;
@@ -65,7 +64,7 @@ public class SolidDataDirectory extends SolidFile {
 
         for (Foc vol : volumes.getVolumes()) {
             Foc aat_data = vol.child(AppDirectory.DIR_AAT_DATA);
-            if (aat_data.isReachable()==false)
+            if (aat_data.exists()==false)
                 add_w(list, vol, aat_data);
         }
 

@@ -1,7 +1,6 @@
 package ch.bailu.aat.menus;
 
 
-import android.net.Uri;
 import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;

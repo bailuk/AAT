@@ -11,7 +11,6 @@ import ch.bailu.aat.preferences.SolidDirectoryQuery;
 import ch.bailu.aat.preferences.SolidMockLocationFile;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.util.Clipboard;
-import ch.bailu.aat.util.fs.foc.FocContent;
 import ch.bailu.aat.util.ui.AppDialog;
 import ch.bailu.aat.util.ui.AppLog;
 import ch.bailu.aat.util.ui.AppSelectDirectoryDialog;
@@ -115,7 +114,7 @@ public class FileAction   {
     public static void copyToDir(Context context, Foc src, Foc destDir) throws Exception {
         final Foc dest = destDir.child(src.getName());
 
-        if (dest == null || dest.isReachable()) {
+        if (dest == null || dest.exists()) {
             AFile.logErrorExists(context, dest);
         } else {
             src.cp(dest);
@@ -144,8 +143,8 @@ public class FileAction   {
                     Foc source = directory.child(file.getName());
                     Foc target = directory.child(edit.getText().toString());
 
-                    if (source.isReachable()) {
-                        if (target.isReachable()) {
+                    if (source.exists()) {
+                        if (target.exists()) {
                             AFile.logErrorExists(activity, target);
                         } else {
                             source.mv(target);

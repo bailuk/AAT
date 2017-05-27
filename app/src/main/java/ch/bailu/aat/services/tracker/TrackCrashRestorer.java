@@ -2,7 +2,6 @@ package ch.bailu.aat.services.tracker;
 
 import android.content.Context;
 
-import java.io.File;
 import java.io.IOException;
 
 import ch.bailu.aat.R;
@@ -20,7 +19,7 @@ public class TrackCrashRestorer{
         
         Foc source = AppDirectory.getLogFile(context);
 
-        if (source.isReachable()) {
+        if (source.exists()) {
             
             GpxList track = readFile(source);
             if (track.getPointList().size() > TrackLogger.MIN_TRACKPOINTS) { 

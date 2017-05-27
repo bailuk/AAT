@@ -4,7 +4,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteException;
 
 import java.io.Closeable;
-import java.io.File;
 
 import ch.bailu.simpleio.foc.Foc;
 

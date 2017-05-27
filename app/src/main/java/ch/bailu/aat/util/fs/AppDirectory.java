@@ -2,36 +2,22 @@ package ch.bailu.aat.util.fs;
 
 import android.content.Context;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Locale;
 
 import ch.bailu.aat.preferences.SolidDataDirectory;
 import ch.bailu.aat.preferences.SolidTileCacheDirectory;
-import ch.bailu.aat.util.fs.foc.FocAndroid;
 import ch.bailu.simpleio.foc.Foc;
 
 public class AppDirectory  {
 
-
     //////////////////////////////////////////////////////////////////////////////////////
-/*    public static File getDataDirectory(Context c, File sub) {
-        return getDataDirectory(c, sub.toString());
-    }*/
-
-
     public static Foc getDataDirectory(Context c, String sub) {
-        final Foc p = FocAndroid.factory(c, new SolidDataDirectory(c).getValueAsString()).child(sub);
-        p.mkdirs();
-        return p;
+        return new SolidDataDirectory(c).getValueAsFile().child(sub);
     }
 
     public static final String DIR_AAT_DATA = "aat_data/";
-
     public static final String DIR_TILES = "tiles/";
     public static final String DIR_TILES_OSMDROID = "osmdroid/tiles/";
 
@@ -60,12 +46,7 @@ public class AppDirectory  {
     public static final String DIR_CACHE = "cache/";
     public static final String FILE_CACHE_DB="summary.db";
     
-    public static Foc getCacheDb(Foc pendingDirectory) {
-        final Foc p = pendingDirectory.child(DIR_CACHE);
-        p.mkdirs();
-        return p.child(FILE_CACHE_DB);
-    }
-    
+
 
     public static final String DIR_EDIT = "overlay/draft";
     public static final String FILE_DRAFT= "draft.gpx";
@@ -86,9 +67,7 @@ public class AppDirectory  {
 
 
     private static Foc getTileCacheDirectory(Context c) {
-        final Foc p = new SolidTileCacheDirectory(c).getValueAsFile();
-        p.mkdirs();
-        return p;
+        return new SolidTileCacheDirectory(c).getValueAsFile();
     }
     //////////////////////////////////////////////////////////////////////////////////////////////////
     
@@ -97,7 +76,7 @@ public class AppDirectory  {
     
     ///////////////////////////////////////////////////////////////////////////////////////
     private static final String PRESET_PREFIX = "activity";
-    private static final String PREVIEW_EXTENSION = ".preview";
+    public static final String PREVIEW_EXTENSION = ".preview";
 
     static public Foc getTrackListDirectory(Context c, int i) {
         return getDataDirectory(c,getPresetPrefix(i));
@@ -112,15 +91,7 @@ public class AppDirectory  {
     }
 
 
-    static public Foc getPreviewFile(Foc path)  {
-        String name = path.getName();
-        Foc directory = path.parent();
 
-        Foc cdir = directory.child(DIR_CACHE);
-        cdir.mkdirs();
-        return cdir.child(name+ PREVIEW_EXTENSION);
-    }
-    
     
 
     ////////////////////////////////////////////////////////////////////////////////////////
@@ -140,9 +111,9 @@ public class AppDirectory  {
         do {
             file = directory.child(generateFileName(prefix, x, extension));
             x++;
-        } while (file.isReachable() && x < 999);
+        } while (file.exists() && x < 999);
 
-        if (file.isReachable()) throw new IOException();
+        if (file.exists()) throw new IOException();
 
         return file;
     }
@@ -181,32 +152,5 @@ public class AppDirectory  {
 
         return name.toString();
     }
-
-    
-    public static void copyFile(File source, File target) throws IOException {
-        if (source.exists()) {
-            BufferedInputStream   reader = new BufferedInputStream(new FileInputStream(source));
-            BufferedOutputStream  writer = new BufferedOutputStream(new FileOutputStream(target, false));
-            
-            try {
-                int oneByte;
-                while ( (oneByte= reader.read()) != -1) {
-                    writer.write( oneByte );
-                }
-                
-            } catch( IOException ex ) {
-                throw new IOException("ERROR while copying " + source.getPath() + " to " + target.getPath());
-            } finally {
-                reader.close();
-                writer.close();
-            }
-            
-        } else {
-            throw new IOException("ERROR: " + source.getPath() + " does not exist.");
-        }
-    }
-
-
-
 
 }

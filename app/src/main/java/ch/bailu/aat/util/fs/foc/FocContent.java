@@ -23,7 +23,7 @@ public class FocContent extends Foc {
 
 
     @Override
-    public boolean rm() {
+    public boolean remove() {
         return resolver.delete(uri,null,null) > 0;
     }
 
@@ -54,11 +54,6 @@ public class FocContent extends Foc {
         } catch (URISyntaxException e) {
             return null;
         }
-    }
-
-    @Override
-    public boolean mv(Foc target) {
-        return false;
     }
 
     @Override
@@ -108,7 +103,7 @@ public class FocContent extends Foc {
     }
 
     @Override
-    public boolean isReachable() {
+    public boolean exists() {
         return false;
     }
 

@@ -13,7 +13,6 @@ import ch.bailu.aat.preferences.SolidExternalDirectory;
 import ch.bailu.aat.preferences.SolidFile;
 import ch.bailu.aat.preferences.SolidPreset;
 import ch.bailu.aat.util.fs.AppDirectory;
-import ch.bailu.aat.util.fs.JFile;
 import ch.bailu.aat.util.ui.AppLayout;
 import ch.bailu.aat.views.AbsLabelTextView;
 import ch.bailu.aat.views.ContentView;

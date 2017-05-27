@@ -1,6 +1,5 @@
 package ch.bailu.aat.services.tileremover;
 
-import java.io.File;
 import java.io.IOException;
 
 import ch.bailu.aat.preferences.SolidTileCacheDirectory;

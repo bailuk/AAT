@@ -4,7 +4,6 @@ import android.content.Context;
 
 import org.mapsforge.core.model.LatLong;
 
-import java.io.File;
 import java.util.Locale;
 
 import ch.bailu.aat.preferences.SolidDataDirectory;
@@ -87,7 +86,7 @@ public class SrtmCoordinates extends Coordinates implements LatLongE6Interface {
     
     public Foc toFile(Foc base) {
         Foc old = toSRTMFile(base);
-        if (old.isReachable()) return old;
+        if (old.exists()) return old;
         
         return base.child("/dem3/"+ toExtString() + ".hgt.zip");
     }

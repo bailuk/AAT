@@ -2,15 +2,8 @@ package ch.bailu.aat.test;
 
 import android.content.Context;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.nio.channels.FileChannel;
 
-import ch.bailu.aat.util.fs.AppDirectory;
-import ch.bailu.aat.preferences.SolidPreset;
-import ch.bailu.aat.services.tracker.TrackLogger;
 import ch.bailu.simpleio.foc.Foc;
 
 public class TestGpxLogRecovery extends TestGpx {
@@ -26,11 +19,11 @@ public class TestGpxLogRecovery extends TestGpx {
         /*
         Foc testFile = getTestFile();
         Foc logFile = AppDirectory.getDataDirectory(getContext(), AppDirectory.DIR_LOG).child("log.gpx");
-        assertFalse(logFile.toString() + " is in use.", logFile.isReachable());
+        assertFalse(logFile.toString() + " is in use.", logFile.exists());
         
         
         copyFile(testFile, logFile);
-        assertTrue("Test failed: '" + logFile.toString() + "' does not exist." ,logFile.isReachable());
+        assertTrue("Test failed: '" + logFile.toString() + "' does not exist." ,logFile.exists());
 
         
         testFile(logFile, testFile);
@@ -39,7 +32,7 @@ public class TestGpxLogRecovery extends TestGpx {
         assertEquals(true, targetDirectory.isDir());
         
         new TrackLogger(getContext(), new SolidPreset(this.getContext() ).getIndex()).close();
-        assertEquals(logFile.isReachable(), false);
+        assertEquals(logFile.exists(), false);
         
         String fileList[] = targetDirectory.list();
         

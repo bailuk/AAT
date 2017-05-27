@@ -23,7 +23,7 @@ public class GpxDatabase extends AbsDatabase{
 
 
 
-    public GpxDatabase (ServiceContext sc, Foc path, String[] k)
+    public GpxDatabase (ServiceContext sc, String path, String[] k)
             throws IOException, SQLiteCantOpenDatabaseException{
 
         keys = k;
@@ -31,16 +31,15 @@ public class GpxDatabase extends AbsDatabase{
         database = openDatabase(path);
     }
 
-    public GpxDatabase (ServiceContext sc, Foc path)
+    public GpxDatabase (ServiceContext sc, String path)
             throws IOException, SQLiteCantOpenDatabaseException {
 
         this(sc, path, GpxDbConstants.KEY_LIST_NEW);
     }
 
 
-    private SQLiteDatabase openDatabase(Foc path) throws IOException, SQLiteCantOpenDatabaseException {
-        path.mkParents();
-        return new GpxDbOpenHelper(context, path).getReadableDatabase();    
+    private SQLiteDatabase openDatabase(String path) throws IOException, SQLiteCantOpenDatabaseException {
+        return new GpxDbOpenHelper(context, path).getReadableDatabase();
     }
 
     @Override

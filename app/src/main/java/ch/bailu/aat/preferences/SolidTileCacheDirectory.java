@@ -2,7 +2,6 @@ package ch.bailu.aat.preferences;
 
 import android.content.Context;
 
-import java.io.File;
 import java.util.ArrayList;
 
 import ch.bailu.aat.R;
@@ -83,7 +82,7 @@ public class SolidTileCacheDirectory extends SolidFile {
         for (Foc vol : volumes.getVolumes()) {
             final Foc aat = vol.child(AppDirectory.DIR_AAT_DATA + "/" + AppDirectory.DIR_TILES);
 
-            if (aat.isReachable()==false)
+            if (aat.exists()==false)
                 add_ro(list, vol, aat);
         }
 

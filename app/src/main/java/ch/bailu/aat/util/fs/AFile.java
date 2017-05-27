@@ -2,8 +2,6 @@ package ch.bailu.aat.util.fs;
 
 import android.content.Context;
 
-import java.io.File;
-
 import ch.bailu.aat.R;
 import ch.bailu.aat.util.ui.AppLog;
 import ch.bailu.simpleio.foc.Foc;

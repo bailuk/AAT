@@ -6,13 +6,11 @@ import android.content.Intent;
 import android.text.InputType;
 import android.widget.EditText;
 
-import java.io.File;
 import java.io.IOException;
 
 import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.util.AppIntent;
 import ch.bailu.aat.util.TextBackup;
-import ch.bailu.aat.util.fs.foc.FocAndroid;
 import ch.bailu.aat.util.ui.AppLog;
 import ch.bailu.simpleio.foc.Foc;
 

@@ -1,10 +1,8 @@
 package ch.bailu.aat.services.tileremover;
 
-import java.io.File;
 import java.util.Iterator;
 
 import ch.bailu.aat.util.AppBroadcaster;
-import ch.bailu.aat.util.fs.JFile;
 import ch.bailu.aat.util.ui.AppLog;
 import ch.bailu.simpleio.foc.Foc;
 

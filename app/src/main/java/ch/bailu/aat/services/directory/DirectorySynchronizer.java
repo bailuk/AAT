@@ -23,7 +23,6 @@ import ch.bailu.aat.services.cache.GpxObject;
 import ch.bailu.aat.services.cache.GpxObjectStatic;
 import ch.bailu.aat.services.cache.ObjectHandle;
 import ch.bailu.aat.util.AppBroadcaster;
-import ch.bailu.aat.util.fs.AppDirectory;
 import ch.bailu.aat.util.fs.foc.FocAndroid;
 import ch.bailu.aat.util.ui.AppLog;
 import ch.bailu.simpleio.foc.Foc;
@@ -116,11 +115,11 @@ public class DirectorySynchronizer  implements Closeable {
 
 
         private GpxDatabase openDatabase()  throws Exception {
-            final Foc file = AppDirectory.getCacheDb(directory);
+            final String dbPath = SummaryConfig.getWriteableDBPath(scontext.getContext(), directory);
             final String query[] = {GpxDbConstants.KEY_FILENAME};
 
-            dbAccessTime = file.lastModified();
-            return new GpxDatabase(scontext, file, query);
+            dbAccessTime = new File(dbPath).lastModified();
+            return new GpxDatabase(scontext, dbPath, query);
         }
 
         @Override
@@ -193,7 +192,7 @@ public class DirectorySynchronizer  implements Closeable {
         private void removeFileFromDatabase(String name) throws IOException {
             final Foc file = directory.child(name);
 
-            AppDirectory.getPreviewFile(file).rm();
+            SummaryConfig.getWriteablePreviewFile(scontext.getContext(), file).rm();
             database.deleteEntry(file);
         }
 
@@ -324,7 +323,7 @@ public class DirectorySynchronizer  implements Closeable {
         public void start() {
             Foc gpxFile = FocAndroid.factory(scontext.getContext(), pendingHandle.toString());
 
-            Foc previewImageFile = AppDirectory.getPreviewFile(gpxFile);
+            Foc previewImageFile = SummaryConfig.getWriteablePreviewFile(scontext.getContext(), gpxFile);
             GpxInformation info =
                     new GpxFileWrapper(gpxFile, pendingHandle.getGpxList());
 

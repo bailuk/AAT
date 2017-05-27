@@ -2,8 +2,6 @@ package ch.bailu.aat.activities;
 
 import android.content.Intent;
 
-import java.io.File;
-
 import ch.bailu.aat.R;
 import ch.bailu.aat.description.ContentDescription;
 import ch.bailu.aat.description.DateDescription;

@@ -2,7 +2,6 @@ package ch.bailu.aat.services.tracker;
 
 import android.content.Context;
 
-import java.io.File;
 import java.io.IOException;
 
 import ch.bailu.aat.gpx.GpxAttributesStatic;
@@ -92,10 +91,10 @@ public class TrackLogger extends Logger {
             writer.close();
 
             if (track.getPointList().size()>MIN_TRACKPOINTS) {
-                new File(logFile.toString()).renameTo(new File(generateTargetFile(context, presetIndex).toString()));
+                logFile.move(generateTargetFile(context, presetIndex));
 
             } else{
-                logFile.rm();
+                logFile.remove();
             }
 
         } catch (IOException e) {

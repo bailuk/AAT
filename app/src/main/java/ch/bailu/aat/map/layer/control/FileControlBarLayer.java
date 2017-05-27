@@ -5,8 +5,6 @@ import android.view.View;
 
 import org.mapsforge.core.model.Point;
 
-import java.io.File;
-
 import ch.bailu.aat.R;
 import ch.bailu.aat.activities.AbsGpxListActivity;
 import ch.bailu.aat.description.AverageSpeedDescription;
@@ -192,7 +190,7 @@ public class FileControlBarLayer extends ControlBarLayer {
         if (node != null && selectedFile != null) {
             Foc file = FocAndroid.factory(acontext,selectedFile);
 
-            if (file.isReachable()) {
+            if (file.exists()) {
                 if        (v == action) {
                     new FileMenu(acontext, file).showAsPopup(acontext, v);
                 } else if (v == overlay) {

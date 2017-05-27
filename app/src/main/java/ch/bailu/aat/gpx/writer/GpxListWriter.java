@@ -1,7 +1,6 @@
 package ch.bailu.aat.gpx.writer;
 
 import java.io.Closeable;
-import java.io.File;
 import java.io.IOException;
 
 import ch.bailu.aat.gpx.GpxList;

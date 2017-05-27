@@ -5,16 +5,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.widget.ImageView;
 
-import java.io.File;
-
+import ch.bailu.aat.services.directory.SummaryConfig;
 import ch.bailu.aat.util.AppBroadcaster;
-import ch.bailu.aat.util.fs.AppDirectory;
 import ch.bailu.aat.util.AppIntent;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.cache.ImageObject;
 import ch.bailu.aat.services.cache.ObjectHandle;
+import ch.bailu.aat.util.fs.foc.FocAndroid;
 import ch.bailu.simpleio.foc.Foc;
-import ch.bailu.simpleio.foc.FocFile;
 
 public class PreviewView extends ImageView {
     private boolean isAttached=false;
@@ -32,7 +30,8 @@ public class PreviewView extends ImageView {
     
     
     public void setFilePath(String fileID) {
-        final Foc file = AppDirectory.getPreviewFile(new FocFile(new File(fileID)));
+        final Foc file = SummaryConfig
+                .getReadablePreviewFile(getContext(), FocAndroid.factory(getContext(), fileID));
         setPreviewPath(file);
         loadAndDisplayImage();
     }

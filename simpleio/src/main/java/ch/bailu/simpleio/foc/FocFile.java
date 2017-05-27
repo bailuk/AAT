@@ -16,30 +16,25 @@ public class FocFile extends Foc {
     public FocFile(String f) {
         file = new File(f);
     }
-
     public FocFile(File f) {
         file = f;
     }
 
 
     @Override
-    public boolean rm() {
-        try {
-            return file.delete();
-        } catch (SecurityException e) {
-            return false;
-        }
+    public boolean remove() throws SecurityException {
+        return file.delete();
     }
 
 
     @Override
     public boolean mkdirs() {
-        return file.mkdirs();
+        return isDir() || file.mkdirs();
     }
 
     @Override
     public boolean mkdir() {
-        return file.mkdir();
+        return isDir() || file.mkdir();
     }
 
     @Override
@@ -51,13 +46,13 @@ public class FocFile extends Foc {
     }
 
     @Override
-    public boolean mv(Foc target) {
+    public boolean move(Foc target) throws IOException {
         if (target instanceof FocFile) {
             FocFile targetFile = (FocFile) target;
 
-            return file.renameTo(targetFile.file);
+            return file.renameTo(targetFile.file) || super.move(target);
         }
-        return false;
+        return super.move(target);
     }
 
     @Override
@@ -78,7 +73,7 @@ public class FocFile extends Foc {
 
     @Override
     public String toString() {
-        return file.getAbsolutePath();
+        return file.toString();
     }
 
 
@@ -129,7 +124,7 @@ public class FocFile extends Foc {
     }
 
     @Override
-    public boolean isReachable() {
+    public boolean exists() {
         return file.exists();
     }
 
@@ -156,6 +151,9 @@ public class FocFile extends Foc {
 
     @Override
     public OutputStream openW() throws IOException {
-        return new FileOutputStream(file);
+        if (mkParents())
+            return new FileOutputStream(file);
+
+        throw new IOException();
     }
 }

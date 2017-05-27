@@ -10,8 +10,6 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.LinearLayout;
 
-import java.io.File;
-
 import ch.bailu.aat.R;
 import ch.bailu.aat.description.ContentDescription;
 import ch.bailu.aat.description.PathDescription;

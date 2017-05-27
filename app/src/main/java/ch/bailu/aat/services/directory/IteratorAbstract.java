@@ -7,8 +7,6 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.database.Cursor;
 
-import java.io.File;
-
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.preferences.SolidDirectoryQuery;

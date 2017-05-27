@@ -1,7 +1,6 @@
 package ch.bailu.aat.activities;
 
 import android.content.Intent;
-import android.content.res.AssetManager;
 
 import ch.bailu.aat.util.AppIntent;
 import ch.bailu.aat.util.fs.foc.FocAsset;

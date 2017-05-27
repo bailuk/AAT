@@ -43,7 +43,7 @@ public class FocAsset extends Foc {
     }
 
     @Override
-    public boolean rm() {
+    public boolean remove() {
         return false;
     }
 
@@ -57,10 +57,6 @@ public class FocAsset extends Foc {
         return null;
     }
 
-    @Override
-    public boolean mv(Foc target) {
-        return false;
-    }
 
     @Override
     public Foc child(String name) {
@@ -103,7 +99,7 @@ public class FocAsset extends Foc {
     }
 
     @Override
-    public boolean isReachable() {
+    public boolean exists() {
         return false;
     }
 

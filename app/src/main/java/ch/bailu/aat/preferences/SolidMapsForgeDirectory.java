@@ -2,7 +2,6 @@ package ch.bailu.aat.preferences;
 
 import android.content.Context;
 
-import java.io.File;
 import java.util.ArrayList;
 
 import ch.bailu.aat.util.fs.AppDirectory;

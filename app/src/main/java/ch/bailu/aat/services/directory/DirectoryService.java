@@ -5,10 +5,8 @@ import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteCantOpenDatabaseException;
 
-import java.io.File;
 import java.io.IOException;
 
-import ch.bailu.aat.util.fs.AppDirectory;
 import ch.bailu.aat.util.ui.AppLog;
 import ch.bailu.aat.preferences.SolidDirectoryQuery;
 import ch.bailu.aat.services.ServiceContext;
@@ -43,7 +41,11 @@ public class DirectoryService extends VirtualService implements OnSharedPreferen
 
 
     private void openDir() {
+        AppLog.d(this, sdirectory.getValueAsString());
+        AppLog.d(this, sdirectory.getValueAsFile().toString());
+
         if (isDirReadable()) {
+
             open();
         } else {
             logNoAccess();
@@ -63,10 +65,11 @@ public class DirectoryService extends VirtualService implements OnSharedPreferen
 
 
     private void open() {
-        final Foc db = AppDirectory.getCacheDb(getDir());
+        final String dbPath =
+                SummaryConfig.getWriteableDBPath(getContext(), getDir());
 
         try {
-            openDataBase(getSContext(), db);
+            openDataBase(getSContext(), dbPath);
 
         } catch (Exception e) {
             database=AbsDatabase.NULL_DATABASE;
@@ -91,11 +94,11 @@ public class DirectoryService extends VirtualService implements OnSharedPreferen
 
 
 
-    private void openDataBase(ServiceContext sc, Foc path) throws IOException, SQLiteCantOpenDatabaseException {
+    private void openDataBase(ServiceContext sc, String dbPath) throws IOException, SQLiteCantOpenDatabaseException {
         database.close();
         database = new GpxDatabase(
                 sc,
-                path);
+                dbPath);
     }
 
 

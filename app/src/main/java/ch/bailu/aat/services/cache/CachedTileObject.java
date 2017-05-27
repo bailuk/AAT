@@ -49,7 +49,7 @@ public class CachedTileObject extends TileObject {
             public long bgOnProcess() {
                 long size = MIN_SIZE;
 
-                if (!toFile(sc.getContext()).isReachable()) {
+                if (!toFile(sc.getContext()).exists()) {
                     OutputStream out = null;
                     ObjectHandle handle = sc.getCacheService().getObject(sourceID);
 
@@ -96,7 +96,7 @@ public class CachedTileObject extends TileObject {
     }
 
     private boolean isLoadable(Context c) {
-        return toFile(c).isReachable();
+        return toFile(c).exists();
     }
 
     @Override

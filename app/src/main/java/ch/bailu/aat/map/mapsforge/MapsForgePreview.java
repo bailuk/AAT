@@ -14,8 +14,6 @@ import org.mapsforge.map.layer.Layer;
 import org.mapsforge.map.util.MapPositionUtil;
 import org.mapsforge.map.view.FrameBuffer;
 
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.OutputStream;
 
 import ch.bailu.aat.gpx.GpxInformation;

@@ -2,7 +2,6 @@ package ch.bailu.aat.test;
 
 import android.content.Context;
 
-import java.io.File;
 import java.io.IOException;
 
 import ch.bailu.aat.gpx.GpxList;
@@ -12,7 +11,6 @@ import ch.bailu.aat.preferences.SolidMockLocationFile;
 import ch.bailu.aat.preferences.SolidString;
 import ch.bailu.aat.util.fs.foc.FocAndroid;
 import ch.bailu.simpleio.foc.Foc;
-import ch.bailu.simpleio.foc.FocFile;
 
 public class TestGpx extends UnitTest {
 
@@ -40,7 +38,7 @@ public class TestGpx extends UnitTest {
         SolidString mockLocation = new SolidMockLocationFile(getContext());
         
         Foc testFile = FocAndroid.factory(getContext(), mockLocation.getValueAsString());
-        assertTrue("Mock file not defined.", testFile.isReachable());
+        assertTrue("Mock file not defined.", testFile.exists());
         return testFile;
     }
 

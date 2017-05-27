@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 
 import java.io.Closeable;
-import java.io.File;
 
 import ch.bailu.aat.coordinates.SrtmCoordinates;
 import ch.bailu.aat.services.ServiceContext;
@@ -118,7 +117,7 @@ public class Dem3TileLoader implements Closeable {
     private void downloadNow(SrtmCoordinates c) {
         Foc target = c.toFile(scontext.getContext());
 
-        if (target.isReachable() == false) {
+        if (target.exists() == false) {
             DownloadHandle handle = new DownloadHandle(c.toURL(), target);
             scontext.getBackgroundService().download(handle);
         }

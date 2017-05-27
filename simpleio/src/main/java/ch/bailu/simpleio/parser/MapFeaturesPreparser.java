@@ -36,7 +36,7 @@ public class MapFeaturesPreparser {
 
             try {
                 new MapFeaturesPreparser(
-                        new FocFile(args[0]),
+                        new FocFile (args[0]),
                         new FocFile (args[1]),
                         new FocFile (args[2]));
             } catch (IOException e) {

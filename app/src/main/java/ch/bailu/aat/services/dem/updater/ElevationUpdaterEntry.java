@@ -38,7 +38,7 @@ public class ElevationUpdaterEntry {
     
 
     private void addSRTMTile(SrtmCoordinates c) {
-        if (c.toFile(scontext.getContext()).isReachable()) {
+        if (c.toFile(scontext.getContext()).exists()) {
             tiles.put(c.hashCode(),c);
         }
     }
