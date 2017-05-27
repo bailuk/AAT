@@ -8,6 +8,7 @@ import java.io.File;
 import java.util.Locale;
 
 import ch.bailu.aat.preferences.SolidDataDirectory;
+import ch.bailu.simpleio.foc.Foc;
 
 public class SrtmCoordinates extends Coordinates implements LatLongE6Interface {
     /**
@@ -84,23 +85,23 @@ public class SrtmCoordinates extends Coordinates implements LatLongE6Interface {
 
     
     
-    public File toFile(File base) {
-        File old = toSRTMFile(base);
-        if (old.exists()) return old;
+    public Foc toFile(Foc base) {
+        Foc old = toSRTMFile(base);
+        if (old.isReachable()) return old;
         
-        return new File(base, "/dem3/"+ toExtString() + ".hgt.zip");
+        return base.child("/dem3/"+ toExtString() + ".hgt.zip");
     }
 
     
-    public File toFile(Context context) {
+    public Foc toFile(Context context) {
         return toFile(new SolidDataDirectory(context).getValueAsFile());
     }
 
     
     
     // obsolete location
-    private File toSRTMFile(File base) {
-        return new File(base, "/SRTM/" + toString() + ".SRTMGL3.hgt.zip");
+    private Foc toSRTMFile(Foc base) {
+        return base.child("/SRTM/" + toString() + ".SRTMGL3.hgt.zip");
     }
 
 

@@ -163,7 +163,7 @@ public class Dem3Tile implements ElevationProvider, DemProvider {
 
     public void reload(ServiceContext cs) {
         handle.stopLoading();
-        handle = new SRTMGL3Loader(coordinates.toFile(cs.getContext()).getAbsolutePath());
+        handle = new SRTMGL3Loader(coordinates.toFile(cs.getContext()).toString());
         loading=true;
         stamp=System.currentTimeMillis();
         cs.getBackgroundService().load(handle);

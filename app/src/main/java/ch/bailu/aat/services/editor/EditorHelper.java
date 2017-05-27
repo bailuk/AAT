@@ -24,7 +24,7 @@ public class EditorHelper {
         scontext = sc;
 
         IID = InfoID.EDITOR_DRAFT;
-        ID = AppDirectory.getEditorDraft(scontext.getContext()).getAbsolutePath();
+        ID = AppDirectory.getEditorDraft(scontext.getContext()).toString();
     }
 
 

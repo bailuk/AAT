@@ -6,31 +6,32 @@ import java.io.File;
 
 import ch.bailu.aat.R;
 import ch.bailu.aat.util.ui.AppLog;
+import ch.bailu.simpleio.foc.Foc;
 
 public class AFile extends JFile {
-    public static void logErrorExists(Context c, File f) {
-        AppLog.e(c, f.getAbsolutePath() + c.getString(R.string.file_exists));
+    public static void logErrorExists(Context c, Foc f) {
+        AppLog.e(c, f.toString() + c.getString(R.string.file_exists));
     }
 
 
-    public static void logErrorReadOnly(Context c, File f) {
-        AppLog.e(c, f.getAbsolutePath() + " is read only.*");
+    public static void logErrorReadOnly(Context c, Foc f) {
+        AppLog.e(c, f.toString() + " is read only.*");
     }
 
-    public static void logErrorNoAccess(Context c, File f) {
-        AppLog.e(c, f.getAbsolutePath() + " no access.*");
+    public static void logErrorNoAccess(Context c, Foc f) {
+        AppLog.e(c, f.toString() + " no access.*");
     }
 
 
-    public static void logInfoAcess(Context c, File f) {
+    public static void logInfoAcess(Context c, Foc f) {
         String msg = ": no acess.*";
-        if (canWrite(f)) {
+        if (f.canWrite()) {
             msg = " is writeable.*";
-        } else if (canRead(f)) {
+        } else if (f.canRead()) {
             msg = " is read only.*";
         }
 
-        AppLog.i(c, f.getAbsolutePath() + msg);
+        AppLog.i(c, f.toString() + msg);
     }
 
 

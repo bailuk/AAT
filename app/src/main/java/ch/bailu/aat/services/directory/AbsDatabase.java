@@ -6,12 +6,14 @@ import android.database.sqlite.SQLiteException;
 import java.io.Closeable;
 import java.io.File;
 
+import ch.bailu.simpleio.foc.Foc;
+
 public abstract class AbsDatabase implements Closeable{
 
     public abstract Cursor query(String selection);
 
 
-    public abstract void deleteEntry(File file) throws SQLiteException;
+    public abstract void deleteEntry(Foc file) throws SQLiteException;
 
 
     public static final AbsDatabase NULL_DATABASE = new AbsDatabase(){
@@ -21,7 +23,7 @@ public abstract class AbsDatabase implements Closeable{
         public Cursor query(String selection) {return null;}
 
         @Override
-        public void deleteEntry(File file) {}
+        public void deleteEntry(Foc file) {}
 
         @Override
         public void close() {}

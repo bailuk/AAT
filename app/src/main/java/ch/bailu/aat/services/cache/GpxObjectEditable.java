@@ -13,10 +13,12 @@ import ch.bailu.aat.gpx.GpxPointNode;
 import ch.bailu.aat.gpx.writer.GpxListWriter;
 import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.util.fs.AppDirectory;
+import ch.bailu.aat.util.fs.foc.FocAndroid;
 import ch.bailu.aat.util.ui.AppLog;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.editor.EditorInterface;
 import ch.bailu.aat.services.editor.GpxEditor;
+import ch.bailu.simpleio.foc.Foc;
 
 public class GpxObjectEditable extends  GpxObject {
 
@@ -180,7 +182,7 @@ public class GpxObjectEditable extends  GpxObject {
         @Override
         public void save() {
             try {
-                final File file = new File(path);
+                final Foc file = FocAndroid.factory(context, path);
 
                 new GpxListWriter(editor.getList(),file).close();
                 modified=false;
@@ -204,7 +206,7 @@ public class GpxObjectEditable extends  GpxObject {
             String prefix = AppDirectory.parsePrefix(x);
 
             try {
-                final File file = 
+                final Foc file =
                         AppDirectory.generateUniqueFilePath(
                                 AppDirectory.getDataDirectory(context, AppDirectory.DIR_OVERLAY), 
                                 prefix, 

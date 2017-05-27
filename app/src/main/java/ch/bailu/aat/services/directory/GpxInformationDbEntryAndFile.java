@@ -10,13 +10,14 @@ import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.cache.GpxObject;
 import ch.bailu.aat.services.cache.GpxObjectStatic;
 import ch.bailu.aat.services.cache.ObjectHandle;
+import ch.bailu.simpleio.foc.Foc;
 
 public class GpxInformationDbEntryAndFile extends GpxInformationDbEntry implements Closeable {
 
     private ObjectHandle handle = ObjectHandle.NULL;
     private final ServiceContext scontext;
     
-    public GpxInformationDbEntryAndFile(ServiceContext sc, File p, Cursor c) {
+    public GpxInformationDbEntryAndFile(ServiceContext sc, Foc p, Cursor c) {
         super(c, p);
         scontext=sc;
     }

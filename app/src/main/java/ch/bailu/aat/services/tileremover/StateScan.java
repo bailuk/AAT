@@ -6,6 +6,7 @@ import java.io.IOException;
 import ch.bailu.aat.preferences.SolidTileCacheDirectory;
 import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.util.ui.AppLog;
+import ch.bailu.simpleio.foc.Foc;
 
 
 public class StateScan implements State, Runnable {
@@ -68,9 +69,9 @@ public class StateScan implements State, Runnable {
     }
 
 
-    private void scanSourceContainer(File sourceContainer) {
+    private void scanSourceContainer(Foc sourceContainer) {
         try {
-            sourceContainer = sourceContainer.getCanonicalFile();
+            //sourceContainer = sourceContainer.getCanonicalFile();
 
             state.summaries.rescan(state.context, sourceContainer);
 
@@ -78,7 +79,7 @@ public class StateScan implements State, Runnable {
                 String sourceName = state.summaries.get(summaryIndex).getName();
 
                 if (sourceName != null && sourceName.length()>0 ) {
-                    File zoomContainer = new File(sourceContainer, sourceName);
+                    Foc zoomContainer = sourceContainer.child(sourceName);
                     scanZoomContainer(zoomContainer, summaryIndex);
                 } else {
                     break;
@@ -91,35 +92,35 @@ public class StateScan implements State, Runnable {
     }
 
 
-    private void scanZoomContainer(File zoomContainer, final int summaryIndex) {
+    private void scanZoomContainer(Foc zoomContainer, final int summaryIndex) {
         new TileScanner(zoomContainer) {
 
             @Override
-            protected boolean doSourceContainer(File dir) {
+            protected boolean doSourceContainer(Foc dir) {
                 return keepUp();
 
             }
 
             @Override
-            protected boolean doZoomContainer(File dir) {
+            protected boolean doZoomContainer(Foc dir) {
                 return keepUp();
             }
 
             @Override
-            protected boolean doXContainer(File dir) {
+            protected boolean doXContainer(Foc dir) {
                 return keepUp();
             }
 
 
             @Override
-            protected boolean doYContainer(File dir) {
+            protected boolean doYContainer(Foc dir) {
                 state.broadcastLimited(AppBroadcaster.TILE_REMOVER_SCAN);
                 return keepUp();
             }
 
 
             @Override
-            protected void doFile(File file) {
+            protected void doFile(Foc file) {
                 TileFile tile = new TileFile(summaryIndex, zoom, x, file);
                 state.list.add(tile);
                 state.summaries.addFile(tile);

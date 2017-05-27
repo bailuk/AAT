@@ -12,6 +12,8 @@ import java.util.Locale;
 
 import ch.bailu.aat.preferences.SolidDataDirectory;
 import ch.bailu.aat.preferences.SolidTileCacheDirectory;
+import ch.bailu.aat.util.fs.foc.FocAndroid;
+import ch.bailu.simpleio.foc.Foc;
 
 public class AppDirectory  {
 
@@ -22,8 +24,8 @@ public class AppDirectory  {
     }*/
 
 
-    public static File getDataDirectory(Context c, String sub) {
-        final File p = new File(new SolidDataDirectory(c).getValueAsString(), sub);
+    public static Foc getDataDirectory(Context c, String sub) {
+        final Foc p = FocAndroid.factory(c, new SolidDataDirectory(c).getValueAsString()).child(sub);
         p.mkdirs();
         return p;
     }
@@ -36,8 +38,8 @@ public class AppDirectory  {
     
     public static final String DIR_LOG = "log/";
     public static final String FILE_LOG = "log.gpx";
-    public static File getLogFile(Context context) {
-        return new File(getDataDirectory(context, DIR_LOG), FILE_LOG);
+    public static Foc getLogFile(Context context) {
+        return getDataDirectory(context, DIR_LOG).child(FILE_LOG);
     }
     
     
@@ -58,18 +60,18 @@ public class AppDirectory  {
     public static final String DIR_CACHE = "cache/";
     public static final String FILE_CACHE_DB="summary.db";
     
-    public static File getCacheDb(File pendingDirectory) {
-        final File p = new File(pendingDirectory, DIR_CACHE);
+    public static Foc getCacheDb(Foc pendingDirectory) {
+        final Foc p = pendingDirectory.child(DIR_CACHE);
         p.mkdirs();
-        return new File(p, FILE_CACHE_DB);
+        return p.child(FILE_CACHE_DB);
     }
     
 
     public static final String DIR_EDIT = "overlay/draft";
     public static final String FILE_DRAFT= "draft.gpx";
 
-    public static File getEditorDraft(Context c) {
-        return new File(AppDirectory.getDataDirectory(c, DIR_EDIT), FILE_DRAFT);
+    public static Foc getEditorDraft(Context c) {
+        return getDataDirectory(c, DIR_EDIT).child(FILE_DRAFT);
     }
 
     //////////////////////////////////////////////////////////////////////////////////////
@@ -78,13 +80,13 @@ public class AppDirectory  {
 
     
     /////////////////////////////////////////////////////////////////////////////////////////////////
-    public static File getTileFile(String tilePath, Context context) {
-        return new File(getTileCacheDirectory(context),tilePath);
+    public static Foc getTileFile(String tilePath, Context context) {
+        return getTileCacheDirectory(context).child(tilePath);
     }
 
 
-    private static File getTileCacheDirectory(Context c) {
-        final File p = new SolidTileCacheDirectory(c).getValueAsFile();
+    private static Foc getTileCacheDirectory(Context c) {
+        final Foc p = new SolidTileCacheDirectory(c).getValueAsFile();
         p.mkdirs();
         return p;
     }
@@ -97,7 +99,7 @@ public class AppDirectory  {
     private static final String PRESET_PREFIX = "activity";
     private static final String PREVIEW_EXTENSION = ".preview";
 
-    static public File getTrackListDirectory(Context c, int i) {
+    static public Foc getTrackListDirectory(Context c, int i) {
         return getDataDirectory(c,getPresetPrefix(i));
     }
     static private String getPresetPrefix(int i) {
@@ -105,19 +107,18 @@ public class AppDirectory  {
     }
     
     
-    public static File getTrackListCacheDb(Context c, int i) {
-        return new File(getDataDirectory(c, getPresetPrefix(i)+ DIR_CACHE), FILE_CACHE_DB);
+    public static Foc getTrackListCacheDb(Context c, int i) {
+        return getDataDirectory(c, getPresetPrefix(i)+ DIR_CACHE).child(FILE_CACHE_DB);
     }
 
 
-    static public File getPreviewFile(File path)  {
+    static public Foc getPreviewFile(Foc path)  {
         String name = path.getName();
-        String directory = path.getParent();
+        Foc directory = path.parent();
 
-
-        File cdir = new File(directory, DIR_CACHE);
+        Foc cdir = directory.child(DIR_CACHE);
         cdir.mkdirs();
-        return new File(cdir, name+ PREVIEW_EXTENSION);
+        return cdir.child(name+ PREVIEW_EXTENSION);
     }
     
     
@@ -131,17 +132,17 @@ public class AppDirectory  {
     public static final String GPX_EXTENSION=".gpx";
     public static final String OSM_EXTENSION=".osm";
 
-    public static File generateUniqueFilePath(File directory, String prefix, String extension) 
+    public static Foc generateUniqueFilePath(Foc directory, String prefix, String extension)
             throws IOException {
-        File file;
+        Foc file;
 
         int x=0;
         do {
-            file = new File(directory, generateFileName(prefix, x, extension));
+            file = directory.child(generateFileName(prefix, x, extension));
             x++;
-        } while (file.exists() && x < 999);
+        } while (file.isReachable() && x < 999);
 
-        if (file.exists()) throw new IOException();
+        if (file.isReachable()) throw new IOException();
 
         return file;
     }

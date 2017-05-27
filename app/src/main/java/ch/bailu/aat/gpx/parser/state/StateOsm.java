@@ -48,7 +48,7 @@ public class StateOsm extends State {
     <note>The data included in this document is from www.openstreetmap.org. The data is made available under ODbL.</note>
     <meta osm_base="2012-11-29T14:56:02Z"/>
     <node id="26860669" lat="47.6437096" lon="8.8589682">
-    <tag k="name" v="Hüttenberg"/>
+    <tag k="getName" v="Hüttenberg"/>
     <tag k="tourism" v="camp_site"/>
     </node>
     </osm> 

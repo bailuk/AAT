@@ -24,7 +24,9 @@ import ch.bailu.aat.services.cache.GpxObjectStatic;
 import ch.bailu.aat.services.cache.ObjectHandle;
 import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.util.fs.AppDirectory;
+import ch.bailu.aat.util.fs.foc.FocAndroid;
 import ch.bailu.aat.util.ui.AppLog;
+import ch.bailu.simpleio.foc.Foc;
 
 public class DirectorySynchronizer  implements Closeable {
 
@@ -38,13 +40,13 @@ public class DirectorySynchronizer  implements Closeable {
 
     private long dbAccessTime;
 
-    private final File directory;
+    private final Foc directory;
     private final ServiceContext scontext;
 
     private boolean canContinue=true;
     private State state;
 
-    public DirectorySynchronizer(ServiceContext cs, File d) {
+    public DirectorySynchronizer(ServiceContext cs, Foc d) {
         scontext=cs;
         directory=d;
 
@@ -114,7 +116,7 @@ public class DirectorySynchronizer  implements Closeable {
 
 
         private GpxDatabase openDatabase()  throws Exception {
-            final File file = AppDirectory.getCacheDb(directory);
+            final Foc file = AppDirectory.getCacheDb(directory);
             final String query[] = {GpxDbConstants.KEY_FILENAME};
 
             dbAccessTime = file.lastModified();
@@ -189,9 +191,9 @@ public class DirectorySynchronizer  implements Closeable {
 
 
         private void removeFileFromDatabase(String name) throws IOException {
-            final File file = new File(directory, name);
+            final Foc file = directory.child(name);
 
-            AppDirectory.getPreviewFile(file).delete();
+            AppDirectory.getPreviewFile(file).rm();
             database.deleteEntry(file);
         }
 
@@ -202,7 +204,7 @@ public class DirectorySynchronizer  implements Closeable {
 
             for (boolean r=cursor.moveToFirst(); canContinue && r; r=cursor.moveToNext()) {
                 final String name = getFileName(cursor);
-                final File file = filesToAdd.findItem(name);
+                final Foc file = filesToAdd.findItem(name);
 
                 if (file == null) {
                     filesToRemove.add(name);
@@ -222,7 +224,7 @@ public class DirectorySynchronizer  implements Closeable {
         }
 
 
-        private boolean isFileInSync(File file) {
+        private boolean isFileInSync(Foc file) {
             if (file.lastModified() < System.currentTimeMillis()) {
                 return file.lastModified() < dbAccessTime; 
             } 
@@ -239,14 +241,14 @@ public class DirectorySynchronizer  implements Closeable {
 
         public void start() {
 
-            File file = filesToAdd.popItem();
+            Foc file = filesToAdd.popItem();
             if (file==null) {
                 terminate();
 
 
             } else {
                 ObjectHandle h = scontext.getCacheService().getObject(
-                        file.getAbsolutePath(), new GpxObjectStatic.Factory());
+                        file.toString(), new GpxObjectStatic.Factory());
                 if (h instanceof GpxObject) {
 
                     setPendingGpxHandle((GpxObject)h);
@@ -320,10 +322,9 @@ public class DirectorySynchronizer  implements Closeable {
     private class StateLoadPreview extends State {
 
         public void start() {
-            File previewImageFile =
-                    AppDirectory.getPreviewFile(new File(pendingHandle.toString()));
-            File gpxFile =
-                    new File(pendingHandle.toString());
+            Foc gpxFile = FocAndroid.factory(scontext.getContext(), pendingHandle.toString());
+
+            Foc previewImageFile = AppDirectory.getPreviewFile(gpxFile);
             GpxInformation info =
                     new GpxFileWrapper(gpxFile, pendingHandle.getGpxList());
 

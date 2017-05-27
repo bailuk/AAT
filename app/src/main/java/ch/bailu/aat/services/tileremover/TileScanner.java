@@ -1,21 +1,21 @@
 package ch.bailu.aat.services.tileremover;
 
 import java.io.File;
-import java.io.FilenameFilter;
 import java.io.IOException;
 
 import ch.bailu.aat.util.ui.AppLog;
+import ch.bailu.simpleio.foc.Foc;
 
 public abstract class TileScanner {
 
-    private final File root;
+    private final Foc root;
 
     protected String source;
     protected short zoom;
     protected int x,y;
     protected String ext;
 
-    public TileScanner(File r) {
+    public TileScanner(Foc r) {
         root = r;
     }
 
@@ -29,104 +29,102 @@ public abstract class TileScanner {
     }
 
 
-    private void scanSourceContainer(File dir) {
+    private void scanSourceContainer(Foc dir) {
         if (doDirectory(dir) && doSourceContainer(dir)) {
-
-            dir.list(new FilenameFilter() {
+            dir.foreachDir(new Foc.Execute() {
                 @Override
-                public boolean accept(File d, String name) {
-                    source = name;
-                    scanZoomContainer(new File(d, name));
-                    return false;
+                public void execute(Foc child) {
+                    source = child.getName();
+                    scanZoomContainer(child);
                 }
             });
         }
     }
 
-    protected abstract boolean doSourceContainer(File dir);
+    protected abstract boolean doSourceContainer(Foc dir);
 
 
-    private void scanZoomContainer(File dir) {
-        if (doDirectory(dir) && doZoomContainer(dir)) {
-            dir.list(new FilenameFilter() {
+    private void scanZoomContainer(final Foc dir) {
+        if (doZoomContainer(dir)) {
+            dir.foreachDir(new Foc.Execute() {
                 @Override
-                public boolean accept(File d, String name) {
-                        try {
-                            zoom = Short.decode(name);
-                            scanXContainer(new File(d, name));
-
-                        } catch (NumberFormatException e) {
-                            AppLog.d(e, d.getName());
-                        }
-
-                    return false;
-                }
-            });
-        }
-    }
-
-    protected abstract boolean doZoomContainer(File dir);
-
-
-    private void scanXContainer(File dir) {
-        if (doDirectory(dir) && doXContainer(dir)) {
-            dir.list(new FilenameFilter() {
-                @Override
-                public boolean accept(File d, String name) {
+                public void execute(Foc child) {
                     try {
-                        x = Integer.decode(name);
-                        scanYContainer(new File(d, name));
+                        zoom = Short.decode(child.getName());
+                        scanXContainer(child);
 
                     } catch (NumberFormatException e) {
-                        AppLog.d(e, d.getName());
+                        AppLog.d(e, child.getName());
                     }
-                    return false;
+
                 }
             });
         }
     }
 
-    protected abstract boolean doXContainer(File dir);
+    protected abstract boolean doZoomContainer(Foc dir);
 
 
-    private void scanYContainer(File dir) {
-        if (doDirectory(dir) && doYContainer(dir)) {
-            dir.list(new FilenameFilter() {
+    private void scanXContainer(Foc dir) {
+
+        if (doXContainer(dir)) {
+            dir.foreachDir(new Foc.Execute() {
                 @Override
-                public boolean accept(File d, String name) {
-                        try {
-                            String[] parts = name.split("\\.");
+                public void execute(Foc child) {
+                    try {
+                        x = Integer.decode(child.getName());
+                        scanYContainer(child);
 
-                            if (parts.length==2) {
-                                y = Integer.decode(parts[0]);
-                                ext = parts[1];
-
-                                scanFile(new File(d, name));
-                            }
-
-
-                        } catch (NumberFormatException e) {
-                            AppLog.d(e, d.getName());
+                    } catch (NumberFormatException e) {
+                        AppLog.d(e, child.getName());
                     }
-                    return false;
+
                 }
             });
         }
     }
 
-    protected abstract boolean doYContainer(File dir);
+    protected abstract boolean doXContainer(Foc dir);
 
 
-    private void scanFile(File file) {
+    private void scanYContainer(Foc dir) {
+        if (doYContainer(dir)) {
+            dir.foreachFile(new Foc.Execute() {
+                @Override
+                public void execute(Foc child) {
+
+                    try {
+                        String[] parts = child.getName().split("\\.");
+
+                        if (parts.length==2) {
+                            y = Integer.decode(parts[0]);
+                            ext = parts[1];
+
+                            scanFile(child);
+                        }
+
+
+                    } catch (NumberFormatException e) {
+                        AppLog.d(e, child.getName());
+                    }
+                }
+            });
+        }
+    }
+
+    protected abstract boolean doYContainer(Foc dir);
+
+
+    private void scanFile(Foc file) {
         if (file.isFile())
             doFile(file);
     }
 
-    protected abstract void doFile(File file);
+    protected abstract void doFile(Foc file);
 
 
-    public static boolean doDirectory(File file) {
-        return file.isDirectory() && !file.isHidden() && isReal(file);
+    public static boolean doDirectory(Foc file) {
+        return file.isDir();
     }
 
 

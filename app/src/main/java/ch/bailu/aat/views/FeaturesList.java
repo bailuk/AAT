@@ -28,12 +28,13 @@ import ch.bailu.aat.osm_features.MapFeaturesParser.OnHaveFeature;
 import ch.bailu.aat.services.icons.IconMapService;
 import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.util.AppHtml;
-import ch.bailu.aat.util.fs.AssetAccess;
+import ch.bailu.aat.util.fs.foc.FocAsset;
 import ch.bailu.aat.util.graphic.SyncTileBitmap;
 import ch.bailu.aat.util.ui.AppDensity;
 import ch.bailu.aat.util.ui.AppLog;
 import ch.bailu.aat.util.ui.AppTheme;
-import ch.bailu.simpleio.io.Access;
+import ch.bailu.simpleio.foc.Foc;
+
 
 public class FeaturesList extends ListView  {
 
@@ -86,14 +87,14 @@ public class FeaturesList extends ListView  {
 
 
         public void loadList(AssetManager assets) throws IOException {
-            ArrayList<String> files = AssetAccess.listAssets(assets, MAP_FEATURES_ASSET);
+            ArrayList<String> files = FocAsset.listAssets(assets, MAP_FEATURES_ASSET);
 
             Collections.sort(files);
             new MapFeaturesParser(assets, this, files);
         }
 
 
-        public void loadList(Access file) throws IOException {
+        public void loadList(Foc file) throws IOException {
             new MapFeaturesParser(this, file);
         }
 
@@ -166,7 +167,7 @@ public class FeaturesList extends ListView  {
 
 
 
-    public void loadList(Access file, IconMapService map) {
+    public void loadList(Foc file, IconMapService map) {
         try {
             new ListLoader(map).loadList(file);
             if (observer != null) observer.onChanged();
@@ -232,11 +233,11 @@ public class FeaturesList extends ListView  {
 //                                       long id) {
 //            ListData d = data.get(index);
 //
-//            if (d.name.length()>1) {
+//            if (d.getName.length()>1) {
 //
 //                String file;
 //                try {
-//                    file = MAP_FEATURES_ASSET+ "/"+d.name;
+//                    file = MAP_FEATURES_ASSET+ "/"+d.getName;
 //                    String content = new AssetAccess(file).contentToString();
 //                    ActivitySwitcher.firstPixelIndex(getContext(), HtmlViewActivity.class, content);
 //

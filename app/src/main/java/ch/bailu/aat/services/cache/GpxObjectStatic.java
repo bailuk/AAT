@@ -22,7 +22,7 @@ import ch.bailu.aat.services.dem.tile.Dem3Tile;
 import ch.bailu.aat.services.dem.tile.ElevationProvider;
 import ch.bailu.aat.services.dem.updater.ElevationUpdaterClient;
 import ch.bailu.aat.util.AppBroadcaster;
-import ch.bailu.aat.util.fs.UriAccess;
+import ch.bailu.aat.util.fs.foc.FocAndroid;
 
 public class GpxObjectStatic extends GpxObject implements ElevationUpdaterClient {
     
@@ -61,7 +61,7 @@ public class GpxObjectStatic extends GpxObject implements ElevationUpdaterClient
                         final String id = toString();
 
                         GpxListReader reader =
-                                new GpxListReader(this, UriAccess.factory(c, id));
+                                new GpxListReader(this, FocAndroid.factory(c, id));
                         if (canContinue()) {
                             gpxList = reader.getGpxList();
                             readyAndLoaded = true;

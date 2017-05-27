@@ -1,11 +1,10 @@
 package ch.bailu.aat.util;
 
-import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 
-import ch.bailu.simpleio.io.FileAccess;
+import ch.bailu.simpleio.foc.Foc;
 import ch.bailu.simpleio.io.Stream;
 
 
@@ -28,14 +27,14 @@ public abstract class TextBackup {
     };
   */
 
-    public static void write(File file, String text) throws IOException{
+    public static void write(Foc file, String text) throws IOException{
         TextBackup b = new TextEditFileBackup(file);
         b.write(text);
     }
     
     
     
-    public static String read(File file) throws IOException {
+    public static String read(Foc file) throws IOException {
         TextBackup b = new TextEditFileBackup(file);
         return b.read();
     }
@@ -45,20 +44,17 @@ public abstract class TextBackup {
     public static class TextEditFileBackup extends TextBackup {
         public static final int MAX_FILE_SIZE=200;
 
-        private final File file;
+        private final Foc file;
 
-        public TextEditFileBackup(File f) throws IOException  {
+        public TextEditFileBackup(Foc f) throws IOException  {
             file = f;
-            if (file.exists()==false) {
-                file.createNewFile();
-            }
 
         }
 
 
 
         public void write(String text) throws IOException {
-            OutputStreamWriter writer = new OutputStreamWriter(new FileOutputStream(file));
+            OutputStreamWriter writer = new OutputStreamWriter(file.openW());
 
             writer.write(text);
             writer.close();
@@ -77,7 +73,7 @@ public abstract class TextBackup {
 
 
         private void readToBuffer(StringBuilder buffer) throws IOException  {
-            Stream stream = new Stream(new FileAccess(file));
+            Stream stream = new Stream(file);
 
             int count = MAX_FILE_SIZE;
 

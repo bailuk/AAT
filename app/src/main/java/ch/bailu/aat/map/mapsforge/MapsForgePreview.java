@@ -16,6 +16,7 @@ import org.mapsforge.map.view.FrameBuffer;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.OutputStream;
 
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.InfoID;
@@ -28,13 +29,14 @@ import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.util.graphic.SyncTileBitmap;
 import ch.bailu.aat.util.ui.AppLog;
+import ch.bailu.simpleio.foc.Foc;
 
 public class MapsForgePreview extends MapsForgeViewBase {
     private static final int BITMAP_SIZE=128;
     private static final Dimension DIM = new Dimension(BITMAP_SIZE, BITMAP_SIZE);
     private static final Source SOURCE = DownloadSource.MAPNIK;
 
-    private final File               imageFile;
+    private final Foc               imageFile;
     private final TileProviderStatic provider;
 
 
@@ -43,7 +45,7 @@ public class MapsForgePreview extends MapsForgeViewBase {
     private final BoundingBox bounding;
     private final Point tlPoint;
 
-    public MapsForgePreview(ServiceContext scontext, GpxInformation info, File out) {
+    public MapsForgePreview(ServiceContext scontext, GpxInformation info, Foc out) {
         super(scontext, MapsForgePreview.class.getSimpleName(), new MapDensity());
 
         layout(0, 0, BITMAP_SIZE, BITMAP_SIZE);
@@ -126,12 +128,12 @@ public class MapsForgePreview extends MapsForgeViewBase {
 
 
         try {
-            FileOutputStream outStream = new FileOutputStream(imageFile);
+            OutputStream outStream = imageFile.openW();
             bitmap.getAndroidBitmap().compress(Bitmap.CompressFormat.PNG, 90, outStream);
             outStream.close();
             AppBroadcaster.broadcast(getContext(),
                     AppBroadcaster.FILE_CHANGED_ONDISK,
-                    imageFile.getAbsolutePath(),
+                    imageFile.toString(),
                     getClass().getName());
 
         } catch (Exception e) {

@@ -3,14 +3,13 @@ package ch.bailu.aat.services.render;
 import org.mapsforge.core.graphics.TileBitmap;
 import org.mapsforge.map.rendertheme.XmlRenderTheme;
 
-import java.io.File;
-import java.io.FilenameFilter;
 import java.util.ArrayList;
 
 import ch.bailu.aat.services.cache.MapsForgeTileObject;
+import ch.bailu.simpleio.foc.Foc;
 
 public class Configuration {
-    private final ArrayList<File> mapFiles = new ArrayList<>(10);
+    private final ArrayList<Foc> mapFiles = new ArrayList<>(10);
 
     private Renderer renderer;
     private String themeID;
@@ -28,7 +27,7 @@ public class Configuration {
         return renderer != null;     }
 
 
-    public void configure(File mapDir, Caches caches, XmlRenderTheme theme, String tID) {
+    public void configure(Foc mapDir, Caches caches, XmlRenderTheme theme, String tID) {
         if (isConfigured() == false && configureMapList(mapDir)) {
             themeID = tID;
             renderer = new Renderer(theme, caches.get(themeID), mapFiles);
@@ -43,18 +42,16 @@ public class Configuration {
     }
 
 
-    private boolean configureMapList(File dir) {
+    private boolean configureMapList(Foc dir) {
         mapFiles.clear();
 
 
-        dir.list(new FilenameFilter() {
+        dir.foreachFile(new Foc.Execute() {
             @Override
-            public boolean accept(File dir, String name) {
-                if (name.endsWith(".map")) {
-                    File file = new File(dir, name);
-                    if (file.isFile()) mapFiles.add(file);
+            public void execute(Foc child) {
+                if (child.getName().endsWith(".map")) {
+                    mapFiles.add(child);
                 }
-                return false;
             }
         });
 

@@ -7,6 +7,7 @@ import java.io.File;
 import ch.bailu.aat.preferences.SolidTrimIndex;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.util.AppBroadcaster;
+import ch.bailu.simpleio.foc.Foc;
 
 public class StateMachine implements State {
 
@@ -15,7 +16,7 @@ public class StateMachine implements State {
     public TilesList list = null;
     public final SourceSummaries summaries;
 
-    public File baseDirectory;
+    public Foc baseDirectory;
 
     public final Context context;
 
@@ -90,8 +91,8 @@ public class StateMachine implements State {
 
         String name = summaries.get(index).getName();
 
-        File subDirectory = baseDirectory;
-        if (index > 0) subDirectory = new File(baseDirectory, name);
+        Foc subDirectory = baseDirectory;
+        if (index > 0) subDirectory = baseDirectory.child(name);
 
         return new SelectedTileDirectoryInfo(baseDirectory, subDirectory, name, index);
     }

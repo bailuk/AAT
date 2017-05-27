@@ -11,7 +11,7 @@ import ch.bailu.aat.description.DistanceDescription;
 import ch.bailu.aat.description.NameDescription;
 import ch.bailu.aat.description.TrackSizeDescription;
 import ch.bailu.aat.util.fs.AppDirectory;
-
+import ch.bailu.simpleio.foc.Foc;
 
 
 public class OverlayListActivity extends AbsGpxListActivity {
@@ -41,7 +41,7 @@ public class OverlayListActivity extends AbsGpxListActivity {
 
 
     @Override
-    public File getDirectory() {
+    public Foc getDirectory() {
         return AppDirectory.getDataDirectory(this, AppDirectory.DIR_OVERLAY); 
     }
 

@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import ch.bailu.aat.R;
 import ch.bailu.aat.util.fs.AndroidVolumes;
 import ch.bailu.aat.util.fs.AppDirectory;
+import ch.bailu.simpleio.foc.Foc;
 
 public class SolidExternalDirectory extends SolidFile {
     public SolidExternalDirectory(Context c) {
@@ -34,14 +35,14 @@ public class SolidExternalDirectory extends SolidFile {
 
 
         for (String dir : KNOWN_DIRS) {
-            for (File vol : volumes.getVolumes()) {
-                add_w(list, new File(vol, dir));
+            for (Foc vol : volumes.getVolumes()) {
+                add_w(list, vol.child(dir));
             }
         }
 
         for (String dir : KNOWN_DIRS) {
-            for (File vol : volumes.getVolumes()) {
-                add_ro(list, new File(vol, dir));
+            for (Foc vol : volumes.getVolumes()) {
+                add_ro(list, vol.child(dir));
             }
         }
 

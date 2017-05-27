@@ -13,6 +13,8 @@ import ch.bailu.aat.util.AppIntent;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.cache.ImageObject;
 import ch.bailu.aat.services.cache.ObjectHandle;
+import ch.bailu.simpleio.foc.Foc;
+import ch.bailu.simpleio.foc.FocFile;
 
 public class PreviewView extends ImageView {
     private boolean isAttached=false;
@@ -20,7 +22,7 @@ public class PreviewView extends ImageView {
     private final ServiceContext scontext;
 
     private ImageObject imageHandle=ImageObject.NULL;
-    private File        imageToLoad=null;
+    private Foc        imageToLoad=null;
     
     public PreviewView(ServiceContext sc) {
         super(sc.getContext());
@@ -30,14 +32,14 @@ public class PreviewView extends ImageView {
     
     
     public void setFilePath(String fileID) {
-        final File file = AppDirectory.getPreviewFile(new File(fileID));
+        final Foc file = AppDirectory.getPreviewFile(new FocFile(new File(fileID)));
         setPreviewPath(file);
         loadAndDisplayImage();
     }
     
     
 
-    public void setPreviewPath(File file) {
+    public void setPreviewPath(Foc file) {
         imageToLoad = file;
         loadAndDisplayImage();
     }
@@ -59,9 +61,9 @@ public class PreviewView extends ImageView {
     }
 
 
-    private boolean loadImage(File f) {
+    private boolean loadImage(Foc f) {
         if (f.canRead()) {
-            final ObjectHandle  h=scontext.getCacheService().getObject(f.getAbsolutePath(), new ImageObject.Factory());
+            final ObjectHandle  h=scontext.getCacheService().getObject(f.toString(), new ImageObject.Factory());
 
             if (ImageObject.class.isInstance(h)) {
                 imageHandle = (ImageObject) h;

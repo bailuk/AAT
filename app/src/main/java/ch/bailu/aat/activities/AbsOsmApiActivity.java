@@ -36,6 +36,7 @@ import ch.bailu.aat.views.NodeListView;
 import ch.bailu.aat.views.PercentageLayout;
 import ch.bailu.aat.views.TagEditor;
 import ch.bailu.aat.views.preferences.AddOverlayDialog;
+import ch.bailu.simpleio.foc.Foc;
 
 
 public abstract class AbsOsmApiActivity extends AbsDispatcher implements OnClickListener {
@@ -236,10 +237,12 @@ public abstract class AbsOsmApiActivity extends AbsDispatcher implements OnClick
 
     private void saveCopy() {
         try {
-            final File source = osmApi.getResultFile();
-            final File target = getOverlayFile();
+            final Foc source = osmApi.getResultFile();
+            final Foc target = getOverlayFile();
 
-            AppDirectory.copyFile(source, target);
+            source.cp(target);
+
+
             AppBroadcaster.broadcast(
                     this, 
                     AppBroadcaster.FILE_CHANGED_ONDISK, 
@@ -252,11 +255,11 @@ public abstract class AbsOsmApiActivity extends AbsDispatcher implements OnClick
     }
 
 
-    private File getOverlayFile() throws IOException {
+    private Foc getOverlayFile() throws IOException {
         final String query = TextBackup.read(osmApi.getQueryFile());
         final String prefix = OsmApiHelper.getFilePrefix(query);
         final String extension = osmApi.getFileExtension();
-        final File directory = AppDirectory.getDataDirectory(this, AppDirectory.DIR_OVERLAY);
+        final Foc directory = AppDirectory.getDataDirectory(this, AppDirectory.DIR_OVERLAY);
 
         return AppDirectory.generateUniqueFilePath(directory, prefix, extension);
     }
@@ -273,9 +276,9 @@ public abstract class AbsOsmApiActivity extends AbsDispatcher implements OnClick
 
     private static class ApiQueryHandle extends DownloadHandle {
         private final String queryString;
-        private final File queryFile;
+        private final Foc queryFile;
 
-        public ApiQueryHandle(String source, File target, String qs, File qf) {
+        public ApiQueryHandle(String source, Foc target, String qs, Foc qf) {
             super(source, target);
             queryString = qs;
             queryFile   = qf;

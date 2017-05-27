@@ -56,7 +56,7 @@ public class DirectoryMenu extends AbsMenu {
 
         } else if (item == get) {
             FileIntent.browse(sdirectory.getContext(), new Intent(),
-                    Uri.fromFile(sdirectory.getValueAsFile()));
+                    Uri.parse(sdirectory.getValueAsFile().toString()));
 
         } else if (item == clipboard) {
             new Clipboard(sdirectory.getContext()).setText(sdirectory.getLabel(),

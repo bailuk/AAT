@@ -5,6 +5,8 @@ import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 
 import java.io.File;
 
+import ch.bailu.simpleio.foc.Foc;
+
 public class SolidOverlayFile  implements SolidTypeInterface {
     private static final String KEY_NAME="overlay_path_";
     private static final String KEY_ENABLED="overlay_enabled_";
@@ -21,9 +23,9 @@ public class SolidOverlayFile  implements SolidTypeInterface {
     }
 
 
-    public void setPath(File file) {
-        if (file.exists()) {
-            path.setValue(file.getAbsolutePath());
+    public void setPath(Foc file) {
+        if (file.isReachable()) {
+            path.setValue(file.toString());
             enabled.setValue(true);
         }
     }

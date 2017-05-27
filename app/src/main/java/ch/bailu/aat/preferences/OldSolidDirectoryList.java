@@ -6,6 +6,9 @@ import android.os.Environment;
 import java.io.File;
 import java.util.ArrayList;
 
+import ch.bailu.aat.util.fs.foc.FocAndroid;
+import ch.bailu.simpleio.foc.Foc;
+
 public abstract class OldSolidDirectoryList extends SolidIndexList {
 
 
@@ -37,8 +40,8 @@ public abstract class OldSolidDirectoryList extends SolidIndexList {
         return getValueAsString();
     }
 
-    public File toFile() {
-        return new File(getValueAsString());
+    public Foc toFile() {
+        return FocAndroid.factory(getContext(), getValueAsString());
     }
     
 

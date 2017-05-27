@@ -120,7 +120,7 @@ public class MainActivity extends AbsDispatcher {
 
         public void setText() {
 
-            if (JFile.canRead(sdirectory.getValueAsFile())) {
+            if (sdirectory.getValueAsFile().canRead()) {
                 setVisibility(VISIBLE);
             } else {
                 setVisibility(GONE);
@@ -209,7 +209,7 @@ public class MainActivity extends AbsDispatcher {
         }
 
         public void setText() {
-            setText(AppDirectory.getDataDirectory(getContext(), directory).getAbsolutePath());
+            setText(AppDirectory.getDataDirectory(getContext(), directory).toString());
         }
 
         @Override

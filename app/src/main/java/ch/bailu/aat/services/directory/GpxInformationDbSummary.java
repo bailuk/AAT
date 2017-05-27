@@ -2,8 +2,6 @@ package ch.bailu.aat.services.directory;
 
 import android.database.Cursor;
 
-import java.io.File;
-
 import ch.bailu.aat.gpx.GpxAttributesStatic;
 import ch.bailu.aat.gpx.GpxBigDelta;
 import ch.bailu.aat.gpx.GpxInformation;
@@ -12,12 +10,13 @@ import ch.bailu.aat.gpx.GpxPoint;
 import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.gpx.MaxSpeed;
 import ch.bailu.aat.gpx.interfaces.GpxType;
+import ch.bailu.simpleio.foc.Foc;
 
 public class GpxInformationDbSummary extends GpxInformation {
     private final GpxList list;
-    private final File directory;
+    private final Foc directory;
     
-    public GpxInformationDbSummary(File dir, Cursor cursor) {
+    public GpxInformationDbSummary(Foc dir, Cursor cursor) {
         directory = dir;
         list = new GpxList(GpxType.WAY, new MaxSpeed.Raw());
         
@@ -51,7 +50,7 @@ public class GpxInformationDbSummary extends GpxInformation {
     
     @Override
     public String getPath() {
-        return directory.getAbsolutePath();
+        return directory.toString();
     }
 
     @Override

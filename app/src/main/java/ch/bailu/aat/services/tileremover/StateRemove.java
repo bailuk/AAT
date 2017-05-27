@@ -6,6 +6,7 @@ import java.util.Iterator;
 import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.util.fs.JFile;
 import ch.bailu.aat.util.ui.AppLog;
+import ch.bailu.simpleio.foc.Foc;
 
 public class StateRemove implements State, Runnable {
     private final StateMachine state;
@@ -48,7 +49,7 @@ public class StateRemove implements State, Runnable {
 
         while (iterator.hasNext() && keepUp()) {
             final TileFile t = iterator.next();
-            final File f = state.summaries.toFile(state.baseDirectory, t);
+            final Foc f = state.summaries.toFile(state.baseDirectory, t);
 
             delete(f, t);
         }
@@ -56,15 +57,15 @@ public class StateRemove implements State, Runnable {
         state.list.resetToRemove();
 
         if (keepUp()) {
-            JFile.deleteEmptiyDirectoriesRecursive(state.baseDirectory);
+            state.baseDirectory.rmdirs();
             state.broadcast(AppBroadcaster.TILE_REMOVER_REMOVE);
         }
 
         state.setFromClass(nextState);
     }
 
-    private boolean delete(File f, TileFile t) {
-        if (JFile.delete(f)) {
+    private boolean delete(Foc f, TileFile t) {
+        if (f.rm()) {
             state.summaries.addFileRemoved(t);
             state.broadcastLimited( AppBroadcaster.TILE_REMOVER_REMOVE);
             return true;

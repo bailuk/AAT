@@ -6,6 +6,8 @@ import android.net.Uri;
 
 import java.io.File;
 
+import ch.bailu.simpleio.foc.Foc;
+
 public class FileIntent {
 
 
@@ -22,13 +24,13 @@ public class FileIntent {
     }
 
 
-    public static void view(Context context, Intent intent, File file) {
+    public static void view(Context context, Intent intent, Foc file) {
         if (file.canRead()) {
             
             intent.setAction(Intent.ACTION_VIEW);
             
-            if (file.isDirectory()) {
-                intent.setData(toUri(file));
+            if (file.isDir() || file.toString().startsWith("content:/")) {
+                intent.setData(Uri.parse(file.toString()));
             } else {
                 intent.setData(toContentUri(file));
             }
@@ -49,12 +51,12 @@ public class FileIntent {
     }
     
     
-    public static Uri toContentUri(File file) {
-        return Uri.parse("content://ch.bailu.aat.gpx" + file.getAbsolutePath());
+    public static Uri toContentUri(Foc file) {
+        return Uri.parse("content://ch.bailu.aat.gpx" + file.toString());
     }
 
     
-   public static void send(Context context, Intent intent, File file) {
+   public static void send(Context context, Intent intent, Foc file) {
         /*
           This is the correct implementation for sending one file as an e-mail attachment.
           It does, however, not work with private files.
@@ -65,7 +67,7 @@ public class FileIntent {
         
         intent.setAction(Intent.ACTION_SEND);
         intent.putExtra(Intent.EXTRA_SUBJECT, file.getName());
-        intent.putExtra(Intent.EXTRA_TEXT, file.getAbsolutePath());
+        intent.putExtra(Intent.EXTRA_TEXT, file.toString());
         intent.putExtra(Intent.EXTRA_STREAM, uri);
         setType(intent, file); // only works with type setCopy (gmail and android mail)
         
@@ -89,7 +91,7 @@ public class FileIntent {
     }
 
 
-    private static void setType(Intent intent, File file) {
+    private static void setType(Intent intent, Foc file) {
         String type = mimeTypeFromFileName(file.getName());
         
         if (type != null) {

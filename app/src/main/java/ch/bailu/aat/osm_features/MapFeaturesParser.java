@@ -5,8 +5,8 @@ import android.content.res.AssetManager;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import ch.bailu.aat.util.fs.AssetAccess;
-import ch.bailu.simpleio.io.Access;
+import ch.bailu.aat.util.fs.foc.FocAsset;
+import ch.bailu.simpleio.foc.Foc;
 import ch.bailu.simpleio.io.Stream;
 
 public class MapFeaturesParser {
@@ -25,7 +25,7 @@ public class MapFeaturesParser {
     }
     
     
-    public MapFeaturesParser(OnHaveFeature hf, Access file) throws IOException {
+    public MapFeaturesParser(OnHaveFeature hf, Foc file) throws IOException {
         haveFeature = hf;
         
         parseFeatures(file);
@@ -39,7 +39,7 @@ public class MapFeaturesParser {
 
 
         for (String file : files) {
-            parseSummary(new AssetAccess(assets, file));
+            parseSummary(new FocAsset(assets, file));
         }
     }
     
@@ -66,7 +66,7 @@ public class MapFeaturesParser {
     
 
     
-    private void parseSummary(Access file) throws IOException {
+    private void parseSummary(Foc file) throws IOException {
         Stream in = new Stream(file);
         
         parseSummary(in);
@@ -76,7 +76,7 @@ public class MapFeaturesParser {
     }
     
     
-    private void parseFeatures(Access file) throws IOException {
+    private void parseFeatures(Foc file) throws IOException {
         Stream in = new Stream(file);
 
         parseSummary(in);

@@ -25,9 +25,11 @@ import ch.bailu.aat.preferences.SolidDirectoryQuery;
 import ch.bailu.aat.services.directory.Iterator;
 import ch.bailu.aat.util.HtmlBuilderGpx;
 import ch.bailu.aat.util.fs.FileAction;
+import ch.bailu.aat.util.fs.foc.FocAndroid;
 import ch.bailu.aat.util.ui.ToolTip;
 import ch.bailu.aat.views.ControlBar;
 import ch.bailu.aat.views.PreviewView;
+import ch.bailu.simpleio.foc.Foc;
 
 public class FileControlBarLayer extends ControlBarLayer {
 
@@ -188,9 +190,9 @@ public class FileControlBarLayer extends ControlBarLayer {
 
         GpxPointNode node =  selector.getSelectedNode();
         if (node != null && selectedFile != null) {
-            File file = new File(selectedFile);
+            Foc file = FocAndroid.factory(acontext,selectedFile);
 
-            if (file.exists()) {
+            if (file.isReachable()) {
                 if        (v == action) {
                     new FileMenu(acontext, file).showAsPopup(acontext, v);
                 } else if (v == overlay) {

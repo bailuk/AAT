@@ -14,6 +14,7 @@ import ch.bailu.aat.description.NameDescription;
 import ch.bailu.aat.description.TimeDescription;
 import ch.bailu.aat.description.TrackSizeDescription;
 import ch.bailu.aat.preferences.SolidPreset;
+import ch.bailu.simpleio.foc.Foc;
 
 public class TrackListActivity extends AbsGpxListActivity {
 
@@ -48,7 +49,7 @@ public class TrackListActivity extends AbsGpxListActivity {
 
 
     @Override
-    public File getDirectory() {
+    public Foc getDirectory() {
         return new SolidPreset(this).getDirectory();
     }
 

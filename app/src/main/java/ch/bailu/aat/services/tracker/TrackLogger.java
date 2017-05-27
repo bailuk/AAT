@@ -15,6 +15,7 @@ import ch.bailu.aat.gpx.interfaces.GpxType;
 import ch.bailu.aat.gpx.writer.GpxListWriter;
 import ch.bailu.aat.util.fs.AppDirectory;
 import ch.bailu.aat.util.ui.AppLog;
+import ch.bailu.simpleio.foc.Foc;
 
 public class TrackLogger extends Logger {
     final public static int MIN_TRACKPOINTS=5;
@@ -22,7 +23,7 @@ public class TrackLogger extends Logger {
     private boolean requestSegment=true;
     private final GpxList track=new GpxList(GpxType.TRK, new MaxSpeed.Samples());
 
-    final private File logFile;
+    final private Foc logFile;
     final private GpxListWriter writer;
     final private int presetIndex;
     final private Context context;
@@ -44,7 +45,7 @@ public class TrackLogger extends Logger {
 
     @Override
     public String getPath() {
-        return logFile.getPath();
+        return logFile.toString();
     }
 
     @Override
@@ -91,10 +92,10 @@ public class TrackLogger extends Logger {
             writer.close();
 
             if (track.getPointList().size()>MIN_TRACKPOINTS) {
-                logFile.renameTo(generateTargetFile(context, presetIndex));
+                new File(logFile.toString()).renameTo(new File(generateTargetFile(context, presetIndex).toString()));
 
             } else{
-                logFile.delete();
+                logFile.rm();
             }
 
         } catch (IOException e) {
@@ -103,7 +104,7 @@ public class TrackLogger extends Logger {
 
     }
     
-    public static File generateTargetFile(Context context, int preset) throws IOException {
+    public static Foc generateTargetFile(Context context, int preset) throws IOException {
         return AppDirectory.generateUniqueFilePath(
                 AppDirectory.getTrackListDirectory(context, preset),
                 AppDirectory.generateDatePrefix(),

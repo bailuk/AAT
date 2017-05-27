@@ -13,7 +13,9 @@ import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.background.DownloadHandle;
 import ch.bailu.aat.services.background.FileHandle;
 import ch.bailu.aat.util.AppBroadcaster;
+import ch.bailu.aat.util.fs.foc.FocAndroid;
 import ch.bailu.aat.util.graphic.SyncTileBitmap;
+import ch.bailu.simpleio.foc.Foc;
 
 
 public class BitmapTileObject extends TileObject {
@@ -35,7 +37,7 @@ public class BitmapTileObject extends TileObject {
         tile = t;
         source=s;
         url = source.getTileURLString(tile);
-        download = new FileDownloader(url, new File(toString()), sc);
+        download = new FileDownloader(url, FocAndroid.factory(sc.getContext(),toString()), sc);
 
         sc.getCacheService().addToBroadcaster(this);
     }
@@ -67,7 +69,7 @@ public class BitmapTileObject extends TileObject {
     @Override
     public void reDownload(ServiceContext sc) {
         if (download.isLocked()==false) {
-            toFile().delete();
+            toFile(sc.getContext()).rm();
             if (isDownloadable()) sc.getBackgroundService().download(download);
         }
     }
@@ -184,7 +186,7 @@ public class BitmapTileObject extends TileObject {
 
         private final ServiceContext scontext;
 
-        public FileDownloader(String source, File target, ServiceContext sc) {
+        public FileDownloader(String source, Foc target, ServiceContext sc) {
             super(source, target);
             scontext = sc;
         }
@@ -202,7 +204,7 @@ public class BitmapTileObject extends TileObject {
         private boolean isInCache() {
             boolean inCache = false;
             if (scontext.lock()) {
-                ObjectHandle obj = scontext.getCacheService().getObject(getFile().getAbsolutePath());
+                ObjectHandle obj = scontext.getCacheService().getObject(getFile().toString());
                 inCache = obj instanceof BitmapTileObject;
                 obj.free();
                 scontext.free();

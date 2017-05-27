@@ -11,16 +11,17 @@ import java.util.Locale;
 import ch.bailu.aat.gpx.interfaces.GpxPointInterface;
 import ch.bailu.aat.gpx.interfaces.GpxType;
 import ch.bailu.aat.util.ui.AppTheme;
+import ch.bailu.simpleio.foc.Foc;
 
 public abstract class GpxWriter {
     private BufferedWriter output=null;
 
 
-    public GpxWriter(File file) throws FileNotFoundException {
-        output = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file)),8*1024);
+    public GpxWriter(Foc file) throws IOException {
+        output = new BufferedWriter(new OutputStreamWriter(file.openW()),8*1024);
 
     }
-    public static GpxWriter factory(File file, int type) throws FileNotFoundException {
+    public static GpxWriter factory(Foc file, int type) throws IOException {
         if (type == GpxType.TRK) {
             return new TrackWriter(file);
         } else if (type == GpxType.RTE) {

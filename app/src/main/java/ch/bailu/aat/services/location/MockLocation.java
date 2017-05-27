@@ -2,7 +2,6 @@ package ch.bailu.aat.services.location;
 
 import android.content.Context;
 
-import java.io.File;
 import java.io.IOException;
 
 import ch.bailu.aat.coordinates.BoundingBoxE6;
@@ -12,10 +11,11 @@ import ch.bailu.aat.gpx.MaxSpeed;
 import ch.bailu.aat.gpx.StateID;
 import ch.bailu.aat.gpx.interfaces.GpxType;
 import ch.bailu.aat.gpx.parser.GpxListReader;
-import ch.bailu.aat.util.ui.AppLog;
-import ch.bailu.aat.util.Timer;
 import ch.bailu.aat.preferences.SolidMockLocationFile;
-import ch.bailu.simpleio.io.FileAccess;
+import ch.bailu.aat.util.Timer;
+import ch.bailu.aat.util.fs.foc.FocAndroid;
+import ch.bailu.aat.util.ui.AppLog;
+import ch.bailu.simpleio.foc.Foc;
 
 public class MockLocation extends LocationStackChainedItem implements Runnable{
 
@@ -36,8 +36,8 @@ public class MockLocation extends LocationStackChainedItem implements Runnable{
         timer=new Timer(this, INTERVAL);
         
         try {
-        	File file = new File(new SolidMockLocationFile(c).getValueAsString());
-        	mockData = new GpxListReader(new FileAccess(file)).getGpxList();
+        	Foc file = FocAndroid.factory(c,(new SolidMockLocationFile(c).getValueAsString()));
+        	mockData = new GpxListReader(file).getGpxList();
             
             timer.kick();
             sendState(StateID.WAIT);

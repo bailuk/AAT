@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import ch.bailu.aat.R;
 import ch.bailu.aat.util.fs.AppDirectory;
 import ch.bailu.aat.util.fs.AndroidVolumes;
+import ch.bailu.simpleio.foc.Foc;
 
 public class SolidDataDirectory extends SolidFile {
 
@@ -36,7 +37,7 @@ public class SolidDataDirectory extends SolidFile {
     }
 
     private String getDefaultValue() {
-        final File f = new OldSolidDataDirectory(getContext()).toFile();
+        final Foc f = new OldSolidDataDirectory(getContext()).toFile();
 
         ArrayList<String> list = new ArrayList<>(5);
 
@@ -46,7 +47,7 @@ public class SolidDataDirectory extends SolidFile {
             list = buildSelection(list);
 
         if (list.size()==0)
-            list.add(f.getAbsolutePath());
+            list.add(f.toString());
 
         return list.get(0);
     }
@@ -57,18 +58,18 @@ public class SolidDataDirectory extends SolidFile {
 
         AndroidVolumes volumes = new AndroidVolumes(getContext());
 
-        for (File vol : volumes.getVolumes()) {
-            File aat_data = new File(vol, AppDirectory.DIR_AAT_DATA);
+        for (Foc vol : volumes.getVolumes()) {
+            Foc aat_data = vol.child(AppDirectory.DIR_AAT_DATA);
             add_w(list, aat_data);
         }
 
-        for (File vol : volumes.getVolumes()) {
-            File aat_data = new File(vol, AppDirectory.DIR_AAT_DATA);
-            if (aat_data.exists()==false)
+        for (Foc vol : volumes.getVolumes()) {
+            Foc aat_data = vol.child(AppDirectory.DIR_AAT_DATA);
+            if (aat_data.isReachable()==false)
                 add_w(list, vol, aat_data);
         }
 
-        File[] files = volumes.getFiles();
+        Foc[] files = volumes.getFiles();
         for (int i=1; i<files.length; i++) {
             add_w(list, files[i]);
         }
@@ -77,8 +78,8 @@ public class SolidDataDirectory extends SolidFile {
             add_ro(list, files[i]);
         }
 
-        for (File vol : volumes.getVolumes()) {
-            File aat_data = new File(vol, AppDirectory.DIR_AAT_DATA);
+        for (Foc vol : volumes.getVolumes()) {
+            Foc aat_data = vol.child(AppDirectory.DIR_AAT_DATA);
             add_ro(list, vol, aat_data);
         }
 

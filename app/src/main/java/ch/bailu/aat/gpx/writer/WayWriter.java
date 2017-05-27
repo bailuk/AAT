@@ -1,16 +1,16 @@
 package ch.bailu.aat.gpx.writer;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Locale;
 
 import ch.bailu.aat.gpx.interfaces.GpxPointInterface;
 import ch.bailu.aat.services.dem.tile.ElevationProvider;
+import ch.bailu.simpleio.foc.Foc;
 
 public class WayWriter extends GpxWriter {
 
-    public WayWriter(File file) throws FileNotFoundException {
+    public WayWriter(Foc file) throws IOException {
         super(file);
     }
 

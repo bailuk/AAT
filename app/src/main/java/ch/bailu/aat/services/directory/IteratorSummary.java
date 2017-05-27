@@ -7,6 +7,7 @@ import java.io.File;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.services.ServiceContext;
+import ch.bailu.simpleio.foc.Foc;
 
 public class IteratorSummary extends IteratorAbstract {
 
@@ -29,7 +30,7 @@ public class IteratorSummary extends IteratorAbstract {
     }
 
     @Override
-    public void onCursorChanged(Cursor cursor, File directory,  String fid) {
+    public void onCursorChanged(Cursor cursor, Foc directory, String fid) {
             info = new GpxInformationDbSummary(directory, cursor);
     }
 

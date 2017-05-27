@@ -8,6 +8,7 @@ import java.io.File;
 
 import ch.bailu.aat.util.fs.AppDirectory;
 import ch.bailu.aat.util.ContextWrapperInterface;
+import ch.bailu.simpleio.foc.Foc;
 
 public abstract class UnitTest extends Assert implements ContextWrapperInterface {
     private final Context context;
@@ -27,7 +28,7 @@ public abstract class UnitTest extends Assert implements ContextWrapperInterface
     }
     
     
-    public static File getTestDirectory(Context context) {
+    public static Foc getTestDirectory(Context context) {
         return AppDirectory.getDataDirectory(context, AppDirectory.DIR_TEST);
     }
 }

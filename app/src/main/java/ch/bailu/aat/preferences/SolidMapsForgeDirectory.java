@@ -7,6 +7,8 @@ import java.util.ArrayList;
 
 import ch.bailu.aat.util.fs.AppDirectory;
 import ch.bailu.aat.util.fs.AndroidVolumes;
+import ch.bailu.aat.util.fs.foc.FocAndroid;
+import ch.bailu.simpleio.foc.Foc;
 
 public class SolidMapsForgeDirectory extends SolidFile {
     public final static String MAPS_DIR = "maps";
@@ -45,7 +47,7 @@ public class SolidMapsForgeDirectory extends SolidFile {
 
         list = buildSelection(list);
 
-        add_w(list, getContext().getExternalFilesDir(null));
+        add_w(list, FocAndroid.factory(getContext(),getContext().getExternalFilesDir(null).getAbsolutePath()));
 
         if (list.size()>0) {
             return list.get(0);
@@ -59,11 +61,10 @@ public class SolidMapsForgeDirectory extends SolidFile {
 
         AndroidVolumes volumes = new AndroidVolumes(getContext());
 
-        for (File f : volumes.getVolumes()) {
-            final File maps1 = new File(f, MAPS_DIR);
-            final File maps2 = new File(f,
-                    AppDirectory.DIR_AAT_DATA + "/" + MAPS_DIR);
-            final File maps3 = new File(f, ORUX_MAPS_DIR);
+        for (Foc f : volumes.getVolumes()) {
+            final Foc maps1 = f.child(MAPS_DIR);
+            final Foc maps2 = f.child(AppDirectory.DIR_AAT_DATA + "/" + MAPS_DIR);
+            final Foc maps3 = f.child(ORUX_MAPS_DIR);
 
             add_r(list, maps1);
             add_subdirectories_r(list, maps1);

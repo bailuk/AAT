@@ -2,7 +2,6 @@ package ch.bailu.aat.services.background;
 
 import android.content.Context;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -11,7 +10,7 @@ import java.net.URL;
 
 import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.util.ui.AppTheme;
-import ch.bailu.simpleio.io.FileAccess;
+import ch.bailu.simpleio.foc.Foc;
 
 public class DownloadHandle extends ProcessHandle {
 
@@ -23,12 +22,12 @@ public class DownloadHandle extends ProcessHandle {
     private final static int IO_BUFFER_SIZE=8*1024;
 
     private final String url;
-    private final File file;
+    private final Foc file;
 
     private boolean downloadLock=false;
 
 
-    public DownloadHandle(String source, File target) {
+    public DownloadHandle(String source, Foc target) {
         file = target;
         url = source;
     }
@@ -41,7 +40,7 @@ public class DownloadHandle extends ProcessHandle {
             return r;
             
         } catch (IOException e) {
-            file.delete();
+            file.rm();
             return 0;
         }
     }
@@ -61,7 +60,7 @@ public class DownloadHandle extends ProcessHandle {
 
 
 
-    private long download(URL url, File file) throws IOException {
+    private long download(URL url, Foc file) throws IOException {
         int count;
         long total=0;
         InputStream input = null;
@@ -75,7 +74,7 @@ public class DownloadHandle extends ProcessHandle {
             input = openInput(connection);
 
             downloadLock=true;
-            output = FileAccess.openOutput(file);
+            output = file.openW();
 
             while (( count = input.read(buffer)) != -1) {
                 total+=count;
@@ -84,10 +83,10 @@ public class DownloadHandle extends ProcessHandle {
 
 
         } finally {    
-            FileAccess.close(output);
+            Foc.close(output);
             downloadLock = false;
 
-            FileAccess.close(input);
+            Foc.close(input);
             if (connection != null) connection.disconnect();
         }
 
@@ -113,7 +112,7 @@ public class DownloadHandle extends ProcessHandle {
 
 
 
-    public File getFile() {
+    public Foc getFile() {
         return file;
     }
 

@@ -5,23 +5,21 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.net.Uri;
 
-import java.io.File;
-
 import ch.bailu.aat.R;
 import ch.bailu.aat.util.fs.AppDirectory;
 import ch.bailu.aat.util.fs.FileAction;
-import ch.bailu.aat.util.ui.AppLog;
+import ch.bailu.simpleio.foc.Foc;
 
 public class AppSelectDirectoryDialog  implements  DialogInterface.OnClickListener {
     private final Uri uri;
-    private final File directories[];
+    private final Foc directories[];
 
 
     private final Context context;
     public AppSelectDirectoryDialog (Context c, Uri u) {
         context=c;
         uri = u;
-        directories = new File[] {
+        directories = new Foc[] {
                 AppDirectory.getTrackListDirectory(context, 0),
                 AppDirectory.getTrackListDirectory(context, 1),
                 AppDirectory.getTrackListDirectory(context, 2),

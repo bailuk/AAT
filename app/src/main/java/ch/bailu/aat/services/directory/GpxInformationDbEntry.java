@@ -6,12 +6,13 @@ import java.io.File;
 
 import ch.bailu.aat.coordinates.BoundingBoxE6;
 import ch.bailu.aat.gpx.GpxInformation;
+import ch.bailu.simpleio.foc.Foc;
 
 public class GpxInformationDbEntry extends GpxInformation {
     private final Cursor cursor;
-    private final File parent;
+    private final Foc parent;
 
-    public GpxInformationDbEntry(Cursor c, File p) {
+    public GpxInformationDbEntry(Cursor c, Foc p) {
         parent = p;
         cursor = c;
     }
@@ -25,7 +26,7 @@ public class GpxInformationDbEntry extends GpxInformation {
 
     @Override
     public String getPath() {
-        return new File(parent, getName()).getAbsolutePath();
+        return parent.child(getName()).toString();
     }
 
     @Override

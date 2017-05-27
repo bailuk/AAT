@@ -13,6 +13,7 @@ import ch.bailu.aat.util.ui.AppLog;
 import ch.bailu.aat.preferences.SolidDirectoryQuery;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.VirtualService;
+import ch.bailu.simpleio.foc.Foc;
 
 public class DirectoryService extends VirtualService implements OnSharedPreferenceChangeListener{
 
@@ -51,18 +52,18 @@ public class DirectoryService extends VirtualService implements OnSharedPreferen
 
 
     private void logReadOnly() {
-        AppLog.e(getContext(), getDir().getAbsolutePath() + " is read only.*");
+        AppLog.e(getContext(), getDir().toString() + " is read only.*");
     }
 
 
     private void logNoAccess() {
-        AppLog.e(getContext(), getDir().getAbsolutePath() + " no access.*");
+        AppLog.e(getContext(), getDir().toString() + " no access.*");
     }
 
 
 
     private void open() {
-        final File db = AppDirectory.getCacheDb(getDir());
+        final Foc db = AppDirectory.getCacheDb(getDir());
 
         try {
             openDataBase(getSContext(), db);
@@ -74,8 +75,8 @@ public class DirectoryService extends VirtualService implements OnSharedPreferen
 
 
 
-    private File getDir() {
-        return new File(sdirectory.getValueAsString());
+    private Foc getDir() {
+        return sdirectory.getValueAsFile();
     }
 
 
@@ -90,7 +91,7 @@ public class DirectoryService extends VirtualService implements OnSharedPreferen
 
 
 
-    private void openDataBase(ServiceContext sc, File path) throws IOException, SQLiteCantOpenDatabaseException {
+    private void openDataBase(ServiceContext sc, Foc path) throws IOException, SQLiteCantOpenDatabaseException {
         database.close();
         database = new GpxDatabase(
                 sc,
@@ -105,7 +106,7 @@ public class DirectoryService extends VirtualService implements OnSharedPreferen
 
 
 
-    public void deleteEntry(File file)  {
+    public void deleteEntry(Foc file)  {
         if (isDirWriteable()) {
             database.deleteEntry(file);
             rescan();
@@ -119,7 +120,7 @@ public class DirectoryService extends VirtualService implements OnSharedPreferen
     public void rescan() {
         if (isDirReadable()) {
             stopSynchronizer();
-            synchronizer = new DirectorySynchronizer(getSContext(), new File(sdirectory.getValueAsString()));
+            synchronizer = new DirectorySynchronizer(getSContext(), sdirectory.getValueAsFile());
         }
     }
 

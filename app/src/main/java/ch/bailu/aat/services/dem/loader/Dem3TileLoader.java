@@ -14,6 +14,7 @@ import ch.bailu.aat.services.dem.tile.Dem3Tile;
 import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.util.AppIntent;
 import ch.bailu.aat.util.Timer;
+import ch.bailu.simpleio.foc.Foc;
 
 public class Dem3TileLoader implements Closeable {
     private static final long MILLIS=1000;
@@ -115,9 +116,9 @@ public class Dem3TileLoader implements Closeable {
 
 
     private void downloadNow(SrtmCoordinates c) {
-        File target = c.toFile(scontext.getContext());
+        Foc target = c.toFile(scontext.getContext());
 
-        if (target.exists() == false) {
+        if (target.isReachable() == false) {
             DownloadHandle handle = new DownloadHandle(c.toURL(), target);
             scontext.getBackgroundService().download(handle);
         }

@@ -8,6 +8,8 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringReader;
 
+import ch.bailu.simpleio.foc.Foc;
+
 public class Stream implements Closeable {
     private final static String CHARSET="UTF-8";
     private final static int BUFFER_BYTES=1024*10;
@@ -16,10 +18,10 @@ public class Stream implements Closeable {
     private final Reader reader;
     private int c=0;
 
-    public Stream(Access file) throws IOException {
+    public Stream(Foc foc) throws IOException {
 
 
-        InputStream istream = file.open_r();
+        InputStream istream = foc.openR();
         Reader ireader = new InputStreamReader(istream, CHARSET);
         reader = new BufferedReader(ireader, BUFFER_BYTES);
     }

@@ -7,9 +7,10 @@ import org.mapsforge.map.rendertheme.InternalRenderTheme;
 import org.mapsforge.map.rendertheme.XmlRenderTheme;
 
 import java.io.File;
-import java.io.FileFilter;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+
+import ch.bailu.simpleio.foc.Foc;
 
 public class SolidRenderTheme extends SolidFile {
 
@@ -78,8 +79,8 @@ public class SolidRenderTheme extends SolidFile {
         list.add(InternalRenderTheme.DEFAULT.toString());
         list.add(InternalRenderTheme.OSMARENDER.toString());
 
-        final File maps = new SolidMapsForgeDirectory(getContext()).getValueAsFile();
-        final File orux = new File(maps, ORUX_THEMES);
+        final Foc maps = new SolidMapsForgeDirectory(getContext()).getValueAsFile();
+        final Foc orux = maps.child(ORUX_THEMES);
         add_xmlInSubdirectories(list,maps);
         add_xmlInSubdirectories(list,orux);
 
@@ -87,24 +88,20 @@ public class SolidRenderTheme extends SolidFile {
         return list;
     }
 
-    public static ArrayList<String> add_xmlInSubdirectories(final ArrayList<String> list, File directory) {
-        directory.listFiles(new FileFilter() {
+    public static ArrayList<String> add_xmlInSubdirectories(final ArrayList<String> list, Foc directory) {
+        directory.foreachDir(new Foc.Execute() {
             @Override
-            public boolean accept(File f) {
-                if (f.isDirectory()) add_xml(list, f);
-                return false;
+            public void execute(Foc child) {
+                add_xml(list, child);
             }
         });
         return list;
     }
-    public static ArrayList<String> add_xml(final ArrayList<String> list, File directory) {
-        directory.listFiles(new FileFilter() {
+    public static ArrayList<String> add_xml(final ArrayList<String> list, Foc directory) {
+        directory.foreachFile(new Foc.Execute() {
             @Override
-            public boolean accept(File f) {
-                if (f.isFile() && f.toString().endsWith(".xml")) {
-                    add_r(list, f);
-                }
-                return false;
+            public void execute(Foc child) {
+                if (child.getName().endsWith(".xml")) add_r(list, child);
             }
         });
         return list;

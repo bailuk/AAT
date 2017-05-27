@@ -12,14 +12,16 @@ import java.io.IOException;
 import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.util.AppIntent;
 import ch.bailu.aat.util.TextBackup;
+import ch.bailu.aat.util.fs.foc.FocAndroid;
 import ch.bailu.aat.util.ui.AppLog;
+import ch.bailu.simpleio.foc.Foc;
 
 
 public class TagEditor extends EditText {
-    private File backup;
+    private Foc backup;
     
     
-    public TagEditor(Context context, String an)  {
+    public TagEditor(Context context, Foc an)  {
         super(context);
         
         createEditor();
@@ -30,8 +32,8 @@ public class TagEditor extends EditText {
                 AppBroadcaster.SELECT_MAP_FEATURE);
     }
 
-    private void createEditorBackup(String directory) {
-        backup = new File(directory,"edit.txt");
+    private void createEditorBackup(Foc directory) {
+        backup = directory.child("edit.txt");
         showFile();
     }
 

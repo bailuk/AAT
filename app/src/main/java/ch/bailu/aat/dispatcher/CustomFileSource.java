@@ -44,7 +44,7 @@ public class CustomFileSource extends ContentSource {
         handle=h;
 
         if (GpxObject.class.isInstance(h) && h.isReadyAndLoaded()) {
-            sendUpdate(InfoID.FILEVIEW, new GpxFileWrapper(new File(h.toString()), ((GpxObject)h).getGpxList()));
+            sendUpdate(InfoID.FILEVIEW, new GpxFileWrapper(h.toFile(scontext.getContext()), ((GpxObject)h).getGpxList()));
         }
 
     }

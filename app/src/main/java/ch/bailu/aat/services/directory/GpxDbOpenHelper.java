@@ -7,15 +7,16 @@ import android.database.sqlite.SQLiteOpenHelper;
 import java.io.File;
 
 import ch.bailu.aat.util.fs.AndroidVolumes;
+import ch.bailu.simpleio.foc.Foc;
 
 public class GpxDbOpenHelper extends SQLiteOpenHelper {
-         public GpxDbOpenHelper(Context context, String name) {
+         private GpxDbOpenHelper(Context context, String name) {
            super(context, name, null, GpxDbConstants.DB_VERSION);
         }
 
          
-         public GpxDbOpenHelper(Context context, File file) {
-             this(context, file.getAbsolutePath());
+         public GpxDbOpenHelper(Context context, Foc file) {
+             this(context, file.toString());
          }
          
         @Override

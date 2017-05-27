@@ -1,12 +1,11 @@
 package ch.bailu.simpleio.parser;
 
 import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.io.Writer;
+import java.io.OutputStreamWriter;
 
-import ch.bailu.simpleio.io.FileAccess;
+import ch.bailu.simpleio.foc.Foc;
+import ch.bailu.simpleio.foc.FocFile;
 import ch.bailu.simpleio.io.Stream;
 
 public class MapFeaturesPreparser {
@@ -30,16 +29,16 @@ public class MapFeaturesPreparser {
 
 
 
-    private final File outDir, imageDir;
+    private final Foc outDir, imageDir;
 
     public static void main(String [] args) {
         if (args.length > 2) {
 
             try {
                 new MapFeaturesPreparser(
-                        new File (args[0]),
-                        new File (args[1]),
-                        new File (args[2]));
+                        new FocFile(args[0]),
+                        new FocFile (args[1]),
+                        new FocFile (args[2]));
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -49,8 +48,8 @@ public class MapFeaturesPreparser {
 
     }
 
-    public MapFeaturesPreparser(File in, File outDir, File imageDir) throws IOException {
-        this.in = new Stream(new FileAccess(in));
+    public MapFeaturesPreparser(Foc in, Foc outDir, Foc imageDir) throws IOException {
+        this.in = new Stream(in);
         this.outDir = outDir;
         this.imageDir = imageDir;
         parseMapFeatures();
@@ -61,15 +60,11 @@ public class MapFeaturesPreparser {
 
 
     private void openOut(String name) throws SecurityException, IOException {
-        File file = new File(
-                outDir,
-                name
-        );
+        Foc file = outDir.child(name);
 
         closeOut();
 
-        Writer ostream = new FileWriter(file);
-        out = new BufferedWriter(ostream);
+        out = new BufferedWriter(new OutputStreamWriter(file.openW()));
     }
 
 

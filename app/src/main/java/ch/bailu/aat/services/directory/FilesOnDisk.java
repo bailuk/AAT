@@ -1,35 +1,44 @@
 package ch.bailu.aat.services.directory;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
+
+import ch.bailu.simpleio.foc.Foc;
 
 public class FilesOnDisk {
-    private final ArrayList<File> files;
+    private final ArrayList<Foc> files;
     
-    public FilesOnDisk(File directory) throws IOException {
+    public FilesOnDisk(Foc directory) throws IOException {
         files = getFileList(directory);
         
-        removeUninterestingItems();
+    //    removeUninterestingItems();
     }
     
-    
+/*
     private void removeUninterestingItems() {
         for (int i=files.size()-1; i>-1; i--) {
-            if (files.get(i).isDirectory() || files.get(i).isHidden()) {
+            if (files.get(i).isDir() || files.get(i).isHidden()) {
                 files.remove(i);
             }
         }
     }
+  */
     
-    
-    private static ArrayList<File> getFileList(File directory) throws IOException {
-        return new ArrayList<>(Arrays.asList(directory.listFiles()));
+    private static ArrayList<Foc> getFileList(Foc directory) throws IOException {
+        final ArrayList<Foc> files = new ArrayList<>(100);
+
+        directory.foreachFile(new Foc.Execute() {
+            @Override
+            public void execute(Foc child) {
+                files.add(child);
+            }
+        });
+
+        return files;
     }
     
     
-    public File findItem(String name) {
+    public Foc findItem(String name) {
         for (int i=0; i<files.size(); i++) {
             if (name.equalsIgnoreCase(files.get(i).getName())) {
                 return files.get(i);
@@ -39,7 +48,7 @@ public class FilesOnDisk {
     }
     
     
-    public File popItem(File file) {
+    public Foc popItem(Foc file) {
         if (files.remove(file)) {
             return file;
         } else {
@@ -49,8 +58,8 @@ public class FilesOnDisk {
     }
     
     
-    public File popItem() {
-        File file = null;
+    public Foc popItem() {
+        Foc file = null;
         
         if (files.size()>0) {
             file = files.get(files.size()-1);

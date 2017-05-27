@@ -11,6 +11,7 @@ import java.util.Locale;
 import ch.bailu.aat.R;
 import ch.bailu.aat.coordinates.BoundingBoxE6;
 import ch.bailu.aat.util.fs.AppDirectory;
+import ch.bailu.simpleio.foc.Foc;
 
 public class OverpassApi extends OsmApiHelper {
 
@@ -21,7 +22,7 @@ public class OverpassApi extends OsmApiHelper {
 
     
     private final String bounding;
-    private final File directory;
+    private final Foc directory;
 
 
     
@@ -90,8 +91,8 @@ public class OverpassApi extends OsmApiHelper {
 
 
     @Override
-    public String getBaseDirectory() {
-        return directory.toString();
+    public Foc getBaseDirectory() {
+        return directory;
     }
 
     @Override
