@@ -12,6 +12,7 @@ import android.os.storage.StorageVolume;
 import java.io.File;
 import java.util.List;
 
+import ch.bailu.aat.menus.DirectoryMenu;
 import ch.bailu.aat.util.fs.foc.FocAndroid;
 import ch.bailu.aat.util.ui.AppLog;
 import ch.bailu.simpleio.foc.Foc;
@@ -183,7 +184,7 @@ public class AndroidVolumes {
                     if (id != null && vol.contains(id)) {
                         Intent intent = v.createAccessIntent(null);
                         if (intent != null) {
-                            c.startActivityForResult(intent, 5);
+                            c.startActivityForResult(intent, DirectoryMenu.PERMISSION);
                             AppLog.d(this, intent.toString());
                         }
                         break;

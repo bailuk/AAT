@@ -1,14 +1,21 @@
 package ch.bailu.aat.menus;
 
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
+import android.provider.DocumentsContract;
+import android.provider.OpenableColumns;
 import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import java.io.Closeable;
+import java.io.IOException;
 
 import ch.bailu.aat.R;
 import ch.bailu.aat.preferences.Storage;
@@ -16,14 +23,16 @@ import ch.bailu.aat.util.Clipboard;
 import ch.bailu.aat.util.fs.FileIntent;
 import ch.bailu.aat.preferences.SolidFile;
 import ch.bailu.aat.util.fs.AndroidVolumes;
+import ch.bailu.aat.util.fs.foc.FocAndroid;
 import ch.bailu.aat.util.ui.AppLog;
 import ch.bailu.simpleio.foc.Foc;
 
 public class DirectoryMenu extends AbsMenu {
     private static final int BROWSE_DIR = DirectoryMenu.class.getSimpleName().hashCode();
+    public static final int PERMISSION = DirectoryMenu.class.getSimpleName().hashCode();
     private static String browseDirKey=null;
 
-    private MenuItem browse, view, get, clipboard;
+    private MenuItem browse, view, get, clipboard, permission;
 
     private final Activity acontext;
 
@@ -43,6 +52,7 @@ public class DirectoryMenu extends AbsMenu {
         view = menu.add(R.string.file_view);
         get = menu.add(R.string.file_view);
         clipboard = menu.add(R.string.clipboard_copy);
+        permission = menu.add("permission");
     }
 
     @Override
@@ -62,7 +72,14 @@ public class DirectoryMenu extends AbsMenu {
         Context c = sdirectory.getContext();
 
         if (item == browse) {
-            Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT_TREE);
+
+            Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+
+            intent.addCategory(Intent.CATEGORY_OPENABLE);
+            intent.setType("image/*");
+
+//            Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT_TREE);
+
             browseDirKey = sdirectory.getKey();
             acontext.startActivityForResult(intent, BROWSE_DIR);
 
@@ -77,17 +94,59 @@ public class DirectoryMenu extends AbsMenu {
             new Clipboard(c).setText(sdirectory.getLabel(),
                     sdirectory.getValueAsString());
 
+        } else if (item == permission) {
+            new AndroidVolumes(acontext).askForPermission(acontext, sdirectory.getValueAsFile());
         }
+
         return true;
     }
 
-    public static void onActivityResult(Context c, int requestCode, int resultCode, Intent data) {
+    public static void onActivityResult(Activity c, int requestCode, int resultCode, Intent data) {
         if (requestCode == DirectoryMenu.BROWSE_DIR) {
             if (resultCode == Activity.RESULT_OK && data != null && DirectoryMenu.browseDirKey != null) {
                 String value = data.getData().toString();
                 Storage.global(c).writeString(browseDirKey, value);
                 browseDirKey = null;
+                test(c, data.getData());
             }
+        } else if (requestCode == PERMISSION) {
+            test(c, data.getData());
+
         }
     }
+
+    private static void test(Activity acontext, Uri uri) {
+        Foc file = FocAndroid.factory(acontext, uri);
+
+        Closeable c=null;
+        try {
+            c = file.openR();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        if (c!= null) try {
+            c.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        //log(file);
+
+    }
+
+    private static void log(Foc file) {
+        AppLog.d(file, file.toString());
+
+        file.foreach(new Foc.Execute() {
+            @Override
+            public void execute(Foc child) {
+                log(child);
+            }
+        });
+
+    }
+
+
 }
+
+
