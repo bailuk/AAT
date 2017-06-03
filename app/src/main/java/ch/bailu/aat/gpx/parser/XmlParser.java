@@ -21,11 +21,11 @@ public class XmlParser implements Closeable, GpxPointInterface {
 
 
 
-    public XmlParser(Foc file) throws IOException {
+    public XmlParser(Foc file) throws IOException, SecurityException{
         scanner = new Scanner(file);
     }
 
-    public void parse() throws IOException {
+    public void parse() throws IOException, SecurityException {
         state.parse(scanner);
     }
 

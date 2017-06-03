@@ -7,10 +7,11 @@ import android.database.sqlite.SQLiteCantOpenDatabaseException;
 
 import java.io.IOException;
 
-import ch.bailu.aat.util.ui.AppLog;
 import ch.bailu.aat.preferences.SolidDirectoryQuery;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.VirtualService;
+import ch.bailu.aat.util.fs.AFile;
+import ch.bailu.aat.util.ui.AppLog;
 import ch.bailu.simpleio.foc.Foc;
 
 public class DirectoryService extends VirtualService implements OnSharedPreferenceChangeListener{
@@ -26,7 +27,7 @@ public class DirectoryService extends VirtualService implements OnSharedPreferen
         sdirectory = new SolidDirectoryQuery(getContext());
         sdirectory.getStorage().register(this);
 
-        openDir();
+        openDir(sdirectory.getValueAsFile());
     }
 
 
@@ -34,39 +35,31 @@ public class DirectoryService extends VirtualService implements OnSharedPreferen
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sp, String key) {
         if (sdirectory.hasKey(key)) {
-            openDir();
+            openDir(sdirectory.getValueAsFile());
         }
     }
 
 
 
-    private void openDir() {
-        AppLog.d(this, sdirectory.getValueAsString());
-        AppLog.d(this, sdirectory.getValueAsFile().toString());
+    private void openDir(Foc dir) {
 
-        if (isDirReadable()) {
+        AppLog.d(this, dir.getPathName());
 
-            open();
+        if (dir.canRead()) {
+            open(dir);
+
         } else {
-            logNoAccess();
+            AFile.logErrorNoAccess(getContext(), dir);
         }
     }
 
 
-    private void logReadOnly() {
-        AppLog.e(getContext(), getDir().toString() + " is read only.*");
-    }
-
-
-    private void logNoAccess() {
-        AppLog.e(getContext(), getDir().toString() + " no access.*");
-    }
 
 
 
-    private void open() {
+    private void open(Foc dir) {
         final String dbPath =
-                SummaryConfig.getWriteableDBPath(getContext(), getDir());
+                SummaryConfig.getWriteableDBPath(getContext(), dir);
 
         try {
             openDataBase(getSContext(), dbPath);
@@ -75,22 +68,6 @@ public class DirectoryService extends VirtualService implements OnSharedPreferen
             database=AbsDatabase.NULL_DATABASE;
         }
     }
-
-
-
-    private Foc getDir() {
-        return sdirectory.getValueAsFile();
-    }
-
-
-    private boolean isDirReadable() {
-        return getDir().canRead();
-    }
-
-    private boolean isDirWriteable() {
-        return getDir().canWrite();
-    }
-
 
 
 
@@ -110,20 +87,26 @@ public class DirectoryService extends VirtualService implements OnSharedPreferen
 
 
     public void deleteEntry(Foc file)  {
-        if (isDirWriteable()) {
+        Foc dir = sdirectory.getValueAsFile();
+
+        if (dir.canWrite()) {
             database.deleteEntry(file);
-            rescan();
+            rescan(dir);
         } else {
-            logReadOnly();
+            AFile.logErrorReadOnly(getContext(), dir);
         }
     }
 
 
-
     public void rescan() {
-        if (isDirReadable()) {
+        rescan(sdirectory.getValueAsFile());
+    }
+
+
+    private void rescan(Foc dir) {
+        if (dir.canRead()) {
             stopSynchronizer();
-            synchronizer = new DirectorySynchronizer(getSContext(), sdirectory.getValueAsFile());
+            synchronizer = new DirectorySynchronizer(getSContext(), dir);
         }
     }
 

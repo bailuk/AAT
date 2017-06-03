@@ -8,16 +8,16 @@ import ch.bailu.simpleio.foc.Foc;
 
 public class AFile extends JFile {
     public static void logErrorExists(Context c, Foc f) {
-        AppLog.e(c, f.toString() + c.getString(R.string.file_exists));
+        AppLog.e(c, f.getPathName() + c.getString(R.string.file_exists));
     }
 
 
     public static void logErrorReadOnly(Context c, Foc f) {
-        AppLog.e(c, f.toString() + " is read only.*");
+        AppLog.e(c, f.getPathName() + " is read only.*");
     }
 
     public static void logErrorNoAccess(Context c, Foc f) {
-        AppLog.e(c, f.toString() + " no access.*");
+        AppLog.e(c, f.getPathName() + " no access.*");
     }
 
 
@@ -29,7 +29,7 @@ public class AFile extends JFile {
             msg = " is read only.*";
         }
 
-        AppLog.i(c, f.toString() + msg);
+        AppLog.i(c, f.getPathName() + msg);
     }
 
 

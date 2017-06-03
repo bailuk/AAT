@@ -72,9 +72,14 @@ public class FocFile extends Foc {
 
 
     @Override
-    public String toString() {
-        return file.toString();
+    public String getPath() {
+        try {
+            return file.getCanonicalPath();
+        } catch (Exception e) {
+            return file.getPath();
+        }
     }
+
 
 
     @Override

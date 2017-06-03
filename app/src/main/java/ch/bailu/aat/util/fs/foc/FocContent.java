@@ -10,7 +10,6 @@ import android.provider.DocumentsContract;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.List;
 
 import ch.bailu.aat.util.ui.AppLog;
 import ch.bailu.simpleio.foc.Foc;
@@ -29,141 +28,124 @@ import ch.bailu.simpleio.foc.Foc;
 
 @TargetApi(Build.VERSION_CODES.LOLLIPOP)
 public class FocContent extends Foc {
-    final static String TREE="tree";
-    final static String DOCUMENT="document";
-    final static String UNKNOWN="unknown";
+    public final static String TREE= "tree";
+    public final static String DOCUMENT="document";
+    public final static String UNKNOWN="unknown";
 
     private String type;
+    private DocumentData data = null;
 
-    final String authority;
-    final Uri tree, document, child, parent;
-    final String encodedDocumentId;
-    final String documentId;
+    private final ContentResolver resolver;
+    private final LazyUris uris;
 
-    DocumentData data;
 
-    final ContentResolver resolver;
 
-    public FocContent(ContentResolver r, Uri uri, DocumentData d) {
-        this (r,uri, d.type);
+
+    // called from parent
+    private FocContent(ContentResolver r, LazyUris u, DocumentData d) {
+        this (r, u, d.type);
         data = d;
     }
 
 
-    public FocContent(ContentResolver r, Uri uri, String t) {
+    // called from child
+    private FocContent(ContentResolver r, LazyUris u, String t) {
         resolver = r;
+        uris = u;
         type = t;
-
-
-        authority = uri.getAuthority();
-        encodedDocumentId = getDocumentId(uri);
-        documentId = Uri.decode(encodedDocumentId);
-
-        tree = DocumentsContract.buildTreeDocumentUri(authority, documentId);
-        document = DocumentsContract.buildDocumentUri(authority, documentId);
-        child = DocumentsContract.buildChildDocumentsUriUsingTree(tree, documentId);
-
-        parent = DocumentsContract.buildTreeDocumentUri(authority, getParentId(documentId));
-
-
     }
 
-    private String getDocumentId(Uri uri) {
-        List <String> s = uri.getPathSegments();
-        if (s.size()>1) {
-            return s.get(1);
-        }
-        return "";
+
+    // called from factory
+    public FocContent(ContentResolver r, Uri per, DocumentId id , String t) {
+        type = t;
+        resolver = r;
+
+        uris = new LazyUris(per, id);
     }
 
-    private String getParentId(String doc) {
-        if (doc != null) {
-            int lastIndex = doc.length();
-            while (lastIndex > 0) {
-                lastIndex--;
-                if (doc.charAt(lastIndex) == '/')
-                    return doc.substring(0, lastIndex);
-            }
-        }
-        return doc;
-    }
+
+
+
+
 
 
     @Override
+    public boolean move(Foc dest) throws IOException, SecurityException {
+        boolean ok = false;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N &&
+                dest instanceof FocContent) {
+            FocContent target = (FocContent) dest;
+
+            ok = target.uris.hasParent()
+                    && uris.hasParent()
+                    && (DocumentsContract.renameDocument(resolver, uris.getDocument(), target.getName()) != null)
+                    && (DocumentsContract.moveDocument(resolver, uris.getDocument(), uris.getParent(), target.uris.getParent()) != null);
+
+
+        }
+        return ok || super.move(dest);
+
+    }
+
+    @Override
     public boolean remove() throws IOException, SecurityException {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            return DocumentsContract.deleteDocument(resolver, uris.getDocument());
+        }
         return false;
     }
 
     @Override
     public boolean mkdir() {
-        return false;
+        return uris.hasParent() && DocumentsContract.createDocument(
+                resolver,
+                uris.getParent(),
+                DocumentsContract.Document.MIME_TYPE_DIR,
+                getName()) != null;
     }
 
     @Override
     public Foc parent() {
-        if (parent.equals(tree))
-            return null;
-
-        return new FocContent(resolver, parent, TREE);
+        if (uris.hasParent()) return new FocContent(resolver, uris.parent(), TREE);
+        return null;
     }
+
 
     @Override
     public Foc child(String name) {
-        String u = tree.toString() + Uri.encode("/" + name);
-        return new FocContent(resolver, Uri.parse(u), UNKNOWN);
-    }
-
-
-    @Override
-    public String getName() {
-        return documentId;
+        return new FocContent(resolver, uris.child(uris.getDocumentId().child(name)), UNKNOWN);
     }
 
 
 
-    private void querySelf() {
-        if (data != null) return;
 
-        Cursor cursor = null;
-        try {
-            cursor = resolver.query(document,null, null, null, null);
-            if (cursor != null && cursor.moveToFirst()) {
-                data = new DocumentData(cursor);
-                type = data.type;
-
-                AppLog.d(this, data.toString());
-            }
-        } catch(Exception e) {
-            data = new DocumentData(documentId);
-        }
-        if (cursor != null) cursor.close();
-    }
 
 
     @Override
     public void foreach(Execute exec) {
-
         if (isFile()) return;
 
         Cursor cursor = null;
         try {
-            cursor = resolver.query(child,null, null, null, null);
+            cursor = resolver.query(uris.getChild(),null, null, null, null);
             if (cursor != null && cursor.moveToFirst()) {
                 type = TREE;
 
                 do {
                     DocumentData data = new DocumentData(cursor);
                     AppLog.d(this, data.mimeType);
-                    Uri child=DocumentsContract.buildTreeDocumentUri(authority, data.documentId);
-                    exec.execute(new FocContent(resolver, child, data));
+                    exec.execute(new FocContent(resolver, uris.child(new DocumentId(data.documentId)), data));
 
                 } while (cursor.moveToNext());
             }
-        } catch(Exception e) {}
+        } catch(Exception e) {
+            AppLog.d(this, e.toString());
+        }
 
         if (cursor != null) cursor.close();
-
     }
+
 
     @Override
     public void foreachFile(final Execute e) {
@@ -188,11 +170,13 @@ public class FocContent extends Foc {
 
     @Override
     public boolean isDir() {
+        if (type == UNKNOWN) querySelf();
         return type == TREE;
     }
 
     @Override
     public boolean isFile() {
+        if (type == UNKNOWN) querySelf();
         return type == DOCUMENT;
     }
 
@@ -211,7 +195,6 @@ public class FocContent extends Foc {
     @Override
     public boolean canWrite() {
         querySelf();
-
         return (data.flags & DocumentsContract.Document.FLAG_SUPPORTS_WRITE) == data.flags;
     }
 
@@ -223,27 +206,68 @@ public class FocContent extends Foc {
         return data.size;
     }
 
+
     @Override
-    public String toString() {
-        if (type == DOCUMENT) return document.toString();
-        return tree.toString();
+    public String getPath() {
+        return uris.getDocument().toString();
     }
+
 
     @Override
     public long lastModified() {
-
         querySelf();
         return data.lastModified;
     }
 
 
     @Override
-    public InputStream openR() throws IOException {
-        return resolver.openInputStream(document);
+    public InputStream openR() throws IOException, SecurityException {
+        return resolver.openInputStream(uris.getDocument());
     }
 
     @Override
-    public OutputStream openW() throws IOException {
-        return resolver.openOutputStream(document);
+    public OutputStream openW() throws IOException, SecurityException {
+        return resolver.openOutputStream(uris.getDocument());
     }
+
+
+    private void querySelf() {
+        AppLog.d(this, "querySelf() " + uris.getDocumentId());
+
+        if (data != null) return;
+
+
+        Cursor cursor = null;
+        try {
+            cursor = resolver.query(uris.getDocument(),null, null, null, null);
+            if (cursor != null && cursor.moveToFirst()) {
+                data = new DocumentData(cursor);
+
+                type = data.type;
+            } else {
+                if (cursor ==  null) AppLog.d(this, "null cursor");
+                AppLog.d(this, uris.getDocument().toString());
+
+                data = new DocumentData(uris.getDocumentId().toString());
+            }
+
+        } catch(Exception e) {
+            AppLog.d(this, e.toString());
+            data = new DocumentData(uris.getDocumentId().toString());
+        }
+        Foc.close(cursor);
+    }
+
+
+    @Override
+    public String getName() {
+        return uris.getDocumentId().getName();
+    }
+
+    @Override
+    public String getPathName() {
+        return uris.getDocumentId().toString();
+    }
+
+
 }

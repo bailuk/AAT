@@ -321,16 +321,27 @@ public class DirectorySynchronizer  implements Closeable {
     private class StateLoadPreview extends State {
 
         public void start() {
+
             Foc gpxFile = FocAndroid.factory(scontext.getContext(), pendingHandle.toString());
 
             Foc previewImageFile = SummaryConfig.getWriteablePreviewFile(scontext.getContext(), gpxFile);
             GpxInformation info =
                     new GpxFileWrapper(gpxFile, pendingHandle.getGpxList());
 
-            MapsForgePreview p = new MapsForgePreview(scontext, info, previewImageFile);
 
-            setPendingPreviewGenerator(p);
-            state.ping();
+            try {
+                MapsForgePreview p = new MapsForgePreview(scontext, info, previewImageFile);
+
+                setPendingPreviewGenerator(p);
+                state.ping();
+
+            } catch (Exception e) {
+                AppLog.d(this, e.toString());
+
+                AppBroadcaster.broadcast(scontext.getContext(), AppBroadcaster.DB_SYNC_CHANGED);
+                setState(new StateLoadNextGpx());
+            }
+
 
 
         }

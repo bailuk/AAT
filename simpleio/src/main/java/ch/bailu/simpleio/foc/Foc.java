@@ -123,6 +123,11 @@ public abstract class Foc {
     public abstract Foc child(String name);
     public abstract String getName();
 
+    public abstract String getPath();
+    public String getPathName() {
+        return getPath();
+    }
+
     public abstract static class Execute {
         public abstract void execute(Foc child);
     }
@@ -145,8 +150,8 @@ public abstract class Foc {
     public abstract long length();
     public abstract long lastModified();
 
-    public abstract InputStream openR() throws IOException;
-    public abstract OutputStream openW() throws IOException;
+    public abstract InputStream openR() throws IOException, SecurityException;
+    public abstract OutputStream openW() throws IOException, SecurityException;
 
     public static void close(Closeable toClose) {
         try {
@@ -159,7 +164,24 @@ public abstract class Foc {
 
 
     @Override
+    public boolean equals(Object o)  {
+        return o instanceof Foc && equals(getPath(), ((Foc) o).getPath());
+
+    }
+
+    private static boolean equals(String s1, String s2) {
+        return s1 == s2 || (s1 != null && s1.equals(s2));
+    }
+
+
+    @Override
+    public String toString() {
+        return getPath();
+    }
+
+
+    @Override
     public int hashCode() {
-        return toString().hashCode();
+        return getPath().hashCode();
     }
 }

@@ -1,27 +1,20 @@
-package ch.bailu.aat.util.fs.foc;
-
-import android.content.ContentResolver;
-import android.net.Uri;
+package ch.bailu.simpleio.foc;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-import ch.bailu.simpleio.foc.Foc;
+public class FocName extends Foc {
 
-public class FocUri extends Foc {
-    final Uri uri;
-    final ContentResolver resolver;
+    private final String name;
 
-    public FocUri(ContentResolver r, Uri u) {
-        uri = u;
-        resolver = r;
+    public FocName(String n) {
+        name = n;
     }
 
-
     @Override
-    public boolean remove() {
-        return resolver.delete(uri,null,null) > 0;
+    public boolean remove() throws IOException, SecurityException {
+        return false;
     }
 
     @Override
@@ -35,25 +28,19 @@ public class FocUri extends Foc {
     }
 
     @Override
-    public Foc child(String name) {
-        return new FocUri(resolver, Uri.parse(this.toString() + "/" + name));
+    public Foc child(String child_name) {
+        return new FocName(name + "/" + child_name);
     }
 
     @Override
     public String getName() {
-        return uri.getLastPathSegment();
+        return name;
     }
 
     @Override
     public String getPath() {
-        return uri.toString();
+        return name;
     }
-
-    @Override
-    public long length() {
-        return 0;
-    }
-
 
     @Override
     public void foreach(Execute e) {
@@ -96,17 +83,22 @@ public class FocUri extends Foc {
     }
 
     @Override
+    public long length() {
+        return 0;
+    }
+
+    @Override
     public long lastModified() {
         return System.currentTimeMillis();
     }
 
     @Override
-    public InputStream openR() throws IOException {
-        return resolver.openInputStream(uri);
+    public InputStream openR() throws IOException, SecurityException {
+        return null;
     }
 
     @Override
-    public OutputStream openW() throws IOException {
-        return resolver.openOutputStream(uri);
+    public OutputStream openW() throws IOException, SecurityException {
+        return null;
     }
 }

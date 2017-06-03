@@ -43,7 +43,7 @@ public class MapsForgePreview extends MapsForgeViewBase {
     private final BoundingBox bounding;
     private final Point tlPoint;
 
-    public MapsForgePreview(ServiceContext scontext, GpxInformation info, Foc out) {
+    public MapsForgePreview(ServiceContext scontext, GpxInformation info, Foc out) throws IllegalArgumentException {
         super(scontext, MapsForgePreview.class.getSimpleName(), new MapDensity());
 
         layout(0, 0, BITMAP_SIZE, BITMAP_SIZE);
@@ -63,12 +63,12 @@ public class MapsForgePreview extends MapsForgeViewBase {
         gpxLayer.onContentUpdated(InfoID.FILEVIEW, info);
         frameBounding(info.getGpxList().getDelta().getBoundingBox());
 
-        mapPosition  = getModel().mapViewPosition.getMapPosition();
-        int tileSize = getModel().displayModel.getTileSize();
-        bounding     = MapPositionUtil.getBoundingBox(mapPosition, DIM, tileSize);
-        tlPoint      = MapPositionUtil.getTopLeftPoint(mapPosition, DIM, tileSize);
+         mapPosition = getModel().mapViewPosition.getMapPosition();
+         int tileSize = getModel().displayModel.getTileSize();
+         bounding = MapPositionUtil.getBoundingBox(mapPosition, DIM, tileSize);
+         tlPoint = MapPositionUtil.getTopLeftPoint(mapPosition, DIM, tileSize);
 
-        tileLayer.preLoadTiles(bounding, mapPosition.zoomLevel, tlPoint);
+         tileLayer.preLoadTiles(bounding, mapPosition.zoomLevel, tlPoint);
     }
 
 

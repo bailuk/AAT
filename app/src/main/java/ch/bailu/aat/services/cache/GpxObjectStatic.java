@@ -68,7 +68,7 @@ public class GpxObjectStatic extends GpxObject implements ElevationUpdaterClient
                         }
                         size = getSize();
                     }
-                } catch (IOException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 } finally {
                     handle.free();

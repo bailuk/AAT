@@ -25,7 +25,7 @@ public class GpxListReader {
     }
 
 
-    public GpxListReader (ThreadControl c, Foc in) throws IOException {
+    public GpxListReader (ThreadControl c, Foc in) throws IOException, SecurityException {
         threadControl=c;
 
         parser = new XmlParser(in);

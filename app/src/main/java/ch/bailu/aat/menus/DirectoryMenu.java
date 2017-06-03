@@ -5,16 +5,15 @@ import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
 import android.provider.DocumentsContract;
-import android.provider.OpenableColumns;
 import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import java.io.Closeable;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import ch.bailu.aat.R;
@@ -45,14 +44,18 @@ public class DirectoryMenu extends AbsMenu {
 
     @Override
     public void inflate(Menu menu) {
-        if (Build.VERSION.SDK_INT >= 21) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             browse = menu.add("Pick directory...*");
+        }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            permission = menu.add("Permission");
         }
 
         view = menu.add(R.string.file_view);
         get = menu.add(R.string.file_view);
         clipboard = menu.add(R.string.clipboard_copy);
-        permission = menu.add("permission");
+
     }
 
     @Override
@@ -72,13 +75,13 @@ public class DirectoryMenu extends AbsMenu {
         Context c = sdirectory.getContext();
 
         if (item == browse) {
-
+/*
             Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
 
             intent.addCategory(Intent.CATEGORY_OPENABLE);
             intent.setType("image/*");
-
-//            Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT_TREE);
+*/
+            Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT_TREE);
 
             browseDirKey = sdirectory.getKey();
             acontext.startActivityForResult(intent, BROWSE_DIR);
@@ -115,35 +118,95 @@ public class DirectoryMenu extends AbsMenu {
         }
     }
 
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     private static void test(Activity acontext, Uri uri) {
+/*
+        String file = DocumentsContract.getTreeDocumentId(uri) + "/Arbeit.gpx";
+        Uri doc = DocumentsContract.buildDocumentUriUsingTree(uri, file);
+
+        AppLog.d(acontext, file);
+        AppLog.d(acontext, doc.toString());
+        try {
+            Closeable close = acontext.getContentResolver().openInputStream(doc);
+
+            if (close != null) {
+                AppLog.d(acontext, "success!!!");
+                close.close();
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+*/
+
         Foc file = FocAndroid.factory(acontext, uri);
 
+        rlog(file);
+    }
+
+    private static boolean write(Foc file) {
         Closeable c=null;
         try {
             c = file.openR();
-        } catch (IOException e) {
-            e.printStackTrace();
+            return true;
+        } catch (Exception e) {
+            return false;
+        } finally {
+            Foc.close(c);
         }
-        if (c!= null) try {
-            c.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    }
 
-        //log(file);
+    private static boolean read(Foc file) {
+        Closeable c=null;
+        try {
+            c = file.openW();
+            return true;
+        } catch (Exception e) {
+            return false;
+        } finally {
+            Foc.close(c);
+        }
+    }
+
+    private static void rlog(Foc file) {
+        log(file);
+        file.foreach(new Foc.Execute() {
+            @Override
+            public void execute(Foc child) {
+                rlog(child);
+            }
+        });
 
     }
 
     private static void log(Foc file) {
+        AppLog.d(file, "====log()==================");
         AppLog.d(file, file.toString());
+        AppLog.d(file, file.getName());
+        AppLog.d(file, "Size: " + file.length());
 
-        file.foreach(new Foc.Execute() {
-            @Override
-            public void execute(Foc child) {
-                log(child);
-            }
-        });
+        if (file.isDir())
+            AppLog.d(file, "isDirectory");
 
+        if (file.isFile())
+            AppLog.d(file, "isFile");
+
+        if (file.canWrite())
+            AppLog.d(file, "canWrite");
+        if (file.canRead())
+            AppLog.d(file, "canRead");
+
+        if (file.exists())
+            AppLog.d(file, "exists");
+
+        if (read(file))
+            AppLog.d(file, "opensForReading");
+
+        if (write(file)){
+            AppLog.d(file, "opensForWriting");
+        }
+        AppLog.d(file, "===========================");
     }
 
 

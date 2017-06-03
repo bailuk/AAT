@@ -145,9 +145,7 @@ public class AndroidVolumes {
     }
 
     public void askForPermission(Activity c, Foc f) {
-        AFile.logInfoAcess(c,f);
-
-        if (Build.VERSION.SDK_INT >= 24) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             askForPermissionSDK24(c, f);
         }
     }
@@ -194,26 +192,4 @@ public class AndroidVolumes {
         }
     }
 
-
-    private static final String PROVIDER_PART =
-            "content://com.android.externalstorage.documents/tree/";
-
-    public Foc toScopedContentHack(Context c, Foc file) {
-        String volPart = volumePathFromFile(file);
-
-        if (volPart != null) {
-            String docPart = file.toString().replace(volPart, "");
-
-            if (docPart != null) {
-
-                String volName = new File(volPart).getName();
-
-                if (volName != null) {
-                    return FocAndroid.factory(c, PROVIDER_PART + volName + docPart);
-                }
-            }
-        }
-
-        return null;
-    }
 }

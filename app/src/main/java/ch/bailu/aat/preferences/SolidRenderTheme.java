@@ -38,7 +38,7 @@ public class SolidRenderTheme extends SolidFile {
     }
 
 
-    public static String toThemeID(String name) {
+    private static String toThemeID(String name) {
         if (name.equals(InternalRenderTheme.DEFAULT.toString())) {
             return name;
         } else if (name.equals(InternalRenderTheme.OSMARENDER.toString())) {
@@ -97,6 +97,7 @@ public class SolidRenderTheme extends SolidFile {
         });
         return list;
     }
+
     public static ArrayList<String> add_xml(final ArrayList<String> list, Foc directory) {
         directory.foreachFile(new Foc.Execute() {
             @Override

@@ -18,9 +18,7 @@ public class Stream implements Closeable {
     private final Reader reader;
     private int c=0;
 
-    public Stream(Foc foc) throws IOException {
-
-
+    public Stream(Foc foc) throws IOException, SecurityException {
         InputStream istream = foc.openR();
         Reader ireader = new InputStreamReader(istream, CHARSET);
         reader = new BufferedReader(ireader, BUFFER_BYTES);

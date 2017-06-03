@@ -4,6 +4,7 @@ import android.database.Cursor;
 
 import ch.bailu.aat.coordinates.BoundingBoxE6;
 import ch.bailu.aat.gpx.GpxInformation;
+import ch.bailu.aat.util.ui.AppLog;
 import ch.bailu.simpleio.foc.Foc;
 
 public class GpxInformationDbEntry extends GpxInformation {
@@ -24,7 +25,9 @@ public class GpxInformationDbEntry extends GpxInformation {
 
     @Override
     public String getPath() {
-        return parent.child(getName()).toString();
+        String result =  parent.child(getName()).toString();
+        AppLog.d(this, result);
+        return result;
     }
 
     @Override

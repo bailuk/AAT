@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import ch.bailu.aat.R;
 import ch.bailu.aat.util.fs.foc.FocAndroid;
+import ch.bailu.aat.util.fs.foc.FocContent;
 import ch.bailu.simpleio.foc.Foc;
 
 
@@ -15,8 +16,15 @@ public abstract class SolidFile extends SolidString {
 
 
     public Foc getValueAsFile() {
-        return FocAndroid.factory(getContext(), getValueAsString());
+        return FocAndroid.factory(getContext(), super.getValueAsString());
     }
+
+    @Override
+    public String getValueAsString() {
+        return getValueAsFile().getPathName();
+    }
+
+
     public int getIconResource() {return R.drawable.folder_inverse;}
 
     public abstract ArrayList<String> buildSelection(ArrayList<String> list);

@@ -3,6 +3,8 @@ package ch.bailu.aat.util.fs.foc;
 import android.database.Cursor;
 import android.provider.DocumentsContract.Document;
 
+import ch.bailu.aat.util.ui.AppLog;
+
 
 public class DocumentData  {
     final public String documentId;
@@ -35,6 +37,8 @@ public class DocumentData  {
 
         if (mimeType.equals(Document.MIME_TYPE_DIR)) type = FocContent.TREE;
         else type = FocContent.DOCUMENT;
+
+        log();
     }
 
     @Override
@@ -42,4 +46,9 @@ public class DocumentData  {
         return documentId;
     }
 
+
+    public void log() {
+        AppLog.d(this, documentId);
+        AppLog.d(this, mimeType);
+    }
 }

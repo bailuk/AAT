@@ -30,7 +30,7 @@ public class Scanner {
     public final SparseArray<LatLongE6> nodeMap = new SparseArray<>(50);
     public final ArrayList<GpxAttributesStatic.Tag> tagList = new ArrayList<>();
 
-    public Scanner(Foc in) throws IOException {
+    public Scanner(Foc in) throws IOException, SecurityException {
         stream = new Stream(in);
 
         latitude = new DoubleScanner(stream,6);

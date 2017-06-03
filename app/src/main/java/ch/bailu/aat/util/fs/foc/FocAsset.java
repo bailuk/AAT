@@ -69,6 +69,11 @@ public class FocAsset extends Foc {
     }
 
     @Override
+    public String getPath() {
+        return asset;
+    }
+
+    @Override
     public long length() {
         return 0;
     }
