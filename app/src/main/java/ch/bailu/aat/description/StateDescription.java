@@ -17,20 +17,20 @@ public abstract class StateDescription extends ContentDescription {
 
     @Override
     public String getLabel() {
-        return getString(R.string.d_state);
+        return getContext().getString(R.string.d_state);
     }
 
     public String getTime() {
         String value;
         
         switch (state) {
-        case StateID.NOACCESS: value=getString(R.string.gps_noaccess); break;
-        case StateID.NOSERVICE: value=getString(R.string.gps_nogps); break;
-        case StateID.ON: value=getString(R.string.on); break;
-        case StateID.OFF: value=getString(R.string.off); break;
-        case StateID.PAUSE: value=getString(R.string.status_paused); break;
-        case StateID.AUTOPAUSED: value=getString(R.string.status_autopaused); break;
-        default: value=getString(R.string.gps_wait); break;
+        case StateID.NOACCESS: value=getContext().getString(R.string.gps_noaccess); break;
+        case StateID.NOSERVICE: value=getContext().getString(R.string.gps_nogps); break;
+        case StateID.ON: value=getContext().getString(R.string.on); break;
+        case StateID.OFF: value=getContext().getString(R.string.off); break;
+        case StateID.PAUSE: value=getContext().getString(R.string.status_paused); break;
+        case StateID.AUTOPAUSED: value=getContext().getString(R.string.status_autopaused); break;
+        default: value=getContext().getString(R.string.gps_wait); break;
         }
         return value;
     }

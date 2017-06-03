@@ -13,7 +13,7 @@ public class AccuracyDescription extends AltitudeDescription {
     
     @Override
     public String getLabel() {
-        return getString(R.string.d_accuracy);
+        return getContext().getString(R.string.d_accuracy);
     }
 
     @Override

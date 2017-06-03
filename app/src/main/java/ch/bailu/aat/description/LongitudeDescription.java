@@ -16,7 +16,7 @@ public class LongitudeDescription extends DoubleDescription {
 
     @Override
     public String getLabel() {
-        return getString(R.string.d_longitude);
+        return getContext().getString(R.string.d_longitude);
     }
 
     @Override

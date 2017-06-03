@@ -15,13 +15,13 @@ public class DistanceDescription extends FloatDescription {
     public DistanceDescription(Context context) {
         super(context);
         
-        unit = new SolidUnit(this);
+        unit = new SolidUnit(context);
     }
 
     
     @Override
     public String getLabel() {
-        return getString(R.string.distance);
+        return getContext().getString(R.string.distance);
     }
     
     

@@ -22,7 +22,7 @@ public class AltitudeDescription extends FloatDescription {
     
     @Override
     public String getLabel() {
-        return getString(R.string.altitude);
+        return getContext().getString(R.string.altitude);
     }
 
     @Override

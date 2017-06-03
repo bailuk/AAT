@@ -15,7 +15,7 @@ public class NameDescription extends ContentDescription {
 
     @Override
     public String getLabel() {
-        return getString(R.string.d_name);
+        return getContext().getString(R.string.d_name);
     }
 
     @Override

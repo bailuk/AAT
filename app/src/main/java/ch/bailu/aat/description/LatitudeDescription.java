@@ -12,7 +12,7 @@ public class LatitudeDescription extends LongitudeDescription {
 
     @Override
     public String getLabel() {
-        return getString(R.string.d_latitude);
+        return getContext().getString(R.string.d_latitude);
     }
 
     @Override

@@ -15,7 +15,7 @@ public class EndDateDescription extends DateDescription {
     
     @Override
     public String getLabel() {
-        return getString(R.string.d_enddate);
+        return getContext().getString(R.string.d_enddate);
     }
 
     @Override

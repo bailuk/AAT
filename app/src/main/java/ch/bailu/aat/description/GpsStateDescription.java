@@ -16,7 +16,7 @@ public class GpsStateDescription extends StateDescription {
 
     @Override
     public String getLabel() {
-        return getString(R.string.gps);
+        return getContext().getString(R.string.gps);
     }
 
     

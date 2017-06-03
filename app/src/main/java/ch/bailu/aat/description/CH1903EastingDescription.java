@@ -18,7 +18,7 @@ public class CH1903EastingDescription extends DoubleDescription {
 
     @Override
     public String getLabel() {
-        return getString(R.string.d_chy);
+        return getContext().getString(R.string.d_chy);
     }
 
     @Override

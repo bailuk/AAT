@@ -37,6 +37,6 @@ public class TrackSizeDescription extends ContentDescription {
 
     @Override
     public String getLabel() {
-        return getString(R.string.d_size);
+        return getContext().getString(R.string.d_size);
     }
 }
