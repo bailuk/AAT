@@ -102,7 +102,7 @@ public abstract class IteratorSource extends ContentSource implements OnCursorCh
         private final BroadcastReceiver  onChangedInCache = new BroadcastReceiver () {
             @Override
             public void onReceive(Context context, Intent intent) {
-                if (AppIntent.hasFile(intent, getInfo().getPath())) {
+                if (AppIntent.hasFile(intent, getInfo().getFile().getPath())) {
                     requestUpdate();
                 }
             }

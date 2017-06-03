@@ -35,7 +35,7 @@ public class GpxInformationDbEntryAndFile extends GpxInformationDbEntry implemen
     public boolean isLoaded() {
         ObjectHandle oldHandle = handle;
 
-        handle = scontext.getCacheService().getObject(getPath(), new GpxObjectStatic.Factory());
+        handle = scontext.getCacheService().getObject(getFile().getPath(), new GpxObjectStatic.Factory());
         oldHandle.free();
         
         if (GpxObject.class.isInstance(handle))

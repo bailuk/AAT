@@ -102,7 +102,7 @@ public abstract class IteratorAbstract extends Iterator implements OnSharedPrefe
         selection = sdirectory.createSelectionString();
         if (cursor != null) {
             oldPosition = cursor.getPosition();
-            fileOnOldPosition = getInfo().getPath();
+            fileOnOldPosition = getInfo().getFile().getPath();
             cursor.close();
         }
 

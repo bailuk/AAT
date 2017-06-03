@@ -42,7 +42,7 @@ public class AutoNodeViewLayer extends NodeViewLayer {
     @Override
     public void setSelectedNode(GpxInformation info, GpxPointNode node, int i) {
         index = i;
-        fileID = info.getPath();
+        fileID = info.getFile().getPath();
 
         html.clear();
 

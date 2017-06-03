@@ -4,7 +4,6 @@ import android.content.Context;
 
 import ch.bailu.aat.R;
 import ch.bailu.aat.gpx.GpxInformation;
-import ch.bailu.aat.util.fs.foc.FocAndroid;
 
 public class PathDescription extends NameDescription {
     
@@ -14,7 +13,7 @@ public class PathDescription extends NameDescription {
 
     @Override
     public void onContentUpdated(int iid, GpxInformation info) {
-        updateName(FocAndroid.factory(getContext(), info.getPath()).getPathName());
+        updateName(info.getFile().getPathName());
     }
     
     

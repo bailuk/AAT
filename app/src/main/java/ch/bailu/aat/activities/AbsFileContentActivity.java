@@ -128,7 +128,7 @@ public abstract class AbsFileContentActivity extends AbsDispatcher implements On
             switchFile(v);
 
         } else if (v == fileOperation) {
-            new FileMenu(this, FocAndroid.factory(this, currentFile.getInfo().getPath())).showAsPopup(this, v);
+            new FileMenu(this, currentFile.getInfo().getFile()).showAsPopup(this, v);
         }
 
     }

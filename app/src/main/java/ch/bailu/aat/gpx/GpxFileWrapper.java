@@ -30,12 +30,7 @@ public class GpxFileWrapper extends GpxInformation {
     }
     
     @Override
-    public String getName() {
-        return file.getName();
-    }
-    
-    @Override
-    public String getPath() {
-        return file.toString();
+    public Foc getFile() {
+        return file;
     }
 }

@@ -23,7 +23,7 @@ public class EditorSource extends ContentSource {
         }
 
         private void update(Intent intent, GpxInformation info) {
-            String id=info.getPath();
+            String id=info.getFile().getPath();
             
             if (AppIntent.hasFile(intent, id)) {
                 requestUpdate();

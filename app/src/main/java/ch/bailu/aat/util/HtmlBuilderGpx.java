@@ -29,7 +29,7 @@ public class HtmlBuilderGpx extends HtmlBuilder {
     public void appendInfo(GpxInformation info, int index) {
         final int count=index+1, total = info.getGpxList().getPointList().size();
 
-        appendHeader(info.getName());
+        appendHeader(info.getFile().getName());
         append("<b>" + count + "</b>/" + total + "<br>");
     }
 

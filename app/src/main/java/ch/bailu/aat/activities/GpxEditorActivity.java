@@ -128,7 +128,7 @@ public class GpxEditorActivity extends AbsFileContentActivity
 
     @Override
     public void onContentUpdated(int iid, GpxInformation info) {
-        editor_helper.edit(new File(currentFile.getInfo().getPath()));
+        editor_helper.edit(currentFile.getInfo().getFile());
         editor_source.requestUpdate();
     }
 
@@ -152,7 +152,7 @@ public class GpxEditorActivity extends AbsFileContentActivity
                     }
 
 
-                }.displaySaveDiscardDialog(this, editor_helper.getInformation().getName());
+                }.displaySaveDiscardDialog(this, editor_helper.getInformation().getFile().getName());
             } else {
                 closeActivity();
             }
@@ -190,7 +190,7 @@ public class GpxEditorActivity extends AbsFileContentActivity
                     }
 
 
-                }.displaySaveDiscardDialog(this, editor_helper.getInformation().getName());
+                }.displaySaveDiscardDialog(this, editor_helper.getInformation().getFile().getName());
             } else {
                 switchFile(v);
             }

@@ -6,6 +6,7 @@ import ch.bailu.aat.coordinates.BoundingBoxE6;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.util.ui.AppLog;
 import ch.bailu.simpleio.foc.Foc;
+import ch.bailu.simpleio.foc.FocAbstractName;
 
 public class GpxInformationDbEntry extends GpxInformation {
     private final Cursor cursor;
@@ -23,17 +24,30 @@ public class GpxInformationDbEntry extends GpxInformation {
     }
 
 
-    @Override
-    public String getPath() {
-        String result =  parent.child(getName()).toString();
-        AppLog.d(this, result);
-        return result;
+    private class FocDbEntry extends FocAbstractName {
+
+        @Override
+        public String getName() {
+            return getString(GpxDbConstants.KEY_FILENAME);
+        }
+
+        @Override
+        public String getPath() {
+            return parent.child(getName()).getPath();
+        }
+
+        @Override
+        public String getPathName() {
+            return parent.child(getName()).getPathName();
+        }
+
     }
 
     @Override
-    public String getName() {
-        return getString(GpxDbConstants.KEY_FILENAME);
+    public Foc getFile() {
+        return  new FocDbEntry();
     }
+
 
     @Override
     public float getSpeed() {

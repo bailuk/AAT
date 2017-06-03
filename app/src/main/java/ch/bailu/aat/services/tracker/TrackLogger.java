@@ -43,13 +43,8 @@ public class TrackLogger extends Logger {
 
 
     @Override
-    public String getPath() {
-        return logFile.toString();
-    }
-
-    @Override
-    public String getName() {
-        return logFile.getName();
+    public Foc getFile() {
+        return logFile;
     }
 
 

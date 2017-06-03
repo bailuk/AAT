@@ -13,6 +13,9 @@ import ch.bailu.simpleio.foc.FocFile;
 import ch.bailu.simpleio.foc.FocName;
 
 public class FocAndroid {
+    public static final Foc NULL = new FocName("");
+
+
     public static Foc factory(Context c, String id) {
         return factory(c, Uri.parse(id));
     }

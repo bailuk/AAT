@@ -21,6 +21,9 @@ import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.cache.GpxObject;
 import ch.bailu.aat.services.cache.GpxObjectStatic;
 import ch.bailu.aat.services.cache.ObjectHandle;
+import ch.bailu.aat.util.fs.foc.FocAndroid;
+import ch.bailu.simpleio.foc.Foc;
+import ch.bailu.simpleio.foc.FocAbstractName;
 
 
 public class OverlaySource extends ContentSource {
@@ -147,13 +150,8 @@ public class OverlaySource extends ContentSource {
 
 
         @Override
-        public String getName() {
-            return new File(handle.toString()).getName();
-        }
-
-        @Override
-        public String getPath() {
-            return handle.toString();
+        public Foc getFile() {
+            return FocAndroid.factory(scontext.getContext(),handle.toString());
         }
 
 

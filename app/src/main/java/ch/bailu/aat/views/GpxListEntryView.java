@@ -70,7 +70,7 @@ public class GpxListEntryView extends LinearLayout implements OnContentUpdatedIn
             description.onContentUpdated(iid, info);
         }
         updateText();
-        preview.setFilePath(info.getPath());
+        preview.setFilePath(info.getFile().getPath());
     }
 
 

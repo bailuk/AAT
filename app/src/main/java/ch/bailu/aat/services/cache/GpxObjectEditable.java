@@ -2,7 +2,6 @@ package ch.bailu.aat.services.cache;
 
 import android.content.Context;
 
-import java.io.File;
 import java.io.IOException;
 
 import ch.bailu.aat.coordinates.BoundingBoxE6;
@@ -11,19 +10,20 @@ import ch.bailu.aat.gpx.GpxList;
 import ch.bailu.aat.gpx.GpxPoint;
 import ch.bailu.aat.gpx.GpxPointNode;
 import ch.bailu.aat.gpx.writer.GpxListWriter;
+import ch.bailu.aat.services.ServiceContext;
+import ch.bailu.aat.services.editor.EditorInterface;
+import ch.bailu.aat.services.editor.GpxEditor;
 import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.util.fs.AppDirectory;
 import ch.bailu.aat.util.fs.foc.FocAndroid;
 import ch.bailu.aat.util.ui.AppLog;
-import ch.bailu.aat.services.ServiceContext;
-import ch.bailu.aat.services.editor.EditorInterface;
-import ch.bailu.aat.services.editor.GpxEditor;
 import ch.bailu.simpleio.foc.Foc;
+import ch.bailu.simpleio.foc.FocAbstractName;
 
 public class GpxObjectEditable extends  GpxObject {
 
     private GpxObject currentHandle=NULL;
-    private final String path;
+    private final Foc real;
     private final String vid;
     
     public final GpxListEditor editor;
@@ -31,8 +31,8 @@ public class GpxObjectEditable extends  GpxObject {
     
     public GpxObjectEditable(String id, String p, ServiceContext sc, int iID) {
         super(id);
-        path=p;
-        vid=id;
+        real = FocAndroid.factory(sc.getContext(), p);
+        vid = id;
         
         editor = new GpxListEditor(sc.getContext(), iID);
         sc.getCacheService().addToBroadcaster(this);        
@@ -41,7 +41,7 @@ public class GpxObjectEditable extends  GpxObject {
 
     @Override
     public void onInsert(ServiceContext sc) {
-        ObjectHandle handle = sc.getCacheService().getObject(path, new GpxObjectStatic.Factory());
+        ObjectHandle handle = sc.getCacheService().getObject(real.getPath(), new GpxObjectStatic.Factory());
         
         if (GpxObject.class.isInstance(handle)) {
         currentHandle = (GpxObject) handle;
@@ -75,7 +75,7 @@ public class GpxObjectEditable extends  GpxObject {
 
     @Override
     public void onChanged(String id, ServiceContext sc) {
-        if (id.equals(path)) {
+        if (id.equals(real)) {
             editor.loadIntoEditor(currentHandle.getGpxList());
         }
     }
@@ -182,12 +182,12 @@ public class GpxObjectEditable extends  GpxObject {
         @Override
         public void save() {
             try {
-                final Foc file = FocAndroid.factory(context, path);
+                final Foc file = real;
 
                 new GpxListWriter(editor.getList(),file).close();
                 modified=false;
                 
-                AppBroadcaster.broadcast(context, AppBroadcaster.FILE_CHANGED_ONDISK, path, vid);
+                AppBroadcaster.broadcast(context, AppBroadcaster.FILE_CHANGED_ONDISK, real.getPath(), vid);
             } catch (IOException e) {
                 AppLog.e(context, this, e);
             }    
@@ -202,8 +202,7 @@ public class GpxObjectEditable extends  GpxObject {
         
         @Override
         public void saveAs() {
-            final File x = new File(path);
-            String prefix = AppDirectory.parsePrefix(x);
+            String prefix = AppDirectory.parsePrefix(real);
 
             try {
                 final Foc file =
@@ -232,24 +231,10 @@ public class GpxObjectEditable extends  GpxObject {
             return editor.getList();
         }
 
-/*
         @Override
-        public int getID() {
-            return ID;
+        public Foc getFile() {
+            return new FocVID();
         }
-*/
-
-        @Override
-        public String getName() {
-            return new File(path).getName();
-        }
-
-
-        @Override
-        public String getPath() {
-            return vid;
-        }
-
 
         @Override
         public boolean isLoaded() {
@@ -301,4 +286,21 @@ public class GpxObjectEditable extends  GpxObject {
         return editor.getGpxList();
     }
 
+
+    private class FocVID extends FocAbstractName {
+        @Override
+        public String getName() {
+            return real.getName();
+        }
+
+        @Override
+        public String getPath() {
+            return vid;
+        }
+
+        @Override
+        public String getPathName() {
+            return real.getPathName();
+        }
+    }
 }

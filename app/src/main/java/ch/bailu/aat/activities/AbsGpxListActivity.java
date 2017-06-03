@@ -134,7 +134,7 @@ public abstract class AbsGpxListActivity extends AbsDispatcher implements OnItem
 
         iteratorSimple.moveToPosition(position);
 
-        fileMenu = new FileMenu(this, FocAndroid.factory(this, iteratorSimple.getInfo().getPath()));
+        fileMenu = new FileMenu(this, FocAndroid.factory(this, iteratorSimple.getInfo().getFile().getPath()));
         fileMenu.inflateWithHeader(menu);
         fileMenu.prepare(menu);
     }

@@ -42,15 +42,10 @@ public class GpxInformationDbSummary extends GpxInformation {
     }
 
 
-    @Override
-    public String getName() {
-        return directory.getName();
-    }
 
-    
     @Override
-    public String getPath() {
-        return directory.toString();
+    public Foc getFile() {
+        return directory;
     }
 
     @Override

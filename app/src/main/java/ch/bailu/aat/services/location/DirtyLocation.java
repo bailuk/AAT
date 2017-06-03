@@ -8,6 +8,8 @@ import ch.bailu.aat.gpx.StateID;
 import ch.bailu.aat.map.layer.MapPositionLayer;
 import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat.util.AppBroadcaster;
+import ch.bailu.simpleio.foc.Foc;
+import ch.bailu.simpleio.foc.FocFile;
 
 public class DirtyLocation extends LocationStackChainedItem {
     private final static String SOLID_KEY="DirtyLocation_";
@@ -61,21 +63,18 @@ public class DirtyLocation extends LocationStackChainedItem {
     class OldLocation extends GpxInformation  {
         private int longitude, latitude;
 
+        private final Foc file;
+
         public OldLocation(Storage storage) {
+            file = new FocFile(storage.getContext().getString(R.string.p_location_old));
             readPosition(storage);
         }
         
         @Override
-        public String getName() {
-            return storage.getContext().getString(R.string.p_location_old);
+        public Foc getFile() {
+            return file;
         }
 
-        /*
-        @Override
-        public int getID() {
-            return InfoID.LOCATION;
-        }
-*/
 
         private void readPosition(Storage storage) {
             longitude=storage.readInteger(SOLID_KEY + MapPositionLayer.LONGITUDE_SUFFIX);

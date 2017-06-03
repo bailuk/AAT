@@ -122,12 +122,12 @@ public class FileControlBarLayer extends ControlBarLayer {
 
             iterator.moveToPosition(i);
 
-            selectedFile = iterator.getInfo().getPath();
+            selectedFile = iterator.getInfo().getFile().getPath();
 
             preview.setFilePath(selectedFile);
 
             builder.clear();
-            builder.appendHeader(iterator.getInfo().getName());
+            builder.appendHeader(iterator.getInfo().getFile().getName());
             for (ContentDescription d: summaryData) {
                 d.onContentUpdated(iterator.getInfoID(), iterator.getInfo());
                 builder.append(d);

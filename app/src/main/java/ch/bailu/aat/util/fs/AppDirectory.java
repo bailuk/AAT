@@ -136,7 +136,7 @@ public class AppDirectory  {
 
 
 
-    public static String parsePrefix(File file) {
+    public static String parsePrefix(Foc file) {
         StringBuilder name = new StringBuilder(file.getName());
 
         int length=name.length();

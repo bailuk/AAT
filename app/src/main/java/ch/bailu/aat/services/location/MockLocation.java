@@ -16,11 +16,12 @@ import ch.bailu.aat.util.Timer;
 import ch.bailu.aat.util.fs.foc.FocAndroid;
 import ch.bailu.aat.util.ui.AppLog;
 import ch.bailu.simpleio.foc.Foc;
+import ch.bailu.simpleio.foc.FocName;
 
 public class MockLocation extends LocationStackChainedItem implements Runnable{
 
     private static final long INTERVAL=1*1000;
-    
+
     private GpxList mockData;
     private GpxPointNode node;
     private final Timer timer;
@@ -31,35 +32,35 @@ public class MockLocation extends LocationStackChainedItem implements Runnable{
 
     public MockLocation(Context c, LocationStackItem i) {
         super(i);
-        
+
         mockData = new GpxList(GpxType.TRK, new MaxSpeed.Raw());
         timer=new Timer(this, INTERVAL);
-        
+
         try {
-        	Foc file = FocAndroid.factory(c,(new SolidMockLocationFile(c).getValueAsString()));
-        	mockData = new GpxListReader(file).getGpxList();
-            
+            Foc file = FocAndroid.factory(c,(new SolidMockLocationFile(c).getValueAsString()));
+            mockData = new GpxListReader(file).getGpxList();
+
             timer.kick();
             sendState(StateID.WAIT);
-            
+
         } catch (IOException e) {
             AppLog.e(c, e);
             sendState(StateID.OFF);
         }
     }
 
-    
+
     @Override
     public void close() {
         timer.close();
     }
-    
+
     @Override
     public void run() {
         if (sendLocation()) {
             kickTimer();
         } else {
-            node = (GpxPointNode) mockData.getPointList().getFirst(); 
+            node = (GpxPointNode) mockData.getPointList().getFirst();
             if (sendLocation()) {
                 sendState(StateID.ON);
                 kickTimer();
@@ -72,7 +73,7 @@ public class MockLocation extends LocationStackChainedItem implements Runnable{
     private boolean sendLocation() {
         if (node != null) {
             sendLocation(new MockLocationInformation(node));
-            
+
             node = (GpxPointNode)node.getNext();
             if (node != null) {
                 nextInterval=node.getTimeDelta();
@@ -96,11 +97,13 @@ public class MockLocation extends LocationStackChainedItem implements Runnable{
     }
 
 
-    private class MockLocationInformation extends LocationInformation {
+    private final static Foc MOCK_NAME = new FocName("Mock location");
 
+
+    private class MockLocationInformation extends LocationInformation {
         private final GpxPointNode node;
         private final long creationTime = System.currentTimeMillis();
-        
+
         public MockLocationInformation(GpxPointNode n) {
             setVisibleTrackPoint(n);
             node=n;
@@ -115,9 +118,10 @@ public class MockLocation extends LocationStackChainedItem implements Runnable{
         public int getState() {
             return state;
         }
+
         @Override
-        public String getName() {
-            return "Mock location";
+        public Foc getFile() {
+            return MOCK_NAME;
         }
         @Override
         public long getTimeStamp() {
@@ -168,13 +172,13 @@ public class MockLocation extends LocationStackChainedItem implements Runnable{
 //            return node.getBearing();
 //        }
     }
-    
+
     @Override
     public void sendState(int s) {
         state = s;
         super.sendState(s);
     }
-    
+
 
     @Override
     public void newLocation(LocationInformation location) {}
@@ -182,7 +186,7 @@ public class MockLocation extends LocationStackChainedItem implements Runnable{
 
     @Override
     public void preferencesChanged(Context c, int i) {}
-    
-    
+
+
 
 }

@@ -104,10 +104,7 @@ public class GpxDataWrapper implements GpxDeltaPointInterface, GpxBigDeltaInterf
         return summary.getEndTime();
     }
 
-//    @Override
-//    public double getBearing() {
-//        return 0;
-//    }
+
 
     @Override
     public int getType() {
