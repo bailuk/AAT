@@ -102,7 +102,8 @@ public class DirectorySynchronizer  implements Closeable {
          */
         @Override
         public void start() {
-            AppBroadcaster.register(scontext.getContext(), onFileChanged, AppBroadcaster.FILE_CHANGED_INCACHE);
+            AppBroadcaster.register(scontext.getContext(),
+                    onFileChanged, AppBroadcaster.FILE_CHANGED_INCACHE);
             try {
                 database = openDatabase();
                 setState(new StatePrepareSync());
@@ -241,11 +242,15 @@ public class DirectorySynchronizer  implements Closeable {
         public void start() {
 
             Foc file = filesToAdd.popItem();
+
+
             if (file==null) {
                 terminate();
 
 
             } else {
+                AppLog.d(this, file.getPathName());
+
                 ObjectHandle h = scontext.getCacheService().getObject(
                         file.toString(), new GpxObjectStatic.Factory());
                 if (h instanceof GpxObject) {
@@ -276,19 +281,18 @@ public class DirectorySynchronizer  implements Closeable {
 
 
         private void addGpxSummaryToDatabase(String id, GpxList list) throws IOException {
-            final File file = new File(id);
+            final Foc file = FocAndroid.factory(scontext.getContext(), id);
 
-            ContentValues content = createContentValues(file.getPath(), file.getName(), list.getDelta());
+            ContentValues content = createContentValues(file.getName(), list.getDelta());
             database.insert(content);
         }
 
-        private ContentValues createContentValues(String pathname, String filename, 
+        private ContentValues createContentValues(String filename,
                 GpxBigDeltaInterface summary) {
 
-            BoundingBoxE6 box = summary.getBoundingBox();
+            BoundingBoxE6 bounding = summary.getBoundingBox();
 
             ContentValues content = new ContentValues();
-            //content.put(GpxDbConstants.KEY_PATHNAME_OLD,   pathname);
             content.put(GpxDbConstants.KEY_FILENAME,   filename);
             content.put(GpxDbConstants.KEY_AVG_SPEED,  summary.getSpeed());
             content.put(GpxDbConstants.KEY_MAX_SPEED,  summary.getMaximumSpeed());
@@ -298,10 +302,10 @@ public class DirectorySynchronizer  implements Closeable {
             content.put(GpxDbConstants.KEY_END_TIME,   summary.getEndTime());        
             content.put(GpxDbConstants.KEY_PAUSE,      summary.getPause());
             content.put(GpxDbConstants.KEY_TYPE_ID,    summary.getType());
-            content.put(GpxDbConstants.KEY_EAST_BOUNDING, box.getLonEastE6());
-            content.put(GpxDbConstants.KEY_WEST_BOUNDING, box.getLonWestE6());
-            content.put(GpxDbConstants.KEY_NORTH_BOUNDING, box.getLatNorthE6());
-            content.put(GpxDbConstants.KEY_SOUTH_BOUNDING, box.getLatSouthE6());
+            content.put(GpxDbConstants.KEY_EAST_BOUNDING, bounding.getLonEastE6());
+            content.put(GpxDbConstants.KEY_WEST_BOUNDING, bounding.getLonWestE6());
+            content.put(GpxDbConstants.KEY_NORTH_BOUNDING, bounding.getLatNorthE6());
+            content.put(GpxDbConstants.KEY_SOUTH_BOUNDING, bounding.getLatSouthE6());
             return content;
         }
 

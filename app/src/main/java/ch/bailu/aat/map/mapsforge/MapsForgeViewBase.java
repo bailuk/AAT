@@ -150,7 +150,8 @@ public class MapsForgeViewBase extends MapView implements
 
     @Override
     public void frameBounding(BoundingBoxE6 boundingBox) {
-        frameBounding(boundingBox.toBoundingBox());
+        if (boundingBox.hasBounding())
+            frameBounding(boundingBox.toBoundingBox());
     }
 
 

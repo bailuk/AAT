@@ -222,6 +222,7 @@ public class FocContent extends Foc {
 
     @Override
     public InputStream openR() throws IOException, SecurityException {
+        AppLog.d(this, uris.getDocument().toString());
         return resolver.openInputStream(uris.getDocument());
     }
 

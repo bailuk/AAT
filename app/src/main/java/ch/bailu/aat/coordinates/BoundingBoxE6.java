@@ -2,6 +2,7 @@ package ch.bailu.aat.coordinates;
 
 import org.mapsforge.core.model.BoundingBox;
 import org.mapsforge.core.model.LatLong;
+import org.mapsforge.core.util.LatLongUtils;
 
 import java.io.IOException;
 import java.util.Locale;
@@ -12,13 +13,20 @@ import ch.bailu.simpleio.io.Stream;
 public class BoundingBoxE6 {
 
 
+    private static final int MIN_LA = LatLongE6.toE6(LatLongUtils.LATITUDE_MIN);
+    private static final int MAX_LA = LatLongE6.toE6(LatLongUtils.LATITUDE_MAX);
+    private static final int MAX_LO = LatLongE6.toE6(LatLongUtils.LONGITUDE_MAX);
+    private static final int MIN_LO = LatLongE6.toE6(LatLongUtils.LONGITUDE_MIN);
+
+
     public final static BoundingBoxE6 NULL_BOX = new BoundingBoxE6(0,0);
 
 
-    private int north = Integer.MIN_VALUE,
-            east  = Integer.MIN_VALUE,
-            south = Integer.MAX_VALUE,
-            west  = Integer.MAX_VALUE;
+    private int north = MIN_LA,
+            east  = MIN_LO,
+            south = MAX_LA,
+            west  = MAX_LO;
+
 
 
 
@@ -46,14 +54,6 @@ public class BoundingBoxE6 {
         add(b);
     }
 
-//    public BoundingBoxE6(GpxPointInterface a, GpxPointInterface b) {
-//        add_w(a.getLatitudeE6(), a.getLongitudeE6(), b.getLatitudeE6(), b.getLongitudeE6());
-//    }
-//
-//
-//    public BoundingBoxE6(BoundingBoxOsm b) {
-//        add_w(b);
-//    }
 
 
     public void add(String bounding) {
@@ -104,17 +104,11 @@ public class BoundingBoxE6 {
     }
 
     public void add(int n, int e, int s, int w) {
-
         north = Math.max(n,north);
         east  = Math.max(e,east);
         south = Math.min(s,south);
         west  = Math.min(w,west);
     }
-
-//    public void add_w(BoundingBoxOsm b) {
-//        add_w(b.getLatNorthE6(), b.getLonEastE6(),
-//            b.getLatSouthE6(), b.getLonWestE6());
-//    }
 
 
     public boolean contains(LatLong p) {
@@ -154,6 +148,7 @@ public class BoundingBoxE6 {
     }
 
     public BoundingBox toBoundingBox() {
+        //validate();
         return new BoundingBox(
                 LatLongE6.toD(Math.min(south, north)),
                 LatLongE6.toD(Math.min(west, east)),
@@ -161,9 +156,6 @@ public class BoundingBoxE6 {
                 LatLongE6.toD(Math.max(west, east)));
     }
 
-//    public BoundingBoxOsm toBoundingBoxE6() {
-//        return new BoundingBoxOsm(north, east, south, west);
-//    }
 
 
     public int getLatNorthE6() {
@@ -207,5 +199,21 @@ public class BoundingBoxE6 {
     public LatLongE6 getCenter() {
         return new LatLongE6(south + getLatitudeSpanE6(), west + getLongitudeSpanE6());
     }
+
+
+    private void validate() {
+        north = validate(north, MIN_LA, MAX_LA);
+        south = validate(south, MIN_LA, MAX_LA);
+        east = validate(east, MIN_LO, MAX_LO);
+        west = validate(west, MIN_LO, MAX_LO);
+
+    }
+
+    private static int validate(int val, int min, int max) {
+        val = Math.min(val, max);
+        val = Math.max(val, min);
+        return val;
+    }
+
 }
 
