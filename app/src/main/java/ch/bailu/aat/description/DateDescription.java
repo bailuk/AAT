@@ -18,7 +18,11 @@ public class DateDescription extends LongDescription {
         return getContext().getString(R.string.d_startdate);
     }
     public String getTime()   {
-        return String.format((Locale) null, "%tF - %tT",getCache(), getCache());
+        return format(getCache());
+    }
+
+    public static String format(long time) {
+        return String.format((Locale) null, "%tF - %tT",time, time);
     }
 
     @Override

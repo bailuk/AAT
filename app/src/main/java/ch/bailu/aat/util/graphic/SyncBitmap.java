@@ -53,7 +53,7 @@ public class SyncBitmap implements Closeable {
 
 
 
-    public static Bitmap load(File file) {
+    private static Bitmap load(File file) {
         android.graphics.Bitmap b =
                 android.graphics.BitmapFactory.decodeFile(file.toString());
 

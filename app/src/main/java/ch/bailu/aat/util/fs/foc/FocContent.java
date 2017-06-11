@@ -134,7 +134,6 @@ public class FocContent extends Foc {
 
                 do {
                     DocumentData data = new DocumentData(cursor);
-                    AppLog.d(this, data.mimeType);
                     exec.execute(new FocContent(resolver, uris.child(new DocumentId(data.documentId)), data));
 
                 } while (cursor.moveToNext());
@@ -222,7 +221,6 @@ public class FocContent extends Foc {
 
     @Override
     public InputStream openR() throws IOException, SecurityException {
-        AppLog.d(this, uris.getDocument().toString());
         return resolver.openInputStream(uris.getDocument());
     }
 
@@ -233,10 +231,10 @@ public class FocContent extends Foc {
 
 
     private void querySelf() {
-        AppLog.d(this, "querySelf() " + uris.getDocumentId());
+
 
         if (data != null) return;
-
+        AppLog.d(this, "querySelf() " + uris.getDocumentId());
 
         Cursor cursor = null;
         try {
@@ -269,6 +267,5 @@ public class FocContent extends Foc {
     public String getPathName() {
         return uris.getDocumentId().toString();
     }
-
 
 }

@@ -64,7 +64,7 @@ public class FileControlBarLayer extends ControlBarLayer {
         selector = new Selector(mc);
         preview = new PreviewView(a.getServiceContext());
 
-        bar.addView(preview);
+        bar.add(preview);
         action = bar.addImageButton(R.drawable.edit_select_all);
         overlay = bar.addImageButton(R.drawable.view_paged);
         reloadPreview = bar.addImageButton(R.drawable.view_refresh);

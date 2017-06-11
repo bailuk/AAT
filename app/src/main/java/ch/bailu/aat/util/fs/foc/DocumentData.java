@@ -1,8 +1,12 @@
 package ch.bailu.aat.util.fs.foc;
 
+import android.annotation.TargetApi;
 import android.database.Cursor;
+import android.os.Build;
 import android.provider.DocumentsContract.Document;
+import android.provider.OpenableColumns;
 
+import ch.bailu.aat.description.DateDescription;
 import ch.bailu.aat.util.ui.AppLog;
 
 
@@ -10,9 +14,9 @@ public class DocumentData  {
     final public String documentId;
     final public String mimeType;
     final public String displayName;
-    final int flags;
-    final long lastModified;
-    final long size;
+    final public int flags;
+    final public long lastModified;
+    final public long size;
 
     final String type;
 
@@ -28,27 +32,33 @@ public class DocumentData  {
     }
 
     public DocumentData(Cursor cursor) {
-        documentId = cursor.getString(cursor.getColumnIndex(Document.COLUMN_DOCUMENT_ID));
-        mimeType = cursor.getString(cursor.getColumnIndex(Document.COLUMN_MIME_TYPE));
-        displayName = cursor.getString(cursor.getColumnIndex(Document.COLUMN_DISPLAY_NAME));
-        lastModified = cursor.getLong(cursor.getColumnIndex(Document.COLUMN_LAST_MODIFIED));
-        flags = cursor.getInt(cursor.getColumnIndex(Document.COLUMN_SIZE));
-        size = cursor.getLong(cursor.getColumnIndex(Document.COLUMN_FLAGS));
+        documentId = cursor.getString(index(cursor, Document.COLUMN_DOCUMENT_ID));
+        mimeType = cursor.getString(index(cursor, Document.COLUMN_MIME_TYPE));
+        displayName = cursor.getString(index(cursor, Document.COLUMN_DISPLAY_NAME));
+        lastModified = cursor.getLong(index(cursor, Document.COLUMN_LAST_MODIFIED));
+        flags = cursor.getInt(index(cursor, Document.COLUMN_FLAGS));
+        size = cursor.getLong(index(cursor, Document.COLUMN_SIZE));
 
         if (mimeType.equals(Document.MIME_TYPE_DIR)) type = FocContent.TREE;
         else type = FocContent.DOCUMENT;
 
-        log();
+
     }
+
+
+    private int index(Cursor cursor, String columnDocumentId) {
+        int i = cursor.getColumnIndex(columnDocumentId);
+
+
+        if (cursor.isNull(i)) {
+            AppLog.d(this, columnDocumentId + " is null");
+        }
+        return i;
+    }
+
 
     @Override
     public String toString() {
         return documentId;
-    }
-
-
-    public void log() {
-        AppLog.d(this, documentId);
-        AppLog.d(this, mimeType);
     }
 }

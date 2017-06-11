@@ -52,26 +52,29 @@ public class GpxObjectStatic extends GpxObject implements ElevationUpdaterClient
             public long bgOnProcess() {
                 long size = 0;
 
-                ObjectHandle handle =
-                        sc.getCacheService().getObject(GpxObjectStatic.this.toString());
-                try {
-                    if (handle instanceof GpxObjectStatic) {
+                if (sc.lock()) {
+                    ObjectHandle handle =
+                            sc.getCacheService().getObject(GpxObjectStatic.this.toString());
+                    try {
+                        if (handle instanceof GpxObjectStatic) {
 
-                        final Context c = sc.getContext();
-                        final String id = toString();
+                            final Context c = sc.getContext();
+                            final String id = toString();
 
-                        GpxListReader reader =
-                                new GpxListReader(this, FocAndroid.factory(c, id));
-                        if (canContinue()) {
-                            gpxList = reader.getGpxList();
-                            readyAndLoaded = true;
+                            GpxListReader reader =
+                                    new GpxListReader(this, FocAndroid.factory(c, id));
+                            if (canContinue()) {
+                                gpxList = reader.getGpxList();
+                                readyAndLoaded = true;
+                            }
+                            size = getSize();
                         }
-                        size = getSize();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    } finally {
+                        handle.free();
                     }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                } finally {
-                    handle.free();
+                    sc.free();
                 }
                 return size;
             }
