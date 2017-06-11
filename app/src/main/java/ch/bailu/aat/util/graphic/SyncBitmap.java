@@ -61,7 +61,7 @@ public class SyncBitmap implements Closeable {
         InputStream in = null;
 
         try {
-            in = file.openR();
+            in = file.openRb();
             bitmap = android.graphics.BitmapFactory.decodeStream(in);
         } catch (Exception e) {
             e.printStackTrace();

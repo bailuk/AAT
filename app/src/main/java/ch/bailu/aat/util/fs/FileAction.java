@@ -37,7 +37,7 @@ public class FileAction   {
         final Foc currentDir = new SolidDirectoryQuery(context).getValueAsFile();
         final Foc dir = file.parent();
 
-        return dir.canWrite() && dir.equals(currentDir);
+        return dir != null && dir.canWrite() && dir.equals(currentDir);
     }
 
 
@@ -129,7 +129,7 @@ public class FileAction   {
     public static void rename(final ServiceContext scontext, final Activity activity, final Foc file) {
         final Context context = scontext.getContext();
 
-        if (file.canWrite()) {
+        if (file.canWrite() && file.hasParent()) {
             final Foc directory=file.parent();
 
             final String title = context.getString(R.string.file_rename) + " " + file.getName();

@@ -105,6 +105,13 @@ public class FocContent extends Foc {
                 getName()) != null;
     }
 
+
+    @Override
+    public boolean hasParent() {
+        return uris.hasParent();
+    }
+
+
     @Override
     public Foc parent() {
         if (uris.hasParent()) return new FocContent(resolver, uris.parent(), TREE);

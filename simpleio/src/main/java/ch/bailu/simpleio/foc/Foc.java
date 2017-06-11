@@ -1,5 +1,7 @@
 package ch.bailu.simpleio.foc;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.Closeable;
 import java.io.IOException;
 import java.io.InputStream;
@@ -56,6 +58,10 @@ public abstract class Foc {
         return parent != null && parent.mkdirs();
     }
 
+    public boolean hasParent() {
+        return parent() != null;
+    }
+
     public abstract Foc parent();
 
 
@@ -103,11 +109,11 @@ public abstract class Foc {
         InputStream in = null;
 
         try {
-            in = openR();
+            in = openRb();
             copy(in, out);
 
         } finally {
-            if (in != null) in.close();
+            close(in);
         }
     }
 
@@ -150,7 +156,28 @@ public abstract class Foc {
     public abstract long length();
     public abstract long lastModified();
 
+    public InputStream openRb() throws IOException, SecurityException {
+        InputStream in = openR();
+
+        if (in != null)
+            return new BufferedInputStream(in);
+
+        return null;
+    }
+
+
     public abstract InputStream openR() throws IOException, SecurityException;
+
+
+    public OutputStream openWb() throws IOException, SecurityException {
+        OutputStream out = openW();
+
+        if (out != null)
+            return new BufferedOutputStream(out);
+
+        return null;
+    }
+
     public abstract OutputStream openW() throws IOException, SecurityException;
 
     public static void close(Closeable toClose) {

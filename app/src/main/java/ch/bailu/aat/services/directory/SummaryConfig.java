@@ -7,8 +7,6 @@ import ch.bailu.simpleio.foc.Foc;
 import ch.bailu.simpleio.foc.FocFile;
 
 public class SummaryConfig {
-
-
     public static String getWriteableDBPath(Context context, Foc dir) {
         return getWriteableSummaryDir(context, dir)
                 .child(AppDirectory.FILE_CACHE_DB)
@@ -19,8 +17,9 @@ public class SummaryConfig {
     public static Foc getWriteableSummaryDir(Context context, Foc dir) {
         Foc summaryDir;
 
-        if (dir instanceof FocFile && dir.mkdirs() && dir.canWrite()) {
+        if (dir.mkdirs() && dir.canWrite()) {
             summaryDir = dir.child(AppDirectory.DIR_CACHE);
+
         } else {
 
             summaryDir = new FocFile(context.getCacheDir())

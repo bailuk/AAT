@@ -60,7 +60,7 @@ public class CachedTileObject extends TileObject {
                             out = toFile(sc.getContext()).openW();
 
                             Bitmap bitmap = tileObject.getBitmap();
-                            if (bitmap != null) {
+                            if (bitmap != null && out != null) {
                                 bitmap.compress(Bitmap.CompressFormat.PNG, 0, out);
                             }
                         }
