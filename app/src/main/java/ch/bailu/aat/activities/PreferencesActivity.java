@@ -6,6 +6,7 @@ import android.widget.LinearLayout;
 
 import ch.bailu.aat.R;
 import ch.bailu.aat.menus.DirectoryMenu;
+import ch.bailu.aat.preferences.SolidFile;
 import ch.bailu.aat.preferences.SolidPreset;
 import ch.bailu.aat.views.ContentView;
 import ch.bailu.aat.views.MainControlBar;
@@ -65,7 +66,7 @@ public class PreferencesActivity extends AbsDispatcher {
     protected void onActivityResult(int requestCode,
                                     int resultCode,
                                     Intent data) {
-        DirectoryMenu.onActivityResult(this, requestCode, resultCode, data);
+        SolidFile.onActivityResult(this, requestCode, resultCode, data);
     }
 
 

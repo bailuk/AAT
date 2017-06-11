@@ -14,6 +14,8 @@ public class FocTest {
         file = f;
     }
 
+
+
     public void rlog() {
         log();
         file.foreach(new Foc.Execute() {

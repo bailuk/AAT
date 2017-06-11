@@ -1,19 +1,10 @@
 package ch.bailu.aat.util.fs;
 
-import android.annotation.TargetApi;
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
-import android.os.Build;
 import android.os.Environment;
-import android.os.storage.StorageManager;
-import android.os.storage.StorageVolume;
 
 import java.io.File;
-import java.util.List;
 
-import ch.bailu.aat.menus.DirectoryMenu;
-import ch.bailu.aat.util.fs.foc.FocAndroid;
 import ch.bailu.aat.util.ui.AppLog;
 import ch.bailu.simpleio.foc.Foc;
 import ch.bailu.simpleio.foc.FocFile;
@@ -143,13 +134,13 @@ public class AndroidVolumes {
         }
         return file;
     }
-
+/*
     public void askForPermission(Activity c, Foc f) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             askForPermissionSDK24(c, f);
         }
     }
-
+*/
 
     private static String volumePathFromFile(Foc f) {
         for (Foc v : volumes) {
@@ -163,7 +154,7 @@ public class AndroidVolumes {
         return null;
     }
 
-
+/*
     @TargetApi(24)
     private void askForPermissionSDK24(Activity c, Foc f) {
         Object s = c.getSystemService(Context.STORAGE_SERVICE);
@@ -191,5 +182,5 @@ public class AndroidVolumes {
             }
         }
     }
-
+*/
 }
