@@ -11,6 +11,7 @@ import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.background.FileHandle;
 import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.util.graphic.SyncBitmap;
+import ch.bailu.simpleio.foc.Foc;
 
 public class ImageObject extends ImageObjectAbstract {
     public final static ImageObject NULL=new ImageObject();
@@ -41,16 +42,32 @@ public class ImageObject extends ImageObjectAbstract {
 
 
 
-    private void load(ServiceContext sc) {
+    private void load(final ServiceContext sc) {
         FileHandle l=new FileHandle(toString()) {
 
             @Override
             public long bgOnProcess() {
-                File file = new File(toString());
+                long size = 0;
 
-                if (file.canRead())
-                    bitmap.set(new File(toString()));
-                return bitmap.getSize();
+                if (sc.lock()) {
+                    ObjectHandle handle = sc.getCacheService().getObject(toString());
+
+                    if (handle != null) {
+
+                        if (handle instanceof ImageObject) {
+                            ImageObject self = (ImageObject) handle;
+
+                            Foc file = self.toFile(sc.getContext());
+
+                            bitmap.set(file);
+                            size =  bitmap.getSize();
+                        }
+                        handle.free();
+                    }
+
+                    sc.free();
+                }
+                return size;
             }
 
             @Override

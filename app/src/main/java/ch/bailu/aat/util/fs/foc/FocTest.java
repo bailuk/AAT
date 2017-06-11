@@ -48,8 +48,7 @@ public class FocTest {
             b.append("e");
 
         if (file.canWrite()) {
-            if (write()) b.append("W");
-            else b.append("w");
+            b.append("w");
         }
 
         if (file.canRead()) {
@@ -62,23 +61,10 @@ public class FocTest {
     }
 
 
-    public boolean write() {
-        Closeable c=null;
-        try {
-            c = file.openR();
-            return true;
-        } catch (Exception e) {
-            return false;
-        } finally {
-            Foc.close(c);
-        }
-    }
-
-
     public boolean read() {
         Closeable c=null;
         try {
-            c = file.openW();
+            c = file.openR();
             return true;
         } catch (Exception e) {
             return false;
