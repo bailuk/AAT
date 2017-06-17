@@ -10,7 +10,7 @@ import ch.bailu.simpleio.foc.Foc;
 public abstract class ObjectHandle implements ObjectBroadcastReceiver{
     public static final int MIN_SIZE=10;
 
-    public static final ObjectHandle NULL = new ObjectHandle(""){
+    public static final ObjectHandle NULL = new ObjectHandle(FocAndroid.NULL){
 
         @Override
         public long getSize() {
@@ -24,21 +24,24 @@ public abstract class ObjectHandle implements ObjectBroadcastReceiver{
         public void onChanged(String id, ServiceContext cs) {}
     };
 
-    private final String ID;
+    private final Foc ID;
     
     private long accessTime=System.currentTimeMillis();
     private int lock=0;
 
     
-    public ObjectHandle(String id) {
-        ID=id;
+    public ObjectHandle(Context c, String id) {
+        this(FocAndroid.factory(c, id));
+    }
+    public ObjectHandle(Foc id) {
+        ID = id;
     }
 
     @Override
     public String toString() {
-        return ID;
+        return ID.getPath();
     }
-    public Foc toFile(Context c) {return FocAndroid.factory(c, ID);}
+    public Foc toFile(Context c) {return ID;}
     
     
     public boolean isLocked() {

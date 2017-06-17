@@ -13,7 +13,9 @@ import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.VirtualService;
 import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.util.AppIntent;
+import ch.bailu.aat.util.fs.foc.FocAndroid;
 import ch.bailu.aat.util.ui.AppLog;
+import ch.bailu.simpleio.foc.Foc;
 
 public class BackgroundService extends VirtualService {
 
@@ -25,7 +27,8 @@ public class BackgroundService extends VirtualService {
     private final BroadcastReceiver onFileDownloaded = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            AppLog.i(context, AppIntent.getFile(intent));
+            Foc file = FocAndroid.factory(context, AppIntent.getFile(intent));
+            AppLog.i(context, file.getPathName());
         }
     };
 

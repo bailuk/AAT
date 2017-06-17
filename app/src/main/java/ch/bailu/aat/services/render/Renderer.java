@@ -45,8 +45,14 @@ public class Renderer extends RendererBase<RendererJob> {
             MultiMapDataStore store= new MultiMapDataStore(MultiMapDataStore.DataPolicy.RETURN_ALL);
 
             for (Foc f: files) {
-                AppLog.d(this, f.toString() + ": add_w to renderer");
-                store.addMapDataStore(new MapFile(f.toString()), true, true);
+                try {
+                     // TODO: Translate FocContent to unix file
+
+                    store.addMapDataStore(new MapFile(f.toString()), true, true);
+                    AppLog.d(this, "Add \'" + f.getPathName() + "\' to renderer");
+                } catch (Exception e) {
+                    AppLog.d(this, e.toString());
+                }
             }
 
             mapDataStore = store;

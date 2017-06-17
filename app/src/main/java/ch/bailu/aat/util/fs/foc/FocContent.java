@@ -67,9 +67,6 @@ public class FocContent extends Foc {
 
 
 
-
-
-
     @Override
     public boolean move(Foc dest) throws IOException, SecurityException {
         boolean ok = false;
@@ -98,11 +95,18 @@ public class FocContent extends Foc {
 
     @Override
     public boolean mkdir() {
-        return uris.hasParent() && DocumentsContract.createDocument(
-                resolver,
-                uris.getParent(),
-                DocumentsContract.Document.MIME_TYPE_DIR,
-                getName()) != null;
+        return touch(DocumentsContract.Document.MIME_TYPE_DIR);
+    }
+
+
+    private boolean touch(String mimeType) {
+        Foc parent = parent();
+
+        return (parent != null && parent.mkdirs() && DocumentsContract.createDocument(
+                        resolver,
+                        uris.getParent(),
+                        mimeType,
+                        getName()) != null);
     }
 
 
@@ -233,7 +237,10 @@ public class FocContent extends Foc {
 
     @Override
     public OutputStream openW() throws IOException, SecurityException {
-        return resolver.openOutputStream(uris.getDocument());
+        if (touch(MimeType.fromName(getName())))
+            return resolver.openOutputStream(uris.getDocument());
+
+        return null;
     }
 
 
