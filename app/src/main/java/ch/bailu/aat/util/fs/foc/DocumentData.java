@@ -1,12 +1,8 @@
 package ch.bailu.aat.util.fs.foc;
 
-import android.annotation.TargetApi;
 import android.database.Cursor;
-import android.os.Build;
 import android.provider.DocumentsContract.Document;
-import android.provider.OpenableColumns;
 
-import ch.bailu.aat.description.DateDescription;
 import ch.bailu.aat.util.ui.AppLog;
 
 
@@ -17,6 +13,11 @@ public class DocumentData  {
     final public int flags;
     final public long lastModified;
     final public long size;
+    final public boolean exists;
+
+    public final static String TREE= "tree";
+    public final static String DOCUMENT="document";
+    public final static String UNKNOWN="unknown";
 
     final String type;
 
@@ -28,7 +29,8 @@ public class DocumentData  {
         lastModified=System.currentTimeMillis();
         flags = 0;
         size = 0;
-        type = FocContent.UNKNOWN;
+        type = UNKNOWN;
+        exists=false;
     }
 
     public DocumentData(Cursor cursor) {
@@ -39,10 +41,10 @@ public class DocumentData  {
         flags = cursor.getInt(index(cursor, Document.COLUMN_FLAGS));
         size = cursor.getLong(index(cursor, Document.COLUMN_SIZE));
 
-        if (mimeType.equals(Document.MIME_TYPE_DIR)) type = FocContent.TREE;
-        else type = FocContent.DOCUMENT;
+        if (mimeType.equals(Document.MIME_TYPE_DIR)) type = TREE;
+        else type = DOCUMENT;
 
-
+        exists=true;
     }
 
 

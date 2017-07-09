@@ -4,13 +4,15 @@ import android.content.Context;
 
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.util.fs.foc.FocAndroid;
+import ch.bailu.aat.util.ui.AppLog;
 import ch.bailu.simpleio.foc.Foc;
+import ch.bailu.simpleio.foc.FocFile;
 
 
 public abstract class ObjectHandle implements ObjectBroadcastReceiver{
     public static final int MIN_SIZE=10;
 
-    public static final ObjectHandle NULL = new ObjectHandle(FocAndroid.NULL){
+    public static final ObjectHandle NULL = new ObjectHandle(""){
 
         @Override
         public long getSize() {
@@ -24,24 +26,30 @@ public abstract class ObjectHandle implements ObjectBroadcastReceiver{
         public void onChanged(String id, ServiceContext cs) {}
     };
 
-    private final Foc ID;
+    private final String ID;
     
     private long accessTime=System.currentTimeMillis();
     private int lock=0;
 
     
-    public ObjectHandle(Context c, String id) {
-        this(FocAndroid.factory(c, id));
-    }
-    public ObjectHandle(Foc id) {
-        ID = id;
+    public ObjectHandle(String id) {
+        ID=id;
     }
 
     @Override
     public String toString() {
-        return ID.getPath();
+        return ID;
     }
-    public Foc toFile(Context c) {return ID;}
+
+
+    public String getID() {
+        return ID;
+    }
+
+    public Foc getFile() {
+        AppLog.d(this, "WARNING: default implementation of getFile() called!");
+        return new FocFile(ID);
+    }
     
     
     public boolean isLocked() {

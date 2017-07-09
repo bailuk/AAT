@@ -1,7 +1,5 @@
 package ch.bailu.aat.util.fs.foc;
 
-import java.io.File;
-
 public class MimeType {
 
     public static String fromName(String name) {
@@ -9,10 +7,15 @@ public class MimeType {
 
         if ("gpx".equals(suffix)) {
             return "application/gpx+xml";
+
         } else if ("osm".equals(suffix)) {
             return "application/xml";
+
         } else if ("png".equals(suffix)) {
             return "image/png";
+
+        } else if ("zip".equals(suffix)) {
+            return "application/zip";
         }
         return "text/plain";
     }

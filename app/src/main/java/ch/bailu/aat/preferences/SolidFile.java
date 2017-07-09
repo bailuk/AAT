@@ -89,7 +89,7 @@ public abstract class SolidFile extends SolidString {
 
                 Uri uri = data.getData();
 
-                //requestPersistablePermission(c, uri);
+                requestPersistablePermission(c, uri);
 
                 Storage.global(c).writeString(browseDirKey, uri.toString());
 

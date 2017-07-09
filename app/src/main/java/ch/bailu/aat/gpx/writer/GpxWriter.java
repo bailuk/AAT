@@ -14,11 +14,11 @@ public abstract class GpxWriter {
     private BufferedWriter output=null;
 
 
-    public GpxWriter(Foc file) throws IOException {
+    public GpxWriter(Foc file) throws IOException, SecurityException {
         output = new BufferedWriter(new OutputStreamWriter(file.openW()),8*1024);
 
     }
-    public static GpxWriter factory(Foc file, int type) throws IOException {
+    public static GpxWriter factory(Foc file, int type) throws IOException, SecurityException{
         if (type == GpxType.TRK) {
             return new TrackWriter(file);
         } else if (type == GpxType.RTE) {

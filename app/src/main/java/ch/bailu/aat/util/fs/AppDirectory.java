@@ -14,36 +14,36 @@ public class AppDirectory  {
 
     //////////////////////////////////////////////////////////////////////////////////////
     public static Foc getDataDirectory(Context c, String sub) {
-        return new SolidDataDirectory(c).getValueAsFile().child(sub);
+        return new SolidDataDirectory(c).getValueAsFile().descendant(sub);
     }
 
-    public static final String DIR_AAT_DATA = "aat_data/";
-    public static final String DIR_TILES = "tiles/";
-    public static final String DIR_TILES_OSMDROID = "osmdroid/tiles/";
+    public static final String DIR_AAT_DATA = "aat_data";
+    public static final String DIR_TILES = "tiles";
+    public static final String DIR_TILES_OSMDROID = "osmdroid/tiles";
 
     
-    public static final String DIR_LOG = "log/";
+    public static final String DIR_LOG = "log";
     public static final String FILE_LOG = "log.gpx";
     public static Foc getLogFile(Context context) {
         return getDataDirectory(context, DIR_LOG).child(FILE_LOG);
     }
     
     
-    public static final String DIR_OVERLAY = "overlay/";
-    public static final String DIR_IMPORT = "import/";
+    public static final String DIR_OVERLAY = "overlay";
+    public static final String DIR_IMPORT = "import";
     
-    public static final String DIR_NOMINATIM = "nominatim/";
+    public static final String DIR_NOMINATIM = "nominatim";
 
-    public static final String DIR_OVERPASS = "overpass/";
-
-    
-    public static final String DIR_TEST = "test/";
-    
-    
-    
+    public static final String DIR_OVERPASS = "overpass";
 
     
-    public static final String DIR_CACHE = "cache/";
+    public static final String DIR_TEST = "test";
+    
+    
+    
+
+    
+    public static final String DIR_CACHE = "cache";
     public static final String FILE_CACHE_DB="summary.db";
     
 
@@ -62,7 +62,7 @@ public class AppDirectory  {
     
     /////////////////////////////////////////////////////////////////////////////////////////////////
     public static Foc getTileFile(String tilePath, Context context) {
-        return getTileCacheDirectory(context).child(tilePath);
+        return getTileCacheDirectory(context).descendant(tilePath);
     }
 
 
@@ -82,14 +82,10 @@ public class AppDirectory  {
         return getDataDirectory(c,getPresetPrefix(i));
     }
     static private String getPresetPrefix(int i) {
-        return PRESET_PREFIX + i+ "/";
+        return PRESET_PREFIX + i;
     }
     
     
-    public static Foc getTrackListCacheDb(Context c, int i) {
-        return getDataDirectory(c, getPresetPrefix(i)+ DIR_CACHE).child(FILE_CACHE_DB);
-    }
-
 
 
     

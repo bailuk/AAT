@@ -35,7 +35,7 @@ public class EditorHelper {
 
 
     public void onResume() {
-        ObjectHandle new_handle = GpxObjectEditable.loadEditor(scontext, file.getPath(), IID);
+        ObjectHandle new_handle = GpxObjectEditable.loadEditor(scontext, file);
 
         handle.free();
         handle = new_handle;
@@ -55,8 +55,8 @@ public class EditorHelper {
     }
 
     public GpxInformation getInformation() {
-        if (GpxObjectEditable.class.isInstance(handle)) {
-            return ((GpxObjectEditable)handle).editor;
+        if (handle instanceof GpxObjectEditable) {
+            return ((GpxObjectEditable)handle).getEditor();
         }
         return GpxInformation.NULL;
     }
@@ -64,7 +64,7 @@ public class EditorHelper {
 
     public EditorInterface getEditor() {
         if (GpxObjectEditable.class.isInstance(handle)) {
-            return ((GpxObjectEditable)handle).editor;
+            return ((GpxObjectEditable)handle).getEditor();
         }
         return EditorInterface.NULL;
     }

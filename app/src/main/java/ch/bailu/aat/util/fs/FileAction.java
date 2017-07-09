@@ -20,24 +20,25 @@ import ch.bailu.simpleio.foc.Foc;
 public class FileAction   {
 
     public static void rescanDirectory(ServiceContext scontext, Foc file) {
-        if (isParentActiveAndWriteable(scontext.getContext(), file)) {
+        if (isParentActive(scontext.getContext(), file)) {
             scontext.getDirectoryService().rescan();
         }
     }
 
 
     public static void reloadPreview(ServiceContext scontext, Foc file) {
-        if (isParentActiveAndWriteable(scontext.getContext(), file)) {
+        if (isParentActive(scontext.getContext(), file)) {
             scontext.getDirectoryService().deleteEntry(file);
         }
     }
 
 
-    public static boolean isParentActiveAndWriteable(Context context, Foc file) {
+    public static boolean isParentActive(Context context, Foc file) {
         final Foc currentDir = new SolidDirectoryQuery(context).getValueAsFile();
         final Foc dir = file.parent();
 
-        return dir != null && dir.canWrite() && dir.equals(currentDir);
+
+        return dir != null && dir.equals(currentDir);
     }
 
 
@@ -54,7 +55,7 @@ public class FileAction   {
                 }
             }.displayYesNoDialog(activity,
                     scontext.getContext().getString(R.string.file_delete_ask),
-                    file.toString());
+                    file.getPathName());
         } else {
             AFile.logErrorReadOnly(scontext.getContext(), file);
         }
@@ -118,7 +119,7 @@ public class FileAction   {
             AFile.logErrorExists(context, dest);
         } else {
             src.cp(dest);
-            AppLog.i(context, dest.toString());
+            AppLog.i(context, dest.getPathName());
         }
     }
 

@@ -60,10 +60,7 @@ public class SolidPreset extends SolidIndexList {
     
     
     public String getDirectoryName() {
-    	return getDirectory().toString();
+    	return getDirectory().getPathName();
     }
-    
-    public String getCacheDbName() {
-    	return AppDirectory.getTrackListCacheDb(getContext(),getIndex()).toString();
-    }
+
 }

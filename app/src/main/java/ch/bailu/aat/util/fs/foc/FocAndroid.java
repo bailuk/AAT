@@ -72,10 +72,10 @@ public class FocAndroid {
                 Uri permission = uri;
                 DocumentId documentId = new DocumentId(Uri.decode(segments.get(1)));
 
-                if (FocContent.TREE.equals(segments.get(0)))
-                    return new FocContent(r, permission, documentId, FocContent.TREE);
-                else if (FocContent.DOCUMENT.equals(segments.get(0)))
-                    return new FocContent(r, permission, documentId, FocContent.DOCUMENT);
+                if (DocumentData.TREE.equals(segments.get(0)))
+                    return new FocContent(r, permission, documentId);
+                else if (DocumentData.DOCUMENT.equals(segments.get(0)))
+                    return new FocContent(r, permission, documentId);
 
             } else if (segments.size() == 4) {
                 Uri permission =
@@ -89,7 +89,7 @@ public class FocAndroid {
                 DocumentId documentId = new DocumentId(Uri.decode(segments.get(3)));
 
 
-                Foc foc =  new FocContent(r, permission, documentId, FocContent.UNKNOWN);
+                Foc foc =  new FocContent(r, permission, documentId);
 
                 /*
                 AppLog.d(foc, foc.getName());

@@ -73,7 +73,7 @@ public class TagEditor extends EditText {
         try {
             text = TextBackup.read(backup);
             
-        } catch (IOException e) {
+        } catch (Exception e) {
             text = "";
         }
         setText(text);

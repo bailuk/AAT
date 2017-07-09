@@ -2,8 +2,6 @@ package ch.bailu.aat.services.cache;
 
 import android.content.Context;
 
-import java.io.IOException;
-
 import ch.bailu.aat.coordinates.BoundingBoxE6;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.GpxList;
@@ -15,36 +13,37 @@ import ch.bailu.aat.services.editor.EditorInterface;
 import ch.bailu.aat.services.editor.GpxEditor;
 import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.util.fs.AppDirectory;
-import ch.bailu.aat.util.fs.foc.FocAndroid;
 import ch.bailu.aat.util.ui.AppLog;
 import ch.bailu.simpleio.foc.Foc;
-import ch.bailu.simpleio.foc.FocAbstractName;
 
 public class GpxObjectEditable extends  GpxObject {
 
     private GpxObject currentHandle=NULL;
-    private final Foc real;
-    private final String vid;
+    private final Foc file;
+    //private final String vid;
     
-    public final GpxListEditor editor;
+    private final GpxListEditor editor;
     
     
-    public GpxObjectEditable(String id, String p, ServiceContext sc, int iID) {
-        super(id);
-        real = FocAndroid.factory(sc.getContext(), p);
-        vid = id;
+    public GpxObjectEditable(String _id, Foc _file, ServiceContext sc) {
+        super(_id);
+        file = _file;
+        //vid = _id;
         
-        editor = new GpxListEditor(sc.getContext(), iID);
+        editor = new GpxListEditor(sc.getContext());
         sc.getCacheService().addToBroadcaster(this);        
     }
 
+    public GpxListEditor getEditor() {
+        return editor;
+    }
 
     @Override
     public void onInsert(ServiceContext sc) {
-        ObjectHandle handle = sc.getCacheService().getObject(real.getPath(), new GpxObjectStatic.Factory());
-        
-        if (GpxObject.class.isInstance(handle)) {
-        currentHandle = (GpxObject) handle;
+        ObjectHandle handle = sc.getCacheService().getObject(file.getPath(), new GpxObjectStatic.Factory());
+
+        if (handle instanceof GpxObject) {
+            currentHandle = (GpxObject) handle;
         } else {
             currentHandle = GpxObject.NULL;
         }
@@ -75,7 +74,7 @@ public class GpxObjectEditable extends  GpxObject {
 
     @Override
     public void onChanged(String id, ServiceContext sc) {
-        if (id.equals(real)) {
+        if (id.equals(file.getPath())) {
             editor.loadIntoEditor(currentHandle.getGpxList());
         }
     }
@@ -88,12 +87,10 @@ public class GpxObjectEditable extends  GpxObject {
         private GpxEditor editor = new GpxEditor(GpxList.NULL_ROUTE);
 
         private boolean modified = false;
-        private final int ID;
-        
+
         private final Context context;
 
-        public GpxListEditor(Context c, int iid) {
-            ID=iid;
+        public GpxListEditor(Context c) {
             context=c;
         }
         
@@ -121,7 +118,6 @@ public class GpxObjectEditable extends  GpxObject {
         @Override
         public void add(GpxPoint point) {
             editor.insertNode(point);
-            //AppBroadcaster.broadcast(context, AppBroadcaster.REQUEST_ELEVATION_UPDATE, vid);
             modified(true);
         }
 
@@ -162,7 +158,7 @@ public class GpxObjectEditable extends  GpxObject {
             setVisibleTrackPoint(editor.getSelectedPoint());
             setVisibleTrackSegment(editor.getList().getDelta());
 
-            AppBroadcaster.broadcast(context, AppBroadcaster.FILE_CHANGED_INCACHE, vid);
+            AppBroadcaster.broadcast(context, AppBroadcaster.FILE_CHANGED_INCACHE, getID());
         }
 
         @Override
@@ -182,13 +178,11 @@ public class GpxObjectEditable extends  GpxObject {
         @Override
         public void save() {
             try {
-                final Foc file = real;
-
                 new GpxListWriter(editor.getList(),file).close();
                 modified=false;
                 
-                AppBroadcaster.broadcast(context, AppBroadcaster.FILE_CHANGED_ONDISK, real.getPath(), vid);
-            } catch (IOException e) {
+                AppBroadcaster.broadcast(context, AppBroadcaster.FILE_CHANGED_ONDISK, file.getPath(), getID());
+            } catch (Exception e) {
                 AppLog.e(context, this, e);
             }    
         }
@@ -202,7 +196,7 @@ public class GpxObjectEditable extends  GpxObject {
         
         @Override
         public void saveAs() {
-            String prefix = AppDirectory.parsePrefix(real);
+            String prefix = AppDirectory.parsePrefix(file);
 
             try {
                 final Foc file =
@@ -213,8 +207,8 @@ public class GpxObjectEditable extends  GpxObject {
                 
                 new GpxListWriter(editor.getList(),file).close();
                 
-                AppBroadcaster.broadcast(context, AppBroadcaster.FILE_CHANGED_ONDISK, file.toString(), vid);
-            } catch (IOException e) {
+                AppBroadcaster.broadcast(context, AppBroadcaster.FILE_CHANGED_ONDISK, file.getPath(), getID());
+            } catch (Exception e) {
                 AppLog.e(context, this, e);
             }
         }
@@ -233,7 +227,7 @@ public class GpxObjectEditable extends  GpxObject {
 
         @Override
         public Foc getFile() {
-            return new FocVID();
+            return file;// new FocVID();
         }
 
         @Override
@@ -251,13 +245,11 @@ public class GpxObjectEditable extends  GpxObject {
 
 
     public static class Factory extends ObjectHandle.Factory {
-        private final int infoID;
-        private final String path;
+        private final Foc file;
         
 
-        public Factory(String p, int iID) {
-            path=p;
-            infoID=iID;
+        public Factory(Foc f) {
+            file=f;
         }
 
 
@@ -265,15 +257,15 @@ public class GpxObjectEditable extends  GpxObject {
 
         @Override
         public ObjectHandle factory(String id, ServiceContext sc) {
-            return new GpxObjectEditable(id,path, sc, infoID);
+            return new GpxObjectEditable(id, file, sc);
         }
 
 
 
     }
     
-    public static ObjectHandle loadEditor(ServiceContext c, String path, int iID) {
-        return c.getCacheService().getObject(getVirtualID(path), new Factory(path, iID));
+    public static ObjectHandle loadEditor(ServiceContext c, Foc file) {
+        return c.getCacheService().getObject(getVirtualID(file.getPath()), new Factory(file));
     }
 
     private static String getVirtualID(String cID) {
@@ -286,11 +278,11 @@ public class GpxObjectEditable extends  GpxObject {
         return editor.getGpxList();
     }
 
-
+/*
     private class FocVID extends FocAbstractName {
         @Override
         public String getName() {
-            return real.getName();
+            return file.getName();
         }
 
         @Override
@@ -300,7 +292,10 @@ public class GpxObjectEditable extends  GpxObject {
 
         @Override
         public String getPathName() {
-            return real.getPathName();
+            return file.getPathName();
         }
+
+
     }
+    */
 }

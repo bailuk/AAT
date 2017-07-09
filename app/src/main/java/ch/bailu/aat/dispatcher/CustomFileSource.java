@@ -36,13 +36,13 @@ public class CustomFileSource extends ContentSource {
     
     @Override
     public void requestUpdate() {
-        ObjectHandle h =  scontext.getCacheService().getObject(fileID, new GpxObjectStatic.Factory());
+        ObjectHandle h = scontext.getCacheService().getObject(fileID, new GpxObjectStatic.Factory());
 
         handle.free();
         handle=h;
 
-        if (GpxObject.class.isInstance(h) && h.isReadyAndLoaded()) {
-            sendUpdate(InfoID.FILEVIEW, new GpxFileWrapper(h.toFile(scontext.getContext()), ((GpxObject)h).getGpxList()));
+        if (h instanceof GpxObject && h.isReadyAndLoaded()) {
+            sendUpdate(InfoID.FILEVIEW, new GpxFileWrapper(h.getFile(), ((GpxObject)h).getGpxList()));
         }
 
     }

@@ -9,6 +9,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 import ch.bailu.aat.util.AppBroadcaster;
+import ch.bailu.aat.util.ui.AppLog;
 import ch.bailu.aat.util.ui.AppTheme;
 import ch.bailu.simpleio.foc.Foc;
 
@@ -30,16 +31,21 @@ public class DownloadHandle extends ProcessHandle {
     public DownloadHandle(String source, Foc target) {
         file = target;
         url = source;
+
     }
 
 
     @Override
     public long bgOnProcess() {
+        AppLog.d(this, url + " -> "  +file.getPathName());
         try {
+
             final long r = download(new URL(url), file);
             return r;
             
-        } catch (IOException e) {
+        } catch (Exception e) {
+            AppLog.d(this, "ERROR: " + e.toString());
+
             file.rm();
             return 0;
         }
@@ -70,11 +76,11 @@ public class DownloadHandle extends ProcessHandle {
 
 
         try {
-            connection = openConnection(url);
-            input = openInput(connection);
-
             downloadLock=true;
             output = file.openW();
+
+            connection = openConnection(url);
+            input = openInput(connection);
 
             while (( count = input.read(buffer)) != -1) {
                 total+=count;

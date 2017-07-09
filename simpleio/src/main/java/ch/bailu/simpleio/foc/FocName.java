@@ -24,5 +24,10 @@ public class FocName extends FocAbstractName {
         return name;
     }
 
+    @Override
+    public void update() {
+
+    }
+
 
 }

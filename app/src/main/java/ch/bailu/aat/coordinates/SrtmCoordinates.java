@@ -87,8 +87,8 @@ public class SrtmCoordinates extends Coordinates implements LatLongE6Interface {
     public Foc toFile(Foc base) {
         Foc old = toSRTMFile(base);
         if (old.exists()) return old;
-        
-        return base.child("/dem3/"+ toExtString() + ".hgt.zip");
+
+        return base.descendant("dem3/" + toExtString() + ".hgt.zip");
     }
 
     
@@ -97,10 +97,10 @@ public class SrtmCoordinates extends Coordinates implements LatLongE6Interface {
     }
 
     
-    
+
     // obsolete location
     private Foc toSRTMFile(Foc base) {
-        return base.child("/SRTM/" + toString() + ".SRTMGL3.hgt.zip");
+        return base.descendant("SRTM/" + toString() + ".SRTMGL3.hgt.zip");
     }
 
 

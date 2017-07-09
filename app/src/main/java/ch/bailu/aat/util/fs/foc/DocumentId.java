@@ -1,5 +1,7 @@
 package ch.bailu.aat.util.fs.foc;
 
+import ch.bailu.aat.util.ui.AppLog;
+
 public class DocumentId {
     final private String documentId;
 
@@ -24,14 +26,21 @@ public class DocumentId {
 
 
     public DocumentId child(String child) {
-        if (child.length() == 0)
+
+        if (child.length() == 0) {
             return this;
+        }
 
-        if (child.charAt(0) == '/')
+        if (child.charAt(child.length()-1) == '/') {
+            AppLog.d(this, "WARNING: " + child + " ends with \'/\'");
+            return child(child.substring(0,child.length()-1));
+        }
+
+        if (child.charAt(0) == '/') {
             return new DocumentId(documentId + child);
-
-        else
+        } else {
             return new DocumentId(documentId + "/" + child);
+        }
     }
 
 

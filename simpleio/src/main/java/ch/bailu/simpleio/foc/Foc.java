@@ -46,11 +46,9 @@ public abstract class Foc {
 
 
     public abstract boolean mkdir();
-    public boolean mkdirs() {
-        if (exists()) return isDir();
 
-        Foc parent = parent();
-        return parent != null && parent.mkdirs() && mkdir();
+    public boolean mkdirs() {
+        return isDir() || (mkParents() && mkdir());
     }
 
     public boolean mkParents() {
@@ -126,7 +124,23 @@ public abstract class Foc {
         }
     }
 
+
+    public Foc descendant(String path) {
+        Foc descendant = this;
+
+        String[] descendants = path.split("/");
+
+        for (String child : descendants) {
+            descendant = descendant.child(child);
+        }
+
+        return descendant;
+    }
+
+
     public abstract Foc child(String name);
+
+
     public abstract String getName();
 
     public abstract String getPath();
@@ -155,6 +169,9 @@ public abstract class Foc {
 
     public abstract long length();
     public abstract long lastModified();
+
+    public void update() {};
+
 
     public InputStream openRb() throws IOException, SecurityException {
         InputStream in = openR();
@@ -192,6 +209,7 @@ public abstract class Foc {
 
     @Override
     public boolean equals(Object o)  {
+
         return o instanceof Foc && equals(getPath(), ((Foc) o).getPath());
 
     }
@@ -211,4 +229,5 @@ public abstract class Foc {
     public int hashCode() {
         return getPath().hashCode();
     }
+
 }

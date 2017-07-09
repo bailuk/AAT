@@ -43,7 +43,7 @@ public class MockLocation extends LocationStackChainedItem implements Runnable{
             timer.kick();
             sendState(StateID.WAIT);
 
-        } catch (IOException e) {
+        } catch (Exception e) {
             AppLog.e(c, e);
             sendState(StateID.OFF);
         }

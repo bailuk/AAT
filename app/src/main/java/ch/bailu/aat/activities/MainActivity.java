@@ -208,7 +208,7 @@ public class MainActivity extends AbsDispatcher {
         }
 
         public void setText() {
-            setText(AppDirectory.getDataDirectory(getContext(), directory).toString());
+            setText(AppDirectory.getDataDirectory(getContext(), directory).getPathName());
         }
 
         @Override

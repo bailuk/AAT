@@ -5,11 +5,10 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 
-import java.io.File;
-
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.background.FileHandle;
 import ch.bailu.aat.util.AppBroadcaster;
+import ch.bailu.aat.util.fs.foc.FocAndroid;
 import ch.bailu.aat.util.graphic.SyncBitmap;
 import ch.bailu.simpleio.foc.Foc;
 
@@ -18,14 +17,19 @@ public class ImageObject extends ImageObjectAbstract {
     
     private final SyncBitmap bitmap=new SyncBitmap();
 
+    private final Foc imageFile;
 
     private ImageObject() {
-        super("");
+        this(FocAndroid.NULL);
     }
     
-    public ImageObject(String id) {
-        super(id);
+    public ImageObject(Foc id) {
+        super(id.getPath());
+        imageFile = id;
     }
+
+
+
     
     @Override
     public void onInsert(ServiceContext sc){
@@ -43,7 +47,7 @@ public class ImageObject extends ImageObjectAbstract {
 
 
     private void load(final ServiceContext sc) {
-        FileHandle l=new FileHandle(toString()) {
+        FileHandle l=new FileHandle(imageFile) {
 
             @Override
             public long bgOnProcess() {
@@ -57,9 +61,7 @@ public class ImageObject extends ImageObjectAbstract {
                         if (handle instanceof ImageObject) {
                             ImageObject self = (ImageObject) handle;
 
-                            Foc file = self.toFile(sc.getContext());
-
-                            bitmap.set(file);
+                            bitmap.set(self.imageFile);
                             size =  bitmap.getSize();
                         }
                         handle.free();
@@ -106,7 +108,7 @@ public class ImageObject extends ImageObjectAbstract {
     public static class Factory extends ObjectHandle.Factory {
         @Override
         public ObjectHandle factory(String id, ServiceContext sc) {
-            return new ImageObject(id);
+            return new ImageObject(FocAndroid.factory(sc.getContext(),id));
         }
     }
 

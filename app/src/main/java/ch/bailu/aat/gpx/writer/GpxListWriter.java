@@ -15,7 +15,7 @@ public class GpxListWriter implements  Closeable {
     private GpxWriter writer;
 
 
-    public GpxListWriter(GpxList track, Foc file) throws IOException  {
+    public GpxListWriter(GpxList track, Foc file) throws IOException, SecurityException  {
         writer = GpxWriter.factory(file, track.getDelta().getType());
         iterator = new GpxListIterator(track);
 

@@ -5,6 +5,8 @@ import android.net.Uri;
 import android.os.Build;
 import android.provider.DocumentsContract;
 
+import ch.bailu.aat.util.ui.AppLog;
+
 @TargetApi(Build.VERSION_CODES.LOLLIPOP)
 public class LazyUris {
     private final Uri permission;
@@ -70,5 +72,15 @@ public class LazyUris {
 
     public boolean hasParent() {
         return (getParentId() != getDocumentId());
+    }
+
+    public void log() {
+
+        AppLog.d(this, "Document: " + getDocument());
+        AppLog.d(this, "Parent: " + getParent());
+        AppLog.d(this, "Child: " + getChild());
+        AppLog.d(this, "ParentId: " + getParentId());
+        AppLog.d(this, "DocumentId: " + getDocumentId());
+
     }
 }

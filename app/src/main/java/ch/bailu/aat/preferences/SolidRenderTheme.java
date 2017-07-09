@@ -14,7 +14,6 @@ import ch.bailu.simpleio.foc.Foc;
 
 public class SolidRenderTheme extends SolidFile {
 
-    private static final String ORUX_THEMES="../mapstyles";
 
     public SolidRenderTheme(Context c) {
         super(Storage.global(c), SolidRenderTheme.class.getSimpleName());
@@ -80,9 +79,7 @@ public class SolidRenderTheme extends SolidFile {
         list.add(InternalRenderTheme.OSMARENDER.toString());
 
         final Foc maps = new SolidMapsForgeDirectory(getContext()).getValueAsFile();
-        final Foc orux = maps.child(ORUX_THEMES);
         add_xmlInSubdirectories(list,maps);
-        add_xmlInSubdirectories(list,orux);
 
 
         return list;

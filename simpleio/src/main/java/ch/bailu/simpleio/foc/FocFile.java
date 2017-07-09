@@ -148,6 +148,9 @@ public class FocFile extends Foc {
         return file.lastModified();
     }
 
+    @Override
+    public void update() {}
+
 
     @Override
     public InputStream openR() throws IOException {

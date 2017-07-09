@@ -17,7 +17,7 @@ public class SummaryConfig {
     public static Foc getWriteableSummaryDir(Context context, Foc dir) {
         Foc summaryDir;
 
-        if (dir.mkdirs() && dir.canWrite()) {
+        if (dir instanceof FocFile && dir.mkdirs() && dir.canWrite()) {
             summaryDir = dir.child(AppDirectory.DIR_CACHE);
 
         } else {

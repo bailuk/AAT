@@ -8,12 +8,12 @@ import ch.bailu.simpleio.foc.Foc;
 
 public class TrackWriter extends GpxWriter {
 
-    public TrackWriter(Foc file) throws IOException {
+    public TrackWriter(Foc file) throws IOException, SecurityException{
         super(file);
     }
 
     @Override
-    public void writeHeader(long timestamp) throws IOException {
+    public void writeHeader(long timestamp) throws IOException, SecurityException {
         super.writeHeader(timestamp);
         writeBeginElement(GpxConstants.QNAME_TRACK);
     }

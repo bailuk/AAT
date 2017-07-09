@@ -6,8 +6,6 @@ import android.graphics.Bitmap;
 import org.mapsforge.core.graphics.TileBitmap;
 import org.mapsforge.core.model.Tile;
 
-import java.io.File;
-
 import ch.bailu.aat.map.tile.source.DownloadSource;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.background.DownloadHandle;
@@ -22,22 +20,23 @@ public class BitmapTileObject extends TileObject {
     private final DownloadSource source;
     private final Tile tile;
 
-
     private final String url;
-
+    private final Foc file;
 
     private final SyncTileBitmap bitmap=new SyncTileBitmap();
-
-
     private final DownloadHandle download;
+
 
 
     public BitmapTileObject(String id, final ServiceContext sc,  Tile t, DownloadSource s) {
         super(id);
         tile = t;
         source=s;
+
+        file = FocAndroid.factory(sc.getContext(),toString());
+
         url = source.getTileURLString(tile);
-        download = new FileDownloader(url, FocAndroid.factory(sc.getContext(),toString()), sc);
+        download = new FileDownloader(url, file, sc);
 
         sc.getCacheService().addToBroadcaster(this);
     }
@@ -54,7 +53,7 @@ public class BitmapTileObject extends TileObject {
 
     @Override
     public void onInsert(ServiceContext sc) {
-        if (isLoadable()) sc.getBackgroundService().load(new FileLoader(toString(), sc));
+        if (isLoadable()) sc.getBackgroundService().load(new FileLoader(file, sc));
         else if (isDownloadable())
             sc.getBackgroundService().download(download);
     }
@@ -69,7 +68,7 @@ public class BitmapTileObject extends TileObject {
     @Override
     public void reDownload(ServiceContext sc) {
         if (download.isLocked()==false) {
-            toFile(sc.getContext()).rm();
+            file.rm();
             if (isDownloadable()) sc.getBackgroundService().download(download);
         }
     }
@@ -81,15 +80,16 @@ public class BitmapTileObject extends TileObject {
     }
 
 
-    private boolean isLoadable() {
-        File file =  new File(toString());
 
+
+    private boolean isLoadable() {
+        file.update();
         return file.isFile() && file.canRead();
     }
 
     private boolean isDownloadable() {
         return (
-                !new File(toString()).exists() &&
+                !file.exists() &&
                         source.getMaximumZoomLevel() >= tile.zoomLevel &&
                         source.getMinimumZoomLevel() <= tile.zoomLevel);
     }
@@ -98,7 +98,7 @@ public class BitmapTileObject extends TileObject {
     @Override
     public void onDownloaded(String id, String u, ServiceContext sc) {
         if (u.equals(url) && isLoadable()) {
-            sc.getBackgroundService().load(new FileLoader(toString(), sc));
+            sc.getBackgroundService().load(new FileLoader(file, sc));
         }
 
     }
@@ -127,6 +127,10 @@ public class BitmapTileObject extends TileObject {
         return bitmap.getAndroidBitmap();
     }
 
+    @Override
+    public Foc getFile() {
+        return file;
+    }
 
 
     public static class Factory extends ObjectHandle.Factory {
@@ -150,7 +154,7 @@ public class BitmapTileObject extends TileObject {
     private static class FileLoader extends FileHandle {
         private final ServiceContext scontext;
 
-        public FileLoader(String f, ServiceContext sc) {
+        public FileLoader(Foc f, ServiceContext sc) {
             super(f);
             scontext = sc;
         }
@@ -159,13 +163,11 @@ public class BitmapTileObject extends TileObject {
         public long bgOnProcess() {
             long size = 0;
             if (scontext.lock()) {
-                File file = new File(toString());
-
                 ObjectHandle obj = scontext.getCacheService().getObject(toString());
 
                 if (obj instanceof BitmapTileObject) {
                     BitmapTileObject bmp = (BitmapTileObject) obj;
-                    bmp.bitmap.set(file, TILE_SIZE, bmp.source.isTransparent());
+                    bmp.bitmap.set(bmp.getFile(), TILE_SIZE, bmp.source.isTransparent());
                     size = bmp.getSize();
 
                 }

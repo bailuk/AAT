@@ -28,7 +28,7 @@ public class TrackLogger extends Logger {
     final private Context context;
 
 
-    public TrackLogger(Context c, int preset) throws IOException {
+    public TrackLogger(Context c, int preset) throws IOException, SecurityException {
         context=c;
         presetIndex=preset;
 

@@ -87,14 +87,8 @@ public class DirectoryService extends VirtualService implements OnSharedPreferen
 
 
     public void deleteEntry(Foc file)  {
-        Foc dir = sdirectory.getValueAsFile();
-
-        if (dir.canWrite()) {
-            database.deleteEntry(file);
-            rescan(dir);
-        } else {
-            AFile.logErrorReadOnly(getContext(), dir);
-        }
+        database.deleteEntry(file);
+        rescan();
     }
 
 
