@@ -37,7 +37,7 @@ public class DownloadHandle extends ProcessHandle {
 
     @Override
     public long bgOnProcess() {
-        AppLog.d(this, url + " -> "  +file.getPathName());
+        //AppLog.d(this, url + " -> "  +file.getPathName());
         try {
 
             final long r = download(new URL(url), file);

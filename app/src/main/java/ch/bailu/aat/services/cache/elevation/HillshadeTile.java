@@ -106,17 +106,12 @@ public class HillshadeTile extends ElevationTile {
 
 
 
-
-    public static int splitFromZoom(int zoom) {
+    private static int splitFromZoom(int zoom) {
         int split = 0;
         if (zoom > 11) {
             split++;
         }
-/*        
-        if (zoom > 13) {
-            split++;
-        }
-  */
+
         return split;
     }
 

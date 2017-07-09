@@ -5,6 +5,7 @@ import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 
 import java.io.File;
 
+import ch.bailu.aat.util.fs.foc.FocAndroid;
 import ch.bailu.simpleio.foc.Foc;
 
 public class SolidOverlayFile  implements SolidTypeInterface {
@@ -31,20 +32,14 @@ public class SolidOverlayFile  implements SolidTypeInterface {
     }
 
 
-    public File toFile() {
-        return new File(getPath());
+    public Foc getValueAsFile() {
+        return FocAndroid.factory(getContext(), getValueAsString());
     }
 
-    public String getName() {
-        return toFile().getName();
-    }
-    public String getPath() {
-        return getValueAsString();
-    }
 
     @Override
     public String getLabel() {
-        return getName();
+        return getValueAsFile().getName();
     }
 
 
@@ -56,12 +51,7 @@ public class SolidOverlayFile  implements SolidTypeInterface {
 
 
     public boolean isEnabled() {
-        return exists() && enabled.getValue();
-    }
-
-
-    public boolean exists() {
-        return toFile().exists();
+        return getValueAsFile().exists() && enabled.getValue();
     }
 
 
