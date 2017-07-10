@@ -43,7 +43,7 @@ public class OffState extends State {
 
             internal.state = new OnState(internal);
             
-        } catch (IOException e) {
+        } catch (Exception e) {
             AppLog.e(internal.scontext.getContext(), e);
             internal.logger = Logger.createNullLogger();
         }

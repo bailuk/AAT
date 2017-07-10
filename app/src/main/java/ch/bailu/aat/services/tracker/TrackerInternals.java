@@ -48,7 +48,9 @@ implements OnSharedPreferenceChangeListener, Closeable {
         try {
             logger = createLogger();
             logger.close();
-        } catch (Exception e) {}
+        } catch (Exception e) {
+            AppLog.e(sc.getContext(), e);
+        }
         logger = Logger.createNullLogger();
 
         state = new OffState(this);
