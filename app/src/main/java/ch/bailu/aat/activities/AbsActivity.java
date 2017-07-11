@@ -3,8 +3,8 @@ package ch.bailu.aat.activities;
 import android.app.Activity;
 import android.os.Bundle;
 
-import ch.bailu.aat.util.ui.AppLog;
 import ch.bailu.aat.preferences.PreferenceLoadDefaults;
+import ch.bailu.aat.util.ui.AppLog;
 
 public abstract class AbsActivity extends Activity {
     private AppLog logger;
