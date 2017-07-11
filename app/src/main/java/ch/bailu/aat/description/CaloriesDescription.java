@@ -25,7 +25,7 @@ public class CaloriesDescription extends LongDescription{
         return "kcal";
     }
 
-    public String getTime() {
+    public String getValue() {
         return String.valueOf(getCache());
     }
 

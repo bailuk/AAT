@@ -23,7 +23,7 @@ public class NameDescription extends ContentDescription {
         return "";
     }
 
-    public String getTime() {
+    public String getValue() {
         return name;
     }
 

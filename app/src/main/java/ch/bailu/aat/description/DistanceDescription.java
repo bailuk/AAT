@@ -31,7 +31,7 @@ public class DistanceDescription extends FloatDescription {
     }
 
     
-    public String getTime() {
+    public String getValue() {
         float dist = unit.getDistanceFactor() * getCache();
         
         int format=0;

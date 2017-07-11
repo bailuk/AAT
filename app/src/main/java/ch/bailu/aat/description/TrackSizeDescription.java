@@ -31,7 +31,7 @@ public class TrackSizeDescription extends ContentDescription {
     }
 
 
-    public String getTime() {
+    public String getValue() {
         return value;
     }
 

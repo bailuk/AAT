@@ -20,7 +20,7 @@ public abstract class StateDescription extends ContentDescription {
         return getContext().getString(R.string.d_state);
     }
 
-    public String getTime() {
+    public String getValue() {
         String value;
         
         switch (state) {

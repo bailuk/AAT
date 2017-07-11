@@ -24,7 +24,7 @@ public class LongitudeDescription extends DoubleDescription {
         return UNIT;
     }
 
-    public String getTime() {
+    public String getValue() {
         return String.format(Locale.getDefault(),"%.6f",  getCache());
     }
 

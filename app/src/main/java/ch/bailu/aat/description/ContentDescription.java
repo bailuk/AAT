@@ -1,7 +1,6 @@
 package ch.bailu.aat.description;
 
 import android.content.Context;
-import android.content.ContextWrapper;
 
 import ch.bailu.aat.dispatcher.OnContentUpdatedInterface;
 
@@ -21,7 +20,7 @@ public abstract class ContentDescription
     }
 
 
-    public abstract String getTime();
+    public abstract String getValue();
     public abstract String getLabel(); 
 
 
@@ -30,9 +29,8 @@ public abstract class ContentDescription
     }
 
 
-
     @Override
     public String getValueAsString() {
-        return getTime() + " " + getUnit();
+        return getValue() + " " + getUnit();
     }
 }

@@ -21,7 +21,7 @@ public class TimeDescription extends LongDescription {
         return "";
     }
 
-    public String getTime() {
+    public String getValue() {
         return getValue(getCache());
     }
 

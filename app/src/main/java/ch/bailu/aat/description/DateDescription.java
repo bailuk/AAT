@@ -17,7 +17,7 @@ public class DateDescription extends LongDescription {
     public String getLabel() {
         return getContext().getString(R.string.d_startdate);
     }
-    public String getTime()   {
+    public String getValue()   {
         return format(getCache());
     }
 

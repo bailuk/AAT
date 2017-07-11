@@ -30,7 +30,7 @@ public class AltitudeDescription extends FloatDescription {
         return unit.getAltitudeUnit();
     }
 
-    public String getTime() {
+    public String getValue() {
         return getValue(getCache());
     }
 
