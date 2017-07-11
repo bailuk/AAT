@@ -17,7 +17,7 @@ import ch.bailu.aat.util.fs.FileIntent;
 
 public class DirectoryMenu extends AbsMenu {
 
-    private MenuItem browse, view, get, clipboard, permission;
+    private MenuItem browse, view, get, clipboard;
 
     private final Activity acontext;
 
@@ -32,10 +32,6 @@ public class DirectoryMenu extends AbsMenu {
     public void inflate(Menu menu) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             browse = menu.add("Pick directory...*");
-        }
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            permission = menu.add("Permission");
         }
 
         view = menu.add(R.string.file_view);
@@ -74,11 +70,6 @@ public class DirectoryMenu extends AbsMenu {
             new Clipboard(c).setText(sdirectory.getLabel(),
                     sdirectory.getValueAsString());
         }
-            /*
-        } else if (item == permission) {
-            new AndroidVolumes(acontext).askForPermission(acontext, sdirectory.getValueAsFile());
-        }
-*/
         return true;
     }
 
