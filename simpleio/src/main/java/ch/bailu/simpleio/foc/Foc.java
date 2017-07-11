@@ -1,7 +1,5 @@
 package ch.bailu.simpleio.foc;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
 import java.io.Closeable;
 import java.io.IOException;
 import java.io.InputStream;
@@ -65,7 +63,8 @@ public abstract class Foc {
 
 
     public boolean move(Foc target) throws IOException , SecurityException {
-        return copy(target) && remove();
+        copy(target);
+        return  remove();
     }
 
 
@@ -78,40 +77,29 @@ public abstract class Foc {
     }
 
 
-
-
-    public boolean copy(Foc copy) throws IOException, SecurityException {
-        OutputStream out = null;
-
-        try {
-            out = copy.openW();
-            copy(out);
-            return true;
-
-        } finally {
-            if (out != null) out.close();
-        }
-    }
-
     public boolean cp(Foc copy) {
         try {
-            return copy(copy);
+            copy(copy);
+            return true;
+
         } catch (Exception e) {
             return false;
         }
     }
 
 
-
-    private void copy(OutputStream out) throws IOException, SecurityException {
+    public void copy(Foc copy) throws IOException, SecurityException {
+        OutputStream out = null;
         InputStream in = null;
 
         try {
-            in = openRb();
+            in = openR();
+            out = copy.openW();
             copy(in, out);
 
         } finally {
-            close(in);
+            Foc.close(in);
+            Foc.close(out);
         }
     }
 
@@ -172,29 +160,7 @@ public abstract class Foc {
 
     public void update() {};
 
-
-    public InputStream openRb() throws IOException, SecurityException {
-        InputStream in = openR();
-
-        if (in != null)
-            return new BufferedInputStream(in);
-
-        return null;
-    }
-
-
     public abstract InputStream openR() throws IOException, SecurityException;
-
-
-    public OutputStream openWb() throws IOException, SecurityException {
-        OutputStream out = openW();
-
-        if (out != null)
-            return new BufferedOutputStream(out);
-
-        return null;
-    }
-
     public abstract OutputStream openW() throws IOException, SecurityException;
 
     public static void close(Closeable toClose) {

@@ -93,7 +93,7 @@ public class CachedTileObject extends TileObject {
 
                         size = self.getSize();
                     } catch (Exception e) {
-                        AppLog.d(this, "Save bitmap error! Delete cachedImageFile here?");
+                        AppLog.d(this, e.toString());
 
                     } finally {
                         Foc.close(out);
