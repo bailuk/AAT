@@ -64,7 +64,7 @@ public abstract class AbsGpxListActivity extends AbsDispatcher implements OnItem
         super.onCreate(savedInstanceState);
 
         sdirectory = new SolidDirectoryQuery(this);
-        sdirectory.setValue(getDirectory().toString());
+        sdirectory.setValue(getDirectory().getPath());
         solid_key = AbsGpxListActivity.class.getSimpleName() +  "_" + sdirectory.getValueAsString();
 
         setContentView(new Layouter().getContentView());
