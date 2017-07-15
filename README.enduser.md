@@ -10,15 +10,8 @@ AAT does not automatically remove downloaded map tiles. This is to...
 This means that you have to remove old tiles manually from time to time.
 Go to `Settings->Map Tiles` to remove old map tiles.
 
-## Offline Maps [now]
-Enable offline map rendering:
 
-- Download map files from the [Mapsforge download server](http://download.mapsforge.org/).
-- Provide the directory that contains the map files in the settings dialog (`Settings->Map Tiles`).
-- Disable Mapnik and enable Mapsforge in `Menu->Map`.
-
-
-## Offline Maps [upcoming]
+## Offline Maps
 ### Download and store maps:
 1. Download maps and render themes from one of these map providers:  
 [OpenAndroMaps](http://www.openandromaps.org),[Freizeitkarte](http://www.freizeitkarte-osm.de/android/en/index.html) or [Mapsforge](http://download.mapsforge.org/)
