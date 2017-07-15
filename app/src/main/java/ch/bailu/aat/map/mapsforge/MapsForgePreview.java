@@ -1,6 +1,7 @@
 package ch.bailu.aat.map.mapsforge;
 
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 
@@ -21,8 +22,15 @@ import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.map.MapDensity;
 import ch.bailu.aat.map.layer.gpx.GpxDynLayer;
 import ch.bailu.aat.map.tile.TileProviderStatic;
+import ch.bailu.aat.map.tile.source.CacheOnlySource;
+import ch.bailu.aat.map.tile.source.CachedSource;
 import ch.bailu.aat.map.tile.source.DownloadSource;
+import ch.bailu.aat.map.tile.source.MapsForgeSource;
 import ch.bailu.aat.map.tile.source.Source;
+import ch.bailu.aat.preferences.SolidEnableTileCache;
+import ch.bailu.aat.preferences.SolidMapTileStack;
+import ch.bailu.aat.preferences.SolidPreset;
+import ch.bailu.aat.preferences.SolidRenderTheme;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.util.graphic.SyncTileBitmap;
@@ -32,7 +40,7 @@ import ch.bailu.simpleio.foc.Foc;
 public class MapsForgePreview extends MapsForgeViewBase {
     private static final int BITMAP_SIZE=128;
     private static final Dimension DIM = new Dimension(BITMAP_SIZE, BITMAP_SIZE);
-    private static final Source SOURCE = DownloadSource.MAPNIK;
+    private static final Source SOURCE = new CacheOnlySource(DownloadSource.MAPNIK);
 
     private final Foc               imageFile;
     private final TileProviderStatic provider;
@@ -46,11 +54,13 @@ public class MapsForgePreview extends MapsForgeViewBase {
     public MapsForgePreview(ServiceContext scontext, GpxInformation info, Foc out) throws IllegalArgumentException {
         super(scontext, MapsForgePreview.class.getSimpleName(), new MapDensity());
 
+
+
         layout(0, 0, BITMAP_SIZE, BITMAP_SIZE);
         getModel().mapViewDimension.setDimension(DIM);
 
         imageFile = out;
-        provider = new TileProviderStatic(scontext, SOURCE);
+        provider = new TileProviderStatic(scontext, getSource(scontext.getContext()));
 
         MapsForgeTileLayer tileLayer = new MapsForgeTileLayer(scontext, provider);
         add(tileLayer, tileLayer);
@@ -69,6 +79,22 @@ public class MapsForgePreview extends MapsForgeViewBase {
          tlPoint = MapPositionUtil.getTopLeftPoint(mapPosition, DIM, tileSize);
 
          tileLayer.preLoadTiles(bounding, mapPosition.zoomLevel, tlPoint);
+    }
+
+
+    private static Source getSource(Context c) {
+        SolidMapTileStack tiles = new SolidMapTileStack(c, new SolidPreset(c).getIndex());
+
+        boolean[] enabled = tiles.getEnabledArray();
+
+        if (enabled[0]) {
+            String theme =
+                    new SolidRenderTheme(c).getValueAsString();
+
+                    return new CacheOnlySource(new MapsForgeSource(theme));
+        }
+
+        return SOURCE;
     }
 
 
@@ -153,4 +179,5 @@ public class MapsForgePreview extends MapsForgeViewBase {
         provider.close();
         super.onDestroy();
     }
+
 }

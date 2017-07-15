@@ -8,11 +8,11 @@ import org.mapsforge.core.model.Tile;
 
 import java.io.OutputStream;
 
+import ch.bailu.aat.map.tile.source.CacheOnlySource;
 import ch.bailu.aat.map.tile.source.Source;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.background.FileHandle;
 import ch.bailu.aat.util.AppBroadcaster;
-import ch.bailu.aat.util.fs.AppDirectory;
 import ch.bailu.aat.util.fs.foc.FocAndroid;
 import ch.bailu.aat.util.ui.AppLog;
 import ch.bailu.simpleio.foc.Foc;
@@ -39,7 +39,7 @@ public class CachedTileObject extends TileObject {
         sourceID = source.getID(t, sc.getContext());
         sourceFactory = source.getFactory(t);
 
-        final Source cached = new CachedSource(source);
+        final Source cached = new CacheOnlySource(source);
 
         cachedID = cached.getID(t, sc.getContext());
         cachedFactory = cached.getFactory(t);
@@ -209,7 +209,7 @@ public class CachedTileObject extends TileObject {
 
 
     public static class Factory extends ObjectHandle.Factory {
-        private final Source source;
+        private final ch.bailu.aat.map.tile.source.Source source;
         private final Tile tile;
 
         public Factory(Tile t, Source s) {
@@ -223,54 +223,5 @@ public class CachedTileObject extends TileObject {
         }
     }
 
-    private static class CachedSource extends Source {
-        public final static String EXT = ".png";
 
-        private final Source generated;
-
-        public CachedSource(Source gen) {
-            generated = gen;
-        }
-
-        public String getName() {
-            return generated.getName();
-        }
-
-        @Override
-        public String getID(Tile tile, Context context) {
-            final String relativePath = generated.getID(tile, context) + EXT;
-            return AppDirectory.getTileFile(relativePath, context).toString();
-        }
-
-
-        @Override
-        public int getMinimumZoomLevel() {
-            return generated.getMinimumZoomLevel();
-        }
-
-        @Override
-        public int getMaximumZoomLevel() {
-            return generated.getMaximumZoomLevel();
-        }
-
-        @Override
-        public int getAlpha() {
-            return generated.getAlpha();
-        }
-
-        @Override
-        public int getPaintFlags() {
-            return generated.getPaintFlags();
-        }
-
-        @Override
-        public TileObject.Factory getFactory(Tile tile) {
-            return new LoadableBitmapTileObject.Factory(tile, generated.isTransparent());
-        }
-
-        @Override
-        public boolean isTransparent() {
-            return generated.isTransparent();
-        }
-    }
 }

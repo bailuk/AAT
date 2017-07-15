@@ -6,14 +6,16 @@ import android.graphics.Bitmap;
 import org.mapsforge.core.graphics.TileBitmap;
 import org.mapsforge.core.model.Tile;
 
+import ch.bailu.aat.map.tile.source.Source;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.background.FileHandle;
 import ch.bailu.aat.util.AppBroadcaster;
+import ch.bailu.aat.util.fs.AppDirectory;
 import ch.bailu.aat.util.fs.foc.FocAndroid;
 import ch.bailu.aat.util.graphic.SyncTileBitmap;
 import ch.bailu.simpleio.foc.Foc;
 
-public class LoadableBitmapTileObject extends TileObject {
+public class CacheOnlyTileObject extends TileObject {
 
     private final Tile tile;
 
@@ -26,7 +28,7 @@ public class LoadableBitmapTileObject extends TileObject {
 
 
 
-    public LoadableBitmapTileObject(String id, ServiceContext sc, Tile t, final boolean transparent) {
+    public CacheOnlyTileObject(String id, ServiceContext sc, Tile t, final boolean transparent) {
         super(id);
 
         file = FocAndroid.factory(sc.getContext(), id);
@@ -45,7 +47,7 @@ public class LoadableBitmapTileObject extends TileObject {
             @Override
             public void broadcast(Context context) {
                 AppBroadcaster.broadcast(context, AppBroadcaster.FILE_CHANGED_INCACHE,
-                        LoadableBitmapTileObject.this.toString());
+                        CacheOnlyTileObject.this.toString());
             }
         };
 
@@ -125,7 +127,7 @@ public class LoadableBitmapTileObject extends TileObject {
 
         @Override
         public ObjectHandle factory(String id, ServiceContext cs) {
-            return new LoadableBitmapTileObject(id, cs, mapTile, isTransparent);
+            return new CacheOnlyTileObject(id, cs, mapTile, isTransparent);
         }
     }
 }
