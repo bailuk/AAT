@@ -35,7 +35,7 @@ public class MapsForgeTileLayerStack implements MapLayerInterface {
         final int preset = new SolidPreset(sc.getContext()).getIndex();
 
         mapView = v;
-        stiles = new SolidMapTileStack(sc.getContext(), preset);
+        stiles = new SolidMapTileStack(sc.getContext());
 
         init(sc);
     }

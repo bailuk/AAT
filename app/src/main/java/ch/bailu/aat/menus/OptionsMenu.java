@@ -84,7 +84,7 @@ public class OptionsMenu extends AbsMenu {
             new SolidIndexListDialog(new SolidBacklight(c, new SolidPreset(c).getIndex()));
 
         } else if (item == map) {
-            new SolidCheckListDialog(new SolidMapTileStack(c, new SolidPreset(c).getIndex()));
+            new SolidCheckListDialog(new SolidMapTileStack(c));
 
         } else if (item == overlays) {
             new SolidCheckListDialog(new SolidOverlayFileList(c));

@@ -83,7 +83,7 @@ public class MapsForgePreview extends MapsForgeViewBase {
 
 
     private static Source getSource(Context c) {
-        SolidMapTileStack tiles = new SolidMapTileStack(c, new SolidPreset(c).getIndex());
+        SolidMapTileStack tiles = new SolidMapTileStack(c);
 
         boolean[] enabled = tiles.getEnabledArray();
 

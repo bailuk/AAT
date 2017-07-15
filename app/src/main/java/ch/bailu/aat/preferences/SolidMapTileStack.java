@@ -33,7 +33,11 @@ public class SolidMapTileStack extends SolidCheckList {
     private final SolidBoolean[] enabledArray = new SolidBoolean[SOURCES.length];
 
 
-    public SolidMapTileStack (Context context, int preset) {
+    public SolidMapTileStack (Context context) {
+        this (context, 0);
+    }
+
+    private SolidMapTileStack (Context context, int preset) {
         Storage s = Storage.global(context);
 
         for (int i=0; i<enabledArray.length; i++) {
