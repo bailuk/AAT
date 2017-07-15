@@ -120,13 +120,6 @@ public class AndroidVolumes {
 
 
 
-    private static Foc getParent(Foc file, int i) {
-        while (i > 0) {
-            i--;
-            if (file != null) file = file.parent();
-        }
-        return file;
-    }
 
     private static File getParent(File file, int i) {
         while (i > 0) {
@@ -135,53 +128,5 @@ public class AndroidVolumes {
         }
         return file;
     }
-/*
-    public void askForPermission(Activity c, Foc f) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            askForPermissionSDK24(c, f);
-        }
-    }
-*/
 
-    private static String volumePathFromFile(Foc f) {
-        for (Foc v : volumes) {
-            final String sf = f.toString();
-            final String sv = v.toString();
-
-            if (sf.startsWith(sv)) {
-                return sv;
-            }
-        }
-        return null;
-    }
-
-/*
-    @TargetApi(24)
-    private void askForPermissionSDK24(Activity c, Foc f) {
-        Object s = c.getSystemService(Context.STORAGE_SERVICE);
-
-        if (s != null && s instanceof StorageManager) {
-            StorageManager storage = (StorageManager) s;
-
-            String vol = volumePathFromFile(f);
-            if (vol != null) {
-                List<StorageVolume> storageVolumes = storage.getStorageVolumes();
-
-                for (StorageVolume v : storageVolumes) {
-                    AppLog.d(v, v.getUuid());
-
-                    final String id = v.getUuid();
-                    if (id != null && vol.contains(id)) {
-                        Intent intent = v.createAccessIntent(null);
-                        if (intent != null) {
-                            c.startActivityForResult(intent, DirectoryMenu.PERMISSION);
-                            AppLog.d(this, intent.toString());
-                        }
-                        break;
-                    }
-                }
-            }
-        }
-    }
-*/
 }

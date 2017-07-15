@@ -11,6 +11,7 @@ import org.mapsforge.core.graphics.Bitmap;
 import org.mapsforge.map.android.graphics.AndroidBitmap;
 import org.mapsforge.map.android.graphics.AndroidGraphicFactory;
 
+import java.io.BufferedInputStream;
 import java.io.Closeable;
 import java.io.File;
 import java.io.IOException;
@@ -61,7 +62,7 @@ public class SyncBitmap implements Closeable {
         InputStream in = null;
 
         try {
-            in = file.openRb();
+            in = new BufferedInputStream(file.openR());
             bitmap = android.graphics.BitmapFactory.decodeStream(in);
         } catch (Exception e) {
             e.printStackTrace();
