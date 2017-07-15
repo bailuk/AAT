@@ -22,7 +22,7 @@ public class AltitudeDescription extends FloatDescription {
     
     @Override
     public String getLabel() {
-        return getString(R.string.altitude);
+        return getContext().getString(R.string.altitude);
     }
 
     @Override
@@ -30,7 +30,7 @@ public class AltitudeDescription extends FloatDescription {
         return unit.getAltitudeUnit();
     }
 
-    public String getTime() {
+    public String getValue() {
         return getValue(getCache());
     }
 

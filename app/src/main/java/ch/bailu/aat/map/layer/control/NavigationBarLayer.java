@@ -66,7 +66,7 @@ public class NavigationBarLayer extends ControlBarLayer implements OnContentUpda
 
             if (nextInBoundingCycle()) {
                 mcontext.getMapView().frameBounding(infoCache.valueAt(boundingCycle).getBoundingBox());
-                AppLog.i(mcontext.getContext(), infoCache.valueAt(boundingCycle).getName());
+                AppLog.i(mcontext.getContext(), infoCache.valueAt(boundingCycle).getFile().getName());
 
             }
         }

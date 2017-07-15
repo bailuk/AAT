@@ -19,7 +19,7 @@ public class BearingDescription extends DoubleDescription {
         return context.getString(R.string.d_bearing);
     }
 
-    public String getTime() {
+    public String getValue() {
         return String.format((Locale)null, "%.3f",  getCache());
     }
     

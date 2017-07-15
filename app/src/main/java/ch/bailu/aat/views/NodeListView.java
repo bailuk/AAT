@@ -100,7 +100,7 @@ public class NodeListView extends ListView implements
     public void onItemClick(AdapterView<?> arg0, View arg1, int pos, long arg3) {
         final Intent intent = new Intent();
         intent.putExtra("I", pos);
-        intent.putExtra("ID", cachedInfo.info.getPath());
+        intent.putExtra("ID", cachedInfo.info.getFile().getPath());
         ActivitySwitcher.start(getContext(), NodeDetailActivity.class, intent);
 
     }

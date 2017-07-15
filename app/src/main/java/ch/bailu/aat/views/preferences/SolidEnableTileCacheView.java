@@ -27,8 +27,8 @@ public class SolidEnableTileCacheView extends LinearLayout {
         public SolidEmptyCacheButton(final SolidEnableTileCache s) {
             super(s.getContext(), R.drawable.user_trash_inverse);
 
-            final String name = s.getKey();
-            final File file = getCacheDirectory(name);
+            final String getName = s.getKey();
+            final File file = getCacheDirectory(getName);
 
             setOnClickListener(new OnClickListener() {
                 @Override
@@ -51,10 +51,10 @@ public class SolidEnableTileCacheView extends LinearLayout {
 
 
 
-        public File getCacheDirectory(String name) {
+        public File getCacheDirectory(String getName) {
             return new File(
                     new SolidTileCacheDirectory(getContext()).getValueAsFile(),
-                    name);
+                    getName);
         }
 
         public void deleteRecursive(File fileOrDirectory) {

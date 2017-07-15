@@ -4,17 +4,16 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 
-import java.io.File;
-
 import ch.bailu.aat.preferences.SolidOverlayFileList;
+import ch.bailu.simpleio.foc.Foc;
 
 public class AddOverlayDialog extends AbsSolidDialog implements  DialogInterface.OnClickListener{
 
     private final SolidOverlayFileList slist;
-    private final File file;
+    private final Foc file;
 
 
-    public AddOverlayDialog (SolidOverlayFileList l, File f) {
+    public AddOverlayDialog (SolidOverlayFileList l, Foc f) {
         slist=l;
         file=f;
 
@@ -25,7 +24,7 @@ public class AddOverlayDialog extends AbsSolidDialog implements  DialogInterface
     }
 
 
-    public AddOverlayDialog(Context context, File f) {
+    public AddOverlayDialog(Context context, Foc f) {
         this(new SolidOverlayFileList(context), f);
     }
 

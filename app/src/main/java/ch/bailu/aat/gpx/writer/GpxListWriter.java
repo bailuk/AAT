@@ -1,11 +1,11 @@
 package ch.bailu.aat.gpx.writer;
 
 import java.io.Closeable;
-import java.io.File;
 import java.io.IOException;
 
 import ch.bailu.aat.gpx.GpxList;
 import ch.bailu.aat.gpx.GpxListIterator;
+import ch.bailu.simpleio.foc.Foc;
 
 
 public class GpxListWriter implements  Closeable {
@@ -15,7 +15,7 @@ public class GpxListWriter implements  Closeable {
     private GpxWriter writer;
 
 
-    public GpxListWriter(GpxList track, File file) throws IOException  {
+    public GpxListWriter(GpxList track, Foc file) throws IOException, SecurityException  {
         writer = GpxWriter.factory(file, track.getDelta().getType());
         iterator = new GpxListIterator(track);
 

@@ -142,19 +142,16 @@ public class MapsForgeViewBase extends MapView implements
     }
 
 
-/*    @Override
-    public void repaint() {
-        postInvalidateDelayed(15);
-    }
-*/
-
     @Override
     public void frameBounding(BoundingBoxE6 boundingBox) {
-        frameBounding(boundingBox.toBoundingBox());
+        if (boundingBox.hasBounding())
+            frameBounding(boundingBox.toBoundingBox());
+
+
     }
 
 
-    public void frameBounding(BoundingBox bounding) {
+    private void frameBounding(BoundingBox bounding) {
         Dimension dimension = getModel().mapViewDimension.getDimension();
 
 

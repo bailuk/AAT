@@ -1,6 +1,6 @@
 package ch.bailu.aat.services.tileremover;
 
-import java.io.File;
+import ch.bailu.simpleio.foc.Foc;
 
 public class TileFile {
 
@@ -10,17 +10,17 @@ public class TileFile {
     private final long size;
 
 
-    public static int getX(File file)throws NumberFormatException {
+    public static int getX(Foc file)throws NumberFormatException {
         return Integer.valueOf(file.getName());
     }
 
 
-    public static short getZoom(File file) throws NumberFormatException {
+    public static short getZoom(Foc file) throws NumberFormatException {
         return Short.valueOf(file.getName());
     }
 
 
-    public static int getY(File file) throws NumberFormatException {
+    public static int getY(Foc file) throws NumberFormatException {
         final String name = file.getName();
         final String yname = name.substring(0, name.length()-4);
 
@@ -28,13 +28,13 @@ public class TileFile {
     }
 
 
-    public static TileFile toTileFile(File file, int source) {
+    public static TileFile toTileFile(Foc file, int source) {
 
         try {
-            File pX = file.getParentFile();
+            Foc pX = file.parent();
 
             if (pX != null) {
-                File pZoom = pX.getParentFile();
+                Foc pZoom = pX.parent();
 
                 if (pZoom != null) {
                     int x = getX(pX);
@@ -50,7 +50,7 @@ public class TileFile {
 
     }
 
-    public TileFile(int summary, short zoom, int x, int y, File file) {
+    public TileFile(int summary, short zoom, int x, int y, Foc file) {
         this.source = summary;
         this.zoom = zoom;
         this.x = x;
@@ -59,13 +59,13 @@ public class TileFile {
         size = file.length();
     }
 
-    public TileFile(int summary, short zoom, int x, File file) {
+    public TileFile(int summary, short zoom, int x, Foc file) {
         this(summary, zoom, x, getY(file), file);
     }
 
 
-    public File toFile(File base_dir) {
-        return new File(base_dir, toString());
+    public Foc toFile(Foc base_dir) {
+        return base_dir.child(toString());
     }
 
     @Override

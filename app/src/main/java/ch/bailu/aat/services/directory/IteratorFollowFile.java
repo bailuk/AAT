@@ -3,12 +3,12 @@ package ch.bailu.aat.services.directory;
 import android.database.Cursor;
 
 import java.io.Closeable;
-import java.io.File;
 import java.io.IOException;
 
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.util.ui.AppLog;
 import ch.bailu.aat.services.ServiceContext;
+import ch.bailu.simpleio.foc.Foc;
 
 public class IteratorFollowFile extends IteratorAbstract {
     private static final Closeable NULL_CLOSEABLE = new Closeable() {
@@ -38,7 +38,7 @@ public class IteratorFollowFile extends IteratorAbstract {
 
 
     @Override
-    public void onCursorChanged(Cursor cursor, File directory, String fid) {
+    public void onCursorChanged(Cursor cursor, Foc directory, String fid) {
         try {
             toClose.close();
         } catch (IOException e) {
@@ -58,7 +58,7 @@ public class IteratorFollowFile extends IteratorAbstract {
 
         moveToPosition(-1);
         while ( moveToNext()) {
-            if (info.getPath().equals(fID)) {
+            if (info.getFile().getPath().equals(fID)) {
                 return true;
             }
         }

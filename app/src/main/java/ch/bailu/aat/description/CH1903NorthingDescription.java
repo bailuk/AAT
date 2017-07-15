@@ -13,7 +13,7 @@ public class CH1903NorthingDescription extends CH1903EastingDescription {
 
     @Override
     public String getLabel() {
-        return getString(R.string.d_chx);
+        return getContext().getString(R.string.d_chx);
     }
 
     @Override

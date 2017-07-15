@@ -6,36 +6,39 @@ import android.graphics.Bitmap;
 import org.mapsforge.core.graphics.TileBitmap;
 import org.mapsforge.core.model.Tile;
 
-import java.io.File;
-
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.background.FileHandle;
 import ch.bailu.aat.util.AppBroadcaster;
+import ch.bailu.aat.util.fs.foc.FocAndroid;
 import ch.bailu.aat.util.graphic.SyncTileBitmap;
+import ch.bailu.simpleio.foc.Foc;
 
 public class LoadableBitmapTileObject extends TileObject {
 
     private final Tile tile;
-    private final FileHandle load;
 
 
     private final SyncTileBitmap bitmap = new SyncTileBitmap();
 
+    private final FileHandle load;
+    private final Foc file;
 
-    public LoadableBitmapTileObject(String id, ServiceContext cs, Tile t, final boolean transparent) {
+
+
+
+    public LoadableBitmapTileObject(String id, ServiceContext sc, Tile t, final boolean transparent) {
         super(id);
+
+        file = FocAndroid.factory(sc.getContext(), id);
         tile = t;
 
-        cs.getCacheService().addToBroadcaster(this);
+        sc.getCacheService().addToBroadcaster(this);
 
-        load = new FileHandle(id) {
+        load = new FileHandle(file) {
 
             @Override
             public long bgOnProcess() {
-
-                File file = new File(toString());
                 bitmap.set(file, TILE_SIZE, transparent);
-
                 return bitmap.getSize();
             }
 
@@ -80,8 +83,6 @@ public class LoadableBitmapTileObject extends TileObject {
 
 
     private boolean isLoadable() {
-        File file = new File(toString());
-
         return file.isFile() && file.canRead();
     }
 

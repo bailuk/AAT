@@ -14,7 +14,7 @@ public class CurrentSpeedDescription extends SpeedDescription {
 
     @Override
     public String getLabel() {
-        return getString(R.string.speed);
+        return getContext().getString(R.string.speed);
     }
 
     @Override

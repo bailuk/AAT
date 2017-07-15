@@ -16,7 +16,7 @@ public class LongitudeDescription extends DoubleDescription {
 
     @Override
     public String getLabel() {
-        return getString(R.string.d_longitude);
+        return getContext().getString(R.string.d_longitude);
     }
 
     @Override
@@ -24,7 +24,7 @@ public class LongitudeDescription extends DoubleDescription {
         return UNIT;
     }
 
-    public String getTime() {
+    public String getValue() {
         return String.format(Locale.getDefault(),"%.6f",  getCache());
     }
 

@@ -13,7 +13,6 @@ import ch.bailu.aat.preferences.SolidExternalDirectory;
 import ch.bailu.aat.preferences.SolidFile;
 import ch.bailu.aat.preferences.SolidPreset;
 import ch.bailu.aat.util.fs.AppDirectory;
-import ch.bailu.aat.util.fs.JFile;
 import ch.bailu.aat.util.ui.AppLayout;
 import ch.bailu.aat.views.AbsLabelTextView;
 import ch.bailu.aat.views.ContentView;
@@ -120,7 +119,7 @@ public class MainActivity extends AbsDispatcher {
 
         public void setText() {
 
-            if (JFile.canRead(sdirectory.getValueAsFile())) {
+            if (sdirectory.getValueAsFile().canRead()) {
                 setVisibility(VISIBLE);
             } else {
                 setVisibility(GONE);
@@ -209,7 +208,7 @@ public class MainActivity extends AbsDispatcher {
         }
 
         public void setText() {
-            setText(AppDirectory.getDataDirectory(getContext(), directory).getAbsolutePath());
+            setText(AppDirectory.getDataDirectory(getContext(), directory).getPathName());
         }
 
         @Override

@@ -11,10 +11,14 @@ import org.mapsforge.core.graphics.Bitmap;
 import org.mapsforge.map.android.graphics.AndroidBitmap;
 import org.mapsforge.map.android.graphics.AndroidGraphicFactory;
 
+import java.io.BufferedInputStream;
 import java.io.Closeable;
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 
 import ch.bailu.aat.services.cache.ObjectHandle;
+import ch.bailu.simpleio.foc.Foc;
 
 public class SyncBitmap implements Closeable {
     private Bitmap bitmap = null;
@@ -53,15 +57,26 @@ public class SyncBitmap implements Closeable {
 
 
 
-    public static Bitmap load(File file) {
-        android.graphics.Bitmap b =
-                android.graphics.BitmapFactory.decodeFile(file.toString());
+    private static Bitmap load(Foc file) {
+        android.graphics.Bitmap bitmap = null;
+        InputStream in = null;
 
-        return new AndroidBitmap(b);
+        try {
+            in = new BufferedInputStream(file.openR());
+            bitmap = android.graphics.BitmapFactory.decodeStream(in);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            Foc.close(in);
+        }
 
+        if (bitmap != null) {
+            return new AndroidBitmap(bitmap);
+        }
+        return null;
     }
 
-    public synchronized void set(File file) {
+    public synchronized void set(Foc file) {
         set(load(file));
     }
 

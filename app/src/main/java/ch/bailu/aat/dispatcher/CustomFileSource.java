@@ -4,8 +4,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
-import java.io.File;
-
 import ch.bailu.aat.gpx.GpxFileWrapper;
 import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.util.AppBroadcaster;
@@ -38,13 +36,13 @@ public class CustomFileSource extends ContentSource {
     
     @Override
     public void requestUpdate() {
-        ObjectHandle h =  scontext.getCacheService().getObject(fileID, new GpxObjectStatic.Factory());
+        ObjectHandle h = scontext.getCacheService().getObject(fileID, new GpxObjectStatic.Factory());
 
         handle.free();
         handle=h;
 
-        if (GpxObject.class.isInstance(h) && h.isReadyAndLoaded()) {
-            sendUpdate(InfoID.FILEVIEW, new GpxFileWrapper(new File(h.toString()), ((GpxObject)h).getGpxList()));
+        if (h instanceof GpxObject && h.isReadyAndLoaded()) {
+            sendUpdate(InfoID.FILEVIEW, new GpxFileWrapper(h.getFile(), ((GpxObject)h).getGpxList()));
         }
 
     }

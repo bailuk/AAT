@@ -48,7 +48,9 @@ implements OnSharedPreferenceChangeListener, Closeable {
         try {
             logger = createLogger();
             logger.close();
-        } catch (IOException e) {}
+        } catch (Exception e) {
+            AppLog.e(sc.getContext(), e);
+        }
         logger = Logger.createNullLogger();
 
         state = new OffState(this);
@@ -89,7 +91,7 @@ implements OnSharedPreferenceChangeListener, Closeable {
 
  
     
-    public  TrackLogger createLogger() throws IOException {
+    public  TrackLogger createLogger() throws IOException, SecurityException {
         return new TrackLogger(scontext.getContext(),new SolidPreset(scontext.getContext()).getIndex());
     }
     

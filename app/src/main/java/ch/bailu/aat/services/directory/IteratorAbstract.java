@@ -7,12 +7,11 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.database.Cursor;
 
-import java.io.File;
-
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.preferences.SolidDirectoryQuery;
 import ch.bailu.aat.services.ServiceContext;
+import ch.bailu.simpleio.foc.Foc;
 
 public abstract class IteratorAbstract extends Iterator implements OnSharedPreferenceChangeListener {
     private final ServiceContext scontext;
@@ -92,7 +91,7 @@ public abstract class IteratorAbstract extends Iterator implements OnSharedPrefe
     @Override
     public abstract GpxInformation getInfo();
 
-    public abstract void onCursorChanged(Cursor cursor, File directory, String fid);
+    public abstract void onCursorChanged(Cursor cursor, Foc directory, String fid);
 
 
     @Override
@@ -103,7 +102,7 @@ public abstract class IteratorAbstract extends Iterator implements OnSharedPrefe
         selection = sdirectory.createSelectionString();
         if (cursor != null) {
             oldPosition = cursor.getPosition();
-            fileOnOldPosition = getInfo().getPath();
+            fileOnOldPosition = getInfo().getFile().getPath();
             cursor.close();
         }
 

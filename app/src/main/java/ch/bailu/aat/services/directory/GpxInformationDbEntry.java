@@ -2,16 +2,17 @@ package ch.bailu.aat.services.directory;
 
 import android.database.Cursor;
 
-import java.io.File;
-
 import ch.bailu.aat.coordinates.BoundingBoxE6;
 import ch.bailu.aat.gpx.GpxInformation;
+import ch.bailu.aat.util.ui.AppLog;
+import ch.bailu.simpleio.foc.Foc;
+import ch.bailu.simpleio.foc.FocAbstractName;
 
 public class GpxInformationDbEntry extends GpxInformation {
     private final Cursor cursor;
-    private final File parent;
+    private final Foc parent;
 
-    public GpxInformationDbEntry(Cursor c, File p) {
+    public GpxInformationDbEntry(Cursor c, Foc p) {
         parent = p;
         cursor = c;
     }
@@ -23,15 +24,30 @@ public class GpxInformationDbEntry extends GpxInformation {
     }
 
 
-    @Override
-    public String getPath() {
-        return new File(parent, getName()).getAbsolutePath();
+    private class FocDbEntry extends FocAbstractName {
+
+        @Override
+        public String getName() {
+            return getString(GpxDbConstants.KEY_FILENAME);
+        }
+
+        @Override
+        public String getPath() {
+            return parent.child(getName()).getPath();
+        }
+
+        @Override
+        public String getPathName() {
+            return parent.child(getName()).getPathName();
+        }
+
     }
 
     @Override
-    public String getName() {
-        return getString(GpxDbConstants.KEY_FILENAME);
+    public Foc getFile() {
+        return  new FocDbEntry();
     }
+
 
     @Override
     public float getSpeed() {

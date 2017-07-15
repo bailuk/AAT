@@ -13,7 +13,7 @@ public class MaximumSpeedDescription  extends SpeedDescription {
 
     @Override
     public String getLabel() {
-        return getString(R.string.maximum);
+        return getContext().getString(R.string.maximum);
     }
 
     @Override

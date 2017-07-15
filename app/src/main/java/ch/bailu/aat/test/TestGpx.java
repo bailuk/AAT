@@ -2,7 +2,6 @@ package ch.bailu.aat.test;
 
 import android.content.Context;
 
-import java.io.File;
 import java.io.IOException;
 
 import ch.bailu.aat.gpx.GpxList;
@@ -10,7 +9,8 @@ import ch.bailu.aat.gpx.parser.GpxListReader;
 import ch.bailu.aat.gpx.writer.GpxListWriter;
 import ch.bailu.aat.preferences.SolidMockLocationFile;
 import ch.bailu.aat.preferences.SolidString;
-import ch.bailu.simpleio.io.FileAccess;
+import ch.bailu.aat.util.fs.foc.FocAndroid;
+import ch.bailu.simpleio.foc.Foc;
 
 public class TestGpx extends UnitTest {
 
@@ -23,7 +23,7 @@ public class TestGpx extends UnitTest {
 
     @Override
     public void test() throws IOException, AssertionError {
-        File testFile = getTestFile();
+        Foc testFile = getTestFile();
         
         testFile(testFile, testFile);
     }
@@ -34,25 +34,25 @@ public class TestGpx extends UnitTest {
 
 
 
-    public File getTestFile() {
+    public Foc getTestFile() {
         SolidString mockLocation = new SolidMockLocationFile(getContext());
         
-        File testFile = new File(mockLocation.getValueAsString());
+        Foc testFile = FocAndroid.factory(getContext(), mockLocation.getValueAsString());
         assertTrue("Mock file not defined.", testFile.exists());
         return testFile;
     }
 
 
-    public void testFile(File fileA, File fileB) throws IOException, AssertionError {
-            GpxList listA= new GpxListReader(new FileAccess(fileA)).getGpxList();
-            GpxList listB=new GpxListReader(new FileAccess(fileB)).getGpxList();
+    public void testFile(Foc fileA, Foc fileB) throws IOException, AssertionError {
+            GpxList listA= new GpxListReader(fileA).getGpxList();
+            GpxList listB=new GpxListReader(fileB).getGpxList();
             
-            File fileCopy = new File(getTestDirectory(getContext()),"test_copy.gpx");
+            Foc fileCopy = getTestDirectory(getContext()).child("test_copy.gpx");
             GpxListWriter writer = new GpxListWriter(listA, fileCopy);
             writer.flushOutput();
             writer.close();
             
-            GpxList listC=new GpxListReader(new FileAccess(fileCopy)).getGpxList();
+            GpxList listC=new GpxListReader(fileCopy).getGpxList();
             
 
             assertListEquals(listA, listB);

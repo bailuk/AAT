@@ -5,26 +5,31 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 
-import java.io.File;
-
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.background.FileHandle;
 import ch.bailu.aat.util.AppBroadcaster;
+import ch.bailu.aat.util.fs.foc.FocAndroid;
 import ch.bailu.aat.util.graphic.SyncBitmap;
+import ch.bailu.simpleio.foc.Foc;
 
 public class ImageObject extends ImageObjectAbstract {
     public final static ImageObject NULL=new ImageObject();
     
     private final SyncBitmap bitmap=new SyncBitmap();
 
+    private final Foc imageFile;
 
     private ImageObject() {
-        super("");
+        this(FocAndroid.NULL);
     }
     
-    public ImageObject(String id) {
-        super(id);
+    public ImageObject(Foc id) {
+        super(id.getPath());
+        imageFile = id;
     }
+
+
+
     
     @Override
     public void onInsert(ServiceContext sc){
@@ -41,16 +46,30 @@ public class ImageObject extends ImageObjectAbstract {
 
 
 
-    private void load(ServiceContext sc) {
-        FileHandle l=new FileHandle(toString()) {
+    private void load(final ServiceContext sc) {
+        FileHandle l=new FileHandle(imageFile) {
 
             @Override
             public long bgOnProcess() {
-                File file = new File(toString());
+                long size = 0;
 
-                if (file.canRead())
-                    bitmap.set(new File(toString()));
-                return bitmap.getSize();
+                if (sc.lock()) {
+                    ObjectHandle handle = sc.getCacheService().getObject(toString());
+
+                    if (handle != null) {
+
+                        if (handle instanceof ImageObject) {
+                            ImageObject self = (ImageObject) handle;
+
+                            bitmap.set(self.imageFile);
+                            size =  bitmap.getSize();
+                        }
+                        handle.free();
+                    }
+
+                    sc.free();
+                }
+                return size;
             }
 
             @Override
@@ -89,7 +108,7 @@ public class ImageObject extends ImageObjectAbstract {
     public static class Factory extends ObjectHandle.Factory {
         @Override
         public ObjectHandle factory(String id, ServiceContext sc) {
-            return new ImageObject(id);
+            return new ImageObject(FocAndroid.factory(sc.getContext(),id));
         }
     }
 

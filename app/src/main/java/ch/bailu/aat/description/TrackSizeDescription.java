@@ -31,12 +31,12 @@ public class TrackSizeDescription extends ContentDescription {
     }
 
 
-    public String getTime() {
+    public String getValue() {
         return value;
     }
 
     @Override
     public String getLabel() {
-        return getString(R.string.d_size);
+        return getContext().getString(R.string.d_size);
     }
 }

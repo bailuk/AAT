@@ -23,8 +23,9 @@ import ch.bailu.aat.services.cache.GpxObject;
 import ch.bailu.aat.services.cache.GpxObjectStatic;
 import ch.bailu.aat.services.cache.ObjectHandle;
 import ch.bailu.aat.util.AppBroadcaster;
-import ch.bailu.aat.util.fs.AppDirectory;
+import ch.bailu.aat.util.fs.foc.FocAndroid;
 import ch.bailu.aat.util.ui.AppLog;
+import ch.bailu.simpleio.foc.Foc;
 
 public class DirectorySynchronizer  implements Closeable {
 
@@ -38,13 +39,13 @@ public class DirectorySynchronizer  implements Closeable {
 
     private long dbAccessTime;
 
-    private final File directory;
+    private final Foc directory;
     private final ServiceContext scontext;
 
     private boolean canContinue=true;
     private State state;
 
-    public DirectorySynchronizer(ServiceContext cs, File d) {
+    public DirectorySynchronizer(ServiceContext cs, Foc d) {
         scontext=cs;
         directory=d;
 
@@ -101,7 +102,8 @@ public class DirectorySynchronizer  implements Closeable {
          */
         @Override
         public void start() {
-            AppBroadcaster.register(scontext.getContext(), onFileChanged, AppBroadcaster.FILE_CHANGED_INCACHE);
+            AppBroadcaster.register(scontext.getContext(),
+                    onFileChanged, AppBroadcaster.FILE_CHANGED_INCACHE);
             try {
                 database = openDatabase();
                 setState(new StatePrepareSync());
@@ -114,11 +116,11 @@ public class DirectorySynchronizer  implements Closeable {
 
 
         private GpxDatabase openDatabase()  throws Exception {
-            final File file = AppDirectory.getCacheDb(directory);
+            final String dbPath = SummaryConfig.getWriteableDBPath(scontext.getContext(), directory);
             final String query[] = {GpxDbConstants.KEY_FILENAME};
 
-            dbAccessTime = file.lastModified();
-            return new GpxDatabase(scontext, file, query);
+            dbAccessTime = new File(dbPath).lastModified();
+            return new GpxDatabase(scontext, dbPath, query);
         }
 
         @Override
@@ -189,9 +191,9 @@ public class DirectorySynchronizer  implements Closeable {
 
 
         private void removeFileFromDatabase(String name) throws IOException {
-            final File file = new File(directory, name);
+            final Foc file = directory.child(name);
 
-            AppDirectory.getPreviewFile(file).delete();
+            SummaryConfig.getWriteablePreviewFile(scontext.getContext(), file).rm();
             database.deleteEntry(file);
         }
 
@@ -202,7 +204,7 @@ public class DirectorySynchronizer  implements Closeable {
 
             for (boolean r=cursor.moveToFirst(); canContinue && r; r=cursor.moveToNext()) {
                 final String name = getFileName(cursor);
-                final File file = filesToAdd.findItem(name);
+                final Foc file = filesToAdd.findItem(name);
 
                 if (file == null) {
                     filesToRemove.add(name);
@@ -222,7 +224,7 @@ public class DirectorySynchronizer  implements Closeable {
         }
 
 
-        private boolean isFileInSync(File file) {
+        private boolean isFileInSync(Foc file) {
             if (file.lastModified() < System.currentTimeMillis()) {
                 return file.lastModified() < dbAccessTime; 
             } 
@@ -239,14 +241,18 @@ public class DirectorySynchronizer  implements Closeable {
 
         public void start() {
 
-            File file = filesToAdd.popItem();
+            Foc file = filesToAdd.popItem();
+
+
             if (file==null) {
                 terminate();
 
 
             } else {
+                AppLog.d(this, file.getPathName());
+
                 ObjectHandle h = scontext.getCacheService().getObject(
-                        file.getAbsolutePath(), new GpxObjectStatic.Factory());
+                        file.toString(), new GpxObjectStatic.Factory());
                 if (h instanceof GpxObject) {
 
                     setPendingGpxHandle((GpxObject)h);
@@ -275,19 +281,18 @@ public class DirectorySynchronizer  implements Closeable {
 
 
         private void addGpxSummaryToDatabase(String id, GpxList list) throws IOException {
-            final File file = new File(id);
+            final Foc file = FocAndroid.factory(scontext.getContext(), id);
 
-            ContentValues content = createContentValues(file.getPath(), file.getName(), list.getDelta());
+            ContentValues content = createContentValues(file.getName(), list.getDelta());
             database.insert(content);
         }
 
-        private ContentValues createContentValues(String pathname, String filename, 
+        private ContentValues createContentValues(String filename,
                 GpxBigDeltaInterface summary) {
 
-            BoundingBoxE6 box = summary.getBoundingBox();
+            BoundingBoxE6 bounding = summary.getBoundingBox();
 
             ContentValues content = new ContentValues();
-            //content.put(GpxDbConstants.KEY_PATHNAME_OLD,   pathname);
             content.put(GpxDbConstants.KEY_FILENAME,   filename);
             content.put(GpxDbConstants.KEY_AVG_SPEED,  summary.getSpeed());
             content.put(GpxDbConstants.KEY_MAX_SPEED,  summary.getMaximumSpeed());
@@ -297,10 +302,10 @@ public class DirectorySynchronizer  implements Closeable {
             content.put(GpxDbConstants.KEY_END_TIME,   summary.getEndTime());        
             content.put(GpxDbConstants.KEY_PAUSE,      summary.getPause());
             content.put(GpxDbConstants.KEY_TYPE_ID,    summary.getType());
-            content.put(GpxDbConstants.KEY_EAST_BOUNDING, box.getLonEastE6());
-            content.put(GpxDbConstants.KEY_WEST_BOUNDING, box.getLonWestE6());
-            content.put(GpxDbConstants.KEY_NORTH_BOUNDING, box.getLatNorthE6());
-            content.put(GpxDbConstants.KEY_SOUTH_BOUNDING, box.getLatSouthE6());
+            content.put(GpxDbConstants.KEY_EAST_BOUNDING, bounding.getLonEastE6());
+            content.put(GpxDbConstants.KEY_WEST_BOUNDING, bounding.getLonWestE6());
+            content.put(GpxDbConstants.KEY_NORTH_BOUNDING, bounding.getLatNorthE6());
+            content.put(GpxDbConstants.KEY_SOUTH_BOUNDING, bounding.getLatSouthE6());
             return content;
         }
 
@@ -320,17 +325,27 @@ public class DirectorySynchronizer  implements Closeable {
     private class StateLoadPreview extends State {
 
         public void start() {
-            File previewImageFile =
-                    AppDirectory.getPreviewFile(new File(pendingHandle.toString()));
-            File gpxFile =
-                    new File(pendingHandle.toString());
+
+            Foc gpxFile = FocAndroid.factory(scontext.getContext(), pendingHandle.toString());
+
+            Foc previewImageFile = SummaryConfig.getWriteablePreviewFile(scontext.getContext(), gpxFile);
             GpxInformation info =
                     new GpxFileWrapper(gpxFile, pendingHandle.getGpxList());
 
-            MapsForgePreview p = new MapsForgePreview(scontext, info, previewImageFile);
 
-            setPendingPreviewGenerator(p);
-            state.ping();
+            try {
+                MapsForgePreview p = new MapsForgePreview(scontext, info, previewImageFile);
+
+                setPendingPreviewGenerator(p);
+                state.ping();
+
+            } catch (Exception e) {
+                AppLog.d(this, e.toString());
+
+                AppBroadcaster.broadcast(scontext.getContext(), AppBroadcaster.DB_SYNC_CHANGED);
+                setState(new StateLoadNextGpx());
+            }
+
 
 
         }

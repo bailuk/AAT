@@ -2,11 +2,11 @@ package ch.bailu.aat.services.tileremover;
 
 import android.content.Context;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
 import ch.bailu.aat.R;
+import ch.bailu.simpleio.foc.Foc;
 
 public class SourceSummaries {
     public final static int SUMMARY_SIZE = 20;
@@ -25,7 +25,7 @@ public class SourceSummaries {
         sourceSummaries.add(new SourceSummary(c.getString(R.string.p_trim_total)));
     }
 
-    public void rescanKeep(Context c, File tileCacheDirectory) throws IOException {
+    public void rescanKeep(Context c, Foc tileCacheDirectory) throws IOException {
         ArrayList<SourceSummary> old = new ArrayList<>(sourceSummaries);
 
         rescan(c, tileCacheDirectory);
@@ -55,21 +55,18 @@ public class SourceSummaries {
     }
 
 
-    public void rescan(Context c, File tileCacheDirectory) throws IOException {
-        tileCacheDirectory = tileCacheDirectory.getCanonicalFile();
+    public void rescan(Context c, Foc tileCacheDirectory) throws IOException {
+        //tileCacheDirectory = tileCacheDirectory.getCanonicalFile();
 
         reset(c);
 
-        File[] files = tileCacheDirectory.listFiles();
-
-        if (files != null) {
-            for (File file: files) {
-                if (TileScanner.doDirectory(file)) {
-                    sourceSummaries.add(new SourceSummary(file.getName()));
-                }
-
+        tileCacheDirectory.foreachDir(new Foc.Execute() {
+            @Override
+            public void execute(Foc child) {
+                sourceSummaries.add(new SourceSummary(child.getName()));
             }
-        }
+        });
+
     }
 
 
@@ -114,7 +111,7 @@ public class SourceSummaries {
     }
 
 
-    public File toFile(File baseDirectory, TileFile t) {
-        return t.toFile(new File(baseDirectory, get(t.getSource()).getName()));
+    public Foc toFile(Foc baseDirectory, TileFile t) {
+        return t.toFile(baseDirectory.child(get(t.getSource()).getName()));
     }
 }

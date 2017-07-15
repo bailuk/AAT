@@ -1,9 +1,9 @@
 package ch.bailu.aat.util;
 
-import java.io.File;
 import java.io.UnsupportedEncodingException;
 
 import ch.bailu.aat.util.fs.AppDirectory;
+import ch.bailu.simpleio.foc.Foc;
 
 
 public abstract class OsmApiHelper {
@@ -16,16 +16,16 @@ public abstract class OsmApiHelper {
         public abstract String getUrl(String query) throws UnsupportedEncodingException;
         public abstract String getUrlEnd();
         public abstract String getUrlStart();
-        public abstract String getBaseDirectory();
+        public abstract Foc getBaseDirectory();
         public abstract String getFileExtension();
 
-        public File getResultFile() {
-            return new File(getBaseDirectory(), "result"+ getFileExtension());
+        public Foc getResultFile() {
+            return getBaseDirectory().child("result"+ getFileExtension());
         }
         
 
-        public File getQueryFile() {
-            return new File(getBaseDirectory(), "query.txt");
+        public Foc getQueryFile() {
+            return getBaseDirectory().child("query.txt");
         }
 
         public static String getFilePrefix(String query) {

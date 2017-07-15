@@ -18,7 +18,7 @@ public class CH1903EastingDescription extends DoubleDescription {
 
     @Override
     public String getLabel() {
-        return getString(R.string.d_chy);
+        return getContext().getString(R.string.d_chy);
     }
 
     @Override
@@ -26,7 +26,7 @@ public class CH1903EastingDescription extends DoubleDescription {
         return "km";
     }
 
-    public String getTime() {
+    public String getValue() {
         return String.format((Locale)null,"%.3f",  ( (float)(coordinate) ) / 1000 );
     }
 

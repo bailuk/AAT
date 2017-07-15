@@ -10,8 +10,8 @@ import java.io.File;
 import java.util.Map.Entry;
 
 import ch.bailu.aat.util.ContextWrapperInterface;
-import ch.bailu.aat.util.fs.UriAccess;
-import ch.bailu.simpleio.io.FileAccess;
+import ch.bailu.simpleio.foc.Foc;
+import ch.bailu.simpleio.foc.FocFile;
 
 public class Storage  implements ContextWrapperInterface {
     public final static String DEF_VALUE="0";
@@ -55,10 +55,10 @@ public class Storage  implements ContextWrapperInterface {
 
 
     public void backup() throws Exception {
-        final File source =new File(getSharedPrefsDirectory(context),  GLOBAL_NAME + ".xml");
-        final File target = new File(Environment.getExternalStorageDirectory(), "aat_preferences.xml");
+        final Foc source = new FocFile(new File(getSharedPrefsDirectory(context),  GLOBAL_NAME + ".xml"));
+        final Foc target = new FocFile(new File(Environment.getExternalStorageDirectory(), "aat_preferences.xml"));
 
-        new UriAccess(context, source).copyTo(target);
+        source.cp(target);
     }
 
 
@@ -70,12 +70,11 @@ public class Storage  implements ContextWrapperInterface {
 
 
     public void restore() throws Exception {
-        final File target = new File(getSharedPrefsDirectory(context) +  "/restore.xml");
-        final File source = new File(Environment.getExternalStorageDirectory(), "/aat_preferences.xml");
+        final Foc target = new FocFile(new File(getSharedPrefsDirectory(context) +  "/restore.xml"));
+        final Foc source = new FocFile(new File(Environment.getExternalStorageDirectory(), "/aat_preferences.xml"));
 
-        if (target.exists()) target.delete();
-
-        new FileAccess(source).copyTo(target);
+        target.rm();
+        source.cp(target);
 
 
 
@@ -102,7 +101,7 @@ public class Storage  implements ContextWrapperInterface {
         }
         editor.commit();
 
-        if (target.exists()) target.delete();
+        target.rm();
     }
 
 

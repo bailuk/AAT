@@ -7,10 +7,10 @@ import android.database.sqlite.SQLiteCantOpenDatabaseException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 
-import java.io.File;
 import java.io.IOException;
 
 import ch.bailu.aat.services.ServiceContext;
+import ch.bailu.simpleio.foc.Foc;
 
 
 public class GpxDatabase extends AbsDatabase{
@@ -23,7 +23,7 @@ public class GpxDatabase extends AbsDatabase{
 
 
 
-    public GpxDatabase (ServiceContext sc, File path, String[] k)
+    public GpxDatabase (ServiceContext sc, String path, String[] k)
             throws IOException, SQLiteCantOpenDatabaseException{
 
         keys = k;
@@ -31,16 +31,15 @@ public class GpxDatabase extends AbsDatabase{
         database = openDatabase(path);
     }
 
-    public GpxDatabase (ServiceContext sc, File path)
+    public GpxDatabase (ServiceContext sc, String path)
             throws IOException, SQLiteCantOpenDatabaseException {
 
         this(sc, path, GpxDbConstants.KEY_LIST_NEW);
     }
 
 
-    private SQLiteDatabase openDatabase(File path) throws IOException, SQLiteCantOpenDatabaseException {
-        path.getParentFile().mkdirs();
-        return new GpxDbOpenHelper(context, path).getReadableDatabase();    
+    private SQLiteDatabase openDatabase(String path) throws IOException, SQLiteCantOpenDatabaseException {
+        return new GpxDbOpenHelper(context, path).getReadableDatabase();
     }
 
     @Override
@@ -60,7 +59,7 @@ public class GpxDatabase extends AbsDatabase{
     }
 
     @Override
-    public void deleteEntry(File file) throws SQLiteException {
+    public void deleteEntry(Foc file) throws SQLiteException {
         final String where = GpxDbConstants.KEY_FILENAME + "=\'" + file.getName() + "\'";
         database.delete(GpxDbConstants.DB_TABLE, where, null);
     }

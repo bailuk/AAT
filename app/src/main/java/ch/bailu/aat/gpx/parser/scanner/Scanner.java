@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 import ch.bailu.aat.coordinates.LatLongE6;
 import ch.bailu.aat.gpx.GpxAttributesStatic;
-import ch.bailu.simpleio.io.Access;
+import ch.bailu.simpleio.foc.Foc;
 import ch.bailu.simpleio.io.Stream;
 import ch.bailu.simpleio.parser.OnParsedInterface;
 import ch.bailu.simpleio.parser.scanner.DateScanner;
@@ -30,7 +30,7 @@ public class Scanner {
     public final SparseArray<LatLongE6> nodeMap = new SparseArray<>(50);
     public final ArrayList<GpxAttributesStatic.Tag> tagList = new ArrayList<>();
 
-    public Scanner(Access in) throws IOException {
+    public Scanner(Foc in) throws IOException, SecurityException {
         stream = new Stream(in);
 
         latitude = new DoubleScanner(stream,6);

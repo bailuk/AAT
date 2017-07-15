@@ -15,7 +15,7 @@ public class NameDescription extends ContentDescription {
 
     @Override
     public String getLabel() {
-        return getString(R.string.d_name);
+        return getContext().getString(R.string.d_name);
     }
 
     @Override
@@ -23,7 +23,7 @@ public class NameDescription extends ContentDescription {
         return "";
     }
 
-    public String getTime() {
+    public String getValue() {
         return name;
     }
 
@@ -35,7 +35,7 @@ public class NameDescription extends ContentDescription {
     
     @Override
     public void onContentUpdated(int iid, GpxInformation info) {
-        updateName(info.getName());
+        updateName(info.getFile().getName());
     }
 
 }

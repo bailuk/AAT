@@ -17,7 +17,7 @@ public class CaloriesDescription extends LongDescription{
 
     @Override
     public String getLabel() {
-        return getString(R.string.calories);
+        return getContext().getString(R.string.calories);
     }
 
     @Override
@@ -25,7 +25,7 @@ public class CaloriesDescription extends LongDescription{
         return "kcal";
     }
 
-    public String getTime() {
+    public String getValue() {
         return String.valueOf(getCache());
     }
 
@@ -37,11 +37,11 @@ public class CaloriesDescription extends LongDescription{
     
 
     private float calculateCalories(GpxInformation track) {
-        int preset = new SolidPreset(this).getIndex();
+        int preset = new SolidPreset(getContext()).getIndex();
         
         float hours = ((float)track.getTimeDelta()) / (1000f * 60f * 60f);
-        float met = new SolidMET(this, preset).getMETValue();
-        float weight = new SolidWeight(this).getValue();
+        float met = new SolidMET(getContext(), preset).getMETValue();
+        float weight = new SolidWeight(getContext()).getValue();
         float kcal = hours*met*weight;
         
         return kcal;

@@ -6,7 +6,6 @@ import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.background.ProcessHandle;
 import ch.bailu.aat.services.cache.ObjectHandle;
 import ch.bailu.aat.util.AppBroadcaster;
-import ch.bailu.aat.util.ui.AppLog;
 
 public class RasterInitializer extends ProcessHandle {
 

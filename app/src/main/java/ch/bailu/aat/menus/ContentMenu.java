@@ -1,7 +1,6 @@
 package ch.bailu.aat.menus;
 
 
-import android.net.Uri;
 import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -9,14 +8,15 @@ import android.view.MenuItem;
 import ch.bailu.aat.R;
 import ch.bailu.aat.util.fs.FileAction;
 import ch.bailu.aat.services.ServiceContext;
+import ch.bailu.simpleio.foc.Foc;
 
 public class ContentMenu extends AbsMenu {
-    private final Uri uri;
+    private final Foc uri;
     private final ServiceContext scontext;
 
     private MenuItem send, view, copy, clipboard;
 
-    public ContentMenu(ServiceContext sc, Uri u) {
+    public ContentMenu(ServiceContext sc, Foc u) {
         uri = u;
         scontext = sc;
     }
@@ -31,7 +31,7 @@ public class ContentMenu extends AbsMenu {
 
     @Override
     public void inflateWithHeader(ContextMenu menu) {
-        menu.setHeaderTitle(uri.getLastPathSegment());
+        menu.setHeaderTitle(uri.getName());
         inflate(menu);
     }
 
@@ -49,7 +49,7 @@ public class ContentMenu extends AbsMenu {
             FileAction.view(scontext.getContext(), uri);
 
         } else if (item == copy) {
-            FileAction.copyTo(scontext.getContext(), uri);
+            FileAction.copyToDir(scontext.getContext(), uri);
 
         } else if (item == clipboard) {
             FileAction.copyToClipboard(scontext.getContext(), uri);

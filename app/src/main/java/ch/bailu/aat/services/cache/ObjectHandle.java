@@ -1,8 +1,12 @@
 package ch.bailu.aat.services.cache;
 
-import java.io.File;
+import android.content.Context;
 
 import ch.bailu.aat.services.ServiceContext;
+import ch.bailu.aat.util.fs.foc.FocAndroid;
+import ch.bailu.aat.util.ui.AppLog;
+import ch.bailu.simpleio.foc.Foc;
+import ch.bailu.simpleio.foc.FocFile;
 
 
 public abstract class ObjectHandle implements ObjectBroadcastReceiver{
@@ -36,7 +40,16 @@ public abstract class ObjectHandle implements ObjectBroadcastReceiver{
     public String toString() {
         return ID;
     }
-    public File toFile() {return new File(ID);}
+
+
+    public String getID() {
+        return ID;
+    }
+
+    public Foc getFile() {
+        AppLog.d(this, "WARNING: default implementation of getFile() called!");
+        return new FocFile(ID);
+    }
     
     
     public boolean isLocked() {

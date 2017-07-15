@@ -2,8 +2,6 @@ package ch.bailu.aat.activities;
 
 import android.content.Intent;
 
-import java.io.File;
-
 import ch.bailu.aat.R;
 import ch.bailu.aat.description.ContentDescription;
 import ch.bailu.aat.description.DateDescription;
@@ -11,6 +9,7 @@ import ch.bailu.aat.description.DistanceDescription;
 import ch.bailu.aat.description.NameDescription;
 import ch.bailu.aat.description.TrackSizeDescription;
 import ch.bailu.aat.preferences.SolidExternalDirectory;
+import ch.bailu.simpleio.foc.Foc;
 
 public class ExternalListActivity extends AbsGpxListActivity {
 
@@ -40,7 +39,7 @@ public class ExternalListActivity extends AbsGpxListActivity {
 
 
     @Override
-    public File getDirectory() {
+    public Foc getDirectory() {
         return new SolidExternalDirectory(this).getValueAsFile();
     }
 

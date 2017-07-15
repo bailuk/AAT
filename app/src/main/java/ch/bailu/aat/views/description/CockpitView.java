@@ -160,7 +160,7 @@ public class CockpitView extends ViewGroup {
             private int getWidthOfView(int index) {
                 final NumberView child = (NumberView) getChildAt(index);
 
-                int len= child.getDescription().getTime().length();
+                int len= child.getDescription().getValue().length();
                 len = Math.max(len, MIN_CHARS);
                 return len*char_width;
             }

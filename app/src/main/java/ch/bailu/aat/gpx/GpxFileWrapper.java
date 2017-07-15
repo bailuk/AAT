@@ -1,14 +1,14 @@
 package ch.bailu.aat.gpx;
 
-import java.io.File;
+import ch.bailu.simpleio.foc.Foc;
 
 
 public class GpxFileWrapper extends GpxInformation {
     private final GpxList list;
-    private final File    file;
+    private final Foc file;
 
 
-    public GpxFileWrapper(File f, GpxList l) {
+    public GpxFileWrapper(Foc f, GpxList l) {
         list = l;
         file = f;
 
@@ -30,12 +30,7 @@ public class GpxFileWrapper extends GpxInformation {
     }
     
     @Override
-    public String getName() {
-        return file.getName();
-    }
-    
-    @Override
-    public String getPath() {
-        return file.getPath();
+    public Foc getFile() {
+        return file;
     }
 }

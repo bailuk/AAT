@@ -22,7 +22,8 @@ import ch.bailu.aat.services.dem.tile.Dem3Tile;
 import ch.bailu.aat.services.dem.tile.ElevationProvider;
 import ch.bailu.aat.services.dem.updater.ElevationUpdaterClient;
 import ch.bailu.aat.util.AppBroadcaster;
-import ch.bailu.aat.util.fs.UriAccess;
+import ch.bailu.aat.util.fs.foc.FocAndroid;
+import ch.bailu.simpleio.foc.Foc;
 
 public class GpxObjectStatic extends GpxObject implements ElevationUpdaterClient {
     
@@ -30,11 +31,15 @@ public class GpxObjectStatic extends GpxObject implements ElevationUpdaterClient
     private GpxList gpxList=new GpxList(GpxType.TRK, new MaxSpeed.Samples());
 
     private boolean readyAndLoaded = false;
+
+    private final Foc file;
     
     
     public GpxObjectStatic(String id, ServiceContext sc) {
         super(id);
         sc.getCacheService().addToBroadcaster(this);
+
+        file = FocAndroid.factory(sc.getContext(), id);
     }
 
     
@@ -42,36 +47,41 @@ public class GpxObjectStatic extends GpxObject implements ElevationUpdaterClient
     public void onInsert(ServiceContext sc) {
         reload(sc);
     }
-    
+
+
+    @Override
+    public Foc getFile() {
+        return file;
+    }
 
     private void reload(final ServiceContext sc) {
-        final FileHandle f = new FileHandle(toString()) {
+        final FileHandle f = new FileHandle(file) {
 
 
             @Override
             public long bgOnProcess() {
                 long size = 0;
 
-                ObjectHandle handle =
-                        sc.getCacheService().getObject(GpxObjectStatic.this.toString());
-                try {
-                    if (handle instanceof GpxObjectStatic) {
+                if (sc.lock()) {
+                    ObjectHandle handle =
+                            sc.getCacheService().getObject(getID());
+                    try {
+                        if (handle instanceof GpxObjectStatic) {
 
-                        final Context c = sc.getContext();
-                        final String id = toString();
-
-                        GpxListReader reader =
-                                new GpxListReader(this, UriAccess.factory(c, id));
-                        if (canContinue()) {
-                            gpxList = reader.getGpxList();
-                            readyAndLoaded = true;
+                            GpxListReader reader =
+                                    new GpxListReader(file);
+                            if (canContinue()) {
+                                gpxList = reader.getGpxList();
+                                readyAndLoaded = true;
+                            }
+                            size = getSize();
                         }
-                        size = getSize();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    } finally {
+                        handle.free();
                     }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } finally {
-                    handle.free();
+                    sc.free();
                 }
                 return size;
             }
@@ -79,8 +89,8 @@ public class GpxObjectStatic extends GpxObject implements ElevationUpdaterClient
 
             @Override
             public void broadcast(Context context) {
-                AppBroadcaster.broadcast(context, AppBroadcaster.FILE_CHANGED_INCACHE, GpxObjectStatic.this.toString());
-                AppBroadcaster.broadcast(context, AppBroadcaster.REQUEST_ELEVATION_UPDATE, GpxObjectStatic.this.toString());
+                AppBroadcaster.broadcast(context, AppBroadcaster.FILE_CHANGED_INCACHE, getID());
+                AppBroadcaster.broadcast(context, AppBroadcaster.REQUEST_ELEVATION_UPDATE, getID());
             }
         };
         sc.getBackgroundService().load(f);

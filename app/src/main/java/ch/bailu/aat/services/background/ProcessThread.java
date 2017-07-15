@@ -1,7 +1,6 @@
 package ch.bailu.aat.services.background;
 
 import java.io.Closeable;
-import java.util.concurrent.ArrayBlockingQueue;
 
 public abstract class ProcessThread extends Thread implements Closeable, ThreadControl {
 

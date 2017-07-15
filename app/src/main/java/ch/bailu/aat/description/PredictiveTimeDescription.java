@@ -19,12 +19,12 @@ public class PredictiveTimeDescription extends TimeDescription {
     @Override
     public String getUnit() {
         if (time - super.getCache() > SHOW_LABEL_LIMIT_MS)
-             return super.getTime();
+             return super.getValue();
 
         return super.getUnit();
     }
 
-    public String getTime() {
+    public String getValue() {
         return getValue(time);
     }
 

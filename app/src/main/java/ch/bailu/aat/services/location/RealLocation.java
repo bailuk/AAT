@@ -14,6 +14,8 @@ import ch.bailu.aat.gpx.StateID;
 import ch.bailu.aat.util.ui.AppLog;
 import ch.bailu.aat.util.AppPermission;
 import ch.bailu.aat.util.ContextWrapperInterface;
+import ch.bailu.simpleio.foc.Foc;
+import ch.bailu.simpleio.foc.FocName;
 
 
 @SuppressLint("MissingPermission")
@@ -33,20 +35,18 @@ public class RealLocation extends LocationStackChainedItem
             location = l;
             location.setTime(System.currentTimeMillis());
         }
-        /*@Override
-        public int getID() {
-            return InfoID.LOCATION;
-        }
-        */
+
         @Override
         public int getState() {
             return state;
         }
+
         @Override
-        public String getName() {
-            return location.getProvider();
+        public Foc getFile() {
+            return new FocName(location.getProvider());
         }
-        @Override 
+
+        @Override
         public float getAccuracy() {
             return location.getAccuracy();
         }
@@ -69,10 +69,6 @@ public class RealLocation extends LocationStackChainedItem
             return location.getLongitude();
         }
 
-//        @Override
-//        public double getBearing() {
-//            return location.getBearing();
-//        }
         @Override
         public long getTimeStamp() {
             return location.getTime();

@@ -26,7 +26,7 @@ public class AccelerationDescription extends FloatDescription {
         return UNIT; 
     }
     
-    public String getTime() {
+    public String getValue() {
         return String.format(Locale.getDefault(),"%.2f", getCache());
     }
 

@@ -17,10 +17,10 @@ import org.mapsforge.map.reader.MapFile;
 import org.mapsforge.map.rendertheme.XmlRenderTheme;
 import org.mapsforge.map.rendertheme.rule.RenderThemeFuture;
 
-import java.io.File;
 import java.util.ArrayList;
 
 import ch.bailu.aat.util.ui.AppLog;
+import ch.bailu.simpleio.foc.Foc;
 
 public class Renderer extends RendererBase<RendererJob> {
     private final static boolean TRANSPARENT = false;
@@ -32,21 +32,27 @@ public class Renderer extends RendererBase<RendererJob> {
     private final MapWorkerPool mapWorkerPool;
     private final RenderThemeFuture renderThemeFuture;
 
-    public Renderer(XmlRenderTheme t, TileCache cache, ArrayList<File> files) {
+    public Renderer(XmlRenderTheme t, TileCache cache, ArrayList<Foc> files) {
         super(cache, new Model());
 
         MapWorkerPool.NUMBER_OF_THREADS=2;
         renderThemeFuture = createTheme(t);
 
         if (files.size()==1) {
-            mapDataStore = new MapFile(files.get(0));
+            mapDataStore = new MapFile(files.get(0).toString());
 
         } else {
             MultiMapDataStore store= new MultiMapDataStore(MultiMapDataStore.DataPolicy.RETURN_ALL);
 
-            for (File f: files) {
-                AppLog.d(this, f.toString() + ": add_w to renderer");
-                store.addMapDataStore(new MapFile(f), true, true);
+            for (Foc f: files) {
+                try {
+                     // TODO: Translate FocContent to unix file
+
+                    store.addMapDataStore(new MapFile(f.toString()), true, true);
+                    AppLog.d(this, "Add \'" + f.getPathName() + "\' to renderer");
+                } catch (Exception e) {
+                    AppLog.d(this, e.toString());
+                }
             }
 
             mapDataStore = store;

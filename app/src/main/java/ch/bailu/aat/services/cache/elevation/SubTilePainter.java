@@ -7,7 +7,6 @@ import ch.bailu.aat.services.background.ProcessHandle;
 import ch.bailu.aat.services.cache.ObjectHandle;
 import ch.bailu.aat.services.dem.tile.Dem3Tile;
 import ch.bailu.aat.util.AppBroadcaster;
-import ch.bailu.aat.util.ui.AppLog;
 
 public class SubTilePainter extends ProcessHandle {
     private final Dem3Tile tile;

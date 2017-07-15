@@ -15,7 +15,7 @@ public class PauseDescription extends TimeDescription {
     
     @Override
     public String getLabel() {
-        return getString(R.string.pause);
+        return getContext().getString(R.string.pause);
     }
 
     @Override

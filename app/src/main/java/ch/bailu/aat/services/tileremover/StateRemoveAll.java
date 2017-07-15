@@ -1,11 +1,9 @@
 package ch.bailu.aat.services.tileremover;
 
 
-import java.io.File;
-
 import ch.bailu.aat.util.AppBroadcaster;
-import ch.bailu.aat.util.fs.JFile;
 import ch.bailu.aat.util.ui.AppLog;
+import ch.bailu.simpleio.foc.Foc;
 
 public class StateRemoveAll implements State, Runnable{
 
@@ -53,28 +51,28 @@ public class StateRemoveAll implements State, Runnable{
             int sourceIndex=0;
 
             @Override
-            protected boolean doSourceContainer(File dir) {
+            protected boolean doSourceContainer(Foc dir) {
                 return keepUp();
             }
 
             @Override
-            protected boolean doZoomContainer(File dir) {
+            protected boolean doZoomContainer(Foc dir) {
                 sourceIndex = state.summaries.findIndex(source);
                 return keepUp();
             }
 
             @Override
-            protected boolean doXContainer(File dir) {
+            protected boolean doXContainer(Foc dir) {
                 return keepUp();
             }
 
             @Override
-            protected boolean doYContainer(File dir) {
+            protected boolean doYContainer(Foc dir) {
                 return keepUp();
             }
 
             @Override
-            protected void doFile(File file) {
+            protected void doFile(Foc file) {
                 delete(file, new TileFile(sourceIndex, zoom, x, y, file));
             }
         };
@@ -86,7 +84,8 @@ public class StateRemoveAll implements State, Runnable{
         }
 
         if (keepUp()) {
-            JFile.deleteEmptiyDirectoriesRecursive(info.directory);
+            info.directory.rmdirs();
+            //JFile.deleteEmptiyDirectoriesRecursive(info.directory);
             broadcast();
         }
 
@@ -95,8 +94,8 @@ public class StateRemoveAll implements State, Runnable{
 
 
 
-    private boolean delete(File f, TileFile t) {
-        if (JFile.delete(f)) {
+    private boolean delete(Foc f, TileFile t) {
+        if (f.rm()) {
             state.summaries.addFileRemoved(t);
             state.broadcastLimited( AppBroadcaster.TILE_REMOVER_REMOVE);
             return true;

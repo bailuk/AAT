@@ -12,16 +12,14 @@ import com.caverock.androidsvg.SVG;
 
 import org.mapsforge.core.graphics.CorruptedInputStreamException;
 import org.mapsforge.core.graphics.TileBitmap;
-import org.mapsforge.core.util.IOUtils;
 import org.mapsforge.map.android.graphics.AndroidGraphicFactory;
 
 import java.io.Closeable;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
 import ch.bailu.aat.services.cache.ObjectHandle;
+import ch.bailu.simpleio.foc.Foc;
 
 public class SyncTileBitmap implements Closeable {
     private TileBitmap bitmap = null;
@@ -61,23 +59,23 @@ public class SyncTileBitmap implements Closeable {
 
 
 
-    public static TileBitmap load(File file, int size, boolean transparent) {
+    public static TileBitmap load(Foc file, int size, boolean transparent) {
         TileBitmap bitmap;
         InputStream inputStream = null;
         try {
-            inputStream = new FileInputStream(file);
+            inputStream = file.openR();
             bitmap = AndroidGraphicFactory.INSTANCE.createTileBitmap(inputStream, size, transparent);
             bitmap.setTimestamp(file.lastModified());
 
         } catch (CorruptedInputStreamException | IOException e) {
             bitmap = null;
         } finally {
-            IOUtils.closeQuietly(inputStream);
+            Foc.close(inputStream);
         }
         return bitmap;
     }
 
-    public synchronized void set(File file, int size, boolean transparent) {
+    public synchronized void set(Foc file, int size, boolean transparent) {
         set(load(file, size, transparent));
     }
 

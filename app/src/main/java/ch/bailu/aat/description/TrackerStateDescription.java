@@ -13,7 +13,7 @@ public class TrackerStateDescription extends StateDescription {
 
 	@Override
     public String getLabel() {
-        return getString(R.string.tracker);
+        return getContext().getString(R.string.tracker);
     }
     
 }

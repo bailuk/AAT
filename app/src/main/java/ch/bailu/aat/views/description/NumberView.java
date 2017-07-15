@@ -20,7 +20,7 @@ public class NumberView extends ViewGroup implements OnContentUpdatedInterface {
 
 
     public NumberView(ContentDescription data) {
-        super(data);
+        super(data.getContext());
 
         number = createLabel();
         number.setIncludeFontPadding(false);
@@ -119,7 +119,7 @@ public class NumberView extends ViewGroup implements OnContentUpdatedInterface {
 
 
     public void updateAllText() {
-        number.setText(description.getTime());
+        number.setText(description.getValue());
         label.setText(description.getLabel());
         unit.setText(description.getUnit());
     }

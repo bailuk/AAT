@@ -6,8 +6,6 @@ import android.graphics.Bitmap;
 import org.mapsforge.core.graphics.TileBitmap;
 import org.mapsforge.core.model.Tile;
 
-import java.io.File;
-import java.io.IOException;
 import java.io.OutputStream;
 
 import ch.bailu.aat.map.tile.source.Source;
@@ -15,8 +13,9 @@ import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.background.FileHandle;
 import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.util.fs.AppDirectory;
+import ch.bailu.aat.util.fs.foc.FocAndroid;
 import ch.bailu.aat.util.ui.AppLog;
-import ch.bailu.simpleio.io.FileAccess;
+import ch.bailu.simpleio.foc.Foc;
 
 public class CachedTileObject extends TileObject {
     private final static int MIN_SAVE_ZOOM_LEVEL = 16;
@@ -30,9 +29,11 @@ public class CachedTileObject extends TileObject {
 
     private final FileHandle save;
 
+    private final Foc cachedImageFile;
 
     public CachedTileObject(String id, final ServiceContext sc,  Tile t, Source source) {
         super(id);
+
         mapTile = t;
 
         sourceID = source.getID(t, sc.getContext());
@@ -43,39 +44,66 @@ public class CachedTileObject extends TileObject {
         cachedID = cached.getID(t, sc.getContext());
         cachedFactory = cached.getFactory(t);
 
-        save = new FileHandle(id) {
+        cachedImageFile = FocAndroid.factory(sc.getContext(), cachedID);
+
+        save = new FileHandle(cachedImageFile) {
 
             @Override
             public long bgOnProcess() {
-                long size = MIN_SIZE;
+                long size = 0;
 
-                if (!toFile().exists()) {
-                    OutputStream out = null;
-                    ObjectHandle handle = sc.getCacheService().getObject(sourceID);
-
-                    try {
-                        if (handle instanceof TileObject) {
-                            TileObject tileObject = (TileObject) handle;
-
-                            out = FileAccess.openOutput(toFile());
-
-                            Bitmap bitmap = tileObject.getBitmap();
-                            if (bitmap != null) {
-                                bitmap.compress(Bitmap.CompressFormat.PNG, 0, out);
-                            }
-                        }
-                    } catch (IOException e) {
-                        AppLog.d(this, "Save bitmap error! Delete file here?");
-
-
-                    } finally {
-                        size = handle.getSize();
-                        FileAccess.close(out);
-                        handle.free();
-                    }
+                if (sc.lock()) {
+                    size = save();
+                    sc.free();
                 }
+
                 return size;
             }
+
+
+            private long save() {
+                long size = 0;
+
+                ObjectHandle handle = sc.getCacheService().getObject(sourceID);
+
+                if (handle instanceof TileObject) {
+                    TileObject self = (TileObject) handle;
+
+                    size = save(self);
+                }
+
+                handle.free();
+                return size;
+            }
+
+
+            private long save(TileObject self) {
+                long size = 0;
+                OutputStream out = null;
+                Foc file = cachedImageFile;
+
+                if (file.exists() == false) {
+                    try {
+                        out = file.openW();
+                        Bitmap bitmap = self.getBitmap();
+                        if (bitmap != null && out != null) {
+                            bitmap.compress(Bitmap.CompressFormat.PNG, 0, out);
+
+                        }
+
+                        size = self.getSize();
+                    } catch (Exception e) {
+                        AppLog.d(this, e.toString());
+
+                    } finally {
+                        Foc.close(out);
+
+                    }
+                }
+
+                return size;
+            }
+
 
             @Override
             public void broadcast(Context context) {
@@ -87,7 +115,7 @@ public class CachedTileObject extends TileObject {
 
     @Override
     public void onInsert(ServiceContext sc) {
-        if (isLoadable()) {
+        if (isLoadable(sc.getContext())) {
             tile = (TileObject) sc.getCacheService().getObject(cachedID, cachedFactory);
         } else {
             tile = (TileObject) sc.getCacheService().getObject(sourceID, sourceFactory);
@@ -95,14 +123,11 @@ public class CachedTileObject extends TileObject {
         sc.getCacheService().addToBroadcaster(this);
     }
 
-    private boolean isLoadable() {
-        return toFile().exists();
+    private boolean isLoadable(Context c) {
+        return cachedImageFile.exists();
     }
 
-    @Override
-    public File toFile() {
-        return new File(cachedID);
-    }
+
 
 
     @Override
@@ -116,7 +141,7 @@ public class CachedTileObject extends TileObject {
 
             if (
                     mapTile.zoomLevel <= MIN_SAVE_ZOOM_LEVEL &&
-                    id.equals(sourceID) &&
+                            id.equals(sourceID) &&
                             tile.isLoaded()) {
 
                 sc.getBackgroundService().process(save);
@@ -150,7 +175,7 @@ public class CachedTileObject extends TileObject {
 
     @Override
     public void reDownload(ServiceContext sc) {
-        toFile().delete();
+        cachedImageFile.rm();
 
         tile.free();
         tile = (TileObject) sc.getCacheService().getObject(sourceID, sourceFactory);
@@ -160,6 +185,7 @@ public class CachedTileObject extends TileObject {
     public boolean isLoaded() {
         return (tile != null && tile.isLoaded());
     }
+
 
     @Override
     public long getSize() {
@@ -176,6 +202,10 @@ public class CachedTileObject extends TileObject {
         makeOld();
     }
 
+    @Override
+    public Foc getFile() {
+        return cachedImageFile;
+    }
 
 
     public static class Factory extends ObjectHandle.Factory {
@@ -209,7 +239,7 @@ public class CachedTileObject extends TileObject {
         @Override
         public String getID(Tile tile, Context context) {
             final String relativePath = generated.getID(tile, context) + EXT;
-            return AppDirectory.getTileFile(relativePath, context).getAbsolutePath();
+            return AppDirectory.getTileFile(relativePath, context).toString();
         }
 
 

@@ -13,12 +13,12 @@ public class PathDescription extends NameDescription {
 
     @Override
     public void onContentUpdated(int iid, GpxInformation info) {
-        updateName(info.getPath());
+        updateName(info.getFile().getPathName());
     }
     
     
     @Override
     public String getLabel() {
-        return getString(R.string.d_path);
+        return getContext().getString(R.string.d_path);
     }
 }

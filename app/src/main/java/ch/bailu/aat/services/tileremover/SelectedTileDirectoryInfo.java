@@ -1,20 +1,20 @@
 package ch.bailu.aat.services.tileremover;
 
-import java.io.File;
+import ch.bailu.simpleio.foc.Foc;
 
 public class SelectedTileDirectoryInfo {
 
     public final String name;
 
-    public final File baseDirectory;
-    public final File directory;
+    public final Foc baseDirectory;
+    public final Foc directory;
 
 
     public final int index;
     public final int scannedFiles;
 
 
-    public SelectedTileDirectoryInfo(File bd, File d, String n, int i) {
+    public SelectedTileDirectoryInfo(Foc bd, Foc d, String n, int i) {
         name = n;
         baseDirectory = bd;
         directory = d;

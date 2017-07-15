@@ -10,8 +10,6 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.LinearLayout;
 
-import java.io.File;
-
 import ch.bailu.aat.R;
 import ch.bailu.aat.description.ContentDescription;
 import ch.bailu.aat.description.PathDescription;
@@ -26,6 +24,7 @@ import ch.bailu.aat.menus.FileMenu;
 import ch.bailu.aat.preferences.SolidDirectoryQuery;
 import ch.bailu.aat.services.directory.Iterator;
 import ch.bailu.aat.services.directory.IteratorSimple;
+import ch.bailu.aat.util.fs.foc.FocAndroid;
 import ch.bailu.aat.util.ui.AppLayout;
 import ch.bailu.aat.views.ContentView;
 import ch.bailu.aat.views.DbSynchronizerBusyIndicator;
@@ -36,6 +35,7 @@ import ch.bailu.aat.views.description.MultiView;
 import ch.bailu.aat.views.preferences.SolidDirectoryMenuButton;
 import ch.bailu.aat.views.preferences.TitleView;
 import ch.bailu.aat.views.preferences.VerticalScrollView;
+import ch.bailu.simpleio.foc.Foc;
 
 
 public abstract class AbsGpxListActivity extends AbsDispatcher implements OnItemClickListener {
@@ -53,7 +53,7 @@ public abstract class AbsGpxListActivity extends AbsDispatcher implements OnItem
 
 
     public abstract void                   displayFile();
-    public abstract File                   getDirectory();
+    public abstract Foc                    getDirectory();
     public abstract String                 getLabel();
     public abstract ContentDescription[]   getGpxListItemData();
     public abstract ContentDescription[]   getSummaryData();
@@ -64,7 +64,7 @@ public abstract class AbsGpxListActivity extends AbsDispatcher implements OnItem
         super.onCreate(savedInstanceState);
 
         sdirectory = new SolidDirectoryQuery(this);
-        sdirectory.setValue(getDirectory().getAbsolutePath());
+        sdirectory.setValue(getDirectory().getPath());
         solid_key = AbsGpxListActivity.class.getSimpleName() +  "_" + sdirectory.getValueAsString();
 
         setContentView(new Layouter().getContentView());
@@ -134,7 +134,7 @@ public abstract class AbsGpxListActivity extends AbsDispatcher implements OnItem
 
         iteratorSimple.moveToPosition(position);
 
-        fileMenu = new FileMenu(this, new File(iteratorSimple.getInfo().getPath()));
+        fileMenu = new FileMenu(this, FocAndroid.factory(this, iteratorSimple.getInfo().getFile().getPath()));
         fileMenu.inflateWithHeader(menu);
         fileMenu.prepare(menu);
     }

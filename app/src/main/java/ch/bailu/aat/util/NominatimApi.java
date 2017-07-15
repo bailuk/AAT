@@ -2,12 +2,12 @@ package ch.bailu.aat.util;
 
 import android.content.Context;
 
-import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
 import ch.bailu.aat.coordinates.BoundingBoxE6;
 import ch.bailu.aat.util.fs.AppDirectory;
+import ch.bailu.simpleio.foc.Foc;
 
 public class NominatimApi extends OsmApiHelper {
     public final static String NAME="Nominatim";
@@ -16,7 +16,7 @@ public class NominatimApi extends OsmApiHelper {
     public final static String EXT=".xml";
 
     
-    private final File directory;
+    private final Foc directory;
     private final String bounding;
     
     public NominatimApi(Context context, BoundingBoxE6 boundingBox) {
@@ -80,8 +80,8 @@ public class NominatimApi extends OsmApiHelper {
 
     
     @Override
-    public String getBaseDirectory() {
-        return directory.toString();
+    public Foc getBaseDirectory() {
+        return directory;
     }
 
 

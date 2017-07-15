@@ -7,20 +7,21 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 
 import java.io.Closeable;
-import java.io.File;
 
 import ch.bailu.aat.coordinates.BoundingBoxE6;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.GpxList;
 import ch.bailu.aat.gpx.InfoID;
-import ch.bailu.aat.util.AppBroadcaster;
-import ch.bailu.aat.util.AppIntent;
 import ch.bailu.aat.preferences.SolidOverlayFile;
 import ch.bailu.aat.preferences.SolidOverlayFileList;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.cache.GpxObject;
 import ch.bailu.aat.services.cache.GpxObjectStatic;
 import ch.bailu.aat.services.cache.ObjectHandle;
+import ch.bailu.aat.util.AppBroadcaster;
+import ch.bailu.aat.util.AppIntent;
+import ch.bailu.aat.util.fs.foc.FocAndroid;
+import ch.bailu.simpleio.foc.Foc;
 
 
 public class OverlaySource extends ContentSource {
@@ -110,13 +111,12 @@ public class OverlaySource extends ContentSource {
         public void initAndUpdateOverlay() {
 
             if (soverlay.isEnabled()) {
-                File file = soverlay.toFile();
-                enableOverlay(file.getAbsolutePath());
+                Foc file = soverlay.getValueAsFile();
+                enableOverlay(file.getPath());
 
             } else {
                 disableOverlay();
             }
-            //AppLog.d(this, "send " + infoID);
             sendUpdate(infoID, this);
         }
 
@@ -147,13 +147,8 @@ public class OverlaySource extends ContentSource {
 
 
         @Override
-        public String getName() {
-            return new File(handle.toString()).getName();
-        }
-
-        @Override
-        public String getPath() {
-            return handle.toString();
+        public Foc getFile() {
+            return FocAndroid.factory(scontext.getContext(),handle.toString());
         }
 
 

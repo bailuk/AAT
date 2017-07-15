@@ -8,9 +8,9 @@ import ch.bailu.aat.gpx.GpxAttributes;
 import ch.bailu.aat.gpx.interfaces.GpxPointInterface;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.VirtualService;
-import ch.bailu.aat.util.fs.AssetAccess;
+import ch.bailu.aat.util.fs.foc.FocAsset;
 import ch.bailu.aat.util.ui.AppLog;
-import ch.bailu.simpleio.io.Access;
+import ch.bailu.simpleio.foc.Foc;
 
 public class IconMapService extends VirtualService {
     private final static String NKEY_KEY = "class";
@@ -30,7 +30,7 @@ public class IconMapService extends VirtualService {
         map = new IconMap();
 
         try {
-            Access map_file = new AssetAccess(sc.getContext().getAssets(), MAP_FILE);
+            Foc map_file = new FocAsset(sc.getContext().getAssets(), MAP_FILE);
             new IconMapParser(map_file, map);
         } catch (IOException e) {
             AppLog.e(getContext(), this, e);

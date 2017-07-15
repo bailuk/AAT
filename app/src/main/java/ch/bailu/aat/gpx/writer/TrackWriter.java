@@ -1,20 +1,19 @@
 package ch.bailu.aat.gpx.writer;
 
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Locale;
 
 import ch.bailu.aat.gpx.interfaces.GpxPointInterface;
+import ch.bailu.simpleio.foc.Foc;
 
 public class TrackWriter extends GpxWriter {
 
-    public TrackWriter(File file) throws FileNotFoundException {
+    public TrackWriter(Foc file) throws IOException, SecurityException{
         super(file);
     }
 
     @Override
-    public void writeHeader(long timestamp) throws IOException {
+    public void writeHeader(long timestamp) throws IOException, SecurityException {
         super.writeHeader(timestamp);
         writeBeginElement(GpxConstants.QNAME_TRACK);
     }

@@ -28,11 +28,7 @@ public class AppPermission {
 
 
     public static boolean checkLocation(Context context) {
-        if (Build.VERSION.SDK_INT < 23) {
-            return true;
-        } else {
-            return checkLocationSdk23(context);
-        }
+        return Build.VERSION.SDK_INT < 23 || checkLocationSdk23(context);
     }
 
 

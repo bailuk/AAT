@@ -1,27 +1,25 @@
 package ch.bailu.aat.menus;
 
 import android.app.Activity;
-import android.net.Uri;
 import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
-
-import java.io.File;
 
 import ch.bailu.aat.R;
 import ch.bailu.aat.activities.AbsServiceLink;
 import ch.bailu.aat.util.fs.FileAction;
 import ch.bailu.aat.services.ServiceContext;
+import ch.bailu.simpleio.foc.Foc;
 
 public class FileMenu extends AbsMenu {
-    private final File file;
+    private final Foc file;
     private final Activity activity;
     private final ServiceContext scontext;
     
     private MenuItem send, view, rename, copy, delete, overlay, reload, mock, clipboard;
     
     
-    public FileMenu(AbsServiceLink a, File f) {
+    public FileMenu(AbsServiceLink a, Foc f) {
         file = f;
         scontext = a.getServiceContext();
         activity = a;
@@ -43,7 +41,7 @@ public class FileMenu extends AbsMenu {
 
     @Override
     public void inflateWithHeader(ContextMenu menu) {
-        menu.setHeaderTitle(file.getName()); 
+        menu.setHeaderTitle(file.getName());
         inflate(menu);
     }
 
@@ -71,13 +69,13 @@ public class FileMenu extends AbsMenu {
             FileAction.useForMockLocation(scontext.getContext(), file);
 
         } else if (item == send) {
-            FileAction.sendTo(scontext.getContext(), Uri.fromFile(file));
+            FileAction.sendTo(scontext.getContext(), file);
 
         } else if (item == view) {
             FileAction.view(scontext.getContext(), file);
 
         } else if (item == copy) {
-            FileAction.copyTo(scontext.getContext(), Uri.fromFile(file));
+            FileAction.copyToDir(scontext.getContext(), file);
 
         } else if (item == clipboard) {
             FileAction.copyToClipboard(scontext.getContext(), file);

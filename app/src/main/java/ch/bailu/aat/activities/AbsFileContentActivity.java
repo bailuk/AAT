@@ -7,8 +7,6 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
-import java.io.File;
-
 import ch.bailu.aat.R;
 import ch.bailu.aat.dispatcher.CurrentLocationSource;
 import ch.bailu.aat.dispatcher.EditorSource;
@@ -19,6 +17,7 @@ import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.map.MapViewInterface;
 import ch.bailu.aat.menus.FileMenu;
 import ch.bailu.aat.services.editor.EditorHelper;
+import ch.bailu.aat.util.fs.foc.FocAndroid;
 import ch.bailu.aat.util.ui.ToolTip;
 import ch.bailu.aat.views.BusyButton;
 import ch.bailu.aat.views.ContentView;
@@ -129,7 +128,7 @@ public abstract class AbsFileContentActivity extends AbsDispatcher implements On
             switchFile(v);
 
         } else if (v == fileOperation) {
-            new FileMenu(this, new File(currentFile.getInfo().getPath())).showAsPopup(this, v);
+            new FileMenu(this, currentFile.getInfo().getFile()).showAsPopup(this, v);
         }
 
     }

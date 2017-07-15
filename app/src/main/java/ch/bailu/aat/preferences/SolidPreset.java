@@ -2,10 +2,9 @@ package ch.bailu.aat.preferences;
 
 import android.content.Context;
 
-import java.io.File;
-
 import ch.bailu.aat.R;
 import ch.bailu.aat.util.fs.AppDirectory;
+import ch.bailu.simpleio.foc.Foc;
 
 public class SolidPreset extends SolidIndexList {
     public final int PRESET_COUNT=5;
@@ -55,16 +54,13 @@ public class SolidPreset extends SolidIndexList {
     }
     
     
-    public File getDirectory() {
+    public Foc getDirectory() {
     	return AppDirectory.getTrackListDirectory(getContext(),getIndex());
     }
     
     
     public String getDirectoryName() {
-    	return getDirectory().toString();
+    	return getDirectory().getPathName();
     }
-    
-    public String getCacheDbName() {
-    	return AppDirectory.getTrackListCacheDb(getContext(),getIndex()).toString();
-    }
+
 }

@@ -8,10 +8,10 @@ import ch.bailu.aat.gpx.GpxAttributesStatic;
 import ch.bailu.aat.gpx.GpxAttributesStatic.Tag;
 import ch.bailu.aat.gpx.interfaces.GpxPointInterface;
 import ch.bailu.aat.gpx.parser.scanner.Scanner;
-import ch.bailu.simpleio.parser.OnParsedInterface;
 import ch.bailu.aat.gpx.parser.state.State;
 import ch.bailu.aat.gpx.parser.state.StateXml;
-import ch.bailu.simpleio.io.Access;
+import ch.bailu.simpleio.foc.Foc;
+import ch.bailu.simpleio.parser.OnParsedInterface;
 
 public class XmlParser implements Closeable, GpxPointInterface {
 
@@ -21,11 +21,11 @@ public class XmlParser implements Closeable, GpxPointInterface {
 
 
 
-    public XmlParser(Access file) throws IOException {
+    public XmlParser(Foc file) throws IOException, SecurityException{
         scanner = new Scanner(file);
     }
 
-    public void parse() throws IOException {
+    public void parse() throws IOException, SecurityException {
         state.parse(scanner);
     }
 

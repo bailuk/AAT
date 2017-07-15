@@ -13,7 +13,7 @@ public class AverageSpeedDescription extends SpeedDescription {
 
     @Override
     public String getLabel() {
-        return getString(R.string.average);
+        return getContext().getString(R.string.average);
     }
 
     @Override

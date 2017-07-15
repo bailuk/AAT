@@ -5,8 +5,6 @@ import android.view.View;
 
 import org.mapsforge.core.model.Point;
 
-import java.io.File;
-
 import ch.bailu.aat.R;
 import ch.bailu.aat.activities.AbsGpxListActivity;
 import ch.bailu.aat.description.AverageSpeedDescription;
@@ -25,9 +23,11 @@ import ch.bailu.aat.preferences.SolidDirectoryQuery;
 import ch.bailu.aat.services.directory.Iterator;
 import ch.bailu.aat.util.HtmlBuilderGpx;
 import ch.bailu.aat.util.fs.FileAction;
+import ch.bailu.aat.util.fs.foc.FocAndroid;
 import ch.bailu.aat.util.ui.ToolTip;
 import ch.bailu.aat.views.ControlBar;
 import ch.bailu.aat.views.PreviewView;
+import ch.bailu.simpleio.foc.Foc;
 
 public class FileControlBarLayer extends ControlBarLayer {
 
@@ -64,7 +64,7 @@ public class FileControlBarLayer extends ControlBarLayer {
         selector = new Selector(mc);
         preview = new PreviewView(a.getServiceContext());
 
-        bar.addView(preview);
+        bar.add(preview);
         action = bar.addImageButton(R.drawable.edit_select_all);
         overlay = bar.addImageButton(R.drawable.view_paged);
         reloadPreview = bar.addImageButton(R.drawable.view_refresh);
@@ -122,12 +122,12 @@ public class FileControlBarLayer extends ControlBarLayer {
 
             iterator.moveToPosition(i);
 
-            selectedFile = iterator.getInfo().getPath();
+            selectedFile = iterator.getInfo().getFile().getPath();
 
             preview.setFilePath(selectedFile);
 
             builder.clear();
-            builder.appendHeader(iterator.getInfo().getName());
+            builder.appendHeader(iterator.getInfo().getFile().getName());
             for (ContentDescription d: summaryData) {
                 d.onContentUpdated(iterator.getInfoID(), iterator.getInfo());
                 builder.append(d);
@@ -188,7 +188,7 @@ public class FileControlBarLayer extends ControlBarLayer {
 
         GpxPointNode node =  selector.getSelectedNode();
         if (node != null && selectedFile != null) {
-            File file = new File(selectedFile);
+            Foc file = FocAndroid.factory(acontext,selectedFile);
 
             if (file.exists()) {
                 if        (v == action) {

@@ -13,7 +13,7 @@ public class TimeDescription extends LongDescription {
 
     @Override
     public String getLabel() {
-        return getString(R.string.time);
+        return getContext().getString(R.string.time);
     }
 
     @Override
@@ -21,7 +21,7 @@ public class TimeDescription extends LongDescription {
         return "";
     }
 
-    public String getTime() {
+    public String getValue() {
         return getValue(getCache());
     }
 
