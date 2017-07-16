@@ -79,7 +79,7 @@ public class FocContent extends Foc {
 
     @Override
     public boolean mkdir() {
-        return createPath(DocumentsContract.Document.MIME_TYPE_DIR) && isDir();
+        return createDocument(DocumentsContract.Document.MIME_TYPE_DIR) && isDir();
     }
 
 
@@ -99,7 +99,7 @@ public class FocContent extends Foc {
                     resolver,
                     uris.getParent(),
                     mimeType,
-                    getName()) != null;
+                    getName()) != null || exists();
         }
     }
 

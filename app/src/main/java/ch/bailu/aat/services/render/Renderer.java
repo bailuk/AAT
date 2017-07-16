@@ -65,7 +65,7 @@ public class Renderer extends RendererBase<RendererJob> {
                 cache,
                 null,
                 RENDER_LABELS,
-                CACHE_LABELS);
+                CACHE_LABELS, null);
 
 
 
