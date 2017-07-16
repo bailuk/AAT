@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 
 import ch.bailu.aat.gpx.GpxInformation;
+import ch.bailu.aat.services.cache.GpxObjectEditable;
 import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.util.AppIntent;
 import ch.bailu.aat.services.ServiceContext;
@@ -19,17 +20,10 @@ public class EditorSource extends ContentSource {
     private final BroadcastReceiver onFileEdited = new BroadcastReceiver () {
         @Override
         public void onReceive(Context context, Intent intent) {
-            update(intent, edit.getInformation());
-        }
-
-        private void update(Intent intent, GpxInformation info) {
-            String id=info.getFile().getPath();
-            
-            if (AppIntent.hasFile(intent, id)) {
+            if (AppIntent.hasFile(intent, edit.getVID())) {
                 requestUpdate();
             }
         }
-
     };
 
     

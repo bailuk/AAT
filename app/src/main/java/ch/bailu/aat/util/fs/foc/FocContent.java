@@ -232,7 +232,10 @@ public class FocContent extends Foc {
     public OutputStream openW() throws IOException, SecurityException {
         createPath(MimeType.fromName(getName()));
 
-        return resolver.openOutputStream(uris.getDocument());
+        OutputStream r = resolver.openOutputStream(uris.getDocument());
+
+        if (r==null) throw new IOException(getPathName());
+        else return r;
     }
 
     public void update() {

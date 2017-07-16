@@ -16,6 +16,7 @@ public class EditorHelper {
 
     private int IID= InfoID.EDITOR_DRAFT;
     private Foc file;
+    private String vid;
 
 
 
@@ -24,18 +25,23 @@ public class EditorHelper {
 
         IID = InfoID.EDITOR_DRAFT;
         file = AppDirectory.getEditorDraft(scontext.getContext());
+        vid = GpxObjectEditable.getVirtualID(file);
     }
 
 
     public void edit(Foc f) {
         IID = InfoID.EDITOR_OVERLAY;
         file = f;
+        vid = GpxObjectEditable.getVirtualID(file);
+
         onResume();
     }
 
 
     public void onResume() {
-        ObjectHandle new_handle = GpxObjectEditable.loadEditor(scontext, file);
+        ObjectHandle new_handle = scontext.getCacheService().getObject(
+                vid,
+                new GpxObjectEditable.Factory(file));
 
         handle.free();
         handle = new_handle;
@@ -53,6 +59,7 @@ public class EditorHelper {
     public int getInfoID() {
         return IID;
     }
+    public String getVID() { return vid; }
 
     public GpxInformation getInformation() {
         if (handle instanceof GpxObjectEditable) {

@@ -20,16 +20,16 @@ public class GpxObjectEditable extends  GpxObject {
 
     private GpxObject currentHandle=NULL;
     private final Foc file;
-    //private final String vid;
-    
+
     private final GpxListEditor editor;
     
     
     public GpxObjectEditable(String _id, Foc _file, ServiceContext sc) {
         super(_id);
         file = _file;
-        //vid = _id;
-        
+
+        AppLog.d(this, "ID: " + getID() + " File: " + file.getPathName());
+
         editor = new GpxListEditor(sc.getContext());
         sc.getCacheService().addToBroadcaster(this);        
     }
@@ -207,7 +207,9 @@ public class GpxObjectEditable extends  GpxObject {
                 
                 new GpxListWriter(editor.getList(),file).close();
                 
-                AppBroadcaster.broadcast(context, AppBroadcaster.FILE_CHANGED_ONDISK, file.getPath(), getID());
+                AppBroadcaster.broadcast(context, AppBroadcaster.FILE_CHANGED_ONDISK,
+                        file.getPath(), getID());
+
             } catch (Exception e) {
                 AppLog.e(context, this, e);
             }
@@ -264,8 +266,9 @@ public class GpxObjectEditable extends  GpxObject {
 
     }
     
-    public static ObjectHandle loadEditor(ServiceContext c, Foc file) {
-        return c.getCacheService().getObject(getVirtualID(file.getPath()), new Factory(file));
+
+    public static String getVirtualID(Foc file) {
+        return getVirtualID(file.getPath());
     }
 
     private static String getVirtualID(String cID) {

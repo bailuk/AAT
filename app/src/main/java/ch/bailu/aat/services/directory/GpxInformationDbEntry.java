@@ -24,28 +24,10 @@ public class GpxInformationDbEntry extends GpxInformation {
     }
 
 
-    private class FocDbEntry extends FocAbstractName {
-
-        @Override
-        public String getName() {
-            return getString(GpxDbConstants.KEY_FILENAME);
-        }
-
-        @Override
-        public String getPath() {
-            return parent.child(getName()).getPath();
-        }
-
-        @Override
-        public String getPathName() {
-            return parent.child(getName()).getPathName();
-        }
-
-    }
-
     @Override
     public Foc getFile() {
-        return  new FocDbEntry();
+        String name = getString(GpxDbConstants.KEY_FILENAME);
+        return parent.child(name);
     }
 
 

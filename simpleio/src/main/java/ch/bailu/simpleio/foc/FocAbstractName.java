@@ -78,11 +78,11 @@ public abstract class FocAbstractName extends Foc {
 
     @Override
     public InputStream openR() throws IOException, SecurityException {
-        return null;
+        throw new IOException(getPathName());
     }
 
     @Override
     public OutputStream openW() throws IOException, SecurityException {
-        return null;
+        throw new IOException(getPathName());
     }
 }
