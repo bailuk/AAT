@@ -33,7 +33,7 @@ public class BitmapTileObject extends TileObject {
         tile = t;
         source=s;
 
-        file = FocAndroid.factory(sc.getContext(),toString());
+        file = FocAndroid.factory(sc.getContext(), id);
 
         url = source.getTileURLString(tile);
         download = new FileDownloader(url, file, sc);
@@ -163,7 +163,7 @@ public class BitmapTileObject extends TileObject {
         public long bgOnProcess() {
             long size = 0;
             if (scontext.lock()) {
-                ObjectHandle obj = scontext.getCacheService().getObject(toString());
+                ObjectHandle obj = scontext.getCacheService().getObject(getFile().getPath());
 
                 if (obj instanceof BitmapTileObject) {
                     BitmapTileObject bmp = (BitmapTileObject) obj;
@@ -180,7 +180,9 @@ public class BitmapTileObject extends TileObject {
 
         @Override
         public void broadcast(Context context) {
-            AppBroadcaster.broadcast(context, AppBroadcaster.FILE_CHANGED_INCACHE, toString());
+            AppBroadcaster.broadcast(context,
+                    AppBroadcaster.FILE_CHANGED_INCACHE,
+                    getFile().getPath());
         }
     }
 
@@ -198,7 +200,7 @@ public class BitmapTileObject extends TileObject {
         @Override
         public long bgOnProcess() {
             if (isInCache()) {
-                    return super.bgOnProcess();
+                return super.bgOnProcess();
             }
             return 0;
         }
@@ -206,7 +208,7 @@ public class BitmapTileObject extends TileObject {
         private boolean isInCache() {
             boolean inCache = false;
             if (scontext.lock()) {
-                ObjectHandle obj = scontext.getCacheService().getObject(getFile().toString());
+                ObjectHandle obj = scontext.getCacheService().getObject(getFile().getPath());
                 inCache = obj instanceof BitmapTileObject;
                 obj.free();
                 scontext.free();
