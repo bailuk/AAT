@@ -73,12 +73,12 @@ public class RemoveTilesMenu extends AbsMenu {
                     scontext.lock();
                     scontext.getTileRemoverService().getState().removeAll();
                     scontext.free();
-                    AppLog.i(scontext.getContext(), "Removed* " + info.directory.toString());
+                    AppLog.i(scontext.getContext(), "Removed* " + info.directory);
                 }
             }.displayYesNoDialog(
                     acontext,
                     "Empty cache*",
-                    "Remove all files in* " + info.directory.toString());
+                    "Remove all files in* " + info.directory);
         }
 
         return false;

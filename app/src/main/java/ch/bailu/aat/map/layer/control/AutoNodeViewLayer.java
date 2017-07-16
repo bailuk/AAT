@@ -4,19 +4,18 @@ import android.view.View;
 
 import org.mapsforge.core.model.Point;
 
-import java.io.File;
-
 import ch.bailu.aat.activities.NodeDetailActivity;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.GpxPointNode;
 import ch.bailu.aat.map.MapContext;
 import ch.bailu.aat.util.HtmlBuilderGpx;
+import ch.bailu.simpleio.foc.Foc;
 
 public class AutoNodeViewLayer extends NodeViewLayer {
 
     final HtmlBuilderGpx html;
 
-    private String fileID = null;
+    private Foc file = null;
     private int index = 0;
 
     private final MapContext mcontext;
@@ -30,9 +29,9 @@ public class AutoNodeViewLayer extends NodeViewLayer {
 
     @Override
     public boolean onLongClick(View v) {
-        if (fileID != null && new File(fileID).isFile()) {
+        if (file != null && file.isFile()) {
 
-            NodeDetailActivity.start(mcontext.getContext(), fileID, index);
+            NodeDetailActivity.start(mcontext.getContext(), file.getPath(), index);
             return true;
         }
         return false;
@@ -42,7 +41,7 @@ public class AutoNodeViewLayer extends NodeViewLayer {
     @Override
     public void setSelectedNode(GpxInformation info, GpxPointNode node, int i) {
         index = i;
-        fileID = info.getFile().getPath();
+        file = info.getFile();
 
         html.clear();
 

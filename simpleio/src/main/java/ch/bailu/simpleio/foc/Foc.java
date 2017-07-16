@@ -187,7 +187,7 @@ public abstract class Foc {
 
     @Override
     public String toString() {
-        return getPath();
+        return getPathName();
     }
 
 

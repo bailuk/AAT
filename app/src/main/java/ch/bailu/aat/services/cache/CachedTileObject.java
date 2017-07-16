@@ -209,7 +209,7 @@ public class CachedTileObject extends TileObject {
 
 
     public static class Factory extends ObjectHandle.Factory {
-        private final ch.bailu.aat.map.tile.source.Source source;
+        private final Source source;
         private final Tile tile;
 
         public Factory(Tile t, Source s) {

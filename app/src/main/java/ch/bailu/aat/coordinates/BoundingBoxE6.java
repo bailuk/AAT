@@ -148,12 +148,15 @@ public class BoundingBoxE6 {
     }
 
     public BoundingBox toBoundingBox() {
-        //validate();
+        validate();
+        BoundingBoxE6 b = new BoundingBoxE6(this);
+        b.validate();
+
         return new BoundingBox(
-                LatLongE6.toD(Math.min(south, north)),
-                LatLongE6.toD(Math.min(west, east)),
-                LatLongE6.toD(Math.max(south, north)),
-                LatLongE6.toD(Math.max(west, east)));
+                LatLongE6.toD(Math.min(b.south, b.north)),
+                LatLongE6.toD(Math.min(b.west, b.east)),
+                LatLongE6.toD(Math.max(b.south, b.north)),
+                LatLongE6.toD(Math.max(b.west, b.east)));
     }
 
 

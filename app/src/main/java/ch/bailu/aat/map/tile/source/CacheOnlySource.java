@@ -24,7 +24,7 @@ public class CacheOnlySource extends Source {
     @Override
     public String getID(Tile tile, Context context) {
         final String relativePath = original.getID(tile, context) + EXT;
-        return AppDirectory.getTileFile(relativePath, context).toString();
+        return AppDirectory.getTileFile(relativePath, context).getPath();
     }
 
 
