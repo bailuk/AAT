@@ -56,8 +56,8 @@ public class GpxEditorActivity extends AbsFileContentActivity
                 new TrackSizeDescription(this),
         };
 
-        NodeListView nodeList = new NodeListView(getServiceContext(), this);
-        addTarget(nodeList, InfoID.EDITOR_OVERLAY);
+        //NodeListView nodeList = new NodeListView(getServiceContext(), this);
+        //addTarget(nodeList, InfoID.EDITOR_OVERLAY);
 
         VerticalScrollView summary = new VerticalScrollView(this);
         summary.addAllContent(this, summaryData, InfoID.EDITOR_OVERLAY);
@@ -66,19 +66,19 @@ public class GpxEditorActivity extends AbsFileContentActivity
 
 
         if (AppLayout.isTablet(this)) {
-            return createPercentageLayout(summary, graph, nodeList);
+            return createPercentageLayout(summary, graph);
         } else {
-            return createMultiView(bar, summary, graph, nodeList);
+            return createMultiView(bar, summary, graph);
         }
 
     }
 
     protected View createMultiView(MainControlBar bar,
-                                   View summary, View graph, View nodeList) {
+                                   View summary, View graph) {
 
         MultiView mv = new MultiView(this, SOLID_KEY);
 
-        mv.add(nodeList);
+        //mv.add(nodeList);
         mv.add(map.toView());
 
         PercentageLayout p = new PercentageLayout(this);
@@ -91,15 +91,15 @@ public class GpxEditorActivity extends AbsFileContentActivity
 
 
     private View createPercentageLayout(
-            View summary, View graph, View nodeList) {
+            View summary, View graph) {
 
         if (AppLayout.getOrientation(this) == Configuration.ORIENTATION_LANDSCAPE) {
             PercentageLayout a = new PercentageLayout(this);
             a.setOrientation(AppLayout.getOrientationAlongLargeSide(this));
 
-            a.add(map.toView(), 40);
-            a.add(summary, 30);
-            a.add(nodeList, 30);
+            a.add(map.toView(), 60);
+            a.add(summary, 40);
+            //a.add(nodeList, 30);
 
             PercentageLayout b = new PercentageLayout(this);
             b.add(a, 85);
@@ -109,8 +109,8 @@ public class GpxEditorActivity extends AbsFileContentActivity
         } else {
             PercentageLayout a = new PercentageLayout(this);
             a.setOrientation(LinearLayout.HORIZONTAL);
-            a.add(map.toView(),70);
-            a.add(nodeList, 30);
+            a.add(map.toView(),100);
+            //a.add(nodeList, 30);
 
             PercentageLayout b = new PercentageLayout(this);
             b.add(a, 70);

@@ -4,9 +4,7 @@ import android.database.Cursor;
 
 import ch.bailu.aat.coordinates.BoundingBoxE6;
 import ch.bailu.aat.gpx.GpxInformation;
-import ch.bailu.aat.util.ui.AppLog;
 import ch.bailu.simpleio.foc.Foc;
-import ch.bailu.simpleio.foc.FocAbstractName;
 
 public class GpxInformationDbEntry extends GpxInformation {
     private final Cursor cursor;
@@ -113,10 +111,4 @@ public class GpxInformationDbEntry extends GpxInformation {
         return (int) getLong(GpxDbConstants.KEY_TYPE_ID);
     }
 
-/*
-    @Override
-    public int getID() {
-        return InfoID.FILEVIEW;
-    }
-    */
 }
