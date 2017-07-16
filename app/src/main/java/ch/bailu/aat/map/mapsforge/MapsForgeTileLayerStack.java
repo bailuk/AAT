@@ -22,8 +22,6 @@ public class MapsForgeTileLayerStack implements MapLayerInterface {
 
     private final SolidMapTileStack stiles;
 
-
-
     private final ArrayList<MapsForgeTileLayer> layers =
             new ArrayList(SolidMapTileStack.SOURCES.length);
 
@@ -32,7 +30,6 @@ public class MapsForgeTileLayerStack implements MapLayerInterface {
 
     public MapsForgeTileLayerStack(MapsForgeView v) {
         final ServiceContext sc = v.getMContext().getSContext();
-        final int preset = new SolidPreset(sc.getContext()).getIndex();
 
         mapView = v;
         stiles = new SolidMapTileStack(sc.getContext());
