@@ -153,7 +153,9 @@ public class DirectorySynchronizer  implements Closeable {
 
             @Override
             public void broadcast(Context context) {
-                AppBroadcaster.broadcast(context, AppBroadcaster.FILE_CHANGED_INCACHE, directory.toString());
+                AppBroadcaster.broadcast(context,
+                        AppBroadcaster.FILE_CHANGED_INCACHE,
+                        directory.getPath());
             }
 
         };
@@ -249,10 +251,10 @@ public class DirectorySynchronizer  implements Closeable {
 
 
             } else {
-                AppLog.d(this, file.getPathName());
+                AppLog.d(this, file.toString());
 
                 ObjectHandle h = scontext.getCacheService().getObject(
-                        file.toString(), new GpxObjectStatic.Factory());
+                        file.getPath(), new GpxObjectStatic.Factory());
                 if (h instanceof GpxObject) {
 
                     setPendingGpxHandle((GpxObject)h);
@@ -271,7 +273,7 @@ public class DirectorySynchronizer  implements Closeable {
                 terminate();
             } else if (pendingHandle.isReadyAndLoaded()) {
                 try {
-                    addGpxSummaryToDatabase(pendingHandle.toString(),pendingHandle.getGpxList());
+                    addGpxSummaryToDatabase(pendingHandle.getID(), pendingHandle.getGpxList());
                     setState(new StateLoadPreview());
                 } catch (IOException e) {
                     terminate(e);
@@ -326,9 +328,12 @@ public class DirectorySynchronizer  implements Closeable {
 
         public void start() {
 
-            Foc gpxFile = FocAndroid.factory(scontext.getContext(), pendingHandle.toString());
+            Foc gpxFile = FocAndroid.factory(scontext.getContext(), pendingHandle.getID());
 
-            Foc previewImageFile = SummaryConfig.getWriteablePreviewFile(scontext.getContext(), gpxFile);
+            Foc previewImageFile = SummaryConfig.getWriteablePreviewFile(
+                    scontext.getContext(),
+                    gpxFile);
+
             GpxInformation info =
                     new GpxFileWrapper(gpxFile, pendingHandle.getGpxList());
 
