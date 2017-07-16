@@ -43,8 +43,8 @@ public class MapsForgeViewBase extends MapView implements
     private final Storage storage;
 
 
-    private final FrameBufferHack frameBufferHack;
-    private final FrameBufferController frameBufferControllerHack;
+    //private final FrameBufferHack frameBufferHack;
+    //private final FrameBufferController frameBufferControllerHack;
 
     private final ArrayList<MapLayerInterface> layers = new ArrayList(10);
 
@@ -71,13 +71,13 @@ public class MapsForgeViewBase extends MapView implements
         }));
 
         FrameBufferController.setUseSquareFrameBuffer(false);
-        frameBufferHack = new FrameBufferHack(getModel());
-        frameBufferControllerHack = FrameBufferController.create(this.frameBufferHack, getModel());
+        //frameBufferHack = new FrameBufferHack(getModel());
+        //frameBufferControllerHack = FrameBufferController.create(this.frameBufferHack, getModel());
     }
 
 
 
-
+/*
     @Override
     public FrameBuffer getFrameBuffer() {
         if (frameBufferHack == null) return super.getFrameBuffer();
@@ -93,7 +93,7 @@ public class MapsForgeViewBase extends MapView implements
         gc.destroy();
 
     }
-
+*/
     public void add(MapLayerInterface layer) {
         LayerWrapper wrapper = new LayerWrapper(mcontext, layer);
         add(wrapper, layer);
@@ -268,7 +268,7 @@ public class MapsForgeViewBase extends MapView implements
     public void onDestroy() {
         disableLayers();
         destroyAll();
-        frameBufferControllerHack.destroy();
-        frameBufferHack.destroy();
+ //       frameBufferControllerHack.destroy();
+ //       frameBufferHack.destroy();
     }
 }
