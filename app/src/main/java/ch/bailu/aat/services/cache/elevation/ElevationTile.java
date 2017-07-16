@@ -149,13 +149,6 @@ public abstract class ElevationTile extends TileObject implements ElevationUpdat
         final int key = tile.hashCode();
         final SubTile span =  subTiles.get(key);
 
-        if (span == null)
-            AppLog.d(this, "span == null");
-
-        if (tile.isLoaded() == false)
-            AppLog.d(this, "tile.isLoaded() == false");
-
-
         if (span != null && tile.isLoaded()) {
             subTiles.remove(key);
             updateLock=true;

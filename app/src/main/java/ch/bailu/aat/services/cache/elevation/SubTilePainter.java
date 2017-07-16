@@ -41,6 +41,7 @@ public class SubTilePainter extends ProcessHandle {
     @Override
     public long bgOnProcess() {
         long size = 0;
+
         if (scontext.lock()) {
             ObjectHandle handle = scontext.getCacheService().getObject(iid);
 

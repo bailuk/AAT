@@ -22,7 +22,10 @@ public class HillshadeTile extends ElevationTile {
 
     @Override
     public void onInsert(ServiceContext sc) {
-        table=(HillshadeColorTable) sc.getCacheService().getObject(HillshadeColorTable.ID, new HillshadeColorTable.Factory());
+        table=(HillshadeColorTable)
+                sc.getCacheService().getObject(
+                        HillshadeColorTable.ID,
+                        HillshadeColorTable.FACTORY);
 
         super.onInsert(sc);
 
@@ -51,7 +54,8 @@ public class HillshadeTile extends ElevationTile {
         return new DemSplitter(dem);
     }
     public MultiCell factoryMultiCell(DemProvider dem) {
-        return new MultiCell8(dem);
+        return MultiCell.factory(dem);
+        //return new MultiCell8(dem);
     }
 
 
