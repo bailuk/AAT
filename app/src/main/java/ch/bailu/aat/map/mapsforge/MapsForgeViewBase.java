@@ -144,10 +144,7 @@ public class MapsForgeViewBase extends MapView implements
 
     @Override
     public void frameBounding(BoundingBoxE6 boundingBox) {
-        //if (boundingBox.hasBounding())
         frameBounding(boundingBox.toBoundingBox());
-
-
     }
 
 
@@ -158,13 +155,7 @@ public class MapsForgeViewBase extends MapView implements
         if (dimension == null) {
             pendingFrameBounding=bounding;
         } else {
-            byte zoom = LatLongUtils.zoomForBounds(
-                    dimension,
-                    bounding,
-                    getModel().displayModel.getTileSize());
-
-            zoom = (byte) Math.min(zoom, getModel().mapViewPosition.getZoomLevelMax());
-            zoom = (byte) Math.max(zoom, getModel().mapViewPosition.getZoomLevelMin());
+            byte zoom = zoomForBounds(bounding, dimension);
 
             MapPosition position = new MapPosition(bounding.getCenterPoint(), zoom);
             getModel().mapViewPosition.setMapPosition(position);
@@ -173,6 +164,24 @@ public class MapsForgeViewBase extends MapView implements
         }
     }
 
+
+    private byte zoomForBounds(BoundingBox bounding, Dimension dimension) {
+        byte zoom;
+        if (bounding.minLatitude == 0d && bounding.minLongitude == 0d
+                && bounding.maxLatitude == 0d && bounding.maxLongitude == 0d) {
+            zoom = 0;
+        } else {
+            zoom = LatLongUtils.zoomForBounds(
+                    dimension,
+                    bounding,
+                    getModel().displayModel.getTileSize());
+        }
+
+        zoom = (byte) Math.min(zoom, getModel().mapViewPosition.getZoomLevelMax());
+        zoom = (byte) Math.max(zoom, getModel().mapViewPosition.getZoomLevelMin());
+
+        return zoom;
+    }
 
 
     @Override
