@@ -1,3 +1,21 @@
+/*
+ * Copyright 2010, 2011, 2012, 2013 mapsforge.org
+ * Copyright 2014 Ludwig M Brinckmann
+ * Copyright 2015-2017 devemux86
+ * Copyright 2017 Lukas Bai <bailu@bailu.ch>
+ *
+ * This program is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License as published by the Free Software
+ * Foundation, either version 3 of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+ * PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with
+ * this program. If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package ch.bailu.aat.map.mapsforge;
 
 import org.mapsforge.core.graphics.Bitmap;
@@ -7,59 +25,82 @@ import org.mapsforge.core.graphics.Matrix;
 import org.mapsforge.core.model.Dimension;
 import org.mapsforge.core.model.MapPosition;
 import org.mapsforge.core.model.Point;
-import org.mapsforge.map.android.graphics.AndroidGraphicFactory;
 import org.mapsforge.map.model.DisplayModel;
 import org.mapsforge.map.model.FrameBufferModel;
-import org.mapsforge.map.model.Model;
 import org.mapsforge.map.view.FrameBuffer;
 
 public class FrameBufferHack extends FrameBuffer {
 
+    private static final boolean IS_TRANSPARENT = false;
+
+    /*
+     *  lm: layer manager
+            Layer manager draws the bitmap off-screen
+     *  od: onDraw() -> draw()
+     *      swaps the two bitmaps and puts one bitmap to the screen
+     *      while the layer manager draws the next off-screen bitmap.
+     *
+     */
+
     private final FrameBufferBitmap odBitmap = new FrameBufferBitmap();
     private final FrameBufferBitmap lmBitmap = new FrameBufferBitmap();
 
+    private final Object dimLock = new Object();
     private MapPosition lmMapPosition;
-
     private Dimension dimension;
-    private final DisplayModel displayModel;
-    private final FrameBufferModel frameBufferModel;
     private final Matrix matrix;
 
-    private final Object dimLock = new Object();
+    private final DisplayModel displayModel;
+    private final FrameBufferModel frameBufferModel;
+    private final GraphicFactory graphicFactory;
 
-    public FrameBufferHack(Model model) {
-        super(model.frameBufferModel, model.displayModel, AndroidGraphicFactory.INSTANCE);
-        this.frameBufferModel = model.frameBufferModel;
-        this.displayModel = model.displayModel;
-        GraphicFactory graphicFactory = AndroidGraphicFactory.INSTANCE;
+
+
+    public FrameBufferHack(FrameBufferModel frameBufferModel, DisplayModel displayModel,
+                           GraphicFactory graphicFactory) {
+        super(frameBufferModel, displayModel, graphicFactory);
+
+        this.frameBufferModel = frameBufferModel;
+        this.displayModel = displayModel;
+
+        this.graphicFactory = graphicFactory;
         this.matrix = graphicFactory.createMatrix();
     }
 
 
-    // this is called from MapView.onDraw()
+    /**
+     * This is called from (Android) <code>MapView.onDraw()</code>.
+     */
     public void draw(GraphicContext graphicContext) {
-
 
         graphicContext.fillColor(this.displayModel.getBackgroundColor());
 
-        //odBitmap.release(); // now we allow swap because we asume that the last drawing is finished
-
+        /*
+         * Swap bitmaps here (and only here).
+         * Swapping is done when layer manager has finished. Else draw old bitmap again.
+         * This (onDraw()) is allways called when layer manager has finished. This ensures that the
+         * last generated frame is allways put on screen.
+         */
         swapBitmaps();
 
-        Bitmap b = odBitmap.lock(); // lock next frame (firstPixelIndex drawing again)
+        Bitmap b = odBitmap.lock();
         if (b != null) {
             synchronized(dimLock) {
                 graphicContext.drawBitmap(b, this.matrix);
             }
         }
-        odBitmap.release();
+
+        /*
+         * Release here so destroy() can free resources
+         */
+        odBitmap.releaseAndAllowSwap();
     }
 
 
     private void swapBitmaps() {
         /*
-          Swap bitmaps only if the layerManager is currently not working and
-          has drawn a new bitmap since the last swap
+         *  Swap bitmaps only if the layerManager is currently not working and
+         *  has drawn a new bitmap since the last swap
          */
         if (FrameBufferBitmap.swap(odBitmap, lmBitmap)) {
             frameBufferModel.setMapPosition(lmMapPosition);
@@ -67,9 +108,16 @@ public class FrameBufferHack extends FrameBuffer {
     }
 
 
-    // this is called from layer manager when drawing starts
+    /**
+     * This is called from <code>LayerManager</code> when drawing starts.
+     * @return the bitmap of the second frame to draw on (may be null).
+     */
     public Bitmap getDrawingBitmap() {
-
+        /*
+         * Layer manager only starts drawing a new bitmap when the last one is swapped (taken to
+         * the screen). This ensures that the layer manager draws not too many frames. (only as
+         * much as can get displayed).
+         */
         Bitmap b = lmBitmap.lockWhenSwapped();
 
         if (b != null) {
@@ -80,9 +128,11 @@ public class FrameBufferHack extends FrameBuffer {
     }
 
 
-    // this is called from layer manager when drawing is finished
+    /**
+     * This is called from <code>LayerManager</code> when drawing is finished.
+     */
     public void frameFinished(MapPosition framePosition) {
-        lmBitmap.release(); // allow swap
+        lmBitmap.releaseAndAllowSwap();
         lmMapPosition = framePosition;
     }
 
@@ -110,8 +160,8 @@ public class FrameBufferHack extends FrameBuffer {
     }
 
     public synchronized void destroy() {
-
-        destroyBitmaps();
+        odBitmap.destroy();
+        lmBitmap.destroy();
     }
 
 
@@ -120,25 +170,19 @@ public class FrameBufferHack extends FrameBuffer {
 
 
     public Dimension getDimension() {
-
         return this.dimension;
     }
 
 
     public void setDimension(Dimension dimension) {
-
         synchronized (dimLock) {
             if (this.dimension != null && this.dimension.equals(dimension)) {
                 return;
             }
             this.dimension = dimension;
 
-            destroyBitmaps();
-
-            if (dimension.width > 0 && dimension.height > 0) {
-                odBitmap.create(dimension.width, dimension.height);
-                lmBitmap.create(dimension.width, dimension.height);
-            }
+            odBitmap.create(graphicFactory, dimension, IS_TRANSPARENT);
+            lmBitmap.create(graphicFactory, dimension, IS_TRANSPARENT);
         }
     }
 
@@ -149,12 +193,6 @@ public class FrameBufferHack extends FrameBuffer {
     }
 
 
-    private void destroyBitmaps() {
-
-       odBitmap.destroy();
-       lmBitmap.destroy();
-    }
-
     private void scale(float scaleFactor, float pivotDistanceX, float pivotDistanceY) {
         if (scaleFactor != 1) {
             final Point center = this.dimension.getCenter();
@@ -163,5 +201,4 @@ public class FrameBufferHack extends FrameBuffer {
             this.matrix.scale(scaleFactor, scaleFactor, pivotX, pivotY);
         }
     }
-
 }

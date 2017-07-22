@@ -87,7 +87,7 @@ public class Dem3TileLoader implements Closeable {
 
 
     public void loadOrDownloadLater(SrtmCoordinates c) {
-        if (pending == null) { // first Request
+        if (pending == null) { // first BitmapRequest
             startTimer();
         }
         pending = c;
