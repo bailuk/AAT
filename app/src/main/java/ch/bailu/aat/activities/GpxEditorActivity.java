@@ -78,7 +78,7 @@ public class GpxEditorActivity extends AbsFileContentActivity
 
         MultiView mv = new MultiView(this, SOLID_KEY);
 
-        //mv.add(nodeList);
+        //mv.addLayer(nodeList);
         mv.add(map.toView());
 
         PercentageLayout p = new PercentageLayout(this);
@@ -99,7 +99,7 @@ public class GpxEditorActivity extends AbsFileContentActivity
 
             a.add(map.toView(), 60);
             a.add(summary, 40);
-            //a.add(nodeList, 30);
+            //a.addLayer(nodeList, 30);
 
             PercentageLayout b = new PercentageLayout(this);
             b.add(a, 85);
@@ -110,7 +110,7 @@ public class GpxEditorActivity extends AbsFileContentActivity
             PercentageLayout a = new PercentageLayout(this);
             a.setOrientation(LinearLayout.HORIZONTAL);
             a.add(map.toView(),100);
-            //a.add(nodeList, 30);
+            //a.addLayer(nodeList, 30);
 
             PercentageLayout b = new PercentageLayout(this);
             b.add(a, 70);

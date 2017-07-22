@@ -40,7 +40,7 @@ public class StateRemoved extends StateUnscanned {
     public void remove() {}
 
     @Override
-    public void removeAll() {}
+    public void removeLayers() {}
 
     @Override
     public void rescan() {}

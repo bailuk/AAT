@@ -9,7 +9,7 @@ import org.mapsforge.map.model.common.Observer;
 import ch.bailu.aat.map.Attachable;
 import ch.bailu.aat.map.tile.source.Source;
 
-public interface TileProviderInterface extends Attachable {
+public interface TileProviderInterface  {
 
     TileBitmap get(Tile tile);
     boolean contains(Tile tile);
@@ -21,8 +21,6 @@ public interface TileProviderInterface extends Attachable {
 
     void setCapacity(int size);
 
-    Drawable getDrawable(Tile convert);
-
     int getMaximumZoomLevel();
 
     int getMinimumZoomLevel();
@@ -30,4 +28,7 @@ public interface TileProviderInterface extends Attachable {
     void reDownloadTiles();
 
     Source getSource();
+
+    void attach();
+    void detach();
 }

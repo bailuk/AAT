@@ -66,7 +66,6 @@ public class MapsForgeTileLayer extends Layer implements MapLayerInterface, Obse
 
     private void draw (BoundingBox box, byte zoom, Canvas canvas, Point tlp, int tileSize) {
 
-
         List<TilePosition> tilePositions = LayerUtil.getTilePositions(box, zoom, tlp, tileSize);
 
         provider.setCapacity(tilePositions.size());
@@ -147,13 +146,13 @@ public class MapsForgeTileLayer extends Layer implements MapLayerInterface, Obse
     private synchronized boolean detachAttach() {
         if (isVisible && isZoomSupported && isAttached) {
             if (isProviderAttached == false) {
-                provider.onAttached();
+                provider.attach();
                 provider.addObserver(this);
                 isProviderAttached = true;
             }
         } else if (isProviderAttached) {
             provider.removeObserver(this);
-            provider.onDetached();
+            provider.detach();
             isProviderAttached = false;
         }
         return isProviderAttached;

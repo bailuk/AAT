@@ -33,7 +33,7 @@ public class TileSummariesView extends RadioGroup  {
             }
 
 
-            // add views
+            // addLayer views
             for (int i = views.size(); i < summaries.size(); i++) {
                 views.add(new TileSummaryView(this, i));
                 views.get(i).select(selected);

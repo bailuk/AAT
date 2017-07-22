@@ -22,11 +22,14 @@ import ch.bailu.aat.util.AppIntent;
 
 public class TileProvider implements TileProviderInterface {
 
+
     private final ServiceContext scontext;
     private final ArrayList<Observer> observers = new ArrayList(2);
     private final Source source;
 
     private TileCache<TileObject> cache = TileObjectCache.NULL;
+
+    private boolean isAttached=false;
 
 
     public TileProvider(ServiceContext sc, Source s) {
@@ -87,16 +90,7 @@ public class TileProvider implements TileProviderInterface {
         cache.setCapacity(size);
     }
 
-    @Override
-    public synchronized Drawable getDrawable(Tile tile) {
-        TileBitmap bitmap = get(tile);
 
-        if (bitmap != null)
-            return new BitmapDrawable(scontext.getContext().getResources(),
-                    AndroidGraphicFactory.getBitmap(bitmap));
-
-        return null;
-    }
 
     @Override
     public int getMaximumZoomLevel() {
@@ -120,20 +114,28 @@ public class TileProvider implements TileProviderInterface {
 
 
     @Override
-    public synchronized void onAttached() {
-        cache.reset();
-        cache = new TileObjectCache();
-        AppBroadcaster.register(scontext.getContext(),
-                onFileChanged, AppBroadcaster.FILE_CHANGED_INCACHE);
+    public synchronized void attach() {
+        if (isAttached == false) {
+            cache.reset();
+            cache = new TileObjectCache();
+            AppBroadcaster.register(scontext.getContext(),
+                    onFileChanged, AppBroadcaster.FILE_CHANGED_INCACHE);
+
+            isAttached = true;
+        }
 
     }
 
 
     @Override
-    public synchronized void onDetached() {
-        scontext.getContext().unregisterReceiver(onFileChanged);
-        cache.reset();
-        cache = TileObjectCache.NULL;
+    public synchronized void detach() {
+        if (isAttached) {
+            scontext.getContext().unregisterReceiver(onFileChanged);
+            cache.reset();
+            cache = TileObjectCache.NULL;
+
+            isAttached = false;
+        }
     }
 
 

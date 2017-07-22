@@ -28,10 +28,6 @@ public class TileProviderStatic implements TileProviderInterface, Closeable {
     }
 
 
-    @Override
-    public Drawable getDrawable(Tile tile) {
-        return null;
-    }
 
     @Override
     public int getMaximumZoomLevel() {
@@ -150,12 +146,12 @@ public class TileProviderStatic implements TileProviderInterface, Closeable {
     }
 
     @Override
-    public void onAttached() {
+    public void attach() {
 
     }
 
     @Override
-    public void onDetached() {
+    public void detach() {
         close();
     }
 }
