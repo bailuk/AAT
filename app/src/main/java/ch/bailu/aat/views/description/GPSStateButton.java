@@ -7,13 +7,13 @@ import android.view.View;
 import android.view.View.OnClickListener;
 
 import ch.bailu.aat.description.GpsStateDescription;
-import ch.bailu.aat.preferences.SolidGPSLock;
+//import ch.bailu.aat.preferences.SolidGPSLock;
 import ch.bailu.aat.preferences.Storage;
 
 public class GPSStateButton extends NumberButton implements OnClickListener, OnSharedPreferenceChangeListener {
 
     private final Storage storage;
-    private final SolidGPSLock slock;
+    //private final SolidGPSLock slock;
     
     public GPSStateButton(Context c) {
         super(new GpsStateDescription(c));
@@ -21,23 +21,23 @@ public class GPSStateButton extends NumberButton implements OnClickListener, OnS
         
         storage=Storage.global(c);
         
-        slock=new SolidGPSLock(storage);
-        setOnClickListener(this);
+        //slock=new SolidGPSLock(storage);
+        //setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
-        if (v==this) {
-            slock.cycle();
-        }
+        //if (v==this) {
+        //    slock.cycle();
+        //}
     }
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences,
             String key) {
-        if (slock.hasKey(key)) {
-            updateAllText();
-        }
+        //if (slock.hasKey(key)) {
+        //    updateAllText();
+        //}
     }
     
     @Override
