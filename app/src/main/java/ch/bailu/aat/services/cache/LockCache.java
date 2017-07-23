@@ -2,8 +2,6 @@ package ch.bailu.aat.services.cache;
 
 import java.io.Closeable;
 
-import ch.bailu.aat.util.ui.AppLog;
-
 public class LockCache<E extends ObjectHandle>  implements Closeable {
     private E[] array;
     private int size;
@@ -100,6 +98,6 @@ public class LockCache<E extends ObjectHandle>  implements Closeable {
         array = newArray;
         size = Math.min(size, array.length);
 
-        AppLog.d(this, "pixelCount is: " + size + ", capacity is: " + array.length);
+        //AppLog.d(this, "Count is: " + size + ", capacity is: " + array.length);
     }
 }

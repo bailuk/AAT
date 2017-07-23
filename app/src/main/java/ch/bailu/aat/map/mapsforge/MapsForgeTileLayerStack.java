@@ -124,6 +124,11 @@ public class MapsForgeTileLayerStack extends Layer implements MapLayerInterface,
 
 
     @Override
+    public void onDestroy() {
+        removeLayers();
+    }
+
+    @Override
     public void onDetached() {
         detachLayers();
     }

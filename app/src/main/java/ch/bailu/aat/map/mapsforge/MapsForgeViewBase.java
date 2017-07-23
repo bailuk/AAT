@@ -223,7 +223,7 @@ public class MapsForgeViewBase extends MapView implements
     private void changeVisibility(int v) {
 
         isVisible = (v == VISIBLE);
-
+/*
         if (isVisible)
             AppLog.d(this, "is visible");
         else AppLog.d(this, "is NOT visible");
@@ -231,7 +231,7 @@ public class MapsForgeViewBase extends MapView implements
         if (isShown())
             AppLog.d(this, "is shown");
         else AppLog.d(this, "is NOT shown");
-
+*/
         attachDetachLayers();
     }
 
