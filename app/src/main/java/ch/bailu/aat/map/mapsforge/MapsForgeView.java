@@ -13,7 +13,7 @@ import ch.bailu.aat.services.ServiceContext;
 public class MapsForgeView extends MapsForgeViewBase {
 
     private final MapsForgeForeground foreground;
-    private final MapsForgeTileLayerStack stack;
+    private final MapsForgeTileLayerStackConfigured stack;
     private final MapPositionLayer pos;
 
     public MapsForgeView(ServiceContext sc, DispatcherInterface dispatcher, String key) {
@@ -22,8 +22,8 @@ public class MapsForgeView extends MapsForgeViewBase {
         pos = new MapPositionLayer(getMContext(), dispatcher);
         add(pos);
 
-        stack = new MapsForgeTileLayerStack(this);
-        add(stack);
+        stack = new MapsForgeTileLayerStackConfigured(this);
+        add(stack, stack);
 
         foreground = new MapsForgeForeground(this,
                 getMContext(),

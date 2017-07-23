@@ -1,105 +1,97 @@
 package ch.bailu.aat.map.mapsforge;
 
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.Paint;
+import android.graphics.Rect;
 
+import org.mapsforge.core.graphics.Canvas;
+import org.mapsforge.core.graphics.TileBitmap;
+import org.mapsforge.core.model.BoundingBox;
 import org.mapsforge.core.model.Point;
+import org.mapsforge.map.android.graphics.AndroidGraphicFactory;
+import org.mapsforge.map.layer.Layer;
+import org.mapsforge.map.layer.TilePosition;
+import org.mapsforge.map.model.common.Observer;
+import org.mapsforge.map.util.LayerUtil;
+import org.mapsforge.map.view.MapView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import ch.bailu.aat.map.MapContext;
 import ch.bailu.aat.map.layer.MapLayerInterface;
-import ch.bailu.aat.map.tile.TileProvider;
-import ch.bailu.aat.map.tile.source.CachedSource;
-import ch.bailu.aat.map.tile.source.MapsForgeSource;
-import ch.bailu.aat.map.tile.source.Source;
-import ch.bailu.aat.preferences.SolidEnableTileCache;
-import ch.bailu.aat.preferences.SolidMapTileStack;
-import ch.bailu.aat.preferences.SolidPreset;
-import ch.bailu.aat.preferences.SolidRenderTheme;
+import ch.bailu.aat.map.tile.TileProviderInterface;
 import ch.bailu.aat.services.ServiceContext;
+import ch.bailu.aat.util.ui.AppLog;
 
-public class MapsForgeTileLayerStack implements MapLayerInterface {
-
-    private final SolidMapTileStack stiles;
-
-    private final ArrayList<MapsForgeTileLayer> layers =
-            new ArrayList(SolidMapTileStack.SOURCES.length);
+public class MapsForgeTileLayerStack extends Layer implements MapLayerInterface, Observer {
 
 
-    private final MapsForgeView mapView;
+    private final ArrayList<Container> layers = new ArrayList<>(10);
 
-    public MapsForgeTileLayerStack(MapsForgeView v) {
-        final ServiceContext sc = v.getMContext().getSContext();
+    private final ServiceContext scontext;
 
-        mapView = v;
-        stiles = new SolidMapTileStack(sc.getContext());
-
-        init(sc);
+    public MapsForgeTileLayerStack(ServiceContext sc) {
+        scontext = sc;
     }
 
 
-    private void init(ServiceContext sc) {
-        for (Source s: SolidMapTileStack.SOURCES) {
-            Source source = s;
-            if (s == MapsForgeSource.MAPSFORGE) {
-                String theme =
-                        new SolidRenderTheme(sc.getContext()).getValueAsString();
-
-                if (new SolidEnableTileCache.MapsForge(sc.getContext()).isEnabled()) {
-                    source = new CachedSource(new MapsForgeSource(theme));
-                } else {
-                    source = new MapsForgeSource(theme);
-                }
-
-            } else if (s == Source.ELEVATION_HILLSHADE) {
-
-                if (new SolidEnableTileCache.Hillshade(sc.getContext()).isEnabled()) {
-                    source = CachedSource.CACHED_ELEVATION_HILLSHADE;
-                } else {
-                    source = Source.ELEVATION_HILLSHADE;
-                }
-            }
+    public void addLayer(TileProviderInterface provider) {
+        addLayer(provider,
+                provider.getMinimumZoomLevel(),
+                provider.getMaximumZoomLevel());
+    }
 
 
-            MapsForgeTileLayer layer =
-                    new MapsForgeTileLayer(sc,
-                            new TileProvider(sc, source));
+    public void addLayer(TileProviderInterface provider, int z1, int z2) {
+        layers.add(new Container(provider, z1, z2));
+        provider.addObserver(this);
+    }
 
-            layers.add(layer);
-            mapView.add(layer, layer);
+
+    public void removeLayers() {
+        detachLayers();
+        layers.clear();
+    }
+
+    private void detachLayers() {
+        for (Container c : layers) {
+            c.provider.detach();
         }
     }
 
-
-    @Override
-    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-        if (stiles.hasKey(key)) {
-            setEnabled();
-        }
-    }
-
-
-    private void setEnabled() {
+    public void setMapViewZoomLimit(MapView mapView) {
         int minZoom=6, maxZoom = 10;
 
-        boolean[] enabled = stiles.getEnabledArray();
-
-        for (int i=0; i<enabled.length; i++) {
-            layers.get(i).setVisible(enabled[i]);
-
-            if (enabled[i]) {
-                maxZoom = Math.max(SolidMapTileStack.SOURCES[i].getMaximumZoomLevel(), maxZoom);
-                minZoom = Math.min(SolidMapTileStack.SOURCES[i].getMinimumZoomLevel(), minZoom);
-            }
+        for (Container c : layers) {
+            maxZoom = Math.max(c.maxZoom, maxZoom);
+            minZoom = Math.min(c.minZoom, minZoom);
         }
 
         mapView.setZoomLevelMin((byte)minZoom);
         mapView.setZoomLevelMax((byte)maxZoom);
     }
 
+    @Override
+    public void draw(BoundingBox box, byte zoom, Canvas c, Point tlp) {
+        if (scontext.lock()) {
+            for (Container l: layers) {
+                if (l.isZoomSupported(zoom)) {
+                    l.provider.attach();
+                    l.draw(box, zoom, c, tlp, displayModel.getTileSize());
+                } else {
+                    l.provider.detach();
+                }
+            }
+            scontext.free();
+        }
+    }
+
+
     public void reDownloadTiles() {
-        for(MapsForgeTileLayer l: layers) {
-            if (l.isVisible()) l.reDownloadTiles();
+        for (Container c: layers) {
+            c.provider.reDownloadTiles();
         }
     }
 
@@ -110,7 +102,6 @@ public class MapsForgeTileLayerStack implements MapLayerInterface {
 
     @Override
     public void drawInside(MapContext mcontext) {
-
     }
 
     @Override
@@ -119,20 +110,90 @@ public class MapsForgeTileLayerStack implements MapLayerInterface {
     }
 
     @Override
-    public boolean onTap(Point tapXY) {
+    public boolean onTap(Point tapPos) {
         return false;
     }
 
-
     @Override
-    public void onAttached() {
-        setEnabled();
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
 
     }
+
+    @Override
+    public void onAttached() {}
+
 
     @Override
     public void onDetached() {
-
+        detachLayers();
     }
 
+    @Override
+    public void onChange() {
+        requestRedraw();
+    }
+
+
+    private static class Container {
+        public final int minZoom, maxZoom;
+        public final TileProviderInterface provider;
+
+        private final Paint paint = new Paint();
+
+
+        public Container(TileProviderInterface p, int a, int b) {
+            int min=Math.min(a, b);
+            int max=Math.max(a, b);
+            minZoom = Math.max(min, p.getSource().getMinimumZoomLevel());
+            maxZoom = Math.min(max, p.getSource().getMaximumZoomLevel());
+
+            provider = p;
+
+            paint.setAlpha(p.getSource().getAlpha());
+            paint.setFlags(p.getSource().getPaintFlags());
+        }
+
+
+        public void draw (BoundingBox box, byte zoom, Canvas canvas, Point tlp, int tileSize) {
+            List<TilePosition> tilePositions = LayerUtil.getTilePositions(box, zoom, tlp, tileSize);
+
+            provider.setCapacity(tilePositions.size());
+
+            for (TilePosition tilePosition : tilePositions) {
+                if (provider.contains(tilePosition.tile)) {
+                    provider.get(tilePosition.tile);
+                }
+            }
+
+
+            for (TilePosition tilePosition : tilePositions) {
+                final TileBitmap bitmap = provider.get(tilePosition.tile);
+
+                if (bitmap != null) {
+                    final Point p = tilePosition.point;
+                    final Rect r=new Rect();
+
+                    r.left = (int) Math.round(p.x);
+                    r.top = (int) Math.round(p.y);
+                    r.right = r.left + tileSize;
+                    r.bottom = r.top + tileSize;
+
+                    Bitmap androidbitmap = AndroidGraphicFactory.getBitmap(bitmap);
+                    if (androidbitmap == null) {
+                        AppLog.d(this, provider.getSource().getName());
+                    } else {
+
+                        AndroidGraphicFactory.getCanvas(canvas).
+                                drawBitmap(androidbitmap, null, r, paint);
+                    }
+                }
+            }
+        }
+
+        public boolean isZoomSupported(byte zoom) {
+            return (zoom <= maxZoom && zoom >= minZoom);
+        }
+
+
+    }
 }
