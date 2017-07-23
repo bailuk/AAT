@@ -7,7 +7,7 @@ import ch.bailu.aat.gpx.segmented_list.SegmentNode;
 
 public class GpxSegmentNode extends SegmentNode implements GpxBigDeltaInterface {
 
-    private final GpxBigDelta delta=new GpxBigDelta(new MaxSpeed.Raw());
+    private final GpxBigDelta delta=new GpxBigDelta(new MaxSpeed.Raw(), AutoPause.NULL);
 
     
     public GpxSegmentNode(GpxPointNode n) {
@@ -55,6 +55,11 @@ public class GpxSegmentNode extends SegmentNode implements GpxBigDeltaInterface 
         return delta.getPause();
     }
 
+    @Override
+    public long getAutoPause() {
+        return delta.getAutoPause();
+    }
+
 
     public long getStartTime() {
         return delta.getStartTime();
@@ -76,11 +81,6 @@ public class GpxSegmentNode extends SegmentNode implements GpxBigDeltaInterface 
         return delta.getEndTime();
     }
 
-
-//    @Override
-//    public double getBearing() {
-//        return 0;
-//    }
 
 
 	@Override

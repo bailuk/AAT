@@ -5,6 +5,7 @@ import android.content.Context;
 import java.io.IOException;
 
 import ch.bailu.aat.R;
+import ch.bailu.aat.gpx.AutoPause;
 import ch.bailu.aat.gpx.GpxList;
 import ch.bailu.aat.gpx.parser.GpxListReader;
 import ch.bailu.aat.gpx.writer.GpxListWriter;
@@ -49,7 +50,7 @@ public class TrackCrashRestorer{
 
     
     private GpxList readFile(Foc remainingLogFile) throws IOException {
-        GpxListReader reader = new GpxListReader(remainingLogFile);
+        GpxListReader reader = new GpxListReader(remainingLogFile, AutoPause.NULL);
         return reader.getGpxList();
     }
 }

@@ -7,6 +7,7 @@ public interface GpxBigDeltaInterface extends GpxDeltaInterface  {
 
     float getMaximumSpeed();
     long getPause();
+    long getAutoPause();
     long getStartTime();
     long getEndTime();
 

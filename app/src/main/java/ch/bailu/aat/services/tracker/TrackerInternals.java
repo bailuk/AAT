@@ -6,6 +6,7 @@ import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import java.io.Closeable;
 import java.io.IOException;
 
+import ch.bailu.aat.preferences.SolidTrackerAutopause;
 import ch.bailu.aat.util.ui.AppLog;
 import ch.bailu.aat.preferences.SolidAutopause;
 import ch.bailu.aat.preferences.SolidBacklight;
@@ -60,7 +61,7 @@ implements OnSharedPreferenceChangeListener, Closeable {
     public void rereadPreferences() {
         presetIndex = new SolidPreset(scontext.getContext()).getIndex();
         sbacklight = new SolidBacklight(scontext.getContext(), presetIndex);
-        sautopause = new SolidAutopause(scontext.getContext(), presetIndex);
+        sautopause = new SolidTrackerAutopause(scontext.getContext(), presetIndex);
 
         scontext.getLocationService().setPresetIndex(presetIndex);
     }

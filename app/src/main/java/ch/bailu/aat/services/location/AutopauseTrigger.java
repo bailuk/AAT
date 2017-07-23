@@ -3,6 +3,7 @@ package ch.bailu.aat.services.location;
 import android.content.Context;
 
 import ch.bailu.aat.preferences.SolidAutopause;
+import ch.bailu.aat.preferences.SolidTrackerAutopause;
 
 
 public class AutopauseTrigger extends LocationStackChainedItem {
@@ -50,8 +51,8 @@ public class AutopauseTrigger extends LocationStackChainedItem {
 
     @Override
     public void preferencesChanged(Context c, int i) {
-        triggerSpeed = new SolidAutopause(c, i).getTriggerSpeed();
-        trigger=new Trigger(new SolidAutopause(c,i).getTriggerLevel(), trigger);
+        triggerSpeed = new SolidTrackerAutopause(c, i).getTriggerSpeed();
+        trigger=new Trigger(new SolidTrackerAutopause(c,i).getTriggerLevel(), trigger);
     }
     
 	

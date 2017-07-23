@@ -5,6 +5,7 @@ import android.content.Context;
 import java.io.IOException;
 
 import ch.bailu.aat.coordinates.BoundingBoxE6;
+import ch.bailu.aat.gpx.AutoPause;
 import ch.bailu.aat.gpx.GpxList;
 import ch.bailu.aat.gpx.GpxPointNode;
 import ch.bailu.aat.gpx.MaxSpeed;
@@ -33,12 +34,12 @@ public class MockLocation extends LocationStackChainedItem implements Runnable{
     public MockLocation(Context c, LocationStackItem i) {
         super(i);
 
-        mockData = new GpxList(GpxType.TRK, new MaxSpeed.Raw());
+        mockData = new GpxList(GpxType.TRK, new MaxSpeed.Raw(), AutoPause.NULL);
         timer=new Timer(this, INTERVAL);
 
         try {
             Foc file = FocAndroid.factory(c,(new SolidMockLocationFile(c).getValueAsString()));
-            mockData = new GpxListReader(file).getGpxList();
+            mockData = new GpxListReader(file, AutoPause.NULL).getGpxList();
 
             timer.kick();
             sendState(StateID.WAIT);

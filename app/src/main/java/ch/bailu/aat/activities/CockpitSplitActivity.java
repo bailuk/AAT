@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import ch.bailu.aat.description.AltitudeDescription;
-import ch.bailu.aat.description.AverageSpeedDescription;
+import ch.bailu.aat.description.AverageSpeedDescriptionAP;
 import ch.bailu.aat.description.CurrentSpeedDescription;
 import ch.bailu.aat.description.DistanceDescription;
 import ch.bailu.aat.description.PredictiveTimeDescription;
@@ -53,7 +53,7 @@ public class CockpitSplitActivity extends AbsDispatcher{
         cockpitA.add(this, new PredictiveTimeDescription(this), InfoID.TRACKER_TIMER);
 
         cockpitB.add(this, new CurrentSpeedDescription(this), InfoID.LOCATION);
-        cockpitB.addC(this, new AverageSpeedDescription(this), InfoID.TRACKER);
+        cockpitB.addC(this, new AverageSpeedDescriptionAP(this), InfoID.TRACKER);
 
 
         MultiView mv = new MultiView(this, SOLID_KEY);

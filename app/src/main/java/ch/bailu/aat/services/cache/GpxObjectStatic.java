@@ -6,6 +6,7 @@ import android.util.SparseArray;
 import java.io.IOException;
 
 import ch.bailu.aat.coordinates.SrtmCoordinates;
+import ch.bailu.aat.gpx.AutoPause;
 import ch.bailu.aat.gpx.GpxList;
 import ch.bailu.aat.gpx.GpxListWalker;
 import ch.bailu.aat.gpx.GpxPoint;
@@ -16,6 +17,7 @@ import ch.bailu.aat.gpx.MaxSpeed;
 import ch.bailu.aat.gpx.interfaces.GpxType;
 import ch.bailu.aat.gpx.linked_list.Node;
 import ch.bailu.aat.gpx.parser.GpxListReader;
+import ch.bailu.aat.preferences.SolidAutopause;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.background.FileHandle;
 import ch.bailu.aat.services.dem.tile.Dem3Tile;
@@ -28,7 +30,7 @@ import ch.bailu.simpleio.foc.Foc;
 public class GpxObjectStatic extends GpxObject implements ElevationUpdaterClient {
     
 
-    private GpxList gpxList=new GpxList(GpxType.TRK, new MaxSpeed.Samples());
+    private GpxList gpxList=new GpxList(GpxType.TRK, new MaxSpeed.Samples(), AutoPause.NULL);
 
     private boolean readyAndLoaded = false;
 
@@ -42,7 +44,7 @@ public class GpxObjectStatic extends GpxObject implements ElevationUpdaterClient
         file = FocAndroid.factory(sc.getContext(), id);
     }
 
-    
+
     @Override
     public void onInsert(ServiceContext sc) {
         reload(sc);
@@ -68,8 +70,16 @@ public class GpxObjectStatic extends GpxObject implements ElevationUpdaterClient
                     try {
                         if (handle instanceof GpxObjectStatic) {
 
+                            SolidAutopause spause = new SolidAutopause(sc.getContext());
+                            AutoPause pause = new AutoPause.Samples(
+                                    spause.getTriggerSpeed(),
+                                    spause.getTriggerLevel());
+
                             GpxListReader reader =
-                                    new GpxListReader(file);
+                                    new GpxListReader(
+                                            file,
+                                            pause);
+
                             if (canContinue()) {
                                 gpxList = reader.getGpxList();
                                 readyAndLoaded = true;

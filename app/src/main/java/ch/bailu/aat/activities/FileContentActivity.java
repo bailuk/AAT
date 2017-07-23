@@ -3,7 +3,9 @@ package ch.bailu.aat.activities;
 import android.os.Bundle;
 import android.view.View;
 
+import ch.bailu.aat.description.AutoPauseDescription;
 import ch.bailu.aat.description.AverageSpeedDescription;
+import ch.bailu.aat.description.AverageSpeedDescriptionAP;
 import ch.bailu.aat.description.CaloriesDescription;
 import ch.bailu.aat.description.ContentDescription;
 import ch.bailu.aat.description.DateDescription;
@@ -49,8 +51,10 @@ public class FileContentActivity extends AbsFileContentActivity{
                 new DateDescription(this),
                 new EndDateDescription(this),
                 new PauseDescription(this),
+                new AutoPauseDescription(this),
                 new DistanceDescription(this),
                 new AverageSpeedDescription(this),
+                new AverageSpeedDescriptionAP(this),
                 new MaximumSpeedDescription(this),
                 new CaloriesDescription(this),
                 new TrackSizeDescription(this),

@@ -4,6 +4,7 @@ import android.content.Context;
 
 import java.io.IOException;
 
+import ch.bailu.aat.gpx.AutoPause;
 import ch.bailu.aat.gpx.GpxAttributesStatic;
 import ch.bailu.aat.gpx.GpxList;
 import ch.bailu.aat.gpx.GpxPoint;
@@ -12,6 +13,8 @@ import ch.bailu.aat.gpx.MaxSpeed;
 import ch.bailu.aat.gpx.interfaces.GpxPointInterface;
 import ch.bailu.aat.gpx.interfaces.GpxType;
 import ch.bailu.aat.gpx.writer.GpxListWriter;
+import ch.bailu.aat.preferences.SolidAutopause;
+import ch.bailu.aat.preferences.SolidTrackerAutopause;
 import ch.bailu.aat.util.fs.AppDirectory;
 import ch.bailu.aat.util.ui.AppLog;
 import ch.bailu.simpleio.foc.Foc;
@@ -20,7 +23,7 @@ public class TrackLogger extends Logger {
     final public static int MIN_TRACKPOINTS=5;
 
     private boolean requestSegment=true;
-    private final GpxList track=new GpxList(GpxType.TRK, new MaxSpeed.Samples());
+    private final GpxList track;
 
     final private Foc logFile;
     final private GpxListWriter writer;
@@ -32,6 +35,7 @@ public class TrackLogger extends Logger {
         context=c;
         presetIndex=preset;
 
+        track = createTrack(context);
         new TrackCrashRestorer(context, presetIndex);
         
         logFile = AppDirectory.getLogFile(context);
@@ -41,6 +45,13 @@ public class TrackLogger extends Logger {
         setVisibleTrackSegment(track.getDelta());
     }
 
+    private static GpxList createTrack(Context c) {
+        SolidAutopause spause = new SolidAutopause(c);
+
+        return new GpxList(GpxType.TRK,
+                new MaxSpeed.Samples(),
+                new AutoPause.Samples(spause.getTriggerSpeed(), spause.getTriggerLevel()));
+    }
 
     @Override
     public Foc getFile() {

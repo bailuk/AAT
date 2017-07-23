@@ -4,6 +4,7 @@ import android.content.Context;
 
 import java.io.IOException;
 
+import ch.bailu.aat.gpx.AutoPause;
 import ch.bailu.aat.gpx.GpxList;
 import ch.bailu.aat.gpx.parser.GpxListReader;
 import ch.bailu.aat.gpx.writer.GpxListWriter;
@@ -44,15 +45,15 @@ public class TestGpx extends UnitTest {
 
 
     public void testFile(Foc fileA, Foc fileB) throws IOException, AssertionError {
-            GpxList listA= new GpxListReader(fileA).getGpxList();
-            GpxList listB=new GpxListReader(fileB).getGpxList();
+            GpxList listA= new GpxListReader(fileA, AutoPause.NULL).getGpxList();
+            GpxList listB=new GpxListReader(fileB, AutoPause.NULL).getGpxList();
             
             Foc fileCopy = getTestDirectory(getContext()).child("test_copy.gpx");
             GpxListWriter writer = new GpxListWriter(listA, fileCopy);
             writer.flushOutput();
             writer.close();
             
-            GpxList listC=new GpxListReader(fileCopy).getGpxList();
+            GpxList listC=new GpxListReader(fileCopy, AutoPause.NULL).getGpxList();
             
 
             assertListEquals(listA, listB);

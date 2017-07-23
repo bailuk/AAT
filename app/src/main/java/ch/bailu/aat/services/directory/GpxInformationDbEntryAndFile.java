@@ -60,4 +60,13 @@ public class GpxInformationDbEntryAndFile extends GpxInformationDbEntry implemen
         return super.getMaximumSpeed();
     }
 
+
+    @Override
+    public long getAutoPause() {
+
+        if (isLoaded()) {
+            return ((GpxObject)handle).getGpxList().getDelta().getAutoPause();
+        }
+        return super.getAutoPause();
+    }
 }

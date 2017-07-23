@@ -7,7 +7,7 @@ import java.util.Locale;
 import ch.bailu.aat.R;
 
 public class SolidAutopause extends SolidIndexList {
-    private final static String KEY="autopause";
+    protected final static String KEY="autopause";
     private final Context context;
     
     
@@ -31,12 +31,20 @@ public class SolidAutopause extends SolidIndexList {
     
     private final SolidUnit sunit;
 
-    public SolidAutopause(Context c, int i) {
-        super(Storage.preset(c), KEY+i);
+    protected SolidAutopause(Context c, String key) {
+        super(Storage.preset(c), key);
+
         context=c;
         sunit = new SolidUnit(context);
+
     }
-    
+
+    public SolidAutopause(Context c) {
+        this(c, KEY);
+    }
+
+
+
     public float getTriggerSpeed() {
         return SPEED_VALUES[getIndex()];
     }

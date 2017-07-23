@@ -5,6 +5,7 @@ import android.view.ViewGroup;
 
 import ch.bailu.aat.description.AltitudeDescription;
 import ch.bailu.aat.description.AverageSpeedDescription;
+import ch.bailu.aat.description.AverageSpeedDescriptionAP;
 import ch.bailu.aat.description.CurrentSpeedDescription;
 import ch.bailu.aat.description.DistanceDescription;
 import ch.bailu.aat.description.MaximumSpeedDescription;
@@ -67,8 +68,9 @@ public class CockpitActivity extends AbsDispatcher{
         c.add(this, new CurrentSpeedDescription(this), InfoID.LOCATION);
         c.add(this, new AltitudeDescription(this), InfoID.LOCATION);
         c.add(this, new PredictiveTimeDescription(this), InfoID.TRACKER_TIMER);
+        c.addC(this, new AverageSpeedDescriptionAP(this), InfoID.TRACKER);
         c.addC(this, new DistanceDescription(this), InfoID.TRACKER);
-        c.addC(this, new AverageSpeedDescription(this), InfoID.TRACKER);
+        c.add(this, new AverageSpeedDescription(this), InfoID.TRACKER);
         c.add(this, new MaximumSpeedDescription(this), InfoID.TRACKER);
 
         return c;
