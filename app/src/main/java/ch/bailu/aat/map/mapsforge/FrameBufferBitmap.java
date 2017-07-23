@@ -17,11 +17,8 @@ package ch.bailu.aat.map.mapsforge;
 import org.mapsforge.core.graphics.Bitmap;
 import org.mapsforge.core.graphics.GraphicFactory;
 import org.mapsforge.core.model.Dimension;
-import org.mapsforge.map.view.FrameBufferHA;
 
 import java.util.logging.Logger;
-
-import ch.bailu.aat.util.ui.AppLog;
 
 public class FrameBufferBitmap {
     private static final Logger LOGGER = Logger.getLogger(FrameBufferBitmap.class.getName());

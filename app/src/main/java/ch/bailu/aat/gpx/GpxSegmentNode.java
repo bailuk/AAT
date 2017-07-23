@@ -60,6 +60,16 @@ public class GpxSegmentNode extends SegmentNode implements GpxBigDeltaInterface 
         return delta.getAutoPause();
     }
 
+    @Override
+    public short getAscend() {
+        return delta.getAscend();
+    }
+
+    @Override
+    public short getDescend() {
+        return delta.getDescend();
+    }
+
 
     public long getStartTime() {
         return delta.getStartTime();

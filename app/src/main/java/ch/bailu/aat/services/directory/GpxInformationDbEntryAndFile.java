@@ -69,4 +69,24 @@ public class GpxInformationDbEntryAndFile extends GpxInformationDbEntry implemen
         }
         return super.getAutoPause();
     }
+
+    @Override
+    public short getAscend() {
+
+        if (isLoaded()) {
+            return ((GpxObject)handle).getGpxList().getDelta().getAscend();
+        }
+        return super.getAscend();
+    }
+
+
+    @Override
+    public short getDescend() {
+
+        if (isLoaded()) {
+            return ((GpxObject)handle).getGpxList().getDelta().getDescend();
+        }
+        return super.getDescend();
+    }
+
 }

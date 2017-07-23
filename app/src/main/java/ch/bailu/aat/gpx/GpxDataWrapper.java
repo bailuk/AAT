@@ -74,6 +74,16 @@ public class GpxDataWrapper implements GpxDeltaPointInterface, GpxBigDeltaInterf
     }
 
     @Override
+    public short getAscend() {
+        return summary.getAscend();
+    }
+
+    @Override
+    public short getDescend() {
+        return summary.getDescend();
+    }
+
+    @Override
     public short getAltitude() {
         return point.getAltitude();
     }

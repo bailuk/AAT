@@ -4,8 +4,10 @@ import android.os.Bundle;
 import android.view.View;
 
 import ch.bailu.aat.description.AltitudeDescription;
+import ch.bailu.aat.description.AscendDescription;
 import ch.bailu.aat.description.AverageSpeedDescriptionAP;
 import ch.bailu.aat.description.CurrentSpeedDescription;
+import ch.bailu.aat.description.DescendDescription;
 import ch.bailu.aat.description.DistanceDescription;
 import ch.bailu.aat.description.PredictiveTimeDescription;
 import ch.bailu.aat.dispatcher.CurrentLocationSource;
@@ -47,6 +49,7 @@ public class CockpitSplitActivity extends AbsDispatcher{
         final MapViewInterface mapSlave = MapFactory.DEF(this, SOLID_KEY).split();
         final CockpitView cockpitA = new CockpitView(this);
         final CockpitView cockpitB = new CockpitView(this);
+        final CockpitView cockpitC = new CockpitView(this);
 
         cockpitA.addC(this, new DistanceDescription(this), InfoID.TRACKER);
         cockpitA.add(this, new AltitudeDescription(this), InfoID.LOCATION);
@@ -55,10 +58,16 @@ public class CockpitSplitActivity extends AbsDispatcher{
         cockpitB.add(this, new CurrentSpeedDescription(this), InfoID.LOCATION);
         cockpitB.addC(this, new AverageSpeedDescriptionAP(this), InfoID.TRACKER);
 
+        cockpitC.addC(this, new DistanceDescription(this), InfoID.TRACKER);
+        cockpitC.add(this, new AltitudeDescription(this), InfoID.LOCATION);
+        cockpitC.add(this, new AscendDescription(this), InfoID.TRACKER);
+        cockpitC.add(this, new DescendDescription(this), InfoID.TRACKER);
+
 
         MultiView mv = new MultiView(this, SOLID_KEY);
         mv.add(cockpitA);
         mv.add(cockpitB);
+        mv.add(cockpitC);
         mv.add(new DistanceAltitudeGraphView(this, this, InfoID.TRACKER));
         mv.add(new DistanceSpeedGraphView(this, this, InfoID.TRACKER));
         mv.add(mapSlave.toView());

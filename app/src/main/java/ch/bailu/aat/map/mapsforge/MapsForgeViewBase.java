@@ -76,6 +76,7 @@ public class MapsForgeViewBase extends MapView implements
                 AndroidGraphicFactory.INSTANCE);
 
         frameBufferControllerHack = FrameBufferController.create(this.frameBufferHack, getModel());
+
     }
 
 
@@ -280,7 +281,7 @@ public class MapsForgeViewBase extends MapView implements
     public void onDestroy() {
         disableLayers();
         destroyAll();
-        frameBufferControllerHack.destroy();
+       frameBufferControllerHack.destroy();
         frameBufferHack.destroy();
     }
 }
