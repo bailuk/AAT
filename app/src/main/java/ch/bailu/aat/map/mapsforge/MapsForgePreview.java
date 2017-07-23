@@ -23,13 +23,10 @@ import ch.bailu.aat.map.MapDensity;
 import ch.bailu.aat.map.layer.gpx.GpxDynLayer;
 import ch.bailu.aat.map.tile.TileProviderStatic;
 import ch.bailu.aat.map.tile.source.CacheOnlySource;
-import ch.bailu.aat.map.tile.source.CachedSource;
 import ch.bailu.aat.map.tile.source.DownloadSource;
 import ch.bailu.aat.map.tile.source.MapsForgeSource;
 import ch.bailu.aat.map.tile.source.Source;
-import ch.bailu.aat.preferences.SolidEnableTileCache;
 import ch.bailu.aat.preferences.SolidMapTileStack;
-import ch.bailu.aat.preferences.SolidPreset;
 import ch.bailu.aat.preferences.SolidRenderTheme;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.util.AppBroadcaster;
@@ -40,7 +37,7 @@ import ch.bailu.simpleio.foc.Foc;
 public class MapsForgePreview extends MapsForgeViewBase {
     private static final int BITMAP_SIZE=128;
     private static final Dimension DIM = new Dimension(BITMAP_SIZE, BITMAP_SIZE);
-    private static final Source SOURCE = new CacheOnlySource(DownloadSource.MAPNIK);
+    private static final Source MAPNIK = new CacheOnlySource(DownloadSource.MAPNIK);
 
     private final Foc               imageFile;
     private final TileProviderStatic provider;
@@ -94,7 +91,7 @@ public class MapsForgePreview extends MapsForgeViewBase {
             return new CacheOnlySource(new MapsForgeSource(theme));
         }
 
-        return SOURCE;
+        return MAPNIK;
     }
 
 
