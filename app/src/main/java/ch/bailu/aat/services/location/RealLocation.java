@@ -54,9 +54,10 @@ public class RealLocation extends LocationStackChainedItem
         public float getSpeed() {
             return location.getSpeed();
         }
+
         @Override
         public short getAltitude() {
-            return (short)location.getAltitude();
+            return (short)Math.round(location.getAltitude());
         }
 
         @Override
