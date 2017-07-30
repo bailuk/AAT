@@ -21,14 +21,14 @@ import ch.bailu.aat.services.dem.tile.DemSplitter;
 import ch.bailu.aat.services.dem.updater.ElevationUpdaterClient;
 import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.util.graphic.SyncTileBitmap;
-import ch.bailu.aat.util.ui.AppLog;
 
 public abstract class ElevationTile extends TileObject implements ElevationUpdaterClient{
 
     private final Tile mapTile;
     private final int split;
     
-    private boolean updateLock=false;
+    private boolean isUpdating = false;
+    private boolean isInitializing = true;
     
     
     private final SyncTileBitmap bitmap = new SyncTileBitmap();
@@ -69,6 +69,7 @@ public abstract class ElevationTile extends TileObject implements ElevationUpdat
     public DemProvider factorySplitter(DemProvider dem) {
         return DemSplitter.factory(dem);
     }
+
     public DemGeoToIndex factoryGeoToIndex(DemDimension dim) {
         return new DemGeoToIndex(dim);
     }
@@ -106,7 +107,7 @@ public abstract class ElevationTile extends TileObject implements ElevationUpdat
 
     @Override
     public void onDownloaded(String id, String url, ServiceContext sc) {
-        if (subTiles.haveID(url)) {
+        if (subTiles.haveID(url) && isInitializing == false) {
             AppBroadcaster.broadcast(sc.getContext(), AppBroadcaster.REQUEST_ELEVATION_UPDATE, toString());
         }
     }
@@ -120,7 +121,7 @@ public abstract class ElevationTile extends TileObject implements ElevationUpdat
 
 
     public boolean isReadyAndLoaded() {
-        return updateLock == false;
+        return isUpdating == false;
     }
 
 
@@ -129,13 +130,6 @@ public abstract class ElevationTile extends TileObject implements ElevationUpdat
         return isReadyAndLoaded() && subTiles.size() == 0;
     }
 
-
-    /*
-    @Override
-    public boolean isUpdating() {
-        return updateLock;
-    }
-*/
 
     @Override
     public SrtmCoordinates[] getSrtmTileCoordinates() {
@@ -149,9 +143,9 @@ public abstract class ElevationTile extends TileObject implements ElevationUpdat
         final int key = tile.hashCode();
         final SubTile span =  subTiles.get(key);
 
-        if (span != null && tile.isLoaded()) {
+        if (span != null && isInitializing == false && tile.isLoaded()) {
             subTiles.remove(key);
-            updateLock=true;
+            isUpdating =true;
 
             cs.getBackgroundService().process(span.painterFactory(cs, toString(), tile));
         }
@@ -190,7 +184,7 @@ public abstract class ElevationTile extends TileObject implements ElevationUpdat
                     interR.height());
 
 
-            updateLock = false;
+            isUpdating = false;
         }
         return interR.width()*interR.height()*2;
     }
@@ -204,6 +198,8 @@ public abstract class ElevationTile extends TileObject implements ElevationUpdat
         raster.initializeWGS84Raster(laSpan, loSpan, getTile());
         raster.initializeIndexRaster(getGeoToIndex());
         subTiles.generateSubTileList(laSpan, loSpan);
+
+        isInitializing = false;
 
         return TileObject.TILE_SIZE * 2;
     }
