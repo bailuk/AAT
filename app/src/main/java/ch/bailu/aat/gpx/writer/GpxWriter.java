@@ -3,7 +3,9 @@ package ch.bailu.aat.gpx.writer;
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
-import java.util.Locale;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.TimeZone;
 
 import ch.bailu.aat.gpx.interfaces.GpxPointInterface;
 import ch.bailu.aat.gpx.interfaces.GpxType;
@@ -11,11 +13,17 @@ import ch.bailu.aat.util.ui.AppTheme;
 import ch.bailu.simpleio.foc.Foc;
 
 public abstract class GpxWriter {
+    private final static TimeZone UTC = TimeZone.getTimeZone("UTC");
+    private final static DateFormat TIME_FORMAT =
+            new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+
+
     private BufferedWriter output=null;
 
 
     public GpxWriter(Foc file) throws IOException, SecurityException {
         output = new BufferedWriter(new OutputStreamWriter(file.openW()),8*1024);
+        TIME_FORMAT.setTimeZone(UTC);
 
     }
     public static GpxWriter factory(Foc file, int type) throws IOException, SecurityException{
@@ -59,7 +67,7 @@ public abstract class GpxWriter {
     }
 
     public void writeTimeStamp(long time) throws IOException {
-        writeString(String.format((Locale)null,"<time>%tFT%tT.%tL</time>", time,time,time)); 
+        writeString("<time>" + TIME_FORMAT.format(time) + "</time>");
     }
 
 
