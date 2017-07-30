@@ -2,6 +2,7 @@ package ch.bailu.aat.gpx.parser;
 
 import java.io.IOException;
 
+import ch.bailu.aat.gpx.AltitudeDelta;
 import ch.bailu.aat.gpx.AutoPause;
 import ch.bailu.aat.gpx.GpxList;
 import ch.bailu.aat.gpx.GpxPoint;
@@ -14,9 +15,9 @@ import ch.bailu.simpleio.parser.OnParsedInterface;
 public class GpxListReader {
     private final ThreadControl threadControl;
 
-    private final OnParsed way = new OnParsed(GpxType.WAY, AutoPause.NULL);
+    private final OnParsed way = new OnParsed(GpxType.WAY, MaxSpeed.NULL, AutoPause.NULL, AltitudeDelta.NULL);
     private final OnParsed track;
-    private final OnParsed route = new OnParsed(GpxType.RTE, AutoPause.NULL);
+    private final OnParsed route = new OnParsed(GpxType.RTE, MaxSpeed.NULL, AutoPause.NULL, AltitudeDelta.NULL);
 
     private final XmlParser parser;
 
@@ -29,7 +30,11 @@ public class GpxListReader {
     public GpxListReader (ThreadControl c, Foc in, AutoPause pause)
             throws IOException, SecurityException {
 
-        track = new OnParsed(GpxType.TRK, pause);
+        track = new OnParsed(
+                GpxType.TRK,
+                new MaxSpeed.Samples(),
+                pause,
+                new AltitudeDelta.LastAverage());
 
         threadControl=c;
 
@@ -54,8 +59,8 @@ public class GpxListReader {
         private final GpxList gpxList;
         private boolean  haveNewSegment=true;
 
-        public OnParsed(int type, AutoPause pause) {
-            gpxList = new GpxList(type, new MaxSpeed.Samples(), pause);
+        public OnParsed(int type, MaxSpeed speed, AutoPause pause, AltitudeDelta altitude) {
+            gpxList = new GpxList(type, speed, pause, altitude);
         }
 
 

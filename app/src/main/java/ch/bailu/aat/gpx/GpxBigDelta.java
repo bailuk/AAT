@@ -6,11 +6,12 @@ import ch.bailu.aat.gpx.interfaces.GpxBigDeltaInterface;
 
 
 public class GpxBigDelta implements GpxBigDeltaInterface {
-    public final static GpxBigDelta NULL= new GpxBigDelta(new MaxSpeed.Raw(), AutoPause.NULL);
+    public final static GpxBigDelta NULL= new GpxBigDelta(
+            MaxSpeed.NULL, AutoPause.NULL, AltitudeDelta.NULL);
 
     private final MaxSpeed maximumSpeed;
     private final AutoPause autoPause;
-    private final AltitudeDelta altitude = new AltitudeDelta();
+    private final AltitudeDelta altitudeDelta;
 
     private float distance=0;
 
@@ -23,9 +24,10 @@ public class GpxBigDelta implements GpxBigDeltaInterface {
     private BoundingBoxE6 boundingBox = null;
 
 
-    public GpxBigDelta(MaxSpeed max, AutoPause pause) {
+    public GpxBigDelta(MaxSpeed max, AutoPause pause, AltitudeDelta altitude) {
         maximumSpeed = max;
         autoPause = pause;
+        altitudeDelta = altitude;
     }
 
 
@@ -34,7 +36,7 @@ public class GpxBigDelta implements GpxBigDeltaInterface {
         _update(p);
 
         if (autoPause.update(p)) {
-            altitude.add(p.getAltitude(), p.getDistance());
+            altitudeDelta.add(p.getAltitude(), p.getDistance());
         }
     }
 
@@ -154,17 +156,17 @@ public class GpxBigDelta implements GpxBigDeltaInterface {
 
     @Override
     public short getAscend() {
-        return altitude.getAscend();
+        return altitudeDelta.getAscend();
     }
 
     @Override
     public short getDescend() {
-        return altitude.getDescend();
+        return altitudeDelta.getDescend();
     }
 
     @Override
     public short getSlope() {
-        return altitude.getSlope();
+        return altitudeDelta.getSlope();
     }
 
 

@@ -7,7 +7,7 @@ import ch.bailu.aat.gpx.segmented_list.SegmentNode;
 
 public class GpxSegmentNode extends SegmentNode implements GpxBigDeltaInterface {
 
-    private final GpxBigDelta delta=new GpxBigDelta(new MaxSpeed.Raw(), AutoPause.NULL);
+    private final GpxBigDelta delta=new GpxBigDelta(MaxSpeed.NULL, AutoPause.NULL, AltitudeDelta.NULL);
 
     
     public GpxSegmentNode(GpxPointNode n) {

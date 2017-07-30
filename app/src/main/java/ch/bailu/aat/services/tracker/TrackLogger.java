@@ -4,6 +4,7 @@ import android.content.Context;
 
 import java.io.IOException;
 
+import ch.bailu.aat.gpx.AltitudeDelta;
 import ch.bailu.aat.gpx.AutoPause;
 import ch.bailu.aat.gpx.GpxAttributesStatic;
 import ch.bailu.aat.gpx.GpxList;
@@ -50,7 +51,10 @@ public class TrackLogger extends Logger {
 
         return new GpxList(GpxType.TRK,
                 new MaxSpeed.Samples(),
-                new AutoPause.Samples(spause.getTriggerSpeed(), spause.getTriggerLevel()));
+                new AutoPause.Samples(
+                        spause.getTriggerSpeed(),
+                        spause.getTriggerLevel()),
+                new AltitudeDelta.LastAverage());
     }
 
     @Override

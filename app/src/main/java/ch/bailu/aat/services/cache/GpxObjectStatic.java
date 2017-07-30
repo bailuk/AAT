@@ -30,7 +30,7 @@ import ch.bailu.simpleio.foc.Foc;
 public class GpxObjectStatic extends GpxObject implements ElevationUpdaterClient {
     
 
-    private GpxList gpxList=new GpxList(GpxType.TRK, new MaxSpeed.Samples(), AutoPause.NULL);
+    private GpxList gpxList = GpxList.NULL_TRACK;
 
     private boolean readyAndLoaded = false;
 

@@ -2,6 +2,7 @@ package ch.bailu.aat.services.directory;
 
 import android.database.Cursor;
 
+import ch.bailu.aat.gpx.AltitudeDelta;
 import ch.bailu.aat.gpx.AutoPause;
 import ch.bailu.aat.gpx.GpxAttributesStatic;
 import ch.bailu.aat.gpx.GpxBigDelta;
@@ -19,14 +20,14 @@ public class GpxInformationDbSummary extends GpxInformation {
     
     public GpxInformationDbSummary(Foc dir, Cursor cursor) {
         directory = dir;
-        list = new GpxList(GpxType.WAY, new MaxSpeed.Raw(), AutoPause.NULL);
+        list = new GpxList(GpxType.WAY, new MaxSpeed.Raw2(), AutoPause.NULL, AltitudeDelta.NULL);
         
-        GpxBigDelta summary=new GpxBigDelta(new MaxSpeed.Raw(), AutoPause.NULL);
+        GpxBigDelta summary=new GpxBigDelta(new MaxSpeed.Raw2(), AutoPause.NULL, AltitudeDelta.NULL);
         GpxInformation entry = new GpxInformationDbEntry(cursor, dir);
         
         cursor.moveToPosition(-1);
         while (cursor.moveToNext()) {
-            addEntryToList(entry, cursor);
+            addEntryToList(entry);
             summary.updateWithPause(entry);
         }
         setVisibleTrackSegment(summary);
@@ -34,7 +35,7 @@ public class GpxInformationDbSummary extends GpxInformation {
         
     }
 
-    private void addEntryToList(GpxInformation entry, Cursor cursor) {
+    private void addEntryToList(GpxInformation entry) {
         final GpxPoint point = new GpxPoint(
                 entry.getBoundingBox().getCenter(),
                 0, entry.getTimeStamp());

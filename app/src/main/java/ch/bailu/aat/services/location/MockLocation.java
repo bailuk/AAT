@@ -5,6 +5,7 @@ import android.content.Context;
 import java.io.IOException;
 
 import ch.bailu.aat.coordinates.BoundingBoxE6;
+import ch.bailu.aat.gpx.AltitudeDelta;
 import ch.bailu.aat.gpx.AutoPause;
 import ch.bailu.aat.gpx.GpxList;
 import ch.bailu.aat.gpx.GpxPointNode;
@@ -34,7 +35,7 @@ public class MockLocation extends LocationStackChainedItem implements Runnable{
     public MockLocation(Context c, LocationStackItem i) {
         super(i);
 
-        mockData = new GpxList(GpxType.TRK, new MaxSpeed.Raw(), AutoPause.NULL);
+        mockData = new GpxList(GpxType.TRK, MaxSpeed.NULL, AutoPause.NULL, AltitudeDelta.NULL);
         timer=new Timer(this, INTERVAL);
 
         try {

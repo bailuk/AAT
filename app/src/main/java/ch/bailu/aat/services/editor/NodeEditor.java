@@ -1,5 +1,6 @@
 package ch.bailu.aat.services.editor;
 
+import ch.bailu.aat.gpx.AltitudeDelta;
 import ch.bailu.aat.gpx.AutoPause;
 import ch.bailu.aat.gpx.GpxAttributesStatic;
 import ch.bailu.aat.gpx.GpxList;
@@ -22,7 +23,7 @@ public class NodeEditor {
     }
 
     public NodeEditor(int t) {
-        gpxList = new GpxList(t, new MaxSpeed.Raw(), AutoPause.NULL);
+        gpxList = new GpxList(t, MaxSpeed.NULL, AutoPause.NULL, AltitudeDelta.NULL);
         node = new GpxPointFirstNode(GpxPoint.NULL, GpxAttributesStatic.NULL_ATTRIBUTES);
     }
 
@@ -76,8 +77,9 @@ public class NodeEditor {
 
     private class Unlinker extends GpxListWalker {
         private final GpxList newList = new GpxList(gpxList.getDelta().getType(),
-                new MaxSpeed.Raw(),
-                AutoPause.NULL);
+                MaxSpeed.NULL,
+                AutoPause.NULL,
+                AltitudeDelta.NULL);
 
         private boolean startSegment=false;
         private NodeEditor newNode = null;
@@ -131,7 +133,7 @@ public class NodeEditor {
 
     private class Inserter extends GpxListWalker {
         private final GpxList newList = new GpxList(gpxList.getDelta().getType(),
-                new MaxSpeed.Raw(), AutoPause.NULL);
+                MaxSpeed.NULL, AutoPause.NULL, AltitudeDelta.NULL);
 
         private NodeEditor newNode = new NodeEditor(gpxList.getDelta().getType());
         private boolean startSegment=false;

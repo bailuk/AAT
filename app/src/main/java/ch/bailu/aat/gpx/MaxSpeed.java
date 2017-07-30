@@ -2,14 +2,24 @@ package ch.bailu.aat.gpx;
 
 public abstract class MaxSpeed {
 
-    public static final MaxSpeed NULL = new Raw();
+    public static final MaxSpeed NULL = new MaxSpeed() {
+        @Override
+        public float get() {
+            return 0;
+        }
+
+        @Override
+        public void add(float speed) {
+
+        }
+    };
 
     public abstract float get();
     public abstract void add(float speed);
 
 
 
-    public static class Raw extends MaxSpeed {
+    public static class Raw2 extends MaxSpeed {
 
         private float maximum=0f;
 
