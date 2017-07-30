@@ -1,31 +1,50 @@
 package ch.bailu.aat.gpx;
 
 public class AverageAltitude {
-    private int samples;
+    private static final int SAMPLES= 10;
+    private static final float SAMPLE_DISTANCE = 5;
+
+    private int sample;
+    private float distance, tdistance;
 
     private float altitude;
 
-    public AverageAltitude() {
 
+    public boolean add(float alt, float dist) {
+        distance += dist;
+        tdistance += dist;
+
+        if (distance > SAMPLE_DISTANCE) {
+            distance = 0f;
+            return add(alt);
+        }
+
+        return false;
     }
 
-    public void add(float alt) {
-        altitude +=alt;
-        altitude /=2f;
+    public boolean add(float alt) {
+        if (sample == 0) {
+            tdistance = 0;
+            altitude = alt;
+        } else {
+            altitude += alt;
+            altitude /= 2f;
+        }
 
-        samples++;
+        sample++;
+
+        if (sample < SAMPLES) {
+            return false;
+
+        } else {
+            sample = 0;
+            return true;
+        }
     }
 
-    public void reset(float alt) {
-        altitude = alt;
-        samples = 1;
-    }
-
-    public float get() {
+    public float getAltitude() {
         return altitude;
     }
+    public float getDistance() { return tdistance;}
 
-    public int getSamples() {
-        return samples;
-    }
 }

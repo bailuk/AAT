@@ -1,15 +1,19 @@
 package ch.bailu.aat.activities;
 
 import android.os.Bundle;
+import android.view.View;
 import android.view.ViewGroup;
 
 import ch.bailu.aat.description.AltitudeDescription;
+import ch.bailu.aat.description.AscendDescription;
 import ch.bailu.aat.description.AverageSpeedDescription;
 import ch.bailu.aat.description.AverageSpeedDescriptionAP;
 import ch.bailu.aat.description.CurrentSpeedDescription;
+import ch.bailu.aat.description.DescendDescription;
 import ch.bailu.aat.description.DistanceDescription;
 import ch.bailu.aat.description.MaximumSpeedDescription;
 import ch.bailu.aat.description.PredictiveTimeDescription;
+import ch.bailu.aat.description.SlopeDescription;
 import ch.bailu.aat.dispatcher.CurrentLocationSource;
 import ch.bailu.aat.dispatcher.EditorSource;
 import ch.bailu.aat.dispatcher.OverlaySource;
@@ -62,18 +66,18 @@ public class CockpitActivity extends AbsDispatcher{
     }
 
 
-    private CockpitView createCockpit() {
-        CockpitView c = new CockpitView(this);
+    private View createCockpit() {
+        CockpitView c1 = new CockpitView(this);
 
-        c.add(this, new CurrentSpeedDescription(this), InfoID.LOCATION);
-        c.add(this, new AltitudeDescription(this), InfoID.LOCATION);
-        c.add(this, new PredictiveTimeDescription(this), InfoID.TRACKER_TIMER);
-        c.addC(this, new AverageSpeedDescriptionAP(this), InfoID.TRACKER);
-        c.addC(this, new DistanceDescription(this), InfoID.TRACKER);
-        c.add(this, new AverageSpeedDescription(this), InfoID.TRACKER);
-        c.add(this, new MaximumSpeedDescription(this), InfoID.TRACKER);
 
-        return c;
+        c1.add(this, new CurrentSpeedDescription(this), InfoID.LOCATION);
+        c1.add(this, new AltitudeDescription(this), InfoID.LOCATION);
+        c1.add(this, new PredictiveTimeDescription(this), InfoID.TRACKER_TIMER);
+        c1.addC(this, new DistanceDescription(this), InfoID.TRACKER);
+        c1.addC(this, new AverageSpeedDescriptionAP(this), InfoID.TRACKER);
+        c1.add(this, new MaximumSpeedDescription(this), InfoID.TRACKER);
+
+        return c1;
     }
 
 

@@ -32,7 +32,10 @@ public class GpxBigDelta implements GpxBigDeltaInterface {
 
     public void update(GpxPointNode p) {
         _update(p);
-        autoPause.update(p);
+
+        if (autoPause.update(p)) {
+            altitude.add(p.getAltitude(), p.getDistance());
+        }
     }
 
 
@@ -52,8 +55,6 @@ public class GpxBigDelta implements GpxBigDeltaInterface {
 
         addBounding(p.getLatitudeE6(), p.getLongitudeE6());
         setMaximumSpeed(p.getSpeed());
-
-        altitude.add(p.getAltitude());
     }
 
     public void updateWithPause(GpxBigDeltaInterface delta) {
@@ -159,6 +160,11 @@ public class GpxBigDelta implements GpxBigDeltaInterface {
     @Override
     public short getDescend() {
         return altitude.getDescend();
+    }
+
+    @Override
+    public short getSlope() {
+        return altitude.getSlope();
     }
 
 

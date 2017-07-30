@@ -1,17 +1,3 @@
-/*
- * Copyright 2017 Lukas Bai <bailu@bailu.ch>
- *
- * This program is free software: you can redistribute it and/or modify it under the
- * terms of the GNU Lesser General Public License as published by the Free Software
- * Foundation, either version 3 of the License, or (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- * PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public License along with
- * this program. If not, see <http://www.gnu.org/licenses/>.
- */
 package ch.bailu.aat.map.mapsforge;
 
 import org.mapsforge.core.graphics.Bitmap;
@@ -20,14 +6,17 @@ import org.mapsforge.core.model.Dimension;
 
 import java.util.logging.Logger;
 
+
 public class FrameBufferBitmap {
     private static final Logger LOGGER = Logger.getLogger(FrameBufferBitmap.class.getName());
 
     private final Lock frameLock = new Lock();
-    private final Lock allowSwap = new Lock();
 
     private Bitmap bitmap = null;
+
     private BitmapRequest bitmapRequest = null;
+    private final Object bitmapRequestSync = new Object();
+
 
 
     public Bitmap lock() {
@@ -42,32 +31,29 @@ public class FrameBufferBitmap {
     }
 
     private void createBitmapIfRequested() {
-        if (bitmapRequest != null) {
-            destroyBitmap();
-            bitmap = bitmapRequest.create();
-            bitmapRequest = null;
+        synchronized(bitmapRequestSync) {
+            if (bitmapRequest != null) {
+
+                destroyBitmap();
+                bitmap = bitmapRequest.create();
+
+                bitmapRequest = null;
+            }
         }
     }
 
-    public Bitmap lockWhenSwapped() {
-        allowSwap.waitDisabled();
-        return lock();
-    }
 
-
-
-
-    public void releaseAndAllowSwap() {
-        frameLock.disable();
+    public void release() {
         synchronized(frameLock) {
-            if (bitmap != null)
-                allowSwap.enable();
+            frameLock.disable();
         }
     }
 
 
-    public void create(GraphicFactory factory, Dimension dimension, boolean isTransparent) {
-        bitmapRequest = new BitmapRequest(factory, dimension, isTransparent);
+    public void create(GraphicFactory factory, Dimension dimension, int color, boolean isTransparent) {
+        synchronized(bitmapRequestSync) {
+            bitmapRequest = new BitmapRequest(factory, dimension, color, isTransparent);
+        }
     }
 
 
@@ -78,35 +64,30 @@ public class FrameBufferBitmap {
                 destroyBitmap();
             }
         }
-        allowSwap.disable();
+
     }
 
 
     private void destroyBitmap() {
         if (bitmap != null) {
-            LOGGER.warning("destory()");
             bitmap.decrementRefCount();
             bitmap = null;
         }
     }
 
 
-    public static boolean swap(FrameBufferBitmap a, FrameBufferBitmap b) {
-        if (a.allowSwap.isEnabled() && b.allowSwap.isEnabled()) {
-            Bitmap t = a.bitmap;
-            a.bitmap = b.bitmap;
-            b.bitmap = t;
+    public static void swap(FrameBufferBitmap a, FrameBufferBitmap b) {
+        Bitmap t = a.bitmap;
+        a.bitmap = b.bitmap;
+        b.bitmap = t;
 
-            a.allowSwap.disable();
-            b.allowSwap.disable();
-            return true;
-
-        }
-        return false;
+        BitmapRequest r = a.bitmapRequest;
+        a.bitmapRequest = b.bitmapRequest;
+        b.bitmapRequest = r;
     }
 
 
-    private static class Lock {
+    public static class Lock {
         private boolean enabled = false;
 
 
@@ -141,16 +122,26 @@ public class FrameBufferBitmap {
         private final GraphicFactory factory;
         private final Dimension dimension;
         private final boolean transparent;
+        private final int color;
 
-        public BitmapRequest(GraphicFactory f, Dimension d, boolean t) {
+
+        public BitmapRequest(GraphicFactory f, Dimension d, int c, boolean t) {
             factory = f;
             dimension = d;
             transparent = t;
+            color = c;
         }
 
         public Bitmap create() {
-            if (dimension.width > 0 && dimension.height > 0)
-                return factory.createBitmap(dimension.width, dimension.height, transparent);
+            if (dimension.width > 0 && dimension.height > 0) {
+                Bitmap b = factory.createBitmap(
+                        dimension.width,
+                        dimension.height,
+                        transparent);
+
+                b.setBackgroundColor(color);
+                return b;
+            }
             return null;
         }
     }

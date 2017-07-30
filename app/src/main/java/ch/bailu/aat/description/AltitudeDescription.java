@@ -53,13 +53,6 @@ public class AltitudeDescription extends FloatDescription {
     }
     
 
-    /*
-    public static String getValuePercentage(float height, float distance) {
-        
-        if (distance != 0f)
-            return String.format((Locale)null, "%d %%", Math.round(height* 100 / distance));
-        return "";
-    }
-    */
+
     
 }

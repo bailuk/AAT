@@ -1,20 +1,3 @@
-/*
- * Copyright 2010, 2011, 2012, 2013 mapsforge.org
- * Copyright 2014 Ludwig M Brinckmann
- * Copyright 2015-2017 devemux86
- * Copyright 2017 Lukas Bai <bailu@bailu.ch>
- *
- * This program is free software: you can redistribute it and/or modify it under the
- * terms of the GNU Lesser General Public License as published by the Free Software
- * Foundation, either version 3 of the License, or (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- * PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public License along with
- * this program. If not, see <http://www.gnu.org/licenses/>.
- */
 
 package ch.bailu.aat.map.mapsforge;
 
@@ -31,6 +14,7 @@ import org.mapsforge.map.view.FrameBuffer;
 
 public class FrameBufferHack extends FrameBuffer {
 
+
     private static final boolean IS_TRANSPARENT = false;
 
     /*
@@ -44,16 +28,16 @@ public class FrameBufferHack extends FrameBuffer {
 
     private final FrameBufferBitmap odBitmap = new FrameBufferBitmap();
     private final FrameBufferBitmap lmBitmap = new FrameBufferBitmap();
-
-    private final Object dimLock = new Object();
     private MapPosition lmMapPosition;
+
+    private final FrameBufferBitmap.Lock allowSwap = new FrameBufferBitmap.Lock();
+
     private Dimension dimension;
     private final Matrix matrix;
 
     private final DisplayModel displayModel;
     private final FrameBufferModel frameBufferModel;
     private final GraphicFactory graphicFactory;
-
 
 
     public FrameBufferHack(FrameBufferModel frameBufferModel, DisplayModel displayModel,
@@ -65,6 +49,8 @@ public class FrameBufferHack extends FrameBuffer {
 
         this.graphicFactory = graphicFactory;
         this.matrix = graphicFactory.createMatrix();
+
+        allowSwap.disable();
     }
 
 
@@ -73,7 +59,6 @@ public class FrameBufferHack extends FrameBuffer {
      */
     public void draw(GraphicContext graphicContext) {
 
-        graphicContext.fillColor(this.displayModel.getBackgroundColor());
 
         /*
          * Swap bitmaps here (and only here).
@@ -81,11 +66,16 @@ public class FrameBufferHack extends FrameBuffer {
          * This (onDraw()) is allways called when layer manager has finished. This ensures that the
          * last generated frame is allways put on screen.
          */
+
+        // FIXME: reseting the background color is redundant if the background color of the map view is allready set
+        graphicContext.fillColor(this.displayModel.getBackgroundColor());
+
         swapBitmaps();
 
-        Bitmap b = odBitmap.lock();
-        if (b != null) {
-            synchronized(dimLock) {
+        synchronized(matrix) {
+
+            Bitmap b = odBitmap.lock();
+            if (b != null) {
                 graphicContext.drawBitmap(b, this.matrix);
             }
         }
@@ -93,7 +83,7 @@ public class FrameBufferHack extends FrameBuffer {
         /*
          * Release here so destroy() can free resources
          */
-        odBitmap.releaseAndAllowSwap();
+        this.odBitmap.release();
     }
 
 
@@ -102,8 +92,12 @@ public class FrameBufferHack extends FrameBuffer {
          *  Swap bitmaps only if the layerManager is currently not working and
          *  has drawn a new bitmap since the last swap
          */
-        if (FrameBufferBitmap.swap(odBitmap, lmBitmap)) {
-            frameBufferModel.setMapPosition(lmMapPosition);
+        synchronized (allowSwap) {
+            if (allowSwap.isEnabled()) {
+                FrameBufferBitmap.swap(odBitmap, lmBitmap);
+                frameBufferModel.setMapPosition(lmMapPosition);
+                allowSwap.disable();
+            }
         }
     }
 
@@ -118,13 +112,19 @@ public class FrameBufferHack extends FrameBuffer {
          * the screen). This ensures that the layer manager draws not too many frames. (only as
          * much as can get displayed).
          */
-        Bitmap b = lmBitmap.lockWhenSwapped();
 
-        if (b != null) {
-            b.setBackgroundColor(this.displayModel.getBackgroundColor());
+        synchronized (allowSwap) {
+            allowSwap.waitDisabled();
+
+            Bitmap b = lmBitmap.lock();
+
+            if (b != null) {
+                b.setBackgroundColor(this.displayModel.getBackgroundColor());
+            }
+            return b;
         }
 
-        return b;
+
     }
 
 
@@ -132,17 +132,20 @@ public class FrameBufferHack extends FrameBuffer {
      * This is called from <code>LayerManager</code> when drawing is finished.
      */
     public void frameFinished(MapPosition framePosition) {
-        lmBitmap.releaseAndAllowSwap();
-        lmMapPosition = framePosition;
+        synchronized(allowSwap) {
+            lmMapPosition = framePosition;
+            lmBitmap.release();
+
+            allowSwap.enable();
+        }
     }
 
 
 
     public void adjustMatrix(float diffX, float diffY, float scaleFactor, Dimension mapViewDimension,
-                                          float pivotDistanceX, float pivotDistanceY) {
+                             float pivotDistanceX, float pivotDistanceY) {
 
-        synchronized(dimLock) {
-
+        synchronized(matrix) {
             if (this.dimension == null) {
                 return;
             }
@@ -153,38 +156,11 @@ public class FrameBufferHack extends FrameBuffer {
                 // the translation happens only once the zoom is finished.
                 this.matrix.translate(diffX, diffY);
             }
-
             scale(scaleFactor, pivotDistanceX, pivotDistanceY);
         }
 
     }
 
-    public synchronized void destroy() {
-        odBitmap.destroy();
-        lmBitmap.destroy();
-    }
-
-
-
-
-
-
-    public Dimension getDimension() {
-        return this.dimension;
-    }
-
-
-    public void setDimension(Dimension dimension) {
-        synchronized (dimLock) {
-            if (this.dimension != null && this.dimension.equals(dimension)) {
-                return;
-            }
-            this.dimension = dimension;
-
-            odBitmap.create(graphicFactory, dimension, IS_TRANSPARENT);
-            lmBitmap.create(graphicFactory, dimension, IS_TRANSPARENT);
-        }
-    }
 
     private void centerFrameBufferToMapView(Dimension mapViewDimension) {
         float dx = (this.dimension.width - mapViewDimension.width) / -2f;
@@ -199,6 +175,37 @@ public class FrameBufferHack extends FrameBuffer {
             float pivotX = (float) (pivotDistanceX + center.x);
             float pivotY = (float) (pivotDistanceY + center.y);
             this.matrix.scale(scaleFactor, scaleFactor, pivotX, pivotY);
+        }
+    }
+
+
+    public synchronized void destroy() {
+        odBitmap.destroy();
+        lmBitmap.destroy();
+    }
+
+
+
+    public Dimension getDimension() {
+        return this.dimension;
+    }
+
+
+    public void setDimension(Dimension dimension) {
+        synchronized(matrix) {
+            if (this.dimension != null && this.dimension.equals(dimension)) {
+                return;
+            }
+            this.dimension = dimension;
+        }
+
+        synchronized(allowSwap) {
+            odBitmap.create(graphicFactory, dimension,
+                    this.displayModel.getBackgroundColor(),
+                    IS_TRANSPARENT);
+            lmBitmap.create(graphicFactory, dimension,
+                    this.displayModel.getBackgroundColor(),
+                    IS_TRANSPARENT);
         }
     }
 }

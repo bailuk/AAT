@@ -10,6 +10,7 @@ import ch.bailu.aat.description.CurrentSpeedDescription;
 import ch.bailu.aat.description.DescendDescription;
 import ch.bailu.aat.description.DistanceDescription;
 import ch.bailu.aat.description.PredictiveTimeDescription;
+import ch.bailu.aat.description.SlopeDescription;
 import ch.bailu.aat.dispatcher.CurrentLocationSource;
 import ch.bailu.aat.dispatcher.EditorSource;
 import ch.bailu.aat.dispatcher.OverlaySource;
@@ -62,6 +63,7 @@ public class CockpitSplitActivity extends AbsDispatcher{
         cockpitC.add(this, new AltitudeDescription(this), InfoID.LOCATION);
         cockpitC.add(this, new AscendDescription(this), InfoID.TRACKER);
         cockpitC.add(this, new DescendDescription(this), InfoID.TRACKER);
+        cockpitC.add(this, new SlopeDescription(this), InfoID.TRACKER);
 
 
         MultiView mv = new MultiView(this, SOLID_KEY);

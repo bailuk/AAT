@@ -13,13 +13,13 @@ public abstract class AutoPause {
         }
 
         @Override
-        public void update(GpxDeltaInterface delta) {
-
+        public boolean update(GpxDeltaInterface delta) {
+            return true;
         }
     };
 
     public abstract long get();
-    public abstract void update(GpxDeltaInterface delta);
+    public abstract boolean update(GpxDeltaInterface delta);
 
 
     public static class Samples extends AutoPause {
@@ -34,7 +34,7 @@ public abstract class AutoPause {
             speed = minSpeed;
         }
 
-        public void update(GpxDeltaInterface delta) {
+        public boolean update(GpxDeltaInterface delta) {
             if (delta.getSpeed() < speed) {
                 trigger.down();
             } else {
@@ -43,11 +43,12 @@ public abstract class AutoPause {
 
             if (trigger.isLow()) {
                 pause += delta.getTimeDelta();
+                return false;
             }
+            return true;
         }
 
         public long get() {
-            AppLog.d(this, "get() -> " + pause);
             return pause;
         }
     }

@@ -10,6 +10,7 @@ public interface GpxBigDeltaInterface extends GpxDeltaInterface  {
     long getAutoPause();
     short getAscend();
     short getDescend();
+    short getSlope();
     long getStartTime();
     long getEndTime();
 

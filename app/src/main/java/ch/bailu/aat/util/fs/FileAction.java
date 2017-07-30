@@ -83,7 +83,7 @@ public class FileAction   {
 
     public static void  useForMockLocation(Context context, Foc file) {
         if (file.canRead())
-            new SolidMockLocationFile(context).setValue(file.toString());
+            new SolidMockLocationFile(context).setValue(file.getPath());
         else
             AFile.logErrorNoAccess(context, file);
     }

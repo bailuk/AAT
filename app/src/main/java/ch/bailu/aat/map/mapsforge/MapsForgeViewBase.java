@@ -52,6 +52,7 @@ public class MapsForgeViewBase extends MapView implements
 
     public MapsForgeViewBase(ServiceContext sc, String key, MapDensity d) {
         super(sc.getContext());
+        this.setBackgroundColor(getModel().displayModel.getBackgroundColor());
         getModel().displayModel.setFixedTileSize(d.getTileSize());
 
         mcontext = new MapsForgeContext(this, sc, key, d);
