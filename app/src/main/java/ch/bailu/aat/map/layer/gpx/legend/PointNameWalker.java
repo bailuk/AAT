@@ -45,6 +45,6 @@ public class PointNameWalker extends LegendWalker{
     }
 
     private String getNameFromB() {
-        return c.nodes.nodeB.point.getAttributes().get("getName");
+        return c.nodes.nodeB.point.getAttributes().get("name");
     }
 }

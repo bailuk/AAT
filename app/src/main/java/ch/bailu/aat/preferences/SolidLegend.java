@@ -21,8 +21,8 @@ public class SolidLegend extends SolidStaticIndexList {
     public SolidLegend(Context context, String k) {
         super(Storage.map(context), k+POSTFIX, new String[] {
             context.getString(R.string.none),
-            context.getString(R.string.p_legend_fulldistance),
-            context.getString(R.string.distance),        
+            context.getString(R.string.p_legend_fulldistance) + " / Name*",
+            context.getString(R.string.distance)+" / Name*",
             context.getString(R.string.altitude), 
             context.getString(R.string.speed)
             });
