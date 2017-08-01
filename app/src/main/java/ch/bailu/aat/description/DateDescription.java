@@ -22,7 +22,7 @@ public class DateDescription extends LongDescription {
     }
 
     public static String format(long time) {
-        return String.format((Locale) null, "%tF - %tT",time, time);
+        return String.format("%tc",time, time);
     }
 
     @Override
