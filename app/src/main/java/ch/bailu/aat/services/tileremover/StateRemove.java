@@ -49,6 +49,7 @@ public class StateRemove implements State, Runnable {
             final TileFile t = iterator.next();
             final Foc f = state.summaries.toFile(state.baseDirectory, t);
 
+
             delete(f, t);
         }
 

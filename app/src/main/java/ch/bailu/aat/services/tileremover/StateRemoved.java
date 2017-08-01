@@ -1,8 +1,11 @@
 package ch.bailu.aat.services.tileremover;
 
+import ch.bailu.aat.util.ui.AppLog;
+
 public class StateRemoved extends StateUnscanned {
     public StateRemoved(StateMachine s) {
         super(s);
+        AppLog.d(this, "removed()");
     }
 }
 

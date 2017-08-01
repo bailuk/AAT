@@ -21,24 +21,34 @@ public abstract class Foc {
         return isDir() && rm();
     }
 
+
+
     public boolean rmdirs() {
+        final boolean[] ok = {true};
+
         foreachDir(new Execute() {
             @Override
             public void execute(Foc child) {
-                child.rmdirs();
+                if (!child.rmdirs()) {
+                    ok[0] = false;
+                };
             }
         });
-        return rmdir();
+        return ok[0] && rmdir();
     }
 
     public boolean rmRecoursive() {
+        final boolean[] ok = {true};
+
         foreach(new Execute() {
             @Override
             public void execute(Foc child) {
-                rmRecoursive();
+                if (!child.rmRecoursive()) {
+                    ok[0] = false;
+                };
             }
         });
-        return rm();
+        return ok[0] && rm();
     }
 
 

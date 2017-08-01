@@ -74,8 +74,15 @@ public class FocContent extends Foc {
 
     @Override
     public boolean remove() throws IOException, SecurityException {
-        return DocumentsContract.deleteDocument(resolver, uris.getDocument());
+        if (childCount() == 0) {
+            AppLog.d(this, "Remove " + toString());
+            return DocumentsContract.deleteDocument(resolver, uris.getDocument());
+        }
+
+        AppLog.d(this, toString() + " not empty -> do not remove");
+        return false;
     }
+
 
     @Override
     public boolean mkdir() {
@@ -147,6 +154,22 @@ public class FocContent extends Foc {
 
         if (cursor != null) cursor.close();
     }
+
+
+    private static class ChildCount extends Execute {
+        public int count = 0;
+        @Override
+        public void execute(Foc child) {
+            count++;
+        }
+    }
+
+    private int childCount() throws IOException {
+        ChildCount children = new ChildCount();
+        foreach(children);
+        return children.count;
+    }
+
 
 
     @Override
