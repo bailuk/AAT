@@ -16,8 +16,11 @@ public class Configuration {
 
 
     public TileBitmap getTile(MapsForgeTileObject o) {
+
+
         if (isConfigured() && themeID.equals(o.getThemeID()))
             return renderer.getTile(o.getTile());
+
 
         return null;
     }

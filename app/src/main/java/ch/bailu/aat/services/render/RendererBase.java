@@ -19,7 +19,6 @@ public abstract class RendererBase<T extends Job> extends Layer {
         cache = c;
         displayModel=model.displayModel;
         jobQueue = new JobQueue<>(model.mapViewPosition, model.displayModel);
-
     }
 
     public TileBitmap getTile(Tile tile) {

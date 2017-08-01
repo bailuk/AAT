@@ -35,18 +35,18 @@ public class Renderer extends RendererBase<RendererJob> {
     public Renderer(XmlRenderTheme t, TileCache cache, ArrayList<Foc> files) {
         super(cache, new Model());
 
-        MapWorkerPool.NUMBER_OF_THREADS=2;
+        MapWorkerPool.NUMBER_OF_THREADS = 2;
         renderThemeFuture = createTheme(t);
 
-        if (files.size()==1) {
+        if (files.size() == 1) {
             mapDataStore = new MapFile(files.get(0).toString());
 
         } else {
-            MultiMapDataStore store= new MultiMapDataStore(MultiMapDataStore.DataPolicy.RETURN_ALL);
+            MultiMapDataStore store = new MultiMapDataStore(MultiMapDataStore.DataPolicy.RETURN_ALL);
 
-            for (Foc f: files) {
+            for (Foc f : files) {
                 try {
-                     // TODO: Translate FocContent to unix file
+                    // TODO: Translate FocContent to unix file
 
                     store.addMapDataStore(new MapFile(f.toString()), true, true);
                     AppLog.d(this, "Add \'" + f.getPathName() + "\' to renderer");
@@ -98,6 +98,13 @@ public class Renderer extends RendererBase<RendererJob> {
     }
 
 
+    @Override
+    public TileBitmap getTile(Tile tile) {
+        if (mapDataStore.supportsTile(tile))
+            return super.getTile(tile);
+
+        return null;
+    }
 
 
     @Override

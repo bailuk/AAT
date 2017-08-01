@@ -127,8 +127,8 @@ public abstract class IteratorSource extends ContentSource implements OnCursorCh
 
         @Override
         public void onResume() {
-            super.onResume();
             AppBroadcaster.register(context, onChangedInCache, AppBroadcaster.FILE_CHANGED_INCACHE);
+            super.onResume();
         }
 
         @Override
