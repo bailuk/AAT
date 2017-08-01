@@ -7,8 +7,6 @@ import ch.bailu.aat.services.cache.LockCache;
 import ch.bailu.aat.services.cache.TileObject;
 
 public class TileObjectCache extends TileCache<TileObject> {
-//    public static final TileCache.NullCache<TileObject> NULL
-//            = new TileCache.NullCache<TileObject>() {};
 
 
     private final static int INITIAL_CAPACITY = 5;

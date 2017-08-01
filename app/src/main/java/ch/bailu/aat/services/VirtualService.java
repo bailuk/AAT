@@ -2,6 +2,8 @@ package ch.bailu.aat.services;
 
 import android.content.Context;
 
+import org.mapsforge.core.model.Tile;
+
 import java.io.Closeable;
 
 public abstract class VirtualService implements Closeable {
@@ -21,6 +23,7 @@ public abstract class VirtualService implements Closeable {
     public Context getContext() {
         return scontext.getContext();
     }
+
 
 
 }

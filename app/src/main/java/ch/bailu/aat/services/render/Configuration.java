@@ -1,6 +1,7 @@
 package ch.bailu.aat.services.render;
 
 import org.mapsforge.core.graphics.TileBitmap;
+import org.mapsforge.core.model.Tile;
 import org.mapsforge.map.rendertheme.XmlRenderTheme;
 
 import java.util.ArrayList;
@@ -59,5 +60,9 @@ public class Configuration {
         });
 
         return mapFiles.size() > 0;
+    }
+
+    public boolean supportsTile(Tile t) {
+        return renderer.supportsTile(t);
     }
 }

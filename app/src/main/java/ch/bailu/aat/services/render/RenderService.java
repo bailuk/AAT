@@ -3,6 +3,7 @@ package ch.bailu.aat.services.render;
 import android.content.SharedPreferences;
 
 import org.mapsforge.core.graphics.TileBitmap;
+import org.mapsforge.core.model.Tile;
 
 import ch.bailu.aat.preferences.SolidMapsForgeDirectory;
 import ch.bailu.aat.preferences.SolidRenderTheme;
@@ -75,5 +76,9 @@ public class RenderService  extends VirtualService
         if (sdirectory.hasKey(key) || stheme.hasKey(key)) {
             reconfigureRenderer();
         }
+    }
+
+    public boolean supportsTile(Tile t) {
+        return configuration.supportsTile(t);
     }
 }

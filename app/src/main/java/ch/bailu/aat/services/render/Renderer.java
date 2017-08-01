@@ -124,4 +124,8 @@ public class Renderer extends RendererBase<RendererJob> {
 
     @Override
     public void draw(BoundingBox b, byte z, Canvas c, Point t) {}
+
+    public boolean supportsTile(Tile t) {
+        return mapDataStore.supportsTile(t);
+    }
 }

@@ -4,6 +4,7 @@ import android.content.SharedPreferences;
 
 import ch.bailu.aat.map.tile.TileProvider;
 import ch.bailu.aat.map.tile.source.CachedSource;
+import ch.bailu.aat.map.tile.source.DoubleSource;
 import ch.bailu.aat.map.tile.source.DownloadSource;
 import ch.bailu.aat.map.tile.source.MapsForgeSource;
 import ch.bailu.aat.map.tile.source.Source;
@@ -63,7 +64,8 @@ public class MapsForgeTileLayerStackConfigured extends MapsForgeTileLayerStack {
 
         if (mapnik != null && mapsforge != null) {
             addLayer(new TileProvider(scontext, mapnik), 0, 6);
-            addLayer(new TileProvider(scontext, mapsforge), 7, 100);
+            addLayer(new TileProvider(scontext,
+                    new DoubleSource(scontext, mapsforge, mapnik)), 7, 100);
 
         } else if (mapnik != null) {
             addLayer(new TileProvider(scontext, mapnik));
