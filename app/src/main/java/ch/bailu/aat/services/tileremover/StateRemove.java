@@ -1,6 +1,15 @@
 package ch.bailu.aat.services.tileremover;
 
 import java.util.Iterator;
+import java.util.concurrent.Callable;
+import java.util.concurrent.CompletionService;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorCompletionService;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
 
 import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.util.ui.AppLog;
@@ -40,38 +49,72 @@ public class StateRemove implements State, Runnable {
     public void rescan() {}
 
 
+    private class TaskDelete implements Callable<TileFile> {
+
+        public final TileFile tileFile;
+
+        private TaskDelete(TileFile tileFile) {
+            this.tileFile = tileFile;
+
+
+        }
+
+        @Override
+        public TileFile call() throws Exception {
+            final Foc f = state.summaries.toFile(state.baseDirectory, tileFile);
+
+            if (f.rm()) {
+                return tileFile;
+            }
+
+            return null;
+        }
+    }
+
+
     @Override
     public void run() {
         final Iterator<TileFile> iterator = state.list.iteratorToRemove();
 
+        ExecutorService executor = Executors.newFixedThreadPool(10);
+        CompletionService<TileFile> completion = new ExecutorCompletionService<>(executor);
+
+
+        int tasks=0;
 
         while (iterator.hasNext() && keepUp()) {
             final TileFile t = iterator.next();
-            final Foc f = state.summaries.toFile(state.baseDirectory, t);
-
-
-            delete(f, t);
+            completion.submit(new TaskDelete(t));
+            tasks++;
         }
+
+        while(tasks > 0 && keepUp()) {
+            tasks--;
+            try {
+                Future<TileFile> future = completion.take();
+                TileFile t = future.get();
+                if (t != null) {
+                     state.summaries.addFileRemoved(t);
+                }
+                state.broadcastLimited( AppBroadcaster.TILE_REMOVER_REMOVE);
+            } catch (InterruptedException e) {
+                AppLog.d(this,e.toString());
+                break;
+            } catch (ExecutionException e) {
+                AppLog.d(this, e.toString());
+            }
+        }
+
+        executor.shutdownNow();
 
         state.list.resetToRemove();
 
         if (keepUp()) {
-            state.baseDirectory.rmdirs();
             state.broadcast(AppBroadcaster.TILE_REMOVER_REMOVE);
+            state.baseDirectory.rmdirs();
         }
 
         state.setFromClass(nextState);
-    }
-
-    private boolean delete(Foc f, TileFile t) {
-        if (f.rm()) {
-            state.summaries.addFileRemoved(t);
-            state.broadcastLimited( AppBroadcaster.TILE_REMOVER_REMOVE);
-            return true;
-        }
-
-        AppLog.d(this, "Failed to delete: " + f.toString());
-        return false;
     }
 
 
