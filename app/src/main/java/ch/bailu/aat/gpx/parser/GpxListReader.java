@@ -22,7 +22,7 @@ public class GpxListReader {
     private final XmlParser parser;
 
 
-    public GpxListReader(Foc in, AutoPause pause) throws IOException {
+    public GpxListReader(Foc in, AutoPause pause) throws IOException, SecurityException{
         this(ThreadControl.KEEP_ON, in, pause);
     }
 

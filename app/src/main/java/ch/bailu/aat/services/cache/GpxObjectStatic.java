@@ -20,6 +20,7 @@ import ch.bailu.aat.gpx.parser.GpxListReader;
 import ch.bailu.aat.preferences.SolidAutopause;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.background.FileHandle;
+import ch.bailu.aat.services.background.ThreadControl;
 import ch.bailu.aat.services.dem.tile.Dem3Tile;
 import ch.bailu.aat.services.dem.tile.ElevationProvider;
 import ch.bailu.aat.services.dem.updater.ElevationUpdaterClient;
@@ -77,6 +78,7 @@ public class GpxObjectStatic extends GpxObject implements ElevationUpdaterClient
 
                             GpxListReader reader =
                                     new GpxListReader(
+                                            this,
                                             file,
                                             pause);
 
