@@ -10,35 +10,36 @@ import ch.bailu.simpleio.io.Stream;
 
 public class DateScanner {
     // Localtime to UTC fix
+    private static final TimeZone UTC = TimeZone.getTimeZone("UTC");
     private final TimeZone localTimeZone;
     private long localOffsetMillis;
 
+    private final Calendar utcDate;
     private final IntegerScanner minute;
     private final IntegerScanner hour;
     private final DoubleScanner seconds;
 
     private long millis;
-    private long dateBase;
-    private int dateBuffer[] = new int[10];
+    private long utcDateMillis;
+    private final int dateBuffer[] = new int[10];
 
     private final Stream stream;
 
 
 
     public DateScanner(Stream s, long l) {
-        stream=s;
+        stream = s;
 
-        millis=l;
-        minute=new IntegerScanner(s);
-        hour=new IntegerScanner(s);
+        millis = l;
+        minute = new IntegerScanner(s);
+        hour = new IntegerScanner(s);
         seconds = new DoubleScanner(s,3);
 
-        dateBase=0;
-
-        dateBuffer= new int[10];
-        for (int i=0; i<dateBuffer.length; i++) dateBuffer[i]=0;
+        utcDateMillis = 0;
 
         localTimeZone = TimeZone.getTimeZone(Calendar.getInstance().getTimeZone().getID());
+
+        utcDate = new GregorianCalendar();
     }
 
     public void parse() throws IOException {
@@ -58,7 +59,6 @@ public class DateScanner {
         if (dateNeedsRescan) scanDate();
         if (stream.haveA('T')) scanTime();
 
-
         if (stream.haveA('Z') == false) {
             millis -= localOffsetMillis;
         }
@@ -69,9 +69,6 @@ public class DateScanner {
     }
 
     private void scanDate() {
-        Calendar date;
-
-
         int list[]=new int[3];
         int x=0;
 
@@ -84,11 +81,14 @@ public class DateScanner {
             }
         }
 
-        date = new GregorianCalendar(list[0],list[1]-1,list[2]); // year, month (zero-based), day
-        dateBase = date.getTimeInMillis();
-        millis=dateBase;
+        utcDate.clear();
+        utcDate.setTimeZone(UTC);
+        utcDate.set(list[0],list[1]-1,list[2]); // year, month (zero-based), day
 
-        localOffsetMillis  = localTimeZone.getOffset(dateBase);
+        utcDateMillis = utcDate.getTimeInMillis();
+        millis = utcDateMillis;
+
+        localOffsetMillis  = localTimeZone.getOffset(utcDateMillis);
     }
 
 
@@ -98,11 +98,11 @@ public class DateScanner {
         seconds.scan();
 
 
-        millis=seconds.getInt();
-        millis+=minute.getInteger()*60*1000;
-        millis+=hour.getInteger()*60*60*1000;
+        millis = seconds.getInt();
+        millis += minute.getInteger()*60*1000;
+        millis += hour.getInteger()*60*60*1000;
 
-        millis+=dateBase;
+        millis += utcDateMillis;
     }
 
 }
