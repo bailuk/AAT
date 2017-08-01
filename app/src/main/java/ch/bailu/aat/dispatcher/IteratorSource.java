@@ -4,7 +4,11 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
+import ch.bailu.aat.gpx.GpxFileWrapper;
 import ch.bailu.aat.gpx.GpxInformation;
+import ch.bailu.aat.services.cache.GpxObject;
+import ch.bailu.aat.services.cache.GpxObjectStatic;
+import ch.bailu.aat.services.cache.ObjectHandle;
 import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.util.AppIntent;
 import ch.bailu.aat.preferences.SolidDirectoryQuery;
@@ -22,6 +26,7 @@ public abstract class IteratorSource extends ContentSource implements OnCursorCh
     private Iterator iterator = Iterator.NULL;
 
 
+
     @Override
     public void onCursorChanged() {
         requestUpdate();
@@ -37,8 +42,10 @@ public abstract class IteratorSource extends ContentSource implements OnCursorCh
 
     @Override
     public void requestUpdate() {
-        sendUpdate(iterator.getInfoID(), iterator.getInfo());
+        sendUpdate(iterator.getInfoID(), getInfo());
     }
+
+
 
 
     @Override
@@ -62,10 +69,6 @@ public abstract class IteratorSource extends ContentSource implements OnCursorCh
         return iterator.getInfo();
     }
 
-    public Iterator getIterator() {
-        return iterator;
-    }
-
     public void moveToPrevious() {
         if (iterator.moveToPrevious() == false)
             iterator.moveToPosition(iterator.getCount()-1);
@@ -87,10 +90,14 @@ public abstract class IteratorSource extends ContentSource implements OnCursorCh
 
     public static class FollowFile extends IteratorSource {
         private final Context context;
+        private final ServiceContext scontext;
+        private ObjectHandle handle = ObjectHandle.NULL;
+
 
         public FollowFile(ServiceContext sc) {
             super(sc);
             context = sc.getContext();
+            scontext = sc;
         }
 
         @Override
@@ -102,7 +109,7 @@ public abstract class IteratorSource extends ContentSource implements OnCursorCh
         private final BroadcastReceiver  onChangedInCache = new BroadcastReceiver () {
             @Override
             public void onReceive(Context context, Intent intent) {
-                if (AppIntent.hasFile(intent, getInfo().getFile().getPath())) {
+                if (AppIntent.hasFile(intent, getIID())) {
                     requestUpdate();
                 }
             }
@@ -111,6 +118,9 @@ public abstract class IteratorSource extends ContentSource implements OnCursorCh
         @Override
         public void onPause() {
             context.unregisterReceiver(onChangedInCache);
+
+            handle.free();
+            handle = ObjectHandle.NULL;
             super.onPause();
         }
 
@@ -119,6 +129,32 @@ public abstract class IteratorSource extends ContentSource implements OnCursorCh
         public void onResume() {
             super.onResume();
             AppBroadcaster.register(context, onChangedInCache, AppBroadcaster.FILE_CHANGED_INCACHE);
+        }
+
+        @Override
+        public GpxInformation getInfo() {
+            GpxInformation info = super.getInfo();
+
+            if (scontext.lock()) {
+                ObjectHandle h = scontext.getCacheService().getObject(getIID(),
+                        new GpxObjectStatic.Factory());
+
+                if (h instanceof GpxObject && h.isReadyAndLoaded()) {
+                    handle.free();
+                    handle = h;
+
+                    info = new GpxFileWrapper(h.getFile(), ((GpxObject)h).getGpxList());
+                } else {
+                    h.free();
+                }
+
+                scontext.free();
+            }
+            return info;
+        }
+
+        private String getIID() {
+            return super.getInfo().getFile().getPath();
         }
 
     }

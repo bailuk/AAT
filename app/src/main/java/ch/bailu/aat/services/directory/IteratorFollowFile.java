@@ -44,11 +44,16 @@ public class IteratorFollowFile extends IteratorAbstract {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        
+
+/*
         GpxInformationDbEntryAndFile info
                 = new GpxInformationDbEntryAndFile(scontext, directory, cursor);
         toClose = info;
         this.info = info;
+*/
+
+        info = new GpxInformationDbEntry(cursor, directory);
+
         findFile(fid);
     }
 

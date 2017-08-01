@@ -1,16 +1,6 @@
 package ch.bailu.aat.services.directory;
 
-import android.database.Cursor;
-
-import java.io.Closeable;
-
-import ch.bailu.aat.gpx.GpxList;
-import ch.bailu.aat.services.ServiceContext;
-import ch.bailu.aat.services.cache.GpxObject;
-import ch.bailu.aat.services.cache.GpxObjectStatic;
-import ch.bailu.aat.services.cache.ObjectHandle;
-import ch.bailu.simpleio.foc.Foc;
-
+/*
 public class GpxInformationDbEntryAndFile extends GpxInformationDbEntry implements Closeable {
 
     private ObjectHandle handle = ObjectHandle.NULL;
@@ -21,7 +11,7 @@ public class GpxInformationDbEntryAndFile extends GpxInformationDbEntry implemen
         scontext=sc;
     }
 
-    
+
     @Override
     public GpxList getGpxList() {
         if (isLoaded()) 
@@ -29,7 +19,7 @@ public class GpxInformationDbEntryAndFile extends GpxInformationDbEntry implemen
         
         else return super.getGpxList();
     }
-    
+
     
     @Override
     public boolean isLoaded() {
@@ -45,15 +35,10 @@ public class GpxInformationDbEntryAndFile extends GpxInformationDbEntry implemen
     }
 
 
-    @Override
-    public void close() {
-        handle.free();
-    }
 
 
     @Override
     public float getMaximumSpeed() {
-
         if (isLoaded()) {
             return ((GpxObject)handle).getGpxList().getDelta().getMaximumSpeed();
         }
@@ -68,6 +53,23 @@ public class GpxInformationDbEntryAndFile extends GpxInformationDbEntry implemen
             return ((GpxObject)handle).getGpxList().getDelta().getAutoPause();
         }
         return super.getAutoPause();
+    }
+
+    @Override
+    public long getStartTime() {
+        if (isLoaded()) {
+            return ((GpxObject)handle).getGpxList().getDelta().getStartTime();
+        }
+        return super.getStartTime();
+    }
+
+
+    @Override
+    public long getEndTime() {
+        if (isLoaded()) {
+            return ((GpxObject)handle).getGpxList().getDelta().getEndTime();
+        }
+        return super.getEndTime();
     }
 
     @Override
@@ -89,4 +91,12 @@ public class GpxInformationDbEntryAndFile extends GpxInformationDbEntry implemen
         return super.getDescend();
     }
 
+
+    @Override
+    public void close() {
+        handle.free();
+    }
+
+
 }
+*/
