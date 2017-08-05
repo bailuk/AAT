@@ -65,7 +65,7 @@ public class MapsForgePreview extends MapsForgeViewBase {
         GpxDynLayer gpxLayer = new GpxDynLayer(getMContext());
         add(gpxLayer);
 
-        enableLayers();
+        attachLayers();
 
         gpxLayer.onContentUpdated(InfoID.FILEVIEW, info);
         frameBounding(info.getGpxList().getDelta().getBoundingBox());

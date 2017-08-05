@@ -28,7 +28,6 @@ import ch.bailu.aat.map.MapViewInterface;
 import ch.bailu.aat.map.layer.MapLayerInterface;
 import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat.services.ServiceContext;
-import ch.bailu.aat.util.ui.AppLog;
 
 public class MapsForgeViewBase extends MapView implements
         MapViewInterface,
@@ -36,11 +35,11 @@ public class MapsForgeViewBase extends MapView implements
 
     private BoundingBox pendingFrameBounding=null;
 
-    private boolean areLayersAttached=false, areServicesUp=false, isVisible=true;
-
-
     private final MapsForgeContext mcontext;
     private final Storage storage;
+
+    public boolean areServicesUp=false;
+    public boolean isVisible=false;
 
 
     private final FrameBufferHack frameBufferHack;
@@ -48,6 +47,7 @@ public class MapsForgeViewBase extends MapView implements
 
     private final ArrayList<MapLayerInterface> layers = new ArrayList(10);
 
+    private boolean areLayersAttached=false;
 
 
     public MapsForgeViewBase(ServiceContext sc, String key, MapDensity d) {
@@ -216,36 +216,12 @@ public class MapsForgeViewBase extends MapView implements
         return layers;
     }
 
+
     @Override
     public void setVisibility(int v) {
         super.setVisibility(v);
-        changeVisibility(v);
-    }
-
-    private void changeVisibility(int v) {
 
         isVisible = (v == VISIBLE);
-/*
-        if (isVisible)
-            AppLog.d(this, "is visible");
-        else AppLog.d(this, "is NOT visible");
-
-        if (isShown())
-            AppLog.d(this, "is shown");
-        else AppLog.d(this, "is NOT shown");
-*/
-        attachDetachLayers();
-    }
-
-
-    protected void enableLayers() {
-        isVisible = true;
-        areServicesUp = true;
-        attachDetachLayers();
-    }
-
-    private void disableLayers() {
-        isVisible = false;
         attachDetachLayers();
     }
 
@@ -265,24 +241,41 @@ public class MapsForgeViewBase extends MapView implements
         attachDetachLayers();
     }
 
-    private void attachDetachLayers() {
-        if (areLayersAttached != (isVisible && areServicesUp)) {
-            areLayersAttached = (isVisible && areServicesUp);
-
-            if (areLayersAttached) {
-                for (MapLayerInterface l : layers) l.onAttached();
-            } else {
-                for (MapLayerInterface l : layers) l.onDetached();
-            }
-        }
-    }
 
 
     @Override
     public void onDestroy() {
-        disableLayers();
+        detachLayers();
         destroyAll();
-       frameBufferControllerHack.destroy();
+        frameBufferControllerHack.destroy();
         frameBufferHack.destroy();
     }
+
+
+    public void attachLayers() {
+        if (areLayersAttached = false) {
+            for (MapLayerInterface l : layers) l.onAttached();
+            areLayersAttached = true;
+        }
+    }
+
+
+    public void detachLayers() {
+        if (areLayersAttached = true) {
+            for (MapLayerInterface l : layers) l.onDetached();
+            areLayersAttached = false;
+        }
+    }
+
+
+    private void attachDetachLayers() {
+        if (isVisible && areServicesUp) {
+            attachLayers();
+
+        } else {
+            detachLayers();
+        }
+    }
+
+
 }

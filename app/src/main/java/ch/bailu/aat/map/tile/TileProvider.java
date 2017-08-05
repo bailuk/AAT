@@ -27,7 +27,7 @@ public class TileProvider implements TileProviderInterface {
     private final ArrayList<Observer> observers = new ArrayList(2);
     private final Source source;
 
-    private final TileCache<TileObject> cache = new TileObjectCache();
+    private TileCache<TileObject> cache = TileCache.NULL;
 
     private boolean isAttached=false;
 
@@ -117,7 +117,10 @@ public class TileProvider implements TileProviderInterface {
     @Override
     public synchronized void attach() {
         if (isAttached == false) {
+
             cache.reset();
+            cache = new TileObjectCache();
+
             AppBroadcaster.register(scontext.getContext(),
                     onFileChanged, AppBroadcaster.FILE_CHANGED_INCACHE);
 
@@ -132,6 +135,7 @@ public class TileProvider implements TileProviderInterface {
         if (isAttached) {
             scontext.getContext().unregisterReceiver(onFileChanged);
             cache.reset();
+            cache = TileCache.NULL;
 
             isAttached = false;
         }
