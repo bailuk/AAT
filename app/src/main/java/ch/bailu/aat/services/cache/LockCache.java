@@ -13,11 +13,6 @@ public class LockCache<E extends ObjectHandle>  implements Closeable {
     }
 
 
-    public int capacity() {
-        return array.length;
-    }
-
-
     public int size() {
         return size;
     }
@@ -97,7 +92,5 @@ public class LockCache<E extends ObjectHandle>  implements Closeable {
 
         array = newArray;
         size = Math.min(size, array.length);
-
-        //AppLog.d(this, "Count is: " + size + ", capacity is: " + array.length);
     }
 }
