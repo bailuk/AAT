@@ -3,8 +3,6 @@ package ch.bailu.aat.services.cache;
 import android.content.Context;
 import android.util.SparseArray;
 
-import java.io.IOException;
-
 import ch.bailu.aat.coordinates.SrtmCoordinates;
 import ch.bailu.aat.gpx.AutoPause;
 import ch.bailu.aat.gpx.GpxList;
@@ -13,14 +11,11 @@ import ch.bailu.aat.gpx.GpxPoint;
 import ch.bailu.aat.gpx.GpxPointLinkedNode;
 import ch.bailu.aat.gpx.GpxPointNode;
 import ch.bailu.aat.gpx.GpxSegmentNode;
-import ch.bailu.aat.gpx.MaxSpeed;
-import ch.bailu.aat.gpx.interfaces.GpxType;
 import ch.bailu.aat.gpx.linked_list.Node;
 import ch.bailu.aat.gpx.parser.GpxListReader;
-import ch.bailu.aat.preferences.SolidAutopause;
+import ch.bailu.aat.preferences.SolidPostprocessedAutopause;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.background.FileHandle;
-import ch.bailu.aat.services.background.ThreadControl;
 import ch.bailu.aat.services.dem.tile.Dem3Tile;
 import ch.bailu.aat.services.dem.tile.ElevationProvider;
 import ch.bailu.aat.services.dem.updater.ElevationUpdaterClient;
@@ -71,7 +66,7 @@ public class GpxObjectStatic extends GpxObject implements ElevationUpdaterClient
                     try {
                         if (handle instanceof GpxObjectStatic) {
 
-                            SolidAutopause spause = new SolidAutopause(sc.getContext());
+                            SolidPostprocessedAutopause spause = new SolidPostprocessedAutopause(sc.getContext());
                             AutoPause pause = new AutoPause.Samples(
                                     spause.getTriggerSpeed(),
                                     spause.getTriggerLevel());

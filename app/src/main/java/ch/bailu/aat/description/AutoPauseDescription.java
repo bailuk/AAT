@@ -13,7 +13,7 @@ public class AutoPauseDescription extends TimeDescription {
 
     @Override
     public String getLabel() {
-        return getContext().getString(R.string.p_autopause_title);
+        return getContext().getString(R.string.p_autopause);
     }
 
     @Override

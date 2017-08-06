@@ -126,7 +126,11 @@
 
     <string name="p_map">Map</string>
     <string name="p_overlay">Overlays</string>
-    <string name="p_autopause_title">Autopause</string>
+
+    <string name="p_autopause">Autopause</string>
+    <string name="p_tracker_autopause">Set tracker to autopause</string>
+    <string name="p_post_autopause">Postprocess autopause when loading tracks</string>
+
     <string name="p_weight_title">Your weight in kg</string>
 
     <string name="p_backlight_title">Backlight</string>
@@ -136,9 +140,9 @@
     <string name="p_system">System</string>
     <string name="p_tile_size">Tile size</string>
     <string name="p_accuracy_filter">Accuracy filter</string>
-    <string name="p_distance_filter" translatable="false">Distance filter</string>
-    <string name="p_directory_data" translatable="false">Data directory</string>
-    <string name="p_directory_tiles" translatable="false">Tile cache directory</string>
+    <string name="p_distance_filter">Distance filter</string>
+    <string name="p_directory_data">Data directory</string>
+    <string name="p_directory_tiles">Tile cache directory</string>
     <string name="p_legend_fulldistance">Distance continuous</string>
     <string name="p_missing_trigger">Missing trigger</string>
 

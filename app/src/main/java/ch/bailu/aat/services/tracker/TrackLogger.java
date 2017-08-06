@@ -15,7 +15,7 @@ import ch.bailu.aat.gpx.interfaces.GpxPointInterface;
 import ch.bailu.aat.gpx.interfaces.GpxType;
 import ch.bailu.aat.gpx.writer.GpxListWriter;
 import ch.bailu.aat.preferences.SolidAutopause;
-import ch.bailu.aat.preferences.SolidTrackerAutopause;
+import ch.bailu.aat.preferences.SolidPostprocessedAutopause;
 import ch.bailu.aat.util.fs.AppDirectory;
 import ch.bailu.aat.util.ui.AppLog;
 import ch.bailu.simpleio.foc.Foc;
@@ -47,7 +47,7 @@ public class TrackLogger extends Logger {
     }
 
     private static GpxList createTrack(Context c) {
-        SolidAutopause spause = new SolidAutopause(c);
+        SolidAutopause spause = new SolidPostprocessedAutopause(c);
 
         return new GpxList(GpxType.TRK,
                 new MaxSpeed.Samples(),

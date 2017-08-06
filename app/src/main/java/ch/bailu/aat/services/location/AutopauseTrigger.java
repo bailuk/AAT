@@ -2,7 +2,6 @@ package ch.bailu.aat.services.location;
 
 import android.content.Context;
 
-import ch.bailu.aat.preferences.SolidAutopause;
 import ch.bailu.aat.preferences.SolidTrackerAutopause;
 
 

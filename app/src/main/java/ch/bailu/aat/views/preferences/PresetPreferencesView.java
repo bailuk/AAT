@@ -4,10 +4,10 @@ import android.content.Context;
 
 import ch.bailu.aat.R;
 import ch.bailu.aat.preferences.SolidAccuracyFilter;
-import ch.bailu.aat.preferences.SolidAutopause;
 import ch.bailu.aat.preferences.SolidDistanceFilter;
 import ch.bailu.aat.preferences.SolidMET;
 import ch.bailu.aat.preferences.SolidMissingTrigger;
+import ch.bailu.aat.preferences.SolidPostprocessedAutopause;
 import ch.bailu.aat.preferences.SolidTrackerAutopause;
 
 public class PresetPreferencesView extends VerticalScrollView {

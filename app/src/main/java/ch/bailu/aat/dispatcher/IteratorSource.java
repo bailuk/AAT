@@ -17,6 +17,7 @@ import ch.bailu.aat.services.directory.Iterator;
 import ch.bailu.aat.services.directory.Iterator.OnCursorChangedListener;
 import ch.bailu.aat.services.directory.IteratorFollowFile;
 import ch.bailu.aat.services.directory.IteratorSummary;
+import ch.bailu.aat.util.ui.AppLog;
 
 public abstract class IteratorSource extends ContentSource implements OnCursorChangedListener {
 
@@ -109,7 +110,8 @@ public abstract class IteratorSource extends ContentSource implements OnCursorCh
         private final BroadcastReceiver  onChangedInCache = new BroadcastReceiver () {
             @Override
             public void onReceive(Context context, Intent intent) {
-                if (AppIntent.hasFile(intent, getIID())) {
+                if (AppIntent.hasFile(intent, getID())) {
+                    AppLog.d(FollowFile.this, "Update " + getID());
                     requestUpdate();
                 }
             }
@@ -136,15 +138,17 @@ public abstract class IteratorSource extends ContentSource implements OnCursorCh
             GpxInformation info = super.getInfo();
 
             if (scontext.lock()) {
-                ObjectHandle h = scontext.getCacheService().getObject(getIID(),
+                ObjectHandle h = scontext.getCacheService().getObject(getID(),
                         new GpxObjectStatic.Factory());
 
-                if (h instanceof GpxObject && h.isReadyAndLoaded()) {
+                if (h instanceof GpxObject) {
                     handle.free();
                     handle = h;
 
-                    info = new GpxFileWrapper(h.getFile(), ((GpxObject)h).getGpxList());
+                    if (handle.isReadyAndLoaded())
+                        info = new GpxFileWrapper(handle.getFile(), ((GpxObject)handle).getGpxList());
                 } else {
+
                     h.free();
                 }
 
@@ -153,7 +157,7 @@ public abstract class IteratorSource extends ContentSource implements OnCursorCh
             return info;
         }
 
-        private String getIID() {
+        private String getID() {
             return super.getInfo().getFile().getPath();
         }
 

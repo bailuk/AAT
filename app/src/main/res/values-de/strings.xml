@@ -85,7 +85,10 @@
 
     <string name="p_weight_title">Gewicht in kg</string>
     <string name="p_map">Karte</string>
-    <string name="p_autopause_title">Autopause</string>
+
+    <string name="p_autopause">Autopause</string>
+    <string name="p_tracker_autopause">Tracker automatisch auf pause setzen</string>
+    <string name="p_post_autopause">Autopause hinzufügen beim laden von tracks</string>
 
     <string name="p_backlight_title">Bildschirm</string>
     <string name="p_backlight_off">Aus</string>
@@ -188,6 +191,11 @@
     <string name="p_overlay">Overlays</string>
     <string name="p_system">System</string>
     <string name="p_tile_size">Kachelgrösse</string>
+
+    <string name="p_distance_filter">Distanz filter</string>
+    <string name="p_directory_data">Interne Dateien</string>
+    <string name="p_directory_tiles">Zwischenspeicher für Kacheln</string>
+
     <string name="pause">Pause</string>
     <string name="tt_info_location">Importieren/exportieren der Kartenmitte</string>
     <string name="tt_menu_file">Menu für Dateioperationen anzeigen.</string>
