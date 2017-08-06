@@ -7,59 +7,36 @@ import android.content.Intent;
 import org.mapsforge.core.model.BoundingBox;
 
 import java.io.File;
+import java.util.ArrayList;
 
 import ch.bailu.aat.BuildConfig;
 import ch.bailu.aat.R;
 import ch.bailu.aat.coordinates.BoundingBoxE6;
 import ch.bailu.aat.util.AppIntent;
 import ch.bailu.aat.util.ui.AppLayout;
+import ch.bailu.aat.util.ui.AppLog;
 
 public class ActivitySwitcher {
 
-    private final static Entry PHONE_LIST[] = {
-            new Entry(R.string.intro_resume, CockpitActivity.class),
-            new Entry(R.string.intro_cockpit2, CockpitSplitActivity.class),
-            new Entry(R.string.intro_map, MapActivity.class),
-            new Entry(R.string.intro_list, TrackListActivity.class),
-            new Entry(R.string.intro_overlay_list, OverlayListActivity.class),
-            new Entry(R.string.intro_external_list, ExternalListActivity.class),
-            new Entry(R.string.intro_settings, PreferencesActivity.class),
-            new Entry(R.string.intro_about, AboutActivity.class),
-            new Entry(R.string.intro_test, TestActivity.class),
-    };
-
     private final static int PHONE_CYCABLE = 3;
-
-
-    private final static Entry TABLET_LIST[] = {
-            new Entry(R.string.intro_resume, CockpitTabletActivity.class),
-            new Entry(R.string.intro_map, MapActivity.class),
-            new Entry(R.string.intro_list, TrackListActivity.class),
-            new Entry(R.string.intro_overlay_list, OverlayListActivity.class),
-            new Entry(R.string.intro_external_list, ExternalListActivity.class),
-            new Entry(R.string.intro_settings, PreferencesActivity.class),
-            new Entry(R.string.intro_about, AboutActivity.class),
-            new Entry(R.string.intro_test, TestActivity.class),
-    };
     private final static int TABLET_CYCABLE = 2;
 
 
+    private static ArrayList<Entry> entries = null;
     private static int cycable=0;
-    private static Entry[] entries=null;
+
 
     public static class Entry {
-        public final int activityLabel;
+        public final String activityLabel;
         public final Class<?> activityClass;
 
-        public Entry(int label, Class<?> c) {
+        public Entry(String label, Class<?> c) {
             activityLabel=label;
             activityClass=c;
         }
-
         public void start(Context c) {
             ActivitySwitcher.start(c, activityClass);
         }
-
     }
 
 
@@ -72,34 +49,58 @@ public class ActivitySwitcher {
 
     private static void init(Context context) {
         if (entries==null) {
+            entries = new ArrayList();
+
             if (AppLayout.isTablet(context)) {
-                entries = TABLET_LIST;
-                cycable = TABLET_CYCABLE;
+                initTablet(context);
             } else {
-                entries = PHONE_LIST;
-                cycable = PHONE_CYCABLE;
+                initPhone(context);
             }
+            initBoth(context);
         }
     }
 
-    public int getActivityCount() {
-        if (BuildConfig.DEBUG) return entries.length;
-        return entries.length-1;
+    private static void initTablet(Context c) {
+        cycable = TABLET_CYCABLE;
+        entries.add(new Entry(c.getString(R.string.intro_resume), CockpitTabletActivity.class));
     }
 
 
-    public Entry getActivity(int i) {
-        return entries[i];
+    private static void initPhone(Context c) {
+        cycable = PHONE_CYCABLE;
+        entries.add(new Entry(c.getString(R.string.intro_resume), CockpitActivity.class));
+        entries.add(new Entry(c.getString(R.string.intro_cockpit2), CockpitSplitActivity.class));
+    }
+
+    private static void initBoth(Context c) {
+        entries.add(new Entry(c.getString(R.string.intro_map), MapActivity.class));
+        entries.add(new Entry(c.getString(R.string.intro_list), TrackListActivity.class));
+        entries.add(new Entry(c.getString(R.string.intro_overlay_list), OverlayListActivity.class));
+        entries.add(new Entry(c.getString(R.string.intro_external_list), ExternalListActivity.class));
+        entries.add(new Entry(c.getString(R.string.intro_settings), PreferencesActivity.class));
+        entries.add(new Entry(c.getString(R.string.intro_about) + " / " + c.getString(R.string.intro_readme), AboutActivity.class));
+
+        if (BuildConfig.DEBUG)
+            entries.add(new Entry(c.getString(R.string.intro_test), TestActivity.class));
+
+    }
+    public int size() {
+        return entries.size();
+    }
+
+
+    public Entry get(int i) {
+        return entries.get(i);
     }
 
     public void cycle() {
-        for (int i=0; i<entries.length; i++) {
-            if (entries[i].activityClass.equals(callingActivity.getClass())) {
-                if (i+1 > cycable-1) {
-                    entries[0].start(callingActivity);
-                } else {
-                    entries[i+1].start(callingActivity);
-                }
+        for (int i=0; i<entries.size(); i++) {
+            if (entries.get(i).activityClass.equals(callingActivity.getClass())) {
+                int x = i+1;
+
+                if (x > cycable-1) x = 0;
+
+                entries.get(x).start(callingActivity);
                 callingActivity.finish();
                 break;
             }

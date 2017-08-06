@@ -50,9 +50,9 @@ public class MainActivity extends AbsDispatcher {
         final VerticalScrollView list = new VerticalScrollView(this);
         list.add(new SolidIndexListView(new SolidPreset(this)));
 
-        final int accessibleCount = new ActivitySwitcher(this).getActivityCount();
+        final int accessibleCount = new ActivitySwitcher(this).size();
         for (int i = 0; i < accessibleCount; i++) {
-            list.add(labelFactory(new ActivitySwitcher(this).getActivity(i)));
+            list.add(labelFactory(new ActivitySwitcher(this).get(i)));
         }
         return list;
     }
@@ -96,7 +96,7 @@ public class MainActivity extends AbsDispatcher {
 
     private class ActivityLabel extends AbsLabelTextView {
         public ActivityLabel(final ActivitySwitcher.Entry s) {
-            super(MainActivity.this, getString(s.activityLabel));
+            super(MainActivity.this, s.activityLabel);
 
             setOnClickListener(new OnClickListener() {
                 @Override
