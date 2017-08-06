@@ -9,6 +9,8 @@ import ch.bailu.aat.services.cache.elevation.HillshadeTile;
 import ch.bailu.aat.services.cache.ObjectHandle;
 
 public abstract class Source {
+    public final static String EXT = ".png";
+
     public final static int TRANSPARENT = 150;
     public final static int OPAQUE = 255;
 
@@ -23,6 +25,11 @@ public abstract class Source {
     public abstract int getPaintFlags();
     public abstract ObjectHandle.Factory getFactory(Tile tile);
 
+
+    public static String genRelativeFilePath(final Tile tile, String name) {
+        return  genID(tile,name) +  EXT;
+
+    }
 
     public static String genID(Tile t, String name) {
         return name + "/" + t.zoomLevel + "/" + t.tileX + "/" + t.tileY;

@@ -144,6 +144,7 @@ public class MapsForgeTileLayer extends Layer implements MapLayerInterface, Obse
 
 
     private synchronized boolean detachAttach() {
+
         if (isVisible && isZoomSupported && isAttached) {
             if (isProviderAttached == false) {
                 provider.attach();

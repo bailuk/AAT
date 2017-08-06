@@ -7,6 +7,7 @@ import org.mapsforge.map.rendertheme.InternalRenderTheme;
 
 import java.io.File;
 
+import ch.bailu.aat.preferences.SolidRenderTheme;
 import ch.bailu.aat.services.cache.MapsForgeTileObject;
 import ch.bailu.aat.services.cache.ObjectHandle;
 
@@ -15,16 +16,16 @@ public class MapsForgeSource extends Source {
 
     public static final String NAME = "MapsForge";
     private final String themeFile;
-    private final String themeIdName;
+    public final String themeIdName;
 
 
-    public MapsForgeSource(String xmlThemeFileName) {
-        themeFile = xmlThemeFileName;
-        themeIdName = "MF_" + new File(themeFile).getName().replace(".xml", "");
+    public MapsForgeSource(String xmlThemeFile) {
+        themeFile = xmlThemeFile;
+        themeIdName = "MF_" + SolidRenderTheme.toThemeName(xmlThemeFile);
     }
 
     public String getName() {
-        return NAME;
+        return themeIdName;
     }
 
     @Override

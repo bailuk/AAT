@@ -253,7 +253,7 @@ public class MapsForgeViewBase extends MapView implements
 
 
     public void attachLayers() {
-        if (areLayersAttached = false) {
+        if (!areLayersAttached) {
             for (MapLayerInterface l : layers) l.onAttached();
             areLayersAttached = true;
         }
@@ -261,7 +261,7 @@ public class MapsForgeViewBase extends MapView implements
 
 
     public void detachLayers() {
-        if (areLayersAttached = true) {
+        if (areLayersAttached) {
             for (MapLayerInterface l : layers) l.onDetached();
             areLayersAttached = false;
         }

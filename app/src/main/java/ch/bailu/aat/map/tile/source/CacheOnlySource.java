@@ -9,7 +9,6 @@ import ch.bailu.aat.services.cache.TileObject;
 import ch.bailu.aat.util.fs.AppDirectory;
 
 public class CacheOnlySource extends Source {
-    public final static String EXT = ".png";
 
     private final Source original;
 
@@ -23,8 +22,7 @@ public class CacheOnlySource extends Source {
 
     @Override
     public String getID(Tile tile, Context context) {
-        final String relativePath = original.getID(tile, context) + EXT;
-        return AppDirectory.getTileFile(relativePath, context).getPath();
+        return AppDirectory.getTileFile(genRelativeFilePath(tile, original.getName()), context).getPath();
     }
 
 

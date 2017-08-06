@@ -17,8 +17,6 @@ public interface TileProviderInterface  {
     void addObserver(Observer observer);
     void removeObserver(Observer observer);
 
-    int getCapacity();
-
     void setCapacity(int size);
 
     int getMaximumZoomLevel();

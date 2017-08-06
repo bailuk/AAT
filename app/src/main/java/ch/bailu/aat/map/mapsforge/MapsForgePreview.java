@@ -43,7 +43,6 @@ public class MapsForgePreview extends MapsForgeViewBase {
     private final TileProviderStatic provider;
 
 
-    //private final int tileSize;
     private final MapPosition mapPosition;
     private final BoundingBox bounding;
     private final Point tlPoint;
@@ -88,7 +87,8 @@ public class MapsForgePreview extends MapsForgeViewBase {
             String theme =
                     new SolidRenderTheme(c).getValueAsString();
 
-            return new CacheOnlySource(new MapsForgeSource(theme));
+            MapsForgeSource mfs = new MapsForgeSource(theme);
+            return new CacheOnlySource(mfs);
         }
 
         return MAPNIK;

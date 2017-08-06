@@ -37,6 +37,14 @@ public class SolidRenderTheme extends SolidFile {
     }
 
 
+    public String getValueAsThemeName() {
+        return toThemeName(getValueAsThemeID());
+    }
+
+    public static String toThemeName(String themeFile) {
+        return new File(themeFile).getName().replace(".xml", "");
+    }
+
     private static String toThemeID(String name) {
         if (name.equals(InternalRenderTheme.DEFAULT.toString())) {
             return name;

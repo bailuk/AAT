@@ -14,7 +14,6 @@ public class DownloadSource extends Source {
     public static final int MIN_ZOOM = 1;
     public static final int MAX_ZOOM =17; // 18 takes way too much space for the gain.
 
-    public final static String EXT = ".png";
 
     private final Random random = new Random();
     private final int minZoom, maxZoom;
@@ -53,7 +52,7 @@ public class DownloadSource extends Source {
 
     @Override
     public String getID(Tile tile, Context context) {
-        return AppDirectory.getTileFile(getTileRelativeFilename(tile), context).getPath();
+        return AppDirectory.getTileFile(genRelativeFilePath(tile, name), context).getPath();
     }
 
     @Override
@@ -98,17 +97,6 @@ public class DownloadSource extends Source {
 
 
 
-    private String getTileRelativeFilename(final Tile tile) {
-        return  name +
-                '/' +
-                tile.zoomLevel +
-                '/' +
-                tile.tileX +
-                '/' +
-                tile.tileY +
-                EXT;
-
-    }
 
 
     public final static DownloadSource MAPNIK =

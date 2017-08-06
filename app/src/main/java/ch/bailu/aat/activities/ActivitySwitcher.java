@@ -14,7 +14,6 @@ import ch.bailu.aat.R;
 import ch.bailu.aat.coordinates.BoundingBoxE6;
 import ch.bailu.aat.util.AppIntent;
 import ch.bailu.aat.util.ui.AppLayout;
-import ch.bailu.aat.util.ui.AppLog;
 
 public class ActivitySwitcher {
 

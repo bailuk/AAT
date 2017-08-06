@@ -81,10 +81,7 @@ public class TileProvider implements TileProviderInterface {
         for (Observer o: observers) o.onChange();
     }
 
-    @Override
-    public synchronized int getCapacity() {
-        return cache.size();
-    }
+
 
     @Override
     public synchronized void setCapacity(int size) {

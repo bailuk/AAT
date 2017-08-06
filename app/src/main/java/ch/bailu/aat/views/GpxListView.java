@@ -8,10 +8,10 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 
 import ch.bailu.aat.description.ContentDescription;
-import ch.bailu.aat.util.ui.AppTheme;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.directory.Iterator;
 import ch.bailu.aat.services.directory.Iterator.OnCursorChangedListener;
+import ch.bailu.aat.util.ui.AppTheme;
 
 public class GpxListView extends ListView implements OnCursorChangedListener {
 

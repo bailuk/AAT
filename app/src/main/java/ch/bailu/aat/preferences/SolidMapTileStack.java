@@ -48,8 +48,12 @@ public class SolidMapTileStack extends SolidCheckList {
 
     @Override
     public CharSequence[] getStringArray() {
+        String mapsForgeLabel =
+                MapsForgeSource.NAME
+                        + " " + new SolidRenderTheme(getContext()).getValueAsThemeName();
         String[] array = new String[SOURCES.length];
-        for (int i=0; i<SOURCES.length; i++)
+        array[0] = mapsForgeLabel;
+        for (int i=1; i<SOURCES.length; i++)
             array[i] = SOURCES[i].getName();
         return array;
     }

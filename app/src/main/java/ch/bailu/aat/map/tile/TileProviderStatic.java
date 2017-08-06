@@ -1,7 +1,5 @@
 package ch.bailu.aat.map.tile;
 
-import android.graphics.drawable.Drawable;
-
 import org.mapsforge.core.graphics.TileBitmap;
 import org.mapsforge.core.model.Tile;
 import org.mapsforge.map.model.common.Observer;
@@ -44,8 +42,9 @@ public class TileProviderStatic implements TileProviderInterface, Closeable {
     public synchronized TileBitmap get(Tile tile) {
         final TileObject handle = getTileHandle(tile);
 
-        if (handle != null)
+        if (handle != null) {
             return handle.getTileBitmap();
+        }
 
         return null;
     }
@@ -112,10 +111,6 @@ public class TileProviderStatic implements TileProviderInterface, Closeable {
 
     }
 
-    @Override
-    public synchronized int getCapacity() {
-        return tiles.size();
-    }
 
     @Override
     public void setCapacity(int numNeeded) {}
