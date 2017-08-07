@@ -28,6 +28,7 @@ import ch.bailu.aat.map.MapViewInterface;
 import ch.bailu.aat.map.layer.MapLayerInterface;
 import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat.services.ServiceContext;
+import ch.bailu.aat.util.ui.AppLog;
 
 public class MapsForgeViewBase extends MapView implements
         MapViewInterface,
@@ -218,6 +219,24 @@ public class MapsForgeViewBase extends MapView implements
 
 
     @Override
+    public void onAttachedToWindow() {
+        super.onAttachedToWindow();
+
+        isVisible = (getVisibility() == VISIBLE);
+        attachDetachLayers();
+    }
+
+
+    @Override
+    public void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+
+        isVisible = false;
+        attachDetachLayers();
+    }
+
+
+    @Override
     public void setVisibility(int v) {
         super.setVisibility(v);
 
@@ -252,28 +271,30 @@ public class MapsForgeViewBase extends MapView implements
     }
 
 
-    public void attachLayers() {
+
+
+    private void attachDetachLayers() {
+        if (isVisible && areServicesUp) {
+            attachLayers();
+        } else {
+            detachLayers();
+        }
+    }
+
+    protected void attachLayers() {
         if (!areLayersAttached) {
+            AppLog.d(this, "now attached");
             for (MapLayerInterface l : layers) l.onAttached();
             areLayersAttached = true;
         }
     }
 
 
-    public void detachLayers() {
+    private void detachLayers() {
         if (areLayersAttached) {
+            AppLog.d(this, "now detached");
             for (MapLayerInterface l : layers) l.onDetached();
             areLayersAttached = false;
-        }
-    }
-
-
-    private void attachDetachLayers() {
-        if (isVisible && areServicesUp) {
-            attachLayers();
-
-        } else {
-            detachLayers();
         }
     }
 

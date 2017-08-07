@@ -6,17 +6,17 @@ import android.content.Intent;
 
 import ch.bailu.aat.gpx.GpxFileWrapper;
 import ch.bailu.aat.gpx.GpxInformation;
+import ch.bailu.aat.preferences.SolidDirectoryQuery;
+import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.cache.GpxObject;
 import ch.bailu.aat.services.cache.GpxObjectStatic;
 import ch.bailu.aat.services.cache.ObjectHandle;
-import ch.bailu.aat.util.AppBroadcaster;
-import ch.bailu.aat.util.AppIntent;
-import ch.bailu.aat.preferences.SolidDirectoryQuery;
-import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.directory.Iterator;
 import ch.bailu.aat.services.directory.Iterator.OnCursorChangedListener;
 import ch.bailu.aat.services.directory.IteratorFollowFile;
 import ch.bailu.aat.services.directory.IteratorSummary;
+import ch.bailu.aat.util.AppBroadcaster;
+import ch.bailu.aat.util.AppIntent;
 import ch.bailu.aat.util.ui.AppLog;
 
 public abstract class IteratorSource extends ContentSource implements OnCursorChangedListener {
@@ -173,8 +173,5 @@ public abstract class IteratorSource extends ContentSource implements OnCursorCh
         public Iterator factoryIterator(ServiceContext scontext) {
             return new IteratorSummary(scontext);
         }
-
-
     }
-
 }
