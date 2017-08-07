@@ -13,6 +13,7 @@ import ch.bailu.aat.gpx.GpxPointNode;
 import ch.bailu.aat.gpx.GpxSegmentNode;
 import ch.bailu.aat.gpx.linked_list.Node;
 import ch.bailu.aat.gpx.parser.GpxListReader;
+import ch.bailu.aat.preferences.SolidAutopause;
 import ch.bailu.aat.preferences.SolidPostprocessedAutopause;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.background.FileHandle;
@@ -66,10 +67,10 @@ public class GpxObjectStatic extends GpxObject implements ElevationUpdaterClient
                     try {
                         if (handle instanceof GpxObjectStatic) {
 
-                            SolidPostprocessedAutopause spause = new SolidPostprocessedAutopause(sc.getContext());
-                            AutoPause pause = new AutoPause.Samples(
+                            SolidAutopause spause = new SolidPostprocessedAutopause(sc.getContext());
+                            AutoPause pause = new AutoPause.Time(
                                     spause.getTriggerSpeed(),
-                                    spause.getTriggerLevel());
+                                    spause.getTriggerLevelMillis());
 
                             GpxListReader reader =
                                     new GpxListReader(

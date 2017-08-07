@@ -43,6 +43,10 @@ public abstract class SolidAutopause extends SolidIndexList {
     }
 
 
+    public int getTriggerLevelMillis() {
+        return TRIGGER_VALUES[getIndex()] * 1000;
+    }
+
     public boolean isEnabled() {
         return getIndex()>0;
     }
@@ -56,7 +60,10 @@ public abstract class SolidAutopause extends SolidIndexList {
     public String getValueAsString(int i) {
         if (i==0) return getContext().getString(R.string.off);
 
-        return String.format("%d * < %.3f%s", TRIGGER_VALUES[i], SPEED_VALUES[i] * sunit.getSpeedFactor(), sunit.getSpeedUnit());
+        return String.format("< %.2f%s - %ds",
+                SPEED_VALUES[i] * sunit.getSpeedFactor(),
+                sunit.getSpeedUnit(),
+                TRIGGER_VALUES[i]);
     }
 
 }

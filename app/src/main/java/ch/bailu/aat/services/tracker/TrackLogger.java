@@ -51,9 +51,9 @@ public class TrackLogger extends Logger {
 
         return new GpxList(GpxType.TRK,
                 new MaxSpeed.Samples(),
-                new AutoPause.Samples(
+                new AutoPause.Time(
                         spause.getTriggerSpeed(),
-                        spause.getTriggerLevel()),
+                        spause.getTriggerLevelMillis()),
                 new AltitudeDelta.LastAverage());
     }
 

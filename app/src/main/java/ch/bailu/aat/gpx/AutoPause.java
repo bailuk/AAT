@@ -22,14 +22,14 @@ public abstract class AutoPause {
     public abstract boolean update(GpxDeltaInterface delta);
 
 
-    public static class Samples extends AutoPause {
+    private static class Samples extends AutoPause {
 
         private final float speed;
         private final Trigger trigger;
 
         private long pause = 0;
 
-        public Samples(float minSpeed, int samples) {
+        private Samples(float minSpeed, int samples) {
             trigger = new Trigger(samples);
             speed = minSpeed;
         }
@@ -50,6 +50,44 @@ public abstract class AutoPause {
 
         public long get() {
             return pause;
+        }
+    }
+
+    public static class Time extends AutoPause {
+
+        private final float minSpeed;
+        private final int time;
+
+
+        private long add;
+
+        private long pause;
+
+        public Time(float minSpeed, int time) {
+            this.minSpeed = minSpeed;
+            this.time = time;
+        }
+
+        @Override
+        public long get() {
+            if (add < time) return pause;
+            return pause + add;
+        }
+
+        @Override
+        public boolean update(GpxDeltaInterface delta) {
+            if (delta.getSpeed() < minSpeed) {
+                 add += delta.getTimeDelta();
+
+            } else {
+                if (add > time) {
+                    pause += add;
+
+                }
+                add = 0;
+            }
+
+            return add < time; // not paused
         }
     }
 }

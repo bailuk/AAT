@@ -17,5 +17,4 @@ public class SolidPostprocessedAutopause extends SolidAutopause {
     public String getLabel() {
         return getContext().getString(R.string.p_post_autopause);
     }
-
 }

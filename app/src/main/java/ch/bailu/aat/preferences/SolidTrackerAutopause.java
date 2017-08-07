@@ -16,4 +16,5 @@ public class SolidTrackerAutopause extends SolidAutopause {
         return getContext().getString(R.string.p_tracker_autopause);
     }
 
+
 }
