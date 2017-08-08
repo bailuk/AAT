@@ -129,7 +129,7 @@
 
     <string name="p_autopause">Autopause</string>
     <string name="p_tracker_autopause">Set tracker to autopause</string>
-    <string name="p_post_autopause">Postprocess autopause when loading tracks</string>
+    <string name="p_post_autopause">Postprocessed autopause</string>
 
     <string name="p_weight_title">Your weight in kg</string>
 

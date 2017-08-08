@@ -33,8 +33,12 @@ public class FocAndroid {
             result = factoryFocContent(scheme, uri, c.getContentResolver());
         }
 
-        if (result == null) {
+        if (result == null && uri.getLastPathSegment() != null) {
             result = new FocUri(c.getContentResolver(), uri);
+        }
+
+        if (result == null) {
+            return new FocName(uri.toString());
         }
 
         return result;
@@ -42,7 +46,6 @@ public class FocAndroid {
 
     private static Foc factoryFocName(String scheme, Uri uri) {
         String name = uri.toString();
-
 
         if (scheme == null && (name.length() == 0 || name.charAt(0) != '/')) {
             return new FocName(name);

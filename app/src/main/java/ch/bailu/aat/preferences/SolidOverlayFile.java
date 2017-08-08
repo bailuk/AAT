@@ -24,9 +24,9 @@ public class SolidOverlayFile  implements SolidTypeInterface {
     }
 
 
-    public void setPath(Foc file) {
+    public void setValueFromFile(Foc file) {
         if (file.exists()) {
-            path.setValue(file.toString());
+            path.setValue(file.getPath());
             enabled.setValue(true);
         }
     }

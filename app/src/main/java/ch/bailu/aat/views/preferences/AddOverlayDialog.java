@@ -30,7 +30,7 @@ public class AddOverlayDialog extends AbsSolidDialog implements  DialogInterface
 
     @Override
     public void onClick(DialogInterface dialog, int i) {
-        slist.get(i).setPath(file);
+        slist.get(i).setValueFromFile(file);
         dialog.dismiss();
     }
 

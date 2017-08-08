@@ -3,6 +3,7 @@ package ch.bailu.aat.preferences;
 import android.content.Context;
 
 import ch.bailu.aat.R;
+import ch.bailu.aat.util.ui.AppLog;
 
 public class SolidOverlayFileList extends SolidCheckList {
     public static final int MAX_OVERLAYS=4;
@@ -24,9 +25,10 @@ public class SolidOverlayFileList extends SolidCheckList {
 
     @Override
     public CharSequence[] getStringArray() {
-        String[] array = new String[MAX_OVERLAYS];
-        for (int i=0; i<list.length; i++)
+        String[] array = new String[list.length];
+        for (int i=0; i < list.length; i++) {
             array[i] = list[i].getLabel();
+        }
         return array;
     }
 

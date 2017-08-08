@@ -88,7 +88,7 @@
 
     <string name="p_autopause">Autopause</string>
     <string name="p_tracker_autopause">Tracker automatisch auf pause setzen</string>
-    <string name="p_post_autopause">Autopause hinzufügen beim laden von tracks</string>
+    <string name="p_post_autopause">Postprocessed autopause</string>
 
     <string name="p_backlight_title">Bildschirm</string>
     <string name="p_backlight_off">Aus</string>
@@ -159,6 +159,9 @@
     <string name ="tt_nominatim_clear">Text für die Abfrage zurücksetzen.</string>
     <string name ="tt_nominatim_overlay">Abfrageresultat als Overlay anzeigen.</string>
     <string name ="tt_nominatim_save">Kopie des Abfrageresultats speichern.</string>
+
+
+
     <string name="file_copy">Kopieren nach…</string>
     <string name="file_exists"> ist bereits vorhanden!</string>
     <string name="file_overlay">Als overlay verwenden</string>
@@ -197,6 +200,7 @@
     <string name="p_directory_tiles">Zwischenspeicher für Kacheln</string>
 
     <string name="pause">Pause</string>
+
     <string name="tt_info_location">Importieren/exportieren der Kartenmitte</string>
     <string name="tt_menu_file">Menu für Dateioperationen anzeigen.</string>
     <string name="tt_overpass_mapfeatures">Map Features auflisten.</string>
