@@ -30,8 +30,6 @@ public abstract class AbsFileContentActivity extends AbsDispatcher implements On
     protected IteratorSource  currentFile;
     protected ImageButton nextFile, previousFile, fileOperation;
 
-    private boolean            firstRun = true;
-
     private BusyButton         busyButton;
     protected MapViewInterface map;
 
@@ -44,7 +42,6 @@ public abstract class AbsFileContentActivity extends AbsDispatcher implements On
     public void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        firstRun = true;
 
         editor_helper = new EditorHelper(getServiceContext());
 
@@ -107,44 +104,25 @@ public abstract class AbsFileContentActivity extends AbsDispatcher implements On
 
                 if (!Objects.equals(currentFileID, newFileID)) {
                     currentFileID = newFileID;
-                    frameCurrentFile();
+                    map.frameBounding(info.getBoundingBox());
                 }
             }
         }, InfoID.FILEVIEW);
 
     }
 
-
-    private void frameCurrentFile() {
-        map.frameBounding(currentFile.getInfo().getBoundingBox());
-    }
-
-
-
     @Override
     public void onClick(View v) {
 
         if (v == previousFile) {
-            switchFile(v);
+            currentFile.moveToPrevious();
 
         } else if (v ==nextFile) {
-            switchFile(v);
+            currentFile.moveToNext();
 
         } else if (v == fileOperation) {
             new FileMenu(this, currentFile.getInfo().getFile()).showAsPopup(this, v);
         }
 
     }
-
-    protected void switchFile(View v) {
-        busyButton.startWaiting();
-
-        if (v==nextFile)
-            currentFile.moveToNext();
-        else if (v==previousFile)
-            currentFile.moveToPrevious();
-    }
-
-
-
 }

@@ -5,8 +5,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
 
-import java.io.File;
-
 import ch.bailu.aat.description.ContentDescription;
 import ch.bailu.aat.description.DistanceDescription;
 import ch.bailu.aat.description.NameDescription;
@@ -21,7 +19,6 @@ import ch.bailu.aat.util.ui.AppDialog;
 import ch.bailu.aat.util.ui.AppLayout;
 import ch.bailu.aat.util.ui.AppLog;
 import ch.bailu.aat.views.MainControlBar;
-import ch.bailu.aat.views.NodeListView;
 import ch.bailu.aat.views.PercentageLayout;
 import ch.bailu.aat.views.description.MultiView;
 import ch.bailu.aat.views.graph.DistanceAltitudeGraphView;
@@ -180,19 +177,19 @@ public class GpxEditorActivity extends AbsFileContentActivity
                     @Override
                     protected void onPositiveClick() {
                         editor.save();
-                        switchFile(v);
+                        GpxEditorActivity.super.onClick(v);
                     }
 
                     @Override
                     public void onNeutralClick() {
                         editor.discard();
-                        switchFile(v);
+                        GpxEditorActivity.super.onClick(v);
                     }
 
 
                 }.displaySaveDiscardDialog(this, editor_helper.getInformation().getFile().getName());
             } else {
-                switchFile(v);
+                onClick(v);
             }
 
         } else {

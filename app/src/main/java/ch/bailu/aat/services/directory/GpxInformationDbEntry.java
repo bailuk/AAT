@@ -18,7 +18,7 @@ public class GpxInformationDbEntry extends GpxInformation {
 
     @Override
     public boolean isLoaded() {
-        return isValid();
+        return false;//isValid();
     }
 
 
