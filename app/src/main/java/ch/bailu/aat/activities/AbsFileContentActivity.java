@@ -11,13 +11,15 @@ import ch.bailu.aat.R;
 import ch.bailu.aat.dispatcher.CurrentLocationSource;
 import ch.bailu.aat.dispatcher.EditorSource;
 import ch.bailu.aat.dispatcher.IteratorSource;
+import ch.bailu.aat.dispatcher.OnContentUpdatedInterface;
 import ch.bailu.aat.dispatcher.OverlaySource;
 import ch.bailu.aat.dispatcher.TrackerSource;
+import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.map.MapViewInterface;
 import ch.bailu.aat.menus.FileMenu;
 import ch.bailu.aat.services.editor.EditorHelper;
-import ch.bailu.aat.util.fs.foc.FocAndroid;
+import ch.bailu.aat.util.Objects;
 import ch.bailu.aat.util.ui.ToolTip;
 import ch.bailu.aat.views.BusyButton;
 import ch.bailu.aat.views.ContentView;
@@ -37,6 +39,7 @@ public abstract class AbsFileContentActivity extends AbsDispatcher implements On
     protected EditorHelper editor_helper = null;
     protected EditorSource editor_source= null;
 
+    private String currentFileID;
 
     public void onCreate(Bundle savedInstanceState) {
 
@@ -97,18 +100,18 @@ public abstract class AbsFileContentActivity extends AbsDispatcher implements On
         addSource(editor_source);
 
         addTarget(busyButton.getBusyControl(InfoID.FILEVIEW), InfoID.FILEVIEW);
+        addTarget(new OnContentUpdatedInterface() {
+            @Override
+            public void onContentUpdated(int iid, GpxInformation info) {
+                String newFileID = info.getFile().getPath();
 
-    }
+                if (!Objects.equals(currentFileID, newFileID)) {
+                    currentFileID = newFileID;
+                    frameCurrentFile();
+                }
+            }
+        }, InfoID.FILEVIEW);
 
-
-    @Override
-    public void onResumeWithService() {
-        super.onResumeWithService();
-
-        if (firstRun) {
-            frameCurrentFile();
-            firstRun = false;
-        }
     }
 
 
@@ -140,10 +143,7 @@ public abstract class AbsFileContentActivity extends AbsDispatcher implements On
             currentFile.moveToNext();
         else if (v==previousFile)
             currentFile.moveToPrevious();
-
-        frameCurrentFile();
     }
-
 
 
 
