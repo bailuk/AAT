@@ -8,22 +8,14 @@ import ch.bailu.aat.services.ServiceContext;
 
 public class MapsForgeViewStatic extends MapsForgeViewBase {
 
-    private final static Source SOURCE = DownloadSource.MAPNIK;
-
     public MapsForgeViewStatic(ServiceContext sc) {
         super(sc, MapsForgeViewStatic.class.getSimpleName(),
                 new MapDensity(sc.getContext()));
 
-        MapsForgeTileLayer tiles = new MapsForgeTileLayer(
-                sc,
-                new TileProvider(sc, SOURCE));
-
+        MapsForgeTileLayerStackConfigured tiles = new MapsForgeTileLayerStackConfigured.BackgroundOnly(this);
         add(tiles, tiles);
 
         setClickable(false);
-
-        setZoomLevelMin((byte)SOURCE.getMinimumZoomLevel());
-        setZoomLevelMax((byte)SOURCE.getMaximumZoomLevel());
     }
 
 }

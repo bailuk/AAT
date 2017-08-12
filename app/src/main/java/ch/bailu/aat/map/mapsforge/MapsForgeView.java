@@ -22,7 +22,7 @@ public class MapsForgeView extends MapsForgeViewBase {
         pos = new MapPositionLayer(getMContext(), dispatcher);
         add(pos);
 
-        stack = new MapsForgeTileLayerStackConfigured(this);
+        stack = new MapsForgeTileLayerStackConfigured.All(this);
         add(stack, stack);
 
         foreground = new MapsForgeForeground(this,

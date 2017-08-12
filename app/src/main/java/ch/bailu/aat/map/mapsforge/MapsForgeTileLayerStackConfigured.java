@@ -13,17 +13,17 @@ import ch.bailu.aat.preferences.SolidMapTileStack;
 import ch.bailu.aat.preferences.SolidRenderTheme;
 import ch.bailu.aat.services.ServiceContext;
 
-public class MapsForgeTileLayerStackConfigured extends MapsForgeTileLayerStack {
+public abstract class MapsForgeTileLayerStackConfigured extends MapsForgeTileLayerStack {
 
     private final SolidMapTileStack stiles;
     private final SolidEnableTileCache.Hillshade scacheHS;
     private final SolidEnableTileCache.MapsForge scacheMF;
     private final SolidRenderTheme stheme;
 
-    private final MapsForgeView mapView;
-    private final ServiceContext scontext;
+    private final MapsForgeViewBase mapView;
+    protected final ServiceContext scontext;
 
-    public MapsForgeTileLayerStackConfigured(MapsForgeView v) {
+    public MapsForgeTileLayerStackConfigured(MapsForgeViewBase v) {
         super(v.getMContext().getSContext());
 
         scontext = v.getMContext().getSContext();
@@ -50,47 +50,15 @@ public class MapsForgeTileLayerStackConfigured extends MapsForgeTileLayerStack {
         setMapViewZoomLimit(mapView);
     }
 
-
-    private void addBackgroundLayers(boolean enabled[], Source sources[]) {
-        Source mapnik = null, mapsforge = null;
-
-        if (enabled[1] && sources[1] == DownloadSource.MAPNIK) {
-            mapnik = DownloadSource.MAPNIK;
-        }
-
-        if (enabled[0] && sources[0] == MapsForgeSource.MAPSFORGE) {
-            mapsforge = getMapsForgeSource();
-        }
-
-        if (mapnik != null && mapsforge != null) {
-            addLayer(new TileProvider(scontext, mapnik), 0, 6);
-            addLayer(new TileProvider(scontext,
-                    new DoubleSource(scontext, mapsforge, mapnik)), 7, 100);
-
-        } else if (mapnik != null) {
-            addLayer(new TileProvider(scontext, mapnik));
-
-        } else if (mapsforge != null) {
-            addLayer(new TileProvider(scontext, mapsforge));
-        }
-    }
+    protected abstract void addBackgroundLayers(boolean enabled[], Source sources[]);
 
 
-    private void addOverlayLayers(boolean enabled[], Source sources[]) {
-        for (int i=2; i< sources.length; i++) {
-            if (enabled[i]) {
-                Source s = sources[i];
 
-                if (s == Source.ELEVATION_HILLSHADE) {
-                    s = getHillShadeSource();
-                }
+    protected abstract void addOverlayLayers(boolean enabled[], Source sources[]);
 
-                addLayer(new TileProvider(scontext, s));
-            }
-        }
-    }
 
-    private Source getHillShadeSource() {
+
+    protected Source getHillShadeSource() {
         if (scacheHS.isEnabled()) {
             return CachedSource.CACHED_ELEVATION_HILLSHADE;
         }
@@ -98,7 +66,7 @@ public class MapsForgeTileLayerStackConfigured extends MapsForgeTileLayerStack {
     }
 
 
-    private Source getMapsForgeSource() {
+    protected Source getMapsForgeSource() {
         String theme =
                 stheme.getValueAsString();
 
@@ -120,5 +88,65 @@ public class MapsForgeTileLayerStackConfigured extends MapsForgeTileLayerStack {
         {
             initLayers();
         }
+    }
+
+
+    public static class BackgroundOnly extends MapsForgeTileLayerStackConfigured {
+        public BackgroundOnly(MapsForgeViewBase v) {
+            super(v);
+        }
+
+        @Override
+        protected void addBackgroundLayers(boolean enabled[], Source sources[]) {
+            Source mapnik = null, mapsforge = null;
+
+            if (enabled[1] && sources[1] == DownloadSource.MAPNIK) {
+                mapnik = DownloadSource.MAPNIK;
+            }
+
+            if (enabled[0] && sources[0] == MapsForgeSource.MAPSFORGE) {
+                mapsforge = getMapsForgeSource();
+            }
+
+            if (mapnik != null && mapsforge != null) {
+                addLayer(new TileProvider(scontext, mapnik), 0, 6);
+                addLayer(new TileProvider(scontext,
+                        new DoubleSource(scontext, mapsforge, mapnik)), 7, 100);
+
+            } else if (mapnik != null) {
+                addLayer(new TileProvider(scontext, mapnik));
+
+            } else if (mapsforge != null) {
+                addLayer(new TileProvider(scontext, mapsforge));
+            }
+        }
+
+        @Override
+        protected void addOverlayLayers(boolean enabled[], Source sources[]) {
+
+        }
+    }
+
+
+    public static class All extends BackgroundOnly {
+        public All(MapsForgeViewBase v) {
+            super(v);
+        }
+
+        @Override
+        protected void addOverlayLayers(boolean enabled[], Source sources[]) {
+            for (int i=2; i< sources.length; i++) {
+                if (enabled[i]) {
+                    Source s = sources[i];
+
+                    if (s == Source.ELEVATION_HILLSHADE) {
+                        s = getHillShadeSource();
+                    }
+
+                    addLayer(new TileProvider(scontext, s));
+                }
+            }
+        }
+
     }
 }
