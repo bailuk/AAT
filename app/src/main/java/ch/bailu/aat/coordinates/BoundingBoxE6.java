@@ -7,8 +7,8 @@ import org.mapsforge.core.util.LatLongUtils;
 import java.io.IOException;
 import java.util.Locale;
 
-import ch.bailu.simpleio.parser.scanner.DoubleScanner;
-import ch.bailu.simpleio.io.Stream;
+import ch.bailu.util_java.parser.scanner.DoubleScanner;
+import ch.bailu.util_java.io.Stream;
 
 public class BoundingBoxE6 {
 

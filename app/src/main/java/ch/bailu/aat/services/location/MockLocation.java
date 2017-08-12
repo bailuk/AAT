@@ -15,8 +15,8 @@ import ch.bailu.aat.preferences.SolidMockLocationFile;
 import ch.bailu.aat.util.Timer;
 import ch.bailu.aat.util.fs.foc.FocAndroid;
 import ch.bailu.aat.util.ui.AppLog;
-import ch.bailu.simpleio.foc.Foc;
-import ch.bailu.simpleio.foc.FocName;
+import ch.bailu.util_java.foc.Foc;
+import ch.bailu.util_java.foc.FocName;
 
 public class MockLocation extends LocationStackChainedItem implements Runnable{
 

@@ -15,7 +15,7 @@ import ch.bailu.aat.services.background.FileHandle;
 import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.util.fs.foc.FocAndroid;
 import ch.bailu.aat.util.ui.AppLog;
-import ch.bailu.simpleio.foc.Foc;
+import ch.bailu.util_java.foc.Foc;
 
 public class CachedTileObject extends TileObject {
     private final static int MIN_SAVE_ZOOM_LEVEL = 16;

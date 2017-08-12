@@ -3,8 +3,8 @@ package ch.bailu.aat.services.directory;
 import android.content.Context;
 
 import ch.bailu.aat.util.fs.AppDirectory;
-import ch.bailu.simpleio.foc.Foc;
-import ch.bailu.simpleio.foc.FocFile;
+import ch.bailu.util_java.foc.Foc;
+import ch.bailu.util_java.foc.FocFile;
 
 public class SummaryConfig {
     public static String getWriteableDBPath(Context context, Foc dir) {

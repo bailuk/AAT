@@ -9,7 +9,7 @@ import ch.bailu.aat.R;
 import ch.bailu.aat.util.fs.AndroidVolumes;
 import ch.bailu.aat.util.fs.AppDirectory;
 import ch.bailu.aat.util.fs.foc.FocAndroid;
-import ch.bailu.simpleio.foc.Foc;
+import ch.bailu.util_java.foc.Foc;
 
 public class SolidMapsForgeDirectory extends SolidFile {
     public final static String MAPS_DIR = "maps";

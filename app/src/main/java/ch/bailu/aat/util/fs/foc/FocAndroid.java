@@ -8,9 +8,9 @@ import android.os.Build;
 import java.io.File;
 import java.util.List;
 
-import ch.bailu.simpleio.foc.Foc;
-import ch.bailu.simpleio.foc.FocFile;
-import ch.bailu.simpleio.foc.FocName;
+import ch.bailu.util_java.foc.Foc;
+import ch.bailu.util_java.foc.FocFile;
+import ch.bailu.util_java.foc.FocName;
 
 public class FocAndroid {
     public static final int SAF_MIN_SDK = 21;

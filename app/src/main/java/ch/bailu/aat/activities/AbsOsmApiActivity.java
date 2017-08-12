@@ -35,7 +35,7 @@ import ch.bailu.aat.views.NodeListView;
 import ch.bailu.aat.views.PercentageLayout;
 import ch.bailu.aat.views.TagEditor;
 import ch.bailu.aat.views.preferences.AddOverlayDialog;
-import ch.bailu.simpleio.foc.Foc;
+import ch.bailu.util_java.foc.Foc;
 
 
 public abstract class AbsOsmApiActivity extends AbsDispatcher implements OnClickListener {

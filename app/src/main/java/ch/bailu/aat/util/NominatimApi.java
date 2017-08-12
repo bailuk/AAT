@@ -7,7 +7,7 @@ import java.net.URLEncoder;
 
 import ch.bailu.aat.coordinates.BoundingBoxE6;
 import ch.bailu.aat.util.fs.AppDirectory;
-import ch.bailu.simpleio.foc.Foc;
+import ch.bailu.util_java.foc.Foc;
 
 public class NominatimApi extends OsmApiHelper {
     public final static String NAME="Nominatim";

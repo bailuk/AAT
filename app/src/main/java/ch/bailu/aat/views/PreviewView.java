@@ -12,7 +12,7 @@ import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.cache.ImageObject;
 import ch.bailu.aat.services.cache.ObjectHandle;
 import ch.bailu.aat.util.fs.foc.FocAndroid;
-import ch.bailu.simpleio.foc.Foc;
+import ch.bailu.util_java.foc.Foc;
 
 public class PreviewView extends ImageView {
     private boolean isAttached=false;

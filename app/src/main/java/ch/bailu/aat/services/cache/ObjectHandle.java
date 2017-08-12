@@ -2,8 +2,8 @@ package ch.bailu.aat.services.cache;
 
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.util.ui.AppLog;
-import ch.bailu.simpleio.foc.Foc;
-import ch.bailu.simpleio.foc.FocFile;
+import ch.bailu.util_java.foc.Foc;
+import ch.bailu.util_java.foc.FocFile;
 
 
 public abstract class ObjectHandle implements ObjectBroadcastReceiver{

@@ -5,7 +5,7 @@ import java.io.IOException;
 import ch.bailu.aat.preferences.SolidTileCacheDirectory;
 import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.util.ui.AppLog;
-import ch.bailu.simpleio.foc.Foc;
+import ch.bailu.util_java.foc.Foc;
 
 
 public class StateScan implements State, Runnable {

@@ -4,7 +4,7 @@ import android.content.Context;
 
 import ch.bailu.aat.R;
 import ch.bailu.aat.util.fs.AppDirectory;
-import ch.bailu.simpleio.foc.Foc;
+import ch.bailu.util_java.foc.Foc;
 
 public class SolidPreset extends SolidIndexList {
     public final int PRESET_COUNT=5;

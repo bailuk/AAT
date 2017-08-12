@@ -16,7 +16,7 @@ import java.io.Closeable;
 import java.io.InputStream;
 
 import ch.bailu.aat.services.cache.ObjectHandle;
-import ch.bailu.simpleio.foc.Foc;
+import ch.bailu.util_java.foc.Foc;
 
 public class SyncBitmap implements Closeable {
     private Bitmap bitmap = null;

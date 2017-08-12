@@ -7,7 +7,7 @@ import org.mapsforge.map.rendertheme.XmlRenderTheme;
 import java.util.ArrayList;
 
 import ch.bailu.aat.services.cache.MapsForgeTileObject;
-import ch.bailu.simpleio.foc.Foc;
+import ch.bailu.util_java.foc.Foc;
 
 public class Configuration {
     private final ArrayList<Foc> mapFiles = new ArrayList<>(10);

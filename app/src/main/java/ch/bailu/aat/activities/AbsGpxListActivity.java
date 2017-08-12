@@ -35,7 +35,7 @@ import ch.bailu.aat.views.description.MultiView;
 import ch.bailu.aat.views.preferences.SolidDirectoryMenuButton;
 import ch.bailu.aat.views.preferences.TitleView;
 import ch.bailu.aat.views.preferences.VerticalScrollView;
-import ch.bailu.simpleio.foc.Foc;
+import ch.bailu.util_java.foc.Foc;
 
 
 public abstract class AbsGpxListActivity extends AbsDispatcher implements OnItemClickListener {

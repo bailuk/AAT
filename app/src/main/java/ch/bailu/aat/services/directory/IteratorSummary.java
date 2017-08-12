@@ -5,7 +5,7 @@ import android.database.Cursor;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.services.ServiceContext;
-import ch.bailu.simpleio.foc.Foc;
+import ch.bailu.util_java.foc.Foc;
 
 public class IteratorSummary extends IteratorAbstract {
 

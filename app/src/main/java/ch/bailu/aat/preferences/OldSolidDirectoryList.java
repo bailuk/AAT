@@ -7,7 +7,7 @@ import java.io.File;
 import java.util.ArrayList;
 
 import ch.bailu.aat.util.fs.foc.FocAndroid;
-import ch.bailu.simpleio.foc.Foc;
+import ch.bailu.util_java.foc.Foc;
 
 public abstract class OldSolidDirectoryList extends SolidIndexList {
 

@@ -1,6 +1,6 @@
 package ch.bailu.aat.services.background;
 
-import ch.bailu.simpleio.foc.Foc;
+import ch.bailu.util_java.foc.Foc;
 
 public abstract class FileHandle extends ProcessHandle {
     public final Foc file;

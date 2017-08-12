@@ -18,7 +18,7 @@ import ch.bailu.aat.preferences.SolidAutopause;
 import ch.bailu.aat.preferences.SolidPostprocessedAutopause;
 import ch.bailu.aat.util.fs.AppDirectory;
 import ch.bailu.aat.util.ui.AppLog;
-import ch.bailu.simpleio.foc.Foc;
+import ch.bailu.util_java.foc.Foc;
 
 public class TrackLogger extends Logger {
     final public static int MIN_TRACKPOINTS=5;

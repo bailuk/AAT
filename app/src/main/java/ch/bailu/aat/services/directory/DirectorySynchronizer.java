@@ -25,7 +25,7 @@ import ch.bailu.aat.services.cache.ObjectHandle;
 import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.util.fs.foc.FocAndroid;
 import ch.bailu.aat.util.ui.AppLog;
-import ch.bailu.simpleio.foc.Foc;
+import ch.bailu.util_java.foc.Foc;
 
 public class DirectorySynchronizer  implements Closeable {
 

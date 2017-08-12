@@ -7,11 +7,11 @@ import java.util.ArrayList;
 
 import ch.bailu.aat.coordinates.LatLongE6;
 import ch.bailu.aat.gpx.GpxAttributesStatic;
-import ch.bailu.simpleio.foc.Foc;
-import ch.bailu.simpleio.io.Stream;
-import ch.bailu.simpleio.parser.OnParsedInterface;
-import ch.bailu.simpleio.parser.scanner.DateScanner;
-import ch.bailu.simpleio.parser.scanner.DoubleScanner;
+import ch.bailu.util_java.foc.Foc;
+import ch.bailu.util_java.io.Stream;
+import ch.bailu.util_java.parser.OnParsedInterface;
+import ch.bailu.util_java.parser.scanner.DateScanner;
+import ch.bailu.util_java.parser.scanner.DoubleScanner;
 
 public class Scanner {
     public final Stream stream;

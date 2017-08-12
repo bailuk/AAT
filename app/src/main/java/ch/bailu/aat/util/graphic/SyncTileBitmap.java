@@ -19,7 +19,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import ch.bailu.aat.services.cache.ObjectHandle;
-import ch.bailu.simpleio.foc.Foc;
+import ch.bailu.util_java.foc.Foc;
 
 public class SyncTileBitmap implements Closeable {
     private TileBitmap bitmap = null;

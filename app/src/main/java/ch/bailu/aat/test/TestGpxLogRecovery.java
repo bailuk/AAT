@@ -4,7 +4,7 @@ import android.content.Context;
 
 import java.io.IOException;
 
-import ch.bailu.simpleio.foc.Foc;
+import ch.bailu.util_java.foc.Foc;
 
 public class TestGpxLogRecovery extends TestGpx {
 

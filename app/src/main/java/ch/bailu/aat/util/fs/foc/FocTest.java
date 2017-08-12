@@ -4,7 +4,7 @@ import java.io.Closeable;
 
 import ch.bailu.aat.description.DateDescription;
 import ch.bailu.aat.util.ui.AppLog;
-import ch.bailu.simpleio.foc.Foc;
+import ch.bailu.util_java.foc.Foc;
 
 public class FocTest {
 

@@ -1,4 +1,4 @@
-package ch.bailu.simpleio.util;
+package ch.bailu.util_java.util;
 
 public class Objects {
     public static boolean equals(Object a, Object b) {

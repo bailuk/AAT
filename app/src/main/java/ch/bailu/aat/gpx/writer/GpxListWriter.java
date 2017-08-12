@@ -5,7 +5,7 @@ import java.io.IOException;
 
 import ch.bailu.aat.gpx.GpxList;
 import ch.bailu.aat.gpx.GpxListIterator;
-import ch.bailu.simpleio.foc.Foc;
+import ch.bailu.util_java.foc.Foc;
 
 
 public class GpxListWriter implements  Closeable {

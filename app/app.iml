@@ -101,6 +101,6 @@
     <orderEntry type="library" exported="" name="mapsforge-core-0.8.0" level="project" />
     <orderEntry type="library" exported="" name="mapsforge-map-android-0.8.0" level="project" />
     <orderEntry type="library" exported="" name="kxml2-2.3.0" level="project" />
-    <orderEntry type="module" module-name="simpleio" exported="" />
+    <orderEntry type="module" module-name="util-java" exported="" />
   </component>
 </module>

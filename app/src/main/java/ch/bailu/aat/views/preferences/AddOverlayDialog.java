@@ -5,7 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 
 import ch.bailu.aat.preferences.SolidOverlayFileList;
-import ch.bailu.simpleio.foc.Foc;
+import ch.bailu.util_java.foc.Foc;
 
 public class AddOverlayDialog extends AbsSolidDialog implements  DialogInterface.OnClickListener{
 

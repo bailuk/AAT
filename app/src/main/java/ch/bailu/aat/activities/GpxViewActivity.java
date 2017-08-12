@@ -44,7 +44,7 @@ import ch.bailu.aat.views.description.MultiView;
 import ch.bailu.aat.views.graph.DistanceAltitudeGraphView;
 import ch.bailu.aat.views.graph.DistanceSpeedGraphView;
 import ch.bailu.aat.views.preferences.VerticalScrollView;
-import ch.bailu.simpleio.foc.Foc;
+import ch.bailu.util_java.foc.Foc;
 
 public class GpxViewActivity extends AbsDispatcher
         implements OnClickListener, OnContentUpdatedInterface {

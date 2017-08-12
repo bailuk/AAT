@@ -52,7 +52,7 @@ dependencies {
 
 
     // Local
-    compile project(path: ':simpleio')
+    compile project(path: ':util-java')
 
 
 }

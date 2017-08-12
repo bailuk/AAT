@@ -6,8 +6,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import ch.bailu.aat.util.fs.foc.FocAsset;
-import ch.bailu.simpleio.foc.Foc;
-import ch.bailu.simpleio.io.Stream;
+import ch.bailu.util_java.foc.Foc;
+import ch.bailu.util_java.io.Stream;
 
 public class MapFeaturesParser {
     

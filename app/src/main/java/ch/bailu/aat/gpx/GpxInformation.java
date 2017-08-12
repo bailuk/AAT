@@ -2,7 +2,7 @@ package ch.bailu.aat.gpx;
 
 
 import ch.bailu.aat.util.fs.foc.FocAndroid;
-import ch.bailu.simpleio.foc.Foc;
+import ch.bailu.util_java.foc.Foc;
 
 public class GpxInformation extends GpxDataWrapper  {
 

@@ -4,7 +4,7 @@ import android.content.Context;
 
 import ch.bailu.aat.R;
 import ch.bailu.aat.util.ui.AppLog;
-import ch.bailu.simpleio.foc.Foc;
+import ch.bailu.util_java.foc.Foc;
 
 public class AFile extends JFile {
     public static void logErrorExists(Context c, Foc f) {

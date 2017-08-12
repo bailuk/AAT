@@ -6,7 +6,7 @@ import android.net.Uri;
 
 import java.io.File;
 
-import ch.bailu.simpleio.foc.Foc;
+import ch.bailu.util_java.foc.Foc;
 
 public class FileIntent {
 

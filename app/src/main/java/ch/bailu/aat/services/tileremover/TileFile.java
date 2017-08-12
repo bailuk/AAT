@@ -1,6 +1,6 @@
 package ch.bailu.aat.services.tileremover;
 
-import ch.bailu.simpleio.foc.Foc;
+import ch.bailu.util_java.foc.Foc;
 
 public class TileFile {
 

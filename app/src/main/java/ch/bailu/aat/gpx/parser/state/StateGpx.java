@@ -3,8 +3,8 @@ package ch.bailu.aat.gpx.parser.state;
 import java.io.IOException;
 
 import ch.bailu.aat.gpx.parser.scanner.Scanner;
-import ch.bailu.simpleio.parser.OnParsedInterface;
-import ch.bailu.simpleio.parser.scanner.DoubleScanner;
+import ch.bailu.util_java.parser.OnParsedInterface;
+import ch.bailu.util_java.parser.scanner.DoubleScanner;
 
 
 public class StateGpx extends State {

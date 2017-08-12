@@ -20,7 +20,7 @@ import org.mapsforge.map.rendertheme.rule.RenderThemeFuture;
 import java.util.ArrayList;
 
 import ch.bailu.aat.util.ui.AppLog;
-import ch.bailu.simpleio.foc.Foc;
+import ch.bailu.util_java.foc.Foc;
 
 public class Renderer extends RendererBase<RendererJob> {
     private final static boolean TRANSPARENT = false;

@@ -13,8 +13,8 @@ import java.util.List;
 import ch.bailu.aat.gpx.StateID;
 import ch.bailu.aat.util.AppPermission;
 import ch.bailu.aat.util.ContextWrapperInterface;
-import ch.bailu.simpleio.foc.Foc;
-import ch.bailu.simpleio.foc.FocName;
+import ch.bailu.util_java.foc.Foc;
+import ch.bailu.util_java.foc.FocName;
 
 
 @SuppressLint("MissingPermission")

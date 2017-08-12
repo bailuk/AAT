@@ -1,12 +1,12 @@
-package ch.bailu.simpleio.parser;
+package ch.bailu.util_java.parser;
 
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 
-import ch.bailu.simpleio.foc.Foc;
-import ch.bailu.simpleio.foc.FocFile;
-import ch.bailu.simpleio.io.Stream;
+import ch.bailu.util_java.foc.Foc;
+import ch.bailu.util_java.foc.FocFile;
+import ch.bailu.util_java.io.Stream;
 
 public class MapFeaturesPreparser {
     private static final int TARGET_LENGTH=30;

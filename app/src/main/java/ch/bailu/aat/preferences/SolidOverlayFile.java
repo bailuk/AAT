@@ -4,7 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 
 import ch.bailu.aat.util.fs.foc.FocAndroid;
-import ch.bailu.simpleio.foc.Foc;
+import ch.bailu.util_java.foc.Foc;
 
 public class SolidOverlayFile  implements SolidTypeInterface {
     private static final String KEY_NAME="overlay_path_";

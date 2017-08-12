@@ -1,7 +1,7 @@
-package ch.bailu.simpleio.parser.scanner;
+package ch.bailu.util_java.parser.scanner;
 import java.io.IOException;
 
-import ch.bailu.simpleio.io.Stream;
+import ch.bailu.util_java.io.Stream;
 
 
 public class IntegerScanner {

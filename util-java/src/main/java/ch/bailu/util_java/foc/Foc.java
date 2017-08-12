@@ -1,11 +1,11 @@
-package ch.bailu.simpleio.foc;
+package ch.bailu.util_java.foc;
 
 import java.io.Closeable;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-import ch.bailu.simpleio.util.Objects;
+import ch.bailu.util_java.util.Objects;
 
 public abstract class Foc {
 

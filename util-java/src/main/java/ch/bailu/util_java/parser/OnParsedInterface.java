@@ -1,4 +1,4 @@
-package ch.bailu.simpleio.parser;
+package ch.bailu.util_java.parser;
 
 import java.io.IOException;
 

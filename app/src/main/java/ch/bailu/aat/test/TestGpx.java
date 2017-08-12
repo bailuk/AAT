@@ -11,7 +11,7 @@ import ch.bailu.aat.gpx.writer.GpxListWriter;
 import ch.bailu.aat.preferences.SolidMockLocationFile;
 import ch.bailu.aat.preferences.SolidString;
 import ch.bailu.aat.util.fs.foc.FocAndroid;
-import ch.bailu.simpleio.foc.Foc;
+import ch.bailu.util_java.foc.Foc;
 
 public class TestGpx extends UnitTest {
 

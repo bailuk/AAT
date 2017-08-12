@@ -5,7 +5,7 @@ import java.util.Locale;
 
 import ch.bailu.aat.gpx.interfaces.GpxPointInterface;
 import ch.bailu.aat.services.dem.tile.ElevationProvider;
-import ch.bailu.simpleio.foc.Foc;
+import ch.bailu.util_java.foc.Foc;
 
 public class WayWriter extends GpxWriter {
 

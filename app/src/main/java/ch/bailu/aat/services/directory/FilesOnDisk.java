@@ -3,7 +3,7 @@ package ch.bailu.aat.services.directory;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import ch.bailu.simpleio.foc.Foc;
+import ch.bailu.util_java.foc.Foc;
 
 public class FilesOnDisk {
     private final ArrayList<Foc> files;

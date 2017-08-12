@@ -10,7 +10,7 @@ import android.database.sqlite.SQLiteException;
 import java.io.IOException;
 
 import ch.bailu.aat.services.ServiceContext;
-import ch.bailu.simpleio.foc.Foc;
+import ch.bailu.util_java.foc.Foc;
 
 
 public class GpxDatabase extends AbsDatabase{

@@ -23,7 +23,7 @@ import ch.bailu.aat.util.ui.ToolTip;
 import ch.bailu.aat.views.BusyButton;
 import ch.bailu.aat.views.ContentView;
 import ch.bailu.aat.views.MainControlBar;
-import ch.bailu.simpleio.util.Objects;
+import ch.bailu.util_java.util.Objects;
 
 public abstract class AbsFileContentActivity extends AbsDispatcher implements OnClickListener {
 

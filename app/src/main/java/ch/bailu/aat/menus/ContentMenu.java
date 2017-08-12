@@ -8,7 +8,7 @@ import android.view.MenuItem;
 import ch.bailu.aat.R;
 import ch.bailu.aat.util.fs.FileAction;
 import ch.bailu.aat.services.ServiceContext;
-import ch.bailu.simpleio.foc.Foc;
+import ch.bailu.util_java.foc.Foc;
 
 public class ContentMenu extends AbsMenu {
     private final Foc uri;

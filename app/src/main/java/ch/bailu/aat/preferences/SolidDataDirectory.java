@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import ch.bailu.aat.R;
 import ch.bailu.aat.util.fs.AppDirectory;
 import ch.bailu.aat.util.fs.AndroidVolumes;
-import ch.bailu.simpleio.foc.Foc;
+import ch.bailu.util_java.foc.Foc;
 
 public class SolidDataDirectory extends SolidFile {
 

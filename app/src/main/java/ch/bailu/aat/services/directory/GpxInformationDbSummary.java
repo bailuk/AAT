@@ -12,7 +12,7 @@ import ch.bailu.aat.gpx.GpxPoint;
 import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.gpx.MaxSpeed;
 import ch.bailu.aat.gpx.interfaces.GpxType;
-import ch.bailu.simpleio.foc.Foc;
+import ch.bailu.util_java.foc.Foc;
 
 public class GpxInformationDbSummary extends GpxInformation {
     private final GpxList list;

@@ -9,8 +9,8 @@ import ch.bailu.aat.gpx.GpxPoint;
 import ch.bailu.aat.gpx.MaxSpeed;
 import ch.bailu.aat.gpx.interfaces.GpxType;
 import ch.bailu.aat.services.background.ThreadControl;
-import ch.bailu.simpleio.foc.Foc;
-import ch.bailu.simpleio.parser.OnParsedInterface;
+import ch.bailu.util_java.foc.Foc;
+import ch.bailu.util_java.parser.OnParsedInterface;
 
 public class GpxListReader {
     private final ThreadControl threadControl;

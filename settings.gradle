@@ -1,1 +1,1 @@
-include ':app', ':simpleio'
+include ':app', ':util-java'

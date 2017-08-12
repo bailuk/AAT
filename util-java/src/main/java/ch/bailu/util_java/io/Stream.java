@@ -1,4 +1,4 @@
-package ch.bailu.simpleio.io;
+package ch.bailu.util_java.io;
 
 import java.io.BufferedReader;
 import java.io.Closeable;
@@ -8,7 +8,7 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringReader;
 
-import ch.bailu.simpleio.foc.Foc;
+import ch.bailu.util_java.foc.Foc;
 
 public class Stream implements Closeable {
     private final static String CHARSET="UTF-8";

@@ -7,7 +7,7 @@ import android.content.DialogInterface;
 import ch.bailu.aat.R;
 import ch.bailu.aat.util.fs.AppDirectory;
 import ch.bailu.aat.util.fs.FileAction;
-import ch.bailu.simpleio.foc.Foc;
+import ch.bailu.util_java.foc.Foc;
 
 public class AppSelectDirectoryDialog  implements  DialogInterface.OnClickListener {
     private final Foc srcFile;

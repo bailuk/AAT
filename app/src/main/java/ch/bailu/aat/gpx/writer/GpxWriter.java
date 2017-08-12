@@ -10,7 +10,7 @@ import java.util.TimeZone;
 import ch.bailu.aat.gpx.interfaces.GpxPointInterface;
 import ch.bailu.aat.gpx.interfaces.GpxType;
 import ch.bailu.aat.util.ui.AppTheme;
-import ch.bailu.simpleio.foc.Foc;
+import ch.bailu.util_java.foc.Foc;
 
 public abstract class GpxWriter {
     private final static TimeZone UTC = TimeZone.getTimeZone("UTC");

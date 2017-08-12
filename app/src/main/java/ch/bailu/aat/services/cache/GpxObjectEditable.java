@@ -14,7 +14,7 @@ import ch.bailu.aat.services.editor.GpxEditor;
 import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.util.fs.AppDirectory;
 import ch.bailu.aat.util.ui.AppLog;
-import ch.bailu.simpleio.foc.Foc;
+import ch.bailu.util_java.foc.Foc;
 
 public class GpxObjectEditable extends  GpxObject {
 
