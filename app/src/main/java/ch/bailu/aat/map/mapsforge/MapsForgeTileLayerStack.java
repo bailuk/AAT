@@ -28,6 +28,8 @@ import ch.bailu.aat.util.ui.AppLog;
 public class MapsForgeTileLayerStack extends Layer implements MapLayerInterface, Observer {
 
 
+    private boolean attached = false;
+
     private final ArrayList<Container> layers = new ArrayList<>(10);
 
     private final ServiceContext scontext;
@@ -75,7 +77,7 @@ public class MapsForgeTileLayerStack extends Layer implements MapLayerInterface,
 
     @Override
     public void draw(BoundingBox box, byte zoom, Canvas c, Point tlp) {
-        if (scontext.lock()) {
+        if (attached && scontext.lock()) {
             for (Container l: layers) {
                 if (l.isZoomSupported(zoom)) {
                     l.provider.attach();
@@ -120,7 +122,7 @@ public class MapsForgeTileLayerStack extends Layer implements MapLayerInterface,
     }
 
     @Override
-    public void onAttached() {}
+    public void onAttached() { attached = true; }
 
 
     @Override
@@ -130,6 +132,7 @@ public class MapsForgeTileLayerStack extends Layer implements MapLayerInterface,
 
     @Override
     public void onDetached() {
+        attached = false;
         detachLayers();
     }
 

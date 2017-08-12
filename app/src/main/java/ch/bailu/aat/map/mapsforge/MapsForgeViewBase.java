@@ -144,7 +144,8 @@ public class MapsForgeViewBase extends MapView implements
 
     @Override
     public void requestRedraw() {
-        getLayerManager().redrawLayers();
+        if (areLayersAttached)
+            getLayerManager().redrawLayers();
     }
 
 
@@ -286,6 +287,7 @@ public class MapsForgeViewBase extends MapView implements
             AppLog.d(this, "now attached");
             for (MapLayerInterface l : layers) l.onAttached();
             areLayersAttached = true;
+            requestRedraw();
         }
     }
 
@@ -297,6 +299,4 @@ public class MapsForgeViewBase extends MapView implements
             areLayersAttached = false;
         }
     }
-
-
 }
