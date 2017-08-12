@@ -8,7 +8,7 @@ import ch.bailu.aat.services.ServiceContext;
 public class SystemLocation extends RealLocation {
     public static final int GPS_INTERVAL=1000;
 
-    private final ServiceLocker locker;
+    //private final ServiceLocker locker;
     private NetworkLocation networkLocation;
 
 
@@ -20,7 +20,7 @@ public class SystemLocation extends RealLocation {
 
     public SystemLocation(LocationStackItem i, ServiceContext c, int gpsInterval) {
         super(i, c.getContext(), LocationManager.GPS_PROVIDER);
-        locker = new ServiceLocker(c);
+        //locker = new ServiceLocker(c);
         
         init(gpsInterval);
     }
@@ -29,13 +29,13 @@ public class SystemLocation extends RealLocation {
     @Override
     public void close() {
         super.close();
-        locker.close();
+        //locker.close();
         disableNetworkLocation();
     }
     
     @Override
     public void sendState(int s) {
-        locker.autoLock(s);
+        //locker.autoLock(s);
         
         if (s == StateID.ON) disableNetworkLocation();
         else enableNetworkLocation();

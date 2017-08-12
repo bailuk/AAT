@@ -63,6 +63,7 @@ public abstract class AbsService  extends Service {
     private synchronized void stopService() {
         if (lock == 0) {
             up = false;
+            lazyOff.cancel();
             AppLog.d(this, "turn off.");
             stopSelf();
         } else if (lock < 0) {
@@ -71,20 +72,14 @@ public abstract class AbsService  extends Service {
     }
 
     public synchronized void lock(String r) {
-        // FIXME: if (lockWhenSwapped()) {
         if (locks.add(r)) {
             lock();
         }
-
-        // free();
-        // }
-
     }
 
     public synchronized void free(String r) {
         if (locks.remove(r)) free();
     }
-
 
     public AbsService() {
         allinstances++;
@@ -192,5 +187,4 @@ public abstract class AbsService  extends Service {
         java.text.DateFormat dateFormat = android.text.format.DateFormat.getTimeFormat(getApplicationContext());
         return dateFormat.format(date);
     }
-
 }

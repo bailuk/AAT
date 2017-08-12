@@ -252,7 +252,7 @@ public class ObjectTable  {
 
     private int logCount=0;
     public void log() {
-        logCount++;
+ /*       logCount++;
 
         if (logCount > 10) {
             logCount = 0;
@@ -275,6 +275,6 @@ public class ObjectTable  {
                         totalMemorySize/MB + "/" +
                         limit/MB + "MB - l:" + locked +
                         " f:" + (hashMap.size()-locked)
-                        );
+                        );*/
     }
 }
