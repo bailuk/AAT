@@ -14,10 +14,6 @@ public class OldSolidMET extends SolidStaticIndexList {
         
     }
 
-    public float getMETValue() {
-        return Float.valueOf(getValueAsString().substring(0, 4));
-    }
-    
     @Override
     public String getLabel() {
         return getContext().getString(R.string.p_met);

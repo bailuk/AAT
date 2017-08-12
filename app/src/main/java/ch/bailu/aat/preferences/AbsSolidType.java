@@ -42,4 +42,8 @@ public abstract class AbsSolidType implements SolidTypeInterface {
     }
 
 
+    @Override
+    public String toString() {
+        return getValueAsString();
+    }
 }

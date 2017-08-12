@@ -28,7 +28,7 @@ public abstract class AbsSolidView extends AbsLabelTextView
 
 
     public void setText() {
-        setText("["+solid.getValueAsString()+"]");
+        setText("["+solid.toString()+"]");
     }
 
     @Override

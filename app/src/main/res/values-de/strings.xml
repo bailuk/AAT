@@ -206,6 +206,10 @@
     <string name="tt_overpass_mapfeatures">Map Features auflisten</string>
 
 
+    <string name ="tt_cockpit_a">Vollbild</string>
+    <string name ="tt_cockpit_b">Aufgeteilt</string>
+
+
 
     <string name="file_copy">Kopieren nach…</string>
     <string name="file_exists"> ist bereits vorhanden!</string>

@@ -23,13 +23,17 @@ public abstract class SolidFile extends SolidString {
 
 
     public Foc getValueAsFile() {
-        return FocAndroid.factory(getContext(), super.getValueAsString());
+        return FocAndroid.factory(getContext(), getValueAsString());
     }
 
+
+
+
     @Override
-    public String getValueAsString() {
+    public String toString() {
         return getValueAsFile().getPathName();
     }
+
 
 
     public int getIconResource() {return R.drawable.folder_inverse;}

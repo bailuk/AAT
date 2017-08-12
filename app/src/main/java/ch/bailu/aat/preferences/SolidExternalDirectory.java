@@ -16,7 +16,8 @@ public class SolidExternalDirectory extends SolidFile {
 
     private final static String[] KNOWN_DIRS = {
             AppDirectory.DIR_AAT_DATA + AppDirectory.DIR_IMPORT,
-            "MyTracks/gpx"
+            "MyTracks/gpx",
+            "gpx"
     };
 
 
