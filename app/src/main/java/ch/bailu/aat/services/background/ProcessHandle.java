@@ -51,4 +51,9 @@ public abstract class ProcessHandle implements ThreadControl {
 
 
     public abstract void broadcast(Context context);
+
+
+    public ThreadControl getThreadControl() {
+        return this;
+    }
 }

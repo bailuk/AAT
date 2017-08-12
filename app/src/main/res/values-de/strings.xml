@@ -119,6 +119,9 @@
     <string name="d_path">Pfad</string>
     <string name="d_state">Status</string>
     <string name="d_size">Größe</string>
+    <string name="d_ascend">Anstieg</string>
+    <string name="d_descend">Abstieg</string>
+    <string name="d_slope">Steigung</string>
 
 
     <string name="speed">Geschwindigkeit</string>

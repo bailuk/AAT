@@ -2,6 +2,7 @@ package ch.bailu.aat.description;
 
 import android.content.Context;
 
+import ch.bailu.aat.R;
 import ch.bailu.aat.dispatcher.OnContentUpdatedInterface;
 
 
@@ -21,7 +22,11 @@ public abstract class ContentDescription
 
 
     public abstract String getValue();
-    public abstract String getLabel(); 
+    public abstract String getLabel();
+
+    public String getApLabel(String label) {
+        return label + " (" + getContext().getString(R.string.p_autopause) + ")";
+    }
 
 
     public String getUnit() {

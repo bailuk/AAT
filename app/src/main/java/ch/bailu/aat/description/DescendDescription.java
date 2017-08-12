@@ -2,8 +2,6 @@ package ch.bailu.aat.description;
 
 import android.content.Context;
 
-import java.util.Locale;
-
 import ch.bailu.aat.R;
 import ch.bailu.aat.gpx.GpxInformation;
 
@@ -14,7 +12,7 @@ public class DescendDescription extends AltitudeDescription {
 
     @Override
     public String getLabel() {
-        return "Descend*";
+        return getContext().getString(R.string.d_descend);
     }
 
 

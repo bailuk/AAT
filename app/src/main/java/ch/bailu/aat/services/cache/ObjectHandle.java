@@ -1,9 +1,6 @@
 package ch.bailu.aat.services.cache;
 
-import android.content.Context;
-
 import ch.bailu.aat.services.ServiceContext;
-import ch.bailu.aat.util.fs.foc.FocAndroid;
 import ch.bailu.aat.util.ui.AppLog;
 import ch.bailu.simpleio.foc.Foc;
 import ch.bailu.simpleio.foc.FocFile;

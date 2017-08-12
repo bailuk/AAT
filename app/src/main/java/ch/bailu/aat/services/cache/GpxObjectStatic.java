@@ -3,6 +3,8 @@ package ch.bailu.aat.services.cache;
 import android.content.Context;
 import android.util.SparseArray;
 
+import java.io.IOException;
+
 import ch.bailu.aat.coordinates.SrtmCoordinates;
 import ch.bailu.aat.gpx.AutoPause;
 import ch.bailu.aat.gpx.GpxList;
@@ -22,6 +24,7 @@ import ch.bailu.aat.services.dem.tile.ElevationProvider;
 import ch.bailu.aat.services.dem.updater.ElevationUpdaterClient;
 import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.util.fs.foc.FocAndroid;
+import ch.bailu.aat.util.ui.AppLog;
 import ch.bailu.simpleio.foc.Foc;
 
 public class GpxObjectStatic extends GpxObject implements ElevationUpdaterClient {
@@ -54,54 +57,7 @@ public class GpxObjectStatic extends GpxObject implements ElevationUpdaterClient
     }
 
     private void reload(final ServiceContext sc) {
-        final FileHandle f = new FileHandle(file) {
-
-
-            @Override
-            public long bgOnProcess() {
-                long size = 0;
-
-                if (sc.lock()) {
-                    ObjectHandle handle =
-                            sc.getCacheService().getObject(getID());
-                    try {
-                        if (handle instanceof GpxObjectStatic) {
-
-                            SolidAutopause spause = new SolidPostprocessedAutopause(sc.getContext());
-                            AutoPause pause = new AutoPause.Time(
-                                    spause.getTriggerSpeed(),
-                                    spause.getTriggerLevelMillis());
-
-                            GpxListReader reader =
-                                    new GpxListReader(
-                                            this,
-                                            file,
-                                            pause);
-
-                            if (canContinue()) {
-                                gpxList = reader.getGpxList();
-                                readyAndLoaded = true;
-                            }
-                            size = getSize();
-                        }
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    } finally {
-                        handle.free();
-                    }
-                    sc.free();
-                }
-                return size;
-            }
-
-
-            @Override
-            public void broadcast(Context context) {
-                AppBroadcaster.broadcast(context, AppBroadcaster.FILE_CHANGED_INCACHE, getID());
-                AppBroadcaster.broadcast(context, AppBroadcaster.REQUEST_ELEVATION_UPDATE, getID());
-            }
-        };
-        sc.getBackgroundService().load(f);
+        sc.getBackgroundService().load(new FileLoader(file, sc));
     }
 
 
@@ -118,6 +74,12 @@ public class GpxObjectStatic extends GpxObject implements ElevationUpdaterClient
                         Node.SIZE_IN_BYTES);
     }
 
+
+
+    private void setGpxList(GpxList list) {
+        readyAndLoaded = true;
+        gpxList = list;
+    }
 
 
     public GpxList getGpxList() {
@@ -137,7 +99,7 @@ public class GpxObjectStatic extends GpxObject implements ElevationUpdaterClient
 
     @Override
     public void onDownloaded(String id, String url,  ServiceContext sc) {
-        if (id.equals(toString())) {
+        if (id.equals(getID())) {
             reload(sc);
         }
     }
@@ -229,5 +191,69 @@ public class GpxObjectStatic extends GpxObject implements ElevationUpdaterClient
                 coordinates.put(c.toString().hashCode(), c);
             }
         }
-    }    
+    }
+
+
+    private static class FileLoader extends FileHandle {
+        private final ServiceContext sc;
+
+        public FileLoader(Foc f, ServiceContext sc) {
+            super(f);
+            this.sc = sc;
+        }
+
+        @Override
+        public long bgOnProcess() {
+            long size = 0;
+
+            if (sc.lock()) {
+                ObjectHandle handle = sc.getCacheService().getObject(getID());
+                try {
+                    if (handle instanceof GpxObjectStatic) {
+                        size = load((GpxObjectStatic) handle);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                } finally {
+                    handle.free();
+                }
+                sc.free();
+            }
+            return size;
+        }
+
+
+        private long load(GpxObjectStatic handle) throws IOException {
+            long size = 0;
+
+            AppLog.d(this, "load: " + getFile().getPathName());
+
+            GpxListReader reader =
+                    new GpxListReader(
+                            getThreadControl(),
+                            getFile(),
+                            getAutoPause());
+
+            if (canContinue()) {
+                handle.setGpxList(reader.getGpxList());
+                size =  handle.getSize();
+            }
+            return size;
+        }
+
+
+        private AutoPause getAutoPause() {
+            SolidAutopause spause = new SolidPostprocessedAutopause(sc.getContext());
+            return new AutoPause.Time(
+                    spause.getTriggerSpeed(),
+                    spause.getTriggerLevelMillis());
+        }
+
+
+        @Override
+        public void broadcast(Context context) {
+            AppBroadcaster.broadcast(context, AppBroadcaster.FILE_CHANGED_INCACHE, getID());
+            AppBroadcaster.broadcast(context, AppBroadcaster.REQUEST_ELEVATION_UPDATE, getID());
+        }
+    };
 }

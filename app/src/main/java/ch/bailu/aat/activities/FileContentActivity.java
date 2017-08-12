@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.View;
 
 import ch.bailu.aat.description.AscendDescription;
-import ch.bailu.aat.description.AutoPauseDescription;
 import ch.bailu.aat.description.AverageSpeedDescription;
 import ch.bailu.aat.description.AverageSpeedDescriptionAP;
 import ch.bailu.aat.description.CaloriesDescription;
@@ -16,7 +15,9 @@ import ch.bailu.aat.description.EndDateDescription;
 import ch.bailu.aat.description.MaximumSpeedDescription;
 import ch.bailu.aat.description.NameDescription;
 import ch.bailu.aat.description.PathDescription;
+import ch.bailu.aat.description.PauseApDescription;
 import ch.bailu.aat.description.PauseDescription;
+import ch.bailu.aat.description.TimeApDescription;
 import ch.bailu.aat.description.TimeDescription;
 import ch.bailu.aat.description.TrackSizeDescription;
 import ch.bailu.aat.gpx.InfoID;
@@ -49,11 +50,12 @@ public class FileContentActivity extends AbsFileContentActivity{
         final ContentDescription summaryData[] = {
                 new NameDescription(this),
                 new PathDescription(this),
-                new TimeDescription(this),
                 new DateDescription(this),
                 new EndDateDescription(this),
+                new TimeDescription(this),
+                new TimeApDescription(this),
                 new PauseDescription(this),
-                new AutoPauseDescription(this),
+                new PauseApDescription(this),
                 new DistanceDescription(this),
                 new AverageSpeedDescription(this),
                 new AverageSpeedDescriptionAP(this),

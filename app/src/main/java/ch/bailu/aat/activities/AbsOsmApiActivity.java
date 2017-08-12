@@ -67,13 +67,13 @@ public abstract class AbsOsmApiActivity extends AbsDispatcher implements OnClick
         }
         setContentView(createContentView());
 
-        addSource(new CustomFileSource(getServiceContext(),osmApi.getResultFile().toString()));
+        addSource(new CustomFileSource(getServiceContext(),osmApi.getResultFile().getPath()));
         addTarget(list, InfoID.FILEVIEW);
 
         setQueryTextFromIntent();
-    }  
+    }
 
-    
+
     private void setQueryTextFromIntent() {
         String query = queryFromIntent(getIntent());
         if (query != null) {
@@ -207,7 +207,8 @@ public abstract class AbsOsmApiActivity extends AbsDispatcher implements OnClick
                         osmApi.getUrl(query),
                         osmApi.getResultFile(),
                         query,
-                        osmApi.getQueryFile());
+                        osmApi.getQueryFile(),
+                        getServiceContext().getContext());
 
                 background.download(request);
 
@@ -243,10 +244,10 @@ public abstract class AbsOsmApiActivity extends AbsDispatcher implements OnClick
 
 
             AppBroadcaster.broadcast(
-                    this, 
-                    AppBroadcaster.FILE_CHANGED_ONDISK, 
-                    target.toString(), 
-                    source.toString());
+                    this,
+                    AppBroadcaster.FILE_CHANGED_ONDISK,
+                    target.getPath(),
+                    source.getPath());
 
         } catch (IOException e) {
             AppLog.e(this, e);
@@ -276,25 +277,32 @@ public abstract class AbsOsmApiActivity extends AbsDispatcher implements OnClick
     private static class ApiQueryHandle extends DownloadHandle {
         private final String queryString;
         private final Foc queryFile;
+        private final Context context;
 
-        public ApiQueryHandle(String source, Foc target, String qs, Foc qf) {
+        public ApiQueryHandle(String source, Foc target, String qs, Foc qf, Context c) {
             super(source, target);
             queryString = qs;
             queryFile   = qf;
+            context = c;
         }
 
         @Override
         public long bgOnProcess() {
-            long r=super.bgOnProcess();
-            if (r>0) {
-                try {
-                    TextBackup.write(queryFile, queryString);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
+            AppLog.d(this, getFile().getPath());
 
-            return r;
+            try {
+                long size = bgDownload();
+                TextBackup.write(queryFile, queryString);
+                return size;
+            } catch (Exception e) {
+                logError(e);
+                return 1;
+            }
+        }
+
+        @Override
+        protected void logError(Exception e) {
+            AppLog.e(context, e);
         }
     }
 

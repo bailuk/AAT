@@ -3,7 +3,7 @@ package ch.bailu.aat.services.background;
 import ch.bailu.simpleio.foc.Foc;
 
 public abstract class FileHandle extends ProcessHandle {
-    private final Foc file;
+    public final Foc file;
     
     
     
@@ -19,5 +19,9 @@ public abstract class FileHandle extends ProcessHandle {
 
     public Foc getFile() {
         return file;
+    }
+
+    public String getID() {
+        return file.getPath();
     }
 }

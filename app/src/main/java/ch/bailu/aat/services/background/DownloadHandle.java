@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 
 import ch.bailu.aat.util.AppBroadcaster;
@@ -37,22 +38,27 @@ public class DownloadHandle extends ProcessHandle {
 
     @Override
     public long bgOnProcess() {
-        //AppLog.d(this, url + " -> "  +file.getPathName());
         try {
+            return bgDownload();
 
-            final long r = download(new URL(url), file);
-            return r;
-            
         } catch (Exception e) {
-            AppLog.d(this, "ERROR: " + e.toString());
-
+            logError(e);
             file.rm();
             return 0;
         }
     }
 
 
-    
+    protected long bgDownload() throws IOException {
+        return download(new URL(url), file);
+    }
+
+
+    protected void logError(Exception e) {
+        AppLog.d(this, "ERROR: " + e.toString());
+    }
+
+
     @Override
     public String toString() {
         return url;
@@ -126,7 +132,7 @@ public class DownloadHandle extends ProcessHandle {
     @Override
     public void broadcast(Context c) {
         AppBroadcaster.broadcast(c, 
-                AppBroadcaster.FILE_CHANGED_ONDISK, file.toString(),url);
+                AppBroadcaster.FILE_CHANGED_ONDISK, file.getPath(),url);
     }
 
 }

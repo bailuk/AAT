@@ -96,10 +96,12 @@ public class FocContent extends Foc {
 
 
     private boolean createDocument(String mimeType) {
+
         if (exists()) {
             return true;
 
         } else {
+            AppLog.d(this, "create: " + mimeType);
             update();
 
             return DocumentsContract.createDocument(

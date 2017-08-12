@@ -12,6 +12,7 @@ import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.cache.GpxObject;
 import ch.bailu.aat.services.cache.GpxObjectStatic;
 import ch.bailu.aat.services.cache.ObjectHandle;
+import ch.bailu.aat.util.ui.AppLog;
 
 public class CustomFileSource extends ContentSource {
     private final ServiceContext scontext;
@@ -21,7 +22,7 @@ public class CustomFileSource extends ContentSource {
     private final BroadcastReceiver  onChangedInCache = new BroadcastReceiver () {
         @Override
         public void onReceive(Context context, Intent intent) {
-            if (AppIntent.hasFile(intent, handle.toString())) {
+            if (AppIntent.hasFile(intent, fileID)) {
                 requestUpdate();
             }
         }
@@ -31,18 +32,21 @@ public class CustomFileSource extends ContentSource {
     public CustomFileSource(ServiceContext sc, String fID) {
         scontext=sc;
         fileID=fID;
-    }   
+    }
 
-    
+
     @Override
     public void requestUpdate() {
-        ObjectHandle h = scontext.getCacheService().getObject(fileID, new GpxObjectStatic.Factory());
+        if (scontext.lock()) {
+            ObjectHandle h = scontext.getCacheService().getObject(fileID, new GpxObjectStatic.Factory());
 
-        handle.free();
-        handle=h;
+            handle.free();
+            handle = h;
 
-        if (h instanceof GpxObject && h.isReadyAndLoaded()) {
-            sendUpdate(InfoID.FILEVIEW, new GpxFileWrapper(h.getFile(), ((GpxObject)h).getGpxList()));
+            if (h instanceof GpxObject && h.isReadyAndLoaded()) {
+                sendUpdate(InfoID.FILEVIEW, new GpxFileWrapper(h.getFile(), ((GpxObject) h).getGpxList()));
+            }
+            scontext.free();
         }
 
     }

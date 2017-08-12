@@ -2,6 +2,7 @@ package ch.bailu.aat.description;
 
 import android.content.Context;
 
+import ch.bailu.aat.R;
 import ch.bailu.aat.gpx.GpxInformation;
 
 public class SlopeDescription extends ContentDescription {
@@ -27,6 +28,6 @@ public class SlopeDescription extends ContentDescription {
 
     @Override
     public String getLabel() {
-        return "Slope*";
+        return getContext().getString(R.string.d_slope);
     }
 }

@@ -8,7 +8,7 @@ public class MimeType {
         if ("gpx".equals(suffix)) {
             return "application/gpx+xml";
 
-        } else if ("osm".equals(suffix)) {
+        } else if ("osm".equals(suffix) || "xml".equals(suffix)) {
             return "application/xml";
 
         } else if ("png".equals(suffix)) {

@@ -195,7 +195,9 @@
     <string name="d_path">Path</string>
     <string name="d_state">State</string>
     <string name="d_size">Size</string>
-
+    <string name="d_ascend">Climb</string>
+    <string name="d_descend">Descend</string>
+    <string name="d_slope">Slope</string>
 
     <string name="pause">Pause</string>
     <string name="speed">Speed</string>

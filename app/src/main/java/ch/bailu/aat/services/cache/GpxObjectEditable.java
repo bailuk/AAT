@@ -28,8 +28,6 @@ public class GpxObjectEditable extends  GpxObject {
         super(_id);
         file = _file;
 
-        AppLog.d(this, "ID: " + getID() + " File: " + file.getPathName());
-
         editor = new GpxListEditor(sc.getContext());
         sc.getCacheService().addToBroadcaster(this);        
     }
@@ -229,7 +227,7 @@ public class GpxObjectEditable extends  GpxObject {
 
         @Override
         public Foc getFile() {
-            return file;// new FocVID();
+            return file;
         }
 
         @Override
@@ -280,25 +278,4 @@ public class GpxObjectEditable extends  GpxObject {
     public GpxList getGpxList() {
         return editor.getGpxList();
     }
-
-/*
-    private class FocVID extends FocAbstractName {
-        @Override
-        public String getName() {
-            return file.getName();
-        }
-
-        @Override
-        public String getPath() {
-            return vid;
-        }
-
-        @Override
-        public String getPathName() {
-            return file.getPathName();
-        }
-
-
-    }
-    */
 }
