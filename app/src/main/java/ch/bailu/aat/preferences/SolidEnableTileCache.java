@@ -2,6 +2,7 @@ package ch.bailu.aat.preferences;
 
 import android.content.Context;
 
+import ch.bailu.aat.R;
 import ch.bailu.aat.map.tile.source.MapsForgeSource;
 import ch.bailu.aat.map.tile.source.Source;
 
@@ -16,7 +17,7 @@ public abstract class SolidEnableTileCache extends SolidBoolean {
 
     @Override
     public String getLabel() {
-        return "Enable cache*";
+        return getContext().getString(R.string.p_enable_cache);
     }
 
 

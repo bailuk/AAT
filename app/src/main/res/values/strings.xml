@@ -9,6 +9,7 @@
     <string name="auto">Auto</string>
     <string name="none">None</string>
     <string name="enter">Enter...</string>
+    <string name="pick">Pick (SAF)…</string>
 
 
     <!-- Main activity (Intro) -->
@@ -16,8 +17,9 @@
     <string name="intro_readme" translatable="false">README</string>
     <string name="intro_resume" translatable="false">Cockpit A</string>
     <string name="intro_cockpit2" translatable="false">Cockpit B</string>
+
     <string name="intro_map">Map</string>
-    <string name="intro_nominatim" translatable="false">Nominatim</string>
+    <string name="intro_nominatim">Map Search</string>
     <string name="intro_test" translatable="false">Test</string>
     <string name="intro_status">Status</string>
 
@@ -63,6 +65,7 @@
     </string-array>
 
     <!-- Map-Tiles settings -->
+    <string name="p_trim_cache">Trim tile cache</string>
     <string name="p_tiles">Map Tiles</string>
     <string name="p_trim_mode">Trim mode</string>
     <string name="p_trim_size">Trim size</string>
@@ -73,13 +76,12 @@
     <string name="p_trim_years">Years</string>
     <string name="p_trim_days">Days</string>
     <string name="p_trim_total">Total</string>
+    <string name="p_remove_all">Clear entire cache</string>
+    <string name="p_remove_all_in">Clear entire cache in</string>
+    <string name="p_remove_old">Remove old tiles</string>
+    <string name="p_remove_old_in">Remove old tiles in</string>
 
-    <string-array name="p_trim_modes">
-        <item>Trim to size</item>
-        <item>Trim to size and age</item>
-        <item>Trim to age</item>
-        <item>Trim to size or age</item>
-    </string-array>
+
 
 
     <string name="p_general">General</string>
@@ -134,9 +136,9 @@
     <string name="p_weight_title">Your weight in kg</string>
 
     <string name="p_backlight_title">Backlight</string>
-    <string name="p_backlight_off">Off</string>
-    <string name="p_backlight_dim">Dim</string>
-    <string name="p_backlight_bright">Bright</string>
+    <string name="p_backlight_off">System default</string>
+    <string name="p_backlight_dim">Keep on (dark)</string>
+    <string name="p_backlight_bright">Keep on (bright)</string>
     <string name="p_system">System</string>
     <string name="p_tile_size">Tile size</string>
     <string name="p_accuracy_filter">Accuracy filter</string>
@@ -150,6 +152,11 @@
     <string name="p_location_gps">System GPS</string>
     <string name="p_location_mock">Mock location</string>
     <string name="p_location_old">Old location</string>
+
+    <string name="p_mapsforge_directory">Offline maps directory</string>
+    <string name="p_mapsforge_theme">Offline maps theme</string>
+
+    <string name="p_enable_cache">Enable cache</string>
 
     <string name="file_reload">Reload preview</string>
     <string name="file_delete">Delete file</string>
@@ -249,6 +256,9 @@
     <string name ="tt_nominatim_clear">Clear search text.</string>
     <string name ="tt_nominatim_overlay">Use result as map overlay.</string>
     <string name ="tt_nominatim_save">Save a copy of the result.</string>
+
+    <string name ="tt_cockpit_a">Fullscreen</string>
+    <string name ="tt_cockpit_b">Splitscreen</string>
 
     <string name ="tt_overpass_mapfeatures">Show list of map features.</string>
 

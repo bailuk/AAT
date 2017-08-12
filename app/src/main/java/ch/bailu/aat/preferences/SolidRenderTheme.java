@@ -10,6 +10,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
+import ch.bailu.aat.R;
 import ch.bailu.simpleio.foc.Foc;
 
 public class SolidRenderTheme extends SolidFile {
@@ -22,7 +23,7 @@ public class SolidRenderTheme extends SolidFile {
 
     @Override
     public String getLabel() {
-        return "Offline map theme*";
+        return getContext().getString(R.string.p_mapsforge_theme);
     }
 
 

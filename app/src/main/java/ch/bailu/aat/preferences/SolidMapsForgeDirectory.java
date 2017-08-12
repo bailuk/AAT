@@ -4,8 +4,9 @@ import android.content.Context;
 
 import java.util.ArrayList;
 
-import ch.bailu.aat.util.fs.AppDirectory;
+import ch.bailu.aat.R;
 import ch.bailu.aat.util.fs.AndroidVolumes;
+import ch.bailu.aat.util.fs.AppDirectory;
 import ch.bailu.aat.util.fs.foc.FocAndroid;
 import ch.bailu.simpleio.foc.Foc;
 
@@ -21,7 +22,7 @@ public class SolidMapsForgeDirectory extends SolidFile {
 
     @Override
     public String getLabel() {
-        return "Offline maps directory*";
+        return getContext().getString(R.string.p_mapsforge_directory);
     }
 
 

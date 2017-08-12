@@ -2,6 +2,7 @@ package ch.bailu.aat.menus;
 
 
 import android.app.Activity;
+import android.content.Context;
 import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -10,7 +11,6 @@ import ch.bailu.aat.R;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.tileremover.SelectedTileDirectoryInfo;
 import ch.bailu.aat.util.ui.AppDialog;
-import ch.bailu.aat.util.ui.AppLog;
 
 public class RemoveTilesMenu extends AbsMenu {
 
@@ -36,12 +36,14 @@ public class RemoveTilesMenu extends AbsMenu {
 
     @Override
     public void inflate(Menu menu) {
+        Context c = scontext.getContext();
+
         if (info.index == 0) {
-            removeScanned = menu.add("Remove old tiles*");
-            removeAll = menu.add("Clear entire cache*");
+            removeScanned = menu.add(c.getString(R.string.p_remove_old));
+            removeAll = menu.add(c.getString(R.string.p_remove_all));
         } else {
-            removeScanned = menu.add("Remove old tiles in *" + info.name);
-            removeAll = menu.add("Clear cache in *" + info.name);
+            removeScanned = menu.add(c.getString(R.string.p_remove_old_in) + info.name);
+            removeAll = menu.add(c.getString(R.string.p_remove_all_in) + info.name);
 
         }
     }
@@ -70,18 +72,17 @@ public class RemoveTilesMenu extends AbsMenu {
             new AppDialog() {
                 @Override
                 protected void onPositiveClick() {
-                    scontext.lock();
-                    scontext.getTileRemoverService().getState().removeAll();
-                    scontext.free();
-                    AppLog.i(scontext.getContext(), "Removed* " + info.directory);
+                    if (scontext.lock()) {
+                        scontext.getTileRemoverService().getState().removeAll();
+                        scontext.free();
+                    }
                 }
             }.displayYesNoDialog(
                     acontext,
-                    "Empty cache*",
-                    "Remove all files in* " + info.directory);
+                    scontext.getContext().getString(R.string.p_remove_all),
+                    scontext.getContext().getString(R.string.p_remove_all_in) + " " + info.directory);
         }
 
         return false;
     }
-
 }

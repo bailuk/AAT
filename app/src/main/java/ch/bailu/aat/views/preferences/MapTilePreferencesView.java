@@ -38,7 +38,7 @@ public class MapTilePreferencesView extends VerticalScrollView {
         add(new TitleView(context, Source.ELEVATION_HILLSHADE.getName()));
         add(new SolidCheckBox(new SolidEnableTileCache.Hillshade(context)));
 
-        add(new TitleView(context, "Trim tile caches*"));
+        add(new TitleView(context, context.getString(R.string.p_trim_cache)));
         add(new SolidIndexListView(new SolidTrimMode(context)));
         add(new SolidIndexListView(new SolidTrimSize(context)));
         add(new SolidIndexListView(new SolidTrimDate(context)));

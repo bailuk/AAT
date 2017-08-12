@@ -13,6 +13,10 @@ import ch.bailu.simpleio.foc.FocFile;
 import ch.bailu.simpleio.foc.FocName;
 
 public class FocAndroid {
+    public static final int SAF_MIN_SDK = 21;
+
+
+
     public static final Foc NULL = new FocName("");
 
 
@@ -66,7 +70,7 @@ public class FocAndroid {
     // [content]://[authority]/[uri type]/[document ID]/[document type]/[document ID]
     private static Foc factoryFocContent(String scheme, Uri uri, ContentResolver r) {
         if ("content".equals(scheme) &&
-                Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                Build.VERSION.SDK_INT >= SAF_MIN_SDK) {
 
             List<String> segments = uri.getPathSegments();
 
@@ -93,13 +97,6 @@ public class FocAndroid {
 
 
                 Foc foc =  new FocContent(r, permission, documentId);
-
-                /*
-                AppLog.d(foc, foc.getName());
-                AppLog.d(foc, foc.getPathName());
-                AppLog.d(foc, foc.getPath());
-                AppLog.d(foc, permission.toString());
-                */
 
                 return foc;
             }

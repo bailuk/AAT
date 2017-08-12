@@ -26,8 +26,9 @@ import ch.bailu.simpleio.foc.Foc;
  *
  */
 
-@TargetApi(21)
+@TargetApi(FocAndroid.SAF_MIN_SDK)
 public class FocContent extends Foc {
+
     private DocumentData data = null;
 
     private final ContentResolver resolver;
@@ -285,7 +286,6 @@ public class FocContent extends Foc {
             }
 
         } catch(Exception e) {
-            //AppLog.d(this, e.toString());
             data = new DocumentData(uris.getDocumentId().toString());
         }
         Foc.close(cursor);

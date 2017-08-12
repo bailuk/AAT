@@ -104,6 +104,8 @@ public class MainActivity extends AbsDispatcher {
                     s.start(MainActivity.this);
                 }
             });
+
+            setText(s.activitySubLabel);
         }
 
     }

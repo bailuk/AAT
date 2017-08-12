@@ -95,7 +95,7 @@ The structure of the data directory is as follows: &lt;/p>
 
 &lt;h2>Calculating calories&lt;/h2>
 
-&lt;p>AAT uses the formula &lt;b>hours * MET * weight&lt;/b> to calculate the kcal used for a specific activity.
+&lt;p>AAT uses the formula &lt;b>time[hours] * MET * weight[kg]&lt;/b> to calculate the kcal used for a specific activity.
 MET stands for &lt;a href=\"https://en.wikipedia.org/wiki/Metabolic_equivalent\">metabolic equivalent&lt;/a>. The higher the value, the more energy you would use
 for this specific activity. A complete list of activities and MET values can be found &lt;a href=\"https://sites.google.com/site/compendiumofphysicalactivities/Activity-Categories\">here&lt;/a>.&lt;/p>
 

@@ -5,13 +5,19 @@
     <string name="on">An</string>
     <string name="off">Aus</string>
     <string name="enter">Eingabe…</string>
+    <string name="pick">Auswählen (SAF)…</string>
 
 
+    <!-- Intro -->
     <string name="intro_about">Info</string>
     <string name="intro_list">Aufgezeichnete Aktivitäten</string>
     <string name="intro_settings">Einstellungen</string>
     <string name="intro_map">Kartenansicht</string>
 
+    <string name="intro_external_list">Externe Dateien</string>
+    <string name="intro_overlay_list">Overlay Liste</string>
+    <string name="intro_status">Status</string>
+    <string name="intro_nominatim">Karten Suche</string>
 
     <!-- MultiView label -->
     <string name="label_summary">Zusammenfassung</string>
@@ -44,6 +50,8 @@
     </string-array>
 
     <string name="p_general">Allgemein</string>
+
+    <string name="p_met">MET und Name</string>
     <string name="p_preset">Voreinstellungen</string>
     <string-array name="p_met_list">
         <!--
@@ -87,13 +95,43 @@
     <string name="p_map">Karte</string>
 
     <string name="p_autopause">Autopause</string>
-    <string name="p_tracker_autopause">Tracker automatisch auf pause setzen</string>
-    <string name="p_post_autopause">Postprocessed autopause</string>
+    <string name="p_tracker_autopause">Tracker automatisch auf Pause setzen</string>
+    <string name="p_post_autopause">Postprocessed Autopause</string>
 
     <string name="p_backlight_title">Bildschirm</string>
-    <string name="p_backlight_off">Aus</string>
-    <string name="p_backlight_dim">Dunkel</string>
-    <string name="p_backlight_bright">Hell</string>
+    <string name="p_backlight_off">Systemeinstellung</string>
+    <string name="p_backlight_dim">Immer an (Dunkel)</string>
+    <string name="p_backlight_bright">Immer an (Hell)</string>
+
+    <!-- Map-Tiles settings -->
+    <string name="p_tiles">Karte</string>
+    <string name="p_trim_cache">Zwischenspeicher verkleinern</string>
+    <string name="p_trim_mode">Modus</string>
+    <string name="p_trim_size">Grösse</string>
+    <string name="p_trim_age">Alter</string>
+    <string name="p_trim_month">Monat</string>
+    <string name="p_trim_months">Monate</string>
+    <string name="p_trim_year">Jahr</string>
+    <string name="p_trim_years">Jahre</string>
+    <string name="p_trim_days">Tage</string>
+    <string name="p_trim_total">Total</string>
+
+    <string-array name="p_trim_modes">
+        <item>Grösse</item>
+        <item>Grösse und alter</item>
+        <item>Alter</item>
+        <item>Grösse oder alter</item>
+    </string-array>
+
+    <string name="p_mapsforge_directory">Verzeichnis für Offline-Karten</string>
+    <string name="p_enable_cache">Zwischenspeichern</string>
+
+
+    <string name="p_remove_all">Zwischenspeicher löschen</string>
+    <string name="p_remove_all_in">Zwischenspeicher löschen in</string>
+    <string name="p_remove_old">Alte Kacheln löschen</string>
+    <string name="p_remove_old_in">Alte Kacheln löschen in</string>
+
 
     <string name="file_delete">Datei löschen</string>
     <string name="file_delete_ask">Datei löschen?</string>
@@ -134,34 +172,38 @@
 
 
     <!-- ToolTip -->
-    <string name ="tt_edit_add">Am Ort in der Kartenmitte einen Punkt hinzufügen.</string>
-    <string name ="tt_edit_remove">Ausgewählten Punkt entfernen.</string>
-    <string name ="tt_edit_up">Ausgewählten Punkt in der Liste nach oben bewegen.</string>
-    <string name ="tt_edit_down">Ausgewählten Punkt in der Liste nach unten bewegen.</string>
-    <string name ="tt_edit_convert">Wechseln zwischen GPX Track oder GPX Way.</string>
-    <string name ="tt_edit_clear">Liste löschen: alle Punkte entfernen.</string>
-    <string name ="tt_edit_redo">Letzte rückgängig gemachte Aktion wiederherstellen.</string>
-    <string name ="tt_edit_undo">Letzte Aktion rückgängig machen.</string>
-    <string name ="tt_edit_save">GPX Liste speichern.</string>
-    <string name ="tt_edit_save_as">Kopie der GPX Liste speichern.</string>
+    <string name ="tt_edit_add">Am Ort in der Kartenmitte einen Punkt hinzufügen</string>
+    <string name ="tt_edit_remove">Ausgewählten Punkt entfernen</string>
+    <string name ="tt_edit_up">Ausgewählten Punkt in der Liste nach oben bewegen</string>
+    <string name ="tt_edit_down">Ausgewählten Punkt in der Liste nach unten bewegen</string>
+    <string name ="tt_edit_convert">Wechseln zwischen GPX Track oder GPX Way</string>
+    <string name ="tt_edit_clear">Liste löschen: alle Punkte entfernen</string>
+    <string name ="tt_edit_redo">Letzte rückgängig gemachte Aktion wiederherstellen</string>
+    <string name ="tt_edit_undo">Letzte Aktion rückgängig machen</string>
+    <string name ="tt_edit_save">GPX Liste speichern</string>
+    <string name ="tt_edit_save_as">Kopie der GPX Liste speichern</string>
 
-    <string name ="tt_info_grid">Zwischen verschiedenen Kartengitter wechseln.</string>
-    <string name ="tt_info_legend">Zwischen Beschreibungsmodi wechseln.</string>
-    <string name ="tt_info_nominatim">Suchabfrage über OSM-Nominatim.</string>
-    <string name ="tt_info_overpass">Abfrage über OSM-Overpass.</string>
-    <string name ="tt_info_reload">Sichtbare Kacheln neuladen.</string>
-
-
-    <string name ="tt_map_zoomin">Hineinzoomen.</string>
-    <string name ="tt_map_zoomout">Heraus zoomen.</string>
-    <string name ="tt_map_home">Karte im Bekannten Standort zentrieren.</string>
-    <string name ="tt_map_frame">Zwischen der Gesamtansicht der Overlays wechseln.</string>
+    <string name ="tt_info_grid">Zwischen verschiedenen Kartengitter wechseln</string>
+    <string name ="tt_info_legend">Zwischen Beschreibungsmodi wechseln</string>
+    <string name ="tt_info_nominatim">Suchanfrage über OSM-Nominatim</string>
+    <string name ="tt_info_overpass">Anfrage über OSM-Overpass</string>
+    <string name ="tt_info_reload">Sichtbare Kacheln neuladen</string>
 
 
-    <string name ="tt_nominatim_query">Abfrage starten…</string>
-    <string name ="tt_nominatim_clear">Text für die Abfrage zurücksetzen.</string>
-    <string name ="tt_nominatim_overlay">Abfrageresultat als Overlay anzeigen.</string>
-    <string name ="tt_nominatim_save">Kopie des Abfrageresultats speichern.</string>
+    <string name ="tt_map_zoomin">Hineinzoomen</string>
+    <string name ="tt_map_zoomout">Heraus zoomen</string>
+    <string name ="tt_map_home">Karte im Bekannten Standort zentrieren</string>
+    <string name ="tt_map_frame">Zwischen der Gesamtansicht der Overlays wechseln</string>
+
+
+    <string name ="tt_nominatim_query">Anfrage starten…</string>
+    <string name ="tt_nominatim_clear">Text für die Anfrage zurücksetzen</string>
+    <string name ="tt_nominatim_overlay">Anfrageresultat als Overlay anzeigen</string>
+    <string name ="tt_nominatim_save">Kopie des Anfrageresultats speichern</string>
+
+    <string name="tt_info_location">Importieren/exportieren der Kartenmitte</string>
+    <string name="tt_menu_file">Menu für Dateioperationen anzeigen</string>
+    <string name="tt_overpass_mapfeatures">Map Features auflisten</string>
 
 
 
@@ -186,9 +228,6 @@
     <string name="filter_date_start">Start Datum</string>
     <string name="filter_date_to">End Datum</string>
     <string name="filter_geo">Innerhalb Bereich</string>
-    <string name="intro_external_list">Externe Dateien</string>
-    <string name="intro_overlay_list">Overlay Liste</string>
-    <string name="intro_status">Status</string>
     <string name="none">Kein</string>
     <string name="p_accuracy_filter">Genauigkeitsfilter</string>
     <string name="p_legend_fulldistance">Totaldistanz</string>
@@ -198,14 +237,11 @@
     <string name="p_system">System</string>
     <string name="p_tile_size">Kachelgrösse</string>
 
-    <string name="p_distance_filter">Distanz filter</string>
+    <string name="p_distance_filter">Distanz-Filter</string>
     <string name="p_directory_data">Interne Dateien</string>
     <string name="p_directory_tiles">Zwischenspeicher für Kacheln</string>
 
     <string name="pause">Pause</string>
 
-    <string name="tt_info_location">Importieren/exportieren der Kartenmitte</string>
-    <string name="tt_menu_file">Menu für Dateioperationen anzeigen.</string>
-    <string name="tt_overpass_mapfeatures">Map Features auflisten.</string>
 
 </resources>

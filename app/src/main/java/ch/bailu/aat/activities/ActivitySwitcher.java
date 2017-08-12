@@ -27,10 +27,17 @@ public class ActivitySwitcher {
 
     public static class Entry {
         public final String activityLabel;
+        public final String activitySubLabel;
         public final Class<?> activityClass;
 
         public Entry(String label, Class<?> c) {
+            this(label, "", c);
+        }
+
+
+        public Entry(String label, String subLabel, Class<?> c) {
             activityLabel=label;
+            activitySubLabel=subLabel;
             activityClass=c;
         }
         public void start(Context c) {
@@ -67,8 +74,8 @@ public class ActivitySwitcher {
 
     private static void initPhone(Context c) {
         cycable = PHONE_CYCABLE;
-        entries.add(new Entry(c.getString(R.string.intro_resume), CockpitActivity.class));
-        entries.add(new Entry(c.getString(R.string.intro_cockpit2), CockpitSplitActivity.class));
+        entries.add(new Entry(c.getString(R.string.intro_resume), c.getString(R.string.tt_cockpit_a), CockpitActivity.class));
+        entries.add(new Entry(c.getString(R.string.intro_cockpit2), c.getString(R.string.tt_cockpit_b), CockpitSplitActivity.class));
     }
 
     private static void initBoth(Context c) {
@@ -76,8 +83,12 @@ public class ActivitySwitcher {
         entries.add(new Entry(c.getString(R.string.intro_list), TrackListActivity.class));
         entries.add(new Entry(c.getString(R.string.intro_overlay_list), OverlayListActivity.class));
         entries.add(new Entry(c.getString(R.string.intro_external_list), ExternalListActivity.class));
+        entries.add(new Entry(c.getString(R.string.intro_nominatim),
+                c.getString(R.string.tt_info_nominatim),
+                NominatimActivity.class));
         entries.add(new Entry(c.getString(R.string.intro_settings), PreferencesActivity.class));
         entries.add(new Entry(c.getString(R.string.intro_about) + " / " + c.getString(R.string.intro_readme), AboutActivity.class));
+
 
         if (BuildConfig.DEBUG)
             entries.add(new Entry(c.getString(R.string.intro_test), TestActivity.class));
