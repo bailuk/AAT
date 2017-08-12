@@ -104,8 +104,8 @@ public class FileContentActivity extends AbsFileContentActivity{
         a.add(summary, 40);
 
         PercentageLayout b = new PercentageLayout(this);
-        b.add(a, 80);
-        b.add(graph, 20);
+        b.add(a, 70);
+        b.add(graph, 30);
 
         return b;
     }

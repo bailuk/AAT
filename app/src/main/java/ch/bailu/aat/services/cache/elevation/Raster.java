@@ -17,6 +17,8 @@ public class Raster {
     public final int[] toLaRaster = new int[TileObject.TILE_SIZE];
     public final int[] toLoRaster = new int[TileObject.TILE_SIZE];
 
+    public boolean isInizialized=false;
+
 
     // 1. pixel to latitude
     public void initializeWGS84Raster(ArrayList<Span> laSpan, ArrayList<Span> loSpan, Tile tile) {

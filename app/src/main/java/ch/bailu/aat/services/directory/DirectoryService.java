@@ -45,7 +45,7 @@ public class DirectoryService extends VirtualService implements OnSharedPreferen
 
         AppLog.d(this, dir.getPathName());
 
-        if (dir.canRead()) {
+        if (dir.mkdirs() && dir.canRead()) {
             open(dir);
 
         } else {

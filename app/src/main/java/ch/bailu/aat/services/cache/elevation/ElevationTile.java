@@ -26,11 +26,9 @@ public abstract class ElevationTile extends TileObject implements ElevationUpdat
 
     private final Tile mapTile;
     private final int split;
-    
-    private boolean isUpdating = false;
-    private boolean isInitializing = true;
-    
-    
+
+    private boolean isPainting = false;
+
     private final SyncTileBitmap bitmap = new SyncTileBitmap();
 
     private final SubTiles subTiles = new SubTiles();
@@ -38,7 +36,7 @@ public abstract class ElevationTile extends TileObject implements ElevationUpdat
 
     private static final int[] buffer = new int[TileObject.TILE_SIZE*TileObject.TILE_SIZE];
 
-    
+
     public ElevationTile(String id, Tile _map_tile, int _split) {
         super(id);
         mapTile =_map_tile;
@@ -79,18 +77,21 @@ public abstract class ElevationTile extends TileObject implements ElevationUpdat
         return factoryGeoToIndex(dim);
     }
 
-    
+
     public abstract void fillBuffer(
-            int[] bitmap, 
+            int[] bitmap,
             Raster raster,
             SubTile span,
             DemProvider demtile);
 
-    
+
     @Override
     public void onInsert(ServiceContext sc) {
         sc.getCacheService().addToBroadcaster(this);
-        sc.getBackgroundService().process(new RasterInitializer(sc, toString()));
+
+        if (!raster.isInizialized) {
+            sc.getBackgroundService().process(new RasterInitializer(sc, getID()));
+        }
     }
 
 
@@ -107,7 +108,7 @@ public abstract class ElevationTile extends TileObject implements ElevationUpdat
 
     @Override
     public void onDownloaded(String id, String url, ServiceContext sc) {
-        if (subTiles.haveID(url) && isInitializing == false) {
+        if (subTiles.haveID(url) && raster.isInizialized) {
             AppBroadcaster.broadcast(sc.getContext(), AppBroadcaster.REQUEST_ELEVATION_UPDATE, toString());
         }
     }
@@ -121,7 +122,7 @@ public abstract class ElevationTile extends TileObject implements ElevationUpdat
 
 
     public boolean isReadyAndLoaded() {
-        return isUpdating == false;
+        return isPainting == false;
     }
 
 
@@ -143,11 +144,11 @@ public abstract class ElevationTile extends TileObject implements ElevationUpdat
         final int key = tile.hashCode();
         final SubTile span =  subTiles.get(key);
 
-        if (span != null && isInitializing == false && tile.isLoaded()) {
+        if (span != null && raster.isInizialized && tile.isLoaded()) {
             subTiles.remove(key);
-            isUpdating =true;
+            isPainting =true;
 
-            cs.getBackgroundService().process(span.painterFactory(cs, toString(), tile));
+            cs.getBackgroundService().process(span.painterFactory(cs, getID(), tile));
         }
     }
 
@@ -162,29 +163,33 @@ public abstract class ElevationTile extends TileObject implements ElevationUpdat
 
         final Rect interR = subTile.toRect();
 
-        synchronized(buffer) {
-            fillBuffer(buffer, raster, subTile, split(dem3Tile));
+        synchronized (raster) {
+            if (raster.isInizialized) {
+                synchronized (buffer) {
+                    fillBuffer(buffer, raster, subTile, split(dem3Tile));
 
 
-            Bitmap t = bitmap.getAndroidBitmap();
+                    Bitmap t = bitmap.getAndroidBitmap();
 
-            if (t == null) {
-                bitmap.set(TILE_SIZE, true);
-                t = bitmap.getAndroidBitmap();
-                t.eraseColor(Color.TRANSPARENT);
+                    if (t == null) {
+                        bitmap.set(TILE_SIZE, true);
+                        t = bitmap.getAndroidBitmap();
+                        t.eraseColor(Color.TRANSPARENT);
+                    }
+
+                    t.setPixels(
+                            buffer,
+                            0,
+                            interR.width(),
+                            interR.left,
+                            interR.top,
+                            interR.width(),
+                            interR.height());
+
+
+                    isPainting = false;
+                }
             }
-
-            t.setPixels(
-                    buffer,
-                    0,
-                    interR.width(),
-                    interR.left,
-                    interR.top,
-                    interR.width(),
-                    interR.height());
-
-
-            isUpdating = false;
         }
         return interR.width()*interR.height()*2;
     }
@@ -192,17 +197,19 @@ public abstract class ElevationTile extends TileObject implements ElevationUpdat
 
 
     public long bgOnProcessInitializer() {
-        final ArrayList<Span> laSpan = new ArrayList<>(5);
-        final ArrayList<Span> loSpan = new ArrayList<>(5);
+        synchronized (raster) {
+            if (!raster.isInizialized) {
+                final ArrayList<Span> laSpan = new ArrayList<>(5);
+                final ArrayList<Span> loSpan = new ArrayList<>(5);
 
-        raster.initializeWGS84Raster(laSpan, loSpan, getTile());
-        raster.initializeIndexRaster(getGeoToIndex());
-        subTiles.generateSubTileList(laSpan, loSpan);
+                raster.initializeWGS84Raster(laSpan, loSpan, getTile());
+                raster.initializeIndexRaster(getGeoToIndex());
+                subTiles.generateSubTileList(laSpan, loSpan);
 
-        isInitializing = false;
+                raster.isInizialized = true;
+            }
+        }
 
         return TileObject.TILE_SIZE * 2;
     }
-
-
 }

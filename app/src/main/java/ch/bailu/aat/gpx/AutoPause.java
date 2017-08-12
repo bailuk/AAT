@@ -87,7 +87,7 @@ public abstract class AutoPause {
                 add = 0;
             }
 
-            return add < time; // not paused
+            return add <= time; // not paused
         }
     }
 }
