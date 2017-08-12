@@ -2,7 +2,6 @@ package ch.bailu.aat.util.fs;
 
 import android.content.Context;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.Locale;
 

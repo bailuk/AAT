@@ -11,7 +11,6 @@ import android.os.Bundle;
 import java.util.List;
 
 import ch.bailu.aat.gpx.StateID;
-import ch.bailu.aat.util.ui.AppLog;
 import ch.bailu.aat.util.AppPermission;
 import ch.bailu.aat.util.ContextWrapperInterface;
 import ch.bailu.simpleio.foc.Foc;
@@ -156,12 +155,6 @@ public class RealLocation extends LocationStackChainedItem
 
             if (list==null) {
                 throw new NoServiceException();
-            } else {
-                /*
-                for (int i=0; i<list.size(); i++) {
-                    AppLog.d(this, list.get(i));
-                }
-                */
             }
 
             if (lm.getProvider(provider)==null) {

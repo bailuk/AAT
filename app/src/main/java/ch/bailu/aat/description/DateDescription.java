@@ -3,8 +3,6 @@ package ch.bailu.aat.description;
 
 import android.content.Context;
 
-import java.util.Locale;
-
 import ch.bailu.aat.R;
 import ch.bailu.aat.gpx.GpxInformation;
 
@@ -22,7 +20,7 @@ public class DateDescription extends LongDescription {
     }
 
     public static String format(long time) {
-        return String.format("%tc",time, time);
+        return String.format("%tc",time);
     }
 
     @Override

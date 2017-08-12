@@ -6,7 +6,6 @@ import org.mapsforge.core.graphics.TileBitmap;
 import org.mapsforge.core.model.Tile;
 
 import ch.bailu.aat.services.ServiceContext;
-import ch.bailu.simpleio.foc.Foc;
 
 public abstract class TileObject extends ObjectHandle {
     public static final int TILE_SIZE=256;

@@ -255,5 +255,5 @@ public class GpxObjectStatic extends GpxObject implements ElevationUpdaterClient
             AppBroadcaster.broadcast(context, AppBroadcaster.FILE_CHANGED_INCACHE, getID());
             AppBroadcaster.broadcast(context, AppBroadcaster.REQUEST_ELEVATION_UPDATE, getID());
         }
-    };
+    }
 }

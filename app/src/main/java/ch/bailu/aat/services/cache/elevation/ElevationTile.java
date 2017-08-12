@@ -122,7 +122,7 @@ public abstract class ElevationTile extends TileObject implements ElevationUpdat
 
 
     public boolean isReadyAndLoaded() {
-        return isPainting == false;
+        return raster.isInizialized && isPainting == false;
     }
 
 

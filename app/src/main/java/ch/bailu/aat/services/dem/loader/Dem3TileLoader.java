@@ -13,7 +13,6 @@ import ch.bailu.aat.services.dem.tile.Dem3Tile;
 import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.util.AppIntent;
 import ch.bailu.aat.util.Timer;
-import ch.bailu.aat.util.ui.AppLog;
 import ch.bailu.simpleio.foc.Foc;
 
 public class Dem3TileLoader implements Closeable {
@@ -62,8 +61,8 @@ public class Dem3TileLoader implements Closeable {
     private void loadOrDownloadPending() {
         final SrtmCoordinates loadNow = pending;
         pending = null;
-        if (loadNow(loadNow) == null);
-        downloadNow(loadNow);
+        if (loadNow(loadNow) == null)
+            downloadNow(loadNow);
     }
 
 

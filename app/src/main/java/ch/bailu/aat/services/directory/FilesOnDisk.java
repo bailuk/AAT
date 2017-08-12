@@ -24,7 +24,7 @@ public class FilesOnDisk {
     }
   */
     
-    private static ArrayList<Foc> getFileList(Foc directory) throws IOException {
+    private static ArrayList<Foc> getFileList(Foc directory) {
         final ArrayList<Foc> files = new ArrayList<>(100);
 
         directory.foreachFile(new Foc.Execute() {

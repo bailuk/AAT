@@ -1,11 +1,13 @@
 package ch.bailu.aat.util.fs.foc;
 
+import android.annotation.TargetApi;
 import android.database.Cursor;
 import android.provider.DocumentsContract.Document;
 
 import ch.bailu.aat.util.ui.AppLog;
 
 
+@TargetApi(FocAndroid.SAF_MIN_SDK)
 public class DocumentData  {
     final public String documentId;
     final public String mimeType;

@@ -112,7 +112,7 @@ public class FileAction   {
         new AppSelectDirectoryDialog(context, src);
     }
 
-    public static void copyToDir(Context context, Foc src, Foc destDir) throws Exception {
+    public static void copyToDir(Context context, Foc src, Foc destDir) {
         final Foc dest = destDir.child(src.getName());
 
         if (dest == null || dest.exists()) {

@@ -36,8 +36,7 @@ public class MapPaint {
 
 
     public static Paint createStatusTextPaint(AppDensity res) {
-        Paint p = createTextPaint(res, TEXT_SIZE);
-        return p;
+        return createTextPaint(res, TEXT_SIZE);
     }
 
     public static Paint createLegendTextPaint(AppDensity res) {

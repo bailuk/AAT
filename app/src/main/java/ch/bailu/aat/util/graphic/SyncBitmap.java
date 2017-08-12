@@ -13,8 +13,6 @@ import org.mapsforge.map.android.graphics.AndroidGraphicFactory;
 
 import java.io.BufferedInputStream;
 import java.io.Closeable;
-import java.io.File;
-import java.io.IOException;
 import java.io.InputStream;
 
 import ch.bailu.aat.services.cache.ObjectHandle;

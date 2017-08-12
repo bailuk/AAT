@@ -12,7 +12,6 @@ import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.cache.GpxObject;
 import ch.bailu.aat.services.cache.GpxObjectStatic;
 import ch.bailu.aat.services.cache.ObjectHandle;
-import ch.bailu.aat.util.ui.AppLog;
 
 public class CustomFileSource extends ContentSource {
     private final ServiceContext scontext;

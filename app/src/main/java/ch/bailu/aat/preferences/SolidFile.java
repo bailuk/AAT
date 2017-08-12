@@ -1,5 +1,6 @@
 package ch.bailu.aat.preferences;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
@@ -10,8 +11,6 @@ import java.util.ArrayList;
 import ch.bailu.aat.R;
 import ch.bailu.aat.menus.DirectoryMenu;
 import ch.bailu.aat.util.fs.foc.FocAndroid;
-import ch.bailu.aat.util.fs.foc.FocContent;
-import ch.bailu.aat.util.fs.foc.FocTest;
 import ch.bailu.simpleio.foc.Foc;
 
 
@@ -111,6 +110,8 @@ public abstract class SolidFile extends SolidString {
         }
     }
 
+
+    @TargetApi(FocAndroid.SAF_MIN_SDK)
     public void setFromPickerActivity(Activity acontext) {
         Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT_TREE);
 

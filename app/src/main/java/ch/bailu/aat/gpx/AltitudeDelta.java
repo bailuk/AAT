@@ -44,7 +44,6 @@ public abstract class AltitudeDelta {
 
                 if (samples > 0) {
                     delta = average_b - average_a;
-                    ;
                     if (delta < 0) descend -= delta;
                     else ascend += delta;
                 }

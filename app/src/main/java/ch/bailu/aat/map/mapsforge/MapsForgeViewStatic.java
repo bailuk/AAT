@@ -1,9 +1,6 @@
 package ch.bailu.aat.map.mapsforge;
 
 import ch.bailu.aat.map.MapDensity;
-import ch.bailu.aat.map.tile.TileProvider;
-import ch.bailu.aat.map.tile.source.DownloadSource;
-import ch.bailu.aat.map.tile.source.Source;
 import ch.bailu.aat.services.ServiceContext;
 
 public class MapsForgeViewStatic extends MapsForgeViewBase {

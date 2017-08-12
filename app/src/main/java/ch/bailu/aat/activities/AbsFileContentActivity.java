@@ -19,11 +19,11 @@ import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.map.MapViewInterface;
 import ch.bailu.aat.menus.FileMenu;
 import ch.bailu.aat.services.editor.EditorHelper;
-import ch.bailu.aat.util.Objects;
 import ch.bailu.aat.util.ui.ToolTip;
 import ch.bailu.aat.views.BusyButton;
 import ch.bailu.aat.views.ContentView;
 import ch.bailu.aat.views.MainControlBar;
+import ch.bailu.simpleio.util.Objects;
 
 public abstract class AbsFileContentActivity extends AbsDispatcher implements OnClickListener {
 

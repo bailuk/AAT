@@ -2,6 +2,7 @@ package ch.bailu.aat.preferences;
 
 import android.content.Context;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import ch.bailu.aat.R;
@@ -47,7 +48,11 @@ public class SolidMapsForgeDirectory extends SolidFile {
 
         list = buildSelection(list);
 
-        add_w(list, FocAndroid.factory(getContext(),getContext().getExternalFilesDir(null).getAbsolutePath()));
+        File external = getContext().getExternalFilesDir(null);
+
+        if (external != null) {
+            add_w(list, FocAndroid.factory(getContext(), external.getAbsolutePath()));
+        }
 
         if (list.size()>0) {
             return list.get(0);

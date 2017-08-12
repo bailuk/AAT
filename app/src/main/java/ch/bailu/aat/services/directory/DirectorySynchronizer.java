@@ -192,7 +192,7 @@ public class DirectorySynchronizer  implements Closeable {
         }
 
 
-        private void removeFileFromDatabase(String name) throws IOException {
+        private void removeFileFromDatabase(String name) {
             final Foc file = directory.child(name);
 
             SummaryConfig.getWriteablePreviewFile(scontext.getContext(), file).rm();
@@ -201,7 +201,7 @@ public class DirectorySynchronizer  implements Closeable {
 
 
 
-        private void compareFileSystemWithDatabase() throws IOException {
+        private void compareFileSystemWithDatabase() {
             final Cursor cursor = database.query(null);
 
             for (boolean r=cursor.moveToFirst(); canContinue && r; r=cursor.moveToNext()) {
@@ -275,14 +275,14 @@ public class DirectorySynchronizer  implements Closeable {
                 try {
                     addGpxSummaryToDatabase(pendingHandle.getID(), pendingHandle.getGpxList());
                     setState(new StateLoadPreview());
-                } catch (IOException e) {
+                } catch (Exception e) {
                     terminate(e);
                 }
             } 
         }
 
 
-        private void addGpxSummaryToDatabase(String id, GpxList list) throws IOException {
+        private void addGpxSummaryToDatabase(String id, GpxList list) {
             final Foc file = FocAndroid.factory(scontext.getContext(), id);
 
             ContentValues content = createContentValues(file.getName(), list.getDelta());

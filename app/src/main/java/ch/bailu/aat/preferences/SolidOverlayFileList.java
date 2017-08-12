@@ -3,7 +3,6 @@ package ch.bailu.aat.preferences;
 import android.content.Context;
 
 import ch.bailu.aat.R;
-import ch.bailu.aat.util.ui.AppLog;
 
 public class SolidOverlayFileList extends SolidCheckList {
     public static final int MAX_OVERLAYS=4;

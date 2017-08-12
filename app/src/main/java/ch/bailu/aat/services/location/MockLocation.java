@@ -2,8 +2,6 @@ package ch.bailu.aat.services.location;
 
 import android.content.Context;
 
-import java.io.IOException;
-
 import ch.bailu.aat.coordinates.BoundingBoxE6;
 import ch.bailu.aat.gpx.AltitudeDelta;
 import ch.bailu.aat.gpx.AutoPause;

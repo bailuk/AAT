@@ -63,7 +63,7 @@ public class SolidRenderTheme extends SolidFile {
 
     public static XmlRenderTheme toRenderTheme(String name) {
 
-        XmlRenderTheme theme = InternalRenderTheme.DEFAULT;
+        XmlRenderTheme theme;
 
         if (name.equals(InternalRenderTheme.DEFAULT.toString())) {
             theme = InternalRenderTheme.DEFAULT;

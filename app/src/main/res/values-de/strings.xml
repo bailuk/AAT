@@ -107,7 +107,7 @@
     <string name="p_tiles">Karte</string>
     <string name="p_trim_cache">Zwischenspeicher verkleinern</string>
     <string name="p_trim_mode">Modus</string>
-    <string name="p_trim_size">Grösse</string>
+    <string name="p_trim_size">Größe</string>
     <string name="p_trim_age">Alter</string>
     <string name="p_trim_month">Monat</string>
     <string name="p_trim_months">Monate</string>
@@ -117,10 +117,10 @@
     <string name="p_trim_total">Total</string>
 
     <string-array name="p_trim_modes">
-        <item>Grösse</item>
-        <item>Grösse und alter</item>
+        <item>Größe</item>
+        <item>Größe und alter</item>
         <item>Alter</item>
-        <item>Grösse oder alter</item>
+        <item>Größe oder alter</item>
     </string-array>
 
     <string name="p_mapsforge_directory">Verzeichnis für Offline-Karten</string>

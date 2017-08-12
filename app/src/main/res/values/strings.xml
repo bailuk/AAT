@@ -8,7 +8,7 @@
     <string name="off">Off</string>
     <string name="auto">Auto</string>
     <string name="none">None</string>
-    <string name="enter">Enter...</string>
+    <string name="enter">Enter…</string>
     <string name="pick">Pick (SAF)…</string>
 
 
@@ -65,6 +65,13 @@
     </string-array>
 
     <!-- Map-Tiles settings -->
+    <string-array name="p_trim_modes">
+        <item>Size</item>
+        <item>Size and age</item>
+        <item>Age</item>
+        <item>Size or age</item>
+    </string-array>
+
     <string name="p_trim_cache">Trim tile cache</string>
     <string name="p_tiles">Map Tiles</string>
     <string name="p_trim_mode">Trim mode</string>

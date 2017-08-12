@@ -7,19 +7,18 @@ import java.io.Closeable;
 
 import ch.bailu.aat.gpx.StateID;
 //import ch.bailu.aat.preferences.SolidGPSLock;
-import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat.services.ServiceContext;
 
 public class ServiceLocker implements Closeable, OnSharedPreferenceChangeListener{
 
     //private final SolidGPSLock slock;
-    private final ServiceContext scontext;
-    private int gpsStatus= StateID.OFF;
+    //private final ServiceContext scontext;
+    //private int gpsStatus= StateID.OFF;
     
     
     public ServiceLocker(ServiceContext sc) {
-        scontext=sc;
-        final Storage storage = Storage.global(sc.getContext());
+        //scontext=sc;
+        //final Storage storage = Storage.global(sc.getContext());
         //slock=new SolidGPSLock(storage);
         
         //slock.register(this);
@@ -43,7 +42,7 @@ public class ServiceLocker implements Closeable, OnSharedPreferenceChangeListene
 
     
     public void autoLock(int state) {
-        gpsStatus=state;
+        //gpsStatus=state;
         autoLock();
     }
     

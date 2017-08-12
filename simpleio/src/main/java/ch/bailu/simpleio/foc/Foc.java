@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
+import ch.bailu.simpleio.util.Objects;
+
 public abstract class Foc {
 
     public abstract boolean remove() throws IOException, SecurityException;
@@ -31,7 +33,7 @@ public abstract class Foc {
             public void execute(Foc child) {
                 if (!child.rmdirs()) {
                     ok[0] = false;
-                };
+                }
             }
         });
         return ok[0] && rmdir();
@@ -45,7 +47,7 @@ public abstract class Foc {
             public void execute(Foc child) {
                 if (!child.rmRecoursive()) {
                     ok[0] = false;
-                };
+                }
             }
         });
         return ok[0] && rm();
@@ -168,7 +170,7 @@ public abstract class Foc {
     public abstract long length();
     public abstract long lastModified();
 
-    public void update() {};
+    public void update() {}
 
     public abstract InputStream openR() throws IOException, SecurityException;
     public abstract OutputStream openW() throws IOException, SecurityException;
@@ -186,12 +188,8 @@ public abstract class Foc {
     @Override
     public boolean equals(Object o)  {
 
-        return o instanceof Foc && equals(getPath(), ((Foc) o).getPath());
+        return o instanceof Foc && Objects.equals(getPath(), ((Foc) o).getPath());
 
-    }
-
-    private static boolean equals(String s1, String s2) {
-        return s1 == s2 || (s1 != null && s1.equals(s2));
     }
 
 

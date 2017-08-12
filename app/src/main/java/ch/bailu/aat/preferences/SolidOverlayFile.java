@@ -3,8 +3,6 @@ package ch.bailu.aat.preferences;
 import android.content.Context;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 
-import java.io.File;
-
 import ch.bailu.aat.util.fs.foc.FocAndroid;
 import ch.bailu.simpleio.foc.Foc;
 

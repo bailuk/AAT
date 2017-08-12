@@ -4,15 +4,16 @@ import android.annotation.TargetApi;
 import android.content.ContentResolver;
 import android.database.Cursor;
 import android.net.Uri;
-import android.os.Build;
 import android.provider.DocumentsContract;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
 import ch.bailu.aat.util.ui.AppLog;
 import ch.bailu.simpleio.foc.Foc;
+import ch.bailu.simpleio.util.Objects;
 
 /**
  *
@@ -105,14 +106,21 @@ public class FocContent extends Foc {
             AppLog.d(this, "create: " + mimeType);
             update();
 
+            return createDocumentNoException(mimeType) || exists();
+        }
+    }
+
+    private boolean createDocumentNoException(String mimeType) {
+        try {
             return DocumentsContract.createDocument(
                     resolver,
                     uris.getParent(),
                     mimeType,
-                    getName()) != null || exists();
+                    getName()) != null;
+        } catch (Exception e) {
+            return false;
         }
     }
-
 
     @Override
     public boolean hasParent() {
@@ -199,13 +207,13 @@ public class FocContent extends Foc {
     @Override
     public boolean isDir() {
         querySelf();
-        return data.type == DocumentData.TREE;
+        return Objects.equals(data.type, DocumentData.TREE);
     }
 
     @Override
     public boolean isFile() {
         querySelf();
-        return data.type == DocumentData.DOCUMENT;
+        return Objects.equals(data.type, DocumentData.DOCUMENT);
     }
 
     @Override
