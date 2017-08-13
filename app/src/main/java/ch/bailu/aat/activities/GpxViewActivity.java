@@ -9,18 +9,6 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
 import ch.bailu.aat.R;
-import ch.bailu.aat.description.AverageSpeedDescription;
-import ch.bailu.aat.description.CaloriesDescription;
-import ch.bailu.aat.description.ContentDescription;
-import ch.bailu.aat.description.DateDescription;
-import ch.bailu.aat.description.DistanceDescription;
-import ch.bailu.aat.description.EndDateDescription;
-import ch.bailu.aat.description.MaximumSpeedDescription;
-import ch.bailu.aat.description.NameDescription;
-import ch.bailu.aat.description.PathDescription;
-import ch.bailu.aat.description.PauseDescription;
-import ch.bailu.aat.description.TimeDescription;
-import ch.bailu.aat.description.TrackSizeDescription;
 import ch.bailu.aat.dispatcher.CurrentLocationSource;
 import ch.bailu.aat.dispatcher.CustomFileSource;
 import ch.bailu.aat.dispatcher.OnContentUpdatedInterface;
@@ -33,7 +21,9 @@ import ch.bailu.aat.map.MapViewInterface;
 import ch.bailu.aat.menus.ContentMenu;
 import ch.bailu.aat.util.fs.FileAction;
 import ch.bailu.aat.util.fs.foc.FocAndroid;
+import ch.bailu.aat.util.fs.foc.FocUri;
 import ch.bailu.aat.util.ui.AppLayout;
+import ch.bailu.aat.util.ui.AppLog;
 import ch.bailu.aat.util.ui.ToolTip;
 import ch.bailu.aat.views.BusyButton;
 import ch.bailu.aat.views.ContentView;
@@ -68,7 +58,6 @@ public class GpxViewActivity extends AbsDispatcher
         Uri uri = intent.getData();
 
         if (uri==null) {
-
             if (intent.hasExtra(Intent.EXTRA_STREAM)) {
                 uri = intent.getParcelableExtra(Intent.EXTRA_STREAM);
             }
@@ -78,9 +67,12 @@ public class GpxViewActivity extends AbsDispatcher
 
 
         if (uri != null) {
-            content = FocAndroid.factory(this, uri.toString());
+            AppLog.d(this, uri.toString());
 
-            fileID = content.toString();
+            content = FocAndroid.factory(this, uri.toString());
+            fileID = content.getPath();
+
+            AppLog.d(this, content.toString());
 
             final LinearLayout contentView = new ContentView(this);
 
@@ -103,22 +95,9 @@ public class GpxViewActivity extends AbsDispatcher
         map = MapFactory.DEF(this, SOLID_KEY).externalContent();
 
 
-        final ContentDescription summaryData[] = {
-                new NameDescription(this),
-                new PathDescription(this),
-                new TimeDescription(this),
-                new DateDescription(this),
-                new EndDateDescription(this),
-                new PauseDescription(this),
-                new DistanceDescription(this),
-                new AverageSpeedDescription(this),
-                new MaximumSpeedDescription(this),
-                new CaloriesDescription(this),
-                new TrackSizeDescription(this),
-        };
-
         VerticalScrollView summary = new VerticalScrollView(this);
-        summary.addAllContent(this, summaryData, InfoID.FILEVIEW);
+        summary.addAllContent(this,
+                FileContentActivity.getSummaryData(this), InfoID.FILEVIEW);
 
         View graph = PercentageLayout.add(this,
                 new DistanceAltitudeGraphView(this, this, InfoID.FILEVIEW),

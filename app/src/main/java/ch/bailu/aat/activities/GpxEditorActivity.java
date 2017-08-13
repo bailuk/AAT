@@ -189,7 +189,7 @@ public class GpxEditorActivity extends AbsFileContentActivity
 
                 }.displaySaveDiscardDialog(this, editor_helper.getInformation().getFile().getName());
             } else {
-                onClick(v);
+                super.onClick(v);
             }
 
         } else {

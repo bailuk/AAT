@@ -1,5 +1,6 @@
 package ch.bailu.aat.activities;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 
@@ -46,28 +47,8 @@ public class FileContentActivity extends AbsFileContentActivity{
     protected View createLayout(MainControlBar bar) {
         map = MapFactory.DEF(this, SOLID_KEY).content(editor_helper);
 
-
-        final ContentDescription summaryData[] = {
-                new NameDescription(this),
-                new PathDescription(this),
-                new DateDescription(this),
-                new EndDateDescription(this),
-                new TimeDescription(this),
-                new TimeApDescription(this),
-                new PauseDescription(this),
-                new PauseApDescription(this),
-                new DistanceDescription(this),
-                new AverageSpeedDescription(this),
-                new AverageSpeedDescriptionAP(this),
-                new MaximumSpeedDescription(this),
-                new CaloriesDescription(this),
-                new AscendDescription(this),
-                new DescendDescription(this),
-                new TrackSizeDescription(this),
-        };
-
         VerticalScrollView summary = new VerticalScrollView(this);
-        summary.addAllContent(this, summaryData, InfoID.FILEVIEW);
+        summary.addAllContent(this, getSummaryData(this), InfoID.FILEVIEW);
 
         View graph = PercentageLayout.add(this,
                 new DistanceAltitudeGraphView(this, this, InfoID.FILEVIEW),
@@ -82,8 +63,29 @@ public class FileContentActivity extends AbsFileContentActivity{
 
     }
 
+    public static ContentDescription[] getSummaryData(Context c) {
+        return new ContentDescription[] {
+                new NameDescription(c),
+                new PathDescription(c),
+                new DateDescription(c),
+                new EndDateDescription(c),
+                new TimeDescription(c),
+                new TimeApDescription(c),
+                new PauseDescription(c),
+                new PauseApDescription(c),
+                new DistanceDescription(c),
+                new AverageSpeedDescription(c),
+                new AverageSpeedDescriptionAP(c),
+                new MaximumSpeedDescription(c),
+                new CaloriesDescription(c),
+                new AscendDescription(c),
+                new DescendDescription(c),
+                new TrackSizeDescription(c),
+        };
+    }
+
     protected View createMultiView(MainControlBar bar,
-                                        View summary, View graph) {
+                                   View summary, View graph) {
 
         MultiView mv = new MultiView(this, SOLID_KEY);
         mv.add(summary);
@@ -109,4 +111,5 @@ public class FileContentActivity extends AbsFileContentActivity{
 
         return b;
     }
+
 }

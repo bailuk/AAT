@@ -40,7 +40,7 @@ public class GpxListEntryView extends LinearLayout implements OnContentUpdatedIn
         addViewWeight(textLayout);
 
         int previewSize = AppLayout.getBigButtonSize(sc.getContext());
-        preview = new PreviewView(sc);
+        preview = new PreviewView(sc, 0);
         addView(preview, previewSize, previewSize);
 
         title = new TextView(getContext());

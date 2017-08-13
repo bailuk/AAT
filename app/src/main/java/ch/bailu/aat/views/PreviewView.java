@@ -5,35 +5,45 @@ import android.content.Context;
 import android.content.Intent;
 import android.widget.ImageView;
 
-import ch.bailu.aat.services.directory.SummaryConfig;
-import ch.bailu.aat.util.AppBroadcaster;
-import ch.bailu.aat.util.AppIntent;
+import ch.bailu.aat.dispatcher.OnContentUpdatedInterface;
+import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.cache.ImageObject;
 import ch.bailu.aat.services.cache.ObjectHandle;
+import ch.bailu.aat.services.directory.SummaryConfig;
+import ch.bailu.aat.util.AppBroadcaster;
+import ch.bailu.aat.util.AppIntent;
 import ch.bailu.aat.util.fs.foc.FocAndroid;
 import ch.bailu.util_java.foc.Foc;
 
-public class PreviewView extends ImageView {
+public class PreviewView extends ImageView implements OnContentUpdatedInterface {
     private boolean isAttached=false;
 
     private final ServiceContext scontext;
 
     private ImageObject imageHandle=ImageObject.NULL;
     private Foc        imageToLoad=null;
-    
-    public PreviewView(ServiceContext sc) {
+
+
+    private final int defaultImageID;
+
+    public PreviewView(ServiceContext sc, int resID) {
         super(sc.getContext());
         scontext = sc;
+        defaultImageID = resID;
     }
     
     
-    
-    public void setFilePath(String fileID) {
+    public void setFilePath(Foc fileID) {
         final Foc file = SummaryConfig
-                .getReadablePreviewFile(getContext(), FocAndroid.factory(getContext(), fileID));
+                .getReadablePreviewFile(getContext(), fileID);
         setPreviewPath(file);
         loadAndDisplayImage();
+    }
+
+
+    public void setFilePath(String fileID) {
+        setFilePath(FocAndroid.factory(getContext(), fileID));
     }
     
     
@@ -52,7 +62,8 @@ public class PreviewView extends ImageView {
             if (loadImage(imageToLoad)) {
                 displayImage();
             } else {
-                setImageDrawable(null);
+                if (defaultImageID != 0) setImageResource(defaultImageID);
+                else setImageDrawable(null);
             }
             
             imageToLoad=null;
@@ -118,4 +129,11 @@ public class PreviewView extends ImageView {
             if (AppIntent.hasFile(intent, file)) displayImage();
         }
     };
+
+
+    @Override
+    public void onContentUpdated(int iid, GpxInformation info) {
+        setFilePath(info.getFile());
+    }
+
 }

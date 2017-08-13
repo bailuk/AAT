@@ -23,12 +23,14 @@ import ch.bailu.aat.util.ui.ToolTip;
 import ch.bailu.aat.views.BusyButton;
 import ch.bailu.aat.views.ContentView;
 import ch.bailu.aat.views.MainControlBar;
+import ch.bailu.aat.views.PreviewView;
 import ch.bailu.util_java.util.Objects;
 
 public abstract class AbsFileContentActivity extends AbsDispatcher implements OnClickListener {
 
     protected IteratorSource  currentFile;
-    protected ImageButton nextFile, previousFile, fileOperation;
+    protected ImageButton nextFile, previousFile;//, fileOperation;
+    protected PreviewView fileOperation;
 
     private BusyButton         busyButton;
     protected MapViewInterface map;
@@ -68,7 +70,10 @@ public abstract class AbsFileContentActivity extends AbsDispatcher implements On
     private void initButtonBar(MainControlBar bar) {
         previousFile =  bar.addImageButton(R.drawable.go_up_inverse);
         nextFile = bar.addImageButton(R.drawable.go_down_inverse);
-        fileOperation = bar.addImageButton(R.drawable.edit_select_all_inverse);
+
+
+        fileOperation = new PreviewView(getServiceContext(), R.drawable.edit_select_all_inverse);
+        bar.addButton(fileOperation);
 
         ToolTip.set(fileOperation, R.string.tt_menu_file);
 
@@ -97,6 +102,8 @@ public abstract class AbsFileContentActivity extends AbsDispatcher implements On
         addSource(editor_source);
 
         addTarget(busyButton.getBusyControl(InfoID.FILEVIEW), InfoID.FILEVIEW);
+        addTarget(fileOperation, InfoID.FILEVIEW);
+
         addTarget(new OnContentUpdatedInterface() {
             @Override
             public void onContentUpdated(int iid, GpxInformation info) {

@@ -8,6 +8,7 @@ import android.os.Build;
 import java.io.File;
 import java.util.List;
 
+import ch.bailu.aat.util.ui.AppLog;
 import ch.bailu.util_java.foc.Foc;
 import ch.bailu.util_java.foc.FocFile;
 import ch.bailu.util_java.foc.FocName;
@@ -27,6 +28,7 @@ public class FocAndroid {
     public static Foc factory(Context c, Uri uri) {
         String scheme = uri.getScheme();
 
+        AppLog.d(uri, uri.toString());
         Foc result = factoryFocName(scheme, uri);
 
         if (result == null) {
@@ -76,13 +78,14 @@ public class FocAndroid {
 
 
             if (segments.size() == 2) {
+
                 Uri permission = uri;
                 DocumentId documentId = new DocumentId(Uri.decode(segments.get(1)));
 
                 if (DocumentData.TREE.equals(segments.get(0)))
                     return new FocContent(r, permission, documentId);
                 else if (DocumentData.DOCUMENT.equals(segments.get(0)))
-                    return new FocContent(r, permission, documentId);
+                    return new FocUri(r, uri);//new FocContent(r, permission, documentId);
 
             } else if (segments.size() == 4) {
                 Uri permission =
