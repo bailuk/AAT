@@ -32,7 +32,7 @@ public class DirectorySynchronizer  implements Closeable {
     private GpxObject pendingHandle=null;
     private MapsForgePreview pendingPreviewGenerator=null;
 
-    private FilesOnDisk filesToAdd=null;
+    private FilesInDirectory filesToAdd=null;
     private final ArrayList<String> filesToRemove = new ArrayList<>();
 
     private GpxDatabase database;
@@ -139,9 +139,17 @@ public class DirectorySynchronizer  implements Closeable {
             @Override
             public long bgOnProcess() {
                 try {
-                    filesToAdd = new FilesOnDisk(directory);
+                    AppLog.d(directory, "p0");
+
+                    filesToAdd = new FilesInDirectory(directory);
+                    AppLog.d(directory, "p1");
+
                     compareFileSystemWithDatabase();
+                    AppLog.d(directory, "p2");
+
                     removeFilesFromDatabase();
+
+                    AppLog.d(directory, "p3");
                 } catch (IOException e) {
                     exception = e;
                 }
@@ -212,7 +220,7 @@ public class DirectorySynchronizer  implements Closeable {
                     filesToRemove.add(name);
 
                 } else if (isFileInSync(file)) {
-                    filesToAdd.popItem(file);
+                    filesToAdd.pollItem(file);
 
                 } else {
                     filesToRemove.add(name);
@@ -243,7 +251,7 @@ public class DirectorySynchronizer  implements Closeable {
 
         public void start() {
 
-            Foc file = filesToAdd.popItem();
+            Foc file = filesToAdd.pollItem();
 
 
             if (file==null) {
