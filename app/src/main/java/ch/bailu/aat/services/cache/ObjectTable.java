@@ -238,7 +238,7 @@ public class ObjectTable  {
     }
 
     public void logLocked() {
-        int locked=0;
+/*        int locked=0;
 
         for (Container current : hashMap.values()) {
             if (current.obj.isLocked()){
@@ -246,7 +246,7 @@ public class ObjectTable  {
                 locked++;
             }
         }
-        AppLog.d(this, "Still locked: " + locked);
+        AppLog.d(this, "Still locked: " + locked);*/
     }
 
 

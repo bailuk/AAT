@@ -28,7 +28,6 @@ public class FocAndroid {
     public static Foc factory(Context c, Uri uri) {
         String scheme = uri.getScheme();
 
-        AppLog.d(uri, uri.toString());
         Foc result = factoryFocName(scheme, uri);
 
         if (result == null) {
