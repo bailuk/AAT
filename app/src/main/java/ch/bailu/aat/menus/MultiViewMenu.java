@@ -1,6 +1,7 @@
 package ch.bailu.aat.menus;
 
 
+import android.graphics.drawable.Drawable;
 import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -24,6 +25,17 @@ public class MultiViewMenu extends AbsMenu {
     public void inflateWithHeader(ContextMenu menu) {
         inflate(menu);
     }
+
+    @Override
+    public String getTitle() {
+        return null;
+    }
+
+    @Override
+    public Drawable getIcon() {
+        return null;
+    }
+
 
     @Override
     public void prepare(Menu menu) {}

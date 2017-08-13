@@ -1,6 +1,7 @@
 package ch.bailu.aat.menus;
 
 import android.app.Activity;
+import android.graphics.drawable.Drawable;
 import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -40,10 +41,15 @@ public class FileMenu extends AbsMenu {
     }
 
     @Override
-    public void inflateWithHeader(ContextMenu menu) {
-        menu.setHeaderTitle(file.getName());
-        inflate(menu);
+    public String getTitle() {
+        return file.getName();
     }
+
+    @Override
+    public Drawable getIcon() {
+        return null;
+    }
+
 
     @Override
     public void prepare(Menu menu) {

@@ -24,7 +24,6 @@ import ch.bailu.aat.services.dem.tile.ElevationProvider;
 import ch.bailu.aat.services.dem.updater.ElevationUpdaterClient;
 import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.util.fs.foc.FocAndroid;
-import ch.bailu.aat.util.ui.AppLog;
 import ch.bailu.util_java.foc.Foc;
 
 public class GpxObjectStatic extends GpxObject implements ElevationUpdaterClient {
@@ -225,8 +224,6 @@ public class GpxObjectStatic extends GpxObject implements ElevationUpdaterClient
 
         private long load(GpxObjectStatic handle) throws IOException {
             long size = 0;
-
-            AppLog.d(this, "load: " + getFile().getPathName());
 
             GpxListReader reader =
                     new GpxListReader(

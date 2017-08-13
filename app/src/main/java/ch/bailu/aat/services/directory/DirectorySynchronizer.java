@@ -139,17 +139,11 @@ public class DirectorySynchronizer  implements Closeable {
             @Override
             public long bgOnProcess() {
                 try {
-                    AppLog.d(directory, "p0");
 
                     filesToAdd = new FilesInDirectory(directory);
-                    AppLog.d(directory, "p1");
-
                     compareFileSystemWithDatabase();
-                    AppLog.d(directory, "p2");
-
                     removeFilesFromDatabase();
 
-                    AppLog.d(directory, "p3");
                 } catch (IOException e) {
                     exception = e;
                 }

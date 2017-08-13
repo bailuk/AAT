@@ -3,6 +3,7 @@ package ch.bailu.aat.menus;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -10,6 +11,7 @@ import android.view.MenuItem;
 import ch.bailu.aat.R;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.tileremover.SelectedTileDirectoryInfo;
+import ch.bailu.aat.util.Res;
 import ch.bailu.aat.util.ui.AppDialog;
 
 public class RemoveTilesMenu extends AbsMenu {
@@ -32,8 +34,6 @@ public class RemoveTilesMenu extends AbsMenu {
 
 
 
-
-
     @Override
     public void inflate(Menu menu) {
         Context c = scontext.getContext();
@@ -50,10 +50,13 @@ public class RemoveTilesMenu extends AbsMenu {
 
 
     @Override
-    public void inflateWithHeader(ContextMenu menu) {
-        menu.setHeaderTitle(info.name);
-        menu.setHeaderIcon(R.drawable.user_trash_inverse);
-        inflate(menu);
+    public Drawable getIcon() {
+        return Res.d(scontext.getContext(), R.drawable.user_trash_inverse);
+    }
+
+    @Override
+    public String getTitle() {
+        return info.name;
     }
 
     @Override

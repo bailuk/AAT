@@ -1,11 +1,14 @@
 package ch.bailu.aat.menus;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import ch.bailu.aat.R;
+import ch.bailu.aat.activities.ActivitySwitcher;
+import ch.bailu.aat.activities.NominatimActivity;
 import ch.bailu.aat.preferences.SolidBacklight;
 import ch.bailu.aat.preferences.SolidMapTileStack;
 import ch.bailu.aat.preferences.SolidOverlayFileList;
@@ -16,7 +19,7 @@ import ch.bailu.aat.views.preferences.SolidCheckListDialog;
 import ch.bailu.aat.views.preferences.SolidIndexListDialog;
 
 public class OptionsMenu extends AbsMenu {
-    private MenuItem start, pause, backlight, map, overlays;//, nominatim;
+    private MenuItem start, pause, backlight, map, overlays, nominatim;
 
     private final ServiceContext scontext;
     
@@ -38,20 +41,24 @@ public class OptionsMenu extends AbsMenu {
 
         overlays = menu.add(R.string.p_overlay);
         overlays.setIcon(R.drawable.view_paged_inverse);
-/*
+
         nominatim = menu.add(R.string.intro_nominatim);
         nominatim.setIcon(R.drawable.edit_find_inverse);
-*/
+
         backlight = menu.add(R.string.p_backlight_title);
     }
 
     @Override
-    public void inflateWithHeader(ContextMenu menu) {
-        menu.setHeaderTitle(R.string.app_sname);
-        inflate(menu);
+    public String getTitle() {
+        return scontext.getContext().getString(R.string.app_sname);
     }
 
-    
+    @Override
+    public Drawable getIcon() {
+        return null;
+    }
+
+
     @Override
     public void prepare(Menu menu) {
         updateMenuText(scontext.getTrackerService().getState());
@@ -83,10 +90,10 @@ public class OptionsMenu extends AbsMenu {
 
         } else if (item == overlays) {
             new SolidCheckListDialog(new SolidOverlayFileList(c));
-/*
+
         } else if (item == nominatim) {
             ActivitySwitcher.start(c, NominatimActivity.class);
-*/
+
 
         } else {
             return false;

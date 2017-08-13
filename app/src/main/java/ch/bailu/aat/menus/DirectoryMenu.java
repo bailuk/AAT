@@ -4,6 +4,7 @@ package ch.bailu.aat.menus;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.view.ContextMenu;
@@ -41,10 +42,13 @@ public class DirectoryMenu extends AbsMenu {
     }
 
     @Override
-    public void inflateWithHeader(ContextMenu menu) {
-        menu.setHeaderTitle(sdirectory.getValueAsFile().getName());
-        menu.setHeaderIcon(R.drawable.folder_inverse);
-        inflate(menu);
+    public String getTitle() {
+        return sdirectory.getValueAsFile().getName();
+    }
+
+    @Override
+    public Drawable getIcon() {
+        return null;
     }
 
     @Override

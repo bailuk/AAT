@@ -28,9 +28,8 @@ public class FileIntent {
         if (file.canRead()) {
             
             intent.setAction(Intent.ACTION_VIEW);
-            
-            if (file.isDir() || file.toString().startsWith("content:/")) {
-                intent.setData(Uri.parse(file.toString()));
+            if (file.isDir() || file.getPath().startsWith("content:/")) {
+                intent.setData(Uri.parse(file.getPath()));
             } else {
                 intent.setData(toContentUri(file));
             }

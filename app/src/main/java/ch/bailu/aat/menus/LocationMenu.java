@@ -2,6 +2,7 @@ package ch.bailu.aat.menus;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.view.ContextMenu;
 import android.view.Menu;
@@ -41,14 +42,18 @@ public class LocationMenu extends AbsMenu{
     }
 
     @Override
-    public void inflateWithHeader(ContextMenu menu) {
-        menu.setHeaderTitle(R.string.location_title);
-        inflate(menu);
+    public String getTitle() {
+        return context.getString(R.string.location_title);
     }
 
+
     @Override
+    public Drawable getIcon() {
+        return null;
+    }
+
+     @Override
     public void prepare(Menu menu) {
-        
         paste.setEnabled(clipboard.getText() != null);
     }
 

@@ -7,11 +7,17 @@ import android.widget.AbsListView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import ch.bailu.aat.R;
+import ch.bailu.aat.activities.AbsActivity;
+import ch.bailu.aat.activities.AbsServiceLink;
 import ch.bailu.aat.description.ContentDescription;
 import ch.bailu.aat.dispatcher.OnContentUpdatedInterface;
 import ch.bailu.aat.gpx.GpxInformation;
+import ch.bailu.aat.menus.FileMenu;
 import ch.bailu.aat.services.ServiceContext;
+import ch.bailu.aat.util.fs.foc.FocAndroid;
 import ch.bailu.aat.util.ui.AppLayout;
+import ch.bailu.util_java.foc.Foc;
 
 public class GpxListEntryView extends LinearLayout implements OnContentUpdatedInterface {
 
@@ -20,9 +26,10 @@ public class GpxListEntryView extends LinearLayout implements OnContentUpdatedIn
 
     private final ContentDescription[] descriptions;
 
+    private Foc file = FocAndroid.NULL;
 
-    public GpxListEntryView(ServiceContext sc, ContentDescription[] d) {
-        super(sc.getContext());
+    public GpxListEntryView(final AbsServiceLink acontext, ContentDescription[] d) {
+        super(acontext);
 
         descriptions = d;
 
@@ -35,13 +42,22 @@ public class GpxListEntryView extends LinearLayout implements OnContentUpdatedIn
         setLayoutParams(p);
 
         final LinearLayout textLayout;
-        textLayout = new LinearLayout(sc.getContext());
+        textLayout = new LinearLayout(acontext);
         textLayout.setOrientation(VERTICAL);
         addViewWeight(textLayout);
 
-        int previewSize = AppLayout.getBigButtonSize(sc.getContext());
-        preview = new PreviewView(sc, 0);
+        int previewSize = AppLayout.getBigButtonSize(acontext);
+        preview = new PreviewView(acontext.getServiceContext(),
+                R.drawable.edit_select_all_inverse);
         addView(preview, previewSize, previewSize);
+
+        preview.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new FileMenu(acontext, file).showAsDialog(acontext);
+            }
+        });
+
 
         title = new TextView(getContext());
         title.setTextColor(Color.WHITE);
@@ -64,13 +80,14 @@ public class GpxListEntryView extends LinearLayout implements OnContentUpdatedIn
 
     @Override
     public void onContentUpdated(int iid, GpxInformation info) {
-
+        file = info.getFile();
 
         for (ContentDescription description : descriptions) {
             description.onContentUpdated(iid, info);
         }
         updateText();
-        preview.setFilePath(info.getFile().getPath());
+
+        preview.onContentUpdated(iid, info);
     }
 
 

@@ -7,8 +7,8 @@ import android.view.ViewGroup;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
+import ch.bailu.aat.activities.ActivityContext;
 import ch.bailu.aat.description.ContentDescription;
-import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.directory.Iterator;
 import ch.bailu.aat.services.directory.Iterator.OnCursorChangedListener;
 import ch.bailu.aat.util.ui.AppTheme;
@@ -32,9 +32,9 @@ public class GpxListView extends ListView implements OnCursorChangedListener {
     }
 
 
-    public void setIterator(ServiceContext scontext, Iterator iterator) {
+    public void setIterator(ActivityContext acontext, Iterator iterator) {
         iterator.setOnCursorChangedLinsener(this);
-        setAdapter(new IteratorAdapter(scontext, iterator));
+        setAdapter(new IteratorAdapter(acontext, iterator));
     }
     
 
@@ -45,11 +45,11 @@ public class GpxListView extends ListView implements OnCursorChangedListener {
 
     public class IteratorAdapter implements ListAdapter {
         private final Iterator iterator;
-        private final ServiceContext scontext;
+        private final ActivityContext acontext;
 
-        public IteratorAdapter(ServiceContext sc, Iterator it) {
+        public IteratorAdapter(ActivityContext ac, Iterator it) {
             iterator=it;
-            scontext=sc;
+            acontext =ac;
         }
 
 
@@ -78,7 +78,7 @@ public class GpxListView extends ListView implements OnCursorChangedListener {
             GpxListEntryView entry = (GpxListEntryView) convertView;
 
             if (entry == null) {
-                entry = new GpxListEntryView(scontext, data);
+                entry = new GpxListEntryView(acontext, data);
             } 
 
             iterator.moveToPosition(position);

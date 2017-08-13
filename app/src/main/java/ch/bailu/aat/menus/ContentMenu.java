@@ -1,13 +1,13 @@
 package ch.bailu.aat.menus;
 
 
-import android.view.ContextMenu;
+import android.graphics.drawable.Drawable;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import ch.bailu.aat.R;
-import ch.bailu.aat.util.fs.FileAction;
 import ch.bailu.aat.services.ServiceContext;
+import ch.bailu.aat.util.fs.FileAction;
 import ch.bailu.util_java.foc.Foc;
 
 public class ContentMenu extends AbsMenu {
@@ -30,10 +30,15 @@ public class ContentMenu extends AbsMenu {
     }
 
     @Override
-    public void inflateWithHeader(ContextMenu menu) {
-        menu.setHeaderTitle(uri.getName());
-        inflate(menu);
+    public String getTitle() {
+        return uri.getName();
     }
+
+    @Override
+    public Drawable getIcon() {
+        return null;
+    }
+
 
     @Override
     public void prepare(Menu menu) {

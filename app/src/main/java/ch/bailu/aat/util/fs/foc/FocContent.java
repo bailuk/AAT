@@ -76,7 +76,6 @@ public class FocContent extends Foc {
     @Override
     public boolean remove() throws IOException, SecurityException {
         if (childCount() == 0) {
-            AppLog.d(this, "Remove " + toString());
             return DocumentsContract.deleteDocument(resolver, uris.getDocument());
         }
 

@@ -70,6 +70,4 @@ public class TileObjectCache extends TileCache<TileObject> {
     public int size() {
         return tiles.size();
     }
-
-
 }

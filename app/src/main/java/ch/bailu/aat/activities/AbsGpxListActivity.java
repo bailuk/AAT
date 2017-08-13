@@ -32,15 +32,14 @@ import ch.bailu.aat.views.GpxListView;
 import ch.bailu.aat.views.MainControlBar;
 import ch.bailu.aat.views.PercentageLayout;
 import ch.bailu.aat.views.description.MultiView;
-import ch.bailu.aat.views.preferences.SolidDirectoryMenuButton;
 import ch.bailu.aat.views.preferences.TitleView;
 import ch.bailu.aat.views.preferences.VerticalScrollView;
 import ch.bailu.util_java.foc.Foc;
 
 
-public abstract class AbsGpxListActivity extends AbsDispatcher implements OnItemClickListener {
+public abstract class AbsGpxListActivity extends ActivityContext implements OnItemClickListener {
 
-    private FileMenu                    fileMenu;
+  //  private FileMenu                    fileMenu;
     private String                      solid_key;
 
     private Iterator                    iteratorSimple = Iterator.NULL;
@@ -82,7 +81,7 @@ public abstract class AbsGpxListActivity extends AbsDispatcher implements OnItem
     public void onResumeWithService() {
 
         iteratorSimple = new IteratorSimple(getServiceContext());
-        listView.setIterator(getServiceContext(), iteratorSimple);
+        listView.setIterator(this, iteratorSimple);
         fileControlBar.setIterator(iteratorSimple);
         listView.setSelection(sdirectory.getPosition().getValue());
 
@@ -98,7 +97,7 @@ public abstract class AbsGpxListActivity extends AbsDispatcher implements OnItem
 
         iteratorSimple.close();
         iteratorSimple = Iterator.NULL;
-        listView.setIterator(getServiceContext(), iteratorSimple);
+        listView.setIterator(this, iteratorSimple);
         fileControlBar.setIterator(iteratorSimple);
 
         super.onPauseWithService();
@@ -125,7 +124,7 @@ public abstract class AbsGpxListActivity extends AbsDispatcher implements OnItem
         displayFile();
     }
 
-
+/*
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
@@ -145,7 +144,7 @@ public abstract class AbsGpxListActivity extends AbsDispatcher implements OnItem
     public boolean onContextItemSelected(MenuItem item) {
         return fileMenu.onItemClick(item);
     }
-
+*/
 
     private class Layouter {
         private final AbsGpxListActivity acontext = AbsGpxListActivity.this;
@@ -187,7 +186,7 @@ public abstract class AbsGpxListActivity extends AbsDispatcher implements OnItem
             contentView.addView(bar);
             contentView.addView(createLayout(map, summary, bar));
 
-            bar.add(new SolidDirectoryMenuButton(acontext, sdirectory));
+            //bar.add(new SolidDirectoryMenuButton(acontext, sdirectory));
         }
 
 
