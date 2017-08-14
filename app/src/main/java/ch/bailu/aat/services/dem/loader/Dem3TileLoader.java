@@ -61,13 +61,16 @@ public class Dem3TileLoader implements Closeable {
     private void loadOrDownloadPending() {
         final SrtmCoordinates loadNow = pending;
         pending = null;
-        if (loadNow(loadNow) == null)
+
+        if (loadNow != null) {
+            loadNow(loadNow);
             downloadNow(loadNow);
+        }
     }
 
 
     public Dem3Tile loadNow(SrtmCoordinates c) {
-        if (havePending()) startTimer(); // Fixme: call cancelPending instead?
+        if (havePending()) cancelPending();
         return loadIntoOldestSlot(c);
     }
 
@@ -115,10 +118,9 @@ public class Dem3TileLoader implements Closeable {
 
 
     private void downloadNow(SrtmCoordinates c) {
-        Foc target = c.toFile(scontext.getContext());
-
-        if (target.exists() == false) {
-            DownloadHandle handle = new DownloadHandle(c.toURL(), target);
+        Foc file = c.toFile(scontext.getContext());
+        if (!file.exists()) {
+            DownloadHandle handle = new DownloadHandle(c.toURL(), file);
             scontext.getBackgroundService().download(handle);
         }
     }
