@@ -25,14 +25,17 @@ import ch.bailu.aat.map.tile.TileProviderInterface;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.util.ui.AppLog;
 
-public class MapsForgeTileLayerStack extends Layer implements MapLayerInterface, Observer {
+public class MapsForgeTileLayerStack extends Layer implements MapLayerInterface {
 
-
-    private boolean attached = false;
-
-    private final ArrayList<Container> layers = new ArrayList<>(10);
+    private final SubLayers layers = new SubLayers(new Observer() {
+        @Override
+        public void onChange() {
+            requestRedraw();
+        }
+    });
 
     private final ServiceContext scontext;
+
 
     public MapsForgeTileLayerStack(ServiceContext sc) {
         scontext = sc;
@@ -47,69 +50,40 @@ public class MapsForgeTileLayerStack extends Layer implements MapLayerInterface,
 
 
     public void addLayer(TileProviderInterface provider, int z1, int z2) {
-        layers.add(new Container(provider, z1, z2));
-        provider.addObserver(this);
+        layers.add(new SubLayer(provider, z1, z2));
     }
 
 
     public void removeLayers() {
-        detachLayers();
         layers.clear();
     }
 
-    private void detachLayers() {
-        for (Container c : layers) {
-            c.provider.detach();
-        }
-    }
 
     public void setMapViewZoomLimit(MapView mapView) {
-        int minZoom=6, maxZoom = 10;
-
-        for (Container c : layers) {
-            maxZoom = Math.max(c.maxZoom, maxZoom);
-            minZoom = Math.min(c.minZoom, minZoom);
-        }
-
-        mapView.setZoomLevelMin((byte)minZoom);
-        mapView.setZoomLevelMax((byte)maxZoom);
+        layers.setMapViewZoomLimit(mapView);
     }
 
     @Override
     public void draw(BoundingBox box, byte zoom, Canvas c, Point tlp) {
-        if (attached && scontext.lock()) {
-            for (Container l: layers) {
-                if (l.isZoomSupported(zoom)) {
-                    l.provider.attach();
-                    l.draw(box, zoom, c, tlp, displayModel.getTileSize());
-                } else {
-                    l.provider.detach();
-                }
-            }
+        if (scontext.lock()) {
+            layers.draw(box, zoom, c, tlp, displayModel.getTileSize());
             scontext.free();
         }
     }
 
 
     public void reDownloadTiles() {
-        for (Container c: layers) {
-            c.provider.reDownloadTiles();
-        }
+        layers.reDownloadTiles();
     }
 
     @Override
-    public void onLayout(boolean changed, int l, int t, int r, int b) {
-
-    }
+    public void onLayout(boolean changed, int l, int t, int r, int b) {}
 
     @Override
-    public void drawInside(MapContext mcontext) {
-    }
+    public void drawInside(MapContext mcontext) {}
 
     @Override
-    public void drawForeground(MapContext mcontext) {
-
-    }
+    public void drawForeground(MapContext mcontext) {}
 
     @Override
     public boolean onTap(Point tapPos) {
@@ -117,39 +91,105 @@ public class MapsForgeTileLayerStack extends Layer implements MapLayerInterface,
     }
 
     @Override
-    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-
-    }
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {}
 
     @Override
-    public void onAttached() { attached = true; }
+    public void onAttached() { layers.attach(); }
 
 
     @Override
-    public void onDestroy() {
-        removeLayers();
+    public  void onDestroy() {
+        layers.clear();
     }
 
     @Override
-    public void onDetached() {
-        attached = false;
-        detachLayers();
-    }
-
-    @Override
-    public void onChange() {
-        requestRedraw();
+    public  void onDetached() {
+        layers.detach();
     }
 
 
-    private static class Container {
+
+    private static class SubLayers {
+        private boolean attached = false;
+
+        private final ArrayList<SubLayer> layers = new ArrayList<>(10);
+        private final Observer observer;
+
+        public SubLayers(Observer o) {
+            observer = o;
+        }
+
+        public synchronized void add(SubLayer l) {
+            layers.add(l);
+            l.provider.addObserver(observer);
+        }
+
+
+        public synchronized void clear() {
+            for (SubLayer c : layers) {
+                c.provider.detach();
+                c.provider.removeObserver(observer);
+            }
+            layers.clear();
+        }
+
+        public synchronized void attach() {
+            attached = true;
+        }
+
+        public synchronized void detach() {
+            attached = false;
+            for (SubLayer c : layers) {
+                c.provider.detach();
+            }
+        }
+
+
+        public synchronized void setMapViewZoomLimit(MapView mapView) {
+            int minZoom=6, maxZoom = 10;
+
+            synchronized (layers) {
+                for (SubLayer c : layers) {
+                    maxZoom = Math.max(c.maxZoom, maxZoom);
+                    minZoom = Math.min(c.minZoom, minZoom);
+                }
+            }
+
+            mapView.setZoomLevelMin((byte)minZoom);
+            mapView.setZoomLevelMax((byte)maxZoom);
+
+        }
+
+        public synchronized void draw(BoundingBox box, byte zoom, Canvas c, Point tlp, int tileSize) {
+            if (attached) {
+                for (SubLayer l : layers) {
+                    if (l.isZoomSupported(zoom)) {
+                        l.provider.attach();
+                        l.draw(box, zoom, c, tlp, tileSize);
+                    } else {
+                        l.provider.detach();
+                    }
+                }
+            }
+
+        }
+
+        public synchronized void reDownloadTiles() {
+            for (SubLayer c : layers) {
+                c.provider.reDownloadTiles();
+            }
+        }
+
+    }
+
+    private static class SubLayer {
         public final int minZoom, maxZoom;
         public final TileProviderInterface provider;
 
         private final Paint paint = new Paint();
 
 
-        public Container(TileProviderInterface p, int a, int b) {
+        public SubLayer(TileProviderInterface p, int a, int b) {
             int min=Math.min(a, b);
             int max=Math.max(a, b);
             minZoom = Math.max(min, p.getSource().getMinimumZoomLevel());
