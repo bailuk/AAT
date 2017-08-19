@@ -1,40 +1,31 @@
 package ch.bailu.aat.map.mapsforge;
 
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
-import android.graphics.Paint;
-import android.graphics.Rect;
 
 import org.mapsforge.core.graphics.Canvas;
-import org.mapsforge.core.graphics.TileBitmap;
 import org.mapsforge.core.model.BoundingBox;
 import org.mapsforge.core.model.Point;
-import org.mapsforge.map.android.graphics.AndroidGraphicFactory;
 import org.mapsforge.map.layer.Layer;
-import org.mapsforge.map.layer.TilePosition;
+import org.mapsforge.map.model.DisplayModel;
 import org.mapsforge.map.model.common.Observer;
-import org.mapsforge.map.util.LayerUtil;
 import org.mapsforge.map.view.MapView;
 
 import java.util.ArrayList;
-import java.util.List;
 
+import ch.bailu.aat.map.Attachable;
 import ch.bailu.aat.map.MapContext;
 import ch.bailu.aat.map.layer.MapLayerInterface;
-import ch.bailu.aat.map.tile.TileProviderInterface;
+import ch.bailu.aat.map.tile.TileProvider;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.util.ui.AppLog;
 
 public class MapsForgeTileLayerStack extends Layer implements MapLayerInterface {
 
-    private final SubLayers layers = new SubLayers(new Observer() {
-        @Override
-        public void onChange() {
-            requestRedraw();
-        }
-    });
+    private final SubLayers layers = new SubLayers();
 
     private final ServiceContext scontext;
+
+    int minZoom=5, maxZoom = 5;
 
 
     public MapsForgeTileLayerStack(ServiceContext sc) {
@@ -42,31 +33,50 @@ public class MapsForgeTileLayerStack extends Layer implements MapLayerInterface 
     }
 
 
-    public void addLayer(TileProviderInterface provider) {
-        addLayer(provider,
-                provider.getMinimumZoomLevel(),
-                provider.getMaximumZoomLevel());
+    public void addLayer(TileProvider provider) {
+        MapsForgeTileLayer layer = new MapsForgeTileLayer(scontext, provider);
+
+        layer.setDisplayModel(getDisplayModel());
+
+        layers.add(layer);
+
+        provider.addObserver(new Observer() {
+
+            @Override
+            public void onChange() {
+                requestRedraw();
+            }
+        });
+
+        maxZoom = Math.max(provider.getMaximumZoomLevel(), maxZoom);
+        minZoom = Math.min(provider.getMinimumZoomLevel(), minZoom);
+
+
     }
 
 
-    public void addLayer(TileProviderInterface provider, int z1, int z2) {
-        layers.add(new SubLayer(provider, z1, z2));
+    @Override
+    public void setDisplayModel(DisplayModel model) {
+        super.setDisplayModel(model);
+        layers.setDisplayModel(model);
     }
 
 
     public void removeLayers() {
         layers.clear();
+        minZoom = maxZoom = 5;
     }
 
 
     public void setMapViewZoomLimit(MapView mapView) {
-        layers.setMapViewZoomLimit(mapView);
+        mapView.setZoomLevelMin((byte)minZoom);
+        mapView.setZoomLevelMax((byte)maxZoom);
     }
 
     @Override
     public void draw(BoundingBox box, byte zoom, Canvas c, Point tlp) {
         if (scontext.lock()) {
-            layers.draw(box, zoom, c, tlp, displayModel.getTileSize());
+            layers.draw(box, zoom, c, tlp);
             scontext.free();
         }
     }
@@ -90,6 +100,7 @@ public class MapsForgeTileLayerStack extends Layer implements MapLayerInterface 
         return false;
     }
 
+
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {}
 
@@ -108,140 +119,61 @@ public class MapsForgeTileLayerStack extends Layer implements MapLayerInterface 
     }
 
 
-
     private static class SubLayers {
-        private boolean attached = false;
 
-        private final ArrayList<SubLayer> layers = new ArrayList<>(10);
-        private final Observer observer;
+        private boolean isAttached=false;
 
-        public SubLayers(Observer o) {
-            observer = o;
-        }
+        private final ArrayList<MapsForgeTileLayer> layers = new ArrayList<>(10);
 
-        public synchronized void add(SubLayer l) {
+        public synchronized void add(MapsForgeTileLayer l) {
+
             layers.add(l);
-            l.provider.addObserver(observer);
+            if (isAttached) l.onAttached();
         }
 
 
         public synchronized void clear() {
-            for (SubLayer c : layers) {
-                c.provider.detach();
-                c.provider.removeObserver(observer);
+            for (MapsForgeTileLayer c : layers) {
+                c.onDetached();
             }
             layers.clear();
         }
 
         public synchronized void attach() {
-            attached = true;
+
+            for (Attachable a : layers)
+                a.onAttached();
+
+            isAttached = true;
         }
 
         public synchronized void detach() {
-            attached = false;
-            for (SubLayer c : layers) {
-                c.provider.detach();
+
+            for (Attachable a : layers) {
+                a.onDetached();
+            }
+
+            isAttached = false;
+        }
+
+        public synchronized void draw(BoundingBox box, byte zoom, Canvas c, Point tlp) {
+            for (Layer l : layers) {
+                l.draw(box, zoom, c, tlp);
             }
         }
 
-
-        public synchronized void setMapViewZoomLimit(MapView mapView) {
-            int minZoom=6, maxZoom = 10;
-
-            synchronized (layers) {
-                for (SubLayer c : layers) {
-                    maxZoom = Math.max(c.maxZoom, maxZoom);
-                    minZoom = Math.min(c.minZoom, minZoom);
-                }
-            }
-
-            mapView.setZoomLevelMin((byte)minZoom);
-            mapView.setZoomLevelMax((byte)maxZoom);
-
-        }
-
-        public synchronized void draw(BoundingBox box, byte zoom, Canvas c, Point tlp, int tileSize) {
-            if (attached) {
-                for (SubLayer l : layers) {
-                    if (l.isZoomSupported(zoom)) {
-                        l.provider.attach();
-                        l.draw(box, zoom, c, tlp, tileSize);
-                    } else {
-                        l.provider.detach();
-                    }
-                }
-            }
-
-        }
 
         public synchronized void reDownloadTiles() {
-            for (SubLayer c : layers) {
-                c.provider.reDownloadTiles();
+            for (MapsForgeTileLayer l : layers) {
+                l.reDownloadTiles();
             }
         }
 
-    }
 
-    private static class SubLayer {
-        public final int minZoom, maxZoom;
-        public final TileProviderInterface provider;
-
-        private final Paint paint = new Paint();
-
-
-        public SubLayer(TileProviderInterface p, int a, int b) {
-            int min=Math.min(a, b);
-            int max=Math.max(a, b);
-            minZoom = Math.max(min, p.getSource().getMinimumZoomLevel());
-            maxZoom = Math.min(max, p.getSource().getMaximumZoomLevel());
-
-            provider = p;
-
-            paint.setAlpha(p.getSource().getAlpha());
-            paint.setFlags(p.getSource().getPaintFlags());
-        }
-
-
-        public void draw (BoundingBox box, byte zoom, Canvas canvas, Point tlp, int tileSize) {
-            List<TilePosition> tilePositions = LayerUtil.getTilePositions(box, zoom, tlp, tileSize);
-
-            provider.setCapacity(tilePositions.size());
-
-            for (TilePosition tilePosition : tilePositions) {
-                if (provider.contains(tilePosition.tile)) {
-                    provider.get(tilePosition.tile);
-                }
-            }
-
-
-            for (TilePosition tilePosition : tilePositions) {
-                final TileBitmap bitmap = provider.get(tilePosition.tile);
-
-                if (bitmap != null) {
-                    final Point p = tilePosition.point;
-                    final Rect r=new Rect();
-
-                    r.left = (int) Math.round(p.x);
-                    r.top = (int) Math.round(p.y);
-                    r.right = r.left + tileSize;
-                    r.bottom = r.top + tileSize;
-
-                    Bitmap androidbitmap = AndroidGraphicFactory.getBitmap(bitmap);
-                    if (androidbitmap == null) {
-                        AppLog.d(this, provider.getSource().getName());
-                    } else {
-
-                        AndroidGraphicFactory.getCanvas(canvas).
-                                drawBitmap(androidbitmap, null, r, paint);
-                    }
-                }
+        public synchronized void setDisplayModel(DisplayModel model) {
+            for(Layer l: layers) {
+                l.setDisplayModel(model);
             }
         }
-
-        public boolean isZoomSupported(byte zoom) {
-            return (zoom <= maxZoom && zoom >= minZoom);
-        }
-
-
     }
 }

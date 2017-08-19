@@ -6,18 +6,23 @@ import android.content.Intent;
 
 import org.mapsforge.core.graphics.TileBitmap;
 import org.mapsforge.core.model.Tile;
+import org.mapsforge.map.layer.TilePosition;
+import org.mapsforge.map.model.common.ObservableInterface;
 import org.mapsforge.map.model.common.Observer;
 
 import java.util.ArrayList;
+import java.util.List;
 
+import ch.bailu.aat.map.Attachable;
 import ch.bailu.aat.map.tile.source.Source;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.cache.ObjectHandle;
 import ch.bailu.aat.services.cache.TileObject;
 import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.util.AppIntent;
+import ch.bailu.aat.util.ui.AppLog;
 
-public class TileProvider implements TileProviderInterface {
+public class TileProvider implements Attachable, ObservableInterface {
 
 
     private final ServiceContext scontext;
@@ -30,7 +35,7 @@ public class TileProvider implements TileProviderInterface {
 
 
     public TileProvider(ServiceContext sc, Source s) {
-        scontext =sc;
+        scontext = sc;
         source = s;
     }
 
@@ -48,27 +53,36 @@ public class TileProvider implements TileProviderInterface {
     };
 
 
+    public void preload(List<TilePosition> tilePositions) {
+        cache.setCapacity(tilePositions.size());
 
-    @Override
+        for (TilePosition p : tilePositions) {
+            cache.get(p.tile);
+        }
+
+        for (TilePosition p : tilePositions) {
+            get(p.tile);
+        }
+    }
+
+
     public synchronized TileBitmap get(Tile tile) {
         TileObject handle = getTileHandle(tile);
+
         if (handle != null) {
             return handle.getTileBitmap();
         }
         return null;
     }
 
-    @Override
+
     public synchronized boolean contains(Tile tile) {
         return cache.get(tile) != null;
     }
 
-    @Override
     public void addObserver(Observer observer) {
         observers.add(observer);
     }
-
-    @Override
     public void removeObserver(Observer observer) {
         observers.remove(observer);
     }
@@ -80,36 +94,29 @@ public class TileProvider implements TileProviderInterface {
 
 
 
-    @Override
-    public synchronized void setCapacity(int size) {
-        cache.setCapacity(size);
-    }
 
-
-
-    @Override
     public int getMaximumZoomLevel() {
         return source.getMaximumZoomLevel();
     }
-
-    @Override
     public int getMinimumZoomLevel() {
         return source.getMinimumZoomLevel();
     }
 
-    @Override
     public void reDownloadTiles() {
         cache.reDownloadTiles(scontext);
     }
 
-    @Override
     public Source getSource() {
         return source;
     }
 
 
+    public synchronized boolean isAttached() {
+        return isAttached;
+    }
+
     @Override
-    public synchronized void attach() {
+    public synchronized void onAttached() {
         if (isAttached == false) {
 
             cache.reset();
@@ -118,19 +125,22 @@ public class TileProvider implements TileProviderInterface {
             AppBroadcaster.register(scontext.getContext(),
                     onFileChanged, AppBroadcaster.FILE_CHANGED_INCACHE);
 
+            AppLog.d(this, "Attach");
             isAttached = true;
         }
 
     }
 
 
+
     @Override
-    public synchronized void detach() {
+    public synchronized void onDetached() {
         if (isAttached) {
             scontext.getContext().unregisterReceiver(onFileChanged);
             cache.reset();
             cache = TileCache.NULL;
 
+            AppLog.d(this, "Detach");
             isAttached = false;
         }
     }
@@ -142,9 +152,11 @@ public class TileProvider implements TileProviderInterface {
 
 
         if (handle == null) {
+            AppLog.d(this, "second " + tile.toString());
             handle = getTileHandleLevel2(tile);
 
             if (handle != null) cache.put(handle);
+        } else {
         }
 
         return handle;
@@ -169,4 +181,10 @@ public class TileProvider implements TileProviderInterface {
         }
         return r;
     }
+
+
+    public synchronized boolean isReadyAndLoaded() {
+        return cache.isReadyAndLoaded();
+    }
+
 }

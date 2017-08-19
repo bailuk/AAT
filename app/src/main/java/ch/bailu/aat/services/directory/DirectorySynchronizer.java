@@ -362,6 +362,7 @@ public class DirectorySynchronizer  implements Closeable {
             if (canContinue==false) {
                 terminate();
             } else if (pendingPreviewGenerator.isReady()) {
+
                 pendingPreviewGenerator.generateBitmapFile();
 
                 AppBroadcaster.broadcast(scontext.getContext(), AppBroadcaster.DB_SYNC_CHANGED);

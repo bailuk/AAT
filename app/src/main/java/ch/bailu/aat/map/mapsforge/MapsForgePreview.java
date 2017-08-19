@@ -12,16 +12,19 @@ import org.mapsforge.core.model.MapPosition;
 import org.mapsforge.core.model.Point;
 import org.mapsforge.map.android.graphics.AndroidGraphicFactory;
 import org.mapsforge.map.layer.Layer;
+import org.mapsforge.map.layer.TilePosition;
+import org.mapsforge.map.util.LayerUtil;
 import org.mapsforge.map.util.MapPositionUtil;
 import org.mapsforge.map.view.FrameBuffer;
 
 import java.io.OutputStream;
+import java.util.List;
 
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.map.MapDensity;
 import ch.bailu.aat.map.layer.gpx.GpxDynLayer;
-import ch.bailu.aat.map.tile.TileProviderStatic;
+import ch.bailu.aat.map.tile.TileProvider;
 import ch.bailu.aat.map.tile.source.CacheOnlySource;
 import ch.bailu.aat.map.tile.source.DownloadSource;
 import ch.bailu.aat.map.tile.source.MapsForgeSource;
@@ -39,8 +42,8 @@ public class MapsForgePreview extends MapsForgeViewBase {
     private static final Dimension DIM = new Dimension(BITMAP_SIZE, BITMAP_SIZE);
     private static final Source MAPNIK = new CacheOnlySource(DownloadSource.MAPNIK);
 
-    private final Foc               imageFile;
-    private final TileProviderStatic provider;
+    private final Foc          imageFile;
+    private final TileProvider provider;
 
 
     private final MapPosition mapPosition;
@@ -56,7 +59,7 @@ public class MapsForgePreview extends MapsForgeViewBase {
         getModel().mapViewDimension.setDimension(DIM);
 
         imageFile = out;
-        provider = new TileProviderStatic(scontext, getSource(scontext.getContext()));
+        provider = new TileProvider(scontext, getSource(scontext.getContext()));
 
         MapsForgeTileLayer tileLayer = new MapsForgeTileLayer(scontext, provider);
         add(tileLayer, tileLayer);
@@ -74,7 +77,18 @@ public class MapsForgePreview extends MapsForgeViewBase {
         bounding = MapPositionUtil.getBoundingBox(mapPosition, DIM, tileSize);
         tlPoint = MapPositionUtil.getTopLeftPoint(mapPosition, DIM, tileSize);
 
-        tileLayer.preLoadTiles(bounding, mapPosition.zoomLevel, tlPoint);
+
+        preLoadTiles();
+
+    }
+
+    private void preLoadTiles() {
+        List<TilePosition> tilePositions = LayerUtil.getTilePositions(bounding,
+                mapPosition.zoomLevel, tlPoint,
+                getModel().displayModel.getTileSize());
+
+        provider.onAttached();
+        provider.preload(tilePositions);
     }
 
 
@@ -167,13 +181,13 @@ public class MapsForgePreview extends MapsForgeViewBase {
 
 
     public boolean isReady() {
-        return provider.isReady();
+        return provider.isReadyAndLoaded();
     }
 
 
     @Override
     public void onDestroy() {
-        provider.close();
+        provider.onDetached();
         super.onDestroy();
     }
 

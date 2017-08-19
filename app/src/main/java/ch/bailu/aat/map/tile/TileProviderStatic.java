@@ -2,16 +2,18 @@ package ch.bailu.aat.map.tile;
 
 import org.mapsforge.core.graphics.TileBitmap;
 import org.mapsforge.core.model.Tile;
+import org.mapsforge.map.layer.TilePosition;
 import org.mapsforge.map.model.common.Observer;
 
 import java.io.Closeable;
 import java.util.ArrayList;
+import java.util.List;
 
 import ch.bailu.aat.map.tile.source.Source;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.cache.ObjectHandle;
 import ch.bailu.aat.services.cache.TileObject;
-
+/*
 public class TileProviderStatic implements TileProviderInterface, Closeable {
 
     private final ArrayList<TileObject> tiles = new ArrayList<>(10);
@@ -25,7 +27,12 @@ public class TileProviderStatic implements TileProviderInterface, Closeable {
 
     }
 
-
+    @Override
+    public void preload(List<TilePosition> tilePositions) {
+        for (TilePosition p : tilePositions) {
+            get(p.tile);
+        }
+    }
 
     @Override
     public int getMaximumZoomLevel() {
@@ -36,6 +43,7 @@ public class TileProviderStatic implements TileProviderInterface, Closeable {
     public int getMinimumZoomLevel() {
         return source.getMinimumZoomLevel();
     }
+
 
 
     @Override
@@ -150,3 +158,4 @@ public class TileProviderStatic implements TileProviderInterface, Closeable {
         close();
     }
 }
+*/

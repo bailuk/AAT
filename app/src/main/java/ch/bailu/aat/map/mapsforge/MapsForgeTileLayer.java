@@ -20,46 +20,47 @@ import java.util.List;
 
 import ch.bailu.aat.map.MapContext;
 import ch.bailu.aat.map.layer.MapLayerInterface;
-import ch.bailu.aat.map.tile.TileProviderInterface;
+import ch.bailu.aat.map.tile.TileProvider;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.util.ui.AppLog;
 
 public class MapsForgeTileLayer extends Layer implements MapLayerInterface, Observer {
 
-    private final TileProviderInterface provider;
+    private final TileProvider provider;
 
     private final Paint paint = new Paint();
 
-    private boolean isAttached = false, isVisible = true, isZoomSupported = false;
-    private boolean isProviderAttached = false;
-
+    private boolean isAttached = false;
 
     private final ServiceContext scontext;
 
-    public MapsForgeTileLayer(ServiceContext sc, TileProviderInterface p) {
+
+
+    public MapsForgeTileLayer(ServiceContext sc, TileProvider p) {
         scontext = sc;
         provider = p;
         paint.setAlpha(p.getSource().getAlpha());
         paint.setFlags(p.getSource().getPaintFlags());
+
+        provider.addObserver(this);
     }
 
 
     @Override
     public void draw(BoundingBox box, byte zoom, Canvas c, Point tlp) {
 
-        if (scontext.lock()) {
-            isZoomSupported =
-                    (zoom <= provider.getMaximumZoomLevel() && zoom >= provider.getMinimumZoomLevel());
-
-            if (detachAttach()) {
-                draw(
-                        box,
-                        zoom,
-                        c,
-                        tlp,
-                        displayModel.getTileSize());
+        synchronized(provider) {
+            if (scontext.lock()) {
+                if (detachAttach(zoom)) {
+                    draw(
+                            box,
+                            zoom,
+                            c,
+                            tlp,
+                            displayModel.getTileSize());
+                }
+                scontext.free();
             }
-            scontext.free();
         }
     }
 
@@ -68,14 +69,7 @@ public class MapsForgeTileLayer extends Layer implements MapLayerInterface, Obse
 
         List<TilePosition> tilePositions = LayerUtil.getTilePositions(box, zoom, tlp, tileSize);
 
-        provider.setCapacity(tilePositions.size());
-
-        for (TilePosition tilePosition : tilePositions) {
-            if (provider.contains(tilePosition.tile)) {
-                provider.get(tilePosition.tile);
-            }
-        }
-
+        provider.preload(tilePositions);
 
         for (TilePosition tilePosition : tilePositions) {
             final TileBitmap bitmap = provider.get(tilePosition.tile);
@@ -102,18 +96,6 @@ public class MapsForgeTileLayer extends Layer implements MapLayerInterface, Obse
     }
 
 
-    public void preLoadTiles(BoundingBox box, byte zoom, Point tlp) {
-        List<TilePosition> tilePositions = LayerUtil.getTilePositions(box, zoom, tlp,
-                getDisplayModel().getTileSize());
-
-        provider.setCapacity(tilePositions.size());
-
-        for (TilePosition tilePosition : tilePositions) {
-                provider.get(tilePosition.tile);
-        }
-    }
-
-
     @Override
     public void onChange() {
         requestRedraw();
@@ -121,47 +103,43 @@ public class MapsForgeTileLayer extends Layer implements MapLayerInterface, Obse
 
 
     @Override
-    public void setVisible(boolean requestVisible, boolean redraw) {
-        isVisible = requestVisible;
-        detachAttach();
-
-        super.setVisible(requestVisible, redraw);
-    }
-
-
-    @Override
     public void onAttached() {
-        isAttached = true;
-        detachAttach();
+        synchronized(provider) {
+            isAttached = true;
+        }
     }
 
 
     @Override
     public void onDetached() {
-        isAttached = false;
-        detachAttach();
+        synchronized(provider) {
+            isAttached = false;
+            provider.onDetached();
+        }
     }
 
 
-    private synchronized boolean detachAttach() {
+    private boolean detachAttach(int zoom) {
 
-        if (isVisible && isZoomSupported && isAttached) {
-            if (isProviderAttached == false) {
-                provider.attach();
-                provider.addObserver(this);
-                isProviderAttached = true;
-            }
-        } else if (isProviderAttached) {
-            provider.removeObserver(this);
-            provider.detach();
-            isProviderAttached = false;
+        if (isVisible() && isZoomSupported(zoom) && isAttached) {
+            provider.onAttached();
+        } else  {
+            provider.onDetached();
         }
-        return isProviderAttached;
+
+        return provider.isAttached();
+    }
+
+
+    private boolean isZoomSupported(int zoom) {
+        return (provider.getMinimumZoomLevel() <= zoom && provider.getMaximumZoomLevel() >= zoom);
     }
 
 
     public void reDownloadTiles() {
-        provider.reDownloadTiles();
+        synchronized (provider) {
+            provider.reDownloadTiles();
+        }
     }
 
 

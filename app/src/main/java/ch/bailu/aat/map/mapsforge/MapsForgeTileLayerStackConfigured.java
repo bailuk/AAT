@@ -109,9 +109,8 @@ public abstract class MapsForgeTileLayerStackConfigured extends MapsForgeTileLay
             }
 
             if (mapnik != null && mapsforge != null) {
-                addLayer(new TileProvider(scontext, mapnik), 0, 6);
                 addLayer(new TileProvider(scontext,
-                        new DoubleSource(scontext, mapsforge, mapnik)), 7, 100);
+                        new DoubleSource(scontext, mapsforge, mapnik, 6)));
 
             } else if (mapnik != null) {
                 addLayer(new TileProvider(scontext, mapnik));

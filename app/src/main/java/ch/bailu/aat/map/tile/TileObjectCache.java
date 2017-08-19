@@ -5,6 +5,7 @@ import org.mapsforge.core.model.Tile;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.cache.LockCache;
 import ch.bailu.aat.services.cache.TileObject;
+import ch.bailu.aat.util.ui.AppLog;
 
 public class TileObjectCache extends TileCache<TileObject> {
 
@@ -13,7 +14,6 @@ public class TileObjectCache extends TileCache<TileObject> {
 
 
     private final LockCache<TileObject> tiles = new LockCache(INITIAL_CAPACITY);
-
 
     @Override
     public TileObject get(String string) {
@@ -69,5 +69,20 @@ public class TileObjectCache extends TileCache<TileObject> {
     @Override
     public int size() {
         return tiles.size();
+    }
+
+
+    @Override
+    public boolean isReadyAndLoaded() {
+
+        AppLog.d(this, "Ready and loaded: " + tiles.size());
+        for (int i = 0; i<tiles.size(); i++) {
+            AppLog.d(this, tiles.get(i).getID());
+            if (tiles.get(i) != null) {
+                if (!tiles.get(i).isReadyAndLoaded())
+                    return false;
+            }
+        }
+        return true;
     }
 }

@@ -10,12 +10,15 @@ import ch.bailu.aat.services.cache.ObjectHandle;
 public class DoubleSource extends Source {
 
     private final Source sourceA, sourceB;
+    private final int minZoomA;
 
     private final ServiceContext scontext;
 
-    public DoubleSource(ServiceContext sc, Source a, Source b) {
+    public DoubleSource(ServiceContext sc, Source a, Source b, int zoom) {
         sourceA = a;
         sourceB = b;
+
+        minZoomA = Math.max(zoom, a.getMinimumZoomLevel());
 
         scontext = sc;
     }
@@ -35,7 +38,7 @@ public class DoubleSource extends Source {
     private Source decide(Tile t) {
         Source r = sourceB;
 
-        if (isZoomLevelSupported(sourceA, t)) {
+        if (isZoomLevelSupportedA(t)) {
             if (scontext.lock()) {
                 if (scontext.getRenderService().supportsTile(t))
                     r = sourceA;
@@ -47,19 +50,19 @@ public class DoubleSource extends Source {
     }
 
 
-    public static boolean isZoomLevelSupported(Source s, Tile t) {
-        return (t.zoomLevel <= s.getMaximumZoomLevel() && t.zoomLevel >= s.getMinimumZoomLevel());
+    public boolean isZoomLevelSupportedA(Tile t) {
+        return (t.zoomLevel <= sourceA.getMaximumZoomLevel() && t.zoomLevel >= minZoomA);
     }
 
 
     @Override
     public int getMinimumZoomLevel() {
-        return Math.min(sourceA.getMinimumZoomLevel(), sourceB.getMinimumZoomLevel());
+        return sourceB.getMinimumZoomLevel();
     }
 
     @Override
     public int getMaximumZoomLevel() {
-        return Math.max(sourceA.getMaximumZoomLevel(), sourceB.getMaximumZoomLevel());
+        return sourceA.getMaximumZoomLevel();
     }
 
     @Override

@@ -16,18 +16,13 @@ public abstract class TileCache<T> implements Closeable {
 
     public abstract void put(T handle);
 
-    /*
-    @Override
-    public void close() {}
-*/
-
     public abstract void reDownloadTiles(ServiceContext sc);
     public abstract void reset();
     public abstract void setCapacity(int capacity);
 
-    public abstract int size();// {return 0;}
+    public abstract int size();
 
-    //public final static TileCache
+    public abstract boolean isReadyAndLoaded();
 
     public final static TileCache NULL = new TileCache<Object>() {
 
@@ -64,6 +59,11 @@ public abstract class TileCache<T> implements Closeable {
         @Override
         public int size() {
             return 0;
+        }
+
+        @Override
+        public boolean isReadyAndLoaded() {
+            return false;
         }
 
         @Override

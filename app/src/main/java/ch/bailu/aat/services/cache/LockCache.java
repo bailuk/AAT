@@ -2,13 +2,18 @@ package ch.bailu.aat.services.cache;
 
 import java.io.Closeable;
 
+import ch.bailu.aat.util.ui.AppLog;
+
 public class LockCache<E extends ObjectHandle>  implements Closeable {
-    private E[] array;
-    private int size;
+    private E[]    objects;
+    private long[] access;
+    private int    size;
+
 
 
     public LockCache(int capacity) {
-        array = (E[]) new ObjectHandle[capacity];
+        objects = (E[]) new ObjectHandle[capacity];
+        access = new long[capacity];
         size = 0;
     }
 
@@ -19,36 +24,39 @@ public class LockCache<E extends ObjectHandle>  implements Closeable {
 
 
     public E get(int i) {
-        return array[i];
+        return objects[i];
     }
 
     public E use(int i) {
-        array[i].access();
-        return array[i];
+        objects[i].access();
+        access[i] = System.currentTimeMillis();
+        return objects[i];
     }
 
 
     public void add(E handle) {
         int i;
 
-        if (size < array.length) {
+        if (size < objects.length) {
             i = size;
             size++;
 
         } else {
             i = indexOfOldest();
-            array[i].free();
+            objects[i].free();
         }
 
-        array[i] = handle;
+        objects[i] = handle;
 
+        use(i);
     }
 
 
     private int indexOfOldest() {
         int x=0;
+
         for (int i = 1; i < size; i++) {
-            if (array[i].getAccessTime() < array[x].getAccessTime()) {
+            if (access[i] < access[x]) {
                 x=i;
             }
         }
@@ -64,33 +72,40 @@ public class LockCache<E extends ObjectHandle>  implements Closeable {
 
     public void reset() {
         for (int i=0; i<size; i++) {
-            array[i].free();
+            objects[i].free();
         }
         size=0;
     }
 
 
     public void ensureCapacity(int capacity) {
-        if (capacity > array.length) {
+        if (capacity > objects.length) {
             resizeCache(capacity);
         }
-
     }
 
+
     private void resizeCache(int capacity) {
-        final E[] newArray= (E[]) new ObjectHandle[capacity];
-        final int l = Math.min(newArray.length, array.length);
+        final E[] newObjects= (E[]) new ObjectHandle[capacity];
+        final long newAccess[] = new long[capacity];
+
+        final int l = Math.min(newObjects.length, objects.length);
         int x,i;
 
         for (i=0; i<l; i++) {
-            newArray[i]=array[i];
+            newObjects[i]= objects[i];
+            newAccess[i]=access[i];
         }
 
         for (x=i; x<size; x++) {
-            array[x].free();
+            objects[x].free();
         }
 
-        array = newArray;
-        size = Math.min(size, array.length);
+        objects = newObjects;
+        access = newAccess;
+
+        size = Math.min(size, objects.length);
+
+        AppLog.d(this, "Size: "+ size + " length: "+ objects.length);
     }
 }

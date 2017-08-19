@@ -199,7 +199,7 @@ public class CachedTileObject extends TileObject {
     @Override
     public synchronized void access() {
         super.access();
-        makeOld();
+        //makeOld();
     }
 
     @Override
