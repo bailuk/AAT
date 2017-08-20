@@ -127,7 +127,7 @@ public class MainActivity extends AbsDispatcher {
                 setVisibility(GONE);
             }
 
-            setText(sdirectory.getValueAsString());
+            setText(sdirectory.toString());
         }
 
         @Override
