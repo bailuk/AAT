@@ -221,6 +221,7 @@
     <string name="altitude">Altitude</string>
     <string name="time">Total Time</string>
     <string name="calories">Calories</string>
+    <string name="name">Name</string>
 
 
     <string name="filter_geo">Inside bounding</string>
