@@ -20,7 +20,6 @@ import ch.bailu.aat.services.cache.ObjectHandle;
 import ch.bailu.aat.services.cache.TileObject;
 import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.util.AppIntent;
-import ch.bailu.aat.util.ui.AppLog;
 
 public class TileProvider implements Attachable, ObservableInterface {
 
@@ -125,7 +124,6 @@ public class TileProvider implements Attachable, ObservableInterface {
             AppBroadcaster.register(scontext.getContext(),
                     onFileChanged, AppBroadcaster.FILE_CHANGED_INCACHE);
 
-            AppLog.d(this, "Attach");
             isAttached = true;
         }
 
@@ -140,7 +138,6 @@ public class TileProvider implements Attachable, ObservableInterface {
             cache.reset();
             cache = TileCache.NULL;
 
-            AppLog.d(this, "Detach");
             isAttached = false;
         }
     }
@@ -152,7 +149,6 @@ public class TileProvider implements Attachable, ObservableInterface {
 
 
         if (handle == null) {
-            AppLog.d(this, "second " + tile.toString());
             handle = getTileHandleLevel2(tile);
 
             if (handle != null) cache.put(handle);

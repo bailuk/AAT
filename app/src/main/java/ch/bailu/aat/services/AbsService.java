@@ -28,7 +28,12 @@ public abstract class AbsService  extends Service {
     public synchronized boolean lock() {
         if (up) {
             lock++;
+
+
             if (lock == 1) {
+                AppLog.d(this, "lock ++: " + lock);
+                AppLog.d(this, "=> startService()");
+
                 startService(new Intent(this,  OneService.class));
                 lazyOff.close();
             }
@@ -41,8 +46,15 @@ public abstract class AbsService  extends Service {
     public synchronized void free() {
         if (up) {
             lock--;
+
+
             if (lock == 0) {
+                AppLog.d(this, "lock --: " + lock);
+                AppLog.d(this, "=> lazyOff.kick()");
                 lazyOff.kick();
+
+            } else if (lock < 0) {
+                AppLog.d(this, "lock < 0 !!!");
             }
         }
     }
@@ -61,10 +73,12 @@ public abstract class AbsService  extends Service {
 
 
     private synchronized void stopService() {
+        AppLog.d(this, "stopService() lock: " + lock);
+
         if (lock == 0) {
             up = false;
             lazyOff.cancel();
-            AppLog.d(this, "turn off.");
+            AppLog.d(this, "=> stopSelf()");
             stopSelf();
         } else if (lock < 0) {
             AppLog.d(this, "lock < 0 !!!");
@@ -72,6 +86,9 @@ public abstract class AbsService  extends Service {
     }
 
     public synchronized void lock(String r) {
+        AppLog.d(this, "lock: " + r);
+
+
         if (locks.add(r)) {
             lock();
         }
@@ -98,6 +115,7 @@ public abstract class AbsService  extends Service {
 
     public class CommonBinder extends Binder {
         public AbsService getService() {
+            AppLog.d(this, "getService()");
             return AbsService.this;
         }
     }
@@ -108,10 +126,12 @@ public abstract class AbsService  extends Service {
         super.onCreate();
 
 
-        AppLog.d(this, "onCreate()");
+
         up = true;
         allcreations++;
         creations++;
+
+        AppLog.d(this, "onCreate() " + creations);
 
         startTime=System.currentTimeMillis();
     }
@@ -124,19 +144,22 @@ public abstract class AbsService  extends Service {
         creations--;
         allcreations--;
 
-        AppLog.d(this, "onDestroy()");
+        AppLog.d(this, "onDestroy() " + creations);
         super.onDestroy();
     }    
 
 
     @Override
     public IBinder onBind(Intent intent) {
-        return new CommonBinder();
+        AppLog.d(this, "onBind()");
+        return
+                new CommonBinder();
     }
 
 
     @Override
     public boolean onUnbind(Intent intent) {
+        AppLog.d(this, "onUnbind()");
         return false;
     }
 

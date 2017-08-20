@@ -13,6 +13,7 @@ import java.util.List;
 import ch.bailu.aat.gpx.StateID;
 import ch.bailu.aat.util.AppPermission;
 import ch.bailu.aat.util.ContextWrapperInterface;
+import ch.bailu.aat.util.ui.AppLog;
 import ch.bailu.util_java.foc.Foc;
 import ch.bailu.util_java.foc.FocName;
 
@@ -186,6 +187,7 @@ public class RealLocation extends LocationStackChainedItem
     @Override
     public void close() {
         try {
+            AppLog.d(this, "=> removeUpdates()");
             getLocationManager(context).removeUpdates(this);
         } catch (NoServiceException e) {
             state=StateID.NOSERVICE;

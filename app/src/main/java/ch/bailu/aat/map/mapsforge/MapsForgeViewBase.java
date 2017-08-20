@@ -284,7 +284,6 @@ public class MapsForgeViewBase extends MapView implements
 
     protected void attachLayers() {
         if (!areLayersAttached) {
-            AppLog.d(this, "now attached");
             for (MapLayerInterface l : layers) l.onAttached();
             areLayersAttached = true;
             requestRedraw();
@@ -294,7 +293,6 @@ public class MapsForgeViewBase extends MapView implements
 
     private void detachLayers() {
         if (areLayersAttached) {
-            AppLog.d(this, "now detached");
             for (MapLayerInterface l : layers) l.onDetached();
             areLayersAttached = false;
         }

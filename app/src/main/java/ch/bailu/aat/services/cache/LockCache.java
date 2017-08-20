@@ -2,8 +2,6 @@ package ch.bailu.aat.services.cache;
 
 import java.io.Closeable;
 
-import ch.bailu.aat.util.ui.AppLog;
-
 public class LockCache<E extends ObjectHandle>  implements Closeable {
     private E[]    objects;
     private long[] access;
@@ -105,7 +103,5 @@ public class LockCache<E extends ObjectHandle>  implements Closeable {
         access = newAccess;
 
         size = Math.min(size, objects.length);
-
-        AppLog.d(this, "Size: "+ size + " length: "+ objects.length);
     }
 }
