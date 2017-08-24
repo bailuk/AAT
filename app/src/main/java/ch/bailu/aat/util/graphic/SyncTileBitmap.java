@@ -67,7 +67,7 @@ public class SyncTileBitmap implements Closeable {
             bitmap = AndroidGraphicFactory.INSTANCE.createTileBitmap(inputStream, size, transparent);
             bitmap.setTimestamp(file.lastModified());
 
-        } catch (CorruptedInputStreamException | IOException e) {
+        } catch (CorruptedInputStreamException | OutOfMemoryError | IOException e) {
             bitmap = null;
         } finally {
             Foc.close(inputStream);

@@ -1,5 +1,6 @@
 package ch.bailu.aat.map.layer.grid;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 
 import org.mapsforge.core.model.LatLong;
@@ -12,6 +13,13 @@ import ch.bailu.aat.map.layer.MapLayerInterface;
 public abstract class CenterCoordinatesLayer implements MapLayerInterface {
 
 
+    private final ElevationLayer elevation;
+
+
+    public CenterCoordinatesLayer(Context c) {
+        elevation = new ElevationLayer(c);
+    }
+
     @Override
     public void onLayout(boolean changed, int l, int t, int r, int b) {
 
@@ -22,6 +30,8 @@ public abstract class CenterCoordinatesLayer implements MapLayerInterface {
         final LatLong point = mc.getMetrics().getBoundingBox().getCenterPoint();
 
         mc.draw().textBottom(getCoordinates(point).toString(), 1);
+
+        elevation.drawForeground(mc);
     }
 
     @Override

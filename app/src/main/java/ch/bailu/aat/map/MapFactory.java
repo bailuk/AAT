@@ -11,6 +11,7 @@ import ch.bailu.aat.map.layer.control.InformationBarLayer;
 import ch.bailu.aat.map.layer.control.NavigationBarLayer;
 import ch.bailu.aat.map.layer.gpx.GpxDynLayer;
 import ch.bailu.aat.map.layer.gpx.GpxOverlayListLayer;
+import ch.bailu.aat.map.layer.grid.Crosshair;
 import ch.bailu.aat.map.layer.grid.GridDynLayer;
 import ch.bailu.aat.map.mapsforge.MapsForgeView;
 import ch.bailu.aat.services.ServiceContext;
@@ -60,6 +61,7 @@ public class MapFactory {
         m.add(new GpxOverlayListLayer(mc,d));
         m.add(new GpxDynLayer(mc, d, InfoID.EDITOR_DRAFT));
         m.add(new GpxDynLayer(mc, d, InfoID.TRACKER));
+        m.add(new Crosshair());
 
         return m;
     }

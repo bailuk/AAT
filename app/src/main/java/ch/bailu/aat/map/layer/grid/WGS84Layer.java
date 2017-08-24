@@ -1,5 +1,6 @@
 package ch.bailu.aat.map.layer.grid;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Point;
 
@@ -14,27 +15,26 @@ import ch.bailu.aat.map.MapContext;
 import ch.bailu.aat.map.layer.MapLayerInterface;
 
 public class WGS84Layer implements MapLayerInterface {
-    private final static int MIN_ZOOM_LEVEL=7;
 
-    //private final MapContext clayer;
-    private final AltitudeDescription altitudeDescription;
+    private final ElevationLayer elevation;
+    private final Crosshair crosshair;
 
-    public WGS84Layer(MapContext cl) {
-        //clayer = cl;
-        altitudeDescription= new AltitudeDescription(cl.getContext());
+
+    public WGS84Layer (Context c) {
+        elevation = new ElevationLayer(c);
+        crosshair = new Crosshair();
     }
-
     @Override
     public void drawForeground(MapContext mcontext) {
-        byte zoomLevel = (byte)mcontext.getMetrics().getZoomLevel();
         BoundingBox boundingBox = mcontext.getMetrics().getBoundingBox();
 
         final LatLong point = boundingBox.getCenterPoint();
 
-        drawGrid(mcontext);
+        crosshair.drawForeground(mcontext);
         drawCoordinates(mcontext, point);
-        drawElevation(mcontext, zoomLevel, point);
+        elevation.drawForeground(mcontext);
     }
+
 
     @Override
     public void drawInside(MapContext mcontext) {
@@ -48,13 +48,7 @@ public class WGS84Layer implements MapLayerInterface {
     }
 
 
-    private void drawGrid(MapContext clayer) {
-        final Point pixel = clayer.getMetrics().getCenterPixel();
 
-        clayer.draw().vLine(pixel.x);
-        clayer.draw().hLine(pixel.y);
-        clayer.draw().point(pixel);
-    }
 
 
     private void drawCoordinates(MapContext clayer,LatLong point) {
@@ -66,13 +60,7 @@ public class WGS84Layer implements MapLayerInterface {
                 0);
     }
 
-    private void drawElevation(MapContext mc, int zoom, LatLong point) {
-        if (zoom > MIN_ZOOM_LEVEL && mc.getSContext().lock()) {
-            final short ele = mc.getSContext().getElevationService().getElevation(point.getLatitudeE6(), point.getLongitudeE6());
-            mc.draw().textBottom(altitudeDescription.getValueUnit(ele),2);
-            mc.getSContext().free();
-        }
-    }
+
 
 
 
