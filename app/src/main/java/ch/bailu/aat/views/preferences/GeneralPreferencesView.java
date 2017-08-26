@@ -8,6 +8,7 @@ import ch.bailu.aat.preferences.SolidPostprocessedAutopause;
 import ch.bailu.aat.preferences.SolidDataDirectory;
 import ch.bailu.aat.preferences.SolidExternalDirectory;
 import ch.bailu.aat.preferences.SolidLocationProvider;
+import ch.bailu.aat.preferences.SolidRendererThreads;
 import ch.bailu.aat.preferences.SolidUnit;
 import ch.bailu.aat.preferences.SolidWeight;
 
@@ -27,6 +28,7 @@ public class GeneralPreferencesView extends VerticalScrollView {
         add(new SolidDirectoryView(context, new SolidDataDirectory(context)));
         add(new SolidDirectoryView(context, new SolidExternalDirectory(context)));
         add(new SolidIndexListView( new SolidCacheSize(context)));
+        add(new SolidIndexListView( new SolidRendererThreads(context)));
     }
 
 

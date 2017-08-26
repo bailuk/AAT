@@ -35,7 +35,6 @@ public class Renderer extends RendererBase<RendererJob> {
     public Renderer(XmlRenderTheme t, TileCache cache, ArrayList<Foc> files) {
         super(cache, new Model());
 
-        MapWorkerPool.NUMBER_OF_THREADS = 2;
         renderThemeFuture = createTheme(t);
 
         if (files.size() == 1) {

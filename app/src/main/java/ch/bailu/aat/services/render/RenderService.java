@@ -7,6 +7,7 @@ import org.mapsforge.core.model.Tile;
 
 import ch.bailu.aat.preferences.SolidMapsForgeDirectory;
 import ch.bailu.aat.preferences.SolidRenderTheme;
+import ch.bailu.aat.preferences.SolidRendererThreads;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.VirtualService;
 import ch.bailu.aat.services.cache.MapsForgeTileObject;
@@ -17,6 +18,8 @@ public class RenderService  extends VirtualService
 
     private final SolidMapsForgeDirectory sdirectory;
     private final SolidRenderTheme stheme;
+    private final SolidRendererThreads sthreads;
+
 
     private final Configuration configuration = new Configuration();
     private final Caches caches= new Caches();
@@ -27,6 +30,7 @@ public class RenderService  extends VirtualService
 
         sdirectory = new SolidMapsForgeDirectory(sc.getContext());
         stheme = new SolidRenderTheme(sc.getContext());
+        sthreads = new SolidRendererThreads(sc.getContext());
 
         sdirectory.getStorage().register(this);
         reconfigureRenderer();
@@ -35,6 +39,7 @@ public class RenderService  extends VirtualService
 
     private void reconfigureRenderer() {
         configuration.destroy();
+        sthreads.set();
         configuration.configure(
                 sdirectory.getValueAsFile(),
                 caches,
@@ -73,7 +78,7 @@ public class RenderService  extends VirtualService
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-        if (sdirectory.hasKey(key) || stheme.hasKey(key)) {
+        if (sdirectory.hasKey(key) || stheme.hasKey(key) || sthreads.hasKey(key)) {
             reconfigureRenderer();
         }
     }
