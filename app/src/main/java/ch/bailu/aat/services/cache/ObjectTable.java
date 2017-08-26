@@ -7,6 +7,7 @@ import java.util.HashMap;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.cache.ObjectHandle.Factory;
 import ch.bailu.aat.util.AppIntent;
+import ch.bailu.aat.util.fs.JFile;
 import ch.bailu.aat.util.ui.AppLog;
 
 
@@ -14,13 +15,10 @@ public class ObjectTable  {
     private final static int INITIAL_CAPACITY=1000;
 
     private final static int MB = 1024*1024;
-    private final static long MIN_SIZE=MB*3;
+    public final static long MIN_SIZE=MB;
 
 
-    private final static long MAX_SIZE=Math.max((Runtime.getRuntime().maxMemory()/5), MB*10);
-
-
-    private long limit=MAX_SIZE;
+    private long limit=MIN_SIZE;
     private long totalMemorySize=0;
 
 
@@ -127,8 +125,9 @@ public class ObjectTable  {
     }
 
 
-    public synchronized void onLowMemory(CacheService self) {
-        limit = MIN_SIZE;
+    public synchronized void limit(CacheService self, long l) {
+        AppLog.d(this, "Limit: " + JFile.reportFileSize(new StringBuilder(), l).toString());
+        limit = l;
         trim(self);
     }
 

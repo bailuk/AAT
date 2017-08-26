@@ -3,19 +3,26 @@ package ch.bailu.aat.services.cache;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 
-import ch.bailu.aat.util.AppBroadcaster;
+import ch.bailu.aat.preferences.SolidCacheSize;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.VirtualService;
+import ch.bailu.aat.util.AppBroadcaster;
 
 
 
-public class CacheService extends VirtualService {
+public class CacheService extends VirtualService implements SharedPreferences.OnSharedPreferenceChangeListener {
+
+
 
     public final ObjectTable table=new ObjectTable();
     public final ObjectBroadcaster broadcaster;
 
     public final ServiceContext scontext;
+
+    private final SolidCacheSize slimit;
+
 
     public CacheService(ServiceContext sc) {
         super(sc);
@@ -23,12 +30,17 @@ public class CacheService extends VirtualService {
         scontext = sc;
         broadcaster = new ObjectBroadcaster(getSContext());
 
+        slimit = new SolidCacheSize(sc.getContext());
+        slimit.register(this);
+
+        table.limit(this, slimit.getValueAsLong());
 
         AppBroadcaster.register(getContext(), onFileProcessed, AppBroadcaster.FILE_CHANGED_INCACHE);
     }
 
     public void onLowMemory() {
-        table.onLowMemory(this);
+        table.limit(this, ObjectTable.MIN_SIZE);
+        slimit.setIndex(1);
     }
 
     public ObjectHandle getObject(String id, ObjectHandle.Factory factory) {
@@ -50,6 +62,7 @@ public class CacheService extends VirtualService {
     public void close() {
         getContext().unregisterReceiver(onFileProcessed);
 
+        slimit.unregister(this);
         table.logLocked();
         broadcaster.close();
         table.close(this);
@@ -69,6 +82,13 @@ public class CacheService extends VirtualService {
 
     public void log() {
         table.log();
+    }
+
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s) {
+        if (slimit.hasKey(s)) {
+            table.limit(this, slimit.getValueAsLong());
+        }
     }
 }
 

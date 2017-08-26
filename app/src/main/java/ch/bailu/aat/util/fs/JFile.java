@@ -23,8 +23,6 @@ public class JFile {
 
 
     public static StringBuilder reportFileSize(StringBuilder out, double size) {
-
-
         int i = ddivider.length;
 
         while (i>0) {
@@ -54,8 +52,4 @@ public class JFile {
         out.append(unit[i]);
         return out;
     }
-
-
-
-
 }

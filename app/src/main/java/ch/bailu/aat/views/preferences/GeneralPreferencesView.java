@@ -3,6 +3,7 @@ package ch.bailu.aat.views.preferences;
 import android.app.Activity;
 
 import ch.bailu.aat.R;
+import ch.bailu.aat.preferences.SolidCacheSize;
 import ch.bailu.aat.preferences.SolidPostprocessedAutopause;
 import ch.bailu.aat.preferences.SolidDataDirectory;
 import ch.bailu.aat.preferences.SolidExternalDirectory;
@@ -25,6 +26,7 @@ public class GeneralPreferencesView extends VerticalScrollView {
         add(new SolidDirectoryView(context, new SolidDataDirectory(context)));
         add(new SolidDirectoryView(context, new SolidExternalDirectory(context)));
         add(new SolidIndexListView(new SolidPostprocessedAutopause(context)));
+        add(new SolidIndexListView( new SolidCacheSize(context)));
     }
 
 
