@@ -52,4 +52,20 @@ public class MemSize {
         out.append(unit[i]);
         return out;
     }
+
+
+    public static long round(long size) {
+        int i = ldivider.length;
+
+        while (i>0) {
+            i--;
+            if (Math.abs(size) >= ldivider[i])
+                break;
+        }
+
+        size = Math.round(size / ldivider[i]);
+        return size * ldivider[i];
+    }
+
+
 }

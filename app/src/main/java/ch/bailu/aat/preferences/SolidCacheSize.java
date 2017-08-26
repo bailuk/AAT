@@ -19,11 +19,11 @@ public class SolidCacheSize extends SolidIndexList {
 
             sizes = new long[11];
 
-            sizes[0] = max / 5;
+            sizes[0] = MemSize.round(max / 5);
             sizes[sizes.length-1] = max;
 
             for (int i = sizes.length-2; i > 0; i--) {
-                sizes[i] = sizes[i+1] / 3 * 2 ;
+                sizes[i] = MemSize.round(sizes[i+1] / 3 * 2);
             }
         }
     }
@@ -46,7 +46,7 @@ public class SolidCacheSize extends SolidIndexList {
         MemSize.describe(b, sizes[i]);
 
         if (i == 0) {
-            b.append(" "  +getContext().getString(R.string.auto));
+            b.append(" " + getContext().getString(R.string.auto));
         }
         return b.toString();
     }
