@@ -9,7 +9,7 @@ import ch.bailu.aat.preferences.SolidCacheSize;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.VirtualService;
 import ch.bailu.aat.util.AppBroadcaster;
-
+import ch.bailu.aat.util.MemSize;
 
 
 public class CacheService extends VirtualService implements SharedPreferences.OnSharedPreferenceChangeListener {
@@ -39,7 +39,7 @@ public class CacheService extends VirtualService implements SharedPreferences.On
     }
 
     public void onLowMemory() {
-        table.limit(this, ObjectTable.MIN_SIZE);
+        table.limit(this, MemSize.MB);
         slimit.setIndex(1);
     }
 
