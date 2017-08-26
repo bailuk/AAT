@@ -20,12 +20,12 @@ public class GeneralPreferencesView extends VerticalScrollView {
         add(new TitleView(context, R.string.p_general));
         add(new SolidIndexListView(new SolidUnit(context)));
         add(new SolidIntegerView(new SolidWeight(context)));
+        add(new SolidIndexListView(new SolidPostprocessedAutopause(context)));
 
         add(new TitleView(context, R.string.p_system));
         add(new SolidIndexListView(new SolidLocationProvider(context)));
         add(new SolidDirectoryView(context, new SolidDataDirectory(context)));
         add(new SolidDirectoryView(context, new SolidExternalDirectory(context)));
-        add(new SolidIndexListView(new SolidPostprocessedAutopause(context)));
         add(new SolidIndexListView( new SolidCacheSize(context)));
     }
 
