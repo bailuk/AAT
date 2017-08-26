@@ -3,7 +3,7 @@ package ch.bailu.aat.preferences;
 import android.content.Context;
 
 import ch.bailu.aat.R;
-import ch.bailu.aat.util.fs.JFile;
+import ch.bailu.aat.util.MemSize;
 
 public class SolidCacheSize extends SolidIndexList {
     final static String KEY = "cache_size";
@@ -43,7 +43,7 @@ public class SolidCacheSize extends SolidIndexList {
     protected String getValueAsString(int i) {
         StringBuilder b = new StringBuilder();
 
-        JFile.reportFileSize(b, sizes[i]);
+        MemSize.describe(b, sizes[i]);
 
         if (i == 0) {
             b.append(" "  +getContext().getString(R.string.auto));

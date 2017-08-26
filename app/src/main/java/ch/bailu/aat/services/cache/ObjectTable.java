@@ -7,19 +7,15 @@ import java.util.HashMap;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.cache.ObjectHandle.Factory;
 import ch.bailu.aat.util.AppIntent;
-import ch.bailu.aat.util.fs.JFile;
+import ch.bailu.aat.util.MemSize;
 import ch.bailu.aat.util.ui.AppLog;
 
 
 public class ObjectTable  {
-    private final static int INITIAL_CAPACITY=1000;
+    private final static int INITIAL_CAPACITY = 1000;
 
-    private final static int MB = 1024*1024;
-    public final static long MIN_SIZE=MB;
-
-
-    private long limit=MIN_SIZE;
-    private long totalMemorySize=0;
+    private long limit = MemSize.MB;
+    private long totalMemorySize = 0;
 
 
     private static class Container {
@@ -126,7 +122,7 @@ public class ObjectTable  {
 
 
     public synchronized void limit(CacheService self, long l) {
-        AppLog.d(this, "Limit: " + JFile.reportFileSize(new StringBuilder(), l).toString());
+        AppLog.d(this, "Limit: " + MemSize.describe(new StringBuilder(), l).toString());
         limit = l;
         trim(self);
     }
@@ -192,29 +188,22 @@ public class ObjectTable  {
         builder.append("<p>Runtime:");
 
         builder.append("<br>Maximum memory: ");
-        builder.append(Runtime.getRuntime().maxMemory()/MB);
-        builder.append(" MB");
+        MemSize.describe(builder, Runtime.getRuntime().maxMemory());
         builder.append("<br>Total memory: ");
-        builder.append(Runtime.getRuntime().totalMemory()/MB);
-        builder.append(" MB");
+        MemSize.describe(builder, Runtime.getRuntime().totalMemory());
         builder.append("<br>Free memory: ");
-        builder.append(Runtime.getRuntime().freeMemory()/MB);
-        builder.append(" MB");
+        MemSize.describe(builder, Runtime.getRuntime().freeMemory());
         builder.append("<br>Used memory: ");
-        builder.append((Runtime.getRuntime().totalMemory()-Runtime.getRuntime().freeMemory())/MB);
-        builder.append(" MB");
+        MemSize.describe(builder, Runtime.getRuntime().totalMemory()-Runtime.getRuntime().freeMemory());
         builder.append("</p>");
 
         builder.append("<p> FileCache:");
         builder.append("<br>Used: ");
-        builder.append(totalMemorySize/MB);
-        builder.append(" MB");
+        MemSize.describe(builder, totalMemorySize);
         builder.append("<br>Limit: ");
-        builder.append(limit/MB);
-        builder.append(" MB");
+        MemSize.describe(builder, limit);
         builder.append("<br>Free: ");
-        builder.append((limit-totalMemorySize)/MB);
-        builder.append(" MB");
+        MemSize.describe(builder, limit-totalMemorySize);
         builder.append("</p>");
 
 

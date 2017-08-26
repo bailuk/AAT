@@ -3,7 +3,7 @@ package ch.bailu.aat.preferences;
 import android.content.Context;
 
 import ch.bailu.aat.R;
-import ch.bailu.aat.util.fs.JFile;
+import ch.bailu.aat.util.MemSize;
 
 public class SolidTrimSize extends SolidIndexList {
 
@@ -13,7 +13,7 @@ public class SolidTrimSize extends SolidIndexList {
 
         private Entry(long s) {
             size = s;
-            text = JFile.reportFileSize(new StringBuilder(), size).toString();
+            text = MemSize.describe(new StringBuilder(), size).toString();
         }
     }
 
@@ -21,15 +21,15 @@ public class SolidTrimSize extends SolidIndexList {
 
 
     private static final Entry[] entries = {
-            new Entry(16 * JFile.GB),
-            new Entry(8 * JFile.GB),
-            new Entry(4 * JFile.GB),
-            new Entry(2 * JFile.GB),
-            new Entry(1 * JFile.GB),
-            new Entry(500 * JFile.MB),
-            new Entry(200 * JFile.MB),
-            new Entry(100 * JFile.MB),
-            new Entry(50 * JFile.MB),
+            new Entry(16 * MemSize.GB),
+            new Entry(8 * MemSize.GB),
+            new Entry(4 * MemSize.GB),
+            new Entry(2 * MemSize.GB),
+            new Entry(1 * MemSize.GB),
+            new Entry(500 * MemSize.MB),
+            new Entry(200 * MemSize.MB),
+            new Entry(100 * MemSize.MB),
+            new Entry(50 * MemSize.MB),
     };
 
 

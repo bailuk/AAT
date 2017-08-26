@@ -1,6 +1,6 @@
 package ch.bailu.aat.services.tileremover;
 
-import ch.bailu.aat.util.fs.JFile;
+import ch.bailu.aat.util.MemSize;
 
 public class SourceSummary implements SourceSummaryInterface {
     private final String name;
@@ -71,11 +71,11 @@ public class SourceSummary implements SourceSummaryInterface {
 
         builder.append('\n');
 
-        JFile.reportFileSize(builder, (double)size);
+        MemSize.describe(builder, (double)size);
         builder.append('-');
-        JFile.reportFileSize(builder, (double)sizeToRemove);
+        MemSize.describe(builder, (double)sizeToRemove);
         builder.append('=');
-        JFile.reportFileSize(builder, (double)sizeNew);
+        MemSize.describe(builder, (double)sizeNew);
 
         return builder;
     }

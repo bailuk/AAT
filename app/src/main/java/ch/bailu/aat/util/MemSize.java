@@ -1,8 +1,8 @@
-package ch.bailu.aat.util.fs;
+package ch.bailu.aat.util;
 
 import java.text.DecimalFormat;
 
-public class JFile {
+public class MemSize {
     public final static long KB=1024;
     public final static long MB=1024*KB;
     public final static long GB=1024*MB;
@@ -22,7 +22,7 @@ public class JFile {
     };
 
 
-    public static StringBuilder reportFileSize(StringBuilder out, double size) {
+    public static StringBuilder describe(StringBuilder out, double size) {
         int i = ddivider.length;
 
         while (i>0) {
@@ -39,7 +39,7 @@ public class JFile {
 
 
 
-    public static StringBuilder reportFileSize(StringBuilder out, long size) {
+    public static StringBuilder describe(StringBuilder out, long size) {
         int i = ldivider.length;
 
         while (i>0) {

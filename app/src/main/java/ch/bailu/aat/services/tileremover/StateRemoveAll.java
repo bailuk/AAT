@@ -85,7 +85,7 @@ public class StateRemoveAll implements State, Runnable{
 
         if (keepUp()) {
             info.directory.rmdirs();
-            //JFile.deleteEmptiyDirectoriesRecursive(info.directory);
+            //MemSize.deleteEmptiyDirectoriesRecursive(info.directory);
             broadcast();
         }
 
