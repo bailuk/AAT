@@ -137,12 +137,17 @@ public class DirectorySynchronizer  implements Closeable {
         private ProcessHandle bgProcess = new ProcessHandle() {
 
             @Override
-            public long bgOnProcess() {
+            public long bgOnProcess(ServiceContext sc) {
                 try {
 
                     filesToAdd = new FilesInDirectory(directory);
                     compareFileSystemWithDatabase();
                     removeFilesFromDatabase();
+
+
+                    AppBroadcaster.broadcast(sc.getContext(),
+                            AppBroadcaster.FILE_CHANGED_INCACHE, directory);
+
 
                 } catch (IOException e) {
                     exception = e;
@@ -153,12 +158,7 @@ public class DirectorySynchronizer  implements Closeable {
 
             }
 
-            @Override
-            public void broadcast(Context context) {
-                AppBroadcaster.broadcast(context,
-                        AppBroadcaster.FILE_CHANGED_INCACHE,
-                        directory.getPath());
-            }
+
 
         };
 

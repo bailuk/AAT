@@ -1,21 +1,21 @@
 package ch.bailu.aat.services.background;
 
-import android.content.Context;
+import ch.bailu.aat.services.ServiceContext;
 
 public class LoaderThread extends ProcessThread {
     private static final int LOADER_QUEUE_SIZE = 100;
 
-    private final Context context;
+    private final ServiceContext scontext;
     private final String directory;
     
     private int total_loads=0;
     private long total_bytes=0;
     
     
-    public LoaderThread(Context c, String d) {
+    public LoaderThread(ServiceContext sc, String d) {
         super(LOADER_QUEUE_SIZE);
         directory=d;
-        context = c;
+        scontext = sc;
     }
 
 
@@ -24,10 +24,10 @@ public class LoaderThread extends ProcessThread {
     public void bgOnHaveHandle(ProcessHandle handle) {
         handle.bgLock();
         total_loads++;
-        total_bytes+=handle.bgOnProcess();
+        total_bytes+=handle.bgOnProcess(scontext);
         
         handle.bgUnlock();
-        handle.broadcast(context);
+
 
     }
 

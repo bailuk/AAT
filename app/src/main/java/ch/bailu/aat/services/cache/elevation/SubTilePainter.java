@@ -1,7 +1,5 @@
 package ch.bailu.aat.services.cache.elevation;
 
-import android.content.Context;
-
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.background.ProcessHandle;
 import ch.bailu.aat.services.cache.ObjectHandle;
@@ -11,15 +9,12 @@ import ch.bailu.aat.util.AppBroadcaster;
 public class SubTilePainter extends ProcessHandle {
     private final Dem3Tile tile;
     private final SubTile subTile;
-
-    private final ServiceContext scontext;
     private final String iid;
 
 
 
-    public SubTilePainter(ServiceContext sc, String i, SubTile s, Dem3Tile t) {
+    public SubTilePainter(String i, SubTile s, Dem3Tile t) {
         subTile = s;
-        scontext = sc;
         iid = i;
         tile = t;
         tile.lock();
@@ -39,31 +34,26 @@ public class SubTilePainter extends ProcessHandle {
 
 
     @Override
-    public long bgOnProcess() {
+    public long bgOnProcess(ServiceContext sc) {
         long size = 0;
 
-        if (scontext.lock()) {
-            ObjectHandle handle = scontext.getCacheService().getObject(iid);
+        if (sc.lock()) {
+            ObjectHandle handle = sc.getCacheService().getObject(iid);
 
             if (handle instanceof ElevationTile) {
 
                 ElevationTile owner = (ElevationTile) handle;
 
                 size = owner.bgOnProcessPainter(subTile, tile);
+                AppBroadcaster.broadcast(sc.getContext(), AppBroadcaster.FILE_CHANGED_INCACHE, iid);
             }
 
             handle.free();
-            scontext.free();
+            sc.free();
         }
 
         tile.free(); // FIXME: does not allways get called
         return size;
-    }
-
-
-    @Override
-    public void broadcast(Context context) {
-        AppBroadcaster.broadcast(context, AppBroadcaster.FILE_CHANGED_INCACHE, iid);
     }
 }
 

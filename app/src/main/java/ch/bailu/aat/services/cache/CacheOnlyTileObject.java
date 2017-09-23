@@ -37,15 +37,12 @@ public class CacheOnlyTileObject extends TileObject {
         load = new FileHandle(file) {
 
             @Override
-            public long bgOnProcess() {
+            public long bgOnProcess(ServiceContext sc) {
                 bitmap.set(file, TILE_SIZE, transparent);
-                return bitmap.getSize();
-            }
+                AppBroadcaster.broadcast(sc.getContext(), AppBroadcaster.FILE_CHANGED_INCACHE,
+                        getFile());
 
-            @Override
-            public void broadcast(Context context) {
-                AppBroadcaster.broadcast(context, AppBroadcaster.FILE_CHANGED_INCACHE,
-                        CacheOnlyTileObject.this.toString());
+                return bitmap.getSize();
             }
         };
 

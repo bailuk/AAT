@@ -8,6 +8,7 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.util.ui.AppLog;
 import ch.bailu.aat.util.ui.AppTheme;
@@ -36,9 +37,12 @@ public class DownloadHandle extends ProcessHandle {
 
 
     @Override
-    public long bgOnProcess() {
+    public long bgOnProcess(ServiceContext sc) {
         try {
-            return bgDownload();
+            long r = bgDownload();
+            AppBroadcaster.broadcast(sc.getContext(),
+                    AppBroadcaster.FILE_CHANGED_ONDISK, file,url);
+            return r;
 
         } catch (Exception e) {
             logError(e);
@@ -128,10 +132,5 @@ public class DownloadHandle extends ProcessHandle {
     }
 
 
-    @Override
-    public void broadcast(Context c) {
-        AppBroadcaster.broadcast(c, 
-                AppBroadcaster.FILE_CHANGED_ONDISK, file.getPath(),url);
-    }
 
 }

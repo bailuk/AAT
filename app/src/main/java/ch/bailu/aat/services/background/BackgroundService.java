@@ -24,7 +24,7 @@ public class BackgroundService extends VirtualService {
     private final WorkerThread workers[] = new WorkerThread[1];
 
 
-    private final BroadcastReceiver onFileDownloaded = new BroadcastReceiver() {
+    private final BroadcastReceiver onFileChangedOnDisk = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             Foc file = FocAndroid.factory(context, AppIntent.getFile(intent));
@@ -35,7 +35,7 @@ public class BackgroundService extends VirtualService {
     public BackgroundService(final ServiceContext sc) {
         super(sc);
 
-        AppBroadcaster.register(getContext(), onFileDownloaded, AppBroadcaster.FILE_CHANGED_ONDISK);
+        AppBroadcaster.register(getContext(), onFileChangedOnDisk, AppBroadcaster.FILE_CHANGED_ONDISK);
 
         HandleQueue queue = new HandleQueue();
         for (int i=0; i< workers.length; i++)
@@ -62,7 +62,7 @@ public class BackgroundService extends VirtualService {
             DownloaderThread downloader = downloaders.get(host);
 
             if (downloader == null) {
-                downloader = new DownloaderThread(getContext(), host);
+                downloader = new DownloaderThread(getSContext(), host);
                 downloaders.put(host, downloader);
             }
             downloader.process(handle);
@@ -77,7 +77,7 @@ public class BackgroundService extends VirtualService {
         LoaderThread loader = loaders.get(base);
 
         if (loader == null) {
-            loader = new LoaderThread(getContext(), base);
+            loader = new LoaderThread(getSContext(), base);
             loaders.put(base, loader);
         }
         loader.process(handle);
@@ -86,7 +86,7 @@ public class BackgroundService extends VirtualService {
 
     @Override
     public void close() {
-        getContext().unregisterReceiver(onFileDownloaded);
+        getContext().unregisterReceiver(onFileChangedOnDisk);
 
         for(ProcessThread p: loaders.values())
             p.close();

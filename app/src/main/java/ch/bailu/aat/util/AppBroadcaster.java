@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 
 import ch.bailu.aat.BuildConfig;
+import ch.bailu.util_java.foc.Foc;
 
 public class AppBroadcaster {
     public static final String NAME_SPACE= BuildConfig.APPLICATION_ID + ".";
@@ -69,7 +70,11 @@ public class AppBroadcaster {
     }
 
 
- 
+    public static void broadcast(Context context, String action, Foc file) {
+        broadcast(context, action, file.getPath());
+    }
+
+
     public static void broadcast(Context context, String action, String file) {
         
         Intent intent = new Intent();
@@ -79,7 +84,10 @@ public class AppBroadcaster {
         context.sendBroadcast(intent);
     }
 
-    
+
+    public static void broadcast(Context context, String action, Foc file, String url) {
+        broadcast(context, action, file.getPath(), url);
+    }
     public static void broadcast(Context context, String action, String file, String url) {
         
         Intent intent = new Intent();

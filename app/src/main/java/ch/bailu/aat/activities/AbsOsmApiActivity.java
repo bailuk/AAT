@@ -17,6 +17,7 @@ import ch.bailu.aat.R;
 import ch.bailu.aat.coordinates.BoundingBoxE6;
 import ch.bailu.aat.dispatcher.CustomFileSource;
 import ch.bailu.aat.gpx.InfoID;
+import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.background.BackgroundService;
 import ch.bailu.aat.services.background.DownloadHandle;
 import ch.bailu.aat.services.background.ProcessHandle;
@@ -287,7 +288,7 @@ public abstract class AbsOsmApiActivity extends AbsDispatcher implements OnClick
         }
 
         @Override
-        public long bgOnProcess() {
+        public long bgOnProcess(ServiceContext sc) {
             AppLog.d(this, getFile().getPath());
 
             try {

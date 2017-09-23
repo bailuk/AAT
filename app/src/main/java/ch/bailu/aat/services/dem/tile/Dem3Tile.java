@@ -170,7 +170,7 @@ public class Dem3Tile implements ElevationProvider, DemProvider {
         }
 
         @Override
-        public long bgOnProcess() {
+        public long bgOnProcess(ServiceContext sc) {
             ZipInputStream zip=null;
 
             try {
@@ -190,6 +190,10 @@ public class Dem3Tile implements ElevationProvider, DemProvider {
 
                 } while(count > 0 && total < data.length && canContinue()) ;
 
+                loading=false;
+                AppBroadcaster.broadcast(sc.getContext(),
+                        AppBroadcaster.FILE_CHANGED_INCACHE, getFile());
+
 
             } catch (Exception e) {
                 for (int i=0; i<data.length; i++) data[i]=0;
@@ -201,12 +205,7 @@ public class Dem3Tile implements ElevationProvider, DemProvider {
             return data.length;
         }
 
-        @Override
-        public void broadcast(Context context) {
-            loading=false;
-            AppBroadcaster.broadcast(context, AppBroadcaster.FILE_CHANGED_INCACHE, toString());
 
-        }
     }
 
 

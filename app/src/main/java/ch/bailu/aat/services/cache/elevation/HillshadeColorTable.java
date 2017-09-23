@@ -107,12 +107,15 @@ public class HillshadeColorTable extends ObjectHandle {
 
 
         @Override
-        public long bgOnProcess() {
+        public long bgOnProcess(ServiceContext sc) {
             for (int x=0; x<TABLE_DIM; x++) {
                 for (int y=0; y<TABLE_DIM; y++) {
                     table[x][y]=hillshade(indexToDelta(x), indexToDelta(y));
                 }
             }
+
+            isInitialized = true;
+            AppBroadcaster.broadcast(sc.getContext(), AppBroadcaster.FILE_CHANGED_INCACHE, ID);
 
             return TABLE_SIZE;
         }
@@ -162,11 +165,6 @@ public class HillshadeColorTable extends ObjectHandle {
         }
 
 
-        @Override
-        public void broadcast(Context context) {
-            isInitialized = true;
-            AppBroadcaster.broadcast(context, AppBroadcaster.FILE_CHANGED_INCACHE, ID);
-        }
     }
 
 

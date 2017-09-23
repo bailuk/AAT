@@ -90,7 +90,7 @@ public abstract class ElevationTile extends TileObject implements ElevationUpdat
         sc.getCacheService().addToBroadcaster(this);
 
         if (!raster.isInizialized) {
-            sc.getBackgroundService().process(new RasterInitializer(sc, getID()));
+            sc.getBackgroundService().process(new RasterInitializer(getID()));
         }
     }
 
@@ -148,7 +148,7 @@ public abstract class ElevationTile extends TileObject implements ElevationUpdat
             subTiles.remove(key);
             isPainting =true;
 
-            cs.getBackgroundService().process(span.painterFactory(cs, getID(), tile));
+            cs.getBackgroundService().process(span.painterFactory(getID(), tile));
         }
     }
 

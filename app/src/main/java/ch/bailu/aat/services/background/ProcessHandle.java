@@ -1,20 +1,17 @@
 package ch.bailu.aat.services.background;
 
-import android.content.Context;
+import ch.bailu.aat.services.ServiceContext;
 
 public abstract class ProcessHandle implements ThreadControl {
     
     public static final ProcessHandle NULL = new ProcessHandle() {
 
         @Override
-        public long bgOnProcess() {
+        public long bgOnProcess(ServiceContext sc) {
             return 0;
         }
 
-        @Override
-        public void broadcast(Context context) {
-        }
-        
+
     };
 
 
@@ -37,7 +34,7 @@ public abstract class ProcessHandle implements ThreadControl {
     }
     
     
-    public abstract long bgOnProcess();
+    public abstract long bgOnProcess(ServiceContext sc);
  
     
     public synchronized void stopLoading() {
@@ -48,9 +45,6 @@ public abstract class ProcessHandle implements ThreadControl {
     public boolean isLocked()  {
         return lock;
     }
-
-
-    public abstract void broadcast(Context context);
 
 
     public ThreadControl getThreadControl() {

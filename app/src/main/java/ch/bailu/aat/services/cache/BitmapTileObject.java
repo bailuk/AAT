@@ -1,6 +1,5 @@
 package ch.bailu.aat.services.cache;
 
-import android.content.Context;
 import android.graphics.Bitmap;
 
 import org.mapsforge.core.graphics.TileBitmap;
@@ -53,7 +52,7 @@ public class BitmapTileObject extends TileObject {
 
     @Override
     public void onInsert(ServiceContext sc) {
-        if (isLoadable()) sc.getBackgroundService().load(new FileLoader(file, sc));
+        if (isLoadable()) sc.getBackgroundService().load(new FileLoader(file));
         else if (isDownloadable())
             sc.getBackgroundService().download(download);
     }
@@ -98,7 +97,7 @@ public class BitmapTileObject extends TileObject {
     @Override
     public void onDownloaded(String id, String u, ServiceContext sc) {
         if (u.equals(url) && isLoadable()) {
-            sc.getBackgroundService().load(new FileLoader(file, sc));
+            sc.getBackgroundService().load(new FileLoader(file));
         }
 
     }
@@ -152,15 +151,13 @@ public class BitmapTileObject extends TileObject {
 
 
     private static class FileLoader extends FileHandle {
-        private final ServiceContext scontext;
 
-        public FileLoader(Foc f, ServiceContext sc) {
+        public FileLoader(Foc f) {
             super(f);
-            scontext = sc;
         }
 
         @Override
-        public long bgOnProcess() {
+        public long bgOnProcess(ServiceContext scontext) {
             long size = 0;
             if (scontext.lock()) {
                 ObjectHandle obj = scontext.getCacheService().getObject(getFile().getPath());
@@ -170,6 +167,10 @@ public class BitmapTileObject extends TileObject {
                     bmp.bitmap.set(bmp.getFile(), TILE_SIZE, bmp.source.isTransparent());
                     size = bmp.getSize();
 
+                    AppBroadcaster.broadcast(scontext.getContext(),
+                            AppBroadcaster.FILE_CHANGED_INCACHE,
+                            getFile().getPath());
+
                 }
                 obj.free();
                 scontext.free();
@@ -178,12 +179,6 @@ public class BitmapTileObject extends TileObject {
         }
 
 
-        @Override
-        public void broadcast(Context context) {
-            AppBroadcaster.broadcast(context,
-                    AppBroadcaster.FILE_CHANGED_INCACHE,
-                    getFile().getPath());
-        }
     }
 
     private static class FileDownloader extends DownloadHandle {
@@ -198,9 +193,9 @@ public class BitmapTileObject extends TileObject {
 
 
         @Override
-        public long bgOnProcess() {
+        public long bgOnProcess(ServiceContext sc) {
             if (isInCache()) {
-                return super.bgOnProcess();
+                return super.bgOnProcess(sc);
             }
             return 0;
         }

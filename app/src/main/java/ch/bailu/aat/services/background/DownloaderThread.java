@@ -1,16 +1,16 @@
 package ch.bailu.aat.services.background;
 
-import android.content.Context;
+import ch.bailu.aat.services.ServiceContext;
 
 public class DownloaderThread  extends ProcessThread {
     private final static int DOWNLOAD_QUEUE_SIZE=100;
     private final String server;
-    private final Context context;
+    private final ServiceContext scontext;
     private final DownloadStatistics statistics = new DownloadStatistics();
 
-    public DownloaderThread(Context c, String s) {
+    public DownloaderThread(ServiceContext sc, String s) {
         super(DOWNLOAD_QUEUE_SIZE);
-        context = c;
+        scontext = sc;
         server = s;
     }
 
@@ -20,12 +20,11 @@ public class DownloaderThread  extends ProcessThread {
     public void bgOnHaveHandle(ProcessHandle handle) {
         if (statistics.isReady()) {
             handle.bgLock();
-            final long size = handle.bgOnProcess();
+            final long size = handle.bgOnProcess(scontext);
             handle.bgUnlock();
             
             if (size > 0) {
                 statistics.success(size);
-                handle.broadcast(context);
             } else {
                 statistics.failure();
             }

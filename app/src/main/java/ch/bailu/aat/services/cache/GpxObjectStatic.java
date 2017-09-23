@@ -56,7 +56,7 @@ public class GpxObjectStatic extends GpxObject implements ElevationUpdaterClient
     }
 
     private void reload(final ServiceContext sc) {
-        sc.getBackgroundService().load(new FileLoader(file, sc));
+        sc.getBackgroundService().load(new FileLoader(file));
     }
 
 
@@ -194,23 +194,28 @@ public class GpxObjectStatic extends GpxObject implements ElevationUpdaterClient
 
 
     private static class FileLoader extends FileHandle {
-        private final ServiceContext sc;
 
-        public FileLoader(Foc f, ServiceContext sc) {
+        public FileLoader(Foc f) {
             super(f);
-            this.sc = sc;
+
         }
 
         @Override
-        public long bgOnProcess() {
+        public long bgOnProcess(ServiceContext sc) {
             long size = 0;
 
             if (sc.lock()) {
                 ObjectHandle handle = sc.getCacheService().getObject(getID());
                 try {
                     if (handle instanceof GpxObjectStatic) {
-                        size = load((GpxObjectStatic) handle);
+                        size = load(sc, (GpxObjectStatic) handle);
                     }
+
+                    AppBroadcaster.broadcast(sc.getContext(),
+                            AppBroadcaster.FILE_CHANGED_INCACHE, getID());
+                    AppBroadcaster.broadcast(sc.getContext(),
+                            AppBroadcaster.REQUEST_ELEVATION_UPDATE, getID());
+
                 } catch (Exception e) {
                     e.printStackTrace();
                 } finally {
@@ -222,14 +227,14 @@ public class GpxObjectStatic extends GpxObject implements ElevationUpdaterClient
         }
 
 
-        private long load(GpxObjectStatic handle) throws IOException {
+        private long load(ServiceContext sc, GpxObjectStatic handle) throws IOException {
             long size = 0;
 
             GpxListReader reader =
                     new GpxListReader(
                             getThreadControl(),
                             getFile(),
-                            getAutoPause());
+                            getAutoPause(sc));
 
             if (canContinue()) {
                 handle.setGpxList(reader.getGpxList());
@@ -239,7 +244,7 @@ public class GpxObjectStatic extends GpxObject implements ElevationUpdaterClient
         }
 
 
-        private AutoPause getAutoPause() {
+        private AutoPause getAutoPause(ServiceContext sc) {
             SolidAutopause spause = new SolidPostprocessedAutopause(sc.getContext());
             return new AutoPause.Time(
                     spause.getTriggerSpeed(),
@@ -247,10 +252,5 @@ public class GpxObjectStatic extends GpxObject implements ElevationUpdaterClient
         }
 
 
-        @Override
-        public void broadcast(Context context) {
-            AppBroadcaster.broadcast(context, AppBroadcaster.FILE_CHANGED_INCACHE, getID());
-            AppBroadcaster.broadcast(context, AppBroadcaster.REQUEST_ELEVATION_UPDATE, getID());
-        }
     }
 }

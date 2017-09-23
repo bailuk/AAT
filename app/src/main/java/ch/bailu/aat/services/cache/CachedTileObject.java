@@ -49,19 +49,21 @@ public class CachedTileObject extends TileObject {
         save = new FileHandle(cachedImageFile) {
 
             @Override
-            public long bgOnProcess() {
+            public long bgOnProcess(ServiceContext sc) {
                 long size = 0;
 
                 if (sc.lock()) {
-                    size = save();
+                    size = save(sc);
+
                     sc.free();
                 }
+
 
                 return size;
             }
 
 
-            private long save() {
+            private long save(ServiceContext sc) {
                 long size = 0;
 
                 ObjectHandle handle = sc.getCacheService().getObject(sourceID);
@@ -69,7 +71,7 @@ public class CachedTileObject extends TileObject {
                 if (handle instanceof TileObject) {
                     TileObject self = (TileObject) handle;
 
-                    size = save(self);
+                    size = save(sc, self);
                 }
 
                 handle.free();
@@ -77,7 +79,7 @@ public class CachedTileObject extends TileObject {
             }
 
 
-            private long save(TileObject self) {
+            private long save(ServiceContext sc, TileObject self) {
                 long size = 0;
                 OutputStream out = null;
                 Foc file = cachedImageFile;
@@ -90,6 +92,9 @@ public class CachedTileObject extends TileObject {
                             bitmap.compress(Bitmap.CompressFormat.PNG, 0, out);
 
                         }
+
+                        AppBroadcaster.broadcast(sc.getContext(), AppBroadcaster.FILE_CHANGED_ONDISK,
+                                cachedID, sourceID);
 
                         size = self.getSize();
                     } catch (Exception e) {
@@ -105,11 +110,6 @@ public class CachedTileObject extends TileObject {
             }
 
 
-            @Override
-            public void broadcast(Context context) {
-                AppBroadcaster.broadcast(context, AppBroadcaster.FILE_CHANGED_ONDISK,
-                        cachedID, sourceID);
-            }
         };
     }
 

@@ -16,9 +16,9 @@ public class WorkerThread extends ProcessThread {
     public void bgOnHaveHandle(ProcessHandle handle) {
         if (handle.canContinue() && scontext.lock()) {
             handle.bgLock();
-            handle.bgOnProcess();
+            handle.bgOnProcess(scontext);
             handle.bgUnlock();
-            handle.broadcast(scontext.getContext());
+
 
             scontext.free();
         }

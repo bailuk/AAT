@@ -19,8 +19,8 @@ public class SubTile {
         coordinates = new SrtmCoordinates((double)laS.deg(), (double)loS.deg());
     }
 
-    public SubTilePainter painterFactory(ServiceContext sc, String i, Dem3Tile t) {
-        return new SubTilePainter(sc, i, this, t);
+    public SubTilePainter painterFactory(String i, Dem3Tile t) {
+        return new SubTilePainter(i, this, t);
     }
 
     public Rect toRect() {

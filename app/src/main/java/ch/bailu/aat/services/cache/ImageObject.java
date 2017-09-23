@@ -46,11 +46,11 @@ public class ImageObject extends ImageObjectAbstract {
 
 
 
-    private void load(final ServiceContext sc) {
+    private void load(ServiceContext sc) {
         FileHandle l=new FileHandle(imageFile) {
 
             @Override
-            public long bgOnProcess() {
+            public long bgOnProcess(ServiceContext sc) {
                 long size = 0;
 
                 if (sc.lock()) {
@@ -63,6 +63,9 @@ public class ImageObject extends ImageObjectAbstract {
 
                             bitmap.set(self.imageFile);
                             size =  bitmap.getSize();
+
+                            AppBroadcaster.broadcast(sc.getContext(), AppBroadcaster.FILE_CHANGED_INCACHE,
+                                    self.imageFile);
                         }
                         handle.free();
                     }
@@ -70,11 +73,6 @@ public class ImageObject extends ImageObjectAbstract {
                     sc.free();
                 }
                 return size;
-            }
-
-            @Override
-            public void broadcast(Context context) {
-                AppBroadcaster.broadcast(context, AppBroadcaster.FILE_CHANGED_INCACHE, ImageObject.this.toString());
             }
 
         };
