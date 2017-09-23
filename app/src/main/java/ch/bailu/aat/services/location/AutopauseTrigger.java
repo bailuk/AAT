@@ -26,7 +26,7 @@ public class AutopauseTrigger extends LocationStackChainedItem {
     public void close() {}
 
     @Override
-    public void newLocation(LocationInformation location) {
+    public void passLocation(LocationInformation location) {
 
 
         float speed = location.getSpeed();
@@ -40,7 +40,7 @@ public class AutopauseTrigger extends LocationStackChainedItem {
             trigger.log(logContext);
         }
 
-        sendLocation(location);
+        super.passLocation(location);
     }
 
     

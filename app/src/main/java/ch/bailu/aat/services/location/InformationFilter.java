@@ -1,7 +1,5 @@
 package ch.bailu.aat.services.location;
 
-import android.content.Context;
-
 public class InformationFilter extends LocationStackChainedItem {
 
     public InformationFilter(LocationStackItem n) {
@@ -9,20 +7,10 @@ public class InformationFilter extends LocationStackChainedItem {
     }
 
     @Override
-    public void close() {}
-
-    @Override
-    public void newLocation(LocationInformation location) {
-//        AppLog.d(this, "newLocation()");
-        if (location.hasAltitude() /*&& location.hasBearing() && location.hasSpeed()*/) {
-//            AppLog.d(this, "-> send");
-            sendLocation(location);
+    public void passLocation(LocationInformation location) {
+        if (location.hasAltitude()) {
+            super.passLocation(location);
         }
     }
-
-    @Override
-    public void preferencesChanged(Context c, int i) {}
-    
-    
 
 }

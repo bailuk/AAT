@@ -25,7 +25,7 @@ public class PredictiveTimeDescription extends TimeDescription {
     }
 
     public String getValue() {
-        return getValue(time);
+        return format(time);
     }
 
 

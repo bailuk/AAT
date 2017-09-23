@@ -22,30 +22,21 @@ import ch.bailu.util_java.foc.FocName;
 public class RealLocation extends LocationStackChainedItem
         implements LocationListener, ContextWrapperInterface{
 
-    private final String provider;
+    private final FocName provider;
     private final Context context;
-    private int state=-99;
-    private LocationInformation lastLocation; 
 
+    private int state = -99;
 
-    private class LocationWrapper extends LocationInformation {
-        private final Location location;
-
-        public LocationWrapper(Location l) {
-            location = l;
-            location.setTime(System.currentTimeMillis());
-        }
-
+    private Location location;
+    private final LocationInformation locationInformation = new  LocationInformation () {
         @Override
         public int getState() {
             return state;
         }
-
         @Override
         public Foc getFile() {
-            return new FocName(location.getProvider());
+            return provider;
         }
-
         @Override
         public float getAccuracy() {
             return location.getAccuracy();
@@ -54,22 +45,18 @@ public class RealLocation extends LocationStackChainedItem
         public float getSpeed() {
             return location.getSpeed();
         }
-
         @Override
         public short getAltitude() {
             return (short)Math.round(location.getAltitude());
         }
-
         @Override
         public double getLatitude() {
             return location.getLatitude();
         }
-
         @Override
         public double getLongitude() {
             return location.getLongitude();
         }
-
         @Override
         public long getTimeStamp() {
             return location.getTime();
@@ -98,36 +85,40 @@ public class RealLocation extends LocationStackChainedItem
         public boolean hasBearing() {
             return location.hasBearing();
         }
-    }
+    };
+
 
     private class NoServiceException extends Exception {
         private static final long serialVersionUID = 5318663897402154115L;
     }
 
 
-    public RealLocation(LocationStackItem i, Context c, String p) {
+
+    public RealLocation(LocationStackItem i, Context c, String p, int intervall) {
         super(i);
 
         context = c;
-        provider = p;
-        lastLocation = new LocationWrapper(new Location(provider));
+        provider = new FocName(p);
+        location = new Location(provider.getName());
+
+        init(intervall);
     }
     
     
-    public void init(int gpsInterval) {
+    private void init(int gpsInterval) {
         try {
-            setState(StateID.WAIT);
+            passState(StateID.WAIT);
 
             final LocationManager lm = getLocationManager(context);
 
-            validateProvider(lm, provider);
-            sendLastKnownLocation(lm, provider);
-            requestLocationUpdates(lm, provider, gpsInterval);
+            validateProvider(lm, provider.getName());
+            sendLastKnownLocation(lm, provider.getName());
+            requestLocationUpdates(lm, provider.getName(), gpsInterval);
 
         } catch (NoServiceException ex) {
-            setState(StateID.NOSERVICE);
+            passState(StateID.NOSERVICE);
         } catch (SecurityException | IllegalArgumentException ex) {
-            setState(StateID.NOACCESS);
+            passState(StateID.NOACCESS);
         }
 
     }
@@ -136,7 +127,7 @@ public class RealLocation extends LocationStackChainedItem
     private void sendLastKnownLocation(LocationManager lm, String provider) {
         if (AppPermission.checkLocation(context)) {
             final Location loc = lm.getLastKnownLocation(provider);
-            if (loc != null) sendLocation(loc);
+            if (loc != null) locationChange(loc);
         }
     }
 
@@ -146,11 +137,6 @@ public class RealLocation extends LocationStackChainedItem
 
 
     private void validateProvider(LocationManager lm, String provider) throws NoServiceException {
-        /* 
-         *  On shashlik all access to LocationManager throws null pointer exception. 
-         *  Therefore we catch all exceptions. 
-         */
-        
         try {
             List <String> list = lm.getAllProviders();
 
@@ -164,20 +150,20 @@ public class RealLocation extends LocationStackChainedItem
         } catch (Exception e) {
             throw new NoServiceException();
         }
-
     }
+
+
     private LocationManager getLocationManager(Context c) throws NoServiceException {
         if (AppPermission.checkLocation(c)) {
             final Object r = c.getSystemService(Context.LOCATION_SERVICE);
 
-            if (r == null || LocationManager.class.isInstance(r) == false) {
-                throw new NoServiceException();
-            } else {
+            if (r instanceof LocationManager) {
                 return (LocationManager) r;
             }
         }
         throw new NoServiceException();
     }
+
 
     private void requestLocationUpdates(LocationManager lm, String provider, long interval)
             throws SecurityException, IllegalArgumentException {
@@ -189,37 +175,36 @@ public class RealLocation extends LocationStackChainedItem
         try {
             AppLog.d(this, "=> removeUpdates()");
             getLocationManager(context).removeUpdates(this);
-        } catch (NoServiceException e) {
-            state=StateID.NOSERVICE;
+        } catch (Exception e) {
+            state = StateID.NOSERVICE;
         }
     }
 
     @Override
     public void onLocationChanged(Location l) {
-        setState(StateID.ON);
-        sendLocation(l);
+        passState(StateID.ON);
+        locationChange(l);
     }
 
 
-    public void sendLocation(Location l) {
-        lastLocation= new LocationWrapper(l);
-        sendLocation(lastLocation);
+    public void locationChange(Location l) {
+        location = l;
+        passLocation(locationInformation);
     }
 
 
     @Override
     public void onProviderDisabled(String p) {
-
-        if (provider.equals(p)) {
-            setState(StateID.OFF);
+        if (provider.getName().equals(p)) {
+            passState(StateID.OFF);
         }
     }
 
     @Override
     public void onProviderEnabled(String p) {
 
-        if (provider.equals(p)) {
-            setState(StateID.WAIT);
+        if (provider.getName().equals(p)) {
+            passState(StateID.WAIT);
         }
     }
 
@@ -227,7 +212,7 @@ public class RealLocation extends LocationStackChainedItem
     @Override
     public void onStatusChanged(String p, int status, Bundle extras) {
 
-        if (provider.equals(p)) {
+        if (provider.getName().equals(p)) {
 
             if (status == LocationProvider.AVAILABLE) {
                 onProviderEnabled(p);
@@ -239,21 +224,15 @@ public class RealLocation extends LocationStackChainedItem
         }
     }
 
-    public void setState(int s) {
+    @Override
+    public void passState(int s) {
         if (state != s) {
             state = s;
-            sendState(s);
+            super.passState(s);
         }
     }
 
 
-    @Override
-    public void newLocation(LocationInformation location) {
-        sendLocation(location);
-    }
-
-    @Override
-    public void preferencesChanged(Context c, int i) {}
 
     @Override
     public Context getContext() {
@@ -277,7 +256,6 @@ public class RealLocation extends LocationStackChainedItem
         default: builder.append("STATE_WAIT"); break;
         }
         builder.append("<br>");
-
     }
 
 }

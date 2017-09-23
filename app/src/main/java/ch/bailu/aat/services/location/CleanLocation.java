@@ -6,7 +6,7 @@ import ch.bailu.aat.gpx.GpxPoint;
 import ch.bailu.aat.gpx.interfaces.GpxPointInterface;
 
 public class CleanLocation extends LocationStackItem {
-    private static final long LOCATION_LIFETIME_MILLIS=5*1000;
+    private static final long LOCATION_LIFETIME_MILLIS=3*1000;
 
     private GpxPointInterface currentLocation=GpxPoint.NULL;
 
@@ -23,25 +23,16 @@ public class CleanLocation extends LocationStackItem {
 
 
     @Override
-    public void newLocation(LocationInformation location) {
-//        AppLog.d(this, "newLocation()");
-//        if (hasLoggableLocation()) AppLog.d(this, "hsLoggableLocation()");
-        currentLocation=location;
+    public void passState(int state) {
+
     }
 
     @Override
-    public void sendLocation(LocationInformation location) {}
+    public void passLocation(LocationInformation location) {
+    }
 
-    @Override
-    public void sendState(int state) {}
 
-    @Override
-    public void newState(int state) {}
-
-    @Override
-    public void close() {}
-
-    @Override
+     @Override
     public void preferencesChanged(Context c, int i) {}
 
 }

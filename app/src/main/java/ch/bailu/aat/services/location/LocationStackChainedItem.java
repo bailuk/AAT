@@ -9,18 +9,14 @@ public abstract class LocationStackChainedItem extends LocationStackItem {
     }
     
     @Override
-    public void sendLocation(LocationInformation l) {
-        next.newLocation(l);
+    public void passLocation(LocationInformation l) {
+        next.passLocation(l);
     }
     
     
     @Override
-    public void sendState(int state) {
-        next.newState(state);
+    public void passState(int state) {
+        next.passState(state);
     }
     
-    @Override
-    public void newState(int state) {
-        sendState(state);
-    }
 }

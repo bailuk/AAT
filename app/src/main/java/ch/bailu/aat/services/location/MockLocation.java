@@ -41,11 +41,11 @@ public class MockLocation extends LocationStackChainedItem implements Runnable{
             mockData = new GpxListReader(file, AutoPause.NULL).getGpxList();
 
             timer.kick();
-            sendState(StateID.WAIT);
+            passState(StateID.WAIT);
 
         } catch (Exception e) {
             AppLog.e(c, e);
-            sendState(StateID.OFF);
+            passState(StateID.OFF);
         }
     }
 
@@ -62,17 +62,17 @@ public class MockLocation extends LocationStackChainedItem implements Runnable{
         } else {
             node = (GpxPointNode) mockData.getPointList().getFirst();
             if (sendLocation()) {
-                sendState(StateID.ON);
+                passState(StateID.ON);
                 kickTimer();
             } else {
-                sendState(StateID.OFF);
+                passState(StateID.OFF);
             }
         }
     }
 
     private boolean sendLocation() {
         if (node != null) {
-            sendLocation(new MockLocationInformation(node));
+            super.passLocation(new MockLocationInformation(node));
 
             node = (GpxPointNode)node.getNext();
             if (node != null) {
@@ -174,19 +174,10 @@ public class MockLocation extends LocationStackChainedItem implements Runnable{
     }
 
     @Override
-    public void sendState(int s) {
+    public void passState(int s) {
         state = s;
-        super.sendState(s);
+        super.passState(s);
     }
-
-
-    @Override
-    public void newLocation(LocationInformation location) {}
-
-
-    @Override
-    public void preferencesChanged(Context c, int i) {}
-
 
 
 }

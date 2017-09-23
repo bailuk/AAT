@@ -18,12 +18,10 @@ public class DistanceFilter extends LocationStackChainedItem {
     public void close() {}
 
     @Override
-    public void newLocation(LocationInformation location) {
-//        AppLog.d(this, "newLocation()");
+    public void passLocation(LocationInformation location) {
         if (oldLocation==null || notTooClose(oldLocation,location)) {
             oldLocation=location;
-//            AppLog.d(this, "send");
-            sendLocation(location);
+            super.passLocation(location);
         }
     }
     

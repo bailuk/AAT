@@ -5,14 +5,7 @@ import android.location.LocationManager;
 
 public class NetworkLocation extends RealLocation {
 
-    public static final int NETWORK_INTERVAL=60*SystemLocation.GPS_INTERVAL;
-
-    public NetworkLocation(LocationStackItem i, Context c) {
-        super(i, c, LocationManager.NETWORK_PROVIDER);
-        init(NETWORK_INTERVAL);
+    public NetworkLocation(LocationStackItem i, Context c, int interval) {
+        super(i, c, LocationManager.NETWORK_PROVIDER, interval);
     }
-
-    @Override
-    public void sendState(int s) {}
-
 }

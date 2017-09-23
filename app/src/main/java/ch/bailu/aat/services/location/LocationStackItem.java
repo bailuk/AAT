@@ -1,19 +1,23 @@
 package ch.bailu.aat.services.location;
 
+import android.content.Context;
+
 import java.io.Closeable;
 
 import ch.bailu.aat.preferences.PresetDependent;
 
 public abstract class LocationStackItem implements Closeable, PresetDependent{
-    public abstract void sendState(int state);
-    public abstract void newState(int state);
-
-    public abstract void sendLocation(LocationInformation location);
-    public abstract void newLocation(LocationInformation location);
+    public abstract void passState(int state);
+    public abstract void passLocation(LocationInformation location);
 
 
     @Override
     public void close(){}
+
+
+    @Override
+    public void preferencesChanged(Context c, int i) {}
+
 
     public void appendStatusText(StringBuilder builder) {
         builder.append("<b>");

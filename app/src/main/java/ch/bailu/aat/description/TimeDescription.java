@@ -22,7 +22,7 @@ public class TimeDescription extends LongDescription {
     }
 
     public String getValue() {
-        return getValue(getCache());
+        return format(getCache());
     }
 
     @Override
@@ -34,9 +34,16 @@ public class TimeDescription extends LongDescription {
 
     private static final StringBuilder builder = new StringBuilder(10);
 
-    public static String getValue(long time) {
-        builder.setLength(0);
 
+    public static String format(long time) {
+        synchronized (builder) {
+            builder.setLength(0);
+            return format(builder, time).toString();
+        }
+    }
+
+
+    public static StringBuilder format(StringBuilder out, long time) {
         int seconds, hours, minutes;
 
         // 1. calculate milliseconds to unit
@@ -48,11 +55,14 @@ public class TimeDescription extends LongDescription {
         seconds -= minutes * 60;
         minutes -= hours * 60;
 
-        appendValueAndDelimer(builder, hours);
-        appendValueAndDelimer(builder, minutes);
-        appendValue(builder, seconds);
-        return builder.toString();
+        appendValueAndDelimer(out, hours);
+        appendValueAndDelimer(out, minutes);
+        appendValue(out, seconds);
+        return out;
+
     }
+
+
 
     private static void appendValueAndDelimer(StringBuilder builder, int value) {
         appendValue(builder,value);

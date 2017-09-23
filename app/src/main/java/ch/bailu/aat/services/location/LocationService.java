@@ -79,11 +79,7 @@ public class LocationService extends VirtualService
             provider.close();
         }
 
-        if      (sprovider.getIndex()==0) provider = new SystemLocation(lastItem(), getSContext());
-        else if (sprovider.getIndex()==1) provider = new SystemLocation(lastItem(), getSContext(), 2000);
-        else if (sprovider.getIndex()==2) provider = new SystemLocation(lastItem(), getSContext(), 3000);
-        else                              provider = new MockLocation(getContext(), lastItem());
-
+        provider = sprovider.createProvider(lastItem());
         itemList.add(provider);
     }
 
@@ -148,5 +144,4 @@ public class LocationService extends VirtualService
         builder.append("</p>");
 
     }
-
 }
