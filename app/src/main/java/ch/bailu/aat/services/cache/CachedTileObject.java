@@ -86,11 +86,12 @@ public class CachedTileObject extends TileObject {
 
                 if (file.exists() == false) {
                     try {
+
                         out = file.openW();
+
                         Bitmap bitmap = self.getBitmap();
                         if (bitmap != null && out != null) {
                             bitmap.compress(Bitmap.CompressFormat.PNG, 0, out);
-
                         }
 
                         AppBroadcaster.broadcast(sc.getContext(), AppBroadcaster.FILE_CHANGED_ONDISK,
@@ -198,11 +199,6 @@ public class CachedTileObject extends TileObject {
     @Override
     public void onDownloaded(String id, String url, ServiceContext sc) {}
 
-    @Override
-    public synchronized void access() {
-        super.access();
-        //makeOld();
-    }
 
     @Override
     public Foc getFile() {

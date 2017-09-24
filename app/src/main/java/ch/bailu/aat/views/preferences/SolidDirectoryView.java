@@ -39,6 +39,8 @@ public class SolidDirectoryView extends AbsSolidView {
     }
 
     private static String getPermissionText(Context c, Foc f) {
+        f.update();
+
         if (f.exists() == false) {
             if (f.hasParent()) {
                 return getPermissionText(c, f.parent());

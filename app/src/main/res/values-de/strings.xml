@@ -220,7 +220,7 @@
     <string name="file_view">Anzeigen/Bearbeiten…</string>
     <string name="file_is_writeable">: lesen und schreiben.</string>
     <string name="file_is_readonly">: nur lesen.</string>
-    <string name="file_is_missing"> existiert nicht.</string>
+    <string name="file_is_missing">\u0020existiert nicht.</string>
     <string name="file_is_denied">: kein Zugriff.</string>
 
 
