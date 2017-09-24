@@ -2,11 +2,15 @@ package ch.bailu.aat.preferences;
 
 import android.content.Context;
 
+import java.io.Closeable;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import ch.bailu.aat.R;
+import ch.bailu.aat.util.Once;
 import ch.bailu.aat.util.fs.AppDirectory;
 import ch.bailu.aat.util.fs.AndroidVolumes;
+import ch.bailu.aat.util.ui.AppLog;
 import ch.bailu.util_java.foc.Foc;
 
 
@@ -15,6 +19,8 @@ public class SolidTileCacheDirectory extends SolidFile {
     public SolidTileCacheDirectory(Context c) {
         super(Storage.global(c), SolidTileCacheDirectory.class.getSimpleName());
     }
+
+
 
 
     @Override

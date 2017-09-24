@@ -230,7 +230,9 @@ public class FocContent extends Foc {
     public boolean canWrite() {
         querySelf();
         return (data.flags & DocumentsContract.Document.FLAG_SUPPORTS_WRITE)
-                == DocumentsContract.Document.FLAG_SUPPORTS_WRITE;
+                == DocumentsContract.Document.FLAG_SUPPORTS_WRITE ||
+                (data.flags & DocumentsContract.Document.FLAG_DIR_SUPPORTS_CREATE)
+                == DocumentsContract.Document.FLAG_DIR_SUPPORTS_CREATE;
     }
 
     @Override

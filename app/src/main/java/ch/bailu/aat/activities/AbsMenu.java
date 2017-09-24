@@ -6,8 +6,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import ch.bailu.aat.menus.OptionsMenu;
+import ch.bailu.aat.util.AbsServiceLink;
 
-public abstract class AbsMenu extends AbsServiceLink  {
+public abstract class AbsMenu extends AbsServiceLink {
 
     private OptionsMenu menu;
 

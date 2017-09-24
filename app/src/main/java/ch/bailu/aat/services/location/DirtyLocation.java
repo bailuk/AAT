@@ -47,14 +47,20 @@ public class DirtyLocation extends LocationStackChainedItem {
     
     @Override
     public void passLocation(LocationInformation location) {
-        AppLog.d(this, "Time: " + TIME_FORMAT.format(location.getTimeStamp()));
-        AppLog.d(this, "Provider: " + location.getFile().getName());
+        ///log(location);
 
         locationInformation=location;
         super.passLocation(location);
         AppBroadcaster.broadcast(storage.getContext(), AppBroadcaster.LOCATION_CHANGED);
     }
-    
+
+
+    private void log(LocationInformation location) {
+        AppLog.d(this, location.getFile().getName()
+                + ": "
+                + TIME_FORMAT.format(location.getTimeStamp()));
+    }
+
     @Override
     public void passState(int s) {
         super.passState(s);

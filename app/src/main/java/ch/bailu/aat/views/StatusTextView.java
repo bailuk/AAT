@@ -2,7 +2,7 @@ package ch.bailu.aat.views;
 
 import android.content.Context;
 
-import ch.bailu.aat.activities.AbsServiceLink;
+import ch.bailu.aat.util.AbsServiceLink;
 import ch.bailu.aat.services.AbsService;
 import ch.bailu.aat.views.preferences.VerticalScrollView;
 

@@ -8,13 +8,11 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import ch.bailu.aat.R;
-import ch.bailu.aat.activities.AbsActivity;
-import ch.bailu.aat.activities.AbsServiceLink;
+import ch.bailu.aat.util.AbsServiceLink;
 import ch.bailu.aat.description.ContentDescription;
 import ch.bailu.aat.dispatcher.OnContentUpdatedInterface;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.menus.FileMenu;
-import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.util.fs.foc.FocAndroid;
 import ch.bailu.aat.util.ui.AppLayout;
 import ch.bailu.util_java.foc.Foc;

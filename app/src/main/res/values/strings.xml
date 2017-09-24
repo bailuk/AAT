@@ -175,6 +175,11 @@
     <string name="file_view">View/Edit…</string>
     <string name="file_copy">Copy to…</string>
     <string name="file_exists"> already exists!</string>
+    <string name="file_is_writeable"> is writeable.</string>
+    <string name="file_is_readonly"> is readonly.</string>
+    <string name="file_is_missing"> does not exist.</string>
+    <string name="file_is_denied"> is not accessable.</string>
+
 
     <string name="location_title">Center location</string>
     <string name="location_view">View location…</string>

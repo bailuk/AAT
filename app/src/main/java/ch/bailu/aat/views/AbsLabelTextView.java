@@ -19,10 +19,8 @@ public abstract class AbsLabelTextView extends LinearLayout{
         label.setText(labelText);
         addView(label);
         AppTheme.themify(label);
-        //label.setTextColor(Color.LTGRAY);
 
         value = new TextView(context);
-        //AppTheme.themify(value);
         value.setTextColor(Color.LTGRAY);
 
         addView(value);

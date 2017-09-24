@@ -10,11 +10,14 @@ import java.util.ArrayList;
 
 import ch.bailu.aat.R;
 import ch.bailu.aat.menus.DirectoryMenu;
+import ch.bailu.aat.util.Once;
 import ch.bailu.aat.util.fs.foc.FocAndroid;
 import ch.bailu.util_java.foc.Foc;
 
 
 public abstract class SolidFile extends SolidString {
+
+
 
     public SolidFile(Storage s, String k) {
         super(s, k);
@@ -106,6 +109,7 @@ public abstract class SolidFile extends SolidString {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             a.getContentResolver().takePersistableUriPermission(
                     uri,
+                    Intent.FLAG_GRANT_READ_URI_PERMISSION |
                     Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
         }
     }

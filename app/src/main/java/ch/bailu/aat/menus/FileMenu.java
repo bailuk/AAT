@@ -2,12 +2,11 @@ package ch.bailu.aat.menus;
 
 import android.app.Activity;
 import android.graphics.drawable.Drawable;
-import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import ch.bailu.aat.R;
-import ch.bailu.aat.activities.AbsServiceLink;
+import ch.bailu.aat.util.AbsServiceLink;
 import ch.bailu.aat.util.fs.FileAction;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.util_java.foc.Foc;

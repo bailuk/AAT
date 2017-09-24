@@ -1,7 +1,5 @@
 package ch.bailu.aat.services.background;
 
-import android.content.Context;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -41,7 +39,7 @@ public class DownloadHandle extends ProcessHandle {
         try {
             long r = bgDownload();
             AppBroadcaster.broadcast(sc.getContext(),
-                    AppBroadcaster.FILE_CHANGED_ONDISK, file,url);
+                    AppBroadcaster.FILE_CHANGED_ONDISK, file, url);
             return r;
 
         } catch (Exception e) {
@@ -49,6 +47,7 @@ public class DownloadHandle extends ProcessHandle {
             file.rm();
             return 0;
         }
+
     }
 
 
@@ -107,6 +106,7 @@ public class DownloadHandle extends ProcessHandle {
 
         return total;
     }
+
 
 
 

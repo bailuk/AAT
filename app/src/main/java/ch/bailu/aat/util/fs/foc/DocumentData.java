@@ -41,6 +41,9 @@ public class DocumentData  {
         displayName = cursor.getString(index(cursor, Document.COLUMN_DISPLAY_NAME));
         lastModified = cursor.getLong(index(cursor, Document.COLUMN_LAST_MODIFIED));
         flags = cursor.getInt(index(cursor, Document.COLUMN_FLAGS));
+
+
+
         size = cursor.getLong(index(cursor, Document.COLUMN_SIZE));
 
         if (mimeType.equals(Document.MIME_TYPE_DIR)) type = TREE;

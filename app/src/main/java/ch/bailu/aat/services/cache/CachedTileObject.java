@@ -97,8 +97,10 @@ public class CachedTileObject extends TileObject {
                                 cachedID, sourceID);
 
                         size = self.getSize();
+
                     } catch (Exception e) {
                         AppLog.d(this, e.toString());
+
 
                     } finally {
                         Foc.close(out);

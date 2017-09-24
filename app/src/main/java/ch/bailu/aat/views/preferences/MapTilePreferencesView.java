@@ -28,10 +28,10 @@ public class MapTilePreferencesView extends VerticalScrollView {
 
         add(new TitleView(context, context.getString(R.string.p_tiles)));
         add(new SolidIndexListView(new SolidTileSize(context)));
-        add(new SolidDirectoryView(acontext, new SolidTileCacheDirectory(context)));
+        add(new SolidDirectoryViewSAF(acontext, new SolidTileCacheDirectory(context)));
 
         add(new TitleView(context, MapsForgeSource.NAME));
-        add(new SolidStringView(new SolidMapsForgeDirectory(context)));
+        add(new SolidDirectoryView(new SolidMapsForgeDirectory(context)));
         add(new SolidStringView(new SolidRenderTheme(context)));
         add(new SolidCheckBox(new SolidEnableTileCache.MapsForge(context)));
 

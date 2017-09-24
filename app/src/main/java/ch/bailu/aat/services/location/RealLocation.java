@@ -24,7 +24,7 @@ public class RealLocation extends LocationStackChainedItem
     private final String provider;
     private final Context context;
 
-    private int state = StateID.NOSERVICE;
+    private int state = StateID.WAIT;
 
     private class NoServiceException extends Exception {
         private static final long serialVersionUID = 5318663897402154115L;
