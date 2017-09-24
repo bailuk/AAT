@@ -10,7 +10,9 @@ public class CleanLocation extends LocationStackItem {
 
     private GpxPointInterface currentLocation=GpxPoint.NULL;
 
+
     public boolean hasLoggableLocation() {
+
         return (System.currentTimeMillis() - currentLocation.getTimeStamp()) < LOCATION_LIFETIME_MILLIS;
     }
 
@@ -23,16 +25,16 @@ public class CleanLocation extends LocationStackItem {
 
 
     @Override
-    public void passState(int state) {
+    public void passState(int state) {}
 
-    }
 
     @Override
     public void passLocation(LocationInformation location) {
+        currentLocation = location;
     }
 
 
-     @Override
+    @Override
     public void preferencesChanged(Context c, int i) {}
 
 }

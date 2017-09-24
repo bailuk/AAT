@@ -2,7 +2,6 @@ package ch.bailu.aat.services.location;
 
 import android.content.Context;
 
-import ch.bailu.aat.coordinates.BoundingBoxE6;
 import ch.bailu.aat.gpx.AltitudeDelta;
 import ch.bailu.aat.gpx.AutoPause;
 import ch.bailu.aat.gpx.GpxList;
@@ -20,30 +19,33 @@ import ch.bailu.util_java.foc.FocName;
 
 public class MockLocation extends LocationStackChainedItem implements Runnable{
 
+    private final static Foc NULL_FILE = new FocName(MockLocation.class.getSimpleName());
     private static final long INTERVAL=1*1000;
 
-    private GpxList mockData;
+    private GpxList list;
     private GpxPointNode node;
+    private int state = StateID.NOSERVICE;
+
+    private long interval = INTERVAL;
+    private Foc file = NULL_FILE;
+
     private final Timer timer;
-    private int state;
-
-    private long nextInterval = INTERVAL;
-
 
     public MockLocation(Context c, LocationStackItem i) {
         super(i);
 
-        mockData = new GpxList(GpxType.TRK, MaxSpeed.NULL, AutoPause.NULL, AltitudeDelta.NULL);
-        timer=new Timer(this, INTERVAL);
+        list = new GpxList(GpxType.TRK, MaxSpeed.NULL, AutoPause.NULL, AltitudeDelta.NULL);
+        timer = new Timer(this, INTERVAL);
 
         try {
-            Foc file = FocAndroid.factory(c,(new SolidMockLocationFile(c).getValueAsString()));
-            mockData = new GpxListReader(file, AutoPause.NULL).getGpxList();
+            file = FocAndroid.factory(c,(new SolidMockLocationFile(c).getValueAsString()));
+            list = new GpxListReader(file, AutoPause.NULL).getGpxList();
 
             timer.kick();
             passState(StateID.WAIT);
 
         } catch (Exception e) {
+            file = NULL_FILE;
             AppLog.e(c, e);
             passState(StateID.OFF);
         }
@@ -60,7 +62,7 @@ public class MockLocation extends LocationStackChainedItem implements Runnable{
         if (sendLocation()) {
             kickTimer();
         } else {
-            node = (GpxPointNode) mockData.getPointList().getFirst();
+            node = (GpxPointNode) list.getPointList().getFirst();
             if (sendLocation()) {
                 passState(StateID.ON);
                 kickTimer();
@@ -72,11 +74,11 @@ public class MockLocation extends LocationStackChainedItem implements Runnable{
 
     private boolean sendLocation() {
         if (node != null) {
-            super.passLocation(new MockLocationInformation(node));
+            passLocation(new MockLocationInformation(file, state, node));
 
             node = (GpxPointNode)node.getNext();
             if (node != null) {
-                nextInterval=node.getTimeDelta();
+                interval = node.getTimeDelta();
             }
             return true;
         }
@@ -85,99 +87,21 @@ public class MockLocation extends LocationStackChainedItem implements Runnable{
     }
 
     private void kickTimer() {
-        if (nextInterval <= 0 || nextInterval > 10*INTERVAL) {
-            timer.kick();
+        if (interval <= 0 || interval > 10*INTERVAL) {
+            timer.kick(INTERVAL);
 
         } else {
-            timer.kick(nextInterval);
+            timer.kick(interval);
 
         }
-
-        nextInterval = INTERVAL;
     }
 
-
-    private final static Foc MOCK_NAME = new FocName("Mock location");
-
-
-    private class MockLocationInformation extends LocationInformation {
-        private final GpxPointNode node;
-        private final long creationTime = System.currentTimeMillis();
-
-        public MockLocationInformation(GpxPointNode n) {
-            setVisibleTrackPoint(n);
-            node=n;
-        }
-        /*
-        @Override
-        public int getID() {
-            return InfoID.LOCATION;
-        }
-        */
-        @Override
-        public int getState() {
-            return state;
-        }
-
-        @Override
-        public Foc getFile() {
-            return MOCK_NAME;
-        }
-        @Override
-        public long getTimeStamp() {
-            return creationTime;
-        }
-        @Override
-        public float getDistance() {
-            return node.getDistance();
-        }
-        @Override
-        public float getSpeed() {
-            return node.getSpeed();
-        }
-        @Override
-        public float getAcceleration() {
-            return node.getAcceleration();
-        }
-        @Override
-        public long getTimeDelta() {
-            return node.getTimeDelta();
-        }
-        @Override
-        public BoundingBoxE6 getBoundingBox() {
-            return node.getBoundingBox();
-        }
-        @Override
-        public boolean hasAccuracy() {
-            return true;
-        }
-        @Override
-        public boolean hasSpeed() {
-            return true;
-        }
-        @Override
-        public boolean hasAltitude() {
-            return true;
-        }
-        @Override
-        public boolean hasBearing() {
-            return true;
-        }
-        @Override
-        public float getAccuracy() {
-            return 5f;
-        }
-//        @Override
-//        public double getBearing() {
-//            return node.getBearing();
-//        }
-    }
 
     @Override
     public void passState(int s) {
-        state = s;
-        super.passState(s);
+        if (state != s) {
+            state = s;
+            super.passState(s);
+        }
     }
-
-
 }

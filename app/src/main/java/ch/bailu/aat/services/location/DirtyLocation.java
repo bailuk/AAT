@@ -2,18 +2,23 @@ package ch.bailu.aat.services.location;
 
 import android.content.Context;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+
 import ch.bailu.aat.R;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.StateID;
 import ch.bailu.aat.map.layer.MapPositionLayer;
 import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat.util.AppBroadcaster;
+import ch.bailu.aat.util.ui.AppLog;
 import ch.bailu.util_java.foc.Foc;
 import ch.bailu.util_java.foc.FocFile;
 
 public class DirtyLocation extends LocationStackChainedItem {
     private final static String SOLID_KEY="DirtyLocation_";
-
+    private final static DateFormat TIME_FORMAT =
+            new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
     
     private GpxInformation locationInformation;
     private int state = StateID.OFF;
@@ -42,6 +47,9 @@ public class DirtyLocation extends LocationStackChainedItem {
     
     @Override
     public void passLocation(LocationInformation location) {
+        AppLog.d(this, "Time: " + TIME_FORMAT.format(location.getTimeStamp()));
+        AppLog.d(this, "Provider: " + location.getFile().getName());
+
         locationInformation=location;
         super.passLocation(location);
         AppBroadcaster.broadcast(storage.getContext(), AppBroadcaster.LOCATION_CHANGED);
