@@ -39,7 +39,6 @@ public class SolidDirectoryView extends AbsSolidView {
     }
 
     private static String getPermissionText(Context c, Foc f) {
-        f.update();
 
         if (f.exists() == false) {
             if (f.hasParent()) {
@@ -48,7 +47,11 @@ public class SolidDirectoryView extends AbsSolidView {
                 return f.getPathName() + c.getString(R.string.file_is_missing);
             }
         } else if (f.canWrite()) {
-            return f.getPathName() + c.getString(R.string.file_is_writeable);
+            if (f.canRead()) {
+                return f.getPathName() + c.getString(R.string.file_is_writeable);
+            } else {
+                return f.getPathName() + " is write only!";
+            }
         } else if (f.canRead()) {
             return f.getPathName() + c.getString(R.string.file_is_readonly);
         } else if (f.hasParent()){

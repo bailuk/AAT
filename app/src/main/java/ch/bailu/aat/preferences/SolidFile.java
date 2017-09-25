@@ -97,6 +97,8 @@ public abstract class SolidFile extends SolidString {
 
                 requestPersistablePermission(c, uri);
 
+                Storage.global(c).writeString(browseDirKey, ""); // forces update notification
+                                                                 // (needed because permission changed)
                 Storage.global(c).writeString(browseDirKey, uri.toString());
 
             }
