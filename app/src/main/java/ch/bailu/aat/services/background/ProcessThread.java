@@ -7,8 +7,11 @@ public abstract class ProcessThread extends Thread implements Closeable, ThreadC
     private boolean continueThread=true;
     private final HandleQueue queue;
 
+
+
     
     private final BackgroundHandle background = new BackgroundHandle();
+
     private class BackgroundHandle {
         private ProcessHandle handle = ProcessHandle.NULL;
 
@@ -56,9 +59,11 @@ public abstract class ProcessThread extends Thread implements Closeable, ThreadC
         }
     }
 
+    public abstract void bgOnHandleProcessed(ProcessHandle handle, long size);
+
 
     public abstract void bgOnHaveHandle(ProcessHandle handle);
-    
+
     public void process(ProcessHandle handle) {
         queue.offer(handle);
     }

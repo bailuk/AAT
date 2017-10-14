@@ -2,10 +2,9 @@ package ch.bailu.aat.services.background;
 
 import ch.bailu.aat.services.ServiceContext;
 
-public class LoaderThread extends ProcessThread {
+public class LoaderThread extends WorkerThread {
     private static final int LOADER_QUEUE_SIZE = 100;
 
-    private final ServiceContext scontext;
     private final String directory;
     
     private int total_loads=0;
@@ -13,25 +12,16 @@ public class LoaderThread extends ProcessThread {
     
     
     public LoaderThread(ServiceContext sc, String d) {
-        super(LOADER_QUEUE_SIZE);
+        super(sc, LOADER_QUEUE_SIZE);
         directory=d;
-        scontext = sc;
     }
-
 
 
     @Override
-    public void bgOnHaveHandle(ProcessHandle handle) {
-        handle.bgLock();
+    public void bgOnHandleProcessed(ProcessHandle handle, long size) {
         total_loads++;
-        total_bytes+=handle.bgOnProcess(scontext);
-        
-        handle.bgUnlock();
-
-
+        total_bytes+=size;
     }
-
-
 
     public void appendStatusText(StringBuilder builder) {
         builder.append("<h2>");
