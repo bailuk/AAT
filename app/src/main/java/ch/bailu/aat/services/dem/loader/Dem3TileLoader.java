@@ -13,6 +13,7 @@ import ch.bailu.aat.services.dem.tile.Dem3Tile;
 import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.util.AppIntent;
 import ch.bailu.aat.util.Timer;
+import ch.bailu.aat.util.ui.AppLog;
 import ch.bailu.util_java.foc.Foc;
 
 public class Dem3TileLoader implements Closeable {
@@ -78,7 +79,12 @@ public class Dem3TileLoader implements Closeable {
         if (tiles.have(c) == false) {
             final Dem3Tile slot = tiles.getOldestProcessed();
 
-            if (slot != null) {
+            if (slot == null) {
+                AppLog.d(this, "not loading because no slot");
+            } else {
+                if (slot.isLocked()) {
+                    AppLog.d(this, "not loading because slot is locked");
+                }
                 slot.load(scontext, c);
             }
         }

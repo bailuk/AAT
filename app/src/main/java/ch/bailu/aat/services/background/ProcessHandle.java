@@ -10,18 +10,29 @@ public abstract class ProcessHandle implements ThreadControl {
         public long bgOnProcess(ServiceContext sc) {
             return 0;
         }
+    };
 
 
+    public static final ProcessHandle NULL_PROCESSED = new ProcessHandle() {
+
+        @Override
+        public long bgOnProcess(ServiceContext sc) {
+            return 0;
+        }
+
+        public boolean canContinue() {
+            return false;
+        }
     };
 
 
     private boolean lock=false;
-    private boolean continueLoading=true;
+    private boolean processing =true;
     
     
     @Override
     public boolean canContinue() {
-        return continueLoading;
+        return processing;
     }
     
     
@@ -37,11 +48,10 @@ public abstract class ProcessHandle implements ThreadControl {
     public abstract long bgOnProcess(ServiceContext sc);
  
     
-    public synchronized void stopLoading() {
-        continueLoading=false;
+    public synchronized void stopProcessing() {
+        processing =false;
     }
 
-    
     public boolean isLocked()  {
         return lock;
     }

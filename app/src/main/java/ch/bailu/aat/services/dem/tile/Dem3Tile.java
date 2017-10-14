@@ -1,7 +1,5 @@
 package ch.bailu.aat.services.dem.tile;
 
-import android.content.Context;
-
 import org.mapsforge.core.model.LatLong;
 import org.mapsforge.core.util.LatLongUtils;
 
@@ -90,11 +88,9 @@ public class Dem3Tile implements ElevationProvider, DemProvider {
 
     private final byte data[]= new byte[DEM3_BUFFER_DIM*DEM3_BUFFER_DIM*2];
 
-    private ProcessHandle handle=FileHandle.NULL;
+    private ProcessHandle handle=FileHandle.NULL_PROCESSED;
 
     private int lock=0;
-    private boolean loading=false;
-
 
     private long stamp=System.currentTimeMillis();
 
@@ -110,28 +106,32 @@ public class Dem3Tile implements ElevationProvider, DemProvider {
     public synchronized void lock() {
         lock++;
     }
-
-
     public synchronized void free() {
         lock--;
     }
 
 
-    private boolean isLocked() {
+    public boolean isLocked() {
+        if (lock < 0) {
+            AppLog.d(this, "ERROR: negative lock.");
+        }
+
         return lock != 0;
     }
 
-    public boolean isProcessed() {
 
-        return (!loading && !isLocked());
+    public boolean isProcessed() {
+        return (!isLoading() && !isLocked());
     }
 
 
     public boolean isLoading() {
-        return loading;
+        return handle.canContinue();
     }
+
+
     public boolean isLoaded() {
-        return !loading;
+        return !isLoading();
     }
 
     @Override
@@ -156,10 +156,14 @@ public class Dem3Tile implements ElevationProvider, DemProvider {
 
 
     public void reload(ServiceContext cs) {
-        handle.stopLoading();
-        handle = new SRTMGL3Loader(coordinates.toFile(cs.getContext()));
-        loading=true;
+        Foc file = coordinates.toFile(cs.getContext());
+
+        handle.stopProcessing();
+        handle = new SRTMGL3Loader(file);
+
         stamp=System.currentTimeMillis();
+
+        AppLog.d(this, "load " + file.getPathName());
         cs.getBackgroundService().load(handle);
     }
 
@@ -167,6 +171,11 @@ public class Dem3Tile implements ElevationProvider, DemProvider {
 
         public SRTMGL3Loader(Foc f) {
             super(f);
+        }
+
+
+        public void onRemove() {
+            stopProcessing();
         }
 
         @Override
@@ -190,7 +199,6 @@ public class Dem3Tile implements ElevationProvider, DemProvider {
 
                 } while(count > 0 && total < data.length && canContinue()) ;
 
-                loading=false;
                 AppBroadcaster.broadcast(sc.getContext(),
                         AppBroadcaster.FILE_CHANGED_INCACHE, getFile());
 
@@ -204,18 +212,14 @@ public class Dem3Tile implements ElevationProvider, DemProvider {
 
             return data.length;
         }
-
-
     }
+
 
 
     @Override
     public DemDimension getDim() {
         return DIMENSION;
     }
-
-
-
 
 
     @Override

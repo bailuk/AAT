@@ -201,7 +201,7 @@ public abstract class AbsOsmApiActivity extends AbsDispatcher implements OnClick
                 BackgroundService background = getServiceContext().getBackgroundService();
 
 
-                request.stopLoading();
+                request.stopProcessing();
                 download.startWaiting();
 
                 request = new ApiQueryHandle(

@@ -60,6 +60,6 @@ public class HandleQueue {
 
 
     public void stopCurrent() {
-        current.stopLoading();
+        current.stopProcessing();
     }
 }
