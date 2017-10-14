@@ -22,7 +22,7 @@ public class WorkerThread extends ProcessThread {
     public void bgOnHandleProcessed(ProcessHandle handle, long size) {}
 
     @Override
-    public void bgOnHaveHandle(ProcessHandle handle) {
+    public void bgProcessHandle(ProcessHandle handle) {
         if (handle.canContinue() && scontext.lock()) {
             long size;
 

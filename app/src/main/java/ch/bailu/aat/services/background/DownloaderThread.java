@@ -24,9 +24,9 @@ public class DownloaderThread  extends WorkerThread {
 
 
     @Override
-    public void bgOnHaveHandle(ProcessHandle handle) {
+    public void bgProcessHandle(ProcessHandle handle) {
         if (statistics.isReady()) {
-            super.bgOnHaveHandle(handle);
+            super.bgProcessHandle(handle);
         }
     }
 

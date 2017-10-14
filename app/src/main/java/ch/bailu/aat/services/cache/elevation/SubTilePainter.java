@@ -17,7 +17,6 @@ public class SubTilePainter extends ProcessHandle {
         subTile = s;
         iid = i;
         tile = t;
-        tile.lock();
     }
 
 
@@ -52,8 +51,18 @@ public class SubTilePainter extends ProcessHandle {
             sc.free();
         }
 
-        tile.free(); // FIXME: does not allways get called
         return size;
+    }
+
+    @Override
+    public void onInsert() {
+        tile.lock();
+    }
+
+
+    @Override
+    public void onRemove() {
+        tile.free();
     }
 }
 

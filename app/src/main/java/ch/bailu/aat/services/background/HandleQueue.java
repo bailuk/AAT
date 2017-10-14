@@ -8,6 +8,7 @@ public class HandleQueue {
     private final ArrayBlockingQueue<ProcessHandle> queue;
     private final int limit;
 
+    private ProcessHandle current = ProcessHandle.NULL;
 
     public HandleQueue() {
         this(DEFAULT_LIMIT);
@@ -20,17 +21,45 @@ public class HandleQueue {
     }
 
 
-    public ProcessHandle take() throws InterruptedException {
-        return queue.take();
+
+    public void takeAndProcess(ProcessThread t) throws InterruptedException {
+        current = queue.take();
+
+        t.bgProcessHandle(current);
+
+        current.onRemove();
+        current = ProcessHandle.NULL;
     }
 
+
     public void offer(ProcessHandle handle) {
-        while (queue.size() >= limit) queue.poll();
-        queue.offer(handle);
+        while (queue.size() >= limit) remove();
+        insert(handle);
     }
 
 
     public void clear() {
-        queue.clear();
+        while(remove() != null);
+    }
+
+
+    private void insert(ProcessHandle handle) {
+        handle.onInsert();
+        queue.offer(handle);
+    }
+
+
+    private ProcessHandle remove() {
+        ProcessHandle handle = queue.poll();
+
+        if (handle != null) {
+            handle.onRemove();
+        }
+        return handle;
+    }
+
+
+    public void stopCurrent() {
+        current.stopLoading();
     }
 }

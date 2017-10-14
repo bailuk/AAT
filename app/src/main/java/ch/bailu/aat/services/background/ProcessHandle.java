@@ -50,4 +50,7 @@ public abstract class ProcessHandle implements ThreadControl {
     public ThreadControl getThreadControl() {
         return this;
     }
+
+    public void onInsert() {}
+    public void onRemove() {}
 }

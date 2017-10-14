@@ -22,7 +22,7 @@ public class FrameBufferHack extends FrameBuffer {
             Layer manager draws the bitmap off-screen
      *  od: onDraw() -> draw()
      *      swaps the two bitmaps and puts one bitmap to the screen
-     *      while the layer manager draws the next off-screen bitmap.
+     *      while the layer manager draws the takeAndProcess off-screen bitmap.
      *
      */
 
