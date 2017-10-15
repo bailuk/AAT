@@ -1,15 +1,12 @@
 package ch.bailu.aat.util.fs.foc;
 
-import android.app.DownloadManager;
 import android.content.ContentResolver;
-import android.database.Cursor;
 import android.net.Uri;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-import ch.bailu.aat.util.ui.AppLog;
 import ch.bailu.util_java.foc.Foc;
 
 public class FocUri extends Foc {

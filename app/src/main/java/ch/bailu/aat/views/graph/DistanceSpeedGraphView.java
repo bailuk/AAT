@@ -5,14 +5,11 @@ import android.graphics.Canvas;
 
 import ch.bailu.aat.R;
 import ch.bailu.aat.dispatcher.DispatcherInterface;
-import ch.bailu.aat.gpx.AltitudeDelta;
 import ch.bailu.aat.gpx.AutoPause;
 import ch.bailu.aat.gpx.GpxList;
 import ch.bailu.aat.gpx.GpxListWalker;
 import ch.bailu.aat.gpx.GpxPointNode;
 import ch.bailu.aat.gpx.GpxSegmentNode;
-import ch.bailu.aat.gpx.MaxSpeed;
-import ch.bailu.aat.gpx.interfaces.GpxType;
 import ch.bailu.aat.preferences.SolidAutopause;
 import ch.bailu.aat.preferences.SolidPostprocessedAutopause;
 import ch.bailu.aat.util.ui.AppDensity;
@@ -49,6 +46,8 @@ public class DistanceSpeedGraphView extends AbsGraphView {
 
 
         float meter_pixel = list.getDelta().getDistance()/getWidth();
+
+
         
         if (markerMode) {
             new GraphPainterMarkerMode(plotter, meter_pixel).walkTrack(list);

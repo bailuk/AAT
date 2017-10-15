@@ -46,7 +46,7 @@ public class SolidCacheSize extends SolidIndexList {
         MemSize.describe(b, sizes[i]);
 
         if (i == 0) {
-            b.append(" " + getContext().getString(R.string.auto));
+            b.append(" ").append(getContext().getString(R.string.auto));
         }
         return b.toString();
     }

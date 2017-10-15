@@ -38,7 +38,6 @@
     <string name="gps_wait" translatable="false">&#8230;</string>
     <string name="gps_nogps">No</string>
     <string name="gps_noaccess">Denied</string>
-    <string name="gps_lock">Lock</string>
 
     <string name="tracker">Tracker</string>
     <string name="tracker_start">Start</string>
@@ -178,7 +177,7 @@
     <string name="file_is_writeable">\u0020is writeable.</string>
     <string name="file_is_readonly">\u0020is readonly.</string>
     <string name="file_is_missing">\u0020does not exist.</string>
-    <string name="file_is_denied">\u0020is not accessable.</string>
+    <string name="file_is_denied">\u0020is not accessible.</string>
 
 
     <string name="location_title">Center location</string>

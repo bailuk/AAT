@@ -1,13 +1,5 @@
 package ch.bailu.aat.map.tile;
 
-import org.mapsforge.core.graphics.TileBitmap;
-import org.mapsforge.core.model.Tile;
-import org.mapsforge.map.layer.TilePosition;
-import org.mapsforge.map.model.common.Observer;
-
-import java.util.List;
-
-import ch.bailu.aat.map.tile.source.Source;
 /*
 public interface TileProviderInterface  {
 

@@ -4,7 +4,6 @@ package ch.bailu.aat.menus;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
-import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
 

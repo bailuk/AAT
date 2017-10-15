@@ -8,7 +8,6 @@ import android.os.Build;
 import java.io.File;
 import java.util.List;
 
-import ch.bailu.aat.util.ui.AppLog;
 import ch.bailu.util_java.foc.Foc;
 import ch.bailu.util_java.foc.FocFile;
 import ch.bailu.util_java.foc.FocName;

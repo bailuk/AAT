@@ -2,7 +2,6 @@ package ch.bailu.aat.map.layer.grid;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.graphics.Point;
 
 import org.mapsforge.core.model.BoundingBox;
 import org.mapsforge.core.model.LatLong;
@@ -10,7 +9,6 @@ import org.mapsforge.core.model.LatLong;
 import java.util.Locale;
 
 import ch.bailu.aat.coordinates.WGS84Sexagesimal;
-import ch.bailu.aat.description.AltitudeDescription;
 import ch.bailu.aat.map.MapContext;
 import ch.bailu.aat.map.layer.MapLayerInterface;
 

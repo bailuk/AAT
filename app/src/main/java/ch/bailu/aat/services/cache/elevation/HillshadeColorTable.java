@@ -1,7 +1,5 @@
 package ch.bailu.aat.services.cache.elevation;
 
-import android.content.Context;
-
 import ch.bailu.aat.services.cache.ObjectHandle;
 import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.services.ServiceContext;

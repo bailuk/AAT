@@ -1,6 +1,5 @@
 package ch.bailu.aat.services.cache;
 
-import android.content.Context;
 import android.graphics.Bitmap;
 
 import org.mapsforge.core.graphics.TileBitmap;

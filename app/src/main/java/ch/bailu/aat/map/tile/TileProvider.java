@@ -152,7 +152,6 @@ public class TileProvider implements Attachable, ObservableInterface {
             handle = getTileHandleLevel2(tile);
 
             if (handle != null) cache.put(handle);
-        } else {
         }
 
         return handle;

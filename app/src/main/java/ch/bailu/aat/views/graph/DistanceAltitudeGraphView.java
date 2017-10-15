@@ -37,7 +37,7 @@ public class DistanceAltitudeGraphView extends AbsGraphView {
         
         scaleGenerator.walkTrack(list);
         plotter.roundYScale(50);
-        
+
 
         painter.walkTrack(list);
 

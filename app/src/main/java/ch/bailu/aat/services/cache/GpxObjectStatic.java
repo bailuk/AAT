@@ -1,6 +1,5 @@
 package ch.bailu.aat.services.cache;
 
-import android.content.Context;
 import android.util.SparseArray;
 
 import java.io.IOException;
