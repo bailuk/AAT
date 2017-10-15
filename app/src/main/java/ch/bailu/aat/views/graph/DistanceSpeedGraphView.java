@@ -5,10 +5,16 @@ import android.graphics.Canvas;
 
 import ch.bailu.aat.R;
 import ch.bailu.aat.dispatcher.DispatcherInterface;
+import ch.bailu.aat.gpx.AltitudeDelta;
+import ch.bailu.aat.gpx.AutoPause;
 import ch.bailu.aat.gpx.GpxList;
 import ch.bailu.aat.gpx.GpxListWalker;
 import ch.bailu.aat.gpx.GpxPointNode;
 import ch.bailu.aat.gpx.GpxSegmentNode;
+import ch.bailu.aat.gpx.MaxSpeed;
+import ch.bailu.aat.gpx.interfaces.GpxType;
+import ch.bailu.aat.preferences.SolidAutopause;
+import ch.bailu.aat.preferences.SolidPostprocessedAutopause;
 import ch.bailu.aat.util.ui.AppDensity;
 import ch.bailu.aat.util.ui.AppTheme;
 import ch.bailu.aat.preferences.SolidUnit;
@@ -33,19 +39,13 @@ public class DistanceSpeedGraphView extends AbsGraphView {
                     new AppDensity(getContext()));
         }
 
-        plotter[0].drawXScale(5, 
-                plotterLabel(R.string.distance, sunit.getDistanceUnit()), 
-                sunit.getDistanceFactor());
 
         for(GraphPlotter p: plotter) {
-            p.inlcudeInYScale(/*list.getDelta().getMaximumSpeed()*/15f);
+            p.inlcudeInYScale(list.getDelta().getMaximumSpeed());
             p.inlcudeInYScale(0f);
         }
 
         
-        plotter[0].drawYScale(5,
-                plotterLabel(R.string.speed, sunit.getSpeedUnit()), 
-                sunit.getSpeedFactor());
 
 
         float meter_pixel = list.getDelta().getDistance()/getWidth();
@@ -55,6 +55,15 @@ public class DistanceSpeedGraphView extends AbsGraphView {
         } else {
             new GraphPainter(plotter, meter_pixel).walkTrack(list);
         }
+
+        plotter[0].drawXScale(5,
+                plotterLabel(R.string.distance, sunit.getDistanceUnit()),
+                sunit.getDistanceFactor());
+
+        plotter[0].drawYScale(5,
+                plotterLabel(R.string.speed, sunit.getSpeedUnit()),
+                sunit.getSpeedFactor(), false);
+
     }
 
 
@@ -68,9 +77,13 @@ public class DistanceSpeedGraphView extends AbsGraphView {
         
         private float distanceOfSample=0;
         private long timeOfSample=0;
-        private float maxSpeedOfSample=0;
-        
-        
+
+        SolidAutopause spause = new SolidPostprocessedAutopause(getContext());
+
+        AutoPause autoPause = new AutoPause.Time(
+                        spause.getTriggerSpeed(),
+                        spause.getTriggerLevelMillis());
+
         private final float minDistance;
         
        
@@ -88,14 +101,13 @@ public class DistanceSpeedGraphView extends AbsGraphView {
 
         @Override
         public void doPoint(GpxPointNode point) {
-            increment(point.getDistance(), point.getTimeDelta(), point.getSpeed());
+            autoPause.update(point);
+            increment(point.getDistance(), point.getTimeDelta());
             plotIfDistance();
 
         }
 
-        public void increment(float distance, long time, float maxSpeed) {
-            maxSpeedOfSample=Math.max(maxSpeedOfSample, maxSpeed);
-
+        public void increment(float distance, long time) {
             distanceOfSample += distance;
             timeOfSample += time;
         }
@@ -106,7 +118,6 @@ public class DistanceSpeedGraphView extends AbsGraphView {
                 totalTime+=timeOfSample;
                 totalDistance += distanceOfSample;
 
-                plotMax();
                 plotTotalAverage();
                 plotAverage();
             }
@@ -122,16 +133,16 @@ public class DistanceSpeedGraphView extends AbsGraphView {
             distanceOfSample=0;
         }
 
-
-        private void plotMax() {
-            plotter[1].plotData(totalDistance, maxSpeedOfSample, AppTheme.getAltBackgroundColor());
-            maxSpeedOfSample=0;
-        }
-
         private void plotTotalAverage() {
-            if (totalTime > 0) {
-                float avg=totalDistance/totalTime*1000;
-                plotter[2].plotData(totalDistance, avg, AppTheme.getHighlightColor3());
+            long timeDelta = totalTime - autoPause.get();
+
+            if (timeDelta > 0) {
+                float avg = totalDistance / totalTime * 1000;
+                plotter[1].plotData(totalDistance, avg, AppTheme.getHighlightColor2());
+
+                float avgAp=totalDistance/timeDelta*1000;
+                plotter[2].plotData(totalDistance, avgAp, AppTheme.getHighlightColor3());
+
             }
         }
 
@@ -159,7 +170,8 @@ public class DistanceSpeedGraphView extends AbsGraphView {
         @Override
         public boolean doMarker(GpxSegmentNode marker) {
             plotIfDistance();
-            increment(marker.getDistance(), marker.getTimeDelta(), marker.getMaximumSpeed());
+            marker.getAutoPause();
+            increment(marker.getDistance(), marker.getTimeDelta());
 
             return false;
         }

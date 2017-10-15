@@ -35,20 +35,23 @@ public class DistanceAltitudeGraphView extends AbsGraphView {
 
         }
         
-        
-        plotter.drawXScale(5, 
-                plotterLabel(R.string.distance, sunit.getDistanceUnit()), 
-                sunit.getDistanceFactor());
-        
-        
         scaleGenerator.walkTrack(list);
         plotter.roundYScale(50);
         
-        plotter.drawYScale(5, 
-                plotterLabel(R.string.altitude, sunit.getAltitudeUnit()), 
-                sunit.getAltitudeFactor());
 
         painter.walkTrack(list);
+
+        plotter.drawYScale(5,
+                plotterLabel(R.string.altitude, sunit.getAltitudeUnit()),
+                sunit.getAltitudeFactor(), true);
+
+
+        plotter.drawXScale(5,
+                plotterLabel(R.string.distance, sunit.getDistanceUnit()),
+                sunit.getDistanceFactor());
+
+
+
     }
 
 
@@ -175,5 +178,5 @@ public class DistanceAltitudeGraphView extends AbsGraphView {
             return false;
         }
     }
-    
+
 }

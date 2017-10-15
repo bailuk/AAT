@@ -18,6 +18,7 @@ public abstract class AutoPause {
         }
     };
 
+
     public abstract long get();
     public abstract boolean update(GpxDeltaInterface delta);
 

@@ -12,7 +12,7 @@ import ch.bailu.aat.preferences.SolidUnit;
 
 public abstract class AbsGraphView extends ViewGroup implements OnContentUpdatedInterface {
     
-    public final static int SAMPLE_WIDTH_PIXEL=5;
+    public final static int SAMPLE_WIDTH_PIXEL=10;
     
     private final SolidUnit sunit;
     private final StringBuilder builder = new StringBuilder();
