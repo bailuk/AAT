@@ -5,7 +5,9 @@ import android.content.Context;
 import android.content.res.Configuration;
 import android.graphics.Point;
 import android.view.Display;
+import android.view.View;
 import android.view.WindowManager;
+import android.view.animation.AlphaAnimation;
 import android.widget.LinearLayout;
 
 public class AppLayout {
@@ -105,5 +107,24 @@ public class AppLayout {
     public static boolean isTablet(Context context) {
         return getVisibleButtonCount(context)>=TABLET_BUTTON_COUNT;
     }
+
+
+    public static void fadeOut(View v) {
+        fade(v, View.GONE, 1.0f, 0.0f);
+    }
+
+    public static void fadeIn(View v) {
+        fade(v, View.VISIBLE, 0.0f, 1.0f);
+    }
+
+
+    private static void fade(View view, int visibility, float startAlpha, float endAlpha) {
+        // Taken from org.mapsforge.map.android.input.MapZoomControls
+        AlphaAnimation anim = new AlphaAnimation(startAlpha, endAlpha);
+        anim.setDuration(500);
+        view.startAnimation(anim);
+        view.setVisibility(visibility);
+    }
+
 }
  

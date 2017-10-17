@@ -1,7 +1,9 @@
 package ch.bailu.aat.views;
 
 import android.content.Context;
+import android.graphics.Canvas;
 import android.view.View;
+import android.view.animation.AlphaAnimation;
 import android.widget.FrameLayout;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageButton;
@@ -74,7 +76,6 @@ public class ControlBar extends LinearLayout {
         }
     }
 
-
     public ImageButton addImageButton(int res) {
         ImageButton button = new ImageButtonView(getContext(), res);
         add(button);
@@ -132,6 +133,7 @@ public class ControlBar extends LinearLayout {
             if (listener2 != null) listener2.onClick(v);
         }
     };
+
 
 
 }

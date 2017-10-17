@@ -10,6 +10,8 @@ import org.mapsforge.core.model.Point;
 import ch.bailu.aat.map.MapContext;
 import ch.bailu.aat.map.MapViewInterface;
 import ch.bailu.aat.map.layer.MapLayerInterface;
+import ch.bailu.aat.util.ui.AppLayout;
+import ch.bailu.aat.util.ui.AppLog;
 
 public abstract class ControlBarLayer implements MapLayerInterface, View.OnClickListener {
     public final static int TOP=0;
@@ -82,7 +84,7 @@ public abstract class ControlBarLayer implements MapLayerInterface, View.OnClick
 
     public void showBar() {
         if (!isBarVisible()) {
-            bar.setVisibility(View.VISIBLE);
+            AppLayout.fadeIn(bar);
             onShowBar();
         }
     }
@@ -92,8 +94,7 @@ public abstract class ControlBarLayer implements MapLayerInterface, View.OnClick
 
     public void hideBar() {
         if (bar!=null && isBarVisible()) {
-            bar.setVisibility(View.GONE);
-
+            AppLayout.fadeOut(bar);
             onHideBar();
         }
     }

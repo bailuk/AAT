@@ -56,7 +56,7 @@ public class CockpitActivity extends AbsDispatcher{
         multiView.add(MapFactory.DEF(this, SOLID_KEY).tracker(edit).toView());
         multiView.add(PercentageLayout.add(this,
                         new DistanceAltitudeGraphView(this, this, InfoID.TRACKER),
-                        new DistanceSpeedGraphView(this, this, InfoID.TRACKER)));
+                        new DistanceSpeedGraphView(this, SOLID_KEY, this, InfoID.TRACKER)));
 
         return multiView;
     }

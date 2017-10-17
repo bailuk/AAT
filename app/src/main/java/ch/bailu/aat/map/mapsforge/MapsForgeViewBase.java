@@ -28,6 +28,7 @@ import ch.bailu.aat.map.MapViewInterface;
 import ch.bailu.aat.map.layer.MapLayerInterface;
 import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat.services.ServiceContext;
+import ch.bailu.aat.util.ui.AppLog;
 
 public class MapsForgeViewBase extends MapView implements
         MapViewInterface,
@@ -80,7 +81,10 @@ public class MapsForgeViewBase extends MapView implements
 
     }
 
-
+    @Override
+    public void onChange() {
+        // Disable MapView.onChange to fix a speed bug in MapsForge
+    }
 
 
     @Override
@@ -210,7 +214,10 @@ public class MapsForgeViewBase extends MapView implements
 
     @Override
     public void onLayout(boolean c, int l, int t, int r, int b) {
-        for (MapLayerInterface layer: layers) layer.onLayout(c,l,t,r,b);
+
+        if (c) {
+            for (MapLayerInterface layer: layers) layer.onLayout(c,l,t,r,b);
+        }
     }
 
     public ArrayList<MapLayerInterface> getLayers() {

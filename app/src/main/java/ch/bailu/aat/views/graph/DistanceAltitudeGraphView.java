@@ -11,6 +11,7 @@ import ch.bailu.aat.gpx.GpxPointNode;
 import ch.bailu.aat.gpx.GpxSegmentNode;
 import ch.bailu.aat.util.ui.AppDensity;
 import ch.bailu.aat.preferences.SolidUnit;
+import ch.bailu.aat.util.ui.AppLog;
 
 public class DistanceAltitudeGraphView extends AbsGraphView {
 
@@ -34,7 +35,9 @@ public class DistanceAltitudeGraphView extends AbsGraphView {
             scaleGenerator = new ScaleGenerator(plotter);
 
         }
-        
+
+        AppLog.d(this, "Prefered width: " + plotter.preferedWidth());
+
         scaleGenerator.walkTrack(list);
         plotter.roundYScale(50);
 

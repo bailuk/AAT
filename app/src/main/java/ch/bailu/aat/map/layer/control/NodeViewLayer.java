@@ -64,7 +64,8 @@ public abstract class NodeViewLayer extends NodeSelectorLayer implements View.On
 
 
     public void hide() {
-        infoView.setVisibility(View.GONE);
+        AppLayout.fadeOut(infoView);
+        //infoView.setVisibility(View.GONE);
         mcontext.getMapView().requestRedraw();
     }
 
@@ -72,7 +73,8 @@ public abstract class NodeViewLayer extends NodeSelectorLayer implements View.On
     private void show() {
         measure();
         layout();
-        infoView.setVisibility(View.VISIBLE);
+        AppLayout.fadeIn(infoView);
+        //infoView.setVisibility(View.VISIBLE);
 
         mcontext.getMapView().requestRedraw();
 

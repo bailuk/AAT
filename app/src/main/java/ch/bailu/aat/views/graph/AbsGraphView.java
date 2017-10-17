@@ -9,6 +9,7 @@ import ch.bailu.aat.dispatcher.OnContentUpdatedInterface;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.GpxList;
 import ch.bailu.aat.preferences.SolidUnit;
+import ch.bailu.aat.util.ui.AppLog;
 
 public abstract class AbsGraphView extends ViewGroup implements OnContentUpdatedInterface {
     
@@ -40,12 +41,15 @@ public abstract class AbsGraphView extends ViewGroup implements OnContentUpdated
     
     
     @Override
-    protected void onLayout(boolean changed, int l, int t, int r, int b) {}
+    protected void onLayout(boolean changed, int l, int t, int r, int b) {
+        AppLog.d(this, "onLayout()");
+    }
 
     
     @Override
     public void onDraw(Canvas c) {
         if (getWidth() > 0 && getHeight() > 0) {
+            AppLog.d(this, "onDraw()");
             markerMode = gpxCache.getMarkerList().size() > getWidth() / SAMPLE_WIDTH_PIXEL;
             plot(c, gpxCache, sunit, markerMode);
         }

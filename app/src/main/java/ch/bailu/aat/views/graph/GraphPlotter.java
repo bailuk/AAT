@@ -172,4 +172,9 @@ public class GraphPlotter {
         pointB=pointA;
         pointA=t;
     }
+
+
+    public float preferedWidth() {
+        return yscaler.scale(yscaler.getRealOffset() + xscaler.getReal());
+    }
 }

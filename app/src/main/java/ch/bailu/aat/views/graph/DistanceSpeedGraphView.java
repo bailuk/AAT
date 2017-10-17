@@ -1,7 +1,9 @@
 package ch.bailu.aat.views.graph;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Canvas;
+import android.view.View;
 
 import ch.bailu.aat.R;
 import ch.bailu.aat.dispatcher.DispatcherInterface;
@@ -10,21 +12,47 @@ import ch.bailu.aat.gpx.GpxList;
 import ch.bailu.aat.gpx.GpxListWalker;
 import ch.bailu.aat.gpx.GpxPointNode;
 import ch.bailu.aat.gpx.GpxSegmentNode;
+import ch.bailu.aat.gpx.GpxTimeWindow;
+import ch.bailu.aat.gpx.GpxWindow;
 import ch.bailu.aat.preferences.SolidAutopause;
 import ch.bailu.aat.preferences.SolidPostprocessedAutopause;
+import ch.bailu.aat.preferences.SolidSpeedGraphWindow;
+import ch.bailu.aat.preferences.SolidUnit;
 import ch.bailu.aat.util.ui.AppDensity;
 import ch.bailu.aat.util.ui.AppTheme;
-import ch.bailu.aat.preferences.SolidUnit;
+import ch.bailu.aat.views.preferences.SolidIndexListDialog;
 
 
-public class DistanceSpeedGraphView extends AbsGraphView {
+public class DistanceSpeedGraphView extends AbsGraphView implements SharedPreferences.OnSharedPreferenceChangeListener {
 
-    public DistanceSpeedGraphView(Context context, DispatcherInterface di, int iid) {
+    private final SolidSpeedGraphWindow swindow;
+
+    public DistanceSpeedGraphView(Context context, String key, DispatcherInterface di, int iid) {
         super(context, di, iid);
+
+        swindow = new SolidSpeedGraphWindow(context, key);
+
+        setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new SolidIndexListDialog(swindow);
+            }
+        });
     }
 
 
-    
+    @Override
+    public void onAttachedToWindow() {
+        super.onAttachedToWindow();
+        swindow.register(this);
+    }
+
+    @Override
+    public void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+        swindow.unregister(this);
+    }
+
     @Override
     public void plot(Canvas canvas, GpxList list, SolidUnit sunit, boolean markerMode) {
         int km_factor = (int) (list.getDelta().getDistance()/1000) + 1;
@@ -42,18 +70,14 @@ public class DistanceSpeedGraphView extends AbsGraphView {
             p.inlcudeInYScale(0f);
         }
 
-        
+
 
 
         float meter_pixel = list.getDelta().getDistance()/getWidth();
 
 
-        
-        if (markerMode) {
-            new GraphPainterMarkerMode(plotter, meter_pixel).walkTrack(list);
-        } else {
-            new GraphPainter(plotter, meter_pixel).walkTrack(list);
-        }
+
+        new GraphPainter(plotter, meter_pixel).walkTrack(list);
 
         plotter[0].drawXScale(5,
                 plotterLabel(R.string.distance, sunit.getDistanceUnit()),
@@ -65,6 +89,12 @@ public class DistanceSpeedGraphView extends AbsGraphView {
 
     }
 
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        if (swindow.hasKey(key)) {
+            invalidate();
+        }
+    }
 
 
     private class GraphPainter extends GpxListWalker {
@@ -73,23 +103,28 @@ public class DistanceSpeedGraphView extends AbsGraphView {
 
         private float totalDistance=0;
         private long totalTime=0;
-        
+
         private float distanceOfSample=0;
         private long timeOfSample=0;
 
         SolidAutopause spause = new SolidPostprocessedAutopause(getContext());
 
         AutoPause autoPause = new AutoPause.Time(
-                        spause.getTriggerSpeed(),
-                        spause.getTriggerLevelMillis());
+                spause.getTriggerSpeed(),
+                spause.getTriggerLevelMillis());
 
         private final float minDistance;
-        
-       
-        
+
+
+        private GpxWindow window;
+
+
+
         public GraphPainter(GraphPlotter[] p, float md) {
             plotter=p;
             minDistance=md*SAMPLE_WIDTH_PIXEL;
+
+
         }
 
 
@@ -100,10 +135,10 @@ public class DistanceSpeedGraphView extends AbsGraphView {
 
         @Override
         public void doPoint(GpxPointNode point) {
+            window.forward(point);
             autoPause.update(point);
             increment(point.getDistance(), point.getTimeDelta());
             plotIfDistance();
-
         }
 
         public void increment(float distance, long time) {
@@ -119,17 +154,18 @@ public class DistanceSpeedGraphView extends AbsGraphView {
 
                 plotTotalAverage();
                 plotAverage();
+
+                timeOfSample=0;
+                distanceOfSample=0;
             }
         }
 
 
         private void plotAverage() {
-            if (timeOfSample > 0) {
-                float avg=distanceOfSample/timeOfSample*1000;
+            if (window.getTimeDelta() > 0) {
+                float avg=window.getSpeed();
                 plotter[0].plotData(totalDistance, avg, AppTheme.getHighlightColor());
             }
-            timeOfSample=0; 
-            distanceOfSample=0;
         }
 
         private void plotTotalAverage() {
@@ -145,7 +181,7 @@ public class DistanceSpeedGraphView extends AbsGraphView {
             }
         }
 
-        
+
         @Override
         public boolean doSegment(GpxSegmentNode segment) {
             return true;
@@ -153,26 +189,9 @@ public class DistanceSpeedGraphView extends AbsGraphView {
 
         @Override
         public boolean doList(GpxList track) {
+            window = swindow.createWindow((GpxPointNode) track.getPointList().getFirst());
             return true;
         }
 
     }
-
-
-
-    private class GraphPainterMarkerMode extends GraphPainter {
-
-        public GraphPainterMarkerMode(GraphPlotter[] p, float md) {
-            super(p,md);
-        }
-
-        @Override
-        public boolean doMarker(GpxSegmentNode marker) {
-            plotIfDistance();
-            marker.getAutoPause();
-            increment(marker.getDistance(), marker.getTimeDelta());
-
-            return false;
-        }
-    }        
 }

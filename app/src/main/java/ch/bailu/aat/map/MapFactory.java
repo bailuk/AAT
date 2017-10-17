@@ -1,5 +1,8 @@
 package ch.bailu.aat.map;
 
+import android.graphics.Color;
+import android.widget.TextView;
+
 import ch.bailu.aat.activities.AbsDispatcher;
 import ch.bailu.aat.activities.AbsGpxListActivity;
 import ch.bailu.aat.dispatcher.DispatcherInterface;
@@ -51,6 +54,16 @@ public class MapFactory {
     public MapViewInterface base(int size) {
         m.add(new CurrentLocationLayer(mc, d));
         m.add(new NavigationBarLayer(mc, d, size));
+        /*TextView test = new TextView(mc.getContext());
+
+
+        m.addView(test);
+
+        test.setBackgroundColor(Color.BLACK);
+        test.setTextColor(Color.WHITE);
+        test.setText("Test");
+        test.layout(10,10,100,100);
+*/
 
         return m;
     }

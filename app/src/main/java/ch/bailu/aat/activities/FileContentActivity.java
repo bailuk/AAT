@@ -52,7 +52,7 @@ public class FileContentActivity extends AbsFileContentActivity{
 
         View graph = PercentageLayout.add(this,
                 new DistanceAltitudeGraphView(this, this, InfoID.FILEVIEW),
-                new DistanceSpeedGraphView(this, this, InfoID.FILEVIEW));
+                new DistanceSpeedGraphView(this, SOLID_KEY, this, InfoID.FILEVIEW));
 
 
         if (AppLayout.isTablet(this)) {
