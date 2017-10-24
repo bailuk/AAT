@@ -70,7 +70,10 @@ public class AppTheme {
     static public int getAltBackgroundColor() {
         return COLOR_BLUEGRAY;
     }
-    
+
+    static public int getTransparentColor(int alpha, int c) {
+        return Color.argb(alpha, Color.red(c), Color.green(c), Color.blue(c));
+    }
     
     public final static String APP_LONG_NAME = "Android Activity Tracker";
     public final static String APP_SHORT_NAME = "aat";

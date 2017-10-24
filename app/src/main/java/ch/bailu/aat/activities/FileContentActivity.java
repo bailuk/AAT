@@ -29,6 +29,7 @@ import ch.bailu.aat.views.PercentageLayout;
 import ch.bailu.aat.views.description.MultiView;
 import ch.bailu.aat.views.graph.DistanceAltitudeGraphView;
 import ch.bailu.aat.views.graph.DistanceSpeedGraphView;
+import ch.bailu.aat.views.graph.GraphViewContainer;
 import ch.bailu.aat.views.preferences.VerticalScrollView;
 
 
@@ -50,10 +51,11 @@ public class FileContentActivity extends AbsFileContentActivity{
         VerticalScrollView summary = new VerticalScrollView(this);
         summary.addAllContent(this, getSummaryData(this), InfoID.FILEVIEW);
 
-        View graph = PercentageLayout.add(this,
+        View graph = GraphViewContainer.speedAltitude(this,this, InfoID.FILEVIEW, SOLID_KEY);
+        /*View graph = PercentageLayout.add(this,
                 new DistanceAltitudeGraphView(this, this, InfoID.FILEVIEW),
                 new DistanceSpeedGraphView(this, SOLID_KEY, this, InfoID.FILEVIEW));
-
+*/
 
         if (AppLayout.isTablet(this)) {
             return createPercentageLayout(summary, graph);

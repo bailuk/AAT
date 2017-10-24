@@ -2,6 +2,7 @@ package ch.bailu.aat.preferences;
 
 import android.content.Context;
 
+import ch.bailu.aat.R;
 import ch.bailu.aat.description.DistanceDescription;
 import ch.bailu.aat.description.TimeDescription;
 import ch.bailu.aat.gpx.GpxDistanceWindow;
@@ -21,7 +22,6 @@ public class SolidSpeedGraphWindow extends SolidIndexList {
             60*1000,
             5*60*1000,
             15*60*1000,
-            60*60*1000,
     };
 
 
@@ -67,4 +67,10 @@ public class SolidSpeedGraphWindow extends SolidIndexList {
         return distanceDescription.getDistanceDescriptionRounded(DISTANCE_VALUES[i]);
     }
 
+
+    @Override
+    public int getIconResource() {return R.drawable.dialog_question;}
+
+    @Override
+    public String getLabel() {return getContext().getString(R.string.average);}
 }

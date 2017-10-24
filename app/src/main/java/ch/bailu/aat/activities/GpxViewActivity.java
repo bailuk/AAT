@@ -32,6 +32,7 @@ import ch.bailu.aat.views.PercentageLayout;
 import ch.bailu.aat.views.description.MultiView;
 import ch.bailu.aat.views.graph.DistanceAltitudeGraphView;
 import ch.bailu.aat.views.graph.DistanceSpeedGraphView;
+import ch.bailu.aat.views.graph.GraphViewContainer;
 import ch.bailu.aat.views.preferences.VerticalScrollView;
 import ch.bailu.util_java.foc.Foc;
 
@@ -98,10 +99,7 @@ public class GpxViewActivity extends AbsDispatcher
         summary.addAllContent(this,
                 FileContentActivity.getSummaryData(this), InfoID.FILEVIEW);
 
-        View graph = PercentageLayout.add(this,
-                new DistanceAltitudeGraphView(this, this, InfoID.FILEVIEW),
-                new DistanceSpeedGraphView(this, SOLID_KEY, this, InfoID.FILEVIEW));
-
+        View graph = GraphViewContainer.speedAltitude(this, this, InfoID.TRACKER, SOLID_KEY);
 
         if (AppLayout.isTablet(this)) {
             return createPercentageLayout(summary, graph);

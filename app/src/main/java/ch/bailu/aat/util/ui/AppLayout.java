@@ -121,7 +121,7 @@ public class AppLayout {
     private static void fade(View view, int visibility, float startAlpha, float endAlpha) {
         // Taken from org.mapsforge.map.android.input.MapZoomControls
         AlphaAnimation anim = new AlphaAnimation(startAlpha, endAlpha);
-        anim.setDuration(500);
+        anim.setDuration(250);
         view.startAnimation(anim);
         view.setVisibility(visibility);
     }

@@ -3,9 +3,14 @@ package ch.bailu.aat.views.graph;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import ch.bailu.aat.R;
+import ch.bailu.aat.description.AverageSpeedDescription;
+import ch.bailu.aat.description.AverageSpeedDescriptionAP;
 import ch.bailu.aat.dispatcher.DispatcherInterface;
 import ch.bailu.aat.gpx.AutoPause;
 import ch.bailu.aat.gpx.GpxList;
@@ -20,6 +25,7 @@ import ch.bailu.aat.preferences.SolidSpeedGraphWindow;
 import ch.bailu.aat.preferences.SolidUnit;
 import ch.bailu.aat.util.ui.AppDensity;
 import ch.bailu.aat.util.ui.AppTheme;
+import ch.bailu.aat.views.ControlBar;
 import ch.bailu.aat.views.preferences.SolidIndexListDialog;
 
 
@@ -31,13 +37,6 @@ public class DistanceSpeedGraphView extends AbsGraphView implements SharedPrefer
         super(context, di, iid);
 
         swindow = new SolidSpeedGraphWindow(context, key);
-
-        setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new SolidIndexListDialog(swindow);
-            }
-        });
     }
 
 
@@ -192,6 +191,8 @@ public class DistanceSpeedGraphView extends AbsGraphView implements SharedPrefer
             window = swindow.createWindow((GpxPointNode) track.getPointList().getFirst());
             return true;
         }
-
     }
+
+
+
 }

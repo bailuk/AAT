@@ -27,6 +27,7 @@ import ch.bailu.aat.views.description.CockpitView;
 import ch.bailu.aat.views.description.MultiView;
 import ch.bailu.aat.views.graph.DistanceAltitudeGraphView;
 import ch.bailu.aat.views.graph.DistanceSpeedGraphView;
+import ch.bailu.aat.views.graph.GraphViewContainer;
 
 public class CockpitActivity extends AbsDispatcher{
 
@@ -54,9 +55,7 @@ public class CockpitActivity extends AbsDispatcher{
         MultiView multiView = new MultiView(this, SOLID_KEY);
         multiView.add(createCockpit());
         multiView.add(MapFactory.DEF(this, SOLID_KEY).tracker(edit).toView());
-        multiView.add(PercentageLayout.add(this,
-                        new DistanceAltitudeGraphView(this, this, InfoID.TRACKER),
-                        new DistanceSpeedGraphView(this, SOLID_KEY, this, InfoID.TRACKER)));
+        multiView.add(GraphViewContainer.speedAltitude(this, this,  InfoID.TRACKER, SOLID_KEY));
 
         return multiView;
     }

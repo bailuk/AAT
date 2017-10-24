@@ -12,6 +12,7 @@ import ch.bailu.aat.map.MapViewInterface;
 import ch.bailu.aat.map.layer.MapLayerInterface;
 import ch.bailu.aat.util.ui.AppLayout;
 import ch.bailu.aat.util.ui.AppLog;
+import ch.bailu.aat.views.ControlBar;
 
 public abstract class ControlBarLayer implements MapLayerInterface, View.OnClickListener {
     public final static int TOP=0;
@@ -19,7 +20,7 @@ public abstract class ControlBarLayer implements MapLayerInterface, View.OnClick
     public final static int BOTTOM=2;
     public final static int RIGHT=3;
 
-    private final static int TRANSPARENT = Color.argb(50, 0, 0, 0);
+
 
     private final ch.bailu.aat.views.ControlBar bar;
 
@@ -45,7 +46,7 @@ public abstract class ControlBarLayer implements MapLayerInterface, View.OnClick
     }
 
     public ControlBarLayer(MapContext c, ch.bailu.aat.views.ControlBar b, int p) {
-        this(c,b,p, TRANSPARENT);
+        this(c,b,p, ControlBar.TRANSPARENT);
     }
 
 

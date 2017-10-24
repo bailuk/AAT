@@ -2,6 +2,7 @@ package ch.bailu.aat.views;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.widget.FrameLayout;
@@ -17,6 +18,9 @@ import ch.bailu.aat.views.preferences.SolidImageButton;
 
 
 public class ControlBar extends LinearLayout {
+
+    public final static int TRANSPARENT = Color.argb(50, 0, 0, 0);
+
 
     private final LinearLayout canvas;
 
