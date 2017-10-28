@@ -147,6 +147,7 @@ public class Dem3Tile implements ElevationProvider, DemProvider {
 
 
 
+
     public void load(ServiceContext cs, SrtmCoordinates c) {
         if (!isLocked()) {
             coordinates=c;
@@ -263,6 +264,11 @@ public class Dem3Tile implements ElevationProvider, DemProvider {
     @Override
     public boolean inverseLongitude() {
         return (coordinates.getLongitudeE6()<0);
+    }
+
+
+    public SrtmCoordinates getCoordinates() {
+        return coordinates;
     }
 
 }

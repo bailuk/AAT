@@ -68,7 +68,16 @@ public class SrtmCoordinates extends Coordinates implements LatLongE6Interface {
         return string;
     }
 
-    
+
+    @Override
+    public boolean equals(Object obj) {
+        return obj instanceof SrtmCoordinates &&
+                string.equals(obj.toString());
+
+
+    }
+
+
     @Override
     public int hashCode() {
         return string.hashCode();
