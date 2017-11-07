@@ -1,6 +1,7 @@
 package ch.bailu.aat.services.dem.loader;
 
 import ch.bailu.aat.coordinates.SrtmCoordinates;
+import ch.bailu.aat.services.dem.tile.Dem3Status;
 import ch.bailu.aat.services.dem.tile.Dem3Tile;
 
 
@@ -22,12 +23,12 @@ public class Dem3Tiles {
         long stamp=System.currentTimeMillis();
         
         for (int i=0; i<NUM_TILES; i++) {
-            if (tiles[i].isProcessed() && tiles[i].getTimeStamp() < stamp) {
+            if (tiles[i].getStatus() == Dem3Status.LOADING) {
+                return null;
+
+            } else if (!tiles[i].isLocked() && tiles[i].getTimeStamp() < stamp) {
                 t=tiles[i];
                 stamp=t.getTimeStamp();
-                
-            } else if (tiles[i].isLoading()) {
-                return null;
             }
         }
         

@@ -61,7 +61,7 @@ public class GpxIterator extends AbsIterator {
 
 
     @Override
-    public boolean isLoaded() {
+    public boolean isValid() {
         ObjectHandle oldHandle = handle;
 
         handle = scontext.getCacheService().getObject( getPath(), new GpxObjectStatic.Factory() );
@@ -72,7 +72,7 @@ public class GpxIterator extends AbsIterator {
 
     @Override
     public GpxList getGpxList() {
-        if (isLoaded()) 
+        if (isValid())
             return ((GpxObject)handle).getGpxList();
         else return	new GpxList(GpxType.WAY);
     }

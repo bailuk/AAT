@@ -3,6 +3,7 @@ package ch.bailu.aat.services.cache.elevation;
 import android.graphics.Rect;
 
 import ch.bailu.aat.coordinates.SrtmCoordinates;
+import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.cache.Span;
 import ch.bailu.aat.services.dem.tile.Dem3Tile;
 
@@ -16,10 +17,6 @@ public class SubTile {
         loSpan = loS;
 
         coordinates = new SrtmCoordinates((double)laS.deg(), (double)loS.deg());
-    }
-
-    public SubTilePainter painterFactory(String i, Dem3Tile t) {
-        return new SubTilePainter(i, this, t);
     }
 
     public Rect toRect() {
@@ -40,6 +37,5 @@ public class SubTile {
     public String toString() {
         return coordinates.toString();
     }
-
 
 }

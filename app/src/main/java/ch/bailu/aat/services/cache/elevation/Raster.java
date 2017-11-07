@@ -17,11 +17,30 @@ public class Raster {
     public final int[] toLaRaster = new int[TileObject.TILE_SIZE];
     public final int[] toLoRaster = new int[TileObject.TILE_SIZE];
 
-    public boolean isInizialized=false;
+    private boolean initialized=false;
+
+
+    public synchronized void initialize(Tile tile, DemGeoToIndex geoToIndex, SubTiles tiles) {
+            if (!initialized) {
+                final ArrayList<Span> laSpan = new ArrayList<>(5);
+                final ArrayList<Span> loSpan = new ArrayList<>(5);
+
+                initializeWGS84Raster(laSpan, loSpan, tile);
+                initializeIndexRaster(geoToIndex);
+                tiles.generateSubTileList(laSpan, loSpan);
+
+                initialized = true;
+            }
+    }
+
+
+    public boolean isInitialized() {
+        return initialized;
+    }
 
 
     // 1. pixel to latitude
-    public void initializeWGS84Raster(ArrayList<Span> laSpan, ArrayList<Span> loSpan, Tile tile) {
+    private void initializeWGS84Raster(ArrayList<Span> laSpan, ArrayList<Span> loSpan, Tile tile) {
         final Rect tileR = getTileR(tile);
 
         final LatLong tl=pixelToGeo(tile.zoomLevel,
@@ -67,7 +86,7 @@ public class Raster {
 
 
     // 2. pixel to dem index
-    public void initializeIndexRaster(DemGeoToIndex toIndex) {
+    private void initializeIndexRaster(DemGeoToIndex toIndex) {
         for (int i=0; i< TileObject.TILE_SIZE; i++) {
             toLaRaster[i]=toIndex.toYPos(toLaRaster[i]);
             toLoRaster[i]=toIndex.toXPos(toLoRaster[i]);

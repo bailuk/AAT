@@ -8,27 +8,23 @@ import ch.bailu.aat.util.AppBroadcaster;
 
 public class SubTilePainter extends ProcessHandle {
     private final Dem3Tile tile;
-    private final SubTile subTile;
+
     private final String iid;
 
 
+    private final ServiceContext scontext;
 
-    public SubTilePainter(String i, SubTile s, Dem3Tile t) {
-        subTile = s;
+    public SubTilePainter(ServiceContext sc, String i, Dem3Tile t) {
+        scontext = sc;
+
         iid = i;
         tile = t;
     }
 
 
     @Override
-    public String toString() {
-        return subTile.coordinates.toString();
-    }
-
-
-    @Override
-    public int hashCode() {
-        return toString().hashCode();
+    public void onInsert() {
+        tile.lock(this);
     }
 
 
@@ -43,7 +39,7 @@ public class SubTilePainter extends ProcessHandle {
 
                 ElevationTile owner = (ElevationTile) handle;
 
-                size = owner.bgOnProcessPainter(subTile, tile);
+                size = owner.bgOnProcessPainter(tile);
                 AppBroadcaster.broadcast(sc.getContext(), AppBroadcaster.FILE_CHANGED_INCACHE, iid);
             }
 
@@ -55,14 +51,13 @@ public class SubTilePainter extends ProcessHandle {
     }
 
     @Override
-    public void onInsert() {
-        tile.lock();
-    }
-
-
-    @Override
     public void onRemove() {
-        tile.free();
+        tile.free(this);
+
+        if (scontext.lock()) {
+            scontext.getElevationService().requestElevationUpdates();
+            scontext.free();
+        }
     }
 }
 

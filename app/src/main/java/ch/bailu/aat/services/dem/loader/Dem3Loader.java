@@ -4,6 +4,7 @@ import java.io.Closeable;
 
 import ch.bailu.aat.coordinates.SrtmCoordinates;
 import ch.bailu.aat.services.ServiceContext;
+import ch.bailu.aat.services.dem.tile.Dem3Status;
 import ch.bailu.aat.services.dem.tile.Dem3Tile;
 import ch.bailu.aat.services.dem.tile.ElevationProvider;
 
@@ -26,7 +27,7 @@ public class Dem3Loader implements Closeable, ElevationProvider {
             loader.loadOrDownloadLater(c);
         } else {
             loader.cancelPending();
-            if (t.isLoaded()) {
+            if (t.getStatus() == Dem3Status.VALID) {
                 r=t.getElevation(laE6, loE6);
             }
         }

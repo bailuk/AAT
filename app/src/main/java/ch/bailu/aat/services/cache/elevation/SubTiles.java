@@ -9,9 +9,11 @@ import ch.bailu.aat.services.cache.Span;
 
 public class SubTiles {
     private final SparseArray<SubTile> subTiles = new SparseArray<>(25);
+    private SrtmCoordinates[] coordinates;
 
+    private int inUse=0;
 
-    public boolean haveID(String id) {
+    public synchronized boolean haveID(String id) {
 
         for (int i = 0; i< subTiles.size(); i++) {
             if (id.contains(subTiles.valueAt(i).toString())) {
@@ -21,21 +23,23 @@ public class SubTiles {
         return false;
     }
 
-    public int size() {
-        return subTiles.size();
-    }
+    public synchronized boolean isNotPainting() {return inUse==0;}
+    public synchronized boolean areAllPainted() {return isNotPainting() && subTiles.size() == 0;}
 
-    public SrtmCoordinates[] toSrtmCoordinates() {
-        final SrtmCoordinates c[] = new SrtmCoordinates[subTiles.size()];
+    public synchronized SrtmCoordinates[] toSrtmCoordinates() {
+        if (coordinates == null || coordinates.length != subTiles.size()) {
 
-        for (int i = 0; i< subTiles.size(); i++) {
-            c[i]= subTiles.valueAt(i).coordinates;
+            coordinates = new SrtmCoordinates[subTiles.size()];
+
+            for (int i = 0; i < subTiles.size(); i++) {
+                coordinates[i] = subTiles.valueAt(i).coordinates;
+            }
         }
-        return c;
+        return coordinates;
     }
 
 
-    public void generateSubTileList(ArrayList<Span> laSpan, ArrayList<Span> loSpan) {
+    public synchronized void generateSubTileList(ArrayList<Span> laSpan, ArrayList<Span> loSpan) {
         for (int la=0; la<laSpan.size(); la++) {
             for (int lo=0; lo<loSpan.size(); lo++) {
                 put(laSpan.get(la), loSpan.get(lo));
@@ -49,11 +53,22 @@ public class SubTiles {
         subTiles.put(subTile.hashCode(), subTile);
     }
 
-    public SubTile get(int key) {
-        return subTiles.get(key);
+
+    public synchronized SubTile take(int key) {
+
+        final SubTile r = subTiles.get(key);
+
+        if (r != null) {
+            inUse++;
+            subTiles.remove(key);
+        }
+        return r;
     }
 
-    public void remove(int key) {
-        subTiles.remove(key);
+
+    public synchronized void done() {
+        inUse--;
     }
+
+
 }

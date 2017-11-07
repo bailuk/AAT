@@ -33,7 +33,7 @@ public class AppBroadcaster {
      *   Make a BitmapRequest to the elevation updater to setTarget missing elevation information
      *   to a specific file
      */
-    public static final String REQUEST_ELEVATION_UPDATE = NAME_SPACE + "REQUEST_ELEVATION_UPDATE";
+    //public static final String REQUEST_ELEVATION_UPDATE = NAME_SPACE + "REQUEST_ELEVATION_UPDATE";
     
     
     /**

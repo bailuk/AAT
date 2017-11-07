@@ -2,6 +2,7 @@ package ch.bailu.aat.services.dem.updater;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 
 import ch.bailu.aat.coordinates.SrtmCoordinates;
@@ -66,7 +67,7 @@ public class PendingUpdatesMap {
 
 
     public Iterator<SrtmCoordinates> coordinates() {
-        return map.keySet().iterator();
+        return new HashSet<>(map.keySet()).iterator();
     }
 
 

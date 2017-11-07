@@ -63,6 +63,6 @@ public class Configuration {
     }
 
     public boolean supportsTile(Tile t) {
-        return renderer.supportsTile(t);
+        return isConfigured() && renderer.supportsTile(t);
     }
 }

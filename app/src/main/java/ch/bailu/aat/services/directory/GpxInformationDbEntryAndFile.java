@@ -14,7 +14,7 @@ public class GpxInformationDbEntryAndFile extends GpxInformationDbEntry implemen
 
     @Override
     public GpxList getGpxList() {
-        if (isLoaded()) 
+        if (isValid())
             return ((GpxObject)handle).getGpxList();
         
         else return super.getGpxList();
@@ -22,7 +22,7 @@ public class GpxInformationDbEntryAndFile extends GpxInformationDbEntry implemen
 
     
     @Override
-    public boolean isLoaded() {
+    public boolean isValid() {
         ObjectHandle oldHandle = handle;
 
         handle = scontext.getCacheService().getObject(getFile().getPath(), new GpxObjectStatic.Factory());
@@ -39,7 +39,7 @@ public class GpxInformationDbEntryAndFile extends GpxInformationDbEntry implemen
 
     @Override
     public float getMaximumSpeed() {
-        if (isLoaded()) {
+        if (isValid()) {
             return ((GpxObject)handle).getGpxList().getDelta().getMaximumSpeed();
         }
         return super.getMaximumSpeed();
@@ -49,7 +49,7 @@ public class GpxInformationDbEntryAndFile extends GpxInformationDbEntry implemen
     @Override
     public long getAutoPause() {
 
-        if (isLoaded()) {
+        if (isValid()) {
             return ((GpxObject)handle).getGpxList().getDelta().getAutoPause();
         }
         return super.getAutoPause();
@@ -57,7 +57,7 @@ public class GpxInformationDbEntryAndFile extends GpxInformationDbEntry implemen
 
     @Override
     public long getStartTime() {
-        if (isLoaded()) {
+        if (isValid()) {
             return ((GpxObject)handle).getGpxList().getDelta().getStartTime();
         }
         return super.getStartTime();
@@ -66,7 +66,7 @@ public class GpxInformationDbEntryAndFile extends GpxInformationDbEntry implemen
 
     @Override
     public long getEndTime() {
-        if (isLoaded()) {
+        if (isValid()) {
             return ((GpxObject)handle).getGpxList().getDelta().getEndTime();
         }
         return super.getEndTime();
@@ -75,7 +75,7 @@ public class GpxInformationDbEntryAndFile extends GpxInformationDbEntry implemen
     @Override
     public short getAscend() {
 
-        if (isLoaded()) {
+        if (isValid()) {
             return ((GpxObject)handle).getGpxList().getDelta().getAscend();
         }
         return super.getAscend();
@@ -85,7 +85,7 @@ public class GpxInformationDbEntryAndFile extends GpxInformationDbEntry implemen
     @Override
     public short getDescend() {
 
-        if (isLoaded()) {
+        if (isValid()) {
             return ((GpxObject)handle).getGpxList().getDelta().getDescend();
         }
         return super.getDescend();

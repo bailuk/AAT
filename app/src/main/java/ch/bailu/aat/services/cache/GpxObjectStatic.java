@@ -18,6 +18,7 @@ import ch.bailu.aat.preferences.SolidAutopause;
 import ch.bailu.aat.preferences.SolidPostprocessedAutopause;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.background.FileHandle;
+import ch.bailu.aat.services.dem.tile.Dem3Status;
 import ch.bailu.aat.services.dem.tile.Dem3Tile;
 import ch.bailu.aat.services.dem.tile.ElevationProvider;
 import ch.bailu.aat.services.dem.updater.ElevationUpdaterClient;
@@ -48,6 +49,14 @@ public class GpxObjectStatic extends GpxObject implements ElevationUpdaterClient
         reload(sc);
     }
 
+
+    @Override
+    public void onRemove(ServiceContext sc) {
+        if (sc.lock()) {
+            sc.getElevationService().cancelElevationUpdates(this);
+            sc.free();
+        }
+    }
 
     @Override
     public Foc getFile() {
@@ -106,7 +115,6 @@ public class GpxObjectStatic extends GpxObject implements ElevationUpdaterClient
     public void onChanged(String id, ServiceContext sc) {}
 
 
-    @Override
     public SrtmCoordinates[] getSrtmTileCoordinates() {
         
         SrtmTileCollector f = new SrtmTileCollector();
@@ -124,7 +132,9 @@ public class GpxObjectStatic extends GpxObject implements ElevationUpdaterClient
     @Override
     public void updateFromSrtmTile(ServiceContext sc, Dem3Tile srtm) {
         new ListUpdater(srtm).walkTrack(gpxList);
+
         AppBroadcaster.broadcast(sc.getContext(), AppBroadcaster.FILE_CHANGED_INCACHE, toString());
+
     }
 
 
@@ -140,7 +150,7 @@ public class GpxObjectStatic extends GpxObject implements ElevationUpdaterClient
     
         @Override
         public boolean doList(GpxList l) {
-            return tile.isLoaded();
+            return tile.getStatus() == Dem3Status.VALID;
         }
 
         @Override
@@ -207,19 +217,22 @@ public class GpxObjectStatic extends GpxObject implements ElevationUpdaterClient
                 ObjectHandle handle = sc.getCacheService().getObject(getID());
                 try {
                     if (handle instanceof GpxObjectStatic) {
-                        size = load(sc, (GpxObjectStatic) handle);
-                    }
+                        GpxObjectStatic owner = (GpxObjectStatic) handle;
 
-                    AppBroadcaster.broadcast(sc.getContext(),
-                            AppBroadcaster.FILE_CHANGED_INCACHE, getID());
-                    AppBroadcaster.broadcast(sc.getContext(),
-                            AppBroadcaster.REQUEST_ELEVATION_UPDATE, getID());
+                        size = load(sc, owner);
+
+                        AppBroadcaster.broadcast(sc.getContext(),
+                                AppBroadcaster.FILE_CHANGED_INCACHE, getID());
+
+                        sc.getElevationService().requestElevationUpdates(owner,
+                                owner.getSrtmTileCoordinates());
+                    }
 
                 } catch (Exception e) {
                     e.printStackTrace();
-                } finally {
-                    handle.free();
                 }
+
+                handle.free();
                 sc.free();
             }
             return size;

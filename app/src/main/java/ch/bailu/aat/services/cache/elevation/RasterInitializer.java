@@ -23,8 +23,7 @@ public class RasterInitializer extends ProcessHandle {
 
             if (handle instanceof ElevationTile) {
                 ElevationTile owner = (ElevationTile) handle;
-                size = owner.bgOnProcessInitializer();
-                AppBroadcaster.broadcast(sc.getContext(), AppBroadcaster.REQUEST_ELEVATION_UPDATE, iid);
+                size = owner.bgOnProcessInitializer(sc);
             }
 
             handle.free();
