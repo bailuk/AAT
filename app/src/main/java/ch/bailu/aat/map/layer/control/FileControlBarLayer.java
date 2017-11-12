@@ -25,7 +25,7 @@ import ch.bailu.aat.util.HtmlBuilderGpx;
 import ch.bailu.aat.util.fs.FileAction;
 import ch.bailu.aat.util.fs.foc.FocAndroid;
 import ch.bailu.aat.util.ui.ToolTip;
-import ch.bailu.aat.views.ControlBar;
+import ch.bailu.aat.views.bar.ControlBar;
 import ch.bailu.aat.views.PreviewView;
 import ch.bailu.util_java.foc.Foc;
 

@@ -21,9 +21,9 @@ import ch.bailu.aat.map.MapViewInterface;
 import ch.bailu.aat.util.HtmlBuilderGpx;
 import ch.bailu.aat.util.ui.AppLayout;
 import ch.bailu.aat.views.ContentView;
-import ch.bailu.aat.views.ControlBar;
+import ch.bailu.aat.views.bar.ControlBar;
 import ch.bailu.aat.views.HtmlScrollTextView;
-import ch.bailu.aat.views.MainControlBar;
+import ch.bailu.aat.views.bar.MainControlBar;
 import ch.bailu.aat.views.PercentageLayout;
 
 public class NodeDetailActivity extends AbsDispatcher

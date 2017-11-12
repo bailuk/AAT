@@ -8,7 +8,7 @@ import android.widget.LinearLayout;
 
 import ch.bailu.aat.dispatcher.DispatcherInterface;
 import ch.bailu.aat.util.ui.AppLayout;
-import ch.bailu.aat.views.ControlBar;
+import ch.bailu.aat.views.bar.ControlBar;
 import ch.bailu.aat.views.PercentageLayout;
 
 public class GraphViewContainer extends ViewGroup implements View.OnClickListener {

@@ -21,8 +21,8 @@ import ch.bailu.aat.util.AppIntent;
 import ch.bailu.aat.util.ui.AppLayout;
 import ch.bailu.aat.util.ui.AppLog;
 import ch.bailu.aat.views.ContentView;
-import ch.bailu.aat.views.ControlBar;
-import ch.bailu.aat.views.MainControlBar;
+import ch.bailu.aat.views.bar.ControlBar;
+import ch.bailu.aat.views.bar.MainControlBar;
 
 public class MapActivity extends AbsDispatcher{
 

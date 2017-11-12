@@ -6,9 +6,9 @@ import android.widget.LinearLayout;
 import ch.bailu.aat.R;
 import ch.bailu.aat.util.ui.AppTheme;
 import ch.bailu.aat.views.ContentView;
-import ch.bailu.aat.views.ControlBar;
+import ch.bailu.aat.views.bar.ControlBar;
 import ch.bailu.aat.views.FeaturesList;
-import ch.bailu.aat.views.MainControlBar;
+import ch.bailu.aat.views.bar.MainControlBar;
 
 
 public class MapFeaturesActivity extends AbsDispatcher {

@@ -24,9 +24,7 @@ public class WGS84Layer implements MapLayerInterface {
     }
     @Override
     public void drawForeground(MapContext mcontext) {
-        BoundingBox boundingBox = mcontext.getMetrics().getBoundingBox();
-
-        final LatLong point = boundingBox.getCenterPoint();
+        final LatLong point = mcontext.getMapView().getMapViewPosition().getCenter();
 
         crosshair.drawForeground(mcontext);
         drawCoordinates(mcontext, point);

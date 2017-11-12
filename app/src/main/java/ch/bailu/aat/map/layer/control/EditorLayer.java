@@ -14,7 +14,7 @@ import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.editor.EditorHelper;
 import ch.bailu.aat.services.editor.EditorInterface;
 import ch.bailu.aat.util.ui.ToolTip;
-import ch.bailu.aat.views.ControlBar;
+import ch.bailu.aat.views.bar.ControlBar;
 
 public class EditorLayer extends ControlBarLayer {
 
@@ -116,7 +116,7 @@ public class EditorLayer extends ControlBarLayer {
         if (v==save)    editor.save();
         else if (v==saveAs)  editor.saveAs();
         else if (v==add)    {
-            LatLong p = mcontext.getMetrics().getBoundingBox().getCenterPoint();
+            LatLong p = mcontext.getMapView().getMapViewPosition().getCenter();
             editor.add(new GpxPoint(p, scontext.getElevationService().getElevation(p.getLatitudeE6(), p.getLongitudeE6()), 0));
         }
         else if (v==remove) editor.remove();

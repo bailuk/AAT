@@ -70,7 +70,8 @@ public class MapPositionLayer implements MapLayerInterface, OnContentUpdatedInte
     }
 
     private void saveState() {
-        LatLongE6 center = new LatLongE6(mcontext.getMetrics().getBoundingBox().getCenterPoint());
+        LatLongE6 center = new LatLongE6(mcontext.getMapView().getMapViewPosition().getCenter());
+
         int zoom = mcontext.getMetrics().getZoomLevel();
 
         storage.writeInteger(mcontext.getSolidKey() + LATITUDE_SUFFIX, center.la);

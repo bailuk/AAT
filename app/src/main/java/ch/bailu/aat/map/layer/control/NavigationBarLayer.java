@@ -12,6 +12,7 @@ import ch.bailu.aat.map.MapContext;
 import ch.bailu.aat.preferences.SolidPositionLock;
 import ch.bailu.aat.util.ui.AppLog;
 import ch.bailu.aat.util.ui.ToolTip;
+import ch.bailu.aat.views.bar.ControlBar;
 
 public class NavigationBarLayer extends ControlBarLayer implements OnContentUpdatedInterface {
 
@@ -31,7 +32,7 @@ public class NavigationBarLayer extends ControlBarLayer implements OnContentUpda
 
 
     public NavigationBarLayer(MapContext mc, DispatcherInterface d, int i) {
-        super(mc,new ch.bailu.aat.views.ControlBar(mc.getContext(),
+        super(mc,new ControlBar(mc.getContext(),
                 getOrientation(BOTTOM), i), BOTTOM);
 
         mcontext = mc;

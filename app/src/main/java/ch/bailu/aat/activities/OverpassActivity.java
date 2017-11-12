@@ -9,7 +9,7 @@ import ch.bailu.aat.coordinates.BoundingBoxE6;
 import ch.bailu.aat.util.OsmApiHelper;
 import ch.bailu.aat.util.OverpassApi;
 import ch.bailu.aat.util.ui.ToolTip;
-import ch.bailu.aat.views.ControlBar;
+import ch.bailu.aat.views.bar.ControlBar;
 
 public class OverpassActivity extends AbsOsmApiActivity  {
     

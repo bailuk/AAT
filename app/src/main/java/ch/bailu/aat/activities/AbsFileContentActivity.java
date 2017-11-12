@@ -22,7 +22,7 @@ import ch.bailu.aat.services.editor.EditorHelper;
 import ch.bailu.aat.util.ui.ToolTip;
 import ch.bailu.aat.views.BusyButton;
 import ch.bailu.aat.views.ContentView;
-import ch.bailu.aat.views.MainControlBar;
+import ch.bailu.aat.views.bar.MainControlBar;
 import ch.bailu.aat.views.PreviewView;
 import ch.bailu.util_java.util.Objects;
 

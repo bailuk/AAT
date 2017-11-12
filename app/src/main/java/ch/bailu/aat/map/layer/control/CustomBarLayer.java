@@ -3,7 +3,7 @@ package ch.bailu.aat.map.layer.control;
 import android.graphics.Color;
 
 import ch.bailu.aat.map.MapContext;
-import ch.bailu.aat.views.ControlBar;
+import ch.bailu.aat.views.bar.ControlBar;
 
 
 public class CustomBarLayer extends ControlBarLayer {

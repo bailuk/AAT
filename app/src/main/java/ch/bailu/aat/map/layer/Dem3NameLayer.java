@@ -2,6 +2,7 @@ package ch.bailu.aat.map.layer;
 
 import android.content.SharedPreferences;
 
+import org.mapsforge.core.model.LatLong;
 import org.mapsforge.core.model.Point;
 
 import ch.bailu.aat.coordinates.SrtmCoordinates;
@@ -17,7 +18,7 @@ public class Dem3NameLayer implements MapLayerInterface {
     @Override
     public void drawInside(MapContext mcontext) {
 
-        final SrtmCoordinates c = new SrtmCoordinates(mcontext.getMetrics().getBoundingBox().getCenterPoint());
+        final SrtmCoordinates c = new SrtmCoordinates(mcontext.getMapView().getMapViewPosition().getCenter());
         mcontext.draw().textBottom(c.toString(),3);
     }
 

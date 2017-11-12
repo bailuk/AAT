@@ -1,4 +1,4 @@
-package ch.bailu.aat.views;
+package ch.bailu.aat.views.bar;
 
 import android.app.Activity;
 import android.view.View;
@@ -12,6 +12,7 @@ import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.menus.MultiViewMenu;
 import ch.bailu.aat.util.ui.AppLayout;
 import ch.bailu.aat.menus.OptionsMenu;
+import ch.bailu.aat.views.BusyButton;
 import ch.bailu.aat.views.description.GPSStateButton;
 import ch.bailu.aat.views.description.MultiView;
 import ch.bailu.aat.views.description.TrackerStateButton;

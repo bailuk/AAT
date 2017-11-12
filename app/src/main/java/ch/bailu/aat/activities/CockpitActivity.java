@@ -20,13 +20,10 @@ import ch.bailu.aat.map.MapFactory;
 import ch.bailu.aat.services.editor.EditorHelper;
 import ch.bailu.aat.util.ui.AppLayout;
 import ch.bailu.aat.views.ContentView;
-import ch.bailu.aat.views.ControlBar;
-import ch.bailu.aat.views.MainControlBar;
-import ch.bailu.aat.views.PercentageLayout;
+import ch.bailu.aat.views.bar.ControlBar;
+import ch.bailu.aat.views.bar.MainControlBar;
 import ch.bailu.aat.views.description.CockpitView;
 import ch.bailu.aat.views.description.MultiView;
-import ch.bailu.aat.views.graph.DistanceAltitudeGraphView;
-import ch.bailu.aat.views.graph.DistanceSpeedGraphView;
 import ch.bailu.aat.views.graph.GraphViewContainer;
 
 public class CockpitActivity extends AbsDispatcher{

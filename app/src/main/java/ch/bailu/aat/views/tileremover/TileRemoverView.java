@@ -15,7 +15,7 @@ import ch.bailu.aat.preferences.SolidTileCacheDirectory;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.tileremover.TileRemoverService;
 import ch.bailu.aat.views.BusyButton;
-import ch.bailu.aat.views.ControlBar;
+import ch.bailu.aat.views.bar.ControlBar;
 
 
 public class TileRemoverView

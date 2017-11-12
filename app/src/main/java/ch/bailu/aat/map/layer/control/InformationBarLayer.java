@@ -16,6 +16,7 @@ import ch.bailu.aat.preferences.SolidIndexList;
 import ch.bailu.aat.preferences.SolidLegend;
 import ch.bailu.aat.preferences.SolidMapGrid;
 import ch.bailu.aat.util.ui.ToolTip;
+import ch.bailu.aat.views.bar.ControlBar;
 
 public class InformationBarLayer extends ControlBarLayer {
 
@@ -27,7 +28,7 @@ public class InformationBarLayer extends ControlBarLayer {
 
 
     public InformationBarLayer(MapContext cl, DispatcherInterface d) {
-        super(cl,new ch.bailu.aat.views.ControlBar(cl.getContext(), getOrientation(RIGHT)), RIGHT);
+        super(cl,new ControlBar(cl.getContext(), getOrientation(RIGHT)), RIGHT);
 
         mcontext = cl;
         final SolidIndexList sgrid, slegend;
@@ -35,7 +36,7 @@ public class InformationBarLayer extends ControlBarLayer {
         sgrid = new SolidMapGrid(cl.getContext(), cl.getSolidKey());
         slegend = new SolidLegend(cl.getContext(), cl.getSolidKey());
 
-        ch.bailu.aat.views.ControlBar bar = getBar();
+        ControlBar bar = getBar();
         View grid=bar.addSolidIndexButton(sgrid);
         View legend=bar.addSolidIndexButton(slegend);
 

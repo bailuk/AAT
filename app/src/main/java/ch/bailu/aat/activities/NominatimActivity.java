@@ -5,7 +5,7 @@ import java.io.IOException;
 import ch.bailu.aat.coordinates.BoundingBoxE6;
 import ch.bailu.aat.util.NominatimApi;
 import ch.bailu.aat.util.OsmApiHelper;
-import ch.bailu.aat.views.ControlBar;
+import ch.bailu.aat.views.bar.ControlBar;
 
 public class NominatimActivity extends AbsOsmApiActivity {
 

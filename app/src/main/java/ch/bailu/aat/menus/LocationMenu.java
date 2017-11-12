@@ -121,7 +121,7 @@ public class LocationMenu extends AbsMenu{
     }
     
     private LatLong getCenter() {
-        return map.getMContext().getMetrics().getBoundingBox().getCenterPoint();
+        return map.getMapViewPosition().getCenter();
     }
     
 }

@@ -1,8 +1,5 @@
 package ch.bailu.aat.map;
 
-import android.graphics.Color;
-import android.widget.TextView;
-
 import ch.bailu.aat.activities.AbsDispatcher;
 import ch.bailu.aat.activities.AbsGpxListActivity;
 import ch.bailu.aat.dispatcher.DispatcherInterface;
@@ -19,7 +16,7 @@ import ch.bailu.aat.map.layer.grid.GridDynLayer;
 import ch.bailu.aat.map.mapsforge.MapsForgeView;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.editor.EditorHelper;
-import ch.bailu.aat.views.ControlBar;
+import ch.bailu.aat.views.bar.ControlBar;
 
 public class MapFactory {
 

@@ -6,7 +6,7 @@ import android.os.Bundle;
 import ch.bailu.aat.util.AppIntent;
 import ch.bailu.aat.views.ContentView;
 import ch.bailu.aat.views.HtmlScrollTextView;
-import ch.bailu.aat.views.MainControlBar;
+import ch.bailu.aat.views.bar.MainControlBar;
 
 public class HtmlViewActivity extends AbsDispatcher {
 

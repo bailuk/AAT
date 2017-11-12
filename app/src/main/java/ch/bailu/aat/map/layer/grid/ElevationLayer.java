@@ -33,7 +33,8 @@ public class ElevationLayer implements MapLayerInterface {
     @Override
     public void drawForeground(MapContext mcontext) {
         byte zoomLevel = (byte)mcontext.getMetrics().getZoomLevel();
-        final LatLong point = mcontext.getMetrics().getBoundingBox().getCenterPoint();
+        final LatLong point = mcontext.getMapView().getMapViewPosition().getCenter();
+
 
         drawElevation(mcontext, zoomLevel, point);
     }
