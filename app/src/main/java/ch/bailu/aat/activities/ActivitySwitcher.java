@@ -17,12 +17,19 @@ import ch.bailu.aat.util.ui.AppLayout;
 
 public class ActivitySwitcher {
 
-    private final static int PHONE_CYCABLE = 3;
-    private final static int TABLET_CYCABLE = 2;
+    private final static int PHONE_CYCLABLE = 3;
+    private final static int TABLET_CYCLABLE = 2;
 
 
     private static ArrayList<Entry> entries = null;
-    private static int cycable=0;
+    private static int cyclable = 0;
+
+    public static Class<?> getDefaultCockpit() {
+        if (entries != null && entries.size() > 0)
+            return entries.get(0).activityClass;
+
+        else return MainActivity.class;
+    }
 
 
     public static class Entry {
@@ -67,13 +74,13 @@ public class ActivitySwitcher {
     }
 
     private static void initTablet(Context c) {
-        cycable = TABLET_CYCABLE;
+        cyclable = TABLET_CYCLABLE;
         entries.add(new Entry(c.getString(R.string.intro_resume), CockpitTabletActivity.class));
     }
 
 
     private static void initPhone(Context c) {
-        cycable = PHONE_CYCABLE;
+        cyclable = PHONE_CYCLABLE;
         entries.add(new Entry(c.getString(R.string.intro_resume), c.getString(R.string.tt_cockpit_a), CockpitActivity.class));
         entries.add(new Entry(c.getString(R.string.intro_cockpit2), c.getString(R.string.tt_cockpit_b), CockpitSplitActivity.class));
     }
@@ -108,7 +115,7 @@ public class ActivitySwitcher {
             if (entries.get(i).activityClass.equals(callingActivity.getClass())) {
                 int x = i+1;
 
-                if (x > cycable-1) x = 0;
+                if (x > cyclable -1) x = 0;
 
                 entries.get(x).start(callingActivity);
                 callingActivity.finish();

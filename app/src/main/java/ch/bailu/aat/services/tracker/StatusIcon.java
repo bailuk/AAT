@@ -11,7 +11,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import ch.bailu.aat.R;
-import ch.bailu.aat.activities.CockpitActivity;
+import ch.bailu.aat.activities.ActivitySwitcher;
 import ch.bailu.aat.util.ui.AppLog;
 import ch.bailu.aat.util.ui.AppTheme;
 import ch.bailu.aat.services.ServiceContext;
@@ -39,7 +39,7 @@ public class StatusIcon  {
     }
 
     private PendingIntent createShowActivityIntent() {
-        Intent intent = new Intent(scontext.getContext(), CockpitActivity.class);
+        Intent intent = new Intent(scontext.getContext(), ActivitySwitcher.getDefaultCockpit());
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
         return PendingIntent.getActivity(scontext.getContext(), 0, intent, 0);
     }
