@@ -25,8 +25,12 @@ public class BackgroundService extends VirtualService {
     private final HashMap<String, LoaderThread> loaders = new HashMap<>(5);
 
 
+    private final HandleQueue queue = new HandleQueue();
+
+
     private final WorkerThread workers[] =
             new WorkerThread[SolidRendererThreads.numberOfBackgroundThreats()];
+
 
 
     private final BroadcastReceiver onFileChangedOnDisk = new BroadcastReceiver() {
@@ -42,9 +46,8 @@ public class BackgroundService extends VirtualService {
 
         AppBroadcaster.register(getContext(), onFileChangedOnDisk, AppBroadcaster.FILE_CHANGED_ONDISK);
 
-        HandleQueue queue = new HandleQueue();
         for (int i=0; i< workers.length; i++)
-            workers[i] =new WorkerThread(sc, queue);
+            workers[i] = new WorkerThread(sc, queue);
 
 
     }
@@ -103,6 +106,8 @@ public class BackgroundService extends VirtualService {
 
         for (WorkerThread w: workers)
             w.close();
+
+        queue.close(workers.length);
     }
 
 

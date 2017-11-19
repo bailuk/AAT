@@ -80,10 +80,10 @@ public class Dem3TileLoader implements Closeable {
             final Dem3Tile slot = tiles.getOldestProcessed();
 
             if (slot == null) {
-                //AppLog.d(this, "not loading because no slot");
+                AppLog.d(this, "not loading because no slot");
             } else {
                 if (slot.isLocked()) {
-                    //AppLog.d(this, "not loading because slot is locked");
+                    AppLog.d(this, "not loading because slot is locked");
                 }
                 slot.load(scontext, c);
             }

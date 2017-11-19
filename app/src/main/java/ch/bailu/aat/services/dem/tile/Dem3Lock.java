@@ -5,25 +5,30 @@ import java.util.ArrayList;
 import ch.bailu.aat.util.ui.AppLog;
 
 public class Dem3Lock {
-    private final ArrayList<Object> locks = new ArrayList<>(5);
+    //private final ArrayList<Object> locks = new ArrayList<>(5);
 
+    int locks=0;
 
     public void lock(Object owner) {
-        if (!locks.contains(owner)) {
+        locks++;
+
+        /*if (!locks.contains(owner)) {
             locks.add(owner);
         }
-
-        //AppLog.d(this, "count " + locks.size());
+*/
+        //AppLog.d(this, "count " + locks);
     }
 
 
     public void free(Object owner) {
-        locks.remove(owner);
-        //AppLog.d(this, "count " + locks.size());
+        locks--;
+        //locks.remove(owner);
+        AppLog.d(this, "count " + locks);
     }
 
 
     public boolean isLocked() {
-        return locks.isEmpty() == false;
+        if (locks < 0) AppLog.d(this, "ERROR: negative lock: " + locks);
+        return locks>0;
     }
 }

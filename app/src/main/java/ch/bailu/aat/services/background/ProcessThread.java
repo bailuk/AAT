@@ -8,6 +8,9 @@ public abstract class ProcessThread extends Thread implements Closeable, ThreadC
     private final HandleQueue queue;
 
 
+    private ProcessHandle current = ProcessHandle.NULL;
+
+
     public ProcessThread(HandleQueue q) {
         queue = q;
         start();
@@ -24,7 +27,11 @@ public abstract class ProcessThread extends Thread implements Closeable, ThreadC
         while(canContinue()) {
 
             try {
-                queue.takeAndProcess(this);
+                current = queue.take();
+                bgProcessHandle(current);
+                current.onRemove();
+                current = ProcessHandle.NULL;
+
 
             } catch (InterruptedException e) {
                 continueThread=false;
@@ -44,16 +51,12 @@ public abstract class ProcessThread extends Thread implements Closeable, ThreadC
         if (canContinue()) queue.offer(handle);
     }
 
-    
+
     @Override
     public void close() {
         continueThread=false;
-
-        queue.stopCurrent();
-        queue.clear();
-        queue.offer(ProcessHandle.NULL);
+        current.stopProcessing();
     }
-
 
     @Override
     public boolean canContinue() {
