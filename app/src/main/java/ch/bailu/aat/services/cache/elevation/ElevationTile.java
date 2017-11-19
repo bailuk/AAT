@@ -31,7 +31,6 @@ public abstract class ElevationTile extends TileObject implements ElevationUpdat
     private final SubTiles subTiles = new SubTiles();
     private final Raster raster = new Raster();
 
-    private static final int[] buffer = new int[TileObject.TILE_SIZE * TileObject.TILE_SIZE];
 
 
     public ElevationTile(String id, Tile _map_tile, int _split) {
@@ -147,7 +146,7 @@ public abstract class ElevationTile extends TileObject implements ElevationUpdat
     public long bgOnProcessPainter(Dem3Tile dem3Tile) {
         long size = 0;
 
-        long mark = System.currentTimeMillis();
+
         if (raster.isInitialized()) {
 
             final SubTile subTile = subTiles.take(dem3Tile.hashCode());
@@ -160,28 +159,22 @@ public abstract class ElevationTile extends TileObject implements ElevationUpdat
             }
         }
 
-        mark = (System.currentTimeMillis() - mark);
-        AppLog.d(this, "P[" + mark+"]" );
-
         return size;
     }
 
 
     private long paintSubTile(SubTile subTile, Dem3Tile dem3Tile) {
-        synchronized (buffer) {
+        Bitmap b = initBitmap();
+
+        if (b != null) {
             final Rect interR = subTile.toRect();
 
+            final int[] buffer = new int[interR.width() * interR.height()];
+
+            long mark = System.currentTimeMillis();
             fillBuffer(buffer, raster, subTile, split(dem3Tile));
 
-            Bitmap t = bitmap.getAndroidBitmap();
-
-            if (t == null) {
-                bitmap.set(TILE_SIZE, true);
-                t = bitmap.getAndroidBitmap();
-                t.eraseColor(Color.TRANSPARENT);
-            }
-
-            t.setPixels(
+            b.setPixels(
                     buffer,
                     0,
                     interR.width(),
@@ -191,7 +184,27 @@ public abstract class ElevationTile extends TileObject implements ElevationUpdat
                     interR.height());
 
 
-            return interR.width()*interR.height()*2;
+            mark = (System.currentTimeMillis() - mark);
+            AppLog.d(this, "P[" + mark+"]" );
+
+            return interR.width() * interR.height() * 2;
+        }
+
+        return 0;
+    }
+
+
+
+    private Bitmap initBitmap() {
+        synchronized(bitmap) {
+            Bitmap b = bitmap.getAndroidBitmap();
+            if (b == null) {
+                bitmap.set(TILE_SIZE, true);
+                b = bitmap.getAndroidBitmap();
+
+                if (b != null) b.eraseColor(Color.TRANSPARENT);
+            }
+            return b;
         }
     }
 

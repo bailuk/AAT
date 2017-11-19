@@ -101,7 +101,7 @@ public class FocContent extends Foc {
             return true;
 
         } else {
-            AppLog.d(this, "create: " + mimeType);
+//            AppLog.d(this, "create: " + mimeType);
             update();
 
             return createDocumentNoException(mimeType) || exists();

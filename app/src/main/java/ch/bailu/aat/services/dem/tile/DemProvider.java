@@ -12,7 +12,7 @@ public interface DemProvider {
     boolean inverseLongitude();
 
 
-    public static final DemProvider NULL = new DemProvider() {
+    DemProvider NULL = new DemProvider() {
 
         @Override
         public short getElevation(int index) {

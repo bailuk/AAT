@@ -3,12 +3,14 @@ package ch.bailu.aat.services.background;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
 
+import ch.bailu.aat.preferences.SolidRendererThreads;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.VirtualService;
 import ch.bailu.aat.util.AppBroadcaster;
@@ -21,7 +23,10 @@ public class BackgroundService extends VirtualService {
 
     private final HashMap<String, DownloaderThread> downloaders = new HashMap<>(5);
     private final HashMap<String, LoaderThread> loaders = new HashMap<>(5);
-    private final WorkerThread workers[] = new WorkerThread[1];
+
+
+    private final WorkerThread workers[] =
+            new WorkerThread[SolidRendererThreads.numberOfBackgroundThreats()];
 
 
     private final BroadcastReceiver onFileChangedOnDisk = new BroadcastReceiver() {

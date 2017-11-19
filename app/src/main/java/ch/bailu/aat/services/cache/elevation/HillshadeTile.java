@@ -54,8 +54,8 @@ public class HillshadeTile extends ElevationTile {
         return new DemSplitter(dem);
     }
     public MultiCell factoryMultiCell(DemProvider dem) {
-        return MultiCell.factory(dem);
-        //return new MultiCell8(dem);
+        //return MultiCell.factory(dem);
+        return new MultiCell8(dem);
     }
 
 

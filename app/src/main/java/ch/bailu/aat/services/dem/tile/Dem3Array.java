@@ -21,7 +21,7 @@ public class Dem3Array {
         return getElevation(toIndex.toPos(laE6, loE6));
     }
 
-    public synchronized short getElevation(int index) {
+    public short getElevation(int index) {
         index = index *2;
 
         final short x = (short) ((data[index] << 8) | (data[index+1]&0xFF));

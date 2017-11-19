@@ -119,6 +119,8 @@ public class Dem3Tile implements ElevationProvider, DemProvider {
 
     @Override
     public short getElevation(int index) {
+
+
         return array.getElevation(index);
     }
 
