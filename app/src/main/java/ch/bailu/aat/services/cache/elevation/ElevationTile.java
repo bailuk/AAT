@@ -107,9 +107,8 @@ public abstract class ElevationTile extends TileObject implements ElevationUpdat
 
     @Override
     public void onDownloaded(String id, String url, ServiceContext sc) {
-        if (subTiles.haveID(url) && raster.isInitialized()) {
-            sc.getElevationService().requestElevationUpdates(this,
-                    subTiles.toSrtmCoordinates());
+        if (subTiles.haveID(url)) {
+            requestElevationUpdates(sc);
         }
     }
 
@@ -121,13 +120,13 @@ public abstract class ElevationTile extends TileObject implements ElevationUpdat
 
 
     public boolean isReadyAndLoaded() { // isDisplayable()
-        return raster.isInitialized() && subTiles.isNotPainting();
+        return isInitialized() && subTiles.isNotPainting();
     }
 
 
     @Override
     public boolean isLoaded() { // isCacheable()
-        return raster.isInitialized() && subTiles.areAllPainted();
+        return isInitialized() && subTiles.areAllPainted();
     }
 
 
@@ -143,11 +142,14 @@ public abstract class ElevationTile extends TileObject implements ElevationUpdat
 
     }
 
+    public boolean isInitialized() {
+        return raster.isInitialized();
+    }
+
     public long bgOnProcessPainter(Dem3Tile dem3Tile) {
         long size = 0;
 
-
-        if (raster.isInitialized()) {
+        if (isInitialized()) {
 
             final SubTile subTile = subTiles.take(dem3Tile.hashCode());
 
@@ -211,8 +213,14 @@ public abstract class ElevationTile extends TileObject implements ElevationUpdat
     public long bgOnProcessInitializer(ServiceContext sc) {
 
         raster.initialize(getTile(), getGeoToIndex(), subTiles);
-        sc.getElevationService().requestElevationUpdates(this, subTiles.toSrtmCoordinates());
+        requestElevationUpdates(sc);
 
         return TileObject.TILE_SIZE * 2;
+    }
+
+
+    public void requestElevationUpdates(ServiceContext sc) {
+        if (isInitialized())
+            sc.getElevationService().requestElevationUpdates(this, subTiles.toSrtmCoordinates());
     }
 }

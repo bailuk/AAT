@@ -32,6 +32,21 @@ public class HillshadeTile extends ElevationTile {
     }
 
 
+
+    @Override
+    public boolean isInitialized() {
+        return table.isReadyAndLoaded() && super.isInitialized();
+    }
+
+
+    @Override
+    public void onChanged(String id, ServiceContext sc) {
+        if (HillshadeColorTable.ID.equals(id)) {
+            requestElevationUpdates(sc);
+        }
+
+    }
+
     @Override
     public void onRemove(ServiceContext sc) {
         super.onRemove(sc);
