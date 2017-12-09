@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 
 import ch.bailu.aat.R;
 import ch.bailu.aat.menus.RemoveTilesMenu;
+import ch.bailu.aat.services.InsideContext;
 import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.preferences.SolidTileCacheDirectory;
 import ch.bailu.aat.services.ServiceContext;
@@ -127,31 +128,34 @@ public class TileRemoverView
 
 
     public void updateText() {
-        if (scontext.lock()) {
-            final TileRemoverService tr = scontext.getTileRemoverService();
-            summaryView.updateInfo(tr.getSummaries());
-
-            scontext.free();
-        }
+        new InsideContext(scontext) {
+            @Override
+            public void run() {
+                final TileRemoverService tr = scontext.getTileRemoverService();
+                summaryView.updateInfo(tr.getSummaries());
+            }
+        };
     }
 
     @Override
-    public void onClick(View v) {
-        if (scontext.lock()) {
+    public void onClick(final View v) {
+        new InsideContext(scontext) {
+            @Override
+            public void run() {
 
-            final TileRemoverService tr = scontext.getTileRemoverService();
-            if (v == scan && scan.isWaiting()) {
-                tr.getState().stop();
-            } else if (v == scan) {
-                tr.getState().scan();
-            } else if (v == remove && remove.isWaiting()) {
-                tr.getState().stop();
-            } else if (v == remove) { // show menu
-                new RemoveTilesMenu(scontext, acontext).showAsDialog(scontext.getContext());
+                final TileRemoverService tr = scontext.getTileRemoverService();
+                if (v == scan && scan.isWaiting()) {
+                    tr.getState().stop();
+                } else if (v == scan) {
+                    tr.getState().scan();
+                } else if (v == remove && remove.isWaiting()) {
+                    tr.getState().stop();
+                } else if (v == remove) { // show menu
+                    new RemoveTilesMenu(scontext, acontext).showAsDialog(scontext.getContext());
+                }
+
             }
-
-            scontext.free();
-        }
+        };
     }
 
 
@@ -159,19 +163,19 @@ public class TileRemoverView
 
 
     @Override
-    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-        if (scontext.lock()) {
-            final TileRemoverService tr = scontext.getTileRemoverService();
-            if (sdirectory.hasKey(key)) {
-                tr.getState().reset();
-            } else if (key.contains("SolidTrim")) {
-                tr.getState().rescan();
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, final String key) {
+        new InsideContext(scontext) {
+            @Override
+            public void run() {
+                final TileRemoverService tr = scontext.getTileRemoverService();
+                if (sdirectory.hasKey(key)) {
+                    tr.getState().reset();
+                } else if (key.contains("SolidTrim")) {
+                    tr.getState().rescan();
+                }
+
             }
-            scontext.free();
-
-        }
-
-
+        };
     }
 
 

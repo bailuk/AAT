@@ -7,6 +7,7 @@ import android.content.Intent;
 import ch.bailu.aat.gpx.GpxFileWrapper;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.preferences.SolidDirectoryQuery;
+import ch.bailu.aat.services.InsideContext;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.cache.GpxObject;
 import ch.bailu.aat.services.cache.GpxObjectStatic;
@@ -133,26 +134,29 @@ public abstract class IteratorSource extends ContentSource implements OnCursorCh
 
         @Override
         public GpxInformation getInfo() {
-            GpxInformation info = super.getInfo();
+            final GpxInformation[] info = {super.getInfo()};
 
-            if (scontext.lock()) {
-                ObjectHandle h = scontext.getCacheService().getObject(getID(),
-                        new GpxObjectStatic.Factory());
+            new InsideContext(scontext) {
+                @Override
+                public void run() {
+                    ObjectHandle h = scontext.getCacheService().getObject(getID(),
+                            new GpxObjectStatic.Factory());
 
-                if (h instanceof GpxObject) {
-                    handle.free();
-                    handle = h;
+                    if (h instanceof GpxObject) {
+                        handle.free();
+                        handle = h;
 
-                    if (handle.isReadyAndLoaded())
-                        info = new GpxFileWrapper(handle.getFile(), ((GpxObject)handle).getGpxList());
-                } else {
+                        if (handle.isReadyAndLoaded())
+                            info[0] = new GpxFileWrapper(handle.getFile(),
+                                    ((GpxObject)handle).getGpxList());
+                    } else {
 
-                    h.free();
+                        h.free();
+                    }
+
                 }
-
-                scontext.free();
-            }
-            return info;
+            };
+            return info[0];
         }
 
         private String getID() {

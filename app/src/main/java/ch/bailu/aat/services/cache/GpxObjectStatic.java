@@ -16,6 +16,7 @@ import ch.bailu.aat.gpx.linked_list.Node;
 import ch.bailu.aat.gpx.parser.GpxListReader;
 import ch.bailu.aat.preferences.SolidAutopause;
 import ch.bailu.aat.preferences.SolidPostprocessedAutopause;
+import ch.bailu.aat.services.InsideContext;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.background.FileHandle;
 import ch.bailu.aat.services.dem.tile.Dem3Status;
@@ -27,15 +28,15 @@ import ch.bailu.aat.util.fs.foc.FocAndroid;
 import ch.bailu.util_java.foc.Foc;
 
 public class GpxObjectStatic extends GpxObject implements ElevationUpdaterClient {
-    
+
 
     private GpxList gpxList = GpxList.NULL_TRACK;
 
     private boolean readyAndLoaded = false;
 
     private final Foc file;
-    
-    
+
+
     public GpxObjectStatic(String id, ServiceContext sc) {
         super(id);
         sc.getCacheService().addToBroadcaster(this);
@@ -51,12 +52,15 @@ public class GpxObjectStatic extends GpxObject implements ElevationUpdaterClient
 
 
     @Override
-    public void onRemove(ServiceContext sc) {
-        if (sc.lock()) {
-            sc.getElevationService().cancelElevationUpdates(this);
-            sc.free();
-        }
+    public void onRemove(final ServiceContext sc) {
+        new InsideContext(sc) {
+            @Override
+            public void run() {
+                sc.getElevationService().cancelElevationUpdates(GpxObjectStatic.this);
+            }
+        };
     }
+
 
     @Override
     public Foc getFile() {
@@ -71,13 +75,13 @@ public class GpxObjectStatic extends GpxObject implements ElevationUpdaterClient
     public boolean isReadyAndLoaded() {
         return readyAndLoaded;
     }
-    
+
 
     @Override
     public long getSize() {
-        return gpxList.getPointList().size() * 
-                (GpxPoint.SIZE_IN_BYTES + 
-                        GpxPointLinkedNode.SIZE_IN_BYTES + 
+        return gpxList.getPointList().size() *
+                (GpxPoint.SIZE_IN_BYTES +
+                        GpxPointLinkedNode.SIZE_IN_BYTES +
                         Node.SIZE_IN_BYTES);
     }
 
@@ -116,10 +120,10 @@ public class GpxObjectStatic extends GpxObject implements ElevationUpdaterClient
 
 
     public SrtmCoordinates[] getSrtmTileCoordinates() {
-        
+
         SrtmTileCollector f = new SrtmTileCollector();
         f.walkTrack(gpxList);
-        
+
         final SrtmCoordinates[] r=new SrtmCoordinates[f.coordinates.size()];
         for (int i=0; i<f.coordinates.size(); i++) {
             r[i]=f.coordinates.valueAt(i);
@@ -143,11 +147,11 @@ public class GpxObjectStatic extends GpxObject implements ElevationUpdaterClient
     private class ListUpdater extends GpxListWalker {
         private final Dem3Tile tile;
         private SrtmCoordinates coordinates=new SrtmCoordinates(0,0);
-        
+
         public ListUpdater(Dem3Tile s) {
             tile=s;
         }
-    
+
         @Override
         public boolean doList(GpxList l) {
             return tile.getStatus() == Dem3Status.VALID;
@@ -173,10 +177,10 @@ public class GpxObjectStatic extends GpxObject implements ElevationUpdaterClient
             }
         }
     }
-    
+
     private class SrtmTileCollector extends GpxListWalker {
         public final SparseArray<SrtmCoordinates> coordinates = new SparseArray<>();
-        
+
         @Override
         public boolean doList(GpxList l) {
             return true;
@@ -210,32 +214,31 @@ public class GpxObjectStatic extends GpxObject implements ElevationUpdaterClient
         }
 
         @Override
-        public long bgOnProcess(ServiceContext sc) {
-            long size = 0;
+        public long bgOnProcess(final ServiceContext sc) {
+            final long[] size = {0};
 
-            if (sc.lock()) {
-                ObjectHandle handle = sc.getCacheService().getObject(getID());
-                try {
-                    if (handle instanceof GpxObjectStatic) {
+            new OnObject(sc, getID(), GpxObjectStatic.class) {
+                @Override
+                public void run(ObjectHandle handle) {
+                    try {
                         GpxObjectStatic owner = (GpxObjectStatic) handle;
 
-                        size = load(sc, owner);
+                        size[0] = load(sc, owner);
 
                         AppBroadcaster.broadcast(sc.getContext(),
                                 AppBroadcaster.FILE_CHANGED_INCACHE, getID());
 
                         sc.getElevationService().requestElevationUpdates(owner,
                                 owner.getSrtmTileCoordinates());
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
 
-                } catch (Exception e) {
-                    e.printStackTrace();
                 }
+            };
 
-                handle.free();
-                sc.free();
-            }
-            return size;
+            return size[0];
         }
 
 

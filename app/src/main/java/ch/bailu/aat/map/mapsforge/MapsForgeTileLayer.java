@@ -21,6 +21,7 @@ import java.util.List;
 import ch.bailu.aat.map.MapContext;
 import ch.bailu.aat.map.layer.MapLayerInterface;
 import ch.bailu.aat.map.tile.TileProvider;
+import ch.bailu.aat.services.InsideContext;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.util.ui.AppLog;
 
@@ -47,20 +48,23 @@ public class MapsForgeTileLayer extends Layer implements MapLayerInterface, Obse
 
 
     @Override
-    public void draw(BoundingBox box, byte zoom, Canvas c, Point tlp) {
+    public void draw(final BoundingBox box, final byte zoom, final Canvas c, final Point tlp) {
 
-        synchronized(provider) {
-            if (scontext.lock()) {
-                if (detachAttach(zoom)) {
-                    draw(
-                            box,
-                            zoom,
-                            c,
-                            tlp,
-                            displayModel.getTileSize());
+        synchronized (provider) {
+            new InsideContext(scontext) {
+                @Override
+                public void run() {
+                    if (detachAttach(zoom)) {
+                        draw(
+                                box,
+                                zoom,
+                                c,
+                                tlp,
+                                displayModel.getTileSize());
+
+                    }
                 }
-                scontext.free();
-            }
+            };
         }
     }
 

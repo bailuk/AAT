@@ -8,6 +8,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import ch.bailu.aat.R;
+import ch.bailu.aat.services.InsideContext;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.tileremover.SelectedTileDirectoryInfo;
 import ch.bailu.aat.util.Res;
@@ -66,18 +67,23 @@ public class RemoveTilesMenu extends AbsMenu {
     @Override
     public boolean onItemClick(MenuItem item) {
         if (item == removeScanned) {
-            scontext.lock();
-            scontext.getTileRemoverService().getState().remove();
-            scontext.free();
+            new InsideContext(scontext) {
+                @Override
+                public void run() {
+                    scontext.getTileRemoverService().getState().remove();
+                }
+            };
 
         } else if (item == removeAll) {
             new AppDialog() {
                 @Override
                 protected void onPositiveClick() {
-                    if (scontext.lock()) {
-                        scontext.getTileRemoverService().getState().removeAll();
-                        scontext.free();
-                    }
+                    new InsideContext(scontext) {
+                        @Override
+                        public void run() {
+                            scontext.getTileRemoverService().getState().removeAll();
+                        }
+                    };
                 }
             }.displayYesNoDialog(
                     acontext,

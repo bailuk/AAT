@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.widget.LinearLayout;
 
 import ch.bailu.aat.R;
+import ch.bailu.aat.services.InsideContext;
+import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.util.ui.AppTheme;
 import ch.bailu.aat.views.ContentView;
 import ch.bailu.aat.views.bar.ControlBar;
@@ -53,12 +55,15 @@ public class MapFeaturesActivity extends AbsDispatcher {
 
 
     private void loadList() {
-        if (getServiceContext().lock()) {
-            list.loadList(
-                    getServiceContext().getContext().getAssets(),
-                    getServiceContext().getIconMapService());
-            getServiceContext().free();
-        }
+        new InsideContext(getServiceContext()) {
+            @Override
+            public void run() {
+                list.loadList(
+                        getServiceContext().getContext().getAssets(),
+                        getServiceContext().getIconMapService());
+
+            }
+        };
     }
 
 }

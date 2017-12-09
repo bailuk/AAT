@@ -15,8 +15,10 @@ import java.util.List;
 
 import ch.bailu.aat.map.Attachable;
 import ch.bailu.aat.map.tile.source.Source;
+import ch.bailu.aat.services.InsideContext;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.cache.ObjectHandle;
+import ch.bailu.aat.services.cache.OnObject;
 import ch.bailu.aat.services.cache.TileObject;
 import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.util.AppIntent;
@@ -157,24 +159,28 @@ public class TileProvider implements Attachable, ObservableInterface {
         return handle;
     }
 
-    private TileObject getTileHandleLevel2(Tile mapTile) {
-        TileObject r = null;
+    private TileObject getTileHandleLevel2(final Tile mapTile) {
+        final TileObject[] r = {null};
 
-        if (scontext.lock()) {
-            String id = source.getID(mapTile, scontext.getContext());
+        new InsideContext(scontext) {
+            @Override
+            public void run() {
+                String id = source.getID(mapTile, scontext.getContext());
 
-            ObjectHandle handle = scontext.getCacheService().getObject(
-                    id,
-                    source.getFactory(mapTile)
-            );
+                ObjectHandle handle = scontext.getCacheService().getObject(
+                        id,
+                        source.getFactory(mapTile)
+                );
 
 
-            if (handle instanceof TileObject) {
-                r = (TileObject) handle;
+                if (handle instanceof TileObject) {
+                    r[0] = (TileObject) handle;
+                }
+
             }
-            scontext.free();
-        }
-        return r;
+        };
+
+        return r[0];
     }
 
 

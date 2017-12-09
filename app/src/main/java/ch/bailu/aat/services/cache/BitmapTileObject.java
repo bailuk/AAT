@@ -157,25 +157,22 @@ public class BitmapTileObject extends TileObject {
         }
 
         @Override
-        public long bgOnProcess(ServiceContext scontext) {
-            long size = 0;
-            if (scontext.lock()) {
-                ObjectHandle obj = scontext.getCacheService().getObject(getFile().getPath());
+        public long bgOnProcess(final ServiceContext scontext) {
+            final long[] size = {0};
 
-                if (obj instanceof BitmapTileObject) {
-                    BitmapTileObject bmp = (BitmapTileObject) obj;
+            new OnObject(scontext, getFile().getPath(), BitmapTileObject.class) {
+                @Override
+                public void run(ObjectHandle handle) {
+                    BitmapTileObject bmp = (BitmapTileObject) handle;
                     bmp.bitmap.set(bmp.getFile(), TILE_SIZE, bmp.source.isTransparent());
-                    size = bmp.getSize();
+                    size[0] = bmp.getSize();
 
                     AppBroadcaster.broadcast(scontext.getContext(),
                             AppBroadcaster.FILE_CHANGED_INCACHE,
                             getFile().getPath());
-
                 }
-                obj.free();
-                scontext.free();
-            }
-            return size;
+            };
+            return size[0];
         }
 
 
@@ -201,14 +198,15 @@ public class BitmapTileObject extends TileObject {
         }
 
         private boolean isInCache() {
-            boolean inCache = false;
-            if (scontext.lock()) {
-                ObjectHandle obj = scontext.getCacheService().getObject(getFile().getPath());
-                inCache = obj instanceof BitmapTileObject;
-                obj.free();
-                scontext.free();
-            }
-            return inCache;
+            final boolean[] inCache = {false};
+
+            new OnObject(scontext, getFile().getPath(), BitmapTileObject.class) {
+                @Override
+                public void run(ObjectHandle handle) {
+                    inCache[0] = true;
+                }
+            };
+            return inCache[0];
         }
     }
 }

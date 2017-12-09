@@ -17,6 +17,7 @@ import ch.bailu.aat.R;
 import ch.bailu.aat.coordinates.BoundingBoxE6;
 import ch.bailu.aat.dispatcher.CustomFileSource;
 import ch.bailu.aat.gpx.InfoID;
+import ch.bailu.aat.services.InsideContext;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.background.BackgroundService;
 import ch.bailu.aat.services.background.DownloadHandle;
@@ -194,33 +195,35 @@ public abstract class AbsOsmApiActivity extends AbsDispatcher implements OnClick
 
 
     private void download() {
-        if (getServiceContext().lock()) {
-            try {
-                String query = tagEditor.getText().toString();
+        new InsideContext(getServiceContext()) {
+            @Override
+            public void run() {
+                try {
+                    String query = tagEditor.getText().toString();
 
-                BackgroundService background = getServiceContext().getBackgroundService();
+                    BackgroundService background = getServiceContext().getBackgroundService();
 
 
-                request.stopProcessing();
-                download.startWaiting();
+                    request.stopProcessing();
+                    download.startWaiting();
 
-                request = new ApiQueryHandle(
-                        osmApi.getUrl(query),
-                        osmApi.getResultFile(),
-                        query,
-                        osmApi.getQueryFile(),
-                        getServiceContext().getContext());
+                    request = new ApiQueryHandle(
+                            osmApi.getUrl(query),
+                            osmApi.getResultFile(),
+                            query,
+                            osmApi.getQueryFile(),
+                            getServiceContext().getContext());
 
-                background.download(request);
+                    background.download(request);
 
-            } catch (Exception e) {
-                download.stopWaiting();
-                request = DownloadHandle.NULL;
+                } catch (Exception e) {
+                    download.stopWaiting();
+                    request = DownloadHandle.NULL;
 
-                AppLog.e(this, e);
+                    AppLog.e(AbsOsmApiActivity.this, e);
+                }
             }
-            getServiceContext().free();
-        }
+        };
     }
 
 

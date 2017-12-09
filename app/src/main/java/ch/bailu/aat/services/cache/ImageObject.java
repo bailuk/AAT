@@ -4,6 +4,7 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 
+import ch.bailu.aat.services.InsideContext;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.background.FileHandle;
 import ch.bailu.aat.util.AppBroadcaster;
@@ -49,29 +50,23 @@ public class ImageObject extends ImageObjectAbstract {
         FileHandle l=new FileHandle(imageFile) {
 
             @Override
-            public long bgOnProcess(ServiceContext sc) {
-                long size = 0;
+            public long bgOnProcess(final ServiceContext sc) {
+                final long[] size = {0};
 
-                if (sc.lock()) {
-                    ObjectHandle handle = sc.getCacheService().getObject(toString());
+                new OnObject(sc, toString(), ImageObject.class) {
+                    @Override
+                    public void run(ObjectHandle obj) {
+                        ImageObject self = (ImageObject) obj;
 
-                    if (handle != null) {
+                        bitmap.set(self.imageFile);
+                        size[0] =  bitmap.getSize();
 
-                        if (handle instanceof ImageObject) {
-                            ImageObject self = (ImageObject) handle;
+                        AppBroadcaster.broadcast(sc.getContext(), AppBroadcaster.FILE_CHANGED_INCACHE,
+                                self.imageFile);
 
-                            bitmap.set(self.imageFile);
-                            size =  bitmap.getSize();
-
-                            AppBroadcaster.broadcast(sc.getContext(), AppBroadcaster.FILE_CHANGED_INCACHE,
-                                    self.imageFile);
-                        }
-                        handle.free();
                     }
-
-                    sc.free();
-                }
-                return size;
+                };
+                return size[0];
             }
 
         };

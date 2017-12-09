@@ -1,5 +1,6 @@
 package ch.bailu.aat.services.background;
 
+import ch.bailu.aat.services.InsideContext;
 import ch.bailu.aat.services.ServiceContext;
 
 public class WorkerThread extends ProcessThread {
@@ -22,17 +23,22 @@ public class WorkerThread extends ProcessThread {
     public void bgOnHandleProcessed(ProcessHandle handle, long size) {}
 
     @Override
-    public void bgProcessHandle(ProcessHandle handle) {
-        if (handle.canContinue() && scontext.lock()) {
-            long size;
+    public void bgProcessHandle(final ProcessHandle handle) {
+        if (handle.canContinue()) {
 
-            handle.bgLock();
-            size = handle.bgOnProcess(scontext);
-            handle.bgUnlock();
+            new InsideContext(scontext) {
+                @Override
+                public void run() {
+                    long size;
 
-            bgOnHandleProcessed(handle, size);
+                    handle.bgLock();
+                    size = handle.bgOnProcess(scontext);
+                    handle.bgUnlock();
 
-            scontext.free();
+                    bgOnHandleProcessed(handle, size);
+
+                }
+            };
         }
     }
 

@@ -1,8 +1,10 @@
 package ch.bailu.aat.services.cache.elevation;
 
+import ch.bailu.aat.services.InsideContext;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.background.ProcessHandle;
 import ch.bailu.aat.services.cache.ObjectHandle;
+import ch.bailu.aat.services.cache.OnObject;
 import ch.bailu.aat.services.dem.tile.Dem3Tile;
 import ch.bailu.aat.util.AppBroadcaster;
 
@@ -29,35 +31,32 @@ public class SubTilePainter extends ProcessHandle {
 
 
     @Override
-    public long bgOnProcess(ServiceContext sc) {
-        long size = 0;
+    public long bgOnProcess(final ServiceContext sc) {
+        final long[] size = {0};
 
-        if (sc.lock()) {
-            ObjectHandle handle = sc.getCacheService().getObject(iid);
-
-            if (handle instanceof ElevationTile) {
-
+        new OnObject(sc, iid, ElevationTile.class) {
+            @Override
+            public void run(ObjectHandle handle) {
                 ElevationTile owner = (ElevationTile) handle;
 
-                size = owner.bgOnProcessPainter(tile);
+                size[0] = owner.bgOnProcessPainter(tile);
                 AppBroadcaster.broadcast(sc.getContext(), AppBroadcaster.FILE_CHANGED_INCACHE, iid);
             }
+        };
 
-            handle.free();
-            sc.free();
-        }
-
-        return size;
+        return size[0];
     }
 
     @Override
     public void onRemove() {
         tile.free(this);
 
-        if (scontext.lock()) {
-            scontext.getElevationService().requestElevationUpdates();
-            scontext.free();
-        }
+        new InsideContext(scontext) {
+            @Override
+            public void run() {
+                scontext.getElevationService().requestElevationUpdates();
+            }
+        };
     }
 }
 

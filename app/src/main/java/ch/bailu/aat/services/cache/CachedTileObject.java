@@ -49,33 +49,18 @@ public class CachedTileObject extends TileObject {
         save = new FileHandle(cachedImageFile) {
 
             @Override
-            public long bgOnProcess(ServiceContext sc) {
-                long size = 0;
-
-                if (sc.lock()) {
-                    size = save(sc);
-
-                    sc.free();
-                }
+            public long bgOnProcess(final ServiceContext sc) {
+                final long[] size = {0};
 
 
-                return size;
-            }
+                new OnObject(sc, sourceID, TileObject.class) {
+                    @Override
+                    public void run(ObjectHandle handle) {
+                        size[0] = save(sc, (TileObject) handle);
+                    }
+                };
 
-
-            private long save(ServiceContext sc) {
-                long size = 0;
-
-                ObjectHandle handle = sc.getCacheService().getObject(sourceID);
-
-                if (handle instanceof TileObject) {
-                    TileObject self = (TileObject) handle;
-
-                    size = save(sc, self);
-                }
-
-                handle.free();
-                return size;
+                return size[0];
             }
 
 
@@ -111,8 +96,6 @@ public class CachedTileObject extends TileObject {
 
                 return size;
             }
-
-
         };
     }
 

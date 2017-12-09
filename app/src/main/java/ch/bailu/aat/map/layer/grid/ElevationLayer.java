@@ -9,6 +9,7 @@ import org.mapsforge.core.model.Point;
 import ch.bailu.aat.description.AltitudeDescription;
 import ch.bailu.aat.map.MapContext;
 import ch.bailu.aat.map.layer.MapLayerInterface;
+import ch.bailu.aat.services.InsideContext;
 
 public class ElevationLayer implements MapLayerInterface {
 
@@ -40,11 +41,19 @@ public class ElevationLayer implements MapLayerInterface {
     }
 
 
-    private void drawElevation(MapContext mc, int zoom, LatLong point) {
-        if (zoom > MIN_ZOOM_LEVEL && mc.getSContext().lock()) {
-            final short ele = mc.getSContext().getElevationService().getElevation(point.getLatitudeE6(), point.getLongitudeE6());
-            mc.draw().textBottom(altitudeDescription.getValueUnit(ele),2);
-            mc.getSContext().free();
+    private void drawElevation(final MapContext mc, int zoom, final LatLong point) {
+        if (zoom > MIN_ZOOM_LEVEL) {
+            new InsideContext(mc.getSContext()) {
+                @Override
+                public void run() {
+                    final short ele = mc.getSContext().
+                            getElevationService().
+                            getElevation(point.getLatitudeE6(), point.getLongitudeE6());
+                    mc.draw().textBottom(altitudeDescription.getValueUnit(ele),2);
+
+                }
+            };
+
         }
     }
     @Override

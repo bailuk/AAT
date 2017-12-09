@@ -4,6 +4,7 @@ import android.content.Context;
 
 import org.mapsforge.core.model.Tile;
 
+import ch.bailu.aat.services.InsideContext;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.cache.ObjectHandle;
 
@@ -35,18 +36,21 @@ public class DoubleSource extends Source {
     }
 
 
-    private Source decide(Tile t) {
-        Source r = sourceB;
+    private Source decide(final Tile t) {
+        final Source[] r = {sourceB};
 
         if (isZoomLevelSupportedA(t)) {
-            if (scontext.lock()) {
-                if (scontext.getRenderService().supportsTile(t))
-                    r = sourceA;
-                scontext.free();
-            }
+            new InsideContext(scontext) {
+                @Override
+                public void run() {
+                    if (scontext.getRenderService().supportsTile(t))
+                        r[0] = sourceA;
+                }
+            };
+
         }
 
-        return r;
+        return r[0];
     }
 
 

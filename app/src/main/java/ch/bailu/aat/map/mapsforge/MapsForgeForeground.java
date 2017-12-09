@@ -15,6 +15,7 @@ import ch.bailu.aat.map.MapMetrics;
 import ch.bailu.aat.map.MapViewInterface;
 import ch.bailu.aat.map.TwoNodes;
 import ch.bailu.aat.map.layer.MapLayerInterface;
+import ch.bailu.aat.services.InsideContext;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.util.ui.AppDensity;
 
@@ -36,18 +37,19 @@ public class MapsForgeForeground implements MapContext {
     }
 
 
-    public void dispatchDraw(Canvas canvas) {
+    public void dispatchDraw(final Canvas canvas) {
 
-        if (mcontext.getSContext().lock()) {
-            metrics.init(new Dimension(canvas.getWidth(), canvas.getHeight()));
-            draw.init(canvas, metrics);
+        new InsideContext(mcontext.getSContext()) {
+            @Override
+            public void run() {
+                metrics.init(new Dimension(canvas.getWidth(), canvas.getHeight()));
+                draw.init(canvas, metrics);
 
-            for (MapLayerInterface l : layers) {
-                l.drawForeground(this);
+                for (MapLayerInterface l : layers) {
+                    l.drawForeground(MapsForgeForeground.this);
+                }
             }
-            mcontext.getSContext().free();
-        }
-
+        };
     }
 
 
