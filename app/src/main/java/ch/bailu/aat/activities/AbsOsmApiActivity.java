@@ -41,8 +41,6 @@ import ch.bailu.util_java.foc.Foc;
 
 
 public abstract class AbsOsmApiActivity extends AbsDispatcher implements OnClickListener {
-    //private static final String SOLID_KEY=AbsOsmApiActivity.class.getSimpleName();
-
 
     private TagEditor          tagEditor;
     private BusyButton         download;
@@ -108,10 +106,6 @@ public abstract class AbsOsmApiActivity extends AbsDispatcher implements OnClick
 
 
     private LinearLayout createContentView()  {
-//        private final LayoutParams layout =
-//                new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
-
-
         ContentView contentView = new ContentView(this);
         ControlBar bar = createControlBar();
         contentView.addView(bar);
@@ -294,11 +288,13 @@ public abstract class AbsOsmApiActivity extends AbsDispatcher implements OnClick
 
         @Override
         public long bgOnProcess(ServiceContext sc) {
-            AppLog.d(this, getFile().getPath());
-
             try {
                 long size = bgDownload();
                 TextBackup.write(queryFile, queryString);
+
+                AppBroadcaster.broadcast(sc.getContext(),
+                        AppBroadcaster.FILE_CHANGED_ONDISK, getFile(), getSource().toString());
+
                 return size;
             } catch (Exception e) {
                 logError(e);
@@ -311,7 +307,4 @@ public abstract class AbsOsmApiActivity extends AbsDispatcher implements OnClick
             AppLog.e(context, e);
         }
     }
-
-
-
 }
