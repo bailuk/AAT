@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 
 import ch.bailu.aat.BuildConfig;
+import ch.bailu.aat.util.net.URX;
 import ch.bailu.util_java.foc.Foc;
 
 public class AppBroadcaster {
@@ -84,6 +85,10 @@ public class AppBroadcaster {
         context.sendBroadcast(intent);
     }
 
+
+    public static void broadcast(Context context, String action, Foc file, URX url) {
+        broadcast(context, action, file, url.toString());
+    }
 
     public static void broadcast(Context context, String action, Foc file, String url) {
         broadcast(context, action, file.getPath(), url);

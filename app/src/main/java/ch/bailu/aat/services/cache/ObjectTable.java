@@ -84,14 +84,20 @@ public class ObjectTable  {
 
 
 
-    private void updateSize(ObjectHandle obj) {
+    private boolean updateSize(ObjectHandle obj) {
         Container c = hashMap.get(obj.toString());
 
-        if (c != null) {
-            totalMemorySize -= c.size;
-            c.size=obj.getSize();
-            totalMemorySize += c.size;
+        if (c != null ) {
+            long oSize = c.size;
+            long nSize = obj.getSize();
+
+            totalMemorySize -= oSize;
+            c.size = nSize;
+            totalMemorySize += nSize;
+
+            return nSize > oSize;
         }
+        return false;
     }
 
 
@@ -102,8 +108,8 @@ public class ObjectTable  {
 
 
     public synchronized void onObjectChanged(ObjectHandle obj, CacheService self) {
-        updateSize(obj);
-        trim(self);
+        if (updateSize(obj))
+            trim(self);
     }
 
 

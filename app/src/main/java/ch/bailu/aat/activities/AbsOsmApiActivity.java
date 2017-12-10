@@ -293,7 +293,7 @@ public abstract class AbsOsmApiActivity extends AbsDispatcher implements OnClick
                 TextBackup.write(queryFile, queryString);
 
                 AppBroadcaster.broadcast(sc.getContext(),
-                        AppBroadcaster.FILE_CHANGED_ONDISK, getFile(), getSource().toString());
+                        AppBroadcaster.FILE_CHANGED_ONDISK, getFile(), getSource());
 
                 return size;
             } catch (Exception e) {

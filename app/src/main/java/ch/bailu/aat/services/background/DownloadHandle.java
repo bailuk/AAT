@@ -44,7 +44,7 @@ public class DownloadHandle extends ProcessHandle {
         try {
             long r = bgDownload();
             AppBroadcaster.broadcast(sc.getContext(),
-                    AppBroadcaster.FILE_CHANGED_ONDISK, file, urx.toString());
+                    AppBroadcaster.FILE_CHANGED_ONDISK, file, urx);
             return r;
 
         } catch (Exception e) {
