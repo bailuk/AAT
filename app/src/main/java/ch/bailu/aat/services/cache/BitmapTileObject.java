@@ -5,6 +5,8 @@ import android.graphics.Bitmap;
 import org.mapsforge.core.graphics.TileBitmap;
 import org.mapsforge.core.model.Tile;
 
+import java.net.MalformedURLException;
+
 import ch.bailu.aat.map.tile.source.DownloadSource;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.background.DownloadHandle;
@@ -182,7 +184,7 @@ public class BitmapTileObject extends TileObject {
 
         private final ServiceContext scontext;
 
-        public FileDownloader(String source, Foc target, ServiceContext sc) {
+        public FileDownloader(String source, Foc target, ServiceContext sc)  {
             super(source, target);
             scontext = sc;
         }

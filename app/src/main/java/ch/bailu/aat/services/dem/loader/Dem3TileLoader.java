@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 
 import java.io.Closeable;
+import java.net.MalformedURLException;
 
 import ch.bailu.aat.coordinates.SrtmCoordinates;
 import ch.bailu.aat.services.ServiceContext;

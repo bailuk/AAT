@@ -91,8 +91,6 @@ public class SrtmCoordinates extends Coordinates implements LatLongE6Interface {
         return (base_url + toExtString() + ".hgt.zip");
     }
 
-    
-    
     public Foc toFile(Foc base) {
         Foc old = toSRTMFile(base);
         if (old.exists()) return old;

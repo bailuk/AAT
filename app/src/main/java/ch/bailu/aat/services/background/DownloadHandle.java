@@ -8,6 +8,7 @@ import java.net.URL;
 
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.util.AppBroadcaster;
+import ch.bailu.aat.util.net.URX;
 import ch.bailu.aat.util.ui.AppLog;
 import ch.bailu.aat.util.ui.AppTheme;
 import ch.bailu.util_java.foc.Foc;
@@ -21,25 +22,29 @@ public class DownloadHandle extends ProcessHandle {
 
     private final static int IO_BUFFER_SIZE=8*1024;
 
-    private final String url;
+    private final URX urx;
     private final Foc file;
 
     private boolean downloadLock=false;
 
 
     public DownloadHandle(String source, Foc target) {
-        file = target;
-        url = source;
+        this(new URX(source), target);
 
     }
 
+
+    public DownloadHandle(URX source, Foc target) {
+        file = target;
+        urx = source;
+    }
 
     @Override
     public long bgOnProcess(ServiceContext sc) {
         try {
             long r = bgDownload();
             AppBroadcaster.broadcast(sc.getContext(),
-                    AppBroadcaster.FILE_CHANGED_ONDISK, file, url);
+                    AppBroadcaster.FILE_CHANGED_ONDISK, file, urx.toString());
             return r;
 
         } catch (Exception e) {
@@ -52,7 +57,7 @@ public class DownloadHandle extends ProcessHandle {
 
 
     protected long bgDownload() throws IOException {
-        return download(new URL(url), file);
+        return download(urx.toURL(), file);
     }
 
 
@@ -63,7 +68,7 @@ public class DownloadHandle extends ProcessHandle {
 
     @Override
     public String toString() {
-        return url;
+        return urx.toString();
     }
     
 
@@ -131,6 +136,7 @@ public class DownloadHandle extends ProcessHandle {
         return file;
     }
 
-
-
+    public URX getSource() {
+        return urx;
+    }
 }

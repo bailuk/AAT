@@ -3,10 +3,7 @@ package ch.bailu.aat.services.background;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
 
-import java.io.File;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
 
@@ -72,12 +69,7 @@ public class BackgroundService extends VirtualService {
 
 
     private void download(DownloadHandle handle) {
-        URL url;
-        try {
-            url = new URL(handle.toString());
-        } catch (MalformedURLException e) {
-            url = null;
-        }
+        URL url = handle.getSource().getURL();
 
         if (url != null) {
             String host = url.getHost();
