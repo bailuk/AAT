@@ -68,7 +68,7 @@ public class GpxObjectStatic extends GpxObject implements ElevationUpdaterClient
     }
 
     private void reload(final ServiceContext sc) {
-        sc.getBackgroundService().load(new FileLoader(file));
+        sc.getBackgroundService().process(new FileLoader(file));
     }
 
 

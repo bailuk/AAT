@@ -86,7 +86,7 @@ public class Dem3Tile implements ElevationProvider, DemProvider {
 
                 AppLog.d(this, "load " + c.toString());
 
-                sc.getBackgroundService().load(loader);
+                sc.getBackgroundService().process(loader);
             }
         }
     }

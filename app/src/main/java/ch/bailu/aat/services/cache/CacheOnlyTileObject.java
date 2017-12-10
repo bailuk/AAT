@@ -59,7 +59,7 @@ public class CacheOnlyTileObject extends TileObject {
 
     @Override
     public void onInsert(ServiceContext sc) {
-        if (isLoadable()) sc.getBackgroundService().load(load);
+        if (isLoadable()) sc.getBackgroundService().process(load);
     }
 
 

@@ -127,7 +127,7 @@ public class Dem3TileLoader implements Closeable {
         Foc file = c.toFile(scontext.getContext());
         if (!file.exists()) {
             DownloadHandle handle = new DownloadHandle(c.toURL(), file);
-            scontext.getBackgroundService().download(handle);
+            scontext.getBackgroundService().process(handle);
         }
     }
 

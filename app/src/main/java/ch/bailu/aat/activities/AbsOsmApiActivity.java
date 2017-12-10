@@ -214,7 +214,7 @@ public abstract class AbsOsmApiActivity extends AbsDispatcher implements OnClick
                             osmApi.getQueryFile(),
                             getServiceContext().getContext());
 
-                    background.download(request);
+                    background.process(request);
 
                 } catch (Exception e) {
                     download.stopWaiting();
@@ -283,12 +283,14 @@ public abstract class AbsOsmApiActivity extends AbsDispatcher implements OnClick
         private final Foc queryFile;
         private final Context context;
 
+
         public ApiQueryHandle(String source, Foc target, String qs, Foc qf, Context c) {
             super(source, target);
             queryString = qs;
             queryFile   = qf;
             context = c;
         }
+
 
         @Override
         public long bgOnProcess(ServiceContext sc) {

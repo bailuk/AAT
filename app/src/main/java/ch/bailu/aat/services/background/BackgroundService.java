@@ -21,6 +21,9 @@ import ch.bailu.util_java.foc.Foc;
 
 public class BackgroundService extends VirtualService {
 
+    final static int FILE_LOADER_BASE_DIRECTORY_DEPTH = 4;
+
+
     private final HashMap<String, DownloaderThread> downloaders = new HashMap<>(5);
     private final HashMap<String, LoaderThread> loaders = new HashMap<>(5);
 
@@ -53,11 +56,22 @@ public class BackgroundService extends VirtualService {
     }
 
     public void process(ProcessHandle handle) {
-        workers[0].process(handle);
+        if (handle instanceof DownloadHandle) {
+            download((DownloadHandle) handle);
+
+        } else if (handle instanceof FileHandle) {
+            load((FileHandle) handle);
+
+        } else {
+            workers[0].process(handle);
+
+        }
     }
 
 
-    public void download(ProcessHandle handle) {
+
+
+    private void download(DownloadHandle handle) {
         URL url;
         try {
             url = new URL(handle.toString());
@@ -79,8 +93,9 @@ public class BackgroundService extends VirtualService {
 
 
 
-    public void load(ProcessHandle handle) {
-        final String base = getBaseDirectory(handle.toString());
+
+    private void load(FileHandle handle) {
+        final String base = getBaseDirectory(handle.getFile());
 
         LoaderThread loader = loaders.get(base);
 
@@ -111,28 +126,20 @@ public class BackgroundService extends VirtualService {
     }
 
 
-    private String getBaseDirectory(String id) {
-        File p1 = new File (id);
-        File r = p1;
+    private String getBaseDirectory(Foc r) {
+        Foc p = r.parent();
+        int depth = 0;
 
-        int c=0;
-        final int t=3;
+        while (p != null && depth < FILE_LOADER_BASE_DIRECTORY_DEPTH) {
+            r = p;
+            p = p.parent();
 
-        while (p1!=null) {
-            p1=p1.getParentFile();
-
-            if (c<t) {
-                c++;
-
-            } else {
-                r=r.getParentFile();
-
-            }
-
+            depth++;
         }
 
-        return r.getAbsolutePath();
+        return r.getPathName();
     }
+
 
     @Override
     public void appendStatusText(StringBuilder builder) {

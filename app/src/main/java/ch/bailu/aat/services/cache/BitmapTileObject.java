@@ -52,9 +52,9 @@ public class BitmapTileObject extends TileObject {
 
     @Override
     public void onInsert(ServiceContext sc) {
-        if (isLoadable()) sc.getBackgroundService().load(new FileLoader(file));
+        if (isLoadable()) sc.getBackgroundService().process(new FileLoader(file));
         else if (isDownloadable())
-            sc.getBackgroundService().download(download);
+            sc.getBackgroundService().process(download);
     }
 
 
@@ -68,7 +68,7 @@ public class BitmapTileObject extends TileObject {
     public void reDownload(ServiceContext sc) {
         if (download.isLocked()==false) {
             file.rm();
-            if (isDownloadable()) sc.getBackgroundService().download(download);
+            if (isDownloadable()) sc.getBackgroundService().process(download);
         }
     }
 
@@ -97,7 +97,7 @@ public class BitmapTileObject extends TileObject {
     @Override
     public void onDownloaded(String id, String u, ServiceContext sc) {
         if (u.equals(url) && isLoadable()) {
-            sc.getBackgroundService().load(new FileLoader(file));
+            sc.getBackgroundService().process(new FileLoader(file));
         }
 
     }

@@ -70,7 +70,7 @@ public class ImageObject extends ImageObjectAbstract {
             }
 
         };
-        sc.getBackgroundService().load(l);
+        sc.getBackgroundService().process(l);
     }
     
     
