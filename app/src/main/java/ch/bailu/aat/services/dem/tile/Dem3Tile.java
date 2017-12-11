@@ -2,7 +2,7 @@ package ch.bailu.aat.services.dem.tile;
 
 import ch.bailu.aat.coordinates.SrtmCoordinates;
 import ch.bailu.aat.services.ServiceContext;
-import ch.bailu.aat.services.background.ProcessHandle;
+import ch.bailu.aat.services.background.BackgroundTask;
 import ch.bailu.aat.util.ui.AppLog;
 import ch.bailu.util_java.foc.Foc;
 
@@ -51,7 +51,7 @@ public class Dem3Tile implements ElevationProvider, DemProvider {
     private final Dem3Array  array = new Dem3Array();
     private final Dem3Lock lock = new Dem3Lock();
 
-    private ProcessHandle loader = ProcessHandle.NULL;
+    private BackgroundTask loader = BackgroundTask.NULL;
 
     @Override
     public String toString() {
@@ -82,7 +82,7 @@ public class Dem3Tile implements ElevationProvider, DemProvider {
                 coordinates.coordinates = c;
 
                 Foc file = c.toFile(sc.getContext());
-                loader = new Dem3Loader(file, array, status);
+                loader = new Dem3LoaderTask(file, array, status);
 
                 AppLog.d(this, "load " + c.toString());
 

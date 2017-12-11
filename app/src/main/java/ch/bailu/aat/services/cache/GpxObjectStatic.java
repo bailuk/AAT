@@ -18,7 +18,7 @@ import ch.bailu.aat.preferences.SolidAutopause;
 import ch.bailu.aat.preferences.SolidPostprocessedAutopause;
 import ch.bailu.aat.services.InsideContext;
 import ch.bailu.aat.services.ServiceContext;
-import ch.bailu.aat.services.background.FileHandle;
+import ch.bailu.aat.services.background.FileTask;
 import ch.bailu.aat.services.dem.tile.Dem3Status;
 import ch.bailu.aat.services.dem.tile.Dem3Tile;
 import ch.bailu.aat.services.dem.tile.ElevationProvider;
@@ -206,7 +206,7 @@ public class GpxObjectStatic extends GpxObject implements ElevationUpdaterClient
     }
 
 
-    private static class FileLoader extends FileHandle {
+    private static class FileLoader extends FileTask {
 
         public FileLoader(Foc f) {
             super(f);

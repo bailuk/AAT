@@ -3,17 +3,17 @@ package ch.bailu.aat.services.dem.tile;
 import java.util.zip.ZipInputStream;
 
 import ch.bailu.aat.services.ServiceContext;
-import ch.bailu.aat.services.background.FileHandle;
+import ch.bailu.aat.services.background.FileTask;
 import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.util.ui.AppLog;
 import ch.bailu.util_java.foc.Foc;
 
-public class Dem3Loader extends FileHandle {
+public class Dem3LoaderTask extends FileTask {
 
     private final Dem3Array array;
     private final Dem3Status status;
 
-    public Dem3Loader(Foc f, Dem3Array a, Dem3Status s) {
+    public Dem3LoaderTask(Foc f, Dem3Array a, Dem3Status s) {
         super(f);
         array = a;
         status = s;

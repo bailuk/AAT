@@ -52,12 +52,12 @@ public class BackgroundService extends VirtualService {
 
     }
 
-    public void process(ProcessHandle handle) {
+    public void process(BackgroundTask handle) {
         if (handle instanceof DownloadHandle) {
             download((DownloadHandle) handle);
 
-        } else if (handle instanceof FileHandle) {
-            load((FileHandle) handle);
+        } else if (handle instanceof FileTask) {
+            load((FileTask) handle);
 
         } else {
             workers[0].process(handle);
@@ -86,7 +86,7 @@ public class BackgroundService extends VirtualService {
 
 
 
-    private void load(FileHandle handle) {
+    private void load(FileTask handle) {
         final String base = getBaseDirectory(handle.getFile());
 
         LoaderThread loader = loaders.get(base);

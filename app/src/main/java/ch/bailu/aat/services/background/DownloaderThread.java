@@ -14,7 +14,7 @@ public class DownloaderThread  extends WorkerThread {
 
 
     @Override
-    public void bgOnHandleProcessed(ProcessHandle handle, long size) {
+    public void bgOnHandleProcessed(BackgroundTask handle, long size) {
         if (size > 0) {
             statistics.success(size);
         } else {
@@ -24,7 +24,7 @@ public class DownloaderThread  extends WorkerThread {
 
 
     @Override
-    public void bgProcessHandle(ProcessHandle handle) {
+    public void bgProcessHandle(BackgroundTask handle) {
         if (statistics.isReady()) {
             super.bgProcessHandle(handle);
         }

@@ -5,12 +5,10 @@ import android.graphics.Bitmap;
 import org.mapsforge.core.graphics.TileBitmap;
 import org.mapsforge.core.model.Tile;
 
-import java.net.MalformedURLException;
-
 import ch.bailu.aat.map.tile.source.DownloadSource;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.background.DownloadHandle;
-import ch.bailu.aat.services.background.FileHandle;
+import ch.bailu.aat.services.background.FileTask;
 import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.util.fs.foc.FocAndroid;
 import ch.bailu.aat.util.graphic.SyncTileBitmap;
@@ -54,7 +52,7 @@ public class BitmapTileObject extends TileObject {
 
     @Override
     public void onInsert(ServiceContext sc) {
-        if (isLoadable()) sc.getBackgroundService().process(new FileLoader(file));
+        if (isLoadable()) sc.getBackgroundService().process(new FileLoaderTask(file));
         else if (isDownloadable())
             sc.getBackgroundService().process(download);
     }
@@ -99,7 +97,7 @@ public class BitmapTileObject extends TileObject {
     @Override
     public void onDownloaded(String id, String u, ServiceContext sc) {
         if (u.equals(url) && isLoadable()) {
-            sc.getBackgroundService().process(new FileLoader(file));
+            sc.getBackgroundService().process(new FileLoaderTask(file));
         }
 
     }
@@ -152,9 +150,9 @@ public class BitmapTileObject extends TileObject {
 
 
 
-    private static class FileLoader extends FileHandle {
+    private static class FileLoaderTask extends FileTask {
 
-        public FileLoader(Foc f) {
+        public FileLoaderTask(Foc f) {
             super(f);
         }
 

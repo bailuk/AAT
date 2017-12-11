@@ -13,7 +13,7 @@ import ch.bailu.aat.util.ui.AppLog;
 import ch.bailu.aat.util.ui.AppTheme;
 import ch.bailu.util_java.foc.Foc;
 
-public class DownloadHandle extends ProcessHandle {
+public class DownloadHandle extends BackgroundTask {
 
 
     private final static String USER_AGENT_KEY = "User-Agent";

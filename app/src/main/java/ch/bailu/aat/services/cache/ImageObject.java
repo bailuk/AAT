@@ -4,9 +4,8 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 
-import ch.bailu.aat.services.InsideContext;
 import ch.bailu.aat.services.ServiceContext;
-import ch.bailu.aat.services.background.FileHandle;
+import ch.bailu.aat.services.background.FileTask;
 import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.util.fs.foc.FocAndroid;
 import ch.bailu.aat.util.graphic.SyncBitmap;
@@ -47,7 +46,7 @@ public class ImageObject extends ImageObjectAbstract {
 
 
     private void load(ServiceContext sc) {
-        FileHandle l=new FileHandle(imageFile) {
+        FileTask l=new FileTask(imageFile) {
 
             @Override
             public long bgOnProcess(final ServiceContext sc) {

@@ -5,16 +5,16 @@ import android.graphics.Bitmap;
 import java.io.OutputStream;
 
 import ch.bailu.aat.services.ServiceContext;
-import ch.bailu.aat.services.background.FileHandle;
+import ch.bailu.aat.services.background.FileTask;
 import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.util.ui.AppLog;
 import ch.bailu.util_java.foc.Foc;
 
-public  class SaveTileHandle extends FileHandle {
+public  class SaveTileTask extends FileTask {
 
     private final String sourceID;
 
-    public SaveTileHandle(String source, Foc target) {
+    public SaveTileTask(String source, Foc target) {
         super(target);
         sourceID = source;
     }

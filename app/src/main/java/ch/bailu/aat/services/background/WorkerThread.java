@@ -20,10 +20,10 @@ public class WorkerThread extends ProcessThread {
     }
 
     @Override
-    public void bgOnHandleProcessed(ProcessHandle handle, long size) {}
+    public void bgOnHandleProcessed(BackgroundTask handle, long size) {}
 
     @Override
-    public void bgProcessHandle(final ProcessHandle handle) {
+    public void bgProcessHandle(final BackgroundTask handle) {
         if (handle.canContinue()) {
 
             new InsideContext(scontext) {

@@ -6,15 +6,11 @@ import android.graphics.Bitmap;
 import org.mapsforge.core.graphics.TileBitmap;
 import org.mapsforge.core.model.Tile;
 
-import java.io.OutputStream;
-
 import ch.bailu.aat.map.tile.source.CacheOnlySource;
 import ch.bailu.aat.map.tile.source.Source;
 import ch.bailu.aat.services.ServiceContext;
-import ch.bailu.aat.services.background.FileHandle;
 import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.util.fs.foc.FocAndroid;
-import ch.bailu.aat.util.ui.AppLog;
 import ch.bailu.util_java.foc.Foc;
 
 public class CachedTileObject extends TileObject {
@@ -27,7 +23,7 @@ public class CachedTileObject extends TileObject {
 
     private TileObject tile = null;
 
-    private final SaveTileHandle save;
+    private final SaveTileTask save;
 
     private final Foc cachedImageFile;
 
@@ -46,7 +42,7 @@ public class CachedTileObject extends TileObject {
 
         cachedImageFile = FocAndroid.factory(sc.getContext(), cachedID);
 
-        save = new SaveTileHandle(sourceID, cachedImageFile);
+        save = new SaveTileTask(sourceID, cachedImageFile);
     }
 
 

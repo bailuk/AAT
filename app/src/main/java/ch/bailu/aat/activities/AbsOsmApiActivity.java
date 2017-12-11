@@ -21,7 +21,7 @@ import ch.bailu.aat.services.InsideContext;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.background.BackgroundService;
 import ch.bailu.aat.services.background.DownloadHandle;
-import ch.bailu.aat.services.background.ProcessHandle;
+import ch.bailu.aat.services.background.BackgroundTask;
 import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.util.AppIntent;
 import ch.bailu.aat.util.OsmApiHelper;
@@ -51,7 +51,7 @@ public abstract class AbsOsmApiActivity extends AbsDispatcher implements OnClick
     private NodeListView       list;
 
     private OsmApiHelper       osmApi;
-    private ProcessHandle      request=ProcessHandle.NULL;
+    private BackgroundTask request= BackgroundTask.NULL;
 
 
 
@@ -227,7 +227,7 @@ public abstract class AbsOsmApiActivity extends AbsDispatcher implements OnClick
         public void onReceive(Context context, Intent intent) {
             if (AppIntent.hasUrl(intent, request.toString())) {
                 download.stopWaiting();
-                request = ProcessHandle.NULL;
+                request = BackgroundTask.NULL;
             }
         }
     };

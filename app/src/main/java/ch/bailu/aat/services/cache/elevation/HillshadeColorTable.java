@@ -3,7 +3,7 @@ package ch.bailu.aat.services.cache.elevation;
 import ch.bailu.aat.services.cache.ObjectHandle;
 import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.services.ServiceContext;
-import ch.bailu.aat.services.background.ProcessHandle;
+import ch.bailu.aat.services.background.BackgroundTask;
 import ch.bailu.aat.services.dem.tile.MultiCell;
 
 public class HillshadeColorTable extends ObjectHandle {
@@ -81,7 +81,7 @@ public class HillshadeColorTable extends ObjectHandle {
     }
 
 
-    private class TableInitializer extends ProcessHandle {
+    private class TableInitializer extends BackgroundTask {
         /**
          * Source: 
          * http://edndoc.esri.com/arcobjects/9.2/net/shared/geoprocessing/spatial_analyst_tools/how_hillshade_works.htm

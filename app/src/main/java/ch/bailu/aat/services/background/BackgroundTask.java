@@ -2,9 +2,9 @@ package ch.bailu.aat.services.background;
 
 import ch.bailu.aat.services.ServiceContext;
 
-public abstract class ProcessHandle implements ThreadControl {
+public abstract class BackgroundTask implements ThreadControl {
     
-    public static final ProcessHandle NULL = new ProcessHandle() {
+    public static final BackgroundTask NULL = new BackgroundTask() {
 
         @Override
         public long bgOnProcess(ServiceContext sc) {
@@ -13,7 +13,7 @@ public abstract class ProcessHandle implements ThreadControl {
     };
 
 
-    public static final ProcessHandle NULL_PROCESSED = new ProcessHandle() {
+    public static final BackgroundTask NULL_PROCESSED = new BackgroundTask() {
 
         @Override
         public long bgOnProcess(ServiceContext sc) {

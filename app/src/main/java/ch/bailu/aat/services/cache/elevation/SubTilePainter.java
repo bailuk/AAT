@@ -2,13 +2,13 @@ package ch.bailu.aat.services.cache.elevation;
 
 import ch.bailu.aat.services.InsideContext;
 import ch.bailu.aat.services.ServiceContext;
-import ch.bailu.aat.services.background.ProcessHandle;
+import ch.bailu.aat.services.background.BackgroundTask;
 import ch.bailu.aat.services.cache.ObjectHandle;
 import ch.bailu.aat.services.cache.OnObject;
 import ch.bailu.aat.services.dem.tile.Dem3Tile;
 import ch.bailu.aat.util.AppBroadcaster;
 
-public class SubTilePainter extends ProcessHandle {
+public class SubTilePainter extends BackgroundTask {
     private final Dem3Tile tile;
 
     private final String iid;

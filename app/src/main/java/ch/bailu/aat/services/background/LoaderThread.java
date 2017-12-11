@@ -18,7 +18,7 @@ public class LoaderThread extends WorkerThread {
 
 
     @Override
-    public void bgOnHandleProcessed(ProcessHandle handle, long size) {
+    public void bgOnHandleProcessed(BackgroundTask handle, long size) {
         total_loads++;
         total_bytes+=size;
     }

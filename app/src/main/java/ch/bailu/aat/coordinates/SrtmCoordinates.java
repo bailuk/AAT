@@ -11,7 +11,7 @@ import ch.bailu.util_java.foc.Foc;
 
 public class SrtmCoordinates extends Coordinates implements LatLongE6Interface {
     /**
-     * # Dem3Loader:
+     * # Dem3LoaderTask:
      * Digital Elevation Models in 3 arc / second resolution. 
      * 
      * # Source:

@@ -6,7 +6,7 @@ import org.mapsforge.core.graphics.TileBitmap;
 import org.mapsforge.core.model.Tile;
 
 import ch.bailu.aat.services.ServiceContext;
-import ch.bailu.aat.services.background.FileHandle;
+import ch.bailu.aat.services.background.FileTask;
 import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.util.fs.foc.FocAndroid;
 import ch.bailu.aat.util.graphic.SyncTileBitmap;
@@ -19,7 +19,7 @@ public class CacheOnlyTileObject extends TileObject {
 
     private final SyncTileBitmap bitmap = new SyncTileBitmap();
 
-    private final FileHandle load;
+    private final FileTask load;
     private final Foc file;
 
     private final boolean isTransparent;
@@ -35,7 +35,7 @@ public class CacheOnlyTileObject extends TileObject {
         sc.getCacheService().addToBroadcaster(this);
 
         isTransparent = transparent;
-        load = new TileLoaderHandle(file);
+        load = new TileLoaderTask(file);
 
 
 
@@ -43,9 +43,9 @@ public class CacheOnlyTileObject extends TileObject {
     }
 
 
-    public static class TileLoaderHandle extends FileHandle {
+    public static class TileLoaderTask extends FileTask {
 
-        public TileLoaderHandle(Foc f) {
+        public TileLoaderTask(Foc f) {
             super(f);
         }
 

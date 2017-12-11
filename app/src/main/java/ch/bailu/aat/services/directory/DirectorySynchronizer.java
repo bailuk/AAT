@@ -18,7 +18,7 @@ import ch.bailu.aat.gpx.GpxList;
 import ch.bailu.aat.gpx.interfaces.GpxBigDeltaInterface;
 import ch.bailu.aat.map.mapsforge.MapsForgePreview;
 import ch.bailu.aat.services.ServiceContext;
-import ch.bailu.aat.services.background.ProcessHandle;
+import ch.bailu.aat.services.background.BackgroundTask;
 import ch.bailu.aat.services.cache.GpxObject;
 import ch.bailu.aat.services.cache.GpxObjectStatic;
 import ch.bailu.aat.services.cache.ObjectHandle;
@@ -134,7 +134,7 @@ public class DirectorySynchronizer  implements Closeable {
     private class StatePrepareSync extends State {
         public Exception exception=null;
 
-        private ProcessHandle bgProcess = new ProcessHandle() {
+        private BackgroundTask bgProcess = new BackgroundTask() {
 
             @Override
             public long bgOnProcess(ServiceContext sc) {

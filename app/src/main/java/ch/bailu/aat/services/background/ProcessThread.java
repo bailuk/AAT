@@ -8,7 +8,7 @@ public abstract class ProcessThread extends Thread implements Closeable, ThreadC
     private final HandleStack queue;
 
 
-    private ProcessHandle current = ProcessHandle.NULL;
+    private BackgroundTask current = BackgroundTask.NULL;
 
 
     public ProcessThread(HandleStack q) {
@@ -30,7 +30,7 @@ public abstract class ProcessThread extends Thread implements Closeable, ThreadC
                 current = queue.take();
                 bgProcessHandle(current);
                 current.onRemove();
-                current = ProcessHandle.NULL;
+                current = BackgroundTask.NULL;
 
 
             } catch (InterruptedException e) {
@@ -42,12 +42,12 @@ public abstract class ProcessThread extends Thread implements Closeable, ThreadC
 
 
 
-    public abstract void bgOnHandleProcessed(ProcessHandle handle, long size);
+    public abstract void bgOnHandleProcessed(BackgroundTask handle, long size);
 
 
-    public abstract void bgProcessHandle(ProcessHandle handle);
+    public abstract void bgProcessHandle(BackgroundTask handle);
 
-    public void process(ProcessHandle handle) {
+    public void process(BackgroundTask handle) {
         if (canContinue()) queue.offer(handle);
     }
 

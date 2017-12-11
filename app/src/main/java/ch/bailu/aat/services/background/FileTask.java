@@ -2,12 +2,12 @@ package ch.bailu.aat.services.background;
 
 import ch.bailu.util_java.foc.Foc;
 
-public abstract class FileHandle extends ProcessHandle {
+public abstract class FileTask extends BackgroundTask {
     private final Foc file;
     
     
     
-    public FileHandle(Foc f) {
+    public FileTask(Foc f) {
         file = f;
     }
     
