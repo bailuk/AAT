@@ -14,7 +14,7 @@ public class WorkerThread extends ProcessThread {
     }
 
 
-    public WorkerThread(ServiceContext sc, HandleQueue q) {
+    public WorkerThread(ServiceContext sc, HandleStack q) {
         super(q);
         scontext = sc;
     }

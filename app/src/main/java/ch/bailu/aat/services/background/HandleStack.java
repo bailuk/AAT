@@ -1,31 +1,29 @@
 package ch.bailu.aat.services.background;
 
-import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.BlockingDeque;
+import java.util.concurrent.LinkedBlockingDeque;
 
-public class HandleQueue {
+public class HandleStack {
     private final static int DEFAULT_LIMIT = 5000;
 
-    private final ArrayBlockingQueue<ProcessHandle> queue;
+    private final BlockingDeque<ProcessHandle> queue;
     private final int limit;
 
-    public HandleQueue() {
+    public HandleStack() {
         this(DEFAULT_LIMIT);
     }
 
 
-    public HandleQueue(int l) {
+    public HandleStack(int l) {
         limit = l;
-        queue = new ArrayBlockingQueue<>(limit, true);
+        queue = new LinkedBlockingDeque<>(limit);
     }
 
 
 
     public ProcessHandle take() throws InterruptedException {
-        return queue.take();
+        return queue.takeFirst();
     }
-
-
-
 
 
     public void offer(ProcessHandle handle) {
@@ -37,7 +35,7 @@ public class HandleQueue {
     public void close(int i) {
         while(remove() != null);
         while(i>0) {
-            queue.offer(ProcessHandle.NULL);
+            queue.offerFirst(ProcessHandle.NULL);
             i--;
         }
     }
@@ -45,12 +43,12 @@ public class HandleQueue {
 
     private void insert(ProcessHandle handle) {
         handle.onInsert();
-        queue.offer(handle);
+        queue.offerFirst(handle);
     }
 
 
     private ProcessHandle remove() {
-        ProcessHandle handle = queue.poll();
+        ProcessHandle handle = queue.pollLast();
 
         if (handle != null) {
             handle.onRemove();

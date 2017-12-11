@@ -25,7 +25,7 @@ public class BackgroundService extends VirtualService {
     private final HashMap<String, LoaderThread> loaders = new HashMap<>(5);
 
 
-    private final HandleQueue queue = new HandleQueue();
+    private final HandleStack queue = new HandleStack();
 
 
     private final WorkerThread workers[] =

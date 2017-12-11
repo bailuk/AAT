@@ -5,20 +5,20 @@ import java.io.Closeable;
 public abstract class ProcessThread extends Thread implements Closeable, ThreadControl {
 
     private boolean continueThread=true;
-    private final HandleQueue queue;
+    private final HandleStack queue;
 
 
     private ProcessHandle current = ProcessHandle.NULL;
 
 
-    public ProcessThread(HandleQueue q) {
+    public ProcessThread(HandleStack q) {
         queue = q;
         start();
     }
 
 
     public ProcessThread(int limit) {
-        this(new HandleQueue(limit));
+        this(new HandleStack(limit));
     }
 
 
