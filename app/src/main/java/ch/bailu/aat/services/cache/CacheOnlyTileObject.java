@@ -22,6 +22,7 @@ public class CacheOnlyTileObject extends TileObject {
     private final FileHandle load;
     private final Foc file;
 
+    private final boolean isTransparent;
 
 
 
@@ -33,19 +34,48 @@ public class CacheOnlyTileObject extends TileObject {
 
         sc.getCacheService().addToBroadcaster(this);
 
-        load = new FileHandle(file) {
+        isTransparent = transparent;
+        load = new TileLoaderHandle(file);
 
-            @Override
-            public long bgOnProcess(ServiceContext sc) {
-                bitmap.set(file, TILE_SIZE, transparent);
-                AppBroadcaster.broadcast(sc.getContext(), AppBroadcaster.FILE_CHANGED_INCACHE,
-                        getFile());
 
-                return bitmap.getSize();
-            }
-        };
+
 
     }
+
+
+    public static class TileLoaderHandle extends FileHandle {
+
+        public TileLoaderHandle(Foc f) {
+            super(f);
+        }
+
+        @Override
+        public long bgOnProcess(final ServiceContext sc) {
+
+            final long[] size = {0};
+
+
+            new OnObject(sc, getFile().getPath(), CacheOnlyTileObject.class) {
+                @Override
+                public void run(ObjectHandle handle) {
+                    CacheOnlyTileObject tile = (CacheOnlyTileObject) handle;
+
+                    tile.bitmap.set(getFile(), TILE_SIZE, tile.isTransparent);
+
+
+                    AppBroadcaster.broadcast(sc.getContext(), AppBroadcaster.FILE_CHANGED_INCACHE,
+                            getFile());
+
+                    size[0] =  tile.bitmap.getSize();
+
+
+                }
+            };
+            return size[0];
+
+
+        }
+    };
 
     @Override
     public TileBitmap getTileBitmap() {

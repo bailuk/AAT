@@ -27,7 +27,7 @@ public class CachedTileObject extends TileObject {
 
     private TileObject tile = null;
 
-    private final FileHandle save;
+    private final SaveTileHandle save;
 
     private final Foc cachedImageFile;
 
@@ -46,58 +46,11 @@ public class CachedTileObject extends TileObject {
 
         cachedImageFile = FocAndroid.factory(sc.getContext(), cachedID);
 
-        save = new FileHandle(cachedImageFile) {
-
-            @Override
-            public long bgOnProcess(final ServiceContext sc) {
-                final long[] size = {0};
-
-
-                new OnObject(sc, sourceID, TileObject.class) {
-                    @Override
-                    public void run(ObjectHandle handle) {
-                        size[0] = save(sc, (TileObject) handle);
-                    }
-                };
-
-                return size[0];
-            }
-
-
-            private long save(ServiceContext sc, TileObject self) {
-                long size = 0;
-                OutputStream out = null;
-                Foc file = cachedImageFile;
-
-                if (file.exists() == false) {
-                    try {
-
-                        out = file.openW();
-
-                        Bitmap bitmap = self.getBitmap();
-                        if (bitmap != null && out != null) {
-                            bitmap.compress(Bitmap.CompressFormat.PNG, 0, out);
-                        }
-
-                        AppBroadcaster.broadcast(sc.getContext(), AppBroadcaster.FILE_CHANGED_ONDISK,
-                                cachedID, sourceID);
-
-                        size = self.getSize();
-
-                    } catch (Exception e) {
-                        AppLog.d(this, e.toString());
-
-
-                    } finally {
-                        Foc.close(out);
-
-                    }
-                }
-
-                return size;
-            }
-        };
+        save = new SaveTileHandle(sourceID, cachedImageFile);
     }
+
+
+
 
     @Override
     public void onInsert(ServiceContext sc) {
@@ -203,6 +156,4 @@ public class CachedTileObject extends TileObject {
             return new CachedTileObject(id, cs, tile, source);
         }
     }
-
-
 }
