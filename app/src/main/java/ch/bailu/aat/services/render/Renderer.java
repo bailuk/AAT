@@ -8,7 +8,9 @@ import org.mapsforge.core.model.Tile;
 import org.mapsforge.map.android.graphics.AndroidGraphicFactory;
 import org.mapsforge.map.datastore.MapDataStore;
 import org.mapsforge.map.datastore.MultiMapDataStore;
+import org.mapsforge.map.layer.Layer;
 import org.mapsforge.map.layer.cache.TileCache;
+import org.mapsforge.map.layer.queue.JobQueue;
 import org.mapsforge.map.layer.renderer.DatabaseRenderer;
 import org.mapsforge.map.layer.renderer.MapWorkerPool;
 import org.mapsforge.map.layer.renderer.RendererJob;
@@ -22,7 +24,7 @@ import java.util.ArrayList;
 import ch.bailu.aat.util.ui.AppLog;
 import ch.bailu.util_java.foc.Foc;
 
-public class Renderer extends RendererBase<RendererJob> {
+public class Renderer extends Layer {
     private final static boolean TRANSPARENT = false;
     private final static boolean RENDER_LABELS = true;
     private final static boolean CACHE_LABELS = false;
@@ -32,8 +34,17 @@ public class Renderer extends RendererBase<RendererJob> {
     private final MapWorkerPool mapWorkerPool;
     private final RenderThemeFuture renderThemeFuture;
 
+
+    private final JobQueue<RendererJob> jobQueue;
+
+
+
     public Renderer(XmlRenderTheme t, TileCache cache, ArrayList<Foc> files) {
-        super(cache, new Model());
+        final Model model = new Model();
+
+
+        displayModel=model.displayModel;
+        jobQueue = new JobQueue<>(model.mapViewPosition, model.displayModel);
 
         renderThemeFuture = createTheme(t);
 
@@ -77,7 +88,6 @@ public class Renderer extends RendererBase<RendererJob> {
 
 
         mapWorkerPool.start();
-
     }
 
 
@@ -97,27 +107,20 @@ public class Renderer extends RendererBase<RendererJob> {
     }
 
 
-    @Override
-    public TileBitmap getTile(Tile tile) {
-        if (mapDataStore.supportsTile(tile))
-            return super.getTile(tile);
-
-        return null;
+    public void addJob(Tile tile) {
+        if (mapDataStore.supportsTile(tile)) {
+            jobQueue.add(createJob(tile));
+            AppLog.d(this, "Size: " + jobQueue.size());
+        }
     }
 
 
-    @Override
-    protected RendererJob createJob(Tile tile) {
+    private RendererJob createJob(Tile tile) {
         return new RendererJob(tile, mapDataStore,
                 renderThemeFuture,
                 displayModel,
                 TEXT_SCALE,
                 TRANSPARENT, false);
-    }
-
-    @Override
-    protected boolean isTileStale(Tile tile, TileBitmap bitmap) {
-        return mapDataStore.getDataTimestamp(tile) > bitmap.getTimestamp();
     }
 
 
@@ -127,4 +130,5 @@ public class Renderer extends RendererBase<RendererJob> {
     public boolean supportsTile(Tile t) {
         return mapDataStore.supportsTile(t);
     }
+
 }

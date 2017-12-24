@@ -53,8 +53,8 @@ public class BackgroundService extends VirtualService {
     }
 
     public void process(BackgroundTask handle) {
-        if (handle instanceof DownloadHandle) {
-            download((DownloadHandle) handle);
+        if (handle instanceof DownloadTask) {
+            download((DownloadTask) handle);
 
         } else if (handle instanceof FileTask) {
             load((FileTask) handle);
@@ -68,7 +68,7 @@ public class BackgroundService extends VirtualService {
 
 
 
-    private void download(DownloadHandle handle) {
+    private void download(DownloadTask handle) {
         URL url = handle.getSource().getURL();
 
         if (url != null) {

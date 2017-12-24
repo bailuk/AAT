@@ -14,10 +14,8 @@ import ch.bailu.aat.services.dem.loader.Dem3Loader;
 import ch.bailu.aat.services.dem.loader.Dem3Tiles;
 import ch.bailu.aat.services.dem.tile.Dem3Status;
 import ch.bailu.aat.services.dem.tile.Dem3Tile;
-import ch.bailu.aat.services.dem.tile.ElevationProvider;
 import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.util.AppIntent;
-import ch.bailu.aat.util.ui.AppLog;
 
 public class ElevationUpdater implements Closeable {
 
@@ -120,13 +118,14 @@ public class ElevationUpdater implements Closeable {
                     e.updateFromSrtmTile(scontext, tile);
                 }
             }
-            AppLog.d(this, "update " + tile.getCoordinates().toString() + "["+size + "]");
+            //AppLog.d(this, "update " + tile.getCoordinates().toString() + "["+size + "]");
         }
 
+        /*
         if (tile.getStatus() == Dem3Status.EMPTY) {
             AppLog.d(this, "update " + tile.getCoordinates().toString() + "[E!]");
         }
-
+*/
         if (tile.getStatus() == Dem3Status.VALID || tile.getStatus() == Dem3Status.EMPTY) {
             pendingUpdates.remove(tile.getCoordinates());
         }

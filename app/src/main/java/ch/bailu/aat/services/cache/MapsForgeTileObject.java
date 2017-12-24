@@ -4,13 +4,15 @@ import android.graphics.Bitmap;
 
 import org.mapsforge.core.graphics.TileBitmap;
 import org.mapsforge.core.model.Tile;
-import org.mapsforge.map.model.common.Observer;
 
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.util.graphic.SyncTileBitmap;
+import ch.bailu.aat.util.ui.AppLog;
 
-public class MapsForgeTileObject extends TileObject implements Observer {
+public class MapsForgeTileObject extends TileObject {
+    private static long DEFAULT_SIZE = TileObject.TILE_SIZE * TileObject.TILE_SIZE * 8 * 4;
+
     private final ServiceContext scontext;
     private final Tile tile;
 
@@ -24,19 +26,7 @@ public class MapsForgeTileObject extends TileObject implements Observer {
         tile = t;
         themeID = tID;
 
-        sc.getRenderService().lockToCache(this);
-        retreiveBitmap();
-    }
-
-    private void retreiveBitmap() {
-        TileBitmap b = scontext.getRenderService().getTile(this);
-
-        if (b != null) {
-            bitmap.set(b);
-            AppBroadcaster.broadcast(scontext.getContext(),
-                    AppBroadcaster.FILE_CHANGED_INCACHE,
-                    toString());
-        }
+        sc.getRenderService().lockToRenderer(this);
     }
 
 
@@ -47,43 +37,36 @@ public class MapsForgeTileObject extends TileObject implements Observer {
 
     @Override
     public Bitmap getBitmap() {
-        return bitmap.getAndroidBitmap();
+            return bitmap.getAndroidBitmap();
     }
-
-
-
-
 
 
     @Override
-    public void reDownload(ServiceContext sc) {
-
-    }
+    public void reDownload(ServiceContext sc) {}
 
     @Override
     public boolean isLoaded() {
-        return getBitmap() != null;
+        return bitmap.getAndroidBitmap() != null;
     }
 
     @Override
-    public void onDownloaded(String id, String url, ServiceContext sc) {
-
-    }
+    public void onDownloaded(String id, String url, ServiceContext sc) {}
 
     @Override
-    public void onChanged(String id, ServiceContext sc) {
+    public void onChanged(String id, ServiceContext sc) {}
 
-    }
 
-    @Override
-    public void onChange() {
-        retreiveBitmap();
+    public void onRendered(TileBitmap fromRenderer) {
+            bitmap.set(fromRenderer);
+            AppBroadcaster.broadcast(scontext.getContext(),
+                    AppBroadcaster.FILE_CHANGED_INCACHE,
+                    getID());
     }
 
 
     @Override
     public void onRemove(ServiceContext sc) {
-        sc.getRenderService().freeFromCache(this);
+        scontext.getRenderService().freeFromRenderer(MapsForgeTileObject.this);
         bitmap.free();
         super.onRemove(sc);
     }
@@ -91,7 +74,10 @@ public class MapsForgeTileObject extends TileObject implements Observer {
 
     @Override
     public long getSize() {
-        return bitmap.getSize();
+        if (isLoaded()) {
+            DEFAULT_SIZE = bitmap.getSize();
+        }
+        return DEFAULT_SIZE;
     }
 
     @Override
@@ -102,6 +88,7 @@ public class MapsForgeTileObject extends TileObject implements Observer {
     public Tile getTile() {
         return tile;
     }
+
 
 
     public static class Factory extends ObjectHandle.Factory {
@@ -120,7 +107,4 @@ public class MapsForgeTileObject extends TileObject implements Observer {
         }
 
     }
-
-
-
 }

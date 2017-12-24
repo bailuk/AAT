@@ -5,11 +5,10 @@ import android.content.Context;
 import android.content.Intent;
 
 import java.io.Closeable;
-import java.net.MalformedURLException;
 
 import ch.bailu.aat.coordinates.SrtmCoordinates;
 import ch.bailu.aat.services.ServiceContext;
-import ch.bailu.aat.services.background.DownloadHandle;
+import ch.bailu.aat.services.background.DownloadTask;
 import ch.bailu.aat.services.dem.tile.Dem3Tile;
 import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.util.AppIntent;
@@ -80,12 +79,7 @@ public class Dem3TileLoader implements Closeable {
         if (tiles.have(c) == false) {
             final Dem3Tile slot = tiles.getOldestProcessed();
 
-            if (slot == null) {
-                AppLog.d(this, "not loading because no slot");
-            } else {
-                if (slot.isLocked()) {
-                    AppLog.d(this, "not loading because slot is locked");
-                }
+            if (slot != null && !slot.isLocked()) {
                 slot.load(scontext, c);
             }
         }
@@ -127,7 +121,7 @@ public class Dem3TileLoader implements Closeable {
     private void downloadNow(SrtmCoordinates c) {
         Foc file = c.toFile(scontext.getContext());
         if (!file.exists()) {
-            DownloadHandle handle = new DownloadHandle(c.toURL(), file);
+            DownloadTask handle = new DownloadTask(c.toURL(), file);
             scontext.getBackgroundService().process(handle);
         }
     }

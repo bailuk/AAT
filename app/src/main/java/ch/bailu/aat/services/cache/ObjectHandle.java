@@ -63,7 +63,7 @@ public abstract class ObjectHandle implements ObjectBroadcastReceiver{
         access();
     }
 
-    public void free() {
+    public synchronized void free() {
         lock--;
     }
     

@@ -173,7 +173,6 @@ public abstract class ElevationTile extends TileObject implements ElevationUpdat
 
             final int[] buffer = new int[interR.width() * interR.height()];
 
-            long mark = System.currentTimeMillis();
             fillBuffer(buffer, raster, subTile, split(dem3Tile));
 
             b.setPixels(
@@ -184,10 +183,6 @@ public abstract class ElevationTile extends TileObject implements ElevationUpdat
                     interR.top,
                     interR.width(),
                     interR.height());
-
-
-            mark = (System.currentTimeMillis() - mark);
-            AppLog.d(this, "P[" + mark+"]" );
 
             return interR.width() * interR.height() * 2;
         }

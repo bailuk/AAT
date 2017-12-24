@@ -3,32 +3,18 @@ package ch.bailu.aat.services.render;
 import java.util.HashMap;
 
 import ch.bailu.aat.services.cache.MapsForgeTileObject;
-import ch.bailu.aat.util.ui.AppLog;
 
 public class Caches {
     private final HashMap<String, Cache> caches = new HashMap<>(5);
 
 
-    public void lockToCache(MapsForgeTileObject o) {
-        get(o.getThemeID()).lockToCache(o);
+    public void lockToRenderer(MapsForgeTileObject o) {
+        get(o.getThemeID()).lockToRenderer(o);
     }
 
 
-    public void freeFromCache(MapsForgeTileObject o) {
-        Cache cache = caches.get(o.getThemeID());
-
-        if (cache == null) {
-            AppLog.d(this, "FIXME: missing cache");
-            return;
-        }
-
-
-        cache.freeFromCache(o);
-
-        if (cache.isEmpty()) {
-            //caches.remove(o.getThemeID());
-            AppLog.d(this, o.getThemeID() + " is empty");
-        }
+    public void freeFromRenderer(MapsForgeTileObject o) {
+        get(o.getThemeID()).freeFromRenderer(o);
     }
 
 
@@ -41,4 +27,6 @@ public class Caches {
         }
         return cache;
     }
+
+
 }

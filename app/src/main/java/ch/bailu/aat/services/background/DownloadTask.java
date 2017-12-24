@@ -13,7 +13,7 @@ import ch.bailu.aat.util.ui.AppLog;
 import ch.bailu.aat.util.ui.AppTheme;
 import ch.bailu.util_java.foc.Foc;
 
-public class DownloadHandle extends BackgroundTask {
+public class DownloadTask extends BackgroundTask {
 
 
     private final static String USER_AGENT_KEY = "User-Agent";
@@ -28,13 +28,13 @@ public class DownloadHandle extends BackgroundTask {
     private boolean downloadLock=false;
 
 
-    public DownloadHandle(String source, Foc target) {
+    public DownloadTask(String source, Foc target) {
         this(new URX(source), target);
 
     }
 
 
-    public DownloadHandle(URX source, Foc target) {
+    public DownloadTask(URX source, Foc target) {
         file = target;
         urx = source;
     }

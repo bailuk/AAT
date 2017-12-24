@@ -1,6 +1,5 @@
 package ch.bailu.aat.services.render;
 
-import org.mapsforge.core.graphics.TileBitmap;
 import org.mapsforge.core.model.Tile;
 import org.mapsforge.map.rendertheme.XmlRenderTheme;
 
@@ -16,15 +15,6 @@ public class Configuration {
     private String themeID;
 
 
-    public TileBitmap getTile(MapsForgeTileObject o) {
-
-
-        if (isConfigured() && themeID.equals(o.getThemeID()))
-            return renderer.getTile(o.getTile());
-
-
-        return null;
-    }
 
 
     public boolean isConfigured() {
@@ -65,4 +55,16 @@ public class Configuration {
     public boolean supportsTile(Tile t) {
         return isConfigured() && renderer.supportsTile(t);
     }
+
+
+    public void lockToRenderer(MapsForgeTileObject o) {
+            if (isConfigured() && themeID.equals(o.getThemeID()))
+                renderer.addJob(o.getTile());
+;
+        }
+
+    public void freeFromRenderer(MapsForgeTileObject o) {
+        //renderer.removeJob(o.getTile());
+    }
 }
+

@@ -88,10 +88,7 @@ public class MapsForgeTileLayer extends Layer implements MapLayerInterface, Obse
                 r.bottom = r.top + tileSize;
 
                 Bitmap androidbitmap = AndroidGraphicFactory.getBitmap(bitmap);
-                if (androidbitmap == null) {
-                    AppLog.d(this, provider.getSource().getName());
-                } else {
-
+                if (androidbitmap != null) {
                     AndroidGraphicFactory.getCanvas(canvas).
                             drawBitmap(androidbitmap, null, r, paint);
                 }

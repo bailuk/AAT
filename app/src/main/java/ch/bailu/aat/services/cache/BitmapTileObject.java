@@ -7,7 +7,7 @@ import org.mapsforge.core.model.Tile;
 
 import ch.bailu.aat.map.tile.source.DownloadSource;
 import ch.bailu.aat.services.ServiceContext;
-import ch.bailu.aat.services.background.DownloadHandle;
+import ch.bailu.aat.services.background.DownloadTask;
 import ch.bailu.aat.services.background.FileTask;
 import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.util.fs.foc.FocAndroid;
@@ -23,7 +23,7 @@ public class BitmapTileObject extends TileObject {
     private final Foc file;
 
     private final SyncTileBitmap bitmap=new SyncTileBitmap();
-    private final DownloadHandle download;
+    private final DownloadTask download;
 
 
 
@@ -178,7 +178,7 @@ public class BitmapTileObject extends TileObject {
 
     }
 
-    private static class FileDownloader extends DownloadHandle {
+    private static class FileDownloader extends DownloadTask {
 
         private final ServiceContext scontext;
 

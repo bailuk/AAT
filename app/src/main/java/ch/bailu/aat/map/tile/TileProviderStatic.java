@@ -61,7 +61,7 @@ public class TileProviderStatic implements TileProviderInterface, Closeable {
 
     private TileObject getHandleFromList(Tile tile) {
         for (TileObject handle: tiles) {
-            if (TileObjectCache.compare(handle.getTile(), tile)) {
+            if (TileObjectCache.compare(handle.getTileBitmap(), tile)) {
                 return handle;
             }
         }

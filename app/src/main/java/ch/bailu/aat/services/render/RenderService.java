@@ -48,18 +48,15 @@ public class RenderService  extends VirtualService
     }
 
 
-    public TileBitmap getTile(MapsForgeTileObject o) {
-        return configuration.getTile(o);
+      public void lockToRenderer(MapsForgeTileObject o) {
+        caches.lockToRenderer(o);
+        configuration.lockToRenderer(o);
     }
 
 
-    public void lockToCache(MapsForgeTileObject o) {
-        caches.lockToCache(o);
-    }
-
-
-    public void freeFromCache(MapsForgeTileObject o) {
-        caches.freeFromCache(o);
+    public void freeFromRenderer(MapsForgeTileObject o) {
+        configuration.freeFromRenderer(o);
+        caches.freeFromRenderer(o);
     }
 
 

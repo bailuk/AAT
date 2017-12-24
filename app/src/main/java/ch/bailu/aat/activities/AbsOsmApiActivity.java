@@ -20,7 +20,7 @@ import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.services.InsideContext;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.background.BackgroundService;
-import ch.bailu.aat.services.background.DownloadHandle;
+import ch.bailu.aat.services.background.DownloadTask;
 import ch.bailu.aat.services.background.BackgroundTask;
 import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.util.AppIntent;
@@ -212,7 +212,7 @@ public abstract class AbsOsmApiActivity extends AbsDispatcher implements OnClick
 
                 } catch (Exception e) {
                     download.stopWaiting();
-                    request = DownloadHandle.NULL;
+                    request = DownloadTask.NULL;
 
                     AppLog.e(AbsOsmApiActivity.this, e);
                 }
@@ -272,7 +272,7 @@ public abstract class AbsOsmApiActivity extends AbsDispatcher implements OnClick
     }
 
 
-    private static class ApiQueryHandle extends DownloadHandle {
+    private static class ApiQueryHandle extends DownloadTask {
         private final String queryString;
         private final Foc queryFile;
         private final Context context;
