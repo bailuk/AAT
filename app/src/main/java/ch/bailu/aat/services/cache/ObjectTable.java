@@ -33,43 +33,6 @@ public class ObjectTable  {
     private final HashMap<String, Container> hashMap = new HashMap(INITIAL_CAPACITY);
 
 
-    public synchronized ObjectHandle getHandle(String id, Factory factory, CacheService son) {
-        ObjectHandle h=getFromCache(id);
-
-        if (h == null) {
-            h = factory.factory(id, son.scontext);
-
-            putIntoCache(h);
-
-            h.lock(son.scontext);
-            h.onInsert(son.scontext);
-
-            trim(son);
-
-        } else {
-            h.lock(son.scontext);
-        }
-        return h;
-    }
-
-
-    private void putIntoCache(ObjectHandle obj) {
-
-        hashMap.put(obj.toString(),new Container(obj));
-        totalMemorySize += obj.getSize();
-
-        log();
-    }
-
-
-    private ObjectHandle getFromCache(String key) {
-        Container c = hashMap.get(key);
-        if (c != null)
-            return c.obj;
-
-        return null;
-    }
-
     public synchronized ObjectHandle getHandle(String key, ServiceContext sc) {
         ObjectHandle obj=getFromCache(key);
 
@@ -82,14 +45,59 @@ public class ObjectTable  {
     }
 
 
+    public synchronized ObjectHandle getHandle(String id, Factory factory, CacheService self) {
+        ObjectHandle h =  getHandle(id, factory, self.scontext);
+        trim(self);
+        return h;
+    }
 
 
-    private boolean updateSize(ObjectHandle obj) {
-        Container c = hashMap.get(obj.toString());
+
+    public synchronized ObjectHandle getHandle(String id, Factory factory, ServiceContext scontext) {
+        ObjectHandle h=getFromCache(id);
+
+        if (h == null) {
+            h = factory.factory(id, scontext);
+
+            putIntoCache(h);
+
+            h.lock(scontext);
+            h.onInsert(scontext);
+
+        } else {
+            h.lock(scontext);
+        }
+        return h;
+    }
+
+
+    private synchronized void putIntoCache(ObjectHandle obj) {
+
+        hashMap.put(obj.toString(),new Container(obj));
+        totalMemorySize += obj.getSize();
+
+        log();
+    }
+
+
+    private synchronized ObjectHandle getFromCache(String key) {
+        Container c = hashMap.get(key);
+        if (c != null)
+            return c.obj;
+
+        return null;
+    }
+
+
+
+
+
+    private synchronized boolean updateSize(String id) {
+        Container c = hashMap.get(id);
 
         if (c != null ) {
             long oSize = c.size;
-            long nSize = obj.getSize();
+            long nSize = c.obj.getSize();
 
             totalMemorySize -= oSize;
             c.size = nSize;
@@ -101,30 +109,18 @@ public class ObjectTable  {
     }
 
 
-    public synchronized void onObjectChanged(Intent intent, CacheService self) {
-        ObjectHandle obj = getHandle(intent);
-        onObjectChanged(obj, self);
-    }
 
-
-    public synchronized void onObjectChanged(ObjectHandle obj, CacheService self) {
-        if (updateSize(obj))
+    public void onObjectChanged(Intent intent, CacheService self) {
+        if (updateSize(toID(intent)))
             trim(self);
+
     }
 
 
-
-
-
-    private ObjectHandle getHandle(Intent intent) {
-        String key = AppIntent.getFile(intent);
-        Container c = hashMap.get(key);
-
-        if (c == null) {
-            c=Container.NULL;
-        }
-        return c.obj;
+    private String toID(Intent intent) {
+        return AppIntent.getFile(intent);
     }
+
 
 
     public synchronized void limit(CacheService self, long l) {
@@ -134,16 +130,14 @@ public class ObjectTable  {
     }
 
 
-    private synchronized void trim(CacheService self) {
-
+    private void trim(CacheService self) {
         while ((totalMemorySize > limit) && removeOldest(self));
     }
 
 
 
     private boolean removeOldest(CacheService self) {
-        final Container oldest = findOldest();
-        return removeFromTable(oldest, self);
+        return removeFromTable(findOldest(), self);
     }
 
 
@@ -155,13 +149,12 @@ public class ObjectTable  {
     }
 
 
-    private boolean removeFromTable(Container remove, CacheService self) {
-        final String key = remove.obj.toString();
-        remove = hashMap.get(key);
+    private synchronized boolean removeFromTable(String id, CacheService self) {
+        Container remove = hashMap.get(id);
 
-        if (remove !=null) {
+        if (remove !=null && remove.obj.isLocked() == false) {
             self.broadcaster.delete(remove.obj);
-            hashMap.remove(key);
+            hashMap.remove(id);
             totalMemorySize -= remove.size;
             remove.obj.onRemove(self.scontext);
             return true;
@@ -172,10 +165,9 @@ public class ObjectTable  {
 
 
 
-    private Container findOldest() {
+    private synchronized String findOldest() {
         Container oldest = new Container(ObjectHandle.NULL);
         oldest.obj.access();
-
 
         for (Container current : hashMap.values()) {
             if ((!current.obj.isLocked()) && (current.obj.getAccessTime() < oldest.obj.getAccessTime())) {
@@ -183,7 +175,7 @@ public class ObjectTable  {
             }
         }
 
-        return oldest;
+        return oldest.obj.getID();
     }
 
 

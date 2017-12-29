@@ -110,7 +110,6 @@ public class Renderer extends Layer {
     public void addJob(Tile tile) {
         if (mapDataStore.supportsTile(tile)) {
             jobQueue.add(createJob(tile));
-            AppLog.d(this, "Size: " + jobQueue.size());
         }
     }
 
