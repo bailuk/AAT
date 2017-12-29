@@ -21,7 +21,7 @@ public class CachedTileObject extends TileObject {
     private final ObjectHandle.Factory cachedFactory, sourceFactory;
     private final String cachedID, sourceID;
 
-    private TileObject tile = null;
+    private TileObject tile = TileObject.NULL_TILE;
 
     private final SaveTileTask save;
 
@@ -84,6 +84,11 @@ public class CachedTileObject extends TileObject {
         }
     }
 
+    @Override
+    public void access() {
+        tile.access();
+        super.access();
+    }
 
     @Override
     public void onRemove(ServiceContext cs) {
@@ -92,15 +97,13 @@ public class CachedTileObject extends TileObject {
 
 
     @Override
-    public Bitmap getBitmap() {
-        if (tile != null) return tile.getBitmap();
-        return null;
+    public Bitmap getAndroidBitmap() {
+        return tile.getAndroidBitmap();
     }
 
     @Override
     public TileBitmap getTileBitmap() {
-        if (tile != null) return tile.getTileBitmap();
-        return null;
+        return tile.getTileBitmap();
     }
 
     @Override
@@ -118,13 +121,12 @@ public class CachedTileObject extends TileObject {
 
     @Override
     public boolean isLoaded() {
-        return (tile != null && tile.isLoaded());
+        return tile.isLoaded();
     }
 
 
     @Override
     public long getSize() {
-        if (tile != null) return tile.getSize();
         return MIN_SIZE;
     }
 

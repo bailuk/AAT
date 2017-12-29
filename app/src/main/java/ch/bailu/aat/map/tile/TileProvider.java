@@ -71,6 +71,7 @@ public class TileProvider implements Attachable, ObservableInterface {
         TileObject handle = getTileHandle(tile);
 
         if (handle != null) {
+            handle.access();
             return handle.getTileBitmap();
         }
         return null;

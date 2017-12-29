@@ -9,13 +9,14 @@ import org.mapsforge.core.util.MercatorProjection;
 
 import java.util.ArrayList;
 
+import ch.bailu.aat.preferences.SolidTileSize;
 import ch.bailu.aat.services.cache.Span;
 import ch.bailu.aat.services.cache.TileObject;
 import ch.bailu.aat.services.dem.tile.DemGeoToIndex;
 
 public class Raster {
-    public final int[] toLaRaster = new int[TileObject.TILE_SIZE];
-    public final int[] toLoRaster = new int[TileObject.TILE_SIZE];
+    public final int[] toLaRaster = new int[SolidTileSize.DEFAULT_TILESIZE];
+    public final int[] toLoRaster = new int[SolidTileSize.DEFAULT_TILESIZE];
 
     private boolean initialized=false;
 
@@ -61,11 +62,11 @@ public class Raster {
         final Span laS=new Span((int) Math.floor(la/1e6d));
         final Span loS=new Span((int) Math.floor(lo/1e6d));
 
-        final int laInc=laDiff / TileObject.TILE_SIZE;
-        final int loInc=loDiff / TileObject.TILE_SIZE;
+        final int laInc=laDiff / SolidTileSize.DEFAULT_TILESIZE;
+        final int loInc=loDiff / SolidTileSize.DEFAULT_TILESIZE;
 
         int i;
-        for (i=0; i< TileObject.TILE_SIZE; i++) {
+        for (i=0; i< SolidTileSize.DEFAULT_TILESIZE; i++) {
             toLaRaster[i]=la;
             toLoRaster[i]=lo;
 
@@ -87,14 +88,14 @@ public class Raster {
 
     // 2. pixel to dem index
     private void initializeIndexRaster(DemGeoToIndex toIndex) {
-        for (int i=0; i< TileObject.TILE_SIZE; i++) {
+        for (int i=0; i< SolidTileSize.DEFAULT_TILESIZE; i++) {
             toLaRaster[i]=toIndex.toYPos(toLaRaster[i]);
             toLoRaster[i]=toIndex.toXPos(toLoRaster[i]);
         }
     }
 
     private LatLong pixelToGeo(byte z, int x, int y) {
-        final long mapSize = MercatorProjection.getMapSize(z, TileObject.TILE_SIZE);
+        final long mapSize = MercatorProjection.getMapSize(z, SolidTileSize.DEFAULT_TILESIZE);
         return MercatorProjection.fromPixels(x, y, mapSize);
     }
 
@@ -103,8 +104,8 @@ public class Raster {
         final Point tileTL = tileToPixel(tile);
 
         final Point tileBR = new Point(
-                tileTL.x+TileObject.TILE_SIZE,
-                tileTL.y+TileObject.TILE_SIZE);
+                tileTL.x+SolidTileSize.DEFAULT_TILESIZE,
+                tileTL.y+SolidTileSize.DEFAULT_TILESIZE);
 
 
 
@@ -112,6 +113,7 @@ public class Raster {
     }
 
     private Point tileToPixel(Tile tile) {
-        return new Point(tile.tileX*TileObject.TILE_SIZE, tile.tileY*TileObject.TILE_SIZE);
+        return new Point(tile.tileX*SolidTileSize.DEFAULT_TILESIZE,
+                tile.tileY*SolidTileSize.DEFAULT_TILESIZE);
     }
 }

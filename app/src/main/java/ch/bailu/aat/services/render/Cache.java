@@ -15,12 +15,16 @@ import ch.bailu.aat.util.ui.AppLog;
 
 public class Cache implements TileCache {
 
-    private final SparseArray<MapsForgeTileObject> cache = new SparseArray(200);
+    private final SparseArray<MapsForgeTileObject> cache = new SparseArray(20);
 
 
     @Override
     public boolean containsKey(Job j) {
-        return get(j) != null;
+        // if this returns true MapWorkerPool will remove this RendererJob
+
+        MapsForgeTileObject o = cache.get(toKey(j));
+
+        return (o == null || o.isLoaded());
     }
 
     @Override
@@ -90,9 +94,7 @@ public class Cache implements TileCache {
 
 
     public void freeFromRenderer(MapsForgeTileObject o) {
-        if (cache.get(toKey(o)) != null) {
-            cache.remove(toKey(o));
-        }
+        cache.remove(toKey(o));
     }
 
 

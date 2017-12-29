@@ -7,7 +7,7 @@ import ch.bailu.util_java.foc.FocFile;
 
 
 public abstract class ObjectHandle implements ObjectBroadcastReceiver{
-    public static final int MIN_SIZE=10;
+    public static final int MIN_SIZE=100;
 
     public static final ObjectHandle NULL = new ObjectHandle(""){
 

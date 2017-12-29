@@ -7,8 +7,10 @@ import android.graphics.Rect;
 import org.mapsforge.core.graphics.TileBitmap;
 import org.mapsforge.core.model.Tile;
 
+import java.lang.annotation.Inherited;
 import java.util.ArrayList;
 
+import ch.bailu.aat.preferences.SolidTileSize;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.cache.Span;
 import ch.bailu.aat.services.cache.TileObject;
@@ -114,8 +116,14 @@ public abstract class ElevationTile extends TileObject implements ElevationUpdat
 
 
     @Override
-    public Bitmap getBitmap() {
+    public Bitmap getAndroidBitmap() {
         return bitmap.getAndroidBitmap();
+    }
+
+
+    @Override
+    public long getSize() {
+        return getSize(bitmap, SolidTileSize.DEFAULT_TILESIZE_BYTES);
     }
 
 
@@ -196,7 +204,7 @@ public abstract class ElevationTile extends TileObject implements ElevationUpdat
         synchronized(bitmap) {
             Bitmap b = bitmap.getAndroidBitmap();
             if (b == null) {
-                bitmap.set(TILE_SIZE, true);
+                bitmap.set(SolidTileSize.DEFAULT_TILESIZE, true);
                 b = bitmap.getAndroidBitmap();
 
                 if (b != null) b.eraseColor(Color.TRANSPARENT);
@@ -210,7 +218,7 @@ public abstract class ElevationTile extends TileObject implements ElevationUpdat
         raster.initialize(getTile(), getGeoToIndex(), subTiles);
         requestElevationUpdates(sc);
 
-        return TileObject.TILE_SIZE * 2;
+        return SolidTileSize.DEFAULT_TILESIZE * 2;
     }
 
 

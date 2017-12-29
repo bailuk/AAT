@@ -65,10 +65,6 @@ public class ElevationColorTile extends ElevationTile {
         }
     }
 
-    @Override
-    public long getSize() {
-        return TileObject.getBytesHack(TileObject.TILE_SIZE);
-    }
 
 
 

@@ -46,7 +46,7 @@ public  class SaveTileTask extends FileTask {
 
                 out = file.openW();
 
-                Bitmap bitmap = self.getBitmap();
+                Bitmap bitmap = self.getAndroidBitmap();
                 if (bitmap != null && out != null) {
                     bitmap.compress(Bitmap.CompressFormat.PNG, 0, out);
                 }

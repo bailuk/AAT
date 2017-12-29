@@ -5,13 +5,14 @@ import android.graphics.Bitmap;
 import org.mapsforge.core.graphics.TileBitmap;
 import org.mapsforge.core.model.Tile;
 
+import ch.bailu.aat.preferences.SolidTileSize;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.util.graphic.SyncTileBitmap;
 import ch.bailu.aat.util.ui.AppLog;
 
 public class MapsForgeTileObject extends TileObject {
-    private static long DEFAULT_SIZE = TileObject.TILE_SIZE * TileObject.TILE_SIZE * 8 * 4;
+    private static long DEFAULT_SIZE = SolidTileSize.DEFAULT_TILESIZE_BYTES * 4;
 
     private final ServiceContext scontext;
     private final Tile tile;
@@ -36,7 +37,7 @@ public class MapsForgeTileObject extends TileObject {
 
 
     @Override
-    public Bitmap getBitmap() {
+    public Bitmap getAndroidBitmap() {
             return bitmap.getAndroidBitmap();
     }
 
@@ -74,10 +75,13 @@ public class MapsForgeTileObject extends TileObject {
 
     @Override
     public long getSize() {
+        DEFAULT_SIZE = getSize(bitmap, DEFAULT_SIZE);
+
         if (isLoaded()) {
-            DEFAULT_SIZE = bitmap.getSize();
+            return DEFAULT_SIZE;
+        } else {
+            return DEFAULT_SIZE * 4;
         }
-        return DEFAULT_SIZE;
     }
 
     @Override

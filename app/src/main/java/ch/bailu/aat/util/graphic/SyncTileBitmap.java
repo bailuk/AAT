@@ -25,7 +25,7 @@ public class SyncTileBitmap implements Closeable {
     private TileBitmap bitmap = null;
     private Drawable drawable = null;
 
-    private long size = ObjectHandle.MIN_SIZE;
+    private long size = 0;
 
 
     public synchronized TileBitmap getTileBitmap() {
@@ -132,7 +132,6 @@ public class SyncTileBitmap implements Closeable {
     public synchronized long getSize() {
         return size;
     }
-
 
 
     public synchronized void free() {

@@ -44,7 +44,10 @@ public class SVGAssetImageObject extends ImageObjectAbstract {
 
     @Override
     public long getSize() {
-        return bitmap.getSize();
+        long size = bitmap.getSize();
+
+        if (size == 0) size = ObjectHandle.MIN_SIZE;
+        return size;
     }
 
     @Override

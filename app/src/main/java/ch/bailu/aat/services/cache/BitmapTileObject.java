@@ -6,6 +6,7 @@ import org.mapsforge.core.graphics.TileBitmap;
 import org.mapsforge.core.model.Tile;
 
 import ch.bailu.aat.map.tile.source.DownloadSource;
+import ch.bailu.aat.preferences.SolidTileSize;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.background.DownloadTask;
 import ch.bailu.aat.services.background.FileTask;
@@ -75,7 +76,7 @@ public class BitmapTileObject extends TileObject {
 
     @Override
     public boolean isLoaded() {
-        return getBitmap() != null;
+        return getAndroidBitmap() != null;
     }
 
 
@@ -118,11 +119,11 @@ public class BitmapTileObject extends TileObject {
 
     @Override
     public long getSize() {
-        return getBytesHack(TILE_SIZE);
+        return getSize(bitmap, SolidTileSize.DEFAULT_TILESIZE_BYTES);
     }
 
     @Override
-    public Bitmap getBitmap() {
+    public Bitmap getAndroidBitmap() {
         return bitmap.getAndroidBitmap();
     }
 
@@ -164,7 +165,7 @@ public class BitmapTileObject extends TileObject {
                 @Override
                 public void run(ObjectHandle handle) {
                     BitmapTileObject bmp = (BitmapTileObject) handle;
-                    bmp.bitmap.set(bmp.getFile(), TILE_SIZE, bmp.source.isTransparent());
+                    bmp.bitmap.set(bmp.getFile(), SolidTileSize.DEFAULT_TILESIZE, bmp.source.isTransparent());
                     size[0] = bmp.getSize();
 
                     AppBroadcaster.broadcast(scontext.getContext(),

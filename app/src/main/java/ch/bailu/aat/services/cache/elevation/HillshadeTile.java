@@ -53,10 +53,7 @@ public class HillshadeTile extends ElevationTile {
         table.free();
     }
 
-    @Override
-    public long getSize() {
-        return getBytesHack(TILE_SIZE);
-    }
+
 
     @Override
     public DemGeoToIndex factoryGeoToIndex(DemDimension dim) {

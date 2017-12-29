@@ -10,7 +10,9 @@ import ch.bailu.aat.services.cache.TileObject;
 public class SolidTileSize extends SolidIndexList {
     private static final String KEY="tile_size";
 
-    public static final int DEFAULT_TILESIZE= TileObject.TILE_SIZE;
+    public static final int DEFAULT_TILESIZE = 256;
+    public static final int DEFAULT_TILESIZE_BYTES = DEFAULT_TILESIZE * DEFAULT_TILESIZE * 4;
+
     private static final int STEP=32;
 
     private final int tileSizeDP;

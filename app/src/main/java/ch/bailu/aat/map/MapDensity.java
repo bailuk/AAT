@@ -18,7 +18,7 @@ public class MapDensity extends AppDensity {
     }
 
     public MapDensity() {
-        tileSize = TileObject.TILE_SIZE;
+        tileSize = SolidTileSize.DEFAULT_TILESIZE;
     }
 
     public int getTileSize() {
