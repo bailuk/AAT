@@ -10,8 +10,8 @@ android {
         minSdkVersion 10
         targetSdkVersion 27
 
-        versionCode 20
-        versionName "v1.10-beta"
+        versionCode 21
+        versionName "v1.11-beta"
 
         resValue "string", "app_sname", "AAT"
     }
