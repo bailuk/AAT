@@ -102,6 +102,8 @@ public class DirectorySynchronizer  implements Closeable {
          */
         @Override
         public void start() {
+            AppLog.d(this, "start");
+
             AppBroadcaster.register(scontext.getContext(),
                     onFileChanged, AppBroadcaster.FILE_CHANGED_INCACHE);
             try {
@@ -132,9 +134,9 @@ public class DirectorySynchronizer  implements Closeable {
 
     /////////////////////////////////////////////////////////////////////////////////////////////    
     private class StatePrepareSync extends State {
-        public Exception exception=null;
+        private Exception exception=null;
 
-        private BackgroundTask bgProcess = new BackgroundTask() {
+        private BackgroundTask backgroundTask = new BackgroundTask() {
 
             @Override
             public long bgOnProcess(ServiceContext sc) {
@@ -144,16 +146,16 @@ public class DirectorySynchronizer  implements Closeable {
                     compareFileSystemWithDatabase();
                     removeFilesFromDatabase();
 
+                } catch (IOException e) {
+                    exception = e;
+
+                } finally {
+                    backgroundTask = null;
 
                     AppBroadcaster.broadcast(sc.getContext(),
                             AppBroadcaster.FILE_CHANGED_INCACHE, directory);
-
-
-                } catch (IOException e) {
-                    exception = e;
                 }
 
-                bgProcess = null;
                 return 100;
 
             }
@@ -164,16 +166,18 @@ public class DirectorySynchronizer  implements Closeable {
 
         @Override
         public void start() {
+            AppLog.d(this, "start");
+
             AppBroadcaster.broadcast(scontext.getContext(), AppBroadcaster.DBSYNC_START);        
 
-            scontext.getBackgroundService().process(bgProcess);
+            scontext.getBackgroundService().process(backgroundTask);
         }
 
 
         @Override
         public void ping() {
-            if (bgProcess==null) {
-                if (exception==null) {
+            if (backgroundTask == null) {
+                if (exception == null) {
                     setState(new StateLoadNextGpx());
                 } else {
                     terminate(exception);
@@ -244,6 +248,7 @@ public class DirectorySynchronizer  implements Closeable {
     private class StateLoadNextGpx extends State {
 
         public void start() {
+            AppLog.d(this, "start");
 
             Foc file = filesToAdd.pollItem();
 
@@ -329,6 +334,7 @@ public class DirectorySynchronizer  implements Closeable {
     private class StateLoadPreview extends State {
 
         public void start() {
+            AppLog.d(this, "start");
 
             Foc gpxFile = FocAndroid.factory(scontext.getContext(), pendingHandle.getID());
 
@@ -396,6 +402,8 @@ public class DirectorySynchronizer  implements Closeable {
 
         @Override
         public void start() {
+            AppLog.d(this, "start");
+
             scontext.getContext().unregisterReceiver(onFileChanged);
 
             if (database != null) {
@@ -406,6 +414,8 @@ public class DirectorySynchronizer  implements Closeable {
             setPendingPreviewGenerator(null);
 
             AppBroadcaster.broadcast(scontext.getContext(), AppBroadcaster.DBSYNC_DONE);
+
+
             scontext.free();
         }
     }
