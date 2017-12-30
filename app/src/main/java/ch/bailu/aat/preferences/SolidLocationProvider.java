@@ -8,6 +8,7 @@ import ch.bailu.aat.services.location.GpsOrNetworkLocation;
 import ch.bailu.aat.services.location.LocationStackItem;
 import ch.bailu.aat.services.location.MockLocation;
 import ch.bailu.aat.services.location.NetworkLocation;
+import ch.bailu.aat.util.ToDo;
 
 public class SolidLocationProvider extends SolidStaticIndexList {
 
@@ -21,8 +22,8 @@ public class SolidLocationProvider extends SolidStaticIndexList {
                     c.getString(R.string.p_location_gps),
                     c.getString(R.string.p_location_gps) + " 2000ms",
                     c.getString(R.string.p_location_gps) + " 3000ms",
-                    c.getString(R.string.p_location_gps) + " or Network*",
-                    "Network only*",
+                    c.getString(R.string.p_location_gps) + ToDo.translate(" or Network"),
+                    ToDo.translate("Network only"),
                     c.getString(R.string.p_location_mock)
             };
         }

@@ -3,6 +3,7 @@ package ch.bailu.aat.preferences;
 import android.content.Context;
 
 import ch.bailu.aat.util.MemSize;
+import ch.bailu.aat.util.ToDo;
 
 public class SolidCacheSize extends SolidIndexList {
     final static String KEY = "cache_size";
@@ -35,7 +36,7 @@ public class SolidCacheSize extends SolidIndexList {
 
     @Override
     public String getLabel() {
-        return "Cache Size*";
+        return ToDo.translate("Cache Size");
     }
 
     @Override

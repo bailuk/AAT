@@ -5,6 +5,8 @@ import android.os.Build;
 
 import org.mapsforge.map.layer.renderer.MapWorkerPool;
 
+import ch.bailu.aat.util.ToDo;
+
 public class SolidRendererThreads extends SolidIndexList {
 
     private final static String KEY = "renderer_threads";
@@ -40,7 +42,7 @@ public class SolidRendererThreads extends SolidIndexList {
 
     @Override
     public String getLabel() {
-        return "Renderer Threads*";
+        return ToDo.translate("Renderer Threads");
     }
 
 
