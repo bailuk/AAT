@@ -7,7 +7,7 @@ import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 
 public abstract class AbsSolidType implements SolidTypeInterface {
     public static final String NULL_LABEL="";
-    public static final String DEFAULT_MARKER=" X";
+    public static final String DEFAULT_MARKER=" ✓";
 
 
     public int getIconResource() {return 0;}
