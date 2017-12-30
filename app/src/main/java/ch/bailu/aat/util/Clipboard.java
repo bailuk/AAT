@@ -37,7 +37,7 @@ public class Clipboard {
     private void setTextSDK1(CharSequence text) {
         android.text.ClipboardManager clipboard = (android.text.ClipboardManager) context
                 .getSystemService(Context.CLIPBOARD_SERVICE);
-        clipboard.setText(text);
+        if (clipboard != null) clipboard.setText(text);
     }
 
 
@@ -45,7 +45,11 @@ public class Clipboard {
     private CharSequence getTextSDK1() {
         android.text.ClipboardManager clipboard = (android.text.ClipboardManager) context
                 .getSystemService(Context.CLIPBOARD_SERVICE);
-        return clipboard.getText().toString();
+
+        if (clipboard != null)
+            return clipboard.getText().toString();
+
+        return null;
     }
 
 
@@ -54,8 +58,10 @@ public class Clipboard {
         ClipboardManager clipboard = (ClipboardManager)
                 context.getSystemService(Context.CLIPBOARD_SERVICE);
 
-        ClipData clip = ClipData.newPlainText(label, text);
-        clipboard.setPrimaryClip(clip);
+        if (clipboard != null) {
+            ClipData clip = ClipData.newPlainText(label, text);
+            clipboard.setPrimaryClip(clip);
+        }
     }
 
     @TargetApi(11)
@@ -63,11 +69,13 @@ public class Clipboard {
         ClipboardManager clipboard = (ClipboardManager)
                 context.getSystemService(Context.CLIPBOARD_SERVICE);
 
-        ClipData clip = clipboard.getPrimaryClip();
-        if (clip != null) {
-            ClipData.Item i = clipboard.getPrimaryClip().getItemAt(0);
-            if (i!= null) {
-                return i.getText();
+        if (clipboard != null) {
+            ClipData clip = clipboard.getPrimaryClip();
+            if (clip != null) {
+                ClipData.Item i = clipboard.getPrimaryClip().getItemAt(0);
+                if (i != null) {
+                    return i.getText();
+                }
             }
         }
         return null;

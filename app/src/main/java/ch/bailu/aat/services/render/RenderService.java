@@ -2,7 +2,6 @@ package ch.bailu.aat.services.render;
 
 import android.content.SharedPreferences;
 
-import org.mapsforge.core.graphics.TileBitmap;
 import org.mapsforge.core.model.Tile;
 
 import ch.bailu.aat.preferences.SolidMapsForgeDirectory;

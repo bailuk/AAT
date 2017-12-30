@@ -34,9 +34,14 @@ public class  Backlight extends ContextWrapper {
     }
     
     private void initWakeLock(int mode) {
-        PowerManager powerManager = (PowerManager) getSystemService(Service.POWER_SERVICE); 
-        wakeLock = powerManager.newWakeLock(mode, getClass().getName());
-        wakeLock.acquire();
+        PowerManager powerManager = (PowerManager) getSystemService(Service.POWER_SERVICE);
+
+        if (powerManager != null) {
+            wakeLock = powerManager.newWakeLock(mode, getClass().getName());
+
+            if (haveWakeLock())
+                wakeLock.acquire();
+        }
     }
 
     private boolean haveWakeLock() {

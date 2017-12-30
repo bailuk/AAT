@@ -4,7 +4,6 @@ import android.content.Context;
 
 import ch.bailu.aat.util.ui.AppDensity;
 import ch.bailu.aat.preferences.SolidTileSize;
-import ch.bailu.aat.services.cache.TileObject;
 
 
 public class MapDensity extends AppDensity {

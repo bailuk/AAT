@@ -27,7 +27,7 @@ public class TilesList {
         }
     });
 
-    private  final ArrayList<TileFile> filesToRemove = new ArrayList(FILES_LIMIT);
+    private  final ArrayList<TileFile> filesToRemove = new ArrayList<>(FILES_LIMIT);
 
 
     public void resetToRemove() {

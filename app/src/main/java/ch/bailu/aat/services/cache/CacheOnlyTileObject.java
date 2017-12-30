@@ -76,7 +76,7 @@ public class CacheOnlyTileObject extends TileObject {
 
 
         }
-    };
+    }
 
     @Override
     public TileBitmap getTileBitmap() {

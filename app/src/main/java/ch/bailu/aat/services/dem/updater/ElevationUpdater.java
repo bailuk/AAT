@@ -108,31 +108,18 @@ public class ElevationUpdater implements Closeable {
         if (tile.getStatus() == Dem3Status.VALID) {
             ArrayList<ElevationUpdaterClient> l = pendingUpdates.get(tile.getCoordinates());
 
-            int size =0 ;
-
             if (l != null) {
-                size = l.size();
-
                 for (ElevationUpdaterClient e : l) {
-
                     e.updateFromSrtmTile(scontext, tile);
                 }
             }
-            //AppLog.d(this, "update " + tile.getCoordinates().toString() + "["+size + "]");
         }
 
-        /*
-        if (tile.getStatus() == Dem3Status.EMPTY) {
-            AppLog.d(this, "update " + tile.getCoordinates().toString() + "[E!]");
-        }
-*/
         if (tile.getStatus() == Dem3Status.VALID || tile.getStatus() == Dem3Status.EMPTY) {
             pendingUpdates.remove(tile.getCoordinates());
         }
 
         tile.free(this);
-
-
     }
 
 

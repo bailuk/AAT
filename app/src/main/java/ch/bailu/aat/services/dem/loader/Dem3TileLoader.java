@@ -13,7 +13,6 @@ import ch.bailu.aat.services.dem.tile.Dem3Tile;
 import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.util.AppIntent;
 import ch.bailu.aat.util.Timer;
-import ch.bailu.aat.util.ui.AppLog;
 import ch.bailu.util_java.foc.Foc;
 
 public class Dem3TileLoader implements Closeable {

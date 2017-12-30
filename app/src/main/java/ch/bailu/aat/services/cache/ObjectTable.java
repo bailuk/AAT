@@ -30,7 +30,7 @@ public class ObjectTable  {
         }
     }
 
-    private final HashMap<String, Container> hashMap = new HashMap(INITIAL_CAPACITY);
+    private final HashMap<String, Container> hashMap = new HashMap<>(INITIAL_CAPACITY);
 
 
     public synchronized ObjectHandle getHandle(String key, ServiceContext sc) {

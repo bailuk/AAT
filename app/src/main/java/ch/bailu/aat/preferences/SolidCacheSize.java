@@ -2,7 +2,6 @@ package ch.bailu.aat.preferences;
 
 import android.content.Context;
 
-import ch.bailu.aat.R;
 import ch.bailu.aat.util.MemSize;
 
 public class SolidCacheSize extends SolidIndexList {
@@ -45,10 +44,7 @@ public class SolidCacheSize extends SolidIndexList {
 
         MemSize.describe(b, sizes[i]);
 
-        if (i == 0) {
-            b.append(" ").append(getContext().getString(R.string.auto));
-        }
-        return b.toString();
+        return toDefaultString(b.toString(), i);
     }
 
 

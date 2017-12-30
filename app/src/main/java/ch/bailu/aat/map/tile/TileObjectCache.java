@@ -13,7 +13,7 @@ public class TileObjectCache extends TileCache<TileObject> {
     private final static int INITIAL_CAPACITY = 5;
 
 
-    private final LockCache<TileObject> tiles = new LockCache(INITIAL_CAPACITY);
+    private final LockCache<TileObject> tiles = new LockCache<>(INITIAL_CAPACITY);
 
     @Override
     public TileObject get(String string) {

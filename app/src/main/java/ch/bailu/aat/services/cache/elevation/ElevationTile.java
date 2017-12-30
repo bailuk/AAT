@@ -7,12 +7,8 @@ import android.graphics.Rect;
 import org.mapsforge.core.graphics.TileBitmap;
 import org.mapsforge.core.model.Tile;
 
-import java.lang.annotation.Inherited;
-import java.util.ArrayList;
-
 import ch.bailu.aat.preferences.SolidTileSize;
 import ch.bailu.aat.services.ServiceContext;
-import ch.bailu.aat.services.cache.Span;
 import ch.bailu.aat.services.cache.TileObject;
 import ch.bailu.aat.services.dem.tile.Dem3Tile;
 import ch.bailu.aat.services.dem.tile.DemDimension;
@@ -21,7 +17,6 @@ import ch.bailu.aat.services.dem.tile.DemProvider;
 import ch.bailu.aat.services.dem.tile.DemSplitter;
 import ch.bailu.aat.services.dem.updater.ElevationUpdaterClient;
 import ch.bailu.aat.util.graphic.SyncTileBitmap;
-import ch.bailu.aat.util.ui.AppLog;
 
 public abstract class ElevationTile extends TileObject implements ElevationUpdaterClient {
 

@@ -2,7 +2,6 @@ package ch.bailu.aat.map.layer;
 
 import android.content.SharedPreferences;
 
-import org.mapsforge.core.model.LatLong;
 import org.mapsforge.core.model.Point;
 
 import ch.bailu.aat.coordinates.SrtmCoordinates;

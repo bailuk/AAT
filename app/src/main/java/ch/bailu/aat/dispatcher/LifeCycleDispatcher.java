@@ -3,7 +3,7 @@ package ch.bailu.aat.dispatcher;
 import java.util.ArrayList;
 
 public class LifeCycleDispatcher implements LifeCycleInterface {
-    private final ArrayList<LifeCycleInterface> targets = new ArrayList(10);
+    private final ArrayList<LifeCycleInterface> targets = new ArrayList<>(10);
 
     private boolean awake=false;
 

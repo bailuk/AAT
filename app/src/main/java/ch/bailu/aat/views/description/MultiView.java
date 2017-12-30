@@ -35,7 +35,7 @@ public class MultiView extends ViewGroup {
 
 
 
-    private final ArrayList<Page> pages = new ArrayList(5);
+    private final ArrayList<Page> pages = new ArrayList<>(5);
     private int active=0;
 
 

@@ -28,7 +28,6 @@ import ch.bailu.aat.map.MapViewInterface;
 import ch.bailu.aat.map.layer.MapLayerInterface;
 import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat.services.ServiceContext;
-import ch.bailu.aat.util.ui.AppLog;
 
 public class MapsForgeViewBase extends MapView implements
         MapViewInterface,
@@ -46,7 +45,7 @@ public class MapsForgeViewBase extends MapView implements
     private final FrameBufferHack frameBufferHack;
     private final FrameBufferController frameBufferControllerHack;
 
-    private final ArrayList<MapLayerInterface> layers = new ArrayList(10);
+    private final ArrayList<MapLayerInterface> layers = new ArrayList<>(10);
 
     private boolean areLayersAttached=false;
 

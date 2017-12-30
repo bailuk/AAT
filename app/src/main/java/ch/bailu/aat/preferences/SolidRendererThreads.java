@@ -27,6 +27,7 @@ public class SolidRendererThreads extends SolidIndexList {
         }
         return 1;
     }
+
     @Override
     public int length() {
         return values.length;
@@ -34,7 +35,7 @@ public class SolidRendererThreads extends SolidIndexList {
 
     @Override
     protected String getValueAsString(int i) {
-        return String.valueOf(values[i]);
+        return toDefaultString(String.valueOf(values[i]), i);
     }
 
     @Override

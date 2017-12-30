@@ -4,7 +4,7 @@ import ch.bailu.aat.gpx.GpxInformation;
 
 
 public interface OnContentUpdatedInterface {
-    static final OnContentUpdatedInterface NULL = new OnContentUpdatedInterface() {
+    OnContentUpdatedInterface NULL = new OnContentUpdatedInterface() {
         @Override
         public void onContentUpdated(int iid, GpxInformation info) {
 

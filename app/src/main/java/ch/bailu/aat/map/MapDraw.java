@@ -7,13 +7,10 @@ import org.mapsforge.core.graphics.Bitmap;
 import org.mapsforge.core.graphics.Paint;
 
 public interface MapDraw {
-    final static int POINT_RADIUS=3;
-    final static int MARGIN=5;
+    int POINT_RADIUS=3;
+    int MARGIN=5;
 
-    Paint getTextPaint();
     Paint getGridPaint();
-    Paint getLegendPaint();
-
     Bitmap getNodeBitmap();
 
 
@@ -33,8 +30,8 @@ public interface MapDraw {
     void bitmap(Bitmap b, Point pixel);
     void bitmap(Bitmap b, Point pixel, int color);
 
-    public void edge(TwoNodes nodes);
-    public void edge(TwoNodes nodes, Paint paint);
+    void edge(TwoNodes nodes);
+    void edge(TwoNodes nodes, Paint paint);
 
-    public void label(String text, Point pixel);
+    void label(String text, Point pixel);
 }

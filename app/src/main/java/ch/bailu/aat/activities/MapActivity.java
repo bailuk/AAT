@@ -23,6 +23,7 @@ import ch.bailu.aat.util.ui.AppLog;
 import ch.bailu.aat.views.ContentView;
 import ch.bailu.aat.views.bar.ControlBar;
 import ch.bailu.aat.views.bar.MainControlBar;
+import ch.bailu.util_java.util.Objects;
 
 public class MapActivity extends AbsDispatcher{
 
@@ -50,7 +51,7 @@ public class MapActivity extends AbsDispatcher{
         Intent intent = getIntent();
         Uri uri = intent.getData();
 
-        if (intent.getAction().equals(Intent.ACTION_VIEW) && uri != null) {
+        if (Objects.equals(intent.getAction(),Intent.ACTION_VIEW) && uri != null) {
             AppLog.d(uri, uri.toString());
             setMapCenterFromUri(map, uri);
             openQueryFromUri(uri);

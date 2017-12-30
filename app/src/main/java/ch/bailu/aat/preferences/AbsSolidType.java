@@ -7,6 +7,7 @@ import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 
 public abstract class AbsSolidType implements SolidTypeInterface {
     public static final String NULL_LABEL="";
+    public static final String DEFAULT_MARKER=" X";
 
 
     public int getIconResource() {return 0;}
@@ -46,4 +47,21 @@ public abstract class AbsSolidType implements SolidTypeInterface {
     public String toString() {
         return getValueAsString();
     }
+
+
+
+    protected static String toDefaultString(String s) {
+        return s + DEFAULT_MARKER;
+    }
+
+    protected static String toDefaultString(String s, int sel) {
+        return toDefaultString(s, sel, 0);
+    }
+
+    protected static String toDefaultString(String s, int sel, int def) {
+        if (def == sel) return toDefaultString(s);
+        return s;
+    }
+
+
 }

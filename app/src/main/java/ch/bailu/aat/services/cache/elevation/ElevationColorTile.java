@@ -4,7 +4,6 @@ import org.mapsforge.core.model.Tile;
 
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.cache.ObjectHandle;
-import ch.bailu.aat.services.cache.TileObject;
 import ch.bailu.aat.services.dem.tile.DemProvider;
 import ch.bailu.aat.views.graph.AltitudeColorTable;
 

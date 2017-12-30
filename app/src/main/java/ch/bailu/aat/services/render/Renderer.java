@@ -1,7 +1,6 @@
 package ch.bailu.aat.services.render;
 
 import org.mapsforge.core.graphics.Canvas;
-import org.mapsforge.core.graphics.TileBitmap;
 import org.mapsforge.core.model.BoundingBox;
 import org.mapsforge.core.model.Point;
 import org.mapsforge.core.model.Tile;

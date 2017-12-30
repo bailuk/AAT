@@ -18,7 +18,6 @@ import ch.bailu.aat.map.tile.source.Source;
 import ch.bailu.aat.services.InsideContext;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.cache.ObjectHandle;
-import ch.bailu.aat.services.cache.OnObject;
 import ch.bailu.aat.services.cache.TileObject;
 import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.util.AppIntent;
@@ -27,7 +26,7 @@ public class TileProvider implements Attachable, ObservableInterface {
 
 
     private final ServiceContext scontext;
-    private final ArrayList<Observer> observers = new ArrayList(2);
+    private final ArrayList<Observer> observers = new ArrayList<>(2);
     private final Source source;
 
     private TileCache<TileObject> cache = TileCache.NULL;

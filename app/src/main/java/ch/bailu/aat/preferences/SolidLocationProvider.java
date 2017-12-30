@@ -18,7 +18,7 @@ public class SolidLocationProvider extends SolidStaticIndexList {
     private static String[] generateProviderList(Context c) {
         if (provider_list == null) {
             provider_list = new String[]{
-                    c.getString(R.string.p_location_gps),
+                    toDefaultString(c.getString(R.string.p_location_gps)),
                     c.getString(R.string.p_location_gps) + " 2000ms",
                     c.getString(R.string.p_location_gps) + " 3000ms",
                     c.getString(R.string.p_location_gps) + " or Network*",

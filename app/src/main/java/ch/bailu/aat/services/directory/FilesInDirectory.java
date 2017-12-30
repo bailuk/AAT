@@ -20,7 +20,7 @@ public class FilesInDirectory {
 
     
     private static NavigableMap<String,Foc> getFileList(Foc directory) {
-        final NavigableMap<String, Foc> files = new TreeMap();
+        final NavigableMap<String, Foc> files = new TreeMap<>();
 
         directory.foreachFile(new Foc.Execute() {
             @Override

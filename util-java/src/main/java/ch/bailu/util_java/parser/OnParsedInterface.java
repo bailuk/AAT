@@ -4,11 +4,11 @@ import java.io.IOException;
 
 
 public interface OnParsedInterface {
-    public void onHaveSegment();
-    public void onHavePoint() throws IOException;
+    void onHaveSegment();
+    void onHavePoint() throws IOException;
     
     
-    public final static OnParsedInterface NULL = new OnParsedInterface() {
+    OnParsedInterface NULL = new OnParsedInterface() {
 		@Override
 		public void onHaveSegment() {}
 		@Override

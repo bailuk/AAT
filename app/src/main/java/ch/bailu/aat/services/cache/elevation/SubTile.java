@@ -3,9 +3,7 @@ package ch.bailu.aat.services.cache.elevation;
 import android.graphics.Rect;
 
 import ch.bailu.aat.coordinates.SrtmCoordinates;
-import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.cache.Span;
-import ch.bailu.aat.services.dem.tile.Dem3Tile;
 
 public class SubTile {
     public final Span laSpan;

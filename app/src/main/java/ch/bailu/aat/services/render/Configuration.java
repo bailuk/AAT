@@ -60,7 +60,7 @@ public class Configuration {
     public void lockToRenderer(MapsForgeTileObject o) {
             if (isConfigured() && themeID.equals(o.getThemeID()))
                 renderer.addJob(o.getTile());
-;
+
         }
 
     public void freeFromRenderer(MapsForgeTileObject o) {

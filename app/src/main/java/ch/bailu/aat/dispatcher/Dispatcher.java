@@ -11,9 +11,9 @@ public class Dispatcher implements DispatcherInterface, OnContentUpdatedInterfac
 
 
     private final SparseArray<TargetList>
-            targets = new SparseArray(10);
+            targets = new SparseArray<>(10);
 
-    private final ArrayList<ContentSource> sources = new ArrayList(5);
+    private final ArrayList<ContentSource> sources = new ArrayList<>(5);
 
 
     private OnContentUpdatedInterface updater = OFF;
@@ -72,7 +72,7 @@ public class Dispatcher implements DispatcherInterface, OnContentUpdatedInterfac
         public final static TargetList NULL_LIST = new TargetList();
 
         private final ArrayList<OnContentUpdatedInterface> targets =
-                new ArrayList(10);
+                new ArrayList<>(10);
 
 
         @Override

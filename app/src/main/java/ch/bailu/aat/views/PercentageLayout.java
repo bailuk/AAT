@@ -26,7 +26,7 @@ public class PercentageLayout  extends ViewGroup {
         }
     }
 
-    private final ArrayList<Entry> list = new ArrayList(5);
+    private final ArrayList<Entry> list = new ArrayList<>(5);
 
     private int orientation= LinearLayout.VERTICAL;
 

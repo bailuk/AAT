@@ -11,7 +11,6 @@ import java.util.ArrayList;
 
 import ch.bailu.aat.preferences.SolidTileSize;
 import ch.bailu.aat.services.cache.Span;
-import ch.bailu.aat.services.cache.TileObject;
 import ch.bailu.aat.services.dem.tile.DemGeoToIndex;
 
 public class Raster {

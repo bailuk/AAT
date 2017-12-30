@@ -9,11 +9,11 @@ public interface SolidTypeInterface extends
         ContextWrapperInterface,
         ContentInterface {
 
-    public String getKey();
-    public Storage getStorage();
+    String getKey();
+    Storage getStorage();
     
-    public boolean hasKey(String key);
+    boolean hasKey(String key);
     
-    public void register(OnSharedPreferenceChangeListener listener);
-    public void unregister(OnSharedPreferenceChangeListener listener);
+    void register(OnSharedPreferenceChangeListener listener);
+    void unregister(OnSharedPreferenceChangeListener listener);
 }

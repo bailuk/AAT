@@ -71,19 +71,10 @@ public class AndroidDraw implements MapDraw {
         return canvas;
     }
 
-    @Override
-    public Paint getTextPaint() {
-        return textPaint;
-    }
 
     @Override
     public Paint getGridPaint() {
         return gridPaint;
-    }
-
-    @Override
-    public Paint getLegendPaint() {
-        return legendPaint;
     }
 
     @Override

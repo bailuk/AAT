@@ -9,7 +9,6 @@ import ch.bailu.aat.preferences.SolidTileSize;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.util.graphic.SyncTileBitmap;
-import ch.bailu.aat.util.ui.AppLog;
 
 public class MapsForgeTileObject extends TileObject {
     private static long DEFAULT_SIZE = SolidTileSize.DEFAULT_TILESIZE_BYTES * 4;
