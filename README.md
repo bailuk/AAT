@@ -12,7 +12,7 @@ AAT - Android Activity Tracker is a GPS-tracking application for tracking sporti
 license: [GNU Lesser GPL v3](http://www.gnu.org/licenses/lgpl.html)
 
 ## AAT
-(c) 2011-2017 Lukas Bai bailu@bailu.ch  
+(c) 2011-2018 Lukas Bai bailu@bailu.ch  
 license: [GNU GPLv3 or later](http://www.gnu.org/licenses/gpl.html)
 
 # Availability
