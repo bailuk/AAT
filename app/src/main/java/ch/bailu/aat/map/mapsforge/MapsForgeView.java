@@ -19,11 +19,12 @@ public class MapsForgeView extends MapsForgeViewBase {
     public MapsForgeView(ServiceContext sc, DispatcherInterface dispatcher, String key) {
         super(sc, key, new MapDensity(sc.getContext()));
 
-        pos = new MapPositionLayer(getMContext(), dispatcher);
-        add(pos);
-
         stack = new MapsForgeTileLayerStackConfigured.All(this);
         add(stack, stack);
+
+        // Depends on zoom limits (set by TileLayerStack)
+        pos = new MapPositionLayer(getMContext(), dispatcher);
+        add(pos);
 
         foreground = new MapsForgeForeground(this,
                 getMContext(),
@@ -39,7 +40,7 @@ public class MapsForgeView extends MapsForgeViewBase {
             public void onChange() {
                 LatLong newCenter = getModel().mapViewPosition.getCenter();
 
-                if (newCenter.equals(center) == false) {
+                if (newCenter != null && newCenter.equals(center) == false) {
                     center = newCenter;
                     pos.onMapCenterChanged(center);
                 }
