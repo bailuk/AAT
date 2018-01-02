@@ -63,5 +63,4 @@ public abstract class SolidIndexList extends AbsSolidType {
         setIndex(getIndex()+1);
     }
 
-    
 }
