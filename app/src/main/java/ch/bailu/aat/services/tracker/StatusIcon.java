@@ -2,9 +2,12 @@ package ch.bailu.aat.services.tracker;
 
 import android.annotation.TargetApi;
 import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Build;
 
 import java.lang.reflect.InvocationTargetException;
@@ -54,8 +57,10 @@ public class StatusIcon  {
 
         } else if (Build.VERSION.SDK_INT < 21){
             return createNotificationSDK16(intent, status_id);
-        } else {
+        } else if (Build.VERSION.SDK_INT < 26){
             return createNotificationSDK21(intent, status_id);
+        } else {
+            return createNotificationSDK26(intent, status_id);
         }
     }
 
@@ -155,6 +160,43 @@ public class StatusIcon  {
         notification.flags |= Notification.FLAG_NO_CLEAR;
 
         return notification;
+    }
+
+    @TargetApi(26)
+    private Notification createNotificationSDK26(PendingIntent intent, int status_id) {
+        String appName = scontext.getContext().getString(R.string.app_name);
+        String appInfo = scontext.getContext().getString(status_id);
+
+        Notification.Builder builder = new Notification.Builder(scontext.getContext())
+                .setChannelId(createNotificationChannelSDK26())
+                .setContentIntent(intent)
+                .setSmallIcon(R.drawable.icon_status)
+                .setColor(AppTheme.getHighlightColor())
+                .setContentTitle(appName)
+                .setContentText(appInfo);
+
+        Notification notification = builder.build();
+
+        notification.flags |= Notification.FLAG_NO_CLEAR;
+
+        return notification;
+    }
+
+
+    @TargetApi(26)
+    private String createNotificationChannelSDK26() {
+        String channelId = StatusIcon.class.getName();
+        String channelName = scontext.getContext().getString(R.string.app_name);
+        NotificationChannel chan = new NotificationChannel(channelId,
+                channelName, NotificationManager.IMPORTANCE_DEFAULT);
+
+        chan.setLockscreenVisibility(Notification.VISIBILITY_PUBLIC);
+
+        NotificationManager notificationManager = (NotificationManager) scontext.getContext().getSystemService(Context.NOTIFICATION_SERVICE);
+        notificationManager.createNotificationChannel(chan);
+
+        return channelId;
+
     }
 
     public void showAutoPause() {
