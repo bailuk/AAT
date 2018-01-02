@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.os.Bundle;
 
 import ch.bailu.aat.preferences.PreferenceLoadDefaults;
+import ch.bailu.aat.preferences.SolidDataDirectoryDefault;
+import ch.bailu.aat.util.AppPermission;
 import ch.bailu.aat.util.ui.AppLog;
 
 public abstract class AbsActivity extends Activity {
@@ -18,11 +20,20 @@ public abstract class AbsActivity extends Activity {
     }
 
 
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         new PreferenceLoadDefaults(this);
         created++;
+    }
+
+
+    @Override
+    public void onRequestPermissionsResult (int requestCode,
+                                            String[] permissions,
+                                            int[] grantResults) {
+        AppPermission.onRequestPermissionsResult(this, requestCode);
     }
 
 

@@ -7,12 +7,17 @@ import java.util.ArrayList;
 import ch.bailu.aat.R;
 import ch.bailu.aat.util.fs.AppDirectory;
 import ch.bailu.aat.util.fs.AndroidVolumes;
+import ch.bailu.aat.util.ui.AppLog;
 import ch.bailu.util_java.foc.Foc;
+import ch.bailu.util_java.util.Objects;
 
 public class SolidDataDirectory extends SolidFile {
 
+    private final SolidDataDirectoryDefault defaultDirectory;
+
     public SolidDataDirectory(Context c) {
         super(Storage.global(c), SolidDataDirectory.class.getSimpleName());
+        defaultDirectory = new SolidDataDirectoryDefault(getContext());
     }
 
 
@@ -27,65 +32,22 @@ public class SolidDataDirectory extends SolidFile {
         String r = super.getValueAsString();
 
 
-        if (r.equals(Storage.DEF_VALUE)) {
-            r = getDefaultValue();
+        if (Objects.equals(r,Storage.DEF_VALUE))
+            return defaultDirectory.getValueAsString();
 
-            setValue(r);
-        }
         return r;
     }
 
-    private String getDefaultValue() {
-        final Foc f = new OldSolidDataDirectory(getContext()).toFile();
-
-        ArrayList<String> list = new ArrayList<>(5);
-
-        add_w(list, f);
-
-        if (list.size()==0)
-            list = buildSelection(list);
-
-        if (list.size()==0)
-            list.add(f.toString());
-
-        return list.get(0);
+    @Override
+    public boolean hasKey(String s) {
+        return super.hasKey(s) || defaultDirectory.hasKey(s);
     }
 
 
     @Override
     public ArrayList<String> buildSelection(ArrayList<String> list) {
-
-        AndroidVolumes volumes = new AndroidVolumes(getContext());
-
-        for (Foc vol : volumes.getVolumes()) {
-            Foc aat_data = vol.child(AppDirectory.DIR_AAT_DATA);
-            add_w(list, aat_data);
-        }
-
-        for (Foc vol : volumes.getVolumes()) {
-            Foc aat_data = vol.child(AppDirectory.DIR_AAT_DATA);
-            if (aat_data.exists()==false)
-                add_w(list, vol, aat_data);
-        }
-
-        Foc[] files = volumes.getFiles();
-        for (int i=1; i<files.length; i++) {
-            add_w(list, files[i]);
-        }
-
-        for (int i=1; i<files.length; i++) {
-            add_ro(list, files[i]);
-        }
-
-        for (Foc vol : volumes.getVolumes()) {
-            Foc aat_data = vol.child(AppDirectory.DIR_AAT_DATA);
-            add_ro(list, vol, aat_data);
-        }
-
-        if (files.length>0) add_w(list, files[0]);
-        return list;
+        return defaultDirectory.buildSelection(list);
     }
-
 
 }
 

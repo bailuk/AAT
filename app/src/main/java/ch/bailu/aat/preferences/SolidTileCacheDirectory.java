@@ -38,17 +38,13 @@ public class SolidTileCacheDirectory extends SolidFile {
 
 
     private String getDefaultValue() {
-        final Foc f = new OldSolidTileCacheDirectory(getContext()).toFile();
 
         ArrayList<String> list = new ArrayList<>(5);
-
-        add_w(list, f);
 
         if (list.size()==0)
             list = buildSelection(list);
 
-        if (list.size()==0)
-            list.add(f.toString());
+        list.add(Storage.DEF_VALUE);
 
         return list.get(0);
     }

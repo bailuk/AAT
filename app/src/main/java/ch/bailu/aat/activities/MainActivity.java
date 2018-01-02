@@ -34,6 +34,7 @@ public class MainActivity extends AbsDispatcher {
     }
 
 
+
     private void createViews() {
 
         LinearLayout contentView = new ContentView(this);
@@ -109,6 +110,7 @@ public class MainActivity extends AbsDispatcher {
         }
 
     }
+
 
     private class ExternalDirectoryLabel extends ActivityLabel implements SharedPreferences.OnSharedPreferenceChangeListener {
         private final SolidExternalDirectory sdirectory;

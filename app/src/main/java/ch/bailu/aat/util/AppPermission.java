@@ -7,6 +7,8 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.Build;
 
+import ch.bailu.aat.preferences.SolidDataDirectoryDefault;
+
 public class AppPermission {
     public static void requestFromUser(Activity activity) {
         if (Build.VERSION.SDK_INT >= 23) {
@@ -14,6 +16,8 @@ public class AppPermission {
         }
 
     }
+
+    private final static int APP_PERMISSION=99;
 
     @TargetApi(23)
     private static void requestFromUserSdk23(Activity activity) {
@@ -23,7 +27,14 @@ public class AppPermission {
                         Manifest.permission.ACCESS_FINE_LOCATION,
                         Manifest.permission.READ_EXTERNAL_STORAGE,
                         Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                99);
+                APP_PERMISSION);
+    }
+
+
+    public static void onRequestPermissionsResult (Context c, int requestCode) {
+        if (requestCode == AppPermission.APP_PERMISSION) {
+            new SolidDataDirectoryDefault(c).setDefaultValue();
+        }
     }
 
 
