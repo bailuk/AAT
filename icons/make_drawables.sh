@@ -49,6 +49,10 @@ function HIGHLIGHT {
 
 }
 
+function CCONVERT {
+	xcf2png $1.xcf > $1.png
+	COPY $1
+}
 
 
 function CONVERT {
@@ -82,7 +86,7 @@ CONVERT "button_pressed.9"
 CONVERT "button_selected.9"
 
 ####### Application
-CONVERT "icon" 
+CCONVERT "icon" 
 CONVERT "status"
 CONVERT "icon_status"
 
