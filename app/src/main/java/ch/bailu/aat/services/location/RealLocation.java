@@ -59,7 +59,7 @@ public class RealLocation extends LocationStackChainedItem
         if (AppPermission.checkLocation(context)) {
             final Location l = lm.getLastKnownLocation(provider);
             if (l != null)
-                passLocation(new AndroidLocationInformation(l, state));
+                passLocation(new RealLocationInformation(l, state));
         }
     }
 
@@ -114,11 +114,18 @@ public class RealLocation extends LocationStackChainedItem
 
     @Override
     public void onLocationChanged(Location l) {
+
         if (isMine(l)) {
             passState(StateID.ON);
-            passLocation(new AndroidLocationInformation(l, state));
+            passLocation(factoryLocationInformation(l, state));
         }
     }
+
+
+    protected LocationInformation factoryLocationInformation(Location location, int state) {
+        return new RealLocationInformation(location, state);
+    }
+
 
 
     private boolean isMine(Location l) {

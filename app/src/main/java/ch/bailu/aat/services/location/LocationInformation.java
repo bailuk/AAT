@@ -7,4 +7,8 @@ public abstract class LocationInformation extends GpxInformation {
     public abstract boolean hasSpeed();
     public abstract boolean hasAltitude();
     public abstract boolean hasBearing();
+
+
+    public abstract boolean isFromGPS();
+    public abstract long getCreationTime();
 }

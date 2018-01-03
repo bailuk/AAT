@@ -4,6 +4,7 @@ import android.app.Activity;
 
 import ch.bailu.aat.R;
 import ch.bailu.aat.preferences.SolidCacheSize;
+import ch.bailu.aat.preferences.SolidGpsTimeFix;
 import ch.bailu.aat.preferences.SolidPostprocessedAutopause;
 import ch.bailu.aat.preferences.SolidDataDirectory;
 import ch.bailu.aat.preferences.SolidExternalDirectory;
@@ -24,6 +25,7 @@ public class GeneralPreferencesView extends VerticalScrollView {
 
         add(new TitleView(context, R.string.p_system));
         add(new SolidIndexListView(new SolidLocationProvider(context)));
+        add(new SolidCheckBox(new SolidGpsTimeFix(context)));
         add(new SolidDirectoryViewSAF(context, new SolidDataDirectory(context)));
         add(new SolidDirectoryViewSAF(context, new SolidExternalDirectory(context)));
         add(new SolidIndexListView( new SolidCacheSize(context)));

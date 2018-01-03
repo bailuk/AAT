@@ -5,13 +5,12 @@ import android.location.Location;
 import ch.bailu.util_java.foc.Foc;
 import ch.bailu.util_java.foc.FocName;
 
-public class AndroidLocationInformation extends LocationInformation {
+public class RealLocationInformation extends LocationInformation {
     private final Location location;
     private final int state;
     private final FocName provider;
 
-
-    public AndroidLocationInformation (Location l, int s) {
+    public RealLocationInformation(Location l, int s) {
         provider = new FocName(l.getProvider());
         state = s;
         location = l;
@@ -85,5 +84,15 @@ public class AndroidLocationInformation extends LocationInformation {
     @Override
     public boolean hasBearing() {
         return location.hasBearing();
+    }
+
+    @Override
+    public boolean isFromGPS() {
+        return false;
+    }
+
+    @Override
+    public long getCreationTime() {
+        return getTimeStamp();
     }
 }

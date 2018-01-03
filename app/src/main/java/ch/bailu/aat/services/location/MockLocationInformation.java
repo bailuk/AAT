@@ -68,6 +68,17 @@ public class MockLocationInformation extends LocationInformation {
     public boolean hasBearing() {
         return true;
     }
+
+    @Override
+    public boolean isFromGPS() {
+        return true;
+    }
+
+    @Override
+    public long getCreationTime() {
+        return getTimeStamp();
+    }
+
     @Override
     public float getAccuracy() {
         return 5f;
