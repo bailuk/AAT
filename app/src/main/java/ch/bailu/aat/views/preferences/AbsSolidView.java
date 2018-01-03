@@ -29,6 +29,8 @@ public abstract class AbsSolidView extends AbsLabelTextView
 
     public void setText() {
         setText("["+solid.toString()+"]");
+
+        setToolTip(solid);
     }
 
     @Override

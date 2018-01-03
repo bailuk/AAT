@@ -49,6 +49,10 @@ public abstract class AbsSolidType implements SolidTypeInterface {
         return getValueAsString();
     }
 
+    @Override
+    public String getToolTip() {
+        return null;
+    }
 
 
     protected static String toDefaultString(String s) {

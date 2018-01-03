@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -86,6 +87,12 @@ public class AppTheme {
     public static int getHighlightColor3() {
         return COLOR_BLUE; 
     }
+
+    public static void themify(CheckBox b) {
+        b.setTextColor(Color.WHITE);
+        b.setTextSize(TEXT_SIZE);
+    }
+
 
     public static void themify(Button w) {
         w.setBackgroundResource(R.drawable.button);

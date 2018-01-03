@@ -94,4 +94,9 @@ public class SolidOverlayFile  implements SolidTypeInterface {
         storage.unregister(listener);
         
     }
+
+    @Override
+    public String getToolTip() {
+        return null;
+    }
 }

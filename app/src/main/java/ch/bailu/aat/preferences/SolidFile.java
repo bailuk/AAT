@@ -2,6 +2,7 @@ package ch.bailu.aat.preferences;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
@@ -113,7 +114,7 @@ public abstract class SolidFile extends SolidString {
             a.getContentResolver().takePersistableUriPermission(
                     uri,
                     Intent.FLAG_GRANT_READ_URI_PERMISSION |
-                    Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+                            Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
         }
     }
 
@@ -129,6 +130,35 @@ public abstract class SolidFile extends SolidString {
         } catch (Exception e) {
             browseDirKey = null;
             e.printStackTrace();
+        }
+    }
+
+
+    @Override
+    public String getToolTip() {
+        return  getPermissionText(getContext(), getValueAsFile());
+    }
+
+    private static String getPermissionText(Context c, Foc f) {
+
+        if (f.exists() == false) {
+            if (f.hasParent()) {
+                return getPermissionText(c, f.parent());
+            } else {
+                return f.getPathName() + c.getString(R.string.file_is_missing);
+            }
+        } else if (f.canWrite()) {
+            if (f.canRead()) {
+                return f.getPathName() + c.getString(R.string.file_is_writeable);
+            } else {
+                return f.getPathName() + " is write only!";
+            }
+        } else if (f.canRead()) {
+            return f.getPathName() + c.getString(R.string.file_is_readonly);
+        } else if (f.hasParent()){
+            return getPermissionText(c, f.parent());
+        } else  {
+            return f.getPathName() + c.getString(R.string.file_is_denied);
         }
     }
 }

@@ -4,10 +4,12 @@ import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 
 import ch.bailu.aat.description.ContentInterface;
 import ch.bailu.aat.util.ContextWrapperInterface;
+import ch.bailu.aat.util.ui.ToolTipProvider;
 
 public interface SolidTypeInterface extends
         ContextWrapperInterface,
-        ContentInterface {
+        ContentInterface,
+        ToolTipProvider {
 
     String getKey();
     Storage getStorage();

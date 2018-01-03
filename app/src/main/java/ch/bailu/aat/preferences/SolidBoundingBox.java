@@ -120,4 +120,9 @@ public class SolidBoundingBox implements SolidTypeInterface {
         " AND " + GpxDbConstants.KEY_EAST_BOUNDING   + " < " + e +
         " AND " + GpxDbConstants.KEY_WEST_BOUNDING   + " > " + w; 
     }
+
+    @Override
+    public String getToolTip() {
+        return null;
+    }
 }
