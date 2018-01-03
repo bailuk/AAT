@@ -6,8 +6,11 @@ import android.content.SharedPreferences;
 import org.mapsforge.core.graphics.Canvas;
 import org.mapsforge.core.model.BoundingBox;
 import org.mapsforge.core.model.Point;
+import org.mapsforge.core.util.Parameters;
+import org.mapsforge.map.android.graphics.AndroidGraphicFactory;
 import org.mapsforge.map.layer.Layer;
 
+import ch.bailu.aat.App;
 import ch.bailu.aat.map.MapViewInterface;
 import ch.bailu.aat.map.MapDraw;
 import ch.bailu.aat.map.MapContext;
@@ -123,5 +126,13 @@ public class MapsForgeContext extends Layer implements MapContext, MapLayerInter
     @Override
     public void onDetached() {
 
+    }
+
+
+    public static void initMapsForge(App app) {
+        AndroidGraphicFactory.createInstance(app);
+
+        Parameters.SQUARE_FRAME_BUFFER = false; // move to app
+        Parameters.FRAME_BUFFER_HA2 = true;
     }
 }

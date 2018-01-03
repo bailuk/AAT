@@ -3,6 +3,7 @@ package ch.bailu.aat.preferences;
 import android.content.Context;
 import android.os.Build;
 
+import org.mapsforge.core.util.Parameters;
 import org.mapsforge.map.layer.renderer.MapWorkerPool;
 
 import ch.bailu.aat.util.ToDo;
@@ -51,6 +52,6 @@ public class SolidRendererThreads extends SolidIndexList {
     }
 
     public void set() {
-        MapWorkerPool.NUMBER_OF_THREADS = getValue();
+        Parameters.NUMBER_OF_THREADS = getValue();
     }
 }

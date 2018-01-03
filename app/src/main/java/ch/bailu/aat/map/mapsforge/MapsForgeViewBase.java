@@ -12,6 +12,7 @@ import org.mapsforge.core.model.Dimension;
 import org.mapsforge.core.model.MapPosition;
 import org.mapsforge.core.model.Point;
 import org.mapsforge.core.util.LatLongUtils;
+import org.mapsforge.core.util.Parameters;
 import org.mapsforge.map.android.graphics.AndroidGraphicFactory;
 import org.mapsforge.map.android.view.MapView;
 import org.mapsforge.map.controller.FrameBufferController;
@@ -42,9 +43,6 @@ public class MapsForgeViewBase extends MapView implements
     public boolean isVisible=false;
 
 
-    private final FrameBufferHack frameBufferHack;
-    private final FrameBufferController frameBufferControllerHack;
-
     private final ArrayList<MapLayerInterface> layers = new ArrayList<>(10);
 
     private boolean areLayersAttached=false;
@@ -52,6 +50,8 @@ public class MapsForgeViewBase extends MapView implements
 
     public MapsForgeViewBase(ServiceContext sc, String key, MapDensity d) {
         super(sc.getContext());
+
+
         this.setBackgroundColor(getModel().displayModel.getBackgroundColor());
         getModel().displayModel.setFixedTileSize(d.getTileSize());
 
@@ -71,12 +71,6 @@ public class MapsForgeViewBase extends MapView implements
             }
         }));
 
-        FrameBufferController.setUseSquareFrameBuffer(false);
-        frameBufferHack = new FrameBufferHack(getModel().frameBufferModel,
-                getModel().displayModel,
-                AndroidGraphicFactory.INSTANCE);
-
-        frameBufferControllerHack = FrameBufferController.create(this.frameBufferHack, getModel());
 
     }
 
@@ -85,22 +79,6 @@ public class MapsForgeViewBase extends MapView implements
         // Disable MapView.onChange to fix a speed bug in MapsForge
     }
 
-
-    @Override
-    public FrameBuffer getFrameBuffer() {
-        if (frameBufferHack == null) return super.getFrameBuffer();
-
-        super.getFrameBuffer().destroy();
-        return frameBufferHack;
-    }
-
-    @Override
-    protected void onDraw(Canvas androidCanvas) {
-        org.mapsforge.core.graphics.Canvas gc = AndroidGraphicFactory.createGraphicContext(androidCanvas);
-        frameBufferHack.draw(gc);
-        gc.destroy();
-
-    }
 
     public void add(MapLayerInterface layer) {
         LayerWrapper wrapper = new LayerWrapper(mcontext, layer);
@@ -272,8 +250,6 @@ public class MapsForgeViewBase extends MapView implements
     public void onDestroy() {
         detachLayers();
         destroyAll();
-        frameBufferControllerHack.destroy();
-        frameBufferHack.destroy();
     }
 
 

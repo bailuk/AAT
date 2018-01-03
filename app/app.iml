@@ -115,13 +115,13 @@
     </content>
     <orderEntry type="jdk" jdkName="Android API 27 Platform" jdkType="Android SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="org.mapsforge:mapsforge-map-android:0.8.0@jar" level="project" />
+    <orderEntry type="library" name="org.mapsforge:mapsforge-map-reader:0.9.0@jar" level="project" />
+    <orderEntry type="library" name="org.mapsforge:mapsforge-core:0.9.0@jar" level="project" />
+    <orderEntry type="library" name="org.mapsforge:mapsforge-themes:0.9.0@jar" level="project" />
     <orderEntry type="library" name="net.sf.kxml:kxml2:2.3.0@jar" level="project" />
-    <orderEntry type="library" name="org.mapsforge:mapsforge-map:0.8.0@jar" level="project" />
-    <orderEntry type="library" name="org.mapsforge:mapsforge-map-reader:0.8.0@jar" level="project" />
+    <orderEntry type="library" name="org.mapsforge:mapsforge-map-android:0.9.0@jar" level="project" />
     <orderEntry type="library" name="com.caverock:androidsvg:1.2.2-beta-1@jar" level="project" />
-    <orderEntry type="library" name="org.mapsforge:mapsforge-themes:0.8.0@jar" level="project" />
-    <orderEntry type="library" name="org.mapsforge:mapsforge-core:0.8.0@jar" level="project" />
+    <orderEntry type="library" name="org.mapsforge:mapsforge-map:0.9.0@jar" level="project" />
     <orderEntry type="module" module-name="util-java" />
   </component>
 </module>
