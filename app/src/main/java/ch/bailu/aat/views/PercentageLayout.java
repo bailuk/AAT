@@ -22,7 +22,7 @@ public class PercentageLayout  extends ViewGroup {
         }
 
         public int getSize(int parent_size, int p100) {
-            return ((parent_size * percentage * 100) / (100*p100));
+            return ((parent_size * percentage) / p100);
         }
 
         public boolean isVisible() {

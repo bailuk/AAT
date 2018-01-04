@@ -2,12 +2,14 @@ package ch.bailu.aat.views.graph;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.view.View;
 import android.view.ViewGroup;
 
 import ch.bailu.aat.dispatcher.DispatcherInterface;
 import ch.bailu.aat.dispatcher.OnContentUpdatedInterface;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.GpxList;
+import ch.bailu.aat.gpx.interfaces.GpxType;
 import ch.bailu.aat.preferences.SolidUnit;
 import ch.bailu.aat.util.ui.AppLog;
 
@@ -96,4 +98,12 @@ public abstract class AbsGraphView extends ViewGroup implements OnContentUpdated
                               int index, SolidUnit sunit, boolean markerMode);
 
 
+    public void setVisibility(GpxInformation info) {
+        if (info.isLoaded() && info.getType() == GpxType.RTE || info.getType() == GpxType.TRK) {
+            setVisibility(View.VISIBLE);
+        } else {
+            setVisibility(View.GONE);
+        }
+
+    }
 }

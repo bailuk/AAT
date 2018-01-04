@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.SeekBar;
 
 import ch.bailu.aat.R;
 import ch.bailu.aat.dispatcher.CurrentLocationSource;
@@ -16,6 +17,7 @@ import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.GpxList;
 import ch.bailu.aat.gpx.GpxListArray;
 import ch.bailu.aat.gpx.InfoID;
+import ch.bailu.aat.gpx.interfaces.GpxType;
 import ch.bailu.aat.map.MapFactory;
 import ch.bailu.aat.map.MapViewInterface;
 import ch.bailu.aat.util.HtmlBuilderGpx;
@@ -25,21 +27,22 @@ import ch.bailu.aat.views.bar.ControlBar;
 import ch.bailu.aat.views.HtmlScrollTextView;
 import ch.bailu.aat.views.bar.MainControlBar;
 import ch.bailu.aat.views.PercentageLayout;
+import ch.bailu.aat.views.graph.DistanceAltitudeGraphView;
 
 public class NodeDetailActivity extends AbsDispatcher
-        implements OnClickListener, OnContentUpdatedInterface {
+        implements OnClickListener, OnContentUpdatedInterface, SeekBar.OnSeekBarChangeListener {
 
 
     private static final String SOLID_KEY=NodeDetailActivity.class.getSimpleName();
 
     private ImageButton nextNode, previousNode;
 
-
     private MapViewInterface mapView;
     private HtmlScrollTextView htmlView;
+    private DistanceAltitudeGraphView graph;
+    private SeekBar seekBar;
 
     private String fileID="";
-
 
     private GpxListArray arrayCache = new GpxListArray(GpxList.NULL_ROUTE);
     private GpxInformation infoCache = GpxInformation.NULL;
@@ -57,6 +60,7 @@ public class NodeDetailActivity extends AbsDispatcher
 
         final LinearLayout contentView = new ContentView(this);
         contentView.addView(createButtonBar());
+        contentView.addView(createSeekBar());
         contentView.addView(createVerticalView());
 
         createDispatcher();
@@ -80,23 +84,35 @@ public class NodeDetailActivity extends AbsDispatcher
 
     private View createVerticalView() {
 
-        PercentageLayout view =
+        PercentageLayout viewA =
                 new PercentageLayout(this);
 
-        view.setOrientation(AppLayout.getOrientationAlongLargeSide(this));
+        PercentageLayout viewB =
+                new PercentageLayout(this);
 
+
+        viewB.setOrientation(AppLayout.getOrientationAlongLargeSide(this));
 
         mapView = MapFactory.DEF(this, SOLID_KEY).node();
 
         htmlView =new HtmlScrollTextView(this);
         htmlView.enableAutoLink();
 
-        view.add(htmlView, 40);
-        view.add(mapView.toView(), 60);
+        viewB.add(htmlView, 40);
+        viewB.add(mapView.toView(), 60);
 
-        return view;
+        graph = new DistanceAltitudeGraphView(this);
+        viewA.add(graph, 20);
+        viewA.add(viewB, 80);
+        return viewA;
     }
 
+
+    private SeekBar createSeekBar() {
+        seekBar = new SeekBar(this);
+        seekBar.setOnSeekBarChangeListener(this);
+        return seekBar;
+    }
 
     private void createDispatcher() {
         addTarget(this, InfoID.FILEVIEW);
@@ -113,8 +129,22 @@ public class NodeDetailActivity extends AbsDispatcher
         arrayCache = new GpxListArray(info.getGpxList());
         infoCache = info;
 
+
+        graph.setVisibility(info);
+        initSeekBar(info);
+
         int index = getIntent().getIntExtra("I", 0);
         updateToIndex(index);
+    }
+
+    private void initSeekBar(GpxInformation info) {
+        int max = 0;
+
+
+        if (info.getGpxList() != null && info.getGpxList().getPointList() != null)
+            max = info.getGpxList().getPointList().size();
+
+        seekBar.setMax(max);
     }
 
 
@@ -124,13 +154,19 @@ public class NodeDetailActivity extends AbsDispatcher
             if (i < 0) i = arrayCache.size()-1;
             if (i >= arrayCache.size()) i=0;
 
-            mapView.frameBounding(arrayCache.get(i).getBoundingBox());
+
+
+            mapView.setCenter(arrayCache.get(i).getBoundingBox().getCenter().toLatLong());
 
             htmlBuilder.clear();
             htmlBuilder.appendInfo(infoCache, i);
             htmlBuilder.appendNode(arrayCache.get(i), infoCache);
             htmlBuilder.appendAttributes(arrayCache.get(i).getAttributes());
             htmlView.setHtmlText(htmlBuilder.toString());
+
+            graph.onContentUpdated(InfoID.ALL, infoCache, i);
+
+            seekBar.setProgress(i);
         }
     }
 
@@ -158,4 +194,18 @@ public class NodeDetailActivity extends AbsDispatcher
         ActivitySwitcher.start(context, NodeDetailActivity.class, intent);
     }
 
+    @Override
+    public void onProgressChanged(SeekBar seekBar, int i, boolean fromUser) {
+        if (fromUser) updateToIndex(i);
+    }
+
+    @Override
+    public void onStartTrackingTouch(SeekBar seekBar) {
+
+    }
+
+    @Override
+    public void onStopTrackingTouch(SeekBar seekBar) {
+
+    }
 }
