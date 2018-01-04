@@ -12,6 +12,7 @@ import ch.bailu.aat.coordinates.BoundingBoxE6;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.GpxList;
 import ch.bailu.aat.gpx.InfoID;
+import ch.bailu.aat.gpx.interfaces.GpxType;
 import ch.bailu.aat.preferences.SolidOverlayFile;
 import ch.bailu.aat.preferences.SolidOverlayFileList;
 import ch.bailu.aat.services.ServiceContext;
@@ -144,7 +145,13 @@ public class OverlaySource extends ContentSource {
         }
 
 
-
+        @Override
+        public int getType() {
+            if (isLoaded() && getGpxList() != null && getGpxList().getDelta() != null) {
+                return getGpxList().getDelta().getType();
+            }
+            return GpxType.NONE;
+        }
 
         @Override
         public Foc getFile() {

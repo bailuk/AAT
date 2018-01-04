@@ -21,8 +21,12 @@ public class PercentageLayout  extends ViewGroup {
             percentage = Math.max(p, 5);
         }
 
-        public int getSize(int parent_size) {
-            return ((parent_size * percentage) / 100);
+        public int getSize(int parent_size, int p100) {
+            return ((parent_size * percentage * 100) / (100*p100));
+        }
+
+        public boolean isVisible() {
+            return view.getVisibility() != GONE;
         }
     }
 
@@ -61,23 +65,27 @@ public class PercentageLayout  extends ViewGroup {
 
     @Override
     protected void onMeasure(int wSpec, int hSpec) {
+
         if (orientation == LinearLayout.VERTICAL)
             vMeasure(wSpec, hSpec);
         else
             hMeasure(wSpec, hSpec);
     }
 
+
     private void vMeasure(int wSpec, int hSpec) {
         final int width = MeasureSpec.getSize(wSpec);
         final int height = MeasureSpec.getSize(hSpec);
+        final int p100 = get100Percent();
 
         if (list.size() > 0) {
             wSpec = MeasureSpec.makeMeasureSpec (width,  MeasureSpec.EXACTLY);
 
-
             for (Entry e : list) {
-                hSpec = MeasureSpec.makeMeasureSpec (e.getSize(height), MeasureSpec.EXACTLY);
-                e.view.measure(wSpec, hSpec);
+                if (e.isVisible()) {
+                    hSpec = MeasureSpec.makeMeasureSpec(e.getSize(height, p100), MeasureSpec.EXACTLY);
+                    e.view.measure(wSpec, hSpec);
+                }
             }
         }
 
@@ -88,14 +96,18 @@ public class PercentageLayout  extends ViewGroup {
     private void hMeasure(int wSpec, int hSpec) {
         final int width = MeasureSpec.getSize(wSpec);
         final int height = MeasureSpec.getSize(hSpec);
+        final int p100 = get100Percent();
 
         if (list.size() > 0) {
+
             hSpec = MeasureSpec.makeMeasureSpec (height,  MeasureSpec.EXACTLY);
 
 
             for (Entry e : list) {
-                wSpec = MeasureSpec.makeMeasureSpec (e.getSize(width), MeasureSpec.EXACTLY);
-                e.view.measure(wSpec, hSpec);
+                if (e.isVisible()) {
+                    wSpec = MeasureSpec.makeMeasureSpec(e.getSize(width, p100), MeasureSpec.EXACTLY);
+                    e.view.measure(wSpec, hSpec);
+                }
             }
         }
 
@@ -103,6 +115,15 @@ public class PercentageLayout  extends ViewGroup {
     }
 
 
+    private int get100Percent() {
+        int p=0;
+        for (Entry e : list) {
+            if (e.isVisible()) {
+                p += e.percentage;
+            }
+        }
+        return p;
+    }
 
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
@@ -112,6 +133,8 @@ public class PercentageLayout  extends ViewGroup {
     }
 
     private void vLayout(int l, int t, int r, int b) {
+        int p100 = get100Percent();
+
         if (list.size() > 0) {
             int parent_height=b-t;
             int parent_width =r-l;
@@ -121,19 +144,23 @@ public class PercentageLayout  extends ViewGroup {
             l=t=0;
 
             for (Entry e : list) {
-                int view_height=e.getSize(parent_height);
+                if (e.isVisible()) {
+                    int view_height = e.getSize(parent_height, p100);
 
-                b=t+view_height;
+                    b = t + view_height;
 
-                e.view.layout(l, t+s, r, b);
+                    e.view.layout(l, t + s, r, b);
 
-                t+=view_height;
-                s=SPACE;
+                    t += view_height;
+                    s = SPACE;
+                }
             }
         }
     }
 
     private void hLayout(int l, int t, int r, int b) {
+        int p100 = get100Percent();
+
         if (list.size() > 0) {
             int parent_height=b-t;
             int parent_width =r-l;
@@ -145,14 +172,16 @@ public class PercentageLayout  extends ViewGroup {
 
 
             for (Entry e : list) {
-                int view_width=e.getSize(parent_width);
+                if (e.isVisible()) {
+                    int view_width = e.getSize(parent_width, p100);
 
-                r=l+view_width;
+                    r = l + view_width;
 
-                e.view.layout(l+s, t, r, b);
+                    e.view.layout(l + s, t, r, b);
 
-                l+=view_width;
-                s = SPACE;
+                    l += view_width;
+                    s = SPACE;
+                }
             }
         }
     }

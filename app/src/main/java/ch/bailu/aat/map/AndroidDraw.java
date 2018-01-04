@@ -12,7 +12,6 @@ import org.mapsforge.core.graphics.Canvas;
 import org.mapsforge.core.graphics.Paint;
 import org.mapsforge.map.android.graphics.AndroidGraphicFactory;
 
-import ch.bailu.aat.util.graphic.SyncTileBitmap;
 import ch.bailu.aat.util.ui.AppDensity;
 
 public class AndroidDraw implements MapDraw {
@@ -32,7 +31,7 @@ public class AndroidDraw implements MapDraw {
 
     private final int point_radius;
 
-    private final SyncTileBitmap nodeBitmap = new SyncTileBitmap();
+    private final NodeBitmap nodePainter;
     private final Resources resources;
 
 
@@ -44,7 +43,7 @@ public class AndroidDraw implements MapDraw {
         textHeight  = textPaint.getTextHeight("X")+5;
         backgroundPaint = MapPaint.createBackgroundPaint();
 
-        nodeBitmap.set(NodePainter.createNodeMF(res));
+        nodePainter = NodeBitmap.get(res);
         resources = r;
 
         point_radius = res.toDPi(POINT_RADIUS);
@@ -79,7 +78,7 @@ public class AndroidDraw implements MapDraw {
 
     @Override
     public Bitmap getNodeBitmap() {
-        return nodeBitmap.getTileBitmap();
+        return nodePainter.getTileBitmap();
     }
 
     @Override
@@ -145,12 +144,15 @@ public class AndroidDraw implements MapDraw {
     public void bitmap(Bitmap b, Point p, int c) {
         Drawable drawable = new BitmapDrawable(resources ,AndroidGraphicFactory.getBitmap(b));
 
-        _center(drawable, p);
+        centerDrawable(drawable, p);
         drawable.setColorFilter(c, PorterDuff.Mode.MULTIPLY);
         drawable.draw(AndroidGraphicFactory.getCanvas(canvas));
     }
 
-    private static void _center(Drawable drawable, Point pixel) {
+
+
+
+    public static void centerDrawable(Drawable drawable, Point pixel) {
         final int HSIZE = drawable.getIntrinsicWidth()/2;
         final int VSIZE = drawable.getIntrinsicHeight()/2;
 

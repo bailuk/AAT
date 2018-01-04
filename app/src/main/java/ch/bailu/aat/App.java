@@ -11,10 +11,7 @@ public class App extends Application {
 
     @Override
     public void onCreate() {
-        AppLog.d(this, "onCreate()");
-
         MapsForgeContext.initMapsForge(this);
-
         super.onCreate();
     }
 }

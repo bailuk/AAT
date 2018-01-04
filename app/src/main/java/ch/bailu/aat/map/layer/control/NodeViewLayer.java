@@ -4,13 +4,15 @@ import android.content.Context;
 import android.graphics.Color;
 import android.view.View;
 
+import ch.bailu.aat.gpx.GpxInformation;
+import ch.bailu.aat.gpx.GpxPointNode;
 import ch.bailu.aat.map.MapContext;
 import ch.bailu.aat.util.ui.AppLayout;
 import ch.bailu.aat.views.HtmlScrollTextView;
 
 public abstract class NodeViewLayer extends NodeSelectorLayer implements View.OnLongClickListener {
 
-    private final HtmlScrollTextView infoView;
+    private final NodeInfoView infoView;
     private final MapContext mcontext;
 
     private final Position pos;
@@ -25,10 +27,8 @@ public abstract class NodeViewLayer extends NodeSelectorLayer implements View.On
 
         pos = new Position(cl.getContext());
 
-        infoView = new HtmlScrollTextView(cl.getContext());
-        infoView.setBackgroundColor(Color.argb(0xcc, 0xff, 0xff, 0xff));
-        infoView.getTextView().setTextColor(Color.BLACK);
-        infoView.getTextView().setOnLongClickListener(this);
+        infoView = new NodeInfoView(cl.getContext());
+        infoView.setOnLongClickListener(this);
         infoView.setVisibility(View.GONE);
 
         cl.getMapView().addView(infoView);
@@ -44,11 +44,19 @@ public abstract class NodeViewLayer extends NodeSelectorLayer implements View.On
     }
 
 
+    public void setGraph(GpxInformation info, int index) {
+        infoView.setGraph(info, index);
+        measure();
+        layout();
+        //infoView.invalidate();
+
+    }
+
     public void setHtmlText(String text) {
         infoView.setHtmlText(text);
         measure();
         layout();
-        infoView.invalidate();
+        //infoView.invalidate();
     }
 
     public void showAtLeft() {
@@ -65,7 +73,6 @@ public abstract class NodeViewLayer extends NodeSelectorLayer implements View.On
 
     public void hide() {
         AppLayout.fadeOut(infoView);
-        //infoView.setVisibility(View.GONE);
         mcontext.getMapView().requestRedraw();
     }
 
@@ -74,7 +81,6 @@ public abstract class NodeViewLayer extends NodeSelectorLayer implements View.On
         measure();
         layout();
         AppLayout.fadeIn(infoView);
-        //infoView.setVisibility(View.VISIBLE);
 
         mcontext.getMapView().requestRedraw();
 

@@ -12,18 +12,19 @@ import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.GpxList;
 import ch.bailu.aat.gpx.GpxNodeFinder;
 import ch.bailu.aat.gpx.GpxPointNode;
+import ch.bailu.aat.map.MapColor;
 import ch.bailu.aat.map.MapContext;
+import ch.bailu.aat.map.NodeBitmap;
 import ch.bailu.aat.map.layer.MapLayerInterface;
 import ch.bailu.aat.preferences.SolidMapGrid;
 import ch.bailu.aat.util.graphic.Pixel;
+import ch.bailu.aat.util.ui.AppTheme;
 
 public abstract class NodeSelectorLayer implements MapLayerInterface, OnContentUpdatedInterface {
 
-    private final static int COLOR = 0xccffffff;
 
-
-    public final int SQUARE_SIZE = 30;
-    public final int SQUARE_HSIZE = SQUARE_SIZE / 2;
+    public final static int SQUARE_SIZE = 30;
+    public final static int SQUARE_HSIZE = SQUARE_SIZE / 2;
 
     public final int square_size, square_hsize;
 
@@ -129,7 +130,7 @@ public abstract class NodeSelectorLayer implements MapLayerInterface, OnContentU
 
         if (node != null) {
             Pixel selectedPixel = mcontext.getMetrics().toPixel(node);
-            mcontext.draw().bitmap(mcontext.draw().getNodeBitmap(), selectedPixel, COLOR);
+            mcontext.draw().bitmap(mcontext.draw().getNodeBitmap(), selectedPixel, MapColor.NODE_SELECTED);
         }
     }
 

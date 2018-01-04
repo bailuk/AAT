@@ -50,6 +50,7 @@ public class AutoNodeViewLayer extends NodeViewLayer {
         html.appendAttributes(node.getAttributes());
 
         setHtmlText(html.toString());
+        setGraph(info, i);
 
     }
 

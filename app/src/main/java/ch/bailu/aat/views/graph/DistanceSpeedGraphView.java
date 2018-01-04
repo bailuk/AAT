@@ -44,7 +44,7 @@ public class DistanceSpeedGraphView extends AbsGraphView implements SharedPrefer
     }
 
     @Override
-    public void plot(Canvas canvas, GpxList list, SolidUnit sunit, boolean markerMode) {
+    public void plot(Canvas canvas, GpxList list, int index, SolidUnit sunit, boolean markerMode) {
         int km_factor = (int) (list.getDelta().getDistance()/1000) + 1;
 
         GraphPlotter plotter[] = new GraphPlotter[3];

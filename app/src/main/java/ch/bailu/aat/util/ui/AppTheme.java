@@ -19,8 +19,8 @@ public class AppTheme {
     private static final int COLOR_GREEN=Color.rgb(0xcc,0xff,0x00);
     private static final int COLOR_BLUE=Color.rgb(0x00,0xd8,0xff);
     private static final int COLOR_BLUEGRAY=Color.rgb(44, 45, 63);
-    
-    
+
+
     /**
      *  0xAARRGGBB
      *  A = Alpha
@@ -28,64 +28,42 @@ public class AppTheme {
      *  G = Green
      *  B = Blue
      */
-    
-    
-    
+
+
+
     public static final int[] OVERLAY_COLOR = {
-        0xffff939f,
-        0xffff94fd,
-        0xff94ffb7,
-        0xfffdff94,
-        
-        0x99ff3f54, 
-        0x99ff3ffc,
-        0x993fff7d,
-        0x99fcff3f,
-    }; 
-    /*
-    static public float getTextSize(Context context) {
-        if ((context.getResources().getConfiguration().screenLayout &
-                Configuration.SCREENLAYOUT_SIZE_MASK) == Configuration.SCREENLAYOUT_SIZE_LARGE) {     
-            return 25f;
+            0xffff939f,
+            0xffff94fd,
+            0xff94ffb7,
+            0xfffdff94,
 
-        }
-        else if ((context.getResources().getConfiguration().screenLayout &
-                Configuration.SCREENLAYOUT_SIZE_MASK) == Configuration.SCREENLAYOUT_SIZE_NORMAL) {     
-            return 20f;
+            0x99ff3f54,
+            0x99ff3ffc,
+            0x993fff7d,
+            0x99fcff3f,
+    };
 
-        } 
-        else if ((context.getResources().getConfiguration().screenLayout &
-                Configuration.SCREENLAYOUT_SIZE_MASK) == Configuration.SCREENLAYOUT_SIZE_SMALL) {     
-            return 15f;
-        }
-        else {
-            return 20f;
-        }
-    }
-    */
-    
+
     static public int getHighlightColor (){
         return COLOR_ORANGE;
     }
-    
+
     static public int getAltBackgroundColor() {
         return COLOR_BLUEGRAY;
     }
 
-    static public int getTransparentColor(int alpha, int c) {
-        return Color.argb(alpha, Color.red(c), Color.green(c), Color.blue(c));
-    }
-    
+
+
     public final static String APP_LONG_NAME = "Android Activity Tracker";
     public final static String APP_SHORT_NAME = "aat";
 
 
     public static int getHighlightColor2() {
-        return COLOR_GREEN; 
+        return COLOR_GREEN;
     }
-    
+
     public static int getHighlightColor3() {
-        return COLOR_BLUE; 
+        return COLOR_BLUE;
     }
 
     public static void themify(CheckBox b) {
@@ -122,8 +100,8 @@ public class AppTheme {
     public static void themify(LinearLayout bar) {
         bar.setBackgroundResource(R.drawable.button);
     }
-    
-    
+
+
     public static TextView getTitleTextView(Context c, int res) {
         return getTitleTextView(c, c.getResources().getText(res));
     }
@@ -134,8 +112,8 @@ public class AppTheme {
         text.setText(t);
         text.setTextColor(AppTheme.getHighlightColor());
         text.setTextSize(25);
-        
+
         return text;
     }
-    
+
 }

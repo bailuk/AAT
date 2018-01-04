@@ -18,7 +18,7 @@ import ch.bailu.aat.views.preferences.SolidImageButton;
 
 public class ControlBar extends LinearLayout {
 
-    public final static int TRANSPARENT = Color.argb(50, 0, 0, 0);
+
 
 
     private final LinearLayout canvas;

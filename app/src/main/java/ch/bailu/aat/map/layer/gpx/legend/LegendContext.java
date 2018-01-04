@@ -2,12 +2,12 @@ package ch.bailu.aat.map.layer.gpx.legend;
 
 import ch.bailu.aat.coordinates.BoundingBoxE6;
 import ch.bailu.aat.gpx.GpxPointNode;
+import ch.bailu.aat.map.MapColor;
 import ch.bailu.aat.map.MapContext;
 import ch.bailu.aat.map.TwoNodes;
 
 public class LegendContext {
 
-    public static final int COLOR = 0x99ffffff;
     public static final int MIN_PIXEL_DISTANCE=100;
 
     private final MapContext mcontext;
@@ -34,7 +34,7 @@ public class LegendContext {
 
 
     private void drawNode(TwoNodes.PixelNode node) {
-        mcontext.draw().bitmap(mcontext.draw().getNodeBitmap(), node.pixel, COLOR);
+        mcontext.draw().bitmap(mcontext.draw().getNodeBitmap(), node.pixel, MapColor.NODE_NEUTRAL);
     }
 
 

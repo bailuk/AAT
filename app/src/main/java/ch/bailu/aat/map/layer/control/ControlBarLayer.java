@@ -6,6 +6,7 @@ import android.widget.LinearLayout;
 
 import org.mapsforge.core.model.Point;
 
+import ch.bailu.aat.map.MapColor;
 import ch.bailu.aat.map.MapContext;
 import ch.bailu.aat.map.MapViewInterface;
 import ch.bailu.aat.map.layer.MapLayerInterface;
@@ -44,7 +45,7 @@ public abstract class ControlBarLayer implements MapLayerInterface, View.OnClick
     }
 
     public ControlBarLayer(MapContext c, ControlBar b, int p) {
-        this(c,b,p, ControlBar.TRANSPARENT);
+        this(c,b,p, MapColor.MEDIUM);
     }
 
 
