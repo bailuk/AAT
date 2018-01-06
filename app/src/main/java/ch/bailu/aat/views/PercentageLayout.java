@@ -170,7 +170,6 @@ public class PercentageLayout  extends ViewGroup {
             t=l=0;
             b = parent_height;
 
-
             for (Entry e : list) {
                 if (e.isVisible()) {
                     int view_width = e.getSize(parent_width, p100);

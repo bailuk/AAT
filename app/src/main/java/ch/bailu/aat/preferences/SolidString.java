@@ -1,5 +1,7 @@
 package ch.bailu.aat.preferences;
 
+import android.content.Context;
+
 import java.util.ArrayList;
 
 public class SolidString extends AbsSolidType {
@@ -7,6 +9,9 @@ public class SolidString extends AbsSolidType {
     private final Storage storage;
 
 
+    public SolidString(Context c, String k) {
+        this(Storage.global(c), k);
+    }
     public SolidString(Storage s, String k) {
         storage=s;
         key=k;
@@ -40,5 +45,11 @@ public class SolidString extends AbsSolidType {
 
     public ArrayList<String> buildSelection(ArrayList<String> strings) {
         return strings;
+    }
+
+    public String getValueAsStringNonDef() {
+        String s = getValueAsString();
+        if (s== null || s.equals(Storage.DEF_VALUE)) return "";
+        return s;
     }
 }

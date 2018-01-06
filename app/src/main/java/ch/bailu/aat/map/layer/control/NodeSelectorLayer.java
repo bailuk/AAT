@@ -14,14 +14,11 @@ import ch.bailu.aat.gpx.GpxNodeFinder;
 import ch.bailu.aat.gpx.GpxPointNode;
 import ch.bailu.aat.map.MapColor;
 import ch.bailu.aat.map.MapContext;
-import ch.bailu.aat.map.NodeBitmap;
 import ch.bailu.aat.map.layer.MapLayerInterface;
 import ch.bailu.aat.preferences.SolidMapGrid;
 import ch.bailu.aat.util.graphic.Pixel;
-import ch.bailu.aat.util.ui.AppTheme;
 
 public abstract class NodeSelectorLayer implements MapLayerInterface, OnContentUpdatedInterface {
-
 
     public final static int SQUARE_SIZE = 30;
     public final static int SQUARE_HSIZE = SQUARE_SIZE / 2;
@@ -152,9 +149,6 @@ public abstract class NodeSelectorLayer implements MapLayerInterface, OnContentU
             infoCache.remove(iid);
         }
     }
-
-
-
 
 
     @Override

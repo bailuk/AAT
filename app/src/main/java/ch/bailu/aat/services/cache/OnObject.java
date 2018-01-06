@@ -6,11 +6,23 @@ import ch.bailu.aat.services.ServiceContext;
 
 public abstract class OnObject {
     public OnObject(final ServiceContext sc, final String id, final Class c) {
+        this (sc, id, c, null);
+    }
+
+
+    public OnObject(final ServiceContext sc, final String id, final Class c,
+                    final ObjectHandle.Factory factory) {
 
         new InsideContext(sc) {
             @Override
             public void run() {
-                ObjectHandle handle = sc.getCacheService().getObject(id);
+                ObjectHandle handle;
+
+                if (factory == null)
+                    handle = sc.getCacheService().getObject(id);
+
+                else
+                    handle = sc.getCacheService().getObject(id, factory);
 
                 try {
                     if (c.isInstance(handle))

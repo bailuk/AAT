@@ -1,4 +1,4 @@
-package ch.bailu.aat.osm_features;
+package ch.bailu.aat.services.cache.osm_features;
 
 import android.content.res.AssetManager;
 
@@ -39,7 +39,8 @@ public class MapFeaturesParser {
 
 
         for (String file : files) {
-            parseSummary(new FocAsset(assets, file));
+            parseFeatures(new FocAsset(assets, file));
+            //parseSummary(new FocAsset(assets, file));
         }
     }
     

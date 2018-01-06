@@ -1,14 +1,11 @@
 package ch.bailu.aat.map.layer.control;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.view.View;
 
 import ch.bailu.aat.gpx.GpxInformation;
-import ch.bailu.aat.gpx.GpxPointNode;
 import ch.bailu.aat.map.MapContext;
 import ch.bailu.aat.util.ui.AppLayout;
-import ch.bailu.aat.views.HtmlScrollTextView;
 
 public abstract class NodeViewLayer extends NodeSelectorLayer implements View.OnLongClickListener {
 
@@ -16,9 +13,6 @@ public abstract class NodeViewLayer extends NodeSelectorLayer implements View.On
     private final MapContext mcontext;
 
     private final Position pos;
-
-
-
 
 
     public NodeViewLayer(MapContext cl) {

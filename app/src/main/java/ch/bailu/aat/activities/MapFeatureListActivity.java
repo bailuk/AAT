@@ -1,11 +1,6 @@
 package ch.bailu.aat.activities;
 
-import android.content.Intent;
-
-import ch.bailu.aat.util.AppIntent;
-import ch.bailu.aat.util.fs.foc.FocAsset;
-import ch.bailu.aat.views.FeaturesList;
-
+/*
 public class MapFeatureListActivity extends AbsDispatcher {
      private boolean contentViewSet = false;
 
@@ -20,6 +15,7 @@ public class MapFeatureListActivity extends AbsDispatcher {
             list.loadList(
                     new FocAsset(this.getAssets(), file),
                     getServiceContext().getIconMapService() );
+
             setContentView(list);
 
             contentViewSet=true;
@@ -29,3 +25,4 @@ public class MapFeatureListActivity extends AbsDispatcher {
 
 
 }
+*/

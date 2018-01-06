@@ -24,7 +24,6 @@ public class NodeInfoView extends PercentageLayout {
         super(context);
         setOrientation(LinearLayout.VERTICAL);
 
-
         htmlView = new HtmlScrollTextView(context);
         htmlView.getTextView().setTextColor(MapColor.TEXT);
         htmlView.setBackgroundColor(MapColor.LIGHT);
@@ -37,11 +36,7 @@ public class NodeInfoView extends PercentageLayout {
         graphView.showLabel(false);
         add(graphView, 40);
 
-
         setBackgroundColor(Color.TRANSPARENT);
-
-
-
     }
 
 
@@ -57,14 +52,7 @@ public class NodeInfoView extends PercentageLayout {
     }
 
     public void setGraph(GpxInformation info, int index) {
-        if (info.isLoaded() && info.getType() == GpxType.TRK || info.getType() == GpxType.RTE) {
-
-            graphView.onContentUpdated(InfoID.ALL, info, index);
-            graphView.setVisibility(VISIBLE);
-        } else {
-            graphView.setVisibility(GONE);
-        }
-
-
+        graphView.setVisibility(info);
+        graphView.onContentUpdated(InfoID.ALL, info, index);
     }
 }
