@@ -3,49 +3,44 @@ package ch.bailu.aat.util.filter_list;
 import java.util.ArrayList;
 
 public abstract class FilterList<T> {
-    private final ArrayList<T> show = new ArrayList<>(100);
+    private final ArrayList<T> visible = new ArrayList<>(100);
     private final ArrayList<T> all = new ArrayList<>(100);
 
 
     private KeyList filterKeys = new KeyList();
 
 
+
+    public void filter(String s) {
+        filterKeys = new KeyList(s);
+
+        filterAll();
+    }
+
+
     public void filterAll() {
-        show.clear();
+        visible.clear();
 
         for (T t: all) {
             if (showElement(t, filterKeys))
-                show.add(t);
+                visible.add(t);
         }
     }
 
 
     public void filterMore() {
-        for (int i = show.size()-1; i > -1; i--) {
-            if (showElement(show.get(i), filterKeys) == false)
-                show.remove(i);
+        for (int i = visible.size()-1; i > -1; i--) {
+            if (showElement(visible.get(i), filterKeys) == false)
+                visible.remove(i);
         }
     }
 
 
-    public void filter(String s) {
-        KeyList old = filterKeys;
-        filterKeys = new KeyList(s);
-
-        if (filterKeys.isEmpty()) {
-            showAll();
-        } else if (filterKeys.fits(old)) {
-            filterMore();
-        } else {
-            filterAll();
-        }
-
-    }
     private void showAll() {
-        if (show.size() != all.size()) {
-            show.clear();
+        if (visible.size() != all.size()) {
+            visible.clear();
             for (T t : all) {
-                show.add(t);
+                visible.add(t);
             }
         }
     }
@@ -58,20 +53,23 @@ public abstract class FilterList<T> {
         all.add(t);
 
         if (showElement(t, filterKeys))
-            show.add(t);
-    }
-
-    public int size() {
-        return show.size();
+            visible.add(t);
     }
 
     public T get(int index) {
-        return show.get(index);
+        return visible.get(index);
     }
 
 
     public void clear() {
-        show.clear();
+        visible.clear();
         all.clear();
+    }
+
+    public int sizeVisible() {
+        return visible.size();
+    }
+    public int sizeAll() {
+        return all.size();
     }
 }

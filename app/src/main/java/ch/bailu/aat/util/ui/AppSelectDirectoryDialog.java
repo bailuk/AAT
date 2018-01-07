@@ -13,9 +13,13 @@ public class AppSelectDirectoryDialog  implements  DialogInterface.OnClickListen
     private final Foc srcFile;
     private final Foc directories[];
 
+    private final String targetPrefix, targetExtension;
 
     private final Context context;
-    public AppSelectDirectoryDialog (Context c, Foc u) {
+    public AppSelectDirectoryDialog (Context c, Foc u, String prefix, String ext) {
+        targetPrefix = prefix;
+        targetExtension = ext;
+
         context=c;
         srcFile = u;
         directories = new Foc[] {
@@ -47,7 +51,7 @@ public class AppSelectDirectoryDialog  implements  DialogInterface.OnClickListen
     public void onClick(DialogInterface dialog, int i) {
         try {
 
-            FileAction.copyToDir(context, srcFile, directories[i]);
+            FileAction.copyToDir(context, srcFile, directories[i], targetPrefix, targetExtension);
         } catch (Exception e) {
             AppLog.e(context, e);
         }

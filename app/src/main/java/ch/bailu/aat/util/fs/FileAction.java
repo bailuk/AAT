@@ -6,10 +6,13 @@ import android.content.Intent;
 import android.net.Uri;
 import android.widget.EditText;
 
+import java.io.IOException;
+
 import ch.bailu.aat.R;
 import ch.bailu.aat.preferences.SolidDirectoryQuery;
 import ch.bailu.aat.preferences.SolidMockLocationFile;
 import ch.bailu.aat.services.ServiceContext;
+import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.util.Clipboard;
 import ch.bailu.aat.util.ui.AppDialog;
 import ch.bailu.aat.util.ui.AppLog;
@@ -17,7 +20,7 @@ import ch.bailu.aat.util.ui.AppSelectDirectoryDialog;
 import ch.bailu.aat.views.preferences.AddOverlayDialog;
 import ch.bailu.util_java.foc.Foc;
 
-public class FileAction   {
+public class FileAction {
 
     public static void rescanDirectory(ServiceContext scontext, Foc file) {
         if (isParentActive(scontext.getContext(), file)) {
@@ -81,14 +84,14 @@ public class FileAction   {
         new AddOverlayDialog(context, file);
     }
 
-    public static void  useForMockLocation(Context context, Foc file) {
+    public static void useForMockLocation(Context context, Foc file) {
         if (file.canRead())
             new SolidMockLocationFile(context).setValue(file.getPath());
         else
             AFile.logErrorNoAccess(context, file);
     }
 
-    
+
     public static void view(Context context, Uri uri) {
         FileIntent.view(context, new Intent(), uri);
     }
@@ -97,7 +100,7 @@ public class FileAction   {
     public static void view(Context context, Foc file) {
         FileIntent.view(context, new Intent(), file);
     }
-    
+
     public static void sendTo(Context context, Foc file) {
         FileIntent.send(context, new Intent(), file);
     }
@@ -109,21 +112,39 @@ public class FileAction   {
 
 
     public static void copyToDir(Context context, Foc src) {
-        new AppSelectDirectoryDialog(context, src);
+        copyToDir(context, src, null, null);
     }
 
-    public static void copyToDir(Context context, Foc src, Foc destDir) {
-        final Foc dest = destDir.child(src.getName());
+    public static void copyToDir(Context context, Foc src,
+                                 String targetPrefix, String targetExtendsion) {
+        new AppSelectDirectoryDialog(context, src, targetPrefix, targetExtendsion);
+    }
 
-        if (dest == null || dest.exists()) {
-            AFile.logErrorExists(context, dest);
-        } else {
-            src.cp(dest);
-            AppLog.i(context, dest.getPathName());
+
+    public static void copyToDir(Context context, Foc src, Foc destDir, String prefix, String extension) {
+        try {
+            final Foc dest;
+
+            if (prefix != null)
+                dest = AppDirectory.generateUniqueFilePath(destDir, prefix, extension);
+
+            else
+                dest = destDir.child(src.getName());
+
+
+            if (dest == null || dest.exists()) {
+                AFile.logErrorExists(context, dest);
+
+            } else {
+                src.copy(dest);
+                AppBroadcaster.broadcast(context,
+                        AppBroadcaster.FILE_CHANGED_ONDISK, dest, src.getPath());
+                //AppLog.i(context, dest.getPathName());
+            }
+        } catch (Exception e) {
+            AppLog.e(context,e);
         }
     }
-
-
 
 
 
@@ -131,7 +152,7 @@ public class FileAction   {
         final Context context = scontext.getContext();
 
         if (file.canWrite() && file.hasParent()) {
-            final Foc directory=file.parent();
+            final Foc directory = file.parent();
 
             final String title = context.getString(R.string.file_rename) + " " + file.getName();
             final EditText edit = new EditText(context);
@@ -159,4 +180,7 @@ public class FileAction   {
             AFile.logErrorReadOnly(context, file);
         }
     }
+
+
+
 }

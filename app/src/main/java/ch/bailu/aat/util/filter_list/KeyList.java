@@ -16,7 +16,7 @@ public class KeyList {
 
 
     public void addKeys(String s) {
-        addKeys(s.split(" |=|\\.|;|:"));
+        addKeys(s.split(" |=|\\.|;|:|\\/"));
     }
 
 
@@ -36,7 +36,7 @@ public class KeyList {
         }
     }
 
-    private boolean hasKey(String k) {
+    public boolean hasKey(String k) {
         return hasKey(k, keys.size());
     }
 
@@ -50,6 +50,7 @@ public class KeyList {
 
         return false;
     }
+
 
 
     public boolean fits(KeyList list) {
@@ -81,5 +82,13 @@ public class KeyList {
 
     public boolean isEmpty() {
         return keys.isEmpty();
+    }
+
+    public int length() {
+        int l = 0;
+        for (String k : keys) {
+            l+=k.length();
+        }
+        return l;
     }
 }

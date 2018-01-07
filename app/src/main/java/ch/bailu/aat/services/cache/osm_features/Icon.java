@@ -11,6 +11,7 @@ import com.caverock.androidsvg.SVGParseException;
 
 import java.io.IOException;
 
+import ch.bailu.aat.services.icons.IconMapService;
 import ch.bailu.aat.util.graphic.SyncTileBitmap;
 import ch.bailu.aat.util.ui.AppDensity;
 import ch.bailu.aat.util.ui.AppLog;
@@ -22,8 +23,8 @@ class Icon {
 
 
     public Icon(Context context) {
-        int sicon_size = new AppDensity(context).toDPi(24);
-        icon_size =new AppDensity(context).toDPi(64);
+        int sicon_size = new AppDensity(context).toDPi(IconMapService.SMALL_ICON_SIZE);
+        icon_size =new AppDensity(context).toDPi(IconMapService.BIG_ICON_SIZE);
 
         way = toDrawable(context,"symbols/way.svg",sicon_size,Color.WHITE);
         node = toDrawable(context,"symbols/node.svg",sicon_size,Color.WHITE);
@@ -45,7 +46,7 @@ class Icon {
             return SyncTileBitmap.toDrawable(svg, size, res, color);
 
         } catch (SVGParseException | IOException e) {
-            AppLog.d(asset, asset);
+            AppLog.d(asset,asset);
         }
         return null;
     }

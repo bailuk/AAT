@@ -81,10 +81,7 @@ public abstract class ObjectHandle implements ObjectBroadcastReceiver{
     
     
     
-    public synchronized void makeOld() {
-        accessTime-=30000;
-    }
-    
+
     public synchronized long getAccessTime() {
         return accessTime;
     }

@@ -15,7 +15,9 @@ public class NominatimActivity extends AbsOsmApiActivity {
     }
 
     @Override
-    public void addButtons(ControlBar bar) {}
+    public void addButtons(ControlBar bar) {
+        bar.addSpace();
+    }
 
     
 

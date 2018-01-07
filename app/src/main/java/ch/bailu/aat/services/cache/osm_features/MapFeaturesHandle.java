@@ -2,29 +2,26 @@ package ch.bailu.aat.services.cache.osm_features;
 
 
 import android.content.Context;
-import android.content.res.AssetManager;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
 
+import ch.bailu.aat.preferences.SolidOsmFeaturesList;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.background.BackgroundTask;
 import ch.bailu.aat.services.cache.ObjectHandle;
 import ch.bailu.aat.services.cache.OnObject;
 import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.util.filter_list.FilterList;
-import ch.bailu.aat.util.fs.foc.FocAsset;
+import ch.bailu.aat.util.filter_list.KeyList;
 
-public class FeaturesListObject extends ObjectHandle {
+public class MapFeaturesHandle extends ObjectHandle {
 
-    private static final long SIZE = 1024*1024;
-    public static final String ID = FeaturesListObject.class.getSimpleName();
+    public static final String ID_FULL = MapFeaturesHandle.class.getSimpleName();
+    public static final String ID_SMALL = MapFeaturesHandle.class.getSimpleName()+"/s";
 
-
-
-
-
+    private boolean isLoaded = false;
+    private long size = 0;
 
     private class List {
         private final ArrayList<ListData> list = new ArrayList<>(50);
@@ -34,7 +31,7 @@ public class FeaturesListObject extends ObjectHandle {
         }
 
         public synchronized void sync(FilterList<ListData> f) {
-            for (int i = f.size(); i < list.size(); i++) {
+            for (int i = f.sizeAll(); i < list.size(); i++) {
                 f.add(list.get(i));
             }
         }
@@ -47,7 +44,7 @@ public class FeaturesListObject extends ObjectHandle {
     private final List list = new List();
 
 
-    public FeaturesListObject() {
+    public MapFeaturesHandle(String ID) {
         super(ID);
     }
 
@@ -56,7 +53,7 @@ public class FeaturesListObject extends ObjectHandle {
     public void onInsert(ServiceContext sc) {
         super.onInsert(sc);
 
-        sc.getBackgroundService().process(new ListLoader());
+        sc.getBackgroundService().process(new ListLoader(getID()));
     }
 
     @Override
@@ -67,7 +64,7 @@ public class FeaturesListObject extends ObjectHandle {
 
     @Override
     public long getSize() {
-        return SIZE;
+        return size;
     }
 
 
@@ -76,43 +73,56 @@ public class FeaturesListObject extends ObjectHandle {
     }
 
 
+    @Override
+    public boolean isReadyAndLoaded() {
+        return isLoaded;
+    }
+
+
     public static class ListLoader extends BackgroundTask implements MapFeaturesParser.OnHaveFeature {
-        private static final String MAP_FEATURES_ASSET = "map_features";
+        private final String ID;
 
         private Icon icons;
         private ServiceContext scontext;
 
-        private FeaturesListObject owner = null;
+        private MapFeaturesHandle owner = null;
+        public ListLoader(String id) {
+            ID = id;
+        }
+
+        public KeyList keyList;
+
+        private int doBroadcast = 0;
 
         @Override
         public long bgOnProcess(final ServiceContext sc) {
-            new OnObject(sc, ID, FeaturesListObject.class) {
+            final long[] size = {0};
+            new OnObject(sc, ID, MapFeaturesHandle.class) {
                 @Override
                 public void run(ObjectHandle handle) {
-                    owner = (FeaturesListObject) handle;
+                    owner = (MapFeaturesHandle) handle;
                     scontext = sc;
                     bgOnProcess(sc.getContext());
 
+                    owner.isLoaded = true;
                     AppBroadcaster.broadcast(sc.getContext(),
                             AppBroadcaster.FILE_CHANGED_INCACHE, ID);
 
+                    size[0] = owner.size;
                     owner = null;
                     scontext = null;
                 }
             };
-            return SIZE;
+            return size[0];
         }
 
 
         private void bgOnProcess(Context context) {
             icons = new Icon(context);
+            keyList = SolidOsmFeaturesList.getKeyList(ID);
 
-            AssetManager assets = context.getAssets();
-            ArrayList<String> files = FocAsset.listAssets(assets, MAP_FEATURES_ASSET);
-
-            Collections.sort(files);
             try {
-                new MapFeaturesParser(assets, this, files);
+                new MapFeaturesParser(context.getAssets(), this);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -120,17 +130,37 @@ public class FeaturesListObject extends ObjectHandle {
 
 
         @Override
+        public boolean onParseFile(String file) {
+            return keyList.isEmpty() || keyList.hasKey(file.toLowerCase());
+
+        }
+
+        @Override
         public void onHaveFeature(MapFeaturesParser parser) {
             ListData d = new ListData(scontext, parser, icons);
+
+            owner.size += d.length() * 2;
             owner.list.add(d);
+
+            doBroadcast++;
+            if (doBroadcast > 10) {
+                doBroadcast = 0;
+                AppBroadcaster.broadcast(scontext.getContext(),
+                        AppBroadcaster.FILE_CHANGED_INCACHE, ID);
+            }
         }
     }
 
-
     public static class Factory extends ObjectHandle.Factory {
+        final String ID;
+
+        public Factory(String id) {
+            ID = id;
+        }
+
         @Override
         public ObjectHandle factory(String id, ServiceContext cs) {
-            return new FeaturesListObject();
+            return new MapFeaturesHandle(ID);
         }
     }
 }

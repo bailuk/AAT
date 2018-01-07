@@ -147,8 +147,6 @@
             android:name="ch.bailu.aat.activities.NominatimActivity"
             android:windowSoftInputMode="adjustPan">
         </activity>
-        <activity android:name="ch.bailu.aat.activities.MapFeaturesActivity" >
-        </activity>
         <activity android:name="ch.bailu.aat.activities.MapFeatureListActivity" >
         </activity>
         <activity android:name="ch.bailu.aat.activities.NodeDetailActivity" >

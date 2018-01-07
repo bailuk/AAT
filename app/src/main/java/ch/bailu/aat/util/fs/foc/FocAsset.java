@@ -27,20 +27,6 @@ public class FocAsset extends Foc {
     }
 
 
-    public static ArrayList<String> listAssets(AssetManager am, String path) {
-        ArrayList<String> r = new ArrayList<>();
-
-        try {
-            String [] files = am.list(path);
-            for (String f: files) {
-                r.add(path+ "/" + f);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return r;
-    }
 
     @Override
     public boolean remove() {

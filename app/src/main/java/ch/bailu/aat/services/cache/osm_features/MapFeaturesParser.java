@@ -4,53 +4,63 @@ import android.content.res.AssetManager;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 
 import ch.bailu.aat.util.fs.foc.FocAsset;
 import ch.bailu.util_java.foc.Foc;
 import ch.bailu.util_java.io.Stream;
 
 public class MapFeaturesParser {
-    
+    private static final String MAP_FEATURES_ASSET = "map_features";
+
     private final OnHaveFeature haveFeature;
     
     private final StringBuilder out=new StringBuilder();
+
     private final StringBuilder outName=new StringBuilder();
     private final StringBuilder outKey=new StringBuilder();
     private final StringBuilder outValue=new StringBuilder();
-    
-    
-    
+
+    private String outSummaryKey = new String();
+
+    public MapFeaturesParser(AssetManager assets, OnHaveFeature hf) throws IOException {
+        this(assets, hf, assets.list(MAP_FEATURES_ASSET));
+    }
+
+    public String getSummaryKey() {
+        return outSummaryKey;
+    }
+
+
     public interface OnHaveFeature {
+        boolean onParseFile(String file);
         void onHaveFeature(MapFeaturesParser parser);
     }
     
     
-    public MapFeaturesParser(OnHaveFeature hf, Foc file) throws IOException {
-        haveFeature = hf;
-        
-        parseFeatures(file);
-    }
-    
-
     public MapFeaturesParser(AssetManager assets,
                              OnHaveFeature hf,
-                             ArrayList<String> files) throws IOException {
+                             String [] files) throws IOException {
         haveFeature = hf;
 
+        for (String f : files) {
+            if (haveFeature.onParseFile(f)) {
+                Foc file = new FocAsset(assets, MAP_FEATURES_ASSET + "/" + f);
+                parseFeatures(file);
+            }
 
-        for (String file : files) {
-            parseFeatures(new FocAsset(assets, file));
-            //parseSummary(new FocAsset(assets, file));
+
         }
     }
     
 
 
-    public void toHtml(StringBuilder html) {
-        html.append(out);
+    public StringBuilder addHtml(StringBuilder b) {
+        b.append(out);
+        return b;
     }
     
-    
+
     public String getName() {
         return outName.toString();
     }
@@ -65,24 +75,12 @@ public class MapFeaturesParser {
     
 
     
-
-    
-    private void parseSummary(Foc file) throws IOException {
-        Stream in = new Stream(file);
-        
-        parseSummary(in);
-        haveFeature();
-        
-        in.close();
-    }
-    
-    
     private void parseFeatures(Foc file) throws IOException {
         Stream in = new Stream(file);
 
         parseSummary(in);
-        resetFeature();
-        
+        haveSummary();
+
         while(!in.haveEOF()) {
             parseFeature(in);
             haveFeature();
@@ -91,9 +89,8 @@ public class MapFeaturesParser {
         in.close();
     }
 
-    
-    
-    
+
+
     private void parseFeature(Stream in) throws IOException {
         parseKeyValue(in);
         parseToEndOfParagraph(in);
@@ -192,12 +189,18 @@ public class MapFeaturesParser {
         
     }
 
-    
+
+    private void haveSummary() {
+        outSummaryKey = "_" + outName.toString().toLowerCase();
+
+        haveFeature.onHaveFeature(this);
+        resetFeature();
+    }
+
     private void haveFeature() {
-        
-        if (out.length()>1) {
+        if (outKey.length() > 0)
             haveFeature.onHaveFeature(this);
-        }
+
         resetFeature();
     }
     

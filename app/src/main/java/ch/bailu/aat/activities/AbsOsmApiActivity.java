@@ -17,11 +17,12 @@ import ch.bailu.aat.R;
 import ch.bailu.aat.coordinates.BoundingBoxE6;
 import ch.bailu.aat.dispatcher.CustomFileSource;
 import ch.bailu.aat.gpx.InfoID;
+import ch.bailu.aat.menus.FileMenu;
 import ch.bailu.aat.services.InsideContext;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.background.BackgroundService;
-import ch.bailu.aat.services.background.DownloadTask;
 import ch.bailu.aat.services.background.BackgroundTask;
+import ch.bailu.aat.services.background.DownloadTask;
 import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.util.AppIntent;
 import ch.bailu.aat.util.OsmApiHelper;
@@ -31,12 +32,12 @@ import ch.bailu.aat.util.ui.AppLog;
 import ch.bailu.aat.util.ui.ToolTip;
 import ch.bailu.aat.views.BusyButton;
 import ch.bailu.aat.views.ContentView;
-import ch.bailu.aat.views.bar.ControlBar;
-import ch.bailu.aat.views.bar.MainControlBar;
+import ch.bailu.aat.views.EditTextTool;
 import ch.bailu.aat.views.NodeListView;
 import ch.bailu.aat.views.PercentageLayout;
 import ch.bailu.aat.views.TagEditor;
-import ch.bailu.aat.views.preferences.AddOverlayDialog;
+import ch.bailu.aat.views.bar.ControlBar;
+import ch.bailu.aat.views.bar.MainControlBar;
 import ch.bailu.util_java.foc.Foc;
 
 
@@ -44,14 +45,12 @@ public abstract class AbsOsmApiActivity extends AbsDispatcher implements OnClick
 
     private TagEditor          tagEditor;
     private BusyButton         download;
-    private View               erase;
-    private View               saveCopy;
-    private View               addLayer;
+    private View               fileMenu;
 
     private NodeListView       list;
 
     private OsmApiHelper       osmApi;
-    private BackgroundTask request= BackgroundTask.NULL;
+    private BackgroundTask     request = BackgroundTask.NULL;
 
 
 
@@ -105,12 +104,29 @@ public abstract class AbsOsmApiActivity extends AbsDispatcher implements OnClick
 
 
 
-    private LinearLayout createContentView()  {
+    private View createContentView()  {
+        MainControlBar bar = createControlBar();
+
         ContentView contentView = new ContentView(this);
-        ControlBar bar = createControlBar();
         contentView.addView(bar);
+        contentView.addView(createMainContentView(bar));
+        return contentView;
+    }
 
 
+    protected View createMainContentView(MainControlBar bar) {
+        View input = createTagEditor();
+        list = new NodeListView(getServiceContext(), this);
+
+        PercentageLayout percentage = new PercentageLayout(this);
+        percentage.add(input, 30);
+        percentage.add(list, 70);
+
+        return percentage;
+    }
+
+
+    private View createTagEditor() {
         LinearLayout input = new LinearLayout(this);
         input.setOrientation(LinearLayout.VERTICAL);
 
@@ -118,47 +134,32 @@ public abstract class AbsOsmApiActivity extends AbsDispatcher implements OnClick
         urlLabel.setText(osmApi.getUrlStart());
         input.addView(urlLabel);
 
+
         tagEditor = new TagEditor(this, osmApi.getBaseDirectory());
 
-        input.addView(tagEditor, new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT, 1f));
+        input.addView(new EditTextTool(tagEditor), new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT, 1f));
 
 
         TextView postLabel = new TextView(this);
         postLabel.setText(osmApi.getUrlEnd());
         input.addView(postLabel);
-        //AppTheme.themify(postLabel);
 
-        list = new NodeListView(getServiceContext(), this);
-
-        PercentageLayout percentage = new PercentageLayout(this);
-        percentage.add(input, 30);
-        percentage.add(list, 70);
-
-        contentView.addView(percentage);
-        return contentView;
+        return input;
     }
 
-
-    private ControlBar createControlBar() {
-        ControlBar bar = new MainControlBar(this,6);
+    private MainControlBar createControlBar() {
+        MainControlBar bar = new MainControlBar(this);
 
         download = new BusyButton(this, R.drawable.go_bottom_inverse);
 
         bar.addView(download);
         download.setOnClickListener(this);
 
-        erase = bar.addImageButton(R.drawable.edit_clear_all_inverse);
-        addLayer = bar.addImageButton(R.drawable.view_paged_inverse);
-        saveCopy = bar.addImageButton(R.drawable.document_save_as_inverse);
-
-
-        ToolTip.set(download, R.string.tt_nominatim_query);
-        ToolTip.set(erase, R.string.tt_nominatim_clear);
-        ToolTip.set(addLayer, R.string.tt_nominatim_overlay);
-        ToolTip.set(saveCopy, R.string.tt_nominatim_save);
-
         addButtons(bar);
 
+        fileMenu = bar.addImageButton(R.drawable.edit_select_all_inverse);
+
+        ToolTip.set(download, R.string.tt_nominatim_query);
         bar.setOnClickListener1(this);
 
 
@@ -175,13 +176,13 @@ public abstract class AbsOsmApiActivity extends AbsDispatcher implements OnClick
         if (v==download) {
             download();
 
-        } else if (v==erase) {
-            tagEditor.erase();
+        } else if (v == fileMenu) {
+            try {
+                showFileMenu(v);
 
-        } else if (v==saveCopy) {
-            saveCopy();
-        } else if (v==addLayer) {
-            new AddOverlayDialog(this,osmApi.getResultFile());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
 
 
@@ -233,36 +234,21 @@ public abstract class AbsOsmApiActivity extends AbsDispatcher implements OnClick
     };
 
 
-    private void saveCopy() {
-        try {
-            final Foc source = osmApi.getResultFile();
-            final Foc target = getOverlayFile();
-
-            source.cp(target);
-
-
-            AppBroadcaster.broadcast(
-                    this,
-                    AppBroadcaster.FILE_CHANGED_ONDISK,
-                    target.getPath(),
-                    source.getPath());
-
-        } catch (IOException e) {
-            AppLog.e(this, e);
-        }
-    }
-
-
-    private Foc getOverlayFile() throws IOException {
+    private void showFileMenu(View parent) throws IOException {
         final String query = TextBackup.read(osmApi.getQueryFile());
         final String prefix = OsmApiHelper.getFilePrefix(query);
         final String extension = osmApi.getFileExtension();
-        final Foc directory = AppDirectory.getDataDirectory(this, AppDirectory.DIR_OVERLAY);
 
-        return AppDirectory.generateUniqueFilePath(directory, prefix, extension);
+        new FileMenu(this, osmApi.getResultFile(),
+                prefix, extension).showAsPopup(this, parent);
     }
 
 
+    public void appendText(String s) {
+        if (tagEditor.getEditableText().length()>0)
+            tagEditor.append("\n");
+        tagEditor.append(s);
+    }
 
 
     @Override

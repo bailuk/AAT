@@ -1,4 +1,4 @@
-package ch.bailu.aat.views;
+package ch.bailu.aat.views.osm_features;
 
 import android.content.Context;
 import android.database.DataSetObserver;
@@ -10,15 +10,23 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import ch.bailu.aat.services.cache.osm_features.ListData;
-import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.util.filter_list.FilterList;
 import ch.bailu.aat.util.ui.AppTheme;
 
 
 public class MapFeaturesListView extends ListView  {
 
+
     private DataSetObserver observer=null;
     private final FilterList<ListData> list;
+
+    private OnSelected onSelected = new OnSelected() {
+        @Override
+        public void onSelected(ListData data) {
+
+        }
+    };
+
 
     public MapFeaturesListView(Context context, FilterList<ListData> l) {
         super(context);
@@ -39,16 +47,22 @@ public class MapFeaturesListView extends ListView  {
     }
 
 
-    private void broadcastKeyValue(CharSequence key, CharSequence value) {
-        String text = "["+key+"="+value+"]";
-        AppBroadcaster.broadcast(getContext(), AppBroadcaster.SELECT_MAP_FEATURE, text);
+    public void setOnTextSelected(OnSelected s) {
+        onSelected = s;
     }
+
+
+    public interface OnSelected {
+        void onSelected(ListData e);
+    }
+
+
 
     private class Adapter implements ListAdapter, android.widget.AdapterView.OnItemClickListener{
 
         @Override
         public int getCount() {
-            return list.size();
+            return list.sizeVisible();
         }
 
 
@@ -78,10 +92,7 @@ public class MapFeaturesListView extends ListView  {
         public void onItemClick(AdapterView<?> arg0, View arg1, int index, long arg3) {
             ListData d = list.get(index);
 
-              if (d.key.length()>1
-                    && d.value.length()>1) {
-                broadcastKeyValue(d.key, d.value);
-            }
+            onSelected.onSelected(d);
         }
 
         @Override
@@ -132,4 +143,7 @@ public class MapFeaturesListView extends ListView  {
         }
 
     }
+
+
+
 }

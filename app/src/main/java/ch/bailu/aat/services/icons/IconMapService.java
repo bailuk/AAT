@@ -13,10 +13,15 @@ import ch.bailu.aat.util.ui.AppLog;
 import ch.bailu.util_java.foc.Foc;
 
 public class IconMapService extends VirtualService {
+    public static final float BIG_ICON_SIZE = 48;//64;
+    public static final float SMALL_ICON_SIZE = 24;
+
+
     private final static String NKEY_KEY = "class";
     private final static String NKEY_VALUE = "type";
 
     private final static String MAP_FILE="symbols/iconmap.txt";
+
 
 
     private final IconMap map;

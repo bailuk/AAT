@@ -12,7 +12,7 @@ import ch.bailu.aat.util.ui.AppLog;
 
 
 public class ListData {
-    public final String name, key, value;
+    public final String name, key, value, summaryKey;
     public final Spanned paragraph;
 
     public final KeyList keys;
@@ -24,11 +24,12 @@ public class ListData {
         key = parser.getKey();
         value = parser.getValue();
 
-        StringBuilder html = new StringBuilder();
-        map.iconify(html, parser.getKey(), parser.getValue());
-        parser.toHtml(html);
+        StringBuilder builder = new StringBuilder();
+        map.iconify(builder, parser.getKey(), parser.getValue());
 
-        paragraph = AppHtml.fromHtml(html.toString(), new Html.ImageGetter() {
+        String html = parser.addHtml(builder).toString();
+
+        paragraph = AppHtml.fromHtml(html, new Html.ImageGetter() {
 
             @Override
             public Drawable getDrawable(String source) {
@@ -57,11 +58,30 @@ public class ListData {
             }
         });
 
-        keys = new KeyList();
-        keys.addKeys(name);
-        keys.addKeys(key);
-        keys.addKeys(value);
-        keys.addKeys(paragraph.toString());
+        summaryKey = parser.getSummaryKey();
 
+        keys = new KeyList(summaryKey);
+
+        if (isSummary() == false)
+            keys.addKeys(html);
+
+    }
+
+    public String getQueryString() {
+        return "["+key+"="+value+"]";
+    }
+
+    public boolean isSummary() {
+        return key.isEmpty() && value.isEmpty();
+    }
+
+    public int length() {
+        int l = name.length() +
+                key.length() +
+                summaryKey.length() +
+                paragraph.length() +
+                keys.length();
+
+        return l;
     }
 }
