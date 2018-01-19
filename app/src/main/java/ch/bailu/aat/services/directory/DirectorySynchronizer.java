@@ -102,7 +102,7 @@ public class DirectorySynchronizer  implements Closeable {
          */
         @Override
         public void start() {
-            AppLog.d(this, "start");
+            AppLog.d(this, "add");
 
             AppBroadcaster.register(scontext.getContext(),
                     onFileChanged, AppBroadcaster.FILE_CHANGED_INCACHE);
@@ -166,7 +166,7 @@ public class DirectorySynchronizer  implements Closeable {
 
         @Override
         public void start() {
-            AppLog.d(this, "start");
+            AppLog.d(this, "add");
 
             AppBroadcaster.broadcast(scontext.getContext(), AppBroadcaster.DBSYNC_START);        
 
@@ -248,7 +248,7 @@ public class DirectorySynchronizer  implements Closeable {
     private class StateLoadNextGpx extends State {
 
         public void start() {
-            AppLog.d(this, "start");
+            AppLog.d(this, "add");
 
             Foc file = filesToAdd.pollItem();
 
@@ -334,7 +334,7 @@ public class DirectorySynchronizer  implements Closeable {
     private class StateLoadPreview extends State {
 
         public void start() {
-            AppLog.d(this, "start");
+            AppLog.d(this, "add");
 
             Foc gpxFile = FocAndroid.factory(scontext.getContext(), pendingHandle.getID());
 
@@ -402,7 +402,7 @@ public class DirectorySynchronizer  implements Closeable {
 
         @Override
         public void start() {
-            AppLog.d(this, "start");
+            AppLog.d(this, "add");
 
             scontext.getContext().unregisterReceiver(onFileChanged);
 

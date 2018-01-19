@@ -16,15 +16,15 @@ import ch.bailu.aat.preferences.SolidString;
 import ch.bailu.aat.services.InsideContext;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.cache.osm_features.MapFeaturesHandle;
-import ch.bailu.aat.services.cache.osm_features.ListData;
+import ch.bailu.aat.services.cache.osm_features.MapFeaturesListEntry;
 import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.util.AppIntent;
 import ch.bailu.aat.util.filter_list.FilterList;
 import ch.bailu.aat.util.filter_list.KeyList;
-import ch.bailu.aat.util.ui.AppTheme;
-import ch.bailu.aat.views.BusyButton;
+import ch.bailu.aat.views.BusyIndicator;
 import ch.bailu.aat.views.EditTextTool;
 import ch.bailu.aat.views.preferences.SolidCheckBox;
+import ch.bailu.aat.views.preferences.TitleView;
 
 public class MapFeaturesView extends LinearLayout implements SharedPreferences.OnSharedPreferenceChangeListener {
 
@@ -34,16 +34,16 @@ public class MapFeaturesView extends LinearLayout implements SharedPreferences.O
     private MapFeaturesListView listView;
     private MapFeaturesHandle listHandle = null;
 
-    private final BusyButton busyButton;
+    private final BusyIndicator busy;
 
     private final SolidOsmFeaturesList slist;
     private final ServiceContext scontext;
 
 
 
-    private final FilterList<ListData> list = new FilterList<ListData>() {
+    private final FilterList<MapFeaturesListEntry> list = new FilterList<MapFeaturesListEntry>() {
         @Override
-        public boolean showElement(ListData e, KeyList keyList) {
+        public boolean showElement(MapFeaturesListEntry e, KeyList keyList) {
             if (keyList.isEmpty()) {
                 return e.isSummary();
             } else {
@@ -63,24 +63,12 @@ public class MapFeaturesView extends LinearLayout implements SharedPreferences.O
     };
 
 
-    private void updateList() {
-        if (listHandle == null) {
-            list.clear();
-            busyButton.stopWaiting();
-        } else {
-            listHandle.syncList(list);
-            if (listHandle.isReadyAndLoaded())
-                busyButton.stopWaiting();
-            else busyButton.startWaiting();
-        }
-        listView.onChanged();
-    }
 
-
-    public MapFeaturesView(ServiceContext sc, BusyButton b) {
+    public MapFeaturesView(ServiceContext sc) {
         super(sc.getContext());
         scontext = sc;
-        busyButton = b;
+
+        busy = new BusyIndicator(getContext());
         slist = new SolidOsmFeaturesList(getContext());
 
         setOrientation(VERTICAL);
@@ -89,9 +77,28 @@ public class MapFeaturesView extends LinearLayout implements SharedPreferences.O
         addView(createFeatureList());
     }
 
+    private void updateList() {
+        if (listHandle == null) {
+            list.clear();
+            busy.stopWaiting();
+        } else {
+            listHandle.syncList(list);
+            if (listHandle.isReadyAndLoaded())
+                busy.stopWaiting();
+            else busy.startWaiting();
+        }
+        listView.onChanged();
+    }
 
     public View createHeader() {
-        return AppTheme.getTitleTextView(getContext(), R.string.query_features);
+
+        LinearLayout layout = new LinearLayout(getContext());
+        layout.setOrientation(HORIZONTAL);
+        layout.addView(new TitleView(getContext(), R.string.query_features));
+        layout.addView(busy);
+
+
+        return layout;
     }
 
     public void setOnTextSelected(MapFeaturesListView.OnSelected s) {
@@ -100,7 +107,7 @@ public class MapFeaturesView extends LinearLayout implements SharedPreferences.O
 
 
     private View createFeatureList() {
-        listView = new MapFeaturesListView(getContext(), list);
+        listView = new MapFeaturesListView(scontext, list);
         return listView;
     }
 
@@ -127,7 +134,7 @@ public class MapFeaturesView extends LinearLayout implements SharedPreferences.O
             }
         });
 
-        EditTextTool layout = new EditTextTool(filterView);
+        EditTextTool layout = new EditTextTool(filterView, LinearLayout.VERTICAL);
         layout.add(new SolidCheckBox(slist));
         return layout;
     }

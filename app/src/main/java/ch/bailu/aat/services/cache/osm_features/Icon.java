@@ -26,7 +26,7 @@ class Icon {
         int sicon_size = new AppDensity(context).toDPi(IconMapService.SMALL_ICON_SIZE);
         icon_size =new AppDensity(context).toDPi(IconMapService.BIG_ICON_SIZE);
 
-        way = toDrawable(context,"symbols/way.svg",sicon_size,Color.WHITE);
+        way = toDrawable(context,"way.svg",sicon_size,Color.WHITE);
         node = toDrawable(context,"symbols/node.svg",sicon_size,Color.WHITE);
         area = toDrawable(context,"symbols/area.svg",sicon_size,Color.WHITE);
         relation = toDrawable(context,"symbols/relation.svg",sicon_size,Color.WHITE);

@@ -24,38 +24,26 @@ public class IconCache implements Closeable {
     }
 
 
-    public Bitmap getIcon(final GpxPointInterface point, final int size) {
+    public Bitmap getIcon(final String path, final int size) {
         final Bitmap[] r = {null};
 
-        new InsideContext(scontext) {
-            @Override
-            public void run() {
-                GpxAttributes attr = point.getAttributes();
-                String path = scontext.getIconMapService().getSVGIconPath(attr);
-                String iconFileID = SVGAssetImageObject.toID(path, size);
+        if (path != null) {
+            String iconFileID = SVGAssetImageObject.toID(path, size);
 
-                ImageObjectAbstract icon = null;
+            ImageObjectAbstract icon = get(iconFileID);
 
-
-                if (iconFileID != null && attr != null) {
-
-                    icon = get(iconFileID);
-
-                    if (icon == null) {
-                        icon = add(iconFileID, path, size);
-                    }
-                }
-
-                if (icon != null) {
-                    r[0] = icon.getBitmap();
-                }
-
+            if (icon == null) {
+                icon = add(iconFileID, path, size);
             }
-        };
+
+
+            if (icon != null) {
+                r[0] = icon.getBitmap();
+            }
+
+        }
         return r[0];
     }
-
-
 
 
     private ImageObjectAbstract get(String id) {
@@ -90,4 +78,5 @@ public class IconCache implements Closeable {
     public void close() {
         icons.close();
     }
+
 }

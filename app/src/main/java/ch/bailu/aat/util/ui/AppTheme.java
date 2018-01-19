@@ -6,11 +6,13 @@ import android.graphics.drawable.ColorDrawable;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import ch.bailu.aat.R;
+import ch.bailu.aat.views.SVGAssetView;
 
 public class AppTheme {
     private static final float TEXT_SIZE=20f;
@@ -86,7 +88,8 @@ public class AppTheme {
 
 
 
-    public static void themify(ImageButton w) {
+
+    public static void themify(ImageView w) {
         w.setBackgroundResource(R.drawable.button);
     }
 
@@ -101,19 +104,5 @@ public class AppTheme {
         bar.setBackgroundResource(R.drawable.button);
     }
 
-
-    public static TextView getTitleTextView(Context c, int res) {
-        return getTitleTextView(c, c.getResources().getText(res));
-    }
-
-
-    public static TextView getTitleTextView(Context c, CharSequence t) {
-        final TextView text = new TextView(c);
-        text.setText(t);
-        text.setTextColor(AppTheme.getHighlightColor());
-        text.setTextSize(25);
-
-        return text;
-    }
 
 }

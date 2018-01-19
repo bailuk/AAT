@@ -56,6 +56,19 @@ public class NominatimApi extends OsmApiHelper {
         return NAME;
     }
 
+
+    @Override
+    public String getUrlPreview(String query) {
+        final StringBuilder url = new StringBuilder();
+        url.setLength(0);
+        url.append(URL);
+        url.append(query);
+        url.append(POST);
+        url.append(bounding);
+        return url.toString();
+    }
+
+
     @Override
     public String getUrl(String query) throws UnsupportedEncodingException {
         final StringBuilder url = new StringBuilder();        

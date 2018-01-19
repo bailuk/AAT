@@ -9,6 +9,7 @@ import ch.bailu.aat.map.tile.source.DownloadSource;
 import ch.bailu.aat.preferences.SolidTileSize;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.background.DownloadTask;
+import ch.bailu.aat.services.background.Downloads;
 import ch.bailu.aat.services.background.FileTask;
 import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.util.fs.foc.FocAndroid;
@@ -24,7 +25,6 @@ public class BitmapTileObject extends TileObject {
     private final Foc file;
 
     private final SyncTileBitmap bitmap=new SyncTileBitmap();
-    private final DownloadTask download;
 
 
 
@@ -36,7 +36,6 @@ public class BitmapTileObject extends TileObject {
         file = FocAndroid.factory(sc.getContext(), id);
 
         url = source.getTileURLString(tile);
-        download = new FileDownloader(url, file, sc);
 
         sc.getCacheService().addToBroadcaster(this);
     }
@@ -54,8 +53,8 @@ public class BitmapTileObject extends TileObject {
     @Override
     public void onInsert(ServiceContext sc) {
         if (isLoadable()) sc.getBackgroundService().process(new FileLoaderTask(file));
-        else if (isDownloadable())
-            sc.getBackgroundService().process(download);
+        else if (isDownloadable() && Downloads.contains(file) == false)
+            sc.getBackgroundService().process(new FileDownloader(url, file, sc));
     }
 
 
@@ -67,9 +66,9 @@ public class BitmapTileObject extends TileObject {
 
     @Override
     public void reDownload(ServiceContext sc) {
-        if (download.isLocked()==false) {
+        if (Downloads.contains(file) == false) {
             file.rm();
-            if (isDownloadable()) sc.getBackgroundService().process(download);
+            if (isDownloadable()) sc.getBackgroundService().process(new FileDownloader(url, file, sc));
         }
     }
 
@@ -184,7 +183,7 @@ public class BitmapTileObject extends TileObject {
         private final ServiceContext scontext;
 
         public FileDownloader(String source, Foc target, ServiceContext sc)  {
-            super(source, target);
+            super(sc.getContext(), source, target);
             scontext = sc;
         }
 

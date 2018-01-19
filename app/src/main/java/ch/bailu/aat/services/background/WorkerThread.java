@@ -31,9 +31,9 @@ public class WorkerThread extends ProcessThread {
                 public void run() {
                     long size;
 
-                    handle.bgLock();
+                    //handle.bgLock();
                     size = handle.bgOnProcess(scontext);
-                    handle.bgUnlock();
+                    //handle.bgUnlock();
 
                     bgOnHandleProcessed(handle, size);
 

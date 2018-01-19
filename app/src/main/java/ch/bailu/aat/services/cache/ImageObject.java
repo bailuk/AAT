@@ -15,8 +15,8 @@ public class ImageObject extends ImageObjectAbstract {
     public final static ImageObject NULL=new ImageObject();
     
     private final SyncBitmap bitmap=new SyncBitmap();
-
     private final Foc imageFile;
+
 
     private ImageObject() {
         this(FocAndroid.NULL);
@@ -46,32 +46,10 @@ public class ImageObject extends ImageObjectAbstract {
 
 
     private void load(ServiceContext sc) {
-        FileTask l=new FileTask(imageFile) {
-
-            @Override
-            public long bgOnProcess(final ServiceContext sc) {
-                final long[] size = {0};
-
-                new OnObject(sc, toString(), ImageObject.class) {
-                    @Override
-                    public void run(ObjectHandle obj) {
-                        ImageObject self = (ImageObject) obj;
-
-                        bitmap.set(self.imageFile);
-                        size[0] =  bitmap.getSize();
-
-                        AppBroadcaster.broadcast(sc.getContext(), AppBroadcaster.FILE_CHANGED_INCACHE,
-                                self.imageFile);
-
-                    }
-                };
-                return size[0];
-            }
-
-        };
-        sc.getBackgroundService().process(l);
+        sc.getBackgroundService().process(new BitmapLoader(imageFile));
     }
-    
+
+
     
     @Override
     public long getSize() {
@@ -114,4 +92,36 @@ public class ImageObject extends ImageObjectAbstract {
     
     @Override
     public void onChanged(String id, ServiceContext sc) {}
+
+
+
+    private static class BitmapLoader extends FileTask {
+
+        public BitmapLoader(Foc f) {
+            super(f);
+        }
+
+        @Override
+        public long bgOnProcess(final ServiceContext sc) {
+            final long[] size = {0};
+
+            new OnObject(sc, toString(), ImageObject.class) {
+                @Override
+                public void run(ObjectHandle obj) {
+                    ImageObject self = (ImageObject) obj;
+
+                    self.bitmap.set(self.imageFile);
+                    size[0] =  self.bitmap.getSize();
+
+                    AppBroadcaster.broadcast(sc.getContext(), AppBroadcaster.FILE_CHANGED_INCACHE,
+                            self.imageFile);
+
+                }
+            };
+            return size[0];
+        }
+
+    };
+
+
 }

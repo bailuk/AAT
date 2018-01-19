@@ -72,7 +72,7 @@ public abstract class AbsFileContentActivity extends AbsDispatcher implements On
         nextFile = bar.addImageButton(R.drawable.go_down_inverse);
 
 
-        fileOperation = new PreviewView(getServiceContext(), R.drawable.edit_select_all_inverse);
+        fileOperation = new PreviewView(getServiceContext());
         bar.addButton(fileOperation);
 
         ToolTip.set(fileOperation, R.string.tt_menu_file);

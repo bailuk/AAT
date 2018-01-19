@@ -10,25 +10,34 @@ import com.caverock.androidsvg.SVGParseException;
 import java.io.IOException;
 
 import ch.bailu.aat.services.ServiceContext;
+import ch.bailu.aat.services.background.BackgroundTask;
+import ch.bailu.aat.services.background.FileTask;
+import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.util.graphic.SyncTileBitmap;
 import ch.bailu.aat.util.ui.AppLog;
+import ch.bailu.util_java.foc.Foc;
 
 public class SVGAssetImageObject extends ImageObjectAbstract {
 
     private final SyncTileBitmap bitmap = new SyncTileBitmap();
 
-    public SVGAssetImageObject(ServiceContext sc, String id, String name, int size) {
+    private final String name;
+    private final int size;
+
+    public SVGAssetImageObject(String id, String name, int size) {
         super(id);
+        this.name = name;
+        this.size = size;
+    }
 
 
-        try {
-            SVG svg = SVG.getFromAsset(sc.getContext().getAssets(), name);
+    @Override
+    public void onInsert(ServiceContext sc){
+        load(sc);
+    }
 
-            bitmap.set(svg, size);
-
-        } catch (SVGParseException | IOException e) {
-            AppLog.e(sc.getContext(), e);
-        }
+    private void load(ServiceContext sc) {
+        sc.getBackgroundService().process(new SvgLoader(getID()));
     }
 
     @Override
@@ -79,7 +88,7 @@ public class SVGAssetImageObject extends ImageObjectAbstract {
 
         @Override
         public ObjectHandle factory(String id, ServiceContext sc) {
-            return new SVGAssetImageObject(sc, id, name, size);
+            return new SVGAssetImageObject(id, name, size);
         }
     }
 
@@ -91,4 +100,43 @@ public class SVGAssetImageObject extends ImageObjectAbstract {
         return null;
     }
 
+
+    private static class SvgLoader extends BackgroundTask  {
+
+        private final String ID;
+        public SvgLoader(String id) {
+            ID = id;
+
+        }
+
+        @Override
+        public long bgOnProcess(final ServiceContext sc) {
+            final long[] size = {0};
+
+            new OnObject(sc, ID, SVGAssetImageObject.class) {
+                @Override
+                public void run(ObjectHandle obj) {
+                    SVGAssetImageObject self = (SVGAssetImageObject) obj;
+
+
+                    try {
+                        SVG svg = SVG.getFromAsset(sc.getContext().getAssets(), self.name);
+
+                        self.bitmap.set(svg, self.size);
+                        size[0] = self.size;
+
+                        AppBroadcaster.broadcast(sc.getContext(),
+                                AppBroadcaster.FILE_CHANGED_INCACHE, ID);
+
+
+                    } catch (SVGParseException | IOException e) {
+                        AppLog.e(sc.getContext(), e);
+                    }
+
+                }
+            };
+            return size[0];
+        }
+
+    };
 }

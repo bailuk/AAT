@@ -28,7 +28,8 @@ public class AppBroadcaster {
      */
     public static final String FILE_CHANGED_ONDISK  = NAME_SPACE + "ONDISK";
     public static final String FILE_CHANGED_INCACHE = NAME_SPACE + "INCACHE";
-    
+    public static final java.lang.String ON_DOWNLOADS_CHANGED = NAME_SPACE + "DOWNLOADS";
+
 
     /**
      *   Make a BitmapRequest to the elevation updater to setTarget missing elevation information
@@ -51,7 +52,6 @@ public class AppBroadcaster {
 
     
     
-    public static final String SELECT_MAP_FEATURE = NAME_SPACE + "SELECT_MAP_FEATURE";
 
 
 

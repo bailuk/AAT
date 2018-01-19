@@ -3,8 +3,6 @@ package ch.bailu.aat.services.cache.osm_features;
 import android.content.res.AssetManager;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
 
 import ch.bailu.aat.util.fs.foc.FocAsset;
 import ch.bailu.util_java.foc.Foc;
@@ -14,33 +12,25 @@ public class MapFeaturesParser {
     private static final String MAP_FEATURES_ASSET = "map_features";
 
     private final OnHaveFeature haveFeature;
-    
-    private final StringBuilder out=new StringBuilder();
 
-    private final StringBuilder outName=new StringBuilder();
-    private final StringBuilder outKey=new StringBuilder();
-    private final StringBuilder outValue=new StringBuilder();
+    private final StringBuilder out = new StringBuilder();
 
+    private final StringBuilder outName = new StringBuilder();
+    private final StringBuilder outKey = new StringBuilder();
+    private final StringBuilder outValue = new StringBuilder();
+
+    private String outSummarySearchKey = new String();
     private String outSummaryKey = new String();
+
+    private int id = 0;
 
     public MapFeaturesParser(AssetManager assets, OnHaveFeature hf) throws IOException {
         this(assets, hf, assets.list(MAP_FEATURES_ASSET));
     }
 
-    public String getSummaryKey() {
-        return outSummaryKey;
-    }
-
-
-    public interface OnHaveFeature {
-        boolean onParseFile(String file);
-        void onHaveFeature(MapFeaturesParser parser);
-    }
-    
-    
     public MapFeaturesParser(AssetManager assets,
                              OnHaveFeature hf,
-                             String [] files) throws IOException {
+                             String[] files) throws IOException {
         haveFeature = hf;
 
         for (String f : files) {
@@ -52,7 +42,29 @@ public class MapFeaturesParser {
 
         }
     }
+
+
+    public String getSummarySearchKey() {
+        return outSummarySearchKey;
+    }
+
+    public String getSumaryKey() {
+        return outSummaryKey;
+    }
+
+
+    public int getId() {
+        return id;
+    }
+
+
+    public interface OnHaveFeature {
+        boolean onParseFile(String file);
+        void onHaveFeature(MapFeaturesParser parser);
+    }
     
+    
+
 
 
     public StringBuilder addHtml(StringBuilder b) {
@@ -191,7 +203,10 @@ public class MapFeaturesParser {
 
 
     private void haveSummary() {
-        outSummaryKey = "_" + outName.toString().toLowerCase();
+
+        outSummaryKey = outName.toString().toLowerCase();
+        outSummarySearchKey = "_" + outSummaryKey;
+
 
         haveFeature.onHaveFeature(this);
         resetFeature();
@@ -206,6 +221,7 @@ public class MapFeaturesParser {
     
     
     private void resetFeature() {
+        id++;
         out.setLength(0);
         outKey.setLength(0);
         outValue.setLength(0);

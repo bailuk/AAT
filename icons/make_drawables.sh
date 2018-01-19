@@ -91,6 +91,9 @@ CONVERT "status"
 CONVERT "icon_status"
 
 
+####### Preview
+COPY "open-menu-light"
+
 ####### Top-Bar
 INVERT "edit-undo" 
 INVERT "go-next" 

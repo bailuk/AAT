@@ -120,7 +120,7 @@ public class Dem3TileLoader implements Closeable {
     private void downloadNow(SrtmCoordinates c) {
         Foc file = c.toFile(scontext.getContext());
         if (!file.exists()) {
-            DownloadTask handle = new DownloadTask(c.toURL(), file);
+            DownloadTask handle = new DownloadTask(scontext.getContext(), c.toURL(), file);
             scontext.getBackgroundService().process(handle);
         }
     }

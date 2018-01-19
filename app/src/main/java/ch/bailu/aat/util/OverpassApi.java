@@ -45,7 +45,7 @@ public class OverpassApi extends OsmApiHelper {
         final double lo2 = bounding.getLonEastE6()/1E6;
         final double la2 = bounding.getLatNorthE6()/1E6;
 
-        return String.format((Locale)null,"(%.2f,%.2f,%.2f,%.2f);", 
+        return String.format((Locale)null,"(%.2f,%.2f,%.2f,%.2f);",
                 Math.min(la1, la2),
                 Math.min(lo1, lo2),
                 Math.max(la1, la2),
@@ -58,21 +58,81 @@ public class OverpassApi extends OsmApiHelper {
      * @throws UnsupportedEncodingException 
      */    
     public String getUrl(String query) throws UnsupportedEncodingException {
+        final String[] queries = query.split(";");
+
         final StringBuilder url = new StringBuilder();
         url.setLength(0);
         url.append(URL);
-        
-        url.append("node");
-        url.append(URLEncoder.encode(query,"UTF-8"));
-        url.append(URLEncoder.encode(bounding,"UTF-8"));
-        
-        url.append("way");
-        url.append(URLEncoder.encode(query,"UTF-8"));
-        url.append(URLEncoder.encode(bounding,"UTF-8"));
-        
+
+        for (String q : queries) {
+            q = q.trim();
+
+            if (q.length() > 0) {
+                if (q.charAt(0) == '[') {
+                    url.append("node");
+                    url.append(URLEncoder.encode(q, "UTF-8"));
+                    url.append(URLEncoder.encode(bounding, "UTF-8"));
+
+                    url.append("rel");
+                    url.append(URLEncoder.encode(q, "UTF-8"));
+                    url.append(URLEncoder.encode(bounding, "UTF-8"));
+
+                    url.append("way");
+                    url.append(URLEncoder.encode(q, "UTF-8"));
+                    url.append(URLEncoder.encode(bounding, "UTF-8"));
+                } else {
+                    url.append(URLEncoder.encode(q, "UTF-8"));
+                    url.append(URLEncoder.encode(bounding, "UTF-8"));
+                }
+            }
+
+        }
         
         url.append(URLEncoder.encode(POST,"UTF-8"));
         
+        return url.toString();
+    }
+
+    @Override
+    public String getUrlPreview(String query) {
+        final String[] queries = query.split(";");
+
+        final StringBuilder url = new StringBuilder();
+        url.setLength(0);
+        url.append(URL);
+
+        url.append('\n');
+        for (String q : queries) {
+            q = q.trim();
+
+            if (q.length() > 0) {
+                if (q.charAt(0) == '[') {
+                    url.append("node");
+                    url.append(q);
+                    url.append(bounding);
+                    url.append('\n');
+
+                    url.append("rel");
+                    url.append(q);
+                    url.append(bounding);
+                    url.append('\n');
+
+                    url.append("way");
+                    url.append(q);
+                    url.append(bounding);
+                    url.append('\n');
+
+                } else {
+                    url.append(q);
+                    url.append(bounding);
+                    url.append('\n');
+                }
+            }
+
+        }
+
+        url.append(POST);
+
         return url.toString();
     }
 
@@ -98,4 +158,5 @@ public class OverpassApi extends OsmApiHelper {
     public String getFileExtension() {
         return EXT;
     }
+
 }

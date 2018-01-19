@@ -3,11 +3,12 @@ package ch.bailu.aat.activities;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -17,17 +18,16 @@ import ch.bailu.aat.R;
 import ch.bailu.aat.coordinates.BoundingBoxE6;
 import ch.bailu.aat.dispatcher.CustomFileSource;
 import ch.bailu.aat.gpx.InfoID;
-import ch.bailu.aat.menus.FileMenu;
+import ch.bailu.aat.menus.ResultFileMenu;
 import ch.bailu.aat.services.InsideContext;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.background.BackgroundService;
-import ch.bailu.aat.services.background.BackgroundTask;
 import ch.bailu.aat.services.background.DownloadTask;
+import ch.bailu.aat.services.background.Downloads;
 import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.util.AppIntent;
 import ch.bailu.aat.util.OsmApiHelper;
 import ch.bailu.aat.util.TextBackup;
-import ch.bailu.aat.util.fs.AppDirectory;
 import ch.bailu.aat.util.ui.AppLog;
 import ch.bailu.aat.util.ui.ToolTip;
 import ch.bailu.aat.views.BusyButton;
@@ -38,20 +38,36 @@ import ch.bailu.aat.views.PercentageLayout;
 import ch.bailu.aat.views.TagEditor;
 import ch.bailu.aat.views.bar.ControlBar;
 import ch.bailu.aat.views.bar.MainControlBar;
+import ch.bailu.aat.views.description.MultiView;
+import ch.bailu.aat.views.preferences.TitleView;
+import ch.bailu.aat.views.preferences.VerticalScrollView;
 import ch.bailu.util_java.foc.Foc;
 
 
 public abstract class AbsOsmApiActivity extends AbsDispatcher implements OnClickListener {
 
-    private TagEditor          tagEditor;
+    private EditTextTool editor;
+    private TextView     preview;
+
     private BusyButton         download;
     private View               fileMenu;
 
     private NodeListView       list;
-
     private OsmApiHelper       osmApi;
-    private BackgroundTask     request = BackgroundTask.NULL;
 
+    protected MultiView inputMultiView;
+
+
+    private final BroadcastReceiver onDownloadsChanged = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (Downloads.contains(osmApi.getResultFile())) {
+                download.startWaiting();
+            } else {
+                download.stopWaiting();
+            }
+        }
+    };
 
 
     @Override
@@ -60,7 +76,6 @@ public abstract class AbsOsmApiActivity extends AbsDispatcher implements OnClick
 
         try {
             osmApi = createUrlGenerator(AppIntent.getBoundingBox(getIntent()));
-            AppBroadcaster.register(this, onFileDownloaded, AppBroadcaster.FILE_CHANGED_ONDISK);
         } catch (Exception e) {
             AppLog.e(this,e);
         }
@@ -70,13 +85,15 @@ public abstract class AbsOsmApiActivity extends AbsDispatcher implements OnClick
         addTarget(list, InfoID.FILEVIEW);
 
         setQueryTextFromIntent();
+
+        AppBroadcaster.register(this, onDownloadsChanged, AppBroadcaster.ON_DOWNLOADS_CHANGED);
     }
 
 
     private void setQueryTextFromIntent() {
         String query = queryFromIntent(getIntent());
         if (query != null) {
-            tagEditor.setText(query);
+            editor.edit.setText(query);
         }
     }
 
@@ -92,7 +109,7 @@ public abstract class AbsOsmApiActivity extends AbsDispatcher implements OnClick
 
         String query = uri.getEncodedQuery();
         if (query != null) {
-            Uri n = Uri.parse("http://bailu.ch/query?"+uri.getEncodedQuery()); // we need a hierarchical url
+            Uri n = Uri.parse("http://bailu.ch/query?" + uri.getEncodedQuery()); // we need a hierarchical url
             String query_parameter = n.getQueryParameter("q");
             if (query_parameter != null) {
                 query_parameter = query_parameter.replace('\n', ',');
@@ -127,39 +144,97 @@ public abstract class AbsOsmApiActivity extends AbsDispatcher implements OnClick
 
 
     private View createTagEditor() {
-        LinearLayout input = new LinearLayout(this);
-        input.setOrientation(LinearLayout.VERTICAL);
+        LinearLayout vertical = new LinearLayout(this);
 
-        TextView urlLabel = new TextView(this);
-        urlLabel.setText(osmApi.getUrlStart());
-        input.addView(urlLabel);
+        vertical.setOrientation(LinearLayout.VERTICAL);
 
 
-        tagEditor = new TagEditor(this, osmApi.getBaseDirectory());
-
-        input.addView(new EditTextTool(tagEditor), new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT, 1f));
 
 
-        TextView postLabel = new TextView(this);
-        postLabel.setText(osmApi.getUrlEnd());
-        input.addView(postLabel);
 
-        return input;
+        vertical.addView(createTitle());
+
+        preview = new TextView(this);
+        preview.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                inputMultiView.setNext();
+            }
+        });
+
+
+
+        VerticalScrollView scroller = new VerticalScrollView(this);
+        scroller.add(preview);
+        editor = new EditTextTool(new TagEditor(this, osmApi.getBaseDirectory()), LinearLayout.VERTICAL);
+
+        inputMultiView = new MultiView(this, osmApi.getApiName());
+        inputMultiView.add(editor);
+        inputMultiView.add(scroller);
+
+        preview.setText(osmApi.getUrlPreview(editor.edit.getText().toString()));
+
+
+        vertical.addView(inputMultiView);
+        return vertical;
+    }
+
+
+    private View createTitle() {
+        LinearLayout layout = new LinearLayout(this);
+        layout.setOrientation(LinearLayout.HORIZONTAL);
+
+        String strings[] = osmApi.getUrlStart().split(osmApi.getApiName().toLowerCase());
+
+        TextView b = new TitleView(this, osmApi.getApiName());
+        b.setSingleLine();
+
+        if (strings.length>1) {
+            TextView a = new TextView(this);
+            TextView c = new TextView(this);
+
+            a.setText(strings[0]);
+            a.setSingleLine();
+
+            c.setText(strings[1]);
+            c.setSingleLine();
+            c.setEllipsize(TextUtils.TruncateAt.END);
+
+            a.setTextColor(Color.WHITE);
+            c.setTextColor(Color.WHITE);
+
+            layout.addView(a);
+            layout.addView(b);
+            layout.addView(c);
+        } else {
+            layout.addView(b);
+        }
+
+        layout.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                preview.setText(osmApi.getUrlPreview(editor.edit.getText().toString()));
+                inputMultiView.setNext();
+            }
+        });
+
+        return layout;
     }
 
     private MainControlBar createControlBar() {
         MainControlBar bar = new MainControlBar(this);
 
         download = new BusyButton(this, R.drawable.go_bottom_inverse);
-
         bar.addView(download);
         download.setOnClickListener(this);
+        if (Downloads.contains(osmApi.getResultFile())) download.startWaiting();
+
+        ToolTip.set(download, R.string.tt_nominatim_query);
 
         addButtons(bar);
 
         fileMenu = bar.addImageButton(R.drawable.edit_select_all_inverse);
 
-        ToolTip.set(download, R.string.tt_nominatim_query);
         bar.setOnClickListener1(this);
 
 
@@ -194,27 +269,27 @@ public abstract class AbsOsmApiActivity extends AbsDispatcher implements OnClick
             @Override
             public void run() {
                 try {
-                    String query = tagEditor.getText().toString();
-
                     BackgroundService background = getServiceContext().getBackgroundService();
 
+                    DownloadTask task = Downloads.get(osmApi.getResultFile());
 
-                    request.stopProcessing();
-                    download.startWaiting();
+                    if (task != null) {
+                        task.stopProcessing();
 
-                    request = new ApiQueryHandle(
-                            osmApi.getUrl(query),
-                            osmApi.getResultFile(),
-                            query,
-                            osmApi.getQueryFile(),
-                            getServiceContext().getContext());
+                    } else {
+                        String query = editor.edit.getText().toString();
 
-                    background.process(request);
+                        task = new ApiQueryTask(
+                                getServiceContext().getContext(),
+                                osmApi.getUrl(query),
+                                osmApi.getResultFile(),
+                                query,
+                                osmApi.getQueryFile());
+
+                        background.process(task);
+                    }
 
                 } catch (Exception e) {
-                    download.stopWaiting();
-                    request = DownloadTask.NULL;
-
                     AppLog.e(AbsOsmApiActivity.this, e);
                 }
             }
@@ -223,15 +298,7 @@ public abstract class AbsOsmApiActivity extends AbsDispatcher implements OnClick
 
 
 
-    private final BroadcastReceiver  onFileDownloaded = new BroadcastReceiver () {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            if (AppIntent.hasUrl(intent, request.toString())) {
-                download.stopWaiting();
-                request = BackgroundTask.NULL;
-            }
-        }
-    };
+
 
 
     private void showFileMenu(View parent) throws IOException {
@@ -239,36 +306,34 @@ public abstract class AbsOsmApiActivity extends AbsDispatcher implements OnClick
         final String prefix = OsmApiHelper.getFilePrefix(query);
         final String extension = osmApi.getFileExtension();
 
-        new FileMenu(this, osmApi.getResultFile(),
+        new ResultFileMenu(this, osmApi.getResultFile(),
                 prefix, extension).showAsPopup(this, parent);
     }
 
 
-    public void appendText(String s) {
-        if (tagEditor.getEditableText().length()>0)
-            tagEditor.append("\n");
-        tagEditor.append(s);
+    public void insertLine(String s) {
+        editor.insertLine(s);
     }
 
 
     @Override
     public void onDestroy() {
-        unregisterReceiver(onFileDownloaded);
+        unregisterReceiver(onDownloadsChanged);
         super.onDestroy();
     }
 
 
-    private static class ApiQueryHandle extends DownloadTask {
+
+
+    private static class ApiQueryTask extends DownloadTask {
         private final String queryString;
         private final Foc queryFile;
-        private final Context context;
 
 
-        public ApiQueryHandle(String source, Foc target, String qs, Foc qf, Context c) {
-            super(source, target);
+        public ApiQueryTask(Context c, String source, Foc target, String qs, Foc qf) {
+            super(c, source, target);
             queryString = qs;
             queryFile   = qf;
-            context = c;
         }
 
 
@@ -290,7 +355,7 @@ public abstract class AbsOsmApiActivity extends AbsDispatcher implements OnClick
 
         @Override
         protected void logError(Exception e) {
-            AppLog.e(context, e);
+            AppLog.e(getContext(), e);
         }
     }
 }

@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
 
@@ -17,21 +16,17 @@ import ch.bailu.aat.dispatcher.OnContentUpdatedInterface;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.GpxList;
 import ch.bailu.aat.gpx.GpxListArray;
-import ch.bailu.aat.gpx.GpxPointNode;
 import ch.bailu.aat.gpx.InfoID;
-import ch.bailu.aat.gpx.interfaces.GpxType;
 import ch.bailu.aat.map.MapFactory;
 import ch.bailu.aat.map.MapViewInterface;
-import ch.bailu.aat.services.InsideContext;
-import ch.bailu.aat.services.icons.IconMapService;
 import ch.bailu.aat.util.HtmlBuilderGpx;
-import ch.bailu.aat.util.ui.AppDensity;
 import ch.bailu.aat.util.ui.AppLayout;
 import ch.bailu.aat.views.ContentView;
-import ch.bailu.aat.views.bar.ControlBar;
 import ch.bailu.aat.views.HtmlScrollTextView;
-import ch.bailu.aat.views.bar.MainControlBar;
 import ch.bailu.aat.views.PercentageLayout;
+import ch.bailu.aat.views.SVGAssetView;
+import ch.bailu.aat.views.bar.ControlBar;
+import ch.bailu.aat.views.bar.MainControlBar;
 import ch.bailu.aat.views.graph.DistanceAltitudeGraphView;
 
 public class NodeDetailActivity extends AbsDispatcher
@@ -41,7 +36,7 @@ public class NodeDetailActivity extends AbsDispatcher
     private static final String SOLID_KEY=NodeDetailActivity.class.getSimpleName();
 
     private ImageButton nextNode, previousNode;
-    private ImageView icon;
+    private SVGAssetView icon;
 
     private MapViewInterface mapView;
     private HtmlScrollTextView htmlView;
@@ -56,13 +51,10 @@ public class NodeDetailActivity extends AbsDispatcher
 
     private HtmlBuilderGpx htmlBuilder;
 
-    private int iconSize;
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        iconSize = new AppDensity(this).toDPi(IconMapService.BIG_ICON_SIZE);
 
         htmlBuilder = new HtmlBuilderGpx(this);
         fileID = getIntent().getStringExtra("ID");
@@ -85,8 +77,7 @@ public class NodeDetailActivity extends AbsDispatcher
         previousNode =  bar.addImageButton(R.drawable.go_up_inverse);
         nextNode = bar.addImageButton(R.drawable.go_down_inverse);
 
-        icon = new ImageView(this);
-        icon.setScaleType(ImageView.ScaleType.CENTER);
+        icon = new SVGAssetView(getServiceContext(), 0);
         bar.add(icon);
 
         bar.setOrientation(LinearLayout.HORIZONTAL);
@@ -179,20 +170,10 @@ public class NodeDetailActivity extends AbsDispatcher
 
             seekBar.setProgress(i);
 
-            displayIcon(arrayCache.get(i));
+            icon.setImageObject(arrayCache.get(i));
         }
     }
 
-    private void displayIcon(final GpxPointNode gpxPointNode) {
-        new InsideContext(getServiceContext()) {
-            @Override
-            public void run() {
-                icon.setImageBitmap(
-                        getServiceContext().getIconMapService().
-                                getIconSVG(gpxPointNode, iconSize));
-            }
-        };
-    }
 
     @Override
     public void onClick(View v) {

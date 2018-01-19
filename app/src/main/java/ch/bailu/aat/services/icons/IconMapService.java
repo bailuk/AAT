@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import java.io.IOException;
 
 import ch.bailu.aat.gpx.GpxAttributes;
+import ch.bailu.aat.gpx.GpxPointNode;
 import ch.bailu.aat.gpx.interfaces.GpxPointInterface;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.VirtualService;
@@ -44,21 +45,41 @@ public class IconMapService extends VirtualService {
 
     }
 
+    public Bitmap getIconSVG(String key, String value, int size) {
+        String id = toAssetPath(key, value);
 
-    public Bitmap getIconSVG(GpxPointInterface point, int size) {
-        return cache.getIcon(point, size);
-    }
+        if (id != null)
+            return cache.getIcon(id, size);
 
-    public String getSVGIconPath(GpxAttributes attr) {
-        final IconMap.Icon icon = getIconEntry(attr);
-
-        if (icon != null) {
-
-            return icon.svg;
-        }
         return null;
     }
 
+
+    public Bitmap getIconSVG(final GpxPointInterface point, final int size) {
+
+        GpxAttributes attr = point.getAttributes();
+        String path = toAssetPath(attr);
+
+        return cache.getIcon(path, size);
+    }
+
+
+    public String toAssetPath(String key, String value) {
+        IconMap.Icon icon = map.get(key, value);
+        if (icon != null) return icon.svg;
+
+        return null;
+    }
+
+
+    public String toAssetPath(GpxAttributes attr) {
+        final IconMap.Icon icon = getIconEntry(attr);
+
+        if (icon != null)
+            return icon.svg;
+
+        return null;
+    }
 
 
     private IconMap.Icon getIconEntry(GpxAttributes attr) {
@@ -82,15 +103,6 @@ public class IconMapService extends VirtualService {
         return null;
     }
 
-    public void iconify(StringBuilder html, String key, String value) {
-        IconMap.Icon icon = map.get(key, value);
-        if (icon != null) {
-            html.append("<p><img src=\"");
-            html.append(icon.svg);
-            html.append("\"/></p>");
-        }
-    }
-
 
 
     @Override
@@ -105,4 +117,9 @@ public class IconMapService extends VirtualService {
 
     }
 
+    public String toAssetPath(GpxPointNode gpxPointNode) {
+        if (gpxPointNode.getAttributes() != null)
+            return toAssetPath(gpxPointNode.getAttributes());
+        return null;
+    }
 }

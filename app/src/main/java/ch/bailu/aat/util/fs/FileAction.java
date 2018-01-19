@@ -112,26 +112,27 @@ public class FileAction {
 
 
     public static void copyToDir(Context context, Foc src) {
-        copyToDir(context, src, null, null);
+        new AppSelectDirectoryDialog(context, src);
     }
 
-    public static void copyToDir(Context context, Foc src,
-                                 String targetPrefix, String targetExtendsion) {
-        new AppSelectDirectoryDialog(context, src, targetPrefix, targetExtendsion);
-    }
-
-
-    public static void copyToDir(Context context, Foc src, Foc destDir, String prefix, String extension) {
+    public static void copyToDir(Context context, Foc src, Foc destDir, String p, String ext) {
         try {
-            final Foc dest;
+            copyToDest(context, src, AppDirectory.generateUniqueFilePath(destDir,p,ext));
+        } catch (IOException e) {
+            AppLog.e(context, e);
+        }
+    }
 
-            if (prefix != null)
-                dest = AppDirectory.generateUniqueFilePath(destDir, prefix, extension);
+    public static void copyToDir(Context context, Foc src, Foc destDir) {
+        try {
+            copyToDest(context, src, destDir.child(src.getName()));
+        } catch (IOException e) {
+            AppLog.e(context, e);
+        }
+    }
 
-            else
-                dest = destDir.child(src.getName());
 
-
+    private static void copyToDest(Context context, Foc src, Foc dest) throws IOException {
             if (dest == null || dest.exists()) {
                 AFile.logErrorExists(context, dest);
 
@@ -139,13 +140,8 @@ public class FileAction {
                 src.copy(dest);
                 AppBroadcaster.broadcast(context,
                         AppBroadcaster.FILE_CHANGED_ONDISK, dest, src.getPath());
-                //AppLog.i(context, dest.getPathName());
             }
-        } catch (Exception e) {
-            AppLog.e(context,e);
-        }
     }
-
 
 
     public static void rename(final ServiceContext scontext, final Activity activity, final Foc file) {

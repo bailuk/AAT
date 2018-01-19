@@ -50,6 +50,7 @@ public abstract class OsmApiHelper {
         }
 
 
-    }
+    public abstract String getUrlPreview(String s);
+}
 
 

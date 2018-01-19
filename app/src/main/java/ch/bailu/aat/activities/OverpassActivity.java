@@ -7,7 +7,7 @@ import java.io.IOException;
 
 import ch.bailu.aat.R;
 import ch.bailu.aat.coordinates.BoundingBoxE6;
-import ch.bailu.aat.services.cache.osm_features.ListData;
+import ch.bailu.aat.services.cache.osm_features.MapFeaturesListEntry;
 import ch.bailu.aat.util.OsmApiHelper;
 import ch.bailu.aat.util.OverpassApi;
 import ch.bailu.aat.util.ui.AppLayout;
@@ -49,15 +49,20 @@ public class OverpassActivity extends AbsOsmApiActivity  {
     }
 
     private View createOsmFeaturesView(MainControlBar bar) {
-        osm_features = new MapFeaturesView(getServiceContext(), bar.getMenu());
+        osm_features = new MapFeaturesView(getServiceContext());
         osm_features.setOnTextSelected(new MapFeaturesListView.OnSelected() {
             @Override
-            public void onSelected(ListData e) {
-                if (e.isSummary()) {
-                    osm_features.setFilterText(e.summaryKey);
-                } else {
-                    appendText(e.getQueryString());
+            public void onSelected(MapFeaturesListEntry e, int action, String variant) {
+                if (action == FILTER) {
+                    osm_features.setFilterText(e.summarySearchKey);
+
+                } else if (action == EDIT){
+                    insertLine(variant);
+                    inputMultiView.setActive(0);
                     if (multiView != null) multiView.setNext();
+
+                } else if (action == SHOW) {
+
                 }
             }
         });

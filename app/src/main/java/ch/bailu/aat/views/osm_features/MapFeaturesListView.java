@@ -1,15 +1,14 @@
 package ch.bailu.aat.views.osm_features;
 
-import android.content.Context;
 import android.database.DataSetObserver;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
 
-import ch.bailu.aat.services.cache.osm_features.ListData;
+import ch.bailu.aat.services.ServiceContext;
+import ch.bailu.aat.services.cache.osm_features.MapFeaturesListEntry;
 import ch.bailu.aat.util.filter_list.FilterList;
 import ch.bailu.aat.util.ui.AppTheme;
 
@@ -18,19 +17,21 @@ public class MapFeaturesListView extends ListView  {
 
 
     private DataSetObserver observer=null;
-    private final FilterList<ListData> list;
+    private final FilterList<MapFeaturesListEntry> list;
+    private final ServiceContext scontext;
 
     private OnSelected onSelected = new OnSelected() {
         @Override
-        public void onSelected(ListData data) {
+        public void onSelected(MapFeaturesListEntry data, int action, String variant) {
 
         }
     };
 
 
-    public MapFeaturesListView(Context context, FilterList<ListData> l) {
-        super(context);
+    public MapFeaturesListView(ServiceContext sc, FilterList<MapFeaturesListEntry> l) {
+        super(sc.getContext());
 
+        scontext = sc;
         list = l;
         final Adapter listAdapter = new Adapter();
 
@@ -53,7 +54,11 @@ public class MapFeaturesListView extends ListView  {
 
 
     public interface OnSelected {
-        void onSelected(ListData e);
+        int EDIT = 0;
+        int SHOW = 1;
+        int FILTER = 2;
+
+        void onSelected(MapFeaturesListEntry e, int action, String variant);
     }
 
 
@@ -68,12 +73,15 @@ public class MapFeaturesListView extends ListView  {
 
         @Override
         public View getView(int index, View v, ViewGroup p) {
-            TextView text = (TextView) v;
-            if (text==null) {
-                text = new TextView(getContext());
+            MapFeaturesEntryView view;
+            if (v instanceof  MapFeaturesEntryView) {
+                view = (MapFeaturesEntryView) v;
+            } else {
+                view = new MapFeaturesEntryView(scontext, onSelected);
             }
-            text.setText(list.get(index).paragraph);
-            return text;
+
+            view.set(list.get(index));
+            return view;
         }
 
         @Override
@@ -89,21 +97,26 @@ public class MapFeaturesListView extends ListView  {
 
 
         @Override
-        public void onItemClick(AdapterView<?> arg0, View arg1, int index, long arg3) {
-            ListData d = list.get(index);
+        public void onItemClick(AdapterView<?> arg0, View view, int index, long arg3) {
+            final MapFeaturesListEntry d = list.get(index);
 
-            onSelected.onSelected(d);
+            if (d.isSummary())
+                onSelected.onSelected(d,OnSelected.FILTER, d.summarySearchKey);
+            else
+                onSelected.onSelected(d,OnSelected.EDIT, d.getDefaultQuery());
+
+
         }
 
         @Override
         public Object getItem(int position) {
-            return null;
+            return list.get(position);
         }
 
 
         @Override
         public long getItemId(int position) {
-            return 0;
+            return list.get(position).id;
         }
 
 
@@ -121,7 +134,7 @@ public class MapFeaturesListView extends ListView  {
 
         @Override
         public boolean hasStableIds() {
-            return false;
+            return true;
         }
 
 

@@ -10,7 +10,7 @@ import ch.bailu.aat.util.filter_list.KeyList;
 
 public class SolidOsmFeaturesList extends SolidBoolean {
 
-    private final static String SMALL_LIST_KEYS = "amenity leisure shop sport tourism";
+    private final static String SMALL_LIST_KEYS = "amenity leisure shop sport tourism name";
 
     public SolidOsmFeaturesList(Context c) {
         super(Storage.global(c), SolidOsmFeaturesList.class.getSimpleName());

@@ -12,7 +12,7 @@ public abstract class BackgroundTask implements ThreadControl {
         }
     };
 
-
+/*
     public static final BackgroundTask NULL_PROCESSED = new BackgroundTask() {
 
         @Override
@@ -24,10 +24,9 @@ public abstract class BackgroundTask implements ThreadControl {
             return false;
         }
     };
+*/
 
-
-    private boolean lock=false;
-    private boolean processing =true;
+    private boolean processing = true;
     
     
     @Override
@@ -36,15 +35,7 @@ public abstract class BackgroundTask implements ThreadControl {
     }
     
     
-    public void bgLock() {
-        lock=true;
-    }
-    
-    public void bgUnlock() {
-        lock=false;
-    }
-    
-    
+
     public abstract long bgOnProcess(ServiceContext sc);
  
     
@@ -52,9 +43,6 @@ public abstract class BackgroundTask implements ThreadControl {
         processing =false;
     }
 
-    public boolean isLocked()  {
-        return lock;
-    }
 
 
     public ThreadControl getThreadControl() {

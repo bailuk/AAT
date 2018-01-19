@@ -24,19 +24,19 @@ public class MapFeaturesHandle extends ObjectHandle {
     private long size = 0;
 
     private class List {
-        private final ArrayList<ListData> list = new ArrayList<>(50);
+        private final ArrayList<MapFeaturesListEntry> list = new ArrayList<>(50);
 
         public synchronized void clear() {
             list.clear();
         }
 
-        public synchronized void sync(FilterList<ListData> f) {
+        public synchronized void sync(FilterList<MapFeaturesListEntry> f) {
             for (int i = f.sizeAll(); i < list.size(); i++) {
                 f.add(list.get(i));
             }
         }
 
-        public synchronized void add(ListData d) {
+        public synchronized void add(MapFeaturesListEntry d) {
             list.add(d);
         }
     }
@@ -68,7 +68,7 @@ public class MapFeaturesHandle extends ObjectHandle {
     }
 
 
-    public void syncList(FilterList<ListData> filterList) {
+    public void syncList(FilterList<MapFeaturesListEntry> filterList) {
         list.sync(filterList);
     }
 
@@ -82,7 +82,6 @@ public class MapFeaturesHandle extends ObjectHandle {
     public static class ListLoader extends BackgroundTask implements MapFeaturesParser.OnHaveFeature {
         private final String ID;
 
-        private Icon icons;
         private ServiceContext scontext;
 
         private MapFeaturesHandle owner = null;
@@ -118,7 +117,6 @@ public class MapFeaturesHandle extends ObjectHandle {
 
 
         private void bgOnProcess(Context context) {
-            icons = new Icon(context);
             keyList = SolidOsmFeaturesList.getKeyList(ID);
 
             try {
@@ -137,7 +135,7 @@ public class MapFeaturesHandle extends ObjectHandle {
 
         @Override
         public void onHaveFeature(MapFeaturesParser parser) {
-            ListData d = new ListData(scontext, parser, icons);
+            MapFeaturesListEntry d = new MapFeaturesListEntry(parser);
 
             owner.size += d.length() * 2;
             owner.list.add(d);

@@ -11,7 +11,6 @@ import ch.bailu.aat.views.description.MultiView;
 
 
 public class AboutActivity extends AbsDispatcher {
-
     private final static String SOLID_KEY = AboutActivity.class.getSimpleName();
 
 
@@ -50,5 +49,4 @@ public class AboutActivity extends AbsDispatcher {
 
         return mv;
     }
-
 }
