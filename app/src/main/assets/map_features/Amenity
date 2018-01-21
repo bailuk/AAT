@@ -1,219 +1,136 @@
 <h1>Amenity</h1>
-
-<p>Used to map facilities used by visitors and residents. For example: toilets, telephones, banks, pharmacies, cafes, parking and schools. See the page Amenities for an introduction on its usage.</p>
-
-<p>[<b>amenity</b>=<b>bar</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Bar is a purpose-built commercial establishment that sells alcoholic drinks to be consumed on the premises. They are characterised by a noisy and vibrant atmosphere, similar to a party and usually don't sell food. See also the description of the tags amenity=pub;bar;restaurant for a distinction between these.</p>
-
-<p>[<b>amenity</b>=<b>bbq</b>]<img src="images/___px_Osm_element_node.svg.png"/>BBQ or Barbecue is a permanently built grill for cooking food, which is most typically used outdoors by the public. For example these may be found in city parks or at beaches. Use the tag fuel=* to specify the source of heating, such as fuel=wood;electric;charcoal. For mapping nearby table and chairs, see also the tag tourism=picnic_site. For mapping campfires and firepits, instead use the tag leisure=firepit.</p>
-
-<p>[<b>amenity</b>=<b>biergarten</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Biergarten or beer garden is an open-air area where alcoholic beverages along with food is prepared and served. See also the description of the tags amenity=pub;bar;restaurant. A biergarten can commonly be found attached to a beer hall, pub, bar, or restaurant. In this case, you can use biergarten=yes additional to amenity=pub;bar;restaurant.</p>
-
-<p>[<b>amenity</b>=<b>cafe</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Cafe is generally an informal place that offers casual meals and beverages; typically, the focus is on coffee or tea. Also known as a coffeehouse/shop, bistro or sidewalk cafe. The kind of food served may be mapped with the tags cuisine=* and diet=*. See also the tags amenity=restaurant;bar;fast_food.</p>
-
-<p>[<b>amenity</b>=<b>drinking_water</b>]<img src="images/___px_Osm_element_node.svg.png"/>Drinking water is a place where humans can obtain potable water for consumption. Typically, the water is used for only drinking. Also known as a drinking fountain or bubbler.</p>
-
-<p>[<b>amenity</b>=<b>fast_food</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Fast food restaurant (see also amenity=restaurant). The kind of food served can be tagged with cuisine=* and diet=*.</p>
-
-<p>[<b>amenity</b>=<b>food_court</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>An area with several different restaurant food counters and a shared eating area. Commonly found in malls, airports, etc.</p>
-
-<p>[<b>amenity</b>=<b>ice_cream</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Ice cream shop or ice cream parlour. A place that sells ice cream and frozen yoghurt over the counter</p>
-
-<p>[<b>amenity</b>=<b>pub</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>A place selling beer and other alcoholic drinks; may also provide food or accommodation (UK). See description of amenity=bar and amenity=pub for distinction between bar and pub</p>
-
-<p>[<b>amenity</b>=<b>restaurant</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Restaurant (not fast food, see amenity=fast_food). The kind of food served can be tagged with cuisine=* and diet=*.</p>
-
-<p>[<b>amenity</b>=<b>college</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>A college campus or buildings</p>
-
-<p>[<b>amenity</b>=<b>kindergarten</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>For children too young for a regular school (also known as playschool or nursery school).</p>
-
-<p>[<b>amenity</b>=<b>library</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>A public library (municipal, university, …) to borrow books from.</p>
-
-<p>[<b>amenity</b>=<b>public_bookcase</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>A street furniture containing books. Take one or leave one.</p>
-
-<p>[<b>amenity</b>=<b>school</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>School and grounds</p>
-
-<p>[<b>amenity</b>=<b>music_school</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Music school</p>
-
-<p>[<b>amenity</b>=<b>driving_school</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Driving School</p>
-
-<p>[<b>amenity</b>=<b>language_school</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Language School</p>
-
-<p>[<b>amenity</b>=<b>university</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>An university campus</p>
-
-<p>[<b>amenity</b>=<b>bicycle_parking</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Parking for bicycles</p>
-
-<p>[<b>amenity</b>=<b>bicycle_repair_station</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Self-service repair stand</p>
-
-<p>[<b>amenity</b>=<b>bicycle_rental</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Rent a bicycle</p>
-
-<p>[<b>amenity</b>=<b>boat_sharing</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Share a Boat</p>
-
-<p>[<b>amenity</b>=<b>bus_station</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>May also be tagged as public_transport=station.</p>
-
-<p>[<b>amenity</b>=<b>car_rental</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Rent a car</p>
-
-<p>[<b>amenity</b>=<b>car_sharing</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Share a car</p>
-
-<p>[<b>amenity</b>=<b>car_wash</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Wash a car</p>
-
-<p>[<b>amenity</b>=<b>charging_station</b>]<img src="images/___px_Osm_element_node.svg.png"/>Charging facility for electric vehicles</p>
-
-<p>[<b>amenity</b>=<b>ferry_terminal</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Ferry terminal/stop. A place where people/cars/etc. can board and leave a ferry.</p>
-
-<p>[<b>amenity</b>=<b>fuel</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Petrol station; gas station; marine fuel; … Streets to petrol stations are often tagged highway=service.</p>
-
-<p>[<b>amenity</b>=<b>grit_bin</b>]<img src="images/___px_Osm_element_node.svg.png"/>A container that holds grit or a mixture of salt and grit.</p>
-
-<p>[<b>amenity</b>=<b>motorcycle_parking</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Parking for motorcycles</p>
-
-<p>[<b>amenity</b>=<b>parking</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Car park. Nodes and areas (without access tag) will get a parking symbol. Areas will be coloured. Streets on car parking are often tagged highway=service and service=parking_aisle.</p>
-
-<p>[<b>amenity</b>=<b>parking_entrance</b>]<img src="images/___px_Osm_element_node.svg.png"/>An entrance or exit to an underground or multi-storey parking facility. Group multiple parking entrances together with a relation using the tags type=site and site=parking. Do not mix with amenity=parking.</p>
-
-<p>[<b>amenity</b>=<b>parking_space</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>A single parking space. Group multiple parking spaces together with a relation using the tags type=site and site=parking. Do not mix with amenity=parking.</p>
-
-<p>[<b>amenity</b>=<b>taxi</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>A place where taxis wait for passengers.</p>
-
-<p>[<b>amenity</b>=<b>atm</b>]<img src="images/___px_Osm_element_node.svg.png"/>an ATM or cash point</p>
-
-<p>[<b>amenity</b>=<b>bank</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>a bank (for a bank that also has an ATM, it is preferred that a separate node for each ATM is added)</p>
-
-<p>[<b>amenity</b>=<b>bureau_de_change</b>]<img src="images/___px_Osm_element_node.svg.png"/>Bureau de change, currency exchange, Wechsel, cambio – a place to change foreign bank notes and travellers cheques</p>
-
-<p>[<b>amenity</b>=<b>baby_hatch</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>A place where a baby can be, out of necessity, anonymously left to be safely cared for and perhaps adopted.</p>
-
-<p>[<b>amenity</b>=<b>clinic</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>A medium-sized medical facility or health centre.</p>
-
-<p>[<b>amenity</b>=<b>dentist</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>A dentist practice / surgery.</p>
-
-<p>[<b>amenity</b>=<b>doctors</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>A doctor's practice / surgery.</p>
-
-<p>[<b>amenity</b>=<b>hospital</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Often used in conjunction with emergency=* to note whether or not the hospital has emergency facilities (A&amp;E (brit.) or ER (am.))</p>
-
-<p>[<b>amenity</b>=<b>nursing_home</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>A home for disabled or elderly persons who need permanent care. See social_facility=* for more details.</p>
-
-<p>[<b>amenity</b>=<b>pharmacy</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Pharmacydispensing=yesdispensing=no or omitted</p>
-
-<p>[<b>amenity</b>=<b>social_facility</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>A facility that provides social services.</p>
-
-<p>[<b>amenity</b>=<b>veterinary</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>A place where a veterinary surgeon (vet) practices.</p>
-
-<p>[<b>healthcare</b>=<b>blood_donation</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>A place where you can donate blood, plasma and/or platelets, and possibly have stem cell samples taken.</p>
-
-<p>[<b>amenity</b>=<b>arts_centre</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>A venue where a variety of arts are performed or conducted</p>
-
-<p>[<b>amenity</b>=<b>brothel</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>An establishment specifically dedicated to prostitution</p>
-
-<p>[<b>amenity</b>=<b>casino</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>A gambling venue with at least one table game(e.g. roulette, blackjack) that takes bets on sporting and other events at agreed upon odds.</p>
-
-<p>[<b>amenity</b>=<b>cinema</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>A place where films are shown (US: movie theater)</p>
-
-<p>[<b>amenity</b>=<b>community_centre</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>A place mostly used for local events and festivities.</p>
-
-<p>[<b>amenity</b>=<b>fountain</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>A fountain for cultural / decorational / recreational purposes.</p>
-
-<p>[<b>amenity</b>=<b>gambling</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>A place for gambling, not being a shop=bookmaker, shop=lottery, amenity=casino, or leisure=adult_gaming_centre.Games that are covered by this definition include bingo and pachinko.</p>
-
-<p>[<b>amenity</b>=<b>nightclub</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>A place to drink and dance (nightclub). The German word is "Disco" or "Discothek". Please don't confuse this with the German "Nachtclub" which is most likely  amenity=stripclub.</p>
-
-<p>[<b>amenity</b>=<b>planetarium</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>A planetarium.</p>
-
-<p>[<b>amenity</b>=<b>social_centre</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>A place for free and not-for-profit activities.</p>
-
-<p>[<b>amenity</b>=<b>stripclub</b>]<img src="images/___px_Osm_element_node.svg.png"/>A place that offers striptease or lapdancing (for sexual services use amenity=brothel).</p>
-
-<p>[<b>amenity</b>=<b>studio</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>TV radio or recording studio</p>
-
-<p>[<b>amenity</b>=<b>swingerclub</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>A club where people meet to have a party and group sex.</p>
-
-<p>[<b>amenity</b>=<b>theatre</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>A theatre or opera house. Use amenity=cinema for movie theaters.</p>
-
-<p>[<b>amenity</b>=<b>animal_boarding</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>A facility where you, paying a fee, can bring your animal for a limited period of time (e.g. for holidays)</p>
-
-<p>[<b>amenity</b>=<b>animal_shelter</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>A shelter that recovers animals in trouble</p>
-
-<p>[<b>amenity</b>=<b>baking_oven</b>]<img src="images/___px_Osm_element_node.svg.png"/>An oven used for baking bread and similar, for example inside a building=bakehouse.</p>
-
-<p>[<b>amenity</b>=<b>bench</b>]<img src="images/___px_Osm_element_node.svg.png"/>A bench to sit down and relax a bit</p>
-
-<p>[<b>amenity</b>=<b>clock</b>]<img src="images/___px_Osm_element_node.svg.png"/>A public visible clock</p>
-
-<p>[<b>amenity</b>=<b>courthouse</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>A place where justice is dispensed</p>
-
-<p>[<b>amenity</b>=<b>coworking_space</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>A place where people can go to work (might require a fee); not limited to a single employer</p>
-
-<p>[<b>amenity</b>=<b>crematorium</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>A place where dead human bodies are burnt</p>
-
-<p>[<b>amenity</b>=<b>crypt</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>It is a stone chamber or vault beneath the floor of a burial vault possibly containing sarcophagi, coffins or relics.</p>
-
-<p>[<b>amenity</b>=<b>dive_centre</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>A dive center is the base location where sports divers usually start scuba diving or make dive guided trips at new locations.</p>
-
-<p>[<b>amenity</b>=<b>dojo</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Training place for any of the Japanese arts.</p>
-
-<p>[<b>amenity</b>=<b>embassy</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>An embassy</p>
-
-<p>[<b>amenity</b>=<b>fire_station</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>A fire station</p>
-
-<p>[<b>amenity </b>=<b>firepit </b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Deprecated. For campfires and firepits, see Tag:leisure=firepit</p>
-
-<p>[<b>amenity</b>=<b>game_feeding</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Game feeding place</p>
-
-<p>[<b>amenity</b>=<b>grave_yard</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>A (smaller) place of burial, often you'll find a church nearby. Large places should be landuse=cemetery instead.</p>
-
-<p>[<b>amenity </b>=<b>gym </b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Do no use, leisure=fitness_centre is preferred! A place which houses exercise equipment for the purpose of physical exercise.</p>
-
-<p>[<b>amenity</b>=<b>hunting_stand</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>A hunting stand</p>
-
-<p>[<b>amenity</b>=<b>internet_cafe</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>A place whose principal role is providing internet services to the public.</p>
-
-<p>[<b>amenity</b>=<b>kneipp_water_cure</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Outdoor foot bath facility. Usually this is a pool with cold water and handrail. Popular in German speaking countries.</p>
-
-<p>[<b>amenity</b>=<b>marketplace</b>]<img src="images/g___px_Osm_element_way.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>A place where trade is regulated, e.g. a square.</p>
-
-<p>[<b>amenity</b>=<b>photo_booth</b>]<img src="images/___px_Osm_element_node.svg.png"/>Photo Booth – A stand to create instant photo.</p>
-
-<p>[<b>amenity</b>=<b>place_of_worship</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>A church, mosque, or temple, etc. Note that you also need religion=*, usually denomination=* and preferably name=* as well as amenity=place_of_worship. See the article for details.</p>
-
-<p>[<b>amenity</b>=<b>police</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>A police station</p>
-
-<p>[<b>amenity</b>=<b>post_box</b>]<img src="images/___px_Osm_element_node.svg.png"/>A box for the reception of mail. Alternative mail-carriers can be tagged via operator=*</p>
-
-<p>[<b>amenity</b>=<b>post_office</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Post office building with postal services</p>
-
-<p>[<b>amenity</b>=<b>prison</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>A prison</p>
-
-<p>[<b>amenity</b>=<b>public_building </b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>A generic public building. Don't use! See office=government.</p>
-
-<p>[<b>amenity</b>=<b>ranger_station</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>National Park Visitor Headquarters</p>
-
-<p>[<b>amenity</b>=<b>recycling</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Recycling facilities (bottle banks, etc.). Combine with recycling_type=container for containers or recycling_type=centre for recycling centres.</p>
-
-<p>[<b>amenity</b>=<b>rescue_station</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>A rescue station</p>
-
-<p>[<b>amenity </b>=<b>sauna </b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Deprecated. For sauna use: leisure=sauna</p>
-
-<p>[<b>amenity</b>=<b>shelter</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>A small shelter against bad weather conditions. To additionally describe the kind of shelter use shelter_type=*.</p>
-
-<p>[<b>amenity</b>=<b>shower</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Public shower or bath.</p>
-
-<p>[<b>amenity</b>=<b>table</b>]<img src="images/___px_Osm_element_node.svg.png"/>A public table to sit down and eat or just relax</p>
-
-<p>[<b>amenity</b>=<b>telephone</b>]<img src="images/___px_Osm_element_node.svg.png"/>Public telephone</p>
-
-<p>[<b>amenity</b>=<b>toilets</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Public toilets (might require a fee)</p>
-
-<p>[<b>amenity</b>=<b>townhall</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Building where the administration of a village, town or city may be located, or just a community meeting place</p>
-
-<p>[<b>amenity</b>=<b>vending_machine</b>]<img src="images/___px_Osm_element_node.svg.png"/>A machine selling goods – food, tickets, newspapers, etc. Add type of goods using vending=*</p>
-
-<p>[<b>amenity</b>=<b>waste_basket</b>]<img src="images/___px_Osm_element_node.svg.png"/>A single small container for depositing garbage that is easily accessible for pedestrians.</p>
-
-<p>[<b>amenity</b>=<b>waste_disposal</b>]<img src="images/___px_Osm_element_node.svg.png"/>A place where canal boaters, caravaners, etc. can dispose of rubbish (trash/waste).</p>
-
-<p>[<b>amenity</b>=<b>waste_transfer_station</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>A waste transfer station is a location that accepts, consolidates and transfers waste in bulk.</p>
-
-<p>[<b>amenity</b>=<b>watering_place</b>]<img src="images/___px_Osm_element_node.svg.png"/>Place where water is contained and animals can drink</p>
-
-<p>[<b>amenity</b>=<b>water_point</b>]<img src="images/___px_Osm_element_node.svg.png"/>Place where you can get large amounts of drinking water</p>
-
-<p>[<b>amenity</b>=<b>user defined</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/g___px_Osm_element_way.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>All commonly used values according to Taginfo</p>
+<p>Used to map facilities used by visitors and residents. For example: 
+toilets, telephones, banks, pharmacies, cafes, parking and schools. See 
+the page Amenities for an introduction on its usage.
+</p>
+<p>[<b>amenity</b>=<b>bar</b>]<br>Bar is a purpose-built commercial establishment that sells 
+alcoholic drinks to be consumed on the premises. They are characterised 
+by a noisy and vibrant atmosphere, similar to a party and usually don't 
+sell food. See also the description of the tags amenity=pub;bar;restaurant for a distinction between these.</p>
+<p>[<b>amenity</b>=<b>bbq</b>]<br>BBQ or Barbecue is a permanently built grill for 
+cooking food, which is most typically used outdoors by the public. For 
+example these may be found in city parks or at beaches. Use the tag fuel=* to specify the source of heating, such as fuel=wood;electric;charcoal. For mapping nearby table and chairs, see also the tag tourism=picnic_site. For mapping campfires and firepits, instead use the tag leisure=firepit.</p>
+<p>[<b>amenity</b>=<b>biergarten</b>]<br>Biergarten or beer garden is an open-air area where alcoholic beverages along with food is prepared and served. See also the description of the tags amenity=pub;bar;restaurant. A biergarten can commonly be found attached to a beer hall, pub, bar, or restaurant. In this case, you can use biergarten=yes additional to amenity=pub;bar;restaurant.</p>
+<p>[<b>amenity</b>=<b>cafe</b>]<br>Cafe is generally an informal place that offers casual meals
+ and beverages; typically, the focus is on coffee or tea. Also known as a
+ coffeehouse/shop, bistro or sidewalk cafe. The kind of food served may be mapped with the tags cuisine=* and diet=*. See also the tags amenity=restaurant;bar;fast_food.</p>
+<p>[<b>amenity</b>=<b>drinking_water</b>]<br>Drinking water is a place where humans can obtain potable 
+water for consumption. Typically, the water is used for only drinking. 
+Also known as a drinking fountain or bubbler.</p>
+<p>[<b>amenity</b>=<b>fast_food</b>]<br>Fast food restaurant (see also amenity=restaurant). The kind of food served can be tagged with cuisine=* and diet=*.</p>
+<p>[<b>amenity</b>=<b>food_court</b>]<br>An area with several different restaurant food counters and a shared eating area. Commonly found in malls, airports, etc.</p>
+<p>[<b>amenity</b>=<b>ice_cream</b>]<br>Ice cream shop or ice cream parlour. A place that sells ice cream and frozen yoghurt over the counter</p>
+<p>[<b>amenity</b>=<b>pub</b>]<br>A place selling beer and other alcoholic drinks; may also provide food or accommodation (UK). See description of amenity=bar and amenity=pub for distinction between bar and pub</p>
+<p>[<b>amenity</b>=<b>restaurant</b>]<br>Restaurant (not fast food, see amenity=fast_food). The kind of food served can be tagged with cuisine=* and diet=*.</p>
+<p>[<b>amenity</b>=<b>college</b>]<br>A college campus or buildings</p>
+<p>[<b>amenity</b>=<b>kindergarten</b>]<br>For children too young for a regular school (also known as 
+preschool, playschool or nursery school), in some countries including 
+afternoon supervision of primary school children.</p>
+<p>[<b>amenity</b>=<b>library</b>]<br>A public library (municipal, university, …) to borrow books from.</p>
+<p>[<b>amenity</b>=<b>archive</b>]<br>An archive</p>
+<p>[<b>amenity</b>=<b>public_bookcase</b>]<br>A street furniture containing books. Take one or leave one.</p>
+<p>[<b>amenity</b>=<b>school</b>]<br>School and grounds</p>
+<p>[<b>amenity</b>=<b>music_school</b>]<br>Music school</p>
+<p>[<b>amenity</b>=<b>driving_school</b>]<br>Driving School</p>
+<p>[<b>amenity</b>=<b>language_school</b>]<br>Language School</p>
+<p>[<b>amenity</b>=<b>university</b>]<br>An university campus</p>
+<p>[<b>amenity</b>=<b>bicycle_parking</b>]<br>Parking for bicycles</p>
+<p>[<b>amenity</b>=<b>bicycle_repair_station</b>]<br>Self-service repair stand</p>
+<p>[<b>amenity</b>=<b>bicycle_rental</b>]<br>Rent a bicycle</p>
+<p>[<b>amenity</b>=<b>boat_rental</b>]<br>Rent a Boat</p>
+<p>[<b>amenity</b>=<b>boat_sharing</b>]<br>Share a Boat</p>
+<p>[<b>amenity</b>=<b>bus_station</b>]<br>May also be tagged as public_transport=station.</p>
+<p>[<b>amenity</b>=<b>car_rental</b>]<br>Rent a car</p>
+<p>[<b>amenity</b>=<b>car_sharing</b>]<br>Share a car</p>
+<p>[<b>amenity</b>=<b>car_wash</b>]<br>Wash a car</p>
+<p>[<b>amenity</b>=<b>charging_station</b>]<br>Charging facility for electric vehicles</p>
+<p>[<b>amenity</b>=<b>ferry_terminal</b>]<br>Ferry terminal/stop. A place where people/cars/etc. can board and leave a ferry.</p>
+<p>[<b>amenity</b>=<b>fuel</b>]<br>Petrol station; gas station; marine fuel; … Streets to petrol stations are often tagged highway=service.</p>
+<p>[<b>amenity</b>=<b>grit_bin</b>]<br>A container that holds grit or a mixture of salt and grit.</p>
+<p>[<b>amenity</b>=<b>motorcycle_parking</b>]<br>Parking for motorcycles</p>
+<p>[<b>amenity</b>=<b>parking</b>]<br>Car park. Nodes and areas (without access tag) will get a parking 
+symbol. Areas will be coloured. Streets on car parking are often tagged highway=service and service=parking_aisle.</p>
+<p>[<b>amenity</b>=<b>parking_entrance</b>]<br>An entrance or exit to an underground or multi-storey parking 
+facility. Group multiple parking entrances together with a relation 
+using the tags type=site and site=parking. Do not mix with amenity=parking.</p>
+<p>[<b>amenity</b>=<b>parking_space</b>]<br>A single parking space. Group multiple parking spaces together with a relation using the tags type=site and site=parking. Do not mix with amenity=parking.</p>
+<p>[<b>amenity</b>=<b>taxi</b>]<br>A place where taxis wait for passengers.</p>
+<p>[<b>amenity</b>=<b>atm</b>]<br>an ATM or cash point</p>
+<p>[<b>amenity</b>=<b>bank</b>]<br>a bank (for a bank that also has an ATM, it is preferred that a separate node for each ATM is added)</p>
+<p>[<b>amenity</b>=<b>bureau_de_change</b>]<br>Bureau de change, currency exchange, Wechsel, cambio – a place to change foreign bank notes and travellers cheques</p>
+<p>[<b>amenity</b>=<b>baby_hatch</b>]<br>A place where a baby can be, out of necessity, anonymously left to be safely cared for and perhaps adopted.</p>
+<p>[<b>amenity</b>=<b>clinic</b>]<br>A medium-sized medical facility or health centre.</p>
+<p>[<b>amenity</b>=<b>dentist</b>]<br>A dentist practice / surgery.</p>
+<p>[<b>amenity</b>=<b>doctors</b>]<br>A doctor's practice / surgery.</p>
+<p>[<b>amenity</b>=<b>hospital</b>]<br>Often used in conjunction with emergency=* to note whether or not the hospital has emergency facilities (A&E (brit.) or ER (am.))</p>
+<p>[<b>amenity</b>=<b>nursing_home</b>]<br>Discouraged tag for a home for disabled or elderly persons who need permanent care. Use amenity=social_facility + social_facility=nursing_home now.</p>
+<p>[<b>amenity</b>=<b>pharmacy</b>]<br>Pharmacydispensing=yesdispensing=no or omitted</p>
+<p>[<b>amenity</b>=<b>social_facility</b>]<br>A facility that provides social services.</p>
+<p>[<b>amenity</b>=<b>veterinary</b>]<br>A place where a veterinary surgeon (vet) practices.</p>
+<p>[<b>healthcare</b>=<b>blood_donation</b>]<br>A place where you can donate blood, plasma and/or platelets, and possibly have stem cell samples taken.</p>
+<p>[<b>amenity</b>=<b>arts_centre</b>]<br>A venue where a variety of arts are performed or conducted</p>
+<p>[<b>amenity</b>=<b>brothel</b>]<br>An establishment specifically dedicated to prostitution</p>
+<p>[<b>amenity</b>=<b>casino</b>]<br>A gambling venue with at least one table game(e.g. roulette, 
+blackjack) that takes bets on sporting and other events at agreed upon 
+odds.</p>
+<p>[<b>amenity</b>=<b>cinema</b>]<br>A place where films are shown (US: movie theater)</p>
+<p>[<b>amenity</b>=<b>community_centre</b>]<br>A place mostly used for local events, festivities and group activities; including special interest and special age groups. .</p>
+<p>[<b>amenity</b>=<b>fountain</b>]<br>A fountain for cultural / decorational / recreational purposes.</p>
+<p>[<b>amenity</b>=<b>gambling</b>]<br>A place for gambling, not being a shop=bookmaker, shop=lottery, amenity=casino, or leisure=adult_gaming_centre.
+Games that are covered by this definition include bingo and pachinko.</p>
+<p>[<b>amenity</b>=<b>nightclub</b>]<br>A place to drink and dance (nightclub). The German word is "Disco" 
+or "Discothek". Please don't confuse this with the German "Nachtclub" 
+which is most likely  amenity=stripclub.</p>
+<p>[<b>amenity</b>=<b>planetarium</b>]<br>A planetarium.</p>
+<p>[<b>amenity</b>=<b>social_centre</b>]<br>A place for free and not-for-profit activities.</p>
+<p>[<b>amenity</b>=<b>stripclub</b>]<br>A place that offers striptease or lapdancing (for sexual services use amenity=brothel).</p>
+<p>[<b>amenity</b>=<b>studio</b>]<br>TV radio or recording studio</p>
+<p>[<b>amenity</b>=<b>swingerclub</b>]<br>A club where people meet to have a party and group sex.</p>
+<p>[<b>amenity</b>=<b>theatre</b>]<br>A theatre or opera house. Use amenity=cinema for movie theaters.</p>
+<p>[<b>amenity</b>=<b>animal_boarding</b>]<br>A facility where you, paying a fee, can bring your animal for a limited period of time (e.g. for holidays)</p>
+<p>[<b>amenity</b>=<b>animal_shelter</b>]<br>A shelter that recovers animals in trouble</p>
+<p>[<b>amenity</b>=<b>baking_oven</b>]<br>An oven used for baking bread and similar, for example inside a building=bakehouse.</p>
+<p>[<b>amenity</b>=<b>bench</b>]<br>A bench to sit down and relax a bit</p>
+<p>[<b>amenity</b>=<b>clock</b>]<br>A public visible clock</p>
+<p>[<b>amenity</b>=<b>courthouse</b>]<br>A place where justice is dispensed</p>
+<p>[<b>amenity</b>=<b>coworking_space</b>]<br>A place where people can go to work (might require a fee); not limited to a single employer</p>
+<p>[<b>amenity</b>=<b>crematorium</b>]<br>A place where dead human bodies are burnt</p>
+<p>[<b>amenity</b>=<b>crypt</b>]<br>It is a stone chamber or vault beneath the floor of a burial vault possibly containing sarcophagi, coffins or relics.</p>
+<p>[<b>amenity</b>=<b>dive_centre</b>]<br>A dive center is the base location where sports divers usually start scuba diving or make dive guided trips at new locations.</p>
+<p>[<b>amenity</b>=<b>dojo</b>]<br>Training place for any of the Japanese arts.</p>
+<p>[<b>amenity</b>=<b>embassy</b>]<br>An embassy</p>
+<p>[<b>amenity</b>=<b>fire_station</b>]<br>A fire station</p>
+<p>[<b>amenity</b>=<b>firepit</b>]<br>Deprecated. For campfires and firepits, see Tag:leisure=firepit</p>
+<p>[<b>amenity</b>=<b>game_feeding</b>]<br>Game feeding place</p>
+<p>[<b>amenity</b>=<b>grave_yard</b>]<br>A (smaller) place of burial, often you'll find a church nearby. Large places should be landuse=cemetery instead.</p>
+<p>[<b>amenity</b>=<b>gym</b>]<br>Do no use, leisure=fitness_centre is preferred! A place which houses exercise equipment for the purpose of physical exercise.</p>
+<p>[<b>amenity</b>=<b>hunting_stand</b>]<br>A hunting stand</p>
+<p>[<b>amenity</b>=<b>internet_cafe</b>]<br>A place whose principal role is providing internet services to the public.</p>
+<p>[<b>amenity</b>=<b>kneipp_water_cure</b>]<br>Outdoor foot bath facility. Usually this is a pool with cold water and handrail. Popular in German speaking countries.</p>
+<p>[<b>amenity</b>=<b>marketplace</b>]<br>A place where trade is regulated, e.g. a square.</p>
+<p>[<b>amenity</b>=<b>photo_booth</b>]<br>Photo Booth – A stand to create instant photo.</p>
+<p>[<b>amenity</b>=<b>place_of_worship</b>]<br>A church, mosque, or temple, etc. Note that you also need religion=*, usually denomination=* and preferably name=* as well as amenity=place_of_worship. See the article for details.</p>
+<p>[<b>amenity</b>=<b>police</b>]<br>A police station</p>
+<p>[<b>amenity</b>=<b>post_box</b>]<br>A box for the reception of mail. Alternative mail-carriers can be tagged via operator=*</p>
+<p>[<b>amenity</b>=<b>post_office</b>]<br>Post office building with postal services</p>
+<p>[<b>amenity</b>=<b>prison</b>]<br>A prison</p>
+<p>[<b>amenity</b>=<b>public_bath</b>]<br>A location where the public may bathe in common, etc. japanese onsen, turkish bath, hot spring</p>
+<p>[<b>amenity</b>=<b>public_building</b>]<br>A generic public building. Don't use! See office=government.</p>
+<p>[<b>amenity</b>=<b>ranger_station</b>]<br>National Park Visitor Headquarters</p>
+<p>[<b>amenity</b>=<b>recycling</b>]<br>Recycling facilities (bottle banks, etc.). Combine with recycling_type=container for containers or recycling_type=centre for recycling centres.</p>
+<p>[<b>amenity</b>=<b>rescue_station</b>]<br>A rescue station</p>
+<p>[<b>amenity</b>=<b>sanitary_dump_station</b>]<br>A station to empty the blackwater tanks of motorhomes, buses and ships</p>
+<p>[<b>amenity</b>=<b>sauna</b>]<br>Deprecated. For sauna use: leisure=sauna</p>
+<p>[<b>amenity</b>=<b>shelter</b>]<br>A small shelter against bad weather conditions. To additionally describe the kind of shelter use shelter_type=*.</p>
+<p>[<b>amenity</b>=<b>shower</b>]<br>Public shower or bath.</p>
+<p>[<b>amenity</b>=<b>table</b>]<br>A public table to sit down and eat or just relax</p>
+<p>[<b>amenity</b>=<b>telephone</b>]<br>Public telephone</p>
+<p>[<b>amenity</b>=<b>toilets</b>]<br>Public toilets (might require a fee)</p>
+<p>[<b>amenity</b>=<b>townhall</b>]<br>Building where the administration of a village, town or city may be located, or just a community meeting place</p>
+<p>[<b>amenity</b>=<b>vending_machine</b>]<br>A machine selling goods – food, tickets, newspapers, etc. Add type of goods using vending=*</p>
+<p>[<b>amenity</b>=<b>waste_basket</b>]<br>A single small container for depositing garbage that is easily accessible for pedestrians.</p>
+<p>[<b>amenity</b>=<b>waste_disposal</b>]<br>A place where canal boaters, caravaners, etc. can dispose of rubbish (trash/waste).</p>
+<p>[<b>amenity</b>=<b>waste_transfer_station</b>]<br>A waste transfer station is a location that accepts, consolidates and transfers waste in bulk.</p>
+<p>[<b>amenity</b>=<b>watering_place</b>]<br>Place where water is contained and animals can drink</p>
+<p>[<b>amenity</b>=<b>water_point</b>]<br>Place where you can get large amounts of drinking water</p>
+<p>[<b>amenity</b>=<b>user defined</b>]<br>All commonly used values according to Taginfo</p>

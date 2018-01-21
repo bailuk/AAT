@@ -1,49 +1,26 @@
 <h1>Annotation</h1>
-
-<p>Providing further information about tag values for other mappers and in some cases also for users. See the page titled Annotations for an introduction on its usage.</p>
-
-<p>[<b>attribution</b>=<b>User defined</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/g___px_Osm_element_way.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/><img src="images/x_Osm_element_relation.svg.png"/>Attribution to originator if required</p>
-
-<p>[<b>comment</b>=<b>User defined</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/g___px_Osm_element_way.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/><img src="images/x_Osm_element_relation.svg.png"/>Comment. Usually a description of a changeset primarily for other mappers. See note=* for nodes, ways and relations.</p>
-
-<p>[<b>description</b>=<b>User defined</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/g___px_Osm_element_way.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/><img src="images/x_Osm_element_relation.svg.png"/>Text that might be viewable to the end user (perhaps using a search system or a map with pop-ups)</p>
-
-<p>[<b>email</b>=<b>User defined</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/g___px_Osm_element_way.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/><img src="images/x_Osm_element_relation.svg.png"/>E-Mail address associated with an object</p>
-
-<p>[<b>fax</b>=<b>User defined</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/g___px_Osm_element_way.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/><img src="images/x_Osm_element_relation.svg.png"/>Fax number associated with an object</p>
-
-<p>[<b>fixme</b>=<b>User defined</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/g___px_Osm_element_way.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/><img src="images/x_Osm_element_relation.svg.png"/>A description to yourself or to other mappers of a (possible) error in the map</p>
-
-<p>[<b>image</b>=<b>URL</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/g___px_Osm_element_way.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/><img src="images/x_Osm_element_relation.svg.png"/>Reference to an image (use the source_ref=* key below when the image is referencing the source of the element)</p>
-
-<p>[<b>note</b>=<b>User defined</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/g___px_Osm_element_way.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/><img src="images/x_Osm_element_relation.svg.png"/>A note to yourself or to other mappers.</p>
-
-<p>[<b>phone</b>=<b>User defined</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/g___px_Osm_element_way.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/><img src="images/x_Osm_element_relation.svg.png"/>Telephone number associated with an object</p>
-
-<p>[<b>source</b>=<b>User defined</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/g___px_Osm_element_way.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/><img src="images/x_Osm_element_relation.svg.png"/>Indicates the source of some information added to OpenStreetMap.</p>
-
-<p>[<b>source</b>=<b>extrapolation</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/g___px_Osm_element_way.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/><img src="images/x_Osm_element_relation.svg.png"/>Extension of information from a known source</p>
-
-<p>[<b>source</b>=<b>historical</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/g___px_Osm_element_way.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/><img src="images/x_Osm_element_relation.svg.png"/>From out-of-copyright mapping or other historical document</p>
-
-<p>[<b>source</b>=<b>image</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/g___px_Osm_element_way.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/><img src="images/x_Osm_element_relation.svg.png"/>Photograph or video</p>
-
-<p>[<b>source</b>=<b>knowledge</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/g___px_Osm_element_way.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/><img src="images/x_Osm_element_relation.svg.png"/>Local or common knowledge</p>
-
-<p>[<b>source</b>=<b>survey</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/g___px_Osm_element_way.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/><img src="images/x_Osm_element_relation.svg.png"/>Track from GPS unit (usually GPX fomat) or other physical survey; suggested addition - survey:date=YYYY-MM-DD</p>
-
-<p>[<b>source</b>=<b>voice</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/g___px_Osm_element_way.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/><img src="images/x_Osm_element_relation.svg.png"/>Voice recordings; e.g., dictaphone</p>
-
-<p>[<b>source:name</b>=<b>User defined</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/g___px_Osm_element_way.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/><img src="images/x_Osm_element_relation.svg.png"/>Source used to gather name information; e.g., for street names</p>
-
-<p>[<b>source:ref</b>=<b>User defined</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/g___px_Osm_element_way.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/><img src="images/x_Osm_element_relation.svg.png"/>Reference data source; e.g., for road numbers</p>
-
-<p>[<b>source_ref</b>=<b>User defined</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/g___px_Osm_element_way.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/><img src="images/x_Osm_element_relation.svg.png"/>To record the URI, source reference (e.g., Landsat) or other link to physical sources</p>
-
-<p>[<b>todo</b>=<b>User defined</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/g___px_Osm_element_way.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/><img src="images/x_Osm_element_relation.svg.png"/>A text note to yourself or another mapper describing how the particular element can be improved</p>
-
-<p>[<b>url</b>=<b>URL</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/g___px_Osm_element_way.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/><img src="images/x_Osm_element_relation.svg.png"/>URL associated with an object. Use more meaningful keys like website=*, image=* or wikipedia=* where applicable!</p>
-
-<p>[<b>website</b>=<b>URL</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/g___px_Osm_element_way.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/><img src="images/x_Osm_element_relation.svg.png"/>Official website of an object</p>
-
-<p>[<b>wikipedia</b>=<b>Language and article title</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/g___px_Osm_element_way.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/><img src="images/x_Osm_element_relation.svg.png"/>Wikipedia article associated with an object</p>
+<p>Providing further information about tag values for other mappers and in some cases also for users. See the page titled Annotations for an introduction on its usage.
+</p>
+<p>[<b>attribution</b>=<b></b>]<br>The data source of the information used to tag and/or place this element (often considered deprecated)</p>
+<p>[<b>comment</b>=<b></b>]<br>A description of a changeset primarily for other mappers.</p>
+<p>[<b>description</b>=<b></b>]<br>To provide additional information about the related element to the end map user.</p>
+<p>[<b>email</b>=<b></b>]<br>An email address associated with the object</p>
+<p>[<b>fax</b>=<b></b>]<br>A fax number associated with the object.</p>
+<p>[<b>fixme</b>=<b></b>]<br>Description of a (possible) error in the map</p>
+<p>[<b>image</b>=<b></b>]<br>Reference to an image of the object</p>
+<p>[<b>note</b>=<b></b>]<br>A note to yourself or to other mappers.</p>
+<p>[<b>phone</b>=<b></b>]<br>A telephone number associated with the object.</p>
+<p>[<b>source</b>=<b></b>]<br>For indicating the source of all tags added to the OSM database.</p>
+<p>[<b>source</b>=<b>extrapolation</b>]<br></p>
+<p>[<b>source</b>=<b>historical</b>]<br></p>
+<p>[<b>source</b>=<b>image</b>]<br></p>
+<p>[<b>source</b>=<b>knowledge</b>]<br></p>
+<p>[<b>source</b>=<b>survey</b>]<br></p>
+<p>[<b>source</b>=<b>voice</b>]<br></p>
+<p>[<b>source:name</b>=<b></b>]<br></p>
+<p>[<b>source:ref</b>=<b></b>]<br></p>
+<p>[<b>source_ref</b>=<b></b>]<br>Used to link external source of information: photos, video links</p>
+<p>[<b>todo</b>=<b></b>]<br>Used for to-do notes</p>
+<p>[<b>url</b>=<b></b>]<br>Specifying an url related to a feature.</p>
+<p>[<b>website</b>=<b></b>]<br>Specifying the link to the official website for a feature.</p>
+<p>[<b>wikipedia</b>=<b></b>]<br>Provides a link to Wikipedia's article about the feature.</p>

@@ -1,3 +1,18 @@
 <h1>Natural</h1>
-
-<p>This is used to describe natural and physical land features. These also include features that have been modified by humans. See the page titled Natural for an introduction on its usage.</p>
+<p>This is used to describe natural and physical land features. These 
+also include features that have been modified by humans. See the page 
+titled Natural for an introduction on its usage.
+</p>
+<p>[<b>natural</b>=<b>wood</b>]<br>Forest. Sometimes considered to have restricted meaning "Woodland with no forestry".</p>
+<p>[<b>natural</b>=<b>tree_row</b>]<br>A line of trees</p>
+<p>[<b>natural</b>=<b>tree</b>]<br>A single tree</p>
+<p>[<b>natural</b>=<b>scrub</b>]<br>Uncultivated land covered with bushes or stunted trees.</p>
+<p>[<b>natural</b>=<b>heath</b>]<br>A dwarf-shrub habitat, characterised by open, low growing woody vegetation, often dominated by plants of the Ericaceae.</p>
+<p>[<b>natural</b>=<b>moor</b>]<br>Don't use, see wikipage</p>
+<p>[<b>natural</b>=<b>grassland</b>]<br>Natural areas where the vegetation is dominated by grasses (Poaceae) and other herbaceous (non-woody) plants.</p>
+<p>[<b>natural</b>=<b>fell</b>]<br>Habitat above tree line covered with grass, dwarf shrubs and mosses.</p>
+<p>[<b>natural</b>=<b>bare_rock</b>]<br>An area with sparse or no vegetation, so that the bedrock becomes visible</p>
+<p>[<b>natural</b>=<b>scree</b>]<br>Unconsolidated angular rocks formed by rockfall and weathering from adjacent rockfaces</p>
+<p>[<b>natural</b>=<b>shingle</b>]<br>An accumulation of rounded rock fragments on a beach or riverbed</p>
+<p>[<b>natural</b>=<b>sand</b>]<br>An area covered by sand with no or very little vegetation</p>
+<p>[<b>natural</b>=<b>mud</b>]<br>Area covered with mud</p>

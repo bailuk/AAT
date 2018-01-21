@@ -1,7 +1,55 @@
 <h1>Man_made</h1>
-
-<p>A tag for identifying man made (artificial) structures that are added to the landscape. See the page Man-made for an introduction on its usage.</p>
-
-<p>This table is a wiki template with a default description in English. Editable here.</p>
-
-<p></p>
+<p>A tag for identifying man made (artificial) structures that are added to the landscape. See the page Man-made for an introduction on its usage.
+</p>
+<p>[<b>man_made</b>=<b>adit</b>]<br>A type of entrance to an underground mine which is horizontal or nearly horizontal.</p>
+<p>[<b>man_made</b>=<b>beacon</b>]<br>A structure for signalling on land and sea</p>
+<p>[<b>man_made</b>=<b>breakwater</b>]<br>A man-made structure designed to protect a shore or harbour from the sea and waves.</p>
+<p>[<b>man_made</b>=<b>bridge</b>]<br>The outline of a bridge, grouping together all features for that bridge.</p>
+<p>[<b>man_made</b>=<b>bunker_silo</b>]<br>An open-sided structure that can be used with vehicles to fill and empty them.</p>
+<p>[<b>man_made</b>=<b>campanile</b>]<br>A free standing bell tower, typically near a church.</p>
+<p>[<b>man_made</b>=<b>chimney</b>]<br>A chimney</p>
+<p>[<b>man_made</b>=<b>communications_tower</b>]<br>A huge tower for transmitting radio applications</p>
+<p>[<b>man_made</b>=<b>crane</b>]<br>A stationary, permanent crane.</p>
+<p>[<b>man_made</b>=<b>cross</b>]<br>Cross with little historical or religion value, e.g. summit cross</p>
+<p>[<b>man_made</b>=<b>cutline</b>]<br>A straight line cut in a forest.</p>
+<p>[<b>man_made</b>=<b>clearcut</b>]<br>Area, where most or all trees are uniformly cut down.</p>
+<p>[<b>man_made</b>=<b>dovecote</b>]<br>A place where doves are farmed or stored.</p>
+<p>[<b>man_made</b>=<b>drinking_fountain</b>]<br>Provides a small jet of drinking water.</p>
+<p>[<b>man_made</b>=<b>dyke</b>]<br>An embankment built to restrict the flow of water or other liquids</p>
+<p>[<b>man_made</b>=<b>embankment</b>]<br>A raised bank to carry a road, railway, or canal across a low-lying or wet area.</p>
+<p>[<b>man_made</b>=<b>flagpole</b>]<br>A long pole built to hold a flag</p>
+<p>[<b>man_made</b>=<b>gasometer</b>]<br>A large container in which natural gas or town gas is stored near atmospheric pressure at ambient temperatures.</p>
+<p>[<b>man_made</b>=<b>groyne</b>]<br>A rigid structure built from a shoreline or riverbank that interrupts water flow and limits the movement of sediment</p>
+<p>[<b>man_made</b>=<b>guy</b>]<br>A rope used for tighting a structure, like a mast</p>
+<p>[<b>man_made</b>=<b>kiln</b>]<br>A kiln</p>
+<p>[<b>man_made</b>=<b>lighthouse</b>]<br>Tower that emits light to serve as a navigational aid at sea or on inland waterway</p>
+<p>[<b>man_made</b>=<b>mast</b>]<br>A mast is a vertical structure built to hold, for example, antennas.</p>
+<p>[<b>man_made</b>=<b>mineshaft</b>]<br>Mineshafts are vertical tunnels.</p>
+<p>[<b>man_made</b>=<b>monitoring_station</b>]<br>A station that monitors something.</p>
+<p>[<b>man_made</b>=<b>obelisk</b>]<br>Tall, narrow, four-sided, tapered monument which usually ends in a pyramid-like shape at the top.</p>
+<p>[<b>man_made</b>=<b>observatory</b>]<br>Observatory</p>
+<p>[<b>man_made</b>=<b>offshore_platform</b>]<br>Offshore platform</p>
+<p>[<b>man_made</b>=<b>petroleum_well</b>]<br>Oil well</p>
+<p>[<b>man_made</b>=<b>pier</b>]<br>A pier is a raised walkway over water, supported by widely spread piles or pillars.</p>
+<p>[<b>man_made</b>=<b>pipeline</b>]<br>A major pipeline carrying gas, water, oil, etc.</p>
+<p>[<b>man_made</b>=<b>pumping_station</b>]<br>Pumping station</p>
+<p>[<b>man_made</b>=<b>reservoir_covered</b>]<br>A covered reservoir is a large man-made tank for holding fresh water</p>
+<p>[<b>man_made</b>=<b>silo</b>]<br>A storage container for bulk material, often grains such as corn or wheat</p>
+<p>[<b>man_made</b>=<b>snow_fence</b>]<br>A solid fence-like structure built across steep slopes to reduce risk and severity of (snow) avalanches</p>
+<p>[<b>man_made</b>=<b>snow_net</b>]<br>A netting fence built across steep slopes to reduce risk and severity of (snow) avalanches</p>
+<p>[<b>man_made</b>=<b>storage_tank</b>]<br>A container that holds liquids or compressed gases.</p>
+<p>[<b>man_made</b>=<b>street_cabinet</b>]<br>A cabinet located in the street and hosting technical equipment to operate facilities such as electricity or street lights.</p>
+<p>[<b>man_made</b>=<b>surveillance</b>]<br>A surveillance camera or other type of surveillance equipment.</p>
+<p>[<b>man_made</b>=<b>survey_point</b>]<br>A triangulation pillar, geodetic vertex, or other piece of fixed equipment used by topographers.</p>
+<p>[<b>man_made</b>=<b>telescope</b>]<br>Telescope</p>
+<p>[<b>man_made</b>=<b>tower</b>]<br>A tower is a building, which is multiple times higher than its diameter</p>
+<p>[<b>man_made</b>=<b>wastewater_plant</b>]<br>A wastewater plant is a facility used to treat wastewater.</p>
+<p>[<b>man_made</b>=<b>watermill</b>]<br>A mill driven by water power.</p>
+<p>[<b>man_made</b>=<b>water_tower</b>]<br>Structure with a water tank at an altitude to increase pressure in water network</p>
+<p>[<b>man_made</b>=<b>water_well</b>]<br>A water well is a structural facility to access ground water.</p>
+<p>[<b>man_made</b>=<b>water_tap</b>]<br>Publicly usable press button water tap</p>
+<p>[<b>man_made</b>=<b>water_works</b>]<br>A place where drinking water is found and applied to the local waterpipes network.</p>
+<p>[<b>man_made</b>=<b>wildlife_crossing</b>]<br>Structure that allow animals to cross human barriers safely.</p>
+<p>[<b>man_made</b>=<b>windmill</b>]<br>A traditional windmill</p>
+<p>[<b>man_made</b>=<b>works</b>]<br>A factory or industrial production plant</p>
+<p>[<b>man_made</b>=<b>yes</b>]<br></p>

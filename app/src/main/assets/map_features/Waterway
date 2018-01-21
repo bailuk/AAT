@@ -1,53 +1,10 @@
 <h1>Waterway</h1>
-
-<p>This is used to described different types of waterways. When mapping the way of a river, stream, drain, canal, etc. these need to be aligned in the direction of the water flow. See the page titled Waterways for an introduction on its usage.</p>
-
-<p>[<b>waterway</b>=<b>river</b>]<img src="images/g___px_Osm_element_way.svg.png"/>For narrow rivers which will be rendered as a line.  For larger rivers see also waterway=riverbank (Other languages).</p>
-
-<p>[<b>waterway</b>=<b>riverbank</b>]<img src="images/___px_Osm_element_area.svg.png"/>Used for larger rivers in addition to waterway=river, to define an area between the opposite riverbanks. See water=river for alternative tagging.</p>
-
-<p>[<b>waterway</b>=<b>stream</b>]<img src="images/g___px_Osm_element_way.svg.png"/>A naturally-formed waterway that is too narrow to be classed as a river. An active, able-bodied person should be able to jump over it if trees along it aren't too thick.</p>
-
-<p>[<b>waterway</b>=<b>wadi</b>]<img src="images/g___px_Osm_element_way.svg.png"/>A natural, dry (ephemeral) riverbed that contains water only during times of heavy rain or simply an intermittent stream, in semi-arid areas. Also known as a "Wash" in the deserts of America. It has been recommended to stop using this tag. For intermittent waterways use waterway=river/waterway=stream + intermittent=yes. For valleys natural=valley.</p>
-
-<p>[<b>waterway</b>=<b>drystream</b>]<img src="images/g___px_Osm_element_way.svg.png"/>Dry stream bed - negative forms of erosion relief formed by the activity of temporary streams.Don't use this tag. For intermittent waterways use waterway=stream + intermittent=yes. For valleys use natural=valley.</p>
-
-<p>[<b>waterway</b>=<b>canal</b>]<img src="images/g___px_Osm_element_way.svg.png"/>An artificial open waterway used for transportation, waterpower, or irrigation.(Other languages).</p>
-
-<p>[<b>waterway</b>=<b>drain</b>]<img src="images/g___px_Osm_element_way.svg.png"/>An artificial waterway for carrying storm water or industrial discharge.</p>
-
-<p>[<b>waterway</b>=<b>ditch</b>]<img src="images/g___px_Osm_element_way.svg.png"/>A small to moderate depression created to channel water.</p>
-
-<p>[<b>waterway</b>=<b>fairway</b>]<img src="images/g___px_Osm_element_way.svg.png"/>A navigable route in a lake or sea marked by buoys. (Note: conflicts with seamark:type=fairway)100px</p>
-
-<p>[<b>waterway</b>=<b>dock</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>An 'enclosed' area of water used for building or repairing ships.</p>
-
-<p>[<b>waterway</b>=<b>boatyard</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Boat yard – a place for constructing, repairing and storing vessels out of the water.</p>
-
-<p>[<b>waterway</b>=<b>dam</b>]<img src="images/g___px_Osm_element_way.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>A wall built across a river or stream to impound the water. A dam normally does not have water flowing over the top of it.</p>
-
-<p>[<b>waterway</b>=<b>weir</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/g___px_Osm_element_way.svg.png"/>A barrier built across a river, sometimes to divert water for industrial purposes. Water can still flow over the top.</p>
-
-<p>[<b>waterway</b>=<b>waterfall </b>]<img src="images/___px_Osm_element_node.svg.png"/>A waterfall, use in combination with natural=cliff</p>
-
-<p>[<b>waterway</b>=<b>lock_gate</b>]<img src="images/___px_Osm_element_node.svg.png"/>To mark the position of gates at each end of a lock. Alternatively, for smaller locks use a single lock=yes node in the middle of the lock.</p>
-
-<p>[<b>waterway</b>=<b>turning_point</b>]<img src="images/___px_Osm_element_node.svg.png"/>A place to turn the driving direction for vessels, where the boats are longer than the river/canal is wide. Use maxlength=* to denote the maximum length of the vessel.</p>
-
-<p>[<b>waterway</b>=<b>water_point</b>]<img src="images/___px_Osm_element_node.svg.png"/>A place to fill fresh water holding tanks of a boat.</p>
-
-<p>[<b>waterway</b>=<b>fuel</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>A place to get fuel for boats.</p>
-
-<p>[<b>intermittent</b>=<b>yes</b>]<img src="images/g___px_Osm_element_way.svg.png"/>Indicates that the waterway does not have a permanent flow (i.e. is sometimes/often dry).</p>
-
-<p>[<b>seasonal</b>=<b>yes, spring, summer, autumn, winter, wet_season, dry_season</b>]<img src="images/g___px_Osm_element_way.svg.png"/>Indicates that a waterway has a seasonal (yearly cyclic) flow.</p>
-
-<p>[<b>lock</b>=<b>yes</b>]<img src="images/g___px_Osm_element_way.svg.png"/>(<img src="images/___px_Osm_element_node.svg.png"/>)A lock is used for moving boats between waterways at two different levels. Can tag either the section of the way between the gates (detailed) or just a single node in the waterway (less detailed).</p>
-
-<p>[<b>mooring</b>=<b>yes, private, no</b>]<img src="images/g___px_Osm_element_way.svg.png"/>A length of bank where boats are explicitly permitted to moor. maxstay=* should be used for timing information.</p>
-
-<p>[<b>service</b>=<b>transportation, water_power, irrigation</b>]<img src="images/g___px_Osm_element_way.svg.png"/>A waterway=canal may have one (or more; separate with semicolons) uses.</p>
-
-<p>[<b>tunnel</b>=<b>culvert</b>]<img src="images/g___px_Osm_element_way.svg.png"/>(<img src="images/___px_Osm_element_node.svg.png"/>)For streams passing under a road in culverts use tunnel=culvert+layer=-1 on the section of stream passing under the road. Don't use either of these tags for streams passing under bridges.</p>
-
-<p>[<b>waterway</b>=<b>user defined</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/g___px_Osm_element_way.svg.png"/>All commonly used values according to Taginfo</p>
+<p>This is used to described different types of waterways. When mapping 
+the way of a river, stream, drain, canal, etc. these need to be aligned 
+in the direction of the water flow. See the page titled Waterways for an introduction on its usage.
+</p>
+<p>[<b>waterway</b>=<b>river</b>]<br>The linear flow of a river, in flow direction.</p>
+<p>[<b>waterway</b>=<b>riverbank</b>]<br>A wide river as defined by its area.</p>
+<p>[<b>waterway</b>=<b>stream</b>]<br>A naturally-forming waterway that is too narrow to be classed as a river.</p>
+<p>[<b>waterway</b>=<b>wadi</b>]<br></p>
+<p>[<b>waterway</b>=<b>drystream</b>]<br>A negative form of erosion relief formed by the activity of temporary streams.</p>

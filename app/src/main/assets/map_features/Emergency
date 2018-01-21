@@ -1,3 +1,12 @@
 <h1>Emergency</h1>
-
-<p>This is used to describe the location of emergency facilities and equipment. See the page Emergency for an introduction on its usage.</p>
+<p>This is used to describe the location of emergency facilities and equipment. See the page Emergency for an introduction on its usage.
+</p>
+<p>[<b>emergency</b>=<b>ambulance_station</b>]<br>A
+ ambulance station is a structure or other area set aside for storage of
+ ambulance vehicles, medical equipment, personal protective equipment, 
+and other medical supplies.</p>
+<p>[<b>emergency</b>=<b>defibrillator</b>]<br>Defibrillator,
+ an external and portable electronic device that diagnoses and can 
+correct arrhythmia of the heart automatically (aka Automated External 
+Defibrillator, AED)</p>
+<p>[<b>emergency</b>=<b>landing_site</b>]<br>Preselected flat area for a helicopter to land in an emergency situation</p>

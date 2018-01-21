@@ -1,31 +1,21 @@
 <h1>Military</h1>
-
-<p>This is used for facilities and on land used by the military. These may include the Navy, Army, Air Force and Marines. See the page titled Military for an introduction on its usage.</p>
-
-<p>[<b>military</b>=<b>airfield</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>A place where military planes take off and land.</p>
-
-<p>[<b>military</b>=<b>ammunition</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Military ammunition storage area.</p>
-
-<p>[<b>military</b>=<b>bunker</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Buildings, often build from concrete, to stand even heavier fire.  Also  WW2 pillboxes.</p>
-
-<p>[<b>military</b>=<b>barracks</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Buildings where soldiers live and work.</p>
-
-<p>[<b>military</b>=<b>checkpoint</b>]<img src="images/___px_Osm_element_node.svg.png"/>Place of a possible access to a restricted or secured area, where civilian visitors and vehicles will be controled by a military authority.</p>
-
-<p>[<b>military</b>=<b>danger_area</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Usually a large marked area around something like a firing range, bombing range, etc which can be an exclusion zone.</p>
-
-<p>[<b>military</b>=<b>naval_base</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>A naval base</p>
-
-<p>[<b>military</b>=<b>nuclear_explosion_site</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Nuclear weapons test site</p>
-
-<p>[<b>military</b>=<b>obstacle_course</b>]<img src="images/g___px_Osm_element_way.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>A military obstacle course.</p>
-
-<p>[<b>military</b>=<b>office</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Military offices, e.g. general staff office, military recruitment office etc</p>
-
-<p>[<b>military</b>=<b>range</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Where soldiers practice with their weapons (firing, bombing, artillery, …).</p>
-
-<p>[<b>military</b>=<b>training_area</b>]<img src="images/___px_Osm_element_area.svg.png"/>An area where soldiers train and weapons or other military technology are experimented with or are tested.</p>
-
-<p>[<b>military</b>=<b>trench</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/g___px_Osm_element_way.svg.png"/>Trenches used for military purposes</p>
-
-<p>[<b>military</b>=<b>user defined</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>All commonly used values according to Taginfo</p>
+<p>This is used for facilities and on land used by the military. These 
+may include the Navy, Army, Air Force and Marines. See the page titled Military for an introduction on its usage.
+</p>
+<p>[<b>military</b>=<b>airfield</b>]<br>A place where military planes take off and land.</p>
+<p>[<b>military</b>=<b>ammunition</b>]<br>Military ammunition storage area.</p>
+<p>[<b>military</b>=<b>bunker</b>]<br>Buildings, often build from concrete, to stand even heavier fire.  Also  WW2 pillboxes.</p>
+<p>[<b>military</b>=<b>barracks</b>]<br>Buildings where soldiers live and work.</p>
+<p>[<b>military</b>=<b>checkpoint</b>]<br>Place of a possible access to a restricted or secured area, where 
+civilian visitors and vehicles will be controled by a military 
+authority.</p>
+<p>[<b>military</b>=<b>danger_area</b>]<br>Usually a large marked area around something like a firing range, bombing range, etc which can be an exclusion zone.</p>
+<p>[<b>military</b>=<b>naval_base</b>]<br>A naval base</p>
+<p>[<b>military</b>=<b>nuclear_explosion_site</b>]<br>Nuclear weapons test site</p>
+<p>[<b>military</b>=<b>obstacle_course</b>]<br>A military obstacle course.</p>
+<p>[<b>military</b>=<b>office</b>]<br>Military offices, e.g. general staff office, military recruitment office etc</p>
+<p>[<b>military</b>=<b>range</b>]<br>Where soldiers practice with their weapons (firing, bombing, artillery, …).</p>
+<p>[<b>military</b>=<b>training_area</b>]<br>An area where soldiers train and weapons or other military technology are experimented with or are tested.</p>
+<p>[<b>military</b>=<b>trench</b>]<br>Trenches used for military purposes</p>
+<p>[<b>military</b>=<b>launchpad</b>]<br>Launchpads used for military purposes, see tag:aeroway=launchpad for civilian use</p>
+<p>[<b>military</b>=<b>user defined</b>]<br>All commonly used values according to Taginfo</p>

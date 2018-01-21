@@ -1,0 +1,10 @@
+<h1>Place</h1>
+<p>This is used mainly to give details about settlements. See the page titled Places for an introduction on its usage.
+</p>
+<p>[<b>place</b>=<b>country</b>]<br>A nation state or other high-level national political/administrative area.</p>
+<p>[<b>place</b>=<b>state</b>]<br>A large sub-national political/administrative area.</p>
+<p>[<b>place</b>=<b>region</b>]<br></p>
+<p>[<b>place</b>=<b>province</b>]<br></p>
+<p>[<b>place</b>=<b>district</b>]<br></p>
+<p>[<b>place</b>=<b>county</b>]<br></p>
+<p>[<b>place</b>=<b>municipality</b>]<br></p>

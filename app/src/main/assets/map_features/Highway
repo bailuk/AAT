@@ -1,163 +1,131 @@
 <h1>Highway</h1>
-
-<p>This is used to describe roads and footpaths. For an introduction on its usage see the page titled Highways. See the page titled Restrictions for an introduction on access limitations by vehicles type, time, day, load and purpose, etc.</p>
-
-<p>[<b>highway</b>=<b>motorway</b>]<img src="images/g___px_Osm_element_way.svg.png"/>A restricted access major divided highway, normally with 2 or more running lanes plus emergency hard shoulder. Equivalent to the Freeway, Autobahn, etc..</p>
-
-<p>[<b>highway</b>=<b>trunk</b>]<img src="images/g___px_Osm_element_way.svg.png"/>The most important roads in a country's system that aren't motorways. (Need not necessarily be a divided highway.)</p>
-
-<p>[<b>highway</b>=<b>primary</b>]<img src="images/g___px_Osm_element_way.svg.png"/>The next most important roads in a country's system. (Often link larger towns.)</p>
-
-<p>[<b>highway</b>=<b>secondary</b>]<img src="images/g___px_Osm_element_way.svg.png"/>The next most important roads in a country's system. (Often link towns.)</p>
-
-<p>[<b>highway</b>=<b>tertiary</b>]<img src="images/g___px_Osm_element_way.svg.png"/>The next most important roads in a country's system. (Often link smaller towns and villages)</p>
-
-<p>[<b>highway</b>=<b>unclassified</b>]<img src="images/g___px_Osm_element_way.svg.png"/>The least most important through roads in a country's system – i.e. minor roads of a lower classification than tertiary, but which serve a purpose other than access to properties. Often link villages and hamlets. (The word 'unclassified' is a historical artefact of the UK road system and does not mean that the classification is unknown; you can use highway=road for that.)</p>
-
-<p>[<b>highway</b>=<b>residential</b>]<img src="images/g___px_Osm_element_way.svg.png"/>Roads which serve as an access to housing, without function of connecting settlements. Often lined with housing.</p>
-
-<p>[<b>highway</b>=<b>service</b>]<img src="images/g___px_Osm_element_way.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>For access roads to, or within an industrial estate, camp site, business park, car park etc. Can be used in conjunction with service=* to indicate the type of usage and with access=* to indicate who can use it and in what circumstances.</p>
-
-<p>[<b>highway</b>=<b>motorway_link</b>]<img src="images/g___px_Osm_element_way.svg.png"/>The link roads (sliproads/ramps) leading to/from a motorway from/to a motorway or lower class highway. Normally with the same motorway restrictions.</p>
-
-<p>[<b>highway</b>=<b>trunk_link</b>]<img src="images/g___px_Osm_element_way.svg.png"/>The link roads (sliproads/ramps) leading to/from a trunk road from/to a trunk road or lower class highway.</p>
-
-<p>[<b>highway</b>=<b>primary_link</b>]<img src="images/g___px_Osm_element_way.svg.png"/>The link roads (sliproads/ramps) leading to/from a primary road from/to a primary road or lower class highway.</p>
-
-<p>[<b>highway</b>=<b>secondary_link</b>]<img src="images/g___px_Osm_element_way.svg.png"/>The link roads (sliproads/ramps) leading to/from a secondary road from/to a secondary road or lower class highway.</p>
-
-<p>[<b>highway</b>=<b>tertiary_link</b>]<img src="images/g___px_Osm_element_way.svg.png"/>The link roads (sliproads/ramps) leading to/from a tertiary road from/to a tertiary road or lower class highway.</p>
-
-<p>[<b>highway</b>=<b>living_street</b>]<img src="images/g___px_Osm_element_way.svg.png"/>For living streets, which are residential streets where pedestrians have legal priority over cars, speeds are kept very low and where children are allowed to play on the street.</p>
-
-<p>[<b>highway</b>=<b>pedestrian</b>]<img src="images/g___px_Osm_element_way.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>For roads used mainly/exclusively for pedestrians in shopping and some residential areas which may allow access by motorised vehicles only for very limited periods of the day. To create a 'square' or 'plaza' create a closed way and tag as pedestrian and also with area=yes.</p>
-
-<p>[<b>highway</b>=<b>track</b>]<img src="images/g___px_Osm_element_way.svg.png"/>Roads for mostly agricultural or forestry uses. To describe the quality of a track, see tracktype=*. Note: Although tracks are often rough with unpaved surfaces, this tag is not describing the quality of a road but its use. Consequently, if you want to tag a general use road, use one of the general highway values instead of track.</p>
-
-<p>[<b>highway</b>=<b>bus_guideway</b>]<img src="images/g___px_Osm_element_way.svg.png"/>A busway where the vehicle guided by the way (though not a railway) and is not suitable for other traffic. Please note: this is not a normal bus lane, use access=no, psv=yes instead!</p>
-
-<p>[<b>highway</b>=<b>escape</b>]<img src="images/g___px_Osm_element_way.svg.png"/>For runaway truck ramps, runaway truck lanes, emergency escape ramps, or truck arrester beds. It enables vehicles with braking failure to safely stop.</p>
-
-<p>[<b>highway</b>=<b>raceway</b>]<img src="images/g___px_Osm_element_way.svg.png"/>A course or track for (motor) racing</p>
-
-<p>[<b>highway</b>=<b>road</b>]<img src="images/g___px_Osm_element_way.svg.png"/>A road/way/street/motorway/etc. of unknown type. It can stand for anything ranging from a footpath to a motorway. This tag should only be used temporarily until the road/way/etc. has been properly surveyed. If you do know the road type, do not use this value, instead use one of the more specific highway=* values.</p>
-
-<p>[<b>highway</b>=<b>footway</b>]<img src="images/g___px_Osm_element_way.svg.png"/>For designated footpaths; i.e., mainly/exclusively for pedestrians. This includes walking tracks and gravel paths. If bicycles are allowed as well, you can indicate this by adding a bicycle=yes tag.  Should not be used for paths where the primary or intended usage is unknown. Use highway=pedestrian for pedestrianised roads in shopping or residential areas and highway=track if it is usable by agricultural or similar vehicles.</p>
-
-<p>[<b>highway</b>=<b>bridleway</b>]<img src="images/g___px_Osm_element_way.svg.png"/>For horses. Equivalent to highway=path + horse=designated.</p>
-
-<p>[<b>highway</b>=<b>steps</b>]<img src="images/g___px_Osm_element_way.svg.png"/>For flights of steps (stairs) on footways. Use with step_count=* to indicate the number of steps</p>
-
-<p>[<b>highway</b>=<b>path</b>]<img src="images/g___px_Osm_element_way.svg.png"/>A non-specific path. Use highway=footway for paths mainly for walkers,  highway=cycleway for one also usable by cyclists, highway=bridleway for ones available to horses as well as walkers and highway=track for ones which is passable by agriculture or similar vehicles.</p>
-
-<p>[<b>sidewalk</b>=<b>both / left / right / no</b>]<img src="images/g___px_Osm_element_way.svg.png"/>Specifies that the highways has sidewalks on both sides, on one side or no sidewalk at all</p>
-
-<p>[<b>highway</b>=<b>cycleway</b>]<img src="images/g___px_Osm_element_way.svg.png"/>For designated cycleways. Add foot=* only if default-access-restrictions do not apply.</p>
-
-<p>[<b>cycleway</b>=<b>lane</b>]<img src="images/g___px_Osm_element_way.svg.png"/>A lane is a route that lies within the roadway</p>
-
-<p>[<b>cycleway</b>=<b>opposite</b>]<img src="images/g___px_Osm_element_way.svg.png"/>Used on ways with oneway=yes where it is legally permitted to cycle in both directions. Used together with oneway:bicycle=no.</p>
-
-<p>[<b>cycleway</b>=<b>opposite_lane</b>]<img src="images/g___px_Osm_element_way.svg.png"/>Used on ways with oneway=yes that have a cycling lane going the opposite direction of normal traffic flow (a "contraflow" lane). Used together with oneway:bicycle=no.</p>
-
-<p>[<b>cycleway</b>=<b>track</b>]<img src="images/g___px_Osm_element_way.svg.png"/>A track provides a route that is separated from traffic. In the United States, this term is often used to refer to bike lanes that are separated from lanes for cars by pavement buffers, bollards, parking lanes, and curbs. Note that a cycle track may alternatively be drawn as a separate way next to the road which is tagged as highway=cycleway.</p>
-
-<p>[<b>cycleway</b>=<b>opposite_track</b>]<img src="images/g___px_Osm_element_way.svg.png"/>Used on ways with oneway=yes that have a cycling track going the opposite direction of normal traffic flow</p>
-
-<p>[<b>cycleway</b>=<b>share_busway</b>]<img src="images/g___px_Osm_element_way.svg.png"/>There is a bus lane that cyclists are permitted to use.</p>
-
-<p>[<b>cycleway</b>=<b>shared_lane</b>]<img src="images/g___px_Osm_element_way.svg.png"/>Cyclists share a lane with motor vehicles, but there are markings indicating that they should share the lane with motorists.</p>
-
-<p>[<b>busway</b>=<b>lane</b>]<img src="images/g___px_Osm_element_way.svg.png"/>Bus lane on both sides of the road.</p>
-
-<p>[<b>highway</b>=<b>proposed</b>]<img src="images/g___px_Osm_element_way.svg.png"/>For planned roads, use with proposed=* and a value of the proposed highway value.</p>
-
-<p>[<b>highway</b>=<b>construction</b>]<img src="images/g___px_Osm_element_way.svg.png"/>For roads under construction. Use construction=* to hold the value for the completed road.</p>
-
-<p>[<b>abutters</b>=<b>commercial/ industrial/ mixed/ residential/ retail etc.</b>]<img src="images/g___px_Osm_element_way.svg.png"/>See Key:abutters for more details.</p>
-
-<p>[<b>bicycle_road</b>=<b>yes</b>]<img src="images/g___px_Osm_element_way.svg.png"/>A bicycle road is a road designated for bicycles. If residential streets get the status of bicycle roads, normally, by special signs, motor traffic is admitted with limited speed, often only for residents.</p>
-
-<p>[<b>driving_side</b>=<b>left/ right</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/x_Osm_element_relation.svg.png"/>Defines which side of the road vehicles must legally use.  (must only be used on highways when they are an exception to the rule)</p>
-
-<p>[<b>ford</b>=<b>yes</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/g___px_Osm_element_way.svg.png"/>The road crosses through stream or river, vehicles must enter any water.</p>
-
-<p>[<b>ice_road</b>=<b>yes</b>]<img src="images/g___px_Osm_element_way.svg.png"/>A highway is laid upon frozen water basin, definitely doesn't exist in summer.</p>
-
-<p>[<b>incline</b>=<b>Number&#160;%/°</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/g___px_Osm_element_way.svg.png"/>Incline steepness as percents ("5%") or degrees ("20°"). Positive/negative values indicate movement upward/downwards in the direction of the way.</p>
-
-<p>[<b>junction</b>=<b>roundabout</b>]<img src="images/g___px_Osm_element_way.svg.png"/><img src="images/_Osm_element_closedway.svg.png"/>This automatically implies oneway=yes, the oneway direction is defined by the sequential ordering of nodes within the Way. This applies on a way, tagged with highway=* already.</p>
-
-<p>[<b>lanes</b>=<b>number</b>]<img src="images/g___px_Osm_element_way.svg.png"/>The number of traffic lanes for general purpose traffic, also for buses and other specific classes of vehicle.</p>
-
-<p>[<b>lit</b>=<b>yes/no</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/g___px_Osm_element_way.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Street lighting</p>
-
-<p>[<b>motorroad</b>=<b>yes/no</b>]<img src="images/g___px_Osm_element_way.svg.png"/><img src="images/___px_Osm_element_node.svg.png"/>The motorroad tag is used to describe highways that have motorway-like access restrictions but that are not a motorway.</p>
-
-<p>[<b>mountain_pass</b>=<b>yes</b>]<img src="images/___px_Osm_element_node.svg.png"/>The highest point of a mountain pass.</p>
-
-<p>[<b>mtb:scale</b>=<b>0-6</b>]<img src="images/g___px_Osm_element_way.svg.png"/>Applies to highway=path and highway=track. A classification scheme for mtb trails (few inclination and downhill).</p>
-
-<p>[<b>mtb:scale:uphill</b>=<b>0-5</b>]<img src="images/g___px_Osm_element_way.svg.png"/>A classification scheme for mtb trails for going uphill if there is significant inclination.</p>
-
-<p>[<b>mtb:scale:imba</b>=<b>0-4</b>]<img src="images/g___px_Osm_element_way.svg.png"/>The IMBA Trail Difficulty Rating System shall be used for bikeparks. It is adapted to mtb trails with artificial obstacles.</p>
-
-<p>[<b>mtb:description</b>=<b>Text</b>]<img src="images/g___px_Osm_element_way.svg.png"/>Applies to highway=path and highway=track. A key to input variable infos related to mtbiking on a way with human words</p>
-
-<p>[<b>overtaking</b>=<b>yes/ no/ both/ forward/ backward</b>]<img src="images/g___px_Osm_element_way.svg.png"/>Specifying sections of roads where overtaking is legally forbidden.</p>
-
-<p>[<b>parking:condition</b>=<b>free/ ticket/ disc/ residents/ customers/ private</b>]<img src="images/g___px_Osm_element_way.svg.png"/>Specifying the parking conditions (terms). See parking:condition=* for more details.</p>
-
-<p>[<b>parking:lane</b>=<b>parallel/ diagonal/ perpendicular/ marked/ no_parking/ no_stopping/ fire_lane.</b>]<img src="images/g___px_Osm_element_way.svg.png"/>Specifying the parking space. See parking:lane=* for more details.</p>
-
-<p>[<b>passing_places</b>=<b>yes</b>]<img src="images/g___px_Osm_element_way.svg.png"/>A way which has frequent passing places</p>
-
-<p>[<b>sac_scale</b>=<b>hiking / mountain_hiking / demanding_mountain_hiking / alpine_hiking / demanding_alpine_hiking / difficult_alpine_hiking</b>]<img src="images/g___px_Osm_element_way.svg.png"/>Applies to highway=path and highway=footway. A classification scheme for hiking trails.</p>
-
-<p>[<b>service</b>=<b>alley / driveway / parking_aisle etc.</b>]<img src="images/g___px_Osm_element_way.svg.png"/>See Key:service for more details.</p>
-
-<p>[<b>surface</b>=<b>paved / unpaved / asphalt / concrete / paving_stones / cobblestone / metal / wood / grass_paver / gravel / pebblestone / grass / ground / earth / dirt / mud / sand</b>]<img src="images/g___px_Osm_element_way.svg.png"/>See Key:surface for more details.</p>
-
-<p>[<b>tactile_paving</b>=<b>yes / no</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/g___px_Osm_element_way.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>A paving in the ground to be followed with a blindman's stick.Not to be rendered on standard maps.</p>
-
-<p>[<b>tracktype</b>=<b>grade1/ grade2/ grade3/ grade4/ grade5</b>]<img src="images/g___px_Osm_element_way.svg.png"/>To describe the quality of the surface. See Key:tracktype for more information.</p>
-
-<p>[<b>traffic_calming</b>=<b>yes / bump / hump / cushion / table etc.</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/g___px_Osm_element_way.svg.png"/>See Key:traffic calming for more details.</p>
-
-<p>[<b>trail_visibility</b>=<b>excellent / good / intermediate / bad / horrible / no</b>]<img src="images/g___px_Osm_element_way.svg.png"/>Applies to highway=path, highway=footway, highway=cycleway and highway=bridleway. A classification for hiking trails visibility</p>
-
-<p>[<b>winter_road</b>=<b>yes</b>]<img src="images/g___px_Osm_element_way.svg.png"/>A highway functions during winter, probably can't be driven in summer.</p>
-
-<p>[<b>highway</b>=<b>bus_stop</b>]<img src="images/___px_Osm_element_node.svg.png"/>A small bus stop. Can be mapped more rigorously using public_transport=stop_position for the position where the vehicle stops and public_transport=platform for the place where passengers wait. See public_transport=* for more details.</p>
-
-<p>[<b>highway</b>=<b>crossing</b>]<img src="images/___px_Osm_element_node.svg.png"/>A.k.a. crosswalk. Pedestrians can cross a street here; e.g., zebra crossing</p>
-
-<p>[<b>highway</b>=<b>elevator</b>]<img src="images/___px_Osm_element_node.svg.png"/>Elevator</p>
-
-<p>[<b>highway</b>=<b>emergency_access_point</b>]<img src="images/___px_Osm_element_node.svg.png"/>Sign number which can be used to define your current position in case of an emergency. Use with ref=NUMBER_ON_THE_SIGN</p>
-
-<p>[<b>highway</b>=<b>give_way</b>]<img src="images/___px_Osm_element_node.svg.png"/>A "give way," or "Yield" sign</p>
-
-<p>[<b>emergency</b>=<b>phone</b>]<img src="images/___px_Osm_element_node.svg.png"/>A calling device can be used to tell on your current position in case of an emergency. Use with ref=NUMBER_ON_THE_SIGN</p>
-
-<p>[<b>highway</b>=<b>mini_roundabout</b>]<img src="images/___px_Osm_element_node.svg.png"/>Similar to roundabouts, but at the center there is either a painted circle or a fully traversable island. In case of an untraversable center island, junction=roundabout should be used.Rendered as anti-clockwise by default direction=anticlockwise. To render clockwise add the tag direction=clockwise.</p>
-
-<p>[<b>highway</b>=<b>motorway_junction</b>]<img src="images/___px_Osm_element_node.svg.png"/>Indicates a junction (UK) or exit (US). ref=* should be set to the exit number or junction identifier. (Some roads – e.g., the A14 – also carry junction numbers, so the tag may be encountered elsewhere despite its name)</p>
-
-<p>[<b>highway</b>=<b>passing_place</b>]<img src="images/___px_Osm_element_node.svg.png"/>The location of a passing space</p>
-
-<p>[<b>highway</b>=<b>rest_area</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Place where drivers can leave the road to rest, but not refuel.</p>
-
-<p>[<b>highway</b>=<b>speed_camera</b>]<img src="images/___px_Osm_element_node.svg.png"/>A fixed road-side or overhead speed camera.</p>
-
-<p>[<b>highway</b>=<b>street_lamp</b>]<img src="images/___px_Osm_element_node.svg.png"/>A street light, lamppost, street lamp, light standard, or lamp standard is a raised source of light on the edge of a road, which is turned on or lit at a certain time every night</p>
-
-<p>[<b>highway</b>=<b>services</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>A service station to get food and eat something, often found at motorways</p>
-
-<p>[<b>highway</b>=<b>stop</b>]<img src="images/___px_Osm_element_node.svg.png"/>A stop sign</p>
-
-<p>[<b>highway</b>=<b>traffic_signals</b>]<img src="images/___px_Osm_element_node.svg.png"/>Lights that control the traffic</p>
-
-<p>[<b>highway</b>=<b>turning_circle</b>]<img src="images/___px_Osm_element_node.svg.png"/>A turning circle is a rounded, widened area usually, but not necessarily, at the end of a road to facilitate easier turning of a vehicle. Also known as a cul de sac.</p>
-
-<p>[<b>highway</b>=<b>User Defined</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/g___px_Osm_element_way.svg.png"/>All commonly used values according to Taginfo</p>
+<p>This is used to describe roads and footpaths. For an introduction on its usage see the page titled Highways. See the page titled Restrictions for an introduction on access limitations by vehicles type, time, day, load and purpose, etc.
+</p>
+<p>[<b>highway</b>=<b>motorway</b>]<br>A restricted access major divided highway, normally with 2 or more 
+running lanes plus emergency hard shoulder. Equivalent to the Freeway, 
+Autobahn, etc..</p>
+<p>[<b>highway</b>=<b>trunk</b>]<br>The most important roads in a country's system that aren't motorways. (Need not necessarily be a divided highway.)</p>
+<p>[<b>highway</b>=<b>primary</b>]<br>The next most important roads in a country's system. (Often link larger towns.)</p>
+<p>[<b>highway</b>=<b>secondary</b>]<br>The next most important roads in a country's system. (Often link towns.)</p>
+<p>[<b>highway</b>=<b>tertiary</b>]<br>The next most important roads in a country's system. (Often link smaller towns and villages)</p>
+<p>[<b>highway</b>=<b>unclassified</b>]<br>The least most important through roads in a country's system – i.e.
+ minor roads of a lower classification than tertiary, but which serve a 
+purpose other than access to properties. Often link villages and 
+hamlets. (The word 'unclassified' is a historical artefact of the UK 
+road system and does not mean that the classification is unknown; you can use highway=road for that.)</p>
+<p>[<b>highway</b>=<b>residential</b>]<br>Roads which serve as an access to housing, without function of connecting settlements. Often lined with housing.</p>
+<p>[<b>highway</b>=<b>service</b>]<br>For access roads to, or within an industrial estate, camp site, business park, car park etc. Can be used in conjunction with service=* to indicate the type of usage and with access=* to indicate who can use it and in what circumstances.</p>
+<p>[<b>highway</b>=<b>motorway_link</b>]<br>The link roads (sliproads/ramps) leading to/from a motorway from/to
+ a motorway or lower class highway. Normally with the same motorway 
+restrictions.</p>
+<p>[<b>highway</b>=<b>trunk_link</b>]<br>The link roads (sliproads/ramps) leading to/from a trunk road from/to a trunk road or lower class highway.</p>
+<p>[<b>highway</b>=<b>primary_link</b>]<br>The link roads (sliproads/ramps) leading to/from a primary road from/to a primary road or lower class highway.</p>
+<p>[<b>highway</b>=<b>secondary_link</b>]<br>The link roads (sliproads/ramps) leading to/from a secondary road from/to a secondary road or lower class highway.</p>
+<p>[<b>highway</b>=<b>tertiary_link</b>]<br>The link roads (sliproads/ramps) leading to/from a tertiary road from/to a tertiary road or lower class highway.</p>
+<p>[<b>highway</b>=<b>living_street</b>]<br>For living streets,
+ which are residential streets where pedestrians have legal priority 
+over cars, speeds are kept very low and where children are allowed to 
+play on the street.</p>
+<p>[<b>highway</b>=<b>pedestrian</b>]<br>For roads used mainly/exclusively for pedestrians in shopping and 
+some residential areas which may allow access by motorised vehicles only
+ for very limited periods of the day. To create a 'square' or 'plaza' 
+create a closed way and tag as pedestrian and also with area=yes.</p>
+<p>[<b>highway</b>=<b>track</b>]<br>Roads for mostly agricultural or forestry uses. To describe the quality of a track, see tracktype=*. Note: Although tracks
+ are often rough with unpaved surfaces, this tag is not describing the 
+quality of a road but its use. Consequently, if you want to tag a 
+general use road, use one of the general highway values instead of track.</p>
+<p>[<b>highway</b>=<b>bus_guideway</b>]<br>A busway where the vehicle guided by the way (though not a railway)
+ and is not suitable for other traffic. Please note: this is not a 
+normal bus lane, use access=no, psv=yes instead!</p>
+<p>[<b>highway</b>=<b>escape</b>]<br>For runaway truck ramps, runaway truck lanes, emergency escape 
+ramps, or truck arrester beds. It enables vehicles with braking failure 
+to safely stop.</p>
+<p>[<b>highway</b>=<b>raceway</b>]<br>A course or track for (motor) racing</p>
+<p>[<b>highway</b>=<b>road</b>]<br>A road/way/street/motorway/etc. of unknown type. It can 
+stand for anything ranging from a footpath to a motorway. This tag 
+should only be used temporarily until the road/way/etc. has been 
+properly surveyed. If you do know the road type, do not use this value, instead use one of the more specific highway=* values.</p>
+<p>[<b>highway</b>=<b>footway</b>]<br>For designated footpaths; i.e., mainly/exclusively for pedestrians.
+ This includes walking tracks and gravel paths. If bicycles are allowed 
+as well, you can indicate this by adding a bicycle=yes tag.  Should not be used for paths where the primary or intended usage is unknown. Use highway=pedestrian for pedestrianised roads in shopping or residential areas and highway=track if it is usable by agricultural or similar vehicles.</p>
+<p>[<b>highway</b>=<b>bridleway</b>]<br>For horses. Equivalent to highway=path + horse=designated.</p>
+<p>[<b>highway</b>=<b>steps</b>]<br>For flights of steps (stairs) on footways. Use with step_count=* to indicate the number of steps</p>
+<p>[<b>highway</b>=<b>path</b>]<br>A non-specific path. Use highway=footway for paths mainly for walkers,  highway=cycleway for one also usable by cyclists, highway=bridleway for ones available to horses as well as walkers and highway=track for ones which is passable by agriculture or similar vehicles.</p>
+<p>[<b>sidewalk</b>=<b>both / left / right / no</b>]<br>Specifies that the highways has sidewalks on both sides, on one side or no sidewalk at all</p>
+<p>[<b>highway</b>=<b>cycleway</b>]<br>For designated cycleways. Add foot=* only if default-access-restrictions do not apply.</p>
+<p>[<b>cycleway</b>=<b>lane</b>]<br>A lane is a route that lies within the roadway</p>
+<p>[<b>cycleway</b>=<b>opposite</b>]<br>Used on ways with oneway=yes where it is legally permitted to cycle in both directions. Used together with oneway:bicycle=no.</p>
+<p>[<b>cycleway</b>=<b>opposite_lane</b>]<br>Used on ways with oneway=yes that have a cycling lane going the opposite direction of normal traffic flow (a "contraflow" lane). Used together with oneway:bicycle=no.</p>
+<p>[<b>cycleway</b>=<b>track</b>]<br>A track provides a route that is separated from traffic. In the 
+United States, this term is often used to refer to bike lanes that are 
+separated from lanes for cars by pavement buffers, bollards, parking 
+lanes, and curbs. Note that a cycle track may alternatively be drawn as a separate way next to the road which is tagged as highway=cycleway.</p>
+<p>[<b>cycleway</b>=<b>opposite_track</b>]<br>Used on ways with oneway=yes that have a cycling track going the opposite direction of normal traffic flow. Used together with oneway:bicycle=no.</p>
+<p>[<b>cycleway</b>=<b>share_busway</b>]<br>There is a bus lane that cyclists are permitted to use.</p>
+<p>[<b>cycleway</b>=<b>opposite_share_busway</b>]<br>Used on ways with oneway=yes
+ that have a bus lane that cyclists are also permitted to use, and which
+ go in the opposite direction to normal traffic flow (a "contraflow" bus
+ lane). Used together with oneway:bicycle=no.</p>
+<p>[<b>cycleway</b>=<b>shared_lane</b>]<br>Cyclists share a lane with motor vehicles, but there are markings indicating that they should share the lane with motorists.</p>
+<p>[<b>busway</b>=<b>lane</b>]<br>Bus lane on both sides of the road.</p>
+<p>[<b>highway</b>=<b>proposed</b>]<br>For planned roads, use with proposed=* and a value of the proposed highway value.</p>
+<p>[<b>highway</b>=<b>construction</b>]<br>For roads under construction. Use construction=* to hold the value for the completed road.</p>
+<p>[<b>abutters</b>=<b>commercial/ industrial/ mixed/ residential/ retail etc.</b>]<br>See Key:abutters for more details.</p>
+<p>[<b>bicycle_road</b>=<b>yes</b>]<br>A bicycle road is a road designated for bicycles. If residential 
+streets get the status of bicycle roads, normally, by special signs, 
+motor traffic is admitted with limited speed, often only for residents.</p>
+<p>[<b>driving_side</b>=<b>left/ right</b>]<br>Defines which side of the road vehicles must legally use.  (must 
+only be used on highways when they are an exception to the rule)</p>
+<p>[<b>ford</b>=<b>yes</b>]<br>The road crosses through stream or river, vehicles must enter any water.</p>
+<p>[<b>ice_road</b>=<b>yes</b>]<br>A highway is laid upon frozen water basin, definitely doesn't exist in summer.</p>
+<p>[<b>incline</b>=<b>Number %/°</b>]<br>Incline steepness as percents ("5%") or degrees ("20°"). 
+Positive/negative values indicate movement upward/downwards in the 
+direction of the way.</p>
+<p>[<b>junction</b>=<b>roundabout</b>]<br>This automatically implies oneway=yes, the oneway direction is defined by the sequential ordering of nodes within the Way. This applies on a way, tagged with highway=* already.</p>
+<p>[<b>lanes</b>=<b>number</b>]<br>The number of traffic lanes for general purpose traffic, also for buses and other specific classes of vehicle.</p>
+<p>[<b>lit</b>=<b>yes/no</b>]<br>Street lighting</p>
+<p>[<b>motorroad</b>=<b>yes/no</b>]<br>The motorroad tag is used to describe highways that have motorway-like access restrictions but that are not a motorway.</p>
+<p>[<b>mountain_pass</b>=<b>yes</b>]<br>The highest point of a mountain pass.</p>
+<p>[<b>mtb:scale</b>=<b>0-6</b>]<br>Applies to highway=path and highway=track. A classification scheme for mtb trails (few inclination and downhill).</p>
+<p>[<b>mtb:scale:uphill</b>=<b>0-5</b>]<br>A classification scheme for mtb trails for going uphill if there is significant inclination.</p>
+<p>[<b>mtb:scale:imba</b>=<b>0-4</b>]<br>The IMBA Trail Difficulty Rating System shall be used for bikeparks. It is adapted to mtb trails with artificial obstacles.</p>
+<p>[<b>mtb:description</b>=<b>Text</b>]<br>Applies to highway=path and highway=track. A key to input variable infos related to mtbiking on a way with human words</p>
+<p>[<b>overtaking</b>=<b>yes/ no/ caution/ both/ forward/ backward</b>]<br>Specifying sections of roads where overtaking is legally forbidden. Use overtaking:forward=yes/no/caution and overtaking:backward=yes/no/caution when it depends on driving direction.</p>
+<p>[<b>parking:condition</b>=<b>free/ ticket/ disc/ residents/ customers/ private</b>]<br>Specifying the parking conditions (terms). See parking:condition=* for more details.</p>
+<p>[<b>parking:lane</b>=<b>parallel/ diagonal/ perpendicular/ marked/ no_parking/ no_stopping/ fire_lane.</b>]<br>Specifying the parking space. See parking:lane=* for more details.</p>
+<p>[<b>passing_places</b>=<b>yes</b>]<br>A way which has frequent passing places</p>
+<p>[<b>sac_scale</b>=<b>hiking / mountain_hiking / demanding_mountain_hiking / alpine_hiking / demanding_alpine_hiking / difficult_alpine_hiking</b>]<br>Applies to highway=path and highway=footway. A classification scheme for hiking trails.</p>
+<p>[<b>service</b>=<b>alley / driveway / parking_aisle etc.</b>]<br>See Key:service for more details.</p>
+<p>[<b>surface</b>=<b>paved / unpaved / asphalt / concrete / paving_stones / sett / 
+cobblestone / metal / wood / compacted / fine_gravel / gravel / 
+pebblestone / grass_paver / grass / dirt / earth / mud / sand / ground</b>]<br>See Key:surface for more details.</p>
+<p>[<b>tactile_paving</b>=<b>yes / no</b>]<br>A paving in the ground to be followed with a blindman's stick.</p>
+<p>[<b>tracktype</b>=<b>grade1/ grade2/ grade3/ grade4/ grade5</b>]<br>To describe the quality of the surface. See Key:tracktype for more information.</p>
+<p>[<b>traffic_calming</b>=<b>yes / bump / hump / cushion / table etc.</b>]<br>See Key:traffic calming for more details.</p>
+<p>[<b>trail_visibility</b>=<b>excellent / good / intermediate / bad / horrible / no</b>]<br>Applies to highway=path, highway=footway, highway=cycleway and highway=bridleway. A classification for hiking trails visibility</p>
+<p>[<b>winter_road</b>=<b>yes</b>]<br>A highway functions during winter, probably can't be driven in summer.</p>
+<p>[<b>highway</b>=<b>bus_stop</b>]<br>A small bus stop. Can be mapped more rigorously using public_transport=stop_position for the position where the vehicle stops and public_transport=platform for the place where passengers wait. See public_transport=* for more details.</p>
+<p>[<b>highway</b>=<b>crossing</b>]<br>A.k.a. crosswalk. Pedestrians can cross a street here; e.g., zebra crossing</p>
+<p>[<b>highway</b>=<b>elevator</b>]<br>Elevator</p>
+<p>[<b>highway</b>=<b>emergency_access_point</b>]<br>Sign number which can be used to define your current position in case of an emergency. Use with ref=NUMBER_ON_THE_SIGN</p>
+<p>[<b>highway</b>=<b>give_way</b>]<br>A "give way," or "Yield" sign</p>
+<p>[<b>emergency</b>=<b>phone</b>]<br>A calling device can be used to tell on your current position in case of an emergency. Use with ref=NUMBER_ON_THE_SIGN</p>
+<p>[<b>highway</b>=<b>mini_roundabout</b>]<br>Similar to roundabouts, but at the center there is either a painted circle or a fully traversable island. In case of an untraversable center island, junction=roundabout should be used.
+Rendered as anti-clockwise by default direction=anticlockwise. To render clockwise add the tag direction=clockwise.</p>
+<p>[<b>highway</b>=<b>motorway_junction</b>]<br>Indicates a junction (UK) or exit (US). ref=*
+ should be set to the exit number or junction identifier. (Some roads – 
+e.g., the A14 – also carry junction numbers, so the tag may be 
+encountered elsewhere despite its name)</p>
+<p>[<b>highway</b>=<b>passing_place</b>]<br>The location of a passing space</p>
+<p>[<b>highway</b>=<b>rest_area</b>]<br>Place where drivers can leave the road to rest, but not refuel.</p>
+<p>[<b>highway</b>=<b>speed_camera</b>]<br>A fixed road-side or overhead speed camera.</p>
+<p>[<b>highway</b>=<b>street_lamp</b>]<br>A street light, lamppost, street lamp, light standard, or lamp 
+standard is a raised source of light on the edge of a road, which is 
+turned on or lit at a certain time every night</p>
+<p>[<b>highway</b>=<b>services</b>]<br>A service station to get food and eat something, often found at motorways</p>
+<p>[<b>highway</b>=<b>stop</b>]<br>A stop sign</p>
+<p>[<b>highway</b>=<b>traffic_signals</b>]<br>Lights that control the traffic</p>
+<p>[<b>highway</b>=<b>turning_circle</b>]<br>A turning circle is a rounded, widened area usually, but not 
+necessarily, at the end of a road to facilitate easier turning of a 
+vehicle. Also known as a cul de sac.</p>
+<p>[<b>highway</b>=<b>User Defined</b>]<br>All commonly used values according to Taginfo</p>

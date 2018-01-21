@@ -1,0 +1,8 @@
+<h1>Public Transport</h1>
+<p>This is used for features related to public transport. For example: 
+railway stations, bus stops and services. See the page titled Public transport for an introduction on its usage.
+</p>
+<p>[<b>public_transport</b>=<b>stop_position</b>]<br>The position on the street or rails where a public transport vehicle stops.</p>
+<p>[<b>public_transport</b>=<b>platform</b>]<br>The place where passengers are waiting for the public transport vehicles.</p>
+<p>[<b>public_transport</b>=<b>station</b>]<br>A station is an area designed to access public transport.</p>
+<p>[<b>public_transport</b>=<b>stop_area</b>]<br>A relation that contains all elements of a train, subway, monorail, tram, bus, trolleybus, aerialway, or ferry stop.</p>

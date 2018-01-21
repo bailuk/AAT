@@ -1,285 +1,171 @@
 <h1>Shop</h1>
-
-<p>The shop tag is used as a place of business that has stocked goods for sale. See the page titled Shop for an introduction on its usage.</p>
-
-<p>[<b>shop</b>=<b>alcohol</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Shop selling alcohol to take away</p>
-
-<p>[<b>shop</b>=<b>bakery</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Shop focused on selling bread</p>
-
-<p>[<b>shop</b>=<b>beverages</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Shop focused on selling alcoholic and non-alcoholic beverages. See also shop=alcohol.</p>
-
-<p>[<b>shop</b>=<b>brewing_supplies</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Shop focused on selling supplies for home brewing of beer, wine and spirits (where permitted).</p>
-
-<p>[<b>shop</b>=<b>butcher</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Shop focused on selling meat</p>
-
-<p>[<b>shop</b>=<b>cheese</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Shop focused on selling cheese.</p>
-
-<p>[<b>shop</b>=<b>chocolate</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Shop focused on selling chocolate.</p>
-
-<p>[<b>shop</b>=<b>coffee</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Shop focused on selling coffee.</p>
-
-<p>[<b>shop</b>=<b>confectionery</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Shop focused on selling sweets or candy</p>
-
-<p>[<b>shop</b>=<b>convenience</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>A small local shop carrying a small subset of the items you would find in a supermarket</p>
-
-<p>[<b>shop</b>=<b>deli</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Shop focused on selling delicatessen (fine foods, gourmet foods), possibly also fine wine. Not to be confused with the US delis.</p>
-
-<p>[<b>shop</b>=<b>dairy</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Shop focused on selling dairy products.</p>
-
-<p>[<b>shop</b>=<b>farm</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Shop or roadside stand focused on selling freshly harvested farm produce</p>
-
-<p>[<b>shop</b>=<b>greengrocer</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Shop focused on selling vegetables and fruits.</p>
-
-<p>[<b>shop</b>=<b>ice_cream</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Shop focused on selling ice cream to take home. See also amenity=ice_cream.</p>
-
-<p>[<b>shop</b>=<b>organic</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Shop focused on selling organic food. Alternatively you can use the more versatile organic=* in combination with a general shop=* key (In this case: shop=supermarket or shop=convenience).</p>
-
-<p>[<b>shop</b>=<b>pasta</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Shop focused on selling (fresh) pasta, ravioli, etc.</p>
-
-<p>[<b>shop</b>=<b>pastry</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Shop focused on selling baked sweets like cakes, biscuits, strudel and pies.</p>
-
-<p>[<b>shop</b>=<b>seafood</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Shop focused on selling fish/seafood.</p>
-
-<p>[<b>shop</b>=<b>spices</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Shop focused on selling spices.</p>
-
-<p>[<b>shop</b>=<b>tea</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Shop focused on selling tea.</p>
-
-<p>[<b>shop</b>=<b>wine</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>please use shop=alcohol + drink:wine=yes instead</p>
-
-<p>[<b>shop</b>=<b>department_store</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>A single large store – often multiple storeys high – selling a large variety of goods (see also shop=mall)</p>
-
-<p>[<b>shop</b>=<b>general</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>A store that carries a general line of merchandise. (see also shop=convenience if it sells food).</p>
-
-<p>[<b>shop</b>=<b>kiosk</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>A small shop on the pavement that sells magazines, tobacco, newspapers, sweets and stamps.</p>
-
-<p>[<b>shop</b>=<b>mall</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>A shopping mall – multiple stores under one roof (also known as a shopping centre)</p>
-
-<p>[<b>shop</b>=<b>supermarket</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Supermarket – a large store with groceries and other items</p>
-
-<p>[<b>shop</b>=<b>baby_goods</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Shop focused on selling objects for babies (clothes, prams, cots, toys).</p>
-
-<p>[<b>shop</b>=<b>bag</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Shop focused on selling bags.</p>
-
-<p>[<b>shop</b>=<b>boutique</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>A small shopping outlet, especially one that specializes in elite and fashionable items</p>
-
-<p>[<b>shop</b>=<b>clothes</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Shop focused on selling clothes (other related value in use is fashion)</p>
-
-<p>[<b>shop</b>=<b>fabric</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Shop focused on selling fabric and other materials for the purpose of making clothes and other products, eg dress making.</p>
-
-<p>[<b>shop</b>=<b>fashion</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Shop focused on selling fashion.</p>
-
-<p>[<b>shop</b>=<b>jewelry</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Jewellers shops.</p>
-
-<p>[<b>shop</b>=<b>leather</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Shop focused on selling products made out of leather.</p>
-
-<p>[<b>shop</b>=<b>shoes</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Shop focused on selling shoes.</p>
-
-<p>[<b>shop</b>=<b>tailor</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Use craft=tailor instead.</p>
-
-<p>[<b>shop</b>=<b>watches</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Shop focused on selling watches.</p>
-
-<p>[<b>shop</b>=<b>charity</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>A charity shop is a shop operated by a charity, for the purposes of fundraising.</p>
-
-<p>[<b>shop</b>=<b>second_hand</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>A shop buying and selling used clothes and other things. See also shop=pawnbroker</p>
-
-<p>[<b>shop</b>=<b>variety_store</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>A variety store retailer is a retail store that sells inexpensive items, sometimes with a single price point for all items in the store.</p>
-
-<p>[<b>shop</b>=<b>beauty</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>A non-hairdresser beauty shop, spa, nail salon, etc.. See also shop=hairdresser.</p>
-
-<p>[<b>shop</b>=<b>chemist</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Shop focused on selling articles of personal hygiene, cosmetics, and household cleaning products (for a shop that potentially dispenses prescription drugs, cf. pharmacy. U.S. drug store, see amenity=pharmacy)</p>
-
-<p>[<b>shop</b>=<b>cosmetics</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Shop focused on selling cosmetics</p>
-
-<p>[<b>shop</b>=<b>drugstore</b>]-This tag is discouraged. Please use either shop=chemist (if they sell prescription-free drugs, cosmetics, household cleaning products, etc.) or amenity=pharmacy (if they offer prescription drugs).</p>
-
-<p>[<b>shop</b>=<b>erotic</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Shop focused on selling erotic toys, -clothes or other erotic stuff.</p>
-
-<p>[<b>shop</b>=<b>hairdresser</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Here you can get your hair cut, coloured, … See also shop=beauty</p>
-
-<p>[<b>shop</b>=<b>hairdresser_supply</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>A shop, where you can buy hairdressing supplies.</p>
-
-<p>[<b>shop</b>=<b>hearing_aids</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Shop focused on selling hearing aids devices</p>
-
-<p>[<b>shop</b>=<b>herbalist</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Shop focused on selling herbs, often for medical purposes. (See also: healthcare:speciality=herbalism and healthcare=alternative).</p>
-
-<p>[<b>shop</b>=<b>massage</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>A massage shop</p>
-
-<p>[<b>shop</b>=<b>medical_supply</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Shop focused on selling medical supplies.</p>
-
-<p>[<b>shop</b>=<b>nutrition_supplements</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Shops that sells one or more nutritional supplements (of vitamins, minerals and/or herbs)</p>
-
-<p>[<b>shop</b>=<b>optician</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Shop focused on selling eyeglasses, contact lenses (may also check your eyes).</p>
-
-<p>[<b>shop</b>=<b>perfumery</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Shop focused on selling perfumery</p>
-
-<p>[<b>shop</b>=<b>tattoo</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>A tattoo parlour.</p>
-
-<p>[<b>shop</b>=<b>agrarian</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Shop focused on selling agrarian products, like seeds, agricultural machinery, animal feed, etc.</p>
-
-<p>[<b>shop</b>=<b>bathroom_furnishing</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Shop focused on selling bathroom furniture and accessories</p>
-
-<p>[<b>shop</b>=<b>doityourself</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Shop focused on selling tools and supplies to do-it-yourself householders, gardening, …</p>
-
-<p>[<b>shop</b>=<b>electrical</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Shop focused on selling electrical supplies and devices</p>
-
-<p>[<b>shop</b>=<b>energy</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Shop focused on selling energy</p>
-
-<p>[<b>shop</b>=<b>fireplace</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Shop focused on selling wood fireplaces.</p>
-
-<p>[<b>shop</b>=<b>florist</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Shop focused on selling bouquets of flowers (see shop=garden_centre for potted flowers).</p>
-
-<p>[<b>shop</b>=<b>garden_centre</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Shop focused on selling potted flowers, maybe even trees (see also shop=florist for flower bouquets).</p>
-
-<p>[<b>shop</b>=<b>garden_furniture</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Shop focused on selling garden furniture (sheds, outdoor tables, gates, fences, ...). See shop=garden_centre if also plants are sold.</p>
-
-<p>[<b>shop</b>=<b>gas</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Shop focused on selling technical gas, such as argon, oxygen, acetylene, nitrogen, carbon dioxide, etc. in pressurized containers</p>
-
-<p>[<b>shop</b>=<b>glaziery</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Shop focused on selling and installing glazing for windows and doors.</p>
-
-<p>[<b>shop</b>=<b>hardware</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Shop focused on selling building supplies including screws, bolts &amp; paints, … See also shop=doityourself</p>
-
-<p>[<b>shop</b>=<b>houseware</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Shop focused on selling crockery, cutlery, kitchenware, small household appliances.</p>
-
-<p>[<b>shop</b>=<b>locksmith</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Shop focused on selling keys, see also craft=locksmith and craft=key_cutter</p>
-
-<p>[<b>shop</b>=<b>paint</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Shop focused on selling paints.</p>
-
-<p>[<b>shop</b>=<b>security</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Shop focused on selling security items like burglar alarms, vaults, locking systems, etc.</p>
-
-<p>[<b>shop</b>=<b>trade</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Shop focused on selling one or more building supplies such as timber/wood, cement etc. See also shop=doityourself</p>
-
-<p>[<b>shop</b>=<b>antiques</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Shop focused on selling antiques.</p>
-
-<p>[<b>shop</b>=<b>bed</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Shop focused on selling mattresses and other bedding products.</p>
-
-<p>[<b>shop</b>=<b>candles</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Shop focused on selling candles and candle accessories (holders, etc)</p>
-
-<p>[<b>shop</b>=<b>carpet</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Shop focused on selling carpets</p>
-
-<p>[<b>shop</b>=<b>curtain</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Shop focused on selling curtains or drapes (see also shop=fabric)</p>
-
-<p>[<b>shop</b>=<b>furniture</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Shop focused on selling furniture, might range from small decorational items to a whole flat interior</p>
-
-<p>[<b>shop</b>=<b>interior_decoration</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Shop focused on selling interior decorations.</p>
-
-<p>[<b>shop</b>=<b>kitchen</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>A shop where you can plan and buy your kitchen. (Sometimes called "kitchen studio" and the like, but plain kitchen is the most frequently used tag so far.)</p>
-
-<p>[<b>shop</b>=<b>lamps</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Shop focused on selling lamps (see also shop=lighting).</p>
-
-<p>[<b>shop</b>=<b>tiles</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Shop focused on selling tiles.</p>
-
-<p>[<b>shop</b>=<b>window_blind</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Shop focused on selling window blinds.</p>
-
-<p>[<b>shop</b>=<b>computer</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Shop focused on selling computers, peripherals, software, …</p>
-
-<p>[<b>shop</b>=<b>electronics</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Shop focused on selling consumer electronics (TV, radio, …). Larger ones may also sell computers, fridges, …</p>
-
-<p>[<b>shop</b>=<b>hifi</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Shop focused on selling High Fidelity or High End environment to listen music or watch films at home</p>
-
-<p>[<b>shop</b>=<b>mobile_phone</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Shop focused on selling mobile phones and accessories</p>
-
-<p>[<b>shop</b>=<b>radiotechnics</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Shop focused on selling electronic components, electrical products, radio measuring devices, supplies for radio and electronics.</p>
-
-<p>[<b>shop</b>=<b>vacuum_cleaner</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Shop focused on selling vacuum cleaners and associated products.</p>
-
-<p>[<b>shop</b>=<b>bicycle</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Shop focused on selling bicycles, bicycle equipment and may rent or repair them</p>
-
-<p>[<b>shop</b>=<b>car</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Car store – a place to buy cars or to get your car repaired</p>
-
-<p>[<b>shop</b>=<b>car_repair</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Shop focused on car repair (usually independent of a specific car brand).</p>
-
-<p>[<b>shop</b>=<b>car_parts</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Shop focused on selling auto parts, auto accessories, motor oil, car chemicals, etc.</p>
-
-<p>[<b>shop</b>=<b>fuel</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Shop selling fuels (motor fuel, wood, coal, gas) that can't be considered a amenity=fuel (fuel station). Use fuel:*=yes/no to indicate which fuels are available.</p>
-
-<p>[<b>shop</b>=<b>fishing</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Shop focused on selling fishing equipment.</p>
-
-<p>[<b>shop</b>=<b>free_flying</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Shop focused on selling free flying equipment.</p>
-
-<p>[<b>shop</b>=<b>hunting</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Shop focused on selling gun and hunting equipment.</p>
-
-<p>[<b>shop</b>=<b>motorcycle</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Shop focused on selling motorcycles and/or related accessories, clothes, parts, repair and rental services.</p>
-
-<p>[<b>shop</b>=<b>outdoor</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Shop focused on selling camping, walking, climbing, and other outdoor sports equipment (GPSes, etc.)</p>
-
-<p>[<b>shop</b>=<b>scuba_diving</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Shop focused on selling scuba diving equipment.</p>
-
-<p>[<b>shop</b>=<b>sports</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Shop focused on selling sporting goods.</p>
-
-<p>[<b>shop</b>=<b>swimming_pool</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>A store that sells swimming pool equipment and supplies.</p>
-
-<p>[<b>shop</b>=<b>tyres</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Shop focused on selling tyres.</p>
-
-<p>[<b>shop</b>=<b>art</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Shop which sells works of art. May be paintings, sculpture, or other types of art</p>
-
-<p>[<b>shop</b>=<b>collector</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>A shop for different collector's items like stamps, coins, action figures, etc.</p>
-
-<p>[<b>shop</b>=<b>craft</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>An arts and crafts supply store. Commonly sold items are paper, canvas, paint, pencils, crafting wood, crafting tools, etc. - look at craft=*</p>
-
-<p>[<b>shop</b>=<b>frame</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Shop focused on selling frames.</p>
-
-<p>[<b>shop</b>=<b>games</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Shop focused on selling board games, card games and/or role-playing games.</p>
-
-<p>[<b>shop</b>=<b>model</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Shop specialising in the sale of scale models.</p>
-
-<p>[<b>shop</b>=<b>music</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Shop focused on selling recorded music (vinyl/CDs/...)</p>
-
-<p>[<b>shop</b>=<b>musical_instrument</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Shop focused on selling musical instruments, lyrics, scores. If focused on a specific instrument, specify with musical_instrument=*</p>
-
-<p>[<b>shop</b>=<b>photo</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Shop focused on selling products or services related with photography.</p>
-
-<p>[<b>shop</b>=<b>camera</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>A shop mainly selling cameras and lenses</p>
-
-<p>[<b>shop</b>=<b>trophy</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Store selling trophies, awards, plaques etc.</p>
-
-<p>[<b>shop</b>=<b>video</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Shop focused on selling or renting out videos/DVDs.</p>
-
-<p>[<b>shop</b>=<b>video_games</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Shop focused on selling video games.</p>
-
-<p>[<b>shop</b>=<b>anime</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Shop focused on selling anime stuff.</p>
-
-<p>[<b>shop</b>=<b>books</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Shop focused on selling books (for a library that lends books, see amenity=library)</p>
-
-<p>[<b>shop</b>=<b>gift</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Shop focused on selling gifts, greeting cards, or tourist gifts (souvenirs)</p>
-
-<p>[<b>shop</b>=<b>lottery</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>A shop of which the main or only purpose is the sale of lottery tickets.</p>
-
-<p>[<b>shop</b>=<b>newsagent</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Shop focused on selling newspapers, cigarettes, other goods</p>
-
-<p>[<b>shop</b>=<b>stationery</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Shop focused on selling office supplies</p>
-
-<p>[<b>shop</b>=<b>ticket</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Shop focused on selling tickets for concerts, events, public transport, …</p>
-
-<p>[<b>shop</b>=<b>bookmaker</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>A shop that takes bets on sporting and other events at agreed upon odds.</p>
-
-<p>[<b>shop</b>=<b>copyshop</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Shop focused on selling photocopying and printing services.</p>
-
-<p>[<b>shop</b>=<b>dry_cleaning</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Shop or kiosk offering a clothes dry cleaning service. The actual cleaning may be done elsewhere.</p>
-
-<p>[<b>shop</b>=<b>e-cigarette</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Shop focused on selling electronic cigarettes.</p>
-
-<p>[<b>shop</b>=<b>funeral_directors</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Providing services related to funeral arrangements, may also be known as a "funeral parlour" or "undertakers".</p>
-
-<p>[<b>shop</b>=<b>laundry</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>A shop to get your normal clothes washed. Might be self service coin operated, with service staff for drop off, …</p>
-
-<p>[<b>shop</b>=<b>money_lender</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>A money lender offers small personal loans at high rates of interest.</p>
-
-<p>[<b>shop</b>=<b>pawnbroker</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>A pawnbroker (or pawnshop) is an individual or business that offers secured loans to people. See also shop=second_hand</p>
-
-<p>[<b>shop</b>=<b>pet</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>A shop for pets, animals and toys or food for them.</p>
-
-<p>[<b>shop</b>=<b>pyrotechnics</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Store of pyrotechnics: fireworks, firecrackers, sparklers etc.</p>
-
-<p>[<b>shop</b>=<b>religion</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Shop focused on selling religious articles, church shop. See also religion=*</p>
-
-<p>[<b>shop</b>=<b>tobacco</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Shop focused on selling tobacco, cigarettes and their related accessories.</p>
-
-<p>[<b>shop</b>=<b>toys</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Shop focused on selling toys.</p>
-
-<p>[<b>shop</b>=<b>travel_agency</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Shop focused on selling tickets for travelling. Also known as a tour operator.</p>
-
-<p>[<b>shop</b>=<b>vacant</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Not an actual shop, of course. You may want to use this tag when a shop has been closed, to avoid confusing other mappers who may not know about this (please leave a note=*). Plus, you can keep the corresponding object and simply edit it when a new shop opens on the same spot. May be confusing, a vacancy is not a shop and should not show up on maps as a shop. disused:shop=* is an alternative</p>
-
-<p>[<b>shop</b>=<b>weapons</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Shop focused on selling weapons like knifes, guns etc.</p>
-
-<p>[<b>shop</b>=<b>user defined</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>All commonly used values according to Taginfo</p>
+<p>The shop tag is used as a place of business that has stocked goods for sale. See the page titled Shop for an introduction on its usage.
+</p>
+<p>[<b>shop</b>=<b>alcohol</b>]<br>Shop selling alcohol to take away</p>
+<p>[<b>shop</b>=<b>bakery</b>]<br>Shop focused on selling bread</p>
+<p>[<b>shop</b>=<b>beverages</b>]<br>Shop focused on selling alcoholic and non-alcoholic beverages. See also shop=alcohol.</p>
+<p>[<b>shop</b>=<b>brewing_supplies</b>]<br>Shop focused on selling supplies for home brewing of beer, wine and spirits (where permitted).</p>
+<p>[<b>shop</b>=<b>butcher</b>]<br>Shop focused on selling meat</p>
+<p>[<b>shop</b>=<b>cheese</b>]<br>Shop focused on selling cheese.</p>
+<p>[<b>shop</b>=<b>chocolate</b>]<br>Shop focused on selling chocolate.</p>
+<p>[<b>shop</b>=<b>coffee</b>]<br>Shop focused on selling coffee.</p>
+<p>[<b>shop</b>=<b>confectionery</b>]<br>Shop focused on selling sweets or candy</p>
+<p>[<b>shop</b>=<b>convenience</b>]<br>A small local shop carrying a small subset of the items you would find in a supermarket</p>
+<p>[<b>shop</b>=<b>deli</b>]<br>Shop focused on selling delicatessen (fine foods, gourmet foods), possibly also fine wine. Not to be confused with the US delis.</p>
+<p>[<b>shop</b>=<b>dairy</b>]<br>Shop focused on selling dairy products.</p>
+<p>[<b>shop</b>=<b>farm</b>]<br>Shop or roadside stand focused on selling freshly harvested farm produce</p>
+<p>[<b>shop</b>=<b>greengrocer</b>]<br>Shop focused on selling vegetables and fruits.</p>
+<p>[<b>shop</b>=<b>frozen_food</b>]<br>Shop focused on selling frozen food.</p>
+<p>[<b>shop</b>=<b>ice_cream</b>]<br>Shop focused on selling ice cream to take home. See also amenity=ice_cream.</p>
+<p>[<b>shop</b>=<b>organic</b>]<br>Shop focused on selling organic food. Alternatively you can use the more versatile organic=* in combination with a general shop=* key (In this case: shop=supermarket or shop=convenience).</p>
+<p>[<b>shop</b>=<b>pasta</b>]<br>Shop focused on selling (fresh) pasta, ravioli, etc.</p>
+<p>[<b>shop</b>=<b>pastry</b>]<br>Shop focused on selling baked sweets like cakes, biscuits, strudel and pies.</p>
+<p>[<b>shop</b>=<b>seafood</b>]<br>Shop focused on selling fish/seafood.</p>
+<p>[<b>shop</b>=<b>spices</b>]<br>Shop focused on selling spices.</p>
+<p>[<b>shop</b>=<b>tea</b>]<br>Shop focused on selling tea.</p>
+<p>[<b>shop</b>=<b>wine</b>]<br>please use shop=alcohol + drink:wine=yes instead</p>
+<p>[<b>shop</b>=<b>department_store</b>]<br>A single large store – often multiple storeys high – selling a large variety of goods (see also shop=mall)</p>
+<p>[<b>shop</b>=<b>general</b>]<br>A store that carries a general line of merchandise. (see also shop=convenience if it sells food).</p>
+<p>[<b>shop</b>=<b>kiosk</b>]<br>A small shop on the pavement that sells magazines, tobacco, newspapers, sweets and stamps.</p>
+<p>[<b>shop</b>=<b>mall</b>]<br>A shopping mall – multiple stores under one roof (also known as a shopping centre)</p>
+<p>[<b>shop</b>=<b>supermarket</b>]<br>Supermarket – a large store with groceries and other items</p>
+<p>[<b>shop</b>=<b>wholesale</b>]<br>Wholesale or Warehouse club - a store that sells items in bulk to retailers. The branch of industry can be defined with wholesale=*.</p>
+<p>[<b>shop</b>=<b>baby_goods</b>]<br>Shop focused on selling objects for babies (clothes, prams, cots, toys).</p>
+<p>[<b>shop</b>=<b>bag</b>]<br>Shop focused on selling bags.</p>
+<p>[<b>shop</b>=<b>boutique</b>]<br>A small shopping outlet, especially one that specializes in elite and fashionable items</p>
+<p>[<b>shop</b>=<b>clothes</b>]<br>Shop focused on selling clothes (other related value in use is fashion)</p>
+<p>[<b>shop</b>=<b>fabric</b>]<br>Shop focused on selling fabric and other materials for the purpose of making clothes and other products, eg dress making.</p>
+<p>[<b>shop</b>=<b>fashion</b>]<br>Shop focused on selling fashion.</p>
+<p>[<b>shop</b>=<b>jewelry</b>]<br>Jewellers shops.</p>
+<p>[<b>shop</b>=<b>leather</b>]<br>Shop focused on selling products made out of leather.</p>
+<p>[<b>shop</b>=<b>sewing</b>]<br>A shop that sells sewing supplies (fabric, thread, yarn, knitting needles, sewing machines, etc.)</p>
+<p>[<b>shop</b>=<b>shoes</b>]<br>Shop focused on selling shoes.</p>
+<p>[<b>shop</b>=<b>tailor</b>]<br>A place where clothing is made, repaired, or altered professionally, especially suits and men's clothing</p>
+<p>[<b>shop</b>=<b>watches</b>]<br>Shop focused on selling watches.</p>
+<p>[<b>shop</b>=<b>charity</b>]<br>A charity shop is a shop operated by a charity, for the purposes of fundraising.</p>
+<p>[<b>shop</b>=<b>second_hand</b>]<br>A shop buying and selling used clothes and other things. See also shop=pawnbroker</p>
+<p>[<b>shop</b>=<b>variety_store</b>]<br>A variety store retailer is a retail store that sells inexpensive 
+items, sometimes with a single price point for all items in the store.</p>
+<p>[<b>shop</b>=<b>beauty</b>]<br>A non-hairdresser beauty shop, spa, nail salon, etc.. See also shop=hairdresser.</p>
+<p>[<b>shop</b>=<b>chemist</b>]<br>Shop focused on selling articles of personal hygiene, cosmetics, 
+and household cleaning products (for a shop that potentially dispenses 
+prescription drugs, cf. pharmacy. U.S. drug store, see amenity=pharmacy)</p>
+<p>[<b>shop</b>=<b>cosmetics</b>]<br>Shop focused on selling cosmetics</p>
+<p>[<b>shop</b>=<b>drugstore</b>]<br>This tag is discouraged. Please use either shop=chemist (if they sell prescription-free drugs, cosmetics, household cleaning products, etc.) or amenity=pharmacy (if they offer prescription drugs).</p>
+<p>[<b>shop</b>=<b>erotic</b>]<br>Shop focused on selling erotic toys, -clothes or other erotic stuff.</p>
+<p>[<b>shop</b>=<b>hairdresser</b>]<br>Here you can get your hair cut, coloured, … See also shop=beauty</p>
+<p>[<b>shop</b>=<b>hairdresser_supply</b>]<br>A shop, where you can buy hairdressing supplies.</p>
+<p>[<b>shop</b>=<b>hearing_aids</b>]<br>Shop focused on selling hearing aids devices</p>
+<p>[<b>shop</b>=<b>herbalist</b>]<br>Shop focused on selling herbs, often for medical purposes. (See also: healthcare:speciality=herbalism and healthcare=alternative).</p>
+<p>[<b>shop</b>=<b>massage</b>]<br>A massage shop</p>
+<p>[<b>shop</b>=<b>medical_supply</b>]<br>Shop focused on selling medical supplies.</p>
+<p>[<b>shop</b>=<b>nutrition_supplements</b>]<br>Shops that sells one or more nutritional supplements (of vitamins, minerals and/or herbs)</p>
+<p>[<b>shop</b>=<b>optician</b>]<br>Shop focused on selling eyeglasses, contact lenses (may also check your eyes).</p>
+<p>[<b>shop</b>=<b>perfumery</b>]<br>Shop focused on selling perfumery</p>
+<p>[<b>shop</b>=<b>tattoo</b>]<br>A tattoo parlour.</p>
+<p>[<b>shop</b>=<b>agrarian</b>]<br>Shop focused on selling agrarian products, like seeds, agricultural machinery, animal feed, etc.</p>
+<p>[<b>shop</b>=<b>bathroom_furnishing</b>]<br>Shop focused on selling bathroom furniture and accessories</p>
+<p>[<b>shop</b>=<b>doityourself</b>]<br>Shop focused on selling tools and supplies to do-it-yourself householders, gardening, …</p>
+<p>[<b>shop</b>=<b>electrical</b>]<br>Shop focused on selling electrical supplies and devices</p>
+<p>[<b>shop</b>=<b>energy</b>]<br>Shop focused on selling energy</p>
+<p>[<b>shop</b>=<b>fireplace</b>]<br>Shop focused on selling electric fireplaces, stoves or masonry heaters and required fuels</p>
+<p>[<b>shop</b>=<b>florist</b>]<br>Shop focused on selling bouquets of flowers (see shop=garden_centre for potted flowers).</p>
+<p>[<b>shop</b>=<b>garden_centre</b>]<br>Shop focused on selling potted flowers, maybe even trees (see also shop=florist for flower bouquets).</p>
+<p>[<b>shop</b>=<b>garden_furniture</b>]<br>Shop focused on selling garden furniture (sheds, outdoor tables, gates, fences, ...). See shop=garden_centre if also plants are sold.</p>
+<p>[<b>shop</b>=<b>gas</b>]<br>Shop focused on selling technical gas, such as argon, oxygen, 
+acetylene, nitrogen, carbon dioxide, etc. in pressurized containers</p>
+<p>[<b>shop</b>=<b>glaziery</b>]<br>Shop focused on selling and installing glazing for windows and doors.</p>
+<p>[<b>shop</b>=<b>hardware</b>]<br>Shop focused on selling building supplies including screws, bolts & paints, … See also shop=doityourself</p>
+<p>[<b>shop</b>=<b>houseware</b>]<br>Shop focused on selling crockery, cutlery, kitchenware, small household appliances.</p>
+<p>[<b>shop</b>=<b>locksmith</b>]<br>Shop focused on selling keys, see also craft=locksmith and craft=key_cutter</p>
+<p>[<b>shop</b>=<b>paint</b>]<br>Shop focused on selling paints.</p>
+<p>[<b>shop</b>=<b>security</b>]<br>Shop focused on selling security items like burglar alarms, vaults, locking systems, etc.</p>
+<p>[<b>shop</b>=<b>trade</b>]<br>Shop focused on selling one or more building supplies such as timber/wood, cement etc. See also shop=doityourself</p>
+<p>[<b>shop</b>=<b>antiques</b>]<br>Shop focused on selling antiques.</p>
+<p>[<b>shop</b>=<b>bed</b>]<br>Shop focused on selling mattresses and other bedding products.</p>
+<p>[<b>shop</b>=<b>candles</b>]<br>Shop focused on selling candles and candle accessories (holders, etc)</p>
+<p>[<b>shop</b>=<b>carpet</b>]<br>Shop focused on selling carpets</p>
+<p>[<b>shop</b>=<b>curtain</b>]<br>Shop focused on selling curtains or drapes (see also shop=fabric)</p>
+<p>[<b>shop</b>=<b>doors</b>]<br>Shop focused on selling doors</p>
+<p>[<b>shop</b>=<b>flooring</b>]<br>Shop focused on selling floorings</p>
+<p>[<b>shop</b>=<b>furniture</b>]<br>Shop focused on selling furniture, might range from small decorational items to a whole flat interior</p>
+<p>[<b>shop</b>=<b>interior_decoration</b>]<br>Shop focused on selling interior decorations.</p>
+<p>[<b>shop</b>=<b>kitchen</b>]<br>A shop where you can plan and buy your kitchen. (Sometimes called 
+"kitchen studio" and the like, but plain kitchen is the most frequently 
+used tag so far.)</p>
+<p>[<b>shop</b>=<b>lamps</b>]<br>Shop focused on selling lamps (see also shop=lighting).</p>
+<p>[<b>shop</b>=<b>tiles</b>]<br>Shop focused on selling tiles.</p>
+<p>[<b>shop</b>=<b>window_blind</b>]<br>Shop focused on selling window blinds.</p>
+<p>[<b>shop</b>=<b>computer</b>]<br>Shop focused on selling computers, peripherals, software, …</p>
+<p>[<b>shop</b>=<b>robot</b>]<br>A shop that sells robots and/or related accessories, parts, repair and rental services</p>
+<p>[<b>shop</b>=<b>electronics</b>]<br>Shop focused on selling consumer electronics (TV, radio, …). Larger ones may also sell computers, fridges, …</p>
+<p>[<b>shop</b>=<b>hifi</b>]<br>Shop focused on selling High Fidelity or High End environment to listen music or watch films at home</p>
+<p>[<b>shop</b>=<b>mobile_phone</b>]<br>Shop focused on selling mobile phones and accessories</p>
+<p>[<b>shop</b>=<b>radiotechnics</b>]<br>Shop focused on selling electronic components, electrical products,
+ radio measuring devices, supplies for radio and electronics.</p>
+<p>[<b>shop</b>=<b>vacuum_cleaner</b>]<br>Shop focused on selling vacuum cleaners and associated products.</p>
+<p>[<b>shop</b>=<b>atv</b>]<br>Shop focused on selling atvs (quads), atv equipment and may rent or repair them</p>
+<p>[<b>shop</b>=<b>bicycle</b>]<br>Shop focused on selling bicycles, bicycle equipment and may rent or repair them</p>
+<p>[<b>shop</b>=<b>boat</b>]<br>Shop focused on selling boats, boat equipment and may rent or repair them</p>
+<p>[<b>shop</b>=<b>car</b>]<br>Car store – a place to buy cars or to get your car repaired</p>
+<p>[<b>shop</b>=<b>car_repair</b>]<br>Shop focused on car repair (usually independent of a specific car brand).</p>
+<p>[<b>shop</b>=<b>car_parts</b>]<br>Shop focused on selling auto parts, auto accessories, motor oil, car chemicals, etc.</p>
+<p>[<b>shop</b>=<b>fuel</b>]<br>Shop selling fuels (motor fuel, wood, coal, gas) that can't be considered a amenity=fuel (fuel station). Use fuel:*=yes/no to indicate which fuels are available.</p>
+<p>[<b>shop</b>=<b>fishing</b>]<br>Shop focused on selling fishing equipment.</p>
+<p>[<b>shop</b>=<b>free_flying</b>]<br>Shop focused on selling free flying equipment.</p>
+<p>[<b>shop</b>=<b>hunting</b>]<br>Shop focused on selling gun and hunting equipment.</p>
+<p>[<b>shop</b>=<b>jetski</b>]<br>Shop focused on selling jetskis, jetski equipment and may rent or repair them</p>
+<p>[<b>shop</b>=<b>motorcycle</b>]<br>Shop focused on selling motorcycles and/or related accessories, clothes, parts, repair and rental services.</p>
+<p>[<b>shop</b>=<b>outdoor</b>]<br>Shop focused on selling camping, walking, climbing, and other outdoor sports equipment (GPSes, etc.)</p>
+<p>[<b>shop</b>=<b>scuba_diving</b>]<br>Shop focused on selling scuba diving equipment.</p>
+<p>[<b>shop</b>=<b>ski</b>]<br>Shop focused on selling skis, ski equipment and may rent or repair them</p>
+<p>[<b>shop</b>=<b>snowmobile</b>]<br>Shop focused on selling snowmobiles, snowmobile equipment and may rent or repair them</p>
+<p>[<b>shop</b>=<b>sports</b>]<br>Shop focused on selling sporting goods.</p>
+<p>[<b>shop</b>=<b>swimming_pool</b>]<br>A store that sells swimming pool equipment and supplies.</p>
+<p>[<b>shop</b>=<b>tyres</b>]<br>Shop focused on selling tyres.</p>
+<p>[<b>shop</b>=<b>art</b>]<br>Shop which sells works of art. May be paintings, sculpture, or other types of art</p>
+<p>[<b>shop</b>=<b>collector</b>]<br>A shop for different collector's items like stamps, coins, action figures, etc.</p>
+<p>[<b>shop</b>=<b>craft</b>]<br>An arts and crafts supply store. Commonly sold items are paper, 
+canvas, paint, pencils, crafting wood, crafting tools, etc. - look at craft=*</p>
+<p>[<b>shop</b>=<b>frame</b>]<br>Shop focused on selling frames.</p>
+<p>[<b>shop</b>=<b>games</b>]<br>Shop focused on selling board games, card games and/or role-playing games.</p>
+<p>[<b>shop</b>=<b>model</b>]<br>Shop specialising in the sale of scale models.</p>
+<p>[<b>shop</b>=<b>music</b>]<br>Shop focused on selling recorded music (vinyl/CDs/...)</p>
+<p>[<b>shop</b>=<b>musical_instrument</b>]<br>Shop focused on selling musical instruments, lyrics, scores. If 
+focused on a specific instrument, specify with musical_instrument=*</p>
+<p>[<b>shop</b>=<b>photo</b>]<br>Shop focused on selling products or services related with photography.</p>
+<p>[<b>shop</b>=<b>camera</b>]<br>A shop mainly selling cameras and lenses</p>
+<p>[<b>shop</b>=<b>trophy</b>]<br>Store selling trophies, awards, plaques etc.</p>
+<p>[<b>shop</b>=<b>video</b>]<br>Shop focused on selling or renting out videos/DVDs.</p>
+<p>[<b>shop</b>=<b>video_games</b>]<br>Shop focused on selling video games.</p>
+<p>[<b>shop</b>=<b>anime</b>]<br>Shop focused on selling anime stuff.</p>
+<p>[<b>shop</b>=<b>books</b>]<br>Shop focused on selling books (for a library that lends books, see amenity=library)</p>
+<p>[<b>shop</b>=<b>gift</b>]<br>Shop focused on selling gifts, greeting cards, or tourist gifts (souvenirs)</p>
+<p>[<b>shop</b>=<b>lottery</b>]<br>A shop of which the main or only purpose is the sale of lottery tickets.</p>
+<p>[<b>shop</b>=<b>newsagent</b>]<br>Shop focused on selling newspapers, cigarettes, other goods</p>
+<p>[<b>shop</b>=<b>stationery</b>]<br>Shop focused on selling office supplies</p>
+<p>[<b>shop</b>=<b>ticket</b>]<br>Shop focused on selling tickets for concerts, events, public transport, …</p>
+<p>[<b>shop</b>=<b>bookmaker</b>]<br>A shop that takes bets on sporting and other events at agreed upon odds.</p>
+<p>[<b>shop</b>=<b>copyshop</b>]<br>Shop focused on selling photocopying and printing services.</p>
+<p>[<b>shop</b>=<b>dry_cleaning</b>]<br>Shop or kiosk offering a clothes dry cleaning service. The actual cleaning may be done elsewhere.</p>
+<p>[<b>shop</b>=<b>e-cigarette</b>]<br>Shop focused on selling electronic cigarettes.</p>
+<p>[<b>shop</b>=<b>funeral_directors</b>]<br>Providing services related to funeral arrangements, may also be known as a "funeral parlour" or "undertakers".</p>
+<p>[<b>shop</b>=<b>laundry</b>]<br>A shop to get your normal clothes washed. Might be self service coin operated, with service staff for drop off, …</p>
+<p>[<b>shop</b>=<b>money_lender</b>]<br>A money lender offers small personal loans at high rates of interest.</p>
+<p>[<b>shop</b>=<b>party</b>]<br>A shop for party and festival supplies, like costumes, etc.</p>
+<p>[<b>shop</b>=<b>pawnbroker</b>]<br>A pawnbroker (or pawnshop) is an individual or business that offers secured loans to people. See also shop=second_hand</p>
+<p>[<b>shop</b>=<b>pet</b>]<br>A shop for pets, animals and toys or food for them.</p>
+<p>[<b>shop</b>=<b>pyrotechnics</b>]<br>Store of pyrotechnics: fireworks, firecrackers, sparklers etc.</p>
+<p>[<b>shop</b>=<b>religion</b>]<br>Shop focused on selling religious articles, church shop. See also religion=*</p>
+<p>[<b>shop</b>=<b>storage_rental</b>]<br>self storage</p>
+<p>[<b>shop</b>=<b>tobacco</b>]<br>Shop focused on selling tobacco, cigarettes and their related accessories.</p>
+<p>[<b>shop</b>=<b>toys</b>]<br>Shop focused on selling toys.</p>
+<p>[<b>shop</b>=<b>travel_agency</b>]<br>Shop focused on selling tickets for travelling. Also known as a tour operator.</p>
+<p>[<b>shop</b>=<b>vacant</b>]<br>Not an actual shop, of course. You may want to use this tag when a 
+shop has been closed, to avoid confusing other mappers who may not know 
+about this (please leave a note=*).
+ Plus, you can keep the corresponding object and simply edit it when a 
+new shop opens on the same spot. May be confusing, a vacancy is not a 
+shop and should not show up on maps as a shop. disused:shop=* is an alternative</p>
+<p>[<b>shop</b>=<b>weapons</b>]<br>Shop focused on selling weapons like knifes, guns etc.</p>
+<p>[<b>shop</b>=<b>user defined</b>]<br>All commonly used values according to Taginfo</p>

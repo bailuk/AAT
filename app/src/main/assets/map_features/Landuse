@@ -1,71 +1,50 @@
 <h1>Landuse</h1>
-
-<p>This is used to describe the purpose for which an area of land is being used. See the page titled Landuse for an introduction on its usage.</p>
-
-<p>[<b>landuse</b>=<b>allotments</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>A piece of land given over to local residents for growing vegetables and flowers.</p>
-
-<p>[<b>landuse</b>=<b>basin</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>An area of water that drains into a river.Together with basin=* for stormwater/rainwater infiltration/detention/retention basins.Other languages.</p>
-
-<p>[<b>landuse</b>=<b>brownfield</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Describes land scheduled for new development where old buildings have been demolished and cleared</p>
-
-<p>[<b>landuse</b>=<b>cemetery</b>]<img src="images/___px_Osm_element_area.svg.png"/>Place for burials. You can add religion=* (values listed in the place of worship page). Smaller places (e.g. with a church nearby) may use amenity=grave_yard instead.</p>
-
-<p>[<b>landuse</b>=<b>commercial</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Predominantly offices, business parks, etc.</p>
-
-<p>[<b>landuse</b>=<b>conservation</b>]<img src="images/___px_Osm_element_area.svg.png"/>Protected areas (Not approved) Alternate tagging of same thing: boundary=protected_area, protected_area=*</p>
-
-<p>[<b>landuse</b>=<b>construction</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>"Under construction" site, should become something different once the construction is finished</p>
-
-<p>[<b>landuse</b>=<b>depot</b>]<img src="images/___px_Osm_element_area.svg.png"/>An area used as a depot for e.g. vehicles (trains, buses or trams).currently not rendered by mapnik</p>
-
-<p>[<b>landuse</b>=<b>farmland</b>]<img src="images/___px_Osm_element_area.svg.png"/>An area of farmland used for tillage and pasture (animals, crops, vegetables, flowers, fruit growing).</p>
-
-<p>[<b>landuse</b>=<b>farmyard</b>]<img src="images/___px_Osm_element_area.svg.png"/>An area of land with farm buildings like farmhouse, dwellings, farmsteads, sheds, stables, barns, equipment sheds, feed bunkers, etc. plus the open space in between them and the shrubbery/trees around them.</p>
-
-<p>[<b>landuse</b>=<b>forest</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Managed forest or woodland plantation (Other languages).</p>
-
-<p>[<b>landuse</b>=<b>garages</b>]<img src="images/___px_Osm_element_area.svg.png"/>One level buildings with boxes commonly for cars, usually made of brick and metal. Usually this area belong to garage cooperative with own name, chairman, budget, rules, security, etc.</p>
-
-<p>[<b>landuse</b>=<b>grass</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>For areas covered with grass. Consider landuse=meadow for meadow. Note that this is actually a Landcover tag, not a landuse tag and there is a proposal to deprecate it.</p>
-
-<p>[<b>landuse</b>=<b>greenfield</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Describes land scheduled for new development where there have been no buildings before. A greenfield is scheduled to turn into a construction site</p>
-
-<p>[<b>landuse</b>=<b>greenhouse_horticulture</b>]<img src="images/___px_Osm_element_area.svg.png"/>Area used for growing plants in greenhouses</p>
-
-<p>[<b>landuse</b>=<b>industrial</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Predominantly workshops, factories or warehouses</p>
-
-<p>[<b>landuse</b>=<b>landfill</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Place where waste is dumped.</p>
-
-<p>[<b>landuse</b>=<b>meadow</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>An area of land primarily vegetated by grass and other non-woody plants, usually mowed for making hay.</p>
-
-<p>[<b>landuse</b>=<b>military</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>For land areas owned/used by the military for whatever purpose</p>
-
-<p>[<b>landuse</b>=<b>orchard</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>intentional planting of trees or shrubs maintained for food production</p>
-
-<p>[<b>landuse</b>=<b>pasture</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>(Proposed in Proposed features/pasture:) An area of land primarily vegetated by grass, used for grazing.</p>
-
-<p>[<b>landuse</b>=<b>peat_cutting</b>]<img src="images/___px_Osm_element_area.svg.png"/>An excavation created by the removal of peat. Use landuse=quarry + resource=peat insteadcurrently not rendered by mapnik</p>
-
-<p>[<b>landuse</b>=<b>plant_nursery</b>]<img src="images/___px_Osm_element_area.svg.png"/>intentional planting of plants maintaining for the production of new plantscurrently not rendered by mapnik</p>
-
-<p>[<b>landuse</b>=<b>port</b>]<img src="images/___px_Osm_element_area.svg.png"/>coastal industrial area where commercial traffic is handledcurrently not rendered by mapnik</p>
-
-<p>[<b>landuse</b>=<b>quarry</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Surface mineral extraction</p>
-
-<p>[<b>landuse</b>=<b>railway</b>]<img src="images/___px_Osm_element_area.svg.png"/>Area for railway use, generally off-limits to the general public</p>
-
-<p>[<b>landuse</b>=<b>recreation_ground</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>An open green space for general recreation, which may include pitches, nets and so on, usually municipal but possibly also private to colleges or companies</p>
-
-<p>[<b>landuse</b>=<b>reservoir</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Stores water, may be covered or uncovered; for a covered reservoir see also man_made=reservoir_covered (Other languages). See water=reservoir for alternative tagging.</p>
-
-<p>[<b>landuse</b>=<b>residential</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Predominantly houses or apartment buildings</p>
-
-<p>[<b>landuse</b>=<b>retail</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>Predominantly shops</p>
-
-<p>[<b>landuse</b>=<b>salt_pond</b>]<img src="images/___px_Osm_element_area.svg.png"/>A place where sea water is evaporated to extract its saltcurrently not rendered by mapnik</p>
-
-<p>[<b>landuse</b>=<b>village_green</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>An area of common land, usually grass, in the centre of a village (quintessentially English – defined separately from 'common land' under the Commons Registration Act 1965 and the Commons Act 2006).This tag is more used to tag all sorts of mixed vegetation, mostly in urban areas. Hence the above definition probably needs to be adjusted to fit the real use of it.</p>
-
-<p>[<b>landuse</b>=<b>vineyard</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>A piece of land where grapes are grown.</p>
-
-<p>[<b>landuse</b>=<b>user defined</b>]<img src="images/___px_Osm_element_node.svg.png"/><img src="images/___px_Osm_element_area.svg.png"/>All commonly used values according to Taginfo</p>
+<p>This is used to describe the purpose for which an area of land is being used. See the page titled Landuse for an introduction on its usage.
+</p>
+<p>[<b>landuse</b>=<b>allotments</b>]<br>A piece of land given over to local residents for growing vegetables and flowers.</p>
+<p>[<b>landuse</b>=<b>basin</b>]<br>An area of water that drains into a river.Together with basin=* for stormwater/rainwater infiltration/detention/retention basins.Other languages.</p>
+<p>[<b>landuse</b>=<b>brownfield</b>]<br>Describes land scheduled for new development where old buildings have been demolished and cleared</p>
+<p>[<b>landuse</b>=<b>cemetery</b>]<br>Place for burials. You can add religion=* (values listed in the place of worship page). Smaller places (e.g. with a church nearby) may use amenity=grave_yard instead.</p>
+<p>[<b>landuse</b>=<b>commercial</b>]<br>Predominantly offices, business parks, etc.</p>
+<p>[<b>landuse</b>=<b>conservation</b>]<br>Protected areas (Not approved) Alternate tagging of same thing: boundary=protected_area, protected_area=*</p>
+<p>[<b>landuse</b>=<b>construction</b>]<br>"Under construction" site, should become something different once the construction is finished</p>
+<p>[<b>landuse</b>=<b>depot</b>]<br>An area used as a depot for e.g. vehicles (trains, buses or trams).</p>
+<p>[<b>landuse</b>=<b>farmland</b>]<br>An area of farmland used for tillage and pasture (animals, crops, vegetables, flowers, fruit growing).</p>
+<p>[<b>landuse</b>=<b>farmyard</b>]<br>An area of land with farm buildings like farmhouse, dwellings, 
+farmsteads, sheds, stables, barns, equipment sheds, feed bunkers, etc. 
+plus the open space in between them and the shrubbery/trees around them.</p>
+<p>[<b>landuse</b>=<b>forest</b>]<br>Managed forest or woodland plantation (Other languages).</p>
+<p>[<b>landuse</b>=<b>garages</b>]<br>One level buildings with boxes commonly for cars, usually made of 
+brick and metal. Usually this area belong to garage cooperative with own
+ name, chairman, budget, rules, security, etc.</p>
+<p>[<b>landuse</b>=<b>grass</b>]<br>An area of mown and managed grass.</p>
+<p>[<b>landuse</b>=<b>greenfield</b>]<br>Describes land scheduled for new development where there have been 
+no buildings before. A greenfield is scheduled to turn into a 
+construction site</p>
+<p>[<b>landuse</b>=<b>greenhouse_horticulture</b>]<br>Area used for growing plants in greenhouses</p>
+<p>[<b>landuse</b>=<b>industrial</b>]<br>Predominantly workshops, factories or warehouses</p>
+<p>[<b>landuse</b>=<b>landfill</b>]<br>Place where waste is dumped.</p>
+<p>[<b>landuse</b>=<b>meadow</b>]<br>A meadow or pasture.</p>
+<p>[<b>landuse</b>=<b>military</b>]<br>For land areas owned/used by the military for whatever purpose</p>
+<p>[<b>landuse</b>=<b>orchard</b>]<br>intentional planting of trees or shrubs maintained for food production</p>
+<p>[<b>landuse</b>=<b>pasture</b>]<br>(Proposed in Proposed features/pasture:) An area of land primarily vegetated by grass, used for grazing.</p>
+<p>[<b>landuse</b>=<b>peat_cutting</b>]<br>An excavation created by the removal of peat. Use landuse=quarry + resource=peat instead</p>
+<p>[<b>landuse</b>=<b>plant_nursery</b>]<br>intentional planting of plants maintaining for the production of new plants</p>
+<p>[<b>landuse</b>=<b>port</b>]<br>coastal industrial area where commercial traffic is handled</p>
+<p>[<b>landuse</b>=<b>quarry</b>]<br>Surface mineral extraction</p>
+<p>[<b>landuse</b>=<b>railway</b>]<br>Area for railway use, generally off-limits to the general public</p>
+<p>[<b>landuse</b>=<b>recreation_ground</b>]<br>An open green space for general recreation, which may include 
+pitches, nets and so on, usually municipal but possibly also private to 
+colleges or companies</p>
+<p>[<b>landuse</b>=<b>reservoir</b>]<br>There was considerable confusion whether landuse=reservoir is deprecated, but it turned out to be not deprecated and landuse=reservoir is used much wider than "new" way natural=water + water=reservoir. It may be a good idea to tag the actual water body with natural=water + water=reservoir in addition or instead of landuse=reservoir. See also the approved water details proposal and pointers to discussion on talk page.</p>
+<p>[<b>landuse</b>=<b>residential</b>]<br>Predominantly houses or apartment buildings</p>
+<p>[<b>landuse</b>=<b>retail</b>]<br>Predominantly shops</p>
+<p>[<b>landuse</b>=<b>salt_pond</b>]<br>A place where sea water is evaporated to extract its salt</p>
+<p>[<b>landuse</b>=<b>village_green</b>]<br>An area of common land, usually grass, in the centre of a village 
+(quintessentially English – defined separately from 'common land' under 
+the Commons Registration Act 1965 and the Commons Act 2006).This tag
+ is more used to tag all sorts of mixed vegetation, mostly in urban 
+areas. Hence the above definition probably needs to be adjusted to fit 
+the real use of it.</p>
+<p>[<b>landuse</b>=<b>vineyard</b>]<br>A piece of land where grapes are grown.</p>
+<p>[<b>landuse</b>=<b>user defined</b>]<br>All commonly used values according to Taginfo</p>
