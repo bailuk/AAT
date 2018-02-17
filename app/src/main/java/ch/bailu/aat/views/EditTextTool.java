@@ -40,7 +40,7 @@ public class EditTextTool extends LinearLayout implements View.OnClickListener {
     @Override
     public void onClick(View view) {
         if (view == clearText) {
-            deleteCurrentLine();
+            new CurrentLine().delete();
         }
     }
 
@@ -51,35 +51,42 @@ public class EditTextTool extends LinearLayout implements View.OnClickListener {
 
     }
 
-    public void deleteCurrentLine() {
-        int selectionStart = Selection.getSelectionStart(edit.getText());
-
-        if (!(selectionStart == -1)) {
-            Layout layout = edit.getLayout();
-
-            int line = layout.getLineForOffset(selectionStart);
-            int start = layout.getLineStart(line);
-            int end = layout.getLineEnd(line);
-
-            if (start > 0) start --;
-            edit.getText().delete(start, end);
-        }
+    public void insertLine(String s) {
+        new CurrentLine().insert(s);
     }
 
 
-    public void insertLine(String l) {
-        int selectionStart = Selection.getSelectionStart(edit.getText());
+    public class CurrentLine {
 
-        if (!(selectionStart == -1)) {
-            Layout layout = edit.getLayout();
+        final int start, end;
 
-            int line = layout.getLineForOffset(selectionStart);
-            int start = layout.getLineStart(line);
-            int end = layout.getLineEnd(line);
 
-            if (start > 0) start --;
-            edit.getText().insert(end, l + "\n");
+        public CurrentLine() {
+            int selectionStart = Selection.getSelectionStart(edit.getText());
+
+            if (!(selectionStart == -1)) {
+                Layout layout = edit.getLayout();
+
+                int line = layout.getLineForOffset(selectionStart);
+                start = layout.getLineStart(line);
+                end = layout.getLineEnd(line);
+
+            } else {
+                start = end = -1;
+            }
+        }
+
+
+        public void delete() {
+            if (start > -1)
+                edit.getText().delete(start, end);
+        }
+
+
+        public void insert(String l) {
+            if (start > -1) {
+                edit.getText().insert(end, l + "\n");
+            }
         }
     }
-
 }
