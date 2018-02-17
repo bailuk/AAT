@@ -1,18 +1,15 @@
 package ch.bailu.aat.util.ui;
 
-import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import ch.bailu.aat.R;
-import ch.bailu.aat.views.SVGAssetView;
 
 public class AppTheme {
     private static final float TEXT_SIZE=20f;

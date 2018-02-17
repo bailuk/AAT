@@ -5,10 +5,6 @@ import android.content.Context;
 import java.util.ArrayList;
 
 import ch.bailu.aat.R;
-import ch.bailu.aat.util.fs.AppDirectory;
-import ch.bailu.aat.util.fs.AndroidVolumes;
-import ch.bailu.aat.util.ui.AppLog;
-import ch.bailu.util_java.foc.Foc;
 import ch.bailu.util_java.util.Objects;
 
 public class SolidDataDirectory extends SolidFile {

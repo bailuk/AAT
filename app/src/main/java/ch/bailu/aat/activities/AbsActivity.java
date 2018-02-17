@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.os.Bundle;
 
 import ch.bailu.aat.preferences.PreferenceLoadDefaults;
-import ch.bailu.aat.preferences.SolidDataDirectoryDefault;
 import ch.bailu.aat.util.AppPermission;
 import ch.bailu.aat.util.ui.AppLog;
 

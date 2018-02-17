@@ -39,9 +39,7 @@ public abstract class FilterList<T> {
     private void showAll() {
         if (visible.size() != all.size()) {
             visible.clear();
-            for (T t : all) {
-                visible.add(t);
-            }
+            visible.addAll(all);
         }
     }
 

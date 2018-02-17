@@ -1,7 +1,6 @@
 package ch.bailu.aat.map.mapsforge;
 
 import android.content.SharedPreferences;
-import android.graphics.Canvas;
 import android.view.GestureDetector;
 import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.MotionEvent;
@@ -12,13 +11,9 @@ import org.mapsforge.core.model.Dimension;
 import org.mapsforge.core.model.MapPosition;
 import org.mapsforge.core.model.Point;
 import org.mapsforge.core.util.LatLongUtils;
-import org.mapsforge.core.util.Parameters;
-import org.mapsforge.map.android.graphics.AndroidGraphicFactory;
 import org.mapsforge.map.android.view.MapView;
-import org.mapsforge.map.controller.FrameBufferController;
 import org.mapsforge.map.layer.Layer;
 import org.mapsforge.map.model.MapViewPosition;
-import org.mapsforge.map.view.FrameBuffer;
 
 import java.util.ArrayList;
 

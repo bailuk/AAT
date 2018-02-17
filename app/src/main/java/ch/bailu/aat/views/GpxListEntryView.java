@@ -7,7 +7,6 @@ import android.widget.AbsListView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import ch.bailu.aat.R;
 import ch.bailu.aat.util.AbsServiceLink;
 import ch.bailu.aat.description.ContentDescription;
 import ch.bailu.aat.dispatcher.OnContentUpdatedInterface;

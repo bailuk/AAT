@@ -7,7 +7,6 @@ import android.view.MenuItem;
 
 import ch.bailu.aat.R;
 import ch.bailu.aat.util.AbsServiceLink;
-import ch.bailu.aat.util.ToDo;
 import ch.bailu.aat.util.fs.FileAction;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.util_java.foc.Foc;

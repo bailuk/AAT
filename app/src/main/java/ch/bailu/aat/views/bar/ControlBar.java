@@ -1,7 +1,6 @@
 package ch.bailu.aat.views.bar;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.HorizontalScrollView;

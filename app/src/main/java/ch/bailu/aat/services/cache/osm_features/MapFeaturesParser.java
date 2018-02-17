@@ -19,8 +19,8 @@ public class MapFeaturesParser {
     private final StringBuilder outKey = new StringBuilder();
     private final StringBuilder outValue = new StringBuilder();
 
-    private String outSummarySearchKey = new String();
-    private String outSummaryKey = new String();
+    private String outSummarySearchKey = "";
+    private String outSummaryKey = "";
 
     private int id = 0;
 

@@ -39,7 +39,7 @@ public class NodeBitmap {
         return node;
     }
 
-    private final SyncTileBitmap bitmap = new SyncTileBitmap();;
+    private final SyncTileBitmap bitmap = new SyncTileBitmap();
 
     private NodeBitmap(int radius, AppDensity res) {
 

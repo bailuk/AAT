@@ -7,7 +7,6 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Build;
 
 import java.lang.reflect.InvocationTargetException;
@@ -190,10 +189,16 @@ public class StatusIcon  {
         NotificationChannel chan = new NotificationChannel(channelId,
                 channelName, NotificationManager.IMPORTANCE_DEFAULT);
 
-        chan.setLockscreenVisibility(Notification.VISIBILITY_PUBLIC);
+        if (chan != null) {
+            chan.setLockscreenVisibility(Notification.VISIBILITY_PUBLIC);
 
-        NotificationManager notificationManager = (NotificationManager) scontext.getContext().getSystemService(Context.NOTIFICATION_SERVICE);
-        notificationManager.createNotificationChannel(chan);
+
+            NotificationManager notificationManager = (NotificationManager)
+                    scontext.getContext().getSystemService(Context.NOTIFICATION_SERVICE);
+
+            if (notificationManager != null)
+                notificationManager.createNotificationChannel(chan);
+        }
 
         return channelId;
 

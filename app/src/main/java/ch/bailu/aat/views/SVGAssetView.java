@@ -2,7 +2,6 @@ package ch.bailu.aat.views;
 
 import android.widget.ImageView;
 
-import ch.bailu.aat.R;
 import ch.bailu.aat.gpx.GpxPointNode;
 import ch.bailu.aat.services.InsideContext;
 import ch.bailu.aat.services.ServiceContext;

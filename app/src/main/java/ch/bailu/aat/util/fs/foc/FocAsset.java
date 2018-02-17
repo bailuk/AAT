@@ -5,7 +5,6 @@ import android.content.res.AssetManager;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.ArrayList;
 
 import ch.bailu.util_java.foc.Foc;
 

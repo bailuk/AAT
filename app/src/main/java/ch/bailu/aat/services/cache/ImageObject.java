@@ -121,7 +121,7 @@ public class ImageObject extends ImageObjectAbstract {
             return size[0];
         }
 
-    };
+    }
 
 
 }

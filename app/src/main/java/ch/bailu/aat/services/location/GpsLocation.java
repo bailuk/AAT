@@ -4,7 +4,6 @@ import android.content.Context;
 import android.location.Location;
 import android.location.LocationManager;
 
-import ch.bailu.aat.preferences.SolidBoolean;
 import ch.bailu.aat.preferences.SolidGpsTimeFix;
 
 public class GpsLocation extends RealLocation {

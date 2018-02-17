@@ -4,7 +4,6 @@ package ch.bailu.aat.preferences;
 import android.content.Context;
 
 import ch.bailu.aat.util.ToDo;
-import ch.bailu.aat.util.ui.AppLog;
 
 public class SolidGpsTimeFix extends SolidBoolean {
 
