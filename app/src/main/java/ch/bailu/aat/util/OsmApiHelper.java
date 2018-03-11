@@ -14,7 +14,6 @@ public abstract class OsmApiHelper {
 
         public abstract String getApiName();
         public abstract String getUrl(String query) throws UnsupportedEncodingException;
-        public abstract String getUrlEnd();
         public abstract String getUrlStart();
         public abstract Foc getBaseDirectory();
         public abstract String getFileExtension();

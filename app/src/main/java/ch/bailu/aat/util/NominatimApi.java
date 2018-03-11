@@ -74,18 +74,18 @@ public class NominatimApi extends OsmApiHelper {
         final StringBuilder url = new StringBuilder();        
         url.setLength(0);
         url.append(URL);
-        url.append(URLEncoder.encode(query, "UTF-8"));
+        url.append(URLEncoder.encode(query.replace('\n', ' '), "UTF-8"));
         url.append(URLEncoder.encode(POST, "UTF-8"));
         url.append(bounding);
         return url.toString();
     }
 
-    
+/*
     @Override
     public String getUrlEnd() {
         return POST+bounding;
     }
-
+*/
     @Override
     public String getUrlStart() {
         return URL;

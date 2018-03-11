@@ -142,12 +142,12 @@ public class OverpassApi extends OsmApiHelper {
         return URL+"...";
     }
 
-
+/*
     @Override
     public String getUrlEnd() {
         return POST;
     }
-
+*/
 
     @Override
     public Foc getBaseDirectory() {
