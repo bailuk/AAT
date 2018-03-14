@@ -16,7 +16,7 @@ public class KeyList {
 
 
     public void addKeys(String s) {
-        addKeys(s.split(" |=|\\.|;|:|\\/"));
+        addKeys(s.split(" |=|\\.|;|:|/"));
     }
 
 
