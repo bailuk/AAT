@@ -86,7 +86,7 @@ CONVERT "button_pressed.9"
 CONVERT "button_selected.9"
 
 ####### Application
-CCONVERT "icon" 
+COPY "icon" 
 CONVERT "status"
 CONVERT "icon_status"
 
