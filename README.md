@@ -1,5 +1,5 @@
 # About
-AAT - Android Activity Tracker is a GPS-tracking application for tracking sportive activities, with emphasis on cycling. It uses MapsForge to display map tiles and offline maps from the OpenStreetMap project.
+AAT - Another Activity Tracker is a GPS-tracking application for tracking sportive activities, with emphasis on cycling. It uses MapsForge to display map tiles and offline maps from the OpenStreetMap project.
 
     
 # Copyright
