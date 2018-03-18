@@ -36,11 +36,7 @@ public abstract class AbsMenu {
 
 
     public void showAsPopup (Context context, View view) {
-        if (android.os.Build.VERSION.SDK_INT < 11) {
-            showAsDialog(context);
-        } else {
-            showAsPopupSDK11(context, view);
-        }
+        showAsPopupSDK11(context, view);
     }
 
 

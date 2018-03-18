@@ -90,7 +90,7 @@ public class DownloadTask extends BackgroundTask implements ContextWrapperInterf
         long total=0;
         InputStream input = null;
         OutputStream output = null;
-        HttpURLConnection connection = null;
+        HttpURLConnection connection;
         byte[] buffer = new byte[IO_BUFFER_SIZE];
 
 

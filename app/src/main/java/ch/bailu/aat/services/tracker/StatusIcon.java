@@ -9,14 +9,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-
 import ch.bailu.aat.R;
 import ch.bailu.aat.activities.ActivitySwitcher;
-import ch.bailu.aat.util.ui.AppLog;
-import ch.bailu.aat.util.ui.AppTheme;
 import ch.bailu.aat.services.ServiceContext;
+import ch.bailu.aat.util.ui.AppTheme;
 
 
 public class StatusIcon  {
@@ -147,16 +143,14 @@ public class StatusIcon  {
         NotificationChannel chan = new NotificationChannel(channelId,
                 channelName, NotificationManager.IMPORTANCE_DEFAULT);
 
-        if (chan != null) {
-            chan.setLockscreenVisibility(Notification.VISIBILITY_PUBLIC);
+        chan.setLockscreenVisibility(Notification.VISIBILITY_PUBLIC);
 
 
-            NotificationManager notificationManager = (NotificationManager)
-                    scontext.getContext().getSystemService(Context.NOTIFICATION_SERVICE);
+        NotificationManager notificationManager = (NotificationManager)
+                scontext.getContext().getSystemService(Context.NOTIFICATION_SERVICE);
 
-            if (notificationManager != null)
-                notificationManager.createNotificationChannel(chan);
-        }
+        if (notificationManager != null)
+            notificationManager.createNotificationChannel(chan);
 
         return channelId;
 
