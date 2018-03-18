@@ -11,6 +11,19 @@ XXHDPI="$DRAW-xxhdpi/"
 XXXHDPI="$DRAW-xxxhdpi/"
 
 
+function SVG_COPY {
+    TARGET="${1//-/_}".png
+
+	convert -size "36x36" $1.svg $LDPI/$TARGET
+	convert -size "48x48" $1.svg $MDPI/$TARGET
+	convert -size "72x72" $1.svg $HDPI/$TARGET
+	convert -size "96x96" $1.svg $XHDPI/$TARGET
+	convert -size "144x144" $1.svg $XXHDPI/$TARGET
+	convert -size "192x192" $1.svg $XXXHDPI/$TARGET
+
+}
+
+
 function COPY {
     TARGET="${1//-/_}".png
 
@@ -20,6 +33,19 @@ function COPY {
 	convert $1.png -scale "96x96"   $XHDPI/$TARGET
 	convert $1.png -scale "144x144" $XXHDPI/$TARGET
 	convert $1.png -scale "192x192" $XXXHDPI/$TARGET
+
+}
+
+
+function SCOPY {
+    TARGET="${1//-/_}".png
+
+	convert $1.png -scale "18x18"   $LDPI/$TARGET
+	convert $1.png -scale "24x24"   $MDPI/$TARGET
+	convert $1.png -scale "36x36"   $HDPI/$TARGET
+	convert $1.png -scale "48x48"   $XHDPI/$TARGET
+	convert $1.png -scale "72x72" $XXHDPI/$TARGET
+	convert $1.png -scale "96x96" $XXXHDPI/$TARGET
 
 }
 
@@ -87,8 +113,8 @@ CONVERT "button_selected.9"
 
 ####### Application
 COPY "icon" 
-CONVERT "status"
-CONVERT "icon_status"
+SCOPY "status"
+# CONVERT "icon_status"
 
 
 ####### Preview
