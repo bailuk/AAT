@@ -39,19 +39,19 @@ dependencies {
     */
 
     // Core
-    compile 'org.mapsforge:mapsforge-core:0.9.0'
-    compile 'org.mapsforge:mapsforge-map:0.9.0'
-    compile 'org.mapsforge:mapsforge-map-reader:0.9.0'
-    compile 'org.mapsforge:mapsforge-themes:0.9.0'
-    compile 'net.sf.kxml:kxml2:2.3.0'
+    implementation 'org.mapsforge:mapsforge-core:0.9.0'
+    implementation 'org.mapsforge:mapsforge-map:0.9.0'
+    implementation 'org.mapsforge:mapsforge-map-reader:0.9.0'
+    implementation 'org.mapsforge:mapsforge-themes:0.9.0'
+    implementation 'net.sf.kxml:kxml2:2.3.0'
 
     // Android
-    compile 'org.mapsforge:mapsforge-map-android:0.9.0'
-    compile 'com.caverock:androidsvg:1.2.2-beta-1'
+    implementation 'org.mapsforge:mapsforge-map-android:0.9.0'
+    implementation 'com.caverock:androidsvg:1.2.2-beta-1'
 
 
     // Local
-    compile project(path: ':util-java')
+    implementation project(path: ':util-java')
 
 
 }

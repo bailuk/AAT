@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.widget.LinearLayout;
 
 import ch.bailu.aat.R;
+import ch.bailu.aat.util.fs.foc.FocAsset;
 import ch.bailu.aat.views.ContentView;
 import ch.bailu.aat.views.HtmlScrollTextView;
 import ch.bailu.aat.views.bar.MainControlBar;
@@ -42,9 +43,12 @@ public class AboutActivity extends AbsDispatcher {
 
     private MultiView createMultiView() {
         MultiView mv = new MultiView(this, SOLID_KEY);
-        mv.add(new HtmlScrollTextView(this, R.string.README_about_html),
+        mv.add(new HtmlScrollTextView(this,
+                new FocAsset(getAssets(),"documentation/README.about.html")),
                 getString(R.string.intro_about));
-        mv.add(new HtmlScrollTextView(this, R.string.README_enduser_html),
+
+        mv.add(new HtmlScrollTextView(this,
+                new FocAsset(getAssets(),"documentation/README.enduser.html")),
                 getString(R.string.intro_readme));
 
         return mv;

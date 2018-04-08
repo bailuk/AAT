@@ -24,10 +24,11 @@ public abstract class ContentDescription
     public abstract String getValue();
     public abstract String getLabel();
 
+    /*
     public String getApLabel(String label) {
         return label + " (" + getContext().getString(R.string.p_autopause) + ")";
     }
-
+*/
 
     public String getUnit() {
         return NULL_STRING;

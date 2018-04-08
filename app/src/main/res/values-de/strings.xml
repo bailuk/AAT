@@ -28,7 +28,6 @@
     <string name="gps_noaccess">Verweigert</string>
 
 
-
     <string name="tracker_start">Start</string>
     <string name="tracker_pause">Pause</string>
     <string name="tracker_stop">Stopp</string>
@@ -161,14 +160,18 @@
     <string name="d_descend">Abstieg</string>
     <string name="d_slope">Steigung</string>
 
-
+    <string name="pause">Pause</string>
+    <string name="pause_ap">Pause (mit Autopause)</string>
     <string name="speed">Geschwindigkeit</string>
     <string name="average">Durchschnitt</string>
+    <string name="average_ap">Durchschnitt (ohne Pause)</string>
     <string name="maximum">Maximum</string>
     <string name="distance">Distanz</string>
     <string name="altitude">Höhe</string>
     <string name="time">Zeit</string>
+    <string name="time_ap">Zeit (ohne Pause)</string>
     <string name="calories">Kalorien</string>
+
 
 
     <!-- ToolTip -->
@@ -248,8 +251,6 @@
     <string name="p_distance_filter">Distanz-Filter</string>
     <string name="p_directory_data">Interne Dateien</string>
     <string name="p_directory_tiles">Zwischenspeicher für Kacheln</string>
-
-    <string name="pause">Pause</string>
 
 
 </resources>

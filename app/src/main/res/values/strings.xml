@@ -3,6 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:ignore="MissingTranslation" >
 
+    <!-- Static -->
+    <string name="app_name" translatable="false">AAT</string>
+
     <!-- General -->
     <string name="on">On</string>
     <string name="off">Off</string>
@@ -218,12 +221,20 @@
     <string name="d_slope">Slope</string>
 
     <string name="pause">Pause</string>
+    <string name="pause_ap">Pause (with autopause)</string>
+
     <string name="speed">Speed</string>
+
     <string name="average">Average</string>
+    <string name="average_ap">Average (without pauses)</string>
+
     <string name="maximum">Maximum</string>
     <string name="distance">Distance</string>
     <string name="altitude">Altitude</string>
-    <string name="time">Total Time</string>
+
+    <string name="time">Total time</string>
+    <string name="time_ap">Total time (without pauses)</string>
+
     <string name="calories">Calories</string>
     <string name="name">Name</string>
 
