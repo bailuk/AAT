@@ -7,9 +7,9 @@ import android.graphics.Typeface;
 import ch.bailu.aat.util.ui.AppLog;
 import ch.bailu.aat.util.ui.AppTheme;
 
-public class ToolTipMessageView extends MessageView {
-    public ToolTipMessageView(Context context) {
-        super(context, AppLog.LogInfo.ACTION);
+public class LogInfoMessageView extends MessageView {
+    public LogInfoMessageView(Context context) {
+        super(context, AppLog.LOG_INFO);
 
         setTextColor(AppTheme.getHighlightColor3());
         setTypeface(Typeface.DEFAULT_BOLD);
@@ -17,11 +17,14 @@ public class ToolTipMessageView extends MessageView {
 
     @Override
     public void updateContent(Intent intent) {
-        if (intent != null) {
-            String message = intent.getStringExtra(AppLog.EXTRA_MESSAGE);
-            setText(message);
-            enableText();
-        }
+        String message = intent.getStringExtra(AppLog.EXTRA_MESSAGE);
+        setText(message);
+        enableText();
         disableText();
+    }
+
+    @Override
+    public void updateContent() {
+
     }
 }

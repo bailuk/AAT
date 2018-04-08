@@ -1,19 +1,11 @@
 package ch.bailu.aat.services.background;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-
 import java.net.URL;
 import java.util.HashMap;
 
 import ch.bailu.aat.preferences.SolidRendererThreads;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.VirtualService;
-import ch.bailu.aat.util.AppBroadcaster;
-import ch.bailu.aat.util.AppIntent;
-import ch.bailu.aat.util.fs.foc.FocAndroid;
-import ch.bailu.aat.util.ui.AppLog;
 import ch.bailu.util_java.foc.Foc;
 
 public class BackgroundService extends VirtualService {

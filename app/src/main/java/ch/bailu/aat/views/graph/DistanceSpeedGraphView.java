@@ -97,9 +97,9 @@ public class DistanceSpeedGraphView extends AbsGraphView implements SharedPrefer
         private float distanceOfSample=0;
         private long timeOfSample=0;
 
-        SolidAutopause spause = new SolidPostprocessedAutopause(getContext());
+        final SolidAutopause spause = new SolidPostprocessedAutopause(getContext());
 
-        AutoPause autoPause = new AutoPause.Time(
+        final AutoPause autoPause = new AutoPause.Time(
                 spause.getTriggerSpeed(),
                 spause.getTriggerLevelMillis());
 

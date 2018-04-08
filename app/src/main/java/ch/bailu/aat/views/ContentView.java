@@ -23,9 +23,9 @@ public class ContentView extends FrameLayout{
         messages.setOrientation(LinearLayout.VERTICAL);
         addView(messages);
 
-        addM(new DownloadingMessageView(context));
+        addM(new DownloadMessageView(context));
         addM(new FileMessageView(context));
-        addM(new ToolTipMessageView(context));
+        addM(new LogInfoMessageView(context));
     }
 
 

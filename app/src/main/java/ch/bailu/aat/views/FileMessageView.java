@@ -16,11 +16,14 @@ public class FileMessageView  extends MessageView{
 
     @Override
     public void updateContent(Intent intent) {
-        if (intent != null) {
-            Foc file = FocAndroid.factory(getContext(), AppIntent.getFile(intent));
-            setText(file.getPathName());
-            enableText();
-        }
+        Foc file = FocAndroid.factory(getContext(), AppIntent.getFile(intent));
+        setText(file.getPathName());
+        enableText();
         disableText();
+    }
+
+    @Override
+    public void updateContent() {
+
     }
 }

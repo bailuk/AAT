@@ -168,6 +168,7 @@ public abstract class AbsOsmApiActivity extends AbsDispatcher implements OnClick
         scroller.add(preview);
         editor = new EditTextTool(new TagEditor(this, osmApi.getBaseDirectory()), LinearLayout.VERTICAL);
 
+
         inputMultiView = new MultiView(this, osmApi.getApiName());
         inputMultiView.add(editor);
         inputMultiView.add(scroller);

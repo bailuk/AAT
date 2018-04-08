@@ -3,8 +3,6 @@ package ch.bailu.aat.views;
 import android.content.Context;
 import android.text.util.Linkify;
 
-import org.mapsforge.core.util.IOUtils;
-
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;

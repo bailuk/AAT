@@ -276,8 +276,7 @@
 
 
     <string name ="tt_nominatim_query">Start search.</string>
-    <string name ="tt_nominatim_clear">Clear search text.</string>
-    <string name ="tt_nominatim_overlay">Use result as map overlay.</string>
+    <string name ="tt_nominatim_clear">Clear line in search text.</string>
     <string name ="tt_nominatim_save">Save a copy of the result.</string>
 
     <string name ="tt_cockpit_a">Fullscreen</string>

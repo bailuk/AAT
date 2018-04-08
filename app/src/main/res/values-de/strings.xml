@@ -200,8 +200,7 @@
 
 
     <string name ="tt_nominatim_query">Anfrage starten…</string>
-    <string name ="tt_nominatim_clear">Text für die Anfrage zurücksetzen</string>
-    <string name ="tt_nominatim_overlay">Anfrageresultat als Overlay anzeigen</string>
+    <string name ="tt_nominatim_clear">Zeile löschen</string>
     <string name ="tt_nominatim_save">Kopie des Anfrageresultats speichern</string>
 
     <string name="tt_info_location">Importieren/exportieren der Kartenmitte</string>

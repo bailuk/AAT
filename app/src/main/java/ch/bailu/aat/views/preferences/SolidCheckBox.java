@@ -11,7 +11,6 @@ import ch.bailu.aat.util.ui.ToolTipView;
 
 public class SolidCheckBox extends LinearLayout {
 
-    private final CheckBox checkBox;
     private final ToolTipView toolTip;
 
     public SolidCheckBox(final SolidBoolean sboolean) {
@@ -19,7 +18,7 @@ public class SolidCheckBox extends LinearLayout {
         setOrientation(VERTICAL);
         AppTheme.themify(this);
 
-        checkBox = new CheckBox(getContext());
+        CheckBox checkBox = new CheckBox(getContext());
         AppTheme.themify(checkBox);
 
         addView(checkBox);

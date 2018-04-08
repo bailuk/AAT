@@ -9,6 +9,7 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
 import ch.bailu.aat.R;
+import ch.bailu.aat.util.ui.ToolTip;
 import ch.bailu.aat.views.bar.ControlBar;
 
 public class EditTextTool extends LinearLayout implements View.OnClickListener {
@@ -26,6 +27,7 @@ public class EditTextTool extends LinearLayout implements View.OnClickListener {
 
         clearText = bar.addImageButton(R.drawable.edit_clear_all_inverse);
         clearText.setOnClickListener(this);
+        ToolTip.set(clearText, R.string.tt_nominatim_clear);
 
         setOrientation(HORIZONTAL);
 
