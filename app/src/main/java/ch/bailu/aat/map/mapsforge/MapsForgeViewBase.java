@@ -1,6 +1,7 @@
 package ch.bailu.aat.map.mapsforge;
 
 import android.content.SharedPreferences;
+import android.graphics.Canvas;
 import android.view.GestureDetector;
 import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.MotionEvent;
@@ -247,6 +248,11 @@ public class MapsForgeViewBase extends MapView implements
         destroyAll();
     }
 
+    @Override
+    public void onDraw(Canvas canvas) {
+        if (areServicesUp && areLayersAttached)
+            super.onDraw(canvas);
+    }
 
 
 
