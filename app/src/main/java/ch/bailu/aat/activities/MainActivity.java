@@ -37,10 +37,10 @@ public class MainActivity extends AbsDispatcher {
 
     private void createViews() {
 
-        LinearLayout contentView = new ContentView(this);
+        ContentView contentView = new ContentView(this);
 
-        contentView.addView(createButtonBar());
-        contentView.addView(createActionList());
+        contentView.add(createButtonBar());
+        contentView.add(createActionList());
 
         setContentView(contentView);
     }

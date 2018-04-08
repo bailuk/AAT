@@ -22,8 +22,8 @@ import ch.bailu.aat.preferences.SolidDirectoryQuery;
 import ch.bailu.aat.services.directory.Iterator;
 import ch.bailu.aat.services.directory.IteratorSimple;
 import ch.bailu.aat.util.ui.AppLayout;
-import ch.bailu.aat.views.ContentView;
 import ch.bailu.aat.views.DbSynchronizerBusyIndicator;
+import ch.bailu.aat.views.ContentView;
 import ch.bailu.aat.views.GpxListView;
 import ch.bailu.aat.views.bar.MainControlBar;
 import ch.bailu.aat.views.PercentageLayout;
@@ -179,8 +179,8 @@ public abstract class AbsGpxListActivity extends ActivityContext implements OnIt
             summary.addAllFilterViews(map.getMContext());
 
 
-            contentView.addView(bar);
-            contentView.addView(createLayout(map, summary, bar));
+            contentView.add(bar);
+            contentView.add(createLayout(map, summary, bar));
 
             //bar.add(new SolidDirectoryMenuButton(acontext, sdirectory));
         }

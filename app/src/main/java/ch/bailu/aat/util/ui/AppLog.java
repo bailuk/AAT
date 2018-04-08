@@ -18,12 +18,12 @@ import ch.bailu.aat.util.AppBroadcaster;
 public class AppLog implements Closeable {
     private final static String UNKNOWN = "";
     
-    private final static String NAME_SPACE= AppBroadcaster.NAME_SPACE;
-    private final static String EXTRA_MESSAGE = "MESSAGE";
+    public final static String NAME_SPACE= AppBroadcaster.NAME_SPACE;
+    public final static String EXTRA_MESSAGE = "MESSAGE";
     private final static String EXTRA_SOURCE = "TITLE";
     
 
-    private abstract class Log extends BroadcastReceiver implements Closeable {
+    public abstract static class Log extends BroadcastReceiver implements Closeable {
 
         private final Context context;
         
@@ -50,7 +50,7 @@ public class AppLog implements Closeable {
 
     
     
-    private class LogError extends Log {
+    private static class LogError extends Log {
         public final static String ACTION = NAME_SPACE + "LOG_ERROR";
         private final AlertDialog.Builder alertbox;
         
@@ -76,7 +76,7 @@ public class AppLog implements Closeable {
     }
     
     
-    private class LogInfo extends Log {
+    public static class LogInfo extends Log {
         public final static String ACTION = NAME_SPACE + "LOG_INFO";
         private final Toast toast;
         
@@ -96,10 +96,10 @@ public class AppLog implements Closeable {
 
     
     
-    private final Log info, error;
+    private final Log error;
 
     public AppLog(Context context) {
-        info = new LogInfo(context);
+        //info = new LogInfo(context);
         error = new LogError(context);
     }
     
@@ -206,7 +206,7 @@ public class AppLog implements Closeable {
     
     @Override
     public void close() {
-        info.close();
+        //info.close();
         error.close();
     }
 }

@@ -59,10 +59,10 @@ public class NodeDetailActivity extends AbsDispatcher
         htmlBuilder = new HtmlBuilderGpx(this);
         fileID = getIntent().getStringExtra("ID");
 
-        final LinearLayout contentView = new ContentView(this);
-        contentView.addView(createButtonBar());
-        contentView.addView(createSeekBar());
-        contentView.addView(createVerticalView());
+        final ContentView contentView = new ContentView(this);
+        contentView.add(createButtonBar());
+        contentView.add(createSeekBar());
+        contentView.add(createVerticalView());
 
         createDispatcher();
 

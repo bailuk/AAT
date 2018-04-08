@@ -17,8 +17,8 @@ public class HtmlViewActivity extends AbsDispatcher {
 
         ContentView contentView = new ContentView(this);
 
-        contentView.addView(new MainControlBar(this));
-        contentView.addView(new HtmlScrollTextView(this, getTextFromIntent()));
+        contentView.add(new MainControlBar(this));
+        contentView.add(new HtmlScrollTextView(this, getTextFromIntent()));
 
         setContentView(contentView);
     }

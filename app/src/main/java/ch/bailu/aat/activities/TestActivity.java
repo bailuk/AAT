@@ -3,7 +3,6 @@ package ch.bailu.aat.activities;
 
 import android.os.Bundle;
 import android.view.View;
-import android.widget.LinearLayout;
 
 import ch.bailu.aat.R;
 import ch.bailu.aat.description.AccelerationDescription;
@@ -69,12 +68,12 @@ public class TestActivity extends AbsDispatcher {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        final LinearLayout contentView = new ContentView(this);
+        final ContentView contentView = new ContentView(this);
 
         MultiView multiView = createMultiView();
 
-        contentView.addView(createButtonBar(multiView));
-        contentView.addView(multiView);
+        contentView.add(createButtonBar(multiView));
+        contentView.add(multiView);
 
 
         setContentView(contentView);

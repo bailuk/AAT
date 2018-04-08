@@ -72,15 +72,15 @@ public class GpxViewActivity extends AbsDispatcher
 
             AppLog.d(this, content.toString());
 
-            final LinearLayout contentView = new ContentView(this);
+            final ContentView contentView = new ContentView(this);
 
             MainControlBar bar = new MainControlBar(this);
 
-            contentView.addView(bar);
+            contentView.add(bar);
             View view = createLayout(bar);
             initButtonBar(bar);
 
-            contentView.addView(view);
+            contentView.add(view);
             setContentView(contentView);
             createDispatcher();
         }

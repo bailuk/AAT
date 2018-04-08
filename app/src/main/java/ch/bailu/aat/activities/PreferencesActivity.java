@@ -2,7 +2,6 @@ package ch.bailu.aat.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.LinearLayout;
 
 import ch.bailu.aat.R;
 import ch.bailu.aat.preferences.SolidFile;
@@ -30,11 +29,11 @@ public class PreferencesActivity extends AbsDispatcher {
 
 
     private void createViews() {
-        LinearLayout contentView = new ContentView(this);
+        ContentView contentView = new ContentView(this);
 
         MultiView multiView = createMultiView();
-        contentView.addView(new MainControlBar(this, multiView));
-        contentView.addView(multiView);
+        contentView.add(new MainControlBar(this, multiView));
+        contentView.add(multiView);
 
         setContentView(contentView);
     }

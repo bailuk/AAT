@@ -3,7 +3,6 @@ package ch.bailu.aat.activities;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
@@ -54,11 +53,11 @@ public abstract class AbsFileContentActivity extends AbsDispatcher implements On
 
 
     private void createViews() {
-        final ViewGroup contentView = new ContentView(this);
+        final ContentView contentView = new ContentView(this);
 
         MainControlBar bar = new MainControlBar(this);
-        contentView.addView(bar);
-        contentView.addView(createLayout(bar));
+        contentView.add(bar);
+        contentView.add(createLayout(bar));
 
         initButtonBar(bar);
 

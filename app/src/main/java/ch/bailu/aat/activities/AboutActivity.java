@@ -25,10 +25,10 @@ public class AboutActivity extends AbsDispatcher {
 
     private void createViews() {
         MultiView multiView = createMultiView();
-        LinearLayout contentView = new ContentView(this);
+        ContentView contentView = new ContentView(this);
 
-        contentView.addView(createButtonBar(multiView));
-        contentView.addView(multiView);
+        contentView.add(createButtonBar(multiView));
+        contentView.add(multiView);
 
         setContentView(contentView);
     }
