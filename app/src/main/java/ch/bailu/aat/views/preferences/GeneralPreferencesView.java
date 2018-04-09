@@ -9,6 +9,7 @@ import ch.bailu.aat.preferences.SolidPostprocessedAutopause;
 import ch.bailu.aat.preferences.SolidDataDirectory;
 import ch.bailu.aat.preferences.SolidExternalDirectory;
 import ch.bailu.aat.preferences.SolidLocationProvider;
+import ch.bailu.aat.preferences.SolidPresetCount;
 import ch.bailu.aat.preferences.SolidUnit;
 import ch.bailu.aat.preferences.SolidWeight;
 
@@ -22,6 +23,7 @@ public class GeneralPreferencesView extends VerticalScrollView {
         add(new SolidIndexListView(new SolidUnit(context)));
         add(new SolidIntegerView(new SolidWeight(context)));
         add(new SolidIndexListView(new SolidPostprocessedAutopause(context)));
+        add(new SolidIntegerView(new SolidPresetCount(context)));
 
         add(new TitleView(context, R.string.p_system));
         add(new SolidIndexListView(new SolidLocationProvider(context)));

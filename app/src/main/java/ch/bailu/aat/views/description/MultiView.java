@@ -61,6 +61,25 @@ public class MultiView extends ViewGroup {
     }
 
 
+    public void remove(int i) {
+        if (i < pages.size() && i > -1) {
+            pages.remove(i);
+        }
+    }
+
+    public void remove(View view) {
+        for (int i = pages.size()-1 ; i>=0; i--) {
+            if (pages.get(i).view == view) {
+                pages.remove(i);
+            }
+        }
+    }
+
+
+    public int pageCount() {
+        return pages.size();
+    }
+
     public void setNext() {
         setActive(active+1);
     }

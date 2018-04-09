@@ -104,4 +104,12 @@ public class SolidMapTileStack extends SolidCheckList {
     }
 
 
+    public void setDefaults() {
+        for (int i=0; i < SOURCES.length; i++) {
+            if (SOURCES[i] == DownloadSource.MAPNIK) {
+                setEnabled(i, true);
+                break;
+            }
+        }
+    }
 }

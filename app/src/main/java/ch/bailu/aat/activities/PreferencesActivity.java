@@ -1,11 +1,13 @@
 package ch.bailu.aat.activities;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import ch.bailu.aat.R;
 import ch.bailu.aat.preferences.SolidFile;
 import ch.bailu.aat.preferences.SolidPreset;
+import ch.bailu.aat.preferences.SolidPresetCount;
 import ch.bailu.aat.views.ContentView;
 import ch.bailu.aat.views.bar.MainControlBar;
 import ch.bailu.aat.views.description.MultiView;
@@ -13,17 +15,21 @@ import ch.bailu.aat.views.preferences.GeneralPreferencesView;
 import ch.bailu.aat.views.preferences.MapTilePreferencesView;
 import ch.bailu.aat.views.preferences.PresetPreferencesView;
 
-public class PreferencesActivity extends AbsDispatcher {
+public class PreferencesActivity extends AbsDispatcher implements SharedPreferences.OnSharedPreferenceChangeListener {
 
     private final static String SOLID_KEY=PreferencesActivity.class.getSimpleName();
 
     private MapTilePreferencesView mapTilePreferences;
 
+    private MultiView multiView;
+    private SolidPresetCount spresetCount;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        spresetCount = new SolidPresetCount(this);
+        spresetCount.register(this);
         createViews();
     }
 
@@ -31,7 +37,7 @@ public class PreferencesActivity extends AbsDispatcher {
     private void createViews() {
         ContentView contentView = new ContentView(this);
 
-        MultiView multiView = createMultiView();
+        multiView = createMultiView();
         contentView.add(new MainControlBar(this, multiView));
         contentView.add(multiView);
 
@@ -41,22 +47,17 @@ public class PreferencesActivity extends AbsDispatcher {
 
 
     private MultiView createMultiView() {
-        MultiView mv = new MultiView(this, SOLID_KEY);
-
-        final int l = new SolidPreset(this).length();
+        multiView = new MultiView(this, SOLID_KEY);
 
         mapTilePreferences = new MapTilePreferencesView(this, getServiceContext());
-        mv.add(new GeneralPreferencesView(this),
+        multiView.add(new GeneralPreferencesView(this),
                 getString(R.string.p_general)+ "/"+ getString(R.string.p_system));
-        mv.add(mapTilePreferences,
+        multiView.add(mapTilePreferences,
                 getString(R.string.p_tiles));
 
-        for (int i = 0; i < l; i++) {
-            mv.add(new PresetPreferencesView(this, i),
-                    getString(R.string.p_preset) + " " + (i + 1));
-        }
+        addPresetPreferences();;
 
-        return mv;
+        return multiView;
     }
 
 
@@ -74,5 +75,28 @@ public class PreferencesActivity extends AbsDispatcher {
         mapTilePreferences.updateText();
     }
 
+    @Override
+    public void onDestroy() {
+        spresetCount.unregister(this);
+        super.onDestroy();
+    }
 
+
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s) {
+        if (spresetCount.hasKey(s)) {
+            addPresetPreferences();
+        }
+    }
+
+    private void addPresetPreferences() {
+        while (multiView.pageCount() > 2)
+            multiView.remove(multiView.pageCount()-1);
+
+        for (int i = 0; i < spresetCount.getValue(); i++) {
+                multiView.add(new PresetPreferencesView(this, i),
+                        getString(R.string.p_preset) + " " + (i+1));
+        }
+
+    }
 }

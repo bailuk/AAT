@@ -22,12 +22,8 @@ public class PreferenceLoadDefaults {
 
 
     private void setDefaults(Context context) {
-        setDefaultMap(context);
-        new SolidWeight(context).setValue(75);
-
-        for (int i=0; i<new SolidPreset(context).length(); i++) {
-            new OldSolidMET(context,i).setIndex(i);
-        }
+        new SolidMapTileStack(context).setDefaults();
+        new SolidWeight(context).setDefaults();
     }
 
 
@@ -35,13 +31,4 @@ public class PreferenceLoadDefaults {
         return new SolidLong(Storage.global(context), KEY_STARTCOUNT).getValue();
     }
 
-
-    public void setDefaultMap(Context context) {
-        for (int i=0; i < SolidMapTileStack.SOURCES.length; i++) {
-            if (SolidMapTileStack.SOURCES[i] == DownloadSource.MAPNIK) {
-                new SolidMapTileStack(context).setEnabled(i, true);
-                break;
-            }
-        }
-    }
 }
