@@ -3,6 +3,7 @@ package ch.bailu.aat.views;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.util.TypedValue;
 
 import ch.bailu.aat.util.ui.AppLog;
 import ch.bailu.aat.util.ui.AppTheme;
@@ -12,7 +13,8 @@ public class LogInfoMessageView extends MessageView {
         super(context, AppLog.LOG_INFO);
 
         setTextColor(AppTheme.getHighlightColor3());
-        setTypeface(Typeface.DEFAULT_BOLD);
+        setTypeface(Typeface.MONOSPACE);
+        setTextSize(TypedValue.COMPLEX_UNIT_SP, 18f);
     }
 
     @Override
