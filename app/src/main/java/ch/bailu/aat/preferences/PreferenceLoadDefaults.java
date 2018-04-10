@@ -24,6 +24,7 @@ public class PreferenceLoadDefaults {
     private void setDefaults(Context context) {
         new SolidMapTileStack(context).setDefaults();
         new SolidWeight(context).setDefaults();
+        OldSolidMET.setDefaults(context);
     }
 
 

@@ -9,7 +9,7 @@ public class SolidPresetCount extends SolidInteger {
     private final static String KEY=SolidPresetCount.class.getSimpleName();
     private final static int MAX=15;
     private final static int MIN=3;
-    private final static int DEFAULT=5;
+    public final static int DEFAULT=5;
 
     public SolidPresetCount(Context c) {
         super(Storage.global(c), KEY);

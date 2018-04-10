@@ -25,16 +25,12 @@ public class SolidMET extends SolidString {
         String r = super.getValueAsString();
 
         if (Storage.DEF_VALUE.equals(r)) {
-            r = getDefaultValue();
+            r = new OldSolidMET(getContext(), preset).getValueAsString();
         }
         return r;
     }
 
 
-    private String getDefaultValue() {
-        String[] array = getContext().getResources().getStringArray(R.array.p_met_list);
-        return array[Math.min(preset, array.length-1)];
-    }
 
 
     public float getMETValue() {
