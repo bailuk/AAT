@@ -4,29 +4,15 @@
     <!-- General -->
     <string name="on">An</string>
     <string name="off">Aus</string>
+    <string name="auto">Auto</string>
+    <string name="none">Kein</string>
     <string name="enter">Eingabe…</string>
     <string name="pick">Auswählen (SAF)…</string>
 
 
-    <!-- Intro -->
-    <string name="intro_about">Info</string>
-    <string name="intro_list">Aufgezeichnete Aktivitäten</string>
-    <string name="intro_settings">Einstellungen</string>
-    <string name="intro_map">Kartenansicht</string>
-
-    <string name="intro_external_list">Externe Dateien</string>
-    <string name="intro_overlay_list">Overlay Liste</string>
-    <string name="intro_status">Status</string>
-    <string name="intro_nominatim">Karten Suche</string>
-
-    <!-- MultiView label -->
-    <string name="label_summary">Zusammenfassung</string>
-    <string name="label_filter">Filter</string>
-    <string name="label_list">Liste</string>
-
+    <!-- GPS / Tracker-->
     <string name="gps_nogps">Kein</string>
     <string name="gps_noaccess">Verweigert</string>
-
 
     <string name="tracker_start">Start</string>
     <string name="tracker_pause">Pause</string>
@@ -34,13 +20,36 @@
     <string name="tracker_resume">Weiter</string>
     <string name="tracker_restore">Track wiederherstellen</string>
 
-
     <string name="status_paused">Pause</string>
     <string name="status_autopaused">Autopause</string>
 
 
+    <!-- Activity main -->
+    <string name="intro_about">Info</string>
+    <string name="intro_map">Kartenansicht</string>
+    <string name="intro_nominatim">Karten Suche</string>
+    <string name="intro_status">Status</string>
 
+    <string name="intro_overlay_list">Overlay Liste</string>
+    <string name="intro_list">Aufgezeichnete Aktivitäten</string>
+    <string name="intro_external_list">Externe Dateien</string>
+    <string name="intro_settings">Einstellungen</string>
+
+
+    <!-- Activity file list -->
+    <string name="label_summary">Zusammenfassung</string>
+    <string name="label_filter">Filter</string>
+    <string name="label_list">Liste</string>
+    <string name="filter_date_start">Start Datum</string>
+    <string name="filter_date_to">End Datum</string>
+    <string name="filter_geo">Innerhalb Bereich</string>
+
+
+    <!-- Preferences General -->
+    <string name="p_general">Allgemein</string>
+    <string name="p_weight_title">Gewicht in kg</string>
     <string name="p_unit_title">Einheiten</string>
+    <string name="p_preset_slots">Anzahl voreinstellungen</string>
     <string-array name="p_unit_list">
         <item>Metrisch (km, km/h)</item>h
         <item>Britisch (mi, mph)</item>
@@ -48,10 +57,24 @@
         <item>SI-Einheiten</item>
     </string-array>
 
-    <string name="p_general">Allgemein</string>
 
-    <string name="p_met">MET und Name</string>
+    <!-- Preferences System -->
+    <string name="p_directory_data">Interne Dateien</string>
+    <string name="p_system">System</string>
+    <string name="p_location_provider">Standortquelle</string>
+    <string name="p_post_autopause">Postprocessed Autopause</string>
+    <string name="p_cache_size">Grösse des internen Zwischenspeicher</string>
+    <string name="p_fix_gps">GPS Zeit korrigieren</string>
+
+
+    <!-- Preferences Context -->
+    <string name="p_legend_fulldistance">Totaldistanz</string>
+    <string name="p_overlay">Overlays</string>
+
+
+    <!-- Preferences Presets -->
     <string name="p_preset">Voreinstellungen</string>
+    <string name="p_met">MET und Name</string>
     <string-array name="p_met_list">
         <!--
           List is taken and modified from "Compendium of Physical Activities"
@@ -89,20 +112,33 @@
         <item> 6.8 Spazieren/Nordic walking hohe Anstrengung</item>
     </string-array>
 
-
-    <string name="p_weight_title">Gewicht in kg</string>
-    <string name="p_map">Karte</string>
-
+    <string name="p_accuracy_filter">Genauigkeitsfilter</string>
+    <string name="p_missing_trigger">Auslöser für fehlendes Signal</string>
+    <string name="p_distance_filter">Distanz-Filter</string>
     <string name="p_autopause">Autopause</string>
     <string name="p_tracker_autopause">Tracker automatisch auf Pause setzen</string>
-    <string name="p_post_autopause">Postprocessed Autopause</string>
 
     <string name="p_backlight_title">Bildschirm</string>
     <string name="p_backlight_off">Systemeinstellung</string>
     <string name="p_backlight_dim">Immer an (Dunkel)</string>
     <string name="p_backlight_bright">Immer an (Hell)</string>
 
-    <!-- Map-Tiles settings -->
+
+    <!-- Preferences Map -->
+    <string name="p_map">Karte</string>
+    <string name="p_mapsforge_directory">Verzeichnis für Offline-Karten</string>
+    <string name="p_enable_cache">Zwischenspeichern</string>
+    <string name="p_directory_tiles">Zwischenspeicher für Kacheln</string>
+    <string name="p_tile_size">Kachelgrösse</string>
+
+
+    <!-- Preferences Map trim tiles -->
+    <string-array name="p_trim_modes">
+        <item>Größe</item>
+        <item>Größe und alter</item>
+        <item>Alter</item>
+        <item>Größe oder alter</item>
+    </string-array>
     <string name="p_tiles">Karte</string>
     <string name="p_trim_cache">Zwischenspeicher verkleinern</string>
     <string name="p_trim_mode">Modus</string>
@@ -114,27 +150,35 @@
     <string name="p_trim_years">Jahre</string>
     <string name="p_trim_days">Tage</string>
     <string name="p_trim_total">Total</string>
-
-    <string-array name="p_trim_modes">
-        <item>Größe</item>
-        <item>Größe und alter</item>
-        <item>Alter</item>
-        <item>Größe oder alter</item>
-    </string-array>
-
-    <string name="p_mapsforge_directory">Verzeichnis für Offline-Karten</string>
-    <string name="p_enable_cache">Zwischenspeichern</string>
-
-
     <string name="p_remove_all">Zwischenspeicher löschen</string>
     <string name="p_remove_all_in">Zwischenspeicher löschen in</string>
     <string name="p_remove_old">Alte Kacheln löschen</string>
     <string name="p_remove_old_in">Alte Kacheln löschen in</string>
 
 
+
+    <!-- File context menu and file operation -->
     <string name="file_delete">Datei löschen</string>
     <string name="file_delete_ask">Datei löschen?</string>
+    <string name="file_copy">Kopieren nach…</string>
+    <string name="file_exists"> ist bereits vorhanden!</string>
+    <string name="file_overlay">Als overlay verwenden</string>
+    <string name="file_reload">Vorschau neu laden</string>
+    <string name="file_rename">Datei umbenenen</string>
+    <string name="file_send">Senden…</string>
+    <string name="file_view">Anzeigen/Bearbeiten…</string>
+    <string name="file_is_writeable">: lesen und schreiben.</string>
+    <string name="file_is_readonly">: nur lesen.</string>
+    <string name="file_is_missing">\u0020existiert nicht.</string>
+    <string name="file_is_denied">: kein Zugriff.</string>
 
+
+    <!-- Location menu -->
+    <string name="location_send">Position senden…</string>
+    <string name="location_view">Position ansehen…</string>
+    <string name="file_mock">Für simulierten Standort verwenden</string>
+    <string name="clipboard_copy">\u21d2 Zwischenablage</string>
+    <string name="clipboard_paste">\u21d0 Zwischenablage</string>
 
     <!-- Dialog -->
     <string name="dialog_yes">Ja</string>
@@ -145,8 +189,9 @@
     <string name="dialog_modified">Datei wurde verändert</string>
 
 
-
     <!-- Description -->
+    <string name="d_name">Name</string>
+    <string name="d_startdate">Start</string>
     <string name="d_longitude">Länge</string>
     <string name="d_latitude">Breite</string>
     <string name="d_accuracy">Genauigkeit</string>
@@ -171,7 +216,6 @@
     <string name="time">Zeit</string>
     <string name="time_ap">Zeit (ohne Pause)</string>
     <string name="calories">Kalorien</string>
-
 
 
     <!-- ToolTip -->
@@ -211,45 +255,5 @@
     <string name ="tt_cockpit_a">Vollbild</string>
     <string name ="tt_cockpit_b">Aufgeteilt</string>
 
-
-
-    <string name="file_copy">Kopieren nach…</string>
-    <string name="file_exists"> ist bereits vorhanden!</string>
-    <string name="file_overlay">Als overlay verwenden</string>
-    <string name="file_reload">Vorschau neu laden</string>
-    <string name="file_rename">Datei umbenenen</string>
-    <string name="file_send">Senden…</string>
-    <string name="file_view">Anzeigen/Bearbeiten…</string>
-    <string name="file_is_writeable">: lesen und schreiben.</string>
-    <string name="file_is_readonly">: nur lesen.</string>
-    <string name="file_is_missing">\u0020existiert nicht.</string>
-    <string name="file_is_denied">: kein Zugriff.</string>
-
-
-    <string name="clipboard_copy">\u21d2 Zwischenablage</string>
-    <string name="clipboard_paste">\u21d0 Zwischenablage</string>
-
-    <string name="location_send">Position senden…</string>
-    <string name="location_view">Position ansehen…</string>
-    <string name="d_name">Name</string>
-    <string name="d_startdate">Start</string>
-    <string name="auto">Auto</string>
-    <string name="file_mock">Für simulierten Standort verwenden</string>
-    <string name="filter_date_start">Start Datum</string>
-    <string name="filter_date_to">End Datum</string>
-    <string name="filter_geo">Innerhalb Bereich</string>
-    <string name="none">Kein</string>
-    <string name="p_accuracy_filter">Genauigkeitsfilter</string>
-    <string name="p_legend_fulldistance">Totaldistanz</string>
-    <string name="p_location_provider">Standortquelle</string>
-    <string name="p_missing_trigger">Auslöser für fehlendes Signal</string>
-    <string name="p_overlay">Overlays</string>
-    <string name="p_system">System</string>
-    <string name="p_tile_size">Kachelgrösse</string>
-
-    <string name="p_distance_filter">Distanz-Filter</string>
-    <string name="p_directory_data">Interne Dateien</string>
-    <string name="p_directory_tiles">Zwischenspeicher für Kacheln</string>
-
-
+    <string name ="tt_p_preset_slots">Anzahl Verzeichnisse und Voreinstellungen um Tracks zu organisieren.</string>
 </resources>

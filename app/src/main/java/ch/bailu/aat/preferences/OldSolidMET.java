@@ -26,6 +26,4 @@ public class OldSolidMET extends SolidStaticIndexList {
     public String getLabel() {
         return getContext().getString(R.string.p_met);
     }
-
-
 }
