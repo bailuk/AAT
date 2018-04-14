@@ -3,6 +3,7 @@ package ch.bailu.aat.views;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.text.TextUtils;
 
 import ch.bailu.aat.services.background.Downloads;
 import ch.bailu.aat.util.AppBroadcaster;
@@ -14,6 +15,7 @@ public class DownloadMessageView extends MessageView {
         super(context, AppBroadcaster.ON_DOWNLOADS_CHANGED);
         setTextColor(Color.WHITE);
         setSingleLine();
+        setEllipsize(TextUtils.TruncateAt.MIDDLE);
     }
 
 

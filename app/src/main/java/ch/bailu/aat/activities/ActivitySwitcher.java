@@ -24,6 +24,15 @@ public class ActivitySwitcher {
     private static ArrayList<Entry> entries = null;
     private static int cyclable = 0;
 
+    public static Entry get(Object obj) {
+        if (entries != null) {
+            for (Entry e : entries) {
+                if (e.activityClass == obj.getClass()) return e;
+            }
+        }
+        return null;
+    }
+
     public static Class<?> getDefaultCockpit() {
         if (entries != null && entries.size() > 0)
             return entries.get(0).activityClass;
@@ -75,14 +84,14 @@ public class ActivitySwitcher {
 
     private static void initTablet(Context c) {
         cyclable = TABLET_CYCLABLE;
-        entries.add(new Entry(c.getString(R.string.intro_resume), CockpitTabletActivity.class));
+        entries.add(new Entry(c.getString(R.string.intro_cockpit_a), CockpitTabletActivity.class));
     }
 
 
     private static void initPhone(Context c) {
         cyclable = PHONE_CYCLABLE;
-        entries.add(new Entry(c.getString(R.string.intro_resume), c.getString(R.string.tt_cockpit_a), CockpitActivity.class));
-        entries.add(new Entry(c.getString(R.string.intro_cockpit2), c.getString(R.string.tt_cockpit_b), CockpitSplitActivity.class));
+        entries.add(new Entry(c.getString(R.string.intro_cockpit_a), c.getString(R.string.tt_cockpit_a), CockpitActivity.class));
+        entries.add(new Entry(c.getString(R.string.intro_cockpit_b), c.getString(R.string.tt_cockpit_b), CockpitSplitActivity.class));
     }
 
     private static void initBoth(Context c) {

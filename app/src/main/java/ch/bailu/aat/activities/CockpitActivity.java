@@ -3,6 +3,7 @@ package ch.bailu.aat.activities;
 import android.os.Bundle;
 import android.view.View;
 
+import ch.bailu.aat.R;
 import ch.bailu.aat.description.AltitudeDescription;
 import ch.bailu.aat.description.AverageSpeedDescriptionAP;
 import ch.bailu.aat.description.CurrentSpeedDescription;
@@ -18,6 +19,7 @@ import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.map.MapFactory;
 import ch.bailu.aat.services.editor.EditorHelper;
 import ch.bailu.aat.util.ui.AppLayout;
+import ch.bailu.aat.util.ui.AppLog;
 import ch.bailu.aat.views.ContentView;
 import ch.bailu.aat.views.bar.ControlBar;
 import ch.bailu.aat.views.bar.MainControlBar;
@@ -42,7 +44,6 @@ public class CockpitActivity extends AbsDispatcher{
         contentView.add(multiView);
 
         setContentView(contentView);
-
         createDispatcher(edit);
     }
 

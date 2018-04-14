@@ -11,6 +11,7 @@ import java.io.Closeable;
 
 import ch.bailu.aat.BuildConfig;
 import ch.bailu.aat.util.AppBroadcaster;
+import ch.bailu.aat.util.Timer;
 
 
 public class AppLog implements Closeable {

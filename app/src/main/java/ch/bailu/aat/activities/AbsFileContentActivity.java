@@ -18,6 +18,7 @@ import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.map.MapViewInterface;
 import ch.bailu.aat.menus.FileMenu;
 import ch.bailu.aat.services.editor.EditorHelper;
+import ch.bailu.aat.util.ui.AppLog;
 import ch.bailu.aat.util.ui.ToolTip;
 import ch.bailu.aat.views.BusyButton;
 import ch.bailu.aat.views.ContentView;
@@ -111,6 +112,7 @@ public abstract class AbsFileContentActivity extends AbsDispatcher implements On
                 if (!Objects.equals(currentFileID, newFileID)) {
                     currentFileID = newFileID;
                     map.frameBounding(info.getBoundingBox());
+                    AppLog.i(AbsFileContentActivity.this, info.getFile().getName());
                 }
             }
         }, InfoID.FILEVIEW);

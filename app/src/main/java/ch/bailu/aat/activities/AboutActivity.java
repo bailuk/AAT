@@ -23,6 +23,7 @@ public class AboutActivity extends AbsDispatcher {
     }
 
 
+
     private void createViews() {
         MultiView multiView = createMultiView();
         ContentView contentView = new ContentView(this);

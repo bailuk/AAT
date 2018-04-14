@@ -44,12 +44,14 @@
     <string name="filter_date_to">End Datum</string>
     <string name="filter_geo">Innerhalb Bereich</string>
 
+    <!-- Activity OSM API Query -->
+    <string name ="query_save_copy">Kopie speichern</string>
 
     <!-- Preferences General -->
     <string name="p_general">Allgemein</string>
     <string name="p_weight_title">Gewicht in kg</string>
     <string name="p_unit_title">Einheiten</string>
-    <string name="p_preset_slots">Anzahl voreinstellungen</string>
+    <string name="p_preset_slots">Anzahl Voreinstellungen</string>
     <string-array name="p_unit_list">
         <item>Metrisch (km, km/h)</item>h
         <item>Britisch (mi, mph)</item>
@@ -64,7 +66,7 @@
     <string name="p_location_provider">Standortquelle</string>
     <string name="p_post_autopause">Postprocessed Autopause</string>
     <string name="p_cache_size">Grösse des internen Zwischenspeicher</string>
-    <string name="p_fix_gps">GPS Zeit korrigieren</string>
+    <string name="p_fix_gps">GPS Zeit anpassen</string>
 
 
     <!-- Preferences Context -->
@@ -245,7 +247,6 @@
 
     <string name ="tt_nominatim_query">Anfrage starten…</string>
     <string name ="tt_nominatim_clear">Zeile löschen</string>
-    <string name ="tt_nominatim_save">Kopie des Anfrageresultats speichern</string>
 
     <string name="tt_info_location">Importieren/exportieren der Kartenmitte</string>
     <string name="tt_menu_file">Menu für Dateioperationen anzeigen</string>

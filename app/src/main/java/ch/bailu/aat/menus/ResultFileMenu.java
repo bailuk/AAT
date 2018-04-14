@@ -27,7 +27,7 @@ public class ResultFileMenu extends FileMenu {
 
     protected void inflateCopyTo(Menu menu) {
         saveCopy = menu.add(
-                scontext.getContext().getString(R.string.tt_nominatim_save));
+                scontext.getContext().getString(R.string.query_save_copy));
     }
 
 

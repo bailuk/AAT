@@ -1,17 +1,24 @@
 package ch.bailu.aat.views;
 
 import android.content.Context;
+import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
 import java.util.ArrayList;
+
+import ch.bailu.aat.activities.ActivitySwitcher;
+import ch.bailu.aat.util.Timer;
+import ch.bailu.aat.util.ui.AppLog;
 
 public class ContentView extends FrameLayout{
     private final LinearLayout mainContent;
     private final LinearLayout messages;
 
     private final ArrayList<MessageView> messageViews = new ArrayList(5);
+
 
     public ContentView(Context context) {
         super(context);
@@ -26,15 +33,18 @@ public class ContentView extends FrameLayout{
         addM(new DownloadMessageView(context));
         addM(new FileMessageView(context));
         addM(new LogInfoMessageView(context));
+
     }
 
 
     private void addM(MessageView v) {
-        messages.addView(v);
+        messages.addView(v,
+                new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
         messageViews.add(v);
     }
 
     public void add(View view) {
+
         mainContent.addView(view);
         messages.bringToFront();
     }
@@ -48,7 +58,18 @@ public class ContentView extends FrameLayout{
         }
 
 
+        logActivityLabel();
     }
+
+
+    private void logActivityLabel() {
+        final ActivitySwitcher.Entry e = ActivitySwitcher.get(getContext());
+
+        if (e != null) {
+            AppLog.i(getContext(), e.activityLabel);
+        }
+    }
+
 
     @Override
     public void onDetachedFromWindow() {

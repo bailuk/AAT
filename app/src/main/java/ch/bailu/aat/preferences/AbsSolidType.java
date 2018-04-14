@@ -69,4 +69,7 @@ public abstract class AbsSolidType implements SolidTypeInterface {
     }
 
 
+    public String getString(int res) {
+        return getContext().getString(res);
+    }
 }

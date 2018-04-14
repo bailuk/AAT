@@ -1,10 +1,12 @@
 package ch.bailu.aat.activities;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 
 import ch.bailu.aat.preferences.PreferenceLoadDefaults;
 import ch.bailu.aat.util.AppPermission;
+import ch.bailu.aat.util.ToDo;
 import ch.bailu.aat.util.ui.AppLog;
 
 public abstract class AbsActivity extends Activity {
@@ -54,7 +56,7 @@ public abstract class AbsActivity extends Activity {
     public void onResume() {
         super.onResume();
         logger = new AppLog(this);
-    }
+  }
 
 
     @Override
@@ -76,8 +78,4 @@ public abstract class AbsActivity extends Activity {
         builder.append("</p>");
 
     }
-
-
-
-
 }

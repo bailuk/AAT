@@ -56,8 +56,8 @@
     <!-- Activity main -->
     <string name="intro_about">About</string>
     <string name="intro_readme">README</string>
-    <string name="intro_resume">Cockpit A</string>
-    <string name="intro_cockpit2">Cockpit B</string>
+    <string name="intro_cockpit_a">Cockpit A</string>
+    <string name="intro_cockpit_b">Cockpit B</string>
 
     <string name="intro_map">Map</string>
     <string name="intro_nominatim">Map Search</string>
@@ -82,6 +82,7 @@
     <!-- Activity OSM API Query -->
     <string name="query_overpass">Overpass</string>
     <string name="query_features">OSM Features</string>
+    <string name ="query_save_copy">Save copy</string>
 
 
     <!-- Preferences General -->
@@ -298,7 +299,6 @@
 
     <string name ="tt_nominatim_query">Start search.</string>
     <string name ="tt_nominatim_clear">Clear line in search text.</string>
-    <string name ="tt_nominatim_save">Save a copy of the result.</string>
 
     <string name ="tt_cockpit_a">Fullscreen</string>
     <string name ="tt_cockpit_b">Splitscreen</string>

@@ -2,6 +2,7 @@ package ch.bailu.aat.activities;
 
 import android.os.Bundle;
 
+import ch.bailu.aat.R;
 import ch.bailu.aat.dispatcher.ContentSource;
 import ch.bailu.aat.dispatcher.Dispatcher;
 import ch.bailu.aat.dispatcher.DispatcherInterface;
@@ -9,6 +10,7 @@ import ch.bailu.aat.dispatcher.LifeCycleDispatcher;
 import ch.bailu.aat.dispatcher.LifeCycleInterface;
 import ch.bailu.aat.dispatcher.OnContentUpdatedInterface;
 import ch.bailu.aat.gpx.InfoID;
+import ch.bailu.aat.util.ui.AppLog;
 
 public abstract class AbsDispatcher extends AbsMenu
         implements DispatcherInterface {
@@ -48,8 +50,13 @@ public abstract class AbsDispatcher extends AbsMenu
 
     @Override
     public void onResumeWithService() {
+
         lifeCycle.onResumeWithService();
         dispatcher.onResume();
+
+
+        super.onResumeWithService();
+
     }
 
     @Override
@@ -66,5 +73,7 @@ public abstract class AbsDispatcher extends AbsMenu
         super.onDestroy();
 
     }
+
+
 
 }

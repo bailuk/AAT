@@ -2,9 +2,10 @@ package ch.bailu.aat.preferences;
 
 import android.content.Context;
 
+import ch.bailu.aat.R;
 import ch.bailu.aat.util.ToDo;
 
-public class SolidPresetCount extends SolidInteger {
+public class SolidPresetCount extends SolidIndexList {
 
     private final static String KEY=SolidPresetCount.class.getSimpleName();
     private final static int MAX=15;
@@ -15,35 +16,36 @@ public class SolidPresetCount extends SolidInteger {
         super(Storage.global(c), KEY);
     }
 
-    @Override
+    public int getValue(int v) {
+        if (v==0) return DEFAULT;
+
+        return MIN + v - 1;
+    }
+
     public int getValue() {
-        return limit(super.getValue());
+        return getValue(getIndex());
     }
-
-
-    @Override
-    public void setValue(int v) {
-        super.setValue(limit(v));
-    }
-
 
     @Override
     public String getLabel() {
-        return ToDo.translate("Activity slots");
+        return getString(R.string.p_preset_slots);
     }
 
     @Override
     public String getToolTip() {
-        return ToDo.translate(
-                "Number of activity slots you want to use " +
-                        "to organize tracks. " +
-                        "Value from " + MIN + " to " + MAX+".");
+        return getString(R.string.tt_p_preset_slots);
     }
 
-    private int limit(int value) {
-        if (value == 0) value = DEFAULT;
-        else if (value < MIN) value =  MIN;
-        else if (value > MAX) value =  MAX;
-        return value;
+
+    @Override
+    public int length() {
+        return MAX - MIN + 2;
+    }
+
+    @Override
+    protected String getValueAsString(int i) {
+        String s = String.valueOf(getValue(i));
+        if (i==0) s = toDefaultString(s);
+        return s;
     }
 }

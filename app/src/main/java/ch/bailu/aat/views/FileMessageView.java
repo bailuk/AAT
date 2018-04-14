@@ -2,6 +2,7 @@ package ch.bailu.aat.views;
 
 import android.content.Context;
 import android.content.Intent;
+import android.text.TextUtils;
 
 import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.util.AppIntent;
@@ -12,6 +13,7 @@ public class FileMessageView  extends MessageView{
     public FileMessageView(Context context) {
         super(context, AppBroadcaster.FILE_CHANGED_ONDISK);
         setSingleLine();
+        setEllipsize(TextUtils.TruncateAt.MIDDLE);
     }
 
     @Override

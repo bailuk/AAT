@@ -3,6 +3,7 @@ package ch.bailu.aat.activities;
 import android.os.Bundle;
 import android.view.View;
 
+import ch.bailu.aat.R;
 import ch.bailu.aat.description.AltitudeDescription;
 import ch.bailu.aat.description.AverageSpeedDescription;
 import ch.bailu.aat.description.CurrentSpeedDescription;
@@ -38,8 +39,9 @@ public class CockpitTabletActivity extends AbsDispatcher {
         EditorHelper edit = new EditorHelper(getServiceContext());
         setContentView(createContentView(edit));
         createDispatcher(edit);
-    }
 
+
+    }
 
     private View createContentView(EditorHelper edit) {
         final MapViewInterface smallMap = MapFactory.DEF(this, SOLID_KEY).split();
