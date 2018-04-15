@@ -78,19 +78,26 @@ public class ControlBar extends LinearLayout {
         }
     }
 
-    public ImageButton addImageButton(int res) {
+
+    public ImageButton addImageButton(int res, int size) {
         ImageButton button = new ImageButtonView(getContext(), res);
-        add(button);
+        add(button, size);
         button.setOnClickListener(onClickListener);
         return button;
     }
 
 
+
     public View add(View v) {
-        canvas.addView(v, controlSize, controlSize);
+        add(v, controlSize);
         return v;
     }
 
+
+    public View add(View v, int size) {
+        canvas.addView(v, size, controlSize);
+        return v;
+    }
 
     @Override
     public void addView(View v) {
@@ -137,5 +144,7 @@ public class ControlBar extends LinearLayout {
     };
 
 
-
+    public ImageButton addImageButton(int res) {
+        return addImageButton(res, getControlSize());
+    }
 }

@@ -6,19 +6,51 @@ import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 
+import org.mapsforge.map.model.common.ObservableInterface;
+import org.mapsforge.map.model.common.Observer;
+
 import java.util.ArrayList;
 
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.preferences.Storage;
 
 
-public class MultiView extends ViewGroup {
+public class MultiView extends ViewGroup implements ObservableInterface{
 
     private final String solidKey;
 
     private final SparseArray<GpxInformation> informationMap =
             new SparseArray<>(5);
 
+    private Observer observer = new Observer() {
+        @Override
+        public void onChange() {
+
+        }
+    };
+
+
+    @Override
+    public void addObserver(Observer o) {
+        observer = o;
+    }
+
+    @Override
+    public void removeObserver(Observer observer) {
+        observer = new Observer() {
+            @Override
+            public void onChange() {
+
+            }
+        };
+    }
+
+    public String getLabel() {
+        if (pages.size()>0)
+            return pages.get(active).label;
+
+        return "";
+    }
 
 
     public class Page {
@@ -89,10 +121,6 @@ public class MultiView extends ViewGroup {
     }
 
 
-    public int getActive() {
-        return active;
-    }
-
     public void setActive(int a) {
         if (a != active) {
             pages.get(active).view.setVisibility(GONE);
@@ -105,6 +133,8 @@ public class MultiView extends ViewGroup {
         
         pages.get(active).view.setVisibility(VISIBLE);
         pages.get(active).view.bringToFront();
+
+        observer.onChange();
     }
     
     
