@@ -99,8 +99,6 @@ public class OptionsMenu extends AbsMenu {
 
         }
 
-
-
         return true;
     }
 }

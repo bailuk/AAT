@@ -1,5 +1,5 @@
 # About
-AAT - Another Activity Tracker is a GPS-tracking application for tracking sportive activities, with emphasis on cycling. It uses MapsForge to display map tiles and offline maps from the OpenStreetMap project.
+[AAT - Another Activity Tracker](https://bailu.ch/aat) is a GPS-tracking application for tracking sportive activities, with emphasis on cycling. It uses MapsForge to display map tiles and offline maps from the OpenStreetMap project.
 
 
 # Copyright
@@ -27,3 +27,5 @@ Binary: [F-Droid](https://f-droid.org/repository/browse/?fdid=ch.bailu.aat)
 [README](README.enduser.md)
 
 
+# Donate  
+You can support this project with a [donation](https://bailu.ch/aat/donate.html)
