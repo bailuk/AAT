@@ -4,6 +4,7 @@ import android.content.Context;
 
 import ch.bailu.aat.util.AbsServiceLink;
 import ch.bailu.aat.services.AbsService;
+import ch.bailu.aat.views.html.HtmlTextView;
 import ch.bailu.aat.views.preferences.VerticalScrollView;
 
 public class StatusTextView extends VerticalScrollView {

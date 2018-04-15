@@ -4,11 +4,13 @@ import android.os.Bundle;
 import android.widget.LinearLayout;
 
 import ch.bailu.aat.R;
+import ch.bailu.aat.util.fs.FileAction;
 import ch.bailu.aat.util.fs.foc.FocAsset;
 import ch.bailu.aat.views.ContentView;
-import ch.bailu.aat.views.HtmlScrollTextView;
+import ch.bailu.aat.views.html.HtmlScrollTextView;
 import ch.bailu.aat.views.bar.MainControlBar;
 import ch.bailu.aat.views.description.MultiView;
+import ch.bailu.aat.views.html.LinkHandler;
 
 
 public class AboutActivity extends AbsDispatcher {
@@ -43,15 +45,40 @@ public class AboutActivity extends AbsDispatcher {
 
 
     private MultiView createMultiView() {
-        MultiView mv = new MultiView(this, SOLID_KEY);
+        final MultiView mv = new MultiView(this, SOLID_KEY);
+        final LinkHandler linkHandler = new LinkHandler() {
+            @Override
+            public boolean openLink(String url) {
+                if (url.contains("README.get")) {
+                    mv.setActive(1);
+                    return true;
+                }
+
+                if (url.contains("README.end")) {
+                    mv.setActive(2);
+                    return true;
+                }
+                return false;
+            }
+        };
+
         mv.add(new HtmlScrollTextView(this,
-                new FocAsset(getAssets(),"documentation/README.about.html")),
+                        assetAsString("documentation/README.about.html"),
+                        linkHandler),
                 getString(R.string.intro_about));
 
         mv.add(new HtmlScrollTextView(this,
-                new FocAsset(getAssets(),"documentation/README.enduser.html")),
+                        assetAsString("documentation/README.gettingstarted.html")),
+                getString(R.string.intro_uiguide));
+
+        mv.add(new HtmlScrollTextView(this,
+                assetAsString("documentation/README.enduser.html")),
                 getString(R.string.intro_readme));
 
         return mv;
+    }
+
+    private String assetAsString(String asset) {
+        return FileAction.asString(new FocAsset(getAssets(),asset));
     }
 }

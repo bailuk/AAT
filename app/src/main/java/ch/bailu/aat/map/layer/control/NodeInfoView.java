@@ -7,7 +7,7 @@ import android.widget.LinearLayout;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.map.MapColor;
-import ch.bailu.aat.views.HtmlScrollTextView;
+import ch.bailu.aat.views.html.HtmlScrollTextView;
 import ch.bailu.aat.views.PercentageLayout;
 import ch.bailu.aat.views.graph.DistanceAltitudeGraphView;
 
