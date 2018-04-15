@@ -9,6 +9,7 @@ import android.widget.ListView;
 
 import ch.bailu.aat.activities.ActivityContext;
 import ch.bailu.aat.description.ContentDescription;
+import ch.bailu.aat.preferences.SolidDirectoryQuery;
 import ch.bailu.aat.services.directory.Iterator;
 import ch.bailu.aat.services.directory.Iterator.OnCursorChangedListener;
 import ch.bailu.aat.util.ui.AppTheme;
@@ -21,11 +22,14 @@ public class GpxListView extends ListView implements OnCursorChangedListener {
     private final ContentDescription data[];
 
 
+
+
     public GpxListView(Context c, 
             ContentDescription cd[]) {
         super(c);
 
         data = cd;
+
 
 
         AppTheme.themify(this, AppTheme.getHighlightColor());
