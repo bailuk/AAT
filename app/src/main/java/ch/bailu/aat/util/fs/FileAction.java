@@ -179,29 +179,4 @@ public class FileAction {
         }
     }
 
-
-    public static String asString(Foc file) {
-
-        StringBuilder builder = new StringBuilder((int) file.length()+1);
-        InputStream in = null;
-
-        try {
-            in = new BufferedInputStream(file.openR());
-
-            int b;
-
-            while ((b = in.read()) > -1) {
-                char c = (char) b;
-                builder.append(c);
-            }
-
-        } catch (IOException e) {
-            builder.append(e.getMessage());
-        } finally {
-            Foc.close(in);
-        }
-
-        return builder.toString();
-    }
-
 }

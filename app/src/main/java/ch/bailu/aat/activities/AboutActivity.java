@@ -4,13 +4,13 @@ import android.os.Bundle;
 import android.widget.LinearLayout;
 
 import ch.bailu.aat.R;
-import ch.bailu.aat.util.fs.FileAction;
 import ch.bailu.aat.util.fs.foc.FocAsset;
 import ch.bailu.aat.views.ContentView;
 import ch.bailu.aat.views.html.HtmlScrollTextView;
 import ch.bailu.aat.views.bar.MainControlBar;
 import ch.bailu.aat.views.description.MultiView;
 import ch.bailu.aat.views.html.LinkHandler;
+import ch.bailu.util_java.util.FUtil;
 
 
 public class AboutActivity extends AbsDispatcher {
@@ -63,22 +63,22 @@ public class AboutActivity extends AbsDispatcher {
         };
 
         mv.add(new HtmlScrollTextView(this,
-                        assetAsString("documentation/README.about.html"),
+                        toStr("documentation/README.about.html"),
                         linkHandler),
                 getString(R.string.intro_about));
 
         mv.add(new HtmlScrollTextView(this,
-                        assetAsString("documentation/README.gettingstarted.html")),
+                        toStr("documentation/README.gettingstarted.html")),
                 getString(R.string.intro_uiguide));
 
         mv.add(new HtmlScrollTextView(this,
-                assetAsString("documentation/README.enduser.html")),
+                toStr("documentation/README.enduser.html")),
                 getString(R.string.intro_readme));
 
         return mv;
     }
 
-    private String assetAsString(String asset) {
-        return FileAction.asString(new FocAsset(getAssets(),asset));
+    private String toStr(String asset) {
+        return FUtil.toStr(new FocAsset(getAssets(),asset));
     }
 }
