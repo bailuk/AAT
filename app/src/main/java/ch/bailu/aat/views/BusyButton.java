@@ -26,30 +26,37 @@ public class BusyButton extends ImageButton implements Runnable {
 
     public BusyButton(Context context, int image_res) {
         super(context);
-        
+
         setClickable(false);
         AppTheme.themify(this);
 
+        drawable  = initDrawable(image_res);
 
+        setImageDrawable(drawable);
+        setBackgroundResource(R.drawable.button);
+
+        timer.kick();
+    }
+
+
+    private TransitionDrawable initDrawable(int image_res) {
         Drawable white = getResources().getDrawable(image_res);
 
-        Drawable.ConstantState constantState = white.getConstantState();
+        Drawable.ConstantState csWhite = white.getConstantState();
 
-        if (constantState != null) {
-            Drawable orange = constantState.newDrawable().mutate();
+        if (csWhite != null) {
+            Drawable orange = csWhite.newDrawable().mutate();
             orange.setColorFilter(
                     AppTheme.getHighlightColor(),
                     PorterDuff.Mode.MULTIPLY);
 
-            drawable = new TransitionDrawable(new Drawable[]{white, orange});
+            return new TransitionDrawable(new Drawable[]{white, orange});
 
-            setImageDrawable(drawable);
-            setBackgroundResource(R.drawable.button);
-
-            timer.kick();
+        } else {
+            return new TransitionDrawable(new Drawable[]{white, white});
         }
-    }
 
+    }
 
 
 
@@ -69,7 +76,7 @@ public class BusyButton extends ImageButton implements Runnable {
         return isWaiting;
     }
 
-    
+
 
 
     public BusyControl getBusyControl(int id) {
@@ -99,8 +106,8 @@ public class BusyButton extends ImageButton implements Runnable {
         public BusyControl(int iid) {
             ID=iid;
         }
-        
-        
+
+
         @Override
         public void onContentUpdated(int iid, GpxInformation info) {
             if (iid==ID) {
@@ -109,7 +116,7 @@ public class BusyButton extends ImageButton implements Runnable {
                 } else {
                     startWaiting();
                 }
-                
+
             }
         }
     }
