@@ -133,7 +133,8 @@ public class FileAction {
 
 
     private static void copyToDest(Context context, Foc src, Foc dest) throws IOException {
-            if (dest == null || dest.exists()) {
+        if (src != null && dest != null) {
+            if (dest.exists()) {
                 AFile.logErrorExists(context, dest);
 
             } else {
@@ -141,6 +142,7 @@ public class FileAction {
                 AppBroadcaster.broadcast(context,
                         AppBroadcaster.FILE_CHANGED_ONDISK, dest, src.getPath());
             }
+        }
     }
 
 
@@ -176,7 +178,5 @@ public class FileAction {
             AFile.logErrorReadOnly(context, file);
         }
     }
-
-
 
 }

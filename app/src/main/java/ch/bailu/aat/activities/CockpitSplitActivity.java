@@ -22,6 +22,7 @@ import ch.bailu.aat.map.MapViewInterface;
 import ch.bailu.aat.map.mapsforge.MapViewLinker;
 import ch.bailu.aat.services.editor.EditorHelper;
 import ch.bailu.aat.util.ui.AppLayout;
+import ch.bailu.aat.views.ContentView;
 import ch.bailu.aat.views.bar.ControlBar;
 import ch.bailu.aat.views.bar.MainControlBar;
 import ch.bailu.aat.views.PercentageLayout;
@@ -79,10 +80,14 @@ public class CockpitSplitActivity extends AbsDispatcher{
 
         new MapViewLinker(mapMaster, mapSlave);
 
-        return
+        ContentView contentView = new ContentView(this);
+
+        contentView.add(
                 new PercentageLayout(this)
                         .add(mapMaster.toView(), 70)
-                        .add(mv,30);
+                        .add(mv,30));
+
+        return contentView;
     }
 
 

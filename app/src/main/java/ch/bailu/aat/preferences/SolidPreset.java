@@ -7,7 +7,7 @@ import ch.bailu.aat.util.fs.AppDirectory;
 import ch.bailu.util_java.foc.Foc;
 
 public class SolidPreset extends SolidIndexList {
-    public final int PRESET_COUNT=5;
+    //public final int PRESET_COUNT=15;
 
     final private static String KEY="preset";
 
@@ -18,7 +18,7 @@ public class SolidPreset extends SolidIndexList {
 
     @Override
     public int length() {
-        return PRESET_COUNT;
+        return new SolidPresetCount(getContext()).getValue();
     }
 
     @Override
@@ -62,5 +62,7 @@ public class SolidPreset extends SolidIndexList {
     public String getDirectoryName() {
     	return getDirectory().getPathName();
     }
+
+
 
 }

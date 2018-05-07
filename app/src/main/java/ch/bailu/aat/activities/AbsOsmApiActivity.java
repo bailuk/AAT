@@ -31,8 +31,8 @@ import ch.bailu.aat.util.TextBackup;
 import ch.bailu.aat.util.ui.AppLog;
 import ch.bailu.aat.util.ui.ToolTip;
 import ch.bailu.aat.views.BusyButton;
-import ch.bailu.aat.views.ContentView;
 import ch.bailu.aat.views.EditTextTool;
+import ch.bailu.aat.views.ContentView;
 import ch.bailu.aat.views.NodeListView;
 import ch.bailu.aat.views.PercentageLayout;
 import ch.bailu.aat.views.TagEditor;
@@ -125,8 +125,8 @@ public abstract class AbsOsmApiActivity extends AbsDispatcher implements OnClick
         MainControlBar bar = createControlBar();
 
         ContentView contentView = new ContentView(this);
-        contentView.addView(bar);
-        contentView.addView(createMainContentView(bar));
+        contentView.add(bar);
+        contentView.add(createMainContentView(bar));
         return contentView;
     }
 
@@ -167,6 +167,7 @@ public abstract class AbsOsmApiActivity extends AbsDispatcher implements OnClick
         VerticalScrollView scroller = new VerticalScrollView(this);
         scroller.add(preview);
         editor = new EditTextTool(new TagEditor(this, osmApi.getBaseDirectory()), LinearLayout.VERTICAL);
+
 
         inputMultiView = new MultiView(this, osmApi.getApiName());
         inputMultiView.add(editor);

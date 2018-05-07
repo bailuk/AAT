@@ -9,14 +9,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-
 import ch.bailu.aat.R;
 import ch.bailu.aat.activities.ActivitySwitcher;
-import ch.bailu.aat.util.ui.AppLog;
-import ch.bailu.aat.util.ui.AppTheme;
 import ch.bailu.aat.services.ServiceContext;
+import ch.bailu.aat.util.ui.AppTheme;
 
 
 public class StatusIcon  {
@@ -48,10 +44,7 @@ public class StatusIcon  {
 
 
     private Notification createNotification(PendingIntent intent, int status_id) {
-        if (Build.VERSION.SDK_INT < 11) {
-            return createNotificationSDK1(intent, status_id);
-
-        } else if (Build.VERSION.SDK_INT < 16) {
+        if (Build.VERSION.SDK_INT < 16) {
             return createNotificationSDK11(intent, status_id);
 
         } else if (Build.VERSION.SDK_INT < 21){
@@ -61,45 +54,6 @@ public class StatusIcon  {
         } else {
             return createNotificationSDK26(intent, status_id);
         }
-    }
-
-
-    @SuppressWarnings("deprecation")
-    private Notification createNotificationSDK1(PendingIntent intent, int status_id) {
-        String appName = scontext.getContext().getString(R.string.app_name);
-        String appInfo = scontext.getContext().getString(status_id);
-
-        Notification notification=new Notification(R.drawable.status,appInfo, System.currentTimeMillis());
-
-        setLatestEventInfoSDK1(notification, scontext.getContext(), appName, appInfo, intent);
-        notification.flags |= Notification.FLAG_NO_CLEAR;
-
-        return notification;
-    }
-
-
-
-
-    private void setLatestEventInfoSDK1(Notification notification,
-                                        Context context,
-                                        String appName,
-                                        String appInfo, PendingIntent intent) {
-
-        try {
-            Method deprecatedMethod = notification.getClass().getMethod(
-                    "setLatestEventInfo",
-                    Context.class,
-                    CharSequence.class,
-                    CharSequence.class,
-                    PendingIntent.class);
-            deprecatedMethod.invoke(notification, context, appName, appInfo, intent);
-        } catch (NoSuchMethodException |
-                IllegalAccessException |
-                IllegalArgumentException |
-                InvocationTargetException e) {
-            AppLog.e(context, "Missing setLatestEventInfo(...)", e);
-        }
-
     }
 
 
@@ -130,7 +84,7 @@ public class StatusIcon  {
 
         Notification.Builder builder = new Notification.Builder(scontext.getContext())
                 .setContentIntent(intent)
-                .setSmallIcon(R.drawable.icon_status)
+                .setSmallIcon(R.drawable.status)
                 .setContentTitle(appName)
                 .setContentText(appInfo);
 
@@ -149,7 +103,7 @@ public class StatusIcon  {
 
         Notification.Builder builder = new Notification.Builder(scontext.getContext())
                 .setContentIntent(intent)
-                .setSmallIcon(R.drawable.icon_status)
+                .setSmallIcon(R.drawable.status)
                 .setColor(AppTheme.getHighlightColor())
                 .setContentTitle(appName)
                 .setContentText(appInfo);
@@ -169,7 +123,7 @@ public class StatusIcon  {
         Notification.Builder builder = new Notification.Builder(scontext.getContext())
                 .setChannelId(createNotificationChannelSDK26())
                 .setContentIntent(intent)
-                .setSmallIcon(R.drawable.icon_status)
+                .setSmallIcon(R.drawable.status)
                 .setColor(AppTheme.getHighlightColor())
                 .setContentTitle(appName)
                 .setContentText(appInfo);
@@ -189,16 +143,14 @@ public class StatusIcon  {
         NotificationChannel chan = new NotificationChannel(channelId,
                 channelName, NotificationManager.IMPORTANCE_DEFAULT);
 
-        if (chan != null) {
-            chan.setLockscreenVisibility(Notification.VISIBILITY_PUBLIC);
+        chan.setLockscreenVisibility(Notification.VISIBILITY_PUBLIC);
 
 
-            NotificationManager notificationManager = (NotificationManager)
-                    scontext.getContext().getSystemService(Context.NOTIFICATION_SERVICE);
+        NotificationManager notificationManager = (NotificationManager)
+                scontext.getContext().getSystemService(Context.NOTIFICATION_SERVICE);
 
-            if (notificationManager != null)
-                notificationManager.createNotificationChannel(chan);
-        }
+        if (notificationManager != null)
+            notificationManager.createNotificationChannel(chan);
 
         return channelId;
 

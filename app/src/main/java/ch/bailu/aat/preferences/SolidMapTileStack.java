@@ -37,6 +37,7 @@ public class SolidMapTileStack extends SolidCheckList {
         this (context, 0);
     }
 
+    // FIXME: use preset for tile stack
     private SolidMapTileStack (Context context, int preset) {
         Storage s = Storage.global(context);
 
@@ -104,4 +105,12 @@ public class SolidMapTileStack extends SolidCheckList {
     }
 
 
+    public void setDefaults() {
+        for (int i=0; i < SOURCES.length; i++) {
+            if (SOURCES[i] == DownloadSource.MAPNIK) {
+                setEnabled(i, true);
+                break;
+            }
+        }
+    }
 }

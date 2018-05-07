@@ -23,7 +23,7 @@ public class NodeBitmap {
     private static final int STROKE_WIDTH=MapPaint.EDGE_WIDTH;
     private static final int RADIUS=5;
 
-    private static SparseArray<NodeBitmap> nodes = new SparseArray<>(10);
+    private static final SparseArray<NodeBitmap> nodes = new SparseArray<>(10);
 
     public static NodeBitmap get(AppDensity res) {
         int radius = res.toDPi(RADIUS);

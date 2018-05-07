@@ -5,7 +5,7 @@ import android.os.Bundle;
 
 import ch.bailu.aat.util.AppIntent;
 import ch.bailu.aat.views.ContentView;
-import ch.bailu.aat.views.HtmlScrollTextView;
+import ch.bailu.aat.views.html.HtmlScrollTextView;
 import ch.bailu.aat.views.bar.MainControlBar;
 
 public class HtmlViewActivity extends AbsDispatcher {
@@ -17,8 +17,8 @@ public class HtmlViewActivity extends AbsDispatcher {
 
         ContentView contentView = new ContentView(this);
 
-        contentView.addView(new MainControlBar(this));
-        contentView.addView(new HtmlScrollTextView(this, getTextFromIntent()));
+        contentView.add(new MainControlBar(this));
+        contentView.add(new HtmlScrollTextView(this, getTextFromIntent()));
 
         setContentView(contentView);
     }

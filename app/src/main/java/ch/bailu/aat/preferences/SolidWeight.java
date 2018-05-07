@@ -18,4 +18,10 @@ public class SolidWeight extends SolidInteger {
     public String getLabel() {
         return getContext().getString(R.string.p_weight_title);
     }
+
+    public void setDefaults() {
+        setValue(75);
+    }
+
+
 }

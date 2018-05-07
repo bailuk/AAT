@@ -10,7 +10,7 @@ import java.io.OutputStream;
 
 public class FocFile extends Foc {
 
-    final protected File file;
+    private final File file;
 
 
     public FocFile(String f) {

@@ -4,8 +4,8 @@ package ch.bailu.aat.menus;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import ch.bailu.aat.R;
 import ch.bailu.aat.util.AbsServiceLink;
-import ch.bailu.aat.util.ToDo;
 import ch.bailu.aat.util.fs.AppDirectory;
 import ch.bailu.aat.util.fs.FileAction;
 import ch.bailu.util_java.foc.Foc;
@@ -25,7 +25,8 @@ public class ResultFileMenu extends FileMenu {
 
 
     protected void inflateCopyTo(Menu menu) {
-        saveCopy = menu.add(ToDo.translate("Als overlay speichern"));
+        saveCopy = menu.add(
+                scontext.getContext().getString(R.string.query_save_copy));
     }
 
 

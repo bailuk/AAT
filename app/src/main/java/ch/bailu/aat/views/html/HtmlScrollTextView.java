@@ -1,4 +1,4 @@
-package ch.bailu.aat.views;
+package ch.bailu.aat.views.html;
 
 import android.content.Context;
 import android.text.util.Linkify;
@@ -17,8 +17,11 @@ public class HtmlScrollTextView extends VerticalScrollView {
     }
 
 
-    public HtmlScrollTextView(Context context, int res) {
-        this(context, context.getString(res));
+
+    public HtmlScrollTextView(Context context, String text, LinkHandler linkHandler) {
+        this(context);
+        setHtmlText(text);
+        textView.setLinkHandler(linkHandler);
     }
 
 
@@ -32,6 +35,7 @@ public class HtmlScrollTextView extends VerticalScrollView {
 
         textView.setHtmlText(text);
     }
+
 
     public void enableAutoLink() {
         textView.setAutoLinkMask(Linkify.ALL);

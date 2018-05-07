@@ -21,11 +21,14 @@ public class GpxListView extends ListView implements OnCursorChangedListener {
     private final ContentDescription data[];
 
 
+
+
     public GpxListView(Context c, 
             ContentDescription cd[]) {
         super(c);
 
         data = cd;
+
 
 
         AppTheme.themify(this, AppTheme.getHighlightColor());

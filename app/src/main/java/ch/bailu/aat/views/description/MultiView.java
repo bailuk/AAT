@@ -6,19 +6,51 @@ import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 
+import org.mapsforge.map.model.common.ObservableInterface;
+import org.mapsforge.map.model.common.Observer;
+
 import java.util.ArrayList;
 
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.preferences.Storage;
 
 
-public class MultiView extends ViewGroup {
+public class MultiView extends ViewGroup implements ObservableInterface{
 
     private final String solidKey;
 
     private final SparseArray<GpxInformation> informationMap =
             new SparseArray<>(5);
 
+    private Observer observer = new Observer() {
+        @Override
+        public void onChange() {
+
+        }
+    };
+
+
+    @Override
+    public void addObserver(Observer o) {
+        observer = o;
+    }
+
+    @Override
+    public void removeObserver(Observer observer) {
+        observer = new Observer() {
+            @Override
+            public void onChange() {
+
+            }
+        };
+    }
+
+    public String getLabel() {
+        if (pages.size()>0)
+            return pages.get(active).label;
+
+        return "";
+    }
 
 
     public class Page {
@@ -61,6 +93,25 @@ public class MultiView extends ViewGroup {
     }
 
 
+    public void remove(int i) {
+        if (i < pages.size() && i > -1) {
+            pages.remove(i);
+        }
+    }
+
+    public void remove(View view) {
+        for (int i = pages.size()-1 ; i>=0; i--) {
+            if (pages.get(i).view == view) {
+                pages.remove(i);
+            }
+        }
+    }
+
+
+    public int pageCount() {
+        return pages.size();
+    }
+
     public void setNext() {
         setActive(active+1);
     }
@@ -69,10 +120,6 @@ public class MultiView extends ViewGroup {
         setActive(active-1);
     }
 
-
-    public int getActive() {
-        return active;
-    }
 
     public void setActive(int a) {
         if (a != active) {
@@ -86,6 +133,8 @@ public class MultiView extends ViewGroup {
         
         pages.get(active).view.setVisibility(VISIBLE);
         pages.get(active).view.bringToFront();
+
+        observer.onChange();
     }
     
     

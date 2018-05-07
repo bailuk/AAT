@@ -1,13 +1,7 @@
 package ch.bailu.aat.activities;
 
 
-import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
-
-import ch.bailu.aat.menus.OptionsMenu;
-import ch.bailu.aat.util.AbsServiceLink;
-
+/*
 public abstract class AbsMenu extends AbsServiceLink {
 
     private OptionsMenu menu;
@@ -42,3 +36,4 @@ public abstract class AbsMenu extends AbsServiceLink {
     }
 
 }
+*/

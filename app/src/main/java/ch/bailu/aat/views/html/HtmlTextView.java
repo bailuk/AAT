@@ -1,7 +1,8 @@
-package ch.bailu.aat.views;
+package ch.bailu.aat.views.html;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.text.Spanned;
 import android.text.method.LinkMovementMethod;
 import android.widget.TextView;
 
@@ -18,10 +19,15 @@ public class HtmlTextView extends TextView {
         setMovementMethod(LinkMovementMethod.getInstance());
         setLinkTextColor(AppTheme.getHighlightColor());
         setTextColor(Color.LTGRAY);
+
     }
 
     public void setHtmlText(String text) {
         setText(AppHtml.fromHtml(text));
+    }
+
+    public void setLinkHandler(LinkHandler linkHandler) {
+        setText(linkHandler.convertAll((Spanned)getText()));
     }
 
 }

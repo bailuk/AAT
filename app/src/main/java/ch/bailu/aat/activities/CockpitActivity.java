@@ -2,7 +2,6 @@ package ch.bailu.aat.activities;
 
 import android.os.Bundle;
 import android.view.View;
-import android.view.ViewGroup;
 
 import ch.bailu.aat.description.AltitudeDescription;
 import ch.bailu.aat.description.AverageSpeedDescriptionAP;
@@ -36,14 +35,13 @@ public class CockpitActivity extends AbsDispatcher{
         super.onCreate(savedInstanceState);
 
         EditorHelper edit = new EditorHelper(getServiceContext());
-        ViewGroup contentView = new ContentView(this);
+        ContentView contentView = new ContentView(this);
         MultiView multiView = createMultiView(edit);
 
-        contentView.addView(createButtonBar(multiView));
-        contentView.addView(multiView);
+        contentView.add(createButtonBar(multiView));
+        contentView.add(multiView);
 
         setContentView(contentView);
-
         createDispatcher(edit);
     }
 

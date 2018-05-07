@@ -4,10 +4,13 @@ import android.os.Bundle;
 import android.widget.LinearLayout;
 
 import ch.bailu.aat.R;
+import ch.bailu.aat.util.fs.foc.FocAsset;
 import ch.bailu.aat.views.ContentView;
-import ch.bailu.aat.views.HtmlScrollTextView;
+import ch.bailu.aat.views.html.HtmlScrollTextView;
 import ch.bailu.aat.views.bar.MainControlBar;
 import ch.bailu.aat.views.description.MultiView;
+import ch.bailu.aat.views.html.LinkHandler;
+import ch.bailu.util_java.util.FUtil;
 
 
 public class AboutActivity extends AbsDispatcher {
@@ -22,12 +25,13 @@ public class AboutActivity extends AbsDispatcher {
     }
 
 
+
     private void createViews() {
         MultiView multiView = createMultiView();
-        LinearLayout contentView = new ContentView(this);
+        ContentView contentView = new ContentView(this);
 
-        contentView.addView(createButtonBar(multiView));
-        contentView.addView(multiView);
+        contentView.add(createButtonBar(multiView));
+        contentView.add(multiView);
 
         setContentView(contentView);
     }
@@ -41,12 +45,40 @@ public class AboutActivity extends AbsDispatcher {
 
 
     private MultiView createMultiView() {
-        MultiView mv = new MultiView(this, SOLID_KEY);
-        mv.add(new HtmlScrollTextView(this, R.string.README_about_html),
+        final MultiView mv = new MultiView(this, SOLID_KEY);
+        final LinkHandler linkHandler = new LinkHandler() {
+            @Override
+            public boolean openLink(String url) {
+                if (url.contains("README.get")) {
+                    mv.setActive(1);
+                    return true;
+                }
+
+                if (url.contains("README.end")) {
+                    mv.setActive(2);
+                    return true;
+                }
+                return false;
+            }
+        };
+
+        mv.add(new HtmlScrollTextView(this,
+                        toStr("documentation/README.about.html"),
+                        linkHandler),
                 getString(R.string.intro_about));
-        mv.add(new HtmlScrollTextView(this, R.string.README_enduser_html),
+
+        mv.add(new HtmlScrollTextView(this,
+                        toStr("documentation/README.gettingstarted.html")),
+                getString(R.string.intro_uiguide));
+
+        mv.add(new HtmlScrollTextView(this,
+                toStr("documentation/README.enduser.html")),
                 getString(R.string.intro_readme));
 
         return mv;
+    }
+
+    private String toStr(String asset) {
+        return FUtil.toStr(new FocAsset(getAssets(),asset));
     }
 }

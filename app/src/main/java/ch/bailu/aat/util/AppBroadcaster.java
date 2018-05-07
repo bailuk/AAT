@@ -31,24 +31,9 @@ public class AppBroadcaster {
     public static final java.lang.String ON_DOWNLOADS_CHANGED = NAME_SPACE + "DOWNLOADS";
 
 
-    /**
-     *   Make a BitmapRequest to the elevation updater to setTarget missing elevation information
-     *   to a specific file
-     */
-    //public static final String REQUEST_ELEVATION_UPDATE = NAME_SPACE + "REQUEST_ELEVATION_UPDATE";
-    
-    
-    /**
-     * 
-     */
-    //public static final String OVERLAY_CHANGED = NAME_SPACE + "OVERLAY_CHANGED";
-    
-    
-    
+
     public static final String LOCATION_CHANGED = NAME_SPACE + "LOCATION";
-    //public static final String DB_CURSOR_CHANGED = NAME_SPACE + "CURSOR";
     public static final String TRACKER = NAME_SPACE + "TRACKER";
-    //public static final String TRACKER_STATE = NAME_SPACE + "TRACKER_STATE";
 
     
     

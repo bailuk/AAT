@@ -3,6 +3,30 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:ignore="MissingTranslation" >
 
+
+    <!-- Keep structure intact when translating! -->
+        <!-- Static -->
+        <!-- General -->
+        <!-- GPS / Tracker-->
+        <!-- Activity main -->
+        <!-- Activity file list -->
+        <!-- Activity OSM API Query -->
+        <!-- Preferences General -->
+        <!-- Preferences System -->
+        <!-- Preferences Context -->
+        <!-- Preferences Presets -->
+        <!-- Preferences Map -->
+        <!-- Preferences Map trim tiles -->
+        <!-- File context menu and file operation -->
+        <!-- Location menu -->
+        <!-- Dialog -->
+        <!-- Description -->
+        <!-- ToolTip -->
+
+
+    <!-- Static -->
+    <string name="app_name" translatable="false">AAT</string>
+
     <!-- General -->
     <string name="on">On</string>
     <string name="off">Off</string>
@@ -12,30 +36,9 @@
     <string name="pick">Pick (SAF)…</string>
 
 
-    <!-- Main activity (Intro) -->
-    <string name="intro_about">About</string>
-    <string name="intro_readme" translatable="false">README</string>
-    <string name="intro_resume" translatable="false">Cockpit A</string>
-    <string name="intro_cockpit2" translatable="false">Cockpit B</string>
-
-    <string name="intro_map">Map</string>
-    <string name="intro_nominatim">Map Search</string>
-    <string name="intro_test" translatable="false">Test</string>
-    <string name="intro_status">Status</string>
-
-    <string name="intro_overlay_list">Overlay list</string>
-    <string name="intro_list">Track list</string>
-    <string name="intro_external_list">External files</string>
-    <string name="intro_settings">Preferences</string>
-
-    <!-- MultiView label -->
-    <string name="label_summary">Summary</string>
-    <string name="label_filter">Filter</string>
-    <string name="label_list">List</string>
-
-
-    <string name="gps" translatable="false">GPS</string>
-    <string name="gps_wait" translatable="false">&#8230;</string>
+    <!-- GPS / Tracker-->
+    <string name="gps">GPS</string>
+    <string name="gps_wait">&#8230;</string>
     <string name="gps_nogps">No</string>
     <string name="gps_noaccess">Denied</string>
 
@@ -50,11 +53,43 @@
     <string name="status_autopaused">A-Paused</string>
 
 
+    <!-- Activity main -->
+    <string name="intro_about">About</string>
+    <string name="intro_readme">README</string>
+    <string name="intro_uiguide">Getting started</string>
+    <string name="intro_cockpit_a">Cockpit A</string>
+    <string name="intro_cockpit_b">Cockpit B</string>
+
+    <string name="intro_map">Map</string>
+    <string name="intro_nominatim">Map Search</string>
+    <string name="intro_test">Test</string>
+    <string name="intro_status">Status</string>
+
+    <string name="intro_overlay_list">Overlay list</string>
+    <string name="intro_list">Track list</string>
+    <string name="intro_external_list">External files</string>
+    <string name="intro_settings">Preferences</string>
 
 
+    <!-- Activity file list -->
+    <string name="label_summary">Summary</string>
+    <string name="label_filter">Filter</string>
+    <string name="label_list">List</string>
+    <string name="filter_geo">Inside bounding</string>
+    <string name="filter_date_start">Start date</string>
+    <string name="filter_date_to">End date</string>
 
 
-    <!-- Preferences and Presets -->
+    <!-- Activity OSM API Query -->
+    <string name="query_overpass">Overpass</string>
+    <string name="query_features">OSM Features</string>
+    <string name ="query_save_copy">Save copy</string>
+
+
+    <!-- Preferences General -->
+    <string name="p_general">General</string>
+    <string name="p_post_autopause">Postprocessed autopause</string>
+    <string name="p_preset_slots">Visible presets</string>
     <string name="p_unit_title">Units</string>
     <string-array name="p_unit_list">
         <item>Metric (km, km/h)</item>
@@ -63,36 +98,24 @@
         <item>International System of Units</item>
     </string-array>
 
-    <!-- Map-Tiles settings -->
-    <string-array name="p_trim_modes">
-        <item>Size</item>
-        <item>Size and age</item>
-        <item>Age</item>
-        <item>Size or age</item>
-    </string-array>
 
-    <string name="p_trim_cache">Trim tile cache</string>
-    <string name="p_tiles">Map Tiles</string>
-    <string name="p_trim_mode">Trim mode</string>
-    <string name="p_trim_size">Trim size</string>
-    <string name="p_trim_age">Trim age</string>
-    <string name="p_trim_month">Month</string>
-    <string name="p_trim_months">Months</string>
-    <string name="p_trim_year">Year</string>
-    <string name="p_trim_years">Years</string>
-    <string name="p_trim_days">Days</string>
-    <string name="p_trim_total">Total</string>
-    <string name="p_remove_all">Clear entire cache</string>
-    <string name="p_remove_all_in">Clear entire cache in</string>
-    <string name="p_remove_old">Remove old tiles</string>
-    <string name="p_remove_old_in">Remove old tiles in</string>
+    <!-- Preferences System -->
+    <string name="p_location_provider">Location provider</string>
+    <string name="p_location_gps">System GPS</string>
+    <string name="p_location_mock">Mock location</string>
+    <string name="p_location_old">Old location</string>
+    <string name="p_directory_data">Data directory</string>
+    <string name="p_cache_size">Internal cache size</string>
+    <string name="p_fix_gps">Fix GPS time</string>
 
 
+    <!-- Preferences Context -->
+    <string name="p_overlay">Overlays</string>
+    <string name="p_legend_fulldistance">Distance continuous</string>
 
 
-    <string name="p_general">General</string>
+    <!-- Preferences Presets -->
     <string name="p_preset">Activity</string>
-
     <string name="p_met">MET and name</string>
     <string-array name="p_met_list">
         <!--
@@ -131,13 +154,8 @@
 
     </string-array>
 
-
-    <string name="p_map">Map</string>
-    <string name="p_overlay">Overlays</string>
-
     <string name="p_autopause">Autopause</string>
     <string name="p_tracker_autopause">Set tracker to autopause</string>
-    <string name="p_post_autopause">Postprocessed autopause</string>
 
     <string name="p_weight_title">Your weight in kg</string>
 
@@ -149,21 +167,43 @@
     <string name="p_tile_size">Tile size</string>
     <string name="p_accuracy_filter">Accuracy filter</string>
     <string name="p_distance_filter">Distance filter</string>
-    <string name="p_directory_data">Data directory</string>
-    <string name="p_directory_tiles">Tile cache directory</string>
-    <string name="p_legend_fulldistance">Distance continuous</string>
     <string name="p_missing_trigger">Missing trigger</string>
 
-    <string name="p_location_provider">Location provider</string>
-    <string name="p_location_gps">System GPS</string>
-    <string name="p_location_mock">Mock location</string>
-    <string name="p_location_old">Old location</string>
 
+    <!-- Preferences Map -->
+    <string name="p_map">Map</string>
     <string name="p_mapsforge_directory">Offline maps directory</string>
     <string name="p_mapsforge_theme">Offline maps theme</string>
-
     <string name="p_enable_cache">Enable cache</string>
+    <string name="p_directory_tiles">Tile cache directory</string>
 
+
+    <!-- Preferences Map trim tiles -->
+    <string-array name="p_trim_modes">
+        <item>Size</item>
+        <item>Size and age</item>
+        <item>Age</item>
+        <item>Size or age</item>
+    </string-array>
+    <string name="p_trim_cache">Trim tile cache</string>
+    <string name="p_tiles">Map Tiles</string>
+    <string name="p_trim_mode">Trim mode</string>
+    <string name="p_trim_size">Trim size</string>
+    <string name="p_trim_age">Trim age</string>
+    <string name="p_trim_month">Month</string>
+    <string name="p_trim_months">Months</string>
+    <string name="p_trim_year">Year</string>
+    <string name="p_trim_years">Years</string>
+    <string name="p_trim_days">Days</string>
+    <string name="p_trim_total">Total</string>
+    <string name="p_remove_all">Clear entire cache</string>
+    <string name="p_remove_all_in">Clear entire cache in</string>
+    <string name="p_remove_old">Remove old tiles</string>
+    <string name="p_remove_old_in">Remove old tiles in</string>
+
+
+
+    <!-- File context menu and file operation -->
     <string name="file_reload">Reload preview</string>
     <string name="file_delete">Delete file</string>
     <string name="file_rename">Rename file</string>
@@ -180,10 +220,10 @@
     <string name="file_is_denied">\u0020is not accessible.</string>
 
 
+    <!-- Location menu -->
     <string name="location_title">Center location</string>
     <string name="location_view">View location…</string>
     <string name="location_send">Send location…</string>
-
     <string name="clipboard_copy">\u21d2 Clipboard</string>
     <string name="clipboard_paste">\u21d0 Clipboard</string>
 
@@ -196,7 +236,6 @@
     <string name="dialog_discard">Discard</string>
     <string name="dialog_save">Save</string>
     <string name="dialog_modified">File has been modified</string>
-
 
 
     <!-- Description -->
@@ -218,24 +257,19 @@
     <string name="d_slope">Slope</string>
 
     <string name="pause">Pause</string>
+    <string name="pause_ap">Pause (with autopause)</string>
     <string name="speed">Speed</string>
     <string name="average">Average</string>
+    <string name="average_ap">Average (without pauses)</string>
     <string name="maximum">Maximum</string>
     <string name="distance">Distance</string>
     <string name="altitude">Altitude</string>
-    <string name="time">Total Time</string>
+
+    <string name="time">Total time</string>
+    <string name="time_ap">Total time (without pauses)</string>
+
     <string name="calories">Calories</string>
     <string name="name">Name</string>
-
-
-    <string name="filter_geo">Inside bounding</string>
-    <string name="filter_date_start">Start date</string>
-    <string name="filter_date_to">End date</string>
-
-
-    <!-- OSM API Query -->
-    <string name="query_overpass" translatable="false">Overpass</string>
-    <string name="query_features" translatable="false">OSM Features</string>
 
 
     <!-- ToolTip -->
@@ -265,14 +299,14 @@
 
 
     <string name ="tt_nominatim_query">Start search.</string>
-    <string name ="tt_nominatim_clear">Clear search text.</string>
-    <string name ="tt_nominatim_overlay">Use result as map overlay.</string>
-    <string name ="tt_nominatim_save">Save a copy of the result.</string>
+    <string name ="tt_nominatim_clear">Clear line in search text.</string>
 
     <string name ="tt_cockpit_a">Fullscreen</string>
     <string name ="tt_cockpit_b">Splitscreen</string>
 
     <string name ="tt_overpass_mapfeatures">Show list of map features.</string>
 
-    <string name="tt_menu_file">Display file operation menu.</string>
+    <string name ="tt_menu_file">Display file operation menu.</string>
+
+    <string name ="tt_p_preset_slots">Number of directories and presets you want to use to organize tracks.</string>
 </resources>

@@ -29,11 +29,7 @@ public class AppLayout {
             if (wm != null) {
                 Display disp = wm.getDefaultDisplay();
                 if (disp != null) {
-                    if (android.os.Build.VERSION.SDK_INT < 13) {
-                        getSizeSDK1(disp, size);
-                    } else {
-                        getSizeSDK13(disp, size);
-                    }
+                    getSizeSDK13(disp, size);
                 }
             }
         }
@@ -45,11 +41,6 @@ public class AppLayout {
         disp.getSize(size);
     }
 
-
-    @SuppressWarnings("deprecation")
-    public static void getSizeSDK1(Display disp, Point size) {
-        size.set(disp.getWidth(), disp.getHeight());
-    }
 
     public static int getScreenSmallSide(Context context) {
         updateMeasurement(context);

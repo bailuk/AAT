@@ -1,13 +1,11 @@
 package ch.bailu.aat.util.ui;
 
-import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Looper;
-import android.widget.Toast;
 
 import java.io.Closeable;
 
@@ -18,12 +16,15 @@ import ch.bailu.aat.util.AppBroadcaster;
 public class AppLog implements Closeable {
     private final static String UNKNOWN = "";
     
-    private final static String NAME_SPACE= AppBroadcaster.NAME_SPACE;
-    private final static String EXTRA_MESSAGE = "MESSAGE";
+    public final static String NAME_SPACE= AppBroadcaster.NAME_SPACE;
+    public final static String LOG_INFO = NAME_SPACE + "LOG_INFO";
+    public final static String LOG_E = NAME_SPACE + "LOG_ERROR";
+
+    public final static String EXTRA_MESSAGE = "MESSAGE";
     private final static String EXTRA_SOURCE = "TITLE";
     
 
-    private abstract class Log extends BroadcastReceiver implements Closeable {
+    private abstract static class Log extends BroadcastReceiver implements Closeable {
 
         private final Context context;
         
@@ -50,12 +51,11 @@ public class AppLog implements Closeable {
 
     
     
-    private class LogError extends Log {
-        public final static String ACTION = NAME_SPACE + "LOG_ERROR";
+    private static class LogError extends Log {
         private final AlertDialog.Builder alertbox;
         
         public LogError(Context c) {
-            super(c, ACTION);
+            super(c, LOG_E);
             alertbox = new AlertDialog.Builder(c);
             alertbox.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface arg0, int arg1) {}
@@ -75,36 +75,16 @@ public class AppLog implements Closeable {
         }
     }
     
-    
-    private class LogInfo extends Log {
-        public final static String ACTION = NAME_SPACE + "LOG_INFO";
-        private final Toast toast;
-        
-        @SuppressLint("ShowToast")
-        public LogInfo(Context c) {
-            super(c, ACTION);
-            toast =  Toast.makeText(c, getClass().getSimpleName(), Toast.LENGTH_LONG);
-        }
 
 
-        @Override
-        public void log(String t, String m) {
-            toast.setText(m);
-            toast.show();
-        }
-    }
-
-    
-    
-    private final Log info, error;
+    private final Log error;
 
     public AppLog(Context context) {
-        info = new LogInfo(context);
         error = new LogError(context);
     }
     
     public static void i(Context c, String m) {
-        sendBroadcast(LogInfo.ACTION, c, toSaveString(m));
+        sendBroadcast(LOG_INFO, c, toSaveString(m));
     }
 
     private static void i(Object o, String m) {
@@ -149,12 +129,12 @@ public class AppLog implements Closeable {
   
     
     public static void e(Context c, String m) {
-        sendBroadcast(LogError.ACTION, c, toSaveString(m));
+        sendBroadcast(LOG_E, c, toSaveString(m));
     }
 
     
     public static void e(Context c, String a, String b) {
-        sendBroadcast(LogError.ACTION, c, toSaveString(a), toSaveString(b));
+        sendBroadcast(LOG_E, c, toSaveString(a), toSaveString(b));
     }
     
     
@@ -206,7 +186,6 @@ public class AppLog implements Closeable {
     
     @Override
     public void close() {
-        info.close();
         error.close();
     }
 }

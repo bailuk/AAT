@@ -3,6 +3,7 @@ package ch.bailu.aat.preferences;
 
 import android.content.Context;
 
+import ch.bailu.aat.R;
 import ch.bailu.aat.util.ToDo;
 
 public class SolidGpsTimeFix extends SolidBoolean {
@@ -16,7 +17,7 @@ public class SolidGpsTimeFix extends SolidBoolean {
 
     @Override
     public String getLabel() {
-        return ToDo.translate("Fix GPS time");
+        return getString(R.string.p_fix_gps);
     }
 
 

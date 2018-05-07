@@ -1,7 +1,9 @@
 package ch.bailu.aat.activities;
 
 
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -22,8 +24,9 @@ import ch.bailu.aat.preferences.SolidDirectoryQuery;
 import ch.bailu.aat.services.directory.Iterator;
 import ch.bailu.aat.services.directory.IteratorSimple;
 import ch.bailu.aat.util.ui.AppLayout;
-import ch.bailu.aat.views.ContentView;
+import ch.bailu.aat.util.ui.AppTheme;
 import ch.bailu.aat.views.DbSynchronizerBusyIndicator;
+import ch.bailu.aat.views.ContentView;
 import ch.bailu.aat.views.GpxListView;
 import ch.bailu.aat.views.bar.MainControlBar;
 import ch.bailu.aat.views.PercentageLayout;
@@ -33,9 +36,8 @@ import ch.bailu.aat.views.preferences.VerticalScrollView;
 import ch.bailu.util_java.foc.Foc;
 
 
-public abstract class AbsGpxListActivity extends ActivityContext implements OnItemClickListener {
+public abstract class AbsGpxListActivity extends ActivityContext implements OnItemClickListener, SharedPreferences.OnSharedPreferenceChangeListener {
 
-  //  private FileMenu                    fileMenu;
     private String                      solid_key;
 
     private Iterator                    iteratorSimple = Iterator.NULL;
@@ -83,19 +85,21 @@ public abstract class AbsGpxListActivity extends ActivityContext implements OnIt
 
         getServiceContext().getDirectoryService().rescan();
 
+        sdirectory.register(this);
+        setListBackgroundColor();
+
         super.onResumeWithService();
     }
 
 
     @Override
     public void onPauseWithService() {
-//        sdirectory.setPosition(iteratorSimple.getPosition());
-
         iteratorSimple.close();
         iteratorSimple = Iterator.NULL;
         listView.setIterator(this, iteratorSimple);
         fileControlBar.setIterator(iteratorSimple);
 
+        sdirectory.unregister(this);
         super.onPauseWithService();
     }
 
@@ -120,27 +124,21 @@ public abstract class AbsGpxListActivity extends ActivityContext implements OnIt
         displayFile();
     }
 
-/*
     @Override
-    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-        super.onCreateContextMenu(menu, v, menuInfo);
-
-        int position =
-                ((AdapterView.AdapterContextMenuInfo)menuInfo).position;
-
-        iteratorSimple.moveToPosition(position);
-
-        fileMenu = new FileMenu(this, FocAndroid.factory(this, iteratorSimple.getInfo().getFile().getPath()));
-        fileMenu.inflateWithHeader(menu);
-        fileMenu.prepare(menu);
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s) {
+        if (sdirectory.containsKey(s)) {
+            setListBackgroundColor();
+        }
     }
 
-
-    @Override
-    public boolean onContextItemSelected(MenuItem item) {
-        return fileMenu.onItemClick(item);
+    private void setListBackgroundColor() {
+        if (sdirectory.createSelectionString().length() > 0) {
+            listView.setBackgroundColor(AppTheme.getAltBackgroundColor());
+        } else {
+            listView.setBackgroundColor(Color.TRANSPARENT);
+        }
     }
-*/
+
 
     private class Layouter {
         private final AbsGpxListActivity acontext = AbsGpxListActivity.this;
@@ -175,14 +173,16 @@ public abstract class AbsGpxListActivity extends ActivityContext implements OnIt
             summary.add(acontext,new PathDescription(acontext), InfoID.LIST_SUMMARY);
             summary.add(new TitleView(acontext, summary_label));
             summary.addAllContent(acontext, getSummaryData(), InfoID.LIST_SUMMARY);
-            summary.add(new TitleView(acontext, filter_label));
+
+            TitleView title = new TitleView(acontext, filter_label);
+            title.setBackgroundColor(AppTheme.getAltBackgroundColor());
+            summary.add(title);
             summary.addAllFilterViews(map.getMContext());
 
 
-            contentView.addView(bar);
-            contentView.addView(createLayout(map, summary, bar));
+            contentView.add(bar);
+            contentView.add(createLayout(map, summary, bar));
 
-            //bar.add(new SolidDirectoryMenuButton(acontext, sdirectory));
         }
 
 

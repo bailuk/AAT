@@ -15,41 +15,13 @@ public class Clipboard {
 
 
     public void setText(CharSequence label, CharSequence text) {
-        if (android.os.Build.VERSION.SDK_INT < 11) {
-            setTextSDK1(text);
-        } else {
-            setTextSDK11(label, text);
-        }
+        setTextSDK11(label, text);
     }
 
 
 
     public CharSequence getText() {
-        if (android.os.Build.VERSION.SDK_INT < 11) {
-            return getTextSDK1();
-        } else {
-            return getTextSDK11();
-        }
-    }
-
-
-    @SuppressWarnings("deprecation")
-    private void setTextSDK1(CharSequence text) {
-        android.text.ClipboardManager clipboard = (android.text.ClipboardManager) context
-                .getSystemService(Context.CLIPBOARD_SERVICE);
-        if (clipboard != null) clipboard.setText(text);
-    }
-
-
-    @SuppressWarnings("deprecation")
-    private CharSequence getTextSDK1() {
-        android.text.ClipboardManager clipboard = (android.text.ClipboardManager) context
-                .getSystemService(Context.CLIPBOARD_SERVICE);
-
-        if (clipboard != null)
-            return clipboard.getText().toString();
-
-        return null;
+        return getTextSDK11();
     }
 
 

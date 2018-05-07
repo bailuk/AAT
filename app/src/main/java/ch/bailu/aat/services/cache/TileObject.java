@@ -33,7 +33,7 @@ public abstract class TileObject extends ObjectHandle {
     }
 
 
-    public static TileObject NULL_TILE = new TileObject("") {
+    public static final TileObject NULL_TILE = new TileObject("") {
         @Override
         public Bitmap getAndroidBitmap() {
             return null;

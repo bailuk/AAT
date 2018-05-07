@@ -23,14 +23,13 @@ public class ElevationUpdater implements Closeable {
     private final PendingUpdatesMap pendingUpdates = new PendingUpdatesMap();
 
     private final ServiceContext scontext;
-    private final Context context;
 
     private final Dem3Loader loader;
     private final Dem3Tiles tiles;
 
     public ElevationUpdater(ServiceContext cs, Dem3Loader d, Dem3Tiles t) {
         scontext = cs;
-        context = cs.getContext();
+        Context context = cs.getContext();
         tiles = t;
         loader = d;
 

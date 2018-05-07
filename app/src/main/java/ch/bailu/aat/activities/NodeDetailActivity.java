@@ -22,7 +22,7 @@ import ch.bailu.aat.map.MapViewInterface;
 import ch.bailu.aat.util.HtmlBuilderGpx;
 import ch.bailu.aat.util.ui.AppLayout;
 import ch.bailu.aat.views.ContentView;
-import ch.bailu.aat.views.HtmlScrollTextView;
+import ch.bailu.aat.views.html.HtmlScrollTextView;
 import ch.bailu.aat.views.PercentageLayout;
 import ch.bailu.aat.views.SVGAssetView;
 import ch.bailu.aat.views.bar.ControlBar;
@@ -59,10 +59,10 @@ public class NodeDetailActivity extends AbsDispatcher
         htmlBuilder = new HtmlBuilderGpx(this);
         fileID = getIntent().getStringExtra("ID");
 
-        final LinearLayout contentView = new ContentView(this);
-        contentView.addView(createButtonBar());
-        contentView.addView(createSeekBar());
-        contentView.addView(createVerticalView());
+        final ContentView contentView = new ContentView(this);
+        contentView.add(createButtonBar());
+        contentView.add(createSeekBar());
+        contentView.add(createVerticalView());
 
         createDispatcher();
 

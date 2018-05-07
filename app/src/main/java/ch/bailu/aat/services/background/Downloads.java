@@ -4,6 +4,7 @@ package ch.bailu.aat.services.background;
 import java.util.ArrayList;
 
 import ch.bailu.aat.util.AppBroadcaster;
+import ch.bailu.aat.util.net.URX;
 import ch.bailu.util_java.foc.Foc;
 import ch.bailu.util_java.util.Objects;
 
@@ -50,4 +51,17 @@ public class Downloads {
         AppBroadcaster.broadcast(t.getContext(),
                 AppBroadcaster.ON_DOWNLOADS_CHANGED, t.getFile(), t.getSource());
     }
+
+    public static Foc getFile() {
+        if (downloads.isEmpty()==false) return downloads.get(0).getFile();
+
+        return null;
+    }
+
+    public static URX getSource() {
+        if (downloads.isEmpty()==false) return downloads.get(0).getSource();
+
+        return null;
+    }
+
 }

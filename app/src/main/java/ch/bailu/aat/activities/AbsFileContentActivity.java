@@ -3,7 +3,6 @@ package ch.bailu.aat.activities;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
@@ -19,6 +18,7 @@ import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.map.MapViewInterface;
 import ch.bailu.aat.menus.FileMenu;
 import ch.bailu.aat.services.editor.EditorHelper;
+import ch.bailu.aat.util.ui.AppLog;
 import ch.bailu.aat.util.ui.ToolTip;
 import ch.bailu.aat.views.BusyButton;
 import ch.bailu.aat.views.ContentView;
@@ -54,11 +54,11 @@ public abstract class AbsFileContentActivity extends AbsDispatcher implements On
 
 
     private void createViews() {
-        final ViewGroup contentView = new ContentView(this);
+        final ContentView contentView = new ContentView(this);
 
         MainControlBar bar = new MainControlBar(this);
-        contentView.addView(bar);
-        contentView.addView(createLayout(bar));
+        contentView.add(bar);
+        contentView.add(createLayout(bar));
 
         initButtonBar(bar);
 
@@ -112,6 +112,7 @@ public abstract class AbsFileContentActivity extends AbsDispatcher implements On
                 if (!Objects.equals(currentFileID, newFileID)) {
                     currentFileID = newFileID;
                     map.frameBounding(info.getBoundingBox());
+                    AppLog.i(AbsFileContentActivity.this, info.getFile().getName());
                 }
             }
         }, InfoID.FILEVIEW);

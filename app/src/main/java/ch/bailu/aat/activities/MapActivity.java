@@ -4,7 +4,6 @@ package ch.bailu.aat.activities;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.widget.LinearLayout;
 
 import org.mapsforge.core.model.LatLong;
 
@@ -35,9 +34,9 @@ public class MapActivity extends AbsDispatcher{
 
         EditorHelper edit = new EditorHelper(getServiceContext());
 
-        LinearLayout contentView=new ContentView(this);
+        ContentView contentView=new ContentView(this);
         MapViewInterface map = createMap(edit);
-        contentView.addView(map.toView());
+        contentView.add(map.toView());
         setContentView(contentView);
 
         createDispatcher(edit);

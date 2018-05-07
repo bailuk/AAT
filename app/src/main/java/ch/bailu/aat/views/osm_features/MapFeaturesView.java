@@ -53,7 +53,7 @@ public class MapFeaturesView extends LinearLayout implements SharedPreferences.O
     };
 
 
-    private BroadcastReceiver onListLoaded = new BroadcastReceiver() {
+    private final BroadcastReceiver onListLoaded = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, final Intent intent) {
             if (listHandle != null && AppIntent.hasFile(intent, listHandle.getID())) {

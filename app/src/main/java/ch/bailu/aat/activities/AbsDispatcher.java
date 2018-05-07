@@ -9,8 +9,9 @@ import ch.bailu.aat.dispatcher.LifeCycleDispatcher;
 import ch.bailu.aat.dispatcher.LifeCycleInterface;
 import ch.bailu.aat.dispatcher.OnContentUpdatedInterface;
 import ch.bailu.aat.gpx.InfoID;
+import ch.bailu.aat.util.AbsServiceLink;
 
-public abstract class AbsDispatcher extends AbsMenu
+public abstract class AbsDispatcher extends AbsServiceLink
         implements DispatcherInterface {
 
     private Dispatcher dispatcher = null;
@@ -48,8 +49,13 @@ public abstract class AbsDispatcher extends AbsMenu
 
     @Override
     public void onResumeWithService() {
+
         lifeCycle.onResumeWithService();
         dispatcher.onResume();
+
+
+        super.onResumeWithService();
+
     }
 
     @Override
@@ -66,5 +72,4 @@ public abstract class AbsDispatcher extends AbsMenu
         super.onDestroy();
 
     }
-
 }

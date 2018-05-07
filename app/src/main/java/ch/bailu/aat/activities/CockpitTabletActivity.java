@@ -38,8 +38,9 @@ public class CockpitTabletActivity extends AbsDispatcher {
         EditorHelper edit = new EditorHelper(getServiceContext());
         setContentView(createContentView(edit));
         createDispatcher(edit);
-    }
 
+
+    }
 
     private View createContentView(EditorHelper edit) {
         final MapViewInterface smallMap = MapFactory.DEF(this, SOLID_KEY).split();

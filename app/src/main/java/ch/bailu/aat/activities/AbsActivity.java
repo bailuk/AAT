@@ -54,7 +54,7 @@ public abstract class AbsActivity extends Activity {
     public void onResume() {
         super.onResume();
         logger = new AppLog(this);
-    }
+  }
 
 
     @Override
@@ -76,8 +76,4 @@ public abstract class AbsActivity extends Activity {
         builder.append("</p>");
 
     }
-
-
-
-
 }
