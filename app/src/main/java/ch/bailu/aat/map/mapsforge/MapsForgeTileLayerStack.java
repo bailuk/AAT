@@ -1,7 +1,6 @@
 package ch.bailu.aat.map.mapsforge;
 
 import android.content.SharedPreferences;
-import android.graphics.Color;
 
 import org.mapsforge.core.graphics.Canvas;
 import org.mapsforge.core.model.BoundingBox;

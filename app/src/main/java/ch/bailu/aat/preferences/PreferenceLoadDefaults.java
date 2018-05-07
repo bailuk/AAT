@@ -3,7 +3,6 @@ package ch.bailu.aat.preferences;
 import android.app.Activity;
 import android.content.Context;
 
-import ch.bailu.aat.map.tile.source.DownloadSource;
 import ch.bailu.aat.util.AppPermission;
 
 public class PreferenceLoadDefaults {

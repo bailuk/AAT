@@ -4,7 +4,6 @@ import android.content.Context;
 
 import ch.bailu.aat.R;
 import ch.bailu.aat.util.MemSize;
-import ch.bailu.aat.util.ToDo;
 
 public class SolidCacheSize extends SolidIndexList {
     final static String KEY = "cache_size";

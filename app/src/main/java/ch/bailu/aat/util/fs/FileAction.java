@@ -6,9 +6,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.widget.EditText;
 
-import java.io.BufferedInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 
 import ch.bailu.aat.R;
 import ch.bailu.aat.preferences.SolidDirectoryQuery;
@@ -135,7 +133,8 @@ public class FileAction {
 
 
     private static void copyToDest(Context context, Foc src, Foc dest) throws IOException {
-            if (dest == null || dest.exists()) {
+        if (src != null && dest != null) {
+            if (dest.exists()) {
                 AFile.logErrorExists(context, dest);
 
             } else {
@@ -143,6 +142,7 @@ public class FileAction {
                 AppBroadcaster.broadcast(context,
                         AppBroadcaster.FILE_CHANGED_ONDISK, dest, src.getPath());
             }
+        }
     }
 
 

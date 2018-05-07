@@ -3,7 +3,6 @@ package ch.bailu.aat.views;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.view.ViewGroup;
 import android.widget.TextView;
 
 import ch.bailu.aat.map.MapColor;

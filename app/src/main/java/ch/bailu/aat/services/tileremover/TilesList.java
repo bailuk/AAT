@@ -17,13 +17,14 @@ public class TilesList {
         @Override
         public int compare(TileFile o1, TileFile o2) {
 
-            //if (o1.equals(o2)) return 0;
-
             if (o2.lastModified() > o1.lastModified())
                 return -1;
 
-            else
+            else if (o2.lastModified() < o1.lastModified())
                 return 1;
+
+            else
+                return 0;
         }
     });
 

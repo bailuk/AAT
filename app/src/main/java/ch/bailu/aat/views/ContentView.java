@@ -1,16 +1,13 @@
 package ch.bailu.aat.views;
 
 import android.content.Context;
-import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
 import java.util.ArrayList;
 
 import ch.bailu.aat.activities.ActivitySwitcher;
-import ch.bailu.aat.util.Timer;
 import ch.bailu.aat.util.ui.AppLog;
 
 public class ContentView extends FrameLayout{

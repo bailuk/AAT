@@ -32,17 +32,22 @@ public class BusyButton extends ImageButton implements Runnable {
 
 
         Drawable white = getResources().getDrawable(image_res);
-        Drawable orange = white.getConstantState().newDrawable().mutate();
-        orange.setColorFilter(
-                AppTheme.getHighlightColor(),
-                PorterDuff.Mode.MULTIPLY);
 
-        drawable = new TransitionDrawable(new Drawable[]{white, orange});
+        Drawable.ConstantState constantState = white.getConstantState();
 
-        setImageDrawable(drawable);
-        setBackgroundResource(R.drawable.button);
+        if (constantState != null) {
+            Drawable orange = constantState.newDrawable().mutate();
+            orange.setColorFilter(
+                    AppTheme.getHighlightColor(),
+                    PorterDuff.Mode.MULTIPLY);
 
-        timer.kick();
+            drawable = new TransitionDrawable(new Drawable[]{white, orange});
+
+            setImageDrawable(drawable);
+            setBackgroundResource(R.drawable.button);
+
+            timer.kick();
+        }
     }
 
 

@@ -9,7 +9,6 @@ import ch.bailu.aat.R;
 import ch.bailu.aat.activities.AbsDispatcher;
 import ch.bailu.aat.activities.ActivitySwitcher;
 import ch.bailu.aat.gpx.InfoID;
-import ch.bailu.aat.menus.MultiViewMenu;
 import ch.bailu.aat.util.ui.AppLayout;
 import ch.bailu.aat.menus.OptionsMenu;
 import ch.bailu.aat.views.BusyButton;

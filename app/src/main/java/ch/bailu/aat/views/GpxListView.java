@@ -9,7 +9,6 @@ import android.widget.ListView;
 
 import ch.bailu.aat.activities.ActivityContext;
 import ch.bailu.aat.description.ContentDescription;
-import ch.bailu.aat.preferences.SolidDirectoryQuery;
 import ch.bailu.aat.services.directory.Iterator;
 import ch.bailu.aat.services.directory.Iterator.OnCursorChangedListener;
 import ch.bailu.aat.util.ui.AppTheme;

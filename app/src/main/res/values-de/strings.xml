@@ -65,7 +65,7 @@
     <string name="p_system">System</string>
     <string name="p_location_provider">Standortquelle</string>
     <string name="p_post_autopause">Postprocessed Autopause</string>
-    <string name="p_cache_size">Grösse des internen Zwischenspeicher</string>
+    <string name="p_cache_size">Größe des internen Zwischenspeicher</string>
     <string name="p_fix_gps">GPS Zeit anpassen</string>
 
 
