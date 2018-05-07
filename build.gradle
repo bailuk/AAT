@@ -11,6 +11,7 @@ buildscript {
 
 allprojects {
     repositories {
+        google() // for com.android.tools.build:gradle'
         jcenter()
     }
 }
