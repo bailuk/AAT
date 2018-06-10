@@ -1,50 +1,49 @@
 package ch.bailu.aat.gpx;
 
 public class AverageAltitude {
-    private static final int SAMPLES= 10;
-    private static final float SAMPLE_DISTANCE = 5;
+    private static final int SAMPLES = 10;
+    private static final float SAMPLE_MIN_DISTANCE = 10f;
 
-    private int sample;
-    private float distance, tdistance;
-
-    private float altitude;
+    private int next_sample_index, samples;
 
 
-    public boolean add(float alt, float dist) {
-        distance += dist;
-        tdistance += dist;
+    private float t_distance;
+    private int t_altitude;
 
-        if (distance > SAMPLE_DISTANCE) {
-            distance = 0f;
-            return add(alt);
+
+    public boolean add(short alt, float dist) {
+        if (next_sample_index == 0) {
+            t_distance = dist;
+            t_altitude = alt;
+            samples = 1;
+
+        } else  {
+            t_distance += dist;
+            t_altitude += alt;
+            samples++;
+
         }
 
-        return false;
-    }
-
-    public boolean add(float alt) {
-        if (sample == 0) {
-            tdistance = 0;
-            altitude = alt;
-        } else {
-            altitude += alt;
-            altitude /= 2f;
-        }
-
-        sample++;
-
-        if (sample < SAMPLES) {
+        if (samples < SAMPLES || t_distance < SAMPLE_MIN_DISTANCE) {
+            next_sample_index++;
             return false;
 
         } else {
-            sample = 0;
+            next_sample_index = 0;
             return true;
         }
     }
 
     public float getAltitude() {
-        return altitude;
-    }
-    public float getDistance() { return tdistance;}
+        double alt = t_altitude;
 
+        if (samples > 0) {
+            return (float) (alt / samples);
+        } else {
+            return 0f;
+        }
+
+    }
+
+    public float getDistance() { return t_distance;}
 }
