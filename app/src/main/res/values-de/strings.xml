@@ -27,10 +27,10 @@
     <!-- Activity main -->
     <string name="intro_about">Info</string>
     <string name="intro_map">Kartenansicht</string>
-    <string name="intro_nominatim">Karten Suche</string>
+    <string name="intro_nominatim">Suche in der Karte</string>
     <string name="intro_status">Status</string>
 
-    <string name="intro_overlay_list">Overlay Liste</string>
+    <string name="intro_overlay_list">Liste der Overlays</string>
     <string name="intro_list">Aufgezeichnete Aktivitäten</string>
     <string name="intro_external_list">Externe Dateien</string>
     <string name="intro_settings">Einstellungen</string>
@@ -40,8 +40,8 @@
     <string name="label_summary">Zusammenfassung</string>
     <string name="label_filter">Filter</string>
     <string name="label_list">Liste</string>
-    <string name="filter_date_start">Start Datum</string>
-    <string name="filter_date_to">End Datum</string>
+    <string name="filter_date_start">Startdatum</string>
+    <string name="filter_date_to">Enddatum</string>
     <string name="filter_geo">Innerhalb Bereich</string>
 
     <!-- Activity OSM API Query -->
@@ -63,14 +63,14 @@
     <!-- Preferences System -->
     <string name="p_directory_data">Interne Dateien</string>
     <string name="p_system">System</string>
-    <string name="p_location_provider">Standortquelle</string>
+    <string name="p_location_provider">Standortbestimmung durch...</string>
     <string name="p_post_autopause">Postprocessed Autopause</string>
-    <string name="p_cache_size">Größe des internen Zwischenspeicher</string>
-    <string name="p_fix_gps">GPS Zeit anpassen</string>
+    <string name="p_cache_size">Größe des internen Zwischenspeichers</string>
+    <string name="p_fix_gps">GPS-Zeit anpassen</string>
 
 
     <!-- Preferences Context -->
-    <string name="p_legend_fulldistance">Totaldistanz</string>
+    <string name="p_legend_fulldistance">Gesamtdistanz</string>
     <string name="p_overlay">Overlays</string>
 
 
@@ -94,31 +94,31 @@
         <item> 5.8 Radfahren, wenig Leistung</item>
         <item>10.0 Radfahren, hohe Leistung</item>
         <item> 6.0 Rennen, langsam</item>
-        <item> 9.0 Rennen, cross country</item>
-        <item> 9.8 running, 6 mph (10 min/mile)</item>
-        <item> 9.0 running, cross country</item>
+        <item> 9.0 Rennen, Querfeldein</item>
+        <item> 9.8 Rennen, 6 mph (10 min/mile)</item>
+        <item> 9.0 Rennen, Querfeldein (schnell)</item>
         <item>10.0 Rennen, auf der Bahn</item>
         <item> 8.0 running, training, pushing a wheelchair or baby carrier</item>
-        <item>13.3 rennen, Marathon</item>
-        <item> 7.8 backpacking, hiking or organized walking with a daypack</item>
-        <item> 7.3 klettern mit wenig Gepäck</item>
-        <item> 8.3 klettern mit mittlerem Gepäck</item>
-        <item> 9.0 klettern mit viel Gepäck</item>
+        <item>13.3 Rennen, Marathon</item>
+        <item> 7.8 Wandern mit kleinem Rucksack</item>
+        <item> 7.3 Klettern mit wenig Gepäck</item>
+        <item> 8.3 Klettern mit mittlerem Gepäck</item>
+        <item> 9.0 Klettern mit viel Gepäck</item>
         <item> 5.3 Wandern/Spazieren normale Geschwindigkeit</item>
-        <item> 6.5 race walking</item>
-        <item> 8.0 rock or mountain climbing</item>
+        <item> 6.5 Wettkampf-Gehen</item>
+        <item> 8.0 Bergsteigen/Klettern</item>
         <item> 2.0 Spazieren, sehr langsam</item>
         <item> 3.5 Spazieren, normal</item>
-        <item> 3.0 walking the dog</item>
-        <item> 4.8 Spazieren/Nordic walking mittelere Anstrengung</item>
-        <item> 6.8 Spazieren/Nordic walking hohe Anstrengung</item>
+        <item> 3.0 Gassigehen</item>
+        <item> 4.8 Spazieren/Nordic Walking mittelere Anstrengung</item>
+        <item> 6.8 Spazieren/Nordic Walking hohe Anstrengung</item>
     </string-array>
 
     <string name="p_accuracy_filter">Genauigkeitsfilter</string>
     <string name="p_missing_trigger">Auslöser für fehlendes Signal</string>
     <string name="p_distance_filter">Distanz-Filter</string>
     <string name="p_autopause">Autopause</string>
-    <string name="p_tracker_autopause">Tracker automatisch auf Pause setzen</string>
+    <string name="p_tracker_autopause">Tracking automatisch pausieren</string>
 
     <string name="p_backlight_title">Bildschirm</string>
     <string name="p_backlight_off">Systemeinstellung</string>
@@ -164,7 +164,7 @@
     <string name="file_delete_ask">Datei löschen?</string>
     <string name="file_copy">Kopieren nach…</string>
     <string name="file_exists"> ist bereits vorhanden!</string>
-    <string name="file_overlay">Als overlay verwenden</string>
+    <string name="file_overlay">Als Overlay verwenden</string>
     <string name="file_reload">Vorschau neu laden</string>
     <string name="file_rename">Datei umbenenen</string>
     <string name="file_send">Senden…</string>
@@ -225,14 +225,14 @@
     <string name ="tt_edit_remove">Ausgewählten Punkt entfernen</string>
     <string name ="tt_edit_up">Ausgewählten Punkt in der Liste nach oben bewegen</string>
     <string name ="tt_edit_down">Ausgewählten Punkt in der Liste nach unten bewegen</string>
-    <string name ="tt_edit_convert">Wechseln zwischen GPX Track oder GPX Way</string>
+    <string name ="tt_edit_convert">Wechseln zwischen GPX-Track oder GPX-Way</string>
     <string name ="tt_edit_clear">Liste löschen: alle Punkte entfernen</string>
     <string name ="tt_edit_redo">Letzte rückgängig gemachte Aktion wiederherstellen</string>
     <string name ="tt_edit_undo">Letzte Aktion rückgängig machen</string>
-    <string name ="tt_edit_save">GPX Liste speichern</string>
-    <string name ="tt_edit_save_as">Kopie der GPX Liste speichern</string>
+    <string name ="tt_edit_save">GPX-Liste speichern</string>
+    <string name ="tt_edit_save_as">Kopie der GPX-Liste speichern</string>
 
-    <string name ="tt_info_grid">Zwischen verschiedenen Kartengitter wechseln</string>
+    <string name ="tt_info_grid">Zwischen verschiedenen Kartengittern wechseln</string>
     <string name ="tt_info_legend">Zwischen Beschreibungsmodi wechseln</string>
     <string name ="tt_info_nominatim">Suchanfrage über OSM-Nominatim</string>
     <string name ="tt_info_overpass">Anfrage über OSM-Overpass</string>
@@ -250,7 +250,7 @@
 
     <string name="tt_info_location">Importieren/exportieren der Kartenmitte</string>
     <string name="tt_menu_file">Menu für Dateioperationen anzeigen</string>
-    <string name="tt_overpass_mapfeatures">Map Features auflisten</string>
+    <string name="tt_overpass_mapfeatures">Map-Features auflisten</string>
 
 
     <string name ="tt_cockpit_a">Vollbild</string>
