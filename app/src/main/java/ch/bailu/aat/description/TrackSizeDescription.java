@@ -12,8 +12,8 @@ public class TrackSizeDescription extends ContentDescription {
     private String value="";
     private int size=-1;
 
-    public TrackSizeDescription(Context c) {
-        super(c);
+    public TrackSizeDescription(Context context) {
+        super(context);
     }
 
     @Override

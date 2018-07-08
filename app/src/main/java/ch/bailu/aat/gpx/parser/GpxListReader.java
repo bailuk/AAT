@@ -15,9 +15,9 @@ import ch.bailu.util_java.parser.OnParsedInterface;
 public class GpxListReader {
     private final ThreadControl threadControl;
 
-    private final OnParsed way = new OnParsed(GpxType.WAY, MaxSpeed.NULL, AutoPause.NULL, AltitudeDelta.NULL);
+    private final OnParsed way;
     private final OnParsed track;
-    private final OnParsed route = new OnParsed(GpxType.RTE, MaxSpeed.NULL, AutoPause.NULL, AltitudeDelta.NULL);
+    private final OnParsed route;
 
     private final XmlParser parser;
 
@@ -34,6 +34,19 @@ public class GpxListReader {
                 GpxType.TRK,
                 new MaxSpeed.Samples(),
                 pause,
+                new AltitudeDelta.LastAverage());
+
+        way = new OnParsed(
+                GpxType.WAY,
+                MaxSpeed.NULL,
+                AutoPause.NULL,
+                AltitudeDelta.NULL);
+
+
+        route = new OnParsed(
+                GpxType.RTE,
+                MaxSpeed.NULL,
+                AutoPause.NULL,
                 new AltitudeDelta.LastAverage());
 
         threadControl=c;

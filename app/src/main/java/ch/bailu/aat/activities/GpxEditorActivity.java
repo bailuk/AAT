@@ -5,7 +5,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
 
+import ch.bailu.aat.description.AscendDescription;
 import ch.bailu.aat.description.ContentDescription;
+import ch.bailu.aat.description.DescendDescription;
 import ch.bailu.aat.description.DistanceDescription;
 import ch.bailu.aat.description.NameDescription;
 import ch.bailu.aat.description.PathDescription;
@@ -50,6 +52,8 @@ public class GpxEditorActivity extends AbsFileContentActivity
                 new NameDescription(this),
                 new PathDescription(this),
                 new DistanceDescription(this),
+                new AscendDescription(this),
+                new DescendDescription(this),
                 new TrackSizeDescription(this),
         };
 
