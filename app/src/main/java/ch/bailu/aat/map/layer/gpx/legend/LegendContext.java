@@ -8,7 +8,9 @@ import ch.bailu.aat.map.TwoNodes;
 
 public class LegendContext {
 
-    public static final int MIN_PIXEL_DISTANCE=100;
+
+    public static final int MIN_DI_PIXEL_DISTANCE=100;
+    public final int min_pixel_distance;
 
     private final MapContext mcontext;
     public final TwoNodes nodes;
@@ -17,6 +19,7 @@ public class LegendContext {
     public LegendContext(MapContext mc) {
         mcontext = mc;
         nodes=mc.getTwoNodes();
+        min_pixel_distance = mc.getMetrics().getDensity().toPixel_i(MIN_DI_PIXEL_DISTANCE);
     }
 
     public boolean isVisible(BoundingBoxE6 bounding) {
@@ -64,7 +67,7 @@ public class LegendContext {
 
 
     public boolean arePointsTooClose() {
-        return nodes.arePointsTooClose(MIN_PIXEL_DISTANCE);
+        return nodes.arePointsTooClose(min_pixel_distance);
     }
 
     public void switchNodes() {

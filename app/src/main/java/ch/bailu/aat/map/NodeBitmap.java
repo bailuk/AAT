@@ -26,7 +26,7 @@ public class NodeBitmap {
     private static final SparseArray<NodeBitmap> nodes = new SparseArray<>(10);
 
     public static NodeBitmap get(AppDensity res) {
-        int radius = res.toDPi(RADIUS);
+        int radius = res.toPixel_i(RADIUS);
 
         NodeBitmap node = nodes.get(radius);
 
@@ -45,7 +45,7 @@ public class NodeBitmap {
 
         final int color = Color.WHITE;
 
-        int stroke_width = res.toDPi(STROKE_WIDTH);
+        int stroke_width = res.toPixel_i(STROKE_WIDTH);
         int hsize = (radius+ stroke_width);
         int size = hsize * 2;
 

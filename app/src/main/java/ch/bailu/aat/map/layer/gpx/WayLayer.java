@@ -30,7 +30,7 @@ public class WayLayer extends GpxLayer {
         super(toColor(color));
         mcontext = mc;
 
-        icon_size = mcontext.getMetrics().getDensity().toDPi(ICON_SIZE);
+        icon_size = mcontext.getMetrics().getDensity().toPixel_i(ICON_SIZE);
     }
 
 

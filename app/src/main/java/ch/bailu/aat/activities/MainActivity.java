@@ -6,9 +6,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
 
-import java.io.IOError;
-import java.io.IOException;
-
 import ch.bailu.aat.dispatcher.CurrentLocationSource;
 import ch.bailu.aat.dispatcher.TrackerSource;
 import ch.bailu.aat.preferences.SolidDataDirectory;
@@ -35,7 +32,6 @@ public class MainActivity extends AbsDispatcher {
 
         createViews();
         createDispatcher();
-
     }
 
 

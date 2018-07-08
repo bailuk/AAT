@@ -46,7 +46,7 @@ public class AndroidDraw implements MapDraw {
         nodePainter = NodeBitmap.get(res);
         resources = r;
 
-        point_radius = res.toDPi(POINT_RADIUS);
+        point_radius = res.toPixel_i(POINT_RADIUS);
     }
 
     private void init(MapMetrics metric) {

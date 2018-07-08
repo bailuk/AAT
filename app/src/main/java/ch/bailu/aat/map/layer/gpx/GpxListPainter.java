@@ -30,8 +30,8 @@ public abstract class GpxListPainter extends GpxListWalker {
         mcontext = mc;
         AppDensity res = mc.getMetrics().getDensity();
 
-        minDistance = mc.getMetrics().pixelToDistance((int) res.toDPf(MIN_PIXEL_SPACE));
-        maxDistance = mc.getMetrics().pixelToDistance((int) res.toDPf(MAX_PIXEL_SPACE));
+        minDistance = mc.getMetrics().pixelToDistance((int) res.toPixel_f(MIN_PIXEL_SPACE));
+        maxDistance = mc.getMetrics().pixelToDistance((int) res.toPixel_f(MAX_PIXEL_SPACE));
 
     }
 

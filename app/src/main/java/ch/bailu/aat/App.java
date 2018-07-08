@@ -36,12 +36,17 @@ public class App extends Application {
     private void initAcra() {
         CoreConfigurationBuilder builder = new CoreConfigurationBuilder(this)
                 .setBuildConfigClass(BuildConfig.class)
-                .setReportFormat(StringFormat.JSON);
+                .setReportFormat(StringFormat.KEY_VALUE_LIST);
         builder.getPluginConfigurationBuilder(MailSenderConfigurationBuilder.class)
                 .setMailTo("aat@bailu.ch")
                 .setEnabled(true);
         builder.getPluginConfigurationBuilder(DialogConfigurationBuilder.class)
-                .setText(ToDo.translate("AAT Crashed"))
+                .setTitle(ToDo.translate("AAT crashed"))
+                .setText(ToDo.translate(
+                        "This will open your e-mail app to send a crash report " +
+                        "including some information about your device to \"aat@bailu.ch\".\n" +
+                        "This will help the author to fix and improve this app."))
+
                 .setEnabled(true);
         ACRA.init(this, builder);
 

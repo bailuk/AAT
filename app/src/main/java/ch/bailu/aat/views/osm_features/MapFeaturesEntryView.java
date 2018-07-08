@@ -32,7 +32,7 @@ public class MapFeaturesEntryView extends LinearLayout implements View.OnClickLi
 
         if (icon_view_size == 0)
             icon_view_size = new AppDensity(getContext())
-                    .toDPi(IconMapService.BIG_ICON_SIZE+10);
+                    .toPixel_i(IconMapService.BIG_ICON_SIZE+10);
 
 
         onSelected = s;

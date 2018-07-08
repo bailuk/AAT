@@ -48,13 +48,13 @@ public class GraphPlotter {
         paintFont.setAntiAlias(true);
         paintFont.setDither(false);
         paintFont.setColor(Color.WHITE);
-        paintFont.setTextSize(res.toSDPf(TEXT_SIZE));
+        paintFont.setTextSize(res.toPixelScaled_f(TEXT_SIZE));
 
 
         paintPlotLines = new Paint();
         paintPlotLines.setAntiAlias(true);
         paintPlotLines.setDither(false);
-        paintPlotLines.setStrokeWidth(res.toDPf(2));
+        paintPlotLines.setStrokeWidth(res.toPixel_f(2));
 
         paintLines = new Paint();
         paintLines.setAntiAlias(true);
@@ -63,8 +63,8 @@ public class GraphPlotter {
         paintLines.setColor(Color.GRAY);
 
         text_size = Math.max(Math.round(paintFont.getTextSize()), 1);
-        ylabel_xoffset = res.toDPi(YLABEL_XOFFSET);
-        ylabel_yoffset = res.toDPi(YLABEL_YOFFSET);
+        ylabel_xoffset = res.toPixel_i(YLABEL_XOFFSET);
+        ylabel_yoffset = res.toPixel_i(YLABEL_YOFFSET);
 
         xscaler = new Scaler(width, xScale);
         yscaler = new InvertetOffsetScaler(height);

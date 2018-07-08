@@ -33,24 +33,24 @@ public class AppDensity {
     }
 
 
-    public float toDPf(float pixel) {
-        return density * pixel;
+    public float toPixel_f(float diPixel) {
+        return density * diPixel;
     }
 
-    public float toSDPf(float pixel) {
-        return scaledDensity * pixel;
+    public float toPixelScaled_f(float diPixel) {
+        return scaledDensity * diPixel;
     }
 
 
-    public int toDPi(float pixel) {
-        return (int) (toDPf(pixel)+0.5f);
+    public int toPixel_i(float diPixel) {
+        return (int) (toPixel_f(diPixel)+0.5f);
     }
 
-    public int toDPi(float pixel, int min) {
-        return Math.max(min, toDPi(pixel));
+    public int toPixel_i(float diPixel, int min) {
+        return Math.max(min, toPixel_i(diPixel));
     }
 
-    public int fromDP(float dpixel) {
-        return (int) (dpixel / density);
+    public int toDensityIndependentPixel(float pixel) {
+        return (int) (pixel / density);
     }
 }

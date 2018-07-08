@@ -24,7 +24,7 @@ public class MapPaint {
         Paint p=AndroidGraphicFactory.INSTANCE.createPaint();
         p.setColor(MapColor.GRID);
         p.setStyle(Style.FILL);
-        p.setStrokeWidth(Math.max(1, res.toDPf(1)));
+        p.setStrokeWidth(Math.max(1, res.toPixel_f(1)));
         return p;
     }
 
@@ -44,7 +44,7 @@ public class MapPaint {
         Paint p=AndroidGraphicFactory.INSTANCE.createPaint();
         p.setColor(MapColor.TEXT);
 
-        p.setTextSize(res.toSDPf(size));
+        p.setTextSize(res.toPixelScaled_f(size));
         AndroidGraphicFactory.getPaint(p).setFakeBoldText(true);
         p.setStyle(Style.FILL);
 
@@ -55,7 +55,7 @@ public class MapPaint {
     public static Paint createEdgePaint(AppDensity res) {
         Paint edge = AndroidGraphicFactory.INSTANCE.createPaint();
 
-        edge.setStrokeWidth(res.toDPf(EDGE_WIDTH));
+        edge.setStrokeWidth(res.toPixel_f(EDGE_WIDTH));
         edge.setColor(MapColor.EDGE);
         edge.setStyle(Style.STROKE);
 

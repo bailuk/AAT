@@ -41,8 +41,8 @@ public abstract class NodeSelectorLayer implements MapLayerInterface, OnContentU
 
     public NodeSelectorLayer(MapContext mc) {
 
-        square_size = mc.getMetrics().getDensity().toDPi(SQUARE_SIZE);
-        square_hsize = mc.getMetrics().getDensity().toDPi(SQUARE_HSIZE);
+        square_size = mc.getMetrics().getDensity().toPixel_i(SQUARE_SIZE);
+        square_hsize = mc.getMetrics().getDensity().toPixel_i(SQUARE_HSIZE);
         centerRect.left = 0;
         centerRect.right = square_size;
         centerRect.top = 0;

@@ -76,7 +76,7 @@ public class AppLayout {
     }
 
     public static int getBigButtonSize(Context context, int buttonCount) {
-        int big_button_size = new AppDensity(context).toDPi(BIG_BUTTON_SIZE);
+        int big_button_size = new AppDensity(context).toPixel_i(BIG_BUTTON_SIZE);
         return Math.min(AppLayout.getScreenSmallSide(context) / buttonCount, big_button_size);
     }
 

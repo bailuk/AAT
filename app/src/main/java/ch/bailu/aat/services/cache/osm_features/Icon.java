@@ -23,8 +23,8 @@ class Icon {
 
 
     public Icon(Context context) {
-        int sicon_size = new AppDensity(context).toDPi(IconMapService.SMALL_ICON_SIZE);
-        icon_size =new AppDensity(context).toDPi(IconMapService.BIG_ICON_SIZE);
+        int sicon_size = new AppDensity(context).toPixel_i(IconMapService.SMALL_ICON_SIZE);
+        icon_size =new AppDensity(context).toPixel_i(IconMapService.BIG_ICON_SIZE);
 
         way = toDrawable(context,"way.svg",sicon_size,Color.WHITE);
         node = toDrawable(context,"symbols/node.svg",sicon_size,Color.WHITE);
