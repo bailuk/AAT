@@ -1,14 +1,14 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 27
+    compileSdkVersion 28
 
 
     defaultConfig {
         applicationId "ch.bailu.aat"
 
         minSdkVersion 14
-        targetSdkVersion 27
+        targetSdkVersion 28
 
         versionCode 23
         versionName "v1.13"
@@ -39,14 +39,14 @@ dependencies {
     */
 
     // Core
-    implementation 'org.mapsforge:mapsforge-core:0.9.0'
-    implementation 'org.mapsforge:mapsforge-map:0.9.0'
-    implementation 'org.mapsforge:mapsforge-map-reader:0.9.0'
-    implementation 'org.mapsforge:mapsforge-themes:0.9.0'
+    implementation 'org.mapsforge:mapsforge-core:0.9.1'
+    implementation 'org.mapsforge:mapsforge-map:0.9.1'
+    implementation 'org.mapsforge:mapsforge-map-reader:0.9.1'
+    implementation 'org.mapsforge:mapsforge-themes:0.9.1'
     implementation 'net.sf.kxml:kxml2:2.3.0'
 
     // Android
-    implementation 'org.mapsforge:mapsforge-map-android:0.9.0'
+    implementation 'org.mapsforge:mapsforge-map-android:0.9.1'
     implementation 'com.caverock:androidsvg:1.2.2-beta-1'
 
 
