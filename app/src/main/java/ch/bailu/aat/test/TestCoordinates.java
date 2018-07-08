@@ -42,7 +42,9 @@ public class TestCoordinates extends UnitTest {
         
 
     }
-    
+
+
+
     public  void testCH1903()  throws AssertionError {
         int n=CH1903Coordinates.BERNE_SIX;
         int e=CH1903Coordinates.BERNE_SIY;

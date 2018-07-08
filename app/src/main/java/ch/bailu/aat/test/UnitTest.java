@@ -2,13 +2,13 @@ package ch.bailu.aat.test;
 
 import android.content.Context;
 
-import junit.framework.Assert;
+
 
 import ch.bailu.aat.util.fs.AppDirectory;
 import ch.bailu.aat.util.ContextWrapperInterface;
 import ch.bailu.util_java.foc.Foc;
 
-public abstract class UnitTest extends Assert implements ContextWrapperInterface {
+public abstract class UnitTest extends FackeAssert implements ContextWrapperInterface {
     private final Context context;
     
     
@@ -29,4 +29,7 @@ public abstract class UnitTest extends Assert implements ContextWrapperInterface
     public static Foc getTestDirectory(Context context) {
         return AppDirectory.getDataDirectory(context, AppDirectory.DIR_TEST);
     }
+
+
+
 }
