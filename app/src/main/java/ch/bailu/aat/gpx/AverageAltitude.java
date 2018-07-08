@@ -11,8 +11,6 @@ import ch.bailu.aat.util.ui.AppLog;
  *
  *   This is used by {@linkplain AltitudeDelta}
  */
-
-
 public class AverageAltitude {
 
     private static final int MIN_SAMPLES = 5;
@@ -27,7 +25,7 @@ public class AverageAltitude {
 
 
     /**
-     *
+     * Add a sample to the averaged sample.
      * @param alt altitude of sample
      * @param dist distance of sample
      * @return true if limit reached (have a new average altitude sample).
