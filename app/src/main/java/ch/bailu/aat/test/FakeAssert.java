@@ -1,6 +1,6 @@
 package ch.bailu.aat.test;
 
-public class FackeAssert {
+public class FakeAssert {
 
     public static void assertEquals(int z, int zone) {
     }

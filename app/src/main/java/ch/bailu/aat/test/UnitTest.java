@@ -8,7 +8,7 @@ import ch.bailu.aat.util.fs.AppDirectory;
 import ch.bailu.aat.util.ContextWrapperInterface;
 import ch.bailu.util_java.foc.Foc;
 
-public abstract class UnitTest extends FackeAssert implements ContextWrapperInterface {
+public abstract class UnitTest extends FakeAssert implements ContextWrapperInterface {
     private final Context context;
     
     
