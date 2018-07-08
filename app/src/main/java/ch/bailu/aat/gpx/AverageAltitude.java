@@ -5,11 +5,11 @@ import ch.bailu.aat.util.ui.AppLog;
 
 
 /**
- *   Calculate average altitude from at least [@see #MIN_SAMPLES] samples and at
- *   least [@see #MIN_DISTANCE] distance.
+ *   Calculate average altitude from at least {@linkplain #MIN_SAMPLES} samples and at
+ *   least {@linkplain #MIN_DISTANCE} distance.
  *   This is used to calculate current slope and total ascend and descend of a track.
  *
- *   This is used by @see AltitudeDelta
+ *   This is used by {@linkplain AltitudeDelta}
  */
 
 
