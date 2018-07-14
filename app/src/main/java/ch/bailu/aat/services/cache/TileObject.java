@@ -10,8 +10,11 @@ import ch.bailu.aat.util.graphic.SyncTileBitmap;
 
 public abstract class TileObject extends ObjectHandle {
 
+    private final int hash;
+
     public TileObject(String id) {
         super(id);
+        hash = id.hashCode();
     }
 
 
@@ -30,6 +33,12 @@ public abstract class TileObject extends ObjectHandle {
         if (size == 0) size = defaultSize;
 
         return size;
+    }
+
+
+    @Override
+    public int hashCode() {
+        return hash;
     }
 
 

@@ -1,16 +1,9 @@
 package ch.bailu.aat.map.tile;
 
-import org.mapsforge.core.model.Tile;
-
-import java.io.Closeable;
-
-import ch.bailu.aat.services.ServiceContext;
-
+/*
 public abstract class TileCache<T> implements Closeable {
 
     public abstract T get(String string);
-
-
     public abstract T get(Tile mt);
 
 
@@ -23,6 +16,8 @@ public abstract class TileCache<T> implements Closeable {
     public abstract int size();
 
     public abstract boolean isReadyAndLoaded();
+
+    public abstract boolean isInCache(String string);
 
     public final static TileCache NULL = new TileCache<Object>() {
 
@@ -67,6 +62,12 @@ public abstract class TileCache<T> implements Closeable {
         }
 
         @Override
+        public boolean isInCache(String string) {
+            return false;
+        }
+
+        @Override
         public void close() {}
     };
 }
+*/

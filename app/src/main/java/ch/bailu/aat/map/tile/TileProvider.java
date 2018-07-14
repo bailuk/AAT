@@ -10,7 +10,6 @@ import org.mapsforge.map.layer.TilePosition;
 import org.mapsforge.map.model.common.ObservableInterface;
 import org.mapsforge.map.model.common.Observer;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import ch.bailu.aat.map.Attachable;
@@ -23,16 +22,15 @@ import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.util.AppIntent;
 
 public class TileProvider implements Attachable, ObservableInterface {
-
-
     private final ServiceContext scontext;
-    private final ArrayList<Observer> observers = new ArrayList<>(2);
     private final Source source;
 
-    private TileCache<TileObject> cache = TileCache.NULL;
+    private TileObjectCache cache = TileObjectCache.NULL;
 
     private boolean isAttached=false;
 
+
+    private final Observers observers = new Observers();
 
     public TileProvider(ServiceContext sc, Source s) {
         scontext = sc;
@@ -40,20 +38,22 @@ public class TileProvider implements Attachable, ObservableInterface {
     }
 
 
+
+
     private final BroadcastReceiver onFileChanged = new BroadcastReceiver() {
 
         @Override
         public void onReceive(Context context, Intent intent) {
-            String string = AppIntent.getFile(intent);
-            if (cache.get((string)) != null) {
-                notifyChange();
-            }
+            String file =  AppIntent.getFile(intent);
+
+            if (cache.isInCache(file)) observers.notifyChange();
         }
 
     };
 
 
-    public void preload(List<TilePosition> tilePositions) {
+
+    public synchronized void preload(List<TilePosition> tilePositions) {
         cache.setCapacity(tilePositions.size());
 
         for (TilePosition p : tilePositions) {
@@ -82,17 +82,11 @@ public class TileProvider implements Attachable, ObservableInterface {
     }
 
     public void addObserver(Observer observer) {
-        observers.add(observer);
+        observers.addObserver(observer);
     }
     public void removeObserver(Observer observer) {
-        observers.remove(observer);
+        observers.removeObserver(observer);
     }
-
-
-    private void notifyChange() {
-        for (Observer o: observers) o.onChange();
-    }
-
 
 
 
@@ -103,7 +97,7 @@ public class TileProvider implements Attachable, ObservableInterface {
         return source.getMinimumZoomLevel();
     }
 
-    public void reDownloadTiles() {
+    public synchronized void reDownloadTiles() {
         cache.reDownloadTiles(scontext);
     }
 
@@ -138,7 +132,7 @@ public class TileProvider implements Attachable, ObservableInterface {
         if (isAttached) {
             scontext.getContext().unregisterReceiver(onFileChanged);
             cache.reset();
-            cache = TileCache.NULL;
+            cache = TileObjectCache.NULL;
 
             isAttached = false;
         }
@@ -187,5 +181,4 @@ public class TileProvider implements Attachable, ObservableInterface {
     public synchronized boolean isReadyAndLoaded() {
         return cache.isReadyAndLoaded();
     }
-
 }
