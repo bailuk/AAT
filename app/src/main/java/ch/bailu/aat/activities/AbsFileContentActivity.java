@@ -8,6 +8,7 @@ import android.widget.LinearLayout;
 
 import ch.bailu.aat.R;
 import ch.bailu.aat.dispatcher.CurrentLocationSource;
+import ch.bailu.aat.dispatcher.Dispatcher;
 import ch.bailu.aat.dispatcher.EditorSource;
 import ch.bailu.aat.dispatcher.IteratorSource;
 import ch.bailu.aat.dispatcher.OnContentUpdatedInterface;
@@ -98,11 +99,13 @@ public abstract class AbsFileContentActivity extends AbsDispatcher implements On
         addSource(new TrackerSource(getServiceContext()));
         addSource(new CurrentLocationSource(getServiceContext()));
         addSource(new OverlaySource(getServiceContext()));
-        addSource(currentFile);
+
         addSource(editor_source);
 
+        addSource(currentFile);
         addTarget(busyButton.getBusyControl(InfoID.FILEVIEW), InfoID.FILEVIEW);
         addTarget(fileOperation, InfoID.FILEVIEW);
+
 
         addTarget(new OnContentUpdatedInterface() {
             @Override
@@ -133,4 +136,6 @@ public abstract class AbsFileContentActivity extends AbsDispatcher implements On
         }
 
     }
+
+
 }

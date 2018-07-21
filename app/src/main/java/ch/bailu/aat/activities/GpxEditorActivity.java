@@ -26,8 +26,7 @@ import ch.bailu.aat.views.description.MultiView;
 import ch.bailu.aat.views.graph.DistanceAltitudeGraphView;
 import ch.bailu.aat.views.preferences.VerticalScrollView;
 
-public class GpxEditorActivity extends AbsFileContentActivity
-        implements OnContentUpdatedInterface {
+public class GpxEditorActivity extends AbsFileContentActivity implements OnContentUpdatedInterface {
 
     private static final String SOLID_KEY="gpx_editor";
 
@@ -199,5 +198,10 @@ public class GpxEditorActivity extends AbsFileContentActivity
         } else {
             super.onClick(v);
         }
+    }
+
+    @Override
+    public void onPointerCaptureChanged(boolean hasCapture) {
+
     }
 }

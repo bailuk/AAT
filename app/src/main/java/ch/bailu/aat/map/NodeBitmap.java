@@ -20,8 +20,8 @@ import ch.bailu.aat.util.ui.AppLog;
 
 public class NodeBitmap {
 
-    private static final int STROKE_WIDTH=MapPaint.EDGE_WIDTH;
-    private static final int RADIUS=5;
+    private static final int STROKE_WIDTH=MapPaint.EDGE_WIDTH_LINE;
+    private static final int RADIUS=6;
 
     private static final SparseArray<NodeBitmap> nodes = new SparseArray<>(10);
 
@@ -54,13 +54,14 @@ public class NodeBitmap {
         bitmap.set(size, true);
 
         Canvas canvas = bitmap.getAndroidCanvas();
-        Paint stroke = AndroidGraphicFactory.getPaint(MapPaint.createEdgePaint(res));
+        Paint stroke = AndroidGraphicFactory.getPaint(MapPaint.createEdgePaintLine(res));
         stroke.setAntiAlias(true);
 
         Paint fill = new Paint();
         fill.setAntiAlias(false);
         fill.setStyle(Style.FILL);
         fill.setColor(color);
+        fill.setAlpha(150);
 
         canvas.drawCircle(hsize,hsize, radius, fill);
         canvas.drawCircle(hsize, hsize, radius, stroke);

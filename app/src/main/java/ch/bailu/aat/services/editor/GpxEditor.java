@@ -73,10 +73,10 @@ public class GpxEditor {
 
 
     public void toggleType() {
-        int type = ring.get().getList().getDelta().getType();
+        GpxType type = ring.get().getList().getDelta().getType();
 
         if (type == GpxType.WAY) {
-            type = GpxType.RTE;
+            type = GpxType.ROUTE;
         } else {
             type = GpxType.WAY;
         }

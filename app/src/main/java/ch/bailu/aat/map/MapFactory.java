@@ -27,17 +27,12 @@ public class MapFactory {
 
 
     public static MapFactory DEF(AbsDispatcher d, String skey) {
-        //return OSM(d.getServiceContext(),d,skey);
         return MF(d.getServiceContext(), d, skey);
     }
 
     public static MapFactory MF(ServiceContext sc, AbsDispatcher d, String skey) {
         return new MapFactory(new MapsForgeView(sc, d, skey), d);
     }
-
-//    public static MapFactory OSM(ServiceContext sc, AbsDispatcher d, String skey) {
-//        return new MapFactory(new OsmViewInteractive(sc, d, skey), d);
-//    }
 
 
     public MapFactory(MapViewInterface map, final AbsDispatcher dispatcher) {
@@ -51,17 +46,6 @@ public class MapFactory {
     public MapViewInterface base(int size) {
         m.add(new CurrentLocationLayer(mc, d));
         m.add(new NavigationBarLayer(mc, d, size));
-        /*TextView test = new TextView(mc.getContext());
-
-
-        m.addView(test);
-
-        test.setBackgroundColor(Color.BLACK);
-        test.setTextColor(Color.WHITE);
-        test.setText("Test");
-        test.layout(10,10,100,100);
-*/
-
         return m;
     }
 
@@ -83,10 +67,10 @@ public class MapFactory {
     private MapViewInterface tracker(EditorHelper e, int iid) {
         base(4);
         m.add(new GpxOverlayListLayer(mc,d));
+        m.add(new EditorLayer(mc, d, iid, e));
         m.add(new GpxDynLayer(mc, d, InfoID.TRACKER));
         m.add(new GridDynLayer(mc));
         m.add(new InformationBarLayer(mc, d));
-        m.add(new EditorLayer(mc, d, iid, e));
 
         return m;
     }

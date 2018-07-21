@@ -4,6 +4,7 @@ import android.database.Cursor;
 
 import ch.bailu.aat.coordinates.BoundingBoxE6;
 import ch.bailu.aat.gpx.GpxInformation;
+import ch.bailu.aat.gpx.interfaces.GpxType;
 import ch.bailu.util_java.foc.Foc;
 
 public class GpxInformationDbEntry extends GpxInformation {
@@ -107,8 +108,9 @@ public class GpxInformationDbEntry extends GpxInformation {
 
 
     @Override
-    public int getType() {
-        return (int) getLong(GpxDbConstants.KEY_TYPE_ID);
+    public GpxType getType() {
+        int id = (int) getLong(GpxDbConstants.KEY_TYPE_ID);
+        return GpxType.fromInteger(id);
     }
 
 }

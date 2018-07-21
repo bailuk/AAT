@@ -7,6 +7,7 @@ import org.mapsforge.core.model.Point;
 
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.GpxPointNode;
+import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.map.MapContext;
 import ch.bailu.aat.services.editor.EditorHelper;
 import ch.bailu.aat.util.HtmlBuilderGpx;
@@ -33,14 +34,14 @@ public class EditorNodeSelectorLayer extends NodeViewLayer {
 
 
     @Override
-    public void setSelectedNode(GpxInformation info, GpxPointNode node, int index) {
+    public void setSelectedNode(int IID, GpxInformation info, GpxPointNode node, int index) {
         edit.getEditor().select(node);
 
         HtmlBuilderGpx h = new HtmlBuilderGpx(context);
 
         h.appendInfo(info, index);
         h.appendNode(node, info);
-        setHtmlText(h.toString());
+        setHtmlText(IID, info, h.toString());
     }
 
 

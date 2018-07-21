@@ -22,21 +22,11 @@ public class WayLayer extends GpxLayer {
 
 
 
-    public WayLayer(MapContext mc) {
-        this(mc, -1);
-    }
 
-    public WayLayer(MapContext mc, int color) {
-        super(toColor(color));
+    public WayLayer(MapContext mc) {
         mcontext = mc;
 
         icon_size = mcontext.getMetrics().getDensity().toPixel_i(ICON_SIZE);
-    }
-
-
-    private static int toColor(int c) {
-        if (c < 0) return AppTheme.getHighlightColor2();
-        return c;
     }
 
 

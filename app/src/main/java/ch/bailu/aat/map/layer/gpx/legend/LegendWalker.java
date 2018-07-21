@@ -1,5 +1,7 @@
 package ch.bailu.aat.map.layer.gpx.legend;
 
+import org.mapsforge.core.graphics.Paint;
+
 import ch.bailu.aat.gpx.GpxList;
 import ch.bailu.aat.gpx.GpxListWalker;
 import ch.bailu.aat.gpx.GpxSegmentNode;
@@ -9,9 +11,10 @@ public abstract class LegendWalker extends GpxListWalker {
 
     public LegendContext c;
 
-    public void init(MapContext mc) {
-        c=new LegendContext(mc);
+    public void init(MapContext mc, Paint backgroundPaint, Paint framePaint) {
+        c=new LegendContext(mc, backgroundPaint, framePaint);
     }
+
 
 
     @Override

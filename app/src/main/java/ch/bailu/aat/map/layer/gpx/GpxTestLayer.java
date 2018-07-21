@@ -26,7 +26,6 @@ public class GpxTestLayer extends GpxLayer {
     private int boxCount=0;
 
     public GpxTestLayer(MapContext mc, DispatcherInterface d, int iid) {
-        super(Color.DKGRAY);
         mcontext = mc;
 
         segmentPaint = createPaint(Color.BLACK);

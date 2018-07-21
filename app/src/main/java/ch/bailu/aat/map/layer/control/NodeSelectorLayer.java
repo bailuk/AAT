@@ -90,7 +90,7 @@ public abstract class NodeSelectorLayer implements MapLayerInterface, OnContentU
 
             if (findNode(centerBounding)) {
 
-                setSelectedNode(infoCache.get(foundID), foundNode, foundIndex);
+                setSelectedNode(foundID, infoCache.get(foundID), foundNode, foundIndex);
             }
         }
     }
@@ -120,7 +120,7 @@ public abstract class NodeSelectorLayer implements MapLayerInterface, OnContentU
     }
 
 
-    public abstract void setSelectedNode(GpxInformation info, GpxPointNode node, int index);
+    public abstract void setSelectedNode(int IID, GpxInformation info, GpxPointNode node, int index);
 
     private void drawSelectedNode(MapContext mcontext) {
         GpxPointNode node = getSelectedNode();

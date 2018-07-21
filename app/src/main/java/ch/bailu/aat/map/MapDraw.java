@@ -30,8 +30,6 @@ public interface MapDraw {
     void bitmap(Bitmap b, Point pixel);
     void bitmap(Bitmap b, Point pixel, int color);
 
-    void edge(TwoNodes nodes);
     void edge(TwoNodes nodes, Paint paint);
-
-    void label(String text, Point pixel);
+    void label(String text, Point pixel, Paint background, Paint frame);
 }

@@ -9,6 +9,7 @@ import ch.bailu.aat.activities.AbsDispatcher;
 import ch.bailu.aat.coordinates.BoundingBoxE6;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.GpxPointNode;
+import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.map.layer.gpx.GpxDynLayer;
 import ch.bailu.aat.map.mapsforge.MapsForgeViewStatic;
 import ch.bailu.aat.services.ServiceContext;

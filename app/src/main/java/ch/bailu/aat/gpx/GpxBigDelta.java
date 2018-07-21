@@ -2,7 +2,7 @@ package ch.bailu.aat.gpx;
 
 import ch.bailu.aat.coordinates.BoundingBoxE6;
 import ch.bailu.aat.gpx.interfaces.GpxBigDeltaInterface;
-
+import ch.bailu.aat.gpx.interfaces.GpxType;
 
 
 public class GpxBigDelta implements GpxBigDeltaInterface {
@@ -19,7 +19,7 @@ public class GpxBigDelta implements GpxBigDeltaInterface {
     private long endTime=0;
     private long pause=0;
 
-    private int type;
+    private GpxType type;
 
     private BoundingBoxE6 boundingBox = null;
 
@@ -185,13 +185,13 @@ public class GpxBigDelta implements GpxBigDeltaInterface {
     }
 
 
-    public void setType(int t) {
+    public void setType(GpxType t) {
         type = t;
     }
 
 
     @Override
-    public int getType() {
+    public GpxType getType() {
         return type;
     }
 }

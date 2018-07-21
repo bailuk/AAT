@@ -26,10 +26,10 @@ public abstract class GpxWriter {
         TIME_FORMAT.setTimeZone(UTC);
 
     }
-    public static GpxWriter factory(Foc file, int type) throws IOException, SecurityException{
-        if (type == GpxType.TRK) {
+    public static GpxWriter factory(Foc file, GpxType type) throws IOException, SecurityException{
+        if (type == GpxType.TRACK) {
             return new TrackWriter(file);
-        } else if (type == GpxType.RTE) {
+        } else if (type == GpxType.ROUTE) {
             return new RouteWriter(file);
         }
         return new WayWriter(file);

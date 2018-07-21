@@ -310,7 +310,7 @@ public class DirectorySynchronizer  implements Closeable {
             content.put(GpxDbConstants.KEY_TOTAL_TIME, summary.getTimeDelta());
             content.put(GpxDbConstants.KEY_END_TIME,   summary.getEndTime());        
             content.put(GpxDbConstants.KEY_PAUSE,      summary.getPause());
-            content.put(GpxDbConstants.KEY_TYPE_ID,    summary.getType());
+            content.put(GpxDbConstants.KEY_TYPE_ID,    summary.getType().toInteger());
             content.put(GpxDbConstants.KEY_EAST_BOUNDING, bounding.getLonEastE6());
             content.put(GpxDbConstants.KEY_WEST_BOUNDING, bounding.getLonWestE6());
             content.put(GpxDbConstants.KEY_NORTH_BOUNDING, bounding.getLatNorthE6());

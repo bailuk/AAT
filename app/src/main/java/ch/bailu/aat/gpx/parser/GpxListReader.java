@@ -31,7 +31,7 @@ public class GpxListReader {
             throws IOException, SecurityException {
 
         track = new OnParsed(
-                GpxType.TRK,
+                GpxType.TRACK,
                 new MaxSpeed.Samples(),
                 pause,
                 new AltitudeDelta.LastAverage());
@@ -44,7 +44,7 @@ public class GpxListReader {
 
 
         route = new OnParsed(
-                GpxType.RTE,
+                GpxType.ROUTE,
                 MaxSpeed.NULL,
                 AutoPause.NULL,
                 new AltitudeDelta.LastAverage());
@@ -72,7 +72,7 @@ public class GpxListReader {
         private final GpxList gpxList;
         private boolean  haveNewSegment=true;
 
-        public OnParsed(int type, MaxSpeed speed, AutoPause pause, AltitudeDelta altitude) {
+        public OnParsed(GpxType type, MaxSpeed speed, AutoPause pause, AltitudeDelta altitude) {
             gpxList = new GpxList(type, speed, pause, altitude);
         }
 

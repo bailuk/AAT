@@ -5,7 +5,7 @@ import ch.bailu.aat.coordinates.BoundingBoxE6;
 import ch.bailu.aat.gpx.interfaces.GpxBigDeltaInterface;
 import ch.bailu.aat.gpx.interfaces.GpxDeltaPointInterface;
 import ch.bailu.aat.gpx.interfaces.GpxPointInterface;
-
+import ch.bailu.aat.gpx.interfaces.GpxType;
 
 
 public class GpxDataWrapper implements GpxDeltaPointInterface, GpxBigDeltaInterface {
@@ -127,7 +127,7 @@ public class GpxDataWrapper implements GpxDeltaPointInterface, GpxBigDeltaInterf
 
 
     @Override
-    public int getType() {
+    public GpxType getType() {
         return summary.getType();
     }
 

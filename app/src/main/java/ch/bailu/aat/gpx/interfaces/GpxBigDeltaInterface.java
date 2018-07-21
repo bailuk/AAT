@@ -14,5 +14,5 @@ public interface GpxBigDeltaInterface extends GpxDeltaInterface  {
     long getStartTime();
     long getEndTime();
 
-    int getType();
+    GpxType getType();
 }

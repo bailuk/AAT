@@ -46,8 +46,8 @@ public abstract class NodeViewLayer extends NodeSelectorLayer implements View.On
 
     }
 
-    public void setHtmlText(String text) {
-        infoView.setHtmlText(text);
+    public void setHtmlText(int IID, GpxInformation info, String text) {
+        infoView.setHtmlText(IID, info, text);
         measure();
         layout();
         //infoView.invalidate();

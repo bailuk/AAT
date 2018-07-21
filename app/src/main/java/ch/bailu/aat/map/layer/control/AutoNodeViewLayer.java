@@ -39,7 +39,7 @@ public class AutoNodeViewLayer extends NodeViewLayer {
 
 
     @Override
-    public void setSelectedNode(GpxInformation info, GpxPointNode node, int i) {
+    public void setSelectedNode(int IID, GpxInformation info, GpxPointNode node, int i) {
         index = i;
         file = info.getFile();
 
@@ -49,7 +49,7 @@ public class AutoNodeViewLayer extends NodeViewLayer {
         html.appendNode(node, info);
         html.appendAttributes(node.getAttributes());
 
-        setHtmlText(html.toString());
+        setHtmlText(IID, info, html.toString());
         setGraph(info, i);
 
     }

@@ -9,6 +9,7 @@ import ch.bailu.aat.dispatcher.OverlaySource;
 import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.map.MapContext;
 import ch.bailu.aat.map.layer.MapLayerInterface;
+import ch.bailu.aat.preferences.SolidOverlayFileList;
 import ch.bailu.aat.util.ui.AppTheme;
 
 public class GpxOverlayListLayer implements MapLayerInterface {
@@ -17,11 +18,10 @@ public class GpxOverlayListLayer implements MapLayerInterface {
 
     public GpxOverlayListLayer(MapContext mc, DispatcherInterface d) {
 
-        overlays = new GpxDynLayer[OverlaySource.MAX_OVERLAYS];
+        overlays = new GpxDynLayer[SolidOverlayFileList.MAX_OVERLAYS];
 
         for (int i = 0; i< overlays.length; i++) {
-            overlays[i] = new GpxDynLayer(mc, AppTheme.OVERLAY_COLOR[i + 4]);
-            d.addTarget(overlays[i], InfoID.OVERLAY + i);
+            overlays[i] = new GpxDynLayer(mc, d, InfoID.OVERLAY +i);
         }
     }
 

@@ -9,7 +9,9 @@ import android.graphics.drawable.Drawable;
 
 import org.mapsforge.core.graphics.Bitmap;
 import org.mapsforge.core.graphics.Canvas;
+import org.mapsforge.core.graphics.Color;
 import org.mapsforge.core.graphics.Paint;
+import org.mapsforge.core.graphics.Style;
 import org.mapsforge.map.android.graphics.AndroidGraphicFactory;
 
 import ch.bailu.aat.util.ui.AppDensity;
@@ -36,7 +38,7 @@ public class AndroidDraw implements MapDraw {
 
 
     public AndroidDraw(AppDensity res, Resources r) {
-        edgePaint   = MapPaint.createEdgePaint(res);
+        edgePaint   = MapPaint.createEdgePaintLine(res);
         legendPaint = MapPaint.createLegendTextPaint(res);
         gridPaint   = MapPaint.createGridPaint(res);
         textPaint   = MapPaint.createStatusTextPaint(res);
@@ -166,10 +168,6 @@ public class AndroidDraw implements MapDraw {
 
 
 
-    @Override
-    public void edge(TwoNodes nodes) {
-        edge(nodes, edgePaint);
-    }
 
 
     @Override
@@ -183,13 +181,14 @@ public class AndroidDraw implements MapDraw {
     }
 
     @Override
-    public void label(String text, Point pixel) {
-        drawBackground(text, pixel);
+    public void label(String text, Point pixel, Paint background, Paint frame) {
+        drawBackground(text, pixel, background);
+        drawBackground(text, pixel, frame);
         canvas.drawText(text, pixel.x, pixel.y, legendPaint);
     }
 
 
-    public void drawBackground(String text, Point pixel) {
+    public void drawBackground(String text, Point pixel, Paint paint) {
         android.graphics.Paint lp = convert(legendPaint);
 
         android.graphics.Paint.FontMetrics legendMetrics = lp.getFontMetrics();
@@ -198,7 +197,7 @@ public class AndroidDraw implements MapDraw {
                 pixel.y + legendMetrics.top - MARGIN,
                 pixel.x + lp.measureText(text) + MARGIN*2,
                 pixel.y + legendMetrics.bottom + MARGIN,
-                convert(backgroundPaint));
+                convert(paint));
     }
 
 

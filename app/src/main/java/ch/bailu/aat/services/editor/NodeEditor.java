@@ -19,10 +19,10 @@ public class NodeEditor {
 
 
     public NodeEditor() {
-        this(GpxType.RTE);
+        this(GpxType.ROUTE);
     }
 
-    public NodeEditor(int t) {
+    public NodeEditor(GpxType t) {
         gpxList = new GpxList(t, MaxSpeed.NULL, AutoPause.NULL, AltitudeDelta.NULL);
         node = new GpxPointFirstNode(GpxPoint.NULL, GpxAttributesStatic.NULL_ATTRIBUTES);
     }

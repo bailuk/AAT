@@ -1,5 +1,7 @@
 package ch.bailu.aat.map.layer.gpx.legend;
 
+import org.mapsforge.core.graphics.Paint;
+
 import ch.bailu.aat.coordinates.BoundingBoxE6;
 import ch.bailu.aat.gpx.GpxPointNode;
 import ch.bailu.aat.map.MapColor;
@@ -15,11 +17,14 @@ public class LegendContext {
     private final MapContext mcontext;
     public final TwoNodes nodes;
 
+    private final Paint backgroundPaint, framePaint;
 
-    public LegendContext(MapContext mc) {
+    public LegendContext(MapContext mc, Paint background, Paint frame) {
         mcontext = mc;
         nodes=mc.getTwoNodes();
         min_pixel_distance = mc.getMetrics().getDensity().toPixel_i(MIN_DI_PIXEL_DISTANCE);
+        backgroundPaint = background;
+        framePaint = frame;
     }
 
     public boolean isVisible(BoundingBoxE6 bounding) {
@@ -50,11 +55,6 @@ public class LegendContext {
     }
 
 
-    public void drawLabelA(String text) {
-        drawLabel(nodes.nodeA, text);
-    }
-
-
     public void drawLabelB(String text) {
         drawLabel(nodes.nodeB, text);
     }
@@ -62,7 +62,7 @@ public class LegendContext {
 
 
     private void drawLabel(TwoNodes.PixelNode node, String text) {
-        mcontext.draw().label(text, node.pixel);
+        mcontext.draw().label(text, node.pixel, backgroundPaint, framePaint);
     }
 
 

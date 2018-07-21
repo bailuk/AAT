@@ -3,6 +3,8 @@ package ch.bailu.aat.map;
 
 import android.graphics.Color;
 
+import ch.bailu.aat.gpx.InfoID;
+import ch.bailu.aat.util.ui.AppLog;
 import ch.bailu.aat.util.ui.AppTheme;
 
 public class MapColor {
@@ -11,12 +13,13 @@ public class MapColor {
     public static final int ALPHA_LOW = 200;
 
 
-    public final static int LIGHT = addAlpha(ALPHA_LOW, Color.WHITE);
-    public final static int MEDIUM = addAlpha(ALPHA_HIGH, Color.BLACK);
-    public final static int DARK = addAlpha(ALPHA_LOW, Color.BLACK);
+
+    public final static int LIGHT = setAlpha(Color.WHITE, ALPHA_LOW);
+    public final static int MEDIUM = setAlpha(Color.BLACK, ALPHA_HIGH);
+    public final static int DARK = setAlpha(Color.BLACK, ALPHA_LOW);
 
 
-    public final static int NODE_NEUTRAL = addAlpha(ALPHA_LOW, Color.LTGRAY);
+    public final static int NODE_NEUTRAL = setAlpha(Color.LTGRAY, ALPHA_LOW);
     public final static int NODE_SELECTED = LIGHT;
 
 
@@ -25,10 +28,68 @@ public class MapColor {
     public final static int TEXT = Color.BLACK;
 
 
-    static public int addAlpha(int alpha, int c) {
-        return Color.argb(alpha, Color.red(c), Color.green(c), Color.blue(c));
+    static public int setAlpha(int color, int alpha) {
+        return Color.argb(alpha, Color.red(color), Color.green(color), Color.blue(color));
     }
 
 
+    public static int setValue(int color, float value) {
+        float[] hsv = new float[3];
+        Color.colorToHSV(color, hsv);
+        hsv[2] = value;
+        return Color.HSVToColor(hsv);
+    }
+
+
+    public static int setSaturation(int color, float saturation) {
+        float[] hsv = new float[3];
+        Color.colorToHSV(color, hsv);
+        hsv[1] = saturation;
+        return Color.HSVToColor(hsv);
+    }
+
+
+
+    public static int getColorFromIID(int iid) {
+        final int OVERLAY_COUNT = AppTheme.OVERLAY_COLOR.length;
+
+        if (iid== InfoID.TRACKER)
+            return AppTheme.getHighlightColor();
+
+        if (iid >= InfoID.OVERLAY && iid < InfoID.OVERLAY + OVERLAY_COUNT) {
+            int slot =  iid - InfoID.OVERLAY;
+
+            return AppTheme.OVERLAY_COLOR[slot];
+        }
+
+        if (iid == InfoID.EDITOR_DRAFT)
+            return AppTheme.getHighlightColor2();
+
+        if (iid == InfoID.EDITOR_OVERLAY)
+            return AppTheme.getHighlightColor3();
+
+
+        if (iid == InfoID.FILEVIEW)
+            return AppTheme.getHighlightColor3();
+
+
+
+        return Color.BLUE;
+    }
+
+
+    public static int toDarkTransparent(int color) {
+
+        color = setValue(color, 0.30f);
+        color = setAlpha(color, ALPHA_LOW);
+        return color;
+    }
+
+    public static int toLightTransparent(int color) {
+
+        color = setSaturation(color, 0.25f);
+        color = setAlpha(color, ALPHA_LOW);
+        return color;
+    }
 
 }

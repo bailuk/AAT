@@ -34,7 +34,7 @@ public class MockLocation extends LocationStackChainedItem implements Runnable{
     public MockLocation(Context c, LocationStackItem i) {
         super(i);
 
-        list = new GpxList(GpxType.TRK, MaxSpeed.NULL, AutoPause.NULL, AltitudeDelta.NULL);
+        list = new GpxList(GpxType.TRACK, MaxSpeed.NULL, AutoPause.NULL, AltitudeDelta.NULL);
         timer = new Timer(this, INTERVAL);
 
         try {

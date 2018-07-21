@@ -34,7 +34,7 @@ public class HtmlBuilderGpx extends HtmlBuilder {
     }
 
     public void appendNode(GpxPointNode n, GpxInformation i) {
-        if (i.getType() == GpxType.TRK && n.getTimeStamp() != 0 ) {
+        if (i.getType() == GpxType.TRACK && n.getTimeStamp() != 0 ) {
             append(speed.getLabel(), speed.getSpeedDescription(n.getSpeed()));
             append("<br>");
         }

@@ -21,13 +21,16 @@ public class TrackLayer  extends GpxLayer{
     private final MapContext mcontext;
 
     public TrackLayer(MapContext mc) {
-        super(Color.BLACK);
         mcontext = mc;
         paint = AndroidGraphicFactory.INSTANCE.createPaint();
+
 
         paint.setStrokeWidth(mcontext.getMetrics().getDensity().toPixel_f(STROKE_WIDTH));
         paint.setStrokeCap(Cap.ROUND);
         paint.setStrokeJoin(Join.ROUND);
+
+
+
     }
 
 

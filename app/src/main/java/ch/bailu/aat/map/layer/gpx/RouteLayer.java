@@ -1,35 +1,32 @@
 package ch.bailu.aat.map.layer.gpx;
 
 import android.content.SharedPreferences;
+import android.graphics.Color;
 
+import org.mapsforge.core.graphics.Paint;
 import org.mapsforge.core.model.Point;
 
 import ch.bailu.aat.map.MapContext;
+import ch.bailu.aat.map.MapPaint;
 import ch.bailu.aat.map.TwoNodes;
 import ch.bailu.aat.services.dem.tile.ElevationProvider;
-import ch.bailu.aat.util.ui.AppTheme;
 import ch.bailu.aat.views.graph.AltitudeColorTable;
 
 public class RouteLayer extends GpxLayer {
 
     private final MapContext mcontext;
-    private RouteLayer(MapContext o) {
-        this(o,  -1);
-    }
+
+    private Paint edgePaintBlur;
+    private final Paint edgePaintLine;
+    private int color;
 
 
-    public RouteLayer(MapContext o, int color) {
-        super(toColor(color));
+    public RouteLayer(MapContext o) {
         mcontext = o;
+        color = getColor();
+        edgePaintBlur = MapPaint.createEdgePaintBlur(mcontext.getMetrics().getDensity(), getColor());
+        edgePaintLine = MapPaint.createEdgePaintLine(mcontext.getMetrics().getDensity());
     }
-
-
-    private static int toColor(int c) {
-        if (c < 0) return AppTheme.getHighlightColor3();
-        return c;
-    }
-
-
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
@@ -38,6 +35,14 @@ public class RouteLayer extends GpxLayer {
 
     @Override
     public void drawInside(MapContext mcontext) {
+        if (color != getColor()) {
+            edgePaintBlur = MapPaint.createEdgePaintBlur(mcontext.getMetrics().getDensity(), getColor());
+
+
+            color = getColor();
+
+        }
+
         new RoutePainter().walkTrack(getGpxList());
     }
 
@@ -69,7 +74,8 @@ public class RouteLayer extends GpxLayer {
 
         @Override
         public void drawEdge(TwoNodes nodes) {
-            mcontext.draw().edge(nodes);
+            mcontext.draw().edge(nodes, edgePaintBlur);
+            mcontext.draw().edge(nodes, edgePaintLine);
         }
 
 

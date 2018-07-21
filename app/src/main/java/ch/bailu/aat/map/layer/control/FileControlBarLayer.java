@@ -117,7 +117,7 @@ public class FileControlBarLayer extends ControlBarLayer {
         };
 
         @Override
-        public void setSelectedNode(GpxInformation info, GpxPointNode node, int i) {
+        public void setSelectedNode(int IID, GpxInformation info, GpxPointNode node, int i) {
             new SolidDirectoryQuery(acontext).getPosition().setValue(i);
 
             iterator.moveToPosition(i);
@@ -134,7 +134,7 @@ public class FileControlBarLayer extends ControlBarLayer {
                 builder.append("<br>");
             }
 
-            setHtmlText(builder.toString());
+            setHtmlText(IID, info, builder.toString());
 
         }
 

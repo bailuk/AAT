@@ -49,7 +49,7 @@ public class TrackLogger extends Logger {
     private static GpxList createTrack(Context c) {
         SolidAutopause spause = new SolidPostprocessedAutopause(c);
 
-        return new GpxList(GpxType.TRK,
+        return new GpxList(GpxType.TRACK,
                 new MaxSpeed.Samples(),
                 new AutoPause.Time(
                         spause.getTriggerSpeed(),

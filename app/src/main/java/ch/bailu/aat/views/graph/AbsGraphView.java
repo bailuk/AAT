@@ -99,7 +99,7 @@ public abstract class AbsGraphView extends ViewGroup implements OnContentUpdated
 
 
     public void setVisibility(GpxInformation info) {
-        if (info.isLoaded() && info.getType() == GpxType.RTE || info.getType() == GpxType.TRK) {
+        if (info.isLoaded() && info.getType() == GpxType.ROUTE || info.getType() == GpxType.TRACK) {
             setVisibility(View.VISIBLE);
         } else {
             setVisibility(View.GONE);

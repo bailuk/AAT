@@ -8,6 +8,7 @@ import org.mapsforge.core.model.LatLong;
 import ch.bailu.aat.R;
 import ch.bailu.aat.dispatcher.DispatcherInterface;
 import ch.bailu.aat.gpx.GpxPoint;
+import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.map.MapContext;
 import ch.bailu.aat.map.layer.gpx.GpxDynLayer;
 import ch.bailu.aat.services.ServiceContext;

@@ -26,12 +26,12 @@ import ch.bailu.util_java.foc.Foc;
 
 
 public class OverlaySource extends ContentSource {
-    public static final int MAX_OVERLAYS=SolidOverlayFileList.MAX_OVERLAYS;
+
 
 
     private final ServiceContext scontext;
 
-    private final OverlayInformation[] overlays = new OverlayInformation[MAX_OVERLAYS];
+    private final OverlayInformation[] overlays = new OverlayInformation[SolidOverlayFileList.MAX_OVERLAYS];
 
     public OverlaySource(ServiceContext sc) {
         scontext=sc;
@@ -48,7 +48,7 @@ public class OverlaySource extends ContentSource {
 
     @Override
     public void onResume() {
-        for (int i=0; i<MAX_OVERLAYS; i++)
+        for (int i=0; i<overlays.length; i++)
             overlays[i]= new OverlayInformation(i);
     }
 
@@ -146,7 +146,7 @@ public class OverlaySource extends ContentSource {
 
 
         @Override
-        public int getType() {
+        public GpxType getType() {
             if (isLoaded() && getGpxList() != null && getGpxList().getDelta() != null) {
                 return getGpxList().getDelta().getType();
             }

@@ -22,17 +22,10 @@ public class GpxDynLayer implements MapLayerInterface, OnContentUpdatedInterface
     private final SolidLegend slegend;
 
     private final MapContext mcontext;
-    private final int color;
-
 
 
     public GpxDynLayer(MapContext mc) {
-        this(mc, -1);
-    }
-
-    public GpxDynLayer(MapContext mc, int c) {
         mcontext = mc;
-        color = c;
         slegend = new SolidLegend(mcontext.getContext(), mcontext.getSolidKey());
 
         createLegendOverlay();
@@ -64,7 +57,7 @@ public class GpxDynLayer implements MapLayerInterface, OnContentUpdatedInterface
 
     }
 
-    private int type = GpxType.NONE;
+    private GpxType type = GpxType.NONE;
 
     @Override
     public void onContentUpdated(int iid, GpxInformation info) {
@@ -94,7 +87,7 @@ public class GpxDynLayer implements MapLayerInterface, OnContentUpdatedInterface
         }
     }
 
-    private static int toType(GpxInformation i) {
+    private static GpxType toType(GpxInformation i) {
         if (i != null && i.getGpxList() != null) {
             return i.getGpxList().getDelta().getType();
         }
@@ -105,32 +98,18 @@ public class GpxDynLayer implements MapLayerInterface, OnContentUpdatedInterface
 
 
     private void createGpxOverlay() {
-        int type = toType(infoCache.info);
+        GpxType type = toType(infoCache.info);
 
-        if (type == GpxType.WAY)
-            gpxOverlay = new WayLayer(mcontext, color);
-
-        else if (type == GpxType.RTE)
-            gpxOverlay = new RouteLayer(mcontext, color);
-
-        else
-            gpxOverlay = new TrackLayer(mcontext);
-
+        gpxOverlay = Factory.get(type).layer(mcontext, 0);
     }
 
 
     private void createLegendOverlay() {
-        int type = toType(infoCache.info);
+        GpxType type = toType(infoCache.info);
 
-        if (type == GpxType.WAY)
-            legendOverlay = slegend.createWayLegendLayer();
-
-        else if (type == GpxType.RTE)
-            legendOverlay = slegend.createRouteLegendLayer();
-
-        else
-            legendOverlay = slegend.createTrackLegendLayer();
+        legendOverlay = Factory.get(type).legend(slegend, 0);
     }
+
 
     @Override
     public void onLayout(boolean changed, int l, int t, int r, int b) {
