@@ -11,7 +11,7 @@ import ch.bailu.util_java.foc.Foc;
 
 public class NominatimApi extends OsmApiHelper {
     public final static String NAME="Nominatim";
-    public final static String URL="http://nominatim.openstreetmap.org/search/";
+    public final static String URL="https://nominatim.openstreetmap.org/search/";
     public final static String POST="?format=xml";
     public final static String EXT=".xml";
 
