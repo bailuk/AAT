@@ -19,20 +19,30 @@ public abstract class GpxListPainter extends GpxListWalker {
 
     private final MapContext mcontext;
 
-    private final float minDistance, maxDistance;
-    private float distanceCount;
-
+    private final DistanceCounter edgeDistance, nodeDistance;
 
     private int action = START_PAINTING;
 
 
-    public GpxListPainter (MapContext mc) {
+
+
+    public GpxListPainter(MapContext mc, int minPixelSpace) {
         mcontext = mc;
         AppDensity res = mc.getMetrics().getDensity();
 
-        minDistance = mc.getMetrics().pixelToDistance((int) res.toPixel_f(MIN_PIXEL_SPACE));
-        maxDistance = mc.getMetrics().pixelToDistance((int) res.toPixel_f(MAX_PIXEL_SPACE));
+        edgeDistance = new DistanceCounter(
+                mc.getMetrics().pixelToDistance((int) res.toPixel_f(MIN_PIXEL_SPACE)),
+                mc.getMetrics().pixelToDistance((int) res.toPixel_f(MAX_PIXEL_SPACE))
+        );
 
+        nodeDistance = new DistanceCounter(
+                mc.getMetrics().pixelToDistance((int) res.toPixel_f(minPixelSpace)),
+                mc.getMetrics().pixelToDistance((int) res.toPixel_f(MAX_PIXEL_SPACE))
+        );
+
+    }
+    public GpxListPainter (MapContext mc) {
+        this(mc, MIN_PIXEL_SPACE);
     }
 
 
@@ -42,7 +52,8 @@ public abstract class GpxListPainter extends GpxListWalker {
 
     @Override
     public boolean doList(GpxList track) {
-        distanceCount=0;
+        edgeDistance.reset();
+        nodeDistance.reset();
         return mcontext.getMetrics().isVisible(track.getDelta().getBoundingBox());
     }
 
@@ -56,7 +67,8 @@ public abstract class GpxListPainter extends GpxListWalker {
 
     private void restartPainting() {
         action=START_PAINTING;
-        distanceCount=0;
+        edgeDistance.reset();
+        nodeDistance.reset();
     }
 
     @Override
@@ -68,7 +80,7 @@ public abstract class GpxListPainter extends GpxListWalker {
 
             }
 
-            if (marker.getDistance() < minDistance) {
+            if (marker.getDistance() < edgeDistance.min) {
                 doMarkerFirstNode(marker);
                 return false;
             }
@@ -94,7 +106,8 @@ public abstract class GpxListPainter extends GpxListWalker {
             mcontext.getTwoNodes().nodeA.set((GpxPointNode)marker.getFirstNode());
             drawNode(mcontext.getTwoNodes().nodeA);
 
-            distanceCount=0;
+            edgeDistance.reset();
+            nodeDistance.reset();
         }
     }
 
@@ -103,42 +116,59 @@ public abstract class GpxListPainter extends GpxListWalker {
         if (marker.getFirstNode() != null) {
             drawNodeIfDistance((GpxPointInterface)marker.getFirstNode());
 
-            distanceCount += marker.getDistance();
+            edgeDistance.add(marker.getDistance());
+            nodeDistance.add(marker.getDistance());
         }
     }
 
 
     @Override
     public void doPoint(GpxPointNode point) {
-        distanceCount += point.getDistance();
+        edgeDistance.add(point.getDistance());
+        nodeDistance.add(point.getDistance());
         drawNodeIfDistance(point);
     }
 
 
     private void drawNodeIfDistance(GpxPointInterface point) {
-        if (distanceCount > minDistance) {
+
+        if (edgeDistance.hasDistance() && nodeDistance.isTooSmall()) {
+            mcontext.getTwoNodes().nodeB.set(point);
+            drawEdgeIfVisible(point);
+            edgeDistance.reset();
+
+            mcontext.getTwoNodes().switchNodes();
+
+        } else if (nodeDistance.hasDistance()) {
+            mcontext.getTwoNodes().nodeB.set(point);
+            drawEdgeIfVisible(point);
             drawNodeIfVisible(point);
-            distanceCount=0;
+            edgeDistance.reset();
+            nodeDistance.reset();
+
+            mcontext.getTwoNodes().switchNodes();
+        }
+
+
+
+    }
+
+
+    private void drawEdgeIfVisible(GpxPointInterface point) {
+
+        if (    mcontext.getTwoNodes().nodeB.isVisible() ||
+                mcontext.getTwoNodes().nodeA.isVisible() ||
+                edgeDistance.isTooLarge()) {
+            drawEdge(mcontext.getTwoNodes());
         }
     }
 
 
     private void drawNodeIfVisible(GpxPointInterface point) {
 
-        mcontext.getTwoNodes().nodeB.set(point);
-
         if (mcontext.getTwoNodes().nodeB.isVisible()) {
-            drawEdge(mcontext.getTwoNodes());
             drawNode(mcontext.getTwoNodes().nodeB);
-
-        } else if (mcontext.getTwoNodes().nodeA.isVisible()) {
-            drawEdge(mcontext.getTwoNodes());
-
-        } else if (distanceCount > maxDistance) {
-            drawEdge(mcontext.getTwoNodes());
         }
-
-        mcontext.getTwoNodes().switchNodes();
     }
 
 }

@@ -14,6 +14,8 @@ import ch.bailu.aat.views.graph.AltitudeColorTable;
 
 public class RouteLayer extends GpxLayer {
 
+    private final int MIN_PIXEL_SPACE = 30;
+
     private final MapContext mcontext;
 
     private Paint edgePaintBlur;
@@ -68,7 +70,7 @@ public class RouteLayer extends GpxLayer {
 
         public RoutePainter() {
 
-            super(mcontext);
+            super(mcontext,MIN_PIXEL_SPACE);
         }
 
 
