@@ -18,7 +18,7 @@ import ch.bailu.aat.views.preferences.SolidCheckListDialog;
 import ch.bailu.aat.views.preferences.SolidIndexListDialog;
 
 public class OptionsMenu extends AbsMenu {
-    private MenuItem start, pause, backlight, map, overlays, nominatim;
+    private MenuItem start, pause, backlight, nominatim;
 
     private final ServiceContext scontext;
     
@@ -36,10 +36,7 @@ public class OptionsMenu extends AbsMenu {
         pause = menu.add(R.string.tracker_pause);
         pause.setIcon(R.drawable.media_playback_pause_inverse);
 
-        map = menu.add(R.string.p_map);
 
-        overlays = menu.add(R.string.p_overlay);
-        overlays.setIcon(R.drawable.view_paged_inverse);
 
         nominatim = menu.add(R.string.intro_nominatim);
         nominatim.setIcon(R.drawable.edit_find_inverse);
@@ -84,11 +81,6 @@ public class OptionsMenu extends AbsMenu {
         } else if (item == backlight) {
             new SolidIndexListDialog(new SolidBacklight(c, new SolidPreset(c).getIndex()));
 
-        } else if (item == map) {
-            new SolidCheckListDialog(new SolidMapTileStack(c));
-
-        } else if (item == overlays) {
-            new SolidCheckListDialog(new SolidOverlayFileList(c));
 
         } else if (item == nominatim) {
             ActivitySwitcher.start(c, NominatimActivity.class);

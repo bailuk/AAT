@@ -12,6 +12,7 @@ import ch.bailu.aat.dispatcher.DispatcherInterface;
 import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.map.MapContext;
 import ch.bailu.aat.menus.LocationMenu;
+import ch.bailu.aat.menus.MapMenu;
 import ch.bailu.aat.preferences.SolidIndexList;
 import ch.bailu.aat.preferences.SolidLegend;
 import ch.bailu.aat.preferences.SolidMapGrid;
@@ -20,8 +21,7 @@ import ch.bailu.aat.views.bar.ControlBar;
 
 public class InformationBarLayer extends ControlBarLayer {
 
-    private final View reload;
-    private final ImageButton overpass, nominatim, location;
+    private final ImageButton menu, overpass, nominatim, location;
 
     private final NodeViewLayer selector;
     private final MapContext mcontext;
@@ -33,16 +33,19 @@ public class InformationBarLayer extends ControlBarLayer {
         mcontext = cl;
         final SolidIndexList sgrid, slegend;
 
+
         sgrid = new SolidMapGrid(cl.getContext(), cl.getSolidKey());
         slegend = new SolidLegend(cl.getContext(), cl.getSolidKey());
 
         ControlBar bar = getBar();
+
+        menu = bar.addImageButton(R.drawable.open_menu);
+
         View grid=bar.addSolidIndexButton(sgrid);
         View legend=bar.addSolidIndexButton(slegend);
 
         overpass = bar.addImageButton(R.drawable.go_bottom);
         nominatim = bar.addImageButton(R.drawable.edit_find);
-        reload = bar.addImageButton(R.drawable.view_refresh);
         location = bar.addImageButton(R.drawable.find_location);
 
         selector = new AutoNodeViewLayer(cl);
@@ -52,7 +55,6 @@ public class InformationBarLayer extends ControlBarLayer {
         ToolTip.set(legend,R.string.tt_info_legend);
         ToolTip.set(nominatim,R.string.tt_info_nominatim);
         ToolTip.set(overpass,R.string.tt_info_overpass);
-        ToolTip.set(reload,R.string.tt_info_reload);
         ToolTip.set(location, R.string.tt_info_location);
 
         d.addTarget(selector, InfoID.ALL);
@@ -63,9 +65,9 @@ public class InformationBarLayer extends ControlBarLayer {
     public void onClick(View v) {
         super.onClick(v);
 
-        if (v==reload) {
-            mcontext.getMapView().reDownloadTiles();
 
+        if (v == menu) {
+            new MapMenu(mcontext).showAsPopup(mcontext.getContext(),v);
 
         } else if (v==overpass) {
             ActivitySwitcher.start(mcontext.getContext(), OverpassActivity.class, mcontext.getMetrics().getBoundingBox());

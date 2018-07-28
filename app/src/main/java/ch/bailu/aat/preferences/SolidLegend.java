@@ -8,6 +8,7 @@ import ch.bailu.aat.map.layer.gpx.legend.GpxLegendLayer;
 import ch.bailu.aat.map.layer.gpx.legend.MarkerAltitudeWalker;
 import ch.bailu.aat.map.layer.gpx.legend.MarkerDistanceWalker;
 import ch.bailu.aat.map.layer.gpx.legend.MarkerSpeedWalker;
+import ch.bailu.aat.map.layer.gpx.legend.NullLegendWalker;
 import ch.bailu.aat.map.layer.gpx.legend.PointAltitudeWalker;
 import ch.bailu.aat.map.layer.gpx.legend.PointDistanceWalker;
 import ch.bailu.aat.map.layer.gpx.legend.PointIndexWalker;
@@ -43,6 +44,7 @@ public class SolidLegend extends SolidStaticIndexList {
 
 
     public GpxLayer createWayLegendLayer() {
+        if (getIndex()==0) return new GpxLegendLayer(new NullLegendWalker());
         if (getIndex()==1) return new GpxLegendLayer(new PointNameWalker());
         if (getIndex()==2) return new GpxLegendLayer(new PointNameWalker());
         if (getIndex()==3) return new GpxLegendLayer(new PointAltitudeWalker(getContext()));
@@ -52,6 +54,7 @@ public class SolidLegend extends SolidStaticIndexList {
 
 
     public GpxLayer createRouteLegendLayer() {
+        if (getIndex()==0) return new GpxLegendLayer(new NullLegendWalker());
         if (getIndex()==1) return new GpxLegendLayer(new PointDistanceWalker(getContext(), false));
         if (getIndex()==2) return new GpxLegendLayer(new PointDistanceWalker(getContext(), true));
         if (getIndex()==3) return new GpxLegendLayer(new PointAltitudeWalker(getContext()));

@@ -158,6 +158,7 @@ COPY "gtk-convert"
 
 
 ####### Information-Bar
+COPY "open-menu"
 COPY "view-grid" 
 COPY "dialog-question" 
 COPY "go-bottom"  ## Overpass
