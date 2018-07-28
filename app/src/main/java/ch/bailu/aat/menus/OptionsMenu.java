@@ -8,6 +8,7 @@ import android.view.MenuItem;
 import ch.bailu.aat.R;
 import ch.bailu.aat.activities.ActivitySwitcher;
 import ch.bailu.aat.activities.NominatimActivity;
+import ch.bailu.aat.activities.PreferencesActivity;
 import ch.bailu.aat.preferences.SolidBacklight;
 import ch.bailu.aat.preferences.SolidMapTileStack;
 import ch.bailu.aat.preferences.SolidOverlayFileList;
@@ -18,7 +19,7 @@ import ch.bailu.aat.views.preferences.SolidCheckListDialog;
 import ch.bailu.aat.views.preferences.SolidIndexListDialog;
 
 public class OptionsMenu extends AbsMenu {
-    private MenuItem start, pause, backlight, nominatim;
+    private MenuItem start, pause, backlight, nominatim, preferences;
 
     private final ServiceContext scontext;
     
@@ -42,6 +43,8 @@ public class OptionsMenu extends AbsMenu {
         nominatim.setIcon(R.drawable.edit_find_inverse);
 
         backlight = menu.add(R.string.p_backlight_title);
+
+        preferences = menu.add(R.string.intro_settings);
     }
 
     @Override
@@ -85,7 +88,8 @@ public class OptionsMenu extends AbsMenu {
         } else if (item == nominatim) {
             ActivitySwitcher.start(c, NominatimActivity.class);
 
-
+        } else if (item == preferences) {
+            ActivitySwitcher.start(c, PreferencesActivity.class);
         } else {
             return false;
 

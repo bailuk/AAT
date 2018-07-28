@@ -6,15 +6,18 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
 
+import ch.bailu.aat.R;
 import ch.bailu.aat.dispatcher.CurrentLocationSource;
 import ch.bailu.aat.dispatcher.TrackerSource;
 import ch.bailu.aat.preferences.SolidDataDirectory;
 import ch.bailu.aat.preferences.SolidExternalDirectory;
 import ch.bailu.aat.preferences.SolidFile;
 import ch.bailu.aat.preferences.SolidPreset;
+import ch.bailu.aat.util.ToDo;
 import ch.bailu.aat.util.fs.AppDirectory;
 import ch.bailu.aat.util.ui.AppLayout;
 import ch.bailu.aat.util.ui.AppLog;
+import ch.bailu.aat.util.ui.AppTheme;
 import ch.bailu.aat.views.AbsLabelTextView;
 import ch.bailu.aat.views.ContentView;
 import ch.bailu.aat.views.bar.MainControlBar;
@@ -90,6 +93,8 @@ public class MainActivity extends AbsDispatcher {
             return new InternalDirectoryLabel(s, AppDirectory.DIR_OVERLAY);
         } else if (s.activityClass == ExternalListActivity.class) {
             return new ExternalDirectoryLabel(s);
+        } else if (s.activityClass == AboutActivity.class) {
+            return new DocumentationLabel(s);
         }
 
         return new ActivityLabel(s);
@@ -237,4 +242,18 @@ public class MainActivity extends AbsDispatcher {
             }
         }
     }
+
+    private class DocumentationLabel extends ActivityLabel {
+
+        public DocumentationLabel(ActivitySwitcher.Entry s) {
+            super(s);
+            setTextColor(AppTheme.getHighlightColor3());
+            setText(getString(R.string.intro_about)
+                    + " / " + getString(R.string.intro_uiguide)
+                    + " / " + getString(R.string.intro_readme));
+        }
+
+
+    }
+
 }

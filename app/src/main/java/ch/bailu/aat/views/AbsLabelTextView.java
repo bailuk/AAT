@@ -11,14 +11,14 @@ import ch.bailu.aat.util.ui.ToolTipView;
 
 public abstract class AbsLabelTextView extends LinearLayout{
 
-    private final TextView value;
+    private final TextView value, label;
     private final ToolTipView toolTip;
 
     public AbsLabelTextView(final Context context, String labelText) {
         super(context);
         setOrientation(VERTICAL);
 
-        final TextView label = new TextView(context);
+        label = new TextView(context);
         label.setText(labelText);
         addView(label);
         AppTheme.themify(label);
@@ -39,5 +39,9 @@ public abstract class AbsLabelTextView extends LinearLayout{
     }
     public void setToolTip(ToolTipProvider tip) {
         toolTip.setToolTip(tip);
+    }
+
+    public void setTextColor(int color) {
+        label.setTextColor(color);
     }
 }

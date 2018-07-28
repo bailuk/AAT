@@ -13,6 +13,7 @@ import ch.bailu.aat.BuildConfig;
 import ch.bailu.aat.R;
 import ch.bailu.aat.coordinates.BoundingBoxE6;
 import ch.bailu.aat.util.AppIntent;
+import ch.bailu.aat.util.ToDo;
 import ch.bailu.aat.util.ui.AppLayout;
 
 public class ActivitySwitcher {
@@ -99,15 +100,16 @@ public class ActivitySwitcher {
         entries.add(new Entry(c.getString(R.string.intro_list), TrackListActivity.class));
         entries.add(new Entry(c.getString(R.string.intro_overlay_list), OverlayListActivity.class));
         entries.add(new Entry(c.getString(R.string.intro_external_list), ExternalListActivity.class));
-        entries.add(new Entry(c.getString(R.string.intro_nominatim),
-                c.getString(R.string.tt_info_nominatim),
-                NominatimActivity.class));
-        entries.add(new Entry(c.getString(R.string.intro_settings), PreferencesActivity.class));
-        entries.add(new Entry(c.getString(R.string.intro_about) + " / " + c.getString(R.string.intro_readme), AboutActivity.class));
+        entries.add(new Entry(ToDo.translate("Documentation"), AboutActivity.class));
+        //entries.add(new Entry(c.getString(R.string.intro_about) + " / " + c.getString(R.string.intro_readme), AboutActivity.class));
+        //entries.add(new Entry(c.getString(R.string.intro_nominatim),
+        //        c.getString(R.string.tt_info_nominatim),
+        //        NominatimActivity.class));
+        //entries.add(new Entry(c.getString(R.string.intro_settings), PreferencesActivity.class));
 
 
-        if (BuildConfig.DEBUG)
-            entries.add(new Entry(c.getString(R.string.intro_test), TestActivity.class));
+        //if (BuildConfig.DEBUG)
+        //    entries.add(new Entry(c.getString(R.string.intro_test), TestActivity.class));
 
     }
     public int size() {
