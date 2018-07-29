@@ -1,20 +1,24 @@
 package ch.bailu.aat.menus;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import ch.bailu.aat.R;
+import ch.bailu.aat.activities.ActivitySwitcher;
+import ch.bailu.aat.activities.PreferencesActivity;
 import ch.bailu.aat.map.MapContext;
 import ch.bailu.aat.preferences.SolidMapTileStack;
 import ch.bailu.aat.preferences.SolidOverlayFileList;
 import ch.bailu.aat.preferences.SolidRenderTheme;
+import ch.bailu.aat.views.description.MultiView;
 import ch.bailu.aat.views.preferences.SolidCheckListDialog;
 import ch.bailu.aat.views.preferences.SolidStringDialog;
 
 public class MapMenu extends AbsMenu {
-    private MenuItem map, overlays, reload, theme;
+    private MenuItem map, overlays, reload, theme, preferences;
 
     private final MapContext mcontext;
 
@@ -32,6 +36,8 @@ public class MapMenu extends AbsMenu {
 
 
         theme = menu.add(R.string.p_mapsforge_theme);
+
+        preferences = menu.add(R.string.intro_settings);
 
         reload = menu.add(R.string.tt_info_reload);
         reload.setIcon(R.drawable.view_refresh);
@@ -66,9 +72,11 @@ public class MapMenu extends AbsMenu {
 
             } else if (item == overlays) {
             new SolidCheckListDialog(new SolidOverlayFileList(c));
-        } else if (item == theme){
+        } else if (item == theme) {
             new SolidStringDialog(new SolidRenderTheme(c));
-
+        } else if (item == preferences) {
+            MultiView.storeActive(c, PreferencesActivity.SOLID_KEY, 1);
+            ActivitySwitcher.start(mcontext.getContext(), PreferencesActivity.class);
         } else {
             return false;
         }

@@ -172,8 +172,12 @@ public class MultiView extends ViewGroup implements ObservableInterface{
 
     @Override
     public void onDetachedFromWindow() {
-        Storage.activity(getContext()).writeInteger(solidKey + "_index",active);
+        storeActive(getContext(), solidKey, active);
         super.onDetachedFromWindow();
     }
 
+
+    public static void storeActive(Context context, String key, int active) {
+        Storage.activity(context).writeInteger(key + "_index",active);
+    }
 }

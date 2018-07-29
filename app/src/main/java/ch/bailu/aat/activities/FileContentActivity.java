@@ -51,10 +51,7 @@ public class FileContentActivity extends AbsFileContentActivity{
         summary.addAllContent(this, getSummaryData(this), InfoID.FILEVIEW);
 
         View graph = GraphViewContainer.speedAltitude(this,this, InfoID.FILEVIEW, SOLID_KEY);
-        /*View graph = PercentageLayout.add(this,
-                new DistanceAltitudeGraphView(this, this, InfoID.FILEVIEW),
-                new DistanceSpeedGraphView(this, SOLID_KEY, this, InfoID.FILEVIEW));
-*/
+
 
         if (AppLayout.isTablet(this)) {
             return createPercentageLayout(summary, graph);

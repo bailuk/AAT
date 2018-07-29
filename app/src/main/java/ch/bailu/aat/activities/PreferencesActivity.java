@@ -7,6 +7,7 @@ import android.os.Bundle;
 import ch.bailu.aat.R;
 import ch.bailu.aat.preferences.SolidFile;
 import ch.bailu.aat.preferences.SolidPresetCount;
+import ch.bailu.aat.util.ui.AppLog;
 import ch.bailu.aat.views.ContentView;
 import ch.bailu.aat.views.bar.MainControlBar;
 import ch.bailu.aat.views.description.MultiView;
@@ -16,7 +17,8 @@ import ch.bailu.aat.views.preferences.PresetPreferencesView;
 
 public class PreferencesActivity extends AbsDispatcher implements SharedPreferences.OnSharedPreferenceChangeListener {
 
-    private final static String SOLID_KEY=PreferencesActivity.class.getSimpleName();
+    public final static String SOLID_KEY=PreferencesActivity.class.getSimpleName();
+
 
     private MapTilePreferencesView mapTilePreferences;
 
