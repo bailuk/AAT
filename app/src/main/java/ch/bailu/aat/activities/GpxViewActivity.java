@@ -44,7 +44,6 @@ public class GpxViewActivity extends AbsDispatcher
 
 
     private MyImageButton        fileOperation, copyTo;
-    private MyImageButton busyButton;
     private BusyViewControlIID busyControl;
     private MapViewInterface   map;
 
@@ -82,6 +81,10 @@ public class GpxViewActivity extends AbsDispatcher
             initButtonBar(bar);
 
             contentView.add(view);
+
+            busyControl = new BusyViewControlIID(contentView, InfoID.FILEVIEW);
+            busyControl.startWaiting();
+
             setContentView(contentView);
             createDispatcher();
         }
@@ -146,9 +149,6 @@ public class GpxViewActivity extends AbsDispatcher
         ToolTip.set(copyTo, R.string.file_copy);
         ToolTip.set(fileOperation, R.string.tt_menu_file);
 
-        busyButton = bar.getMenu();
-        busyControl = new BusyViewControlIID(busyButton, InfoID.FILEVIEW);
-        busyControl.startWaiting();
 
         bar.setOrientation(LinearLayout.HORIZONTAL);
         bar.setOnClickListener1(this);

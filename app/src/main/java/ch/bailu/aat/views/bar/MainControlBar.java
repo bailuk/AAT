@@ -8,6 +8,7 @@ import android.widget.LinearLayout;
 import ch.bailu.aat.R;
 import ch.bailu.aat.activities.AbsDispatcher;
 import ch.bailu.aat.activities.ActivitySwitcher;
+import ch.bailu.aat.activities.MainActivity;
 import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.menus.OptionsMenu;
 import ch.bailu.aat.util.ui.AppLayout;
@@ -16,10 +17,10 @@ import ch.bailu.aat.views.MyImageButton;
 import ch.bailu.aat.views.description.GPSStateButton;
 import ch.bailu.aat.views.description.MultiView;
 import ch.bailu.aat.views.description.TrackerStateButton;
+import ch.bailu.util_java.util.Objects;
 
 public class MainControlBar extends ControlBar {
 
-    private final MyImageButton menu;
 
     public MainControlBar(final AbsDispatcher acontext) {
         this(acontext, AppLayout.DEFAULT_VISIBLE_BUTTON_COUNT);
@@ -38,22 +39,22 @@ public class MainControlBar extends ControlBar {
     public MainControlBar(final AbsDispatcher acontext, int orientation, int button) {
         super(acontext, orientation, button);
 
-        menu = addMenuButton(acontext);
-        addBackButton(acontext);
+        if (Objects.equals(acontext.getClass().getSimpleName(), MainActivity.class.getSimpleName()))
+            addMenuButton(acontext);
+        else
+            addBackButton(acontext);
 
     }
 
 
     private void addBackButton(final AbsDispatcher acontext) {
-        if (AppLayout.haveExtraSpaceBack(getContext())) {
-            MyImageButton b = addImageButton(R.drawable.edit_undo_inverse, getControlSize());
-            b.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    acontext.onBackPressed();
-                }
-            });
-        }
+        MyImageButton b = addImageButton(R.drawable.edit_undo_inverse, getControlSize());
+        b.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                acontext.onBackPressed();
+            }
+        });
     }
 
 
@@ -67,10 +68,6 @@ public class MainControlBar extends ControlBar {
             public void onClick(View v) {
                 new OptionsMenu(acontext.getServiceContext()).showAsPopup(getContext(), menu);
             }});
-        return menu;
-    }
-
-    public MyImageButton getMenu() {
         return menu;
     }
 
