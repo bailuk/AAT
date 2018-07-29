@@ -15,7 +15,8 @@ import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.preferences.SolidTileCacheDirectory;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.tileremover.TileRemoverService;
-import ch.bailu.aat.views.BusyButton;
+import ch.bailu.aat.views.BusyViewControl;
+import ch.bailu.aat.views.MyImageButton;
 import ch.bailu.aat.views.bar.ControlBar;
 
 
@@ -25,7 +26,8 @@ public class TileRemoverView
 
 
     private TileSummariesView summaryView;
-    private BusyButton scan, remove;
+    private MyImageButton scan, remove;
+    private BusyViewControl bscan, bremove;
 
     private final SolidTileCacheDirectory sdirectory;
 
@@ -65,10 +67,12 @@ public class TileRemoverView
     private View createControlBar(Context context) {
         final ControlBar bar =  new ControlBar(context, LinearLayout.VERTICAL);
 
-        scan = new BusyButton(context, R.drawable.view_refresh_inverse);
+        scan = new MyImageButton(context, R.drawable.view_refresh_inverse);
+        bscan = new BusyViewControl(scan);
         bar.addButton(scan);
 
-        remove = new BusyButton(context, R.drawable.user_trash_inverse);
+        remove = new MyImageButton(context, R.drawable.user_trash_inverse);
+        bremove = new BusyViewControl(remove);
         bar.addButton(remove);
 
         bar.setOnClickListener1(this);
@@ -100,8 +104,8 @@ public class TileRemoverView
     private final BroadcastReceiver onTileRemoverStopped = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            scan.stopWaiting();
-            remove.stopWaiting();
+            bscan.stopWaiting();
+            bremove.stopWaiting();
             updateText();
         }
     };
@@ -111,8 +115,8 @@ public class TileRemoverView
     private final BroadcastReceiver onTileRemoverRemove = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            remove.startWaiting();
-            scan.stopWaiting();
+            bremove.startWaiting();
+            bscan.stopWaiting();
             updateText();
         }
     };
@@ -120,8 +124,8 @@ public class TileRemoverView
     private final BroadcastReceiver onTileRemoverScan = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            scan.startWaiting();
-            remove.stopWaiting();
+            bscan.startWaiting();
+            bremove.stopWaiting();
             updateText();
         }
     };
@@ -144,11 +148,11 @@ public class TileRemoverView
             public void run() {
 
                 final TileRemoverService tr = scontext.getTileRemoverService();
-                if (v == scan && scan.isWaiting()) {
+                if (v == scan && bscan.isWaiting()) {
                     tr.getState().stop();
                 } else if (v == scan) {
                     tr.getState().scan();
-                } else if (v == remove && remove.isWaiting()) {
+                } else if (v == remove && bremove.isWaiting()) {
                     tr.getState().stop();
                 } else if (v == remove) { // show menu
                     new RemoveTilesMenu(scontext, acontext).showAsDialog(scontext.getContext());

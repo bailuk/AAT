@@ -3,6 +3,7 @@ package ch.bailu.aat.activities;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 
 import ch.bailu.aat.description.AscendDescription;
 import ch.bailu.aat.description.AverageSpeedDescription;
@@ -43,7 +44,7 @@ public class FileContentActivity extends AbsFileContentActivity{
     }
 
     @Override
-    protected View createLayout(MainControlBar bar) {
+    protected ViewGroup createLayout(MainControlBar bar) {
         map = MapFactory.DEF(this, SOLID_KEY).content(editor_helper);
 
         VerticalScrollView summary = new VerticalScrollView(this);
@@ -84,7 +85,7 @@ public class FileContentActivity extends AbsFileContentActivity{
         };
     }
 
-    protected View createMultiView(MainControlBar bar,
+    protected ViewGroup createMultiView(MainControlBar bar,
                                    View summary, View graph) {
 
         MultiView mv = new MultiView(this, SOLID_KEY);
@@ -97,7 +98,7 @@ public class FileContentActivity extends AbsFileContentActivity{
     }
 
 
-    private View createPercentageLayout(
+    private ViewGroup createPercentageLayout(
             View summary, View graph) {
 
         PercentageLayout a = new PercentageLayout(this);

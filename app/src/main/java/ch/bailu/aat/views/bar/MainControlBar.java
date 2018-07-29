@@ -9,17 +9,17 @@ import ch.bailu.aat.R;
 import ch.bailu.aat.activities.AbsDispatcher;
 import ch.bailu.aat.activities.ActivitySwitcher;
 import ch.bailu.aat.gpx.InfoID;
-import ch.bailu.aat.util.ui.AppLayout;
 import ch.bailu.aat.menus.OptionsMenu;
-import ch.bailu.aat.views.BusyButton;
+import ch.bailu.aat.util.ui.AppLayout;
 import ch.bailu.aat.views.MultiViewSelector;
+import ch.bailu.aat.views.MyImageButton;
 import ch.bailu.aat.views.description.GPSStateButton;
 import ch.bailu.aat.views.description.MultiView;
 import ch.bailu.aat.views.description.TrackerStateButton;
 
 public class MainControlBar extends ControlBar {
 
-    private final BusyButton menu;
+    private final MyImageButton menu;
 
     public MainControlBar(final AbsDispatcher acontext) {
         this(acontext, AppLayout.DEFAULT_VISIBLE_BUTTON_COUNT);
@@ -46,7 +46,7 @@ public class MainControlBar extends ControlBar {
 
     private void addBackButton(final AbsDispatcher acontext) {
         if (AppLayout.haveExtraSpaceBack(getContext())) {
-            ImageButton b = addImageButton(R.drawable.edit_undo_inverse, getControlSize());
+            MyImageButton b = addImageButton(R.drawable.edit_undo_inverse, getControlSize());
             b.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -57,9 +57,9 @@ public class MainControlBar extends ControlBar {
     }
 
 
-    private BusyButton addMenuButton(final AbsDispatcher acontext) {
-        final BusyButton menu = new BusyButton(acontext, ch.bailu.aat.R.drawable.open_menu_inverse);
-        add(menu);
+    private MyImageButton addMenuButton(final AbsDispatcher acontext) {
+        final MyImageButton menu = addImageButton(ch.bailu.aat.R.drawable.open_menu_inverse);
+
 
         menu.setOnClickListener(new OnClickListener() {
 
@@ -70,7 +70,7 @@ public class MainControlBar extends ControlBar {
         return menu;
     }
 
-    public BusyButton getMenu() {
+    public MyImageButton getMenu() {
         return menu;
     }
 
@@ -118,7 +118,7 @@ public class MainControlBar extends ControlBar {
     }
 
     public void addActivityCycle(final Activity acontext) {
-        ImageButton cb = addImageButton(R.drawable.go_down_inverse, getControlSize());
+        MyImageButton cb = addImageButton(R.drawable.go_down_inverse, getControlSize());
         cb.setOnClickListener(new OnClickListener() {
 
             @Override

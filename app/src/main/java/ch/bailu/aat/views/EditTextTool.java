@@ -16,7 +16,7 @@ public class EditTextTool extends LinearLayout implements View.OnClickListener {
     public final EditText edit;
     public final ControlBar bar;
 
-    private final ImageButton clearText;
+    private final MyImageButton clearText;
 
 
 

@@ -24,7 +24,9 @@ import ch.bailu.aat.util.fs.foc.FocAndroid;
 import ch.bailu.aat.util.ui.AppLayout;
 import ch.bailu.aat.util.ui.AppLog;
 import ch.bailu.aat.util.ui.ToolTip;
-import ch.bailu.aat.views.BusyButton;
+import ch.bailu.aat.views.BusyViewControl;
+import ch.bailu.aat.views.BusyViewControlIID;
+import ch.bailu.aat.views.MyImageButton;
 import ch.bailu.aat.views.ContentView;
 import ch.bailu.aat.views.bar.ControlBar;
 import ch.bailu.aat.views.bar.MainControlBar;
@@ -41,8 +43,9 @@ public class GpxViewActivity extends AbsDispatcher
 
 
 
-    private ImageButton        fileOperation, copyTo;
-    private BusyButton         busyButton;
+    private MyImageButton        fileOperation, copyTo;
+    private MyImageButton busyButton;
+    private BusyViewControlIID busyControl;
     private MapViewInterface   map;
 
     private String fileID;
@@ -146,7 +149,8 @@ public class GpxViewActivity extends AbsDispatcher
         ToolTip.set(fileOperation, R.string.tt_menu_file);
 
         busyButton = bar.getMenu();
-        busyButton.startWaiting();
+        busyControl = new BusyViewControlIID(busyButton, InfoID.FILEVIEW);
+        busyControl.startWaiting();
 
         bar.setOrientation(LinearLayout.HORIZONTAL);
         bar.setOnClickListener1(this);
@@ -162,7 +166,7 @@ public class GpxViewActivity extends AbsDispatcher
         addSource(new CustomFileSource(getServiceContext(), fileID));
 
         addTarget(this, InfoID.FILEVIEW);
-        addTarget(busyButton.getBusyControl(InfoID.FILEVIEW), InfoID.FILEVIEW);
+        addTarget(busyControl, InfoID.FILEVIEW);
     }
 
 

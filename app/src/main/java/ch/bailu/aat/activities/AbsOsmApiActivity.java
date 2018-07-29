@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -30,9 +31,10 @@ import ch.bailu.aat.util.OsmApiHelper;
 import ch.bailu.aat.util.TextBackup;
 import ch.bailu.aat.util.ui.AppLog;
 import ch.bailu.aat.util.ui.ToolTip;
-import ch.bailu.aat.views.BusyButton;
-import ch.bailu.aat.views.EditTextTool;
+import ch.bailu.aat.views.BusyViewControl;
 import ch.bailu.aat.views.ContentView;
+import ch.bailu.aat.views.EditTextTool;
+import ch.bailu.aat.views.MyImageButton;
 import ch.bailu.aat.views.NodeListView;
 import ch.bailu.aat.views.PercentageLayout;
 import ch.bailu.aat.views.TagEditor;
@@ -49,7 +51,9 @@ public abstract class AbsOsmApiActivity extends AbsDispatcher implements OnClick
     private EditTextTool editor;
     private TextView     preview;
 
-    private BusyButton         download;
+    private MyImageButton download;
+    private BusyViewControl downloadBusy;
+
     private View               fileMenu;
 
     private NodeListView       list;
@@ -62,9 +66,9 @@ public abstract class AbsOsmApiActivity extends AbsDispatcher implements OnClick
         @Override
         public void onReceive(Context context, Intent intent) {
             if (Downloads.contains(osmApi.getResultFile())) {
-                download.startWaiting();
+                downloadBusy.startWaiting();
             } else {
-                download.stopWaiting();
+                downloadBusy.stopWaiting();
             }
         }
     };
@@ -225,10 +229,11 @@ public abstract class AbsOsmApiActivity extends AbsDispatcher implements OnClick
     private MainControlBar createControlBar() {
         MainControlBar bar = new MainControlBar(this);
 
-        download = new BusyButton(this, R.drawable.go_bottom_inverse);
-        bar.addView(download);
+        download = bar.addImageButton(R.drawable.go_bottom_inverse);
+        downloadBusy = new BusyViewControl(download);
+
         download.setOnClickListener(this);
-        if (Downloads.contains(osmApi.getResultFile())) download.startWaiting();
+        if (Downloads.contains(osmApi.getResultFile())) downloadBusy.startWaiting();
 
         ToolTip.set(download, R.string.tt_nominatim_query);
 

@@ -30,7 +30,6 @@ public class ContentView extends FrameLayout{
         addM(new DownloadMessageView(context));
         addM(new FileMessageView(context));
         addM(new LogInfoMessageView(context));
-
     }
 
 

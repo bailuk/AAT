@@ -12,6 +12,7 @@ import ch.bailu.aat.preferences.SolidIndexList;
 import ch.bailu.aat.util.ui.AppLayout;
 import ch.bailu.aat.util.ui.AppLog;
 import ch.bailu.aat.views.ImageButtonView;
+import ch.bailu.aat.views.MyImageButton;
 import ch.bailu.aat.views.preferences.SolidImageButton;
 
 
@@ -79,8 +80,8 @@ public class ControlBar extends LinearLayout {
     }
 
 
-    public ImageButton addImageButton(int res, int size) {
-        ImageButton button = new ImageButtonView(getContext(), res);
+    public MyImageButton addImageButton(int res, int size) {
+        MyImageButton button = new MyImageButton(getContext(), res);
         add(button, size);
         button.setOnClickListener(onClickListener);
         return button;
@@ -144,7 +145,7 @@ public class ControlBar extends LinearLayout {
     };
 
 
-    public ImageButton addImageButton(int res) {
+    public MyImageButton addImageButton(int res) {
         return addImageButton(res, getControlSize());
     }
 }

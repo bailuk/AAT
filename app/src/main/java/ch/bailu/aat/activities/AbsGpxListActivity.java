@@ -25,7 +25,7 @@ import ch.bailu.aat.services.directory.Iterator;
 import ch.bailu.aat.services.directory.IteratorSimple;
 import ch.bailu.aat.util.ui.AppLayout;
 import ch.bailu.aat.util.ui.AppTheme;
-import ch.bailu.aat.views.DbSynchronizerBusyIndicator;
+import ch.bailu.aat.views.BusyViewControlDbSync;
 import ch.bailu.aat.views.ContentView;
 import ch.bailu.aat.views.GpxListView;
 import ch.bailu.aat.views.bar.MainControlBar;
@@ -46,7 +46,7 @@ public abstract class AbsGpxListActivity extends ActivityContext implements OnIt
 
     private GpxListView                 listView;
     private FileControlBarLayer         fileControlBar;
-    private DbSynchronizerBusyIndicator busyControl;
+    private BusyViewControlDbSync       busyControl;
 
 
     public abstract void                   displayFile();
@@ -164,7 +164,7 @@ public abstract class AbsGpxListActivity extends ActivityContext implements OnIt
             listView.setOnItemClickListener(acontext);
             registerForContextMenu(listView);
 
-            busyControl = new DbSynchronizerBusyIndicator(bar.getMenu());
+            busyControl = new BusyViewControlDbSync(contentView);
 
             fileControlBar = new FileControlBarLayer(map.getMContext(), acontext);
             map.add(fileControlBar);

@@ -17,11 +17,12 @@ import ch.bailu.aat.preferences.SolidIndexList;
 import ch.bailu.aat.preferences.SolidLegend;
 import ch.bailu.aat.preferences.SolidMapGrid;
 import ch.bailu.aat.util.ui.ToolTip;
+import ch.bailu.aat.views.MyImageButton;
 import ch.bailu.aat.views.bar.ControlBar;
 
 public class InformationBarLayer extends ControlBarLayer {
 
-    private final ImageButton menu, overpass, nominatim, location;
+    private final MyImageButton menu, overpass, nominatim, location;
 
     private final NodeViewLayer selector;
     private final MapContext mcontext;

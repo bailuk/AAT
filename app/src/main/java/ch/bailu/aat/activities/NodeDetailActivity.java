@@ -22,6 +22,7 @@ import ch.bailu.aat.map.MapViewInterface;
 import ch.bailu.aat.util.HtmlBuilderGpx;
 import ch.bailu.aat.util.ui.AppLayout;
 import ch.bailu.aat.views.ContentView;
+import ch.bailu.aat.views.MyImageButton;
 import ch.bailu.aat.views.html.HtmlScrollTextView;
 import ch.bailu.aat.views.PercentageLayout;
 import ch.bailu.aat.views.SVGAssetView;
@@ -35,7 +36,7 @@ public class NodeDetailActivity extends AbsDispatcher
 
     private static final String SOLID_KEY=NodeDetailActivity.class.getSimpleName();
 
-    private ImageButton nextNode, previousNode;
+    private MyImageButton nextNode, previousNode;
     private SVGAssetView icon;
 
     private MapViewInterface mapView;

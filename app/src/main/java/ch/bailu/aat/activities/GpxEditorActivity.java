@@ -3,6 +3,7 @@ package ch.bailu.aat.activities;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import ch.bailu.aat.description.AscendDescription;
@@ -43,7 +44,7 @@ public class GpxEditorActivity extends AbsFileContentActivity implements OnConte
 
 
     @Override
-    protected View createLayout(MainControlBar bar) {
+    protected ViewGroup createLayout(MainControlBar bar) {
         map = MapFactory.DEF(this, SOLID_KEY).editor(editor_helper);
 
 
@@ -73,7 +74,7 @@ public class GpxEditorActivity extends AbsFileContentActivity implements OnConte
 
     }
 
-    protected View createMultiView(MainControlBar bar,
+    protected ViewGroup createMultiView(MainControlBar bar,
                                    View summary, View graph) {
 
         MultiView mv = new MultiView(this, SOLID_KEY);
@@ -90,7 +91,7 @@ public class GpxEditorActivity extends AbsFileContentActivity implements OnConte
     }
 
 
-    private View createPercentageLayout(
+    private ViewGroup createPercentageLayout(
             View summary, View graph) {
 
         if (AppLayout.getOrientation(this) == Configuration.ORIENTATION_LANDSCAPE) {

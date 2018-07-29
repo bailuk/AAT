@@ -3,12 +3,11 @@ package ch.bailu.aat.activities;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.ImageButton;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import ch.bailu.aat.R;
 import ch.bailu.aat.dispatcher.CurrentLocationSource;
-import ch.bailu.aat.dispatcher.Dispatcher;
 import ch.bailu.aat.dispatcher.EditorSource;
 import ch.bailu.aat.dispatcher.IteratorSource;
 import ch.bailu.aat.dispatcher.OnContentUpdatedInterface;
@@ -21,19 +20,22 @@ import ch.bailu.aat.menus.FileMenu;
 import ch.bailu.aat.services.editor.EditorHelper;
 import ch.bailu.aat.util.ui.AppLog;
 import ch.bailu.aat.util.ui.ToolTip;
-import ch.bailu.aat.views.BusyButton;
+import ch.bailu.aat.views.BusyViewContainer;
+import ch.bailu.aat.views.BusyViewControl;
+import ch.bailu.aat.views.BusyViewControlIID;
 import ch.bailu.aat.views.ContentView;
-import ch.bailu.aat.views.bar.MainControlBar;
+import ch.bailu.aat.views.MyImageButton;
 import ch.bailu.aat.views.PreviewView;
+import ch.bailu.aat.views.bar.MainControlBar;
 import ch.bailu.util_java.util.Objects;
 
 public abstract class AbsFileContentActivity extends AbsDispatcher implements OnClickListener {
 
     protected IteratorSource  currentFile;
-    protected ImageButton nextFile, previousFile;//, fileOperation;
+    protected MyImageButton nextFile, previousFile;//, fileOperation;
     protected PreviewView fileOperation;
 
-    private BusyButton         busyButton;
+    private BusyViewControlIID busyControl;
     protected MapViewInterface map;
 
 
@@ -59,10 +61,22 @@ public abstract class AbsFileContentActivity extends AbsDispatcher implements On
 
         MainControlBar bar = new MainControlBar(this);
         contentView.add(bar);
-        contentView.add(createLayout(bar));
+
+
+
+
+        ViewGroup layout = createLayout(bar);
+        busyControl = new BusyViewControlIID(contentView, InfoID.FILEVIEW);
+        busyControl.busy.setOrientation(BusyViewContainer.BOTTOM_RIGHT);
+
+
+
+
+        contentView.add(layout);
 
         initButtonBar(bar);
 
+        busyControl.startWaiting();
         setContentView(contentView);
 
     }
@@ -78,15 +92,12 @@ public abstract class AbsFileContentActivity extends AbsDispatcher implements On
 
         ToolTip.set(fileOperation, R.string.tt_menu_file);
 
-        busyButton = bar.getMenu();
-        busyButton.startWaiting();
-
         bar.setOrientation(LinearLayout.HORIZONTAL);
         bar.setOnClickListener1(this);
     }
 
 
-    protected abstract View createLayout(MainControlBar bar);
+    protected abstract ViewGroup createLayout(MainControlBar bar);
 
 
 
@@ -103,7 +114,7 @@ public abstract class AbsFileContentActivity extends AbsDispatcher implements On
         addSource(editor_source);
 
         addSource(currentFile);
-        addTarget(busyButton.getBusyControl(InfoID.FILEVIEW), InfoID.FILEVIEW);
+        addTarget(busyControl, InfoID.FILEVIEW);
         addTarget(fileOperation, InfoID.FILEVIEW);
 
 
