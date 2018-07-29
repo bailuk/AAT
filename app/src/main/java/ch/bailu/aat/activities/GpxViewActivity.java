@@ -68,12 +68,10 @@ public class GpxViewActivity extends AbsDispatcher
 
 
         if (uri != null) {
-            AppLog.d(this, uri.toString());
 
             content = FocAndroid.factory(this, uri.toString());
             fileID = content.getPath();
 
-            AppLog.d(this, content.toString());
 
             final ContentView contentView = new ContentView(this);
 

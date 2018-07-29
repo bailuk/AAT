@@ -43,8 +43,6 @@ public class DirectoryService extends VirtualService implements OnSharedPreferen
 
     private void openDir(Foc dir) {
 
-        AppLog.d(this, dir.getPathName());
-
         if (dir.mkdirs() && dir.canRead()) {
             open(dir);
 

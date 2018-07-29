@@ -1,24 +1,19 @@
 package ch.bailu.aat.views;
 
 import android.content.Context;
-import android.view.ViewGroup;
 import android.widget.FrameLayout;
-import android.widget.ImageButton;
+import android.widget.ImageView;
 
 public class MyImageButton extends FrameLayout  {
 
-    private final ImageButton button;
+    private final ImageView image;
 
     public MyImageButton(Context context, int image_res) {
         super(context);
 
-        //setClickable(false);
-
-
-        button = new ImageButtonView(context, image_res);
-        button.setClickable(false);
-        addView(button, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
-
+        image = new ImageButtonView(context, image_res);
+        image.setClickable(false);
+        addView(image, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
     }
 
 }

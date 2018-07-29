@@ -24,9 +24,7 @@ public class GpxProvider extends ContentProvider {
     public ParcelFileDescriptor openFile(Uri uri, String mode) throws FileNotFoundException {
         final File file =  new File(uri.getPath());
 
-        AppLog.d(uri, uri.toString());
-        AppLog.d(this, file.toString());
-        
+
         if (file.exists()) {
             return (ParcelFileDescriptor.open(file, ParcelFileDescriptor.MODE_READ_ONLY));
         }

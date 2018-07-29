@@ -33,7 +33,6 @@ public class NodeBitmap {
         if (node == null) {
             node = new NodeBitmap(radius, res);
             nodes.append(radius, node);
-            AppLog.d(node, "Nodes: " + nodes.size());
         }
 
         return node;

@@ -105,7 +105,6 @@ public class RealLocation extends LocationStackChainedItem
     @Override
     public void close() {
         try {
-            AppLog.d(this, "=> removeUpdates()");
             getLocationManager().removeUpdates(this);
         } catch (Exception e) {
             state = StateID.NOSERVICE;

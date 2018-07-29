@@ -79,7 +79,6 @@ public class FocContent extends Foc {
             return DocumentsContract.deleteDocument(resolver, uris.getDocument());
         }
 
-        AppLog.d(this, toString() + " not empty -> do not remove");
         return false;
     }
 
@@ -287,7 +286,6 @@ public class FocContent extends Foc {
                 data = new DocumentData(cursor);
 
             } else {
-                if (cursor ==  null) AppLog.d(this, "null cursor");
                 AppLog.d(this, uris.getDocument().toString());
 
                 data = new DocumentData(uris.getDocumentId().toString());

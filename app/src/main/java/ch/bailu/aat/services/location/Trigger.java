@@ -59,6 +59,5 @@ public class Trigger {
         if (trigger==HIGH) t="High";
         else if (trigger==LOW) t="Low";
 
-        AppLog.d(this, t + ": " + level);
     }
 }

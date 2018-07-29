@@ -101,7 +101,6 @@ public class StateRemoveAll implements State, Runnable{
             return true;
         }
 
-        AppLog.d(this, "Failed to delete: " + f.toString());
         return false;
     }
 

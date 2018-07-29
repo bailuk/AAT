@@ -84,7 +84,6 @@ public class Dem3Tile implements ElevationProvider, DemProvider {
                 Foc file = c.toFile(sc.getContext());
                 loader = new Dem3LoaderTask(file, array, status);
 
-                AppLog.d(this, "load " + c.toString());
 
                 sc.getBackgroundService().process(loader);
             }

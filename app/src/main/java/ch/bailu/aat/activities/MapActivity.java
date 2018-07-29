@@ -51,7 +51,6 @@ public class MapActivity extends AbsDispatcher{
         Uri uri = intent.getData();
 
         if (Objects.equals(intent.getAction(),Intent.ACTION_VIEW) && uri != null) {
-            AppLog.d(uri, uri.toString());
             setMapCenterFromUri(map, uri);
             openQueryFromUri(uri);
         }

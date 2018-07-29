@@ -58,7 +58,6 @@ public class Renderer extends Layer {
                     // TODO: Translate FocContent to unix file
 
                     store.addMapDataStore(new MapFile(f.toString()), true, true);
-                    AppLog.d(this, "Add \'" + f.getPathName() + "\' to renderer");
                 } catch (Exception e) {
                     AppLog.d(this, e.toString());
                 }

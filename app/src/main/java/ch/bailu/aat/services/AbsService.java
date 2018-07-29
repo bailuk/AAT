@@ -31,8 +31,6 @@ public abstract class AbsService  extends Service {
 
 
             if (lock == 1) {
-                AppLog.d(this, "lock ++: " + lock);
-                AppLog.d(this, "=> startService()");
 
                 startService(new Intent(this,  OneService.class));
                 lazyOff.close();
@@ -49,8 +47,6 @@ public abstract class AbsService  extends Service {
 
 
             if (lock == 0) {
-                AppLog.d(this, "lock --: " + lock);
-                AppLog.d(this, "=> lazyOff.kick()");
                 lazyOff.kick();
 
             } else if (lock < 0) {
@@ -73,12 +69,10 @@ public abstract class AbsService  extends Service {
 
 
     private synchronized void stopService() {
-        AppLog.d(this, "stopService() lock: " + lock);
 
         if (lock == 0) {
             up = false;
             lazyOff.cancel();
-            AppLog.d(this, "=> stopSelf()");
             stopSelf();
         } else if (lock < 0) {
             AppLog.d(this, "lock < 0 !!!");
@@ -86,7 +80,6 @@ public abstract class AbsService  extends Service {
     }
 
     public synchronized void lock(String r) {
-        AppLog.d(this, "lock: " + r);
 
 
         if (locks.add(r)) {
@@ -115,7 +108,6 @@ public abstract class AbsService  extends Service {
 
     public class CommonBinder extends Binder {
         public AbsService getService() {
-            AppLog.d(this, "getService()");
             return AbsService.this;
         }
     }
@@ -131,7 +123,6 @@ public abstract class AbsService  extends Service {
         allcreations++;
         creations++;
 
-        AppLog.d(this, "onCreate() " + creations);
 
         startTime=System.currentTimeMillis();
     }
@@ -144,14 +135,12 @@ public abstract class AbsService  extends Service {
         creations--;
         allcreations--;
 
-        AppLog.d(this, "onDestroy() " + creations);
         super.onDestroy();
     }    
 
 
     @Override
     public IBinder onBind(Intent intent) {
-        AppLog.d(this, "onBind()");
         return
                 new CommonBinder();
     }
@@ -159,7 +148,6 @@ public abstract class AbsService  extends Service {
 
     @Override
     public boolean onUnbind(Intent intent) {
-        AppLog.d(this, "onUnbind()");
         return false;
     }
 

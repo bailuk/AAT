@@ -57,7 +57,6 @@ public class AverageAltitude {
         double alt = t_altitude;
 
         if (samples > 0) {
-            AppLog.d(this, "ta: " + alt + ", s: " + samples + ", a: " + alt/samples);
             return (float) (alt / samples);
         } else {
             return 0f;

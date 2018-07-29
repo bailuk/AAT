@@ -97,7 +97,6 @@ public class LocationMenu extends AbsMenu{
         final Intent intent = new Intent(Intent.ACTION_VIEW);
         final LatLong center = getCenter();
         final Uri uri = Uri.parse(Coordinates.geoPointToGeoUri(center));
-        AppLog.d(this, uri.toString());
 
         intent.setData(uri);
         context.startActivity(Intent.createChooser(intent, uri.toString()));
