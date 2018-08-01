@@ -25,8 +25,6 @@ import ch.bailu.aat.views.preferences.VerticalScrollView;
 
 public class MainActivity extends AbsDispatcher {
 
-
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,17 +34,26 @@ public class MainActivity extends AbsDispatcher {
     }
 
 
-
     private void createViews() {
 
         ContentView contentView = new ContentView(this);
 
         contentView.add(createButtonBar());
-        contentView.add(createActionList());
+        contentView.addW(createActionList());
 
+
+        contentView.add(createExtraButton());
         setContentView(contentView);
     }
 
+
+    private View createExtraButton() {
+        LinearLayout layout = new LinearLayout(this);
+        layout.setOrientation(LinearLayout.VERTICAL);
+        layout.addView(new DocumentationLabel(ActivitySwitcher.ABOUT));
+        layout.setBackgroundColor(AppTheme.getAltBackgroundColor());
+        return layout;
+    }
 
     private View createActionList() {
 
@@ -246,6 +253,7 @@ public class MainActivity extends AbsDispatcher {
         public DocumentationLabel(ActivitySwitcher.Entry s) {
             super(s);
             setTextColor(AppTheme.getHighlightColor3());
+
             setText(getString(R.string.intro_about)
                     + " / " + getString(R.string.intro_uiguide)
                     + " / " + getString(R.string.intro_readme));
@@ -253,5 +261,4 @@ public class MainActivity extends AbsDispatcher {
 
 
     }
-
 }

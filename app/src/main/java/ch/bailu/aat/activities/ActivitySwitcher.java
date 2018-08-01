@@ -21,6 +21,8 @@ public class ActivitySwitcher {
     private final static int PHONE_CYCLABLE = 3;
     private final static int TABLET_CYCLABLE = 2;
 
+    public final static Entry ABOUT = new Entry(
+            ToDo.translate("Documentation"), AboutActivity.class);
 
     private static ArrayList<Entry> entries = null;
     private static int cyclable = 0;
@@ -100,16 +102,15 @@ public class ActivitySwitcher {
         entries.add(new Entry(c.getString(R.string.intro_list), TrackListActivity.class));
         entries.add(new Entry(c.getString(R.string.intro_overlay_list), OverlayListActivity.class));
         entries.add(new Entry(c.getString(R.string.intro_external_list), ExternalListActivity.class));
-        entries.add(new Entry(ToDo.translate("Documentation"), AboutActivity.class));
-        //entries.add(new Entry(c.getString(R.string.intro_about) + " / " + c.getString(R.string.intro_readme), AboutActivity.class));
-        //entries.add(new Entry(c.getString(R.string.intro_nominatim),
-        //        c.getString(R.string.tt_info_nominatim),
-        //        NominatimActivity.class));
-        //entries.add(new Entry(c.getString(R.string.intro_settings), PreferencesActivity.class));
+
+        entries.add(new Entry(c.getString(R.string.intro_nominatim),
+                c.getString(R.string.tt_info_nominatim),
+                NominatimActivity.class));
+        entries.add(new Entry(c.getString(R.string.intro_settings), PreferencesActivity.class));
 
 
-        //if (BuildConfig.DEBUG)
-        //    entries.add(new Entry(c.getString(R.string.intro_test), TestActivity.class));
+        if (BuildConfig.DEBUG)
+            entries.add(new Entry(c.getString(R.string.intro_test), TestActivity.class));
 
     }
     public int size() {
@@ -166,6 +167,7 @@ public class ActivitySwitcher {
         intent.setAction(activityClass.getName());
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         context.startActivity(intent);
+
     }
 
 

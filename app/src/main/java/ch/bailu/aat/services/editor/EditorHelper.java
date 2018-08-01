@@ -82,6 +82,5 @@ public class EditorHelper {
         if (e.isModified()) { 
             e.save();
         }
-
     }
 }

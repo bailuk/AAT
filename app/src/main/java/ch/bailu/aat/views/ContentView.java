@@ -46,6 +46,14 @@ public class ContentView extends FrameLayout{
     }
 
 
+    public void addW(View v) {
+        add(v);
+
+        LinearLayout.LayoutParams l = (LinearLayout.LayoutParams) v.getLayoutParams();
+        l.weight = 1;
+        v.setLayoutParams(l);
+    }
+
     @Override
     public void onAttachedToWindow() {
         super.onAttachedToWindow();

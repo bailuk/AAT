@@ -47,6 +47,7 @@ public abstract class AbsActivity extends Activity {
         logger.close();
         logger=null;
         super.onPause();
+
     }
 
     @Override
@@ -75,4 +76,6 @@ public abstract class AbsActivity extends Activity {
         builder.append("</p>");
 
     }
+
+
 }

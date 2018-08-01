@@ -40,6 +40,7 @@ public class AboutActivity extends AbsDispatcher {
         final MainControlBar bar = new MainControlBar(this);
 
         bar.addAll(mv);
+
         return bar;
     }
 

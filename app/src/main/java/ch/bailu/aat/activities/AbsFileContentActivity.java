@@ -32,7 +32,7 @@ import ch.bailu.util_java.util.Objects;
 public abstract class AbsFileContentActivity extends AbsDispatcher implements OnClickListener {
 
     protected IteratorSource  currentFile;
-    protected MyImageButton nextFile, previousFile;//, fileOperation;
+    protected MyImageButton nextFile, previousFile;
     protected PreviewView fileOperation;
 
     private BusyViewControlIID busyControl;
@@ -147,6 +147,4 @@ public abstract class AbsFileContentActivity extends AbsDispatcher implements On
         }
 
     }
-
-
 }
