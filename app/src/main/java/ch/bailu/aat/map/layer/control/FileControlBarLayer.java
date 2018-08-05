@@ -79,7 +79,7 @@ public class FileControlBarLayer extends ControlBarLayer {
         ToolTip.set(reloadPreview, R.string.file_reload);
         ToolTip.set(delete, R.string.file_delete);
 
-        acontext.addTarget(selector, InfoID.LIST_SUMMARY);
+        acontext.addTargets(selector, InfoID.LIST_SUMMARY);
     }
 
     public void setIterator(Iterator i) {
@@ -97,13 +97,10 @@ public class FileControlBarLayer extends ControlBarLayer {
     }
 
 
-    private class Selector extends NodeViewLayer {
+    private class Selector extends AbsNodeViewLayer {
         public Selector(MapContext mc) {
             super(mc);
         }
-
-        final HtmlBuilderGpx builder = new HtmlBuilderGpx(acontext);
-
 
         final ContentDescription summaryData[] = {
 
@@ -118,6 +115,8 @@ public class FileControlBarLayer extends ControlBarLayer {
 
         @Override
         public void setSelectedNode(int IID, GpxInformation info, GpxPointNode node, int i) {
+            super.setSelectedNode(IID, info, node, i);
+
             new SolidDirectoryQuery(acontext).getPosition().setValue(i);
 
             iterator.moveToPosition(i);
@@ -126,22 +125,20 @@ public class FileControlBarLayer extends ControlBarLayer {
 
             preview.setFilePath(selectedFile);
 
-            builder.clear();
-            builder.appendHeader(iterator.getInfo().getFile().getName());
+            html.appendHeader(iterator.getInfo().getFile().getName());
             for (ContentDescription d: summaryData) {
                 d.onContentUpdated(iterator.getInfoID(), iterator.getInfo());
-                builder.append(d);
-                builder.append("<br>");
+                html.append(d);
+                html.append("<br>");
             }
 
-            setHtmlText(IID, info, builder.toString());
+            setHtmlText(html);
 
         }
 
         @Override
-        public boolean onLongClick(View v) {
+        public void onClick(View v) {
             acontext.displayFile();
-            return true;
         }
 
         @Override
@@ -162,6 +159,11 @@ public class FileControlBarLayer extends ControlBarLayer {
         @Override
         public void onDetached() {
 
+        }
+
+        @Override
+        public boolean onLongClick(View view) {
+            return false;
         }
     }
 

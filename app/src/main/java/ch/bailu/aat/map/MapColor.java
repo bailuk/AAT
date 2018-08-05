@@ -66,7 +66,7 @@ public class MapColor {
             return AppTheme.getHighlightColor2();
 
         if (iid == InfoID.EDITOR_OVERLAY)
-            return AppTheme.getHighlightColor3();
+            return Color.MAGENTA; //AppTheme.getHighlightColor3();
 
 
         if (iid == InfoID.FILEVIEW)

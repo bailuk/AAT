@@ -11,6 +11,7 @@ import ch.bailu.aat.description.MaximumSpeedDescription;
 import ch.bailu.aat.description.PredictiveTimeDescription;
 import ch.bailu.aat.dispatcher.CurrentLocationSource;
 import ch.bailu.aat.dispatcher.EditorSource;
+import ch.bailu.aat.dispatcher.EditorSourceInterface;
 import ch.bailu.aat.dispatcher.OverlaySource;
 import ch.bailu.aat.dispatcher.TrackerSource;
 import ch.bailu.aat.dispatcher.TrackerTimerSource;
@@ -18,11 +19,10 @@ import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.map.MapFactory;
 import ch.bailu.aat.map.MapViewInterface;
 import ch.bailu.aat.map.mapsforge.MapViewLinker;
-import ch.bailu.aat.services.editor.EditorHelper;
 import ch.bailu.aat.util.ui.AppLayout;
+import ch.bailu.aat.views.PercentageLayout;
 import ch.bailu.aat.views.bar.ControlBar;
 import ch.bailu.aat.views.bar.MainControlBar;
-import ch.bailu.aat.views.PercentageLayout;
 import ch.bailu.aat.views.description.CockpitView;
 import ch.bailu.aat.views.graph.GraphViewContainer;
 
@@ -35,14 +35,15 @@ public class CockpitTabletActivity extends AbsDispatcher {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        EditorHelper edit = new EditorHelper(getServiceContext());
+        EditorSource edit = new EditorSource(getServiceContext());
+
         setContentView(createContentView(edit));
         createDispatcher(edit);
 
 
     }
 
-    private View createContentView(EditorHelper edit) {
+    private View createContentView(EditorSourceInterface edit) {
         final MapViewInterface smallMap = MapFactory.DEF(this, SOLID_KEY).split();
         final MapViewInterface bigMap = MapFactory.DEF(this, SOLID_MAP_KEY).map(edit, createButtonBar());
         new MapViewLinker(bigMap, smallMap);
@@ -99,8 +100,8 @@ public class CockpitTabletActivity extends AbsDispatcher {
     }
 
 
-    private void createDispatcher(EditorHelper edit) {
-        addSource(new EditorSource(getServiceContext(),edit));
+    private void createDispatcher(EditorSource edit) {
+        addSource(edit);
         addSource(new TrackerSource(getServiceContext()));
         addSource(new TrackerTimerSource(getServiceContext()));
         addSource(new CurrentLocationSource(getServiceContext()));

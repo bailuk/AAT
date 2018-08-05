@@ -15,7 +15,6 @@ import ch.bailu.aat.dispatcher.OverlaySource;
 import ch.bailu.aat.dispatcher.TrackerSource;
 import ch.bailu.aat.map.MapFactory;
 import ch.bailu.aat.map.MapViewInterface;
-import ch.bailu.aat.services.editor.EditorHelper;
 import ch.bailu.aat.util.AppIntent;
 import ch.bailu.aat.util.ui.AppLayout;
 import ch.bailu.aat.util.ui.AppLog;
@@ -32,7 +31,7 @@ public class MapActivity extends AbsDispatcher{
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        EditorHelper edit = new EditorHelper(getServiceContext());
+        EditorSource edit = new EditorSource(getServiceContext());
 
         ContentView contentView=new ContentView(this);
         MapViewInterface map = createMap(edit);
@@ -80,13 +79,13 @@ public class MapActivity extends AbsDispatcher{
     }
 
 
-    private MapViewInterface createMap(EditorHelper edit) {
+    private MapViewInterface createMap(EditorSource edit) {
         return MapFactory.DEF(this, SOLID_KEY).map(edit, createButtonBar());
     }
 
 
-    private void createDispatcher(EditorHelper edit) {
-        addSource(new EditorSource(getServiceContext(), edit));
+    private void createDispatcher(EditorSource edit) {
+        addSource(edit);
         addSource(new TrackerSource(getServiceContext()));
         addSource(new CurrentLocationSource(getServiceContext()));
         addSource(new OverlaySource(getServiceContext()));

@@ -2,7 +2,6 @@ package ch.bailu.aat.map.layer.control;
 
 import android.content.SharedPreferences;
 import android.view.View;
-import android.widget.ImageButton;
 
 import ch.bailu.aat.R;
 import ch.bailu.aat.activities.ActivitySwitcher;
@@ -24,7 +23,7 @@ public class InformationBarLayer extends ControlBarLayer {
 
     private final MyImageButton menu, overpass, nominatim, location;
 
-    private final NodeViewLayer selector;
+    private final AbsNodeViewLayer selector;
     private final MapContext mcontext;
 
 
@@ -49,7 +48,7 @@ public class InformationBarLayer extends ControlBarLayer {
         nominatim = bar.addImageButton(R.drawable.edit_find);
         location = bar.addImageButton(R.drawable.find_location);
 
-        selector = new AutoNodeViewLayer(cl);
+        selector = new GeneralNodeViewLayer(cl);
 
 
         ToolTip.set(grid,R.string.tt_info_grid);
@@ -58,7 +57,7 @@ public class InformationBarLayer extends ControlBarLayer {
         ToolTip.set(overpass,R.string.tt_info_overpass);
         ToolTip.set(location, R.string.tt_info_location);
 
-        d.addTarget(selector, InfoID.ALL);
+        d.addTargets(selector, InfoID.ALL);
     }
 
 

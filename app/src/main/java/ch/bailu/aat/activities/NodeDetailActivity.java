@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
 
@@ -120,7 +119,7 @@ public class NodeDetailActivity extends AbsDispatcher
     }
 
     private void createDispatcher() {
-        addTarget(this, InfoID.FILEVIEW);
+        addTargets(this, InfoID.FILEVIEW);
         addSource(new CurrentLocationSource(getServiceContext()));
         addSource(new CustomFileSource(getServiceContext(), fileID));
 

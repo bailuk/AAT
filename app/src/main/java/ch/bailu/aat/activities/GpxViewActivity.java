@@ -5,7 +5,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
 import ch.bailu.aat.R;
@@ -22,9 +21,7 @@ import ch.bailu.aat.menus.ContentMenu;
 import ch.bailu.aat.util.fs.FileAction;
 import ch.bailu.aat.util.fs.foc.FocAndroid;
 import ch.bailu.aat.util.ui.AppLayout;
-import ch.bailu.aat.util.ui.AppLog;
 import ch.bailu.aat.util.ui.ToolTip;
-import ch.bailu.aat.views.BusyViewControl;
 import ch.bailu.aat.views.BusyViewControlIID;
 import ch.bailu.aat.views.MyImageButton;
 import ch.bailu.aat.views.ContentView;
@@ -163,8 +160,8 @@ public class GpxViewActivity extends AbsDispatcher
         addSource(new OverlaySource(getServiceContext()));
         addSource(new CustomFileSource(getServiceContext(), fileID));
 
-        addTarget(this, InfoID.FILEVIEW);
-        addTarget(busyControl, InfoID.FILEVIEW);
+        addTargets(this, InfoID.FILEVIEW);
+        addTargets(busyControl, InfoID.FILEVIEW);
     }
 
 

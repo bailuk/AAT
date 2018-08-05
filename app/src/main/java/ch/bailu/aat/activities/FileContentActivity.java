@@ -45,7 +45,7 @@ public class FileContentActivity extends AbsFileContentActivity{
 
     @Override
     protected ViewGroup createLayout(MainControlBar bar) {
-        map = MapFactory.DEF(this, SOLID_KEY).content(editor_helper);
+        map = MapFactory.DEF(this, SOLID_KEY).content(editorSource);
 
         VerticalScrollView summary = new VerticalScrollView(this);
         summary.addAllContent(this, getSummaryData(this), InfoID.FILEVIEW);

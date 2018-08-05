@@ -52,7 +52,15 @@ public class OverlaySource extends ContentSource {
             overlays[i]= new OverlayInformation(i);
     }
 
+    @Override
+    public int getIID() {
+        return InfoID.OVERLAY;
+    }
 
+    @Override
+    public GpxInformation getInfo() {
+        return GpxInformation.NULL;
+    }
 
 
     @Override

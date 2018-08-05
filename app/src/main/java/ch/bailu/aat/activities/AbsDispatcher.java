@@ -32,12 +32,12 @@ public abstract class AbsDispatcher extends AbsServiceLink
     }
 
     public void addTarget(OnContentUpdatedInterface target) {
-        addTarget(target, InfoID.ALL);
+        addTargets(target, InfoID.ALL);
     }
 
     @Override
-    public void addTarget(OnContentUpdatedInterface target, int iid) {
-        dispatcher.addTarget(target, iid);
+    public void addTargets(OnContentUpdatedInterface target, int... iid) {
+        dispatcher.addTargets(target, iid);
     }
 
 

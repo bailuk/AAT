@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
+import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.services.ServiceContext;
@@ -43,6 +44,15 @@ public class TrackerSource extends ContentSource {
         AppBroadcaster.register(scontext.getContext(), onTrackChanged, AppBroadcaster.TRACKER);
     }
 
-    
+    @Override
+    public int getIID() {
+        return InfoID.TRACKER;
+    }
+
+    @Override
+    public GpxInformation getInfo() {
+        return scontext.getTrackerService().getLoggerInformation();
+    }
+
 
 }

@@ -34,7 +34,7 @@ public class CockpitActivity extends AbsDispatcher{
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        EditorHelper edit = new EditorHelper(getServiceContext());
+        EditorSource edit = new EditorSource(getServiceContext());
         ContentView contentView = new ContentView(this);
         MultiView multiView = createMultiView(edit);
 
@@ -46,7 +46,7 @@ public class CockpitActivity extends AbsDispatcher{
     }
 
 
-    private MultiView createMultiView(EditorHelper edit) {
+    private MultiView createMultiView(EditorSource edit) {
         MultiView multiView = new MultiView(this, SOLID_KEY);
         multiView.add(createCockpit());
         multiView.add(MapFactory.DEF(this, SOLID_KEY).tracker(edit).toView());
@@ -85,8 +85,8 @@ public class CockpitActivity extends AbsDispatcher{
     }
 
 
-    private void createDispatcher(EditorHelper edit) {
-        addSource(new EditorSource(getServiceContext(), edit));
+    private void createDispatcher(EditorSource edit) {
+        addSource(edit);
         addSource(new TrackerSource(getServiceContext()));
         addSource(new TrackerTimerSource(getServiceContext()));
         addSource(new CurrentLocationSource(getServiceContext()));

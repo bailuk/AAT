@@ -3,6 +3,7 @@ package ch.bailu.aat.map;
 import ch.bailu.aat.activities.AbsDispatcher;
 import ch.bailu.aat.activities.AbsGpxListActivity;
 import ch.bailu.aat.dispatcher.DispatcherInterface;
+import ch.bailu.aat.dispatcher.EditorSourceInterface;
 import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.map.layer.CurrentLocationLayer;
 import ch.bailu.aat.map.layer.control.CustomBarLayer;
@@ -60,14 +61,15 @@ public class MapFactory {
         return m;
     }
 
-    public MapViewInterface tracker(EditorHelper e) {
+    public MapViewInterface tracker(EditorSourceInterface e) {
         return tracker(e, InfoID.EDITOR_DRAFT);
     }
 
-    private MapViewInterface tracker(EditorHelper e, int iid) {
+    private MapViewInterface tracker(EditorSourceInterface e, int iid) {
         base(4);
         m.add(new GpxOverlayListLayer(mc,d));
         m.add(new EditorLayer(mc, d, iid, e));
+        m.add(new GpxDynLayer(mc, d, InfoID.FILEVIEW));
         m.add(new GpxDynLayer(mc, d, InfoID.TRACKER));
         m.add(new GridDynLayer(mc));
         m.add(new InformationBarLayer(mc, d));
@@ -76,7 +78,7 @@ public class MapFactory {
     }
 
 
-    public MapViewInterface map(EditorHelper e, ControlBar b) {
+    public MapViewInterface map(EditorSourceInterface e, ControlBar b) {
         tracker(e);
 
         m.add(new CustomBarLayer(mc, b));
@@ -96,18 +98,15 @@ public class MapFactory {
     }
 
 
-    public MapViewInterface editor(EditorHelper e) {
+    public MapViewInterface editor(EditorSourceInterface e) {
         return tracker(e, InfoID.EDITOR_OVERLAY);
     }
 
 
-    public MapViewInterface content(EditorHelper e) {
-        tracker(e);
-
-        m.add(new GpxDynLayer(mc, d, InfoID.FILEVIEW));
-
-        return m;
+    public MapViewInterface content(EditorSourceInterface e) {
+        return editor(e);
     }
+
 
     public MapViewInterface node() {
         base(4);

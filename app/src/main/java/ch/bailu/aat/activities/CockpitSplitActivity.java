@@ -20,12 +20,11 @@ import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.map.MapFactory;
 import ch.bailu.aat.map.MapViewInterface;
 import ch.bailu.aat.map.mapsforge.MapViewLinker;
-import ch.bailu.aat.services.editor.EditorHelper;
 import ch.bailu.aat.util.ui.AppLayout;
 import ch.bailu.aat.views.ContentView;
+import ch.bailu.aat.views.PercentageLayout;
 import ch.bailu.aat.views.bar.ControlBar;
 import ch.bailu.aat.views.bar.MainControlBar;
-import ch.bailu.aat.views.PercentageLayout;
 import ch.bailu.aat.views.description.CockpitView;
 import ch.bailu.aat.views.description.MultiView;
 import ch.bailu.aat.views.graph.DistanceAltitudeGraphView;
@@ -40,14 +39,14 @@ public class CockpitSplitActivity extends AbsDispatcher{
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        EditorHelper edit = new EditorHelper(getServiceContext());
+        EditorSource edit = new EditorSource(getServiceContext());
         setContentView(createContentView(edit));
         createDispatcher(edit);
 
     }
 
 
-    private View createContentView(EditorHelper edit) {
+    private View createContentView(EditorSource edit) {
         final MapViewInterface mapSlave = MapFactory.DEF(this, SOLID_KEY).split();
         final CockpitView cockpitA = new CockpitView(this);
         final CockpitView cockpitB = new CockpitView(this);
@@ -110,8 +109,8 @@ public class CockpitSplitActivity extends AbsDispatcher{
     }
 
 
-    private void createDispatcher(EditorHelper edit) {
-        addSource(new EditorSource(getServiceContext(),edit));
+    private void createDispatcher(EditorSource edit) {
+        addSource(edit);
         addSource(new TrackerSource(getServiceContext()));
         addSource(new TrackerTimerSource(getServiceContext()));
         addSource(new CurrentLocationSource(getServiceContext()));

@@ -34,7 +34,7 @@ public class MapPositionLayer implements MapLayerInterface, OnContentUpdatedInte
         slock = new SolidPositionLock(mcontext.getContext(), mcontext.getSolidKey());
 
         loadState();
-        d.addTarget(this, InfoID.LOCATION);
+        d.addTargets(this, InfoID.LOCATION);
     }
 
 

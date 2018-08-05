@@ -19,7 +19,12 @@ public class Dispatcher implements DispatcherInterface, OnContentUpdatedInterfac
     private OnContentUpdatedInterface updater = OFF;
 
     @Override
-    public void addTarget(OnContentUpdatedInterface t, int iid) {
+    public void addTargets(OnContentUpdatedInterface t, int... iid) {
+        for (int i: iid) addSingleTarget(t, i);
+    }
+
+
+    private void addSingleTarget(OnContentUpdatedInterface t, int iid) {
         TargetList target = targets.get(iid);
 
         if (target == null) {
@@ -29,7 +34,6 @@ public class Dispatcher implements DispatcherInterface, OnContentUpdatedInterfac
 
         target.add(t);
     }
-
 
     @Override
     public void addSource(ContentSource s) {

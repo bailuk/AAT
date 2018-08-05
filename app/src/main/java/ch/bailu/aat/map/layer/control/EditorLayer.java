@@ -7,8 +7,8 @@ import org.mapsforge.core.model.LatLong;
 
 import ch.bailu.aat.R;
 import ch.bailu.aat.dispatcher.DispatcherInterface;
+import ch.bailu.aat.dispatcher.EditorSourceInterface;
 import ch.bailu.aat.gpx.GpxPoint;
-import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.map.MapContext;
 import ch.bailu.aat.map.layer.gpx.GpxDynLayer;
 import ch.bailu.aat.services.ServiceContext;
@@ -31,10 +31,10 @@ public class EditorLayer extends ControlBarLayer {
     private final GpxDynLayer content;
 
 
-    private final EditorHelper edit;
+    private final EditorSourceInterface edit;
 
     public EditorLayer(MapContext mc, DispatcherInterface d,
-                       int iid, EditorHelper e) {
+                       int iid, EditorSourceInterface e) {
         super(mc, new ControlBar(
                 mc.getContext(),
                 getOrientation(LEFT)), LEFT);
@@ -80,8 +80,8 @@ public class EditorLayer extends ControlBarLayer {
         saveAs = bar.addImageButton(R.drawable.document_save_as);
         ToolTip.set(saveAs, R.string.tt_edit_save_as);
 
-        d.addTarget(selector, iid);
-        d.addTarget(content, iid);
+        d.addTargets(selector, iid);
+        d.addTargets(content, iid);
     }
 
     @Override

@@ -19,7 +19,6 @@ public class EditorHelper {
     private String vid;
 
 
-
     public EditorHelper(ServiceContext sc) {
         scontext = sc;
 
@@ -82,5 +81,9 @@ public class EditorHelper {
         if (e.isModified()) { 
             e.save();
         }
+    }
+
+    public Foc getFile() {
+        return file;
     }
 }

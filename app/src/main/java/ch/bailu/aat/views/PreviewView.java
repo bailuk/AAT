@@ -37,7 +37,7 @@ public class PreviewView extends ImageObjectView implements OnContentUpdatedInte
 
     @Override
     public void onContentUpdated(int iid, GpxInformation info) {
-        setFilePath(info.getFile());
+         setFilePath(info.getFile());
     }
 
 }

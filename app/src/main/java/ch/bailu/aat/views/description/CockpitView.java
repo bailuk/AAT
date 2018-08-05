@@ -41,7 +41,7 @@ public class CockpitView extends ViewGroup {
         final NumberView v = new ColorNumberView(de);
 
         addView(v);
-        di.addTarget(v, iid);
+        di.addTargets(v, iid);
     }
 
 
@@ -49,7 +49,7 @@ public class CockpitView extends ViewGroup {
         final NumberView v = new NumberView(de);
 
         addView(v);
-        di.addTarget(v, iid);
+        di.addTargets(v, iid);
     }
 
 

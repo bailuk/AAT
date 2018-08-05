@@ -2,7 +2,6 @@ package ch.bailu.aat.views.bar;
 
 import android.app.Activity;
 import android.view.View;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
 import ch.bailu.aat.R;
@@ -101,7 +100,7 @@ public class MainControlBar extends ControlBar {
     public MainControlBar addGpsState(AbsDispatcher acontext) {
         GPSStateButton gps = new GPSStateButton(acontext);
         add(gps);
-        acontext.addTarget(gps, InfoID.LOCATION);
+        acontext.addTargets(gps, InfoID.LOCATION);
 
         return this;
     }
@@ -109,7 +108,7 @@ public class MainControlBar extends ControlBar {
     public MainControlBar addTrackerState(AbsDispatcher acontext) {
         TrackerStateButton ts = new TrackerStateButton(acontext.getServiceContext());
         add(ts);
-        acontext.addTarget(ts, InfoID.TRACKER);
+        acontext.addTargets(ts, InfoID.TRACKER);
 
         return this;
     }

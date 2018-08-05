@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -86,7 +85,7 @@ public abstract class AbsOsmApiActivity extends AbsDispatcher implements OnClick
         setContentView(createContentView());
 
         addSource(new CustomFileSource(getServiceContext(),osmApi.getResultFile().getPath()));
-        addTarget(list, InfoID.FILEVIEW);
+        addTargets(list, InfoID.FILEVIEW);
 
         setQueryTextFromIntent();
 

@@ -44,13 +44,21 @@ public class NodeInfoView extends PercentageLayout {
 
 
     @Override
+    public void setOnClickListener(OnClickListener l) {
+        htmlView.setClickable(true);
+        htmlView.setOnClickListener(l);
+        super.setOnClickListener(l);
+    }
+
+    @Override
     public void setOnLongClickListener(OnLongClickListener l) {
         htmlView.getTextView().setOnLongClickListener(l);
         super.setOnLongClickListener(l);
     }
 
 
-    public void setHtmlText(int IID, GpxInformation info, String htmlText) {
+
+    public void setBackgroundColorFromIID(int IID) {
         int newBackgroundColor = MapColor.getColorFromIID(IID);
 
         if (backgroundColor != newBackgroundColor) {
@@ -58,21 +66,19 @@ public class NodeInfoView extends PercentageLayout {
             htmlView.setBackgroundColor(toBackgroundColorLight(backgroundColor));
             graphView.setBackgroundColor(toBackgroundColorDark(backgroundColor));
         }
+    }
 
+    public void setHtmlText(String htmlText) {
         htmlView.setHtmlText(htmlText);
     }
 
     private int toBackgroundColorLight(int color) {
-        //color = MapColor.setSaturation(color, 0.15f);
-        //color = MapColor.setAlpha(color, MapColor.ALPHA_LOW);
         return MapColor.toLightTransparent(color);
 
     }
 
 
     private int toBackgroundColorDark(int color) {
-        //color = MapColor.setValue(color, 0.15f);
-        //color = MapColor.setAlpha(color, MapColor.ALPHA_LOW);
         return MapColor.toDarkTransparent(color);
     }
 

@@ -18,6 +18,7 @@ import ch.bailu.aat.services.directory.IteratorFollowFile;
 import ch.bailu.aat.services.directory.IteratorSummary;
 import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.util.AppIntent;
+import ch.bailu.aat.util.ui.AppLog;
 
 public abstract class IteratorSource extends ContentSource implements OnCursorChangedListener {
 
@@ -49,6 +50,13 @@ public abstract class IteratorSource extends ContentSource implements OnCursorCh
 
 
 
+
+    @Override
+    public int getIID() {
+        return iterator.getInfoID();
+    }
+
+
     @Override
     public void onPause() {
         iterator.close();
@@ -66,6 +74,7 @@ public abstract class IteratorSource extends ContentSource implements OnCursorCh
 
     public abstract Iterator factoryIterator(ServiceContext scontext);
 
+    @Override
     public GpxInformation getInfo() {
         return iterator.getInfo();
     }
@@ -118,6 +127,7 @@ public abstract class IteratorSource extends ContentSource implements OnCursorCh
 
         @Override
         public void onPause() {
+            AppLog.d(this, "unregister");
             context.unregisterReceiver(onChangedInCache);
 
             handle.free();
@@ -128,6 +138,7 @@ public abstract class IteratorSource extends ContentSource implements OnCursorCh
 
         @Override
         public void onResume() {
+            AppLog.d(this, "register");
             AppBroadcaster.register(context, onChangedInCache, AppBroadcaster.FILE_CHANGED_INCACHE);
             super.onResume();
         }

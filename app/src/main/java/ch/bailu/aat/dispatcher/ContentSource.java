@@ -19,4 +19,6 @@ public abstract class ContentSource  {
     public abstract void onPause();
     public abstract void onResume();
 
+    public abstract int getIID();
+    public abstract GpxInformation getInfo();
 }

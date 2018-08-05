@@ -8,7 +8,7 @@ import android.widget.LinearLayout;
 
 import ch.bailu.aat.R;
 import ch.bailu.aat.dispatcher.CurrentLocationSource;
-import ch.bailu.aat.dispatcher.EditorSource;
+import ch.bailu.aat.dispatcher.EditorOrBackupSource;
 import ch.bailu.aat.dispatcher.IteratorSource;
 import ch.bailu.aat.dispatcher.OnContentUpdatedInterface;
 import ch.bailu.aat.dispatcher.OverlaySource;
@@ -17,11 +17,10 @@ import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.map.MapViewInterface;
 import ch.bailu.aat.menus.FileMenu;
-import ch.bailu.aat.services.editor.EditorHelper;
+import ch.bailu.aat.util.ui.AppDialog;
 import ch.bailu.aat.util.ui.AppLog;
 import ch.bailu.aat.util.ui.ToolTip;
 import ch.bailu.aat.views.BusyViewContainer;
-import ch.bailu.aat.views.BusyViewControl;
 import ch.bailu.aat.views.BusyViewControlIID;
 import ch.bailu.aat.views.ContentView;
 import ch.bailu.aat.views.MyImageButton;
@@ -31,7 +30,7 @@ import ch.bailu.util_java.util.Objects;
 
 public abstract class AbsFileContentActivity extends AbsDispatcher implements OnClickListener {
 
-    protected IteratorSource  currentFile;
+    private IteratorSource  currentFile;
     protected MyImageButton nextFile, previousFile;
     protected PreviewView fileOperation;
 
@@ -39,8 +38,7 @@ public abstract class AbsFileContentActivity extends AbsDispatcher implements On
     protected MapViewInterface map;
 
 
-    protected EditorHelper editor_helper = null;
-    protected EditorSource editor_source= null;
+    protected EditorOrBackupSource editorSource = null;
 
     private String currentFileID;
 
@@ -48,7 +46,8 @@ public abstract class AbsFileContentActivity extends AbsDispatcher implements On
 
         super.onCreate(savedInstanceState);
 
-        editor_helper = new EditorHelper(getServiceContext());
+        currentFile = new IteratorSource.FollowFile(getServiceContext());
+        editorSource = new EditorOrBackupSource(getServiceContext(), currentFile);
 
         createViews();
         createDispatcher();
@@ -104,21 +103,19 @@ public abstract class AbsFileContentActivity extends AbsDispatcher implements On
 
 
     private void createDispatcher() {
-        currentFile = new IteratorSource.FollowFile(getServiceContext());
-        editor_source = new EditorSource(getServiceContext(), editor_helper);
+
 
         addSource(new TrackerSource(getServiceContext()));
         addSource(new CurrentLocationSource(getServiceContext()));
         addSource(new OverlaySource(getServiceContext()));
 
-        addSource(editor_source);
+        addSource(editorSource);
 
-        addSource(currentFile);
-        addTarget(busyControl, InfoID.FILEVIEW);
-        addTarget(fileOperation, InfoID.FILEVIEW);
+        addTargets(busyControl, InfoID.FILEVIEW);
+        addTargets(fileOperation, InfoID.FILEVIEW);
 
 
-        addTarget(new OnContentUpdatedInterface() {
+        addTargets(new OnContentUpdatedInterface() {
             @Override
             public void onContentUpdated(int iid, GpxInformation info) {
                 String newFileID = info.getFile().getPath();
@@ -133,18 +130,93 @@ public abstract class AbsFileContentActivity extends AbsDispatcher implements On
 
     }
 
+
+
     @Override
-    public void onClick(View v) {
+    public void onClick(final View v) {
 
-        if (v == previousFile) {
-            currentFile.moveToPrevious();
-
-        } else if (v ==nextFile) {
-            currentFile.moveToNext();
-
+        if (v == previousFile || v ==nextFile) {
+            changeFileAsk(v);
         } else if (v == fileOperation) {
             new FileMenu(this, currentFile.getInfo().getFile()).showAsPopup(this, v);
         }
 
+    }
+
+
+
+    private void changeFileAsk(View v) {
+        if (editorSource.isModified()) {
+            new AppDialog() {
+                @Override
+                protected void onPositiveClick() {
+                    editorSource.releaseEditorSave();
+                    changeFile(v);
+                }
+
+                @Override
+                public void onNeutralClick() {
+                    editorSource.releaseEditorDiscard();
+                    changeFile(v);
+                }
+
+
+            }.displaySaveDiscardDialog(this, editorSource.getFile().getName());
+        } else {
+            changeFile(v);
+        }
+
+    }
+
+
+
+    private void changeFile(View v) {
+
+        if (v == previousFile) {
+            editorSource.releaseEditorDiscard();
+            currentFile.moveToPrevious();
+
+        } else if (v ==nextFile) {
+            editorSource.releaseEditorDiscard();
+            currentFile.moveToNext();
+
+        }
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        try {
+            if (editorSource.isModified()) {
+                new AppDialog() {
+                    @Override
+                    protected void onPositiveClick() {
+
+                        editorSource.releaseEditorSave();
+                        closeActivity();
+                    }
+
+                    @Override
+                    public void onNeutralClick() {
+                        editorSource.releaseEditorDiscard();
+                        closeActivity();
+                    }
+
+
+                }.displaySaveDiscardDialog(this, editorSource.getFile().getName());
+            } else {
+                closeActivity();
+            }
+
+        } catch (Exception e) {
+            AppLog.e(AbsFileContentActivity.this, e);
+            closeActivity();
+        }
+
+    }
+
+
+    private void closeActivity() {
+        super.onBackPressed();
     }
 }

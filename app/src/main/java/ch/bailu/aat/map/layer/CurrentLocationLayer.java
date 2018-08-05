@@ -40,7 +40,7 @@ public class CurrentLocationLayer implements OnContentUpdatedInterface, MapLayer
 
         //paint.setAntiAlias(true);
 
-        d.addTarget(this, InfoID.LOCATION);
+        d.addTargets(this, InfoID.LOCATION);
     }
 
 

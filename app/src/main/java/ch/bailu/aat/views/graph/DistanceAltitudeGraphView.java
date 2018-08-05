@@ -16,7 +16,7 @@ import ch.bailu.aat.util.ui.AppDensity;
 public class DistanceAltitudeGraphView extends AbsGraphView {
 
 
-    public DistanceAltitudeGraphView(Context context, DispatcherInterface di, int iid) {
+    public DistanceAltitudeGraphView(Context context, DispatcherInterface di, int... iid) {
         super(context, di, iid);
     }
 

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 
 import ch.bailu.aat.gpx.GpxFileWrapper;
+import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.services.InsideContext;
 import ch.bailu.aat.util.AppBroadcaster;
@@ -67,5 +68,15 @@ public class CustomFileSource extends ContentSource {
     public void onResume() {
         AppBroadcaster.register(scontext.getContext(), onChangedInCache,
                 AppBroadcaster.FILE_CHANGED_INCACHE);
+    }
+
+    @Override
+    public int getIID() {
+        return InfoID.FILEVIEW;
+    }
+
+    @Override
+    public GpxInformation getInfo() {
+        return GpxInformation.NULL;
     }
 }

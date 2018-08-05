@@ -4,37 +4,45 @@ import android.content.Context;
 import android.view.View;
 
 import ch.bailu.aat.gpx.GpxInformation;
+import ch.bailu.aat.gpx.GpxPointNode;
 import ch.bailu.aat.map.MapContext;
+import ch.bailu.aat.util.HtmlBuilder;
+import ch.bailu.aat.util.HtmlBuilderGpx;
 import ch.bailu.aat.util.ui.AppLayout;
 
-public abstract class NodeViewLayer extends NodeSelectorLayer implements View.OnLongClickListener {
+public abstract class AbsNodeViewLayer extends NodeSelectorLayer implements
+        View.OnLongClickListener, View.OnClickListener {
 
     private final NodeInfoView infoView;
+    protected final HtmlBuilderGpx html;
+
     private final MapContext mcontext;
 
     private final Position pos;
 
 
-    public NodeViewLayer(MapContext cl) {
-        super(cl);
-        mcontext = cl;
+    public AbsNodeViewLayer(MapContext mc) {
+        super(mc);
+        mcontext = mc;
 
-        pos = new Position(cl.getContext());
+        pos = new Position(mc.getContext());
 
-        infoView = new NodeInfoView(cl.getContext());
+        html = new HtmlBuilderGpx(mc.getContext());
+
+        infoView = new NodeInfoView(mc.getContext());
         infoView.setOnLongClickListener(this);
+        infoView.setOnClickListener(this);
+
         infoView.setVisibility(View.GONE);
 
-        cl.getMapView().addView(infoView);
+        mc.getMapView().addView(infoView);
 
     }
 
-    public void drawForeground(MapContext cl) {
-        super.drawForeground(cl);
-
-        pos.setSize(cl.getMetrics().getWidth(), cl.getMetrics().getHeight());
-
-
+    @Override
+    public void setSelectedNode(int IID, GpxInformation info, GpxPointNode node, int i) {
+        infoView.setBackgroundColorFromIID(IID);
+        setGraph(info, i);
     }
 
 
@@ -42,16 +50,20 @@ public abstract class NodeViewLayer extends NodeSelectorLayer implements View.On
         infoView.setGraph(info, index);
         measure();
         layout();
-        //infoView.invalidate();
-
     }
 
-    public void setHtmlText(int IID, GpxInformation info, String text) {
-        infoView.setHtmlText(IID, info, text);
+
+    public void setBackgroundColorFromIID(int IID) {
+        infoView.setBackgroundColorFromIID(IID);
+    }
+
+    public void setHtmlText(HtmlBuilder html) {
+        infoView.setHtmlText(html.toString());
+        html.clear();
         measure();
         layout();
-        //infoView.invalidate();
     }
+
 
     public void showAtLeft() {
         pos.toLeft();
@@ -83,8 +95,8 @@ public abstract class NodeViewLayer extends NodeSelectorLayer implements View.On
     @Override
     public void onLayout(boolean changed, int l, int t, int r, int b) {
         pos.setSize(r-l, b-t);
-
     }
+
     private void layout() {
         infoView.layout(
                 pos.x(),

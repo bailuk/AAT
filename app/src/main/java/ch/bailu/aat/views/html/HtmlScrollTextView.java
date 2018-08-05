@@ -44,4 +44,10 @@ public class HtmlScrollTextView extends VerticalScrollView {
     public HtmlTextView getTextView() {
         return textView;
     }
+
+    @Override
+    public void setOnClickListener(OnClickListener l) {
+        textView.setOnClickListener(l);
+        super.setOnClickListener(l);
+    }
 }

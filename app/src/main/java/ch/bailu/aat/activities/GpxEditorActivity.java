@@ -13,39 +13,29 @@ import ch.bailu.aat.description.DistanceDescription;
 import ch.bailu.aat.description.NameDescription;
 import ch.bailu.aat.description.PathDescription;
 import ch.bailu.aat.description.TrackSizeDescription;
-import ch.bailu.aat.dispatcher.OnContentUpdatedInterface;
-import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.map.MapFactory;
-import ch.bailu.aat.services.editor.EditorInterface;
-import ch.bailu.aat.util.ui.AppDialog;
 import ch.bailu.aat.util.ui.AppLayout;
-import ch.bailu.aat.util.ui.AppLog;
 import ch.bailu.aat.views.bar.MainControlBar;
 import ch.bailu.aat.views.PercentageLayout;
 import ch.bailu.aat.views.description.MultiView;
 import ch.bailu.aat.views.graph.DistanceAltitudeGraphView;
 import ch.bailu.aat.views.preferences.VerticalScrollView;
 
-public class GpxEditorActivity extends AbsFileContentActivity implements OnContentUpdatedInterface {
+public class GpxEditorActivity extends AbsFileContentActivity {
 
     private static final String SOLID_KEY="gpx_editor";
-
-
 
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        addTarget(this, InfoID.FILEVIEW);
     }
-
 
 
     @Override
     protected ViewGroup createLayout(MainControlBar bar) {
-        map = MapFactory.DEF(this, SOLID_KEY).editor(editor_helper);
+        map = MapFactory.DEF(this, SOLID_KEY).editor(editorSource);
 
 
         ContentDescription summaryData[] = {
@@ -59,9 +49,14 @@ public class GpxEditorActivity extends AbsFileContentActivity implements OnConte
 
 
         VerticalScrollView summary = new VerticalScrollView(this);
-        summary.addAllContent(this, summaryData, InfoID.EDITOR_OVERLAY);
+        summary.addAllContent(this, summaryData,
+                InfoID.EDITOR_OVERLAY,
+                InfoID.FILEVIEW);
 
-        DistanceAltitudeGraphView graph = new DistanceAltitudeGraphView(this, this, InfoID.EDITOR_OVERLAY);
+        DistanceAltitudeGraphView graph = new DistanceAltitudeGraphView(this,
+                this,
+                InfoID.EDITOR_OVERLAY,
+                InfoID.FILEVIEW);
 
 
         if (AppLayout.isTablet(this)) {
@@ -71,6 +66,7 @@ public class GpxEditorActivity extends AbsFileContentActivity implements OnConte
         }
 
     }
+
 
     protected ViewGroup createMultiView(MainControlBar bar,
                                    View summary, View graph) {
@@ -119,85 +115,5 @@ public class GpxEditorActivity extends AbsFileContentActivity implements OnConte
 
             return c;
         }
-    }
-
-
-    @Override
-    public void onContentUpdated(int iid, GpxInformation info) {
-        editor_helper.edit(currentFile.getInfo().getFile());
-        editor_source.requestUpdate();
-    }
-
-
-    @Override
-    public void onBackPressed() {
-        try {
-            if (editor_helper.getEditor().isModified()) {
-                new AppDialog() {
-                    @Override
-                    protected void onPositiveClick() {
-
-                        editor_helper.getEditor().save();
-                        closeActivity();
-                    }
-
-                    @Override
-                    public void onNeutralClick() {
-                        editor_helper.getEditor().discard();
-                        closeActivity();
-                    }
-
-
-                }.displaySaveDiscardDialog(this, editor_helper.getInformation().getFile().getName());
-            } else {
-                closeActivity();
-            }
-
-        } catch (Exception e) {
-            AppLog.e(GpxEditorActivity.this, e);
-            closeActivity();
-        }
-
-    }
-
-
-    private void closeActivity() {
-        super.onBackPressed();
-    }
-
-
-    @Override
-    public void onClick(final View v) {
-        final EditorInterface editor = editor_helper.getEditor();
-
-        if (v == previousFile || v ==nextFile) {
-            if (editor.isModified()) {
-                new AppDialog() {
-                    @Override
-                    protected void onPositiveClick() {
-                        editor.save();
-                        GpxEditorActivity.super.onClick(v);
-                    }
-
-                    @Override
-                    public void onNeutralClick() {
-                        editor.discard();
-                        GpxEditorActivity.super.onClick(v);
-                    }
-
-
-                }.displaySaveDiscardDialog(this, editor_helper.getInformation().getFile().getName());
-            } else {
-                super.onClick(v);
-            }
-
-        } else {
-            super.onClick(v);
-        }
-    }
-
-    @Override
-    public void onPointerCaptureChanged(boolean hasCapture) {
-
     }
 }

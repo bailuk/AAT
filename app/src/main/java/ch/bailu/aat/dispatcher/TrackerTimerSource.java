@@ -1,9 +1,10 @@
 package ch.bailu.aat.dispatcher;
 
 
+import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.InfoID;
-import ch.bailu.aat.util.Timer;
 import ch.bailu.aat.services.ServiceContext;
+import ch.bailu.aat.util.Timer;
 
 public class TrackerTimerSource extends ContentSource {
     private static final int INTERVAL=500;
@@ -22,15 +23,6 @@ public class TrackerTimerSource extends ContentSource {
         scontext = sc;
     }
 
-/*
-     private final BroadcastReceiver onTrackChanged = new BroadcastReceiver () {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            requestUpdate();
-        }
-
-    };
-*/
 
 
     @Override
@@ -43,7 +35,6 @@ public class TrackerTimerSource extends ContentSource {
 
     @Override
     public void onPause() {
-  //      scontext.getContext().unregisterReceiver(onTrackChanged);
         timer.cancel();
 
     }
@@ -51,7 +42,17 @@ public class TrackerTimerSource extends ContentSource {
 
     @Override
     public void onResume() {
-    //    AppBroadcaster.register(scontext.getContext(), onTrackChanged, AppBroadcaster.TRACKER);
         timer.kick();
     }
+
+    @Override
+    public int getIID() {
+        return InfoID.TRACKER_TIMER;
+    }
+
+    @Override
+    public GpxInformation getInfo() {
+        return scontext.getTrackerService().getLoggerInformation();
+    }
+
 }

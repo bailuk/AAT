@@ -48,7 +48,7 @@ public class NavigationBarLayer extends ControlBarLayer implements OnContentUpda
         ToolTip.set(buttonFrame,  R.string.tt_map_frame);
         ToolTip.set(lock, R.string.tt_map_home);
 
-        d.addTarget(this, InfoID.ALL);
+        d.addTargets(this, InfoID.ALL);
     }
 
 

@@ -11,48 +11,47 @@ import ch.bailu.aat.map.MapContext;
 import ch.bailu.aat.util.HtmlBuilderGpx;
 import ch.bailu.util_java.foc.Foc;
 
-public class AutoNodeViewLayer extends NodeViewLayer {
+public class GeneralNodeViewLayer extends AbsNodeViewLayer {
 
-    final HtmlBuilderGpx html;
 
     private Foc file = null;
     private int index = 0;
 
     private final MapContext mcontext;
 
-    public AutoNodeViewLayer(MapContext cl) {
+    public GeneralNodeViewLayer(MapContext cl) {
         super(cl);
         mcontext = cl;
+    }
 
-        html = new HtmlBuilderGpx(cl.getContext());
+
+    @Override
+    public boolean onLongClick(View view) {
+        return false;
     }
 
     @Override
-    public boolean onLongClick(View v) {
+    public void onClick(View v) {
         if (file != null && file.isFile()) {
 
             NodeDetailActivity.start(mcontext.getContext(), file.getPath(), index);
-            return true;
         }
-        return false;
     }
 
 
     @Override
     public void setSelectedNode(int IID, GpxInformation info, GpxPointNode node, int i) {
+        super.setSelectedNode(IID, info, node, i);
+
         index = i;
         file = info.getFile();
-
-        html.clear();
 
         html.appendInfo(info, index);
         html.appendNode(node, info);
         html.appendAttributes(node.getAttributes());
-
-        setHtmlText(IID, info, html.toString());
-        setGraph(info, i);
-
+        setHtmlText(html);
     }
+
 
 
     @Override
@@ -69,4 +68,6 @@ public class AutoNodeViewLayer extends NodeViewLayer {
     public void onDetached() {
 
     }
+
+
 }

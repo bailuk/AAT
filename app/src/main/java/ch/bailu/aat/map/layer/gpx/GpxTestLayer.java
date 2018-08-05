@@ -31,7 +31,7 @@ public class GpxTestLayer extends GpxLayer {
         segmentPaint = createPaint(Color.BLACK);
         markerPaint = createPaint(Color.DKGRAY);
 
-        d.addTarget(this, iid);
+        d.addTargets(this, iid);
     }
 
     private Paint createPaint(int color) {
