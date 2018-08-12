@@ -1,5 +1,7 @@
 package ch.bailu.aat.gpx;
 
+import android.location.Location;
+
 import org.mapsforge.core.model.LatLong;
 import org.mapsforge.core.util.LatLongUtils;
 
@@ -25,10 +27,17 @@ public class GpxDeltaHelper  {
         return (float) LatLongUtils.sphericalDistance(a, b);
     }
 
-//    public static double getBearing(GpxPointInterface a, GpxPointInterface b) {
-//        GeoPoint p = new GeoPoint(a);
-//        return p.bearingTo(b);
-//    }
+    public static double getBearing(GpxPointInterface a, GpxPointInterface b) {
+        Location la = new Location("");
+        la.setLatitude(a.getLatitude());
+        la.setLongitude(a.getLongitude());
+
+        Location lb = new Location("");
+        lb.setLatitude(b.getLatitude());
+        lb.setLongitude(b.getLongitude());
+
+        return la.bearingTo(lb);
+    }
 
     
     public static float getAcceleration(GpxDeltaPointInterface a, GpxDeltaPointInterface b) {

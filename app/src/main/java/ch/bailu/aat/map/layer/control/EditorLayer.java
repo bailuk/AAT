@@ -11,6 +11,7 @@ import ch.bailu.aat.dispatcher.EditorSourceInterface;
 import ch.bailu.aat.gpx.GpxPoint;
 import ch.bailu.aat.map.MapContext;
 import ch.bailu.aat.map.layer.gpx.GpxDynLayer;
+import ch.bailu.aat.menus.EditorMenu;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.editor.EditorHelper;
 import ch.bailu.aat.services.editor.EditorInterface;
@@ -19,7 +20,7 @@ import ch.bailu.aat.views.bar.ControlBar;
 
 public class EditorLayer extends ControlBarLayer {
 
-    private final View add, remove, up, down,
+    private final View menu, add, remove, up, down,
             save, saveAs, toggle, clear,
             undo, redo;
 
@@ -49,6 +50,8 @@ public class EditorLayer extends ControlBarLayer {
 
 
         ControlBar bar = getBar();
+
+        menu = bar.addImageButton(R.drawable.open_menu);
 
         add = bar.addImageButton(R.drawable.list_add);
         ToolTip.set(add, R.string.tt_edit_add);
@@ -128,6 +131,8 @@ public class EditorLayer extends ControlBarLayer {
         else if (v==clear)   editor.clear();
         else if (v==undo)    editor.undo();
         else if (v==redo)    editor.redo();
+
+        else if (v==menu)    new EditorMenu(scontext.getContext(), editor).showAsPopup(v.getContext(), v);
     }
 
 

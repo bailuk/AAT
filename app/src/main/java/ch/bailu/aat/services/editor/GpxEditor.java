@@ -93,4 +93,8 @@ public class GpxEditor {
         return ring.redo();
     }
 
+
+    public void simplify() {
+        ring.add(ring.get().simplify());
+    }
 }

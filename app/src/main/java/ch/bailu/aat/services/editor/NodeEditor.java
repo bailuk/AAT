@@ -12,6 +12,8 @@ import ch.bailu.aat.gpx.GpxSegmentNode;
 import ch.bailu.aat.gpx.MaxSpeed;
 import ch.bailu.aat.gpx.interfaces.GpxPointInterface;
 import ch.bailu.aat.gpx.interfaces.GpxType;
+import ch.bailu.aat.gpx.tools.SimplifierBearing;
+import ch.bailu.aat.gpx.tools.SimplifierDistance;
 
 public class NodeEditor {
     private final GpxList gpxList;
@@ -40,6 +42,26 @@ public class NodeEditor {
 
     public GpxList getList() {
         return gpxList;
+    }
+
+    public NodeEditor simplify() {
+        SimplifierDistance distance = new SimplifierDistance();
+        distance.walkTrack(gpxList);
+
+        SimplifierBearing bearing = new SimplifierBearing();
+        bearing.walkTrack(distance.getNewList());
+
+        return toEditor(bearing.getNewList());
+    }
+
+
+    private static NodeEditor toEditor(GpxList list) {
+        if (list.getPointList().size()>0) {
+            return new NodeEditor(
+                    (GpxPointNode)list.getPointList().getFirst(), list);
+        } else {
+            return new NodeEditor(list.getDelta().getType());
+        }
     }
 
     public NodeEditor unlink() {
@@ -170,7 +192,7 @@ public class NodeEditor {
             }
 
             if (point == node) {
-                newList.appendToCurrentSegment(new GpxPoint(newPoint), 
+                newList.appendToCurrentSegment(new GpxPoint(newPoint),
                         GpxAttributesStatic.NULL_ATTRIBUTES);
                 newNode = insertNewPoint();
             }
@@ -178,7 +200,7 @@ public class NodeEditor {
 
         public NodeEditor getNewNode() {
             if (newList.getPointList().size() == 0) {
-                newList.appendToCurrentSegment(new GpxPoint(newPoint), 
+                newList.appendToCurrentSegment(new GpxPoint(newPoint),
                         GpxAttributesStatic.NULL_ATTRIBUTES);
                 newNode = insertNewPoint();
             }

@@ -2,6 +2,7 @@ package ch.bailu.aat.services.editor;
 
 import ch.bailu.aat.gpx.GpxPoint;
 import ch.bailu.aat.gpx.GpxPointNode;
+import ch.bailu.util_java.foc.Foc;
 
 public interface EditorInterface {
     EditorInterface NULL = new EditorInterface() {
@@ -51,6 +52,26 @@ public interface EditorInterface {
 
         @Override
         public void discard() {}
+
+        @Override
+        public void inverse() {
+
+        }
+
+        @Override
+        public void attach(Foc file) {
+
+        }
+
+        @Override
+        public void fix() {
+
+        }
+
+        @Override
+        public void simplify() {
+
+        }
     };
     void save();
     void toggle();
@@ -68,4 +89,12 @@ public interface EditorInterface {
     void redo();
     void undo();
     void discard();
+
+    void inverse();
+
+    void attach(Foc file);
+
+    void fix();
+
+    void simplify();
 }

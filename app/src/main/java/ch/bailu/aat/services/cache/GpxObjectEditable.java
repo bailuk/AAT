@@ -190,8 +190,29 @@ public class GpxObjectEditable extends  GpxObject {
         public void discard() {
             loadIntoEditor(currentHandle.getGpxList());
         }
-        
-        
+
+        @Override
+        public void inverse() {
+
+        }
+
+        @Override
+        public void attach(Foc file) {
+
+        }
+
+        @Override
+        public void fix() {
+
+        }
+
+        @Override
+        public void simplify() {
+            editor.simplify();
+            modified(true);
+        }
+
+
         @Override
         public void saveAs() {
             String prefix = AppDirectory.parsePrefix(file);
