@@ -112,7 +112,18 @@ public class FileAction {
 
 
     public static void copyToDir(Context context, Foc src) {
-        new AppSelectDirectoryDialog(context, src);
+        new AppSelectDirectoryDialog(context, src) {
+            @Override
+            public void copyTo(Context context, Foc srcFile, Foc destDirectory) {
+                try {
+
+                    FileAction.copyToDir(context, srcFile, destDirectory);
+                } catch (Exception e) {
+                    AppLog.e(context, e);
+                }
+
+            }
+        };
     }
 
     public static void copyToDir(Context context, Foc src, Foc destDir, String p, String ext) {

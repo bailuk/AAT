@@ -13,7 +13,6 @@ import ch.bailu.aat.map.MapContext;
 import ch.bailu.aat.map.layer.gpx.GpxDynLayer;
 import ch.bailu.aat.menus.EditorMenu;
 import ch.bailu.aat.services.ServiceContext;
-import ch.bailu.aat.services.editor.EditorHelper;
 import ch.bailu.aat.services.editor.EditorInterface;
 import ch.bailu.aat.util.ui.ToolTip;
 import ch.bailu.aat.views.bar.ControlBar;
@@ -21,7 +20,6 @@ import ch.bailu.aat.views.bar.ControlBar;
 public class EditorLayer extends ControlBarLayer {
 
     private final View menu, add, remove, up, down,
-            save, saveAs, toggle, clear,
             undo, redo;
 
 
@@ -65,33 +63,23 @@ public class EditorLayer extends ControlBarLayer {
         down = bar.addImageButton(R.drawable.go_down);
         ToolTip.set(down, R.string.tt_edit_down);
 
-        toggle = bar.addImageButton(R.drawable.gtk_convert);
-        ToolTip.set(toggle, R.string.tt_edit_convert);
-
-        clear = bar.addImageButton(R.drawable.edit_clear_all);
-        ToolTip.set(clear, R.string.tt_edit_clear);
-
         redo = bar.addImageButton(R.drawable.edit_redo);
         ToolTip.set(redo, R.string.tt_edit_redo);
 
         undo = bar.addImageButton(R.drawable.edit_undo);
         ToolTip.set(undo, R.string.tt_edit_undo);
 
-        save = bar.addImageButton(R.drawable.document_save);
-        ToolTip.set(save, R.string.tt_edit_save);
-
-        saveAs = bar.addImageButton(R.drawable.document_save_as);
-        ToolTip.set(saveAs, R.string.tt_edit_save_as);
-
         d.addTargets(selector, iid);
         d.addTargets(content, iid);
     }
+
 
     @Override
     public void onLayout(boolean c, int l, int t, int r, int b) {
         super.onLayout(c, l, t, r, b);
         selector.onLayout(c, l, t, r,b);
     }
+
 
     @Override
     public void drawInside(MapContext p) {
@@ -117,9 +105,7 @@ public class EditorLayer extends ControlBarLayer {
 
         final EditorInterface editor = edit.getEditor();
 
-        if (v==save)    editor.save();
-        else if (v==saveAs)  editor.saveAs();
-        else if (v==add)    {
+        if (v==add)    {
             LatLong p = mcontext.getMapView().getMapViewPosition().getCenter();
             editor.add(new GpxPoint(p, scontext.getElevationService().getElevation(p.getLatitudeE6(), p.getLongitudeE6()), 0));
         }
@@ -127,12 +113,11 @@ public class EditorLayer extends ControlBarLayer {
 
         else if (v==up)      editor.up();
         else if (v==down)    editor.down();
-        else if (v==toggle)  editor.toggle();
-        else if (v==clear)   editor.clear();
         else if (v==undo)    editor.undo();
         else if (v==redo)    editor.redo();
 
-        else if (v==menu)    new EditorMenu(scontext.getContext(), editor).showAsPopup(v.getContext(), v);
+        else if (v==menu)    new EditorMenu(scontext, editor, edit.getFile())
+                .showAsPopup(v.getContext(), v);
     }
 
 

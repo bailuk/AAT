@@ -9,7 +9,7 @@ import ch.bailu.aat.util.fs.AppDirectory;
 import ch.bailu.aat.util.fs.FileAction;
 import ch.bailu.util_java.foc.Foc;
 
-public class AppSelectDirectoryDialog  implements  DialogInterface.OnClickListener {
+public abstract class AppSelectDirectoryDialog  implements  DialogInterface.OnClickListener {
     private final Foc srcFile;
     private final Foc directories[];
 
@@ -46,12 +46,11 @@ public class AppSelectDirectoryDialog  implements  DialogInterface.OnClickListen
 
     @Override
     public void onClick(DialogInterface dialog, int i) {
-        try {
-
-            FileAction.copyToDir(context, srcFile, directories[i]);
-        } catch (Exception e) {
-            AppLog.e(context, e);
-        }
+        copyTo(context, srcFile, directories[i]);
         dialog.dismiss();
     }
+
+
+    public abstract void copyTo(Context context, Foc srcFile, Foc destDirectory);
+
 }

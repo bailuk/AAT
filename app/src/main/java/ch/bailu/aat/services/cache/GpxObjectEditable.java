@@ -7,6 +7,7 @@ import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.GpxList;
 import ch.bailu.aat.gpx.GpxPoint;
 import ch.bailu.aat.gpx.GpxPointNode;
+import ch.bailu.aat.gpx.interfaces.GpxType;
 import ch.bailu.aat.gpx.writer.GpxListWriter;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.editor.EditorInterface;
@@ -100,8 +101,8 @@ public class GpxObjectEditable extends  GpxObject {
         }
         
         @Override
-        public void toggle() {
-            editor.toggleType();
+        public void setType(GpxType type) {
+            editor.setType(type);
             modified(true);
         }
 
@@ -193,16 +194,21 @@ public class GpxObjectEditable extends  GpxObject {
 
         @Override
         public void inverse() {
-
+            editor.inverse();
+            modified(true);
         }
 
         @Override
-        public void attach(Foc file) {
+        public void attach(GpxList toAttach) {
+            editor.attach(toAttach);
+            modified(true);
 
         }
 
         @Override
         public void fix() {
+            editor.fix();
+            modified(true);
 
         }
 
@@ -214,13 +220,13 @@ public class GpxObjectEditable extends  GpxObject {
 
 
         @Override
-        public void saveAs() {
+        public void saveTo(Foc destDir) {
             String prefix = AppDirectory.parsePrefix(file);
 
             try {
                 final Foc file =
                         AppDirectory.generateUniqueFilePath(
-                                AppDirectory.getDataDirectory(context, AppDirectory.DIR_OVERLAY), 
+                                destDir,
                                 prefix, 
                                 AppDirectory.GPX_EXTENSION);
                 

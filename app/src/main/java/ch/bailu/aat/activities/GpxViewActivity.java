@@ -98,7 +98,7 @@ public class GpxViewActivity extends AbsDispatcher
         summary.addAllContent(this,
                 FileContentActivity.getSummaryData(this), InfoID.FILEVIEW);
 
-        View graph = GraphViewContainer.speedAltitude(this, this, InfoID.TRACKER, SOLID_KEY);
+        View graph = GraphViewContainer.speedAltitude(this, SOLID_KEY, this, InfoID.TRACKER);
 
         if (AppLayout.isTablet(this)) {
             return createPercentageLayout(summary, graph);

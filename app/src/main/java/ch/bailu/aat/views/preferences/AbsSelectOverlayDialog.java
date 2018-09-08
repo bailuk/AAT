@@ -31,9 +31,10 @@ public abstract class AbsSelectOverlayDialog extends AbsSolidDialog implements  
     @Override
     public void onClick(DialogInterface dialog, int i) {
         Foc file = slist.get(i).getValueAsFile();
-        onFileSelected(file);
+        onFileSelected(slist, i, file);
         dialog.dismiss();
     }
 
-    protected abstract void onFileSelected(Foc file);
+
+    protected abstract void onFileSelected(SolidOverlayFileList slist, int index, Foc file);
 }

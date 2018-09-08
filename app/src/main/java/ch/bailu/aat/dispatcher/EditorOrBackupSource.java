@@ -40,13 +40,7 @@ public class EditorOrBackupSource extends ContentSource implements EditorSourceI
     public void setTarget(OnContentUpdatedInterface t) {
         super.setTarget(t);
         editorSource.setTarget(t);
-        backupSource.setTarget(new OnContentUpdatedInterface() {
-            @Override
-            public void onContentUpdated(int iid, GpxInformation info) {
-                t.onContentUpdated(iid, info);
-                requestEditorNullUpdate();
-            }
-        });
+        backupSource.setTarget(t);
     }
 
 
@@ -100,12 +94,14 @@ public class EditorOrBackupSource extends ContentSource implements EditorSourceI
     @Override
     public void requestUpdate() {
         if (isEditing) {
-            editorSource.requestUpdate();
             requestBackupNullUpdate();
+            editorSource.requestUpdate();
+
 
         }  else {
-            backupSource.requestUpdate();
             requestEditorNullUpdate();
+            backupSource.requestUpdate();
+
         }
     }
 
@@ -121,12 +117,13 @@ public class EditorOrBackupSource extends ContentSource implements EditorSourceI
     @Override
     public void onResume() {
         if (isEditing) {
-            editorSource.onResume();
             requestBackupNullUpdate();
+            editorSource.onResume();
 
         } else {
-            backupSource.onResume();
             requestEditorNullUpdate();
+            backupSource.onResume();
+
         }
     }
 

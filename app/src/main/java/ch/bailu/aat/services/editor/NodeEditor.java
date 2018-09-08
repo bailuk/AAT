@@ -12,6 +12,10 @@ import ch.bailu.aat.gpx.GpxSegmentNode;
 import ch.bailu.aat.gpx.MaxSpeed;
 import ch.bailu.aat.gpx.interfaces.GpxPointInterface;
 import ch.bailu.aat.gpx.interfaces.GpxType;
+import ch.bailu.aat.gpx.tools.Attacher;
+import ch.bailu.aat.gpx.tools.Copier;
+import ch.bailu.aat.gpx.tools.Inverser;
+import ch.bailu.aat.gpx.tools.TimeStampFixer;
 import ch.bailu.aat.gpx.tools.SimplifierBearing;
 import ch.bailu.aat.gpx.tools.SimplifierDistance;
 
@@ -52,6 +56,32 @@ public class NodeEditor {
         bearing.walkTrack(distance.getNewList());
 
         return toEditor(bearing.getNewList());
+    }
+
+
+
+    public NodeEditor fix() {
+        TimeStampFixer fixer = new TimeStampFixer();
+        fixer.walkTrack(gpxList);
+
+        return toEditor(fixer.getNewList());
+    }
+
+
+    public NodeEditor inverse() {
+        Inverser inverser = new Inverser(gpxList);
+
+        return toEditor(inverser.getNewList());
+    }
+
+    public NodeEditor attach(GpxList toAttach) {
+        Copier copier = new Copier();
+        copier.walkTrack(gpxList);
+
+        Attacher attacher = new Attacher(copier.getNewList());
+        attacher.walkTrack(toAttach);
+
+        return toEditor(attacher.getNewList());
     }
 
 

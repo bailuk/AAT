@@ -24,7 +24,7 @@ public class DistanceSpeedGraphView extends AbsGraphView implements SharedPrefer
 
     private final SolidSpeedGraphWindow swindow;
 
-    public DistanceSpeedGraphView(Context context, String key, DispatcherInterface di, int iid) {
+    public DistanceSpeedGraphView(Context context, String key, DispatcherInterface di, int... iid) {
         super(context, di, iid);
 
         swindow = new SolidSpeedGraphWindow(context, key);

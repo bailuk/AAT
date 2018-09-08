@@ -50,7 +50,7 @@ public class CockpitActivity extends AbsDispatcher{
         MultiView multiView = new MultiView(this, SOLID_KEY);
         multiView.add(createCockpit());
         multiView.add(MapFactory.DEF(this, SOLID_KEY).tracker(edit).toView());
-        multiView.add(GraphViewContainer.speedAltitude(this, this,  InfoID.TRACKER, SOLID_KEY));
+        multiView.add(GraphViewContainer.speedAltitude(this, SOLID_KEY,this,  InfoID.TRACKER));
 
         return multiView;
     }

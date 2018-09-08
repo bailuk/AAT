@@ -63,7 +63,7 @@ public class CockpitTabletActivity extends AbsDispatcher {
 
         final PercentageLayout three = new PercentageLayout(this);
         three.add(two,80);
-        three.add(GraphViewContainer.speedAltitude(this, this, InfoID.TRACKER, SOLID_KEY),20);
+        three.add(GraphViewContainer.speedAltitude(this, SOLID_KEY, this, InfoID.TRACKER),20);
 
 
         return three;

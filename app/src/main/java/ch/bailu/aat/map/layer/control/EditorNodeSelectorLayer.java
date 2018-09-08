@@ -4,10 +4,13 @@ import android.view.View;
 
 import org.mapsforge.core.model.Point;
 
+import ch.bailu.aat.activities.NodeDetailActivity;
+import ch.bailu.aat.dispatcher.EditorSource;
 import ch.bailu.aat.dispatcher.EditorSourceInterface;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.GpxPointNode;
 import ch.bailu.aat.map.MapContext;
+import ch.bailu.aat.services.cache.GpxObjectEditable;
 import ch.bailu.aat.util.ToDo;
 import ch.bailu.util_java.foc.Foc;
 
@@ -77,8 +80,7 @@ public class EditorNodeSelectorLayer extends GeneralNodeViewLayer {
     @Override
     public void onClick(View v) {
         if (editorSource.isEditing())
-            super.onClick(v);
-
+            startNodeDetailActivity(GpxObjectEditable.getVirtualID(editorSource.getFile()));
         else
             editorSource.edit();
 

@@ -1,22 +1,37 @@
 package ch.bailu.aat.gpx.interfaces;
 
 public enum GpxType {
-    WAY(0), ROUTE(1), TRACK(2), NONE(-1);
+    WAY,
+    ROUTE,
+    TRACK,
+    NONE;
 
-    private final int id;
 
-    GpxType(int _id) {
-        id = _id;
+
+    @Override
+    public String toString() {
+        return name();
     }
+
+
+    public static String[] toStrings() {
+        String[] strings = new String[values().length-1];
+
+        for (int i = 0; i < strings.length; i++)
+            strings[i] = values()[i].toString();
+
+        return strings;
+    }
+
 
     public int toInteger() {
-        return id;
+        return ordinal();
     }
 
+
     public static GpxType fromInteger(int id) {
-        if (id == WAY.id) return WAY;
-        if (id == ROUTE.id) return ROUTE;
-        if (id == TRACK.id) return TRACK;
-        return NONE;
+        if (id < 0 || id >= values().length)
+            id = values().length-1;
+        return values()[id];
     }
 }

@@ -25,8 +25,8 @@ import ch.bailu.aat.description.TrackSizeDescription;
 import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.map.MapFactory;
 import ch.bailu.aat.util.ui.AppLayout;
-import ch.bailu.aat.views.bar.MainControlBar;
 import ch.bailu.aat.views.PercentageLayout;
+import ch.bailu.aat.views.bar.MainControlBar;
 import ch.bailu.aat.views.description.MultiView;
 import ch.bailu.aat.views.graph.GraphViewContainer;
 import ch.bailu.aat.views.preferences.VerticalScrollView;
@@ -48,9 +48,11 @@ public class FileContentActivity extends AbsFileContentActivity{
         map = MapFactory.DEF(this, SOLID_KEY).content(editorSource);
 
         VerticalScrollView summary = new VerticalScrollView(this);
-        summary.addAllContent(this, getSummaryData(this), InfoID.FILEVIEW);
+        summary.addAllContent(this, getSummaryData(this),
+                InfoID.FILEVIEW, InfoID.EDITOR_OVERLAY);
 
-        View graph = GraphViewContainer.speedAltitude(this,this, InfoID.FILEVIEW, SOLID_KEY);
+        View graph = GraphViewContainer.speedAltitude(this,SOLID_KEY,this,
+                InfoID.FILEVIEW, InfoID.EDITOR_OVERLAY);
 
 
         if (AppLayout.isTablet(this)) {

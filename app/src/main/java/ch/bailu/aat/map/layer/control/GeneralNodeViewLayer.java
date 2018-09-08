@@ -33,9 +33,14 @@ public class GeneralNodeViewLayer extends AbsNodeViewLayer {
     @Override
     public void onClick(View v) {
         if (file != null && file.isFile()) {
-
-            NodeDetailActivity.start(mcontext.getContext(), file.getPath(), index);
+            startNodeDetailActivity(file.getPath());
         }
+    }
+
+
+
+    protected void startNodeDetailActivity(String path) {
+        NodeDetailActivity.start(mcontext.getContext(), path, index);
     }
 
 
@@ -68,6 +73,4 @@ public class GeneralNodeViewLayer extends AbsNodeViewLayer {
     public void onDetached() {
 
     }
-
-
 }

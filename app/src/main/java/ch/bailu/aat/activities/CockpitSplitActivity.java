@@ -71,7 +71,7 @@ public class CockpitSplitActivity extends AbsDispatcher{
         mv.add(cockpitB);
         mv.add(cockpitC);
         mv.add(new DistanceAltitudeGraphView(this, this, InfoID.TRACKER));
-        mv.add(GraphViewContainer.speed(this, this, InfoID.TRACKER, SOLID_KEY));
+        mv.add(GraphViewContainer.speed(this, SOLID_KEY,this, InfoID.TRACKER));
         mv.add(mapSlave.toView());
 
         MapViewInterface mapMaster =

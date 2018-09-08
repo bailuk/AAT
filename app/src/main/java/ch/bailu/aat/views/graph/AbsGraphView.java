@@ -11,6 +11,7 @@ import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.GpxList;
 import ch.bailu.aat.gpx.interfaces.GpxType;
 import ch.bailu.aat.preferences.SolidUnit;
+import ch.bailu.aat.util.ui.AppLog;
 
 public abstract class AbsGraphView extends ViewGroup implements OnContentUpdatedInterface {
 
@@ -45,13 +46,14 @@ public abstract class AbsGraphView extends ViewGroup implements OnContentUpdated
 
     @Override
     public void onContentUpdated(int iid, GpxInformation info) {
-        onContentUpdated(iid,info, -1);
+        onContentUpdated(iid, info, -1);
     }
 
-    public void onContentUpdated(int all, GpxInformation info, int i) {
+    public void onContentUpdated(int iid, GpxInformation info, int i) {
         gpxCache = info.getGpxList();
         nodeIndex = i;
 
+        AppLog.d(this, "InfoID: " + iid);
         invalidate();
     }
 

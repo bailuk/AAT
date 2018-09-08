@@ -1,7 +1,9 @@
 package ch.bailu.aat.services.editor;
 
+import ch.bailu.aat.gpx.GpxList;
 import ch.bailu.aat.gpx.GpxPoint;
 import ch.bailu.aat.gpx.GpxPointNode;
+import ch.bailu.aat.gpx.interfaces.GpxType;
 import ch.bailu.util_java.foc.Foc;
 
 public interface EditorInterface {
@@ -11,7 +13,7 @@ public interface EditorInterface {
         public void save() {}
 
         @Override
-        public void toggle() {}
+        public void setType(GpxType type) {}
 
         @Override
         public void remove() {}
@@ -39,7 +41,7 @@ public interface EditorInterface {
         public void select(GpxPointNode p) {}
 
         @Override
-        public void saveAs() {}
+        public void saveTo(Foc path) {}
 
         @Override
         public void clear() {}
@@ -59,7 +61,7 @@ public interface EditorInterface {
         }
 
         @Override
-        public void attach(Foc file) {
+        public void attach(GpxList file) {
 
         }
 
@@ -74,7 +76,7 @@ public interface EditorInterface {
         }
     };
     void save();
-    void toggle();
+    void setType(GpxType type);
     void remove();
     void add(GpxPoint point);
     void up();
@@ -84,7 +86,7 @@ public interface EditorInterface {
     GpxPointNode getSelected();
     void select(GpxPointNode p);
 
-    void saveAs();
+    void saveTo(Foc path);
     void clear();
     void redo();
     void undo();
@@ -92,7 +94,7 @@ public interface EditorInterface {
 
     void inverse();
 
-    void attach(Foc file);
+    void attach(GpxList toAttach);
 
     void fix();
 

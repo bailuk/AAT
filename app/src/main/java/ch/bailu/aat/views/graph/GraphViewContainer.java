@@ -35,7 +35,7 @@ public class GraphViewContainer extends ViewGroup implements View.OnClickListene
     }
 
 
-    public static GraphViewContainer speed(Context c, DispatcherInterface di, int iid, String key) {
+    public static GraphViewContainer speed(Context c, String key, DispatcherInterface di, int... iid) {
         GraphViewContainer v =new GraphViewContainer(c).
                 add(new DistanceSpeedGraphView(c, key, di , iid), 100);
 
@@ -44,7 +44,7 @@ public class GraphViewContainer extends ViewGroup implements View.OnClickListene
     }
 
 
-    public static GraphViewContainer speedAltitude(Context c, DispatcherInterface di, int iid, String key) {
+    public static GraphViewContainer speedAltitude(Context c, String key, DispatcherInterface di, int... iid) {
         GraphViewContainer v =new GraphViewContainer(c).
                 add(new DistanceAltitudeGraphView(c, di, iid), 50).
                 add(new DistanceSpeedGraphView(c, key, di , iid), 50);
