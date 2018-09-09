@@ -26,7 +26,7 @@ public class EditorLayer extends ControlBarLayer {
     private final ServiceContext scontext;
     private final MapContext mcontext;
 
-    private final EditorNodeSelectorLayer selector;
+    private final EditorNodeViewLayer selector;
     private final GpxDynLayer content;
 
 
@@ -44,7 +44,7 @@ public class EditorLayer extends ControlBarLayer {
 
 
         content = new GpxDynLayer(mc);
-        selector = new EditorNodeSelectorLayer(mc, e);
+        selector = new EditorNodeViewLayer(mc, e);
 
 
         ControlBar bar = getBar();
@@ -115,7 +115,6 @@ public class EditorLayer extends ControlBarLayer {
         else if (v==down)    editor.down();
         else if (v==undo)    editor.undo();
         else if (v==redo)    editor.redo();
-
         else if (v==menu)    new EditorMenu(scontext, editor, edit.getFile())
                 .showAsPopup(v.getContext(), v);
     }

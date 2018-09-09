@@ -53,7 +53,6 @@ public abstract class AbsGraphView extends ViewGroup implements OnContentUpdated
         gpxCache = info.getGpxList();
         nodeIndex = i;
 
-        AppLog.d(this, "InfoID: " + iid);
         invalidate();
     }
 

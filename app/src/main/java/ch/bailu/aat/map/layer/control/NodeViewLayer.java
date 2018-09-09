@@ -11,7 +11,7 @@ import ch.bailu.aat.map.MapContext;
 import ch.bailu.aat.util.HtmlBuilderGpx;
 import ch.bailu.util_java.foc.Foc;
 
-public class GeneralNodeViewLayer extends AbsNodeViewLayer {
+public class NodeViewLayer extends AbsNodeViewLayer {
 
 
     private Foc file = null;
@@ -19,9 +19,9 @@ public class GeneralNodeViewLayer extends AbsNodeViewLayer {
 
     private final MapContext mcontext;
 
-    public GeneralNodeViewLayer(MapContext cl) {
-        super(cl);
-        mcontext = cl;
+    public NodeViewLayer(MapContext mc) {
+        super(mc);
+        mcontext = mc;
     }
 
 

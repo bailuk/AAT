@@ -5,6 +5,10 @@ import android.graphics.Color;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
+import ch.bailu.aat.map.MapColor;
+import ch.bailu.aat.util.ui.AppLayout;
+import ch.bailu.aat.util.ui.AppTheme;
+
 public class BusyViewContainer extends FrameLayout {
 
     public static final int CENTER=0, TOP_LEFT=1, TOP_RIGHT=2, BOTTOM_LEFT=3, BOTTOM_RIGHT=4;
@@ -21,7 +25,6 @@ public class BusyViewContainer extends FrameLayout {
         busy = new BusyView(context);
         addView(busy,
                 new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-
     }
 
     public void setOrientation(int i) {

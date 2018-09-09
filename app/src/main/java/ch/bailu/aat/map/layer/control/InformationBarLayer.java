@@ -48,7 +48,7 @@ public class InformationBarLayer extends ControlBarLayer {
         nominatim = bar.addImageButton(R.drawable.edit_find);
         location = bar.addImageButton(R.drawable.find_location);
 
-        selector = new GeneralNodeViewLayer(cl);
+        selector = new NodeViewLayer(cl);
 
 
         ToolTip.set(grid,R.string.tt_info_grid);

@@ -31,5 +31,10 @@ public abstract class GpxObject extends ObjectHandle {
             return GpxList.NULL_TRACK;
         }
 
+        @Override
+        public boolean isReadyAndLoaded() {
+            return true;
+        }
+
     };
 }

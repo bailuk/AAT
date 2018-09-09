@@ -10,7 +10,7 @@ import ch.bailu.aat.util.HtmlBuilder;
 import ch.bailu.aat.util.HtmlBuilderGpx;
 import ch.bailu.aat.util.ui.AppLayout;
 
-public abstract class AbsNodeViewLayer extends NodeSelectorLayer implements
+public abstract class AbsNodeViewLayer extends AbsNodeSelectorLayer implements
         View.OnLongClickListener, View.OnClickListener {
 
     private final NodeInfoView infoView;

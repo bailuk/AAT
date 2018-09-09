@@ -58,14 +58,14 @@ public abstract class AbsFileContentActivity extends AbsDispatcher implements On
     private void createViews() {
         final ContentView contentView = new ContentView(this);
 
-        MainControlBar bar = new MainControlBar(this);
+        MainControlBar bar = new MainControlBar(this,5);
         contentView.add(bar);
 
 
 
 
         ViewGroup layout = createLayout(bar);
-        busyControl = new BusyViewControlIID(contentView, InfoID.FILEVIEW);
+        busyControl = new BusyViewControlIID(contentView);
         busyControl.busy.setOrientation(BusyViewContainer.BOTTOM_RIGHT);
 
 
@@ -111,7 +111,12 @@ public abstract class AbsFileContentActivity extends AbsDispatcher implements On
 
         addSource(editorSource);
 
-        addTargets(busyControl, InfoID.FILEVIEW);
+        addTargets(busyControl,
+                InfoID.FILEVIEW,
+                InfoID.OVERLAY,
+                InfoID.OVERLAY+1,
+                InfoID.OVERLAY+2,
+                InfoID.OVERLAY+3);
         addTargets(fileOperation, InfoID.FILEVIEW);
 
 

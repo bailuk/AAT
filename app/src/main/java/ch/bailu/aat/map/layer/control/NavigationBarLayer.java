@@ -4,6 +4,7 @@ import android.util.SparseArray;
 import android.view.View;
 
 import ch.bailu.aat.R;
+import ch.bailu.aat.activities.AbsActivity;
 import ch.bailu.aat.dispatcher.DispatcherInterface;
 import ch.bailu.aat.dispatcher.OnContentUpdatedInterface;
 import ch.bailu.aat.gpx.GpxInformation;
@@ -118,4 +119,6 @@ public class NavigationBarLayer extends ControlBarLayer implements OnContentUpda
     public void onDetached() {
 
     }
+
+
 }

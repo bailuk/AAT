@@ -9,7 +9,7 @@ import java.io.Closeable;
 
 import ch.bailu.aat.util.AppBroadcaster;
 
-public class BusyViewControlDbSync extends BusyViewControl implements Closeable {
+public class BusyViewControlDbSync extends BusyViewControlIID implements Closeable {
     private final Context context;
 
     public BusyViewControlDbSync(ViewGroup parent) {

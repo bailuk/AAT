@@ -18,7 +18,7 @@ import ch.bailu.aat.map.layer.MapLayerInterface;
 import ch.bailu.aat.preferences.SolidMapGrid;
 import ch.bailu.aat.util.graphic.Pixel;
 
-public abstract class NodeSelectorLayer implements MapLayerInterface, OnContentUpdatedInterface {
+public abstract class AbsNodeSelectorLayer implements MapLayerInterface, OnContentUpdatedInterface {
 
     public final static int SQUARE_SIZE = 30;
     public final static int SQUARE_HSIZE = SQUARE_SIZE / 2;
@@ -39,7 +39,7 @@ public abstract class NodeSelectorLayer implements MapLayerInterface, OnContentU
     private MapLayerInterface coordinates;
 
 
-    public NodeSelectorLayer(MapContext mc) {
+    public AbsNodeSelectorLayer(MapContext mc) {
 
         square_size = mc.getMetrics().getDensity().toPixel_i(SQUARE_SIZE);
         square_hsize = mc.getMetrics().getDensity().toPixel_i(SQUARE_HSIZE);

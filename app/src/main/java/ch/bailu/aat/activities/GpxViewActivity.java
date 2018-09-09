@@ -79,7 +79,7 @@ public class GpxViewActivity extends AbsDispatcher
 
             contentView.add(view);
 
-            busyControl = new BusyViewControlIID(contentView, InfoID.FILEVIEW);
+            busyControl = new BusyViewControlIID(contentView);
             busyControl.startWaiting();
 
             setContentView(contentView);
@@ -161,7 +161,11 @@ public class GpxViewActivity extends AbsDispatcher
         addSource(new CustomFileSource(getServiceContext(), fileID));
 
         addTargets(this, InfoID.FILEVIEW);
-        addTargets(busyControl, InfoID.FILEVIEW);
+        addTargets(busyControl, InfoID.FILEVIEW,
+                InfoID.OVERLAY,
+                InfoID.OVERLAY+1,
+                InfoID.OVERLAY+2,
+                InfoID.OVERLAY+3);
     }
 
 

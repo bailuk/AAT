@@ -20,34 +20,26 @@ import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.map.MapContext;
 import ch.bailu.aat.menus.FileMenu;
 import ch.bailu.aat.preferences.SolidDirectoryQuery;
+import ch.bailu.aat.preferences.SolidOverlayFile;
 import ch.bailu.aat.services.directory.Iterator;
-import ch.bailu.aat.util.HtmlBuilderGpx;
 import ch.bailu.aat.util.fs.FileAction;
-import ch.bailu.aat.util.fs.foc.FocAndroid;
 import ch.bailu.aat.util.ui.ToolTip;
-import ch.bailu.aat.views.bar.ControlBar;
 import ch.bailu.aat.views.PreviewView;
+import ch.bailu.aat.views.bar.ControlBar;
 import ch.bailu.util_java.foc.Foc;
 
 public class FileControlBarLayer extends ControlBarLayer {
 
 
 
-    @Override
-    public void onShowBar() {
-        selector.showAtRight();
-    }
-
-
-
-    private final PreviewView        preview;
+    private final PreviewView preview;
     private final AbsGpxListActivity acontext;
-    private final Selector           selector;
+    private final FileViewLayer selector;
 
-    private final View           action, overlay, reloadPreview, delete;
+    private final View           overlay, reloadPreview, delete;
 
     private Iterator iterator = Iterator.NULL;
-    private String selectedFile = null;
+    private Foc selectedFile = null;
 
 
     public FileControlBarLayer(MapContext mc, AbsGpxListActivity a) {
@@ -59,22 +51,17 @@ public class FileControlBarLayer extends ControlBarLayer {
 
         acontext = a;
 
-
-
-        selector = new Selector(mc);
+        selector = new FileViewLayer(mc);
         preview = new PreviewView(a.getServiceContext());
 
         bar.add(preview);
-        action = bar.addImageButton(R.drawable.edit_select_all);
         overlay = bar.addImageButton(R.drawable.view_paged);
         reloadPreview = bar.addImageButton(R.drawable.view_refresh);
         delete = bar.addImageButton(R.drawable.user_trash);
 
         preview.setOnClickListener(this);
-        preview.setOnLongClickListener(selector);
 
-
-        ToolTip.set(action, R.string.tt_menu_file);
+        ToolTip.set(preview, R.string.tt_menu_file);
         ToolTip.set(overlay, R.string.file_overlay);
         ToolTip.set(reloadPreview, R.string.file_reload);
         ToolTip.set(delete, R.string.file_delete);
@@ -82,9 +69,17 @@ public class FileControlBarLayer extends ControlBarLayer {
         acontext.addTargets(selector, InfoID.LIST_SUMMARY);
     }
 
+
     public void setIterator(Iterator i) {
         iterator = i;
     }
+
+
+    @Override
+    public void onShowBar() {
+        selector.showAtRight();
+    }
+
 
     @Override
     public void onAttached() {
@@ -97,8 +92,60 @@ public class FileControlBarLayer extends ControlBarLayer {
     }
 
 
-    private class Selector extends AbsNodeViewLayer {
-        public Selector(MapContext mc) {
+    @Override
+    public void drawForeground(MapContext mc) {
+        if (isBarVisible()) {
+            selector.drawForeground(mc);
+        }
+    }
+
+
+    @Override
+    public void drawInside(MapContext mc) {
+        if (isBarVisible()) {
+            selector.drawInside(mc);
+        }
+    }
+
+
+    @Override
+    public void onLayout(boolean c, int l, int t, int r, int b) {
+        super.onLayout(c, l, t, r, b);
+        selector.onLayout(c, l, t, r,b);
+    }
+
+    @Override
+    public void onClick(View v) {
+        super.onClick(v);
+
+        GpxPointNode node =  selector.getSelectedNode();
+        if (node != null && selectedFile != null) {
+            Foc file = selectedFile;
+
+            if (file.exists()) {
+                if        (v == preview) {
+                    new FileMenu(acontext, file).showAsPopup(acontext, v);
+                } else if (v == overlay) {
+                    FileAction.useAsOverlay(acontext, file);
+                } else if (v == reloadPreview) {
+                    FileAction.reloadPreview(acontext.getServiceContext(), file);
+                } else if (v == delete) {
+                    FileAction.delete(acontext.getServiceContext(), acontext, file);
+                }
+            }
+        }
+    }
+
+
+
+    @Override
+    public void onHideBar() {
+        selector.hide();
+    }
+
+
+    private class FileViewLayer extends AbsNodeViewLayer {
+        public FileViewLayer(MapContext mc) {
             super(mc);
         }
 
@@ -121,7 +168,7 @@ public class FileControlBarLayer extends ControlBarLayer {
 
             iterator.moveToPosition(i);
 
-            selectedFile = iterator.getInfo().getFile().getPath();
+            selectedFile = iterator.getInfo().getFile();
 
             preview.setFilePath(selectedFile);
 
@@ -163,56 +210,12 @@ public class FileControlBarLayer extends ControlBarLayer {
 
         @Override
         public boolean onLongClick(View view) {
+            if (selectedFile != null) {
+                new SolidOverlayFile(acontext,0).setValueFromFile(selectedFile);
+                return true;
+            }
             return false;
         }
-    }
-
-
-    @Override
-    public void drawForeground(MapContext mc) {
-        if (isBarVisible()) {
-            selector.drawForeground(mc);
-        }
-    }
-
-
-    @Override
-    public void drawInside(MapContext mc) {
-        if (isBarVisible()) {
-            selector.drawInside(mc);
-        }
-    }
-
-
-    @Override
-    public void onClick(View v) {
-        super.onClick(v);
-
-        GpxPointNode node =  selector.getSelectedNode();
-        if (node != null && selectedFile != null) {
-            Foc file = FocAndroid.factory(acontext,selectedFile);
-
-            if (file.exists()) {
-                if        (v == action) {
-                    new FileMenu(acontext, file).showAsPopup(acontext, v);
-                } else if (v == overlay) {
-                    FileAction.useAsOverlay(acontext, file);
-                } else if (v == reloadPreview) {
-                    FileAction.reloadPreview(acontext.getServiceContext(), file);
-                } else if (v == delete) {
-                    FileAction.delete(acontext.getServiceContext(), acontext, file);
-                } else if (v == preview) {
-                    acontext.displayFile();
-                }
-            }
-        }
-    }
-
-
-
-    @Override
-    public void onHideBar() {
-        selector.hide();
     }
 
 

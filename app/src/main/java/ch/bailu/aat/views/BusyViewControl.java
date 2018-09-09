@@ -1,13 +1,15 @@
 package ch.bailu.aat.views;
 
+import android.util.SparseArray;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class BusyViewControl implements  BusyInterface{
+public class BusyViewControl {
+
+    private static final int DEFAULT_ID=-1;
 
     public final BusyViewContainer busy;
-
-    private boolean isWaiting = false;
+    private SparseArray<Boolean> isWaiting = new SparseArray<>(5);
 
 
 
@@ -20,22 +22,44 @@ public class BusyViewControl implements  BusyInterface{
         busy.setVisibility(View.GONE);
     }
 
-
     public void startWaiting() {
-        isWaiting = true;
-        busy.setVisibility(View.VISIBLE);
-        busy.bringToFront();
+        startWaiting(DEFAULT_ID);
     }
 
     public void stopWaiting() {
-        isWaiting = false;
-        busy.setVisibility(View.GONE);
+        stopWaiting(DEFAULT_ID);
     }
 
-    @Override
-    public boolean isWaiting() {
-        return isWaiting;
+    public void startWaiting(int id) {
+        changeWaiting(id, true);
     }
+
+    public void stopWaiting(int id) {
+        changeWaiting(id, false);
+    }
+
+
+    private void changeWaiting(int id, boolean w) {
+        isWaiting.put(id, w);
+
+        if (isWaiting()) {
+            busy.setVisibility(View.VISIBLE);
+            busy.bringToFront();
+        } else {
+            busy.setVisibility(View.GONE);
+        }
+
+    }
+
+    public boolean isWaiting() {
+        for (int i=0; i<isWaiting.size(); i++) {
+            if (isWaiting.valueAt(i)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 
 
     public void setText(CharSequence t) {
