@@ -75,7 +75,6 @@ public abstract class AbsFileContentActivity extends AbsDispatcher implements On
 
         initButtonBar(bar);
 
-        busyControl.startWaiting();
         setContentView(contentView);
 
     }

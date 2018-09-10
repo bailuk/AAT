@@ -1,6 +1,6 @@
 package ch.bailu.aat.views;
 
-import android.util.SparseArray;
+import android.util.SparseBooleanArray;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -9,7 +9,7 @@ public class BusyViewControl {
     private static final int DEFAULT_ID=-1;
 
     public final BusyViewContainer busy;
-    private SparseArray<Boolean> isWaiting = new SparseArray<>(5);
+    private SparseBooleanArray isWaiting = new SparseBooleanArray(5);
 
 
 

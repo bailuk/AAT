@@ -80,7 +80,6 @@ public class GpxViewActivity extends AbsDispatcher
             contentView.add(view);
 
             busyControl = new BusyViewControlIID(contentView);
-            busyControl.startWaiting();
 
             setContentView(contentView);
             createDispatcher();
@@ -98,7 +97,7 @@ public class GpxViewActivity extends AbsDispatcher
         summary.addAllContent(this,
                 FileContentActivity.getSummaryData(this), InfoID.FILEVIEW);
 
-        View graph = GraphViewContainer.speedAltitude(this, SOLID_KEY, this, InfoID.TRACKER);
+        View graph = GraphViewContainer.speedAltitude(this, SOLID_KEY, this, InfoID.FILEVIEW);
 
         if (AppLayout.isTablet(this)) {
             return createPercentageLayout(summary, graph);
