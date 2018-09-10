@@ -200,7 +200,7 @@ public class BoundingBoxE6 {
     }
 
     public LatLongE6 getCenter() {
-        return new LatLongE6(south + getLatitudeSpanE6(), west + getLongitudeSpanE6());
+        return new LatLongE6(south + getLatitudeSpanE6()/2, west + getLongitudeSpanE6()/2);
     }
 
 
