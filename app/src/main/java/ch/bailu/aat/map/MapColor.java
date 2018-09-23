@@ -74,7 +74,7 @@ public class MapColor {
 
 
 
-        return Color.BLUE;
+        return AppTheme.getHighlightColor();
     }
 
 
