@@ -1,0 +1,6 @@
+v1.13
+
+# Changes
+- New app logo. #20
+- Number of preset slots is adjustable in preferences. #21
+- Replace toast messages with status messages on top of display.

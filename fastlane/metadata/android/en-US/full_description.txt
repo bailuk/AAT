@@ -1,0 +1,7 @@
+A GPS-tracking application for tracking sportive activities, with emphasis on cycling. 
+It uses MapsForge to display map tiles and offline maps from the OpenStreetMap project.
+
+More information on GitHub:
+* [https://github.com/bailuk/AAT/blob/master/README.md README.md]
+* [https://github.com/bailuk/AAT/blob/master/README.enduser.md README.enduser.md]
+

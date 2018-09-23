@@ -1,0 +1,8 @@
+v1.8-beta
+
+- Support for multible off line maps and map themes
+- Support for external GPX directory
+- List all devices in directory selecten
+- Improve tile remover
+- Editor fixes
+

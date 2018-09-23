@@ -1,0 +1,14 @@
+v1.12-beta
+
+# Add
+- Improve Overpass and OSM features support
+- Add altitude graph to node selector view
+- Add altitude graph and seek bar to NodeDetailActivity
+- Introducing tool tips in preferences
+- MapsForge v0.9.0
+
+# Fix
+- Use "sdcard/aat_data" as default directory if possible
+- Add notification channel support (Fix crash on SDK 26 devices)
+- Use system time to calculate time of life of GPS fix / provide preference to synchronize GPS time with system time. This probably fixes #18
+

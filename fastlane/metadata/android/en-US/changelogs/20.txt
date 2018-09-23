@@ -1,0 +1,6 @@
+v1.10-beta
+
+- GPS fixes
+- File system permission fixes
+- Show file system permission information in settings dialog
+- Improved speed and altitude plot view

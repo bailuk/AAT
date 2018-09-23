@@ -1,0 +1,8 @@
+v1.7-beta
+
+### Added
+- Layout for big screens
+- Support horizontal screen orientation
+
+### Fixed
+- Missing assets

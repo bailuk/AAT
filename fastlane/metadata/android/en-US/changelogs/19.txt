@@ -1,0 +1,7 @@
+v1.9-beta
+
+- Support for Storage Access Framework
+- Improved map configuration
+- Display total climb and descend
+- Postprocessed autopause
+- Fix GPX time stamp

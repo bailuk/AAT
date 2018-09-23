@@ -1,0 +1,12 @@
+v1.14
+
+# Fixes
+- Crash when resuming to map view.
+- Fix Nominatim search.
+
+# Changes
+- Different colors for overlays.
+- Improved GPX editor.
+- Map menu in navigation bar (Tab on right side inside map view).
+- Highlight documentation in main view.
+- Add Acra https://github.com/ACRA/acra for crash reports.

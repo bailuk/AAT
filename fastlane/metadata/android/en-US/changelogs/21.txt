@@ -1,0 +1,4 @@
+v1.11-beta
+
+Fix many performance issues related to map displaying.
+
