@@ -9,9 +9,7 @@ import android.graphics.drawable.Drawable;
 
 import org.mapsforge.core.graphics.Bitmap;
 import org.mapsforge.core.graphics.Canvas;
-import org.mapsforge.core.graphics.Color;
 import org.mapsforge.core.graphics.Paint;
-import org.mapsforge.core.graphics.Style;
 import org.mapsforge.map.android.graphics.AndroidGraphicFactory;
 
 import ch.bailu.aat.util.ui.AppDensity;

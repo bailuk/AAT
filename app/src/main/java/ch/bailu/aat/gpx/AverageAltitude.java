@@ -1,8 +1,5 @@
 package ch.bailu.aat.gpx;
 
-import ch.bailu.aat.util.ui.AppLog;
-
-
 
 /**
  *   Calculate average altitude from at least {@linkplain #MIN_SAMPLES} samples and at

@@ -1,10 +1,7 @@
 package ch.bailu.aat.activities;
 
 import android.app.Activity;
-import android.content.Context;
 import android.os.Bundle;
-import android.view.View;
-import android.view.ViewGroup;
 
 import ch.bailu.aat.preferences.PreferenceLoadDefaults;
 import ch.bailu.aat.util.AppPermission;

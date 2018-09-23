@@ -1,13 +1,8 @@
 package ch.bailu.aat.views;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
-
-import ch.bailu.aat.map.MapColor;
-import ch.bailu.aat.util.ui.AppLayout;
-import ch.bailu.aat.util.ui.AppTheme;
 
 public class BusyViewContainer extends FrameLayout {
 
@@ -105,7 +100,7 @@ public class BusyViewContainer extends FrameLayout {
         int h = b - t;
 
         int nl = w - bw;
-        int nt = h - bh;;
+        int nt = h - bh;
 
         busy.layout(nl, nt, nl + bw, nt + bh);
     }

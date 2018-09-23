@@ -6,9 +6,7 @@ import ch.bailu.aat.gpx.GpxList;
 import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.editor.EditorInterface;
-import ch.bailu.aat.util.fs.foc.FocAndroid;
 import ch.bailu.util_java.foc.Foc;
-import ch.bailu.util_java.foc.FocFile;
 
 public class EditorOrBackupSource extends ContentSource implements EditorSourceInterface {
 

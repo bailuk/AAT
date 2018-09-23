@@ -5,7 +5,6 @@ import android.text.Layout;
 import android.text.Selection;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
 import ch.bailu.aat.R;

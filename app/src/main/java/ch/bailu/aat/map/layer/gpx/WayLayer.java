@@ -10,7 +10,6 @@ import ch.bailu.aat.map.MapContext;
 import ch.bailu.aat.map.TwoNodes;
 import ch.bailu.aat.services.InsideContext;
 import ch.bailu.aat.services.ServiceContext;
-import ch.bailu.aat.util.ui.AppTheme;
 
 public class WayLayer extends GpxLayer {
 

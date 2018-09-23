@@ -11,7 +11,6 @@ import ch.bailu.aat.preferences.SolidDirectoryQuery;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.VirtualService;
 import ch.bailu.aat.util.fs.AFile;
-import ch.bailu.aat.util.ui.AppLog;
 import ch.bailu.util_java.foc.Foc;
 
 public class DirectoryService extends VirtualService implements OnSharedPreferenceChangeListener{

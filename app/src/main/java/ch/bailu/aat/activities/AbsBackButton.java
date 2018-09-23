@@ -4,7 +4,7 @@ import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class AbsBackButton extends AbsActivity {
+public abstract class AbsBackButton extends AbsActivity {
 
     @Override
     public void onBackPressed() {
@@ -40,8 +40,7 @@ public class AbsBackButton extends AbsActivity {
         }
 
         if (view instanceof ViewGroup) {
-            if (onBackPressedChildren((ViewGroup) view))
-                return true;
+            return onBackPressedChildren((ViewGroup) view);
         }
         return false;
     }

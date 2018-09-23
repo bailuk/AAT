@@ -7,11 +7,9 @@ import android.view.MenuItem;
 
 import ch.bailu.aat.R;
 import ch.bailu.aat.activities.ActivitySwitcher;
-import ch.bailu.aat.activities.NominatimActivity;
 import ch.bailu.aat.activities.PreferencesActivity;
 import ch.bailu.aat.preferences.SolidBacklight;
 import ch.bailu.aat.preferences.SolidMapTileStack;
-import ch.bailu.aat.preferences.SolidOverlayFileList;
 import ch.bailu.aat.preferences.SolidPreset;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.tracker.State;

@@ -16,7 +16,6 @@ import org.mapsforge.map.android.graphics.AndroidGraphicFactory;
 
 import ch.bailu.aat.util.graphic.SyncTileBitmap;
 import ch.bailu.aat.util.ui.AppDensity;
-import ch.bailu.aat.util.ui.AppLog;
 
 public class NodeBitmap {
 

@@ -16,7 +16,6 @@ import ch.bailu.aat.map.layer.grid.Crosshair;
 import ch.bailu.aat.map.layer.grid.GridDynLayer;
 import ch.bailu.aat.map.mapsforge.MapsForgeView;
 import ch.bailu.aat.services.ServiceContext;
-import ch.bailu.aat.services.editor.EditorHelper;
 import ch.bailu.aat.views.bar.ControlBar;
 
 public class MapFactory {

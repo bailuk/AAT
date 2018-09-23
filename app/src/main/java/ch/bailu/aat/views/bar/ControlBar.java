@@ -4,14 +4,12 @@ import android.content.Context;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.HorizontalScrollView;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 
 import ch.bailu.aat.preferences.SolidIndexList;
 import ch.bailu.aat.util.ui.AppLayout;
 import ch.bailu.aat.util.ui.AppLog;
-import ch.bailu.aat.views.ImageButtonView;
 import ch.bailu.aat.views.MyImageButton;
 import ch.bailu.aat.views.preferences.SolidImageButton;
 

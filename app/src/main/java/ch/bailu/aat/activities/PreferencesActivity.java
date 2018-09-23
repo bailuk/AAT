@@ -7,7 +7,6 @@ import android.os.Bundle;
 import ch.bailu.aat.R;
 import ch.bailu.aat.preferences.SolidFile;
 import ch.bailu.aat.preferences.SolidPresetCount;
-import ch.bailu.aat.util.ui.AppLog;
 import ch.bailu.aat.views.ContentView;
 import ch.bailu.aat.views.bar.MainControlBar;
 import ch.bailu.aat.views.description.MultiView;

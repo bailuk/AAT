@@ -6,7 +6,6 @@ import android.widget.LinearLayout;
 
 import org.mapsforge.core.model.Point;
 
-import ch.bailu.aat.activities.AbsActivity;
 import ch.bailu.aat.activities.AbsBackButton;
 import ch.bailu.aat.map.MapColor;
 import ch.bailu.aat.map.MapContext;

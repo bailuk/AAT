@@ -2,8 +2,6 @@ package ch.bailu.aat.services.location;
 
 import android.content.Context;
 
-import ch.bailu.aat.util.ui.AppLog;
-
 public class Trigger {
     private static final int LOW =-1;
     private static final int NEUTRAL = 0;

@@ -6,8 +6,6 @@ import android.graphics.Color;
 import org.mapsforge.core.graphics.Paint;
 import org.mapsforge.core.model.Point;
 
-import ch.bailu.aat.gpx.InfoID;
-import ch.bailu.aat.map.MapColor;
 import ch.bailu.aat.map.MapContext;
 import ch.bailu.aat.map.MapPaint;
 import ch.bailu.aat.map.layer.gpx.GpxLayer;

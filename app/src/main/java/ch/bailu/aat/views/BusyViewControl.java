@@ -9,7 +9,7 @@ public class BusyViewControl {
     private static final int DEFAULT_ID=-1;
 
     public final BusyViewContainer busy;
-    private SparseBooleanArray isWaiting = new SparseBooleanArray(5);
+    private final SparseBooleanArray isWaiting = new SparseBooleanArray(5);
 
 
 

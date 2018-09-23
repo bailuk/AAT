@@ -4,10 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
-import ch.bailu.aat.gpx.GpxFileWrapper;
 import ch.bailu.aat.gpx.GpxInformation;
-import ch.bailu.aat.gpx.GpxList;
-import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.editor.EditorHelper;
 import ch.bailu.aat.services.editor.EditorInterface;

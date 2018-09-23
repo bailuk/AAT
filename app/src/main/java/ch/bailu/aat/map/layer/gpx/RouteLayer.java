@@ -1,7 +1,6 @@
 package ch.bailu.aat.map.layer.gpx;
 
 import android.content.SharedPreferences;
-import android.graphics.Color;
 
 import org.mapsforge.core.graphics.Paint;
 import org.mapsforge.core.model.Point;

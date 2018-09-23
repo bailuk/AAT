@@ -25,15 +25,15 @@ public class Storage  implements ContextWrapperInterface {
 
 
     @SuppressLint("CommitPrefEdits")
-    private Storage(Context c, String fileName) {
+    private Storage(Context c) {
         context=c;
-        preferences = context.getSharedPreferences(fileName,Context.MODE_PRIVATE);
+        preferences = context.getSharedPreferences(Storage.GLOBAL_NAME,Context.MODE_PRIVATE);
         editor = preferences.edit();
     }
 
 
     public static Storage global(Context c) {
-        return new Storage(c, GLOBAL_NAME);
+        return new Storage(c);
     }
 
 

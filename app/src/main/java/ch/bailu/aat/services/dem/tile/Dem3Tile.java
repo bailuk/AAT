@@ -3,7 +3,6 @@ package ch.bailu.aat.services.dem.tile;
 import ch.bailu.aat.coordinates.SrtmCoordinates;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.background.BackgroundTask;
-import ch.bailu.aat.util.ui.AppLog;
 import ch.bailu.util_java.foc.Foc;
 
 public class Dem3Tile implements ElevationProvider, DemProvider {

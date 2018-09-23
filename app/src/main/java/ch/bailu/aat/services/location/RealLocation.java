@@ -13,7 +13,6 @@ import java.util.List;
 import ch.bailu.aat.gpx.StateID;
 import ch.bailu.aat.util.AppPermission;
 import ch.bailu.aat.util.ContextWrapperInterface;
-import ch.bailu.aat.util.ui.AppLog;
 import ch.bailu.util_java.util.Objects;
 
 

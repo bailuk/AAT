@@ -4,7 +4,6 @@ package ch.bailu.aat.map;
 import android.graphics.Color;
 
 import ch.bailu.aat.gpx.InfoID;
-import ch.bailu.aat.util.ui.AppLog;
 import ch.bailu.aat.util.ui.AppTheme;
 
 public class MapColor {

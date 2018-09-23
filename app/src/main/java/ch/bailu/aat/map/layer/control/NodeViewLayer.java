@@ -8,7 +8,6 @@ import ch.bailu.aat.activities.NodeDetailActivity;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.GpxPointNode;
 import ch.bailu.aat.map.MapContext;
-import ch.bailu.aat.util.HtmlBuilderGpx;
 import ch.bailu.util_java.foc.Foc;
 
 public class NodeViewLayer extends AbsNodeViewLayer {

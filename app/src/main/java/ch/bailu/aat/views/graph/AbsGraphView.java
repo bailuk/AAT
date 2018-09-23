@@ -11,7 +11,6 @@ import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.GpxList;
 import ch.bailu.aat.gpx.interfaces.GpxType;
 import ch.bailu.aat.preferences.SolidUnit;
-import ch.bailu.aat.util.ui.AppLog;
 
 public abstract class AbsGraphView extends ViewGroup implements OnContentUpdatedInterface {
 

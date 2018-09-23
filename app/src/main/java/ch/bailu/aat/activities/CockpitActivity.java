@@ -16,7 +16,6 @@ import ch.bailu.aat.dispatcher.TrackerSource;
 import ch.bailu.aat.dispatcher.TrackerTimerSource;
 import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.map.MapFactory;
-import ch.bailu.aat.services.editor.EditorHelper;
 import ch.bailu.aat.util.ui.AppLayout;
 import ch.bailu.aat.views.ContentView;
 import ch.bailu.aat.views.bar.ControlBar;
