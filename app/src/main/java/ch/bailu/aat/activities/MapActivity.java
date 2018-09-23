@@ -23,7 +23,7 @@ import ch.bailu.aat.views.bar.ControlBar;
 import ch.bailu.aat.views.bar.MainControlBar;
 import ch.bailu.util_java.util.Objects;
 
-public class MapActivity extends AbsDispatcher{
+public class MapActivity extends ActivityContext{
 
     private static final String SOLID_KEY="map";
 

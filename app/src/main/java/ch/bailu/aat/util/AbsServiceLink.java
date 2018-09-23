@@ -4,10 +4,11 @@ package ch.bailu.aat.util;
 import android.os.Bundle;
 
 import ch.bailu.aat.activities.AbsActivity;
+import ch.bailu.aat.activities.AbsBackButton;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.ServiceLink;
 
-public abstract class AbsServiceLink extends AbsActivity {
+public abstract class AbsServiceLink extends AbsBackButton {
 
 
     private ServiceLink serviceLink=null;

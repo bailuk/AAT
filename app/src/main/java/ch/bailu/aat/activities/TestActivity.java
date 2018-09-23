@@ -58,7 +58,7 @@ import ch.bailu.aat.views.StatusTextView;
 import ch.bailu.aat.views.description.MultiView;
 import ch.bailu.aat.views.preferences.VerticalScrollView;
 
-public class TestActivity extends AbsDispatcher {
+public class TestActivity extends ActivityContext {
     private static final String SOLID_KEY = "test";
 
     private StatusTextView statusTextView;

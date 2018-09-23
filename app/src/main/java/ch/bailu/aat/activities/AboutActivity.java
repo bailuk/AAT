@@ -13,7 +13,7 @@ import ch.bailu.aat.views.html.LinkHandler;
 import ch.bailu.util_java.util.FUtil;
 
 
-public class AboutActivity extends AbsDispatcher {
+public class AboutActivity extends ActivityContext {
     private final static String SOLID_KEY = AboutActivity.class.getSimpleName();
 
 

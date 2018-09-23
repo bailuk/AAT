@@ -51,7 +51,7 @@ public class MainControlBar extends ControlBar {
         b.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                acontext.onBackPressed();
+                acontext.onBackPressedMenuBar();
             }
         });
     }

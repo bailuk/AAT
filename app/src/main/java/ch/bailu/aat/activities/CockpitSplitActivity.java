@@ -30,7 +30,7 @@ import ch.bailu.aat.views.description.MultiView;
 import ch.bailu.aat.views.graph.DistanceAltitudeGraphView;
 import ch.bailu.aat.views.graph.GraphViewContainer;
 
-public class CockpitSplitActivity extends AbsDispatcher{
+public class CockpitSplitActivity extends ActivityContext{
     private static final String SOLID_KEY="split";
     private static final String SOLID_MAP_KEY="themap";
 

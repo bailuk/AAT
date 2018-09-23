@@ -26,7 +26,7 @@ import ch.bailu.aat.views.bar.MainControlBar;
 import ch.bailu.aat.views.description.CockpitView;
 import ch.bailu.aat.views.graph.GraphViewContainer;
 
-public class CockpitTabletActivity extends AbsDispatcher {
+public class CockpitTabletActivity extends ActivityContext {
     private final static String SOLID_KEY="cockpit_tablet";
     private final static String SOLID_MAP_KEY=SOLID_KEY+"_map";
 

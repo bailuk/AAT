@@ -45,7 +45,7 @@ import ch.bailu.aat.views.preferences.VerticalScrollView;
 import ch.bailu.util_java.foc.Foc;
 
 
-public abstract class AbsOsmApiActivity extends AbsDispatcher implements OnClickListener {
+public abstract class AbsOsmApiActivity extends ActivityContext implements OnClickListener {
 
     private EditTextTool editor;
     private TextView     preview;

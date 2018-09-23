@@ -29,7 +29,7 @@ import ch.bailu.aat.views.bar.ControlBar;
 import ch.bailu.aat.views.bar.MainControlBar;
 import ch.bailu.aat.views.graph.DistanceAltitudeGraphView;
 
-public class NodeDetailActivity extends AbsDispatcher
+public class NodeDetailActivity extends ActivityContext
         implements OnClickListener, OnContentUpdatedInterface, SeekBar.OnSeekBarChangeListener {
 
 

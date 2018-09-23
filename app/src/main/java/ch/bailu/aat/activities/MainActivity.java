@@ -23,7 +23,7 @@ import ch.bailu.aat.views.preferences.SolidIndexListView;
 import ch.bailu.aat.views.preferences.VerticalScrollView;
 
 
-public class MainActivity extends AbsDispatcher {
+public class MainActivity extends ActivityContext {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

@@ -33,7 +33,7 @@ import ch.bailu.aat.views.graph.GraphViewContainer;
 import ch.bailu.aat.views.preferences.VerticalScrollView;
 import ch.bailu.util_java.foc.Foc;
 
-public class GpxViewActivity extends AbsDispatcher
+public class GpxViewActivity extends ActivityContext
         implements OnClickListener, OnContentUpdatedInterface {
 
     private static final String SOLID_KEY=GpxViewActivity.class.getSimpleName();

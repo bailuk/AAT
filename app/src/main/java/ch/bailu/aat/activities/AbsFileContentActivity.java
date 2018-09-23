@@ -28,7 +28,7 @@ import ch.bailu.aat.views.PreviewView;
 import ch.bailu.aat.views.bar.MainControlBar;
 import ch.bailu.util_java.util.Objects;
 
-public abstract class AbsFileContentActivity extends AbsDispatcher implements OnClickListener {
+public abstract class AbsFileContentActivity extends ActivityContext implements OnClickListener {
 
     private IteratorSource  currentFile;
     protected MyImageButton nextFile, previousFile;

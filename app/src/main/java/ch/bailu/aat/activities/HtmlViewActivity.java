@@ -8,7 +8,7 @@ import ch.bailu.aat.views.ContentView;
 import ch.bailu.aat.views.html.HtmlScrollTextView;
 import ch.bailu.aat.views.bar.MainControlBar;
 
-public class HtmlViewActivity extends AbsDispatcher {
+public class HtmlViewActivity extends ActivityContext {
 
     
     @Override

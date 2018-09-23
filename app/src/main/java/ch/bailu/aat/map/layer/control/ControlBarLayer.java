@@ -7,6 +7,7 @@ import android.widget.LinearLayout;
 import org.mapsforge.core.model.Point;
 
 import ch.bailu.aat.activities.AbsActivity;
+import ch.bailu.aat.activities.AbsBackButton;
 import ch.bailu.aat.map.MapColor;
 import ch.bailu.aat.map.MapContext;
 import ch.bailu.aat.map.MapViewInterface;
@@ -44,7 +45,7 @@ public abstract class ControlBarLayer implements MapLayerInterface, View.OnClick
         map.addView(bar);
 
 
-        map.addView(new AbsActivity.OnBackPressedListener(mc.getContext()) {
+        map.addView(new AbsBackButton.OnBackPressedListener(mc.getContext()) {
             @Override
             public boolean onBackPressed() {
                 if (isBarVisible()) {

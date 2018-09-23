@@ -15,7 +15,7 @@ import ch.bailu.aat.views.preferences.GeneralPreferencesView;
 import ch.bailu.aat.views.preferences.MapTilePreferencesView;
 import ch.bailu.aat.views.preferences.PresetPreferencesView;
 
-public class PreferencesActivity extends AbsDispatcher implements SharedPreferences.OnSharedPreferenceChangeListener {
+public class PreferencesActivity extends ActivityContext implements SharedPreferences.OnSharedPreferenceChangeListener {
 
     public final static String SOLID_KEY=PreferencesActivity.class.getSimpleName();
 

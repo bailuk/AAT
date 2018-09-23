@@ -25,7 +25,7 @@ import ch.bailu.aat.views.description.CockpitView;
 import ch.bailu.aat.views.description.MultiView;
 import ch.bailu.aat.views.graph.GraphViewContainer;
 
-public class CockpitActivity extends AbsDispatcher{
+public class CockpitActivity extends ActivityContext{
 
     private static final String SOLID_KEY="tracker";
 
