@@ -13,8 +13,8 @@ license: [GNU Lesser GPL v3](http://www.gnu.org/licenses/lgpl.html)
 
 ## AAT
 (c) 2011-2018 Lukas Bai bailu@bailu.ch  
-Logo designed by Ibrahim Tenekeci  
 license: [GNU GPLv3 or later](http://www.gnu.org/licenses/gpl.html)  
+Logo designed by Ibrahim Tenekeci  
 
 
 # Availability
@@ -23,7 +23,6 @@ Binary: [F-Droid](https://f-droid.org/repository/browse/?fdid=ch.bailu.aat)
 
 
 # Documentation
-[Getting started](README.gettingstarted.md)  
 [README](README.enduser.md)
 
 

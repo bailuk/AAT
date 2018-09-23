@@ -254,9 +254,7 @@ public class MainActivity extends ActivityContext {
             super(s);
             setTextColor(AppTheme.getHighlightColor3());
 
-            setText(getString(R.string.intro_about)
-                    + " / " + getString(R.string.intro_uiguide)
-                    + " / " + getString(R.string.intro_readme));
+            setText(getString(R.string.intro_about) + " / " + getString(R.string.intro_readme));
         }
 
 

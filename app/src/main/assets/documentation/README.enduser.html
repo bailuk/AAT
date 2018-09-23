@@ -1,5 +1,22 @@
 <h1>README</h1>
 
+<h2>Getting started with the UI</h2>
+
+<h3>Main view</h3>
+
+<p>When starting AAT the first time it shows the <strong>main view</strong>. That's basically a list of sub-views you can open. The first 3 entries are <strong>"Copckpit A, Cockpit B, and Map"</strong> if you have one of these open you can cycle through them with the down arrow. The right arrow switches trough the different pages of the view you are in.</p>
+
+<h3>Map view (or full screen map)</h3>
+
+<p>In the <strong>map view</strong> the down arrow is in the main bar (tap the top area of the map). For zooming and navigating tap the bottom area of the map. For grid, search, overpass etc. tap  the right area of the map. For the draft editor tap the left side of the map. 
+The track that gets currently recorded is always displayed on the map.</p>
+
+<h3>Display recorded track</h3>
+
+<p>Now once you have stopped the tracker go back to the <strong>main view</strong> with your phones back button. Then select <strong>Track list</strong> to show a list of all recorded GPX tracks. Every track has a preview image if you tap on this image you'll get a context menu for this GPX-file. <em>Here you can for example select this track for one of the 4 overlay slots.</em> You can display any recorded track by taping the text area of the list entry. (Always go back to the list with the phones back button). In the track view there are again different pages (graph, summary and map) and you can cycle trough all tracks with the up and down arrow.</p>
+
+<p>There are different pages in the <strong>Track list</strong> view (Access them with &lt; ... > ). This pages offer <strong>a map as an alternative to the track list</strong>, <strong>summary information</strong> and <strong>filter options</strong>.</p>
+
 <h2>Map Tiles</h2>
 
 <p>AAT does not automatically remove downloaded map tiles. This is to...</p>
@@ -69,6 +86,32 @@ for this specific activity. A complete list of activities and MET values can be 
 
 <p>Both MET and weight can be provided in the settings dialog. The MET value is leading the activity's name. For example: <code>6.8 bicycling, leisure, moderate effort</code></p>
 
-<h2>Issues and feedback</h2>
+<h2>Contribution</h2>
+
+<h3>Issues and feedback</h3>
 
 <p>For questions, feedback and bugreports <a href="https://github.com/bailuk/AAT/issues">report an issue</a> or send an e-mail to aat@bailu.ch</p>
+
+<h3>Translation</h3>
+
+<p>You can open a pull request or send me your translation as e-mail or publish them as an issue report.</p>
+
+<h4>File tree structure</h4>
+
+<p>Resources (like text and icons) are located in <a href="https://github.com/bailuk/AAT/tree/master/app/src/main/res">app/src/main/res</a>. </p>
+
+<p>English text strings are in this file: <a href="https://github.com/bailuk/AAT/blob/master/app/src/main/res/values/strings.xml">/app/src/main/res/values/strings.xml</a></p>
+
+<p>German translations are in this file: <a href="https://github.com/bailuk/AAT/blob/master/app/src/main/res/values-de/strings.xml">/app/src/main/res/values-de/strings.xml</a></p>
+
+<h4>Modify</h4>
+
+<ul>
+<li>To add a new language just add a <code>value-&lt;language code&gt;</code> directory containing a <code>strings.xml</code> file.</li>
+<li>Use the English (original) strings.xml as a template.</li>
+<li>Use the same structure (order) as in the original file</li>
+<li>You don't have to translate everything. Just remove an entry and English is used as a fall back.</li>
+<li>You can modify existing strings.</li>
+<li>You can add new suggestions for strings.</li>
+<li>If a ° gets displayed somewhere inside the app it means the string is not yet in the resource file (only in java code). See <a href="https://github.com/bailuk/AAT/blob/master/app/src/main/java/ch/bailu/aat/util/ToDo.java">app/src/main/java/ch/bailu/aat/util/ToDo.java</a></li>
+</ul>
