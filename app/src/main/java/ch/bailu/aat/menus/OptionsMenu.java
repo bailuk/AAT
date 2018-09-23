@@ -19,7 +19,7 @@ import ch.bailu.aat.views.preferences.SolidCheckListDialog;
 import ch.bailu.aat.views.preferences.SolidIndexListDialog;
 
 public class OptionsMenu extends AbsMenu {
-    private MenuItem start, pause, backlight, preferences;
+    private MenuItem start, pause, backlight, preferences, map;
 
     private final ServiceContext scontext;
     
@@ -41,6 +41,8 @@ public class OptionsMenu extends AbsMenu {
         backlight = menu.add(R.string.p_backlight_title);
 
         preferences = menu.add(R.string.intro_settings);
+
+        map = menu.add(R.string.p_map);
     }
 
     @Override
@@ -83,9 +85,12 @@ public class OptionsMenu extends AbsMenu {
 
         } else if (item == preferences) {
             ActivitySwitcher.start(c, PreferencesActivity.class);
+
+
+        } else if (item == map) {
+                new SolidCheckListDialog(new SolidMapTileStack(c));
         } else {
             return false;
-
         }
 
         return true;
