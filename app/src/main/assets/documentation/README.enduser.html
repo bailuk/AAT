@@ -1,23 +1,21 @@
-<h1>README</h1>
+<h1>Getting started with the UI</h1>
 
-<h2>Getting started with the UI</h2>
-
-<h3>Main view</h3>
+<h2>Main view</h2>
 
 <p>When starting AAT the first time it shows the <strong>main view</strong>. That's basically a list of sub-views you can open. The first 3 entries are <strong>"Copckpit A, Cockpit B, and Map"</strong> if you have one of these open you can cycle through them with the down arrow. The right arrow switches trough the different pages of the view you are in.</p>
 
-<h3>Map view (or full screen map)</h3>
+<h2>Map view (or full screen map)</h2>
 
 <p>In the <strong>map view</strong> the down arrow is in the main bar (tap the top area of the map). For zooming and navigating tap the bottom area of the map. For grid, search, overpass etc. tap  the right area of the map. For the draft editor tap the left side of the map. 
 The track that gets currently recorded is always displayed on the map.</p>
 
-<h3>Display recorded track</h3>
+<h2>Display recorded track</h2>
 
 <p>Now once you have stopped the tracker go back to the <strong>main view</strong> with your phones back button. Then select <strong>Track list</strong> to show a list of all recorded GPX tracks. Every track has a preview image if you tap on this image you'll get a context menu for this GPX-file. <em>Here you can for example select this track for one of the 4 overlay slots.</em> You can display any recorded track by taping the text area of the list entry. (Always go back to the list with the phones back button). In the track view there are again different pages (graph, summary and map) and you can cycle trough all tracks with the up and down arrow.</p>
 
 <p>There are different pages in the <strong>Track list</strong> view (Access them with &lt; ... > ). This pages offer <strong>a map as an alternative to the track list</strong>, <strong>summary information</strong> and <strong>filter options</strong>.</p>
 
-<h2>Map Tiles</h2>
+<h1>Map Tiles</h1>
 
 <p>AAT does not automatically remove downloaded map tiles. This is to...</p>
 
@@ -30,9 +28,9 @@ The track that gets currently recorded is always displayed on the map.</p>
 <p>This means that you have to remove old tiles manually from time to time.
 Go to <code>Settings-&gt;Map Tiles</code> to remove old map tiles.</p>
 
-<h2>Offline Maps</h2>
+<h1>Offline Maps</h1>
 
-<h3>Download and store maps:</h3>
+<h2>Download and store maps:</h2>
 
 <ol>
 <li>Download maps and render themes from one of these map providers: <br>
@@ -43,7 +41,7 @@ Example: <code>maps/OAM/</code> contains <code>Alps.map</code></li>
 Example: <code>maps/OAM/OAM/</code> contains <code>andromaps_cycle.xml</code>, <code>symbols/</code>, <code>patterns/</code> and other files.</li>
 </ol>
 
-<h3>Enable offline maps</h3>
+<h2>Enable offline maps</h2>
 
 <ol>
 <li>Inside AAT open the map settings dialog. (<code>Settings-&gt;Map Tiles</code>).</li>
@@ -52,7 +50,7 @@ Example: <code>maps/OAM/OAM/</code> contains <code>andromaps_cycle.xml</code>, <
 <li>Disable Mapnik and enable Mapsforge in <code>Menu-&gt;Map</code>.</li>
 </ol>
 
-<h2>Where to find files?</h2>
+<h1>Where to find files?</h1>
 
 <p>AAT let's you create and view files in GPX format. This files are exchangeable with many other applications. They can also be edited in a text editor. 
 These and other files are stored in subdirectories of the data directory. You can choose the location of the data directory from the settings.
@@ -68,17 +66,17 @@ The structure of the data directory is as follows: </p>
 <li><code>aat_data/dem3</code>          - cached <a href="http://viewfinderpanoramas.org/dem3.html">Digital elevation data</a> from the Shuttle Radar Topography Mission and other sources</li>
 </ul>
 
-<h2>Overpass</h2>
+<h1>Overpass</h1>
 
-<h3>Overview</h3>
+<h2>Overview</h2>
 
 <p>AAT lets you query the <a href="http://wiki.openstreetmap.org/wiki/Overpass_API">Overpass API</a>. Any result of a query can be saved to  <code>aat_data/overlay</code>. It then can be displayed as an overlay inside the map-view whenever needed.</p>
 
-<h3>Example</h3>
+<h2>Example</h2>
 
 <p><code>[amenity=restaurant]</code> will get you list of all restaurants located inside the area that was visible on the map-view before opening the Overpass dialog. </p>
 
-<h2>Calculating calories</h2>
+<h1>Calculating calories</h1>
 
 <p>AAT uses the formula <code>time[hours] * MET * weight[kg]</code> to calculate the kcal used for a specific activity.
 MET stands for <a href="https://en.wikipedia.org/wiki/Metabolic_equivalent">metabolic equivalent</a>. The higher the value, the more energy you would use
@@ -86,17 +84,17 @@ for this specific activity. A complete list of activities and MET values can be 
 
 <p>Both MET and weight can be provided in the settings dialog. The MET value is leading the activity's name. For example: <code>6.8 bicycling, leisure, moderate effort</code></p>
 
-<h2>Contribution</h2>
+<h1>Contribution</h1>
 
-<h3>Issues and feedback</h3>
+<h2>Issues and feedback</h2>
 
 <p>For questions, feedback and bugreports <a href="https://github.com/bailuk/AAT/issues">report an issue</a> or send an e-mail to aat@bailu.ch</p>
 
-<h3>Translation</h3>
+<h2>Translation</h2>
 
 <p>You can open a pull request or send me your translation as e-mail or publish them as an issue report.</p>
 
-<h4>File tree structure</h4>
+<h3>File tree structure</h3>
 
 <p>Resources (like text and icons) are located in <a href="https://github.com/bailuk/AAT/tree/master/app/src/main/res">app/src/main/res</a>. </p>
 
@@ -104,7 +102,7 @@ for this specific activity. A complete list of activities and MET values can be 
 
 <p>German translations are in this file: <a href="https://github.com/bailuk/AAT/blob/master/app/src/main/res/values-de/strings.xml">/app/src/main/res/values-de/strings.xml</a></p>
 
-<h4>Modify</h4>
+<h3>Modify</h3>
 
 <ul>
 <li>To add a new language just add a <code>value-&lt;language code&gt;</code> directory containing a <code>strings.xml</code> file.</li>
