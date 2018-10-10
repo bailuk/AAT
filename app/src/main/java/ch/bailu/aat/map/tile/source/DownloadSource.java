@@ -102,9 +102,9 @@ public class DownloadSource extends Source {
     public final static DownloadSource MAPNIK =
             new DownloadSource("Mapnik",
                     OPAQUE,
-                    "http://a.tile.openstreetmap.org/",
-                    "http://b.tile.openstreetmap.org/",
-                    "http://c.tile.openstreetmap.org/") {
+                    "https://a.tile.openstreetmap.org/",
+                    "https://b.tile.openstreetmap.org/",
+                    "https://c.tile.openstreetmap.org/") {
                 @Override
                 public int getPaintFlags() {
                     return Paint.FILTER_BITMAP_FLAG;
@@ -115,24 +115,24 @@ public class DownloadSource extends Source {
     public final static DownloadSource TRAIL_MTB =
             new DownloadSource("TrailMTB",
                     TRANSPARENT,
-                    "http://tile.waymarkedtrails.org/mtb/");
+                    "https://tile.waymarkedtrails.org/mtb/");
 
     public final static DownloadSource TRAIL_SKATING =
             new DownloadSource("TrailSkating",
                     TRANSPARENT,
-                    "http://tile.waymarkedtrails.org/skating/");
+                    "https://tile.waymarkedtrails.org/skating/");
 
 
     public final static DownloadSource TRAIL_HIKING =
             new DownloadSource("TrailHiking",
                     TRANSPARENT,
-                    "http://tile.waymarkedtrails.org/hiking/");
+                    "https://tile.waymarkedtrails.org/hiking/");
 
 
     public final static DownloadSource TRAIL_CYCLING =
             new DownloadSource("TrailCycling",
                     TRANSPARENT,
-                    "http://tile.waymarkedtrails.org/cycling/");
+                    "https://tile.waymarkedtrails.org/cycling/");
 
 
 
