@@ -52,13 +52,13 @@ public class Downloads {
                 AppBroadcaster.ON_DOWNLOADS_CHANGED, t.getFile(), t.getSource());
     }
 
-    public static Foc getFile() {
+    public synchronized static Foc getFile() {
         if (downloads.isEmpty()==false) return downloads.get(0).getFile();
 
         return null;
     }
 
-    public static URX getSource() {
+    public synchronized static URX getSource() {
         if (downloads.isEmpty()==false) return downloads.get(0).getSource();
 
         return null;
