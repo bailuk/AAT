@@ -1,4 +1,4 @@
-<img alt="Logo" src="icons/logo/iconSVG.svg" width="80" />
+[!(fastlane/metadata/android/en-US/images/featureGraphic.png)]
 
 
 # AAT Another Activity Tracker
