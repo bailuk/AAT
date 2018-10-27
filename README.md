@@ -1,5 +1,16 @@
-# About
-[AAT - Another Activity Tracker](https://bailu.ch/aat) is a GPS-tracking application for tracking sportive activities, with emphasis on cycling. It uses MapsForge to display map tiles and offline maps from the OpenStreetMap project.
+<img alt="Logo" src="icons/logo/iconSVG.svg" width="80" />
+
+
+# AAT Another Activity Tracker
+AAT is a GPS-tracking application for tracking sportive activities, with emphasis on cycling.
+It features:
+* Display live tracking on different cockpit and map views.
+* Store tracks in [standard GPX format](https://www.topografix.com/gpx.asp) for sharing with other applications.
+* Display [offline](http://download.mapsforge.org) as well as [tile based](https://www.openstreetmap.org) maps.
+* Tile based overlays for displaying cycle and hiking routes [(Waymarked Trails)](http://www.waymarkedtrails.org/).
+* Integration of [Overpass](http://wiki.openstreetmap.org/wiki/Overpass_API) and [Nominatim](http://nominatim.openstreetmap.org).
+* Simple GPX editor for quick route planing.
+* GPS independent altitude information and hill shading.
 
 
 # Copyright
@@ -28,3 +39,18 @@ Binary: [F-Droid](https://f-droid.org/repository/browse/?fdid=ch.bailu.aat)
 
 # Donate  
 You can support this project with a [donation](https://bailu.ch/aat/donate.html)
+
+
+# Screenshots
+<div style="display:flex;">
+<img alt="Screenshot" src="fastlane/metadata/android/en-US/images/phoneScreenshots/screen1.png" width="30%">
+<img alt="Screenshot" src="fastlane/metadata/android/en-US/images/phoneScreenshots/screen2.png" width="30%">
+<img alt="Screenshot" src="fastlane/metadata/android/en-US/images/phoneScreenshots/screen3.png" width="30%">
+<img alt="Screenshot" src="fastlane/metadata/android/en-US/images/phoneScreenshots/screen4.png" width="30%">
+<img alt="Screenshot" src="fastlane/metadata/android/en-US/images/phoneScreenshots/screen5.png" width="30%">
+<img alt="Screenshot" src="fastlane/metadata/android/en-US/images/phoneScreenshots/screen6.png" width="30%">
+<img alt="Screenshot" src="fastlane/metadata/android/en-US/images/phoneScreenshots/screen7.png" width="30%">
+<img alt="Screenshot" src="fastlane/metadata/android/en-US/images/phoneScreenshots/screen8.png" width="30%">
+</div>
+
+
