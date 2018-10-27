@@ -1,1 +1,1 @@
-A GPS-tracking application for tracking sportive activities.
+AAT is a GPS-tracking application for tracking sportive activities, with emphasis on cycling.

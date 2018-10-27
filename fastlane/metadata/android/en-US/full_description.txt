@@ -1,7 +1,13 @@
-A GPS-tracking application for tracking sportive activities, with emphasis on cycling. 
-It uses MapsForge to display map tiles and offline maps from the OpenStreetMap project.
+<p>AAT is a GPS-tracking application for tracking sportive activities, with emphasis on cycling.</p>
 
-More information on GitHub:
-* [https://github.com/bailuk/AAT/blob/master/README.md README.md]
-* [https://github.com/bailuk/AAT/blob/master/README.enduser.md README.enduser.md]
+<p><b>Features</b></p>
 
+<ul>
+<li>Display live tracking on different cockpit and map views.</li>
+<li>Store tracks in <a href="https://www.topografix.com/gpx.asp">standard GPX format</a> for sharing with other applications.</li>
+<li>Display <a href="http://download.mapsforge.org">offline</a> as well as <a href="https://www.openstreetmap.org">tile based</a> maps.</li>
+<li>Tile based overlays for displaying cycle and hiking routes <a href="http://www.waymarkedtrails.org/">(Waymarked Trails)</a>.</li>
+<li>Integration of <a href="http://wiki.openstreetmap.org/wiki/Overpass_API">Overpass</a> and <a href="http://nominatim.openstreetmap.org">Nominatim</a>.</li>
+<li>Simple GPX editor for quick route planing.</li>
+<li>GPS independent altitude information and hill shading.</li>
+</ul>
