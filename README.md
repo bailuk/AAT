@@ -1,4 +1,4 @@
-<img alt="Logo" src="icons/logo/icon.png"/>
+<img alt="Logo" src="icons/logo/icon.png"/ width="100">
 
 # AAT Another Activity Tracker
 AAT is a GPS-tracking application for tracking sportive activities, with emphasis on cycling.
