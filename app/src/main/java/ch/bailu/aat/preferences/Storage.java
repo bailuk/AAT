@@ -1,6 +1,5 @@
 package ch.bailu.aat.preferences;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
@@ -24,7 +23,6 @@ public class Storage  implements ContextWrapperInterface {
     private final Context context;
 
 
-    @SuppressLint("CommitPrefEdits")
     private Storage(Context c) {
         context=c;
         preferences = context.getSharedPreferences(Storage.GLOBAL_NAME,Context.MODE_PRIVATE);
@@ -37,32 +35,20 @@ public class Storage  implements ContextWrapperInterface {
     }
 
 
-    public static Storage map(Context context) {
-        return global(context);  // TODO remove
+    private FocFile getBackupFile() {
+        return new FocFile(new File(Environment.getExternalStorageDirectory(),
+                "aat_preferences.xml"));
     }
 
-
-
-
-    public static Storage activity(Context c) {
-        return global(c); // TODO remove
-    }
-
-
-    public static Storage preset(Context c) {
-        return global(c); // TODO remove
-    }
-
-
-    public void backup() throws Exception {
-        final Foc source = new FocFile(new File(getSharedPrefsDirectory(context),  GLOBAL_NAME + ".xml"));
-        final Foc target = new FocFile(new File(Environment.getExternalStorageDirectory(), "aat_preferences.xml"));
+    public void backup() {
+        final Foc source = new FocFile(new File(getSharedPrefsDirectory(), GLOBAL_NAME + ".xml"));
+        final Foc target = getBackupFile();
 
         source.cp(target);
     }
 
 
-    public static File getSharedPrefsDirectory(Context context) {
+    public File getSharedPrefsDirectory() {
         final File data = context.getFilesDir();
         
         return new File(data.getParent(), "shared_prefs");
@@ -70,8 +56,8 @@ public class Storage  implements ContextWrapperInterface {
 
 
     public void restore() throws Exception {
-        final Foc target = new FocFile(new File(getSharedPrefsDirectory(context) +  "/restore.xml"));
-        final Foc source = new FocFile(new File(Environment.getExternalStorageDirectory(), "/aat_preferences.xml"));
+        final Foc target = new FocFile(new File(getSharedPrefsDirectory() +  "/restore.xml"));
+        final Foc source = getBackupFile();
 
         target.rm();
         source.cp(target);
@@ -79,10 +65,6 @@ public class Storage  implements ContextWrapperInterface {
 
 
         final SharedPreferences restore = context.getSharedPreferences("restore", Context.MODE_PRIVATE);
-
-
-
-
 
         for(Entry<String,?> entry : restore.getAll().entrySet()){ 
             Object v = entry.getValue(); 
@@ -112,7 +94,7 @@ public class Storage  implements ContextWrapperInterface {
     public void writeString(String key, String value) {
         if (!readString(key).equals(value)) {
             editor.putString(key, value);
-            editor.commit();
+            editor.apply();
         }
     }
 
@@ -120,22 +102,12 @@ public class Storage  implements ContextWrapperInterface {
         return preferences.getInt(key, 0);
     }
 
-    public void writeBoolean(String key, boolean v) {
-        if (readBoolean(key) != v) {
-            editor.putBoolean(key, v);
-            editor.commit();
-        }        
-    }
 
     public void writeInteger(String key, int v) {
         if (readInteger(key) != v) {
             editor.putInt(key, v);
-            editor.commit();
+            editor.apply();
         }
-    }
-
-    public boolean readBoolean(String key) {
-        return preferences.getBoolean(key, false);
     }
 
     public long readLong(String key) {
@@ -145,7 +117,7 @@ public class Storage  implements ContextWrapperInterface {
     public void writeLong(String key, long v) {
         if (readLong(key) != v) {
             editor.putLong(key, v);
-            editor.commit();
+            editor.apply();
         }
     }
 
