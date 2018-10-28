@@ -8,6 +8,7 @@ import android.widget.LinearLayout;
 import java.util.ArrayList;
 
 import ch.bailu.aat.activities.ActivitySwitcher;
+import ch.bailu.aat.preferences.SolidStatusMessages;
 import ch.bailu.aat.util.ui.AppLog;
 
 public class ContentView extends FrameLayout{
@@ -19,6 +20,9 @@ public class ContentView extends FrameLayout{
 
     public ContentView(Context context) {
         super(context);
+
+
+
         mainContent = new LinearLayout(context);
         mainContent.setOrientation(LinearLayout.VERTICAL);
         addView(mainContent);
@@ -27,8 +31,15 @@ public class ContentView extends FrameLayout{
         messages.setOrientation(LinearLayout.VERTICAL);
         addView(messages);
 
-        addM(new DownloadMessageView(context));
-        addM(new FileMessageView(context));
+        SolidStatusMessages smessages = new SolidStatusMessages(context);
+        if (smessages.showURL()) {
+            addM(new DownloadMessageView(context));
+        }
+
+        if (smessages.showPath()) {
+            addM(new FileMessageView(context));
+        }
+
         addM(new LogInfoMessageView(context));
     }
 

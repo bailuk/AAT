@@ -2,9 +2,16 @@ package ch.bailu.aat.preferences;
 
 import android.content.Context;
 
+import ch.bailu.aat.util.ToDo;
+
 public class SolidStatusMessages extends SolidIndexList {
 
     private static final String KEY = "SatusMessages";
+
+    private static final String VAL[] = {ToDo.translate("Download summary"),
+            ToDo.translate("URL"),
+            ToDo.translate("URL and filepath"),
+            ToDo.translate("None")};
 
     public SolidStatusMessages(Context c) {
         super(c, KEY);
@@ -12,11 +19,31 @@ public class SolidStatusMessages extends SolidIndexList {
 
     @Override
     public int length() {
-        return 0;
+        return VAL.length;
     }
 
     @Override
     protected String getValueAsString(int i) {
-        return null;
+        return VAL[i];
     }
+
+    @Override
+    public String getLabel() {
+        return ToDo.translate(KEY);
+    }
+
+
+    public boolean showPath() {
+        return getIndex()==2;
+    }
+
+    public boolean showURL() {
+        return getIndex()==1 || getIndex()==2;
+    }
+
+    public boolean showSummary() {
+        return getIndex()==0;
+    }
+
+
 }
