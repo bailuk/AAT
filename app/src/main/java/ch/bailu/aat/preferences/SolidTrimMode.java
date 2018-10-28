@@ -14,7 +14,7 @@ public class SolidTrimMode extends SolidStaticIndexList {
     private static String[] modes = null;
 
     public SolidTrimMode(Context context) {
-        super(Storage.global(context),
+        super(context,
                 SolidTrimMode.class.getSimpleName(),
                 generateModes(context));
 

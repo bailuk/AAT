@@ -17,7 +17,7 @@ public class SolidRenderTheme extends SolidFile {
 
 
     public SolidRenderTheme(Context c) {
-        super(Storage.global(c), SolidRenderTheme.class.getSimpleName());
+        super(c, SolidRenderTheme.class.getSimpleName());
     }
 
 

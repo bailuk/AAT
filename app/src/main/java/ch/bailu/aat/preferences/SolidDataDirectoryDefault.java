@@ -11,10 +11,9 @@ import ch.bailu.util_java.foc.Foc;
 import ch.bailu.util_java.util.Objects;
 
 public class SolidDataDirectoryDefault extends SolidFile {
-    private static final String[] POSTFIX={"aat_data"};
 
     public SolidDataDirectoryDefault(Context c) {
-        super(Storage.global(c), SolidDataDirectoryDefault.class.getSimpleName());
+        super(c, SolidDataDirectoryDefault.class.getSimpleName());
     }
 
 

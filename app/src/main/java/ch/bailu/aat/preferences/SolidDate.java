@@ -1,5 +1,6 @@
 package ch.bailu.aat.preferences;
 
+import android.content.Context;
 import android.text.format.DateFormat;
 
 import java.util.GregorianCalendar;
@@ -7,8 +8,8 @@ import java.util.GregorianCalendar;
 public class SolidDate extends SolidLong {
     private final String label;
 
-    public SolidDate(Storage s, String k, String l) {
-        super(s, k);
+    public SolidDate(Context c, String k, String l) {
+        super(c, k);
         label = l;
     }
 

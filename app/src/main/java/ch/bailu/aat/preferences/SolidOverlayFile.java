@@ -12,13 +12,11 @@ public class SolidOverlayFile  implements SolidTypeInterface {
 
     private final SolidString path;
     private final SolidBoolean enabled;
-    private final Storage storage;
 
     
     public SolidOverlayFile(Context c, int i) {
-        storage = Storage.global(c);
-        path = new SolidString(storage, KEY_NAME+i);
-        enabled = new SolidBoolean(storage, KEY_ENABLED+i);
+        path = new SolidString(c, KEY_NAME+i);
+        enabled = new SolidBoolean(c, KEY_ENABLED+i);
     }
 
 
@@ -60,7 +58,7 @@ public class SolidOverlayFile  implements SolidTypeInterface {
 
     @Override
     public Context getContext() {
-        return storage.getContext();
+        return enabled.getContext();
     }
 
 
@@ -72,7 +70,7 @@ public class SolidOverlayFile  implements SolidTypeInterface {
 
     @Override
     public Storage getStorage() {
-        return storage;
+        return enabled.getStorage();
     }
 
 
@@ -84,14 +82,14 @@ public class SolidOverlayFile  implements SolidTypeInterface {
 
     @Override
     public void register(OnSharedPreferenceChangeListener listener) {
-        storage.register(listener);
+        getStorage().register(listener);
         
     }
 
 
     @Override
     public void unregister(OnSharedPreferenceChangeListener listener) {
-        storage.unregister(listener);
+        getStorage().unregister(listener);
         
     }
 

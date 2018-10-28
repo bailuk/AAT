@@ -1,10 +1,13 @@
 package ch.bailu.aat.preferences;
 
+import android.content.Context;
+
 public class SolidStatusMessages extends SolidIndexList {
 
+    private static final String KEY = "SatusMessages";
 
-    public SolidStatusMessages(Storage s, String k) {
-        super(s, k);
+    public SolidStatusMessages(Context c) {
+        super(c, KEY);
     }
 
     @Override

@@ -12,7 +12,7 @@ public class SolidDataDirectory extends SolidFile {
     private final SolidDataDirectoryDefault defaultDirectory;
 
     public SolidDataDirectory(Context c) {
-        super(Storage.global(c), SolidDataDirectory.class.getSimpleName());
+        super(c, SolidDataDirectory.class.getSimpleName());
         defaultDirectory = new SolidDataDirectoryDefault(getContext());
     }
 

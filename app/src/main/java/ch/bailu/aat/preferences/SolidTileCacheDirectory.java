@@ -13,7 +13,7 @@ import ch.bailu.util_java.foc.Foc;
 public class SolidTileCacheDirectory extends SolidFile {
 
     public SolidTileCacheDirectory(Context c) {
-        super(Storage.global(c), SolidTileCacheDirectory.class.getSimpleName());
+        super(c, SolidTileCacheDirectory.class.getSimpleName());
     }
 
 

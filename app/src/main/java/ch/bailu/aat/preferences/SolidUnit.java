@@ -16,7 +16,7 @@ public class SolidUnit extends SolidStaticIndexList {
     static private final String ALT_UNIT[]    = {"m", "f", "m", "m"};
     
     public SolidUnit(Context c) {
-        super(Storage.global(c), KEY, 
+        super(c, KEY,
                 c.getResources().getStringArray(R.array.p_unit_list));
     }
     

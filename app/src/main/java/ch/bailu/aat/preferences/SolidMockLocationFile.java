@@ -7,7 +7,7 @@ public class SolidMockLocationFile extends SolidString {
 
 
     public SolidMockLocationFile(Context c) {
-        super(Storage.global(c), KEY);
+        super(c, KEY);
     }
 
 }

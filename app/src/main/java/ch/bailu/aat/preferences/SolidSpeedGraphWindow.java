@@ -39,7 +39,7 @@ public class SolidSpeedGraphWindow extends SolidIndexList {
 
 
     public SolidSpeedGraphWindow(Context c, String key) {
-        super(Storage.preset(c), KEY + key);
+        super(c, KEY + key);
         distanceDescription = new DistanceDescription(c);
     }
 

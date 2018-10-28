@@ -12,7 +12,7 @@ public class SolidCacheSize extends SolidIndexList {
 
 
     public SolidCacheSize(Context c) {
-        super(Storage.global(c), KEY);
+        super(c, KEY);
 
         if (sizes == null) {
             long max = Runtime.getRuntime().maxMemory();

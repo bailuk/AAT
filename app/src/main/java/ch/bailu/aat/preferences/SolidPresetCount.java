@@ -12,7 +12,7 @@ public class SolidPresetCount extends SolidIndexList {
     public final static int DEFAULT=5;
 
     public SolidPresetCount(Context c) {
-        super(Storage.global(c), KEY);
+        super(c, KEY);
     }
 
     public int getValue(int v) {

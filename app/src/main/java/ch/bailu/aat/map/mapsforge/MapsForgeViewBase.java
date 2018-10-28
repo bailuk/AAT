@@ -54,7 +54,7 @@ public class MapsForgeViewBase extends MapView implements
         mcontext = new MapsForgeContext(this, sc, key, d);
         add(mcontext, mcontext);
 
-        storage = Storage.global(mcontext.getContext());
+        storage = new Storage(mcontext.getContext());
 
         getMapScaleBar().setVisible(false);
         setBuiltInZoomControls(false);

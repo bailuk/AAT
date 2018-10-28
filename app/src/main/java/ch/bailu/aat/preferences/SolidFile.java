@@ -19,8 +19,8 @@ public abstract class SolidFile extends SolidString {
 
 
 
-    public SolidFile(Storage s, String k) {
-        super(s, k);
+    public SolidFile(Context c, String k) {
+        super(c, k);
     }
 
 
@@ -99,9 +99,10 @@ public abstract class SolidFile extends SolidString {
 
                     requestPersistablePermission(c, uri);
 
-                    Storage.global(c).writeString(browseDirKey, ""); // forces update notification
+                    Storage storage = new Storage(c);
+                    storage.writeString(browseDirKey, ""); // forces update notification
                     // (needed because permission changed)
-                    Storage.global(c).writeString(browseDirKey, uri.toString());
+                    storage.writeString(browseDirKey, uri.toString());
                 }
             }
             browseDirKey = null;

@@ -11,7 +11,7 @@ import ch.bailu.util_java.foc.Foc;
 
 public class SolidExternalDirectory extends SolidFile {
     public SolidExternalDirectory(Context c) {
-        super(Storage.global(c), "ExternalDirectory");
+        super(c, "ExternalDirectory");
     }
 
     private final static String[] KNOWN_DIRS = {

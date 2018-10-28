@@ -12,7 +12,7 @@ public class PreferencesFromSdcard extends UnitTest {
 
     @Override
     public void test() throws Exception {
-        Storage storage = Storage.global(getContext());
+        Storage storage = new Storage(getContext());
         storage.restore();        
     }
 

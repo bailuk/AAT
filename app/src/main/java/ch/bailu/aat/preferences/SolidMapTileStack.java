@@ -39,10 +39,9 @@ public class SolidMapTileStack extends SolidCheckList {
 
     // FIXME: use preset for tile stack
     private SolidMapTileStack (Context context, int preset) {
-        Storage s = Storage.global(context);
 
         for (int i=0; i<enabledArray.length; i++) {
-            enabledArray[i]=new SolidBoolean(s, KEY+preset+"_"+i);
+            enabledArray[i]=new SolidBoolean(context, KEY+preset+"_"+i);
         }
     }
 

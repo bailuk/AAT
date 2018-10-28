@@ -9,7 +9,7 @@ import ch.bailu.aat.map.tile.source.Source;
 public abstract class SolidEnableTileCache extends SolidBoolean {
 
     public SolidEnableTileCache(Context c, String key) {
-        super(Storage.global(c),
+        super(c,
                 SolidEnableTileCache.class.getSimpleName() + key);
     }
 

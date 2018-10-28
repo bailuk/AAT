@@ -23,15 +23,10 @@ public class Storage  implements ContextWrapperInterface {
     private final Context context;
 
 
-    private Storage(Context c) {
+    public Storage(Context c) {
         context=c;
         preferences = context.getSharedPreferences(Storage.GLOBAL_NAME,Context.MODE_PRIVATE);
         editor = preferences.edit();
-    }
-
-
-    public static Storage global(Context c) {
-        return new Storage(c);
     }
 
 

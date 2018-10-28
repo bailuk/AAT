@@ -21,8 +21,8 @@ public class SolidBoolean extends SolidStaticIndexList {
         return label;
     }
 
-    public SolidBoolean(Storage s, String k) {
-        super(s, k, generateLabel(s.getContext()));
+    public SolidBoolean(Context c, String k) {
+        super(c, k, generateLabel(c));
     }
 
     public boolean isEnabled() {

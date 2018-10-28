@@ -7,13 +7,12 @@ import ch.bailu.aat.util.fs.AppDirectory;
 import ch.bailu.util_java.foc.Foc;
 
 public class SolidPreset extends SolidIndexList {
-    //public final int PRESET_COUNT=15;
 
     final private static String KEY="preset";
 
 
     public SolidPreset(Context c) {
-        super(Storage.global(c), KEY);
+        super(c, KEY);
     }
 
     @Override

@@ -30,7 +30,7 @@ public class SolidAccuracyFilter extends SolidIndexList {
     private final SolidUnit sunit;
 
     public SolidAccuracyFilter(Context c, int i) {
-        super(Storage.preset(c), KEY + i);
+        super(c, KEY + i);
         sunit = new SolidUnit(c);
     }
 

@@ -34,15 +34,12 @@ public class SolidTileSize extends SolidIndexList {
 
     };
 
-    public SolidTileSize(Storage s) {
-        super(s, KEY);
-        tileSizeDP = new AppDensity(s.getContext()).toPixel_i(DEFAULT_TILESIZE);
+    public SolidTileSize(Context c) {
+        super(c, KEY);
+        tileSizeDP = new AppDensity(c).toPixel_i(DEFAULT_TILESIZE);
     }
 
 
-    public SolidTileSize(Context context) {
-        this(Storage.global(context));
-    }
 
 
     public int getTileSize() {

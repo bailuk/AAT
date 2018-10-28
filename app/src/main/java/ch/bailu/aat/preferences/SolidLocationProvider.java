@@ -32,7 +32,7 @@ public class SolidLocationProvider extends SolidStaticIndexList {
 
 
     public SolidLocationProvider(Context c) {
-        super(Storage.global(c), KEY,
+        super(c, KEY,
                 generateProviderList(c));
     }
     

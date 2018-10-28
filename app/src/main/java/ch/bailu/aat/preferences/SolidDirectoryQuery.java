@@ -22,7 +22,7 @@ public class SolidDirectoryQuery extends SolidFile {
     
 
     public SolidDirectoryQuery(Context c) {
-        super(Storage.global(c), KEY_DIR_DIRECTORY);
+        super(c, KEY_DIR_DIRECTORY);
 
     }
 
@@ -31,23 +31,23 @@ public class SolidDirectoryQuery extends SolidFile {
     }
     
     public SolidInteger getPosition() {
-        return new SolidInteger(getStorage(), KEY_DIR_INDEX+ getValueAsString());
+        return new SolidInteger(getContext(), KEY_DIR_INDEX+ getValueAsString());
     }
 
 
     public SolidBoolean getUseDateStart() {
-        return new SolidBoolean(getStorage(), KEY_USE_DATE_START+ getValueAsString());
+        return new SolidBoolean(getContext(), KEY_USE_DATE_START+ getValueAsString());
     }
 
 
     public SolidBoolean getUseDateEnd() {
-        return new SolidBoolean(getStorage(), KEY_USE_DATE_END+ getValueAsString());
+        return new SolidBoolean(getContext(), KEY_USE_DATE_END+ getValueAsString());
     }
 
 
     public SolidDate getDateStart() {
         return new SolidDate(
-                getStorage(),
+                getContext(),
                 KEY_DATE_START+ getValueAsString(),
                 getContext().getString(R.string.filter_date_start));
 
@@ -56,19 +56,19 @@ public class SolidDirectoryQuery extends SolidFile {
 
     public SolidDate getDateTo() {
         return new SolidDate(
-                getStorage(),
+                getContext(),
                 KEY_DATE_END+ getValueAsString(),
                 getContext().getString(R.string.filter_date_to));
     }
 
     public SolidBoolean getUseGeo() {
-        return new SolidBoolean(getStorage(), KEY_USE_GEO+ getValueAsString());
+        return new SolidBoolean(getContext(), KEY_USE_GEO+ getValueAsString());
 
     }
 
     public SolidBoundingBox getBoundingBox() {
         return new SolidBoundingBox(
-                getStorage(),
+                getContext(),
                 KEY_BOUNDING_BOX+ getValueAsString(),
                 getContext().getString(R.string.filter_geo));
     }

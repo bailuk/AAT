@@ -1,5 +1,7 @@
 package ch.bailu.aat.preferences;
 
+import android.content.Context;
+
 import ch.bailu.aat.util.ui.AppLog;
 
 public class SolidLong extends AbsSolidType {
@@ -9,8 +11,8 @@ public class SolidLong extends AbsSolidType {
     private final Storage storage;
         
         
-    public SolidLong(Storage s, String k) {
-        storage=s;
+    public SolidLong(Context c, String k) {
+        storage=new Storage(c);
         key=k;
     }
 

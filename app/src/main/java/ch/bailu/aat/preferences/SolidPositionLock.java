@@ -9,7 +9,7 @@ public class SolidPositionLock extends SolidBoolean {
     private static final String POSTFIX = "_POSITION_LOCK";
     
     public SolidPositionLock(Context c, String k) {
-        super(Storage.map(c), k + POSTFIX);
+        super(c, k + POSTFIX);
     }
     
     

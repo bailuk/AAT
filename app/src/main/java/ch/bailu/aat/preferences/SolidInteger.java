@@ -1,5 +1,7 @@
 package ch.bailu.aat.preferences;
 
+import android.content.Context;
+
 import ch.bailu.aat.util.ui.AppLog;
 
 public class SolidInteger extends AbsSolidType {
@@ -7,8 +9,8 @@ public class SolidInteger extends AbsSolidType {
     private final Storage storage;
     
     
-    public SolidInteger(Storage s, String k) {
-        storage=s;
+    public SolidInteger(Context c, String k) {
+        storage=new Storage(c);
         key=k;
     }
 

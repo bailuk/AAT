@@ -12,8 +12,8 @@ public class PreferencesToSdcard extends UnitTest {
     }
 
     @Override
-    public void test() throws Exception {
-        Storage storage = Storage.global(getContext());
+    public void test() {
+        Storage storage = new Storage(getContext());
         
         storage.backup();
     }

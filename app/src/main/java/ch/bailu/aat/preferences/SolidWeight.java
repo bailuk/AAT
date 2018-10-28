@@ -10,7 +10,7 @@ public class SolidWeight extends SolidInteger {
     
     
     public SolidWeight(Context c) {
-        super(Storage.global(c), KEY);
+        super(c, KEY);
         
     }
     

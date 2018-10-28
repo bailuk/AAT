@@ -20,7 +20,7 @@ public class SolidMapGrid extends SolidStaticIndexList {
     
     
     public SolidMapGrid(Context context, String k) {
-        super(Storage.map(context), k + POSTFIX, LABEL);
+        super(context, k + POSTFIX, LABEL);
     }
 
 

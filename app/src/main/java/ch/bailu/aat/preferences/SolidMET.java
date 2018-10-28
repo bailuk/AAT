@@ -11,7 +11,7 @@ public class SolidMET extends SolidString {
     private final int preset;
 
     public SolidMET(Context c, int i) {
-        super(Storage.global(c), SolidMET.class.getSimpleName()+ "_" + i);
+        super(c, SolidMET.class.getSimpleName()+ "_" + i);
         preset = i;
     }
 

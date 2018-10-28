@@ -34,7 +34,7 @@ public class SolidTrimSize extends SolidIndexList {
 
 
     public SolidTrimSize(Context context) {
-        super(Storage.global(context), SolidTrimSize.class.getSimpleName());
+        super(context, SolidTrimSize.class.getSimpleName());
     }
 
     @Override

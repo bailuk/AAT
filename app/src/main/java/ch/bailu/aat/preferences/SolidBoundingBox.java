@@ -12,13 +12,13 @@ public class SolidBoundingBox implements SolidTypeInterface {
 
     private final String label;
     
-    public SolidBoundingBox(final Storage storage, final String key, String l) {
+    public SolidBoundingBox(final Context c, final String key, String l) {
         label = l;
 
-        N = new SolidInteger(storage, key + "_N");
-        E = new SolidInteger(storage, key + "_E");
-        S = new SolidInteger(storage, key + "_S");
-        W = new SolidInteger(storage, key + "_W");
+        N = new SolidInteger(c, key + "_N");
+        E = new SolidInteger(c, key + "_E");
+        S = new SolidInteger(c, key + "_S");
+        W = new SolidInteger(c, key + "_W");
     }
     
     public BoundingBoxE6 getValue() {

@@ -30,7 +30,7 @@ public class MapPositionLayer implements MapLayerInterface, OnContentUpdatedInte
     public MapPositionLayer(MapContext mc, DispatcherInterface d) {
         mcontext = mc;
 
-        storage = Storage.global(mcontext.getContext());
+        storage = new Storage(mcontext.getContext());
         slock = new SolidPositionLock(mcontext.getContext(), mcontext.getSolidKey());
 
         loadState();

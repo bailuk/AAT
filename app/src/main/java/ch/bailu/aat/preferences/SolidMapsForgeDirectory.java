@@ -18,7 +18,7 @@ public class SolidMapsForgeDirectory extends SolidFile {
     private final static String KEY = SolidMapsForgeDirectory.class.getSimpleName();
 
     public SolidMapsForgeDirectory(Context c) {
-        super(Storage.global(c), KEY);
+        super(c, KEY);
     }
 
     @Override

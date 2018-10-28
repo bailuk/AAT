@@ -13,7 +13,7 @@ public class SolidOsmFeaturesList extends SolidBoolean {
     private final static String SMALL_LIST_KEYS = "amenity emergency leisure shop sport tourism name";
 
     public SolidOsmFeaturesList(Context c) {
-        super(Storage.global(c), SolidOsmFeaturesList.class.getSimpleName());
+        super(c, SolidOsmFeaturesList.class.getSimpleName());
     }
 
 

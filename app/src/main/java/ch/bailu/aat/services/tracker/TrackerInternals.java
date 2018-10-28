@@ -40,7 +40,7 @@ implements OnSharedPreferenceChangeListener, Closeable {
 
         backlight = new Backlight(scontext.getContext());
 
-        storage = Storage.preset(scontext.getContext());
+        storage = new Storage(scontext.getContext());
         storage.register(this);
         rereadPreferences();
 

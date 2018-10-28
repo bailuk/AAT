@@ -59,7 +59,7 @@ public class SolidTrimDate extends SolidIndexList {
 
 
     public SolidTrimDate(Context context) {
-        super(Storage.global(context), SolidTrimDate.class.getSimpleName());
+        super(context, SolidTrimDate.class.getSimpleName());
     }
 
 

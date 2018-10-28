@@ -11,7 +11,7 @@ public class OldSolidMET extends SolidStaticIndexList {
 
     
     public OldSolidMET(Context c, int i) {
-        super(Storage.preset(c), KEY+i, c.getResources().getStringArray(R.array.p_met_list));
+        super(c, KEY+i, c.getResources().getStringArray(R.array.p_met_list));
         
     }
 

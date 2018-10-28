@@ -37,7 +37,7 @@ public class SolidMissingTrigger extends SolidStaticIndexList {
 
     public SolidMissingTrigger(Context c, int i) {
 
-        super(Storage.preset(c), KEY+i, generateLabelList(c));
+        super(c, KEY+i, generateLabelList(c));
     }
     
     public int getTriggerSeconds() {

@@ -1,11 +1,13 @@
 package ch.bailu.aat.preferences;
 
+import android.content.Context;
+
 public class SolidStaticIndexList extends SolidIndexList {
 
     private final String[] labelList;
     
-    public SolidStaticIndexList(Storage s, String k, String[] l) {
-        super(s,k);
+    public SolidStaticIndexList(Context c, String k, String[] l) {
+        super(c,k);
         labelList=l;
     }
     

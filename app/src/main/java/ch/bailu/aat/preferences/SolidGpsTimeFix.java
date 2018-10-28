@@ -12,7 +12,7 @@ public class SolidGpsTimeFix extends SolidBoolean {
     private static int difference_hour = 0;
 
     public SolidGpsTimeFix(Context c) {
-        super(Storage.global(c), SolidGpsTimeFix.class.getSimpleName());
+        super(c, SolidGpsTimeFix.class.getSimpleName());
     }
 
     @Override

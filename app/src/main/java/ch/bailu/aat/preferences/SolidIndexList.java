@@ -1,12 +1,14 @@
 package ch.bailu.aat.preferences;
 
+import android.content.Context;
+
 public abstract class SolidIndexList extends AbsSolidType {
 
     private final SolidInteger sindex;
     
     
-    public SolidIndexList(Storage s, String k) {
-        sindex = new SolidInteger(s,k);
+    public SolidIndexList(Context c, String k) {
+        sindex = new SolidInteger(c,k);
     }
     
     

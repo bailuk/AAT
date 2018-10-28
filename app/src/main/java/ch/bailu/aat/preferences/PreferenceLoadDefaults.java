@@ -10,7 +10,7 @@ public class PreferenceLoadDefaults {
 
 
     public PreferenceLoadDefaults (Activity context) {
-        SolidLong startCount = new SolidLong(Storage.global(context), KEY_STARTCOUNT);
+        SolidLong startCount = new SolidLong(context, KEY_STARTCOUNT);
 
         if (startCount.getValue() == 0) {
             setDefaults(context);
@@ -28,7 +28,7 @@ public class PreferenceLoadDefaults {
 
 
     public static long getStartCount(Context context) {
-        return new SolidLong(Storage.global(context), KEY_STARTCOUNT).getValue();
+        return new SolidLong(context, KEY_STARTCOUNT).getValue();
     }
 
 }

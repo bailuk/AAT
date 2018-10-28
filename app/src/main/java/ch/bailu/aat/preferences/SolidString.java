@@ -10,10 +10,7 @@ public class SolidString extends AbsSolidType {
 
 
     public SolidString(Context c, String k) {
-        this(Storage.global(c), k);
-    }
-    public SolidString(Storage s, String k) {
-        storage=s;
+        storage=new Storage(c);
         key=k;
     }
 

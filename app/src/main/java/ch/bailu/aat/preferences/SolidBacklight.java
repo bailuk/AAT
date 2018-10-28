@@ -30,7 +30,7 @@ public class SolidBacklight extends SolidStaticIndexList {
             WindowManager.LayoutParams.FLAG_ALLOW_LOCK_WHILE_SCREEN_ON;
 
     public SolidBacklight(Context c, int i) {
-        super(Storage.preset(c), KEY+i,
+        super(c, KEY+i,
                 new String[] {
                     c.getString(R.string.p_backlight_off),
                     c.getString(R.string.p_backlight_dim),

@@ -29,7 +29,7 @@ public abstract class SolidAutopause extends SolidIndexList {
 
 
     protected SolidAutopause(Context c, String key, int preset) {
-        super(Storage.preset(c), key + preset);
+        super(c, key + preset);
 
         sunit = new SolidUnit(c);
 

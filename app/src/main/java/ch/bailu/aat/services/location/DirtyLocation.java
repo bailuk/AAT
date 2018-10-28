@@ -28,8 +28,8 @@ public class DirtyLocation extends LocationStackChainedItem {
     
     public DirtyLocation(LocationStackItem n, Context c) {
         super(n);
-        storage = Storage.global(c);
-        
+        storage = new Storage(c);
+
         locationInformation = new OldLocation(storage);
     }
 
@@ -47,8 +47,6 @@ public class DirtyLocation extends LocationStackChainedItem {
     
     @Override
     public void passLocation(LocationInformation location) {
-        ///log(location);
-
         locationInformation=location;
         super.passLocation(location);
         AppBroadcaster.broadcast(storage.getContext(), AppBroadcaster.LOCATION_CHANGED);

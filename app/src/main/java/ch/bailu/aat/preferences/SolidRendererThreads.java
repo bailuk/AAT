@@ -13,7 +13,7 @@ public class SolidRendererThreads extends SolidIndexList {
     private final static int[] values = {0,2,3,4,1};
 
     public SolidRendererThreads(Context c) {
-        super(Storage.global(c), KEY);
+        super(c, KEY);
         if (values[0] == 0) values[0] = numberOfBackgroundThreats();
     }
 
