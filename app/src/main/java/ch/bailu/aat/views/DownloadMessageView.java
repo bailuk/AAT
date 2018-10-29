@@ -5,35 +5,40 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.text.TextUtils;
 
-import ch.bailu.aat.services.background.Downloads;
 import ch.bailu.aat.util.AppBroadcaster;
-import ch.bailu.aat.util.net.URX;
+import ch.bailu.aat.util.AppIntent;
 
 public class DownloadMessageView extends MessageView {
 
     public DownloadMessageView(Context context) {
-        super(context, AppBroadcaster.ON_DOWNLOADS_CHANGED);
+        super(context, AppBroadcaster.FILE_CHANGED_ONDISK);
         setTextColor(Color.WHITE);
         setSingleLine();
         setEllipsize(TextUtils.TruncateAt.MIDDLE);
     }
 
 
-    public void updateContent(Intent intent) {
+    @Override
+    public void updateContent() {
 
     }
 
     @Override
-    public void updateContent() {
-        URX x = Downloads.getSource();
+    public void updateContent(Intent intent) {
+        String url = AppIntent.getUrl(intent);
 
-        if (x != null) {
-            setText(x.toString());
-            setTextColor(Color.WHITE);
+        if (url != null && url.startsWith("http")) {
+            setText(url);
             enableText();
-        } else {
-            setTextColor(Color.LTGRAY);
             disableText();
         }
+        /*
+        long size = DownloaderThread.getTotalSize();
+        StringBuilder builder = new StringBuilder();
+        MemSize.describe(builder, size);
+        setText(builder.toString());
+        setTextColor(Color.WHITE);
+        enableText();
+        */
     }
 }

@@ -1,6 +1,8 @@
 package ch.bailu.aat.services.background;
 
 
+import android.content.Context;
+
 import java.util.ArrayList;
 
 import ch.bailu.aat.util.AppBroadcaster;
@@ -10,55 +12,56 @@ import ch.bailu.util_java.util.Objects;
 
 public class Downloads {
 
-    private static final ArrayList<DownloadTask> downloads = new ArrayList<>(10);
+    private final ArrayList<DownloadTask> downloads = new ArrayList<>(10);
 
-    private Downloads() {}
+    public Downloads() {}
 
 
-    public synchronized static void add(DownloadTask t) {
+    public synchronized void add(DownloadTask t) {
         if (!contains(t)) {
             downloads.add(t);
-            changed(t);
+            changed(t.getContext(), t);
         }
     }
 
 
-    public synchronized static boolean contains(DownloadTask t) {
-        return downloads.contains(t);
+    public boolean contains(DownloadTask t) {
+        return contains(t.getFile());
     }
 
-    public synchronized static DownloadTask get(Foc file) {
-        for (DownloadTask d : downloads) {
-            if (Objects.equals(d.getFile(), file)) {
-                return d;
+    public synchronized DownloadTask get(Foc file) {
+        for (DownloadTask t : downloads) {
+            if (Objects.equals(t.getFile(), file)) {
+                return t;
             }
         }
         return null;
 
     }
 
-    public synchronized static boolean contains(Foc file) {
+    public synchronized boolean contains(Foc file) {
         return get(file) != null;
     }
 
 
-    public synchronized static void remove(DownloadTask t) {
-        if (downloads.remove(t))
-            changed(t);
+    public synchronized void remove(DownloadTask t) {
+        if (downloads.remove(t)) {
+            changed(t.getContext(), t);
+        }
     }
 
-    private synchronized static void changed(DownloadTask t) {
-        AppBroadcaster.broadcast(t.getContext(),
+    private synchronized void changed(Context c, DownloadTask t) {
+        AppBroadcaster.broadcast(c,
                 AppBroadcaster.ON_DOWNLOADS_CHANGED, t.getFile(), t.getSource());
     }
 
-    public synchronized static Foc getFile() {
+    public synchronized Foc getFile() {
         if (downloads.isEmpty()==false) return downloads.get(0).getFile();
 
         return null;
     }
 
-    public synchronized static URX getSource() {
+    public synchronized URX getSource() {
         if (downloads.isEmpty()==false) return downloads.get(0).getSource();
 
         return null;

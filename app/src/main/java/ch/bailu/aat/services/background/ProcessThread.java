@@ -62,4 +62,7 @@ public abstract class ProcessThread extends Thread implements Closeable, ThreadC
     public boolean canContinue() {
         return continueThread;
     }
+
+
+
 }

@@ -32,6 +32,8 @@ public class ContentView extends FrameLayout{
         addView(messages);
 
         SolidStatusMessages smessages = new SolidStatusMessages(context);
+
+
         if (smessages.showURL()) {
             addM(new DownloadMessageView(context));
         }
@@ -41,6 +43,10 @@ public class ContentView extends FrameLayout{
         }
 
         addM(new LogInfoMessageView(context));
+
+        if (smessages.showSummary()) {
+            addM(new DownloadSizeMessageView(context));
+        }
     }
 
 

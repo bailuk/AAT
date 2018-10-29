@@ -33,6 +33,7 @@ public class DownloadTask extends BackgroundTask implements ContextWrapperInterf
     private final Context context;
 
 
+    private Downloads downloads = null;
 
     public DownloadTask(Context c, String source, Foc target) {
         this(c, new URX(source), target);
@@ -46,24 +47,23 @@ public class DownloadTask extends BackgroundTask implements ContextWrapperInterf
     }
 
 
-    public void onInsert() {Downloads.add(this);}
-    public void onRemove() {Downloads.remove(this);}
 
 
     @Override
     public long bgOnProcess(ServiceContext sc) {
+        long size = 0;
+
         try {
-            long r = bgDownload();
+            size = bgDownload();
             AppBroadcaster.broadcast(sc.getContext(),
                     AppBroadcaster.FILE_CHANGED_ONDISK, file, urx);
-            return r;
 
         } catch (Exception e) {
             logError(e);
             file.rm();
-            return 0;
-        }
 
+        }
+        return size;
     }
 
 
@@ -151,5 +151,22 @@ public class DownloadTask extends BackgroundTask implements ContextWrapperInterf
     @Override
     public Context getContext() {
         return context;
+    }
+
+    public void setDownloads(Downloads d) {
+        if (downloads == null)
+            downloads = d;
+    }
+
+
+    @Override
+    public void onInsert() {
+        if (downloads != null) downloads.add(this);
+    }
+
+
+    @Override
+    public void onRemove() {
+        if (downloads != null) downloads.remove(this);
     }
 }

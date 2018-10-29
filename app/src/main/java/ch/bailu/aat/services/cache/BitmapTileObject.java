@@ -9,7 +9,6 @@ import ch.bailu.aat.map.tile.source.DownloadSource;
 import ch.bailu.aat.preferences.SolidTileSize;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.background.DownloadTask;
-import ch.bailu.aat.services.background.Downloads;
 import ch.bailu.aat.services.background.FileTask;
 import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.util.fs.foc.FocAndroid;
@@ -53,9 +52,11 @@ public class BitmapTileObject extends TileObject {
     @Override
     public void onInsert(ServiceContext sc) {
         if (isLoadable()) sc.getBackgroundService().process(new FileLoaderTask(file));
-        else if (isDownloadable() && Downloads.contains(file) == false)
+        else if (isDownloadable() && sc.getBackgroundService().findDownloadTask(file) == null)
             sc.getBackgroundService().process(new FileDownloader(url, file, sc));
     }
+
+
 
 
     public void onRemove(ServiceContext sc) {
@@ -66,7 +67,7 @@ public class BitmapTileObject extends TileObject {
 
     @Override
     public void reDownload(ServiceContext sc) {
-        if (Downloads.contains(file) == false) {
+        if (sc.getBackgroundService().findDownloadTask(file) == null) {
             file.rm();
             if (isDownloadable()) sc.getBackgroundService().process(new FileDownloader(url, file, sc));
         }

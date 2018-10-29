@@ -12,6 +12,7 @@ public class BackgroundService extends VirtualService {
 
     final static int FILE_LOADER_BASE_DIRECTORY_DEPTH = 4;
 
+    private final Downloads downloads = new Downloads();
 
     private final HashMap<String, DownloaderThread> downloaders = new HashMap<>(5);
     private final HashMap<String, LoaderThread> loaders = new HashMap<>(5);
@@ -20,23 +21,14 @@ public class BackgroundService extends VirtualService {
     private final HandleStack queue = new HandleStack();
 
 
+
     private final WorkerThread workers[] =
             new WorkerThread[SolidRendererThreads.numberOfBackgroundThreats()];
 
 
-/*
-    private final BroadcastReceiver onFileChangedOnDisk = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            Foc file = FocAndroid.factory(context, AppIntent.getFile(intent));
-            //AppLog.i(context, file.getPathName());
-        }
-    };
-*/
+
     public BackgroundService(final ServiceContext sc) {
         super(sc);
-
-  //      AppBroadcaster.register(getContext(), onFileChangedOnDisk, AppBroadcaster.FILE_CHANGED_ONDISK);
 
         for (int i=0; i< workers.length; i++)
             workers[i] = new WorkerThread(sc, queue);
@@ -71,6 +63,8 @@ public class BackgroundService extends VirtualService {
                 downloader = new DownloaderThread(getSContext(), host);
                 downloaders.put(host, downloader);
             }
+
+            handle.setDownloads(downloads);
             downloader.process(handle);
         }
     }
@@ -93,8 +87,6 @@ public class BackgroundService extends VirtualService {
 
     @Override
     public void close() {
-    //    getContext().unregisterReceiver(onFileChangedOnDisk);
-
         for(ProcessThread p: loaders.values())
             p.close();
         loaders.clear();
@@ -125,6 +117,7 @@ public class BackgroundService extends VirtualService {
     }
 
 
+
     @Override
     public void appendStatusText(StringBuilder builder) {
 
@@ -133,6 +126,11 @@ public class BackgroundService extends VirtualService {
 
         for (DownloaderThread p: downloaders.values())
             p.appendStatusText(builder);
+    }
+
+
+    public DownloadTask findDownloadTask(Foc file) {
+        return downloads.get(file);
     }
 }
 

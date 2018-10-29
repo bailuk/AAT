@@ -23,7 +23,6 @@ import ch.bailu.aat.services.InsideContext;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.background.BackgroundService;
 import ch.bailu.aat.services.background.DownloadTask;
-import ch.bailu.aat.services.background.Downloads;
 import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.util.AppIntent;
 import ch.bailu.aat.util.OsmApiHelper;
@@ -64,13 +63,24 @@ public abstract class AbsOsmApiActivity extends ActivityContext implements OnCli
     private final BroadcastReceiver onDownloadsChanged = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            if (Downloads.contains(osmApi.getResultFile())) {
-                downloadBusy.startWaiting();
-            } else {
-                downloadBusy.stopWaiting();
-            }
+
+            new InsideContext(getServiceContext()) {
+                @Override
+                public void run() {
+                    final DownloadTask task =
+                            getServiceContext().getBackgroundService().findDownloadTask(osmApi.getResultFile());
+
+                    if (task != null) {
+                        downloadBusy.startWaiting();
+                    } else {
+                        downloadBusy.stopWaiting();
+                    }
+
+                }
+            };
         }
     };
+
 
 
     @Override
@@ -232,7 +242,15 @@ public abstract class AbsOsmApiActivity extends ActivityContext implements OnCli
         downloadBusy = new BusyViewControl(download);
 
         download.setOnClickListener(this);
-        if (Downloads.contains(osmApi.getResultFile())) downloadBusy.startWaiting();
+
+        new InsideContext(getServiceContext()) {
+            @Override
+            public void run() {
+                if (getServiceContext().getBackgroundService().findDownloadTask(osmApi.getResultFile()) != null)
+                    downloadBusy.startWaiting();
+            }
+        };
+
 
         ToolTip.set(download, R.string.tt_nominatim_query);
 
@@ -276,7 +294,7 @@ public abstract class AbsOsmApiActivity extends ActivityContext implements OnCli
                 try {
                     BackgroundService background = getServiceContext().getBackgroundService();
 
-                    DownloadTask task = Downloads.get(osmApi.getResultFile());
+                    DownloadTask task = getServiceContext().getBackgroundService().findDownloadTask(osmApi.getResultFile());
 
                     if (task != null) {
                         task.stopProcessing();

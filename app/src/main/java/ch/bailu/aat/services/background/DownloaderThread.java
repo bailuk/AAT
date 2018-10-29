@@ -1,11 +1,16 @@
 package ch.bailu.aat.services.background;
 
 import ch.bailu.aat.services.ServiceContext;
+import ch.bailu.util_java.foc.Foc;
 
 public class DownloaderThread  extends WorkerThread {
     private final static int DOWNLOAD_QUEUE_SIZE=100;
     private final String server;
     private final DownloadStatistics statistics = new DownloadStatistics();
+
+    private static long totalSize = 0;
+
+
 
     public DownloaderThread(ServiceContext sc, String s) {
         super(sc, DOWNLOAD_QUEUE_SIZE);
@@ -15,6 +20,8 @@ public class DownloaderThread  extends WorkerThread {
 
     @Override
     public void bgOnHandleProcessed(BackgroundTask handle, long size) {
+        totalSize += size;
+
         if (size > 0) {
             statistics.success(size);
         } else {
@@ -33,5 +40,10 @@ public class DownloaderThread  extends WorkerThread {
 
     public void appendStatusText(StringBuilder builder) {
         statistics.appendStatusText(builder,server);
+    }
+
+
+    public static long getTotalSize() {
+        return totalSize;
     }
 }
