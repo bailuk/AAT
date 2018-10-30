@@ -12,7 +12,6 @@ public class OffState extends State {
 
         internal.logger.close();
         internal.statusIcon.hide();
-        internal.backlight.unlock();
         internal.unlockService();
         
     }

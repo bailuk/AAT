@@ -19,7 +19,6 @@ public class OnState extends State {
             
         } else {
             tracker.statusIcon.showOn();
-            internal.backlight.setToPreferred(internal.sbacklight);
         }
 
     }
@@ -32,7 +31,7 @@ public class OnState extends State {
 
     @Override
     public void preferencesChanged() {
-        internal.backlight.setToPreferred(internal.sbacklight);
+
     }
 
 

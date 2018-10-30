@@ -17,7 +17,6 @@ public class PauseState extends State {
         try {
             internal.logger.logPause();
             internal.statusIcon.showPause();
-            internal.backlight.setToOff();
         } catch (IOException e) {
             internal.emergencyOff(e);
         }

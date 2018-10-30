@@ -25,20 +25,16 @@ implements OnSharedPreferenceChangeListener, Closeable {
     public Logger logger;
 
     public final StatusIcon statusIcon;
-    public final Backlight backlight;
-    
+
     
     private final Storage storage;
     public SolidAutopause sautopause;
-    public SolidBacklight sbacklight;
-        
+
     public int presetIndex;
 
 
     public TrackerInternals(ServiceContext sc) {
         scontext=sc;
-
-        backlight = new Backlight(scontext.getContext());
 
         storage = new Storage(scontext.getContext());
         storage.register(this);
@@ -60,7 +56,6 @@ implements OnSharedPreferenceChangeListener, Closeable {
 
     public void rereadPreferences() {
         presetIndex = new SolidPreset(scontext.getContext()).getIndex();
-        sbacklight = new SolidBacklight(scontext.getContext(), presetIndex);
         sautopause = new SolidTrackerAutopause(scontext.getContext(), presetIndex);
 
         scontext.getLocationService().setPresetIndex(presetIndex);
