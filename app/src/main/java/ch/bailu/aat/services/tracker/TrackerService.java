@@ -43,6 +43,12 @@ public class TrackerService extends VirtualService {
 
 
 
+    public int getPresetIndex() {
+        return internal.presetIndex;
+    }
+
+
+
     @Override
     public void appendStatusText(StringBuilder builder) {
         builder.append("<p>Log to: ");

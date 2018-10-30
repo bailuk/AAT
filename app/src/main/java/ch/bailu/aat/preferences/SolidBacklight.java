@@ -47,4 +47,8 @@ public class SolidBacklight extends SolidStaticIndexList {
     public int getLockMode() {
         return LOCK_MODE[getIndex()];
     }
+
+    public boolean keepScreenOn() {
+        return getIndex() != 0;
+    }
 }
