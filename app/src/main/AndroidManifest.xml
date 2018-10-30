@@ -18,7 +18,7 @@
         android:name="ch.bailu.aat.App"
         android:allowBackup="true"
         android:usesCleartextTraffic="true"
-        android:icon="@drawable/icon"
+        android:icon="@mipmap/ic_launcher"
         android:label="@string/app_sname"
         android:theme="@android:style/Theme.NoTitleBar"
         android:fullBackupContent="@xml/backup_descriptor">
