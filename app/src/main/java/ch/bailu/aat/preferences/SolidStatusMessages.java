@@ -6,7 +6,7 @@ import ch.bailu.aat.util.ToDo;
 
 public class SolidStatusMessages extends SolidIndexList {
 
-    private static final String KEY = "SatusMessages";
+    private static final String KEY = "Satus Messages";
 
     private static final String VAL[] = {ToDo.translate("Download size"),
             ToDo.translate("URL"),
@@ -36,14 +36,10 @@ public class SolidStatusMessages extends SolidIndexList {
     public boolean showPath() {
         return getIndex()==2;
     }
-
     public boolean showURL() {
         return getIndex()==1 || getIndex()==2;
     }
-
     public boolean showSummary() {
         return getIndex()==0;
     }
-
-
 }

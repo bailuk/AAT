@@ -167,6 +167,8 @@ public class DownloadTask extends BackgroundTask implements ContextWrapperInterf
 
     @Override
     public void onRemove() {
-        if (downloads != null) downloads.remove(this);
+        if (downloads != null) {
+            downloads.remove(this);
+        }
     }
 }
