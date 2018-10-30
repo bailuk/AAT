@@ -161,8 +161,7 @@
 
     <string name="p_backlight_title">Backlight</string>
     <string name="p_backlight_off">System default</string>
-    <string name="p_backlight_dim">Keep on (dark)</string>
-    <string name="p_backlight_bright">Keep on (bright)</string>
+    <string name="p_backlight_bright">Keep on</string>
     <string name="p_system">System</string>
     <string name="p_tile_size">Tile size</string>
     <string name="p_accuracy_filter">Accuracy filter</string>

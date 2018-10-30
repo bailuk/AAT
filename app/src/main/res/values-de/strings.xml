@@ -122,8 +122,7 @@
 
     <string name="p_backlight_title">Bildschirm</string>
     <string name="p_backlight_off">Systemeinstellung</string>
-    <string name="p_backlight_dim">Immer an (Dunkel)</string>
-    <string name="p_backlight_bright">Immer an (Hell)</string>
+    <string name="p_backlight_bright">Immer an</string>
 
 
     <!-- Preferences Map -->
