@@ -87,11 +87,13 @@ public class Backlight implements OnContentUpdatedInterface,
 
 
     private void keepOn() {
+        AppLog.d(this, "keep screen on");
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
     }
 
     private void autoOff() {
+        AppLog.d(this, "auto off screen");
         window.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
     }
 

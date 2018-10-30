@@ -24,7 +24,7 @@ import ch.bailu.aat.views.description.CockpitView;
 import ch.bailu.aat.views.description.MultiView;
 import ch.bailu.aat.views.graph.GraphViewContainer;
 
-public class CockpitActivity extends ActivityContext{
+public class CockpitActivity extends AbsKeepScreenOnActivity {
 
     private static final String SOLID_KEY="tracker";
 
