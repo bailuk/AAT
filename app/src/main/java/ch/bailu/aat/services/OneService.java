@@ -35,6 +35,8 @@ public class OneService extends AbsService  implements ServiceContext {
     @Override
     public  synchronized void onDestroy() {
 
+        onDestroyCalled();
+
         if (tracker != null) {
             tracker.close();
             tracker = null;

@@ -29,10 +29,8 @@ public abstract class AbsService  extends Service {
         if (up) {
             lock++;
 
-
             if (lock == 1) {
-
-                startService(new Intent(this,  OneService.class));
+                startService(new Intent(this, OneService.class));
                 lazyOff.close();
             }
         }
@@ -44,7 +42,6 @@ public abstract class AbsService  extends Service {
     public synchronized void free() {
         if (up) {
             lock--;
-
 
             if (lock == 0) {
                 lazyOff.kick();
@@ -71,7 +68,6 @@ public abstract class AbsService  extends Service {
     private synchronized void stopService() {
 
         if (lock == 0) {
-            up = false;
             lazyOff.cancel();
             stopSelf();
         } else if (lock < 0) {
@@ -80,8 +76,6 @@ public abstract class AbsService  extends Service {
     }
 
     public synchronized void lock(String r) {
-
-
         if (locks.add(r)) {
             lock();
         }
@@ -128,10 +122,13 @@ public abstract class AbsService  extends Service {
     }
 
 
+    protected void onDestroyCalled() {
+        up = false;
+    }
+
     @Override
     public synchronized void onDestroy() {
 
-        up = false;
         creations--;
         allcreations--;
 
