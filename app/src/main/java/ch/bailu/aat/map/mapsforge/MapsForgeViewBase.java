@@ -2,20 +2,25 @@ package ch.bailu.aat.map.mapsforge;
 
 import android.content.SharedPreferences;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.view.GestureDetector;
 import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.MotionEvent;
 import android.view.View;
 
+import org.mapsforge.core.graphics.Bitmap;
 import org.mapsforge.core.model.BoundingBox;
 import org.mapsforge.core.model.Dimension;
 import org.mapsforge.core.model.MapPosition;
 import org.mapsforge.core.model.Point;
 import org.mapsforge.core.util.LatLongUtils;
+import org.mapsforge.core.util.Parameters;
 import org.mapsforge.map.android.view.MapView;
 import org.mapsforge.map.layer.Layer;
+import org.mapsforge.map.model.IMapViewPosition;
 import org.mapsforge.map.model.MapViewPosition;
 
+import java.lang.reflect.Parameter;
 import java.util.ArrayList;
 
 import ch.bailu.aat.coordinates.BoundingBoxE6;
@@ -46,7 +51,6 @@ public class MapsForgeViewBase extends MapView implements
 
     public MapsForgeViewBase(ServiceContext sc, String key, MapDensity d) {
         super(sc.getContext());
-
 
         this.setBackgroundColor(getModel().displayModel.getBackgroundColor());
         getModel().displayModel.setFixedTileSize(d.getTileSize());
@@ -95,7 +99,7 @@ public class MapsForgeViewBase extends MapView implements
     public void reDownloadTiles() {}
 
     @Override
-    public MapViewPosition getMapViewPosition() {
+    public IMapViewPosition getMapViewPosition() {
         return getModel().mapViewPosition;
     }
 
@@ -203,16 +207,18 @@ public class MapsForgeViewBase extends MapView implements
         super.onAttachedToWindow();
 
         isVisible = (getVisibility() == VISIBLE);
+
         attachDetachLayers();
     }
 
 
     @Override
     public void onDetachedFromWindow() {
-        super.onDetachedFromWindow();
-
         isVisible = false;
         attachDetachLayers();
+
+        super.onDetachedFromWindow();
+
     }
 
 
@@ -238,6 +244,7 @@ public class MapsForgeViewBase extends MapView implements
         areServicesUp = false;
 
         attachDetachLayers();
+
     }
 
 
@@ -248,13 +255,24 @@ public class MapsForgeViewBase extends MapView implements
         destroyAll();
     }
 
+/*
     @Override
     public void onDraw(Canvas canvas) {
-        if (areServicesUp && areLayersAttached)
+        if (areServicesUp && areLayersAttached) {
             super.onDraw(canvas);
+        } else {
+            canvas.drawColor(Color.GREEN);
+
+            // reset frame buffer
+            Bitmap bitmap = getFrameBuffer().getDrawingBitmap();
+            bitmap.setBackgroundColor(Color.GREEN);
+            getFrameBuffer().frameFinished(getMapViewPosition().getMapPosition());
+
+            super.onDraw(canvas);
+        }
     }
 
-
+*/
 
     private void attachDetachLayers() {
         if (isVisible && areServicesUp) {

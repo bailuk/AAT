@@ -3,6 +3,7 @@ package ch.bailu.aat.map.mapsforge;
 import android.content.SharedPreferences;
 
 import org.mapsforge.core.graphics.Canvas;
+import org.mapsforge.core.graphics.Color;
 import org.mapsforge.core.model.BoundingBox;
 import org.mapsforge.core.model.Point;
 import org.mapsforge.map.layer.Layer;
@@ -75,6 +76,7 @@ public class MapsForgeTileLayerStack extends Layer implements MapLayerInterface 
 
     @Override
     public void draw(final BoundingBox box, final byte zoom, final Canvas c, final Point tlp) {
+        c.fillColor(Color.GREEN);
         new InsideContext(scontext) {
             @Override
             public void run() {

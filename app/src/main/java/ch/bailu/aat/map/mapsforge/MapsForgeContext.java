@@ -133,6 +133,5 @@ public class MapsForgeContext extends Layer implements MapContext, MapLayerInter
         AndroidGraphicFactory.createInstance(app);
 
         Parameters.SQUARE_FRAME_BUFFER = false; // move to app
-        Parameters.FRAME_BUFFER_HA2 = true;
     }
 }
