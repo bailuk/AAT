@@ -1,26 +1,20 @@
 package ch.bailu.aat.map.mapsforge;
 
 import android.content.SharedPreferences;
-import android.graphics.Canvas;
-import android.graphics.Color;
 import android.view.GestureDetector;
 import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.MotionEvent;
 import android.view.View;
 
-import org.mapsforge.core.graphics.Bitmap;
 import org.mapsforge.core.model.BoundingBox;
 import org.mapsforge.core.model.Dimension;
 import org.mapsforge.core.model.MapPosition;
 import org.mapsforge.core.model.Point;
 import org.mapsforge.core.util.LatLongUtils;
-import org.mapsforge.core.util.Parameters;
 import org.mapsforge.map.android.view.MapView;
 import org.mapsforge.map.layer.Layer;
 import org.mapsforge.map.model.IMapViewPosition;
-import org.mapsforge.map.model.MapViewPosition;
 
-import java.lang.reflect.Parameter;
 import java.util.ArrayList;
 
 import ch.bailu.aat.coordinates.BoundingBoxE6;
@@ -30,7 +24,6 @@ import ch.bailu.aat.map.MapViewInterface;
 import ch.bailu.aat.map.layer.MapLayerInterface;
 import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat.services.ServiceContext;
-import ch.bailu.aat.util.ui.AppLayout;
 
 public class MapsForgeViewBase extends MapView implements
         MapViewInterface,

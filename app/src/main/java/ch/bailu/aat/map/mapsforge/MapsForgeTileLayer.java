@@ -20,9 +20,11 @@ import java.util.List;
 
 import ch.bailu.aat.map.MapContext;
 import ch.bailu.aat.map.layer.MapLayerInterface;
+import ch.bailu.aat.map.tile.AlternativeTile;
 import ch.bailu.aat.map.tile.TileProvider;
 import ch.bailu.aat.services.InsideContext;
 import ch.bailu.aat.services.ServiceContext;
+import ch.bailu.aat.util.ui.AppLog;
 
 public class MapsForgeTileLayer extends Layer implements MapLayerInterface, Observer {
 
@@ -35,12 +37,16 @@ public class MapsForgeTileLayer extends Layer implements MapLayerInterface, Obse
     private final ServiceContext scontext;
 
 
+    private final AlternativeTile alternativeTile;
+
 
     public MapsForgeTileLayer(ServiceContext sc, TileProvider p) {
         scontext = sc;
         provider = p;
         paint.setAlpha(p.getSource().getAlpha());
         paint.setFlags(p.getSource().getPaintFlags());
+
+        alternativeTile = new AlternativeTile(p);
 
         provider.addObserver(this);
     }
@@ -78,6 +84,7 @@ public class MapsForgeTileLayer extends Layer implements MapLayerInterface, Obse
             final TileBitmap bitmap = provider.get(tilePosition.tile);
 
             if (bitmap != null) {
+                AppLog.d(this, "draw bitmap");
                 final Point p = tilePosition.point;
                 final Rect r=new Rect();
 
@@ -91,6 +98,8 @@ public class MapsForgeTileLayer extends Layer implements MapLayerInterface, Obse
                     AndroidGraphicFactory.getCanvas(canvas).
                             drawBitmap(androidbitmap, null, r, paint);
                 }
+            } else {
+                alternativeTile.drawParentTileBitmap(canvas, tlp, tilePosition.tile, tileSize);
             }
         }
     }
