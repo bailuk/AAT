@@ -76,7 +76,6 @@ public class MapsForgeTileLayerStack extends Layer implements MapLayerInterface 
 
     @Override
     public void draw(final BoundingBox box, final byte zoom, final Canvas c, final Point tlp) {
-        c.fillColor(Color.GREEN);
         new InsideContext(scontext) {
             @Override
             public void run() {

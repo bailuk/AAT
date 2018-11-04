@@ -6,22 +6,22 @@ import org.mapsforge.map.model.common.Observer;
 import ch.bailu.aat.map.MapViewInterface;
 
 public class MapViewLinker implements Observer {
-        private final IMapViewPosition master;
-        private final IMapViewPosition slave;
+    private final IMapViewPosition master;
+    private final IMapViewPosition slave;
 
-        public MapViewLinker(MapViewInterface m, MapViewInterface s) {
-            s.toView().setClickable(false);
+    public MapViewLinker(MapViewInterface m, MapViewInterface s) {
+        s.toView().setClickable(false);
 
-            master = m.getMapViewPosition();
-            slave = s.getMapViewPosition();
-            master.addObserver(this);
-        }
+        master = m.getMapViewPosition();
+        slave = s.getMapViewPosition();
+        master.addObserver(this);
+    }
 
-        @Override
-        public void onChange() {
-            setCenter();
-            setZoom();
-        }
+    @Override
+    public void onChange() {
+        setCenter();
+        setZoom();
+    }
 
     private void setZoom() {
         int zoom =  master.getZoomLevel()+2;
@@ -38,13 +38,13 @@ public class MapViewLinker implements Observer {
     }
 
     protected void setCenter() {
-            // need to check to avoid circular notifications
-            if (!this.master.getCenter().equals(this.slave.getCenter())) {
-                this.slave.setCenter(this.master.getCenter());
-            }
+        // need to check to avoid circular notifications
+        if (!this.master.getCenter().equals(this.slave.getCenter())) {
+            this.slave.setCenter(this.master.getCenter());
         }
+    }
 
-        public void removeObserver() {
-            this.master.removeObserver(this);
-        }
+    public void removeObserver() {
+        this.master.removeObserver(this);
+    }
 }

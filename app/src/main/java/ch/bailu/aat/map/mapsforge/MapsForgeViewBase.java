@@ -30,6 +30,7 @@ import ch.bailu.aat.map.MapViewInterface;
 import ch.bailu.aat.map.layer.MapLayerInterface;
 import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat.services.ServiceContext;
+import ch.bailu.aat.util.ui.AppLayout;
 
 public class MapsForgeViewBase extends MapView implements
         MapViewInterface,
@@ -209,6 +210,7 @@ public class MapsForgeViewBase extends MapView implements
         isVisible = (getVisibility() == VISIBLE);
 
         attachDetachLayers();
+
     }
 
 
@@ -244,7 +246,6 @@ public class MapsForgeViewBase extends MapView implements
         areServicesUp = false;
 
         attachDetachLayers();
-
     }
 
 
@@ -255,24 +256,6 @@ public class MapsForgeViewBase extends MapView implements
         destroyAll();
     }
 
-/*
-    @Override
-    public void onDraw(Canvas canvas) {
-        if (areServicesUp && areLayersAttached) {
-            super.onDraw(canvas);
-        } else {
-            canvas.drawColor(Color.GREEN);
-
-            // reset frame buffer
-            Bitmap bitmap = getFrameBuffer().getDrawingBitmap();
-            bitmap.setBackgroundColor(Color.GREEN);
-            getFrameBuffer().frameFinished(getMapViewPosition().getMapPosition());
-
-            super.onDraw(canvas);
-        }
-    }
-
-*/
 
     private void attachDetachLayers() {
         if (isVisible && areServicesUp) {
