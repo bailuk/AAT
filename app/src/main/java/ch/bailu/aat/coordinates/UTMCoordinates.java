@@ -4,6 +4,8 @@ import org.mapsforge.core.model.LatLong;
 
 import java.util.Locale;
 
+import ch.bailu.aat.description.FF;
+
 public class UTMCoordinates extends MeterCoordinates {
 
 
@@ -125,11 +127,10 @@ public class UTMCoordinates extends MeterCoordinates {
 
     @Override
     public String toString() {
-        return String.format((Locale)null,"Z %d%c, E %3.3f, N %3.3f", 
-                ezone, 
-                getNorthingZoneCharacter(), 
-                ((float)easting)/1000f, 
-                ((float)northing)/1000f);
+
+        return "Z " + ezone + getNorthingZoneCharacter()
+                + ", E " + FF.N3_3.format(((float)easting)/1000f)
+                + ", N " + FF.N3_3.format(((float)northing)/1000f);
     }
     
     /*

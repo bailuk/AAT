@@ -7,6 +7,7 @@ import org.mapsforge.core.util.LatLongUtils;
 import java.io.IOException;
 import java.util.Locale;
 
+import ch.bailu.aat.description.FF;
 import ch.bailu.util_java.parser.scanner.DoubleScanner;
 import ch.bailu.util_java.io.Stream;
 
@@ -184,10 +185,10 @@ public class BoundingBoxE6 {
 
     @Override
     public String toString() {
-        return String.format((Locale) null,
-                "%.2f,%.2f,%.2f,%.2f",
-                north/1e6f, west/1e6f, south/1e6f, east/1e6f);
-
+        return  FF.N_2.format(north/1e6f) + "," +
+                FF.N_2.format(west/1e6f)     + "," +
+                FF.N_2.format(south/1e6f)    + "," +
+                FF.N_2.format(east/1e6f);
     }
 
 

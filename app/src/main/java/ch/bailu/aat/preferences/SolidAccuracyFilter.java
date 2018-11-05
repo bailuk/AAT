@@ -2,9 +2,8 @@ package ch.bailu.aat.preferences;
 
 import android.content.Context;
 
-import java.util.Locale;
-
 import ch.bailu.aat.R;
+import ch.bailu.aat.description.FF;
 
 public class SolidAccuracyFilter extends SolidIndexList {
     private static final String KEY = "accuracy_filter_";
@@ -51,6 +50,7 @@ public class SolidAccuracyFilter extends SolidIndexList {
     @Override
     public String getValueAsString(int i) {
         if (i == 0) return getContext().getString(R.string.off);
-        return String.format((Locale) null, "%.3f%s", VALUE_LIST[i] * sunit.getAltitudeFactor(), sunit.getAltitudeUnit());
+        return FF.N_2.format(VALUE_LIST[i] * sunit.getAltitudeFactor())
+                + sunit.getAltitudeUnit();
     }
 }

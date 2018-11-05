@@ -64,7 +64,7 @@ public class SolidSpeedGraphWindow extends SolidIndexList {
         if (i < TIME_VALUES.length) return TimeDescription.format(TIME_VALUES[i]);
 
         i -= TIME_VALUES.length;
-        return distanceDescription.getDistanceDescriptionRounded(DISTANCE_VALUES[i]);
+        return distanceDescription.getDistanceDescription(DISTANCE_VALUES[i]);
     }
 
 

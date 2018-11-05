@@ -1,6 +1,6 @@
 package ch.bailu.aat.coordinates;
 
-import java.util.Locale;
+import java.text.DecimalFormat;
 
 public class WGS84Sexagesimal extends Coordinates {
     
@@ -20,20 +20,22 @@ public class WGS84Sexagesimal extends Coordinates {
         }
 
         public int toDecimalDegree() {
-            return (int) (coordinate * 1e6);//toDecimalDegree(deg,min,sec);
+            return (int) (coordinate * 1e6);
         }
         
-        //public static  double toDecimalDegree(int d, int m, float s) {
-        //    return d + ((double)m)/60d + ((double)s)/3600d;
-        //}
-        
+
         
         public int getDegree() {return deg;}
         public int getMinute() {return min;}
         public int getSecond() {return sec;}
-        
+
+        private final static DecimalFormat fX = new DecimalFormat("#");
+        private final static DecimalFormat f00 = new DecimalFormat("00");
+
         public String toString() {
-            return String.format((Locale)null,"%2d\u00B0 %02d\u0027 %02d\u0027\u0027", Math.abs(deg), min, sec);
+            return fX.format(Math.abs(deg)) + "\u00B0 "
+                    + f00.format(min) + "\u0027 "
+                    + f00.format(sec) + "\u0027\u0027";
         }
     }
 
@@ -47,10 +49,6 @@ public class WGS84Sexagesimal extends Coordinates {
         longitude=new Sexagesimal(lo);
     }
     
-//    public WGS84Sexagesimal(IGeoPoint p) {
-//        this(((double)p.getLatitudeE6())/1e6d, ((double)p.getLongitudeE6())/1e6d);
-//    }
-
     public Sexagesimal getLongitude() {
         return longitude;
     }
@@ -58,13 +56,14 @@ public class WGS84Sexagesimal extends Coordinates {
     public Sexagesimal getLatitude() {
         return latitude;
     }
-    
+
+
     @Override
     public String toString() {
-        
-        return String.format((Locale)null,"%s %c  %s %c", 
-                latitude.toString(),  getLatitudeChar(), 
-                longitude.toString(), getLongitudeChar());
+        return latitude.toString() + " "
+                + getLatitudeChar() + " "
+                + longitude.toString() + " "
+                + getLongitudeChar();
     }
     
     

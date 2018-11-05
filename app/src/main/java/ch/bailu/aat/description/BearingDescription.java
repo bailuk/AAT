@@ -2,8 +2,6 @@ package ch.bailu.aat.description;
 
 import android.content.Context;
 
-import java.util.Locale;
-
 import ch.bailu.aat.R;
 import ch.bailu.aat.gpx.GpxInformation;
 
@@ -20,7 +18,7 @@ public class BearingDescription extends DoubleDescription {
     }
 
     public String getValue() {
-        return String.format((Locale)null, "%.3f",  getCache());
+        return FF.N_3.format(getCache());
     }
     
     @Override

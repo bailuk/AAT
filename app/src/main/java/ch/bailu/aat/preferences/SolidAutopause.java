@@ -5,6 +5,7 @@ import android.content.Context;
 import java.util.Locale;
 
 import ch.bailu.aat.R;
+import ch.bailu.aat.description.FF;
 
 public abstract class SolidAutopause extends SolidIndexList {
 
@@ -62,10 +63,10 @@ public abstract class SolidAutopause extends SolidIndexList {
     public String getValueAsString(int i) {
         if (i==0) return getContext().getString(R.string.off);
 
-        return String.format(Locale.getDefault(), "< %.2f%s - %ds",
-                SPEED_VALUES[i] * sunit.getSpeedFactor(),
-                sunit.getSpeedUnit(),
-                TRIGGER_VALUES[i]);
+        return "< " +
+                FF.N_2.format(SPEED_VALUES[i] * sunit.getSpeedFactor()) +
+                sunit.getSpeedUnit() + " - " +
+                TRIGGER_VALUES[i] + "s";
     }
 
 }

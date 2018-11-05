@@ -2,8 +2,6 @@ package ch.bailu.aat.description;
 
 import android.content.Context;
 
-import java.util.Locale;
-
 import ch.bailu.aat.R;
 import ch.bailu.aat.gpx.GpxInformation;
 
@@ -25,9 +23,10 @@ public class AccelerationDescription extends FloatDescription {
     public String getUnit() {
         return UNIT; 
     }
-    
+
+
     public String getValue() {
-        return String.format(Locale.getDefault(),"%.2f", getCache());
+        return FF.N_2.format(getCache());
     }
 
     @Override

@@ -7,6 +7,7 @@ import org.mapsforge.core.model.Point;
 import java.util.Locale;
 
 import ch.bailu.aat.map.MapContext;
+import ch.bailu.aat.util.ToDo;
 
 public class ZoomLevel implements MapLayerInterface {
 
@@ -16,7 +17,7 @@ public class ZoomLevel implements MapLayerInterface {
     @Override
     public void drawForeground(MapContext mcontext) {
         int zoomLevel = mcontext.getMetrics().getZoomLevel();
-        String text = String.format((Locale)null,"Zoomlevel*: %d", zoomLevel);
+        String text = ToDo.translate("Zoomlevel: " + zoomLevel);
 
         mcontext.draw().textTop(text, 2);
     }

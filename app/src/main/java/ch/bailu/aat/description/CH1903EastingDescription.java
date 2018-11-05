@@ -2,8 +2,6 @@ package ch.bailu.aat.description;
 
 import android.content.Context;
 
-import java.util.Locale;
-
 import ch.bailu.aat.R;
 import ch.bailu.aat.coordinates.CH1903Coordinates;
 import ch.bailu.aat.gpx.GpxInformation;
@@ -27,7 +25,7 @@ public class CH1903EastingDescription extends DoubleDescription {
     }
 
     public String getValue() {
-        return String.format((Locale)null,"%.3f",  ( (float)(coordinate) ) / 1000 );
+        return FF.N_3.format( ((float)(coordinate) ) / 1000f );
     }
 
     @Override

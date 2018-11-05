@@ -2,7 +2,7 @@ package ch.bailu.aat.description;
 
 import android.content.Context;
 
-import java.util.Locale;
+import java.text.DecimalFormat;
 
 import ch.bailu.aat.R;
 import ch.bailu.aat.gpx.GpxInformation;
@@ -34,17 +34,16 @@ public class AltitudeDescription extends FloatDescription {
         return getValue(getCache());
     }
 
-    
+    private static final DecimalFormat f0 = new DecimalFormat("0");
+
     public String getValue(float v) {
         float f = unit.getAltitudeFactor();
-        return String.format((Locale)null, "%.0f", v * f);
+        return f0.format(v *f);
     }
     
 
     public String getValueUnit(float v) {
-        float f = unit.getAltitudeFactor();
-        return String.format((Locale)null, "%.0f %s", v * f, getUnit());
-        
+        return getValue(v) + " " + getUnit();
     }
     
     @Override

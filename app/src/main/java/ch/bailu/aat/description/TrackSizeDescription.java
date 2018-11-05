@@ -23,10 +23,9 @@ public class TrackSizeDescription extends ContentDescription {
         if (track != null && size != track.getPointList().size()) {
             size = track.getPointList().size();
 
-            value = String.format(Locale.getDefault(),"P: %d, M: %d, S: %d", 
-                    track.getPointList().size(),
-                    track.getMarkerList().size(),
-                    track.getSegmentList().size());
+            value =   "P: " + track.getPointList().size() +
+                    ", M: " + track.getMarkerList().size() +
+                    ", S: " + track.getSegmentList().size();
         }
     }
 

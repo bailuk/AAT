@@ -178,6 +178,32 @@ public class TileProvider implements Attachable, ObservableInterface {
     }
 
 
+
+    public synchronized TileBitmap getNonCached(final Tile mapTile) {
+        final TileBitmap[] r = {null};
+
+        new InsideContext(scontext) {
+            @Override
+            public void run() {
+                String id = source.getID(mapTile, scontext.getContext());
+
+                ObjectHandle handle = scontext.getCacheService().getObject(
+                        id
+                );
+
+
+                if (handle instanceof TileObject) {
+                    r[0] = ((TileObject) handle).getTileBitmap();
+                    handle.free();
+                }
+
+            }
+        };
+
+        return r[0];
+    }
+
+
     public synchronized boolean isReadyAndLoaded() {
         return cache.isReadyAndLoaded();
     }

@@ -2,8 +2,6 @@ package ch.bailu.aat.description;
 
 import android.content.Context;
 
-import java.util.Locale;
-
 import ch.bailu.aat.R;
 import ch.bailu.aat.gpx.GpxInformation;
 public class LongitudeDescription extends DoubleDescription {
@@ -25,7 +23,7 @@ public class LongitudeDescription extends DoubleDescription {
     }
 
     public String getValue() {
-        return String.format(Locale.getDefault(),"%.6f",  getCache());
+        return FF.N_6.format(getCache());
     }
 
     @Override

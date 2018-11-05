@@ -2,8 +2,10 @@ package ch.bailu.aat.coordinates;
 
 import org.mapsforge.core.model.LatLong;
 
+import java.text.DecimalFormat;
 import java.util.Locale;
 
+import ch.bailu.aat.description.FF;
 
 
 public class CH1903Coordinates extends MeterCoordinates {
@@ -148,26 +150,14 @@ public class CH1903Coordinates extends MeterCoordinates {
     }
     
 
+
     @Override
     public String toString() {
-        return String.format((Locale)null,"%3.3f/%3.3f", ((float)northing)/1000f, ((float)easting)/1000f);
+        return FF.N3_3.format(((float)northing)/1000f) + "/"
+                + FF.N3_3.format(((float)easting)/1000f);
     }
     
 
-    /*
-    public static float adjustAltitude(double la, double lo, float altitude) {
-        la = getRelativeLatitude(la);
-        lo = getRelativeLongitude(lo);
-        
-        return (float) 
-        (  
-            altitude
-            -49.55f
-            + 2.73f * lo
-            + 6.94f * la
-         );
-    }
-    */
 
 
     private static final BoundingBoxE6 SWISS_AREA = new BoundingBoxE6(48300000,11200000,45600000,5000000);
@@ -175,9 +165,5 @@ public class CH1903Coordinates extends MeterCoordinates {
     public static boolean inSwitzerland(LatLong point) {
         return SWISS_AREA.contains(point);
     }
-//    public static boolean inSwitzerland(LatLongE6Interface point) {
-//        return SWISS_AREA.contains(point);
-//    }
-
 
 }

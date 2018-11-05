@@ -49,7 +49,7 @@ public abstract class MeterGridLayer implements MapLayerInterface {
                 mcontext.draw().grid(centerPixel, mcontext.getMetrics().distanceToPixel(grid.getOptimalScale()));
                 mcontext.draw().point(centerPixel);
 
-                ttext = distanceDescription.getDistanceDescriptionRounded(grid.getOptimalScale());
+                ttext = distanceDescription.getDistanceDescription(grid.getOptimalScale());
                 btext = coordinates.toString();
             }
         }

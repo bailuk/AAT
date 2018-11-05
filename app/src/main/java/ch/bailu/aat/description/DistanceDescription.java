@@ -2,14 +2,15 @@ package ch.bailu.aat.description;
 
 import android.content.Context;
 
-import java.util.Locale;
+import java.text.DecimalFormat;
 
 import ch.bailu.aat.R;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.preferences.SolidUnit;
 
 public class DistanceDescription extends FloatDescription {
-    private final static String FORMAT_STRING[] = {"%.3f", "%.2f", "%.1f", "%.0f"}; 
+    private final static DecimalFormat FORMAT[] =
+            {FF.N_3, FF.N_2, FF.N_1, FF.N};
     private final SolidUnit unit;
     
     public DistanceDescription(Context context) {
@@ -35,8 +36,8 @@ public class DistanceDescription extends FloatDescription {
         float dist = unit.getDistanceFactor() * getCache();
         
         int format=0;
-        for (int x=10; dist >= x && format < FORMAT_STRING.length-1; x*=10) format++;
-        return String.format(Locale.getDefault(),FORMAT_STRING[format], dist);
+        for (int x=10; dist >= x && format < FORMAT.length-1; x*=10) format++;
+        return FORMAT[format].format(dist);
     }
 
     
@@ -53,23 +54,25 @@ public class DistanceDescription extends FloatDescription {
         
         if (nonSI < 1)
             return getAltitudeDescription(distance);
-        
-        return String.format(Locale.getDefault(),"%1.1f%s", nonSI, unit.getDistanceUnit());
+
+        return FF.N.format(nonSI) + unit.getDistanceUnit();
     }
     
-
+/*
     public String getDistanceDescriptionRounded(float distance) {
         float nonSI=distance * unit.getDistanceFactor();
         
         if (nonSI < 1)
             return getAltitudeDescription(distance);
         
-        return String.format(Locale.getDefault(),"%1.0f%s", nonSI, unit.getDistanceUnit());
+        return FF.N.format(nonSI) + unit.getDistanceUnit();
     }
-
+*/
     
     public String getAltitudeDescription(double value) {
-        return String.format(Locale.getDefault(),"%1.0f%s", value*unit.getAltitudeFactor(), unit.getAltitudeUnit());
+        return FF.N.format(
+                value*unit.getAltitudeFactor()) +
+                unit.getAltitudeUnit();
     }
 
 }

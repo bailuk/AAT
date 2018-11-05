@@ -5,9 +5,8 @@ import android.content.SharedPreferences;
 
 import org.mapsforge.core.model.LatLong;
 
-import java.util.Locale;
-
 import ch.bailu.aat.coordinates.WGS84Sexagesimal;
+import ch.bailu.aat.description.FF;
 import ch.bailu.aat.map.MapContext;
 import ch.bailu.aat.map.layer.MapLayerInterface;
 
@@ -43,16 +42,9 @@ public class WGS84Layer implements MapLayerInterface {
     }
 
 
-
-
-
     private void drawCoordinates(MapContext clayer,LatLong point) {
         clayer.draw().textBottom(new WGS84Sexagesimal(point.getLatitude(), point.getLongitude()).toString(),1);
-        clayer.draw().textBottom(
-                String.format((Locale)null,"%.6f/%.6f",
-                        (point.getLatitude()),
-                        (point.getLongitude())),
-                0);
+        clayer.draw().textBottom(FF.N_6.format(point.latitude) + "/" + FF.N_6.format(point.getLongitude()),0);
     }
 
 

@@ -3,6 +3,7 @@ package ch.bailu.aat.gpx.writer;
 import java.io.IOException;
 import java.util.Locale;
 
+import ch.bailu.aat.description.FF;
 import ch.bailu.aat.gpx.interfaces.GpxPointInterface;
 import ch.bailu.util_java.foc.Foc;
 
@@ -29,13 +30,13 @@ public class TrackWriter extends GpxWriter {
     public void writeTrackPoint(GpxPointInterface tp) throws IOException {
         writeString("\t");
         writeBeginElementStart(GpxConstants.QNAME_TRACK_POINT);
-        writeParameter(GpxConstants.QNAME_LATITUDE, String.format((Locale)null, "%.6f", tp.getLatitude()));
-        writeParameter(GpxConstants.QNAME_LONGITUDE, String.format((Locale)null, "%.6f", tp.getLongitude()));
+        writeParameter(GpxConstants.QNAME_LATITUDE, FF.N_6.format(tp.getLatitude()));
+        writeParameter(GpxConstants.QNAME_LONGITUDE, FF.N_6.format(tp.getLongitude()));
 
         writeBeginElementEnd();
 
         writeBeginElement(GpxConstants.QNAME_ALTITUDE);
-        writeString(String.format((Locale)null, "%d",(int)tp.getAltitude()));
+        writeString(FF.N.format(tp.getAltitude()));
         writeEndElement(GpxConstants.QNAME_ALTITUDE);
 
         writeTimeStamp(tp.getTimeStamp()); 

@@ -4,6 +4,7 @@ import android.content.Context;
 
 import org.mapsforge.core.model.LatLong;
 
+import java.text.DecimalFormat;
 import java.util.Locale;
 
 import ch.bailu.aat.preferences.SolidDataDirectory;
@@ -52,15 +53,16 @@ public class SrtmCoordinates extends Coordinates implements LatLongE6Interface {
     }
 
 
-    public String toLaString() {
-        return String.format((Locale)null,"%c%02d", 
-                WGS84Sexagesimal.getLatitudeChar(la),  Math.abs(la));
-    }
-    
-    public String toLoString() {
-        return String.format((Locale)null,"%c%03d",
-                WGS84Sexagesimal.getLongitudeChar(lo), Math.abs(lo));
+    private final static DecimalFormat f2 = new DecimalFormat("00");
+    private final static DecimalFormat f3 = new DecimalFormat("000");
 
+    public String toLaString() {
+        return WGS84Sexagesimal.getLatitudeChar(la) + f2.format(Math.abs(la));
+    }
+
+
+    public String toLoString() {
+        return WGS84Sexagesimal.getLongitudeChar(lo) + f3.format(Math.abs(lo));
     }
     
     @Override
