@@ -5,7 +5,6 @@ import org.mapsforge.core.model.LatLong;
 import org.mapsforge.core.util.LatLongUtils;
 
 import java.io.IOException;
-import java.util.Locale;
 
 import ch.bailu.aat.description.FF;
 import ch.bailu.util_java.parser.scanner.DoubleScanner;

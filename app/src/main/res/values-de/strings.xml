@@ -224,12 +224,8 @@
     <string name ="tt_edit_remove">Ausgewählten Punkt entfernen</string>
     <string name ="tt_edit_up">Ausgewählten Punkt in der Liste nach oben bewegen</string>
     <string name ="tt_edit_down">Ausgewählten Punkt in der Liste nach unten bewegen</string>
-    <string name ="tt_edit_convert">Wechseln zwischen GPX-Track oder GPX-Way</string>
-    <string name ="tt_edit_clear">Liste löschen: alle Punkte entfernen</string>
     <string name ="tt_edit_redo">Letzte rückgängig gemachte Aktion wiederherstellen</string>
     <string name ="tt_edit_undo">Letzte Aktion rückgängig machen</string>
-    <string name ="tt_edit_save">GPX-Liste speichern</string>
-    <string name ="tt_edit_save_as">Kopie der GPX-Liste speichern</string>
 
     <string name ="tt_info_grid">Zwischen verschiedenen Kartengittern wechseln</string>
     <string name ="tt_info_legend">Zwischen Beschreibungsmodi wechseln</string>

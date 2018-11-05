@@ -4,8 +4,6 @@ import android.content.SharedPreferences;
 
 import org.mapsforge.core.model.Point;
 
-import java.util.Locale;
-
 import ch.bailu.aat.map.MapContext;
 import ch.bailu.aat.util.ToDo;
 

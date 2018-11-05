@@ -2,8 +2,6 @@ package ch.bailu.aat.coordinates;
 
 import org.mapsforge.core.model.LatLong;
 
-import java.util.Locale;
-
 import ch.bailu.aat.description.FF;
 
 public class UTMCoordinates extends MeterCoordinates {

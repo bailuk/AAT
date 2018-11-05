@@ -2,8 +2,6 @@ package ch.bailu.aat.coordinates;
 
 import org.mapsforge.core.model.LatLong;
 
-import java.text.DecimalFormat;
-
 public abstract class MeterCoordinates extends Coordinates {
     public abstract int getNorthing();
     public abstract int getEasting();

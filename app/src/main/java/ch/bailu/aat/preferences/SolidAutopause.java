@@ -2,8 +2,6 @@ package ch.bailu.aat.preferences;
 
 import android.content.Context;
 
-import java.util.Locale;
-
 import ch.bailu.aat.R;
 import ch.bailu.aat.description.FF;
 

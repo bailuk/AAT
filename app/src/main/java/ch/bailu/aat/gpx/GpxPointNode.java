@@ -8,7 +8,7 @@ import ch.bailu.aat.gpx.linked_list.Node;
 public abstract class GpxPointNode extends Node implements GpxDeltaPointInterface {
     private final static String NULL_VALUE="0";
 
-    private GpxAttributes attributes = GpxAttributesStatic.NULL_ATTRIBUTES;
+    private GpxAttributes attributes;
     private final GpxPoint     point;
     
     

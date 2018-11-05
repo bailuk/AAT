@@ -1,7 +1,6 @@
 package ch.bailu.aat.views.html;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.text.util.Linkify;
 
 import ch.bailu.aat.util.ui.AppTheme;

@@ -13,7 +13,7 @@ public class Inverser {
 
 
     private final GpxList newList;
-    private final GpxListArray list, listInverse;
+    private final GpxListArray listInverse;
 
 
     public Inverser(GpxList track) {
@@ -21,7 +21,7 @@ public class Inverser {
                 MaxSpeed.NULL,  AutoPause.NULL, AltitudeDelta.NULL);
 
 
-        list = new GpxListArray(track);
+        GpxListArray list = new GpxListArray(track);
         listInverse = new GpxListArray(track);
 
         if (list.size() > 0) {

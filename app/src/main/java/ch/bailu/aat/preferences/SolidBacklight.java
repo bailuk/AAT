@@ -1,8 +1,6 @@
 package ch.bailu.aat.preferences;
 
 import android.content.Context;
-import android.os.PowerManager;
-import android.view.WindowManager;
 
 import ch.bailu.aat.R;
 

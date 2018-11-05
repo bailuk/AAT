@@ -56,7 +56,6 @@
     <!-- Activity main -->
     <string name="intro_about">About</string>
     <string name="intro_readme">README</string>
-    <string name="intro_uiguide">Getting started</string>
     <string name="intro_cockpit_a">Cockpit A</string>
     <string name="intro_cockpit_b">Cockpit B</string>
 
@@ -276,12 +275,8 @@
     <string name ="tt_edit_remove">Remove selected point.</string>
     <string name ="tt_edit_up">Move point one up in order.</string>
     <string name ="tt_edit_down">Move point one down in order.</string>
-    <string name ="tt_edit_convert">Switch between GPX Track or GPX Way.</string>
-    <string name ="tt_edit_clear">Clear list: remove all points.</string>
     <string name ="tt_edit_redo">Redo last undone action..</string>
     <string name ="tt_edit_undo">Undo last action.</string>
-    <string name ="tt_edit_save">Save GPX list.</string>
-    <string name ="tt_edit_save_as">Save a copy of GPX list.</string>
 
     <string name ="tt_info_grid">Switch between grid modes.</string>
     <string name ="tt_info_legend">Switch between track legend modes.</string>

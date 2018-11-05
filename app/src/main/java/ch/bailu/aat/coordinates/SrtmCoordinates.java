@@ -5,7 +5,6 @@ import android.content.Context;
 import org.mapsforge.core.model.LatLong;
 
 import java.text.DecimalFormat;
-import java.util.Locale;
 
 import ch.bailu.aat.preferences.SolidDataDirectory;
 import ch.bailu.util_java.foc.Foc;

@@ -128,8 +128,8 @@ INVERT "go-previous"
 INVERT "go-down" 
 INVERT "go-up" 
 INVERT "open-menu"
-INVERT "edit-select-all"
 INVERT "folder"
+INVERT "edit-select-all"
 
 
 ####### Navigation-Bar
@@ -140,22 +140,17 @@ COPY "zoom-original"
 INVERT "zoom-original"
 
 ####### File-Bar
-COPY "edit-select-all"
 COPY "view-paged"
 
 
 ####### Edit-Bar
 COPY "go-up" 
 COPY "go-down" 
-COPY "document-save-as" 
-COPY "edit-clear-all" 
-COPY "document-save" 
 COPY "edit-undo" 
 COPY "user-trash" 
 COPY "edit-redo" 
 COPY "list-add" 
 COPY "list-remove" 
-COPY "gtk-convert" 
 
 
 ####### Information-Bar
@@ -182,9 +177,7 @@ INVERT "media-playback-stop"
 
 ####### FileView / OsmApi Activities
 INVERT "view-paged"
-INVERT "content-loading"
 INVERT "go-bottom"  ## Overpass
-INVERT "edit-find"  ## Nominatim
 INVERT "edit-clear-all" 
 INVERT "document-save-as" 
 

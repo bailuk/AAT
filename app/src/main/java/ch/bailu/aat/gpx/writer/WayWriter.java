@@ -1,7 +1,6 @@
 package ch.bailu.aat.gpx.writer;
 
 import java.io.IOException;
-import java.util.Locale;
 
 import ch.bailu.aat.description.FF;
 import ch.bailu.aat.gpx.interfaces.GpxPointInterface;

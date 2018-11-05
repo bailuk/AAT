@@ -20,8 +20,6 @@ public class SimplifierBearing extends GpxListWalker {
     private GpxList newList;
     private boolean newSegment = true;
 
-    private GpxPointNode lastPoint=null;
-
     private double lastBearing;
     private double currentBearing;
 
@@ -46,6 +44,7 @@ public class SimplifierBearing extends GpxListWalker {
 
     @Override
     public void doPoint(GpxPointNode point) {
+        GpxPointNode lastPoint = null;
         if (newSegment) {
             newSegment = false;
 

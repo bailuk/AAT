@@ -27,7 +27,7 @@ public class MockLocation extends LocationStackChainedItem implements Runnable{
     private int state = StateID.NOSERVICE;
 
     private long interval = INTERVAL;
-    private Foc file = NULL_FILE;
+    private Foc file;
 
     private final Timer timer;
 

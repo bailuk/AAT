@@ -9,7 +9,6 @@ import android.widget.TextView;
 import ch.bailu.aat.util.ui.AppDensity;
 
 public class BusyView extends LinearLayout {
-    private final ProgressBar progress;
     private final TextView label;
 
     public BusyView(Context context) {
@@ -22,7 +21,7 @@ public class BusyView extends LinearLayout {
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         lp.setMargins(m,m,m,m);
 
-        progress = new ProgressBar(context, null, android.R.attr.progressBarStyleSmall);
+        ProgressBar progress = new ProgressBar(context, null, android.R.attr.progressBarStyleSmall);
         addView(progress, lp);
 
         label = new TextView(context);

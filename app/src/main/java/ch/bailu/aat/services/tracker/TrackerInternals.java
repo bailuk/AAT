@@ -7,7 +7,6 @@ import java.io.Closeable;
 import java.io.IOException;
 
 import ch.bailu.aat.preferences.SolidAutopause;
-import ch.bailu.aat.preferences.SolidBacklight;
 import ch.bailu.aat.preferences.SolidPreset;
 import ch.bailu.aat.preferences.SolidTrackerAutopause;
 import ch.bailu.aat.preferences.Storage;
@@ -20,7 +19,7 @@ implements OnSharedPreferenceChangeListener, Closeable {
 
     
     public final ServiceContext scontext;
-    public State state=null;
+    public State state;
 
     public Logger logger;
 

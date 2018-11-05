@@ -2,9 +2,6 @@ package ch.bailu.aat.coordinates;
 
 import org.mapsforge.core.model.LatLong;
 
-import java.text.DecimalFormat;
-import java.util.Locale;
-
 import ch.bailu.aat.description.FF;
 
 

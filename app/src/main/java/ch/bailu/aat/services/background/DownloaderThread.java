@@ -1,7 +1,6 @@
 package ch.bailu.aat.services.background;
 
 import ch.bailu.aat.services.ServiceContext;
-import ch.bailu.util_java.foc.Foc;
 
 public class DownloaderThread  extends WorkerThread {
     private final static int DOWNLOAD_QUEUE_SIZE=100;

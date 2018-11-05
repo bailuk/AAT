@@ -14,7 +14,7 @@ public class EditorHelper {
 
     private ObjectHandle handle = ObjectHandle.NULL;
 
-    private int IID= InfoID.EDITOR_DRAFT;
+    private int IID;
     private Foc file;
     private String vid;
 
