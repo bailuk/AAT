@@ -62,7 +62,7 @@ public abstract class SolidAutopause extends SolidIndexList {
         if (i==0) return getContext().getString(R.string.off);
 
         return "< " +
-                FF.N_2.format(SPEED_VALUES[i] * sunit.getSpeedFactor()) +
+                FF.f().N2.format(SPEED_VALUES[i] * sunit.getSpeedFactor()) +
                 sunit.getSpeedUnit() + " - " +
                 TRIGGER_VALUES[i] + "s";
     }

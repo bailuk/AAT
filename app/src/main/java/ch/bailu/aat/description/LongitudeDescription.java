@@ -22,8 +22,10 @@ public class LongitudeDescription extends DoubleDescription {
         return UNIT;
     }
 
+    private final FF f = FF.f();
+
     public String getValue() {
-        return FF.N_6.format(getCache());
+        return f.N6.format(getCache());
     }
 
     @Override

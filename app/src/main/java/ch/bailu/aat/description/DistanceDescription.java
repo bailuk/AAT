@@ -9,8 +9,8 @@ import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.preferences.SolidUnit;
 
 public class DistanceDescription extends FloatDescription {
-    private final static DecimalFormat FORMAT[] =
-            {FF.N_3, FF.N_2, FF.N_1, FF.N};
+    private final DecimalFormat FORMAT[] =
+            {FF.f().N3, FF.f().N2, FF.f().N1, FF.f().N};
     private final SolidUnit unit;
     
     public DistanceDescription(Context context) {
@@ -55,22 +55,12 @@ public class DistanceDescription extends FloatDescription {
         if (nonSI < 1)
             return getAltitudeDescription(distance);
 
-        return FF.N.format(nonSI) + unit.getDistanceUnit();
+        return FF.f().N.format(nonSI) + unit.getDistanceUnit();
     }
     
-/*
-    public String getDistanceDescriptionRounded(float distance) {
-        float nonSI=distance * unit.getDistanceFactor();
-        
-        if (nonSI < 1)
-            return getAltitudeDescription(distance);
-        
-        return FF.N.format(nonSI) + unit.getDistanceUnit();
-    }
-*/
-    
+
     public String getAltitudeDescription(double value) {
-        return FF.N.format(
+        return FF.f().N.format(
                 value*unit.getAltitudeFactor()) +
                 unit.getAltitudeUnit();
     }

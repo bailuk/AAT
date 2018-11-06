@@ -15,12 +15,10 @@ public class DateDescription extends LongDescription {
     public String getLabel() {
         return getContext().getString(R.string.d_startdate);
     }
-    public String getValue()   {
-        return format(getCache());
-    }
 
-    public static String format(long time) {
-        return String.format("%tc",time);
+    @Override
+    public String getValue()   {
+        return f.LOCAL_DATE_TIME.format(getCache());
     }
 
     @Override

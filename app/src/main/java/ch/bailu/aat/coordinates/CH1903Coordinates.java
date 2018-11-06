@@ -145,13 +145,14 @@ public class CH1903Coordinates extends MeterCoordinates {
     private static double getRelativeX(int si) {
         return ( (double)(si - BERNE_SIX) ) / 1e6d;
     }
-    
 
+
+    private final FF f = FF.f();
 
     @Override
     public String toString() {
-        return FF.N3_3.format(((float)northing)/1000f) + "/"
-                + FF.N3_3.format(((float)easting)/1000f);
+        return f.N3_3.format(((float)northing)/1000f) + "/"
+                + f.N3_3.format(((float)easting)/1000f);
     }
     
 

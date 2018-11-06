@@ -2,7 +2,7 @@ package ch.bailu.aat.util.fs.foc;
 
 import java.io.Closeable;
 
-import ch.bailu.aat.description.DateDescription;
+import ch.bailu.aat.description.FF;
 import ch.bailu.aat.util.ui.AppLog;
 import ch.bailu.util_java.foc.Foc;
 
@@ -37,7 +37,7 @@ public class FocTest {
         b.append(file.length());
 
         b.append(" m:");
-        b.append(DateDescription.format(file.lastModified()));
+        b.append(FF.f().LOCAL_DATE_TIME.format(file.lastModified()));
         b.append(" [");
 
         if (file.isDir())

@@ -19,12 +19,14 @@ public abstract class SpeedDescription extends FloatDescription{
         return sunit.getSpeedUnit();
     }
 
+    private final FF f = FF.f();
+
     @Override
     public String getValue() {
         float speed = getCache();
         float speedFactor = sunit.getSpeedFactor();
         speed = speed * speedFactor;
-        return FF.N_1.format(speed);
+        return f.N1.format(speed);
     }
     
     

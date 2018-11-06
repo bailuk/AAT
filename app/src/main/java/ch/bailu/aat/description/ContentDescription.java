@@ -10,6 +10,9 @@ public abstract class ContentDescription
 
     private final Context context;
 
+    protected final FF f = FF.f();
+
+
     protected static final String NULL_STRING="";
     public ContentDescription(Context c) {
         context = c;

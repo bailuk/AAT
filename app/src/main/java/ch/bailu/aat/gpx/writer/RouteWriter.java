@@ -2,7 +2,6 @@ package ch.bailu.aat.gpx.writer;
 
 import java.io.IOException;
 
-import ch.bailu.aat.description.FF;
 import ch.bailu.aat.gpx.interfaces.GpxPointInterface;
 import ch.bailu.aat.services.dem.tile.ElevationProvider;
 import ch.bailu.util_java.foc.Foc;
@@ -35,13 +34,13 @@ public class RouteWriter extends GpxWriter {
     public void writeTrackPoint(GpxPointInterface tp) throws IOException {
         writeString("\t");
         writeBeginElementStart(GpxConstants.QNAME_ROUTE_POINT);
-            writeParameter(GpxConstants.QNAME_LATITUDE, FF.N_6.format(tp.getLatitude()));
-            writeParameter(GpxConstants.QNAME_LONGITUDE, FF.N_6.format(tp.getLongitude()));
+            writeParameter(GpxConstants.QNAME_LATITUDE, f.N6.format(tp.getLatitude()));
+            writeParameter(GpxConstants.QNAME_LONGITUDE, f.N6.format(tp.getLongitude()));
         writeBeginElementEnd();
         
         if (tp.getAltitude() != ElevationProvider.NULL_ALTITUDE) {
             writeBeginElement(GpxConstants.QNAME_ALTITUDE);
-            writeString(FF.N.format(tp.getAltitude()));
+            writeString(f.N.format(tp.getAltitude()));
             writeEndElement(GpxConstants.QNAME_ALTITUDE);
         }
         

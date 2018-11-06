@@ -122,13 +122,14 @@ public class UTMCoordinates extends MeterCoordinates {
 
     }
 
+    private final FF f = FF.f();
 
     @Override
     public String toString() {
 
         return "Z " + ezone + getNorthingZoneCharacter()
-                + ", E " + FF.N3_3.format(((float)easting)/1000f)
-                + ", N " + FF.N3_3.format(((float)northing)/1000f);
+                + ", E " + f.N3_3.format(((float)easting)/1000f)
+                + ", N " + f.N3_3.format(((float)northing)/1000f);
     }
     
     /*

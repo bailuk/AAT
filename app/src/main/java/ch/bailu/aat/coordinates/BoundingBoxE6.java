@@ -7,8 +7,8 @@ import org.mapsforge.core.util.LatLongUtils;
 import java.io.IOException;
 
 import ch.bailu.aat.description.FF;
-import ch.bailu.util_java.parser.scanner.DoubleScanner;
 import ch.bailu.util_java.io.Stream;
+import ch.bailu.util_java.parser.scanner.DoubleScanner;
 
 public class BoundingBoxE6 {
 
@@ -184,10 +184,11 @@ public class BoundingBoxE6 {
 
     @Override
     public String toString() {
-        return  FF.N_2.format(north/1e6f) + "," +
-                FF.N_2.format(west/1e6f)     + "," +
-                FF.N_2.format(south/1e6f)    + "," +
-                FF.N_2.format(east/1e6f);
+        final FF f = FF.f();
+        return  f.N2.format(north/1e6f) + "," +
+                f.N2.format(west/1e6f)     + "," +
+                f.N2.format(south/1e6f)    + "," +
+                f.N2.format(east/1e6f);
     }
 
 

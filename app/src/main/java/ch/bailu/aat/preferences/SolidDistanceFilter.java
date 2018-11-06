@@ -52,7 +52,7 @@ public class SolidDistanceFilter extends SolidIndexList {
         if (i==0) return getContext().getString(R.string.off);
         if (i==length()-1) getContext().getString(R.string.auto);
 
-        return FF.N_2.format(VALUE_LIST[i] * sunit.getAltitudeFactor())
+        return FF.f().N2.format(VALUE_LIST[i] * sunit.getAltitudeFactor())
                 + sunit.getAltitudeUnit();
     }
     
