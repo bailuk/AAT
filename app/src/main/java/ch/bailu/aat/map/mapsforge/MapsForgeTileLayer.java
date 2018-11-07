@@ -1,9 +1,11 @@
 package ch.bailu.aat.map.mapsforge;
 
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.graphics.drawable.Drawable;
 
 import org.mapsforge.core.graphics.Canvas;
 import org.mapsforge.core.graphics.TileBitmap;
@@ -28,20 +30,24 @@ public class MapsForgeTileLayer extends Layer implements MapLayerInterface, Obse
 
     private final TileProvider provider;
 
-    private final Paint paint = new Paint();
-
     private boolean isAttached = false;
 
     private final ServiceContext scontext;
+    private final Resources resources;
+    private final int alpha;
 
+    private final Rect rect = new Rect();
 
     public MapsForgeTileLayer(ServiceContext sc, TileProvider p) {
         scontext = sc;
         provider = p;
-        paint.setAlpha(p.getSource().getAlpha());
-        paint.setFlags(p.getSource().getPaintFlags());
+
+        resources = sc.getContext().getResources();
+        alpha = p.getSource().getAlpha();
 
         provider.addObserver(this);
+
+
     }
 
 
@@ -74,22 +80,20 @@ public class MapsForgeTileLayer extends Layer implements MapLayerInterface, Obse
         provider.preload(tilePositions);
 
         for (TilePosition tilePosition : tilePositions) {
-            final TileBitmap bitmap = provider.get(tilePosition.tile);
+            final Drawable drawable = provider.get(tilePosition.tile, resources);
 
-            if (bitmap != null) {
+            if (drawable != null) {
+
                 final Point p = tilePosition.point;
-                final Rect r=new Rect();
 
-                r.left = (int) Math.round(p.x);
-                r.top = (int) Math.round(p.y);
-                r.right = r.left + tileSize;
-                r.bottom = r.top + tileSize;
+                rect.left = (int) Math.round(p.x);
+                rect.top = (int) Math.round(p.y);
+                rect.right = rect.left + tileSize;
+                rect.bottom = rect.top + tileSize;
 
-                Bitmap androidbitmap = AndroidGraphicFactory.getBitmap(bitmap);
-                if (androidbitmap != null) {
-                    AndroidGraphicFactory.getCanvas(canvas).
-                            drawBitmap(androidbitmap, null, r, paint);
-                }
+                drawable.setAlpha(alpha);
+                drawable.setBounds(rect);
+                drawable.draw(AndroidGraphicFactory.getCanvas(canvas));
             }
         }
     }

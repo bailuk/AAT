@@ -4,9 +4,9 @@ import android.content.Context;
 
 import org.mapsforge.core.model.Tile;
 
+import ch.bailu.aat.services.cache.ObjectHandle;
 import ch.bailu.aat.services.cache.elevation.ElevationColorTile;
 import ch.bailu.aat.services.cache.elevation.HillshadeTile;
-import ch.bailu.aat.services.cache.ObjectHandle;
 
 public abstract class Source {
     public final static String EXT = ".png";
@@ -22,7 +22,6 @@ public abstract class Source {
 
     public abstract boolean isTransparent();
     public abstract int getAlpha();
-    public abstract int getPaintFlags();
     public abstract ObjectHandle.Factory getFactory(Tile tile);
 
 
@@ -76,11 +75,6 @@ public abstract class Source {
                 }
 
                 @Override
-                public int getPaintFlags() {
-                    return 0;
-                }
-
-                @Override
                 public ObjectHandle.Factory getFactory(Tile mt) {
                     return  new HillshadeTile.Factory(mt);
                 }
@@ -119,10 +113,6 @@ public abstract class Source {
                     return 50;
                 }
 
-                @Override
-                public int getPaintFlags() {
-                    return 0;
-                }
 
                 @Override
                 public ObjectHandle.Factory getFactory(Tile mt) {

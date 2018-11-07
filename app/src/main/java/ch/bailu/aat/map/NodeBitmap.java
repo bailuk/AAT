@@ -66,8 +66,8 @@ public class NodeBitmap {
     }
 
 
-    public Bitmap getTileBitmap() {
-        return bitmap.getTileBitmap();
+    public SyncTileBitmap getTileBitmap() {
+        return bitmap;
     }
 
 

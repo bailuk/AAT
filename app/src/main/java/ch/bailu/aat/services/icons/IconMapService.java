@@ -1,7 +1,5 @@
 package ch.bailu.aat.services.icons;
 
-import android.graphics.Bitmap;
-
 import java.io.IOException;
 
 import ch.bailu.aat.gpx.GpxAttributes;
@@ -9,6 +7,7 @@ import ch.bailu.aat.gpx.GpxPointNode;
 import ch.bailu.aat.gpx.interfaces.GpxPointInterface;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.VirtualService;
+import ch.bailu.aat.services.cache.ImageObjectAbstract;
 import ch.bailu.aat.util.fs.foc.FocAsset;
 import ch.bailu.aat.util.ui.AppLog;
 import ch.bailu.util_java.foc.Foc;
@@ -45,7 +44,7 @@ public class IconMapService extends VirtualService {
 
     }
 
-    public Bitmap getIconSVG(String key, String value, int size) {
+    public ImageObjectAbstract getIconSVG(String key, String value, int size) {
         String id = toAssetPath(key, value);
 
         if (id != null)
@@ -55,7 +54,7 @@ public class IconMapService extends VirtualService {
     }
 
 
-    public Bitmap getIconSVG(final GpxPointInterface point, final int size) {
+    public ImageObjectAbstract getIconSVG(final GpxPointInterface point, final int size) {
 
         GpxAttributes attr = point.getAttributes();
         String path = toAssetPath(attr);

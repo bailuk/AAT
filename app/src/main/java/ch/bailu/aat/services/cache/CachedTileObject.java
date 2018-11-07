@@ -1,7 +1,9 @@
 package ch.bailu.aat.services.cache;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 
 import org.mapsforge.core.graphics.TileBitmap;
 import org.mapsforge.core.model.Tile;
@@ -95,6 +97,11 @@ public class CachedTileObject extends TileObject {
         tile.free();
     }
 
+
+    @Override
+    public Drawable getDrawable(Resources r) {
+        return tile.getDrawable(r);
+    }
 
     @Override
     public Bitmap getAndroidBitmap() {

@@ -79,10 +79,6 @@ public class DoubleSource extends Source {
         return sourceA.getAlpha();
     }
 
-    @Override
-    public int getPaintFlags() {
-        return sourceA.getPaintFlags();
-    }
 
     @Override
     public ObjectHandle.Factory getFactory(Tile tile) {

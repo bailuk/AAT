@@ -38,15 +38,7 @@ public class CachedSource extends Source {
         return source.getAlpha();
     }
 
-    @Override
-    public int getPaintFlags() {
-        return source.getPaintFlags();
-    }
-/*
-    public Source getSource() {
-        return source;
-    }
-*/
+
     @Override
     public ObjectHandle.Factory getFactory(Tile tile) {
         return new CachedTileObject.Factory(tile, source);

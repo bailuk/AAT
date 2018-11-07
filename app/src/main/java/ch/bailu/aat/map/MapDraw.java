@@ -2,8 +2,8 @@ package ch.bailu.aat.map;
 
 import android.graphics.Point;
 import android.graphics.Rect;
+import android.graphics.drawable.Drawable;
 
-import org.mapsforge.core.graphics.Bitmap;
 import org.mapsforge.core.graphics.Paint;
 
 public interface MapDraw {
@@ -11,7 +11,7 @@ public interface MapDraw {
     int MARGIN=5;
 
     Paint getGridPaint();
-    Bitmap getNodeBitmap();
+    Drawable getNodeDrawable();
 
 
     void grid(Point center, int space);
@@ -27,8 +27,12 @@ public interface MapDraw {
 
     void rect(Rect rect, Paint paint);
 
-    void bitmap(Bitmap b, Point pixel);
-    void bitmap(Bitmap b, Point pixel, int color);
+
+    void bitmap(Drawable d, Point pixel);
+    void bitmap(Drawable d, Point pixel, int color);
+
+    //void bitmap(Bitmap b, Point pixel);
+    //void bitmap(Bitmap b, Point pixel, int color);
 
     void edge(TwoNodes nodes, Paint paint);
     void label(String text, Point pixel, Paint background, Paint frame);

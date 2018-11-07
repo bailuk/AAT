@@ -51,10 +51,6 @@ public class MapsForgeSource extends Source {
         return OPAQUE;
     }
 
-    @Override
-    public int getPaintFlags() {
-        return 0;
-    }
 
     @Override
     public ObjectHandle.Factory getFactory(Tile t) {

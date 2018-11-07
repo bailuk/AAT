@@ -1,7 +1,5 @@
 package ch.bailu.aat.services.icons;
 
-import android.graphics.Bitmap;
-
 import java.io.Closeable;
 
 import ch.bailu.aat.services.ServiceContext;
@@ -21,8 +19,8 @@ public class IconCache implements Closeable {
     }
 
 
-    public Bitmap getIcon(final String path, final int size) {
-        final Bitmap[] r = {null};
+    public ImageObjectAbstract getIcon(final String path, final int size) {
+        final ImageObjectAbstract[] r = {null};
 
         if (path != null) {
             String iconFileID = SVGAssetImageObject.toID(path, size);
@@ -34,10 +32,7 @@ public class IconCache implements Closeable {
             }
 
 
-            if (icon != null) {
-                r[0] = icon.getBitmap();
-            }
-
+            r[0] = icon;
         }
         return r[0];
     }

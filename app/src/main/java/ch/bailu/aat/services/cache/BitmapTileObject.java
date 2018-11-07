@@ -1,6 +1,8 @@
 package ch.bailu.aat.services.cache;
 
+import android.content.res.Resources;
 import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 
 import org.mapsforge.core.graphics.TileBitmap;
 import org.mapsforge.core.model.Tile;
@@ -120,6 +122,11 @@ public class BitmapTileObject extends TileObject {
     @Override
     public long getSize() {
         return getSize(bitmap, SolidTileSize.DEFAULT_TILESIZE_BYTES);
+    }
+
+    @Override
+    public Drawable getDrawable(Resources r) {
+        return bitmap.getDrawable(r);
     }
 
     @Override

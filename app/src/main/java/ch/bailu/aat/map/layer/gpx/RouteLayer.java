@@ -88,7 +88,7 @@ public class RouteLayer extends GpxLayer {
             if (altitude == ElevationProvider.NULL_ALTITUDE) c=getColor();
             else c= AltitudeColorTable.INSTANCE.getColor(altitude);
 
-            mcontext.draw().bitmap(mcontext.draw().getNodeBitmap(), node.pixel, c);
+            mcontext.draw().bitmap(mcontext.draw().getNodeDrawable(), node.pixel, c);
         }
     }
 }

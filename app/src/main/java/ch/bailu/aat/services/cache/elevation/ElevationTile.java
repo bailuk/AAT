@@ -1,8 +1,10 @@
 package ch.bailu.aat.services.cache.elevation;
 
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Rect;
+import android.graphics.drawable.Drawable;
 
 import org.mapsforge.core.graphics.TileBitmap;
 import org.mapsforge.core.model.Tile;
@@ -115,6 +117,10 @@ public abstract class ElevationTile extends TileObject implements ElevationUpdat
         return bitmap.getAndroidBitmap();
     }
 
+    @Override
+    public Drawable getDrawable(Resources r) {
+        return bitmap.getDrawable(r);
+    }
 
     @Override
     public long getSize() {

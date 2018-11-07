@@ -3,6 +3,8 @@ package ch.bailu.aat.map.tile;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
+import android.graphics.drawable.Drawable;
 
 import org.mapsforge.core.graphics.TileBitmap;
 import org.mapsforge.core.model.Tile;
@@ -61,17 +63,28 @@ public class TileProvider implements Attachable, ObservableInterface {
         }
 
         for (TilePosition p : tilePositions) {
-            get(p.tile);
+            getHandle(p.tile);
         }
     }
 
 
-    public synchronized TileBitmap get(Tile tile) {
+
+    private synchronized TileObject getHandle(Tile tile) {
         TileObject handle = getTileHandle(tile);
 
         if (handle != null) {
             handle.access();
-            return handle.getTileBitmap();
+        }
+        return handle;
+    }
+
+
+
+    public synchronized Drawable get(Tile tile, Resources r) {
+        TileObject handle = getHandle(tile);
+
+        if (handle != null) {
+            return handle.getDrawable(r);
         }
         return null;
     }

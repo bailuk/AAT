@@ -4,10 +4,8 @@ import android.content.res.Resources;
 import android.graphics.Point;
 import android.graphics.PorterDuff;
 import android.graphics.Rect;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 
-import org.mapsforge.core.graphics.Bitmap;
 import org.mapsforge.core.graphics.Canvas;
 import org.mapsforge.core.graphics.Paint;
 import org.mapsforge.map.android.graphics.AndroidGraphicFactory;
@@ -77,8 +75,8 @@ public class AndroidDraw implements MapDraw {
     }
 
     @Override
-    public Bitmap getNodeBitmap() {
-        return nodePainter.getTileBitmap();
+    public Drawable getNodeDrawable() {
+        return nodePainter.getTileBitmap().getDrawable(resources);
     }
 
     @Override
@@ -139,17 +137,12 @@ public class AndroidDraw implements MapDraw {
         canvas.drawLine(rect.right, rect.top,    rect.left,  rect.top, paint);
     }
 
-
     @Override
-    public void bitmap(Bitmap b, Point p, int c) {
-        Drawable drawable = new BitmapDrawable(resources ,AndroidGraphicFactory.getBitmap(b));
-
-        centerDrawable(drawable, p);
-        drawable.setColorFilter(c, PorterDuff.Mode.MULTIPLY);
-        drawable.draw(AndroidGraphicFactory.getCanvas(canvas));
+    public void bitmap(Drawable d, Point p, int c) {
+        centerDrawable(d, p);
+        d.setColorFilter(c, PorterDuff.Mode.MULTIPLY);
+        d.draw(AndroidGraphicFactory.getCanvas(canvas));
     }
-
-
 
 
     public static void centerDrawable(Drawable drawable, Point pixel) {
@@ -159,12 +152,14 @@ public class AndroidDraw implements MapDraw {
         drawable.setBounds(pixel.x-HSIZE, pixel.y-VSIZE, pixel.x+HSIZE, pixel.y+VSIZE);
     }
 
+
+
+
     @Override
-    public void bitmap(Bitmap b, Point p) {
-        canvas.drawBitmap(b, p.x -b.getWidth()/2, p.y -b.getHeight()/2);
+    public void bitmap(Drawable d, Point p) {
+        centerDrawable(d, p);
+        d.draw(AndroidGraphicFactory.getCanvas(canvas));
     }
-
-
 
 
 

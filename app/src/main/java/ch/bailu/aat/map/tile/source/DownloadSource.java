@@ -55,11 +55,6 @@ public class DownloadSource extends Source {
         return AppDirectory.getTileFile(genRelativeFilePath(tile, name), context).getPath();
     }
 
-    @Override
-    public int getPaintFlags() {
-        return 0;
-    }
-
 
     @Override
     public int getMinimumZoomLevel() {
@@ -105,10 +100,10 @@ public class DownloadSource extends Source {
                     "https://a.tile.openstreetmap.org/",
                     "https://b.tile.openstreetmap.org/",
                     "https://c.tile.openstreetmap.org/") {
-                @Override
+/*                @Override
                 public int getPaintFlags() {
                     return Paint.FILTER_BITMAP_FLAG;
-                }
+                }*/
             };
 
 

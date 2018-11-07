@@ -1,6 +1,8 @@
 package ch.bailu.aat.services.cache;
 
+import android.content.res.Resources;
 import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 
 import org.mapsforge.core.graphics.TileBitmap;
 import org.mapsforge.core.model.Tile;
@@ -34,6 +36,11 @@ public class MapsForgeTileObject extends TileObject {
         return themeID;
     }
 
+
+    @Override
+    public Drawable getDrawable(Resources r) {
+        return bitmap.getDrawable(r);
+    }
 
     @Override
     public Bitmap getAndroidBitmap() {

@@ -41,10 +41,6 @@ public class CacheOnlySource extends Source {
         return original.getAlpha();
     }
 
-    @Override
-    public int getPaintFlags() {
-        return original.getPaintFlags();
-    }
 
     @Override
     public TileObject.Factory getFactory(Tile tile) {

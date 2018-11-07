@@ -1,6 +1,7 @@
 package ch.bailu.aat.map.layer.gpx;
 
 import android.content.SharedPreferences;
+import android.graphics.drawable.Drawable;
 
 import org.mapsforge.core.graphics.Bitmap;
 import org.mapsforge.core.model.Point;
@@ -10,6 +11,7 @@ import ch.bailu.aat.map.MapContext;
 import ch.bailu.aat.map.TwoNodes;
 import ch.bailu.aat.services.InsideContext;
 import ch.bailu.aat.services.ServiceContext;
+import ch.bailu.aat.services.cache.ImageObjectAbstract;
 
 public class WayLayer extends GpxLayer {
 
@@ -79,24 +81,24 @@ public class WayLayer extends GpxLayer {
             if (node.isVisible() && count < MAX_VISIBLE_NODES) {
 
                 final ServiceContext scontext = mcontext.getSContext();
-                final Bitmap[] nodeBitmap = {null};
+                final Drawable[] nodeDrawable = {null};
 
                 new InsideContext(scontext) {
                     @Override
                     public void run() {
-                        android.graphics.Bitmap b = scontext.getIconMapService().getIconSVG(node.point,
+                        ImageObjectAbstract i = scontext.getIconMapService().getIconSVG(node.point,
                                 icon_size);
 
-                        if (b != null)
-                            nodeBitmap[0] = new AndroidBitmap(b);
+                        if (i != null)
+                            nodeDrawable[0] = i.getDrawable(scontext.getContext().getResources());
                     }
                 };
 
-                if (nodeBitmap[0] != null) {
-                    mcontext.draw().bitmap(nodeBitmap[0], node.pixel);
+                if (nodeDrawable[0] != null) {
+                    mcontext.draw().bitmap(nodeDrawable[0], node.pixel);
                 } else {
                     mcontext.draw().bitmap(
-                            mcontext.draw().getNodeBitmap(),
+                            mcontext.draw().getNodeDrawable(),
                             node.pixel,
                             getColor());
                 }
