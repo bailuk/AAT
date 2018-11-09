@@ -6,6 +6,7 @@ import ch.bailu.aat.dispatcher.DispatcherInterface;
 import ch.bailu.aat.dispatcher.EditorSourceInterface;
 import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.map.layer.CurrentLocationLayer;
+import ch.bailu.aat.map.layer.FpsLayer;
 import ch.bailu.aat.map.layer.control.CustomBarLayer;
 import ch.bailu.aat.map.layer.control.EditorLayer;
 import ch.bailu.aat.map.layer.control.InformationBarLayer;
@@ -80,7 +81,9 @@ public class MapFactory {
     public MapViewInterface map(EditorSourceInterface e, ControlBar b) {
         tracker(e);
 
+        m.add(new FpsLayer());
         m.add(new CustomBarLayer(mc, b));
+
 
         return m;
     }

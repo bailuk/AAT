@@ -14,6 +14,7 @@ import java.util.ArrayList;
 
 import ch.bailu.aat.map.Attachable;
 import ch.bailu.aat.map.MapContext;
+import ch.bailu.aat.map.layer.FpsLayer;
 import ch.bailu.aat.map.layer.MapLayerInterface;
 import ch.bailu.aat.map.tile.TileProvider;
 import ch.bailu.aat.services.InsideContext;
@@ -160,9 +161,11 @@ public class MapsForgeTileLayerStack extends Layer implements MapLayerInterface 
         }
 
         public synchronized void draw(BoundingBox box, byte zoom, Canvas c, Point tlp) {
+            FpsLayer.start();
             for (Layer l : layers) {
                 l.draw(box, zoom, c, tlp);
             }
+            FpsLayer.stop();
         }
 
 
