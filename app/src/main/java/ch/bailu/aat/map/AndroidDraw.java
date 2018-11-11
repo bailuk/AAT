@@ -2,11 +2,8 @@ package ch.bailu.aat.map;
 
 import android.content.res.Resources;
 import android.graphics.Bitmap;
-import android.graphics.ColorFilter;
 import android.graphics.Point;
-import android.graphics.PorterDuff;
 import android.graphics.Rect;
-import android.graphics.drawable.Drawable;
 
 import org.mapsforge.core.graphics.Canvas;
 import org.mapsforge.core.graphics.Paint;
@@ -23,6 +20,9 @@ public class AndroidDraw implements MapDraw {
     private final Paint gridPaint;
     private final Paint legendPaint;
 
+
+    private final BitmapDraw bitmapCanvas = new BitmapDraw();
+
     private final int textHeight;
 
     private int left=0, top=0, bottom=0, right = 0;
@@ -37,12 +37,14 @@ public class AndroidDraw implements MapDraw {
         legendPaint = MapPaint.createLegendTextPaint(res);
         gridPaint   = MapPaint.createGridPaint(res);
         textPaint   = MapPaint.createStatusTextPaint(res);
+
         textHeight  = textPaint.getTextHeight("X")+5;
 
         nodePainter = NodeBitmap.get(res);
         resources = r;
 
         point_radius = res.toPixel_i(POINT_RADIUS);
+
     }
 
     private void init(MapMetrics metric) {
@@ -73,8 +75,8 @@ public class AndroidDraw implements MapDraw {
     }
 
     @Override
-    public Drawable getNodeDrawable() {
-        return nodePainter.getTileBitmap().getDrawable(resources);
+    public Bitmap getNodeBitmap() {
+        return nodePainter.getTileBitmap().getAndroidBitmap();
     }
 
     @Override
@@ -137,31 +139,23 @@ public class AndroidDraw implements MapDraw {
 
 
 
-    android.graphics.Paint bmpPaint = new android.graphics.Paint();
-
     @Override
     public void bitmap(Bitmap b, Point p, int c) {
-        centerDrawable(d, p);
-
-        bmpPaint.setColorFilter(PorterDuff.Mode.MULTIPLY);
-        d.draw(AndroidGraphicFactory.getCanvas(canvas));
+        bitmapCanvas.draw(convert(canvas), b, p, c);
     }
 
 
-    public static void centerDrawable(Drawable drawable, Point pixel) {
-        final int HSIZE = drawable.getIntrinsicWidth()/2;
-        final int VSIZE = drawable.getIntrinsicHeight()/2;
 
-        drawable.setBounds(pixel.x-HSIZE, pixel.y-VSIZE, pixel.x+HSIZE, pixel.y+VSIZE);
+    private static Point center(Bitmap b, Point p) {
+        p.x = p.x - (b.getWidth() / 2);
+        p.y = p.y - (b.getHeight() / 2);
+        return p;
     }
-
-
 
 
     @Override
-    public void bitmap(Drawable d, Point p) {
-        centerDrawable(d, p);
-        d.draw(AndroidGraphicFactory.getCanvas(canvas));
+    public void bitmap(Bitmap b, Point p) {
+        bitmapCanvas.draw(convert(canvas), b, p);
     }
 
 
@@ -196,13 +190,13 @@ public class AndroidDraw implements MapDraw {
                 convert(paint));
     }
 
-
-    private static android.graphics.Canvas convert(Canvas c) {
+    public static android.graphics.Canvas convert(org.mapsforge.core.graphics.Canvas c) {
         return AndroidGraphicFactory.getCanvas(c);
     }
 
-    private static android.graphics.Paint convert(org.mapsforge.core.graphics.Paint p) {
+    public static android.graphics.Paint convert(org.mapsforge.core.graphics.Paint p) {
         return AndroidGraphicFactory.getPaint(p);
     }
+
 
 }

@@ -42,7 +42,7 @@ public class LegendContext {
 
 
     private void drawNode(TwoNodes.PixelNode node) {
-        mcontext.draw().bitmap(mcontext.draw().getNodeDrawable(), node.pixel, MapColor.NODE_NEUTRAL);
+        mcontext.draw().bitmap(mcontext.draw().getNodeBitmap(), node.pixel, MapColor.NODE_NEUTRAL);
     }
 
 

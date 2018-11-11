@@ -127,7 +127,7 @@ public abstract class AbsNodeSelectorLayer implements MapLayerInterface, OnConte
 
         if (node != null) {
             Pixel selectedPixel = mcontext.getMetrics().toPixel(node);
-            mcontext.draw().bitmap(mcontext.draw().getNodeDrawable(), selectedPixel, MapColor.NODE_SELECTED);
+            mcontext.draw().bitmap(mcontext.draw().getNodeBitmap(), selectedPixel, MapColor.NODE_SELECTED);
         }
     }
 

@@ -81,7 +81,7 @@ public class WayLayer extends GpxLayer {
             if (node.isVisible() && count < MAX_VISIBLE_NODES) {
 
                 final ServiceContext scontext = mcontext.getSContext();
-                final Drawable[] nodeDrawable = {null};
+                final android.graphics.Bitmap[] nodeDrawable = {null};
 
                 new InsideContext(scontext) {
                     @Override
@@ -90,7 +90,7 @@ public class WayLayer extends GpxLayer {
                                 icon_size);
 
                         if (i != null)
-                            nodeDrawable[0] = i.getDrawable(scontext.getContext().getResources());
+                            nodeDrawable[0] = i.getBitmap();
                     }
                 };
 
@@ -98,7 +98,7 @@ public class WayLayer extends GpxLayer {
                     mcontext.draw().bitmap(nodeDrawable[0], node.pixel);
                 } else {
                     mcontext.draw().bitmap(
-                            mcontext.draw().getNodeDrawable(),
+                            mcontext.draw().getNodeBitmap(),
                             node.pixel,
                             getColor());
                 }

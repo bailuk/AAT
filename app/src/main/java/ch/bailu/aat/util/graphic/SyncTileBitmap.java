@@ -23,7 +23,6 @@ import ch.bailu.util_java.foc.Foc;
 
 public class SyncTileBitmap implements Closeable {
     private TileBitmap bitmap = null;
-    private Drawable drawable = null;
 
     private long size = 0;
 
@@ -37,18 +36,6 @@ public class SyncTileBitmap implements Closeable {
         if (bitmap != null) return AndroidGraphicFactory.getBitmap(bitmap);
         return null;
     }
-
-
-    public synchronized Drawable getDrawable(Resources r) {
-        if (drawable == null) {
-            Bitmap bitmap = getAndroidBitmap();
-            if (bitmap != null) {
-                drawable = new BitmapDrawable(r, bitmap);
-            }
-        }
-        return drawable;
-    }
-
 
 
     public synchronized Canvas getAndroidCanvas() {
@@ -139,7 +126,6 @@ public class SyncTileBitmap implements Closeable {
             bitmap.decrementRefCount();
         }
         bitmap = null;
-        drawable = null;
         size = ObjectHandle.MIN_SIZE;
     }
 

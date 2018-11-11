@@ -19,10 +19,10 @@ public class FrameBufferHack extends FrameBuffer {
 
     /*
      *  lm: layer manager
-            Layer manager draws the bitmap off-screen
+            Layer manager draws the draw off-screen
      *  od: onDraw() -> draw()
-     *      swaps the two bitmaps and puts one bitmap to the screen
-     *      while the layer manager draws the takeAndProcess off-screen bitmap.
+     *      swaps the two bitmaps and puts one draw to the screen
+     *      while the layer manager draws the takeAndProcess off-screen draw.
      *
      */
 
@@ -62,7 +62,7 @@ public class FrameBufferHack extends FrameBuffer {
 
         /*
          * Swap bitmaps here (and only here).
-         * Swapping is done when layer manager has finished. Else draw old bitmap again.
+         * Swapping is done when layer manager has finished. Else draw old draw again.
          * This (onDraw()) is allways called when layer manager has finished. This ensures that the
          * last generated frame is allways put on screen.
          */
@@ -90,7 +90,7 @@ public class FrameBufferHack extends FrameBuffer {
     private void swapBitmaps() {
         /*
          *  Swap bitmaps only if the layerManager is currently not working and
-         *  has drawn a new bitmap since the last swap
+         *  has drawn a new draw since the last swap
          */
         synchronized (allowSwap) {
             if (allowSwap.isEnabled()) {
@@ -104,11 +104,11 @@ public class FrameBufferHack extends FrameBuffer {
 
     /**
      * This is called from <code>LayerManager</code> when drawing starts.
-     * @return the bitmap of the second frame to draw on (may be null).
+     * @return the draw of the second frame to draw on (may be null).
      */
     public Bitmap getDrawingBitmap() {
         /*
-         * Layer manager only starts drawing a new bitmap when the last one is swapped (taken to
+         * Layer manager only starts drawing a new draw when the last one is swapped (taken to
          * the screen). This ensures that the layer manager draws not too many frames. (only as
          * much as can get displayed).
          */

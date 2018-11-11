@@ -14,7 +14,6 @@ import java.util.ArrayList;
 
 import ch.bailu.aat.map.Attachable;
 import ch.bailu.aat.map.MapContext;
-import ch.bailu.aat.map.layer.FpsLayer;
 import ch.bailu.aat.map.layer.MapLayerInterface;
 import ch.bailu.aat.map.tile.TileProvider;
 import ch.bailu.aat.services.InsideContext;
@@ -98,7 +97,7 @@ public class MapsForgeTileLayerStack extends Layer implements MapLayerInterface 
     public void drawInside(MapContext mcontext) {}
 
     @Override
-    public void drawForeground(MapContext mcontext) {layers.fpsLayer.drawForeground(mcontext);}
+    public void drawForeground(MapContext mcontext) {}
 
     @Override
     public boolean onTap(Point tapPos) {
@@ -125,8 +124,6 @@ public class MapsForgeTileLayerStack extends Layer implements MapLayerInterface 
 
 
     private static class SubLayers {
-        private final FpsLayer fpsLayer = new FpsLayer();
-
         private boolean isAttached=false;
 
         private final ArrayList<MapsForgeTileLayer> layers = new ArrayList<>(10);
@@ -164,11 +161,9 @@ public class MapsForgeTileLayerStack extends Layer implements MapLayerInterface 
         }
 
         public synchronized void draw(BoundingBox box, byte zoom, Canvas c, Point tlp) {
-            fpsLayer.start();
             for (Layer l : layers) {
                 l.draw(box, zoom, c, tlp);
             }
-            fpsLayer.stop();
         }
 
 

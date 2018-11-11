@@ -118,11 +118,6 @@ public abstract class ElevationTile extends TileObject implements ElevationUpdat
     }
 
     @Override
-    public Drawable getDrawable(Resources r) {
-        return bitmap.getDrawable(r);
-    }
-
-    @Override
     public long getSize() {
         return getSize(bitmap, SolidTileSize.DEFAULT_TILESIZE_BYTES);
     }

@@ -1,11 +1,11 @@
 package ch.bailu.aat.views.graph;
 
-import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
 
+import ch.bailu.aat.map.BitmapDraw;
 import ch.bailu.aat.map.NodeBitmap;
 import ch.bailu.aat.util.ui.AppDensity;
 
@@ -29,6 +29,7 @@ public class GraphPlotter {
 
 
     private final Canvas canvas;
+    private final BitmapDraw bitmapCanvas = new BitmapDraw();
     
     private final int width;
     private final int height;
@@ -186,7 +187,6 @@ public class GraphPlotter {
 
     public void plotPoint(float xvalue, float yvalue, int color) {
         scaleToPixel(xvalue,yvalue);
-        nodeBitmap.draw(pointA, canvas, color, Resources.getSystem());
-
+        bitmapCanvas.draw(canvas, nodeBitmap.getTileBitmap().getAndroidBitmap(), pointA, color);
     }
 }

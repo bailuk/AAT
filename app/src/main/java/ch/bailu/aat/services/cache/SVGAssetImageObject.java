@@ -43,11 +43,6 @@ public class SVGAssetImageObject extends ImageObjectAbstract {
         return bitmap.getAndroidBitmap();
     }
 
-    @Override
-    public Drawable getDrawable(Resources res) {
-        return bitmap.getDrawable(res);
-    }
-
 
     @Override
     public long getSize() {

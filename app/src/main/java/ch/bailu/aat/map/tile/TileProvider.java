@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 
 import org.mapsforge.core.graphics.TileBitmap;
@@ -80,11 +81,11 @@ public class TileProvider implements Attachable, ObservableInterface {
 
 
 
-    public synchronized Drawable get(Tile tile, Resources r) {
+    public synchronized Bitmap get(Tile tile, Resources r) {
         TileObject handle = getHandle(tile);
 
         if (handle != null) {
-            return handle.getDrawable(r);
+            return handle.getAndroidBitmap();
         }
         return null;
     }

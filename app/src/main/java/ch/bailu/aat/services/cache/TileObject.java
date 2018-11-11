@@ -20,7 +20,6 @@ public abstract class TileObject extends ObjectHandle {
     }
 
 
-    public abstract Drawable getDrawable(Resources r);
     public abstract Bitmap getAndroidBitmap();
     public abstract TileBitmap getTileBitmap();
     public abstract Tile getTile();
@@ -46,10 +45,6 @@ public abstract class TileObject extends ObjectHandle {
 
 
     public static final TileObject NULL_TILE = new TileObject("") {
-        @Override
-        public Drawable getDrawable(Resources r) {
-            return null;
-        }
 
         @Override
         public Bitmap getAndroidBitmap() {

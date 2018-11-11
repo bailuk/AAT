@@ -128,7 +128,7 @@ public class ImageObjectView extends ImageView {
 
     private void displayImage() {
         if (imageHandle.isReadyAndLoaded()) {
-            setImageDrawable(imageHandle.getDrawable(getResources()));
+            setImageBitmap(imageHandle.getBitmap());
         }
     }
 

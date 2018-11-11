@@ -20,6 +20,7 @@ import org.mapsforge.map.util.LayerUtil;
 
 import java.util.List;
 
+import ch.bailu.aat.map.AndroidDraw;
 import ch.bailu.aat.map.MapContext;
 import ch.bailu.aat.map.layer.MapLayerInterface;
 import ch.bailu.aat.map.tile.TileProvider;
@@ -34,8 +35,9 @@ public class MapsForgeTileLayer extends Layer implements MapLayerInterface, Obse
 
     private final ServiceContext scontext;
     private final Resources resources;
-    private final int alpha;
+    //private final int alpha;
 
+    private final Paint paint = new Paint();
     private final Rect rect = new Rect();
 
     public MapsForgeTileLayer(ServiceContext sc, TileProvider p) {
@@ -43,7 +45,7 @@ public class MapsForgeTileLayer extends Layer implements MapLayerInterface, Obse
         provider = p;
 
         resources = sc.getContext().getResources();
-        alpha = p.getSource().getAlpha();
+        paint.setAlpha(p.getSource().getAlpha());
 
         provider.addObserver(this);
 
@@ -80,9 +82,9 @@ public class MapsForgeTileLayer extends Layer implements MapLayerInterface, Obse
         provider.preload(tilePositions);
 
         for (TilePosition tilePosition : tilePositions) {
-            final Drawable drawable = provider.get(tilePosition.tile, resources);
+            final Bitmap bitmap = provider.get(tilePosition.tile, resources);
 
-            if (drawable != null) {
+            if (bitmap != null) {
 
                 final Point p = tilePosition.point;
 
@@ -91,9 +93,7 @@ public class MapsForgeTileLayer extends Layer implements MapLayerInterface, Obse
                 rect.right = rect.left + tileSize;
                 rect.bottom = rect.top + tileSize;
 
-                drawable.setAlpha(alpha);
-                drawable.setBounds(rect);
-                drawable.draw(AndroidGraphicFactory.getCanvas(canvas));
+                AndroidDraw.convert(canvas).drawBitmap(bitmap, null, rect, paint);
             }
         }
     }

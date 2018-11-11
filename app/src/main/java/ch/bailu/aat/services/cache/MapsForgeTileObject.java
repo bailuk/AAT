@@ -38,11 +38,6 @@ public class MapsForgeTileObject extends TileObject {
 
 
     @Override
-    public Drawable getDrawable(Resources r) {
-        return bitmap.getDrawable(r);
-    }
-
-    @Override
     public Bitmap getAndroidBitmap() {
             return bitmap.getAndroidBitmap();
     }

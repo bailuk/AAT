@@ -66,10 +66,6 @@ public class ImageObject extends ImageObjectAbstract {
         return bitmap.getAndroidBitmap();
     }
 
-    @Override
-    public synchronized Drawable getDrawable(Resources res) {
-        return bitmap.getDrawable(res);
-    }
 
 
 

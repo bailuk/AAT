@@ -6,7 +6,6 @@ import android.graphics.Color;
 import org.mapsforge.core.graphics.Paint;
 import org.mapsforge.core.model.Point;
 
-import ch.bailu.aat.map.MapColor;
 import ch.bailu.aat.map.MapContext;
 import ch.bailu.aat.map.MapPaint;
 import ch.bailu.aat.map.TwoNodes;
@@ -19,16 +18,16 @@ public class RouteLayer extends GpxLayer {
 
     private final MapContext mcontext;
 
-    private Paint edgePaintBlur;
-    private Paint edgePaintLine;
+    private Paint paint, shadow;
     private int color;
     private int zoom;
 
     public RouteLayer(MapContext o) {
         mcontext = o;
         color = getColor();
-        edgePaintBlur = MapPaint.createEdgePaintBlur(mcontext.getMetrics().getDensity(), getColor(), 1);
-        edgePaintLine = MapPaint.createEdgePaintLine(mcontext.getMetrics().getDensity(), 1);
+        paint = MapPaint.createEdgePaintLine(mcontext.getMetrics().getDensity());
+        shadow = MapPaint.createEdgePaintBlur(mcontext.draw(),color,zoom);
+
     }
 
     @Override
@@ -42,14 +41,16 @@ public class RouteLayer extends GpxLayer {
             zoom = mcontext.getMetrics().getZoomLevel();
             color = getColor();
 
-            edgePaintBlur = MapPaint.createEdgePaintBlur(mcontext.getMetrics().getDensity(),
-                    color, zoom);
 
-            edgePaintLine = MapPaint.createEdgePaintLine(mcontext.getMetrics().getDensity(), zoom);
+            paint = MapPaint.createEdgePaintLine(mcontext.getMetrics().getDensity());
+            shadow = MapPaint.createEdgePaintBlur(mcontext.draw(),Color.BLACK, zoom);
 
-            edgePaintLine.setColor(color);
-            edgePaintBlur.setColor(MapColor.toDarkTransparent(color));
+            paint.setColor(color);
         }
+
+
+        if (zoom > 9)
+            new RouteShadowPainter().walkTrack(getGpxList());
 
         new RoutePainter().walkTrack(getGpxList());
     }
@@ -69,6 +70,24 @@ public class RouteLayer extends GpxLayer {
 
     }
 
+    private class RouteShadowPainter extends GpxListPainter {
+        public RouteShadowPainter() {
+
+            super(mcontext,MIN_PIXEL_SPACE);
+        }
+
+
+        @Override
+        public void drawEdge(TwoNodes nodes) {
+            mcontext.draw().edge(nodes, shadow);
+        }
+
+
+        @Override
+        public void drawNode(TwoNodes.PixelNode node) {
+
+        }
+    }
 
     private class RoutePainter extends GpxListPainter {
 
@@ -82,8 +101,7 @@ public class RouteLayer extends GpxLayer {
 
         @Override
         public void drawEdge(TwoNodes nodes) {
-            mcontext.draw().edge(nodes, edgePaintBlur);
-            mcontext.draw().edge(nodes, edgePaintLine);
+            mcontext.draw().edge(nodes, paint);
         }
 
 
@@ -95,7 +113,7 @@ public class RouteLayer extends GpxLayer {
             if (altitude == ElevationProvider.NULL_ALTITUDE) c=getColor();
             else c= AltitudeColorTable.INSTANCE.getColor(altitude);
 
-            mcontext.draw().bitmap(mcontext.draw().getNodeDrawable(), node.pixel, c);
+            mcontext.draw().bitmap(mcontext.draw().getNodeBitmap(), node.pixel, c);
         }
     }
 }

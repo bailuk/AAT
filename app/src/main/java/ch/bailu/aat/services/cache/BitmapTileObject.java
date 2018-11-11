@@ -124,10 +124,7 @@ public class BitmapTileObject extends TileObject {
         return getSize(bitmap, SolidTileSize.DEFAULT_TILESIZE_BYTES);
     }
 
-    @Override
-    public Drawable getDrawable(Resources r) {
-        return bitmap.getDrawable(r);
-    }
+
 
     @Override
     public Bitmap getAndroidBitmap() {

@@ -1,17 +1,12 @@
 package ch.bailu.aat.map;
 
 
-import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Paint.Style;
-import android.graphics.Point;
-import android.graphics.PorterDuff;
-import android.graphics.drawable.Drawable;
 import android.util.SparseArray;
 
-import org.mapsforge.core.graphics.Bitmap;
 import org.mapsforge.map.android.graphics.AndroidGraphicFactory;
 
 import ch.bailu.aat.util.graphic.SyncTileBitmap;
@@ -52,7 +47,7 @@ public class NodeBitmap {
         bitmap.set(size, true);
 
         Canvas canvas = bitmap.getAndroidCanvas();
-        Paint stroke = AndroidGraphicFactory.getPaint(MapPaint.createEdgePaintLine(res,1));
+        Paint stroke = AndroidGraphicFactory.getPaint(MapPaint.createEdgePaintLine(res));
         stroke.setAntiAlias(true);
 
         Paint fill = new Paint();
@@ -71,11 +66,14 @@ public class NodeBitmap {
     }
 
 
+/*
     public synchronized void draw(Point p, Canvas c, int color, Resources r) {
-        Drawable drawable = bitmap.getDrawable(r);
+        Drawable drawable = draw.getDrawable(r);
+
 
         AndroidDraw.centerDrawable(drawable, p);
         drawable.setColorFilter(color, PorterDuff.Mode.MULTIPLY);
         drawable.draw(c);
     }
+*/
 }

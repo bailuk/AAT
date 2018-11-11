@@ -98,10 +98,6 @@ public class CachedTileObject extends TileObject {
     }
 
 
-    @Override
-    public Drawable getDrawable(Resources r) {
-        return tile.getDrawable(r);
-    }
 
     @Override
     public Bitmap getAndroidBitmap() {
