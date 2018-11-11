@@ -1,6 +1,8 @@
 package ch.bailu.aat.map;
 
 import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.ColorFilter;
 import android.graphics.Point;
 import android.graphics.PorterDuff;
 import android.graphics.Rect;
@@ -20,8 +22,6 @@ public class AndroidDraw implements MapDraw {
     private final Paint textPaint;
     private final Paint gridPaint;
     private final Paint legendPaint;
-    private final Paint edgePaint;
-    private final Paint backgroundPaint;
 
     private final int textHeight;
 
@@ -34,12 +34,10 @@ public class AndroidDraw implements MapDraw {
 
 
     public AndroidDraw(AppDensity res, Resources r) {
-        edgePaint   = MapPaint.createEdgePaintLine(res);
         legendPaint = MapPaint.createLegendTextPaint(res);
         gridPaint   = MapPaint.createGridPaint(res);
         textPaint   = MapPaint.createStatusTextPaint(res);
         textHeight  = textPaint.getTextHeight("X")+5;
-        backgroundPaint = MapPaint.createBackgroundPaint();
 
         nodePainter = NodeBitmap.get(res);
         resources = r;
@@ -137,10 +135,15 @@ public class AndroidDraw implements MapDraw {
         canvas.drawLine(rect.right, rect.top,    rect.left,  rect.top, paint);
     }
 
+
+
+    android.graphics.Paint bmpPaint = new android.graphics.Paint();
+
     @Override
-    public void bitmap(Drawable d, Point p, int c) {
+    public void bitmap(Bitmap b, Point p, int c) {
         centerDrawable(d, p);
-        d.setColorFilter(c, PorterDuff.Mode.MULTIPLY);
+
+        bmpPaint.setColorFilter(PorterDuff.Mode.MULTIPLY);
         d.draw(AndroidGraphicFactory.getCanvas(canvas));
     }
 

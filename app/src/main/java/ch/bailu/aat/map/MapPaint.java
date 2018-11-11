@@ -66,7 +66,7 @@ public class MapPaint {
     }
 
 
-    public static Paint createEdgePaintLine(AppDensity res) {
+    public static Paint createEdgePaintLine(AppDensity res, int zoom) {
         Paint edge = AndroidGraphicFactory.INSTANCE.createPaint();
 
         edge.setStrokeWidth(res.toPixel_f(EDGE_WIDTH_LINE));
@@ -76,15 +76,19 @@ public class MapPaint {
         return edge;
     }
 
-    public static Paint createEdgePaintBlur(AppDensity res, int color) {
+    public static Paint createEdgePaintBlur(AppDensity res, int color, int zoom) {
         Paint edge = AndroidGraphicFactory.INSTANCE.createPaint();
 
         color = MapColor.toLightTransparent(color);
 
-        edge.setStrokeWidth(res.toPixel_f(EDGE_WIDTH_BLUR));
+        zoom -= 14;
+
+        if (zoom < 1) zoom = 1;
+
+
+        edge.setStrokeWidth(res.toPixel_f(EDGE_WIDTH_BLUR * zoom ));
         edge.setColor(color);
         edge.setStyle(Style.STROKE);
-
 
         return edge;
     }

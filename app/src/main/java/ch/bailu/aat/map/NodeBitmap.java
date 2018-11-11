@@ -52,7 +52,7 @@ public class NodeBitmap {
         bitmap.set(size, true);
 
         Canvas canvas = bitmap.getAndroidCanvas();
-        Paint stroke = AndroidGraphicFactory.getPaint(MapPaint.createEdgePaintLine(res));
+        Paint stroke = AndroidGraphicFactory.getPaint(MapPaint.createEdgePaintLine(res,1));
         stroke.setAntiAlias(true);
 
         Paint fill = new Paint();

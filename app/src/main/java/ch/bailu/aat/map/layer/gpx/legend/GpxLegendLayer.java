@@ -31,7 +31,7 @@ public class GpxLegendLayer extends GpxLayer {
     public void drawInside(MapContext mcontext) {
         if (color != getColor()) {
             backgroundPaint = MapPaint.createBackgroundPaint(getColor());
-            framePaint = MapPaint.createEdgePaintLine(mcontext.getMetrics().getDensity());
+            framePaint = MapPaint.createEdgePaintLine(mcontext.getMetrics().getDensity(),1);
             framePaint.setColor(getColor());
             color = getColor();
 

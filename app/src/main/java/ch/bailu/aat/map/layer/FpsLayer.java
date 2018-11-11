@@ -8,10 +8,10 @@ import ch.bailu.aat.map.MapContext;
 
 public class FpsLayer implements MapLayerInterface {
 
-    private static long totalTime;
-    private static long frameCount;
-    private static long startTime;
-    private static long frameTime;
+    private long totalTime;
+    private long frameCount;
+    private long startTime;
+    private long frameTime;
 
 
     @Override
@@ -28,7 +28,7 @@ public class FpsLayer implements MapLayerInterface {
     public void drawForeground(MapContext mcontext) {
         if (frameCount > 0 ) {
             long averageTime = totalTime / frameCount;
-            mcontext.draw().textTop(frameCount + " " + frameTime + "ms, " + averageTime + "ms", 2);
+            mcontext.draw().textTop(frameCount + " " + frameTime + "ms, " + averageTime + "ms", 3);
         }
     }
 
@@ -53,11 +53,11 @@ public class FpsLayer implements MapLayerInterface {
     }
 
 
-    public static void start() {
+    public void start() {
         startTime = System.currentTimeMillis();
     }
 
-    public static void stop() {
+    public void stop() {
         frameTime = System.currentTimeMillis() - startTime;
         totalTime += frameTime;
         frameCount++;
