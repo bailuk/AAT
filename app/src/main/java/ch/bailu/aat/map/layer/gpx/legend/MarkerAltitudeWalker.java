@@ -45,8 +45,8 @@ public class MarkerAltitudeWalker extends LegendWalker {
 
     private void drawLegendFromB() {
         if (c.isBVisible()) {
-            c.drawNodeB();
             if (!c.arePointsTooClose()) {
+                c.drawNodeB();
                 c.drawLabelB(description.getAltitudeDescription(c.nodes.nodeB.point.getAltitude()));
             }
         }

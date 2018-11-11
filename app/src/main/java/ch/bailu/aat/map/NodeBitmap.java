@@ -64,16 +64,4 @@ public class NodeBitmap {
     public SyncTileBitmap getTileBitmap() {
         return bitmap;
     }
-
-
-/*
-    public synchronized void draw(Point p, Canvas c, int color, Resources r) {
-        Drawable drawable = draw.getDrawable(r);
-
-
-        AndroidDraw.centerDrawable(drawable, p);
-        drawable.setColorFilter(color, PorterDuff.Mode.MULTIPLY);
-        drawable.draw(c);
-    }
-*/
 }

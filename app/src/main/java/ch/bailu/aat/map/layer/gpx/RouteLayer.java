@@ -49,10 +49,9 @@ public class RouteLayer extends GpxLayer {
         }
 
 
-        if (zoom > 9)
-            new RouteShadowPainter().walkTrack(getGpxList());
-
-        new RoutePainter().walkTrack(getGpxList());
+        new RouteShadowPainter().walkTrack(getGpxList());
+        new RoutePainterEdge().walkTrack(getGpxList());
+        new RoutePainterNode().walkTrack(getGpxList());
     }
 
     @Override
@@ -89,11 +88,11 @@ public class RouteLayer extends GpxLayer {
         }
     }
 
-    private class RoutePainter extends GpxListPainter {
+    private class RoutePainterNode extends GpxListPainter {
 
 
 
-        public RoutePainter() {
+        public RoutePainterNode() {
 
             super(mcontext,MIN_PIXEL_SPACE);
         }
@@ -101,7 +100,7 @@ public class RouteLayer extends GpxLayer {
 
         @Override
         public void drawEdge(TwoNodes nodes) {
-            mcontext.draw().edge(nodes, paint);
+
         }
 
 
@@ -116,4 +115,27 @@ public class RouteLayer extends GpxLayer {
             mcontext.draw().bitmap(mcontext.draw().getNodeBitmap(), node.pixel, c);
         }
     }
+
+
+    private class RoutePainterEdge extends GpxListPainter {
+
+
+
+        public RoutePainterEdge() {
+
+            super(mcontext,MIN_PIXEL_SPACE);
+        }
+
+
+        @Override
+        public void drawEdge(TwoNodes nodes) {
+            mcontext.draw().edge(nodes, paint);
+        }
+
+
+        @Override
+        public void drawNode(TwoNodes.PixelNode node) {
+        }
+    }
+
 }

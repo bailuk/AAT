@@ -82,9 +82,7 @@ public class MapFactory {
     public MapViewInterface map(EditorSourceInterface e, ControlBar b) {
         tracker(e);
 
-        m.add(new ZoomLevel());
         m.add(new CustomBarLayer(mc, b));
-
 
         return m;
     }

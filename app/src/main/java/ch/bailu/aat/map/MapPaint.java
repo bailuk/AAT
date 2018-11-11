@@ -11,7 +11,6 @@ public class MapPaint {
 
 
     public static final int EDGE_WIDTH_LINE=2;
-    public static final int EDGE_WIDTH_BLUR=4;
 
     private final static float TEXT_SIZE=20;
 
