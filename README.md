@@ -34,6 +34,7 @@ Binary: [F-Droid](https://f-droid.org/repository/browse/?fdid=ch.bailu.aat)
 [README.enduser.md](README.enduser.md) provides information on how to use this app and on how to contribute to it.
 
 ## Donate  
+cccccccccccccccccccciiiiiiiiiiiiiiiiiiiiiiiiaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaooooooooooooooooooooooooooooooo
 You can support this project with a [donation](https://bailu.ch/aat/donate.html).
 
 ## Screenshots
