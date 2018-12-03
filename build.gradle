@@ -8,7 +8,13 @@ buildscript {
         classpath 'com.android.tools.build:gradle:3.2.1'
     }
 }
-
+//inserito da max
+project.gradle.taskGraph.whenReady {
+    connectedAndroidTest {
+        ignoreFailures = true
+    }
+}
+//fine inserimento
 allprojects {
     repositories {
         google() // for com.android.tools.build:gradle'
