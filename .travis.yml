@@ -48,9 +48,6 @@ before_install:
 #Source: https://medium.com/@oldergod/constraint-layout-and-circleci-travis-d50342696d2
 
 
-script:
-- "./gradlew clean build connectedCheck -PdisablePreDex --stacktrace"
-
 before_deploy:
 - cp $TRAVIS_BUILD_DIR/example_keystore.jks $HOME
 - cd app/build/outputs/apk/
