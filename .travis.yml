@@ -11,6 +11,6 @@ android:
     - build-tools-26.0.2
     - android-26
     - extra-android-m2repository
- before_script:
+ before_install:
  - chmod +x gradlew
  
