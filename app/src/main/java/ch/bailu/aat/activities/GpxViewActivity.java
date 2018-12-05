@@ -21,6 +21,7 @@ import ch.bailu.aat.menus.ContentMenu;
 import ch.bailu.aat.util.fs.FileAction;
 import ch.bailu.aat.util.fs.foc.FocAndroid;
 import ch.bailu.aat.util.ui.AppLayout;
+import ch.bailu.aat.util.ui.AppLog;
 import ch.bailu.aat.util.ui.ToolTip;
 import ch.bailu.aat.views.BusyViewControlIID;
 import ch.bailu.aat.views.MyImageButton;
@@ -65,24 +66,28 @@ public class GpxViewActivity extends ActivityContext
 
         if (uri != null) {
 
-            content = FocAndroid.factory(this, uri.toString());
-            fileID = content.getPath();
+            try {
+                content = FocAndroid.factory(this, uri.toString());
+                fileID = content.getPath();
 
 
-            final ContentView contentView = new ContentView(this);
+                final ContentView contentView = new ContentView(this);
 
-            MainControlBar bar = new MainControlBar(this);
+                MainControlBar bar = new MainControlBar(this);
 
-            contentView.add(bar);
-            View view = createLayout(bar);
-            initButtonBar(bar);
+                contentView.add(bar);
+                View view = createLayout(bar);
+                initButtonBar(bar);
 
-            contentView.add(view);
+                contentView.add(view);
 
-            busyControl = new BusyViewControlIID(contentView);
+                busyControl = new BusyViewControlIID(contentView);
 
-            setContentView(contentView);
-            createDispatcher();
+                setContentView(contentView);
+                createDispatcher();
+            } catch (Exception e) {
+                AppLog.e(this, e);
+            }
         }
 
 
