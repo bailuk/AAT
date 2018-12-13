@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/AAT.iml" filepath="$PROJECT_DIR$/AAT.iml" />
+      <module fileurl="file://$PROJECT_DIR$/AAT_MS.iml" filepath="$PROJECT_DIR$/AAT_MS.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/util-java/util-java.iml" filepath="$PROJECT_DIR$/util-java/util-java.iml" />
     </modules>
