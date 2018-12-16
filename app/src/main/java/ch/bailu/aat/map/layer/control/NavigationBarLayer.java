@@ -140,17 +140,18 @@ public class NavigationBarLayer extends ControlBarLayer implements OnContentUpda
         }
 
         @Override
-        public boolean onVolumePressed(int code) {
-            if (code == KeyEvent.KEYCODE_VOLUME_UP) {
-                mcontext.getMapView().zoomIn();
-                return true;
-            }
+        public boolean onVolumePressed(int code, AbsVolumeKeys.EventType type) {
+            if (mcontext.getMapView().toView().getVisibility()==VISIBLE) {
+                if (code == KeyEvent.KEYCODE_VOLUME_UP) {
+                    if (type == AbsVolumeKeys.EventType.DOWN) mcontext.getMapView().zoomIn();
+                    return true;
+                }
 
-            if (code == KeyEvent.KEYCODE_VOLUME_DOWN) {
-                mcontext.getMapView().zoomOut();
-                return true;
+                if (code == KeyEvent.KEYCODE_VOLUME_DOWN) {
+                    if (type == AbsVolumeKeys.EventType.DOWN) mcontext.getMapView().zoomOut();
+                    return true;
+                }
             }
-
             return false;
         }
     }
