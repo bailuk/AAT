@@ -21,11 +21,13 @@ public class ActivitySwitcher {
     private final static int PHONE_CYCLABLE = 3;
     private final static int TABLET_CYCLABLE = 2;
 
-    public final static Entry ABOUT = new Entry(
-            ToDo.translate("Documentation"), AboutActivity.class);
-
     private static ArrayList<Entry> entries = null;
     private static int cyclable = 0;
+
+
+    public static Entry getAbout(Context c) {
+        return new Entry(c.getString(R.string.intro_documentation), AboutActivity.class);
+    }
 
     public static Entry get(Object obj) {
         if (entries != null) {

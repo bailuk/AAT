@@ -50,7 +50,7 @@ public class MainActivity extends ActivityContext {
     private View createExtraButton() {
         LinearLayout layout = new LinearLayout(this);
         layout.setOrientation(LinearLayout.VERTICAL);
-        layout.addView(new DocumentationLabel(ActivitySwitcher.ABOUT));
+        layout.addView(new DocumentationLabel(ActivitySwitcher.getAbout(this)));
         layout.setBackgroundColor(AppTheme.getAltBackgroundColor());
         return layout;
     }

@@ -26,6 +26,8 @@
 
     <!-- Activity main -->
     <string name="intro_about">Info</string>
+    <string name="intro_documentation">Dokumentation</string>
+
     <string name="intro_map">Kartenansicht</string>
     <string name="intro_nominatim">Suche in der Karte</string>
     <string name="intro_status">Status</string>
