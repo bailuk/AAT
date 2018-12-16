@@ -141,9 +141,10 @@ public class StatusIcon  {
         String channelId = StatusIcon.class.getName();
         String channelName = scontext.getContext().getString(R.string.app_name);
         NotificationChannel chan = new NotificationChannel(channelId,
-                channelName, NotificationManager.IMPORTANCE_DEFAULT);
+                channelName, NotificationManager.IMPORTANCE_LOW);
 
         chan.setLockscreenVisibility(Notification.VISIBILITY_PUBLIC);
+
 
 
         NotificationManager notificationManager = (NotificationManager)
