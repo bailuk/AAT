@@ -1,6 +1,7 @@
 package ch.bailu.aat.map.tile.source;
 
 import android.content.Context;
+import android.graphics.Paint;
 
 import org.mapsforge.core.model.Tile;
 
@@ -99,10 +100,11 @@ public class DownloadSource extends Source {
                     "https://a.tile.openstreetmap.org/",
                     "https://b.tile.openstreetmap.org/",
                     "https://c.tile.openstreetmap.org/") {
-/*                @Override
+
+                @Override
                 public int getPaintFlags() {
                     return Paint.FILTER_BITMAP_FLAG;
-                }*/
+                }
             };
 
 

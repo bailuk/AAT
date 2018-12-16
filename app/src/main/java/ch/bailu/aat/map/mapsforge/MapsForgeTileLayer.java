@@ -32,7 +32,6 @@ public class MapsForgeTileLayer extends Layer implements MapLayerInterface, Obse
 
     private final ServiceContext scontext;
     private final Resources resources;
-    //private final int alpha;
 
     private final Paint paint = new Paint();
     private final Rect rect = new Rect();
@@ -43,6 +42,7 @@ public class MapsForgeTileLayer extends Layer implements MapLayerInterface, Obse
 
         resources = sc.getContext().getResources();
         paint.setAlpha(p.getSource().getAlpha());
+        paint.setFlags(p.getSource().getPaintFlags());
 
         provider.addObserver(this);
 

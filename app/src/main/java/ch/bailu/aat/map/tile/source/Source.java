@@ -25,6 +25,8 @@ public abstract class Source {
     public abstract ObjectHandle.Factory getFactory(Tile tile);
 
 
+    public int getPaintFlags() {return 0;}
+
     public static String genRelativeFilePath(final Tile tile, String name) {
         return  genID(tile,name) +  EXT;
 
