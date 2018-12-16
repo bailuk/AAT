@@ -55,7 +55,7 @@ public class NavigationBarLayer extends ControlBarLayer implements OnContentUpda
         d.addTargets(this, InfoID.ALL);
 
         VolumeView volumeView = new VolumeView(mc.getContext());
-        volumeView.setVisibility(View.GONE);
+        volumeView.setVisibility(View.INVISIBLE);
 
         mcontext.getMapView().addView(volumeView);
     }
