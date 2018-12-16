@@ -18,6 +18,15 @@ public abstract class AbsKeepScreenOnActivity extends ActivityContext {
         addTargets(backlight, InfoID.TRACKER);
     }
 
+
+    @Override
+    public void onResumeWithService() {
+        super.onResumeWithService();
+
+        backlight.setBacklightAndPreset();
+    }
+
+
     @Override
     public void onDestroy() {
         backlight.close();

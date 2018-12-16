@@ -26,40 +26,48 @@ public class Backlight implements OnContentUpdatedInterface,
 
     private int state = StateID.OFF;
 
+
     public Backlight(Window w, ServiceContext sc) {
         scontext = sc;
         window = w;
         spreset = new SolidPreset(sc.getContext());
-        sbacklight = setSolidBacklight();
+        sbacklight = setToPreset();
 
         spreset.register(this);
+
 
     }
 
 
+    public void setBacklightAndPreset() {
+        setToPreset();
+        setBacklight();
+    }
 
 
     @Override
     public void onContentUpdated(int iid, GpxInformation info) {
-        state = info.getState();
-        set();
+        if (state != info.getState()) {
+            state = info.getState();
+            setBacklight();
+        }
     }
 
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         if (spreset.hasKey(key)) {
-            setSolidBacklight();
-            set();
+            setBacklightAndPreset();
 
         } else if (sbacklight.hasKey(key)) {
-            set();
+            setBacklight();
         }
     }
 
 
-    private SolidBacklight setSolidBacklight() {
+    private SolidBacklight setToPreset() {
         int presetIndex = getPresetIndex();
+
         sbacklight = new SolidBacklight(scontext.getContext(), presetIndex);
         return sbacklight;
     }
@@ -77,7 +85,7 @@ public class Backlight implements OnContentUpdatedInterface,
     }
 
 
-    private void set() {
+    private void setBacklight() {
         if (state == StateID.ON && sbacklight.keepScreenOn()) {
             keepOn();
         } else {
@@ -85,16 +93,22 @@ public class Backlight implements OnContentUpdatedInterface,
         }
     }
 
-
     private void keepOn() {
-        AppLog.d(this, "keep screen on");
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-
+        setKeyGuard();
     }
 
+    private void setKeyGuard() {
+        if (sbacklight.dismissKeyGuard())
+            window.addFlags(WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD);
+        else
+            window.clearFlags(WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD);
+    }
+
+
     private void autoOff() {
-        AppLog.d(this, "auto off screen");
         window.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        window.clearFlags(WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD);
     }
 
 

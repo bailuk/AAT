@@ -13,7 +13,7 @@ public class OffState extends State {
         internal.logger.close();
         internal.statusIcon.hide();
         internal.unlockService();
-        
+        internal.rereadPreferences();
     }
 
     @Override
@@ -35,7 +35,6 @@ public class OffState extends State {
         try {
             internal.logger = internal.createLogger();
 
-            internal.rereadPreferences();
             internal.lockService();
 
             internal.state = new OnState(internal);
@@ -76,4 +75,9 @@ public class OffState extends State {
         return R.drawable.media_playback_start_inverse;
     }
 
+
+    @Override
+    public void preferencesChanged() {
+        internal.rereadPreferences();
+    }
 }
