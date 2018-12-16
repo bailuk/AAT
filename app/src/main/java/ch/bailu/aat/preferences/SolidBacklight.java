@@ -15,8 +15,8 @@ public class SolidBacklight extends SolidStaticIndexList {
         super(c, KEY+i,
                 new String[] {
                     c.getString(R.string.p_backlight_off),
-                    c.getString(R.string.p_backlight_bright),
-                    ToDo.translate("Keep on (disable screen lock)")
+                    c.getString(R.string.p_backlight_on),
+                    c.getString(R.string.p_backlight_on_no_lock)
                 }
             );
     }

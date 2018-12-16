@@ -124,7 +124,9 @@
 
     <string name="p_backlight_title">Bildschirm</string>
     <string name="p_backlight_off">Systemeinstellung</string>
-    <string name="p_backlight_bright">Immer an</string>
+    <string name="p_backlight_on">Immer an</string>
+    <string name="p_backlight_on_no_lock">Immer an (ohne Sperrbildschirm)</string>
+
 
 
     <!-- Preferences Map -->
