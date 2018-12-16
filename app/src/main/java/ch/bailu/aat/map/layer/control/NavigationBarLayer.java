@@ -1,9 +1,13 @@
 package ch.bailu.aat.map.layer.control;
 
+import android.content.Context;
 import android.util.SparseArray;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.ViewGroup;
 
 import ch.bailu.aat.R;
+import ch.bailu.aat.activities.AbsVolumeKeys;
 import ch.bailu.aat.dispatcher.DispatcherInterface;
 import ch.bailu.aat.dispatcher.OnContentUpdatedInterface;
 import ch.bailu.aat.gpx.GpxInformation;
@@ -49,6 +53,11 @@ public class NavigationBarLayer extends ControlBarLayer implements OnContentUpda
         ToolTip.set(lock, R.string.tt_map_home);
 
         d.addTargets(this, InfoID.ALL);
+
+        VolumeView volumeView = new VolumeView(mc.getContext());
+        volumeView.setVisibility(View.GONE);
+
+        mcontext.getMapView().addView(volumeView);
     }
 
 
@@ -119,5 +128,31 @@ public class NavigationBarLayer extends ControlBarLayer implements OnContentUpda
 
     }
 
+    private class VolumeView extends ViewGroup implements AbsVolumeKeys.OnVolumePressed {
+
+        public VolumeView(Context context) {
+            super(context);
+        }
+
+        @Override
+        protected void onLayout(boolean changed, int l, int t, int r, int b) {
+
+        }
+
+        @Override
+        public boolean onVolumePressed(int code) {
+            if (code == KeyEvent.KEYCODE_VOLUME_UP) {
+                mcontext.getMapView().zoomIn();
+                return true;
+            }
+
+            if (code == KeyEvent.KEYCODE_VOLUME_DOWN) {
+                mcontext.getMapView().zoomOut();
+                return true;
+            }
+
+            return false;
+        }
+    }
 
 }

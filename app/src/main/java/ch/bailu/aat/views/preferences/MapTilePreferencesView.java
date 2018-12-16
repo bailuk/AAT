@@ -15,6 +15,7 @@ import ch.bailu.aat.preferences.SolidTileSize;
 import ch.bailu.aat.preferences.SolidTrimDate;
 import ch.bailu.aat.preferences.SolidTrimMode;
 import ch.bailu.aat.preferences.SolidTrimSize;
+import ch.bailu.aat.preferences.SolidVolumeKeys;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.views.tileremover.TileRemoverView;
 
@@ -27,9 +28,11 @@ public class MapTilePreferencesView extends VerticalScrollView {
 
         final Context context = scontext.getContext();
 
+
         add(new TitleView(context, context.getString(R.string.p_tiles)));
         add(new SolidIndexListView(new SolidTileSize(context)));
         add(new SolidDirectoryViewSAF(acontext, new SolidTileCacheDirectory(context)));
+        add(new SolidCheckBox(new SolidVolumeKeys(acontext)));
 
         add(new TitleView(context, MapsForgeSource.NAME));
         add(new SolidDirectoryView(new SolidMapsForgeDirectory(context)));
