@@ -12,13 +12,8 @@ public class SolidDirectoryMenuButton extends ImageButtonView {
     public SolidDirectoryMenuButton(final Activity acontext, final SolidFile s) {
         super(s.getContext(), R.drawable.folder_inverse);
 
-        setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new DirectoryMenu(acontext, s).showAsPopup(
-                        s.getContext(),
-                        SolidDirectoryMenuButton.this);
-            }
-        });
+        setOnClickListener(v -> new DirectoryMenu(acontext, s).showAsPopup(
+                s.getContext(),
+                SolidDirectoryMenuButton.this));
     }
 }

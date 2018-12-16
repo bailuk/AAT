@@ -4,11 +4,8 @@ import ch.bailu.aat.gpx.GpxInformation;
 
 
 public interface OnContentUpdatedInterface {
-    OnContentUpdatedInterface NULL = new OnContentUpdatedInterface() {
-        @Override
-        public void onContentUpdated(int iid, GpxInformation info) {
+    OnContentUpdatedInterface NULL = (iid, info) -> {
 
-        }
     };
 
     void onContentUpdated(int iid, GpxInformation info);

@@ -22,7 +22,7 @@ public abstract class AbsSolidStringDialog extends AbsSolidDialog
         solid = s;
 
         final AlertDialog.Builder dialog;
-        final ArrayList<String> selectionList = s.buildSelection(new ArrayList<String>(10));
+        final ArrayList<String> selectionList = s.buildSelection(new ArrayList<>(10));
 
         baseSelectionSize = selectionList.size();
 

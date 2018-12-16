@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 
 import ch.bailu.aat.preferences.SolidVolumeKeys;
 
-public class AbsVolumeKeys extends AbsBackButton {
+public abstract class AbsVolumeKeys extends AbsBackButton {
 
     private SolidVolumeKeys svolumeKeys;
 

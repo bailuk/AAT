@@ -50,20 +50,17 @@ public class OverpassActivity extends AbsOsmApiActivity  {
 
     private View createOsmFeaturesView(MainControlBar bar) {
         osm_features = new MapFeaturesView(getServiceContext());
-        osm_features.setOnTextSelected(new MapFeaturesListView.OnSelected() {
-            @Override
-            public void onSelected(MapFeaturesListEntry e, int action, String variant) {
-                if (action == FILTER) {
-                    osm_features.setFilterText(e.summarySearchKey);
+        osm_features.setOnTextSelected((e, action, variant) -> {
+            if (action == MapFeaturesListView.OnSelected.FILTER) {
+                osm_features.setFilterText(e.summarySearchKey);
 
-                } else if (action == EDIT){
-                    insertLine(variant);
-                    inputMultiView.setActive(0);
-                    if (multiView != null) multiView.setNext();
+            } else if (action == MapFeaturesListView.OnSelected.EDIT){
+                insertLine(variant);
+                inputMultiView.setActive(0);
+                if (multiView != null) multiView.setNext();
 
-                } else if (action == SHOW) {
+            } else if (action == MapFeaturesListView.OnSelected.SHOW) {
 
-                }
             }
         });
 

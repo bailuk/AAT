@@ -13,12 +13,7 @@ public class TrackerTimerSource extends ContentSource {
     private final Timer timer;
 
     public TrackerTimerSource(ServiceContext sc) {
-        timer = new Timer(new Runnable() {
-            @Override
-            public void run() {
-                requestUpdate();
-            }
-        }, INTERVAL);
+        timer = new Timer(() -> requestUpdate(), INTERVAL);
 
         scontext = sc;
     }

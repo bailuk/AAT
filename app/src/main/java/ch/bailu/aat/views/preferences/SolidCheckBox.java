@@ -31,12 +31,9 @@ public class SolidCheckBox extends LinearLayout {
         checkBox.setText(sboolean.getLabel());
 
 
-        checkBox.setOnCheckedChangeListener(new CheckBox.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                sboolean.setValue(isChecked);
-                toolTip.setToolTip(sboolean);
-            }
+        checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            sboolean.setValue(isChecked);
+            toolTip.setToolTip(sboolean);
         });
     }
 }

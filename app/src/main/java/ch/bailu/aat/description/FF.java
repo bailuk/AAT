@@ -3,7 +3,6 @@ package ch.bailu.aat.description;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
-import java.time.format.DateTimeFormatter;
 import java.util.TimeZone;
 
 public class FF {

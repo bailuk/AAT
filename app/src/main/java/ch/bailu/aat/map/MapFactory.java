@@ -6,8 +6,6 @@ import ch.bailu.aat.dispatcher.DispatcherInterface;
 import ch.bailu.aat.dispatcher.EditorSourceInterface;
 import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.map.layer.CurrentLocationLayer;
-import ch.bailu.aat.map.layer.FpsLayer;
-import ch.bailu.aat.map.layer.ZoomLevel;
 import ch.bailu.aat.map.layer.control.CustomBarLayer;
 import ch.bailu.aat.map.layer.control.EditorLayer;
 import ch.bailu.aat.map.layer.control.InformationBarLayer;

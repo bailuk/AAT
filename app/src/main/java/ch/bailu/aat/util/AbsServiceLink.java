@@ -3,7 +3,6 @@ package ch.bailu.aat.util;
 
 import android.os.Bundle;
 
-import ch.bailu.aat.activities.AbsBackButton;
 import ch.bailu.aat.activities.AbsVolumeKeys;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.ServiceLink;

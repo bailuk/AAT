@@ -22,11 +22,8 @@ public class MultiView extends ViewGroup implements ObservableInterface{
     private final SparseArray<GpxInformation> informationMap =
             new SparseArray<>(5);
 
-    private Observer observer = new Observer() {
-        @Override
-        public void onChange() {
+    private Observer observer = () -> {
 
-        }
     };
 
 
@@ -37,11 +34,8 @@ public class MultiView extends ViewGroup implements ObservableInterface{
 
     @Override
     public void removeObserver(Observer observer) {
-        observer = new Observer() {
-            @Override
-            public void onChange() {
+        observer = () -> {
 
-            }
         };
     }
 

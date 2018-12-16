@@ -20,12 +20,7 @@ public class SolidBoundingBoxView extends AbsLabelTextView implements SharedPref
         setText(bounding.getValueAsString());
 
 
-        this.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                sbounding.setValue(new BoundingBoxE6(map.getMetrics().getBoundingBox()));
-            }
-        });
+        this.setOnClickListener(v -> sbounding.setValue(new BoundingBoxE6(map.getMetrics().getBoundingBox())));
     }
 
 

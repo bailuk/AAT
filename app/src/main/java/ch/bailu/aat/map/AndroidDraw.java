@@ -30,10 +30,8 @@ public class AndroidDraw implements MapDraw {
     private final int point_radius;
 
     private final NodeBitmap nodePainter;
-    private final Resources resources;
 
-
-    public AndroidDraw(AppDensity res, Resources r) {
+    public AndroidDraw(AppDensity res) {
         legendPaint = MapPaint.createLegendTextPaint(res);
         gridPaint   = MapPaint.createGridPaint(res);
         textPaint   = MapPaint.createStatusTextPaint(res);
@@ -41,7 +39,6 @@ public class AndroidDraw implements MapDraw {
         textHeight  = textPaint.getTextHeight("X")+5;
 
         nodePainter = NodeBitmap.get(res);
-        resources = r;
 
         point_radius = res.toPixel_i(POINT_RADIUS);
 

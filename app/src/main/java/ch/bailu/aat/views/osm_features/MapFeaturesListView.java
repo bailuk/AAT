@@ -20,11 +20,8 @@ public class MapFeaturesListView extends ListView  {
     private final FilterList<MapFeaturesListEntry> list;
     private final ServiceContext scontext;
 
-    private OnSelected onSelected = new OnSelected() {
-        @Override
-        public void onSelected(MapFeaturesListEntry data, int action, String variant) {
+    private OnSelected onSelected = (data, action, variant) -> {
 
-        }
     };
 
 

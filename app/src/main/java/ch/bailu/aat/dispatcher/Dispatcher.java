@@ -92,10 +92,7 @@ public class Dispatcher implements DispatcherInterface, OnContentUpdatedInterfac
     }
 
     private static final OnContentUpdatedInterface
-            OFF = new OnContentUpdatedInterface() {
-        @Override
-        public void onContentUpdated(int iid, GpxInformation info) {}
-    };
+            OFF = (iid, info) -> {};
 
 
     private final OnContentUpdatedInterface

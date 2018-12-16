@@ -13,7 +13,6 @@ import ch.bailu.aat.BuildConfig;
 import ch.bailu.aat.R;
 import ch.bailu.aat.coordinates.BoundingBoxE6;
 import ch.bailu.aat.util.AppIntent;
-import ch.bailu.aat.util.ToDo;
 import ch.bailu.aat.util.ui.AppLayout;
 
 public class ActivitySwitcher {

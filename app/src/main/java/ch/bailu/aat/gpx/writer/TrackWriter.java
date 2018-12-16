@@ -2,7 +2,6 @@ package ch.bailu.aat.gpx.writer;
 
 import java.io.IOException;
 
-import ch.bailu.aat.description.FF;
 import ch.bailu.aat.gpx.interfaces.GpxPointInterface;
 import ch.bailu.util_java.foc.Foc;
 

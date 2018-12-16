@@ -1,11 +1,8 @@
 package ch.bailu.aat.map.layer.gpx;
 
 import android.content.SharedPreferences;
-import android.graphics.drawable.Drawable;
 
-import org.mapsforge.core.graphics.Bitmap;
 import org.mapsforge.core.model.Point;
-import org.mapsforge.map.android.graphics.AndroidBitmap;
 
 import ch.bailu.aat.map.MapContext;
 import ch.bailu.aat.map.TwoNodes;

@@ -11,13 +11,13 @@ import org.mapsforge.map.android.graphics.AndroidGraphicFactory;
 import org.mapsforge.map.layer.Layer;
 
 import ch.bailu.aat.App;
-import ch.bailu.aat.map.MapViewInterface;
-import ch.bailu.aat.map.MapDraw;
+import ch.bailu.aat.map.AndroidDraw;
 import ch.bailu.aat.map.MapContext;
+import ch.bailu.aat.map.MapDraw;
 import ch.bailu.aat.map.MapMetrics;
+import ch.bailu.aat.map.MapViewInterface;
 import ch.bailu.aat.map.TwoNodes;
 import ch.bailu.aat.map.layer.MapLayerInterface;
-import ch.bailu.aat.map.AndroidDraw;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.util.ui.AppDensity;
 
@@ -40,7 +40,7 @@ public class MapsForgeContext extends Layer implements MapContext, MapLayerInter
                             String key,
                             AppDensity d) {
         metrics = new MapsForgeMetrics(map, d);
-        draw = new AndroidDraw(metrics.getDensity(), sc.getContext().getResources());
+        draw = new AndroidDraw(metrics.getDensity());
         nodes = new TwoNodes(metrics);
         skey = key;
         mapView = map;

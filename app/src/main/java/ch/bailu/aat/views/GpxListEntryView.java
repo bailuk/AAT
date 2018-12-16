@@ -47,12 +47,7 @@ public class GpxListEntryView extends LinearLayout implements OnContentUpdatedIn
         preview = new PreviewView(acontext.getServiceContext());
         addView(preview, previewSize, previewSize);
 
-        preview.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                new FileMenu(acontext, file).showAsDialog(acontext);
-            }
-        });
+        preview.setOnClickListener(view -> new FileMenu(acontext, file).showAsDialog(acontext));
 
 
         title = new TextView(getContext());

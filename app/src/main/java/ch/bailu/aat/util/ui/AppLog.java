@@ -57,9 +57,7 @@ public class AppLog implements Closeable {
         public LogError(Context c) {
             super(c, LOG_E);
             alertbox = new AlertDialog.Builder(c);
-            alertbox.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface arg0, int arg1) {}
-            });
+            alertbox.setPositiveButton("OK", (arg0, arg1) -> {});
         }
 
         

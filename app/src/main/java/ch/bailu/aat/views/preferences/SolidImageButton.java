@@ -16,15 +16,11 @@ public class SolidImageButton extends ImageButtonView implements SharedPreferenc
         super(s.getContext(), s.getIconResource());
 
         solid = s;
-        setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (solid.length()<3) {
-                    solid.cycle();
-                } else {
-                    new SolidIndexListDialog(solid);
-                }
-
+        setOnClickListener(v -> {
+            if (solid.length()<3) {
+                solid.cycle();
+            } else {
+                new SolidIndexListDialog(solid);
             }
 
         });

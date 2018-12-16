@@ -48,12 +48,7 @@ public class MainControlBar extends ControlBar {
 
     private void addBackButton(final AbsDispatcher acontext) {
         MyImageButton b = addImageButton(R.drawable.edit_undo_inverse, getControlSize());
-        b.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                acontext.onBackPressedMenuBar();
-            }
-        });
+        b.setOnClickListener(v -> acontext.onBackPressedMenuBar());
     }
 
 
@@ -61,12 +56,7 @@ public class MainControlBar extends ControlBar {
         final MyImageButton menu = addImageButton(ch.bailu.aat.R.drawable.open_menu_inverse);
 
 
-        menu.setOnClickListener(new OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                new OptionsMenu(acontext.getServiceContext()).showAsPopup(getContext(), menu);
-            }});
+        menu.setOnClickListener(v -> new OptionsMenu(acontext.getServiceContext()).showAsPopup(getContext(), menu));
         return menu;
     }
 
@@ -79,22 +69,12 @@ public class MainControlBar extends ControlBar {
 
 
     public void addMvNext(final MultiView mv, int size) {
-        addImageButton(R.drawable.go_next_inverse, size).setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mv.setNext();
-            }
-        });
+        addImageButton(R.drawable.go_next_inverse, size).setOnClickListener(v -> mv.setNext());
     }
 
 
     public void addMvPrevious(final MultiView mv, int size) {
-        addImageButton(R.drawable.go_previous_inverse, size).setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mv.setPrevious();
-            }
-        });
+        addImageButton(R.drawable.go_previous_inverse, size).setOnClickListener(v -> mv.setPrevious());
     }
 
     public MainControlBar addGpsState(AbsDispatcher acontext) {
@@ -115,12 +95,7 @@ public class MainControlBar extends ControlBar {
 
     public void addActivityCycle(final Activity acontext) {
         MyImageButton cb = addImageButton(R.drawable.go_down_inverse, getControlSize());
-        cb.setOnClickListener(new OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                new ActivitySwitcher(acontext).cycle();
-            }});
+        cb.setOnClickListener(v -> new ActivitySwitcher(acontext).cycle());
     }
 
     public void addMvNext(MultiView mv) {

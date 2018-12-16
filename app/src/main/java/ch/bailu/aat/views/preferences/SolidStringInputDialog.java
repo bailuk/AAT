@@ -21,11 +21,7 @@ public class SolidStringInputDialog extends AbsSolidDialog {
 
         dialog.setView(input);
 
-        dialog.setPositiveButton(context.getString(R.string.dialog_ok), new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int whichButton) {
-                s.setValueFromString(input.getText().toString());
-            }
-        });
+        dialog.setPositiveButton(context.getString(R.string.dialog_ok), (dialog1, whichButton) -> s.setValueFromString(input.getText().toString()));
         dialog.show();
     }
 }

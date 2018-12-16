@@ -119,16 +119,13 @@ public abstract class AbsFileContentActivity extends ActivityContext implements 
         addTargets(fileOperation, InfoID.FILEVIEW);
 
 
-        addTargets(new OnContentUpdatedInterface() {
-            @Override
-            public void onContentUpdated(int iid, GpxInformation info) {
-                String newFileID = info.getFile().getPath();
+        addTargets((iid, info) -> {
+            String newFileID = info.getFile().getPath();
 
-                if (!Objects.equals(currentFileID, newFileID)) {
-                    currentFileID = newFileID;
-                    map.frameBounding(info.getBoundingBox());
-                    AppLog.i(AbsFileContentActivity.this, info.getFile().getName());
-                }
+            if (!Objects.equals(currentFileID, newFileID)) {
+                currentFileID = newFileID;
+                map.frameBounding(info.getBoundingBox());
+                AppLog.i(AbsFileContentActivity.this, info.getFile().getName());
             }
         }, InfoID.FILEVIEW);
 

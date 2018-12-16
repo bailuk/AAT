@@ -23,14 +23,11 @@ public class SolidDateView extends AbsSolidView {
         calendar.setTimeInMillis(sdate.getValue());
 
         DatePickerDialog picker=new DatePickerDialog(getContext(),
-                new DatePickerDialog.OnDateSetListener() {
-                    @Override
-                    public void onDateSet(DatePicker view, int y, int m, int d) {
-                        calendar.set(Calendar.YEAR, y);
-                        calendar.set(Calendar.MONTH, m);
-                        calendar.set(Calendar.DAY_OF_MONTH, d);
-                        sdate.setValue(calendar.getTimeInMillis());
-                    }
+                (view, y, m, d) -> {
+                    calendar.set(Calendar.YEAR, y);
+                    calendar.set(Calendar.MONTH, m);
+                    calendar.set(Calendar.DAY_OF_MONTH, d);
+                    sdate.setValue(calendar.getTimeInMillis());
                 },
                 calendar.get(Calendar.YEAR),
                 calendar.get(Calendar.MONTH),

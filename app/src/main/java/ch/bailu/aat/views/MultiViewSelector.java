@@ -30,21 +30,11 @@ public class MultiViewSelector extends LinearLayout {
 
         setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL);
         setOrientation(HORIZONTAL);
-        setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                new MultiViewMenu(multiView).showAsPopup(getContext(),
-                        MultiViewSelector.this);
-            }
-        });
+        setOnClickListener(view -> new MultiViewMenu(multiView).showAsPopup(getContext(),
+                MultiViewSelector.this));
 
 
-        multiView.addObserver(new Observer() {
-            @Override
-            public void onChange() {
-                label.setText(multiView.getLabel());
-            }
-        });
+        multiView.addObserver(() -> label.setText(multiView.getLabel()));
 
 
     }

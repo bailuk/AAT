@@ -196,20 +196,16 @@ public class TestActivity extends ActivityContext {
         public TestEntryView(final UnitTest test) {
             super(test.getContext(), test.getClass().getSimpleName());
 
-            setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    try {
-                        test.test();
-                        setText("Test successfull");
-                        AppLog.i(getContext(), "Test sucessfull");
+            setOnClickListener(v -> {
+                try {
+                    test.test();
+                    setText("Test successfull");
+                    AppLog.i(getContext(), "Test sucessfull");
 
-                    } catch (AssertionError | Exception e) {
-                        setText("Test failed.");
-                        AppLog.e(getContext(), e);
-                    }
+                } catch (AssertionError | Exception e) {
+                    setText("Test failed.");
+                    AppLog.e(getContext(), e);
                 }
-
             });
         }
     }

@@ -16,12 +16,7 @@ public abstract class AbsSolidView extends AbsLabelTextView
 
         solid = s;
 
-        setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onRequestNewValue();
-            }
-        });
+        setOnClickListener(v -> onRequestNewValue());
     }
 
     public abstract void onRequestNewValue();

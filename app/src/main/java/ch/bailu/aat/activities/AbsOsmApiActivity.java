@@ -168,12 +168,7 @@ public abstract class AbsOsmApiActivity extends ActivityContext implements OnCli
         vertical.addView(createTitle());
 
         preview = new TextView(this);
-        preview.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                inputMultiView.setNext();
-            }
-        });
+        preview.setOnClickListener(view -> inputMultiView.setNext());
 
 
 

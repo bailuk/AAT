@@ -156,12 +156,7 @@ public class EditorMenu extends AbsMenu {
         AlertDialog.Builder dialog = new AlertDialog.Builder(context);
 
         dialog.setTitle(changeType.getTitle());
-        dialog.setItems(GpxType.toStrings(), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                editor.setType(GpxType.fromInteger(i));
-            }
-        });
+        dialog.setItems(GpxType.toStrings(), (dialogInterface, i) -> editor.setType(GpxType.fromInteger(i)));
 
         dialog.show();
     }

@@ -110,12 +110,7 @@ public class MainActivity extends ActivityContext {
         public ActivityLabel(final ActivitySwitcher.Entry s) {
             super(MainActivity.this, s.activityLabel);
 
-            setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    s.start(MainActivity.this);
-                }
-            });
+            setOnClickListener(v -> s.start(MainActivity.this));
 
             setText(s.activitySubLabel);
         }

@@ -32,7 +32,7 @@ public class MapsForgeForeground implements MapContext {
         layers = l;
 
         metrics = new MapsForgeMetrics(mapView, d);
-        draw = new AndroidDraw(mc.getMetrics().getDensity(), mc.getContext().getResources());
+        draw = new AndroidDraw(mc.getMetrics().getDensity());
 
     }
 

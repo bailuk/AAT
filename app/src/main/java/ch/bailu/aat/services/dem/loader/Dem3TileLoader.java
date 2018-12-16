@@ -34,13 +34,10 @@ public class Dem3TileLoader implements Closeable {
     }
 
 
-    private final Timer timer = new Timer(new Runnable() {
-        @Override
-        public void run() {
-            if (havePending()) {
-                loadOrDownloadPending();
-                stopTimer();
-            }
+    private final Timer timer = new Timer(() -> {
+        if (havePending()) {
+            loadOrDownloadPending();
+            stopTimer();
         }
     }, MILLIS);
 

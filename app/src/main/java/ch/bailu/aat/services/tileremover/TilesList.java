@@ -13,20 +13,17 @@ public class TilesList {
 
     private final TreeSet<TileFile> files = new TreeSet<>(
 
-            new Comparator<TileFile>() {
-        @Override
-        public int compare(TileFile o1, TileFile o2) {
+            (o1, o2) -> {
 
-            if (o2.lastModified() > o1.lastModified())
-                return -1;
+                if (o2.lastModified() > o1.lastModified())
+                    return -1;
 
-            else if (o2.lastModified() < o1.lastModified())
-                return 1;
+                else if (o2.lastModified() < o1.lastModified())
+                    return 1;
 
-            else
-                return 0;
-        }
-    });
+                else
+                    return 0;
+            });
 
     private  final ArrayList<TileFile> filesToRemove = new ArrayList<>(FILES_LIMIT);
 

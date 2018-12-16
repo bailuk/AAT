@@ -84,37 +84,28 @@ public class FocFile extends Foc {
 
     @Override
     public void foreach(final Execute e) {
-        file.listFiles(new FileFilter() {
-            @Override
-            public boolean accept(File file) {
-                e.execute(new FocFile(file));
-                return false;
-            }
+        file.listFiles(file -> {
+            e.execute(new FocFile(file));
+            return false;
         });
     }
 
     @Override
     public void foreachFile(final Execute e) {
-        file.listFiles(new FileFilter() {
-            @Override
-            public boolean accept(File file) {
-                if (file.isFile())
-                    e.execute(new FocFile(file));
-                return false;
-            }
+        file.listFiles(file -> {
+            if (file.isFile())
+                e.execute(new FocFile(file));
+            return false;
         });
     }
 
 
     @Override
     public void foreachDir(final Execute e) {
-        file.listFiles(new FileFilter() {
-            @Override
-            public boolean accept(File file) {
-                if (file.isDirectory())
-                    e.execute(new FocFile(file));
-                return false;
-            }
+        file.listFiles(file -> {
+            if (file.isDirectory())
+                e.execute(new FocFile(file));
+            return false;
         });
     }
 
