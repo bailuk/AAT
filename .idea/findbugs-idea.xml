@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="FindBugs-IDEA">
+    <analysisEffort>max</analysisEffort>
+    <minPriority>Low</minPriority>
+    <detectors>
+      <detector name="BadAppletConstructor" enabled="true" />
+      <detector name="CallToUnsupportedMethod" enabled="true" />
+      <detector name="CheckExpectedWarnings" enabled="true" />
+      <detector name="CovariantArrayAssignment" enabled="true" />
+      <detector name="EmptyZipFileEntry" enabled="true" />
+      <detector name="FindCircularDependencies" enabled="true" />
+      <detector name="InefficientIndexOf" enabled="true" />
+      <detector name="InefficientInitializationInsideLoop" enabled="true" />
+      <detector name="InefficientMemberAccess" enabled="true" />
+      <detector name="InefficientToArray" enabled="true" />
+      <detector name="PublicSemaphores" enabled="true" />
+      <detector name="UselessSubclassMethod" enabled="true" />
+    </detectors>
+  </component>
+</project>
