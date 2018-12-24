@@ -13,5 +13,4 @@ public class MyImageButton extends FrameLayout  {
         image.setClickable(false);
         addView(image, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
     }
-
 }

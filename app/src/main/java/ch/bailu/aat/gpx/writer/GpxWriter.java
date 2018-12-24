@@ -1,9 +1,12 @@
 package ch.bailu.aat.gpx.writer;
 
+import android.os.Build;
+
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 
+import ch.bailu.aat.BuildConfig;
 import ch.bailu.aat.description.FF;
 import ch.bailu.aat.gpx.interfaces.GpxPointInterface;
 import ch.bailu.aat.gpx.interfaces.GpxType;
@@ -48,6 +51,8 @@ public abstract class GpxWriter {
         writeString(AppTheme.APP_SHORT_NAME);
         writeString(" ");
         writeString(AppTheme.APP_LONG_NAME);
+        writeString(" ");
+        writeString(BuildConfig.VERSION_NAME);
         writeString("\" version=\"1.0\"");
         writeString("\n    xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"");
         writeString("\n    xsi:schemaLocation=\"http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd\">");
