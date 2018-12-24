@@ -1,0 +1,19 @@
+v1.15
+
+# Fixes
+- Add android.permission.FOREGROUND_SERVICE needed by Android 9
+- Allow non secure http on Android 9
+- Fix IndexOutOfBoundsException when accessing download information from different threads
+- Catch permission exceptions to prevent crash when using SAF
+- Set tracker notifications to IMPORTANCE_LOW (disable annoying beep)
+
+
+# Add / Change
+- Allow configuration of status messages
+- Add adaptive icon
+- Use window flags in cockpit views to leave screen on (remove android.permission.WAKE_LOCK)
+- Add option to disable screen lock while tracking (see issue #36)
+- Speed improvements (formating strings and drawing map tiles)
+- Draw shadow to make route overlays more visible
+- Allow use of volume keys for map zoom (see issue #36)
+
