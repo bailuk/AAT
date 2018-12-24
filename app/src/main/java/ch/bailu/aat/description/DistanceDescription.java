@@ -55,9 +55,21 @@ public class DistanceDescription extends FloatDescription {
         if (nonSI < 1)
             return getAltitudeDescription(distance);
 
-        return FF.f().N.format(nonSI) + unit.getDistanceUnit();
+
+        return FF.f().N.format(nonSI) + " " + unit.getDistanceUnit();
     }
-    
+
+
+    public String getDistanceDescriptionN1(float distance) {
+        float nonSI=distance * unit.getDistanceFactor();
+
+        if (nonSI < 1)
+            return getAltitudeDescription(distance);
+
+
+        return FF.f().N1.format(nonSI) + " " + unit.getDistanceUnit();
+    }
+
 
     public String getAltitudeDescription(double value) {
         return FF.f().N.format(

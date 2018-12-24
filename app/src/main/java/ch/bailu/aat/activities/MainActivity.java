@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 import ch.bailu.aat.R;
+import ch.bailu.aat.description.FF;
 import ch.bailu.aat.dispatcher.CurrentLocationSource;
 import ch.bailu.aat.dispatcher.TrackerSource;
 import ch.bailu.aat.preferences.SolidDataDirectory;
@@ -15,12 +16,15 @@ import ch.bailu.aat.preferences.SolidFile;
 import ch.bailu.aat.preferences.SolidPreset;
 import ch.bailu.aat.util.fs.AppDirectory;
 import ch.bailu.aat.util.ui.AppLayout;
+import ch.bailu.aat.util.ui.AppLog;
 import ch.bailu.aat.util.ui.AppTheme;
 import ch.bailu.aat.views.AbsLabelTextView;
 import ch.bailu.aat.views.ContentView;
 import ch.bailu.aat.views.bar.MainControlBar;
 import ch.bailu.aat.views.preferences.SolidIndexListView;
 import ch.bailu.aat.views.preferences.VerticalScrollView;
+
+import static java.util.Calendar.LONG;
 
 
 public class MainActivity extends ActivityContext {

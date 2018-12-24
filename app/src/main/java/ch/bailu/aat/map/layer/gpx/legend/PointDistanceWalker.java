@@ -54,7 +54,7 @@ public class PointDistanceWalker extends LegendWalker {
 
     private void drawLegendFromB() {
         if (c.isBVisible()) {
-            c.drawLabelB(description.getDistanceDescription(distance));
+            c.drawLabelB(description.getDistanceDescriptionN1(distance));
         }
     }
 }

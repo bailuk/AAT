@@ -68,7 +68,7 @@ public class MarkerDistanceWalker extends LegendWalker {
         if (c.isBVisible()) {
             if (!c.arePointsTooClose()) {
                 c.drawNodeB();
-                c.drawLabelB(description.getDistanceDescription(distance));
+                c.drawLabelB(description.getDistanceDescriptionN1(distance));
             }
         }
     }
