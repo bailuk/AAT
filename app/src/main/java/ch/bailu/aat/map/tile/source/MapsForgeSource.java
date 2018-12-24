@@ -38,7 +38,7 @@ public class MapsForgeSource extends Source {
 
     @Override
     public int getMaximumZoomLevel() {
-        return 17;
+        return 19;
     }
 
     @Override

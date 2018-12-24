@@ -53,8 +53,8 @@ public class AppTheme {
 
 
 
-    public final static String APP_LONG_NAME = "Android Activity Tracker";
-    public final static String APP_SHORT_NAME = "aat";
+    public final static String APP_LONG_NAME = "Another Activity Tracker";
+    public final static String APP_SHORT_NAME = "AAT";
 
 
     public static int getHighlightColor2() {
