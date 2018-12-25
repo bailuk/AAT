@@ -7,6 +7,7 @@ import org.mapsforge.core.graphics.Paint;
 import org.mapsforge.core.model.Point;
 
 import ch.bailu.aat.map.MapContext;
+import ch.bailu.aat.map.MapMetrics;
 import ch.bailu.aat.map.MapPaint;
 import ch.bailu.aat.map.layer.gpx.GpxLayer;
 
@@ -20,25 +21,33 @@ public class GpxLegendLayer extends GpxLayer {
     public GpxLegendLayer(LegendWalker w) {
         walker=w;
 
-
-        backgroundPaint =
-                MapPaint.createBackgroundPaint(getColor());
-        framePaint = MapPaint.createBackgroundPaint(getColor());
-        framePaint.setColor(getColor());
+        initPaint();
     }
 
     @Override
     public void drawInside(MapContext mcontext) {
         if (color != getColor()) {
-            backgroundPaint = MapPaint.createBackgroundPaint(getColor());
-            framePaint = MapPaint.createEdgePaintLine(mcontext.getMetrics().getDensity());
-            framePaint.setColor(getColor());
             color = getColor();
 
+            initPaint(mcontext.getMetrics());
         }
 
         walker.init(mcontext, backgroundPaint, framePaint);
         walker.walkTrack(getGpxList());
+    }
+
+
+
+    private void initPaint(MapMetrics metrics) {
+        backgroundPaint = MapPaint.createBackgroundPaint(color);
+        framePaint = MapPaint.createEdgePaintLine(metrics.getDensity());
+        framePaint.setColor(color);
+    }
+
+
+    private void initPaint() {
+        backgroundPaint = MapPaint.createBackgroundPaint(color);
+        framePaint = MapPaint.createBackgroundPaint(color);
     }
 
 
