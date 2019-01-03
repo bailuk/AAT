@@ -48,6 +48,12 @@ public class AppTheme {
         return COLOR_ORANGE;
     }
 
+
+    static public int getBackgroundColor() {
+        return Color.BLACK;
+    }
+
+
     static public int getAltBackgroundColor() {
         return COLOR_BLUEGRAY;
     }

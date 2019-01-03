@@ -18,7 +18,7 @@
         android:usesCleartextTraffic="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_sname"
-        android:theme="@android:style/Theme.NoTitleBar"
+        android:theme="@android:style/Theme.Black.NoTitleBar"
         android:fullBackupContent="@xml/backup_descriptor">
 
         <activity

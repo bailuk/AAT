@@ -1,6 +1,7 @@
 package ch.bailu.aat.views;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
@@ -10,6 +11,7 @@ import java.util.ArrayList;
 import ch.bailu.aat.activities.ActivitySwitcher;
 import ch.bailu.aat.preferences.SolidStatusMessages;
 import ch.bailu.aat.util.ui.AppLog;
+import ch.bailu.aat.util.ui.AppTheme;
 
 public class ContentView extends FrameLayout{
     private final LinearLayout mainContent;
@@ -20,8 +22,6 @@ public class ContentView extends FrameLayout{
 
     public ContentView(Context context) {
         super(context);
-
-
 
         mainContent = new LinearLayout(context);
         mainContent.setOrientation(LinearLayout.VERTICAL);
