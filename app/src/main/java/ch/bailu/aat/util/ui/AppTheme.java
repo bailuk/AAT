@@ -54,6 +54,19 @@ public class AppTheme {
     }
 
 
+    static public int getTextColor() {
+        return Color.WHITE;
+    }
+
+
+    static public int getAltTextColor() {
+        return Color.LTGRAY;
+    }
+
+
+    static  public int getAltTextBackgroundColor() {
+        return Color.DKGRAY;
+    }
     static public int getAltBackgroundColor() {
         return COLOR_BLUEGRAY;
     }

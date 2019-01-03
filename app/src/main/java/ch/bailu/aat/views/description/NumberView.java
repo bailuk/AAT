@@ -2,6 +2,9 @@ package ch.bailu.aat.views.description;
 
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.os.Build;
+import android.text.Layout;
+import android.text.TextUtils;
 import android.util.TypedValue;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -24,12 +27,14 @@ public class NumberView extends ViewGroup implements OnContentUpdatedInterface {
 
         number = createLabel();
         number.setIncludeFontPadding(false);
-        number.setTextColor(Color.WHITE);
+        number.setTextColor(AppTheme.getTextColor());
         number.setTypeface(Typeface.create((String) null, Typeface.BOLD));
-
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            number.setHyphenationFrequency(Layout.HYPHENATION_FREQUENCY_NONE);
+        }
 
         label = createLabel();
-        label.setTextColor(Color.LTGRAY);
+        label.setTextColor(AppTheme.getAltTextColor());
         defaultTextSize = label.getTextSize();
 
         unit = createLabel();
@@ -41,8 +46,8 @@ public class NumberView extends ViewGroup implements OnContentUpdatedInterface {
     }
 
     public void setDefaultUnitLabelColor() {
-        unit.setBackgroundColor(Color.DKGRAY);
-        unit.setTextColor(Color.LTGRAY);
+        unit.setBackgroundColor(AppTheme.getAltTextBackgroundColor());
+        unit.setTextColor(AppTheme.getAltTextColor());
     }
 
 
