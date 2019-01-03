@@ -13,6 +13,10 @@ android {
         versionCode 27
         versionName "v1.15.1"
 
+
+        buildConfigField 'String', 'APP_SNAME', '\"AAT\"'
+        buildConfigField 'String', 'APP_NAME', '\"Another Activity Tracker\"'
+        buildConfigField 'String', 'APP_CONTACT', '\"aat@bailu.ch\"'
         resValue "string", "app_sname", "AAT"
     }
 
@@ -24,7 +28,7 @@ android {
         }
 
         debug {
-            resValue "string", "app_sname", "AAT.debug"
+            resValue "string", "app_sname", "AAT Debug"
             applicationIdSuffix = ".debug"
         }
 

@@ -23,7 +23,9 @@ public class DownloadTask extends BackgroundTask implements ContextWrapperInterf
     private final static int TIMEOUT = 30 * 1000;
     private final static String USER_AGENT_KEY = "User-Agent";
     private final static String USER_AGENT_VALUE =
-            AppTheme.APP_SHORT_NAME + "/" + AppTheme.APP_LONG_NAME + " (aat@bailu.ch)";
+                    AppTheme.getShortName() + "/" +
+                    AppTheme.getLongName() + "/" +
+                    AppTheme.getVersionName() + " (" + AppTheme.getContact() + ")";
 
     private final static int IO_BUFFER_SIZE=8*1024;
 

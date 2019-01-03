@@ -10,9 +10,12 @@ import org.acra.data.StringFormat;
 
 import ch.bailu.aat.map.mapsforge.MapsForgeContext;
 import ch.bailu.aat.util.ToDo;
+import ch.bailu.aat.util.ui.AppTheme;
 
 
 public class App extends Application {
+
+
 
     @Override
     public void onCreate() {
@@ -31,14 +34,16 @@ public class App extends Application {
                 .setBuildConfigClass(BuildConfig.class)
                 .setReportFormat(StringFormat.KEY_VALUE_LIST);
         builder.getPluginConfigurationBuilder(MailSenderConfigurationBuilder.class)
-                .setMailTo("aat@bailu.ch")
+                .setMailTo(AppTheme.getContact())
                 .setEnabled(true);
         builder.getPluginConfigurationBuilder(DialogConfigurationBuilder.class)
-                .setTitle(ToDo.translate("AAT crashed"))
-                .setText(ToDo.translate(
+                .setTitle(AppTheme.getShortName() + " crashed")
+                .setText(
                         "This will open your e-mail app to send a crash report " +
-                        "including some information about your device to \"aat@bailu.ch\".\n" +
-                        "This will help the author to fix and improve this app."))
+                        "including some information about your device to \"" +
+                        AppTheme.getContact() +
+                        "\".\n" +
+                        "This will help the author to fix and improve this app.")
 
                 .setEnabled(true);
         ACRA.init(this, builder);

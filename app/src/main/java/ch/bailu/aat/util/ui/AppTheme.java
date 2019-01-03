@@ -9,6 +9,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import ch.bailu.aat.BuildConfig;
 import ch.bailu.aat.R;
 
 public class AppTheme {
@@ -52,9 +53,23 @@ public class AppTheme {
     }
 
 
+    static public String getLongName() {
+        return BuildConfig.APP_NAME;
+    }
 
-    public final static String APP_LONG_NAME = "Another Activity Tracker";
-    public final static String APP_SHORT_NAME = "AAT";
+    static public String getShortName() {
+        return BuildConfig.APP_SNAME;
+    }
+
+
+    static public String getVersionName() {
+        return BuildConfig.VERSION_NAME;
+    }
+
+
+    public static String getContact() {
+        return BuildConfig.APP_CONTACT;
+    }
 
 
     public static int getHighlightColor2() {
@@ -100,6 +115,7 @@ public class AppTheme {
     public static void themify(LinearLayout bar) {
         bar.setBackgroundResource(R.drawable.button);
     }
+
 
 
 }

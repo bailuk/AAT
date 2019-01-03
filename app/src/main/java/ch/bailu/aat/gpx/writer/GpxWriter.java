@@ -47,11 +47,11 @@ public abstract class GpxWriter {
         writeString("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>");
         writeString("\n<gpx xmlns=\"http://www.topografix.com/GPX/1/1\"");
         writeString("\n    creator=\"");
-        writeString(AppTheme.APP_SHORT_NAME);
+        writeString(AppTheme.getShortName());
         writeString(" ");
-        writeString(AppTheme.APP_LONG_NAME);
+        writeString(AppTheme.getLongName());
         writeString(" ");
-        writeString(BuildConfig.VERSION_NAME);
+        writeString(AppTheme.getVersionName());
         writeString("\" version=\"1.0\"");
         writeString("\n    xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"");
         writeString("\n    xsi:schemaLocation=\"http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd\">");
