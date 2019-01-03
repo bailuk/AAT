@@ -22,7 +22,7 @@ AAT is a GPS-tracking application for tracking sportive activities, with emphasi
 license: [GNU Lesser GPL v3](http://www.gnu.org/licenses/lgpl.html)
 
 ### AAT
-(c) 2011-2018 Lukas Bai bailu@bailu.ch  
+(c) 2011-2019 Lukas Bai bailu@bailu.ch  
 license: [GNU GPLv3 or later](http://www.gnu.org/licenses/gpl.html)  
 Logo designed by Ibrahim Tenekeci  
 
