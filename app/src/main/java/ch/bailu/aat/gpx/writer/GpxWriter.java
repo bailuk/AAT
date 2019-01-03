@@ -1,13 +1,12 @@
 package ch.bailu.aat.gpx.writer;
 
-import android.os.Build;
-
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 
 import ch.bailu.aat.BuildConfig;
 import ch.bailu.aat.description.FF;
+import ch.bailu.aat.description.FF_GPX;
 import ch.bailu.aat.gpx.interfaces.GpxPointInterface;
 import ch.bailu.aat.gpx.interfaces.GpxType;
 import ch.bailu.aat.util.ui.AppTheme;
@@ -18,7 +17,7 @@ public abstract class GpxWriter {
 
     private BufferedWriter output=null;
 
-    protected final FF f = FF.f();
+    protected final FF_GPX f = FF_GPX.f();
 
 
     public GpxWriter(Foc file) throws IOException, SecurityException {
@@ -68,7 +67,7 @@ public abstract class GpxWriter {
     }
 
     public void writeTimeStamp(long time) throws IOException {
-        writeString("<time>" + f.GPX_TIME.format(time) + "</time>");
+        writeString("<time>" + f.TIME.format(time) + "</time>");
     }
 
 
