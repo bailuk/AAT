@@ -88,7 +88,6 @@ public abstract class AbsFileContentActivity extends ActivityContext implements 
         fileOperation = new PreviewView(getServiceContext());
         bar.addButton(fileOperation);
 
-        ToolTip.set(fileOperation, R.string.tt_menu_file);
 
         bar.setOrientation(LinearLayout.HORIZONTAL);
         bar.setOnClickListener1(this);

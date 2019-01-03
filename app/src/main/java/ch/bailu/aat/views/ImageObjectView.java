@@ -33,7 +33,7 @@ public class ImageObjectView extends ImageView {
         scontext = sc;
         defaultImageID = resID;
 
-        //resetImage();
+        resetImage();
     }
 
 
@@ -77,6 +77,8 @@ public class ImageObjectView extends ImageView {
 
 
     private boolean loadImage(final String id, final ObjectHandle.Factory factory) {
+
+
         final boolean[] r = {false};
         new InsideContext(scontext) {
             @Override
@@ -94,6 +96,7 @@ public class ImageObjectView extends ImageView {
 
             }
         };
+
         return r[0];
     }
 
@@ -127,7 +130,9 @@ public class ImageObjectView extends ImageView {
 
 
     private void displayImage() {
-        if (imageHandle.isReadyAndLoaded()) {
+        if (imageHandle.hasErrors()) {
+            resetImage();
+        } else if (imageHandle.isReadyAndLoaded()) {
             setImageBitmap(imageHandle.getBitmap());
         }
     }
@@ -140,7 +145,4 @@ public class ImageObjectView extends ImageView {
             if (AppIntent.hasFile(intent, file)) displayImage();
         }
     };
-
-
-
 }

@@ -15,6 +15,7 @@ public class ImageObject extends ImageObjectAbstract {
     private final SyncBitmap bitmap=new SyncBitmap();
     private final Foc imageFile;
 
+    private boolean errors = false;
 
     private ImageObject() {
         this(FocAndroid.NULL);
@@ -64,8 +65,10 @@ public class ImageObject extends ImageObjectAbstract {
         return bitmap.getAndroidBitmap();
     }
 
-
-
+    @Override
+    public boolean hasErrors() {
+        return errors;
+    }
 
 
     public static class Factory extends ObjectHandle.Factory {
@@ -106,6 +109,8 @@ public class ImageObject extends ImageObjectAbstract {
 
                     self.bitmap.set(self.imageFile);
                     size[0] =  self.bitmap.getSize();
+
+                    self.errors = self.getBitmap() == null;
 
                     AppBroadcaster.broadcast(sc.getContext(), AppBroadcaster.FILE_CHANGED_INCACHE,
                             self.imageFile);

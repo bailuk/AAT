@@ -7,6 +7,8 @@ import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.cache.ImageObject;
 import ch.bailu.aat.services.directory.SummaryConfig;
 import ch.bailu.aat.util.fs.foc.FocAndroid;
+import ch.bailu.aat.util.ui.AppLog;
+import ch.bailu.aat.util.ui.ToolTip;
 import ch.bailu.util_java.foc.Foc;
 
 public class PreviewView extends ImageObjectView implements OnContentUpdatedInterface {
@@ -14,6 +16,8 @@ public class PreviewView extends ImageObjectView implements OnContentUpdatedInte
 
     public PreviewView(ServiceContext sc) {
         super(sc, R.drawable.open_menu_light);
+        ToolTip.set(this, R.string.tt_menu_file);
+
     }
 
 

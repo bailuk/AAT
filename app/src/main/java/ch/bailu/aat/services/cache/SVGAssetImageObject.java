@@ -19,6 +19,7 @@ public class SVGAssetImageObject extends ImageObjectAbstract {
 
     private final String name;
     private final int size;
+    private boolean errors = false;
 
     public SVGAssetImageObject(String id, String name, int size) {
         super(id);
@@ -39,6 +40,11 @@ public class SVGAssetImageObject extends ImageObjectAbstract {
     @Override
     public Bitmap getBitmap() {
         return bitmap.getAndroidBitmap();
+    }
+
+    @Override
+    public boolean hasErrors() {
+        return errors;
     }
 
 
@@ -121,6 +127,7 @@ public class SVGAssetImageObject extends ImageObjectAbstract {
 
 
                     } catch (SVGParseException | IOException e) {
+                        self.errors = true;
                         AppLog.e(sc.getContext(), e);
                     }
 
