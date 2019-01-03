@@ -1,5 +1,7 @@
 package ch.bailu.aat.gpx.parser;
 
+import org.xmlpull.v1.XmlPullParserException;
+
 import java.io.IOException;
 
 import ch.bailu.aat.gpx.AltitudeDelta;
@@ -8,6 +10,7 @@ import ch.bailu.aat.gpx.GpxList;
 import ch.bailu.aat.gpx.GpxPoint;
 import ch.bailu.aat.gpx.MaxSpeed;
 import ch.bailu.aat.gpx.interfaces.GpxType;
+import ch.bailu.aat.gpx.new_parser.NewXmlParser;
 import ch.bailu.aat.services.background.ThreadControl;
 import ch.bailu.util_java.foc.Foc;
 import ch.bailu.util_java.parser.OnParsedInterface;
@@ -19,16 +22,16 @@ public class GpxListReader {
     private final OnParsed track;
     private final OnParsed route;
 
-    private final XmlParser parser;
+    private final AbsXmlParser parser;
 
 
-    public GpxListReader(Foc in, AutoPause pause) throws IOException, SecurityException{
+    public GpxListReader(Foc in, AutoPause pause) throws IOException, SecurityException, XmlPullParserException {
         this(ThreadControl.KEEP_ON, in, pause);
     }
 
 
     public GpxListReader (ThreadControl c, Foc in, AutoPause pause)
-            throws IOException, SecurityException {
+            throws IOException, SecurityException, XmlPullParserException {
 
         track = new OnParsed(
                 GpxType.TRACK,
@@ -51,7 +54,7 @@ public class GpxListReader {
 
         threadControl=c;
 
-        parser = new XmlParser(in);
+        parser = new NewXmlParser(in);
         parser.setOnRouteParsed(route);
         parser.setOnTrackParsed(track);
         parser.setOnWayParsed(way);

@@ -2,6 +2,8 @@ package ch.bailu.aat.services.tracker;
 
 import android.content.Context;
 
+import org.xmlpull.v1.XmlPullParserException;
+
 import java.io.IOException;
 
 import ch.bailu.aat.R;
@@ -16,7 +18,7 @@ import ch.bailu.util_java.foc.Foc;
 
 public class TrackCrashRestorer{
     
-    public TrackCrashRestorer (Context context, int presetIndex) throws IOException {
+    public TrackCrashRestorer (Context context, int presetIndex) throws IOException, XmlPullParserException {
         
         Foc source = AppDirectory.getLogFile(context);
 
@@ -49,7 +51,7 @@ public class TrackCrashRestorer{
 
 
     
-    private GpxList readFile(Foc remainingLogFile) throws IOException {
+    private GpxList readFile(Foc remainingLogFile) throws IOException, XmlPullParserException {
         GpxListReader reader = new GpxListReader(remainingLogFile, AutoPause.NULL);
         return reader.getGpxList();
     }

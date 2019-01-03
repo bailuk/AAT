@@ -2,6 +2,8 @@ package ch.bailu.aat.services.tracker;
 
 import android.content.Context;
 
+import org.xmlpull.v1.XmlPullParserException;
+
 import java.io.IOException;
 
 import ch.bailu.aat.gpx.AltitudeDelta;
@@ -32,7 +34,7 @@ public class TrackLogger extends Logger {
     final private Context context;
 
 
-    public TrackLogger(Context c, int preset) throws IOException, SecurityException {
+    public TrackLogger(Context c, int preset) throws IOException, SecurityException, XmlPullParserException {
         context=c;
         presetIndex=preset;
 

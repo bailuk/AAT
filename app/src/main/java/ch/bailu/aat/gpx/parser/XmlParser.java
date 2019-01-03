@@ -13,7 +13,7 @@ import ch.bailu.aat.gpx.parser.state.StateXml;
 import ch.bailu.util_java.foc.Foc;
 import ch.bailu.util_java.parser.OnParsedInterface;
 
-public class XmlParser implements Closeable, GpxPointInterface {
+public class XmlParser extends AbsXmlParser {
 
 
     private final Scanner scanner;

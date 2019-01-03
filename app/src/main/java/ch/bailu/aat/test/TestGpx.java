@@ -2,6 +2,8 @@ package ch.bailu.aat.test;
 
 import android.content.Context;
 
+import org.xmlpull.v1.XmlPullParserException;
+
 import java.io.IOException;
 
 import ch.bailu.aat.gpx.AutoPause;
@@ -23,7 +25,7 @@ public class TestGpx extends UnitTest {
 
 
     @Override
-    public void test() throws IOException, AssertionError {
+    public void test() throws IOException, AssertionError, XmlPullParserException {
         Foc testFile = getTestFile();
         
         testFile(testFile, testFile);
@@ -45,7 +47,7 @@ public class TestGpx extends UnitTest {
 
 
 
-    public void testFile(Foc fileA, Foc fileB) throws IOException, AssertionError {
+    public void testFile(Foc fileA, Foc fileB) throws IOException, AssertionError, XmlPullParserException {
             GpxList listA= new GpxListReader(fileA, AutoPause.NULL).getGpxList();
             GpxList listB=new GpxListReader(fileB, AutoPause.NULL).getGpxList();
             

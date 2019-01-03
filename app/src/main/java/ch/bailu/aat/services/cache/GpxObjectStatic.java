@@ -2,6 +2,8 @@ package ch.bailu.aat.services.cache;
 
 import android.util.SparseArray;
 
+import org.xmlpull.v1.XmlPullParserException;
+
 import java.io.IOException;
 
 import ch.bailu.aat.coordinates.SrtmCoordinates;
@@ -242,7 +244,7 @@ public class GpxObjectStatic extends GpxObject implements ElevationUpdaterClient
         }
 
 
-        private long load(ServiceContext sc, GpxObjectStatic handle) throws IOException {
+        private long load(ServiceContext sc, GpxObjectStatic handle) throws IOException, XmlPullParserException {
             long size = 0;
 
             GpxListReader reader =
