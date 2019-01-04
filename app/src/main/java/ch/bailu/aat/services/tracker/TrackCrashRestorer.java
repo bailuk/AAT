@@ -9,7 +9,7 @@ import java.io.IOException;
 import ch.bailu.aat.R;
 import ch.bailu.aat.gpx.AutoPause;
 import ch.bailu.aat.gpx.GpxList;
-import ch.bailu.aat.gpx.parser.GpxListReader;
+import ch.bailu.aat.gpx.xml_parser.GpxListReader;
 import ch.bailu.aat.gpx.writer.GpxListWriter;
 import ch.bailu.aat.util.fs.AppDirectory;
 import ch.bailu.aat.util.ui.AppLog;
