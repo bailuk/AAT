@@ -17,6 +17,9 @@ public class GpxParser  extends TagParser {
     private TagParser rte = new RteParser();
     private TagParser wpt = new WptParser();
 
+    // for non standard GPX files
+    private TagParser seg = new SegParser();
+
 
     public GpxParser() {
         super(GpxConstants.QNAME_GPX);
@@ -40,7 +43,8 @@ public class GpxParser  extends TagParser {
                 metadata.parse(parser, scanner) ||
                 trk.parse(parser, scanner) ||
                 rte.parse(parser, scanner) ||
-                wpt.parse(parser, scanner);
+                wpt.parse(parser, scanner) ||
+                seg.parse(parser, scanner);
     }
 
     @Override
