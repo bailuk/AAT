@@ -8,7 +8,7 @@ import java.util.TimeZone;
 import ch.bailu.util_java.io.Stream;
 
 
-public class DateScanner {
+public class DateScanner extends AbsScanner {
     // Localtime to UTC fix
     private static final TimeZone UTC = TimeZone.getTimeZone("UTC");
     private final TimeZone localTimeZone;
@@ -23,17 +23,12 @@ public class DateScanner {
     private long utcDateMillis;
     private final int dateBuffer[] = new int[10];
 
-    private final Stream stream;
-
-
-
-    public DateScanner(Stream s, long l) {
-        stream = s;
+    public DateScanner(long l) {
 
         millis = l;
-        minute = new IntegerScanner(s);
-        hour = new IntegerScanner(s);
-        seconds = new DoubleScanner(s,3);
+        minute = new IntegerScanner();
+        hour = new IntegerScanner();
+        seconds = new DoubleScanner(3);
 
         utcDateMillis = 0;
 
@@ -42,7 +37,8 @@ public class DateScanner {
         utcDate = new GregorianCalendar();
     }
 
-    public void parse() throws IOException {
+    @Override
+    public void scan(Stream stream) throws IOException {
         boolean dateNeedsRescan=false;
 
         stream.read();
@@ -57,7 +53,7 @@ public class DateScanner {
         }
 
         if (dateNeedsRescan) scanDate();
-        if (stream.haveA('T')) scanTime();
+        if (stream.haveA('T')) scanTime(stream);
 
         if (stream.haveA('Z') == false) {
             millis -= localOffsetMillis;
@@ -92,10 +88,10 @@ public class DateScanner {
     }
 
 
-    private void scanTime() throws IOException {
-        hour.scan();
-        minute.scan();
-        seconds.scan();
+    private void scanTime(Stream stream) throws IOException {
+        hour.scan(stream);
+        minute.scan(stream);
+        seconds.scan(stream);
 
 
         millis = seconds.getInt();

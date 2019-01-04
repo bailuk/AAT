@@ -50,15 +50,15 @@ public class StateOsmNode extends StateOsmPoint {
     private void parseNode(Scanner io) throws IOException {
         io.stream.to('=');
         io.stream.to('"');
-        io.id.scan();
+        io.id.scan(io.stream);
 
         io.stream.to('=');
         io.stream.to('"');
-        io.latitude.scan();
+        io.latitude.scan(io.stream);
 
         io.stream.to('=');
         io.stream.to('"');
-        io.longitude.scan();
+        io.longitude.scan(io.stream);
     }
 
 

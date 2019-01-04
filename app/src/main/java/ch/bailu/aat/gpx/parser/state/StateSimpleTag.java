@@ -16,9 +16,9 @@ public class StateSimpleTag extends State {
         while (true) {
             if (io.stream.haveQuotation()) {
                 if (key.equals("lat")) {
-                    io.latitude.scan();
+                    io.latitude.scan(io.stream);
                 } else if (key.equals("lon")) {
-                    io.longitude.scan();
+                    io.longitude.scan(io.stream);
                 } else {
                     parseQuotedString(io);
                     final String value = io.builder.toString();

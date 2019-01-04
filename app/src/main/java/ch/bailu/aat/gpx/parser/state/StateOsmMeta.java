@@ -10,7 +10,7 @@ public class StateOsmMeta extends State {
     @Override
     public void parse(Scanner io) throws IOException {
         io.stream.to('"');
-        io.dateTime.parse();
+        io.dateTime.scan(io.stream);
     }
 
 }

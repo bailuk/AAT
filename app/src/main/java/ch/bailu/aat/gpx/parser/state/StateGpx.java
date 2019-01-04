@@ -70,7 +70,7 @@ public class StateGpx extends State {
 
     private void parseDateTime(Scanner io) throws IOException {
         io.stream.skip(1);
-        io.dateTime.parse();
+        io.dateTime.scan(io.stream);
     }
 
 
@@ -92,7 +92,7 @@ public class StateGpx extends State {
                 io.stream.skip(2);
                 parser=io.longitude;
             } else if (io.stream.haveA('\"') && parser != null) {
-                parser.scan();
+                parser.scan(io.stream);
             } else if (io.stream.haveA('>') || io.stream.haveEOF()) {
                 break;
             }
@@ -111,7 +111,7 @@ public class StateGpx extends State {
 
     private void parseAltitude(Scanner io) throws IOException {
         io.stream.skip(2);
-        io.altitude.scan();
+        io.altitude.scan(io.stream);
     }
 
     private void parseName(Scanner io) throws IOException {

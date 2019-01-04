@@ -52,7 +52,7 @@ public class StateOsmRelation extends StateOsmPoint {
     
     private void parseId(Scanner io) throws IOException {
         io.stream.to('"');
-        io.id.scan();
+        io.id.scan(io.stream);
         myId=io.id.getInt();
     }
 
@@ -73,7 +73,7 @@ public class StateOsmRelation extends StateOsmPoint {
         io.stream.to('f');
         io.stream.to('=');
         io.stream.to('"');
-        io.id.scan();
+        io.id.scan(io.stream);
         LatLongE6 point = io.nodeMap.get(io.id.getInt());
 
         if (point != null) {

@@ -11,7 +11,7 @@ public abstract class StateOsmPoint extends State {
     public void havePoint(Scanner io) throws IOException {
         
         
-        
+
         
         if (io.tagList.size()>0) {
             Collections.sort(io.tagList);

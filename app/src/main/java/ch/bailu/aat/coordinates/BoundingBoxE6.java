@@ -58,21 +58,21 @@ public class BoundingBoxE6 {
 
     public void add(String bounding) {
         final Stream stream = new Stream(bounding);
-        final DoubleScanner parser = new DoubleScanner(stream,6);
+        final DoubleScanner parser = new DoubleScanner(6);
 
         try {
-            parser.scan();
+            parser.scan(stream);
             final int s=parser.getInt();
 
 
-            parser.scan();
+            parser.scan(stream);
             final int n=parser.getInt();
 
 
-            parser.scan();
+            parser.scan(stream);
             final int w=parser.getInt();
 
-            parser.scan();
+            parser.scan(stream);
             final int e=parser.getInt();
 
             add(n,e,s,w);
