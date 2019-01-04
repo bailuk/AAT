@@ -14,14 +14,14 @@ public class Util {
     public static void skipTag(XmlPullParser parser) throws IOException, XmlPullParserException {
         String tag = parser.getName();
 
-        log(parser);
+        // log(parser);
         while(tag != null) {
 
             int event = parser.next();
 
             if (event == XmlPullParser.END_TAG
                     && Objects.equals(tag, parser.getName())) {
-                log(parser);
+                // log(parser);
                 return;
             }
         }
@@ -34,6 +34,8 @@ public class Util {
             scanner.wayParsed.onHavePoint();
         }
     }
+
+    /*
     public static void log(XmlPullParser parser) throws XmlPullParserException {
         String event = "unknown";
 
@@ -48,5 +50,5 @@ public class Util {
                         " N: " + parser.getName() +
                         " T: " + parser.getText() +
                         " A: " + parser.getAttributeCount());
-    }
+    }*/
 }

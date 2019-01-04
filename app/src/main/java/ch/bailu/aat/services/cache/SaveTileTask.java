@@ -57,7 +57,7 @@ public  class SaveTileTask extends FileTask {
                 size = self.getSize();
 
             } catch (Exception e) {
-                AppLog.d(this, e.toString());
+                AppLog.w(this, e);
 
 
             } finally {

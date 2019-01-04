@@ -74,6 +74,7 @@ public class LazyUris {
         return (getParentId() != getDocumentId());
     }
 
+    /*
     public void log() {
 
         AppLog.d(this, "Document: " + getDocument());
@@ -83,4 +84,5 @@ public class LazyUris {
         AppLog.d(this, "DocumentId: " + getDocumentId());
 
     }
+    */
 }

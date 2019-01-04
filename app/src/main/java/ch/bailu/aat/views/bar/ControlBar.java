@@ -100,7 +100,7 @@ public class ControlBar extends LinearLayout {
 
     @Override
     public void addView(View v) {
-        AppLog.d(this, "Wrong call! use \'addLayer(View)\'");
+        AppLog.w(this, "Wrong call! use \'add(View)\'");
         canvas.addView(v, controlSize, controlSize);
     }
 

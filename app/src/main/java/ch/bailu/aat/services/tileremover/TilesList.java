@@ -33,9 +33,12 @@ public class TilesList {
     }
 
     public void add(TileFile file) {
+        files.add(file);
+
+        /*
         if (!files.add(file)) {
             AppLog.d(this, file.getSource() +"/"+ file.toString());
-        }
+        }*/
         if (files.size()>= FILES_LIMIT) {
             files.pollLast();
         }
@@ -55,7 +58,9 @@ public class TilesList {
         return files.iterator();
     }
 
+    /*
     public void log() {
         AppLog.d(this, "Files: " + files.size());
     }
+    */
 }

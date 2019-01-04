@@ -76,7 +76,7 @@ public class DownloadTask extends BackgroundTask implements ContextWrapperInterf
 
 
     protected void logError(Exception e) {
-        AppLog.d(this, "ERROR: " + e.toString());
+        AppLog.w(this, e.toString());
     }
 
 

@@ -57,7 +57,6 @@ public class StateScan implements State, Runnable {
         if(keepUp()) {
             state.broadcast(AppBroadcaster.TILE_REMOVER_SCAN);
         }
-        state.list.log();
         state.setFromClass(nextState);
     }
 

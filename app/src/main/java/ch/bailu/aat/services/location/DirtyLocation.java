@@ -52,12 +52,13 @@ public class DirtyLocation extends LocationStackChainedItem {
         AppBroadcaster.broadcast(storage.getContext(), AppBroadcaster.LOCATION_CHANGED);
     }
 
-
+/*
     private void log(LocationInformation location) {
         AppLog.d(this, location.getFile().getName()
                 + ": "
                 + TIME_FORMAT.format(location.getTimeStamp()));
     }
+*/
 
     @Override
     public void passState(int s) {

@@ -18,7 +18,7 @@ public class Dem3Lock {
 
 
     public boolean isLocked() {
-        if (locks < 0) AppLog.d(this, "ERROR: negative lock: " + locks);
+        if (locks < 0) AppLog.w(this, "Negative lock!!: " + locks);
         return locks>0;
     }
 }

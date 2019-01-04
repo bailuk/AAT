@@ -127,7 +127,6 @@ public abstract class IteratorSource extends ContentSource implements OnCursorCh
 
         @Override
         public void onPause() {
-            AppLog.d(this, "unregister");
             context.unregisterReceiver(onChangedInCache);
 
             handle.free();
@@ -138,7 +137,6 @@ public abstract class IteratorSource extends ContentSource implements OnCursorCh
 
         @Override
         public void onResume() {
-            AppLog.d(this, "register");
             AppBroadcaster.register(context, onChangedInCache, AppBroadcaster.FILE_CHANGED_INCACHE);
             super.onResume();
         }
