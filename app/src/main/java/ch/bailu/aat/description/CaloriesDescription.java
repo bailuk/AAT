@@ -41,6 +41,7 @@ public class CaloriesDescription extends LongDescription{
         
         float hours = ((float)track.getTimeDelta()) / (1000f * 60f * 60f);
         float met = new SolidMET(getContext(), preset).getMETValue();
+        // TODO : add userfeedback about wrong calculation here ?
         float weight = new SolidWeight(getContext()).getValue();
         float kcal = hours*met*weight;
         

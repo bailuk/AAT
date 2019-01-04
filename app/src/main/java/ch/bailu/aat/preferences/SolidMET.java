@@ -36,7 +36,8 @@ public class SolidMET extends SolidString {
     public float getMETValue() {
         String val = getValueAsString();
 
-        final int from = 0; int to = val.indexOf(' ');
+        final int from = 0;
+        int to = val.indexOf(' ');
 
         float r = 0f;
 
@@ -46,11 +47,15 @@ public class SolidMET extends SolidString {
                 String met = val.substring(from, to);
                 r = Float.valueOf(met);
             } catch (NumberFormatException e) {
+                // TODO : userfeedback missing
                 r = 0f;
             }
         }
 
-        if (r > 20f || r < 0f) r = 0f;
+        if (r > 20f || r < 0f) {
+            // TODO : userfeedback missing, validation should be moved to MET preferences
+            r = 0f;
+        }
         return r;
     }
 

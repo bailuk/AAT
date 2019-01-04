@@ -260,4 +260,5 @@
     <!-- Errors -->
     <string name ="error_integer">Falsche Eingabe, es sind nur Zahlen erlaubt.\n"%s"</string>
     <string name ="error_integer_positive">Falsche Eingabe, es sind nur positive Zahlen erlaubt.\n"%s"</string>
+    <string name ="error_long">Falsche Eingabe, es sind nur Zahlen erlaubt.\n"%s"</string>
 </resources>
