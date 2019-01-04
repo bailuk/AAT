@@ -22,6 +22,7 @@
         <!-- Dialog -->
         <!-- Description -->
         <!-- ToolTip -->
+        <!-- Errors -->
 
 
     <!-- Static -->
@@ -307,4 +308,8 @@
     <string name ="tt_menu_file">Display file operation menu.</string>
 
     <string name ="tt_p_preset_slots">Number of directories and presets you want to use to organize tracks.</string>
+
+    <!-- Errors -->
+    <string name="error_integer">Wrong input, only integers are allowed.\n\"%s\"</string>
+
 </resources>

@@ -256,4 +256,7 @@
     <string name ="tt_cockpit_b">Aufgeteilt</string>
 
     <string name ="tt_p_preset_slots">Anzahl Verzeichnisse und Voreinstellungen um Tracks zu organisieren.</string>
+
+    <!-- Errors -->
+    <string name ="error_integer">Falsche Eingabe, es sind nur Zahlen erlaubt.\n"%s"</string>
 </resources>
