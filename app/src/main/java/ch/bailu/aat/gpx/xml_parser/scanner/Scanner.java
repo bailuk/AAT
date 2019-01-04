@@ -18,8 +18,7 @@ public class Scanner {
     public OnParsedInterface
             wayParsed	  = OnParsedInterface.NULL,
             routeParsed	  = OnParsedInterface.NULL,
-            trackParsed	  = OnParsedInterface.NULL,
-            currentParsed = OnParsedInterface.NULL;
+            trackParsed	  = OnParsedInterface.NULL;
 
     public final SparseArray<LatLongE6> nodeMap = new SparseArray<>(50);
     public final ArrayList<GpxAttributesStatic.Tag> tagList = new ArrayList<>();

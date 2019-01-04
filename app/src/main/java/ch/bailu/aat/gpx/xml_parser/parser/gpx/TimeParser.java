@@ -5,13 +5,14 @@ import org.xmlpull.v1.XmlPullParserException;
 
 import java.io.IOException;
 
+import ch.bailu.aat.gpx.GpxConstants;
 import ch.bailu.aat.gpx.xml_parser.parser.TagParser;
 import ch.bailu.aat.gpx.xml_parser.scanner.Scanner;
 
 public class TimeParser extends TagParser {
 
     public TimeParser() {
-        super("time");
+        super(GpxConstants.QNAME_TIME);
     }
 
     @Override

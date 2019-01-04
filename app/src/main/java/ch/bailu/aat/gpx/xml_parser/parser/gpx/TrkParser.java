@@ -5,19 +5,17 @@ import org.xmlpull.v1.XmlPullParserException;
 
 import java.io.IOException;
 
+import ch.bailu.aat.gpx.GpxConstants;
 import ch.bailu.aat.gpx.xml_parser.parser.TagParser;
 import ch.bailu.aat.gpx.xml_parser.scanner.Scanner;
 
 public class TrkParser extends TagParser {
-    private final SegParser seg;
-    private final PntParser pnt;
+    private final TagParser seg = new SegParser();
+    private final TagParser pnt = new TrkptParser();
 
 
-    public TrkParser(String prefix) {
-        super(prefix);
-
-        seg = new SegParser(prefix);
-        pnt = new PntParser(prefix);
+    public TrkParser() {
+        super(GpxConstants.QNAME_TRACK);
     }
 
 
@@ -27,15 +25,6 @@ public class TrkParser extends TagParser {
 
     @Override
     protected void parseAttributes(XmlPullParser parser, Scanner scanner) throws IOException, XmlPullParserException {
-        char c = parser.getName().charAt(0);
-
-        if (c=='t') {
-            scanner.currentParsed=scanner.trackParsed;
-        } else if (c=='w') {
-            scanner.currentParsed=scanner.wayParsed;
-        } else {
-            scanner.currentParsed=scanner.routeParsed;
-        }
     }
 
     @Override

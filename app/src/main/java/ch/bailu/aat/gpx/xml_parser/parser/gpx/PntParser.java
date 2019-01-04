@@ -5,17 +5,18 @@ import org.xmlpull.v1.XmlPullParserException;
 
 import java.io.IOException;
 
+import ch.bailu.aat.gpx.GpxConstants;
 import ch.bailu.aat.gpx.xml_parser.parser.Attr;
 import ch.bailu.aat.gpx.xml_parser.parser.TagParser;
 import ch.bailu.aat.gpx.xml_parser.scanner.Scanner;
 import ch.bailu.util_java.util.Objects;
 
-public class PntParser extends TagParser {
+public abstract class PntParser extends TagParser {
     private final TimeParser time = new TimeParser();
     private final EleParser ele = new EleParser();
 
-    public PntParser(String prefix) {
-        super(prefix +"pt");
+    public PntParser(String t) {
+        super(t);
     }
 
     @Override
@@ -28,10 +29,10 @@ public class PntParser extends TagParser {
         new Attr(parser) {
             @Override
             public void attribute(String name, String value) throws IOException {
-                if (Objects.equals(name, "lat")) {
+                if (Objects.equals(name, GpxConstants.QNAME_LATITUDE)) {
                     scanner.latitude.scan(value);
 
-                } else if (Objects.equals(name, "lon")) {
+                } else if (Objects.equals(name, GpxConstants.QNAME_LONGITUDE)) {
                     scanner.longitude.scan(value);
                 }
 
@@ -45,8 +46,4 @@ public class PntParser extends TagParser {
         return ele.parse(parser, scanner) || time.parse(parser, scanner);
     }
 
-    @Override
-    public void parsed(XmlPullParser parser, Scanner scanner) throws IOException {
-        scanner.currentParsed.onHavePoint();
-    }
 }

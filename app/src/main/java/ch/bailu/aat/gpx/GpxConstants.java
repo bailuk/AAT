@@ -1,4 +1,4 @@
-package ch.bailu.aat.gpx.writer;
+package ch.bailu.aat.gpx;
 
 public class GpxConstants {
     public static final String QNAME_GPX = "gpx";

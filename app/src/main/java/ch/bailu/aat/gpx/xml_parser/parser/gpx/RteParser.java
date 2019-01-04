@@ -9,11 +9,11 @@ import ch.bailu.aat.gpx.GpxConstants;
 import ch.bailu.aat.gpx.xml_parser.parser.TagParser;
 import ch.bailu.aat.gpx.xml_parser.scanner.Scanner;
 
-public class SegParser extends TagParser {
-    private final TagParser trkpt = new TrkptParser();
+public class RteParser extends TagParser {
+    private final TagParser pnt = new RteptParser();
 
-    public SegParser() {
-        super(GpxConstants.QNAME_TRACK_SEGMENT);
+    public RteParser() {
+        super(GpxConstants.QNAME_ROUTE);
     }
 
     @Override
@@ -26,15 +26,13 @@ public class SegParser extends TagParser {
 
     }
 
-
     @Override
-    public boolean parseTags(XmlPullParser parser, Scanner scanner) throws IOException, XmlPullParserException {
-        return trkpt.parse(parser, scanner);
-
+    protected boolean parseTags(XmlPullParser parser, Scanner scanner) throws IOException, XmlPullParserException {
+        return pnt.parse(parser, scanner);
     }
 
     @Override
-    public void parsed(XmlPullParser parser, Scanner scanner) throws IOException {
-        scanner.trackParsed.onHaveSegment();
+    protected void parsed(XmlPullParser parser, Scanner scanner) throws IOException {
+
     }
 }
