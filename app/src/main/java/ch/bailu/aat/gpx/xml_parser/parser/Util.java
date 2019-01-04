@@ -5,6 +5,7 @@ import org.xmlpull.v1.XmlPullParserException;
 
 import java.io.IOException;
 
+import ch.bailu.aat.gpx.xml_parser.scanner.Scanner;
 import ch.bailu.aat.util.ui.AppLog;
 import ch.bailu.util_java.util.Objects;
 
@@ -26,6 +27,13 @@ public class Util {
         }
     }
 
+
+    public static void wayPointParsed(Scanner scanner) throws IOException {
+        if (scanner.tags.notEmpty()) {
+            scanner.tags.sort();
+            scanner.wayParsed.onHavePoint();
+        }
+    }
     public static void log(XmlPullParser parser) throws XmlPullParserException {
         String event = "unknown";
 

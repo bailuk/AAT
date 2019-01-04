@@ -6,6 +6,7 @@ import org.xmlpull.v1.XmlPullParserException;
 import java.io.IOException;
 
 import ch.bailu.aat.gpx.GpxAttributesStatic;
+import ch.bailu.aat.gpx.OsmConstants;
 import ch.bailu.aat.gpx.xml_parser.parser.Attr;
 import ch.bailu.aat.gpx.xml_parser.parser.TagParser;
 import ch.bailu.aat.gpx.xml_parser.scanner.Scanner;
@@ -13,7 +14,7 @@ import ch.bailu.util_java.util.Objects;
 
 public class OsmTagParser extends TagParser {
     public OsmTagParser() {
-        super("tag");
+        super(OsmConstants.T_TAG);
     }
 
     @Override
@@ -29,14 +30,14 @@ public class OsmTagParser extends TagParser {
         new Attr(parser) {
             @Override
             public void attribute(String name, String value) throws IOException {
-                if (Objects.equals(name, "k")) {
+                if (Objects.equals(name, OsmConstants.A_KEY)) {
                     k[0] =value;
-                } else if (Objects.equals(name, "v")) {
+                } else if (Objects.equals(name, OsmConstants.A_VALUE)) {
                     v[0] =value;
                 }
             }
         };
-        scanner.tagList.add(new GpxAttributesStatic.Tag(k[0], v[0]));
+        scanner.tags.add(k[0], v[0]);
     }
 
 

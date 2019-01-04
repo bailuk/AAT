@@ -8,10 +8,11 @@ import java.io.IOException;
 import ch.bailu.aat.coordinates.LatLongE6;
 import ch.bailu.aat.gpx.xml_parser.parser.Attr;
 import ch.bailu.aat.gpx.xml_parser.parser.TagParser;
+import ch.bailu.aat.gpx.xml_parser.parser.Util;
 import ch.bailu.aat.gpx.xml_parser.scanner.Scanner;
 import ch.bailu.util_java.util.Objects;
 
-public class NodeParser extends AbsParser {
+public class NodeParser extends TagParser {
     private final TagParser tag = new OsmTagParser();
 
     public NodeParser() {
@@ -25,7 +26,7 @@ public class NodeParser extends AbsParser {
 
     @Override
     protected void parseAttributes(XmlPullParser parser, Scanner scanner) throws IOException, XmlPullParserException {
-        scanner.tagList.clear();
+        scanner.tags.clear();
 
 
         new Attr(parser) {
@@ -53,10 +54,10 @@ public class NodeParser extends AbsParser {
 
     @Override
     protected void parsed(XmlPullParser parser, Scanner scanner) throws IOException {
-        scanner.nodeMap.put(scanner.id.getInt(),
+        scanner.referencer.put(scanner.id.getInt(),
                 new LatLongE6(scanner.latitude.getInt(), scanner.longitude.getInt()));
 
-        havePoint(scanner);
+        Util.wayPointParsed(scanner);
 
     }
 }

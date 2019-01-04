@@ -9,6 +9,7 @@ import java.util.Collections;
 import ch.bailu.aat.gpx.GpxAttributesStatic;
 import ch.bailu.aat.gpx.xml_parser.parser.Attr;
 import ch.bailu.aat.gpx.xml_parser.parser.TagParser;
+import ch.bailu.aat.gpx.xml_parser.parser.Util;
 import ch.bailu.aat.gpx.xml_parser.scanner.Scanner;
 import ch.bailu.util_java.util.Objects;
 
@@ -24,7 +25,7 @@ public class PlaceParser extends TagParser {
 
     @Override
     protected void parseAttributes(XmlPullParser parser, Scanner scanner) throws IOException, XmlPullParserException {
-        scanner.tagList.clear();
+        scanner.tags.clear();
 
         new Attr(parser) {
             @Override
@@ -36,7 +37,7 @@ public class PlaceParser extends TagParser {
                     scanner.longitude.scan(value);
 
                 } else {
-                    scanner.tagList.add(new GpxAttributesStatic.Tag(name, value));
+                    scanner.tags.add(name, value);
 
                 }
             }
@@ -50,9 +51,6 @@ public class PlaceParser extends TagParser {
 
     @Override
     protected void parsed(XmlPullParser parser, Scanner scanner) throws IOException {
-        if (scanner.tagList.size()>0) {
-            Collections.sort(scanner.tagList);
-            scanner.wayParsed.onHavePoint();
-        }
+        Util.wayPointParsed(scanner);
     }
 }

@@ -84,7 +84,7 @@ public class XmlParser extends AbsXmlParser {
 
     @Override
     public GpxAttributes getAttributes() {
-        return new GpxAttributesStatic(scanner.tagList.toArray(new GpxAttributesStatic.Tag[]{}));
+        return scanner.tags.get();
     }
 
     @Override

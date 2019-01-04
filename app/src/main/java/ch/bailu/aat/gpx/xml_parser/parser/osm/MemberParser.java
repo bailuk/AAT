@@ -13,18 +13,11 @@ import ch.bailu.util_java.util.Objects;
 
 public class MemberParser extends TagParser {
 
-
-    private final WayParser.Dereferencer dereferencer;
-
-
-    public MemberParser(WayParser.Dereferencer d) {
-        super("member");
-        dereferencer = d;
+    public MemberParser() {
+        this("member");
     }
-
-    public MemberParser(String tag, WayParser.Dereferencer d) {
+    public MemberParser(String tag) {
         super(tag);
-        dereferencer = d;
     }
 
 
@@ -35,24 +28,23 @@ public class MemberParser extends TagParser {
 
     @Override
     protected void parseAttributes(XmlPullParser parser, Scanner scanner) throws IOException, XmlPullParserException {
-        scanner.tagList.clear();
-
         new Attr(parser) {
             @Override
             public void attribute(String name, String value) throws IOException {
                 if (Objects.equals(name, "ref")) {
                     scanner.id.scan(value);
 
-                    LatLongE6 point = scanner.nodeMap.get(scanner.id.getInt());
+                    LatLongE6 point = scanner.referencer.get(scanner.id.getInt());
 
                     if (point != null) {
-                        dereferencer.bounding.add(point);
-                        dereferencer.dereferenced++;
+                        scanner.referencer.bounding.add(point);
+                        scanner.referencer.resolved++;
                     }
                 }
             }
         };
     }
+
 
     @Override
     protected boolean parseTags(XmlPullParser parser, Scanner scanner) throws IOException, XmlPullParserException {
