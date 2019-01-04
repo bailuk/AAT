@@ -311,5 +311,6 @@
 
     <!-- Errors -->
     <string name="error_integer">Wrong input, only integers are allowed.\n\"%s\"</string>
+    <string name ="error_integer_positive">Wrong input, only positive integers are allowed.\n"%s"</string>
 
 </resources>
