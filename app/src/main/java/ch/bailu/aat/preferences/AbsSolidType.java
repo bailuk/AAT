@@ -3,6 +3,7 @@ package ch.bailu.aat.preferences;
 import android.content.Context;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 
+import ch.bailu.aat.exception.ValidationException;
 import ch.bailu.util_java.util.Objects;
 
 
@@ -18,7 +19,7 @@ public abstract class AbsSolidType implements SolidTypeInterface {
         return NULL_LABEL;
     }
 
-    public abstract void setValueFromString(String s);
+    public abstract void setValueFromString(String s) throws ValidationException;
 
     @Override
     public boolean hasKey(String s) {
@@ -68,6 +69,8 @@ public abstract class AbsSolidType implements SolidTypeInterface {
         return s;
     }
 
+
+    public boolean validate(String s) { return true; }
 
     public String getString(int res) {
         return getContext().getString(res);

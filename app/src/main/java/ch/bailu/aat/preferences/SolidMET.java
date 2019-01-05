@@ -31,8 +31,6 @@ public class SolidMET extends SolidString {
     }
 
 
-
-
     public float getMETValue() {
         String val = getValueAsString();
 

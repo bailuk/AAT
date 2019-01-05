@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 
 import java.util.ArrayList;
 
+import ch.bailu.aat.exception.ValidationException;
 import ch.bailu.aat.preferences.AbsSolidType;
 import ch.bailu.aat.preferences.SolidString;
 
@@ -45,7 +46,12 @@ public abstract class AbsSolidStringDialog extends AbsSolidDialog
     @Override
     public void onClick(DialogInterface dialog, int i) {
         if (i < baseSelectionSize) {
-            solid.setValueFromString(selection[i]);
+            try {
+                solid.setValueFromString(selection[i]);
+            } catch (ValidationException e) {
+                // TODO : no idea what happens here
+
+            }
         } else {
             onExtraItemClick(i-baseSelectionSize);
         }
