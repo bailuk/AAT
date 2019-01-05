@@ -261,4 +261,5 @@
     <string name ="error_integer">Falsche Eingabe, es sind nur Zahlen erlaubt.\n"%s"</string>
     <string name ="error_integer_positive">Zahl muss zwischen 1 und 999 sein."</string>
     <string name ="error_long">Falsche Eingabe, es sind nur Zahlen erlaubt.\n"%s"</string>
+    <string name ="error_met">"Die erste Zahl muss zwischen 0.0 und 20.0 sein, gefolgt von einem Leerzeichen."</string>
 </resources>

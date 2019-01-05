@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import ch.bailu.aat.exception.ValidationException;
 import ch.bailu.aat.preferences.AbsSolidType;
 import ch.bailu.aat.preferences.SolidString;
+import ch.bailu.aat.util.ui.AppLog;
 
 public abstract class AbsSolidStringDialog extends AbsSolidDialog
         implements  DialogInterface.OnClickListener{

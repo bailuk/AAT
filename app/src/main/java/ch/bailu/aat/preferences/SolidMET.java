@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 import ch.bailu.aat.R;
+import ch.bailu.aat.exception.ValidationException;
 
 public class SolidMET extends SolidString {
     private final int preset;
@@ -57,6 +58,17 @@ public class SolidMET extends SolidString {
         return r;
     }
 
+    @Override
+    public void setValueFromString(String s) throws ValidationException {
+        s = s.trim();
+
+        if (! validate(s)) {
+            throw new ValidationException(getString(R.string.error_met));
+        } else {
+            setValue(s);
+        }
+    }
+
 
     @Override
     public ArrayList<String> buildSelection(ArrayList<String> list) {
@@ -66,5 +78,11 @@ public class SolidMET extends SolidString {
         Collections.addAll(list, array);
 
         return list;
+    }
+
+    @Override
+    public boolean validate(String s) {
+        // entering 0.0 is still possible
+        return s.split(" ")[0].matches("1?[0-9].[0-9]|20.0");
     }
 }
