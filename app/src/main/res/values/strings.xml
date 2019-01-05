@@ -35,6 +35,8 @@
     <string name="none">None</string>
     <string name="enter">Enter…</string>
     <string name="pick">Pick (SAF)…</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
 
 
     <!-- GPS / Tracker-->

@@ -10,6 +10,7 @@ import android.os.Looper;
 import java.io.Closeable;
 
 import ch.bailu.aat.BuildConfig;
+import ch.bailu.aat.R;
 import ch.bailu.aat.util.AppBroadcaster;
 
 
@@ -57,7 +58,7 @@ public class AppLog implements Closeable {
         public LogError(Context c) {
             super(c, LOG_E);
             alertbox = new AlertDialog.Builder(c);
-            alertbox.setPositiveButton("OK", (arg0, arg1) -> {});
+            alertbox.setPositiveButton(c.getString(R.string.ok), (arg0, arg1) -> {});
         }
 
         

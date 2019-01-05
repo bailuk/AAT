@@ -20,9 +20,9 @@ public class SolidStringInputDialog extends AbsSolidDialog {
         final Context context = s.getContext();
         final AlertDialog.Builder builder = createDefaultDialog(s);
 
-        builder.setPositiveButton("OK", (dialogInterface, i) -> {
+        builder.setPositiveButton(context.getString(R.string.ok), (dialogInterface, i) -> {
         });
-        builder.setNegativeButton("Cancel", (dialogInterface, i) -> {
+        builder.setNegativeButton(context.getString(R.string.cancel), (dialogInterface, i) -> {
         });
 
         AlertDialog dialog = builder.create();

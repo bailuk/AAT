@@ -8,6 +8,8 @@
     <string name="none">Kein</string>
     <string name="enter">Eingabe…</string>
     <string name="pick">Auswählen (SAF)…</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Abbrechen</string>
 
 
     <!-- GPS / Tracker-->
