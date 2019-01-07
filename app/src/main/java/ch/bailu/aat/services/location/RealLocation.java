@@ -25,7 +25,7 @@ public class RealLocation extends LocationStackChainedItem
 
     private int state = StateID.WAIT;
 
-    private class NoServiceException extends Exception {
+    public static class NoServiceException extends Exception {
         private static final long serialVersionUID = 5318663897402154115L;
     }
 
@@ -83,8 +83,11 @@ public class RealLocation extends LocationStackChainedItem
         }
     }
 
-
     private LocationManager getLocationManager() throws NoServiceException {
+        return getLocationManager(context);
+    }
+
+    public static LocationManager getLocationManager(Context context) throws NoServiceException {
         if (AppPermission.checkLocation(context)) {
             final Object lm = context.getSystemService(Context.LOCATION_SERVICE);
 
@@ -95,6 +98,16 @@ public class RealLocation extends LocationStackChainedItem
         throw new NoServiceException();
     }
 
+
+    public static List<String> getAllLocationProvidersOrNull(Context c) {
+        try {
+            LocationManager lm = RealLocation.getLocationManager(c);
+            return lm.getAllProviders();
+
+        } catch (RealLocation.NoServiceException e) {
+            return null;
+        }
+    }
 
     private void requestLocationUpdates(LocationManager lm, long interval)
             throws SecurityException, IllegalArgumentException {
