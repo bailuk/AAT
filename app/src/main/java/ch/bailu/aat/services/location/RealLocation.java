@@ -20,10 +20,16 @@ import ch.bailu.util_java.util.Objects;
 public class RealLocation extends LocationStackChainedItem
         implements LocationListener, ContextWrapperInterface{
 
+
+    public final static int INITIAL_STATE = StateID.WAIT;
+
+
+    private int state = INITIAL_STATE;
+
     private final String provider;
     private final Context context;
 
-    private int state = StateID.WAIT;
+
 
     public static class NoServiceException extends Exception {
         private static final long serialVersionUID = 5318663897402154115L;

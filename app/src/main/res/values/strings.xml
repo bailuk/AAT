@@ -105,7 +105,6 @@
     <string name="p_location_provider">Location provider</string>
     <string name="p_location_gps">System GPS</string>
     <string name="p_location_mock">Mock location</string>
-    <string name="p_location_old">Old location</string>
     <string name="p_directory_data">Data directory</string>
     <string name="p_cache_size">Internal cache size</string>
     <string name="p_fix_gps">Fix GPS time</string>

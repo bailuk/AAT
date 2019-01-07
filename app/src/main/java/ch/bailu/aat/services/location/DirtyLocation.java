@@ -2,26 +2,18 @@ package ch.bailu.aat.services.location;
 
 import android.content.Context;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-
-import ch.bailu.aat.R;
 import ch.bailu.aat.gpx.GpxInformation;
-import ch.bailu.aat.gpx.StateID;
 import ch.bailu.aat.map.layer.MapPositionLayer;
 import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat.util.AppBroadcaster;
-import ch.bailu.aat.util.ui.AppLog;
 import ch.bailu.util_java.foc.Foc;
-import ch.bailu.util_java.foc.FocFile;
+import ch.bailu.util_java.foc.FocName;
 
 public class DirtyLocation extends LocationStackChainedItem {
     private final static String SOLID_KEY="DirtyLocation_";
-    private final static DateFormat TIME_FORMAT =
-            new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
-    
+
     private GpxInformation locationInformation;
-    private int state = StateID.OFF;
+    private int state = RealLocation.INITIAL_STATE;
 
     private final Storage storage;
     
@@ -52,13 +44,6 @@ public class DirtyLocation extends LocationStackChainedItem {
         AppBroadcaster.broadcast(storage.getContext(), AppBroadcaster.LOCATION_CHANGED);
     }
 
-/*
-    private void log(LocationInformation location) {
-        AppLog.d(this, location.getFile().getName()
-                + ": "
-                + TIME_FORMAT.format(location.getTimeStamp()));
-    }
-*/
 
     @Override
     public void passState(int s) {
@@ -78,7 +63,7 @@ public class DirtyLocation extends LocationStackChainedItem {
         private final Foc file;
 
         public OldLocation(Storage storage) {
-            file = new FocFile(storage.getContext().getString(R.string.p_location_old));
+            file = new FocName(OldLocation.class.getSimpleName());
             readPosition(storage);
         }
         
@@ -119,5 +104,17 @@ public class DirtyLocation extends LocationStackChainedItem {
         }
         
     }
+
+
+    /*
+    private final static DateFormat TIME_FORMAT =
+            new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+
+    private void log(LocationInformation location) {
+        AppLog.d(this, location.getFile().getName()
+                + ": "
+                + TIME_FORMAT.format(location.getTimeStamp()));
+    }
+    */
 
 }

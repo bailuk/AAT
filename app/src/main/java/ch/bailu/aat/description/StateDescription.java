@@ -13,7 +13,7 @@ public abstract class StateDescription extends ContentDescription {
 		super(c);
 	}
 
-	private int state= StateID.OFF;
+	private int state = StateID.OFF;
 
     @Override
     public String getLabel() {
