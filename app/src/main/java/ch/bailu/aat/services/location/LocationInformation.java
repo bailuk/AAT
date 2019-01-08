@@ -11,4 +11,6 @@ public abstract class LocationInformation extends GpxInformation {
 
     public abstract boolean isFromGPS();
     public abstract long getCreationTime();
+
+    public abstract void setAltitude(double altitude);
 }

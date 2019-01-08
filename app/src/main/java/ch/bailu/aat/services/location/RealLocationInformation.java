@@ -95,4 +95,9 @@ public class RealLocationInformation extends LocationInformation {
     public long getCreationTime() {
         return getTimeStamp();
     }
+
+    @Override
+    public void setAltitude(double altitude) {
+        location.setAltitude(altitude);
+    }
 }

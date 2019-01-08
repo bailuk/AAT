@@ -62,7 +62,7 @@ public class LocationService extends VirtualService
         missing = new MissingTrigger(lastItem()); 
         itemList.add(missing);
 
-        //itemList.setTarget(new AccelerationFilter(lastItem()));
+        itemList.add(new AltitudeFromBarometer(lastItem(), getContext()));
         itemList.add(new AccuracyFilter(lastItem()));
         itemList.add(new InformationFilter(lastItem()));
 

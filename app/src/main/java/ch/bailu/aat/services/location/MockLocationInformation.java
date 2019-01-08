@@ -80,6 +80,11 @@ public class MockLocationInformation extends LocationInformation {
     }
 
     @Override
+    public void setAltitude(double altitude) {
+
+    }
+
+    @Override
     public float getAccuracy() {
         return 5f;
     }
