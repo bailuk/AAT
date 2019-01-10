@@ -13,6 +13,7 @@ import ch.bailu.aat.preferences.system.SolidDataDirectory;
 import ch.bailu.aat.preferences.system.SolidExternalDirectory;
 import ch.bailu.aat.preferences.SolidFile;
 import ch.bailu.aat.preferences.presets.SolidPreset;
+import ch.bailu.aat.services.bluetooth_le.BluetoothLE;
 import ch.bailu.aat.util.fs.AppDirectory;
 import ch.bailu.aat.util.ui.AppLayout;
 import ch.bailu.aat.util.ui.AppTheme;
@@ -31,6 +32,8 @@ public class MainActivity extends ActivityContext {
 
         createViews();
         createDispatcher();
+
+        new BluetoothLE(this);
     }
 
 
