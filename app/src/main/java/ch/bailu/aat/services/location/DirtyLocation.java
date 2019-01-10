@@ -53,7 +53,7 @@ public class DirtyLocation extends LocationStackChainedItem {
     }
 
     @Override
-    public void preferencesChanged(Context c, int i) {}
+    public void preferencesChanged(Context c, String key, int presetIndex) {}
     
 
     

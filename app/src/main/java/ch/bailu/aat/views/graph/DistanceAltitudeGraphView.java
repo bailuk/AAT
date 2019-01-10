@@ -10,7 +10,7 @@ import ch.bailu.aat.gpx.GpxListWalker;
 import ch.bailu.aat.gpx.GpxPointNode;
 import ch.bailu.aat.gpx.GpxSegmentNode;
 import ch.bailu.aat.map.MapColor;
-import ch.bailu.aat.preferences.SolidUnit;
+import ch.bailu.aat.preferences.general.SolidUnit;
 import ch.bailu.aat.util.ui.AppDensity;
 
 public class DistanceAltitudeGraphView extends AbsGraphView {

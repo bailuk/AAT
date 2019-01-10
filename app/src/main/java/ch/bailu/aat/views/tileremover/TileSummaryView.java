@@ -6,7 +6,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
-import ch.bailu.aat.preferences.SolidTrimIndex;
+import ch.bailu.aat.preferences.map.SolidTrimIndex;
 import ch.bailu.aat.services.tileremover.SourceSummaryInterface;
 
 public class TileSummaryView implements View.OnClickListener {

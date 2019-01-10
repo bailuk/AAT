@@ -10,8 +10,8 @@ import java.util.ArrayList;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.interfaces.GpxPointInterface;
 import ch.bailu.aat.preferences.PresetDependent;
-import ch.bailu.aat.preferences.SolidLocationProvider;
-import ch.bailu.aat.preferences.SolidPreset;
+import ch.bailu.aat.preferences.location.SolidLocationProvider;
+import ch.bailu.aat.preferences.presets.SolidPreset;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.VirtualService;
 
@@ -46,7 +46,7 @@ public class LocationService extends VirtualService
 
     public void setPresetIndex(int i) {
         presetIndex = i;
-        preferencesChanged(getContext(), presetIndex);
+        preferencesChanged(getContext(), SolidPreset.KEY, presetIndex);
     }
 
 
@@ -62,12 +62,16 @@ public class LocationService extends VirtualService
         missing = new MissingTrigger(lastItem()); 
         itemList.add(missing);
 
-        itemList.add(new AltitudeFromBarometer(lastItem(), getContext()));
         itemList.add(new AccuracyFilter(lastItem()));
         itemList.add(new InformationFilter(lastItem()));
 
+
         dirty = new DirtyLocation(lastItem(), getContext());
         itemList.add(dirty);
+
+        itemList.add(new AltitudeFromBarometer(lastItem(), getContext()));
+        itemList.add(new AdjustGpsAltitude(lastItem(), getContext()));
+
     }
 
     private LocationStackItem lastItem() {
@@ -94,9 +98,9 @@ public class LocationService extends VirtualService
 
 
     @Override
-    public void preferencesChanged(Context c, int presetIndex) {
+    public void preferencesChanged(Context c, String key, int presetIndex) {
         for (int i=0; i<itemList.size(); i++) 
-            itemList.get(i).preferencesChanged(c,presetIndex);
+            itemList.get(i).preferencesChanged(c, key, presetIndex);
     }
 
     public GpxInformation getLocationInformation() {
@@ -127,7 +131,7 @@ public class LocationService extends VirtualService
             String key) {
         if (sprovider.hasKey(key)) createLocationProvider();
 
-        preferencesChanged(getContext(), presetIndex);
+        preferencesChanged(getContext(), key, presetIndex);
     }
 
 

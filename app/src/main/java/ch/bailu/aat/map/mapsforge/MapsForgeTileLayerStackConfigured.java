@@ -8,9 +8,9 @@ import ch.bailu.aat.map.tile.source.DoubleSource;
 import ch.bailu.aat.map.tile.source.DownloadSource;
 import ch.bailu.aat.map.tile.source.MapsForgeSource;
 import ch.bailu.aat.map.tile.source.Source;
-import ch.bailu.aat.preferences.SolidEnableTileCache;
-import ch.bailu.aat.preferences.SolidMapTileStack;
-import ch.bailu.aat.preferences.SolidRenderTheme;
+import ch.bailu.aat.preferences.map.SolidEnableTileCache;
+import ch.bailu.aat.preferences.map.SolidMapTileStack;
+import ch.bailu.aat.preferences.map.SolidRenderTheme;
 import ch.bailu.aat.services.ServiceContext;
 
 public abstract class MapsForgeTileLayerStackConfigured extends MapsForgeTileLayerStack {

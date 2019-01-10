@@ -6,7 +6,7 @@ import org.mapsforge.core.model.Point;
 
 import ch.bailu.aat.map.MapContext;
 import ch.bailu.aat.map.layer.MapLayerInterface;
-import ch.bailu.aat.preferences.SolidMapGrid;
+import ch.bailu.aat.preferences.map.SolidMapGrid;
 
 public class GridDynLayer implements MapLayerInterface {
     private MapLayerInterface gridLayer;

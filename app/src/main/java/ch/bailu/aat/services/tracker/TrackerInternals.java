@@ -9,8 +9,8 @@ import java.io.Closeable;
 import java.io.IOException;
 
 import ch.bailu.aat.preferences.SolidAutopause;
-import ch.bailu.aat.preferences.SolidPreset;
-import ch.bailu.aat.preferences.SolidTrackerAutopause;
+import ch.bailu.aat.preferences.presets.SolidPreset;
+import ch.bailu.aat.preferences.presets.SolidTrackerAutopause;
 import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.util.ui.AppLog;

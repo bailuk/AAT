@@ -11,7 +11,7 @@ import ch.bailu.aat.dispatcher.OnContentUpdatedInterface;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.map.MapContext;
-import ch.bailu.aat.preferences.SolidPositionLock;
+import ch.bailu.aat.preferences.map.SolidPositionLock;
 import ch.bailu.aat.preferences.Storage;
 
 public class MapPositionLayer implements MapLayerInterface, OnContentUpdatedInterface {

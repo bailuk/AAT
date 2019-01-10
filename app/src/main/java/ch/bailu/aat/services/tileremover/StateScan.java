@@ -2,7 +2,7 @@ package ch.bailu.aat.services.tileremover;
 
 import java.io.IOException;
 
-import ch.bailu.aat.preferences.SolidTileCacheDirectory;
+import ch.bailu.aat.preferences.map.SolidTileCacheDirectory;
 import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.util.ui.AppLog;
 import ch.bailu.util_java.foc.Foc;

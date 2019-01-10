@@ -20,7 +20,7 @@ import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.map.MapContext;
 import ch.bailu.aat.menus.FileMenu;
 import ch.bailu.aat.preferences.SolidDirectoryQuery;
-import ch.bailu.aat.preferences.SolidOverlayFile;
+import ch.bailu.aat.preferences.map.SolidOverlayFile;
 import ch.bailu.aat.services.directory.Iterator;
 import ch.bailu.aat.util.fs.FileAction;
 import ch.bailu.aat.util.ui.ToolTip;

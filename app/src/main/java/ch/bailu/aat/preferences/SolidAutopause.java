@@ -4,6 +4,7 @@ import android.content.Context;
 
 import ch.bailu.aat.R;
 import ch.bailu.aat.description.FF;
+import ch.bailu.aat.preferences.general.SolidUnit;
 
 public abstract class SolidAutopause extends SolidIndexList {
 

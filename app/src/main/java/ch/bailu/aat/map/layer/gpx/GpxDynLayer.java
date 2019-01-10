@@ -11,7 +11,7 @@ import ch.bailu.aat.gpx.GpxInformationCache;
 import ch.bailu.aat.gpx.interfaces.GpxType;
 import ch.bailu.aat.map.MapContext;
 import ch.bailu.aat.map.layer.MapLayerInterface;
-import ch.bailu.aat.preferences.SolidLegend;
+import ch.bailu.aat.preferences.map.SolidLegend;
 
 public class GpxDynLayer implements MapLayerInterface, OnContentUpdatedInterface {
     private final GpxInformationCache infoCache = new GpxInformationCache();

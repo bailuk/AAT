@@ -7,9 +7,10 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Build;
 
-public class Barometer {
+public class Barometer{
 
     private final Context context;
+
 
     public Barometer(Context c) {
         context = c;
@@ -42,10 +43,30 @@ public class Barometer {
     }
 
 
-    public static float getPressure(SensorEvent event) {
-            if (event.values.length > 0) {
-                return event.values[0];
+    public String getSensorID() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            final SensorManager manager = context.getSystemService(SensorManager.class);
+
+            if (manager instanceof SensorManager) {
+                final Sensor sensor = manager.getDefaultSensor(Sensor.TYPE_PRESSURE);
+
+                if (sensor instanceof  Sensor) {
+                    return sensor.toString();
+                }
             }
-            return 0f;
+        }
+        return null;
+    }
+
+
+    public static float getPressure(SensorEvent event) {
+        if (event.values.length > 0) {
+            return event.values[0];
+        }
+        return 0f;
+    }
+
+    public boolean haveSensor() {
+        return getSensorID() != null;
     }
 }

@@ -6,7 +6,7 @@ import org.mapsforge.core.model.LatLong;
 
 import java.text.DecimalFormat;
 
-import ch.bailu.aat.preferences.SolidDataDirectory;
+import ch.bailu.aat.preferences.system.SolidDataDirectory;
 import ch.bailu.util_java.foc.Foc;
 
 public class SrtmCoordinates extends Coordinates implements LatLongE6Interface {

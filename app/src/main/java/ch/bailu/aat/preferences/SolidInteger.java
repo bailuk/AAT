@@ -47,6 +47,5 @@ public class SolidInteger extends AbsSolidType {
         } catch (NumberFormatException e) {
             AppLog.e(getContext(), e);
         }
-
     }
 }

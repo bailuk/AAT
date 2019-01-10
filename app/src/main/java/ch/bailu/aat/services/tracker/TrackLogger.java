@@ -17,7 +17,7 @@ import ch.bailu.aat.gpx.interfaces.GpxPointInterface;
 import ch.bailu.aat.gpx.interfaces.GpxType;
 import ch.bailu.aat.gpx.writer.GpxListWriter;
 import ch.bailu.aat.preferences.SolidAutopause;
-import ch.bailu.aat.preferences.SolidPostprocessedAutopause;
+import ch.bailu.aat.preferences.general.SolidPostprocessedAutopause;
 import ch.bailu.aat.util.fs.AppDirectory;
 import ch.bailu.aat.util.ui.AppLog;
 import ch.bailu.util_java.foc.Foc;

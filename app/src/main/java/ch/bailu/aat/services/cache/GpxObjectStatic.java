@@ -17,7 +17,7 @@ import ch.bailu.aat.gpx.GpxSegmentNode;
 import ch.bailu.aat.gpx.linked_list.Node;
 import ch.bailu.aat.gpx.xml_parser.GpxListReader;
 import ch.bailu.aat.preferences.SolidAutopause;
-import ch.bailu.aat.preferences.SolidPostprocessedAutopause;
+import ch.bailu.aat.preferences.general.SolidPostprocessedAutopause;
 import ch.bailu.aat.services.InsideContext;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.background.FileTask;

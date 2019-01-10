@@ -5,15 +5,52 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 
+import ch.bailu.aat.preferences.general.SolidUnit;
+import ch.bailu.aat.preferences.location.SolidAltitudeFromBarometer;
+import ch.bailu.aat.preferences.location.SolidPressureAtSeaLevel;
+import ch.bailu.aat.preferences.location.SolidProvideAltitude;
+
 public class AltitudeFromBarometer extends LocationStackChainedItem implements SensorEventListener {
     private final Hypsometric hypsometric = new Hypsometric();
     private final Barometer barometer;
+
+    private final SolidAltitudeFromBarometer sbarometer;
+    private final SolidPressureAtSeaLevel    spressure;
+    private final SolidProvideAltitude       saltitude;
+
+
+    private boolean enabled;
 
 
     public AltitudeFromBarometer(LocationStackItem n, Context c) {
         super(n);
         barometer = new Barometer(c);
         barometer.requestUpdates(this);
+
+        sbarometer = new SolidAltitudeFromBarometer(c);
+        spressure  = new SolidPressureAtSeaLevel(c);
+        saltitude  = new SolidProvideAltitude(c, SolidUnit.SI);
+
+        enabled    = sbarometer.isEnabled() && barometer.haveSensor();
+
+        hypsometric.setPressureAtSeaLevel(spressure.getPressure());
+    }
+
+
+    @Override
+    public void preferencesChanged(Context c, String key, int presetIndex) {
+        if (saltitude.hasKey(key)) {
+            hypsometric.setAltitude(saltitude.getValue());
+            if (hypsometric.isPressureAtSeaLevelValid()) {
+                spressure.setPressure((float) hypsometric.getPressureAtSeaLevel());
+            }
+
+        } else if (spressure.hasKey(key)) {
+            hypsometric.setPressureAtSeaLevel(spressure.getPressure());
+
+        } else if (sbarometer.hasKey(key)) {
+            enabled = sbarometer.useBarometer();
+        }
     }
 
 
@@ -29,7 +66,6 @@ public class AltitudeFromBarometer extends LocationStackChainedItem implements S
     }
 
 
-
     @Override
     public void close() {
         barometer.cancelUpdates(this);
@@ -40,11 +76,7 @@ public class AltitudeFromBarometer extends LocationStackChainedItem implements S
     @Override
     public void passLocation(LocationInformation l) {
 
-        if (!hypsometric.isPressureAtSeaLevelValid()) {
-            hypsometric.setAltitude(l.getAltitude());
-        }
-
-        if (hypsometric.isValid()) {
+        if (enabled && hypsometric.isValid()) {
             l.setAltitude(hypsometric.getAltitude());
         }
 

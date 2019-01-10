@@ -5,8 +5,8 @@ import android.content.Context;
 import java.io.IOException;
 import java.util.Locale;
 
-import ch.bailu.aat.preferences.SolidDataDirectory;
-import ch.bailu.aat.preferences.SolidTileCacheDirectory;
+import ch.bailu.aat.preferences.system.SolidDataDirectory;
+import ch.bailu.aat.preferences.map.SolidTileCacheDirectory;
 import ch.bailu.util_java.foc.Foc;
 
 public class AppDirectory  {

@@ -5,7 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 
-import ch.bailu.aat.preferences.SolidCacheSize;
+import ch.bailu.aat.preferences.system.SolidCacheSize;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.VirtualService;
 import ch.bailu.aat.util.AppBroadcaster;

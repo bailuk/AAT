@@ -76,4 +76,8 @@ public class Hypsometric {
 
         return pressure * Math.pow( (Hx / TEMPERATURE_KELVIN) + 1d, Ex);
     }
+
+    public void setPressureAtSeaLevel(double pressure) {
+        pressureAtSeaLevel = pressure;
+    }
 }

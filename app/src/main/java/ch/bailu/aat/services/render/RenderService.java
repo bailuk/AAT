@@ -4,9 +4,9 @@ import android.content.SharedPreferences;
 
 import org.mapsforge.core.model.Tile;
 
-import ch.bailu.aat.preferences.SolidMapsForgeDirectory;
-import ch.bailu.aat.preferences.SolidRenderTheme;
-import ch.bailu.aat.preferences.SolidRendererThreads;
+import ch.bailu.aat.preferences.map.SolidMapsForgeDirectory;
+import ch.bailu.aat.preferences.map.SolidRenderTheme;
+import ch.bailu.aat.preferences.map.SolidRendererThreads;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.VirtualService;
 import ch.bailu.aat.services.cache.MapsForgeTileObject;

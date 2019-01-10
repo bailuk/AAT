@@ -3,7 +3,6 @@ package ch.bailu.aat.activities;
 import android.os.Bundle;
 import android.view.View;
 
-import ch.bailu.aat.description.AltitudeDescription;
 import ch.bailu.aat.description.AscendDescription;
 import ch.bailu.aat.description.AverageSpeedDescriptionAP;
 import ch.bailu.aat.description.CurrentSpeedDescription;
@@ -42,7 +41,6 @@ public class CockpitSplitActivity extends AbsKeepScreenOnActivity {
         EditorSource edit = new EditorSource(getServiceContext());
         setContentView(createContentView(edit));
         createDispatcher(edit);
-
     }
 
 
@@ -53,14 +51,14 @@ public class CockpitSplitActivity extends AbsKeepScreenOnActivity {
         final CockpitView cockpitC = new CockpitView(this);
 
         cockpitA.addC(this, new DistanceDescription(this), InfoID.TRACKER);
-        cockpitA.add(this, new AltitudeDescription(this), InfoID.LOCATION);
+        cockpitA.addC(this, new AverageSpeedDescriptionAP(this), InfoID.TRACKER);
         cockpitA.add(this, new PredictiveTimeDescription(this), InfoID.TRACKER_TIMER);
 
         cockpitB.add(this, new CurrentSpeedDescription(this), InfoID.LOCATION);
         cockpitB.addC(this, new AverageSpeedDescriptionAP(this), InfoID.TRACKER);
 
         cockpitC.addC(this, new DistanceDescription(this), InfoID.TRACKER);
-        cockpitC.add(this, new AltitudeDescription(this), InfoID.LOCATION);
+        cockpitC.addAltitude(this);
         cockpitC.add(this, new AscendDescription(this), InfoID.TRACKER);
         cockpitC.add(this, new DescendDescription(this), InfoID.TRACKER);
         cockpitC.add(this, new SlopeDescription(this), InfoID.TRACKER);

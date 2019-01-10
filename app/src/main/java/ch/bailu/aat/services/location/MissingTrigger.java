@@ -2,7 +2,7 @@ package ch.bailu.aat.services.location;
 
 import android.content.Context;
 
-import ch.bailu.aat.preferences.SolidMissingTrigger;
+import ch.bailu.aat.preferences.presets.SolidMissingTrigger;
 
 public class MissingTrigger extends LocationStackChainedItem {
     private int triggerMillis=15000;
@@ -26,8 +26,8 @@ public class MissingTrigger extends LocationStackChainedItem {
     }
 
     @Override
-    public void preferencesChanged(Context c, int i) {
-        triggerMillis=new SolidMissingTrigger(c,i).getTriggerMillis();
+    public void preferencesChanged(Context c, String key, int presetIndex) {
+        triggerMillis=new SolidMissingTrigger(c, presetIndex).getTriggerMillis();
     }
     
 

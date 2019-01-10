@@ -5,7 +5,7 @@ import android.widget.RadioGroup;
 
 import java.util.ArrayList;
 
-import ch.bailu.aat.preferences.SolidTrimIndex;
+import ch.bailu.aat.preferences.map.SolidTrimIndex;
 import ch.bailu.aat.services.tileremover.SourceSummaries;
 
 public class TileSummariesView extends RadioGroup  {

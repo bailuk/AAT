@@ -9,8 +9,8 @@ import java.io.Closeable;
 import ch.bailu.aat.dispatcher.OnContentUpdatedInterface;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.StateID;
-import ch.bailu.aat.preferences.SolidBacklight;
-import ch.bailu.aat.preferences.SolidPreset;
+import ch.bailu.aat.preferences.presets.SolidBacklight;
+import ch.bailu.aat.preferences.presets.SolidPreset;
 import ch.bailu.aat.services.InsideContext;
 import ch.bailu.aat.services.ServiceContext;
 

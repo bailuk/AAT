@@ -5,7 +5,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
-import ch.bailu.aat.preferences.SolidVolumeKeys;
+import ch.bailu.aat.preferences.system.SolidVolumeKeys;
 
 public abstract class AbsVolumeKeys extends AbsBackButton {
 

@@ -4,7 +4,7 @@ import android.content.Context;
 import android.location.Location;
 import android.location.LocationManager;
 
-import ch.bailu.aat.preferences.SolidGpsTimeFix;
+import ch.bailu.aat.preferences.location.SolidGpsTimeFix;
 
 public class GpsLocation extends RealLocation {
     private boolean fixTime;
@@ -29,7 +29,7 @@ public class GpsLocation extends RealLocation {
     }
 
     @Override
-    public void preferencesChanged(Context c, int i) {
+    public void preferencesChanged(Context c, String key, int presetIndex) {
         fixTime = new SolidGpsTimeFix(c).getValue();
     }
 

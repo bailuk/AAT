@@ -17,3 +17,4 @@ public class SolidStringView extends AbsSolidView {
         new SolidStringDialog(solid);
     }
 }
+

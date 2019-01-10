@@ -3,7 +3,7 @@ package ch.bailu.aat.map;
 import android.content.Context;
 
 import ch.bailu.aat.util.ui.AppDensity;
-import ch.bailu.aat.preferences.SolidTileSize;
+import ch.bailu.aat.preferences.map.SolidTileSize;
 
 
 public class MapDensity extends AppDensity {

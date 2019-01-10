@@ -41,6 +41,6 @@ public class CleanLocation extends LocationStackItem {
 
 
     @Override
-    public void preferencesChanged(Context c, int i) {}
+    public void preferencesChanged(Context c, String key, int presetIndex) {}
 
 }

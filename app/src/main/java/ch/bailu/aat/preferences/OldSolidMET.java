@@ -4,6 +4,7 @@ package ch.bailu.aat.preferences;
 import android.content.Context;
 
 import ch.bailu.aat.R;
+import ch.bailu.aat.preferences.general.SolidPresetCount;
 
 public class OldSolidMET extends SolidStaticIndexList {
     private final static String KEY="met";

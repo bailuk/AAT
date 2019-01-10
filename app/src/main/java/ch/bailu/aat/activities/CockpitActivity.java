@@ -3,6 +3,7 @@ package ch.bailu.aat.activities;
 import android.os.Bundle;
 import android.view.View;
 
+import ch.bailu.aat.description.AltitudeConfigurationDescription;
 import ch.bailu.aat.description.AltitudeDescription;
 import ch.bailu.aat.description.AverageSpeedDescriptionAP;
 import ch.bailu.aat.description.CurrentSpeedDescription;
@@ -16,6 +17,7 @@ import ch.bailu.aat.dispatcher.TrackerSource;
 import ch.bailu.aat.dispatcher.TrackerTimerSource;
 import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.map.MapFactory;
+import ch.bailu.aat.preferences.location.SolidProvideAltitude;
 import ch.bailu.aat.util.ui.AppLayout;
 import ch.bailu.aat.views.ContentView;
 import ch.bailu.aat.views.bar.ControlBar;
@@ -60,7 +62,7 @@ public class CockpitActivity extends AbsKeepScreenOnActivity {
 
 
         c1.add(this, new CurrentSpeedDescription(this), InfoID.LOCATION);
-        c1.add(this, new AltitudeDescription(this), InfoID.LOCATION);
+        c1.addAltitude(this);
         c1.add(this, new PredictiveTimeDescription(this), InfoID.TRACKER_TIMER);
         c1.addC(this, new DistanceDescription(this), InfoID.TRACKER);
         c1.addC(this, new AverageSpeedDescriptionAP(this), InfoID.TRACKER);

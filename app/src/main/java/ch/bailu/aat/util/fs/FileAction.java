@@ -10,7 +10,7 @@ import java.io.IOException;
 
 import ch.bailu.aat.R;
 import ch.bailu.aat.preferences.SolidDirectoryQuery;
-import ch.bailu.aat.preferences.SolidMockLocationFile;
+import ch.bailu.aat.preferences.location.SolidMockLocationFile;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.util.Clipboard;

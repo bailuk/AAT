@@ -26,6 +26,6 @@ public class SolidStringDialog extends AbsSolidStringDialog {
 
     @Override
     protected void onExtraItemClick(int i) {
-        new SolidStringInputDialog(solid);
+        new SolidTextInputDialog(solid, SolidTextInputDialog.TEXT);
     }
 }

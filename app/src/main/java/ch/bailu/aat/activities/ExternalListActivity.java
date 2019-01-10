@@ -8,7 +8,7 @@ import ch.bailu.aat.description.DateDescription;
 import ch.bailu.aat.description.DistanceDescription;
 import ch.bailu.aat.description.NameDescription;
 import ch.bailu.aat.description.TrackSizeDescription;
-import ch.bailu.aat.preferences.SolidExternalDirectory;
+import ch.bailu.aat.preferences.system.SolidExternalDirectory;
 import ch.bailu.util_java.foc.Foc;
 
 public class ExternalListActivity extends AbsGpxListActivity {

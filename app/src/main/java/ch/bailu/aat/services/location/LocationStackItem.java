@@ -16,7 +16,7 @@ public abstract class LocationStackItem implements Closeable, PresetDependent{
 
 
     @Override
-    public void preferencesChanged(Context c, int i) {}
+    public void preferencesChanged(Context c, String key, int presetIndex) {}
 
 
     public void appendStatusText(StringBuilder builder) {

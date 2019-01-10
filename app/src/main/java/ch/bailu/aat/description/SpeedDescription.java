@@ -2,7 +2,7 @@ package ch.bailu.aat.description;
 
 import android.content.Context;
 
-import ch.bailu.aat.preferences.SolidUnit;
+import ch.bailu.aat.preferences.general.SolidUnit;
 
 
 public abstract class SpeedDescription extends FloatDescription{

@@ -5,9 +5,16 @@ import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 
+import ch.bailu.aat.description.AltitudeConfigurationDescription;
 import ch.bailu.aat.description.ContentDescription;
 import ch.bailu.aat.dispatcher.DispatcherInterface;
 import ch.bailu.aat.gpx.InfoID;
+import ch.bailu.aat.preferences.AbsSolidType;
+import ch.bailu.aat.preferences.general.SolidUnit;
+import ch.bailu.aat.preferences.location.SolidAdjustGpsAltitude;
+import ch.bailu.aat.preferences.location.SolidAltitudeFromBarometer;
+import ch.bailu.aat.preferences.location.SolidProvideAltitude;
+import ch.bailu.aat.views.preferences.SolidTextInputDialog;
 
 
 public class CockpitView extends ViewGroup {
@@ -18,12 +25,6 @@ public class CockpitView extends ViewGroup {
     public CockpitView(Context context) {
         super(context);
     }
-
-
-//    public CockpitView(Context c, DispatcherInterface di, ContentDescription[] des) {
-//        super(c);
-//        addAll(di, des);
-//    }
 
 
     public void addAll(DispatcherInterface di, ContentDescription[] des) {
@@ -45,12 +46,22 @@ public class CockpitView extends ViewGroup {
     }
 
 
-    public void add(DispatcherInterface di, ContentDescription de, int iid) {
+    public View add(DispatcherInterface di, ContentDescription de, int iid) {
         final NumberView v = new NumberView(de);
 
         addView(v);
         di.addTargets(v, iid);
+        return v;
     }
+
+
+
+    public void addAltitude(DispatcherInterface di) {
+        SolidProvideAltitude.requestOnClick(
+                add(di, new AltitudeConfigurationDescription(getContext()), InfoID.LOCATION)
+        );
+    }
+
 
 
     @Override

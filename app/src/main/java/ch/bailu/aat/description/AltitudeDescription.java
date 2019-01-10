@@ -6,7 +6,7 @@ import java.text.DecimalFormat;
 
 import ch.bailu.aat.R;
 import ch.bailu.aat.gpx.GpxInformation;
-import ch.bailu.aat.preferences.SolidUnit;
+import ch.bailu.aat.preferences.general.SolidUnit;
 
 public class AltitudeDescription extends FloatDescription {
 
@@ -50,8 +50,5 @@ public class AltitudeDescription extends FloatDescription {
     public void onContentUpdated(int iid, GpxInformation info) {
         setCache( ((float)info.getAltitude()) );
     }
-    
 
-
-    
 }

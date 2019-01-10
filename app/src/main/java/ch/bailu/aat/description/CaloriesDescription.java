@@ -4,9 +4,9 @@ import android.content.Context;
 
 import ch.bailu.aat.R;
 import ch.bailu.aat.gpx.GpxInformation;
-import ch.bailu.aat.preferences.SolidMET;
-import ch.bailu.aat.preferences.SolidPreset;
-import ch.bailu.aat.preferences.SolidWeight;
+import ch.bailu.aat.preferences.presets.SolidMET;
+import ch.bailu.aat.preferences.presets.SolidPreset;
+import ch.bailu.aat.preferences.general.SolidWeight;
 
 public class CaloriesDescription extends LongDescription{
 

@@ -15,7 +15,7 @@ import ch.bailu.aat.gpx.GpxPointNode;
 import ch.bailu.aat.map.MapColor;
 import ch.bailu.aat.map.MapContext;
 import ch.bailu.aat.map.layer.MapLayerInterface;
-import ch.bailu.aat.preferences.SolidMapGrid;
+import ch.bailu.aat.preferences.map.SolidMapGrid;
 import ch.bailu.aat.util.graphic.Pixel;
 
 public abstract class AbsNodeSelectorLayer implements MapLayerInterface, OnContentUpdatedInterface {

@@ -2,7 +2,7 @@ package ch.bailu.aat.map.layer.gpx;
 
 import ch.bailu.aat.gpx.interfaces.GpxType;
 import ch.bailu.aat.map.MapContext;
-import ch.bailu.aat.preferences.SolidLegend;
+import ch.bailu.aat.preferences.map.SolidLegend;
 
 public abstract class Factory {
 

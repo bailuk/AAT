@@ -3,7 +3,7 @@ package ch.bailu.aat.services.location;
 import android.content.Context;
 
 import ch.bailu.aat.gpx.GpxDeltaHelper;
-import ch.bailu.aat.preferences.SolidDistanceFilter;
+import ch.bailu.aat.preferences.presets.SolidDistanceFilter;
 
 public class DistanceFilter extends LocationStackChainedItem {
     private LocationInformation oldLocation=null;
@@ -34,8 +34,8 @@ public class DistanceFilter extends LocationStackChainedItem {
     }
 
     @Override
-    public void preferencesChanged(Context c, int i) {
-        minDistance = new SolidDistanceFilter(c,i).getMinDistance();
+    public void preferencesChanged(Context c, String key, int presetIndex) {
+        minDistance = new SolidDistanceFilter(c, presetIndex).getMinDistance();
     }
     
 

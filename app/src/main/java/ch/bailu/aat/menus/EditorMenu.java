@@ -2,13 +2,12 @@ package ch.bailu.aat.menus;
 
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.graphics.drawable.Drawable;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import ch.bailu.aat.gpx.interfaces.GpxType;
-import ch.bailu.aat.preferences.SolidOverlayFileList;
+import ch.bailu.aat.preferences.map.SolidOverlayFileList;
 import ch.bailu.aat.services.InsideContext;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.cache.GpxObject;

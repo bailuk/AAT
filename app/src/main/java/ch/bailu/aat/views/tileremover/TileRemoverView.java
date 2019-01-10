@@ -12,7 +12,7 @@ import ch.bailu.aat.R;
 import ch.bailu.aat.menus.RemoveTilesMenu;
 import ch.bailu.aat.services.InsideContext;
 import ch.bailu.aat.util.AppBroadcaster;
-import ch.bailu.aat.preferences.SolidTileCacheDirectory;
+import ch.bailu.aat.preferences.map.SolidTileCacheDirectory;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.tileremover.TileRemoverService;
 import ch.bailu.aat.views.BusyViewControl;

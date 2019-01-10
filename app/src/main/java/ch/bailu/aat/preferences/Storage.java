@@ -94,7 +94,12 @@ public class Storage  implements ContextWrapperInterface {
     }
 
     public int readInteger(String key) {
-        return preferences.getInt(key, 0);
+        try {
+            return preferences.getInt(key, 0);
+
+        } catch (ClassCastException e) {
+            return 0;
+        }
     }
 
 
@@ -103,6 +108,15 @@ public class Storage  implements ContextWrapperInterface {
             editor.putInt(key, v);
             editor.apply();
         }
+    }
+
+
+
+    public void writeIntegerForce(String key, int v) {
+        editor.remove(key);
+        editor.apply();
+        editor.putInt(key, v);
+        editor.apply();
     }
 
     public long readLong(String key) {

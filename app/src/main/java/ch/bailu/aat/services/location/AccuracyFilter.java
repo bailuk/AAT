@@ -2,7 +2,7 @@ package ch.bailu.aat.services.location;
 
 import android.content.Context;
 
-import ch.bailu.aat.preferences.SolidAccuracyFilter;
+import ch.bailu.aat.preferences.presets.SolidAccuracyFilter;
 
 
 public class AccuracyFilter extends LocationStackChainedItem {
@@ -24,8 +24,8 @@ public class AccuracyFilter extends LocationStackChainedItem {
     }
 
     @Override
-    public void preferencesChanged(Context c, int i) {
-        minAccuracy=new SolidAccuracyFilter(c, i).getMinAccuracy();
+    public void preferencesChanged(Context c, String key, int presetIndex) {
+        minAccuracy=new SolidAccuracyFilter(c, presetIndex).getMinAccuracy();
     }
     
 

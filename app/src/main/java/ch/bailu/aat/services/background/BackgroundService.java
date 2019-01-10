@@ -3,7 +3,7 @@ package ch.bailu.aat.services.background;
 import java.net.URL;
 import java.util.HashMap;
 
-import ch.bailu.aat.preferences.SolidRendererThreads;
+import ch.bailu.aat.preferences.map.SolidRendererThreads;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.VirtualService;
 import ch.bailu.util_java.foc.Foc;

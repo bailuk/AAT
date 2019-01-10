@@ -13,9 +13,9 @@ import ch.bailu.aat.gpx.GpxPointNode;
 import ch.bailu.aat.gpx.GpxSegmentNode;
 import ch.bailu.aat.gpx.GpxWindow;
 import ch.bailu.aat.preferences.SolidAutopause;
-import ch.bailu.aat.preferences.SolidPostprocessedAutopause;
+import ch.bailu.aat.preferences.general.SolidPostprocessedAutopause;
 import ch.bailu.aat.preferences.SolidSpeedGraphWindow;
-import ch.bailu.aat.preferences.SolidUnit;
+import ch.bailu.aat.preferences.general.SolidUnit;
 import ch.bailu.aat.util.ui.AppDensity;
 import ch.bailu.aat.util.ui.AppTheme;
 

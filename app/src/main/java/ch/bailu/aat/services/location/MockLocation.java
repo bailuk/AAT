@@ -10,7 +10,7 @@ import ch.bailu.aat.gpx.MaxSpeed;
 import ch.bailu.aat.gpx.StateID;
 import ch.bailu.aat.gpx.interfaces.GpxType;
 import ch.bailu.aat.gpx.xml_parser.GpxListReader;
-import ch.bailu.aat.preferences.SolidMockLocationFile;
+import ch.bailu.aat.preferences.location.SolidMockLocationFile;
 import ch.bailu.aat.util.Timer;
 import ch.bailu.aat.util.fs.foc.FocAndroid;
 import ch.bailu.aat.util.ui.AppLog;

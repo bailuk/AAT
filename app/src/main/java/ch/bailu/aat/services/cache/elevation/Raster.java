@@ -9,7 +9,7 @@ import org.mapsforge.core.util.MercatorProjection;
 
 import java.util.ArrayList;
 
-import ch.bailu.aat.preferences.SolidTileSize;
+import ch.bailu.aat.preferences.map.SolidTileSize;
 import ch.bailu.aat.services.cache.Span;
 import ch.bailu.aat.services.dem.tile.DemGeoToIndex;
 

@@ -5,7 +5,7 @@ import android.content.Context;
 import org.mapsforge.core.model.Tile;
 import org.mapsforge.map.rendertheme.InternalRenderTheme;
 
-import ch.bailu.aat.preferences.SolidRenderTheme;
+import ch.bailu.aat.preferences.map.SolidRenderTheme;
 import ch.bailu.aat.services.cache.MapsForgeTileObject;
 import ch.bailu.aat.services.cache.ObjectHandle;
 

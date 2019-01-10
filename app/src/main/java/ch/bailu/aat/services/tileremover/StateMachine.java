@@ -2,7 +2,7 @@ package ch.bailu.aat.services.tileremover;
 
 import android.content.Context;
 
-import ch.bailu.aat.preferences.SolidTrimIndex;
+import ch.bailu.aat.preferences.map.SolidTrimIndex;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.util_java.foc.Foc;

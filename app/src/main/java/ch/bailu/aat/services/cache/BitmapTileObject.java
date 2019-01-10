@@ -6,7 +6,7 @@ import org.mapsforge.core.graphics.TileBitmap;
 import org.mapsforge.core.model.Tile;
 
 import ch.bailu.aat.map.tile.source.DownloadSource;
-import ch.bailu.aat.preferences.SolidTileSize;
+import ch.bailu.aat.preferences.map.SolidTileSize;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.background.DownloadTask;
 import ch.bailu.aat.services.background.FileTask;

@@ -7,7 +7,7 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.Build;
 
-import ch.bailu.aat.preferences.SolidDataDirectoryDefault;
+import ch.bailu.aat.preferences.system.SolidDataDirectoryDefault;
 
 public class AppPermission {
     public static void requestFromUser(Activity activity) {

@@ -2,10 +2,10 @@ package ch.bailu.aat.services.tileremover;
 
 import java.util.Iterator;
 
-import ch.bailu.aat.preferences.SolidTrimDate;
-import ch.bailu.aat.preferences.SolidTrimIndex;
-import ch.bailu.aat.preferences.SolidTrimMode;
-import ch.bailu.aat.preferences.SolidTrimSize;
+import ch.bailu.aat.preferences.map.SolidTrimDate;
+import ch.bailu.aat.preferences.map.SolidTrimIndex;
+import ch.bailu.aat.preferences.map.SolidTrimMode;
+import ch.bailu.aat.preferences.map.SolidTrimSize;
 import ch.bailu.aat.util.AppBroadcaster;
 
 public class StateScanForRemoval implements State, Runnable {

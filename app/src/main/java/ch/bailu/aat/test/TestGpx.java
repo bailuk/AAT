@@ -10,7 +10,7 @@ import ch.bailu.aat.gpx.AutoPause;
 import ch.bailu.aat.gpx.GpxList;
 import ch.bailu.aat.gpx.xml_parser.GpxListReader;
 import ch.bailu.aat.gpx.writer.GpxListWriter;
-import ch.bailu.aat.preferences.SolidMockLocationFile;
+import ch.bailu.aat.preferences.location.SolidMockLocationFile;
 import ch.bailu.aat.preferences.SolidString;
 import ch.bailu.aat.util.fs.foc.FocAndroid;
 import ch.bailu.util_java.foc.Foc;

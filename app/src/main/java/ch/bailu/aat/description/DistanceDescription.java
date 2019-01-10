@@ -6,7 +6,7 @@ import java.text.DecimalFormat;
 
 import ch.bailu.aat.R;
 import ch.bailu.aat.gpx.GpxInformation;
-import ch.bailu.aat.preferences.SolidUnit;
+import ch.bailu.aat.preferences.general.SolidUnit;
 
 public class DistanceDescription extends FloatDescription {
     private final DecimalFormat FORMAT[] =

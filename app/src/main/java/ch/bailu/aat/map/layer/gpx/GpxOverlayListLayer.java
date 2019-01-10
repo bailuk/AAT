@@ -8,7 +8,7 @@ import ch.bailu.aat.dispatcher.DispatcherInterface;
 import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.map.MapContext;
 import ch.bailu.aat.map.layer.MapLayerInterface;
-import ch.bailu.aat.preferences.SolidOverlayFileList;
+import ch.bailu.aat.preferences.map.SolidOverlayFileList;
 
 public class GpxOverlayListLayer implements MapLayerInterface {
     private final GpxDynLayer[] overlays;

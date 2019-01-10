@@ -11,7 +11,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 
 import ch.bailu.aat.R;
-import ch.bailu.aat.preferences.SolidOsmFeaturesList;
+import ch.bailu.aat.preferences.map.SolidOsmFeaturesList;
 import ch.bailu.aat.preferences.SolidString;
 import ch.bailu.aat.services.InsideContext;
 import ch.bailu.aat.services.ServiceContext;
