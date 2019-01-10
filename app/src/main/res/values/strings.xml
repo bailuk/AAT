@@ -220,6 +220,7 @@
     <string name="file_copy">Copy to…</string>
     <string name="file_exists">\u0020already exists!</string>
     <string name="file_is_writeable">\u0020is writeable.</string>
+    <string name="file_is_writeonly">\u0020is writeonly.</string>
     <string name="file_is_readonly">\u0020is readonly.</string>
     <string name="file_is_missing">\u0020does not exist.</string>
     <string name="file_is_denied">\u0020is not accessible.</string>
