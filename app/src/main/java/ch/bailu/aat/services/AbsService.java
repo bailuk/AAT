@@ -47,7 +47,7 @@ public abstract class AbsService  extends Service {
                 lazyOff.kick();
 
             } else if (lock < 0) {
-                AppLog.d(this, "lock < 0 !!!");
+                AppLog.w(this, "lock < 0 !!!");
             }
         }
     }
@@ -65,7 +65,7 @@ public abstract class AbsService  extends Service {
             lazyOff.cancel();
             stopSelf();
         } else if (lock < 0) {
-            AppLog.d(this, "lock < 0 !!!");
+            AppLog.w(this, "lock < 0 !!!");
         }
     }
 

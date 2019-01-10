@@ -124,7 +124,7 @@ public class ObjectTable  {
 
 
     public synchronized void limit(CacheService self, long l) {
-        AppLog.d(this, "Limit: " + MemSize.describe(new StringBuilder(), l).toString());
+        //AppLog.w(this, "Limit: " + MemSize.describe(new StringBuilder(), l).toString());
         limit = l;
         trim(self);
     }

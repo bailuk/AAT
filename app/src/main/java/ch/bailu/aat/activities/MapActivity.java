@@ -62,7 +62,7 @@ public class MapActivity extends AbsKeepScreenOnActivity {
             map.setCenter(c);
 
         } catch (NumberFormatException e) {
-            AppLog.d(this, uri.toString());
+            AppLog.w(this, e);
         }
     }
 

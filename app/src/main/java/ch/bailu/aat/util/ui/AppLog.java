@@ -65,7 +65,7 @@ public class AppLog implements Closeable {
         @Override
         public void log(String t, String m) {
             if (Looper.myLooper()==null) {
-                e(t, m); 
+                _w(t, m);
             } else {
                 alertbox.setTitle(t);
                 alertbox.setMessage(m);
@@ -86,13 +86,13 @@ public class AppLog implements Closeable {
         sendBroadcast(LOG_INFO, c, toSaveString(m));
     }
 
-    private static void i(Object o, String m) {
-        i(o.getClass().getSimpleName(), m);
-    }
+    //private static void i(Object o, String m) {
+    //    i(o.getClass().getSimpleName(), m);
+    //}
     
-    private static void i(String a, String b) {
-        android.util.Log.i(toSaveString(a), toSaveString(b));
-    }
+    //private static void i(String a, String b) {
+    //    android.util.Log.i(toSaveString(a), toSaveString(b));
+    //}
 
     
     public static void e(Context c, Throwable e) {
@@ -106,23 +106,18 @@ public class AppLog implements Closeable {
 
     
     
-    private static void e(Object o, Throwable e) {
-        e(o, toStringAndPrintStackTrace(e));
+    public static void w(Object o, Throwable e) {
+        w(o, toStringAndPrintStackTrace(e));
     }
 
 
-    private static void e(Object o, String m) {
-        e(o.getClass().getSimpleName(), m);
+    public static void w(Object o, String m) {
+        _w(o.getClass().getSimpleName(), m);
     }
 
-    
-    private static void e(String a, Throwable e) {
-        e(a, toStringAndPrintStackTrace(e));
-    }
-    
-    
-    private static void e(String a, String b) {
-        android.util.Log.e(toSaveString(a), toSaveString(b));
+
+    private static void _w(String a, String b) {
+        android.util.Log.w(toSaveString(a), toSaveString(b));
 
     }
   

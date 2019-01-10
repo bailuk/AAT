@@ -2,6 +2,7 @@ package ch.bailu.aat.gpx.writer;
 
 import java.io.IOException;
 
+import ch.bailu.aat.gpx.GpxConstants;
 import ch.bailu.aat.gpx.interfaces.GpxPointInterface;
 import ch.bailu.aat.services.dem.tile.ElevationProvider;
 import ch.bailu.util_java.foc.Foc;

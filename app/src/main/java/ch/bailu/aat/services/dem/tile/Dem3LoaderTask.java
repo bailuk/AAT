@@ -48,7 +48,7 @@ public class Dem3LoaderTask extends FileTask {
                 }
 
             } catch (Exception e) {
-                AppLog.d(getFile(), "ERROR: " + e.toString());
+                AppLog.w(this, e);
                 status.setStatus(Dem3Status.EMPTY);
             }
 

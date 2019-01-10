@@ -3,6 +3,8 @@ package ch.bailu.aat.services.tracker;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 
+import org.xmlpull.v1.XmlPullParserException;
+
 import java.io.Closeable;
 import java.io.IOException;
 
@@ -86,7 +88,7 @@ implements OnSharedPreferenceChangeListener, Closeable {
 
  
     
-    public  TrackLogger createLogger() throws IOException, SecurityException {
+    public  TrackLogger createLogger() throws IOException, SecurityException, XmlPullParserException {
         return new TrackLogger(scontext.getContext(),new SolidPreset(scontext.getContext()).getIndex());
     }
     

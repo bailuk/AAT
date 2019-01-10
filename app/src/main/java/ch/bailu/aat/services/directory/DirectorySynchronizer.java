@@ -165,9 +165,7 @@ public class DirectorySynchronizer  implements Closeable {
 
         @Override
         public void start() {
-            AppLog.d(this, "add");
-
-            AppBroadcaster.broadcast(scontext.getContext(), AppBroadcaster.DBSYNC_START);        
+            AppBroadcaster.broadcast(scontext.getContext(), AppBroadcaster.DBSYNC_START);
 
             scontext.getBackgroundService().process(backgroundTask);
         }
@@ -256,8 +254,6 @@ public class DirectorySynchronizer  implements Closeable {
 
 
             } else {
-                AppLog.d(this, file.toString());
-
                 ObjectHandle h = scontext.getCacheService().getObject(
                         file.getPath(), new GpxObjectStatic.Factory());
                 if (h instanceof GpxObject) {
@@ -350,7 +346,7 @@ public class DirectorySynchronizer  implements Closeable {
                 state.ping();
 
             } catch (Exception e) {
-                AppLog.d(this, e.toString());
+                AppLog.w(this, e);
 
                 AppBroadcaster.broadcast(scontext.getContext(), AppBroadcaster.DB_SYNC_CHANGED);
                 setState(new StateLoadNextGpx());

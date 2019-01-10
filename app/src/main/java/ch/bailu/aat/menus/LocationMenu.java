@@ -83,7 +83,7 @@ public class LocationMenu extends AbsMenu{
             LatLong p = Coordinates.stringToGeoPoint(s);
             map.setCenter(p);
         } catch (NumberFormatException e) {
-            AppLog.d(this, s);
+            AppLog.w(this, e);
         }
 
     }

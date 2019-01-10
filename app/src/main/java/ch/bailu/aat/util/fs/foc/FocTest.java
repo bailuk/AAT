@@ -14,7 +14,7 @@ public class FocTest {
         file = f;
     }
 
-
+/*
 
     public void rlog() {
         log();
@@ -25,7 +25,8 @@ public class FocTest {
             }
         });
     }
-
+*/
+    /*
     public void log() {
         AppLog.d(this, "======= FocTest.log(" + file.getName() + ")");
         AppLog.d(this, file.getPathName());
@@ -61,7 +62,7 @@ public class FocTest {
         b.append("]");
         AppLog.d(this, b.toString());
     }
-
+*/
 
     public boolean read() {
         Closeable c=null;

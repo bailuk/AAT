@@ -96,10 +96,10 @@ public class StateRemove implements State, Runnable {
                 }
                 state.broadcastLimited( AppBroadcaster.TILE_REMOVER_REMOVE);
             } catch (InterruptedException e) {
-                AppLog.d(this,e.toString());
+                AppLog.w(this,e);
                 break;
             } catch (ExecutionException e) {
-                AppLog.d(this, e.toString());
+                AppLog.w(this, e);
             }
         }
 

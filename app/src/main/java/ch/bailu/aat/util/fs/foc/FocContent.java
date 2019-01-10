@@ -157,7 +157,7 @@ public class FocContent extends Foc {
                 } while (cursor.moveToNext());
             }
         } catch(Exception e) {
-            AppLog.d(this, e.toString());
+            AppLog.w(this, e);
         }
 
         if (cursor != null) cursor.close();
@@ -286,7 +286,7 @@ public class FocContent extends Foc {
                 data = new DocumentData(cursor);
 
             } else {
-                AppLog.d(this, uris.getDocument().toString());
+                //AppLog.d(this, uris.getDocument().toString());
 
                 data = new DocumentData(uris.getDocumentId().toString());
             }

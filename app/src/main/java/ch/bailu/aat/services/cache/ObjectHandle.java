@@ -44,7 +44,7 @@ public abstract class ObjectHandle implements ObjectBroadcastReceiver{
     }
 
     public Foc getFile() {
-        AppLog.d(this, "WARNING: default implementation of getFile() called!");
+        AppLog.w(this, "Default implementation of getFile() called!");
         return new FocFile(ID);
     }
     

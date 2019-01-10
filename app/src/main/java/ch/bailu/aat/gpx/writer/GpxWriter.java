@@ -76,6 +76,10 @@ public abstract class GpxWriter {
         writeString("</"); writeString(e); writeString(">");
     }
 
+    public void writeElementEnd() throws IOException{
+        writeString("/>");
+    }
+
     public void writeBeginElementStart(String e) throws IOException {
         writeString("<"); writeString(e);
     }
@@ -83,6 +87,8 @@ public abstract class GpxWriter {
     public void writeBeginElementEnd() throws IOException{
         writeString(">");
     }
+
+
 
     public void writeBeginElement(String e) throws IOException {
         writeBeginElementStart(e); writeBeginElementEnd();

@@ -54,7 +54,7 @@ public abstract class TileScanner {
                         scanXContainer(child);
 
                     } catch (NumberFormatException e) {
-                        AppLog.d(e, child.getName());
+                        AppLog.w(this, e);
                     }
 
                 }
@@ -76,7 +76,7 @@ public abstract class TileScanner {
                         scanYContainer(child);
 
                     } catch (NumberFormatException e) {
-                        AppLog.d(e, child.getName());
+                        AppLog.w(this, e);
                     }
 
                 }
@@ -105,7 +105,7 @@ public abstract class TileScanner {
 
 
                     } catch (NumberFormatException e) {
-                        AppLog.d(e, child.getName());
+                        AppLog.w(this, e);
                     }
                 }
             });

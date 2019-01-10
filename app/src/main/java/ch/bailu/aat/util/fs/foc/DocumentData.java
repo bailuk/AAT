@@ -58,7 +58,7 @@ public class DocumentData  {
 
 
         if (cursor.isNull(i)) {
-            AppLog.d(this, columnDocumentId + " is null");
+            AppLog.w(this, columnDocumentId + " is null");
         }
         return i;
     }

@@ -103,7 +103,7 @@ public class TileObjectCache implements Closeable {
 
     public synchronized boolean isReadyAndLoaded() {
         for (int i = 0; i<tiles.size(); i++) {
-            AppLog.d(this, tiles.get(i).getID());
+            //AppLog.d(this, tiles.get(i).getID());
             if (tiles.get(i) != null) {
                 if (!tiles.get(i).isReadyAndLoaded())
                     return false;

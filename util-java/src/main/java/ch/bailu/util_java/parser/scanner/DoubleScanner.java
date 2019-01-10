@@ -4,7 +4,7 @@ import java.io.IOException;
 import ch.bailu.util_java.io.Stream;
 
 
-public class DoubleScanner {
+public class DoubleScanner extends AbsScanner {
     private static final int exp_table[] = {
         1,
         10,
@@ -21,13 +21,7 @@ public class DoubleScanner {
     
     private final int baseExponent;
     
-    final Stream stream;
-
-  
-    
-    
-    public DoubleScanner(Stream s, int be) {
-        stream = s;
+    public DoubleScanner(int be) {
         baseExponent=be;
     }
     
@@ -42,7 +36,7 @@ public class DoubleScanner {
     }
 
     
-    public void scan() throws IOException {
+    public void scan(Stream stream) throws IOException {
         boolean haveDecimal=false;
         boolean negative=false;
 

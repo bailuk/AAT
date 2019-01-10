@@ -30,7 +30,7 @@ public class AndroidVolumes {
         return files;
     }
 
-
+/*
     public void log() {
         for (Foc f : volumes) {
             AppLog.d(f, f.toString());
@@ -43,7 +43,7 @@ public class AndroidVolumes {
         }
 
     }
-
+*/
     public static void init(Context context) {
         File internal_cache = context.getCacheDir();
         File internal_file = context.getFilesDir();

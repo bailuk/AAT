@@ -59,7 +59,7 @@ public class Renderer extends Layer {
 
                     store.addMapDataStore(new MapFile(f.toString()), true, true);
                 } catch (Exception e) {
-                    AppLog.d(this, e.toString());
+                    AppLog.w(this, e);
                 }
             }
 

@@ -25,6 +25,10 @@ public class Stream implements Closeable {
     }
 
 
+    public Stream(Reader r) {
+        reader = r;
+    }
+
     public Stream(String string) {
         reader = new StringReader(string);
     }

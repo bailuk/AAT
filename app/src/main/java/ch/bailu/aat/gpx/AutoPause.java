@@ -8,7 +8,7 @@ public abstract class AutoPause {
     public static final AutoPause NULL = new AutoPause() {
         @Override
         public long get() {
-            AppLog.d(this, "NULL");
+            AppLog.w(this, "NULL");
             return 0;
         }
 

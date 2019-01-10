@@ -4,16 +4,11 @@ import java.io.IOException;
 import ch.bailu.util_java.io.Stream;
 
 
-public class IntegerScanner {
+public class IntegerScanner extends AbsScanner {
 	private int integer;
-	private final Stream stream;
-	
-	public IntegerScanner(Stream s) {
-		stream = s;
-	}
-	
-	
-	public void scan() throws IOException {
+
+
+	public void scan(Stream stream) throws IOException {
 		integer=0;
 		
 		stream.read();

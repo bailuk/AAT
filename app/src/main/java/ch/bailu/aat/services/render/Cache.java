@@ -112,11 +112,11 @@ public class Cache implements TileCache {
 
     @Override
     public void addObserver(Observer observer) {
-        AppLog.d(this, "Use lockToRenderer()!");
+        AppLog.w(this, "Use lockToRenderer()!");
     }
 
     @Override
     public void removeObserver(Observer observer) {
-        AppLog.d(this, "Use freeFromRenderer()!");
+        AppLog.w(this, "Use freeFromRenderer()!");
     }
 }
