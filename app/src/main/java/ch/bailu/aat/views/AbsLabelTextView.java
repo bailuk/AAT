@@ -35,7 +35,6 @@ public abstract class AbsLabelTextView extends LinearLayout{
         addView(toolTip);
 
         theme.button(this);
-        theme.background(this);
     }
 
 

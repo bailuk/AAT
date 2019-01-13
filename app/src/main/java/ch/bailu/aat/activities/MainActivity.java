@@ -9,10 +9,10 @@ import android.widget.LinearLayout;
 import ch.bailu.aat.R;
 import ch.bailu.aat.dispatcher.CurrentLocationSource;
 import ch.bailu.aat.dispatcher.TrackerSource;
-import ch.bailu.aat.preferences.system.SolidDataDirectory;
-import ch.bailu.aat.preferences.system.SolidExternalDirectory;
 import ch.bailu.aat.preferences.SolidFile;
 import ch.bailu.aat.preferences.presets.SolidPreset;
+import ch.bailu.aat.preferences.system.SolidDataDirectory;
+import ch.bailu.aat.preferences.system.SolidExternalDirectory;
 import ch.bailu.aat.util.fs.AppDirectory;
 import ch.bailu.aat.util.ui.AppLayout;
 import ch.bailu.aat.util.ui.AppTheme;
@@ -50,9 +50,9 @@ public class MainActivity extends ActivityContext {
 
     private View createExtraButton() {
         LinearLayout layout = new LinearLayout(this);
+        AppTheme.alt.background(layout);
         layout.setOrientation(LinearLayout.VERTICAL);
-        layout.addView(new DocumentationLabel(ActivitySwitcher.getAbout(this)));
-
+        layout.addView(labelFactory(ActivitySwitcher.getAbout(this)));
         return layout;
     }
 
@@ -100,7 +100,9 @@ public class MainActivity extends ActivityContext {
         } else if (s.activityClass == ExternalListActivity.class) {
             return new ExternalDirectoryLabel(s);
         } else if (s.activityClass == AboutActivity.class) {
-            return new DocumentationLabel(s);
+            ActivityLabel label = new ActivityLabel(AppTheme.alt, s);
+            label.setText(getString(R.string.intro_about) + " / " + getString(R.string.intro_readme));
+            return label;
         }
 
         return new ActivityLabel(s);
@@ -248,13 +250,4 @@ public class MainActivity extends ActivityContext {
         }
     }
 
-    private class DocumentationLabel extends ActivityLabel {
-
-        public DocumentationLabel(ActivitySwitcher.Entry s) {
-            super(AppTheme.alt, s);
-            setText(getString(R.string.intro_about) + " / " + getString(R.string.intro_readme));
-        }
-
-
-    }
 }

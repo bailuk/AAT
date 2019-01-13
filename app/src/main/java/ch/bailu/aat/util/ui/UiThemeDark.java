@@ -1,6 +1,7 @@
 package ch.bailu.aat.util.ui;
 
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.view.View;
 import android.widget.TextView;
 
@@ -16,6 +17,7 @@ public class UiThemeDark implements UiTheme {
     @Override
     public void button(View v) {
         v.setBackgroundResource(R.drawable.button);
+
     }
 
 
