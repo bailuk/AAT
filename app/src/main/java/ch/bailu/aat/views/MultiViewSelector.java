@@ -24,8 +24,8 @@ public class MultiViewSelector extends LinearLayout {
         label.setText(mv.getLabel());
         label.setSingleLine();
 
-        AppTheme.themify(label);
-        AppTheme.themify(this);
+        AppTheme.bar.topic(label);
+        AppTheme.bar.button(this);
         addView(label);
 
         setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL);

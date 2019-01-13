@@ -4,7 +4,6 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Build;
 import android.text.Layout;
-import android.text.TextUtils;
 import android.util.TypedValue;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -13,6 +12,7 @@ import ch.bailu.aat.description.ContentDescription;
 import ch.bailu.aat.dispatcher.OnContentUpdatedInterface;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.util.ui.AppTheme;
+import ch.bailu.aat.util.ui.UiTheme;
 
 public class NumberView extends ViewGroup implements OnContentUpdatedInterface {
 
@@ -21,20 +21,24 @@ public class NumberView extends ViewGroup implements OnContentUpdatedInterface {
 
     private final float defaultTextSize;
 
-
-    public NumberView(ContentDescription data) {
+    public NumberView(ContentDescription data, UiTheme theme) {
         super(data.getContext());
+
 
         number = createLabel();
         number.setIncludeFontPadding(false);
-        number.setTextColor(AppTheme.getTextColor());
+
+
+        theme.header(number);
+
         number.setTypeface(Typeface.create((String) null, Typeface.BOLD));
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             number.setHyphenationFrequency(Layout.HYPHENATION_FREQUENCY_NONE);
         }
 
         label = createLabel();
-        label.setTextColor(AppTheme.getAltTextColor());
+
+        theme.content(label);
         defaultTextSize = label.getTextSize();
 
         unit = createLabel();
@@ -46,8 +50,8 @@ public class NumberView extends ViewGroup implements OnContentUpdatedInterface {
     }
 
     public void setDefaultUnitLabelColor() {
-        unit.setBackgroundColor(AppTheme.getAltTextBackgroundColor());
-        unit.setTextColor(AppTheme.getAltTextColor());
+        AppTheme.alt.content(unit);
+        AppTheme.alt.background(unit);
     }
 
 

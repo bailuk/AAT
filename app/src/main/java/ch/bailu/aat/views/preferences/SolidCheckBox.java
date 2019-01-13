@@ -16,10 +16,10 @@ public class SolidCheckBox extends LinearLayout {
     public SolidCheckBox(final SolidBoolean sboolean) {
         super(sboolean.getContext());
         setOrientation(VERTICAL);
-        AppTheme.themify(this);
+        AppTheme.main.button(this);
 
         CheckBox checkBox = new CheckBox(getContext());
-        AppTheme.themify(checkBox);
+        AppTheme.main.header(checkBox);
 
         addView(checkBox);
 

@@ -39,7 +39,8 @@ public class MapFeaturesEntryView extends LinearLayout implements View.OnClickLi
         text = new TextView(getContext());
         icon = new SVGAssetView(scontext, R.drawable.open_menu_light);
         icon.setOnClickListener(this);
-        AppTheme.themify(icon);
+
+        //AppTheme.themify(icon);
 
 
         addView(icon, icon_view_size, icon_view_size);

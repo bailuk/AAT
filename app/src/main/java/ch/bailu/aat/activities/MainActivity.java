@@ -16,6 +16,7 @@ import ch.bailu.aat.preferences.presets.SolidPreset;
 import ch.bailu.aat.util.fs.AppDirectory;
 import ch.bailu.aat.util.ui.AppLayout;
 import ch.bailu.aat.util.ui.AppTheme;
+import ch.bailu.aat.util.ui.UiTheme;
 import ch.bailu.aat.views.AbsLabelTextView;
 import ch.bailu.aat.views.ContentView;
 import ch.bailu.aat.views.bar.MainControlBar;
@@ -51,7 +52,7 @@ public class MainActivity extends ActivityContext {
         LinearLayout layout = new LinearLayout(this);
         layout.setOrientation(LinearLayout.VERTICAL);
         layout.addView(new DocumentationLabel(ActivitySwitcher.getAbout(this)));
-        layout.setBackgroundColor(AppTheme.getAltBackgroundColor());
+
         return layout;
     }
 
@@ -108,7 +109,11 @@ public class MainActivity extends ActivityContext {
 
     private class ActivityLabel extends AbsLabelTextView {
         public ActivityLabel(final ActivitySwitcher.Entry s) {
-            super(MainActivity.this, s.activityLabel);
+            this(AppTheme.main, s);
+        }
+
+        public ActivityLabel(UiTheme theme, final ActivitySwitcher.Entry s) {
+            super( MainActivity.this, theme, s.activityLabel);
 
             setOnClickListener(v -> s.start(MainActivity.this));
 
@@ -246,9 +251,7 @@ public class MainActivity extends ActivityContext {
     private class DocumentationLabel extends ActivityLabel {
 
         public DocumentationLabel(ActivitySwitcher.Entry s) {
-            super(s);
-            setTextColor(AppTheme.getHighlightColor3());
-
+            super(AppTheme.alt, s);
             setText(getString(R.string.intro_about) + " / " + getString(R.string.intro_readme));
         }
 

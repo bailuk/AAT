@@ -23,8 +23,9 @@ public class MapColor {
 
 
     public final static int GRID = Color.GRAY;
-    public final static int EDGE = AppTheme.getAltBackgroundColor();
+    public final static int EDGE = Color.BLACK; //AppTheme.getAltBackgroundColor();
     public final static int TEXT = Color.BLACK;
+    //public static final int LEGEND_TEXT = Color.BLACK;
 
 
     static public int setAlpha(int color, int alpha) {
@@ -62,14 +63,14 @@ public class MapColor {
         }
 
         if (iid == InfoID.EDITOR_DRAFT)
-            return AppTheme.getHighlightColor2();
+            return AppTheme.COLOR_GREEN;
 
         if (iid == InfoID.EDITOR_OVERLAY)
             return Color.MAGENTA; //AppTheme.getHighlightColor3();
 
 
         if (iid == InfoID.FILEVIEW)
-            return AppTheme.getHighlightColor3();
+            return AppTheme.COLOR_BLUE;
 
 
 

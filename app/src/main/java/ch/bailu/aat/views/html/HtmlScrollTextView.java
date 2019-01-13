@@ -18,7 +18,7 @@ public class HtmlScrollTextView extends VerticalScrollView {
     }
 
 
-
+/*
     private static String themify(String text) {
         int color = AppTheme.getHighlightColor3();
         String scolor = String.format("#%06X", 0xFFFFFF & color);
@@ -31,7 +31,7 @@ public class HtmlScrollTextView extends VerticalScrollView {
 
         return text;
     }
-
+*/
     public HtmlScrollTextView(Context context, String text, LinkHandler linkHandler) {
         this(context);
         setHtmlText(text);

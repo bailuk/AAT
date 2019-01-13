@@ -12,9 +12,14 @@ public class LogInfoMessageView extends MessageView {
     public LogInfoMessageView(Context context) {
         super(context, AppLog.LOG_INFO);
 
-        setTextColor(AppTheme.getHighlightColor3());
-        setTypeface(Typeface.MONOSPACE);
-        setTextSize(TypedValue.COMPLEX_UNIT_SP, 18f);
+
+        AppTheme.bar.topic(this);
+        AppTheme.bar.toolTip(this);
+
+
+        //setTextColor(getHighlightColor3());
+        //setTypeface(Typeface.MONOSPACE);
+        //setTextSize(TypedValue.COMPLEX_UNIT_SP, 18f);
     }
 
     @Override

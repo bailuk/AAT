@@ -135,9 +135,10 @@ public abstract class AbsGpxListActivity extends ActivityContext implements OnIt
 
     private void setListBackgroundColor() {
         if (sdirectory.createSelectionString().length() > 0) {
-            listView.setBackgroundColor(AppTheme.getAltBackgroundColor());
+            AppTheme.alt.background(listView);
+            //listView.setBackgroundColor(AppTheme.getAltBackgroundColor());
         } else {
-            listView.setBackgroundColor(Color.TRANSPARENT);
+            AppTheme.main.background(listView);//listView.setBackgroundColor(Color.TRANSPARENT);
         }
     }
 
@@ -177,7 +178,8 @@ public abstract class AbsGpxListActivity extends ActivityContext implements OnIt
             summary.addAllContent(acontext, getSummaryData(), InfoID.LIST_SUMMARY);
 
             TitleView title = new TitleView(acontext, filter_label);
-            title.setBackgroundColor(AppTheme.getAltBackgroundColor());
+            AppTheme.alt.background(title);
+            //title.setBackgroundColor(AppTheme.getAltBackgroundColor());
             summary.add(title);
             summary.addAllFilterViews(map.getMContext());
 

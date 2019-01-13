@@ -64,7 +64,8 @@ public class OverpassActivity extends AbsOsmApiActivity  {
             }
         });
 
-        osm_features.setBackgroundColor(AppTheme.getAltBackgroundColor());
+        AppTheme.alt.background(osm_features);
+        //osm_features.setBackgroundColor(getAltBackgroundColor());
 
         return osm_features;
     }

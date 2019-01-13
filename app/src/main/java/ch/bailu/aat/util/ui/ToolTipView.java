@@ -8,7 +8,7 @@ public class ToolTipView extends TextView {
     public ToolTipView(Context context) {
         super(context);
 
-        setTextColor(AppTheme.getHighlightColor3());
+        AppTheme.main.toolTip(this);
         setVisibility(GONE);
     }
 

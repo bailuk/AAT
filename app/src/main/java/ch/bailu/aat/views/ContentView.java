@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import ch.bailu.aat.activities.ActivitySwitcher;
 import ch.bailu.aat.preferences.system.SolidStatusMessages;
 import ch.bailu.aat.util.ui.AppLog;
+import ch.bailu.aat.util.ui.AppTheme;
 
 public class ContentView extends FrameLayout{
     private final LinearLayout mainContent;
@@ -20,6 +21,8 @@ public class ContentView extends FrameLayout{
 
     public ContentView(Context context) {
         super(context);
+
+        AppTheme.main.background(this);
 
         mainContent = new LinearLayout(context);
         mainContent.setOrientation(LinearLayout.VERTICAL);
