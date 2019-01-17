@@ -3,6 +3,7 @@ package ch.bailu.aat.services;
 import android.content.Context;
 
 import ch.bailu.aat.services.background.BackgroundService;
+import ch.bailu.aat.services.bluetooth_le.BleService;
 import ch.bailu.aat.services.cache.CacheService;
 import ch.bailu.aat.services.dem.ElevationService;
 import ch.bailu.aat.services.directory.DirectoryService;
@@ -23,6 +24,8 @@ public class OneService extends AbsService  implements ServiceContext {
     private ElevationService elevation;
     private TileRemoverService tileRemover;
     private RenderService render;
+    private BleService ble;
+
 
 
     @Override
@@ -81,6 +84,12 @@ public class OneService extends AbsService  implements ServiceContext {
             render.close();
             render = null;
         }
+
+        if (ble != null) {
+            ble.close();
+            ble = null;
+        }
+
         super.onDestroy();
     }
 
@@ -124,6 +133,14 @@ public class OneService extends AbsService  implements ServiceContext {
             render = new RenderService(this);
         }
         return render;
+    }
+
+    @Override
+    public BleService getBleService() {
+        if (ble == null) {
+            ble = new BleService(this);
+        }
+        return ble;
     }
 
     @Override

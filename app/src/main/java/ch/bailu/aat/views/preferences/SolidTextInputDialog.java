@@ -7,9 +7,6 @@ import android.widget.EditText;
 
 import ch.bailu.aat.R;
 import ch.bailu.aat.preferences.AbsSolidType;
-import ch.bailu.aat.preferences.SolidInteger;
-import ch.bailu.aat.preferences.SolidLong;
-import ch.bailu.aat.preferences.SolidString;
 
 public class SolidTextInputDialog extends AbsSolidDialog {
 

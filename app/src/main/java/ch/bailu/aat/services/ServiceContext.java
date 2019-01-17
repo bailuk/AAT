@@ -3,6 +3,7 @@ package ch.bailu.aat.services;
 import android.app.Notification;
 
 import ch.bailu.aat.services.background.BackgroundService;
+import ch.bailu.aat.services.bluetooth_le.BleService;
 import ch.bailu.aat.services.cache.CacheService;
 import ch.bailu.aat.services.dem.ElevationService;
 import ch.bailu.aat.services.directory.DirectoryService;
@@ -30,6 +31,7 @@ public interface ServiceContext extends ContextWrapperInterface {
     DirectoryService getDirectoryService();
     TileRemoverService getTileRemoverService();
     RenderService getRenderService();
+    BleService getBleService();
 
     void startForeground(int id, Notification notification);
     void stopForeground(boolean b);
