@@ -5,8 +5,6 @@ import android.support.annotation.RequiresApi;
 
 import java.util.UUID;
 
-import ch.bailu.aat.util.ui.AppLog;
-
 @RequiresApi(api = 18)
 public class BatteryService {
 

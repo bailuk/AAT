@@ -5,12 +5,14 @@ import android.support.annotation.RequiresApi;
 
 import java.util.UUID;
 
-import ch.bailu.aat.util.ui.AppLog;
-
 @RequiresApi(api = 18)
 public class HeartRateService {
-    // EC DMH30 0ADE BBB Bluepulse+ Heart Rate Sensor BCP-62DB
-
+    /**
+     *
+     * EC DMH30 0ADE BBB Bluepulse+ Heart Rate Sensor BCP-62DB
+     * https://www.bluetooth.com/specifications/gatt/viewer?attributeXmlFile=org.bluetooth.service.heart_rate.xml
+     *
+     */
 
     public final static UUID HEART_RATE_SERVICE = ID.toUUID(0x180d);
     public final static UUID HEART_RATE_MESUREMENT = ID.toUUID(0x2a37);
@@ -57,7 +59,7 @@ public class HeartRateService {
         if (HEART_RATE_SERVICE.equals(c.getService().getUuid())) {
 
             if (BODY_SENSOR_LOCATION.equals(c.getUuid())) {
-                logBodySensorLocation(c.getValue());
+                readBodySensorLocation(c.getValue());
             }
         }
     }
@@ -67,7 +69,7 @@ public class HeartRateService {
         if (HEART_RATE_SERVICE.equals(c.getService().getUuid())) {
 
             if (HEART_RATE_MESUREMENT.equals(c.getUuid())) {
-                logHeartRateMesurement(c, c.getValue());
+                readHeartRateMesurement(c, c.getValue());
             }
         }
 
@@ -79,54 +81,59 @@ public class HeartRateService {
         return "Heart Rate Sensor [" + location + "]";
     }
 
-    private void logBodySensorLocation(byte[] value) {
+    private void readBodySensorLocation(byte[] value) {
 
         if (value[0] < BODY_SENSOR_LOCATIONS.length) {
             location = BODY_SENSOR_LOCATIONS[value[0]];
         }
-        AppLog.d(this, value.length + " Body Sensor Location " + location);
     }
 
 
 
-    private void logHeartRateMesurement(BluetoothGattCharacteristic c, byte[] v) {
-        AppLog.d(this, v.length + " HeartRateMesurement");
-        byte flags = v[0];
+    private boolean bpmUint16 = false;
 
-        if (ID.isBitSet(flags, 0)) {
-            AppLog.d(this, "bpm UNIT8");
+
+    private boolean haveSensorContactStatus = false;
+    private boolean haveSensorContact = false;
+
+    private boolean haveEnergyExpended = false;
+    private boolean haveRrIntervall = false;
+
+    private int bpm = 0;
+    private double rrIntervall = 0d;
+
+    private void readHeartRateMesurement(BluetoothGattCharacteristic c, byte[] v) {
+        int offset = 0;
+        byte flags = v[offset];
+
+
+        bpmUint16 = ID.isBitSet(flags, 0);
+
+        haveSensorContactStatus = ID.isBitSet(flags, 1);
+        haveSensorContact = ID.isBitSet(flags, 2);
+
+        haveEnergyExpended = ID.isBitSet(flags, 3);
+        haveRrIntervall = ID.isBitSet(flags, 4);
+
+        offset += 1;
+
+        if (bpmUint16) {
+            bpm = c.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT16, offset);
+            offset += 2;
+
         } else {
-            AppLog.d(this, "bpm UNIT16");
+            bpm = c.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT8, offset);
+            offset += 1;
+
         }
 
-        if (ID.isBitSet(flags, 1)) {
-
-            if (ID.isBitSet(flags, 2)) {
-                AppLog.d(this, "3 supported & detected");
-            } else {
-                AppLog.d(this, "2 supported");
-            }
-
-        } else {
-            if (ID.isBitSet(flags, 2)) {
-                AppLog.d(this, "1 not supported");
-            } else {
-                AppLog.d(this, "0 not supported");
-            }
+        if (haveEnergyExpended) {
+            offset += 2;
         }
 
-
-        if (ID.isBitSet(flags, 3)) {
-            AppLog.d(this, "Energy extension");
-        } else {
-            AppLog.d(this, "No energy extension");
-        }
-
-        if (ID.isBitSet(flags, 4)) {
-            AppLog.d(this, "RR intervall is present");
-        } else {
-            AppLog.d(this, "No rr intervall");
+        if (haveRrIntervall) {
+            rrIntervall = c.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT16, offset);
+            rrIntervall = rrIntervall / 1024d;
         }
     }
-
 }

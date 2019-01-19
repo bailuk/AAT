@@ -21,6 +21,7 @@ public class AppBroadcaster {
     public static final String DBSYNC_DONE=NAME_SPACE+"SYNC_DONE";
     public static final String DB_SYNC_CHANGED=NAME_SPACE+"SYNC_CHANGED";
 
+    public static final String BLE_DEVICE_SCANNED = NAME_SPACE+"BLE_DEVICE_SCANNED";
 
     /** 
      *   Information about state changes of files (in cache and on disk)

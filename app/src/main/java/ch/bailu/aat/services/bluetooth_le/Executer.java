@@ -12,6 +12,7 @@ import java.util.UUID;
 public class Executer {
     private final UUID ENABLE_NOTIFICATION = UUID.fromString("00002902-0000-1000-8000-00805f9b34fb");
 
+
     private final Stack<BluetoothGattCharacteristic> toRead = new Stack<>();
     private final Stack<BluetoothGattCharacteristic> toNotify = new Stack<>();
 
@@ -26,25 +27,31 @@ public class Executer {
     }
 
 
-    public void next(BluetoothGatt gatt) {
+
+
+    public boolean next(BluetoothGatt gatt) {
         if (toRead.size() > 0) {
             gatt.readCharacteristic(toRead.pop());
 
         } else if (toNotify.size() > 0) {
             enableNotification(gatt, toNotify.pop());
+
+        } else {
+            return false;
+
         }
+        return true;
     }
 
 
     private void enableNotification(BluetoothGatt gatt, BluetoothGattCharacteristic c) {
-        gatt.setCharacteristicNotification(c, true);
 
-        for (BluetoothGattDescriptor d : c.getDescriptors()) {
-            if (ENABLE_NOTIFICATION.equals(d.getUuid())) {
-                d.setValue(BluetoothGattDescriptor.ENABLE_NOTIFICATION_VALUE);
-                gatt.writeDescriptor(d);
-                break;
-            }
+        BluetoothGattDescriptor d = c.getDescriptor(ENABLE_NOTIFICATION);
+
+        if (d != null) {
+            gatt.setCharacteristicNotification(c, true);
+            d.setValue(BluetoothGattDescriptor.ENABLE_NOTIFICATION_VALUE);
+            gatt.writeDescriptor(d);
         }
     }
 }

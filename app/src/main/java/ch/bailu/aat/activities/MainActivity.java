@@ -1,7 +1,11 @@
 package ch.bailu.aat.activities;
 
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -13,7 +17,9 @@ import ch.bailu.aat.preferences.system.SolidDataDirectory;
 import ch.bailu.aat.preferences.system.SolidExternalDirectory;
 import ch.bailu.aat.preferences.SolidFile;
 import ch.bailu.aat.preferences.presets.SolidPreset;
-import ch.bailu.aat.services.bluetooth_le.ScannerSDK18;
+import ch.bailu.aat.services.InsideContext;
+import ch.bailu.aat.util.AppBroadcaster;
+import ch.bailu.aat.util.ToDo;
 import ch.bailu.aat.util.fs.AppDirectory;
 import ch.bailu.aat.util.ui.AppLayout;
 import ch.bailu.aat.util.ui.AppTheme;
@@ -32,8 +38,14 @@ public class MainActivity extends ActivityContext {
 
         createViews();
         createDispatcher();
+    }
 
-        new ScannerSDK18(this);
+
+    @Override
+    public void onResumeWithService() {
+        super.onResumeWithService();
+
+        AppBroadcaster.broadcast(this, AppBroadcaster.BLE_DEVICE_SCANNED);
     }
 
 
@@ -44,8 +56,8 @@ public class MainActivity extends ActivityContext {
         contentView.add(createButtonBar());
         contentView.addW(createActionList());
 
-
         contentView.add(createExtraButton());
+
         setContentView(contentView);
     }
 
@@ -53,6 +65,11 @@ public class MainActivity extends ActivityContext {
     private View createExtraButton() {
         LinearLayout layout = new LinearLayout(this);
         layout.setOrientation(LinearLayout.VERTICAL);
+
+        if (Build.VERSION.SDK_INT >= 18) {
+            layout.addView(new BleLabel());
+        }
+
         layout.addView(new DocumentationLabel(ActivitySwitcher.getAbout(this)));
         layout.setBackgroundColor(AppTheme.getAltBackgroundColor());
         return layout;
@@ -67,6 +84,8 @@ public class MainActivity extends ActivityContext {
         for (int i = 0; i < accessibleCount; i++) {
             list.add(labelFactory(new ActivitySwitcher(this).get(i)));
         }
+
+
         return list;
     }
 
@@ -257,4 +276,56 @@ public class MainActivity extends ActivityContext {
 
 
     }
+
+
+    private class BleLabel extends AbsLabelTextView implements View.OnClickListener {
+        public BleLabel() {
+            super(MainActivity.this, ToDo.translate("Bluetooth LE sensors"));
+            setText();
+            setOnClickListener(this);
+        }
+
+
+        @Override
+        public void onDetachedFromWindow() {
+            getContext().unregisterReceiver(onBleDeviceScanned);
+            super.onDetachedFromWindow();
+        }
+
+
+        @Override
+        public void onAttachedToWindow() {
+            super.onAttachedToWindow();
+            AppBroadcaster.register(getContext(), onBleDeviceScanned, AppBroadcaster.BLE_DEVICE_SCANNED);
+        }
+
+
+        private final BroadcastReceiver onBleDeviceScanned = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                setText();
+            }
+        };
+
+        private void setText() {
+            new InsideContext(getServiceContext()) {
+                @Override
+                public void run() {
+                    setText(getServiceContext().getBleService().toString());
+                }
+            };
+        }
+
+
+        @Override
+        public void onClick(View v) {
+            new InsideContext(getServiceContext()) {
+                @Override
+                public void run() {
+                    getServiceContext().getBleService().scan();
+                }
+            };
+        }
+    }
+
 }

@@ -5,8 +5,6 @@ import android.support.annotation.RequiresApi;
 
 import java.util.UUID;
 
-import ch.bailu.aat.util.ui.AppLog;
-
 @RequiresApi(api = 18)
 public class CscService {
     /**
@@ -64,7 +62,7 @@ public class CscService {
     public void notify(BluetoothGattCharacteristic c) {
         if (CSC_SERVICE.equals(c.getService().getUuid())) {
             if (CSC_MESUREMENT.equals(c.getUuid())) {
-                logCscMesurement(c, c.getValue());
+                readCscMesurement(c, c.getValue());
             }
         }
     }
@@ -90,15 +88,81 @@ public class CscService {
     public void read(BluetoothGattCharacteristic c) {
         if (CSC_SERVICE.equals(c.getService().getUuid())) {
             if (CSC_FEATURE.equals(c.getUuid())) {
-                logCscFeature(c.getValue());
+                readCscFeature(c.getValue());
 
             } else if (CSC_SENSOR_LOCATION.equals(c.getUuid())) {
-                logCscSensorLocation(c.getValue());
+                readCscSensorLocation(c.getValue());
 
             }
         }
     }
 
+
+
+
+    private void readCscSensorLocation(byte[] v) {
+        if (v.length > 0 && v[0] < SENSOR_LOCATION.length) {
+            location = SENSOR_LOCATION[v[0]];
+        }
+    }
+
+
+    private int cumulative_wheel_revolutions = 0;
+    private double last_wheel_event_time = 0d;
+
+    private int cumulative_crank_revolutions = 0;
+    private double last_crank_event_time = 0d;
+
+    private long timestamp = 0;
+
+    private void readCscMesurement(BluetoothGattCharacteristic c, byte[] value) {
+        int offset = 0;
+
+        timestamp = System.currentTimeMillis();
+
+        byte data = value[offset];
+
+        offset += 1;
+
+        if (ID.isBitSet(data, BIT_SPEED)) {
+            cumulative_wheel_revolutions =
+                    c.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT32, offset);
+            offset += 4;
+
+            last_wheel_event_time = c.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT16, offset);
+            last_wheel_event_time /= 1024d;
+            offset += 2;
+
+        }
+
+
+        if (ID.isBitSet(data, BIT_CADENCE)) {
+            cumulative_crank_revolutions = c.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT16, offset);
+            offset += 2;
+
+            last_crank_event_time = c.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT16, offset);
+            last_crank_event_time /= 1024d;
+        }
+    }
+
+
+
+    private void readCscFeature(byte[] v) {
+        if (v.length > 0) {
+            byte b = v[0];
+
+            if (ID.isBitSet(b, BIT_SPEED)) {
+                speed = true;
+
+            } else if (ID.isBitSet(b, BIT_CADENCE)) {
+                cadence = true;
+
+            } else if (ID.isBitSet(b, BIT_SPEED_AND_CADENCE)) {
+                speed = true;
+                cadence = true;
+            }
+        }
+    }
 
 
     @Override
@@ -114,56 +178,11 @@ public class CscService {
         }
 
         if (cadence) {
-            name +="Cadence ";
+            name += "Cadence ";
         }
 
         return name + "Sensor [" + location + "]";
     }
 
 
-    private void logCscSensorLocation(byte[] v) {
-        if (v.length > 0 && v[0] < SENSOR_LOCATION.length) {
-            location = SENSOR_LOCATION[v[0]];
-
-            AppLog.d(this, v.length + " CSC Location: " + location);
-        }
-    }
-
-
-    private void logCscMesurement(BluetoothGattCharacteristic c, byte[] value) {
-        AppLog.d(this, value.length + " CSC_MESUREMENT");
-
-        byte data = value[0];
-        Integer cumulative_wheel_revolutions = c.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT32, 1);
-        Integer last_wheel_event_time = c.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT16, 5);
-        Integer cumulative_crank_revolutions = c.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT16, 7);
-        Integer last_crank_event_time = c.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT16, 9);
-
-
-        //logCscFeature(value);
-    }
-
-
-
-    private void logCscFeature(byte[] v) {
-        AppLog.d(this, v.length + " CSC_FEATURE");
-        if (v.length > 0) {
-            byte b = v[0];
-
-            if (ID.isBitSet(b, BIT_SPEED)) {
-                speed = true;
-                AppLog.d(this, "Wheel revolution");
-
-            } else if (ID.isBitSet(b, BIT_CADENCE)) {
-                cadence = true;
-                AppLog.d(this, "Crank revolution");
-
-            } else if (ID.isBitSet(b, BIT_SPEED_AND_CADENCE)) {
-                speed = true;
-                cadence = true;
-                AppLog.d(this, "Multible senors");
-
-            }
-        }
-    }
 }

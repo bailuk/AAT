@@ -7,9 +7,12 @@ import android.bluetooth.BluetoothGattCharacteristic;
 import android.bluetooth.BluetoothGattDescriptor;
 import android.bluetooth.BluetoothGattService;
 import android.bluetooth.BluetoothProfile;
+import android.content.Context;
 import android.support.annotation.RequiresApi;
 
 import java.util.List;
+
+import ch.bailu.aat.util.AppBroadcaster;
 
 @RequiresApi(api = 18)
 public class Device extends BluetoothGattCallback {
@@ -22,13 +25,17 @@ public class Device extends BluetoothGattCallback {
 
     private final BluetoothDevice device;
 
-    public Device(BluetoothDevice d) {
+    private final Context context;
+    private boolean connected = false;
+
+    public Device(Context c, BluetoothDevice d) {
         device = d;
+        context = c;
     }
 
 
     public boolean isValid() {
-        return csc.isValid() || heartRate.isValid();
+        return connected && (csc.isValid() || heartRate.isValid());
     }
 
     @Override
@@ -36,12 +43,14 @@ public class Device extends BluetoothGattCallback {
         String s = device.getName();
 
         if (csc.isValid()) {
-            s = s + " " + csc.toString();
+            s = s + ", " + csc.toString();
         }
 
         if (heartRate.isValid()) {
-            s = s+ " " + heartRate.toString();
+            s = s+ ", " + heartRate.toString();
         }
+
+        s = s + ", " + battery.getBatteryLevelPercentage() + "%";
         return s;
     }
 
@@ -50,16 +59,29 @@ public class Device extends BluetoothGattCallback {
     public void onConnectionStateChange(BluetoothGatt gatt, int status, int newState) {
         if (status == BluetoothGatt.GATT_SUCCESS && newState == BluetoothProfile.STATE_CONNECTED) {
             gatt.discoverServices();
+            connected = true;
+        } else {
+            broadcast();
+            connected = false;
         }
     }
 
+    private void broadcast() {
+        AppBroadcaster.broadcast(context, AppBroadcaster.BLE_DEVICE_SCANNED);
+    }
+
+    private void executeOrBroadcast(BluetoothGatt gatt) {
+        if (!execute.next(gatt)) {
+            broadcast();
+        }
+    }
 
     @Override
     public void onServicesDiscovered(BluetoothGatt gatt, int status) {
         discover(gatt);
 
         if (isValid()) {
-            execute.next(gatt);
+            executeOrBroadcast(gatt);
         } else {
             gatt.close();
         }
@@ -70,7 +92,7 @@ public class Device extends BluetoothGattCallback {
 
     @Override
     public void onDescriptorWrite(BluetoothGatt gatt, BluetoothGattDescriptor descriptor, int status) {
-        execute.next(gatt);
+        executeOrBroadcast(gatt);
     }
 
     @Override
@@ -107,12 +129,11 @@ public class Device extends BluetoothGattCallback {
 
     public void onCharacteristicRead(BluetoothGatt gatt, BluetoothGattCharacteristic c,
                                      int status) {
-
         heartRate.read(c);
         battery.read(c);
         csc.read(c);
 
-        execute.next(gatt);
+        executeOrBroadcast(gatt);
     }
 
     public String getAddress() {
