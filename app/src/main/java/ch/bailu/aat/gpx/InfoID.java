@@ -18,5 +18,4 @@ public class InfoID {
     public final static int UNSPECIFIED = -1;
 
 
-
 }

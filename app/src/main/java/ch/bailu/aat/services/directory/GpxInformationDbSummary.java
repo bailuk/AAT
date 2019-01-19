@@ -4,7 +4,7 @@ import android.database.Cursor;
 
 import ch.bailu.aat.gpx.AltitudeDelta;
 import ch.bailu.aat.gpx.AutoPause;
-import ch.bailu.aat.gpx.GpxAttributesStatic;
+import ch.bailu.aat.gpx.GpxAttributes;
 import ch.bailu.aat.gpx.GpxBigDelta;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.GpxList;
@@ -40,7 +40,7 @@ public class GpxInformationDbSummary extends GpxInformation {
                 entry.getBoundingBox().getCenter(),
                 0, entry.getTimeStamp());
 
-        list.appendToCurrentSegment(point, GpxAttributesStatic.NULL_ATTRIBUTES);
+        list.appendToCurrentSegment(point, GpxAttributes.NULL);
     }
 
 

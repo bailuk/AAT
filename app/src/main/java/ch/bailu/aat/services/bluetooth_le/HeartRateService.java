@@ -5,6 +5,9 @@ import android.support.annotation.RequiresApi;
 
 import java.util.UUID;
 
+import ch.bailu.aat.gpx.GpxAttributes;
+import ch.bailu.aat.gpx.GpxInformation;
+
 @RequiresApi(api = 18)
 public class HeartRateService {
     /**
@@ -19,6 +22,15 @@ public class HeartRateService {
     public final static UUID BODY_SENSOR_LOCATION = ID.toUUID(0x2a38);
 
 
+    public static final int BPM_KEY_INDEX=0;
+    public static final int CONTACT_KEY_INDEX=1;
+
+    public static final String[] KEYS = {
+            "BPM",
+            "ContactStatus",
+    };
+
+
     private static final String[] BODY_SENSOR_LOCATIONS = {
             "Other",
             "Chest",
@@ -31,6 +43,8 @@ public class HeartRateService {
 
     private String location = BODY_SENSOR_LOCATIONS[0];
 
+
+    private GpxInformation information = GpxInformation.NULL;
 
     private boolean valid = false;
 
@@ -57,7 +71,6 @@ public class HeartRateService {
 
     public void read(BluetoothGattCharacteristic c) {
         if (HEART_RATE_SERVICE.equals(c.getService().getUuid())) {
-
             if (BODY_SENSOR_LOCATION.equals(c.getUuid())) {
                 readBodySensorLocation(c.getValue());
             }
@@ -75,6 +88,10 @@ public class HeartRateService {
 
     }
 
+    private void readHeartRateMesurement(BluetoothGattCharacteristic c, byte[] value) {
+        information = new Information(new Attributes(c, value));
+    }
+
 
     @Override
     public String toString() {
@@ -90,50 +107,117 @@ public class HeartRateService {
 
 
 
-    private boolean bpmUint16 = false;
+    private static class Attributes extends GpxAttributes {
+
+        private boolean haveSensorContactStatus = false;
+        private boolean haveSensorContact = false;
+
+        private boolean haveEnergyExpended = false;
+        private boolean haveRrIntervall = false;
+
+        private int bpm = 0;
+        private double rrIntervall = 0d;
 
 
-    private boolean haveSensorContactStatus = false;
-    private boolean haveSensorContact = false;
 
-    private boolean haveEnergyExpended = false;
-    private boolean haveRrIntervall = false;
+        public Attributes(BluetoothGattCharacteristic c, byte[] v) {
+            int offset = 0;
+            byte flags = v[offset];
 
-    private int bpm = 0;
-    private double rrIntervall = 0d;
+            boolean bpmUint16 = ID.isBitSet(flags, 0);
 
-    private void readHeartRateMesurement(BluetoothGattCharacteristic c, byte[] v) {
-        int offset = 0;
-        byte flags = v[offset];
+            haveSensorContactStatus = ID.isBitSet(flags, 1);
+            haveSensorContact = ID.isBitSet(flags, 2);
 
+            haveEnergyExpended = ID.isBitSet(flags, 3);
+            haveRrIntervall = ID.isBitSet(flags, 4);
 
-        bpmUint16 = ID.isBitSet(flags, 0);
-
-        haveSensorContactStatus = ID.isBitSet(flags, 1);
-        haveSensorContact = ID.isBitSet(flags, 2);
-
-        haveEnergyExpended = ID.isBitSet(flags, 3);
-        haveRrIntervall = ID.isBitSet(flags, 4);
-
-        offset += 1;
-
-        if (bpmUint16) {
-            bpm = c.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT16, offset);
-            offset += 2;
-
-        } else {
-            bpm = c.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT8, offset);
             offset += 1;
 
+            if (bpmUint16) {
+                bpm = c.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT16, offset);
+                offset += 2;
+
+            } else {
+                bpm = c.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT8, offset);
+                offset += 1;
+
+            }
+
+            if (haveEnergyExpended) {
+                offset += 2;
+            }
+
+            if (haveRrIntervall) {
+                rrIntervall = c.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT16, offset);
+                rrIntervall = rrIntervall / 1024d;
+            }
         }
 
-        if (haveEnergyExpended) {
-            offset += 2;
+        @Override
+        public String get(String key) {
+            for (int i = 0; i< KEYS.length; i++) {
+                if (key.equalsIgnoreCase(KEYS[i])) return getValue(i);
+            }
+
+            return null;
         }
 
-        if (haveRrIntervall) {
-            rrIntervall = c.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT16, offset);
-            rrIntervall = rrIntervall / 1024d;
+        @Override
+        public String getValue(int index) {
+            if (index == BPM_KEY_INDEX) {
+                return String.valueOf(bpm);
+            } else if (index == CONTACT_KEY_INDEX) {
+                if (haveSensorContact) {
+                    if (haveSensorContact) return "ok";
+                    else return "...";
+                }
+                return "-";
+            }
+
+            return NULL_VALUE;
+        }
+
+        @Override
+        public String getKey(int index) {
+            if (index < KEYS.length) return KEYS[index];
+            return null;
+        }
+
+        @Override
+        public void put(String key, String value) {
+
+        }
+
+        @Override
+        public int size() {
+            return KEYS.length;
+        }
+
+        @Override
+        public void remove(String key) {
+
+        }
+    }
+
+
+    private static class Information extends GpxInformation {
+        private final GpxAttributes attributes;
+        private final long timeStamp = System.currentTimeMillis();
+
+
+        public Information(GpxAttributes a) {
+            attributes = a;
+        }
+
+        @Override
+        public GpxAttributes getAttributes() {
+            return attributes;
+        }
+
+        @Override
+        public long getTimeStamp() {
+            return timeStamp;
         }
     }
 }

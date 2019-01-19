@@ -2,6 +2,7 @@ package ch.bailu.aat.services.editor;
 
 import ch.bailu.aat.gpx.AltitudeDelta;
 import ch.bailu.aat.gpx.AutoPause;
+import ch.bailu.aat.gpx.GpxAttributes;
 import ch.bailu.aat.gpx.GpxAttributesStatic;
 import ch.bailu.aat.gpx.GpxList;
 import ch.bailu.aat.gpx.GpxListWalker;
@@ -15,9 +16,9 @@ import ch.bailu.aat.gpx.interfaces.GpxType;
 import ch.bailu.aat.gpx.tools.Attacher;
 import ch.bailu.aat.gpx.tools.Copier;
 import ch.bailu.aat.gpx.tools.Inverser;
-import ch.bailu.aat.gpx.tools.TimeStampFixer;
 import ch.bailu.aat.gpx.tools.SimplifierBearing;
 import ch.bailu.aat.gpx.tools.SimplifierDistance;
+import ch.bailu.aat.gpx.tools.TimeStampFixer;
 
 public class NodeEditor {
     private final GpxList gpxList;
@@ -30,7 +31,7 @@ public class NodeEditor {
 
     public NodeEditor(GpxType t) {
         gpxList = new GpxList(t, MaxSpeed.NULL, AutoPause.NULL, AltitudeDelta.NULL);
-        node = new GpxPointFirstNode(GpxPoint.NULL, GpxAttributesStatic.NULL_ATTRIBUTES);
+        node = new GpxPointFirstNode(GpxPoint.NULL, GpxAttributes.NULL);
     }
 
     public NodeEditor(GpxPointNode n, GpxList l) {
@@ -223,7 +224,7 @@ public class NodeEditor {
 
             if (point == node) {
                 newList.appendToCurrentSegment(new GpxPoint(newPoint),
-                        GpxAttributesStatic.NULL_ATTRIBUTES);
+                        GpxAttributesStatic.NULL);
                 newNode = insertNewPoint();
             }
         }
@@ -231,7 +232,7 @@ public class NodeEditor {
         public NodeEditor getNewNode() {
             if (newList.getPointList().size() == 0) {
                 newList.appendToCurrentSegment(new GpxPoint(newPoint),
-                        GpxAttributesStatic.NULL_ATTRIBUTES);
+                        GpxAttributesStatic.NULL);
                 newNode = insertNewPoint();
             }
             return newNode;

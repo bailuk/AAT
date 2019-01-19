@@ -86,10 +86,10 @@ public class TrackLogger extends Logger {
     public void log(GpxPointInterface tp) throws IOException {
         if (requestSegment) {
             requestSegment=false;
-            track.appendToNewSegment(new GpxPoint(tp), GpxAttributesStatic.NULL_ATTRIBUTES);
+            track.appendToNewSegment(new GpxPoint(tp), GpxAttributesStatic.NULL);
 
         } else {
-            track.appendToCurrentSegment(new GpxPoint(tp), GpxAttributesStatic.NULL_ATTRIBUTES);
+            track.appendToCurrentSegment(new GpxPoint(tp), GpxAttributesStatic.NULL);
         }
 
         setVisibleTrackPoint((GpxPointNode)track.getPointList().getLast());

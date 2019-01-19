@@ -3,8 +3,6 @@ package ch.bailu.aat.gpx;
 
 
 public class GpxAttributesStatic extends GpxAttributes{
-    public static final GpxAttributesStatic NULL_ATTRIBUTES =
-            new GpxAttributesStatic();
 
 
     public static class Tag implements Comparable<Tag> {

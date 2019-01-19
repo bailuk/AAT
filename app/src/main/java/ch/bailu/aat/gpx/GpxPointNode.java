@@ -6,7 +6,6 @@ import ch.bailu.aat.gpx.linked_list.Node;
 
 
 public abstract class GpxPointNode extends Node implements GpxDeltaPointInterface {
-    private final static String NULL_VALUE="0";
 
     private GpxAttributes attributes;
     private final GpxPoint     point;
@@ -61,7 +60,7 @@ public abstract class GpxPointNode extends Node implements GpxDeltaPointInterfac
     public String getValue(String key) {
         String value = attributes.get(key);
         if (value==null) {
-            value=NULL_VALUE;
+            value=GpxAttributes.NULL_VALUE;
         }
         return value;
     }
@@ -88,7 +87,7 @@ public abstract class GpxPointNode extends Node implements GpxDeltaPointInterfac
     
     
     private void initMap() {
-        if (attributes == GpxAttributesStatic.NULL_ATTRIBUTES) {
+        if (attributes == GpxAttributes.NULL) {
             attributes = new GpxAttributesStatic();
         }
     }
@@ -102,7 +101,7 @@ public abstract class GpxPointNode extends Node implements GpxDeltaPointInterfac
     
     private void releaseMap() {
         if (attributes.size() == 0) {
-            attributes = GpxAttributesStatic.NULL_ATTRIBUTES;
+            attributes = GpxAttributesStatic.NULL;
         }
     }
 
