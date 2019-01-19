@@ -3,9 +3,16 @@ package ch.bailu.aat.services.bluetooth_le;
 import android.content.Context;
 import android.os.Build;
 
-public class BleDevices {
+import java.io.Closeable;
+
+import ch.bailu.aat.gpx.GpxInformation;
+
+public class BleDevices implements Closeable {
 
     public void scann() {}
+    public GpxInformation getInformation() {
+        return GpxInformation.NULL;
+    }
 
 
     public static BleDevices factory(Context context) {
@@ -15,4 +22,7 @@ public class BleDevices {
             return new BleDevices();
         }
     }
+
+    @Override
+    public void close() {}
 }

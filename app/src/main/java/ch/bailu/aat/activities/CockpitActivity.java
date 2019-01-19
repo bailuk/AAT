@@ -8,8 +8,10 @@ import ch.bailu.aat.description.AltitudeDescription;
 import ch.bailu.aat.description.AverageSpeedDescriptionAP;
 import ch.bailu.aat.description.CurrentSpeedDescription;
 import ch.bailu.aat.description.DistanceDescription;
+import ch.bailu.aat.description.HeartRateDescription;
 import ch.bailu.aat.description.MaximumSpeedDescription;
 import ch.bailu.aat.description.PredictiveTimeDescription;
+import ch.bailu.aat.dispatcher.BleSensorSource;
 import ch.bailu.aat.dispatcher.CurrentLocationSource;
 import ch.bailu.aat.dispatcher.EditorSource;
 import ch.bailu.aat.dispatcher.OverlaySource;
@@ -67,6 +69,7 @@ public class CockpitActivity extends AbsKeepScreenOnActivity {
         c1.addC(this, new DistanceDescription(this), InfoID.TRACKER);
         c1.addC(this, new AverageSpeedDescriptionAP(this), InfoID.TRACKER);
         c1.add(this, new MaximumSpeedDescription(this), InfoID.TRACKER);
+        c1.add(this, new HeartRateDescription(this), InfoID.HEART_RATE_SENSOR);
 
         return c1;
     }
@@ -92,5 +95,6 @@ public class CockpitActivity extends AbsKeepScreenOnActivity {
         addSource(new TrackerTimerSource(getServiceContext()));
         addSource(new CurrentLocationSource(getServiceContext()));
         addSource(new OverlaySource(getServiceContext()));
+        addSource(new BleSensorSource(getServiceContext()));
     }
 }

@@ -3,12 +3,12 @@ package ch.bailu.aat.gpx;
 public class GpxAttributesNull extends GpxAttributes {
     @Override
     public String get(String key) {
-        return null;
+        return NULL_VALUE;
     }
 
     @Override
     public String getValue(int index) {
-        return null;
+        return NULL_VALUE;
     }
 
     @Override

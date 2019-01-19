@@ -1,15 +1,17 @@
 package ch.bailu.aat.services.bluetooth_le;
 
 import android.bluetooth.BluetoothGattCharacteristic;
+import android.content.Context;
 import android.support.annotation.RequiresApi;
 
 import java.util.UUID;
 
 import ch.bailu.aat.gpx.GpxAttributes;
 import ch.bailu.aat.gpx.GpxInformation;
+import ch.bailu.aat.util.AppBroadcaster;
 
 @RequiresApi(api = 18)
-public class HeartRateService {
+public class HeartRateService extends HeartRateServiceID {
     /**
      *
      * EC DMH30 0ADE BBB Bluepulse+ Heart Rate Sensor BCP-62DB
@@ -17,36 +19,18 @@ public class HeartRateService {
      *
      */
 
-    public final static UUID HEART_RATE_SERVICE = ID.toUUID(0x180d);
-    public final static UUID HEART_RATE_MESUREMENT = ID.toUUID(0x2a37);
-    public final static UUID BODY_SENSOR_LOCATION = ID.toUUID(0x2a38);
-
-
-    public static final int BPM_KEY_INDEX=0;
-    public static final int CONTACT_KEY_INDEX=1;
-
-    public static final String[] KEYS = {
-            "BPM",
-            "ContactStatus",
-    };
-
-
-    private static final String[] BODY_SENSOR_LOCATIONS = {
-            "Other",
-            "Chest",
-            "Wrist",
-            "Finger",
-            "Hand",
-            "Ear Lobe",
-            "Foot"
-    };
 
     private String location = BODY_SENSOR_LOCATIONS[0];
 
-
     private GpxInformation information = GpxInformation.NULL;
 
+    private final Context context;
+
     private boolean valid = false;
+
+    public HeartRateService(Context c) {
+        context = c;
+    }
 
     public boolean isValid() {
         return valid;
@@ -90,6 +74,7 @@ public class HeartRateService {
 
     private void readHeartRateMesurement(BluetoothGattCharacteristic c, byte[] value) {
         information = new Information(new Attributes(c, value));
+        AppBroadcaster.broadcast(context, AppBroadcaster.BLE_DEVICE_NOTIFIED);
     }
 
 
@@ -107,7 +92,9 @@ public class HeartRateService {
 
 
 
-    private static class Attributes extends GpxAttributes {
+    private final Averager averager = new Averager();
+
+    private class Attributes extends GpxAttributes {
 
         private boolean haveSensorContactStatus = false;
         private boolean haveSensorContact = false;
@@ -116,7 +103,9 @@ public class HeartRateService {
         private boolean haveRrIntervall = false;
 
         private int bpm = 0;
-        private double rrIntervall = 0d;
+        private int bpma = 0;
+
+        private float rrIntervall = 0f;
 
 
 
@@ -150,8 +139,22 @@ public class HeartRateService {
 
             if (haveRrIntervall) {
                 rrIntervall = c.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT16, offset);
-                rrIntervall = rrIntervall / 1024d;
+                rrIntervall = rrIntervall / 1024f;
+
+                if (bpm == 0 && rrIntervall > 0f) {
+                    bpm = Math.round (60f / rrIntervall);
+                }
             }
+
+            if (bpm > 0) {
+                averager.add(bpm);
+                bpma = averager.get();
+                if (!haveSensorContactStatus) haveSensorContact = true;
+            } else {
+                if (!haveSensorContactStatus) haveSensorContact = false;
+            }
+
+
         }
 
         @Override
@@ -167,12 +170,17 @@ public class HeartRateService {
         public String getValue(int index) {
             if (index == BPM_KEY_INDEX) {
                 return String.valueOf(bpm);
+
+            } else if (index == BPMA_KEY_INDEX) {
+                return String.valueOf(bpma);
+
+            } else if (index == RR_KEY_INDEX) {
+                return String.valueOf(rrIntervall);
+
+
             } else if (index == CONTACT_KEY_INDEX) {
-                if (haveSensorContact) {
-                    if (haveSensorContact) return "ok";
-                    else return "...";
-                }
-                return "-";
+                 if (haveSensorContact) return "on";
+                 return "...";
             }
 
             return NULL_VALUE;
@@ -218,6 +226,41 @@ public class HeartRateService {
         @Override
         public long getTimeStamp() {
             return timeStamp;
+        }
+    }
+
+
+    public GpxInformation getInformation() {
+        return information;
+    }
+
+
+    private static class Averager {
+        private final static int MAX_SAMPLES = 20;
+
+        private final int values[] = new int[MAX_SAMPLES];
+        private int size = 0;
+        private int next = 0;
+
+        public void add(int b) {
+            values[next] = b;
+            if (size < MAX_SAMPLES) size++;
+
+            next++;
+            if (next >= MAX_SAMPLES) next = 0;
+        }
+
+        public int get() {
+            int r = 0;
+
+            if (size > 0) {
+                for (int i = 0; i < size; i++) {
+                    r = r + values[i];
+                }
+
+                r = r / size;
+            }
+            return r;
         }
     }
 }

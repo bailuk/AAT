@@ -5,6 +5,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
+import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.VirtualService;
 import ch.bailu.aat.util.AppBroadcaster;
@@ -45,12 +46,12 @@ public class BleService extends VirtualService {
 
     @Override
     public void close() {
+        devices.close();
         getContext().unregisterReceiver(onBluetoothStateChanged);
     }
 
 
     public void scan() {
-
         devices.scann();
     }
 
@@ -58,5 +59,9 @@ public class BleService extends VirtualService {
     @Override
     public String toString() {
         return devices.toString();
+    }
+
+    public GpxInformation getInformation() {
+        return devices.getInformation();
     }
 }

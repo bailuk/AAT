@@ -8,6 +8,7 @@ import android.support.annotation.RequiresApi;
 
 import java.util.ArrayList;
 
+import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.util.Timer;
 import ch.bailu.aat.util.ToDo;
@@ -80,7 +81,7 @@ public class BleDevicesSDK18 extends BleDevices {
 
     private void removeInvalidDevices() {
         for (int i = scanned.size()-1; i > -1; i--) {
-            if (scanned.get(i).isValid() == false) {
+            if (scanned.get(i).isConnected() == false) {
                 scanned.remove(i);
             }
         }
@@ -133,4 +134,32 @@ public class BleDevicesSDK18 extends BleDevices {
         }
         return s;
     }
+
+
+    @Override
+    public GpxInformation getInformation() {
+        for (Device device : scanned) {
+            if (device.isValid()) {
+                GpxInformation information = device.getInformation();
+                if (information != null) return information;
+            }
+        }
+        return GpxInformation.NULL;
+    }
+
+
+    @Override
+    public void close() {
+        timer.cancel();
+        scanner.stop();
+
+        for (Device device : scanned) {
+            device.close();
+        }
+
+        scanned.clear();
+
+
+    }
+
 }

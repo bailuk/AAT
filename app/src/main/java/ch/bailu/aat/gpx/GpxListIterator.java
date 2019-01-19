@@ -7,7 +7,7 @@ public class GpxListIterator {
 
     private class PointPrimerNode extends GpxPointFirstNode {
         public PointPrimerNode() {
-            super(GpxPoint.NULL, GpxAttributesStatic.NULL_ATTRIBUTES);
+            super(GpxPoint.NULL, GpxAttributes.NULL);
         }
         
         @Override
