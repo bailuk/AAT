@@ -1,13 +1,13 @@
 package ch.bailu.aat.views;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import ch.bailu.aat.util.ui.AppTheme;
 import ch.bailu.aat.util.ui.ToolTipProvider;
 import ch.bailu.aat.util.ui.ToolTipView;
+import ch.bailu.aat.util.ui.UiTheme;
 
 public abstract class AbsLabelTextView extends LinearLayout{
 
@@ -15,28 +15,33 @@ public abstract class AbsLabelTextView extends LinearLayout{
     private final ToolTipView toolTip;
 
     public AbsLabelTextView(final Context context, String labelText) {
+        this (context, AppTheme.main, labelText);
+    }
+
+    public AbsLabelTextView(final Context context, UiTheme theme, String labelText) {
         super(context);
         setOrientation(VERTICAL);
 
         label = new TextView(context);
         label.setText(labelText);
+        theme.header(label);
         addView(label);
-        AppTheme.themify(label);
 
         value = new TextView(context);
-        value.setTextColor(Color.LTGRAY);
+        theme.content(value);
         addView(value);
 
         toolTip = new ToolTipView(context);
         addView(toolTip);
 
-        AppTheme.themify(this);
+        theme.button(this);
     }
 
 
     public void setText(CharSequence text) {
         value.setText(text);
     }
+
     public void setToolTip(ToolTipProvider tip) {
         toolTip.setToolTip(tip);
     }

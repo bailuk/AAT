@@ -31,7 +31,7 @@ public class GpxListView extends ListView implements OnCursorChangedListener {
 
 
 
-        AppTheme.themify(this, AppTheme.getHighlightColor());
+        AppTheme.themifyList(this);
     }
 
 

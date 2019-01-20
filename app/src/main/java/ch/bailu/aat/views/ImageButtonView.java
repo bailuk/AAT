@@ -11,6 +11,6 @@ public class ImageButtonView extends ImageButton {
         super(context);
 
         setImageResource(res);
-        AppTheme.themify(this);
+        AppTheme.bar.button(this);
     }
 }

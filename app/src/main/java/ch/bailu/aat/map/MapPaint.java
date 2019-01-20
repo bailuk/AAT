@@ -47,7 +47,7 @@ public class MapPaint {
 
     public static Paint createLegendTextPaint(AppDensity res) {
         Paint p =  createTextPaint(res, TEXT_SIZE/3*2);
-        p.setColor(AppTheme.getAltBackgroundColor());
+        p.setColor(MapColor.TEXT);
 
         return p;
     }

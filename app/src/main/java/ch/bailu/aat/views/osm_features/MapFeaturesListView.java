@@ -33,7 +33,7 @@ public class MapFeaturesListView extends ListView  {
         final Adapter listAdapter = new Adapter();
 
 
-        AppTheme.themify(this, AppTheme.getHighlightColor());
+        AppTheme.themifyList(this);
 
         setAdapter(listAdapter);
         setOnItemClickListener(listAdapter);

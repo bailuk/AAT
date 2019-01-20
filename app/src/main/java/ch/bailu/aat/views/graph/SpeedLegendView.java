@@ -32,12 +32,12 @@ public class SpeedLegendView  extends LinearLayout implements SharedPreferences.
         addView(current);
 
         average = new TextView(context);
-        average.setTextColor(AppTheme.getHighlightColor2());
+        average.setTextColor(AppTheme.COLOR_GREEN);
         average.setText(new AverageSpeedDescription(context).getLabel());
         addView(average);
 
         averageAP = new TextView(context);
-        averageAP.setTextColor(AppTheme.getHighlightColor3());
+        averageAP.setTextColor(AppTheme.COLOR_BLUE);
         averageAP.setText(new AverageSpeedDescriptionAP(context).getLabel());
         addView(averageAP);
 

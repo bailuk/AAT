@@ -4,12 +4,10 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 
-import ch.bailu.aat.BuildConfig;
-import ch.bailu.aat.description.FF;
 import ch.bailu.aat.description.FF_GPX;
 import ch.bailu.aat.gpx.interfaces.GpxPointInterface;
 import ch.bailu.aat.gpx.interfaces.GpxType;
-import ch.bailu.aat.util.ui.AppTheme;
+import ch.bailu.aat.util.ui.AppString;
 import ch.bailu.util_java.foc.Foc;
 
 public abstract class GpxWriter {
@@ -47,11 +45,11 @@ public abstract class GpxWriter {
         writeString("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>");
         writeString("\n<gpx xmlns=\"http://www.topografix.com/GPX/1/1\"");
         writeString("\n    creator=\"");
-        writeString(AppTheme.getShortName());
+        writeString(AppString.getShortName());
         writeString(" ");
-        writeString(AppTheme.getLongName());
+        writeString(AppString.getLongName());
         writeString(" ");
-        writeString(AppTheme.getVersionName());
+        writeString(AppString.getVersionName());
         writeString("\" version=\"1.0\"");
         writeString("\n    xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"");
         writeString("\n    xsi:schemaLocation=\"http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd\">");

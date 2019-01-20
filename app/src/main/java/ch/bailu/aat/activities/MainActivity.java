@@ -13,16 +13,17 @@ import android.widget.LinearLayout;
 import ch.bailu.aat.R;
 import ch.bailu.aat.dispatcher.CurrentLocationSource;
 import ch.bailu.aat.dispatcher.TrackerSource;
-import ch.bailu.aat.preferences.system.SolidDataDirectory;
-import ch.bailu.aat.preferences.system.SolidExternalDirectory;
 import ch.bailu.aat.preferences.SolidFile;
 import ch.bailu.aat.preferences.presets.SolidPreset;
 import ch.bailu.aat.services.InsideContext;
 import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.util.ToDo;
+import ch.bailu.aat.preferences.system.SolidDataDirectory;
+import ch.bailu.aat.preferences.system.SolidExternalDirectory;
 import ch.bailu.aat.util.fs.AppDirectory;
 import ch.bailu.aat.util.ui.AppLayout;
 import ch.bailu.aat.util.ui.AppTheme;
+import ch.bailu.aat.util.ui.UiTheme;
 import ch.bailu.aat.views.AbsLabelTextView;
 import ch.bailu.aat.views.ContentView;
 import ch.bailu.aat.views.bar.MainControlBar;
@@ -64,14 +65,17 @@ public class MainActivity extends ActivityContext {
 
     private View createExtraButton() {
         LinearLayout layout = new LinearLayout(this);
+        AppTheme.alt.background(layout);
         layout.setOrientation(LinearLayout.VERTICAL);
 
         if (Build.VERSION.SDK_INT >= 18) {
             layout.addView(new BleLabel());
         }
 
-        layout.addView(new DocumentationLabel(ActivitySwitcher.getAbout(this)));
+        layout.addView(labelFactory(ActivitySwitcher.getAbout(this)));
+        //layout.addView(new DocumentationLabel(ActivitySwitcher.getAbout(this)));
         layout.setBackgroundColor(AppTheme.getAltBackgroundColor());
+
         return layout;
     }
 
@@ -121,7 +125,9 @@ public class MainActivity extends ActivityContext {
         } else if (s.activityClass == ExternalListActivity.class) {
             return new ExternalDirectoryLabel(s);
         } else if (s.activityClass == AboutActivity.class) {
-            return new DocumentationLabel(s);
+            ActivityLabel label = new ActivityLabel(AppTheme.alt, s);
+            label.setText(getString(R.string.intro_about) + " / " + getString(R.string.intro_readme));
+            return label;
         }
 
         return new ActivityLabel(s);
@@ -130,7 +136,11 @@ public class MainActivity extends ActivityContext {
 
     private class ActivityLabel extends AbsLabelTextView {
         public ActivityLabel(final ActivitySwitcher.Entry s) {
-            super(MainActivity.this, s.activityLabel);
+            this(AppTheme.main, s);
+        }
+
+        public ActivityLabel(UiTheme theme, final ActivitySwitcher.Entry s) {
+            super( MainActivity.this, theme, s.activityLabel);
 
             setOnClickListener(v -> s.start(MainActivity.this));
 

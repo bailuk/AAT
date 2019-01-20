@@ -41,7 +41,7 @@ public class NodeListView extends ListView implements
         scontext = sc;
         dispatcher = d;
 
-        AppTheme.themify(this, AppTheme.getHighlightColor());
+        AppTheme.themifyList(this);
 
         setAdapter(this);
         setOnItemClickListener(this);

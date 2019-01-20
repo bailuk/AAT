@@ -15,7 +15,7 @@ public class TitleView extends TextView {
         super(context);
 
         setText(text);
-        AppTheme.themify(this);
-        setTextColor(AppTheme.getHighlightColor());
+        AppTheme.main.topic(this);
+        //setTextColor(AppTheme.getHighlightColor());
     }
 }

@@ -163,10 +163,10 @@ public class DistanceSpeedGraphView extends AbsGraphView implements SharedPrefer
 
             if (timeDelta > 0) {
                 float avg = totalDistance / totalTime * 1000;
-                plotter[1].plotData(totalDistance, avg, AppTheme.getHighlightColor2());
+                plotter[1].plotData(totalDistance, avg, AppTheme.COLOR_GREEN);
 
                 float avgAp=totalDistance/timeDelta*1000;
-                plotter[2].plotData(totalDistance, avgAp, AppTheme.getHighlightColor3());
+                plotter[2].plotData(totalDistance, avgAp, AppTheme.COLOR_BLUE);
 
             }
         }

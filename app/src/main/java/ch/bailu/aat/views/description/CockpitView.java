@@ -14,6 +14,7 @@ import ch.bailu.aat.preferences.general.SolidUnit;
 import ch.bailu.aat.preferences.location.SolidAdjustGpsAltitude;
 import ch.bailu.aat.preferences.location.SolidAltitudeFromBarometer;
 import ch.bailu.aat.preferences.location.SolidProvideAltitude;
+import ch.bailu.aat.util.ui.AppTheme;
 import ch.bailu.aat.views.preferences.SolidTextInputDialog;
 
 
@@ -39,15 +40,15 @@ public class CockpitView extends ViewGroup {
 
 
     public void addC(DispatcherInterface di, ContentDescription de, int iid) {
-        final NumberView v = new ColorNumberView(de);
+        final NumberView v = new ColorNumberView(de, AppTheme.main);
 
         addView(v);
         di.addTargets(v, iid);
     }
 
 
-    public View add(DispatcherInterface di, ContentDescription de, int iid) {
-        final NumberView v = new NumberView(de);
+    public NumberView add(DispatcherInterface di, ContentDescription de, int iid) {
+        final NumberView v = new NumberView(de, AppTheme.main);
 
         addView(v);
         di.addTargets(v, iid);
@@ -57,9 +58,11 @@ public class CockpitView extends ViewGroup {
 
 
     public void addAltitude(DispatcherInterface di) {
-        SolidProvideAltitude.requestOnClick(
-                add(di, new AltitudeConfigurationDescription(getContext()), InfoID.LOCATION)
-        );
+        NumberView v = add(di, new AltitudeConfigurationDescription(getContext()), InfoID.LOCATION);
+        SolidProvideAltitude.requestOnClick(v);
+        AppTheme.main.button(v);
+        v.setPadding(0,0,0,0);
+
     }
 
 

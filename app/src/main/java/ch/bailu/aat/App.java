@@ -9,8 +9,7 @@ import org.acra.config.MailSenderConfigurationBuilder;
 import org.acra.data.StringFormat;
 
 import ch.bailu.aat.map.mapsforge.MapsForgeContext;
-import ch.bailu.aat.util.ToDo;
-import ch.bailu.aat.util.ui.AppTheme;
+import ch.bailu.aat.util.ui.AppString;
 
 
 public class App extends Application {
@@ -34,14 +33,14 @@ public class App extends Application {
                 .setBuildConfigClass(BuildConfig.class)
                 .setReportFormat(StringFormat.KEY_VALUE_LIST);
         builder.getPluginConfigurationBuilder(MailSenderConfigurationBuilder.class)
-                .setMailTo(AppTheme.getContact())
+                .setMailTo(AppString.getContact())
                 .setEnabled(true);
         builder.getPluginConfigurationBuilder(DialogConfigurationBuilder.class)
-                .setTitle(AppTheme.getShortName() + " crashed")
+                .setTitle(AppString.getShortName() + " crashed")
                 .setText(
                         "This will open your e-mail app to send a crash report " +
                         "including some information about your device to \"" +
-                        AppTheme.getContact() +
+                        AppString.getContact() +
                         "\".\n" +
                         "This will help the author to fix and improve this app.")
 
