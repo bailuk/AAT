@@ -15,11 +15,11 @@ import ch.bailu.aat.dispatcher.CurrentLocationSource;
 import ch.bailu.aat.dispatcher.TrackerSource;
 import ch.bailu.aat.preferences.SolidFile;
 import ch.bailu.aat.preferences.presets.SolidPreset;
+import ch.bailu.aat.preferences.system.SolidDataDirectory;
+import ch.bailu.aat.preferences.system.SolidExternalDirectory;
 import ch.bailu.aat.services.InsideContext;
 import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.util.ToDo;
-import ch.bailu.aat.preferences.system.SolidDataDirectory;
-import ch.bailu.aat.preferences.system.SolidExternalDirectory;
 import ch.bailu.aat.util.fs.AppDirectory;
 import ch.bailu.aat.util.ui.AppLayout;
 import ch.bailu.aat.util.ui.AppTheme;
@@ -73,8 +73,6 @@ public class MainActivity extends ActivityContext {
         }
 
         layout.addView(labelFactory(ActivitySwitcher.getAbout(this)));
-        //layout.addView(new DocumentationLabel(ActivitySwitcher.getAbout(this)));
-        layout.setBackgroundColor(AppTheme.getAltBackgroundColor());
 
         return layout;
     }
@@ -273,18 +271,6 @@ public class MainActivity extends ActivityContext {
                 setText();
             }
         }
-    }
-
-    private class DocumentationLabel extends ActivityLabel {
-
-        public DocumentationLabel(ActivitySwitcher.Entry s) {
-            super(s);
-            setTextColor(AppTheme.getHighlightColor3());
-
-            setText(getString(R.string.intro_about) + " / " + getString(R.string.intro_readme));
-        }
-
-
     }
 
 

@@ -8,8 +8,10 @@ import ch.bailu.aat.description.AverageSpeedDescriptionAP;
 import ch.bailu.aat.description.CurrentSpeedDescription;
 import ch.bailu.aat.description.DescendDescription;
 import ch.bailu.aat.description.DistanceDescription;
+import ch.bailu.aat.description.HeartRateDescription;
 import ch.bailu.aat.description.PredictiveTimeDescription;
 import ch.bailu.aat.description.SlopeDescription;
+import ch.bailu.aat.dispatcher.BleSensorSource;
 import ch.bailu.aat.dispatcher.CurrentLocationSource;
 import ch.bailu.aat.dispatcher.EditorSource;
 import ch.bailu.aat.dispatcher.OverlaySource;
@@ -55,7 +57,8 @@ public class CockpitSplitActivity extends AbsKeepScreenOnActivity {
         cockpitA.add(this, new PredictiveTimeDescription(this), InfoID.TRACKER_TIMER);
 
         cockpitB.add(this, new CurrentSpeedDescription(this), InfoID.LOCATION);
-        cockpitB.addC(this, new AverageSpeedDescriptionAP(this), InfoID.TRACKER);
+        //cockpitB.addC(this, new AverageSpeedDescriptionAP(this), InfoID.TRACKER);
+        cockpitB.add(this, new HeartRateDescription(this), InfoID.HEART_RATE_SENSOR);
 
         cockpitC.addC(this, new DistanceDescription(this), InfoID.TRACKER);
         cockpitC.addAltitude(this);
@@ -113,6 +116,7 @@ public class CockpitSplitActivity extends AbsKeepScreenOnActivity {
         addSource(new TrackerTimerSource(getServiceContext()));
         addSource(new CurrentLocationSource(getServiceContext()));
         addSource(new OverlaySource(getServiceContext()));
+        addSource(new BleSensorSource(getServiceContext(), InfoID.HEART_RATE_SENSOR));
 
     }
 }
