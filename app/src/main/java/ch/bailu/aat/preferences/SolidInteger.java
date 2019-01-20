@@ -2,6 +2,8 @@ package ch.bailu.aat.preferences;
 
 import android.content.Context;
 
+import ch.bailu.aat.R;
+import ch.bailu.aat.exception.ValidationException;
 import ch.bailu.aat.util.ui.AppLog;
 
 public class SolidInteger extends AbsSolidType {
@@ -42,11 +44,23 @@ public class SolidInteger extends AbsSolidType {
 
 
     @Override
-    public void setValueFromString(String s) {
-        try {
-            setValue(Integer.valueOf(s));
-        } catch (NumberFormatException e) {
-            AppLog.e(getContext(), e);
+    public void setValueFromString(String s) throws ValidationException {
+        s = s.trim();
+
+        if (! validate(s)) {
+            throw new ValidationException(getString(R.string.error_integer, s));
+        } else {
+            try {
+                setValue(Integer.valueOf(s));
+            } catch (NumberFormatException e) {
+                AppLog.e(getContext(), e);
+            }
         }
+    }
+
+    @Override
+    public boolean validate(String s) {
+        // only positive/negative Integers, any size allowed
+        return s.matches("-?[1-9]\\d*");
     }
 }

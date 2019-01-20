@@ -4,6 +4,8 @@ import android.content.Context;
 
 import ch.bailu.aat.R;
 import ch.bailu.aat.preferences.SolidInteger;
+import ch.bailu.aat.exception.ValidationException;
+import ch.bailu.aat.util.ui.AppLog;
 
 public class SolidWeight extends SolidInteger {
 
@@ -24,5 +26,25 @@ public class SolidWeight extends SolidInteger {
         setValue(75);
     }
 
+    @Override
+    public void setValueFromString(String s) throws ValidationException {
+        s = s.trim();
+
+        if (! validate(s)) {
+            throw new ValidationException(getString(R.string.error_weight));
+        } else {
+            try {
+                setValue(Integer.valueOf(s));
+            } catch (NumberFormatException e) {
+                AppLog.e(getContext(), e);
+            }
+        }
+    }
+
+    @Override
+    public boolean validate(String s) {
+        // only positive Integers, from 1-999 allowed
+        return s.matches("[1-9]\\d{0,2}");
+    }
 
 }
