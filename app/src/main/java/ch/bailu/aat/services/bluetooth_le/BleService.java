@@ -17,7 +17,7 @@ public class BleService extends VirtualService {
     public BleService(ServiceContext sc) {
         super(sc);
 
-        devices = BleDevices.factory(sc.getContext());
+        devices = BleDevices.factory(sc);
 
 
         AppBroadcaster.register(getContext(),
@@ -45,23 +45,23 @@ public class BleService extends VirtualService {
 
 
     @Override
-    public void close() {
+    public synchronized void close() {
         devices.close();
         getContext().unregisterReceiver(onBluetoothStateChanged);
     }
 
 
-    public void scan() {
+    public  synchronized void scan() {
         devices.scann();
     }
 
 
     @Override
-    public String toString() {
+    public synchronized String toString() {
         return devices.toString();
     }
 
-    public GpxInformation getInformation() {
-        return devices.getInformation();
+    public synchronized GpxInformation getInformation(int iid) {
+        return devices.getInformation(iid);
     }
 }

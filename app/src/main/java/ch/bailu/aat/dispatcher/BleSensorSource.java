@@ -5,16 +5,17 @@ import android.content.Context;
 import android.content.Intent;
 
 import ch.bailu.aat.gpx.GpxInformation;
-import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.util.ui.AppLog;
 
 public class BleSensorSource extends ContentSource {
     private final ServiceContext scontext;
+    private final int iid;
 
-    public BleSensorSource(ServiceContext sc) {
+    public BleSensorSource(ServiceContext sc, int i) {
         scontext = sc;
+        iid = i;
     }
 
 
@@ -41,17 +42,17 @@ public class BleSensorSource extends ContentSource {
 
     @Override
     public void onResume() {
-        AppBroadcaster.register(scontext.getContext(), onSensorUpdated, AppBroadcaster.BLE_DEVICE_NOTIFIED);
+        AppBroadcaster.register(scontext.getContext(), onSensorUpdated, AppBroadcaster.BLE_NOTIFIED + iid);
 
     }
 
     @Override
     public int getIID() {
-        return InfoID.HEART_RATE_SENSOR;
+        return iid;
     }
 
     @Override
     public GpxInformation getInfo() {
-        return scontext.getBleService().getInformation();
+        return scontext.getBleService().getInformation(iid);
     }
 }

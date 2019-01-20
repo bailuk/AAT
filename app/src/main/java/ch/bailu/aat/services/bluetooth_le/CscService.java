@@ -1,58 +1,57 @@
 package ch.bailu.aat.services.bluetooth_le;
 
 import android.bluetooth.BluetoothGattCharacteristic;
+import android.content.Context;
 import android.support.annotation.RequiresApi;
 
-import java.util.UUID;
+import java.io.Closeable;
+import java.io.IOException;
+
+import ch.bailu.aat.gpx.GpxAttributes;
+import ch.bailu.aat.gpx.GpxInformation;
+import ch.bailu.aat.gpx.InfoID;
+import ch.bailu.aat.services.ServiceContext;
+import ch.bailu.aat.util.AppBroadcaster;
 
 @RequiresApi(api = 18)
-public class CscService {
+public class CscService extends CscServiceID implements Closeable {
     /**
      *
      * RPM BBB BCP-66 SmartCadence RPM Sensor
      *
-     * CSC ( Cycling Speed And Cadence)
+     * CSC (Cycling Speed And Cadence)
      * https://www.bluetooth.com/specifications/gatt/viewer?attributeXmlFile=org.bluetooth.service.cycling_speed_and_cadence.xml
+     * https://developer.polar.com/wiki/Cycling_Speed_%26_Cadence
      */
 
-
-    public final static UUID CSC_SERVICE = ID.toUUID(0x1816);
-    public final static UUID CSC_MESUREMENT = ID.toUUID(0x2A5B);
-    public final static int BIT_SPEED = 0;
-    public final static int BIT_CADENCE = 1;
-    public final static int BIT_SPEED_AND_CADENCE = 2;
-
-    public final static UUID CSC_FEATURE = ID.toUUID(0x2A5C);
-    public final static UUID CSC_SENSOR_LOCATION = ID.toUUID(0x2A5D);
-    public final static UUID CSC_CONTROL_POINT = ID.toUUID(0x2A55);
+    private static final long BROADCAST_TIMEOUT = 3000;
 
 
-    private final static String[] SENSOR_LOCATION = {
-            "Other",
-            "Top of shoe",
-            "In shoe",
-            "Hip",
-            "Front Wheel",
-            "Left Crank",
-            "Right Crank",
-            "Left Pedal",
-            "Right Pedal",
-            "Front Hub",
-            "Rear Dropout",
-            "Chainstay",
-            "Rear Wheel",
-            "Rear Hub",
-            "Chest",
-            "Spider",
-            "Chain Ring",
-    };
+    private long lastBroadcast = 0L;
 
     private String location = SENSOR_LOCATION[0];
 
-    private boolean speed = false;
-    private boolean cadence = false;
+    private boolean isSpeedSensor = false;
+    private boolean isCadenceSensor = false;
+
+    private final Revolution cadence = new Revolution();
+    private final Revolution speed = new Revolution();
+    private final Averager averageCadence = new Averager(5);
+    private final WheelCircumference wheelCircumference;
+    private float circumference = 0f;
+
+
+    private GpxInformation information = GpxInformation.NULL;
+
+    private final Context context;
 
     private boolean valid = false;
+
+    public CscService(ServiceContext c) {
+        context = c.getContext();
+        wheelCircumference = new WheelCircumference(c, speed);
+    }
+
 
     public boolean isValid() {
         return valid;
@@ -107,42 +106,10 @@ public class CscService {
     }
 
 
-    private int cumulative_wheel_revolutions = 0;
-    private double last_wheel_event_time = 0d;
 
-    private int cumulative_crank_revolutions = 0;
-    private double last_crank_event_time = 0d;
-
-    private long timestamp = 0;
 
     private void readCscMesurement(BluetoothGattCharacteristic c, byte[] value) {
-        int offset = 0;
-
-        timestamp = System.currentTimeMillis();
-
-        byte data = value[offset];
-
-        offset += 1;
-
-        if (ID.isBitSet(data, BIT_SPEED)) {
-            cumulative_wheel_revolutions =
-                    c.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT32, offset);
-            offset += 4;
-
-            last_wheel_event_time = c.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT16, offset);
-            last_wheel_event_time /= 1024d;
-            offset += 2;
-
-        }
-
-
-        if (ID.isBitSet(data, BIT_CADENCE)) {
-            cumulative_crank_revolutions = c.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT16, offset);
-            offset += 2;
-
-            last_crank_event_time = c.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT16, offset);
-            last_crank_event_time /= 1024d;
-        }
+        information = new Information(new Attributes(c, value));
     }
 
 
@@ -152,14 +119,14 @@ public class CscService {
             byte b = v[0];
 
             if (ID.isBitSet(b, BIT_SPEED)) {
-                speed = true;
+                isSpeedSensor = true;
 
             } else if (ID.isBitSet(b, BIT_CADENCE)) {
-                cadence = true;
+                isCadenceSensor = true;
 
             } else if (ID.isBitSet(b, BIT_SPEED_AND_CADENCE)) {
-                speed = true;
-                cadence = true;
+                isSpeedSensor = true;
+                isCadenceSensor = true;
             }
         }
     }
@@ -173,11 +140,11 @@ public class CscService {
             name = "No ";
         }
 
-        if (speed) {
+        if (isSpeedSensor) {
             name = "Speed ";
         }
 
-        if (cadence) {
+        if (isCadenceSensor) {
             name += "Cadence ";
         }
 
@@ -185,4 +152,192 @@ public class CscService {
     }
 
 
+    @Override
+    public void close()  {
+        wheelCircumference.close();
+    }
+
+
+    private class Attributes extends GpxAttributes {
+
+        boolean haveCadence, haveSpeed;
+        private int speed_rpm = 0;
+        private int cadence_rpm = 0;
+        private int cadence_rpm_average = 0;
+        private float speedSI = 0f;
+
+
+        public Attributes(BluetoothGattCharacteristic c, byte[] v) {
+            int offset = 0;
+
+            byte data = v[offset];
+            offset += 1;
+
+            haveCadence = ID.isBitSet(data, BIT_CADENCE);
+            haveSpeed = ID.isBitSet(data, BIT_SPEED);
+
+            if (haveSpeed) {
+                long revolutions = c.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT32, offset);
+                offset += 4;
+
+                int time = c.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT16, offset);
+
+                offset += 2;
+
+                speed.addUINT32(time, revolutions);
+
+                speed_rpm = speed.rpm();
+
+                if (circumference == 0f)
+                    circumference = wheelCircumference.getCircumference();
+
+                if (circumference != 0f) {
+                    speedSI = speed.getSpeedSI(circumference);
+                    wheelCircumference.close();
+                }
+            }
+
+
+            if (haveCadence) {
+                int revolutions = c.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT16, offset);
+                offset += 2;
+
+                int time = c.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT16, offset);
+
+                cadence.add(time, revolutions);
+                cadence_rpm = cadence.rpm();
+
+                if (cadence_rpm != 0) {
+                    averageCadence.add(cadence_rpm);
+                }
+            }
+            cadence_rpm_average = averageCadence.get();
+
+            broadcast();
+        }
+
+
+        private void broadcast() {
+            final long time = System.currentTimeMillis();
+
+            if (haveSpeed && isSpeedSensor && (timeout(time) || speed_rpm != 0)) {
+                AppBroadcaster.broadcast(
+                        context, AppBroadcaster.BLE_NOTIFIED + InfoID.SPEED_SENSOR);
+
+                lastBroadcast = time;
+            }
+
+            if (haveCadence && isCadenceSensor) {
+                AppBroadcaster.broadcast(
+                        context, AppBroadcaster.BLE_NOTIFIED + InfoID.CADENCE_SENSOR);
+            }
+
+
+        }
+
+
+        public float getSpeedSI() {
+            return speedSI;
+        }
+
+        @Override
+        public String get(String key) {
+            for (int i = 0; i< KEYS.length; i++) {
+                if (key.equalsIgnoreCase(KEYS[i])) return getValue(i);
+            }
+
+            return null;
+        }
+
+        @Override
+        public String getValue(int index) {
+            if (index == KEY_INDEX_SENSOR_LOCATION) {
+                return location;
+
+            } else if (index == KEY_INDEX_CADENCE_SENSOR) {
+                return String.valueOf(isCadenceSensor);
+
+            } else if (index == KEY_INDEX_SPEED_SENSOR) {
+                return String.valueOf(isSpeedSensor);
+
+            } else if (index == KEY_INDEX_CRANK_RPM) {
+                return String.valueOf(cadence_rpm);
+
+            } else if (index == KEY_INDEX_CRANK_RPM_AVERAGE) {
+                return String.valueOf(cadence_rpm_average);
+
+            } else if (index == KEY_INDEX_WHEEL_CIRCUMFERENCE) {
+                return String.valueOf(wheelCircumference);
+            }
+
+
+            return NULL_VALUE;
+        }
+
+        @Override
+        public String getKey(int index) {
+            if (index < KEYS.length) return KEYS[index];
+            return null;
+        }
+
+        @Override
+        public void put(String key, String value) {
+
+        }
+
+        @Override
+        public int size() {
+            return KEYS.length;
+        }
+
+        @Override
+        public void remove(String key) {
+
+        }
+    }
+
+
+    private static class Information extends GpxInformation {
+        private final Attributes attributes;
+        private final long timeStamp = System.currentTimeMillis();
+
+
+        public Information(Attributes a) {
+            attributes = a;
+
+        }
+
+        @Override
+        public GpxAttributes getAttributes() {
+            return attributes;
+        }
+
+        @Override
+        public long getTimeStamp() {
+            return timeStamp;
+        }
+
+
+        @Override
+        public float getSpeed() {
+            return attributes.getSpeedSI();
+        }
+    }
+
+
+    public GpxInformation getInformation(int iid) {
+        if (isSpeedSensor && iid == InfoID.SPEED_SENSOR)
+            return information;
+
+        else if (isCadenceSensor && iid == InfoID.CADENCE_SENSOR) {
+            return information;
+        }
+
+        return null;
+    }
+
+
+    private boolean timeout(long time) {
+        return (lastBroadcast - time > BROADCAST_TIMEOUT);
+    }
 }

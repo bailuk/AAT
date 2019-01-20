@@ -8,6 +8,7 @@ import java.util.UUID;
 
 import ch.bailu.aat.gpx.GpxAttributes;
 import ch.bailu.aat.gpx.GpxInformation;
+import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.util.AppBroadcaster;
 
 @RequiresApi(api = 18)
@@ -74,7 +75,7 @@ public class HeartRateService extends HeartRateServiceID {
 
     private void readHeartRateMesurement(BluetoothGattCharacteristic c, byte[] value) {
         information = new Information(new Attributes(c, value));
-        AppBroadcaster.broadcast(context, AppBroadcaster.BLE_DEVICE_NOTIFIED);
+        AppBroadcaster.broadcast(context, AppBroadcaster.BLE_NOTIFIED + InfoID.HEART_RATE_SENSOR);
     }
 
 
@@ -92,7 +93,7 @@ public class HeartRateService extends HeartRateServiceID {
 
 
 
-    private final Averager averager = new Averager();
+    private final Averager averager = new Averager(10);
 
     private class Attributes extends GpxAttributes {
 
@@ -103,7 +104,7 @@ public class HeartRateService extends HeartRateServiceID {
         private boolean haveRrIntervall = false;
 
         private int bpm = 0;
-        private int bpma = 0;
+        private int bpmAverage = 0;
 
         private float rrIntervall = 0f;
 
@@ -148,7 +149,7 @@ public class HeartRateService extends HeartRateServiceID {
 
             if (bpm > 0) {
                 averager.add(bpm);
-                bpma = averager.get();
+                bpmAverage = averager.get();
                 if (!haveSensorContactStatus) haveSensorContact = true;
             } else {
                 if (!haveSensorContactStatus) haveSensorContact = false;
@@ -168,19 +169,23 @@ public class HeartRateService extends HeartRateServiceID {
 
         @Override
         public String getValue(int index) {
-            if (index == BPM_KEY_INDEX) {
+            if (index == KEY_INDEX_BPM) {
                 return String.valueOf(bpm);
 
-            } else if (index == BPMA_KEY_INDEX) {
-                return String.valueOf(bpma);
+            } else if (index == KEY_INDEX_BPM_AVERAGE) {
+                return String.valueOf(bpmAverage);
 
-            } else if (index == RR_KEY_INDEX) {
+            } else if (index == KEY_INDEX_RR) {
                 return String.valueOf(rrIntervall);
 
 
-            } else if (index == CONTACT_KEY_INDEX) {
+            } else if (index == KEY_INDEX_CONTACT) {
                  if (haveSensorContact) return "on";
                  return "...";
+
+            } else if (index == KEY_INDEX_LOCATION) {
+                return location;
+
             }
 
             return NULL_VALUE;
@@ -230,37 +235,9 @@ public class HeartRateService extends HeartRateServiceID {
     }
 
 
-    public GpxInformation getInformation() {
-        return information;
-    }
-
-
-    private static class Averager {
-        private final static int MAX_SAMPLES = 20;
-
-        private final int values[] = new int[MAX_SAMPLES];
-        private int size = 0;
-        private int next = 0;
-
-        public void add(int b) {
-            values[next] = b;
-            if (size < MAX_SAMPLES) size++;
-
-            next++;
-            if (next >= MAX_SAMPLES) next = 0;
-        }
-
-        public int get() {
-            int r = 0;
-
-            if (size > 0) {
-                for (int i = 0; i < size; i++) {
-                    r = r + values[i];
-                }
-
-                r = r / size;
-            }
-            return r;
-        }
+    public GpxInformation getInformation(int iid) {
+        if (iid == InfoID.HEART_RATE_SENSOR)
+            return information;
+        return null;
     }
 }

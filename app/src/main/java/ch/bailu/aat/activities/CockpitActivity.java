@@ -3,12 +3,10 @@ package ch.bailu.aat.activities;
 import android.os.Bundle;
 import android.view.View;
 
-import ch.bailu.aat.description.AltitudeConfigurationDescription;
-import ch.bailu.aat.description.AltitudeDescription;
 import ch.bailu.aat.description.AverageSpeedDescriptionAP;
+import ch.bailu.aat.description.CadenceDescription;
 import ch.bailu.aat.description.CurrentSpeedDescription;
 import ch.bailu.aat.description.DistanceDescription;
-import ch.bailu.aat.description.HeartRateDescription;
 import ch.bailu.aat.description.MaximumSpeedDescription;
 import ch.bailu.aat.description.PredictiveTimeDescription;
 import ch.bailu.aat.dispatcher.BleSensorSource;
@@ -19,7 +17,6 @@ import ch.bailu.aat.dispatcher.TrackerSource;
 import ch.bailu.aat.dispatcher.TrackerTimerSource;
 import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.map.MapFactory;
-import ch.bailu.aat.preferences.location.SolidProvideAltitude;
 import ch.bailu.aat.util.ui.AppLayout;
 import ch.bailu.aat.views.ContentView;
 import ch.bailu.aat.views.bar.ControlBar;
@@ -63,13 +60,15 @@ public class CockpitActivity extends AbsKeepScreenOnActivity {
         CockpitView c1 = new CockpitView(this);
 
 
-        c1.add(this, new CurrentSpeedDescription(this), InfoID.LOCATION);
+        c1.add(this, new CurrentSpeedDescription(this), InfoID.SPEED_SENSOR);
         c1.addAltitude(this);
         c1.add(this, new PredictiveTimeDescription(this), InfoID.TRACKER_TIMER);
         c1.addC(this, new DistanceDescription(this), InfoID.TRACKER);
         c1.addC(this, new AverageSpeedDescriptionAP(this), InfoID.TRACKER);
         c1.add(this, new MaximumSpeedDescription(this), InfoID.TRACKER);
-        c1.add(this, new HeartRateDescription(this), InfoID.HEART_RATE_SENSOR);
+        //c1.add(this, new HeartRateDescription(this), InfoID.HEART_RATE_SENSOR);
+        //c1.add(this, new CurrentSpeedDescription(this), InfoID.SPEED_SENSOR);
+        c1.add(this, new CadenceDescription(this), InfoID.CADENCE_SENSOR);
 
         return c1;
     }
@@ -95,6 +94,8 @@ public class CockpitActivity extends AbsKeepScreenOnActivity {
         addSource(new TrackerTimerSource(getServiceContext()));
         addSource(new CurrentLocationSource(getServiceContext()));
         addSource(new OverlaySource(getServiceContext()));
-        addSource(new BleSensorSource(getServiceContext()));
+        //addSource(new BleSensorSource(getServiceContext(), InfoID.HEART_RATE_SENSOR));
+        addSource(new BleSensorSource(getServiceContext(), InfoID.CADENCE_SENSOR));
+        addSource(new BleSensorSource(getServiceContext(), InfoID.SPEED_SENSOR));
     }
 }

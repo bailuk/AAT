@@ -14,6 +14,7 @@ import java.io.Closeable;
 import java.util.List;
 
 import ch.bailu.aat.gpx.GpxInformation;
+import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.util.AppBroadcaster;
 
 @RequiresApi(api = 18)
@@ -21,81 +22,87 @@ public class Device extends BluetoothGattCallback implements Closeable {
 
     private final Executer execute = new Executer();
 
-    private final HeartRateService heartRate;
-    private final BatteryService battery = new BatteryService();
-    private final CscService csc = new CscService();
+    private final HeartRateService heartRateService;
+    private final BatteryService batteryService = new BatteryService();
+    private final CscService cscService;
 
     private final BluetoothDevice device;
 
     private final Context context;
     private BluetoothGatt gatt = null;
 
-    private boolean connected = false;
+    private int state;
 
-    public Device(Context c, BluetoothDevice d) {
+    public Device(ServiceContext c, BluetoothDevice d) {
         device = d;
-        context = c;
+        context = c.getContext();
 
-        heartRate = new HeartRateService(context);
+        cscService = new CscService(c);
+        heartRateService = new HeartRateService(context);
     }
 
 
-    public boolean isConnected() {
-        return connected;
+    public synchronized boolean isConnected() {
+        return  state == BluetoothProfile.STATE_CONNECTED || 
+                state ==BluetoothProfile.STATE_CONNECTING;
     }
 
-    public boolean isValid() {
-        return connected && (csc.isValid() || heartRate.isValid());
+    public synchronized boolean isValid() {
+        return state == BluetoothProfile.STATE_CONNECTED &&
+                (cscService.isValid() || heartRateService.isValid());
     }
 
     @Override
-    public String toString() {
+    public synchronized String toString() {
         String s = device.getName();
 
-        if (csc.isValid()) {
-            s = s + ", " + csc.toString();
+        if (cscService.isValid()) {
+            s = s + ", " + cscService.toString();
         }
 
-        if (heartRate.isValid()) {
-            s = s+ ", " + heartRate.toString();
+        if (heartRateService.isValid()) {
+            s = s+ ", " + heartRateService.toString();
         }
 
-        s = s + ", " + battery.getBatteryLevelPercentage() + "%";
+        s = s + ", " + batteryService.getBatteryLevelPercentage() + "%";
         return s;
     }
 
 
     @Override
-    public void onConnectionStateChange(BluetoothGatt g, int status, int newState) {
+    public synchronized void onConnectionStateChange(BluetoothGatt g, int status, int newState) {
         gatt = g;
-        if (status == BluetoothGatt.GATT_SUCCESS && newState == BluetoothProfile.STATE_CONNECTED) {
+        state = newState;
+        
+        if (status == BluetoothGatt.GATT_SUCCESS && state == BluetoothProfile.STATE_CONNECTED) {
             gatt.discoverServices();
-        } else {
+            
+        } else if (state == BluetoothProfile.STATE_DISCONNECTED) {
             broadcast();
         }
-
-        connected = (newState == BluetoothProfile.STATE_CONNECTED
-                || newState == BluetoothProfile.STATE_CONNECTING);
     }
 
+    
     private void broadcast() {
         AppBroadcaster.broadcast(context, AppBroadcaster.BLE_DEVICE_SCANNED);
     }
 
+    
     private void executeOrBroadcast(BluetoothGatt gatt) {
         if (!execute.next(gatt)) {
             broadcast();
         }
     }
 
+    
     @Override
-    public void onServicesDiscovered(BluetoothGatt gatt, int status) {
+    public synchronized void onServicesDiscovered(BluetoothGatt gatt, int status) {
         discover(gatt);
 
-        if (isValid()) {
+        if ((cscService.isValid() || heartRateService.isValid())) {
             executeOrBroadcast(gatt);
         } else {
-            gatt.close();
+            close();
         }
     }
 
@@ -103,16 +110,16 @@ public class Device extends BluetoothGattCallback implements Closeable {
 
 
     @Override
-    public void onDescriptorWrite(BluetoothGatt gatt, BluetoothGattDescriptor descriptor, int status) {
+    public synchronized void onDescriptorWrite(BluetoothGatt gatt, BluetoothGattDescriptor descriptor, int status) {
         executeOrBroadcast(gatt);
     }
 
     @Override
-    public void onCharacteristicChanged(BluetoothGatt gatt,
+    public synchronized void onCharacteristicChanged(BluetoothGatt gatt,
                                         BluetoothGattCharacteristic c) {
 
-        heartRate.notify(c);
-        csc.notify(c);
+        heartRateService.notify(c);
+        cscService.notify(c);
 
     }
 
@@ -131,37 +138,51 @@ public class Device extends BluetoothGattCallback implements Closeable {
         List<BluetoothGattCharacteristic> list = service.getCharacteristics();
 
         for (BluetoothGattCharacteristic c : list) {
-            heartRate.discovered(c, execute);
-            battery.discovered(c, execute);
-            csc.discovered(c, execute);
+            heartRateService.discovered(c, execute);
+            batteryService.discovered(c, execute);
+            cscService.discovered(c, execute);
 
         }
     }
 
 
-    public void onCharacteristicRead(BluetoothGatt gatt, BluetoothGattCharacteristic c,
+    @Override
+    public synchronized void onCharacteristicRead(BluetoothGatt gatt, BluetoothGattCharacteristic c,
                                      int status) {
-        heartRate.read(c);
-        battery.read(c);
-        csc.read(c);
+        heartRateService.read(c);
+        batteryService.read(c);
+        cscService.read(c);
 
         executeOrBroadcast(gatt);
     }
 
-    public String getAddress() {
+
+    public synchronized String getAddress() {
         return device.getAddress();
     }
 
-    public GpxInformation getInformation() {
-        return heartRate.getInformation();
+
+    public synchronized GpxInformation getInformation(int iid) {
+        GpxInformation i = heartRateService.getInformation(iid);
+
+        if (i == null) {
+            i = cscService.getInformation(iid);
+        }
+
+        return i;
     }
 
+    
     @Override
-    public void close() {
+    public synchronized void close() {
+        cscService.close();
+
+
         if (gatt != null) {
             gatt.close();
-            connected = false;
+            state = BluetoothProfile.STATE_DISCONNECTED;
             gatt = null;
+            broadcast();
         }
     }
 }

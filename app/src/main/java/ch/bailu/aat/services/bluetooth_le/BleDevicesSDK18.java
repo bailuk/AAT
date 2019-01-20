@@ -6,13 +6,11 @@ import android.bluetooth.BluetoothManager;
 import android.content.Context;
 import android.support.annotation.RequiresApi;
 
-import java.util.ArrayList;
-
 import ch.bailu.aat.gpx.GpxInformation;
+import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.util.Timer;
 import ch.bailu.aat.util.ToDo;
-import ch.bailu.util_java.util.Objects;
 
 @RequiresApi(api = 18)
 public class BleDevicesSDK18 extends BleDevices {
@@ -20,13 +18,12 @@ public class BleDevicesSDK18 extends BleDevices {
     private final static long SCAN_DURATION = 5000;
 
     private final Context context;
+    private final ServiceContext scontext;
+
     private final BluetoothAdapter adapter;
 
-    private ArrayList<Device> scanned = new ArrayList<>(5);
-
+    private final Devices devices = new Devices();
     private final BleScanner scanner;
-
-
     private final Timer timer = new Timer(new Runnable() {
         @Override
         public void run() {
@@ -37,8 +34,10 @@ public class BleDevicesSDK18 extends BleDevices {
 
 
 
-    public BleDevicesSDK18(Context c) {
-        context = c;
+    public BleDevicesSDK18(ServiceContext sc) {
+        scontext = sc;
+        context = sc.getContext();
+
         adapter = getAdapter();
         scanner = BleScanner.factory(adapter, this);
 
@@ -48,18 +47,15 @@ public class BleDevicesSDK18 extends BleDevices {
 
 
     @Override
-    public void scann() {
+    public  synchronized void scann() {
+        stopScanner();
+
         if (isEnabled()) {
-            timer.kick();
-            scanner.stop();
-            removeInvalidDevices();
-            scanner.start();
+            devices.closeDisconnectedDevices();
+            startScanner();
 
         } else {
-            timer.cancel();
-            scanner.stop();
-            scanned.clear();
-
+            devices.closeAllDevices();
         }
 
         AppBroadcaster.broadcast(context, AppBroadcaster.BLE_DEVICE_SCANNED);
@@ -79,87 +75,55 @@ public class BleDevicesSDK18 extends BleDevices {
 
 
 
-    private void removeInvalidDevices() {
-        for (int i = scanned.size()-1; i > -1; i--) {
-            if (scanned.get(i).isConnected() == false) {
-                scanned.remove(i);
-            }
+
+
+    public synchronized void foundDevice(BluetoothDevice device) {
+        if (!devices.isInList(device)) {
+            devices.addAndConnectDevice(scontext, device);
         }
     }
 
-
-    void foundDevice(BluetoothDevice device) {
-        if (!isScanned(device)) {
-            scannDevice(device);
-        }
-    }
-
-
-    private void scannDevice(BluetoothDevice device) {
-        Device d = new Device(context, device);
-        scanned.add(d);
-        device.connectGatt(context, true, d);
-    }
-
-
-    private boolean isScanned(BluetoothDevice device) {
-        for (Device d : scanned) {
-            if (Objects.equals(d.getAddress(), device.getAddress())) return true;
-        }
-        return false;
-    }
 
 
     @Override
-    public String toString() {
-
-
-        String s = "";
-
+    public  synchronized String toString() {
         if (isEnabled()) {
-            String nl = "";
+            return devices.toString();
 
-            for (Device d : scanned) {
-                if (d.isValid()) {
-                    s = s + nl + d.toString();
-                    nl = "\n";
-                }
-            }
-
-            if (s.length() == 0) {
-                s = ToDo.translate("No sensors found");
-            }
         } else {
-            s = ToDo.translate("Bluetooth is disabled");
+            return ToDo.translate("Bluetooth is disabled");
         }
-        return s;
     }
 
 
     @Override
-    public GpxInformation getInformation() {
-        for (Device device : scanned) {
-            if (device.isValid()) {
-                GpxInformation information = device.getInformation();
-                if (information != null) return information;
-            }
+    public synchronized GpxInformation getInformation(int iid) {
+
+        GpxInformation information = devices.getInformation(iid);
+
+        if (information == null) {
+            information = GpxInformation.NULL;
         }
-        return GpxInformation.NULL;
+
+        return information;
     }
 
 
     @Override
-    public void close() {
+    public synchronized void close() {
+        stopScanner();
+        devices.close();
+    }
+
+
+    private void startScanner() {
+        timer.kick();
+        scanner.start();
+    }
+
+
+    private void stopScanner() {
         timer.cancel();
         scanner.stop();
-
-        for (Device device : scanned) {
-            device.close();
-        }
-
-        scanned.clear();
-
-
     }
-
 }

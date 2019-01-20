@@ -39,9 +39,9 @@ public class HeartRateDescription extends ContentDescription {
     @Override
     public void onContentUpdated(int iid, GpxInformation info) {
         if (iid == InfoID.HEART_RATE_SENSOR) {
-            String bpm = info.getAttributes().getValue(HeartRateServiceID.BPM_KEY_INDEX);
-            String bpma = info.getAttributes().getValue(HeartRateServiceID.BPMA_KEY_INDEX);
-            String contact = info.getAttributes().getValue(HeartRateServiceID.CONTACT_KEY_INDEX);
+            String bpm = info.getAttributes().getValue(HeartRateServiceID.KEY_INDEX_BPM);
+            String bpma = info.getAttributes().getValue(HeartRateServiceID.KEY_INDEX_BPM_AVERAGE);
+            String contact = info.getAttributes().getValue(HeartRateServiceID.KEY_INDEX_CONTACT);
 
 
             value = bpma;

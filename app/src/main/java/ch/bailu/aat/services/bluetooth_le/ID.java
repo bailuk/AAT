@@ -15,7 +15,6 @@ public class ID {
         return Integer.toHexString(id);
     }
 
-
     public static int toID(UUID uuid) {
         return (int) (uuid.getMostSignificantBits() >> 32);
     }
