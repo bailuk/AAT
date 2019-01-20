@@ -152,7 +152,7 @@ public abstract class SolidFile extends SolidString {
             if (f.canRead()) {
                 return f.getPathName() + c.getString(R.string.file_is_writeable);
             } else {
-                return f.getPathName() + " is write only!";
+                return f.getPathName() + c.getString(R.string.file_is_writeonly);
             }
         } else if (f.canRead()) {
             return f.getPathName() + c.getString(R.string.file_is_readonly);

@@ -1,6 +1,7 @@
 package ch.bailu.aat.preferences;
 
 import android.content.Context;
+import ch.bailu.aat.exception.ValidationException;
 
 import java.util.ArrayList;
 
@@ -20,7 +21,7 @@ public class SolidString extends AbsSolidType {
     }
 
     @Override
-    public void setValueFromString(String s) {
+    public void setValueFromString(String s) throws ValidationException {
         setValue(s);
     }
 

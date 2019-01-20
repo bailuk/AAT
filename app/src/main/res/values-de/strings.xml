@@ -8,6 +8,8 @@
     <string name="none">Kein</string>
     <string name="enter">Eingabe…</string>
     <string name="pick">Auswählen (SAF)…</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Abbrechen</string>
 
 
     <!-- GPS / Tracker-->
@@ -173,6 +175,7 @@
     <string name="file_send">Senden…</string>
     <string name="file_view">Anzeigen/Bearbeiten…</string>
     <string name="file_is_writeable">: lesen und schreiben.</string>
+    <string name="file_is_writeonly">: nur lesen.</string>
     <string name="file_is_readonly">: nur lesen.</string>
     <string name="file_is_missing">\u0020existiert nicht.</string>
     <string name="file_is_denied">: kein Zugriff.</string>
@@ -256,4 +259,10 @@
     <string name ="tt_cockpit_b">Aufgeteilt</string>
 
     <string name ="tt_p_preset_slots">Anzahl Verzeichnisse und Voreinstellungen um Tracks zu organisieren.</string>
+
+    <!-- Errors -->
+    <string name ="error_integer">Falsche Eingabe, es sind nur Zahlen erlaubt.\n"%s"</string>
+    <string name ="error_integer_positive">Zahl muss zwischen 1 und 999 sein."</string>
+    <string name ="error_long">Falsche Eingabe, es sind nur Zahlen erlaubt.\n"%s"</string>
+    <string name ="error_met">"Die erste Zahl muss zwischen 0.0 und 20.0 sein, gefolgt von einem Leerzeichen."</string>
 </resources>

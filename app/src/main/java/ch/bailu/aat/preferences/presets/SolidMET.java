@@ -9,6 +9,7 @@ import ch.bailu.aat.R;
 import ch.bailu.aat.preferences.OldSolidMET;
 import ch.bailu.aat.preferences.SolidString;
 import ch.bailu.aat.preferences.Storage;
+import ch.bailu.aat.exception.ValidationException;
 
 public class SolidMET extends SolidString {
     private final int preset;
@@ -34,12 +35,11 @@ public class SolidMET extends SolidString {
     }
 
 
-
-
     public float getMETValue() {
         String val = getValueAsString();
 
-        final int from = 0; int to = val.indexOf(' ');
+        final int from = 0;
+        int to = val.indexOf(' ');
 
         float r = 0f;
 
@@ -49,12 +49,27 @@ public class SolidMET extends SolidString {
                 String met = val.substring(from, to);
                 r = Float.valueOf(met);
             } catch (NumberFormatException e) {
+                // TODO : userfeedback missing
                 r = 0f;
             }
         }
 
-        if (r > 20f || r < 0f) r = 0f;
+        if (r > 20f || r < 0f) {
+            // TODO : userfeedback missing, validation should be moved to MET preferences
+            r = 0f;
+        }
         return r;
+    }
+
+    @Override
+    public void setValueFromString(String s) throws ValidationException {
+        s = s.trim();
+
+        if (! validate(s)) {
+            throw new ValidationException(getString(R.string.error_met));
+        } else {
+            setValue(s);
+        }
     }
 
 
@@ -66,5 +81,11 @@ public class SolidMET extends SolidString {
         Collections.addAll(list, array);
 
         return list;
+    }
+
+    @Override
+    public boolean validate(String s) {
+        // entering 0.0 is still possible
+        return s.split(" ")[0].matches("1?[0-9].[0-9]|20.0");
     }
 }
