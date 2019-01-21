@@ -1,7 +1,6 @@
 package ch.bailu.aat.services.bluetooth_le;
 
 public class Revolution {
-    private final static int MINUTE = 60 * 1024;
 
     private final Rollover time = new Rollover();
     private final Rollover revolution = new Rollover();
@@ -23,7 +22,7 @@ public class Revolution {
         final int time_for_one_revolution = intervall();
 
         if (time_for_one_revolution > 0)
-            rpm = MINUTE / time_for_one_revolution;
+            rpm = ID.MINUTE / time_for_one_revolution;
 
         return rpm;
     }
@@ -36,11 +35,16 @@ public class Revolution {
         return 0;
     }
 
-    public float getSpeedSI(float wheel_size) {
-        final float seconds = ((float)intervall()) / 1024f;
-        final float meters = wheel_size;
+    public float getSpeedSI(float circumferenceSI) {
+        if (circumferenceSI > 0) {
+            final int time1024 = intervall();
 
-        return meters / seconds;
+            if (time1024 > 0) {
+                return (circumferenceSI * 1024f) / time1024;
+            }
+        }
+
+        return 0f;
     }
 
     public long getTotalRevolutions() {

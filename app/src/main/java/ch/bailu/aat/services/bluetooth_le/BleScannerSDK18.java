@@ -1,12 +1,10 @@
 package ch.bailu.aat.services.bluetooth_le;
 
-import android.annotation.SuppressLint;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.support.annotation.RequiresApi;
 
 @RequiresApi(api = 18)
-@SuppressLint("MissingPermission")
 public abstract class BleScannerSDK18 extends BleScanner {
 
     private final BluetoothAdapter adapter;

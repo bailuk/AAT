@@ -8,7 +8,6 @@ import android.bluetooth.le.ScanResult;
 import android.support.annotation.RequiresApi;
 
 @RequiresApi(api = 21)
-@SuppressLint("MissingPermission")
 public abstract class BleScannerSDK21 extends BleScanner {
     private final BluetoothAdapter adapter;
 

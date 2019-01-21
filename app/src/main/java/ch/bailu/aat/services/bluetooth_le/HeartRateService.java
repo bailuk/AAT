@@ -106,7 +106,7 @@ public class HeartRateService extends HeartRateServiceID {
         private int bpm = 0;
         private int bpmAverage = 0;
 
-        private float rrIntervall = 0f;
+        private int rrIntervall = 0;
 
 
 
@@ -139,11 +139,11 @@ public class HeartRateService extends HeartRateServiceID {
             }
 
             if (haveRrIntervall) {
-                rrIntervall = c.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT16, offset);
-                rrIntervall = rrIntervall / 1024f;
 
-                if (bpm == 0 && rrIntervall > 0f) {
-                    bpm = Math.round (60f / rrIntervall);
+                rrIntervall = c.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT16, offset);
+
+                if (bpm == 0 && rrIntervall > 0) {
+                    bpm = Math.round (MINUTE / rrIntervall);
                 }
             }
 
@@ -176,7 +176,7 @@ public class HeartRateService extends HeartRateServiceID {
                 return String.valueOf(bpmAverage);
 
             } else if (index == KEY_INDEX_RR) {
-                return String.valueOf(rrIntervall);
+                return String.valueOf(rrIntervall / 1024f);
 
 
             } else if (index == KEY_INDEX_CONTACT) {

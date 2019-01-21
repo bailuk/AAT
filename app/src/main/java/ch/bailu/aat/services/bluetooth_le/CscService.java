@@ -5,7 +5,6 @@ import android.content.Context;
 import android.support.annotation.RequiresApi;
 
 import java.io.Closeable;
-import java.io.IOException;
 
 import ch.bailu.aat.gpx.GpxAttributes;
 import ch.bailu.aat.gpx.GpxInformation;
@@ -37,8 +36,7 @@ public class CscService extends CscServiceID implements Closeable {
     private final Revolution cadence = new Revolution();
     private final Revolution speed = new Revolution();
     private final Averager averageCadence = new Averager(5);
-    private final WheelCircumference wheelCircumference;
-    private float circumference = 0f;
+    private final NewWheelCircumference wheelCircumference;
 
 
     private GpxInformation information = GpxInformation.NULL;
@@ -49,7 +47,7 @@ public class CscService extends CscServiceID implements Closeable {
 
     public CscService(ServiceContext c) {
         context = c.getContext();
-        wheelCircumference = new WheelCircumference(c, speed);
+        wheelCircumference = new NewWheelCircumference(c, speed);
     }
 
 
@@ -165,6 +163,7 @@ public class CscService extends CscServiceID implements Closeable {
         private int cadence_rpm = 0;
         private int cadence_rpm_average = 0;
         private float speedSI = 0f;
+        private float circumferenceSI = 0f;
 
 
         public Attributes(BluetoothGattCharacteristic c, byte[] v) {
@@ -188,12 +187,10 @@ public class CscService extends CscServiceID implements Closeable {
 
                 speed_rpm = speed.rpm();
 
-                if (circumference == 0f)
-                    circumference = wheelCircumference.getCircumference();
+                circumferenceSI = wheelCircumference.getCircumferenceSI();
 
-                if (circumference != 0f) {
-                    speedSI = speed.getSpeedSI(circumference);
-                    wheelCircumference.close();
+                if (circumferenceSI > 0f) {
+                    speedSI = speed.getSpeedSI(circumferenceSI);
                 }
             }
 
@@ -267,7 +264,7 @@ public class CscService extends CscServiceID implements Closeable {
                 return String.valueOf(cadence_rpm_average);
 
             } else if (index == KEY_INDEX_WHEEL_CIRCUMFERENCE) {
-                return String.valueOf(wheelCircumference);
+                return String.valueOf(circumferenceSI);
             }
 
 
@@ -338,6 +335,6 @@ public class CscService extends CscServiceID implements Closeable {
 
 
     private boolean timeout(long time) {
-        return (lastBroadcast - time > BROADCAST_TIMEOUT);
+        return ((time - lastBroadcast) > BROADCAST_TIMEOUT);
     }
 }

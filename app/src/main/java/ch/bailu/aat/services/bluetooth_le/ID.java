@@ -4,6 +4,9 @@ import java.util.UUID;
 
 public class ID {
 
+    public final static int MINUTE = 60 * 1024;
+
+
     public static Boolean isBitSet(byte b, int bit) {
         return (b & (1 << bit)) != 0;
     }
