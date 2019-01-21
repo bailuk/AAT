@@ -1,5 +1,6 @@
 package ch.bailu.aat.services.bluetooth_le;
 
+import android.annotation.SuppressLint;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.le.BluetoothLeScanner;
 import android.bluetooth.le.ScanCallback;
@@ -7,6 +8,7 @@ import android.bluetooth.le.ScanResult;
 import android.support.annotation.RequiresApi;
 
 @RequiresApi(api = 21)
+@SuppressLint("MissingPermission")
 public abstract class BleScannerSDK21 extends BleScanner {
     private final BluetoothAdapter adapter;
 
@@ -36,6 +38,4 @@ public abstract class BleScannerSDK21 extends BleScanner {
         if (scanner != null)
             scanner.stopScan(callback);
     }
-
-
 }
