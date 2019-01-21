@@ -24,7 +24,7 @@ proguard/
 *.log
 
 # Android Studio, Intellij and Gradle 
-#*.iml
+*.iml
 .idea
 .gradle
 build/

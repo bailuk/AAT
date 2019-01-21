@@ -2,6 +2,8 @@ package ch.bailu.aat.preferences;
 
 import android.content.Context;
 
+import ch.bailu.aat.R;
+import ch.bailu.aat.exception.ValidationException;
 import ch.bailu.aat.util.ui.AppLog;
 
 public class SolidLong extends AbsSolidType {
@@ -25,13 +27,18 @@ public class SolidLong extends AbsSolidType {
     }
 
     @Override
-    public void setValueFromString(String s) {
-        try {
-            setValue(Long.valueOf(s));
-        } catch (NumberFormatException e) {
-            AppLog.e(getContext(), e);
-        }
+    public void setValueFromString(String s) throws ValidationException {
+            s = s.trim();
 
+            if (! validate(s)) {
+                throw new ValidationException(getString(R.string.error_long, s));
+            } else {
+                try {
+                    setValue(Long.valueOf(s));
+                } catch (NumberFormatException e) {
+                    AppLog.e(getContext(), e);
+                }
+            }
     }
 
 
@@ -48,5 +55,11 @@ public class SolidLong extends AbsSolidType {
     @Override
     public String getValueAsString() {
         return String.valueOf(getValue());
+    }
+
+    @Override
+    public boolean validate(String s) {
+        // regex long, not 100% correct
+        return s.matches("^-?\\d{1,19}$");
     }
 }
