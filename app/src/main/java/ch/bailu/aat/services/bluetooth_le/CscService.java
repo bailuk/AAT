@@ -232,6 +232,10 @@ public class CscService extends CscServiceID implements Closeable {
 
         }
 
+        private boolean timeout(long time) {
+            return ((time - lastBroadcast) > BROADCAST_TIMEOUT);
+        }
+
 
         public float getSpeedSI() {
             return speedSI;
@@ -331,10 +335,5 @@ public class CscService extends CscServiceID implements Closeable {
         }
 
         return null;
-    }
-
-
-    private boolean timeout(long time) {
-        return ((time - lastBroadcast) > BROADCAST_TIMEOUT);
     }
 }

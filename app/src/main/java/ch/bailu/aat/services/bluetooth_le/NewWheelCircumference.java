@@ -8,7 +8,6 @@ import java.io.Closeable;
 
 import ch.bailu.aat.gpx.GpxDeltaHelper;
 import ch.bailu.aat.gpx.GpxInformation;
-import ch.bailu.aat.gpx.GpxPoint;
 import ch.bailu.aat.gpx.interfaces.GpxPointInterface;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.util.AppBroadcaster;
@@ -17,7 +16,7 @@ public class NewWheelCircumference implements Closeable {
 
     private static final float MIN_SAMPLE_DISTANCE = 0.5f;
     private static final float MAX_SAMPLE_DISTANCE = 100f;
-    private static final float MIN_ACCURACY = 5f;
+    private static final float MIN_ACCURACY = 10f;
     private static final int MIN_REVOLUTIONS = 10;
     private static final int MIN_SAMPLES = 10;
 
@@ -27,9 +26,9 @@ public class NewWheelCircumference implements Closeable {
     private long revolutionsStart = 0;
     private long revolutionsDelta = 0;
 
-    private GpxPointInterface locationStart = null;
+    private GpxPointInterface previousLocation = null;
 
-    private float distance;
+    private float distance = 0f;
     private int samples = 0;
 
 
@@ -39,28 +38,26 @@ public class NewWheelCircumference implements Closeable {
         @Override
         public void onReceive(Context context, Intent intent) {
 
-            GpxInformation location = scontext.getLocationService().getLocationInformation();
+            GpxInformation currentLocation = scontext.getLocationService().getLocationInformation();
 
-            if (locationStart == null) {
-                reset(location);
+            if (previousLocation != null && currentLocation.getAccuracy() <= MIN_ACCURACY) {
 
-            } else if (location.getAccuracy() <= MIN_ACCURACY) {
-
-                float dist = GpxDeltaHelper.getDistance(locationStart, location);
+                final float dist = GpxDeltaHelper.getDistance(previousLocation, currentLocation);
 
                 if (dist > MIN_SAMPLE_DISTANCE && dist < MAX_SAMPLE_DISTANCE) {
-                    addSample(location, dist);
+                    addSample(currentLocation, dist);
 
                 } else {
-                    reset(location);
+                    reset(currentLocation);
 
                 }
 
             } else {
-                reset(location);
+                reset(currentLocation);
             }
         }
     };
+
 
     public NewWheelCircumference (ServiceContext sc, Revolution r) {
         scontext = sc;
@@ -72,14 +69,14 @@ public class NewWheelCircumference implements Closeable {
 
     private void addSample(GpxPointInterface location, float dist) {
         distance += dist;
-        samples++;
+        samples ++;
         revolutionsDelta = revolution.getTotalRevolutions() - revolutionsStart;
-        locationStart = location;
+        previousLocation = location;
     }
 
 
     private void reset(GpxPointInterface location) {
-        locationStart = location;
+        previousLocation = location;
         distance = 0f;
         samples = 0;
         revolutionsDelta = 0;
