@@ -1,4 +1,4 @@
-package ch.bailu.aat.services.bluetooth_le;
+package ch.bailu.aat.services.sensor.bluetooth_le;
 
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
@@ -8,12 +8,13 @@ import android.support.annotation.RequiresApi;
 
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.services.ServiceContext;
+import ch.bailu.aat.services.sensor.Sensors;
 import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.util.Timer;
 import ch.bailu.aat.util.ToDo;
 
 @RequiresApi(api = 18)
-public class BleDevicesSDK18 extends BleDevices {
+public class BleSensorsSDK18 extends Sensors {
 
     private final static long SCAN_DURATION = 5000;
 
@@ -34,7 +35,7 @@ public class BleDevicesSDK18 extends BleDevices {
 
 
 
-    public BleDevicesSDK18(ServiceContext sc) {
+    public BleSensorsSDK18(ServiceContext sc) {
         scontext = sc;
         context = sc.getContext();
 
@@ -91,7 +92,7 @@ public class BleDevicesSDK18 extends BleDevices {
             return devices.toString();
 
         } else {
-            return ToDo.translate("Bluetooth is disabled");
+            return ToDo.translate("Bluetooth is disabled") + "\n";
         }
     }
 

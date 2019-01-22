@@ -4,7 +4,7 @@ import android.content.Context;
 
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.InfoID;
-import ch.bailu.aat.services.bluetooth_le.CscServiceID;
+import ch.bailu.aat.services.sensor.bluetooth_le.CscServiceID;
 import ch.bailu.aat.util.ToDo;
 
 public class CadenceDescription  extends ContentDescription {

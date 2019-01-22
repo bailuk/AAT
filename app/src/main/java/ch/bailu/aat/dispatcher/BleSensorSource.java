@@ -42,7 +42,7 @@ public class BleSensorSource extends ContentSource {
 
     @Override
     public void onResume() {
-        AppBroadcaster.register(scontext.getContext(), onSensorUpdated, AppBroadcaster.BLE_NOTIFIED + iid);
+        AppBroadcaster.register(scontext.getContext(), onSensorUpdated, AppBroadcaster.SENSOR_CHANGED + iid);
 
     }
 
@@ -53,6 +53,6 @@ public class BleSensorSource extends ContentSource {
 
     @Override
     public GpxInformation getInfo() {
-        return scontext.getBleService().getInformation(iid);
+        return scontext.getSensorService().getInformation(iid);
     }
 }

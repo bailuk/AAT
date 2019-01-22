@@ -1,4 +1,4 @@
-package ch.bailu.aat.services.bluetooth_le;
+package ch.bailu.aat.services.sensor.bluetooth_le;
 
 public class Rollover {
     private final static int MAX_UINT16 = 0xffff;

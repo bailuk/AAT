@@ -1,4 +1,4 @@
-package ch.bailu.aat.services.bluetooth_le;
+package ch.bailu.aat.services.sensor.bluetooth_le;
 
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
@@ -13,7 +13,7 @@ public abstract class BleScanner {
 
 
     @RequiresApi(api = 18)
-    public static BleScanner factory(BluetoothAdapter adapter, BleDevicesSDK18 devices) {
+    public static BleScanner factory(BluetoothAdapter adapter, BleSensorsSDK18 devices) {
         /*
         return new BleScannerBonded(adapter) {
             @Override

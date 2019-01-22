@@ -1,4 +1,4 @@
-package ch.bailu.aat.services.bluetooth_le;
+package ch.bailu.aat.services.sensor.bluetooth_le;
 
 import android.bluetooth.BluetoothGattCharacteristic;
 import android.content.Context;
@@ -6,9 +6,11 @@ import android.support.annotation.RequiresApi;
 
 import java.util.UUID;
 
-import ch.bailu.aat.gpx.GpxAttributes;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.InfoID;
+import ch.bailu.aat.services.sensor.Averager;
+import ch.bailu.aat.services.sensor.attributes.HeartRateAttributes;
+import ch.bailu.aat.services.sensor.attributes.SensorInformation;
 import ch.bailu.aat.util.AppBroadcaster;
 
 @RequiresApi(api = 18)
@@ -21,7 +23,7 @@ public class HeartRateService extends HeartRateServiceID {
      */
 
 
-    private String location = BODY_SENSOR_LOCATIONS[0];
+    private String location = HeartRateAttributes.BODY_SENSOR_LOCATIONS[0];
 
     private GpxInformation information = GpxInformation.NULL;
 
@@ -74,8 +76,8 @@ public class HeartRateService extends HeartRateServiceID {
     }
 
     private void readHeartRateMesurement(BluetoothGattCharacteristic c, byte[] value) {
-        information = new Information(new Attributes(c, value));
-        AppBroadcaster.broadcast(context, AppBroadcaster.BLE_NOTIFIED + InfoID.HEART_RATE_SENSOR);
+        information = new SensorInformation(new Attributes(c, value));
+        AppBroadcaster.broadcast(context, AppBroadcaster.SENSOR_CHANGED + InfoID.HEART_RATE_SENSOR);
     }
 
 
@@ -86,8 +88,8 @@ public class HeartRateService extends HeartRateServiceID {
 
     private void readBodySensorLocation(byte[] value) {
 
-        if (value[0] < BODY_SENSOR_LOCATIONS.length) {
-            location = BODY_SENSOR_LOCATIONS[value[0]];
+        if (value[0] < HeartRateAttributes.BODY_SENSOR_LOCATIONS.length) {
+            location = HeartRateAttributes.BODY_SENSOR_LOCATIONS[value[0]];
         }
     }
 
@@ -95,19 +97,11 @@ public class HeartRateService extends HeartRateServiceID {
 
     private final Averager averager = new Averager(10);
 
-    private class Attributes extends GpxAttributes {
+    private class Attributes extends HeartRateAttributes {
 
         private boolean haveSensorContactStatus = false;
-        private boolean haveSensorContact = false;
-
         private boolean haveEnergyExpended = false;
         private boolean haveRrIntervall = false;
-
-        private int bpm = 0;
-        private int bpmAverage = 0;
-
-        private int rrIntervall = 0;
-
 
 
         public Attributes(BluetoothGattCharacteristic c, byte[] v) {
@@ -154,85 +148,9 @@ public class HeartRateService extends HeartRateServiceID {
             } else {
                 if (!haveSensorContactStatus) haveSensorContact = false;
             }
-
-
-        }
-
-        @Override
-        public String get(String key) {
-            for (int i = 0; i< KEYS.length; i++) {
-                if (key.equalsIgnoreCase(KEYS[i])) return getValue(i);
-            }
-
-            return null;
-        }
-
-        @Override
-        public String getValue(int index) {
-            if (index == KEY_INDEX_BPM) {
-                return String.valueOf(bpm);
-
-            } else if (index == KEY_INDEX_BPM_AVERAGE) {
-                return String.valueOf(bpmAverage);
-
-            } else if (index == KEY_INDEX_RR) {
-                return String.valueOf(rrIntervall / 1024f);
-
-
-            } else if (index == KEY_INDEX_CONTACT) {
-                 if (haveSensorContact) return "on";
-                 return "...";
-
-            } else if (index == KEY_INDEX_LOCATION) {
-                return location;
-
-            }
-
-            return NULL_VALUE;
-        }
-
-        @Override
-        public String getKey(int index) {
-            if (index < KEYS.length) return KEYS[index];
-            return null;
-        }
-
-        @Override
-        public void put(String key, String value) {
-
-        }
-
-        @Override
-        public int size() {
-            return KEYS.length;
-        }
-
-        @Override
-        public void remove(String key) {
-
         }
     }
 
-
-    private static class Information extends GpxInformation {
-        private final GpxAttributes attributes;
-        private final long timeStamp = System.currentTimeMillis();
-
-
-        public Information(GpxAttributes a) {
-            attributes = a;
-        }
-
-        @Override
-        public GpxAttributes getAttributes() {
-            return attributes;
-        }
-
-        @Override
-        public long getTimeStamp() {
-            return timeStamp;
-        }
-    }
 
 
     public GpxInformation getInformation(int iid) {

@@ -276,7 +276,7 @@ public class MainActivity extends ActivityContext {
 
     private class BleLabel extends AbsLabelTextView implements View.OnClickListener {
         public BleLabel() {
-            super(MainActivity.this, ToDo.translate("Bluetooth LE sensors"));
+            super(MainActivity.this, ToDo.translate("Sensors"));
             setText();
             setOnClickListener(this);
         }
@@ -307,7 +307,7 @@ public class MainActivity extends ActivityContext {
             new InsideContext(getServiceContext()) {
                 @Override
                 public void run() {
-                    setText(getServiceContext().getBleService().toString());
+                    setText(getServiceContext().getSensorService().toString());
                 }
             };
         }
@@ -318,7 +318,7 @@ public class MainActivity extends ActivityContext {
             new InsideContext(getServiceContext()) {
                 @Override
                 public void run() {
-                    getServiceContext().getBleService().scan();
+                    getServiceContext().getSensorService().scan();
                 }
             };
         }

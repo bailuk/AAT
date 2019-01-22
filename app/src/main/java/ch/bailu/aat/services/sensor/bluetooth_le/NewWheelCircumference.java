@@ -1,4 +1,4 @@
-package ch.bailu.aat.services.bluetooth_le;
+package ch.bailu.aat.services.sensor.bluetooth_le;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;

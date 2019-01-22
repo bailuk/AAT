@@ -10,7 +10,7 @@ import android.os.IBinder;
 import java.io.Closeable;
 
 import ch.bailu.aat.services.background.BackgroundService;
-import ch.bailu.aat.services.bluetooth_le.BleService;
+import ch.bailu.aat.services.sensor.SensorService;
 import ch.bailu.aat.services.cache.CacheService;
 import ch.bailu.aat.services.dem.ElevationService;
 import ch.bailu.aat.services.directory.DirectoryService;
@@ -222,8 +222,8 @@ public abstract class ServiceLink implements
     }
 
     @Override
-    public BleService getBleService() {
-        return getService().getBleService();
+    public SensorService getSensorService() {
+        return getService().getSensorService();
     }
 
 

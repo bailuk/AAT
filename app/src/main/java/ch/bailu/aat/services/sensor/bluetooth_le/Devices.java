@@ -1,7 +1,6 @@
-package ch.bailu.aat.services.bluetooth_le;
+package ch.bailu.aat.services.sensor.bluetooth_le;
 
 import android.bluetooth.BluetoothDevice;
-import android.content.Context;
 import android.support.annotation.RequiresApi;
 
 import java.io.Closeable;
@@ -9,6 +8,7 @@ import java.util.ArrayList;
 
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.services.ServiceContext;
+import ch.bailu.aat.services.sensor.Sensors;
 import ch.bailu.aat.util.ToDo;
 import ch.bailu.util_java.util.Objects;
 
@@ -39,21 +39,17 @@ public class Devices implements Closeable {
     @Override
     public synchronized String toString() {
         String s = "";
-        String nl = "";
+        //String nl = "";
 
         for (Device d : devices) {
             if (d.isValid()) {
-                s = s + nl + d.toString();
-                nl = "\n";
+                s = s + d.toString() + "\n";
+                //nl = "\n";
             }
         }
-
-        if (s.length() == 0) {
-            s = ToDo.translate("No sensors found");
-        }
-
         return s;
     }
+
 
     public synchronized GpxInformation getInformation(int iid) {
         for (Device device : devices) {

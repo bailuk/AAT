@@ -1,7 +1,5 @@
 package ch.bailu.aat.gpx;
 
-import ch.bailu.aat.services.bluetooth_le.HeartRateService;
-
 public class InfoID {
     public final static int ALL = 0;
 
@@ -21,7 +19,8 @@ public class InfoID {
 
 
 
-    public static final int HEART_RATE_SENSOR = 71;
-    public static final int CADENCE_SENSOR = 72;
-    public static final int SPEED_SENSOR = 73;
+    public final static int SENSORS = 70;
+    public final static int HEART_RATE_SENSOR = 71;
+    public final static int CADENCE_SENSOR = 72;
+    public final static int SPEED_SENSOR = 73;
 }

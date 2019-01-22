@@ -4,7 +4,7 @@ import android.content.Context;
 
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.InfoID;
-import ch.bailu.aat.services.bluetooth_le.HeartRateServiceID;
+import ch.bailu.aat.services.sensor.attributes.HeartRateAttributes;
 import ch.bailu.aat.util.ToDo;
 
 public class HeartRateDescription extends ContentDescription {
@@ -39,9 +39,9 @@ public class HeartRateDescription extends ContentDescription {
     @Override
     public void onContentUpdated(int iid, GpxInformation info) {
         if (iid == InfoID.HEART_RATE_SENSOR) {
-            String bpm = info.getAttributes().getValue(HeartRateServiceID.KEY_INDEX_BPM);
-            String bpma = info.getAttributes().getValue(HeartRateServiceID.KEY_INDEX_BPM_AVERAGE);
-            String contact = info.getAttributes().getValue(HeartRateServiceID.KEY_INDEX_CONTACT);
+            String bpm = info.getAttributes().getValue(HeartRateAttributes.KEY_INDEX_BPM);
+            String bpma = info.getAttributes().getValue(HeartRateAttributes.KEY_INDEX_BPM_AVERAGE);
+            String contact = info.getAttributes().getValue(HeartRateAttributes.KEY_INDEX_CONTACT);
 
 
             value = bpma;

@@ -1,4 +1,4 @@
-package ch.bailu.aat.services.bluetooth_le;
+package ch.bailu.aat.services.sensor.bluetooth_le;
 
 import android.bluetooth.BluetoothGattCharacteristic;
 import android.content.Context;
@@ -10,6 +10,7 @@ import ch.bailu.aat.gpx.GpxAttributes;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.services.ServiceContext;
+import ch.bailu.aat.services.sensor.Averager;
 import ch.bailu.aat.util.AppBroadcaster;
 
 @RequiresApi(api = 18)
@@ -219,14 +220,14 @@ public class CscService extends CscServiceID implements Closeable {
 
             if (haveSpeed && isSpeedSensor && (timeout(time) || speed_rpm != 0)) {
                 AppBroadcaster.broadcast(
-                        context, AppBroadcaster.BLE_NOTIFIED + InfoID.SPEED_SENSOR);
+                        context, AppBroadcaster.SENSOR_CHANGED + InfoID.SPEED_SENSOR);
 
                 lastBroadcast = time;
             }
 
             if (haveCadence && isCadenceSensor) {
                 AppBroadcaster.broadcast(
-                        context, AppBroadcaster.BLE_NOTIFIED + InfoID.CADENCE_SENSOR);
+                        context, AppBroadcaster.SENSOR_CHANGED + InfoID.CADENCE_SENSOR);
             }
 
 

@@ -1,4 +1,4 @@
-package ch.bailu.aat.services.bluetooth_le;
+package ch.bailu.aat.services.sensor.bluetooth_le;
 
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothGatt;
@@ -10,15 +10,15 @@ import android.bluetooth.BluetoothProfile;
 import android.content.Context;
 import android.support.annotation.RequiresApi;
 
-import java.io.Closeable;
 import java.util.List;
 
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.services.ServiceContext;
+import ch.bailu.aat.services.sensor.SensorInterface;
 import ch.bailu.aat.util.AppBroadcaster;
 
 @RequiresApi(api = 18)
-public class Device extends BluetoothGattCallback implements Closeable {
+public class Device extends BluetoothGattCallback implements SensorInterface {
 
     private final Executer execute = new Executer();
 

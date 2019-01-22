@@ -1,6 +1,5 @@
-package ch.bailu.aat.services.bluetooth_le;
+package ch.bailu.aat.services.sensor.bluetooth_le;
 
-import android.annotation.SuppressLint;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.le.BluetoothLeScanner;
 import android.bluetooth.le.ScanCallback;
@@ -27,8 +26,20 @@ public abstract class BleScannerSDK21 extends BleScanner {
     @Override
     public void start() {
         BluetoothLeScanner scanner = adapter.getBluetoothLeScanner();
-        if (scanner != null)
+        if (scanner != null) { /*
+            final ArrayList<ScanFilter> filters = new ArrayList(2);
+            filters.add(new ScanFilter.Builder()
+                    .setServiceUuid(new ParcelUuid(HeartRateServiceID.HEART_RATE_SERVICE))
+                    .build());
+
+            filters.add(new ScanFilter.Builder()
+                    .setServiceUuid(new ParcelUuid(CscServiceID.CSC_SERVICE))
+                    .build());
+
+            scanner.startScan(filters, new ScanSettings.Builder().build(), callback);
+            */
             scanner.startScan(callback);
+        }
     }
 
     @Override

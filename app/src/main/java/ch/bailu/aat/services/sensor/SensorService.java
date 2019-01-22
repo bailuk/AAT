@@ -1,4 +1,4 @@
-package ch.bailu.aat.services.bluetooth_le;
+package ch.bailu.aat.services.sensor;
 
 import android.bluetooth.BluetoothAdapter;
 import android.content.BroadcastReceiver;
@@ -10,18 +10,22 @@ import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.VirtualService;
 import ch.bailu.aat.util.AppBroadcaster;
 
-public class BleService extends VirtualService {
-    private final BleDevices devices;
+public class SensorService extends VirtualService {
+    private final Sensors bluetoothLE;
+    private final Sensors internal;
 
 
-    public BleService(ServiceContext sc) {
+    public SensorService(ServiceContext sc) {
         super(sc);
 
-        devices = BleDevices.factory(sc);
+        bluetoothLE = Sensors.factoryBle(sc);
+        internal = Sensors.factoryInternal(sc.getContext());
 
 
         AppBroadcaster.register(getContext(),
                 onBluetoothStateChanged, BluetoothAdapter.ACTION_STATE_CHANGED);
+
+        scan();
 
     }
 
@@ -32,7 +36,7 @@ public class BleService extends VirtualService {
             int state = intent.getIntExtra(BluetoothAdapter.EXTRA_STATE, BluetoothAdapter.ERROR);
 
             if (state == BluetoothAdapter.STATE_ON || state == BluetoothAdapter.STATE_OFF) {
-                devices.scann();
+                bluetoothLE.scann();
             }
         }
     };
@@ -46,22 +50,26 @@ public class BleService extends VirtualService {
 
     @Override
     public synchronized void close() {
-        devices.close();
+        bluetoothLE.close();
+        internal.close();
         getContext().unregisterReceiver(onBluetoothStateChanged);
     }
 
 
     public  synchronized void scan() {
-        devices.scann();
+        bluetoothLE.scann();
     }
 
 
     @Override
     public synchronized String toString() {
-        return devices.toString();
+        return bluetoothLE.toString() + internal.toString();
     }
 
     public synchronized GpxInformation getInformation(int iid) {
-        return devices.getInformation(iid);
+        GpxInformation info = internal.getInformation(iid);
+        if (info == null) info = bluetoothLE.getInformation(iid);
+
+        return info;
     }
 }
