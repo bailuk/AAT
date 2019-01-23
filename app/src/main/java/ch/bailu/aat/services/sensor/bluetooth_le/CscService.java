@@ -37,7 +37,7 @@ public class CscService extends CscServiceID implements Closeable {
     private final Revolution cadence = new Revolution();
     private final Revolution speed = new Revolution();
     private final Averager averageCadence = new Averager(5);
-    private final NewWheelCircumference wheelCircumference;
+    private final WheelCircumference wheelCircumference;
 
 
     private GpxInformation information = GpxInformation.NULL;
@@ -48,7 +48,7 @@ public class CscService extends CscServiceID implements Closeable {
 
     public CscService(ServiceContext c) {
         context = c.getContext();
-        wheelCircumference = new NewWheelCircumference(c, speed);
+        wheelCircumference = new WheelCircumference(c, speed);
     }
 
 
