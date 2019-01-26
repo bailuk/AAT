@@ -51,7 +51,7 @@ public class GeneralPreferencesView extends VerticalScrollView {
         add(new SolidTextInputView(new SolidAdjustGpsAltitudeValue(acontext, new SolidUnit(acontext).getIndex()),
                 SolidTextInputDialog.INTEGER_SIGNED));
 
-        add(new SolidCheckBox(new SolidAltitudeFromBarometer(acontext)));
+        //add(new SolidCheckBox(new SolidAltitudeFromBarometer(acontext)));
         add(new SolidTextInputView(new SolidPressureAtSeaLevel(acontext),
                 SolidTextInputDialog.FLOAT));
 

@@ -76,6 +76,7 @@ public class AltitudeFromBarometer extends LocationStackChainedItem implements S
     @Override
     public void passLocation(LocationInformation l) {
 
+
         if (enabled && hypsometric.isValid()) {
             l.setAltitude(hypsometric.getAltitude());
         }

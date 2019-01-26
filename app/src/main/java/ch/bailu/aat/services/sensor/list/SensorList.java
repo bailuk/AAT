@@ -10,6 +10,7 @@ import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.gpx.StateID;
 import ch.bailu.aat.services.sensor.SensorInterface;
+import ch.bailu.aat.services.sensor.attributes.IndexedAttributes;
 import ch.bailu.aat.util.AppBroadcaster;
 
 public class SensorList extends ArrayList<SensorListItem> implements Closeable {
@@ -128,50 +129,31 @@ public class SensorList extends ArrayList<SensorListItem> implements Closeable {
     }
 
 
-    public static class Attributes extends GpxAttributes {
+    public static class Attributes extends IndexedAttributes {
 
         public static final int KEY_SENSOR_COUNT=0;
+
+        public static final String[] KEYS = {
+                "SensorCount"
+        };
+
 
         private final int sensors;
 
 
         public Attributes(int s) {
+            super(KEYS);
             sensors = s;
         }
 
 
-        public static final String[] KEYS = {
-            "SensorCount"
-        };
-
-        @Override
-        public String get(String key) {
-            return String.valueOf(sensors);
-        }
 
         @Override
         public String getValue(int index) {
-            return String.valueOf(sensors);
-        }
-
-        @Override
-        public String getKey(int index) {
-            return KEYS[KEY_SENSOR_COUNT];
-        }
-
-        @Override
-        public void put(String key, String value) {
-
-        }
-
-        @Override
-        public int size() {
-            return KEYS.length;
-        }
-
-        @Override
-        public void remove(String key) {
-
+            if (index == KEY_SENSOR_COUNT) {
+                return String.valueOf(sensors);
+            }
+            return "";
         }
     }
 }

@@ -1,8 +1,6 @@
 package ch.bailu.aat.services.sensor.attributes;
 
-import ch.bailu.aat.gpx.GpxAttributes;
-
-public class HeartRateAttributes extends GpxAttributes {
+public class HeartRateAttributes extends IndexedAttributes {
 
     public static final int KEY_INDEX_BPM = 0;
     public static final int KEY_INDEX_BPM_AVERAGE = 1;
@@ -45,18 +43,11 @@ public class HeartRateAttributes extends GpxAttributes {
     }
 
     public HeartRateAttributes(String l) {
+        super(KEYS);
         location = l;
     }
 
 
-    @Override
-    public String get(String key) {
-        for (int i = 0; i< KEYS.length; i++) {
-            if (key.equalsIgnoreCase(KEYS[i])) return getValue(i);
-        }
-
-        return null;
-    }
 
     @Override
     public String getValue(int index) {
@@ -82,25 +73,5 @@ public class HeartRateAttributes extends GpxAttributes {
         return NULL_VALUE;
     }
 
-    @Override
-    public String getKey(int index) {
-        if (index < KEYS.length) return KEYS[index];
-        return null;
-    }
-
-    @Override
-    public void put(String key, String value) {
-
-    }
-
-    @Override
-    public int size() {
-        return KEYS.length;
-    }
-
-    @Override
-    public void remove(String key) {
-
-    }
 }
 

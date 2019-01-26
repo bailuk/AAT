@@ -38,10 +38,10 @@ public class InternalSensorsSDK23 extends Sensors {
 
     private void scann(int type) {
         if (manager instanceof SensorManager) {
-            List<Sensor> heartRateSensors = manager.getSensorList(type);
+            List<Sensor> sensors = manager.getSensorList(type);
 
-            if (heartRateSensors != null) {
-                for (Sensor sensor : heartRateSensors) {
+            if (sensors != null) {
+                for (Sensor sensor : sensors) {
                     sensorList.add(toAddress(sensor), sensor.getVendor() + " " + sensor.getName());
                 }
             }
@@ -64,17 +64,27 @@ public class InternalSensorsSDK23 extends Sensors {
 
     private InternalSensorSDK23 createSensorFromAddress(String address) {
         if (manager instanceof SensorManager) {
-            List<Sensor> heartRateSensors = manager.getSensorList(Sensor.TYPE_HEART_RATE);
+            List<Sensor> sensors = manager.getSensorList(Sensor.TYPE_ALL);
 
-            if (heartRateSensors != null) {
-                for (Sensor sensor : heartRateSensors) {
+            if (sensors != null) {
+                for (Sensor sensor : sensors) {
 
                     if (address.equals(toAddress(sensor))) {
-                        return new HeartRateSensor(context, sensor);
+                        return factory(sensor);
                     }
                 }
             }
         }
+        return null;
+    }
+
+
+    private InternalSensorSDK23 factory(Sensor sensor) {
+        if (sensor.getType() == Sensor.TYPE_HEART_RATE)
+            return new HeartRateSensor(context, sensor);
+        else if (sensor.getType() == Sensor.TYPE_PRESSURE)
+            return new BarometerSensor(context, sensor);
+
         return null;
     }
 

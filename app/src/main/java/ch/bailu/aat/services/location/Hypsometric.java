@@ -32,12 +32,12 @@ public class Hypsometric {
     }
 
 
-    public double getAltitude() {
+    public short getAltitude() {
         if (isValid()) {
-            return getAltitude(pressure, pressureAtSeaLevel);
+            return (short) Math.round(getAltitude(pressure, pressureAtSeaLevel));
         }
 
-        return 0d;
+        return 0;
     }
 
 

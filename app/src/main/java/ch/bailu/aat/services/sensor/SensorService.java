@@ -88,7 +88,7 @@ public class SensorService extends VirtualService {
     }
 
     public synchronized GpxInformation getInformation(int iid) {
-        GpxInformation information = sensorList.getInformation(iid);
+        GpxInformation information = getInformationOrNull(iid);
 
 
         if (information == null) {
@@ -98,6 +98,11 @@ public class SensorService extends VirtualService {
         return information;
     }
 
+
+    public synchronized GpxInformation getInformationOrNull(int iid) {
+        GpxInformation information = sensorList.getInformation(iid);
+        return information;
+    }
 
 
     public SensorList getSensorList() {

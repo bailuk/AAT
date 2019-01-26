@@ -11,6 +11,7 @@ import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.sensor.Averager;
+import ch.bailu.aat.services.sensor.attributes.IndexedAttributes;
 import ch.bailu.aat.util.AppBroadcaster;
 
 @RequiresApi(api = 18)
@@ -157,7 +158,7 @@ public class CscService extends CscServiceID implements Closeable {
     }
 
 
-    private class Attributes extends GpxAttributes {
+    private class Attributes extends IndexedAttributes {
 
         boolean haveCadence, haveSpeed;
         private int speed_rpm = 0;
@@ -168,6 +169,7 @@ public class CscService extends CscServiceID implements Closeable {
 
 
         public Attributes(BluetoothGattCharacteristic c, byte[] v) {
+            super(KEYS);
             int offset = 0;
 
             byte data = v[offset];
@@ -242,14 +244,6 @@ public class CscService extends CscServiceID implements Closeable {
             return speedSI;
         }
 
-        @Override
-        public String get(String key) {
-            for (int i = 0; i< KEYS.length; i++) {
-                if (key.equalsIgnoreCase(KEYS[i])) return getValue(i);
-            }
-
-            return null;
-        }
 
         @Override
         public String getValue(int index) {
@@ -274,27 +268,6 @@ public class CscService extends CscServiceID implements Closeable {
 
 
             return NULL_VALUE;
-        }
-
-        @Override
-        public String getKey(int index) {
-            if (index < KEYS.length) return KEYS[index];
-            return null;
-        }
-
-        @Override
-        public void put(String key, String value) {
-
-        }
-
-        @Override
-        public int size() {
-            return KEYS.length;
-        }
-
-        @Override
-        public void remove(String key) {
-
         }
     }
 
