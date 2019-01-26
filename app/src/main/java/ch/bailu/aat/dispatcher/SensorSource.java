@@ -9,11 +9,11 @@ import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.util.ui.AppLog;
 
-public class BleSensorSource extends ContentSource {
+public class SensorSource extends ContentSource {
     private final ServiceContext scontext;
     private final int iid;
 
-    public BleSensorSource(ServiceContext sc, int i) {
+    public SensorSource(ServiceContext sc, int i) {
         scontext = sc;
         iid = i;
     }
@@ -22,7 +22,7 @@ public class BleSensorSource extends ContentSource {
     private final BroadcastReceiver onSensorUpdated = new BroadcastReceiver () {
         @Override
         public void onReceive(Context context, Intent intent) {
-            AppLog.d(BleSensorSource.this, "onSensorUpdated()");
+            AppLog.d(SensorSource.this, "onSensorUpdated()");
             sendUpdate(getIID(), getInfo());
         }
 

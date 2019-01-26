@@ -56,7 +56,12 @@ public class NumberView extends ViewGroup implements OnContentUpdatedInterface {
 
 
     public void setHighlightUnitLabelColor() {
-        unit.setBackgroundColor(AppTheme.getHighlightColor());
+        setHighlightUnitLabelColor(AppTheme.getHighlightColor());
+    }
+
+
+    public void setHighlightUnitLabelColor(int color) {
+        unit.setBackgroundColor(color);
         unit.setTextColor(Color.BLACK);
     }
 
@@ -131,5 +136,14 @@ public class NumberView extends ViewGroup implements OnContentUpdatedInterface {
         number.setText(description.getValue());
         label.setText(description.getLabel());
         unit.setText(description.getUnit());
+    }
+
+    @Override
+    public void setOnClickListener(OnClickListener listener) {
+
+        super.setOnClickListener(listener);
+
+        AppTheme.bar.button(this);
+        setPadding(0,0,0,0);
     }
 }

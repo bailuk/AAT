@@ -4,6 +4,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 
 import ch.bailu.aat.description.TrackerStateDescription;
+import ch.bailu.aat.services.InsideContext;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.util.ui.AppTheme;
 
@@ -18,15 +19,19 @@ public class TrackerStateButton extends ColorNumberView implements OnClickListen
         scontext=c;
 
         setOnClickListener(this);
-
-        AppTheme.bar.button(this);
-        setPadding(0,0,0,0);
     }
 
     @Override
     public void onClick(View v) {
         if (v==this) {
-            scontext.getTrackerService().getState().onStartPauseResume();
+            new InsideContext(scontext) {
+
+                @Override
+                public void run() {
+                    scontext.getTrackerService().getState().onStartPauseResume();
+                }
+            };
+
         }
     }
 }

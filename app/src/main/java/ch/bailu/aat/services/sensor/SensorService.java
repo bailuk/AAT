@@ -4,8 +4,11 @@ import android.bluetooth.BluetoothAdapter;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 
 import ch.bailu.aat.gpx.GpxInformation;
+import ch.bailu.aat.gpx.InfoID;
+import ch.bailu.aat.gpx.StateID;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.VirtualService;
 import ch.bailu.aat.services.sensor.list.SensorList;
@@ -34,6 +37,10 @@ public class SensorService extends VirtualService {
     }
 
 
+    public static boolean isSupported() {
+        return (Build.VERSION.SDK_INT >= 18);
+    }
+
 
     BroadcastReceiver onBluetoothStateChanged = new BroadcastReceiver() {
         @Override
@@ -45,6 +52,8 @@ public class SensorService extends VirtualService {
             }
         }
     };
+
+
 
 
     @Override
@@ -79,11 +88,21 @@ public class SensorService extends VirtualService {
     }
 
     public synchronized GpxInformation getInformation(int iid) {
-        return sensorList.getInformation(iid);
+        GpxInformation information = sensorList.getInformation(iid);
+
+
+        if (information == null) {
+            information = GpxInformation.NULL;
+        }
+
+        return information;
     }
+
 
 
     public SensorList getSensorList() {
         return sensorList;
     }
+
+
 }

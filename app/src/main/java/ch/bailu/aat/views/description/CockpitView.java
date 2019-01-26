@@ -55,8 +55,8 @@ public class CockpitView extends ViewGroup {
     public void addAltitude(DispatcherInterface di) {
         NumberView v = add(di, new AltitudeConfigurationDescription(getContext()), InfoID.LOCATION);
         SolidProvideAltitude.requestOnClick(v);
-        AppTheme.main.button(v);
-        v.setPadding(0,0,0,0);
+        //AppTheme.main.button(v);
+        //v.setPadding(0,0,0,0);
 
     }
 

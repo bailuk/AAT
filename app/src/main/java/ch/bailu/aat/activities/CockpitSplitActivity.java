@@ -11,7 +11,7 @@ import ch.bailu.aat.description.DistanceDescription;
 import ch.bailu.aat.description.HeartRateDescription;
 import ch.bailu.aat.description.PredictiveTimeDescription;
 import ch.bailu.aat.description.SlopeDescription;
-import ch.bailu.aat.dispatcher.BleSensorSource;
+import ch.bailu.aat.dispatcher.SensorSource;
 import ch.bailu.aat.dispatcher.CurrentLocationSource;
 import ch.bailu.aat.dispatcher.EditorSource;
 import ch.bailu.aat.dispatcher.OverlaySource;
@@ -116,7 +116,7 @@ public class CockpitSplitActivity extends AbsKeepScreenOnActivity {
         addSource(new TrackerTimerSource(getServiceContext()));
         addSource(new CurrentLocationSource(getServiceContext()));
         addSource(new OverlaySource(getServiceContext()));
-        addSource(new BleSensorSource(getServiceContext(), InfoID.HEART_RATE_SENSOR));
+        addSource(new SensorSource(getServiceContext(), InfoID.HEART_RATE_SENSOR));
 
     }
 }

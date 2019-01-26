@@ -5,6 +5,7 @@ import android.widget.LinearLayout;
 
 import ch.bailu.aat.R;
 import ch.bailu.aat.activities.AbsDispatcher;
+import ch.bailu.aat.activities.ActivityContext;
 import ch.bailu.aat.activities.ActivitySwitcher;
 import ch.bailu.aat.activities.MainActivity;
 import ch.bailu.aat.gpx.InfoID;
@@ -14,6 +15,7 @@ import ch.bailu.aat.views.MultiViewSelector;
 import ch.bailu.aat.views.MyImageButton;
 import ch.bailu.aat.views.description.GPSStateButton;
 import ch.bailu.aat.views.description.MultiView;
+import ch.bailu.aat.views.description.SensorStateButton;
 import ch.bailu.aat.views.description.TrackerStateButton;
 import ch.bailu.util_java.util.Objects;
 
@@ -91,6 +93,14 @@ public class MainControlBar extends ControlBar {
 
         return this;
     }
+
+
+    public void addSensorState(ActivityContext acontext) {
+        SensorStateButton s = new SensorStateButton(acontext.getServiceContext());
+        add(s);
+        acontext.addTarget(s, InfoID.SENSORS);
+    }
+
 
     public void addActivityCycle(final Activity acontext) {
         MyImageButton cb = addImageButton(R.drawable.go_down_inverse, getControlSize());

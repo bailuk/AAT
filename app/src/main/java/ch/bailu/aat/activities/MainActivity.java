@@ -1,39 +1,30 @@
 package ch.bailu.aat.activities;
 
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
 
 import ch.bailu.aat.R;
-import ch.bailu.aat.dispatcher.BleSensorSource;
+import ch.bailu.aat.dispatcher.SensorSource;
 import ch.bailu.aat.dispatcher.CurrentLocationSource;
-import ch.bailu.aat.dispatcher.OnContentUpdatedInterface;
 import ch.bailu.aat.dispatcher.TrackerSource;
-import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.preferences.SolidFile;
 import ch.bailu.aat.preferences.presets.SolidPreset;
 import ch.bailu.aat.preferences.system.SolidDataDirectory;
 import ch.bailu.aat.preferences.system.SolidExternalDirectory;
-import ch.bailu.aat.services.InsideContext;
+import ch.bailu.aat.services.sensor.SensorService;
 import ch.bailu.aat.util.AppBroadcaster;
-import ch.bailu.aat.util.ToDo;
 import ch.bailu.aat.util.fs.AppDirectory;
 import ch.bailu.aat.util.ui.AppLayout;
 import ch.bailu.aat.util.ui.AppTheme;
 import ch.bailu.aat.util.ui.UiTheme;
 import ch.bailu.aat.views.AbsLabelTextView;
 import ch.bailu.aat.views.ContentView;
-import ch.bailu.aat.views.SensorListView;
 import ch.bailu.aat.views.bar.MainControlBar;
 import ch.bailu.aat.views.preferences.SolidIndexListView;
-import ch.bailu.aat.views.preferences.TitleView;
 import ch.bailu.aat.views.preferences.VerticalScrollView;
 
 
@@ -99,6 +90,7 @@ public class MainActivity extends ActivityContext {
     private void createDispatcher() {
         addSource(new TrackerSource(getServiceContext()));
         addSource(new CurrentLocationSource(getServiceContext()));
+        addSource(new SensorSource(getServiceContext(), InfoID.SENSORS));
     }
 
 
@@ -106,7 +98,12 @@ public class MainActivity extends ActivityContext {
     private LinearLayout createButtonBar() {
         final MainControlBar bar = new MainControlBar(this);
 
-        bar.addSpace();
+        if (SensorService.isSupported()) {
+            bar.addSensorState(this);
+        } else {
+            bar.addSpace();
+        }
+
         if (AppLayout.haveExtraSpaceGps(this)) {
             bar.addSpace();
         }

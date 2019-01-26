@@ -1,16 +1,14 @@
 package ch.bailu.aat.services.sensor.list;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 
 import java.io.Closeable;
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Set;
 
+import ch.bailu.aat.gpx.GpxAttributes;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.InfoID;
+import ch.bailu.aat.gpx.StateID;
 import ch.bailu.aat.services.sensor.SensorInterface;
 import ch.bailu.aat.util.AppBroadcaster;
 
@@ -60,20 +58,18 @@ public class SensorList extends ArrayList<SensorListItem> implements Closeable {
     }
 
 
-
-    private final static String PREFERENCES = "SensorList";
-    private final static String KEY_ADDRESS = "Address";
-    private final static String KEY_NAME = "Name";
-
-
-
     public GpxInformation getInformation(int iid) {
         GpxInformation i = null;
+
+        if (iid == InfoID.SENSORS)
+            return new Information();
+
         for (SensorListItem item: this) {
             i = item.getInformation(iid);
             if (i != null) return i;
 
         }
+
         return i;
     }
 
@@ -88,38 +84,94 @@ public class SensorList extends ArrayList<SensorListItem> implements Closeable {
 
 
     private void save() {
-        final SharedPreferences settings = context.getSharedPreferences(PREFERENCES, Context.MODE_PRIVATE);
-        final SharedPreferences.Editor editor = settings.edit();
-
-        final Set<String> addresses = new HashSet<>();
-        final Set<String> names = new HashSet<>();
-        for (SensorListItem i: this) {
-            if (i.isEnabled()) {
-                addresses.add(i.getAddress());
-                names.add(i.getName());
-            }
-        }
-
-        editor.putStringSet(KEY_ADDRESS, addresses);
-        editor.putStringSet(KEY_NAME, names);
-        editor.apply();
+        SensorListDb.write(context, this);
     }
 
 
     private void restore() {
-        SharedPreferences settings = context.getSharedPreferences(PREFERENCES, Context.MODE_PRIVATE);
-
-        Set<String> addresses = settings.getStringSet(KEY_ADDRESS, new HashSet<>());
-        Set<String> names = settings.getStringSet(KEY_NAME, new HashSet<>());
+        SensorListDb.read(context, this);
+    }
 
 
-        if (addresses != null && names != null) {
-            Iterator<String> address = addresses.iterator();
-            Iterator<String> name = names.iterator();
+    public class Information extends GpxInformation {
+        private int state = StateID.OFF;
+        private int sensorCount = 0;
 
-            while (address.hasNext() && name.hasNext()) {
-                add(address.next(), name.next()).enable();
+        private final Attributes attributes;
+
+        public Information() {
+            for (SensorListItem i : SensorList.this) {
+                if (i.isConnectionEstablished()) {
+                    sensorCount++;
+                } else if (i.isConnected()) {
+                    state = StateID.WAIT;
+                }
             }
+
+            if (state != StateID.WAIT && sensorCount > 0)
+                state = StateID.ON;
+
+            attributes = new Attributes(sensorCount);
+        }
+
+
+        @Override
+        public int getState() {
+            return state;
+        }
+
+
+        @Override
+        public GpxAttributes getAttributes() {
+            return attributes;
+        }
+    }
+
+
+    public static class Attributes extends GpxAttributes {
+
+        public static final int KEY_SENSOR_COUNT=0;
+
+        private final int sensors;
+
+
+        public Attributes(int s) {
+            sensors = s;
+        }
+
+
+        public static final String[] KEYS = {
+            "SensorCount"
+        };
+
+        @Override
+        public String get(String key) {
+            return String.valueOf(sensors);
+        }
+
+        @Override
+        public String getValue(int index) {
+            return String.valueOf(sensors);
+        }
+
+        @Override
+        public String getKey(int index) {
+            return KEYS[KEY_SENSOR_COUNT];
+        }
+
+        @Override
+        public void put(String key, String value) {
+
+        }
+
+        @Override
+        public int size() {
+            return KEYS.length;
+        }
+
+        @Override
+        public void remove(String key) {
+
         }
     }
 }
