@@ -36,7 +36,7 @@ public class GpxDynLayer implements MapLayerInterface, OnContentUpdatedInterface
     public GpxDynLayer(MapContext mc,
                          DispatcherInterface dispatcher, int iid) {
         this(mc);
-        dispatcher.addTargets(this, iid);
+        dispatcher.addTarget(this, iid);
     }
 
 

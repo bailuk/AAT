@@ -25,6 +25,7 @@ public class VerticalScrollView extends ScrollView {
     }
 
 
+
     public void add(View view) {
         layout.addView(view);
     }
@@ -34,7 +35,7 @@ public class VerticalScrollView extends ScrollView {
 
         add(v);
 
-        for (int i : iid) di.addTargets(v, i);
+        for (int i : iid) di.addTarget(v, i);
 
     }
 

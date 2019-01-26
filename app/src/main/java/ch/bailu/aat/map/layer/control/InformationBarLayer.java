@@ -57,7 +57,7 @@ public class InformationBarLayer extends ControlBarLayer {
         ToolTip.set(overpass,R.string.tt_info_overpass);
         ToolTip.set(location, R.string.tt_info_location);
 
-        d.addTargets(selector, InfoID.ALL);
+        d.addTarget(selector, InfoID.ALL);
     }
 
 

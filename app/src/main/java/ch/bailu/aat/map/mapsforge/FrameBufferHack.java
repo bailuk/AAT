@@ -67,7 +67,7 @@ public class FrameBufferHack extends FrameBuffer {
          * last generated frame is allways put on screen.
          */
 
-        // FIXME: reseting the background color is redundant if the background color of the map view is allready set
+        // FIXME: reseting the background color is redundant if the background color of the map view is allready setItem
         graphicContext.fillColor(this.displayModel.getBackgroundColor());
 
         swapBitmaps();

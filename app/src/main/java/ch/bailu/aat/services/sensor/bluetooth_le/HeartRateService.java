@@ -12,6 +12,7 @@ import ch.bailu.aat.services.sensor.Averager;
 import ch.bailu.aat.services.sensor.attributes.HeartRateAttributes;
 import ch.bailu.aat.services.sensor.attributes.SensorInformation;
 import ch.bailu.aat.util.AppBroadcaster;
+import ch.bailu.aat.util.ToDo;
 
 @RequiresApi(api = 18)
 public class HeartRateService extends HeartRateServiceID {
@@ -83,7 +84,7 @@ public class HeartRateService extends HeartRateServiceID {
 
     @Override
     public String toString() {
-        return "Heart Rate Sensor [" + location + "]";
+        return ToDo.translate("Heart Rate Sensor");
     }
 
     private void readBodySensorLocation(byte[] value) {
@@ -105,6 +106,7 @@ public class HeartRateService extends HeartRateServiceID {
 
 
         public Attributes(BluetoothGattCharacteristic c, byte[] v) {
+            super(HeartRateService.this.location);
             int offset = 0;
             byte flags = v[offset];
 
@@ -148,9 +150,11 @@ public class HeartRateService extends HeartRateServiceID {
             } else {
                 if (!haveSensorContactStatus) haveSensorContact = false;
             }
+
+
+
         }
     }
-
 
 
     public GpxInformation getInformation(int iid) {

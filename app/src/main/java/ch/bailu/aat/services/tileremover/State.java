@@ -8,7 +8,7 @@ public interface State {
     /** chancel **/
     void stop();
 
-    /** set to initial state **/
+    /** setItem to initial state **/
     void reset();
 
     /** firstPixelIndex removing **/

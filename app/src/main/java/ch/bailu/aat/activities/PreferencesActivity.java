@@ -5,6 +5,8 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import ch.bailu.aat.R;
+import ch.bailu.aat.dispatcher.BleSensorSource;
+import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.preferences.SolidFile;
 import ch.bailu.aat.preferences.general.SolidPresetCount;
 import ch.bailu.aat.views.ContentView;
@@ -31,6 +33,9 @@ public class PreferencesActivity extends ActivityContext implements SharedPrefer
         spresetCount = new SolidPresetCount(this);
         spresetCount.register(this);
         createViews();
+
+        addSource(new BleSensorSource(getServiceContext(), InfoID.SENSORS));
+
     }
 
 

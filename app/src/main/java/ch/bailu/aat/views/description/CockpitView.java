@@ -9,13 +9,8 @@ import ch.bailu.aat.description.AltitudeConfigurationDescription;
 import ch.bailu.aat.description.ContentDescription;
 import ch.bailu.aat.dispatcher.DispatcherInterface;
 import ch.bailu.aat.gpx.InfoID;
-import ch.bailu.aat.preferences.AbsSolidType;
-import ch.bailu.aat.preferences.general.SolidUnit;
-import ch.bailu.aat.preferences.location.SolidAdjustGpsAltitude;
-import ch.bailu.aat.preferences.location.SolidAltitudeFromBarometer;
 import ch.bailu.aat.preferences.location.SolidProvideAltitude;
 import ch.bailu.aat.util.ui.AppTheme;
-import ch.bailu.aat.views.preferences.SolidTextInputDialog;
 
 
 public class CockpitView extends ViewGroup {
@@ -43,7 +38,7 @@ public class CockpitView extends ViewGroup {
         final NumberView v = new ColorNumberView(de, AppTheme.main);
 
         addView(v);
-        di.addTargets(v, iid);
+        di.addTarget(v, iid);
     }
 
 
@@ -51,7 +46,7 @@ public class CockpitView extends ViewGroup {
         final NumberView v = new NumberView(de, AppTheme.main);
 
         addView(v);
-        di.addTargets(v, iid);
+        di.addTarget(v, iid);
         return v;
     }
 

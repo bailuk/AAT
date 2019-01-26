@@ -15,7 +15,7 @@ public abstract class AbsKeepScreenOnActivity extends ActivityContext {
 
         backlight = new Backlight(getWindow(), getServiceContext());
 
-        addTargets(backlight, InfoID.TRACKER);
+        addTarget(backlight, InfoID.TRACKER);
     }
 
 

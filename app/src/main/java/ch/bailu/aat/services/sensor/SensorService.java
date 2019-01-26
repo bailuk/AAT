@@ -8,9 +8,12 @@ import android.content.Intent;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.VirtualService;
+import ch.bailu.aat.services.sensor.list.SensorList;
 import ch.bailu.aat.util.AppBroadcaster;
 
 public class SensorService extends VirtualService {
+    private final SensorList sensorList;
+
     private final Sensors bluetoothLE;
     private final Sensors internal;
 
@@ -18,16 +21,18 @@ public class SensorService extends VirtualService {
     public SensorService(ServiceContext sc) {
         super(sc);
 
-        bluetoothLE = Sensors.factoryBle(sc);
-        internal = Sensors.factoryInternal(sc.getContext());
+        sensorList = new SensorList(sc.getContext());
+        bluetoothLE = Sensors.factoryBle(sc, sensorList);
+        internal = Sensors.factoryInternal(sc.getContext(), sensorList);
 
 
         AppBroadcaster.register(getContext(),
                 onBluetoothStateChanged, BluetoothAdapter.ACTION_STATE_CHANGED);
 
-        scan();
 
+        updateConnections();
     }
+
 
 
     BroadcastReceiver onBluetoothStateChanged = new BroadcastReceiver() {
@@ -36,7 +41,7 @@ public class SensorService extends VirtualService {
             int state = intent.getIntExtra(BluetoothAdapter.EXTRA_STATE, BluetoothAdapter.ERROR);
 
             if (state == BluetoothAdapter.STATE_ON || state == BluetoothAdapter.STATE_OFF) {
-                bluetoothLE.scann();
+                updateConnections();
             }
         }
     };
@@ -52,24 +57,33 @@ public class SensorService extends VirtualService {
     public synchronized void close() {
         bluetoothLE.close();
         internal.close();
+        sensorList.close();
         getContext().unregisterReceiver(onBluetoothStateChanged);
     }
 
+    public synchronized void updateConnections() {
+        bluetoothLE.updateConnections();
+        internal.updateConnections();
+        sensorList.broadcast();
+    }
 
-    public  synchronized void scan() {
+    public  synchronized void scann() {
         bluetoothLE.scann();
     }
 
 
     @Override
     public synchronized String toString() {
-        return bluetoothLE.toString() + internal.toString();
+        return bluetoothLE.toString();
+
     }
 
     public synchronized GpxInformation getInformation(int iid) {
-        GpxInformation info = internal.getInformation(iid);
-        if (info == null) info = bluetoothLE.getInformation(iid);
+        return sensorList.getInformation(iid);
+    }
 
-        return info;
+
+    public SensorList getSensorList() {
+        return sensorList;
     }
 }

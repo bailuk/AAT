@@ -21,7 +21,6 @@ public class AppBroadcaster {
     public static final String DBSYNC_DONE=NAME_SPACE+"SYNC_DONE";
     public static final String DB_SYNC_CHANGED=NAME_SPACE+"SYNC_CHANGED";
 
-    public static final String BLE_DEVICE_SCANNED = NAME_SPACE+"BLE_DEVICE_SCANNED";
     public static final String SENSOR_CHANGED = NAME_SPACE + "SENSOR_CHANGED";
 
     /** 

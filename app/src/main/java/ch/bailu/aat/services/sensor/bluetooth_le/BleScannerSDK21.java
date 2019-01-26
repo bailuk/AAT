@@ -7,7 +7,7 @@ import android.bluetooth.le.ScanResult;
 import android.support.annotation.RequiresApi;
 
 @RequiresApi(api = 21)
-public abstract class BleScannerSDK21 extends BleScanner {
+public class BleScannerSDK21 extends BleScanner {
     private final BluetoothAdapter adapter;
 
     private final ScanCallback callback = new ScanCallback() {
@@ -19,33 +19,27 @@ public abstract class BleScannerSDK21 extends BleScanner {
     };
 
 
-    protected BleScannerSDK21(BluetoothAdapter a) {
-        adapter = a;
+    protected BleScannerSDK21(BleSensorsSDK18 sensors) {
+        super(sensors);
+        adapter = sensors.getAdapter();
     }
 
     @Override
     public void start() {
-        BluetoothLeScanner scanner = adapter.getBluetoothLeScanner();
-        if (scanner != null) { /*
-            final ArrayList<ScanFilter> filters = new ArrayList(2);
-            filters.add(new ScanFilter.Builder()
-                    .setServiceUuid(new ParcelUuid(HeartRateServiceID.HEART_RATE_SERVICE))
-                    .build());
-
-            filters.add(new ScanFilter.Builder()
-                    .setServiceUuid(new ParcelUuid(CscServiceID.CSC_SERVICE))
-                    .build());
-
-            scanner.startScan(filters, new ScanSettings.Builder().build(), callback);
-            */
-            scanner.startScan(callback);
+        if (adapter != null) {
+            BluetoothLeScanner scanner = adapter.getBluetoothLeScanner();
+            if (scanner != null) {
+                scanner.startScan(callback);
+            }
         }
     }
 
     @Override
     public void stop() {
-        BluetoothLeScanner scanner = adapter.getBluetoothLeScanner();
-        if (scanner != null)
-            scanner.stopScan(callback);
+        if (adapter != null) {
+            BluetoothLeScanner scanner = adapter.getBluetoothLeScanner();
+            if (scanner != null)
+                scanner.stopScan(callback);
+        }
     }
 }

@@ -22,7 +22,7 @@ public class MapsForgeView extends MapsForgeViewBase {
         stack = new MapsForgeTileLayerStackConfigured.All(this);
         add(stack, stack);
 
-        // Depends on zoom limits (set by TileLayerStack)
+        // Depends on zoom limits (setItem by TileLayerStack)
         pos = new MapPositionLayer(getMContext(), dispatcher);
         add(pos);
 

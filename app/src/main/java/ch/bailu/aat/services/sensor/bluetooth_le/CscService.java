@@ -147,7 +147,7 @@ public class CscService extends CscServiceID implements Closeable {
             name += "Cadence ";
         }
 
-        return name + "Sensor [" + location + "]";
+        return name + "Sensor";
     }
 
 

@@ -5,62 +5,82 @@ import android.hardware.Sensor;
 import android.hardware.SensorManager;
 import android.support.annotation.RequiresApi;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.services.sensor.Sensors;
+import ch.bailu.aat.services.sensor.list.SensorList;
+import ch.bailu.aat.services.sensor.list.SensorListItem;
 
 
 @RequiresApi(api = 23)
 public class InternalSensorsSDK23 extends Sensors {
-    private final ArrayList<AbsSensorSDK23> sensors = new ArrayList<>(5);
+
+    private final SensorManager manager;
+    private final Context context;
+
+    private final SensorList sensorList;
+
+    public InternalSensorsSDK23(Context c, SensorList list) {
+        sensorList = list;
+        context = c;
+        manager = context.getSystemService(SensorManager.class);
+
+        scann();
+    }
 
 
-    public InternalSensorsSDK23(Context context) {
-        final SensorManager manager = context.getSystemService(SensorManager.class);
+    @Override
+    public void scann() {
+        scann(Sensor.TYPE_HEART_RATE);
+        scann(Sensor.TYPE_PRESSURE);
+    }
 
 
+    private void scann(int type) {
         if (manager instanceof SensorManager) {
-            List<Sensor> heartRateSensors = manager.getSensorList(Sensor.TYPE_HEART_RATE);
+            List<Sensor> heartRateSensors = manager.getSensorList(type);
 
             if (heartRateSensors != null) {
                 for (Sensor sensor : heartRateSensors) {
-                    sensors.add(new HeartRateSensor(context, sensor));
+                    sensorList.add(toAddress(sensor), sensor.getVendor() + " " + sensor.getName());
+                }
+            }
+        }
+
+    }
+
+    @Override
+    public void updateConnections() {
+        for (SensorListItem item : sensorList) {
+            if (item.isEnabled() && item.isConnected() == false) {
+                final InternalSensorSDK23 sensor = createSensorFromAddress(item.getAddress());
+                if (sensor != null) {
+                    item.setSensor(sensor);
                 }
             }
         }
     }
 
 
+    private InternalSensorSDK23 createSensorFromAddress(String address) {
+        if (manager instanceof SensorManager) {
+            List<Sensor> heartRateSensors = manager.getSensorList(Sensor.TYPE_HEART_RATE);
 
-    @Override
-    public synchronized String toString() {
-        String s = "";
-        //String nl = "";
+            if (heartRateSensors != null) {
+                for (Sensor sensor : heartRateSensors) {
 
-        for (AbsSensorSDK23 sensor : sensors) {
-            if (sensor.isValid()) {
-                s = s + sensor.toString() + "\n";
-            }
-        }
-        return s;
-    }
-
-
-    @Override
-    public synchronized GpxInformation getInformation(int iid) {
-        for (AbsSensorSDK23 sensor : sensors) {
-            if (sensor.isValid()) {
-                GpxInformation information = sensor.getInformation(iid);
-                if (information != null) return information;
+                    if (address.equals(toAddress(sensor))) {
+                        return new HeartRateSensor(context, sensor);
+                    }
+                }
             }
         }
         return null;
     }
 
-    @Override
-    public void close() {
-        for (AbsSensorSDK23 sensor : sensors) sensor.close();
+
+    public static String toAddress(Sensor sensor) {
+        return sensor.getVendor()+sensor.getName();
     }
+
 }

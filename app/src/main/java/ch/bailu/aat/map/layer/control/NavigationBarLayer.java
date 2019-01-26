@@ -52,7 +52,7 @@ public class NavigationBarLayer extends ControlBarLayer implements OnContentUpda
         ToolTip.set(buttonFrame,  R.string.tt_map_frame);
         ToolTip.set(lock, R.string.tt_map_home);
 
-        d.addTargets(this, InfoID.ALL);
+        d.addTarget(this, InfoID.ALL);
 
         VolumeView volumeView = new VolumeView(mc.getContext());
         volumeView.setVisibility(View.INVISIBLE);

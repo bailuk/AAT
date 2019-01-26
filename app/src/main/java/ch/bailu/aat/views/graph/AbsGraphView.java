@@ -31,7 +31,7 @@ public abstract class AbsGraphView extends ViewGroup implements OnContentUpdated
 
     public AbsGraphView(Context context, DispatcherInterface di, int... iid) {
         this(context);
-        di.addTargets(this, iid);
+        di.addTarget(this, iid);
     }
 
 

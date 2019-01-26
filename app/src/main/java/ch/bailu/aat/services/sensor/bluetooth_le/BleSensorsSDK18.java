@@ -6,43 +6,48 @@ import android.bluetooth.BluetoothManager;
 import android.content.Context;
 import android.support.annotation.RequiresApi;
 
-import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.sensor.Sensors;
-import ch.bailu.aat.util.AppBroadcaster;
+import ch.bailu.aat.services.sensor.list.SensorList;
+import ch.bailu.aat.services.sensor.list.SensorListItem;
 import ch.bailu.aat.util.Timer;
 import ch.bailu.aat.util.ToDo;
 
 @RequiresApi(api = 18)
 public class BleSensorsSDK18 extends Sensors {
 
-    private final static long SCAN_DURATION = 5000;
+    private final static long SCAN_DURATION = 10000;
 
     private final Context context;
     private final ServiceContext scontext;
 
     private final BluetoothAdapter adapter;
 
-    private final Devices devices = new Devices();
-    private final BleScanner scanner;
+    private final SensorList sensorList;
+
+    private final BleScanner scannerBle, scannerBonded;
+
+    private boolean scanning = false;
+
+
     private final Timer timer = new Timer(new Runnable() {
         @Override
         public void run() {
-            scanner.stop();
+            stopScanner();
         }
     }, SCAN_DURATION);
 
 
 
 
-    public BleSensorsSDK18(ServiceContext sc) {
+    public BleSensorsSDK18(ServiceContext sc, SensorList list) {
+        sensorList = list;
         scontext = sc;
         context = sc.getContext();
 
-        adapter = getAdapter();
-        scanner = BleScanner.factory(adapter, this);
-
-        scann();
+        adapter = getAdapter(context);
+        scannerBonded = new BleScannerBonded(this);
+        scannerBle = BleScanner.factory(this);
     }
 
 
@@ -52,23 +57,41 @@ public class BleSensorsSDK18 extends Sensors {
         stopScanner();
 
         if (isEnabled()) {
-            devices.closeDisconnectedDevices();
             startScanner();
-
-        } else {
-            devices.closeAllDevices();
         }
-
-        AppBroadcaster.broadcast(context, AppBroadcaster.BLE_DEVICE_SCANNED);
     }
 
 
-    private BluetoothAdapter getAdapter() {
+    @Override
+    public synchronized void updateConnections() {
+        connectEnabledSensors();
+    }
+
+
+    private void connectEnabledSensors() {
+        for (SensorListItem item : sensorList) {
+            if (item.isEnabled() && item.isBluetoothDevice() && item.isConnected() == false) {
+                    final BluetoothDevice device = adapter.getRemoteDevice(item.getAddress());
+
+                    if (device != null) {
+                        new BleSensorSDK18(scontext, device, sensorList);
+                    }
+                }
+        }
+    }
+
+
+    private BluetoothAdapter getAdapter(Context context) {
         BluetoothManager bm = (BluetoothManager) context.getSystemService(Context.BLUETOOTH_SERVICE);
 
-        return bm.getAdapter();
+        if (bm instanceof  BluetoothManager)
+            return bm.getAdapter();
+        return null;
     }
 
+    public BluetoothAdapter getAdapter() {
+        return adapter;
+    }
 
     private boolean isEnabled() {
         return adapter instanceof  BluetoothAdapter && adapter.isEnabled();
@@ -79,8 +102,8 @@ public class BleSensorsSDK18 extends Sensors {
 
 
     public synchronized void foundDevice(BluetoothDevice device) {
-        if (!devices.isInList(device)) {
-            devices.addAndConnectDevice(scontext, device);
+        if (sensorList.find(device.getAddress()) == null) {
+            new BleSensorSDK18(scontext, device, sensorList);
         }
     }
 
@@ -89,42 +112,37 @@ public class BleSensorsSDK18 extends Sensors {
     @Override
     public  synchronized String toString() {
         if (isEnabled()) {
-            return devices.toString();
+            if (scanning)
+                return ToDo.translate("Scanning for Bluetooth sensors...");
+
+            return ToDo.translate("Bluetooth is enabled");
 
         } else {
-            return ToDo.translate("Bluetooth is disabled") + "\n";
+            return ToDo.translate("Bluetooth is disabled");
         }
-    }
-
-
-    @Override
-    public synchronized GpxInformation getInformation(int iid) {
-
-        GpxInformation information = devices.getInformation(iid);
-
-        if (information == null) {
-            information = GpxInformation.NULL;
-        }
-
-        return information;
     }
 
 
     @Override
     public synchronized void close() {
         stopScanner();
-        devices.close();
     }
 
 
     private void startScanner() {
+        scannerBonded.start();
         timer.kick();
-        scanner.start();
+        scannerBle.start();
+
+        scanning = isEnabled();
+        sensorList.broadcast();
     }
 
 
     private void stopScanner() {
+        scanning = false;
         timer.cancel();
-        scanner.stop();
+        scannerBle.stop();
+        sensorList.broadcast();
     }
 }

@@ -11,8 +11,12 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 import ch.bailu.aat.R;
+import ch.bailu.aat.dispatcher.BleSensorSource;
 import ch.bailu.aat.dispatcher.CurrentLocationSource;
+import ch.bailu.aat.dispatcher.OnContentUpdatedInterface;
 import ch.bailu.aat.dispatcher.TrackerSource;
+import ch.bailu.aat.gpx.GpxInformation;
+import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.preferences.SolidFile;
 import ch.bailu.aat.preferences.presets.SolidPreset;
 import ch.bailu.aat.preferences.system.SolidDataDirectory;
@@ -26,8 +30,10 @@ import ch.bailu.aat.util.ui.AppTheme;
 import ch.bailu.aat.util.ui.UiTheme;
 import ch.bailu.aat.views.AbsLabelTextView;
 import ch.bailu.aat.views.ContentView;
+import ch.bailu.aat.views.SensorListView;
 import ch.bailu.aat.views.bar.MainControlBar;
 import ch.bailu.aat.views.preferences.SolidIndexListView;
+import ch.bailu.aat.views.preferences.TitleView;
 import ch.bailu.aat.views.preferences.VerticalScrollView;
 
 
@@ -46,7 +52,7 @@ public class MainActivity extends ActivityContext {
     public void onResumeWithService() {
         super.onResumeWithService();
 
-        AppBroadcaster.broadcast(this, AppBroadcaster.BLE_DEVICE_SCANNED);
+        AppBroadcaster.broadcast(this, AppBroadcaster.SENSOR_CHANGED + InfoID.SENSORS);
     }
 
 
@@ -68,10 +74,6 @@ public class MainActivity extends ActivityContext {
         AppTheme.alt.background(layout);
         layout.setOrientation(LinearLayout.VERTICAL);
 
-        if (Build.VERSION.SDK_INT >= 18) {
-            layout.addView(new BleLabel());
-        }
-
         layout.addView(labelFactory(ActivitySwitcher.getAbout(this)));
 
         return layout;
@@ -86,6 +88,8 @@ public class MainActivity extends ActivityContext {
         for (int i = 0; i < accessibleCount; i++) {
             list.add(labelFactory(new ActivitySwitcher(this).get(i)));
         }
+
+
 
 
         return list;
@@ -270,57 +274,6 @@ public class MainActivity extends ActivityContext {
             if (sdirectory.hasKey(key)) {
                 setText();
             }
-        }
-    }
-
-
-    private class BleLabel extends AbsLabelTextView implements View.OnClickListener {
-        public BleLabel() {
-            super(MainActivity.this, ToDo.translate("Sensors"));
-            setText();
-            setOnClickListener(this);
-        }
-
-
-        @Override
-        public void onDetachedFromWindow() {
-            getContext().unregisterReceiver(onBleDeviceScanned);
-            super.onDetachedFromWindow();
-        }
-
-
-        @Override
-        public void onAttachedToWindow() {
-            super.onAttachedToWindow();
-            AppBroadcaster.register(getContext(), onBleDeviceScanned, AppBroadcaster.BLE_DEVICE_SCANNED);
-        }
-
-
-        private final BroadcastReceiver onBleDeviceScanned = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                setText();
-            }
-        };
-
-        private void setText() {
-            new InsideContext(getServiceContext()) {
-                @Override
-                public void run() {
-                    setText(getServiceContext().getSensorService().toString());
-                }
-            };
-        }
-
-
-        @Override
-        public void onClick(View v) {
-            new InsideContext(getServiceContext()) {
-                @Override
-                public void run() {
-                    getServiceContext().getSensorService().scan();
-                }
-            };
         }
     }
 

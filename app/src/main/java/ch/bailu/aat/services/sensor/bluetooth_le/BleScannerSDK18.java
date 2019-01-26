@@ -4,8 +4,10 @@ import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.support.annotation.RequiresApi;
 
+import ch.bailu.aat.services.sensor.list.SensorList;
+
 @RequiresApi(api = 18)
-public abstract class BleScannerSDK18 extends BleScanner {
+public class BleScannerSDK18 extends BleScanner {
 
     private final BluetoothAdapter adapter;
     private final BluetoothAdapter.LeScanCallback callback = new BluetoothAdapter.LeScanCallback() {
@@ -16,18 +18,22 @@ public abstract class BleScannerSDK18 extends BleScanner {
     };
 
 
-    public BleScannerSDK18(BluetoothAdapter a) {
-        adapter = a;
+    public BleScannerSDK18(BleSensorsSDK18 sensors) {
+        super(sensors);
+        adapter = sensors.getAdapter();
     }
 
     @Override
     public void start() {
-        adapter.startLeScan(callback);
+        if (adapter != null)
+            adapter.startLeScan(callback);
     }
 
     @Override
     public void stop() {
-        adapter.stopLeScan(callback);
+
+        if (adapter != null)
+            adapter.stopLeScan(callback);
     }
 
 }

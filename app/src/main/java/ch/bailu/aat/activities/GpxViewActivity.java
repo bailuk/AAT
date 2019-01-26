@@ -164,8 +164,8 @@ public class GpxViewActivity extends ActivityContext
         addSource(new OverlaySource(getServiceContext()));
         addSource(new CustomFileSource(getServiceContext(), fileID));
 
-        addTargets(this, InfoID.FILEVIEW);
-        addTargets(busyControl, InfoID.FILEVIEW,
+        addTarget(this, InfoID.FILEVIEW);
+        addTarget(busyControl, InfoID.FILEVIEW,
                 InfoID.OVERLAY,
                 InfoID.OVERLAY+1,
                 InfoID.OVERLAY+2,

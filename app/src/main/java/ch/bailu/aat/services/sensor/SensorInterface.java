@@ -4,7 +4,13 @@ import java.io.Closeable;
 
 import ch.bailu.aat.gpx.GpxInformation;
 
-public interface SensorInterface extends Closeable {
-    boolean isValid();
+public interface SensorInterface {
     GpxInformation getInformation(int iid);
+
+    boolean isConnectionEstablished();
+
+    String getAddress();
+    String getName();
+
+    void close();
 }

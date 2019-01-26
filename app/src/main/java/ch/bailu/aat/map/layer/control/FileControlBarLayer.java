@@ -66,7 +66,7 @@ public class FileControlBarLayer extends ControlBarLayer {
         ToolTip.set(reloadPreview, R.string.file_reload);
         ToolTip.set(delete, R.string.file_delete);
 
-        acontext.addTargets(selector, InfoID.LIST_SUMMARY);
+        acontext.addTarget(selector, InfoID.LIST_SUMMARY);
     }
 
 

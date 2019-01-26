@@ -3,7 +3,6 @@ package ch.bailu.aat.activities;
 
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -73,7 +72,7 @@ public abstract class AbsGpxListActivity extends ActivityContext implements OnIt
         addSource(new OverlaySource(getServiceContext()));
         addSource(new CurrentLocationSource(getServiceContext()));
 
-        addTargets(busyControl, InfoID.OVERLAY, InfoID.OVERLAY+1,InfoID.OVERLAY+2,InfoID.OVERLAY+3);
+        addTarget(busyControl, InfoID.OVERLAY, InfoID.OVERLAY+1,InfoID.OVERLAY+2,InfoID.OVERLAY+3);
 
     }
 

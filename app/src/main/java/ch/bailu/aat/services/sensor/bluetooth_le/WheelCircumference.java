@@ -36,7 +36,7 @@ public class WheelCircumference implements Closeable {
 
 
 
-    private final BroadcastReceiver onLocationChanged = new BroadcastReceiver() {
+    private BroadcastReceiver onLocationChanged = new BroadcastReceiver() {
 
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -110,6 +110,9 @@ public class WheelCircumference implements Closeable {
 
     @Override
     public void close() {
-        scontext.getContext().unregisterReceiver(onLocationChanged);
+        if (onLocationChanged != null) {
+            scontext.getContext().unregisterReceiver(onLocationChanged);
+            onLocationChanged = null;
+        }
     }
 }

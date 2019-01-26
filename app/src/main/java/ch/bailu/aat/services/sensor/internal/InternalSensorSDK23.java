@@ -7,41 +7,44 @@ import android.hardware.SensorManager;
 import android.support.annotation.RequiresApi;
 
 import ch.bailu.aat.services.sensor.SensorInterface;
-import ch.bailu.aat.util.ToDo;
 
 @RequiresApi(api = 23)
-public abstract class AbsSensorSDK23 implements SensorEventListener, SensorInterface {
+public abstract class InternalSensorSDK23 implements SensorEventListener, SensorInterface {
 
 
     private final Context context;
 
-    private String name = "";
-    private String vendor = "";
+    private final String name;
+    private final String address;
+
+    private boolean registered = false;
 
 
-    private boolean haveSensor = false;
-
-
-    public AbsSensorSDK23(Context c, Sensor sensor) {
+    public InternalSensorSDK23(Context c, Sensor sensor) {
         context = c;
+        name = sensor.getVendor() + " " + sensor.getName();
+        address = InternalSensorsSDK23.toAddress(sensor);
         requestUpdates(this, sensor);
     }
 
 
+
     @Override
-    public boolean isValid() {
-        return haveSensor;
+    public String getName() {
+        return toString();
     }
+
 
     @Override
     public String toString() {
-        if (haveSensor)
-            return vendor + " " + name;
-
-        return ToDo.translate("no sensor");
+        return name;
     }
 
 
+    @Override
+    public boolean isConnectionEstablished() {
+        return true;
+    }
 
 
     @Override
@@ -50,28 +53,32 @@ public abstract class AbsSensorSDK23 implements SensorEventListener, SensorInter
     }
 
 
-    public void requestUpdates(SensorEventListener listener, Sensor sensor) {
+    private void requestUpdates(SensorEventListener listener, Sensor sensor) {
         final SensorManager manager = context.getSystemService(SensorManager.class);
 
         if (manager instanceof SensorManager) {
             if (sensor instanceof android.hardware.Sensor) {
-                vendor = sensor.getVendor();
-                name = sensor.getName();
-                haveSensor = true;
 
                 manager.registerListener(listener, sensor, SensorManager.SENSOR_DELAY_NORMAL);
+                registered = true;
             }
         }
     }
 
 
-    public void cancelUpdates(SensorEventListener listener) {
+    private void cancelUpdates(SensorEventListener listener) {
         final SensorManager manager = context.getSystemService(SensorManager.class);
 
-        if (manager instanceof SensorManager) {
+        if (registered && manager instanceof SensorManager) {
             manager.unregisterListener(listener);
+            registered = false;
         }
     }
 
+
+    @Override
+    public String getAddress() {
+        return address;
+    }
 }
 

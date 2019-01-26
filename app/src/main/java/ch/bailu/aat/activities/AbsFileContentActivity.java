@@ -10,16 +10,13 @@ import ch.bailu.aat.R;
 import ch.bailu.aat.dispatcher.CurrentLocationSource;
 import ch.bailu.aat.dispatcher.EditorOrBackupSource;
 import ch.bailu.aat.dispatcher.IteratorSource;
-import ch.bailu.aat.dispatcher.OnContentUpdatedInterface;
 import ch.bailu.aat.dispatcher.OverlaySource;
 import ch.bailu.aat.dispatcher.TrackerSource;
-import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.map.MapViewInterface;
 import ch.bailu.aat.menus.FileMenu;
 import ch.bailu.aat.util.ui.AppDialog;
 import ch.bailu.aat.util.ui.AppLog;
-import ch.bailu.aat.util.ui.ToolTip;
 import ch.bailu.aat.views.BusyViewContainer;
 import ch.bailu.aat.views.BusyViewControlIID;
 import ch.bailu.aat.views.ContentView;
@@ -109,16 +106,16 @@ public abstract class AbsFileContentActivity extends ActivityContext implements 
 
         addSource(editorSource);
 
-        addTargets(busyControl,
+        addTarget(busyControl,
                 InfoID.FILEVIEW,
                 InfoID.OVERLAY,
                 InfoID.OVERLAY+1,
                 InfoID.OVERLAY+2,
                 InfoID.OVERLAY+3);
-        addTargets(fileOperation, InfoID.FILEVIEW);
+        addTarget(fileOperation, InfoID.FILEVIEW);
 
 
-        addTargets((iid, info) -> {
+        addTarget((iid, info) -> {
             String newFileID = info.getFile().getPath();
 
             if (!Objects.equals(currentFileID, newFileID)) {

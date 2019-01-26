@@ -119,7 +119,7 @@ public class NodeDetailActivity extends ActivityContext
     }
 
     private void createDispatcher() {
-        addTargets(this, InfoID.FILEVIEW);
+        addTarget(this, InfoID.FILEVIEW);
         addSource(new CurrentLocationSource(getServiceContext()));
         addSource(new CustomFileSource(getServiceContext(), fileID));
 

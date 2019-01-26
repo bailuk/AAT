@@ -69,8 +69,8 @@ public class EditorLayer extends ControlBarLayer {
         undo = bar.addImageButton(R.drawable.edit_undo);
         ToolTip.set(undo, R.string.tt_edit_undo);
 
-        d.addTargets(selector, iid);
-        d.addTargets(content, iid);
+        d.addTarget(selector, iid);
+        d.addTarget(content, iid);
     }
 
 

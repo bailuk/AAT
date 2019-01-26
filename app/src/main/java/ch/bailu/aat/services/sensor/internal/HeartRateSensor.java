@@ -14,7 +14,7 @@ import ch.bailu.aat.services.sensor.attributes.SensorInformation;
 import ch.bailu.aat.util.AppBroadcaster;
 
 @RequiresApi(api = 23)
-public class HeartRateSensor extends AbsSensorSDK23 {
+public class HeartRateSensor extends InternalSensorSDK23 {
 
     private final Context context;
     private final Averager averager = new Averager(10);
@@ -69,9 +69,11 @@ public class HeartRateSensor extends AbsSensorSDK23 {
         );
     }
 
+    @Override
     public GpxInformation getInformation(int iid) {
-        if (isValid() && contact && iid == InfoID.HEART_RATE_SENSOR)
+        if (iid == InfoID.HEART_RATE_SENSOR)
             return information;
         return null;
     }
+
 }

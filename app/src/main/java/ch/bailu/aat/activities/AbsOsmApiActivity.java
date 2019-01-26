@@ -95,7 +95,7 @@ public abstract class AbsOsmApiActivity extends ActivityContext implements OnCli
         setContentView(createContentView());
 
         addSource(new CustomFileSource(getServiceContext(),osmApi.getResultFile().getPath()));
-        addTargets(list, InfoID.FILEVIEW);
+        addTarget(list, InfoID.FILEVIEW);
 
         setQueryTextFromIntent();
 
