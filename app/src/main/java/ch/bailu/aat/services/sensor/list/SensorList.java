@@ -15,6 +15,9 @@ import ch.bailu.aat.util.AppBroadcaster;
 
 public class SensorList extends ArrayList<SensorListItem> implements Closeable {
 
+
+
+
     private final Context context;
 
     public SensorList(Context c) {
@@ -132,10 +135,13 @@ public class SensorList extends ArrayList<SensorListItem> implements Closeable {
     public static class Attributes extends IndexedAttributes {
 
         public static final int KEY_SENSOR_COUNT=0;
+        public static final int KEY_SENSOR_OVERVIEW = 1;
 
         public static final String[] KEYS = {
-                "SensorCount"
+                "Count",
+                "Overview"
         };
+
 
 
         private final int sensors;
@@ -152,6 +158,8 @@ public class SensorList extends ArrayList<SensorListItem> implements Closeable {
         public String getValue(int index) {
             if (index == KEY_SENSOR_COUNT) {
                 return String.valueOf(sensors);
+            } else if (index == KEY_SENSOR_OVERVIEW) {
+                return SensorState.getOverviewString();
             }
             return "";
         }

@@ -17,6 +17,7 @@ import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.sensor.SensorInterface;
 import ch.bailu.aat.services.sensor.list.SensorList;
 import ch.bailu.aat.services.sensor.list.SensorListItem;
+import ch.bailu.aat.services.sensor.list.SensorState;
 
 @RequiresApi(api = 18)
 public class BleSensorSDK18 extends BluetoothGattCallback implements SensorInterface {
@@ -33,8 +34,6 @@ public class BleSensorSDK18 extends BluetoothGattCallback implements SensorInter
 
     private final Context context;
     private final BluetoothGatt gatt;
-
-    private boolean connectionEstablished =false;
 
 
     private boolean closed = false;
@@ -91,10 +90,12 @@ public class BleSensorSDK18 extends BluetoothGattCallback implements SensorInter
 
     private void executeOrBroadcast(BluetoothGatt gatt) {
         if (!execute.next(gatt)) {
+
+            // TODO move this to first sensor notification (connector)
             SensorListItem item = sensorList.find(getAddress());
             if (item != null) {
                 item.setSensor(this);
-                sensorList.broadcast();
+                //sensorList.broadcast();
             }
 
         }
@@ -111,15 +112,12 @@ public class BleSensorSDK18 extends BluetoothGattCallback implements SensorInter
             item.setSensor(this);
 
             if (item.isEnabled()) {
-                connectionEstablished = true;
                 executeOrBroadcast(gatt);
 
             } else {
                 close();
 
             }
-
-            //sensorList.broadcast();
         } else {
             close();
         }
@@ -203,16 +201,16 @@ public class BleSensorSDK18 extends BluetoothGattCallback implements SensorInter
 
     @Override
     public boolean isConnectionEstablished() {
-        return connectionEstablished;
+        return heartRateService.isConnectionEstablished() || cscService.isConnectionEstablished();
     }
     
     @Override
     public synchronized void close() {
         if (!closed) {
             closed = true;
-            connectionEstablished = false;
 
             cscService.close();
+            heartRateService.close();
 
             if (gatt != null) {
                 gatt.close();

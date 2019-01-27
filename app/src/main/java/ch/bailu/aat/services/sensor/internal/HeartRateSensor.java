@@ -27,7 +27,7 @@ public class HeartRateSensor extends InternalSensorSDK23 {
 
 
     public HeartRateSensor(Context c, Sensor sensor) {
-        super(c, sensor);
+        super(c, sensor, InfoID.HEART_RATE_SENSOR);
         context = c;
     }
 

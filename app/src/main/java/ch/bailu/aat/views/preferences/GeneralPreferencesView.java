@@ -14,7 +14,6 @@ import ch.bailu.aat.preferences.general.SolidUnit;
 import ch.bailu.aat.preferences.general.SolidWeight;
 import ch.bailu.aat.preferences.location.SolidAdjustGpsAltitude;
 import ch.bailu.aat.preferences.location.SolidAdjustGpsAltitudeValue;
-import ch.bailu.aat.preferences.location.SolidAltitudeFromBarometer;
 import ch.bailu.aat.preferences.location.SolidGpsTimeFix;
 import ch.bailu.aat.preferences.location.SolidLocationProvider;
 import ch.bailu.aat.preferences.location.SolidPressureAtSeaLevel;

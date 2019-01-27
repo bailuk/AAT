@@ -34,7 +34,7 @@ public class SensorStateDescription extends StateDescription {
         GpxAttributes attributes = info.getAttributes();
 
         if (attributes != null) {
-            unit = info.getAttributes().getValue(SensorList.Attributes.KEY_SENSOR_COUNT);
+            unit = info.getAttributes().getValue(SensorList.Attributes.KEY_SENSOR_OVERVIEW);
         }
     }
 

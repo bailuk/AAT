@@ -56,7 +56,8 @@ public class CockpitSplitActivity extends AbsKeepScreenOnActivity {
         cockpitA.addC(this, new AverageSpeedDescriptionAP(this), InfoID.TRACKER);
         cockpitA.add(this, new PredictiveTimeDescription(this), InfoID.TRACKER_TIMER);
 
-        cockpitB.add(this, new CurrentSpeedDescription(this), InfoID.LOCATION);
+        cockpitB.add(this, new CurrentSpeedDescription(this),
+                InfoID.LOCATION, InfoID.SPEED_SENSOR, InfoID.SENSORS);
         //cockpitB.addC(this, new AverageSpeedDescriptionAP(this), InfoID.TRACKER);
         cockpitB.add(this, new HeartRateDescription(this), InfoID.HEART_RATE_SENSOR);
 
@@ -117,6 +118,10 @@ public class CockpitSplitActivity extends AbsKeepScreenOnActivity {
         addSource(new CurrentLocationSource(getServiceContext()));
         addSource(new OverlaySource(getServiceContext()));
         addSource(new SensorSource(getServiceContext(), InfoID.HEART_RATE_SENSOR));
+        addSource(new SensorSource(getServiceContext(), InfoID.SENSORS));
+        addSource(new SensorSource(getServiceContext(), InfoID.SPEED_SENSOR));
+
+
 
     }
 }

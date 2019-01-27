@@ -7,6 +7,7 @@ import android.hardware.SensorManager;
 import android.support.annotation.RequiresApi;
 
 import ch.bailu.aat.services.sensor.SensorInterface;
+import ch.bailu.aat.services.sensor.Connector;
 
 @RequiresApi(api = 23)
 public abstract class InternalSensorSDK23 implements SensorEventListener, SensorInterface {
@@ -19,12 +20,16 @@ public abstract class InternalSensorSDK23 implements SensorEventListener, Sensor
 
     private boolean registered = false;
 
+    private final Connector connector;
 
-    public InternalSensorSDK23(Context c, Sensor sensor) {
+    public InternalSensorSDK23(Context c, Sensor sensor, int iid) {
         context = c;
         name = sensor.getVendor() + " " + sensor.getName();
         address = InternalSensorsSDK23.toAddress(sensor);
         requestUpdates(this, sensor);
+
+        connector = new Connector(c, iid);
+        connector.connect();
     }
 
 
@@ -43,13 +48,15 @@ public abstract class InternalSensorSDK23 implements SensorEventListener, Sensor
 
     @Override
     public boolean isConnectionEstablished() {
-        return true;
+        return connector.isConnectionEstablished();
     }
 
 
     @Override
     public void close() {
+        connector.close();
         cancelUpdates(this);
+
     }
 
 

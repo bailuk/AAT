@@ -69,7 +69,7 @@ public class LocationService extends VirtualService
         dirty = new DirtyLocation(lastItem(), getContext());
         itemList.add(dirty);
 
-        itemList.add(new AltitudeFromBarometer(lastItem(), getContext()));
+        itemList.add(new NewAltitudeFromBarometer(lastItem(), getSContext()));
         itemList.add(new AdjustGpsAltitude(lastItem(), getContext()));
 
     }

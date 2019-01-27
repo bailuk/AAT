@@ -60,15 +60,17 @@ public class CockpitActivity extends AbsKeepScreenOnActivity {
         CockpitView c1 = new CockpitView(this);
 
 
-        c1.add(this, new CurrentSpeedDescription(this), InfoID.SPEED_SENSOR);
+        c1.add(this, new CurrentSpeedDescription(this),
+                InfoID.SENSORS, InfoID.SPEED_SENSOR, InfoID.LOCATION);
+
         c1.addAltitude(this);
         c1.add(this, new PredictiveTimeDescription(this), InfoID.TRACKER_TIMER);
         c1.addC(this, new DistanceDescription(this), InfoID.TRACKER);
         c1.addC(this, new AverageSpeedDescriptionAP(this), InfoID.TRACKER);
         c1.add(this, new MaximumSpeedDescription(this), InfoID.TRACKER);
         //c1.add(this, new HeartRateDescription(this), InfoID.HEART_RATE_SENSOR);
-        //c1.add(this, new CurrentSpeedDescription(this), InfoID.SPEED_SENSOR);
         c1.add(this, new CadenceDescription(this), InfoID.CADENCE_SENSOR);
+
 
         return c1;
     }
@@ -94,8 +96,12 @@ public class CockpitActivity extends AbsKeepScreenOnActivity {
         addSource(new TrackerTimerSource(getServiceContext()));
         addSource(new CurrentLocationSource(getServiceContext()));
         addSource(new OverlaySource(getServiceContext()));
-        //addSource(new BleSensorSource(getServiceContext(), InfoID.HEART_RATE_SENSOR));
+
+        addSource(new SensorSource(getServiceContext(), InfoID.HEART_RATE_SENSOR));
         addSource(new SensorSource(getServiceContext(), InfoID.CADENCE_SENSOR));
         addSource(new SensorSource(getServiceContext(), InfoID.SPEED_SENSOR));
+        addSource(new SensorSource(getServiceContext(), InfoID.SENSORS));
+
+
     }
 }

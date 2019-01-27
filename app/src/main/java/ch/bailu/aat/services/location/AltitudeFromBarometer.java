@@ -1,15 +1,6 @@
 package ch.bailu.aat.services.location;
 
-import android.content.Context;
-import android.hardware.Sensor;
-import android.hardware.SensorEvent;
-import android.hardware.SensorEventListener;
-
-import ch.bailu.aat.preferences.general.SolidUnit;
-import ch.bailu.aat.preferences.location.SolidAltitudeFromBarometer;
-import ch.bailu.aat.preferences.location.SolidPressureAtSeaLevel;
-import ch.bailu.aat.preferences.location.SolidProvideAltitude;
-
+/*
 public class AltitudeFromBarometer extends LocationStackChainedItem implements SensorEventListener {
     private final Hypsometric hypsometric = new Hypsometric();
     private final Barometer barometer;
@@ -49,7 +40,7 @@ public class AltitudeFromBarometer extends LocationStackChainedItem implements S
             hypsometric.setPressureAtSeaLevel(spressure.getPressure());
 
         } else if (sbarometer.hasKey(key)) {
-            enabled = sbarometer.useBarometer();
+            enabled = sbarometer.isEnabled();
         }
     }
 
@@ -84,3 +75,4 @@ public class AltitudeFromBarometer extends LocationStackChainedItem implements S
         super.passLocation(l);
     }
 }
+*/

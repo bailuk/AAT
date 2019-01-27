@@ -10,7 +10,6 @@ import ch.bailu.aat.gpx.GpxAttributes;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.preferences.general.SolidUnit;
-import ch.bailu.aat.preferences.location.SolidAltitudeFromBarometer;
 import ch.bailu.aat.preferences.location.SolidPressureAtSeaLevel;
 import ch.bailu.aat.preferences.location.SolidProvideAltitude;
 import ch.bailu.aat.services.location.Hypsometric;
@@ -26,7 +25,6 @@ public class BarometerSensor extends InternalSensorSDK23
 
     private final SolidPressureAtSeaLevel spressure;
     private final SolidProvideAltitude saltitude;
-    private final SolidAltitudeFromBarometer sbarometer;
 
     private final Context context;
 
@@ -35,16 +33,14 @@ public class BarometerSensor extends InternalSensorSDK23
     private GpxInformation information = null;
 
     public BarometerSensor(Context c, Sensor sensor) {
-        super(c, sensor);
+        super(c, sensor, InfoID.BAROMETER_SENSOR);
 
         context = c;
         spressure  = new SolidPressureAtSeaLevel(c);
         saltitude  = new SolidProvideAltitude(c, SolidUnit.SI);
-        sbarometer = new SolidAltitudeFromBarometer(c);
 
         hypsometric.setPressureAtSeaLevel(spressure.getPressure());
 
-        sbarometer.setValue(true);
         spressure.register(this);
     }
 
@@ -105,7 +101,6 @@ public class BarometerSensor extends InternalSensorSDK23
         if (closed == false) {
             closed = true;
             spressure.unregister(this);
-            sbarometer.setValue(false);
         }
     }
 

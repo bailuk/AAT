@@ -4,6 +4,7 @@ import android.bluetooth.BluetoothGattCharacteristic;
 import android.content.Context;
 import android.support.annotation.RequiresApi;
 
+import java.io.Closeable;
 import java.util.UUID;
 
 import ch.bailu.aat.gpx.GpxInformation;
@@ -11,11 +12,12 @@ import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.services.sensor.Averager;
 import ch.bailu.aat.services.sensor.attributes.HeartRateAttributes;
 import ch.bailu.aat.services.sensor.attributes.SensorInformation;
+import ch.bailu.aat.services.sensor.Connector;
 import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.util.ToDo;
 
 @RequiresApi(api = 18)
-public class HeartRateService extends HeartRateServiceID {
+public class HeartRateService extends HeartRateServiceID implements Closeable {
     /**
      *
      * EC DMH30 0ADE BBB Bluepulse+ Heart Rate Sensor BCP-62DB
@@ -32,12 +34,21 @@ public class HeartRateService extends HeartRateServiceID {
 
     private boolean valid = false;
 
+    private final Connector connector;
+
+
     public HeartRateService(Context c) {
+        connector = new Connector(c, InfoID.HEART_RATE_SENSOR);
         context = c;
     }
 
     public boolean isValid() {
         return valid;
+    }
+
+
+    public boolean isConnectionEstablished() {
+        return connector.isConnectionEstablished();
     }
 
 
@@ -78,6 +89,8 @@ public class HeartRateService extends HeartRateServiceID {
 
     private void readHeartRateMesurement(BluetoothGattCharacteristic c, byte[] value) {
         information = new SensorInformation(new Attributes(c, value));
+
+        connector.connect(isValid());
         AppBroadcaster.broadcast(context, AppBroadcaster.SENSOR_CHANGED + InfoID.HEART_RATE_SENSOR);
     }
 
@@ -97,6 +110,11 @@ public class HeartRateService extends HeartRateServiceID {
 
 
     private final Averager averager = new Averager(10);
+
+    @Override
+    public void close()  {
+        connector.close();
+    }
 
     private class Attributes extends HeartRateAttributes {
 

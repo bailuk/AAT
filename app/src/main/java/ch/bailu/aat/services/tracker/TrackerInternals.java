@@ -38,7 +38,6 @@ implements OnSharedPreferenceChangeListener, Closeable {
         scontext=sc;
 
         storage = new Storage(scontext.getContext());
-        storage.register(this);
         rereadPreferences();
 
         statusIcon = new StatusIcon(scontext);
@@ -52,6 +51,8 @@ implements OnSharedPreferenceChangeListener, Closeable {
         logger = Logger.createNullLogger();
 
         state = new OffState(this);
+        storage.register(this);
+
     }
 
 

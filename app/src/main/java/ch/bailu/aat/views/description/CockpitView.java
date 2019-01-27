@@ -22,19 +22,19 @@ public class CockpitView extends ViewGroup {
         super(context);
     }
 
-
-    public void addAll(DispatcherInterface di, ContentDescription[] des) {
+/*
+    public void addAll(DispatcherInterface di, ContentDescription... des) {
         for (ContentDescription de : des) {
             add(di, de);
         }
     }
-
+*/
     public void add(DispatcherInterface di, ContentDescription de) {
         add(di, de, InfoID.TRACKER);
     }
 
 
-    public void addC(DispatcherInterface di, ContentDescription de, int iid) {
+    public void addC(DispatcherInterface di, ContentDescription de, int... iid) {
         final NumberView v = new ColorNumberView(de, AppTheme.main);
 
         addView(v);
@@ -42,7 +42,7 @@ public class CockpitView extends ViewGroup {
     }
 
 
-    public NumberView add(DispatcherInterface di, ContentDescription de, int iid) {
+    public NumberView add(DispatcherInterface di, ContentDescription de, int... iid) {
         final NumberView v = new NumberView(de, AppTheme.main);
 
         addView(v);
@@ -55,9 +55,6 @@ public class CockpitView extends ViewGroup {
     public void addAltitude(DispatcherInterface di) {
         NumberView v = add(di, new AltitudeConfigurationDescription(getContext()), InfoID.LOCATION);
         SolidProvideAltitude.requestOnClick(v);
-        //AppTheme.main.button(v);
-        //v.setPadding(0,0,0,0);
-
     }
 
 

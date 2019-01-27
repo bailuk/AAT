@@ -7,7 +7,7 @@ import ch.bailu.aat.services.ServiceContext;
 public class NewAltitudeFromBarometer extends LocationStackChainedItem {
     private final ServiceContext scontext;
 
-    public NewAltitudeFromBarometer(ServiceContext sc, LocationStackItem n) {
+    public NewAltitudeFromBarometer(LocationStackItem n, ServiceContext sc) {
         super(n);
         scontext = sc;
     }

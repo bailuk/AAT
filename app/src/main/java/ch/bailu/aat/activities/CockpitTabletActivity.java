@@ -74,7 +74,8 @@ public class CockpitTabletActivity extends AbsKeepScreenOnActivity {
 
         CockpitView c = new CockpitView(this);
 
-        c.add(this, new CurrentSpeedDescription(this), InfoID.LOCATION);
+        c.add(this, new CurrentSpeedDescription(this),
+                InfoID.SENSORS, InfoID.SPEED_SENSOR, InfoID.LOCATION);
         c.add(this, new AltitudeDescription(this), InfoID.LOCATION);
         c.add(this, new PredictiveTimeDescription(this), InfoID.TRACKER_TIMER);
         c.addC(this, new DistanceDescription(this), InfoID.TRACKER);

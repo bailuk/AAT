@@ -32,12 +32,4 @@ public class SensorStateButton extends ColorNumberView implements View.OnClickLi
 
         }
     }
-
-
-    @Override
-    public void setHighlightUnitLabelColor() {
-        super.setHighlightUnitLabelColor(AppTheme.COLOR_BLUE);
-    }
-
-
 }

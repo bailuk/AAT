@@ -3,7 +3,9 @@ package ch.bailu.aat.preferences.location;
 import android.content.Context;
 import android.view.View;
 
+import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.preferences.general.SolidUnit;
+import ch.bailu.aat.services.sensor.list.SensorState;
 import ch.bailu.aat.util.ToDo;
 import ch.bailu.aat.views.preferences.SolidTextInputDialog;
 
@@ -38,8 +40,9 @@ public class SolidProvideAltitude extends SolidAltitude {
         return v;
     }
 
+
     public static void requestValueFromUserIfEnabled(Context c) {
-        if (new SolidAltitudeFromBarometer(c).useBarometer() ||
+        if (SensorState.isConnected(InfoID.BAROMETER_SENSOR) ||
                 new SolidAdjustGpsAltitude(c).isEnabled()) {
             reqeustValueFromUser(c);
         }

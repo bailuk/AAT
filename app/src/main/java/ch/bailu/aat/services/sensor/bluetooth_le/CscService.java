@@ -12,6 +12,8 @@ import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.sensor.Averager;
 import ch.bailu.aat.services.sensor.attributes.IndexedAttributes;
+import ch.bailu.aat.services.sensor.Connector;
+import ch.bailu.aat.services.sensor.list.SensorState;
 import ch.bailu.aat.util.AppBroadcaster;
 
 @RequiresApi(api = 18)
@@ -47,14 +49,23 @@ public class CscService extends CscServiceID implements Closeable {
 
     private boolean valid = false;
 
+    private Connector connectorSpeed, connectorCadence;
+
+
     public CscService(ServiceContext c) {
         context = c.getContext();
         wheelCircumference = new WheelCircumference(c, speed);
+        connectorCadence = new Connector(c.getContext(), InfoID.CADENCE_SENSOR);
+        connectorSpeed = new Connector(c.getContext(), InfoID.SPEED_SENSOR);
     }
 
 
     public boolean isValid() {
         return valid;
+    }
+
+    public boolean isConnectionEstablished() {
+        return connectorCadence.isConnectionEstablished() || connectorSpeed.isConnectionEstablished();
     }
 
 
@@ -110,6 +121,8 @@ public class CscService extends CscServiceID implements Closeable {
 
     private void readCscMesurement(BluetoothGattCharacteristic c, byte[] value) {
         information = new Information(new Attributes(c, value));
+        connectorSpeed.connect(isSpeedSensor);
+        connectorCadence.connect(isCadenceSensor);
     }
 
 
@@ -141,11 +154,11 @@ public class CscService extends CscServiceID implements Closeable {
         }
 
         if (isSpeedSensor) {
-            name = "Speed ";
+            name = SensorState.getName(InfoID.SPEED_SENSOR) + " ";
         }
 
         if (isCadenceSensor) {
-            name += "Cadence ";
+            name += SensorState.getName(InfoID.CADENCE_SENSOR) + " ";
         }
 
         return name + "Sensor";
@@ -154,6 +167,8 @@ public class CscService extends CscServiceID implements Closeable {
 
     @Override
     public void close()  {
+        connectorSpeed.close();
+        connectorSpeed.close();
         wheelCircumference.close();
     }
 
