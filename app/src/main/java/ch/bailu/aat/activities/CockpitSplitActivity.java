@@ -5,10 +5,12 @@ import android.view.View;
 
 import ch.bailu.aat.description.AscendDescription;
 import ch.bailu.aat.description.AverageSpeedDescriptionAP;
+import ch.bailu.aat.description.CadenceDescription;
 import ch.bailu.aat.description.CurrentSpeedDescription;
 import ch.bailu.aat.description.DescendDescription;
 import ch.bailu.aat.description.DistanceDescription;
 import ch.bailu.aat.description.HeartRateDescription;
+import ch.bailu.aat.description.MaximumSpeedDescription;
 import ch.bailu.aat.description.PredictiveTimeDescription;
 import ch.bailu.aat.description.SlopeDescription;
 import ch.bailu.aat.dispatcher.SensorSource;
@@ -58,7 +60,9 @@ public class CockpitSplitActivity extends AbsKeepScreenOnActivity {
 
         cockpitB.add(this, new CurrentSpeedDescription(this),
                 InfoID.LOCATION, InfoID.SPEED_SENSOR);
-        //cockpitB.addC(this, new AverageSpeedDescriptionAP(this), InfoID.TRACKER);
+        cockpitB.addC(this, new AverageSpeedDescriptionAP(this), InfoID.TRACKER);
+        cockpitB.addC(this, new MaximumSpeedDescription(this), InfoID.TRACKER);
+        cockpitB.add(this, new CadenceDescription(this), InfoID.CADENCE_SENSOR);
         cockpitB.add(this, new HeartRateDescription(this), InfoID.HEART_RATE_SENSOR);
 
         cockpitC.addC(this, new DistanceDescription(this), InfoID.TRACKER);
@@ -118,7 +122,7 @@ public class CockpitSplitActivity extends AbsKeepScreenOnActivity {
         addSource(new CurrentLocationSource(getServiceContext()));
         addSource(new OverlaySource(getServiceContext()));
         addSource(new SensorSource(getServiceContext(), InfoID.HEART_RATE_SENSOR));
-        addSource(new SensorSource(getServiceContext(), InfoID.SENSORS));
+        addSource(new SensorSource(getServiceContext(), InfoID.CADENCE_SENSOR));
         addSource(new SensorSource(getServiceContext(), InfoID.SPEED_SENSOR));
 
 

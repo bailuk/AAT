@@ -168,7 +168,7 @@ public class CscService extends CscServiceID implements Closeable {
     @Override
     public void close()  {
         connectorSpeed.close();
-        connectorSpeed.close();
+        connectorCadence.close();
         wheelCircumference.close();
     }
 

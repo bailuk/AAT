@@ -108,6 +108,4 @@ public class SensorService extends VirtualService {
     public SensorList getSensorList() {
         return sensorList;
     }
-
-
 }

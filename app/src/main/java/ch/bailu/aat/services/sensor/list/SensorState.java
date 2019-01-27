@@ -40,16 +40,14 @@ public class SensorState {
 
     public static String getOverviewString() {
         String overview="";
-        String space="";
         for (int i = 0; i< SIZE; i++) {
             if (connected[i] > 0) {
                 overview = overview
-                        + space
                         + NAMES[i].charAt(0)
                         + String.valueOf(connected[i]);
-                space = " ";
             }
         }
+
         return overview;
     }
 }

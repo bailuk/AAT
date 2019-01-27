@@ -27,20 +27,20 @@ public class Executer {
     }
 
 
+    public boolean haveToRead() {
+        return toRead.size() > 0;
+    }
 
-
-    public boolean next(BluetoothGatt gatt) {
-        if (toRead.size() > 0) {
+    public void next(BluetoothGatt gatt) {
+        if (haveToRead()) {
             gatt.readCharacteristic(toRead.pop());
+
 
         } else if (toNotify.size() > 0) {
             enableNotification(gatt, toNotify.pop());
 
-        } else {
-            return false;
 
         }
-        return true;
     }
 
 

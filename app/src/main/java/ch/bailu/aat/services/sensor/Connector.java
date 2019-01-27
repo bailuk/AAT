@@ -13,10 +13,11 @@ public class Connector implements Closeable {
     private final int iid;
     private final Context context;
 
+
+
     public Connector(Context c, int i) {
         iid = i;
         context = c;
-
     }
 
     public void connect() {
@@ -33,7 +34,6 @@ public class Connector implements Closeable {
         if (condition) {
             connect();
         }
-
     }
 
 

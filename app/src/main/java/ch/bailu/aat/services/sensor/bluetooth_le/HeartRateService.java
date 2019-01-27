@@ -118,9 +118,9 @@ public class HeartRateService extends HeartRateServiceID implements Closeable {
 
     private class Attributes extends HeartRateAttributes {
 
-        private boolean haveSensorContactStatus = false;
-        private boolean haveEnergyExpended = false;
-        private boolean haveRrIntervall = false;
+        private boolean haveSensorContactStatus;
+        private boolean haveEnergyExpended;
+        private boolean haveRrIntervall;
 
 
         public Attributes(BluetoothGattCharacteristic c, byte[] v) {
