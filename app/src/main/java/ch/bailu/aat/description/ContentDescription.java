@@ -8,6 +8,8 @@ import ch.bailu.aat.dispatcher.OnContentUpdatedInterface;
 public abstract class ContentDescription
         implements ContentInterface, OnContentUpdatedInterface {
 
+    public static final String VALUE_DISABLED = "--";
+
     private final Context context;
 
     protected final FF f = FF.f();
@@ -26,11 +28,6 @@ public abstract class ContentDescription
     public abstract String getValue();
     public abstract String getLabel();
 
-    /*
-    public String getApLabel(String label) {
-        return label + " (" + getContext().getString(R.string.p_autopause) + ")";
-    }
-*/
 
     public String getUnit() {
         return NULL_STRING;

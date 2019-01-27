@@ -6,7 +6,6 @@ import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.preferences.location.SolidAdjustGpsAltitude;
 import ch.bailu.aat.services.sensor.list.SensorState;
-import ch.bailu.aat.util.ToDo;
 
 public class AltitudeConfigurationDescription extends AltitudeDescription {
 
@@ -22,7 +21,7 @@ public class AltitudeConfigurationDescription extends AltitudeDescription {
 
     private void setLabel(Context context) {
         if (haveSensor) {
-            configuration  = ToDo.translate(" Barometer");
+            configuration  = " " + SensorState.getName(InfoID.BAROMETER_SENSOR);
 
         } else if (new SolidAdjustGpsAltitude(context).isEnabled()) {
             configuration = " GPS+-";

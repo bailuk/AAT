@@ -57,7 +57,7 @@ public class CockpitSplitActivity extends AbsKeepScreenOnActivity {
         cockpitA.add(this, new PredictiveTimeDescription(this), InfoID.TRACKER_TIMER);
 
         cockpitB.add(this, new CurrentSpeedDescription(this),
-                InfoID.LOCATION, InfoID.SPEED_SENSOR, InfoID.SENSORS);
+                InfoID.LOCATION, InfoID.SPEED_SENSOR);
         //cockpitB.addC(this, new AverageSpeedDescriptionAP(this), InfoID.TRACKER);
         cockpitB.add(this, new HeartRateDescription(this), InfoID.HEART_RATE_SENSOR);
 

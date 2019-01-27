@@ -99,6 +99,7 @@ public class BarometerSensor extends InternalSensorSDK23
     @Override
     public void close() {
         if (closed == false) {
+            super.close();
             closed = true;
             spressure.unregister(this);
         }

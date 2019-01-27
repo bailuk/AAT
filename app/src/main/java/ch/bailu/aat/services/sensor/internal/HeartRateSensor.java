@@ -29,6 +29,7 @@ public class HeartRateSensor extends InternalSensorSDK23 {
     public HeartRateSensor(Context c, Sensor sensor) {
         super(c, sensor, InfoID.HEART_RATE_SENSOR);
         context = c;
+        broadcast();
     }
 
 
@@ -56,9 +57,8 @@ public class HeartRateSensor extends InternalSensorSDK23 {
 
         information = new SensorInformation(attributes);
 
-        if (contact)
-            AppBroadcaster.broadcast(context,
-                AppBroadcaster.SENSOR_CHANGED + InfoID.HEART_RATE_SENSOR);
+         AppBroadcaster.broadcast(context,
+              AppBroadcaster.SENSOR_CHANGED + InfoID.HEART_RATE_SENSOR);
     }
 
     @Override
@@ -67,6 +67,7 @@ public class HeartRateSensor extends InternalSensorSDK23 {
                 accuracy != SensorManager.SENSOR_STATUS_UNRELIABLE &&
                 accuracy != SensorManager.SENSOR_STATUS_NO_CONTACT
         );
+        broadcast();
     }
 
     @Override

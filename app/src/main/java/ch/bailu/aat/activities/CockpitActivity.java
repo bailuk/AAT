@@ -7,18 +7,20 @@ import ch.bailu.aat.description.AverageSpeedDescriptionAP;
 import ch.bailu.aat.description.CadenceDescription;
 import ch.bailu.aat.description.CurrentSpeedDescription;
 import ch.bailu.aat.description.DistanceDescription;
+import ch.bailu.aat.description.HeartRateDescription;
 import ch.bailu.aat.description.MaximumSpeedDescription;
 import ch.bailu.aat.description.PredictiveTimeDescription;
-import ch.bailu.aat.dispatcher.SensorSource;
 import ch.bailu.aat.dispatcher.CurrentLocationSource;
 import ch.bailu.aat.dispatcher.EditorSource;
 import ch.bailu.aat.dispatcher.OverlaySource;
+import ch.bailu.aat.dispatcher.SensorSource;
 import ch.bailu.aat.dispatcher.TrackerSource;
 import ch.bailu.aat.dispatcher.TrackerTimerSource;
 import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.map.MapFactory;
 import ch.bailu.aat.util.ui.AppLayout;
 import ch.bailu.aat.views.ContentView;
+import ch.bailu.aat.views.PercentageLayout;
 import ch.bailu.aat.views.bar.ControlBar;
 import ch.bailu.aat.views.bar.MainControlBar;
 import ch.bailu.aat.views.description.CockpitView;
@@ -57,22 +59,31 @@ public class CockpitActivity extends AbsKeepScreenOnActivity {
 
 
     private View createCockpit() {
+
+        PercentageLayout p = new PercentageLayout(this);
+        p.setOrientation(AppLayout.getOrientationAlongLargeSide(this));
+
         CockpitView c1 = new CockpitView(this);
 
 
         c1.add(this, new CurrentSpeedDescription(this),
-                InfoID.SENSORS, InfoID.SPEED_SENSOR, InfoID.LOCATION);
+                InfoID.SPEED_SENSOR, InfoID.LOCATION);
 
         c1.addAltitude(this);
         c1.add(this, new PredictiveTimeDescription(this), InfoID.TRACKER_TIMER);
         c1.addC(this, new DistanceDescription(this), InfoID.TRACKER);
         c1.addC(this, new AverageSpeedDescriptionAP(this), InfoID.TRACKER);
-        c1.add(this, new MaximumSpeedDescription(this), InfoID.TRACKER);
-        //c1.add(this, new HeartRateDescription(this), InfoID.HEART_RATE_SENSOR);
-        c1.add(this, new CadenceDescription(this), InfoID.CADENCE_SENSOR);
+
+        CockpitView c2 = new CockpitView(this);
+        c2.add(this, new MaximumSpeedDescription(this), InfoID.TRACKER);
+        c2.add(this, new HeartRateDescription(this), InfoID.HEART_RATE_SENSOR);
+        c2.add(this, new CadenceDescription(this), InfoID.CADENCE_SENSOR);
 
 
-        return c1;
+        p.add(c1, 80);
+        p.add(c2, 20);
+
+        return p;
     }
 
 
@@ -100,8 +111,5 @@ public class CockpitActivity extends AbsKeepScreenOnActivity {
         addSource(new SensorSource(getServiceContext(), InfoID.HEART_RATE_SENSOR));
         addSource(new SensorSource(getServiceContext(), InfoID.CADENCE_SENSOR));
         addSource(new SensorSource(getServiceContext(), InfoID.SPEED_SENSOR));
-        addSource(new SensorSource(getServiceContext(), InfoID.SENSORS));
-
-
     }
 }
