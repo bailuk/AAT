@@ -1,12 +1,9 @@
 package ch.bailu.aat.views.preferences;
 
 import android.os.Build;
-import android.view.View;
 
 import ch.bailu.aat.R;
 import ch.bailu.aat.activities.ActivityContext;
-import ch.bailu.aat.dispatcher.OnContentUpdatedInterface;
-import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.preferences.general.SolidPostprocessedAutopause;
 import ch.bailu.aat.preferences.general.SolidPresetCount;
@@ -22,10 +19,7 @@ import ch.bailu.aat.preferences.system.SolidCacheSize;
 import ch.bailu.aat.preferences.system.SolidDataDirectory;
 import ch.bailu.aat.preferences.system.SolidExternalDirectory;
 import ch.bailu.aat.preferences.system.SolidStatusMessages;
-import ch.bailu.aat.services.InsideContext;
-import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.util.ToDo;
-import ch.bailu.aat.views.AbsLabelTextView;
 import ch.bailu.aat.views.SensorListView;
 
 
@@ -61,12 +55,15 @@ public class GeneralPreferencesView extends VerticalScrollView {
 
         if (Build.VERSION.SDK_INT >= 18) {
             add(new TitleView(acontext, ToDo.translate("Sensors")));
-            BleLabel label = new BleLabel(acontext.getServiceContext());
+            ScannBluetoothView scann = new ScannBluetoothView(acontext.getServiceContext());
+            ConnectToSensorsView updateConnection = new ConnectToSensorsView(acontext.getServiceContext());
             SensorListView sensors = new SensorListView(acontext.getServiceContext());
 
-            add(label);
+            add(scann);
+            add(updateConnection);
             add(sensors);
-            acontext.addTarget(label, InfoID.SENSORS);
+            acontext.addTarget(scann, InfoID.SENSORS);
+            acontext.addTarget(updateConnection, InfoID.SENSORS);
             acontext.addTarget(sensors, InfoID.SENSORS);
         }
 
@@ -82,42 +79,4 @@ public class GeneralPreferencesView extends VerticalScrollView {
 
     }
 
-    private class BleLabel extends AbsLabelTextView implements View.OnClickListener, OnContentUpdatedInterface {
-        private final ServiceContext scontext;
-        public BleLabel(ServiceContext s) {
-            super(s.getContext(), ToDo.translate("Scann for BluetoothLE sensors"));
-            scontext = s;
-            setText();
-            setOnClickListener(this);
-        }
-
-
-        private void setText() {
-            new InsideContext(scontext) {
-                @Override
-                public void run() {
-                    setText(scontext.getSensorService().toString());
-                }
-            };
-        }
-
-
-        @Override
-        public void onClick(View v) {
-            new InsideContext(scontext) {
-                @Override
-                public void run() {
-                    scontext.getSensorService().scann();
-                }
-            };
-        }
-
-        @Override
-        public void onContentUpdated(int iid, GpxInformation info) {
-            if (iid == InfoID.SENSORS) {
-                setText();
-            }
-
-        }
-    }
 }

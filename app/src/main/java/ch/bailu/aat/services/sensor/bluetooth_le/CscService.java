@@ -65,7 +65,7 @@ public class CscService extends CscServiceID implements Closeable {
     }
 
     public boolean isConnectionEstablished() {
-        return connectorCadence.isConnectionEstablished() || connectorSpeed.isConnectionEstablished();
+        return connectorCadence.isConnected() || connectorSpeed.isConnected();
     }
 
 

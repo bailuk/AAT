@@ -6,8 +6,11 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.support.annotation.RequiresApi;
 
-import ch.bailu.aat.services.sensor.SensorInterface;
 import ch.bailu.aat.services.sensor.Connector;
+import ch.bailu.aat.services.sensor.SensorInterface;
+import ch.bailu.aat.services.sensor.list.SensorList;
+import ch.bailu.aat.services.sensor.list.SensorListItem;
+import ch.bailu.aat.services.sensor.list.SensorStateID;
 
 @RequiresApi(api = 23)
 public abstract class InternalSensorSDK23 implements SensorEventListener, SensorInterface {
@@ -22,17 +25,32 @@ public abstract class InternalSensorSDK23 implements SensorEventListener, Sensor
 
     private final Connector connector;
 
-    public InternalSensorSDK23(Context c, Sensor sensor, int iid) {
+    private final SensorList sensorList;
+
+
+    public InternalSensorSDK23(Context c, SensorList list, Sensor sensor, int iid) {
         context = c;
+        sensorList = list;
         name = sensor.getVendor() + " " + sensor.getName();
         address = InternalSensorsSDK23.toAddress(sensor);
-        requestUpdates(this, sensor);
-
         connector = new Connector(c, iid);
-        connector.connect();
+
+        SensorListItem item = getItem();
+        if (item.lock(this)) {
+            item.setState(SensorStateID.CONNECTING);
+            item.setState(SensorStateID.CONNECTED);
+
+            connector.connect();
+
+            requestUpdates(this, sensor);
+
+        }
     }
 
 
+    public SensorListItem getItem() {
+        return sensorList.add(this);
+    }
 
     @Override
     public String getName() {
@@ -47,16 +65,22 @@ public abstract class InternalSensorSDK23 implements SensorEventListener, Sensor
 
 
     @Override
-    public boolean isConnectionEstablished() {
-        return connector.isConnectionEstablished();
+    public boolean isConnected() {
+        return connector.isConnected();
     }
 
 
     @Override
     public void close() {
-        connector.close();
-        cancelUpdates(this);
+        SensorListItem item = getItem();
 
+        if (item.unlock(this)) {
+
+            connector.close();
+            cancelUpdates(this);
+
+            item.setState(SensorStateID.ENABLED);
+        }
     }
 
 

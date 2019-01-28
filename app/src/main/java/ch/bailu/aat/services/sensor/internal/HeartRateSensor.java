@@ -11,6 +11,7 @@ import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.services.sensor.Averager;
 import ch.bailu.aat.services.sensor.attributes.HeartRateAttributes;
 import ch.bailu.aat.services.sensor.attributes.SensorInformation;
+import ch.bailu.aat.services.sensor.list.SensorList;
 import ch.bailu.aat.util.AppBroadcaster;
 
 @RequiresApi(api = 23)
@@ -26,8 +27,8 @@ public class HeartRateSensor extends InternalSensorSDK23 {
     private GpxInformation information = GpxInformation.NULL;
 
 
-    public HeartRateSensor(Context c, Sensor sensor) {
-        super(c, sensor, InfoID.HEART_RATE_SENSOR);
+    public HeartRateSensor(Context c, SensorList list, Sensor sensor) {
+        super(c, list, sensor, InfoID.HEART_RATE_SENSOR);
         context = c;
         broadcast();
     }

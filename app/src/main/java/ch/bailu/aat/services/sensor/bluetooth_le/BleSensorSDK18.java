@@ -17,6 +17,7 @@ import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.sensor.SensorInterface;
 import ch.bailu.aat.services.sensor.list.SensorList;
 import ch.bailu.aat.services.sensor.list.SensorListItem;
+import ch.bailu.aat.services.sensor.list.SensorStateID;
 
 @RequiresApi(api = 18)
 public class BleSensorSDK18 extends BluetoothGattCallback implements SensorInterface {
@@ -37,6 +38,8 @@ public class BleSensorSDK18 extends BluetoothGattCallback implements SensorInter
 
     private boolean closed = false;
 
+    private int closeState;
+
 
     public BleSensorSDK18(ServiceContext c, BluetoothDevice d, SensorList l) {
         sensorList = l;
@@ -45,25 +48,34 @@ public class BleSensorSDK18 extends BluetoothGattCallback implements SensorInter
         cscService = new CscService(c);
         heartRateService = new HeartRateService(context);
 
-        gatt = connect();
+
+        item = getItem();
+        closeState = item.getState();
+
+        if (item.lock(this)) {
+            gatt = device.connectGatt(context, false, this);
+
+        } else {
+            gatt = null;
+
+        }
+
 
         if (gatt == null) {
             close();
+
+        } else {
+            item.setState(SensorStateID.CONNECTING);
+            item.setState(SensorStateID.SCANNING);
+
         }
     }
 
 
-    private BluetoothGatt connect() {
-        item = sensorList.find(getAddress());
-
-        if (item == null) {
-            return device.connectGatt(context, false, this);
-
-        } else if(item.isEnabled() && item.isConnected() == false) {
-            item.setSensor(this);
-            return device.connectGatt(context, false, this);
-        }
-        return null;
+    private SensorListItem getItem() {
+        if (item == null) item = sensorList.add(this);
+        else item.setName(getName());
+        return item;
     }
 
 
@@ -71,7 +83,7 @@ public class BleSensorSDK18 extends BluetoothGattCallback implements SensorInter
     public synchronized void onConnectionStateChange(BluetoothGatt g, int status, int state) {
         if (isConnected(status, state)) {
             gatt.discoverServices();
-            
+
         } else if (!isConnecting(status, state)) {
             close();
         }
@@ -91,15 +103,18 @@ public class BleSensorSDK18 extends BluetoothGattCallback implements SensorInter
         if (execute.haveToRead()) {
             execute.next(gatt);
 
-        } else if (item.isEnabled()) {
-            execute.next(gatt);
-            item = sensorList.add(this);
-
         } else {
-            close();
+            item = getItem();
+            if (item.isEnabled()) {
+                execute.next(gatt);
+
+            } else {
+
+                closeState = SensorStateID.VALID;
+                close();
+            }
         }
     }
-
 
 
 
@@ -108,28 +123,29 @@ public class BleSensorSDK18 extends BluetoothGattCallback implements SensorInter
         discover(gatt);
 
         if (cscService.isValid() || heartRateService.isValid()) {
-            item = sensorList.add(this);
-            item.setSensor(this);  // connect
-
             executeNextOrClose(gatt);
+
         } else {
+            closeState = SensorStateID.INVALID;
             close();
         }
     }
 
 
     @Override
-    public synchronized void onDescriptorWrite(BluetoothGatt gatt, BluetoothGattDescriptor descriptor, int status) {
+    public synchronized void onDescriptorWrite(BluetoothGatt gatt, BluetoothGattDescriptor d, int s) {
         executeNextOrClose(gatt);
     }
 
     @Override
     public synchronized void onCharacteristicChanged(BluetoothGatt gatt,
-                                        BluetoothGattCharacteristic c) {
+                                                     BluetoothGattCharacteristic c) {
 
 
         heartRateService.notify(c);
         cscService.notify(c);
+
+        getItem().setState(SensorStateID.CONNECTED);
     }
 
 
@@ -149,14 +165,13 @@ public class BleSensorSDK18 extends BluetoothGattCallback implements SensorInter
         for (BluetoothGattCharacteristic c : list) {
             heartRateService.discovered(c, execute);
             cscService.discovered(c, execute);
-
         }
     }
 
 
     @Override
     public synchronized void onCharacteristicRead(BluetoothGatt gatt, BluetoothGattCharacteristic c,
-                                     int status) {
+                                                  int status) {
         heartRateService.read(c);
         cscService.read(c);
 
@@ -168,19 +183,28 @@ public class BleSensorSDK18 extends BluetoothGattCallback implements SensorInter
         return device.getAddress();
     }
 
+
     @Override
     public String toString() {
-        return getName();
+        String s = getName();
+        if (s == null)
+            s = super.toString();
+
+        return s;
     }
+
 
     @Override
     public String getName() {
         String name = device.getName();
 
+        if (name == null) name = "";
+
         if (heartRateService.isValid()) name += " " + heartRateService.toString();
         if (cscService.isValid()) name += " " + cscService.toString();
 
-        return  name;
+        return name + " Sensor";
+
     }
 
 
@@ -194,15 +218,19 @@ public class BleSensorSDK18 extends BluetoothGattCallback implements SensorInter
         return i;
     }
 
+
     @Override
-    public boolean isConnectionEstablished() {
+    public boolean isConnected() {
         return heartRateService.isConnectionEstablished() || cscService.isConnectionEstablished();
     }
-    
+
+
     @Override
     public synchronized void close() {
         if (!closed) {
             closed = true;
+
+            item = getItem();
 
             cscService.close();
             heartRateService.close();
@@ -211,9 +239,11 @@ public class BleSensorSDK18 extends BluetoothGattCallback implements SensorInter
                 gatt.close();
             }
 
-            item = sensorList.add(this);
-            item.disconnect();
-            sensorList.broadcast();
+            if (item.unlock(this)) {
+
+                item.setState(closeState);
+                sensorList.broadcast();
+            }
         }
     }
 }

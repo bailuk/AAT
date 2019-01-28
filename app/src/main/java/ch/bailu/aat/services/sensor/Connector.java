@@ -50,7 +50,7 @@ public class Connector implements Closeable {
         }
     }
 
-    public boolean isConnectionEstablished() {
+    public boolean isConnected() {
         return connected;
     }
 }

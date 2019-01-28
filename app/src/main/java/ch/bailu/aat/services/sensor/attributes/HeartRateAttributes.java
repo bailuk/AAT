@@ -62,7 +62,7 @@ public class HeartRateAttributes extends IndexedAttributes {
 
 
         } else if (index == KEY_INDEX_CONTACT) {
-            if (haveSensorContact) return "on";
+            if (haveSensorContact) return "";
             return "...";
 
         } else if (index == KEY_INDEX_LOCATION) {

@@ -7,7 +7,7 @@ import ch.bailu.aat.gpx.GpxInformation;
 public interface SensorInterface {
     GpxInformation getInformation(int iid);
 
-    boolean isConnectionEstablished();
+    boolean isConnected();
 
     String getAddress();
     String getName();

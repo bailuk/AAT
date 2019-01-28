@@ -14,6 +14,7 @@ import ch.bailu.aat.preferences.location.SolidPressureAtSeaLevel;
 import ch.bailu.aat.preferences.location.SolidProvideAltitude;
 import ch.bailu.aat.services.location.Hypsometric;
 import ch.bailu.aat.services.sensor.attributes.IndexedAttributes;
+import ch.bailu.aat.services.sensor.list.SensorList;
 import ch.bailu.aat.util.AppBroadcaster;
 
 @RequiresApi(api = 23)
@@ -28,20 +29,21 @@ public class BarometerSensor extends InternalSensorSDK23
 
     private final Context context;
 
-    private boolean closed = false;
 
     private GpxInformation information = null;
 
-    public BarometerSensor(Context c, Sensor sensor) {
-        super(c, sensor, InfoID.BAROMETER_SENSOR);
+    public BarometerSensor(Context c, SensorList list, Sensor sensor) {
+        super(c, list, sensor, InfoID.BAROMETER_SENSOR);
 
         context = c;
         spressure  = new SolidPressureAtSeaLevel(c);
         saltitude  = new SolidProvideAltitude(c, SolidUnit.SI);
 
-        hypsometric.setPressureAtSeaLevel(spressure.getPressure());
+        if (getItem().isLocked(this)) {
+            hypsometric.setPressureAtSeaLevel(spressure.getPressure());
 
-        spressure.register(this);
+            spressure.register(this);
+        }
     }
 
     @Override
@@ -98,11 +100,11 @@ public class BarometerSensor extends InternalSensorSDK23
 
     @Override
     public void close() {
-        if (closed == false) {
-            super.close();
-            closed = true;
+        if (getItem().isLocked(this)) {
             spressure.unregister(this);
         }
+
+        super.close();
     }
 
 

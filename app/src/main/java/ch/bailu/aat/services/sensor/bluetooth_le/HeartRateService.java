@@ -13,6 +13,7 @@ import ch.bailu.aat.services.sensor.Averager;
 import ch.bailu.aat.services.sensor.attributes.HeartRateAttributes;
 import ch.bailu.aat.services.sensor.attributes.SensorInformation;
 import ch.bailu.aat.services.sensor.Connector;
+import ch.bailu.aat.services.sensor.list.SensorState;
 import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.util.ToDo;
 
@@ -48,7 +49,7 @@ public class HeartRateService extends HeartRateServiceID implements Closeable {
 
 
     public boolean isConnectionEstablished() {
-        return connector.isConnectionEstablished();
+        return connector.isConnected();
     }
 
 
@@ -97,7 +98,7 @@ public class HeartRateService extends HeartRateServiceID implements Closeable {
 
     @Override
     public String toString() {
-        return ToDo.translate("Heart Rate Sensor");
+        return SensorState.getName(InfoID.HEART_RATE_SENSOR);
     }
 
     private void readBodySensorLocation(byte[] value) {

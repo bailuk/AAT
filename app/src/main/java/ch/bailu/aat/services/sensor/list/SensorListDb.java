@@ -57,7 +57,7 @@ public class SensorListDb {
             final String address = cursor.getString(
                     cursor.getColumnIndexOrThrow(SensorListDbContract.COLUMN_ADDRESS));
 
-            list.add(address, name).enable();
+            list.addEnabled(address, name);
         }
         cursor.close();
     }

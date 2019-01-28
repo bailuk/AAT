@@ -15,9 +15,6 @@ import ch.bailu.aat.util.AppBroadcaster;
 
 public class SensorList extends ArrayList<SensorListItem> implements Closeable {
 
-
-
-
     private final Context context;
 
     public SensorList(Context c) {
@@ -28,10 +25,19 @@ public class SensorList extends ArrayList<SensorListItem> implements Closeable {
 
 
     public SensorListItem add(String address, String name) {
+        return add(address, name, SensorListItem.UNSCANNED);
+    }
+
+
+    public SensorListItem addEnabled(String address, String name) {
+        return add(address, name, SensorListItem.ENABLED);
+    }
+
+    private SensorListItem add(String address, String name, int initialState) {
         SensorListItem item = find(address);
 
         if (item == null) {
-            item = new SensorListItem(address, name);
+            item = new SensorListItem(address, name, initialState);
             add(item);
 
         } else {
@@ -105,7 +111,7 @@ public class SensorList extends ArrayList<SensorListItem> implements Closeable {
 
         public Information() {
             for (SensorListItem i : SensorList.this) {
-                if (i.isConnectionEstablished()) {
+                if (i.isConnected()) {
                     sensorCount++;
                 } else if (i.isConnected()) {
                     state = StateID.WAIT;

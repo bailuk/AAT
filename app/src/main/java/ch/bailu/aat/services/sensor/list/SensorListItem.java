@@ -4,66 +4,67 @@ import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.services.sensor.SensorInterface;
 import ch.bailu.aat.util.ToDo;
 
-public class SensorListItem implements SensorInterface {
-    private String name;
-    private final String address;
+public class SensorListItem extends SensorStateID implements SensorInterface {
 
-    private boolean enabled;
+    private final static String BLUETOOTH_ADDRESS = "^([0-9A-F]{2}[:]){5}([0-9A-F]{2})$";
+
+    private final String address;
+    private String name = "";
 
     private SensorInterface sensor;
 
 
 
-    public SensorListItem(String a, String n) {
+    public SensorListItem(String a, String n, int initialState) {
+        super(initialState);
+
         address = a;
-        name = n;
+        setName(n);
     }
 
-    public void setSensor(SensorInterface s) {
-        if (s != sensor) disconnect();
-        sensor = s;
+    public boolean isBluetoothDevice() {
+        return address.matches(BLUETOOTH_ADDRESS);
     }
 
+    public boolean lock(SensorInterface s) {
+        if (s == null) {
+            return false;
 
-    public boolean isConnected() {
-        return sensor != null;
-    }
+        } else if (!isLocked() || sensor == s) {
+            sensor = s;
+            return true;
 
+        } else {
+            return false;
 
-    public void setEnabled(boolean e) {
-        if (e) enable();
-        else disable();
-    }
-
-
-    public boolean isEnabled() {
-        return enabled;
-    }
-
-
-    public void enable() {
-        enabled = true;
-    }
-
-
-    public void disable() {
-        enabled = false;
-        disconnect();
-    }
-
-
-    public void disconnect() {
-        if (isConnected()) {
-            sensor.close();
-            sensor = null;
         }
     }
 
 
-    public void setName(String n) {
-        name = n;
+    public boolean unlock(SensorInterface s) {
+        if (isLocked(s)) {
+            sensor = null;
+            return true;
+        }
+        return false;
     }
 
+
+    private boolean isLocked() {
+        return sensor != null;
+    }
+
+    public boolean isLocked(SensorInterface s) {
+        return sensor == s;
+    }
+
+
+    public void setName(String n) {
+        if (n != null)
+            name = n;
+    }
+
+    @Override
     public String getName() {
         return name;
     }
@@ -71,14 +72,11 @@ public class SensorListItem implements SensorInterface {
 
     @Override
     public GpxInformation getInformation(int iid) {
-        if (sensor != null) return sensor.getInformation(iid);
+        if (isLocked()) return sensor.getInformation(iid);
         return null;
     }
 
-    @Override
-    public boolean isConnectionEstablished() {
-        return isConnected() && sensor.isConnectionEstablished();
-    }
+
 
     public String getAddress() {
         return address;
@@ -88,14 +86,12 @@ public class SensorListItem implements SensorInterface {
     public String toString() {
         String sensorState = ToDo.translate("Not connected");
         String sensorType = ToDo.translate("Internal");
-        String sensorName = getName();
+        final String sensorName = getName();
 
         if (isConnected()) {
-            if (isConnectionEstablished()) {
-                sensorState = ToDo.translate("Connection established");
-            } else if (isConnected()) {
-                sensorState = ToDo.translate("Is connecting...");
-            }
+            sensorState = ToDo.translate("Connection established");
+        } else if (isConnecting()) {
+            sensorState = ToDo.translate("Is connecting...");
         }
 
         if (isBluetoothDevice()) {
@@ -106,15 +102,22 @@ public class SensorListItem implements SensorInterface {
     }
 
 
-    private final static String BLUETOOTH_ADDRESS = "^([0-9A-F]{2}[:]){5}([0-9A-F]{2})$";
-
-    public boolean isBluetoothDevice() {
-        return address.matches(BLUETOOTH_ADDRESS);
-    }
 
 
     @Override
     public void close() {
-        disconnect();
+        if (isLocked()) sensor.close();
+    }
+
+    public void setEnabled(boolean enabled) {
+        if (enabled) {
+            setState(ENABLED);
+
+        } else {
+            if (isLocked()) {
+                sensor.close();
+            }
+            setState(VALID);
+        }
     }
 }

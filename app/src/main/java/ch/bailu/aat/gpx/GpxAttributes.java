@@ -3,7 +3,7 @@ package ch.bailu.aat.gpx;
 public abstract class GpxAttributes {
 
     public final static GpxAttributes NULL = new GpxAttributesNull();
-    public final static String NULL_VALUE="0";
+    public final static String NULL_VALUE="";
 
 
     public abstract String get(String key);
