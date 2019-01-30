@@ -44,12 +44,12 @@ public class HeartRateDescription extends ContentDescription {
         if (iid == InfoID.HEART_RATE_SENSOR && haveSensor) {
             String bpm = info.getAttributes().getValue(HeartRateAttributes.KEY_INDEX_BPM);
 
-                String bpma = info.getAttributes().getValue(HeartRateAttributes.KEY_INDEX_BPM_AVERAGE);
+                //String bpma = info.getAttributes().getValue(HeartRateAttributes.KEY_INDEX_BPM_AVERAGE);
                 String contact = info.getAttributes().getValue(HeartRateAttributes.KEY_INDEX_CONTACT);
 
-                value = bpma;
+                value = bpm;
                 label = LABEL + " " + contact;
-                unit = bpm + " " + UNIT;
+                unit = UNIT;
 
          } else {
             value = VALUE_DISABLED;

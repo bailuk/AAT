@@ -1,20 +1,16 @@
 package ch.bailu.aat.services.sensor.bluetooth_le;
 
 import android.bluetooth.BluetoothGattCharacteristic;
-import android.content.Context;
 import android.support.annotation.RequiresApi;
-
-import java.io.Closeable;
 
 import ch.bailu.aat.gpx.GpxAttributes;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.sensor.Averager;
-import ch.bailu.aat.services.sensor.attributes.IndexedAttributes;
 import ch.bailu.aat.services.sensor.Connector;
+import ch.bailu.aat.services.sensor.attributes.IndexedAttributes;
 import ch.bailu.aat.services.sensor.list.SensorState;
-import ch.bailu.aat.util.AppBroadcaster;
 
 @RequiresApi(api = 18)
 public class CscService extends CscServiceID implements ServiceInterface {
@@ -26,11 +22,6 @@ public class CscService extends CscServiceID implements ServiceInterface {
      * https://www.bluetooth.com/specifications/gatt/viewer?attributeXmlFile=org.bluetooth.service.cycling_speed_and_cadence.xml
      * https://developer.polar.com/wiki/Cycling_Speed_%26_Cadence
      */
-
-    private static final long BROADCAST_TIMEOUT = 3000;
-
-
-    private long lastBroadcast = 0L;
 
     private String location = SENSOR_LOCATION[0];
 
@@ -45,18 +36,20 @@ public class CscService extends CscServiceID implements ServiceInterface {
 
     private GpxInformation information = GpxInformation.NULL;
 
-    private final Context context;
-
     private boolean valid = false;
 
-    private Connector connectorSpeed, connectorCadence;
+    private final Connector connectorSpeed, connectorCadence;
+    private final Broadcaster broadcasterSpeed, broadcasterCadence;
+
 
 
     public CscService(ServiceContext c) {
-        context = c.getContext();
         wheelCircumference = new WheelCircumference(c, speed);
         connectorCadence = new Connector(c.getContext(), InfoID.CADENCE_SENSOR);
         connectorSpeed = new Connector(c.getContext(), InfoID.SPEED_SENSOR);
+        broadcasterCadence = new Broadcaster(c.getContext(), InfoID.CADENCE_SENSOR);
+        broadcasterSpeed = new Broadcaster(c.getContext(), InfoID.SPEED_SENSOR);
+
     }
 
 
@@ -231,25 +224,18 @@ public class CscService extends CscServiceID implements ServiceInterface {
 
 
         private void broadcast() {
-            final long time = System.currentTimeMillis();
 
-            if (haveSpeed && isSpeedSensor && (timeout(time) || speed_rpm != 0)) {
-                AppBroadcaster.broadcast(
-                        context, AppBroadcaster.SENSOR_CHANGED + InfoID.SPEED_SENSOR);
+            if (haveSpeed && isSpeedSensor && (speed_rpm != 0 || broadcasterSpeed.timeout())) {
+                broadcasterSpeed.broadcast();
 
-                lastBroadcast = time;
             }
 
             if (haveCadence && isCadenceSensor) {
-                AppBroadcaster.broadcast(
-                        context, AppBroadcaster.SENSOR_CHANGED + InfoID.CADENCE_SENSOR);
+                broadcasterCadence.broadcast();
+
             }
 
 
-        }
-
-        private boolean timeout(long time) {
-            return ((time - lastBroadcast) > BROADCAST_TIMEOUT);
         }
 
 

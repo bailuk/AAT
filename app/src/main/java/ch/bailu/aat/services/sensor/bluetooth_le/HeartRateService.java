@@ -4,18 +4,14 @@ import android.bluetooth.BluetoothGattCharacteristic;
 import android.content.Context;
 import android.support.annotation.RequiresApi;
 
-import java.io.Closeable;
 import java.util.UUID;
 
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.InfoID;
-import ch.bailu.aat.services.sensor.Averager;
+import ch.bailu.aat.services.sensor.Connector;
 import ch.bailu.aat.services.sensor.attributes.HeartRateAttributes;
 import ch.bailu.aat.services.sensor.attributes.SensorInformation;
-import ch.bailu.aat.services.sensor.Connector;
 import ch.bailu.aat.services.sensor.list.SensorState;
-import ch.bailu.aat.util.AppBroadcaster;
-import ch.bailu.aat.util.ToDo;
 
 @RequiresApi(api = 18)
 public class HeartRateService extends HeartRateServiceID implements ServiceInterface {
@@ -26,22 +22,23 @@ public class HeartRateService extends HeartRateServiceID implements ServiceInter
      *
      */
 
-
     private String location = HeartRateAttributes.BODY_SENSOR_LOCATIONS[0];
+    private GpxInformation information;
 
-    private GpxInformation information = GpxInformation.NULL;
-
-    private final Context context;
 
     private boolean valid = false;
-
     private final Connector connector;
+    private final Broadcaster broadcaster;
+
 
 
     public HeartRateService(Context c) {
         connector = new Connector(c, InfoID.HEART_RATE_SENSOR);
-        context = c;
+        broadcaster = new Broadcaster(c, InfoID.HEART_RATE_SENSOR);
+
+        information = new SensorInformation(new HeartRateAttributes());
     }
+
 
     public boolean isValid() {
         return valid;
@@ -69,7 +66,8 @@ public class HeartRateService extends HeartRateServiceID implements ServiceInter
             if (BODY_SENSOR_LOCATION.equals(c.getUuid())) {
                 readBodySensorLocation(c.getValue());
                 connector.connect(isValid());
-                AppBroadcaster.broadcast(context, AppBroadcaster.SENSOR_CHANGED + InfoID.HEART_RATE_SENSOR);
+                information = new SensorInformation(new HeartRateAttributes(location));
+                broadcaster.broadcast();
 
             }
         }
@@ -89,7 +87,7 @@ public class HeartRateService extends HeartRateServiceID implements ServiceInter
 
     private void readHeartRateMesurement(BluetoothGattCharacteristic c, byte[] value) {
         information = new SensorInformation(new Attributes(c, value));
-        AppBroadcaster.broadcast(context, AppBroadcaster.SENSOR_CHANGED + InfoID.HEART_RATE_SENSOR);
+
 
     }
 
@@ -107,15 +105,13 @@ public class HeartRateService extends HeartRateServiceID implements ServiceInter
     }
 
 
-
-    private final Averager averager = new Averager(10);
-
     @Override
     public void close()  {
         connector.close();
-        AppBroadcaster.broadcast(context, AppBroadcaster.SENSOR_CHANGED + InfoID.HEART_RATE_SENSOR);
-
+        broadcaster.broadcast();
     }
+
+
 
     private class Attributes extends HeartRateAttributes {
 
@@ -162,16 +158,23 @@ public class HeartRateService extends HeartRateServiceID implements ServiceInter
                 }
             }
 
-            if (bpm > 0) {
-                averager.add(bpm);
-                bpmAverage = averager.get();
-                if (!haveSensorContactStatus) haveSensorContact = true;
-            } else {
-                if (!haveSensorContactStatus) haveSensorContact = false;
-            }
 
+
+
+            if (bpm > 0) {
+                if (!haveSensorContactStatus) haveSensorContact = true;
+                broadcaster.broadcast();
+
+            } else if (haveSensorContactStatus && !haveSensorContact) {
+                broadcaster.broadcast();
+
+            } else if (broadcaster.timeout()){
+                if (!haveSensorContactStatus) haveSensorContact = false;
+                broadcaster.broadcast();
+            }
         }
     }
+
 
 
     @Override
