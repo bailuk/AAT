@@ -4,7 +4,7 @@ import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.services.sensor.SensorInterface;
 import ch.bailu.aat.util.ToDo;
 
-public class SensorListItem extends SensorStateID implements SensorInterface {
+public class SensorListItem extends SensorItemState implements SensorInterface {
 
     private final static String BLUETOOTH_ADDRESS = "^([0-9A-F]{2}[:]){5}([0-9A-F]{2})$";
 
@@ -60,8 +60,7 @@ public class SensorListItem extends SensorStateID implements SensorInterface {
 
 
     public void setName(String n) {
-        if (n != null)
-            name = n;
+        if (n != null) name = n;
     }
 
     @Override
@@ -84,23 +83,22 @@ public class SensorListItem extends SensorStateID implements SensorInterface {
 
     @Override
     public String toString() {
-        String sensorState = ToDo.translate("Not connected");
-        String sensorType = ToDo.translate("Internal");
+
+        final String sensorType = getSensorTypeDescription();
+        final String sensorState = getSensorStateDescription();
         final String sensorName = getName();
 
-        if (isConnected()) {
-            sensorState = ToDo.translate("Connection established");
-        } else if (isConnecting()) {
-            sensorState = ToDo.translate("Is connecting...");
-        }
-
-        if (isBluetoothDevice()) {
-            sensorType = "Bluetooth";
-        }
 
         return sensorType + " " + sensorName + "\n" + sensorState;
     }
 
+    public String getSensorTypeDescription() {
+        if (isBluetoothDevice()) {
+            return "Bluetooth";
+        } else {
+            return ToDo.translate("Internal");
+        }
+    }
 
 
 
@@ -117,7 +115,7 @@ public class SensorListItem extends SensorStateID implements SensorInterface {
             if (isLocked()) {
                 sensor.close();
             }
-            setState(VALID);
+            setState(SUPPORTED);
         }
     }
 }

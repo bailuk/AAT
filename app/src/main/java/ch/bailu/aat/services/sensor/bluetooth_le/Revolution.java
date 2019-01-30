@@ -50,4 +50,8 @@ public class Revolution {
     public long getTotalRevolutions() {
         return revolution.getTotal();
     }
+
+    public boolean isInitialized() {
+        return time.isInitialized() && revolution.isInitialized();
+    }
 }

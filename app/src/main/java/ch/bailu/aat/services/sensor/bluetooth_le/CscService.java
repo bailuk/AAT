@@ -17,7 +17,7 @@ import ch.bailu.aat.services.sensor.list.SensorState;
 import ch.bailu.aat.util.AppBroadcaster;
 
 @RequiresApi(api = 18)
-public class CscService extends CscServiceID implements Closeable {
+public class CscService extends CscServiceID implements ServiceInterface {
     /**
      *
      * RPM BBB BCP-66 SmartCadence RPM Sensor
@@ -64,12 +64,10 @@ public class CscService extends CscServiceID implements Closeable {
         return valid;
     }
 
-    public boolean isConnectionEstablished() {
-        return connectorCadence.isConnected() || connectorSpeed.isConnected();
-    }
 
 
-    public void notify(BluetoothGattCharacteristic c) {
+    @Override
+    public void changed(BluetoothGattCharacteristic c) {
         if (CSC_SERVICE.equals(c.getService().getUuid())) {
             if (CSC_MESUREMENT.equals(c.getUuid())) {
                 readCscMesurement(c, c.getValue());
@@ -315,6 +313,7 @@ public class CscService extends CscServiceID implements Closeable {
     }
 
 
+    @Override
     public GpxInformation getInformation(int iid) {
         if (isSpeedSensor && iid == InfoID.SPEED_SENSOR)
             return information;

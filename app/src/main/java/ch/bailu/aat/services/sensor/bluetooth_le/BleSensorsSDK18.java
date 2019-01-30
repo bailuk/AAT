@@ -64,16 +64,11 @@ public class BleSensorsSDK18 extends Sensors {
 
     @Override
     public synchronized void updateConnections() {
-        connectEnabledSensors();
-    }
-
-
-    private void connectEnabledSensors() {
         for (SensorListItem item : sensorList) {
             if (item.isEnabled() && item.isBluetoothDevice() && item.isOpen() == false) {
                     final BluetoothDevice device = adapter.getRemoteDevice(item.getAddress());
 
-                    if (device != null) {
+                    if (device instanceof  BluetoothDevice) {
                         new BleSensorSDK18(scontext, device, sensorList);
                     }
                 }
@@ -102,7 +97,7 @@ public class BleSensorsSDK18 extends Sensors {
 
 
     public synchronized void foundDevice(BluetoothDevice device) {
-        if (sensorList.add(device.getAddress(), null).isUnscanned()) {
+        if (sensorList.add(device.getAddress(), device.getName()).isUnscanned()) {
             new BleSensorSDK18(scontext, device, sensorList);
         }
     }

@@ -40,8 +40,6 @@ public class SensorList extends ArrayList<SensorListItem> implements Closeable {
             item = new SensorListItem(address, name, initialState);
             add(item);
 
-        } else {
-            item.setName(name);
         }
 
         return item;
@@ -113,7 +111,7 @@ public class SensorList extends ArrayList<SensorListItem> implements Closeable {
             for (SensorListItem i : SensorList.this) {
                 if (i.isConnected()) {
                     sensorCount++;
-                } else if (i.isConnected()) {
+                } else if (i.isConnecting()) {
                     state = StateID.WAIT;
                 }
             }

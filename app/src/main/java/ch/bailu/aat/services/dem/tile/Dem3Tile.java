@@ -37,7 +37,7 @@ public class Dem3Tile implements ElevationProvider, DemProvider {
      * Recent versions of GDAL support the HGT files natively (as long as you don't rename the files; the names they
      * come with are the source of their georeferencing), but the srtm_generate_hdr.sh script can also be used to create
      * a GeoTIFF from the HGT zip files. (Note that the script has SRTM3 values hardcoded; if you're using SRTM1, you'll
-     * have to change the number of rows and columns to 3601, the number of row bytes to 7202, and the pixel dimensions 
+     * have to changed the number of rows and columns to 3601, the number of row bytes to 7202, and the pixel dimensions
      * to 0.000277777777778.)
      *
      *

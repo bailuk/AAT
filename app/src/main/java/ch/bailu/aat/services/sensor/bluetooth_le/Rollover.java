@@ -56,4 +56,8 @@ public class Rollover {
         return total;
     }
 
+
+    public boolean isInitialized() {
+        return first == false;
+    }
 }

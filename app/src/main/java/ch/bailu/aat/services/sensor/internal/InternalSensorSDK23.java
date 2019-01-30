@@ -8,9 +8,9 @@ import android.support.annotation.RequiresApi;
 
 import ch.bailu.aat.services.sensor.Connector;
 import ch.bailu.aat.services.sensor.SensorInterface;
+import ch.bailu.aat.services.sensor.list.SensorItemState;
 import ch.bailu.aat.services.sensor.list.SensorList;
 import ch.bailu.aat.services.sensor.list.SensorListItem;
-import ch.bailu.aat.services.sensor.list.SensorStateID;
 
 @RequiresApi(api = 23)
 public abstract class InternalSensorSDK23 implements SensorEventListener, SensorInterface {
@@ -24,21 +24,21 @@ public abstract class InternalSensorSDK23 implements SensorEventListener, Sensor
     private boolean registered = false;
 
     private final Connector connector;
-
     private final SensorList sensorList;
+    private final SensorListItem item;
 
 
     public InternalSensorSDK23(Context c, SensorList list, Sensor sensor, int iid) {
         context = c;
         sensorList = list;
-        name = sensor.getVendor() + " " + sensor.getName();
+        name = InternalSensorsSDK23.toName(sensor);
         address = InternalSensorsSDK23.toAddress(sensor);
         connector = new Connector(c, iid);
 
-        SensorListItem item = getItem();
+        item = sensorList.add(this);
         if (item.lock(this)) {
-            item.setState(SensorStateID.CONNECTING);
-            item.setState(SensorStateID.CONNECTED);
+            item.setState(SensorItemState.CONNECTING);
+            item.setState(SensorItemState.CONNECTED);
 
             connector.connect();
 
@@ -54,20 +54,15 @@ public abstract class InternalSensorSDK23 implements SensorEventListener, Sensor
 
     @Override
     public String getName() {
-        return toString();
-    }
-
-
-    @Override
-    public String toString() {
         return name;
     }
 
 
     @Override
-    public boolean isConnected() {
-        return connector.isConnected();
+    public String toString() {
+        return getName() + "@" + getAddress() + ":" + item.getSensorStateDescription();
     }
+
 
 
     @Override
@@ -79,7 +74,7 @@ public abstract class InternalSensorSDK23 implements SensorEventListener, Sensor
             connector.close();
             cancelUpdates(this);
 
-            item.setState(SensorStateID.ENABLED);
+            item.setState(SensorItemState.ENABLED);
         }
     }
 

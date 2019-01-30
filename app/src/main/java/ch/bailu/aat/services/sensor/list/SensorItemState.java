@@ -1,21 +1,29 @@
 package ch.bailu.aat.services.sensor.list;
 
-import ch.bailu.aat.services.sensor.SensorInterface;
-import ch.bailu.aat.services.sensor.internal.BarometerSensor;
-
-public class SensorStateID {
+public class SensorItemState {
     public final static int UNSCANNED = 0;
     public final static int SCANNING = 1;
-    public final static int VALID = 2;
+    public final static int SUPPORTED = 2;
     public final static int ENABLED = 3;
     public final static int CONNECTING = 4;
     public final static int CONNECTED = 5;
-    public final static int INVALID = 6;
+    public final static int UNSUPPORTED = 6;
 
+
+
+    private static final String STATE_DESCRIPTION[] = {
+            "Unscanned",
+            "Scanning...",
+            "Supported",
+            "Not connected",
+            "Connecting...",
+            "Connected",
+            "Not supported"
+    };
 
     private int state;
 
-    public SensorStateID(int initialState) {
+    public SensorItemState(int initialState) {
         state = initialState;
     }
 
@@ -34,21 +42,21 @@ public class SensorStateID {
             return (nextState == SCANNING);
 
         } else if (state == SCANNING) {
-            return (nextState == VALID || nextState == INVALID);
+            return (nextState == SUPPORTED || nextState == UNSUPPORTED);
 
-        } else if (state == VALID) {
+        } else if (state == SUPPORTED) {
             return (nextState == ENABLED);
 
         } else if (state == ENABLED) {
-            return (nextState == VALID || nextState == CONNECTING);
+            return (nextState == SUPPORTED || nextState == CONNECTING);
 
         } else if (state == CONNECTING) {
-            return (nextState == CONNECTED || nextState == ENABLED || nextState == VALID);
+            return (nextState == CONNECTED || nextState == ENABLED || nextState == SUPPORTED);
 
         } else if (state == CONNECTED) {
-            return (nextState == ENABLED || nextState == VALID);
+            return (nextState == ENABLED || nextState == SUPPORTED);
 
-        } else if (state == INVALID){
+        } else if (state == UNSUPPORTED){
             return false;
 
         }
@@ -57,8 +65,8 @@ public class SensorStateID {
     }
 
 
-    public boolean isValid() {
-        return state == VALID || isEnabled();
+    public boolean isSupported() {
+        return state == SUPPORTED || isEnabled();
     }
 
     public boolean isEnabled() {
@@ -87,5 +95,10 @@ public class SensorStateID {
 
     public int getState() {
         return state;
+    }
+
+
+    public String getSensorStateDescription() {
+        return STATE_DESCRIPTION[state];
     }
 }

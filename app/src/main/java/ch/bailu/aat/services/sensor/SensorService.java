@@ -100,8 +100,7 @@ public class SensorService extends VirtualService {
 
 
     public synchronized GpxInformation getInformationOrNull(int iid) {
-        GpxInformation information = sensorList.getInformation(iid);
-        return information;
+        return sensorList.getInformation(iid);
     }
 
 

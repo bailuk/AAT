@@ -30,7 +30,6 @@ public class HeartRateSensor extends InternalSensorSDK23 {
     public HeartRateSensor(Context c, SensorList list, Sensor sensor) {
         super(c, list, sensor, InfoID.HEART_RATE_SENSOR);
         context = c;
-        broadcast();
     }
 
 

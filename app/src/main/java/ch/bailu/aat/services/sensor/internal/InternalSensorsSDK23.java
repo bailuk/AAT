@@ -10,7 +10,7 @@ import java.util.List;
 import ch.bailu.aat.services.sensor.Sensors;
 import ch.bailu.aat.services.sensor.list.SensorList;
 import ch.bailu.aat.services.sensor.list.SensorListItem;
-import ch.bailu.aat.services.sensor.list.SensorStateID;
+import ch.bailu.aat.services.sensor.list.SensorItemState;
 
 
 @RequiresApi(api = 23)
@@ -32,8 +32,9 @@ public class InternalSensorsSDK23 extends Sensors {
 
     @Override
     public void scann() {
-        scann(Sensor.TYPE_HEART_RATE);
+        //scann(Sensor.TYPE_ALL);
         scann(Sensor.TYPE_PRESSURE);
+        scann(Sensor.TYPE_HEART_RATE);
     }
 
 
@@ -44,31 +45,45 @@ public class InternalSensorsSDK23 extends Sensors {
             if (sensors != null) {
                 for (Sensor sensor : sensors) {
                     SensorListItem item =
-                            sensorList.add(toAddress(sensor), sensor.getVendor() + " " + sensor.getName());
+                            sensorList.add(toAddress(sensor), toName(sensor));
 
-                    if (!item.isEnabled()) {
-                        item.setState(SensorStateID.SCANNING);
-                        item.setState(SensorStateID.VALID);
+                    if (item.getState() == SensorItemState.UNSCANNED) {
+                        item.setState(SensorItemState.SCANNING);
+                        if (isSupported(sensor)) {
+                            item.setState(SensorItemState.SUPPORTED);
+                        } else {
+                            item.setState(SensorItemState.UNSUPPORTED);
+                        }
                     }
-
                 }
             }
         }
 
     }
 
+    private boolean isSupported(Sensor sensor) {
+        return     sensor.getType() == Sensor.TYPE_PRESSURE
+                || sensor.getType() == Sensor.TYPE_HEART_RATE;
+
+    }
+
+
+    public static String toName(Sensor sensor) {
+        return sensor.getVendor() + " " + sensor.getName();
+    }
+
     @Override
     public void updateConnections() {
         for (SensorListItem item : sensorList) {
             if (item.isEnabled() && item.isConnected() == false) {
+               factory(item.getAddress(), sensorList);
 
-               createSensorFromAddress(item.getAddress(), sensorList);
             }
         }
     }
 
 
-    private InternalSensorSDK23 createSensorFromAddress(String address, SensorList list) {
+    private InternalSensorSDK23 factory(String address, SensorList list) {
         if (manager instanceof SensorManager) {
             List<Sensor> sensors = manager.getSensorList(Sensor.TYPE_ALL);
 

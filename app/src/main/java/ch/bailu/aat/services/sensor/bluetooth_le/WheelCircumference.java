@@ -43,7 +43,7 @@ public class WheelCircumference implements Closeable {
 
             GpxInformation currentLocation = scontext.getLocationService().getLocationInformation();
 
-            if (currentLocation.getAccuracy() <= MIN_ACCURACY) {
+            if (currentLocation.getAccuracy() <= MIN_ACCURACY && revolution.isInitialized()) {
                 if (previousLocation == null) {
                     reset(currentLocation);
 
@@ -51,6 +51,7 @@ public class WheelCircumference implements Closeable {
                     final float dist = GpxDeltaHelper.getDistance(previousLocation, currentLocation);
 
                     if (dist > MIN_SAMPLE_DISTANCE && dist < MAX_SAMPLE_DISTANCE) {
+
                         addSample(currentLocation, dist);
 
                     } else {

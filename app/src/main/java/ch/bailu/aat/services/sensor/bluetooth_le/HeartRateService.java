@@ -18,7 +18,7 @@ import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.util.ToDo;
 
 @RequiresApi(api = 18)
-public class HeartRateService extends HeartRateServiceID implements Closeable {
+public class HeartRateService extends HeartRateServiceID implements ServiceInterface {
     /**
      *
      * EC DMH30 0ADE BBB Bluepulse+ Heart Rate Sensor BCP-62DB
@@ -48,11 +48,6 @@ public class HeartRateService extends HeartRateServiceID implements Closeable {
     }
 
 
-    public boolean isConnectionEstablished() {
-        return connector.isConnected();
-    }
-
-
     public void discovered(BluetoothGattCharacteristic c, Executer execute) {
         UUID sid = c.getService().getUuid();
         UUID cid = c.getUuid();
@@ -73,12 +68,16 @@ public class HeartRateService extends HeartRateServiceID implements Closeable {
         if (HEART_RATE_SERVICE.equals(c.getService().getUuid())) {
             if (BODY_SENSOR_LOCATION.equals(c.getUuid())) {
                 readBodySensorLocation(c.getValue());
+                connector.connect(isValid());
+                AppBroadcaster.broadcast(context, AppBroadcaster.SENSOR_CHANGED + InfoID.HEART_RATE_SENSOR);
+
             }
         }
     }
 
 
-    public void notify(BluetoothGattCharacteristic c) {
+    @Override
+    public void changed(BluetoothGattCharacteristic c) {
         if (HEART_RATE_SERVICE.equals(c.getService().getUuid())) {
 
             if (HEART_RATE_MESUREMENT.equals(c.getUuid())) {
@@ -90,9 +89,8 @@ public class HeartRateService extends HeartRateServiceID implements Closeable {
 
     private void readHeartRateMesurement(BluetoothGattCharacteristic c, byte[] value) {
         information = new SensorInformation(new Attributes(c, value));
-
-        connector.connect(isValid());
         AppBroadcaster.broadcast(context, AppBroadcaster.SENSOR_CHANGED + InfoID.HEART_RATE_SENSOR);
+
     }
 
 
@@ -115,6 +113,8 @@ public class HeartRateService extends HeartRateServiceID implements Closeable {
     @Override
     public void close()  {
         connector.close();
+        AppBroadcaster.broadcast(context, AppBroadcaster.SENSOR_CHANGED + InfoID.HEART_RATE_SENSOR);
+
     }
 
     private class Attributes extends HeartRateAttributes {
@@ -170,14 +170,13 @@ public class HeartRateService extends HeartRateServiceID implements Closeable {
                 if (!haveSensorContactStatus) haveSensorContact = false;
             }
 
-
-
         }
     }
 
 
+    @Override
     public GpxInformation getInformation(int iid) {
-        if (iid == InfoID.HEART_RATE_SENSOR)
+        if (isValid() && iid == InfoID.HEART_RATE_SENSOR)
             return information;
         return null;
     }

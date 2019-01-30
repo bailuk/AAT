@@ -42,6 +42,8 @@ public class SensorListItemView extends LinearLayout {
 
     public void setItem(SensorListItem i) {
         item = i;
+
+        checkBox.setEnabled(item.isSupported());
         checkBox.setChecked(item.isEnabled());
         checkBox.setText(item.toString());
     }
