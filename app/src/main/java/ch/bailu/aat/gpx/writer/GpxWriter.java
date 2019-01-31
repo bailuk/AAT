@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 
 import ch.bailu.aat.description.FF_GPX;
+import ch.bailu.aat.gpx.GpxConstants;
+import ch.bailu.aat.gpx.OsmConstants;
 import ch.bailu.aat.gpx.interfaces.GpxPointInterface;
 import ch.bailu.aat.gpx.interfaces.GpxType;
 import ch.bailu.aat.util.ui.AppString;
@@ -99,4 +101,23 @@ public abstract class GpxWriter {
         writeString(pvalue);
         writeString("\"");
     }
+
+
+    public void writeAttributes(GpxPointInterface tp) throws IOException {
+        if (tp.getAttributes().size()>0) {
+            writeBeginElement(GpxConstants.QNAME_EXTENSIONS);
+
+            for(int i=0; i< tp.getAttributes().size(); i++) {
+                writeString("\n\t\t");
+                writeBeginElementStart(OsmConstants.T_TAG);
+                writeParameter(OsmConstants.A_KEY, tp.getAttributes().getKey(i));
+                writeParameter(OsmConstants.A_VALUE, tp.getAttributes().getValue(i));
+                writeElementEnd();
+            }
+
+            writeString("\n\t");
+            writeEndElement(GpxConstants.QNAME_EXTENSIONS);
+        }
+    }
+
 }

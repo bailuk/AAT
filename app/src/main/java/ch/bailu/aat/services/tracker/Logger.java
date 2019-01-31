@@ -20,12 +20,6 @@ public class Logger extends GpxInformation implements Closeable {
     @Override
     public void close() {}
     
-/*
-    @Override
-    public int getID() {
-        return InfoID.TRACKER;
-    }
-*/
     public void setState(int s) {
         state = s;
     }
