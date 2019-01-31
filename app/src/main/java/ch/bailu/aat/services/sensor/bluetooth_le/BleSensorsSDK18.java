@@ -16,7 +16,8 @@ import ch.bailu.aat.util.ToDo;
 @RequiresApi(api = 18)
 public class BleSensorsSDK18 extends Sensors {
 
-    private final static long SCAN_DURATION = 10000;
+    public final static long SCAN_DURATION = 10 * 1000;
+    public static final long CONNECTING_DURATION = 60 * 1000;
 
     private final Context context;
     private final ServiceContext scontext;

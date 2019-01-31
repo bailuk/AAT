@@ -8,6 +8,7 @@ import android.bluetooth.BluetoothGattDescriptor;
 import android.bluetooth.BluetoothGattService;
 import android.bluetooth.BluetoothProfile;
 import android.content.Context;
+import android.os.Build;
 import android.support.annotation.RequiresApi;
 
 import java.util.List;
@@ -18,6 +19,7 @@ import ch.bailu.aat.services.sensor.SensorInterface;
 import ch.bailu.aat.services.sensor.list.SensorList;
 import ch.bailu.aat.services.sensor.list.SensorListItem;
 import ch.bailu.aat.services.sensor.list.SensorItemState;
+import ch.bailu.aat.util.Timer;
 
 @RequiresApi(api = 18)
 public class BleSensorSDK18 extends BluetoothGattCallback implements SensorInterface {
@@ -35,6 +37,22 @@ public class BleSensorSDK18 extends BluetoothGattCallback implements SensorInter
 
     private boolean closed = false;
     private int closeState;
+
+
+    private final Timer scanningTimeout = new Timer(new Runnable() {
+        @Override
+        public void run() {
+            if (item.isScanning())  close();
+        }
+    }, BleSensorsSDK18.SCAN_DURATION);
+
+
+    private final Timer connectingTimeout = new Timer(new Runnable() {
+        @Override
+        public void run() {
+            if (item.isConnecting())  close();
+        }
+    }, BleSensorsSDK18.CONNECTING_DURATION);
 
 
     public BleSensorSDK18(ServiceContext c, BluetoothDevice d, SensorList l) {
@@ -57,6 +75,8 @@ public class BleSensorSDK18 extends BluetoothGattCallback implements SensorInter
                 close();
 
             } else {
+                scanningTimeout.kick();
+                connectingTimeout.kick();
                 item.setState(SensorItemState.CONNECTING);
                 item.setState(SensorItemState.SCANNING);
 
@@ -67,7 +87,13 @@ public class BleSensorSDK18 extends BluetoothGattCallback implements SensorInter
 
     private BluetoothGatt connect() {
         if (item.lock(this)) {
-            return device.connectGatt(context, true, this);
+
+            if (Build.VERSION.SDK_INT >= 23) {
+                return device.connectGatt(context, true, this,
+                        BluetoothDevice.TRANSPORT_LE);
+            } else {
+                return device.connectGatt(context, true, this);
+            }
 
         }
         return null;
@@ -249,6 +275,9 @@ public class BleSensorSDK18 extends BluetoothGattCallback implements SensorInter
     public synchronized void close() {
         if (!closed) {
             closed = true;
+
+            scanningTimeout.close();
+            connectingTimeout.close();
 
             updateListItemName();
 
