@@ -12,12 +12,9 @@ import ch.bailu.aat.services.sensor.attributes.HeartRateAttributes;
 import ch.bailu.aat.services.sensor.attributes.SensorInformation;
 import ch.bailu.aat.services.sensor.bluetooth_le.Broadcaster;
 import ch.bailu.aat.services.sensor.list.SensorList;
-import ch.bailu.aat.util.AppBroadcaster;
 
 @RequiresApi(api = 23)
 public class HeartRateSensor extends InternalSensorSDK23 {
-
-    //private final Averager averager = new Averager(10);
 
     private boolean contact = false;
     private int bpm = 0;
@@ -79,9 +76,6 @@ public class HeartRateSensor extends InternalSensorSDK23 {
 
         attributes.bpm = bpm;
         attributes.haveSensorContact = contact;
-
-        //  if (bpm != 0) averager.add(bpm);
-        //  attributes.bpmAverage = averager.get();
 
         return new SensorInformation(attributes);
     }

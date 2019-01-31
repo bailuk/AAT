@@ -10,7 +10,6 @@ import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.sensor.Averager;
 import ch.bailu.aat.services.sensor.Connector;
 import ch.bailu.aat.services.sensor.attributes.CadenceSpeedAttributes;
-import ch.bailu.aat.services.sensor.attributes.IndexedAttributes;
 import ch.bailu.aat.services.sensor.list.SensorState;
 
 @RequiresApi(api = 18)
@@ -224,12 +223,14 @@ public class CscService extends CscServiceID implements ServiceInterface {
 
         private void broadcast() {
 
-            if (haveSpeed && isSpeedSensor && (speed_rpm != 0 || broadcasterSpeed.timeout())) {
+            if (haveSpeed && isSpeedSensor
+                    && (speed_rpm != 0 || broadcasterSpeed.timeout())) {
                 broadcasterSpeed.broadcast();
 
             }
 
-            if (haveCadence && isCadenceSensor) {
+            if (haveCadence && isCadenceSensor
+                    && (cadence_rpm != 0 || broadcasterCadence.timeout())) {
                 broadcasterCadence.broadcast();
 
             }
