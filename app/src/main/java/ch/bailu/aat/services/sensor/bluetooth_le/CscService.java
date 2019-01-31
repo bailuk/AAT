@@ -9,6 +9,7 @@ import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.sensor.Averager;
 import ch.bailu.aat.services.sensor.Connector;
+import ch.bailu.aat.services.sensor.attributes.CadenceSpeedAttributes;
 import ch.bailu.aat.services.sensor.attributes.IndexedAttributes;
 import ch.bailu.aat.services.sensor.list.SensorState;
 
@@ -23,7 +24,7 @@ public class CscService extends CscServiceID implements ServiceInterface {
      * https://developer.polar.com/wiki/Cycling_Speed_%26_Cadence
      */
 
-    private String location = SENSOR_LOCATION[0];
+    private String location = CadenceSpeedAttributes.SENSOR_LOCATION[0];
 
     private boolean isSpeedSensor = false;
     private boolean isCadenceSensor = false;
@@ -102,8 +103,8 @@ public class CscService extends CscServiceID implements ServiceInterface {
 
 
     private void readCscSensorLocation(byte[] v) {
-        if (v.length > 0 && v[0] < SENSOR_LOCATION.length) {
-            location = SENSOR_LOCATION[v[0]];
+        if (v.length > 0 && v[0] < CadenceSpeedAttributes.SENSOR_LOCATION.length) {
+            location = CadenceSpeedAttributes.SENSOR_LOCATION[v[0]];
         }
     }
 
@@ -164,18 +165,16 @@ public class CscService extends CscServiceID implements ServiceInterface {
     }
 
 
-    private class Attributes extends IndexedAttributes {
+    private class Attributes extends CadenceSpeedAttributes {
 
         boolean haveCadence, haveSpeed;
         private int speed_rpm = 0;
-        private int cadence_rpm = 0;
-        private int cadence_rpm_average = 0;
         private float speedSI = 0f;
-        private float circumferenceSI = 0f;
+
 
 
         public Attributes(BluetoothGattCharacteristic c, byte[] v) {
-            super(KEYS);
+            super(CscService.this.location, CscService.this.isCadenceSensor, CscService.this.isSpeedSensor);
             int offset = 0;
 
             byte data = v[offset];
@@ -234,39 +233,11 @@ public class CscService extends CscServiceID implements ServiceInterface {
                 broadcasterCadence.broadcast();
 
             }
-
-
         }
 
 
         public float getSpeedSI() {
             return speedSI;
-        }
-
-
-        @Override
-        public String getValue(int index) {
-            if (index == KEY_INDEX_SENSOR_LOCATION) {
-                return location;
-
-            } else if (index == KEY_INDEX_CADENCE_SENSOR) {
-                return String.valueOf(isCadenceSensor);
-
-            } else if (index == KEY_INDEX_SPEED_SENSOR) {
-                return String.valueOf(isSpeedSensor);
-
-            } else if (index == KEY_INDEX_CRANK_RPM) {
-                return String.valueOf(cadence_rpm);
-
-            } else if (index == KEY_INDEX_CRANK_RPM_AVERAGE) {
-                return String.valueOf(cadence_rpm_average);
-
-            } else if (index == KEY_INDEX_WHEEL_CIRCUMFERENCE) {
-                return String.valueOf(circumferenceSI);
-            }
-
-
-            return NULL_VALUE;
         }
     }
 

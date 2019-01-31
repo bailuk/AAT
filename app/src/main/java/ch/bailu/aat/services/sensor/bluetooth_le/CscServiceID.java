@@ -15,41 +15,4 @@ public class CscServiceID extends ID {
     public final static UUID CSC_CONTROL_POINT = toUUID(0x2A55);
 
 
-    public final static String[] SENSOR_LOCATION = {
-            "Other",
-            "Top of shoe",
-            "In shoe",
-            "Hip",
-            "Front Wheel",
-            "Left Crank",
-            "Right Crank",
-            "Left Pedal",
-            "Right Pedal",
-            "Front Hub",
-            "Rear Dropout",
-            "Chainstay",
-            "Rear Wheel",
-            "Rear Hub",
-            "Chest",
-            "Spider",
-            "Chain Ring",
-    };
-
-
-    public static final int KEY_INDEX_SENSOR_LOCATION = 0;
-    public static final int KEY_INDEX_SPEED_SENSOR = 1;
-    public static final int KEY_INDEX_CADENCE_SENSOR = 2;
-    public static final int KEY_INDEX_CRANK_RPM = 3;
-    public static final int KEY_INDEX_CRANK_RPM_AVERAGE = 4;
-    public static final int KEY_INDEX_WHEEL_CIRCUMFERENCE = 5;
-
-
-    public final static String[] KEYS = {
-            "SensorLocation",
-            "SpeedSensor",
-            "CadenceSensor",
-            "RevolutionsPerMinute",
-            "AbverageRevolutionsPerMinute",
-            "WheelCircumference"
-    };
 }

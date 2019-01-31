@@ -85,6 +85,11 @@ public class SensorList extends ArrayList<SensorListItem> implements Closeable {
     @Override
     public void close()  {
         save();
+        closeConnections();
+    }
+
+
+    public void closeConnections() {
         for (SensorListItem i: this) {
             i.close();
         }
@@ -99,6 +104,7 @@ public class SensorList extends ArrayList<SensorListItem> implements Closeable {
     private void restore() {
         SensorListDb.read(context, this);
     }
+
 
 
     public class Information extends GpxInformation {

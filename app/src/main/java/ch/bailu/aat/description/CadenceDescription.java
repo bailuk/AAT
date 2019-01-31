@@ -4,6 +4,7 @@ import android.content.Context;
 
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.InfoID;
+import ch.bailu.aat.services.sensor.attributes.CadenceSpeedAttributes;
 import ch.bailu.aat.services.sensor.bluetooth_le.CscServiceID;
 import ch.bailu.aat.services.sensor.list.SensorState;
 
@@ -42,11 +43,13 @@ public class CadenceDescription  extends ContentDescription {
         final boolean haveSensor = SensorState.isConnected(InfoID.CADENCE_SENSOR);
 
         if (iid == InfoID.CADENCE_SENSOR && haveSensor) {
-            value = info.getAttributes().getValue(CscServiceID.KEY_INDEX_CRANK_RPM_AVERAGE);
-            unit = info.getAttributes().getValue(CscServiceID.KEY_INDEX_CRANK_RPM) + " " + UNIT;
+            label = LABEL + " " + info.getAttributes().getValue(CadenceSpeedAttributes.KEY_INDEX_CONTACT);
+            value = info.getAttributes().getValue(CadenceSpeedAttributes.KEY_INDEX_CRANK_RPM);
+            //unit = info.getAttributes().getValue(CscServiceID.KEY_INDEX_CRANK_RPM) + " " + UNIT;
         } else {
+            label = LABEL;
             value = VALUE_DISABLED;
-            unit = UNIT;
+            //unit = UNIT;
         }
     }
 }
