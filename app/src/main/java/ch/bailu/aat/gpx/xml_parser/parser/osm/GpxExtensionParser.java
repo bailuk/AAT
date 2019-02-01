@@ -1,37 +1,45 @@
-package ch.bailu.aat.gpx.xml_parser.parser.gpx;
+package ch.bailu.aat.gpx.xml_parser.parser.osm;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 
 import java.io.IOException;
 
-import ch.bailu.aat.gpx.GpxConstants;
 import ch.bailu.aat.gpx.xml_parser.parser.TagParser;
-import ch.bailu.aat.gpx.xml_parser.parser.osm.GpxExtensionParser;
-import ch.bailu.aat.gpx.xml_parser.parser.osm.OsmTagParser;
 import ch.bailu.aat.gpx.xml_parser.scanner.Scanner;
+import ch.bailu.aat.util.ui.AppLog;
 
-public class ExtensionsParser extends TagParser {
-    private final TagParser tag = new OsmTagParser();
-    private final GpxExtensionParser gpxTag = new GpxExtensionParser();
+public class GpxExtensionParser extends TagParser {
 
-    public ExtensionsParser() {
-        super(GpxConstants.QNAME_EXTENSIONS);
+
+    private String key = null;
+
+
+    public GpxExtensionParser() {
+        super(null);
     }
+
 
     @Override
     protected void parseText(XmlPullParser parser, Scanner scanner) throws IOException, XmlPullParserException {
+        final String val = parser.getText();
+        AppLog.d(this, key + "=" + val);
+        if (val != null && key != null && key.length() > 0) {
+            scanner.tags.add(key, val);
 
+        }
     }
+
 
     @Override
     protected void parseAttributes(XmlPullParser parser, Scanner scanner) throws IOException, XmlPullParserException {
+        key = parser.getName();
 
     }
 
     @Override
     protected boolean parseTags(XmlPullParser parser, Scanner scanner) throws IOException, XmlPullParserException {
-        return tag.parse(parser, scanner) || gpxTag.parse(parser, scanner);
+        return false;
     }
 
     @Override

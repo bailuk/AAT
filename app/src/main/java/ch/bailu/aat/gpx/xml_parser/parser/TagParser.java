@@ -6,6 +6,8 @@ import org.xmlpull.v1.XmlPullParserException;
 import java.io.IOException;
 
 import ch.bailu.aat.gpx.xml_parser.scanner.Scanner;
+import ch.bailu.aat.util.ui.AppLog;
+import ch.bailu.util_java.util.Objects;
 
 public abstract class TagParser {
 
@@ -58,12 +60,12 @@ public abstract class TagParser {
 
     private boolean begins(XmlPullParser parser) throws XmlPullParserException {
         return parser.getEventType() == XmlPullParser.START_TAG
-                && parser.getName().equals(tag);
+                && (tag == null || Objects.equals(parser.getName(), tag));
     }
 
     private boolean ends(XmlPullParser parser) throws XmlPullParserException {
         return parser.getEventType() == XmlPullParser.END_TAG
-                && parser.getName().equals(tag);
+                && (tag == null || Objects.equals(parser.getName(), tag));
     }
 
 
