@@ -3,11 +3,20 @@ package ch.bailu.aat.services.tracker;
 import java.io.IOException;
 
 import ch.bailu.aat.R;
+import ch.bailu.aat.gpx.GpxAttributes;
+import ch.bailu.aat.gpx.GpxAttributesStatic;
+import ch.bailu.aat.gpx.GpxInformation;
+import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.gpx.StateID;
+import ch.bailu.aat.services.sensor.SensorService;
+import ch.bailu.aat.services.sensor.attributes.CadenceSpeedAttributes;
+import ch.bailu.aat.services.sensor.attributes.HeartRateAttributes;
 import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.services.location.LocationService;
 
 public class OnState extends State {
+
+    private final AttributesCollector attributes = new AttributesCollector();
 
 
     public OnState(TrackerInternals tracker) {
@@ -43,10 +52,11 @@ public class OnState extends State {
 
         } else  {
             final LocationService l = internal.scontext.getLocationService();
+            final GpxAttributes attr = attributes.collect(internal.scontext);
 
             if (l.hasLoggableLocation()) {
                 try {
-                    internal.logger.log(l.getCleanLocation());
+                    internal.logger.log(l.getCleanLocation(), attr);
                 } catch (IOException e) {
                     internal.emergencyOff(e);
                 }
@@ -55,7 +65,8 @@ public class OnState extends State {
         }
     }
 
-    
+
+
     @Override
     public void onStartPauseResume() {
         onPauseResume();

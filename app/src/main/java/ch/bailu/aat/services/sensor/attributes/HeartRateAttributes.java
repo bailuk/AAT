@@ -9,8 +9,8 @@ public class HeartRateAttributes extends IndexedAttributes {
 
 
     public static final String[] KEYS = {
-            "hr",
-            "rr",
+            "HR",
+            "RR",
             "Contact",
             "Location"
     };

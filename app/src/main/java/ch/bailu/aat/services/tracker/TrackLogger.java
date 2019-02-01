@@ -8,6 +8,7 @@ import java.io.IOException;
 
 import ch.bailu.aat.gpx.AltitudeDelta;
 import ch.bailu.aat.gpx.AutoPause;
+import ch.bailu.aat.gpx.GpxAttributes;
 import ch.bailu.aat.gpx.GpxAttributesStatic;
 import ch.bailu.aat.gpx.GpxList;
 import ch.bailu.aat.gpx.GpxPoint;
@@ -83,13 +84,14 @@ public class TrackLogger extends Logger {
     }
 
 
-    public void log(GpxPointInterface tp) throws IOException {
+    @Override
+    public void log(GpxPointInterface tp, GpxAttributes attr) throws IOException {
         if (requestSegment) {
             requestSegment=false;
-            track.appendToNewSegment(new GpxPoint(tp), GpxAttributesStatic.NULL);
+            track.appendToNewSegment(new GpxPoint(tp), attr);
 
         } else {
-            track.appendToCurrentSegment(new GpxPoint(tp), GpxAttributesStatic.NULL);
+            track.appendToCurrentSegment(new GpxPoint(tp), attr);
         }
 
         setVisibleTrackPoint((GpxPointNode)track.getPointList().getLast());
@@ -102,7 +104,7 @@ public class TrackLogger extends Logger {
         try {
             writer.close();
 
-            if (track.getPointList().size()>MIN_TRACKPOINTS) {
+            if (track.getPointList().size() > MIN_TRACKPOINTS) {
                 logFile.move(generateTargetFile(context, presetIndex));
 
             } else{

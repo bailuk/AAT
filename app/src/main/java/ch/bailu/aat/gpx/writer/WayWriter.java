@@ -37,7 +37,7 @@ public class WayWriter extends GpxWriter {
         writeBeginElementEnd();
 
         writeAltitude(tp);
-        writeAttributesTagStyle(tp);
+        writeAttributesGpxStyle(tp);
 
         writeEndElement(GpxConstants.QNAME_WAY_POINT);
         writeString("\n");

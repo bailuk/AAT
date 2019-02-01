@@ -36,7 +36,7 @@ public class CadenceSpeedAttributes   extends IndexedAttributes {
             "Location",
             "SpeedSensor",
             "CadenceSensor",
-            "cad",
+            "Cadence",
             "WheelCircumference",
             "Contact"
     };
