@@ -40,11 +40,6 @@ public class GpxInformationDbEntry extends GpxInformation {
         return getFloat(GpxDbConstants.KEY_DISTANCE);
     }
 
-    @Override
-    public float getMaximumSpeed() {
-        return getFloat(GpxDbConstants.KEY_MAX_SPEED);
-    }
-
 
     @Override
     public long getPause() {

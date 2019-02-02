@@ -48,11 +48,6 @@ public class GpxDataWrapper implements GpxDeltaPointInterface, GpxBigDeltaInterf
     }
 
     @Override
-    public float getMaximumSpeed() {
-        return summary.getMaximumSpeed();
-    }
-
-    @Override
     public long getStartTime() {
         return summary.getStartTime();
     }
@@ -66,26 +61,6 @@ public class GpxDataWrapper implements GpxDeltaPointInterface, GpxBigDeltaInterf
     @Override
     public long getPause()  {
         return summary.getPause();
-    }
-
-    @Override
-    public long getAutoPause() {
-        return summary.getAutoPause();
-    }
-
-    @Override
-    public short getAscend() {
-        return summary.getAscend();
-    }
-
-    @Override
-    public short getDescend() {
-        return summary.getDescend();
-    }
-
-    @Override
-    public short getSlope() {
-        return summary.getSlope();
     }
 
     @Override

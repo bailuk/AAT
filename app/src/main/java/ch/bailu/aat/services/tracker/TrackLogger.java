@@ -6,14 +6,11 @@ import org.xmlpull.v1.XmlPullParserException;
 
 import java.io.IOException;
 
-import ch.bailu.aat.gpx.AltitudeDelta;
-import ch.bailu.aat.gpx.AutoPause;
+import ch.bailu.aat.gpx.GpxTrackAttributes;
 import ch.bailu.aat.gpx.GpxAttributes;
-import ch.bailu.aat.gpx.GpxAttributesStatic;
 import ch.bailu.aat.gpx.GpxList;
 import ch.bailu.aat.gpx.GpxPoint;
 import ch.bailu.aat.gpx.GpxPointNode;
-import ch.bailu.aat.gpx.MaxSpeed;
 import ch.bailu.aat.gpx.interfaces.GpxPointInterface;
 import ch.bailu.aat.gpx.interfaces.GpxType;
 import ch.bailu.aat.gpx.writer.GpxListWriter;
@@ -52,12 +49,7 @@ public class TrackLogger extends Logger {
     private static GpxList createTrack(Context c) {
         SolidAutopause spause = new SolidPostprocessedAutopause(c);
 
-        return new GpxList(GpxType.TRACK,
-                new MaxSpeed.Samples(),
-                new AutoPause.Time(
-                        spause.getTriggerSpeed(),
-                        spause.getTriggerLevelMillis()),
-                new AltitudeDelta.LastAverage());
+        return new GpxList(GpxType.TRACK, GpxTrackAttributes.factoryTrackLogger(spause));
     }
 
     @Override

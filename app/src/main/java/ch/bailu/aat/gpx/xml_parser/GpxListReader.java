@@ -6,6 +6,7 @@ import java.io.IOException;
 
 import ch.bailu.aat.gpx.AltitudeDelta;
 import ch.bailu.aat.gpx.AutoPause;
+import ch.bailu.aat.gpx.GpxTrackAttributes;
 import ch.bailu.aat.gpx.GpxList;
 import ch.bailu.aat.gpx.GpxPoint;
 import ch.bailu.aat.gpx.MaxSpeed;
@@ -35,22 +36,22 @@ public class GpxListReader {
 
         track = new OnParsed(
                 GpxType.TRACK,
+                new GpxTrackAttributes(
                 new MaxSpeed.Samples(),
                 pause,
-                new AltitudeDelta.LastAverage());
+                new AltitudeDelta.LastAverage()));
 
         way = new OnParsed(
                 GpxType.WAY,
-                MaxSpeed.NULL,
-                AutoPause.NULL,
-                AltitudeDelta.NULL);
+                GpxTrackAttributes.NULL);
 
 
         route = new OnParsed(
                 GpxType.ROUTE,
+                new GpxTrackAttributes(
                 MaxSpeed.NULL,
                 AutoPause.NULL,
-                new AltitudeDelta.LastAverage());
+                new AltitudeDelta.LastAverage()));
 
         threadControl=c;
 
@@ -75,8 +76,8 @@ public class GpxListReader {
         private final GpxList gpxList;
         private boolean  haveNewSegment=true;
 
-        public OnParsed(GpxType type, MaxSpeed speed, AutoPause pause, AltitudeDelta altitude) {
-            gpxList = new GpxList(type, speed, pause, altitude);
+        public OnParsed(GpxType type, GpxTrackAttributes attr) {
+            gpxList = new GpxList(type, attr);
         }
 
 

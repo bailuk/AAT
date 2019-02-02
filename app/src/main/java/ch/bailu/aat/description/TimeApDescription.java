@@ -3,6 +3,7 @@ package ch.bailu.aat.description;
 import android.content.Context;
 
 import ch.bailu.aat.R;
+import ch.bailu.aat.gpx.GpxTrackAttributes;
 import ch.bailu.aat.gpx.GpxInformation;
 
 public class TimeApDescription extends TimeDescription {
@@ -13,7 +14,8 @@ public class TimeApDescription extends TimeDescription {
 
     @Override
     public void onContentUpdated(int iid, GpxInformation info) {
-        setCache(info.getTimeDelta() - info.getAutoPause());
+        final long autoPause = info.getAttributes().getLongValue(GpxTrackAttributes.INDEX_AUTO_PAUSE);
+        setCache(info.getTimeDelta() - autoPause);
     }
 
 

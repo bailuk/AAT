@@ -2,15 +2,13 @@ package ch.bailu.aat.services.directory;
 
 import android.database.Cursor;
 
-import ch.bailu.aat.gpx.AltitudeDelta;
-import ch.bailu.aat.gpx.AutoPause;
+import ch.bailu.aat.gpx.GpxTrackAttributes;
 import ch.bailu.aat.gpx.GpxAttributes;
 import ch.bailu.aat.gpx.GpxBigDelta;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.GpxList;
 import ch.bailu.aat.gpx.GpxPoint;
 import ch.bailu.aat.gpx.InfoID;
-import ch.bailu.aat.gpx.MaxSpeed;
 import ch.bailu.aat.gpx.interfaces.GpxType;
 import ch.bailu.util_java.foc.Foc;
 
@@ -20,9 +18,9 @@ public class GpxInformationDbSummary extends GpxInformation {
     
     public GpxInformationDbSummary(Foc dir, Cursor cursor) {
         directory = dir;
-        list = new GpxList(GpxType.WAY, new MaxSpeed.Raw2(), AutoPause.NULL, AltitudeDelta.NULL);
+        list = new GpxList(GpxType.WAY, GpxTrackAttributes.factorySummary());
         
-        GpxBigDelta summary=new GpxBigDelta(new MaxSpeed.Raw2(), AutoPause.NULL, AltitudeDelta.NULL);
+        GpxBigDelta summary=new GpxBigDelta(GpxTrackAttributes.factorySummary());
         GpxInformation entry = new GpxInformationDbEntry(cursor, dir);
         
         cursor.moveToPosition(-1);

@@ -6,12 +6,7 @@ import ch.bailu.aat.gpx.interfaces.GpxType;
 
 
 public class GpxBigDelta implements GpxBigDeltaInterface {
-    public final static GpxBigDelta NULL= new GpxBigDelta(
-            MaxSpeed.NULL, AutoPause.NULL, AltitudeDelta.NULL);
-
-    private final MaxSpeed maximumSpeed;
-    private final AutoPause autoPause;
-    private final AltitudeDelta altitudeDelta;
+    public final static GpxBigDelta NULL= new GpxBigDelta(GpxTrackAttributes.factoryNull());
 
     private float distance=0;
 
@@ -23,11 +18,10 @@ public class GpxBigDelta implements GpxBigDeltaInterface {
 
     private BoundingBoxE6 boundingBox = null;
 
+    private final GpxTrackAttributes attributes;
 
-    public GpxBigDelta(MaxSpeed max, AutoPause pause, AltitudeDelta altitude) {
-        maximumSpeed = max;
-        autoPause = pause;
-        altitudeDelta = altitude;
+    public GpxBigDelta(GpxTrackAttributes attr) {
+        attributes = attr;
     }
 
 
@@ -35,9 +29,7 @@ public class GpxBigDelta implements GpxBigDeltaInterface {
     public void update(GpxPointNode p) {
         _update(p);
 
-        if (autoPause.update(p)) {
-            altitudeDelta.add(p.getAltitude(), p.getDistance());
-        }
+        attributes.update(p);
     }
 
 
@@ -56,7 +48,6 @@ public class GpxBigDelta implements GpxBigDeltaInterface {
         incDistance(p.getDistance());
 
         addBounding(p.getLatitudeE6(), p.getLongitudeE6());
-        setMaximumSpeed(p.getSpeed());
     }
 
     public void updateWithPause(GpxBigDeltaInterface delta) {
@@ -67,7 +58,6 @@ public class GpxBigDelta implements GpxBigDeltaInterface {
         incDistance(delta.getDistance());
 
         addBounding(delta.getBoundingBox());
-        setMaximumSpeed(delta.getSpeed());
     }
 
 
@@ -86,9 +76,6 @@ public class GpxBigDelta implements GpxBigDeltaInterface {
         endTime = timestamp;
     }
 
-    private void setMaximumSpeed(float speed) {
-        maximumSpeed.add(speed);
-    }
 
     private void incPause(long p) {
         pause += p;
@@ -132,9 +119,6 @@ public class GpxBigDelta implements GpxBigDeltaInterface {
     }
 
 
-    public float getMaximumSpeed() { 
-        return maximumSpeed.get();
-    }
 
     public float getDistance() { 
         return distance; 
@@ -149,25 +133,6 @@ public class GpxBigDelta implements GpxBigDeltaInterface {
         return pause;
     }
 
-    @Override
-    public long getAutoPause() {
-        return autoPause.get();
-    }
-
-    @Override
-    public short getAscend() {
-        return altitudeDelta.getAscend();
-    }
-
-    @Override
-    public short getDescend() {
-        return altitudeDelta.getDescend();
-    }
-
-    @Override
-    public short getSlope() {
-        return altitudeDelta.getSlope();
-    }
 
 
     public long getStartTime() { 
@@ -193,5 +158,11 @@ public class GpxBigDelta implements GpxBigDeltaInterface {
     @Override
     public GpxType getType() {
         return type;
+    }
+
+
+    @Override
+    public GpxAttributes getAttributes() {
+        return attributes;
     }
 }

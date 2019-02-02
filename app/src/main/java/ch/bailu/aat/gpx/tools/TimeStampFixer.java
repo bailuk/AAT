@@ -1,14 +1,12 @@
 package ch.bailu.aat.gpx.tools;
 
-import ch.bailu.aat.gpx.AltitudeDelta;
-import ch.bailu.aat.gpx.AutoPause;
+import ch.bailu.aat.gpx.GpxTrackAttributes;
 import ch.bailu.aat.gpx.GpxList;
 import ch.bailu.aat.gpx.GpxListWalker;
 import ch.bailu.aat.gpx.GpxPoint;
 import ch.bailu.aat.gpx.GpxPointFirstNode;
 import ch.bailu.aat.gpx.GpxPointNode;
 import ch.bailu.aat.gpx.GpxSegmentNode;
-import ch.bailu.aat.gpx.MaxSpeed;
 
 public class TimeStampFixer extends GpxListWalker {
 
@@ -22,8 +20,7 @@ public class TimeStampFixer extends GpxListWalker {
 
     @Override
     public boolean doList(GpxList track) {
-        newList = new GpxList(track.getDelta().getType(),
-                MaxSpeed.NULL,  AutoPause.NULL, AltitudeDelta.NULL);
+        newList = new GpxList(track.getDelta().getType(), GpxTrackAttributes.factoryNull());
         return true;
     }
 

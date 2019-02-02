@@ -7,6 +7,7 @@ import android.graphics.Canvas;
 import ch.bailu.aat.R;
 import ch.bailu.aat.dispatcher.DispatcherInterface;
 import ch.bailu.aat.gpx.AutoPause;
+import ch.bailu.aat.gpx.GpxTrackAttributes;
 import ch.bailu.aat.gpx.GpxList;
 import ch.bailu.aat.gpx.GpxListWalker;
 import ch.bailu.aat.gpx.GpxPointNode;
@@ -56,7 +57,7 @@ public class DistanceSpeedGraphView extends AbsGraphView implements SharedPrefer
 
 
         for(GraphPlotter p: plotter) {
-            p.inlcudeInYScale(list.getDelta().getMaximumSpeed());
+            p.inlcudeInYScale(list.getDelta().getAttributes().getFloatValue((GpxTrackAttributes.INDEX_MAX_SPEED)));
             p.inlcudeInYScale(0f);
         }
 

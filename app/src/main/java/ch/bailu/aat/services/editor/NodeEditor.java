@@ -1,7 +1,6 @@
 package ch.bailu.aat.services.editor;
 
-import ch.bailu.aat.gpx.AltitudeDelta;
-import ch.bailu.aat.gpx.AutoPause;
+import ch.bailu.aat.gpx.GpxTrackAttributes;
 import ch.bailu.aat.gpx.GpxAttributes;
 import ch.bailu.aat.gpx.GpxAttributesStatic;
 import ch.bailu.aat.gpx.GpxList;
@@ -10,7 +9,6 @@ import ch.bailu.aat.gpx.GpxPoint;
 import ch.bailu.aat.gpx.GpxPointFirstNode;
 import ch.bailu.aat.gpx.GpxPointNode;
 import ch.bailu.aat.gpx.GpxSegmentNode;
-import ch.bailu.aat.gpx.MaxSpeed;
 import ch.bailu.aat.gpx.interfaces.GpxPointInterface;
 import ch.bailu.aat.gpx.interfaces.GpxType;
 import ch.bailu.aat.gpx.tools.Attacher;
@@ -30,7 +28,7 @@ public class NodeEditor {
     }
 
     public NodeEditor(GpxType t) {
-        gpxList = new GpxList(t, MaxSpeed.NULL, AutoPause.NULL, AltitudeDelta.NULL);
+        gpxList = new GpxList(t, GpxTrackAttributes.NULL);
         node = new GpxPointFirstNode(GpxPoint.NULL, GpxAttributes.NULL);
     }
 
@@ -129,10 +127,7 @@ public class NodeEditor {
 
 
     private class Unlinker extends GpxListWalker {
-        private final GpxList newList = new GpxList(gpxList.getDelta().getType(),
-                MaxSpeed.NULL,
-                AutoPause.NULL,
-                AltitudeDelta.NULL);
+        private final GpxList newList = new GpxList(gpxList.getDelta().getType(), GpxTrackAttributes.NULL);
 
         private boolean startSegment=false;
         private NodeEditor newNode = null;
@@ -186,7 +181,7 @@ public class NodeEditor {
 
     private class Inserter extends GpxListWalker {
         private final GpxList newList = new GpxList(gpxList.getDelta().getType(),
-                MaxSpeed.NULL, AutoPause.NULL, AltitudeDelta.NULL);
+                GpxTrackAttributes.NULL);
 
         private NodeEditor newNode = new NodeEditor(gpxList.getDelta().getType());
         private boolean startSegment=false;

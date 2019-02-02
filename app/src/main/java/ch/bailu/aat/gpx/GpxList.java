@@ -10,9 +10,9 @@ import ch.bailu.aat.gpx.segmented_list.SegmentedList;
 
 public class GpxList {
     public static final GpxList NULL_TRACK = new GpxList(
-            GpxType.TRACK, MaxSpeed.NULL, AutoPause.NULL, AltitudeDelta.NULL);
+            GpxType.TRACK, GpxTrackAttributes.NULL);
     public static final GpxList NULL_ROUTE = new GpxList(
-            GpxType.ROUTE, MaxSpeed.NULL, AutoPause.NULL, AltitudeDelta.NULL);
+            GpxType.ROUTE, GpxTrackAttributes.NULL);
 
     
 
@@ -36,8 +36,8 @@ public class GpxList {
     private final GpxBigDelta delta;
 
 
-    public GpxList(GpxType type, MaxSpeed max, AutoPause pause, AltitudeDelta altitude) {
-        delta = new GpxBigDelta(max, pause, altitude);
+    public GpxList(GpxType type, GpxTrackAttributes attr) {
+        delta = new GpxBigDelta(attr);
         delta.setType(type);
     }
 

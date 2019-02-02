@@ -8,7 +8,7 @@ import ch.bailu.aat.gpx.segmented_list.SegmentNode;
 
 public class GpxSegmentNode extends SegmentNode implements GpxBigDeltaInterface {
 
-    private final GpxBigDelta delta=new GpxBigDelta(MaxSpeed.NULL, AutoPause.NULL, AltitudeDelta.NULL);
+    private final GpxBigDelta delta=new GpxBigDelta(GpxTrackAttributes.factoryNull());
 
     
     public GpxSegmentNode(GpxPointNode n) {
@@ -47,35 +47,10 @@ public class GpxSegmentNode extends SegmentNode implements GpxBigDeltaInterface 
     }
 
 
-    public float getMaximumSpeed() {
-        return delta.getMaximumSpeed();
-    }
-
 
     public long getPause() {
         return delta.getPause();
     }
-
-    @Override
-    public long getAutoPause() {
-        return delta.getAutoPause();
-    }
-
-    @Override
-    public short getAscend() {
-        return delta.getAscend();
-    }
-
-    @Override
-    public short getDescend() {
-        return delta.getDescend();
-    }
-
-    @Override
-    public short getSlope() {
-        return delta.getSlope();
-    }
-
 
     public long getStartTime() {
         return delta.getStartTime();
@@ -103,5 +78,10 @@ public class GpxSegmentNode extends SegmentNode implements GpxBigDeltaInterface 
 	public GpxType getType() {
 		return delta.getType();
 	}
+
+    @Override
+    public GpxAttributes getAttributes() {
+        return delta.getAttributes();
+    }
 
 }

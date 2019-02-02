@@ -19,7 +19,7 @@ public class App extends Application {
     @Override
     public void onCreate() {
         initMapsForge();
-        initAcra();
+        //initAcra();
         super.onCreate();
     }
 

@@ -2,11 +2,10 @@ package ch.bailu.aat.services.location;
 
 import android.content.Context;
 
-import ch.bailu.aat.gpx.AltitudeDelta;
 import ch.bailu.aat.gpx.AutoPause;
+import ch.bailu.aat.gpx.GpxTrackAttributes;
 import ch.bailu.aat.gpx.GpxList;
 import ch.bailu.aat.gpx.GpxPointNode;
-import ch.bailu.aat.gpx.MaxSpeed;
 import ch.bailu.aat.gpx.StateID;
 import ch.bailu.aat.gpx.interfaces.GpxType;
 import ch.bailu.aat.gpx.xml_parser.GpxListReader;
@@ -34,7 +33,7 @@ public class MockLocation extends LocationStackChainedItem implements Runnable{
     public MockLocation(Context c, LocationStackItem i) {
         super(i);
 
-        list = new GpxList(GpxType.TRACK, MaxSpeed.NULL, AutoPause.NULL, AltitudeDelta.NULL);
+        list = new GpxList(GpxType.TRACK, GpxTrackAttributes.NULL);
         timer = new Timer(this, INTERVAL);
 
         try {

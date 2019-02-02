@@ -13,4 +13,22 @@ public abstract class GpxAttributes {
     public abstract void put(String key, String value);
     public abstract int size();
     public abstract void remove(String key);
+
+
+    public float getFloatValue(int index) {
+        try {
+            return Float.valueOf(getValue(index));
+        } catch (NumberFormatException e) {
+            return 0f;
+        }
+    }
+
+
+    public long getLongValue(int index) {
+        try {
+            return Long.valueOf(getValue(index));
+        } catch (NumberFormatException e) {
+            return 0L;
+        }
+    }
 }

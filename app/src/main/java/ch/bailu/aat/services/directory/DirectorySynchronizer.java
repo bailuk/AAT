@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import ch.bailu.aat.coordinates.BoundingBoxE6;
+import ch.bailu.aat.gpx.GpxTrackAttributes;
 import ch.bailu.aat.gpx.GpxFileWrapper;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.GpxList;
@@ -298,7 +299,10 @@ public class DirectorySynchronizer  implements Closeable {
             ContentValues content = new ContentValues();
             content.put(GpxDbConstants.KEY_FILENAME,   filename);
             content.put(GpxDbConstants.KEY_AVG_SPEED,  summary.getSpeed());
-            content.put(GpxDbConstants.KEY_MAX_SPEED,  summary.getMaximumSpeed());
+
+            content.put(GpxDbConstants.KEY_MAX_SPEED,  summary.getAttributes().getValue(
+                    GpxTrackAttributes.INDEX_MAX_SPEED));
+
             content.put(GpxDbConstants.KEY_DISTANCE,   summary.getDistance());
             content.put(GpxDbConstants.KEY_START_TIME, summary.getStartTime());
             content.put(GpxDbConstants.KEY_TOTAL_TIME, summary.getTimeDelta());
