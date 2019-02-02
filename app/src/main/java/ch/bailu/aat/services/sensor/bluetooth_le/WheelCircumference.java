@@ -116,4 +116,8 @@ public class WheelCircumference implements Closeable {
             onLocationChanged = null;
         }
     }
+
+    public String getDebugString() {
+        return "S: " + samples + " D: " + distance + " C: " + circumference + " D: " + revolutionsDelta;
+    }
 }

@@ -31,6 +31,8 @@ public class CadenceSpeedAttributes   extends IndexedAttributes {
     public static final int KEY_INDEX_WHEEL_CIRCUMFERENCE = 4;
     public static final int KEY_INDEX_CONTACT = 5;
 
+    public static final int KEY_INDEX_CIRCUMFERENCE_DEBUG = 6;
+
 
     public final static String[] KEYS = {
             "Location",
@@ -45,6 +47,8 @@ public class CadenceSpeedAttributes   extends IndexedAttributes {
     public int cadence_rpm = 0;
     public int cadence_rpm_average = 0;
     public float circumferenceSI = 0f;
+
+    public String circumferenceDebugString = "--";
 
     public final String location;
     public final boolean isCadenceSensor, isSpeedSensor;
@@ -79,6 +83,9 @@ public class CadenceSpeedAttributes   extends IndexedAttributes {
         } else if (index == KEY_INDEX_CONTACT) {
             if (cadence_rpm == 0) return "...";
             return "";
+
+        } else if (index == KEY_INDEX_CIRCUMFERENCE_DEBUG) {
+            return circumferenceDebugString;
         }
 
 

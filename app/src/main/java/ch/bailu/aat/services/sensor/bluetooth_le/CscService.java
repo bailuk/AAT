@@ -217,6 +217,8 @@ public class CscService extends CscServiceID implements ServiceInterface {
             }
             cadence_rpm_average = averageCadence.get();
 
+
+            circumferenceDebugString = wheelCircumference.getDebugString();
             broadcast();
         }
 

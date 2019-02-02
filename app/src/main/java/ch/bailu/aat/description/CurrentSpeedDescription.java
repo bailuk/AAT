@@ -7,6 +7,7 @@ import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.GpxList;
 import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.gpx.interfaces.GpxDeltaInterface;
+import ch.bailu.aat.services.sensor.attributes.CadenceSpeedAttributes;
 import ch.bailu.aat.services.sensor.list.SensorState;
 
 public class CurrentSpeedDescription extends SpeedDescription {
@@ -23,6 +24,7 @@ public class CurrentSpeedDescription extends SpeedDescription {
     private void setLabel() {
         if (currentIID == InfoID.SPEED_SENSOR) {
             label = getContext().getString(R.string.speed) + " S";
+
         } else if (currentIID == InfoID.LOCATION) {
             label = getContext().getString(R.string.speed) + " GPS";
         } else {
@@ -42,6 +44,8 @@ public class CurrentSpeedDescription extends SpeedDescription {
             if (setSpeedFromLastPoint(info) == false) {
                 setCache(info.getSpeed());
             }
+
+            label = info.getAttributes().getValue(CadenceSpeedAttributes.KEY_INDEX_CIRCUMFERENCE_DEBUG);
         }
 
 

@@ -45,11 +45,11 @@ public class CadenceDescription  extends ContentDescription {
         if (iid == InfoID.CADENCE_SENSOR && haveSensor) {
             label = LABEL + " " + info.getAttributes().getValue(CadenceSpeedAttributes.KEY_INDEX_CONTACT);
             value = info.getAttributes().getValue(CadenceSpeedAttributes.KEY_INDEX_CRANK_RPM);
-            //unit = info.getAttributes().getValue(CscServiceID.KEY_INDEX_CRANK_RPM) + " " + UNIT;
+
         } else {
             label = LABEL;
             value = VALUE_DISABLED;
-            //unit = UNIT;
+
         }
     }
 }
