@@ -6,7 +6,7 @@ import org.xmlpull.v1.XmlPullParserException;
 
 import java.io.IOException;
 
-import ch.bailu.aat.gpx.GpxTrackAttributes;
+import ch.bailu.aat.gpx.GpxListAttributes;
 import ch.bailu.aat.gpx.GpxAttributes;
 import ch.bailu.aat.gpx.GpxList;
 import ch.bailu.aat.gpx.GpxPoint;
@@ -49,7 +49,7 @@ public class TrackLogger extends Logger {
     private static GpxList createTrack(Context c) {
         SolidAutopause spause = new SolidPostprocessedAutopause(c);
 
-        return new GpxList(GpxType.TRACK, GpxTrackAttributes.factoryTrackLogger(spause));
+        return new GpxList(GpxType.TRACK, GpxListAttributes.factoryTrack(spause));
     }
 
     @Override

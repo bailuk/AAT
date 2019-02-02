@@ -1,5 +1,7 @@
 package ch.bailu.aat.gpx;
 
+import ch.bailu.util_java.util.Objects;
+
 public abstract class GpxAttributes {
 
     public final static GpxAttributes NULL = new GpxAttributesNull();
@@ -16,19 +18,11 @@ public abstract class GpxAttributes {
 
 
     public float getFloatValue(int index) {
-        try {
-            return Float.valueOf(getValue(index));
-        } catch (NumberFormatException e) {
-            return 0f;
-        }
+        return Objects.toFloat(getValue(index));
     }
 
 
     public long getLongValue(int index) {
-        try {
-            return Long.valueOf(getValue(index));
-        } catch (NumberFormatException e) {
-            return 0L;
-        }
+        return Objects.toLong(getValue(index));
     }
 }

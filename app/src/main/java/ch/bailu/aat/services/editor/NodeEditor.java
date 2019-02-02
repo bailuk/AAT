@@ -1,6 +1,6 @@
 package ch.bailu.aat.services.editor;
 
-import ch.bailu.aat.gpx.GpxTrackAttributes;
+import ch.bailu.aat.gpx.GpxListAttributes;
 import ch.bailu.aat.gpx.GpxAttributes;
 import ch.bailu.aat.gpx.GpxAttributesStatic;
 import ch.bailu.aat.gpx.GpxList;
@@ -28,7 +28,7 @@ public class NodeEditor {
     }
 
     public NodeEditor(GpxType t) {
-        gpxList = new GpxList(t, GpxTrackAttributes.NULL);
+        gpxList = new GpxList(t, GpxListAttributes.NULL);
         node = new GpxPointFirstNode(GpxPoint.NULL, GpxAttributes.NULL);
     }
 
@@ -127,7 +127,7 @@ public class NodeEditor {
 
 
     private class Unlinker extends GpxListWalker {
-        private final GpxList newList = new GpxList(gpxList.getDelta().getType(), GpxTrackAttributes.NULL);
+        private final GpxList newList = new GpxList(gpxList.getDelta().getType(), GpxListAttributes.NULL);
 
         private boolean startSegment=false;
         private NodeEditor newNode = null;
@@ -181,7 +181,7 @@ public class NodeEditor {
 
     private class Inserter extends GpxListWalker {
         private final GpxList newList = new GpxList(gpxList.getDelta().getType(),
-                GpxTrackAttributes.NULL);
+                GpxListAttributes.NULL);
 
         private NodeEditor newNode = new NodeEditor(gpxList.getDelta().getType());
         private boolean startSegment=false;

@@ -1,6 +1,6 @@
 package ch.bailu.aat.gpx.tools;
 
-import ch.bailu.aat.gpx.GpxTrackAttributes;
+import ch.bailu.aat.gpx.GpxListAttributes;
 import ch.bailu.aat.gpx.GpxList;
 import ch.bailu.aat.gpx.GpxListArray;
 import ch.bailu.aat.gpx.GpxPoint;
@@ -16,7 +16,7 @@ public class Inverser {
 
     public Inverser(GpxList track) {
         newList = new GpxList(track.getDelta().getType(),
-                GpxTrackAttributes.NULL);
+                GpxListAttributes.NULL);
 
 
         GpxListArray list = new GpxListArray(track);

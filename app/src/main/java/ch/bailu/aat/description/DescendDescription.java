@@ -3,7 +3,7 @@ package ch.bailu.aat.description;
 import android.content.Context;
 
 import ch.bailu.aat.R;
-import ch.bailu.aat.gpx.GpxTrackAttributes;
+import ch.bailu.aat.gpx.GpxListAttributes;
 import ch.bailu.aat.gpx.GpxInformation;
 
 public class DescendDescription extends AltitudeDescription {
@@ -20,6 +20,6 @@ public class DescendDescription extends AltitudeDescription {
 
     @Override
     public void onContentUpdated(int iid, GpxInformation info) {
-        setCache(info.getAttributes().getFloatValue(GpxTrackAttributes.INDEX_DESCEND));
+        setCache(info.getAttributes().getFloatValue(GpxListAttributes.INDEX_DESCEND));
     }
 }

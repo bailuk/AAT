@@ -7,4 +7,51 @@ public class Objects {
         }
         return a == b;
     }
+
+
+    public static String toString(Object o) {
+        if (o != null) {
+            final String r = o.toString();
+
+            if (r != null) return r;
+        }
+        return "";
+    }
+
+
+    public static long toLong(Object o) {
+        try {
+            return Long.valueOf(toString(o));
+        } catch (NumberFormatException e) {
+            return 0L;
+        }
+    }
+
+
+    public static int toInt(Object o) {
+        try {
+            return Integer.valueOf(toString(o));
+        } catch (NumberFormatException e) {
+            return 0;
+        }
+
+    }
+
+    public static float toFloat(Object o) {
+        try {
+            return Float.valueOf(toString(o));
+        } catch (NumberFormatException e) {
+            return 0f;
+        }
+
+    }
+
+    public static boolean toBoolean(Object o) {
+        String s = toString(o);
+        char c = 'f';
+        if (s.length() > 0)
+            c = s.charAt(0);
+
+        return c == 't' || c == 'T';
+    }
 }

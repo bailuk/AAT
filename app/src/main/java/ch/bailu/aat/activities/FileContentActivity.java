@@ -19,6 +19,7 @@ import ch.bailu.aat.description.NameDescription;
 import ch.bailu.aat.description.PathDescription;
 import ch.bailu.aat.description.PauseApDescription;
 import ch.bailu.aat.description.PauseDescription;
+import ch.bailu.aat.description.SpmDescription;
 import ch.bailu.aat.description.TimeApDescription;
 import ch.bailu.aat.description.TimeDescription;
 import ch.bailu.aat.description.TrackSizeDescription;
@@ -80,6 +81,10 @@ public class FileContentActivity extends AbsFileContentActivity{
                 new CaloriesDescription(c),
                 new AscendDescription(c),
                 new DescendDescription(c),
+                new SpmDescription.HR(c),
+                new SpmDescription.HeartBeats(c),
+                new SpmDescription.Cadence(c),
+                new SpmDescription.TotalCadence(c),
                 new TrackSizeDescription(c),
         };
     }

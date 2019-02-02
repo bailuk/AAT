@@ -6,7 +6,7 @@ import ch.bailu.aat.gpx.interfaces.GpxType;
 
 
 public class GpxBigDelta implements GpxBigDeltaInterface {
-    public final static GpxBigDelta NULL= new GpxBigDelta(GpxTrackAttributes.factoryNull());
+    public final static GpxBigDelta NULL= new GpxBigDelta(GpxListAttributes.factoryNull());
 
     private float distance=0;
 
@@ -18,9 +18,9 @@ public class GpxBigDelta implements GpxBigDeltaInterface {
 
     private BoundingBoxE6 boundingBox = null;
 
-    private final GpxTrackAttributes attributes;
+    private final GpxListAttributes attributes;
 
-    public GpxBigDelta(GpxTrackAttributes attr) {
+    public GpxBigDelta(GpxListAttributes attr) {
         attributes = attr;
     }
 

@@ -1,6 +1,6 @@
 package ch.bailu.aat.gpx.tools;
 
-import ch.bailu.aat.gpx.GpxTrackAttributes;
+import ch.bailu.aat.gpx.GpxListAttributes;
 import ch.bailu.aat.gpx.GpxDeltaHelper;
 import ch.bailu.aat.gpx.GpxList;
 import ch.bailu.aat.gpx.GpxListWalker;
@@ -21,7 +21,7 @@ public class SimplifierDistance extends GpxListWalker {
 
     @Override
     public boolean doList(GpxList track) {
-        newList = new GpxList(track.getDelta().getType(), GpxTrackAttributes.NULL);
+        newList = new GpxList(track.getDelta().getType(), GpxListAttributes.NULL);
 
         return true;
     }

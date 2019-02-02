@@ -4,14 +4,13 @@ import org.xmlpull.v1.XmlPullParserException;
 
 import java.io.IOException;
 
-import ch.bailu.aat.gpx.AltitudeDelta;
 import ch.bailu.aat.gpx.AutoPause;
-import ch.bailu.aat.gpx.GpxTrackAttributes;
 import ch.bailu.aat.gpx.GpxList;
+import ch.bailu.aat.gpx.GpxListAttributes;
 import ch.bailu.aat.gpx.GpxPoint;
-import ch.bailu.aat.gpx.MaxSpeed;
 import ch.bailu.aat.gpx.interfaces.GpxType;
 import ch.bailu.aat.gpx.xml_parser.parser.AbsXmlParser;
+import ch.bailu.aat.preferences.SolidAutopause;
 import ch.bailu.aat.services.background.ThreadControl;
 import ch.bailu.util_java.foc.Foc;
 import ch.bailu.util_java.parser.OnParsedInterface;
@@ -26,32 +25,30 @@ public class GpxListReader {
     private final AbsXmlParser parser;
 
 
-    public GpxListReader(Foc in, AutoPause pause) throws IOException, SecurityException, XmlPullParserException {
-        this(ThreadControl.KEEP_ON, in, pause);
+    public GpxListReader(Foc in, AutoPause apause) throws IOException, SecurityException, XmlPullParserException {
+        this(ThreadControl.KEEP_ON, in, apause);
+    }
+
+/*
+    public GpxListReader (ThreadControl c, Foc in, SolidAutopause spause)
+            throws IOException, SecurityException, XmlPullParserException {
+
+        this(c, in, GpxListAttributes.factoryTrack(spause));
+    }
+*/
+
+    public GpxListReader (ThreadControl c, Foc in, AutoPause apause)
+            throws IOException, SecurityException, XmlPullParserException {
+        this(c, in, GpxListAttributes.factoryTrack(apause));
     }
 
 
-    public GpxListReader (ThreadControl c, Foc in, AutoPause pause)
+    private GpxListReader (ThreadControl c, Foc in, GpxListAttributes trackAttributes)
             throws IOException, SecurityException, XmlPullParserException {
 
-        track = new OnParsed(
-                GpxType.TRACK,
-                new GpxTrackAttributes(
-                new MaxSpeed.Samples(),
-                pause,
-                new AltitudeDelta.LastAverage()));
-
-        way = new OnParsed(
-                GpxType.WAY,
-                GpxTrackAttributes.NULL);
-
-
-        route = new OnParsed(
-                GpxType.ROUTE,
-                new GpxTrackAttributes(
-                MaxSpeed.NULL,
-                AutoPause.NULL,
-                new AltitudeDelta.LastAverage()));
+        track = new OnParsed(GpxType.TRACK, trackAttributes);
+        way   = new OnParsed(GpxType.WAY,   GpxListAttributes.factoryNull());
+        route = new OnParsed(GpxType.ROUTE, GpxListAttributes.factoryRoute());
 
         threadControl=c;
 
@@ -76,7 +73,7 @@ public class GpxListReader {
         private final GpxList gpxList;
         private boolean  haveNewSegment=true;
 
-        public OnParsed(GpxType type, GpxTrackAttributes attr) {
+        public OnParsed(GpxType type, GpxListAttributes attr) {
             gpxList = new GpxList(type, attr);
         }
 

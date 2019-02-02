@@ -46,17 +46,8 @@ public abstract class GpxPointNode extends Node implements GpxDeltaPointInterfac
         return point.getLongitudeE6();
     }
     
-    
-    
-    public int getIntValue(String key) {
-        return Integer.valueOf(getValue(key));
-    }
-    
-    public double getDoubleValue(String key) {
-        return Double.valueOf(getValue(key));
-    }
 
-
+/*
     public String getValue(String key) {
         String value = attributes.get(key);
         if (value==null) {
@@ -85,7 +76,7 @@ public abstract class GpxPointNode extends Node implements GpxDeltaPointInterfac
         attributes.put(key, value);
     }
     
-    
+
     private void initMap() {
         if (attributes == GpxAttributes.NULL) {
             attributes = new GpxAttributesStatic();
@@ -104,7 +95,7 @@ public abstract class GpxPointNode extends Node implements GpxDeltaPointInterfac
             attributes = GpxAttributesStatic.NULL;
         }
     }
-
+*/
     
     @Override
     public String toString() {

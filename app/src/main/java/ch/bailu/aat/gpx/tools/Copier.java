@@ -1,6 +1,6 @@
 package ch.bailu.aat.gpx.tools;
 
-import ch.bailu.aat.gpx.GpxTrackAttributes;
+import ch.bailu.aat.gpx.GpxListAttributes;
 import ch.bailu.aat.gpx.GpxList;
 import ch.bailu.aat.gpx.GpxListWalker;
 import ch.bailu.aat.gpx.GpxPointNode;
@@ -16,7 +16,7 @@ public class Copier extends GpxListWalker {
     @Override
     public boolean doList(GpxList track) {
         newList = new GpxList(track.getDelta().getType(),
-                GpxTrackAttributes.NULL);
+                GpxListAttributes.NULL);
         newSegment = true;
         return true;
     }

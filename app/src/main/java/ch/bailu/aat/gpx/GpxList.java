@@ -10,9 +10,9 @@ import ch.bailu.aat.gpx.segmented_list.SegmentedList;
 
 public class GpxList {
     public static final GpxList NULL_TRACK = new GpxList(
-            GpxType.TRACK, GpxTrackAttributes.NULL);
+            GpxType.TRACK, GpxListAttributes.NULL);
     public static final GpxList NULL_ROUTE = new GpxList(
-            GpxType.ROUTE, GpxTrackAttributes.NULL);
+            GpxType.ROUTE, GpxListAttributes.NULL);
 
     
 
@@ -36,7 +36,7 @@ public class GpxList {
     private final GpxBigDelta delta;
 
 
-    public GpxList(GpxType type, GpxTrackAttributes attr) {
+    public GpxList(GpxType type, GpxListAttributes attr) {
         delta = new GpxBigDelta(attr);
         delta.setType(type);
     }

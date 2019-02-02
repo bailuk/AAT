@@ -108,6 +108,6 @@ public class GpxDataWrapper implements GpxDeltaPointInterface, GpxBigDeltaInterf
 
     @Override
     public GpxAttributes getAttributes() {
-        return point.getAttributes();
+        return summary.getAttributes();
     }
 }
