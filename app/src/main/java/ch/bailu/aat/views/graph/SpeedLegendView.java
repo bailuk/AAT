@@ -2,6 +2,7 @@ package ch.bailu.aat.views.graph;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -27,6 +28,8 @@ public class SpeedLegendView  extends LinearLayout implements SharedPreferences.
 
 
         setOrientation(VERTICAL);
+
+
         current = new TextView(context);
         current.setTextColor(AppTheme.getHighlightColor());
         addView(current);

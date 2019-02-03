@@ -9,8 +9,8 @@ import ch.bailu.aat.services.sensor.list.SensorState;
 import ch.bailu.aat.util.ToDo;
 
 public class HeartRateDescription extends ContentDescription {
-    private static final String LABEL = SensorState.getName(InfoID.HEART_RATE_SENSOR);
-    private static final String UNIT = "bpm";
+    public static final String LABEL = SensorState.getName(InfoID.HEART_RATE_SENSOR);
+    public static final String UNIT = "bpm";
 
     private String value = VALUE_DISABLED;
     private String unit = UNIT;
@@ -43,15 +43,13 @@ public class HeartRateDescription extends ContentDescription {
 
         if (iid == InfoID.HEART_RATE_SENSOR && haveSensor) {
             String bpm = info.getAttributes().getValue(HeartRateAttributes.KEY_INDEX_BPM);
+            String contact = info.getAttributes().getValue(HeartRateAttributes.KEY_INDEX_CONTACT);
 
-                //String bpma = info.getAttributes().getValue(HeartRateAttributes.KEY_INDEX_BPM_AVERAGE);
-                String contact = info.getAttributes().getValue(HeartRateAttributes.KEY_INDEX_CONTACT);
+            value = bpm;
+            label = LABEL + " " + contact;
+            unit = UNIT;
 
-                value = bpm;
-                label = LABEL + " " + contact;
-                unit = UNIT;
-
-         } else {
+        } else {
             value = VALUE_DISABLED;
             label = LABEL;
             unit = UNIT;

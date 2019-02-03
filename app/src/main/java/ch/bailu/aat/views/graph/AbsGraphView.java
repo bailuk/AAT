@@ -2,9 +2,12 @@ package ch.bailu.aat.views.graph;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 
+import ch.bailu.aat.R;
 import ch.bailu.aat.dispatcher.DispatcherInterface;
 import ch.bailu.aat.dispatcher.OnContentUpdatedInterface;
 import ch.bailu.aat.gpx.GpxInformation;
@@ -16,22 +19,18 @@ public abstract class AbsGraphView extends ViewGroup implements OnContentUpdated
 
     public final static int SAMPLE_WIDTH_PIXEL=5;
 
-    private final SolidUnit sunit;
-    private final StringBuilder builder = new StringBuilder();
-
     private boolean markerMode=false;
-
     private GpxList gpxCache = GpxList.NULL_TRACK;
     private int nodeIndex = -1;
 
-
-    private boolean showLabel = true;
-
+    protected final SolidUnit sunit;
+    protected final LabelOverlay ylabel, xlabel;
 
 
     public AbsGraphView(Context context, DispatcherInterface di, int... iid) {
         this(context);
         di.addTarget(this, iid);
+
     }
 
 
@@ -39,6 +38,15 @@ public abstract class AbsGraphView extends ViewGroup implements OnContentUpdated
         super(context);
         setWillNotDraw(false);
         sunit = new SolidUnit(context);
+
+        xlabel = new LabelOverlay(context, Gravity.LEFT | Gravity.BOTTOM);
+        ylabel = new LabelOverlay(context, Gravity.RIGHT | Gravity.TOP);
+
+        xlabel.setGravity(Gravity.BOTTOM);
+        xlabel.setText(Color.WHITE, R.string.distance, sunit.getDistanceUnit());
+
+        addView(xlabel);
+        addView(ylabel);
     }
 
 
@@ -58,6 +66,23 @@ public abstract class AbsGraphView extends ViewGroup implements OnContentUpdated
 
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
+        xlabel.layout(0,0, r-l, b-t);
+        ylabel.layout(0,0, r-l, b-t);
+    }
+
+
+    @Override
+    protected void onMeasure(int wSpec, int hSpec) {
+        int width = MeasureSpec.getSize(wSpec);
+        int height = MeasureSpec.getSize(hSpec);
+
+        // As big as possible
+        wSpec  = MeasureSpec.makeMeasureSpec (width,  MeasureSpec.EXACTLY);
+        hSpec  = MeasureSpec.makeMeasureSpec (height,  MeasureSpec.EXACTLY);
+
+        xlabel.measure(wSpec, hSpec);
+        ylabel.measure(wSpec, hSpec);
+        setMeasuredDimension(width, height);
     }
 
 
@@ -71,24 +96,15 @@ public abstract class AbsGraphView extends ViewGroup implements OnContentUpdated
 
 
     public void showLabel(boolean b) {
-        showLabel = b;
-    }
-
-
-    public String plotterLabel(int id, String unit) {
-        if (showLabel) {
-            builder.setLength(0);
-            builder.append(getContext().getString(id));
-            builder.append(" [");
-            builder.append(unit);
-            builder.append("]");
-            if (markerMode) builder.append(".");
-            return builder.toString();
+        if (b) {
+            xlabel.setVisibility(VISIBLE);
+            ylabel.setVisibility(VISIBLE);
         } else {
-            return "";
+            xlabel.setVisibility(GONE);
+            ylabel.setVisibility(GONE);
         }
-
     }
+
 
 
     public abstract void plot(Canvas canvas, GpxList list,
@@ -101,6 +117,5 @@ public abstract class AbsGraphView extends ViewGroup implements OnContentUpdated
         } else {
             setVisibility(View.GONE);
         }
-
     }
 }

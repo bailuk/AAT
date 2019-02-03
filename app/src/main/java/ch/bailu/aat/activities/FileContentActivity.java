@@ -19,7 +19,7 @@ import ch.bailu.aat.description.NameDescription;
 import ch.bailu.aat.description.PathDescription;
 import ch.bailu.aat.description.PauseApDescription;
 import ch.bailu.aat.description.PauseDescription;
-import ch.bailu.aat.description.SpmDescription;
+import ch.bailu.aat.description.IndexedAttributeDescription;
 import ch.bailu.aat.description.TimeApDescription;
 import ch.bailu.aat.description.TimeDescription;
 import ch.bailu.aat.description.TrackSizeDescription;
@@ -29,7 +29,7 @@ import ch.bailu.aat.util.ui.AppLayout;
 import ch.bailu.aat.views.PercentageLayout;
 import ch.bailu.aat.views.bar.MainControlBar;
 import ch.bailu.aat.views.description.MultiView;
-import ch.bailu.aat.views.graph.GraphViewContainer;
+import ch.bailu.aat.views.graph.GraphViewFactory;
 import ch.bailu.aat.views.preferences.VerticalScrollView;
 
 
@@ -52,7 +52,7 @@ public class FileContentActivity extends AbsFileContentActivity{
         summary.addAllContent(this, getSummaryData(this),
                 InfoID.FILEVIEW, InfoID.EDITOR_OVERLAY);
 
-        View graph = GraphViewContainer.speedAltitude(this,SOLID_KEY,this,
+        View graph = GraphViewFactory.all(this,SOLID_KEY,this,
                 InfoID.FILEVIEW, InfoID.EDITOR_OVERLAY);
 
 
@@ -81,10 +81,10 @@ public class FileContentActivity extends AbsFileContentActivity{
                 new CaloriesDescription(c),
                 new AscendDescription(c),
                 new DescendDescription(c),
-                new SpmDescription.HR(c),
-                new SpmDescription.HeartBeats(c),
-                new SpmDescription.Cadence(c),
-                new SpmDescription.TotalCadence(c),
+                new IndexedAttributeDescription.HeartRate(c),
+                new IndexedAttributeDescription.HeartBeats(c),
+                new IndexedAttributeDescription.Cadence(c),
+                new IndexedAttributeDescription.TotalCadence(c),
                 new TrackSizeDescription(c),
         };
     }

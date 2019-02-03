@@ -30,7 +30,7 @@ import ch.bailu.aat.views.bar.ControlBar;
 import ch.bailu.aat.views.bar.MainControlBar;
 import ch.bailu.aat.views.PercentageLayout;
 import ch.bailu.aat.views.description.MultiView;
-import ch.bailu.aat.views.graph.GraphViewContainer;
+import ch.bailu.aat.views.graph.GraphViewFactory;
 import ch.bailu.aat.views.preferences.VerticalScrollView;
 import ch.bailu.util_java.foc.Foc;
 
@@ -102,7 +102,7 @@ public class GpxViewActivity extends ActivityContext
         summary.addAllContent(this,
                 FileContentActivity.getSummaryData(this), InfoID.FILEVIEW);
 
-        View graph = GraphViewContainer.speedAltitude(this, SOLID_KEY, this, InfoID.FILEVIEW);
+        View graph = GraphViewFactory.all(this, SOLID_KEY, this, InfoID.FILEVIEW);
 
         if (AppLayout.isTablet(this)) {
             return createPercentageLayout(summary, graph);

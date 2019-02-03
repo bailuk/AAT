@@ -2,6 +2,7 @@ package ch.bailu.aat.views.graph;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Color;
 
 import ch.bailu.aat.R;
 import ch.bailu.aat.dispatcher.DispatcherInterface;
@@ -18,11 +19,15 @@ public class DistanceAltitudeGraphView extends AbsGraphView {
 
     public DistanceAltitudeGraphView(Context context, DispatcherInterface di, int... iid) {
         super(context, di, iid);
-    }
+        ylabel.setText(Color.WHITE, R.string.altitude, sunit.getAltitudeUnit());
+       }
+
 
     public DistanceAltitudeGraphView(Context context) {
         super(context);
+        ylabel.setText(Color.WHITE, R.string.altitude, sunit.getAltitudeUnit());
     }
+
 
     @Override
     public void plot(Canvas canvas, GpxList list, int index, SolidUnit sunit, boolean markerMode) {
@@ -53,14 +58,9 @@ public class DistanceAltitudeGraphView extends AbsGraphView {
             new IndexPainter(plotter, index).walkTrack(list);
         }
 
-        plotter.drawYScale(5,
-                plotterLabel(R.string.altitude, sunit.getAltitudeUnit()),
-                sunit.getAltitudeFactor(), true);
+        plotter.drawXScale(5, sunit.getDistanceFactor());
+        plotter.drawYScale(5, sunit.getAltitudeFactor(), true);
 
-
-        plotter.drawXScale(5,
-                plotterLabel(R.string.distance, sunit.getDistanceUnit()),
-                sunit.getDistanceFactor());
 
 
 

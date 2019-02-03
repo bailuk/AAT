@@ -31,7 +31,7 @@ import ch.bailu.aat.views.bar.MainControlBar;
 import ch.bailu.aat.views.description.CockpitView;
 import ch.bailu.aat.views.description.MultiView;
 import ch.bailu.aat.views.graph.DistanceAltitudeGraphView;
-import ch.bailu.aat.views.graph.GraphViewContainer;
+import ch.bailu.aat.views.graph.GraphViewFactory;
 
 public class CockpitSplitActivity extends AbsKeepScreenOnActivity {
     private static final String SOLID_KEY="split";
@@ -77,7 +77,7 @@ public class CockpitSplitActivity extends AbsKeepScreenOnActivity {
         mv.add(cockpitB);
         mv.add(cockpitC);
         mv.add(new DistanceAltitudeGraphView(this, this, InfoID.TRACKER));
-        mv.add(GraphViewContainer.speed(this, SOLID_KEY,this, InfoID.TRACKER));
+        mv.add(GraphViewFactory.speed(this, SOLID_KEY,this, InfoID.TRACKER));
         mv.add(mapSlave.toView());
 
         MapViewInterface mapMaster =

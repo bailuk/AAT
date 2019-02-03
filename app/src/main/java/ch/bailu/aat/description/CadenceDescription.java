@@ -9,8 +9,9 @@ import ch.bailu.aat.services.sensor.bluetooth_le.CscServiceID;
 import ch.bailu.aat.services.sensor.list.SensorState;
 
 public class CadenceDescription  extends ContentDescription {
-    private static final String LABEL = SensorState.getName(InfoID.CADENCE_SENSOR);
-    private static final String UNIT = "rpm";
+    public static final String UNIT = "rpm";
+    public static final String LABEL = SensorState.getName(InfoID.CADENCE_SENSOR);
+
 
     private String value = VALUE_DISABLED;
     private String unit = UNIT;

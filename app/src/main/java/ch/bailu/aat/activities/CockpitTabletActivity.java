@@ -27,7 +27,7 @@ import ch.bailu.aat.views.PercentageLayout;
 import ch.bailu.aat.views.bar.ControlBar;
 import ch.bailu.aat.views.bar.MainControlBar;
 import ch.bailu.aat.views.description.CockpitView;
-import ch.bailu.aat.views.graph.GraphViewContainer;
+import ch.bailu.aat.views.graph.GraphViewFactory;
 
 public class CockpitTabletActivity extends AbsKeepScreenOnActivity {
     private final static String SOLID_KEY="cockpit_tablet";
@@ -66,7 +66,7 @@ public class CockpitTabletActivity extends AbsKeepScreenOnActivity {
 
         final PercentageLayout three = new PercentageLayout(this);
         three.add(two,80);
-        three.add(GraphViewContainer.speedAltitude(this, SOLID_KEY, this, InfoID.TRACKER),20);
+        three.add(GraphViewFactory.all(this, SOLID_KEY, this, InfoID.TRACKER),20);
 
 
         return three;

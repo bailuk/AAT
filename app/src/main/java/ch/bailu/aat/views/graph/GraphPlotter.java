@@ -13,13 +13,6 @@ public class GraphPlotter {
     private static final int TEXT_SIZE=15;
     private final int text_size;
 
-    private static final int YLABEL_XOFFSET=50;
-    private final int ylabel_xoffset;
-
-    private static final int YLABEL_YOFFSET=30;
-    private final int ylabel_yoffset;
-
-
     private final Scaler xscaler;
     private final InvertetOffsetScaler yscaler;
 
@@ -48,7 +41,7 @@ public class GraphPlotter {
         paintFont = new Paint();
         paintFont.setAntiAlias(true);
         paintFont.setDither(false);
-        paintFont.setColor(Color.WHITE);
+        paintFont.setColor(Color.LTGRAY);
         paintFont.setTextSize(res.toPixelScaled_f(TEXT_SIZE));
 
 
@@ -63,10 +56,8 @@ public class GraphPlotter {
         paintLines.setStrokeWidth(0);
         paintLines.setColor(Color.GRAY);
 
-        text_size = Math.max(Math.round(paintFont.getTextSize()), 1);
-        ylabel_xoffset = res.toPixel_i(YLABEL_XOFFSET);
-        ylabel_yoffset = res.toPixel_i(YLABEL_YOFFSET);
 
+        text_size = Math.max(Math.round(paintFont.getTextSize()), 1);
         xscaler = new Scaler(width, xScale);
         yscaler = new InvertetOffsetScaler(height);
 
@@ -82,7 +73,7 @@ public class GraphPlotter {
     public void inlcudeInYScale(float value) {
         yscaler.addValue(value);
     }
-    public void drawYScale(int lines, String label, float factor, boolean drawFirstValue) {
+    public void drawYScale(int lines, float factor, boolean drawFirstValue) {
         lines = Math.min(height / (text_size*2), lines);
         lines = Math.max(1, lines);
 
@@ -92,8 +83,6 @@ public class GraphPlotter {
         for (float x=yscaler.getRealOffset(); x<= yscaler.getRealTop(); x+=space) {
             drawHorizontalLine(x,factor, drawFirstValue);
         }
-
-        canvas.drawText(label,ylabel_xoffset , ylabel_yoffset, paintFont);
     }
 
 
@@ -123,7 +112,7 @@ public class GraphPlotter {
         
         
     
-    public void drawXScale(int lines, String label, float factor) {
+    public void drawXScale(int lines, float factor) {
         lines = Math.min(width / (text_size*4), lines);
         lines = Math.max(1, lines);
 
@@ -134,7 +123,6 @@ public class GraphPlotter {
             drawVerticalLine(x, factor);
         }
 
-        canvas.drawText(label, width/2, height-text_size, paintFont);
     }
         
     private void drawVerticalLine(float value, float factor) {
@@ -178,11 +166,6 @@ public class GraphPlotter {
         Point t=pointB;
         pointB=pointA;
         pointA=t;
-    }
-
-
-    public float preferedWidth() {
-        return yscaler.scale(yscaler.getRealOffset() + xscaler.getReal());
     }
 
     public void plotPoint(float xvalue, float yvalue, int color) {

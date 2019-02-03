@@ -25,7 +25,7 @@ import ch.bailu.aat.views.bar.ControlBar;
 import ch.bailu.aat.views.bar.MainControlBar;
 import ch.bailu.aat.views.description.CockpitView;
 import ch.bailu.aat.views.description.MultiView;
-import ch.bailu.aat.views.graph.GraphViewContainer;
+import ch.bailu.aat.views.graph.GraphViewFactory;
 
 public class CockpitActivity extends AbsKeepScreenOnActivity {
 
@@ -52,7 +52,7 @@ public class CockpitActivity extends AbsKeepScreenOnActivity {
         MultiView multiView = new MultiView(this, SOLID_KEY);
         multiView.add(createCockpit());
         multiView.add(MapFactory.DEF(this, SOLID_KEY).tracker(edit).toView());
-        multiView.add(GraphViewContainer.speedAltitude(this, SOLID_KEY,this,  InfoID.TRACKER));
+        multiView.add(GraphViewFactory.all(this, SOLID_KEY,this,  InfoID.TRACKER));
 
         return multiView;
     }

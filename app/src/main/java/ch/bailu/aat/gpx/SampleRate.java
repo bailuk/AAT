@@ -6,12 +6,12 @@ import ch.bailu.util_java.util.Objects;
 
 public class SampleRate {
 
-    private final static String[] KEYS_BPM = {
+    public final static String[] KEYS_BPM = {
             HeartRateAttributes.KEYS[HeartRateAttributes.KEY_INDEX_BPM],
             "bpm"
     };
 
-    private final static String[] KEYS_CADENCE = {
+    public final static String[] KEYS_CADENCE = {
             CadenceSpeedAttributes.KEYS[CadenceSpeedAttributes.KEY_INDEX_CRANK_RPM],
             "rpm"
     };
@@ -74,14 +74,18 @@ public class SampleRate {
     }
 
     private int getValue(GpxAttributes attr) {
+        return getValue(attr, KEY);
+    }
+
+
+    public static int getValue(GpxAttributes attr, String... keys) {
         int r  = 0;
-        for (String k : KEY) {
+        for (String k : keys) {
             r = Objects.toInt(attr.get(k));
             if (r != 0) break;
         }
         return r;
     }
-
 
     public int getTotalSamples() {
         return Math.round(totalSamples60KM / 60000);
