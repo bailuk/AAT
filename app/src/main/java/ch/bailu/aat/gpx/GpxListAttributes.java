@@ -16,8 +16,10 @@ public class GpxListAttributes extends GpxAttributes {
     public static final int INDEX_DESCEND = KEYS.add("Descend");
     public static final int INDEX_ASCEND = KEYS.add("Ascend");
     public static final int INDEX_CADENCE = KEYS.add("AverageCadence");
+    public static final int INDEX_MAX_CADENCE = KEYS.add("MaxCadence");
     public static final int INDEX_TOTAL_CADENCE = KEYS.add("TotalCadence");
     public static final int INDEX_AVERAGE_HR = KEYS.add("AverageHR");
+    public static final int INDEX_MAX_HR = KEYS.add("MaxHr");
     public static final int INDEX_HEART_BEATS = KEYS.add("HeartBeats");
 
     private final MaxSpeed maximumSpeed;
@@ -96,11 +98,17 @@ public class GpxListAttributes extends GpxAttributes {
         } else if (key == INDEX_TOTAL_CADENCE) {
             return String.valueOf(cadence.getTotalSamples());
 
+        } else if (key == INDEX_MAX_CADENCE) {
+            return String.valueOf(cadence.getMaxSpm());
+
         } else if (key == INDEX_HEART_BEATS) {
             return String.valueOf(hr.getTotalSamples());
 
         } else if (key == INDEX_AVERAGE_HR) {
-            return String .valueOf(hr.getAverageSpm());
+            return String.valueOf(hr.getAverageSpm());
+
+        } else if (key == INDEX_MAX_HR) {
+            return String.valueOf(hr.getMaxSpm());
         }
 
         return NULL_VALUE;
@@ -132,6 +140,40 @@ public class GpxListAttributes extends GpxAttributes {
         }
         return super.getAsLong(key);
     }
+
+
+    @Override
+    public int getAsInteger(int key) {
+        if (key == INDEX_SLOPE) {
+            return altitudeDelta.getSlope();
+
+        } else if (key == INDEX_DESCEND) {
+            return altitudeDelta.getDescend();
+
+        } else if (key == INDEX_ASCEND) {
+            return altitudeDelta.getAscend();
+
+        } else if (key == INDEX_CADENCE) {
+            return cadence.getAverageSpm();
+
+        } else if (key == INDEX_TOTAL_CADENCE) {
+            return cadence.getTotalSamples();
+
+        } else if (key == INDEX_MAX_CADENCE) {
+            return cadence.getMaxSpm();
+
+        } else if (key == INDEX_HEART_BEATS) {
+            return hr.getTotalSamples();
+
+        } else if (key == INDEX_AVERAGE_HR) {
+            return hr.getAverageSpm();
+
+        } else if (key == INDEX_MAX_HR) {
+            return hr.getMaxSpm();
+        }
+        return super.getAsInteger(key);
+    }
+
 
     @Override
     public int size() {

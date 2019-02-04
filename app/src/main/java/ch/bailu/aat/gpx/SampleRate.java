@@ -26,6 +26,8 @@ public class SampleRate {
 
     private long totalSamples60KM = 0;
 
+    private int maxSamplesPM = 0;
+
 
     private SampleRate(int... key) {
         KEY = key;
@@ -68,6 +70,11 @@ public class SampleRate {
             totalSamples60KM += bpSample60KM;
 
             sampleTimeMillis = 0L;
+
+            if (spm >maxSamplesPM) {
+                maxSamplesPM = spm;
+            }
+
         }
 
 
@@ -98,5 +105,9 @@ public class SampleRate {
         if (totalTimeMillis > 0)
             return Math.round(totalSamples60KM / totalTimeMillis);
         return 0;
+    }
+
+    public int getMaxSpm() {
+        return maxSamplesPM;
     }
 }

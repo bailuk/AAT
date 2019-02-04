@@ -7,6 +7,7 @@ import ch.bailu.aat.description.CadenceDescription;
 import ch.bailu.aat.description.HeartRateDescription;
 import ch.bailu.aat.dispatcher.DispatcherInterface;
 import ch.bailu.aat.gpx.GpxList;
+import ch.bailu.aat.gpx.GpxListAttributes;
 import ch.bailu.aat.gpx.GpxListWalker;
 import ch.bailu.aat.gpx.GpxPointNode;
 import ch.bailu.aat.gpx.GpxSegmentNode;
@@ -47,10 +48,16 @@ public class SpmGraphView extends AbsGraphView {
         GraphPlotter plotterCadence = new GraphPlotter(canvas,getWidth(), getHeight(), 1000 * km_factor,
                 new AppDensity(getContext()));
 
-        plotterHr.inlcudeInYScale(225);
+        int max = Math.max(
+                list.getDelta().getAttributes().getAsInteger(GpxListAttributes.INDEX_MAX_CADENCE),
+                list.getDelta().getAttributes().getAsInteger(GpxListAttributes.INDEX_MAX_HR));
+
+
+
+        plotterHr.inlcudeInYScale(max);
         plotterHr.inlcudeInYScale(25);
 
-        plotterCadence.inlcudeInYScale(225);
+        plotterCadence.inlcudeInYScale(max);
         plotterCadence.inlcudeInYScale(25);
 
         final GpxListWalker hrPainter =
@@ -67,8 +74,10 @@ public class SpmGraphView extends AbsGraphView {
         plotterCadence.roundYScale(25);
 
 
-        hrPainter.walkTrack(list);
-        cadencePainter.walkTrack(list);
+        if (max > 0) {
+            hrPainter.walkTrack(list);
+            cadencePainter.walkTrack(list);
+        }
 
 
         plotterHr.drawXScale(5, sunit.getDistanceFactor());
