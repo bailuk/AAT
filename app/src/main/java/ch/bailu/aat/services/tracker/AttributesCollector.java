@@ -1,9 +1,9 @@
 package ch.bailu.aat.services.tracker;
 
-import ch.bailu.aat.gpx.GpxAttributes;
-import ch.bailu.aat.gpx.GpxAttributesStatic;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.InfoID;
+import ch.bailu.aat.gpx.attributes.GpxAttributes;
+import ch.bailu.aat.gpx.attributes.GpxAttributesStatic;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.sensor.SensorService;
 import ch.bailu.aat.services.sensor.attributes.CadenceSpeedAttributes;
@@ -41,24 +41,23 @@ public class AttributesCollector {
     }
 
 
-    private GpxAttributes addAttribute(GpxAttributes target, GpxInformation source, int index) {
+    private GpxAttributes addAttribute(GpxAttributes target, GpxInformation source, int keyIndex) {
         if (source != null && (time - source.getTimeStamp()) < MAX_AGE) {
-            target = addAttribute(target, source.getAttributes(), index);
+            target = addAttribute(target, source.getAttributes(), keyIndex);
         }
         return target;
     }
 
 
-    private GpxAttributes addAttribute(GpxAttributes target, GpxAttributes source, int index) {
-        if (source != null && source.size() > index) {
-            final String key = source.getKey(index);
-            final String value = source.getValue(index);
+    private GpxAttributes addAttribute(GpxAttributes target, GpxAttributes source, int keyIndex) {
+        if (source.hasKey(keyIndex)) {
+            final String value = source.get(keyIndex);
 
-            if (key.length() > 0 && value.length() > 0 && !value.equals("0")) {
+            if (value.length() > 0) {
 
                 if (target == null) target = new GpxAttributesStatic();
 
-                target.put(key, value);
+                target.put(keyIndex, value);
             }
         }
         return target;

@@ -5,6 +5,7 @@ import android.location.Location;
 import org.mapsforge.core.model.LatLong;
 
 import ch.bailu.aat.coordinates.LatLongE6Interface;
+import ch.bailu.aat.gpx.attributes.GpxAttributes;
 import ch.bailu.aat.gpx.interfaces.GpxPointInterface;
 
 

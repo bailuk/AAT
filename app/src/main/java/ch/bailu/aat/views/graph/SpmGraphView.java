@@ -85,10 +85,10 @@ public class SpmGraphView extends AbsGraphView {
         private float summaryDistance=0;
         private final float minDistance;
 
-        private final String[] keys;
+        private final int[] keys;
         private final int color;
 
-        public GraphPainter(GraphPlotter p, int md, int c, String... k) {
+        public GraphPainter(GraphPlotter p, int md, int c, int... k) {
             plotter=p;
             minDistance=md*SAMPLE_WIDTH_PIXEL;
             keys = k;

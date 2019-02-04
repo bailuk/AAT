@@ -6,7 +6,6 @@ import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.services.sensor.attributes.HeartRateAttributes;
 import ch.bailu.aat.services.sensor.list.SensorState;
-import ch.bailu.aat.util.ToDo;
 
 public class HeartRateDescription extends ContentDescription {
     public static final String LABEL = SensorState.getName(InfoID.HEART_RATE_SENSOR);
@@ -42,8 +41,8 @@ public class HeartRateDescription extends ContentDescription {
         final boolean haveSensor = SensorState.isConnected(InfoID.HEART_RATE_SENSOR);
 
         if (iid == InfoID.HEART_RATE_SENSOR && haveSensor) {
-            String bpm = info.getAttributes().getValue(HeartRateAttributes.KEY_INDEX_BPM);
-            String contact = info.getAttributes().getValue(HeartRateAttributes.KEY_INDEX_CONTACT);
+            String bpm = info.getAttributes().get(HeartRateAttributes.KEY_INDEX_BPM);
+            String contact = info.getAttributes().get(HeartRateAttributes.KEY_INDEX_CONTACT);
 
             value = bpm;
             label = LABEL + " " + contact;

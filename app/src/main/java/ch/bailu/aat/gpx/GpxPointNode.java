@@ -1,6 +1,8 @@
 package ch.bailu.aat.gpx;
 
 import ch.bailu.aat.coordinates.BoundingBoxE6;
+import ch.bailu.aat.gpx.attributes.GpxAttributes;
+import ch.bailu.aat.gpx.attributes.Keys;
 import ch.bailu.aat.gpx.interfaces.GpxDeltaPointInterface;
 import ch.bailu.aat.gpx.linked_list.Node;
 
@@ -48,7 +50,7 @@ public abstract class GpxPointNode extends Node implements GpxDeltaPointInterfac
     
 
 /*
-    public String getValue(String key) {
+    public String getAt(String key) {
         String value = attributes.get(key);
         if (value==null) {
             value=GpxAttributes.NULL_VALUE;
@@ -116,18 +118,17 @@ public abstract class GpxPointNode extends Node implements GpxDeltaPointInterfac
         point.setAltitude(e);
     }
     
-    
+
+    private static int BOUNDING_KEY= Keys.toIndex("boundingbox");
     
         
     @Override
     public BoundingBoxE6 getBoundingBox() {
         final BoundingBoxE6 box = new BoundingBoxE6();
-        
-        String bounding = attributes.get("boundingbox");
-        if (bounding != null) {
-            box.add(bounding);
+
+        if (attributes.hasKey(BOUNDING_KEY)) {
+            box.add(attributes.get(BOUNDING_KEY));
         }
-        
         box.add(getPoint());
         
         return box;

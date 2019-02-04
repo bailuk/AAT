@@ -4,9 +4,7 @@ import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 
 import java.io.IOException;
-import java.util.Collections;
 
-import ch.bailu.aat.gpx.GpxAttributesStatic;
 import ch.bailu.aat.gpx.xml_parser.parser.Attr;
 import ch.bailu.aat.gpx.xml_parser.parser.TagParser;
 import ch.bailu.aat.gpx.xml_parser.parser.Util;

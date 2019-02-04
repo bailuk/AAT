@@ -1,6 +1,7 @@
 package ch.bailu.aat.gpx;
 
 
+import ch.bailu.aat.gpx.attributes.GpxAttributes;
 
 public class GpxPointFirstNode extends GpxPointNode {
 

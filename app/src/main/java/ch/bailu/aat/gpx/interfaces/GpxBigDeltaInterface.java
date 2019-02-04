@@ -1,7 +1,7 @@
 package ch.bailu.aat.gpx.interfaces;
 
 
-import ch.bailu.aat.gpx.GpxAttributes;
+import ch.bailu.aat.gpx.attributes.GpxAttributes;
 
 public interface GpxBigDeltaInterface extends GpxDeltaInterface  {
 

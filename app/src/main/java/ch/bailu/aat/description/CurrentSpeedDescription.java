@@ -45,7 +45,7 @@ public class CurrentSpeedDescription extends SpeedDescription {
                 setCache(info.getSpeed());
             }
 
-            label = info.getAttributes().getValue(CadenceSpeedAttributes.KEY_INDEX_CIRCUMFERENCE_DEBUG);
+            label = info.getAttributes().get(CadenceSpeedAttributes.KEY_INDEX_CIRCUMFERENCE_DEBUG);
         }
 
 

@@ -1,5 +1,6 @@
 package ch.bailu.aat.gpx;
 
+import ch.bailu.aat.gpx.attributes.GpxAttributes;
 import ch.bailu.aat.gpx.interfaces.GpxBigDeltaInterface;
 import ch.bailu.aat.gpx.interfaces.GpxType;
 import ch.bailu.aat.gpx.linked_list.List;

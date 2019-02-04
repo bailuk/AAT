@@ -103,12 +103,13 @@ public abstract class GpxWriter {
 
 
     public void writeAttributesGpxStyle(GpxPointInterface tp) throws IOException {
-        if (tp.getAttributes().size()>0) {
+        if (tp.getAttributes().size() > 0) {
             writeBeginElement(GpxConstants.QNAME_EXTENSIONS);
 
             for(int i=0; i< tp.getAttributes().size(); i++) {
                 writeString("\n\t\t");
-                writeAttributeGpxStyle(tp.getAttributes().getKey(i), tp.getAttributes().getValue(i));
+                writeAttributeGpxStyle(tp.getAttributes().getSKeyAt(i),
+                        tp.getAttributes().getAt(i));
             }
 
             writeString("\n\t");
@@ -131,7 +132,7 @@ public abstract class GpxWriter {
                 writeString("\n\t\t");
                 writeBeginElementStart(OsmConstants.T_TAG);
                 writeParameter(OsmConstants.A_KEY, tp.getAttributes().getKey(i));
-                writeParameter(OsmConstants.A_VALUE, tp.getAttributes().getValue(i));
+                writeParameter(OsmConstants.A_VALUE, tp.getAttributes().getAt(i));
                 writeElementEnd();
             }
 

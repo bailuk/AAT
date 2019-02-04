@@ -20,6 +20,6 @@ public class DescendDescription extends AltitudeDescription {
 
     @Override
     public void onContentUpdated(int iid, GpxInformation info) {
-        setCache(info.getAttributes().getFloatValue(GpxListAttributes.INDEX_DESCEND));
+        setCache(info.getAttributes().getAsFloat(GpxListAttributes.INDEX_DESCEND));
     }
 }

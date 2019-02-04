@@ -2,7 +2,7 @@ package ch.bailu.aat.description;
 
 import android.content.Context;
 
-import ch.bailu.aat.gpx.GpxAttributes;
+import ch.bailu.aat.gpx.attributes.GpxAttributes;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.services.sensor.list.SensorList;
 import ch.bailu.aat.util.ToDo;
@@ -34,7 +34,7 @@ public class SensorStateDescription extends StateDescription {
         GpxAttributes attributes = info.getAttributes();
 
         if (attributes != null) {
-            unit = info.getAttributes().getValue(SensorList.Attributes.KEY_SENSOR_OVERVIEW);
+            unit = info.getAttributes().get(SensorList.Attributes.KEY_SENSOR_OVERVIEW);
         }
     }
 

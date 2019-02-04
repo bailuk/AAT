@@ -2,6 +2,7 @@ package ch.bailu.aat.services.icons;
 
 import java.io.IOException;
 
+import ch.bailu.aat.gpx.attributes.Keys;
 import ch.bailu.util_java.foc.Foc;
 import ch.bailu.util_java.io.Stream;
 
@@ -60,7 +61,7 @@ public class IconMapParser {
 
     private void addEntry(IconMap map) {
         if (entry==END) {
-            map.add(entries[KEY], entries[VALUE], entries[ICON]);
+            map.add(Keys.toIndex(entries[KEY]), entries[VALUE], entries[ICON]);
         }
         entry=0;
         

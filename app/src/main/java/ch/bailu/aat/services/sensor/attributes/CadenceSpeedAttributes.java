@@ -1,6 +1,9 @@
 package ch.bailu.aat.services.sensor.attributes;
 
-public class CadenceSpeedAttributes   extends IndexedAttributes {
+import ch.bailu.aat.gpx.attributes.GpxAttributes;
+import ch.bailu.aat.gpx.attributes.Keys;
+
+public class CadenceSpeedAttributes   extends GpxAttributes {
 
 
     public final static String[] SENSOR_LOCATION = {
@@ -23,25 +26,17 @@ public class CadenceSpeedAttributes   extends IndexedAttributes {
             "Chain Ring",
     };
 
+    public static final Keys KEYS = new Keys();
 
-    public static final int KEY_INDEX_SENSOR_LOCATION = 0;
-    public static final int KEY_INDEX_SPEED_SENSOR = 1;
-    public static final int KEY_INDEX_CADENCE_SENSOR = 2;
-    public static final int KEY_INDEX_CRANK_RPM = 3;
-    public static final int KEY_INDEX_WHEEL_CIRCUMFERENCE = 4;
-    public static final int KEY_INDEX_CONTACT = 5;
+
+    public static final int KEY_INDEX_SENSOR_LOCATION = KEYS.add("Location");
+    public static final int KEY_INDEX_SPEED_SENSOR = KEYS.add("SpeedSensor");
+    public static final int KEY_INDEX_CADENCE_SENSOR = KEYS.add("CadenceSensor");
+    public static final int KEY_INDEX_CRANK_RPM = KEYS.add("Cadence");
+    public static final int KEY_INDEX_WHEEL_CIRCUMFERENCE = KEYS.add("WheelCircumference");
+    public static final int KEY_INDEX_CONTACT = KEYS.add("Contact");
 
     public static final int KEY_INDEX_CIRCUMFERENCE_DEBUG = 6;
-
-
-    public final static String[] KEYS = {
-            "Location",
-            "SpeedSensor",
-            "CadenceSensor",
-            "Cadence",
-            "WheelCircumference",
-            "Contact"
-    };
 
 
     public int cadence_rpm = 0;
@@ -55,7 +50,6 @@ public class CadenceSpeedAttributes   extends IndexedAttributes {
 
 
     public CadenceSpeedAttributes(String l, boolean cadence, boolean speed) {
-        super(KEYS);
         location = l;
         isCadenceSensor = cadence;
         isSpeedSensor = speed;
@@ -64,31 +58,51 @@ public class CadenceSpeedAttributes   extends IndexedAttributes {
 
 
     @Override
-    public String getValue(int index) {
-        if (index == KEY_INDEX_SENSOR_LOCATION) {
+    public String get(int keyIndex) {
+        if (keyIndex == KEY_INDEX_SENSOR_LOCATION) {
             return location;
 
-        } else if (index == KEY_INDEX_CADENCE_SENSOR) {
+        } else if (keyIndex == KEY_INDEX_CADENCE_SENSOR) {
             return String.valueOf(isCadenceSensor);
 
-        } else if (index == KEY_INDEX_SPEED_SENSOR) {
+        } else if (keyIndex == KEY_INDEX_SPEED_SENSOR) {
             return String.valueOf(isSpeedSensor);
 
-        } else if (index == KEY_INDEX_CRANK_RPM) {
+        } else if (keyIndex == KEY_INDEX_CRANK_RPM) {
             return String.valueOf(cadence_rpm_average);
 
-        } else if (index == KEY_INDEX_WHEEL_CIRCUMFERENCE) {
+        } else if (keyIndex == KEY_INDEX_WHEEL_CIRCUMFERENCE) {
             return String.valueOf(circumferenceSI);
 
-        } else if (index == KEY_INDEX_CONTACT) {
+        } else if (keyIndex == KEY_INDEX_CONTACT) {
             if (cadence_rpm == 0) return "...";
             return "";
 
-        } else if (index == KEY_INDEX_CIRCUMFERENCE_DEBUG) {
+        } else if (keyIndex == KEY_INDEX_CIRCUMFERENCE_DEBUG) {
             return circumferenceDebugString;
         }
 
 
         return NULL_VALUE;
+    }
+
+    @Override
+    public boolean hasKey(int keyIndex) {
+        return KEYS.hasKey(keyIndex);
+    }
+
+    @Override
+    public int size() {
+        return KEYS.size();
+    }
+
+    @Override
+    public String getAt(int i) {
+        return get(KEYS.getKeyIndex(i));
+    }
+
+    @Override
+    public int getKeyAt(int i) {
+        return KEYS.getKeyIndex(i);
     }
 }

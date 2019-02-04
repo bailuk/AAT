@@ -300,7 +300,7 @@ public class DirectorySynchronizer  implements Closeable {
             content.put(GpxDbConstants.KEY_FILENAME,   filename);
             content.put(GpxDbConstants.KEY_AVG_SPEED,  summary.getSpeed());
 
-            content.put(GpxDbConstants.KEY_MAX_SPEED,  summary.getAttributes().getValue(
+            content.put(GpxDbConstants.KEY_MAX_SPEED,  summary.getAttributes().get(
                     GpxListAttributes.INDEX_MAX_SPEED));
 
             content.put(GpxDbConstants.KEY_DISTANCE,   summary.getDistance());

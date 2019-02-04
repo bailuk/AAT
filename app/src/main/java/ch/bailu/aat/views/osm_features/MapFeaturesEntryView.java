@@ -6,6 +6,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import ch.bailu.aat.R;
+import ch.bailu.aat.gpx.attributes.Keys;
 import ch.bailu.aat.menus.MapFeaturesMenu;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.cache.osm_features.MapFeaturesListEntry;
@@ -53,7 +54,7 @@ public class MapFeaturesEntryView extends LinearLayout implements View.OnClickLi
 
     public void set(final MapFeaturesListEntry e) {
         entry = e;
-        icon.setImageObject(entry.key, entry.value);
+        icon.setImageObject(Keys.toIndex(entry.key), entry.value);
         text.setText(AppHtml.fromHtml(entry.html));
     }
 

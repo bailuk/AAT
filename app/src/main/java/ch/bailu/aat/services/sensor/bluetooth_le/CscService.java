@@ -3,7 +3,7 @@ package ch.bailu.aat.services.sensor.bluetooth_le;
 import android.bluetooth.BluetoothGattCharacteristic;
 import android.support.annotation.RequiresApi;
 
-import ch.bailu.aat.gpx.GpxAttributes;
+import ch.bailu.aat.gpx.attributes.GpxAttributes;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.services.ServiceContext;

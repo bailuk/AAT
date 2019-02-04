@@ -5,7 +5,6 @@ import org.xmlpull.v1.XmlPullParserException;
 
 import java.io.IOException;
 
-import ch.bailu.aat.gpx.GpxAttributesStatic;
 import ch.bailu.aat.gpx.OsmConstants;
 import ch.bailu.aat.gpx.xml_parser.parser.Attr;
 import ch.bailu.aat.gpx.xml_parser.parser.TagParser;

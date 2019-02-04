@@ -19,7 +19,7 @@ public class MaximumSpeedDescription  extends SpeedDescription {
 
     @Override
     public void onContentUpdated(int iid, GpxInformation info) {
-        setCache(info.getAttributes().getFloatValue(GpxListAttributes.INDEX_MAX_SPEED));
+        setCache(info.getAttributes().getAsFloat(GpxListAttributes.INDEX_MAX_SPEED));
     }
 
 }

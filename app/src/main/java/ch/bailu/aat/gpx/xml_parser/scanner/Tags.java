@@ -3,7 +3,8 @@ package ch.bailu.aat.gpx.xml_parser.scanner;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import ch.bailu.aat.gpx.GpxAttributesStatic;
+import ch.bailu.aat.gpx.attributes.GpxAttributesStatic;
+import ch.bailu.aat.gpx.attributes.Keys;
 
 public class Tags {
     public final ArrayList<GpxAttributesStatic.Tag> list = new ArrayList<>();
@@ -22,7 +23,7 @@ public class Tags {
     }
 
     public void add(String k, String v) {
-        list.add(new GpxAttributesStatic.Tag(k, v));
+        list.add(new GpxAttributesStatic.Tag(Keys.toIndex(k), v));
     }
 
     public GpxAttributesStatic get() {

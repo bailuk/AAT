@@ -1,33 +1,24 @@
 package ch.bailu.aat.gpx;
 
+import ch.bailu.aat.gpx.attributes.GpxAttributes;
+import ch.bailu.aat.gpx.attributes.Keys;
 import ch.bailu.aat.preferences.SolidAutopause;
-import ch.bailu.aat.services.sensor.attributes.IndexedAttributes;
 
-public class GpxListAttributes extends IndexedAttributes {
+public class GpxListAttributes extends GpxAttributes {
 
     public static final GpxListAttributes NULL = factoryNull();
 
-    private static final String[] KEYS = {
-            "MaxSpeed",
-            "AutoPause",
-            "Slope",
-            "Descend",
-            "Ascend",
-            "AverageCadence",
-            "TotalCadence",
-            "AverageHR",
-            "HeartBeats",
-    };
+    public static final Keys KEYS = new Keys();
 
-    public static final int INDEX_MAX_SPEED = 0;
-    public static final int INDEX_AUTO_PAUSE = 1;
-    public static final int INDEX_SLOPE = 2;
-    public static final int INDEX_DESCEND = 3;
-    public static final int INDEX_ASCEND = 4;
-    public static final int INDEX_CADENCE = 5;
-    public static final int INDEX_TOTAL_CADENCE = 6;
-    public static final int INDEX_AVERAGE_HR = 7;
-    public static final int INDEX_HEART_BEATS = 8;
+    public static final int INDEX_MAX_SPEED = KEYS.add("MaxSpeed");
+    public static final int INDEX_AUTO_PAUSE = KEYS.add("AutoPause");
+    public static final int INDEX_SLOPE = KEYS.add("Slope");
+    public static final int INDEX_DESCEND = KEYS.add("Descend");
+    public static final int INDEX_ASCEND = KEYS.add("Ascend");
+    public static final int INDEX_CADENCE = KEYS.add("AverageCadence");
+    public static final int INDEX_TOTAL_CADENCE = KEYS.add("TotalCadence");
+    public static final int INDEX_AVERAGE_HR = KEYS.add("AverageHR");
+    public static final int INDEX_HEART_BEATS = KEYS.add("HeartBeats");
 
     private final MaxSpeed maximumSpeed;
     private final AutoPause autoPause;
@@ -42,7 +33,6 @@ public class GpxListAttributes extends IndexedAttributes {
                              AltitudeDelta altitude,
                              SampleRate c,
                              SampleRate h) {
-        super(KEYS);
         maximumSpeed = max;
         autoPause = pause;
         altitudeDelta = altitude;
@@ -84,58 +74,78 @@ public class GpxListAttributes extends IndexedAttributes {
 
 
     @Override
-    public String getValue(int index) {
-        if (index == INDEX_MAX_SPEED) {
+    public String get(int key) {
+        if (key == INDEX_MAX_SPEED) {
             return String.valueOf(maximumSpeed.get());
 
-        } else if (index == INDEX_AUTO_PAUSE) {
+        } else if (key == INDEX_AUTO_PAUSE) {
             return String.valueOf(autoPause.get());
 
-        } else if (index == INDEX_SLOPE) {
+        } else if (key == INDEX_SLOPE) {
             return String.valueOf(altitudeDelta.getSlope());
 
-        } else if (index == INDEX_DESCEND) {
+        } else if (key == INDEX_DESCEND) {
             return String.valueOf(altitudeDelta.getDescend());
 
-        } else if (index == INDEX_ASCEND) {
+        } else if (key == INDEX_ASCEND) {
             return String.valueOf(altitudeDelta.getAscend());
 
-        } else if (index == INDEX_CADENCE) {
+        } else if (key == INDEX_CADENCE) {
             return String.valueOf(cadence.getAverageSpm());
 
-        } else if (index == INDEX_TOTAL_CADENCE) {
+        } else if (key == INDEX_TOTAL_CADENCE) {
             return String.valueOf(cadence.getTotalSamples());
 
-        } else if (index == INDEX_HEART_BEATS) {
+        } else if (key == INDEX_HEART_BEATS) {
             return String.valueOf(hr.getTotalSamples());
 
-        } else if (index == INDEX_AVERAGE_HR) {
+        } else if (key == INDEX_AVERAGE_HR) {
             return String .valueOf(hr.getAverageSpm());
         }
 
-        return "";
+        return NULL_VALUE;
+    }
+
+    @Override
+    public boolean hasKey(int keyIndex) {
+        return KEYS.hasKey(keyIndex);
     }
 
 
     @Override
-    public float getFloatValue(int index) {
-        if (index == INDEX_MAX_SPEED)
+    public float getAsFloat(int key) {
+        if (key == INDEX_MAX_SPEED)
             return maximumSpeed.get();
-        else if (index == INDEX_ASCEND)
+        else if (key == INDEX_ASCEND)
             return altitudeDelta.getAscend();
-        else if (index == INDEX_DESCEND)
+        else if (key == INDEX_DESCEND)
             return altitudeDelta.getDescend();
 
-        return super.getFloatValue(index);
+        return super.getAsFloat(key);
     }
 
 
     @Override
-    public long getLongValue(int index) {
-        if (index == INDEX_AUTO_PAUSE) {
+    public long getAsLong(int key) {
+        if (key == INDEX_AUTO_PAUSE) {
             return autoPause.get();
         }
-        return super.getLongValue(index);
+        return super.getAsLong(key);
+    }
+
+    @Override
+    public int size() {
+        return KEYS.size();
+    }
+
+    @Override
+    public String getAt(int i) {
+        return get(KEYS.getKeyIndex(i));
+    }
+
+    @Override
+    public int getKeyAt(int i) {
+        return KEYS.getKeyIndex(i);
     }
 
 

@@ -82,7 +82,7 @@ public class DistanceSpeedGraphView extends AbsGraphView implements SharedPrefer
 
 
         for(GraphPlotter p: plotter) {
-            p.inlcudeInYScale(list.getDelta().getAttributes().getFloatValue((GpxListAttributes.INDEX_MAX_SPEED)));
+            p.inlcudeInYScale(list.getDelta().getAttributes().getAsFloat((GpxListAttributes.INDEX_MAX_SPEED)));
             p.inlcudeInYScale(0f);
         }
 

@@ -2,8 +2,9 @@ package ch.bailu.aat.services.icons;
 
 import java.io.IOException;
 
-import ch.bailu.aat.gpx.GpxAttributes;
 import ch.bailu.aat.gpx.GpxPointNode;
+import ch.bailu.aat.gpx.attributes.GpxAttributes;
+import ch.bailu.aat.gpx.attributes.Keys;
 import ch.bailu.aat.gpx.interfaces.GpxPointInterface;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.VirtualService;
@@ -17,8 +18,8 @@ public class IconMapService extends VirtualService {
     public static final float SMALL_ICON_SIZE = 24;
 
 
-    private final static String NKEY_KEY = "class";
-    private final static String NKEY_VALUE = "type";
+    private final static int NKEY_KEY = Keys.toIndex("class");
+    private final static int NKEY_VALUE = Keys.toIndex("type");
 
     private final static String MAP_FILE="symbols/iconmap.txt";
 
@@ -44,7 +45,7 @@ public class IconMapService extends VirtualService {
 
     }
 
-    public ImageObjectAbstract getIconSVG(String key, String value, int size) {
+    public ImageObjectAbstract getIconSVG(int key, String value, int size) {
         String id = toAssetPath(key, value);
 
         if (id != null)
@@ -63,7 +64,7 @@ public class IconMapService extends VirtualService {
     }
 
 
-    public String toAssetPath(String key, String value) {
+    public String toAssetPath(int key, String value) {
         IconMap.Icon icon = map.get(key, value);
         if (icon != null) return icon.svg;
 
@@ -83,7 +84,7 @@ public class IconMapService extends VirtualService {
 
     private IconMap.Icon getIconEntry(GpxAttributes attr) {
         for (int i=0; i<attr.size(); i++) {
-            IconMap.Icon icon = map.get(attr.getKey(i), attr.getValue(i));
+            IconMap.Icon icon = map.get(attr.getKeyAt(i), attr.getAt(i));
             if (icon != null) return icon;
         }
         return getIconEntryNominatimType(attr);
@@ -92,12 +93,12 @@ public class IconMapService extends VirtualService {
 
 
     private IconMap.Icon getIconEntryNominatimType(GpxAttributes attr) {
-        String key = attr.get(NKEY_KEY);
 
-        if (key != null) {
-            String value = attr.get(NKEY_VALUE);
-            if (value != null)
-                return map.get(key, value);
+        if (attr.hasKey(NKEY_KEY) && attr.hasKey(NKEY_VALUE)) {
+            final int key = Keys.toIndex(attr.get(NKEY_KEY));
+            final String value = attr.get(NKEY_VALUE);
+
+            return map.get(key, value);
         }
         return null;
     }

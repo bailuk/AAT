@@ -39,7 +39,7 @@ public class IndexedAttributeDescription extends ContentDescription {
 
     @Override
     public void onContentUpdated(int iid, GpxInformation info) {
-        value = info.getAttributes().getValue(keyIndex);
+        value = info.getAttributes().get(keyIndex);
     }
 
 

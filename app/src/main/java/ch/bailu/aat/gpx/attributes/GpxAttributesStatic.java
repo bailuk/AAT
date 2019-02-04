@@ -1,8 +1,7 @@
-package ch.bailu.aat.gpx;
+package ch.bailu.aat.gpx.attributes;
 
 
-
-public class GpxAttributesStatic extends GpxAttributes{
+public class GpxAttributesStatic extends GpxAttributes {
 
 
     public static class Tag implements Comparable<Tag> {
@@ -10,17 +9,18 @@ public class GpxAttributesStatic extends GpxAttributes{
             this(keyValue.key, keyValue.value);
         }
 
-        public Tag(String k, String v) {
+        public Tag(int k, String v) {
             key=k;
             value=v;
         }
 
-        public final String key, value;
+        public final int key;
+        public final String value;
 
 
         @Override
         public int compareTo(Tag another) {
-            return key.compareTo(another.key);
+            return Integer.compare(key, another.key);
         }
     }
 
@@ -37,34 +37,22 @@ public class GpxAttributesStatic extends GpxAttributes{
 
 
     @Override
-    public String get(String key) {
+    public String get(int key) {
         int index = getIndex(key);
 
-        if (index==size()) return null;
+        if (index==size()) return NULL_VALUE;
 
         return tagList[index].value;
     }
 
+
     @Override
-    public String getValue(int index) {
-        if (index < size()) {
-            return tagList[index].value;
-        }
-        return null;
+    public boolean hasKey(int key) {
+        return getIndex(key) < size();
     }
 
-
     @Override
-    public String getKey(int index) {
-        if (index < size()) {
-            return tagList[index].key;
-        }
-        return null;
-    }
-
-
-    @Override
-    public void put(String key, String value) {
+    public void put(int key, String value) {
         int index = getIndex(key);
 
         if (index == size()) {
@@ -78,9 +66,9 @@ public class GpxAttributesStatic extends GpxAttributes{
     }
 
 
-    private int getIndex(String key) {
+    private int getIndex(int key) {
         for (int i=0; i<size(); i++) {
-            if (tagList[i].key.equals(key)) return i;
+            if (tagList[i].key == key) return i;
         }
         return size();
     }
@@ -91,7 +79,17 @@ public class GpxAttributesStatic extends GpxAttributes{
         return tagList.length;
     }
 
+    @Override
+    public String getAt(int i) {
+        return tagList[i].value;
+    }
 
+    @Override
+    public int getKeyAt(int i) {
+        return tagList[i].key;
+    }
+
+/*
     @Override
     public void remove(String key) {
         int index = getIndex(key);
@@ -109,5 +107,5 @@ public class GpxAttributesStatic extends GpxAttributes{
             tagList=newTagList;
         }
     }
-
+*/
 }

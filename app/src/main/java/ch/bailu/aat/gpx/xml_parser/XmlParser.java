@@ -8,8 +8,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
 
-import ch.bailu.aat.gpx.GpxAttributes;
-import ch.bailu.aat.gpx.GpxAttributesStatic;
+import ch.bailu.aat.gpx.attributes.GpxAttributes;
 import ch.bailu.aat.gpx.xml_parser.parser.RootParser;
 import ch.bailu.aat.gpx.xml_parser.scanner.Scanner;
 import ch.bailu.aat.gpx.xml_parser.parser.AbsXmlParser;

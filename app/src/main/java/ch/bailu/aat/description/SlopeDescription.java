@@ -15,7 +15,7 @@ public class SlopeDescription extends ContentDescription {
 
     @Override
     public void onContentUpdated(int iid, GpxInformation info) {
-        slope = info.getAttributes().getValue(GpxListAttributes.INDEX_SLOPE);
+        slope = info.getAttributes().get(GpxListAttributes.INDEX_SLOPE);
     }
 
     @Override

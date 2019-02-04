@@ -6,14 +6,14 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.support.annotation.RequiresApi;
 
-import ch.bailu.aat.gpx.GpxAttributes;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.InfoID;
+import ch.bailu.aat.gpx.attributes.GpxAttributes;
+import ch.bailu.aat.gpx.attributes.Keys;
 import ch.bailu.aat.preferences.general.SolidUnit;
 import ch.bailu.aat.preferences.location.SolidPressureAtSeaLevel;
 import ch.bailu.aat.preferences.location.SolidProvideAltitude;
 import ch.bailu.aat.services.location.Hypsometric;
-import ch.bailu.aat.services.sensor.attributes.IndexedAttributes;
 import ch.bailu.aat.services.sensor.list.SensorList;
 import ch.bailu.aat.util.AppBroadcaster;
 
@@ -139,27 +139,43 @@ public class BarometerSensor extends InternalSensorSDK23
     }
 
 
-    public static class Attributes extends IndexedAttributes {
+    public static class Attributes extends GpxAttributes {
 
         final float pressure;
 
-        public static final float KEY_INDEX_PRESSURE=0;
+        public static final int KEY_INDEX_PRESSURE= Keys.toIndex("Pressure");
 
-        public static final String[] KEYS = {
-                "Pressure"
-        };
 
 
 
         public Attributes(float p) {
-            super(KEYS);
             pressure = p;
         }
 
         @Override
-        public String getValue(int index) {
+        public String get(int index) {
             if (index == KEY_INDEX_PRESSURE) return String.valueOf(pressure);
-            return "";
+            return NULL_VALUE;
+        }
+
+        @Override
+        public boolean hasKey(int keyIndex) {
+            return keyIndex == KEY_INDEX_PRESSURE;
+        }
+
+        @Override
+        public int size() {
+            return 1;
+        }
+
+        @Override
+        public String getAt(int i) {
+            return get(KEY_INDEX_PRESSURE);
+        }
+
+        @Override
+        public int getKeyAt(int i) {
+            return KEY_INDEX_PRESSURE;
         }
     }
 }

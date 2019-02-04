@@ -3,7 +3,7 @@ package ch.bailu.aat.services.directory;
 import android.database.Cursor;
 
 import ch.bailu.aat.gpx.GpxListAttributes;
-import ch.bailu.aat.gpx.GpxAttributes;
+import ch.bailu.aat.gpx.attributes.GpxAttributes;
 import ch.bailu.aat.gpx.GpxBigDelta;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.GpxList;

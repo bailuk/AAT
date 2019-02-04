@@ -31,7 +31,7 @@ public class AltitudeFromBarometer extends LocationStackChainedItem implements S
     @Override
     public void preferencesChanged(Context c, String key, int presetIndex) {
         if (saltitude.hasKey(key)) {
-            hypsometric.setAltitude(saltitude.getValue());
+            hypsometric.setAltitude(saltitude.getAt());
             if (hypsometric.isPressureAtSeaLevelValid()) {
                 spressure.setPressure((float) hypsometric.getPressureAtSeaLevel());
             }

@@ -21,7 +21,7 @@ public class SVGAssetView extends ImageObjectView {
     }
 
 
-    public void setImageObject(final String key, final String value) {
+    public void setImageObject(final int key, final String value) {
 
         new InsideContext(scontext) {
             @Override

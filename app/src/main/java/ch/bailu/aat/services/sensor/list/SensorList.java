@@ -5,12 +5,12 @@ import android.content.Context;
 import java.io.Closeable;
 import java.util.ArrayList;
 
-import ch.bailu.aat.gpx.GpxAttributes;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.gpx.StateID;
+import ch.bailu.aat.gpx.attributes.GpxAttributes;
+import ch.bailu.aat.gpx.attributes.Keys;
 import ch.bailu.aat.services.sensor.SensorInterface;
-import ch.bailu.aat.services.sensor.attributes.IndexedAttributes;
 import ch.bailu.aat.util.AppBroadcaster;
 
 public class SensorList extends ArrayList<SensorListItem> implements Closeable {
@@ -142,36 +142,50 @@ public class SensorList extends ArrayList<SensorListItem> implements Closeable {
     }
 
 
-    public static class Attributes extends IndexedAttributes {
+    public static class Attributes extends GpxAttributes {
 
-        public static final int KEY_SENSOR_COUNT=0;
-        public static final int KEY_SENSOR_OVERVIEW = 1;
-
-        public static final String[] KEYS = {
-                "Count",
-                "Overview"
-        };
-
+        private static Keys KEYS = new Keys();
+        public static final int KEY_SENSOR_COUNT = KEYS.add("count");
+        public static final int KEY_SENSOR_OVERVIEW = KEYS.add("overview");
 
 
         private final int sensors;
 
 
         public Attributes(int s) {
-            super(KEYS);
             sensors = s;
         }
 
 
 
         @Override
-        public String getValue(int index) {
-            if (index == KEY_SENSOR_COUNT) {
+        public String get(int key) {
+            if (key == KEY_SENSOR_COUNT) {
                 return String.valueOf(sensors);
-            } else if (index == KEY_SENSOR_OVERVIEW) {
+            } else if (key == KEY_SENSOR_OVERVIEW) {
                 return SensorState.getOverviewString();
             }
-            return "";
+            return NULL_VALUE;
+        }
+
+        @Override
+        public boolean hasKey(int keyIndex) {
+            return KEYS.hasKey(keyIndex);
+        }
+
+        @Override
+        public int size() {
+            return KEYS.size();
+        }
+
+        @Override
+        public String getAt(int i) {
+            return get(getKeyAt(i));
+        }
+
+        @Override
+        public int getKeyAt(int i) {
+            return KEYS.getKeyIndex(i);
         }
     }
 }

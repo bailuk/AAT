@@ -8,7 +8,7 @@ import ch.bailu.aat.description.ContentDescription;
 import ch.bailu.aat.description.CurrentSpeedDescription;
 import ch.bailu.aat.description.DistanceDescription;
 import ch.bailu.aat.description.SpeedDescription;
-import ch.bailu.aat.gpx.GpxAttributes;
+import ch.bailu.aat.gpx.attributes.GpxAttributes;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.GpxPointNode;
 import ch.bailu.aat.gpx.interfaces.GpxType;
@@ -55,8 +55,8 @@ public class HtmlBuilderGpx extends HtmlBuilder {
         if (a.size()>0) {
 
             for (int i = 0; i < a.size(); i++) {
-                String k = a.getKey(i);
-                String v = a.getValue(i);
+                String k = a.getSKeyAt(i);
+                String v = a.getAt(i);
 
                 if (k.contains("getName")) {
                     appendKeyValueBold(k, v);

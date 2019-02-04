@@ -1,22 +1,24 @@
 package ch.bailu.aat.gpx;
 
+import ch.bailu.aat.gpx.attributes.GpxAttributes;
+import ch.bailu.aat.gpx.attributes.Keys;
 import ch.bailu.aat.services.sensor.attributes.CadenceSpeedAttributes;
 import ch.bailu.aat.services.sensor.attributes.HeartRateAttributes;
 import ch.bailu.util_java.util.Objects;
 
 public class SampleRate {
 
-    public final static String[] KEYS_BPM = {
-            HeartRateAttributes.KEYS[HeartRateAttributes.KEY_INDEX_BPM],
-            "bpm"
+    public final static int[] KEYS_BPM = {
+            HeartRateAttributes.KEY_INDEX_BPM,
+            Keys.toIndex("bpm"),
     };
 
-    public final static String[] KEYS_CADENCE = {
-            CadenceSpeedAttributes.KEYS[CadenceSpeedAttributes.KEY_INDEX_CRANK_RPM],
-            "rpm"
+    public final static int[] KEYS_CADENCE = {
+            CadenceSpeedAttributes.KEY_INDEX_CRANK_RPM,
+            Keys.toIndex("rpm"),
     };
 
-    private final String KEY[];
+    private final int KEY[];
 
     private long sampleTimeMillis = 0L;
     private long totalTimeMillis = 0L;
@@ -25,7 +27,7 @@ public class SampleRate {
     private long totalSamples60KM = 0;
 
 
-    private SampleRate(String... key) {
+    private SampleRate(int... key) {
         KEY = key;
     }
 
@@ -45,7 +47,7 @@ public class SampleRate {
     }
 
 
-    public static final SampleRate NULL = new SampleRate("") {
+    public static final SampleRate NULL = new SampleRate() {
         @Override
         public void add(GpxPointNode p) {};
     };
@@ -58,31 +60,31 @@ public class SampleRate {
         sampleTimeMillis += p.getTimeDelta();
         totalTimeMillis += p.getTimeDelta();
 
-        if (attr.size() > 0) {
-            int spm = getValue(attr);
+        final int spm = getValue(attr, KEY);
 
-            if (spm > 0) {
-                long bpSample60KM = sampleTimeMillis * spm;
+        if (spm > 0) {
+            long bpSample60KM = sampleTimeMillis * spm;
 
-                totalSamples60KM += bpSample60KM;
+            totalSamples60KM += bpSample60KM;
 
-                sampleTimeMillis = 0L;
-            }
+            sampleTimeMillis = 0L;
         }
 
 
     }
 
-    private int getValue(GpxAttributes attr) {
-        return getValue(attr, KEY);
-    }
 
 
-    public static int getValue(GpxAttributes attr, String... keys) {
+
+
+    public static int getValue(GpxAttributes attr, int... keys) {
         int r  = 0;
-        for (String k : keys) {
-            r = Objects.toInt(attr.get(k));
-            if (r != 0) break;
+
+        for (int k : keys) {
+            if (attr.hasKey(k)) {
+                r = attr.getAsInteger(k);
+                if (r > 0) break;
+            }
         }
         return r;
     }

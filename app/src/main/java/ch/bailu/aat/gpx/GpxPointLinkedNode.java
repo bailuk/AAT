@@ -1,5 +1,6 @@
 package ch.bailu.aat.gpx;
 
+import ch.bailu.aat.gpx.attributes.GpxAttributes;
 import ch.bailu.aat.gpx.linked_list.Node;
 
 public class GpxPointLinkedNode extends GpxPointNode {
