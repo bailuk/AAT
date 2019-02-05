@@ -118,6 +118,8 @@ public class WheelCircumference implements Closeable {
     }
 
     public String getDebugString() {
-        return "S: " + samples + " D: " + distance + " C: " + circumference + " D: " + revolutionsDelta;
+        int dist = Math.round(distance);
+        int circ = Math.round(circumference);
+        return "S: " + samples + " D: " + dist + " C: " + circ + " D: " + revolutionsDelta;
     }
 }

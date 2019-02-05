@@ -35,8 +35,7 @@ public class CadenceSpeedAttributes   extends GpxAttributes {
     public static final int KEY_INDEX_CRANK_RPM = KEYS.add("Cadence");
     public static final int KEY_INDEX_WHEEL_CIRCUMFERENCE = KEYS.add("WheelCircumference");
     public static final int KEY_INDEX_CONTACT = KEYS.add("Contact");
-
-    public static final int KEY_INDEX_CIRCUMFERENCE_DEBUG = 6;
+    public static final int KEY_INDEX_CIRCUMFERENCE_DEBUG = KEYS.add("Debug");
 
 
     public int cadence_rpm = 0;
