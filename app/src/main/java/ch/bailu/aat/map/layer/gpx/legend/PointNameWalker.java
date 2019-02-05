@@ -3,6 +3,7 @@ package ch.bailu.aat.map.layer.gpx.legend;
 import ch.bailu.aat.gpx.GpxList;
 import ch.bailu.aat.gpx.GpxPointNode;
 import ch.bailu.aat.gpx.GpxSegmentNode;
+import ch.bailu.aat.gpx.attributes.GpxAttributes;
 import ch.bailu.aat.gpx.attributes.Keys;
 
 public class PointNameWalker extends LegendWalker{
@@ -47,6 +48,11 @@ public class PointNameWalker extends LegendWalker{
 
     private static int KEY_INDEX_NAME = Keys.toIndex("name");
     private String getNameFromB() {
-        return c.nodes.nodeB.point.getAttributes().get(KEY_INDEX_NAME);
+        final GpxAttributes attr = c.nodes.nodeB.point.getAttributes();
+
+        if (attr.hasKey(KEY_INDEX_NAME))
+            return attr.get(KEY_INDEX_NAME);
+
+        return null;
     }
 }

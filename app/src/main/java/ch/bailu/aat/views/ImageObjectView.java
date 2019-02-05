@@ -130,7 +130,7 @@ public class ImageObjectView extends ImageView {
 
 
     private void displayImage() {
-        if (imageHandle.hasErrors()) {
+        if (imageHandle.hasException()) {
             resetImage();
         } else if (imageHandle.isReadyAndLoaded()) {
             setImageBitmap(imageHandle.getBitmap());

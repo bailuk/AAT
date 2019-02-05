@@ -9,5 +9,4 @@ public abstract class ImageObjectAbstract extends ObjectHandle {
 
 
     public abstract Bitmap getBitmap();
-    public abstract boolean hasErrors();
 }

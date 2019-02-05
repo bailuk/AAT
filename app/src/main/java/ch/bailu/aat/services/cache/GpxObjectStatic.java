@@ -222,20 +222,21 @@ public class GpxObjectStatic extends GpxObject implements ElevationUpdaterClient
             new OnObject(sc, getID(), GpxObjectStatic.class) {
                 @Override
                 public void run(ObjectHandle handle) {
+                    GpxObjectStatic owner = (GpxObjectStatic) handle;
+
                     try {
-                        GpxObjectStatic owner = (GpxObjectStatic) handle;
-
                         size[0] = load(sc, owner);
-
-                        AppBroadcaster.broadcast(sc.getContext(),
-                                AppBroadcaster.FILE_CHANGED_INCACHE, getID());
 
                         sc.getElevationService().requestElevationUpdates(owner,
                                 owner.getSrtmTileCoordinates());
 
+
                     } catch (Exception e) {
-                        e.printStackTrace();
+                        owner.setException(e);
+
                     }
+                    AppBroadcaster.broadcast(sc.getContext(),
+                            AppBroadcaster.FILE_CHANGED_INCACHE, getID());
 
                 }
             };

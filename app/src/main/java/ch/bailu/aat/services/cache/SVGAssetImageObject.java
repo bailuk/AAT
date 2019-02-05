@@ -19,12 +19,14 @@ public class SVGAssetImageObject extends ImageObjectAbstract {
 
     private final String name;
     private final int size;
-    private boolean errors = false;
 
     public SVGAssetImageObject(String id, String name, int size) {
         super(id);
         this.name = name;
         this.size = size;
+
+        AppLog.d(this, name + " s: " + size);
+
     }
 
 
@@ -40,11 +42,6 @@ public class SVGAssetImageObject extends ImageObjectAbstract {
     @Override
     public Bitmap getBitmap() {
         return bitmap.getAndroidBitmap();
-    }
-
-    @Override
-    public boolean hasErrors() {
-        return errors;
     }
 
 
@@ -122,14 +119,16 @@ public class SVGAssetImageObject extends ImageObjectAbstract {
                         self.bitmap.set(svg, self.size);
                         size[0] = self.size;
 
-                        AppBroadcaster.broadcast(sc.getContext(),
-                                AppBroadcaster.FILE_CHANGED_INCACHE, ID);
 
+                    } catch (SVGParseException | IOException | IndexOutOfBoundsException e) {
+                        self.setException(e);
 
-                    } catch (SVGParseException | IOException e) {
-                        self.errors = true;
-                        AppLog.e(sc.getContext(), e);
                     }
+
+                    AppBroadcaster.broadcast(sc.getContext(),
+                           AppBroadcaster.FILE_CHANGED_INCACHE, ID);
+
+
 
                 }
             };

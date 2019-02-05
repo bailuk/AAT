@@ -28,6 +28,20 @@ public abstract class ObjectHandle implements ObjectBroadcastReceiver{
     private long accessTime=System.currentTimeMillis();
     private int lock=0;
 
+    private Exception exception = null;
+
+    protected void setException(Exception e) {
+        exception = e;
+    }
+
+    public boolean hasException() {
+        return exception != null;
+    }
+
+    public Exception getException() {
+        return exception;
+    }
+
     
     public ObjectHandle(String id) {
         ID=id;
@@ -99,6 +113,8 @@ public abstract class ObjectHandle implements ObjectBroadcastReceiver{
             return NULL;
         }
     }
+
+
 
 
 }

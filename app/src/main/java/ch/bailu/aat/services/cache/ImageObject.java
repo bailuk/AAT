@@ -2,6 +2,8 @@ package ch.bailu.aat.services.cache;
 
 import android.graphics.Bitmap;
 
+import java.io.IOException;
+
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.background.FileTask;
 import ch.bailu.aat.util.AppBroadcaster;
@@ -15,7 +17,6 @@ public class ImageObject extends ImageObjectAbstract {
     private final SyncBitmap bitmap=new SyncBitmap();
     private final Foc imageFile;
 
-    private boolean errors = false;
 
     private ImageObject() {
         this(FocAndroid.NULL);
@@ -65,11 +66,6 @@ public class ImageObject extends ImageObjectAbstract {
         return bitmap.getAndroidBitmap();
     }
 
-    @Override
-    public boolean hasErrors() {
-        return errors;
-    }
-
 
     public static class Factory extends ObjectHandle.Factory {
         @Override
@@ -107,10 +103,12 @@ public class ImageObject extends ImageObjectAbstract {
                 public void run(ObjectHandle obj) {
                     ImageObject self = (ImageObject) obj;
 
-                    self.bitmap.set(self.imageFile);
-                    size[0] =  self.bitmap.getSize();
-
-                    self.errors = self.getBitmap() == null;
+                    try {
+                        self.bitmap.set(self.imageFile);
+                        size[0] =  self.bitmap.getSize();
+                    } catch (IOException e) {
+                        self.setException(e);
+                    }
 
                     AppBroadcaster.broadcast(sc.getContext(), AppBroadcaster.FILE_CHANGED_INCACHE,
                             self.imageFile);
