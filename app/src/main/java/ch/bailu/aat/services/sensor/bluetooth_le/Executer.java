@@ -16,29 +16,33 @@ public class Executer {
     private final Stack<BluetoothGattCharacteristic> toRead = new Stack<>();
     private final Stack<BluetoothGattCharacteristic> toNotify = new Stack<>();
 
+    private boolean discoverd = false;
+
 
     public void notify(BluetoothGattCharacteristic c) {
         toNotify.push(c);
     }
-
-
     public void read(BluetoothGattCharacteristic c) {
         toRead.push(c);
     }
 
-
+    public boolean needToDiscover() { return !discoverd; }
     public boolean haveToRead() {
         return toRead.size() > 0;
     }
+    public boolean haveToNotify() { return toNotify.size() > 0;}
+
+
 
     public void next(BluetoothGatt gatt) {
-        if (haveToRead()) {
+        if (needToDiscover()) {
+            discoverd = gatt.discoverServices();
+
+        } else if (haveToRead()) {
             gatt.readCharacteristic(toRead.pop());
 
-
-        } else if (toNotify.size() > 0) {
+        } else if (haveToNotify()) {
             enableNotification(gatt, toNotify.pop());
-
 
         }
     }

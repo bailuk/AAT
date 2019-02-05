@@ -19,10 +19,13 @@ import ch.bailu.aat.services.sensor.SensorInterface;
 import ch.bailu.aat.services.sensor.list.SensorList;
 import ch.bailu.aat.services.sensor.list.SensorListItem;
 import ch.bailu.aat.services.sensor.list.SensorItemState;
+import ch.bailu.aat.util.Res;
 import ch.bailu.aat.util.Timer;
+import ch.bailu.aat.util.ui.AppLog;
 
 @RequiresApi(api = 18)
 public class BleSensorSDK18 extends BluetoothGattCallback implements SensorInterface {
+
 
     private final Executer execute = new Executer();
 
@@ -75,6 +78,14 @@ public class BleSensorSDK18 extends BluetoothGattCallback implements SensorInter
                 close();
 
             } else {
+                // fixme reconnect ///////////////////////////////////////////////
+                execute.next(gatt);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                    device.createBond();
+                }
+                // fixme reconnect ///////////////////////////////////////////////
+
+
                 scanningTimeout.kick();
                 connectingTimeout.kick();
                 item.setState(SensorItemState.CONNECTING);
@@ -93,6 +104,7 @@ public class BleSensorSDK18 extends BluetoothGattCallback implements SensorInter
                         BluetoothDevice.TRANSPORT_LE);
             } else {
                 return device.connectGatt(context, true, this);
+
             }
 
         }
@@ -108,12 +120,20 @@ public class BleSensorSDK18 extends BluetoothGattCallback implements SensorInter
 
     @Override
     public synchronized void onConnectionStateChange(BluetoothGatt g, int status, int state) {
+        // fixme reconnect ///////////////////////////////////////////////
+        log(status, state);
+        // fixme reconnect ///////////////////////////////////////////////
+
         if (isConnected(status, state)) {
-            gatt.discoverServices();
+            execute.next(gatt);
 
         } else if (!isConnecting(status, state)) {
             close();
         }
+    }
+
+    private void log(int status, int state) {
+        AppLog.d(this, "status: " + Integer.toHexString(status) + " state: " + Integer.toHexString(state));
     }
 
 
