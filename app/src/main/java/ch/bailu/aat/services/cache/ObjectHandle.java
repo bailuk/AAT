@@ -3,25 +3,13 @@ package ch.bailu.aat.services.cache;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.util.ui.AppLog;
 import ch.bailu.util_java.foc.Foc;
-import ch.bailu.util_java.foc.FocFile;
+import ch.bailu.util_java.foc.FocName;
 
 
 public abstract class ObjectHandle implements ObjectBroadcastReceiver{
+    public final static ObjectHandle NULL = new NullHandle();
+
     public static final int MIN_SIZE=100;
-
-    public static final ObjectHandle NULL = new ObjectHandle(""){
-
-        @Override
-        public long getSize() {
-            return MIN_SIZE;
-        }
-
-        @Override
-        public void onDownloaded(String id, String url, ServiceContext cs) {}
-
-        @Override
-        public void onChanged(String id, ServiceContext cs) {}
-    };
 
     private final String ID;
     
@@ -30,22 +18,10 @@ public abstract class ObjectHandle implements ObjectBroadcastReceiver{
 
     private Exception exception = null;
 
-    protected void setException(Exception e) {
-        exception = e;
-    }
-
-    public boolean hasException() {
-        return exception != null;
-    }
-
-    public Exception getException() {
-        return exception;
-    }
-
-    
     public ObjectHandle(String id) {
         ID=id;
     }
+
 
     @Override
     public String toString() {
@@ -59,10 +35,26 @@ public abstract class ObjectHandle implements ObjectBroadcastReceiver{
 
     public Foc getFile() {
         AppLog.w(this, "Default implementation of getFile() called!");
-        return new FocFile(ID);
+        return new FocName(ID);
     }
-    
-    
+
+
+    protected void setException(Exception e) {
+        exception = e;
+        AppLog.w(this, e);
+    }
+
+
+    public boolean hasException() {
+        return exception != null;
+    }
+
+
+    public Exception getException() {
+        return exception;
+    }
+
+
     public boolean isLocked() {
         return lock > 0;
     }
@@ -85,7 +77,13 @@ public abstract class ObjectHandle implements ObjectBroadcastReceiver{
     public boolean isReadyAndLoaded() {
         return true;
     }
-    
+
+
+    public boolean isLoaded() {
+        return isReadyAndLoaded() || hasException();
+    }
+
+
     public abstract long getSize();
     
     public synchronized void access() {
@@ -110,11 +108,8 @@ public abstract class ObjectHandle implements ObjectBroadcastReceiver{
 
     public static class Factory {
         public ObjectHandle factory(String id, ServiceContext cs) {
-            return NULL;
+            return NullHandle.NULL;
         }
     }
-
-
-
 
 }

@@ -23,7 +23,6 @@ public class GpxExtensionParser extends TagParser {
     @Override
     protected void parseText(XmlPullParser parser, Scanner scanner) throws IOException, XmlPullParserException {
         final String val = parser.getText();
-        AppLog.d(this, key + "=" + val);
         if (val != null && key != null && key.length() > 0) {
             scanner.tags.add(key, val);
 

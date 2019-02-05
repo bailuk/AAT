@@ -273,6 +273,7 @@ public class DirectorySynchronizer  implements Closeable {
         public void ping() {
             if (canContinue == false) {
                 terminate();
+
             } else if (pendingHandle.isReadyAndLoaded()) {
                 try {
                     addGpxSummaryToDatabase(pendingHandle.getID(), pendingHandle.getGpxList());
@@ -280,7 +281,12 @@ public class DirectorySynchronizer  implements Closeable {
                 } catch (Exception e) {
                     terminate(e);
                 }
-            } 
+
+            }  else if (pendingHandle.hasException()) {
+                state.start();
+                //setState(new StateLoadNextGpx());
+
+            }
         }
 
 

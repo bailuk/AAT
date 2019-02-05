@@ -4,6 +4,7 @@ import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlPullParserFactory;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
@@ -27,16 +28,14 @@ public class XmlParser extends AbsXmlParser {
 
         factory.setNamespaceAware(true);
 
-
         parser = factory.newPullParser();
-        reader = new InputStreamReader(file.openR());
+        reader = BOM.open(file);
         scanner = new Scanner(file.lastModified());
     }
 
 
     @Override
     public void parse() throws XmlPullParserException, IOException {
-
         parser.setInput(reader);
         new RootParser().parse(parser, scanner);
     }
