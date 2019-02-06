@@ -4,6 +4,7 @@ import android.content.Context;
 
 import java.io.Closeable;
 
+import ch.bailu.aat.gpx.interfaces.GpxPointInterface;
 import ch.bailu.aat.preferences.PresetDependent;
 
 public abstract class LocationStackItem implements Closeable, PresetDependent{
@@ -24,4 +25,5 @@ public abstract class LocationStackItem implements Closeable, PresetDependent{
         builder.append(getClass().getSimpleName());
         builder.append("</b><br>");
     }
+
 }

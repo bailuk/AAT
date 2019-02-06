@@ -26,7 +26,7 @@ public class WheelCircumference implements Closeable {
     private long revolutionsStart = 0;
     private long revolutionsDelta = 0;
 
-    private GpxPointInterface previousLocation = null;
+
 
     private float distance = 0f;
     private int samples = 0;
@@ -34,33 +34,35 @@ public class WheelCircumference implements Closeable {
     private int minSamples = MIN_SAMPLES;
     private float circumference = 0f;
 
-
+    private GpxInformation currentLocation = GpxInformation.NULL;
+    private GpxPointInterface previousLocation = null;
 
     private BroadcastReceiver onLocationChanged = new BroadcastReceiver() {
 
         @Override
         public void onReceive(Context context, Intent intent) {
 
-            GpxInformation currentLocation = scontext.getLocationService().getLocationInformation();
+            if (scontext.getLocationService().hasLoggableLocation(currentLocation)) {
+                currentLocation = scontext.getLocationService().getLoggableLocation();
 
-            if (currentLocation.getAccuracy() <= MIN_ACCURACY && revolution.isInitialized()) {
-                if (previousLocation == null) {
-                    reset(currentLocation);
-
-                } else {
-                    final float dist = GpxDeltaHelper.getDistance(previousLocation, currentLocation);
-
-                    if (dist > MIN_SAMPLE_DISTANCE && dist < MAX_SAMPLE_DISTANCE) {
-
-                        addSample(currentLocation, dist);
+                if (currentLocation.getAccuracy() <= MIN_ACCURACY && revolution.isInitialized()) {
+                    if (previousLocation == null) {
+                        reset(currentLocation);
 
                     } else {
-                        reset();
+                        final float dist = GpxDeltaHelper.getDistance(previousLocation, currentLocation);
 
+                        if (dist > MIN_SAMPLE_DISTANCE && dist < MAX_SAMPLE_DISTANCE) {
+                            addSample(currentLocation, dist);
+
+                        } else {
+                            reset();
+
+                        }
                     }
+                } else {
+                    reset();
                 }
-            } else {
-                reset();
             }
         }
     };
@@ -119,7 +121,7 @@ public class WheelCircumference implements Closeable {
 
     public String getDebugString() {
         int dist = Math.round(distance);
-        int circ = Math.round(circumference);
-        return "S: " + samples + " D: " + dist + " C: " + circ + " D: " + revolutionsDelta;
+        int circ = Math.round(circumference * 100f) ;
+        return "S" + samples + " D" + dist + " C" + circ; // + " D: " + revolutionsDelta;
     }
 }

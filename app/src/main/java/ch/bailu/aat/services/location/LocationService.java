@@ -8,7 +8,6 @@ import java.io.Closeable;
 import java.util.ArrayList;
 
 import ch.bailu.aat.gpx.GpxInformation;
-import ch.bailu.aat.gpx.interfaces.GpxPointInterface;
 import ch.bailu.aat.preferences.PresetDependent;
 import ch.bailu.aat.preferences.location.SolidLocationProvider;
 import ch.bailu.aat.preferences.presets.SolidPreset;
@@ -108,12 +107,10 @@ public class LocationService extends VirtualService
     }
 
 
-    public GpxPointInterface getCleanLocation() {
-        return clean.getCleanLocation();
-    }
+    public GpxInformation getLoggableLocation() {return clean.getLoggableLocation();}
 
-    public boolean hasLoggableLocation() {
-        return clean.hasLoggableLocation();
+    public boolean hasLoggableLocation(GpxInformation old) {
+        return clean.hasLoggableLocation(old);
     }
 
     public boolean isAutopaused() {

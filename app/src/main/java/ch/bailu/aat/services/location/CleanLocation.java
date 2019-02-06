@@ -2,28 +2,22 @@ package ch.bailu.aat.services.location;
 
 import android.content.Context;
 
-import ch.bailu.aat.gpx.GpxPoint;
-import ch.bailu.aat.gpx.interfaces.GpxPointInterface;
+import ch.bailu.aat.gpx.GpxInformation;
 
 public class CleanLocation extends LocationStackItem {
     private static final long LOCATION_LIFETIME_MILLIS=3*1000;
 
-    private GpxPointInterface currentLocation=GpxPoint.NULL;
-    private long creationTime=0;
+    private GpxInformation loggableLocation = GpxInformation.NULL;
+    private long creationTime = 0;
 
 
-
-    public boolean hasLoggableLocation() {
-        return (System.currentTimeMillis() - creationTime) < LOCATION_LIFETIME_MILLIS;
+    public boolean hasLoggableLocation(GpxInformation lastLocation) {
+        return (loggableLocation != lastLocation &&
+                (System.currentTimeMillis() - creationTime) < LOCATION_LIFETIME_MILLIS);
     }
 
-
-    public GpxPointInterface getCleanLocation() {
-        GpxPointInterface location=currentLocation;
-        currentLocation=GpxPoint.NULL;
-        creationTime = 0;
-
-        return location;
+    public GpxInformation getLoggableLocation() {
+        return loggableLocation;
     }
 
 
@@ -34,7 +28,7 @@ public class CleanLocation extends LocationStackItem {
     @Override
     public void passLocation(LocationInformation location) {
         if (location.isFromGPS()) {
-            currentLocation = location;
+            loggableLocation = location;
             creationTime = location.getCreationTime();
         }
     }

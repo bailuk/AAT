@@ -3,6 +3,7 @@ package ch.bailu.aat.services.tracker;
 import java.io.IOException;
 
 import ch.bailu.aat.R;
+import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.attributes.GpxAttributes;
 import ch.bailu.aat.gpx.StateID;
 import ch.bailu.aat.util.AppBroadcaster;
@@ -12,6 +13,7 @@ public class OnState extends State {
 
     private final AttributesCollector attributes = new AttributesCollector();
 
+    private GpxInformation location = GpxInformation.NULL;
 
     public OnState(TrackerInternals tracker) {
         super(tracker);
@@ -48,9 +50,10 @@ public class OnState extends State {
             final LocationService l = internal.scontext.getLocationService();
             final GpxAttributes attr = attributes.collect(internal.scontext);
 
-            if (l.hasLoggableLocation()) {
+            if (l.hasLoggableLocation(location)) {
                 try {
-                    internal.logger.log(l.getCleanLocation(), attr);
+                    location = l.getLoggableLocation();
+                    internal.logger.log(location, attr);
                 } catch (IOException e) {
                     internal.emergencyOff(e);
                 }
