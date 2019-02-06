@@ -100,10 +100,10 @@ public class BleSensorSDK18 extends BluetoothGattCallback implements SensorInter
         if (item.lock(this)) {
 
             if (Build.VERSION.SDK_INT >= 23) {
-                return device.connectGatt(context, true, this,
+                return device.connectGatt(context, false, this,
                         BluetoothDevice.TRANSPORT_LE);
             } else {
-                return device.connectGatt(context, true, this);
+                return device.connectGatt(context, false, this);
 
             }
 
