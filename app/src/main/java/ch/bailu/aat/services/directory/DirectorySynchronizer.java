@@ -12,10 +12,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import ch.bailu.aat.coordinates.BoundingBoxE6;
-import ch.bailu.aat.gpx.GpxListAttributes;
 import ch.bailu.aat.gpx.GpxFileWrapper;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.GpxList;
+import ch.bailu.aat.gpx.attributes.MaxSpeed;
 import ch.bailu.aat.gpx.interfaces.GpxBigDeltaInterface;
 import ch.bailu.aat.map.mapsforge.MapsForgePreview;
 import ch.bailu.aat.services.ServiceContext;
@@ -307,7 +307,7 @@ public class DirectorySynchronizer  implements Closeable {
             content.put(GpxDbConstants.KEY_AVG_SPEED,  summary.getSpeed());
 
             content.put(GpxDbConstants.KEY_MAX_SPEED,  summary.getAttributes().get(
-                    GpxListAttributes.INDEX_MAX_SPEED));
+                    MaxSpeed.INDEX_MAX_SPEED));
 
             content.put(GpxDbConstants.KEY_DISTANCE,   summary.getDistance());
             content.put(GpxDbConstants.KEY_START_TIME, summary.getStartTime());

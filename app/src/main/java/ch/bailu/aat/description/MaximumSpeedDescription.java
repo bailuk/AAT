@@ -4,8 +4,9 @@ package ch.bailu.aat.description;
 import android.content.Context;
 
 import ch.bailu.aat.R;
-import ch.bailu.aat.gpx.GpxListAttributes;
 import ch.bailu.aat.gpx.GpxInformation;
+import ch.bailu.aat.gpx.attributes.MaxSpeed;
+
 public class MaximumSpeedDescription  extends SpeedDescription {
 
     public MaximumSpeedDescription(Context context) {
@@ -19,7 +20,7 @@ public class MaximumSpeedDescription  extends SpeedDescription {
 
     @Override
     public void onContentUpdated(int iid, GpxInformation info) {
-        setCache(info.getAttributes().getAsFloat(GpxListAttributes.INDEX_MAX_SPEED));
+        setCache(info.getAttributes().getAsFloat(MaxSpeed.INDEX_MAX_SPEED));
     }
 
 }

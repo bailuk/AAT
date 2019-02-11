@@ -4,13 +4,12 @@ import org.xmlpull.v1.XmlPullParserException;
 
 import java.io.IOException;
 
-import ch.bailu.aat.gpx.AutoPause;
+import ch.bailu.aat.gpx.attributes.AutoPause;
 import ch.bailu.aat.gpx.GpxList;
-import ch.bailu.aat.gpx.GpxListAttributes;
+import ch.bailu.aat.gpx.attributes.GpxListAttributes;
 import ch.bailu.aat.gpx.GpxPoint;
 import ch.bailu.aat.gpx.interfaces.GpxType;
 import ch.bailu.aat.gpx.xml_parser.parser.AbsXmlParser;
-import ch.bailu.aat.preferences.SolidAutopause;
 import ch.bailu.aat.services.background.ThreadControl;
 import ch.bailu.util_java.foc.Foc;
 import ch.bailu.util_java.parser.OnParsedInterface;
@@ -47,7 +46,7 @@ public class GpxListReader {
             throws IOException, SecurityException, XmlPullParserException {
 
         track = new OnParsed(GpxType.TRACK, trackAttributes);
-        way   = new OnParsed(GpxType.WAY,   GpxListAttributes.factoryNull());
+        way   = new OnParsed(GpxType.WAY,   GpxListAttributes.NULL);
         route = new OnParsed(GpxType.ROUTE, GpxListAttributes.factoryRoute());
 
         threadControl=c;

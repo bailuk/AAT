@@ -2,8 +2,8 @@ package ch.bailu.aat.services.location;
 
 import android.content.Context;
 
-import ch.bailu.aat.gpx.AutoPause;
-import ch.bailu.aat.gpx.GpxListAttributes;
+import ch.bailu.aat.gpx.attributes.AutoPause;
+import ch.bailu.aat.gpx.attributes.GpxListAttributes;
 import ch.bailu.aat.gpx.GpxList;
 import ch.bailu.aat.gpx.GpxPointNode;
 import ch.bailu.aat.gpx.StateID;

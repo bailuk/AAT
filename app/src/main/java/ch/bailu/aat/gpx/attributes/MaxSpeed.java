@@ -1,21 +1,47 @@
-package ch.bailu.aat.gpx;
+package ch.bailu.aat.gpx.attributes;
 
-public abstract class MaxSpeed {
+import ch.bailu.aat.gpx.GpxPointNode;
 
-    public static final MaxSpeed NULL = new MaxSpeed() {
-        @Override
-        public float get() {
-            return 0;
-        }
+public abstract class MaxSpeed  extends GpxSubAttributes {
 
-        @Override
-        public void add(float speed) {
 
-        }
-    };
+    private static final Keys KEYS = new Keys();
+    public static final int INDEX_MAX_SPEED = KEYS.add("MaxSpeed");
+
+
+    public MaxSpeed() {
+        super(KEYS);
+    }
+
 
     public abstract float get();
     public abstract void add(float speed);
+
+
+    @Override
+    public boolean update(GpxPointNode p, boolean autoPause) {
+        if (!autoPause) add(p.getSpeed());
+        return autoPause;
+    }
+
+
+
+    @Override
+    public String get(int key) {
+        if (key == INDEX_MAX_SPEED) {
+            return String.valueOf(get());
+        }
+        return NULL_VALUE;
+    }
+
+
+    @Override
+    public float getAsFloat(int key) {
+        if (key == INDEX_MAX_SPEED)
+            return get();
+
+        return super.getAsFloat(key);
+    }
 
 
 
@@ -32,6 +58,7 @@ public abstract class MaxSpeed {
         public void add(float speed) {
             maximum=Math.max(speed, maximum);
         }
+
     }
 
 

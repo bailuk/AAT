@@ -15,11 +15,15 @@ public class Keys {
     private ArrayList<Integer> keys = new ArrayList<>(10);
 
     public int add(String string) {
-        int keyIndex = toIndex(string);
+        return add(toIndex(string));
+    }
 
+
+    public int add(int keyIndex) {
         keys.add(keyIndex);
         return keyIndex;
     }
+
 
     public boolean hasKey(int keyIndex) {
         for (int k : keys) {
@@ -63,4 +67,5 @@ public class Keys {
     public int getKeyIndex(int i) {
         return keys.get(i);
     }
+
 }

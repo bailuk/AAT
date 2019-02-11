@@ -4,7 +4,7 @@ import ch.bailu.aat.gpx.InfoID;
 
 public class SensorState {
 
-    private static int SIZE = InfoID.BAROMETER_SENSOR - InfoID.HEART_RATE_SENSOR + 1;
+    private static int SIZE = InfoID.STEP_COUNTER_SENSOR - InfoID.HEART_RATE_SENSOR + 1;
 
     private static int[] connected = new int[SIZE];
 
@@ -13,6 +13,7 @@ public class SensorState {
             "Cadence",
             "Speed",
             "Barometer",
+            "Step Counter"
     };
 
     public static int toIndex(int iid) {

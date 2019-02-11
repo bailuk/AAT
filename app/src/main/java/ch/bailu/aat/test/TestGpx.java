@@ -6,7 +6,7 @@ import org.xmlpull.v1.XmlPullParserException;
 
 import java.io.IOException;
 
-import ch.bailu.aat.gpx.AutoPause;
+import ch.bailu.aat.gpx.attributes.AutoPause;
 import ch.bailu.aat.gpx.GpxList;
 import ch.bailu.aat.gpx.xml_parser.GpxListReader;
 import ch.bailu.aat.gpx.writer.GpxListWriter;

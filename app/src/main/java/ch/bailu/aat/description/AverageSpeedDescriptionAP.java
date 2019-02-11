@@ -3,7 +3,7 @@ package ch.bailu.aat.description;
 import android.content.Context;
 
 import ch.bailu.aat.R;
-import ch.bailu.aat.gpx.GpxListAttributes;
+import ch.bailu.aat.gpx.attributes.AutoPause;
 import ch.bailu.aat.gpx.GpxInformation;
 
 public class AverageSpeedDescriptionAP extends AverageSpeedDescription {
@@ -19,7 +19,7 @@ public class AverageSpeedDescriptionAP extends AverageSpeedDescription {
 
     @Override
     public void onContentUpdated(int iid, GpxInformation info) {
-        final long autoPause = info.getAttributes().getAsLong(GpxListAttributes.INDEX_AUTO_PAUSE);
+        final long autoPause = info.getAttributes().getAsLong(AutoPause.INDEX_AUTO_PAUSE);
         float distance = info.getDistance();
         long stime = (info.getTimeDelta() - autoPause)/1000;
 

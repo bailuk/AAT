@@ -2,12 +2,13 @@ package ch.bailu.aat.gpx;
 
 import ch.bailu.aat.coordinates.BoundingBoxE6;
 import ch.bailu.aat.gpx.attributes.GpxAttributes;
+import ch.bailu.aat.gpx.attributes.GpxListAttributes;
 import ch.bailu.aat.gpx.interfaces.GpxBigDeltaInterface;
 import ch.bailu.aat.gpx.interfaces.GpxType;
 
 
 public class GpxBigDelta implements GpxBigDeltaInterface {
-    public final static GpxBigDelta NULL= new GpxBigDelta(GpxListAttributes.factoryNull());
+    public final static GpxBigDelta NULL= new GpxBigDelta(GpxListAttributes.NULL);
 
     private float distance=0;
 

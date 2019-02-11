@@ -3,7 +3,8 @@ package ch.bailu.aat.description;
 import android.content.Context;
 
 import ch.bailu.aat.gpx.GpxInformation;
-import ch.bailu.aat.gpx.GpxListAttributes;
+import ch.bailu.aat.gpx.attributes.SampleRate;
+import ch.bailu.aat.services.sensor.attributes.StepCounterAttributes;
 
 public class IndexedAttributeDescription extends ContentDescription {
 
@@ -47,7 +48,7 @@ public class IndexedAttributeDescription extends ContentDescription {
 
         public Cadence(Context c) {
             super(c, CadenceDescription.LABEL, CadenceDescription.UNIT,
-                    GpxListAttributes.INDEX_CADENCE);
+                    SampleRate.Cadence.INDEX_CADENCE);
         }
     }
 
@@ -55,7 +56,7 @@ public class IndexedAttributeDescription extends ContentDescription {
     public static class TotalCadence extends IndexedAttributeDescription {
 
         public TotalCadence(Context c) {
-            super(c, "Crank rotations", "Rotations", GpxListAttributes.INDEX_TOTAL_CADENCE);
+            super(c, "Crank rotations", "Rotations", SampleRate.Cadence.INDEX_TOTAL_CADENCE);
         }
     }
 
@@ -63,7 +64,7 @@ public class IndexedAttributeDescription extends ContentDescription {
     public static class HeartRate extends IndexedAttributeDescription {
 
         public HeartRate(Context c) {
-            super(c, HeartRateDescription.LABEL, HeartRateDescription.UNIT, GpxListAttributes.INDEX_AVERAGE_HR);
+            super(c, HeartRateDescription.LABEL, HeartRateDescription.UNIT, SampleRate.HeartRate.INDEX_AVERAGE_HR);
         }
     }
 
@@ -71,7 +72,21 @@ public class IndexedAttributeDescription extends ContentDescription {
     public static class HeartBeats extends IndexedAttributeDescription {
 
         public HeartBeats(Context c) {
-            super(c, "Heart Beats", "Beats", GpxListAttributes.INDEX_HEART_BEATS);
+            super(c, "Heartbeats", "Beats", SampleRate.HeartRate.INDEX_HEART_BEATS);
         }
     }
+
+
+    public static class StepsRate extends IndexedAttributeDescription {
+        public StepsRate(Context c) {
+            super(c, "Steprate", "spm", StepCounterAttributes.KEY_INDEX_STEPS_RATE);
+        }
+    }
+
+    public static class StepsTotal extends IndexedAttributeDescription {
+        public StepsTotal(Context c) {
+            super(c, "Total steps", "steps", StepCounterAttributes.KEY_INDEX_STEPS_TOTAL);
+        }
+    }
+
 }

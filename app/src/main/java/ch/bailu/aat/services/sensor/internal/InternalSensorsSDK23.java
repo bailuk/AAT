@@ -32,7 +32,7 @@ public class InternalSensorsSDK23 extends Sensors {
 
     @Override
     public void scann() {
-        //scann(Sensor.TYPE_ALL);
+        scann(Sensor.TYPE_STEP_COUNTER);
         scann(Sensor.TYPE_PRESSURE);
         scann(Sensor.TYPE_HEART_RATE);
     }
@@ -63,7 +63,8 @@ public class InternalSensorsSDK23 extends Sensors {
 
     private boolean isSupported(Sensor sensor) {
         return     sensor.getType() == Sensor.TYPE_PRESSURE
-                || sensor.getType() == Sensor.TYPE_HEART_RATE;
+                || sensor.getType() == Sensor.TYPE_HEART_RATE
+                || sensor.getType() == Sensor.TYPE_STEP_COUNTER;
 
     }
 
@@ -105,6 +106,8 @@ public class InternalSensorsSDK23 extends Sensors {
             return new HeartRateSensor(context, list, sensor);
         else if (sensor.getType() == Sensor.TYPE_PRESSURE)
             return new BarometerSensor(context, list, sensor);
+        else if (sensor.getType() == Sensor.TYPE_STEP_COUNTER)
+            return new StepCounterSensor(context, list, sensor);
 
         return null;
     }

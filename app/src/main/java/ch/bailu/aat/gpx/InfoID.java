@@ -24,4 +24,5 @@ public class InfoID {
     public final static int CADENCE_SENSOR = 72;
     public final static int SPEED_SENSOR = 73;
     public final static int BAROMETER_SENSOR = 74;
+    public final static int STEP_COUNTER_SENSOR = 75;
 }

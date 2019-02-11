@@ -7,11 +7,10 @@ import ch.bailu.aat.description.CadenceDescription;
 import ch.bailu.aat.description.HeartRateDescription;
 import ch.bailu.aat.dispatcher.DispatcherInterface;
 import ch.bailu.aat.gpx.GpxList;
-import ch.bailu.aat.gpx.GpxListAttributes;
 import ch.bailu.aat.gpx.GpxListWalker;
 import ch.bailu.aat.gpx.GpxPointNode;
 import ch.bailu.aat.gpx.GpxSegmentNode;
-import ch.bailu.aat.gpx.SampleRate;
+import ch.bailu.aat.gpx.attributes.SampleRate;
 import ch.bailu.aat.preferences.general.SolidUnit;
 import ch.bailu.aat.util.ui.AppDensity;
 import ch.bailu.aat.util.ui.AppTheme;
@@ -49,8 +48,8 @@ public class SpmGraphView extends AbsGraphView {
                 new AppDensity(getContext()));
 
         int max = Math.max(
-                list.getDelta().getAttributes().getAsInteger(GpxListAttributes.INDEX_MAX_CADENCE),
-                list.getDelta().getAttributes().getAsInteger(GpxListAttributes.INDEX_MAX_HR));
+                list.getDelta().getAttributes().getAsInteger(SampleRate.Cadence.INDEX_MAX_CADENCE),
+                list.getDelta().getAttributes().getAsInteger(SampleRate.HeartRate.INDEX_MAX_HR));
 
 
 
@@ -62,11 +61,11 @@ public class SpmGraphView extends AbsGraphView {
 
         final GpxListWalker hrPainter =
                     new GraphPainter(plotterHr, (int)list.getDelta().getDistance() / getWidth(),
-                            AppTheme.COLOR_BLUE, SampleRate.KEYS_BPM);
+                            AppTheme.COLOR_BLUE, SampleRate.HeartRate.GPX_KEYS);
 
         final GpxListWalker cadencePainter =
                 new GraphPainter(plotterCadence, (int)list.getDelta().getDistance() / getWidth(),
-                        AppTheme.COLOR_GREEN, SampleRate.KEYS_CADENCE);
+                        AppTheme.COLOR_GREEN, SampleRate.Cadence.GPX_KEYS);
 
 
 

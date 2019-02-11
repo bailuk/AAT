@@ -2,6 +2,7 @@ package ch.bailu.aat.gpx;
 
 import ch.bailu.aat.coordinates.BoundingBoxE6;
 import ch.bailu.aat.gpx.attributes.GpxAttributes;
+import ch.bailu.aat.gpx.attributes.GpxListAttributes;
 import ch.bailu.aat.gpx.interfaces.GpxBigDeltaInterface;
 import ch.bailu.aat.gpx.interfaces.GpxType;
 import ch.bailu.aat.gpx.linked_list.Node;
@@ -9,7 +10,7 @@ import ch.bailu.aat.gpx.segmented_list.SegmentNode;
 
 public class GpxSegmentNode extends SegmentNode implements GpxBigDeltaInterface {
 
-    private final GpxBigDelta delta=new GpxBigDelta(GpxListAttributes.factoryNull());
+    private final GpxBigDelta delta=new GpxBigDelta(GpxListAttributes.NULL);
 
     
     public GpxSegmentNode(GpxPointNode n) {

@@ -1,10 +1,16 @@
-package ch.bailu.aat.gpx;
+package ch.bailu.aat.gpx.attributes;
 
+import ch.bailu.aat.gpx.GpxPointNode;
 import ch.bailu.aat.gpx.interfaces.GpxDeltaInterface;
 import ch.bailu.aat.services.location.Trigger;
 import ch.bailu.aat.util.ui.AppLog;
 
-public abstract class AutoPause {
+public abstract class AutoPause extends GpxSubAttributes {
+
+    private static final Keys KEYS = new Keys();
+
+    public static final int INDEX_AUTO_PAUSE = KEYS.add("AutoPause");
+
     public static final AutoPause NULL = new AutoPause() {
         @Override
         public long get() {
@@ -18,9 +24,41 @@ public abstract class AutoPause {
         }
     };
 
+    public AutoPause() {
+        super(KEYS);
+    }
+
 
     public abstract long get();
     public abstract boolean update(GpxDeltaInterface delta);
+
+
+    @Override
+    public boolean update(GpxPointNode p, boolean autoPause) {
+        return update(p) == false;
+    }
+
+
+    @Override
+    public String get(int key) {
+        if (key == INDEX_AUTO_PAUSE) {
+            return String.valueOf(get());
+
+        }
+        return NULL_VALUE;
+    }
+
+
+
+
+    @Override
+    public long getAsLong(int key) {
+        if (key == INDEX_AUTO_PAUSE) {
+            return get();
+        }
+        return super.getAsLong(key);
+    }
+
 
 
     private static class Samples extends AutoPause {
@@ -52,6 +90,7 @@ public abstract class AutoPause {
         public long get() {
             return pause;
         }
+
     }
 
     public static class Time extends AutoPause {

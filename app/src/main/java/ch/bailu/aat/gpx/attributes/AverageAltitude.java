@@ -1,4 +1,4 @@
-package ch.bailu.aat.gpx;
+package ch.bailu.aat.gpx.attributes;
 
 
 /**

@@ -7,7 +7,7 @@ import org.xmlpull.v1.XmlPullParserException;
 import java.io.IOException;
 
 import ch.bailu.aat.coordinates.SrtmCoordinates;
-import ch.bailu.aat.gpx.AutoPause;
+import ch.bailu.aat.gpx.attributes.AutoPause;
 import ch.bailu.aat.gpx.GpxList;
 import ch.bailu.aat.gpx.GpxListWalker;
 import ch.bailu.aat.gpx.GpxPoint;

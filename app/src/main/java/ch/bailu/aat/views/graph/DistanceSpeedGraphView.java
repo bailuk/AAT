@@ -11,13 +11,13 @@ import ch.bailu.aat.R;
 import ch.bailu.aat.description.AverageSpeedDescription;
 import ch.bailu.aat.description.AverageSpeedDescriptionAP;
 import ch.bailu.aat.dispatcher.DispatcherInterface;
-import ch.bailu.aat.gpx.AutoPause;
+import ch.bailu.aat.gpx.attributes.AutoPause;
 import ch.bailu.aat.gpx.GpxList;
-import ch.bailu.aat.gpx.GpxListAttributes;
 import ch.bailu.aat.gpx.GpxListWalker;
 import ch.bailu.aat.gpx.GpxPointNode;
 import ch.bailu.aat.gpx.GpxSegmentNode;
 import ch.bailu.aat.gpx.GpxWindow;
+import ch.bailu.aat.gpx.attributes.MaxSpeed;
 import ch.bailu.aat.preferences.SolidAutopause;
 import ch.bailu.aat.preferences.SolidSpeedGraphWindow;
 import ch.bailu.aat.preferences.general.SolidPostprocessedAutopause;
@@ -82,7 +82,7 @@ public class DistanceSpeedGraphView extends AbsGraphView implements SharedPrefer
 
 
         for(GraphPlotter p: plotter) {
-            p.inlcudeInYScale(list.getDelta().getAttributes().getAsFloat((GpxListAttributes.INDEX_MAX_SPEED)));
+            p.inlcudeInYScale(list.getDelta().getAttributes().getAsFloat((MaxSpeed.INDEX_MAX_SPEED)));
             p.inlcudeInYScale(0f);
         }
 

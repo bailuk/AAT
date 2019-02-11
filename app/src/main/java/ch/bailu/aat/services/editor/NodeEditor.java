@@ -1,6 +1,6 @@
 package ch.bailu.aat.services.editor;
 
-import ch.bailu.aat.gpx.GpxListAttributes;
+import ch.bailu.aat.gpx.attributes.GpxListAttributes;
 import ch.bailu.aat.gpx.attributes.GpxAttributes;
 import ch.bailu.aat.gpx.attributes.GpxAttributesStatic;
 import ch.bailu.aat.gpx.GpxList;

@@ -3,7 +3,7 @@ package ch.bailu.aat.description;
 import android.content.Context;
 
 import ch.bailu.aat.R;
-import ch.bailu.aat.gpx.GpxListAttributes;
+import ch.bailu.aat.gpx.attributes.AltitudeDelta;
 import ch.bailu.aat.gpx.GpxInformation;
 
 public class SlopeDescription extends ContentDescription {
@@ -15,7 +15,7 @@ public class SlopeDescription extends ContentDescription {
 
     @Override
     public void onContentUpdated(int iid, GpxInformation info) {
-        slope = info.getAttributes().get(GpxListAttributes.INDEX_SLOPE);
+        slope = info.getAttributes().get(AltitudeDelta.INDEX_SLOPE);
     }
 
     @Override
