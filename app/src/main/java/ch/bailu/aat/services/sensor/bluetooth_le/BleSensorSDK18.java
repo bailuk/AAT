@@ -78,14 +78,7 @@ public class BleSensorSDK18 extends BluetoothGattCallback implements SensorInter
                 close();
 
             } else {
-                // fixme reconnect ///////////////////////////////////////////////
                 execute.next(gatt);
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                    device.createBond();
-                }
-                // fixme reconnect ///////////////////////////////////////////////
-
-
                 scanningTimeout.kick();
                 connectingTimeout.kick();
                 item.setState(SensorItemState.CONNECTING);
@@ -100,10 +93,10 @@ public class BleSensorSDK18 extends BluetoothGattCallback implements SensorInter
         if (item.lock(this)) {
 
             if (Build.VERSION.SDK_INT >= 23) {
-                return device.connectGatt(context, false, this,
+                return device.connectGatt(context, true, this,
                         BluetoothDevice.TRANSPORT_LE);
             } else {
-                return device.connectGatt(context, false, this);
+                return device.connectGatt(context, true, this);
 
             }
 
@@ -120,10 +113,6 @@ public class BleSensorSDK18 extends BluetoothGattCallback implements SensorInter
 
     @Override
     public synchronized void onConnectionStateChange(BluetoothGatt g, int status, int state) {
-        // fixme reconnect ///////////////////////////////////////////////
-        log(status, state);
-        // fixme reconnect ///////////////////////////////////////////////
-
         if (isConnected(status, state)) {
             execute.next(gatt);
 

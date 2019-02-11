@@ -10,7 +10,7 @@ import java.util.UUID;
 
 @RequiresApi(api = 18)
 public class Executer {
-    private final UUID ENABLE_NOTIFICATION = UUID.fromString("00002902-0000-1000-8000-00805f9b34fb");
+    private final static UUID ENABLE_NOTIFICATION = UUID.fromString("00002902-0000-1000-8000-00805f9b34fb");
 
 
     private final Stack<BluetoothGattCharacteristic> toRead = new Stack<>();
