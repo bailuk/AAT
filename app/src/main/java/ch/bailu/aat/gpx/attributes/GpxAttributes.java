@@ -36,5 +36,7 @@ public abstract class GpxAttributes {
         return Objects.toInt(get(keyIndex));
     }
 
+    public boolean getAsBoolean(int keyIndex) { return Objects.toBoolean(get(keyIndex));}
+
 
 }

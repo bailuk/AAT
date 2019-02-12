@@ -32,7 +32,7 @@ public class StepCounterSensor extends InternalSensorSDK23 {
             samples[i] = Sample.NULL;
         }
 
-        broadcaster = new Broadcaster(c, InfoID.SPEED_SENSOR);
+        broadcaster = new Broadcaster(c, InfoID.STEP_COUNTER_SENSOR);
     }
 
 
@@ -72,7 +72,7 @@ public class StepCounterSensor extends InternalSensorSDK23 {
 
 
     private Sample getFirstSample() {
-        int index = this.index +1;
+        int index = this.index + 1;
 
         for (int i = 0; i< samples.length; i++) {
             index = index % samples.length;
@@ -80,6 +80,7 @@ public class StepCounterSensor extends InternalSensorSDK23 {
             if (samples[index] != Sample.NULL) {
                 return samples[index];
             }
+            index ++;
         }
         return Sample.NULL;
     }
@@ -89,8 +90,10 @@ public class StepCounterSensor extends InternalSensorSDK23 {
         Sample a = getFirstSample();
         Sample b = samples[index];
 
-        long timeDelta = b.time - a.time;
+        long timeDelta = b.timeMillis - a.timeMillis;
         int steps = b.steps - a.steps;
+
+        //AppLog.d(this , "s: " + steps + " t: " + timeDelta);
 
         if (timeDelta > 0 && steps > 0) {
             return Math.round((steps * 1000 * 60)  / timeDelta);
@@ -117,16 +120,16 @@ public class StepCounterSensor extends InternalSensorSDK23 {
     private static class Sample {
         private static final Sample NULL = new Sample();
 
-        public final long time;
+        public final long timeMillis;
         public final int steps;
 
         public Sample(SensorEvent event) {
-            time = event.timestamp;
+            timeMillis = event.timestamp / 1000000;
             steps = (int) event.values[0];
         }
 
         private Sample() {
-            time = 0;
+            timeMillis = 0;
             steps = 0;
         }
     }

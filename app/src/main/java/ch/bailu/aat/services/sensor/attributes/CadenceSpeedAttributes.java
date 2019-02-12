@@ -74,8 +74,7 @@ public class CadenceSpeedAttributes   extends GpxAttributes {
             return String.valueOf(circumferenceSI);
 
         } else if (keyIndex == KEY_INDEX_CONTACT) {
-            if (cadence_rpm == 0) return "...";
-            return "";
+            return String.valueOf(getAsBoolean(keyIndex));
 
         } else if (keyIndex == KEY_INDEX_CIRCUMFERENCE_DEBUG) {
             return circumferenceDebugString;
@@ -84,6 +83,22 @@ public class CadenceSpeedAttributes   extends GpxAttributes {
 
         return NULL_VALUE;
     }
+
+
+    @Override
+    public boolean getAsBoolean(int keyIndex) {
+        if (keyIndex == KEY_INDEX_CONTACT) {
+            boolean cadenceContact = isCadenceSensor && cadence_rpm > 0;
+            boolean speedContect = isSpeedSensor && circumferenceSI > 0f;
+
+            return cadenceContact || speedContect;
+
+
+        } else {
+            return super.getAsBoolean(keyIndex);
+        }
+    }
+
 
     @Override
     public boolean hasKey(int keyIndex) {

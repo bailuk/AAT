@@ -13,7 +13,7 @@ public class GpxConstants {
     public static final String QNAME_LATITUDE = "lat";
     public static final String QNAME_LONGITUDE = "lon";
 
-    public static final String QNAME_TIME = "time";
+    public static final String QNAME_TIME = "timeMillis";
     public static final String QNAME_ALTITUDE = "ele";
     public static final String QNAME_EXTENSIONS = "extensions";
 }

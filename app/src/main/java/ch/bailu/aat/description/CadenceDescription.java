@@ -10,6 +10,7 @@ import ch.bailu.aat.services.sensor.list.SensorState;
 public class CadenceDescription  extends ContentDescription {
     public static final String UNIT = "rpm";
     public static final String LABEL = SensorState.getName(InfoID.CADENCE_SENSOR);
+    public static final String LABEL_WAIT = LABEL + "...";
 
 
     private String value = VALUE_DISABLED;
@@ -40,10 +41,18 @@ public class CadenceDescription  extends ContentDescription {
     @Override
     public void onContentUpdated(int iid, GpxInformation info) {
 
+
         final boolean haveSensor = SensorState.isConnected(InfoID.CADENCE_SENSOR);
 
         if (iid == InfoID.CADENCE_SENSOR && haveSensor) {
-            label = LABEL + " " + info.getAttributes().get(CadenceSpeedAttributes.KEY_INDEX_CONTACT);
+            final boolean hasContact = info.getAttributes().getAsBoolean(CadenceSpeedAttributes.KEY_INDEX_CONTACT);
+
+            if (hasContact) {
+                label = LABEL;
+            } else {
+                label = LABEL_WAIT;
+            }
+
             value = info.getAttributes().get(CadenceSpeedAttributes.KEY_INDEX_CRANK_RPM);
 
         } else {

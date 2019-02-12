@@ -6,6 +6,7 @@ import ch.bailu.aat.R;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.GpxList;
 import ch.bailu.aat.gpx.InfoID;
+import ch.bailu.aat.gpx.attributes.GpxAttributes;
 import ch.bailu.aat.gpx.interfaces.GpxDeltaInterface;
 import ch.bailu.aat.services.sensor.attributes.CadenceSpeedAttributes;
 import ch.bailu.aat.services.sensor.list.SensorState;
@@ -13,8 +14,8 @@ import ch.bailu.aat.services.sensor.list.SensorState;
 public class CurrentSpeedDescription extends SpeedDescription {
 
     private int currentIID=-1;
-
     private String label;
+
 
     public CurrentSpeedDescription(Context context) {
         super(context);
@@ -22,6 +23,7 @@ public class CurrentSpeedDescription extends SpeedDescription {
     }
 
     private void setLabel() {
+
         if (currentIID == InfoID.SPEED_SENSOR) {
             label = getContext().getString(R.string.speed) + " S";
 
@@ -40,21 +42,20 @@ public class CurrentSpeedDescription extends SpeedDescription {
 
     @Override
     public void onContentUpdated(int iid, GpxInformation info) {
-        if (configure(iid)) {
+
+        if (configure(iid, info.getAttributes())) {
             if (setSpeedFromLastPoint(info) == false) {
                 setCache(info.getSpeed());
             }
-
-            label = info.getAttributes().get(CadenceSpeedAttributes.KEY_INDEX_CIRCUMFERENCE_DEBUG);
         }
 
 
 
     }
 
-    private boolean configure(int iid) {
+    private boolean configure(int iid, GpxAttributes attr) {
         if (currentIID != iid) {
-            if (changeSource(iid)) {
+            if (changeSource(iid, attr)) {
                 setLabel();
             }
         }
@@ -62,16 +63,19 @@ public class CurrentSpeedDescription extends SpeedDescription {
     }
 
 
-    private boolean changeSource(int iid) {
+    private boolean changeSource(int iid, GpxAttributes attr) {
         boolean haveSensor = SensorState.isConnected(InfoID.SPEED_SENSOR);
 
         if (currentIID == InfoID.SPEED_SENSOR && haveSensor) {
             return false;
 
         } else if (iid == InfoID.SPEED_SENSOR) {
-            if (haveSensor) {
+            boolean isSensorReady = haveSensor && attr.getAsBoolean(CadenceSpeedAttributes.KEY_INDEX_CONTACT);
+
+            if (isSensorReady) {
                 currentIID = iid;
                 return true;
+
             } else {
                 return false;
             }

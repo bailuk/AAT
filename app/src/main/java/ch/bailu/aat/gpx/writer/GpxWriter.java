@@ -66,7 +66,7 @@ public abstract class GpxWriter {
     }
 
     public void writeTimeStamp(long time) throws IOException {
-        writeString("<time>" + f.TIME.format(time) + "</time>");
+        writeString("<timeMillis>" + f.TIME.format(time) + "</timeMillis>");
     }
 
 
