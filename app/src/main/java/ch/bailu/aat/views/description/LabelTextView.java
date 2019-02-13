@@ -11,7 +11,7 @@ public class LabelTextView extends AbsLabelTextView implements OnContentUpdatedI
     private final ContentDescription description;
 
     public LabelTextView(Context context, ContentDescription d) {
-        super(context, d.getLabel());
+        super(true, context, d.getLabel());
 
         description = d;
         setText();

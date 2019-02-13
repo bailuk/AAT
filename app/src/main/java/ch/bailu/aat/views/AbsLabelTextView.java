@@ -14,27 +14,46 @@ public abstract class AbsLabelTextView extends LinearLayout{
     private final TextView value, label;
     private final ToolTipView toolTip;
 
+    public AbsLabelTextView(boolean inverse, final Context context, String labelText) {
+        this (inverse, context, AppTheme.main, labelText);
+    }
+
     public AbsLabelTextView(final Context context, String labelText) {
-        this (context, AppTheme.main, labelText);
+        this (false, context, AppTheme.main, labelText);
     }
 
     public AbsLabelTextView(final Context context, UiTheme theme, String labelText) {
+        this(false, context, theme, labelText);
+    }
+
+
+    private AbsLabelTextView(boolean inverse, final Context context, UiTheme theme, String labelText) {
         super(context);
         setOrientation(VERTICAL);
 
         label = new TextView(context);
         label.setText(labelText);
-        theme.header(label);
+
         addView(label);
 
         value = new TextView(context);
-        theme.content(value);
         addView(value);
 
         toolTip = new ToolTipView(context);
         addView(toolTip);
 
         theme.button(this);
+
+        if (inverse) {
+            theme.header(value);
+            theme.content(label);
+
+        } else {
+            theme.header(label);
+            theme.content(value);
+
+        }
+
     }
 
 

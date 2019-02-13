@@ -24,11 +24,11 @@ import ch.bailu.aat.util.ui.AppLayout;
 import ch.bailu.aat.util.ui.AppLog;
 import ch.bailu.aat.util.ui.ToolTip;
 import ch.bailu.aat.views.BusyViewControlIID;
-import ch.bailu.aat.views.MyImageButton;
 import ch.bailu.aat.views.ContentView;
+import ch.bailu.aat.views.MyImageButton;
+import ch.bailu.aat.views.PercentageLayout;
 import ch.bailu.aat.views.bar.ControlBar;
 import ch.bailu.aat.views.bar.MainControlBar;
-import ch.bailu.aat.views.PercentageLayout;
 import ch.bailu.aat.views.description.MultiView;
 import ch.bailu.aat.views.graph.GraphViewFactory;
 import ch.bailu.aat.views.preferences.VerticalScrollView;
@@ -92,6 +92,7 @@ public class GpxViewActivity extends ActivityContext
 
 
     }
+
 
 
     private View createLayout(MainControlBar bar) {

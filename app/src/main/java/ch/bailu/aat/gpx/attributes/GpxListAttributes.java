@@ -28,11 +28,6 @@ public class GpxListAttributes extends GpxSubAttributes {
     }
 
 
-/*    public static GpxListAttributes factoryNull() {
-        return new GpxListAttributes();
-    }
-*/
-
     public static GpxListAttributes factoryTrackList() {
         return new GpxListAttributes(new MaxSpeed.Raw2());
     }
@@ -49,7 +44,7 @@ public class GpxListAttributes extends GpxSubAttributes {
         return new GpxListAttributes(new MaxSpeed.Samples(),
                 apause,
                 new AltitudeDelta.LastAverage(),
-                new SampleRate.Cadence(), new SampleRate.HeartRate());
+                new SampleRate.Cadence(), new SampleRate.HeartRate(), new Steps());
     }
 
     public static GpxListAttributes factoryRoute() {

@@ -14,6 +14,14 @@ public class Keys {
 
     private ArrayList<Integer> keys = new ArrayList<>(10);
 
+
+    public Keys(int... keyIndex) {
+        for (int k : keyIndex) {
+            add(k);
+        }
+    }
+
+
     public int add(String string) {
         return add(toIndex(string));
     }
