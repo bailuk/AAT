@@ -44,7 +44,11 @@ public class GpxListAttributes extends GpxSubAttributes {
         return new GpxListAttributes(new MaxSpeed.Samples(),
                 apause,
                 new AltitudeDelta.LastAverage(),
-                new SampleRate.Cadence(), new SampleRate.HeartRate(), new Steps());
+                new SampleRate.Cadence(),
+                new SampleRate.HeartRate(),
+                new SampleRate.StepsRate(),
+                new Steps()
+                );
     }
 
     public static GpxListAttributes factoryRoute() {

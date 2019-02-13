@@ -3,6 +3,7 @@ package ch.bailu.aat.gpx.attributes;
 import ch.bailu.aat.gpx.GpxPointNode;
 import ch.bailu.aat.services.sensor.attributes.CadenceSpeedAttributes;
 import ch.bailu.aat.services.sensor.attributes.HeartRateAttributes;
+import ch.bailu.aat.services.sensor.attributes.StepCounterAttributes;
 
 public class SampleRate extends GpxSubAttributes {
 
@@ -26,6 +27,30 @@ public class SampleRate extends GpxSubAttributes {
     @Override
     public String get(int key) {
         return String.valueOf(getAsInteger(key));
+    }
+
+
+    public static class StepsRate extends SampleRate {
+        public final static int[] GPX_KEYS = {
+                StepCounterAttributes.KEY_INDEX_STEPS_RATE,
+        };
+
+        private static final Keys KEYS = new Keys();
+
+        public static final int INDEX_MAX_SPM = KEYS.add("MaxStepsRate");
+
+        public StepsRate() {
+            super(KEYS, GPX_KEYS);
+        }
+
+        @Override
+        public int getAsInteger(int key) {
+
+            if (key == INDEX_MAX_SPM) {
+                return getMaxSpm();
+            }
+            return super.getAsInteger(key);
+        }
     }
 
 

@@ -5,6 +5,7 @@ import android.graphics.Canvas;
 
 import ch.bailu.aat.description.CadenceDescription;
 import ch.bailu.aat.description.HeartRateDescription;
+import ch.bailu.aat.description.StepRateDescription;
 import ch.bailu.aat.dispatcher.DispatcherInterface;
 import ch.bailu.aat.gpx.GpxList;
 import ch.bailu.aat.gpx.GpxListWalker;
@@ -16,6 +17,27 @@ import ch.bailu.aat.util.ui.AppDensity;
 import ch.bailu.aat.util.ui.AppTheme;
 
 public class SpmGraphView extends AbsGraphView {
+
+    final Entry[] entries = {
+            new Entry(AppTheme.COLOR_BLUE,
+                    HeartRateDescription.LABEL,
+                    HeartRateDescription.UNIT,
+                    SampleRate.HeartRate.INDEX_MAX_HR,
+                    SampleRate.HeartRate.GPX_KEYS),
+
+            new Entry(AppTheme.COLOR_GREEN,
+                    CadenceDescription.LABEL,
+                    CadenceDescription.UNIT,
+                    SampleRate.Cadence.INDEX_MAX_CADENCE,
+                    SampleRate.Cadence.GPX_KEYS),
+
+
+            new Entry(AppTheme.COLOR_ORANGE,
+                    StepRateDescription.LABEL,
+                    StepRateDescription.UNIT,
+                    SampleRate.StepsRate.INDEX_MAX_SPM,
+                    SampleRate.StepsRate.GPX_KEYS)
+    };
 
     public SpmGraphView(Context context, DispatcherInterface di, int... iid) {
         super(context, di, iid);
@@ -30,79 +52,118 @@ public class SpmGraphView extends AbsGraphView {
 
 
     private void setLabelText() {
-        ylabel.setText(AppTheme.COLOR_BLUE, HeartRateDescription.LABEL, HeartRateDescription.UNIT);
-        ylabel.setText(AppTheme.COLOR_GREEN, CadenceDescription.LABEL, CadenceDescription.UNIT);
+        for (Entry e : entries)
+            e.setLabelText();
     }
 
 
     @Override
     public void plot(Canvas canvas, GpxList list, int index, SolidUnit sunit, boolean markerMode) {
 
-
+        int max = 0;
+        int min = 25;
         int km_factor = (int) (list.getDelta().getDistance()/1000) + 1;
 
-        GraphPlotter plotterHr = new GraphPlotter(canvas,getWidth(), getHeight(), 1000 * km_factor,
-                new AppDensity(getContext()));
-
-        GraphPlotter plotterCadence = new GraphPlotter(canvas,getWidth(), getHeight(), 1000 * km_factor,
-                new AppDensity(getContext()));
-
-        int max = Math.max(
-                list.getDelta().getAttributes().getAsInteger(SampleRate.Cadence.INDEX_MAX_CADENCE),
-                list.getDelta().getAttributes().getAsInteger(SampleRate.HeartRate.INDEX_MAX_HR));
-
-
-
-        plotterHr.inlcudeInYScale(max);
-        plotterHr.inlcudeInYScale(25);
-
-        plotterCadence.inlcudeInYScale(max);
-        plotterCadence.inlcudeInYScale(25);
-
-        final GpxListWalker hrPainter =
-                    new GraphPainter(plotterHr, (int)list.getDelta().getDistance() / getWidth(),
-                            AppTheme.COLOR_BLUE, SampleRate.HeartRate.GPX_KEYS);
-
-        final GpxListWalker cadencePainter =
-                new GraphPainter(plotterCadence, (int)list.getDelta().getDistance() / getWidth(),
-                        AppTheme.COLOR_GREEN, SampleRate.Cadence.GPX_KEYS);
-
-
-
-        plotterHr.roundYScale(25);
-        plotterCadence.roundYScale(25);
-
+        for (Entry e : entries) {
+            e.setPlotter(km_factor, canvas);
+            max = Math.max(max, e.getMax(list));
+        }
 
         if (max > 0) {
-            hrPainter.walkTrack(list);
-            cadencePainter.walkTrack(list);
+            for (Entry e: entries) {
+                e.getPlotter().inlcudeInYScale(min);
+                e.getPlotter().inlcudeInYScale(max);
+                e.getPlotter().roundYScale(25);
+            }
+
+            new GraphPainter(
+                    entries,
+                    (int)list.getDelta().getDistance() / getWidth()
+            ).walkTrack(list);
+
+            entries[0].getPlotter().drawYScale(5, 1, false);
         }
 
 
-        plotterHr.drawXScale(5, sunit.getDistanceFactor());
-        plotterHr.drawYScale(5, sunit.getAltitudeFactor(), true);
-
+        entries[0].getPlotter().drawXScale(5, sunit.getDistanceFactor());
     }
 
 
 
-    private static class GraphPainter extends GpxListWalker {
-        private final GraphPlotter plotter;
-
-        private float distance=0;
-        private float summaryDistance=0;
-        private final float minDistance;
-
-        private final int[] keys;
+    private class Entry {
         private final int color;
+        private final String label;
+        private final String unit;
 
-        public GraphPainter(GraphPlotter p, int md, int c, int... k) {
-            plotter=p;
-            minDistance=md*SAMPLE_WIDTH_PIXEL;
-            keys = k;
-            color = c;
+        private final int maxKey;
+        private final int[] keys;
+
+        private GraphPlotter plotter;
+
+        private float summaryDistance=0;
+
+
+        public Entry(int color, String label, String unit, int maxKey, int... keys) {
+            this.color = color;
+            this.label = label;
+            this.unit = unit;
+            this.maxKey = maxKey;
+            this.keys = keys;
         }
 
+
+        public void setLabelText() {
+            ylabel.setText(color, label, unit);
+        }
+
+
+        public void setPlotter(int kmFactor, Canvas canvas) {
+            plotter =  new GraphPlotter(canvas, getWidth(), getHeight(), 1000 * kmFactor,
+                    new AppDensity(getContext()));
+
+        }
+
+        public GraphPlotter getPlotter() {
+            return plotter;
+        }
+
+        public int getMax(GpxList list) {
+            return list.getDelta().getAttributes().getAsInteger(maxKey);
+        }
+
+        public void incrementSummaryDistance(float distance) {
+            summaryDistance += distance;
+        }
+
+
+        public void plotIfDistance(GpxPointNode point, float minDistance, float distance) {
+            if (summaryDistance >= minDistance) {
+
+                final int value = SampleRate.getValue(point.getAttributes(), keys);
+
+                if (value > 0) {
+                    //distance += summaryDistance;
+                    summaryDistance = 0;
+
+                    plotter.plotData(distance, value, color);
+                }
+            }
+
+        }
+    }
+
+    private static class GraphPainter extends GpxListWalker {
+        private final Entry[] entries;
+
+        private float distance=0;
+        private final float minDistance;
+
+
+        public GraphPainter(Entry[] entries, int minDistance) {
+            this.entries = entries;
+            this.minDistance = minDistance;
+
+        }
 
 
         @Override
@@ -113,29 +174,13 @@ public class SpmGraphView extends AbsGraphView {
 
         @Override
         public void doPoint(GpxPointNode point) {
-            incrementSummaryDistance(point.getDistance());
-            plotIfDistance(point);
-        }
+            for (Entry e : entries) {
+                distance += point.getDistance();
 
-
-        public void incrementSummaryDistance(float distance) {
-            summaryDistance += distance;
-        }
-
-        public void plotIfDistance(GpxPointNode point) {
-            if (summaryDistance >= minDistance) {
-                final int value = SampleRate.getValue(point.getAttributes(), keys);
-
-                if (value > 0) {
-                    distance += summaryDistance;
-                    summaryDistance = 0;
-
-                    plotter.plotData(distance, value, color);
-                }
+                e.incrementSummaryDistance(point.getDistance());
+                e.plotIfDistance(point, minDistance, distance);
             }
         }
-
-
 
         @Override
         public boolean doSegment(GpxSegmentNode segment) {
