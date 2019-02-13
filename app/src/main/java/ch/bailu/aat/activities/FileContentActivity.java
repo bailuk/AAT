@@ -25,11 +25,13 @@ import ch.bailu.aat.description.TimeDescription;
 import ch.bailu.aat.description.TrackSizeDescription;
 import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.map.MapFactory;
+import ch.bailu.aat.services.sensor.list.SensorList;
 import ch.bailu.aat.util.ui.AppLayout;
 import ch.bailu.aat.views.PercentageLayout;
 import ch.bailu.aat.views.bar.MainControlBar;
 import ch.bailu.aat.views.description.MultiView;
 import ch.bailu.aat.views.graph.GraphViewFactory;
+import ch.bailu.aat.views.html.AttributesView;
 import ch.bailu.aat.views.preferences.VerticalScrollView;
 
 
@@ -52,6 +54,10 @@ public class FileContentActivity extends AbsFileContentActivity{
         summary.addAllContent(this, getSummaryData(this),
                 InfoID.FILEVIEW, InfoID.EDITOR_OVERLAY);
 
+
+        summary.add(createAttributesView());
+
+
         View graph = GraphViewFactory.all(this,SOLID_KEY,this,
                 InfoID.FILEVIEW, InfoID.EDITOR_OVERLAY);
 
@@ -63,6 +69,7 @@ public class FileContentActivity extends AbsFileContentActivity{
         }
 
     }
+
 
     public static ContentDescription[] getSummaryData(Context c) {
         return new ContentDescription[] {
@@ -79,13 +86,18 @@ public class FileContentActivity extends AbsFileContentActivity{
                 new AverageSpeedDescriptionAP(c),
                 new MaximumSpeedDescription(c),
                 new CaloriesDescription(c),
+
+                /*
                 new AscendDescription(c),
                 new DescendDescription(c),
+
+
                 new IndexedAttributeDescription.HeartRate(c),
                 new IndexedAttributeDescription.HeartBeats(c),
                 new IndexedAttributeDescription.Cadence(c),
                 new IndexedAttributeDescription.TotalCadence(c),
-                new TrackSizeDescription(c),
+                */
+                new TrackSizeDescription(c)
         };
     }
 

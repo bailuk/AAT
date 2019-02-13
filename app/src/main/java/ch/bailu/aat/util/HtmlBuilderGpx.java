@@ -7,10 +7,13 @@ import ch.bailu.aat.description.AltitudeDescription;
 import ch.bailu.aat.description.ContentDescription;
 import ch.bailu.aat.description.CurrentSpeedDescription;
 import ch.bailu.aat.description.DistanceDescription;
+import ch.bailu.aat.description.MaximumSpeedDescription;
 import ch.bailu.aat.description.SpeedDescription;
 import ch.bailu.aat.gpx.attributes.GpxAttributes;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.GpxPointNode;
+import ch.bailu.aat.gpx.attributes.GpxListAttributes;
+import ch.bailu.aat.gpx.attributes.MaxSpeed;
 import ch.bailu.aat.gpx.interfaces.GpxType;
 
 public class HtmlBuilderGpx extends HtmlBuilder {
@@ -52,16 +55,17 @@ public class HtmlBuilderGpx extends HtmlBuilder {
 
 
     public void appendAttributes(GpxAttributes a) {
-        if (a.size()>0) {
+        if (a.size() > 0) {
 
             for (int i = 0; i < a.size(); i++) {
-                String k = a.getSKeyAt(i);
+                int k = a.getKeyAt(i);
+                String kString = a.getSKeyAt(i);
                 String v = a.getAt(i);
 
-                if (k.contains("getName")) {
-                    appendKeyValueBold(k, v);
-                } else {
-                    appendKeyValue(k, v);
+                if (kString.toLowerCase().contains("name")) {
+                    appendKeyValueBold(kString, v);
+                }  else {
+                    appendKeyValue(kString, v);
                 }
                 append("<br>");
             }

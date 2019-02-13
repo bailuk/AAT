@@ -42,8 +42,6 @@ public class GpxEditorActivity extends AbsFileContentActivity {
                 new NameDescription(this),
                 new PathDescription(this),
                 new DistanceDescription(this),
-                new AscendDescription(this),
-                new DescendDescription(this),
                 new TrackSizeDescription(this),
         };
 
@@ -52,6 +50,8 @@ public class GpxEditorActivity extends AbsFileContentActivity {
         summary.addAllContent(this, summaryData,
                 InfoID.EDITOR_OVERLAY,
                 InfoID.FILEVIEW);
+
+        summary.add(createAttributesView());
 
         DistanceAltitudeGraphView graph = new DistanceAltitudeGraphView(this,
                 this,

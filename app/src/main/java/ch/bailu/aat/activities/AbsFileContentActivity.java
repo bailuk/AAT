@@ -23,6 +23,7 @@ import ch.bailu.aat.views.ContentView;
 import ch.bailu.aat.views.MyImageButton;
 import ch.bailu.aat.views.PreviewView;
 import ch.bailu.aat.views.bar.MainControlBar;
+import ch.bailu.aat.views.html.AttributesView;
 import ch.bailu.util_java.util.Objects;
 
 public abstract class AbsFileContentActivity extends ActivityContext implements OnClickListener {
@@ -74,6 +75,13 @@ public abstract class AbsFileContentActivity extends ActivityContext implements 
 
         setContentView(contentView);
 
+    }
+
+
+    protected View createAttributesView() {
+        final AttributesView v = new AttributesView(this);
+        addTarget(v, InfoID.FILEVIEW, InfoID.EDITOR_OVERLAY);
+        return v;
     }
 
 
@@ -216,4 +224,7 @@ public abstract class AbsFileContentActivity extends ActivityContext implements 
     private void closeActivity() {
         super.onBackPressed();
     }
+
+
+
 }
