@@ -1,6 +1,7 @@
 package ch.bailu.aat.services.sensor.list;
 
 import ch.bailu.aat.gpx.InfoID;
+import ch.bailu.aat.util.ToDo;
 
 public class SensorState {
 
@@ -9,11 +10,15 @@ public class SensorState {
     private static int[] connected = new int[SIZE];
 
     public static final String[] NAMES = {
-            "Heart Rate",
-            "Cadence",
-            "Speed",
-            "Barometer",
-            "Step Counter"
+            ToDo.translate("Heart Rate"),
+            ToDo.translate("Cadence"),
+            ToDo.translate("Speed"),
+            ToDo.translate("Barometer"),
+            ToDo.translate("Step Counter")
+    };
+
+    public static final char[] CHARS = {
+            'H', 'C', 'S', 'B', 'T'
     };
 
     public static int toIndex(int iid) {
@@ -37,6 +42,7 @@ public class SensorState {
     public static String getName(int iid) {
         return NAMES[toIndex(iid)];
     }
+    public static char getChar(int iid) { return CHARS[toIndex(iid)]; }
 
 
     public static String getOverviewString() {
@@ -44,7 +50,7 @@ public class SensorState {
         for (int i = 0; i< SIZE; i++) {
             if (connected[i] > 0) {
                 overview = overview
-                        + NAMES[i].charAt(0)
+                        + CHARS[i]
                         + String.valueOf(connected[i]);
             }
         }

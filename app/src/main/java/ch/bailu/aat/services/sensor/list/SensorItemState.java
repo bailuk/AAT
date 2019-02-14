@@ -1,5 +1,7 @@
 package ch.bailu.aat.services.sensor.list;
 
+import ch.bailu.aat.util.ToDo;
+
 public class SensorItemState {
     public final static int UNSCANNED = 0;
     public final static int SCANNING = 1;
@@ -12,13 +14,13 @@ public class SensorItemState {
 
 
     private static final String STATE_DESCRIPTION[] = {
-            "Unscanned",
-            "Scanning...",
-            "Supported",
-            "Not connected",
-            "Connecting...",
-            "Connected",
-            "Not supported"
+            ToDo.translate("Unscanned"),
+            ToDo.translate("Scanning..."),
+            ToDo.translate("Supported"),
+            ToDo.translate("Not connected"),
+            ToDo.translate("Connecting..."),
+            ToDo.translate("Connected"),
+            ToDo.translate("Not supported")
     };
 
     private int state;

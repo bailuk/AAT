@@ -11,4 +11,14 @@ public class ToolTip {
             new ToolTipLongClick(view, new ToolTipRes(view.getContext(), resID));
         }
     }
+
+
+    public static void set(View view, String toolTip) {
+        if (Build.VERSION.SDK_INT >= 26) {
+            view.setTooltipText(toolTip);
+        } else {
+            new ToolTipLongClick(view, new ToolTipString(toolTip));
+        }
+
+    }
 }

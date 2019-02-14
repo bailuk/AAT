@@ -6,8 +6,10 @@ import ch.bailu.aat.description.SensorStateDescription;
 import ch.bailu.aat.services.InsideContext;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.util.ui.AppTheme;
+import ch.bailu.aat.util.ui.ToolTip;
+import ch.bailu.aat.views.preferences.ConnectToSensorsView;
 
-public class SensorStateButton extends ColorNumberView implements View.OnClickListener {
+public class SensorStateButton extends NumberView implements View.OnClickListener {
     private final ServiceContext scontext;
 
 
@@ -16,6 +18,8 @@ public class SensorStateButton extends ColorNumberView implements View.OnClickLi
         scontext = c;
 
         setOnClickListener(this);
+
+        ToolTip.set(this, ConnectToSensorsView.LABEL);
     }
 
 

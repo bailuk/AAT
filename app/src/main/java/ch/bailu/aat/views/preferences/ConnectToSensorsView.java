@@ -15,11 +15,13 @@ import ch.bailu.aat.views.AbsLabelTextView;
 
 public class ConnectToSensorsView extends AbsLabelTextView implements View.OnClickListener, OnContentUpdatedInterface {
 
+    public static final String LABEL = ToDo.translate("Connect to enabled sensors");
+
     private String busy="";
     private final ServiceContext scontext;
 
     public ConnectToSensorsView(ServiceContext s) {
-        super(s.getContext(), ToDo.translate("Connect to enabled sensors"));
+        super(s.getContext(), LABEL);
         scontext = s;
         setText();
         setOnClickListener(this);
