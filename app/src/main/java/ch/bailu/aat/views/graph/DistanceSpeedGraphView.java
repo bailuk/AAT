@@ -18,6 +18,7 @@ import ch.bailu.aat.gpx.GpxPointNode;
 import ch.bailu.aat.gpx.GpxSegmentNode;
 import ch.bailu.aat.gpx.GpxWindow;
 import ch.bailu.aat.gpx.attributes.MaxSpeed;
+import ch.bailu.aat.map.MapColor;
 import ch.bailu.aat.preferences.SolidAutopause;
 import ch.bailu.aat.preferences.SolidSpeedGraphWindow;
 import ch.bailu.aat.preferences.general.SolidPostprocessedAutopause;
@@ -41,9 +42,11 @@ public class DistanceSpeedGraphView extends AbsGraphView implements SharedPrefer
         setLabelText(context);
 
         bar = new ControlBar(context, LinearLayout.HORIZONTAL,6);
+        bar.addSpace();
+        bar.addSpace();
         bar.addSolidIndexButton(new SolidSpeedGraphWindow(context, key));
         bar.setBackgroundColor(Color.TRANSPARENT);
-        bar.setGravity(Gravity.RIGHT);
+
         addView(bar);
     }
 

@@ -69,7 +69,7 @@ public class SolidSpeedGraphWindow extends SolidIndexList {
 
 
     @Override
-    public int getIconResource() {return R.drawable.open_menu_inverse;}
+    public int getIconResource() {return R.drawable.open_menu_light;}
 
     @Override
     public String getLabel() {return getContext().getString(R.string.average);}
