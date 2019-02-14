@@ -13,7 +13,7 @@ import ch.bailu.aat.views.AbsLabelTextView;
 public class ScannBluetoothView extends AbsLabelTextView implements View.OnClickListener, OnContentUpdatedInterface {
     private final ServiceContext scontext;
     public ScannBluetoothView(ServiceContext s) {
-        super(s.getContext(), ToDo.translate("Scann for Bluetooth sensors"));
+        super(s.getContext(), ToDo.translate("Scann for BluetoothLE sensors\u2026"));
         scontext = s;
         setText();
         setOnClickListener(this);

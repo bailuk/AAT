@@ -15,7 +15,7 @@ import ch.bailu.aat.views.AbsLabelTextView;
 
 public class ConnectToSensorsView extends AbsLabelTextView implements View.OnClickListener, OnContentUpdatedInterface {
 
-    public static final String LABEL = ToDo.translate("Connect to enabled sensors");
+    public static final String LABEL = ToDo.translate("Connect to enabled sensors\u2026");
 
     private String busy="";
     private final ServiceContext scontext;

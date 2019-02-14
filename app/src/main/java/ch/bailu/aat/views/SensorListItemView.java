@@ -1,5 +1,6 @@
 package ch.bailu.aat.views;
 
+import android.graphics.Color;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
 
@@ -22,6 +23,7 @@ public class SensorListItemView extends LinearLayout {
         setOrientation(VERTICAL);
 
         checkBox = new CheckBox(getContext());
+        checkBox.setTextColor(Color.LTGRAY);
         addView(checkBox);
 
         setItem(i);
@@ -37,6 +39,8 @@ public class SensorListItemView extends LinearLayout {
                 }
             } ;
         });
+
+
     }
 
 

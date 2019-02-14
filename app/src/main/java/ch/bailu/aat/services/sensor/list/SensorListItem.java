@@ -81,6 +81,7 @@ public class SensorListItem extends SensorItemState implements SensorInterface {
         return address;
     }
 
+
     @Override
     public String toString() {
 
@@ -91,6 +92,8 @@ public class SensorListItem extends SensorItemState implements SensorInterface {
 
         return sensorType + " " + sensorName + "\n" + sensorState;
     }
+
+
 
     public String getSensorTypeDescription() {
         if (isBluetoothDevice()) {
