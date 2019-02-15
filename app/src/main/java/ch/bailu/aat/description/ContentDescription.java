@@ -27,7 +27,9 @@ public abstract class ContentDescription
 
     public abstract String getValue();
     public abstract String getLabel();
-
+    public String getLabelShort() {
+        return getLabel();
+    }
 
     public String getUnit() {
         return NULL_STRING;
@@ -38,4 +40,6 @@ public abstract class ContentDescription
     public String getValueAsString() {
         return getValue() + " " + getUnit();
     }
+
+
 }

@@ -73,19 +73,15 @@ public class NumberView extends ViewGroup implements OnContentUpdatedInterface {
     private TextView createLabel() {
         TextView view = new TextView(getContext());
 
-        view.setLines(1);
-        view.setPadding(0, 0, 0, 0);
         addView(view);
         return view;
-    }
 
+    }
 
 
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
         if (changed) {
-
-
             int height=(b-t);
             int width=(r-l);
 
@@ -93,7 +89,7 @@ public class NumberView extends ViewGroup implements OnContentUpdatedInterface {
 
             l=t=0; b=height; r=width;
 
-            height-=margin*2;
+
 
             final float textSizeLimit = height /4;
             final float textSize = Math.min(defaultTextSize, textSizeLimit);
@@ -110,6 +106,7 @@ public class NumberView extends ViewGroup implements OnContentUpdatedInterface {
             unit.layout(l, b-unit.getMeasuredHeight()-margin, r, b-margin);
             height-=unit.getMeasuredHeight();
 
+            height -= margin*2;
             setTextSize(number, height);
 
             number.measure(width, height);
@@ -134,7 +131,7 @@ public class NumberView extends ViewGroup implements OnContentUpdatedInterface {
 
     public void updateAllText() {
         number.setText(description.getValue());
-        label.setText(description.getLabel());
+        label.setText(description.getLabelShort());
         unit.setText(description.getUnit());
     }
 
