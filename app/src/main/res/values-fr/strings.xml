@@ -110,7 +110,7 @@
     <string name="p_location_mock">position simulée</string>
     <string name="p_directory_data">Répertoire des données</string>
     <string name="p_cache_size">Taille du le cache interne</string>
-    <string name="p_fix_gps">Fixer l'horloge GPS</string>
+    <string name="p_fix_gps">Fixer l\'horloge GPS</string>
 
 
     <!-- Preferences Context -->
@@ -153,8 +153,8 @@
         <item> 2.0 Marche, promenade, lente</item>
         <item> 3.5 Marche de loisir</item>
         <item> 3.0 Marche tavec chien</item>
-        <item> 4.8 Marche, d'entretien, 3.5 to 4 mph, with ski poles, Nordic Marche, level, moderate pace</item>
-        <item> 6.8 Marche, d'entretien, with ski poles, Nordic Marche, en montée</item>
+        <item> 4.8 Marche, d\'entretien, 3.5 to 4 mph, with ski poles, Nordic Marche, level, moderate pace</item>
+        <item> 6.8 Marche, d\'entretien, with ski poles, Nordic Marche, en montée</item>
 
     </string-array>
 
@@ -221,8 +221,8 @@
     <string name="file_is_writeable">\u0020est editable.</string>
     <string name="file_is_writeonly">\u0020est uniquement editable.</string>
     <string name="file_is_readonly">\u0020est en lecture seule.</string>
-    <string name="file_is_missing">\u0020n'existe pas.</string>
-    <string name="file_is_denied">\u0020n'est pas accessible.</string>
+    <string name="file_is_missing">\u0020n\'existe pas.</string>
+    <string name="file_is_denied">\u0020n\'est pas accessible.</string>
 
 
     <!-- Location menu -->
@@ -290,7 +290,7 @@
     <string name ="tt_info_nominatim">Recherche avec OSM-Nominatim.</string>
     <string name ="tt_info_overpass">OSM-Passer requête.</string>
     <string name ="tt_info_reload">Recharger les tuiles visibles.</string>
-    <string name ="tt_info_location">Import/export d'une position centrée.</string>
+    <string name ="tt_info_location">Import/export d\'une position centrée.</string>
 
 
     <string name ="tt_map_zoomin">Zoom dans la carte.</string>
