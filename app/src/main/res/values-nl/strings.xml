@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:ignore="MissingTranslation" >
+
+
+    <!-- Keep structure intact when translating! -->
+        <!-- Static -->
+        <!-- General -->
+        <!-- GPS / Tracker-->
+        <!-- Activity main -->
+        <!-- Activity file list -->
+        <!-- Activity OSM API Query -->
+        <!-- Preferences General -->
+        <!-- Preferences System -->
+        <!-- Preferences Context -->
+        <!-- Preferences Presets -->
+        <!-- Preferences Map -->
+        <!-- Preferences Map trim tiles -->
+        <!-- File context menu and file operation -->
+        <!-- Location menu -->
+        <!-- Dialog -->
+        <!-- Description -->
+        <!-- ToolTip -->
+        <!-- Errors -->
+
+
+    <!-- Static -->
+    <string name="app_name" translatable="false">AAT</string>
+
+    <!-- General -->
+    <string name="on">Aan</string>
+    <string name="off">Uit</string>
+    <string name="auto">Auto</string>
+    <string name="none">Geen</string>
+    <string name="enter">Ingeven…</string>
+    <string name="pick">Kies (SAF)…</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Annuleren</string>
+
+
+    <!-- GPS / Tracker-->
+    <string name="gps">GPS</string>
+    <string name="gps_wait">&#8230;</string>
+    <string name="gps_nogps">Geen</string>
+    <string name="gps_noaccess">Geweigerd</string>
+
+    <string name="tracker">Tracker</string>
+    <string name="tracker_start">Start</string>
+    <string name="tracker_pause">Pauze</string>
+    <string name="tracker_stop">Stop</string>
+    <string name="tracker_resume">Hervatten</string>
+    <string name="tracker_restore">Herstel track</string>
+
+    <string name="status_paused">Gepauzeerd</string>
+    <string name="status_autopaused">A-pauze</string>
+
+
+    <!-- Activity main -->
+    <string name="intro_about">Over</string>
+    <string name="intro_readme">LEESMIJ</string>
+    <string name="intro_documentation">Documentatie</string>
+
+    <string name="intro_cockpit_a">Cockpit A</string>
+    <string name="intro_cockpit_b">Cockpit B</string>
+
+    <string name="intro_map">Kaart</string>
+    <string name="intro_nominatim">Kaart zoeken</string>
+    <string name="intro_test">Test</string>
+    <string name="intro_status">Status</string>
+
+    <string name="intro_overlay_list">Overlay lijst</string>
+    <string name="intro_list">Track lijst</string>
+    <string name="intro_external_list">Extere bestanden</string>
+    <string name="intro_settings">Voorkeueren</string>
+
+
+
+    <!-- Activity file list -->
+    <string name="label_summary">Samenvatting</string>
+    <string name="label_filter">Filter</string>
+    <string name="label_list">Lijst</string>
+    <string name="filter_geo">Binnen grenzen</string>
+    <string name="filter_date_start">Start datum</string>
+    <string name="filter_date_to">Eind datum</string>
+
+
+    <!-- Activity OSM API Query -->
+    <string name="query_overpass">Overpass</string>
+    <string name="query_features">OSM Features</string>
+    <string name ="query_save_copy">Slaag kopie op</string>
+
+
+    <!-- Preferences General -->
+    <string name="p_general">Algemeen</string>
+    <string name="p_post_autopause">Autopause na proces</string>
+    <string name="p_preset_slots">Zichtbare presets</string>
+    <string name="p_unit_title">Eenheden</string>
+    <string-array name="p_unit_list">
+        <item>Metrisch (km, km/h)</item>
+        <item>Imperiaal (mi, mph)</item>
+        <item>Nautisch (nm, kn)</item>
+        <item>Internationaal Eenheden Systeem </item>
+    </string-array>
+
+
+    <!-- Preferences System -->
+    <string name="p_location_provider">Locatie provider</string>
+    <string name="p_location_gps">Systeem GPS</string>
+    <string name="p_location_mock">Nagemaakte location</string>
+    <string name="p_directory_data">Data folder</string>
+    <string name="p_cache_size">Interne cachegrootte</string>
+    <string name="p_fix_gps">Fix GPS time</string>
+
+
+    <!-- Preferences Context -->
+    <string name="p_overlay">Overlays</string>
+    <string name="p_legend_fulldistance">Continue afstand</string>
+
+
+    <!-- Preferences Presets -->
+    <string name="p_preset">Activiteit</string>
+    <string name="p_met">MET en naam</string>
+    <string-array name="p_met_list">
+        <!--
+          List is taken and modified from "Compendium of Physical Activities"
+          https://sites.google.com/site/compendiumofphysicalactivities/Activity-Categories
+        -->
+        <item> 6.8 fietsen, vrije tijd, gematigde inspanning</item>
+        <item> 8.5 fietsen, berg, algemeen</item>
+        <item> 7.0 joggen, algemeen</item>
+        <item> 6.0 wandelen, cross country</item>
+        <item> 2.0 test</item>
+
+        <item>14.0 fietsen, berg, bergop</item>
+        <item>16.0 fietsen, berg, competitief</item>
+        <item> 5.8 fietsen, vrije tijd, lichte inspanning</item>
+        <item>10.0 fietsen, racen of vrije tijd, veel inspanning</item>
+        <item> 6.0 lopen, 4 mph (13 min/mile)</item>
+        <item> 9.0 lopen, 5.2 mph (11.5 min/mile)</item>
+        <item> 9.8 lopen, 6 mph (10 min/mile)</item>
+        <item> 9.0 lopen, cross country</item>
+        <item>10.0 lopen, op een piste, team oefening</item>
+        <item> 8.0 lopen, training, een rolstoel of kinderwagen duwend</item>
+        <item>13.3 lopen, marathon</item>
+        <item> 7.8 backpacking of wandelen met een rugzak</item>
+        <item> 7.3 heuvels beklimmen met een lading van 10 tot 20 pond.</item>
+        <item> 8.3 heuvels beklimmen met een lading van 21 tot 42 pond.</item>
+        <item> 9.0 heuvels beklimmen met een lading van 42+ pond.</item>
+        <item> 5.3 wandelen op een normaal tempo door velden en heuvels</item>
+        <item> 6.5 race wandelen</item>
+        <item> 8.0 bergbeklimmen</item>
+        <item> 2.0 wandelen, heel traag</item>
+        <item> 3.5 wandelen voor plezier</item>
+        <item> 3.0 de hond uitlaten</item>
+        <item> 4.8 wandelen, als oefening, met snelheid van 3.5 tot 4 mph, met wandelstokken, Nordic wandelen aan een gemiddeld tempo</item>
+        <item> 6.8 wandelen, als oefening, met wandelstokken, Nordic wandelen, bergop</item>
+
+    </string-array>
+
+    <string name="p_autopause">Autopause</string>
+    <string name="p_tracker_autopause">Stel de tracker in om te autopauzeren</string>
+
+    <string name="p_weight_title">Je gewicht in kg</string>
+
+    <string name="p_backlight_title">Backlight</string>
+    <string name="p_backlight_off">Systeemstandaard</string>
+    <string name="p_backlight_on">Hou aan</string>
+    <string name="p_backlight_on_no_lock">Hou aan (Ontgrendel lock screen))</string>
+    <string name="p_system">Systeem</string>
+    <string name="p_tile_size">Tegelgrootte</string>
+    <string name="p_accuracy_filter">Nauwkeurigheidsfilter</string>
+    <string name="p_distance_filter">Afstandsfilter</string>
+    <string name="p_missing_trigger">Ontbrekende trigger</string>
+
+
+    <!-- Preferences Map -->
+    <string name="p_map">Kaart</string>
+    <string name="p_mapsforge_directory">Offline kaartenfolder</string>
+    <string name="p_mapsforge_theme">Offline kaarten thema</string>
+    <string name="p_enable_cache">Laat cache toe</string>
+    <string name="p_directory_tiles">Tegelcache folder</string>
+
+
+    <!-- Preferences Map trim tiles -->
+    <string-array name="p_trim_modes">
+        <item>Grootte</item>
+        <item>Grootte en ouderdom</item>
+        <item>Ouderdom</item>
+        <item>Grootte of ouderdom</item>
+    </string-array>
+    <string name="p_trim_cache">Trim tegelcache</string>
+    <string name="p_tiles">Kaarttegels</string>
+    <string name="p_trim_mode">Trim mode</string>
+    <string name="p_trim_size">Trimgrootte</string>
+    <string name="p_trim_age">Trimleeftijd</string>
+    <string name="p_trim_month">Maand</string>
+    <string name="p_trim_months">Maanden</string>
+    <string name="p_trim_year">Jaar</string>
+    <string name="p_trim_years">Jaren</string>
+    <string name="p_trim_days">Dagen</string>
+    <string name="p_trim_total">Totaal</string>
+    <string name="p_remove_all">Leeg de volledige cache</string>
+    <string name="p_remove_all_in">Leeg de volledige cache in</string>
+    <string name="p_remove_old">Verwijder oude tegels</string>
+    <string name="p_remove_old_in">Verwijder oude tegels in</string>
+
+
+
+    <!-- File context menu and file operation -->
+    <string name="file_reload">Herlaad preview</string>
+    <string name="file_delete">Delete bestand</string>
+    <string name="file_rename">Hernoem bestand</string>
+    <string name="file_overlay">Gebruik als overlay</string>
+    <string name="file_mock">Gebruik voor namaaklokatie</string>
+    <string name="file_delete_ask">Verwijder bestand?</string>
+    <string name="file_send">Verstuur…</string>
+    <string name="file_view">Bekijk/Editeer…</string>
+    <string name="file_copy">Kopieer naar…</string>
+    <string name="file_exists">\u0020bestaat al!</string>
+    <string name="file_is_writeable">\u0020is schrijfbaar.</string>
+    <string name="file_is_writeonly">\u0020is enkel schrijfbaar.</string>
+    <string name="file_is_readonly">\u0020is enkel leesbaar.</string>
+    <string name="file_is_missing">\u0020bestaat niet.</string>
+    <string name="file_is_denied">\u0020niet toegankelijk.</string>
+
+
+    <!-- Location menu -->
+    <string name="location_title">Centreer locatie</string>
+    <string name="location_view">Bekijk locatie…</string>
+    <string name="location_send">Verstuur locatie…</string>
+    <string name="clipboard_copy">\u21d2 Clipboard</string>
+    <string name="clipboard_paste">\u21d0 Clipboard</string>
+
+
+    <!-- Dialog -->
+    <string name="dialog_yes">Ja</string>
+    <string name="dialog_no">Nee</string>
+    <string name="dialog_ok" translatable="false">OK</string>
+    <string name="dialog_cancel">Annuleer</string>
+    <string name="dialog_discard">Gooi weg</string>
+    <string name="dialog_save">Sla op</string>
+    <string name="dialog_modified">File is gewijzigd.</string>
+
+
+    <!-- Description -->
+    <string name="d_longitude">Longitude</string>
+    <string name="d_latitude">Latitude</string>
+    <string name="d_chx" translatable="false">CH1903 X</string>
+    <string name="d_chy" translatable="false">CH1903 Y</string>
+    <string name="d_name">Naam</string>
+    <string name="d_accuracy">Nauwkeurigheid</string>
+    <string name="d_enddate">Einde</string>
+    <string name="d_startdate">Start</string>
+    <string name="d_acceleration">Versnelling</string>
+    <string name="d_bearing">Bearing</string>
+    <string name="d_path">Pad</string>
+    <string name="d_state">Staat</string>
+    <string name="d_size">Grootte</string>
+    <string name="d_ascend">Klim</string>
+    <string name="d_descend">Afdaling</string>
+    <string name="d_slope">Helling</string>
+
+    <string name="pause">Pauzeer</string>
+    <string name="pause_ap">Pauzeer (met autopause)</string>
+    <string name="speed">Snelheid</string>
+    <string name="average">Gemiddeld</string>
+    <string name="average_ap">Gemiddeld (zonder pauzes)</string>
+    <string name="maximum">Maximum</string>
+    <string name="distance">AfstandDistance</string>
+    <string name="altitude">Altitude</string>
+
+    <string name="time">Totale tijd</string>
+    <string name="time_ap">Totale tijd (zonder pauzes)</string>
+
+    <string name="calories">Calorieën</string>
+    <string name="name">Naam</string>
+
+
+    <!-- ToolTip -->
+    <string name ="tt_edit_add">Voeg een punt toe met de locatie waarop de kaart gecentreerd is.</string>
+    <string name ="tt_edit_remove">Verwijder geselecteerd punt.</string>
+    <string name ="tt_edit_up">Verschuif punt eentje omhoog in de volgorde.</string>
+    <string name ="tt_edit_down">Verschuif punt eentje omlaag in de volgorde.</string>
+    <string name ="tt_edit_redo">Hermaak de laatste ongedane actie.</string>
+    <string name ="tt_edit_undo">Hermaak de laatste actie.</string>
+
+    <string name ="tt_info_grid">Wissel tussen roostermodes.</string>
+    <string name ="tt_info_legend">Wissel tussen tracklegendemodes.</string>
+    <string name ="tt_info_nominatim">Zoek met OSM-Nominatim.</string>
+    <string name ="tt_info_overpass">OSM-Overpass query.</string>
+    <string name ="tt_info_reload">Herlaad zichtbare tegels.</string>
+    <string name ="tt_info_location">Importeer/exporteer de centerlocatie.</string>
+
+
+    <string name ="tt_map_zoomin">Zoom in op de kaart.</string>
+    <string name ="tt_map_zoomout">Zoom uit op de kaart.</string>
+    <string name ="tt_map_home">Zet het centrum van de kaart vast op je huidige bekende locatie.</string>
+    <string name ="tt_map_frame">Wissel tussen GPX-Overlays en frame ze.</string>
+
+
+    <string name ="tt_nominatim_query">Start zoeken.</string>
+    <string name ="tt_nominatim_clear">Verwijder lijne in de zoektext.</string>
+
+    <string name ="tt_cockpit_a">Fullscreen</string>
+    <string name ="tt_cockpit_b">Splitscreen</string>
+
+    <string name ="tt_overpass_mapfeatures">Toon een lijst van kaartfeatures.</string>
+
+    <string name ="tt_menu_file">Toon bestandsoperatie menu.</string>
+
+    <string name ="tt_p_preset_slots">Aantal folders en presets die je wil gebruiken om tracks te organizeren</string>
+
+    <!-- Errors -->
+    <string name="error_integer">Verkeerde input, enkel gehele getallen zijn toegestaan.\n\"%s\"</string>
+    <string name ="error_weight">"Gewicht moet tussen 1 en 999 zijn."</string>
+    <string name="error_long">Verkeerde input, enkel getallen zijn toegestaan.\n\"%s\"</string>
+    <string name ="error_met">"Eerste Getal moet tussen 0.0 en 20.0 zijn, gevolgd door een spatie."</string>
+
+</resources>
