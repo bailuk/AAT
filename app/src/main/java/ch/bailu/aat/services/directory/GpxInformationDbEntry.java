@@ -75,6 +75,10 @@ public class GpxInformationDbEntry extends GpxInformation {
 
 
     @Override
+    public long getTimeStamp() { return getStartTime();}
+
+
+    @Override
     public long getStartTime() {
         return getLong(GpxDbConstants.KEY_START_TIME);
     }
