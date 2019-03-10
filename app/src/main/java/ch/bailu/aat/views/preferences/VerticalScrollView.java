@@ -52,25 +52,20 @@ public class VerticalScrollView extends ScrollView {
     public void addAllFilterViews(MapContext mc) {
         final SolidDirectoryQuery sdirectory = new SolidDirectoryQuery(mc.getContext());
 
-
         LinearLayout geo = new LinearLayout(mc.getContext());
         AppTheme.alt.background(geo);
-        //geo.setBackgroundColor(AppTheme.getAltBackgroundColor());
         geo.addView(new SolidCheckBox(sdirectory.getUseGeo()));
         geo.addView(new SolidBoundingBoxView(sdirectory.getBoundingBox(), mc));
         layout.addView(geo);
 
-
         LinearLayout from = new LinearLayout(mc.getContext());
-        AppTheme.alt.background(geo);
-        //from.setBackgroundColor(AppTheme.getAltBackgroundColor());
+        AppTheme.alt.background(from);
         from.addView(new SolidCheckBox(sdirectory.getUseDateStart()));
         from.addView(new SolidDateView(sdirectory.getDateStart()));
         layout.addView(from);
 
         LinearLayout to = new LinearLayout(mc.getContext());
-        AppTheme.alt.background(geo);
-        //to.setBackgroundColor(AppTheme.getAltBackgroundColor());
+        AppTheme.alt.background(to);
         to.addView(new SolidCheckBox(sdirectory.getUseDateEnd()));
         to.addView(new SolidDateView(sdirectory.getDateTo()));
         layout.addView(to);

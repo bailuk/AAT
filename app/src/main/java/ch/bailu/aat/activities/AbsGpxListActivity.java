@@ -178,7 +178,7 @@ public abstract class AbsGpxListActivity extends ActivityContext implements OnIt
 
             TitleView title = new TitleView(acontext, filter_label);
             AppTheme.alt.background(title);
-            //title.setBackgroundColor(AppTheme.getAltBackgroundColor());
+
             summary.add(title);
             summary.addAllFilterViews(map.getMContext());
 
