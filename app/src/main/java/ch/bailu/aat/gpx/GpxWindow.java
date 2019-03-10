@@ -67,4 +67,5 @@ public abstract class GpxWindow implements GpxDeltaInterface {
     public BoundingBoxE6 getBoundingBox() {
         return null;
     }
+
 }

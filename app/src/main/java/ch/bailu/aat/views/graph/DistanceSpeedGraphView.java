@@ -10,11 +10,11 @@ import ch.bailu.aat.R;
 import ch.bailu.aat.description.AverageSpeedDescription;
 import ch.bailu.aat.description.AverageSpeedDescriptionAP;
 import ch.bailu.aat.dispatcher.DispatcherInterface;
+import ch.bailu.aat.gpx.GpxDistanceWindow;
 import ch.bailu.aat.gpx.GpxList;
 import ch.bailu.aat.gpx.GpxListWalker;
 import ch.bailu.aat.gpx.GpxPointNode;
 import ch.bailu.aat.gpx.GpxSegmentNode;
-import ch.bailu.aat.gpx.GpxWindow;
 import ch.bailu.aat.gpx.attributes.AutoPause;
 import ch.bailu.aat.gpx.attributes.MaxSpeed;
 import ch.bailu.aat.preferences.SolidAutopause;
@@ -28,45 +28,45 @@ import ch.bailu.aat.views.bar.ControlBar;
 
 public class DistanceSpeedGraphView extends AbsGraphView implements SharedPreferences.OnSharedPreferenceChangeListener {
 
-    private final SolidSpeedGraphWindow swindow;
-    private final ControlBar bar;
+//    private final SolidSpeedGraphWindow swindow;
+    //private final ControlBar bar;
 
 
     public DistanceSpeedGraphView(Context context, String key, DispatcherInterface di, int... iid) {
         super(context, di, iid);
 
-        swindow = new SolidSpeedGraphWindow(context, key);
+  //      swindow = new SolidSpeedGraphWindow(context, key);
 
         setLabelText(context);
 
-        bar = new ControlBar(context, LinearLayout.HORIZONTAL,6);
+      /*  bar = new ControlBar(context, LinearLayout.HORIZONTAL,6);
         bar.addSpace();
         bar.addSpace();
         bar.addSolidIndexButton(new SolidSpeedGraphWindow(context, key));
         bar.setBackgroundColor(Color.TRANSPARENT);
 
-        addView(bar);
+        addView(bar);*/
     }
 
     private void setLabelText(Context context) {
         ylabel.setText(Color.WHITE, R.string.speed, sunit.getSpeedUnit());
         ylabel.setText(AppTheme.COLOR_BLUE, new AverageSpeedDescriptionAP(context).getLabel());
         ylabel.setText(AppTheme.COLOR_GREEN, new AverageSpeedDescription(context).getLabel());
-        ylabel.setText(AppTheme.COLOR_ORANGE, swindow.getValueAsString());
+        //ylabel.setText(AppTheme.COLOR_ORANGE, swindow.getValueAsString());
     }
 
 
     @Override
     public void onAttachedToWindow() {
         super.onAttachedToWindow();
-        swindow.register(this);
+        //swindow.register(this);
     }
 
 
     @Override
     public void onDetachedFromWindow() {
         super.onDetachedFromWindow();
-        swindow.unregister(this);
+        //swindow.unregister(this);
     }
 
 
@@ -101,17 +101,17 @@ public class DistanceSpeedGraphView extends AbsGraphView implements SharedPrefer
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-        if (swindow.hasKey(key)) {
+        /*if (swindow.hasKey(key)) {
             setLabelText(swindow.getContext());
             invalidate();
-        }
+        }*/
     }
 
 
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
         super.onLayout(changed, l, t, r, b);
-        bar.place(0,b-t-bar.getControlSize(), r-l);
+       // bar.place(0,b-t-bar.getControlSize(), r-l);
     }
 
 
@@ -134,7 +134,7 @@ public class DistanceSpeedGraphView extends AbsGraphView implements SharedPrefer
         private final float minDistance;
 
 
-        private GpxWindow window;
+        private GpxDistanceWindow window;
 
 
 
@@ -210,7 +210,10 @@ public class DistanceSpeedGraphView extends AbsGraphView implements SharedPrefer
 
         @Override
         public boolean doList(GpxList track) {
-            window = swindow.createWindow((GpxPointNode) track.getPointList().getFirst());
+            window = new GpxDistanceWindow(track);//SolidSpeedGraphWindow.createDistanceWindow(track);
+
+            ylabel.setText(AppTheme.COLOR_ORANGE,
+                    window.getLimitAsString(getContext()));
             return true;
         }
     }
