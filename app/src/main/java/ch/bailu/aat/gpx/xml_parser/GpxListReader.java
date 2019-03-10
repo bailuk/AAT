@@ -4,10 +4,10 @@ import org.xmlpull.v1.XmlPullParserException;
 
 import java.io.IOException;
 
-import ch.bailu.aat.gpx.attributes.AutoPause;
 import ch.bailu.aat.gpx.GpxList;
-import ch.bailu.aat.gpx.attributes.GpxListAttributes;
 import ch.bailu.aat.gpx.GpxPoint;
+import ch.bailu.aat.gpx.attributes.AutoPause;
+import ch.bailu.aat.gpx.attributes.GpxListAttributes;
 import ch.bailu.aat.gpx.interfaces.GpxType;
 import ch.bailu.aat.gpx.xml_parser.parser.AbsXmlParser;
 import ch.bailu.aat.services.background.ThreadControl;
@@ -21,29 +21,23 @@ public class GpxListReader {
     private final OnParsed track;
     private final OnParsed route;
 
-    private final AbsXmlParser parser;
+    private AbsXmlParser parser = null;
+
+    private Exception parserException = null;
 
 
-    public GpxListReader(Foc in, AutoPause apause) throws IOException, SecurityException, XmlPullParserException {
+
+    public GpxListReader(Foc in, AutoPause apause) throws IOException, SecurityException{
         this(ThreadControl.KEEP_ON, in, apause);
     }
 
-/*
-    public GpxListReader (ThreadControl c, Foc in, SolidAutopause spause)
-            throws IOException, SecurityException, XmlPullParserException {
 
-        this(c, in, GpxListAttributes.factoryTrack(spause));
-    }
-*/
-
-    public GpxListReader (ThreadControl c, Foc in, AutoPause apause)
-            throws IOException, SecurityException, XmlPullParserException {
+    public GpxListReader (ThreadControl c, Foc in, AutoPause apause) throws IOException, SecurityException {
         this(c, in, GpxListAttributes.factoryTrack(apause));
     }
 
 
-    private GpxListReader (ThreadControl c, Foc in, GpxListAttributes trackAttributes)
-            throws IOException, SecurityException, XmlPullParserException {
+    private GpxListReader (ThreadControl c, Foc in, GpxListAttributes trackAttributes) throws IOException, SecurityException {
 
         track = new OnParsed(GpxType.TRACK, trackAttributes);
         way   = new OnParsed(GpxType.WAY,   GpxListAttributes.NULL);
@@ -51,12 +45,29 @@ public class GpxListReader {
 
         threadControl=c;
 
-        parser = new XmlParser(in);
-        parser.setOnRouteParsed(route);
-        parser.setOnTrackParsed(track);
-        parser.setOnWayParsed(way);
-        parser.parse();
-        parser.close();
+        try {
+            parser = new XmlParser(in);
+
+            parser.setOnRouteParsed(route);
+            parser.setOnTrackParsed(track);
+            parser.setOnWayParsed(way);
+            parser.parse();
+            parser.close();
+
+        } catch (XmlPullParserException e) {
+            parserException = e;
+        }
+
+    }
+
+
+
+    public boolean hasParserException() {
+        return parserException != null;
+    }
+
+    public Exception getParserException() {
+        return parserException;
     }
 
 
@@ -67,7 +78,7 @@ public class GpxListReader {
     }
 
 
-    
+
     private class OnParsed implements OnParsedInterface {
         private final GpxList gpxList;
         private boolean  haveNewSegment=true;
@@ -94,11 +105,11 @@ public class GpxListReader {
         public void onHavePoint() throws IOException {
             if (threadControl.canContinue()) {
                 if (haveNewSegment) {
-                    gpxList.appendToNewSegment(new GpxPoint(parser), 
+                    gpxList.appendToNewSegment(new GpxPoint(parser),
                             parser.getAttributes());
                     haveNewSegment=false;
                 } else {
-                    gpxList.appendToCurrentSegment(new GpxPoint(parser), 
+                    gpxList.appendToCurrentSegment(new GpxPoint(parser),
                             parser.getAttributes());
 
                 }

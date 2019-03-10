@@ -2,18 +2,16 @@ package ch.bailu.aat.services.cache;
 
 import android.util.SparseArray;
 
-import org.xmlpull.v1.XmlPullParserException;
-
 import java.io.IOException;
 
 import ch.bailu.aat.coordinates.SrtmCoordinates;
-import ch.bailu.aat.gpx.attributes.AutoPause;
 import ch.bailu.aat.gpx.GpxList;
 import ch.bailu.aat.gpx.GpxListWalker;
 import ch.bailu.aat.gpx.GpxPoint;
 import ch.bailu.aat.gpx.GpxPointLinkedNode;
 import ch.bailu.aat.gpx.GpxPointNode;
 import ch.bailu.aat.gpx.GpxSegmentNode;
+import ch.bailu.aat.gpx.attributes.AutoPause;
 import ch.bailu.aat.gpx.linked_list.Node;
 import ch.bailu.aat.gpx.xml_parser.GpxListReader;
 import ch.bailu.aat.preferences.SolidAutopause;
@@ -224,17 +222,11 @@ public class GpxObjectStatic extends GpxObject implements ElevationUpdaterClient
                 public void run(ObjectHandle handle) {
                     GpxObjectStatic owner = (GpxObjectStatic) handle;
 
-                    try {
-                        size[0] = load(sc, owner);
+                    size[0] = load(sc, owner);
 
-                        sc.getElevationService().requestElevationUpdates(owner,
-                                owner.getSrtmTileCoordinates());
+                    sc.getElevationService().requestElevationUpdates(owner,
+                            owner.getSrtmTileCoordinates());
 
-
-                    } catch (Exception e) {
-                        owner.setException(e);
-
-                    }
                     AppBroadcaster.broadcast(sc.getContext(),
                             AppBroadcaster.FILE_CHANGED_INCACHE, getID());
 
@@ -245,19 +237,26 @@ public class GpxObjectStatic extends GpxObject implements ElevationUpdaterClient
         }
 
 
-        private long load(ServiceContext sc, GpxObjectStatic handle) throws IOException, XmlPullParserException {
+        private long load(ServiceContext sc, GpxObjectStatic handle) {
             long size = 0;
 
-            GpxListReader reader =
-                    new GpxListReader(
-                            getThreadControl(),
-                            getFile(),
-                            getAutoPause(sc));
+            try {
+                GpxListReader reader = new GpxListReader(
+                        getThreadControl(),
+                        getFile(),
+                        getAutoPause(sc));
 
-            if (canContinue()) {
-                handle.setGpxList(reader.getGpxList());
-                size =  handle.getSize();
+                if (canContinue()) {
+                    handle.setGpxList(reader.getGpxList());
+                    handle.setException(reader.getParserException());
+
+                    size = handle.getSize();
+                }
+
+            } catch (IOException e) {
+                handle.setException(e);
             }
+
             return size;
         }
 
@@ -268,7 +267,5 @@ public class GpxObjectStatic extends GpxObject implements ElevationUpdaterClient
                     spause.getTriggerSpeed(),
                     spause.getTriggerLevelMillis());
         }
-
-
     }
 }

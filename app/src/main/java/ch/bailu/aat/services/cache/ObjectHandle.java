@@ -41,7 +41,7 @@ public abstract class ObjectHandle implements ObjectBroadcastReceiver{
 
     protected void setException(Exception e) {
         exception = e;
-        AppLog.w(this, e);
+        //AppLog.w(this, e);
     }
 
 

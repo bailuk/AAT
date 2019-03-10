@@ -25,7 +25,7 @@ public class TestGpx extends UnitTest {
 
 
     @Override
-    public void test() throws IOException, AssertionError, XmlPullParserException {
+    public void test() throws IOException, AssertionError {
         Foc testFile = getTestFile();
         
         testFile(testFile, testFile);
@@ -47,7 +47,7 @@ public class TestGpx extends UnitTest {
 
 
 
-    public void testFile(Foc fileA, Foc fileB) throws IOException, AssertionError, XmlPullParserException {
+    public void testFile(Foc fileA, Foc fileB) throws IOException, AssertionError {
             GpxList listA= new GpxListReader(fileA, AutoPause.NULL).getGpxList();
             GpxList listB=new GpxListReader(fileB, AutoPause.NULL).getGpxList();
             
@@ -75,7 +75,4 @@ public class TestGpx extends UnitTest {
         assertEquals(listA.getDelta().getPause(), listB.getDelta().getPause());
         
     }
-
-
-
 }
