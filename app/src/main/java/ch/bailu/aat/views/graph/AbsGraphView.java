@@ -19,7 +19,6 @@ public abstract class AbsGraphView extends ViewGroup implements OnContentUpdated
 
     public final static int SAMPLE_WIDTH_PIXEL=5;
 
-    private boolean markerMode=false;
     private GpxList gpxCache = GpxList.NULL_TRACK;
     private int nodeIndex = -1;
 
@@ -89,7 +88,7 @@ public abstract class AbsGraphView extends ViewGroup implements OnContentUpdated
     @Override
     public void onDraw(Canvas c) {
         if (getWidth() > 0 && getHeight() > 0) {
-            markerMode = gpxCache.getMarkerList().size() > getWidth() / SAMPLE_WIDTH_PIXEL;
+            boolean markerMode = gpxCache.getMarkerList().size() > getWidth() / SAMPLE_WIDTH_PIXEL;
             plot(c, gpxCache, nodeIndex, sunit, markerMode);
         }
     }

@@ -45,7 +45,7 @@ public class OverpassApi extends OsmApiHelper {
         final double lo2 = bounding.getLonEastE6()/1E6;
         final double la2 = bounding.getLatNorthE6()/1E6;
 
-        return String.format((Locale)null,"(%.2f,%.2f,%.2f,%.2f);",
+        return String.format(Locale.ROOT,"(%.2f,%.2f,%.2f,%.2f);",
                 Math.min(la1, la2),
                 Math.min(lo1, lo2),
                 Math.max(la1, la2),

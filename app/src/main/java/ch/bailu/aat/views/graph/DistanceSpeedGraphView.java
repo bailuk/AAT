@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.widget.LinearLayout;
 
 import ch.bailu.aat.R;
 import ch.bailu.aat.description.AverageSpeedDescription;
@@ -18,12 +17,10 @@ import ch.bailu.aat.gpx.GpxSegmentNode;
 import ch.bailu.aat.gpx.attributes.AutoPause;
 import ch.bailu.aat.gpx.attributes.MaxSpeed;
 import ch.bailu.aat.preferences.SolidAutopause;
-import ch.bailu.aat.preferences.SolidSpeedGraphWindow;
 import ch.bailu.aat.preferences.general.SolidPostprocessedAutopause;
 import ch.bailu.aat.preferences.general.SolidUnit;
 import ch.bailu.aat.util.ui.AppDensity;
 import ch.bailu.aat.util.ui.AppTheme;
-import ch.bailu.aat.views.bar.ControlBar;
 
 
 public class DistanceSpeedGraphView extends AbsGraphView implements SharedPreferences.OnSharedPreferenceChangeListener {

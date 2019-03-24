@@ -1,7 +1,6 @@
 package ch.bailu.aat.views.preferences;
 
 import android.content.SharedPreferences;
-import android.view.View;
 
 import ch.bailu.aat.coordinates.BoundingBoxE6;
 import ch.bailu.aat.map.MapContext;

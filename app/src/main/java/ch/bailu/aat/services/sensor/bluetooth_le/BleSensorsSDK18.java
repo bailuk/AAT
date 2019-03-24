@@ -83,7 +83,7 @@ public class BleSensorsSDK18 extends Sensors {
     private void connect(SensorListItem item) {
         final BluetoothDevice device = adapter.getRemoteDevice(item.getAddress());
 
-        if (device instanceof  BluetoothDevice) {
+        if (device != null) {
             new BleSensorSDK18(scontext, device, sensorList);
         }
     }

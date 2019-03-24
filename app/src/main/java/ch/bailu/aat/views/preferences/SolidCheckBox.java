@@ -1,7 +1,6 @@
 package ch.bailu.aat.views.preferences;
 
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 
 import ch.bailu.aat.preferences.SolidBoolean;

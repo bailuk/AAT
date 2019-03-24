@@ -1,11 +1,8 @@
 package ch.bailu.aat.services.tileremover;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.Iterator;
 import java.util.TreeSet;
-
-import ch.bailu.aat.util.ui.AppLog;
 
 public class TilesList {
     private final static int FILES_LIMIT=50000;

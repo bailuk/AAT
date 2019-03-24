@@ -7,13 +7,10 @@ import ch.bailu.aat.description.AltitudeDescription;
 import ch.bailu.aat.description.ContentDescription;
 import ch.bailu.aat.description.CurrentSpeedDescription;
 import ch.bailu.aat.description.DistanceDescription;
-import ch.bailu.aat.description.MaximumSpeedDescription;
 import ch.bailu.aat.description.SpeedDescription;
 import ch.bailu.aat.gpx.attributes.GpxAttributes;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.GpxPointNode;
-import ch.bailu.aat.gpx.attributes.GpxListAttributes;
-import ch.bailu.aat.gpx.attributes.MaxSpeed;
 import ch.bailu.aat.gpx.interfaces.GpxType;
 
 public class HtmlBuilderGpx extends HtmlBuilder {

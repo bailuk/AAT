@@ -1,7 +1,6 @@
 package ch.bailu.util_java.foc;
 
 import java.io.File;
-import java.io.FileFilter;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;

@@ -115,9 +115,9 @@ public class HeartRateService extends HeartRateServiceID implements ServiceInter
 
     private class Attributes extends HeartRateAttributes {
 
-        private boolean haveSensorContactStatus;
-        private boolean haveEnergyExpended;
-        private boolean haveRrIntervall;
+        private final boolean haveSensorContactStatus;
+        private final boolean haveEnergyExpended;
+        private final boolean haveRrIntervall;
 
 
         public Attributes(BluetoothGattCharacteristic c, byte[] v) {

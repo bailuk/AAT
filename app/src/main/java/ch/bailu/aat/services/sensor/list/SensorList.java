@@ -144,7 +144,7 @@ public class SensorList extends ArrayList<SensorListItem> implements Closeable {
 
     public static class Attributes extends GpxAttributes {
 
-        private static Keys KEYS = new Keys();
+        private static final Keys KEYS = new Keys();
         public static final int KEY_SENSOR_COUNT = KEYS.add("count");
         public static final int KEY_SENSOR_OVERVIEW = KEYS.add("overview");
 

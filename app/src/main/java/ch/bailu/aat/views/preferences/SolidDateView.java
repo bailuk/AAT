@@ -1,7 +1,6 @@
 package ch.bailu.aat.views.preferences;
 
 import android.app.DatePickerDialog;
-import android.widget.DatePicker;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;

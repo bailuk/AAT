@@ -46,7 +46,7 @@ public class PointNameWalker extends LegendWalker{
         }
     }
 
-    private static int KEY_INDEX_NAME = Keys.toIndex("name");
+    private static final int KEY_INDEX_NAME = Keys.toIndex("name");
     private String getNameFromB() {
         final GpxAttributes attr = c.nodes.nodeB.point.getAttributes();
 

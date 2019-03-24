@@ -6,7 +6,7 @@ import ch.bailu.aat.gpx.attributes.Keys;
 public class StepCounterAttributes extends GpxAttributes {
 
 
-    private static Keys KEYS = new Keys();
+    private static final Keys KEYS = new Keys();
 
     public static final int KEY_INDEX_STEPS_RATE = KEYS.add("StepRate");
     public static final int KEY_INDEX_STEPS_TOTAL = KEYS.add("TotalSteps");

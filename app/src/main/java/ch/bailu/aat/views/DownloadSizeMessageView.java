@@ -10,7 +10,7 @@ import ch.bailu.aat.util.MemSize;
 
 public class DownloadSizeMessageView extends MessageView {
     private long size = 0;
-    StringBuilder builder = new StringBuilder();
+    final StringBuilder builder = new StringBuilder();
 
 
     DownloadSizeMessageView(Context context) {

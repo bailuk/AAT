@@ -5,7 +5,6 @@ import org.mapsforge.core.graphics.Style;
 import org.mapsforge.map.android.graphics.AndroidGraphicFactory;
 
 import ch.bailu.aat.util.ui.AppDensity;
-import ch.bailu.aat.util.ui.AppTheme;
 
 public class MapPaint {
 

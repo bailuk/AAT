@@ -6,7 +6,6 @@ import org.xmlpull.v1.XmlPullParserException;
 import java.io.IOException;
 
 import ch.bailu.aat.gpx.xml_parser.scanner.Scanner;
-import ch.bailu.aat.util.ui.AppLog;
 import ch.bailu.util_java.util.Objects;
 
 public class Util {

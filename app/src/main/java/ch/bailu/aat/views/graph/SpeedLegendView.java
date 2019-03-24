@@ -2,7 +2,6 @@ package ch.bailu.aat.views.graph;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;

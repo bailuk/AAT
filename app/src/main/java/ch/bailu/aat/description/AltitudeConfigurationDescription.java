@@ -11,7 +11,7 @@ public class AltitudeConfigurationDescription extends AltitudeDescription {
 
     private String configuration;
 
-    private boolean haveSensor = SensorState.isConnected(InfoID.BAROMETER_SENSOR);;
+    private boolean haveSensor = SensorState.isConnected(InfoID.BAROMETER_SENSOR);
 
 
     public AltitudeConfigurationDescription(Context context) {

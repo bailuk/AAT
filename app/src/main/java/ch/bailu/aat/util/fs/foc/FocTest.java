@@ -2,8 +2,6 @@ package ch.bailu.aat.util.fs.foc;
 
 import java.io.Closeable;
 
-import ch.bailu.aat.description.FF;
-import ch.bailu.aat.util.ui.AppLog;
 import ch.bailu.util_java.foc.Foc;
 
 public class FocTest {

@@ -5,7 +5,7 @@ import ch.bailu.aat.gpx.attributes.Keys;
 
 public class HeartRateAttributes extends GpxAttributes {
 
-    private static Keys KEYS = new Keys();
+    private static final Keys KEYS = new Keys();
 
     public static final int KEY_INDEX_BPM = KEYS.add("HR");
     public static final int KEY_INDEX_RR = KEYS.add("RR");

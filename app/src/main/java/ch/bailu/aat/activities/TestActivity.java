@@ -2,7 +2,6 @@ package ch.bailu.aat.activities;
 
 
 import android.os.Bundle;
-import android.view.View;
 
 import ch.bailu.aat.R;
 import ch.bailu.aat.description.AccelerationDescription;

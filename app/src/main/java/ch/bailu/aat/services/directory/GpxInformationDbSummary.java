@@ -17,7 +17,7 @@ public class GpxInformationDbSummary extends GpxInformation {
     private final GpxList list;
     private final Foc directory;
 
-    private MaxSpeed maxSpeed = new MaxSpeed.Raw2();
+    private final MaxSpeed maxSpeed = new MaxSpeed.Raw2();
 
     
     public GpxInformationDbSummary(Foc dir, Cursor cursor) {

@@ -5,9 +5,9 @@ import ch.bailu.aat.util.ToDo;
 
 public class SensorState {
 
-    private static int SIZE = InfoID.STEP_COUNTER_SENSOR - InfoID.HEART_RATE_SENSOR + 1;
+    private static final int SIZE = InfoID.STEP_COUNTER_SENSOR - InfoID.HEART_RATE_SENSOR + 1;
 
-    private static int[] connected = new int[SIZE];
+    private static final int[] connected = new int[SIZE];
 
     public static final String[] NAMES = {
             ToDo.translate("Heart Rate"),

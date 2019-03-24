@@ -2,8 +2,6 @@ package ch.bailu.aat.views;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Typeface;
-import android.util.TypedValue;
 
 import ch.bailu.aat.util.ui.AppLog;
 import ch.bailu.aat.util.ui.AppTheme;

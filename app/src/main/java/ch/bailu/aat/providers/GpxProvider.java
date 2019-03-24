@@ -19,11 +19,15 @@ public class GpxProvider extends ContentProvider {
 
     @Override
     public ParcelFileDescriptor openFile(Uri uri, String mode) throws FileNotFoundException {
-        final File file =  new File(uri.getPath());
 
+        final String path = uri.getPath();
 
-        if (file.exists()) {
-            return (ParcelFileDescriptor.open(file, ParcelFileDescriptor.MODE_READ_ONLY));
+        if (path != null) {
+            final File file = new File(uri.getPath());
+
+            if (file.exists()) {
+                return (ParcelFileDescriptor.open(file, ParcelFileDescriptor.MODE_READ_ONLY));
+            }
         }
         throw UNSUPORTED;
     }

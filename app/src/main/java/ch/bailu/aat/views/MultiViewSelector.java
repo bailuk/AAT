@@ -1,11 +1,8 @@
 package ch.bailu.aat.views;
 
 import android.view.Gravity;
-import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import org.mapsforge.map.model.common.Observer;
 
 import ch.bailu.aat.menus.MultiViewMenu;
 import ch.bailu.aat.util.ui.AppTheme;

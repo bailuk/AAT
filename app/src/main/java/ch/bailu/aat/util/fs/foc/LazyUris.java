@@ -5,8 +5,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.provider.DocumentsContract;
 
-import ch.bailu.aat.util.ui.AppLog;
-
 @TargetApi(Build.VERSION_CODES.LOLLIPOP)
 public class LazyUris {
     private final Uri permission;

@@ -2,13 +2,10 @@ package ch.bailu.aat.services.location;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.hardware.Sensor;
-import android.hardware.SensorManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.location.LocationProvider;
-import android.os.Build;
 import android.os.Bundle;
 
 import java.util.List;
@@ -16,7 +13,6 @@ import java.util.List;
 import ch.bailu.aat.gpx.StateID;
 import ch.bailu.aat.util.AppPermission;
 import ch.bailu.aat.util.ContextWrapperInterface;
-import ch.bailu.aat.util.ui.AppLog;
 import ch.bailu.util_java.util.Objects;
 
 

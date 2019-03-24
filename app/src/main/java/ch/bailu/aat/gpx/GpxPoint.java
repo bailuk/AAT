@@ -13,8 +13,9 @@ public class GpxPoint implements GpxPointInterface {
     public static final long SIZE_IN_BYTES=(1*2)+(2*4)+(1*8);
 
     private short  altitude;
-    private int    longitude, latitude;
-    private long   timestamp;
+    private final int    longitude;
+    private final int latitude;
+    private final long   timestamp;
 
     
     public static final GpxPoint NULL=new GpxPoint();

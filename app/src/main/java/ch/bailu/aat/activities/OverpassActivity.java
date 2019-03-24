@@ -7,7 +7,6 @@ import java.io.IOException;
 
 import ch.bailu.aat.R;
 import ch.bailu.aat.coordinates.BoundingBoxE6;
-import ch.bailu.aat.services.cache.osm_features.MapFeaturesListEntry;
 import ch.bailu.aat.util.OsmApiHelper;
 import ch.bailu.aat.util.OverpassApi;
 import ch.bailu.aat.util.ui.AppLayout;

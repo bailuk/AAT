@@ -1,9 +1,7 @@
 package ch.bailu.aat.preferences.location;
 
 import android.content.Context;
-import android.location.LocationManager;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import ch.bailu.aat.R;
@@ -16,7 +14,6 @@ import ch.bailu.aat.services.location.NetworkLocation;
 import ch.bailu.aat.services.location.RealLocation;
 import ch.bailu.aat.util.AppPermission;
 import ch.bailu.aat.util.ToDo;
-import ch.bailu.aat.util.ui.AppLog;
 
 public class SolidLocationProvider extends SolidStaticIndexList {
 

@@ -112,7 +112,7 @@ public class BarometerSensor extends InternalSensorSDK23
 
         private final GpxAttributes attributes;
         private final short altitude;
-        private long time = System.currentTimeMillis();
+        private final long time = System.currentTimeMillis();
 
         public Information(short a, float p) {
             attributes = new Attributes(p);

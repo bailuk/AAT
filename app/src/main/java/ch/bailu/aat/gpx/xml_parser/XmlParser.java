@@ -4,9 +4,7 @@ import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlPullParserFactory;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.Reader;
 
 import ch.bailu.aat.gpx.attributes.GpxAttributes;
@@ -19,7 +17,7 @@ import ch.bailu.util_java.parser.OnParsedInterface;
 public class XmlParser extends AbsXmlParser {
 
 
-    private final Scanner scanner;;
+    private final Scanner scanner;
     private final Reader reader;
     private final XmlPullParser parser;
 

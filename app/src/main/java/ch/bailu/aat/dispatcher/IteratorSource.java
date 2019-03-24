@@ -18,7 +18,6 @@ import ch.bailu.aat.services.directory.IteratorFollowFile;
 import ch.bailu.aat.services.directory.IteratorSummary;
 import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.util.AppIntent;
-import ch.bailu.aat.util.ui.AppLog;
 
 public abstract class IteratorSource extends ContentSource implements OnCursorChangedListener {
 

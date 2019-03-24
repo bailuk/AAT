@@ -7,7 +7,6 @@ import java.io.IOException;
 
 import ch.bailu.aat.gpx.xml_parser.parser.TagParser;
 import ch.bailu.aat.gpx.xml_parser.scanner.Scanner;
-import ch.bailu.aat.util.ui.AppLog;
 
 public class GpxExtensionParser extends TagParser {
 

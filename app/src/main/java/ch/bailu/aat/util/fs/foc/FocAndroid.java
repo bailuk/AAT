@@ -60,7 +60,9 @@ public class FocAndroid {
 
 
     private static Foc factoryFocFile(String scheme, Uri uri) {
-        if (scheme == null || "file".equals(scheme)) {
+        String path = uri.getPath();
+
+        if (path != null && scheme == null || "file".equals(scheme)) {
             return new FocFile(new File(uri.getPath()));
         }
 

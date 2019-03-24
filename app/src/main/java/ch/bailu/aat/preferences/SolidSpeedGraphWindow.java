@@ -6,7 +6,6 @@ import ch.bailu.aat.R;
 import ch.bailu.aat.description.DistanceDescription;
 import ch.bailu.aat.description.TimeDescription;
 import ch.bailu.aat.gpx.GpxDistanceWindow;
-import ch.bailu.aat.gpx.GpxList;
 import ch.bailu.aat.gpx.GpxPointNode;
 import ch.bailu.aat.gpx.GpxTimeWindow;
 import ch.bailu.aat.gpx.GpxWindow;

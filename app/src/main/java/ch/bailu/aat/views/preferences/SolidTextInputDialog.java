@@ -13,11 +13,11 @@ import ch.bailu.aat.preferences.AbsSolidType;
 public class SolidTextInputDialog extends AbsSolidDialog {
 
 
-    public static int INTEGER = InputType.TYPE_CLASS_NUMBER;
-    public static int INTEGER_SIGNED = InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_SIGNED;
-    public static int FLOAT = InputType.TYPE_CLASS_NUMBER   | InputType.TYPE_NUMBER_FLAG_DECIMAL;
+    public static final int INTEGER = InputType.TYPE_CLASS_NUMBER;
+    public static final int INTEGER_SIGNED = InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_SIGNED;
+    public static final int FLOAT = InputType.TYPE_CLASS_NUMBER   | InputType.TYPE_NUMBER_FLAG_DECIMAL;
 
-    public static int TEXT = InputType.TYPE_CLASS_TEXT;
+    public static final int TEXT = InputType.TYPE_CLASS_TEXT;
 
 
     public SolidTextInputDialog(final AbsSolidType s, int inputType) {

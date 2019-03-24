@@ -14,7 +14,7 @@ public class CadenceDescription  extends ContentDescription {
 
 
     private String value = VALUE_DISABLED;
-    private String unit = UNIT;
+    private final String unit = UNIT;
     private String label = LABEL;
 
 

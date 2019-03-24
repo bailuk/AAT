@@ -14,7 +14,7 @@ public class StepRateDescription extends ContentDescription {
 
     private String value = VALUE_DISABLED;
     private String unit = UNIT;
-    private String label = LABEL;
+    private final String label = LABEL;
 
 
     public StepRateDescription(Context c) {

@@ -1,7 +1,6 @@
 package ch.bailu.aat.views.preferences;
 
 import android.content.SharedPreferences;
-import android.view.View;
 
 import ch.bailu.aat.preferences.AbsSolidType;
 import ch.bailu.aat.views.AbsLabelTextView;

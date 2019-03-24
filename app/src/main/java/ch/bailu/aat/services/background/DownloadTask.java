@@ -15,7 +15,6 @@ import ch.bailu.aat.util.ToDo;
 import ch.bailu.aat.util.net.URX;
 import ch.bailu.aat.util.ui.AppLog;
 import ch.bailu.aat.util.ui.AppString;
-import ch.bailu.aat.util.ui.AppTheme;
 import ch.bailu.util_java.foc.Foc;
 
 public class DownloadTask extends BackgroundTask implements ContextWrapperInterface{

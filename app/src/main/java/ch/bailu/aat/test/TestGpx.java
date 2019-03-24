@@ -2,8 +2,6 @@ package ch.bailu.aat.test;
 
 import android.content.Context;
 
-import org.xmlpull.v1.XmlPullParserException;
-
 import java.io.IOException;
 
 import ch.bailu.aat.gpx.attributes.AutoPause;

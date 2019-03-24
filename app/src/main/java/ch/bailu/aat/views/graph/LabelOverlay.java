@@ -11,7 +11,7 @@ import ch.bailu.aat.map.MapColor;
 public class LabelOverlay extends LinearLayout {
     private final static int BACKGROUND_COLOR  = MapColor.setAlpha(Color.BLACK, 100);
 
-    private final SparseArray<TextView> labels = new SparseArray<TextView>(4);
+    private final SparseArray<TextView> labels = new SparseArray<>(4);
 
     public LabelOverlay(Context context, int gravity) {
         super(context);

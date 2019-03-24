@@ -166,7 +166,8 @@ public class CscService extends CscServiceID implements ServiceInterface {
 
     private class Attributes extends CadenceSpeedAttributes {
 
-        boolean haveCadence, haveSpeed;
+        final boolean haveCadence;
+        boolean haveSpeed;
         private int speed_rpm = 0;
         private float speedSI = 0f;
 

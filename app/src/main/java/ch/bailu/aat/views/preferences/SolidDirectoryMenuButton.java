@@ -1,7 +1,6 @@
 package ch.bailu.aat.views.preferences;
 
 import android.app.Activity;
-import android.view.View;
 
 import ch.bailu.aat.R;
 import ch.bailu.aat.menus.DirectoryMenu;

@@ -12,13 +12,13 @@ import ch.bailu.aat.gpx.xml_parser.scanner.Scanner;
 
 public class GpxParser  extends TagParser {
 
-    private TagParser metadata = new MetadataParser();
-    private TagParser trk = new TrkParser();
-    private TagParser rte = new RteParser();
-    private TagParser wpt = new WptParser();
+    private final TagParser metadata = new MetadataParser();
+    private final TagParser trk = new TrkParser();
+    private final TagParser rte = new RteParser();
+    private final TagParser wpt = new WptParser();
 
     // for non standard GPX files
-    private TagParser seg = new SegParser();
+    private final TagParser seg = new SegParser();
 
 
     public GpxParser() {

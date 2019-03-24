@@ -19,7 +19,6 @@ import ch.bailu.aat.services.sensor.SensorInterface;
 import ch.bailu.aat.services.sensor.list.SensorList;
 import ch.bailu.aat.services.sensor.list.SensorListItem;
 import ch.bailu.aat.services.sensor.list.SensorItemState;
-import ch.bailu.aat.util.Res;
 import ch.bailu.aat.util.Timer;
 import ch.bailu.aat.util.ui.AppLog;
 

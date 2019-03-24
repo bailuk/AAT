@@ -7,8 +7,6 @@ import android.content.Intent;
 import android.os.Build;
 
 import ch.bailu.aat.gpx.GpxInformation;
-import ch.bailu.aat.gpx.InfoID;
-import ch.bailu.aat.gpx.StateID;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.VirtualService;
 import ch.bailu.aat.services.sensor.list.SensorList;
@@ -42,7 +40,7 @@ public class SensorService extends VirtualService {
     }
 
 
-    BroadcastReceiver onBluetoothStateChanged = new BroadcastReceiver() {
+    final BroadcastReceiver onBluetoothStateChanged = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             int state = intent.getIntExtra(BluetoothAdapter.EXTRA_STATE, BluetoothAdapter.ERROR);

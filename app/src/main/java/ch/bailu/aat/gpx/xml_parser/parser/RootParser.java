@@ -11,9 +11,9 @@ import ch.bailu.aat.gpx.xml_parser.parser.osm.OsmParser;
 import ch.bailu.aat.gpx.xml_parser.scanner.Scanner;
 
 public class RootParser {
-    TagParser gpx = new GpxParser();
-    TagParser osm = new OsmParser();
-    TagParser nominatim = new SearchresultsParser();
+    final TagParser gpx = new GpxParser();
+    final TagParser osm = new OsmParser();
+    final TagParser nominatim = new SearchresultsParser();
 
 
     public void parse(XmlPullParser parser, Scanner scanner) throws IOException, XmlPullParserException {

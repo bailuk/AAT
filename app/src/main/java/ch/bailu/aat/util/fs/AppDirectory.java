@@ -117,15 +117,13 @@ public class AppDirectory  {
     
     public static String generateDatePrefix() {
         long time = System.currentTimeMillis();
-        return String.format(
-                (Locale) null, 
+        return String.format(Locale.ROOT,
                 "%tY_%tm_%td", time,time,time);
     }
 
 
     private static String generateFileName(String prefix, int i, String extension) {
-        return String.format(
-                (Locale) null, 
+        return String.format(Locale.ROOT,
                 "%s_%d%s", prefix, i, extension);
     }
 

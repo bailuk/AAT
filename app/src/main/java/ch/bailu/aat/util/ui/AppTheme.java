@@ -2,15 +2,7 @@ package ch.bailu.aat.util.ui;
 
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.TextView;
-
-import ch.bailu.aat.BuildConfig;
-import ch.bailu.aat.R;
 
 public class AppTheme {
 

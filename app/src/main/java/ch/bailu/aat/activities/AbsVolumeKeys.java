@@ -11,7 +11,7 @@ public abstract class AbsVolumeKeys extends AbsBackButton {
 
     private SolidVolumeKeys svolumeKeys;
 
-    public enum EventType {UP, DOWN};
+    public enum EventType {UP, DOWN}
 
 
     @Override

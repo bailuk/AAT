@@ -7,7 +7,6 @@ import java.io.Closeable;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.cache.LockCache;
 import ch.bailu.aat.services.cache.TileObject;
-import ch.bailu.aat.util.ui.AppLog;
 
 public class TileObjectCache implements Closeable {
 

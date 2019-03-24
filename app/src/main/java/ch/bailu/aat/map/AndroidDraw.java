@@ -1,6 +1,5 @@
 package ch.bailu.aat.map;
 
-import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Point;
 import android.graphics.Rect;

@@ -21,7 +21,7 @@ public class Barometer{
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             final SensorManager manager = context.getSystemService(SensorManager.class);
 
-            if (manager instanceof SensorManager) {
+            if (manager != null) {
                 final Sensor sensor = manager.getDefaultSensor(Sensor.TYPE_PRESSURE);
 
                 if (sensor instanceof  Sensor) {

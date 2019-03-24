@@ -7,7 +7,6 @@ import org.mapsforge.core.model.BoundingBox;
 import org.mapsforge.core.model.Point;
 import org.mapsforge.map.layer.Layer;
 import org.mapsforge.map.model.DisplayModel;
-import org.mapsforge.map.model.common.Observer;
 import org.mapsforge.map.view.MapView;
 
 import java.util.ArrayList;

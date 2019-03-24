@@ -8,11 +8,11 @@ public class Keys {
 
 
 
-    private static HashMap<String, Integer> indexes = new HashMap();
-    private static ArrayList<String> strings = new ArrayList(100);
+    private static final HashMap<String, Integer> indexes = new HashMap();
+    private static final ArrayList<String> strings = new ArrayList(100);
 
 
-    private ArrayList<Integer> keys = new ArrayList<>(10);
+    private final ArrayList<Integer> keys = new ArrayList<>(10);
 
 
     public Keys(int... keyIndex) {

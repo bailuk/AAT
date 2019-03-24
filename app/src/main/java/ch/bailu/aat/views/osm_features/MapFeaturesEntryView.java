@@ -13,7 +13,6 @@ import ch.bailu.aat.services.cache.osm_features.MapFeaturesListEntry;
 import ch.bailu.aat.services.icons.IconMapService;
 import ch.bailu.aat.util.AppHtml;
 import ch.bailu.aat.util.ui.AppDensity;
-import ch.bailu.aat.util.ui.AppTheme;
 import ch.bailu.aat.views.SVGAssetView;
 
 public class MapFeaturesEntryView extends LinearLayout implements View.OnClickListener {

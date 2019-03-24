@@ -17,7 +17,7 @@ public class StepCounterSensor extends InternalSensorSDK23 {
     private static final int SAMPLES=25;
 
     private Sample first = Sample.NULL;
-    private Sample[] samples = new Sample[SAMPLES];
+    private final Sample[] samples = new Sample[SAMPLES];
     private int index = 0;
 
     private final Broadcaster broadcaster;

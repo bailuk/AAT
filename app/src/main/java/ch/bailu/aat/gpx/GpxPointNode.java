@@ -9,7 +9,7 @@ import ch.bailu.aat.gpx.linked_list.Node;
 
 public abstract class GpxPointNode extends Node implements GpxDeltaPointInterface {
 
-    private GpxAttributes attributes;
+    private final GpxAttributes attributes;
     private final GpxPoint     point;
     
     
@@ -119,7 +119,7 @@ public abstract class GpxPointNode extends Node implements GpxDeltaPointInterfac
     }
     
 
-    private static int BOUNDING_KEY= Keys.toIndex("boundingbox");
+    private static final int BOUNDING_KEY= Keys.toIndex("boundingbox");
     
         
     @Override
