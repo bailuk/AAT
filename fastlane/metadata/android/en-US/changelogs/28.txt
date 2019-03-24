@@ -1,0 +1,15 @@
+v1.16 (28)
+
+
+# Add
+- Preferences: Give usefull feedback to user when entering wrong values.
+- French translation.
+- Dutch translation.
+- Support internal sensors: Pressure (for Altitude), Step counter (experimental), Heartrate.
+- Support BluetoothLE sensors: Cadence, speed and heartrate.
+
+# Changes
+- Replace xml parser: Better support for GPX extras.
+- Reorganize cockpit and graph layout.
+
+
