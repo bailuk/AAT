@@ -29,10 +29,14 @@ public abstract class AbsService  extends Service {
         if (up) {
             lock++;
 
-            if (lock == 1) {
+            try {
                 startService(new Intent(this, OneService.class));
-                lazyOff.close();
+            } catch (IllegalStateException e) {
+                AppLog.w(this, e);
             }
+
+            lazyOff.close();
+
         }
         return up;
     }
