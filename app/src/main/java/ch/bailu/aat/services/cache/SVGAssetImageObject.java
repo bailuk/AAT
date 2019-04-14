@@ -122,6 +122,7 @@ public class SVGAssetImageObject extends ImageObjectAbstract {
 
                     } catch (SVGParseException | IOException | IndexOutOfBoundsException e) {
                         self.setException(e);
+                        AppLog.w(this, e);
 
                     }
 
