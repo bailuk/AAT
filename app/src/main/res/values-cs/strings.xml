@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:ignore="MissingTranslation" >
+
+
+    <!-- Keep structure intact when translating! -->
+        <!-- Static -->
+        <!-- General -->
+        <!-- GPS / Tracker-->
+        <!-- Activity main -->
+        <!-- Activity file list -->
+        <!-- Activity OSM API Query -->
+        <!-- Preferences General -->
+        <!-- Preferences System -->
+        <!-- Preferences Context -->
+        <!-- Preferences Presets -->
+        <!-- Preferences Map -->
+        <!-- Preferences Map trim tiles -->
+        <!-- File context menu and file operation -->
+        <!-- Location menu -->
+        <!-- Dialog -->
+        <!-- Description -->
+        <!-- ToolTip -->
+        <!-- Errors -->
+
+
+    <!-- Static -->
+    <string name="app_name" translatable="false">AAT</string>
+
+    <!-- General -->
+    <string name="on">Zap.</string>
+    <string name="off">Vyp.</string>
+    <string name="auto">Auto</string>
+    <string name="none">Žádný</string>
+    <string name="enter">Zadat…</string>
+    <string name="pick">Vybrat (SAF)…</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Zrušit</string>
+
+
+    <!-- GPS / Tracker-->
+    <string name="gps">GPS</string>
+    <string name="gps_wait">&#8230;</string>
+    <string name="gps_nogps">Ne</string>
+    <string name="gps_noaccess">Zakázáno</string>
+
+    <string name="tracker">Záznam</string>
+    <string name="tracker_start">Start</string>
+    <string name="tracker_pause">Pauza</string>
+    <string name="tracker_stop">Stop</string>
+    <string name="tracker_resume">Pokračovat</string>
+    <string name="tracker_restore">Obnovit záznam</string>
+
+    <string name="status_paused">Pozastaveno</string>
+    <string name="status_autopaused">Autopauza</string>
+
+
+    <!-- Activity main -->
+    <string name="intro_about">O aplikaci</string>
+    <string name="intro_readme">README</string>
+    <string name="intro_documentation">Dokumentace</string>
+
+    <string name="intro_cockpit_a">Kokpit A</string>
+    <string name="intro_cockpit_b">Kokpit B</string>
+
+    <string name="intro_map">Mapa</string>
+    <string name="intro_nominatim">Vyhledávání v mapě</string>
+    <string name="intro_test">Test</string>
+    <string name="intro_status">Stav</string>
+
+    <string name="intro_overlay_list">Překryvná data</string>
+    <string name="intro_list">Seznam aktivit</string>
+    <string name="intro_external_list">Externí soubory</string>
+    <string name="intro_settings">Možnosti</string>
+
+
+
+    <!-- Activity file list -->
+    <string name="label_summary">Přehled</string>
+    <string name="label_filter">Filtr</string>
+    <string name="label_list">Souhrn</string>
+    <string name="filter_geo">Vnitřní hranice</string>
+    <string name="filter_date_start">Počáteční datum</string>
+    <string name="filter_date_to">Koncové datum</string>
+
+
+    <!-- Activity OSM API Query -->
+    <string name="query_overpass">Overpass</string>
+    <string name="query_features">Fuknce OSM</string>
+    <string name ="query_save_copy">Uložit kopii</string>
+
+
+    <!-- Preferences General -->
+    <string name="p_general">Hlavní</string>
+    <string name="p_post_autopause">Automatická pauza při následném zpracování</string>
+    <string name="p_preset_slots">Předvolené obrazovky</string>
+    <string name="p_unit_title">Jednotky</string>
+    <string-array name="p_unit_list">
+        <item>Metrické (km, km/h)</item>
+        <item>Imperiální (mi, mph)</item>
+        <item>Námořní (nm, kn)</item>
+        <item>Mezinárodní systém jednotek</item>
+    </string-array>
+
+
+    <!-- Preferences System -->
+    <string name="p_location_provider">Poskytovatel polohy</string>
+    <string name="p_location_gps">Systém GPS</string>
+    <string name="p_location_mock">Simulovaná poloha</string>
+    <string name="p_directory_data">Složka s daty</string>
+    <string name="p_cache_size">Velikost dočasné interní paměti</string>
+    <string name="p_fix_gps">Opravit čas GPS</string>
+
+
+    <!-- Preferences Context -->
+    <string name="p_overlay">Překryvné vrstvy</string>
+    <string name="p_legend_fulldistance">Distance continuous</string>
+
+
+    <!-- Preferences Presets -->
+    <string name="p_preset">Aktivita</string>
+    <string name="p_met">MET a jméno</string>
+    <string-array name="p_met_list">
+        <!--
+          List is taken and modified from "Compendium of Physical Activities"
+          https://sites.google.com/site/compendiumofphysicalactivities/Activity-Categories
+        -->
+        <item> 6.8 cyklistika, volnočasová, mírná zátěž</item>
+        <item> 8.5 cyklistika, horská, obecné</item>
+        <item> 7.0 běh, obecné</item>
+        <item> 6.0 pěší turistika, terénní</item>
+        <item> 2.0 test</item>
+
+        <item>14.0 cyklistika, horská, do kopce</item>
+        <item>16.0 cyklistika, horská, závodní</item>
+        <item> 5.8 cyklistika, volnočasová, mírná zátěž</item>
+        <item>10.0 cyklistika, závod nebo volnočasová, velká zátěž</item>
+        <item> 6.0 běh, 4 mph (13 min/míli)</item>
+        <item> 9.0 běh, 5.2 mph (11.5 min/míli)</item>
+        <item> 9.8 běh, 6 mph (10 min/míli)</item>
+        <item> 9.0 běh, terénní</item>
+        <item>10.0 běh, na trati, týmový výcvik</item>
+        <item> 8.0 běh, trénink, tlačení invalidního vozíku nebo kočárku</item>
+        <item>13.3 běh, maraton</item>
+        <item> 7.8 túra, pěší turistika nebo organizovaná chůze s batohem</item>
+        <item> 7.3 horozelecký výstup s nákladem od 4,5 kg do 9 kg</item>
+        <item> 8.3 horozelecký výstup s nákladem od 9,5 kg do 19 kg</item>
+        <item> 9.0 horozelecký výstup s nákladem na 19 kg</item>
+        <item> 5.3 pěší turistika nebo chůze běžnou rychlostí přes pole a svahy</item>
+        <item> 6.5 sportovní chůze</item>
+        <item> 8.0 horolezectví</item>
+        <item> 2.0 chůze, procházka, velmi pomalá</item>
+        <item> 3.5 chůze pro radost</item>
+        <item> 3.0 vycházka se psem</item>
+        <item> 4.8 chůze, pro trénink, od 5,6 km/h do 6,4 km/h, s lyžařskými holemi, severská chůze, vyrovnaná, mírné tempo</item>
+        <item> 6.8 chůze, pro trénink, s lyžařskými holemi, severská chůze, do kopce</item>
+
+    </string-array>
+
+    <string name="p_autopause">Autopauza</string>
+    <string name="p_tracker_autopause">Nastavit automatickou pauzu záznamu</string>
+
+    <string name="p_weight_title">Vaše váha v kg</string>
+
+    <string name="p_backlight_title">Podsvícení</string>
+    <string name="p_backlight_off">Výchozí nastavení</string>
+    <string name="p_backlight_on">Ponechat zapnuté</string>
+    <string name="p_backlight_on_no_lock">Ponechat zapnuté (zrušit zámek displeje)</string>
+    <string name="p_system">Systém</string>
+    <string name="p_tile_size">Velikost dlaždice</string>
+    <string name="p_accuracy_filter">Filtr přesnosti</string>
+    <string name="p_distance_filter">Filtr vzdálenosti</string>
+    <string name="p_missing_trigger">Missing trigger</string>
+
+
+    <!-- Preferences Map -->
+    <string name="p_map">Mapa</string>
+    <string name="p_mapsforge_directory">Adresář pro offline mapy</string>
+    <string name="p_mapsforge_theme">Vzhled offline map</string>
+    <string name="p_enable_cache">Povolit dočasné úložiště</string>
+    <string name="p_directory_tiles">Dočasný adresář pro dlaždice</string>
+
+
+    <!-- Preferences Map trim tiles -->
+    <string-array name="p_trim_modes">
+        <item>Velikost</item>
+        <item>Velikost a stáří</item>
+        <item>Stáří</item>
+        <item>Velikost nebo stáří</item>
+    </string-array>
+    <string name="p_trim_cache">Zmenšit velikost dočasného úložiště</string>
+    <string name="p_tiles">Mapové dlaždice</string>
+    <string name="p_trim_mode">Způsob redukce</string>
+    <string name="p_trim_size">Zmenšit podle velikosti</string>
+    <string name="p_trim_age">Zmenšit podle data</string>
+    <string name="p_trim_month">Měsíc</string>
+    <string name="p_trim_months">Měsíců</string>
+    <string name="p_trim_year">Rok</string>
+    <string name="p_trim_years">Let</string>
+    <string name="p_trim_days">Dnů</string>
+    <string name="p_trim_total">Celkem</string>
+    <string name="p_remove_all">Vymazat celé dočasné úložiště</string>
+    <string name="p_remove_all_in">Vymazat celé dočasné úložiště z </string>
+    <string name="p_remove_old">Smazat staré dlaždice</string>
+    <string name="p_remove_old_in">Smazat staré dlaždice z </string>
+
+
+
+    <!-- File context menu and file operation -->
+    <string name="file_reload">Obnovit náhled</string>
+    <string name="file_delete">Odstranit soubor</string>
+    <string name="file_rename">Přejmenovat soubor</string>
+    <string name="file_overlay">Použít překrytí</string>
+    <string name="file_mock">Použít simulovanou polohu</string>
+    <string name="file_delete_ask">Odstranit soubor?</string>
+    <string name="file_send">Odeslat…</string>
+    <string name="file_view">Zobrazit/Editovat…</string>
+    <string name="file_copy">Kopírovat do…</string>
+    <string name="file_exists">\u0020již existuje!</string>
+    <string name="file_is_writeable">\u0020je zapisovatelný.</string>
+    <string name="file_is_writeonly">\u0020je pouze k zápisu.</string>
+    <string name="file_is_readonly">\u0020je pouze ke čtení.</string>
+    <string name="file_is_missing">\u0020neexistuje.</string>
+    <string name="file_is_denied">\u0020není dostupný.</string>
+
+
+    <!-- Location menu -->
+    <string name="location_title">Vycentrolvat pozici</string>
+    <string name="location_view">Zobrazit pozici…</string>
+    <string name="location_send">Odeslat pozici…</string>
+    <string name="clipboard_copy">\u21d2 Schránka</string>
+    <string name="clipboard_paste">\u21d0 Schránka</string>
+
+
+    <!-- Dialog -->
+    <string name="dialog_yes">Ano</string>
+    <string name="dialog_no">Ne</string>
+    <string name="dialog_ok" translatable="false">OK</string>
+    <string name="dialog_cancel">Zrušit</string>
+    <string name="dialog_discard">Vyřadit</string>
+    <string name="dialog_save">Uložit</string>
+    <string name="dialog_modified">Soubor byl upraven</string>
+
+
+    <!-- Description -->
+    <string name="d_longitude">Délka</string>
+    <string name="d_latitude">Šířka</string>
+    <string name="d_chx" translatable="false">CH1903 X</string>
+    <string name="d_chy" translatable="false">CH1903 Y</string>
+    <string name="d_name">Název</string>
+    <string name="d_accuracy">Přesnost</string>
+    <string name="d_enddate">Konec</string>
+    <string name="d_startdate">Začátek</string>
+    <string name="d_acceleration">Zrychlení</string>
+    <string name="d_bearing">Azimut</string>
+    <string name="d_path">Cesta</string>
+    <string name="d_state">Stav</string>
+    <string name="d_size">Velikost</string>
+    <string name="d_ascend">Stoupání</string>
+    <string name="d_descend">Klesání</string>
+    <string name="d_slope">Sklon</string>
+
+    <string name="pause">Pauza</string>
+    <string name="pause_ap">Pauza (s autopauzou)</string>
+    <string name="speed">Rychlost</string>
+    <string name="average">Průměr</string>
+    <string name="average_ap">Průměr (bez pauz)</string>
+    <string name="maximum">Maximum</string>
+    <string name="distance">Vzdálenost</string>
+    <string name="altitude">Výška</string>
+
+    <string name="time">Celkový čas</string>
+    <string name="time_ap">Celkový čas (bez pauz)</string>
+
+    <string name="calories">Kalorie</string>
+    <string name="name">Název</string>
+
+
+    <!-- ToolTip -->
+    <string name ="tt_edit_add">Přidat bod podle středu mapy.</string>
+    <string name ="tt_edit_remove">Odstranit vybraný bod.</string>
+    <string name ="tt_edit_up">Posunout bod v pořadí dolu.</string>
+    <string name ="tt_edit_down">Posunout bod v pořadi nahoru.</string>
+    <string name ="tt_edit_redo">Vzít zpět posledně vrácenou akci..</string>
+    <string name ="tt_edit_undo">Vrátit poslední akci.</string>
+
+    <string name ="tt_info_grid">Přepnout mezi režimy mřížky.</string>
+    <string name ="tt_info_legend">Přepnout mezi režimy popisku záznamu.</string>
+    <string name ="tt_info_nominatim">Hledat pomocí OSM-Nominatim.</string>
+    <string name ="tt_info_overpass">Dotaz do OSM-Overpass.</string>
+    <string name ="tt_info_reload">Přenačíst viditelné dlaždice.</string>
+    <string name ="tt_info_location">Import/export of center location.</string>
+
+
+    <string name ="tt_map_zoomin">Přiblížit mapu.</string>
+    <string name ="tt_map_zoomout">Oddálit mapu.</string>
+    <string name ="tt_map_home">Uzamknout střed mapy podle aktuální polohy.</string>
+    <string name ="tt_map_frame">Switch between GPX-Overlays and frame them.</string>
+
+
+    <string name ="tt_nominatim_query">Vyhledat.</string>
+    <string name ="tt_nominatim_clear">Smazat řádek v hledaném textu.</string>
+
+    <string name ="tt_cockpit_a">Celá obrazovka</string>
+    <string name ="tt_cockpit_b">Rozdělená obrazovka</string>
+
+    <string name ="tt_overpass_mapfeatures">Zobrazit seznam funkcí mapy.</string>
+
+    <string name ="tt_menu_file">Zobrazit volby práce se soubory.</string>
+
+    <string name ="tt_p_preset_slots">Počet adresářů a obrazovek, které chcete použít pro správu záznamů.</string>
+
+    <!-- Errors -->
+    <string name="error_integer">Nesprávný vstup, povolena jsou pouze celá čísla.\n\"%s\"</string>
+    <string name ="error_weight">"Váha musí být mezi 1 a 999."</string>
+    <string name="error_long">Nesprávný vstup, povolena jsou pouze.\n\"%s\"</string>
+    <string name ="error_met">"První číslo musí být mezi 0.0 a 20.0 s mezerou na konci."</string>
+
+</resources>
