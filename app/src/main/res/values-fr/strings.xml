@@ -313,7 +313,7 @@
 
     <!-- Errors -->
     <string name="error_integer">Mauvaise entrée, seuls les nombres entiers sont acceptés.\n\"%s\"</string>
-    <string name ="error_weight">"le poids doit être compris entre 1 et 999."</string>
+    <string name ="error_integer_positive">"le poids doit être compris entre 1 et 999."</string>
     <string name="error_long">Mauvaise entrée, seuls les nombres sont autorisés.\n\"%s\"</string>
     <string name ="error_met">"Le premier nombre doit être entre  0.0 to 20.0, suivi d'un espace."</string>
 

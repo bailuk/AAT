@@ -9,7 +9,7 @@ android {
         targetSdkVersion 28
 
         versionCode 28
-        versionName "v1.16"
+        versionName "v1.16.1"
 
 
         buildConfigField 'String', 'APP_SNAME', '\"AAT\"'
@@ -29,6 +29,12 @@ android {
         }
 
     }
+
+
+    lintOptions {
+        abortOnError true
+    }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8

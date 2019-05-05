@@ -31,7 +31,7 @@ public class SolidWeight extends SolidInteger {
         s = s.trim();
 
         if (! validate(s)) {
-            throw new ValidationException(getString(R.string.error_weight));
+            throw new ValidationException(getString(R.string.error_integer_positive));
         } else {
             try {
                 setValue(Integer.valueOf(s));
