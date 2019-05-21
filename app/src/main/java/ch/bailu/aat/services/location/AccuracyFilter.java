@@ -27,6 +27,6 @@ public class AccuracyFilter extends LocationStackChainedItem {
     public void preferencesChanged(Context c, String key, int presetIndex) {
         minAccuracy=new SolidAccuracyFilter(c, presetIndex).getMinAccuracy();
     }
-    
+
 
 }

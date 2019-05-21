@@ -310,11 +310,15 @@
     <string name ="tt_menu_file">Display file operation menu.</string>
 
     <string name ="tt_p_preset_slots">Number of directories and presets you want to use to organize tracks.</string>
+    <string name ="tt_p_distance_filter">Only log a GPS sample if it has a minimal distance from the last sample.</string>
+    <string name ="tt_p_accuracy_filter">Only log a GPS sample if it has a minimal accuracy.</string>
+    <string name ="tt_p_missing_trigger">Set tracker to auto-pause if the GPS singal is lost for a certain period.</string>
 
     <!-- Errors -->
     <string name="error_integer">Wrong input, only integers are allowed.\n\"%s\"</string>
     <string name ="error_integer_positive">"Weight must be between 1 and 999."</string>
     <string name="error_long">Wrong input, only numbers are allowed.\n\"%s\"</string>
     <string name ="error_met">"First Number must be between 0.0 to 20.0, followed by a space."</string>
+
 
 </resources>

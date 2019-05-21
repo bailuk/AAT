@@ -6,6 +6,7 @@ import ch.bailu.aat.R;
 import ch.bailu.aat.description.FF;
 import ch.bailu.aat.preferences.SolidIndexList;
 import ch.bailu.aat.preferences.general.SolidUnit;
+import ch.bailu.aat.util.ToDo;
 
 public class SolidDistanceFilter extends SolidIndexList {
     private static final String KEY="distance_filter_";
@@ -57,5 +58,11 @@ public class SolidDistanceFilter extends SolidIndexList {
         return FF.f().N2.format(VALUE_LIST[i] * sunit.getAltitudeFactor())
                 + sunit.getAltitudeUnit();
     }
-    
+
+
+    @Override
+    public String getToolTip() {
+        return getString(R.string.tt_p_distance_filter);
+    }
+
 }

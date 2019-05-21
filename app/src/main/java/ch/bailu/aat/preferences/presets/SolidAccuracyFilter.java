@@ -57,4 +57,11 @@ public class SolidAccuracyFilter extends SolidIndexList {
         return f.N2.format(VALUE_LIST[i] * sunit.getAltitudeFactor())
                 + sunit.getAltitudeUnit();
     }
+
+
+    @Override
+    public String getToolTip() {
+        return getString(R.string.tt_p_accuracy_filter);
+    }
+
 }

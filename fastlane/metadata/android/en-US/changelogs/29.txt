@@ -4,7 +4,7 @@ v1.16.1 (29)
 - Wrong string id in translation. 
 
 # Add
-- Preferences: Give usefull feedback to user when entering wrong values.
+- Preferences: Give useful feedback to user when entering wrong values.
 - French translation.
 - Dutch translation.
 - Czech translation.

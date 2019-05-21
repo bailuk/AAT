@@ -54,4 +54,10 @@ public class SolidMissingTrigger extends SolidStaticIndexList {
         return getContext().getString(R.string.p_missing_trigger);
     }
 
+
+    @Override
+    public String getToolTip() {
+        return getString(R.string.tt_p_missing_trigger);
+    }
+
 }
