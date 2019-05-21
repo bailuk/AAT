@@ -312,7 +312,7 @@
     <string name ="tt_p_preset_slots">Number of directories and presets you want to use to organize tracks.</string>
     <string name ="tt_p_distance_filter">Only log a GPS sample if it has a minimal distance from the last sample.</string>
     <string name ="tt_p_accuracy_filter">Only log a GPS sample if it has a minimal accuracy.</string>
-    <string name ="tt_p_missing_trigger">Set tracker to auto-pause if the GPS singal is lost for a certain period.</string>
+    <string name ="tt_p_missing_trigger">Set tracker to auto-pause if the GPS signal is lost for a certain period.</string>
 
     <!-- Errors -->
     <string name="error_integer">Wrong input, only integers are allowed.\n\"%s\"</string>
