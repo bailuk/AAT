@@ -1,16 +1,16 @@
 # Getting started with the UI
 
 ## Main view
-When starting AAT the first time it shows the **main view**. That's basically a list of sub-views you can open. The first 3 entries are **"Copckpit A, Cockpit B, and Map"** if you have one of these open you can cycle through them with the down arrow. The right arrow switches trough the different pages of the view you are in.
+When starting AAT the first time it shows the **main view**. That's basically a list of sub-views you can open. The first 3 entries are **"Cockpit A, Cockpit B, and Map"** if you have one of these open you can cycle through them with the down arrow. The right arrow switches trough the different pages of the view you are in.
 
 ## Map view (or full screen map)
 In the **map view** the down arrow is in the main bar (tap the top area of the map). For zooming and navigating tap the bottom area of the map. For grid, search, overpass etc. tap  the right area of the map. For the draft editor tap the left side of the map. 
 The track that gets currently recorded is always displayed on the map.
 
 ## Display recorded track
-Now once you have stopped the tracker go back to the **main view** with your phones back button. Then select **Track list** to show a list of all recorded GPX tracks. Every track has a preview image if you tap on this image you'll get a context menu for this GPX-file. _Here you can for example select this track for one of the 4 overlay slots._ You can display any recorded track by taping the text area of the list entry. (Always go back to the list with the phones back button). In the track view there are again different pages (graph, summary and map) and you can cycle trough all tracks with the up and down arrow.
+Now once you have stopped the tracker go back to the **main view** with your phones back button. Then select **Track list** to show a list of all recorded GPX tracks. Every track has a preview image if you tap on this image, you'll get a context menu for this GPX-file. _Here you can for example select this track for one of the 4 overlay slots._ You can display any recorded track by taping the text area of the list entry. (Always go back to the list with the phones back button). In the track view there are again different pages (graph, summary and map) and you can cycle trough all tracks with the up and down arrow.
 
-There are different pages in the **Track list** view (Access them with < ... > ). This pages offer **a map as an alternative to the track list**, **summary information** and **filter options**.
+There are different pages in the **Track list** view (Access them with < ... > ). These pages offer **a map as an alternative to the track list**, **summary information** and **filter options**.
 
 
 # Map Tiles
@@ -41,7 +41,7 @@ Example: `maps/OAM/OAM/` contains `andromaps_cycle.xml`, `symbols/`, `patterns/`
 
 
 # Where to find files?
-AAT let's you create and view files in GPX format. This files are exchangeable with many other applications. They can also be edited in a text editor. 
+AAT lets you create and view files in GPX format. These files are exchangeable with many other applications. They can also be edited in a text editor. 
 These and other files are stored in subdirectories of the data directory. You can choose the location of the data directory from the settings.
 The structure of the data directory is as follows: 
 
@@ -56,7 +56,7 @@ The structure of the data directory is as follows:
 
 # Overpass
 ## Overview
-AAT lets you query the [Overpass API](http://wiki.openstreetmap.org/wiki/Overpass_API). Any result of a query can be saved to  `aat_data/overlay`. It then can be displayed as an overlay inside the map-view whenever needed.
+AAT lets you query the [Overpass API](http://wiki.openstreetmap.org/wiki/Overpass_API). Any result of a query can be saved to `aat_data/overlay`. It then can be displayed as an overlay inside the map-view whenever needed.
 
 ## Example
 `[amenity=restaurant]` will get you list of all restaurants located inside the area that was visible on the map-view before opening the Overpass dialog. 
@@ -72,7 +72,7 @@ Both MET and weight can be provided in the settings dialog. The MET value is lea
 
 # Contribution
 ## Issues and feedback
-For questions, feedback and bugreports [report an issue](https://github.com/bailuk/AAT/issues) or send an e-mail to aat@bailu.ch
+For questions, feedback and bug reports [report an issue](https://github.com/bailuk/AAT/issues) or send an e-mail to aat@bailu.ch
 
 ## Translation
 You can open a pull request or send me your translation as e-mail or publish them as an issue report.
