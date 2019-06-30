@@ -9,7 +9,7 @@ AAT is a GPS-tracking application for tracking sportive activities, with emphasi
 * Display [offline](http://download.mapsforge.org) as well as [tile based](https://www.openstreetmap.org) maps.
 * Tile based overlays for displaying cycle and hiking routes [(Waymarked Trails)](http://www.waymarkedtrails.org/).
 * Integration of [Overpass](http://wiki.openstreetmap.org/wiki/Overpass_API) and [Nominatim](http://nominatim.openstreetmap.org).
-* Simple GPX editor for quick route planing.
+* Simple GPX editor for quick route planning.
 * GPS independent altitude information and hill shading.
 
 ## Copyright
@@ -47,5 +47,3 @@ You can support this project with a [donation](https://bailu.ch/aat/donate.html)
 <img alt="Screenshot" src="fastlane/metadata/android/en-US/images/phoneScreenshots/screen7.png" width="30%">
 <img alt="Screenshot" src="fastlane/metadata/android/en-US/images/phoneScreenshots/screen8.png" width="30%">
 </div>
-
-
