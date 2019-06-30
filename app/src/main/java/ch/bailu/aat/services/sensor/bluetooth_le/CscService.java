@@ -121,17 +121,8 @@ public class CscService extends CscServiceID implements ServiceInterface {
     private void readCscFeature(byte[] v) {
         if (v.length > 0) {
             byte b = v[0];
-
-            if (ID.isBitSet(b, BIT_SPEED)) {
-                isSpeedSensor = true;
-
-            } else if (ID.isBitSet(b, BIT_CADENCE)) {
-                isCadenceSensor = true;
-
-            } else if (ID.isBitSet(b, BIT_SPEED_AND_CADENCE)) {
-                isSpeedSensor = true;
-                isCadenceSensor = true;
-            }
+            isCadenceSensor = ID.isBitSet(b, BIT_CADENCE);
+            isSpeedSensor = ID.isBitSet(b, BIT_SPEED);
         }
     }
 
