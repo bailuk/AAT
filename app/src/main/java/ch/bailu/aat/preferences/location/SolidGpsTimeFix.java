@@ -43,10 +43,10 @@ public class SolidGpsTimeFix extends SolidBoolean {
         if (checked > 0) {
 
             if (difference_hour == 0) {
-                return ToDo.translate("GPS timeMillis is correct (in UTC)");
+                return ToDo.translate("GPS time is correct (in UTC)");
             } else {
-                return ToDo.translate("GPS timeMillis differs " +
-                        difference_hour + " hours from system timeMillis");
+                return ToDo.translate("GPS time differs " +
+                        difference_hour + " hours from system time");
             }
         }
         return null;
