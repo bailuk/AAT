@@ -47,12 +47,13 @@ public class Keys {
 
 
     public static int toIndex(String string) {
-        String keyString = string.toLowerCase(Locale.ROOT);
+        // use lower case because xml is case sensitive
+        string = string.toLowerCase(Locale.ROOT);
 
-        Integer keyIndex = indexes.get(keyString);
+        Integer keyIndex = indexes.get(string);
 
         if (keyIndex == null) {
-            keyIndex = add(keyString, string);
+            keyIndex = add(string, string);
         }
 
         return keyIndex;
