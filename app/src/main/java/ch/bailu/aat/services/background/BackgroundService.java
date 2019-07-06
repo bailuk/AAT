@@ -21,8 +21,7 @@ public class BackgroundService extends VirtualService {
     private final HandleStack queue = new HandleStack();
 
 
-
-    private final WorkerThread workers[] =
+    private final WorkerThread[] workers =
             new WorkerThread[SolidRendererThreads.numberOfBackgroundThreats()];
 
 

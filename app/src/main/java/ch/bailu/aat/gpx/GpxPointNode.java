@@ -1,5 +1,7 @@
 package ch.bailu.aat.gpx;
 
+import android.support.annotation.NonNull;
+
 import ch.bailu.aat.coordinates.BoundingBoxE6;
 import ch.bailu.aat.gpx.attributes.GpxAttributes;
 import ch.bailu.aat.gpx.attributes.Keys;
@@ -99,6 +101,7 @@ public abstract class GpxPointNode extends Node implements GpxDeltaPointInterfac
     }
 */
     
+    @NonNull
     @Override
     public String toString() {
         return attributes.toString();

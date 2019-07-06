@@ -12,8 +12,7 @@ public class SensorItemState {
     public final static int UNSUPPORTED = 6;
 
 
-
-    private static final String STATE_DESCRIPTION[] = {
+    private static final String[] STATE_DESCRIPTION = {
             ToDo.translate("Unscanned"),
             ToDo.translate("Scanning..."),
             ToDo.translate("Supported"),

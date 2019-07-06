@@ -4,6 +4,7 @@ import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothManager;
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 
 import ch.bailu.aat.services.ServiceContext;
@@ -117,6 +118,7 @@ public class BleSensorsSDK18 extends Sensors {
 
 
 
+    @NonNull
     @Override
     public  synchronized String toString() {
         if (isEnabled()) {

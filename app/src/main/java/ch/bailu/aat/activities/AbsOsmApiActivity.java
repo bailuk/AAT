@@ -193,7 +193,7 @@ public abstract class AbsOsmApiActivity extends ActivityContext implements OnCli
         LinearLayout layout = new LinearLayout(this);
         layout.setOrientation(LinearLayout.HORIZONTAL);
 
-        String strings[] = osmApi.getUrlStart().split(osmApi.getApiName().toLowerCase());
+        String[] strings = osmApi.getUrlStart().split(osmApi.getApiName().toLowerCase());
 
         TextView b = new TitleView(this, osmApi.getApiName());
         b.setSingleLine();

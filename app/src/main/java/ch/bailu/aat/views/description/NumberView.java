@@ -91,7 +91,7 @@ public class NumberView extends ViewGroup implements OnContentUpdatedInterface {
 
 
 
-            final float textSizeLimit = height /4;
+            final float textSizeLimit = height /4f;
             final float textSize = Math.min(defaultTextSize, textSizeLimit);
 
             setTextSize(label, textSize);

@@ -1,6 +1,7 @@
 package ch.bailu.aat.services.sensor.bluetooth_le;
 
 import android.bluetooth.BluetoothGattCharacteristic;
+import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 
 import ch.bailu.aat.gpx.attributes.GpxAttributes;
@@ -127,6 +128,7 @@ public class CscService extends CscServiceID implements ServiceInterface {
     }
 
 
+    @NonNull
     @Override
     public String toString() {
         String name = "";
@@ -158,7 +160,7 @@ public class CscService extends CscServiceID implements ServiceInterface {
     private class Attributes extends CadenceSpeedAttributes {
 
         final boolean haveCadence;
-        boolean haveSpeed;
+        final boolean haveSpeed;
         private int speed_rpm = 0;
         private float speedSI = 0f;
 

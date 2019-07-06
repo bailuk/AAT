@@ -2,6 +2,7 @@ package ch.bailu.aat.services.sensor.bluetooth_le;
 
 import android.bluetooth.BluetoothGattCharacteristic;
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 
 import java.util.UUID;
@@ -92,6 +93,7 @@ public class HeartRateService extends HeartRateServiceID implements ServiceInter
     }
 
 
+    @NonNull
     @Override
     public String toString() {
         return SensorState.getName(InfoID.HEART_RATE_SENSOR);
@@ -154,7 +156,7 @@ public class HeartRateService extends HeartRateServiceID implements ServiceInter
                 rrIntervall = c.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT16, offset);
 
                 if (bpm == 0 && rrIntervall > 0) {
-                    bpm = Math.round (MINUTE / rrIntervall);
+                    bpm = Math.round (MINUTE / (float)rrIntervall);
                 }
             }
 

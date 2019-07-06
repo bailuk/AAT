@@ -6,7 +6,6 @@ import ch.bailu.aat.R;
 import ch.bailu.aat.description.FF;
 import ch.bailu.aat.preferences.SolidIndexList;
 import ch.bailu.aat.preferences.general.SolidUnit;
-import ch.bailu.aat.util.ToDo;
 
 public class SolidDistanceFilter extends SolidIndexList {
     private static final String KEY="distance_filter_";

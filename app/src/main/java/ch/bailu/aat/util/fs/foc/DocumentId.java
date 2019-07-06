@@ -1,5 +1,7 @@
 package ch.bailu.aat.util.fs.foc;
 
+import android.support.annotation.NonNull;
+
 import ch.bailu.aat.util.ui.AppLog;
 
 public class DocumentId {
@@ -9,6 +11,7 @@ public class DocumentId {
         documentId = did;
     }
 
+    @NonNull
     @Override
     public String toString() {
         return documentId;

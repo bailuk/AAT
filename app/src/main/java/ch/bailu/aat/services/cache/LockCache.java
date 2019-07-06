@@ -85,7 +85,7 @@ public class LockCache<E extends ObjectHandle>  implements Closeable {
 
     private void resizeCache(int capacity) {
         final E[] newObjects= (E[]) new ObjectHandle[capacity];
-        final long newAccess[] = new long[capacity];
+        final long[] newAccess = new long[capacity];
 
         final int l = Math.min(newObjects.length, objects.length);
         int x,i;

@@ -1,5 +1,7 @@
 package ch.bailu.aat.services.sensor.list;
 
+import android.support.annotation.NonNull;
+
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.services.sensor.SensorInterface;
 import ch.bailu.aat.util.ToDo;
@@ -82,6 +84,7 @@ public class SensorListItem extends SensorItemState implements SensorInterface {
     }
 
 
+    @NonNull
     @Override
     public String toString() {
 

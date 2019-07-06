@@ -1,5 +1,7 @@
 package ch.bailu.aat.coordinates;
 
+import android.support.annotation.NonNull;
+
 import org.mapsforge.core.model.LatLong;
 import org.mapsforge.core.util.LatLongUtils;
 
@@ -56,6 +58,7 @@ public class LatLongE6 implements LatLongE6Interface {
 
     }
 
+    @NonNull
     @Override
     public String toString() {
         return toLatLong().toString();

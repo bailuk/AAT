@@ -5,6 +5,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
+import android.support.annotation.NonNull;
 
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.services.ServiceContext;
@@ -80,6 +81,7 @@ public class SensorService extends VirtualService {
     }
 
 
+    @NonNull
     @Override
     public synchronized String toString() {
         return bluetoothLE.toString();

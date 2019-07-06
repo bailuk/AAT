@@ -1,10 +1,13 @@
 package ch.bailu.aat.coordinates;
 
+import android.support.annotation.NonNull;
+
 import org.mapsforge.core.model.LatLong;
 
 import ch.bailu.aat.util.ui.AppLog;
 
 public abstract class Coordinates {
+    @NonNull
     public abstract String toString();
 
 

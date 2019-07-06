@@ -1,5 +1,7 @@
 package ch.bailu.aat.services.tileremover;
 
+import android.support.annotation.NonNull;
+
 import ch.bailu.util_java.foc.Foc;
 
 public class TileFile {
@@ -68,12 +70,13 @@ public class TileFile {
         return base_dir.child(toString());
     }
 
+    @NonNull
     @Override
     public String toString() {
-        return String.valueOf(zoom)+"/" +
-                String.valueOf(x) +
+        return zoom +"/" +
+                x +
                 "/" +
-                String.valueOf(y)+ ".png";
+                y + ".png";
     }
     public long lastModified() {
         return age;

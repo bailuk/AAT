@@ -81,7 +81,7 @@ public class DemSplitter implements DemProvider {
 
         
         int sum = parent.getElevation(e)*2;
-        final int div=12;
+        final float div=12;
         
         if (row_mode+col_mode == 0) { // A
             sum = sum + 

@@ -1,6 +1,7 @@
 package ch.bailu.aat.coordinates;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 
 import org.mapsforge.core.model.LatLong;
 
@@ -64,6 +65,7 @@ public class SrtmCoordinates extends Coordinates implements LatLongE6Interface {
         return WGS84Sexagesimal.getLongitudeChar(lo) + f3.format(Math.abs(lo));
     }
     
+    @NonNull
     @Override
     public String toString() {
         return string;

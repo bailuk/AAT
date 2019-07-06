@@ -2,6 +2,7 @@ package ch.bailu.aat.preferences;
 
 import android.content.Context;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
+import android.support.annotation.NonNull;
 
 import ch.bailu.aat.exception.ValidationException;
 import ch.bailu.util_java.util.Objects;
@@ -45,6 +46,7 @@ public abstract class AbsSolidType implements SolidTypeInterface {
     }
 
 
+    @NonNull
     @Override
     public String toString() {
         return getValueAsString();

@@ -1,5 +1,7 @@
 package ch.bailu.aat.coordinates;
 
+import android.support.annotation.NonNull;
+
 import java.text.DecimalFormat;
 
 public class WGS84Sexagesimal extends Coordinates {
@@ -32,6 +34,7 @@ public class WGS84Sexagesimal extends Coordinates {
         private final static DecimalFormat fX = new DecimalFormat("#");
         private final static DecimalFormat f00 = new DecimalFormat("00");
 
+        @NonNull
         public String toString() {
             return fX.format(Math.abs(deg)) + "\u00B0 "
                     + f00.format(min) + "\u0027 "
@@ -58,6 +61,7 @@ public class WGS84Sexagesimal extends Coordinates {
     }
 
 
+    @NonNull
     @Override
     public String toString() {
         return latitude.toString() + " "

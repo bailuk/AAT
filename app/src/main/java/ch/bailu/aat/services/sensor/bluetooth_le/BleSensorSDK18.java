@@ -9,6 +9,7 @@ import android.bluetooth.BluetoothGattService;
 import android.bluetooth.BluetoothProfile;
 import android.content.Context;
 import android.os.Build;
+import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 
 import java.util.List;
@@ -234,6 +235,7 @@ public class BleSensorSDK18 extends BluetoothGattCallback implements SensorInter
     }
 
 
+    @NonNull
     @Override
     public String toString() {
         return device.getName()

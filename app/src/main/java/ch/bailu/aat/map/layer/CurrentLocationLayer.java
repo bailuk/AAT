@@ -47,9 +47,9 @@ public class CurrentLocationLayer implements OnContentUpdatedInterface, MapLayer
     private static class Satturate {
         private final static int STEPS=60;
 
-        private final short r[] = new short[STEPS];
-        private final short g[] = new short[STEPS];
-        private final short b[] = new short[STEPS];
+        private final short[] r = new short[STEPS];
+        private final short[] g = new short[STEPS];
+        private final short[] b = new short[STEPS];
 
 
         public Satturate(int c) {
@@ -65,9 +65,11 @@ public class CurrentLocationLayer implements OnContentUpdatedInterface, MapLayer
         }
 
 
-        private void fill(int base, int max, short t[]) {
+        private void fill(int base, int max, short[] t) {
+            final float steps = STEPS;
+
             for (int i=0; i<STEPS; i++) {
-                float step = (max - base) / STEPS;
+                float step = (max - base) / steps;
 
                 t[i] = (short) (base+ Math.round(step * i));
             }

@@ -83,7 +83,7 @@ public class TestActivity extends ActivityContext {
 
 
     private MultiView createMultiView() {
-        ContentDescription locationDescription[] = new ContentDescription[]{
+        ContentDescription[] locationDescription = new ContentDescription[]{
                 new NameDescription(this),
                 new GpsStateDescription(this),
                 new AltitudeDescription(this),
@@ -97,7 +97,7 @@ public class TestActivity extends ActivityContext {
                 new BearingDescription(this),
         };
 
-        ContentDescription trackerDescription[] = new ContentDescription[]{
+        ContentDescription[] trackerDescription = new ContentDescription[]{
                 new NameDescription(this),
                 new PathDescription(this),
                 new TrackerStateDescription(this),

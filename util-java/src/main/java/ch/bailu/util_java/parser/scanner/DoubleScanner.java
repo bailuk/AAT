@@ -5,16 +5,16 @@ import ch.bailu.util_java.io.Stream;
 
 
 public class DoubleScanner extends AbsScanner {
-    private static final int exp_table[] = {
-        1,
-        10,
-        100,
-        1000,
-        10000,
-        100000,
-        1000000,
-        10000000,
-        100000000};
+    private static final int[] exp_table = {
+            1,
+            10,
+            100,
+            1000,
+            10000,
+            100000,
+            1000000,
+            10000000,
+            100000000};
     
     
     private int output=0;

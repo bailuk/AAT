@@ -1,6 +1,7 @@
 package ch.bailu.aat.services.cache.elevation;
 
 import android.graphics.Rect;
+import android.support.annotation.NonNull;
 
 import ch.bailu.aat.coordinates.SrtmCoordinates;
 import ch.bailu.aat.services.cache.Span;
@@ -31,6 +32,7 @@ public class SubTile {
         return coordinates.hashCode();
     }
 
+    @NonNull
     @Override
     public String toString() {
         return coordinates.toString();

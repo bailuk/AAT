@@ -3,7 +3,7 @@ package ch.bailu.aat.services.sensor;
 public class Averager {
 
 
-    private final int values[];
+    private final int[] values;
     private int size = 0;
     private int next = 0;
     private int average = 0;

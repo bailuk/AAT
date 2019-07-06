@@ -19,7 +19,7 @@ import ch.bailu.util_java.foc.FocName;
 public class MockLocation extends LocationStackChainedItem implements Runnable{
 
     private final static Foc NULL_FILE = new FocName(MockLocation.class.getSimpleName());
-    private static final long INTERVAL=1*1000;
+    private static final long INTERVAL=1000L;
 
     private GpxList list;
     private GpxPointNode node;

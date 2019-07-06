@@ -9,7 +9,7 @@ import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.preferences.general.SolidUnit;
 
 public class DistanceDescription extends FloatDescription {
-    private final DecimalFormat FORMAT[] =
+    private final DecimalFormat[] FORMAT =
             {FF.f().N3, FF.f().N2, FF.f().N1, FF.f().N};
     private final SolidUnit unit;
     

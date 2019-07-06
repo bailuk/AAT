@@ -1,6 +1,7 @@
 package ch.bailu.aat.services.background;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -77,6 +78,7 @@ public class DownloadTask extends BackgroundTask implements ContextWrapperInterf
     }
 
 
+    @NonNull
     @Override
     public String toString() {
         return urx.toString();

@@ -26,7 +26,7 @@ public class SimpleStringReader extends Reader {
 
 
     @Override
-    public int read(char cbuf[]) throws IOException {
+    public int read(char[] cbuf) throws IOException {
         return read(cbuf, 0, cbuf.length);
     }
 

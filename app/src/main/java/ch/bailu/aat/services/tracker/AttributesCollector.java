@@ -19,12 +19,11 @@ public class AttributesCollector {
     public long time = System.currentTimeMillis();
 
 
-
-    private final Collector collectors[] = new Collector[] {
-            new Collector(InfoID.HEART_RATE_SENSOR,   HeartRateAttributes.KEY_INDEX_BPM,
+    private final Collector[] collectors = new Collector[]{
+            new Collector(InfoID.HEART_RATE_SENSOR, HeartRateAttributes.KEY_INDEX_BPM,
                     SHORT_TIMEOUT),
 
-            new Collector(InfoID.CADENCE_SENSOR,      CadenceSpeedAttributes.KEY_INDEX_CRANK_RPM,
+            new Collector(InfoID.CADENCE_SENSOR, CadenceSpeedAttributes.KEY_INDEX_CRANK_RPM,
                     SHORT_TIMEOUT),
 
             new Collector(InfoID.STEP_COUNTER_SENSOR, StepCounterAttributes.KEY_INDEX_STEPS_RATE,

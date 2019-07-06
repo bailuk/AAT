@@ -1,5 +1,6 @@
 package ch.bailu.aat.views.html;
 
+import android.support.annotation.NonNull;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.Spanned;
@@ -33,7 +34,7 @@ public abstract class LinkHandler {
             urlSpan = span;
         }
         @Override
-        public void onClick(View view) {
+        public void onClick(@NonNull View view) {
             if (openLink(urlSpan.getURL()) == false)
                 urlSpan.onClick(view);
         }

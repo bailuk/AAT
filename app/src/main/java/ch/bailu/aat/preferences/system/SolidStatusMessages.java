@@ -9,7 +9,7 @@ public class SolidStatusMessages extends SolidIndexList {
 
     private static final String KEY = "Satus Messages";
 
-    private static final String VAL[] = {ToDo.translate("Download size"),
+    private static final String[] VAL = {ToDo.translate("Download size"),
             ToDo.translate("URL"),
             ToDo.translate("URL and filepath"),
             ToDo.translate("None")};

@@ -21,7 +21,7 @@ public class DateScanner extends AbsScanner {
 
     private long millis;
     private long utcDateMillis;
-    private final int dateBuffer[] = new int[10];
+    private final int[] dateBuffer = new int[10];
 
     public DateScanner(long l) {
 
@@ -65,7 +65,7 @@ public class DateScanner extends AbsScanner {
     }
 
     private void scanDate() {
-        int list[]=new int[3];
+        int[] list = new int[3];
         int x=0;
 
         for (int aDateBuffer : dateBuffer) {

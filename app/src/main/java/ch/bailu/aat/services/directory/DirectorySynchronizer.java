@@ -119,7 +119,7 @@ public class DirectorySynchronizer  implements Closeable {
 
         private GpxDatabase openDatabase()  throws Exception {
             final String dbPath = SummaryConfig.getWriteableDBPath(scontext.getContext(), directory);
-            final String query[] = {GpxDbConstants.KEY_FILENAME};
+            final String[] query = {GpxDbConstants.KEY_FILENAME};
 
             dbAccessTime = new File(dbPath).lastModified();
             return new GpxDatabase(scontext, dbPath, query);

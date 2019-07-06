@@ -46,15 +46,13 @@ public class SensorState {
 
 
     public static String getOverviewString() {
-        String overview="";
+        StringBuilder overview= new StringBuilder();
         for (int i = 0; i< SIZE; i++) {
             if (connected[i] > 0) {
-                overview = overview
-                        + CHARS[i]
-                        + String.valueOf(connected[i]);
+                overview.append(CHARS[i]).append(connected[i]);
             }
         }
 
-        return overview;
+        return overview.toString();
     }
 }

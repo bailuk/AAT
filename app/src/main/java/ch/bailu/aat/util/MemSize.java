@@ -63,7 +63,7 @@ public class MemSize {
                 break;
         }
 
-        size = Math.round(size / ldivider[i]);
+        size = Math.round(size / (double)ldivider[i]);
         return size * ldivider[i];
     }
 

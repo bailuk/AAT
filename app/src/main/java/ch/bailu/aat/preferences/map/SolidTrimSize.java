@@ -22,15 +22,15 @@ public class SolidTrimSize extends SolidIndexList {
 
 
     private static final Entry[] entries = {
-            new Entry(16 * MemSize.GB),
-            new Entry(8 * MemSize.GB),
-            new Entry(4 * MemSize.GB),
-            new Entry(2 * MemSize.GB),
-            new Entry(1 * MemSize.GB),
-            new Entry(500 * MemSize.MB),
-            new Entry(200 * MemSize.MB),
-            new Entry(100 * MemSize.MB),
-            new Entry(50 * MemSize.MB),
+            new Entry(16L * MemSize.GB),
+            new Entry(8L * MemSize.GB),
+            new Entry(4L * MemSize.GB),
+            new Entry(2L * MemSize.GB),
+            new Entry(1L * MemSize.GB),
+            new Entry(500L * MemSize.MB),
+            new Entry(200L * MemSize.MB),
+            new Entry(100L * MemSize.MB),
+            new Entry(50L * MemSize.MB),
     };
 
 

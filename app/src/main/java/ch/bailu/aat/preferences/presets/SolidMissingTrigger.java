@@ -30,7 +30,7 @@ public class SolidMissingTrigger extends SolidStaticIndexList {
 
             label_list[0] = c.getString(R.string.off);
             for (int i = 1; i < label_list.length; i++) {
-                label_list[i] = String.valueOf(VALUE_LIST[i]) + "s";
+                label_list[i] = VALUE_LIST[i] + "s";
             }
         }
         return label_list;

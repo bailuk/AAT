@@ -1,5 +1,7 @@
 package ch.bailu.aat.services.background;
 
+import android.support.annotation.NonNull;
+
 import ch.bailu.util_java.foc.Foc;
 
 public abstract class FileTask extends BackgroundTask {
@@ -12,7 +14,8 @@ public abstract class FileTask extends BackgroundTask {
     }
     
 
-    @Override 
+    @NonNull
+    @Override
     public String toString() {
         return file.toString();
     }

@@ -6,7 +6,7 @@ public class Dem3Array {
     public static final DemDimension DIMENSION=
             new DemDimension(DEM3_BUFFER_DIM, DEM3_BUFFER_OFFSET);
 
-    protected final byte data[]= new byte[DEM3_BUFFER_DIM*DEM3_BUFFER_DIM*2];
+    protected final byte[] data = new byte[DEM3_BUFFER_DIM * DEM3_BUFFER_DIM * 2];
     private final DemGeoToIndex toIndex = new DemGeoToIndex(DIMENSION);
 
 

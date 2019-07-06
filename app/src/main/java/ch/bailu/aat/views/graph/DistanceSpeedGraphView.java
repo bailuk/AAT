@@ -71,7 +71,7 @@ public class DistanceSpeedGraphView extends AbsGraphView implements SharedPrefer
     public void plot(Canvas canvas, GpxList list, int index, SolidUnit sunit, boolean markerMode) {
         int km_factor = (int) (list.getDelta().getDistance()/1000) + 1;
 
-        GraphPlotter plotter[] = new GraphPlotter[3];
+        GraphPlotter[] plotter = new GraphPlotter[3];
 
         for (int i=0; i<plotter.length; i++) {
             plotter[i] = new GraphPlotter(canvas,getWidth(), getHeight(), 1000 * km_factor,

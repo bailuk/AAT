@@ -2,6 +2,7 @@ package ch.bailu.aat.activities;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 
 import ch.bailu.aat.preferences.PreferenceLoadDefaults;
 import ch.bailu.aat.util.AppPermission;
@@ -30,8 +31,8 @@ public abstract class AbsActivity extends Activity {
 
     @Override
     public void onRequestPermissionsResult (int requestCode,
-                                            String[] permissions,
-                                            int[] grantResults) {
+                                            @NonNull String[] permissions,
+                                            @NonNull int[] grantResults) {
         AppPermission.onRequestPermissionsResult(this, requestCode);
     }
 

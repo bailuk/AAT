@@ -63,7 +63,7 @@ public abstract class MaxSpeed  extends GpxSubAttributes {
 
 
     public static class Samples extends MaxSpeed {
-        private final float speeds[];
+        private final float[] speeds;
         private int i = 0;
 
         private float maximum = 0f;

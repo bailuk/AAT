@@ -1,5 +1,7 @@
 package ch.bailu.aat.services.cache;
 
+import android.support.annotation.NonNull;
+
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.util.ui.AppLog;
 import ch.bailu.util_java.foc.Foc;
@@ -23,6 +25,7 @@ public abstract class ObjectHandle implements ObjectBroadcastReceiver{
     }
 
 
+    @NonNull
     @Override
     public String toString() {
         return ID;

@@ -1,6 +1,7 @@
 package ch.bailu.aat.util.net;
 
 import android.net.Uri;
+import android.support.annotation.NonNull;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -27,6 +28,7 @@ public class URX {
 
 
 
+    @NonNull
     @Override
     public String toString() {
         if (string == null) {

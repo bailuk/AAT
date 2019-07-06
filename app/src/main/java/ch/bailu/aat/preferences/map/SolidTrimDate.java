@@ -47,14 +47,14 @@ public class SolidTrimDate extends SolidIndexList {
 
 
     private final Entry[] entries = {
-            new Entry(2 * DateUtils.YEAR_IN_MILLIS),
-            new Entry(1 * DateUtils.YEAR_IN_MILLIS),
-            new Entry(6 * 30 * DateUtils.DAY_IN_MILLIS),
-            new Entry(3 * 30 * DateUtils.DAY_IN_MILLIS),
-            new Entry(2 * 30 * DateUtils.DAY_IN_MILLIS),
-            new Entry(1 * 30 * DateUtils.DAY_IN_MILLIS),
-            new Entry(2 * 7 * DateUtils.DAY_IN_MILLIS),
-            new Entry(1 * 7 * DateUtils.DAY_IN_MILLIS),
+            new Entry(2L * DateUtils.YEAR_IN_MILLIS),
+            new Entry(1L * DateUtils.YEAR_IN_MILLIS),
+            new Entry(6L * 30L * DateUtils.DAY_IN_MILLIS),
+            new Entry(3L * 30L * DateUtils.DAY_IN_MILLIS),
+            new Entry(2L * 30L * DateUtils.DAY_IN_MILLIS),
+            new Entry(1L * 30L * DateUtils.DAY_IN_MILLIS),
+            new Entry(2L * 7L * DateUtils.DAY_IN_MILLIS),
+            new Entry(1L * 7L * DateUtils.DAY_IN_MILLIS),
     };
 
 

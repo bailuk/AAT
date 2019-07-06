@@ -1,5 +1,7 @@
 package ch.bailu.aat.services.dem.tile;
 
+import android.support.annotation.NonNull;
+
 import ch.bailu.aat.coordinates.SrtmCoordinates;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.background.BackgroundTask;
@@ -52,6 +54,7 @@ public class Dem3Tile implements ElevationProvider, DemProvider {
 
     private BackgroundTask loader = BackgroundTask.NULL;
 
+    @NonNull
     @Override
     public String toString() {
         return coordinates.coordinates.toString();

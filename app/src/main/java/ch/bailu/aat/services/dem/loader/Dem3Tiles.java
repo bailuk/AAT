@@ -8,8 +8,8 @@ import ch.bailu.aat.services.dem.tile.Dem3Tile;
 public class Dem3Tiles {
 
     private final static int NUM_TILES=1;
-    
-    private final Dem3Tile tiles[];
+
+    private final Dem3Tile[] tiles;
 
     public Dem3Tiles() {
         tiles = new Dem3Tile[NUM_TILES];

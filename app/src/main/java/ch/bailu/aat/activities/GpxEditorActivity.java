@@ -36,7 +36,7 @@ public class GpxEditorActivity extends AbsFileContentActivity {
         map = MapFactory.DEF(this, SOLID_KEY).editor(editorSource);
 
 
-        ContentDescription summaryData[] = {
+        ContentDescription[] summaryData = {
                 new NameDescription(this),
                 new PathDescription(this),
                 new DistanceDescription(this),

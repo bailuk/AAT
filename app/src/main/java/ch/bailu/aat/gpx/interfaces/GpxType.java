@@ -1,5 +1,7 @@
 package ch.bailu.aat.gpx.interfaces;
 
+import android.support.annotation.NonNull;
+
 public enum GpxType {
     WAY,
     ROUTE,
@@ -8,6 +10,7 @@ public enum GpxType {
 
 
 
+    @NonNull
     @Override
     public String toString() {
         return name();

@@ -1,5 +1,7 @@
 package ch.bailu.aat.coordinates;
 
+import android.support.annotation.NonNull;
+
 import org.mapsforge.core.model.BoundingBox;
 import org.mapsforge.core.model.LatLong;
 import org.mapsforge.core.util.LatLongUtils;
@@ -182,6 +184,7 @@ public class BoundingBoxE6 {
     }
 
 
+    @NonNull
     @Override
     public String toString() {
         final FF f = FF.f();

@@ -10,7 +10,7 @@ import ch.bailu.util_java.foc.Foc;
 
 public abstract class AppSelectDirectoryDialog  implements  DialogInterface.OnClickListener {
     private final Foc srcFile;
-    private final Foc directories[];
+    private final Foc[] directories;
 
 
     private final Context context;

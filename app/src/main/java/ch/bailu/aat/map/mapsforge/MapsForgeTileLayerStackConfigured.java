@@ -39,8 +39,8 @@ public abstract class MapsForgeTileLayerStackConfigured extends MapsForgeTileLay
 
 
     private void initLayers() {
-        boolean enabled[] = stiles.getEnabledArray();
-        Source sources[] = SolidMapTileStack.SOURCES;
+        boolean[] enabled = stiles.getEnabledArray();
+        Source[] sources = SolidMapTileStack.SOURCES;
 
         removeLayers();
 
@@ -50,11 +50,11 @@ public abstract class MapsForgeTileLayerStackConfigured extends MapsForgeTileLay
         setMapViewZoomLimit(mapView);
     }
 
-    protected abstract void addBackgroundLayers(boolean enabled[], Source sources[]);
+    protected abstract void addBackgroundLayers(boolean[] enabled, Source[] sources);
 
 
 
-    protected abstract void addOverlayLayers(boolean enabled[], Source sources[]);
+    protected abstract void addOverlayLayers(boolean[] enabled, Source[] sources);
 
 
 
@@ -97,7 +97,7 @@ public abstract class MapsForgeTileLayerStackConfigured extends MapsForgeTileLay
         }
 
         @Override
-        protected void addBackgroundLayers(boolean enabled[], Source sources[]) {
+        protected void addBackgroundLayers(boolean[] enabled, Source[] sources) {
             Source mapnik = null, mapsforge = null;
 
             if (enabled[1] && sources[1] == DownloadSource.MAPNIK) {
@@ -121,7 +121,7 @@ public abstract class MapsForgeTileLayerStackConfigured extends MapsForgeTileLay
         }
 
         @Override
-        protected void addOverlayLayers(boolean enabled[], Source sources[]) {
+        protected void addOverlayLayers(boolean[] enabled, Source[] sources) {
 
         }
     }
@@ -133,7 +133,7 @@ public abstract class MapsForgeTileLayerStackConfigured extends MapsForgeTileLay
         }
 
         @Override
-        protected void addOverlayLayers(boolean enabled[], Source sources[]) {
+        protected void addOverlayLayers(boolean[] enabled, Source[] sources) {
             for (int i=2; i< sources.length; i++) {
                 if (enabled[i]) {
                     Source s = sources[i];

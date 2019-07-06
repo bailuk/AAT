@@ -1,6 +1,8 @@
 package ch.bailu.aat.gpx.attributes;
 
 
+import android.support.annotation.NonNull;
+
 public class GpxAttributesStatic extends GpxAttributes {
 
 
@@ -19,7 +21,7 @@ public class GpxAttributesStatic extends GpxAttributes {
 
 
         @Override
-        public int compareTo(Tag another) {
+        public int compareTo(@NonNull Tag another) {
             return Integer.compare(key, another.key);
         }
     }

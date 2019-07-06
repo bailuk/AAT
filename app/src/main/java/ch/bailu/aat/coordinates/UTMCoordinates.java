@@ -1,5 +1,7 @@
 package ch.bailu.aat.coordinates;
 
+import android.support.annotation.NonNull;
+
 import org.mapsforge.core.model.LatLong;
 
 import ch.bailu.aat.description.FF;
@@ -124,6 +126,7 @@ public class UTMCoordinates extends MeterCoordinates {
 
     private final FF f = FF.f();
 
+    @NonNull
     @Override
     public String toString() {
 

@@ -121,9 +121,9 @@ public class SolidDirectoryQuery extends SolidFile {
 
             selection = GpxDbConstants.KEY_START_TIME 
                     + " BETWEEN " 
-                    + String.valueOf(Math.min(start, end)) 
+                    + Math.min(start, end)
                     + " AND " 
-                    + String.valueOf(Math.max(start, end)) ;
+                    + Math.max(start, end);
         }
 
         return selection;

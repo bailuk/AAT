@@ -1,7 +1,7 @@
 package ch.bailu.aat.services.editor;
 
 public class EditorRing {
-    private final NodeEditor ring[] = new NodeEditor[10];
+    private final NodeEditor[] ring = new NodeEditor[10];
     private int index=0;
     private int undoable=0;
     private int redoable=0;

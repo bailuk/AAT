@@ -7,7 +7,7 @@ import ch.bailu.aat.services.sensor.attributes.StepCounterAttributes;
 
 public class SampleRate extends GpxSubAttributes {
 
-    private final int KEY[];
+    private final int[] KEY;
 
     private long sampleTimeMillis = 0L;
     private long totalTimeMillis = 0L;
@@ -168,13 +168,13 @@ public class SampleRate extends GpxSubAttributes {
     }
 
     public int getTotalSamples() {
-        return Math.round(totalSamples60KM / 60000);
+        return Math.round(totalSamples60KM / 60000f);
     }
 
 
     public int getAverageSpm() {
         if (totalTimeMillis > 0)
-            return Math.round(totalSamples60KM / totalTimeMillis);
+            return (int) Math.round(totalSamples60KM / (double)totalTimeMillis);
         return 0;
     }
 

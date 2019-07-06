@@ -1,5 +1,7 @@
 package ch.bailu.aat.util;
 
+import android.support.annotation.NonNull;
+
 public class HtmlBuilder {
 
     private final StringBuilder b = new StringBuilder();
@@ -42,6 +44,7 @@ public class HtmlBuilder {
     }
 
 
+    @NonNull
     @Override
     public String toString() {
         return b.toString();

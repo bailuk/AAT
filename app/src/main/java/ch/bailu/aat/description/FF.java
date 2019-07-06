@@ -18,7 +18,7 @@ public class FF {
 
     public final DecimalFormat N3_3 = new DecimalFormat("000.000");
 
-    private FF() {};
+    private FF() {}
 
     private static final ThreadLocal<FF> F = new ThreadLocal<FF>() {
         @Override

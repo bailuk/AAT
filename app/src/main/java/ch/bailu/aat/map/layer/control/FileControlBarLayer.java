@@ -149,7 +149,7 @@ public class FileControlBarLayer extends ControlBarLayer {
             super(mc);
         }
 
-        final ContentDescription summaryData[] = {
+        final ContentDescription[] summaryData = {
 
                 new DateDescription(acontext),
                 new TimeDescription(acontext),

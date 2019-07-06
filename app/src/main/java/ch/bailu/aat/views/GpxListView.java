@@ -18,13 +18,13 @@ public class GpxListView extends ListView implements OnCursorChangedListener {
 
     private DataSetObserver observer;
 
-    private final ContentDescription data[];
+    private final ContentDescription[] data;
 
 
 
 
-    public GpxListView(Context c, 
-            ContentDescription cd[]) {
+    public GpxListView(Context c,
+                       ContentDescription[] cd) {
         super(c);
 
         data = cd;

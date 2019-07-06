@@ -35,7 +35,7 @@ public class LoaderThread extends WorkerThread {
 
         if (total_loads >0) {
             builder.append("<br>Average bytes: ");
-            builder.append(Math.round(total_bytes/total_loads));
+            builder.append(Math.round(total_bytes/(float)total_loads));
             builder.append(" bytes");
         }
 
