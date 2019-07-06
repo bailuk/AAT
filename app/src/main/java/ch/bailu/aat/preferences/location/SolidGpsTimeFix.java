@@ -10,7 +10,8 @@ import ch.bailu.aat.util.ToDo;
 public class SolidGpsTimeFix extends SolidBoolean {
 
     private static int checked = 0;
-    private static int difference_hour = 0;
+    private static long differenceHour = 0;
+    private static long differenceMillis = 0;
 
     public SolidGpsTimeFix(Context c) {
         super(c, SolidGpsTimeFix.class.getSimpleName());
@@ -23,30 +24,42 @@ public class SolidGpsTimeFix extends SolidBoolean {
 
 
     public static long fix(long gpsTime, long systemTime) {
-        long lfix = systemTime - gpsTime;
+        if (checked < 5) {
+            differenceHour = getDifferenceHour(gpsTime, systemTime);
+            differenceMillis = getMillisFromHour(differenceHour);
+            checked ++;
+        }
 
-        float ffix = lfix / (1000 * 60);
-        difference_hour = Math.round(ffix / 60f);
-
-        checked++;
-        if (difference_hour == 0) {
+        if (differenceHour == 0) {
             return gpsTime;
 
         } else {
-            lfix = difference_hour * 1000 * 60 * 60;
-            return gpsTime + lfix;
+            return gpsTime + differenceMillis;
         }
     }
+
+
+    public static long getMillisFromHour(long hour) {
+        return hour * 1000L * 60L * 60L;
+    }
+
+    public static long getDifferenceHour(long gpsTime, long systemTime) {
+        long millis = systemTime - gpsTime;
+        long seconds = millis / 1000L;
+        double minutes = seconds / 60d;
+        return Math.round(minutes / 60d);
+    }
+
 
     @Override
     public String getToolTip() {
         if (checked > 0) {
 
-            if (difference_hour == 0) {
+            if (differenceHour == 0) {
                 return ToDo.translate("GPS time is correct (in UTC)");
             } else {
                 return ToDo.translate("GPS time differs " +
-                        difference_hour + " hours from system time");
+                        differenceHour + " hours from system time");
             }
         }
         return null;
