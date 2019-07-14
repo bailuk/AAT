@@ -7,9 +7,9 @@ public class HeartRateAttributes extends GpxAttributes {
 
     private static final Keys KEYS = new Keys();
 
-    public static final int KEY_INDEX_BPM = KEYS.add("HR");
+    public static final int KEY_INDEX_BPM = KEYS.add("HeartRate");
     public static final int KEY_INDEX_RR = KEYS.add("RR");
-    public static final int KEY_INDEX_CONTACT = KEYS.add("Contect");
+    public static final int KEY_INDEX_CONTACT = KEYS.add("Contact");
     public static final int KEY_INDEX_LOCATION = KEYS.add("Location");
 
 

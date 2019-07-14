@@ -58,13 +58,14 @@ public class SampleRate extends GpxSubAttributes {
         public final static int[] GPX_KEYS = {
                 HeartRateAttributes.KEY_INDEX_BPM,
                 Keys.toIndex("bpm"),
+                Keys.toIndex("HR")
         };
 
 
         private static final Keys KEYS = new Keys();
 
-        public static final int INDEX_AVERAGE_HR = KEYS.add("HR");
-        public static final int INDEX_MAX_HR = KEYS.add("MaxHR");
+        public static final int INDEX_AVERAGE_HR = KEYS.add("HeartRate");
+        public static final int INDEX_MAX_HR = KEYS.add("MaxHeartRate");
         public static final int INDEX_HEART_BEATS = KEYS.add("HeartBeats");
 
         public HeartRate() {
