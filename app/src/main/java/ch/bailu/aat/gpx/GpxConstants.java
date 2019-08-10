@@ -16,4 +16,6 @@ public class GpxConstants {
     public static final String QNAME_TIME = "time";
     public static final String QNAME_ALTITUDE = "ele";
     public static final String QNAME_EXTENSIONS = "extensions";
+
+    public static final String QNAME_GPXTPX_EXTENSION = "TrackPointExtension";
 }

@@ -8,16 +8,14 @@ import java.io.IOException;
 import ch.bailu.aat.gpx.GpxConstants;
 import ch.bailu.aat.gpx.xml_parser.parser.TagParser;
 import ch.bailu.aat.gpx.xml_parser.parser.osm.GpxExtensionParser;
-import ch.bailu.aat.gpx.xml_parser.parser.osm.OsmTagParser;
 import ch.bailu.aat.gpx.xml_parser.scanner.Scanner;
 
-public class ExtensionsParser extends TagParser {
-    private final GpxTpxExtension gpxtpx = new GpxTpxExtension();
-    private final TagParser tag = new OsmTagParser();
+public class GpxTpxExtension extends TagParser {
+
     private final GpxExtensionParser gpxTag = new GpxExtensionParser();
 
-    public ExtensionsParser() {
-        super(GpxConstants.QNAME_EXTENSIONS);
+    public GpxTpxExtension() {
+        super(GpxConstants.QNAME_GPXTPX_EXTENSION);
     }
 
     @Override
@@ -32,7 +30,7 @@ public class ExtensionsParser extends TagParser {
 
     @Override
     protected boolean parseTags(XmlPullParser parser, Scanner scanner) throws IOException, XmlPullParserException {
-        return tag.parse(parser, scanner) || gpxtpx.parse(parser, scanner) || gpxTag.parse(parser, scanner);
+        return gpxTag.parse(parser, scanner);
     }
 
     @Override
@@ -40,3 +38,4 @@ public class ExtensionsParser extends TagParser {
 
     }
 }
+

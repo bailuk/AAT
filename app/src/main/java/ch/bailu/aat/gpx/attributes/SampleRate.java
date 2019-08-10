@@ -162,7 +162,9 @@ public class SampleRate extends GpxSubAttributes {
         for (int k : keys) {
             if (attr.hasKey(k)) {
                 r = attr.getAsInteger(k);
-                if (r > 0) break;
+                if (r > 0) {
+                    break;
+                }
             }
         }
         return r;
