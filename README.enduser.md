@@ -27,7 +27,7 @@ Go to `Settings->Map Tiles` to remove old map tiles.
 # Offline Maps
 ## Download and store maps:
 1. Download maps and render themes from one of these map providers:  
-[OpenAndroMaps](http://www.openandromaps.org),[Freizeitkarte](http://www.freizeitkarte-osm.de/android/en/index.html) or [Mapsforge](http://download.mapsforge.org/)
+[OpenAndroMaps](http://www.openandromaps.org), [Freizeitkarte](http://www.freizeitkarte-osm.de/android/en/index.html) or [Mapsforge](http://download.mapsforge.org/)
 2. Store extracted maps in the directory `maps` or in one of its subdirectories.  
 Example: `maps/OAM/` contains `Alps.map`
 3. Store extracted themes in a subdirectory of the directory containing the corresponding maps.  
