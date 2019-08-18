@@ -253,7 +253,7 @@ public class GpxObjectStatic extends GpxObject implements ElevationUpdaterClient
                     size = handle.getSize();
                 }
 
-            } catch (IOException e) {
+            } catch (IOException | IllegalArgumentException | SecurityException e) {
                 handle.setException(e);
             }
 
