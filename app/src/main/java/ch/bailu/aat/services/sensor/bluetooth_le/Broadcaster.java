@@ -5,7 +5,7 @@ import android.content.Context;
 import ch.bailu.aat.util.AppBroadcaster;
 
 public class Broadcaster {
-    private static final long BROADCAST_TIMEOUT = 3000;
+    private static final long BROADCAST_TIMEOUT = 2000;
 
     private final Context context;
     private final int IID;

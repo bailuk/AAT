@@ -4,11 +4,10 @@ import android.bluetooth.BluetoothGattCharacteristic;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 
-import ch.bailu.aat.gpx.attributes.GpxAttributes;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.InfoID;
+import ch.bailu.aat.gpx.attributes.GpxAttributes;
 import ch.bailu.aat.services.ServiceContext;
-import ch.bailu.aat.services.sensor.Averager;
 import ch.bailu.aat.services.sensor.Connector;
 import ch.bailu.aat.services.sensor.attributes.CadenceSpeedAttributes;
 import ch.bailu.aat.services.sensor.list.SensorState;
@@ -31,7 +30,6 @@ public class CscService extends CscServiceID implements ServiceInterface {
 
     private final Revolution cadence = new Revolution();
     private final Revolution speed = new Revolution();
-    private final Averager averageCadence = new Averager(2);
     private final WheelCircumference wheelCircumference;
 
 
@@ -159,22 +157,19 @@ public class CscService extends CscServiceID implements ServiceInterface {
 
     private class Attributes extends CadenceSpeedAttributes {
 
-        final boolean haveCadence;
-        final boolean haveSpeed;
-        private int speed_rpm = 0;
         private float speedSI = 0f;
-
 
 
         public Attributes(BluetoothGattCharacteristic c, byte[] v) {
             super(CscService.this.location, CscService.this.isCadenceSensor, CscService.this.isSpeedSensor);
+
             int offset = 0;
 
             byte data = v[offset];
             offset += 1;
 
-            haveCadence = ID.isBitSet(data, BIT_CADENCE);
-            haveSpeed = ID.isBitSet(data, BIT_SPEED);
+            final boolean haveCadence = ID.isBitSet(data, BIT_CADENCE);
+            final boolean haveSpeed = ID.isBitSet(data, BIT_SPEED);
 
             if (haveSpeed) {
                 long revolutions = c.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT32, offset);
@@ -185,14 +180,7 @@ public class CscService extends CscServiceID implements ServiceInterface {
                 offset += 2;
 
                 speed.addUINT32(time, revolutions);
-
-                speed_rpm = speed.rpm();
-
-                circumferenceSI = wheelCircumference.getCircumferenceSI();
-
-                if (circumferenceSI > 0f) {
-                    speedSI = speed.getSpeedSI(circumferenceSI);
-                }
+                broadcastSpeed(speed.rpm());
             }
 
 
@@ -203,34 +191,40 @@ public class CscService extends CscServiceID implements ServiceInterface {
                 int time = c.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT16, offset);
 
                 cadence.add(time, revolutions);
-                cadence_rpm = cadence.rpm();
-
-                // if (cadence_rpm != 0) {
-                averageCadence.add(cadence_rpm);
-                //}
+                broadcastCadence(cadence.rpm());
             }
-            cadence_rpm_average = averageCadence.get();
-
-
-            circumferenceDebugString = wheelCircumference.getDebugString();
-            broadcast();
         }
 
 
-        private void broadcast() {
+        private void broadcastSpeed(int rpm) {
+            if (rpm != 0 || broadcasterSpeed.timeout()) {
 
-            if (haveSpeed && isSpeedSensor
-                    && (speed_rpm != 0 || broadcasterSpeed.timeout())) {
+                circumferenceSI = wheelCircumference.getCircumferenceSI();
+
+                if (circumferenceSI > 0f) {
+                    speedSI = speed.getSpeedSI(circumferenceSI);
+                }
+
+                circumferenceDebugString = wheelCircumference.getDebugString();
+
                 broadcasterSpeed.broadcast();
-
             }
 
-            if (haveCadence && isCadenceSensor) {
-                    //&& (cadence_rpm != 0 || broadcasterCadence.timeout())) {
+        }
+
+        private void broadcastCadence(int rpm) {
+            if (rpm != 0 || broadcasterCadence.timeout()) {
+
+                cadence_rpm = rpm;
+                cadence_rpm_average = rpm;
+
                 broadcasterCadence.broadcast();
 
             }
         }
+
+
+
 
 
         public float getSpeedSI() {
