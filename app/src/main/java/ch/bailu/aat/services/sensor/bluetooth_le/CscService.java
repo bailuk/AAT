@@ -31,7 +31,7 @@ public class CscService extends CscServiceID implements ServiceInterface {
 
     private final Revolution cadence = new Revolution();
     private final Revolution speed = new Revolution();
-    private final Averager averageCadence = new Averager(5);
+    private final Averager averageCadence = new Averager(2);
     private final WheelCircumference wheelCircumference;
 
 
@@ -205,9 +205,9 @@ public class CscService extends CscServiceID implements ServiceInterface {
                 cadence.add(time, revolutions);
                 cadence_rpm = cadence.rpm();
 
-                if (cadence_rpm != 0) {
-                    averageCadence.add(cadence_rpm);
-                }
+                // if (cadence_rpm != 0) {
+                averageCadence.add(cadence_rpm);
+                //}
             }
             cadence_rpm_average = averageCadence.get();
 
@@ -225,8 +225,8 @@ public class CscService extends CscServiceID implements ServiceInterface {
 
             }
 
-            if (haveCadence && isCadenceSensor
-                    && (cadence_rpm != 0 || broadcasterCadence.timeout())) {
+            if (haveCadence && isCadenceSensor) {
+                    //&& (cadence_rpm != 0 || broadcasterCadence.timeout())) {
                 broadcasterCadence.broadcast();
 
             }
