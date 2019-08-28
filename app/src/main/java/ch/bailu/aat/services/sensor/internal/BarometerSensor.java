@@ -127,7 +127,7 @@ public class BarometerSensor extends InternalSensorSDK23
 
 
         @Override
-        public short getAltitude() {
+        public double getAltitude() {
             return altitude;
         }
 

@@ -107,7 +107,7 @@ public class RouteLayer extends GpxLayer {
         @Override
         public void drawNode(TwoNodes.PixelNode node) {
             int c;
-            int altitude=node.point.getAltitude();
+            int altitude= (int) node.point.getAltitude();
 
             if (altitude == ElevationProvider.NULL_ALTITUDE) c=getColor();
             else c= AltitudeColorTable.INSTANCE.getColor(altitude);

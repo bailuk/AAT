@@ -15,7 +15,7 @@ public abstract class AltitudeDelta extends GpxSubAttributes {
         super(KEYS);
     }
 
-    public abstract void add(short alt, float dist);
+    public abstract void add(float alt, float dist);
     public abstract short getDescend();
     public abstract short getAscend();
     public abstract short getSlope();
@@ -24,7 +24,7 @@ public abstract class AltitudeDelta extends GpxSubAttributes {
     @Override
     public boolean update(GpxPointNode p, boolean autoPause) {
         if (!autoPause)
-            add(p.getAltitude(), p.getDistance());
+            add((float) p.getAltitude(), p.getDistance());
         return autoPause;
     }
 
@@ -83,7 +83,7 @@ public abstract class AltitudeDelta extends GpxSubAttributes {
 
         private int samples;
 
-        public void add(short alt, float dist) {
+        public void add(float alt, float dist) {
 
             if (average.add(alt, dist)) {
                 average_a = average_b;

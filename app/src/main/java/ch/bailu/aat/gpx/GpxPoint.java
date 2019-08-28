@@ -12,7 +12,7 @@ import ch.bailu.aat.gpx.interfaces.GpxPointInterface;
 public class GpxPoint implements GpxPointInterface {
     public static final long SIZE_IN_BYTES=(1*2)+(2*4)+(1*8);
 
-    private short  altitude;
+    private float  altitude;
     private final int    longitude;
     private final int latitude;
     private final long   timestamp;
@@ -29,7 +29,7 @@ public class GpxPoint implements GpxPointInterface {
 
     
     public GpxPoint (GpxPointInterface tp) {
-        altitude= tp.getAltitude();
+        altitude= (float) tp.getAltitude();
         longitude=tp.getLongitudeE6();
         latitude=tp.getLatitudeE6();
         timestamp=tp.getTimeStamp();
@@ -38,23 +38,23 @@ public class GpxPoint implements GpxPointInterface {
     }
 
     public GpxPoint (Location location) {
-        altitude=(short)location.getAltitude();
+        altitude=(float)location.getAltitude();
         longitude=(int) (location.getLongitude()*1E6);
         latitude=(int) (location.getLatitude()*1E6);
         timestamp=location.getTime();
     }
 
-    public GpxPoint(LatLong p, int a, long time) {
+    public GpxPoint(LatLong p, float a, long time) {
         latitude=p.getLatitudeE6();
         longitude=p.getLongitudeE6();
-        altitude=(short) a;
+        altitude= a;
         timestamp=time;
     }
 
-    public GpxPoint(LatLongE6Interface gp, int a, long time) {
+    public GpxPoint(LatLongE6Interface gp, float a, long time) {
         latitude = gp.getLatitudeE6();
         longitude = gp.getLongitudeE6();
-        altitude = (short)a;
+        altitude = a;
         timestamp = time; 
     }
 
@@ -84,12 +84,12 @@ public class GpxPoint implements GpxPointInterface {
     }
 
     @Override
-    public short getAltitude() {
-        return altitude;
+    public double getAltitude() {
+        return (double)altitude;
     }
 
 
-    public void setAltitude(short e) {
+    public void setAltitude(float e) {
         altitude=e;
     }
 

@@ -18,7 +18,7 @@ public class AverageAltitude {
 
 
     private float t_distance;
-    private int t_altitude;
+    private float t_altitude;
 
 
     /**
@@ -27,7 +27,7 @@ public class AverageAltitude {
      * @param dist distance of sample
      * @return true if limit reached (have a new average altitude sample).
      */
-    public boolean add(short alt, float dist) {
+    public boolean add(float alt, float dist) {
         if (next_sample_index == 0) {
             t_distance = dist;
             t_altitude = alt;
