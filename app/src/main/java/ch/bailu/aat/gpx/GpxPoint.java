@@ -10,7 +10,7 @@ import ch.bailu.aat.gpx.interfaces.GpxPointInterface;
 
 
 public class GpxPoint implements GpxPointInterface {
-    public static final long SIZE_IN_BYTES=(1*2)+(2*4)+(1*8);
+    public static final long SIZE_IN_BYTES=(1*4)+(2*4)+(1*8);
 
     private float  altitude;
     private final int    longitude;
