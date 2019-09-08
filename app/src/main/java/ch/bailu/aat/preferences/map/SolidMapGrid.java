@@ -8,6 +8,7 @@ import ch.bailu.aat.map.layer.MapLayerInterface;
 import ch.bailu.aat.map.layer.NullLayer;
 import ch.bailu.aat.map.layer.grid.CH1903CenterCoordinatesLayer;
 import ch.bailu.aat.map.layer.grid.CH1903GridLayer;
+import ch.bailu.aat.map.layer.grid.PlusCodesCenterCoordinatesLayer;
 import ch.bailu.aat.map.layer.grid.UTMCenterCoordinatesLayer;
 import ch.bailu.aat.map.layer.grid.UTMGridLayer;
 import ch.bailu.aat.map.layer.grid.WGS84Layer;
@@ -17,7 +18,7 @@ public class SolidMapGrid extends SolidStaticIndexList {
 
     private static final String POSTFIX="_GRID";
     
-    private static final String[] LABEL={"WGS84", "CH1903", "UTM", "None"};
+    private static final String[] LABEL={"WGS84", "CH1903", "UTM", "plus codes", "None"};
     
     
     public SolidMapGrid(Context context, String k) {
@@ -42,6 +43,10 @@ public class SolidMapGrid extends SolidStaticIndexList {
 
         if (this.getIndex()==2) {
             return new UTMGridLayer(cl);
+        }
+
+        if (this.getIndex()==3) {
+            return new PlusCodesCenterCoordinatesLayer(getContext());
         }
 
         return new NullLayer();
