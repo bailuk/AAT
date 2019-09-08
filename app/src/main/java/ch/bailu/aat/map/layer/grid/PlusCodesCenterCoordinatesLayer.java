@@ -45,18 +45,11 @@ public class PlusCodesCenterCoordinatesLayer  implements MapLayerInterface {
 
 
     private void drawCoordinates(MapContext clayer,LatLong point) {
-        final int z = clayer.getMetrics().getZoomLevel();
         final OpenLocationCode center =
                 new OpenLocationCode(point.latitude, point.longitude);
 
         final String code = center.getCode();
-
-        if (z > 14)
-            clayer.draw().textBottom(code,1);
-        else if (z > 5)
-            clayer.draw().textBottom(code.substring(0,8),1);
-        else
-            clayer.draw().textBottom(code.substring(0,4), 1);
+        clayer.draw().textBottom(code,1);
 
     }
 
