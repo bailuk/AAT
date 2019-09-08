@@ -245,7 +245,7 @@ public class DistanceAltitudeGraphView extends AbsGraphView {
         }
 
         private void plotPoint(GpxPointNode point, float distance) {
-            plotter.plotPoint(distance, point.getAltitude(),
+            plotter.plotPoint(distance, (float) point.getAltitude(),
                     MapColor.NODE_SELECTED);
         }
     }
@@ -288,7 +288,7 @@ public class DistanceAltitudeGraphView extends AbsGraphView {
         public void doPoint(GpxPointNode point) {}
 
         private void plotPoint(GpxPointNode point, float distance) {
-            plotter.plotPoint(distance, point.getAltitude(),
+            plotter.plotPoint(distance, (float) point.getAltitude(),
                     MapColor.NODE_NEUTRAL);
         }
     }

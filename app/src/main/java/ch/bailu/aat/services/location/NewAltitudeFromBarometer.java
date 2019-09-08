@@ -19,7 +19,7 @@ public class NewAltitudeFromBarometer extends LocationStackChainedItem {
                 scontext.getSensorService().getInformationOrNull(InfoID.BAROMETER_SENSOR);
 
         if (info != null) {
-            short altitude = info.getAltitude();
+            double altitude = info.getAltitude();
             l.setAltitude(altitude);
         }
 

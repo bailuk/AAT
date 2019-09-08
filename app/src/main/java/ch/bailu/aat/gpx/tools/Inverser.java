@@ -33,7 +33,7 @@ public class Inverser {
                 final GpxPointNode point = list.get();
                 final GpxPointNode pointInverse = listInverse.get();
 
-                final GpxPoint pointNew = new GpxPoint(pointInverse, pointInverse.getAltitude(),
+                final GpxPoint pointNew = new GpxPoint(pointInverse, (float) pointInverse.getAltitude(),
                         point.getTimeStamp());
 
 

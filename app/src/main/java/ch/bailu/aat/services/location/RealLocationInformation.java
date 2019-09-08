@@ -37,8 +37,8 @@ public class RealLocationInformation extends LocationInformation {
     }
 
     @Override
-    public short getAltitude() {
-        return (short)Math.round(location.getAltitude());
+    public double getAltitude() {
+        return  (location.getAltitude());
     }
 
     @Override

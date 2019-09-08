@@ -66,7 +66,7 @@ public class AdjustGpsAltitude extends LocationStackChainedItem {
 
         public boolean set(LocationInformation l) {
             if (l.hasAltitude()) {
-                altitude = l.getAltitude();
+                altitude = (int) l.getAltitude();
                 time = l.getTimeStamp();
                 return true;
             }
