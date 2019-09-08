@@ -53,5 +53,7 @@ public class SolidTextInputDialog extends AbsSolidDialog {
 
         dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setOnClickListener( view -> dialog.dismiss());
     }
+
+
 }
 

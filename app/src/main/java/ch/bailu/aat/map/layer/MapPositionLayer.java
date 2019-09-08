@@ -11,8 +11,11 @@ import ch.bailu.aat.dispatcher.OnContentUpdatedInterface;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.map.MapContext;
+import ch.bailu.aat.menus.LocationMenu;
+import ch.bailu.aat.preferences.location.SolidGoTo;
 import ch.bailu.aat.preferences.map.SolidPositionLock;
 import ch.bailu.aat.preferences.Storage;
+import ch.bailu.aat.util.ui.AppLog;
 
 public class MapPositionLayer implements MapLayerInterface, OnContentUpdatedInterface {
 
@@ -23,6 +26,8 @@ public class MapPositionLayer implements MapLayerInterface, OnContentUpdatedInte
     private static final String ZOOM_SUFFIX ="zoom";
 
     private final SolidPositionLock slock;
+    private final SolidGoTo sgoTo;
+
     private LatLong gpsLocation = new LatLong(0,0);
 
     private final Storage storage;
@@ -32,6 +37,7 @@ public class MapPositionLayer implements MapLayerInterface, OnContentUpdatedInte
 
         storage = new Storage(mcontext.getContext());
         slock = new SolidPositionLock(mcontext.getContext(), mcontext.getSolidKey());
+        sgoTo = new SolidGoTo(mcontext.getContext());
 
         loadState();
         d.addTarget(this, InfoID.LOCATION);
@@ -87,6 +93,16 @@ public class MapPositionLayer implements MapLayerInterface, OnContentUpdatedInte
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         if (slock.hasKey(key)) {
             setMapCenter();
+        } else if (sgoTo.hasKey(key)) {
+            setMapCenterFromGoTo();
+        }
+    }
+
+    private void setMapCenterFromGoTo() {
+        try {
+            LocationMenu.center(mcontext.getMapView(), sgoTo.getValueAsString());
+        } catch (Exception e) {
+            AppLog.w(this, e);
         }
     }
 
