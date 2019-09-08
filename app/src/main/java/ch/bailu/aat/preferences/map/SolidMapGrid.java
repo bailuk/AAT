@@ -2,7 +2,12 @@ package ch.bailu.aat.preferences.map;
 
 import android.content.Context;
 
+import com.google.openlocationcode.OpenLocationCode;
+
+import org.mapsforge.core.model.LatLong;
+
 import ch.bailu.aat.R;
+import ch.bailu.aat.coordinates.Coordinates;
 import ch.bailu.aat.map.MapContext;
 import ch.bailu.aat.map.layer.MapLayerInterface;
 import ch.bailu.aat.map.layer.NullLayer;
@@ -66,4 +71,21 @@ public class SolidMapGrid extends SolidStaticIndexList {
 
     }
 
+
+    public CharSequence getClipboardLabel() {
+        if (this.getIndex()==3) {
+            return LABEL[3];
+        }
+
+        return "geo URI";
+    }
+
+
+    public CharSequence getUri(LatLong pos) {
+        if (this.getIndex()==3) {
+            return new OpenLocationCode(pos.latitude, pos.longitude).getCode();
+        }
+
+        return Coordinates.geoPointToGeoUri(pos);
+    }
 }

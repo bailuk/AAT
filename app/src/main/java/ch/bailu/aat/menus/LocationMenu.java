@@ -7,11 +7,14 @@ import android.net.Uri;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.google.openlocationcode.OpenLocationCode;
+
 import org.mapsforge.core.model.LatLong;
 
 import ch.bailu.aat.R;
 import ch.bailu.aat.coordinates.Coordinates;
 import ch.bailu.aat.map.MapViewInterface;
+import ch.bailu.aat.preferences.map.SolidMapGrid;
 import ch.bailu.aat.util.Clipboard;
 import ch.bailu.aat.util.ui.AppLog;
 
@@ -80,16 +83,36 @@ public class LocationMenu extends AbsMenu{
         final String s = clipboard.getText().toString();
 
         try {
-            LatLong p = Coordinates.stringToGeoPoint(s);
-            map.setCenter(p);
-        } catch (NumberFormatException e) {
+            map.setCenter(latLongFromString(s));
+        } catch (IllegalArgumentException e) {
             AppLog.w(this, e);
         }
-
     }
 
+
+    private LatLong latLongFromString(String s) throws  IllegalArgumentException {
+        try {
+            OpenLocationCode.CodeArea a = OpenLocationCode.decode(s);
+
+            return new LatLong(a.getCenterLatitude(), a.getCenterLongitude());
+
+        } catch (IllegalArgumentException illegalArgument) {
+            try {
+                return Coordinates.stringToGeoPoint(s);
+
+            } catch (NumberFormatException e) {
+                throw illegalArgument;
+
+            }
+        }
+    }
+
+
     private void copy() {
-        clipboard.setText("GEO location", Coordinates.geoPointToGeoUri(getCenter()));
+        SolidMapGrid sgrid = new SolidMapGrid(context,
+                map.getMContext().getSolidKey());
+
+        clipboard.setText(sgrid.getClipboardLabel(), sgrid.getUri(getCenter()));
     }
 
 
