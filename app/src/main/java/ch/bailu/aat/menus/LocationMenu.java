@@ -7,18 +7,14 @@ import android.net.Uri;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.google.openlocationcode.OpenLocationCode;
-
 import org.mapsforge.core.model.LatLong;
 
 import ch.bailu.aat.R;
 import ch.bailu.aat.coordinates.Coordinates;
 import ch.bailu.aat.map.MapViewInterface;
-import ch.bailu.aat.preferences.location.SolidGoTo;
+import ch.bailu.aat.preferences.location.SolidGoToLocation;
 import ch.bailu.aat.preferences.map.SolidMapGrid;
 import ch.bailu.aat.util.Clipboard;
-import ch.bailu.aat.util.ui.AppLog;
-import ch.bailu.aat.views.preferences.SolidTextInputDialog;
 
 public class LocationMenu extends AbsMenu{
 
@@ -42,7 +38,7 @@ public class LocationMenu extends AbsMenu{
         view = menu.add(R.string.location_view);
         copy = menu.add(R.string.clipboard_copy);
         paste = menu.add(R.string.clipboard_paste);
-        goTo = menu.add(new SolidGoTo(context).getLabel());
+        goTo = menu.add(new SolidGoToLocation(context).getLabel());
         
     }
 
@@ -78,54 +74,19 @@ public class LocationMenu extends AbsMenu{
             paste();
 
         } else if (item == goTo) {
-            goTo();
+            new SolidGoToLocation(context).goToLocationFromUser(map);
         }
         return false;
     }
 
-    private void goTo() {
-        new SolidTextInputDialog(new SolidGoTo(context), SolidTextInputDialog.TEXT);
-    }
 
 
     private void paste() {
         final String s = clipboard.getText().toString();
 
-        center(map, s);
+        SolidGoToLocation.goToLocation(map, s);
     }
 
-    public static void center(MapViewInterface map, String s) {
-        try {
-            map.setCenter(latLongFromString(s, map.getMapViewPosition().getCenter()));
-
-        } catch (Exception e) {
-            AppLog.e(map.getMContext().getContext(), e);
-        }
-
-    }
-
-
-    private static LatLong latLongFromString(String s, LatLong reference)
-            throws  IllegalArgumentException, IllegalStateException {
-
-        try {
-            OpenLocationCode code = new OpenLocationCode(s);
-
-            code = code.recover(reference.latitude, reference.longitude);
-
-            OpenLocationCode.CodeArea a = code.decode(s);
-
-            return new LatLong(a.getCenterLatitude(), a.getCenterLongitude());
-
-        } catch (Exception exception) {
-            try {
-                return Coordinates.stringToGeoPoint(s);
-
-            } catch (NumberFormatException e) {
-                throw exception;
-            }
-        }
-    }
 
 
     private void copy() {
