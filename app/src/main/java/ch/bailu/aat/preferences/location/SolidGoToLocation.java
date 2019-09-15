@@ -8,6 +8,7 @@ import com.google.openlocationcode.OpenLocationCode;
 import org.mapsforge.core.model.LatLong;
 
 import ch.bailu.aat.coordinates.Coordinates;
+import ch.bailu.aat.exception.ValidationException;
 import ch.bailu.aat.map.MapViewInterface;
 import ch.bailu.aat.preferences.SolidString;
 import ch.bailu.aat.util.ToDo;
@@ -37,7 +38,7 @@ public class SolidGoToLocation extends SolidString {
 
     public static void goToLocation(MapViewInterface map, String s) {
         try {
-            map.setCenter(latLongFromString(s, map.getMapViewPosition().getCenter()));
+            map.setCenter(latLongFromString(s));
 
         } catch (Exception e) {
             AppLog.e(map.getMContext().getContext(), e);
@@ -46,13 +47,11 @@ public class SolidGoToLocation extends SolidString {
     }
 
 
-    private static LatLong latLongFromString(String s, LatLong reference)
+    private static LatLong latLongFromString(String s)
             throws  IllegalArgumentException, IllegalStateException {
 
         try {
             OpenLocationCode code = new OpenLocationCode(s);
-
-            code = code.recover(reference.latitude, reference.longitude);
 
             OpenLocationCode.CodeArea a = code.decode(s);
 
@@ -68,4 +67,26 @@ public class SolidGoToLocation extends SolidString {
         }
     }
 
+
+    @Override
+    public void setValueFromString(String s) throws ValidationException {
+        s = s.trim();
+
+
+        if (! validate(s)) {
+            throw new ValidationException(ToDo.translate("Geo URL or plus code"));
+        } else {
+            setValue(s);
+        }
+    }
+
+
+    @Override
+    public boolean validate(String s) {
+        try  {
+            return latLongFromString(s) != null;
+        } catch (Exception e) {
+            return false;
+        }
+    }
 }
