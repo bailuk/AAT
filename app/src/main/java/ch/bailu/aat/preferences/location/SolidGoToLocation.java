@@ -28,7 +28,7 @@ public class SolidGoToLocation extends SolidString {
 
     @Override
     public String getLabel() {
-        return ToDo.translate("Center map at location (Geo URL or plus code):");
+        return ToDo.translate("Center map at location (WGS84 decimal or Open Location Code)");
     }
 
 
