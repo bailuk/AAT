@@ -2,11 +2,10 @@ package ch.bailu.aat.coordinates;
 
 import android.support.annotation.NonNull;
 
-import com.google.openlocationcode.OpenLocationCode;
-
 import org.mapsforge.core.model.LatLong;
 
 import ch.bailu.aat.description.FF;
+import ch.bailu.aat.util.ui.AppLog;
 
 
 public class CH1903Coordinates extends MeterCoordinates {
@@ -41,6 +40,45 @@ public class CH1903Coordinates extends MeterCoordinates {
     public CH1903Coordinates(int e, int n) {
         easting=e;
         northing=n;
+    }
+
+
+
+    public CH1903Coordinates(String code) {
+        code = code.trim();
+
+        String[] parts = code.split("[,/ ]");
+
+
+
+
+        int n=0;
+        int e=0;
+
+        for (String p : parts) {
+            try {
+                AppLog.d(this, p);
+                final double d = Double.parseDouble(p.trim());
+                final int i;
+
+                if (d < 1000d) i = (int) (d*1000d);
+                else i = (int) d;
+
+                if (i > 100000 && i < 300000) n = i;
+                else if (i > 400000 && i < 800000) e = i;
+
+
+            } catch (Exception ex) {
+                AppLog.d(this, code + ": " + p);
+            }
+        }
+
+        if (n == 0 || e == 0) {
+            throw getCodeNotValidException(code);
+        }
+
+        easting = e;
+        northing = n;
     }
 
 

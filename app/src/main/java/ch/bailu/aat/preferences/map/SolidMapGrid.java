@@ -7,7 +7,10 @@ import com.google.openlocationcode.OpenLocationCode;
 import org.mapsforge.core.model.LatLong;
 
 import ch.bailu.aat.R;
+import ch.bailu.aat.coordinates.CH1903Coordinates;
 import ch.bailu.aat.coordinates.Coordinates;
+import ch.bailu.aat.coordinates.OlcCoordinates;
+import ch.bailu.aat.coordinates.WGS84Coordinates;
 import ch.bailu.aat.map.MapContext;
 import ch.bailu.aat.map.layer.MapLayerInterface;
 import ch.bailu.aat.map.layer.NullLayer;
@@ -23,7 +26,7 @@ public class SolidMapGrid extends SolidStaticIndexList {
 
     private static final String POSTFIX="_GRID";
     
-    private static final String[] LABEL={"WGS84", "CH1903", "UTM", "plus codes", "None"};
+    private static final String[] LABEL={"WGS84", "CH1903", "UTM", "Open Location Code (plus codes)", "None"};
     
     
     public SolidMapGrid(Context context, String k) {
@@ -73,19 +76,21 @@ public class SolidMapGrid extends SolidStaticIndexList {
 
 
     public CharSequence getClipboardLabel() {
-        if (this.getIndex()==3) {
-            return LABEL[3];
+        if (this.getIndex()==3 || this.getIndex()==1) {
+            return LABEL[this.getIndex()];
         }
 
-        return "geo URI";
+        return LABEL[0];
     }
 
 
-    public CharSequence getUri(LatLong pos) {
+    public CharSequence getCode(LatLong pos) {
         if (this.getIndex()==3) {
-            return new OpenLocationCode(pos.latitude, pos.longitude).getCode();
+            return new OlcCoordinates(pos).toString();
+        } else if (this.getIndex() == 1) {
+            return new CH1903Coordinates(pos).toString();
         }
 
-        return Coordinates.geoPointToGeoUri(pos);
+        return WGS84Coordinates.getGeoUri(pos);
     }
 }

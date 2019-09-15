@@ -2,10 +2,20 @@ package ch.bailu.aat.coordinates;
 
 import android.support.annotation.NonNull;
 
+import org.mapsforge.core.model.LatLong;
+
 import java.text.DecimalFormat;
 
-public class WGS84Sexagesimal extends Coordinates {
-    
+import ch.bailu.aat.util.ui.AppLog;
+
+public class WGS84Coordinates extends Coordinates {
+
+
+    /**
+     * WGS84 Sexagesimal and decimal operations
+     */
+
+
     public static class Sexagesimal {
         public final int deg, min, sec;
         public final double coordinate;
@@ -21,7 +31,7 @@ public class WGS84Sexagesimal extends Coordinates {
             sec = (int)Math.round(c);
         }
 
-        public int toDecimalDegree() {
+        public int toE6() {
             return (int) (coordinate * 1e6);
         }
         
@@ -45,13 +55,55 @@ public class WGS84Sexagesimal extends Coordinates {
     
     private final Sexagesimal longitude;
     private final Sexagesimal latitude;
-    
-    
-    public WGS84Sexagesimal(double la, double lo) {
+
+
+    public WGS84Coordinates(LatLong point) {
+        this(point.getLatitude(), point.getLongitude());
+    }
+
+    public WGS84Coordinates(double la, double lo) {
         latitude=new Sexagesimal(la);
         longitude=new Sexagesimal(lo);
     }
-    
+
+
+    public WGS84Coordinates(String code) {
+        String[] parts = code.split("[:,?#]");
+
+        boolean scanLa=true;
+        boolean scanned=false;
+
+
+        double la=0d;
+        double lo=0d;
+
+        for (String p : parts) {
+            try  {
+                final double d = Double.parseDouble(p.trim());
+                if (scanLa) {
+                    la = d;
+                    scanLa=false;
+                } else {
+                    lo = d;
+                    scanned = true;
+                }
+
+            } catch (NumberFormatException e){
+                AppLog.d(this, code + ": " + p);
+            }
+        }
+
+        if (scanned) {
+            latitude = new Sexagesimal(la);
+            longitude = new Sexagesimal(lo);
+        } else {
+            throw getCodeNotValidException(code);
+        }
+
+    }
+
+
+
     public Sexagesimal getLongitude() {
         return longitude;
     }
@@ -69,8 +121,10 @@ public class WGS84Sexagesimal extends Coordinates {
                 + longitude.toString() + " "
                 + getLongitudeChar();
     }
-    
-    
+
+
+
+
     public static char getLatitudeChar(double la) {
         if (la<0) return 'S';
         else return 'N';
@@ -89,6 +143,30 @@ public class WGS84Sexagesimal extends Coordinates {
     public char getLongitudeChar() {
         return getLongitudeChar(longitude.coordinate);
     }
-    
+
+
+    public LatLong toLatLong() {
+        return new LatLong(latitude.coordinate, longitude.coordinate);
+    }
+
+    public String getGeoUri() {
+        return getGeoUri(toLatLong());
+    }
+
+
+    public static String getGeoUri(LatLong src) {
+        return  "geo:" +
+                src.getLatitude() +
+                ',' +
+                src.getLongitude();
+    }
+
+
+    public static String getGeoPointDescription(LatLong src) {
+        return "Coordinates:\nLatitude:" +
+                src.getLatitude() +
+                "Longitude:" +
+                src.getLongitude();
+    }
 
 }

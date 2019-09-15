@@ -5,7 +5,7 @@ import android.content.SharedPreferences;
 
 import org.mapsforge.core.model.LatLong;
 
-import ch.bailu.aat.coordinates.WGS84Sexagesimal;
+import ch.bailu.aat.coordinates.WGS84Coordinates;
 import ch.bailu.aat.description.FF;
 import ch.bailu.aat.map.MapContext;
 import ch.bailu.aat.map.layer.MapLayerInterface;
@@ -44,7 +44,7 @@ public class WGS84Layer implements MapLayerInterface {
 
 
     private void drawCoordinates(MapContext clayer,LatLong point) {
-        clayer.draw().textBottom(new WGS84Sexagesimal(point.getLatitude(), point.getLongitude()).toString(),1);
+        clayer.draw().textBottom(new WGS84Coordinates(point).toString(),1);
         clayer.draw().textBottom(f.N6.format(point.latitude) + "/" + f.N6.format(point.getLongitude()),0);
     }
 

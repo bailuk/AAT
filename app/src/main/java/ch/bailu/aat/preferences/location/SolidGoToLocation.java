@@ -3,11 +3,12 @@ package ch.bailu.aat.preferences.location;
 import android.content.Context;
 import android.view.View;
 
-import com.google.openlocationcode.OpenLocationCode;
-
 import org.mapsforge.core.model.LatLong;
 
+import ch.bailu.aat.coordinates.CH1903Coordinates;
 import ch.bailu.aat.coordinates.Coordinates;
+import ch.bailu.aat.coordinates.OlcCoordinates;
+import ch.bailu.aat.coordinates.WGS84Coordinates;
 import ch.bailu.aat.exception.ValidationException;
 import ch.bailu.aat.map.MapViewInterface;
 import ch.bailu.aat.preferences.SolidString;
@@ -21,6 +22,10 @@ public class SolidGoToLocation extends SolidString {
         super(c, KEY);
     }
 
+
+    private LatLong reference = null;
+
+
     @Override
     public String getLabel() {
         return ToDo.translate("Center map at location (Geo URL or plus code):");
@@ -28,6 +33,9 @@ public class SolidGoToLocation extends SolidString {
 
 
     public void goToLocationFromUser(MapViewInterface map) {
+
+        reference = map.getMapViewPosition().getCenter();
+
         new SolidTextInputDialog(this, SolidTextInputDialog.TEXT, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -36,7 +44,9 @@ public class SolidGoToLocation extends SolidString {
         });
     }
 
-    public static void goToLocation(MapViewInterface map, String s) {
+    public void goToLocation(MapViewInterface map, String s) {
+        reference = map.getMapViewPosition().getCenter();
+
         try {
             map.setCenter(latLongFromString(s));
 
@@ -47,22 +57,28 @@ public class SolidGoToLocation extends SolidString {
     }
 
 
-    private static LatLong latLongFromString(String s)
+    private LatLong latLongFromString(String code)
             throws  IllegalArgumentException, IllegalStateException {
 
         try {
-            OpenLocationCode code = new OpenLocationCode(s);
+            if (reference != null)
+                return new OlcCoordinates(code, reference).toLatLong();
 
-            OpenLocationCode.CodeArea a = code.decode(s);
+            else
+                return new OlcCoordinates(code).toLatLong();
 
-            return new LatLong(a.getCenterLatitude(), a.getCenterLongitude());
 
-        } catch (Exception exception) {
+        } catch (Exception eOLC) {
             try {
-                return Coordinates.stringToGeoPoint(s);
+                return new CH1903Coordinates(code).toLatLong();
 
-            } catch (NumberFormatException e) {
-                throw exception;
+            } catch(Exception eCH1903) {
+                try {
+                    return new WGS84Coordinates(code).toLatLong();
+
+                } catch (Exception eWGS) {
+                    throw Coordinates.getCodeNotValidException(code);
+                }
             }
         }
     }
@@ -74,7 +90,8 @@ public class SolidGoToLocation extends SolidString {
 
 
         if (! validate(s)) {
-            throw new ValidationException(ToDo.translate("Geo URL or plus code"));
+            throw new ValidationException(ToDo.translate(
+                    "Supports WGS84 decimal, CH1903 and Open Location Code (Plus Code)"));
         } else {
             setValue(s);
         }

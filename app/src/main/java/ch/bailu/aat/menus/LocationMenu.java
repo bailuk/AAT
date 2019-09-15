@@ -10,7 +10,8 @@ import android.view.MenuItem;
 import org.mapsforge.core.model.LatLong;
 
 import ch.bailu.aat.R;
-import ch.bailu.aat.coordinates.Coordinates;
+import ch.bailu.aat.coordinates.OlcCoordinates;
+import ch.bailu.aat.coordinates.WGS84Coordinates;
 import ch.bailu.aat.map.MapViewInterface;
 import ch.bailu.aat.preferences.location.SolidGoToLocation;
 import ch.bailu.aat.preferences.map.SolidMapGrid;
@@ -84,7 +85,7 @@ public class LocationMenu extends AbsMenu{
     private void paste() {
         final String s = clipboard.getText().toString();
 
-        SolidGoToLocation.goToLocation(map, s);
+        new SolidGoToLocation(context).goToLocation(map, s);
     }
 
 
@@ -93,14 +94,14 @@ public class LocationMenu extends AbsMenu{
         SolidMapGrid sgrid = new SolidMapGrid(context,
                 map.getMContext().getSolidKey());
 
-        clipboard.setText(sgrid.getClipboardLabel(), sgrid.getUri(getCenter()));
+        clipboard.setText(sgrid.getClipboardLabel(), sgrid.getCode(getCenter()));
     }
 
 
     private void view() {
         final Intent intent = new Intent(Intent.ACTION_VIEW);
         final LatLong center = getCenter();
-        final Uri uri = Uri.parse(Coordinates.geoPointToGeoUri(center));
+        final Uri uri = Uri.parse(WGS84Coordinates.getGeoUri(center));
 
         intent.setData(uri);
         context.startActivity(Intent.createChooser(intent, uri.toString()));
@@ -112,9 +113,9 @@ public class LocationMenu extends AbsMenu{
         final LatLong center = getCenter();
 
 
-        final String url = Coordinates.geoPointToGeoUri(center);
-        final String desc = Coordinates.geoPointToDescription(center);
-        final String body = desc+ "\n\n" + url;   
+        final String url = WGS84Coordinates.getGeoUri(center);
+        final String desc = WGS84Coordinates.getGeoPointDescription(center);
+        final String body = desc+ "\n\n" + url + "\n\n" + new OlcCoordinates(center).toString();
 
 
         intent.setType("label/plain");
