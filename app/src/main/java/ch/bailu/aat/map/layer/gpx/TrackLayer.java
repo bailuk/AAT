@@ -77,7 +77,7 @@ public class TrackLayer  extends GpxLayer{
 
         @Override
         public void drawNode(TwoNodes.PixelNode node) {
-            int altitude=node.point.getAltitude();
+            int altitude= (int) node.point.getAltitude();
             int color= AltitudeColorTable.INSTANCE.getColor(altitude);
             paint.setColor(color);
         }

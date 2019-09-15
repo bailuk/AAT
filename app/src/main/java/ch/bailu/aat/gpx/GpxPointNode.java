@@ -21,7 +21,7 @@ public abstract class GpxPointNode extends Node implements GpxDeltaPointInterfac
     }
     
     
-    public short getAltitude() {
+    public double getAltitude() {
         return point.getAltitude();
     }
 
@@ -117,8 +117,8 @@ public abstract class GpxPointNode extends Node implements GpxDeltaPointInterfac
     }
 
 
-    public void setAltitude(short e) {
-        point.setAltitude(e);
+    public void setAltitude(double e) {
+        point.setAltitude((float) e);
     }
     
 

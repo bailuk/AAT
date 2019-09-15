@@ -14,6 +14,9 @@ public class FF_GPX {
     public final DecimalFormat N =
             new DecimalFormat("0", new DecimalFormatSymbols(Locale.ROOT));
 
+    public final DecimalFormat N1 =
+            new DecimalFormat("0.0", new DecimalFormatSymbols(Locale.ROOT));
+
     public final DecimalFormat N6 =
             new DecimalFormat("0.000000", new DecimalFormatSymbols(Locale.ROOT));
 

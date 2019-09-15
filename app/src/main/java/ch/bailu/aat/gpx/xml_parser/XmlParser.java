@@ -70,8 +70,8 @@ public class XmlParser extends AbsXmlParser {
     public int getLongitudeE6() {return scanner.longitude.getInt();}
 
     @Override
-    public short getAltitude() {
-        return (short) scanner.altitude.getInt();
+    public double getAltitude() {
+        return (double) scanner.altitude.getInt();
     }
 
     @Override

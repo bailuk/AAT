@@ -111,10 +111,10 @@ public class BarometerSensor extends InternalSensorSDK23
     public static class Information extends GpxInformation {
 
         private final GpxAttributes attributes;
-        private final short altitude;
+        private final double altitude;
         private final long time = System.currentTimeMillis();
 
-        public Information(short a, float p) {
+        public Information(double a, float p) {
             attributes = new Attributes(p);
             altitude = a;
         }
@@ -127,8 +127,8 @@ public class BarometerSensor extends InternalSensorSDK23
 
 
         @Override
-        public short getAltitude() {
-            return altitude;
+        public double getAltitude() {
+            return  altitude;
         }
 
 

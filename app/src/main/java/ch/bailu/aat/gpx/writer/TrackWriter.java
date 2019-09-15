@@ -35,7 +35,7 @@ public class TrackWriter extends GpxWriter {
         writeBeginElementEnd();
 
         writeBeginElement(GpxConstants.QNAME_ALTITUDE);
-        writeString(f.N.format(tp.getAltitude()));
+        writeString(f.N1.format(tp.getAltitude()));
         writeEndElement(GpxConstants.QNAME_ALTITUDE);
 
         writeTimeStamp(tp.getTimeStamp());
