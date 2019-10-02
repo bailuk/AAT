@@ -1,6 +1,8 @@
 ![Logo](app/src/main/res/mipmap-xhdpi/ic_launcher.png)
 
-# AAT Another Activity Tracker  (THIS IS FORK to test Decimal altitude)
+# AAT Another Activity Tracker  (THIS IS FORK to test Decimal altitude) Archived since it has been integrated
+
+
 AAT is a GPS-tracking application for tracking sportive activities, with emphasis on cycling.
 
 ## Features
