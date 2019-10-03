@@ -46,12 +46,14 @@ public class HeartRateService extends HeartRateServiceID implements ServiceInter
     }
 
 
-    public void discovered(BluetoothGattCharacteristic c, Executer execute) {
+    public boolean discovered(BluetoothGattCharacteristic c, Executer execute) {
         UUID sid = c.getService().getUuid();
         UUID cid = c.getUuid();
+        boolean disc = false;
 
         if (HEART_RATE_SERVICE.equals(sid)) {
             valid = true;
+            disc = true;
 
             if (HEART_RATE_MESUREMENT.equals(cid)) {
                 execute.notify(c);
@@ -59,6 +61,7 @@ public class HeartRateService extends HeartRateServiceID implements ServiceInter
                 execute.read(c);
             }
         }
+        return disc;
     }
 
 

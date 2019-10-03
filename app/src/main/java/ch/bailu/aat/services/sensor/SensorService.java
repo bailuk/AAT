@@ -8,6 +8,7 @@ import android.os.Build;
 import android.support.annotation.NonNull;
 
 import ch.bailu.aat.gpx.GpxInformation;
+import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.VirtualService;
 import ch.bailu.aat.services.sensor.list.SensorList;
@@ -28,9 +29,11 @@ public class SensorService extends VirtualService {
         internal = Sensors.factoryInternal(sc.getContext(), sensorList);
 
 
-        AppBroadcaster.register(getContext(),
-                onBluetoothStateChanged, BluetoothAdapter.ACTION_STATE_CHANGED);
+        AppBroadcaster.register(getContext(), onBluetoothStateChanged, BluetoothAdapter.ACTION_STATE_CHANGED);
 
+        AppBroadcaster.register(getContext(), onSensorDisconected, AppBroadcaster.SENSOR_DISCONECTED + InfoID.SENSORS);
+
+        AppBroadcaster.register(getContext(), onSensorReconnect, AppBroadcaster.SENSOR_RECONECT + InfoID.SENSORS);
 
         updateConnections();
     }
@@ -55,6 +58,22 @@ public class SensorService extends VirtualService {
     };
 
 
+    final BroadcastReceiver onSensorDisconected = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            updateConnections();
+        }
+    };
+
+
+    final BroadcastReceiver onSensorReconnect = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            updateConnections();
+            scann();                        // rescan to get them in cache if they were not
+        }
+    };
+
 
     @Override
     public void appendStatusText(StringBuilder builder) {
@@ -68,6 +87,8 @@ public class SensorService extends VirtualService {
         internal.close();
         sensorList.close();
         getContext().unregisterReceiver(onBluetoothStateChanged);
+        getContext().unregisterReceiver(onSensorDisconected);
+        getContext().unregisterReceiver(onSensorReconnect);
     }
 
     public synchronized void updateConnections() {

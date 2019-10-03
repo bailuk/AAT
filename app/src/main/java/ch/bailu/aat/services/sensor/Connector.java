@@ -47,6 +47,7 @@ public class Connector implements Closeable {
         if (connected) {
             connected = false;
             SensorState.disconnect(iid);
+            AppBroadcaster.broadcast(context, AppBroadcaster.SENSOR_DISCONECTED + InfoID.SENSORS);      // just disconected try reconnect
         }
     }
 

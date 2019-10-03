@@ -69,9 +69,11 @@ public class CscService extends CscServiceID implements ServiceInterface {
     }
 
 
-    public void discovered(BluetoothGattCharacteristic c, Executer execute) {
+    public boolean discovered(BluetoothGattCharacteristic c, Executer execute) {
+        boolean disc = false;
         if (CSC_SERVICE.equals(c.getService().getUuid())) {
             valid = true;
+            disc = true;
 
             if (CSC_FEATURE.equals(c.getUuid())) {
                 execute.read(c);
@@ -84,6 +86,7 @@ public class CscService extends CscServiceID implements ServiceInterface {
 
             }
         }
+        return disc;
     }
 
     public void read(BluetoothGattCharacteristic c) {

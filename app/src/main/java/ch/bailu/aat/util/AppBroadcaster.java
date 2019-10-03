@@ -22,6 +22,8 @@ public class AppBroadcaster {
     public static final String DB_SYNC_CHANGED=NAME_SPACE+"SYNC_CHANGED";
 
     public static final String SENSOR_CHANGED = NAME_SPACE + "SENSOR_CHANGED";
+    public static final String SENSOR_DISCONECTED = NAME_SPACE + "SENSOR_DISCONECTED";
+    public static final String SENSOR_RECONECT = NAME_SPACE + "SENSOR_RECONECT";
 
     /** 
      *   Information about state changes of files (in cache and on disk)
