@@ -8,7 +8,7 @@ import android.os.Bundle;
 import org.mapsforge.core.model.LatLong;
 
 import ch.bailu.aat.coordinates.BoundingBoxE6;
-import ch.bailu.aat.coordinates.Coordinates;
+import ch.bailu.aat.coordinates.WGS84Coordinates;
 import ch.bailu.aat.dispatcher.CurrentLocationSource;
 import ch.bailu.aat.dispatcher.EditorSource;
 import ch.bailu.aat.dispatcher.OverlaySource;
@@ -58,10 +58,10 @@ public class MapActivity extends AbsKeepScreenOnActivity {
     private void setMapCenterFromUri(MapViewInterface map, Uri uri) {
 
         try {
-            LatLong c = Coordinates.stringToGeoPoint(uri.toString());
+            LatLong c = new WGS84Coordinates(uri.toString()).toLatLong();
             map.setCenter(c);
 
-        } catch (NumberFormatException e) {
+        } catch (Exception e) {
             AppLog.w(this, e);
         }
     }

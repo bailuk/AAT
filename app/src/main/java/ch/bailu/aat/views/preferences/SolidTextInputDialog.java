@@ -20,8 +20,8 @@ public class SolidTextInputDialog extends AbsSolidDialog {
     public static final int TEXT = InputType.TYPE_CLASS_TEXT;
 
 
-    public SolidTextInputDialog(final AbsSolidType s, int inputType) {
-
+    public SolidTextInputDialog(final AbsSolidType s, int inputType,
+                                final View.OnClickListener onClick) {
         final Context context = s.getContext();
         final AlertDialog.Builder builder = createDefaultDialog(s);
 
@@ -44,7 +44,9 @@ public class SolidTextInputDialog extends AbsSolidDialog {
             public void onClick(View view) {
                 try {
                     s.setValueFromString(input.getText().toString());
+                    onClick.onClick(view);
                     dialog.dismiss();
+
                 } catch (ValidationException e) {
                     input.setError(e.getMessage());
                 }
@@ -52,6 +54,18 @@ public class SolidTextInputDialog extends AbsSolidDialog {
         });
 
         dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setOnClickListener( view -> dialog.dismiss());
+
+    }
+
+
+
+    public SolidTextInputDialog(final AbsSolidType s, int inputType) {
+        this(s, inputType, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
     }
 }
 

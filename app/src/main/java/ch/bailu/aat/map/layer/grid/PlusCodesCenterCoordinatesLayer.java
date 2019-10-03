@@ -3,21 +3,22 @@ package ch.bailu.aat.map.layer.grid;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.google.openlocationcode.OpenLocationCode;
+
 import org.mapsforge.core.model.LatLong;
 
-import ch.bailu.aat.coordinates.WGS84Coordinates;
 import ch.bailu.aat.description.FF;
 import ch.bailu.aat.map.MapContext;
 import ch.bailu.aat.map.layer.MapLayerInterface;
 
-public class WGS84Layer implements MapLayerInterface {
+public class PlusCodesCenterCoordinatesLayer  implements MapLayerInterface {
 
     private final ElevationLayer elevation;
     private final Crosshair crosshair;
 
     private final FF f = FF.f();
 
-    public WGS84Layer (Context c) {
+    public PlusCodesCenterCoordinatesLayer (Context c) {
         elevation = new ElevationLayer(c);
         crosshair = new Crosshair();
     }
@@ -44,8 +45,12 @@ public class WGS84Layer implements MapLayerInterface {
 
 
     private void drawCoordinates(MapContext clayer,LatLong point) {
-        clayer.draw().textBottom(new WGS84Coordinates(point).toString(),1);
-        clayer.draw().textBottom(f.N6.format(point.latitude) + "/" + f.N6.format(point.getLongitude()),0);
+        final OpenLocationCode center =
+                new OpenLocationCode(point.latitude, point.longitude);
+
+        final String code = center.getCode();
+        clayer.draw().textBottom(code,1);
+
     }
 
 

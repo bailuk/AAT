@@ -10,10 +10,12 @@ import android.view.MenuItem;
 import org.mapsforge.core.model.LatLong;
 
 import ch.bailu.aat.R;
-import ch.bailu.aat.coordinates.Coordinates;
+import ch.bailu.aat.coordinates.OlcCoordinates;
+import ch.bailu.aat.coordinates.WGS84Coordinates;
 import ch.bailu.aat.map.MapViewInterface;
+import ch.bailu.aat.preferences.location.SolidGoToLocation;
+import ch.bailu.aat.preferences.map.SolidMapGrid;
 import ch.bailu.aat.util.Clipboard;
-import ch.bailu.aat.util.ui.AppLog;
 
 public class LocationMenu extends AbsMenu{
 
@@ -21,7 +23,7 @@ public class LocationMenu extends AbsMenu{
     private final Context context;
     private final Clipboard clipboard;
 
-    private MenuItem send, view, copy, paste;
+    private MenuItem send, view, copy, paste, goTo;
     
     
     public LocationMenu(MapViewInterface m) {
@@ -37,6 +39,7 @@ public class LocationMenu extends AbsMenu{
         view = menu.add(R.string.location_view);
         copy = menu.add(R.string.clipboard_copy);
         paste = menu.add(R.string.clipboard_paste);
+        goTo = menu.add(new SolidGoToLocation(context).getLabel());
         
     }
 
@@ -70,33 +73,35 @@ public class LocationMenu extends AbsMenu{
 
         } else if (item == paste) {
             paste();
+
+        } else if (item == goTo) {
+            new SolidGoToLocation(context).goToLocationFromUser(map);
         }
         return false;
     }
 
-    
+
 
     private void paste() {
         final String s = clipboard.getText().toString();
 
-        try {
-            LatLong p = Coordinates.stringToGeoPoint(s);
-            map.setCenter(p);
-        } catch (NumberFormatException e) {
-            AppLog.w(this, e);
-        }
-
+        new SolidGoToLocation(context).goToLocation(map, s);
     }
 
+
+
     private void copy() {
-        clipboard.setText("GEO location", Coordinates.geoPointToGeoUri(getCenter()));
+        SolidMapGrid sgrid = new SolidMapGrid(context,
+                map.getMContext().getSolidKey());
+
+        clipboard.setText(sgrid.getClipboardLabel(), sgrid.getCode(getCenter()));
     }
 
 
     private void view() {
         final Intent intent = new Intent(Intent.ACTION_VIEW);
         final LatLong center = getCenter();
-        final Uri uri = Uri.parse(Coordinates.geoPointToGeoUri(center));
+        final Uri uri = Uri.parse(WGS84Coordinates.getGeoUri(center));
 
         intent.setData(uri);
         context.startActivity(Intent.createChooser(intent, uri.toString()));
@@ -108,9 +113,9 @@ public class LocationMenu extends AbsMenu{
         final LatLong center = getCenter();
 
 
-        final String url = Coordinates.geoPointToGeoUri(center);
-        final String desc = Coordinates.geoPointToDescription(center);
-        final String body = desc+ "\n\n" + url;   
+        final String url = WGS84Coordinates.getGeoUri(center);
+        final String desc = WGS84Coordinates.getGeoPointDescription(center);
+        final String body = desc+ "\n\n" + url + "\n\n" + new OlcCoordinates(center).toString();
 
 
         intent.setType("label/plain");

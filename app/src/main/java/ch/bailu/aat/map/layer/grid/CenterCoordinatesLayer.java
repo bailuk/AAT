@@ -6,7 +6,7 @@ import android.content.SharedPreferences;
 import org.mapsforge.core.model.LatLong;
 import org.mapsforge.core.model.Point;
 
-import ch.bailu.aat.coordinates.MeterCoordinates;
+import ch.bailu.aat.coordinates.Coordinates;
 import ch.bailu.aat.map.MapContext;
 import ch.bailu.aat.map.layer.MapLayerInterface;
 
@@ -45,7 +45,7 @@ public abstract class CenterCoordinatesLayer implements MapLayerInterface {
     }
 
 
-    public abstract MeterCoordinates getCoordinates(LatLong p);
+    public abstract Coordinates getCoordinates(LatLong p);
 
 
     @Override

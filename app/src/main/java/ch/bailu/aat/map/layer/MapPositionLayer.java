@@ -11,8 +11,8 @@ import ch.bailu.aat.dispatcher.OnContentUpdatedInterface;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.map.MapContext;
-import ch.bailu.aat.preferences.map.SolidPositionLock;
 import ch.bailu.aat.preferences.Storage;
+import ch.bailu.aat.preferences.map.SolidPositionLock;
 
 public class MapPositionLayer implements MapLayerInterface, OnContentUpdatedInterface {
 
@@ -23,6 +23,7 @@ public class MapPositionLayer implements MapLayerInterface, OnContentUpdatedInte
     private static final String ZOOM_SUFFIX ="zoom";
 
     private final SolidPositionLock slock;
+
     private LatLong gpsLocation = new LatLong(0,0);
 
     private final Storage storage;
@@ -89,6 +90,7 @@ public class MapPositionLayer implements MapLayerInterface, OnContentUpdatedInte
             setMapCenter();
         }
     }
+
 
 
     @Override
