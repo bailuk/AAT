@@ -83,7 +83,6 @@ public class BleSensorSDK18 extends BluetoothGattCallback implements SensorInter
                 connectingTimeout.kick();
                 item.setState(SensorItemState.CONNECTING);
                 item.setState(SensorItemState.SCANNING);
-
             }
         }
     }
@@ -91,15 +90,11 @@ public class BleSensorSDK18 extends BluetoothGattCallback implements SensorInter
 
     private BluetoothGatt connect() {
         if (item.lock(this)) {
-
             if (Build.VERSION.SDK_INT >= 23) {
-                return device.connectGatt(context, true, this,
-                        BluetoothDevice.TRANSPORT_LE);
+                return device.connectGatt(context, true, this, BluetoothDevice.TRANSPORT_LE);
             } else {
                 return device.connectGatt(context, true, this);
-
             }
-
         }
         return null;
     }
@@ -164,9 +159,8 @@ public class BleSensorSDK18 extends BluetoothGattCallback implements SensorInter
 
     @Override
     public synchronized void onServicesDiscovered(BluetoothGatt gatt, int status) {
-        discover(gatt);
 
-        if (hasValidService()) {
+        if (discover(gatt)) {
             executeNextAndSetState(gatt);
 
         } else {
@@ -176,11 +170,23 @@ public class BleSensorSDK18 extends BluetoothGattCallback implements SensorInter
     }
 
 
-    private boolean hasValidService() {
-        for (ServiceInterface s : services) {
-            if (s.isValid()) return true;
+    private boolean discover(BluetoothGatt gatt) {
+        boolean discovered = false;
+
+        List<BluetoothGattService> lists = gatt.getServices();
+
+        for (BluetoothGattService service: lists) {
+
+            List<BluetoothGattCharacteristic> listc = service.getCharacteristics();
+
+            for (ServiceInterface s : services) {                  // scan each sensor to find valid caracteristics
+                for (BluetoothGattCharacteristic c : listc) {      // characteristics belong to service
+                    if ( s.discovered(c, execute) )
+                        discovered =  true;                        // found at least one valid new characteristics
+                }
+            }
         }
-        return false;
+        return discovered;
     }
 
 
@@ -189,6 +195,7 @@ public class BleSensorSDK18 extends BluetoothGattCallback implements SensorInter
         executeNextAndSetState(gatt);
     }
 
+
     @Override
     public synchronized void onCharacteristicChanged(BluetoothGatt gatt,
                                                      BluetoothGattCharacteristic c) {
@@ -196,26 +203,6 @@ public class BleSensorSDK18 extends BluetoothGattCallback implements SensorInter
         for (ServiceInterface s : services)
             s.changed(c);
 
-    }
-
-
-
-    private void discover(BluetoothGatt gatt) {
-        List<BluetoothGattService> list = gatt.getServices();
-
-        for (BluetoothGattService service: list) {
-            discover(service);
-        }
-    }
-
-
-    private void discover(BluetoothGattService service) {
-        List<BluetoothGattCharacteristic> list = service.getCharacteristics();
-
-        for (BluetoothGattCharacteristic c : list) {
-            for (ServiceInterface s : services)
-                s.discovered(c, execute);
-        }
     }
 
 
@@ -258,8 +245,6 @@ public class BleSensorSDK18 extends BluetoothGattCallback implements SensorInter
 
         return name + " Sensor";
     }
-
-
 
 
 

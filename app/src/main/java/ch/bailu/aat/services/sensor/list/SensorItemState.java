@@ -12,6 +12,10 @@ public class SensorItemState {
     public final static int UNSUPPORTED = 6;
 
 
+    // in future decouple
+    // configuration, discovery: unscanned, supported, enabled, unsupported
+    // from real time status : scanning, connecting, connected, disconnected trying to reconnect?
+
     private static final String[] STATE_DESCRIPTION = {
             ToDo.translate("Unscanned"),
             ToDo.translate("Scanning..."),
@@ -83,11 +87,15 @@ public class SensorItemState {
     }
 
     public boolean isOpen() {
-        return state == CONNECTING || state == CONNECTING || state == SCANNING;
+        return state == CONNECTING || state == SCANNING;
     }
 
     public boolean isUnscanned() {
         return state == UNSCANNED;
+    }
+
+    public boolean isUnscanned_or_scanning() {
+        return state == UNSCANNED || state == SCANNING;
     }
 
     public boolean isScanning() {

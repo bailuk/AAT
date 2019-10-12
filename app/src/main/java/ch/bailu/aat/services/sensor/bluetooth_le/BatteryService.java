@@ -18,10 +18,13 @@ public class BatteryService {
     }
 
 
-    public void discovered(BluetoothGattCharacteristic c, Executer execute) {
+    public boolean discovered(BluetoothGattCharacteristic c, Executer execute) {
+        boolean disc = false;
         if (BATTERY_SERVICE.equals(c.getService().getUuid()) && BATTERY_LEVEL.equals(c.getUuid())) {
+            disc = true;
             execute.read(c);
         }
+        return disc;
     }
 
     public void read(BluetoothGattCharacteristic c) {

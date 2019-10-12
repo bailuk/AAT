@@ -11,7 +11,7 @@ public interface ServiceInterface {
 
     boolean isValid();
 
-    void discovered(BluetoothGattCharacteristic c, Executer execute);
+    boolean discovered(BluetoothGattCharacteristic c, Executer execute);
 
     void read(BluetoothGattCharacteristic c);
 

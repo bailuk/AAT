@@ -5,7 +5,8 @@ import android.bluetooth.BluetoothGattCharacteristic;
 import android.bluetooth.BluetoothGattDescriptor;
 import android.support.annotation.RequiresApi;
 
-import java.util.Stack;
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.UUID;
 
 @RequiresApi(api = 18)
@@ -13,36 +14,40 @@ public class Executer {
     private final static UUID ENABLE_NOTIFICATION = UUID.fromString("00002902-0000-1000-8000-00805f9b34fb");
 
 
-    private final Stack<BluetoothGattCharacteristic> toRead = new Stack<>();
-    private final Stack<BluetoothGattCharacteristic> toNotify = new Stack<>();
+    private Queue<BluetoothGattCharacteristic> toReadQ = new LinkedList<BluetoothGattCharacteristic>();
+    private Queue<BluetoothGattCharacteristic> toNotifyQ = new LinkedList<BluetoothGattCharacteristic>();
 
     private boolean discoverd = false;
 
 
-    public void notify(BluetoothGattCharacteristic c) {
-        toNotify.push(c);
+    public synchronized void notify(BluetoothGattCharacteristic c) {
+        toNotifyQ.add(c);
     }
-    public void read(BluetoothGattCharacteristic c) {
-        toRead.push(c);
+    public synchronized void read(BluetoothGattCharacteristic c) {
+        toReadQ.add(c);
     }
 
     public boolean needToDiscover() { return !discoverd; }
-    public boolean haveToRead() {
-        return toRead.size() > 0;
+
+    public synchronized boolean haveToRead() {
+        return toReadQ.size() > 0;
     }
-    public boolean haveToNotify() { return toNotify.size() > 0;}
+
+    public boolean haveToNotify() {
+        return toNotifyQ.size() > 0;
+    }
 
 
 
-    public void next(BluetoothGatt gatt) {
+    public synchronized void next(BluetoothGatt gatt) {
         if (needToDiscover()) {
             discoverd = gatt.discoverServices();
 
         } else if (haveToRead()) {
-            gatt.readCharacteristic(toRead.pop());
+            gatt.readCharacteristic(toReadQ.poll());
 
         } else if (haveToNotify()) {
-            enableNotification(gatt, toNotify.pop());
+            enableNotification(gatt, toNotifyQ.poll());
 
         }
     }
