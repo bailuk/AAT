@@ -165,6 +165,19 @@
             android:authorities="${applicationId}.gpx"
             android:exported="true">
         </provider>
+
+        <provider
+            android:enabled="@bool/atLeastKitKat"
+            android:name="ch.bailu.aat.providers.GpxDocumentProvider"
+            android:authorities="${applicationId}.gpxdocs"
+            android:grantUriPermissions="true"
+            android:exported="true"
+            android:permission="android.permission.MANAGE_DOCUMENTS">
+            <intent-filter>
+                <action android:name="android.content.action.DOCUMENTS_PROVIDER" />
+            </intent-filter>
+        </provider>
+
     </application>
 
 </manifest>
