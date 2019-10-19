@@ -140,7 +140,6 @@ public class BleSensorsSDK18 extends Sensors {
 
 
     private void startScanner() {
-        AppLog.i(context, ToDo.translate("Scann for sensors..."));
         scannerBonded.start();
         timer.kick();
         scannerBle.start();
