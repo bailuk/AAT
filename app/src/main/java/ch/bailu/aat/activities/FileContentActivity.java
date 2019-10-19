@@ -5,13 +5,17 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 
+import ch.bailu.aat.description.AscendDescription;
 import ch.bailu.aat.description.AverageSpeedDescription;
 import ch.bailu.aat.description.AverageSpeedDescriptionAP;
 import ch.bailu.aat.description.CaloriesDescription;
 import ch.bailu.aat.description.ContentDescription;
+import ch.bailu.aat.description.ContentDescriptions;
 import ch.bailu.aat.description.DateDescription;
+import ch.bailu.aat.description.DescendDescription;
 import ch.bailu.aat.description.DistanceDescription;
 import ch.bailu.aat.description.EndDateDescription;
+import ch.bailu.aat.description.IndexedAttributeDescription;
 import ch.bailu.aat.description.MaximumSpeedDescription;
 import ch.bailu.aat.description.NameDescription;
 import ch.bailu.aat.description.PaceDescription;
@@ -73,27 +77,40 @@ public class FileContentActivity extends AbsFileContentActivity{
                 new PathDescription(c),
                 new DateDescription(c),
                 new EndDateDescription(c),
-                new TimeDescription(c),
-                new TimeApDescription(c),
-                new PauseDescription(c),
-                new PauseApDescription(c),
+
+                new ContentDescriptions(
+                        new TimeDescription(c),
+                        new TimeApDescription(c)),
+
+                new ContentDescriptions(
+                        new PauseDescription(c),
+                        new PauseApDescription(c)),
+
                 new DistanceDescription(c),
-                new AverageSpeedDescription(c),
-                new AverageSpeedDescriptionAP(c),
-                new MaximumSpeedDescription(c),
+
+                new ContentDescriptions(
+                        new AverageSpeedDescription(c),
+                        new AverageSpeedDescriptionAP(c),
+                        new MaximumSpeedDescription(c)),
+
+
                 new CaloriesDescription(c),
+
                 new PaceDescription(c),
 
-                /*
-                new AscendDescription(c),
-                new DescendDescription(c),
 
+                new ContentDescriptions(
+                    new AscendDescription(c),
+                    new DescendDescription(c)),
 
-                new IndexedAttributeDescription.HeartRate(c),
-                new IndexedAttributeDescription.HeartBeats(c),
-                new IndexedAttributeDescription.Cadence(c),
-                new IndexedAttributeDescription.TotalCadence(c),
-                */
+                new ContentDescriptions(
+                    new IndexedAttributeDescription.HeartRate(c),
+                    new IndexedAttributeDescription.HeartBeats(c)),
+
+                new ContentDescriptions(
+                    new IndexedAttributeDescription.Cadence(c),
+                    new IndexedAttributeDescription.TotalCadence(c)),
+
                 new TrackSizeDescription(c)
         };
     }
