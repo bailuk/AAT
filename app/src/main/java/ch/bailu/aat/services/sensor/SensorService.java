@@ -33,7 +33,7 @@ public class SensorService extends VirtualService {
 
         AppBroadcaster.register(getContext(), onSensorDisconected, AppBroadcaster.SENSOR_DISCONECTED + InfoID.SENSORS);
 
-        AppBroadcaster.register(getContext(), onSensorReconnect, AppBroadcaster.SENSOR_RECONECT + InfoID.SENSORS);
+        AppBroadcaster.register(getContext(), onSensorReconnect, AppBroadcaster.SENSOR_RECONNECT + InfoID.SENSORS);
 
         updateConnections();
     }

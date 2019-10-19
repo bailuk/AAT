@@ -23,7 +23,7 @@ public class AppBroadcaster {
 
     public static final String SENSOR_CHANGED = NAME_SPACE + "SENSOR_CHANGED";
     public static final String SENSOR_DISCONECTED = NAME_SPACE + "SENSOR_DISCONECTED";
-    public static final String SENSOR_RECONECT = NAME_SPACE + "SENSOR_RECONECT";
+    public static final String SENSOR_RECONNECT = NAME_SPACE + "SENSOR_RECONNECT";
 
     /** 
      *   Information about state changes of files (in cache and on disk)
