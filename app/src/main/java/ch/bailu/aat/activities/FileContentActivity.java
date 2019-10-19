@@ -14,6 +14,7 @@ import ch.bailu.aat.description.DistanceDescription;
 import ch.bailu.aat.description.EndDateDescription;
 import ch.bailu.aat.description.MaximumSpeedDescription;
 import ch.bailu.aat.description.NameDescription;
+import ch.bailu.aat.description.PaceDescription;
 import ch.bailu.aat.description.PathDescription;
 import ch.bailu.aat.description.PauseApDescription;
 import ch.bailu.aat.description.PauseDescription;
@@ -81,6 +82,7 @@ public class FileContentActivity extends AbsFileContentActivity{
                 new AverageSpeedDescriptionAP(c),
                 new MaximumSpeedDescription(c),
                 new CaloriesDescription(c),
+                new PaceDescription(c),
 
                 /*
                 new AscendDescription(c),

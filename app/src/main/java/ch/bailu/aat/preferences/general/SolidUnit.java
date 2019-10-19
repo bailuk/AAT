@@ -19,6 +19,7 @@ public class SolidUnit extends SolidStaticIndexList {
     static private final String[] DIST_UNIT = {"km", "miles", "m", "m"};
     static private final String[] SPEED_UNIT = {"km/h", "mph", "m/s", "m/s"};
     static public final String[] ALT_UNIT = {"m", "f", "m", "m"};
+    static public final String[] PACE_UNIT = {"T/km", "T/miles", "T/m", "s/m"};
     
     public SolidUnit(Context c) {
         super(c, KEY,
@@ -39,4 +40,12 @@ public class SolidUnit extends SolidStaticIndexList {
         return getContext().getString(R.string.p_unit_title); 
     }
 
+
+    public String getPaceUnit() {
+        return PACE_UNIT[getIndex()];
+    }
+
+    public float getPaceFactor() {
+        return 1f / getDistanceFactor();
+    }
 }
