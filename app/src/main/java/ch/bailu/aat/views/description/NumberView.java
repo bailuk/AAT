@@ -5,14 +5,20 @@ import android.graphics.Typeface;
 import android.os.Build;
 import android.text.Layout;
 import android.util.TypedValue;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import ch.bailu.aat.description.ContentDescription;
 import ch.bailu.aat.dispatcher.OnContentUpdatedInterface;
 import ch.bailu.aat.gpx.GpxInformation;
+import ch.bailu.aat.gpx.InfoID;
+import ch.bailu.aat.util.AppBroadcaster;
+import ch.bailu.aat.util.ui.AppLog;
 import ch.bailu.aat.util.ui.AppTheme;
+import ch.bailu.aat.util.ui.ToolTip;
 import ch.bailu.aat.util.ui.UiTheme;
+import ch.bailu.aat.views.preferences.ConnectToSensorsView;
 
 public class NumberView extends ViewGroup implements OnContentUpdatedInterface {
 
@@ -142,5 +148,20 @@ public class NumberView extends ViewGroup implements OnContentUpdatedInterface {
 
         AppTheme.bar.button(this);
         setPadding(0,0,0,0);
+    }
+
+
+
+    public View requestOnClickSensorReconect() {
+        ToolTip.set(this, ConnectToSensorsView.LABEL);
+
+        setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AppLog.i(v.getContext(), ConnectToSensorsView.LABEL);
+                AppBroadcaster.broadcast(v.getContext(), AppBroadcaster.SENSOR_RECONNECT + InfoID.SENSORS);
+            }
+        });
+        return this;
     }
 }
