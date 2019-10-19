@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import ch.bailu.aat.description.AscendDescription;
+import ch.bailu.aat.description.AveragePaceDescription;
 import ch.bailu.aat.description.AverageSpeedDescriptionAP;
 import ch.bailu.aat.description.CadenceDescription;
 import ch.bailu.aat.description.CurrentSpeedDescription;
@@ -66,7 +67,7 @@ public class CockpitSplitActivity extends AbsKeepScreenOnActivity {
         cockpitA.addC(this, new AverageSpeedDescriptionAP(this), InfoID.TRACKER);
         cockpitA.add(this, new PredictiveTimeDescription(this), InfoID.TRACKER_TIMER);
 
-        cockpitB.addC(this, new PaceDescription(this), InfoID.TRACKER);
+        cockpitB.addC(this, new AveragePaceDescription(this), InfoID.TRACKER);
         cockpitB.add(this, new CadenceDescription(this), InfoID.CADENCE_SENSOR);
         cockpitB.add(this, new HeartRateDescription(this), InfoID.HEART_RATE_SENSOR);
         cockpitB.addC(this, new MaximumSpeedDescription(this), InfoID.TRACKER);

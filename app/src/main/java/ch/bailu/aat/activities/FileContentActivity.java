@@ -6,6 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import ch.bailu.aat.description.AscendDescription;
+import ch.bailu.aat.description.AveragePaceDescription;
+import ch.bailu.aat.description.AveragePaceDescriptionAP;
 import ch.bailu.aat.description.AverageSpeedDescription;
 import ch.bailu.aat.description.AverageSpeedDescriptionAP;
 import ch.bailu.aat.description.CaloriesDescription;
@@ -18,7 +20,6 @@ import ch.bailu.aat.description.EndDateDescription;
 import ch.bailu.aat.description.IndexedAttributeDescription;
 import ch.bailu.aat.description.MaximumSpeedDescription;
 import ch.bailu.aat.description.NameDescription;
-import ch.bailu.aat.description.PaceDescription;
 import ch.bailu.aat.description.PathDescription;
 import ch.bailu.aat.description.PauseApDescription;
 import ch.bailu.aat.description.PauseDescription;
@@ -96,7 +97,9 @@ public class FileContentActivity extends AbsFileContentActivity{
 
                 new CaloriesDescription(c),
 
-                new PaceDescription(c),
+                new ContentDescriptions(
+                    new AveragePaceDescription(c),
+                    new AveragePaceDescriptionAP(c)),
 
 
                 new ContentDescriptions(

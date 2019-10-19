@@ -6,7 +6,7 @@ import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.preferences.general.SolidUnit;
 import ch.bailu.aat.util.ToDo;
 
-public class PaceDescription extends FloatDescription {
+public abstract class PaceDescription extends FloatDescription {
     private final SolidUnit sunit;
 
     private final FF f = FF.f();
@@ -39,18 +39,7 @@ public class PaceDescription extends FloatDescription {
         sunit = new SolidUnit(c);
     }
 
-
-    @Override
-    public String getLabel() {
-        return ToDo.translate("Pace");
-    }
-
-    @Override
-    public void onContentUpdated(int iid, GpxInformation info) {
-        setCache(toPace(info.getSpeed()));
-    }
-
-    private float toPace(float speed) {
+    public float speedToPace(float speed) {
         float pace = 0f;
 
         if (speed != 0f)
