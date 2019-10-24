@@ -267,8 +267,8 @@
     <string name="average">Gemiddeld</string>
     <string name="average_ap">Gemiddeld (zonder pauzes)</string>
     <string name="maximum">Maximum</string>
-    <string name="distance">AfstandDistance</string>
-    <string name="altitude">Altitude</string>
+    <string name="distance">Afstand</string>
+    <string name="altitude">Hoogte</string>
 
     <string name="time">Totale tijd</string>
     <string name="time_ap">Totale tijd (zonder pauzes)</string>
