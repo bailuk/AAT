@@ -2,9 +2,7 @@ package ch.bailu.aat.description;
 
 import android.content.Context;
 
-import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.preferences.general.SolidUnit;
-import ch.bailu.aat.util.ToDo;
 
 public abstract class PaceDescription extends FloatDescription {
     private final SolidUnit sunit;
@@ -62,7 +60,7 @@ public abstract class PaceDescription extends FloatDescription {
         int seconds, hours, minutes;
 
         // 1. calculate milliseconds to unit
-        seconds = (int) Math.round(pace);
+        seconds = Math.round(pace);
         minutes = seconds / 60;
         hours = minutes / 60;
 

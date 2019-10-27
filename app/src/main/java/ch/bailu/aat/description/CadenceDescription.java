@@ -14,7 +14,6 @@ public class CadenceDescription  extends ContentDescription {
 
 
     private String value = VALUE_DISABLED;
-    private final String unit = UNIT;
     private String label = LABEL;
 
 
@@ -34,7 +33,7 @@ public class CadenceDescription  extends ContentDescription {
 
     @Override
     public String getUnit() {
-        return unit;
+        return UNIT;
     }
 
 

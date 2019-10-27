@@ -235,28 +235,27 @@ public class BleSensorSDK18 extends BluetoothGattCallback implements SensorInter
 
     @Override
     public String getName() {
-        String name = device.getName();
+        final StringBuilder builder = new StringBuilder(20);
 
-        if (name == null) name = "";
+        if (device.getName() != null)
+            builder.append(device.getName());
 
         for (ServiceInterface s : services) {
-            if (s.isValid()) name += " " + s.toString();
+            if (s.isValid()) builder.append(" ").append(s.toString());
         }
 
-        return name + " Sensor";
+        builder.append(" Sensor");
+        return builder.toString();
     }
 
 
-
     public synchronized GpxInformation getInformation(int iid) {
-        GpxInformation i = null;
-
         for (ServiceInterface s : services) {
-            i = s.getInformation(iid);
+            GpxInformation i = s.getInformation(iid);
             if (i != null) return i;
         }
 
-        return i;
+        return null;
     }
 
 

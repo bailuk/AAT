@@ -9,7 +9,6 @@ public class Res {
         return c.getString(r);
     }
 
-    @SuppressWarnings("deprecation")
     public static Drawable d(Context c, int r) {
         Drawable drawable;
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {

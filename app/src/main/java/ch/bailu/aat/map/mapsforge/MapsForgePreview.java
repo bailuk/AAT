@@ -1,6 +1,7 @@
 package ch.bailu.aat.map.mapsforge;
 
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -158,6 +159,7 @@ public class MapsForgePreview extends MapsForgeViewBase {
     }
 
 
+    @SuppressLint("WrongThread")
     public void generateBitmapFile() {
         SyncTileBitmap bitmap = generateBitmap();
 

@@ -120,10 +120,6 @@ public class HeartRateService extends HeartRateServiceID implements ServiceInter
 
     private class Attributes extends HeartRateAttributes {
 
-        private final boolean haveSensorContactStatus;
-        private final boolean haveEnergyExpended;
-        private final boolean haveRrIntervall;
-
 
         public Attributes(BluetoothGattCharacteristic c, byte[] v) {
             super(HeartRateService.this.location);
@@ -132,11 +128,11 @@ public class HeartRateService extends HeartRateServiceID implements ServiceInter
 
             boolean bpmUint16 = ID.isBitSet(flags, 0);
 
-            haveSensorContactStatus = ID.isBitSet(flags, 1);
+            boolean haveSensorContactStatus = ID.isBitSet(flags, 1);
             haveSensorContact = ID.isBitSet(flags, 2);
 
-            haveEnergyExpended = ID.isBitSet(flags, 3);
-            haveRrIntervall = ID.isBitSet(flags, 4);
+            boolean haveEnergyExpended = ID.isBitSet(flags, 3);
+            boolean haveRrIntervall = ID.isBitSet(flags, 4);
 
             offset += 1;
 

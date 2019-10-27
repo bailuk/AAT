@@ -57,7 +57,6 @@ public class StatusIcon  {
     }
 
 
-    @SuppressWarnings("deprecation")
     @TargetApi(11)
     private Notification createNotificationSDK11(PendingIntent intent, int status_id) {
         String appName = scontext.getContext().getString(R.string.app_name);

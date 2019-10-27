@@ -96,7 +96,7 @@ public class StepCounterSensor extends InternalSensorSDK23 {
         //AppLog.d(this , "s: " + steps + " t: " + timeDelta);
 
         if (timeDelta > 0 && steps > 0) {
-            return (int) Math.round((steps * 1000 * 60)  / (float)timeDelta);
+            return Math.round((steps * 1000 * 60)  / (float)timeDelta);
         }
         return 0;
     }

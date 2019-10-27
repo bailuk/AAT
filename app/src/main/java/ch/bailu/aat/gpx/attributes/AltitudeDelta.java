@@ -79,14 +79,16 @@ public abstract class AltitudeDelta extends GpxSubAttributes {
         private float ascend, descend;
 
         private final AverageAltitude average = new AverageAltitude();
-        private float average_a, average_b, distance, delta;
+        private float average_b;
+        private float distance;
+        private float delta;
 
         private int samples;
 
         public void add(float alt, float dist) {
 
             if (average.add(alt, dist)) {
-                average_a = average_b;
+                float average_a = average_b;
                 average_b = average.getAltitude();
                 distance = average.getDistance();
 

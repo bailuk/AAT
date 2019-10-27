@@ -13,17 +13,17 @@ public class ContentDescriptions extends ContentDescription {
 
     @Override
     public String getValue() {
-        String v="";
+        StringBuilder v= new StringBuilder();
         String u="";
         String s="";
         for (ContentDescription d: descriptions) {
 
-            v = v+ s + d.getValue();
+            v.append(s).append(d.getValue());
             u = d.getUnit();
-            if (u.length() > 0) v+= " " + u;
+            if (u.length() > 0) v.append(" ").append(u);
             s= ", ";
         }
-        return v;
+        return v.toString();
     }
 
     @Override

@@ -109,11 +109,11 @@ public class SensorList extends ArrayList<SensorListItem> implements Closeable {
 
     public class Information extends GpxInformation {
         private int state = StateID.OFF;
-        private int sensorCount = 0;
 
         private final Attributes attributes;
 
         public Information() {
+            int sensorCount = 0;
             for (SensorListItem i : SensorList.this) {
                 if (i.isConnected()) {
                     sensorCount++;

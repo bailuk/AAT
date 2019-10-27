@@ -2,13 +2,10 @@ package ch.bailu.aat.preferences.map;
 
 import android.content.Context;
 
-import com.google.openlocationcode.OpenLocationCode;
-
 import org.mapsforge.core.model.LatLong;
 
 import ch.bailu.aat.R;
 import ch.bailu.aat.coordinates.CH1903Coordinates;
-import ch.bailu.aat.coordinates.Coordinates;
 import ch.bailu.aat.coordinates.OlcCoordinates;
 import ch.bailu.aat.coordinates.WGS84Coordinates;
 import ch.bailu.aat.map.MapContext;

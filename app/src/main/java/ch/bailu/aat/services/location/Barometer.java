@@ -24,7 +24,7 @@ public class Barometer{
             if (manager != null) {
                 final Sensor sensor = manager.getDefaultSensor(Sensor.TYPE_PRESSURE);
 
-                if (sensor instanceof  Sensor) {
+                if (sensor != null) {
                     manager.registerListener(listener, sensor, SensorManager.SENSOR_DELAY_NORMAL);
                 }
             }
@@ -36,7 +36,7 @@ public class Barometer{
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             final SensorManager manager = context.getSystemService(SensorManager.class);
 
-            if (manager instanceof SensorManager) {
+            if (manager != null) {
                 manager.unregisterListener(listener);
             }
         }
@@ -47,10 +47,10 @@ public class Barometer{
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             final SensorManager manager = context.getSystemService(SensorManager.class);
 
-            if (manager instanceof SensorManager) {
+            if (manager != null) {
                 final Sensor sensor = manager.getDefaultSensor(Sensor.TYPE_PRESSURE);
 
-                if (sensor instanceof  Sensor) {
+                if (sensor != null) {
                     return sensor.toString();
                 }
             }

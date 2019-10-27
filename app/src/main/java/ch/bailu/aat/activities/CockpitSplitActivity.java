@@ -12,7 +12,6 @@ import ch.bailu.aat.description.DescendDescription;
 import ch.bailu.aat.description.DistanceDescription;
 import ch.bailu.aat.description.HeartRateDescription;
 import ch.bailu.aat.description.MaximumSpeedDescription;
-import ch.bailu.aat.description.PaceDescription;
 import ch.bailu.aat.description.PredictiveTimeDescription;
 import ch.bailu.aat.description.SlopeDescription;
 import ch.bailu.aat.description.StepRateDescription;

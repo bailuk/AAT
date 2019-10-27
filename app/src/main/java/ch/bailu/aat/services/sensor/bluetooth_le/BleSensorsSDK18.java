@@ -13,7 +13,6 @@ import ch.bailu.aat.services.sensor.list.SensorList;
 import ch.bailu.aat.services.sensor.list.SensorListItem;
 import ch.bailu.aat.util.Timer;
 import ch.bailu.aat.util.ToDo;
-import ch.bailu.aat.util.ui.AppLog;
 
 @RequiresApi(api = 18)
 public class BleSensorsSDK18 extends Sensors {
@@ -21,7 +20,6 @@ public class BleSensorsSDK18 extends Sensors {
     public final static long SCAN_DURATION = 10 * 1000;
     public static final long CONNECTING_DURATION = 60 * 1000;
 
-    private final Context context;
     private final ServiceContext scontext;
 
     private final BluetoothAdapter adapter;
@@ -46,9 +44,8 @@ public class BleSensorsSDK18 extends Sensors {
     public BleSensorsSDK18(ServiceContext sc, SensorList list) {
         sensorList = list;
         scontext = sc;
-        context = sc.getContext();
 
-        adapter = getAdapter(context);
+        adapter = getAdapter(sc.getContext());
         scannerBonded = new BleScannerBonded(this);
         scannerBle = BleScanner.factory(this);
     }
@@ -94,7 +91,7 @@ public class BleSensorsSDK18 extends Sensors {
     private BluetoothAdapter getAdapter(Context context) {
         BluetoothManager bm = (BluetoothManager) context.getSystemService(Context.BLUETOOTH_SERVICE);
 
-        if (bm instanceof  BluetoothManager)
+        if (bm != null)
             return bm.getAdapter();
         return null;
     }
@@ -104,7 +101,7 @@ public class BleSensorsSDK18 extends Sensors {
     }
 
     private boolean isEnabled() {
-        return adapter instanceof  BluetoothAdapter && adapter.isEnabled();
+        return adapter != null && adapter.isEnabled();
     }
 
 

@@ -146,7 +146,6 @@ public class GpxObjectStatic extends GpxObject implements ElevationUpdaterClient
 
     private class ListUpdater extends GpxListWalker {
         private final Dem3Tile tile;
-        private SrtmCoordinates coordinates=new SrtmCoordinates(0,0);
 
         public ListUpdater(Dem3Tile s) {
             tile=s;
@@ -170,8 +169,8 @@ public class GpxObjectStatic extends GpxObject implements ElevationUpdaterClient
         @Override
         public void doPoint(GpxPointNode point) {
             if (point.getAltitude() == ElevationProvider.NULL_ALTITUDE) {
-                coordinates=new SrtmCoordinates(point.getLatitudeE6(), point.getLongitudeE6());
-                if (tile.hashCode()==coordinates.hashCode()) {
+                SrtmCoordinates coordinates = new SrtmCoordinates(point.getLatitudeE6(), point.getLongitudeE6());
+                if (tile.hashCode()== coordinates.hashCode()) {
                     point.setAltitude(tile.getElevation(point.getLatitudeE6(), point.getLongitudeE6()));
                 }
             }

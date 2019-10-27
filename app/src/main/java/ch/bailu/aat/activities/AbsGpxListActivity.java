@@ -152,13 +152,6 @@ public abstract class AbsGpxListActivity extends ActivityContext implements OnIt
         private final String list_label = getString(R.string.label_list);
 
         private final ContentView contentView = new ContentView(acontext);
-        private final MainControlBar bar = new MainControlBar(acontext);
-
-        private final VerticalScrollView summary = new VerticalScrollView(acontext);
-        private final MapViewInterface map =
-                MapFactory.DEF(AbsGpxListActivity.this, solid_key).list(acontext);
-
-
 
 
         public Layouter() {
@@ -168,9 +161,11 @@ public abstract class AbsGpxListActivity extends ActivityContext implements OnIt
 
             busyControl = new BusyViewControlDbSync(contentView);
 
+            MapViewInterface map = MapFactory.DEF(AbsGpxListActivity.this, solid_key).list(acontext);
             fileControlBar = new FileControlBarLayer(map.getMContext(), acontext);
             map.add(fileControlBar);
 
+            VerticalScrollView summary = new VerticalScrollView(acontext);
             summary.add(new TitleView(acontext, getLabel()));
             summary.add(acontext,new PathDescription(acontext), InfoID.LIST_SUMMARY);
             summary.add(new TitleView(acontext, summary_label));
@@ -183,6 +178,7 @@ public abstract class AbsGpxListActivity extends ActivityContext implements OnIt
             summary.addAllFilterViews(map.getMContext());
 
 
+            MainControlBar bar = new MainControlBar(acontext);
             contentView.add(bar);
             contentView.add(createLayout(map, summary, bar));
 

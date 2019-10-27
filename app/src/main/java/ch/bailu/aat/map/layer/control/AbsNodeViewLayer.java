@@ -118,7 +118,7 @@ public abstract class AbsNodeViewLayer extends AbsNodeSelectorLayer implements
 
     private static class Position {
         private int xoffset=0, width, height, right_space;
-        private final int yoffset=0, button_space;
+        private final int button_space;
 
         public Position(Context c) {
             button_space = AppLayout.getBigButtonSize(c);
@@ -145,7 +145,7 @@ public abstract class AbsNodeViewLayer extends AbsNodeSelectorLayer implements
         }
 
         public int y() {
-            return yoffset;
+            return 0;
         }
 
         public int h() {

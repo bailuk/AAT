@@ -4,8 +4,6 @@ import android.support.annotation.NonNull;
 
 import org.mapsforge.core.model.LatLong;
 
-import ch.bailu.aat.util.ui.AppLog;
-
 public abstract class Coordinates {
 
 

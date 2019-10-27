@@ -4,10 +4,8 @@ import android.os.Bundle;
 import android.view.View;
 
 import ch.bailu.aat.description.AverageSpeedDescriptionAP;
-import ch.bailu.aat.description.CadenceDescription;
 import ch.bailu.aat.description.CurrentSpeedDescription;
 import ch.bailu.aat.description.DistanceDescription;
-import ch.bailu.aat.description.HeartRateDescription;
 import ch.bailu.aat.description.MaximumSpeedDescription;
 import ch.bailu.aat.description.PredictiveTimeDescription;
 import ch.bailu.aat.dispatcher.CurrentLocationSource;
