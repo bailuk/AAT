@@ -25,38 +25,25 @@ import ch.bailu.aat.util.ui.AppTheme;
 
 public class DistanceSpeedGraphView extends AbsGraphView implements SharedPreferences.OnSharedPreferenceChangeListener {
 
-//    private final SolidSpeedGraphWindow swindow;
-    //private final ControlBar bar;
 
-
-    public DistanceSpeedGraphView(Context context, String key, DispatcherInterface di, int... iid) {
+    public DistanceSpeedGraphView(Context context, DispatcherInterface di, int... iid) {
         super(context, di, iid);
 
-  //      swindow = new SolidSpeedGraphWindow(context, key);
 
         setLabelText(context);
 
-      /*  bar = new ControlBar(context, LinearLayout.HORIZONTAL,6);
-        bar.addSpace();
-        bar.addSpace();
-        bar.addSolidIndexButton(new SolidSpeedGraphWindow(context, key));
-        bar.setBackgroundColor(Color.TRANSPARENT);
-
-        addView(bar);*/
     }
 
     private void setLabelText(Context context) {
         ylabel.setText(Color.WHITE, R.string.speed, sunit.getSpeedUnit());
         ylabel.setText(AppTheme.COLOR_BLUE, new AverageSpeedDescriptionAP(context).getLabel());
         ylabel.setText(AppTheme.COLOR_GREEN, new AverageSpeedDescription(context).getLabel());
-        //ylabel.setText(AppTheme.COLOR_ORANGE, swindow.getValueAsString());
     }
 
 
     @Override
     public void onAttachedToWindow() {
         super.onAttachedToWindow();
-        //swindow.register(this);
     }
 
 

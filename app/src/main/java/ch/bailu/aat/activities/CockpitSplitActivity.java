@@ -7,11 +7,13 @@ import ch.bailu.aat.description.AscendDescription;
 import ch.bailu.aat.description.AveragePaceDescription;
 import ch.bailu.aat.description.AverageSpeedDescriptionAP;
 import ch.bailu.aat.description.CadenceDescription;
+import ch.bailu.aat.description.CurrentPaceDescription;
 import ch.bailu.aat.description.CurrentSpeedDescription;
 import ch.bailu.aat.description.DescendDescription;
 import ch.bailu.aat.description.DistanceDescription;
 import ch.bailu.aat.description.HeartRateDescription;
 import ch.bailu.aat.description.MaximumSpeedDescription;
+import ch.bailu.aat.description.PaceDescription;
 import ch.bailu.aat.description.PredictiveTimeDescription;
 import ch.bailu.aat.description.SlopeDescription;
 import ch.bailu.aat.description.StepRateDescription;
@@ -34,6 +36,8 @@ import ch.bailu.aat.views.bar.MainControlBar;
 import ch.bailu.aat.views.description.CockpitView;
 import ch.bailu.aat.views.description.MultiView;
 import ch.bailu.aat.views.graph.DistanceAltitudeGraphView;
+import ch.bailu.aat.views.graph.DistanceSpeedGraphView;
+import ch.bailu.aat.views.graph.SpmGraphView;
 
 public class CockpitSplitActivity extends AbsKeepScreenOnActivity {
     private static final String SOLID_KEY="split";
@@ -54,32 +58,29 @@ public class CockpitSplitActivity extends AbsKeepScreenOnActivity {
         final MapViewInterface mapSlave = MapFactory.DEF(this, SOLID_KEY).split();
         final CockpitView cockpitA = new CockpitView(this);
         final CockpitView cockpitB = new CockpitView(this);
-  //      final CockpitView cockpitC = new CockpitView(this);
+        final CockpitView cockpitC = new CockpitView(this);
         final CockpitView cockpitD = new CockpitView(this);
 
-        PercentageLayout percentageD = new PercentageLayout(this);
-        percentageD.setRotation(AppLayout.getOrientationAlongLargeSide(this));
+        PercentageLayout percentageB = new PercentageLayout(this);
+        percentageB.setOrientation(AppLayout.getOrientationAlongLargeSide(this));
 
-        cockpitA.add(this, new CurrentSpeedDescription(this),
-                InfoID.LOCATION, InfoID.SPEED_SENSOR);
+        PercentageLayout percentageC = new PercentageLayout(this);
+        percentageC.setOrientation(AppLayout.getOrientationAlongLargeSide(this));
+
+        PercentageLayout percentageD = new PercentageLayout(this);
+        percentageD.setOrientation(AppLayout.getOrientationAlongLargeSide(this));
+
+        cockpitA.add(this, new CurrentSpeedDescription(this), InfoID.SPEED_SENSOR, InfoID.LOCATION);
         cockpitA.addC(this, new DistanceDescription(this), InfoID.TRACKER);
         cockpitA.addC(this, new AverageSpeedDescriptionAP(this), InfoID.TRACKER);
         cockpitA.add(this, new PredictiveTimeDescription(this), InfoID.TRACKER_TIMER);
 
         cockpitB.addC(this, new AveragePaceDescription(this), InfoID.TRACKER);
-        cockpitB.add(this, new CadenceDescription(this), InfoID.CADENCE_SENSOR);
-        cockpitB.add(this, new HeartRateDescription(this), InfoID.HEART_RATE_SENSOR);
+        cockpitB.addC(this, new AverageSpeedDescriptionAP(this), InfoID.TRACKER);
         cockpitB.addC(this, new MaximumSpeedDescription(this), InfoID.TRACKER);
-        cockpitB.add(this, new StepRateDescription(this), InfoID.STEP_COUNTER_SENSOR);
-        cockpitB.add(this, new TotalStepsDescription(this), InfoID.TRACKER);
 
-        /*
-        cockpitC.addC(this, new DistanceDescription(this), InfoID.TRACKER);
-        cockpitC.addAltitude(this);
-        cockpitC.add(this, new AscendDescription(this), InfoID.TRACKER);
-        cockpitC.add(this, new DescendDescription(this), InfoID.TRACKER);
-        cockpitC.add(this, new SlopeDescription(this), InfoID.TRACKER);
-        */
+        percentageB.add(cockpitB, 50);
+        percentageB.add(new DistanceSpeedGraphView(this, this, InfoID.TRACKER), 50);
 
         cockpitD.addAltitude(this);
         cockpitD.add(this, new AscendDescription(this), InfoID.TRACKER);
@@ -89,13 +90,19 @@ public class CockpitSplitActivity extends AbsKeepScreenOnActivity {
         percentageD.add(cockpitD, 50);
         percentageD.add(new DistanceAltitudeGraphView(this, this, InfoID.TRACKER), 50);
 
+        cockpitC.add(this, new CadenceDescription(this), InfoID.CADENCE_SENSOR);
+        cockpitC.add(this, new HeartRateDescription(this), InfoID.HEART_RATE_SENSOR);
+        cockpitC.add(this, new StepRateDescription(this), InfoID.STEP_COUNTER_SENSOR);
+        cockpitC.add(this, new TotalStepsDescription(this), InfoID.TRACKER);
+
+        percentageC.add(cockpitC, 50);
+        percentageC.add(new SpmGraphView(this, this, InfoID.TRACKER), 50);
 
         MultiView mv = new MultiView(this, SOLID_KEY);
         mv.add(cockpitA);
-        mv.add(cockpitB);
+        mv.add(percentageB);
+        mv.add(percentageC);
         mv.add(percentageD);
-        //mv.add(new DistanceAltitudeGraphView(this, this, InfoID.TRACKER));
-        //mv.add(GraphViewFactory.speed(this, SOLID_KEY,this, InfoID.TRACKER));
         mv.add(mapSlave.toView());
 
         MapViewInterface mapMaster =
