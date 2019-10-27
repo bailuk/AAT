@@ -244,7 +244,6 @@ public class BleSensorSDK18 extends BluetoothGattCallback implements SensorInter
             if (s.isValid()) builder.append(" ").append(s.toString());
         }
 
-        builder.append(" Sensor");
         return builder.toString();
     }
 
