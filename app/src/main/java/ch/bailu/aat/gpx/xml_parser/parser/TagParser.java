@@ -63,8 +63,10 @@ public abstract class TagParser {
     }
 
     private boolean ends(XmlPullParser parser) throws XmlPullParserException {
-        return parser.getEventType() == XmlPullParser.END_TAG
-                && (tag == null || Objects.equals(parser.getName(), tag));
+        return parser.getEventType() == XmlPullParser.END_DOCUMENT ||
+
+                (parser.getEventType() == XmlPullParser.END_TAG &&
+                        (tag == null || Objects.equals(parser.getName(), tag)));
     }
 
 
