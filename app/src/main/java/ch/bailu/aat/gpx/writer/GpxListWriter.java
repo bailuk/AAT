@@ -11,8 +11,8 @@ import ch.bailu.util_java.foc.Foc;
 public class GpxListWriter implements  Closeable {
 
 
-    private GpxListIterator iterator;
-    private GpxWriter writer;
+    private final GpxListIterator iterator;
+    private final GpxWriter writer;
 
 
     public GpxListWriter(GpxList track, Foc file) throws IOException, SecurityException  {
