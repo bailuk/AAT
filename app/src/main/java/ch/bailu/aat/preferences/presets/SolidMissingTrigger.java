@@ -7,7 +7,7 @@ import ch.bailu.aat.preferences.SolidStaticIndexList;
 
 public class SolidMissingTrigger extends SolidStaticIndexList {
     private static final String KEY="missing_trigger_";
-    
+
     private static final int[] VALUE_LIST = {
     999,
     10,
@@ -20,7 +20,7 @@ public class SolidMissingTrigger extends SolidStaticIndexList {
     100,
     200,
     };
-    
+
 
     private static String[] label_list = null;
     private static String[] generateLabelList(Context c) {
@@ -40,11 +40,11 @@ public class SolidMissingTrigger extends SolidStaticIndexList {
 
         super(c, KEY+i, generateLabelList(c));
     }
-    
+
     public int getTriggerSeconds() {
         return VALUE_LIST[getIndex()];
     }
-    
+
     public int getTriggerMillis() {
         return getTriggerSeconds() * 1000;
     }

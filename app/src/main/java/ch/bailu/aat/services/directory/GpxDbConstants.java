@@ -19,7 +19,7 @@ public class GpxDbConstants {
     public final static String KEY_WEST_BOUNDING="west";
     public final static String KEY_NORTH_BOUNDING="north";
     public final static String KEY_SOUTH_BOUNDING="south";
-    
+
     public final static String KEY_ID="_id";
 
     public final static String KEY_START_TIME="start_time";
@@ -51,13 +51,13 @@ public class GpxDbConstants {
 
 
     public static final String[] KEY_LIST_OLD = new String[] {
-        KEY_ID, 
+        KEY_ID,
         KEY_PATHNAME_OLD,
-        KEY_FILENAME, 
-        KEY_AVG_SPEED, 
-        KEY_MAX_SPEED, 
-        KEY_DISTANCE, 
-        KEY_START_TIME, 
+        KEY_FILENAME,
+        KEY_AVG_SPEED,
+        KEY_MAX_SPEED,
+        KEY_DISTANCE,
+        KEY_START_TIME,
         KEY_TOTAL_TIME,
         KEY_END_TIME,
         KEY_PAUSE,
@@ -70,17 +70,17 @@ public class GpxDbConstants {
 
 
     public static final String[] TYPE_LIST_OLD = new String[] {
-        TYPE_ID, 
-        TYPE_STRING, 
-        TYPE_STRING, 
-        TYPE_FLOAT, 
+        TYPE_ID,
+        TYPE_STRING,
+        TYPE_STRING,
         TYPE_FLOAT,
         TYPE_FLOAT,
-        TYPE_LONG, 
+        TYPE_FLOAT,
         TYPE_LONG,
         TYPE_LONG,
         TYPE_LONG,
-        TYPE_LONG, 
+        TYPE_LONG,
+        TYPE_LONG,
         TYPE_LONG,
         TYPE_LONG,
         TYPE_LONG,

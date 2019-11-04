@@ -11,7 +11,7 @@ public class SolidBoundingBox implements SolidTypeInterface {
 
 
     private final String label;
-    
+
     public SolidBoundingBox(final Context c, final String key, String l) {
         label = l;
 
@@ -20,7 +20,7 @@ public class SolidBoundingBox implements SolidTypeInterface {
         S = new SolidInteger(c, key + "_S");
         W = new SolidInteger(c, key + "_W");
     }
-    
+
     public BoundingBoxE6 getValue() {
         return new BoundingBoxE6(
                 N.getValue(),
@@ -28,7 +28,7 @@ public class SolidBoundingBox implements SolidTypeInterface {
                 S.getValue(),
                 W.getValue());
     }
-    
+
     public void setValue(BoundingBoxE6 b) {
         N.setValue(b.getLatNorthE6());
         E.setValue(b.getLonEastE6());
@@ -78,47 +78,47 @@ public class SolidBoundingBox implements SolidTypeInterface {
     public void unregister(OnSharedPreferenceChangeListener listener) {
         N.unregister(listener);
     }
-    
+
 
     public String createSelectionStringOverlaps() {
-       
+
         final int n = N.getValue(), e = E.getValue(), s = S.getValue(), w = W.getValue();
-        
+
         return
          "(("
         +          GpxDbConstants.KEY_NORTH_BOUNDING  + " < " + n
         +" AND " + GpxDbConstants.KEY_NORTH_BOUNDING  + " > " + s
-        
+
         +") OR ("
-        
+
         +          GpxDbConstants.KEY_SOUTH_BOUNDING  + " < " + n
         +" AND " + GpxDbConstants.KEY_SOUTH_BOUNDING  + " > " + s
         +"))"
 
-        
+
         + " AND "
 
-        
-        +"((" 
+
+        +"(("
         +" AND " + GpxDbConstants.KEY_EAST_BOUNDING   + " > " + w
         +" AND " + GpxDbConstants.KEY_EAST_BOUNDING   + " < " + e
-        
-        +") OR (" 
-        
+
+        +") OR ("
+
         +" AND " + GpxDbConstants.KEY_WEST_BOUNDING   + " > " + w
         +" AND " + GpxDbConstants.KEY_WEST_BOUNDING   + " < " + e
         +"))";
 
     }
 
-    
+
     public String createSelectionStringInside() {
         final int n = N.getValue(), e = E.getValue(), s = S.getValue(), w = W.getValue();
-        
+
         return    GpxDbConstants.KEY_NORTH_BOUNDING  + " < " + n +
         " AND " + GpxDbConstants.KEY_SOUTH_BOUNDING  + " > " + s +
         " AND " + GpxDbConstants.KEY_EAST_BOUNDING   + " < " + e +
-        " AND " + GpxDbConstants.KEY_WEST_BOUNDING   + " > " + w; 
+        " AND " + GpxDbConstants.KEY_WEST_BOUNDING   + " > " + w;
     }
 
     @Override

@@ -23,10 +23,10 @@ public class GraphPlotter {
 
     private final Canvas canvas;
     private final BitmapDraw bitmapCanvas = new BitmapDraw();
-    
+
     private final int width;
     private final int height;
-    
+
     private Point pointA=new Point(-5,-5), pointB = new Point(-5,-5);
 
     private final NodeBitmap nodeBitmap;
@@ -69,7 +69,7 @@ public class GraphPlotter {
     public void roundYScale(int roundTo) {
         yscaler.round(roundTo);
     }
-    
+
     public void inlcudeInYScale(float value) {
         yscaler.addValue(value);
     }
@@ -88,18 +88,18 @@ public class GraphPlotter {
 
     private void drawHorizontalLine(float value, float factor, boolean drawFirstValue) {
         int pixel = (int)yscaler.scale(value);
-        
+
         drawScaleLine(0, pixel, width, pixel);
-        
+
         if (drawFirstValue || pixel < height-text_size)
             drawScaleText(0,pixel, String.valueOf((int) (value*factor)) );
     }
-    
-    
+
+
     private void drawScaleLine(int x1, int y1, int x2, int y2) {
         canvas.drawLine(x1, y1 , x2, y2,  paintLines);
     }
-        
+
     private void drawScaleText(int x,int y, String value) {
         int w = value.length()*text_size;
         int h = text_size;
@@ -109,22 +109,22 @@ public class GraphPlotter {
 
         canvas.drawText(value, x, y, paintFont);
     }
-        
-        
-    
+
+
+
     public void drawXScale(int lines, float factor) {
         lines = Math.min(width / (text_size*4), lines);
         lines = Math.max(1, lines);
 
         float space=xscaler.getReal()/lines;
         space = Math.max(1, space);
-        
+
         for (float x=0; x <= xscaler.getReal(); x+=space) {
             drawVerticalLine(x, factor);
         }
 
     }
-        
+
     private void drawVerticalLine(float value, float factor) {
         int pixel = (int)xscaler.scale(value);
 
@@ -135,14 +135,14 @@ public class GraphPlotter {
             drawScaleText(pixel-text_size, height, text);
         }
     }
-    
-    
+
+
     public int plotData(float xvalue, float yvalue, int color) {
         int delta;
         scaleToPixel(xvalue, yvalue);
-        
+
         delta = Math.max(pointA.x - pointB.x, 0);
-        
+
         if (delta > 1) {
             if (pointB.x < 0) pointB.y=pointA.y;
             plotLine(pointB,pointA,color);
@@ -150,12 +150,12 @@ public class GraphPlotter {
         }
         return delta;
     }
-    
+
     private void scaleToPixel(float xvalue, float yvalue) {
         pointA.x=(int)xscaler.scale(xvalue);
         pointA.y=(int)yscaler.scale(yvalue);
     }
-    
+
 
     private void plotLine(Point pA, Point pB, int color) {
         paintPlotLines.setColor(color);

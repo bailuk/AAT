@@ -53,7 +53,7 @@ public class GpsOrNetworkLocation extends LocationStackChainedItem {
         network.close();
         gps.close();
     }
-    
+
     @Override
     public void appendStatusText(StringBuilder builder) {
         super.appendStatusText(builder);

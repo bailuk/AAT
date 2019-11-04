@@ -11,14 +11,14 @@ public class FilesInDirectory {
 
     final NavigableMap<String,Foc> files;
 
-    
+
     public FilesInDirectory(Foc directory) throws IOException {
         files = getFileList(directory);
 
     }
-    
 
-    
+
+
     private static NavigableMap<String,Foc> getFileList(Foc directory) {
         final NavigableMap<String, Foc> files = new TreeMap<>();
 
@@ -31,18 +31,18 @@ public class FilesInDirectory {
 
         return files;
     }
-    
-    
+
+
     public Foc findItem(String name) {
         return files.get(name);
     }
-    
-    
+
+
     public Foc pollItem(Foc file) {
         return files.remove(file.getName());
     }
-    
-    
+
+
     public Foc pollItem() {
         Map.Entry<String, Foc> e = files.pollLastEntry();
 

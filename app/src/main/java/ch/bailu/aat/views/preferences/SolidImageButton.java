@@ -10,7 +10,7 @@ import ch.bailu.aat.views.ImageButtonView;
 public class SolidImageButton extends ImageButtonView implements SharedPreferences.OnSharedPreferenceChangeListener {
 
     private final SolidIndexList solid;
-    
+
     public SolidImageButton(SolidIndexList s) {
         super(s.getContext(), s.getIconResource());
 

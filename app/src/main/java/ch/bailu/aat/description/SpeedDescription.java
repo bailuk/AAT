@@ -8,7 +8,7 @@ import ch.bailu.aat.preferences.general.SolidUnit;
 public abstract class SpeedDescription extends FloatDescription{
 
     private final SolidUnit sunit;
-    
+
     public SpeedDescription(Context context) {
         super(context);
         sunit = new SolidUnit(context);
@@ -28,8 +28,8 @@ public abstract class SpeedDescription extends FloatDescription{
         speed = speed * speedFactor;
         return f.N1.format(speed);
     }
-    
-    
+
+
     public String getSpeedDescription(float value) {
         setCache(value);
         return getValue() + getUnit();

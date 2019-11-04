@@ -19,7 +19,7 @@ public class AutoPauseState extends State {
         } catch (IOException e) {
             internal.emergencyOff(e);
         }
-        
+
     }
 
     @Override
@@ -40,27 +40,27 @@ public class AutoPauseState extends State {
             internal.state = new OnState(internal);
         }
     }
-    
 
-    
+
+
     @Override
     public void onStartPauseResume() {
         onPauseResume();
-        
+
     }
 
     @Override
     public void onStartStop() {
         internal.state = new OffState(internal);
-        
+
     }
 
     @Override
     public void onPauseResume() {
         internal.state = new PauseState(internal);
-        
-    }    
-    
+
+    }
+
     @Override
     public int getStatusTextID() {
         return R.string.status_autopaused;

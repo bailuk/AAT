@@ -22,10 +22,10 @@ import ch.bailu.aat.preferences.SolidStaticIndexList;
 public class SolidMapGrid extends SolidStaticIndexList {
 
     private static final String POSTFIX="_GRID";
-    
+
     private static final String[] LABEL={"WGS84", "CH1903", "UTM", "Open Location Code (plus codes)", "None"};
-    
-    
+
+
     public SolidMapGrid(Context context, String k) {
         super(context, k + POSTFIX, LABEL);
     }

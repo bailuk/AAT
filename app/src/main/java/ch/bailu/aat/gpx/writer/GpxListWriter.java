@@ -22,7 +22,6 @@ public class GpxListWriter implements  Closeable {
         writer.writeHeader(System.currentTimeMillis());
     }
 
-    
     @Override
     public void close() throws IOException {
         flushOutput();

@@ -16,8 +16,8 @@ public class DirtyLocation extends LocationStackChainedItem {
     private int state = RealLocation.INITIAL_STATE;
 
     private final Storage storage;
-    
-    
+
+
     public DirtyLocation(LocationStackItem n, Context c) {
         super(n);
         storage = new Storage(c);
@@ -25,18 +25,18 @@ public class DirtyLocation extends LocationStackChainedItem {
         locationInformation = new OldLocation(storage);
     }
 
-    
+
     public GpxInformation getLocationInformation() {
         return locationInformation;
     }
-    
+
     @Override
     public void close() {
         storage.writeInteger(SOLID_KEY + MapPositionLayer.LONGITUDE_SUFFIX, locationInformation.getLongitudeE6());
         storage.writeInteger(SOLID_KEY + MapPositionLayer.LATITUDE_SUFFIX, locationInformation.getLatitudeE6());
     }
 
-    
+
     @Override
     public void passLocation(LocationInformation location) {
         locationInformation=location;
@@ -54,9 +54,9 @@ public class DirtyLocation extends LocationStackChainedItem {
 
     @Override
     public void preferencesChanged(Context c, String key, int presetIndex) {}
-    
 
-    
+
+
     class OldLocation extends GpxInformation  {
         private int longitude, latitude;
 
@@ -66,7 +66,7 @@ public class DirtyLocation extends LocationStackChainedItem {
             file = new FocName(OldLocation.class.getSimpleName());
             readPosition(storage);
         }
-        
+
         @Override
         public Foc getFile() {
             return file;
@@ -77,32 +77,32 @@ public class DirtyLocation extends LocationStackChainedItem {
             longitude=storage.readInteger(SOLID_KEY + MapPositionLayer.LONGITUDE_SUFFIX);
             latitude=storage.readInteger(SOLID_KEY + MapPositionLayer.LATITUDE_SUFFIX);
         }
-        
+
         @Override
         public int getLongitudeE6() {
             return longitude;
         }
-        
+
         @Override
         public int getLatitudeE6() {
             return latitude;
         }
-        
+
         @Override
         public double getLongitude() {
             return ((double)longitude)/1e6d;
         }
-        
+
         @Override
         public double getLatitude() {
             return ((double)latitude)/1e6d;
         }
-        
+
         @Override
         public int getState() {
             return state;
         }
-        
+
     }
 
 

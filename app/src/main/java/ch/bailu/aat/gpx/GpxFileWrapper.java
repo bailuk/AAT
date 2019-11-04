@@ -28,7 +28,7 @@ public class GpxFileWrapper extends GpxInformation {
     public GpxList getGpxList() {
         return list;
     }
-    
+
     @Override
     public Foc getFile() {
         return file;

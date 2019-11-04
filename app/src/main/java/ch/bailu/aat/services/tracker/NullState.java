@@ -10,7 +10,7 @@ public class NullState extends State {
         return StateID.OFF;
     }
 
- 
+
 
     @Override
     public void updateTrack() {}
@@ -23,8 +23,8 @@ public class NullState extends State {
 
     @Override
     public void onPauseResume() {}
-    
-    
+
+
     @Override
     public int getStatusTextID() {
         return R.string.off;

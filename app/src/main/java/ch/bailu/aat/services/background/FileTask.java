@@ -6,13 +6,13 @@ import ch.bailu.util_java.foc.Foc;
 
 public abstract class FileTask extends BackgroundTask {
     private final Foc file;
-    
-    
-    
+
+
+
     public FileTask(Foc f) {
         file = f;
     }
-    
+
 
     @NonNull
     @Override

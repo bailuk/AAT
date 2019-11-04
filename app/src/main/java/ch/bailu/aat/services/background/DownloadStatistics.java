@@ -28,7 +28,7 @@ public class DownloadStatistics {
         increment(size);
         success();
     }
-    
+
     public synchronized  void success() {
         failureRate = Math.max(0, failureRate-2);
         success++;

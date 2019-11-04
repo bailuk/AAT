@@ -36,7 +36,7 @@ public class TrackLogger extends Logger {
 
         track = createTrack(context);
         new TrackCrashRestorer(context, presetIndex);
-        
+
         logFile = AppDirectory.getLogFile(context);
 
         writer=new GpxListWriter(track,logFile);
@@ -106,7 +106,7 @@ public class TrackLogger extends Logger {
         }
 
     }
-    
+
     public static Foc generateTargetFile(Context context, int preset) throws IOException {
         return AppDirectory.generateUniqueFilePath(
                 AppDirectory.getTrackListDirectory(context, preset),

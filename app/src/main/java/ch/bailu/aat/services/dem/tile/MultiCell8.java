@@ -5,7 +5,7 @@ public class MultiCell8 extends MultiCell {
      *      a  b  c
      *      d [e] f
      *      g  h  i
-     *      
+     *
      *      only works with double offset mode
      */
 
@@ -15,7 +15,7 @@ public class MultiCell8 extends MultiCell {
     private final DemProvider demtile;
     private final int dim;
     private final int total_cellsize;
-    
+
     public MultiCell8(final DemProvider dem) {
         demtile=dem;
         dim = dem.getDim().DIM;
@@ -41,7 +41,7 @@ public class MultiCell8 extends MultiCell {
         G=demtile.getElevation(g);
         H=demtile.getElevation(h);
         I=demtile.getElevation(i);
-        
+
         dzx=_delta_zx();
         dzy=_delta_zy();
     }
@@ -49,19 +49,19 @@ public class MultiCell8 extends MultiCell {
     public int delta_zx() {
         return dzx;
     }
-    
-    
+
+
     public int delta_zy() {
         return dzy;
     }
 
     private int _delta_zx() {
-        final int sum = (C + 2*F + I) - (A + 2*D + G); 
+        final int sum = (C + 2*F + I) - (A + 2*D + G);
         return  (sum * 100)  / total_cellsize;
     }
-    
+
     private int _delta_zy() {
-        final int sum = (G + 2*H + I) - (A + 2*B + C); 
+        final int sum = (G + 2*H + I) - (A + 2*B + C);
         return (sum *100)  / total_cellsize;
     }
 }

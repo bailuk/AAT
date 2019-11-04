@@ -16,7 +16,7 @@ public class GpxList {
     public static final GpxList NULL_ROUTE = new GpxList(
             GpxType.ROUTE, GpxListAttributes.NULL);
 
-    
+
 
 
     private final static SegmentNodeFactory GPX_SEGMENT_FACTORY = new SegmentNodeFactory () {

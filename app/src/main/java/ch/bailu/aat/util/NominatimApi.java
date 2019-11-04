@@ -15,21 +15,21 @@ public class NominatimApi extends OsmApiHelper {
     public final static String POST="?format=xml";
     public final static String EXT=".xml";
 
-    
+
     private final Foc directory;
     private final String bounding;
-    
+
     public NominatimApi(Context context, BoundingBoxE6 boundingBox) {
         directory = AppDirectory.getDataDirectory(context, AppDirectory.DIR_NOMINATIM);
         bounding = toString(boundingBox);
     }
-    
-    
+
+
 
     private static String toString(BoundingBoxE6 b) {
         if (b.getLatitudeSpanE6()>0 && b.getLongitudeSpanE6() > 0) {
-            return 
-                    "&bounded=1&viewbox=" + 
+            return
+                    "&bounded=1&viewbox=" +
                     toS(b.getLonWestE6())  + "," +
                     toS(b.getLatNorthE6()) + "," +
                     toS(b.getLonEastE6())  + "," +
@@ -48,9 +48,9 @@ public class NominatimApi extends OsmApiHelper {
 
 
 
-    
 
-    
+
+
     @Override
     public String getApiName() {
         return NAME;
@@ -71,7 +71,7 @@ public class NominatimApi extends OsmApiHelper {
 
     @Override
     public String getUrl(String query) throws UnsupportedEncodingException {
-        final StringBuilder url = new StringBuilder();        
+        final StringBuilder url = new StringBuilder();
         url.setLength(0);
         url.append(URL);
         url.append(URLEncoder.encode(query.replace('\n', ' '), "UTF-8"));
@@ -91,7 +91,7 @@ public class NominatimApi extends OsmApiHelper {
         return URL;
     }
 
-    
+
     @Override
     public Foc getBaseDirectory() {
         return directory;

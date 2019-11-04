@@ -6,7 +6,7 @@ import ch.bailu.aat.R;
 import ch.bailu.aat.gpx.GpxInformation;
 
 public class TimeDescription extends LongDescription {
-    
+
     public TimeDescription(Context context) {
         super(context);
     }
@@ -68,7 +68,7 @@ public class TimeDescription extends LongDescription {
         appendValue(builder,value);
         builder.append(":");
     }
-    
+
     private static void appendValue(StringBuilder builder, int value) {
         if (value < 10) {
             builder.append("0");

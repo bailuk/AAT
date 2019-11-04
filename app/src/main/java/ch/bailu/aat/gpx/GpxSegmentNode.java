@@ -12,12 +12,12 @@ public class GpxSegmentNode extends SegmentNode implements GpxBigDeltaInterface 
 
     private final GpxBigDelta delta=new GpxBigDelta(GpxListAttributes.NULL);
 
-    
+
     public GpxSegmentNode(GpxPointNode n) {
         super(n);
     }
 
-    
+
     public GpxSegmentNode(GpxPointNode n, GpxSegmentNode m) {
         super(n, m);
     }
@@ -32,8 +32,8 @@ public class GpxSegmentNode extends SegmentNode implements GpxBigDeltaInterface 
         super.update(node);
         delta.update(node);
     }
-    
-    
+
+
     public float getAcceleration() {
         return delta.getAcceleration();
     }
@@ -76,10 +76,10 @@ public class GpxSegmentNode extends SegmentNode implements GpxBigDeltaInterface 
 
 
 
-	@Override
-	public GpxType getType() {
-		return delta.getType();
-	}
+    @Override
+    public GpxType getType() {
+        return delta.getType();
+    }
 
     @Override
     public GpxAttributes getAttributes() {

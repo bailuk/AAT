@@ -17,7 +17,7 @@ public class SolidOverlayFile  implements SolidTypeInterface {
     private final SolidString path;
     private final SolidBoolean enabled;
 
-    
+
     public SolidOverlayFile(Context c, int i) {
         path = new SolidString(c, KEY_NAME+i);
         enabled = new SolidBoolean(c, KEY_ENABLED+i);
@@ -87,14 +87,14 @@ public class SolidOverlayFile  implements SolidTypeInterface {
     @Override
     public void register(OnSharedPreferenceChangeListener listener) {
         getStorage().register(listener);
-        
+
     }
 
 
     @Override
     public void unregister(OnSharedPreferenceChangeListener listener) {
         getStorage().unregister(listener);
-        
+
     }
 
     @Override

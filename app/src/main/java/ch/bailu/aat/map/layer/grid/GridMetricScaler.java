@@ -23,21 +23,21 @@ public class GridMetricScaler {
     };
 
     private int squareDistance=0;
-    
-    
+
+
     public GridMetricScaler() {}
-    
-    
+
+
     public GridMetricScaler(int distance) {
         findOptimalScale(distance);
     }
-    
-    
+
+
     public int getOptimalScale() {
         return squareDistance;
     }
-    
-    
+
+
     public void findOptimalScale(int distance) {
         for (int level:GRID_LEVELS) {
             final float flevel = level;

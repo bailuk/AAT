@@ -15,11 +15,11 @@ import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.util.ui.AppLog;
 
-public class TrackerInternals 
+public class TrackerInternals
 implements OnSharedPreferenceChangeListener, Closeable {
 
 
-    
+
     public final ServiceContext scontext;
     public State state;
 
@@ -27,7 +27,7 @@ implements OnSharedPreferenceChangeListener, Closeable {
 
     public final StatusIcon statusIcon;
 
-    
+
     private final Storage storage;
     public SolidAutopause sautopause;
 
@@ -63,7 +63,7 @@ implements OnSharedPreferenceChangeListener, Closeable {
         scontext.getLocationService().setPresetIndex(presetIndex);
     }
 
-        
+
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences,
             String key) {
@@ -71,12 +71,12 @@ implements OnSharedPreferenceChangeListener, Closeable {
     }
 
 
-        
-    
-    
-    
 
-    
+
+
+
+
+
     public void lockService() {
         scontext.lock(this.getClass().getSimpleName());
     }
@@ -84,18 +84,18 @@ implements OnSharedPreferenceChangeListener, Closeable {
     public void unlockService() {
         scontext.free(this.getClass().getSimpleName());
     }
-    
-    
 
- 
-    
+
+
+
+
     public  TrackLogger createLogger() throws IOException, SecurityException, XmlPullParserException {
         return new TrackLogger(scontext.getContext(),new SolidPreset(scontext.getContext()).getIndex());
     }
-    
-    
- 
-    
+
+
+
+
     public boolean isReadyForAutoPause() {
         return ((
                 scontext.getLocationService().isMissingUpdates() ||
@@ -103,7 +103,7 @@ implements OnSharedPreferenceChangeListener, Closeable {
                 sautopause.isEnabled());
     }
 
-    
+
     public void emergencyOff(Exception e) {
         AppLog.e(scontext.getContext(), this,e);
         logger.close();
@@ -116,7 +116,7 @@ implements OnSharedPreferenceChangeListener, Closeable {
     public void close() {
         logger.close();
 
-        storage.unregister(this);            
+        storage.unregister(this);
     }
 
 

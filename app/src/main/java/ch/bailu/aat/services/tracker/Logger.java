@@ -10,17 +10,17 @@ import ch.bailu.aat.gpx.interfaces.GpxPointInterface;
 
 public class Logger extends GpxInformation implements Closeable {
     private int state = StateID.OFF;
-    
+
     public static Logger createNullLogger() {
         return new Logger();
     }
-    
+
     public void logPause() throws IOException {}
     public void log(GpxPointInterface tp, GpxAttributes attr) throws IOException {}
-    
+
     @Override
     public void close() {}
-    
+
     public void setState(int s) {
         state = s;
     }

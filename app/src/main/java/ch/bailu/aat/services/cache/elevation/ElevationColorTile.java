@@ -14,7 +14,7 @@ public class ElevationColorTile extends ElevationTile {
         super(id,  t, _split);
     }
 
-   
+
 
     @Override
     public void fillBuffer(int[] buffer, Raster raster, SubTile subTile, DemProvider dem) {
@@ -24,15 +24,15 @@ public class ElevationColorTile extends ElevationTile {
         int c=0;
         int old_line=-1;
         int color=0;
-        
+
         for (int la = subTile.laSpan.firstPixelIndex(); la< subTile.laSpan.lastPixelIndex(); la++) {
 
             final int line = raster.toLaRaster[la]*dim;
-            int offset = -1; 
+            int offset = -1;
 
             if (old_line != line) {
 
-                
+
                 for (int lo = subTile.loSpan.firstPixelIndex(); lo<subTile.loSpan.lastPixelIndex(); lo++) {
                     final int new_offset=raster.toLoRaster[lo];
 
@@ -49,15 +49,15 @@ public class ElevationColorTile extends ElevationTile {
                 copyLine(buffer, c-bitmap_dim, c);
                 c+=bitmap_dim;
             }
-            
+
             old_line=line;
-        }                
+        }
     }
-    
-    
+
+
     private void copyLine(int[] buffer, int cs, int cd) {
         final int next_line=cd;
-        
+
         for (; cs < next_line; cs++) {
             buffer[cd]=buffer[cs];
             cd++;
@@ -75,7 +75,7 @@ public class ElevationColorTile extends ElevationTile {
             mapTile=t;
         }
 
-        
+
         @Override
         public ObjectHandle factory(String id, ServiceContext cs) {
             return  new ElevationColorTile(id, mapTile,SPLIT);

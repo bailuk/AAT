@@ -14,13 +14,13 @@ public class ServiceLocker implements Closeable, OnSharedPreferenceChangeListene
     //private final SolidGPSLock slock;
     //private final ServiceContext scontext;
     //private int gpsStatus= StateID.OFF;
-    
-    
+
+
     public ServiceLocker(ServiceContext sc) {
         //scontext=sc;
         //final Storage storage = Storage.global(sc.getContext());
         //slock=new SolidGPSLock(storage);
-        
+
         //slock.register(this);
     }
 
@@ -31,35 +31,35 @@ public class ServiceLocker implements Closeable, OnSharedPreferenceChangeListene
         //slock.unregister(this);
     }
 
-    
+
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences,
             String key) {
         //if (slock.hasKey(key)) autoLock();
-        
+
     }
 
-    
+
     public void autoLock(int state) {
         //gpsStatus=state;
         autoLock();
     }
-    
-    
+
+
     public void free() {
         autoLock(StateID.OFF);
     }
-    
-    
+
+
     private void autoLock() {
         //if (slock.isEnabled() &&
         //        (gpsStatus == StateID.ON || gpsStatus== StateID.WAIT)) {
         //    scontext.lock(slock.getKey());
-            
+
         //} else {
            // scontext.free(slock.getKey());
-            
+
         //}
     }
 }

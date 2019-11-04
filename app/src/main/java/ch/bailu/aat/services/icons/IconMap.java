@@ -22,11 +22,11 @@ public class IconMap {
 
     public void add(int key, String value, String file_name) {
         HashMap<String,Icon>  value_list = key_list.get(key);
-        
+
         if (value_list == null) {
             value_list = new HashMap<>();
         }
-        
+
         value_list.put(value, new Icon(file_name));
         key_list.put(key, value_list);
     }

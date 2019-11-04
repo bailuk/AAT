@@ -10,8 +10,8 @@ public class AppIntent {
     private static final String EXTRA_FILE="file";
     private static final String EXTRA_URL="source";
 
-    
-    
+
+
     public static void setUrl(Intent intent, String url) {
         intent.putExtra(EXTRA_URL, url);
     }

@@ -12,7 +12,7 @@ public class PauseDescription extends TimeDescription {
     public PauseDescription(Context context) {
         super(context);
     }
-    
+
     @Override
     public String getLabel() {
         return getContext().getString(R.string.pause);

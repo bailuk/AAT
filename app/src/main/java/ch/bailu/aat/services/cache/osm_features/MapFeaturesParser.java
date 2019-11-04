@@ -62,8 +62,8 @@ public class MapFeaturesParser {
         boolean onParseFile(String file);
         void onHaveFeature(MapFeaturesParser parser);
     }
-    
-    
+
+
 
 
 
@@ -71,22 +71,22 @@ public class MapFeaturesParser {
         b.append(out);
         return b;
     }
-    
+
 
     public String getName() {
         return outName.toString();
     }
-    
+
     public String getKey() {
         return outKey.toString();
     }
-    
+
     public String getValue() {
         return outValue.toString();
     }
-    
 
-    
+
+
     private void parseFeatures(Foc file) throws IOException {
         Stream in = new Stream(file);
 
@@ -97,7 +97,7 @@ public class MapFeaturesParser {
             parseFeature(in);
             haveFeature();
         }
-        
+
         in.close();
     }
 
@@ -118,10 +118,10 @@ public class MapFeaturesParser {
 
     private void parseBoldName(Stream in, StringBuilder outString) throws IOException {
         int state=0;
-        
+
         while(state<4) {
             in.read();
-            
+
             if (in.haveEOF()) {
                 break;
             } else if (in.haveA('<')) {
@@ -136,7 +136,7 @@ public class MapFeaturesParser {
             } else {
                 state=0;
             }
-            
+
             out.append((char)in.get());
         }
     }
@@ -145,22 +145,22 @@ public class MapFeaturesParser {
     private void parseName(Stream in, StringBuilder outString) throws IOException {
         int state=0;
         int lock=0;
-        
+
         while(state < 3) {
-            
+
             if (in.haveEOF()) {
                 break;
-                
+
             } else if (in.haveA('<') && state==0) {
                 state++;
                 lock++;
-                
+
             } else if (in.haveA('/') && state==1) {
                 state++;
-                
+
             } else if (in.haveA('b') && state==2) {
                 state++;
-                
+
             } else {
                 if (in.haveA('>')) {
                     lock--;
@@ -170,26 +170,26 @@ public class MapFeaturesParser {
 
             if (lock < 1 && !in.haveA('>') )
                 outString.append((char)in.get());
-            
+
             out.append((char)in.get());
-            
+
             in.read();
         }
     }
 
 
     private void parseString(Stream in, StringBuilder outString) throws IOException {
-        
+
         while (true) {
             if (in.haveEOF() || in.haveA('<')) {
                 break;
-                
+
             } else if (in.haveCharacter()) {
                 outString.append((char)in.get());
             }
-            
+
             out.append((char)in.get());
-            
+
             in.read();
         }
     }
@@ -198,7 +198,7 @@ public class MapFeaturesParser {
     private void parseSummary(Stream in) throws IOException {
         parseSummaryHeading(in);
         parseToEndOfParagraph(in);
-        
+
     }
 
 
@@ -218,8 +218,8 @@ public class MapFeaturesParser {
 
         resetFeature();
     }
-    
-    
+
+
     private void resetFeature() {
         id++;
         out.setLength(0);
@@ -227,34 +227,34 @@ public class MapFeaturesParser {
         outValue.setLength(0);
         outName.setLength(0);
     }
-    
-    
+
+
     private void parseToEndOfParagraph(Stream in) throws IOException {
         int state=0;
-        
+
         while(state < 4) {
             in.read();
-            
+
             if (in.haveEOF()) {
                 break;
-                
+
             } else if (in.haveA('<') && state==0) {
                 state++;
-                
+
             } else if (in.haveA('/') && state==1) {
                 state++;
-                
+
             } else if (in.haveA('p') && state==2) {
                 state++;
-                
+
             } else if (in.haveA('>') && state == 3) {
                 state++;
-                
+
             } else {
                 state=0;
-                
+
             }
-            
+
             out.append((char)in.get());
         }
     }
@@ -262,20 +262,20 @@ public class MapFeaturesParser {
 
     private void parseSummaryHeading(Stream in) throws IOException {
         int state=0;
-        
+
         while(state<2) {
             in.read();
-            
+
             if (in.haveEOF()) {
                 break;
-                
+
             } else if (in.haveA('>') ) {
                 state=1;
             } else if (state == 1) {
                 parseString(in, outName);
                 state=2;
             }
-            
+
             out.append((char)in.get());
         }
     }

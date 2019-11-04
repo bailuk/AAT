@@ -75,7 +75,7 @@ public class DirectorySynchronizer  implements Closeable {
 
 
     private void setState(State s) {
-        if (canContinue) { 
+        if (canContinue) {
             state = s;
             state.start();
         } else {
@@ -96,7 +96,7 @@ public class DirectorySynchronizer  implements Closeable {
 
 
 
-    /////////////////////////////////////////////////////////////////////////////////////////////    
+    /////////////////////////////////////////////////////////////////////////////////////////////
     private class StateInit extends State {
         /**
          *  TODO: move db open into background
@@ -132,7 +132,7 @@ public class DirectorySynchronizer  implements Closeable {
 
 
 
-    /////////////////////////////////////////////////////////////////////////////////////////////    
+    /////////////////////////////////////////////////////////////////////////////////////////////
     private class StatePrepareSync extends State {
         private Exception exception=null;
 
@@ -232,8 +232,8 @@ public class DirectorySynchronizer  implements Closeable {
 
         private boolean isFileInSync(Foc file) {
             if (file.lastModified() < System.currentTimeMillis()) {
-                return file.lastModified() < dbAccessTime; 
-            } 
+                return file.lastModified() < dbAccessTime;
+            }
             return true;
         }
 
@@ -312,7 +312,7 @@ public class DirectorySynchronizer  implements Closeable {
             content.put(GpxDbConstants.KEY_DISTANCE,   summary.getDistance());
             content.put(GpxDbConstants.KEY_START_TIME, summary.getStartTime());
             content.put(GpxDbConstants.KEY_TOTAL_TIME, summary.getTimeDelta());
-            content.put(GpxDbConstants.KEY_END_TIME,   summary.getEndTime());        
+            content.put(GpxDbConstants.KEY_END_TIME,   summary.getEndTime());
             content.put(GpxDbConstants.KEY_PAUSE,      summary.getPause());
             content.put(GpxDbConstants.KEY_TYPE_ID,    summary.getType().toInteger());
             content.put(GpxDbConstants.KEY_EAST_BOUNDING, bounding.getLonEastE6());
@@ -334,7 +334,7 @@ public class DirectorySynchronizer  implements Closeable {
 
 
 
-    /////////////////////////////////////////////////////////////////////////////////////////////    
+    /////////////////////////////////////////////////////////////////////////////////////////////
     private class StateLoadPreview extends State {
 
         public void start() {

@@ -25,14 +25,14 @@ public abstract class AbsSolidType implements SolidTypeInterface {
     @Override
     public boolean hasKey(String s) {
         return Objects.equals(s, getKey());
-    }    
-    
+    }
+
 
     @Override
     public Context getContext() {
         return getStorage().getContext();
     }
-    
+
 
     @Override
     public void register(OnSharedPreferenceChangeListener listener) {

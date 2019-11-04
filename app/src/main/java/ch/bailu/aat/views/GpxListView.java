@@ -39,7 +39,7 @@ public class GpxListView extends ListView implements OnCursorChangedListener {
         iterator.setOnCursorChangedLinsener(this);
         setAdapter(new IteratorAdapter(acontext, iterator));
     }
-    
+
 
     @Override
     public void onCursorChanged() {
@@ -82,7 +82,7 @@ public class GpxListView extends ListView implements OnCursorChangedListener {
 
             if (entry == null) {
                 entry = new GpxListEntryView(acontext, data);
-            } 
+            }
 
             iterator.moveToPosition(position);
             entry.onContentUpdated(iterator.getInfoID(), iterator.getInfo());

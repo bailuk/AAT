@@ -9,7 +9,7 @@ import ch.bailu.aat.gpx.GpxInformation;
 public class CH1903EastingDescription extends DoubleDescription {
 
     protected int coordinate=0;
-    
+
     public CH1903EastingDescription(Context c) {
         super(c);
     }

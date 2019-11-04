@@ -14,10 +14,10 @@ public abstract class SegmentNodeFactory {
         public SegmentNode createSegment(Node n, SegmentNode m) {
             return new SegmentNode(n, m);
         }
-        
+
     };
 
-    
+
     public abstract SegmentNode createMarker(Node n);
     public abstract SegmentNode createSegment(Node n, SegmentNode m);
 }

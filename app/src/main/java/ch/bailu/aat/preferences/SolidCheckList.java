@@ -9,28 +9,28 @@ public abstract class SolidCheckList extends AbsSolidType {
     public abstract CharSequence[] getStringArray();
     public abstract boolean[] getEnabledArray();
     public abstract void setEnabled(int i, boolean isChecked);
-    
-    
- 
+
+
+
 
     @Override
     public void setValueFromString(String s) {}
 
-    
+
     public void register(OnSharedPreferenceChangeListener listener) {
         getStorage().register(listener);
-        
+
     }
 
 
     public void unregister(OnSharedPreferenceChangeListener listener) {
         getStorage().unregister(listener);
-        
+
     }
 
 
 
-    
+
     public Context getContext() {
         return getStorage().getContext();
     }

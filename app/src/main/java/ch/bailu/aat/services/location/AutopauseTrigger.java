@@ -43,9 +43,9 @@ public class AutopauseTrigger extends LocationStackChainedItem {
         super.passLocation(location);
     }
 
-    
+
     public boolean isAutopaused() {
-        return  trigger.isLow(); 
+        return  trigger.isLow();
     }
 
     @Override
@@ -53,7 +53,7 @@ public class AutopauseTrigger extends LocationStackChainedItem {
         triggerSpeed = new SolidTrackerAutopause(c, presetIndex).getTriggerSpeed();
         trigger=new Trigger(new SolidTrackerAutopause(c, presetIndex).getTriggerLevel(), trigger);
     }
-    
-	
+
+
 
 }

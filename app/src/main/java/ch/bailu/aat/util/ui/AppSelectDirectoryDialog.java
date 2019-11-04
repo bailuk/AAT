@@ -31,7 +31,7 @@ public abstract class AppSelectDirectoryDialog  implements  DialogInterface.OnCl
 
 
         final String[] names = new String[directories.length];
-        
+
         for (int i=0; i< names.length; i++) names[i]=directories[i].getName();
 
 

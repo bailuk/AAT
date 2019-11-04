@@ -32,13 +32,13 @@ public class TrackerSource extends ContentSource {
         sendUpdate(InfoID.TRACKER, scontext.getTrackerService().getLoggerInformation());
     }
 
-    
+
     @Override
     public void onPause() {
         scontext.getContext().unregisterReceiver(onTrackChanged);
     }
 
-    
+
     @Override
     public void onResume() {
         AppBroadcaster.register(scontext.getContext(), onTrackChanged, AppBroadcaster.TRACKER);

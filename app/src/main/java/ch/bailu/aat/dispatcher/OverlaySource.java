@@ -35,7 +35,7 @@ public class OverlaySource extends ContentSource {
 
     public OverlaySource(ServiceContext sc) {
         scontext=sc;
-    }	
+    }
 
 
     @Override
@@ -104,7 +104,7 @@ public class OverlaySource extends ContentSource {
                 if (soverlay.hasKey(key)) {
                     initAndUpdateOverlay();
                 }
-            }       
+            }
         };
 
 

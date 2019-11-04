@@ -20,7 +20,7 @@ public class PauseState extends State {
         } catch (IOException e) {
             internal.emergencyOff(e);
         }
-        
+
     }
 
     @Override
@@ -35,21 +35,21 @@ public class PauseState extends State {
     @Override
     public void onStartPauseResume() {
         onPauseResume();
-        
+
     }
 
     @Override
     public void onStartStop() {
         internal.state = new OffState(internal);
-        
+
     }
 
     @Override
     public void onPauseResume() {
         internal.state = new OnState(internal);
-        
-    }    
-    
+
+    }
+
     @Override
     public int getStatusTextID() {
         return R.string.status_paused;

@@ -19,26 +19,26 @@ public class OverpassApi extends OsmApiHelper {
     public final static String URL="http://overpass-api.de/api/interpreter?data=("; // data=node
     public final static String POST=">;);out;";
 
-    
+
     private final String bounding;
     private final Foc directory;
 
 
-    
+
     public OverpassApi(Context context, BoundingBoxE6 b) throws SecurityException, IOException {
         NAME=context.getString(R.string.query_overpass);
         bounding = toString(b);
         directory = AppDirectory.getDataDirectory(context, AppDirectory.DIR_OVERPASS);
     }
 
-    
+
     @Override
     public String getApiName() {
         return NAME;
     }
 
-    
-    
+
+
     private static String toString(BoundingBoxE6 bounding) {
         final double lo1 = bounding.getLonWestE6()/1E6;
         final double la1 = bounding.getLatSouthE6()/1E6;
@@ -55,8 +55,8 @@ public class OverpassApi extends OsmApiHelper {
 
     /**
      * See: http://overpass-api.de/command_line.html
-     * @throws UnsupportedEncodingException 
-     */    
+     * @throws UnsupportedEncodingException
+     */
     public String getUrl(String query) throws UnsupportedEncodingException {
         final String[] queries = query.split(";");
 
@@ -87,9 +87,9 @@ public class OverpassApi extends OsmApiHelper {
             }
 
         }
-        
+
         url.append(URLEncoder.encode(POST,"UTF-8"));
-        
+
         return url.toString();
     }
 
@@ -136,7 +136,7 @@ public class OverpassApi extends OsmApiHelper {
         return url.toString();
     }
 
-    
+
     @Override
     public String getUrlStart() {
         return URL+"...";

@@ -12,7 +12,7 @@ public class EndDateDescription extends DateDescription {
         super(context);
     }
 
-    
+
     @Override
     public String getLabel() {
         return getContext().getString(R.string.d_enddate);

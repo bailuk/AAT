@@ -9,7 +9,7 @@ import ch.bailu.aat.preferences.general.SolidUnit;
 
 public class SolidDistanceFilter extends SolidIndexList {
     private static final String KEY="distance_filter_";
-    
+
     private static final float[] VALUE_LIST = {
     0f,
     1f,
@@ -24,20 +24,20 @@ public class SolidDistanceFilter extends SolidIndexList {
     30f,
     99f,
     };
-    
+
     private final SolidUnit sunit;
 
     public SolidDistanceFilter(Context c, int i) {
         super(c, KEY+i);
         sunit = new SolidUnit(c);
     }
-    
-    
+
+
     public float getMinDistance() {
         return VALUE_LIST[getIndex()];
     }
-    
-    
+
+
     @Override
     public String getLabel() {
         return getContext().getString(R.string.p_distance_filter);

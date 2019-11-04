@@ -20,7 +20,7 @@ public class CH1903NorthingDescription extends CH1903EastingDescription {
     public void onContentUpdated(int iid, GpxInformation info) {
         if (setCache(info.getLatitude())) setCH1903_x(info);
     }
-    
+
     private void setCH1903_x(GpxInformation info) {
         coordinate = new CH1903Coordinates(info.getLatitude(), info.getLongitude()).getNorthing();
     }

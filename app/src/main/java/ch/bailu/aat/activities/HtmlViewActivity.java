@@ -10,7 +10,7 @@ import ch.bailu.aat.views.bar.MainControlBar;
 
 public class HtmlViewActivity extends ActivityContext {
 
-    
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,7 +23,7 @@ public class HtmlViewActivity extends ActivityContext {
         setContentView(contentView);
     }
 
-    
+
     private String getTextFromIntent() {
         Intent intent = getIntent();
         return AppIntent.getFile(intent);

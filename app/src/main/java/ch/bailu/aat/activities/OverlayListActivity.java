@@ -19,7 +19,7 @@ public class OverlayListActivity extends AbsGpxListActivity {
                 new DateDescription(this),
                 new DistanceDescription(this),
                 new NameDescription(this)
-        };    		
+        };
     }
 
     @Override
@@ -29,8 +29,8 @@ public class OverlayListActivity extends AbsGpxListActivity {
                 new TrackSizeDescription(this),
         };
     }
-    
-    
+
+
     @Override
     public void displayFile() {
         Intent intent=new Intent(this,GpxEditorActivity.class);
@@ -40,7 +40,7 @@ public class OverlayListActivity extends AbsGpxListActivity {
 
     @Override
     public Foc getDirectory() {
-        return AppDirectory.getDataDirectory(this, AppDirectory.DIR_OVERLAY); 
+        return AppDirectory.getDataDirectory(this, AppDirectory.DIR_OVERLAY);
     }
 
     @Override

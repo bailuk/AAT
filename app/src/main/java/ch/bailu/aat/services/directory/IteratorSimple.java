@@ -9,19 +9,19 @@ import ch.bailu.util_java.foc.Foc;
 public class IteratorSimple extends IteratorAbstract {
     private GpxInformation info = GpxInformation.NULL;
 
-    
+
     public IteratorSimple(ServiceContext sc) {
         super(sc);
         query();
     }
 
-    
+
     @Override
     public GpxInformation getInfo() {
         return info;
     }
 
-    
+
     @Override
     public void onCursorChanged(Cursor cursor, Foc directory, String fid) {
         if (cursor.getCount()>0) {
@@ -29,6 +29,6 @@ public class IteratorSimple extends IteratorAbstract {
         } else {
             info = GpxInformation.NULL;
         }
-        
+
     }
 }

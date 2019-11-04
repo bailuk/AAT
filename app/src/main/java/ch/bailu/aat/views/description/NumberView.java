@@ -108,7 +108,7 @@ public class NumberView extends ViewGroup implements OnContentUpdatedInterface {
             label.layout(l, t+margin, r, label.getMeasuredHeight()+margin);
             height-=label.getMeasuredHeight();
 
-            unit.measure(width,height);    
+            unit.measure(width,height);
             unit.layout(l, b-unit.getMeasuredHeight()-margin, r, b-margin);
             height-=unit.getMeasuredHeight();
 

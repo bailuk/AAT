@@ -16,7 +16,7 @@ import java.io.FileNotFoundException;
 public class GpxProvider extends ContentProvider {
     private static final UnsupportedOperationException UNSUPORTED=
             new UnsupportedOperationException("Not supported by this provider");
-    
+
 
     @Override
     public ParcelFileDescriptor openFile(@NonNull Uri uri, @NonNull String mode) throws FileNotFoundException {
@@ -33,20 +33,20 @@ public class GpxProvider extends ContentProvider {
         throw UNSUPORTED;
     }
 
-    
+
     @Override
     public boolean onCreate() {
-        
-        
+
+
         return true;
     }
 
     @Override
     public Cursor query(@NonNull Uri uri, String[] strings, String s, String[] strings2, String s2) {
-        
+
         MatrixCursor cursor = new MatrixCursor(new String[]{OpenableColumns.DISPLAY_NAME, OpenableColumns.SIZE});
-        
-        
+
+
         final File file =  new File(uri.getPath());
 
         cursor.addRow(new Object[]{file.getName(), file.length()});
@@ -58,7 +58,7 @@ public class GpxProvider extends ContentProvider {
         final File file =  new File(uri.getPath());
         return mimeTypeFromFileName(file.getName());
     }
-    
+
     public static String mimeTypeFromFileName(String name) {
         if (name.endsWith(".gpx")) return "application/gpx+xml";
         else if (name.endsWith(".osm")) return "application/xml";
@@ -79,5 +79,5 @@ public class GpxProvider extends ContentProvider {
     public int update(@NonNull Uri uri, ContentValues contentValues, String s, String[] strings) {
         throw UNSUPORTED;
     }
-    
+
 }

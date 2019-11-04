@@ -38,7 +38,7 @@ public abstract class GpxWriter {
     public abstract void writeTrackPoint(GpxPointInterface tp) throws IOException;
 
     public void close() throws IOException {
-        output.close();		
+        output.close();
     }
 
 

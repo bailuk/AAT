@@ -9,7 +9,7 @@ public class DistanceFilter extends LocationStackChainedItem {
     private LocationInformation oldLocation=null;
     private float minDistance=0f;
 
-    
+
     public DistanceFilter(LocationStackItem n) {
         super(n);
     }
@@ -24,11 +24,11 @@ public class DistanceFilter extends LocationStackChainedItem {
             super.passLocation(location);
         }
     }
-    
+
     private boolean notTooClose(LocationInformation a, LocationInformation b) {
-        if (minDistance > 90) { 
+        if (minDistance > 90) {
             return GpxDeltaHelper.getDistance(a, b) >= (a.getAccuracy()+b.getAccuracy())/2;
-        } else { 
+        } else {
             return (GpxDeltaHelper.getDistance(a, b) >= minDistance);
         }
     }
@@ -37,6 +37,6 @@ public class DistanceFilter extends LocationStackChainedItem {
     public void preferencesChanged(Context c, String key, int presetIndex) {
         minDistance = new SolidDistanceFilter(c, presetIndex).getMinDistance();
     }
-    
+
 
 }

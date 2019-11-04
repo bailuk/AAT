@@ -8,9 +8,9 @@ public abstract class MeterCoordinates extends Coordinates {
     //public abstract GeoPoint toLatLongE6();
     public abstract LatLong toLatLong();
     public abstract void round(int c);
-    
+
     public static int round(int v, int c) {
-        return c * Math.round(((float)v)/((float)c)); 
+        return c * Math.round(((float)v)/((float)c));
     }
 
 

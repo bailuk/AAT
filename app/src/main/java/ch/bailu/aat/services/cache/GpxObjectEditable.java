@@ -23,14 +23,14 @@ public class GpxObjectEditable extends  GpxObject {
     private final Foc file;
 
     private final GpxListEditor editor;
-    
-    
+
+
     public GpxObjectEditable(String _id, Foc _file, ServiceContext sc) {
         super(_id);
         file = _file;
 
         editor = new GpxListEditor(sc.getContext());
-        sc.getCacheService().addToBroadcaster(this);        
+        sc.getCacheService().addToBroadcaster(this);
     }
 
     public GpxListEditor getEditor() {
@@ -48,7 +48,7 @@ public class GpxObjectEditable extends  GpxObject {
         }
         editor.loadIntoEditor(currentHandle.getGpxList());
     }
-    
+
 
     @Override
     public void onRemove(ServiceContext sc) {
@@ -79,9 +79,9 @@ public class GpxObjectEditable extends  GpxObject {
     }
 
 
-    
 
-    
+
+
     public class GpxListEditor extends GpxInformation implements EditorInterface {
         private GpxEditor editor = new GpxEditor(GpxList.NULL_ROUTE);
 
@@ -92,14 +92,14 @@ public class GpxObjectEditable extends  GpxObject {
         public GpxListEditor(Context c) {
             context=c;
         }
-        
-        
+
+
         public void loadIntoEditor(GpxList list) {
             editor = new GpxEditor(list);
             modified = false;
             modified(false);
         }
-        
+
         @Override
         public void setType(GpxType type) {
             editor.setType(type);
@@ -121,7 +121,7 @@ public class GpxObjectEditable extends  GpxObject {
         }
 
 
-        
+
         @Override
         public void up() {
             editor.moveSelectedUp();
@@ -179,11 +179,11 @@ public class GpxObjectEditable extends  GpxObject {
             try {
                 new GpxListWriter(editor.getList(),file).close();
                 modified=false;
-                
+
                 AppBroadcaster.broadcast(context, AppBroadcaster.FILE_CHANGED_ONDISK, file.getPath(), getID());
             } catch (Exception e) {
                 AppLog.e(context, this, e);
-            }    
+            }
         }
 
 
@@ -227,11 +227,11 @@ public class GpxObjectEditable extends  GpxObject {
                 final Foc file =
                         AppDirectory.generateUniqueFilePath(
                                 destDir,
-                                prefix, 
+                                prefix,
                                 AppDirectory.GPX_EXTENSION);
-                
+
                 new GpxListWriter(editor.getList(),file).close();
-                
+
                 AppBroadcaster.broadcast(context, AppBroadcaster.FILE_CHANGED_ONDISK,
                         file.getPath(), getID());
 
@@ -245,7 +245,7 @@ public class GpxObjectEditable extends  GpxObject {
         public GpxPointNode getSelected() {
             return editor.getSelectedPoint();
         }
-        
+
 
         @Override
         public GpxList getGpxList() {
@@ -267,20 +267,20 @@ public class GpxObjectEditable extends  GpxObject {
         public BoundingBoxE6 getBoundingBox() {
             return editor.getList().getDelta().getBoundingBox();
         }
-        
+
     }
 
 
     public static class Factory extends ObjectHandle.Factory {
         private final Foc file;
-        
+
 
         public Factory(Foc f) {
             file=f;
         }
 
 
- 
+
 
         @Override
         public ObjectHandle factory(String id, ServiceContext sc) {
@@ -290,7 +290,7 @@ public class GpxObjectEditable extends  GpxObject {
 
 
     }
-    
+
 
     public static String getVirtualID(Foc file) {
         return getVirtualID(file.getPath());

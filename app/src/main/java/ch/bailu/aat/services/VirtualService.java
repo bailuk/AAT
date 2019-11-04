@@ -5,10 +5,10 @@ import android.content.Context;
 import java.io.Closeable;
 
 public abstract class VirtualService implements Closeable {
-    
-    
+
+
     private final ServiceContext scontext;
-    
+
     public VirtualService(ServiceContext sc) {
         scontext = sc;
     }

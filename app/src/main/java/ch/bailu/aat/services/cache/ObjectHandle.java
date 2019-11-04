@@ -14,7 +14,7 @@ public abstract class ObjectHandle implements ObjectBroadcastReceiver{
     public static final int MIN_SIZE=100;
 
     private final String ID;
-    
+
     private long accessTime=System.currentTimeMillis();
     private int lock=0;
 
@@ -62,11 +62,11 @@ public abstract class ObjectHandle implements ObjectBroadcastReceiver{
         return lock > 0;
     }
 
-    
+
     public void onInsert(ServiceContext sc) {}
     public void onRemove(ServiceContext sc) {}
 
-    
+
     public synchronized void lock(ServiceContext sc) {
         lock++;
         access();
@@ -75,7 +75,7 @@ public abstract class ObjectHandle implements ObjectBroadcastReceiver{
     public synchronized void free() {
         lock--;
     }
-    
+
 
     public boolean isReadyAndLoaded() {
         return true;
@@ -88,20 +88,20 @@ public abstract class ObjectHandle implements ObjectBroadcastReceiver{
 
 
     public abstract long getSize();
-    
+
     public synchronized void access() {
         accessTime=System.currentTimeMillis();
     }
-    
-    
-    
-    
+
+
+
+
 
     public synchronized long getAccessTime() {
         return accessTime;
     }
-    
-    
+
+
     @Override
     public int hashCode() {
         return toString().hashCode();

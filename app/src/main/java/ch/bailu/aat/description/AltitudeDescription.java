@@ -11,15 +11,15 @@ import ch.bailu.aat.preferences.general.SolidUnit;
 public class AltitudeDescription extends FloatDescription {
 
     private final SolidUnit unit;
-    
-    
+
+
     public AltitudeDescription(Context context) {
         super(context);
         unit = new SolidUnit(context);
     }
 
-    
-    
+
+
     @Override
     public String getLabel() {
         return getContext().getString(R.string.altitude);
@@ -40,12 +40,12 @@ public class AltitudeDescription extends FloatDescription {
         float f = unit.getAltitudeFactor();
         return f0.format(v *f);
     }
-    
+
 
     public String getValueUnit(float v) {
         return getValue(v) + " " + getUnit();
     }
-    
+
     @Override
     public void onContentUpdated(int iid, GpxInformation info) {
         setCache( ((float)info.getAltitude()) );

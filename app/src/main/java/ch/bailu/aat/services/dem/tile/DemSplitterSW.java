@@ -1,7 +1,7 @@
 package ch.bailu.aat.services.dem.tile;
 
 public class DemSplitterSW extends DemSplitter {
-    
+
     public DemSplitterSW(DemProvider p) {
         super(p);
     }
@@ -16,7 +16,7 @@ public class DemSplitterSW extends DemSplitter {
 
         final int parent_index=parent_row*parent_dim + parent_col;
 
-        final int row_mode=row % 2; 
+        final int row_mode=row % 2;
         final int col_mode=col % 2;
 
         float sum;

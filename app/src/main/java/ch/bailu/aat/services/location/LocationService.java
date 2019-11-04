@@ -50,7 +50,7 @@ public class LocationService extends VirtualService
 
 
     private void createLocationStack() {
-        clean = new CleanLocation();       
+        clean = new CleanLocation();
         itemList.add(clean);
 
         itemList.add(new DistanceFilter(lastItem()));
@@ -58,7 +58,7 @@ public class LocationService extends VirtualService
         autopause=new AutopauseTrigger(lastItem());
         itemList.add(autopause);
 
-        missing = new MissingTrigger(lastItem()); 
+        missing = new MissingTrigger(lastItem());
         itemList.add(missing);
 
         itemList.add(new AccuracyFilter(lastItem()));
@@ -89,7 +89,7 @@ public class LocationService extends VirtualService
 
     @Override
     public void close() {
-        for (int i=0; i<itemList.size(); i++) 
+        for (int i=0; i<itemList.size(); i++)
             itemList.get(i).close();
 
         sprovider.unregister(this);
@@ -98,7 +98,7 @@ public class LocationService extends VirtualService
 
     @Override
     public void preferencesChanged(Context c, String key, int presetIndex) {
-        for (int i=0; i<itemList.size(); i++) 
+        for (int i=0; i<itemList.size(); i++)
             itemList.get(i).preferencesChanged(c, key, presetIndex);
     }
 
@@ -139,7 +139,7 @@ public class LocationService extends VirtualService
         builder.append("</h2><p>");
 
 
-        for (int i=0; i<itemList.size(); i++) 
+        for (int i=0; i<itemList.size(); i++)
             itemList.get(i).appendStatusText(builder);
 
         builder.append("</p>");

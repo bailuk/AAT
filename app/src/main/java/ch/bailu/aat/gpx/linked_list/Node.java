@@ -7,22 +7,22 @@ public class Node {
     private Node previous=null;
     private Node next=null;
 
-    
+
     protected void setPrevious(Node node) {
         previous=node;
     }
 
-    
+
     protected void setNext(Node node) {
         next=node;
     }
 
-    
+
     public Node getNext() {
         return next;
     }
 
-    
+
     public Node getPrevious() {
         return previous;
     }
