@@ -14,7 +14,7 @@ import ch.bailu.util_java.foc.Foc;
 public abstract class GpxWriter {
 
 
-    private BufferedWriter output=null;
+    private final BufferedWriter output;
 
     protected final FF_GPX f = FF_GPX.f();
 
