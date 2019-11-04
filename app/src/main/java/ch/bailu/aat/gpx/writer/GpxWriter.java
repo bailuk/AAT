@@ -43,19 +43,19 @@ public abstract class GpxWriter {
 
 
     public void writeHeader(long timestamp) throws IOException {
-        writeString("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>");
-        writeString("\n<gpx xmlns=\"http://www.topografix.com/GPX/1/1\"");
-        writeString("\n    creator=\"");
+        writeString("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>" +
+                    "\n<gpx xmlns=\"http://www.topografix.com/GPX/1/1\"" +
+                    "\n    creator=\"");
         writeString(AppString.getShortName());
         writeString(" ");
         writeString(AppString.getLongName());
         writeString(" ");
         writeString(AppString.getVersionName());
-        writeString("\" version=\"1.0\"");
-        writeString("\n    xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"");
-        writeString("\n    xsi:schemaLocation=\"http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd\">");
+        writeString("\" version=\"1.0\"" +
+                    "\n    xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"" +
+                    "\n    xsi:schemaLocation=\"http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd\">" +
 
-        writeString("\n<metadata>");
+                    "\n<metadata>");
         writeTimeStamp(timestamp);
         writeString("</metadata>\n");
 
