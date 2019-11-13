@@ -11,6 +11,7 @@ import ch.bailu.aat_lib.service.render.RenderServiceInterface
 import ch.bailu.aat_lib.service.sensor.SensorServiceInterface
 import ch.bailu.aat_lib.service.tileremover.TileRemoverService
 import ch.bailu.aat_lib.service.tracker.TrackerServiceInterface
+import ch.bailu.aat_lib.service.beacon.BeaconServiceInterface
 
 class MockServices : ServicesInterface {
     override fun getLocationService(): LocationServiceInterface {
@@ -22,6 +23,10 @@ class MockServices : ServicesInterface {
     }
 
     override fun getTrackerService(): TrackerServiceInterface {
+        TODO("Not yet implemented")
+    }
+
+    override fun getBeaconService(): BeaconServiceInterface {
         TODO("Not yet implemented")
     }
 

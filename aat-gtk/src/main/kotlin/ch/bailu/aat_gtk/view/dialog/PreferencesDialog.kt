@@ -3,6 +3,7 @@ package ch.bailu.aat_gtk.view.dialog
 import ch.bailu.aat_gtk.view.preferences.ActivityPreferencesPage
 import ch.bailu.aat_gtk.view.preferences.GeneralPreferencesPage
 import ch.bailu.aat_gtk.view.preferences.MapPreferencesPage
+import ch.bailu.aat_gtk.view.preferences.NetworkPreferencesPage
 import ch.bailu.aat_lib.app.AppContext
 import ch.bailu.gtk.adw.PreferencesDialog
 import ch.bailu.gtk.gtk.Application
@@ -15,6 +16,7 @@ object PreferencesDialog {
             window = PreferencesDialog().apply {
                 add(GeneralPreferencesPage(app, app.activeWindow, appContext).page)
                 add(MapPreferencesPage(appContext, app, app.activeWindow).page)
+                add(NetworkPreferencesPage(appContext).page)
                 add(ActivityPreferencesPage(appContext.storage).page)
 
                 onDestroy {

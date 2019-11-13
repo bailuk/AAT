@@ -18,6 +18,7 @@ import ch.bailu.aat_lib.service.location.LocationServiceInterface
 import ch.bailu.aat_lib.service.render.RenderServiceInterface
 import ch.bailu.aat_lib.service.sensor.SensorServiceInterface
 import ch.bailu.aat_lib.service.tracker.TrackerServiceInterface
+import ch.bailu.aat_lib.service.beacon.BeaconServiceInterface
 import java.io.Closeable
 
 
@@ -147,6 +148,10 @@ abstract class ServiceLink(private val context: Context) : ServiceContext, Servi
 
     override fun getTrackerService(): TrackerServiceInterface {
         return getService()!!.getTrackerService()
+    }
+
+    override fun getBeaconService(): BeaconServiceInterface {
+        return getService()!!.getBeaconService()
     }
 
     override fun getLocationService(): LocationServiceInterface {

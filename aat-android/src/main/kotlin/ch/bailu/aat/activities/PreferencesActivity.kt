@@ -13,6 +13,7 @@ import ch.bailu.aat.views.description.mview.MultiView
 import ch.bailu.aat.views.layout.ContentView
 import ch.bailu.aat.views.preferences.GeneralPreferencesView
 import ch.bailu.aat.views.preferences.MapPreferencesView
+import ch.bailu.aat.views.preferences.NetworkPreferencesView
 import ch.bailu.aat.views.preferences.PresetPreferencesView
 import ch.bailu.aat_lib.gpx.information.InfoID
 import ch.bailu.aat_lib.preferences.OnPreferencesChanged
@@ -27,7 +28,7 @@ class PreferencesActivity : ActivityContext(), OnPreferencesChanged {
         /**
          * The number of pages not counting the "preset" pages.
          */
-        private const val N_BASE_PAGES = 2
+        private const val N_BASE_PAGES = 3
     }
 
     private val theme = AppTheme.preferences
@@ -67,6 +68,10 @@ class PreferencesActivity : ActivityContext(), OnPreferencesChanged {
         multiView.add(
             mapTilePreferences,
             getString(R.string.p_tiles)
+        )
+        multiView.add(
+            NetworkPreferencesView(this, theme),
+            "Network"
         )
 
         assert(multiView.pageCount() == N_BASE_PAGES);

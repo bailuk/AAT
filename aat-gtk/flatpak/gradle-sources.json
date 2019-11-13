@@ -1534,6 +1534,27 @@
   },
   {
     "type": "file",
+    "url": "https://jitpack.io/com/github/MaxKellermann/beacon/v0.1/beacon-v0.1.jar",
+    "sha256": "5204cb1cd5367c86fcf0ca461091fe819b628154328025aea2f77bf92065dc59",
+    "dest": "maven-local/com/github/MaxKellermann/beacon/v0.1",
+    "dest-filename": "beacon-v0.1.jar"
+  },
+  {
+    "type": "file",
+    "url": "https://jitpack.io/com/github/MaxKellermann/beacon/v0.1/beacon-v0.1.module",
+    "sha256": "fc9a6d0cbe50c9b5d68b7f8d4b9559c84998528ea583a5ffd3179d92d044124a",
+    "dest": "maven-local/com/github/MaxKellermann/beacon/v0.1",
+    "dest-filename": "beacon-v0.1.module"
+  },
+  {
+    "type": "file",
+    "url": "https://jitpack.io/com/github/MaxKellermann/beacon/v0.1/beacon-v0.1.pom",
+    "sha256": "3de827a9aff1bb5eb06a454bf214cb2bcb51c32bf347c991f8e5b96f4a4f345f",
+    "dest": "maven-local/com/github/MaxKellermann/beacon/v0.1",
+    "dest-filename": "beacon-v0.1.pom"
+  },
+  {
+    "type": "file",
     "url": "https://plugins.gradle.org/m2/com/github/spotbugs/spotbugs-annotations/4.9.3/spotbugs-annotations-4.9.3.jar",
     "sha256": "13532bfe2f45fcd491432221df72d9cd0efb8f987c9245e12befa192c8925ce3",
     "dest": "maven-local/com/github/spotbugs/spotbugs-annotations/4.9.3",
