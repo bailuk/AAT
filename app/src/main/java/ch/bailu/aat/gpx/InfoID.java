@@ -13,6 +13,8 @@ public class InfoID {
 
     public final static int LIST_SUMMARY = 5;
 
+    public final static int BEACON = 50;
+
     public final static int OVERLAY=60;
 
     public final static int UNSPECIFIED = -1;

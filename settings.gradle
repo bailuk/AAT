@@ -15,3 +15,8 @@ if (! gradle.ext.mapsForgeDir.equals("")) {
     includeBuild "${gradle.ext.mapsForgeDir}"
 }
 
+sourceControl {
+    gitRepository("git://github.com/MaxKellermann/beacon") {
+        producesModule("beacon:java")
+    }
+}

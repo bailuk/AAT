@@ -9,6 +9,7 @@ import android.widget.LinearLayout;
 import ch.bailu.aat.dispatcher.CurrentLocationSource;
 import ch.bailu.aat.dispatcher.SensorSource;
 import ch.bailu.aat.dispatcher.TrackerSource;
+import ch.bailu.aat.dispatcher.BeaconSource;
 import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.preferences.SolidFile;
 import ch.bailu.aat.preferences.presets.SolidPreset;
@@ -89,6 +90,7 @@ public class MainActivity extends ActivityContext {
 
     private void createDispatcher() {
         addSource(new TrackerSource(getServiceContext()));
+        addSource(new BeaconSource(getServiceContext()));
         addSource(new CurrentLocationSource(getServiceContext()));
         addSource(new SensorSource(getServiceContext(), InfoID.SENSORS));
     }

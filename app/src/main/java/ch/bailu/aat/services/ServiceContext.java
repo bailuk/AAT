@@ -12,6 +12,7 @@ import ch.bailu.aat.services.location.LocationService;
 import ch.bailu.aat.services.render.RenderService;
 import ch.bailu.aat.services.tileremover.TileRemoverService;
 import ch.bailu.aat.services.tracker.TrackerService;
+import ch.bailu.aat.services.beacon.BeaconService;
 import ch.bailu.aat.util.ContextWrapperInterface;
 
 public interface ServiceContext extends ContextWrapperInterface {
@@ -24,6 +25,7 @@ public interface ServiceContext extends ContextWrapperInterface {
 
     LocationService getLocationService();
     TrackerService getTrackerService();
+    BeaconService getBeaconService();
     BackgroundService getBackgroundService();
     CacheService getCacheService();
     ElevationService getElevationService();

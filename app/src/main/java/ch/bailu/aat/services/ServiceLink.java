@@ -20,6 +20,7 @@ import ch.bailu.aat.services.sensor.SensorService;
 import ch.bailu.aat.services.tileremover.TileRemoverService;
 import ch.bailu.aat.services.tracker.TrackerService;
 import ch.bailu.aat.util.ui.AppLog;
+import ch.bailu.aat.services.beacon.BeaconService;
 
 public abstract class ServiceLink implements
         ServiceContext,
@@ -193,6 +194,11 @@ public abstract class ServiceLink implements
     @Override
     public TrackerService getTrackerService() {
         return getService().getTrackerService();
+    }
+
+    @Override
+    public BeaconService getBeaconService() {
+        return getService().getBeaconService();
     }
 
     @Override

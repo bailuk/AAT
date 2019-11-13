@@ -12,12 +12,14 @@ import ch.bailu.aat.services.location.LocationService;
 import ch.bailu.aat.services.render.RenderService;
 import ch.bailu.aat.services.tileremover.TileRemoverService;
 import ch.bailu.aat.services.tracker.TrackerService;
+import ch.bailu.aat.services.beacon.BeaconService;
 import ch.bailu.aat.util.WithStatusText;
 
 public final class OneService extends AbsService  implements ServiceContext {
 
     private LocationService location;
     private TrackerService tracker;
+    private BeaconService beacon;
     private BackgroundService background;
     private IconMapService iconMap;
     private CacheService   cache;
@@ -170,6 +172,13 @@ public final class OneService extends AbsService  implements ServiceContext {
         if (tracker == null)
             tracker = new TrackerService(this);
         return tracker;
+    }
+
+    @Override
+    public synchronized  BeaconService getBeaconService() {
+        if (beacon == null)
+            beacon = new BeaconService(this);
+        return beacon;
     }
 
     @Override

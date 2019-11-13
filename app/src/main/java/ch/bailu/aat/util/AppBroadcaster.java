@@ -37,6 +37,7 @@ public class AppBroadcaster {
 
     public static final String LOCATION_CHANGED = NAME_SPACE + "LOCATION";
     public static final String TRACKER = NAME_SPACE + "TRACKER";
+    public static final String BEACON = NAME_SPACE + "BEACON";
 
 
     public static void broadcast(Context context, String action) {
