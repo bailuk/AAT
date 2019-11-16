@@ -12,11 +12,6 @@ public class GpxAttributesNull extends GpxAttributes {
     }
 
     @Override
-    public void put(int keyIndex, String value) {
-
-    }
-
-    @Override
     public int size() {
         return 0;
     }

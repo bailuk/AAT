@@ -21,7 +21,7 @@ public abstract class OsmApiHelper {
         public Foc getResultFile() {
             return getBaseDirectory().child("result"+ getFileExtension());
         }
-        
+
 
         public Foc getQueryFile() {
             return getBaseDirectory().child("query.txt");
@@ -29,15 +29,15 @@ public abstract class OsmApiHelper {
 
         public static String getFilePrefix(String query) {
             final StringBuilder name= new StringBuilder();
-            
+
             for (int i=0; i<query.length() && name.length()<NAME_MAX; i++) {
                 appendToName(query.charAt(i), name);
             }
-            
+
             if (name.length()<NAME_MIN) {
                 name.append(AppDirectory.generateDatePrefix());
             }
-            
+
             return name.toString();
         }
 

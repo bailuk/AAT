@@ -27,7 +27,7 @@ public class OffState extends State {
     @Override
     public void onStartPauseResume() {
         onStartStop();
-        
+
     }
 
     @Override
@@ -38,7 +38,7 @@ public class OffState extends State {
             internal.lockService();
 
             internal.state = new OnState(internal);
-            
+
         } catch (Exception e) {
             AppLog.e(internal.scontext.getContext(), e);
             internal.logger = Logger.createNullLogger();
@@ -47,9 +47,9 @@ public class OffState extends State {
 
     @Override
     public void onPauseResume() {
-    }    
-    
-    
+    }
+
+
     @Override
     public int getStatusTextID() {
         return R.string.off;

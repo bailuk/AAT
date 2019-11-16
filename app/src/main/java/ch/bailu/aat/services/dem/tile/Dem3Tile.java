@@ -13,27 +13,27 @@ public class Dem3Tile implements ElevationProvider, DemProvider {
      * SRTM
      *
      *
-     * The Shuttle Radar Topography Mission (SRTM) (Wikipedia article) is a NASA mission conducted in 2000 
-     * to obtain elevation data for most of the world. It is the current dataset of choice for digital 
-     * elevation model data (DEM) since it has a fairly high resolution (1 arc-second, or around 25 meters, 
+     * The Shuttle Radar Topography Mission (SRTM) (Wikipedia article) is a NASA mission conducted in 2000
+     * to obtain elevation data for most of the world. It is the current dataset of choice for digital
+     * elevation model data (DEM) since it has a fairly high resolution (1 arc-second, or around 25 meters,
      * for the United States, and 3 arc-second, or around 90 meters at the equator, for the rest of the world),
      * has near-global coverage (from 56°S to 60°N), and is in the public domain.
      *
      * Many OpenStreetMap-based projects use SRTM data to provide topography information, relief shading,
      * and elevation profiles for trails and routes. An example is the OpenCycleMap rendering which shows contours
-     * and relief shading derived from SRTM data.  
+     * and relief shading derived from SRTM data.
      *
      *
      *
      * Format
      *
-     * The official 3-arc-second and 1-arc-second data for versions 2.1 and 3.0 are divided into 1°×1° data tiles. 
-     * The tiles are distributed as zip files containing HGT files labeled with the coordinate of the southwest cell. 
+     * The official 3-arc-second and 1-arc-second data for versions 2.1 and 3.0 are divided into 1°×1° data tiles.
+     * The tiles are distributed as zip files containing HGT files labeled with the coordinate of the southwest cell.
      * For example, the file N20E100.hgt contains data from 20°N to 21°N and from 100°E to 101°E inclusive.
      *
-     * The HGT files have a very simple format. Each file is a series of 16-bit integers giving the height of each cell 
-     * in meters arranged from west to east and then north to south. Each 3-arc-second data tile has 144201 integers 
-     * representing a 1201×1201 grid, while each 1-arc-second data tile has 12967201 integers representing a 3601×3601 grid. 
+     * The HGT files have a very simple format. Each file is a series of 16-bit integers giving the height of each cell
+     * in meters arranged from west to east and then north to south. Each 3-arc-second data tile has 144201 integers
+     * representing a 1201×1201 grid, while each 1-arc-second data tile has 12967201 integers representing a 3601×3601 grid.
      * The outermost rows and columns of each tile overlap with the corresponding rows and columns of adjacent tiles.
      *
      * Recent versions of GDAL support the HGT files natively (as long as you don't rename the files; the names they

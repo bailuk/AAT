@@ -13,7 +13,7 @@ public class PreferencesFromSdcard extends UnitTest {
     @Override
     public void test() throws Exception {
         Storage storage = new Storage(getContext());
-        storage.restore();        
+        storage.restore();
     }
 
 }

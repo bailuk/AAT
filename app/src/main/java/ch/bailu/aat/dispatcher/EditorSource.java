@@ -27,7 +27,7 @@ public class EditorSource extends ContentSource implements  EditorSourceInterfac
         }
     };
 
-    
+
     public EditorSource (ServiceContext sc) {
         scontext = sc;
         edit = new EditorHelper(sc);

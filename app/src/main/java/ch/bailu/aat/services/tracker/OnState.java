@@ -21,7 +21,7 @@ public class OnState extends State {
 
         if (tracker.isReadyForAutoPause()) {
             tracker.state = new AutoPauseState(tracker);
-            
+
         } else {
             tracker.statusIcon.showOn();
         }
@@ -40,7 +40,7 @@ public class OnState extends State {
     }
 
 
-    
+
     @Override
     public void updateTrack() {
         if (internal.isReadyForAutoPause()) {
@@ -57,7 +57,7 @@ public class OnState extends State {
                 } catch (IOException e) {
                     internal.emergencyOff(e);
                 }
-            } 
+            }
             AppBroadcaster.broadcast(internal.scontext.getContext(), AppBroadcaster.TRACKER);
         }
     }
@@ -67,21 +67,21 @@ public class OnState extends State {
     @Override
     public void onStartPauseResume() {
         onPauseResume();
-        
+
     }
 
     @Override
     public void onStartStop() {
         internal.state = new OffState(internal);
-        
+
     }
 
     @Override
     public void onPauseResume() {
         internal.state = new PauseState(internal);
-        
-    }    
-    
+
+    }
+
     @Override
     public int getStatusTextID() {
         return R.string.on;

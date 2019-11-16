@@ -20,8 +20,8 @@ import ch.bailu.aat.views.osm_features.MapFeaturesListView;
 import ch.bailu.aat.views.osm_features.MapFeaturesView;
 
 public class OverpassActivity extends AbsOsmApiActivity  {
-    
-    
+
+
     private View next;
     private MapFeaturesView osm_features;
     private MultiView multiView;

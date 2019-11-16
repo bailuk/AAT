@@ -122,11 +122,11 @@ public class GpxBigDelta implements GpxBigDeltaInterface {
 
 
 
-    public float getDistance() { 
-        return distance; 
+    public float getDistance() {
+        return distance;
     }
 
-    public long getTimeDelta() { 
+    public long getTimeDelta() {
         return (endTime-startTime)-pause;
     }
 
@@ -137,7 +137,7 @@ public class GpxBigDelta implements GpxBigDeltaInterface {
 
 
 
-    public long getStartTime() { 
+    public long getStartTime() {
         return startTime;
     }
 

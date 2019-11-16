@@ -24,8 +24,8 @@ public class LocationMenu extends AbsMenu{
     private final Clipboard clipboard;
 
     private MenuItem send, view, copy, paste, goTo;
-    
-    
+
+
     public LocationMenu(MapViewInterface m) {
         map = m;
         context = m.getMContext().getContext();
@@ -40,7 +40,7 @@ public class LocationMenu extends AbsMenu{
         copy = menu.add(R.string.clipboard_copy);
         paste = menu.add(R.string.clipboard_paste);
         goTo = menu.add(new SolidGoToLocation(context).getLabel());
-        
+
     }
 
     @Override
@@ -59,7 +59,7 @@ public class LocationMenu extends AbsMenu{
         paste.setEnabled(clipboard.getText() != null);
     }
 
-    
+
     @Override
     public boolean onItemClick(MenuItem item) {
         if (item == send) {
@@ -123,9 +123,9 @@ public class LocationMenu extends AbsMenu{
         intent.putExtra(android.content.Intent.EXTRA_TEXT, body);
         context.startActivity(Intent.createChooser(intent, url));
     }
-    
+
     private LatLong getCenter() {
         return map.getMapViewPosition().getCenter();
     }
-    
+
 }

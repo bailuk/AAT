@@ -78,7 +78,7 @@ public class EditorHelper {
 
     public void save() {
         EditorInterface e = getEditor();
-        if (e.isModified()) { 
+        if (e.isModified()) {
             e.save();
         }
     }

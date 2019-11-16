@@ -26,7 +26,7 @@ public abstract class AbsServiceLink extends AbsVolumeKeys {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         state = State.created;
-        
+
         serviceLink = new ServiceLink(this) {
 
             @Override
@@ -36,13 +36,13 @@ public abstract class AbsServiceLink extends AbsVolumeKeys {
                     state = State.serviceUp;
                 }
             }
-            
+
         };
     }
 
 
 
-    
+
     @Override
     public void onResume() {
         super.onResume();
@@ -50,7 +50,7 @@ public abstract class AbsServiceLink extends AbsVolumeKeys {
         serviceLink.up();
     }
 
-    
+
     @Override
     public void onPause() {
         if (state == State.serviceUp) {
@@ -61,8 +61,8 @@ public abstract class AbsServiceLink extends AbsVolumeKeys {
         state = State.created;
         super.onPause();
     }
-    
-    
+
+
     public void onResumeWithService() {}
     public void onPauseWithService() {}
 
@@ -73,7 +73,7 @@ public abstract class AbsServiceLink extends AbsVolumeKeys {
         serviceLink=null;
         state = State.destroyed;
         super.onDestroy();
-    }    
+    }
 
 
     public ServiceContext getServiceContext() {

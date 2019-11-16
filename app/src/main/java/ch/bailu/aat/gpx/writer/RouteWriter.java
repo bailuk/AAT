@@ -38,13 +38,13 @@ public class RouteWriter extends GpxWriter {
             writeParameter(GpxConstants.QNAME_LATITUDE, f.N6.format(tp.getLatitude()));
             writeParameter(GpxConstants.QNAME_LONGITUDE, f.N6.format(tp.getLongitude()));
         writeBeginElementEnd();
-        
+
         if (tp.getAltitude() != ElevationProvider.NULL_ALTITUDE) {
             writeBeginElement(GpxConstants.QNAME_ALTITUDE);
             writeString(f.N.format(tp.getAltitude()));
             writeEndElement(GpxConstants.QNAME_ALTITUDE);
         }
-        
+
         writeEndElement(GpxConstants.QNAME_ROUTE_POINT);
         writeString("\n");
     }

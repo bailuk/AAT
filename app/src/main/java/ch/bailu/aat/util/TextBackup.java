@@ -22,7 +22,7 @@ public abstract class TextBackup {
         public String read() throws IOException {
             return "";
         }
-        
+
     };
   */
 
@@ -30,16 +30,16 @@ public abstract class TextBackup {
         TextBackup b = new TextEditFileBackup(file);
         b.write(text);
     }
-    
-    
-    
+
+
+
     public static String read(Foc file) throws IOException {
         TextBackup b = new TextEditFileBackup(file);
         return b.read();
     }
-    
-    
-    
+
+
+
     public static class TextEditFileBackup extends TextBackup {
         public static final int MAX_FILE_SIZE=200;
 
@@ -65,7 +65,7 @@ public abstract class TextBackup {
         public String read() throws IOException {
             StringBuilder buffer = new StringBuilder();
             readToBuffer(buffer);
-            
+
             return buffer.toString();
         }
 

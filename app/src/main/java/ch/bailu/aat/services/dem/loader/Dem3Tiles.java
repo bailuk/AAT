@@ -15,13 +15,13 @@ public class Dem3Tiles {
         tiles = new Dem3Tile[NUM_TILES];
         for (int i=0; i< NUM_TILES; i++) tiles[i]=new Dem3Tile();
     }
-    
+
 
 
     public Dem3Tile getOldestProcessed() {
         Dem3Tile t=null;
         long stamp=System.currentTimeMillis();
-        
+
         for (int i=0; i<NUM_TILES; i++) {
             if (tiles[i].getStatus() == Dem3Status.LOADING) {
                 return null;
@@ -31,17 +31,17 @@ public class Dem3Tiles {
                 stamp=t.getTimeStamp();
             }
         }
-        
+
         return t;
     }
-    
-    
-    
+
+
+
     public Dem3Tile get(int index) {
         if (index < tiles.length) return tiles[index];
         return null;
     }
-    
+
     public Dem3Tile get(SrtmCoordinates c) {
         for (int i=0; i<NUM_TILES; i++) {
             if (tiles[i].hashCode() == c.hashCode()) {
@@ -50,8 +50,8 @@ public class Dem3Tiles {
         }
         return null;
     }
-    
-    
+
+
     public Dem3Tile get(String id) {
         for (int i=0; i<NUM_TILES; i++) {
             if (id.contains(tiles[i].toString())) {

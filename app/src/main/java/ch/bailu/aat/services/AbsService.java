@@ -131,7 +131,7 @@ public abstract class AbsService  extends Service {
         allcreations--;
 
         super.onDestroy();
-    }    
+    }
 
 
     @Override

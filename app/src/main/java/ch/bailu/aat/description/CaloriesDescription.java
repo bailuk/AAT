@@ -10,7 +10,7 @@ import ch.bailu.aat.preferences.general.SolidWeight;
 
 public class CaloriesDescription extends LongDescription{
 
-    
+
     public CaloriesDescription(Context context) {
         super(context);
     }
@@ -29,22 +29,22 @@ public class CaloriesDescription extends LongDescription{
         return String.valueOf(getCache());
     }
 
-    
+
     @Override
     public void onContentUpdated(int iid, GpxInformation info) {
         setCache((long)calculateCalories(info));
     }
-    
+
 
     private float calculateCalories(GpxInformation track) {
         int preset = new SolidPreset(getContext()).getIndex();
-        
+
         float hours = ((float)track.getTimeDelta()) / (1000f * 60f * 60f);
         float met = new SolidMET(getContext(), preset).getMETValue();
         // TODO : add userfeedback about wrong calculation here ?
         float weight = new SolidWeight(getContext()).getValue();
         float kcal = hours*met*weight;
-        
+
         return kcal;
     }
 }

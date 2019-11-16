@@ -8,7 +8,7 @@ import ch.bailu.aat.gpx.GpxInformation;
 
 public class NameDescription extends ContentDescription {
     private String name = "";
-    
+
     public NameDescription(Context context) {
         super(context);
     }
@@ -32,7 +32,7 @@ public class NameDescription extends ContentDescription {
         name=s;
         return r;
     }
-    
+
     @Override
     public void onContentUpdated(int iid, GpxInformation info) {
         updateName(info.getFile().getName());

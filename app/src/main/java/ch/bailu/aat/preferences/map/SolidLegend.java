@@ -19,19 +19,19 @@ import ch.bailu.aat.preferences.SolidStaticIndexList;
 public class SolidLegend extends SolidStaticIndexList {
 
     private static final String POSTFIX="_LEGEND";
-    
+
     public SolidLegend(Context context, String k) {
         super(context, k+POSTFIX, new String[] {
             context.getString(R.string.none),
             context.getString(R.string.p_legend_fulldistance) + " / " + context.getString(R.string.name),
             context.getString(R.string.distance)+ " / " + context.getString(R.string.name),
-            context.getString(R.string.altitude), 
+            context.getString(R.string.altitude),
             context.getString(R.string.speed)
             });
-        
+
     }
 
-    
+
 
 
     public GpxLayer createTrackLegendLayer() {

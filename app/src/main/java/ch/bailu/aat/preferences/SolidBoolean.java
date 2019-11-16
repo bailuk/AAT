@@ -28,14 +28,14 @@ public class SolidBoolean extends SolidStaticIndexList {
     public boolean isEnabled() {
         return getValue();
     }
-    
+
     public boolean getValue() {
         return getIndex()==1;
     }
-    
+
     public void setValue(boolean v) {
         if (v) setIndex(1);
         else   setIndex(0);
     }
-    
+
 }

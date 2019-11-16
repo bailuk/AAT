@@ -45,7 +45,7 @@ public class Storage  implements ContextWrapperInterface {
 
     public File getSharedPrefsDirectory() {
         final File data = context.getFilesDir();
-        
+
         return new File(data.getParent(), "shared_prefs");
     }
 
@@ -61,8 +61,8 @@ public class Storage  implements ContextWrapperInterface {
 
         final SharedPreferences restore = context.getSharedPreferences("restore", Context.MODE_PRIVATE);
 
-        for(Entry<String,?> entry : restore.getAll().entrySet()){ 
-            Object v = entry.getValue(); 
+        for(Entry<String,?> entry : restore.getAll().entrySet()){
+            Object v = entry.getValue();
             String key = entry.getKey();
 
             if(v instanceof Boolean)
@@ -74,7 +74,7 @@ public class Storage  implements ContextWrapperInterface {
             else if(v instanceof Long)
                 editor.putLong(key, (Long) v);
             else if(v instanceof String)
-                editor.putString(key, ((String)v));         
+                editor.putString(key, ((String)v));
         }
         editor.commit();
 
@@ -136,7 +136,7 @@ public class Storage  implements ContextWrapperInterface {
 
 
     public void unregister(OnSharedPreferenceChangeListener l) {
-        preferences.unregisterOnSharedPreferenceChangeListener(l);        
+        preferences.unregisterOnSharedPreferenceChangeListener(l);
     }
 
 

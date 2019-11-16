@@ -6,12 +6,12 @@ public class DemSplitter implements DemProvider {
     public final int dim, parent_dim;
 
     private final DemDimension _dim;
-    
+
     private final float cellsize;
 
 
     public static DemProvider factory(DemProvider dem) {
-        
+
         if (dem.inverseLatitude()==true && dem.inverseLongitude()==false) {
             dem = new DemSplitterNE(dem);
 
@@ -21,25 +21,25 @@ public class DemSplitter implements DemProvider {
         } else if (dem.inverseLatitude()==false && dem.inverseLongitude()==true) {
             dem = new DemSplitterSW(dem);
 
-        } else { 
+        } else {
             dem =  new DemSplitterNW(dem);
         }
-        
+
         return dem;
     }
 
-    
+
     public DemSplitter(DemProvider p) {
         final DemDimension pdim=p.getDim();
-        
+
         parent=p;
         parent_dim=pdim.DIM;
-        
+
         cellsize=parent.getCellsize()/2;
         _dim=new DemDimension(
-                pdim.DIM*2, 
-                pdim.OFFSET*3); // Add extra offset (1x) for MultiCell. Original (parent) offset (2x) is used by DemSplitter. 
-        
+                pdim.DIM*2,
+                pdim.OFFSET*3); // Add extra offset (1x) for MultiCell. Original (parent) offset (2x) is used by DemSplitter.
+
         dim = _dim.DIM;
     }
 
@@ -52,10 +52,10 @@ public class DemSplitter implements DemProvider {
 
         final int parent_index=parent_row*parent_dim + parent_col;
 
-        final int row_mode=row % 2; 
+        final int row_mode=row % 2;
         final int col_mode=col % 2;
 
-        
+
 
         /*
           Kernel:
@@ -79,13 +79,13 @@ public class DemSplitter implements DemProvider {
         final int g = h - 1;
         final int i = h + 1;
 
-        
+
         int sum = parent.getElevation(e)*2;
         final float div=12;
-        
+
         if (row_mode+col_mode == 0) { // A
-            sum = sum + 
-                    parent.getElevation(a)*2 + 
+            sum = sum +
+                    parent.getElevation(a)*2 +
                     parent.getElevation(b)*2 +
                     parent.getElevation(c) +
                     parent.getElevation(d)*2 +
@@ -95,8 +95,8 @@ public class DemSplitter implements DemProvider {
                     //parent.getElevation(i);
 
         } else if (row_mode==0) {    // B
-            sum = sum + 
-                    parent.getElevation(a) + 
+            sum = sum +
+                    parent.getElevation(a) +
                     parent.getElevation(b)*2 +
                     parent.getElevation(c)*2 +
                     parent.getElevation(d) +
@@ -106,8 +106,8 @@ public class DemSplitter implements DemProvider {
                     parent.getElevation(i);
 
         } else if (col_mode==0) {    // C
-            sum = sum + 
-                    parent.getElevation(a) + 
+            sum = sum +
+                    parent.getElevation(a) +
                     parent.getElevation(b) +
                     //parent.getElevation(c) +
                     parent.getElevation(d)*2 +
@@ -117,8 +117,8 @@ public class DemSplitter implements DemProvider {
                     parent.getElevation(i);
 
         } else {                     // D
-            sum = sum + 
-                    //parent.getElevation(a) + 
+            sum = sum +
+                    //parent.getElevation(a) +
                     parent.getElevation(b) +
                     parent.getElevation(c) +
                     parent.getElevation(d) +

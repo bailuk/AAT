@@ -15,7 +15,7 @@ public abstract class ContentSource  {
         target.onContentUpdated(iid, info);
     }
 
-    
+
     public abstract void onPause();
     public abstract void onResume();
 

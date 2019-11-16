@@ -5,12 +5,12 @@ import android.content.Context;
 public class SolidStaticIndexList extends SolidIndexList {
 
     private final String[] labelList;
-    
+
     public SolidStaticIndexList(Context c, String k, String[] l) {
         super(c,k);
         labelList=l;
     }
-    
+
 
     @Override
     public int length() {
@@ -27,6 +27,6 @@ public class SolidStaticIndexList extends SolidIndexList {
     public String[] getStringArray() {
         return labelList;
     }
-    
+
 
 }

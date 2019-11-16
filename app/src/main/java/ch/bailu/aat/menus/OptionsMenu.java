@@ -20,13 +20,13 @@ public class OptionsMenu extends AbsMenu {
     private MenuItem start, pause, backlight, preferences, map;
 
     private final ServiceContext scontext;
-    
-    
+
+
     public OptionsMenu(ServiceContext sc) {
         scontext = sc;
     }
-    
-    
+
+
     @Override
     public void inflate(Menu menu) {
         start = menu.add(R.string.tracker_start);
@@ -59,18 +59,18 @@ public class OptionsMenu extends AbsMenu {
         updateMenuText(scontext.getTrackerService().getState());
     }
 
-    
+
     private void updateMenuText(State state) {
         start.setTitle(state.getStartStopTextID());
         start.setIcon(state.getStartStopIconID());
         pause.setTitle(state.getPauseResumeTextID());
     }
-    
-    
+
+
     @Override
     public boolean onItemClick(MenuItem item) {
         final Context c = scontext.getContext();
-        
+
         if (item == start) {
             scontext.getTrackerService().getState().onStartStop();
 

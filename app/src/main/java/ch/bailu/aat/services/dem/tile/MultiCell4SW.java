@@ -30,7 +30,7 @@ public class MultiCell4SW extends MultiCell {
 
     private void _set(int x) {
 
-        final int a=x-1;    
+        final int a=x-1;
         final int b=x;
         final int d=x+dim;
         final int c=d-1;
@@ -55,12 +55,12 @@ public class MultiCell4SW extends MultiCell {
     }
 
     private int _delta_zx() {
-        final int sum = ((b + d) - (a + c)); 
+        final int sum = ((b + d) - (a + c));
         return  (sum * 100) / total_cellsize;
     }
 
     private int _delta_zy() {
-        final int sum = ((c + d) - (b + a)); 
+        final int sum = ((c + d) - (b + a));
         return (sum * 100)  / total_cellsize;
     }
 }

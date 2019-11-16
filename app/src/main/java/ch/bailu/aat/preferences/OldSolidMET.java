@@ -8,12 +8,12 @@ import ch.bailu.aat.preferences.general.SolidPresetCount;
 
 public class OldSolidMET extends SolidStaticIndexList {
     private final static String KEY="met";
-    
 
-    
+
+
     public OldSolidMET(Context c, int i) {
         super(c, KEY+i, c.getResources().getStringArray(R.array.p_met_list));
-        
+
     }
 
 

@@ -109,7 +109,7 @@ public class MultiView extends ViewGroup implements ObservableInterface{
     public void setNext() {
         setActive(active+1);
     }
-    
+
     public void setPrevious() {
         setActive(active-1);
     }
@@ -123,15 +123,15 @@ public class MultiView extends ViewGroup implements ObservableInterface{
         active=a;
         if (active >= pages.size()) active=0;
         else if (active < 0) active= pages.size()-1;
-        
-        
+
+
         pages.get(active).view.setVisibility(VISIBLE);
         pages.get(active).view.bringToFront();
 
         observer.onChange();
     }
-    
-    
+
+
     @Override
     protected void onMeasure(int wSpec, int hSpec) {
         int width = MeasureSpec.getSize(wSpec);
@@ -148,7 +148,7 @@ public class MultiView extends ViewGroup implements ObservableInterface{
         }
         setMeasuredDimension(width, height);
     }
-    
+
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
         for (Page p : pages) {

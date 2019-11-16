@@ -6,14 +6,14 @@ public class Trigger {
     private static final int LOW =-1;
     private static final int NEUTRAL = 0;
     private static final int HIGH = 1;
-    
+
     private final int htrigger;
     private final int ltrigger;
-    
+
     private int trigger=NEUTRAL;
-    
-    private int level=0;    
-    
+
+    private int level=0;
+
     public Trigger(int trigger) {
         htrigger=trigger;
         ltrigger=0-trigger;
@@ -32,8 +32,8 @@ public class Trigger {
             trigger=HIGH;
         }
     }
-    
-    
+
+
     public void down() {
         level--;
         if (level <= ltrigger) {
@@ -44,10 +44,10 @@ public class Trigger {
 
     public boolean isHigh() {
         return trigger==HIGH;
-    }  
+    }
     public boolean isNeutral() {
         return trigger==NEUTRAL;
-    }  
+    }
     public boolean isLow() {
         return trigger==LOW;
     }

@@ -8,7 +8,7 @@ import ch.bailu.aat.preferences.SolidStaticIndexList;
 public class SolidBacklight extends SolidStaticIndexList {
 
     private final static String KEY="backlight";
-    
+
 
 
     public SolidBacklight(Context c, int i) {
@@ -20,7 +20,7 @@ public class SolidBacklight extends SolidStaticIndexList {
                 }
             );
     }
-    
+
     public String getLabel() {
         return getContext().getString(R.string.p_backlight_title);
     }

@@ -6,11 +6,11 @@ public class LoaderThread extends WorkerThread {
     private static final int LOADER_QUEUE_SIZE = 100;
 
     private final String directory;
-    
+
     private int total_loads=0;
     private long total_bytes=0;
-    
-    
+
+
     public LoaderThread(ServiceContext sc, String d) {
         super(sc, LOADER_QUEUE_SIZE);
         directory=d;
@@ -40,7 +40,7 @@ public class LoaderThread extends WorkerThread {
         }
 
 
-        builder.append("</p>");        
+        builder.append("</p>");
     }
 }
 

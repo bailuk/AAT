@@ -8,13 +8,13 @@ public class PreferencesToSdcard extends UnitTest {
 
     public PreferencesToSdcard(Context c) {
         super(c);
-        
+
     }
 
     @Override
     public void test() {
         Storage storage = new Storage(getContext());
-        
+
         storage.backup();
     }
 

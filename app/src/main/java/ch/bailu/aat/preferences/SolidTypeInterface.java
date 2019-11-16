@@ -13,9 +13,9 @@ public interface SolidTypeInterface extends
 
     String getKey();
     Storage getStorage();
-    
+
     boolean hasKey(String key);
-    
+
     void register(OnSharedPreferenceChangeListener listener);
     void unregister(OnSharedPreferenceChangeListener listener);
 }

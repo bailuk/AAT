@@ -17,7 +17,7 @@ public class GpxPoint implements GpxPointInterface {
     private final int latitude;
     private final long   timestamp;
 
-    
+
     public static final GpxPoint NULL=new GpxPoint();
 
     private GpxPoint () {
@@ -27,7 +27,7 @@ public class GpxPoint implements GpxPointInterface {
         timestamp = 0;
     }
 
-    
+
     public GpxPoint (GpxPointInterface tp) {
         altitude= (float) tp.getAltitude();
         longitude=tp.getLongitudeE6();
@@ -55,7 +55,7 @@ public class GpxPoint implements GpxPointInterface {
         latitude = gp.getLatitudeE6();
         longitude = gp.getLongitudeE6();
         altitude = a;
-        timestamp = time; 
+        timestamp = time;
     }
 
     @Override

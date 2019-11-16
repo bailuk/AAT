@@ -77,5 +77,5 @@ public class SolidOverlayFileList extends SolidCheckList {
 
     @Override
     public int getIconResource() {return R.drawable.view_paged_inverse;}
-    
+
 }

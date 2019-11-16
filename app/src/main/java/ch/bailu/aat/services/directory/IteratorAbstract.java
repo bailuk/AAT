@@ -16,12 +16,12 @@ import ch.bailu.util_java.foc.Foc;
 public abstract class IteratorAbstract extends Iterator implements OnSharedPreferenceChangeListener {
     private final ServiceContext scontext;
 
-   
+
     private OnCursorChangedListener onCursorChangedListener = NULL_LISTENER;
     private Cursor cursor = null;
     private final SolidDirectoryQuery sdirectory;
     private String selection="";
-    
+
 
     public IteratorAbstract (ServiceContext sc) {
         sdirectory = new SolidDirectoryQuery(sc.getContext());
@@ -30,13 +30,13 @@ public abstract class IteratorAbstract extends Iterator implements OnSharedPrefe
         AppBroadcaster.register(sc.getContext(), onSyncChanged, AppBroadcaster.DB_SYNC_CHANGED);
     }
 
-    
+
     @Override
     public void setOnCursorChangedLinsener(OnCursorChangedListener l) {
         onCursorChangedListener = l;
     }
-    
-    
+
+
     @Override
     public void onSharedPreferenceChanged(SharedPreferences pref, String key) {
         if (sdirectory.containsKey(key) && selection.equals(sdirectory.createSelectionString()) == false) {
@@ -44,7 +44,7 @@ public abstract class IteratorAbstract extends Iterator implements OnSharedPrefe
         }
     }
 
-    
+
     private final BroadcastReceiver  onSyncChanged = new BroadcastReceiver () {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -52,7 +52,7 @@ public abstract class IteratorAbstract extends Iterator implements OnSharedPrefe
         }
     };
 
-    
+
     @Override
     public boolean moveToPrevious() {
         if (cursor!=null) return cursor.moveToPrevious();

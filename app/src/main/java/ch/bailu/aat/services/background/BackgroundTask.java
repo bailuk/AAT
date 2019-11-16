@@ -3,7 +3,7 @@ package ch.bailu.aat.services.background;
 import ch.bailu.aat.services.ServiceContext;
 
 public abstract class BackgroundTask implements ThreadControl {
-    
+
     public static final BackgroundTask NULL = new BackgroundTask() {
 
         @Override
@@ -27,18 +27,18 @@ public abstract class BackgroundTask implements ThreadControl {
 */
 
     private boolean processing = true;
-    
-    
+
+
     @Override
     public boolean canContinue() {
         return processing;
     }
-    
-    
+
+
 
     public abstract long bgOnProcess(ServiceContext sc);
- 
-    
+
+
     public synchronized void stopProcessing() {
         processing =false;
     }

@@ -11,12 +11,12 @@ import ch.bailu.aat.services.sensor.attributes.HeartRateAttributes;
 import ch.bailu.aat.services.sensor.attributes.StepCounterAttributes;
 
 public class AttributesCollector {
-    public final static long LOG_INTERVAL = 3 * 1000;
-    public final static long SHORT_TIMEOUT = 2 * 1000;
-    public final static long LONG_TIMEOUT = 10 * 1000;
+    private final static long LOG_INTERVAL = 3 * 1000;
+    private final static long SHORT_TIMEOUT = 2 * 1000;
+    private final static long LONG_TIMEOUT = 10 * 1000;
 
-    public long lastLog = System.currentTimeMillis();
-    public long time = System.currentTimeMillis();
+    private long lastLog = System.currentTimeMillis();
+    private long time = System.currentTimeMillis();
 
 
     private final Collector[] collectors = new Collector[]{
@@ -51,11 +51,11 @@ public class AttributesCollector {
 
 
     private class Collector {
-        public final int keyIndex;
-        public final int infoID;
-        public final long maxAge;
+        private final int keyIndex;
+        private final int infoID;
+        private final long maxAge;
 
-        public GpxInformation lastInfo;
+        private GpxInformation lastInfo;
 
 
 

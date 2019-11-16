@@ -13,24 +13,24 @@ import ch.bailu.util_java.foc.Foc;
 public class SrtmCoordinates extends Coordinates implements LatLongE6Interface {
     /**
      * # Dem3LoaderTask:
-     * Digital Elevation Models in 3 arc / second resolution. 
-     * 
+     * Digital Elevation Models in 3 arc / second resolution.
+     *
      * # Source:
      * All tiles are taken from http://viewfinderpanoramas.org/dem3.html and repackaged.
-     * Most tiles are originally from the 2000 Shuttle Radar Topography Mission. 
+     * Most tiles are originally from the 2000 Shuttle Radar Topography Mission.
      * See http://viewfinderpanoramas.org/dem3 for details.
-     * 
+     *
      * # Obsolete download location:
      * private final static String base_url_srtm= "http://e4ftl01.cr.usgs.gov/SRTM/SRTMGL3.003/2000.02.11/";
-     *  
+     *
      */
     private final static String base_url= "http://bailu.ch/dem3/";
-    
-    
+
+
     private final int la, lo;
     private final String string;
-    
-    
+
+
     public SrtmCoordinates(int la, int lo) {
         this(la/1e6,lo/1e6);
     }
@@ -42,8 +42,8 @@ public class SrtmCoordinates extends Coordinates implements LatLongE6Interface {
         string = toLaString() + toLoString();
     }
 
-    
-    
+
+
     public SrtmCoordinates(LatLongE6Interface p) {
         this(p.getLatitudeE6(), p.getLongitudeE6());
     }
@@ -64,7 +64,7 @@ public class SrtmCoordinates extends Coordinates implements LatLongE6Interface {
     public String toLoString() {
         return WGS84Coordinates.getLongitudeChar(lo) + f3.format(Math.abs(lo));
     }
-    
+
     @NonNull
     @Override
     public String toString() {
@@ -90,7 +90,7 @@ public class SrtmCoordinates extends Coordinates implements LatLongE6Interface {
     public int hashCode() {
         return string.hashCode();
     }
-    
+
     public String toExtString() {
         return toLaString() + "/" + toString();
     }
@@ -106,12 +106,12 @@ public class SrtmCoordinates extends Coordinates implements LatLongE6Interface {
         return base.descendant("dem3/" + toExtString() + ".hgt.zip");
     }
 
-    
+
     public Foc toFile(Context context) {
         return toFile(new SolidDataDirectory(context).getValueAsFile());
     }
 
-    
+
 
     // obsolete location
     private Foc toSRTMFile(Foc base) {

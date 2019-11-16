@@ -11,11 +11,11 @@ import ch.bailu.util_java.foc.Foc;
 
 public class TagEditor extends EditText {
     private Foc backup;
-    
-    
+
+
     public TagEditor(Context context, Foc an)  {
         super(context);
-        
+
         createEditor();
         createEditorBackup(an);
     }
@@ -47,21 +47,21 @@ public class TagEditor extends EditText {
         String text;
         try {
             text = TextBackup.read(backup);
-            
+
         } catch (Exception e) {
             text = "";
         }
         setText(text);
-        
+
     }
 
-    
+
     private void saveFile() {
         try {
             TextBackup.write(backup, getText().toString());
         } catch (Exception e) {
             AppLog.e(getContext(), TagEditor.this, e);
-            
+
         }
     }
 

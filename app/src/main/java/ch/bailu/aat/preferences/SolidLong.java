@@ -11,8 +11,8 @@ public class SolidLong extends AbsSolidType {
 
     private final String key;
     private final Storage storage;
-        
-        
+
+
     public SolidLong(Context c, String k) {
         storage=new Storage(c);
         key=k;
@@ -21,7 +21,7 @@ public class SolidLong extends AbsSolidType {
     public long getValue() {
         return getStorage().readLong(getKey());
     }
-        
+
     public void setValue(long v) {
         getStorage().writeLong(getKey(),v);
     }

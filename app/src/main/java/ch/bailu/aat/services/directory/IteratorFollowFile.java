@@ -34,7 +34,7 @@ public class IteratorFollowFile extends IteratorAbstract {
     }
 
 
-    public boolean findFile(String fID) { 
+    public boolean findFile(String fID) {
         int old_position = getPosition();
 
         moveToPosition(-1);
@@ -43,7 +43,7 @@ public class IteratorFollowFile extends IteratorAbstract {
                 return true;
             }
         }
-        
+
         moveToPosition(old_position);
         return false;
     }

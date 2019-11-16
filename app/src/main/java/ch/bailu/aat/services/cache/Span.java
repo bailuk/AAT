@@ -13,8 +13,8 @@ public class Span {
         deg = d;
         firstPixel = lastPixel = 0;
     }
-    
-    
+
+
 
     public Span(Span s) {
         deg = s.deg;
@@ -22,24 +22,24 @@ public class Span {
         lastPixel = s.lastPixel;
     }
 
-    
+
     public int firstPixelIndex() {
         return firstPixel;
     }
     public int lastPixelIndex() {
         return lastPixel;
     }
-    
+
     public int deg() {
         return deg;
     }
-    
-    
+
+
     public int pixelCount() {
         return lastPixel - firstPixel;
     }
 
-    
+
     public void copyIntoArray(ArrayList<Span> span_array, int pixel_index, int deg) {
         lastPixel = pixel_index;
 

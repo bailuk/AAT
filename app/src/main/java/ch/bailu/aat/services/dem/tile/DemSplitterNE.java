@@ -16,7 +16,7 @@ public class DemSplitterNE extends DemSplitter {
 
         final int parent_index=parent_row*parent_dim + parent_col;
 
-        final int row_mode=row % 2; 
+        final int row_mode=row % 2;
         final int col_mode=col % 2;
 
         int sum;
@@ -27,9 +27,9 @@ public class DemSplitterNE extends DemSplitter {
         if (row_mode+col_mode == 0) { // a
             final int a = parent.getElevation(parent_index - parent_dim);
             sum = C + a;
-            
+
         } else if (row_mode==0) {    // b
-            final int b = parent.getElevation(parent_index - parent_dim + 1); 
+            final int b = parent.getElevation(parent_index - parent_dim + 1);
             sum = C + b;
         } else if (col_mode==0) {    // c
             sum=C;

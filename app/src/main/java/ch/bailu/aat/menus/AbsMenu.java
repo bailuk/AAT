@@ -52,7 +52,7 @@ public abstract class AbsMenu {
 
         inflate(popup.getMenu());
         prepare(popup.getMenu());
-        
+
         popup.setOnMenuItemClickListener(item -> onItemClick(item));
 
         popup.show();

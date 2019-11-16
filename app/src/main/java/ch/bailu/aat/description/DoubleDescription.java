@@ -5,7 +5,7 @@ import android.content.Context;
 public abstract class DoubleDescription extends ContentDescription {
 
     private double cache;
-    
+
     public DoubleDescription(Context c) {
         super(c);
     }
@@ -13,9 +13,9 @@ public abstract class DoubleDescription extends ContentDescription {
     protected double getCache() {
         return cache;
     }
-    
+
     protected boolean setCache(double f) {
-        boolean r; 
+        boolean r;
         if (cache==f) {
             r=false;
         } else {

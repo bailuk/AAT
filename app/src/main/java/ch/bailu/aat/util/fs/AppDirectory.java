@@ -20,31 +20,31 @@ public class AppDirectory  {
     public static final String DIR_TILES = "tiles";
     public static final String DIR_TILES_OSMDROID = "osmdroid/tiles";
 
-    
+
     public static final String DIR_LOG = "log";
     public static final String FILE_LOG = "log.gpx";
     public static Foc getLogFile(Context context) {
         return getDataDirectory(context, DIR_LOG).child(FILE_LOG);
     }
-    
-    
+
+
     public static final String DIR_OVERLAY = "overlay";
     public static final String DIR_IMPORT = "import";
-    
+
     public static final String DIR_NOMINATIM = "nominatim";
 
     public static final String DIR_OVERPASS = "overpass";
 
-    
-    public static final String DIR_TEST = "test";
-    
-    
-    
 
-    
+    public static final String DIR_TEST = "test";
+
+
+
+
+
     public static final String DIR_CACHE = "cache";
     public static final String FILE_CACHE_DB="summary.db";
-    
+
 
 
     public static final String DIR_EDIT = "overlay/draft";
@@ -55,10 +55,10 @@ public class AppDirectory  {
     }
 
     //////////////////////////////////////////////////////////////////////////////////////
-    
-    
 
-    
+
+
+
     /////////////////////////////////////////////////////////////////////////////////////////////////
     public static Foc getTileFile(String tilePath, Context context) {
         return getTileCacheDirectory(context).descendant(tilePath);
@@ -69,10 +69,10 @@ public class AppDirectory  {
         return new SolidTileCacheDirectory(c).getValueAsFile();
     }
     //////////////////////////////////////////////////////////////////////////////////////////////////
-    
-    
 
-    
+
+
+
     ///////////////////////////////////////////////////////////////////////////////////////
     private static final String PRESET_PREFIX = "activity";
     public static final String PREVIEW_EXTENSION = ".preview";
@@ -83,17 +83,17 @@ public class AppDirectory  {
     static private String getPresetPrefix(int i) {
         return PRESET_PREFIX + i;
     }
-    
-    
 
 
-    
+
+
+
 
     ////////////////////////////////////////////////////////////////////////////////////////
 
 
-    
-    
+
+
     ///////////////////////////////////////////////////////////////////////////////////////////////
     public static final String GPX_EXTENSION=".gpx";
     public static final String OSM_EXTENSION=".osm";
@@ -114,7 +114,7 @@ public class AppDirectory  {
     }
 
 
-    
+
     public static String generateDatePrefix() {
         long time = System.currentTimeMillis();
         return String.format(Locale.ROOT,
@@ -134,7 +134,7 @@ public class AppDirectory  {
 
         int length=name.length();
 
-        for (int i=length; i>0 ; i--) { 
+        for (int i=length; i>0 ; i--) {
             if (name.charAt(i-1)=='.') {
                 length=i;
                 break;

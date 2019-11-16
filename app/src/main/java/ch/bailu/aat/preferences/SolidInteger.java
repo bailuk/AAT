@@ -9,23 +9,23 @@ import ch.bailu.aat.util.ui.AppLog;
 public class SolidInteger extends AbsSolidType {
     private final String key;
     private final Storage storage;
-    
-    
+
+
     public SolidInteger(Context c, String k) {
         storage=new Storage(c);
         key=k;
     }
 
-    
+
     public int getValue() {
         return getStorage().readInteger(getKey());
     }
-    
-    
+
+
     public void setValue(int v) {
         getStorage().writeInteger(getKey(),v);
     }
-    
+
 
     @Override
     public String getKey() {

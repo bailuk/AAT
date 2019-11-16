@@ -10,13 +10,13 @@ import ch.bailu.aat.util.ui.AppLog;
 public class SolidWeight extends SolidInteger {
 
     final private static String KEY="weight";
-    
-    
+
+
     public SolidWeight(Context c) {
         super(c, KEY);
-        
+
     }
-    
+
     @Override
     public String getLabel() {
         return getContext().getString(R.string.p_weight_title);

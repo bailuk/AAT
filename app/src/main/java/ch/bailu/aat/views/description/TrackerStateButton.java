@@ -10,9 +10,9 @@ import ch.bailu.aat.util.ui.AppTheme;
 
 public class TrackerStateButton extends ColorNumberView implements OnClickListener {
 
-    final private ServiceContext scontext; 
-    
-    
+    final private ServiceContext scontext;
+
+
     public TrackerStateButton(ServiceContext c) {
         super(new TrackerStateDescription(c.getContext()), AppTheme.bar);
 

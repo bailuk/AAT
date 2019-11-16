@@ -19,10 +19,10 @@ public class ExternalListActivity extends AbsGpxListActivity {
                 new DateDescription(this),
                 new DistanceDescription(this),
                 new NameDescription(this)
-        };          
+        };
     }
 
-    
+
     @Override
     public ContentDescription[] getSummaryData() {
         return new ContentDescription[] {
@@ -30,7 +30,7 @@ public class ExternalListActivity extends AbsGpxListActivity {
                 new TrackSizeDescription(this),
         };
     }
- 
+
     @Override
     public void displayFile() {
         Intent intent=new Intent(this,FileContentActivity.class);

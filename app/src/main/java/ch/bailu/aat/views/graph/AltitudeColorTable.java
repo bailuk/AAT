@@ -3,7 +3,7 @@ package ch.bailu.aat.views.graph;
 import android.graphics.Color;
 
 public class AltitudeColorTable extends ColorTable{
-    
+
     private final static int ALTITUDE_OFFSET=500;
     private final static int MAX_ALTITUDE=3000;
     private final static int GRADIENTS=12;
@@ -14,7 +14,7 @@ public class AltitudeColorTable extends ColorTable{
     public AltitudeColorTable() {
         super(MAX_ALTITUDE, GRADIENTS);
     }
-    
+
     @Override
     public int getColor(int index) {
         return super.getColor(index + ALTITUDE_OFFSET);
@@ -23,7 +23,7 @@ public class AltitudeColorTable extends ColorTable{
     @Override
     public int calculateColor(int gradient, int i) {
         int color;
-        
+
         switch (gradient) {
         case 0:
             color=Color.rgb(0, i, i);
@@ -61,7 +61,7 @@ public class AltitudeColorTable extends ColorTable{
         case 11:
             color=Color.rgb(i,i, i);
             break;
-        default: 
+        default:
             color=super.calculateColor(gradient, i);
             break;
         }

@@ -83,7 +83,7 @@ public class HillshadeColorTable extends ObjectHandle {
 
     private class TableInitializer extends BackgroundTask {
         /**
-         * Source: 
+         * Source:
          * http://edndoc.esri.com/arcobjects/9.2/net/shared/geoprocessing/spatial_analyst_tools/how_hillshade_works.htm
          */
 

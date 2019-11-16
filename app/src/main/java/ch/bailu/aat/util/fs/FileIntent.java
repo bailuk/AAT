@@ -26,7 +26,7 @@ public class FileIntent {
 
     public static void view(Context context, Intent intent, Foc file) {
         if (file.canRead()) {
-            
+
             intent.setAction(Intent.ACTION_VIEW);
             if (file.isDir() || file.getPath().startsWith("content:/")) {
                 intent.setData(Uri.parse(file.getPath()));
@@ -48,13 +48,13 @@ public class FileIntent {
     public static Uri toUri(File file) {
         return Uri.fromFile(file);
     }
-    
-    
+
+
     public static Uri toContentUri(Foc file) {
         return Uri.parse("content://ch.bailu.aat.gpx" + file.toString());
     }
 
-    
+
    public static void send(Context context, Intent intent, Foc file) {
         /*
           This is the correct implementation for sending one file as an e-mail attachment.
@@ -63,13 +63,13 @@ public class FileIntent {
          */
         //final Uri uri = Uri.fromFile(file);
         final Uri uri = toContentUri(file);
-        
+
         intent.setAction(Intent.ACTION_SEND);
         intent.putExtra(Intent.EXTRA_SUBJECT, file.getName());
         intent.putExtra(Intent.EXTRA_TEXT, file.toString());
         intent.putExtra(Intent.EXTRA_STREAM, uri);
         setType(intent, file); // only works with type setCopy (gmail and android mail)
-        
+
         context.startActivity(Intent.createChooser(intent , file.getName()));
     }
 
@@ -92,7 +92,7 @@ public class FileIntent {
 
     private static void setType(Intent intent, Foc file) {
         String type = mimeTypeFromFileName(file.getName());
-        
+
         if (type != null) {
             intent.setType(type);
         }
@@ -105,7 +105,7 @@ public class FileIntent {
             intent.setType(type);
         }
     }
-    
+
     public static String mimeTypeFromFileName(String name) {
         if (name.endsWith(".gpx")) return "application/gpx+xml";
         else if (name.endsWith(".osm")) return "application/xml";

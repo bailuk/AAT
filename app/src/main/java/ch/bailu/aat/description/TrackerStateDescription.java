@@ -5,7 +5,7 @@ import android.content.Context;
 import ch.bailu.aat.R;
 
 public class TrackerStateDescription extends StateDescription {
-    
+
 
     public TrackerStateDescription(Context c) {
 		super(c);
@@ -15,5 +15,5 @@ public class TrackerStateDescription extends StateDescription {
     public String getLabel() {
         return getContext().getString(R.string.tracker);
     }
-    
+
 }

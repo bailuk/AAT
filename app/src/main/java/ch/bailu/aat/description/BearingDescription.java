@@ -22,7 +22,7 @@ public class BearingDescription extends DoubleDescription {
     public String getValue() {
         return f.N3.format(getCache());
     }
-    
+
     @Override
     public String getUnit() {
         return LongitudeDescription.UNIT;
@@ -33,7 +33,7 @@ public class BearingDescription extends DoubleDescription {
 //        setCache(info.getBearing());
     }
 
-   
-    
+
+
 
 }

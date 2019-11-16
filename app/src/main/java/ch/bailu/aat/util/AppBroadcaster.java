@@ -25,9 +25,9 @@ public class AppBroadcaster {
     public static final String SENSOR_DISCONECTED = NAME_SPACE + "SENSOR_DISCONECTED";
     public static final String SENSOR_RECONNECT = NAME_SPACE + "SENSOR_RECONNECT";
 
-    /** 
+    /**
      *   Information about state changes of files (in cache and on disk)
-     *   
+     *
      */
     public static final String FILE_CHANGED_ONDISK  = NAME_SPACE + "ONDISK";
     public static final String FILE_CHANGED_INCACHE = NAME_SPACE + "INCACHE";
@@ -61,7 +61,7 @@ public class AppBroadcaster {
 
 
     public static void broadcast(Context context, String action, String file) {
-        
+
         Intent intent = new Intent();
         intent.setAction(action);
 
@@ -78,13 +78,13 @@ public class AppBroadcaster {
         broadcast(context, action, file.getPath(), url);
     }
     public static void broadcast(Context context, String action, String file, String url) {
-        
+
         Intent intent = new Intent();
         intent.setAction(action);
 
         AppIntent.setFile(intent, file);
         AppIntent.setUrl(intent, url);
-        
+
         context.sendBroadcast(intent);
     }
 

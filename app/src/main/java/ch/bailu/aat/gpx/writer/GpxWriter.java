@@ -14,7 +14,7 @@ import ch.bailu.util_java.foc.Foc;
 public abstract class GpxWriter {
 
 
-    private BufferedWriter output=null;
+    private final BufferedWriter output;
 
     protected final FF_GPX f = FF_GPX.f();
 
@@ -38,34 +38,34 @@ public abstract class GpxWriter {
     public abstract void writeTrackPoint(GpxPointInterface tp) throws IOException;
 
     public void close() throws IOException {
-        output.close();		
+        output.close();
     }
 
 
     public void writeHeader(long timestamp) throws IOException {
-        writeString("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>");
-        writeString("\n<gpx xmlns=\"http://www.topografix.com/GPX/1/1\"");
-        writeString("\n    creator=\"");
+        writeString("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>" +
+                    "\n<gpx xmlns=\"http://www.topografix.com/GPX/1/1\"" +
+                    "\n    creator=\"");
         writeString(AppString.getShortName());
         writeString(" ");
         writeString(AppString.getLongName());
         writeString(" ");
         writeString(AppString.getVersionName());
-        writeString("\" version=\"1.0\"");
-        writeString("\n    xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"");
-        writeString("\n    xsi:schemaLocation=\"http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd\">");
+        writeString("\" version=\"1.0\"" +
+                    "\n    xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"" +
+                    "\n    xsi:schemaLocation=\"http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd\">" +
 
-        writeString("\n<metadata>");
+                    "\n<metadata>");
         writeTimeStamp(timestamp);
         writeString("</metadata>\n");
 
     }
 
-    public void writeString(String string) throws IOException {
+    protected void writeString(String string) throws IOException {
         output.write(string,0,string.length());
     }
 
-    public void writeTimeStamp(long time) throws IOException {
+    protected void writeTimeStamp(long time) throws IOException {
         writeString(
                 "<" + GpxConstants.QNAME_TIME + ">"
                 + f.TIME.format(time) +
@@ -74,29 +74,29 @@ public abstract class GpxWriter {
 
 
 
-    public void writeEndElement(String e) throws IOException {
+    protected void writeEndElement(String e) throws IOException {
         writeString("</"); writeString(e); writeString(">");
     }
 
-    public void writeElementEnd() throws IOException{
+    protected void writeElementEnd() throws IOException{
         writeString("/>");
     }
 
-    public void writeBeginElementStart(String e) throws IOException {
+    protected void writeBeginElementStart(String e) throws IOException {
         writeString("<"); writeString(e);
     }
 
-    public void writeBeginElementEnd() throws IOException{
+    protected void writeBeginElementEnd() throws IOException{
         writeString(">");
     }
 
 
 
-    public void writeBeginElement(String e) throws IOException {
+    protected void writeBeginElement(String e) throws IOException {
         writeBeginElementStart(e); writeBeginElementEnd();
     }
 
-    public void writeParameter(String pname, String pvalue) throws IOException {
+    protected void writeParameter(String pname, String pvalue) throws IOException {
         writeString(" ");
         writeString(pname);
         writeString("=\"");
@@ -105,7 +105,7 @@ public abstract class GpxWriter {
     }
 
 
-    public void writeAttributesGpxStyle(GpxPointInterface tp) throws IOException {
+    protected void writeAttributesGpxStyle(GpxPointInterface tp) throws IOException {
         if (tp.getAttributes().size() > 0) {
             writeBeginElement(GpxConstants.QNAME_EXTENSIONS);
 
@@ -121,13 +121,13 @@ public abstract class GpxWriter {
     }
 
 
-    public void writeAttributeGpxStyle(String key, String val) throws IOException {
+    protected void writeAttributeGpxStyle(String key, String val) throws IOException {
         writeBeginElement(key);
         writeString(val);
         writeEndElement(key);
     }
 /*
-    public void writeAttributesTagStyle(GpxPointInterface tp) throws IOException {
+    protected void writeAttributesTagStyle(GpxPointInterface tp) throws IOException {
         if (tp.getAttributes().size()>0) {
             writeBeginElement(GpxConstants.QNAME_EXTENSIONS);
 

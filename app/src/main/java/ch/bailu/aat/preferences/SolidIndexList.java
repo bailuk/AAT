@@ -5,13 +5,13 @@ import android.content.Context;
 public abstract class SolidIndexList extends AbsSolidType {
 
     private final SolidInteger sindex;
-    
-    
+
+
     public SolidIndexList(Context c, String k) {
         sindex = new SolidInteger(c,k);
     }
-    
-    
+
+
     public abstract int length();
     protected abstract String getValueAsString(int i);
 
@@ -42,13 +42,13 @@ public abstract class SolidIndexList extends AbsSolidType {
         }
         return r;
     }
-    
-    
+
+
     public int getIndex() {
         return validate(sindex.getValue());
     }
 
-    
+
     @Override
     public String getKey() {
         return sindex.getKey();

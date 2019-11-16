@@ -8,7 +8,7 @@ import ch.bailu.aat.gpx.StateID;
 
 public abstract class StateDescription extends ContentDescription {
 
-    
+
 	public StateDescription(Context c) {
 		super(c);
 	}
@@ -22,7 +22,7 @@ public abstract class StateDescription extends ContentDescription {
 
     public String getValue() {
         String value;
-        
+
         switch (state) {
         case StateID.NOACCESS: value=getContext().getString(R.string.gps_noaccess); break;
         case StateID.NOSERVICE: value=getContext().getString(R.string.gps_nogps); break;

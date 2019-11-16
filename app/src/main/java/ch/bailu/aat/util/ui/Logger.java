@@ -28,7 +28,7 @@ public class Logger {
 
 
     public void info(String string, Throwable e) {
-        if (e.getMessage() != null) 
+        if (e.getMessage() != null)
             AppLog.d(source, string + " " + e.getMessage());
         else {
             info(string);

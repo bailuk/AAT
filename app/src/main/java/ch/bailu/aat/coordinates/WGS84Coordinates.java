@@ -19,14 +19,14 @@ public class WGS84Coordinates extends Coordinates {
     public static class Sexagesimal {
         public final int deg, min, sec;
         public final double coordinate;
-        
+
         public Sexagesimal(double c) {
             coordinate = c;
             deg = (int)c;
 
             c = (Math.abs(c)-Math.abs(deg))*60d;
             min = (int)c;
-            
+
             c = (c-min)*60d;
             sec = (int)Math.round(c);
         }
@@ -34,9 +34,9 @@ public class WGS84Coordinates extends Coordinates {
         public int toE6() {
             return (int) (coordinate * 1e6);
         }
-        
 
-        
+
+
         public int getDegree() {return deg;}
         public int getMinute() {return min;}
         public int getSecond() {return sec;}
@@ -52,7 +52,7 @@ public class WGS84Coordinates extends Coordinates {
         }
     }
 
-    
+
     private final Sexagesimal longitude;
     private final Sexagesimal latitude;
 
@@ -107,7 +107,7 @@ public class WGS84Coordinates extends Coordinates {
     public Sexagesimal getLongitude() {
         return longitude;
     }
-    
+
     public Sexagesimal getLatitude() {
         return latitude;
     }
@@ -128,9 +128,9 @@ public class WGS84Coordinates extends Coordinates {
     public static char getLatitudeChar(double la) {
         if (la<0) return 'S';
         else return 'N';
-        
+
     }
-    
+
     public char getLatitudeChar() {
         return getLatitudeChar(latitude.coordinate);
     }

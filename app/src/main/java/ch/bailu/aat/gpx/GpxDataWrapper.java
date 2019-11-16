@@ -37,7 +37,7 @@ public class GpxDataWrapper implements GpxDeltaPointInterface, GpxBigDeltaInterf
     public int getLongitudeE6() {
         return point.getLongitudeE6();
     }
-    
+
     @Override
     public float getSpeed() {
         return summary.getSpeed();

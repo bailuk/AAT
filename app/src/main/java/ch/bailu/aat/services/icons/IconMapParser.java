@@ -8,13 +8,13 @@ import ch.bailu.util_java.io.Stream;
 
 
 public class IconMapParser {
-    private final static int ICON=0, KEY=1, VALUE=2, END=3, MAX=4; 
-    
+    private final static int ICON=0, KEY=1, VALUE=2, END=3, MAX=4;
+
     private final String[] entries = new String[MAX];
     private int entry=0;
-    
+
     private final StringBuilder buffer = new StringBuilder();
-    
+
     IconMapParser(Foc file, IconMap map) throws IOException {
         Stream stream = new Stream(file);
 
@@ -26,13 +26,13 @@ public class IconMapParser {
             if (stream.haveA('\n')) {
                 addEntry(map);
                 stream.read();
-                
+
             } else if (stream.haveCharacter()) {
                 parseSubEntry(stream);
-                
+
             } else if (stream.haveEOF()){
                 break;
-                
+
             } else {
                 stream.read();
             }
@@ -41,7 +41,7 @@ public class IconMapParser {
 
     private void parseSubEntry(Stream stream) throws IOException {
         buffer.setLength(0);
-        
+
         while(
                 stream.haveA('_') ||
                 stream.haveA('/') ||
@@ -51,11 +51,11 @@ public class IconMapParser {
             buffer.append((char)stream.get());
             stream.read();
         }
-        
+
         entries[entry]=buffer.toString();
-        
+
         if (entry < END) {
-            entry++;    
+            entry++;
         }
     }
 
@@ -64,6 +64,6 @@ public class IconMapParser {
             map.add(Keys.toIndex(entries[KEY]), entries[VALUE], entries[ICON]);
         }
         entry=0;
-        
+
     }
 }

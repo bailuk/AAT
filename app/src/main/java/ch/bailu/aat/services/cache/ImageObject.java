@@ -13,7 +13,7 @@ import ch.bailu.util_java.foc.Foc;
 
 public class ImageObject extends ImageObjectAbstract {
     public final static ImageObject NULL=new ImageObject();
-    
+
     private final SyncBitmap bitmap=new SyncBitmap();
     private final Foc imageFile;
 
@@ -21,7 +21,7 @@ public class ImageObject extends ImageObjectAbstract {
     private ImageObject() {
         this(FocAndroid.NULL);
     }
-    
+
     public ImageObject(Foc id) {
         super(id.getPath());
         imageFile = id;
@@ -29,11 +29,11 @@ public class ImageObject extends ImageObjectAbstract {
 
 
 
-    
+
     @Override
     public void onInsert(ServiceContext sc){
         load(sc);
-        
+
         sc.getCacheService().addToBroadcaster(this);
     }
 
@@ -50,13 +50,13 @@ public class ImageObject extends ImageObjectAbstract {
     }
 
 
-    
+
     @Override
     public long getSize() {
         return bitmap.getSize();
     }
 
-    
+
     public boolean isReadyAndLoaded() {
         return getBitmap() != null;
     }
@@ -82,7 +82,7 @@ public class ImageObject extends ImageObjectAbstract {
         }
     }
 
-    
+
     @Override
     public void onChanged(String id, ServiceContext sc) {}
 

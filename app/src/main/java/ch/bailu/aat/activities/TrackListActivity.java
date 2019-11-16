@@ -24,7 +24,7 @@ public class TrackListActivity extends AbsGpxListActivity {
                 new AverageSpeedDescription(this),
                 new TimeDescription(this),
                 new NameDescription(this)
-        };    		
+        };
     }
 
     @Override

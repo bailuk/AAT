@@ -44,7 +44,7 @@ public abstract class AppDialog {
         builder.setPositiveButton(activity.getString(R.string.dialog_yes), new PositiveClickListener());
         builder.setNegativeButton(activity.getString(R.string.dialog_no), new NegativeClickListener());
         dialog = builder.create();
-                
+
         dialog.setOwnerActivity(activity);
         dialog.show();
     }
@@ -58,13 +58,13 @@ public abstract class AppDialog {
         builder.setTitle(title);
         builder.setView(edit);
         builder.setCancelable(true);
-        builder.setPositiveButton(activity.getString(R.string.dialog_ok), 
+        builder.setPositiveButton(activity.getString(R.string.dialog_ok),
                 new PositiveClickListener());
-        builder.setNegativeButton(activity.getString(R.string.dialog_cancel), 
+        builder.setNegativeButton(activity.getString(R.string.dialog_cancel),
                 new NegativeClickListener());
 
         dialog = builder.create();
-        
+
         dialog.setOwnerActivity(activity);
         dialog.show();
     }
@@ -81,7 +81,7 @@ public abstract class AppDialog {
         builder.setNegativeButton(activity.getString(R.string.dialog_cancel), new NegativeClickListener());
 
         dialog = builder.create();
-        
+
         dialog.setOwnerActivity(activity);
         dialog.show();
 

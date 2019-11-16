@@ -2,7 +2,7 @@ package ch.bailu.aat.views.description;
 
 /*
 public class NumberButton extends ColorNumberView {
-    
+
 
     public NumberButton(ContentDescription data) {
         super(data);
@@ -11,6 +11,6 @@ public class NumberButton extends ColorNumberView {
         setFocusable(true);
     }
 
-    
+
 }
 */

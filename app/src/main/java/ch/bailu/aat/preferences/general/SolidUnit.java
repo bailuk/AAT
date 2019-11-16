@@ -20,7 +20,7 @@ public class SolidUnit extends SolidStaticIndexList {
     static private final String[] SPEED_UNIT = {"km/h", "mph", "m/s", "m/s"};
     static public final String[] ALT_UNIT = {"m", "f", "m", "m"};
     static public final String[] PACE_UNIT = {"T/km", "T/miles", "T/m", "s/m"};
-    
+
     public SolidUnit(Context c) {
         super(c, KEY,
                 c.getResources().getStringArray(R.array.p_unit_list));
@@ -30,14 +30,14 @@ public class SolidUnit extends SolidStaticIndexList {
     public float getDistanceFactor() {return DIST_FACTOR[getIndex()];}
     public float getAltitudeFactor() {return ALT_FACTOR[getIndex()];}
     public float getSpeedFactor() {return SPEED_FACTOR[getIndex()];}
-        
+
     public String getDistanceUnit() {return DIST_UNIT[getIndex()];}
     public String getAltitudeUnit() {return ALT_UNIT[getIndex()];}
     public String getSpeedUnit() {return SPEED_UNIT[getIndex()];}
-    
+
     @Override
     public String getLabel() {
-        return getContext().getString(R.string.p_unit_title); 
+        return getContext().getString(R.string.p_unit_title);
     }
 
 

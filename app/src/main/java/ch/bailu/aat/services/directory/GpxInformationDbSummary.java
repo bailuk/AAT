@@ -19,14 +19,14 @@ public class GpxInformationDbSummary extends GpxInformation {
 
     private final MaxSpeed maxSpeed = new MaxSpeed.Raw2();
 
-    
+
     public GpxInformationDbSummary(Foc dir, Cursor cursor) {
         directory = dir;
         list = new GpxList(GpxType.WAY, GpxListAttributes.factoryTrackList());
-        
+
         GpxBigDelta summary=new GpxBigDelta(GpxListAttributes.factoryTrackList());
         GpxInformation entry = new GpxInformationDbEntry(cursor, dir);
-        
+
         cursor.moveToPosition(-1);
         while (cursor.moveToNext()) {
             if (isEntryValid(entry)) {
@@ -35,8 +35,8 @@ public class GpxInformationDbSummary extends GpxInformation {
             }
         }
         setVisibleTrackSegment(summary);
-        
-        
+
+
     }
 
 
@@ -67,13 +67,13 @@ public class GpxInformationDbSummary extends GpxInformation {
     public GpxList getGpxList() {
         return list;
     }
-    
-    
+
+
     @Override
     public boolean isLoaded() {
         return true;
     }
-    
+
     public int getID() {
         return InfoID.LIST_SUMMARY;
     }

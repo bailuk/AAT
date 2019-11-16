@@ -47,19 +47,19 @@ public class SolidPreset extends SolidIndexList {
         return super.hasKey(key) || smet().hasKey(key);
     }
 
-    
+
 
     @Override
     public String getLabel() {
         return getContext().getString(R.string.p_preset);
     }
-    
-    
+
+
     public Foc getDirectory() {
     	return AppDirectory.getTrackListDirectory(getContext(),getIndex());
     }
-    
-    
+
+
     public String getDirectoryName() {
     	return getDirectory().getPathName();
     }
