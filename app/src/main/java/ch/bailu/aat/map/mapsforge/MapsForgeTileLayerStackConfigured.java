@@ -98,22 +98,25 @@ public abstract class MapsForgeTileLayerStackConfigured extends MapsForgeTileLay
 
         @Override
         protected void addBackgroundLayers(boolean[] enabled, Source[] sources) {
-            Source mapnik = null, mapsforge = null;
+            Source download = null, mapsforge = null;
 
-            if (enabled[1] && sources[1] == DownloadSource.MAPNIK) {
-                mapnik = DownloadSource.MAPNIK;
+            for (int i=0; i< enabled.length; i++) {
+                if (enabled[i]) {
+                    if (DownloadSource.isDownloadBackgroundSource(sources[i]))
+                        download = sources[i];
+                }
             }
 
             if (enabled[0] && sources[0] == MapsForgeSource.MAPSFORGE) {
                 mapsforge = getMapsForgeSource();
             }
 
-            if (mapnik != null && mapsforge != null) {
+            if (download != null && mapsforge != null) {
                 addLayer(new TileProvider(scontext,
-                        new DoubleSource(scontext, mapsforge, mapnik, 6)));
+                        new DoubleSource(scontext, mapsforge, download, 6)));
 
-            } else if (mapnik != null) {
-                addLayer(new TileProvider(scontext, mapnik));
+            } else if (download != null) {
+                addLayer(new TileProvider(scontext, download));
 
             } else if (mapsforge != null) {
                 addLayer(new TileProvider(scontext, mapsforge));

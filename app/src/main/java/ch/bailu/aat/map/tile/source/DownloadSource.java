@@ -19,6 +19,7 @@ public class DownloadSource extends Source {
     private final int minZoom, maxZoom;
 
     private final String name;
+    private final String apiKey;
 
     private final String[] urls;
 
@@ -26,23 +27,29 @@ public class DownloadSource extends Source {
     private final boolean transparent;
 
 
+
     public DownloadSource(String n, int a, final String... url) {
-        this(n, MIN_ZOOM, MAX_ZOOM, a, (a != OPAQUE), url);
+        this(n, "", MIN_ZOOM, MAX_ZOOM, a, (a != OPAQUE), url);
     }
 
+    public DownloadSource(String n, String k, int a, final String... url) {
+        this(n, k, MIN_ZOOM, MAX_ZOOM, a, (a != OPAQUE), url);
+    }
     public DownloadSource(String n, int minZ, int maxZ, int a, final String... url) {
-        this(n, minZ, maxZ, a, (a != OPAQUE), url);
+        this(n, "",minZ, maxZ, a, (a != OPAQUE), url);
     }
 
 
-    public DownloadSource(String n, int minZ, int maxZ, int a, boolean t, String... u) {
+    public DownloadSource(String n, String k, int minZ, int maxZ, int a, boolean t, String... u) {
         name = n;
+        apiKey = k;
         minZoom = minZ;
         maxZoom = maxZ;
         urls = u;
         alpha = a;
         transparent = (a != OPAQUE);
     }
+
 
 
     public String getName() {
@@ -83,7 +90,7 @@ public class DownloadSource extends Source {
     }
 
     public String getTileURLString(Tile tile) {
-        return getBaseUrl() + tile.zoomLevel + "/" + tile.tileX + "/" + tile.tileY + EXT;
+        return getBaseUrl() + tile.zoomLevel + "/" + tile.tileX + "/" + tile.tileY + EXT + apiKey;
     }
 
     private String getBaseUrl() {
@@ -91,7 +98,9 @@ public class DownloadSource extends Source {
     }
 
 
-
+    public static boolean isDownloadBackgroundSource(Source source) {
+        return (source == MAPNIK || source == OPEN_TOPO_MAP || source == OPEN_CYCLE_MAP);
+    }
 
 
     public final static DownloadSource MAPNIK =
@@ -100,6 +109,32 @@ public class DownloadSource extends Source {
                     "https://a.tile.openstreetmap.org/",
                     "https://b.tile.openstreetmap.org/",
                     "https://c.tile.openstreetmap.org/") {
+
+                @Override
+                public int getPaintFlags() {
+                    return Paint.FILTER_BITMAP_FLAG;
+                }
+            };
+
+
+    public final static DownloadSource OPEN_TOPO_MAP =
+            new DownloadSource("OpenTopoMap",
+                    OPAQUE,
+                    "https://a.tile.opentopomap.org/",
+                    "https://b.tile.opentopomap.org/",
+                    "https://c.tile.opentopomap.org/") {
+
+                @Override
+                public int getPaintFlags() {
+                    return Paint.FILTER_BITMAP_FLAG;
+                }
+            };
+
+    public final static DownloadSource OPEN_CYCLE_MAP =
+            new DownloadSource("OpenCycleMap",
+                    "?apikey=4fc8425f35f44f11a59407ef5de1e2c2",
+                    OPAQUE,
+                    "https://tile.thunderforest.com/cycle/") {
 
                 @Override
                 public int getPaintFlags() {

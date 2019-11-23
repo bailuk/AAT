@@ -15,6 +15,8 @@ AAT is a GPS-tracking application for tracking sportive activities, with emphasi
 ## Copyright
 ### Map tiles
 (c) [OpenStreetMap, CC-BY-SA 2.0](http://wiki.openstreetmap.org/wiki/Legal_FAQ)  
+OpenTopoMap: (c) [OpenStreetMap](https://www.openstreetmap.org/copyright)-Mitwirkende, SRTM | Kartendarstellung: (c) [OpenTopoMap](https://opentopomap.org/#map=5/49.000/10.000) ([CC-BY-SA](https://creativecommons.org/licenses/by-sa/3.0/))
+OpenCycleMap: (c) [Thunderforest](https://www.thunderforest.com/), Data (c) [OpenStreetMap](https://www.openstreetmap.org/copyright) contributors [CC-BY-SA 2.0](https://creativecommons.org/licenses/by-sa/2.0/)  
 (c) [Waymarked Trails, CC BY-SA 3.0 DE](http://waymarkedtrails.org/en/help/legal)
 
 ### Mapsforge

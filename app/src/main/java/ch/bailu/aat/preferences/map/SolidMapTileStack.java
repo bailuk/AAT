@@ -21,6 +21,8 @@ public class SolidMapTileStack extends SolidCheckList {
     public final static Source[] SOURCES = new Source[] {
             MapsForgeSource.MAPSFORGE,
             DownloadSource.MAPNIK,
+            DownloadSource.OPEN_TOPO_MAP,
+            DownloadSource.OPEN_CYCLE_MAP,
             Source.ELEVATION_COLOR,
             Source.ELEVATION_HILLSHADE,
             DownloadSource.TRANSPORT_OVERLAY,
