@@ -9,7 +9,7 @@ import ch.bailu.aat.services.dem.tile.ElevationProvider;
 import ch.bailu.aat.services.dem.updater.ElevationUpdaterClient;
 import ch.bailu.aat.services.dem.updater.ElevationUpdater;
 
-public class ElevationService extends VirtualService implements ElevationProvider{
+public final class ElevationService extends VirtualService implements ElevationProvider{
 
     private final ElevationUpdater updater;
     private final Dem3Loader loader;

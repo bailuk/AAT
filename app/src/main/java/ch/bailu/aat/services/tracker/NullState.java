@@ -3,7 +3,7 @@ package ch.bailu.aat.services.tracker;
 import ch.bailu.aat.R;
 import ch.bailu.aat.gpx.StateID;
 
-public class NullState extends State {
+public final class NullState extends State {
 
     @Override
     public int getStateID() {

@@ -6,7 +6,7 @@ import ch.bailu.aat.R;
 import ch.bailu.aat.gpx.StateID;
 
 
-public class PauseState extends State {
+public final class PauseState extends State {
 
 
 

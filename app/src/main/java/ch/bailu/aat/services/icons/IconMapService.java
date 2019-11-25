@@ -13,7 +13,7 @@ import ch.bailu.aat.util.fs.foc.FocAsset;
 import ch.bailu.aat.util.ui.AppLog;
 import ch.bailu.util_java.foc.Foc;
 
-public class IconMapService extends VirtualService {
+public final class IconMapService extends VirtualService {
     public static final float BIG_ICON_SIZE = 48;//64;
     public static final float SMALL_ICON_SIZE = 24;
 

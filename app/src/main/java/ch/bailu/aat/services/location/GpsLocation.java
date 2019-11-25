@@ -6,7 +6,7 @@ import android.location.LocationManager;
 
 import ch.bailu.aat.preferences.location.SolidGpsTimeFix;
 
-public class GpsLocation extends RealLocation {
+public final class GpsLocation extends RealLocation {
 
     private boolean fixTime;
 

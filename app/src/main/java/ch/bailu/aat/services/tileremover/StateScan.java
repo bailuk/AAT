@@ -8,7 +8,7 @@ import ch.bailu.aat.util.ui.AppLog;
 import ch.bailu.util_java.foc.Foc;
 
 
-public class StateScan implements State, Runnable {
+public final class StateScan implements State, Runnable {
     private final StateMachine state;
     private Class nextState = StateScanForRemoval.class;
 

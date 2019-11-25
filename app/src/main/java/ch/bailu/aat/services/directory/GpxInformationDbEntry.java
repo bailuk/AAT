@@ -7,7 +7,7 @@ import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.interfaces.GpxType;
 import ch.bailu.util_java.foc.Foc;
 
-public class GpxInformationDbEntry extends GpxInformation {
+public final class GpxInformationDbEntry extends GpxInformation {
     private final Cursor cursor;
     private final Foc parent;
 

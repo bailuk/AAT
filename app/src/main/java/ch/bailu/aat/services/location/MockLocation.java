@@ -16,7 +16,7 @@ import ch.bailu.aat.util.ui.AppLog;
 import ch.bailu.util_java.foc.Foc;
 import ch.bailu.util_java.foc.FocName;
 
-public class MockLocation extends LocationStackChainedItem implements Runnable{
+public final class MockLocation extends LocationStackChainedItem implements Runnable{
 
     private final static Foc NULL_FILE = new FocName(MockLocation.class.getSimpleName());
     private static final long INTERVAL=1000L;

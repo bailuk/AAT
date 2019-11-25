@@ -2,7 +2,7 @@ package ch.bailu.aat.services.tileremover;
 
 import ch.bailu.aat.util.MemSize;
 
-public class SourceSummary implements SourceSummaryInterface {
+public final class SourceSummary implements SourceSummaryInterface {
     private final String name;
     public int count, countToRemove, countNew;
     public long size, sizeToRemove, sizeNew;

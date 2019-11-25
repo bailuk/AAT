@@ -13,7 +13,7 @@ import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.util.fs.foc.FocAndroid;
 import ch.bailu.util_java.foc.Foc;
 
-public class CachedTileObject extends TileObject {
+public final class CachedTileObject extends TileObject {
     private final static int MIN_SAVE_ZOOM_LEVEL = 16;
 
     private final Tile mapTile;

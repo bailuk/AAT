@@ -11,7 +11,7 @@ import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.util.AppIntent;
 
-public class ObjectBroadcaster implements Closeable {
+public final class ObjectBroadcaster implements Closeable {
 
     private final static int INITIAL_CAPACITY=200;
 

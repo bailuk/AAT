@@ -2,7 +2,7 @@ package ch.bailu.aat.services.cache;
 
 import ch.bailu.aat.services.ServiceContext;
 
-public class NullHandle extends ObjectHandle {
+public final class NullHandle extends ObjectHandle {
 
     protected NullHandle() {
         super(NullHandle.class.getSimpleName());

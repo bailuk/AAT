@@ -7,7 +7,7 @@ import ch.bailu.aat.preferences.location.SolidAdjustGpsAltitude;
 import ch.bailu.aat.preferences.location.SolidAdjustGpsAltitudeValue;
 import ch.bailu.aat.preferences.location.SolidProvideAltitude;
 
-public class AdjustGpsAltitude extends LocationStackChainedItem {
+public final class AdjustGpsAltitude extends LocationStackChainedItem {
 
     private final SolidProvideAltitude saltitude;
 

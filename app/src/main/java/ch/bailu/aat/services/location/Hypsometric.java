@@ -1,6 +1,6 @@
 package ch.bailu.aat.services.location;
 
-public class Hypsometric {
+public final class Hypsometric {
     /**
      *  See
      *  https://physics.stackexchange.com/questions/333475/how-to-calculate-altitude-from-current-temperature-and-pressure

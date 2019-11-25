@@ -9,7 +9,7 @@ import ch.bailu.aat.gpx.StateID;
 import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.services.location.LocationService;
 
-public class OnState extends State {
+public final class OnState extends State {
 
     private final AttributesCollector attributes = new AttributesCollector();
 

@@ -11,7 +11,7 @@ import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.VirtualService;
 import ch.bailu.aat.services.cache.MapsForgeTileObject;
 
-public class RenderService  extends VirtualService
+public final class RenderService  extends VirtualService
         implements SharedPreferences.OnSharedPreferenceChangeListener {
 
 

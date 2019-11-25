@@ -18,7 +18,7 @@ import ch.bailu.aat.gpx.tools.SimplifierBearing;
 import ch.bailu.aat.gpx.tools.SimplifierDistance;
 import ch.bailu.aat.gpx.tools.TimeStampFixer;
 
-public class NodeEditor {
+public final class NodeEditor {
     private final GpxList gpxList;
     private final GpxPointNode node;
 

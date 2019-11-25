@@ -1,6 +1,6 @@
 package ch.bailu.aat.services.sensor;
 
-public class Averager {
+public final class Averager {
 
 
     private final int[] values;

@@ -14,7 +14,7 @@ import ch.bailu.aat.services.sensor.bluetooth_le.Broadcaster;
 import ch.bailu.aat.services.sensor.list.SensorList;
 
 @RequiresApi(api = 23)
-public class HeartRateSensor extends InternalSensorSDK23 {
+public final class HeartRateSensor extends InternalSensorSDK23 {
 
     private boolean contact = false;
     private int bpm = 0;

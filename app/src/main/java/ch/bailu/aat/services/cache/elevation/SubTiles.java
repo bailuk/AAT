@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import ch.bailu.aat.coordinates.SrtmCoordinates;
 import ch.bailu.aat.services.cache.Span;
 
-public class SubTiles {
+public final class SubTiles {
     private final SparseArray<SubTile> subTiles = new SparseArray<>(25);
     private SrtmCoordinates[] coordinates;
 

@@ -9,7 +9,7 @@ import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.VirtualService;
 
-public class TrackerService extends VirtualService {
+public final class TrackerService extends VirtualService {
 
     private final TrackerInternals internal;
 

@@ -13,7 +13,7 @@ import ch.bailu.aat.gpx.attributes.MaxSpeed;
 import ch.bailu.aat.gpx.interfaces.GpxType;
 import ch.bailu.util_java.foc.Foc;
 
-public class GpxInformationDbSummary extends GpxInformation {
+public final class GpxInformationDbSummary extends GpxInformation {
     private final GpxList list;
     private final Foc directory;
 

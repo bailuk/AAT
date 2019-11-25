@@ -13,7 +13,7 @@ import ch.bailu.aat.gpx.attributes.Keys;
 import ch.bailu.aat.services.sensor.SensorInterface;
 import ch.bailu.aat.util.AppBroadcaster;
 
-public class SensorList extends ArrayList<SensorListItem> implements Closeable {
+public final class SensorList extends ArrayList<SensorListItem> implements Closeable {
 
     private final Context context;
 

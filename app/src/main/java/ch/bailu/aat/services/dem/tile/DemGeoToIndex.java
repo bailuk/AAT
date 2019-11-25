@@ -1,6 +1,6 @@
 package ch.bailu.aat.services.dem.tile;
 
-public class DemGeoToIndex {
+public final class DemGeoToIndex {
     private final int DOFFSET;
     private final int LAST_INDEX;
     private final DemDimension dim;

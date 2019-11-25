@@ -4,7 +4,7 @@ import android.content.Context;
 
 import ch.bailu.aat.gpx.GpxInformation;
 
-public class CleanLocation extends LocationStackItem {
+public final class CleanLocation extends LocationStackItem {
     private static final long LOCATION_LIFETIME_MILLIS=3*1000;
 
     private GpxInformation loggableLocation = GpxInformation.NULL;

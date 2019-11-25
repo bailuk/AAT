@@ -13,7 +13,7 @@ import ch.bailu.aat.services.sensor.bluetooth_le.Broadcaster;
 import ch.bailu.aat.services.sensor.list.SensorList;
 
 @RequiresApi(api = 23)
-public class StepCounterSensor extends InternalSensorSDK23 {
+public final class StepCounterSensor extends InternalSensorSDK23 {
     private static final int SAMPLES=25;
 
     private Sample first = Sample.NULL;

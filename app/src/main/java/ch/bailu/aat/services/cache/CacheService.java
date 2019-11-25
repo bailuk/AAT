@@ -12,7 +12,7 @@ import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.util.MemSize;
 
 
-public class CacheService extends VirtualService implements SharedPreferences.OnSharedPreferenceChangeListener {
+public final class CacheService extends VirtualService implements SharedPreferences.OnSharedPreferenceChangeListener {
 
 
 

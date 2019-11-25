@@ -1,6 +1,6 @@
 package ch.bailu.aat.services.dem.tile;
 
-public class MultiCell4NW extends MultiCell {
+public final class MultiCell4NW extends MultiCell {
     /*
      *      a  b
      *      c  D

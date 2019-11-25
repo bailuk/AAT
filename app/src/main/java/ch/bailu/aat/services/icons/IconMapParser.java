@@ -7,7 +7,7 @@ import ch.bailu.util_java.foc.Foc;
 import ch.bailu.util_java.io.Stream;
 
 
-public class IconMapParser {
+public final class IconMapParser {
     private final static int ICON=0, KEY=1, VALUE=2, END=3, MAX=4;
 
     private final String[] entries = new String[MAX];

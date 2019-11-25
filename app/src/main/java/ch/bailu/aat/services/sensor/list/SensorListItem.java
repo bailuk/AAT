@@ -6,7 +6,7 @@ import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.services.sensor.SensorInterface;
 import ch.bailu.aat.util.ToDo;
 
-public class SensorListItem extends SensorItemState implements SensorInterface {
+public final class SensorListItem extends SensorItemState implements SensorInterface {
 
     private final static String BLUETOOTH_ADDRESS = "^([0-9A-F]{2}[:]){5}([0-9A-F]{2})$";
 

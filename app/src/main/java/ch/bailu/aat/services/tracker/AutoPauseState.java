@@ -6,7 +6,7 @@ import ch.bailu.aat.R;
 import ch.bailu.aat.gpx.StateID;
 
 
-public class AutoPauseState extends State {
+public final class AutoPauseState extends State {
 
 
     public AutoPauseState(TrackerInternals ti) {

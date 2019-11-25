@@ -14,7 +14,7 @@ import ch.bailu.aat.services.VirtualService;
 import ch.bailu.aat.services.sensor.list.SensorList;
 import ch.bailu.aat.util.AppBroadcaster;
 
-public class SensorService extends VirtualService {
+public final class SensorService extends VirtualService {
     private final SensorList sensorList;
 
     private final Sensors bluetoothLE;

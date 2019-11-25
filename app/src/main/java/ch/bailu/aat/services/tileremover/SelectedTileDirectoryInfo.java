@@ -2,7 +2,7 @@ package ch.bailu.aat.services.tileremover;
 
 import ch.bailu.util_java.foc.Foc;
 
-public class SelectedTileDirectoryInfo {
+public final class SelectedTileDirectoryInfo {
 
     public final String name;
 

@@ -9,7 +9,7 @@ import ch.bailu.aat.gpx.StateID;
 //import ch.bailu.aat.preferences.SolidGPSLock;
 import ch.bailu.aat.services.ServiceContext;
 
-public class ServiceLocker implements Closeable, OnSharedPreferenceChangeListener{
+public final class ServiceLocker implements Closeable, OnSharedPreferenceChangeListener{
 
     //private final SolidGPSLock slock;
     //private final ServiceContext scontext;

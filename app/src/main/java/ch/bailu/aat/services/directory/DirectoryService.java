@@ -13,7 +13,7 @@ import ch.bailu.aat.services.VirtualService;
 import ch.bailu.aat.util.fs.AFile;
 import ch.bailu.util_java.foc.Foc;
 
-public class DirectoryService extends VirtualService implements OnSharedPreferenceChangeListener{
+public final class DirectoryService extends VirtualService implements OnSharedPreferenceChangeListener{
 
 
     private AbsDatabase database=AbsDatabase.NULL_DATABASE;

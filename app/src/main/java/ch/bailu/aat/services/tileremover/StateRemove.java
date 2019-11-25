@@ -13,7 +13,7 @@ import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.util.ui.AppLog;
 import ch.bailu.util_java.foc.Foc;
 
-public class StateRemove implements State, Runnable {
+public final class StateRemove implements State, Runnable {
     private final StateMachine state;
     private Class nextState = StateRemoved.class;
 

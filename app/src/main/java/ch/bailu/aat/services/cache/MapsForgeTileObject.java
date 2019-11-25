@@ -10,7 +10,7 @@ import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.util.graphic.SyncTileBitmap;
 
-public class MapsForgeTileObject extends TileObject {
+public final class MapsForgeTileObject extends TileObject {
     private static long DEFAULT_SIZE = SolidTileSize.DEFAULT_TILESIZE_BYTES * 4;
 
     private final ServiceContext scontext;

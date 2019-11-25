@@ -1,6 +1,6 @@
 package ch.bailu.aat.services.dem.tile;
 
-public class Dem3Status {
+public final class Dem3Status {
 
     public static final int LOADING =1;
     public static final int VALID=2;

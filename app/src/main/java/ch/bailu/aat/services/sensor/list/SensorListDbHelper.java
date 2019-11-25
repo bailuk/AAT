@@ -4,7 +4,7 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-public class SensorListDbHelper  extends SQLiteOpenHelper {
+public final class SensorListDbHelper  extends SQLiteOpenHelper {
 
     private static final String SQL_CREATE_ENTRIES =
             "CREATE TABLE " + SensorListDbContract.TABLE_NAME + " (" +

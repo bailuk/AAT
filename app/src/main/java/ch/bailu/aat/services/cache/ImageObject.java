@@ -11,7 +11,7 @@ import ch.bailu.aat.util.fs.foc.FocAndroid;
 import ch.bailu.aat.util.graphic.SyncBitmap;
 import ch.bailu.util_java.foc.Foc;
 
-public class ImageObject extends ImageObjectAbstract {
+public final class ImageObject extends ImageObjectAbstract {
     public final static ImageObject NULL=new ImageObject();
 
     private final SyncBitmap bitmap=new SyncBitmap();

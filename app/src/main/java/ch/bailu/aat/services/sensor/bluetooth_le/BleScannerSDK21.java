@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 @RequiresApi(api = 21)
-public class BleScannerSDK21 extends BleScanner {
+public final class BleScannerSDK21 extends BleScanner {
     private final BluetoothAdapter adapter;
 
     private final ScanCallback callback = new ScanCallback() {

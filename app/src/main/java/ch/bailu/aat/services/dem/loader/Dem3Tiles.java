@@ -5,7 +5,7 @@ import ch.bailu.aat.services.dem.tile.Dem3Status;
 import ch.bailu.aat.services.dem.tile.Dem3Tile;
 
 
-public class Dem3Tiles {
+public final class Dem3Tiles {
 
     private final static int NUM_TILES=1;
 

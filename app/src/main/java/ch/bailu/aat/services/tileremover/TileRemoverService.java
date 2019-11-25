@@ -8,7 +8,7 @@ import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.VirtualService;
 
-public class TileRemoverService extends VirtualService {
+public final class TileRemoverService extends VirtualService {
 
 
     final private StateMachine state;

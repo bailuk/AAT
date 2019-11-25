@@ -5,7 +5,7 @@ import ch.bailu.aat.gpx.StateID;
 import ch.bailu.aat.util.ui.AppLog;
 
 
-public class OffState extends State {
+public final class OffState extends State {
 
     public OffState(TrackerInternals ti) {
         super(ti);

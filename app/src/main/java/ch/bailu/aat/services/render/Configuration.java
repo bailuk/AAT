@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import ch.bailu.aat.services.cache.MapsForgeTileObject;
 import ch.bailu.util_java.foc.Foc;
 
-public class Configuration {
+public final class Configuration {
     private final ArrayList<Foc> mapFiles = new ArrayList<>(10);
 
     private Renderer renderer;

@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import ch.bailu.aat.util.filter_list.KeyList;
 
 
-public class MapFeaturesListEntry {
+public final class MapFeaturesListEntry {
     private final boolean isSummary;
     public final String name, key, value, summarySearchKey, summaryKey,  html;
     public final KeyList keys;

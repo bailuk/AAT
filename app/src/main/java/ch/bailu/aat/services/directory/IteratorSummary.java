@@ -7,7 +7,7 @@ import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.util_java.foc.Foc;
 
-public class IteratorSummary extends IteratorAbstract {
+public final class IteratorSummary extends IteratorAbstract {
 
     private GpxInformation info = GpxInformation.NULL;
 

@@ -1,7 +1,7 @@
 package ch.bailu.aat.services.location;
 
 /*
-public class AltitudeFromBarometer extends LocationStackChainedItem implements SensorEventListener {
+public final class AltitudeFromBarometer extends LocationStackChainedItem implements SensorEventListener {
     private final Hypsometric hypsometric = new Hypsometric();
     private final Barometer barometer;
 

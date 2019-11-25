@@ -3,7 +3,7 @@ package ch.bailu.aat.services.background;
 import java.util.concurrent.BlockingDeque;
 import java.util.concurrent.LinkedBlockingDeque;
 
-public class HandleStack {
+public final class HandleStack {
     private final static int DEFAULT_LIMIT = 5000;
 
     private final BlockingDeque<BackgroundTask> queue;

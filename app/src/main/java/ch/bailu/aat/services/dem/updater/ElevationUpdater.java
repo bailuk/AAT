@@ -17,7 +17,7 @@ import ch.bailu.aat.services.dem.tile.Dem3Tile;
 import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.util.AppIntent;
 
-public class ElevationUpdater implements Closeable {
+public final class ElevationUpdater implements Closeable {
 
 
     private final PendingUpdatesMap pendingUpdates = new PendingUpdatesMap();

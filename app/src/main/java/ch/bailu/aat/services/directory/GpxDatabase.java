@@ -13,7 +13,7 @@ import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.util_java.foc.Foc;
 
 
-public class GpxDatabase extends AbsDatabase{
+public final class GpxDatabase extends AbsDatabase{
 
     private final Context context;
 

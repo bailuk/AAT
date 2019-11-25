@@ -7,7 +7,7 @@ import java.util.TreeMap;
 
 import ch.bailu.util_java.foc.Foc;
 
-public class FilesInDirectory {
+public final class FilesInDirectory {
 
     final NavigableMap<String,Foc> files;
 

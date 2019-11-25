@@ -7,7 +7,7 @@ import android.support.annotation.RequiresApi;
 import java.util.Set;
 
 @RequiresApi(api = 18)
-public class BleScannerBonded extends BleScanner {
+public final class BleScannerBonded extends BleScanner {
 
     private final BluetoothAdapter adapter;
 

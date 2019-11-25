@@ -4,7 +4,7 @@ import android.graphics.Rect;
 
 import java.util.ArrayList;
 
-public class Span {
+public final class Span {
     private int deg;
     private int firstPixel;
     private int lastPixel;

@@ -13,7 +13,7 @@ import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.util.graphic.SyncTileBitmap;
 import ch.bailu.aat.util.ui.AppLog;
 
-public class SVGAssetImageObject extends ImageObjectAbstract {
+public final class SVGAssetImageObject extends ImageObjectAbstract {
 
     private final SyncTileBitmap bitmap = new SyncTileBitmap();
 

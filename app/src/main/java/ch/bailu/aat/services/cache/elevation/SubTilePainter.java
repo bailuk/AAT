@@ -8,7 +8,7 @@ import ch.bailu.aat.services.cache.OnObject;
 import ch.bailu.aat.services.dem.tile.Dem3Tile;
 import ch.bailu.aat.util.AppBroadcaster;
 
-public class SubTilePainter extends BackgroundTask {
+public final class SubTilePainter extends BackgroundTask {
     private final Dem3Tile tile;
 
     private final String iid;

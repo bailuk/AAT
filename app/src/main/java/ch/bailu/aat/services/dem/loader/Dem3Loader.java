@@ -8,7 +8,7 @@ import ch.bailu.aat.services.dem.tile.Dem3Status;
 import ch.bailu.aat.services.dem.tile.Dem3Tile;
 import ch.bailu.aat.services.dem.tile.ElevationProvider;
 
-public class Dem3Loader implements Closeable, ElevationProvider {
+public final class Dem3Loader implements Closeable, ElevationProvider {
     private final Dem3TileLoader loader;
     private final Dem3Tiles tiles;
 

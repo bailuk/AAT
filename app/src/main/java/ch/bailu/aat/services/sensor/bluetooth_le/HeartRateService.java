@@ -15,7 +15,7 @@ import ch.bailu.aat.services.sensor.attributes.SensorInformation;
 import ch.bailu.aat.services.sensor.list.SensorState;
 
 @RequiresApi(api = 18)
-public class HeartRateService extends HeartRateServiceID implements ServiceInterface {
+public final class HeartRateService extends HeartRateServiceID implements ServiceInterface {
     /**
      *
      * EC DMH30 0ADE BBB Bluepulse+ Heart Rate Sensor BCP-62DB

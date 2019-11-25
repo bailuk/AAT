@@ -2,7 +2,7 @@ package ch.bailu.aat.services.background;
 
 import ch.bailu.aat.services.ServiceContext;
 
-public class LoaderThread extends WorkerThread {
+public final class LoaderThread extends WorkerThread {
     private static final int LOADER_QUEUE_SIZE = 100;
 
     private final String directory;

@@ -8,7 +8,7 @@ import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.services.sensor.list.SensorState;
 import ch.bailu.aat.util.AppBroadcaster;
 
-public class Connector implements Closeable {
+public final class Connector implements Closeable {
     private boolean connected = false;
     private final int iid;
     private final Context context;

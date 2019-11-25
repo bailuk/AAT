@@ -1,6 +1,6 @@
 package ch.bailu.aat.services.dem.tile;
 
-public class MultiCell8 extends MultiCell {
+public final class MultiCell8 extends MultiCell {
     /**
      *      a  b  c
      *      d [e] f

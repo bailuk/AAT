@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import ch.bailu.aat.R;
 import ch.bailu.util_java.foc.Foc;
 
-public class SourceSummaries {
+public final class SourceSummaries {
     public final static int SUMMARY_SIZE = 20;
 
     private final ArrayList<SourceSummary>

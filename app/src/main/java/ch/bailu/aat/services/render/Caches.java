@@ -4,7 +4,7 @@ import java.util.HashMap;
 
 import ch.bailu.aat.services.cache.MapsForgeTileObject;
 
-public class Caches {
+public final class Caches {
     private final HashMap<String, Cache> caches = new HashMap<>(5);
 
 

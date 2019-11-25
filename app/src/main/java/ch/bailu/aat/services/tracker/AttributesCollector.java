@@ -10,7 +10,7 @@ import ch.bailu.aat.services.sensor.attributes.CadenceSpeedAttributes;
 import ch.bailu.aat.services.sensor.attributes.HeartRateAttributes;
 import ch.bailu.aat.services.sensor.attributes.StepCounterAttributes;
 
-public class AttributesCollector {
+public final class AttributesCollector {
     private final static long LOG_INTERVAL = 3 * 1000;
     private final static long SHORT_TIMEOUT = 2 * 1000;
     private final static long LONG_TIMEOUT = 10 * 1000;
@@ -111,7 +111,7 @@ public class AttributesCollector {
     }
 
 
-    private class StepsTotalCollector extends Collector {
+    private final class StepsTotalCollector extends Collector {
         private int base = -1;
 
         public StepsTotalCollector() {

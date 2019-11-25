@@ -13,7 +13,7 @@ import ch.bailu.aat.services.render.RenderService;
 import ch.bailu.aat.services.tileremover.TileRemoverService;
 import ch.bailu.aat.services.tracker.TrackerService;
 
-public class OneService extends AbsService  implements ServiceContext {
+public final class OneService extends AbsService  implements ServiceContext {
 
     private LocationService location;
     private TrackerService tracker;

@@ -8,7 +8,7 @@ import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.util.ui.AppLog;
 import ch.bailu.util_java.foc.Foc;
 
-public class Dem3LoaderTask extends FileTask {
+public final class Dem3LoaderTask extends FileTask {
 
     private final Dem3Array array;
     private final Dem3Status status;

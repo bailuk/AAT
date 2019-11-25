@@ -8,7 +8,7 @@ import ch.bailu.aat.services.cache.ObjectHandle;
 import ch.bailu.aat.util.fs.AppDirectory;
 import ch.bailu.util_java.foc.Foc;
 
-public class EditorHelper {
+public final class EditorHelper {
     private final ServiceContext scontext;
 
 

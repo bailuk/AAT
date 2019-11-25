@@ -1,7 +1,7 @@
 package ch.bailu.aat.services.background;
 
 
-public class DownloadStatistics {
+public final class DownloadStatistics {
     private final static int MAX_RATE=5;
     private int failureRate=0;
 

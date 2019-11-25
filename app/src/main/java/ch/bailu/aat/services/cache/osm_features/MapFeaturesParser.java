@@ -8,7 +8,7 @@ import ch.bailu.aat.util.fs.foc.FocAsset;
 import ch.bailu.util_java.foc.Foc;
 import ch.bailu.util_java.io.Stream;
 
-public class MapFeaturesParser {
+public final class MapFeaturesParser {
     private static final String MAP_FEATURES_ASSET = "map_features";
 
     private final OnHaveFeature haveFeature;

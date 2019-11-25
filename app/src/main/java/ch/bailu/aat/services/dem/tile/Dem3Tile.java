@@ -7,7 +7,7 @@ import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.background.BackgroundTask;
 import ch.bailu.util_java.foc.Foc;
 
-public class Dem3Tile implements ElevationProvider, DemProvider {
+public final class Dem3Tile implements ElevationProvider, DemProvider {
 
     /**
      * SRTM

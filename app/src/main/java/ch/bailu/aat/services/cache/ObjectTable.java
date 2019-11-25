@@ -10,14 +10,14 @@ import ch.bailu.aat.util.AppIntent;
 import ch.bailu.aat.util.MemSize;
 
 
-public class ObjectTable  {
+public final class ObjectTable  {
     private final static int INITIAL_CAPACITY = 1000;
 
     private long limit = MemSize.MB;
     private long totalMemorySize = 0;
 
 
-    private static class Container {
+    private static final class Container {
         public static final Container NULL = new Container(ObjectHandle.NULL);
 
         public final ObjectHandle obj;

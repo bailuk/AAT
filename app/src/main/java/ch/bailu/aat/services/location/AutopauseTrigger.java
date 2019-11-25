@@ -5,7 +5,7 @@ import android.content.Context;
 import ch.bailu.aat.preferences.presets.SolidTrackerAutopause;
 
 
-public class AutopauseTrigger extends LocationStackChainedItem {
+public final class AutopauseTrigger extends LocationStackChainedItem {
     private float triggerSpeed=0f;
     private Trigger trigger=new Trigger(10);
 

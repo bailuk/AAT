@@ -7,7 +7,7 @@ import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.util_java.foc.Foc;
 
-public class StateMachine implements State {
+public final class StateMachine implements State {
 
     private State state;
 

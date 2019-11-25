@@ -5,7 +5,7 @@ import org.mapsforge.core.util.LatLongUtils;
 
 import ch.bailu.aat.coordinates.SrtmCoordinates;
 
-public class Dem3Coordinates {
+public final class Dem3Coordinates {
     private final static double REF_LO_1=7d;
     private final static double REF_LO_2=8d;
 

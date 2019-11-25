@@ -2,7 +2,7 @@ package ch.bailu.aat.services.tileremover;
 
 import ch.bailu.aat.util.AppBroadcaster;
 
-public class StateScannedPartial implements State {
+public final class StateScannedPartial implements State {
 
     private final StateMachine state;
 

@@ -5,7 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-public class SensorListDb {
+public final class SensorListDb {
 
     private SensorListDb() {}
 
