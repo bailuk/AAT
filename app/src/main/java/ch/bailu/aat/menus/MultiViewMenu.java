@@ -22,11 +22,6 @@ public class MultiViewMenu extends AbsMenu {
     }
 
     @Override
-    public void inflateWithHeader(ContextMenu menu) {
-        inflate(menu);
-    }
-
-    @Override
     public String getTitle() {
         return null;
     }
