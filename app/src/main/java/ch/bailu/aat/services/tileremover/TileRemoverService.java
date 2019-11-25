@@ -55,14 +55,6 @@ public final class TileRemoverService extends VirtualService {
         }
     }
 
-
-    @Override
-    public void appendStatusText(StringBuilder builder) {
-
-    }
-
-
-
     @Override
     public void close() {
         getContext().unregisterReceiver(onRemove);

@@ -58,13 +58,6 @@ public final class RenderService  extends VirtualService
         caches.freeFromRenderer(o);
     }
 
-
-
-    @Override
-    public void appendStatusText(StringBuilder builder) {
-
-    }
-
     @Override
     public void close() {
         sdirectory.getStorage().unregister(this);

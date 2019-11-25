@@ -6,10 +6,11 @@ import android.content.Intent;
 
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.util.AppBroadcaster;
+import ch.bailu.aat.util.WithStatusText;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.VirtualService;
 
-public final class TrackerService extends VirtualService {
+public final class TrackerService extends VirtualService implements WithStatusText {
 
     private final TrackerInternals internal;
 

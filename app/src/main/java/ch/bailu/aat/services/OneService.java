@@ -12,6 +12,7 @@ import ch.bailu.aat.services.location.LocationService;
 import ch.bailu.aat.services.render.RenderService;
 import ch.bailu.aat.services.tileremover.TileRemoverService;
 import ch.bailu.aat.services.tracker.TrackerService;
+import ch.bailu.aat.util.WithStatusText;
 
 public final class OneService extends AbsService  implements ServiceContext {
 
@@ -188,10 +189,9 @@ public final class OneService extends AbsService  implements ServiceContext {
             appendStatusText(cache, builder);
             appendStatusText(iconMap, builder);
             appendStatusText(directory, builder);
-            appendStatusText(elevation, builder);
     }
 
-    public synchronized  void appendStatusText(VirtualService service, StringBuilder builder) {
+    public synchronized  void appendStatusText(WithStatusText service, StringBuilder builder) {
         if (service != null) {
 
             builder.append("<h1>");

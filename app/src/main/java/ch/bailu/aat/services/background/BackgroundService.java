@@ -6,9 +6,10 @@ import java.util.HashMap;
 import ch.bailu.aat.preferences.map.SolidRendererThreads;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.VirtualService;
+import ch.bailu.aat.util.WithStatusText;
 import ch.bailu.util_java.foc.Foc;
 
-public final class BackgroundService extends VirtualService {
+public final class BackgroundService extends VirtualService implements WithStatusText {
 
     final static int FILE_LOADER_BASE_DIRECTORY_DEPTH = 4;
 

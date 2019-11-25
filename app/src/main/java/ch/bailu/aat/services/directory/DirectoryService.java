@@ -10,10 +10,11 @@ import java.io.IOException;
 import ch.bailu.aat.preferences.SolidDirectoryQuery;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.VirtualService;
+import ch.bailu.aat.util.WithStatusText;
 import ch.bailu.aat.util.fs.AFile;
 import ch.bailu.util_java.foc.Foc;
 
-public final class DirectoryService extends VirtualService implements OnSharedPreferenceChangeListener{
+public final class DirectoryService extends VirtualService implements OnSharedPreferenceChangeListener, WithStatusText{
 
 
     private AbsDatabase database=AbsDatabase.NULL_DATABASE;

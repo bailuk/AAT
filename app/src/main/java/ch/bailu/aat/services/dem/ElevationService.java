@@ -24,13 +24,6 @@ public final class ElevationService extends VirtualService implements ElevationP
 
     }
 
-    @Override
-    public void appendStatusText(StringBuilder builder) {
-
-    }
-
-
-
     public void requestElevationUpdates(ElevationUpdaterClient e, SrtmCoordinates[] c) {
         updater.requestElevationUpdates(e, c);
     }

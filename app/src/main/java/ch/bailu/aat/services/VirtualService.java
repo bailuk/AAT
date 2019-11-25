@@ -13,8 +13,6 @@ public abstract class VirtualService implements Closeable {
         scontext = sc;
     }
 
-    public abstract void appendStatusText(StringBuilder builder);
-
     protected final ServiceContext getSContext() {
         return scontext;
     }

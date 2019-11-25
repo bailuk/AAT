@@ -13,9 +13,10 @@ import ch.bailu.aat.preferences.location.SolidLocationProvider;
 import ch.bailu.aat.preferences.presets.SolidPreset;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.VirtualService;
+import ch.bailu.aat.util.WithStatusText;
 
 public final class LocationService extends VirtualService
-        implements Closeable,  OnSharedPreferenceChangeListener, PresetDependent {
+        implements Closeable,  OnSharedPreferenceChangeListener, PresetDependent, WithStatusText {
 
     private final SolidLocationProvider sprovider;
 
