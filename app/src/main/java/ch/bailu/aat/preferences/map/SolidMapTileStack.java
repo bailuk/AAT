@@ -11,7 +11,7 @@ import ch.bailu.aat.preferences.SolidCheckList;
 import ch.bailu.aat.preferences.Storage;
 
 
-public class SolidMapTileStack extends SolidCheckList {
+public final class SolidMapTileStack extends SolidCheckList {
 
 
     private final static String KEY = "tile_overlay_";
