@@ -51,22 +51,12 @@ public final class PauseState extends State {
     }
 
     @Override
-    public int getStatusTextID() {
-        return R.string.status_paused;
-    }
-
-    @Override
     public int getStartStopTextID() {
         return R.string.tracker_stop;
     }
 
     @Override
     public int getPauseResumeTextID() {
-        return R.string.tracker_resume;
-    }
-
-    @Override
-    public int getStartPauseResumeTextID() {
         return R.string.tracker_resume;
     }
 

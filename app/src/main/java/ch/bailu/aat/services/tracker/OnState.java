@@ -83,22 +83,12 @@ public final class OnState extends State {
     }
 
     @Override
-    public int getStatusTextID() {
-        return R.string.on;
-    }
-
-    @Override
     public int getStartStopTextID() {
         return R.string.tracker_stop;
     }
 
     @Override
     public int getPauseResumeTextID() {
-        return R.string.tracker_pause;
-    }
-
-    @Override
-    public int getStartPauseResumeTextID() {
         return R.string.tracker_pause;
     }
 

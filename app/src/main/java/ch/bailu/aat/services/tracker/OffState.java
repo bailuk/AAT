@@ -51,11 +51,6 @@ public final class OffState extends State {
 
 
     @Override
-    public int getStatusTextID() {
-        return R.string.off;
-    }
-
-    @Override
     public int getStartStopTextID() {
         return R.string.tracker_start;
     }
@@ -63,11 +58,6 @@ public final class OffState extends State {
     @Override
     public int getPauseResumeTextID() {
         return R.string.tracker_pause;
-    }
-
-    @Override
-    public int getStartPauseResumeTextID() {
-        return R.string.tracker_start;
     }
 
     @Override
