@@ -12,7 +12,7 @@ import ch.bailu.aat.map.TwoNodes;
 import ch.bailu.aat.services.dem.tile.ElevationProvider;
 import ch.bailu.aat.views.graph.AltitudeColorTable;
 
-public class RouteLayer extends GpxLayer {
+public final class RouteLayer extends GpxLayer {
 
     private final int MIN_PIXEL_SPACE = 30;
 

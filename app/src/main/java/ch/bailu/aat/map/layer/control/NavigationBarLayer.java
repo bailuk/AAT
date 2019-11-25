@@ -18,7 +18,7 @@ import ch.bailu.aat.util.ui.AppLog;
 import ch.bailu.aat.util.ui.ToolTip;
 import ch.bailu.aat.views.bar.ControlBar;
 
-public class NavigationBarLayer extends ControlBarLayer implements OnContentUpdatedInterface {
+public final class NavigationBarLayer extends ControlBarLayer implements OnContentUpdatedInterface {
 
     private final MapContext mcontext;
     private final View buttonPlus;

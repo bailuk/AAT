@@ -8,7 +8,7 @@ import android.graphics.Point;
 import android.graphics.Rect;
 
 
-public class BitmapDraw {
+public final class BitmapDraw {
 
     private final Paint paint = new Paint();
     private final Paint colorPaint = new Paint();

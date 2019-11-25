@@ -13,7 +13,7 @@ import ch.bailu.aat.map.MapContext;
 import ch.bailu.aat.map.layer.MapLayerInterface;
 import ch.bailu.aat.preferences.map.SolidLegend;
 
-public class GpxDynLayer implements MapLayerInterface, OnContentUpdatedInterface {
+public final class GpxDynLayer implements MapLayerInterface, OnContentUpdatedInterface {
     private final GpxInformationCache infoCache = new GpxInformationCache();
 
     private GpxLayer gpxOverlay;

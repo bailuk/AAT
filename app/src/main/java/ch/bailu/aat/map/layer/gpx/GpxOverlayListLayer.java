@@ -10,7 +10,7 @@ import ch.bailu.aat.map.MapContext;
 import ch.bailu.aat.map.layer.MapLayerInterface;
 import ch.bailu.aat.preferences.map.SolidOverlayFileList;
 
-public class GpxOverlayListLayer implements MapLayerInterface {
+public final class GpxOverlayListLayer implements MapLayerInterface {
     private final GpxDynLayer[] overlays;
 
 

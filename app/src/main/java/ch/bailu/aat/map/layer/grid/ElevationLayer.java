@@ -11,7 +11,7 @@ import ch.bailu.aat.map.MapContext;
 import ch.bailu.aat.map.layer.MapLayerInterface;
 import ch.bailu.aat.services.InsideContext;
 
-public class ElevationLayer implements MapLayerInterface {
+public final class ElevationLayer implements MapLayerInterface {
 
     private final static int MIN_ZOOM_LEVEL=7;
 

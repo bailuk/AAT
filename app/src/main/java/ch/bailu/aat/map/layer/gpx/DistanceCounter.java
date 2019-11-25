@@ -1,6 +1,6 @@
 package ch.bailu.aat.map.layer.gpx;
 
-public class DistanceCounter {
+public final class DistanceCounter {
     public final float min, max;
     private float count=0;
 

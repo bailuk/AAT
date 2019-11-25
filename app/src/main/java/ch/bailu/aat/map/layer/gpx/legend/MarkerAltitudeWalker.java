@@ -6,7 +6,7 @@ import ch.bailu.aat.description.DistanceDescription;
 import ch.bailu.aat.gpx.GpxPointNode;
 import ch.bailu.aat.gpx.GpxSegmentNode;
 
-public class MarkerAltitudeWalker extends LegendWalker {
+public final class MarkerAltitudeWalker extends LegendWalker {
 
     private final DistanceDescription description;
 

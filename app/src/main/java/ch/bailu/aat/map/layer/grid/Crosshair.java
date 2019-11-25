@@ -7,7 +7,7 @@ import org.mapsforge.core.model.Point;
 import ch.bailu.aat.map.MapContext;
 import ch.bailu.aat.map.layer.MapLayerInterface;
 
-public class Crosshair implements MapLayerInterface {
+public final class Crosshair implements MapLayerInterface {
     @Override
     public void onLayout(boolean changed, int l, int t, int r, int b) {
 

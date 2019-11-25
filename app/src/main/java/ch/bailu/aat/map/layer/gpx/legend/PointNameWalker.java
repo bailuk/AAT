@@ -6,7 +6,7 @@ import ch.bailu.aat.gpx.GpxSegmentNode;
 import ch.bailu.aat.gpx.attributes.GpxAttributes;
 import ch.bailu.aat.gpx.attributes.Keys;
 
-public class PointNameWalker extends LegendWalker{
+public final class PointNameWalker extends LegendWalker{
     private static final int LIMIT=20;
     private int displayed=0;
 

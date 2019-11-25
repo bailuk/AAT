@@ -12,7 +12,7 @@ import ch.bailu.aat.services.cache.GpxObjectEditable;
 import ch.bailu.aat.util.ToDo;
 import ch.bailu.util_java.foc.Foc;
 
-public class EditorNodeViewLayer extends NodeViewLayer {
+public final class EditorNodeViewLayer extends NodeViewLayer {
 
     private final EditorSourceInterface editorSource;
     private boolean showNode = false;

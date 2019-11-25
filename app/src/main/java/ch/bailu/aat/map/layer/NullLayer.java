@@ -6,7 +6,7 @@ import org.mapsforge.core.model.Point;
 
 import ch.bailu.aat.map.MapContext;
 
-public class NullLayer implements MapLayerInterface {
+public final class NullLayer implements MapLayerInterface {
 
 
     @Override

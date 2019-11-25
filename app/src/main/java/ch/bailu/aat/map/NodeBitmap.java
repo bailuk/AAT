@@ -12,7 +12,7 @@ import org.mapsforge.map.android.graphics.AndroidGraphicFactory;
 import ch.bailu.aat.util.graphic.SyncTileBitmap;
 import ch.bailu.aat.util.ui.AppDensity;
 
-public class NodeBitmap {
+public final class NodeBitmap {
 
     private static final int STROKE_WIDTH=MapPaint.EDGE_WIDTH_LINE;
     private static final int RADIUS=6;

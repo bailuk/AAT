@@ -17,7 +17,7 @@ import ch.bailu.aat.gpx.GpxPointNode;
 import ch.bailu.aat.gpx.GpxSegmentNode;
 import ch.bailu.aat.map.MapContext;
 
-public class GpxTestLayer extends GpxLayer {
+public final class GpxTestLayer extends GpxLayer {
 
     private final MapContext mcontext;
 

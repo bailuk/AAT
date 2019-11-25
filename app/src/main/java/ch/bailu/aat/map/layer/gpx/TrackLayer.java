@@ -12,7 +12,7 @@ import ch.bailu.aat.map.MapContext;
 import ch.bailu.aat.map.TwoNodes;
 import ch.bailu.aat.views.graph.AltitudeColorTable;
 
-public class TrackLayer  extends GpxLayer{
+public final class TrackLayer  extends GpxLayer{
     private static final int STROKE_WIDTH=3;
     private final Paint paint;
 

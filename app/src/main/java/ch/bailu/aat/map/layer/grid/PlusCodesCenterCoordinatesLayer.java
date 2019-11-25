@@ -11,7 +11,7 @@ import ch.bailu.aat.description.FF;
 import ch.bailu.aat.map.MapContext;
 import ch.bailu.aat.map.layer.MapLayerInterface;
 
-public class PlusCodesCenterCoordinatesLayer  implements MapLayerInterface {
+public final class PlusCodesCenterCoordinatesLayer  implements MapLayerInterface {
 
     private final ElevationLayer elevation;
     private final Crosshair crosshair;

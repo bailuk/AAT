@@ -6,7 +6,7 @@ import ch.bailu.aat.util.ui.AppDensity;
 import ch.bailu.aat.preferences.map.SolidTileSize;
 
 
-public class MapDensity extends AppDensity {
+public final class MapDensity extends AppDensity {
 
     private final int tileSize;
 

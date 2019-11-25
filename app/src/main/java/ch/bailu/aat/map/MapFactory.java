@@ -18,7 +18,7 @@ import ch.bailu.aat.map.mapsforge.MapsForgeView;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.views.bar.ControlBar;
 
-public class MapFactory {
+public final class MapFactory {
 
     private final MapViewInterface m;
     private final DispatcherInterface d;
