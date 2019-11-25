@@ -82,7 +82,6 @@ public final class SensorService extends VirtualService implements WithStatusTex
     }
 
 
-    @Override
     public synchronized void close() {
         bluetoothLE.close();
         internal.close();

@@ -85,7 +85,6 @@ public final class BackgroundService extends VirtualService implements WithStatu
     }
 
 
-    @Override
     public void close() {
         for(ProcessThread p: loaders.values())
             p.close();

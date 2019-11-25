@@ -55,7 +55,6 @@ public final class TileRemoverService extends VirtualService {
         }
     }
 
-    @Override
     public void close() {
         getContext().unregisterReceiver(onRemove);
         getContext().unregisterReceiver(onStop);

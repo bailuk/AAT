@@ -106,7 +106,6 @@ public final class IconMapService extends VirtualService implements WithStatusTe
 
 
 
-    @Override
     public void close() {
         cache.close();
     }

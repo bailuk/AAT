@@ -57,7 +57,6 @@ public final class TrackerService extends VirtualService implements WithStatusTe
         builder.append("</p>");
     }
 
-    @Override
     public void close() {
         internal.close();
         getContext().unregisterReceiver(onLocation);

@@ -59,7 +59,6 @@ public final class CacheService extends VirtualService implements SharedPreferen
     }
 
 
-    @Override
     public void close() {
         getContext().unregisterReceiver(onFileProcessed);
 

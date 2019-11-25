@@ -45,7 +45,6 @@ public final class ElevationService extends VirtualService implements ElevationP
     }
 
 
-    @Override
     public void close() {
         updater.close();
         loader.close();

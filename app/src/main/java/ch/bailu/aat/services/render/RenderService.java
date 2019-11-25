@@ -58,7 +58,6 @@ public final class RenderService  extends VirtualService
         caches.freeFromRenderer(o);
     }
 
-    @Override
     public void close() {
         sdirectory.getStorage().unregister(this);
         configuration.destroy();
