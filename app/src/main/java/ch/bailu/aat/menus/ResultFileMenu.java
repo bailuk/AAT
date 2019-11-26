@@ -24,12 +24,14 @@ public final class ResultFileMenu extends FileMenu {
     }
 
 
+    @Override
     protected void inflateCopyTo(Menu menu) {
         saveCopy = menu.add(
                 scontext.getContext().getString(R.string.query_save_copy));
     }
 
 
+    @Override
     protected void inflateManipulate(Menu menu) {
     }
 
