@@ -8,7 +8,7 @@ import android.view.MenuItem;
 
 import ch.bailu.aat.views.description.MultiView;
 
-public class MultiViewMenu extends AbsMenu {
+public final class MultiViewMenu extends AbsMenu {
 
     private final MultiView mview;
 

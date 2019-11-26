@@ -10,7 +10,7 @@ import ch.bailu.aat.util.fs.AppDirectory;
 import ch.bailu.aat.util.fs.FileAction;
 import ch.bailu.util_java.foc.Foc;
 
-public class ResultFileMenu extends FileMenu {
+public final class ResultFileMenu extends FileMenu {
 
     private final String targetPrefix, targetExtendsion;
 

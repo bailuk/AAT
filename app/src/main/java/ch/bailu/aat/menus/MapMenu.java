@@ -16,7 +16,7 @@ import ch.bailu.aat.views.description.MultiView;
 import ch.bailu.aat.views.preferences.SolidCheckListDialog;
 import ch.bailu.aat.views.preferences.SolidStringDialog;
 
-public class MapMenu extends AbsMenu {
+public final class MapMenu extends AbsMenu {
     private MenuItem map, overlays, reload, theme, preferences;
 
     private final MapContext mcontext;

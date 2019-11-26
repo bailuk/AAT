@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import ch.bailu.aat.services.cache.osm_features.MapFeaturesListEntry;
 import ch.bailu.aat.views.osm_features.MapFeaturesListView;
 
-public class MapFeaturesMenu extends AbsMenu {
+public final class MapFeaturesMenu extends AbsMenu {
 
     private final MapFeaturesListView.OnSelected onSelected;
 
