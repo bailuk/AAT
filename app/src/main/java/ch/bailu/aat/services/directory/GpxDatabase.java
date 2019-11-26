@@ -60,8 +60,9 @@ public class GpxDatabase extends AbsDatabase{
 
     @Override
     public void deleteEntry(Foc file) throws SQLiteException {
-        final String where = GpxDbConstants.KEY_FILENAME + "=\'" + file.getName() + "\'";
-        database.delete(GpxDbConstants.DB_TABLE, where, null);
+        final String where = GpxDbConstants.KEY_FILENAME + "=?";
+        database.delete(GpxDbConstants.DB_TABLE, where,
+                        new String[]{file.getName()});
     }
 
     public void insert(ContentValues content) {
