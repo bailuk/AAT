@@ -12,7 +12,7 @@ import ch.bailu.aat.views.PercentageLayout;
 import ch.bailu.aat.views.graph.DistanceAltitudeGraphView;
 
 
-public class NodeInfoView extends PercentageLayout {
+public final class NodeInfoView extends PercentageLayout {
     private final HtmlScrollTextView htmlView;
     private final DistanceAltitudeGraphView graphView;
 

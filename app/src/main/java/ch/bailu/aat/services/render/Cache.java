@@ -13,7 +13,7 @@ import java.util.Set;
 import ch.bailu.aat.services.cache.MapsForgeTileObject;
 import ch.bailu.aat.util.ui.AppLog;
 
-public class Cache implements TileCache {
+public final class Cache implements TileCache {
 
     private final SparseArray<MapsForgeTileObject> cache = new SparseArray<>(20);
 

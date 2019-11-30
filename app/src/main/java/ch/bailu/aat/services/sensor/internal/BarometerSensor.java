@@ -18,7 +18,7 @@ import ch.bailu.aat.services.sensor.list.SensorList;
 import ch.bailu.aat.util.AppBroadcaster;
 
 @RequiresApi(api = 23)
-public class BarometerSensor extends InternalSensorSDK23
+public final class BarometerSensor extends InternalSensorSDK23
         implements SharedPreferences.OnSharedPreferenceChangeListener {
 
 

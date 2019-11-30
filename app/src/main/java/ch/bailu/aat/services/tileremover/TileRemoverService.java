@@ -8,7 +8,7 @@ import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.VirtualService;
 
-public class TileRemoverService extends VirtualService {
+public final class TileRemoverService extends VirtualService {
 
 
     final private StateMachine state;
@@ -55,15 +55,6 @@ public class TileRemoverService extends VirtualService {
         }
     }
 
-
-    @Override
-    public void appendStatusText(StringBuilder builder) {
-
-    }
-
-
-
-    @Override
     public void close() {
         getContext().unregisterReceiver(onRemove);
         getContext().unregisterReceiver(onStop);

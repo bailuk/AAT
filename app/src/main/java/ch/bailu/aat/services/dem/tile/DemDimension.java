@@ -2,7 +2,7 @@ package ch.bailu.aat.services.dem.tile;
 
 
 
-public class DemDimension {
+public final class DemDimension {
     public final int DIM;
     public final int OFFSET;
 

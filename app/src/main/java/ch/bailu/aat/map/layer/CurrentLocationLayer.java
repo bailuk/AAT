@@ -17,7 +17,7 @@ import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.map.MapContext;
 import ch.bailu.aat.util.ui.AppTheme;
 
-public class CurrentLocationLayer implements OnContentUpdatedInterface, MapLayerInterface {
+public final class CurrentLocationLayer implements OnContentUpdatedInterface, MapLayerInterface {
     private static final int MIN_RADIUS=7;
     private final static int STROKE_WIDTH=2;
 

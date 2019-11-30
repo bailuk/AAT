@@ -6,7 +6,7 @@ import android.support.annotation.NonNull;
 import ch.bailu.aat.coordinates.SrtmCoordinates;
 import ch.bailu.aat.services.cache.Span;
 
-public class SubTile {
+public final class SubTile {
     public final Span laSpan;
     public final Span loSpan;
     public final SrtmCoordinates coordinates;

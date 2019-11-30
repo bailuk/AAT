@@ -6,7 +6,7 @@ import android.content.DialogInterface;
 import android.graphics.drawable.Drawable;
 
 
-public class MenuDialog implements  DialogInterface.OnClickListener {
+public final class MenuDialog implements  DialogInterface.OnClickListener {
     private final AbsMenu menu;
     private final MenuArray array;
 

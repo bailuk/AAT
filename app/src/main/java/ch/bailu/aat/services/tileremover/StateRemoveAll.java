@@ -4,7 +4,7 @@ package ch.bailu.aat.services.tileremover;
 import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.util_java.foc.Foc;
 
-public class StateRemoveAll implements State, Runnable{
+public final class StateRemoveAll implements State, Runnable{
 
     private final StateMachine state;
     private Class nextState = StateRemoved.class;

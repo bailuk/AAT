@@ -7,7 +7,7 @@ import org.mapsforge.core.model.Point;
 import ch.bailu.aat.map.MapContext;
 import ch.bailu.aat.util.ToDo;
 
-public class ZoomLevel implements MapLayerInterface {
+public final class ZoomLevel implements MapLayerInterface {
 
     @Override
     public void onLayout(boolean changed, int l, int t, int r, int b) {}

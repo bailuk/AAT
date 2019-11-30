@@ -4,7 +4,7 @@ import ch.bailu.aat.coordinates.BoundingBoxE6;
 import ch.bailu.aat.gpx.GpxPointNode;
 import ch.bailu.util_java.foc.Foc;
 
-public class MockLocationInformation extends LocationInformation {
+public final class MockLocationInformation extends LocationInformation {
 
     private final long time = System.currentTimeMillis();
     private final GpxPointNode node;

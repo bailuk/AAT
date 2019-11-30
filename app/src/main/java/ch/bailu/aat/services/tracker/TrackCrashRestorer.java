@@ -14,7 +14,7 @@ import ch.bailu.aat.util.ui.AppLog;
 import ch.bailu.util_java.foc.Foc;
 
 
-public class TrackCrashRestorer{
+public final class TrackCrashRestorer{
 
     public TrackCrashRestorer (Context context, int presetIndex) throws IOException {
 

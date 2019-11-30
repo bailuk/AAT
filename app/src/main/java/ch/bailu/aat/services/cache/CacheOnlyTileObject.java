@@ -13,7 +13,7 @@ import ch.bailu.aat.util.fs.foc.FocAndroid;
 import ch.bailu.aat.util.graphic.SyncTileBitmap;
 import ch.bailu.util_java.foc.Foc;
 
-public class CacheOnlyTileObject extends TileObject {
+public final class CacheOnlyTileObject extends TileObject {
 
     private final Tile tile;
 

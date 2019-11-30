@@ -7,7 +7,7 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Build;
 
-public class Barometer{
+public final class Barometer{
 
     private final Context context;
 

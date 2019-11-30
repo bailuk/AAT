@@ -10,7 +10,7 @@ import ch.bailu.aat.util.fs.AppDirectory;
 import ch.bailu.aat.util.fs.FileAction;
 import ch.bailu.util_java.foc.Foc;
 
-public class ResultFileMenu extends FileMenu {
+public final class ResultFileMenu extends FileMenu {
 
     private final String targetPrefix, targetExtendsion;
 
@@ -24,12 +24,14 @@ public class ResultFileMenu extends FileMenu {
     }
 
 
+    @Override
     protected void inflateCopyTo(Menu menu) {
         saveCopy = menu.add(
                 scontext.getContext().getString(R.string.query_save_copy));
     }
 
 
+    @Override
     protected void inflateManipulate(Menu menu) {
     }
 

@@ -12,21 +12,6 @@ import android.widget.PopupMenu;
 public abstract class AbsMenu {
     public abstract void inflate(Menu menu);
 
-    public void inflateWithHeader(ContextMenu menu) {
-        Drawable icon = getIcon();
-        String title = getTitle();
-
-
-        if (title != null)
-            menu.setHeaderTitle(title);
-
-        if (icon != null)
-            menu.setHeaderIcon(icon);
-
-        inflate(menu);
-
-    }
-
     public abstract String getTitle();
     public abstract Drawable getIcon();
 

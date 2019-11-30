@@ -10,7 +10,7 @@ import java.util.Queue;
 import java.util.UUID;
 
 @RequiresApi(api = 18)
-public class Executer {
+public final class Executer {
     private final static UUID ENABLE_NOTIFICATION = UUID.fromString("00002902-0000-1000-8000-00805f9b34fb");
 
 

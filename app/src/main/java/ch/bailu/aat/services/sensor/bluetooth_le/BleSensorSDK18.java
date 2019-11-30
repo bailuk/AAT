@@ -24,7 +24,7 @@ import ch.bailu.aat.util.Timer;
 import ch.bailu.aat.util.ui.AppLog;
 
 @RequiresApi(api = 18)
-public class BleSensorSDK18 extends BluetoothGattCallback implements SensorInterface {
+public final class BleSensorSDK18 extends BluetoothGattCallback implements SensorInterface {
 
 
     private final Executer execute = new Executer();

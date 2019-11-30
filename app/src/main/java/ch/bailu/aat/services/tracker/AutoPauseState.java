@@ -6,7 +6,7 @@ import ch.bailu.aat.R;
 import ch.bailu.aat.gpx.StateID;
 
 
-public class AutoPauseState extends State {
+public final class AutoPauseState extends State {
 
 
     public AutoPauseState(TrackerInternals ti) {
@@ -62,11 +62,6 @@ public class AutoPauseState extends State {
     }
 
     @Override
-    public int getStatusTextID() {
-        return R.string.status_autopaused;
-    }
-
-    @Override
     public int getStartStopTextID() {
         return R.string.tracker_stop;
     }
@@ -74,11 +69,6 @@ public class AutoPauseState extends State {
     @Override
     public int getPauseResumeTextID() {
         return R.string.tracker_pause;
-    }
-
-    @Override
-    public int getStartPauseResumeTextID() {
-        return R.string.tracker_stop;
     }
 
     @Override

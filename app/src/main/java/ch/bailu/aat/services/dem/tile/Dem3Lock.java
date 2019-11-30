@@ -2,7 +2,7 @@ package ch.bailu.aat.services.dem.tile;
 
 import ch.bailu.aat.util.ui.AppLog;
 
-public class Dem3Lock {
+public final class Dem3Lock {
 
     int locks=0;
 

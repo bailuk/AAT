@@ -3,7 +3,7 @@ package ch.bailu.aat.services.location;
 import android.location.Location;
 
 
-public class GpsLocationInformation extends RealLocationInformation {
+public final class GpsLocationInformation extends RealLocationInformation {
     private final long time = System.currentTimeMillis();
 
     public GpsLocationInformation(Location l, int s) {

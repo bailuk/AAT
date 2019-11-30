@@ -1,6 +1,6 @@
 package ch.bailu.aat.services.dem.tile;
 
-public class Dem3Array {
+public final class Dem3Array {
     private static final int DEM3_BUFFER_DIM=1201;
     private static final int DEM3_BUFFER_OFFSET=1;
     public static final DemDimension DIMENSION=

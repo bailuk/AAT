@@ -7,7 +7,7 @@ import java.util.Iterator;
 
 import ch.bailu.aat.coordinates.SrtmCoordinates;
 
-public class PendingUpdatesMap {
+public final class PendingUpdatesMap {
     private final HashMap<SrtmCoordinates,ArrayList<ElevationUpdaterClient>> map =
             new HashMap<>();
 

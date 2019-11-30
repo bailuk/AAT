@@ -15,7 +15,7 @@ import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.util.filter_list.FilterList;
 import ch.bailu.aat.util.filter_list.KeyList;
 
-public class MapFeaturesHandle extends ObjectHandle {
+public final class MapFeaturesHandle extends ObjectHandle {
 
     public static final String ID_FULL = MapFeaturesHandle.class.getSimpleName();
     public static final String ID_SMALL = MapFeaturesHandle.class.getSimpleName()+"/s";

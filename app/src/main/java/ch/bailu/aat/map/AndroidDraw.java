@@ -10,7 +10,7 @@ import org.mapsforge.map.android.graphics.AndroidGraphicFactory;
 
 import ch.bailu.aat.util.ui.AppDensity;
 
-public class AndroidDraw implements MapDraw {
+public final class AndroidDraw implements MapDraw {
     private final static int SPACE=5;
 
     private Canvas canvas=null;

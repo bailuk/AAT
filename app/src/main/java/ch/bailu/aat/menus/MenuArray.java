@@ -15,7 +15,7 @@ import android.view.View;
 import java.util.ArrayList;
 
 
-public class MenuArray implements Menu {
+public final class MenuArray implements Menu {
     private final ArrayList<Item> item = new ArrayList<>();
     private final Context context;
 
@@ -26,14 +26,14 @@ public class MenuArray implements Menu {
 
     @Override
     public MenuItem add(CharSequence charSequence) {
-        Item i = new Item(charSequence);
+        Item i = new Item(context, charSequence);
         item.add(i);
         return i;
     }
 
     @Override
     public MenuItem add(int i0, int id, int i2, CharSequence charSequence) {
-        Item i = new Item(charSequence, id);
+        Item i = new Item(context, charSequence, id);
         item.add(i);
         return i;
     }
@@ -167,16 +167,18 @@ public class MenuArray implements Menu {
     }
 
 
-    private class Item implements MenuItem {
+    private static final class Item implements MenuItem {
+        private final Context context;
         private CharSequence title;
         private final int id;
 
 
-        public Item(CharSequence t) {
-            this (t, 0);
+        public Item(Context c, CharSequence t) {
+            this (c, t, 0);
         }
 
-        public Item(CharSequence t, int i) {
+        public Item(Context c, CharSequence t, int i) {
+            context = c;
             title = t;
             id = i;
         }

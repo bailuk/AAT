@@ -2,7 +2,7 @@ package ch.bailu.aat.services.icons;
 
 import java.util.HashMap;
 
-public class IconMap {
+public final class IconMap {
     private final static String SVG_PREFIX="symbols/";
     private final static String SVG_SUFFIX=".svg";
 

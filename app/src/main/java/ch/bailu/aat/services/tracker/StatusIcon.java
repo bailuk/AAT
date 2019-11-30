@@ -15,7 +15,7 @@ import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.util.ui.AppTheme;
 
 
-public class StatusIcon  {
+public final class StatusIcon  {
     private final static int MY_ID=5;
 
     private final ServiceContext scontext;

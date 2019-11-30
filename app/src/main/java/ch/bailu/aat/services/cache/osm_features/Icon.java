@@ -17,7 +17,7 @@ import ch.bailu.aat.util.ui.AppDensity;
 import ch.bailu.aat.util.ui.AppLog;
 
 
-class Icon {
+final class Icon {
     public final Drawable way, node, area, relation;
     private final int icon_size;
 

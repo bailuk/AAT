@@ -11,7 +11,7 @@ import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.VirtualService;
 import ch.bailu.aat.services.cache.MapsForgeTileObject;
 
-public class RenderService  extends VirtualService
+public final class RenderService  extends VirtualService
         implements SharedPreferences.OnSharedPreferenceChangeListener {
 
 
@@ -58,14 +58,6 @@ public class RenderService  extends VirtualService
         caches.freeFromRenderer(o);
     }
 
-
-
-    @Override
-    public void appendStatusText(StringBuilder builder) {
-
-    }
-
-    @Override
     public void close() {
         sdirectory.getStorage().unregister(this);
         configuration.destroy();

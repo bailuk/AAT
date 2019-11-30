@@ -18,7 +18,7 @@ import ch.bailu.aat.util.fs.AppDirectory;
 import ch.bailu.aat.util.ui.AppLog;
 import ch.bailu.util_java.foc.Foc;
 
-public class TrackLogger extends Logger {
+public final class TrackLogger extends Logger {
     final public static int MIN_TRACKPOINTS=5;
 
     private boolean requestSegment=true;

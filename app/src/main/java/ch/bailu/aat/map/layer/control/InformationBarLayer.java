@@ -19,7 +19,7 @@ import ch.bailu.aat.util.ui.ToolTip;
 import ch.bailu.aat.views.MyImageButton;
 import ch.bailu.aat.views.bar.ControlBar;
 
-public class InformationBarLayer extends ControlBarLayer {
+public final class InformationBarLayer extends ControlBarLayer {
 
     private final MyImageButton menu, overpass, nominatim, location;
 

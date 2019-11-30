@@ -6,7 +6,7 @@ import org.mapsforge.map.android.graphics.AndroidGraphicFactory;
 
 import ch.bailu.aat.util.ui.AppDensity;
 
-public class MapPaint {
+public final class MapPaint {
 
 
     public static final int EDGE_WIDTH_LINE=2;

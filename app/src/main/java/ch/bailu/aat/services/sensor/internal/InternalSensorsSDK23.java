@@ -14,7 +14,7 @@ import ch.bailu.aat.services.sensor.list.SensorItemState;
 
 
 @RequiresApi(api = 23)
-public class InternalSensorsSDK23 extends Sensors {
+public final class InternalSensorsSDK23 extends Sensors {
 
     private final SensorManager manager;
     private final Context context;

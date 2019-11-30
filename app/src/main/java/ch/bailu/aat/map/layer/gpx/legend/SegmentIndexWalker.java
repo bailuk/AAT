@@ -4,7 +4,7 @@ import ch.bailu.aat.gpx.GpxList;
 import ch.bailu.aat.gpx.GpxPointNode;
 import ch.bailu.aat.gpx.GpxSegmentNode;
 
-public class SegmentIndexWalker extends LegendWalker{
+public final class SegmentIndexWalker extends LegendWalker{
 
     private int index=1;
 

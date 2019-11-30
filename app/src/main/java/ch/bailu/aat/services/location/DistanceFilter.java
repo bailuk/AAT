@@ -5,7 +5,7 @@ import android.content.Context;
 import ch.bailu.aat.gpx.GpxDeltaHelper;
 import ch.bailu.aat.preferences.presets.SolidDistanceFilter;
 
-public class DistanceFilter extends LocationStackChainedItem {
+public final class DistanceFilter extends LocationStackChainedItem {
     private LocationInformation oldLocation=null;
     private float minDistance=0f;
 

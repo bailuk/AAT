@@ -4,7 +4,7 @@ import android.content.Context;
 
 import java.io.Closeable;
 
-public abstract class VirtualService implements Closeable {
+public abstract class VirtualService {
 
 
     private final ServiceContext scontext;
@@ -13,12 +13,10 @@ public abstract class VirtualService implements Closeable {
         scontext = sc;
     }
 
-    public abstract void appendStatusText(StringBuilder builder);
-
-    public ServiceContext getSContext() {
+    protected final ServiceContext getSContext() {
         return scontext;
     }
-    public Context getContext() {
+    protected final Context getContext() {
         return scontext.getContext();
     }
 

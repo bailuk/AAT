@@ -7,7 +7,7 @@ import ch.bailu.aat.gpx.GpxList;
 import ch.bailu.aat.gpx.GpxPointNode;
 import ch.bailu.aat.gpx.GpxSegmentNode;
 
-public class PointDistanceWalker extends LegendWalker {
+public final class PointDistanceWalker extends LegendWalker {
 
     private final DistanceDescription description;
     private float distance=0;

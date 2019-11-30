@@ -15,7 +15,7 @@ import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.util.ui.AppLog;
 
-public class TrackerInternals
+public final class TrackerInternals
 implements OnSharedPreferenceChangeListener, Closeable {
 
 

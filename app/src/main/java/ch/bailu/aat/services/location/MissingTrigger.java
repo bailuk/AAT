@@ -4,7 +4,7 @@ import android.content.Context;
 
 import ch.bailu.aat.preferences.presets.SolidMissingTrigger;
 
-public class MissingTrigger extends LocationStackChainedItem {
+public final class MissingTrigger extends LocationStackChainedItem {
     private int triggerMillis=15000;
     private long stamp = System.currentTimeMillis();
 

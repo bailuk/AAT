@@ -11,9 +11,10 @@ import ch.bailu.aat.services.VirtualService;
 import ch.bailu.aat.services.cache.ImageObjectAbstract;
 import ch.bailu.aat.util.fs.foc.FocAsset;
 import ch.bailu.aat.util.ui.AppLog;
+import ch.bailu.aat.util.WithStatusText;
 import ch.bailu.util_java.foc.Foc;
 
-public class IconMapService extends VirtualService {
+public final class IconMapService extends VirtualService implements WithStatusText {
     public static final float BIG_ICON_SIZE = 48;//64;
     public static final float SMALL_ICON_SIZE = 24;
 
@@ -105,7 +106,6 @@ public class IconMapService extends VirtualService {
 
 
 
-    @Override
     public void close() {
         cache.close();
     }

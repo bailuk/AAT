@@ -31,10 +31,8 @@ public abstract class State  {
 
     public abstract int getStateID();
 
-    public abstract int getStatusTextID();
     public abstract int getStartStopTextID();
     public abstract int getPauseResumeTextID();
-    public abstract int getStartPauseResumeTextID();
 
     public abstract int getStartStopIconID();
 }

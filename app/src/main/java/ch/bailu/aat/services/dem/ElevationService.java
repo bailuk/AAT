@@ -9,7 +9,7 @@ import ch.bailu.aat.services.dem.tile.ElevationProvider;
 import ch.bailu.aat.services.dem.updater.ElevationUpdaterClient;
 import ch.bailu.aat.services.dem.updater.ElevationUpdater;
 
-public class ElevationService extends VirtualService implements ElevationProvider{
+public final class ElevationService extends VirtualService implements ElevationProvider{
 
     private final ElevationUpdater updater;
     private final Dem3Loader loader;
@@ -23,13 +23,6 @@ public class ElevationService extends VirtualService implements ElevationProvide
         updater = new ElevationUpdater(sc, loader, tiles);
 
     }
-
-    @Override
-    public void appendStatusText(StringBuilder builder) {
-
-    }
-
-
 
     public void requestElevationUpdates(ElevationUpdaterClient e, SrtmCoordinates[] c) {
         updater.requestElevationUpdates(e, c);
@@ -52,7 +45,6 @@ public class ElevationService extends VirtualService implements ElevationProvide
     }
 
 
-    @Override
     public void close() {
         updater.close();
         loader.close();

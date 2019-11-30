@@ -5,7 +5,7 @@ import android.content.Context;
 import ch.bailu.aat.preferences.presets.SolidAccuracyFilter;
 
 
-public class AccuracyFilter extends LocationStackChainedItem {
+public final class AccuracyFilter extends LocationStackChainedItem {
     private float minAccuracy=99f;
 
     public AccuracyFilter(LocationStackItem n) {

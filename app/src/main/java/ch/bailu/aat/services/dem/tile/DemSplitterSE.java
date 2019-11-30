@@ -1,6 +1,6 @@
 package ch.bailu.aat.services.dem.tile;
 
-public class DemSplitterSE extends DemSplitter {
+public final class DemSplitterSE extends DemSplitter {
 
 
     public DemSplitterSE(DemProvider p) {

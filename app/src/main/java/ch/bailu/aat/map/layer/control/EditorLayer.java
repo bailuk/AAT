@@ -17,7 +17,7 @@ import ch.bailu.aat.services.editor.EditorInterface;
 import ch.bailu.aat.util.ui.ToolTip;
 import ch.bailu.aat.views.bar.ControlBar;
 
-public class EditorLayer extends ControlBarLayer {
+public final class EditorLayer extends ControlBarLayer {
 
     private final View menu, add, remove, up, down,
             undo, redo;

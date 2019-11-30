@@ -27,7 +27,7 @@ import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.util.fs.foc.FocAndroid;
 import ch.bailu.util_java.foc.Foc;
 
-public class GpxObjectStatic extends GpxObject implements ElevationUpdaterClient {
+public final class GpxObjectStatic extends GpxObject implements ElevationUpdaterClient {
 
 
     private GpxList gpxList = GpxList.NULL_TRACK;

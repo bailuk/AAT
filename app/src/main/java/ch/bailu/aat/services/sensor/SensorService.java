@@ -13,8 +13,9 @@ import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.VirtualService;
 import ch.bailu.aat.services.sensor.list.SensorList;
 import ch.bailu.aat.util.AppBroadcaster;
+import ch.bailu.aat.util.WithStatusText;
 
-public class SensorService extends VirtualService {
+public final class SensorService extends VirtualService implements WithStatusText {
     private final SensorList sensorList;
 
     private final Sensors bluetoothLE;
@@ -81,7 +82,6 @@ public class SensorService extends VirtualService {
     }
 
 
-    @Override
     public synchronized void close() {
         bluetoothLE.close();
         internal.close();

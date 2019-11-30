@@ -6,7 +6,7 @@ import android.graphics.Color;
 import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.util.ui.AppTheme;
 
-public class MapColor {
+public final class MapColor {
 
     public static final int ALPHA_HIGH = 50;
     public static final int ALPHA_LOW = 200;

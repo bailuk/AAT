@@ -6,7 +6,7 @@ import android.support.annotation.RequiresApi;
 import java.util.UUID;
 
 @RequiresApi(api = 18)
-public class BatteryService {
+public final class BatteryService {
 
     public final static UUID BATTERY_SERVICE = ID.toUUID(0x180f);
     public final static UUID BATTERY_LEVEL = ID.toUUID(0x2A19);

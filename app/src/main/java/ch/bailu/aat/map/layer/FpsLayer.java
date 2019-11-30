@@ -6,7 +6,7 @@ import org.mapsforge.core.model.Point;
 
 import ch.bailu.aat.map.MapContext;
 
-public class FpsLayer implements MapLayerInterface {
+public final class FpsLayer implements MapLayerInterface {
 
     private long totalTime;
     private long frameCount;

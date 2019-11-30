@@ -11,7 +11,7 @@ import ch.bailu.aat.map.MapMetrics;
 import ch.bailu.aat.map.MapPaint;
 import ch.bailu.aat.map.layer.gpx.GpxLayer;
 
-public class GpxLegendLayer extends GpxLayer {
+public final class GpxLegendLayer extends GpxLayer {
     private final LegendWalker walker;
 
     private Paint backgroundPaint, framePaint;

@@ -13,7 +13,7 @@ import ch.bailu.aat.preferences.map.SolidTileSize;
 import ch.bailu.aat.services.cache.Span;
 import ch.bailu.aat.services.dem.tile.DemGeoToIndex;
 
-public class Raster {
+public final class Raster {
     public final int[] toLaRaster = new int[SolidTileSize.DEFAULT_TILESIZE];
     public final int[] toLoRaster = new int[SolidTileSize.DEFAULT_TILESIZE];
 

@@ -1,6 +1,6 @@
 package ch.bailu.aat.map.layer.grid;
 
-public class GridMetricScaler {
+public final class GridMetricScaler {
     private static final int KM=1000;
     private static final int[] GRID_LEVELS = {
         500*KM,

@@ -8,7 +8,7 @@ import ch.bailu.aat.services.cache.LockCache;
 import ch.bailu.aat.services.cache.ObjectHandle;
 import ch.bailu.aat.services.cache.SVGAssetImageObject;
 
-public class IconCache implements Closeable {
+public final class IconCache implements Closeable {
     private final LockCache<ImageObjectAbstract> icons = new LockCache<>(20);
 
     private final ServiceContext scontext;

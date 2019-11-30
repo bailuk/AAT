@@ -1,6 +1,6 @@
 package ch.bailu.aat.services.directory;
 
-public class GpxDbConstants {
+public final class GpxDbConstants {
     public final static int DB_VERSION=8;
 
     public final static String DB_TABLE="summary";

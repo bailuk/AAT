@@ -9,7 +9,7 @@ import ch.bailu.aat.gpx.StateID;
 import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.services.location.LocationService;
 
-public class OnState extends State {
+public final class OnState extends State {
 
     private final AttributesCollector attributes = new AttributesCollector();
 
@@ -83,22 +83,12 @@ public class OnState extends State {
     }
 
     @Override
-    public int getStatusTextID() {
-        return R.string.on;
-    }
-
-    @Override
     public int getStartStopTextID() {
         return R.string.tracker_stop;
     }
 
     @Override
     public int getPauseResumeTextID() {
-        return R.string.tracker_pause;
-    }
-
-    @Override
-    public int getStartPauseResumeTextID() {
         return R.string.tracker_pause;
     }
 

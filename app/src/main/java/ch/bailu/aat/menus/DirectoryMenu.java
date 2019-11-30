@@ -15,7 +15,7 @@ import ch.bailu.aat.preferences.SolidFile;
 import ch.bailu.aat.util.Clipboard;
 import ch.bailu.aat.util.fs.FileIntent;
 
-public class DirectoryMenu extends AbsMenu {
+public final class DirectoryMenu extends AbsMenu {
 
     private MenuItem browse, view, get, clipboard;
 

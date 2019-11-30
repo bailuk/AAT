@@ -9,7 +9,7 @@ import ch.bailu.aat.coordinates.MeterCoordinates;
 import ch.bailu.aat.coordinates.UTMCoordinates;
 import ch.bailu.aat.map.MapContext;
 
-public class UTMGridLayer extends MeterGridLayer{
+public final class UTMGridLayer extends MeterGridLayer{
     public UTMGridLayer(MapContext cl) {
         super(cl.getContext());
     }

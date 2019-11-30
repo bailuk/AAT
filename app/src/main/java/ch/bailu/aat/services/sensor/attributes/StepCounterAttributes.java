@@ -3,7 +3,7 @@ package ch.bailu.aat.services.sensor.attributes;
 import ch.bailu.aat.gpx.attributes.GpxAttributes;
 import ch.bailu.aat.gpx.attributes.Keys;
 
-public class StepCounterAttributes extends GpxAttributes {
+public final class StepCounterAttributes extends GpxAttributes {
 
 
     private static final Keys KEYS = new Keys();

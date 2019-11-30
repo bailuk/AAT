@@ -9,7 +9,7 @@ import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.util_java.foc.Foc;
 import ch.bailu.util_java.foc.FocName;
 
-public class DirtyLocation extends LocationStackChainedItem {
+public final class DirtyLocation extends LocationStackChainedItem {
     private final static String SOLID_KEY="DirtyLocation_";
 
     private GpxInformation locationInformation;

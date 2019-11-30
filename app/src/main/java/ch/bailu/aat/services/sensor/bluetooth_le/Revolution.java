@@ -1,6 +1,6 @@
 package ch.bailu.aat.services.sensor.bluetooth_le;
 
-public class Revolution {
+public final class Revolution {
 
     private final Rollover time = new Rollover();
     private final Rollover revolution = new Rollover();

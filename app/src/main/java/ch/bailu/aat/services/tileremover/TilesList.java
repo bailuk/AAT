@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.TreeSet;
 
-public class TilesList {
+public final class TilesList {
     private final static int FILES_LIMIT=50000;
 
 

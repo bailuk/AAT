@@ -10,7 +10,7 @@ import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.util.ui.AppLog;
 import ch.bailu.util_java.foc.Foc;
 
-public  class SaveTileTask extends FileTask {
+public final class SaveTileTask extends FileTask {
 
     private final String sourceID;
 

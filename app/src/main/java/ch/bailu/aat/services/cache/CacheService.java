@@ -10,9 +10,10 @@ import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.VirtualService;
 import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.util.MemSize;
+import ch.bailu.aat.util.WithStatusText;
 
 
-public class CacheService extends VirtualService implements SharedPreferences.OnSharedPreferenceChangeListener {
+public final class CacheService extends VirtualService implements SharedPreferences.OnSharedPreferenceChangeListener, WithStatusText {
 
 
 
@@ -58,7 +59,6 @@ public class CacheService extends VirtualService implements SharedPreferences.On
     }
 
 
-    @Override
     public void close() {
         getContext().unregisterReceiver(onFileProcessed);
 

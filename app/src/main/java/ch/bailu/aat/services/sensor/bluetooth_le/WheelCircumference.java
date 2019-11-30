@@ -12,7 +12,7 @@ import ch.bailu.aat.gpx.interfaces.GpxPointInterface;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.util.AppBroadcaster;
 
-public class WheelCircumference implements Closeable {
+public final class WheelCircumference implements Closeable {
 
     private static final float MIN_SAMPLE_DISTANCE = 0.5f;
     private static final float MAX_SAMPLE_DISTANCE = 100f;

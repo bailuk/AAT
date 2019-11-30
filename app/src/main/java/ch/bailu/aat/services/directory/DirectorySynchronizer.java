@@ -28,7 +28,7 @@ import ch.bailu.aat.util.fs.foc.FocAndroid;
 import ch.bailu.aat.util.ui.AppLog;
 import ch.bailu.util_java.foc.Foc;
 
-public class DirectorySynchronizer  implements Closeable {
+public final class DirectorySynchronizer  implements Closeable {
 
     private GpxObject pendingHandle=null;
     private MapsForgePreview pendingPreviewGenerator=null;
@@ -97,7 +97,7 @@ public class DirectorySynchronizer  implements Closeable {
 
 
     /////////////////////////////////////////////////////////////////////////////////////////////
-    private class StateInit extends State {
+    private final class StateInit extends State {
         /**
          *  TODO: move db open into background
          */
@@ -133,7 +133,7 @@ public class DirectorySynchronizer  implements Closeable {
 
 
     /////////////////////////////////////////////////////////////////////////////////////////////
-    private class StatePrepareSync extends State {
+    private final class StatePrepareSync extends State {
         private Exception exception=null;
 
         private BackgroundTask backgroundTask = new BackgroundTask() {
@@ -243,7 +243,7 @@ public class DirectorySynchronizer  implements Closeable {
 
 
     /////////////////////////////////////////////////////////////////////////////////////////////
-    private class StateLoadNextGpx extends State {
+    private final class StateLoadNextGpx extends State {
 
         public void start() {
 
@@ -335,7 +335,7 @@ public class DirectorySynchronizer  implements Closeable {
 
 
     /////////////////////////////////////////////////////////////////////////////////////////////
-    private class StateLoadPreview extends State {
+    private final class StateLoadPreview extends State {
 
         public void start() {
 
@@ -391,7 +391,7 @@ public class DirectorySynchronizer  implements Closeable {
 
 
     /////////////////////////////////////////////////////////////////////////////////////////////
-    private class StateTerminate extends State {
+    private final class StateTerminate extends State {
 
         public StateTerminate(Exception e) {
             e.printStackTrace();

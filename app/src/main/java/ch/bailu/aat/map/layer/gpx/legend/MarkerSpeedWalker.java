@@ -8,7 +8,7 @@ import ch.bailu.aat.gpx.GpxList;
 import ch.bailu.aat.gpx.GpxPointNode;
 import ch.bailu.aat.gpx.GpxSegmentNode;
 
-public class MarkerSpeedWalker extends LegendWalker {
+public final class MarkerSpeedWalker extends LegendWalker {
     private final SpeedDescription description;
 
     public MarkerSpeedWalker(Context context) {

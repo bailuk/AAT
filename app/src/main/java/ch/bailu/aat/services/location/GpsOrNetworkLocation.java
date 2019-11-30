@@ -4,7 +4,7 @@ import android.content.Context;
 
 import ch.bailu.aat.gpx.StateID;
 
-public class GpsOrNetworkLocation extends LocationStackChainedItem {
+public final class GpsOrNetworkLocation extends LocationStackChainedItem {
 
     private final NetworkLocation network;
     private final GpsLocation gps;

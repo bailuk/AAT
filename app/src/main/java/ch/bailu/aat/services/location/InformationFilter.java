@@ -1,6 +1,6 @@
 package ch.bailu.aat.services.location;
 
-public class InformationFilter extends LocationStackChainedItem {
+public final class InformationFilter extends LocationStackChainedItem {
 
     public InformationFilter(LocationStackItem n) {
         super(n);

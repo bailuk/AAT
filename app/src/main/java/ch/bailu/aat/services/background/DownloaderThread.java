@@ -2,7 +2,7 @@ package ch.bailu.aat.services.background;
 
 import ch.bailu.aat.services.ServiceContext;
 
-public class DownloaderThread  extends WorkerThread {
+public final class DownloaderThread  extends WorkerThread {
     private final static int DOWNLOAD_QUEUE_SIZE=100;
     private final String server;
     private final DownloadStatistics statistics = new DownloadStatistics();

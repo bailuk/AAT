@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import ch.bailu.aat.util.ui.AppLog;
 import ch.bailu.util_java.foc.Foc;
 
-public class Renderer extends Layer {
+public final class Renderer extends Layer {
     private final static boolean TRANSPARENT = false;
     private final static boolean RENDER_LABELS = true;
     private final static boolean CACHE_LABELS = false;

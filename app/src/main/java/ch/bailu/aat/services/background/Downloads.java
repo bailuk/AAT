@@ -10,7 +10,7 @@ import ch.bailu.aat.util.net.URX;
 import ch.bailu.util_java.foc.Foc;
 import ch.bailu.util_java.util.Objects;
 
-public class Downloads {
+public final class Downloads {
 
     private final ArrayList<DownloadTask> downloads = new ArrayList<>(10);
 

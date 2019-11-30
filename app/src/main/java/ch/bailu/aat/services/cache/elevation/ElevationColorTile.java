@@ -7,7 +7,7 @@ import ch.bailu.aat.services.cache.ObjectHandle;
 import ch.bailu.aat.services.dem.tile.DemProvider;
 import ch.bailu.aat.views.graph.AltitudeColorTable;
 
-public class ElevationColorTile extends ElevationTile {
+public final class ElevationColorTile extends ElevationTile {
 
 
     public ElevationColorTile(String id, Tile t, int _split) {

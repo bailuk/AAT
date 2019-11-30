@@ -14,7 +14,7 @@ import ch.bailu.aat.services.sensor.attributes.CadenceSpeedAttributes;
 import ch.bailu.aat.services.sensor.list.SensorState;
 
 @RequiresApi(api = 18)
-public class CscService extends CscServiceID implements ServiceInterface {
+public final class CscService extends CscServiceID implements ServiceInterface {
     /**
      *
      * RPM BBB BCP-66 SmartCadence RPM Sensor

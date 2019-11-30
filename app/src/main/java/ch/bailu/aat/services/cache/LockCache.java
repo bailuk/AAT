@@ -2,7 +2,7 @@ package ch.bailu.aat.services.cache;
 
 import java.io.Closeable;
 
-public class LockCache<E extends ObjectHandle>  implements Closeable {
+public final class LockCache<E extends ObjectHandle>  implements Closeable {
     private E[]    objects;
     private long[] access;
     private int    size;

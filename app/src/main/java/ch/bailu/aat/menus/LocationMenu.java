@@ -17,7 +17,7 @@ import ch.bailu.aat.preferences.location.SolidGoToLocation;
 import ch.bailu.aat.preferences.map.SolidMapGrid;
 import ch.bailu.aat.util.Clipboard;
 
-public class LocationMenu extends AbsMenu{
+public final class LocationMenu extends AbsMenu{
 
     private final MapViewInterface map;
     private final Context context;

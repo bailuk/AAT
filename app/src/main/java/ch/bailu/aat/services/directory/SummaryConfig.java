@@ -6,7 +6,7 @@ import ch.bailu.aat.util.fs.AppDirectory;
 import ch.bailu.util_java.foc.Foc;
 import ch.bailu.util_java.foc.FocFile;
 
-public class SummaryConfig {
+public final class SummaryConfig {
     public static String getWriteableDBPath(Context context, Foc dir) {
         return getWriteableSummaryDir(context, dir)
                 .child(AppDirectory.FILE_CACHE_DB)

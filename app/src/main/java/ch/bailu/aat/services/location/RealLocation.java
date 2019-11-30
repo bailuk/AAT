@@ -31,7 +31,7 @@ public class RealLocation extends LocationStackChainedItem
 
 
 
-    public static class NoServiceException extends Exception {
+    public static final class NoServiceException extends Exception {
         private static final long serialVersionUID = 5318663897402154115L;
     }
 

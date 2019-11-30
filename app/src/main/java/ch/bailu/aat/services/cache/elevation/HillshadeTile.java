@@ -11,7 +11,7 @@ import ch.bailu.aat.services.dem.tile.DemSplitter;
 import ch.bailu.aat.services.dem.tile.MultiCell;
 import ch.bailu.aat.services.dem.tile.MultiCell8;
 
-public class HillshadeTile extends ElevationTile {
+public final class HillshadeTile extends ElevationTile {
 
     private HillshadeColorTable table;
 
@@ -132,7 +132,7 @@ public class HillshadeTile extends ElevationTile {
     }
 
 
-    public static class Factory extends ObjectHandle.Factory {
+    public static final class Factory extends ObjectHandle.Factory {
         private final Tile mapTile;
 
         public Factory(Tile t) {

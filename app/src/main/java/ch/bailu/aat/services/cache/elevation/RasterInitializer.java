@@ -5,7 +5,7 @@ import ch.bailu.aat.services.background.BackgroundTask;
 import ch.bailu.aat.services.cache.ObjectHandle;
 import ch.bailu.aat.services.cache.OnObject;
 
-public class RasterInitializer extends BackgroundTask {
+public final class RasterInitializer extends BackgroundTask {
 
     private final String iid;
     private long size;

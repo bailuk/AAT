@@ -16,7 +16,7 @@ import ch.bailu.aat.services.tracker.State;
 import ch.bailu.aat.views.preferences.SolidCheckListDialog;
 import ch.bailu.aat.views.preferences.SolidIndexListDialog;
 
-public class OptionsMenu extends AbsMenu {
+public final class OptionsMenu extends AbsMenu {
     private MenuItem start, pause, backlight, preferences, map;
 
     private final ServiceContext scontext;

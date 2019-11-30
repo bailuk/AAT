@@ -15,7 +15,7 @@ import ch.bailu.aat.util.AppIntent;
 import ch.bailu.aat.util.Timer;
 import ch.bailu.util_java.foc.Foc;
 
-public class Dem3TileLoader implements Closeable {
+public final class Dem3TileLoader implements Closeable {
     private static final long MILLIS=2000;
 
     private final ServiceContext scontext;

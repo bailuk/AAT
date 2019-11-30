@@ -8,7 +8,7 @@ import ch.bailu.aat.map.MapContext;
 import ch.bailu.aat.map.layer.MapLayerInterface;
 import ch.bailu.aat.preferences.map.SolidMapGrid;
 
-public class GridDynLayer implements MapLayerInterface {
+public final class GridDynLayer implements MapLayerInterface {
     private MapLayerInterface gridLayer;
     private final SolidMapGrid sgrid;
 

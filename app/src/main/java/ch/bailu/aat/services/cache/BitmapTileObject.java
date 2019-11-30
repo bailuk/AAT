@@ -16,7 +16,7 @@ import ch.bailu.aat.util.graphic.SyncTileBitmap;
 import ch.bailu.util_java.foc.Foc;
 
 
-public class BitmapTileObject extends TileObject {
+public final class BitmapTileObject extends TileObject {
     private final DownloadSource source;
     private final Tile tile;
 

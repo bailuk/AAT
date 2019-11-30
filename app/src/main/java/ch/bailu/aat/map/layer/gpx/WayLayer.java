@@ -10,7 +10,7 @@ import ch.bailu.aat.services.InsideContext;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.cache.ImageObjectAbstract;
 
-public class WayLayer extends GpxLayer {
+public final class WayLayer extends GpxLayer {
 
     private static final int MAX_VISIBLE_NODES=100;
     private static final int ICON_SIZE=20;

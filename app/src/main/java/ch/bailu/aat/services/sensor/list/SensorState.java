@@ -3,7 +3,7 @@ package ch.bailu.aat.services.sensor.list;
 import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.util.ToDo;
 
-public class SensorState {
+public final class SensorState {
 
     private static final int SIZE = InfoID.STEP_COUNTER_SENSOR - InfoID.HEART_RATE_SENSOR + 1;
 

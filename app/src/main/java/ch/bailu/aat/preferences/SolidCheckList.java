@@ -16,25 +16,6 @@ public abstract class SolidCheckList extends AbsSolidType {
     @Override
     public void setValueFromString(String s) {}
 
-
-    public void register(OnSharedPreferenceChangeListener listener) {
-        getStorage().register(listener);
-
-    }
-
-
-    public void unregister(OnSharedPreferenceChangeListener listener) {
-        getStorage().unregister(listener);
-
-    }
-
-
-
-
-    public Context getContext() {
-        return getStorage().getContext();
-    }
-
     @Override
     public String getValueAsString() {
         return null;

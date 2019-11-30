@@ -14,7 +14,7 @@ import ch.bailu.aat.map.MapContext;
 import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat.preferences.map.SolidPositionLock;
 
-public class MapPositionLayer implements MapLayerInterface, OnContentUpdatedInterface {
+public final class MapPositionLayer implements MapLayerInterface, OnContentUpdatedInterface {
 
     private final MapContext mcontext;
 

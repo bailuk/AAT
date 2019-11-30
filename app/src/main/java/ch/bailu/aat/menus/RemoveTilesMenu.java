@@ -14,7 +14,7 @@ import ch.bailu.aat.services.tileremover.SelectedTileDirectoryInfo;
 import ch.bailu.aat.util.Res;
 import ch.bailu.aat.util.ui.AppDialog;
 
-public class RemoveTilesMenu extends AbsMenu {
+public final class RemoveTilesMenu extends AbsMenu {
 
     private MenuItem removeScanned, removeAll;
 

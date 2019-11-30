@@ -5,7 +5,7 @@ import ch.bailu.aat.gpx.GpxPointNode;
 import ch.bailu.aat.gpx.interfaces.GpxPointInterface;
 import ch.bailu.aat.gpx.interfaces.GpxType;
 
-public class GpxEditor {
+public final class GpxEditor {
 
     private final EditorRing ring;
 

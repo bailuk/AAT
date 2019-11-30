@@ -8,7 +8,7 @@ import android.view.MenuItem;
 
 import ch.bailu.aat.views.description.MultiView;
 
-public class MultiViewMenu extends AbsMenu {
+public final class MultiViewMenu extends AbsMenu {
 
     private final MultiView mview;
 
@@ -19,11 +19,6 @@ public class MultiViewMenu extends AbsMenu {
     @Override
     public void inflate(Menu menu) {
         mview.inflateMenu(menu);
-    }
-
-    @Override
-    public void inflateWithHeader(ContextMenu menu) {
-        inflate(menu);
     }
 
     @Override

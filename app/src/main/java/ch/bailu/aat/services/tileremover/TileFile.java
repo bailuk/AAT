@@ -4,7 +4,7 @@ import android.support.annotation.NonNull;
 
 import ch.bailu.util_java.foc.Foc;
 
-public class TileFile {
+public final class TileFile {
 
     private final short zoom;
     private final int x, y, source;

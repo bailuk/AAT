@@ -2,7 +2,7 @@ package ch.bailu.aat.services.location;
 
 import android.content.Context;
 
-public class Trigger {
+public final class Trigger {
     private static final int LOW =-1;
     private static final int NEUTRAL = 0;
     private static final int HIGH = 1;

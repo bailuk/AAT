@@ -29,19 +29,19 @@ public abstract class AbsSolidType implements SolidTypeInterface {
 
 
     @Override
-    public Context getContext() {
+    public final Context getContext() {
         return getStorage().getContext();
     }
 
 
     @Override
-    public void register(OnSharedPreferenceChangeListener listener) {
+    public final void register(OnSharedPreferenceChangeListener listener) {
         getStorage().register(listener);
     }
 
 
     @Override
-    public void unregister(OnSharedPreferenceChangeListener listener) {
+    public final void unregister(OnSharedPreferenceChangeListener listener) {
         getStorage().unregister(listener);
     }
 
@@ -58,15 +58,15 @@ public abstract class AbsSolidType implements SolidTypeInterface {
     }
 
 
-    protected static String toDefaultString(String s) {
+    protected static final String toDefaultString(String s) {
         return s + DEFAULT_MARKER;
     }
 
-    protected static String toDefaultString(String s, int sel) {
+    protected static final String toDefaultString(String s, int sel) {
         return toDefaultString(s, sel, 0);
     }
 
-    protected static String toDefaultString(String s, int sel, int def) {
+    protected static final String toDefaultString(String s, int sel, int def) {
         if (def == sel) return toDefaultString(s);
         return s;
     }
@@ -74,11 +74,11 @@ public abstract class AbsSolidType implements SolidTypeInterface {
 
     public boolean validate(String s) { return true; }
 
-    public String getString(int res) {
+    public final String getString(int res) {
         return getContext().getString(res);
     }
 
-    public String getString(int res, Object obj) {
+    public final String getString(int res, Object obj) {
         return getContext().getString(res, obj.toString());
     }
 }

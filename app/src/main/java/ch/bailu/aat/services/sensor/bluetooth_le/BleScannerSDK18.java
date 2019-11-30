@@ -5,7 +5,7 @@ import android.bluetooth.BluetoothDevice;
 import android.support.annotation.RequiresApi;
 
 @RequiresApi(api = 18)
-public class BleScannerSDK18 extends BleScanner {
+public final class BleScannerSDK18 extends BleScanner {
 
     private final BluetoothAdapter adapter;
     private final BluetoothAdapter.LeScanCallback callback = new BluetoothAdapter.LeScanCallback() {

@@ -10,7 +10,7 @@ import ch.bailu.aat.description.FF;
 import ch.bailu.aat.map.MapContext;
 import ch.bailu.aat.map.layer.MapLayerInterface;
 
-public class WGS84Layer implements MapLayerInterface {
+public final class WGS84Layer implements MapLayerInterface {
 
     private final ElevationLayer elevation;
     private final Crosshair crosshair;

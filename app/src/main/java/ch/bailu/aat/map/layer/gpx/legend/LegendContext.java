@@ -8,7 +8,7 @@ import ch.bailu.aat.map.MapColor;
 import ch.bailu.aat.map.MapContext;
 import ch.bailu.aat.map.TwoNodes;
 
-public class LegendContext {
+public final class LegendContext {
 
 
     public static final int MIN_DI_PIXEL_DISTANCE=100;

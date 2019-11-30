@@ -7,7 +7,7 @@ import org.mapsforge.core.model.Point;
 import ch.bailu.aat.coordinates.SrtmCoordinates;
 import ch.bailu.aat.map.MapContext;
 
-public class Dem3NameLayer implements MapLayerInterface {
+public final class Dem3NameLayer implements MapLayerInterface {
 
 
     @Override

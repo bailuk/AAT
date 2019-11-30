@@ -9,7 +9,7 @@ import ch.bailu.aat.coordinates.CH1903Coordinates;
 import ch.bailu.aat.coordinates.MeterCoordinates;
 import ch.bailu.aat.map.MapContext;
 
-public class CH1903GridLayer extends MeterGridLayer {
+public final class CH1903GridLayer extends MeterGridLayer {
     public CH1903GridLayer(MapContext cl) {
         super(cl.getContext());
     }
