@@ -24,10 +24,8 @@ public class CH1903EastingDescription extends DoubleDescription {
         return "km";
     }
 
-    private final FF f = FF.f();
-
     public String getValue() {
-        return f.N3.format( ((float)(coordinate) ) / 1000f );
+        return FF.f().N3.format( ((float)(coordinate) ) / 1000f );
     }
 
     @Override

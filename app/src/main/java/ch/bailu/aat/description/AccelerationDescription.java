@@ -24,10 +24,9 @@ public class AccelerationDescription extends FloatDescription {
         return UNIT;
     }
 
-    private final FF f = FF.f();
 
     public String getValue() {
-        return f.N2.format(getCache());
+        return FF.f().N2.format(getCache());
     }
 
     @Override

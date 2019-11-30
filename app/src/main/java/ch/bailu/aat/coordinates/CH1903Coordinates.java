@@ -189,13 +189,12 @@ public class CH1903Coordinates extends MeterCoordinates {
     }
 
 
-    private final FF f = FF.f();
 
     @NonNull
     @Override
     public String toString() {
-        return f.N3_3.format(((float)northing)/1000f) + "/"
-                + f.N3_3.format(((float)easting)/1000f);
+        return FF.f().N3_3.format(((float)northing)/1000f) + "/"
+                + FF.f().N3_3.format(((float)easting)/1000f);
     }
 
 

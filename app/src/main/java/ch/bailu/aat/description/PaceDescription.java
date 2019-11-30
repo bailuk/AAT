@@ -7,9 +7,6 @@ import ch.bailu.aat.preferences.general.SolidUnit;
 public abstract class PaceDescription extends FloatDescription {
     private final SolidUnit sunit;
 
-    private final FF f = FF.f();
-
-
     @Override
     public String getUnit() {
         return sunit.getPaceUnit();
@@ -27,7 +24,7 @@ public abstract class PaceDescription extends FloatDescription {
     private String getPaceTimeString(float pace) {
 
         if (sunit.getIndex() == SolidUnit.SI) {
-            return f.N1.format(pace);
+            return FF.f().N1.format(pace);
         }
         return format(pace);
     }

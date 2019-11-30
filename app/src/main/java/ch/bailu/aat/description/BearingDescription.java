@@ -17,10 +17,8 @@ public class BearingDescription extends DoubleDescription {
         return context.getString(R.string.d_bearing);
     }
 
-    private final FF f = FF.f();
-
     public String getValue() {
-        return f.N3.format(getCache());
+        return FF.f().N3.format(getCache());
     }
 
     @Override

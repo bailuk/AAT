@@ -49,12 +49,10 @@ public class SolidAccuracyFilter extends SolidIndexList {
         return VALUE_LIST.length;
     }
 
-    private final FF f = FF.f();
-
     @Override
     public String getValueAsString(int i) {
         if (i == 0) return getContext().getString(R.string.off);
-        return f.N2.format(VALUE_LIST[i] * sunit.getAltitudeFactor())
+        return FF.f().N2.format(VALUE_LIST[i] * sunit.getAltitudeFactor())
                 + sunit.getAltitudeUnit();
     }
 

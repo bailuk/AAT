@@ -16,8 +16,6 @@ public class PlusCodesCenterCoordinatesLayer  implements MapLayerInterface {
     private final ElevationLayer elevation;
     private final Crosshair crosshair;
 
-    private final FF f = FF.f();
-
     public PlusCodesCenterCoordinatesLayer (Context c) {
         elevation = new ElevationLayer(c);
         crosshair = new Crosshair();

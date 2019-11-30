@@ -15,7 +15,6 @@ public class WGS84Layer implements MapLayerInterface {
     private final ElevationLayer elevation;
     private final Crosshair crosshair;
 
-    private final FF f = FF.f();
 
     public WGS84Layer (Context c) {
         elevation = new ElevationLayer(c);
@@ -44,6 +43,8 @@ public class WGS84Layer implements MapLayerInterface {
 
 
     private void drawCoordinates(MapContext clayer,LatLong point) {
+        final FF f = FF.f();
+
         clayer.draw().textBottom(new WGS84Coordinates(point).toString(),1);
         clayer.draw().textBottom(f.N6.format(point.latitude) + "/" + f.N6.format(point.getLongitude()),0);
     }
