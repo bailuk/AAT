@@ -37,7 +37,7 @@ public final class WheelCircumference implements Closeable {
     private GpxInformation currentLocation = GpxInformation.NULL;
     private GpxPointInterface previousLocation = null;
 
-    private BroadcastReceiver onLocationChanged = new BroadcastReceiver() {
+    private final BroadcastReceiver onLocationChanged = new BroadcastReceiver() {
 
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -113,10 +113,7 @@ public final class WheelCircumference implements Closeable {
 
     @Override
     public void close() {
-        if (onLocationChanged != null) {
-            scontext.getContext().unregisterReceiver(onLocationChanged);
-            onLocationChanged = null;
-        }
+        scontext.getContext().unregisterReceiver(onLocationChanged);
     }
 
     public String getDebugString() {

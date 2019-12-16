@@ -106,7 +106,7 @@ public final class ImageObject extends ImageObjectAbstract {
                     try {
                         self.bitmap.set(self.imageFile);
                         size[0] =  self.bitmap.getSize();
-                    } catch (IOException e) {
+                    } catch (Exception e) {
                         self.setException(e);
                     }
 

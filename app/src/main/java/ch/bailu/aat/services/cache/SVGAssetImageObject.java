@@ -120,10 +120,8 @@ public final class SVGAssetImageObject extends ImageObjectAbstract {
                         size[0] = self.size;
 
 
-                    } catch (SVGParseException | IOException | IndexOutOfBoundsException e) {
+                    } catch (Exception e) {
                         self.setException(e);
-                        AppLog.w(this, e);
-
                     }
 
                     AppBroadcaster.broadcast(sc.getContext(),

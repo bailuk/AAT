@@ -1,5 +1,6 @@
 package ch.bailu.aat.services.cache;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 
 import ch.bailu.aat.services.ServiceContext;
@@ -44,7 +45,6 @@ public abstract class ObjectHandle implements ObjectBroadcastReceiver{
 
     protected void setException(Exception e) {
         exception = e;
-        //AppLog.w(this, e);
     }
 
 

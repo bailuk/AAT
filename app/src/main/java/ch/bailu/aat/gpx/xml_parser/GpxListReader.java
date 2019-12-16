@@ -28,17 +28,17 @@ public class GpxListReader {
 
 
 
-    public GpxListReader(Foc in, AutoPause apause) throws IOException, SecurityException{
+    public GpxListReader(Foc in, AutoPause apause) {
         this(ThreadControl.KEEP_ON, in, apause);
     }
 
 
-    public GpxListReader (ThreadControl c, Foc in, AutoPause apause) throws IOException, SecurityException {
+    public GpxListReader (ThreadControl c, Foc in, AutoPause apause) {
         this(c, in, GpxListAttributes.factoryTrack(apause));
     }
 
 
-    private GpxListReader (ThreadControl c, Foc in, GpxListAttributes trackAttributes) throws IOException, SecurityException {
+    private GpxListReader (ThreadControl c, Foc in, GpxListAttributes trackAttributes) {
 
         track = new OnParsed(GpxType.TRACK, trackAttributes);
         way   = new OnParsed(GpxType.WAY,   GpxListAttributes.NULL);
@@ -52,23 +52,22 @@ public class GpxListReader {
             parser.setOnRouteParsed(route);
             parser.setOnTrackParsed(track);
             parser.setOnWayParsed(way);
+
             parser.parse();
             parser.close();
 
-        } catch (XmlPullParserException e) {
+        } catch (Exception e) {
             parserException = e;
-            AppLog.d(this, e.getMessage());
         }
 
     }
-
 
 
     public boolean hasParserException() {
         return parserException != null;
     }
 
-    public Exception getParserException() {
+    public Exception getException() {
         return parserException;
     }
 
