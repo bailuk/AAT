@@ -36,18 +36,12 @@ public final class MockLocation extends LocationStackChainedItem implements Runn
         list = new GpxList(GpxType.TRACK, GpxListAttributes.NULL);
         timer = new Timer(this, INTERVAL);
 
-        try {
-            file = FocAndroid.factory(c,(new SolidMockLocationFile(c).getValueAsString()));
-            list = new GpxListReader(file, AutoPause.NULL).getGpxList();
+        file = FocAndroid.factory(c,(new SolidMockLocationFile(c).getValueAsString()));
+        list = new GpxListReader(file, AutoPause.NULL).getGpxList();
 
-            timer.kick();
-            passState(StateID.WAIT);
+        timer.kick();
+        passState(StateID.WAIT);
 
-        } catch (Exception e) {
-            file = NULL_FILE;
-            AppLog.e(c, e);
-            passState(StateID.OFF);
-        }
     }
 
 
