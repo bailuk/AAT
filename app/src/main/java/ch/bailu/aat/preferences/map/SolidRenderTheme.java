@@ -88,9 +88,13 @@ public class SolidRenderTheme extends SolidFile {
         list.add(InternalRenderTheme.DEFAULT.toString());
         list.add(InternalRenderTheme.OSMARENDER.toString());
 
-        final Foc maps = new SolidMapsForgeDirectory(getContext()).getValueAsFile();
-        add_xmlInSubdirectories(list,maps);
+        Foc maps = new SolidMapsForgeDirectory(getContext()).getValueAsFile();
+        add_xmlInSubdirectories(list, maps);
 
+        ArrayList<Foc> dirs = new SolidMapsForgeDirectory(getContext()).getWellKnownMapDirs();
+        for (Foc dir: dirs) {
+             add_xmlInSubdirectories(list, dir);
+        }
 
         return list;
     }

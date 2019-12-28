@@ -49,7 +49,7 @@ dependencies {
             https://github.com/mapsforge/mapsforge/raw/master/docs/Integration.md
         */
     // MapsForge
-    def mapsforgeVersion = '0.10.0'
+    def mapsforgeVersion = '0.12.0'
 
     // MapsForge Core
     implementation "org.mapsforge:mapsforge-core:$mapsforgeVersion"
@@ -60,7 +60,7 @@ dependencies {
 
     // MapsForge Android
     implementation "org.mapsforge:mapsforge-map-android:$mapsforgeVersion"
-    implementation 'com.caverock:androidsvg:1.3'
+    implementation 'com.caverock:androidsvg:1.4'
 
     // Acra
     def acraVersion = '5.1.3'
