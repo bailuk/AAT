@@ -53,64 +53,64 @@
     <string name="tracker_restore">Restaurer la trace</string>
 
     <string name="status_paused">En pause</string>
-    <string name="status_autopaused">A-En pause</string>
+    <string name="status_autopaused">Pause Auto</string>
 
 
     <!-- Activity main -->
-    <string name="intro_about">Au sujet de</string>
+    <string name="intro_about">À Propos</string>
     <string name="intro_readme">LISEZ-MOI</string>
     <string name="intro_documentation">Documentation</string>
 
-    <string name="intro_cockpit_a">Cockpit A</string>
-    <string name="intro_cockpit_b">Cockpit B</string>
+    <string name="intro_cockpit_a">Vue A</string>
+    <string name="intro_cockpit_b">Vue B</string>
 
     <string name="intro_map">Carte</string>
-    <string name="intro_nominatim">Rechercher la carte</string>
+    <string name="intro_nominatim">Rechercher sur la carte</string>
     <string name="intro_test">Test</string>
     <string name="intro_status">Etat</string>
 
-    <string name="intro_overlay_list">liste des couches</string>
-    <string name="intro_list">liste des traces</string>
-    <string name="intro_external_list">Fichier externe</string>
-    <string name="intro_settings">Preferences</string>
+    <string name="intro_overlay_list">Couches</string>
+    <string name="intro_list">Traces</string>
+    <string name="intro_external_list">Fichiers externes</string>
+    <string name="intro_settings">Préfèrences</string>
 
 
 
     <!-- Activity file list -->
     <string name="label_summary">Sommaire</string>
     <string name="label_filter">Filtre</string>
-    <string name="label_list">liste</string>
+    <string name="label_list">Liste</string>
     <string name="filter_geo">Limite intérieure</string>
     <string name="filter_date_start">Date de départ</string>
     <string name="filter_date_to">Date de fin</string>
 
 
     <!-- Activity OSM API Query -->
-    <string name="query_overpass">Passer</string>
+    <string name="query_overpass">Overpass</string>
     <string name="query_features">Fonctions OSM</string>
-    <string name ="query_save_copy">Sauver la copie</string>
+    <string name ="query_save_copy">Enregistrer une copie</string>
 
 
     <!-- Preferences General -->
-    <string name="p_general">général</string>
-    <string name="p_post_autopause">autopause post-traitement</string>
-    <string name="p_preset_slots">Préréglages visibles</string>
+    <string name="p_general">Général</string>
+    <string name="p_post_autopause">Pause Post-Traitement</string>
+    <string name="p_preset_slots">Préréglages Visibles</string>
     <string name="p_unit_title">Unités</string>
     <string-array name="p_unit_list">
-        <item>Metric (km, km/h)</item>
-        <item>Imperial (mi, mph)</item>
-        <item>Nautical (nm, kn)</item>
+        <item>Métriques (km, km/h)</item>
+        <item>Impériales (mi, mph)</item>
+        <item>Nautiques (nm, kn)</item>
         <item>Unités du système International</item>
     </string-array>
 
 
     <!-- Preferences System -->
     <string name="p_location_provider">Fournisseur de position</string>
-    <string name="p_location_gps">System GPS</string>
-    <string name="p_location_mock">position simulée</string>
+    <string name="p_location_gps">GPS Système</string>
+    <string name="p_location_mock">Position Simulée</string>
     <string name="p_directory_data">Répertoire des données</string>
-    <string name="p_cache_size">Taille du le cache interne</string>
-    <string name="p_fix_gps">Fixer l\'horloge GPS</string>
+    <string name="p_cache_size">Taille du cache</string>
+    <string name="p_fix_gps">Régler l\'horloge GPS</string>
 
 
     <!-- Preferences Context -->
@@ -126,58 +126,58 @@
           List is taken and modified from "Compendium of Physical Activities"
           https://sites.google.com/site/compendiumofphysicalactivities/Activity-Categories
         -->
-        <item> 6.8 cyclisme, loisir, Effort modéré</item>
-        <item> 8.5 Cyclisme, Montagne, général</item>
-        <item> 7.0 jogging, général</item>
-        <item> 6.0 Randonnée, cross country</item>
-        <item> 2.0 test</item>
+        <item> 6.8 Cyclisme : Route (20km/h)</item>
+        <item> 8.5 Cyclisme : VTT Général</item>
+        <item> 7.0 Jogging : Général</item>
+        <item> 6.0 Randonnée : Cross country</item>
+        <item> 2.0 Test</item>
 
-        <item>14.0 Cyclisme, Montagne, en montée</item>
-        <item>16.0 Cyclisme, Montagne, compétition</item>
-        <item> 5.8 Cyclisme, loisir, Effort modéré</item>
-        <item>10.0 Cyclisme, Course ou loisir, Effort soutenu</item>
-        <item> 6.0 Course à pied, 4 mph (13 min/mile)</item>
-        <item> 9.0 Course à pied, 5.2 mph (11.5 min/mile)</item>
-        <item> 9.8 Course à pied, 6 mph (10 min/mile)</item>
-        <item> 9.0 Course à pied, cross country</item>
-        <item>10.0 Course à pied, sur un parcours, Entrainement de groupe</item>
-        <item> 8.0 Course à pied, training, poussant une chaise roulante ou un landeau</item>
-        <item>13.3 Course à pied, marathon</item>
-        <item> 7.8 Sac au dos, Randonnée</item>
-        <item> 7.3 Escalader une colline with 10 to 20 lb load</item>
-        <item> 8.3 Escalader une colline with 21 to 42 lb load</item>
-        <item> 9.0 Escalader une colline with 42+ lb load</item>
-        <item> 5.3 Randonnée ou promenade à travers champs</item>
-        <item> 6.5 Marche sportive</item>
-        <item> 8.0 Varappe</item>
-        <item> 2.0 Marche, promenade, lente</item>
-        <item> 3.5 Marche de loisir</item>
-        <item> 3.0 Marche tavec chien</item>
-        <item> 4.8 Marche, d\'entretien, 3.5 to 4 mph, with ski poles, Nordic Marche, level, moderate pace</item>
-        <item> 6.8 Marche, d\'entretien, with ski poles, Nordic Marche, en montée</item>
+        <item>14.0 Cyclisme : Côtes ou VTT</item>
+        <item>16.0 Cyclisme : Course ou VTT</item>
+        <item> 5.8 Cyclisme : Route (15km/h)</item>
+        <item>10.0 Cyclisme, Route (26km/h)</item>
+        <item> 6.0 Course à pied (6,4km/h)</item>
+        <item> 9.0 Course à pied (8,4km/h)</item>
+        <item> 9.8 Course à pied (9,7km/h)</item>
+        <item> 9.0 Course à pied : Cross</item>
+        <item>10.0 Course à pied : Sur bitume ou en groupe</item>
+        <item> 8.0 Course à pied : Chaise roulante ou Poussette</item>
+        <item>13.3 Course à pied : Marathon</item>
+        <item> 7.8 Randonnée avec sac à dos</item>
+        <item> 7.3 Randonnée avec charge de 0,5 à 1kg</item>
+        <item> 8.3 Randonnée avec charge de 10 à 20kg</item>
+        <item> 9.0 Randonnée avec charge supérieure à 20kg</item>
+        <item> 5.3 Marche : Général</item>
+        <item> 6.5 Marche Sportive</item>
+        <item> 8.0 Escalade</item>
+        <item> 2.0 Marche Lente (3km/h) </item>
+        <item> 3.5 Marche Loisir</item>
+        <item> 3.0 Marche avec chien</item>
+        <item> 4.8 Marche Nordique</item>
+        <item> 6.8 Marche Nordique en Montée</item>
 
     </string-array>
 
-    <string name="p_autopause">Autopause</string>
-    <string name="p_tracker_autopause">Mettre la trace en autopause</string>
+    <string name="p_autopause">Pause Automatique</string>
+    <string name="p_tracker_autopause">Mettre le Tracker en Pause Automatique</string>
 
     <string name="p_weight_title">Votre poids en kg</string>
 
     <string name="p_backlight_title">Rétro-éclairage</string>
-    <string name="p_backlight_off">Systeme par defaut</string>
-    <string name="p_backlight_on">Garder</string>
-    <string name="p_backlight_on_no_lock">Garder (disable lock screen)</string>
-    <string name="p_system">Systeme</string>
-    <string name="p_tile_size">Taille de tuile</string>
+    <string name="p_backlight_off">Réglage Système</string>
+    <string name="p_backlight_on">Allumé</string>
+    <string name="p_backlight_on_no_lock">Allumé (Dévérouillage Automatique)</string>
+    <string name="p_system">Système</string>
+    <string name="p_tile_size">Taille de Tuile</string>
     <string name="p_accuracy_filter">Précision Filtre</string>
     <string name="p_distance_filter">Distance Filtre</string>
-    <string name="p_missing_trigger">Manque déclencheur</string>
+    <string name="p_missing_trigger">Déclencheur manquant</string>
 
 
     <!-- Preferences Map -->
     <string name="p_map">Carte</string>
-    <string name="p_mapsforge_directory">Répertoire des cartes offline</string>
-    <string name="p_mapsforge_theme">Thème des cartes Offline</string>
+    <string name="p_mapsforge_directory">Répertoire des cartes hors-ligne</string>
+    <string name="p_mapsforge_theme">Thème des cartes hors-ligne</string>
     <string name="p_enable_cache">Activer le cache</string>
     <string name="p_directory_tiles">Répertoire du cache des tuiles</string>
 
@@ -186,24 +186,24 @@
     <string-array name="p_trim_modes">
         <item>Taille</item>
         <item>Taille et âge</item>
-        <item>âge</item>
+        <item>Âge</item>
         <item>Taille ou âge</item>
     </string-array>
     <string name="p_trim_cache">Réduire le cache des tuiles</string>
-    <string name="p_tiles">Carte en tuiles</string>
-    <string name="p_trim_mode">mode réduction</string>
+    <string name="p_tiles">Tuiles</string>
+    <string name="p_trim_mode">Mode réduction</string>
     <string name="p_trim_size">Réduire Taille</string>
     <string name="p_trim_age">Réduire âge</string>
     <string name="p_trim_month">Mois</string>
     <string name="p_trim_months">Mois</string>
-    <string name="p_trim_year">année</string>
-    <string name="p_trim_years">années</string>
-    <string name="p_trim_days">jours</string>
+    <string name="p_trim_year">Année</string>
+    <string name="p_trim_years">Années</string>
+    <string name="p_trim_days">Jours</string>
     <string name="p_trim_total">Total</string>
-    <string name="p_remove_all">Effacer entierement le cache</string>
-    <string name="p_remove_all_in">Effacer entierement le cache in</string>
-    <string name="p_remove_old">Enlever anciennes tuiles</string>
-    <string name="p_remove_old_in">Enlever anciennes tuiles in</string>
+    <string name="p_remove_all">Effacer le cache</string>
+    <string name="p_remove_all_in">Effacer le cache dans</string>
+    <string name="p_remove_old">Effacer anciennes tuiles</string>
+    <string name="p_remove_old_in">Effacer anciennes tuiles dans</string>
 
 
 
@@ -213,13 +213,13 @@
     <string name="file_rename">Renommer le fichier</string>
     <string name="file_overlay">Utiliser comme couche</string>
     <string name="file_mock">Utiliser comme position simulée</string>
-    <string name="file_delete_ask">Effacer le fichier?</string>
+    <string name="file_delete_ask">Effacer le fichier ?</string>
     <string name="file_send">Envoyer…</string>
-    <string name="file_view">Voir/Editer……</string>
-    <string name="file_copy">Copier version…</string>
+    <string name="file_view">Voir/Editer…</string>
+    <string name="file_copy">Copier vers…</string>
     <string name="file_exists">\u0020existe déjà!</string>
-    <string name="file_is_writeable">\u0020est editable.</string>
-    <string name="file_is_writeonly">\u0020est uniquement editable.</string>
+    <string name="file_is_writeable">\u0020est éditable.</string>
+    <string name="file_is_writeonly">\u0020est uniquement éditable.</string>
     <string name="file_is_readonly">\u0020est en lecture seule.</string>
     <string name="file_is_missing">\u0020n\'existe pas.</string>
     <string name="file_is_denied">\u0020n\'est pas accessible.</string>
@@ -239,8 +239,8 @@
     <string name="dialog_ok" translatable="false">OK</string>
     <string name="dialog_cancel">Annuler</string>
     <string name="dialog_discard">Abandonner</string>
-    <string name="dialog_save">Sauver</string>
-    <string name="dialog_modified">le fichier a été modifié</string>
+    <string name="dialog_save">Sauvegarder</string>
+    <string name="dialog_modified">Le fichier a été modifié</string>
 
 
     <!-- Description -->
@@ -252,20 +252,20 @@
     <string name="d_accuracy">Précision</string>
     <string name="d_enddate">Fin</string>
     <string name="d_startdate">Démarrer</string>
-    <string name="d_acceleration">Accélerationleration</string>
+    <string name="d_acceleration">Accéleration</string>
     <string name="d_bearing">Orientation</string>
     <string name="d_path">Chemin</string>
     <string name="d_state">Etat</string>
     <string name="d_size">Taille</string>
-    <string name="d_ascend">Monte</string>
-    <string name="d_descend">Descend</string>
-    <string name="d_slope">pente</string>
+    <string name="d_ascend">Ascension</string>
+    <string name="d_descend">Descente</string>
+    <string name="d_slope">Pente</string>
 
     <string name="pause">Pause</string>
     <string name="pause_ap">Pause (avec autopause)</string>
     <string name="speed">Vitesse</string>
     <string name="average">Moyenne</string>
-    <string name="average_ap">Moyenne (without pauses)</string>
+    <string name="average_ap">Moyenne (sans pauses)</string>
     <string name="maximum">Maximum</string>
     <string name="distance">Distance</string>
     <string name="altitude">Altitude</string>
@@ -280,23 +280,23 @@
     <!-- ToolTip -->
     <string name ="tt_edit_add">Ajouter un point et centrer la carte.</string>
     <string name ="tt_edit_remove">Enlever le point selectionné.</string>
-    <string name ="tt_edit_up">Deplacer un point vers le haut dans la liste.</string>
+    <string name ="tt_edit_up">Déplacer un point vers le haut dans la liste.</string>
     <string name ="tt_edit_down">Déplacer un point vers le bas dans la liste.</string>
-    <string name ="tt_edit_redo">Refaire la derniere action annulée..</string>
-    <string name ="tt_edit_undo">Défaire la derniere action.</string>
+    <string name ="tt_edit_redo">Refaire la dernière action annulée.</string>
+    <string name ="tt_edit_undo">Défaire la dernière action.</string>
 
     <string name ="tt_info_grid">Changer de mode de grille.</string>
     <string name ="tt_info_legend">Changer de mode de légende des traces.</string>
     <string name ="tt_info_nominatim">Recherche avec OSM-Nominatim.</string>
-    <string name ="tt_info_overpass">OSM-Passer requête.</string>
+    <string name ="tt_info_overpass">Requête Overpass.</string>
     <string name ="tt_info_reload">Recharger les tuiles visibles.</string>
     <string name ="tt_info_location">Import/export d\'une position centrée.</string>
 
 
-    <string name ="tt_map_zoomin">Zoom dans la carte.</string>
-    <string name ="tt_map_zoomout">Zoom arriere dans la carte.</string>
-    <string name ="tt_map_home">Verrouiller le centre de la carte à votre derniere position connue.</string>
-    <string name ="tt_map_frame">GPX-Couches et les cadrer.</string>
+    <string name ="tt_map_zoomin">Zoom avant.</string>
+    <string name ="tt_map_zoomout">Zoom arrière.</string>
+    <string name ="tt_map_home">Verrouiller le centre de la carte à la dernière position connue.</string>
+    <string name ="tt_map_frame">Changer de couches GPX et les décaler.</string>
 
 
     <string name ="tt_nominatim_query">Démarrer la recherche.</string>
@@ -305,16 +305,19 @@
     <string name ="tt_cockpit_a">Plein écran</string>
     <string name ="tt_cockpit_b">Ecran partagé</string>
 
-    <string name ="tt_overpass_mapfeatures">Montrer la liste des fonctions de la carte  .</string>
+    <string name ="tt_overpass_mapfeatures">Montrer la liste des fonctions de la carte.</string>
 
-    <string name ="tt_menu_file">Afficher le fichier Menu operation.</string>
+    <string name ="tt_menu_file">Afficher le menu d'opérations fichiers.</string>
 
-    <string name ="tt_p_preset_slots">Nombre de repertoires et Préréglages que vous souhaitez utiliser pour organiser les tracés.</string>
+    <string name ="tt_p_preset_slots">Nombre de Répertoires et Préréglages que vous souhaitez utiliser pour organiser les tracés.</string>
+    <string name ="tt_p_distance_filter">Distance minimale entre deux enregistrements GPS.</string>
+    <string name ="tt_p_accuracy_filter">Précision GPS minimale pour enregistrement.</string>
+    <string name ="tt_p_missing_trigger">Pause Automatique si le signal GPS est perdu pendant un certain laps de temps.</string>
 
     <!-- Errors -->
-    <string name="error_integer">Mauvaise entrée, seuls les nombres entiers sont acceptés.\n\"%s\"</string>
-    <string name ="error_integer_positive">"le poids doit être compris entre 1 et 999."</string>
-    <string name="error_long">Mauvaise entrée, seuls les nombres sont autorisés.\n\"%s\"</string>
-    <string name ="error_met">"Le premier nombre doit être entre  0.0 to 20.0, suivi d'un espace."</string>
+    <string name="error_integer">Seuls les nombres entiers sont acceptés.\n\"%s\"</string>
+    <string name ="error_integer_positive">"Le poids doit être compris entre 1 et 999."</string>
+    <string name="error_long">Seuls les nombres sont autorisés.\n\"%s\"</string>
+    <string name ="error_met">"Le premier nombre doit être entre 0.0 et 20.0, suivi d'un espace."</string>
 
 </resources>
