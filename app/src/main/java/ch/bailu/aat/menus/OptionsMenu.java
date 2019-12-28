@@ -8,9 +8,10 @@ import android.view.MenuItem;
 import ch.bailu.aat.R;
 import ch.bailu.aat.activities.ActivitySwitcher;
 import ch.bailu.aat.activities.PreferencesActivity;
-import ch.bailu.aat.preferences.presets.SolidBacklight;
 import ch.bailu.aat.preferences.map.SolidMapTileStack;
+import ch.bailu.aat.preferences.presets.SolidBacklight;
 import ch.bailu.aat.preferences.presets.SolidPreset;
+import ch.bailu.aat.services.InsideContext;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.tracker.State;
 import ch.bailu.aat.views.preferences.SolidCheckListDialog;
@@ -56,7 +57,13 @@ public final class OptionsMenu extends AbsMenu {
 
     @Override
     public void prepare(Menu menu) {
-        updateMenuText(scontext.getTrackerService().getState());
+        new InsideContext(scontext) {
+            @Override
+            public void run() {
+                updateMenuText(scontext.getTrackerService().
+                        getState());
+            }
+        };
     }
 
 
@@ -72,10 +79,21 @@ public final class OptionsMenu extends AbsMenu {
         final Context c = scontext.getContext();
 
         if (item == start) {
-            scontext.getTrackerService().getState().onStartStop();
+            new InsideContext(scontext) {
+                @Override
+                public void run() {
+                    scontext.getTrackerService().getState().onStartStop();
+                }
+
+            };
 
         } else if (item == pause) {
-            scontext.getTrackerService().getState().onPauseResume();
+            new InsideContext(scontext) {
+                @Override
+                public void run() {
+                    scontext.getTrackerService().getState().onPauseResume();
+                }
+            };
 
         } else if (item == backlight) {
             new SolidIndexListDialog(new SolidBacklight(c, new SolidPreset(c).getIndex()));
