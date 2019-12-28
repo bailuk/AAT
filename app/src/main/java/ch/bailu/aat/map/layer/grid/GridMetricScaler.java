@@ -39,9 +39,11 @@ public final class GridMetricScaler {
 
 
     public void findOptimalScale(int distance) {
+        final float fdistance = distance / 2;
+
         for (int level:GRID_LEVELS) {
             final float flevel = level;
-            if (Math.round(distance / flevel) > 0) {
+            if (Math.round(fdistance / flevel) > 0) {
                 squareDistance=level;
                 break;
             }

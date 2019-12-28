@@ -307,7 +307,7 @@
 
     <string name ="tt_overpass_mapfeatures">Montrer la liste des fonctions de la carte.</string>
 
-    <string name ="tt_menu_file">Afficher le menu d'opérations fichiers.</string>
+    <string name ="tt_menu_file">Afficher le menu d\'opérations fichiers.</string>
 
     <string name ="tt_p_preset_slots">Nombre de Répertoires et Préréglages que vous souhaitez utiliser pour organiser les tracés.</string>
     <string name ="tt_p_distance_filter">Distance minimale entre deux enregistrements GPS.</string>
