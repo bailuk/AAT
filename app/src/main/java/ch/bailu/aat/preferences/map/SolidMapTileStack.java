@@ -18,6 +18,8 @@ public final class SolidMapTileStack extends SolidCheckList {
 
 
 
+    public final static int FIRST_OVERLAY_INDEX = 4;
+
     public final static Source[] SOURCES = new Source[] {
             MapsForgeSource.MAPSFORGE,
             DownloadSource.MAPNIK,

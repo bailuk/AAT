@@ -137,7 +137,7 @@ public abstract class MapsForgeTileLayerStackConfigured extends MapsForgeTileLay
 
         @Override
         protected void addOverlayLayers(boolean[] enabled, Source[] sources) {
-            for (int i=2; i< sources.length; i++) {
+            for (int i=SolidMapTileStack.FIRST_OVERLAY_INDEX; i< sources.length; i++) {
                 if (enabled[i]) {
                     Source s = sources[i];
 
