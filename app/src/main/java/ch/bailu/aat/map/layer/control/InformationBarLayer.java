@@ -15,6 +15,7 @@ import ch.bailu.aat.menus.MapMenu;
 import ch.bailu.aat.preferences.SolidIndexList;
 import ch.bailu.aat.preferences.map.SolidLegend;
 import ch.bailu.aat.preferences.map.SolidMapGrid;
+import ch.bailu.aat.test.PoiToGpx;
 import ch.bailu.aat.util.ui.ToolTip;
 import ch.bailu.aat.views.MyImageButton;
 import ch.bailu.aat.views.bar.ControlBar;
@@ -25,6 +26,8 @@ public final class InformationBarLayer extends ControlBarLayer {
 
     private final AbsNodeViewLayer selector;
     private final MapContext mcontext;
+
+    //private final PoiToGpx poiToGpx = new PoiToGpx();
 
 
     public InformationBarLayer(MapContext cl, DispatcherInterface d) {
@@ -70,6 +73,8 @@ public final class InformationBarLayer extends ControlBarLayer {
             new MapMenu(mcontext).showAsPopup(mcontext.getContext(),v);
 
         } else if (v==overpass) {
+            //poiToGpx.queryPois(mcontext.getMetrics().getBoundingBox());
+
             ActivitySwitcher.start(mcontext.getContext(), OverpassActivity.class, mcontext.getMetrics().getBoundingBox());
         } else if (v==nominatim) {
             ActivitySwitcher.start(mcontext.getContext(), NominatimActivity.class, mcontext.getMetrics().getBoundingBox());
