@@ -3,14 +3,10 @@ package ch.bailu.aat.activities;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import java.io.IOException;
 
@@ -31,23 +27,16 @@ import ch.bailu.aat.util.ui.AppLog;
 import ch.bailu.aat.util.ui.ToolTip;
 import ch.bailu.aat.views.BusyViewControl;
 import ch.bailu.aat.views.ContentView;
-import ch.bailu.aat.views.EditTextTool;
 import ch.bailu.aat.views.MyImageButton;
 import ch.bailu.aat.views.NodeListView;
+import ch.bailu.aat.views.OsmApiEditorView;
 import ch.bailu.aat.views.PercentageLayout;
-import ch.bailu.aat.views.TagEditor;
-import ch.bailu.aat.views.bar.ControlBar;
 import ch.bailu.aat.views.bar.MainControlBar;
-import ch.bailu.aat.views.description.MultiView;
-import ch.bailu.aat.views.preferences.TitleView;
-import ch.bailu.aat.views.preferences.VerticalScrollView;
 import ch.bailu.util_java.foc.Foc;
 
 
 public abstract class AbsOsmApiActivity extends ActivityContext implements OnClickListener {
 
-    private EditTextTool editor;
-    private TextView     preview;
 
     private MyImageButton download;
     private BusyViewControl downloadBusy;
@@ -57,7 +46,7 @@ public abstract class AbsOsmApiActivity extends ActivityContext implements OnCli
     private NodeListView       list;
     private OsmApiHelper       osmApi;
 
-    protected MultiView inputMultiView;
+    private OsmApiEditorView   editorView;
 
 
     private final BroadcastReceiver onDownloadsChanged = new BroadcastReceiver() {
@@ -88,7 +77,7 @@ public abstract class AbsOsmApiActivity extends ActivityContext implements OnCli
         super.onCreate(savedInstanceState);
 
         try {
-            osmApi = createUrlGenerator(AppIntent.getBoundingBox(getIntent()));
+            osmApi = getApiHelper(AppIntent.getBoundingBox(getIntent()));
         } catch (Exception e) {
             AppLog.e(this,e);
         }
@@ -106,7 +95,7 @@ public abstract class AbsOsmApiActivity extends ActivityContext implements OnCli
     private void setQueryTextFromIntent() {
         String query = queryFromIntent(getIntent());
         if (query != null) {
-            editor.edit.setText(query);
+            editorView.setText(query);
         }
     }
 
@@ -122,7 +111,7 @@ public abstract class AbsOsmApiActivity extends ActivityContext implements OnCli
 
         String query = uri.getEncodedQuery();
         if (query != null) {
-            Uri n = Uri.parse("http://bailu.ch/query?" + uri.getEncodedQuery()); // we need a hierarchical url
+            Uri n = Uri.parse("http://localhost/query?" + uri.getEncodedQuery()); // we need a hierarchical url
             String query_parameter = n.getQueryParameter("q");
             if (query_parameter != null) {
                 query_parameter = query_parameter.replace('\n', ',');
@@ -139,100 +128,17 @@ public abstract class AbsOsmApiActivity extends ActivityContext implements OnCli
 
         ContentView contentView = new ContentView(this);
         contentView.add(bar);
-        contentView.add(createMainContentView(bar));
+        contentView.add(createMainContentView());
+
+        addDownloadButton(bar);
+        addCustomButtons(bar);
+        addButtons(bar);
+
         return contentView;
     }
 
 
-    protected View createMainContentView(MainControlBar bar) {
-        View input = createTagEditor();
-        list = new NodeListView(getServiceContext(), this);
-
-        PercentageLayout percentage = new PercentageLayout(this);
-        percentage.add(input, 30);
-        percentage.add(list, 70);
-
-        return percentage;
-    }
-
-
-    private View createTagEditor() {
-        LinearLayout vertical = new LinearLayout(this);
-
-        vertical.setOrientation(LinearLayout.VERTICAL);
-
-
-
-
-
-        vertical.addView(createTitle());
-
-        preview = new TextView(this);
-        preview.setOnClickListener(view -> inputMultiView.setNext());
-
-
-
-        VerticalScrollView scroller = new VerticalScrollView(this);
-        scroller.add(preview);
-        editor = new EditTextTool(new TagEditor(this, osmApi.getBaseDirectory()), LinearLayout.VERTICAL);
-
-
-        inputMultiView = new MultiView(this, osmApi.getApiName());
-        inputMultiView.add(editor);
-        inputMultiView.add(scroller);
-
-        preview.setText(osmApi.getUrlPreview(editor.edit.getText().toString()));
-
-
-        vertical.addView(inputMultiView);
-        return vertical;
-    }
-
-
-    private View createTitle() {
-        LinearLayout layout = new LinearLayout(this);
-        layout.setOrientation(LinearLayout.HORIZONTAL);
-
-        String[] strings = osmApi.getUrlStart().split(osmApi.getApiName().toLowerCase());
-
-        TextView b = new TitleView(this, osmApi.getApiName());
-        b.setSingleLine();
-
-        if (strings.length>1) {
-            TextView a = new TextView(this);
-            TextView c = new TextView(this);
-
-            a.setText(strings[0]);
-            a.setSingleLine();
-
-            c.setText(strings[1]);
-            c.setSingleLine();
-            c.setEllipsize(TextUtils.TruncateAt.END);
-
-            a.setTextColor(Color.WHITE);
-            c.setTextColor(Color.WHITE);
-
-            layout.addView(a);
-            layout.addView(b);
-            layout.addView(c);
-        } else {
-            layout.addView(b);
-        }
-
-        layout.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                preview.setText(osmApi.getUrlPreview(editor.edit.getText().toString()));
-                inputMultiView.setNext();
-            }
-        });
-
-        return layout;
-    }
-
-    private MainControlBar createControlBar() {
-        MainControlBar bar = new MainControlBar(this);
-
+    private void addDownloadButton(MainControlBar bar) {
         download = bar.addImageButton(R.drawable.go_bottom_inverse);
         downloadBusy = new BusyViewControl(download);
 
@@ -246,13 +152,32 @@ public abstract class AbsOsmApiActivity extends ActivityContext implements OnCli
             }
         };
 
-
         ToolTip.set(download, R.string.tt_nominatim_query);
+    }
 
-        addButtons(bar);
 
+    private void addButtons(MainControlBar bar) {
         fileMenu = bar.addImageButton(R.drawable.edit_select_all_inverse);
+    }
 
+
+    protected View createMainContentView() {
+        editorView = new OsmApiEditorView(this, osmApi);
+        list = new NodeListView(getServiceContext(), this);
+
+        PercentageLayout percentage = new PercentageLayout(this);
+        percentage.add(editorView, 30);
+        percentage.add(list, 70);
+
+        return percentage;
+    }
+
+
+
+
+
+    private MainControlBar createControlBar() {
+        MainControlBar bar = new MainControlBar(this);
         bar.setOnClickListener1(this);
 
 
@@ -260,8 +185,8 @@ public abstract class AbsOsmApiActivity extends ActivityContext implements OnCli
     }
 
 
-    public abstract OsmApiHelper createUrlGenerator(BoundingBoxE6 boundingBox) throws SecurityException, IOException;
-    public abstract void addButtons(ControlBar bar);
+    public abstract OsmApiHelper getApiHelper(BoundingBoxE6 boundingBox) throws SecurityException, IOException;
+    public abstract void addCustomButtons(MainControlBar bar);
 
 
     @Override
@@ -295,7 +220,7 @@ public abstract class AbsOsmApiActivity extends ActivityContext implements OnCli
                         task.stopProcessing();
 
                     } else {
-                        String query = editor.edit.getText().toString();
+                        String query = editorView.toString();
 
                         task = new ApiQueryTask(
                                 getServiceContext().getContext(),
@@ -330,7 +255,7 @@ public abstract class AbsOsmApiActivity extends ActivityContext implements OnCli
 
 
     public void insertLine(String s) {
-        editor.insertLine(s);
+        editorView.insertLine(s);
     }
 
 
