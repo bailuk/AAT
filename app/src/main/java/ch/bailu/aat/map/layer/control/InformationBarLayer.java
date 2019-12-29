@@ -4,30 +4,25 @@ import android.content.SharedPreferences;
 import android.view.View;
 
 import ch.bailu.aat.R;
-import ch.bailu.aat.activities.ActivitySwitcher;
-import ch.bailu.aat.activities.NominatimActivity;
-import ch.bailu.aat.activities.OverpassActivity;
 import ch.bailu.aat.dispatcher.DispatcherInterface;
 import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.map.MapContext;
 import ch.bailu.aat.menus.LocationMenu;
 import ch.bailu.aat.menus.MapMenu;
+import ch.bailu.aat.menus.MapSearchMenu;
 import ch.bailu.aat.preferences.SolidIndexList;
 import ch.bailu.aat.preferences.map.SolidLegend;
 import ch.bailu.aat.preferences.map.SolidMapGrid;
-import ch.bailu.aat.test.PoiToGpx;
 import ch.bailu.aat.util.ui.ToolTip;
 import ch.bailu.aat.views.MyImageButton;
 import ch.bailu.aat.views.bar.ControlBar;
 
 public final class InformationBarLayer extends ControlBarLayer {
 
-    private final MyImageButton menu, overpass, nominatim, location;
+    private final MyImageButton map, search, location;
 
     private final AbsNodeViewLayer selector;
     private final MapContext mcontext;
-
-    //private final PoiToGpx poiToGpx = new PoiToGpx();
 
 
     public InformationBarLayer(MapContext cl, DispatcherInterface d) {
@@ -42,13 +37,12 @@ public final class InformationBarLayer extends ControlBarLayer {
 
         ControlBar bar = getBar();
 
-        menu = bar.addImageButton(R.drawable.open_menu);
+        map = bar.addImageButton(R.drawable.open_menu);
 
         View grid=bar.addSolidIndexButton(sgrid);
         View legend=bar.addSolidIndexButton(slegend);
 
-        overpass = bar.addImageButton(R.drawable.go_bottom);
-        nominatim = bar.addImageButton(R.drawable.edit_find);
+        search = bar.addImageButton(R.drawable.edit_find);
         location = bar.addImageButton(R.drawable.find_location);
 
         selector = new NodeViewLayer(cl);
@@ -56,8 +50,6 @@ public final class InformationBarLayer extends ControlBarLayer {
 
         ToolTip.set(grid,R.string.tt_info_grid);
         ToolTip.set(legend,R.string.tt_info_legend);
-        ToolTip.set(nominatim,R.string.tt_info_nominatim);
-        ToolTip.set(overpass,R.string.tt_info_overpass);
         ToolTip.set(location, R.string.tt_info_location);
 
         d.addTarget(selector, InfoID.ALL);
@@ -69,15 +61,12 @@ public final class InformationBarLayer extends ControlBarLayer {
         super.onClick(v);
 
 
-        if (v == menu) {
+        if (v == map) {
             new MapMenu(mcontext).showAsPopup(mcontext.getContext(),v);
 
-        } else if (v==overpass) {
-            //poiToGpx.queryPois(mcontext.getMetrics().getBoundingBox());
+        } else if (v==search) {
+            new MapSearchMenu(mcontext).showAsPopup(mcontext.getContext(),v);
 
-            ActivitySwitcher.start(mcontext.getContext(), OverpassActivity.class, mcontext.getMetrics().getBoundingBox());
-        } else if (v==nominatim) {
-            ActivitySwitcher.start(mcontext.getContext(), NominatimActivity.class, mcontext.getMetrics().getBoundingBox());
         } else if (v==location) {
             new LocationMenu(mcontext.getMapView()).showAsPopup(mcontext.getContext(), location);
         }

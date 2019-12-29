@@ -151,6 +151,10 @@
             android:name="ch.bailu.aat.activities.NominatimActivity"
             android:windowSoftInputMode="adjustPan">
         </activity>
+        <activity
+            android:name="ch.bailu.aat.activities.PoiActivity"
+            android:windowSoftInputMode="adjustPan">
+        </activity>
         <activity android:name="ch.bailu.aat.activities.NodeDetailActivity" >
         </activity>
         <activity android:name="ch.bailu.aat.activities.HtmlViewActivity" >
