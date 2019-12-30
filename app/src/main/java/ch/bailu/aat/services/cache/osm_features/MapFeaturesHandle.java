@@ -12,8 +12,9 @@ import ch.bailu.aat.services.background.BackgroundTask;
 import ch.bailu.aat.services.cache.ObjectHandle;
 import ch.bailu.aat.services.cache.OnObject;
 import ch.bailu.aat.util.AppBroadcaster;
-import ch.bailu.aat.util.filter_list.FilterList;
+import ch.bailu.aat.util.filter_list.AbsFilterList;
 import ch.bailu.aat.util.filter_list.KeyList;
+import ch.bailu.aat.util.filter_list.ListEntry;
 
 public final class MapFeaturesHandle extends ObjectHandle {
 
@@ -30,7 +31,7 @@ public final class MapFeaturesHandle extends ObjectHandle {
             list.clear();
         }
 
-        public synchronized void sync(FilterList<MapFeaturesListEntry> f) {
+        public synchronized void sync(AbsFilterList<ListEntry> f) {
             for (int i = f.sizeAll(); i < list.size(); i++) {
                 f.add(list.get(i));
             }
@@ -68,7 +69,7 @@ public final class MapFeaturesHandle extends ObjectHandle {
     }
 
 
-    public void syncList(FilterList<MapFeaturesListEntry> filterList) {
+    public void syncList(AbsFilterList<ListEntry> filterList) {
         list.sync(filterList);
     }
 

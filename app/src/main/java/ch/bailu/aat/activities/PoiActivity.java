@@ -3,25 +3,34 @@ package ch.bailu.aat.activities;
 import android.view.View;
 import android.widget.LinearLayout;
 
+import org.mapsforge.poi.storage.PoiCategory;
+
 import java.io.IOException;
+import java.util.ArrayList;
 
 import ch.bailu.aat.coordinates.BoundingBoxE6;
 import ch.bailu.aat.util.OsmApiHelper;
 import ch.bailu.aat.util.PoiApi;
 import ch.bailu.aat.util.ui.AppLayout;
+import ch.bailu.aat.util.ui.AppTheme;
 import ch.bailu.aat.views.PercentageLayout;
-import ch.bailu.aat.views.bar.ControlBar;
 import ch.bailu.aat.views.bar.MainControlBar;
 import ch.bailu.aat.views.description.MultiView;
+import ch.bailu.aat.views.osm_features.PoiView;
 
 public class PoiActivity extends AbsOsmApiActivity {
 
     private MultiView multiView;
-
+    private PoiView poiView;
 
     @Override
     public OsmApiHelper getApiHelper(BoundingBoxE6 boundingBox) throws SecurityException, IOException {
-        return new PoiApi(this);
+        return new PoiApi(this, boundingBox) {
+            @Override
+            protected ArrayList<PoiCategory> getCategories() {
+                return poiView.getCategories();
+            }
+        };
     }
 
 
@@ -60,6 +69,20 @@ public class PoiActivity extends AbsOsmApiActivity {
     }
 
     private View createPoiListView() {
-        return new View(this);
+
+
+        poiView = new PoiView(getServiceContext());
+
+
+        AppTheme.alt.background(poiView);
+        return poiView;
+
     }
+
+    @Override
+    public void onPause() {
+        poiView.onPause(getServiceContext());
+        super.onPause();
+    }
+
 }

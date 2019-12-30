@@ -8,28 +8,26 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 
 import ch.bailu.aat.services.ServiceContext;
-import ch.bailu.aat.services.cache.osm_features.MapFeaturesListEntry;
-import ch.bailu.aat.util.filter_list.AbsFilterList;
-import ch.bailu.aat.util.filter_list.ListEntry;
+import ch.bailu.aat.util.filter_list.FilterList;
+import ch.bailu.aat.util.filter_list.PoiListEntry;
 import ch.bailu.aat.util.ui.AppTheme;
 
-
-public class MapFeaturesListView extends ListView  {
+public class PoiListView extends ListView {
 
 
     private DataSetObserver observer=null;
-    private final AbsFilterList<ListEntry> list;
+    private final FilterList list;
     private final ServiceContext scontext;
 
     private OnSelected onSelected = OnSelected.NULL;
 
 
-    public MapFeaturesListView(ServiceContext sc, AbsFilterList<ListEntry> l) {
+    public PoiListView(ServiceContext sc, FilterList l) {
         super(sc.getContext());
 
         scontext = sc;
         list = l;
-        final Adapter listAdapter = new Adapter();
+        final PoiListView.Adapter listAdapter = new PoiListView.Adapter();
 
 
         AppTheme.themifyList(this);
@@ -59,14 +57,14 @@ public class MapFeaturesListView extends ListView  {
 
         @Override
         public View getView(int index, View v, ViewGroup p) {
-            MapFeaturesEntryView view;
+            PoiListEntryView view;
             if (v instanceof  MapFeaturesEntryView) {
-                view = (MapFeaturesEntryView) v;
+                view = (PoiListEntryView) v;
             } else {
-                view = new MapFeaturesEntryView(scontext, onSelected);
+                view = new PoiListEntryView(scontext, onSelected);
             }
 
-            view.set((MapFeaturesListEntry) list.get(index));
+            view.set((PoiListEntry) list.get(index));
             return view;
         }
 
@@ -84,14 +82,7 @@ public class MapFeaturesListView extends ListView  {
 
         @Override
         public void onItemClick(AdapterView<?> arg0, View view, int index, long arg3) {
-            final MapFeaturesListEntry d = (MapFeaturesListEntry) list.get(index);
-
-            if (d.isSummary())
-                onSelected.onSelected(d,OnSelected.FILTER, d.getSummaryKey());
-            else
-                onSelected.onSelected(d,OnSelected.EDIT, d.getDefaultQuery());
-
-
+            onSelected.onSelected(list.get(index), 0,null);
         }
 
         @Override

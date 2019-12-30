@@ -51,7 +51,7 @@ public class MapActivity extends AbsKeepScreenOnActivity {
 
         if (Objects.equals(intent.getAction(),Intent.ACTION_VIEW) && uri != null) {
             setMapCenterFromUri(map, uri);
-            openQueryFromUri(uri);
+            //openQueryFromUri(uri);
         }
     }
 
@@ -66,7 +66,7 @@ public class MapActivity extends AbsKeepScreenOnActivity {
         }
     }
 
-
+/*
     private void openQueryFromUri(Uri uri) {
         String query = AbsOsmApiActivity.queryFromUri(uri);
 
@@ -77,7 +77,7 @@ public class MapActivity extends AbsKeepScreenOnActivity {
             ActivitySwitcher.start(this, NominatimActivity.class, intent);
         }
     }
-
+*/
 
     private MapViewInterface createMap(EditorSource edit) {
         return MapFactory.DEF(this, SOLID_KEY).map(edit, createButtonBar());

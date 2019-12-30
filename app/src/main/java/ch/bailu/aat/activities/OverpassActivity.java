@@ -15,6 +15,7 @@ import ch.bailu.aat.views.bar.MainControlBar;
 import ch.bailu.aat.views.description.MultiView;
 import ch.bailu.aat.views.osm_features.MapFeaturesListView;
 import ch.bailu.aat.views.osm_features.MapFeaturesView;
+import ch.bailu.aat.views.osm_features.OnSelected;
 
 public class OverpassActivity extends AbsOsmApiActivity  {
 
@@ -46,15 +47,15 @@ public class OverpassActivity extends AbsOsmApiActivity  {
     private View createOsmFeaturesView() {
         osmFeatures = new MapFeaturesView(getServiceContext());
         osmFeatures.setOnTextSelected((e, action, variant) -> {
-            if (action == MapFeaturesListView.OnSelected.FILTER) {
-                osmFeatures.setFilterText(e.summarySearchKey);
+            if (action == OnSelected.FILTER) {
+                osmFeatures.setFilterText(e.getSummaryKey());
 
-            } else if (action == MapFeaturesListView.OnSelected.EDIT){
+            } else if (action == OnSelected.EDIT){
                 insertLine(variant);
 
                 if (multiView != null) multiView.setNext();
 
-            } else if (action == MapFeaturesListView.OnSelected.SHOW) {
+            } else if (action == OnSelected.SHOW) {
 
             }
         });

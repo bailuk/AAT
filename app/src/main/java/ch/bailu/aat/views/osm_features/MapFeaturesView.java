@@ -11,14 +11,15 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 
 import ch.bailu.aat.R;
-import ch.bailu.aat.preferences.map.SolidOsmFeaturesList;
 import ch.bailu.aat.preferences.SolidString;
+import ch.bailu.aat.preferences.map.SolidOsmFeaturesList;
 import ch.bailu.aat.services.InsideContext;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.cache.osm_features.MapFeaturesHandle;
 import ch.bailu.aat.services.cache.osm_features.MapFeaturesListEntry;
 import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.util.AppIntent;
+import ch.bailu.aat.util.filter_list.AbsFilterList;
 import ch.bailu.aat.util.filter_list.FilterList;
 import ch.bailu.aat.util.filter_list.KeyList;
 import ch.bailu.aat.views.BusyIndicator;
@@ -41,16 +42,7 @@ public class MapFeaturesView extends LinearLayout implements SharedPreferences.O
 
 
 
-    private final FilterList<MapFeaturesListEntry> list = new FilterList<MapFeaturesListEntry>() {
-        @Override
-        public boolean showElement(MapFeaturesListEntry e, KeyList keyList) {
-            if (keyList.isEmpty()) {
-                return e.isSummary();
-            } else {
-                return e.keys.fits(keyList);
-            }
-        }
-    };
+    private final FilterList list = new FilterList();
 
 
     private final BroadcastReceiver onListLoaded = new BroadcastReceiver() {
@@ -101,7 +93,7 @@ public class MapFeaturesView extends LinearLayout implements SharedPreferences.O
         return layout;
     }
 
-    public void setOnTextSelected(MapFeaturesListView.OnSelected s) {
+    public void setOnTextSelected(OnSelected s) {
         listView.setOnTextSelected(s);
     }
 

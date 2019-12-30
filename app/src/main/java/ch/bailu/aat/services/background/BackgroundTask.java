@@ -12,19 +12,8 @@ public abstract class BackgroundTask implements ThreadControl {
         }
     };
 
-/*
-    public static final BackgroundTask NULL_PROCESSED = new BackgroundTask() {
 
-        @Override
-        public long bgOnProcess(ServiceContext sc) {
-            return 0;
-        }
-
-        public boolean canContinue() {
-            return false;
-        }
-    };
-*/
+    private Exception exception;
 
     private boolean processing = true;
 
@@ -51,4 +40,12 @@ public abstract class BackgroundTask implements ThreadControl {
 
     public void onInsert() {}
     public void onRemove() {}
+
+    protected void setException(Exception e) {
+        exception = e;
+    }
+
+    public  Exception getException() {
+        return exception;
+    }
 }

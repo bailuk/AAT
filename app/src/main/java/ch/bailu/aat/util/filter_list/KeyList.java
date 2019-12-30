@@ -91,4 +91,9 @@ public class KeyList {
         }
         return l;
     }
+
+    public String getFirstKey() {
+        if (keys.size() > 0) return keys.get(0);
+        else return "";
+    }
 }

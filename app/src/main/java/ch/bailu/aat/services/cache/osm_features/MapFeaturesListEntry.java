@@ -2,14 +2,17 @@ package ch.bailu.aat.services.cache.osm_features;
 
 import java.util.ArrayList;
 
+import ch.bailu.aat.gpx.attributes.Keys;
 import ch.bailu.aat.util.filter_list.KeyList;
+import ch.bailu.aat.util.filter_list.ListEntry;
 
 
-public final class MapFeaturesListEntry {
+public final class MapFeaturesListEntry extends ListEntry {
     private final boolean isSummary;
-    public final String name, key, value, summarySearchKey, summaryKey,  html;
-    public final KeyList keys;
-    public final int id;
+    private final String name, key, value, summarySearchKey, html;
+
+    private final KeyList keys;
+    private final int id;
 
     public MapFeaturesListEntry(MapFeaturesParser parser) {
 
@@ -25,7 +28,6 @@ public final class MapFeaturesListEntry {
 
         value = parser.getValue();
         id = parser.getId();
-        summaryKey = parser.getSumaryKey();
         html = parser.addHtml(new StringBuilder()).toString();
 
         summarySearchKey = parser.getSummarySearchKey();
@@ -36,9 +38,35 @@ public final class MapFeaturesListEntry {
 
     }
 
+    @Override
+    public boolean isSelected() {
+        return false;
+    }
+
+    @Override
     public boolean isSummary() {
         return isSummary;
     }
+
+    @Override
+    public KeyList getKeys() {
+        return keys;
+    }
+
+    @Override
+    public String getSummaryKey() {
+        return summarySearchKey;
+    }
+
+    public int getID() {
+        return id;
+    }
+
+    @Override
+    public void select() {
+
+    }
+
 
     public int length() {
         int l = name.length() +
@@ -67,5 +95,17 @@ public final class MapFeaturesListEntry {
             list.add("["+ key +"~\"" + value + "\",i];");
         }
         return list;
+    }
+
+    public int getOsmKey() {
+        return Keys.toIndex(key);
+    }
+
+    public String getOsmValue() {
+        return value;
+    }
+
+    public String getHtml() {
+        return html;
     }
 }

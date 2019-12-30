@@ -1,6 +1,7 @@
 package ch.bailu.aat.views;
 
 
+import android.graphics.Color;
 import android.text.Layout;
 import android.text.Selection;
 import android.view.View;

@@ -2,6 +2,7 @@ package ch.bailu.aat.util;
 
 import java.io.UnsupportedEncodingException;
 
+import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.util.fs.AppDirectory;
 import ch.bailu.util_java.foc.Foc;
 
@@ -17,6 +18,12 @@ public abstract class OsmApiHelper {
         public abstract String getUrlStart();
         public abstract Foc getBaseDirectory();
         public abstract String getFileExtension();
+
+        public abstract String getUrlPreview(String s);
+        public abstract boolean isTaskRunning(ServiceContext scontext);
+        public abstract void stopTask(ServiceContext scontext);
+        public abstract void startTask(ServiceContext scontext, String query);
+
 
         public Foc getResultFile() {
             return getBaseDirectory().child("result"+ getFileExtension());
@@ -47,9 +54,6 @@ public abstract class OsmApiHelper {
                 name.append(c);
             }
         }
-
-
-    public abstract String getUrlPreview(String s);
 }
 
 

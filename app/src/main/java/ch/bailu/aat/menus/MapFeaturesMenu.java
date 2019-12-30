@@ -8,17 +8,17 @@ import android.view.MenuItem;
 import java.util.ArrayList;
 
 import ch.bailu.aat.services.cache.osm_features.MapFeaturesListEntry;
-import ch.bailu.aat.views.osm_features.MapFeaturesListView;
+import ch.bailu.aat.views.osm_features.OnSelected;
 
 public final class MapFeaturesMenu extends AbsMenu {
 
-    private final MapFeaturesListView.OnSelected onSelected;
+    private final OnSelected onSelected;
 
     private final MapFeaturesListEntry element;
 
     private final ArrayList<String> variants;
 
-    public MapFeaturesMenu(MapFeaturesListEntry d, MapFeaturesListView.OnSelected s) {
+    public MapFeaturesMenu(MapFeaturesListEntry d, OnSelected s) {
         element = d;
         onSelected = s;
         variants = element.getVariants();
@@ -28,7 +28,7 @@ public final class MapFeaturesMenu extends AbsMenu {
     @Override
     public void inflate(Menu menu) {
 
-        int g = MapFeaturesListView.OnSelected.EDIT;
+        int g = OnSelected.EDIT;
         int i = 0;
         for (String v : variants) {
             menu.add(g,i,Menu.NONE,v);
@@ -53,7 +53,7 @@ public final class MapFeaturesMenu extends AbsMenu {
 
     @Override
     public boolean onItemClick(MenuItem item) {
-        onSelected.onSelected(element, MapFeaturesListView.OnSelected.EDIT ,variants.get(item.getItemId()));
+        onSelected.onSelected(element, OnSelected.EDIT ,variants.get(item.getItemId()));
         return true;
     }
 
