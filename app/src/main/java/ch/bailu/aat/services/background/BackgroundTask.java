@@ -1,5 +1,7 @@
 package ch.bailu.aat.services.background;
 
+import android.content.Context;
+
 import ch.bailu.aat.services.ServiceContext;
 
 public abstract class BackgroundTask implements ThreadControl {
@@ -38,8 +40,8 @@ public abstract class BackgroundTask implements ThreadControl {
         return this;
     }
 
-    public void onInsert() {}
-    public void onRemove() {}
+    public void onInsert(Context c) {}
+    public void onRemove(Context c) {}
 
     protected void setException(Exception e) {
         exception = e;

@@ -52,7 +52,7 @@ public final class BitmapTileObject extends TileObject {
     @Override
     public void onInsert(ServiceContext sc) {
         if (isLoadable()) sc.getBackgroundService().process(new FileLoaderTask(file));
-        else if (isDownloadable() && sc.getBackgroundService().findDownloadTask(file) == null)
+        else if (isDownloadable() && sc.getBackgroundService().findTask(file) == null)
             sc.getBackgroundService().process(new FileDownloader(url, file, sc));
     }
 
@@ -67,7 +67,7 @@ public final class BitmapTileObject extends TileObject {
 
     @Override
     public void reDownload(ServiceContext sc) {
-        if (sc.getBackgroundService().findDownloadTask(file) == null) {
+        if (sc.getBackgroundService().findTask(file) == null) {
             file.rm();
             if (isDownloadable()) sc.getBackgroundService().process(new FileDownloader(url, file, sc));
         }

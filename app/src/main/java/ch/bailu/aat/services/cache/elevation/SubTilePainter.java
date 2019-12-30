@@ -1,5 +1,7 @@
 package ch.bailu.aat.services.cache.elevation;
 
+import android.content.Context;
+
 import ch.bailu.aat.services.InsideContext;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.background.BackgroundTask;
@@ -25,7 +27,7 @@ public final class SubTilePainter extends BackgroundTask {
 
 
     @Override
-    public void onInsert() {
+    public void onInsert(Context c) {
         tile.lock(this);
     }
 
@@ -48,7 +50,7 @@ public final class SubTilePainter extends BackgroundTask {
     }
 
     @Override
-    public void onRemove() {
+    public void onRemove(Context c) {
         tile.free(this);
 
         new InsideContext(scontext) {

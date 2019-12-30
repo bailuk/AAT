@@ -16,6 +16,7 @@ import ch.bailu.util_java.foc.Foc;
 
 public class SolidRenderTheme extends SolidFile {
 
+    private final static String EXTENSION = ".xml";
 
     public SolidRenderTheme(Context c) {
         super(c, SolidRenderTheme.class.getSimpleName());
@@ -44,7 +45,7 @@ public class SolidRenderTheme extends SolidFile {
     }
 
     public static String toThemeName(String themeFile) {
-        return new File(themeFile).getName().replace(".xml", "");
+        return new File(themeFile).getName().replace(EXTENSION, "");
     }
 
     private static String toThemeID(String name) {
@@ -89,33 +90,15 @@ public class SolidRenderTheme extends SolidFile {
         list.add(InternalRenderTheme.OSMARENDER.toString());
 
         Foc maps = new SolidMapsForgeDirectory(getContext()).getValueAsFile();
-        add_xmlInSubdirectories(list, maps);
+        add_ext(list, maps, EXTENSION);
+        add_extInSubdirectories(list, maps, EXTENSION);
 
         ArrayList<Foc> dirs = new SolidMapsForgeDirectory(getContext()).getWellKnownMapDirs();
         for (Foc dir: dirs) {
-             add_xmlInSubdirectories(list, dir);
+            add_ext(list, maps, EXTENSION);
+            add_extInSubdirectories(list, dir, EXTENSION);
         }
 
-        return list;
-    }
-
-    public static ArrayList<String> add_xmlInSubdirectories(final ArrayList<String> list, Foc directory) {
-        directory.foreachDir(new Foc.Execute() {
-            @Override
-            public void execute(Foc child) {
-                add_xml(list, child);
-            }
-        });
-        return list;
-    }
-
-    public static ArrayList<String> add_xml(final ArrayList<String> list, Foc directory) {
-        directory.foreachFile(new Foc.Execute() {
-            @Override
-            public void execute(Foc child) {
-                if (child.getName().endsWith(".xml")) add_r(list, child);
-            }
-        });
         return list;
     }
 }

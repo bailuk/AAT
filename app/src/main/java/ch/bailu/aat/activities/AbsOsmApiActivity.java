@@ -14,7 +14,6 @@ import ch.bailu.aat.coordinates.BoundingBoxE6;
 import ch.bailu.aat.dispatcher.CustomFileSource;
 import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.menus.ResultFileMenu;
-import ch.bailu.aat.services.InsideContext;
 import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.util.AppIntent;
 import ch.bailu.aat.util.OsmApiHelper;
@@ -27,7 +26,6 @@ import ch.bailu.aat.views.NodeListView;
 import ch.bailu.aat.views.OsmApiEditorView;
 import ch.bailu.aat.views.PercentageLayout;
 import ch.bailu.aat.views.bar.MainControlBar;
-import ch.bailu.util_java.foc.Foc;
 
 
 public abstract class AbsOsmApiActivity extends ActivityContext implements OnClickListener {
@@ -44,16 +42,13 @@ public abstract class AbsOsmApiActivity extends ActivityContext implements OnCli
     private OsmApiEditorView   editorView;
 
 
-    private final BroadcastReceiver onDownloadsChanged = new BroadcastReceiver() {
+    private final BroadcastReceiver onFileTaskChanged = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-
-            if (osmApi.isTaskRunning(getServiceContext())) downloadBusy.startWaiting();
-            else downloadBusy.stopWaiting();
+            setDownloadBusy();
         }
 
     };
-
 
 
     @Override
@@ -71,42 +66,10 @@ public abstract class AbsOsmApiActivity extends ActivityContext implements OnCli
         addSource(new CustomFileSource(getServiceContext(), osmApi.getResultFile().getPath()));
         addTarget(list, InfoID.FILEVIEW);
 
-        //setQueryTextFromIntent();
-
-        AppBroadcaster.register(this, onDownloadsChanged, AppBroadcaster.ON_DOWNLOADS_CHANGED);
+        AppBroadcaster.register(this, onFileTaskChanged,
+                AppBroadcaster.FILE_BACKGROND_TASK_CHANGED);
     }
 
-/*
-    private void setQueryTextFromIntent() {
-        String query = queryFromIntent(getIntent());
-        if (query != null) {
-            editorView.setText(query);
-        }
-    }
-*/
-/*
-    public static String queryFromIntent(Intent intent) {
-        Uri  uri = intent.getData();
-        if (uri != null) return queryFromUri(uri);
-        return null;
-    }
-*/
-
-/*
-    private static String queryFromUri(Uri uri) {
-
-        String query = uri.getEncodedQuery();
-        if (query != null) {
-            Uri n = Uri.parse("http://localhost/query?" + uri.getEncodedQuery()); // we need a hierarchical url
-            String query_parameter = n.getQueryParameter("q");
-            if (query_parameter != null) {
-                query_parameter = query_parameter.replace('\n', ',');
-                return query_parameter;
-            }
-        }
-        return null;
-    }
-*/
 
 
     private View createContentView()  {
@@ -130,17 +93,17 @@ public abstract class AbsOsmApiActivity extends ActivityContext implements OnCli
 
         download.setOnClickListener(this);
 
-        new InsideContext(getServiceContext()) {
-            @Override
-            public void run() {
-                if (getServiceContext().getBackgroundService().findDownloadTask(osmApi.getResultFile()) != null)
-                    downloadBusy.startWaiting();
-            }
-        };
-
         ToolTip.set(download, R.string.tt_nominatim_query);
+
+        setDownloadBusy();
     }
 
+
+    private void setDownloadBusy() {
+        if (osmApi.isTaskRunning(getServiceContext())) downloadBusy.startWaiting();
+        else downloadBusy.stopWaiting();
+
+    }
 
     private void addButtons(MainControlBar bar) {
         fileMenu = bar.addImageButton(R.drawable.edit_select_all_inverse);
@@ -219,9 +182,7 @@ public abstract class AbsOsmApiActivity extends ActivityContext implements OnCli
 
     @Override
     public void onDestroy() {
-        unregisterReceiver(onDownloadsChanged);
+        unregisterReceiver(onFileTaskChanged);
         super.onDestroy();
     }
 }
-
-

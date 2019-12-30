@@ -49,32 +49,8 @@ public abstract class DownloadApi extends OsmApiHelper {
     }
 
 
-    @Override
-    public boolean isTaskRunning(ServiceContext scontext) {
-        final boolean[] running = {false};
-
-        new InsideContext(scontext) {
-            @Override
-            public void run() {
-                BackgroundService background = scontext.getBackgroundService();
-                running[0] = background.findDownloadTask(getResultFile()) != null;
-            }
-        };
-        return running[0];
-    }
 
 
-    @Override
-    public void stopTask(ServiceContext scontext) {
-        new InsideContext(scontext) {
-            @Override
-            public void run() {
-                BackgroundService background = scontext.getBackgroundService();
-                BackgroundTask task = background.findDownloadTask(getResultFile());
-                if (task != null) task.stopProcessing();
-            }
-        };
-    }
 
     @Override
     public void startTask(ServiceContext scontext, String query) {

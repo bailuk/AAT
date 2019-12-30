@@ -1,5 +1,7 @@
 package ch.bailu.aat.services.background;
 
+import android.content.Context;
+
 import java.io.Closeable;
 
 public abstract class ProcessThread extends Thread implements Closeable, ThreadControl {
@@ -11,14 +13,17 @@ public abstract class ProcessThread extends Thread implements Closeable, ThreadC
     private BackgroundTask current = BackgroundTask.NULL;
 
 
-    public ProcessThread(HandleStack q) {
+    private final Context context;
+
+    public ProcessThread(Context c, HandleStack q) {
         queue = q;
+        context = c;
         start();
     }
 
 
-    public ProcessThread(int limit) {
-        this(new HandleStack(limit));
+    public ProcessThread(Context c, int limit) {
+        this(c, new HandleStack(c, limit));
     }
 
 
@@ -29,7 +34,7 @@ public abstract class ProcessThread extends Thread implements Closeable, ThreadC
             try {
                 current = queue.take();
                 bgProcessHandle(current);
-                current.onRemove();
+                current.onRemove(context);
                 current = BackgroundTask.NULL;
 
 

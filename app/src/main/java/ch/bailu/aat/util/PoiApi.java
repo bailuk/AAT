@@ -17,6 +17,7 @@ import java.util.Collection;
 
 import ch.bailu.aat.coordinates.BoundingBoxE6;
 import ch.bailu.aat.gpx.writer.WayWriter;
+import ch.bailu.aat.preferences.map.SolidPoiDatabase;
 import ch.bailu.aat.services.InsideContext;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.background.BackgroundTask;
@@ -70,27 +71,23 @@ public abstract class PoiApi extends OsmApiHelper {
         return "";
     }
 
-    @Override
-    public boolean isTaskRunning(ServiceContext scontext) {
-        return false;
-    }
-
-    @Override
-    public void stopTask(ServiceContext scontext) {
-        task.stopProcessing();
-    }
 
     @Override
     public void startTask(ServiceContext scontext, String query) {
 
         final ArrayList<PoiCategory> categories = getCategories();
 
+        final String poiDatabase = new SolidPoiDatabase(scontext.getContext()).getValueAsString();
+
         if (categories.size() > 0) {
             new InsideContext(scontext) {
                 @Override
                 public void run() {
                     task.stopProcessing();
-                    task = new PoiToGpx(getResultFile(), bounding.toBoundingBox(), categories);
+                    task = new PoiToGpxTask(getResultFile(),
+                            bounding.toBoundingBox(),
+                            categories,
+                            poiDatabase);
                     scontext.getBackgroundService().process(task);
 
                 }
@@ -101,17 +98,17 @@ public abstract class PoiApi extends OsmApiHelper {
     protected abstract ArrayList<PoiCategory> getCategories();
 
 
-    private static class PoiToGpx extends FileTask {
+    private static class PoiToGpxTask extends FileTask {
 
         private final static int LIMIT = 100;
-        private final static String POI_FILE = "/storage/0B35-1209/maps/Alps/Alps_ML.poi";
-
 
         private final BoundingBox bounding;
+        private final String poiDatabase;
         private final ArrayList<PoiCategory> categories;
 
-        public PoiToGpx(Foc result, BoundingBox b, ArrayList<PoiCategory> c) {
+        public PoiToGpxTask(Foc result, BoundingBox b, ArrayList<PoiCategory> c, String poiDb) {
             super(result);
+            poiDatabase = poiDb;
             bounding = b;
             categories = c;
         }
@@ -120,7 +117,7 @@ public abstract class PoiApi extends OsmApiHelper {
         @Override
         public long bgOnProcess(ServiceContext sc) {
             final PoiPersistenceManager persistenceManager =
-                    AndroidPoiPersistenceManagerFactory.getPoiPersistenceManager(POI_FILE);
+                    AndroidPoiPersistenceManagerFactory.getPoiPersistenceManager(poiDatabase);
 
             try {
                 queryPois(persistenceManager, bounding);
@@ -130,8 +127,9 @@ public abstract class PoiApi extends OsmApiHelper {
 
             persistenceManager.close();
 
+
             AppBroadcaster.broadcast(sc.getContext(), AppBroadcaster.FILE_CHANGED_ONDISK,
-                    getFile().getPath(), POI_FILE);
+                    getFile().getPath(), poiDatabase);
 
             return 100;
         }

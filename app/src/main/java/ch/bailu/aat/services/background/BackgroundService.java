@@ -13,13 +13,13 @@ public final class BackgroundService extends VirtualService implements WithStatu
 
     final static int FILE_LOADER_BASE_DIRECTORY_DEPTH = 4;
 
-    private final Downloads downloads = new Downloads();
+    private final Tasks tasks = new Tasks();
 
     private final HashMap<String, DownloaderThread> downloaders = new HashMap<>(5);
     private final HashMap<String, LoaderThread> loaders = new HashMap<>(5);
 
 
-    private final HandleStack queue = new HandleStack();
+    private final HandleStack queue;
 
 
     private final WorkerThread[] workers =
@@ -29,7 +29,7 @@ public final class BackgroundService extends VirtualService implements WithStatu
 
     public BackgroundService(final ServiceContext sc) {
         super(sc);
-
+        queue = new HandleStack(sc.getContext());
         for (int i=0; i< workers.length; i++)
             workers[i] = new WorkerThread(sc, queue);
 
@@ -64,7 +64,7 @@ public final class BackgroundService extends VirtualService implements WithStatu
                 downloaders.put(host, downloader);
             }
 
-            handle.setDownloads(downloads);
+            handle.register(tasks);
             downloader.process(handle);
         }
     }
@@ -81,6 +81,8 @@ public final class BackgroundService extends VirtualService implements WithStatu
             loader = new LoaderThread(getSContext(), base);
             loaders.put(base, loader);
         }
+
+        handle.register(tasks);
         loader.process(handle);
     }
 
@@ -128,8 +130,8 @@ public final class BackgroundService extends VirtualService implements WithStatu
     }
 
 
-    public DownloadTask findDownloadTask(Foc file) {
-        return downloads.get(file);
+    public FileTask findTask(Foc file) {
+        return tasks.get(file);
     }
 }
 

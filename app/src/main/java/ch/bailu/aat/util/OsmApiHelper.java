@@ -2,7 +2,10 @@ package ch.bailu.aat.util;
 
 import java.io.UnsupportedEncodingException;
 
+import ch.bailu.aat.services.InsideContext;
 import ch.bailu.aat.services.ServiceContext;
+import ch.bailu.aat.services.background.BackgroundService;
+import ch.bailu.aat.services.background.BackgroundTask;
 import ch.bailu.aat.util.fs.AppDirectory;
 import ch.bailu.util_java.foc.Foc;
 
@@ -20,8 +23,6 @@ public abstract class OsmApiHelper {
         public abstract String getFileExtension();
 
         public abstract String getUrlPreview(String s);
-        public abstract boolean isTaskRunning(ServiceContext scontext);
-        public abstract void stopTask(ServiceContext scontext);
         public abstract void startTask(ServiceContext scontext, String query);
 
 
@@ -54,6 +55,31 @@ public abstract class OsmApiHelper {
                 name.append(c);
             }
         }
+
+    final public boolean isTaskRunning(ServiceContext scontext) {
+        final boolean[] running = {false};
+
+        new InsideContext(scontext) {
+            @Override
+            public void run() {
+                BackgroundService background = scontext.getBackgroundService();
+                running[0] = background.findTask(getResultFile()) != null;
+            }
+        };
+        return running[0];
+    }
+
+    final public void stopTask(ServiceContext scontext) {
+        new InsideContext(scontext) {
+            @Override
+            public void run() {
+                BackgroundService background = scontext.getBackgroundService();
+                BackgroundTask task = background.findTask(getResultFile());
+                if (task != null) task.stopProcessing();
+            }
+        };
+    }
+
 }
 
 

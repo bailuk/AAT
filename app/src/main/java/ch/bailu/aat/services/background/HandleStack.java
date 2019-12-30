@@ -1,5 +1,7 @@
 package ch.bailu.aat.services.background;
 
+import android.content.Context;
+
 import java.util.concurrent.BlockingDeque;
 import java.util.concurrent.LinkedBlockingDeque;
 
@@ -9,12 +11,18 @@ public final class HandleStack {
     private final BlockingDeque<BackgroundTask> queue;
     private final int limit;
 
-    public HandleStack() {
-        this(DEFAULT_LIMIT);
+    private final Context context;
+
+
+    public HandleStack(Context c) {
+        this(c, DEFAULT_LIMIT);
     }
 
 
-    public HandleStack(int l) {
+
+
+    public HandleStack(Context c, int l) {
+        context = c;
         limit = l;
         queue = new LinkedBlockingDeque<>(limit);
     }
@@ -42,7 +50,7 @@ public final class HandleStack {
 
 
     private void insert(BackgroundTask handle) {
-        handle.onInsert();
+        handle.onInsert(context);
         queue.offerFirst(handle);
     }
 
@@ -51,7 +59,7 @@ public final class HandleStack {
         BackgroundTask handle = queue.pollLast();
 
         if (handle != null) {
-            handle.onRemove();
+            handle.onRemove(context);
         }
         return handle;
     }

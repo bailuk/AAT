@@ -69,10 +69,7 @@ public class PoiActivity extends AbsOsmApiActivity {
     }
 
     private View createPoiListView() {
-
-
         poiView = new PoiView(getServiceContext());
-
 
         AppTheme.alt.background(poiView);
         return poiView;
@@ -80,9 +77,9 @@ public class PoiActivity extends AbsOsmApiActivity {
     }
 
     @Override
-    public void onPause() {
-        poiView.onPause(getServiceContext());
-        super.onPause();
+    public void onDestroy() {
+        poiView.close(getServiceContext());
+        super.onDestroy();
     }
 
 }

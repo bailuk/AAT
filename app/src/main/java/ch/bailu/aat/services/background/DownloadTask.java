@@ -18,7 +18,7 @@ import ch.bailu.aat.util.ui.AppLog;
 import ch.bailu.aat.util.ui.AppString;
 import ch.bailu.util_java.foc.Foc;
 
-public class DownloadTask extends BackgroundTask implements ContextWrapperInterface{
+public class DownloadTask extends FileTask implements ContextWrapperInterface{
 
 
     private final static int TIMEOUT = 30 * 1000;
@@ -28,12 +28,8 @@ public class DownloadTask extends BackgroundTask implements ContextWrapperInterf
     private final static int IO_BUFFER_SIZE=8*1024;
 
     private final URX urx;
-    private final Foc file;
 
     private final Context context;
-
-
-    private Downloads downloads = null;
 
     public DownloadTask(Context c, String source, Foc target) {
         this(c, new URX(source), target);
@@ -41,7 +37,8 @@ public class DownloadTask extends BackgroundTask implements ContextWrapperInterf
 
 
     public DownloadTask(Context c, URX source, Foc target) {
-        file = target;
+        super(target);
+
         urx = source;
         context = c;
     }
@@ -56,11 +53,12 @@ public class DownloadTask extends BackgroundTask implements ContextWrapperInterf
         try {
             size = bgDownload();
             AppBroadcaster.broadcast(sc.getContext(),
-                    AppBroadcaster.FILE_CHANGED_ONDISK, file, urx);
+                    AppBroadcaster.FILE_CHANGED_ONDISK, getFile(), urx);
 
         } catch (Exception e) {
             logError(e);
-            file.rm();
+            setException(e);
+            getFile().rm();
 
         }
         return size;
@@ -69,7 +67,7 @@ public class DownloadTask extends BackgroundTask implements ContextWrapperInterf
 
 
     protected long bgDownload() throws IOException {
-        return download(urx.toURL(), file);
+        return download(urx.toURL(), getFile());
     }
 
 
@@ -142,9 +140,6 @@ public class DownloadTask extends BackgroundTask implements ContextWrapperInterf
     }
 
 
-    public Foc getFile() {
-        return file;
-    }
     public URX getSource() {
         return urx;
     }
@@ -154,22 +149,5 @@ public class DownloadTask extends BackgroundTask implements ContextWrapperInterf
         return context;
     }
 
-    public void setDownloads(Downloads d) {
-        if (downloads == null)
-            downloads = d;
-    }
 
-
-    @Override
-    public void onInsert() {
-        if (downloads != null) downloads.add(this);
-    }
-
-
-    @Override
-    public void onRemove() {
-        if (downloads != null) {
-            downloads.remove(this);
-        }
-    }
 }

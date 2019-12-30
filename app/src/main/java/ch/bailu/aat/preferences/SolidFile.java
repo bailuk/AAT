@@ -164,4 +164,27 @@ public abstract class SolidFile extends SolidString {
             return f.getPathName() + c.getString(R.string.file_is_denied);
         }
     }
+
+
+    public static ArrayList<String> add_extInSubdirectories(final ArrayList<String> list,
+                                                            Foc directory, String ext) {
+        directory.foreachDir(new Foc.Execute() {
+            @Override
+            public void execute(Foc child) {
+                add_ext(list, child, ext);
+            }
+        });
+        return list;
+    }
+
+    public static ArrayList<String> add_ext(final ArrayList<String> list, Foc directory, String ext) {
+        directory.foreachFile(new Foc.Execute() {
+            @Override
+            public void execute(Foc child) {
+                if (child.getName().endsWith(ext)) add_r(list, child);
+            }
+        });
+        return list;
+    }
+
 }

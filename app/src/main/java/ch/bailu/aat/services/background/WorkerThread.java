@@ -9,13 +9,13 @@ public class WorkerThread extends ProcessThread {
 
 
     public WorkerThread(ServiceContext sc, int limit) {
-        super(limit);
+        super(sc.getContext(), limit);
         scontext = sc;
     }
 
 
     public WorkerThread(ServiceContext sc, HandleStack q) {
-        super(q);
+        super(sc.getContext(), q);
         scontext = sc;
     }
 

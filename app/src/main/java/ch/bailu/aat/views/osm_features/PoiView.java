@@ -1,5 +1,6 @@
 package ch.bailu.aat.views.osm_features;
 
+import android.content.SharedPreferences;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -15,16 +16,15 @@ import org.mapsforge.poi.storage.UnknownPoiCategoryException;
 import java.util.ArrayList;
 
 import ch.bailu.aat.preferences.SolidString;
+import ch.bailu.aat.preferences.map.SolidPoiDatabase;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.util.filter_list.FilterList;
-import ch.bailu.aat.util.filter_list.ListEntry;
 import ch.bailu.aat.util.filter_list.PoiListEntry;
 import ch.bailu.aat.views.EditTextTool;
-import ch.bailu.aat.views.preferences.TitleView;
+import ch.bailu.aat.views.preferences.SolidStringView;
 
-public class PoiView  extends LinearLayout {
+public class PoiView  extends LinearLayout implements SharedPreferences.OnSharedPreferenceChangeListener {
 
-    private final static String POI_FILE = "/storage/0B35-1209/maps/Alps/Alps_ML.poi";
     private final static String FILTER_KEY = "PoiView";
 
     private EditText filterView;
@@ -34,10 +34,15 @@ public class PoiView  extends LinearLayout {
 
     private final FilterList list = new FilterList();
 
+    private final SolidPoiDatabase sdatabase;
+
 
     public PoiView(ServiceContext sc) {
         super(sc.getContext());
         scontext = sc;
+
+        sdatabase = new SolidPoiDatabase(sc.getContext());
+        sdatabase.register(this);
 
         setOrientation(VERTICAL);
         addView(createHeader());
@@ -45,6 +50,7 @@ public class PoiView  extends LinearLayout {
         addView(createPoiList());
 
         readList();
+        listView.onChanged();
     }
 
 
@@ -53,7 +59,8 @@ public class PoiView  extends LinearLayout {
 
 
         final PoiPersistenceManager persistenceManager =
-                AndroidPoiPersistenceManagerFactory.getPoiPersistenceManager(POI_FILE);
+                AndroidPoiPersistenceManagerFactory.getPoiPersistenceManager(
+                        sdatabase.getValueAsString());
 
         final PoiCategoryManager categoryManager = persistenceManager.getCategoryManager();
 
@@ -82,12 +89,7 @@ public class PoiView  extends LinearLayout {
     }
 
     public View createHeader() {
-
-        LinearLayout layout = new LinearLayout(getContext());
-        layout.setOrientation(HORIZONTAL);
-        layout.addView(new TitleView(getContext(), POI_FILE));
-
-        return layout;
+        return new SolidStringView(new SolidPoiDatabase(getContext()));
     }
 
 
@@ -135,9 +137,11 @@ public class PoiView  extends LinearLayout {
     }
 
 
-    public void onPause(ServiceContext sc) {
+    public void close(ServiceContext sc) {
         new SolidString(sc.getContext(), FILTER_KEY).setValue(filterView.getText().toString());
+        sdatabase.unregister(this);
     }
+
 
     public ArrayList<PoiCategory> getCategories() {
         ArrayList<PoiCategory> export = new ArrayList<>(10);
@@ -150,5 +154,12 @@ public class PoiView  extends LinearLayout {
             }
         }
         return export;
+    }
+
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        if (sdatabase.hasKey(key)) {
+            readList();
+        }
     }
 }
