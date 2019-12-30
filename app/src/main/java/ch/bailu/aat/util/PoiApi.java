@@ -27,8 +27,11 @@ import ch.bailu.aat.util.fs.AppDirectory;
 import ch.bailu.util_java.foc.Foc;
 
 public abstract class PoiApi extends OsmApiHelper {
-    public final static String NAME="MapsForge Poi";
+    public final static String NAME="MapsForge Poi (Offline)";
     public final static String EXT=".gpx";
+
+    private final static int LIMIT = 1000;
+
 
     private final Foc directory;
 
@@ -100,7 +103,6 @@ public abstract class PoiApi extends OsmApiHelper {
 
     private static class PoiToGpxTask extends FileTask {
 
-        private final static int LIMIT = 100;
 
         private final BoundingBox bounding;
         private final String poiDatabase;
