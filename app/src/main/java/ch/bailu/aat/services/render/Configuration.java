@@ -5,6 +5,7 @@ import org.mapsforge.map.rendertheme.XmlRenderTheme;
 
 import java.util.ArrayList;
 
+import ch.bailu.aat.preferences.map.SolidMapsForgeDirectory;
 import ch.bailu.aat.services.cache.MapsForgeTileObject;
 import ch.bailu.util_java.foc.Foc;
 
@@ -40,14 +41,18 @@ public final class Configuration {
         mapFiles.clear();
 
 
-        dir.foreachFile(new Foc.Execute() {
-            @Override
-            public void execute(Foc child) {
-                if (child.getName().endsWith(".map")) {
-                    mapFiles.add(child);
+        if (dir.isFile()) {
+            mapFiles.add(dir);
+        } else {
+            dir.foreachFile(new Foc.Execute() {
+                @Override
+                public void execute(Foc child) {
+                    if (child.getName().endsWith(SolidMapsForgeDirectory.EXTENSION)) {
+                        mapFiles.add(child);
+                    }
                 }
-            }
-        });
+            });
+        }
 
         return mapFiles.size() > 0;
     }

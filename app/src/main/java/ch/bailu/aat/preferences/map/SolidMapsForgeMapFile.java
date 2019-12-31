@@ -4,34 +4,28 @@ import android.content.Context;
 
 import java.util.ArrayList;
 
-import ch.bailu.aat.preferences.SolidFile;
 import ch.bailu.aat.util.ToDo;
 import ch.bailu.util_java.foc.Foc;
 
-public class SolidPoiDatabase extends SolidFile {
-
-    private final static String EXTENSION = ".poi";
-
-    public SolidPoiDatabase(Context c) {
-        super(c, SolidPoiDatabase.class.getSimpleName());
+public class SolidMapsForgeMapFile extends SolidMapsForgeDirectory {
+    public SolidMapsForgeMapFile(Context c) {
+        super(c);
     }
 
 
     @Override
     public String getLabel() {
-        return ToDo.translate("MapsForge POI Database");
+        return ToDo.translate("Offline-map file");
     }
-
 
     @Override
     public ArrayList<String> buildSelection(ArrayList<String> list) {
+        final ArrayList<Foc> dirs = getWellKnownMapDirs();
 
-        ArrayList<Foc> dirs = new SolidMapsForgeDirectory(getContext()).getWellKnownMapDirs();
-        for (Foc dir: dirs) {
+        for (Foc dir : dirs) {
             add_ext(list, dir, EXTENSION);
             add_extInSubdirectories(list, dir, EXTENSION);
         }
-
         return list;
     }
 }

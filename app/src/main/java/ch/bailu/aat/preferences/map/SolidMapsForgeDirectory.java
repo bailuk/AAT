@@ -14,6 +14,8 @@ import ch.bailu.aat.util.fs.foc.FocAndroid;
 import ch.bailu.util_java.foc.Foc;
 
 public class SolidMapsForgeDirectory extends SolidFile {
+
+    public final static String EXTENSION = ".map";
     public final static String MAPS_DIR = "maps";
     public final static String ORUX_MAPS_DIR = "oruxmaps/mapfiles";
 
@@ -65,26 +67,6 @@ public class SolidMapsForgeDirectory extends SolidFile {
 
     @Override
     public ArrayList<String> buildSelection(ArrayList<String> list) {
-        /*
-        AndroidVolumes volumes = new AndroidVolumes(getContext());
-
-
-        for (Foc f : volumes.getVolumes()) {
-            final Foc maps1 = f.child(MAPS_DIR);
-            final Foc maps2 = f.child(AppDirectory.DIR_AAT_DATA + "/" + MAPS_DIR);
-            final Foc maps3 = f.child(ORUX_MAPS_DIR);
-
-            add_r(list, maps1);
-            add_subdirectories_r(list, maps1);
-
-            add_r(list, maps2);
-            add_subdirectories_r(list, maps2);
-
-            add_r(list, maps3);
-        }
-        */
-
-
         final ArrayList<Foc> dirs = getWellKnownMapDirs();
 
         for (Foc dir : dirs) {
