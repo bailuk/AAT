@@ -26,6 +26,8 @@ import ch.bailu.aat.views.NodeListView;
 import ch.bailu.aat.views.OsmApiEditorView;
 import ch.bailu.aat.views.PercentageLayout;
 import ch.bailu.aat.views.bar.MainControlBar;
+import ch.bailu.aat.views.description.LabelTextView;
+import ch.bailu.aat.views.preferences.TitleView;
 
 
 public abstract class AbsOsmApiActivity extends ActivityContext implements OnClickListener {
@@ -39,7 +41,7 @@ public abstract class AbsOsmApiActivity extends ActivityContext implements OnCli
     private NodeListView       list;
     private OsmApiHelper       osmApi;
 
-    private OsmApiEditorView   editorView;
+    protected OsmApiEditorView   editorView;
 
 
     private final BroadcastReceiver onFileTaskChanged = new BroadcastReceiver() {
@@ -111,18 +113,22 @@ public abstract class AbsOsmApiActivity extends ActivityContext implements OnCli
 
 
     protected View createMainContentView() {
-        editorView = new OsmApiEditorView(this, osmApi);
-        list = new NodeListView(getServiceContext(), this);
-
         PercentageLayout percentage = new PercentageLayout(this);
-        percentage.add(editorView, 30);
-        percentage.add(list, 70);
+        percentage.add(createEditorView(), 30);
+        percentage.add(createNodeListView(), 70);
 
         return percentage;
     }
 
+    protected View createNodeListView() {
+        list = new NodeListView(getServiceContext(), this);
+        return list;
+    }
 
-
+    private View createEditorView() {
+        editorView = new OsmApiEditorView(this, osmApi);
+        return editorView;
+    }
 
 
     private MainControlBar createControlBar() {
@@ -160,7 +166,7 @@ public abstract class AbsOsmApiActivity extends ActivityContext implements OnCli
         if (osmApi.isTaskRunning(getServiceContext())) {
             osmApi.stopTask(getServiceContext());
         } else {
-            osmApi.startTask(getServiceContext(), editorView.toString());
+            osmApi.startTask(getServiceContext());
         }
     }
 

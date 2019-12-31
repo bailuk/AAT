@@ -11,7 +11,12 @@ public class NominatimActivity extends AbsOsmApiActivity {
 
     @Override
     public OsmApiHelper getApiHelper(BoundingBoxE6 boundingBox) throws SecurityException, IOException {
-        return new NominatimApi(this, boundingBox);
+        return new NominatimApi(this, boundingBox) {
+            @Override
+            protected String getQueryString() {
+                return editorView.toString();
+            }
+        };
     }
 
     @Override

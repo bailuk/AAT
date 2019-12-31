@@ -25,7 +25,7 @@ import ch.bailu.aat.views.preferences.SolidStringView;
 
 public class PoiView  extends LinearLayout implements SharedPreferences.OnSharedPreferenceChangeListener {
 
-    private final static String FILTER_KEY = "PoiView";
+    private final static String FILTER_KEY = PoiView.class.getSimpleName();
 
     private EditText filterView;
     private PoiListView listView;
@@ -50,7 +50,7 @@ public class PoiView  extends LinearLayout implements SharedPreferences.OnShared
         addView(createPoiList());
 
         readList();
-        listView.onChanged();
+        filterList(filterView.getText().toString());
     }
 
 
@@ -122,8 +122,7 @@ public class PoiView  extends LinearLayout implements SharedPreferences.OnShared
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                list.filter(charSequence.toString());
-                listView.onChanged();
+                filterList(charSequence.toString());
             }
 
             @Override
@@ -134,6 +133,11 @@ public class PoiView  extends LinearLayout implements SharedPreferences.OnShared
 
         EditTextTool layout = new EditTextTool(filterView, LinearLayout.VERTICAL);
         return layout;
+    }
+
+    private void filterList(String string) {
+        list.filter(string);
+        listView.onChanged();
     }
 
 

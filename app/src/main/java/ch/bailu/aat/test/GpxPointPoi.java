@@ -41,7 +41,7 @@ public class GpxPointPoi implements GpxPointInterface {
         int i=0;
         for(Tag tag : tags) {
             newTags[i++] =
-                    new GpxAttributesStatic.Tag(Keys.toIndex(tag.key.replace(':', '_')), tag.value);
+                    new GpxAttributesStatic.Tag(Keys.toIndex(tag.key), tag.value);
         }
         return new GpxAttributesStatic(newTags);
     }

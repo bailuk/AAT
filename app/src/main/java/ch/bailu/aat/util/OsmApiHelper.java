@@ -23,7 +23,7 @@ public abstract class OsmApiHelper {
         public abstract String getFileExtension();
 
         public abstract String getUrlPreview(String s);
-        public abstract void startTask(ServiceContext scontext, String query);
+        public abstract void startTask(ServiceContext scontext);
 
 
         public Foc getResultFile() {

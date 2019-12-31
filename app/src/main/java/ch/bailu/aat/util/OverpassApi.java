@@ -12,7 +12,7 @@ import ch.bailu.aat.coordinates.BoundingBoxE6;
 import ch.bailu.aat.util.fs.AppDirectory;
 import ch.bailu.util_java.foc.Foc;
 
-public class OverpassApi extends DownloadApi {
+public abstract class OverpassApi extends DownloadApi {
 
     public final String NAME;
     public final static String EXT=".osm";

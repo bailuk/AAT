@@ -3,6 +3,7 @@ package ch.bailu.aat.gpx.writer;
 import java.io.IOException;
 
 import ch.bailu.aat.gpx.GpxConstants;
+import ch.bailu.aat.gpx.OsmConstants;
 import ch.bailu.aat.gpx.interfaces.GpxPointInterface;
 import ch.bailu.aat.services.dem.tile.ElevationProvider;
 import ch.bailu.util_java.foc.Foc;
@@ -36,10 +37,15 @@ public class WayWriter extends GpxWriter {
         writeBeginElementEnd();
 
         writeAltitude(tp);
-        writeAttributesGpxStyle(tp);
+        writeAttributes(tp);
 
         writeEndElement(GpxConstants.QNAME_WAY_POINT);
         writeString("\n");
+    }
+
+
+    public void writeAttributes(GpxPointInterface tp) throws IOException {
+        writeAttributesGpxStyle(tp);
     }
 
 

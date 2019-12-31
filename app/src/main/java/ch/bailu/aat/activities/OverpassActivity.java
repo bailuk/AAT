@@ -19,6 +19,7 @@ import ch.bailu.aat.views.osm_features.OnSelected;
 
 public class OverpassActivity extends AbsOsmApiActivity  {
 
+    private final static String KEY = OverpassActivity.class.getSimpleName();
 
     private MapFeaturesView osmFeatures;
     private MultiView multiView = null;
@@ -36,7 +37,7 @@ public class OverpassActivity extends AbsOsmApiActivity  {
             return mainView;
         } else {
 
-            multiView = new MultiView(this, OverpassActivity.class.getSimpleName());
+            multiView = new MultiView(this, KEY);
             multiView.add(super.createMainContentView());
             multiView.add(createOsmFeaturesView());
             return multiView;
@@ -82,7 +83,12 @@ public class OverpassActivity extends AbsOsmApiActivity  {
     @Override
     public OsmApiHelper getApiHelper(BoundingBoxE6 boundingBox)
             throws SecurityException, IOException {
-        return new OverpassApi(this,boundingBox);
+        return new OverpassApi(this, boundingBox) {
+            @Override
+            protected String getQueryString() {
+                return editorView.toString();
+            }
+        };
     }
 
 

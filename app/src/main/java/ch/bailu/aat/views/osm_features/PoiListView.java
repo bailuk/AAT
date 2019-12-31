@@ -29,7 +29,6 @@ public class PoiListView extends ListView {
         list = l;
         final PoiListView.Adapter listAdapter = new PoiListView.Adapter();
 
-
         AppTheme.themifyList(this);
 
         setAdapter(listAdapter);

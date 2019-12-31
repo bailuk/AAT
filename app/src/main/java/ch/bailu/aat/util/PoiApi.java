@@ -17,6 +17,7 @@ import java.util.Collection;
 
 import ch.bailu.aat.coordinates.BoundingBoxE6;
 import ch.bailu.aat.gpx.writer.WayWriter;
+import ch.bailu.aat.gpx.writer.WayWriterOsmTags;
 import ch.bailu.aat.preferences.map.SolidPoiDatabase;
 import ch.bailu.aat.services.InsideContext;
 import ch.bailu.aat.services.ServiceContext;
@@ -76,26 +77,23 @@ public abstract class PoiApi extends OsmApiHelper {
 
 
     @Override
-    public void startTask(ServiceContext scontext, String query) {
+    public void startTask(ServiceContext scontext) {
 
         final ArrayList<PoiCategory> categories = getCategories();
-
         final String poiDatabase = new SolidPoiDatabase(scontext.getContext()).getValueAsString();
 
-        if (categories.size() > 0) {
-            new InsideContext(scontext) {
-                @Override
-                public void run() {
-                    task.stopProcessing();
-                    task = new PoiToGpxTask(getResultFile(),
-                            bounding.toBoundingBox(),
-                            categories,
-                            poiDatabase);
-                    scontext.getBackgroundService().process(task);
+        new InsideContext(scontext) {
+            @Override
+            public void run() {
+                task.stopProcessing();
+                task = new PoiToGpxTask(getResultFile(),
+                        bounding.toBoundingBox(),
+                        categories,
+                        poiDatabase);
+                scontext.getBackgroundService().process(task);
 
-                }
-            };
-        }
+            }
+        };
     }
 
     protected abstract ArrayList<PoiCategory> getCategories();
@@ -108,7 +106,10 @@ public abstract class PoiApi extends OsmApiHelper {
         private final String poiDatabase;
         private final ArrayList<PoiCategory> categories;
 
-        public PoiToGpxTask(Foc result, BoundingBox b, ArrayList<PoiCategory> c, String poiDb) {
+        public PoiToGpxTask(Foc result,
+                            BoundingBox b,
+                            ArrayList<PoiCategory> c,
+                            String poiDb) {
             super(result);
             poiDatabase = poiDb;
             bounding = b;
@@ -158,7 +159,7 @@ public abstract class PoiApi extends OsmApiHelper {
 
 
         private void writeGpxFile(Collection<PointOfInterest> pois) throws IOException {
-            WayWriter writer = new WayWriter(getFile());
+            WayWriter writer = new WayWriterOsmTags(getFile());
 
             writer.writeHeader(System.currentTimeMillis());
 

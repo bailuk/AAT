@@ -20,6 +20,7 @@ import ch.bailu.aat.views.osm_features.PoiView;
 
 public class PoiActivity extends AbsOsmApiActivity {
 
+    private final static String KEY = PoiActivity.class.getSimpleName();
     private MultiView multiView;
     private PoiView poiView;
 
@@ -49,8 +50,8 @@ public class PoiActivity extends AbsOsmApiActivity {
             return mainView;
         } else {
 
-            multiView = new MultiView(this, OverpassActivity.class.getSimpleName());
-            multiView.add(super.createMainContentView());
+            multiView = new MultiView(this, KEY);
+            multiView.add(super.createNodeListView());
             multiView.add(createPoiListView());
 
             return multiView;
