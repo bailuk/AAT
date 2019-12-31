@@ -38,7 +38,7 @@ public abstract class DownloadApi extends OsmApiHelper {
 
                 return size;
             } catch (Exception e) {
-                logError(e);
+                setException(e);
                 return 1;
             }
         }

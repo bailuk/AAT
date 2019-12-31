@@ -6,9 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.LinearLayout;
-
-import org.mapsforge.map.rendertheme.renderinstruction.Line;
 
 import java.io.IOException;
 
@@ -30,8 +27,6 @@ import ch.bailu.aat.views.NodeListView;
 import ch.bailu.aat.views.OsmApiEditorView;
 import ch.bailu.aat.views.PercentageLayout;
 import ch.bailu.aat.views.bar.MainControlBar;
-import ch.bailu.aat.views.description.LabelTextView;
-import ch.bailu.aat.views.preferences.TitleView;
 
 
 public abstract class AbsOsmApiActivity extends ActivityContext implements OnClickListener {
@@ -43,15 +38,17 @@ public abstract class AbsOsmApiActivity extends ActivityContext implements OnCli
     private View               fileMenu;
 
     private NodeListView       list;
-    protected OsmApiHelper       osmApi;
+    protected OsmApiHelper     osmApi;
 
     protected OsmApiEditorView   editorView;
+
+    private ErrorView downloadError;
 
 
     private final BroadcastReceiver onFileTaskChanged = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            setDownloadBusy();
+            setDownloadStatus();
         }
 
     };
@@ -83,7 +80,9 @@ public abstract class AbsOsmApiActivity extends ActivityContext implements OnCli
 
         ContentView contentView = new ContentView(this);
         contentView.add(bar);
-        contentView.add(errorView());
+        contentView.add(downloadErrorView());
+        contentView.add(fileErrorView());
+
         contentView.add(createMainContentView());
 
         addDownloadButton(bar);
@@ -93,7 +92,13 @@ public abstract class AbsOsmApiActivity extends ActivityContext implements OnCli
         return contentView;
     }
 
-    private View errorView() {
+    private View downloadErrorView() {
+        downloadError = new ErrorView(this);
+
+        return downloadError;
+    }
+
+    private View fileErrorView() {
         final ErrorView fileError = new ErrorView(this);
 
         addTarget((iid, info) -> {
@@ -111,13 +116,15 @@ public abstract class AbsOsmApiActivity extends ActivityContext implements OnCli
 
         ToolTip.set(download, R.string.tt_nominatim_query);
 
-        setDownloadBusy();
+        setDownloadStatus();
     }
 
 
-    private void setDownloadBusy() {
+    private void setDownloadStatus() {
         if (osmApi.isTaskRunning(getServiceContext())) downloadBusy.startWaiting();
         else downloadBusy.stopWaiting();
+
+        downloadError.displayError(osmApi.getException());
 
     }
 
