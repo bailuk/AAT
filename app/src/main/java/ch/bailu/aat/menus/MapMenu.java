@@ -10,6 +10,7 @@ import ch.bailu.aat.activities.ActivitySwitcher;
 import ch.bailu.aat.activities.PreferencesActivity;
 import ch.bailu.aat.map.MapContext;
 import ch.bailu.aat.preferences.map.SolidMapTileStack;
+import ch.bailu.aat.preferences.map.SolidMapsForgeMapFile;
 import ch.bailu.aat.preferences.map.SolidOverlayFileList;
 import ch.bailu.aat.preferences.map.SolidRenderTheme;
 import ch.bailu.aat.views.description.MultiView;
@@ -17,7 +18,7 @@ import ch.bailu.aat.views.preferences.SolidCheckListDialog;
 import ch.bailu.aat.views.preferences.SolidStringDialog;
 
 public final class MapMenu extends AbsMenu {
-    private MenuItem map, overlays, reload, theme, preferences;
+    private MenuItem stack, overlays, reload, theme, preferences, map;
 
     private final MapContext mcontext;
 
@@ -28,13 +29,13 @@ public final class MapMenu extends AbsMenu {
 
     @Override
     public void inflate(Menu menu) {
-        map = menu.add(R.string.p_map);
+        stack = menu.add(R.string.p_map);
 
         overlays = menu.add(R.string.p_overlay);
         overlays.setIcon(R.drawable.view_paged_inverse);
 
-
-        theme = menu.add(R.string.p_mapsforge_theme);
+        map = menu.add(new SolidMapsForgeMapFile(mcontext.getContext()).getLabel());
+        theme = menu.add(new SolidRenderTheme(mcontext.getContext()).getLabel());
 
         preferences = menu.add(R.string.intro_settings);
 
@@ -64,7 +65,7 @@ public final class MapMenu extends AbsMenu {
     public boolean onItemClick(MenuItem item) {
         final Context c = mcontext.getContext();
 
-        if (item == map) {
+        if (item == stack) {
             new SolidCheckListDialog(new SolidMapTileStack(c));
         } else if (item ==reload) {
                 mcontext.getMapView().reDownloadTiles();
@@ -73,6 +74,8 @@ public final class MapMenu extends AbsMenu {
             new SolidCheckListDialog(new SolidOverlayFileList(c));
         } else if (item == theme) {
             new SolidStringDialog(new SolidRenderTheme(c));
+        } else if (item == map) {
+            new SolidStringDialog(new SolidMapsForgeMapFile(c));
         } else if (item == preferences) {
             MultiView.storeActive(c, PreferencesActivity.SOLID_KEY, 1);
             ActivitySwitcher.start(mcontext.getContext(), PreferencesActivity.class);

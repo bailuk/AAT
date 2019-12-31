@@ -15,7 +15,7 @@ public class SolidMapsForgeMapFile extends SolidMapsForgeDirectory {
 
     @Override
     public String getLabel() {
-        return ToDo.translate("Offline-map file");
+        return ToDo.translate("Offline map");
     }
 
     @Override
