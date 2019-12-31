@@ -7,16 +7,18 @@ import java.io.UnsupportedEncodingException;
 import ch.bailu.aat.services.InsideContext;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.background.BackgroundService;
+import ch.bailu.aat.services.background.BackgroundTask;
 import ch.bailu.aat.services.background.DownloadTask;
 import ch.bailu.aat.util.ui.AppLog;
 import ch.bailu.util_java.foc.Foc;
 
 public abstract class DownloadApi extends OsmApiHelper {
 
+    private BackgroundTask task = BackgroundTask.NULL;
+
     private static class ApiQueryTask extends DownloadTask {
         private final String queryString;
         private final Foc queryFile;
-
 
         public ApiQueryTask(Context c, String source, Foc target, String qs, Foc qf) {
             super(c, source, target);
@@ -61,7 +63,7 @@ public abstract class DownloadApi extends OsmApiHelper {
                     BackgroundService background = scontext.getBackgroundService();
 
                     final String query = getQueryString();
-                    ApiQueryTask task = new ApiQueryTask(
+                    task = new ApiQueryTask(
                             scontext.getContext(),
                             getUrl(query),
                             getResultFile(),
@@ -76,4 +78,11 @@ public abstract class DownloadApi extends OsmApiHelper {
     }
 
     protected abstract String getQueryString();
+
+
+    @Override
+    public Exception getException() {
+        return task.getException();
+    }
+
 }

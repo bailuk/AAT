@@ -28,22 +28,24 @@ import ch.bailu.aat.util.fs.AppDirectory;
 import ch.bailu.util_java.foc.Foc;
 
 public abstract class PoiApi extends OsmApiHelper {
-    public final static String NAME="MapsForge Poi (Offline)";
+
+    public final static String NAME="MapsForge POI";
     public final static String EXT=".gpx";
-
-    private final static int LIMIT = 1000;
-
+    private final static int LIMIT = 10000;
 
     private final Foc directory;
-
     private final BoundingBoxE6 bounding;
 
     private BackgroundTask task = BackgroundTask.NULL;
+
+
 
     public PoiApi(Context context, BoundingBoxE6 box) {
         bounding = box;
         directory = AppDirectory.getDataDirectory(context, AppDirectory.DIR_POI);
     }
+
+
     @Override
     public String getApiName() {
         return NAME;
@@ -169,4 +171,11 @@ public abstract class PoiApi extends OsmApiHelper {
             writer.close();
         }
     }
+
+
+    @Override
+    public Exception getException() {
+        return task.getException();
+    }
+
 }

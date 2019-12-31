@@ -28,6 +28,7 @@ public class PoiActivity extends AbsOsmApiActivity {
     @Override
     public OsmApiHelper getApiHelper(BoundingBoxE6 boundingBox) throws SecurityException, IOException {
         return new PoiApi(this, boundingBox) {
+
             @Override
             protected ArrayList<PoiCategory> getCategories() {
                 return poiView.getCategories();

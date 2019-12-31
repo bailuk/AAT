@@ -6,9 +6,7 @@ import java.util.ArrayList;
 
 import ch.bailu.aat.preferences.SolidFile;
 import ch.bailu.aat.util.ToDo;
-import ch.bailu.aat.util.ui.AppDensity;
 import ch.bailu.util_java.foc.Foc;
-import ch.bailu.util_java.util.Objects;
 
 public class SolidPoiDatabase extends SolidFile {
 
@@ -41,22 +39,4 @@ public class SolidPoiDatabase extends SolidFile {
 
         return list;
     }
-
-/*
-    public void setToValid() {
-        ArrayList<String> list = new ArrayList<>(5);
-
-        list = buildSelection(list);
-
-        String current = getValueAsString();
-
-        for (String e : list) {
-            if (Objects.equals(e, current)) return;
-        }
-
-        if (list.size() > 0) setValue(list.get(0));
-    }
- */
-
-
 }

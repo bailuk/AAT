@@ -21,6 +21,7 @@ public abstract class OsmApiHelper {
         public abstract String getUrlStart();
         public abstract Foc getBaseDirectory();
         public abstract String getFileExtension();
+        public abstract Exception getException();
 
         public abstract String getUrlPreview(String s);
         public abstract void startTask(ServiceContext scontext);
