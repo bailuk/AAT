@@ -42,8 +42,7 @@ public abstract class PoiApi extends OsmApiHelper {
 
     public PoiApi(Context context, BoundingBoxE6 box) {
         bounding = box;
-        directory = AppDirectory.getDataDirectory(context, AppDirectory.DIR_NOMINATIM);
-
+        directory = AppDirectory.getDataDirectory(context, AppDirectory.DIR_POI);
     }
     @Override
     public String getApiName() {

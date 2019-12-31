@@ -17,6 +17,7 @@ import ch.bailu.aat.views.PercentageLayout;
 import ch.bailu.aat.views.bar.MainControlBar;
 import ch.bailu.aat.views.description.MultiView;
 import ch.bailu.aat.views.osm_features.PoiView;
+import ch.bailu.aat.views.preferences.TitleView;
 
 public class PoiActivity extends AbsOsmApiActivity {
 
@@ -35,15 +36,25 @@ public class PoiActivity extends AbsOsmApiActivity {
     }
 
 
+    @Override
+    protected View createMainContentView() {
+        LinearLayout linear = new LinearLayout(this);
+
+        linear.setOrientation(LinearLayout.VERTICAL);
+        linear.addView(new TitleView(this, osmApi.getApiName()));
+        linear.addView(createNodeListView());
+
+        return linear;
+    }
 
 
     @Override
-    public View createMainContentView() {
+    protected View createNodeListView() {
         if (AppLayout.isTablet(this)) {
             PercentageLayout mainView = new PercentageLayout(this);
             mainView.setOrientation(LinearLayout.HORIZONTAL);
 
-            mainView.add(super.createMainContentView(),50);
+            mainView.add(super.createNodeListView(),50);
             mainView.add(createPoiListView(), 50);
 
 

@@ -13,32 +13,31 @@ import ch.bailu.aat.util.ui.AppTheme;
 import ch.bailu.aat.views.PercentageLayout;
 import ch.bailu.aat.views.bar.MainControlBar;
 import ch.bailu.aat.views.description.MultiView;
-import ch.bailu.aat.views.osm_features.MapFeaturesListView;
-import ch.bailu.aat.views.osm_features.MapFeaturesView;
+import ch.bailu.aat.views.osm_features.OsmFeaturesView;
 import ch.bailu.aat.views.osm_features.OnSelected;
 
 public class OverpassActivity extends AbsOsmApiActivity  {
 
     private final static String KEY = OverpassActivity.class.getSimpleName();
 
-    private MapFeaturesView osmFeatures;
+    private OsmFeaturesView osmFeatures;
     private MultiView multiView = null;
 
 
     @Override
-    public View createMainContentView() {
+    public View createNodeListView() {
         if (AppLayout.isTablet(this)) {
             final PercentageLayout mainView = new PercentageLayout(this);
             mainView.setOrientation(LinearLayout.HORIZONTAL);
 
-            mainView.add(super.createMainContentView(),50);
+            mainView.add(super.createNodeListView(),50);
             mainView.add(createOsmFeaturesView(), 50);
 
             return mainView;
         } else {
 
             multiView = new MultiView(this, KEY);
-            multiView.add(super.createMainContentView());
+            multiView.add(super.createNodeListView());
             multiView.add(createOsmFeaturesView());
             return multiView;
         }
@@ -46,7 +45,7 @@ public class OverpassActivity extends AbsOsmApiActivity  {
     }
 
     private View createOsmFeaturesView() {
-        osmFeatures = new MapFeaturesView(getServiceContext());
+        osmFeatures = new OsmFeaturesView(getServiceContext());
         osmFeatures.setOnTextSelected((e, action, variant) -> {
             if (action == OnSelected.FILTER) {
                 osmFeatures.setFilterText(e.getSummaryKey());
@@ -54,7 +53,7 @@ public class OverpassActivity extends AbsOsmApiActivity  {
             } else if (action == OnSelected.EDIT){
                 insertLine(variant);
 
-                if (multiView != null) multiView.setNext();
+                //if (multiView != null) multiView.setNext();
 
             } else if (action == OnSelected.SHOW) {
 

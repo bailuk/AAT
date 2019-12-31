@@ -27,7 +27,7 @@ import ch.bailu.aat.views.EditTextTool;
 import ch.bailu.aat.views.preferences.SolidCheckBox;
 import ch.bailu.aat.views.preferences.TitleView;
 
-public class MapFeaturesView extends LinearLayout implements SharedPreferences.OnSharedPreferenceChangeListener {
+public class OsmFeaturesView extends LinearLayout implements SharedPreferences.OnSharedPreferenceChangeListener {
 
     private final static String FILTER_KEY="FilterView";
 
@@ -56,7 +56,7 @@ public class MapFeaturesView extends LinearLayout implements SharedPreferences.O
 
 
 
-    public MapFeaturesView(ServiceContext sc) {
+    public OsmFeaturesView(ServiceContext sc) {
         super(sc.getContext());
         scontext = sc;
 
@@ -64,7 +64,7 @@ public class MapFeaturesView extends LinearLayout implements SharedPreferences.O
         slist = new SolidOsmFeaturesList(getContext());
 
         setOrientation(VERTICAL);
-        addView(createHeader());
+        //addView(createHeader());
         addView(createFilterView());
         addView(createFeatureList());
     }

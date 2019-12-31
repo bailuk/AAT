@@ -31,9 +31,9 @@ public class AppDirectory  {
     public static final String DIR_OVERLAY = "overlay";
     public static final String DIR_IMPORT = "import";
 
-    public static final String DIR_NOMINATIM = "nominatim";
-
-    public static final String DIR_OVERPASS = "overpass";
+    public static final String DIR_NOMINATIM = "query/nominatim";
+    public static final String DIR_OVERPASS = "query/overpass";
+    public static final String DIR_POI = "query/poi";
 
 
     public static final String DIR_TEST = "test";

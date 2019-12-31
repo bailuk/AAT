@@ -6,6 +6,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.LinearLayout;
+
+import org.mapsforge.map.rendertheme.renderinstruction.Line;
 
 import java.io.IOException;
 
@@ -21,6 +24,7 @@ import ch.bailu.aat.util.TextBackup;
 import ch.bailu.aat.util.ui.ToolTip;
 import ch.bailu.aat.views.BusyViewControl;
 import ch.bailu.aat.views.ContentView;
+import ch.bailu.aat.views.ErrorView;
 import ch.bailu.aat.views.MyImageButton;
 import ch.bailu.aat.views.NodeListView;
 import ch.bailu.aat.views.OsmApiEditorView;
@@ -39,7 +43,7 @@ public abstract class AbsOsmApiActivity extends ActivityContext implements OnCli
     private View               fileMenu;
 
     private NodeListView       list;
-    private OsmApiHelper       osmApi;
+    protected OsmApiHelper       osmApi;
 
     protected OsmApiEditorView   editorView;
 
@@ -63,6 +67,7 @@ public abstract class AbsOsmApiActivity extends ActivityContext implements OnCli
             e.printStackTrace();
         }
 
+
         setContentView(createContentView());
 
         addSource(new CustomFileSource(getServiceContext(), osmApi.getResultFile().getPath()));
@@ -73,12 +78,12 @@ public abstract class AbsOsmApiActivity extends ActivityContext implements OnCli
     }
 
 
-
     private View createContentView()  {
         MainControlBar bar = createControlBar();
 
         ContentView contentView = new ContentView(this);
         contentView.add(bar);
+        contentView.add(errorView());
         contentView.add(createMainContentView());
 
         addDownloadButton(bar);
@@ -86,6 +91,15 @@ public abstract class AbsOsmApiActivity extends ActivityContext implements OnCli
         addButtons(bar);
 
         return contentView;
+    }
+
+    private View errorView() {
+        final ErrorView fileError = new ErrorView(this);
+
+        addTarget((iid, info) -> {
+            fileError.displayError(getServiceContext(), info.getFile());
+        }, InfoID.FILEVIEW);
+        return fileError;
     }
 
 
@@ -114,8 +128,8 @@ public abstract class AbsOsmApiActivity extends ActivityContext implements OnCli
 
     protected View createMainContentView() {
         PercentageLayout percentage = new PercentageLayout(this);
-        percentage.add(createEditorView(), 30);
-        percentage.add(createNodeListView(), 70);
+        percentage.add(createEditorView(), 20);
+        percentage.add(createNodeListView(), 80);
 
         return percentage;
     }
@@ -140,8 +154,8 @@ public abstract class AbsOsmApiActivity extends ActivityContext implements OnCli
     }
 
 
-    public abstract OsmApiHelper getApiHelper(BoundingBoxE6 boundingBox) throws SecurityException, IOException;
-    public abstract void addCustomButtons(MainControlBar bar);
+    protected abstract OsmApiHelper getApiHelper(BoundingBoxE6 boundingBox) throws SecurityException, IOException;
+    protected abstract void addCustomButtons(MainControlBar bar);
 
 
     @Override
@@ -150,12 +164,7 @@ public abstract class AbsOsmApiActivity extends ActivityContext implements OnCli
             download();
 
         } else if (v == fileMenu) {
-            try {
-                showFileMenu(v);
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+             showFileMenu(v);
         }
 
 
@@ -171,17 +180,27 @@ public abstract class AbsOsmApiActivity extends ActivityContext implements OnCli
     }
 
 
-    private void showFileMenu(View parent) throws IOException {
-        final String query = TextBackup.read(osmApi.getQueryFile());
-        final String prefix = OsmApiHelper.getFilePrefix(query);
-        final String extension = osmApi.getFileExtension();
+    private void showFileMenu(View parent) {
+
+        final String targetPrefix = getTargetFilePrefix();
+        final String targetExtension = osmApi.getFileExtension();
 
         new ResultFileMenu(this, osmApi.getResultFile(),
-                prefix, extension).showAsPopup(this, parent);
+                targetPrefix, targetExtension).showAsPopup(this, parent);
+    }
+
+    private String getTargetFilePrefix() {
+        try {
+            final String query = TextBackup.read(osmApi.getQueryFile());
+            return OsmApiHelper.getFilePrefix(query);
+
+        } catch (Exception e) {
+            return OsmApiHelper.getFilePrefix("");
+        }
     }
 
 
-    public void insertLine(String s) {
+    protected void insertLine(String s) {
         editorView.insertLine(s);
     }
 

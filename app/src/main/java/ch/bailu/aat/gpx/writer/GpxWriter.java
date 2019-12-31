@@ -1,5 +1,7 @@
 package ch.bailu.aat.gpx.writer;
 
+import android.text.TextUtils;
+
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
@@ -101,7 +103,7 @@ public abstract class GpxWriter {
         writeString(" ");
         writeString(pname);
         writeString("=\"");
-        writeString(pvalue);
+        writeString(TextUtils.htmlEncode(pvalue));
         writeString("\"");
     }
 
