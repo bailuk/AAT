@@ -62,8 +62,8 @@ public class WayParser extends TagParser {
     @Override
     protected void parsed(XmlPullParser parser, Scanner scanner) throws IOException {
         if (scanner.referencer.resolved > 0) {
-            Util.wayPointParsed(scanner);
             rememberRelation(scanner);
+            Util.wayPointParsed(scanner);
         }
     }
 
