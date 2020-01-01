@@ -26,9 +26,14 @@ public abstract class OverpassApi extends DownloadApi {
 
 
     public OverpassApi(Context context, BoundingBoxE6 b) {
-        NAME=context.getString(R.string.query_overpass);
+        NAME=getName(context);
         bounding = toString(b);
         directory = AppDirectory.getDataDirectory(context, AppDirectory.DIR_OVERPASS);
+    }
+
+
+    public static String getName(Context context) {
+        return context.getString(R.string.query_overpass);
     }
 
 

@@ -29,7 +29,7 @@ import ch.bailu.util_java.foc.Foc;
 
 public abstract class PoiApi extends OsmApiConfiguration {
 
-    public final static String NAME="MapsForge POI";
+    public final static String NAME = ToDo.translate("Offline POI");
     public final static String EXT=".gpx";
     public static final String SELECTED = "selected.txt";
 
@@ -82,7 +82,7 @@ public abstract class PoiApi extends OsmApiConfiguration {
     @Override
     public void startTask(ServiceContext scontext) {
 
-        final ArrayList<PoiCategory> categories = getCategories();
+        final ArrayList<PoiCategory> categories = getSelectedCategories();
         final String poiDatabase = new SolidPoiDatabase(scontext.getContext()).getValueAsString();
 
         new InsideContext(scontext) {
@@ -99,7 +99,7 @@ public abstract class PoiApi extends OsmApiConfiguration {
         };
     }
 
-    protected abstract ArrayList<PoiCategory> getCategories();
+    protected abstract ArrayList<PoiCategory> getSelectedCategories();
 
 
     private static class PoiToGpxTask extends FileTask {

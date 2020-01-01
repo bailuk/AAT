@@ -11,7 +11,7 @@ import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.map.MapContext;
 import ch.bailu.aat.menus.LocationMenu;
 import ch.bailu.aat.menus.MapMenu;
-import ch.bailu.aat.menus.MapSearchMenu;
+import ch.bailu.aat.menus.MapQueryMenu;
 import ch.bailu.aat.preferences.SolidIndexList;
 import ch.bailu.aat.preferences.map.SolidLegend;
 import ch.bailu.aat.preferences.map.SolidMapGrid;
@@ -68,7 +68,7 @@ public final class InformationBarLayer extends ControlBarLayer {
             new MapMenu(mcontext).showAsPopup(mcontext.getContext(),v);
 
         } else if (v==search) {
-            new MapSearchMenu(mcontext).showAsPopup(mcontext.getContext(), v);
+            new MapQueryMenu(mcontext).showAsPopup(mcontext.getContext(), v);
 
         } else if (v == poi) {
             ActivitySwitcher.start(mcontext.getContext(),

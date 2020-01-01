@@ -5,7 +5,6 @@ import android.widget.LinearLayout;
 
 import org.mapsforge.poi.storage.PoiCategory;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 import ch.bailu.aat.coordinates.BoundingBoxE6;
@@ -30,8 +29,9 @@ public class PoiActivity extends AbsOsmApiActivity {
         return new PoiApi(this, boundingBox) {
 
             @Override
-            protected ArrayList<PoiCategory> getCategories() {
-                return poiView.getCategories();
+            protected ArrayList<PoiCategory> getSelectedCategories() {
+                poiView.saveSelected(getQueryFile());
+                return poiView.getSelectedCategories();
             }
         };
     }

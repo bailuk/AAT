@@ -11,9 +11,12 @@ import ch.bailu.aat.activities.NominatimActivity;
 import ch.bailu.aat.activities.OverpassActivity;
 import ch.bailu.aat.activities.PoiActivity;
 import ch.bailu.aat.map.MapContext;
+import ch.bailu.aat.util.NominatimApi;
+import ch.bailu.aat.util.OverpassApi;
+import ch.bailu.aat.util.PoiApi;
 import ch.bailu.aat.util.ToDo;
 
-public class MapSearchMenu extends AbsMenu {
+public class MapQueryMenu extends AbsMenu {
 
     private final MapContext mcontext;
     private final Context context;
@@ -22,7 +25,7 @@ public class MapSearchMenu extends AbsMenu {
     private MenuItem nominatim, overpass, poi;
 
 
-    public MapSearchMenu(MapContext m) {
+    public MapQueryMenu(MapContext m) {
         mcontext = m;
         context = m.getContext();
     }
@@ -33,9 +36,9 @@ public class MapSearchMenu extends AbsMenu {
     @Override
     public void inflate(Menu menu) {
 
-        nominatim = menu.add(R.string.intro_nominatim);
-        overpass = menu.add(R.string.query_overpass);
-        poi = menu.add(ToDo.translate("Poi (offline)"));
+        nominatim = menu.add(NominatimApi.NAME);
+        overpass = menu.add(OverpassApi.getName(context));
+        poi = menu.add(PoiApi.NAME);
     }
 
     @Override

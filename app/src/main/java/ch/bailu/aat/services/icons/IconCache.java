@@ -7,6 +7,7 @@ import ch.bailu.aat.services.cache.ImageObjectAbstract;
 import ch.bailu.aat.services.cache.LockCache;
 import ch.bailu.aat.services.cache.ObjectHandle;
 import ch.bailu.aat.services.cache.SVGAssetImageObject;
+import ch.bailu.util_java.util.Objects;
 
 public final class IconCache implements Closeable {
     private final LockCache<ImageObjectAbstract> icons = new LockCache<>(20);
@@ -40,7 +41,7 @@ public final class IconCache implements Closeable {
 
     private ImageObjectAbstract get(String id) {
         for (int i = 0; i < icons.size(); i++) {
-            if (id.equals(icons.get(i).toString())) {
+            if (Objects.equals(id, icons.get(i).toString())) {
                 return icons.use(i);
             }
         }

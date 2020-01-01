@@ -162,7 +162,7 @@ public class PoiView  extends LinearLayout implements SharedPreferences.OnShared
     }
 
 
-    public ArrayList<PoiCategory> getCategories() {
+    public ArrayList<PoiCategory> getSelectedCategories() {
         ArrayList<PoiCategory> export = new ArrayList<>(10);
 
         for (int i = 0; i< list.sizeVisible(); i++) {
@@ -184,10 +184,15 @@ public class PoiView  extends LinearLayout implements SharedPreferences.OnShared
     }
 
     private void saveSelected() {
+        saveSelected(selected);
+    }
+
+    public void saveSelected(Foc file) {
         try {
-            new FilterListUtil(list).writeSelected(selected);
+            new FilterListUtil(list).writeSelected(file);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
 }
