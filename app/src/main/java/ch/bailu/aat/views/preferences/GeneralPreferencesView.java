@@ -33,7 +33,6 @@ public class GeneralPreferencesView extends VerticalScrollView {
         add(new SolidTextInputView(new SolidWeight(acontext),
                 SolidTextInputDialog.INTEGER));
 
-        add(new SolidIndexListView(new SolidPostprocessedAutopause(acontext)));
         add(new SolidIndexListView(new SolidPresetCount(acontext)));
         add(new SolidIndexListView( new SolidStatusMessages(acontext)));
 

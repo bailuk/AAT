@@ -8,7 +8,7 @@ import ch.bailu.aat.preferences.SolidIndexList;
 public class SolidPresetCount extends SolidIndexList {
 
     private final static String KEY=SolidPresetCount.class.getSimpleName();
-    private final static int MAX=15;
+    public final static int MAX=15;
     private final static int MIN=3;
     public final static int DEFAULT=5;
 

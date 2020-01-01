@@ -74,7 +74,7 @@ public class AppDirectory  {
 
 
     ///////////////////////////////////////////////////////////////////////////////////////
-    private static final String PRESET_PREFIX = "activity";
+    public static final String PRESET_PREFIX = "activity";
     public static final String PREVIEW_EXTENSION = ".preview";
 
     static public Foc getTrackListDirectory(Context c, int i) {

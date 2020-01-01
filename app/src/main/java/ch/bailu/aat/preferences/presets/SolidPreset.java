@@ -17,6 +17,31 @@ public class SolidPreset extends SolidIndexList {
         super(c, KEY);
     }
 
+
+    public static int getPresetFromFile(Foc file) {
+        int preset = 0;
+        file = file.parent();
+
+        if (file != null && file.isDir()) {
+            String name = file.getName();
+
+            if (name != null) {
+                name = name.replace(AppDirectory.PRESET_PREFIX, "");
+
+                try {
+                    preset = Integer.valueOf(name);
+                    preset = Math.max(preset, 0);
+                    preset = Math.min(preset, SolidPresetCount.MAX);
+                } catch (Exception e) {
+                    preset = 0;
+                }
+            }
+        }
+
+        return preset;
+    }
+
+
     @Override
     public int length() {
         return new SolidPresetCount(getContext()).getValue();
@@ -56,12 +81,12 @@ public class SolidPreset extends SolidIndexList {
 
 
     public Foc getDirectory() {
-    	return AppDirectory.getTrackListDirectory(getContext(),getIndex());
+        return AppDirectory.getTrackListDirectory(getContext(),getIndex());
     }
 
 
     public String getDirectoryName() {
-    	return getDirectory().getPathName();
+        return getDirectory().getPathName();
     }
 
 

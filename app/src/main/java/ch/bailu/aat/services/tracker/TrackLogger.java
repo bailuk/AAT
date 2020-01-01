@@ -14,6 +14,7 @@ import ch.bailu.aat.gpx.interfaces.GpxType;
 import ch.bailu.aat.gpx.writer.GpxListWriter;
 import ch.bailu.aat.preferences.SolidAutopause;
 import ch.bailu.aat.preferences.general.SolidPostprocessedAutopause;
+import ch.bailu.aat.preferences.presets.SolidPreset;
 import ch.bailu.aat.util.fs.AppDirectory;
 import ch.bailu.aat.util.ui.AppLog;
 import ch.bailu.util_java.foc.Foc;
@@ -34,7 +35,7 @@ public final class TrackLogger extends Logger {
         context=c;
         presetIndex=preset;
 
-        track = createTrack(context);
+        track = createTrack(context, presetIndex);
         new TrackCrashRestorer(context, presetIndex);
 
         logFile = AppDirectory.getLogFile(context);
@@ -44,8 +45,8 @@ public final class TrackLogger extends Logger {
         setVisibleTrackSegment(track.getDelta());
     }
 
-    private static GpxList createTrack(Context c) {
-        SolidAutopause spause = new SolidPostprocessedAutopause(c);
+    private static GpxList createTrack(Context c, int presetIndex) {
+        SolidAutopause spause = new SolidPostprocessedAutopause(c, presetIndex);
 
         return new GpxList(GpxType.TRACK, GpxListAttributes.factoryTrack(spause));
     }

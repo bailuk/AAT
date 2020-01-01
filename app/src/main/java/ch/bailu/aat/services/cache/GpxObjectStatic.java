@@ -14,6 +14,7 @@ import ch.bailu.aat.gpx.linked_list.Node;
 import ch.bailu.aat.gpx.xml_parser.GpxListReader;
 import ch.bailu.aat.preferences.SolidAutopause;
 import ch.bailu.aat.preferences.general.SolidPostprocessedAutopause;
+import ch.bailu.aat.preferences.presets.SolidPreset;
 import ch.bailu.aat.services.InsideContext;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.background.FileTask;
@@ -240,7 +241,7 @@ public final class GpxObjectStatic extends GpxObject implements ElevationUpdater
             GpxListReader reader = new GpxListReader(
                     getThreadControl(),
                     getFile(),
-                    getAutoPause(sc));
+                    getAutoPause(sc, SolidPreset.getPresetFromFile(getFile())));
 
             handle.setException(reader.getException());
 
@@ -254,8 +255,8 @@ public final class GpxObjectStatic extends GpxObject implements ElevationUpdater
         }
 
 
-        private AutoPause getAutoPause(ServiceContext sc) {
-            SolidAutopause spause = new SolidPostprocessedAutopause(sc.getContext());
+        private AutoPause getAutoPause(ServiceContext sc, int preset) {
+            SolidAutopause spause = new SolidPostprocessedAutopause(sc.getContext(), preset);
             return new AutoPause.Time(
                     spause.getTriggerSpeed(),
                     spause.getTriggerLevelMillis());

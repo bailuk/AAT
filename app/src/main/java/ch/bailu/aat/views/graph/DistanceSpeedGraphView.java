@@ -19,11 +19,14 @@ import ch.bailu.aat.gpx.attributes.MaxSpeed;
 import ch.bailu.aat.preferences.SolidAutopause;
 import ch.bailu.aat.preferences.general.SolidPostprocessedAutopause;
 import ch.bailu.aat.preferences.general.SolidUnit;
+import ch.bailu.aat.preferences.presets.SolidPreset;
 import ch.bailu.aat.util.ui.AppDensity;
 import ch.bailu.aat.util.ui.AppTheme;
 
 
 public class DistanceSpeedGraphView extends AbsGraphView implements SharedPreferences.OnSharedPreferenceChangeListener {
+
+
 
 
     public DistanceSpeedGraphView(Context context, DispatcherInterface di, int... iid) {
@@ -109,20 +112,25 @@ public class DistanceSpeedGraphView extends AbsGraphView implements SharedPrefer
         private float distanceOfSample=0;
         private long timeOfSample=0;
 
-        final SolidAutopause spause = new SolidPostprocessedAutopause(getContext());
-
-        final AutoPause autoPause = new AutoPause.Time(
-                spause.getTriggerSpeed(),
-                spause.getTriggerLevelMillis());
 
         private final float minDistance;
 
 
         private GpxDistanceWindow window;
 
+        final private AutoPause autoPause;
 
 
         public GraphPainter(GraphPlotter[] p, float md) {
+
+
+            int preset = new SolidPreset(getContext()).getIndex();
+            final SolidAutopause spause = new SolidPostprocessedAutopause(getContext(), preset);
+
+            autoPause = new AutoPause.Time(
+                    spause.getTriggerSpeed(),
+                    spause.getTriggerLevelMillis());
+
             plotter=p;
             minDistance=md*SAMPLE_WIDTH_PIXEL;
 

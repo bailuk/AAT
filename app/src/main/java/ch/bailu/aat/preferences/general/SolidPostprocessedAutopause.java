@@ -9,8 +9,8 @@ public class SolidPostprocessedAutopause extends SolidAutopause {
     protected final static String KEY="pautopause";
 
 
-    public SolidPostprocessedAutopause(Context c) {
-        super(c, KEY, 0);
+    public SolidPostprocessedAutopause(Context c, int preset) {
+        super(c, KEY, preset);
     }
 
 
