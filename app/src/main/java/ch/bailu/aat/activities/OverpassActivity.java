@@ -6,7 +6,7 @@ import android.widget.LinearLayout;
 import java.io.IOException;
 
 import ch.bailu.aat.coordinates.BoundingBoxE6;
-import ch.bailu.aat.util.OsmApiHelper;
+import ch.bailu.aat.util.OsmApiConfiguration;
 import ch.bailu.aat.util.OverpassApi;
 import ch.bailu.aat.util.ui.AppLayout;
 import ch.bailu.aat.util.ui.AppTheme;
@@ -80,8 +80,7 @@ public class OverpassActivity extends AbsOsmApiActivity  {
 
 
     @Override
-    public OsmApiHelper getApiHelper(BoundingBoxE6 boundingBox)
-            throws SecurityException, IOException {
+    public OsmApiConfiguration createApiConfiguration(BoundingBoxE6 boundingBox) {
         return new OverpassApi(this, boundingBox) {
             @Override
             protected String getQueryString() {

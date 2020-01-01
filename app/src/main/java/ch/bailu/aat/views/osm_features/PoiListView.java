@@ -63,7 +63,7 @@ public class PoiListView extends ListView {
                 view = new PoiListEntryView(scontext, onSelected);
             }
 
-            view.set((PoiListEntry) list.get(index));
+            view.set((PoiListEntry) list.getFromVisible(index));
             return view;
         }
 
@@ -81,18 +81,18 @@ public class PoiListView extends ListView {
 
         @Override
         public void onItemClick(AdapterView<?> arg0, View view, int index, long arg3) {
-            onSelected.onSelected(list.get(index), 0,null);
+            onSelected.onSelected(list.getFromVisible(index), 0,null);
         }
 
         @Override
         public Object getItem(int position) {
-            return list.get(position);
+            return list.getFromVisible(position);
         }
 
 
         @Override
         public long getItemId(int position) {
-            return list.get(position).getID();
+            return list.getFromVisible(position).getID();
         }
 
 

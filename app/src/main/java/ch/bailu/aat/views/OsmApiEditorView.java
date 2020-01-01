@@ -7,7 +7,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import ch.bailu.aat.util.OsmApiHelper;
+import ch.bailu.aat.util.OsmApiConfiguration;
 import ch.bailu.aat.views.description.MultiView;
 import ch.bailu.aat.views.preferences.TitleView;
 import ch.bailu.aat.views.preferences.VerticalScrollView;
@@ -19,7 +19,7 @@ public class OsmApiEditorView extends LinearLayout {
     private final MultiView inputMultiView;
 
 
-    public OsmApiEditorView(Context context, OsmApiHelper osmApi) {
+    public OsmApiEditorView(Context context, OsmApiConfiguration osmApi) {
         super(context);
         setOrientation(LinearLayout.VERTICAL);
 
@@ -46,7 +46,7 @@ public class OsmApiEditorView extends LinearLayout {
 
 
 
-    private View createTitle(OsmApiHelper osmApi) {
+    private View createTitle(OsmApiConfiguration osmApi) {
         LinearLayout layout = new LinearLayout(getContext());
         layout.setOrientation(LinearLayout.HORIZONTAL);
 

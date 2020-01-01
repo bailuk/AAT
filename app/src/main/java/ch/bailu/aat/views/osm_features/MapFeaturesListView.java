@@ -66,7 +66,7 @@ public class MapFeaturesListView extends ListView  {
                 view = new MapFeaturesEntryView(scontext, onSelected);
             }
 
-            view.set((MapFeaturesListEntry) list.get(index));
+            view.set((MapFeaturesListEntry) list.getFromVisible(index));
             return view;
         }
 
@@ -84,7 +84,7 @@ public class MapFeaturesListView extends ListView  {
 
         @Override
         public void onItemClick(AdapterView<?> arg0, View view, int index, long arg3) {
-            final MapFeaturesListEntry d = (MapFeaturesListEntry) list.get(index);
+            final MapFeaturesListEntry d = (MapFeaturesListEntry) list.getFromVisible(index);
 
             if (d.isSummary())
                 onSelected.onSelected(d,OnSelected.FILTER, d.getSummaryKey());
@@ -96,13 +96,13 @@ public class MapFeaturesListView extends ListView  {
 
         @Override
         public Object getItem(int position) {
-            return list.get(position);
+            return list.getFromVisible(position);
         }
 
 
         @Override
         public long getItemId(int position) {
-            return list.get(position).getID();
+            return list.getFromVisible(position).getID();
         }
 
 

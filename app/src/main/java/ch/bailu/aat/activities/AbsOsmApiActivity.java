@@ -7,8 +7,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 
-import java.io.IOException;
-
 import ch.bailu.aat.R;
 import ch.bailu.aat.coordinates.BoundingBoxE6;
 import ch.bailu.aat.dispatcher.CustomFileSource;
@@ -16,7 +14,7 @@ import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.menus.ResultFileMenu;
 import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.util.AppIntent;
-import ch.bailu.aat.util.OsmApiHelper;
+import ch.bailu.aat.util.OsmApiConfiguration;
 import ch.bailu.aat.util.TextBackup;
 import ch.bailu.aat.util.ui.ToolTip;
 import ch.bailu.aat.views.BusyViewControl;
@@ -38,7 +36,7 @@ public abstract class AbsOsmApiActivity extends ActivityContext implements OnCli
     private View               fileMenu;
 
     private NodeListView       list;
-    protected OsmApiHelper     osmApi;
+    private OsmApiConfiguration configuration;
 
     protected OsmApiEditorView   editorView;
 
@@ -58,16 +56,12 @@ public abstract class AbsOsmApiActivity extends ActivityContext implements OnCli
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        try {
-            osmApi = getApiHelper(AppIntent.getBoundingBox(getIntent()));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        configuration = createApiConfiguration(AppIntent.getBoundingBox(getIntent()));
 
 
         setContentView(createContentView());
 
-        addSource(new CustomFileSource(getServiceContext(), osmApi.getResultFile().getPath()));
+        addSource(new CustomFileSource(getServiceContext(), configuration.getResultFile().getPath()));
         addTarget(list, InfoID.FILEVIEW);
 
         AppBroadcaster.register(this, onFileTaskChanged,
@@ -121,10 +115,10 @@ public abstract class AbsOsmApiActivity extends ActivityContext implements OnCli
 
 
     private void setDownloadStatus() {
-        if (osmApi.isTaskRunning(getServiceContext())) downloadBusy.startWaiting();
+        if (configuration.isTaskRunning(getServiceContext())) downloadBusy.startWaiting();
         else downloadBusy.stopWaiting();
 
-        downloadError.displayError(osmApi.getException());
+        downloadError.displayError(configuration.getException());
 
     }
 
@@ -147,7 +141,7 @@ public abstract class AbsOsmApiActivity extends ActivityContext implements OnCli
     }
 
     private View createEditorView() {
-        editorView = new OsmApiEditorView(this, osmApi);
+        editorView = new OsmApiEditorView(this, configuration);
         return editorView;
     }
 
@@ -161,9 +155,12 @@ public abstract class AbsOsmApiActivity extends ActivityContext implements OnCli
     }
 
 
-    protected abstract OsmApiHelper getApiHelper(BoundingBoxE6 boundingBox) throws SecurityException, IOException;
+    protected abstract OsmApiConfiguration createApiConfiguration(BoundingBoxE6 boundingBox);
     protected abstract void addCustomButtons(MainControlBar bar);
 
+    protected OsmApiConfiguration getConfiguration() {
+        return configuration;
+    }
 
     @Override
     public void onClick(View v) {
@@ -179,10 +176,10 @@ public abstract class AbsOsmApiActivity extends ActivityContext implements OnCli
 
 
     private void download() {
-        if (osmApi.isTaskRunning(getServiceContext())) {
-            osmApi.stopTask(getServiceContext());
+        if (configuration.isTaskRunning(getServiceContext())) {
+            configuration.stopTask(getServiceContext());
         } else {
-            osmApi.startTask(getServiceContext());
+            configuration.startTask(getServiceContext());
         }
     }
 
@@ -190,19 +187,19 @@ public abstract class AbsOsmApiActivity extends ActivityContext implements OnCli
     private void showFileMenu(View parent) {
 
         final String targetPrefix = getTargetFilePrefix();
-        final String targetExtension = osmApi.getFileExtension();
+        final String targetExtension = configuration.getFileExtension();
 
-        new ResultFileMenu(this, osmApi.getResultFile(),
+        new ResultFileMenu(this, configuration.getResultFile(),
                 targetPrefix, targetExtension).showAsPopup(this, parent);
     }
 
     private String getTargetFilePrefix() {
         try {
-            final String query = TextBackup.read(osmApi.getQueryFile());
-            return OsmApiHelper.getFilePrefix(query);
+            final String query = TextBackup.read(configuration.getQueryFile());
+            return OsmApiConfiguration.getFilePrefix(query);
 
         } catch (Exception e) {
-            return OsmApiHelper.getFilePrefix("");
+            return OsmApiConfiguration.getFilePrefix("");
         }
     }
 

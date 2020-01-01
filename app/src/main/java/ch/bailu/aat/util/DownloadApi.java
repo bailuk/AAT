@@ -12,7 +12,7 @@ import ch.bailu.aat.services.background.DownloadTask;
 import ch.bailu.aat.util.ui.AppLog;
 import ch.bailu.util_java.foc.Foc;
 
-public abstract class DownloadApi extends OsmApiHelper {
+public abstract class DownloadApi extends OsmApiConfiguration {
 
     private BackgroundTask task = BackgroundTask.NULL;
 

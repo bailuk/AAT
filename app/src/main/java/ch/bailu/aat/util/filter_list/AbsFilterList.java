@@ -54,7 +54,11 @@ public abstract class AbsFilterList<T> {
             visible.add(t);
     }
 
-    public T get(int index) {
+    public T getFromAll(int index) {
+        return all.get(index);
+    }
+
+    public T getFromVisible(int index) {
         return visible.get(index);
     }
 

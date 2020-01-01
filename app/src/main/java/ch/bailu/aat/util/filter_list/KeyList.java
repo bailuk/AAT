@@ -92,8 +92,12 @@ public class KeyList {
         return l;
     }
 
-    public String getFirstKey() {
-        if (keys.size() > 0) return keys.get(0);
+    public int size() {
+        return keys.size();
+    }
+    
+    public String getKey(int i) {
+        if (keys.size() > i) return keys.get(i);
         else return "";
     }
 }

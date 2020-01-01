@@ -17,7 +17,7 @@ public class PoiListEntry extends ListEntry {
         self = c;
 
         keys = new KeyList(c.getTitle());
-        summaryKey = "_" + keys.getFirstKey();
+        summaryKey = "_" + keys.getKey(0);
         keys.addKeys(summaryKey);
 
     }

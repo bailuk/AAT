@@ -13,15 +13,18 @@ import org.mapsforge.poi.storage.PoiCategoryManager;
 import org.mapsforge.poi.storage.PoiPersistenceManager;
 import org.mapsforge.poi.storage.UnknownPoiCategoryException;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import ch.bailu.aat.preferences.SolidString;
 import ch.bailu.aat.preferences.map.SolidPoiDatabase;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.util.filter_list.FilterList;
+import ch.bailu.aat.util.filter_list.FilterListUtil;
 import ch.bailu.aat.util.filter_list.PoiListEntry;
 import ch.bailu.aat.views.EditTextTool;
 import ch.bailu.aat.views.preferences.SolidStringView;
+import ch.bailu.util_java.foc.Foc;
 
 public class PoiView  extends LinearLayout implements SharedPreferences.OnSharedPreferenceChangeListener {
 
@@ -36,10 +39,13 @@ public class PoiView  extends LinearLayout implements SharedPreferences.OnShared
 
     private final SolidPoiDatabase sdatabase;
 
+    private final Foc selected;
 
-    public PoiView(ServiceContext sc) {
+    public PoiView(ServiceContext sc, Foc s) {
         super(sc.getContext());
         scontext = sc;
+
+        selected = s;
 
         sdatabase = new SolidPoiDatabase(sc.getContext());
         sdatabase.register(this);
@@ -66,12 +72,18 @@ public class PoiView  extends LinearLayout implements SharedPreferences.OnShared
 
         try {
             readList(categoryManager);
-        } catch (UnknownPoiCategoryException e) {
+            readSelected();
+
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
         persistenceManager.close();
         listView.onChanged();
+    }
+
+    private void readSelected() throws IOException {
+        new FilterListUtil(list).readSelected(selected);
     }
 
     private void readList(PoiCategoryManager categoryManager) throws UnknownPoiCategoryException {
@@ -142,6 +154,9 @@ public class PoiView  extends LinearLayout implements SharedPreferences.OnShared
 
 
     public void close(ServiceContext sc) {
+
+        saveSelected();
+
         new SolidString(sc.getContext(), FILTER_KEY).setValue(filterView.getText().toString());
         sdatabase.unregister(this);
     }
@@ -151,7 +166,7 @@ public class PoiView  extends LinearLayout implements SharedPreferences.OnShared
         ArrayList<PoiCategory> export = new ArrayList<>(10);
 
         for (int i = 0; i< list.sizeVisible(); i++) {
-            PoiListEntry e = (PoiListEntry) list.get(i);
+            PoiListEntry e = (PoiListEntry) list.getFromVisible(i);
 
             if (e.isSelected()) {
                 export.add(e.getCategory());
@@ -163,7 +178,16 @@ public class PoiView  extends LinearLayout implements SharedPreferences.OnShared
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         if (sdatabase.hasKey(key)) {
+            saveSelected();
             readList();
+        }
+    }
+
+    private void saveSelected() {
+        try {
+            new FilterListUtil(list).writeSelected(selected);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }

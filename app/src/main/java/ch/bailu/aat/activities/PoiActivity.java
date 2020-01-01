@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import ch.bailu.aat.coordinates.BoundingBoxE6;
-import ch.bailu.aat.util.OsmApiHelper;
+import ch.bailu.aat.util.OsmApiConfiguration;
 import ch.bailu.aat.util.PoiApi;
 import ch.bailu.aat.util.ui.AppLayout;
 import ch.bailu.aat.util.ui.AppTheme;
@@ -26,7 +26,7 @@ public class PoiActivity extends AbsOsmApiActivity {
     private PoiView poiView;
 
     @Override
-    public OsmApiHelper getApiHelper(BoundingBoxE6 boundingBox) throws SecurityException, IOException {
+    public OsmApiConfiguration createApiConfiguration(BoundingBoxE6 boundingBox) {
         return new PoiApi(this, boundingBox) {
 
             @Override
@@ -42,7 +42,7 @@ public class PoiActivity extends AbsOsmApiActivity {
         LinearLayout linear = new LinearLayout(this);
 
         linear.setOrientation(LinearLayout.VERTICAL);
-        linear.addView(new TitleView(this, osmApi.getApiName()));
+        linear.addView(new TitleView(this, getConfiguration().getApiName()));
         linear.addView(createNodeListView());
 
         return linear;
@@ -82,7 +82,8 @@ public class PoiActivity extends AbsOsmApiActivity {
     }
 
     private View createPoiListView() {
-        poiView = new PoiView(getServiceContext());
+        poiView = new PoiView(getServiceContext(),
+                getConfiguration().getBaseDirectory().child(PoiApi.SELECTED));
 
         AppTheme.alt.background(poiView);
         return poiView;

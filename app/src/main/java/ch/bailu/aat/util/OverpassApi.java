@@ -25,7 +25,7 @@ public abstract class OverpassApi extends DownloadApi {
 
 
 
-    public OverpassApi(Context context, BoundingBoxE6 b) throws SecurityException, IOException {
+    public OverpassApi(Context context, BoundingBoxE6 b) {
         NAME=context.getString(R.string.query_overpass);
         bounding = toString(b);
         directory = AppDirectory.getDataDirectory(context, AppDirectory.DIR_OVERPASS);

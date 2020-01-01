@@ -27,10 +27,12 @@ import ch.bailu.aat.test.GpxPointPoi;
 import ch.bailu.aat.util.fs.AppDirectory;
 import ch.bailu.util_java.foc.Foc;
 
-public abstract class PoiApi extends OsmApiHelper {
+public abstract class PoiApi extends OsmApiConfiguration {
 
     public final static String NAME="MapsForge POI";
     public final static String EXT=".gpx";
+    public static final String SELECTED = "selected.txt";
+
     private final static int LIMIT = 10000;
 
     private final Foc directory;

@@ -10,7 +10,7 @@ import ch.bailu.aat.util.fs.AppDirectory;
 import ch.bailu.util_java.foc.Foc;
 
 
-public abstract class OsmApiHelper {
+public abstract class OsmApiConfiguration {
 
         public final static int NAME_MAX=15;
         public final static int NAME_MIN=2;
