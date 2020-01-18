@@ -30,10 +30,9 @@ public class Storage  implements ContextWrapperInterface {
     }
 
 
-    private FocFile getBackupFile() {
-        return new FocFile(new File(Environment.getExternalStorageDirectory(),
-                "aat_preferences.xml"));
-    }
+    private static FocFile getBackupFile() {
+		return new FocFile(new File(Environment.getExternalStorageDirectory(), "aat_preferences.xml"));
+	}
 
     public void backup() {
         final Foc source = new FocFile(new File(getSharedPrefsDirectory(), GLOBAL_NAME + ".xml"));
