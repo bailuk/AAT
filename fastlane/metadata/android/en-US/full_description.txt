@@ -1,5 +1,3 @@
-<p>AAT is a GPS-tracking application for tracking sportive activities, with emphasis on cycling.</p>
-
 <p><b>Features</b></p>
 
 <ul>
