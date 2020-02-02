@@ -24,7 +24,7 @@ OpenCycleMap: (c) [Thunderforest](https://www.thunderforest.com/), Data (c) [Ope
 license: [GNU Lesser GPL v3](http://www.gnu.org/licenses/lgpl.html)
 
 ### AAT
-(c) 2011-2019 Lukas Bai bailu@bailu.ch  
+(c) 2011-2020 Lukas Bai bailu@bailu.ch  
 license: [GNU GPLv3 or later](http://www.gnu.org/licenses/gpl.html)  
 Logo designed by Ibrahim Tenekeci  
 
