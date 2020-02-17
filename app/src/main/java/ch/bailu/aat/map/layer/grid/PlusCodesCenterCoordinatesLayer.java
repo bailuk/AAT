@@ -7,7 +7,6 @@ import com.google.openlocationcode.OpenLocationCode;
 
 import org.mapsforge.core.model.LatLong;
 
-import ch.bailu.aat.description.FF;
 import ch.bailu.aat.map.MapContext;
 import ch.bailu.aat.map.layer.MapLayerInterface;
 

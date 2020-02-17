@@ -15,7 +15,7 @@ public class Logger extends GpxInformation implements Closeable {
         return new Logger();
     }
 
-    public void logPause() throws IOException {}
+    public void logPause() {}
     public void log(GpxPointInterface tp, GpxAttributes attr) throws IOException {}
 
     @Override

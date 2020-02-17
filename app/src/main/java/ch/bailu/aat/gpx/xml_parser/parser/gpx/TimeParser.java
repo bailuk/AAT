@@ -16,13 +16,13 @@ public class TimeParser extends TagParser {
     }
 
     @Override
-    public void parseText(XmlPullParser parser, Scanner scanner) throws IOException, XmlPullParserException {
+    public void parseText(XmlPullParser parser, Scanner scanner) throws IOException {
         scanner.dateTime.scan(parser.getText());
     }
 
 
     @Override
-    protected void parseAttributes(XmlPullParser parser, Scanner scanner) throws IOException, XmlPullParserException {
+    protected void parseAttributes(XmlPullParser parser, Scanner scanner) {
 
     }
 
@@ -32,7 +32,7 @@ public class TimeParser extends TagParser {
     }
 
     @Override
-    public void parsed(XmlPullParser parser, Scanner scanner) throws IOException {
+    public void parsed(XmlPullParser parser, Scanner scanner) {
 
     }
 }

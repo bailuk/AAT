@@ -1,6 +1,5 @@
 package ch.bailu.aat.services.directory;
 
-import java.io.IOException;
 import java.util.Map;
 import java.util.NavigableMap;
 import java.util.TreeMap;
@@ -12,7 +11,7 @@ public final class FilesInDirectory {
     final NavigableMap<String,Foc> files;
 
 
-    public FilesInDirectory(Foc directory) throws IOException {
+    public FilesInDirectory(Foc directory) {
         files = getFileList(directory);
 
     }

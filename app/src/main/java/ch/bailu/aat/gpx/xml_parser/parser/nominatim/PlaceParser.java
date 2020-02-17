@@ -17,12 +17,12 @@ public class PlaceParser extends TagParser {
     }
 
     @Override
-    protected void parseText(XmlPullParser parser, Scanner scanner) throws IOException, XmlPullParserException {
+    protected void parseText(XmlPullParser parser, Scanner scanner) {
 
     }
 
     @Override
-    protected void parseAttributes(XmlPullParser parser, Scanner scanner) throws IOException, XmlPullParserException {
+    protected void parseAttributes(XmlPullParser parser, Scanner scanner) throws IOException {
         scanner.tags.clear();
 
         new Attr(parser) {
@@ -43,7 +43,7 @@ public class PlaceParser extends TagParser {
     }
 
     @Override
-    protected boolean parseTags(XmlPullParser parser, Scanner scanner) throws IOException, XmlPullParserException {
+    protected boolean parseTags(XmlPullParser parser, Scanner scanner) {
         return false;
     }
 

@@ -76,12 +76,9 @@ public class OsmApiEditorView extends LinearLayout {
             layout.addView(b);
         }
 
-        layout.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                preview.setText(osmApi.getUrlPreview(editor.edit.getText().toString()));
-                inputMultiView.setNext();
-            }
+        layout.setOnClickListener(view -> {
+            preview.setText(osmApi.getUrlPreview(editor.edit.getText().toString()));
+            inputMultiView.setNext();
         });
 
         return layout;

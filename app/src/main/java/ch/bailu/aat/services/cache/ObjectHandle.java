@@ -1,6 +1,5 @@
 package ch.bailu.aat.services.cache;
 
-import android.content.Context;
 import android.support.annotation.NonNull;
 
 import ch.bailu.aat.services.ServiceContext;

@@ -14,8 +14,8 @@ public final class Executer {
     private final static UUID ENABLE_NOTIFICATION = UUID.fromString("00002902-0000-1000-8000-00805f9b34fb");
 
 
-    private Queue<BluetoothGattCharacteristic> toReadQ = new LinkedList<BluetoothGattCharacteristic>();
-    private Queue<BluetoothGattCharacteristic> toNotifyQ = new LinkedList<BluetoothGattCharacteristic>();
+    private final Queue<BluetoothGattCharacteristic> toReadQ = new LinkedList<BluetoothGattCharacteristic>();
+    private final Queue<BluetoothGattCharacteristic> toNotifyQ = new LinkedList<BluetoothGattCharacteristic>();
 
     private boolean discoverd = false;
 

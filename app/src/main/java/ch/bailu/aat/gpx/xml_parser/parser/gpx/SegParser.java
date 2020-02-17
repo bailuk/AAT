@@ -17,12 +17,12 @@ public class SegParser extends TagParser {
     }
 
     @Override
-    protected void parseText(XmlPullParser parser, Scanner scanner) throws IOException, XmlPullParserException {
+    protected void parseText(XmlPullParser parser, Scanner scanner) {
 
     }
 
     @Override
-    protected void parseAttributes(XmlPullParser parser, Scanner scanner) throws IOException, XmlPullParserException {
+    protected void parseAttributes(XmlPullParser parser, Scanner scanner) {
 
     }
 
@@ -34,7 +34,7 @@ public class SegParser extends TagParser {
     }
 
     @Override
-    public void parsed(XmlPullParser parser, Scanner scanner) throws IOException {
+    public void parsed(XmlPullParser parser, Scanner scanner) {
         scanner.trackParsed.onHaveSegment();
     }
 }

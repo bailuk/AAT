@@ -20,11 +20,11 @@ public class TrkParser extends TagParser {
 
 
     @Override
-    public void parseText(XmlPullParser parser, Scanner scanner) throws IOException, XmlPullParserException {
+    public void parseText(XmlPullParser parser, Scanner scanner) {
     }
 
     @Override
-    protected void parseAttributes(XmlPullParser parser, Scanner scanner) throws IOException, XmlPullParserException {
+    protected void parseAttributes(XmlPullParser parser, Scanner scanner) {
     }
 
     @Override
@@ -33,7 +33,7 @@ public class TrkParser extends TagParser {
     }
 
     @Override
-    public void parsed(XmlPullParser parser, Scanner scanner) throws IOException {
+    public void parsed(XmlPullParser parser, Scanner scanner) {
 
     }
 }

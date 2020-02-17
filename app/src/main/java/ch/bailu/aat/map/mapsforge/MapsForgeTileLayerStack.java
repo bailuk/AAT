@@ -40,7 +40,7 @@ public class MapsForgeTileLayerStack extends Layer implements MapLayerInterface 
 
         layers.add(layer);
 
-        provider.addObserver(() -> requestRedraw());
+        provider.addObserver(this::requestRedraw);
 
         maxZoom = Math.max(provider.getMaximumZoomLevel(), maxZoom);
         minZoom = Math.min(provider.getMinimumZoomLevel(), minZoom);

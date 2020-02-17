@@ -16,8 +16,8 @@ public final class IconMap {
 
 
 
-    private final HashMap<Integer, HashMap<String, Icon>> key_list = new HashMap();
-    //private final SparseArray<SparseArray<Icon>> key_list = new SparseArray<>(50);
+    private final HashMap<Integer, HashMap<String, Icon>> key_list =
+            new HashMap<Integer, HashMap<String, Icon>>();
 
 
     public void add(int key, String value, String file_name) {

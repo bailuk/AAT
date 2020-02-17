@@ -8,7 +8,6 @@ import java.io.OutputStreamWriter;
 
 import ch.bailu.aat.description.FF_GPX;
 import ch.bailu.aat.gpx.GpxConstants;
-import ch.bailu.aat.gpx.OsmConstants;
 import ch.bailu.aat.gpx.interfaces.GpxPointInterface;
 import ch.bailu.aat.gpx.interfaces.GpxType;
 import ch.bailu.aat.util.ui.AppString;

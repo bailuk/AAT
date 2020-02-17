@@ -3,8 +3,6 @@ package ch.bailu.aat.activities;
 import android.view.View;
 import android.widget.LinearLayout;
 
-import java.io.IOException;
-
 import ch.bailu.aat.coordinates.BoundingBoxE6;
 import ch.bailu.aat.util.OsmApiConfiguration;
 import ch.bailu.aat.util.OverpassApi;

@@ -28,13 +28,13 @@ public class ContentDescriptions extends ContentDescription {
 
     @Override
     public String getLabel() {
-        String l="";
+        StringBuilder l= new StringBuilder();
         String s="";
         for (ContentDescription d: descriptions) {
-            l = l + s + d.getLabel();
+            l.append(s).append(d.getLabel());
             s= ", ";
         }
-        return l;
+        return l.toString();
     }
 
 

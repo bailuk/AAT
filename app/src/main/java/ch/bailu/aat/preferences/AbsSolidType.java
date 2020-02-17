@@ -58,15 +58,15 @@ public abstract class AbsSolidType implements SolidTypeInterface {
     }
 
 
-    protected static final String toDefaultString(String s) {
+    protected static String toDefaultString(String s) {
         return s + DEFAULT_MARKER;
     }
 
-    protected static final String toDefaultString(String s, int sel) {
+    protected static String toDefaultString(String s, int sel) {
         return toDefaultString(s, sel, 0);
     }
 
-    protected static final String toDefaultString(String s, int sel, int def) {
+    protected static String toDefaultString(String s, int sel, int def) {
         if (def == sel) return toDefaultString(s);
         return s;
     }

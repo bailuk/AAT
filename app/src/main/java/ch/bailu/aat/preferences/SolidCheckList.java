@@ -1,8 +1,5 @@
 package ch.bailu.aat.preferences;
 
-import android.content.Context;
-import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
-
 
 public abstract class SolidCheckList extends AbsSolidType {
 

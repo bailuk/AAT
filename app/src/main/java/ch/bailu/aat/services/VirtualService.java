@@ -2,8 +2,6 @@ package ch.bailu.aat.services;
 
 import android.content.Context;
 
-import java.io.Closeable;
-
 public abstract class VirtualService {
 
 

@@ -55,7 +55,7 @@ public final class SourceSummaries {
     }
 
 
-    public void rescan(Context c, Foc tileCacheDirectory) throws IOException {
+    public void rescan(Context c, Foc tileCacheDirectory) {
         //tileCacheDirectory = tileCacheDirectory.getCanonicalFile();
 
         reset(c);

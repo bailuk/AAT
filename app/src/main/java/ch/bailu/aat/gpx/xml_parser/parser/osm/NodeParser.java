@@ -20,12 +20,12 @@ public class NodeParser extends TagParser {
     }
 
     @Override
-    protected void parseText(XmlPullParser parser, Scanner scanner) throws IOException, XmlPullParserException {
+    protected void parseText(XmlPullParser parser, Scanner scanner) {
 
     }
 
     @Override
-    protected void parseAttributes(XmlPullParser parser, Scanner scanner) throws IOException, XmlPullParserException {
+    protected void parseAttributes(XmlPullParser parser, Scanner scanner) throws IOException {
         scanner.tags.clear();
 
 

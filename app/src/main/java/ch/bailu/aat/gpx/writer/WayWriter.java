@@ -3,7 +3,6 @@ package ch.bailu.aat.gpx.writer;
 import java.io.IOException;
 
 import ch.bailu.aat.gpx.GpxConstants;
-import ch.bailu.aat.gpx.OsmConstants;
 import ch.bailu.aat.gpx.interfaces.GpxPointInterface;
 import ch.bailu.aat.services.dem.tile.ElevationProvider;
 import ch.bailu.util_java.foc.Foc;
@@ -20,11 +19,11 @@ public class WayWriter extends GpxWriter {
     }
 
     @Override
-    public void writeSegment() throws IOException {
+    public void writeSegment() {
     }
 
     @Override
-    public void writeFirstSegment() throws IOException {
+    public void writeFirstSegment() {
     }
 
     @Override

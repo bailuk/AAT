@@ -2,7 +2,6 @@ package ch.bailu.aat.util.filter_list;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
@@ -26,17 +25,15 @@ public class FilterListUtil {
 
 
     public void writeSelected(Foc file) throws IOException {
-        final Writer out =
-                new OutputStreamWriter(new BufferedOutputStream(file.openW()));
 
-        try {
+        try (Writer out = new OutputStreamWriter(new BufferedOutputStream(file.openW()))) {
 
             for (int e = 0; e < list.sizeVisible(); e++) {
                 if (list.getFromVisible(e).isSelected()) {
 
                     KeyList keys = list.getFromVisible(e).getKeys();
 
-                    for (int k = 0; k < keys.size()-1; k++) {
+                    for (int k = 0; k < keys.size() - 1; k++) {
                         out.write(keys.getKey(k));
                         out.write(' ');
                     }
@@ -44,22 +41,18 @@ public class FilterListUtil {
                     out.write('\n');
                 }
             }
-        } finally {
-            out.close();
         }
     }
 
 
     public void readSelected(Foc file) throws IOException {
-        final Reader in =
-                new InputStreamReader(new BufferedInputStream(file.openR()));
 
-        try {
+        try (Reader in = new InputStreamReader(new BufferedInputStream(file.openR()))) {
             final StringBuilder builder = new StringBuilder(LINE_EST);
 
             int c = 0;
             while (c > -1) {
-                c=in.read();
+                c = in.read();
 
                 if (c < 0 || c == '\n') {
                     final KeyList keys = new KeyList(builder.toString());
@@ -75,8 +68,6 @@ public class FilterListUtil {
                 }
             }
 
-        } finally {
-            in.close();
         }
     }
 

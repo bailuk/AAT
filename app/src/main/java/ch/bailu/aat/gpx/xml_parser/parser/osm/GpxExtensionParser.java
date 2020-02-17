@@ -20,7 +20,7 @@ public class GpxExtensionParser extends TagParser {
 
 
     @Override
-    protected void parseText(XmlPullParser parser, Scanner scanner) throws IOException, XmlPullParserException {
+    protected void parseText(XmlPullParser parser, Scanner scanner) {
         final String val = parser.getText();
         if (val != null && key != null && key.length() > 0) {
             scanner.tags.add(key, val);
@@ -30,18 +30,18 @@ public class GpxExtensionParser extends TagParser {
 
 
     @Override
-    protected void parseAttributes(XmlPullParser parser, Scanner scanner) throws IOException, XmlPullParserException {
+    protected void parseAttributes(XmlPullParser parser, Scanner scanner) {
         key = parser.getName();
 
     }
 
     @Override
-    protected boolean parseTags(XmlPullParser parser, Scanner scanner) throws IOException, XmlPullParserException {
+    protected boolean parseTags(XmlPullParser parser, Scanner scanner) {
         return false;
     }
 
     @Override
-    protected void parsed(XmlPullParser parser, Scanner scanner) throws IOException {
+    protected void parsed(XmlPullParser parser, Scanner scanner) {
 
     }
 }

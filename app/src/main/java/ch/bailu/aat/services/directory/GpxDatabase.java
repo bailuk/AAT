@@ -38,7 +38,7 @@ public final class GpxDatabase extends AbsDatabase{
     }
 
 
-    private SQLiteDatabase openDatabase(String path) throws IOException, SQLiteCantOpenDatabaseException {
+    private SQLiteDatabase openDatabase(String path) throws SQLiteCantOpenDatabaseException {
         return new GpxDbOpenHelper(context, path).getReadableDatabase();
     }
 

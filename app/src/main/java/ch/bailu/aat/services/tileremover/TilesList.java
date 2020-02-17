@@ -12,14 +12,7 @@ public final class TilesList {
 
             (o1, o2) -> {
 
-                if (o2.lastModified() > o1.lastModified())
-                    return -1;
-
-                else if (o2.lastModified() < o1.lastModified())
-                    return 1;
-
-                else
-                    return 0;
+                return Long.compare(o1.lastModified(), o2.lastModified());
             });
 
     private  final ArrayList<TileFile> filesToRemove = new ArrayList<>(FILES_LIMIT);

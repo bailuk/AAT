@@ -21,12 +21,12 @@ public abstract class PntParser extends TagParser {
     }
 
     @Override
-    protected void parseText(XmlPullParser parser, Scanner scanner) throws IOException, XmlPullParserException {
+    protected void parseText(XmlPullParser parser, Scanner scanner) {
 
     }
 
     @Override
-    public void parseAttributes(XmlPullParser parser, Scanner scanner) throws IOException, XmlPullParserException {
+    public void parseAttributes(XmlPullParser parser, Scanner scanner) throws IOException {
         scanner.tags.clear();
 
         new Attr(parser) {

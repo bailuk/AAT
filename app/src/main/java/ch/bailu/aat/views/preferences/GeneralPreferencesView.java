@@ -5,7 +5,6 @@ import android.os.Build;
 import ch.bailu.aat.R;
 import ch.bailu.aat.activities.ActivityContext;
 import ch.bailu.aat.gpx.InfoID;
-import ch.bailu.aat.preferences.general.SolidPostprocessedAutopause;
 import ch.bailu.aat.preferences.general.SolidPresetCount;
 import ch.bailu.aat.preferences.general.SolidUnit;
 import ch.bailu.aat.preferences.general.SolidWeight;

@@ -16,13 +16,13 @@ public class MetaParser extends TagParser {
     }
 
     @Override
-    protected void parseText(XmlPullParser parser, Scanner scanner) throws IOException, XmlPullParserException {
+    protected void parseText(XmlPullParser parser, Scanner scanner) throws IOException {
 
     }
 
 
     @Override
-    protected void parseAttributes(XmlPullParser parser, Scanner scanner) throws IOException, XmlPullParserException {
+    protected void parseAttributes(XmlPullParser parser, Scanner scanner) throws IOException {
         new Attr(parser) {
             @Override
             public void attribute(String name, String value) throws IOException {
@@ -35,12 +35,12 @@ public class MetaParser extends TagParser {
 
 
     @Override
-    protected boolean parseTags(XmlPullParser parser, Scanner scanner) throws IOException, XmlPullParserException {
+    protected boolean parseTags(XmlPullParser parser, Scanner scanner) {
         return false;
     }
 
     @Override
-    protected void parsed(XmlPullParser parser, Scanner scanner) throws IOException {
+    protected void parsed(XmlPullParser parser, Scanner scanner) {
 
     }
 }

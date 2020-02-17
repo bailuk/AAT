@@ -172,7 +172,7 @@ public class FocContent extends Foc {
         }
     }
 
-    private int childCount() throws IOException {
+    private int childCount() {
         ChildCount children = new ChildCount();
         foreach(children);
         return children.count;

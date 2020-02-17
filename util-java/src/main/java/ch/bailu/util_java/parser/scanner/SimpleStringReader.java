@@ -5,7 +5,7 @@ import java.io.Reader;
 
 public class SimpleStringReader extends Reader {
 
-    private String string = new String();
+    private String string = "";
     private int index = 0;
 
     public void setString(String s) throws IOException {
@@ -15,7 +15,7 @@ public class SimpleStringReader extends Reader {
 
 
     @Override
-    public int read() throws IOException {
+    public int read() {
         if (index < string.length()) {
             int c = string.charAt(index);
             index ++;
@@ -33,7 +33,7 @@ public class SimpleStringReader extends Reader {
 
 
     @Override
-    public long skip(long n) throws IOException {
+    public long skip(long n) {
         if (index + n >= string.length()) {
             n = string.length()- index;
         }
@@ -43,13 +43,13 @@ public class SimpleStringReader extends Reader {
     }
 
     @Override
-    public boolean ready() throws IOException {
+    public boolean ready() {
         return true;
     }
 
 
     @Override
-    public void reset() throws IOException {
+    public void reset() {
         index = 0;
     }
 
@@ -58,7 +58,7 @@ public class SimpleStringReader extends Reader {
 
 
     @Override
-    public int read(char[] cbuf, int off, int len) throws IOException {
+    public int read(char[] cbuf, int off, int len) {
         if (index >= string.length()) return -1;
 
         int c = 0;
@@ -80,7 +80,7 @@ public class SimpleStringReader extends Reader {
 
 
     @Override
-    public void close() throws IOException {
+    public void close() {
 
     }
 }

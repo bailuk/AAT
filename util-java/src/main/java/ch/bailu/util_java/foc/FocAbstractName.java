@@ -6,7 +6,7 @@ import java.io.OutputStream;
 
 public abstract class FocAbstractName extends Foc {
     @Override
-    public boolean remove() throws IOException, SecurityException {
+    public boolean remove() throws SecurityException {
         return false;
     }
 

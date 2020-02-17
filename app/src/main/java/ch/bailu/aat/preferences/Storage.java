@@ -50,7 +50,7 @@ public class Storage  implements ContextWrapperInterface {
     }
 
 
-    public void restore() throws Exception {
+    public void restore() {
         final Foc target = new FocFile(new File(getSharedPrefsDirectory() +  "/restore.xml"));
         final Foc source = getBackupFile();
 

@@ -12,7 +12,6 @@ import ch.bailu.aat.gpx.xml_parser.GpxListReader;
 import ch.bailu.aat.preferences.location.SolidMockLocationFile;
 import ch.bailu.aat.util.Timer;
 import ch.bailu.aat.util.fs.foc.FocAndroid;
-import ch.bailu.aat.util.ui.AppLog;
 import ch.bailu.util_java.foc.Foc;
 import ch.bailu.util_java.foc.FocName;
 
@@ -26,7 +25,7 @@ public final class MockLocation extends LocationStackChainedItem implements Runn
     private int state = StateID.NOSERVICE;
 
     private long interval = INTERVAL;
-    private Foc file;
+    private final Foc file;
 
     private final Timer timer;
 

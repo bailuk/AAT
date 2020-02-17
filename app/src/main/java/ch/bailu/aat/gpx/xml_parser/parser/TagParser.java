@@ -51,8 +51,8 @@ public abstract class TagParser {
 
 
 
-    protected abstract void parseText(XmlPullParser parser, Scanner scanner) throws IOException, XmlPullParserException;
-    protected abstract void parseAttributes(XmlPullParser parser, Scanner scanner) throws IOException, XmlPullParserException;
+    protected abstract void parseText(XmlPullParser parser, Scanner scanner) throws IOException;
+    protected abstract void parseAttributes(XmlPullParser parser, Scanner scanner) throws IOException;
     protected abstract boolean parseTags(XmlPullParser parser, Scanner scanner) throws IOException, XmlPullParserException;
     protected abstract void parsed(XmlPullParser parser, Scanner scanner) throws IOException;
 

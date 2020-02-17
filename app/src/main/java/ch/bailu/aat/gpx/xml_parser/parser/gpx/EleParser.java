@@ -1,7 +1,6 @@
 package ch.bailu.aat.gpx.xml_parser.parser.gpx;
 
 import org.xmlpull.v1.XmlPullParser;
-import org.xmlpull.v1.XmlPullParserException;
 
 import java.io.IOException;
 
@@ -14,7 +13,7 @@ public class EleParser extends TagParser {
     }
 
     @Override
-    public void parseText(XmlPullParser parser, Scanner scanner) throws IOException, XmlPullParserException {
+    public void parseText(XmlPullParser parser, Scanner scanner) throws IOException {
         scanner.altitude.scan(parser.getText());
     }
 
@@ -24,7 +23,7 @@ public class EleParser extends TagParser {
     }
 
     @Override
-    public boolean parseTags(XmlPullParser parser, Scanner scanner) throws IOException, XmlPullParserException {
+    public boolean parseTags(XmlPullParser parser, Scanner scanner) {
         return false;
     }
 

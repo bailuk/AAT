@@ -58,7 +58,7 @@ public final class StateRemove implements State, Runnable {
         }
 
         @Override
-        public TileFile call() throws Exception {
+        public TileFile call() {
             final Foc f = state.summaries.toFile(state.baseDirectory, tileFile);
 
             if (f.rm()) {

@@ -42,11 +42,8 @@ public final class PendingUpdatesMap {
 
 
     public void remove(ElevationUpdaterClient e) {
-        Iterator<ArrayList<ElevationUpdaterClient>> values = map.values().iterator();
 
-        while (values.hasNext()) {
-            ArrayList<ElevationUpdaterClient> l = values.next();
-
+        for (ArrayList<ElevationUpdaterClient> l : map.values()) {
             if (l != null) {
                 l.remove(e);
             }

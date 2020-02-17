@@ -8,11 +8,8 @@ public interface OnSelected {
     int FILTER = 2;
     int SELECT = 3;
 
-    OnSelected NULL = new OnSelected() {
-        @Override
-        public void onSelected(ListEntry e, int action, String variant) {
+    OnSelected NULL = (e, action, variant) -> {
 
-        }
     };
 
 

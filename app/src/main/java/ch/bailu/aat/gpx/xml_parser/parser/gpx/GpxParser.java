@@ -27,7 +27,7 @@ public class GpxParser  extends TagParser {
 
 
     @Override
-    protected void parseText(XmlPullParser parser, Scanner scanner) throws IOException, XmlPullParserException {
+    protected void parseText(XmlPullParser parser, Scanner scanner) throws IOException {
 
     }
 

@@ -7,7 +7,6 @@ import android.os.Bundle;
 
 import org.mapsforge.core.model.LatLong;
 
-import ch.bailu.aat.coordinates.BoundingBoxE6;
 import ch.bailu.aat.coordinates.WGS84Coordinates;
 import ch.bailu.aat.dispatcher.CurrentLocationSource;
 import ch.bailu.aat.dispatcher.EditorSource;
@@ -15,7 +14,6 @@ import ch.bailu.aat.dispatcher.OverlaySource;
 import ch.bailu.aat.dispatcher.TrackerSource;
 import ch.bailu.aat.map.MapFactory;
 import ch.bailu.aat.map.MapViewInterface;
-import ch.bailu.aat.util.AppIntent;
 import ch.bailu.aat.util.ui.AppLayout;
 import ch.bailu.aat.util.ui.AppLog;
 import ch.bailu.aat.views.ContentView;

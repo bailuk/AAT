@@ -185,7 +185,7 @@ public final class DirectorySynchronizer  implements Closeable {
 
 
 
-        private void removeFilesFromDatabase() throws IOException {
+        private void removeFilesFromDatabase() {
             if (canContinue && filesToRemove.size()>0) {
                 for (int i=0; canContinue && i<filesToRemove.size(); i++) {
 

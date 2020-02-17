@@ -1,7 +1,5 @@
 package ch.bailu.aat.gpx.xml_parser;
 
-import org.xmlpull.v1.XmlPullParserException;
-
 import java.io.IOException;
 
 import ch.bailu.aat.gpx.GpxList;
@@ -11,7 +9,6 @@ import ch.bailu.aat.gpx.attributes.GpxListAttributes;
 import ch.bailu.aat.gpx.interfaces.GpxType;
 import ch.bailu.aat.gpx.xml_parser.parser.AbsXmlParser;
 import ch.bailu.aat.services.background.ThreadControl;
-import ch.bailu.aat.util.ui.AppLog;
 import ch.bailu.util_java.foc.Foc;
 import ch.bailu.util_java.parser.OnParsedInterface;
 

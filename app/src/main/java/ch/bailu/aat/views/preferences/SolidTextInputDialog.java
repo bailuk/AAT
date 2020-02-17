@@ -39,17 +39,14 @@ public class SolidTextInputDialog extends AbsSolidDialog {
 
         dialog.show();
 
-        dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                try {
-                    s.setValueFromString(input.getText().toString());
-                    onClick.onClick(view);
-                    dialog.dismiss();
+        dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(view -> {
+            try {
+                s.setValueFromString(input.getText().toString());
+                onClick.onClick(view);
+                dialog.dismiss();
 
-                } catch (ValidationException e) {
-                    input.setError(e.getMessage());
-                }
+            } catch (ValidationException e) {
+                input.setError(e.getMessage());
             }
         });
 
@@ -60,11 +57,8 @@ public class SolidTextInputDialog extends AbsSolidDialog {
 
 
     public SolidTextInputDialog(final AbsSolidType s, int inputType) {
-        this(s, inputType, new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        this(s, inputType, v -> {
 
-            }
         });
     }
 }

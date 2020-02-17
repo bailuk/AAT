@@ -26,10 +26,10 @@ public class RouteWriter extends GpxWriter {
     }
 
     @Override
-    public void writeSegment() throws IOException {}
+    public void writeSegment() {}
 
     @Override
-    public void writeFirstSegment() throws IOException {}
+    public void writeFirstSegment() {}
 
     @Override
     public void writeTrackPoint(GpxPointInterface tp) throws IOException {

@@ -45,7 +45,7 @@ public abstract class TextBackup {
 
         private final Foc file;
 
-        public TextEditFileBackup(Foc f) throws IOException  {
+        public TextEditFileBackup(Foc f) {
             file = f;
 
         }

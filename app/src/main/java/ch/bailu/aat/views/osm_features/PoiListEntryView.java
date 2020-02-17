@@ -1,8 +1,6 @@
 package ch.bailu.aat.views.osm_features;
 
-import android.view.View;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -28,22 +26,14 @@ public class PoiListEntryView extends LinearLayout  {
         onSelected = s;
 
         checkBox = new CheckBox(getContext());
-        checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+        checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
 
-            }
         });
         checkBox.setClickable(false);
         addView(checkBox);
 
         text = new TextView(getContext());
-        this.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onSelected.onSelected(entry, 0, null);
-            }
-        });
+        this.setOnClickListener(v -> onSelected.onSelected(entry, 0, null));
 
         addView(text);
 

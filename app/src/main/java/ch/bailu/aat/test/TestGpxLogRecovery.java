@@ -15,7 +15,7 @@ public class TestGpxLogRecovery extends TestGpx {
 
 
     @Override
-    public void test() throws IOException, AssertionError  {
+    public void test() throws AssertionError  {
         /*
         Foc testFile = getTestFile();
         Foc logFile = AppDirectory.getDataDirectory(getContext(), AppDirectory.DIR_LOG).child("log.gpx");
@@ -55,7 +55,7 @@ public class TestGpxLogRecovery extends TestGpx {
     }
 
 
-    private void copyFile(Foc sourceFile, Foc destFile) throws IOException, AssertionError {
+    private void copyFile(Foc sourceFile, Foc destFile) throws AssertionError {
         /*
         if(!destFile.exists()) {
             destFile.createNewFile();

@@ -9,7 +9,7 @@ public class TestTest extends UnitTest {
     }
 
     @Override
-    public void test() throws Exception  {
+    public void test() {
         assertTrue(true);
 
     }

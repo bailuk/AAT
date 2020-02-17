@@ -14,7 +14,6 @@ import ch.bailu.aat.gpx.interfaces.GpxType;
 import ch.bailu.aat.gpx.writer.GpxListWriter;
 import ch.bailu.aat.preferences.SolidAutopause;
 import ch.bailu.aat.preferences.general.SolidPostprocessedAutopause;
-import ch.bailu.aat.preferences.presets.SolidPreset;
 import ch.bailu.aat.util.fs.AppDirectory;
 import ch.bailu.aat.util.ui.AppLog;
 import ch.bailu.util_java.foc.Foc;
@@ -68,7 +67,7 @@ public final class TrackLogger extends Logger {
     }
 
 
-    public void logPause() throws IOException {
+    public void logPause() {
         if (track.getPointList().size()>0) {
             requestSegment=true;
         }

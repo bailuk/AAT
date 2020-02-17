@@ -137,9 +137,9 @@ public abstract class AbsFileContentActivity extends ActivityContext implements 
         }, InfoID.FILEVIEW);
 
 
-        addTarget((iid, info) -> {
-            fileError.displayError(getServiceContext(), info.getFile());
-        }, InfoID.FILEVIEW);
+        addTarget((iid, info) -> fileError.displayError(
+                getServiceContext(),
+                info.getFile()), InfoID.FILEVIEW);
     }
 
 

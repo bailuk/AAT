@@ -17,18 +17,18 @@ public class OsmTagParser extends TagParser {
     }
 
     @Override
-    protected void parseText(XmlPullParser parser, Scanner scanner) throws IOException, XmlPullParserException {
+    protected void parseText(XmlPullParser parser, Scanner scanner) {
 
     }
 
     @Override
-    protected void parseAttributes(XmlPullParser parser, Scanner scanner) throws IOException, XmlPullParserException {
+    protected void parseAttributes(XmlPullParser parser, Scanner scanner) throws IOException {
         final String[] k = {""};
         final String[] v = {""};
 
         new Attr(parser) {
             @Override
-            public void attribute(String name, String value) throws IOException {
+            public void attribute(String name, String value) {
                 if (Objects.equals(name, OsmConstants.A_KEY)) {
                     k[0] =value;
                 } else if (Objects.equals(name, OsmConstants.A_VALUE)) {
@@ -41,12 +41,12 @@ public class OsmTagParser extends TagParser {
 
 
     @Override
-    protected boolean parseTags(XmlPullParser parser, Scanner scanner) throws IOException, XmlPullParserException {
+    protected boolean parseTags(XmlPullParser parser, Scanner scanner) {
         return false;
     }
 
     @Override
-    protected void parsed(XmlPullParser parser, Scanner scanner) throws IOException {
+    protected void parsed(XmlPullParser parser, Scanner scanner) {
 
     }
 }

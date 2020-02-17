@@ -95,9 +95,8 @@ public abstract class AbsOsmApiActivity extends ActivityContext implements OnCli
     private View fileErrorView() {
         final ErrorView fileError = new ErrorView(this);
 
-        addTarget((iid, info) -> {
-            fileError.displayError(getServiceContext(), info.getFile());
-        }, InfoID.FILEVIEW);
+        addTarget((iid, info) -> fileError.displayError(getServiceContext(), info.getFile()),
+                InfoID.FILEVIEW);
         return fileError;
     }
 

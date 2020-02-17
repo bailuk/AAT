@@ -60,7 +60,7 @@ public abstract class AbsService  extends Service {
 
     private final Set<String> locks = new HashSet<>();
 
-    private final Timer lazyOff = new Timer(() -> stopService(), 15*1000);
+    private final Timer lazyOff = new Timer(this::stopService, 15*1000);
 
 
     private synchronized void stopService() {

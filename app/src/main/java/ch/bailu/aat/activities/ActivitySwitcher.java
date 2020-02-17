@@ -75,7 +75,7 @@ public class ActivitySwitcher {
 
     private static void init(Context context) {
         if (entries==null) {
-            entries = new ArrayList();
+            entries = new ArrayList<Entry>();
 
             if (AppLayout.isTablet(context)) {
                 initTablet(context);

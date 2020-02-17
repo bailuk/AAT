@@ -89,7 +89,7 @@ implements OnSharedPreferenceChangeListener, Closeable {
 
 
 
-    public  TrackLogger createLogger() throws IOException, SecurityException, XmlPullParserException {
+    public  TrackLogger createLogger() throws IOException, SecurityException {
         return new TrackLogger(scontext.getContext(),new SolidPreset(scontext.getContext()).getIndex());
     }
 

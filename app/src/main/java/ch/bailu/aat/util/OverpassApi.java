@@ -2,7 +2,6 @@ package ch.bailu.aat.util;
 
 import android.content.Context;
 
-import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.Locale;

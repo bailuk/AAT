@@ -5,13 +5,7 @@ import android.content.Context;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
-import ch.bailu.aat.activities.AbsOsmApiActivity;
 import ch.bailu.aat.coordinates.BoundingBoxE6;
-import ch.bailu.aat.services.InsideContext;
-import ch.bailu.aat.services.ServiceContext;
-import ch.bailu.aat.services.background.BackgroundService;
-import ch.bailu.aat.services.background.BackgroundTask;
-import ch.bailu.aat.services.background.DownloadTask;
 import ch.bailu.aat.util.fs.AppDirectory;
 import ch.bailu.util_java.foc.Foc;
 

@@ -18,7 +18,6 @@ import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.map.MapFactory;
 import ch.bailu.aat.map.MapViewInterface;
 import ch.bailu.aat.menus.ContentMenu;
-import ch.bailu.aat.preferences.presets.SolidPreset;
 import ch.bailu.aat.util.fs.FileAction;
 import ch.bailu.aat.util.fs.foc.FocAndroid;
 import ch.bailu.aat.util.ui.AppLayout;

@@ -16,7 +16,7 @@ public class ContentView extends FrameLayout{
     private final LinearLayout mainContent;
     private final LinearLayout messages;
 
-    private final ArrayList<MessageView> messageViews = new ArrayList(5);
+    private final ArrayList<MessageView> messageViews = new ArrayList<MessageView>(5);
 
 
     public ContentView(Context context) {

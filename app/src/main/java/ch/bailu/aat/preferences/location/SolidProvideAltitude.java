@@ -31,12 +31,7 @@ public class SolidProvideAltitude extends SolidAltitude {
 
 
     public static View requestOnClick(View v) {
-        v.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                requestValueFromUserIfEnabled(v.getContext());
-            }
-        });
+        v.setOnClickListener(v1 -> requestValueFromUserIfEnabled(v1.getContext()));
         return v;
     }
 

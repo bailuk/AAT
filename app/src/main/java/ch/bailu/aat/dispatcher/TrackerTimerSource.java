@@ -13,7 +13,7 @@ public class TrackerTimerSource extends ContentSource {
     private final Timer timer;
 
     public TrackerTimerSource(ServiceContext sc) {
-        timer = new Timer(() -> requestUpdate(), INTERVAL);
+        timer = new Timer(this::requestUpdate, INTERVAL);
 
         scontext = sc;
     }

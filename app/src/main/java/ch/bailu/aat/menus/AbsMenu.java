@@ -3,7 +3,6 @@ package ch.bailu.aat.menus;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
-import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -38,7 +37,7 @@ public abstract class AbsMenu {
         inflate(popup.getMenu());
         prepare(popup.getMenu());
 
-        popup.setOnMenuItemClickListener(item -> onItemClick(item));
+        popup.setOnMenuItemClickListener(this::onItemClick);
 
         popup.show();
     }

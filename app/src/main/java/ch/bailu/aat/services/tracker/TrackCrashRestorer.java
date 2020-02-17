@@ -49,7 +49,7 @@ public final class TrackCrashRestorer{
 
 
 
-    private GpxList readFile(Foc remainingLogFile) throws IOException {
+    private GpxList readFile(Foc remainingLogFile) {
         GpxListReader reader = new GpxListReader(remainingLogFile, AutoPause.NULL);
         return reader.getGpxList();
     }

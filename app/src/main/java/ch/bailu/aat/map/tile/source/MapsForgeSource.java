@@ -8,7 +8,6 @@ import org.mapsforge.map.rendertheme.InternalRenderTheme;
 import ch.bailu.aat.preferences.map.SolidRenderTheme;
 import ch.bailu.aat.services.cache.MapsForgeTileObject;
 import ch.bailu.aat.services.cache.ObjectHandle;
-import ch.bailu.aat.util.ToDo;
 
 public class MapsForgeSource extends Source {
     public final static Source MAPSFORGE = new MapsForgeSource(InternalRenderTheme.DEFAULT.name());

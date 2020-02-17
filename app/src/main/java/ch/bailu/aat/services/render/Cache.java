@@ -68,9 +68,6 @@ public final class Cache implements TileCache {
 
     /**
      *
-     * @param job
-     * @param fromRenderer
-     *
      * This gets called from the renderer
      */
     @Override

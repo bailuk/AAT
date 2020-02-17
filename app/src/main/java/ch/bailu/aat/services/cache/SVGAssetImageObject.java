@@ -3,9 +3,6 @@ package ch.bailu.aat.services.cache;
 import android.graphics.Bitmap;
 
 import com.caverock.androidsvg.SVG;
-import com.caverock.androidsvg.SVGParseException;
-
-import java.io.IOException;
 
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.background.BackgroundTask;

@@ -54,7 +54,7 @@ public abstract class PoiApi extends OsmApiConfiguration {
     }
 
     @Override
-    public String getUrl(String query) throws UnsupportedEncodingException {
+    public String getUrl(String query) {
         return "";
     }
 

@@ -1,7 +1,6 @@
 package ch.bailu.aat.preferences.location;
 
 import android.content.Context;
-import android.view.View;
 
 import org.mapsforge.core.model.LatLong;
 
@@ -36,12 +35,7 @@ public class SolidGoToLocation extends SolidString {
 
         reference = map.getMapViewPosition().getCenter();
 
-        new SolidTextInputDialog(this, SolidTextInputDialog.TEXT, new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                goToLocation(map, getValueAsString());
-            }
-        });
+        new SolidTextInputDialog(this, SolidTextInputDialog.TEXT, v -> goToLocation(map, getValueAsString()));
     }
 
     public void goToLocation(MapViewInterface map, String s) {

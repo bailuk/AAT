@@ -18,7 +18,7 @@ public class MetadataParser  extends TagParser {
 
 
     @Override
-    protected void parseText(XmlPullParser parser, Scanner scanner) throws IOException, XmlPullParserException {
+    protected void parseText(XmlPullParser parser, Scanner scanner) {
 
     }
 
@@ -33,7 +33,7 @@ public class MetadataParser  extends TagParser {
     }
 
     @Override
-    public void parsed(XmlPullParser parser, Scanner scanner) throws IOException {
+    public void parsed(XmlPullParser parser, Scanner scanner) {
 
     }
 }

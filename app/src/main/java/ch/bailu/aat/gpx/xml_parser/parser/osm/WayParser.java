@@ -30,12 +30,12 @@ public class WayParser extends TagParser {
 
 
     @Override
-    protected void parseText(XmlPullParser parser, Scanner scanner) throws IOException, XmlPullParserException {
+    protected void parseText(XmlPullParser parser, Scanner scanner) {
 
     }
 
     @Override
-    protected void parseAttributes(XmlPullParser parser, Scanner scanner) throws IOException, XmlPullParserException {
+    protected void parseAttributes(XmlPullParser parser, Scanner scanner) throws IOException {
 
         scanner.tags.clear();
         scanner.referencer.clear();
@@ -67,7 +67,7 @@ public class WayParser extends TagParser {
         }
     }
 
-    private void rememberRelation(Scanner scanner) throws IOException {
+    private void rememberRelation(Scanner scanner) {
         BoundingBoxE6 b = scanner.referencer.bounding;
 
         LatLongE6 c = b.getCenter();
