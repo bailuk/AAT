@@ -16,7 +16,7 @@ public final class AutoPauseState extends State {
             internal.logger.logPause();
             internal.statusIcon.showAutoPause();
 
-        } catch (IOException e) {
+        } catch (Exception e) {
             internal.emergencyOff(e);
         }
 
