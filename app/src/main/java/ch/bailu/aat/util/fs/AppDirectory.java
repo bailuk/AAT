@@ -121,7 +121,7 @@ public class AppDirectory  {
     public static String generateDatePrefix() {
         long time = System.currentTimeMillis();
         return String.format(Locale.ROOT,
-                "%tY_%tm_%td_%tH_%M", time, time, time, time, time);
+                "%tY_%tm_%td_%tH_%tM", time, time, time, time, time);
     }
 
 
