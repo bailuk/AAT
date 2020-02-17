@@ -47,8 +47,8 @@ public class AppDirectory  {
 
 
 
-    public static final String DIR_EDIT = "overlay/draft";
-    public static final String FILE_DRAFT= "draft.gpx";
+    private static final String DIR_EDIT = "overlay/draft";
+    private static final String FILE_DRAFT= "draft.gpx";
 
     public static Foc getEditorDraft(Context c) {
         return getDataDirectory(c, DIR_EDIT).child(FILE_DRAFT);
@@ -141,8 +141,8 @@ public class AppDirectory  {
 
         int length=name.length();
 
-        for (int i=length; i>0 ; i--) {
-            if (name.charAt(i-1)=='.') {
+        for (int i=length-1; i>0; i--) {
+            if (name.charAt(i)=='.') {
                 length=i;
                 break;
             }
