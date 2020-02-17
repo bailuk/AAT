@@ -21,8 +21,8 @@ public class AppDirectory  {
     public static final String DIR_TILES_OSMDROID = "osmdroid/tiles";
 
 
-    public static final String DIR_LOG = "log";
-    public static final String FILE_LOG = "log.gpx";
+    private static final String DIR_LOG = "log";
+    private static final String FILE_LOG = "log.gpx";
     public static Foc getLogFile(Context context) {
         return getDataDirectory(context, DIR_LOG).child(FILE_LOG);
     }
@@ -83,12 +83,6 @@ public class AppDirectory  {
     static private String getPresetPrefix(int i) {
         return PRESET_PREFIX + i;
     }
-
-
-
-
-
-
     ////////////////////////////////////////////////////////////////////////////////////////
 
 
@@ -96,7 +90,7 @@ public class AppDirectory  {
 
     ///////////////////////////////////////////////////////////////////////////////////////////////
 
-    public static final int MAX_TRY=99;
+    private static final int MAX_TRY=99;
     public static final String GPX_EXTENSION=".gpx";
 
 
