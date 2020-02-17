@@ -95,18 +95,22 @@ public class AppDirectory  {
 
 
     ///////////////////////////////////////////////////////////////////////////////////////////////
+
+    public static final int MAX_TRY=99;
     public static final String GPX_EXTENSION=".gpx";
-    public static final String OSM_EXTENSION=".osm";
+
 
     public static Foc generateUniqueFilePath(Foc directory, String prefix, String extension)
             throws IOException {
-        Foc file;
 
-        int x=0;
-        do {
-            file = directory.child(generateFileName(prefix, x, extension));
-            x++;
-        } while (file.exists() && x < 999);
+        Foc file = directory.child(generateFileName(prefix, extension));
+
+        int x=1;
+
+        while (file.exists() && x < MAX_TRY) {
+          file = directory.child(generateFileName(prefix, x, extension));
+          x++;
+        }
 
         if (file.exists()) throw new IOException();
 
@@ -114,13 +118,16 @@ public class AppDirectory  {
     }
 
 
-
     public static String generateDatePrefix() {
         long time = System.currentTimeMillis();
         return String.format(Locale.ROOT,
-                "%tY_%tm_%td", time,time,time);
+                "%tY_%tm_%td_%tH_%M", time, time, time, time, time);
     }
 
+
+    private static String generateFileName(String prefix, String extension) {
+        return prefix + extension;
+    }
 
     private static String generateFileName(String prefix, int i, String extension) {
         return String.format(Locale.ROOT,

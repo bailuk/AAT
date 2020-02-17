@@ -84,7 +84,7 @@ public final class StateScan implements State, Runnable {
                 }
             }
 
-        } catch (IOException e) {
+        } catch (Exception e) {
             AppLog.e(state.context, e);
         }
     }

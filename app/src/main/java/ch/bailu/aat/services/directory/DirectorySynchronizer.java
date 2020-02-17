@@ -146,7 +146,7 @@ public final class DirectorySynchronizer  implements Closeable {
                     compareFileSystemWithDatabase();
                     removeFilesFromDatabase();
 
-                } catch (IOException e) {
+                } catch (Exception e) {
                     exception = e;
 
                 } finally {
