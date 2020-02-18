@@ -1,0 +1,14 @@
+v1.18 (31)
+
+# Fix
+- Fix lock when parsing broken GPX files
+
+# Add
+- Support POI databases from [OpenAndroMaps](https://www.openandromaps.org)
+- Add [OpenTopoMap](https://opentopomap.org/) and [OpenCycleMap](https://www.opencyclemap.org/) #77 #6
+
+# Change
+- Improve configuration of offline maps
+- Improve exception handling when loading files
+- Change file name pattern to YYYY_MM_DD_hh_mm.gpx #95
+
