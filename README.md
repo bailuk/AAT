@@ -23,6 +23,11 @@ OpenCycleMap: (c) [Thunderforest](https://www.thunderforest.com/), Data (c) [Ope
 (c) [Mapsforge project](https://github.com/mapsforge/mapsforge)  
 license: [GNU Lesser GPL v3](http://www.gnu.org/licenses/lgpl.html)
 
+### Digital elevation model (DEM)
+DEM3 tiles are taken from [viewfinderpanoramas.org](http://viewfinderpanoramas.org) and are [repackaged](https://bailu.ch/dem3).
+Most tiles are originally from the [2000 Shuttle Radar Topography Mission](https://wiki.openstreetmap.org/wiki/SRTM).
+See [viewfinderpanoramas.org/dem3.html](http://viewfinderpanoramas.org/dem3.html) for details.
+
 ### AAT
 (c) 2011-2020 Lukas Bai bailu@bailu.ch  
 license: [GNU GPLv3 or later](http://www.gnu.org/licenses/gpl.html)  
