@@ -32,7 +32,7 @@ public final class SensorService extends VirtualService implements WithStatusTex
 
         AppBroadcaster.register(getContext(), onBluetoothStateChanged, BluetoothAdapter.ACTION_STATE_CHANGED);
 
-        AppBroadcaster.register(getContext(), onSensorDisconected, AppBroadcaster.SENSOR_DISCONECTED + InfoID.SENSORS);
+        AppBroadcaster.register(getContext(), onSensorDisconnected, AppBroadcaster.SENSOR_DISCONNECTED + InfoID.SENSORS);
 
         AppBroadcaster.register(getContext(), onSensorReconnect, AppBroadcaster.SENSOR_RECONNECT + InfoID.SENSORS);
 
@@ -59,7 +59,7 @@ public final class SensorService extends VirtualService implements WithStatusTex
     };
 
 
-    final BroadcastReceiver onSensorDisconected = new BroadcastReceiver() {
+    final BroadcastReceiver onSensorDisconnected = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             updateConnections();
@@ -87,7 +87,7 @@ public final class SensorService extends VirtualService implements WithStatusTex
         internal.close();
         sensorList.close();
         getContext().unregisterReceiver(onBluetoothStateChanged);
-        getContext().unregisterReceiver(onSensorDisconected);
+        getContext().unregisterReceiver(onSensorDisconnected);
         getContext().unregisterReceiver(onSensorReconnect);
     }
 

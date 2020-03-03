@@ -152,7 +152,7 @@ public class NumberView extends ViewGroup implements OnContentUpdatedInterface {
 
 
 
-    public View requestOnClickSensorReconect() {
+    public View requestOnClickSensorReconnect() {
         ToolTip.set(this, ConnectToSensorsView.LABEL);
 
         setOnClickListener(v -> {

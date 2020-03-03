@@ -8,6 +8,6 @@ public class SensorStateButton extends NumberView {
 
     public SensorStateButton(ServiceContext c) {
         super(new SensorStateDescription(c.getContext()), AppTheme.bar);
-        requestOnClickSensorReconect();
+        requestOnClickSensorReconnect();
     }
 }

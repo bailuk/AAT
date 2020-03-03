@@ -61,13 +61,13 @@ public class CockpitView extends ViewGroup {
 
     public void addHeartRate(DispatcherInterface di) {
         NumberView v = add(di, new HeartRateDescription(getContext()), InfoID.HEART_RATE_SENSOR);
-        v.requestOnClickSensorReconect();
+        v.requestOnClickSensorReconnect();
     }
 
 
     public void addCadence(DispatcherInterface di) {
         NumberView v = add(di, new CadenceDescription(getContext()), InfoID.CADENCE_SENSOR);
-        v.requestOnClickSensorReconect();
+        v.requestOnClickSensorReconnect();
     }
 
 
