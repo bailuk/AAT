@@ -26,7 +26,7 @@ public final class EditorMenu extends AbsMenu {
     private final Context context;
 
     private MenuItem save, saveCopy, saveCopyTo,
-            inverse, changeType, simplify, attach, fix, clearAll;
+            inverse, changeType, simplify, attach, fix, clearAll, cutRemaining, cutPreceding;
 
     public EditorMenu(ServiceContext sc, EditorInterface e, Foc f) {
         editor = e;
@@ -47,6 +47,8 @@ public final class EditorMenu extends AbsMenu {
         attach = menu.add(ToDo.translate("Attach file"));
         fix = menu.add(ToDo.translate("Fix"));
         clearAll = menu.add(ToDo.translate("Clear all"));
+        cutRemaining = menu.add(ToDo.translate("Cut remaining"));
+        cutPreceding = menu.add(ToDo.translate("Cut preceding"));
     }
 
     @Override
@@ -90,6 +92,12 @@ public final class EditorMenu extends AbsMenu {
 
         } else if (item == clearAll) {
             editor.clear();
+
+        } else if (item == cutPreceding) {
+            editor.cutPreceding();
+
+        } else if (item == cutRemaining) {
+            editor.cutRemaining();
 
         } else if (item == changeType) {
             changeType();

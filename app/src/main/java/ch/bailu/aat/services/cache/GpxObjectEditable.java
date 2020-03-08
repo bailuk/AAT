@@ -188,11 +188,6 @@ public final class GpxObjectEditable extends  GpxObject {
 
 
         @Override
-        public void discard() {
-            loadIntoEditor(currentHandle.getGpxList());
-        }
-
-        @Override
         public void inverse() {
             editor.inverse();
             modified(true);
@@ -215,6 +210,18 @@ public final class GpxObjectEditable extends  GpxObject {
         @Override
         public void simplify() {
             editor.simplify();
+            modified(true);
+        }
+
+        @Override
+        public void cutPreceding() {
+            editor.cutPreceding();
+            modified(true);
+        }
+
+        @Override
+        public void cutRemaining() {
+            editor.cutRemaining();
             modified(true);
         }
 

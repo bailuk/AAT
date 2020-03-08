@@ -1,14 +1,14 @@
 package ch.bailu.aat.services.editor;
 
-import ch.bailu.aat.gpx.attributes.GpxListAttributes;
-import ch.bailu.aat.gpx.attributes.GpxAttributes;
-import ch.bailu.aat.gpx.attributes.GpxAttributesStatic;
 import ch.bailu.aat.gpx.GpxList;
 import ch.bailu.aat.gpx.GpxListWalker;
 import ch.bailu.aat.gpx.GpxPoint;
 import ch.bailu.aat.gpx.GpxPointFirstNode;
 import ch.bailu.aat.gpx.GpxPointNode;
 import ch.bailu.aat.gpx.GpxSegmentNode;
+import ch.bailu.aat.gpx.attributes.GpxAttributes;
+import ch.bailu.aat.gpx.attributes.GpxAttributesStatic;
+import ch.bailu.aat.gpx.attributes.GpxListAttributes;
 import ch.bailu.aat.gpx.interfaces.GpxPointInterface;
 import ch.bailu.aat.gpx.interfaces.GpxType;
 import ch.bailu.aat.gpx.tools.Attacher;
@@ -124,6 +124,26 @@ public final class NodeEditor {
         return new NodeEditor(newNode, gpxList);
     }
 
+    public NodeEditor cutPreciding() {
+        PrecedingCutter cutter = new PrecedingCutter();
+        cutter.walkTrack(gpxList);
+
+        return saveReturn(cutter.getNewNode());
+    }
+
+
+    private NodeEditor saveReturn(NodeEditor n) {
+        if (n == null) return this;
+        return n;
+    }
+
+
+    public NodeEditor cutRemaining() {
+        RemainingCutter cutter = new RemainingCutter();
+        cutter.walkTrack(gpxList);
+
+        return saveReturn(cutter.getNewNode());
+    }
 
 
     private class Unlinker extends GpxListWalker {
@@ -238,4 +258,117 @@ public final class NodeEditor {
                     (GpxPointNode) newList.getPointList().getLast(), newList);
         }
     }
+
+
+
+
+
+
+    private class RemainingCutter extends GpxListWalker {
+        private final GpxList newList = new GpxList(gpxList.getDelta().getType(), GpxListAttributes.NULL);
+
+        private boolean startSegment=false;
+
+        private boolean goOn=true;
+
+        @Override
+        public boolean doList(GpxList track) {
+            return goOn;
+        }
+
+        @Override
+        public boolean doSegment(GpxSegmentNode segment) {
+            startSegment=true;
+            return goOn;
+        }
+
+        @Override
+        public boolean doMarker(GpxSegmentNode marker) {
+            return goOn;
+        }
+
+        @Override
+        public void doPoint(GpxPointNode pointNode) {
+            if (goOn) {
+                copyNode(pointNode);
+                if (pointNode == node) {
+                    goOn = false;
+                }
+            }
+        }
+
+        public void copyNode(GpxPointNode pointNode) {
+            if (startSegment) {
+                newList.appendToNewSegment(pointNode.getPoint(), pointNode.getAttributes());
+                startSegment=false;
+            } else {
+                newList.appendToCurrentSegment(pointNode.getPoint(), pointNode.getAttributes());
+            }
+        }
+
+
+        public NodeEditor getNewNode() {
+            if (newList.getPointList().size()>0) {
+                return new NodeEditor(
+                        (GpxPointNode)newList.getPointList().getLast(), newList);
+            }
+            return null;
+        }
+    }
+
+
+    private class PrecedingCutter extends GpxListWalker {
+        private final GpxList newList = new GpxList(gpxList.getDelta().getType(), GpxListAttributes.NULL);
+
+        private boolean startSegment=false;
+        private boolean start=false;
+
+        @Override
+        public boolean doList(GpxList track) {
+            return true;
+        }
+
+        @Override
+        public boolean doSegment(GpxSegmentNode segment) {
+            startSegment=true;
+            return true;
+        }
+
+        @Override
+        public boolean doMarker(GpxSegmentNode marker) {
+            return true;
+        }
+
+        @Override
+        public void doPoint(GpxPointNode pointNode) {
+
+            if (pointNode == node) {
+                start = true;
+
+            }
+
+            if (start) {
+                copyNode(pointNode);
+            }
+        }
+
+        public void copyNode(GpxPointNode pointNode) {
+            if (startSegment) {
+                newList.appendToNewSegment(pointNode.getPoint(), pointNode.getAttributes());
+                startSegment=false;
+            } else {
+                newList.appendToCurrentSegment(pointNode.getPoint(), pointNode.getAttributes());
+            }
+        }
+
+
+        public NodeEditor getNewNode() {
+            if (newList.getPointList().size()>0) {
+                return new NodeEditor(
+                        (GpxPointNode)newList.getPointList().getFirst(), newList);
+            }
+            return null;
+        }
+    }
+
 }

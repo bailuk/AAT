@@ -53,27 +53,23 @@ public interface EditorInterface {
         public void undo() {}
 
         @Override
-        public void discard() {}
+        public void inverse() {}
 
         @Override
-        public void inverse() {
-
-        }
+        public void attach(GpxList file) {}
 
         @Override
-        public void attach(GpxList file) {
-
-        }
+        public void fix() {}
 
         @Override
-        public void fix() {
-
-        }
+        public void simplify() {}
 
         @Override
-        public void simplify() {
+        public void cutPreceding() {}
 
-        }
+        @Override
+        public void cutRemaining(){}
+
     };
     void save();
     void setType(GpxType type);
@@ -90,13 +86,11 @@ public interface EditorInterface {
     void clear();
     void redo();
     void undo();
-    void discard();
 
     void inverse();
-
     void attach(GpxList toAttach);
-
     void fix();
-
     void simplify();
+    void cutPreceding();
+    void cutRemaining();
 }

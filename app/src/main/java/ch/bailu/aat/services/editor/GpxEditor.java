@@ -103,4 +103,11 @@ public final class GpxEditor {
         ring.add(ring.get().attach(toAttach));
     }
 
+    public void cutPreceding() {
+        ring.add(ring.get().cutPreciding());
+    }
+
+    public void cutRemaining() {
+        ring.add(ring.get().cutRemaining());
+    }
 }
