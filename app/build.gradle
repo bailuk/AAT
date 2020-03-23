@@ -49,14 +49,14 @@ dependencies {
             https://github.com/mapsforge/mapsforge/raw/master/docs/Integration.md
         */
     // MapsForge
-    def mapsforgeVersion = '0.12.0'
+    def mapsforgeVersion = '0.13.0'
 
     // MapsForge Core
     implementation "org.mapsforge:mapsforge-core:$mapsforgeVersion"
     implementation "org.mapsforge:mapsforge-map:$mapsforgeVersion"
     implementation "org.mapsforge:mapsforge-map-reader:$mapsforgeVersion"
     implementation "org.mapsforge:mapsforge-themes:$mapsforgeVersion"
-    implementation 'net.sf.kxml:kxml2:2.3.0'
+    //implementation 'net.sf.kxml:kxml2:2.3.0'
 
     // MapsForge Android
     implementation "org.mapsforge:mapsforge-map-android:$mapsforgeVersion"
@@ -76,7 +76,7 @@ dependencies {
     implementation "ch.acra:acra-mail:$acraVersion"
     implementation "ch.acra:acra-dialog:$acraVersion"
 
-    // open - location -code
+    // open-location-code
     implementation "com.google.openlocationcode:openlocationcode:1.0.4"
 
     // Local

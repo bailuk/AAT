@@ -9,21 +9,20 @@ import ch.bailu.aat.gpx.interfaces.GpxPointInterface;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.VirtualService;
 import ch.bailu.aat.services.cache.ImageObjectAbstract;
+import ch.bailu.aat.util.WithStatusText;
 import ch.bailu.aat.util.fs.foc.FocAsset;
 import ch.bailu.aat.util.ui.AppLog;
-import ch.bailu.aat.util.WithStatusText;
 import ch.bailu.util_java.foc.Foc;
 
 public final class IconMapService extends VirtualService implements WithStatusText {
-    public static final float BIG_ICON_SIZE = 48;//64;
-    public static final float SMALL_ICON_SIZE = 24;
-
+    public static final float BIG_ICON_SIZE = 48;
 
     private final static int NKEY_KEY = Keys.toIndex("class");
     private final static int NKEY_VALUE = Keys.toIndex("type");
 
-    private final static String MAP_FILE="symbols/iconmap.txt";
-
+    public final static String SVG_SUFFIX = ".svg";
+    public final static String SVG_DIRECTORY = "icons/";
+    private final static String SVG_MAP_FILE = SVG_DIRECTORY + "iconmap.txt";
 
 
     private final IconMap map;
@@ -37,7 +36,7 @@ public final class IconMapService extends VirtualService implements WithStatusTe
         map = new IconMap();
 
         try {
-            Foc map_file = new FocAsset(sc.getContext().getAssets(), MAP_FILE);
+            Foc map_file = new FocAsset(sc.getContext().getAssets(), SVG_MAP_FILE);
             new IconMapParser(map_file, map);
         } catch (IOException e) {
             AppLog.e(getContext(), this, e);
@@ -45,16 +44,6 @@ public final class IconMapService extends VirtualService implements WithStatusTe
 
 
     }
-
-    public ImageObjectAbstract getIconSVG(int key, String value, int size) {
-        String id = toAssetPath(key, value);
-
-        if (id != null)
-            return cache.getIcon(id, size);
-
-        return null;
-    }
-
 
     public ImageObjectAbstract getIconSVG(final GpxPointInterface point, final int size) {
 

@@ -3,17 +3,15 @@ package ch.bailu.aat.services.icons;
 import java.util.HashMap;
 
 public final class IconMap {
-    private final static String SVG_PREFIX="symbols/";
-    private final static String SVG_SUFFIX=".svg";
+
 
    public class Icon {
         public final String svg;
 
         public Icon(String file_name) {
-            svg = SVG_PREFIX + file_name + SVG_SUFFIX;
+            svg = IconMapService.SVG_DIRECTORY + file_name + IconMapService.SVG_SUFFIX;
         }
     }
-
 
 
     private final HashMap<Integer, HashMap<String, Icon>> key_list =
