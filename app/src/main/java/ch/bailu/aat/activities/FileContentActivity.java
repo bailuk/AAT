@@ -15,6 +15,7 @@ import ch.bailu.aat.description.ContentDescription;
 import ch.bailu.aat.description.ContentDescriptions;
 import ch.bailu.aat.description.DateDescription;
 import ch.bailu.aat.description.DescendDescription;
+import ch.bailu.aat.description.DistanceApDescription;
 import ch.bailu.aat.description.DistanceDescription;
 import ch.bailu.aat.description.EndDateDescription;
 import ch.bailu.aat.description.IndexedAttributeDescription;
@@ -87,7 +88,9 @@ public class FileContentActivity extends AbsFileContentActivity{
                         new PauseDescription(c),
                         new PauseApDescription(c)),
 
-                new DistanceDescription(c),
+                new ContentDescriptions(
+                    new DistanceDescription(c),
+                    new DistanceApDescription(c)),
 
                 new ContentDescriptions(
                         new AverageSpeedDescription(c),

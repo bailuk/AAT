@@ -25,9 +25,11 @@ public class AveragePaceDescriptionAP extends AveragePaceDescription {
 
     @Override
     public void onContentUpdated(int iid, GpxInformation info) {
-        final long autoPause = info.getAttributes().getAsLong(AutoPause.INDEX_AUTO_PAUSE);
-        float distance = info.getDistance();
-        long stime = (info.getTimeDelta() - autoPause) / 1000;
+        final long apTime = info.getAttributes().getAsLong(AutoPause.INDEX_AUTO_PAUSE_TIME);
+        final float apDistance = info.getAttributes().getAsFloat(AutoPause.INDEX_AUTO_PAUSE_DISTANCE);
+
+        float distance = info.getDistance() - apDistance;
+        long stime = (info.getTimeDelta() - apTime) / 1000;
 
         float ftime = stime;
 

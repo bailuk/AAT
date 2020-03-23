@@ -14,7 +14,7 @@ public class TimeApDescription extends TimeDescription {
 
     @Override
     public void onContentUpdated(int iid, GpxInformation info) {
-        final long autoPause = info.getAttributes().getAsLong(AutoPause.INDEX_AUTO_PAUSE);
+        final long autoPause = info.getAttributes().getAsLong(AutoPause.INDEX_AUTO_PAUSE_TIME);
         setCache(info.getTimeDelta() - autoPause);
     }
 

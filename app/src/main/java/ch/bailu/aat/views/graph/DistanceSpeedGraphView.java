@@ -181,7 +181,7 @@ public class DistanceSpeedGraphView extends AbsGraphView implements SharedPrefer
 
 
         private void plotTotalAverage() {
-            long timeDelta = totalTime - autoPause.get();
+            long timeDelta = totalTime - autoPause.getPauseTime();
 
             if (timeDelta > 0) {
                 float avg = totalDistance / totalTime * 1000;

@@ -51,62 +51,11 @@ public abstract class GpxPointNode extends Node implements GpxDeltaPointInterfac
     }
 
 
-/*
-    public String getAt(String key) {
-        String value = attributes.get(key);
-        if (value==null) {
-            value=GpxAttributes.NULL_VALUE;
-        }
-        return value;
-    }
-
-
-    public void setValue(String key, int value) {
-        setValue(key, String.valueOf(value));
-    }
-
-
-    public void setValue(String key, long value) {
-        setValue(key, String.valueOf(value));
-    }
-
-
-    public void setValue(String key, double value) {
-        setValue(key, String.valueOf(value));
-    }
-
-    public void setValue(String key, String value) {
-        initMap();
-        attributes.put(key, value);
-    }
-
-
-    private void initMap() {
-        if (attributes == GpxAttributes.NULL) {
-            attributes = new GpxAttributesStatic();
-        }
-    }
-
-
-    public void removeKey(String key) {
-        attributes.remove(key);
-        releaseMap();
-    }
-
-
-    private void releaseMap() {
-        if (attributes.size() == 0) {
-            attributes = GpxAttributesStatic.NULL;
-        }
-    }
-*/
-
     @NonNull
     @Override
     public String toString() {
         return attributes.toString();
     }
-
 
     public GpxPoint getPoint() {
         return point;
