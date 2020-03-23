@@ -109,10 +109,6 @@ public class ActivitySwitcher {
                 NominatimActivity.class));
         entries.add(new Entry(c.getString(R.string.intro_settings), PreferencesActivity.class));
 
-
-        if (BuildConfig.DEBUG)
-            entries.add(new Entry(c.getString(R.string.intro_test), TestActivity.class));
-
     }
     public int size() {
         return entries.size();

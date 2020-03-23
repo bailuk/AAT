@@ -1,4 +1,5 @@
-package ch.bailu.aat.test;
+package ch.bailu.aat.util;
+
 
 import org.mapsforge.core.model.Tag;
 import org.mapsforge.poi.storage.PointOfInterest;

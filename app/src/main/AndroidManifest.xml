@@ -138,8 +138,6 @@
         <activity android:name="ch.bailu.aat.activities.AboutActivity" >
         </activity>
 
-        <activity android:name="ch.bailu.aat.activities.TestActivity" >
-        </activity>
         <activity
             android:name="ch.bailu.aat.activities.GpxEditorActivity">
         </activity>

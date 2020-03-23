@@ -11,7 +11,6 @@ import org.mapsforge.poi.storage.PoiPersistenceManager;
 import org.mapsforge.poi.storage.PointOfInterest;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -23,7 +22,6 @@ import ch.bailu.aat.services.InsideContext;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.background.BackgroundTask;
 import ch.bailu.aat.services.background.FileTask;
-import ch.bailu.aat.test.GpxPointPoi;
 import ch.bailu.aat.util.fs.AppDirectory;
 import ch.bailu.util_java.foc.Foc;
 
