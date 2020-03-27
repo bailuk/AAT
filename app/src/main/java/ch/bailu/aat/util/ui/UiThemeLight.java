@@ -6,14 +6,15 @@ import android.widget.TextView;
 
 import ch.bailu.aat.R;
 
-public class UiThemeLight extends  UiThemeDark {
-    public static final int COLOR_FG=Color.BLACK;
-    public static final int COLOR_BG=Color.WHITE;
+public class UiThemeLight implements  UiTheme {
 
+    private final static int GITHUB_TEXT = 0xFF24292e;
+    private final static int GITHUB_LINK = 0xFF428ce0;
+    private final static int GITHUB_BACKGROUND=Color.WHITE;
 
     @Override
     public void background(View v) {
-        v.setBackgroundColor(COLOR_BG);
+        v.setBackgroundColor(GITHUB_BACKGROUND);
     }
 
     @Override
@@ -31,7 +32,7 @@ public class UiThemeLight extends  UiThemeDark {
 
     @Override
     public void header(TextView v) {
-        v.setTextColor(COLOR_FG);
+        v.setTextColor(GITHUB_TEXT);
         v.setTextSize(TEXT_SIZE);
 
 
@@ -39,6 +40,13 @@ public class UiThemeLight extends  UiThemeDark {
 
     @Override
     public void content(TextView v) {
-        v.setTextColor(Color.BLACK);
+        v.setTextColor(GITHUB_TEXT);
+        v.setLinkTextColor(GITHUB_LINK);
+
+    }
+
+    @Override
+    public void toolTip(TextView v) {
+
     }
 }

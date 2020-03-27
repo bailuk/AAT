@@ -3,19 +3,19 @@
 may include the Navy, Army, Air Force and Marines. See the page titled Military for an introduction on its usage.
 </p>
 <p>[<b>military</b>=<b>airfield</b>]<br>A place where military planes take off and land.</p>
-<p>[<b>military</b>=<b>ammunition</b>]<br>Military ammunition storage area.</p>
-<p>[<b>military</b>=<b>bunker</b>]<br>Buildings, often build from concrete, to stand even heavier fire.  Also  WW2 pillboxes.</p>
-<p>[<b>military</b>=<b>barracks</b>]<br>Buildings where soldiers live and work.</p>
-<p>[<b>military</b>=<b>checkpoint</b>]<br>Place of a possible access to a restricted or secured area, where 
-civilian visitors and vehicles will be controled by a military 
-authority.</p>
-<p>[<b>military</b>=<b>danger_area</b>]<br>Usually a large marked area around something like a firing range, bombing range, etc which can be an exclusion zone.</p>
-<p>[<b>military</b>=<b>naval_base</b>]<br>A naval base</p>
+<p>[<b>military</b>=<b>bunker</b>]<br>A building reinforced to withstand attack</p>
+<p>[<b>military</b>=<b>barracks</b>]<br>Buildings where soldiers live and work</p>
+<p>[<b>military</b>=<b>checkpoint</b>]<br>Place where civilian visitors and vehicles will be checked by a military authority.</p>
+<p>[<b>military</b>=<b>danger_area</b>]<br>An exclusion zone around something like a firing range</p>
+<p>[<b>military</b>=<b>naval_base</b>]<br>A naval base where warships are docked</p>
 <p>[<b>military</b>=<b>nuclear_explosion_site</b>]<br>Nuclear weapons test site</p>
-<p>[<b>military</b>=<b>obstacle_course</b>]<br>A military obstacle course.</p>
+<p>[<b>military</b>=<b>obstacle_course</b>]<br>A
+ military obstacle course: a series of challenging physical obstructions
+ an individual or team must navigate usually while being timed</p>
 <p>[<b>military</b>=<b>office</b>]<br>Military offices, e.g. general staff office, military recruitment office etc</p>
-<p>[<b>military</b>=<b>range</b>]<br>Where soldiers practice with their weapons (firing, bombing, artillery, …).</p>
-<p>[<b>military</b>=<b>training_area</b>]<br>An area where soldiers train and weapons or other military technology are experimented with or are tested.</p>
-<p>[<b>military</b>=<b>trench</b>]<br>Trenches used for military purposes</p>
-<p>[<b>military</b>=<b>launchpad</b>]<br>Launchpads used for military purposes, see tag:aeroway=launchpad for civilian use</p>
-<p>[<b>military</b>=<b>user defined</b>]<br>All commonly used values according to Taginfo</p>
+<p>[<b>military</b>=<b>range</b>]<br>Where soldiers practice with their weapons (firing, bombing, artillery, …)</p>
+<p>[<b>military</b>=<b>training_area</b>]<br>A military training area/proving ground</p>
+<p>[<b>military</b>=<b>trench</b>]<br>A
+ military trench: an excavation in the ground that is generally deeper 
+than it is wide, dug into the ground as a barrier for military purposes 
+(e.g. trench warfare)</p>

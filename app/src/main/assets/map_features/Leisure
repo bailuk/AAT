@@ -6,34 +6,36 @@
 <p>[<b>leisure</b>=<b>beach_resort</b>]<br>A managed beach, including within the boundary any associated facilities. Entry may also require payment of a fee.</p>
 <p>[<b>leisure</b>=<b>bandstand</b>]<br>A bandstand is an open structure where musical bands can perform concerts</p>
 <p>[<b>leisure</b>=<b>bird_hide</b>]<br>A place that is used to observe wildlife, especially birds.</p>
-<p>[<b>leisure</b>=<b>common</b>]<br>Identify land over which the public has general rights of use for certain leisure activities.</p>
-<p>[<b>leisure</b>=<b>dance</b>]<br>A place to go dancing.</p>
+<p>[<b>leisure</b>=<b>common</b>]<br></p>
+<p>[<b>leisure</b>=<b>dance</b>]<br>A dance venue or dance hall.</p>
 <p>[<b>leisure</b>=<b>disc_golf_course</b>]<br>A place to play disc golf</p>
-<p>[<b>leisure</b>=<b>dog_park</b>]<br>A designated area, with or without a fenced boundary, where dog-owners are permitted to exercise their pets unrestrained</p>
+<p>[<b>leisure</b>=<b>dog_park</b>]<br>A designated area, with or without a fenced boundary, where dog-owners are permitted to exercise their pets unrestrained.</p>
 <p>[<b>leisure</b>=<b>escape_game</b>]<br>A
  physical adventure game in which players solve a series of puzzles 
 using clues, hints and strategy to complete the objectives at hand.</p>
-<p>[<b>leisure</b>=<b>firepit</b>]<br>A fireplace on a camp or picnic site</p>
-<p>[<b>leisure</b>=<b>fishing</b>]<br>A place for fishing</p>
-<p>[<b>leisure</b>=<b>fitness_centre</b>]<br>Fitness centre</p>
-<p>[<b>leisure</b>=<b>fitness_station</b>]<br>An outdoor facility where people can practise typical fitness excercises</p>
+<p>[<b>leisure</b>=<b>firepit</b>]<br>A fire ring or fire pit, often at a campsite or picnic site</p>
+<p>[<b>leisure</b>=<b>fishing</b>]<br>A public or private place for fishing</p>
+<p>[<b>leisure</b>=<b>fitness_centre</b>]<br>Fitness centre, health club or gym with exercise machines, fitness classes or both.</p>
+<p>[<b>leisure</b>=<b>fitness_station</b>]<br>An outdoor facility where people can practise typical fitness exercises</p>
 <p>[<b>leisure</b>=<b>garden</b>]<br>A place where flowers and other plants are grown in a decorative and structured manner or for scientific purposes.</p>
 <p>[<b>leisure</b>=<b>hackerspace</b>]<br>A place where people with common interests (science, technology, ...) meet.</p>
-<p>[<b>leisure</b>=<b>horse_riding</b>]<br>A facility where people practice horse riding, usually in their spare time.</p>
+<p>[<b>leisure</b>=<b>horse_riding</b>]<br>A
+ facility where people practise horse riding, usually in their spare 
+time, e.g. a riding centre. For a riding arena use the tags for pitch 
+and equestrian sport.</p>
 <p>[<b>leisure</b>=<b>ice_rink</b>]<br>A place where you can skate and play bandy or ice hockey.</p>
 <p>[<b>leisure</b>=<b>marina</b>]<br>A facility for mooring leisure yachts and motor boats.</p>
 <p>[<b>leisure</b>=<b>miniature_golf</b>]<br>A place or area where you can play miniature golf.</p>
 <p>[<b>leisure</b>=<b>nature_reserve</b>]<br>A protected area of importance for wildlife, flora, fauna or features of geological or other special interest.</p>
-<p>[<b>leisure</b>=<b>park</b>]<br>A park, usually municipal.</p>
+<p>[<b>leisure</b>=<b>park</b>]<br>A park, usually urban (municipal).</p>
 <p>[<b>leisure</b>=<b>picnic_table</b>]<br>A table with benches for food and rest</p>
-<p>[<b>leisure</b>=<b>pitch</b>]<br>An area designed for playing a particular sport, normally designated with appropriate markings.</p>
-<p>[<b>leisure</b>=<b>playground</b>]<br>A playground.</p>
-<p>[<b>leisure</b>=<b>slipway</b>]<br>A slipway</p>
+<p>[<b>leisure</b>=<b>pitch</b>]<br>An area designed for practising a particular sport, normally designated with appropriate markings.</p>
+<p>[<b>leisure</b>=<b>playground</b>]<br>A playground: an area designed for children to play.</p>
+<p>[<b>leisure</b>=<b>slipway</b>]<br>A slipway: a ramp for launching a boat into water</p>
 <p>[<b>leisure</b>=<b>sports_centre</b>]<br>A sports centre is a distinct facility where sports take place within an enclosed area.</p>
 <p>[<b>leisure</b>=<b>stadium</b>]<br>A major sports facility with substantial tiered seating.</p>
 <p>[<b>leisure</b>=<b>summer_camp</b>]<br>A place for supervised camps for children or teenagers conducted during the summer months</p>
-<p>[<b>leisure</b>=<b>swimming_area</b>]<br>An open-space natural place where you can swim</p>
+<p>[<b>leisure</b>=<b>swimming_area</b>]<br>An official open-space natural place where you can swim</p>
 <p>[<b>leisure</b>=<b>swimming_pool</b>]<br>A swimming pool (water area only)</p>
 <p>[<b>leisure</b>=<b>track</b>]<br>A track for running, cycling and other non-motorised racing such as horses, greyhounds.</p>
 <p>[<b>leisure</b>=<b>water_park</b>]<br>An amusement park with features like water slides, recreational pools (e.g. wave pools) or lazy rivers.</p>
-<p>[<b>leisure</b>=<b>wildlife_hide</b>]<br>A place to observe wildlife.</p>

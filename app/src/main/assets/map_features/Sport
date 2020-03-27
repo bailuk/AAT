@@ -4,7 +4,7 @@
 conjunction with tags landuse=* or leisure=*. See the page titled Sport for an introduction on its usage.
 </p>
 <p>[<b>sport</b>=<b>9pin</b>]<br>A bowling game played in Europe with only 9 pins.</p>
-<p>[<b>sport</b>=<b>10pin</b>]<br>A place that has bowling alleys in it.</p>
+<p>[<b>sport</b>=<b>10pin</b>]<br>A bowling game popular in North America with 10 pins.</p>
 <p>[<b>sport</b>=<b>american_football</b>]<br>A sport played by two teams of eleven players on a rectangular field with goalposts at each end.</p>
 <p>[<b>sport</b>=<b>aikido</b>]<br>A
  Japanese martial art by blending with the motion of the attacker and 
@@ -20,12 +20,12 @@ similarly sized sports venue, also called football, footy, Aussie rules,
  racquet sport played by singles or in teams of two, who take positions 
 on opposite halves of a rectangular court (pitch) divided by a net.</p>
 <p>[<b>sport</b>=<b>bandy</b>]<br>Bandy is a sport played by two teams of eleven players on a rectangular field.</p>
-<p>[<b>sport</b>=<b>base</b>]<br>BASE jumping is an activity that employs an initially packed parachute to jump from fixed objects.</p>
 <p>[<b>sport</b>=<b>baseball</b>]<br>A
  bat-and-ball game played between two teams of nine players on a field 
 (pitch or stadium) each who take turns batting and fielding.</p>
 <p>[<b>sport</b>=<b>basketball</b>]<br>A sport played by two teams of five players on a rectangular court.</p>
 <p>[<b>sport</b>=<b>beachvolleyball</b>]<br>Volleyball played on a sand court</p>
+<p>[<b>sport</b>=<b>biathlon</b>]<br>The biathlon is a winter sport that combines cross-country skiing and rifle shooting.</p>
 <p>[<b>sport</b>=<b>billiards</b>]<br>Cue
  sports, a wide variety of games of skill generally played with a cue 
 stick which is used to strike billiard balls, moving them around a 
@@ -47,21 +47,17 @@ lyonnaise, bocce, or bocce volo.</p>
  combat sport in which two people engage in a contest of strength, 
 speed, reflexes, endurance, and will, by throwing punches with gloved 
 hands against each other.</p>
+<p>[<b>sport</b>=<b>bullfighting</b>]<br>Bullfighting, both on foot and on horseback, is a physical contest in which bulls are fought by humans.</p>
 <p>[<b>sport</b>=<b>canadian_football</b>]<br>Canadian
  football (CFL) is a form of gridiron football played in Canada in which
  two teams of 12 players each compete for territorial control of a field</p>
-<p>[<b>sport</b>=<b>canoe</b>]<br>Canoe
- and Kayak are a narrow human-powered boats, primarily designed to be 
-manually propelled by means of a paddle for the use of racing, 
-whitewater canoeing, touring and camping, freestyle, and general 
-recreation. The intended use of the canoe dictates its hull shape and 
-construction material.</p>
+<p>[<b>sport</b>=<b>canoe</b>]<br>Canoe and Kayak.</p>
 <p>[<b>sport</b>=<b>chess</b>]<br>Chess is a popular two-player strategy board game.</p>
 <p>[<b>sport</b>=<b>cliff_diving</b>]<br>Non-competitive diving is jumping from a cliff or a rock into water.</p>
 <p>[<b>sport</b>=<b>climbing</b>]<br>Marks
  elements to represent natural climbing sites (climbing areas, sectors, 
 crags, halls, frozen waterfalls, etc.) or artificial climbs (climbing 
-walls, Indoor climbing etc.)</p>
+walls, indoor climbing etc.)</p>
 <p>[<b>sport</b>=<b>climbing_adventure</b>]<br>Used
  to tag an area as "Adventure Park", "Ropes Courses", "Climbing 
 Adventure", "Zip-line", or "Treetop Adventure", where people climb, walk
@@ -71,20 +67,24 @@ Adventure", "Zip-line", or "Treetop Adventure", where people climb, walk
  bat-and-ball sport contested by two teams, usually of eleven players, 
 each on a large grass Cricket pitch. Played on a large circular or 
 oval-shaped grassy Cricket field ground.</p>
+<p>[<b>sport</b>=<b>crossfit</b>]<br>CrossFit, a branded fitness regimen</p>
 <p>[<b>sport</b>=<b>croquet</b>]<br>A
  sport or game that is played between two or more players embedded on a 
 small grass playing court or pitch which involves hitting plastic or 
 wooden balls with a mallet through hoops (often called "wickets" in the 
 United States).</p>
 <p>[<b>sport</b>=<b>curling</b>]<br>A sport in which players slide stones on a sheet of ice towards a target area which is segmented into four concentric rings.</p>
-<p>[<b>sport</b>=<b>cycling</b>]<br>The use of bicycles for transport, recreation, or for sport, also called bicycling, mountain biking or biking.</p>
+<p>[<b>sport</b>=<b>cycling</b>]<br>The use of bicycles for sport, also called bicycling, mountain biking or biking.</p>
 <p>[<b>sport</b>=<b>darts</b>]<br>Darts is a form of throwing game in which small missiles are thrown at a circular target (dartboard) fixed to a wall.</p>
-<p>[<b>sport</b>=<b>dog_racing</b>]<br></p>
+<p>[<b>sport</b>=<b>dog_agility</b>]<br>Dog agility is a dog sport in which a handler directs a dog through an obstacle course in a race for both time and accuracy.</p>
+<p>[<b>sport</b>=<b>dog_racing</b>]<br>A feature used for dog racing</p>
 <p>[<b>sport</b>=<b>equestrian</b>]<br>A sport practised with the horse as a partner</p>
 <p>[<b>sport</b>=<b>fencing</b>]<br>Fencing
  is the martial art of fighting with blades. Divided into three weapon 
 categories: foil, sabre (spelled saber in the United States) and épée.</p>
 <p>[<b>sport</b>=<b>field_hockey</b>]<br>Field Hockey</p>
+<p>[<b>sport</b>=<b>fitness</b>]<br>Fitness sports</p>
+<p>[<b>sport</b>=<b>floorball</b>]<br>Floorball is a type of floor hockey with five players and a goalkeeper in each team.</p>
 <p>[<b>sport</b>=<b>free_flying</b>]<br>Provides a way to tag landing and takeoff for free flying aircraft with additional related amenities.</p>
 <p>[<b>sport</b>=<b>futsal</b>]<br>Futsal is a sport played by two teams of five players on a rectangular court.</p>
 <p>[<b>sport</b>=<b>gaelic_games</b>]<br>Gaelic
@@ -94,63 +94,98 @@ Gaelic Football, Hurling, Ladies Gaelic Football, Camogie, Handball and
 Rounders</p>
 <p>[<b>sport</b>=<b>golf</b>]<br>Golf</p>
 <p>[<b>sport</b>=<b>gymnastics</b>]<br>Gymnastics</p>
-<p>[<b>sport</b>=<b>handball</b>]<br>Handball</p>
+<p>[<b>sport</b>=<b>handball</b>]<br>A team sport played with goals and a thrown ball using the hands.</p>
 <p>[<b>sport</b>=<b>hapkido</b>]<br>A dynamic and highly eclectic Korean martial art</p>
 <p>[<b>sport</b>=<b>horseshoes</b>]<br>Horseshoes</p>
 <p>[<b>sport</b>=<b>horse_racing</b>]<br>Horse racing</p>
-<p>[<b>sport</b>=<b>ice_hockey</b>]<br>Ice hockey</p>
+<p>[<b>sport</b>=<b>ice_hockey</b>]<br>Ice hockey ring.</p>
 <p>[<b>sport</b>=<b>ice_skating</b>]<br>A sport or pastime by moving on ice while using ice skates.</p>
 <p>[<b>sport</b>=<b>ice_stock</b>]<br>Ice
- stock sport, also known as Bavarian Curling is a winter sport, somewhat
- similar to Wikipedia Curling. In German, it is known as Wikipedia 
-Eisstockschießen.</p>
+ stock sport, also known as Bavarian curling, is a winter sport, 
+somewhat similar to curling. In German, it is known as Eisstockschießen.</p>
 <p>[<b>sport</b>=<b>judo</b>]<br>Judo
  (柔道 jūdō, meaning "gentle way") is a modern martial art, combat and 
 Olympic sport created in Japan in 1882 by Jigoro Kano (嘉納治五郎).</p>
 <p>[<b>sport</b>=<b>karate</b>]<br>Karate</p>
 <p>[<b>sport</b>=<b>karting</b>]<br>Kart racing</p>
+<p>[<b>sport</b>=<b>kickboxing</b>]<br>Kickboxing is a group of stand-up combat sports based on kicking and punching.</p>
 <p>[<b>sport</b>=<b>kitesurfing</b>]<br>To mark a spot for kitesurfing</p>
-<p>[<b>sport</b>=<b>korfball</b>]<br>Korfball</p>
+<p>[<b>sport</b>=<b>korfball</b>]<br>Korfball: a team sport played with a ball on a rectangular court</p>
+<p>[<b>sport</b>=<b>krachtbal</b>]<br>Team sport played with a heavy ball on a rectangular pitch, originating in West-Flanders, Belgium</p>
 <p>[<b>sport</b>=<b>lacrosse</b>]<br>A
  team sport played with a lacrosse stick and a lacrosse ball. Players 
 use the head of the lacrosse stick to carry pass, catch, and shoot the 
 ball into the goal.</p>
+<p>[<b>sport</b>=<b>martial_arts</b>]<br>Codified systems and traditions of combat practices</p>
+<p>[<b>sport</b>=<b>miniature_golf</b>]<br>Miniature
+ golf, also known as minigolf, mini-putt, crazy golf, or putt-putt, is 
+an offshoot of the sport of golf focusing solely on the putting aspect 
+of its parent game.</p>
 <p>[<b>sport</b>=<b>model_aerodrome</b>]<br>Model aerodrome</p>
-<p>[<b>sport</b>=<b>motocross</b>]<br>Motocross.</p>
-<p>[<b>sport</b>=<b>motor</b>]<br>Motorsport</p>
-<p>[<b>sport</b>=<b>multi</b>]<br>A sports facility that is suitable for different kinds of sport</p>
-<p>[<b>sport</b>=<b>netball</b>]<br>A sport played by two teams on a rectangular court.</p>
+<p>[<b>sport</b>=<b>motocross</b>]<br>Motorcycle racing on unpaved surfaces.</p>
+<p>[<b>sport</b>=<b>motor</b>]<br>Motorsport: a sport with motorised vehicles, e.g. auto racing</p>
+<p>[<b>sport</b>=<b>multi</b>]<br>A sports facility that is suitable for more than one sport</p>
+<p>[<b>sport</b>=<b>netball</b>]<br>A hand ball competition between two teams on a rectangular court.</p>
 <p>[<b>sport</b>=<b>obstacle_course</b>]<br>A series of challenging physical obstacles an individual or team must navigate usually while being timed.</p>
 <p>[<b>sport</b>=<b>orienteering</b>]<br>Orienteering</p>
-<p>[<b>sport</b>=<b>paddle_tennis</b>]<br>Paddle tennis</p>
+<p>[<b>sport</b>=<b>paddle_tennis</b>]<br>Paddle tennis is a racquet sport adapted from tennis and played for over a century.</p>
+<p>[<b>sport</b>=<b>padel</b>]<br>Padel is a racquet sport invented in 1969 in Acapulco, Mexico.</p>
 <p>[<b>sport</b>=<b>parachuting</b>]<br>Parachuting / Skydiving</p>
-<p>[<b>sport</b>=<b>paragliding</b>]<br></p>
-<p>[<b>sport</b>=<b>pelota</b>]<br></p>
-<p>[<b>sport</b>=<b>racquet</b>]<br></p>
-<p>[<b>sport</b>=<b>rc_car</b>]<br></p>
+<p>[<b>sport</b>=<b>parkour</b>]<br>Parkour is a training discipline using movement that developed from military obstacle course training.</p>
+<p>[<b>sport</b>=<b>pelota</b>]<br>Pelota,
+ a variety of court sports played with a ball using one's hand, a 
+racket, a wooden bat (pala), or a basket propulsor (txistera), against a
+ wall or with two teams.</p>
+<p>[<b>sport</b>=<b>pesäpallo</b>]<br>Pesäpallo,
+ sometimes known as Finnish baseball, is a fast-moving bat-and-ball 
+sport where the offense tries to score by hitting the ball successfully 
+and running through the bases, while the defense tries to put the batter
+ and runners out.</p>
+<p>[<b>sport</b>=<b>pilates</b>]<br>Pilates is a physical fitness system developed in the early 20th century by Joseph Pilates.</p>
+<p>[<b>sport</b>=<b>racquet</b>]<br>Racquetball facilities, such as racquetball courts</p>
+<p>[<b>sport</b>=<b>rc_car</b>]<br>Radio controlled cars</p>
 <p>[<b>sport</b>=<b>roller_skating</b>]<br>The traveling on surfaces with roller skates.</p>
 <p>[<b>sport</b>=<b>rowing</b>]<br>Sites connected to the sport of rowing</p>
-<p>[<b>sport</b>=<b>rugby_league</b>]<br></p>
-<p>[<b>sport</b>=<b>rugby_union</b>]<br></p>
-<p>[<b>sport</b>=<b>running</b>]<br>Sites connected to the sport of running</p>
+<p>[<b>sport</b>=<b>rugby_league</b>]<br>Rugby league football</p>
+<p>[<b>sport</b>=<b>rugby_union</b>]<br>Rugby union football</p>
+<p>[<b>sport</b>=<b>running</b>]<br>Features dedicated to the sport of running</p>
 <p>[<b>sport</b>=<b>sailing</b>]<br>Sailing</p>
 <p>[<b>sport</b>=<b>scuba_diving</b>]<br>To mark a spot for scuba diving</p>
-<p>[<b>sport</b>=<b>shooting</b>]<br>Indentifies given object as used for practicing shooting sports</p>
+<p>[<b>sport</b>=<b>shooting</b>]<br>Identifies given object as used for practicing shooting sports</p>
+<p>[<b>sport</b>=<b>shot-put</b>]<br>Shot-put is a sport involving throwing a heavy spherical object as far as possible.</p>
 <p>[<b>sport</b>=<b>skateboard</b>]<br>An area designated and equipped for skateboarding</p>
+<p>[<b>sport</b>=<b>ski_jumping</b>]<br>Ski
+ jumping is a winter sport in which competitors aim to achieve the 
+longest jump after descending from a specially designed ramp on their 
+skis.</p>
+<p>[<b>sport</b>=<b>skiing</b>]<br>Identifies given object as used for practicing skiing</p>
+<p>[<b>sport</b>=<b>snooker</b>]<br>Snooker
+ is a cue sport that is played on a rectangular table covered with a 
+green cloth with pockets at each of the four corners and in the middle 
+of each long side.</p>
 <p>[<b>sport</b>=<b>soccer</b>]<br>Association football, more commonly known as football or soccer</p>
+<p>[<b>sport</b>=<b>speedway</b>]<br>Motorcycle
+ speedway, usually referred to as speedway, is a motorcycle sport 
+involving four and sometimes up to six riders competing over four 
+anti-clockwise laps of an oval circuit.</p>
+<p>[<b>sport</b>=<b>squash</b>]<br>Squash is a racket and ball sport played by two or four players in a four-walled court with a small, hollow rubber ball.</p>
 <p>[<b>sport</b>=<b>sumo</b>]<br>A traditional martial arts sport of Japan.</p>
 <p>[<b>sport</b>=<b>surfing</b>]<br>A spot for surfing.</p>
 <p>[<b>sport</b>=<b>swimming</b>]<br>A place where people do swimming</p>
-<p>[<b>sport</b>=<b>table_tennis</b>]<br>Table tennis</p>
+<p>[<b>sport</b>=<b>table_tennis</b>]<br>A bat and ball game played over a table.</p>
 <p>[<b>sport</b>=<b>table_soccer</b>]<br>Table
  Soccer or Table Football, also known as Foosball, Fussball, Kicker, or 
 Tecball, is a table-top game and sport based off association football 
 (soccer).</p>
 <p>[<b>sport</b>=<b>taekwondo</b>]<br>Taekwondo</p>
-<p>[<b>sport</b>=<b>tennis</b>]<br>Tennis</p>
+<p>[<b>sport</b>=<b>tennis</b>]<br>A competition where two or four players use a ball and rackets over a net.</p>
 <p>[<b>sport</b>=<b>toboggan</b>]<br>Public toboggan run</p>
+<p>[<b>sport</b>=<b>ultimate</b>]<br>Ultimate, also known as ultimate frisbee, is a team sport played with a flying disc (frisbee).</p>
 <p>[<b>sport</b>=<b>volleyball</b>]<br>Volleyball</p>
-<p>[<b>sport</b>=<b>water_polo</b>]<br>Water polo</p>
+<p>[<b>sport</b>=<b>wakeboarding</b>]<br>Wakeboarding
+ is a water sport in which the rider, standing on a wakeboard, is towed 
+behind a motorboat in order to perform aerial maneuvers.</p>
+<p>[<b>sport</b>=<b>water_polo</b>]<br>A competitive ball sport played in a pool between two teams.</p>
 <p>[<b>sport</b>=<b>water_ski</b>]<br>Water skiing</p>
 <p>[<b>sport</b>=<b>weightlifting</b>]<br>Weightlifting</p>
 <p>[<b>sport</b>=<b>wrestling</b>]<br>Wrestling</p>

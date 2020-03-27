@@ -1,6 +1,6 @@
 #!/bin/bash
 
-DRAW="../app/src/main/res/drawable"
+DRAW="../../app/src/main/res/drawable"
 
 DRAWABLES="$DRAW/"
 LDPI="$DRAW-ldpi/"

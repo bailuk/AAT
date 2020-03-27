@@ -1,0 +1,15 @@
+<h1>Telecom</h1>
+<p>These are used to map telecommunication systems.
+</p>
+<p>[<b>telecom</b>=<b>exchange</b>]<br>A place to connect landlines subscribers to telecommunication service equipments</p>
+<p>[<b>telecom</b>=<b>connection_point</b>]<br>Last point of telecom local loops allowing direct connections towards a few households and subscribers</p>
+<p>[<b>telecom</b>=<b>distribution_point</b>]<br>Equipment,
+ often small boxes, allowing to directly connect up to 15 individuals or
+ households to a single upstream local loop cable towards telecom 
+exchanges</p>
+<p>[<b>telecom</b>=<b>service_device</b>]<br>Active
+ equipment which deliver service to connected customers. It can be for 
+instance a DSLAM, a telephone switch, or more recently an OLT for 
+optical networks. It excludes amplifiers or repeaters installed along 
+local loops or long distance lines.</p>
+<p>[<b>telecom</b>=<b>data_center</b>]<br>A building used to house computers and network equipment.</p>

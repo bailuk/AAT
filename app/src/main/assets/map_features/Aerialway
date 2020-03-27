@@ -3,28 +3,24 @@
 goods by using aerial wires. For example these may include cable-cars, 
 chair-lifts and drag-lifts. See the page Aerialway for more information on the usage of these tags.
 </p>
-<p>[<b>aerialway</b>=<b>cable_car</b>]<br>Cablecar or Tramway.
- Just one or two large cars. The traction cable forms a loop, but the 
-cars do not loop around, they just move up and down on their own side, 
-rolling along static cables over which they are suspended.</p>
-<p>[<b>aerialway</b>=<b>gondola</b>]<br>Gondola lift. Many cars on a looped cable.</p>
-<p>[<b>aerialway</b>=<b>chair_lift</b>]<br>Chairlift.
- Looped cable with a series of single chairs (typically seating two or 
-four people, but can be more). Exposed to the open air (can have a 
-bubble). This implies oneway=yes (drawn upward).  Any two-way chairlifts should be tagged oneway=no.</p>
-<p>[<b>aerialway</b>=<b>mixed_lift</b>]<br>Mixed lift Also known as a hybrid lift is a new type of ski lift that combines the elements of a chairlift and a gondola lift.</p>
-<p>[<b>aerialway</b>=<b>drag_lift</b>]<br>Drag lift or Surface lift
- is an overhead tow-line for skiers and riders. A T-bar lift, button 
-lift, or more simple looped rope drag lifts, or loops of wire with 
-handles to grab. See also aerialway=t-bar, aerialway=j-bar, aerialway=platter and aerialway=rope_tow. This automatically implies oneway=yes (drawn upward).</p>
-<p>[<b>aerialway</b>=<b>t-bar</b>]<br>T-bar lift.  A type of aerialway=drag_lift. This automatically implies oneway=yes (drawn upward).</p>
-<p>[<b>aerialway</b>=<b>j-bar</b>]<br>J-bar lift. A type of aerialway=drag_lift. Like t-bar but just on one side. This automatically implies oneway=yes (drawn upward).</p>
-<p>[<b>aerialway</b>=<b>platter</b>]<br>Platter lift. A type of aerialway=drag_lift. Similar to a t-bar, but with a disc instead of a bar. Single-person only. This automatically implies oneway=yes (drawn upward).</p>
-<p>[<b>aerialway</b>=<b>rope_tow</b>]<br>Rope tow. A type of aerialway=drag_lift. This automatically implies oneway=yes (drawn upward).</p>
-<p>[<b>aerialway</b>=<b>magic_carpet</b>]<br>Magic carpet. A type of ski lift. This automatically implies oneway=yes (drawn upward).</p>
-<p>[<b>aerialway</b>=<b>zip_line</b>]<br>Zip line. Simple aerial rope slides. This automatically implies oneway=yes (drawn downward).</p>
-<p>[<b>aerialway</b>=<b>pylon</b>]<br>Aerial lift pylon is a pylon supporting the aerialway cable.</p>
-<p>[<b>aerialway</b>=<b>station</b>]<br>A station, where passengers can enter and/or leave the aerialway.</p>
-<p>[<b>aerialway</b>=<b>canopy</b>]<br>Obsolete, please use aerialway=zip_line instead. This automatically implies oneway=yes (drawn downward).</p>
-<p>[<b>aerialway</b>=<b>goods</b>]<br>Controversial, consider other aerialway=* values in combination with foot=no and/or a usage=* key instead of this.</p>
-<p>[<b>aerialway</b>=<b>user defined</b>]<br>All commonly used values according to Taginfo</p>
+<p>[<b>aerialway</b>=<b>cable_car</b>]<br>A
+ cable car run. Just one or two large cars. The traction cable forms a 
+loop, but the cars do not loop around, they just move up and down on 
+their own side, rolling along static cables over which they are 
+suspended.</p>
+<p>[<b>aerialway</b>=<b>gondola</b>]<br>An aerialway where the cabins go around in a circle</p>
+<p>[<b>aerialway</b>=<b>mixed_lift</b>]<br>A mixed lift, containing both gondolas and chairs.</p>
+<p>[<b>aerialway</b>=<b>chair_lift</b>]<br>An open chairlift run. These have a single seat to sit on and are open to the outside air</p>
+<p>[<b>aerialway</b>=<b>drag_lift</b>]<br>An overhead tow-line for skiers and riders.</p>
+<p>[<b>aerialway</b>=<b>t-bar</b>]<br>An overhead tow-line for skiers and riders with T-shaped carriers for two passengers.</p>
+<p>[<b>aerialway</b>=<b>j-bar</b>]<br>J-bar lift or L-bar lift. Overhead tow-line for skiers and riders with carriers in J-shape.</p>
+<p>[<b>aerialway</b>=<b>platter</b>]<br>An overhead tow-line for skiers and riders with platters.</p>
+<p>[<b>aerialway</b>=<b>rope_tow</b>]<br>A tow-line for skiers and riders where passenger hold by hand or use special tow grabbers.</p>
+<p>[<b>aerialway</b>=<b>magic_carpet</b>]<br>A ski lift for small children resembling a conveyor belt.</p>
+<p>[<b>aerialway</b>=<b>zip_line</b>]<br>Zip line, gravity propelled aerial ropeslide like a flying fox or similar</p>
+<p>[<b>aerialway</b>=<b>goods</b>]<br>A
+ cable supported lift for conveying goods, not passengers. Consider 
+other values for aerialway in combination with access and usage keys 
+instead of this.</p>
+<p>[<b>aerialway</b>=<b>pylon</b>]<br>A pylon supporting the aerialway cable.</p>
+<p>[<b>aerialway</b>=<b>station</b>]<br>A station where passengers and/or goods can enter and/or leave the aerialway</p>

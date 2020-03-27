@@ -42,6 +42,9 @@ public class AppTheme {
     public static final UiTheme main = new UiThemeDark();
     public static final UiTheme alt = new UiThemeDark2();
 
+    public static final UiTheme light = new UiThemeLight();
+
+
 
     public static void themifyList(ListView list) {
         int height = list.getDividerHeight();

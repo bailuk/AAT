@@ -5,17 +5,18 @@
 add this to features that are already defined as an area type.</p>
 <p>[<b>bridge</b>=<b>yes / aqueduct / viaduct / cantilever / movable / covered / …</b>]<br>A bridge, use together with the tag layer=*. Value yes is generic, or you can specialize.</p>
 <p>[<b>charge</b>=<b>amount</b>]<br>Used for specifying how much is charged for use/access to a facility. See toll=* or fee=*.</p>
-<p>[<b>covered</b>=<b>yes</b>]<br>Used to denote that a node, way or area is covered by another 
-entity (or in some cases the ground), when the use of layers is 
-inappropriate, or additional clarification is needed.</p>
+<p>[<b>covered</b>=<b>yes</b>]<br>Used to denote that a node, way or area is covered by another entity
+ (or in some cases the ground), when the use of layers is inappropriate,
+ or additional clarification is needed.</p>
 <p>[<b>crossing</b>=<b>no / traffic_signals / uncontrolled / island / unmarked / unknown</b>]<br>Further refinement for nodes already tagged with highway=crossing or railway=crossing</p>
-<p>[<b>cutting</b>=<b>yes / left / right</b>]<br>A cut in the land to carry a road or tram. Mostly in hilly landscape. See  Cutting on Wikipedia</p>
+<p>[<b>crossing:island</b>=<b>yes / no</b>]<br>Specifies whether a pedestrian crossing has a refuge island</p>
+<p>[<b>cutting</b>=<b>yes / left / right</b>]<br>A cut in the land to carry a road or tram. Mostly in hilly landscape. See Cutting on Wikipedia</p>
 <p>[<b>disused</b>=<b>yes</b>]<br>For features that are useful for navigation, yet are unused. See abandoned=* if infrastructure is removed.</p>
 <p>[<b>drive_through</b>=<b>yes / no</b>]<br>Used to indicate if a pharmacy, bank, atm, or fast_food, or post_box offers drive_thru service. drive_through=* is different than drive_in=*}</p>
 <p>[<b>drive_in</b>=<b>yes / no</b>]<br>Used to indicate if a cinema is a drive-in cinema or a restaurant offers drive-in service. drive_in=* is different than drive_through=*</p>
 <p>[<b>electrified</b>=<b>contact_line / rail</b>]<br>Indicates infrastructure to supply vehicles with electricity on rail tracks</p>
 <p>[<b>ele</b>=<b>Number</b>]<br>Elevation (also known as altitude or height) above mean sea level in metre, based on geoid model EGM 96 which is used by WGS 84 (GPS). (see also Altitude)</p>
-<p>[<b>embankment</b>=<b>yes</b>]<br>A raised bank to carry a road, railway, or canal across a low-lying or wet area. See  Embankment on Wikipedia</p>
+<p>[<b>embankment</b>=<b>yes</b>]<br>A raised bank to carry a road, railway, or canal across a low-lying or wet area. See Embankment on Wikipedia</p>
 <p>[<b>end_date</b>=<b>Date</b>]<br>Date feature was removed</p>
 <p>[<b>est_width</b>=<b>Number</b>]<br>A rough guess of the width of way in metres</p>
 <p>[<b>fire_object:type</b>=<b>poo / szo</b>]<br>Potentially dangerous and socially significant objects</p>
@@ -34,6 +35,7 @@ shop, restaurant, etc. offers internet access to the public, either as a
 <p>[<b>nudism</b>=<b>yes / obligatory / no / customary / permissive</b>]<br>Indicates if the described object provides the possibility of nudism</p>
 <p>[<b>opening_hours</b>=<b>24/7 or mo md hh:mm-hh:mm. (read described syntax)</b>]<br>opening_hours describes when something is open.</p>
 <p>[<b>operator</b>=<b>User Defined</b>]<br>The operator tag can be used to name a company or corporation who's responsible for a certain object or who operates it.</p>
+<p>[<b>produce</b>=<b>User Defined</b>]<br>Describes a feature's agricultural output produced though a natural process of growing or breeding.</p>
 <p>[<b>start_date</b>=<b>Date</b>]<br>Date feature was created</p>
 <p>[<b>service_times</b>=<b>see opening_hours</b>]<br>Times of service of a given feature e.g. church service</p>
 <p>[<b>tactile_paving</b>=<b>yes /no</b>]<br>Indicate if a specific place can be detected or followed with a blindman's stick.</p>

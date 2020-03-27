@@ -1,15 +1,15 @@
 <h1>References</h1>
 <p>This is used to add reference information for an element.
 </p>
-<p>[<b>iata</b>=<b>User Defined</b>]<br>IATA International airport codes</p>
-<p>[<b>icao</b>=<b>User Defined</b>]<br>ICAO International airport codes</p>
-<p>[<b>int_ref</b>=<b>User Defined</b>]<br>International reference (eg E 30)</p>
-<p>[<b>lcn_ref</b>=<b>User Defined</b>]<br>The number of the local cycle network</p>
-<p>[<b>loc_ref</b>=<b>User Defined</b>]<br>Local reference</p>
-<p>[<b>nat_ref</b>=<b>User Defined</b>]<br>National reference</p>
-<p>[<b>ncn_ref</b>=<b>User Defined</b>]<br>The number reference (eg 54) of a National Cycle Network route.</p>
-<p>[<b>old_ref</b>=<b>User Defined</b>]<br>Historical reference</p>
-<p>[<b>rcn_ref</b>=<b>User Defined</b>]<br>The number of the regional cycle network.</p>
-<p>[<b>ref</b>=<b>User Defined</b>]<br>The common default reference (eg M25, in Germany always with space eg A 5)</p>
-<p>[<b>reg_ref</b>=<b>User Defined</b>]<br>Regional reference</p>
-<p>[<b>source_ref</b>=<b>User Defined</b>]<br>To record the URI, source reference (eg Landsat) or other link to physical sources.</p>
+<p>[<b>iata</b>=<b></b>]<br>Indicates the IATA airport code</p>
+<p>[<b>icao</b>=<b></b>]<br>Indicates the ICAO airport code</p>
+<p>[<b>int_ref</b>=<b></b>]<br>International reference number or code on roads, highway exits, routes, etc.</p>
+<p>[<b>lcn_ref</b>=<b></b>]<br>The node number of a numbered junction in a local cycling node network</p>
+<p>[<b>loc_ref</b>=<b></b>]<br>Local reference</p>
+<p>[<b>nat_ref</b>=<b></b>]<br>National reference ("Nationally referenced as...")</p>
+<p>[<b>ncn_ref</b>=<b></b>]<br>The reference for a national cycle route.</p>
+<p>[<b>old_ref</b>=<b></b>]<br>Historical reference</p>
+<p>[<b>rcn_ref</b>=<b></b>]<br>The number of the regional cycle network.</p>
+<p>[<b>ref</b>=<b></b>]<br>Used for reference numbers or codes. Common for roads, highway exits, routes, etc.</p>
+<p>[<b>reg_ref</b>=<b></b>]<br>Regional reference</p>
+<p>[<b>source_ref</b>=<b></b>]<br>Used to link external source of information: photos, video links</p>

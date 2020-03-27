@@ -10,3 +10,4 @@ and other medical supplies.</p>
 correct arrhythmia of the heart automatically (aka Automated External 
 Defibrillator, AED)</p>
 <p>[<b>emergency</b>=<b>landing_site</b>]<br>Preselected flat area for a helicopter to land in an emergency situation</p>
+<p>[<b>emergency</b>=<b>emergency_ward_entrance</b>]<br>to mark the entrance to an emergency ward</p>

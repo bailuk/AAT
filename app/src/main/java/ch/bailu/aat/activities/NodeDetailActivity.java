@@ -20,6 +20,7 @@ import ch.bailu.aat.map.MapFactory;
 import ch.bailu.aat.map.MapViewInterface;
 import ch.bailu.aat.util.HtmlBuilderGpx;
 import ch.bailu.aat.util.ui.AppLayout;
+import ch.bailu.aat.util.ui.AppTheme;
 import ch.bailu.aat.views.ContentView;
 import ch.bailu.aat.views.MyImageButton;
 import ch.bailu.aat.views.html.HtmlScrollTextView;
@@ -101,6 +102,7 @@ public class NodeDetailActivity extends ActivityContext
 
         htmlView =new HtmlScrollTextView(this);
         htmlView.enableAutoLink();
+        htmlView.themify(AppTheme.main);
 
         viewB.add(htmlView, 40);
         viewB.add(mapView.toView(), 60);

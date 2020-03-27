@@ -4,7 +4,6 @@ the way of a river, stream, drain, canal, etc. these need to be aligned
 in the direction of the water flow. See the page titled Waterways for an introduction on its usage.
 </p>
 <p>[<b>waterway</b>=<b>river</b>]<br>The linear flow of a river, in flow direction.</p>
-<p>[<b>waterway</b>=<b>riverbank</b>]<br>A wide river as defined by its area.</p>
+<p>[<b>waterway</b>=<b>riverbank</b>]<br>The water-covered area of a river</p>
 <p>[<b>waterway</b>=<b>stream</b>]<br>A naturally-forming waterway that is too narrow to be classed as a river.</p>
-<p>[<b>waterway</b>=<b>wadi</b>]<br></p>
-<p>[<b>waterway</b>=<b>drystream</b>]<br>A negative form of erosion relief formed by the activity of temporary streams.</p>
+<p>[<b>waterway</b>=<b>tidal_channel</b>]<br>A natural intertidal waterway in mangroves, salt marshes and tidal flats with water flow in the direction of the tide</p>

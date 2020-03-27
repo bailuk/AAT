@@ -17,6 +17,7 @@
 <p>[<b>source</b>=<b>knowledge</b>]<br></p>
 <p>[<b>source</b>=<b>survey</b>]<br></p>
 <p>[<b>source</b>=<b>voice</b>]<br></p>
+<p>[<b>source:geometry</b>=<b></b>]<br>For indicating the source of geometry of object added to the OSM database.</p>
 <p>[<b>source:name</b>=<b></b>]<br></p>
 <p>[<b>source:ref</b>=<b></b>]<br></p>
 <p>[<b>source_ref</b>=<b></b>]<br>Used to link external source of information: photos, video links</p>

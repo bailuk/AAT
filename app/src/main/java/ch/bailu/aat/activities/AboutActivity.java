@@ -5,6 +5,7 @@ import android.widget.LinearLayout;
 
 import ch.bailu.aat.R;
 import ch.bailu.aat.util.fs.foc.FocAsset;
+import ch.bailu.aat.util.ui.AppTheme;
 import ch.bailu.aat.views.ContentView;
 import ch.bailu.aat.views.html.HtmlScrollTextView;
 import ch.bailu.aat.views.bar.MainControlBar;
@@ -58,15 +59,19 @@ public class AboutActivity extends ActivityContext {
             }
         };
 
-        mv.add(new HtmlScrollTextView(this,
+        final HtmlScrollTextView about = new HtmlScrollTextView(this,
                         toStr("documentation/README.about.html"),
-                        linkHandler),
-                getString(R.string.intro_about));
+                        linkHandler);
 
-        mv.add(new HtmlScrollTextView(this,
-                toStr("documentation/README.enduser.html")),
-                getString(R.string.intro_readme));
+        final HtmlScrollTextView readme = new HtmlScrollTextView(this,
+                toStr("documentation/README.enduser.html"));
 
+        mv.add(about, getString(R.string.intro_about));
+        mv.add(readme, getString(R.string.intro_readme));
+
+        readme.themify(AppTheme.light);
+        about.themify(AppTheme.light);
+        AppTheme.light.background(mv);
         return mv;
     }
 

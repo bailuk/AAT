@@ -2,14 +2,16 @@
 <p>This is used as a place that produces or processes customised goods. See the page Crafts for more information on the usage of these tags.
 </p>
 <p>[<b>craft</b>=<b>agricultural_engines</b>]<br>A place where engines and tools for agricultural use are planned and constructed.</p>
+<p>[<b>craft</b>=<b>atelier</b>]<br>A place where visual artists work</p>
 <p>[<b>craft</b>=<b>bakery</b>]<br>A workplace for fresh bakery goods. No shop.</p>
 <p>[<b>craft</b>=<b>basket_maker</b>]<br>A person weaving baskets</p>
 <p>[<b>craft</b>=<b>beekeeper</b>]<br>A workplace of a beekeeper (apiarist)</p>
 <p>[<b>craft</b>=<b>blacksmith</b>]<br>A place where a blacksmith forges tools, horseshoes, etc. from iron.</p>
-<p>[<b>craft</b>=<b>boatbuilder</b>]<br>A place where boats are planned and constructed</p>
+<p>[<b>craft</b>=<b>boatbuilder</b>]<br>A workplace where boats are planned and constructed</p>
 <p>[<b>craft</b>=<b>bookbinder</b>]<br>A workplace for physically assembling a book from a number of sheets of paper.</p>
 <p>[<b>craft</b>=<b>brewery</b>]<br>A dedicated building for the making of beer.</p>
 <p>[<b>craft</b>=<b>builder</b>]<br>A workplace or office of a tradesman who performs structural alterations and additions to buildings.</p>
+<p>[<b>craft</b>=<b>cabinet_maker</b>]<br>A person who makes fine wooden furniture</p>
 <p>[<b>craft</b>=<b>carpenter</b>]<br>A
  workplace or office of carpenters that work with timber to construct, 
 install and maintain buildings, furniture, and other objects.</p>
@@ -20,22 +22,35 @@ or provides prepared meals or supplies to a group at social gatherings</p>
 <p>[<b>craft</b>=<b>chimney_sweeper</b>]<br>A workplace or office of a person who cleans chimneys for a living.</p>
 <p>[<b>craft</b>=<b>clockmaker</b>]<br>A workplace or office of a clockmaker that is building, repairing or engraving clocks of all sorts.</p>
 <p>[<b>craft</b>=<b>confectionery</b>]<br>A place where the set of food items that are rich in sugar, any one or type of which is called a confection is produced.</p>
+<p>[<b>craft</b>=<b>cooper</b>]<br>A person or company that manufacture of containers and vessels mainly made of wood.</p>
+<p>[<b>craft</b>=<b>dental_technician</b>]<br>A workplace for dental technician</p>
 <p>[<b>craft</b>=<b>distillery</b>]<br>An establishment for distilling, especially for distilling alcoholic liquors.</p>
+<p>[<b>craft</b>=<b>door_construction</b>]<br>A workplace of someone constructing doors</p>
 <p>[<b>craft</b>=<b>dressmaker</b>]<br>Dressmaker is a person who makes custom clothing for women, such as dresses, blouses, and evening gowns.</p>
+<p>[<b>craft</b>=<b>electronics_repair</b>]<br>Repair shops and service centers which provides repair of computers, phones, appliance etc.</p>
+<p>[<b>craft</b>=<b>embroiderer</b>]<br>Needlework or textile artist</p>
 <p>[<b>craft</b>=<b>electrician</b>]<br>A person or company that works with electricity or electrical systems.</p>
 <p>[<b>craft</b>=<b>engraver</b>]<br>A workplace or office of an engraver.</p>
 <p>[<b>craft</b>=<b>floorer</b>]<br>A workplace or office of a floorer.</p>
 <p>[<b>craft</b>=<b>gardener</b>]<br>A workplace or office of a garden designer or a landscape gardener.</p>
 <p>[<b>craft</b>=<b>glaziery</b>]<br>A place where residential, commercial, and artistic glass is selected, cut, installed, replaced, and removed</p>
+<p>[<b>craft</b>=<b>grinding_mill</b>]<br>A
+ device that breaks solid materials into smaller pieces by grinding, 
+crushing, or cutting. The aftermath is powdered product, not liquid 
+extract like oil mill.</p>
 <p>[<b>craft</b>=<b>handicraft</b>]<br>A place where useful and decorative devices are made completely by hand or using only simple tools</p>
 <p>[<b>craft</b>=<b>hvac</b>]<br>A workplace or office of an HVAC system designer (Heating, Ventilating, and Air Conditioning)</p>
 <p>[<b>craft</b>=<b>insulation</b>]<br>A workplace or office of a person who does thermal insulation in buildings.</p>
 <p>[<b>craft</b>=<b>jeweller</b>]<br>A place where necklaces, rings, brooches, earrings and bracelets and other personal adornments are created or repaired.</p>
-<p>[<b>craft</b>=<b>joiner</b>]<br></p>
+<p>[<b>craft</b>=<b>joiner</b>]<br>An artisan who builds things by joining pieces of wood, particularly furniture or ornamental work.</p>
 <p>[<b>craft</b>=<b>key_cutter</b>]<br>A place where keys can be duplicated from originals.</p>
 <p>[<b>craft</b>=<b>locksmith</b>]<br>A place where locks and keys are created or repaired.</p>
 <p>[<b>craft</b>=<b>metal_construction</b>]<br>Workplace or office of a person who work with metal. This applies to: planning, construction, trade, repair.</p>
+<p>[<b>craft</b>=<b>mint</b>]<br>A place where coins and medals are hand crafted.</p>
+<p>[<b>craft</b>=<b>musical_instrument</b>]<br>A craftsman creating musical instruments</p>
+<p>[<b>craft</b>=<b>oil_mill</b>]<br>A mill designed to crush or bruise oil-bearing seeds, such as linseed or peanuts, or other oil-rich vegetable material.</p>
 <p>[<b>craft</b>=<b>optician</b>]<br>A place where lenses for the correction of a person's vision are designed, fitted and dispensed.</p>
+<p>[<b>craft</b>=<b>organ_builder</b>]<br>Organ building is the profession of designing, building, restoring and maintaining pipe organs.</p>
 <p>[<b>craft</b>=<b>painter</b>]<br>A workplace or office of a house painter which is a tradesman responsible for the painting and decorating of buildings.</p>
 <p>[<b>craft</b>=<b>parquet_layer</b>]<br>A workplace or office of a parquet layer.</p>
 <p>[<b>craft</b>=<b>photographer</b>]<br>A workplace or office of a person who takes photographs using a camera.</p>
@@ -52,17 +67,23 @@ forming a layer of plaster on an interior wall or plaster decorative
 moldings on ceilings or walls.</p>
 <p>[<b>craft</b>=<b>plumber</b>]<br>A workplace or office of a skilled tradesperson who specializes in (drinking) water supply, sewage and drainage systems</p>
 <p>[<b>craft</b>=<b>pottery</b>]<br>A place where earthenware, stoneware and porcelain and other ceramic ware is made by potters.</p>
-<p>[<b>craft</b>=<b>rigger</b>]<br>A workplace or office of a person who makes masts, yards, sails, and cordage for sailboats and sailing ships.</p>
-<p>[<b>craft</b>=<b>roofer</b>]<br>A workplace or office of a tradesman who is specialized in roof construction.</p>
+<p>[<b>craft</b>=<b>printer</b>]<br>Printer</p>
+<p>[<b>craft</b>=<b>printmaker</b>]<br>A producer of fine art prints.</p>
+<p>[<b>craft</b>=<b>rigger</b>]<br>The
+ workplace of a person who makes masts, yards, sails, and cordage for 
+sailboats and sailing ships (or possibly a person who works on ropes, 
+booms, lifts, hoists and the like for a stage production)</p>
+<p>[<b>craft</b>=<b>roofer</b>]<br>A workplace or office of a tradesman who is specialized in roof covering and sealing.</p>
 <p>[<b>craft</b>=<b>saddler</b>]<br>A place where saddles or accessories for cars and boats are produced or repaired.</p>
-<p>[<b>craft</b>=<b>sailmaker</b>]<br>A workplace or office of sailmakers who cleans, repairs and makes sails.</p>
+<p>[<b>craft</b>=<b>sailmaker</b>]<br>A workshop of a sailmaker who cleans, repairs and makes sails.</p>
 <p>[<b>craft</b>=<b>sawmill</b>]<br>A sawmill is a facility where logs are cut into timber</p>
 <p>[<b>craft</b>=<b>scaffolder</b>]<br>A
  workplace or office of a tradesman who builds temporary structure used 
 to support people and material in the construction or repair of 
 buildings and other large structures.</p>
-<p>[<b>craft</b>=<b>sculptor</b>]<br>A place where sculptures are made.</p>
+<p>[<b>craft</b>=<b>sculptor</b>]<br>The workplace of a sculptor.</p>
 <p>[<b>craft</b>=<b>shoemaker</b>]<br>A place where shoes, boots, sandals, clogs and moccasins are created, repaired or altered to fit personal needs.</p>
+<p>[<b>craft</b>=<b>signmaker</b>]<br>Signmaker</p>
 <p>[<b>craft</b>=<b>stand_builder</b>]<br>A workplace of a company that builds stands/booths for fairs.</p>
 <p>[<b>craft</b>=<b>stonemason</b>]<br>A place where rough pieces of rock are shaped into accurate geometrical shapes.</p>
 <p>[<b>craft</b>=<b>sun_protection</b>]<br>A place where sun protection is made, repaired, or delivered for assembly, especially awnings and shutters.</p>
@@ -73,5 +94,6 @@ buildings and other large structures.</p>
 <p>[<b>craft</b>=<b>turner</b>]<br>A workplace or office of a turner.</p>
 <p>[<b>craft</b>=<b>upholsterer</b>]<br>A place where furniture, especially seats are provided with padding, springs, webbing, and fabric or leather covers.</p>
 <p>[<b>craft</b>=<b>watchmaker</b>]<br>A watchmaker is an artisan who makes and repairs watches. Today due to industrial production they mostly repair watches.</p>
+<p>[<b>craft</b>=<b>water_well_drilling</b>]<br>A company that drills water wells.</p>
 <p>[<b>craft</b>=<b>window_construction</b>]<br>A workplace of someone constructing windows</p>
 <p>[<b>craft</b>=<b>winery</b>]<br>A place where wine is produced</p>

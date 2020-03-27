@@ -35,6 +35,7 @@ public class UiThemeDark implements UiTheme {
     @Override
     public void content(TextView v) {
         v.setTextColor(Color.LTGRAY);
+        v.setLinkTextColor(AppTheme.getHighlightColor());
     }
 
     @Override
