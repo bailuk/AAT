@@ -1,16 +1,20 @@
 package ch.bailu.aat.map.tile.source;
 
 import android.content.Context;
-import android.graphics.Paint;
 
 import org.mapsforge.core.model.Tile;
 
 import java.util.Random;
 
+import ch.bailu.aat.map.tile.TileFlags;
 import ch.bailu.aat.services.cache.BitmapTileObject;
 import ch.bailu.aat.util.fs.AppDirectory;
 
 public class DownloadSource extends Source {
+
+
+
+
     public static final int MIN_ZOOM = 1;
     public static final int MAX_ZOOM =17; // 18 takes way too much space for the gain.
 
@@ -112,7 +116,7 @@ public class DownloadSource extends Source {
 
                 @Override
                 public int getPaintFlags() {
-                    return Paint.FILTER_BITMAP_FLAG;
+                    return TileFlags.SCALE_FLAGS;
                 }
             };
 
@@ -126,7 +130,7 @@ public class DownloadSource extends Source {
 
                 @Override
                 public int getPaintFlags() {
-                    return Paint.FILTER_BITMAP_FLAG;
+                    return TileFlags.SCALE_FLAGS;
                 }
             };
 
@@ -138,7 +142,7 @@ public class DownloadSource extends Source {
 
                 @Override
                 public int getPaintFlags() {
-                    return Paint.FILTER_BITMAP_FLAG;
+                    return TileFlags.SCALE_FLAGS;
                 }
             };
 

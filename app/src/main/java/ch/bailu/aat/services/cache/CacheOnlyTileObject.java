@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import org.mapsforge.core.graphics.TileBitmap;
 import org.mapsforge.core.model.Tile;
 
+import ch.bailu.aat.map.tile.TileFlags;
 import ch.bailu.aat.preferences.map.SolidTileSize;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.background.FileTask;
@@ -15,13 +16,9 @@ import ch.bailu.util_java.foc.Foc;
 
 public final class CacheOnlyTileObject extends TileObject {
 
-    private final Tile tile;
-
-
-    private final SyncTileBitmap bitmap = new SyncTileBitmap();
-
-    private final FileTask load;
     private final Foc file;
+    private final Tile tile;
+    private final SyncTileBitmap bitmap = new SyncTileBitmap();
 
     private final boolean isTransparent;
 
@@ -29,22 +26,87 @@ public final class CacheOnlyTileObject extends TileObject {
 
     public CacheOnlyTileObject(String id, ServiceContext sc, Tile t, final boolean transparent) {
         super(id);
-
-        file = FocAndroid.factory(sc.getContext(), id);
         tile = t;
+        file = FocAndroid.factory(sc.getContext(), id);
+
+        isTransparent = transparent;
 
         sc.getCacheService().addToBroadcaster(this);
 
-        isTransparent = transparent;
-        load = new TileLoaderTask(file);
+    }
 
-
-
-
+    @Override
+    public TileBitmap getTileBitmap() {
+        return bitmap.getTileBitmap();
     }
 
 
-    public static class TileLoaderTask extends FileTask {
+    @Override
+    public Tile getTile() {
+        return tile;
+    }
+
+
+    @Override
+    public void onInsert(ServiceContext sc) {
+        if (isLoadable()) sc.getBackgroundService().process(new TileLoaderTask(file));
+    }
+
+
+    public void onRemove(ServiceContext sc) {
+        super.onRemove(sc);
+        bitmap.free();
+    }
+
+    @Override
+    public void reDownload(ServiceContext sc) {}
+
+    @Override
+    public boolean isLoaded() {
+        return getAndroidBitmap() != null;
+    }
+
+
+    private boolean isLoadable() {
+        // **? file.update();
+        return file.isFile() && file.canRead();
+    }
+
+
+    public boolean isReadyAndLoaded() {
+        boolean loaded = isLoaded();
+        boolean notLoadable = isLoadable() == false;
+
+        return loaded || notLoadable;
+    }
+
+
+    @Override
+    public void onChanged(String id, ServiceContext sc) {}
+
+    @Override
+    public void onDownloaded(String id, String url, ServiceContext sc) {}
+
+
+
+    @Override
+    public long getSize() {
+        return getSize(bitmap, SolidTileSize.DEFAULT_TILESIZE_BYTES);
+    }
+
+
+
+    @Override
+    public Bitmap getAndroidBitmap() {
+        return bitmap.getAndroidBitmap();
+    }
+
+    @Override
+    public Foc getFile() {
+        return file;
+    }
+
+    private static class TileLoaderTask extends FileTask {
 
         public TileLoaderTask(Foc f) {
             super(f);
@@ -52,7 +114,6 @@ public final class CacheOnlyTileObject extends TileObject {
 
         @Override
         public long bgOnProcess(final ServiceContext sc) {
-
             final long[] size = {0};
 
 
@@ -61,7 +122,10 @@ public final class CacheOnlyTileObject extends TileObject {
                 public void run(ObjectHandle handle) {
                     CacheOnlyTileObject tile = (CacheOnlyTileObject) handle;
 
-                    tile.bitmap.set(getFile(), SolidTileSize.DEFAULT_TILESIZE, tile.isTransparent);
+                    tile.bitmap.set(
+                            getFile(),
+                            SolidTileSize.DEFAULT_TILESIZE,
+                            TileFlags.ALWAYS_TRANSPARENT || tile.isTransparent);
 
 
                     AppBroadcaster.broadcast(sc.getContext(), AppBroadcaster.FILE_CHANGED_INCACHE,
@@ -76,69 +140,6 @@ public final class CacheOnlyTileObject extends TileObject {
 
 
         }
-    }
-
-    @Override
-    public TileBitmap getTileBitmap() {
-        return bitmap.getTileBitmap();
-    }
-
-    @Override
-    public Tile getTile() {
-        return tile;
-    }
-
-    @Override
-    public void onInsert(ServiceContext sc) {
-        if (isLoadable()) sc.getBackgroundService().process(load);
-    }
-
-
-    public void onRemove(ServiceContext sc) {
-        super.onRemove(sc);
-        bitmap.free();
-    }
-
-    @Override
-    public void reDownload(ServiceContext sc) {
-    }
-
-    @Override
-    public boolean isLoaded() {
-        return getAndroidBitmap() != null;
-    }
-
-
-    private boolean isLoadable() {
-        return file.isFile() && file.canRead();
-    }
-
-    @Override
-    public void onDownloaded(String id, String url, ServiceContext sc) {}
-
-    @Override
-    public void onChanged(String id, ServiceContext sc) {
-    }
-
-
-    public boolean isReadyAndLoaded() {
-        boolean loaded = isLoaded();
-        boolean notLoadable = isLoadable() == false;
-
-        return loaded || notLoadable;
-    }
-
-
-    @Override
-    public long getSize() {
-        return getSize(bitmap, SolidTileSize.DEFAULT_TILESIZE_BYTES);
-    }
-
-
-
-    @Override
-    public Bitmap getAndroidBitmap() {
-        return bitmap.getAndroidBitmap();
     }
 
 
