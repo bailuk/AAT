@@ -3,7 +3,7 @@ package ch.bailu.aat.services.cache.elevation;
 import org.mapsforge.core.model.Tile;
 
 import ch.bailu.aat.services.ServiceContext;
-import ch.bailu.aat.services.cache.ObjectHandle;
+import ch.bailu.aat.services.cache.Obj;
 import ch.bailu.aat.services.dem.tile.DemDimension;
 import ch.bailu.aat.services.dem.tile.DemGeoToIndex;
 import ch.bailu.aat.services.dem.tile.DemProvider;
@@ -11,21 +11,21 @@ import ch.bailu.aat.services.dem.tile.DemSplitter;
 import ch.bailu.aat.services.dem.tile.MultiCell;
 import ch.bailu.aat.services.dem.tile.MultiCell8;
 
-public final class HillshadeTile extends ElevationTile {
+public final class ObjTileHillshade extends ObjTileElevation {
 
-    private HillshadeColorTable table;
+    private ObjHillshadeColorTable table;
 
-    public HillshadeTile(String id, Tile t) {
+    public ObjTileHillshade(String id, Tile t) {
         super(id, t, splitFromZoom(t.zoomLevel));
     }
 
 
     @Override
     public void onInsert(ServiceContext sc) {
-        table=(HillshadeColorTable)
+        table=(ObjHillshadeColorTable)
                 sc.getCacheService().getObject(
-                        HillshadeColorTable.ID,
-                        HillshadeColorTable.FACTORY);
+                        ObjHillshadeColorTable.ID,
+                        ObjHillshadeColorTable.FACTORY);
 
         super.onInsert(sc);
 
@@ -41,7 +41,7 @@ public final class HillshadeTile extends ElevationTile {
 
     @Override
     public void onChanged(String id, ServiceContext sc) {
-        if (HillshadeColorTable.ID.equals(id)) {
+        if (ObjHillshadeColorTable.ID.equals(id)) {
             requestElevationUpdates(sc);
         }
 
@@ -132,7 +132,7 @@ public final class HillshadeTile extends ElevationTile {
     }
 
 
-    public static final class Factory extends ObjectHandle.Factory {
+    public static final class Factory extends Obj.Factory {
         private final Tile mapTile;
 
         public Factory(Tile t) {
@@ -140,8 +140,8 @@ public final class HillshadeTile extends ElevationTile {
         }
 
         @Override
-        public ObjectHandle factory(String id, ServiceContext sc) {
-            return  new HillshadeTile(id, mapTile);
+        public Obj factory(String id, ServiceContext sc) {
+            return  new ObjTileHillshade(id, mapTile);
         }
 
     }

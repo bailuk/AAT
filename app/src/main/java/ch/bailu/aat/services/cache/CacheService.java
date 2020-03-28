@@ -44,12 +44,12 @@ public final class CacheService extends VirtualService implements SharedPreferen
         slimit.setIndex(1);
     }
 
-    public ObjectHandle getObject(String id, ObjectHandle.Factory factory) {
+    public Obj getObject(String id, Obj.Factory factory) {
 
         return table.getHandle(id, factory, this);
     }
 
-    public ObjectHandle getObject(String id) {
+    public Obj getObject(String id) {
         return table.getHandle(id, getSContext());
     }
 
@@ -69,7 +69,7 @@ public final class CacheService extends VirtualService implements SharedPreferen
     }
 
 
-    public void addToBroadcaster(ObjectBroadcastReceiver b) {
+    public void addToBroadcaster(ObjBroadcastReceiver b) {
         broadcaster.put(b);
     }
 

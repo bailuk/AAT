@@ -4,7 +4,7 @@ import ch.bailu.aat.R;
 import ch.bailu.aat.dispatcher.OnContentUpdatedInterface;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.services.ServiceContext;
-import ch.bailu.aat.services.cache.ImageObject;
+import ch.bailu.aat.services.cache.ObjBitmap;
 import ch.bailu.aat.services.directory.SummaryConfig;
 import ch.bailu.aat.util.fs.foc.FocAndroid;
 import ch.bailu.aat.util.ui.ToolTip;
@@ -34,7 +34,7 @@ public class PreviewView extends ImageObjectView implements OnContentUpdatedInte
 
 
     public void setPreviewPath(Foc file) {
-        setImageObject(file.getPath(), new ImageObject.Factory());
+        setImageObject(file.getPath(), new ObjBitmap.Factory());
     }
 
 

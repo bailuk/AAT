@@ -8,7 +8,7 @@ import ch.bailu.aat.gpx.attributes.Keys;
 import ch.bailu.aat.gpx.interfaces.GpxPointInterface;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.VirtualService;
-import ch.bailu.aat.services.cache.ImageObjectAbstract;
+import ch.bailu.aat.services.cache.ObjImageAbstract;
 import ch.bailu.aat.util.WithStatusText;
 import ch.bailu.aat.util.fs.foc.FocAsset;
 import ch.bailu.aat.util.ui.AppLog;
@@ -45,7 +45,7 @@ public final class IconMapService extends VirtualService implements WithStatusTe
 
     }
 
-    public ImageObjectAbstract getIconSVG(final GpxPointInterface point, final int size) {
+    public ObjImageAbstract getIconSVG(final GpxPointInterface point, final int size) {
 
         GpxAttributes attr = point.getAttributes();
         String path = toAssetPath(attr);

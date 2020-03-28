@@ -7,12 +7,11 @@ import org.mapsforge.core.model.Tile;
 import java.util.Random;
 
 import ch.bailu.aat.map.tile.TileFlags;
-import ch.bailu.aat.services.cache.BitmapTileObject;
+import ch.bailu.aat.services.cache.ObjTileDownloadable;
+import ch.bailu.aat.services.cache.Obj;
 import ch.bailu.aat.util.fs.AppDirectory;
 
 public class DownloadSource extends Source {
-
-
 
 
     public static final int MIN_ZOOM = 1;
@@ -89,8 +88,8 @@ public class DownloadSource extends Source {
 
 
     @Override
-    public BitmapTileObject.Factory getFactory(Tile mt) {
-        return new BitmapTileObject.Factory(mt, this);
+    public Obj.Factory getFactory(Tile t) {
+        return new ObjTileDownloadable.Factory(t, this);
     }
 
     public String getTileURLString(Tile tile) {

@@ -2,8 +2,8 @@ package ch.bailu.aat.services.cache;
 
 import android.graphics.Bitmap;
 
-public abstract class ImageObjectAbstract extends ObjectHandle {
-    public ImageObjectAbstract(String id) {
+public abstract class ObjImageAbstract extends Obj {
+    public ObjImageAbstract(String id) {
         super(id);
     }
 

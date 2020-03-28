@@ -11,12 +11,12 @@ public abstract class OnObject {
 
 
     public OnObject(final ServiceContext sc, final String id, final Class c,
-                    final ObjectHandle.Factory factory) {
+                    final Obj.Factory factory) {
 
         new InsideContext(sc) {
             @Override
             public void run() {
-                ObjectHandle handle;
+                Obj handle;
 
                 if (factory == null)
                     handle = sc.getCacheService().getObject(id);
@@ -35,5 +35,5 @@ public abstract class OnObject {
         };
     }
 
-    public abstract void run(ObjectHandle handle);
+    public abstract void run(Obj handle);
 }

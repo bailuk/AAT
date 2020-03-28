@@ -10,8 +10,8 @@ import ch.bailu.aat.gpx.interfaces.GpxType;
 import ch.bailu.aat.preferences.map.SolidOverlayFileList;
 import ch.bailu.aat.services.InsideContext;
 import ch.bailu.aat.services.ServiceContext;
-import ch.bailu.aat.services.cache.GpxObject;
-import ch.bailu.aat.services.cache.ObjectHandle;
+import ch.bailu.aat.services.cache.ObjGpx;
+import ch.bailu.aat.services.cache.Obj;
 import ch.bailu.aat.services.editor.EditorInterface;
 import ch.bailu.aat.util.ToDo;
 import ch.bailu.aat.util.fs.AppDirectory;
@@ -138,11 +138,11 @@ public final class EditorMenu extends AbsMenu {
                 new InsideContext(scontext) {
                     @Override
                     public void run() {
-                        ObjectHandle handle = scontext.getCacheService().getObject(file.getPath(),
-                                new GpxObject.Factory());
+                        Obj handle = scontext.getCacheService().getObject(file.getPath(),
+                                new ObjGpx.Factory());
 
-                        if (handle instanceof GpxObject) {
-                            GpxObject gpxObject = (GpxObject) handle;
+                        if (handle instanceof ObjGpx) {
+                            ObjGpx gpxObject = (ObjGpx) handle;
 
                             if (gpxObject.isReadyAndLoaded()) {
                                 editor.attach(gpxObject.getGpxList());

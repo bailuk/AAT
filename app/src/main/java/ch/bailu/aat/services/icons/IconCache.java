@@ -3,14 +3,14 @@ package ch.bailu.aat.services.icons;
 import java.io.Closeable;
 
 import ch.bailu.aat.services.ServiceContext;
-import ch.bailu.aat.services.cache.ImageObjectAbstract;
+import ch.bailu.aat.services.cache.ObjImageAbstract;
 import ch.bailu.aat.services.cache.LockCache;
-import ch.bailu.aat.services.cache.ObjectHandle;
-import ch.bailu.aat.services.cache.SVGAssetImageObject;
+import ch.bailu.aat.services.cache.Obj;
+import ch.bailu.aat.services.cache.ObjSVGAsset;
 import ch.bailu.util_java.util.Objects;
 
 public final class IconCache implements Closeable {
-    private final LockCache<ImageObjectAbstract> icons = new LockCache<>(20);
+    private final LockCache<ObjImageAbstract> icons = new LockCache<>(20);
 
     private final ServiceContext scontext;
 
@@ -20,13 +20,13 @@ public final class IconCache implements Closeable {
     }
 
 
-    public ImageObjectAbstract getIcon(final String path, final int size) {
-        final ImageObjectAbstract[] r = {null};
+    public ObjImageAbstract getIcon(final String path, final int size) {
+        final ObjImageAbstract[] r = {null};
 
         if (path != null) {
-            String iconFileID = SVGAssetImageObject.toID(path, size);
+            String iconFileID = ObjSVGAsset.toID(path, size);
 
-            ImageObjectAbstract icon = get(iconFileID);
+            ObjImageAbstract icon = get(iconFileID);
 
             if (icon == null) {
                 icon = add(iconFileID, path, size);
@@ -39,7 +39,7 @@ public final class IconCache implements Closeable {
     }
 
 
-    private ImageObjectAbstract get(String id) {
+    private ObjImageAbstract get(String id) {
         for (int i = 0; i < icons.size(); i++) {
             if (Objects.equals(id, icons.get(i).toString())) {
                 return icons.use(i);
@@ -49,14 +49,14 @@ public final class IconCache implements Closeable {
     }
 
 
-    private ImageObjectAbstract add(final String id, final String path, final int size) {
-        ImageObjectAbstract r = null;
+    private ObjImageAbstract add(final String id, final String path, final int size) {
+        ObjImageAbstract r = null;
 
-        final ObjectHandle handle = scontext.getCacheService().
-                getObject(id, new SVGAssetImageObject.Factory(path, size));
+        final Obj handle = scontext.getCacheService().
+                getObject(id, new ObjSVGAsset.Factory(path, size));
 
-        if (SVGAssetImageObject.class.isInstance(handle)) {
-            final SVGAssetImageObject imageHandle = ((SVGAssetImageObject) handle);
+        if (ObjSVGAsset.class.isInstance(handle)) {
+            final ObjSVGAsset imageHandle = ((ObjSVGAsset) handle);
 
             icons.add(imageHandle);
             r = imageHandle;

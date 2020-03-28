@@ -9,7 +9,7 @@ import ch.bailu.aat.preferences.map.SolidRenderTheme;
 import ch.bailu.aat.preferences.map.SolidRendererThreads;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.VirtualService;
-import ch.bailu.aat.services.cache.MapsForgeTileObject;
+import ch.bailu.aat.services.cache.ObjTileMapsForge;
 
 public final class RenderService  extends VirtualService
         implements SharedPreferences.OnSharedPreferenceChangeListener {
@@ -47,13 +47,13 @@ public final class RenderService  extends VirtualService
     }
 
 
-      public void lockToRenderer(MapsForgeTileObject o) {
+      public void lockToRenderer(ObjTileMapsForge o) {
         caches.lockToRenderer(o);
         configuration.lockToRenderer(o);
     }
 
 
-    public void freeFromRenderer(MapsForgeTileObject o) {
+    public void freeFromRenderer(ObjTileMapsForge o) {
         configuration.freeFromRenderer(o);
         caches.freeFromRenderer(o);
     }

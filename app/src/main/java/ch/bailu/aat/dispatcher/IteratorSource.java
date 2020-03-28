@@ -9,9 +9,9 @@ import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.preferences.SolidDirectoryQuery;
 import ch.bailu.aat.services.InsideContext;
 import ch.bailu.aat.services.ServiceContext;
-import ch.bailu.aat.services.cache.GpxObject;
-import ch.bailu.aat.services.cache.GpxObjectStatic;
-import ch.bailu.aat.services.cache.ObjectHandle;
+import ch.bailu.aat.services.cache.ObjGpx;
+import ch.bailu.aat.services.cache.ObjGpxStatic;
+import ch.bailu.aat.services.cache.Obj;
 import ch.bailu.aat.services.directory.Iterator;
 import ch.bailu.aat.services.directory.Iterator.OnCursorChangedListener;
 import ch.bailu.aat.services.directory.IteratorFollowFile;
@@ -100,7 +100,7 @@ public abstract class IteratorSource extends ContentSource implements OnCursorCh
     public static class FollowFile extends IteratorSource {
         private final Context context;
         private final ServiceContext scontext;
-        private ObjectHandle handle = ObjectHandle.NULL;
+        private Obj handle = Obj.NULL;
 
 
         public FollowFile(ServiceContext sc) {
@@ -129,7 +129,7 @@ public abstract class IteratorSource extends ContentSource implements OnCursorCh
             context.unregisterReceiver(onChangedInCache);
 
             handle.free();
-            handle = ObjectHandle.NULL;
+            handle = Obj.NULL;
             super.onPause();
         }
 
@@ -147,16 +147,16 @@ public abstract class IteratorSource extends ContentSource implements OnCursorCh
             new InsideContext(scontext) {
                 @Override
                 public void run() {
-                    ObjectHandle h = scontext.getCacheService().getObject(getID(),
-                            new GpxObjectStatic.Factory());
+                    Obj h = scontext.getCacheService().getObject(getID(),
+                            new ObjGpxStatic.Factory());
 
-                    if (h instanceof GpxObject) {
+                    if (h instanceof ObjGpx) {
                         handle.free();
                         handle = h;
 
                         if (handle.isReadyAndLoaded())
                             info[0] = new GpxFileWrapper(handle.getFile(),
-                                    ((GpxObject)handle).getGpxList());
+                                    ((ObjGpx)handle).getGpxList());
                     } else {
 
                         h.free();

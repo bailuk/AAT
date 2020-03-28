@@ -4,8 +4,8 @@ import android.content.Context;
 
 import org.mapsforge.core.model.Tile;
 
-import ch.bailu.aat.services.cache.CacheOnlyTileObject;
-import ch.bailu.aat.services.cache.TileObject;
+import ch.bailu.aat.services.cache.Obj;
+import ch.bailu.aat.services.cache.ObjTileCacheOnly;
 import ch.bailu.aat.util.fs.AppDirectory;
 
 public class CacheOnlySource extends Source {
@@ -43,8 +43,8 @@ public class CacheOnlySource extends Source {
 
 
     @Override
-    public TileObject.Factory getFactory(Tile tile) {
-        return new CacheOnlyTileObject.Factory(tile, original.isTransparent());
+    public Obj.Factory getFactory(Tile tile) {
+        return new ObjTileCacheOnly.Factory(tile, original);
     }
 
     @Override

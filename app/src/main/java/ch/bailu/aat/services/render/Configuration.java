@@ -6,7 +6,7 @@ import org.mapsforge.map.rendertheme.XmlRenderTheme;
 import java.util.ArrayList;
 
 import ch.bailu.aat.preferences.map.SolidMapsForgeDirectory;
-import ch.bailu.aat.services.cache.MapsForgeTileObject;
+import ch.bailu.aat.services.cache.ObjTileMapsForge;
 import ch.bailu.util_java.foc.Foc;
 
 public final class Configuration {
@@ -62,13 +62,13 @@ public final class Configuration {
     }
 
 
-    public void lockToRenderer(MapsForgeTileObject o) {
+    public void lockToRenderer(ObjTileMapsForge o) {
             if (isConfigured() && themeID.equals(o.getThemeID()))
                 renderer.addJob(o.getTile());
 
         }
 
-    public void freeFromRenderer(MapsForgeTileObject o) {
+    public void freeFromRenderer(ObjTileMapsForge o) {
         //renderer.removeJob(o.getTile());
     }
 }

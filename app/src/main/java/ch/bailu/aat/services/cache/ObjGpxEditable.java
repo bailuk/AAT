@@ -17,15 +17,15 @@ import ch.bailu.aat.util.fs.AppDirectory;
 import ch.bailu.aat.util.ui.AppLog;
 import ch.bailu.util_java.foc.Foc;
 
-public final class GpxObjectEditable extends  GpxObject {
+public final class ObjGpxEditable extends ObjGpx {
 
-    private GpxObject currentHandle=NULL;
+    private ObjGpx currentHandle=NULL;
     private final Foc file;
 
     private final GpxListEditor editor;
 
 
-    public GpxObjectEditable(String _id, Foc _file, ServiceContext sc) {
+    public ObjGpxEditable(String _id, Foc _file, ServiceContext sc) {
         super(_id);
         file = _file;
 
@@ -39,12 +39,12 @@ public final class GpxObjectEditable extends  GpxObject {
 
     @Override
     public void onInsert(ServiceContext sc) {
-        ObjectHandle handle = sc.getCacheService().getObject(file.getPath(), new GpxObjectStatic.Factory());
+        Obj handle = sc.getCacheService().getObject(file.getPath(), new ObjGpxStatic.Factory());
 
-        if (handle instanceof GpxObject) {
-            currentHandle = (GpxObject) handle;
+        if (handle instanceof ObjGpx) {
+            currentHandle = (ObjGpx) handle;
         } else {
-            currentHandle = GpxObject.NULL;
+            currentHandle = ObjGpx.NULL;
         }
         editor.loadIntoEditor(currentHandle.getGpxList());
     }
@@ -278,7 +278,7 @@ public final class GpxObjectEditable extends  GpxObject {
     }
 
 
-    public static class Factory extends ObjectHandle.Factory {
+    public static class Factory extends Obj.Factory {
         private final Foc file;
 
 
@@ -290,8 +290,8 @@ public final class GpxObjectEditable extends  GpxObject {
 
 
         @Override
-        public ObjectHandle factory(String id, ServiceContext sc) {
-            return new GpxObjectEditable(id, file, sc);
+        public Obj factory(String id, ServiceContext sc) {
+            return new ObjGpxEditable(id, file, sc);
         }
 
 
@@ -304,7 +304,7 @@ public final class GpxObjectEditable extends  GpxObject {
     }
 
     private static String getVirtualID(String cID) {
-        return GpxObjectEditable.class.getSimpleName()+cID;
+        return ObjGpxEditable.class.getSimpleName()+cID;
     }
 
 

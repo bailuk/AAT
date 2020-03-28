@@ -2,7 +2,7 @@ package ch.bailu.aat.services.cache;
 
 import java.io.Closeable;
 
-public final class LockCache<E extends ObjectHandle>  implements Closeable {
+public final class LockCache<E extends Obj>  implements Closeable {
     private E[]    objects;
     private long[] access;
     private int    size;
@@ -10,7 +10,7 @@ public final class LockCache<E extends ObjectHandle>  implements Closeable {
 
 
     public LockCache(int capacity) {
-        objects = (E[]) new ObjectHandle[capacity];
+        objects = (E[]) new Obj[capacity];
         access = new long[capacity];
         size = 0;
     }
@@ -84,7 +84,7 @@ public final class LockCache<E extends ObjectHandle>  implements Closeable {
 
 
     private void resizeCache(int capacity) {
-        final E[] newObjects= (E[]) new ObjectHandle[capacity];
+        final E[] newObjects= (E[]) new Obj[capacity];
         final long[] newAccess = new long[capacity];
 
         final int l = Math.min(newObjects.length, objects.length);

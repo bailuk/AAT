@@ -15,7 +15,7 @@ import java.io.Closeable;
 import java.io.IOException;
 import java.io.InputStream;
 
-import ch.bailu.aat.services.cache.ObjectHandle;
+import ch.bailu.aat.services.cache.Obj;
 import ch.bailu.util_java.foc.Foc;
 
 public class SyncTileBitmap implements Closeable {
@@ -74,7 +74,7 @@ public class SyncTileBitmap implements Closeable {
 
 
     private long getSizeOfBitmap() {
-        long result = ObjectHandle.MIN_SIZE;
+        long result = Obj.MIN_SIZE;
         Bitmap bitmap = getAndroidBitmap();
 
         if (bitmap != null) {
@@ -110,7 +110,7 @@ public class SyncTileBitmap implements Closeable {
             bitmap.decrementRefCount();
         }
         bitmap = null;
-        size = ObjectHandle.MIN_SIZE;
+        size = Obj.MIN_SIZE;
     }
 
 

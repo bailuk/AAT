@@ -4,16 +4,16 @@ import ch.bailu.aat.gpx.GpxList;
 import ch.bailu.aat.services.ServiceContext;
 
 
-public abstract class GpxObject extends ObjectHandle {
+public abstract class ObjGpx extends Obj {
 
-    public GpxObject(String id) {
+    public ObjGpx(String id) {
         super(id);
     }
 
     public abstract GpxList getGpxList();
 
 
-    public static final GpxObject NULL = new GpxObject(GpxObject.class.getSimpleName()) {
+    public static final ObjGpx NULL = new ObjGpx(ObjGpx.class.getSimpleName()) {
 
         @Override
         public long getSize() {

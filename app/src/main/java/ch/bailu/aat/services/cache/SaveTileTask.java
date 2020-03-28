@@ -25,10 +25,10 @@ public final class SaveTileTask extends FileTask {
         final long[] size = {0};
 
 
-        new OnObject(sc, sourceID, TileObject.class) {
+        new OnObject(sc, sourceID, ObjTile.class) {
             @Override
-            public void run(ObjectHandle handle) {
-                size[0] = save(sc, (TileObject) handle);
+            public void run(Obj handle) {
+                size[0] = save(sc, (ObjTile) handle);
             }
         };
 
@@ -36,7 +36,7 @@ public final class SaveTileTask extends FileTask {
     }
 
 
-    private long save(ServiceContext sc, TileObject self) {
+    private long save(ServiceContext sc, ObjTile self) {
         long size = 0;
         OutputStream out = null;
         Foc file = getFile();

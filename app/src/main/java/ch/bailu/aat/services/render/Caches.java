@@ -2,18 +2,18 @@ package ch.bailu.aat.services.render;
 
 import java.util.HashMap;
 
-import ch.bailu.aat.services.cache.MapsForgeTileObject;
+import ch.bailu.aat.services.cache.ObjTileMapsForge;
 
 public final class Caches {
     private final HashMap<String, Cache> caches = new HashMap<>(5);
 
 
-    public void lockToRenderer(MapsForgeTileObject o) {
+    public void lockToRenderer(ObjTileMapsForge o) {
         get(o.getThemeID()).lockToRenderer(o);
     }
 
 
-    public void freeFromRenderer(MapsForgeTileObject o) {
+    public void freeFromRenderer(ObjTileMapsForge o) {
         get(o.getThemeID()).freeFromRenderer(o);
     }
 

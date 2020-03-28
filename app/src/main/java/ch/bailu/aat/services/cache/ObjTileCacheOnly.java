@@ -6,6 +6,7 @@ import org.mapsforge.core.graphics.TileBitmap;
 import org.mapsforge.core.model.Tile;
 
 import ch.bailu.aat.map.tile.TileFlags;
+import ch.bailu.aat.map.tile.source.Source;
 import ch.bailu.aat.preferences.map.SolidTileSize;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.background.FileTask;
@@ -13,23 +14,24 @@ import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.util.fs.foc.FocAndroid;
 import ch.bailu.aat.util.graphic.SyncTileBitmap;
 import ch.bailu.util_java.foc.Foc;
+import ch.bailu.util_java.util.Objects;
 
-public final class CacheOnlyTileObject extends TileObject {
+public class ObjTileCacheOnly extends ObjTile {
 
     private final Foc file;
     private final Tile tile;
     private final SyncTileBitmap bitmap = new SyncTileBitmap();
 
-    private final boolean isTransparent;
+    private final Source source;
 
 
 
-    public CacheOnlyTileObject(String id, ServiceContext sc, Tile t, final boolean transparent) {
+    public ObjTileCacheOnly(String id, ServiceContext sc, Tile t, Source s) {
         super(id);
         tile = t;
         file = FocAndroid.factory(sc.getContext(), id);
 
-        isTransparent = transparent;
+        source = s;
 
         sc.getCacheService().addToBroadcaster(this);
 
@@ -49,7 +51,7 @@ public final class CacheOnlyTileObject extends TileObject {
 
     @Override
     public void onInsert(ServiceContext sc) {
-        if (isLoadable()) sc.getBackgroundService().process(new TileLoaderTask(file));
+        if (isLoadable()) load(sc);
     }
 
 
@@ -67,9 +69,27 @@ public final class CacheOnlyTileObject extends TileObject {
     }
 
 
-    private boolean isLoadable() {
-        // **? file.update();
+    protected boolean isLoadable() {
+        file.update();
         return file.isFile() && file.canRead();
+    }
+
+
+    @Override
+    public void onDownloaded(String id, String u, ServiceContext sc) {
+        if (Objects.equals(id, getID()) && isLoadable()) {
+            load(sc);
+        }
+    }
+
+
+    protected boolean fileExists() {
+        file.update();
+        return getFile().exists();
+    }
+
+    protected void load(ServiceContext sc) {
+        sc.getBackgroundService().process(new TileLoaderTask(file));
     }
 
 
@@ -83,9 +103,6 @@ public final class CacheOnlyTileObject extends TileObject {
 
     @Override
     public void onChanged(String id, ServiceContext sc) {}
-
-    @Override
-    public void onDownloaded(String id, String url, ServiceContext sc) {}
 
 
 
@@ -117,15 +134,15 @@ public final class CacheOnlyTileObject extends TileObject {
             final long[] size = {0};
 
 
-            new OnObject(sc, getFile().getPath(), CacheOnlyTileObject.class) {
+            new OnObject(sc, getFile().getPath(), ObjTileCacheOnly.class) {
                 @Override
-                public void run(ObjectHandle handle) {
-                    CacheOnlyTileObject tile = (CacheOnlyTileObject) handle;
+                public void run(Obj handle) {
+                    ObjTileCacheOnly tile = (ObjTileCacheOnly) handle;
 
                     tile.bitmap.set(
                             getFile(),
                             SolidTileSize.DEFAULT_TILESIZE,
-                            TileFlags.ALWAYS_TRANSPARENT || tile.isTransparent);
+                            TileFlags.ALWAYS_TRANSPARENT || tile.source.isTransparent());
 
 
                     AppBroadcaster.broadcast(sc.getContext(), AppBroadcaster.FILE_CHANGED_INCACHE,
@@ -143,19 +160,19 @@ public final class CacheOnlyTileObject extends TileObject {
     }
 
 
-    public static class Factory extends ObjectHandle.Factory {
-        private final Tile mapTile;
-        private final boolean isTransparent;
+    public static class Factory extends Obj.Factory {
+        private final Tile tile;
+        private final Source source;
 
 
-        public Factory(Tile mt, Boolean t) {
-            mapTile = mt;
-            isTransparent = t;
+        public Factory(Tile t, Source s) {
+            tile = t;
+            source = s;
         }
 
         @Override
-        public ObjectHandle factory(String id, ServiceContext cs) {
-            return new CacheOnlyTileObject(id, cs, mapTile, isTransparent);
+        public Obj factory(String id, ServiceContext cs) {
+            return new ObjTileCacheOnly(id, cs, tile, source);
         }
     }
 }

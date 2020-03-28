@@ -15,7 +15,7 @@ import ch.bailu.aat.preferences.SolidString;
 import ch.bailu.aat.preferences.map.SolidOsmFeaturesList;
 import ch.bailu.aat.services.InsideContext;
 import ch.bailu.aat.services.ServiceContext;
-import ch.bailu.aat.services.cache.osm_features.MapFeaturesHandle;
+import ch.bailu.aat.services.cache.osm_features.ObjMapFeatures;
 import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.util.AppIntent;
 import ch.bailu.aat.util.filter_list.FilterList;
@@ -30,7 +30,7 @@ public class OsmFeaturesView extends LinearLayout implements SharedPreferences.O
 
     private EditText filterView;
     private MapFeaturesListView listView;
-    private MapFeaturesHandle listHandle = null;
+    private ObjMapFeatures listHandle = null;
 
     private final BusyIndicator busy;
 

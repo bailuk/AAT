@@ -9,7 +9,7 @@ import org.mapsforge.core.model.Tile;
 
 import ch.bailu.aat.preferences.map.SolidTileSize;
 import ch.bailu.aat.services.ServiceContext;
-import ch.bailu.aat.services.cache.TileObject;
+import ch.bailu.aat.services.cache.ObjTile;
 import ch.bailu.aat.services.dem.tile.Dem3Tile;
 import ch.bailu.aat.services.dem.tile.DemDimension;
 import ch.bailu.aat.services.dem.tile.DemGeoToIndex;
@@ -18,7 +18,7 @@ import ch.bailu.aat.services.dem.tile.DemSplitter;
 import ch.bailu.aat.services.dem.updater.ElevationUpdaterClient;
 import ch.bailu.aat.util.graphic.SyncTileBitmap;
 
-public abstract class ElevationTile extends TileObject implements ElevationUpdaterClient {
+public abstract class ObjTileElevation extends ObjTile implements ElevationUpdaterClient {
 
     private final Tile mapTile;
     private final int split;
@@ -30,7 +30,7 @@ public abstract class ElevationTile extends TileObject implements ElevationUpdat
 
 
 
-    public ElevationTile(String id, Tile _map_tile, int _split) {
+    public ObjTileElevation(String id, Tile _map_tile, int _split) {
         super(id);
         mapTile = _map_tile;
         split = _split;

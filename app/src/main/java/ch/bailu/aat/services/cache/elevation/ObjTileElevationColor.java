@@ -3,14 +3,14 @@ package ch.bailu.aat.services.cache.elevation;
 import org.mapsforge.core.model.Tile;
 
 import ch.bailu.aat.services.ServiceContext;
-import ch.bailu.aat.services.cache.ObjectHandle;
+import ch.bailu.aat.services.cache.Obj;
 import ch.bailu.aat.services.dem.tile.DemProvider;
 import ch.bailu.aat.views.graph.AltitudeColorTable;
 
-public final class ElevationColorTile extends ElevationTile {
+public final class ObjTileElevationColor extends ObjTileElevation {
 
 
-    public ElevationColorTile(String id, Tile t, int _split) {
+    public ObjTileElevationColor(String id, Tile t, int _split) {
         super(id,  t, _split);
     }
 
@@ -67,7 +67,7 @@ public final class ElevationColorTile extends ElevationTile {
 
 
 
-    public static class Factory extends ObjectHandle.Factory {
+    public static class Factory extends Obj.Factory {
         private static final int SPLIT=0;
         private final Tile mapTile;
 
@@ -77,8 +77,8 @@ public final class ElevationColorTile extends ElevationTile {
 
 
         @Override
-        public ObjectHandle factory(String id, ServiceContext cs) {
-            return  new ElevationColorTile(id, mapTile,SPLIT);
+        public Obj factory(String id, ServiceContext cs) {
+            return  new ObjTileElevationColor(id, mapTile,SPLIT);
         }
     }
 

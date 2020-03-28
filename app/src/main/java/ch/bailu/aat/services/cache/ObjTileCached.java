@@ -13,21 +13,21 @@ import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.util.fs.foc.FocAndroid;
 import ch.bailu.util_java.foc.Foc;
 
-public final class CachedTileObject extends TileObject {
+public final class ObjTileCached extends ObjTile {
     private final static int MIN_SAVE_ZOOM_LEVEL = 16;
 
     private final Tile mapTile;
 
-    private final ObjectHandle.Factory cachedFactory, sourceFactory;
+    private final Obj.Factory cachedFactory, sourceFactory;
     private final String cachedID, sourceID;
 
-    private TileObject tile = TileObject.NULL_TILE;
+    private ObjTile tile = ObjTile.NULL;
 
     private final SaveTileTask save;
 
     private final Foc cachedImageFile;
 
-    public CachedTileObject(String id, final ServiceContext sc,  Tile t, Source source) {
+    public ObjTileCached(String id, final ServiceContext sc, Tile t, Source source) {
         super(id);
 
         mapTile = t;
@@ -51,9 +51,9 @@ public final class CachedTileObject extends TileObject {
     @Override
     public void onInsert(ServiceContext sc) {
         if (isLoadable(sc.getContext())) {
-            tile = (TileObject) sc.getCacheService().getObject(cachedID, cachedFactory);
+            tile = (ObjTile) sc.getCacheService().getObject(cachedID, cachedFactory);
         } else {
-            tile = (TileObject) sc.getCacheService().getObject(sourceID, sourceFactory);
+            tile = (ObjTile) sc.getCacheService().getObject(sourceID, sourceFactory);
         }
         sc.getCacheService().addToBroadcaster(this);
     }
@@ -117,7 +117,7 @@ public final class CachedTileObject extends TileObject {
         cachedImageFile.rm();
 
         tile.free();
-        tile = (TileObject) sc.getCacheService().getObject(sourceID, sourceFactory);
+        tile = (ObjTile) sc.getCacheService().getObject(sourceID, sourceFactory);
     }
 
     @Override
@@ -141,7 +141,7 @@ public final class CachedTileObject extends TileObject {
     }
 
 
-    public static class Factory extends ObjectHandle.Factory {
+    public static class Factory extends Obj.Factory {
         private final Source source;
         private final Tile tile;
 
@@ -151,8 +151,8 @@ public final class CachedTileObject extends TileObject {
         }
 
         @Override
-        public ObjectHandle factory(String id, ServiceContext cs) {
-            return new CachedTileObject(id, cs, tile, source);
+        public Obj factory(String id, ServiceContext cs) {
+            return new ObjTileCached(id, cs, tile, source);
         }
     }
 }

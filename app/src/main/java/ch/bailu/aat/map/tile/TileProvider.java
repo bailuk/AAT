@@ -18,8 +18,8 @@ import ch.bailu.aat.map.Attachable;
 import ch.bailu.aat.map.tile.source.Source;
 import ch.bailu.aat.services.InsideContext;
 import ch.bailu.aat.services.ServiceContext;
-import ch.bailu.aat.services.cache.ObjectHandle;
-import ch.bailu.aat.services.cache.TileObject;
+import ch.bailu.aat.services.cache.Obj;
+import ch.bailu.aat.services.cache.ObjTile;
 import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.util.AppIntent;
 
@@ -69,8 +69,8 @@ public class TileProvider implements Attachable, ObservableInterface {
 
 
 
-    private synchronized TileObject getHandle(Tile tile) {
-        TileObject handle = getTileHandle(tile);
+    private synchronized ObjTile getHandle(Tile tile) {
+        ObjTile handle = getTileHandle(tile);
 
         if (handle != null) {
             handle.access();
@@ -81,7 +81,7 @@ public class TileProvider implements Attachable, ObservableInterface {
 
 
     public synchronized Bitmap get(Tile tile, Resources r) {
-        TileObject handle = getHandle(tile);
+        ObjTile handle = getHandle(tile);
 
         if (handle != null) {
             return handle.getAndroidBitmap();
@@ -153,8 +153,8 @@ public class TileProvider implements Attachable, ObservableInterface {
 
 
 
-    private TileObject getTileHandle(Tile tile) {
-        TileObject handle = cache.get(tile);
+    private ObjTile getTileHandle(Tile tile) {
+        ObjTile handle = cache.get(tile);
 
 
         if (handle == null) {
@@ -166,22 +166,22 @@ public class TileProvider implements Attachable, ObservableInterface {
         return handle;
     }
 
-    private TileObject getTileHandleLevel2(final Tile mapTile) {
-        final TileObject[] r = {null};
+    private ObjTile getTileHandleLevel2(final Tile mapTile) {
+        final ObjTile[] r = {null};
 
         new InsideContext(scontext) {
             @Override
             public void run() {
                 String id = source.getID(mapTile, scontext.getContext());
 
-                ObjectHandle handle = scontext.getCacheService().getObject(
+                Obj handle = scontext.getCacheService().getObject(
                         id,
                         source.getFactory(mapTile)
                 );
 
 
-                if (handle instanceof TileObject) {
-                    r[0] = (TileObject) handle;
+                if (handle instanceof ObjTile) {
+                    r[0] = (ObjTile) handle;
                 }
 
             }
@@ -200,13 +200,13 @@ public class TileProvider implements Attachable, ObservableInterface {
             public void run() {
                 String id = source.getID(mapTile, scontext.getContext());
 
-                ObjectHandle handle = scontext.getCacheService().getObject(
+                Obj handle = scontext.getCacheService().getObject(
                         id
                 );
 
 
-                if (handle instanceof TileObject) {
-                    r[0] = ((TileObject) handle).getTileBitmap();
+                if (handle instanceof ObjTile) {
+                    r[0] = ((ObjTile) handle).getTileBitmap();
                     handle.free();
                 }
 

@@ -4,8 +4,8 @@ import android.content.Context;
 
 import org.mapsforge.core.model.Tile;
 
-import ch.bailu.aat.services.cache.CachedTileObject;
-import ch.bailu.aat.services.cache.ObjectHandle;
+import ch.bailu.aat.services.cache.ObjTileCached;
+import ch.bailu.aat.services.cache.Obj;
 
 public class CachedSource extends Source {
     private final Source source;
@@ -40,8 +40,8 @@ public class CachedSource extends Source {
 
 
     @Override
-    public ObjectHandle.Factory getFactory(Tile tile) {
-        return new CachedTileObject.Factory(tile, source);
+    public Obj.Factory getFactory(Tile tile) {
+        return new ObjTileCached.Factory(tile, source);
     }
 
     @Override

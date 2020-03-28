@@ -9,18 +9,18 @@ import ch.bailu.aat.util.fs.foc.FocAndroid;
 import ch.bailu.aat.util.graphic.SyncBitmap;
 import ch.bailu.util_java.foc.Foc;
 
-public final class ImageObject extends ImageObjectAbstract {
-    public final static ImageObject NULL=new ImageObject();
+public final class ObjBitmap extends ObjImageAbstract {
+    public final static ObjBitmap NULL=new ObjBitmap();
 
     private final SyncBitmap bitmap=new SyncBitmap();
     private final Foc imageFile;
 
 
-    private ImageObject() {
+    private ObjBitmap() {
         this(FocAndroid.NULL);
     }
 
-    public ImageObject(Foc id) {
+    public ObjBitmap(Foc id) {
         super(id.getPath());
         imageFile = id;
     }
@@ -65,10 +65,10 @@ public final class ImageObject extends ImageObjectAbstract {
     }
 
 
-    public static class Factory extends ObjectHandle.Factory {
+    public static class Factory extends Obj.Factory {
         @Override
-        public ObjectHandle factory(String id, ServiceContext sc) {
-            return new ImageObject(FocAndroid.factory(sc.getContext(),id));
+        public Obj factory(String id, ServiceContext sc) {
+            return new ObjBitmap(FocAndroid.factory(sc.getContext(),id));
         }
     }
 
@@ -96,10 +96,10 @@ public final class ImageObject extends ImageObjectAbstract {
         public long bgOnProcess(final ServiceContext sc) {
             final long[] size = {0};
 
-            new OnObject(sc, toString(), ImageObject.class) {
+            new OnObject(sc, toString(), ObjBitmap.class) {
                 @Override
-                public void run(ObjectHandle obj) {
-                    ImageObject self = (ImageObject) obj;
+                public void run(Obj obj) {
+                    ObjBitmap self = (ObjBitmap) obj;
 
                     try {
                         self.bitmap.set(self.imageFile);

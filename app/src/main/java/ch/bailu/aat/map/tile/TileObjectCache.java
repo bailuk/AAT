@@ -6,18 +6,18 @@ import java.io.Closeable;
 
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.cache.LockCache;
-import ch.bailu.aat.services.cache.TileObject;
+import ch.bailu.aat.services.cache.ObjTile;
 
 public class TileObjectCache implements Closeable {
 
 
     private final static int INITIAL_CAPACITY = 5;
 
-    private final LockCache<TileObject> tiles = new LockCache<>(INITIAL_CAPACITY);
+    private final LockCache<ObjTile> tiles = new LockCache<>(INITIAL_CAPACITY);
 
     public final static TileObjectCache NULL = new TileObjectCache() {
         @Override
-        public void put(TileObject t) {
+        public void put(ObjTile t) {
 
         }
     };
@@ -32,7 +32,7 @@ public class TileObjectCache implements Closeable {
             int hash = string.hashCode();
 
             for (int i = 0; i < tiles.size(); i++) {
-                TileObject o = tiles.get(i);
+                ObjTile o = tiles.get(i);
 
                 if (o != null && hash == tiles.get(i).hashCode()) {
                     return true;
@@ -44,7 +44,7 @@ public class TileObjectCache implements Closeable {
     }
 
 
-    public synchronized TileObject  get(String string) {
+    public synchronized ObjTile get(String string) {
         for (int i = 0; i<tiles.size(); i++) {
             if (tiles.get(i).toString().equals(string)) {
                 return tiles.use(i);
@@ -54,7 +54,7 @@ public class TileObjectCache implements Closeable {
     }
 
 
-    public synchronized TileObject get(Tile tile) {
+    public synchronized ObjTile get(Tile tile) {
         for (int i = 0; i<tiles.size(); i++) {
             if (compare(tile, tiles.get(i).getTile())) {
                 return tiles.use(i);
@@ -68,7 +68,7 @@ public class TileObjectCache implements Closeable {
     }
 
 
-    public synchronized void put(TileObject handle) {
+    public synchronized void put(ObjTile handle) {
         tiles.add(handle);
     }
 

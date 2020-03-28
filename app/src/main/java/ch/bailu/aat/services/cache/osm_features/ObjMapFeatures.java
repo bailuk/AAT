@@ -9,17 +9,17 @@ import java.util.ArrayList;
 import ch.bailu.aat.preferences.map.SolidOsmFeaturesList;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.background.BackgroundTask;
-import ch.bailu.aat.services.cache.ObjectHandle;
+import ch.bailu.aat.services.cache.Obj;
 import ch.bailu.aat.services.cache.OnObject;
 import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.util.filter_list.AbsFilterList;
 import ch.bailu.aat.util.filter_list.KeyList;
 import ch.bailu.aat.util.filter_list.ListEntry;
 
-public final class MapFeaturesHandle extends ObjectHandle {
+public final class ObjMapFeatures extends Obj {
 
-    public static final String ID_FULL = MapFeaturesHandle.class.getSimpleName();
-    public static final String ID_SMALL = MapFeaturesHandle.class.getSimpleName()+"/s";
+    public static final String ID_FULL = ObjMapFeatures.class.getSimpleName();
+    public static final String ID_SMALL = ObjMapFeatures.class.getSimpleName()+"/s";
 
     private boolean isLoaded = false;
     private long size = 0;
@@ -45,7 +45,7 @@ public final class MapFeaturesHandle extends ObjectHandle {
     private final List list = new List();
 
 
-    public MapFeaturesHandle(String ID) {
+    public ObjMapFeatures(String ID) {
         super(ID);
     }
 
@@ -85,7 +85,7 @@ public final class MapFeaturesHandle extends ObjectHandle {
 
         private ServiceContext scontext;
 
-        private MapFeaturesHandle owner = null;
+        private ObjMapFeatures owner = null;
         public ListLoader(String id) {
             ID = id;
         }
@@ -97,10 +97,10 @@ public final class MapFeaturesHandle extends ObjectHandle {
         @Override
         public long bgOnProcess(final ServiceContext sc) {
             final long[] size = {0};
-            new OnObject(sc, ID, MapFeaturesHandle.class) {
+            new OnObject(sc, ID, ObjMapFeatures.class) {
                 @Override
-                public void run(ObjectHandle handle) {
-                    owner = (MapFeaturesHandle) handle;
+                public void run(Obj handle) {
+                    owner = (ObjMapFeatures) handle;
                     scontext = sc;
                     bgOnProcess(sc.getContext());
 
@@ -150,7 +150,7 @@ public final class MapFeaturesHandle extends ObjectHandle {
         }
     }
 
-    public static class Factory extends ObjectHandle.Factory {
+    public static class Factory extends Obj.Factory {
         final String ID;
 
         public Factory(String id) {
@@ -158,8 +158,8 @@ public final class MapFeaturesHandle extends ObjectHandle {
         }
 
         @Override
-        public ObjectHandle factory(String id, ServiceContext cs) {
-            return new MapFeaturesHandle(ID);
+        public Obj factory(String id, ServiceContext cs) {
+            return new ObjMapFeatures(ID);
         }
     }
 }

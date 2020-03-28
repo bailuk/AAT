@@ -6,7 +6,7 @@ import android.widget.TextView;
 
 import ch.bailu.aat.services.InsideContext;
 import ch.bailu.aat.services.ServiceContext;
-import ch.bailu.aat.services.cache.ObjectHandle;
+import ch.bailu.aat.services.cache.Obj;
 import ch.bailu.util_java.foc.Foc;
 
 
@@ -29,7 +29,7 @@ public class ErrorView extends TextView  {
 
             @Override
             public void run() {
-                ObjectHandle obj = sc.getCacheService().getObject(file.getPath());
+                Obj obj = sc.getCacheService().getObject(file.getPath());
 
                 displayError(obj.getException());
 

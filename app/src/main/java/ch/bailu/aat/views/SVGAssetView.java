@@ -5,7 +5,7 @@ import android.widget.ImageView;
 import ch.bailu.aat.gpx.GpxPointNode;
 import ch.bailu.aat.services.InsideContext;
 import ch.bailu.aat.services.ServiceContext;
-import ch.bailu.aat.services.cache.SVGAssetImageObject;
+import ch.bailu.aat.services.cache.ObjSVGAsset;
 import ch.bailu.aat.services.icons.IconMapService;
 import ch.bailu.aat.util.ui.AppDensity;
 
@@ -48,8 +48,8 @@ public class SVGAssetView extends ImageObjectView {
     private void setImageObject(String name) {
         if (name != null) {
 
-            String id = SVGAssetImageObject.toID(name, size);
-            setImageObject(id, new SVGAssetImageObject.Factory(name, size));
+            String id = ObjSVGAsset.toID(name, size);
+            setImageObject(id, new ObjSVGAsset.Factory(name, size));
         } else {
             setImageObject();
         }

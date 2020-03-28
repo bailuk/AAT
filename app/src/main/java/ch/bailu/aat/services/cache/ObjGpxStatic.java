@@ -26,7 +26,7 @@ import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.util.fs.foc.FocAndroid;
 import ch.bailu.util_java.foc.Foc;
 
-public final class GpxObjectStatic extends GpxObject implements ElevationUpdaterClient {
+public final class ObjGpxStatic extends ObjGpx implements ElevationUpdaterClient {
 
 
     private GpxList gpxList = GpxList.NULL_TRACK;
@@ -36,7 +36,7 @@ public final class GpxObjectStatic extends GpxObject implements ElevationUpdater
     private final Foc file;
 
 
-    public GpxObjectStatic(String id, ServiceContext sc) {
+    public ObjGpxStatic(String id, ServiceContext sc) {
         super(id);
         sc.getCacheService().addToBroadcaster(this);
 
@@ -55,7 +55,7 @@ public final class GpxObjectStatic extends GpxObject implements ElevationUpdater
         new InsideContext(sc) {
             @Override
             public void run() {
-                sc.getElevationService().cancelElevationUpdates(GpxObjectStatic.this);
+                sc.getElevationService().cancelElevationUpdates(ObjGpxStatic.this);
             }
         };
     }
@@ -97,11 +97,11 @@ public final class GpxObjectStatic extends GpxObject implements ElevationUpdater
     }
 
 
-    public static class Factory extends ObjectHandle.Factory {
+    public static class Factory extends Obj.Factory {
 
         @Override
-        public ObjectHandle factory(String id, ServiceContext sc) {
-            return new GpxObjectStatic(id, sc);
+        public Obj factory(String id, ServiceContext sc) {
+            return new ObjGpxStatic(id, sc);
         }
     }
 
@@ -215,10 +215,10 @@ public final class GpxObjectStatic extends GpxObject implements ElevationUpdater
         public long bgOnProcess(final ServiceContext sc) {
             final long[] size = {0};
 
-            new OnObject(sc, getID(), GpxObjectStatic.class) {
+            new OnObject(sc, getID(), ObjGpxStatic.class) {
                 @Override
-                public void run(ObjectHandle handle) {
-                    GpxObjectStatic owner = (GpxObjectStatic) handle;
+                public void run(Obj handle) {
+                    ObjGpxStatic owner = (ObjGpxStatic) handle;
 
                     size[0] = load(sc, owner);
 
@@ -235,7 +235,7 @@ public final class GpxObjectStatic extends GpxObject implements ElevationUpdater
         }
 
 
-        private long load(ServiceContext sc, GpxObjectStatic handle) {
+        private long load(ServiceContext sc, ObjGpxStatic handle) {
             long size = 0;
 
             GpxListReader reader = new GpxListReader(

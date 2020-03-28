@@ -8,9 +8,9 @@ import android.widget.ImageView;
 
 import ch.bailu.aat.services.InsideContext;
 import ch.bailu.aat.services.ServiceContext;
-import ch.bailu.aat.services.cache.ImageObject;
-import ch.bailu.aat.services.cache.ImageObjectAbstract;
-import ch.bailu.aat.services.cache.ObjectHandle;
+import ch.bailu.aat.services.cache.ObjBitmap;
+import ch.bailu.aat.services.cache.ObjImageAbstract;
+import ch.bailu.aat.services.cache.Obj;
 import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.util.AppIntent;
 
@@ -20,10 +20,10 @@ public class ImageObjectView extends ImageView {
 
     protected final ServiceContext scontext;
 
-    private ImageObjectAbstract imageHandle=ImageObject.NULL;
+    private ObjImageAbstract imageHandle= ObjBitmap.NULL;
 
     private String idToLoad=null;
-    private ObjectHandle.Factory factoryToLoad=null;
+    private Obj.Factory factoryToLoad=null;
 
 
     private final int defaultImageID;
@@ -46,7 +46,7 @@ public class ImageObjectView extends ImageView {
 
 
 
-    public void setImageObject(String ID, ObjectHandle.Factory factory) {
+    public void setImageObject(String ID, Obj.Factory factory) {
         idToLoad = ID;
         factoryToLoad=factory;
 
@@ -76,18 +76,18 @@ public class ImageObjectView extends ImageView {
     }
 
 
-    private boolean loadImage(final String id, final ObjectHandle.Factory factory) {
+    private boolean loadImage(final String id, final Obj.Factory factory) {
 
 
         final boolean[] r = {false};
         new InsideContext(scontext) {
             @Override
             public void run() {
-                final ObjectHandle h=scontext.getCacheService().getObject(id, factory);
+                final Obj h=scontext.getCacheService().getObject(id, factory);
 
-                if (h instanceof ImageObjectAbstract)
+                if (h instanceof ObjImageAbstract)
                 {
-                    imageHandle = (ImageObjectAbstract) h;
+                    imageHandle = (ObjImageAbstract) h;
                     r[0] = true;
                 } else {
                     h.free();
@@ -103,7 +103,7 @@ public class ImageObjectView extends ImageView {
 
     private void freeImageHandle() {
         imageHandle.free();
-        imageHandle = ImageObject.NULL;
+        imageHandle = ObjBitmap.NULL;
     }
 
 

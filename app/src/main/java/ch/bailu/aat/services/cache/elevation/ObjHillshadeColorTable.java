@@ -1,14 +1,14 @@
 package ch.bailu.aat.services.cache.elevation;
 
-import ch.bailu.aat.services.cache.ObjectHandle;
+import ch.bailu.aat.services.cache.Obj;
 import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.background.BackgroundTask;
 import ch.bailu.aat.services.dem.tile.MultiCell;
 
-public final class HillshadeColorTable extends ObjectHandle {
+public final class ObjHillshadeColorTable extends Obj {
 
-    public final static String ID=HillshadeColorTable.class.getSimpleName();
+    public final static String ID= ObjHillshadeColorTable.class.getSimpleName();
 
     private final static int MAX_DARKNES=50;
     private final static int TABLE_DIM=500;
@@ -23,7 +23,7 @@ public final class HillshadeColorTable extends ObjectHandle {
 
     private final byte[][] table=new byte[TABLE_DIM][TABLE_DIM];
 
-    public HillshadeColorTable() {
+    public ObjHillshadeColorTable() {
         super(ID);
     }
 
@@ -166,11 +166,11 @@ public final class HillshadeColorTable extends ObjectHandle {
     }
 
 
-    public static final Factory FACTORY = new ObjectHandle.Factory() {
+    public static final Factory FACTORY = new Obj.Factory() {
 
         @Override
-        public ObjectHandle factory(String id, ServiceContext sc) {
-            return  new HillshadeColorTable();
+        public Obj factory(String id, ServiceContext sc) {
+            return  new ObjHillshadeColorTable();
         }
     };
 }

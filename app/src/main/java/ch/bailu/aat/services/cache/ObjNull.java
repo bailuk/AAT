@@ -2,15 +2,15 @@ package ch.bailu.aat.services.cache;
 
 import ch.bailu.aat.services.ServiceContext;
 
-public final class NullHandle extends ObjectHandle {
+public final class ObjNull extends Obj {
 
-    protected NullHandle() {
-        super(NullHandle.class.getSimpleName());
+    protected ObjNull() {
+        super(ObjNull.class.getSimpleName());
     }
 
     @Override
     public long getSize() {
-        return ObjectHandle.MIN_SIZE;
+        return Obj.MIN_SIZE;
     }
 
     @Override

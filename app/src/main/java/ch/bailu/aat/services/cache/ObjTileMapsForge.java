@@ -10,7 +10,7 @@ import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.util.graphic.SyncTileBitmap;
 
-public final class MapsForgeTileObject extends TileObject {
+public final class ObjTileMapsForge extends ObjTile {
     private static long DEFAULT_SIZE = SolidTileSize.DEFAULT_TILESIZE_BYTES * 4;
 
     private final ServiceContext scontext;
@@ -20,7 +20,7 @@ public final class MapsForgeTileObject extends TileObject {
 
     private final String themeID;
 
-    public MapsForgeTileObject(String id, ServiceContext sc, Tile t, String tID) {
+    public ObjTileMapsForge(String id, ServiceContext sc, Tile t, String tID) {
         super(id);
         scontext = sc;
         tile = t;
@@ -66,7 +66,7 @@ public final class MapsForgeTileObject extends TileObject {
 
     @Override
     public void onRemove(ServiceContext sc) {
-        scontext.getRenderService().freeFromRenderer(MapsForgeTileObject.this);
+        scontext.getRenderService().freeFromRenderer(ObjTileMapsForge.this);
         bitmap.free();
         super.onRemove(sc);
     }
@@ -94,7 +94,7 @@ public final class MapsForgeTileObject extends TileObject {
 
 
 
-    public static class Factory extends ObjectHandle.Factory {
+    public static class Factory extends Obj.Factory {
         private final Tile mapTile;
         private final String themeID;
 
@@ -105,8 +105,8 @@ public final class MapsForgeTileObject extends TileObject {
         }
 
         @Override
-        public ObjectHandle factory(String id, ServiceContext sc) {
-            return  new MapsForgeTileObject(id, sc, mapTile, themeID);
+        public Obj factory(String id, ServiceContext sc) {
+            return  new ObjTileMapsForge(id, sc, mapTile, themeID);
         }
 
     }

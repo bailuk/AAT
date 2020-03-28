@@ -5,7 +5,7 @@ import android.content.Context;
 import ch.bailu.aat.services.InsideContext;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.background.BackgroundTask;
-import ch.bailu.aat.services.cache.ObjectHandle;
+import ch.bailu.aat.services.cache.Obj;
 import ch.bailu.aat.services.cache.OnObject;
 import ch.bailu.aat.services.dem.tile.Dem3Tile;
 import ch.bailu.aat.util.AppBroadcaster;
@@ -36,10 +36,10 @@ public final class SubTilePainter extends BackgroundTask {
     public long bgOnProcess(final ServiceContext sc) {
         final long[] size = {0};
 
-        new OnObject(sc, iid, ElevationTile.class) {
+        new OnObject(sc, iid, ObjTileElevation.class) {
             @Override
-            public void run(ObjectHandle handle) {
-                ElevationTile owner = (ElevationTile) handle;
+            public void run(Obj handle) {
+                ObjTileElevation owner = (ObjTileElevation) handle;
 
                 size[0] = owner.bgOnProcessPainter(tile);
                 AppBroadcaster.broadcast(sc.getContext(), AppBroadcaster.FILE_CHANGED_INCACHE, iid);

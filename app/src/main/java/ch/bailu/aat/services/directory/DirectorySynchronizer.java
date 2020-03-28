@@ -8,7 +8,6 @@ import android.database.Cursor;
 
 import java.io.Closeable;
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 
 import ch.bailu.aat.coordinates.BoundingBoxE6;
@@ -20,9 +19,9 @@ import ch.bailu.aat.gpx.interfaces.GpxBigDeltaInterface;
 import ch.bailu.aat.map.mapsforge.MapsForgePreview;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.background.BackgroundTask;
-import ch.bailu.aat.services.cache.GpxObject;
-import ch.bailu.aat.services.cache.GpxObjectStatic;
-import ch.bailu.aat.services.cache.ObjectHandle;
+import ch.bailu.aat.services.cache.ObjGpx;
+import ch.bailu.aat.services.cache.ObjGpxStatic;
+import ch.bailu.aat.services.cache.Obj;
 import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.util.fs.foc.FocAndroid;
 import ch.bailu.aat.util.ui.AppLog;
@@ -30,7 +29,7 @@ import ch.bailu.util_java.foc.Foc;
 
 public final class DirectorySynchronizer  implements Closeable {
 
-    private GpxObject pendingHandle=null;
+    private ObjGpx pendingHandle=null;
     private MapsForgePreview pendingPreviewGenerator=null;
 
     private FilesInDirectory filesToAdd=null;
@@ -255,11 +254,11 @@ public final class DirectorySynchronizer  implements Closeable {
 
 
             } else {
-                ObjectHandle h = scontext.getCacheService().getObject(
-                        file.getPath(), new GpxObjectStatic.Factory());
-                if (h instanceof GpxObject) {
+                Obj h = scontext.getCacheService().getObject(
+                        file.getPath(), new ObjGpxStatic.Factory());
+                if (h instanceof ObjGpx) {
 
-                    setPendingGpxHandle((GpxObject)h);
+                    setPendingGpxHandle((ObjGpx)h);
                     state.ping();
 
                 } else {
@@ -325,7 +324,7 @@ public final class DirectorySynchronizer  implements Closeable {
     }
 
 
-    private void setPendingGpxHandle(GpxObject h) {
+    private void setPendingGpxHandle(ObjGpx h) {
         if (pendingHandle != null) {
             pendingHandle.free();
         }

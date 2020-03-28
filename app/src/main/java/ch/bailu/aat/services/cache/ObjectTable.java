@@ -5,7 +5,7 @@ import android.content.Intent;
 import java.util.HashMap;
 
 import ch.bailu.aat.services.ServiceContext;
-import ch.bailu.aat.services.cache.ObjectHandle.Factory;
+import ch.bailu.aat.services.cache.Obj.Factory;
 import ch.bailu.aat.util.AppIntent;
 import ch.bailu.aat.util.MemSize;
 
@@ -18,12 +18,12 @@ public final class ObjectTable  {
 
 
     private static final class Container {
-        public static final Container NULL = new Container(ObjectHandle.NULL);
+        public static final Container NULL = new Container(Obj.NULL);
 
-        public final ObjectHandle obj;
+        public final Obj obj;
         public long size;
 
-        public Container(ObjectHandle o) {
+        public Container(Obj o) {
             obj = o;
             size = o.getSize();
         }
@@ -32,11 +32,11 @@ public final class ObjectTable  {
     private final HashMap<String, Container> hashMap = new HashMap<>(INITIAL_CAPACITY);
 
 
-    public synchronized ObjectHandle getHandle(String key, ServiceContext sc) {
-        ObjectHandle obj=getFromCache(key);
+    public synchronized Obj getHandle(String key, ServiceContext sc) {
+        Obj obj=getFromCache(key);
 
         if (obj == null) {
-            obj = ObjectHandle.NULL;
+            obj = Obj.NULL;
         }
 
         obj.lock(sc);
@@ -44,16 +44,16 @@ public final class ObjectTable  {
     }
 
 
-    public synchronized ObjectHandle getHandle(String id, Factory factory, CacheService self) {
-        ObjectHandle h =  getHandle(id, factory, self.scontext);
+    public synchronized Obj getHandle(String id, Factory factory, CacheService self) {
+        Obj h =  getHandle(id, factory, self.scontext);
         trim(self);
         return h;
     }
 
 
 
-    public synchronized ObjectHandle getHandle(String id, Factory factory, ServiceContext scontext) {
-        ObjectHandle h=getFromCache(id);
+    public synchronized Obj getHandle(String id, Factory factory, ServiceContext scontext) {
+        Obj h=getFromCache(id);
 
         if (h == null) {
             h = factory.factory(id, scontext);
@@ -70,7 +70,7 @@ public final class ObjectTable  {
     }
 
 
-    private synchronized void putIntoCache(ObjectHandle obj) {
+    private synchronized void putIntoCache(Obj obj) {
 
         hashMap.put(obj.toString(),new Container(obj));
         totalMemorySize += obj.getSize();
@@ -79,7 +79,7 @@ public final class ObjectTable  {
     }
 
 
-    private synchronized ObjectHandle getFromCache(String key) {
+    private synchronized Obj getFromCache(String key) {
         Container c = hashMap.get(key);
         if (c != null)
             return c.obj;
@@ -165,7 +165,7 @@ public final class ObjectTable  {
 
 
     private synchronized String findOldest() {
-        Container oldest = new Container(ObjectHandle.NULL);
+        Container oldest = new Container(Obj.NULL);
         oldest.obj.access();
 
         for (Container current : hashMap.values()) {

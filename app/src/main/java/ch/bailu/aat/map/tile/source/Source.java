@@ -4,9 +4,9 @@ import android.content.Context;
 
 import org.mapsforge.core.model.Tile;
 
-import ch.bailu.aat.services.cache.ObjectHandle;
-import ch.bailu.aat.services.cache.elevation.ElevationColorTile;
-import ch.bailu.aat.services.cache.elevation.HillshadeTile;
+import ch.bailu.aat.services.cache.Obj;
+import ch.bailu.aat.services.cache.elevation.ObjTileElevationColor;
+import ch.bailu.aat.services.cache.elevation.ObjTileHillshade;
 
 public abstract class Source {
     public final static String EXT = ".png";
@@ -22,7 +22,7 @@ public abstract class Source {
 
     public abstract boolean isTransparent();
     public abstract int getAlpha();
-    public abstract ObjectHandle.Factory getFactory(Tile tile);
+    public abstract Obj.Factory getFactory(Tile tile);
 
 
     public int getPaintFlags() {return 0;}
@@ -77,8 +77,8 @@ public abstract class Source {
                 }
 
                 @Override
-                public ObjectHandle.Factory getFactory(Tile mt) {
-                    return  new HillshadeTile.Factory(mt);
+                public Obj.Factory getFactory(Tile mt) {
+                    return  new ObjTileHillshade.Factory(mt);
                 }
 
             };
@@ -92,7 +92,7 @@ public abstract class Source {
 
                 @Override
                 public String getID(Tile t, Context x) {
-                    return Source.genID(t, ElevationColorTile.class.getSimpleName());
+                    return Source.genID(t, ObjTileElevationColor.class.getSimpleName());
                 }
 
                 @Override
@@ -117,8 +117,8 @@ public abstract class Source {
 
 
                 @Override
-                public ObjectHandle.Factory getFactory(Tile mt) {
-                    return  new ElevationColorTile.Factory(mt);
+                public Obj.Factory getFactory(Tile mt) {
+                    return  new ObjTileElevationColor.Factory(mt);
                 }
 
             };

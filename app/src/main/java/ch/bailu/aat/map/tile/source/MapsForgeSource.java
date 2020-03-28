@@ -6,8 +6,8 @@ import org.mapsforge.core.model.Tile;
 import org.mapsforge.map.rendertheme.InternalRenderTheme;
 
 import ch.bailu.aat.preferences.map.SolidRenderTheme;
-import ch.bailu.aat.services.cache.MapsForgeTileObject;
-import ch.bailu.aat.services.cache.ObjectHandle;
+import ch.bailu.aat.services.cache.ObjTileMapsForge;
+import ch.bailu.aat.services.cache.Obj;
 
 public class MapsForgeSource extends Source {
     public final static Source MAPSFORGE = new MapsForgeSource(InternalRenderTheme.DEFAULT.name());
@@ -53,7 +53,7 @@ public class MapsForgeSource extends Source {
 
 
     @Override
-    public ObjectHandle.Factory getFactory(Tile t) {
-        return  new MapsForgeTileObject.Factory(t, themeFile);
+    public Obj.Factory getFactory(Tile t) {
+        return  new ObjTileMapsForge.Factory(t, themeFile);
     }
 }

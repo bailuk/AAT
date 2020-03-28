@@ -8,8 +8,8 @@ import ch.bailu.util_java.foc.Foc;
 import ch.bailu.util_java.foc.FocName;
 
 
-public abstract class ObjectHandle implements ObjectBroadcastReceiver{
-    public final static ObjectHandle NULL = new NullHandle();
+public abstract class Obj implements ObjBroadcastReceiver {
+    public final static Obj NULL = new ObjNull();
 
     public static final int MIN_SIZE=100;
 
@@ -20,7 +20,7 @@ public abstract class ObjectHandle implements ObjectBroadcastReceiver{
 
     private Exception exception = null;
 
-    public ObjectHandle(String id) {
+    public Obj(String id) {
         ID=id;
     }
 
@@ -109,8 +109,8 @@ public abstract class ObjectHandle implements ObjectBroadcastReceiver{
 
 
     public static class Factory {
-        public ObjectHandle factory(String id, ServiceContext cs) {
-            return NullHandle.NULL;
+        public Obj factory(String id, ServiceContext cs) {
+            return ObjNull.NULL;
         }
     }
 

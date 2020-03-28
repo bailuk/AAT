@@ -11,13 +11,13 @@ import ch.bailu.aat.services.InsideContext;
 import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.util.AppIntent;
 import ch.bailu.aat.services.ServiceContext;
-import ch.bailu.aat.services.cache.GpxObject;
-import ch.bailu.aat.services.cache.GpxObjectStatic;
-import ch.bailu.aat.services.cache.ObjectHandle;
+import ch.bailu.aat.services.cache.ObjGpx;
+import ch.bailu.aat.services.cache.ObjGpxStatic;
+import ch.bailu.aat.services.cache.Obj;
 
 public class CustomFileSource extends ContentSource {
     private final ServiceContext scontext;
-    private ObjectHandle   handle=ObjectHandle.NULL;
+    private Obj handle= Obj.NULL;
     private final String fileID;
 
     private final BroadcastReceiver  onChangedInCache = new BroadcastReceiver () {
@@ -41,13 +41,13 @@ public class CustomFileSource extends ContentSource {
         new InsideContext(scontext) {
             @Override
             public void run() {
-                ObjectHandle h = scontext.getCacheService().getObject(fileID, new GpxObjectStatic.Factory());
+                Obj h = scontext.getCacheService().getObject(fileID, new ObjGpxStatic.Factory());
 
                 handle.free();
                 handle = h;
 
-                if (h instanceof GpxObject && h.isReadyAndLoaded()) {
-                    sendUpdate(InfoID.FILEVIEW, new GpxFileWrapper(h.getFile(), ((GpxObject) h).getGpxList()));
+                if (h instanceof ObjGpx && h.isReadyAndLoaded()) {
+                    sendUpdate(InfoID.FILEVIEW, new GpxFileWrapper(h.getFile(), ((ObjGpx) h).getGpxList()));
                 }
 
             }
@@ -60,7 +60,7 @@ public class CustomFileSource extends ContentSource {
     public void onPause() {
         scontext.getContext().unregisterReceiver(onChangedInCache);
         handle.free();
-        handle = ObjectHandle.NULL;
+        handle = Obj.NULL;
     }
 
 

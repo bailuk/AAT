@@ -8,11 +8,11 @@ import org.mapsforge.core.model.Tile;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.util.graphic.SyncTileBitmap;
 
-public abstract class TileObject extends ObjectHandle {
+public abstract class ObjTile extends Obj {
 
     private final int hash;
 
-    public TileObject(String id) {
+    public ObjTile(String id) {
         super(id);
         hash = id.hashCode();
     }
@@ -42,7 +42,7 @@ public abstract class TileObject extends ObjectHandle {
     }
 
 
-    public static final TileObject NULL_TILE = new TileObject("") {
+    public static final ObjTile NULL = new ObjTile("") {
 
         @Override
         public Bitmap getAndroidBitmap() {

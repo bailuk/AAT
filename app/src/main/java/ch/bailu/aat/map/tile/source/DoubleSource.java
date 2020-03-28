@@ -6,7 +6,7 @@ import org.mapsforge.core.model.Tile;
 
 import ch.bailu.aat.services.InsideContext;
 import ch.bailu.aat.services.ServiceContext;
-import ch.bailu.aat.services.cache.ObjectHandle;
+import ch.bailu.aat.services.cache.Obj;
 
 public class DoubleSource extends Source {
 
@@ -81,7 +81,7 @@ public class DoubleSource extends Source {
 
 
     @Override
-    public ObjectHandle.Factory getFactory(Tile tile) {
+    public Obj.Factory getFactory(Tile tile) {
         return decide(tile).getFactory(tile);
     }
 }

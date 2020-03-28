@@ -10,14 +10,14 @@ import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.util.graphic.SyncTileBitmap;
 import ch.bailu.aat.util.ui.AppLog;
 
-public final class SVGAssetImageObject extends ImageObjectAbstract {
+public final class ObjSVGAsset extends ObjImageAbstract {
 
     private final SyncTileBitmap bitmap = new SyncTileBitmap();
 
     private final String name;
     private final int size;
 
-    public SVGAssetImageObject(String id, String name, int size) {
+    public ObjSVGAsset(String id, String name, int size) {
         super(id);
         this.name = name;
         this.size = size;
@@ -46,7 +46,7 @@ public final class SVGAssetImageObject extends ImageObjectAbstract {
     public long getSize() {
         long size = bitmap.getSize();
 
-        if (size == 0) size = ObjectHandle.MIN_SIZE;
+        if (size == 0) size = Obj.MIN_SIZE;
         return size;
     }
 
@@ -67,7 +67,7 @@ public final class SVGAssetImageObject extends ImageObjectAbstract {
     }
 
 
-    public static class Factory extends ObjectHandle.Factory {
+    public static class Factory extends Obj.Factory {
         private final String name;
         private final int size;
 
@@ -78,15 +78,15 @@ public final class SVGAssetImageObject extends ImageObjectAbstract {
 
 
         @Override
-        public ObjectHandle factory(String id, ServiceContext sc) {
-            return new SVGAssetImageObject(id, name, size);
+        public Obj factory(String id, ServiceContext sc) {
+            return new ObjSVGAsset(id, name, size);
         }
     }
 
 
     public static String toID(String name, int size) {
         if (name != null && name.length()>0)
-            return SVGAssetImageObject.class.getSimpleName() + "/" + name + "/" + size;
+            return ObjSVGAsset.class.getSimpleName() + "/" + name + "/" + size;
 
         return null;
     }
@@ -104,10 +104,10 @@ public final class SVGAssetImageObject extends ImageObjectAbstract {
         public long bgOnProcess(final ServiceContext sc) {
             final long[] size = {0};
 
-            new OnObject(sc, ID, SVGAssetImageObject.class) {
+            new OnObject(sc, ID, ObjSVGAsset.class) {
                 @Override
-                public void run(ObjectHandle obj) {
-                    SVGAssetImageObject self = (SVGAssetImageObject) obj;
+                public void run(Obj obj) {
+                    ObjSVGAsset self = (ObjSVGAsset) obj;
 
 
                     try {

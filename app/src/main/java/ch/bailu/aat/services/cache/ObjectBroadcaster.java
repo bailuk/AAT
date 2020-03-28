@@ -17,7 +17,7 @@ public final class ObjectBroadcaster implements Closeable {
 
     private final ServiceContext serviceContext;
 
-    private final SparseArray<ObjectBroadcastReceiver> table = new SparseArray<>(INITIAL_CAPACITY);
+    private final SparseArray<ObjBroadcastReceiver> table = new SparseArray<>(INITIAL_CAPACITY);
 
 
     public ObjectBroadcaster(ServiceContext sc) {
@@ -31,12 +31,12 @@ public final class ObjectBroadcaster implements Closeable {
     }
 
 
-    public synchronized void put(ObjectBroadcastReceiver b) {
+    public synchronized void put(ObjBroadcastReceiver b) {
         table.put(b.toString().hashCode(), b);
     }
 
 
-    public synchronized void delete(ObjectBroadcastReceiver b) {
+    public synchronized void delete(ObjBroadcastReceiver b) {
         delete(b.toString());
     }
 

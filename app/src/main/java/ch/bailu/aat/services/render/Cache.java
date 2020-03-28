@@ -10,19 +10,19 @@ import org.mapsforge.map.model.common.Observer;
 
 import java.util.Set;
 
-import ch.bailu.aat.services.cache.MapsForgeTileObject;
+import ch.bailu.aat.services.cache.ObjTileMapsForge;
 import ch.bailu.aat.util.ui.AppLog;
 
 public final class Cache implements TileCache {
 
-    private final SparseArray<MapsForgeTileObject> cache = new SparseArray<>(20);
+    private final SparseArray<ObjTileMapsForge> cache = new SparseArray<>(20);
 
 
     @Override
     public boolean containsKey(Job j) {
         // if this returns true MapWorkerPool will remove this RendererJob
 
-        MapsForgeTileObject o = cache.get(toKey(j));
+        ObjTileMapsForge o = cache.get(toKey(j));
 
         return (o == null || o.isLoaded());
     }
@@ -56,7 +56,7 @@ public final class Cache implements TileCache {
 
     @Override
     public TileBitmap get(Job job) {
-        MapsForgeTileObject owner =  cache.get(toKey(job));
+        ObjTileMapsForge owner =  cache.get(toKey(job));
 
         if (owner != null) {
             return owner.getTileBitmap();
@@ -75,7 +75,7 @@ public final class Cache implements TileCache {
         if (fromRenderer != null) {
             fromRenderer.incrementRefCount();
 
-            MapsForgeTileObject owner =  cache.get(toKey(job));
+            ObjTileMapsForge owner =  cache.get(toKey(job));
 
             if (owner != null) {
                 owner.onRendered(fromRenderer);
@@ -85,18 +85,18 @@ public final class Cache implements TileCache {
 
 
 
-    public void lockToRenderer(MapsForgeTileObject o) {
+    public void lockToRenderer(ObjTileMapsForge o) {
         cache.put(toKey(o), o);
     }
 
 
-    public void freeFromRenderer(MapsForgeTileObject o) {
+    public void freeFromRenderer(ObjTileMapsForge o) {
         cache.remove(toKey(o));
     }
 
 
     private int toKey(Tile t) { return t.hashCode();}
-    private int toKey(MapsForgeTileObject o) {
+    private int toKey(ObjTileMapsForge o) {
         return toKey(o.getTile());
     }
     private int toKey(Job j) {

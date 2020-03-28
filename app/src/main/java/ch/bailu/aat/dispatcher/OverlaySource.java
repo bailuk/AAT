@@ -16,9 +16,9 @@ import ch.bailu.aat.gpx.interfaces.GpxType;
 import ch.bailu.aat.preferences.map.SolidOverlayFile;
 import ch.bailu.aat.preferences.map.SolidOverlayFileList;
 import ch.bailu.aat.services.ServiceContext;
-import ch.bailu.aat.services.cache.GpxObject;
-import ch.bailu.aat.services.cache.GpxObjectStatic;
-import ch.bailu.aat.services.cache.ObjectHandle;
+import ch.bailu.aat.services.cache.ObjGpx;
+import ch.bailu.aat.services.cache.ObjGpxStatic;
+import ch.bailu.aat.services.cache.Obj;
 import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.util.AppIntent;
 import ch.bailu.aat.util.fs.foc.FocAndroid;
@@ -75,7 +75,7 @@ public class OverlaySource extends ContentSource {
 
         private final SolidOverlayFile soverlay;
 
-        private GpxObject handle = GpxObjectStatic.NULL;
+        private ObjGpx handle = ObjGpxStatic.NULL;
         private BoundingBoxE6 bounding = BoundingBoxE6.NULL_BOX;
 
 
@@ -110,7 +110,7 @@ public class OverlaySource extends ContentSource {
 
         private void disableOverlay() {
             handle.free();
-            handle = GpxObjectStatic.NULL;
+            handle = ObjGpxStatic.NULL;
             bounding = BoundingBoxE6.NULL_BOX;
         }
 
@@ -131,7 +131,7 @@ public class OverlaySource extends ContentSource {
 
 
         private void enableOverlay(String fileId) {
-            final ObjectHandle oldHandle = handle;
+            final Obj oldHandle = handle;
 
             handle = getObjectSave(fileId);
             oldHandle.free();
@@ -139,12 +139,12 @@ public class OverlaySource extends ContentSource {
         }
 
 
-        private GpxObject getObjectSave(String id) {
-            ObjectHandle h = scontext.getCacheService().getObject(id, new GpxObjectStatic.Factory());
-            if (GpxObject.class.isInstance(h)==false) {
-                h=GpxObject.NULL;
+        private ObjGpx getObjectSave(String id) {
+            Obj h = scontext.getCacheService().getObject(id, new ObjGpxStatic.Factory());
+            if (ObjGpx.class.isInstance(h)==false) {
+                h= ObjGpx.NULL;
             }
-            return (GpxObject)h;
+            return (ObjGpx)h;
         }
 
         private void setBounding() {
@@ -185,7 +185,7 @@ public class OverlaySource extends ContentSource {
         @Override
         public void close() {
             handle.free();
-            handle = GpxObjectStatic.NULL;
+            handle = ObjGpxStatic.NULL;
             soverlay.unregister(onPreferencesChanged);
             scontext.getContext().unregisterReceiver(onFileProcessed);
         }

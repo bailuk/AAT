@@ -16,14 +16,14 @@ import java.io.Closeable;
 import java.io.IOException;
 import java.io.InputStream;
 
-import ch.bailu.aat.services.cache.ObjectHandle;
+import ch.bailu.aat.services.cache.Obj;
 import ch.bailu.util_java.foc.Foc;
 
 public class SyncBitmap implements Closeable {
     private Bitmap bitmap = null;
     private Drawable drawable = null;
 
-    private long size = ObjectHandle.MIN_SIZE;
+    private long size = Obj.MIN_SIZE;
 
 
     public Bitmap getBitmap() {
@@ -90,7 +90,7 @@ public class SyncBitmap implements Closeable {
         if (bitmap != null) {
             size = bitmap.getRowBytes() * bitmap.getHeight();
         } else {
-            size = ObjectHandle.MIN_SIZE;
+            size = Obj.MIN_SIZE;
         }
     }
 
@@ -117,7 +117,7 @@ public class SyncBitmap implements Closeable {
         }
         bitmap = null;
         drawable = null;
-        size = ObjectHandle.MIN_SIZE;
+        size = Obj.MIN_SIZE;
     }
 
 
