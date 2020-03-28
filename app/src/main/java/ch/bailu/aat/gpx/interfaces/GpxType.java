@@ -1,6 +1,6 @@
 package ch.bailu.aat.gpx.interfaces;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 public enum GpxType {
     WAY,

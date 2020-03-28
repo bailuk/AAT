@@ -3,7 +3,7 @@ package ch.bailu.aat.util.fs.foc;
 import android.annotation.TargetApi;
 import android.database.Cursor;
 import android.provider.DocumentsContract.Document;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import ch.bailu.aat.util.ui.AppLog;
 

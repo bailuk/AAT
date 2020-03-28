@@ -66,8 +66,6 @@
 
     <string name="intro_map">Map</string>
     <string name="intro_nominatim">Map Search</string>
-    <string name="intro_test">Test</string>
-    <string name="intro_status">Status</string>
 
     <string name="intro_overlay_list">Overlay list</string>
     <string name="intro_list">Track list</string>
@@ -288,7 +286,6 @@
     <string name ="tt_info_grid">Switch between grid modes.</string>
     <string name ="tt_info_legend">Switch between track legend modes.</string>
     <string name ="tt_info_nominatim">Search with OSM-Nominatim.</string>
-    <string name ="tt_info_overpass">OSM-Overpass query.</string>
     <string name ="tt_info_reload">Reload visible tiles.</string>
     <string name ="tt_info_location">Import/export of center location.</string>
 
@@ -304,8 +301,6 @@
 
     <string name ="tt_cockpit_a">Fullscreen</string>
     <string name ="tt_cockpit_b">Splitscreen</string>
-
-    <string name ="tt_overpass_mapfeatures">Show list of map features.</string>
 
     <string name ="tt_menu_file">Display file operation menu.</string>
 

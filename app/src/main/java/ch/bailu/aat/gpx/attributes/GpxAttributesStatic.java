@@ -1,7 +1,7 @@
 package ch.bailu.aat.gpx.attributes;
 
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 public class GpxAttributesStatic extends GpxAttributes {
 

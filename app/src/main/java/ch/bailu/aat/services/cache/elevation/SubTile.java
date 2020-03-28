@@ -1,7 +1,7 @@
 package ch.bailu.aat.services.cache.elevation;
 
 import android.graphics.Rect;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import ch.bailu.aat.coordinates.SrtmCoordinates;
 import ch.bailu.aat.services.cache.Span;

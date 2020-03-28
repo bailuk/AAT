@@ -2,7 +2,7 @@ package ch.bailu.aat.services.sensor.bluetooth_le;
 
 import android.bluetooth.BluetoothDevice;
 import android.os.Build;
-import android.support.annotation.RequiresApi;
+import androidx.annotation.RequiresApi;
 
 @RequiresApi(api = 18)
 public abstract class BleScanner {

@@ -66,8 +66,6 @@
 
     <string name="intro_map">Carte</string>
     <string name="intro_nominatim">Rechercher sur la carte</string>
-    <string name="intro_test">Test</string>
-    <string name="intro_status">Etat</string>
 
     <string name="intro_overlay_list">Couches</string>
     <string name="intro_list">Traces</string>
@@ -288,7 +286,6 @@
     <string name ="tt_info_grid">Changer de mode de grille.</string>
     <string name ="tt_info_legend">Changer de mode de légende des traces.</string>
     <string name ="tt_info_nominatim">Recherche avec OSM-Nominatim.</string>
-    <string name ="tt_info_overpass">Requête Overpass.</string>
     <string name ="tt_info_reload">Recharger les tuiles visibles.</string>
     <string name ="tt_info_location">Import/export d\'une position centrée.</string>
 
@@ -304,8 +301,6 @@
 
     <string name ="tt_cockpit_a">Plein écran</string>
     <string name ="tt_cockpit_b">Ecran partagé</string>
-
-    <string name ="tt_overpass_mapfeatures">Montrer la liste des fonctions de la carte.</string>
 
     <string name ="tt_menu_file">Afficher le menu d\'opérations fichiers.</string>
 

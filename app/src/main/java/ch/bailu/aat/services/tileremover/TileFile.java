@@ -1,6 +1,6 @@
 package ch.bailu.aat.services.tileremover;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import ch.bailu.util_java.foc.Foc;
 

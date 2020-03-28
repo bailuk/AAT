@@ -1,6 +1,6 @@
 package ch.bailu.aat.gpx;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import ch.bailu.aat.coordinates.BoundingBoxE6;
 import ch.bailu.aat.gpx.attributes.GpxAttributes;

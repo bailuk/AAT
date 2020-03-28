@@ -32,7 +32,6 @@
 
     <string name="intro_map">Kartenansicht</string>
     <string name="intro_nominatim">Suche in der Karte</string>
-    <string name="intro_status">Status</string>
 
     <string name="intro_overlay_list">Liste der Overlays</string>
     <string name="intro_list">Aufgezeichnete Aktivitäten</string>
@@ -237,7 +236,6 @@
     <string name ="tt_info_grid">Zwischen verschiedenen Kartengittern wechseln</string>
     <string name ="tt_info_legend">Zwischen Beschreibungsmodi wechseln</string>
     <string name ="tt_info_nominatim">Suchanfrage über OSM-Nominatim</string>
-    <string name ="tt_info_overpass">Anfrage über OSM-Overpass</string>
     <string name ="tt_info_reload">Sichtbare Kacheln neuladen</string>
 
 
@@ -252,7 +250,6 @@
 
     <string name="tt_info_location">Importieren/exportieren der Kartenmitte</string>
     <string name="tt_menu_file">Menu für Dateioperationen anzeigen</string>
-    <string name="tt_overpass_mapfeatures">Map-Features auflisten</string>
 
 
     <string name ="tt_cockpit_a">Vollbild</string>

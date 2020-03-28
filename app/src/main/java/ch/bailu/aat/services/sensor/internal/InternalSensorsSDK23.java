@@ -3,7 +3,7 @@ package ch.bailu.aat.services.sensor.internal;
 import android.content.Context;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
-import android.support.annotation.RequiresApi;
+import androidx.annotation.RequiresApi;
 
 import java.util.List;
 

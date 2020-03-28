@@ -3,7 +3,7 @@ package ch.bailu.aat.services.sensor.internal;
 import android.content.Context;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
-import android.support.annotation.RequiresApi;
+import androidx.annotation.RequiresApi;
 
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.InfoID;

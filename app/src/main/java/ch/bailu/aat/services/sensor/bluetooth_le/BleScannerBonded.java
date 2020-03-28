@@ -2,7 +2,7 @@ package ch.bailu.aat.services.sensor.bluetooth_le;
 
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
-import android.support.annotation.RequiresApi;
+import androidx.annotation.RequiresApi;
 
 import java.util.Set;
 

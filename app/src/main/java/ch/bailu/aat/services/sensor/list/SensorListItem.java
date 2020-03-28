@@ -1,6 +1,6 @@
 package ch.bailu.aat.services.sensor.list;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.services.sensor.SensorInterface;

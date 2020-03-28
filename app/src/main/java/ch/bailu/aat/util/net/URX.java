@@ -1,7 +1,7 @@
 package ch.bailu.aat.util.net;
 
 import android.net.Uri;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import java.net.MalformedURLException;
 import java.net.URL;

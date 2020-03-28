@@ -1,6 +1,6 @@
 package ch.bailu.aat.coordinates;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import org.mapsforge.core.model.LatLong;
 import org.mapsforge.core.util.LatLongUtils;

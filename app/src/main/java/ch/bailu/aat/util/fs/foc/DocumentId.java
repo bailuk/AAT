@@ -1,6 +1,6 @@
 package ch.bailu.aat.util.fs.foc;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import ch.bailu.aat.util.ui.AppLog;
 

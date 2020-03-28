@@ -1,6 +1,6 @@
 package ch.bailu.aat.services.dem.tile;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import ch.bailu.aat.coordinates.SrtmCoordinates;
 import ch.bailu.aat.services.ServiceContext;

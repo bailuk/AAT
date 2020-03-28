@@ -66,8 +66,6 @@
 
     <string name="intro_map">Mapa</string>
     <string name="intro_nominatim">Vyhledávání v mapě</string>
-    <string name="intro_test">Test</string>
-    <string name="intro_status">Stav</string>
 
     <string name="intro_overlay_list">Překryvná data</string>
     <string name="intro_list">Seznam aktivit</string>
@@ -288,7 +286,6 @@
     <string name ="tt_info_grid">Přepnout mezi režimy mřížky.</string>
     <string name ="tt_info_legend">Přepnout mezi režimy popisku záznamu.</string>
     <string name ="tt_info_nominatim">Hledat pomocí OSM-Nominatim.</string>
-    <string name ="tt_info_overpass">Dotaz do OSM-Overpass.</string>
     <string name ="tt_info_reload">Přenačíst viditelné dlaždice.</string>
     <string name ="tt_info_location">Import/export of center location.</string>
 
@@ -304,8 +301,6 @@
 
     <string name ="tt_cockpit_a">Celá obrazovka</string>
     <string name ="tt_cockpit_b">Rozdělená obrazovka</string>
-
-    <string name ="tt_overpass_mapfeatures">Zobrazit seznam funkcí mapy.</string>
 
     <string name ="tt_menu_file">Zobrazit volby práce se soubory.</string>
 

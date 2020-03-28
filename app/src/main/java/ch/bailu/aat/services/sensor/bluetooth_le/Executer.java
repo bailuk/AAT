@@ -3,7 +3,7 @@ package ch.bailu.aat.services.sensor.bluetooth_le;
 import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothGattCharacteristic;
 import android.bluetooth.BluetoothGattDescriptor;
-import android.support.annotation.RequiresApi;
+import androidx.annotation.RequiresApi;
 
 import java.util.LinkedList;
 import java.util.Queue;

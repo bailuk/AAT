@@ -1,7 +1,7 @@
 package ch.bailu.aat.services.background;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import ch.bailu.util_java.foc.Foc;
 
