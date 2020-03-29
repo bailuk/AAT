@@ -7,8 +7,8 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 import ch.bailu.aat.R;
-import ch.bailu.aat.dispatcher.SensorSource;
 import ch.bailu.aat.dispatcher.CurrentLocationSource;
+import ch.bailu.aat.dispatcher.SensorSource;
 import ch.bailu.aat.dispatcher.TrackerSource;
 import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.preferences.SolidFile;
