@@ -38,9 +38,13 @@ public class MapsForgeViewBase extends MapView implements
     public boolean isVisible=false;
 
 
+
     private final ArrayList<MapLayerInterface> layers = new ArrayList<>(10);
 
     private boolean areLayersAttached=false;
+
+
+
 
 
     public MapsForgeViewBase(ServiceContext sc, String key, MapDensity d) {
@@ -64,7 +68,6 @@ public class MapsForgeViewBase extends MapView implements
                 return false;
             }
         }));
-
 
     }
 
