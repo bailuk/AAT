@@ -19,6 +19,7 @@ import ch.bailu.aat.services.location.LocationService;
 import ch.bailu.aat.services.render.RenderService;
 import ch.bailu.aat.services.tileremover.TileRemoverService;
 import ch.bailu.aat.services.tracker.TrackerService;
+import ch.bailu.aat.util.ui.AppLog;
 
 public abstract class ServiceLink implements
         ServiceContext,
@@ -99,8 +100,8 @@ public abstract class ServiceLink implements
                     wait();
                 }
             }
-        } catch (InterruptedException e) {
-                e.printStackTrace();
+        } catch (Exception e) {
+                AppLog.e(context, e);
         }
     }
 
@@ -108,8 +109,13 @@ public abstract class ServiceLink implements
     private void bindService() {
         if (bound == false) {
             bound = true;
-            context.bindService(new Intent(context,
-                    OneService.class), this, Context.BIND_AUTO_CREATE);
+
+            try {
+                context.bindService(new Intent(context,
+                        OneService.class), this, Context.BIND_AUTO_CREATE);
+            } catch (Exception e) {
+                AppLog.e(context, e);
+            }
         }
     }
 
@@ -117,7 +123,12 @@ public abstract class ServiceLink implements
     private void unbindService() {
         if (bound) {
             bound = false;
-            context.unbindService(this);
+
+            try {
+                context.unbindService(this);
+            } catch (Exception e) {
+                AppLog.e(context, e);
+            }
         }
     }
 
