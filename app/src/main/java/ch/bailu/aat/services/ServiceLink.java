@@ -10,13 +10,13 @@ import android.os.IBinder;
 import java.io.Closeable;
 
 import ch.bailu.aat.services.background.BackgroundService;
-import ch.bailu.aat.services.sensor.SensorService;
 import ch.bailu.aat.services.cache.CacheService;
 import ch.bailu.aat.services.dem.ElevationService;
 import ch.bailu.aat.services.directory.DirectoryService;
 import ch.bailu.aat.services.icons.IconMapService;
 import ch.bailu.aat.services.location.LocationService;
 import ch.bailu.aat.services.render.RenderService;
+import ch.bailu.aat.services.sensor.SensorService;
 import ch.bailu.aat.services.tileremover.TileRemoverService;
 import ch.bailu.aat.services.tracker.TrackerService;
 import ch.bailu.aat.util.ui.AppLog;
