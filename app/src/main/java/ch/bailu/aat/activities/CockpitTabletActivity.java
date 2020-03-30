@@ -23,6 +23,8 @@ import ch.bailu.aat.map.MapFactory;
 import ch.bailu.aat.map.MapViewInterface;
 import ch.bailu.aat.map.mapsforge.MapViewLinker;
 import ch.bailu.aat.util.ui.AppLayout;
+import ch.bailu.aat.util.ui.AppTheme;
+import ch.bailu.aat.util.ui.UiTheme;
 import ch.bailu.aat.views.PercentageLayout;
 import ch.bailu.aat.views.bar.ControlBar;
 import ch.bailu.aat.views.bar.MainControlBar;
@@ -33,6 +35,7 @@ public class CockpitTabletActivity extends AbsKeepScreenOnActivity {
     private final static String SOLID_KEY="cockpit_tablet";
     private final static String SOLID_MAP_KEY=SOLID_KEY+"_map";
 
+    private final UiTheme theme  = AppTheme.cockpit;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -75,7 +78,7 @@ public class CockpitTabletActivity extends AbsKeepScreenOnActivity {
 
     private CockpitView createCockpit() {
 
-        CockpitView c = new CockpitView(this);
+        CockpitView c = new CockpitView(this, theme);
 
         c.add(this, new CurrentSpeedDescription(this),
                 InfoID.SPEED_SENSOR, InfoID.LOCATION);

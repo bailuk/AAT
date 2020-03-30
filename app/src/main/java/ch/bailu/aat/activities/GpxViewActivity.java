@@ -22,10 +22,12 @@ import ch.bailu.aat.util.fs.FileAction;
 import ch.bailu.aat.util.fs.foc.FocAndroid;
 import ch.bailu.aat.util.ui.AppLayout;
 import ch.bailu.aat.util.ui.AppLog;
+import ch.bailu.aat.util.ui.AppTheme;
 import ch.bailu.aat.util.ui.ToolTip;
+import ch.bailu.aat.util.ui.UiTheme;
 import ch.bailu.aat.views.BusyViewControlIID;
 import ch.bailu.aat.views.ContentView;
-import ch.bailu.aat.views.MyImageButton;
+import ch.bailu.aat.views.ImageButtonViewGroup;
 import ch.bailu.aat.views.PercentageLayout;
 import ch.bailu.aat.views.bar.ControlBar;
 import ch.bailu.aat.views.bar.MainControlBar;
@@ -41,12 +43,14 @@ public class GpxViewActivity extends ActivityContext
 
 
 
-    private MyImageButton        fileOperation, copyTo;
+    private ImageButtonViewGroup fileOperation, copyTo;
     private BusyViewControlIID busyControl;
     private MapViewInterface   map;
 
     private String fileID;
     private Foc content;
+
+    private final UiTheme theme = AppTheme.trackContent;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -71,7 +75,7 @@ public class GpxViewActivity extends ActivityContext
                 fileID = content.getPath();
 
 
-                final ContentView contentView = new ContentView(this);
+                final ContentView contentView = new ContentView(this, theme);
 
                 MainControlBar bar = new MainControlBar(this);
 
@@ -101,7 +105,7 @@ public class GpxViewActivity extends ActivityContext
 
         VerticalScrollView summary = new VerticalScrollView(this);
         summary.addAllContent(this,
-                FileContentActivity.getSummaryData(this), InfoID.FILEVIEW);
+                FileContentActivity.getSummaryData(this), theme, InfoID.FILEVIEW);
 
         View graph = GraphViewFactory.all(this, this, InfoID.FILEVIEW);
 

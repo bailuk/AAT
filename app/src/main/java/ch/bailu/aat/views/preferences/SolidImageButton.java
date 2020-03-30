@@ -4,10 +4,10 @@ import android.content.SharedPreferences;
 
 import ch.bailu.aat.util.ui.AppLog;
 import ch.bailu.aat.preferences.SolidIndexList;
-import ch.bailu.aat.views.ImageButtonView;
+import ch.bailu.aat.views.ImageButtonViewGroup;
 
 
-public class SolidImageButton extends ImageButtonView implements SharedPreferences.OnSharedPreferenceChangeListener {
+public class SolidImageButton extends ImageButtonViewGroup implements SharedPreferences.OnSharedPreferenceChangeListener {
 
     private final SolidIndexList solid;
 

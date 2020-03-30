@@ -6,6 +6,7 @@ import android.widget.LinearLayout;
 import ch.bailu.aat.R;
 import ch.bailu.aat.util.fs.foc.FocAsset;
 import ch.bailu.aat.util.ui.AppTheme;
+import ch.bailu.aat.util.ui.UiTheme;
 import ch.bailu.aat.views.ContentView;
 import ch.bailu.aat.views.html.HtmlScrollTextView;
 import ch.bailu.aat.views.bar.MainControlBar;
@@ -18,6 +19,8 @@ public class AboutActivity extends ActivityContext {
     private final static String SOLID_KEY = AboutActivity.class.getSimpleName();
 
 
+    private final UiTheme theme = AppTheme.doc;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,7 +32,7 @@ public class AboutActivity extends ActivityContext {
 
     private void createViews() {
         MultiView multiView = createMultiView();
-        ContentView contentView = new ContentView(this);
+        ContentView contentView = new ContentView(this, theme);
 
         contentView.add(createButtonBar(multiView));
         contentView.add(multiView);
@@ -69,9 +72,9 @@ public class AboutActivity extends ActivityContext {
         mv.add(about, getString(R.string.intro_about));
         mv.add(readme, getString(R.string.intro_readme));
 
-        readme.themify(AppTheme.light);
-        about.themify(AppTheme.light);
-        AppTheme.light.background(mv);
+        readme.themify(theme);
+        about.themify(theme);
+        theme.background(mv);
         return mv;
     }
 

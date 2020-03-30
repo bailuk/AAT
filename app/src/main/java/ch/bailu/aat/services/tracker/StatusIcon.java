@@ -13,6 +13,7 @@ import ch.bailu.aat.R;
 import ch.bailu.aat.activities.ActivitySwitcher;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.util.ui.AppTheme;
+import ch.bailu.aat.util.ui.UiTheme;
 
 
 public final class StatusIcon  {
@@ -23,6 +24,7 @@ public final class StatusIcon  {
     private final Notification onNotification;
     private final Notification autoPauseNotification;
 
+    private final UiTheme theme = AppTheme.bar;
 
     public StatusIcon(ServiceContext s) {
         PendingIntent intent;
@@ -103,7 +105,7 @@ public final class StatusIcon  {
         Notification.Builder builder = new Notification.Builder(scontext.getContext())
                 .setContentIntent(intent)
                 .setSmallIcon(R.drawable.status)
-                .setColor(AppTheme.getHighlightColor())
+                .setColor(theme.getHighlightColor())
                 .setContentTitle(appName)
                 .setContentText(appInfo);
 
@@ -123,7 +125,7 @@ public final class StatusIcon  {
                 .setChannelId(createNotificationChannelSDK26())
                 .setContentIntent(intent)
                 .setSmallIcon(R.drawable.status)
-                .setColor(AppTheme.getHighlightColor())
+                .setColor(theme.getHighlightColor())
                 .setContentTitle(appName)
                 .setContentText(appInfo);
 

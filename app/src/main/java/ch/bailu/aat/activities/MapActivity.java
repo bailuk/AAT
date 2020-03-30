@@ -16,6 +16,7 @@ import ch.bailu.aat.map.MapFactory;
 import ch.bailu.aat.map.MapViewInterface;
 import ch.bailu.aat.util.ui.AppLayout;
 import ch.bailu.aat.util.ui.AppLog;
+import ch.bailu.aat.util.ui.AppTheme;
 import ch.bailu.aat.views.ContentView;
 import ch.bailu.aat.views.bar.ControlBar;
 import ch.bailu.aat.views.bar.MainControlBar;
@@ -31,7 +32,7 @@ public class MapActivity extends AbsKeepScreenOnActivity {
 
         EditorSource edit = new EditorSource(getServiceContext());
 
-        ContentView contentView=new ContentView(this);
+        ContentView contentView=new ContentView(this, AppTheme.cockpit);
         MapViewInterface map = createMap(edit);
         contentView.add(map.toView());
         setContentView(contentView);

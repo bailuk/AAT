@@ -6,11 +6,17 @@ import android.widget.TextView;
 
 public class UiThemeDark2 extends UiThemeDark {
 
+
     @Override
-    public void background(View v) {
-        v.setBackgroundColor(Color.DKGRAY);
+    public int getBackgroundColor() {
+        return Color.DKGRAY;
     }
 
+
+    @Override
+    public void content(TextView v) {
+        v.setTextColor(Color.WHITE);
+    }
 
 
     @Override
@@ -19,7 +25,4 @@ public class UiThemeDark2 extends UiThemeDark {
         v.setTextSize(TEXT_SIZE);
     }
 
-    public void content(TextView v) {
-        v.setTextColor(Color.WHITE);
-    }
 }

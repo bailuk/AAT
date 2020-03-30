@@ -22,6 +22,7 @@ import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.util.filter_list.FilterList;
 import ch.bailu.aat.util.filter_list.FilterListUtil;
 import ch.bailu.aat.util.filter_list.PoiListEntry;
+import ch.bailu.aat.util.ui.UiTheme;
 import ch.bailu.aat.views.EditTextTool;
 import ch.bailu.aat.views.preferences.SolidStringView;
 import ch.bailu.util_java.foc.Foc;
@@ -41,7 +42,7 @@ public class PoiView  extends LinearLayout implements SharedPreferences.OnShared
 
     private final Foc selected;
 
-    public PoiView(ServiceContext sc, Foc s) {
+    public PoiView(ServiceContext sc, Foc s, UiTheme theme) {
         super(sc.getContext());
         scontext = sc;
 
@@ -51,8 +52,8 @@ public class PoiView  extends LinearLayout implements SharedPreferences.OnShared
         sdatabase.register(this);
 
         setOrientation(VERTICAL);
-        addView(createHeader());
-        addView(createFilterView());
+        addView(createHeader(theme));
+        addView(createFilterView(theme));
         addView(createPoiList());
 
         readList();
@@ -100,8 +101,8 @@ public class PoiView  extends LinearLayout implements SharedPreferences.OnShared
 
     }
 
-    public View createHeader() {
-        return new SolidStringView(new SolidPoiDatabase(getContext()));
+    public View createHeader(UiTheme theme) {
+        return new SolidStringView(new SolidPoiDatabase(getContext()), theme);
     }
 
 
@@ -122,7 +123,7 @@ public class PoiView  extends LinearLayout implements SharedPreferences.OnShared
     }
 
 
-    private View createFilterView() {
+    private View createFilterView(UiTheme theme) {
         filterView = new EditText(getContext());
         filterView.setSingleLine(true);
         filterView.setText(new SolidString(getContext(), FILTER_KEY).getValueAsStringNonDef());
@@ -143,7 +144,7 @@ public class PoiView  extends LinearLayout implements SharedPreferences.OnShared
             }
         });
 
-        EditTextTool layout = new EditTextTool(filterView, LinearLayout.VERTICAL);
+        EditTextTool layout = new EditTextTool(filterView, LinearLayout.VERTICAL, theme);
         return layout;
     }
 

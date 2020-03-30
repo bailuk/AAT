@@ -15,6 +15,8 @@ import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.util.AppHtml;
 import ch.bailu.aat.util.HtmlBuilderGpx;
 import ch.bailu.aat.util.ui.AppLayout;
+import ch.bailu.aat.util.ui.AppTheme;
+import ch.bailu.aat.util.ui.UiTheme;
 
 public class NodeEntryView extends LinearLayout {
 
@@ -22,6 +24,9 @@ public class NodeEntryView extends LinearLayout {
     private final TextView text;
 
     private final GpxDynLayer gpxOverlay;
+
+    private final UiTheme theme = AppTheme.search;
+
 
     public NodeEntryView(ServiceContext sc, AbsDispatcher d) {
         super(sc.getContext());
@@ -41,6 +46,9 @@ public class NodeEntryView extends LinearLayout {
 
         addViewWeight(text);
         addView(map, previewSize, previewSize);
+
+        theme.content(text);
+        theme.button(this);
     }
 
 

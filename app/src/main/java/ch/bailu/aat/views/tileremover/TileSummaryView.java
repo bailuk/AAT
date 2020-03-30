@@ -1,6 +1,7 @@
 package ch.bailu.aat.views.tileremover;
 
 
+import android.graphics.Typeface;
 import android.view.View;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -8,13 +9,14 @@ import android.widget.TextView;
 
 import ch.bailu.aat.preferences.map.SolidTrimIndex;
 import ch.bailu.aat.services.tileremover.SourceSummaryInterface;
+import ch.bailu.aat.util.ui.UiTheme;
 
 public class TileSummaryView implements View.OnClickListener {
     private final RadioButton radioButton;
     private final TextView textView;
     private final RadioGroup parent;
 
-    public TileSummaryView(RadioGroup p, int id) {
+    public TileSummaryView(RadioGroup p, int id, UiTheme theme) {
         parent = p;
 
         radioButton = new RadioButton(p.getContext());
@@ -25,6 +27,12 @@ public class TileSummaryView implements View.OnClickListener {
 
         p.addView(radioButton);
         p.addView(textView);
+
+        theme.content(textView);
+        theme.content(radioButton);
+
+        radioButton.setTypeface(null, Typeface.BOLD);
+
     }
 
     public void destroy() {

@@ -2,6 +2,10 @@ package ch.bailu.aat.util.ui;
 
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.StateListDrawable;
+import android.util.StateSet;
+import android.view.View;
 import android.widget.ListView;
 
 public class AppTheme {
@@ -33,22 +37,39 @@ public class AppTheme {
     };
 
 
-    static public int getHighlightColor () {
-        return COLOR_ORANGE;
+    public static final UiTheme bar = new UiThemeDark();
+    public static final UiTheme cockpit = new UiThemeDark();
+    public static final UiTheme graph = new UiThemeLight();
+    public static final UiTheme preferences = new UiThemeLight();
+    public static final UiTheme intro = new UiThemeLight();
+    public static final UiTheme alt = new UiThemeDark();
+    public static final UiTheme doc = new UiThemeLight();
+    public static final UiTheme search = new UiThemeLight();
+    public static final UiTheme trackList = new UiThemeLight();
+    public static final UiTheme trackContent = new UiThemeLight();
+
+    public static void padding(View view) {
+        padding(view, 15);
     }
 
 
-    public static final UiTheme bar = new UiThemeDark();
-    public static final UiTheme main = new UiThemeDark();
-    public static final UiTheme alt = new UiThemeDark2();
+    public static void padding(View view, int p) {
+        int padding = new AppDensity(view.getContext()).toPixel_i(p);
+        view.setPadding(padding,padding,padding,padding);
+    }
 
-    public static final UiTheme light = new UiThemeLight();
+    public static void paddingV(View view, int p) {
+        int padding = new AppDensity(view.getContext()).toPixel_i(p);
+        view.setPadding(0,padding,0,padding);
+    }
 
 
 
-    public static void themifyList(ListView list) {
-        int height = list.getDividerHeight();
-        list.setDivider(new ColorDrawable(getHighlightColor()));
-        list.setDividerHeight(height);
+    public static Drawable getButtonDrawable(int def, int pressed) {
+        final StateListDrawable result = new StateListDrawable();
+
+        result.addState(new int[] { android.R.attr.state_pressed}, new ColorDrawable(pressed));
+        result.addState(StateSet.WILD_CARD, new ColorDrawable(def));
+        return result;
     }
 }

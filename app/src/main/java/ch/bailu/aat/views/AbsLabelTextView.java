@@ -14,20 +14,14 @@ public abstract class AbsLabelTextView extends LinearLayout{
     private final TextView value, label;
     private final ToolTipView toolTip;
 
-    public AbsLabelTextView(boolean inverse, final Context context, String labelText) {
-        this (inverse, context, AppTheme.main, labelText);
-    }
 
-    public AbsLabelTextView(final Context context, String labelText) {
-        this (false, context, AppTheme.main, labelText);
-    }
-
-    public AbsLabelTextView(final Context context, UiTheme theme, String labelText) {
-        this(false, context, theme, labelText);
+    public AbsLabelTextView(final Context context, String labelText, UiTheme theme) {
+        this(false, context, labelText, theme);
     }
 
 
-    private AbsLabelTextView(boolean inverse, final Context context, UiTheme theme, String labelText) {
+    public AbsLabelTextView(boolean inverse, final Context context, String labelText,
+                             UiTheme theme) {
         super(context);
         setOrientation(VERTICAL);
 
@@ -39,10 +33,10 @@ public abstract class AbsLabelTextView extends LinearLayout{
         value = new TextView(context);
         addView(value);
 
-        toolTip = new ToolTipView(context);
+        toolTip = new ToolTipView(context, theme);
         addView(toolTip);
 
-        theme.button(this);
+        AppTheme.padding(this);
 
         if (inverse) {
             theme.header(value);

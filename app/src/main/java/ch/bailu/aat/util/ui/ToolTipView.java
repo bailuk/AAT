@@ -5,10 +5,10 @@ import android.content.Context;
 import android.widget.TextView;
 
 public class ToolTipView extends TextView {
-    public ToolTipView(Context context) {
+    public ToolTipView(Context context, UiTheme theme) {
         super(context);
 
-        AppTheme.main.toolTip(this);
+        theme.toolTip(this);
         setVisibility(GONE);
     }
 

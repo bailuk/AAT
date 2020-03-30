@@ -14,6 +14,7 @@ import ch.bailu.aat.map.layer.gpx.GpxDynLayer;
 import ch.bailu.aat.menus.EditorMenu;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.editor.EditorInterface;
+import ch.bailu.aat.util.ui.AppTheme;
 import ch.bailu.aat.util.ui.ToolTip;
 import ch.bailu.aat.views.bar.ControlBar;
 
@@ -36,7 +37,7 @@ public final class EditorLayer extends ControlBarLayer {
                        int iid, EditorSourceInterface e) {
         super(mc, new ControlBar(
                 mc.getContext(),
-                getOrientation(LEFT)), LEFT);
+                getOrientation(LEFT), AppTheme.bar), LEFT);
 
         edit = e;
         scontext=mc.getSContext();

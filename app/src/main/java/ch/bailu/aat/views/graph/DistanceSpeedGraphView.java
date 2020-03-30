@@ -175,7 +175,7 @@ public class DistanceSpeedGraphView extends AbsGraphView implements SharedPrefer
         private void plotAverage() {
             if (window.getTimeDelta() > 0) {
                 float avg=window.getSpeed();
-                plotter[0].plotData(totalDistance, avg, AppTheme.getHighlightColor());
+                plotter[0].plotData(totalDistance, avg, AppTheme.graph.getHighlightColor());
             }
         }
 

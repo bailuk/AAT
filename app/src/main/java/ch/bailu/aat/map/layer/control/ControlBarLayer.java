@@ -12,6 +12,7 @@ import ch.bailu.aat.map.MapContext;
 import ch.bailu.aat.map.MapViewInterface;
 import ch.bailu.aat.map.layer.MapLayerInterface;
 import ch.bailu.aat.util.ui.AppLayout;
+import ch.bailu.aat.util.ui.UiTheme;
 import ch.bailu.aat.views.bar.ControlBar;
 
 public abstract class ControlBarLayer implements MapLayerInterface, View.OnClickListener {

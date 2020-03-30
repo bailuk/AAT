@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 import ch.bailu.aat.preferences.map.SolidTrimIndex;
 import ch.bailu.aat.services.tileremover.SourceSummaries;
+import ch.bailu.aat.util.ui.UiTheme;
 
 public class TileSummariesView extends RadioGroup  {
 
@@ -14,9 +15,12 @@ public class TileSummariesView extends RadioGroup  {
     private final StringBuilder builder = new StringBuilder(100);
 
 
-    public TileSummariesView(Activity a) {
+    private final UiTheme theme;
+
+    public TileSummariesView(Activity a, UiTheme theme) {
         super(a);
         setOrientation(VERTICAL);
+        this.theme = theme;
     }
 
 
@@ -35,7 +39,7 @@ public class TileSummariesView extends RadioGroup  {
 
             // addLayer views
             for (int i = views.size(); i < summaries.size(); i++) {
-                views.add(new TileSummaryView(this, i));
+                views.add(new TileSummaryView(this, i, theme));
                 views.get(i).select(selected);
             }
 

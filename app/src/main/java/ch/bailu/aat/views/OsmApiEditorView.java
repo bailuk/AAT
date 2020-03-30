@@ -8,6 +8,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import ch.bailu.aat.util.OsmApiConfiguration;
+import ch.bailu.aat.util.ui.AppTheme;
+import ch.bailu.aat.util.ui.UiTheme;
 import ch.bailu.aat.views.description.MultiView;
 import ch.bailu.aat.views.preferences.TitleView;
 import ch.bailu.aat.views.preferences.VerticalScrollView;
@@ -19,7 +21,7 @@ public class OsmApiEditorView extends LinearLayout {
     private final MultiView inputMultiView;
 
 
-    public OsmApiEditorView(Context context, OsmApiConfiguration osmApi) {
+    public OsmApiEditorView(Context context, OsmApiConfiguration osmApi, UiTheme theme) {
         super(context);
         setOrientation(LinearLayout.VERTICAL);
 
@@ -30,7 +32,7 @@ public class OsmApiEditorView extends LinearLayout {
         VerticalScrollView scroller = new VerticalScrollView(getContext());
         scroller.add(preview);
         editor = new EditTextTool(new TagEditor(getContext(),
-                osmApi.getBaseDirectory()), LinearLayout.VERTICAL);
+                osmApi.getBaseDirectory()), LinearLayout.VERTICAL, theme);
 
         inputMultiView = new MultiView(getContext(), osmApi.getApiName());
         inputMultiView.add(editor);
@@ -52,7 +54,7 @@ public class OsmApiEditorView extends LinearLayout {
 
         String[] strings = osmApi.getUrlStart().split(osmApi.getApiName().toLowerCase());
 
-        TextView b = new TitleView(getContext(), osmApi.getApiName());
+        TextView b = new TitleView(getContext(), osmApi.getApiName(), AppTheme.search);
         b.setSingleLine();
 
         if (strings.length>1) {

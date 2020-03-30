@@ -11,8 +11,9 @@ import ch.bailu.aat.activities.MainActivity;
 import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.menus.OptionsMenu;
 import ch.bailu.aat.util.ui.AppLayout;
+import ch.bailu.aat.util.ui.AppTheme;
 import ch.bailu.aat.views.MultiViewSelector;
-import ch.bailu.aat.views.MyImageButton;
+import ch.bailu.aat.views.ImageButtonViewGroup;
 import ch.bailu.aat.views.description.GPSStateButton;
 import ch.bailu.aat.views.description.MultiView;
 import ch.bailu.aat.views.description.SensorStateButton;
@@ -37,7 +38,7 @@ public class MainControlBar extends ControlBar {
 
 
     public MainControlBar(final AbsDispatcher acontext, int orientation, int button) {
-        super(acontext, orientation, button);
+        super(acontext, orientation, button, AppTheme.bar);
 
         if (Objects.equals(acontext.getClass().getSimpleName(), MainActivity.class.getSimpleName()))
             addMenuButton(acontext);
@@ -48,13 +49,13 @@ public class MainControlBar extends ControlBar {
 
 
     private void addBackButton(final AbsDispatcher acontext) {
-        MyImageButton b = addImageButton(R.drawable.edit_undo_inverse, getControlSize());
+        ImageButtonViewGroup b = addImageButton(R.drawable.edit_undo_inverse, getControlSize());
         b.setOnClickListener(v -> acontext.onBackPressedMenuBar());
     }
 
 
-    private MyImageButton addMenuButton(final AbsDispatcher acontext) {
-        final MyImageButton menu = addImageButton(ch.bailu.aat.R.drawable.open_menu_inverse);
+    private ImageButtonViewGroup addMenuButton(final AbsDispatcher acontext) {
+        final ImageButtonViewGroup menu = addImageButton(ch.bailu.aat.R.drawable.open_menu_inverse);
 
 
         menu.setOnClickListener(v -> new OptionsMenu(acontext.getServiceContext()).showAsPopup(getContext(), menu));
@@ -103,7 +104,7 @@ public class MainControlBar extends ControlBar {
 
 
     public void addActivityCycle(final Activity acontext) {
-        MyImageButton cb = addImageButton(R.drawable.go_down_inverse, getControlSize());
+        ImageButtonViewGroup cb = addImageButton(R.drawable.go_down_inverse, getControlSize());
         cb.setOnClickListener(v -> new ActivitySwitcher(acontext).cycle());
     }
 

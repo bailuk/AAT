@@ -5,8 +5,12 @@ import android.graphics.Color;
 
 import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.util.ui.AppTheme;
+import ch.bailu.aat.util.ui.UiTheme;
 
 public final class MapColor {
+
+    private static final UiTheme theme = AppTheme.bar;
+
 
     public static final int ALPHA_HIGH = 50;
     public static final int ALPHA_LOW = 200;
@@ -16,6 +20,8 @@ public final class MapColor {
     public final static int LIGHT = setAlpha(Color.WHITE, ALPHA_LOW);
     public final static int MEDIUM = setAlpha(Color.BLACK, ALPHA_HIGH);
     public final static int DARK = setAlpha(Color.BLACK, ALPHA_LOW);
+
+
 
 
     public final static int NODE_NEUTRAL = setAlpha(Color.LTGRAY, ALPHA_LOW);
@@ -54,7 +60,7 @@ public final class MapColor {
         final int OVERLAY_COUNT = AppTheme.OVERLAY_COLOR.length;
 
         if (iid== InfoID.TRACKER)
-            return AppTheme.getHighlightColor();
+            return theme.getHighlightColor();
 
         if (iid >= InfoID.OVERLAY && iid < InfoID.OVERLAY + OVERLAY_COUNT) {
             int slot =  iid - InfoID.OVERLAY;
@@ -74,7 +80,7 @@ public final class MapColor {
 
 
 
-        return AppTheme.getHighlightColor();
+        return theme.getHighlightColor();
     }
 
 

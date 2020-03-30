@@ -11,14 +11,12 @@ import ch.bailu.aat.preferences.SolidIndexList;
 import ch.bailu.aat.util.ui.AppLayout;
 import ch.bailu.aat.util.ui.AppLog;
 import ch.bailu.aat.util.ui.AppTheme;
-import ch.bailu.aat.views.MyImageButton;
+import ch.bailu.aat.util.ui.UiTheme;
+import ch.bailu.aat.views.ImageButtonViewGroup;
 import ch.bailu.aat.views.preferences.SolidImageButton;
 
 
 public class ControlBar extends LinearLayout {
-
-
-
 
     private final LinearLayout canvas;
 
@@ -27,17 +25,19 @@ public class ControlBar extends LinearLayout {
 
     private OnClickListener listener1, listener2;
 
-    public ControlBar(Context context, int orientation) {
-        this(context, orientation, AppLayout.DEFAULT_VISIBLE_BUTTON_COUNT);
+    private final UiTheme theme;
+
+    public ControlBar(Context context, int orientation, UiTheme theme) {
+        this(context, orientation, AppLayout.DEFAULT_VISIBLE_BUTTON_COUNT, theme);
     }
 
 
-    public ControlBar(Context context, int orient, int visibleButtonCount) {
+    public ControlBar(Context context, int orient, int visibleButtonCount, UiTheme theme) {
         super(context);
 
         final FrameLayout scroller;
-
-        AppTheme.bar.background(this);
+        this.theme = theme;
+        theme.background(this);
         orientation = orient;
         controlSize = AppLayout.getBigButtonSize(context, visibleButtonCount);
 
@@ -80,10 +80,12 @@ public class ControlBar extends LinearLayout {
     }
 
 
-    public MyImageButton addImageButton(int res, int size) {
-        MyImageButton button = new MyImageButton(getContext(), res);
-        add(button, size);
+    public ImageButtonViewGroup addImageButton(int res, int size) {
+        ImageButtonViewGroup button = new ImageButtonViewGroup(getContext(), res);
         button.setOnClickListener(onClickListener);
+        theme.button(button);
+        add(button, size);
+
         return button;
     }
 
@@ -124,7 +126,9 @@ public class ControlBar extends LinearLayout {
 
 
     public View addSolidIndexButton(SolidIndexList slist) {
-        return add(new SolidImageButton(slist));
+        View button = new SolidImageButton(slist);
+        theme.button(button);
+        return add(button);
     }
 
     public void setOnClickListener1(OnClickListener l) {
@@ -145,9 +149,7 @@ public class ControlBar extends LinearLayout {
     };
 
 
-    public MyImageButton addImageButton(int res) {
+    public ImageButtonViewGroup addImageButton(int res) {
         return addImageButton(res, getControlSize());
     }
-
-
 }

@@ -23,6 +23,7 @@ import ch.bailu.aat.preferences.SolidDirectoryQuery;
 import ch.bailu.aat.preferences.map.SolidOverlayFile;
 import ch.bailu.aat.services.directory.Iterator;
 import ch.bailu.aat.util.fs.FileAction;
+import ch.bailu.aat.util.ui.AppTheme;
 import ch.bailu.aat.util.ui.ToolTip;
 import ch.bailu.aat.views.PreviewView;
 import ch.bailu.aat.views.bar.ControlBar;
@@ -45,7 +46,7 @@ public final class FileControlBarLayer extends ControlBarLayer {
     public FileControlBarLayer(MapContext mc, AbsGpxListActivity a) {
         super(mc, new ControlBar(
                 mc.getContext(),
-                getOrientation(LEFT)), LEFT);
+                getOrientation(LEFT), AppTheme.bar), LEFT);
 
         final ControlBar bar = getBar();
 

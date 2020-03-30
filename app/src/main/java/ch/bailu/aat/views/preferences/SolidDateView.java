@@ -6,12 +6,13 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 import ch.bailu.aat.preferences.SolidDate;
+import ch.bailu.aat.util.ui.UiTheme;
 
 public class SolidDateView extends AbsSolidView {
     private final SolidDate sdate;
 
-    public SolidDateView(SolidDate s) {
-        super(s);
+    public SolidDateView(SolidDate s, UiTheme theme) {
+        super(s, theme);
         sdate = s;
     }
 

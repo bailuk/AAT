@@ -58,7 +58,7 @@ public class OverpassActivity extends AbsOsmApiActivity  {
             }
         });
 
-        AppTheme.alt.background(osmFeatures);
+        theme.background(osmFeatures);
         return osmFeatures;
     }
 

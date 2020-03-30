@@ -155,9 +155,6 @@
         </activity>
         <activity android:name="ch.bailu.aat.activities.NodeDetailActivity" >
         </activity>
-        <activity android:name="ch.bailu.aat.activities.HtmlViewActivity" >
-        </activity>
-
 
         <service android:name="ch.bailu.aat.services.OneService" >
         </service>

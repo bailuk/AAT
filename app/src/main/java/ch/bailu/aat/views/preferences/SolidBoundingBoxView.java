@@ -5,6 +5,8 @@ import android.content.SharedPreferences;
 import ch.bailu.aat.coordinates.BoundingBoxE6;
 import ch.bailu.aat.map.MapContext;
 import ch.bailu.aat.preferences.SolidBoundingBox;
+import ch.bailu.aat.util.ui.AppTheme;
+import ch.bailu.aat.util.ui.UiTheme;
 import ch.bailu.aat.views.AbsLabelTextView;
 
 
@@ -12,13 +14,13 @@ public class SolidBoundingBoxView extends AbsLabelTextView implements SharedPref
     private final SolidBoundingBox sbounding;
 
 
-    public SolidBoundingBoxView(SolidBoundingBox bounding, final MapContext map) {
-        super(bounding.getContext(), bounding.getLabel());
+    public SolidBoundingBoxView(SolidBoundingBox bounding, final MapContext map, UiTheme theme) {
+        super(bounding.getContext(), bounding.getLabel(), theme);
 
         sbounding = bounding;
         setText(bounding.getValueAsString());
 
-
+        theme.button(this);
         this.setOnClickListener(v -> sbounding.setValue(new BoundingBoxE6(map.getMetrics().getBoundingBox())));
     }
 

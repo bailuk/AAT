@@ -8,21 +8,23 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 
 import ch.bailu.aat.R;
+import ch.bailu.aat.util.ui.AppTheme;
 import ch.bailu.aat.util.ui.ToolTip;
+import ch.bailu.aat.util.ui.UiTheme;
 import ch.bailu.aat.views.bar.ControlBar;
 
 public class EditTextTool extends LinearLayout implements View.OnClickListener {
     public final EditText edit;
     public final ControlBar bar;
 
-    private final MyImageButton clearText;
+    private final ImageButtonViewGroup clearText;
 
 
 
-    public EditTextTool(EditText e, int orientation) {
+    public EditTextTool(EditText e, int orientation, UiTheme theme) {
         super(e.getContext());
         edit = e;
-        bar = new ControlBar(getContext(),orientation,6);
+        bar = new ControlBar(getContext(),orientation,6, theme);
 
         clearText = bar.addImageButton(R.drawable.edit_clear_all_inverse);
         clearText.setOnClickListener(this);

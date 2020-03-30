@@ -19,42 +19,55 @@ import ch.bailu.aat.preferences.system.SolidDataDirectory;
 import ch.bailu.aat.preferences.system.SolidExternalDirectory;
 import ch.bailu.aat.preferences.system.SolidStatusMessages;
 import ch.bailu.aat.util.ToDo;
+import ch.bailu.aat.util.ui.UiTheme;
 import ch.bailu.aat.views.SensorListView;
 
 
 public class GeneralPreferencesView extends VerticalScrollView {
 
-    public GeneralPreferencesView(ActivityContext acontext) {
+    public GeneralPreferencesView(ActivityContext acontext, UiTheme theme) {
         super(acontext);
 
-        add(new TitleView(acontext, R.string.p_general));
-        add(new SolidIndexListView(new SolidUnit(acontext)));
+
+
+        add(new TitleView(acontext, R.string.p_general, theme));
+        add(new SolidIndexListView(new SolidUnit(acontext), theme));
         add(new SolidTextInputView(new SolidWeight(acontext),
-                SolidTextInputDialog.INTEGER));
+                SolidTextInputDialog.INTEGER, theme));
 
-        add(new SolidIndexListView(new SolidPresetCount(acontext)));
-        add(new SolidIndexListView( new SolidStatusMessages(acontext)));
+        add(new SolidIndexListView(new SolidPresetCount(acontext), theme));
+        add(new SolidIndexListView( new SolidStatusMessages(acontext), theme));
 
-        add(new TitleView(acontext, "GPS"));
-        add(new SolidIndexListView(new SolidLocationProvider(acontext)));
-        add(new SolidCheckBox(new SolidGpsTimeFix(acontext)));
-        add(new SolidCheckBox(new SolidAdjustGpsAltitude(acontext)));
-        add(new SolidTextInputView(new SolidAdjustGpsAltitudeValue(acontext, new SolidUnit(acontext).getIndex()),
-                SolidTextInputDialog.INTEGER_SIGNED));
+        add(new TitleView(acontext, "GPS", theme));
+        add(new SolidIndexListView(new SolidLocationProvider(acontext), theme));
+        add(new SolidCheckBox(new SolidGpsTimeFix(acontext), theme));
+        add(new SolidCheckBox(new SolidAdjustGpsAltitude(acontext), theme));
+        add(new SolidTextInputView(
+                new SolidAdjustGpsAltitudeValue(acontext, new SolidUnit(acontext).getIndex()),
+                SolidTextInputDialog.INTEGER_SIGNED,
+                theme));
 
         add(new SolidTextInputView(new SolidPressureAtSeaLevel(acontext),
-                SolidTextInputDialog.FLOAT));
+                SolidTextInputDialog.FLOAT,
+                theme));
 
         add(new SolidTextInputView(new SolidProvideAltitude(acontext, SolidUnit.SI),
-                SolidTextInputDialog.INTEGER_SIGNED));
+                SolidTextInputDialog.INTEGER_SIGNED,
+                theme));
         add(new SolidTextInputView(new SolidProvideAltitude(acontext, SolidUnit.IMPERIAL),
-                SolidTextInputDialog.INTEGER_SIGNED));
+                SolidTextInputDialog.INTEGER_SIGNED,
+                theme));
 
         if (Build.VERSION.SDK_INT >= 18) {
-            add(new TitleView(acontext, ToDo.translate("Sensors")));
-            ScannBluetoothView scann = new ScannBluetoothView(acontext.getServiceContext());
-            ConnectToSensorsView updateConnection = new ConnectToSensorsView(acontext.getServiceContext());
-            SensorListView sensors = new SensorListView(acontext.getServiceContext());
+            add(new TitleView(acontext, ToDo.translate("Sensors"), theme));
+            ScannBluetoothView scann = new ScannBluetoothView(
+                    acontext.getServiceContext(), theme
+            );
+            ConnectToSensorsView updateConnection = new ConnectToSensorsView(
+                    acontext.getServiceContext(),
+                    theme
+            );
+            SensorListView sensors = new SensorListView(acontext.getServiceContext(), theme);
 
             add(scann);
             add(updateConnection);
@@ -65,15 +78,11 @@ public class GeneralPreferencesView extends VerticalScrollView {
         }
 
 
-        add(new TitleView(acontext, ToDo.translate("Files")));
-        add(new SolidDirectoryViewSAF(acontext, new SolidDataDirectory(acontext)));
-        add(new SolidDirectoryViewSAF(acontext, new SolidExternalDirectory(acontext)));
+        add(new TitleView(acontext, ToDo.translate("Files"), theme));
+        add(new SolidDirectoryViewSAF(acontext, new SolidDataDirectory(acontext), theme));
+        add(new SolidDirectoryViewSAF(acontext, new SolidExternalDirectory(acontext), theme));
 
-        add(new SolidIndexListView( new SolidCacheSize(acontext)));
-
-
-
-
+        add(new SolidIndexListView( new SolidCacheSize(acontext), theme));
     }
 
 }

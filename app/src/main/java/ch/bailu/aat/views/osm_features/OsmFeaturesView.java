@@ -19,6 +19,8 @@ import ch.bailu.aat.services.cache.osm_features.ObjMapFeatures;
 import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.util.AppIntent;
 import ch.bailu.aat.util.filter_list.FilterList;
+import ch.bailu.aat.util.ui.AppTheme;
+import ch.bailu.aat.util.ui.UiTheme;
 import ch.bailu.aat.views.BusyIndicator;
 import ch.bailu.aat.views.EditTextTool;
 import ch.bailu.aat.views.preferences.SolidCheckBox;
@@ -37,10 +39,9 @@ public class OsmFeaturesView extends LinearLayout implements SharedPreferences.O
     private final SolidOsmFeaturesList slist;
     private final ServiceContext scontext;
 
-
-
     private final FilterList list = new FilterList();
 
+    private final UiTheme theme = AppTheme.search;
 
     private final BroadcastReceiver onListLoaded = new BroadcastReceiver() {
         @Override
@@ -83,7 +84,7 @@ public class OsmFeaturesView extends LinearLayout implements SharedPreferences.O
 
         LinearLayout layout = new LinearLayout(getContext());
         layout.setOrientation(HORIZONTAL);
-        layout.addView(new TitleView(getContext(), R.string.query_features));
+        layout.addView(new TitleView(getContext(), R.string.query_features, theme));
         layout.addView(busy);
 
 
@@ -123,8 +124,8 @@ public class OsmFeaturesView extends LinearLayout implements SharedPreferences.O
             }
         });
 
-        EditTextTool layout = new EditTextTool(filterView, LinearLayout.VERTICAL);
-        layout.add(new SolidCheckBox(slist));
+        EditTextTool layout = new EditTextTool(filterView, LinearLayout.VERTICAL, theme);
+        layout.add(new SolidCheckBox(slist, theme));
         return layout;
     }
 

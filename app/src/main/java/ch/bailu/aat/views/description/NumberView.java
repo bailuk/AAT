@@ -15,7 +15,6 @@ import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.util.ui.AppLog;
-import ch.bailu.aat.util.ui.AppTheme;
 import ch.bailu.aat.util.ui.ToolTip;
 import ch.bailu.aat.util.ui.UiTheme;
 import ch.bailu.aat.views.preferences.ConnectToSensorsView;
@@ -27,13 +26,16 @@ public class NumberView extends ViewGroup implements OnContentUpdatedInterface {
 
     private final float defaultTextSize;
 
+    private final UiTheme theme;
+
+
     public NumberView(ContentDescription data, UiTheme theme) {
         super(data.getContext());
 
+        this.theme = theme;
 
         number = createLabel();
         number.setIncludeFontPadding(false);
-
 
         theme.header(number);
 
@@ -43,7 +45,6 @@ public class NumberView extends ViewGroup implements OnContentUpdatedInterface {
         }
 
         label = createLabel();
-
         theme.content(label);
         defaultTextSize = label.getTextSize();
 
@@ -56,13 +57,13 @@ public class NumberView extends ViewGroup implements OnContentUpdatedInterface {
     }
 
     public void setDefaultUnitLabelColor() {
-        AppTheme.alt.content(unit);
-        AppTheme.alt.background(unit);
+        theme.contentAlt(unit);
+        theme.backgroundAlt(unit);
     }
 
 
     public void setHighlightUnitLabelColor() {
-        setHighlightUnitLabelColor(AppTheme.getHighlightColor());
+        setHighlightUnitLabelColor(theme.getHighlightColor());
     }
 
 
@@ -146,7 +147,7 @@ public class NumberView extends ViewGroup implements OnContentUpdatedInterface {
 
         super.setOnClickListener(listener);
 
-        AppTheme.bar.button(this);
+        theme.button(this);
         setPadding(0,0,0,0);
     }
 

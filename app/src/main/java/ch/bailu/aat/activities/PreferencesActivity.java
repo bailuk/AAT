@@ -9,6 +9,8 @@ import ch.bailu.aat.dispatcher.SensorSource;
 import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.preferences.SolidFile;
 import ch.bailu.aat.preferences.general.SolidPresetCount;
+import ch.bailu.aat.util.ui.AppTheme;
+import ch.bailu.aat.util.ui.UiTheme;
 import ch.bailu.aat.views.ContentView;
 import ch.bailu.aat.views.bar.MainControlBar;
 import ch.bailu.aat.views.description.MultiView;
@@ -20,6 +22,7 @@ public class PreferencesActivity extends ActivityContext implements SharedPrefer
 
     public final static String SOLID_KEY=PreferencesActivity.class.getSimpleName();
 
+    private final UiTheme theme = AppTheme.preferences;
 
     private MapTilePreferencesView mapTilePreferences;
 
@@ -40,9 +43,9 @@ public class PreferencesActivity extends ActivityContext implements SharedPrefer
 
 
     private void createViews() {
-        ContentView contentView = new ContentView(this);
+        ContentView contentView = new ContentView(this, theme);
 
-        multiView = createMultiView();
+        multiView = createMultiView(theme);
         contentView.add(new MainControlBar(this, multiView));
         contentView.add(multiView);
 
@@ -51,16 +54,16 @@ public class PreferencesActivity extends ActivityContext implements SharedPrefer
 
 
 
-    private MultiView createMultiView() {
+    private MultiView createMultiView(UiTheme theme) {
         multiView = new MultiView(this, SOLID_KEY);
 
-        mapTilePreferences = new MapTilePreferencesView(this, getServiceContext());
-        multiView.add(new GeneralPreferencesView(this),
+        mapTilePreferences = new MapTilePreferencesView(this, getServiceContext(), theme);
+        multiView.add(new GeneralPreferencesView(this, theme),
                 getString(R.string.p_general)+ "/"+ getString(R.string.p_system));
         multiView.add(mapTilePreferences,
                 getString(R.string.p_tiles));
 
-        addPresetPreferences();
+        addPresetPreferences(theme);
 
         return multiView;
     }
@@ -90,16 +93,16 @@ public class PreferencesActivity extends ActivityContext implements SharedPrefer
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s) {
         if (spresetCount.hasKey(s)) {
-            addPresetPreferences();
+            addPresetPreferences(theme);
         }
     }
 
-    private void addPresetPreferences() {
+    private void addPresetPreferences(UiTheme theme) {
         while (multiView.pageCount() > 2)
             multiView.remove(multiView.pageCount()-1);
 
         for (int i = 0; i < spresetCount.getValue(); i++) {
-                multiView.add(new PresetPreferencesView(this, i),
+                multiView.add(new PresetPreferencesView(this, i, theme),
                         getString(R.string.p_preset) + " " + (i+1));
         }
 

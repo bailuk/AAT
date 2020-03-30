@@ -28,6 +28,8 @@ import ch.bailu.aat.map.MapFactory;
 import ch.bailu.aat.map.MapViewInterface;
 import ch.bailu.aat.map.mapsforge.MapViewLinker;
 import ch.bailu.aat.util.ui.AppLayout;
+import ch.bailu.aat.util.ui.AppTheme;
+import ch.bailu.aat.util.ui.UiTheme;
 import ch.bailu.aat.views.ContentView;
 import ch.bailu.aat.views.PercentageLayout;
 import ch.bailu.aat.views.bar.ControlBar;
@@ -42,6 +44,8 @@ public class CockpitSplitActivity extends AbsKeepScreenOnActivity {
     private static final String SOLID_KEY="split";
     private static final String SOLID_MAP_KEY="themap";
 
+    private final UiTheme theme  = AppTheme.cockpit;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -55,10 +59,10 @@ public class CockpitSplitActivity extends AbsKeepScreenOnActivity {
 
     private View createContentView(EditorSource edit) {
         final MapViewInterface mapSlave = MapFactory.DEF(this, SOLID_KEY).split();
-        final CockpitView cockpitA = new CockpitView(this);
-        final CockpitView cockpitB = new CockpitView(this);
-        final CockpitView cockpitC = new CockpitView(this);
-        final CockpitView cockpitD = new CockpitView(this);
+        final CockpitView cockpitA = new CockpitView(this, theme);
+        final CockpitView cockpitB = new CockpitView(this, theme);
+        final CockpitView cockpitC = new CockpitView(this, theme);
+        final CockpitView cockpitD = new CockpitView(this, theme);
 
         PercentageLayout percentageB = new PercentageLayout(this);
         percentageB.setOrientation(AppLayout.getOrientationAlongLargeSide(this));
@@ -110,7 +114,7 @@ public class CockpitSplitActivity extends AbsKeepScreenOnActivity {
 
         new MapViewLinker(mapMaster, mapSlave);
 
-        ContentView contentView = new ContentView(this);
+        ContentView contentView = new ContentView(this, theme);
 
         contentView.add(
                 new PercentageLayout(this)

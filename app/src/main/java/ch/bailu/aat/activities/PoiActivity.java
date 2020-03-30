@@ -11,7 +11,6 @@ import ch.bailu.aat.coordinates.BoundingBoxE6;
 import ch.bailu.aat.util.OsmApiConfiguration;
 import ch.bailu.aat.util.PoiApi;
 import ch.bailu.aat.util.ui.AppLayout;
-import ch.bailu.aat.util.ui.AppTheme;
 import ch.bailu.aat.views.PercentageLayout;
 import ch.bailu.aat.views.bar.MainControlBar;
 import ch.bailu.aat.views.description.MultiView;
@@ -42,7 +41,7 @@ public class PoiActivity extends AbsOsmApiActivity {
         LinearLayout linear = new LinearLayout(this);
 
         linear.setOrientation(LinearLayout.VERTICAL);
-        linear.addView(new TitleView(this, getConfiguration().getApiName()));
+        linear.addView(new TitleView(this, getConfiguration().getApiName(), theme));
         linear.addView(createNodeListView());
 
         return linear;
@@ -83,9 +82,9 @@ public class PoiActivity extends AbsOsmApiActivity {
 
     private View createPoiListView() {
         poiView = new PoiView(getServiceContext(),
-                getConfiguration().getBaseDirectory().child(PoiApi.SELECTED));
+                getConfiguration().getBaseDirectory().child(PoiApi.SELECTED), theme);
 
-        AppTheme.alt.background(poiView);
+        theme.background(poiView);
         return poiView;
 
     }

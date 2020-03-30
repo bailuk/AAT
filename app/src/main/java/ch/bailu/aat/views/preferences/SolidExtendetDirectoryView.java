@@ -5,13 +5,14 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 import ch.bailu.aat.preferences.SolidFile;
+import ch.bailu.aat.util.ui.UiTheme;
 
 public class SolidExtendetDirectoryView extends LinearLayout{
-    public SolidExtendetDirectoryView(Activity a, SolidFile s) {
+    public SolidExtendetDirectoryView(Activity a, SolidFile s, UiTheme theme) {
         super(s.getContext());
         setOrientation(HORIZONTAL);
 
-        addW(new SolidStringView(s));
+        addW(new SolidStringView(s, theme));
         addView(new SolidDirectoryMenuButton(a,s));
     }
 

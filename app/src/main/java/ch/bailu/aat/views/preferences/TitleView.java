@@ -3,19 +3,18 @@ package ch.bailu.aat.views.preferences;
 import android.content.Context;
 import android.widget.TextView;
 
-import ch.bailu.aat.util.ui.AppTheme;
+import ch.bailu.aat.util.ui.UiTheme;
 
 public class TitleView extends TextView {
-    public TitleView(Context context, int res) {
-        this(context, context.getText(res));
+    public TitleView(Context context, int res, UiTheme theme) {
+        this(context, context.getText(res), theme);
     }
 
 
-    public TitleView(Context context, CharSequence text) {
+    public TitleView(Context context, CharSequence text, UiTheme theme) {
         super(context);
 
         setText(text);
-        AppTheme.main.topic(this);
-        //setTextColor(AppTheme.getHighlightColor());
+        theme.topic(this);
     }
 }

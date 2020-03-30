@@ -13,31 +13,29 @@ import ch.bailu.aat.dispatcher.DispatcherInterface;
 import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.preferences.location.SolidProvideAltitude;
 import ch.bailu.aat.util.ui.AppTheme;
+import ch.bailu.aat.util.ui.UiTheme;
 
 
 public class CockpitView extends ViewGroup {
 
     private final Layouter layouter = new Layouter();
 
+    private final UiTheme theme;
 
-    public CockpitView(Context context) {
+    public CockpitView(Context context, UiTheme theme) {
         super(context);
+        this.theme = theme;
+        theme.background(this);
     }
 
-/*
-    public void addAll(DispatcherInterface di, ContentDescription... des) {
-        for (ContentDescription de : des) {
-            add(di, de);
-        }
-    }
-*/
+
     public void add(DispatcherInterface di, ContentDescription de) {
         add(di, de, InfoID.TRACKER);
     }
 
 
     public void addC(DispatcherInterface di, ContentDescription de, int... iid) {
-        final NumberView v = new ColorNumberView(de, AppTheme.main);
+        final NumberView v = new ColorNumberView(de, theme);
 
         addView(v);
         di.addTarget(v, iid);
@@ -45,7 +43,7 @@ public class CockpitView extends ViewGroup {
 
 
     public NumberView add(DispatcherInterface di, ContentDescription de, int... iid) {
-        final NumberView v = new NumberView(de, AppTheme.main);
+        final NumberView v = new NumberView(de, theme);
 
         addView(v);
         di.addTarget(v, iid);
@@ -198,6 +196,4 @@ public class CockpitView extends ViewGroup {
         }
 
     }
-
-
 }

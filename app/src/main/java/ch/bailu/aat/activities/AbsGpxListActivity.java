@@ -24,11 +24,12 @@ import ch.bailu.aat.services.directory.Iterator;
 import ch.bailu.aat.services.directory.IteratorSimple;
 import ch.bailu.aat.util.ui.AppLayout;
 import ch.bailu.aat.util.ui.AppTheme;
+import ch.bailu.aat.util.ui.UiTheme;
 import ch.bailu.aat.views.BusyViewControlDbSync;
 import ch.bailu.aat.views.ContentView;
 import ch.bailu.aat.views.GpxListView;
-import ch.bailu.aat.views.bar.MainControlBar;
 import ch.bailu.aat.views.PercentageLayout;
+import ch.bailu.aat.views.bar.MainControlBar;
 import ch.bailu.aat.views.description.MultiView;
 import ch.bailu.aat.views.preferences.TitleView;
 import ch.bailu.aat.views.preferences.VerticalScrollView;
@@ -54,6 +55,7 @@ public abstract class AbsGpxListActivity extends ActivityContext implements OnIt
     public abstract ContentDescription[]   getGpxListItemData();
     public abstract ContentDescription[]   getSummaryData();
 
+    protected final UiTheme theme = AppTheme.trackList;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -135,9 +137,9 @@ public abstract class AbsGpxListActivity extends ActivityContext implements OnIt
     private void setListBackgroundColor() {
         if (sdirectory.createSelectionString().length() > 0) {
             AppTheme.alt.background(listView);
-            //listView.setBackgroundColor(AppTheme.getAltBackgroundColor());
+
         } else {
-            AppTheme.main.background(listView);//listView.setBackgroundColor(Color.TRANSPARENT);
+            AppTheme.trackList.background(listView);
         }
     }
 
@@ -151,7 +153,7 @@ public abstract class AbsGpxListActivity extends ActivityContext implements OnIt
         private final String map_label = getString(R.string.intro_map);
         private final String list_label = getString(R.string.label_list);
 
-        private final ContentView contentView = new ContentView(acontext);
+        private final ContentView contentView = new ContentView(acontext, theme);
 
 
         public Layouter() {
@@ -166,16 +168,16 @@ public abstract class AbsGpxListActivity extends ActivityContext implements OnIt
             map.add(fileControlBar);
 
             VerticalScrollView summary = new VerticalScrollView(acontext);
-            summary.add(new TitleView(acontext, getLabel()));
-            summary.add(acontext,new PathDescription(acontext), InfoID.LIST_SUMMARY);
-            summary.add(new TitleView(acontext, summary_label));
-            summary.addAllContent(acontext, getSummaryData(), InfoID.LIST_SUMMARY);
+            summary.add(new TitleView(acontext, getLabel(), theme));
+            summary.add(acontext,new PathDescription(acontext), theme, InfoID.LIST_SUMMARY);
+            summary.add(new TitleView(acontext, summary_label, theme));
+            summary.addAllContent(acontext, getSummaryData(), theme, InfoID.LIST_SUMMARY);
 
-            TitleView title = new TitleView(acontext, filter_label);
-            AppTheme.alt.background(title);
+            TitleView title = new TitleView(acontext, filter_label, theme);
+            //AppTheme.alt.background(title);
 
             summary.add(title);
-            summary.addAllFilterViews(map.getMContext());
+            summary.addAllFilterViews(map.getMContext(), theme);
 
 
             MainControlBar bar = new MainControlBar(acontext);

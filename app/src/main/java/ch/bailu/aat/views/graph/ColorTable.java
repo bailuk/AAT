@@ -27,7 +27,7 @@ public class ColorTable {
     }
 
     public int calculateColor(int gradient, int i) {
-        return AppTheme.getHighlightColor();
+        return AppTheme.bar.getHighlightColor();
     }
 
     public int getColor(int index) {

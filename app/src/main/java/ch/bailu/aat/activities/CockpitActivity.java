@@ -17,6 +17,8 @@ import ch.bailu.aat.dispatcher.TrackerTimerSource;
 import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.map.MapFactory;
 import ch.bailu.aat.util.ui.AppLayout;
+import ch.bailu.aat.util.ui.AppTheme;
+import ch.bailu.aat.util.ui.UiTheme;
 import ch.bailu.aat.views.ContentView;
 import ch.bailu.aat.views.PercentageLayout;
 import ch.bailu.aat.views.bar.ControlBar;
@@ -29,13 +31,14 @@ public class CockpitActivity extends AbsKeepScreenOnActivity {
 
     private static final String SOLID_KEY="tracker";
 
+    private final UiTheme theme  = AppTheme.cockpit;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         EditorSource edit = new EditorSource(getServiceContext());
-        ContentView contentView = new ContentView(this);
+        ContentView contentView = new ContentView(this, theme);
         MultiView multiView = createMultiView(edit);
 
         contentView.add(createButtonBar(multiView));
@@ -61,7 +64,7 @@ public class CockpitActivity extends AbsKeepScreenOnActivity {
         PercentageLayout p = new PercentageLayout(this);
         p.setOrientation(AppLayout.getOrientationAlongLargeSide(this));
 
-        CockpitView c1 = new CockpitView(this);
+        CockpitView c1 = new CockpitView(this, theme);
 
 
         c1.add(this, new CurrentSpeedDescription(this),
@@ -72,7 +75,7 @@ public class CockpitActivity extends AbsKeepScreenOnActivity {
         c1.addC(this, new DistanceDescription(this), InfoID.TRACKER);
         c1.addC(this, new AverageSpeedDescriptionAP(this), InfoID.TRACKER);
 
-        CockpitView c2 = new CockpitView(this);
+        CockpitView c2 = new CockpitView(this, theme);
         c2.add(this, new MaximumSpeedDescription(this), InfoID.TRACKER);
         c2.addHeartRate(this);        // With click to update sensors
         c2.addCadence(this);          // With click to update sensors

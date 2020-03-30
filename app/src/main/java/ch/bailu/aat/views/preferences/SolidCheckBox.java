@@ -4,25 +4,24 @@ import android.widget.CheckBox;
 import android.widget.LinearLayout;
 
 import ch.bailu.aat.preferences.SolidBoolean;
-import ch.bailu.aat.util.ui.AppTheme;
 import ch.bailu.aat.util.ui.ToolTipView;
+import ch.bailu.aat.util.ui.UiTheme;
 
 
 public class SolidCheckBox extends LinearLayout {
 
     private final ToolTipView toolTip;
 
-    public SolidCheckBox(final SolidBoolean sboolean) {
+    public SolidCheckBox(final SolidBoolean sboolean, UiTheme theme) {
         super(sboolean.getContext());
         setOrientation(VERTICAL);
-        AppTheme.main.button(this);
 
         CheckBox checkBox = new CheckBox(getContext());
-        AppTheme.main.header(checkBox);
+        theme.header(checkBox);
 
         addView(checkBox);
 
-        toolTip = new ToolTipView(getContext());
+        toolTip = new ToolTipView(getContext(), theme);
         toolTip.setToolTip(sboolean);
         addView(toolTip);
 

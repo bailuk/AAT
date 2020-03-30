@@ -7,6 +7,7 @@ import android.widget.LinearLayout;
 import ch.bailu.aat.services.InsideContext;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.sensor.list.SensorListItem;
+import ch.bailu.aat.util.ui.UiTheme;
 
 public class SensorListItemView extends LinearLayout {
 
@@ -16,7 +17,7 @@ public class SensorListItemView extends LinearLayout {
 
     private final ServiceContext scontext;
 
-    public SensorListItemView(ServiceContext sc, SensorListItem i) {
+    public SensorListItemView(ServiceContext sc, SensorListItem i, UiTheme theme) {
         super(sc.getContext());
         scontext = sc;
 
@@ -40,7 +41,7 @@ public class SensorListItemView extends LinearLayout {
             } ;
         });
 
-
+        theme.content(checkBox);
     }
 
 

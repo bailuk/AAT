@@ -12,6 +12,7 @@ import ch.bailu.aat.description.ContentDescription;
 import ch.bailu.aat.services.directory.Iterator;
 import ch.bailu.aat.services.directory.Iterator.OnCursorChangedListener;
 import ch.bailu.aat.util.ui.AppTheme;
+import ch.bailu.aat.util.ui.UiTheme;
 
 public class GpxListView extends ListView implements OnCursorChangedListener {
 
@@ -21,7 +22,7 @@ public class GpxListView extends ListView implements OnCursorChangedListener {
     private final ContentDescription[] data;
 
 
-
+    private final UiTheme theme = AppTheme.trackList;
 
     public GpxListView(Context c,
                        ContentDescription[] cd) {
@@ -29,9 +30,7 @@ public class GpxListView extends ListView implements OnCursorChangedListener {
 
         data = cd;
 
-
-
-        AppTheme.themifyList(this);
+        theme.list(this);
     }
 
 
@@ -81,7 +80,7 @@ public class GpxListView extends ListView implements OnCursorChangedListener {
             GpxListEntryView entry = (GpxListEntryView) convertView;
 
             if (entry == null) {
-                entry = new GpxListEntryView(acontext, data);
+                entry = new GpxListEntryView(acontext, data, theme);
             }
 
             iterator.moveToPosition(position);

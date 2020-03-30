@@ -16,11 +16,13 @@ import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.util.AppIntent;
 import ch.bailu.aat.util.OsmApiConfiguration;
 import ch.bailu.aat.util.TextBackup;
+import ch.bailu.aat.util.ui.AppTheme;
 import ch.bailu.aat.util.ui.ToolTip;
+import ch.bailu.aat.util.ui.UiTheme;
 import ch.bailu.aat.views.BusyViewControl;
 import ch.bailu.aat.views.ContentView;
 import ch.bailu.aat.views.ErrorView;
-import ch.bailu.aat.views.MyImageButton;
+import ch.bailu.aat.views.ImageButtonViewGroup;
 import ch.bailu.aat.views.NodeListView;
 import ch.bailu.aat.views.OsmApiEditorView;
 import ch.bailu.aat.views.PercentageLayout;
@@ -30,7 +32,7 @@ import ch.bailu.aat.views.bar.MainControlBar;
 public abstract class AbsOsmApiActivity extends ActivityContext implements OnClickListener {
 
 
-    private MyImageButton   download;
+    private ImageButtonViewGroup download;
     private BusyViewControl downloadBusy;
 
     private View               fileMenu;
@@ -41,6 +43,8 @@ public abstract class AbsOsmApiActivity extends ActivityContext implements OnCli
     protected OsmApiEditorView   editorView;
 
     private ErrorView downloadError;
+
+    protected final UiTheme theme = AppTheme.search;
 
 
     private final BroadcastReceiver onFileTaskChanged = new BroadcastReceiver() {
@@ -72,7 +76,7 @@ public abstract class AbsOsmApiActivity extends ActivityContext implements OnCli
     private View createContentView()  {
         MainControlBar bar = createControlBar();
 
-        ContentView contentView = new ContentView(this);
+        ContentView contentView = new ContentView(this, theme);
         contentView.add(bar);
         contentView.add(downloadErrorView());
         contentView.add(fileErrorView());
@@ -140,7 +144,7 @@ public abstract class AbsOsmApiActivity extends ActivityContext implements OnCli
     }
 
     private View createEditorView() {
-        editorView = new OsmApiEditorView(this, configuration);
+        editorView = new OsmApiEditorView(this, configuration, theme);
         return editorView;
     }
 

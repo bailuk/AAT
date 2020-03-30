@@ -21,14 +21,15 @@ import ch.bailu.aat.map.MapViewInterface;
 import ch.bailu.aat.util.HtmlBuilderGpx;
 import ch.bailu.aat.util.ui.AppLayout;
 import ch.bailu.aat.util.ui.AppTheme;
+import ch.bailu.aat.util.ui.UiTheme;
 import ch.bailu.aat.views.ContentView;
-import ch.bailu.aat.views.MyImageButton;
-import ch.bailu.aat.views.html.HtmlScrollTextView;
+import ch.bailu.aat.views.ImageButtonViewGroup;
 import ch.bailu.aat.views.PercentageLayout;
 import ch.bailu.aat.views.SVGAssetView;
 import ch.bailu.aat.views.bar.ControlBar;
 import ch.bailu.aat.views.bar.MainControlBar;
 import ch.bailu.aat.views.graph.DistanceAltitudeGraphView;
+import ch.bailu.aat.views.html.HtmlScrollTextView;
 
 public class NodeDetailActivity extends ActivityContext
         implements OnClickListener, OnContentUpdatedInterface, SeekBar.OnSeekBarChangeListener {
@@ -36,7 +37,7 @@ public class NodeDetailActivity extends ActivityContext
 
     private static final String SOLID_KEY=NodeDetailActivity.class.getSimpleName();
 
-    private MyImageButton nextNode, previousNode;
+    private ImageButtonViewGroup nextNode, previousNode;
     private SVGAssetView icon;
 
     private MapViewInterface mapView;
@@ -52,6 +53,8 @@ public class NodeDetailActivity extends ActivityContext
 
     private HtmlBuilderGpx htmlBuilder;
 
+    private final UiTheme theme = AppTheme.trackContent;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,7 +63,7 @@ public class NodeDetailActivity extends ActivityContext
         htmlBuilder = new HtmlBuilderGpx(this);
         fileID = getIntent().getStringExtra("ID");
 
-        final ContentView contentView = new ContentView(this);
+        final ContentView contentView = new ContentView(this, theme);
         contentView.add(createButtonBar());
         contentView.add(createSeekBar());
         contentView.add(createVerticalView());
@@ -102,7 +105,7 @@ public class NodeDetailActivity extends ActivityContext
 
         htmlView =new HtmlScrollTextView(this);
         htmlView.enableAutoLink();
-        htmlView.themify(AppTheme.main);
+        htmlView.themify(theme);
 
         viewB.add(htmlView, 40);
         viewB.add(mapView.toView(), 60);

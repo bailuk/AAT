@@ -12,6 +12,7 @@ import ch.bailu.aat.services.cache.osm_features.MapFeaturesListEntry;
 import ch.bailu.aat.services.icons.IconMapService;
 import ch.bailu.aat.util.AppHtml;
 import ch.bailu.aat.util.ui.AppDensity;
+import ch.bailu.aat.util.ui.UiTheme;
 import ch.bailu.aat.views.SVGAssetView;
 
 public class MapFeaturesEntryView extends LinearLayout implements View.OnClickListener {
@@ -25,7 +26,7 @@ public class MapFeaturesEntryView extends LinearLayout implements View.OnClickLi
     private MapFeaturesListEntry entry;
 
 
-    public MapFeaturesEntryView(final ServiceContext scontext, OnSelected s) {
+    public MapFeaturesEntryView(final ServiceContext scontext, OnSelected s, UiTheme theme) {
         super(scontext.getContext());
 
 
@@ -39,13 +40,10 @@ public class MapFeaturesEntryView extends LinearLayout implements View.OnClickLi
         icon = new SVGAssetView(scontext, R.drawable.open_menu_light);
         icon.setOnClickListener(this);
 
-        //AppTheme.themify(icon);
-
-
         addView(icon, icon_view_size, icon_view_size);
         addView(text);
 
-
+        theme.content(text);
     }
 
 

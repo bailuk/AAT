@@ -11,6 +11,7 @@ import ch.bailu.aat.activities.ActivitySwitcher;
 import ch.bailu.aat.preferences.system.SolidStatusMessages;
 import ch.bailu.aat.util.ui.AppLog;
 import ch.bailu.aat.util.ui.AppTheme;
+import ch.bailu.aat.util.ui.UiTheme;
 
 public class ContentView extends FrameLayout{
     private final LinearLayout mainContent;
@@ -19,10 +20,10 @@ public class ContentView extends FrameLayout{
     private final ArrayList<MessageView> messageViews = new ArrayList<MessageView>(5);
 
 
-    public ContentView(Context context) {
+    public ContentView(Context context, UiTheme theme) {
         super(context);
 
-        AppTheme.main.background(this);
+        theme.background(this);
 
         mainContent = new LinearLayout(context);
         mainContent.setOrientation(LinearLayout.VERTICAL);

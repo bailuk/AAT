@@ -19,6 +19,7 @@ import ch.bailu.aat.gpx.GpxList;
 import ch.bailu.aat.gpx.GpxListArray;
 import ch.bailu.aat.util.ui.AppTheme;
 import ch.bailu.aat.services.ServiceContext;
+import ch.bailu.aat.util.ui.UiTheme;
 
 public class NodeListView extends ListView implements
         OnContentUpdatedInterface,
@@ -35,13 +36,14 @@ public class NodeListView extends ListView implements
     private final ServiceContext scontext;
     private final AbsDispatcher dispatcher;
 
+    private final UiTheme theme = AppTheme.search;
 
     public NodeListView(ServiceContext sc, AbsDispatcher d) {
         super(sc.getContext());
         scontext = sc;
         dispatcher = d;
 
-        AppTheme.themifyList(this);
+        theme.list(this);
 
         setAdapter(this);
         setOnItemClickListener(this);

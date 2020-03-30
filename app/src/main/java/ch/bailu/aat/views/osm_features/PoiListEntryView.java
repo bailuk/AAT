@@ -46,11 +46,11 @@ public class PoiListEntryView extends LinearLayout  {
 
         if (e.isSummary()) {
             checkBox.setVisibility(INVISIBLE);
-            AppTheme.main.header(text);
+            AppTheme.search.header(text);
         } else {
             checkBox.setChecked(e.isSelected());
             checkBox.setVisibility(VISIBLE);
-            AppTheme.main.content(text);
+            AppTheme.search.content(text);
         }
 
         text.setText(entry.getTitle());

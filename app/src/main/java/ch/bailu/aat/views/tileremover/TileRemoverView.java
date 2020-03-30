@@ -15,8 +15,10 @@ import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.preferences.map.SolidTileCacheDirectory;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.tileremover.TileRemoverService;
+import ch.bailu.aat.util.ui.AppTheme;
+import ch.bailu.aat.util.ui.UiTheme;
 import ch.bailu.aat.views.BusyViewControl;
-import ch.bailu.aat.views.MyImageButton;
+import ch.bailu.aat.views.ImageButtonViewGroup;
 import ch.bailu.aat.views.bar.ControlBar;
 
 
@@ -26,7 +28,7 @@ public class TileRemoverView
 
 
     private TileSummariesView summaryView;
-    private MyImageButton scan, remove;
+    private ImageButtonViewGroup scan, remove;
     private BusyViewControl bscan, bremove;
 
     private final SolidTileCacheDirectory sdirectory;
@@ -36,7 +38,7 @@ public class TileRemoverView
 
 
 
-    public TileRemoverView(ServiceContext sc, Activity ac) {
+    public TileRemoverView(ServiceContext sc, Activity ac, UiTheme theme) {
         super(sc.getContext());
 
         setOrientation(HORIZONTAL);
@@ -45,8 +47,9 @@ public class TileRemoverView
 
         sdirectory = new SolidTileCacheDirectory(getContext());
 
-        addW(createFilterLayout(ac));
-        addView(createControlBar(getContext()));
+        addW(createFilterLayout(ac, theme));
+        addView(createControlBar(getContext(), theme));
+
 
     }
 
@@ -58,24 +61,29 @@ public class TileRemoverView
         v.setLayoutParams(l);
     }
 
-    private View createFilterLayout(Activity acontext) {
-        summaryView = new TileSummariesView(acontext);
+    private View createFilterLayout(Activity acontext, UiTheme theme) {
+        summaryView = new TileSummariesView(acontext, theme);
         return summaryView;
     }
 
 
-    private View createControlBar(Context context) {
-        final ControlBar bar =  new ControlBar(context, LinearLayout.VERTICAL);
+    private View createControlBar(Context context, UiTheme theme) {
+        final ControlBar bar =  new ControlBar(context, LinearLayout.VERTICAL, AppTheme.bar);
 
-        scan = new MyImageButton(context, R.drawable.view_refresh_inverse);
+        scan = new ImageButtonViewGroup(context, R.drawable.view_refresh_inverse);
         bscan = new BusyViewControl(scan);
         bar.addButton(scan);
 
-        remove = new MyImageButton(context, R.drawable.user_trash_inverse);
+        remove = new ImageButtonViewGroup(context, R.drawable.user_trash_inverse);
         bremove = new BusyViewControl(remove);
         bar.addButton(remove);
 
         bar.setOnClickListener1(this);
+
+        theme.button(scan);
+        theme.button(remove);
+        theme.background(bar);
+
         return bar;
     }
 

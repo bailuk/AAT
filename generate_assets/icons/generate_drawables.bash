@@ -1,5 +1,11 @@
 #!/bin/bash
 
+# Convert images to android resources and copies them to 'assets' directory
+# Depends on 'xcf2png' (https://github.com/j-jorge/xcftools/) 
+# and 'convert' from ImageMagick (https://imagemagick.org/index.php)
+
+
+
 DRAW="../../app/src/main/res/drawable"
 
 DRAWABLES="$DRAW/"
@@ -14,6 +20,7 @@ XXXHDPI="$DRAW-xxxhdpi/"
 function SVG_COPY {
     TARGET="${1//-/_}".png
 
+    echo "convert $1.svg (svg)"
 	convert -size "36x36" $1.svg $LDPI/$TARGET
 	convert -size "48x48" $1.svg $MDPI/$TARGET
 	convert -size "72x72" $1.svg $HDPI/$TARGET
@@ -27,6 +34,7 @@ function SVG_COPY {
 function COPY {
     TARGET="${1//-/_}".png
 
+    echo "convert $1.png (big)"
 	convert $1.png -scale "36x36"   $LDPI/$TARGET
 	convert $1.png -scale "48x48"   $MDPI/$TARGET
 	convert $1.png -scale "72x72"   $HDPI/$TARGET
@@ -40,6 +48,7 @@ function COPY {
 function SCOPY {
     TARGET="${1//-/_}".png
 
+    echo "convert $1.png (small)"
 	convert $1.png -scale "18x18"   $LDPI/$TARGET
 	convert $1.png -scale "24x24"   $MDPI/$TARGET
 	convert $1.png -scale "36x36"   $HDPI/$TARGET
@@ -53,6 +62,7 @@ function SCOPY {
 function INVERT {
 	TARGET="${1//-/_}_inverse.png"
 
+    echo "convert $1.png (invert)"
 	convert $1.png -negate -scale "36x36"   $LDPI/$TARGET
 	convert $1.png -negate -scale "48x48"   $MDPI/$TARGET
 	convert $1.png -negate -scale "72x72"   $HDPI/$TARGET
@@ -66,6 +76,7 @@ function INVERT {
 function HIGHLIGHT {
 	TARGET="${1//-/_}_highlight.png"
 
+    echo "convert $1.png (highlight)"
 	convert $1.png -negate -scale "36x36"   $LDPI/$TARGET
 	convert $1.png -negate -scale "48x48"   $MDPI/$TARGET
 	convert $1.png -negate -scale "72x72"   $HDPI/$TARGET
@@ -76,12 +87,14 @@ function HIGHLIGHT {
 }
 
 function CCONVERT {
+    echo "xcf2png $1.xcf (local)"
 	xcf2png $1.xcf > $1.png
 	COPY $1
 }
 
 
 function CONVERT {
+    echo "xcf2png $1.xcf (to resources)"
 	xcf2png $1.xcf > $DRAWABLES/$1.png
 }
 
@@ -106,16 +119,8 @@ CLEAR_DIRECTORY $XXHDPI
 CLEAR_DIRECTORY $XXXHDPI
 
 
-
-####### Global
-cp button.xml $DRAWABLES
-CONVERT "button_default.9"
-CONVERT "button_pressed.9"
-CONVERT "button_selected.9"
-
 ####### Application
 SCOPY "status"
-# CONVERT "icon_status"
 
 
 ####### Preview

@@ -10,6 +10,7 @@ import ch.bailu.aat.dispatcher.DispatcherInterface;
 import ch.bailu.aat.map.MapContext;
 import ch.bailu.aat.preferences.SolidDirectoryQuery;
 import ch.bailu.aat.util.ui.AppTheme;
+import ch.bailu.aat.util.ui.UiTheme;
 import ch.bailu.aat.views.description.LabelTextView;
 
 
@@ -27,11 +28,12 @@ public class VerticalScrollView extends ScrollView {
 
 
     public void add(View view) {
+        AppTheme.padding(view);
         layout.addView(view);
     }
 
-    public void add(DispatcherInterface di, ContentDescription d, int... iid) {
-        final LabelTextView v = new LabelTextView(getContext(), d);
+    public void add(DispatcherInterface di, ContentDescription d, UiTheme theme, int... iid) {
+        final LabelTextView v = new LabelTextView(getContext(), d, theme);
 
         add(v);
 
@@ -42,32 +44,33 @@ public class VerticalScrollView extends ScrollView {
 
     public void addAllContent(DispatcherInterface di,
                               ContentDescription[] descriptions,
+                              UiTheme theme,
                               int... iid) {
         for (ContentDescription description : descriptions) {
-            add(di, description, iid);
+            add(di, description, theme, iid);
         }
     }
 
 
-    public void addAllFilterViews(MapContext mc) {
+    public void addAllFilterViews(MapContext mc, UiTheme theme) {
         final SolidDirectoryQuery sdirectory = new SolidDirectoryQuery(mc.getContext());
 
         LinearLayout geo = new LinearLayout(mc.getContext());
-        AppTheme.alt.background(geo);
-        geo.addView(new SolidCheckBox(sdirectory.getUseGeo()));
-        geo.addView(new SolidBoundingBoxView(sdirectory.getBoundingBox(), mc));
+
+        geo.addView(new SolidCheckBox(sdirectory.getUseGeo(), theme));
+        geo.addView(new SolidBoundingBoxView(sdirectory.getBoundingBox(), mc, theme));
         layout.addView(geo);
 
         LinearLayout from = new LinearLayout(mc.getContext());
-        AppTheme.alt.background(from);
-        from.addView(new SolidCheckBox(sdirectory.getUseDateStart()));
-        from.addView(new SolidDateView(sdirectory.getDateStart()));
+        //AppTheme.alt.background(from);
+        from.addView(new SolidCheckBox(sdirectory.getUseDateStart(), theme));
+        from.addView(new SolidDateView(sdirectory.getDateStart(), theme));
         layout.addView(from);
 
         LinearLayout to = new LinearLayout(mc.getContext());
-        AppTheme.alt.background(to);
-        to.addView(new SolidCheckBox(sdirectory.getUseDateEnd()));
-        to.addView(new SolidDateView(sdirectory.getDateTo()));
+        //AppTheme.alt.background(to);
+        to.addView(new SolidCheckBox(sdirectory.getUseDateEnd(), theme));
+        to.addView(new SolidDateView(sdirectory.getDateTo(), theme));
         layout.addView(to);
     }
 

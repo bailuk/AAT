@@ -17,11 +17,12 @@ import ch.bailu.aat.map.MapViewInterface;
 import ch.bailu.aat.menus.FileMenu;
 import ch.bailu.aat.util.ui.AppDialog;
 import ch.bailu.aat.util.ui.AppLog;
+import ch.bailu.aat.util.ui.AppTheme;
 import ch.bailu.aat.views.BusyViewContainer;
 import ch.bailu.aat.views.BusyViewControlIID;
 import ch.bailu.aat.views.ContentView;
 import ch.bailu.aat.views.ErrorView;
-import ch.bailu.aat.views.MyImageButton;
+import ch.bailu.aat.views.ImageButtonViewGroup;
 import ch.bailu.aat.views.PreviewView;
 import ch.bailu.aat.views.bar.MainControlBar;
 import ch.bailu.aat.views.html.AttributesView;
@@ -30,7 +31,7 @@ import ch.bailu.util_java.util.Objects;
 public abstract class AbsFileContentActivity extends ActivityContext implements OnClickListener {
 
     private IteratorSource  currentFile;
-    protected MyImageButton nextFile, previousFile;
+    protected ImageButtonViewGroup nextFile, previousFile;
     protected PreviewView fileOperation;
 
     private ErrorView fileError;
@@ -57,7 +58,7 @@ public abstract class AbsFileContentActivity extends ActivityContext implements 
 
 
     private void createViews() {
-        final ContentView contentView = new ContentView(this);
+        final ContentView contentView = new ContentView(this, AppTheme.trackContent);
 
         MainControlBar bar = new MainControlBar(this,5);
         contentView.add(bar);

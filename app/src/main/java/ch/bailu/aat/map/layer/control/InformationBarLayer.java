@@ -15,20 +15,21 @@ import ch.bailu.aat.menus.MapQueryMenu;
 import ch.bailu.aat.preferences.SolidIndexList;
 import ch.bailu.aat.preferences.map.SolidLegend;
 import ch.bailu.aat.preferences.map.SolidMapGrid;
+import ch.bailu.aat.util.ui.AppTheme;
 import ch.bailu.aat.util.ui.ToolTip;
-import ch.bailu.aat.views.MyImageButton;
+import ch.bailu.aat.views.ImageButtonViewGroup;
 import ch.bailu.aat.views.bar.ControlBar;
 
 public final class InformationBarLayer extends ControlBarLayer {
 
-    private final MyImageButton map, search, location, poi;
+    private final ImageButtonViewGroup map, search, location, poi;
 
     private final AbsNodeViewLayer selector;
     private final MapContext mcontext;
 
 
     public InformationBarLayer(MapContext cl, DispatcherInterface d) {
-        super(cl,new ControlBar(cl.getContext(), getOrientation(RIGHT)), RIGHT);
+        super(cl,new ControlBar(cl.getContext(), getOrientation(RIGHT), AppTheme.bar), RIGHT);
 
         mcontext = cl;
         final SolidIndexList sgrid, slegend;

@@ -3,6 +3,7 @@ package ch.bailu.aat.views.preferences;
 import android.content.SharedPreferences;
 
 import ch.bailu.aat.preferences.AbsSolidType;
+import ch.bailu.aat.util.ui.UiTheme;
 import ch.bailu.aat.views.AbsLabelTextView;
 
 public abstract class AbsSolidView extends AbsLabelTextView
@@ -10,11 +11,12 @@ public abstract class AbsSolidView extends AbsLabelTextView
 
     private final AbsSolidType solid;
 
-    public AbsSolidView(final AbsSolidType s) {
-        super(s.getContext(), s.getLabel());
+    public AbsSolidView(final AbsSolidType s, UiTheme theme) {
+        super(s.getContext(), s.getLabel(), theme);
 
         solid = s;
 
+        theme.button(this);
         setOnClickListener(v -> onRequestNewValue());
     }
 

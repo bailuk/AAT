@@ -14,6 +14,8 @@ import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.menus.FileMenu;
 import ch.bailu.aat.util.fs.foc.FocAndroid;
 import ch.bailu.aat.util.ui.AppLayout;
+import ch.bailu.aat.util.ui.AppTheme;
+import ch.bailu.aat.util.ui.UiTheme;
 import ch.bailu.util_java.foc.Foc;
 
 public class GpxListEntryView extends LinearLayout implements OnContentUpdatedInterface {
@@ -25,7 +27,7 @@ public class GpxListEntryView extends LinearLayout implements OnContentUpdatedIn
 
     private Foc file = FocAndroid.NULL;
 
-    public GpxListEntryView(final AbsServiceLink acontext, ContentDescription[] d) {
+    public GpxListEntryView(final AbsServiceLink acontext, ContentDescription[] d, UiTheme theme) {
         super(acontext);
 
         descriptions = d;
@@ -57,6 +59,10 @@ public class GpxListEntryView extends LinearLayout implements OnContentUpdatedIn
         text = new TextView(getContext());
         text.setTextColor(Color.LTGRAY);
         textLayout.addView(text);
+
+        theme.header(title);
+        theme.content(text);
+        theme.button(this);
 
     }
 

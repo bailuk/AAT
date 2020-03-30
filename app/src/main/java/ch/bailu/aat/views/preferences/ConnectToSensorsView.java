@@ -11,6 +11,7 @@ import ch.bailu.aat.services.InsideContext;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.sensor.list.SensorState;
 import ch.bailu.aat.util.ToDo;
+import ch.bailu.aat.util.ui.UiTheme;
 import ch.bailu.aat.views.AbsLabelTextView;
 
 public class ConnectToSensorsView extends AbsLabelTextView implements View.OnClickListener, OnContentUpdatedInterface {
@@ -20,11 +21,12 @@ public class ConnectToSensorsView extends AbsLabelTextView implements View.OnCli
     private String busy="";
     private final ServiceContext scontext;
 
-    public ConnectToSensorsView(ServiceContext s) {
-        super(s.getContext(), LABEL);
+    public ConnectToSensorsView(ServiceContext s, UiTheme theme) {
+        super(s.getContext(), LABEL, theme);
         scontext = s;
         setText();
         setOnClickListener(this);
+        theme.button(this);
     }
 
 

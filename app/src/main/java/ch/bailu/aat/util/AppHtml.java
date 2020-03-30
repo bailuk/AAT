@@ -4,15 +4,13 @@ import android.text.Editable;
 import android.text.Html;
 import android.text.Spanned;
 import android.text.style.BackgroundColorSpan;
-import android.text.style.ForegroundColorSpan;
 import android.text.style.TypefaceSpan;
 
 import org.xml.sax.XMLReader;
 
-import ch.bailu.aat.util.ui.AppTheme;
+import ch.bailu.aat.util.ui.UiThemeLight;
 
 public class AppHtml {
-    private static final int CODE_BG = 0xFFF3F3F3;
 
     private static final int FLAGS =
             Html.FROM_HTML_MODE_LEGACY | Html.FROM_HTML_SEPARATOR_LINE_BREAK_LIST_ITEM;
@@ -43,7 +41,7 @@ public class AppHtml {
                     code = output.length();
 
                 } else {
-                    output.setSpan(new BackgroundColorSpan(CODE_BG),
+                    output.setSpan(new BackgroundColorSpan(UiThemeLight.CODE_BG),
                             code, output.length(),
                             Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 

@@ -16,6 +16,7 @@ import ch.bailu.aat.map.layer.grid.Crosshair;
 import ch.bailu.aat.map.layer.grid.GridDynLayer;
 import ch.bailu.aat.map.mapsforge.MapsForgeView;
 import ch.bailu.aat.services.ServiceContext;
+import ch.bailu.aat.util.ui.AppTheme;
 import ch.bailu.aat.views.bar.ControlBar;
 
 public final class MapFactory {
@@ -23,7 +24,6 @@ public final class MapFactory {
     private final MapViewInterface m;
     private final DispatcherInterface d;
     private final MapContext mc;
-
 
 
     public static MapFactory DEF(AbsDispatcher d, String skey) {
@@ -80,7 +80,7 @@ public final class MapFactory {
     public MapViewInterface map(EditorSourceInterface e, ControlBar b) {
         tracker(e);
 
-        m.add(new CustomBarLayer(mc, b));
+        m.add(new CustomBarLayer(mc, b, AppTheme.bar));
 
         return m;
     }

@@ -12,6 +12,7 @@ import ch.bailu.aat.services.cache.osm_features.MapFeaturesListEntry;
 import ch.bailu.aat.util.filter_list.AbsFilterList;
 import ch.bailu.aat.util.filter_list.ListEntry;
 import ch.bailu.aat.util.ui.AppTheme;
+import ch.bailu.aat.util.ui.UiTheme;
 
 
 public class MapFeaturesListView extends ListView  {
@@ -24,6 +25,9 @@ public class MapFeaturesListView extends ListView  {
     private OnSelected onSelected = OnSelected.NULL;
 
 
+    private final static UiTheme theme = AppTheme.search;
+
+
     public MapFeaturesListView(ServiceContext sc, AbsFilterList<ListEntry> l) {
         super(sc.getContext());
 
@@ -32,7 +36,7 @@ public class MapFeaturesListView extends ListView  {
         final Adapter listAdapter = new Adapter();
 
 
-        AppTheme.themifyList(this);
+        theme.list(this);
 
         setAdapter(listAdapter);
         setOnItemClickListener(listAdapter);
@@ -63,7 +67,7 @@ public class MapFeaturesListView extends ListView  {
             if (v instanceof  MapFeaturesEntryView) {
                 view = (MapFeaturesEntryView) v;
             } else {
-                view = new MapFeaturesEntryView(scontext, onSelected);
+                view = new MapFeaturesEntryView(scontext, onSelected, theme);
             }
 
             view.set((MapFeaturesListEntry) list.getFromVisible(index));

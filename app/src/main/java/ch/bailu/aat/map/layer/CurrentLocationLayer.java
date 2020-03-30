@@ -21,7 +21,7 @@ public final class CurrentLocationLayer implements OnContentUpdatedInterface, Ma
     private static final int MIN_RADIUS=7;
     private final static int STROKE_WIDTH=2;
 
-    private final static Satturate COLOR = new Satturate(AppTheme.getHighlightColor());
+    private final static Satturate COLOR = new Satturate(AppTheme.bar.getHighlightColor());
 
     private GpxInformation center = GpxInformation.NULL;
 

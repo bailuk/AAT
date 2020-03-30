@@ -30,6 +30,9 @@ import ch.bailu.aat.views.preferences.VerticalScrollView;
 
 public class MainActivity extends ActivityContext {
 
+
+    private final UiTheme theme = AppTheme.intro;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,7 +52,7 @@ public class MainActivity extends ActivityContext {
 
     private void createViews() {
 
-        ContentView contentView = new ContentView(this);
+        ContentView contentView = new ContentView(this, theme);
 
         contentView.add(createButtonBar());
         contentView.addW(createActionList());
@@ -73,7 +76,7 @@ public class MainActivity extends ActivityContext {
     private View createActionList() {
 
         final VerticalScrollView list = new VerticalScrollView(this);
-        list.add(new SolidIndexListView(new SolidPreset(this)));
+        list.add(new SolidIndexListView(new SolidPreset(this), theme));
 
         final int accessibleCount = new ActivitySwitcher(this).size();
         for (int i = 0; i < accessibleCount; i++) {
@@ -135,13 +138,15 @@ public class MainActivity extends ActivityContext {
 
     private class ActivityLabel extends AbsLabelTextView {
         public ActivityLabel(final ActivitySwitcher.Entry s) {
-            this(AppTheme.main, s);
+            this(theme, s);
+
         }
 
         public ActivityLabel(UiTheme theme, final ActivitySwitcher.Entry s) {
-            super( MainActivity.this, theme, s.activityLabel);
+            super( MainActivity.this, s.activityLabel, theme);
 
             setOnClickListener(v -> s.start(MainActivity.this));
+            theme.button(this);
 
             setText(s.activitySubLabel);
         }
