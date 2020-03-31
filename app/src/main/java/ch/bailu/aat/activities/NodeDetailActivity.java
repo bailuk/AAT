@@ -110,7 +110,7 @@ public class NodeDetailActivity extends ActivityContext
         viewB.add(htmlView, 40);
         viewB.add(mapView.toView(), 60);
 
-        graph = new DistanceAltitudeGraphView(this);
+        graph = new DistanceAltitudeGraphView(this, theme);
         viewA.add(graph, 20);
         viewA.add(viewB, 80);
         return viewA;

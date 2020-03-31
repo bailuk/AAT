@@ -7,6 +7,7 @@ import android.widget.LinearLayout;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.map.MapColor;
+import ch.bailu.aat.util.ui.AppTheme;
 import ch.bailu.aat.views.html.HtmlScrollTextView;
 import ch.bailu.aat.views.PercentageLayout;
 import ch.bailu.aat.views.graph.DistanceAltitudeGraphView;
@@ -32,7 +33,7 @@ public final class NodeInfoView extends PercentageLayout {
 
 
 
-        graphView = new DistanceAltitudeGraphView(context);
+        graphView = new DistanceAltitudeGraphView(context, AppTheme.bar);
         graphView.setVisibility(GONE);
         graphView.setBackgroundColor(MapColor.DARK);
         graphView.showLabel(false);

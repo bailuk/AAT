@@ -18,6 +18,7 @@ import ch.bailu.aat.menus.FileMenu;
 import ch.bailu.aat.util.ui.AppDialog;
 import ch.bailu.aat.util.ui.AppLog;
 import ch.bailu.aat.util.ui.AppTheme;
+import ch.bailu.aat.util.ui.UiTheme;
 import ch.bailu.aat.views.BusyViewContainer;
 import ch.bailu.aat.views.BusyViewControlIID;
 import ch.bailu.aat.views.ContentView;
@@ -44,6 +45,8 @@ public abstract class AbsFileContentActivity extends ActivityContext implements 
 
     private String currentFileID;
 
+    protected UiTheme theme = AppTheme.trackContent;
+
     public void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
@@ -58,7 +61,7 @@ public abstract class AbsFileContentActivity extends ActivityContext implements 
 
 
     private void createViews() {
-        final ContentView contentView = new ContentView(this, AppTheme.trackContent);
+        final ContentView contentView = new ContentView(this, theme);
 
         MainControlBar bar = new MainControlBar(this,5);
         contentView.add(bar);

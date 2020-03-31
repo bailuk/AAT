@@ -31,6 +31,21 @@ public class UiThemeDark implements UiTheme {
         return HIGHLIGHT;
     }
 
+    @Override
+    public int getGraphBackgroundColor() {
+        return 0;
+    }
+
+    @Override
+    public int getGraphLineColor() {
+        return Color.DKGRAY;
+    }
+
+    @Override
+    public int getGraphTextColor() {
+        return Color.LTGRAY;
+    }
+
 
     @Override
     public void list(ListView l) {

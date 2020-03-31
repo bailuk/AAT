@@ -22,38 +22,22 @@ import ch.bailu.aat.preferences.general.SolidUnit;
 import ch.bailu.aat.preferences.presets.SolidPreset;
 import ch.bailu.aat.util.ui.AppDensity;
 import ch.bailu.aat.util.ui.AppTheme;
+import ch.bailu.aat.util.ui.UiTheme;
 
 
 public class DistanceSpeedGraphView extends AbsGraphView implements SharedPreferences.OnSharedPreferenceChangeListener {
 
 
-
-
-    public DistanceSpeedGraphView(Context context, DispatcherInterface di, int... iid) {
-        super(context, di, iid);
-
-
+    public DistanceSpeedGraphView(Context context, DispatcherInterface di, UiTheme theme, int... iid) {
+        super(context, di, theme, iid);
         setLabelText(context);
-
     }
+
 
     private void setLabelText(Context context) {
         ylabel.setText(Color.WHITE, R.string.speed, sunit.getSpeedUnit());
         ylabel.setText(AppTheme.COLOR_BLUE, new AverageSpeedDescriptionAP(context).getLabel());
         ylabel.setText(AppTheme.COLOR_GREEN, new AverageSpeedDescription(context).getLabel());
-    }
-
-
-    @Override
-    public void onAttachedToWindow() {
-        super.onAttachedToWindow();
-    }
-
-
-    @Override
-    public void onDetachedFromWindow() {
-        super.onDetachedFromWindow();
-        //swindow.unregister(this);
     }
 
 
@@ -65,7 +49,7 @@ public class DistanceSpeedGraphView extends AbsGraphView implements SharedPrefer
 
         for (int i=0; i<plotter.length; i++) {
             plotter[i] = new GraphPlotter(canvas,getWidth(), getHeight(), 1000 * km_factor,
-                    new AppDensity(getContext()));
+                    new AppDensity(getContext()), theme);
         }
 
 
@@ -87,18 +71,12 @@ public class DistanceSpeedGraphView extends AbsGraphView implements SharedPrefer
     }
 
     @Override
-    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-        /*if (swindow.hasKey(key)) {
-            setLabelText(swindow.getContext());
-            invalidate();
-        }*/
-    }
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {}
 
 
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
         super.onLayout(changed, l, t, r, b);
-       // bar.place(0,b-t-bar.getControlSize(), r-l);
     }
 
 
@@ -175,7 +153,7 @@ public class DistanceSpeedGraphView extends AbsGraphView implements SharedPrefer
         private void plotAverage() {
             if (window.getTimeDelta() > 0) {
                 float avg=window.getSpeed();
-                plotter[0].plotData(totalDistance, avg, AppTheme.graph.getHighlightColor());
+                plotter[0].plotData(totalDistance, avg, AppTheme.COLOR_ORANGE);
             }
         }
 
@@ -202,7 +180,7 @@ public class DistanceSpeedGraphView extends AbsGraphView implements SharedPrefer
 
         @Override
         public boolean doList(GpxList track) {
-            window = new GpxDistanceWindow(track);//SolidSpeedGraphWindow.createDistanceWindow(track);
+            window = new GpxDistanceWindow(track);
 
             ylabel.setText(AppTheme.COLOR_ORANGE,
                     window.getLimitAsString(getContext()));

@@ -1,15 +1,8 @@
 package ch.bailu.aat.util.ui;
 
-import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.StateListDrawable;
-import android.util.StateSet;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
-
-import ch.bailu.aat.views.NodeListView;
-import ch.bailu.aat.views.bar.ControlBar;
 
 public interface UiTheme {
 
@@ -31,6 +24,10 @@ public interface UiTheme {
 
     int getBackgroundColor();
     int getHighlightColor();
+
+    int getGraphBackgroundColor();
+    int getGraphLineColor();
+    int getGraphTextColor();
 
     void list(ListView l);
 

@@ -6,17 +6,15 @@ import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
 
-public class UiThemeLight implements  UiTheme {
+public class UiThemeDarkGreen implements UiTheme {
 
-    public final static int CODE_BG = 0xFFF3F3F3;
-
-    private final static int HIGHLIGHT = 0xFF136fd8;
-    private final static int TEXT = 0xFF24292e;
+    private final static int HIGHLIGHT = AppTheme.COLOR_ORANGE;
+    private final static int TEXT = Color.WHITE;
     private final static int LINK = 0xFF428ce0;
-    private final static int BACKGROUND = Color.WHITE;
+    private final static int BACKGROUND = 0xff49575b;
     private final static int ALT_BACKGOUND=0xff8ca6ad;
-    private final static int BUTTON_PRESSED = 0x88136fd8;
-    private final static int BUTTON = 0x88f3f3f3;
+    private final static int BUTTON_PRESSED = HIGHLIGHT;
+    private final static int BUTTON = BACKGROUND;
 
 
     @Override
@@ -87,7 +85,7 @@ public class UiThemeLight implements  UiTheme {
 
     @Override
     public int getGraphBackgroundColor() {
-        return 0xff49575b;
+        return BACKGROUND;
     }
 
     @Override

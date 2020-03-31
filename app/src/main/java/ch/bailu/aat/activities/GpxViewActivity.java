@@ -107,7 +107,7 @@ public class GpxViewActivity extends ActivityContext
         summary.addAllContent(this,
                 FileContentActivity.getSummaryData(this), theme, InfoID.FILEVIEW);
 
-        View graph = GraphViewFactory.all(this, this, InfoID.FILEVIEW);
+        View graph = GraphViewFactory.all(this, this, theme, InfoID.FILEVIEW);
 
         if (AppLayout.isTablet(this)) {
             return createPercentageLayout(summary, graph);

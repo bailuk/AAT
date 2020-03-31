@@ -15,6 +15,7 @@ import ch.bailu.aat.gpx.attributes.SampleRate;
 import ch.bailu.aat.preferences.general.SolidUnit;
 import ch.bailu.aat.util.ui.AppDensity;
 import ch.bailu.aat.util.ui.AppTheme;
+import ch.bailu.aat.util.ui.UiTheme;
 
 public class SpmGraphView extends AbsGraphView {
 
@@ -39,14 +40,14 @@ public class SpmGraphView extends AbsGraphView {
                     SampleRate.StepsRate.GPX_KEYS)
     };
 
-    public SpmGraphView(Context context, DispatcherInterface di, int... iid) {
-        super(context, di, iid);
+    public SpmGraphView(Context context, DispatcherInterface di, UiTheme theme, int... iid) {
+        super(context, di, theme, iid);
         setLabelText();
     }
 
 
-    public SpmGraphView(Context context) {
-        super(context);
+    public SpmGraphView(Context context, UiTheme theme) {
+        super(context, theme);
         setLabelText();
     }
 
@@ -119,7 +120,7 @@ public class SpmGraphView extends AbsGraphView {
 
         public void setPlotter(int kmFactor, Canvas canvas) {
             plotter =  new GraphPlotter(canvas, getWidth(), getHeight(), 1000 * kmFactor,
-                    new AppDensity(getContext()));
+                    new AppDensity(getContext()), theme);
 
         }
 

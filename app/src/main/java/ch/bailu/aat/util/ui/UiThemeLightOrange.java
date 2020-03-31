@@ -6,16 +6,14 @@ import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
 
-public class UiThemeLight implements  UiTheme {
-
-    public final static int CODE_BG = 0xFFF3F3F3;
+public class UiThemeLightOrange implements  UiTheme {
 
     private final static int HIGHLIGHT = 0xFF136fd8;
     private final static int TEXT = 0xFF24292e;
     private final static int LINK = 0xFF428ce0;
     private final static int BACKGROUND = Color.WHITE;
     private final static int ALT_BACKGOUND=0xff8ca6ad;
-    private final static int BUTTON_PRESSED = 0x88136fd8;
+    private final static int BUTTON_PRESSED = AppTheme.COLOR_ORANGE;
     private final static int BUTTON = 0x88f3f3f3;
 
 

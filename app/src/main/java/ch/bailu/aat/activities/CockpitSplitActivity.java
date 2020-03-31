@@ -84,7 +84,7 @@ public class CockpitSplitActivity extends AbsKeepScreenOnActivity {
         cockpitB.addC(this, new MaximumSpeedDescription(this), InfoID.TRACKER);
 
         percentageB.add(cockpitB, 50);
-        percentageB.add(new DistanceSpeedGraphView(this, this, InfoID.TRACKER), 50);
+        percentageB.add(new DistanceSpeedGraphView(this, this, theme, InfoID.TRACKER), 50);
 
         cockpitD.addAltitude(this);
         cockpitD.add(this, new AscendDescription(this), InfoID.TRACKER);
@@ -92,7 +92,7 @@ public class CockpitSplitActivity extends AbsKeepScreenOnActivity {
         cockpitD.add(this, new SlopeDescription(this), InfoID.TRACKER);
 
         percentageD.add(cockpitD, 50);
-        percentageD.add(new DistanceAltitudeGraphView(this, this, InfoID.TRACKER), 50);
+        percentageD.add(new DistanceAltitudeGraphView(this, this, theme, InfoID.TRACKER), 50);
 
         cockpitC.add(this, new CadenceDescription(this), InfoID.CADENCE_SENSOR);
         cockpitC.add(this, new HeartRateDescription(this), InfoID.HEART_RATE_SENSOR);
@@ -100,7 +100,7 @@ public class CockpitSplitActivity extends AbsKeepScreenOnActivity {
         cockpitC.add(this, new TotalStepsDescription(this), InfoID.TRACKER);
 
         percentageC.add(cockpitC, 50);
-        percentageC.add(new SpmGraphView(this, this, InfoID.TRACKER), 50);
+        percentageC.add(new SpmGraphView(this, this, theme, InfoID.TRACKER), 50);
 
         MultiView mv = new MultiView(this, SOLID_KEY);
         mv.add(cockpitA);

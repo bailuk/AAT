@@ -39,14 +39,13 @@ public class AppTheme {
 
     public static final UiTheme bar = new UiThemeDark();
     public static final UiTheme cockpit = new UiThemeDark();
-    public static final UiTheme graph = new UiThemeLight();
-    public static final UiTheme preferences = new UiThemeLight();
-    public static final UiTheme intro = new UiThemeLight();
+    public static final UiTheme preferences = new UiThemeLightOrange();
+    public static final UiTheme intro = new UiThemeLightOrange();
     public static final UiTheme alt = new UiThemeDark();
-    public static final UiTheme doc = new UiThemeLight();
-    public static final UiTheme search = new UiThemeLight();
-    public static final UiTheme trackList = new UiThemeLight();
-    public static final UiTheme trackContent = new UiThemeLight();
+    public static final UiTheme doc = new UiThemeLightOrange();
+    public static final UiTheme search = new UiThemeLightOrange();
+    public static final UiTheme trackList = new UiThemeLightOrange();
+    public static final UiTheme trackContent = new UiThemeLightOrange();
 
     public static void padding(View view) {
         padding(view, 15);

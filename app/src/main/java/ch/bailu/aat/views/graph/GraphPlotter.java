@@ -1,13 +1,13 @@
 package ch.bailu.aat.views.graph;
 
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
 
 import ch.bailu.aat.map.BitmapDraw;
 import ch.bailu.aat.map.NodeBitmap;
 import ch.bailu.aat.util.ui.AppDensity;
+import ch.bailu.aat.util.ui.UiTheme;
 
 public class GraphPlotter {
     private static final int TEXT_SIZE=15;
@@ -31,7 +31,7 @@ public class GraphPlotter {
 
     private final NodeBitmap nodeBitmap;
 
-    public GraphPlotter(Canvas c, int w, int h, float xScale, AppDensity res) {
+    public GraphPlotter(Canvas c, int w, int h, float xScale, AppDensity res, UiTheme theme) {
         width=w;
         height=h;
 
@@ -41,7 +41,7 @@ public class GraphPlotter {
         paintFont = new Paint();
         paintFont.setAntiAlias(true);
         paintFont.setDither(false);
-        paintFont.setColor(Color.LTGRAY);
+        paintFont.setColor(theme.getGraphTextColor());
         paintFont.setTextSize(res.toPixelScaled_f(TEXT_SIZE));
 
 
@@ -54,7 +54,7 @@ public class GraphPlotter {
         paintLines.setAntiAlias(true);
         paintLines.setDither(false);
         paintLines.setStrokeWidth(0);
-        paintLines.setColor(Color.GRAY);
+        paintLines.setColor(theme.getGraphLineColor());
 
 
         text_size = Math.max(Math.round(paintFont.getTextSize()), 1);

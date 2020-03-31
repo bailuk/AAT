@@ -14,6 +14,7 @@ import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.GpxList;
 import ch.bailu.aat.gpx.interfaces.GpxType;
 import ch.bailu.aat.preferences.general.SolidUnit;
+import ch.bailu.aat.util.ui.UiTheme;
 
 public abstract class AbsGraphView extends ViewGroup implements OnContentUpdatedInterface {
 
@@ -25,16 +26,18 @@ public abstract class AbsGraphView extends ViewGroup implements OnContentUpdated
     protected final SolidUnit sunit;
     protected final LabelOverlay ylabel, xlabel;
 
+    protected final UiTheme theme;
 
-    public AbsGraphView(Context context, DispatcherInterface di, int... iid) {
-        this(context);
+    public AbsGraphView(Context context, DispatcherInterface di, UiTheme theme, int... iid) {
+        this(context, theme);
         di.addTarget(this, iid);
 
     }
 
 
-    public AbsGraphView(Context context) {
+    public AbsGraphView(Context context, UiTheme theme) {
         super(context);
+        this.theme = theme;
         setWillNotDraw(false);
         sunit = new SolidUnit(context);
 
@@ -46,6 +49,8 @@ public abstract class AbsGraphView extends ViewGroup implements OnContentUpdated
 
         addView(xlabel);
         addView(ylabel);
+
+        setBackgroundColor(theme.getGraphBackgroundColor());
     }
 
 
@@ -107,7 +112,8 @@ public abstract class AbsGraphView extends ViewGroup implements OnContentUpdated
 
 
     public abstract void plot(Canvas canvas, GpxList list,
-                              int index, SolidUnit sunit, boolean markerMode);
+                              int index, SolidUnit sunit,
+                              boolean markerMode);
 
 
     public void setVisibility(GpxInformation info) {

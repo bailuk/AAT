@@ -69,7 +69,7 @@ public class CockpitTabletActivity extends AbsKeepScreenOnActivity {
 
         final PercentageLayout three = new PercentageLayout(this);
         three.add(two,80);
-        three.add(GraphViewFactory.all(this, this, InfoID.TRACKER),20);
+        three.add(GraphViewFactory.all(this, this, theme, InfoID.TRACKER),20);
 
 
         return three;

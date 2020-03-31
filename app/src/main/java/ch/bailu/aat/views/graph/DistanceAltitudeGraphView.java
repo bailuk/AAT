@@ -13,27 +13,31 @@ import ch.bailu.aat.gpx.GpxSegmentNode;
 import ch.bailu.aat.map.MapColor;
 import ch.bailu.aat.preferences.general.SolidUnit;
 import ch.bailu.aat.util.ui.AppDensity;
+import ch.bailu.aat.util.ui.UiTheme;
 
 public class DistanceAltitudeGraphView extends AbsGraphView {
 
 
-    public DistanceAltitudeGraphView(Context context, DispatcherInterface di, int... iid) {
-        super(context, di, iid);
+    public DistanceAltitudeGraphView(Context context, DispatcherInterface di,
+                                     UiTheme theme, int... iid) {
+        super(context, di, theme, iid);
         ylabel.setText(Color.WHITE, R.string.altitude, sunit.getAltitudeUnit());
        }
 
 
-    public DistanceAltitudeGraphView(Context context) {
-        super(context);
+    public DistanceAltitudeGraphView(Context context, UiTheme theme) {
+        super(context, theme);
         ylabel.setText(Color.WHITE, R.string.altitude, sunit.getAltitudeUnit());
     }
 
 
     @Override
-    public void plot(Canvas canvas, GpxList list, int index, SolidUnit sunit, boolean markerMode) {
+    public void plot(Canvas canvas, GpxList list, int index, SolidUnit sunit,
+                     boolean markerMode) {
         int km_factor = (int) (list.getDelta().getDistance()/1000) + 1;
         GraphPlotter plotter = new GraphPlotter(canvas,getWidth(), getHeight(), 1000 * km_factor,
-                new AppDensity(getContext()));
+                new AppDensity(getContext()), theme);
+
         GpxListWalker painter, scaleGenerator;
 
         if (markerMode) {
