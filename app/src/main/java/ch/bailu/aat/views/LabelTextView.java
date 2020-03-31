@@ -14,6 +14,7 @@ public class LabelTextView extends LinearLayout{
     private final TextView value, label;
     private final ToolTipView toolTip;
 
+    private final boolean inverse;
 
     public LabelTextView(final Context context, String labelText, UiTheme theme) {
         this(false, context, labelText, theme);
@@ -25,6 +26,7 @@ public class LabelTextView extends LinearLayout{
         super(context);
         setOrientation(VERTICAL);
 
+        this.inverse = inverse;
         label = new TextView(context);
         label.setText(labelText);
 
@@ -38,16 +40,7 @@ public class LabelTextView extends LinearLayout{
 
         AppTheme.padding(this);
 
-        if (inverse) {
-            theme.header(value);
-            theme.content(label);
-
-        } else {
-            theme.header(label);
-            theme.content(value);
-
-        }
-
+        themify(theme);
     }
 
     public void setLabel(CharSequence text) {
@@ -61,5 +54,18 @@ public class LabelTextView extends LinearLayout{
     }
     public void setTextColor(int color) {
         label.setTextColor(color);
+    }
+
+
+    public void themify(UiTheme theme) {
+        if (inverse) {
+            theme.header(value);
+            theme.content(label);
+
+        } else {
+            theme.header(label);
+            theme.content(value);
+
+        }
     }
 }

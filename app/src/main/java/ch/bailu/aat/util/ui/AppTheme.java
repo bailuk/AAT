@@ -46,6 +46,7 @@ public class AppTheme {
     public static final UiTheme search = new UiThemeLightOrange();
     public static final UiTheme trackList = new UiThemeLightOrange();
     public static final UiTheme trackContent = new UiThemeLightOrange();
+    public static final UiTheme filter = new UiThemeLightHeader();
 
     public static void padding(View view) {
         padding(view, 15);

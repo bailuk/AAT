@@ -22,7 +22,8 @@ public class GpxListView extends ListView implements OnCursorChangedListener {
     private final ContentDescription[] data;
 
 
-    private final UiTheme theme = AppTheme.trackList;
+    private UiTheme theme = AppTheme.trackList;
+
 
     public GpxListView(Context c,
                        ContentDescription[] cd) {
@@ -43,6 +44,10 @@ public class GpxListView extends ListView implements OnCursorChangedListener {
     @Override
     public void onCursorChanged() {
         if (observer != null) observer.onChanged();
+    }
+
+    public void themify(UiTheme t) {
+        theme = t;
     }
 
     public class IteratorAdapter implements ListAdapter {
@@ -85,6 +90,7 @@ public class GpxListView extends ListView implements OnCursorChangedListener {
 
             iterator.moveToPosition(position);
             entry.onContentUpdated(iterator.getInfoID(), iterator.getInfo());
+            entry.themify(theme);
 
 
             return entry;

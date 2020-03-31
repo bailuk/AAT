@@ -45,8 +45,6 @@ public class GpxListEntryView extends LinearLayout implements OnContentUpdatedIn
         addView(preview, previewSize, previewSize);
 
         preview.setOnClickListener(view -> new FileMenu(acontext, file).showAsDialog(acontext));
-
-        theme.button(this);
     }
 
 
@@ -70,6 +68,11 @@ public class GpxListEntryView extends LinearLayout implements OnContentUpdatedIn
         preview.onContentUpdated(iid, info);
     }
 
+
+    public void themify(UiTheme theme) {
+        labelTextView.themify(theme);
+        theme.button(labelTextView);
+    }
 
     private final StringBuilder builder = new StringBuilder(20);
     private void updateText() {

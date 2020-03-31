@@ -56,6 +56,8 @@ public abstract class AbsGpxListActivity extends ActivityContext implements OnIt
     public abstract ContentDescription[]   getSummaryData();
 
     protected final UiTheme theme = AppTheme.trackList;
+    protected final UiTheme filterTheme = AppTheme.filter;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -136,10 +138,10 @@ public abstract class AbsGpxListActivity extends ActivityContext implements OnIt
 
     private void setListBackgroundColor() {
         if (sdirectory.createSelectionString().length() > 0) {
-            AppTheme.alt.background(listView);
+            listView.themify(filterTheme);
 
         } else {
-            AppTheme.trackList.background(listView);
+            listView.themify(theme);
         }
     }
 
@@ -173,11 +175,11 @@ public abstract class AbsGpxListActivity extends ActivityContext implements OnIt
             summary.add(new TitleView(acontext, summary_label, theme));
             summary.addAllContent(acontext, getSummaryData(), theme, InfoID.LIST_SUMMARY);
 
-            TitleView title = new TitleView(acontext, filter_label, theme);
+            TitleView title = new TitleView(acontext, filter_label, filterTheme);
             //AppTheme.alt.background(title);
 
             summary.add(title);
-            summary.addAllFilterViews(map.getMContext(), theme);
+            summary.addAllFilterViews(map.getMContext(), filterTheme);
 
 
             MainControlBar bar = new MainControlBar(acontext);
