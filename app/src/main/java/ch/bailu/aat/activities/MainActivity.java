@@ -21,7 +21,7 @@ import ch.bailu.aat.util.fs.AppDirectory;
 import ch.bailu.aat.util.ui.AppLayout;
 import ch.bailu.aat.util.ui.AppTheme;
 import ch.bailu.aat.util.ui.UiTheme;
-import ch.bailu.aat.views.AbsLabelTextView;
+import ch.bailu.aat.views.LabelTextView;
 import ch.bailu.aat.views.ContentView;
 import ch.bailu.aat.views.bar.MainControlBar;
 import ch.bailu.aat.views.preferences.SolidIndexListView;
@@ -136,7 +136,7 @@ public class MainActivity extends ActivityContext {
 
     }
 
-    private class ActivityLabel extends AbsLabelTextView {
+    private class ActivityLabel extends LabelTextView {
         public ActivityLabel(final ActivitySwitcher.Entry s) {
             this(theme, s);
 

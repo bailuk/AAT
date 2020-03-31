@@ -1,27 +1,24 @@
 package ch.bailu.aat.views;
 
-import android.graphics.Color;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
-import ch.bailu.aat.util.AbsServiceLink;
 import ch.bailu.aat.description.ContentDescription;
 import ch.bailu.aat.dispatcher.OnContentUpdatedInterface;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.menus.FileMenu;
+import ch.bailu.aat.util.AbsServiceLink;
 import ch.bailu.aat.util.fs.foc.FocAndroid;
 import ch.bailu.aat.util.ui.AppLayout;
-import ch.bailu.aat.util.ui.AppTheme;
 import ch.bailu.aat.util.ui.UiTheme;
 import ch.bailu.util_java.foc.Foc;
 
 public class GpxListEntryView extends LinearLayout implements OnContentUpdatedInterface {
 
     private final PreviewView preview;
-    private final TextView title, text;
+    private final LabelTextView labelTextView;
 
     private final ContentDescription[] descriptions;
 
@@ -40,10 +37,8 @@ public class GpxListEntryView extends LinearLayout implements OnContentUpdatedIn
 
         setLayoutParams(p);
 
-        final LinearLayout textLayout;
-        textLayout = new LinearLayout(acontext);
-        textLayout.setOrientation(VERTICAL);
-        addViewWeight(textLayout);
+        labelTextView = new LabelTextView(getContext(), "", theme);
+        addViewWeight(labelTextView);
 
         int previewSize = AppLayout.getBigButtonSize(acontext);
         preview = new PreviewView(acontext.getServiceContext());
@@ -51,19 +46,7 @@ public class GpxListEntryView extends LinearLayout implements OnContentUpdatedIn
 
         preview.setOnClickListener(view -> new FileMenu(acontext, file).showAsDialog(acontext));
 
-
-        title = new TextView(getContext());
-        title.setTextColor(Color.WHITE);
-        textLayout.addView(title);
-
-        text = new TextView(getContext());
-        text.setTextColor(Color.LTGRAY);
-        textLayout.addView(text);
-
-        theme.header(title);
-        theme.content(text);
         theme.button(this);
-
     }
 
 
@@ -94,13 +77,13 @@ public class GpxListEntryView extends LinearLayout implements OnContentUpdatedIn
         builder.setLength(0);
         for (int i=0; i< descriptions.length; i++) {
             if (i==0) {
-                title.setText(descriptions[i].getValueAsString());
+                labelTextView.setLabel(descriptions[i].getValueAsString());
             } else {
                 if (i > 1) builder.append(" - ");
                 builder.append(descriptions[i].getValueAsString());
             }
         }
 
-        text.setText(builder);
+        labelTextView.setText(builder);
     }
 }

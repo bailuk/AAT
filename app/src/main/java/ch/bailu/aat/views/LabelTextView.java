@@ -9,19 +9,19 @@ import ch.bailu.aat.util.ui.ToolTipProvider;
 import ch.bailu.aat.util.ui.ToolTipView;
 import ch.bailu.aat.util.ui.UiTheme;
 
-public abstract class AbsLabelTextView extends LinearLayout{
+public class LabelTextView extends LinearLayout{
 
     private final TextView value, label;
     private final ToolTipView toolTip;
 
 
-    public AbsLabelTextView(final Context context, String labelText, UiTheme theme) {
+    public LabelTextView(final Context context, String labelText, UiTheme theme) {
         this(false, context, labelText, theme);
     }
 
 
-    public AbsLabelTextView(boolean inverse, final Context context, String labelText,
-                             UiTheme theme) {
+    public LabelTextView(boolean inverse, final Context context, String labelText,
+                         UiTheme theme) {
         super(context);
         setOrientation(VERTICAL);
 
@@ -50,15 +50,15 @@ public abstract class AbsLabelTextView extends LinearLayout{
 
     }
 
-
+    public void setLabel(CharSequence text) {
+        label.setText(text);
+    }
     public void setText(CharSequence text) {
         value.setText(text);
     }
-
     public void setToolTip(ToolTipProvider tip) {
         toolTip.setToolTip(tip);
     }
-
     public void setTextColor(int color) {
         label.setTextColor(color);
     }

@@ -11,7 +11,7 @@ import ch.bailu.aat.map.MapContext;
 import ch.bailu.aat.preferences.SolidDirectoryQuery;
 import ch.bailu.aat.util.ui.AppTheme;
 import ch.bailu.aat.util.ui.UiTheme;
-import ch.bailu.aat.views.description.LabelTextView;
+import ch.bailu.aat.views.description.DescriptionLabelTextView;
 
 
 public class VerticalScrollView extends ScrollView {
@@ -33,7 +33,7 @@ public class VerticalScrollView extends ScrollView {
     }
 
     public void add(DispatcherInterface di, ContentDescription d, UiTheme theme, int... iid) {
-        final LabelTextView v = new LabelTextView(getContext(), d, theme);
+        final DescriptionLabelTextView v = new DescriptionLabelTextView(getContext(), d, theme);
 
         add(v);
 

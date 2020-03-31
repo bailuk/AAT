@@ -6,12 +6,12 @@ import ch.bailu.aat.description.ContentDescription;
 import ch.bailu.aat.dispatcher.OnContentUpdatedInterface;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.util.ui.UiTheme;
-import ch.bailu.aat.views.AbsLabelTextView;
+import ch.bailu.aat.views.LabelTextView;
 
-public class LabelTextView extends AbsLabelTextView implements OnContentUpdatedInterface {
+public class DescriptionLabelTextView extends LabelTextView implements OnContentUpdatedInterface {
     private final ContentDescription description;
 
-    public LabelTextView(Context context, ContentDescription d, UiTheme theme) {
+    public DescriptionLabelTextView(Context context, ContentDescription d, UiTheme theme) {
         super(true, context, d.getLabel(), theme);
 
         description = d;
@@ -23,7 +23,6 @@ public class LabelTextView extends AbsLabelTextView implements OnContentUpdatedI
         description.onContentUpdated(iid, info);
         setText();
     }
-
 
     public void setText() {
         setText(description.getValueAsString());

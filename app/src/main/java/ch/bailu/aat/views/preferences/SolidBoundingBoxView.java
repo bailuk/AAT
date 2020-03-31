@@ -5,12 +5,11 @@ import android.content.SharedPreferences;
 import ch.bailu.aat.coordinates.BoundingBoxE6;
 import ch.bailu.aat.map.MapContext;
 import ch.bailu.aat.preferences.SolidBoundingBox;
-import ch.bailu.aat.util.ui.AppTheme;
 import ch.bailu.aat.util.ui.UiTheme;
-import ch.bailu.aat.views.AbsLabelTextView;
+import ch.bailu.aat.views.LabelTextView;
 
 
-public class SolidBoundingBoxView extends AbsLabelTextView implements SharedPreferences.OnSharedPreferenceChangeListener {
+public class SolidBoundingBoxView extends LabelTextView implements SharedPreferences.OnSharedPreferenceChangeListener {
     private final SolidBoundingBox sbounding;
 
 

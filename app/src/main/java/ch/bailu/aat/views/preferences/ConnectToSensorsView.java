@@ -12,9 +12,9 @@ import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.sensor.list.SensorState;
 import ch.bailu.aat.util.ToDo;
 import ch.bailu.aat.util.ui.UiTheme;
-import ch.bailu.aat.views.AbsLabelTextView;
+import ch.bailu.aat.views.LabelTextView;
 
-public class ConnectToSensorsView extends AbsLabelTextView implements View.OnClickListener, OnContentUpdatedInterface {
+public class ConnectToSensorsView extends LabelTextView implements View.OnClickListener, OnContentUpdatedInterface {
 
     public static final String LABEL = ToDo.translate("Connect to enabled sensors\u2026");
 

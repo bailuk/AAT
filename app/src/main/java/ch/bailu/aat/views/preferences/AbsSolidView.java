@@ -4,9 +4,9 @@ import android.content.SharedPreferences;
 
 import ch.bailu.aat.preferences.AbsSolidType;
 import ch.bailu.aat.util.ui.UiTheme;
-import ch.bailu.aat.views.AbsLabelTextView;
+import ch.bailu.aat.views.LabelTextView;
 
-public abstract class AbsSolidView extends AbsLabelTextView
+public abstract class AbsSolidView extends LabelTextView
         implements SharedPreferences.OnSharedPreferenceChangeListener {
 
     private final AbsSolidType solid;
