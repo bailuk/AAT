@@ -54,7 +54,7 @@ public class PoiView  extends LinearLayout implements SharedPreferences.OnShared
         setOrientation(VERTICAL);
         addView(createHeader(theme));
         addView(createFilterView(theme));
-        addView(createPoiList());
+        addView(createPoiList(theme));
 
         readList();
         filterList(filterView.getText().toString());
@@ -106,8 +106,8 @@ public class PoiView  extends LinearLayout implements SharedPreferences.OnShared
     }
 
 
-    private View createPoiList() {
-        listView = new PoiListView(scontext, list);
+    private View createPoiList(UiTheme theme) {
+        listView = new PoiListView(scontext, list, theme);
         listView.setOnTextSelected((e, action, variant) -> {
             if (e.isSummary()) {
                 filterView.setText(e.getSummaryKey());

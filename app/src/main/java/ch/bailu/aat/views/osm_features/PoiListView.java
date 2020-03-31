@@ -11,6 +11,7 @@ import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.util.filter_list.FilterList;
 import ch.bailu.aat.util.filter_list.PoiListEntry;
 import ch.bailu.aat.util.ui.AppTheme;
+import ch.bailu.aat.util.ui.UiTheme;
 
 public class PoiListView extends ListView {
 
@@ -22,8 +23,12 @@ public class PoiListView extends ListView {
     private OnSelected onSelected = OnSelected.NULL;
 
 
-    public PoiListView(ServiceContext sc, FilterList l) {
+    private final UiTheme theme;
+
+    public PoiListView(ServiceContext sc, FilterList l, UiTheme theme) {
         super(sc.getContext());
+
+        this.theme = theme;
 
         scontext = sc;
         list = l;
@@ -60,7 +65,7 @@ public class PoiListView extends ListView {
             if (v instanceof  MapFeaturesEntryView) {
                 view = (PoiListEntryView) v;
             } else {
-                view = new PoiListEntryView(scontext, onSelected);
+                view = new PoiListEntryView(scontext, onSelected, theme);
             }
 
             view.set((PoiListEntry) list.getFromVisible(index));

@@ -7,37 +7,33 @@ import android.widget.TextView;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.util.filter_list.PoiListEntry;
 import ch.bailu.aat.util.ui.AppTheme;
+import ch.bailu.aat.util.ui.UiTheme;
 
 public class PoiListEntryView extends LinearLayout  {
 
     private PoiListEntry entry;
 
-    private final OnSelected onSelected;
-
     private final CheckBox checkBox;
-    private final TextView text;
+    private final TextView textView;
 
 
-    public PoiListEntryView(final ServiceContext scontext, OnSelected s) {
+    public PoiListEntryView(final ServiceContext scontext, OnSelected onSelected, UiTheme theme) {
         super(scontext.getContext());
 
-
-
-        onSelected = s;
+        setOnClickListener(v -> onSelected.onSelected(entry, 0, null));
 
         checkBox = new CheckBox(getContext());
-        checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
-
-        });
+        checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {});
         checkBox.setClickable(false);
+        textView = new TextView(getContext());
+
+        AppTheme.padding(textView, 10);
+        theme.content(checkBox);
+        theme.header(textView);
+        theme.button(textView);
+
         addView(checkBox);
-
-        text = new TextView(getContext());
-        this.setOnClickListener(v -> onSelected.onSelected(entry, 0, null));
-
-        addView(text);
-
-
+        addView(textView);
     }
 
 
@@ -45,14 +41,19 @@ public class PoiListEntryView extends LinearLayout  {
         entry = e;
 
         if (e.isSummary()) {
-            checkBox.setVisibility(INVISIBLE);
-            AppTheme.search.header(text);
-        } else {
-            checkBox.setChecked(e.isSelected());
-            checkBox.setVisibility(VISIBLE);
-            AppTheme.search.content(text);
-        }
+            checkBox.setVisibility(GONE);
+            checkBox.setText("");
 
-        text.setText(entry.getTitle());
+            textView.setText(entry.getTitle());
+            textView.setVisibility(VISIBLE);
+
+        } else {
+            textView.setVisibility(GONE);
+            textView.setText("");
+
+            checkBox.setChecked(e.isSelected());
+            checkBox.setText(entry.getTitle());
+            checkBox.setVisibility(VISIBLE);
+        }
     }
 }
