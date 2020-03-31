@@ -1,4 +1,4 @@
-package ch.bailu.aat.views.description;
+package ch.bailu.aat.views.description.mview;
 
 import android.content.Context;
 import android.util.SparseArray;
@@ -19,24 +19,17 @@ public class MultiView extends ViewGroup implements ObservableInterface{
 
     private final String solidKey;
 
-    private final SparseArray<GpxInformation> informationMap =
-            new SparseArray<>(5);
-
-    private Observer observer = () -> {
-
-    };
-
+    private final ArrayList<Observer> observers = new ArrayList(2);
 
     @Override
     public void addObserver(Observer o) {
-        observer = o;
+        observers.remove(o);
+        observers.add(o);
     }
 
     @Override
     public void removeObserver(Observer observer) {
-        observer = () -> {
-
-        };
+        observers.remove(observer);
     }
 
     public String getLabel() {
@@ -128,7 +121,9 @@ public class MultiView extends ViewGroup implements ObservableInterface{
         pages.get(active).view.setVisibility(VISIBLE);
         pages.get(active).view.bringToFront();
 
-        observer.onChange();
+        for (Observer observer : observers) {
+            observer.onChange();
+        }
     }
 
 
@@ -170,6 +165,10 @@ public class MultiView extends ViewGroup implements ObservableInterface{
         super.onDetachedFromWindow();
     }
 
+
+    public int getActive() {
+        return active;
+    }
 
     public static void storeActive(Context context, String key, int active) {
         new Storage(context).writeInteger(key + "_index",active);

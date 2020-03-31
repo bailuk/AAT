@@ -13,7 +13,7 @@ import ch.bailu.aat.util.ui.AppTheme;
 import ch.bailu.aat.util.ui.UiTheme;
 import ch.bailu.aat.views.ContentView;
 import ch.bailu.aat.views.bar.MainControlBar;
-import ch.bailu.aat.views.description.MultiView;
+import ch.bailu.aat.views.description.mview.MultiView;
 import ch.bailu.aat.views.preferences.GeneralPreferencesView;
 import ch.bailu.aat.views.preferences.MapTilePreferencesView;
 import ch.bailu.aat.views.preferences.PresetPreferencesView;
@@ -46,6 +46,7 @@ public class PreferencesActivity extends ActivityContext implements SharedPrefer
         ContentView contentView = new ContentView(this, theme);
 
         multiView = createMultiView(theme);
+        contentView.addMvIndicator(multiView);
         contentView.add(new MainControlBar(this, multiView));
         contentView.add(multiView);
 

@@ -31,7 +31,7 @@ import ch.bailu.aat.views.ImageButtonViewGroup;
 import ch.bailu.aat.views.PercentageLayout;
 import ch.bailu.aat.views.bar.ControlBar;
 import ch.bailu.aat.views.bar.MainControlBar;
-import ch.bailu.aat.views.description.MultiView;
+import ch.bailu.aat.views.description.mview.MultiView;
 import ch.bailu.aat.views.graph.GraphViewFactory;
 import ch.bailu.aat.views.preferences.VerticalScrollView;
 import ch.bailu.util_java.foc.Foc;
@@ -80,7 +80,7 @@ public class GpxViewActivity extends ActivityContext
                 MainControlBar bar = new MainControlBar(this);
 
                 contentView.add(bar);
-                View view = createLayout(bar);
+                View view = createLayout(bar, contentView);
                 initButtonBar(bar);
 
                 contentView.add(view);
@@ -99,7 +99,7 @@ public class GpxViewActivity extends ActivityContext
 
 
 
-    private View createLayout(MainControlBar bar) {
+    private View createLayout(MainControlBar bar, ContentView contentView) {
         map = MapFactory.DEF(this, SOLID_KEY).externalContent();
 
 
@@ -112,13 +112,14 @@ public class GpxViewActivity extends ActivityContext
         if (AppLayout.isTablet(this)) {
             return createPercentageLayout(summary, graph);
         } else {
-            return createMultiView(bar, summary, graph);
+            return createMultiView(bar, summary, graph, contentView);
         }
 
     }
 
     protected View createMultiView(MainControlBar bar,
-                                   View summary, View graph) {
+                                   View summary, View graph,
+                                   ContentView contentView) {
 
         MultiView mv = new MultiView(this, SOLID_KEY);
         mv.add(summary);
@@ -126,6 +127,8 @@ public class GpxViewActivity extends ActivityContext
         mv.add(graph);
 
         bar.addMvNext(mv);
+
+        contentView.addMvIndicator(mv);
         return mv;
     }
 

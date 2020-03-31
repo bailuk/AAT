@@ -5,14 +5,17 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 
+import ch.bailu.aat.map.MapColor;
 import ch.bailu.aat.util.ui.AppLog;
+import ch.bailu.aat.util.ui.AppTheme;
 
 public class LogInfoMessageView extends MessageView {
     public LogInfoMessageView(Context context) {
         super(context, AppLog.LOG_INFO);
 
-        setTextColor(Color.WHITE);
-        setTypeface(null, Typeface.BOLD);
+        setBackgroundColor(MapColor.LIGHT);
+        setTextColor(Color.BLACK);
+        AppTheme.padding(this,10);
     }
 
     @Override

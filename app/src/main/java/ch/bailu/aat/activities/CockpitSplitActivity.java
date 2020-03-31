@@ -15,7 +15,6 @@ import ch.bailu.aat.description.MaximumSpeedDescription;
 import ch.bailu.aat.description.PredictiveTimeDescription;
 import ch.bailu.aat.description.SlopeDescription;
 import ch.bailu.aat.description.StepRateDescription;
-import ch.bailu.aat.description.TimeApDescription;
 import ch.bailu.aat.description.TotalStepsDescription;
 import ch.bailu.aat.dispatcher.CurrentLocationSource;
 import ch.bailu.aat.dispatcher.EditorSource;
@@ -35,7 +34,7 @@ import ch.bailu.aat.views.PercentageLayout;
 import ch.bailu.aat.views.bar.ControlBar;
 import ch.bailu.aat.views.bar.MainControlBar;
 import ch.bailu.aat.views.description.CockpitView;
-import ch.bailu.aat.views.description.MultiView;
+import ch.bailu.aat.views.description.mview.MultiView;
 import ch.bailu.aat.views.graph.DistanceAltitudeGraphView;
 import ch.bailu.aat.views.graph.DistanceSpeedGraphView;
 import ch.bailu.aat.views.graph.SpmGraphView;
@@ -116,6 +115,7 @@ public class CockpitSplitActivity extends AbsKeepScreenOnActivity {
 
         ContentView contentView = new ContentView(this, theme);
 
+        contentView.addMvIndicator(mv);
         contentView.add(
                 new PercentageLayout(this)
                         .add(mapMaster.toView(), 70)

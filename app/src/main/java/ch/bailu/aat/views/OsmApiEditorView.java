@@ -10,7 +10,7 @@ import android.widget.TextView;
 import ch.bailu.aat.util.OsmApiConfiguration;
 import ch.bailu.aat.util.ui.AppTheme;
 import ch.bailu.aat.util.ui.UiTheme;
-import ch.bailu.aat.views.description.MultiView;
+import ch.bailu.aat.views.description.mview.MultiView;
 import ch.bailu.aat.views.preferences.TitleView;
 import ch.bailu.aat.views.preferences.VerticalScrollView;
 
@@ -41,14 +41,15 @@ public class OsmApiEditorView extends LinearLayout {
         preview.setOnClickListener(view -> inputMultiView.setNext());
         preview.setText(osmApi.getUrlPreview(editor.edit.getText().toString()));
 
-        addView(createTitle(osmApi));
+        theme.content(preview);
+        addView(createTitle(osmApi, theme));
         addView(inputMultiView);
 
     }
 
 
 
-    private View createTitle(OsmApiConfiguration osmApi) {
+    private View createTitle(OsmApiConfiguration osmApi, UiTheme theme) {
         LinearLayout layout = new LinearLayout(getContext());
         layout.setOrientation(LinearLayout.HORIZONTAL);
 
@@ -68,8 +69,9 @@ public class OsmApiEditorView extends LinearLayout {
             c.setSingleLine();
             c.setEllipsize(TextUtils.TruncateAt.END);
 
-            a.setTextColor(Color.WHITE);
-            c.setTextColor(Color.WHITE);
+            theme.content(a);
+            theme.content(c);
+            b.setTextColor(theme.getHighlightColor());
 
             layout.addView(a);
             layout.addView(b);

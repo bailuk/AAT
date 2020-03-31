@@ -15,9 +15,10 @@ import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.map.MapFactory;
 import ch.bailu.aat.util.ui.AppLayout;
 import ch.bailu.aat.util.ui.AppTheme;
+import ch.bailu.aat.views.ContentView;
 import ch.bailu.aat.views.bar.MainControlBar;
 import ch.bailu.aat.views.PercentageLayout;
-import ch.bailu.aat.views.description.MultiView;
+import ch.bailu.aat.views.description.mview.MultiView;
 import ch.bailu.aat.views.graph.DistanceAltitudeGraphView;
 import ch.bailu.aat.views.preferences.VerticalScrollView;
 
@@ -33,7 +34,7 @@ public class GpxEditorActivity extends AbsFileContentActivity {
 
 
     @Override
-    protected ViewGroup createLayout(MainControlBar bar) {
+    protected ViewGroup createLayout(MainControlBar bar, ContentView contentView) {
         map = MapFactory.DEF(this, SOLID_KEY).editor(editorSource);
 
 
@@ -62,14 +63,14 @@ public class GpxEditorActivity extends AbsFileContentActivity {
         if (AppLayout.isTablet(this)) {
             return createPercentageLayout(summary, graph);
         } else {
-            return createMultiView(bar, summary, graph);
+            return createMultiView(bar, summary, graph, contentView);
         }
 
     }
 
 
     protected ViewGroup createMultiView(MainControlBar bar,
-                                   View summary, View graph) {
+                                   View summary, View graph, ContentView contentView) {
 
         MultiView mv = new MultiView(this, SOLID_KEY);
 
@@ -80,6 +81,7 @@ public class GpxEditorActivity extends AbsFileContentActivity {
         p.add(graph,40);
         mv.add(p);
         bar.addMvNext(mv);
+        contentView.addMvIndicator(mv);
         return mv;
     }
 

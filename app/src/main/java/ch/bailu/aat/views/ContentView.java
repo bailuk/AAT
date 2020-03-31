@@ -10,8 +10,9 @@ import java.util.ArrayList;
 import ch.bailu.aat.activities.ActivitySwitcher;
 import ch.bailu.aat.preferences.system.SolidStatusMessages;
 import ch.bailu.aat.util.ui.AppLog;
-import ch.bailu.aat.util.ui.AppTheme;
 import ch.bailu.aat.util.ui.UiTheme;
+import ch.bailu.aat.views.description.mview.MultiView;
+import ch.bailu.aat.views.description.mview.MultiViewIndicator;
 
 public class ContentView extends FrameLayout{
     private final LinearLayout mainContent;
@@ -59,7 +60,6 @@ public class ContentView extends FrameLayout{
     }
 
     public void add(View view) {
-
         mainContent.addView(view);
         messages.bringToFront();
     }
@@ -101,5 +101,9 @@ public class ContentView extends FrameLayout{
         }
 
         super.onDetachedFromWindow();
+    }
+
+    public void addMvIndicator(MultiView mv) {
+        messages.addView(new MultiViewIndicator(mv), 0);
     }
 }

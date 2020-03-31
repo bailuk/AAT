@@ -62,7 +62,6 @@ public abstract class AbsOsmApiActivity extends ActivityContext implements OnCli
 
         configuration = createApiConfiguration(AppIntent.getBoundingBox(getIntent()));
 
-
         setContentView(createContentView());
 
         addSource(new CustomFileSource(getServiceContext(), configuration.getResultFile().getPath()));
@@ -81,7 +80,7 @@ public abstract class AbsOsmApiActivity extends ActivityContext implements OnCli
         contentView.add(downloadErrorView());
         contentView.add(fileErrorView());
 
-        contentView.add(createMainContentView());
+        contentView.add(createMainContentView(contentView));
 
         addDownloadButton(bar);
         addCustomButtons(bar);
@@ -130,15 +129,15 @@ public abstract class AbsOsmApiActivity extends ActivityContext implements OnCli
     }
 
 
-    protected View createMainContentView() {
+    protected View createMainContentView(ContentView contentView) {
         PercentageLayout percentage = new PercentageLayout(this);
         percentage.add(createEditorView(), 20);
-        percentage.add(createNodeListView(), 80);
+        percentage.add(createNodeListView(contentView), 80);
 
         return percentage;
     }
 
-    protected View createNodeListView() {
+    protected View createNodeListView(ContentView contentView) {
         list = new NodeListView(getServiceContext(), this);
         return list;
     }

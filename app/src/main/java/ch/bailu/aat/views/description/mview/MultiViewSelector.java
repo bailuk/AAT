@@ -1,4 +1,4 @@
-package ch.bailu.aat.views;
+package ch.bailu.aat.views.description.mview;
 
 import android.view.Gravity;
 import android.widget.LinearLayout;
@@ -6,7 +6,6 @@ import android.widget.TextView;
 
 import ch.bailu.aat.menus.MultiViewMenu;
 import ch.bailu.aat.util.ui.AppTheme;
-import ch.bailu.aat.views.description.MultiView;
 
 public class MultiViewSelector extends LinearLayout {
     private final MultiView multiView;
@@ -30,10 +29,7 @@ public class MultiViewSelector extends LinearLayout {
         setOnClickListener(view -> new MultiViewMenu(multiView).showAsPopup(getContext(),
                 MultiViewSelector.this));
 
-
         multiView.addObserver(() -> label.setText(multiView.getLabel()));
-
-
     }
 
 

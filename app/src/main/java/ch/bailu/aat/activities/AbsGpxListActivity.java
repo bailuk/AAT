@@ -30,7 +30,7 @@ import ch.bailu.aat.views.ContentView;
 import ch.bailu.aat.views.GpxListView;
 import ch.bailu.aat.views.PercentageLayout;
 import ch.bailu.aat.views.bar.MainControlBar;
-import ch.bailu.aat.views.description.MultiView;
+import ch.bailu.aat.views.description.mview.MultiView;
 import ch.bailu.aat.views.preferences.TitleView;
 import ch.bailu.aat.views.preferences.VerticalScrollView;
 import ch.bailu.util_java.foc.Foc;
@@ -183,8 +183,10 @@ public abstract class AbsGpxListActivity extends ActivityContext implements OnIt
 
 
             MainControlBar bar = new MainControlBar(acontext);
+            View layout = createLayout(map, summary, bar);
+
             contentView.add(bar);
-            contentView.add(createLayout(map, summary, bar));
+            contentView.add(layout);
 
         }
 
@@ -208,6 +210,8 @@ public abstract class AbsGpxListActivity extends ActivityContext implements OnIt
             multiView.add(map.toView(), map_label);
             multiView.add(summary, summary_label + "/" + filter_label);
             bar.addAll(multiView);
+            contentView.addMvIndicator(multiView);
+
 
             return multiView;
         }

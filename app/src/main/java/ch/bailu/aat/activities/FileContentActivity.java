@@ -31,9 +31,10 @@ import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.map.MapFactory;
 import ch.bailu.aat.util.ui.AppLayout;
 import ch.bailu.aat.util.ui.AppTheme;
+import ch.bailu.aat.views.ContentView;
 import ch.bailu.aat.views.PercentageLayout;
 import ch.bailu.aat.views.bar.MainControlBar;
-import ch.bailu.aat.views.description.MultiView;
+import ch.bailu.aat.views.description.mview.MultiView;
 import ch.bailu.aat.views.graph.GraphViewFactory;
 import ch.bailu.aat.views.preferences.VerticalScrollView;
 
@@ -50,7 +51,7 @@ public class FileContentActivity extends AbsFileContentActivity{
     }
 
     @Override
-    protected ViewGroup createLayout(MainControlBar bar) {
+    protected ViewGroup createLayout(MainControlBar bar, ContentView contentView) {
         map = MapFactory.DEF(this, SOLID_KEY).content(editorSource);
 
         VerticalScrollView summary = new VerticalScrollView(this);
@@ -68,7 +69,7 @@ public class FileContentActivity extends AbsFileContentActivity{
         if (AppLayout.isTablet(this)) {
             return createPercentageLayout(summary, graph);
         } else {
-            return createMultiView(bar, summary, graph);
+            return createMultiView(bar, summary, graph, contentView);
         }
 
     }
@@ -123,7 +124,7 @@ public class FileContentActivity extends AbsFileContentActivity{
     }
 
     protected ViewGroup createMultiView(MainControlBar bar,
-                                   View summary, View graph) {
+                                   View summary, View graph, ContentView contentView) {
 
         MultiView mv = new MultiView(this, SOLID_KEY);
         mv.add(summary);
@@ -131,6 +132,8 @@ public class FileContentActivity extends AbsFileContentActivity{
         mv.add(graph);
 
         bar.addMvNext(mv);
+
+        contentView.addMvIndicator(mv);
         return mv;
     }
 

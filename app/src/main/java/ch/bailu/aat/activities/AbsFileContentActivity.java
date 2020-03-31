@@ -64,12 +64,15 @@ public abstract class AbsFileContentActivity extends ActivityContext implements 
         final ContentView contentView = new ContentView(this, theme);
 
         MainControlBar bar = new MainControlBar(this,5);
+
+        ViewGroup layout = createLayout(bar, contentView);
+
         contentView.add(bar);
 
         fileError = new ErrorView(this);
         contentView.add(fileError);
 
-        ViewGroup layout = createLayout(bar);
+
         busyControl = new BusyViewControlIID(contentView);
         busyControl.busy.setOrientation(BusyViewContainer.BOTTOM_RIGHT);
 
@@ -106,7 +109,7 @@ public abstract class AbsFileContentActivity extends ActivityContext implements 
     }
 
 
-    protected abstract ViewGroup createLayout(MainControlBar bar);
+    protected abstract ViewGroup createLayout(MainControlBar bar, ContentView contentView);
 
 
 

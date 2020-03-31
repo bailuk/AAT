@@ -13,7 +13,7 @@ import ch.bailu.aat.preferences.map.SolidMapTileStack;
 import ch.bailu.aat.preferences.map.SolidMapsForgeMapFile;
 import ch.bailu.aat.preferences.map.SolidOverlayFileList;
 import ch.bailu.aat.preferences.map.SolidRenderTheme;
-import ch.bailu.aat.views.description.MultiView;
+import ch.bailu.aat.views.description.mview.MultiView;
 import ch.bailu.aat.views.preferences.SolidCheckListDialog;
 import ch.bailu.aat.views.preferences.SolidStringDialog;
 

@@ -10,7 +10,7 @@ import ch.bailu.aat.util.ui.UiTheme;
 import ch.bailu.aat.views.ContentView;
 import ch.bailu.aat.views.html.HtmlScrollTextView;
 import ch.bailu.aat.views.bar.MainControlBar;
-import ch.bailu.aat.views.description.MultiView;
+import ch.bailu.aat.views.description.mview.MultiView;
 import ch.bailu.aat.views.html.LinkHandler;
 import ch.bailu.util_java.util.FUtil;
 
@@ -34,6 +34,7 @@ public class AboutActivity extends ActivityContext {
         MultiView multiView = createMultiView();
         ContentView contentView = new ContentView(this, theme);
 
+        contentView.addMvIndicator(multiView);
         contentView.add(createButtonBar(multiView));
         contentView.add(multiView);
 

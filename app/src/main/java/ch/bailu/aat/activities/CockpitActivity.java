@@ -24,7 +24,7 @@ import ch.bailu.aat.views.PercentageLayout;
 import ch.bailu.aat.views.bar.ControlBar;
 import ch.bailu.aat.views.bar.MainControlBar;
 import ch.bailu.aat.views.description.CockpitView;
-import ch.bailu.aat.views.description.MultiView;
+import ch.bailu.aat.views.description.mview.MultiView;
 import ch.bailu.aat.views.graph.GraphViewFactory;
 
 public class CockpitActivity extends AbsKeepScreenOnActivity {
@@ -41,6 +41,7 @@ public class CockpitActivity extends AbsKeepScreenOnActivity {
         ContentView contentView = new ContentView(this, theme);
         MultiView multiView = createMultiView(edit);
 
+        contentView.addMvIndicator(multiView);
         contentView.add(createButtonBar(multiView));
         contentView.add(multiView);
 
@@ -92,6 +93,7 @@ public class CockpitActivity extends AbsKeepScreenOnActivity {
 
         bar.addActivityCycle(this);
         bar.addMvNext(mv);
+
         if (AppLayout.haveExtraSpaceGps(this)) {
             bar.addGpsState(this);
         }
