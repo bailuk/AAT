@@ -6,8 +6,7 @@ import android.widget.TextView;
 
 public interface UiTheme {
 
-    float TEXT_SIZE = 18f;
-    int TT_COLOR = AppTheme.COLOR_BLUE;
+    float HEADER_TEXT_SIZE = 18f;
 
     void background(View v);
     void backgroundAlt(View v);

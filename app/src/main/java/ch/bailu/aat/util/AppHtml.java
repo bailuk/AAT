@@ -41,7 +41,7 @@ public class AppHtml {
                     code = output.length();
 
                 } else {
-                    output.setSpan(new BackgroundColorSpan(UiThemeLight.CODE_BG),
+                    output.setSpan(new BackgroundColorSpan(UiThemeLight.BG_CODE_LIGHT_GRAY),
                             code, output.length(),
                             Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 

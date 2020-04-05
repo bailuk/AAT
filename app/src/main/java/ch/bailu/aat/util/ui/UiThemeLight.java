@@ -8,55 +8,54 @@ import android.widget.TextView;
 
 public class UiThemeLight implements  UiTheme {
 
-    public final static int CODE_BG = 0xFFF3F3F3;
-
-    private final static int HIGHLIGHT = 0xFF136fd8;
-    private final static int TEXT = 0xFF24292e;
-    private final static int LINK = 0xFF428ce0;
-    private final static int BACKGROUND = Color.WHITE;
-    private final static int ALT_BACKGOUND=0xff8ca6ad;
-    private final static int BUTTON_PRESSED = 0x88136fd8;
-    private final static int BUTTON = 0x88f3f3f3;
+    public static final int BG_CODE_LIGHT_GRAY = 0xFFF3F3F3;
+    public static final int HL_BLUE = 0xFF136fd8;
+    public static final int TXT_DARK_GRAY = 0xFF24292e;
+    public static final int TXT_LINK_BLUE = 0xFF428ce0;
+    public static final int BG_LIGHT_BLUE = 0xff8ca6ad;
+    public static final int BUTTON_BLUE = 0x88136fd8;
+    public static final int BUTTON_LIGHT_GRAY = 0x88f3f3f3;
+    public static final int GRAPH_BG_DARK_GREEN = 0xff49575b;
 
 
     @Override
     public int getBackgroundColor() {
-        return BACKGROUND;
+        return Color.WHITE;
     }
 
     @Override
     public void background(View v) {
-        v.setBackgroundColor(BACKGROUND);
+        v.setBackgroundColor(getBackgroundColor());
     }
 
     @Override
     public void backgroundAlt(View v) {
-        v.setBackgroundColor(ALT_BACKGOUND);
+        v.setBackgroundColor(BG_LIGHT_BLUE);
     }
 
     @Override
     public void button(View v) {
-        v.setBackgroundDrawable(AppTheme.getButtonDrawable(BUTTON, BUTTON_PRESSED));
+        v.setBackgroundDrawable(AppTheme.getButtonDrawable(BUTTON_LIGHT_GRAY, BUTTON_BLUE));
     }
 
     @Override
     public void topic(TextView v) {
-        v.setTextColor(TEXT);
-        v.setTextSize(TEXT_SIZE*1.5f);
+        v.setTextColor(TXT_DARK_GRAY);
+        v.setTextSize(HEADER_TEXT_SIZE *1.5f);
         v.setTypeface(null, Typeface.BOLD);
     }
 
     @Override
     public void header(TextView v) {
-        v.setTextColor(TEXT);
-        v.setTextSize(TEXT_SIZE);
+        v.setTextColor(TXT_DARK_GRAY);
+        v.setTextSize(HEADER_TEXT_SIZE);
         v.setTypeface(null, Typeface.BOLD);
     }
 
     @Override
     public void content(TextView v) {
-        v.setTextColor(TEXT);
-        v.setLinkTextColor(LINK);
+        v.setTextColor(TXT_DARK_GRAY);
+        v.setLinkTextColor(TXT_LINK_BLUE);
 
     }
 
@@ -67,14 +66,11 @@ public class UiThemeLight implements  UiTheme {
 
     @Override
     public void toolTip(TextView v) {
-        v.setTextColor(HIGHLIGHT);
+        v.setTextColor(HL_BLUE);
     }
 
     @Override
     public void list(ListView l) {
-//      int height = l.getDividerHeight();
-//      l.setDivider(new ColorDrawable(HIGHLIGHT));
-//      l.setDividerHeight(height);
         l.setDividerHeight(0);
         l.setSelector(android.R.color.transparent);
     }
@@ -82,12 +78,12 @@ public class UiThemeLight implements  UiTheme {
 
     @Override
     public int getHighlightColor() {
-        return HIGHLIGHT;
+        return HL_BLUE;
     }
 
     @Override
     public int getGraphBackgroundColor() {
-        return 0xff49575b;
+        return GRAPH_BG_DARK_GREEN;
     }
 
     @Override

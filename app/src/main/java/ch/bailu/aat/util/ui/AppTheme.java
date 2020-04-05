@@ -13,8 +13,6 @@ public class AppTheme {
     public static final int COLOR_ORANGE=Color.rgb(0xff, 0x66, 0x00);
     public static final int COLOR_GREEN=Color.rgb(0xcc,0xff,0x00);
     public static final int COLOR_BLUE=Color.rgb(0x00,0xd8,0xff);
-//    public static final int COLOR_BLUEGRAY=Color.rgb(44, 45, 63);
-
 
     /**
      *  0xAARRGGBB
@@ -23,7 +21,6 @@ public class AppTheme {
      *  G = Green
      *  B = Blue
      */
-
     public static final int[] OVERLAY_COLOR = {
             0xffff939f,
             0xffff94fd,
@@ -36,17 +33,35 @@ public class AppTheme {
             0x99fcff3f,
     };
 
+    
+    // light & dark
 
     public static final UiTheme bar = new UiThemeDark();
     public static final UiTheme cockpit = new UiThemeDark();
     public static final UiTheme preferences = new UiThemeLightOrange();
     public static final UiTheme intro = new UiThemeLightOrange();
-    public static final UiTheme alt = new UiThemeDark();
     public static final UiTheme doc = new UiThemeLightOrange();
     public static final UiTheme search = new UiThemeLightOrange();
     public static final UiTheme trackList = new UiThemeLightOrange();
     public static final UiTheme trackContent = new UiThemeLightOrange();
     public static final UiTheme filter = new UiThemeLightHeader();
+    public static final UiTheme alt = new UiThemeDark();
+
+
+
+    // dark classic
+    /*
+    public static final UiTheme bar = new UiThemeDark();
+    public static final UiTheme cockpit = new UiThemeDark();
+    public static final UiTheme preferences = new UiThemeDark();
+    public static final UiTheme intro = new UiThemeDark();
+    public static final UiTheme doc = new UiThemeLightOrange();
+    public static final UiTheme search = new UiThemeDark();
+    public static final UiTheme trackList = new UiThemeDark();
+    public static final UiTheme trackContent = new UiThemeDark();
+    public static final UiTheme filter = new UiThemeDark2();
+    public static final UiTheme alt = new UiThemeDark2();
+   */
 
     public static void padding(View view) {
         padding(view, 15);
