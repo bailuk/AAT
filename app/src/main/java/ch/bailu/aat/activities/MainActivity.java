@@ -278,5 +278,4 @@ public class MainActivity extends ActivityContext {
             }
         }
     }
-
 }

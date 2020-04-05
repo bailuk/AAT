@@ -25,7 +25,7 @@ public class ControlBar extends LinearLayout {
 
     private OnClickListener listener1, listener2;
 
-    private final UiTheme theme;
+    protected final UiTheme theme;
 
     public ControlBar(Context context, int orientation, UiTheme theme) {
         this(context, orientation, AppLayout.DEFAULT_VISIBLE_BUTTON_COUNT, theme);

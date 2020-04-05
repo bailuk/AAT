@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import ch.bailu.aat.R;
-import ch.bailu.aat.activities.AbsVolumeKeys;
+import ch.bailu.aat.activities.AbsHardwareButtons;
 import ch.bailu.aat.dispatcher.DispatcherInterface;
 import ch.bailu.aat.dispatcher.OnContentUpdatedInterface;
 import ch.bailu.aat.gpx.GpxInformation;
@@ -129,7 +129,7 @@ public final class NavigationBarLayer extends ControlBarLayer implements OnConte
 
     }
 
-    private class VolumeView extends ViewGroup implements AbsVolumeKeys.OnVolumePressed {
+    private class VolumeView extends ViewGroup implements AbsHardwareButtons.OnHardwareButtonPressed {
 
         public VolumeView(Context context) {
             super(context);
@@ -141,15 +141,15 @@ public final class NavigationBarLayer extends ControlBarLayer implements OnConte
         }
 
         @Override
-        public boolean onVolumePressed(int code, AbsVolumeKeys.EventType type) {
+        public boolean onHardwareButtonPressed(int code, AbsHardwareButtons.EventType type) {
             if (mcontext.getMapView().toView().getVisibility()==VISIBLE) {
                 if (code == KeyEvent.KEYCODE_VOLUME_UP) {
-                    if (type == AbsVolumeKeys.EventType.DOWN) mcontext.getMapView().zoomIn();
+                    if (type == AbsHardwareButtons.EventType.DOWN) mcontext.getMapView().zoomIn();
                     return true;
                 }
 
                 if (code == KeyEvent.KEYCODE_VOLUME_DOWN) {
-                    if (type == AbsVolumeKeys.EventType.DOWN) mcontext.getMapView().zoomOut();
+                    if (type == AbsHardwareButtons.EventType.DOWN) mcontext.getMapView().zoomOut();
                     return true;
                 }
             }

@@ -15,6 +15,7 @@ import ch.bailu.aat.util.ui.AppLayout;
 import ch.bailu.aat.util.ui.AppTheme;
 import ch.bailu.aat.views.MessageView;
 import ch.bailu.aat.views.description.mview.MultiViewIndicator;
+import ch.bailu.aat.views.description.mview.MultiViewNextButton;
 import ch.bailu.aat.views.description.mview.MultiViewSelector;
 import ch.bailu.aat.views.ImageButtonViewGroup;
 import ch.bailu.aat.views.description.GPSStateButton;
@@ -74,7 +75,7 @@ public class MainControlBar extends ControlBar {
 
 
     public void addMvNext(final MultiView mv, int size) {
-        addImageButton(R.drawable.go_next_inverse, size).setOnClickListener(v -> mv.setNext());
+        add(new MultiViewNextButton(mv, theme), size);
     }
 
 
