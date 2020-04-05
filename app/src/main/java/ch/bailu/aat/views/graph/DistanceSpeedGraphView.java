@@ -36,8 +36,8 @@ public class DistanceSpeedGraphView extends AbsGraphView implements SharedPrefer
 
     private void setLabelText(Context context) {
         ylabel.setText(Color.WHITE, R.string.speed, sunit.getSpeedUnit());
-        ylabel.setText(AppTheme.COLOR_BLUE, new AverageSpeedDescriptionAP(context).getLabel());
-        ylabel.setText(AppTheme.COLOR_GREEN, new AverageSpeedDescription(context).getLabel());
+        ylabel.setText(AppTheme.HL_BLUE, new AverageSpeedDescriptionAP(context).getLabel());
+        ylabel.setText(AppTheme.HL_GREEN, new AverageSpeedDescription(context).getLabel());
     }
 
 
@@ -153,7 +153,7 @@ public class DistanceSpeedGraphView extends AbsGraphView implements SharedPrefer
         private void plotAverage() {
             if (window.getTimeDelta() > 0) {
                 float avg=window.getSpeed();
-                plotter[0].plotData(totalDistance, avg, AppTheme.COLOR_ORANGE);
+                plotter[0].plotData(totalDistance, avg, AppTheme.HL_ORANGE);
             }
         }
 
@@ -163,10 +163,10 @@ public class DistanceSpeedGraphView extends AbsGraphView implements SharedPrefer
 
             if (timeDelta > 0) {
                 float avg = totalDistance / totalTime * 1000;
-                plotter[1].plotData(totalDistance, avg, AppTheme.COLOR_GREEN);
+                plotter[1].plotData(totalDistance, avg, AppTheme.HL_GREEN);
 
                 float avgAp=totalDistance/timeDelta * 1000;
-                plotter[2].plotData(totalDistance, avgAp, AppTheme.COLOR_BLUE);
+                plotter[2].plotData(totalDistance, avgAp, AppTheme.HL_BLUE);
 
             }
         }
@@ -182,7 +182,7 @@ public class DistanceSpeedGraphView extends AbsGraphView implements SharedPrefer
         public boolean doList(GpxList track) {
             window = new GpxDistanceWindow(track);
 
-            ylabel.setText(AppTheme.COLOR_ORANGE,
+            ylabel.setText(AppTheme.HL_ORANGE,
                     window.getLimitAsString(getContext()));
             return true;
         }

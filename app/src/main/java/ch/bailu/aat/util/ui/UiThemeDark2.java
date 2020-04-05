@@ -19,7 +19,7 @@ public class UiThemeDark2 extends UiThemeDark {
 
     @Override
     public void header(TextView v) {
-        v.setTextColor(AppTheme.COLOR_BLUE);
+        v.setTextColor(AppTheme.HL_BLUE);
         v.setTextSize(HEADER_TEXT_SIZE);
     }
 }

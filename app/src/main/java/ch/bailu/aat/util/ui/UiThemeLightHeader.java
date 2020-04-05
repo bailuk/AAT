@@ -12,21 +12,21 @@ public class UiThemeLightHeader  extends UiThemeLight {
 
     @Override
     public void topic(TextView v) {
-        v.setTextColor(AppTheme.COLOR_ORANGE);
+        v.setTextColor(AppTheme.HL_ORANGE);
         v.setTextSize(HEADER_TEXT_SIZE *1.5f);
         v.setTypeface(null, Typeface.BOLD);
     }
 
     @Override
     public void header(TextView v) {
-        v.setTextColor(AppTheme.COLOR_ORANGE);
+        v.setTextColor(AppTheme.HL_ORANGE);
         v.setTextSize(HEADER_TEXT_SIZE);
         v.setTypeface(null, Typeface.BOLD);
     }
 
     @Override
     public int getHighlightColor() {
-        return AppTheme.COLOR_ORANGE;
+        return AppTheme.HL_ORANGE;
     }
 
 

@@ -8,6 +8,6 @@ public class UiThemeLightOrange extends UiThemeLight {
 
     @Override
     public void button(View v) {
-        v.setBackgroundDrawable(AppTheme.getButtonDrawable(BUTTON_LIGHT_GRAY, AppTheme.COLOR_ORANGE));
+        v.setBackgroundDrawable(AppTheme.getButtonDrawable(BUTTON_LIGHT_GRAY, AppTheme.HL_ORANGE));
     }
 }

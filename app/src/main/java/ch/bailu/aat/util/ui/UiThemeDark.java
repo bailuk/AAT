@@ -18,7 +18,7 @@ public class UiThemeDark implements UiTheme {
 
     @Override
     public int getHighlightColor () {
-        return AppTheme.COLOR_ORANGE;
+        return AppTheme.HL_ORANGE;
     }
 
     @Override
@@ -40,7 +40,7 @@ public class UiThemeDark implements UiTheme {
     @Override
     public void list(ListView l) {
         int height = l.getDividerHeight();
-        l.setDivider(new ColorDrawable(AppTheme.COLOR_ORANGE));
+        l.setDivider(new ColorDrawable(AppTheme.HL_ORANGE));
         l.setDividerHeight(height);
         l.setSelector(android.R.color.transparent);
     }
@@ -52,13 +52,13 @@ public class UiThemeDark implements UiTheme {
 
     @Override
     public void button(View v) {
-        v.setBackgroundDrawable(AppTheme.getButtonDrawable(0, AppTheme.COLOR_ORANGE));
+        v.setBackgroundDrawable(AppTheme.getButtonDrawable(0, AppTheme.HL_ORANGE));
     }
 
 
     @Override
     public void topic(TextView v) {
-        v.setTextColor(AppTheme.COLOR_ORANGE);
+        v.setTextColor(AppTheme.HL_ORANGE);
         v.setTextSize(HEADER_TEXT_SIZE);
     }
 
@@ -71,12 +71,12 @@ public class UiThemeDark implements UiTheme {
     @Override
     public void content(TextView v) {
         v.setTextColor(Color.LTGRAY);
-        v.setLinkTextColor(AppTheme.COLOR_ORANGE);
+        v.setLinkTextColor(AppTheme.HL_ORANGE);
     }
 
     @Override
     public void toolTip(TextView v) {
-        v.setTextColor(AppTheme.COLOR_BLUE);
+        v.setTextColor(AppTheme.HL_BLUE);
     }
 
 

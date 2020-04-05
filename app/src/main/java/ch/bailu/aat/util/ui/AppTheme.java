@@ -1,18 +1,16 @@
 package ch.bailu.aat.util.ui;
 
-import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.StateListDrawable;
 import android.util.StateSet;
 import android.view.View;
-import android.widget.ListView;
 
 public class AppTheme {
 
-    public static final int COLOR_ORANGE=Color.rgb(0xff, 0x66, 0x00);
-    public static final int COLOR_GREEN=Color.rgb(0xcc,0xff,0x00);
-    public static final int COLOR_BLUE=Color.rgb(0x00,0xd8,0xff);
+    public static final int HL_ORANGE = 0xffff6600;
+    public static final int HL_GREEN = 0xffccff00;
+    public static final int HL_BLUE = 0xff00d8ff;
 
     /**
      *  0xAARRGGBB
@@ -33,7 +31,7 @@ public class AppTheme {
             0x99fcff3f,
     };
 
-    
+
     // light & dark
 
     public static final UiTheme bar = new UiThemeDark();

@@ -20,20 +20,20 @@ import ch.bailu.aat.util.ui.UiTheme;
 public class SpmGraphView extends AbsGraphView {
 
     final Entry[] entries = {
-            new Entry(AppTheme.COLOR_BLUE,
+            new Entry(AppTheme.HL_BLUE,
                     HeartRateDescription.LABEL,
                     HeartRateDescription.UNIT,
                     SampleRate.HeartRate.INDEX_MAX_HR,
                     SampleRate.HeartRate.GPX_KEYS),
 
-            new Entry(AppTheme.COLOR_GREEN,
+            new Entry(AppTheme.HL_GREEN,
                     CadenceDescription.LABEL,
                     CadenceDescription.UNIT,
                     SampleRate.Cadence.INDEX_MAX_CADENCE,
                     SampleRate.Cadence.GPX_KEYS),
 
 
-            new Entry(AppTheme.COLOR_ORANGE,
+            new Entry(AppTheme.HL_ORANGE,
                     StepRateDescription.LABEL,
                     StepRateDescription.UNIT,
                     SampleRate.StepsRate.INDEX_MAX_SPM,

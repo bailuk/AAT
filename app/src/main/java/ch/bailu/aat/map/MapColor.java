@@ -69,14 +69,14 @@ public final class MapColor {
         }
 
         if (iid == InfoID.EDITOR_DRAFT)
-            return AppTheme.COLOR_GREEN;
+            return AppTheme.HL_GREEN;
 
         if (iid == InfoID.EDITOR_OVERLAY)
             return Color.MAGENTA; //AppTheme.getHighlightColor3();
 
 
         if (iid == InfoID.FILEVIEW)
-            return AppTheme.COLOR_BLUE;
+            return AppTheme.HL_BLUE;
 
 
 
