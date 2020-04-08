@@ -8,14 +8,13 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 public class UiThemeDarkGray extends UiThemeDark {
-    @Override
-    public int getBackgroundColor() {
-        return Color.GRAY;
+    public UiThemeDarkGray(int hl_color) {
+        super(hl_color);
     }
 
     @Override
-    public int getHighlightColor () {
-        return AppTheme.HL_GREEN;
+    public int getBackgroundColor() {
+        return Color.GRAY;
     }
 
     @Override

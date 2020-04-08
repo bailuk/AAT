@@ -20,7 +20,7 @@ public class MultiViewSelector extends LinearLayout {
         label.setText(mv.getLabel());
         label.setSingleLine();
 
-        AppTheme.bar.topic(label);
+        AppTheme.bar.header(label);
         AppTheme.bar.button(this);
         addView(label);
 

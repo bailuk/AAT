@@ -33,22 +33,23 @@ public class AppTheme {
 
 
     // light & dark
-/*
-    public static final UiTheme bar = new UiThemeDark();
-    public static final UiTheme cockpit = new UiThemeDark();
-    public static final UiTheme preferences = new UiThemeLightOrange();
-    public static final UiTheme intro = new UiThemeLightOrange();
-    public static final UiTheme doc = new UiThemeLightOrange();
-    public static final UiTheme search = new UiThemeLightOrange();
-    public static final UiTheme trackList = new UiThemeLightOrange();
-    public static final UiTheme trackContent = new UiThemeLightOrange();
-    public static final UiTheme filter = new UiThemeLightHeader();
-    public static final UiTheme alt = new UiThemeDark();
-*/
+    private static final int hl_color = AppTheme.HL_ORANGE;
+    public static final UiTheme bar = new UiThemeDark(hl_color);
+    public static final UiTheme cockpit = new UiThemeDark(hl_color);
+    public static final UiTheme preferences = new UiThemeLightOrange(hl_color);
+    public static final UiTheme intro = new UiThemeLightOrange(hl_color);
+    public static final UiTheme doc = new UiThemeLightOrange(hl_color);
+    public static final UiTheme search = new UiThemeLightOrange(hl_color);
+    public static final UiTheme trackList = new UiThemeLightOrange(hl_color);
+    public static final UiTheme trackContent = new UiThemeLightOrange(hl_color);
+    public static final UiTheme filter = new UiThemeLightHeader(UiThemeLight.HL_BLUE);
+    public static final UiTheme alt = new UiThemeDark(hl_color);
+
 
     // gray & green
-    public static final UiTheme bar = new UiThemeDarkGray();
-    public static final UiTheme cockpit = new UiThemeLightGray();
+    /*
+    public static final UiTheme bar = new UiThemeDarkGray(AppTheme.HL_GREEN);
+    public static final UiTheme cockpit = new UiThemeDarkGray(AppTheme.HL_GREEN);
     public static final UiTheme preferences = new UiThemeLightGray();
     public static final UiTheme intro = new UiThemeLightGray();
     public static final UiTheme doc = new UiThemeLightGray();
@@ -56,8 +57,8 @@ public class AppTheme {
     public static final UiTheme trackList = new UiThemeLightGray();
     public static final UiTheme trackContent = new UiThemeLightGray();
     public static final UiTheme filter = new UiThemeLightGrayBlue();
-    public static final UiTheme alt = new UiThemeDarkGray();
-
+    public static final UiTheme alt = new UiThemeDarkGray(AppTheme.HL_GREEN);
+*/
 
     // light & blue
     /*

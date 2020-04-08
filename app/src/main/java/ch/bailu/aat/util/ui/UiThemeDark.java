@@ -8,6 +8,15 @@ import android.widget.TextView;
 
 public class UiThemeDark implements UiTheme {
 
+
+    private final int hl_color;
+
+
+    public UiThemeDark(int hl_color) {
+        this.hl_color = hl_color;
+    }
+
+
     @Override
     public int getBackgroundColor() {
         return Color.BLACK;
@@ -16,7 +25,7 @@ public class UiThemeDark implements UiTheme {
 
     @Override
     public int getHighlightColor () {
-        return AppTheme.HL_ORANGE;
+        return hl_color;
     }
 
     @Override
@@ -38,7 +47,7 @@ public class UiThemeDark implements UiTheme {
     @Override
     public void list(ListView l) {
         int height = l.getDividerHeight();
-        l.setDivider(new ColorDrawable(AppTheme.HL_ORANGE));
+        l.setDivider(new ColorDrawable(hl_color));
         l.setDividerHeight(height);
         l.setSelector(android.R.color.transparent);
     }
@@ -50,13 +59,13 @@ public class UiThemeDark implements UiTheme {
 
     @Override
     public void button(View v) {
-        v.setBackgroundDrawable(AppTheme.getButtonDrawable(0, AppTheme.HL_ORANGE));
+        v.setBackgroundDrawable(AppTheme.getButtonDrawable(0, hl_color));
     }
 
 
     @Override
     public void topic(TextView v) {
-        v.setTextColor(AppTheme.HL_ORANGE);
+        v.setTextColor(hl_color);
         v.setTextSize(HEADER_TEXT_SIZE);
     }
 
@@ -69,7 +78,7 @@ public class UiThemeDark implements UiTheme {
     @Override
     public void content(TextView v) {
         v.setTextColor(Color.LTGRAY);
-        v.setLinkTextColor(AppTheme.HL_ORANGE);
+        v.setLinkTextColor(hl_color);
     }
 
     @Override

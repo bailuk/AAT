@@ -5,6 +5,10 @@ import android.widget.TextView;
 
 public class UiThemeDark2 extends UiThemeDark {
 
+    public UiThemeDark2(int hl_color) {
+        super(hl_color);
+    }
+
     @Override
     public int getBackgroundColor() {
         return Color.DKGRAY;
