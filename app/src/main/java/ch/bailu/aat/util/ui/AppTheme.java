@@ -33,7 +33,7 @@ public class AppTheme {
 
 
     // light & dark
-
+/*
     public static final UiTheme bar = new UiThemeDark();
     public static final UiTheme cockpit = new UiThemeDark();
     public static final UiTheme preferences = new UiThemeLightOrange();
@@ -44,9 +44,34 @@ public class AppTheme {
     public static final UiTheme trackContent = new UiThemeLightOrange();
     public static final UiTheme filter = new UiThemeLightHeader();
     public static final UiTheme alt = new UiThemeDark();
+*/
+
+    // gray & green
+    public static final UiTheme bar = new UiThemeDarkGray();
+    public static final UiTheme cockpit = new UiThemeLightGray();
+    public static final UiTheme preferences = new UiThemeLightGray();
+    public static final UiTheme intro = new UiThemeLightGray();
+    public static final UiTheme doc = new UiThemeLightGray();
+    public static final UiTheme search = new UiThemeLightGray();
+    public static final UiTheme trackList = new UiThemeLightGray();
+    public static final UiTheme trackContent = new UiThemeLightGray();
+    public static final UiTheme filter = new UiThemeLightGrayBlue();
+    public static final UiTheme alt = new UiThemeDarkGray();
 
 
-
+    // light & blue
+    /*
+    public static final UiTheme bar = new UiThemeLight();
+    public static final UiTheme cockpit = new UiThemeLight();
+    public static final UiTheme preferences = new UiThemeLight();
+    public static final UiTheme intro = new UiThemeLight();
+    public static final UiTheme doc = new UiThemeLight();
+    public static final UiTheme search = new UiThemeLight();
+    public static final UiTheme trackList = new UiThemeLight();
+    public static final UiTheme trackContent = new UiThemeLight();
+    public static final UiTheme filter = new UiThemeLight();
+    public static final UiTheme alt = new UiThemeLight();
+    */
     // dark classic
     /*
     public static final UiTheme bar = new UiThemeDark();

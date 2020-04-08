@@ -6,21 +6,18 @@ import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
 
-public class UiThemeLight implements  UiTheme {
+public class UiThemeLightGray implements  UiTheme {
 
-    public static final int BG_CODE_LIGHT_GRAY = 0xFFF3F3F3;
-    public static final int HL_BLUE = 0xFF136fd8;
-    public static final int TXT_DARK_GRAY = 0xFF24292e;
-    public static final int TXT_LINK_BLUE = 0xFF428ce0;
-    public static final int BG_LIGHT_BLUE = 0xff8ca6ad;
-    public static final int BUTTON_BLUE = 0x88136fd8;
-    public static final int BUTTON_LIGHT_GRAY = 0x88f3f3f3;
+    public static final int DARK_TEXT = 0xFF24292e;
+    public static final int LIGHT_GRAY = 0xFFf3f3f3;
+    public static final int DARKER_GRAY = 0xFFdedede;
     public static final int GRAPH_BG_DARK_GREEN = 0xff49575b;
+    public static final int BLUE_TEXT = 0xFF3C3B6E;
 
 
     @Override
     public int getBackgroundColor() {
-        return Color.WHITE;
+        return DARKER_GRAY;
     }
 
     @Override
@@ -30,33 +27,32 @@ public class UiThemeLight implements  UiTheme {
 
     @Override
     public void backgroundAlt(View v) {
-        v.setBackgroundColor(BG_LIGHT_BLUE);
+        v.setBackgroundColor(Color.DKGRAY);
     }
 
     @Override
     public void button(View v) {
-        v.setBackgroundDrawable(AppTheme.getButtonDrawable(BUTTON_LIGHT_GRAY, BUTTON_BLUE));
+        v.setBackgroundDrawable(AppTheme.getButtonDrawable(LIGHT_GRAY, AppTheme.HL_GREEN));
     }
 
     @Override
     public void topic(TextView v) {
-        //v.setTextColor(TXT_DARK_GRAY);
-        v.setTextColor(HL_BLUE);
+        v.setTextColor(DARK_TEXT);
         v.setTextSize(HEADER_TEXT_SIZE *1.5f);
         v.setTypeface(null, Typeface.BOLD);
     }
 
     @Override
     public void header(TextView v) {
-        v.setTextColor(TXT_DARK_GRAY);
+        v.setTextColor(DARK_TEXT);
         v.setTextSize(HEADER_TEXT_SIZE);
         v.setTypeface(null, Typeface.BOLD);
     }
 
     @Override
     public void content(TextView v) {
-        v.setTextColor(TXT_DARK_GRAY);
-        v.setLinkTextColor(TXT_LINK_BLUE);
+        v.setTextColor(DARK_TEXT);
+        v.setLinkTextColor(BLUE_TEXT);
 
     }
 
@@ -67,7 +63,7 @@ public class UiThemeLight implements  UiTheme {
 
     @Override
     public void toolTip(TextView v) {
-        v.setTextColor(HL_BLUE);
+        v.setTextColor(BLUE_TEXT);
     }
 
     @Override
@@ -79,7 +75,7 @@ public class UiThemeLight implements  UiTheme {
 
     @Override
     public int getHighlightColor() {
-        return HL_BLUE;
+        return AppTheme.HL_GREEN;
     }
 
     @Override

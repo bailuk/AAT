@@ -1,22 +1,21 @@
 package ch.bailu.aat.util.ui;
 
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
 
-public class UiThemeDark implements UiTheme {
-
+public class UiThemeDarkGray extends UiThemeDark {
     @Override
     public int getBackgroundColor() {
-        return Color.BLACK;
-
+        return Color.GRAY;
     }
 
     @Override
     public int getHighlightColor () {
-        return AppTheme.HL_ORANGE;
+        return AppTheme.HL_GREEN;
     }
 
     @Override
@@ -34,42 +33,43 @@ public class UiThemeDark implements UiTheme {
         return Color.LTGRAY;
     }
 
-
     @Override
     public void list(ListView l) {
         int height = l.getDividerHeight();
-        l.setDivider(new ColorDrawable(AppTheme.HL_ORANGE));
+        l.setDivider(new ColorDrawable(getBackgroundColor()));
         l.setDividerHeight(height);
         l.setSelector(android.R.color.transparent);
     }
 
     @Override
     public void background(View v) {
-        v.setBackgroundColor(Color.BLACK);
+        v.setBackgroundColor(getBackgroundColor());
     }
 
     @Override
     public void button(View v) {
-        v.setBackgroundDrawable(AppTheme.getButtonDrawable(0, AppTheme.HL_ORANGE));
+        v.setBackgroundDrawable(AppTheme.getButtonDrawable(0, getHighlightColor()));
     }
 
 
     @Override
     public void topic(TextView v) {
-        v.setTextColor(AppTheme.HL_ORANGE);
-        v.setTextSize(HEADER_TEXT_SIZE);
+        v.setTextColor(Color.WHITE);
+        v.setTextSize(HEADER_TEXT_SIZE *1.5f);
+        v.setTypeface(null, Typeface.BOLD);
     }
 
     @Override
     public void header(TextView v) {
         v.setTextColor(Color.WHITE);
         v.setTextSize(HEADER_TEXT_SIZE);
+        v.setTypeface(null, Typeface.BOLD);
     }
 
     @Override
     public void content(TextView v) {
-        v.setTextColor(Color.LTGRAY);
-        v.setLinkTextColor(AppTheme.HL_ORANGE);
+        v.setTextColor(Color.WHITE);
+        v.setLinkTextColor(getHighlightColor());
     }
 
     @Override
@@ -77,12 +77,10 @@ public class UiThemeDark implements UiTheme {
         v.setTextColor(AppTheme.HL_BLUE);
     }
 
-
     @Override
     public void backgroundAlt(View v) {
         v.setBackgroundColor(Color.DKGRAY);
     }
-
 
     @Override
     public void contentAlt(TextView v) {

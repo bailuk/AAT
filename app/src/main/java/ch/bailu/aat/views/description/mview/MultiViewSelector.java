@@ -31,8 +31,4 @@ public class MultiViewSelector extends LinearLayout {
 
         multiView.addObserver(() -> label.setText(multiView.getLabel()));
     }
-
-
-
-
 }
