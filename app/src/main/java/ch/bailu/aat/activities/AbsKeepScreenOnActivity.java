@@ -13,7 +13,7 @@ public abstract class AbsKeepScreenOnActivity extends ActivityContext {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        backlight = new Backlight(getWindow(), getServiceContext());
+        backlight = new Backlight(this, getServiceContext());
 
         addTarget(backlight, InfoID.TRACKER);
     }

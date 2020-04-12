@@ -12,7 +12,6 @@ import ch.bailu.aat.description.HeartRateDescription;
 import ch.bailu.aat.dispatcher.DispatcherInterface;
 import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.preferences.location.SolidProvideAltitude;
-import ch.bailu.aat.util.ui.AppTheme;
 import ch.bailu.aat.util.ui.UiTheme;
 
 

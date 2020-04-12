@@ -1,8 +1,12 @@
 package ch.bailu.aat.util.ui;
 
+import android.app.Activity;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.view.Window;
 import android.view.WindowManager;
+
+import androidx.annotation.RequiresApi;
 
 import java.io.Closeable;
 
@@ -18,8 +22,8 @@ public class Backlight implements OnContentUpdatedInterface,
         SharedPreferences.OnSharedPreferenceChangeListener, Closeable {
 
     private final ServiceContext scontext;
+    private final Activity activity;
     private final Window window;
-
 
     private final SolidPreset spreset;
     private SolidBacklight sbacklight;
@@ -27,15 +31,15 @@ public class Backlight implements OnContentUpdatedInterface,
     private int state = StateID.OFF;
 
 
-    public Backlight(Window w, ServiceContext sc) {
+    public Backlight(Activity a, ServiceContext sc) {
         scontext = sc;
-        window = w;
+        activity = a;
+        window = a.getWindow();
+
         spreset = new SolidPreset(sc.getContext());
         sbacklight = setToPreset();
 
         spreset.register(this);
-
-
     }
 
 
@@ -74,14 +78,16 @@ public class Backlight implements OnContentUpdatedInterface,
 
 
     private int getPresetIndex() {
-        final int[] presetIndex = new int[1];
+        final int[] result = new int[1];
+        result[0] = 0;
+
         new InsideContext(scontext) {
             @Override
             public void run() {
-                presetIndex[0] = scontext.getTrackerService().getPresetIndex();
+                result[0] = scontext.getTrackerService().getPresetIndex();
             }
         };
-        return presetIndex[0];
+        return result[0];
     }
 
 
@@ -93,22 +99,59 @@ public class Backlight implements OnContentUpdatedInterface,
         }
     }
 
-    private void keepOn() {
-        window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-        setKeyGuard();
+
+    private void autoOff() {
+        keepScreenOn(false);
+        dismissKeyGuard(false);
     }
 
-    private void setKeyGuard() {
-        if (sbacklight.dismissKeyGuard())
+
+    private void keepOn() {
+        keepScreenOn(true);
+        dismissKeyGuard(sbacklight.dismissKeyGuard());
+    }
+
+
+    private void dismissKeyGuard(boolean dismiss) {
+        if (Build.VERSION.SDK_INT >= 27) {
+            dismissKeyGuardSDK27(dismiss);
+        } else if (Build.VERSION.SDK_INT >= 26) {
+            dismissKeyGuardSDK26(dismiss);
+        } else {
+            dismissKeyGuardSDK1(dismiss);
+        }
+    }
+
+
+    @RequiresApi(api = 27)
+    private void dismissKeyGuardSDK27(boolean dismiss) {
+        activity.setShowWhenLocked(dismiss);
+    }
+
+
+    @RequiresApi(api = 26)
+    private void dismissKeyGuardSDK26(boolean dismiss) {
+        if (dismiss)
+            window.addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED);
+        else
+            window.clearFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED);
+    }
+
+
+    private void dismissKeyGuardSDK1(boolean dismiss) {
+        if (dismiss)
             window.addFlags(WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD);
         else
             window.clearFlags(WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD);
     }
 
 
-    private void autoOff() {
-        window.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-        window.clearFlags(WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD);
+    private void keepScreenOn(boolean keepOn) {
+        if (keepOn) {
+            window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        } else {
+            window.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        }
     }
 
 
