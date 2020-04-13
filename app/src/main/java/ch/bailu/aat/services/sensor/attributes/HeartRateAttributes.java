@@ -24,10 +24,12 @@ public class HeartRateAttributes extends GpxAttributes {
             "Foot"
     };
 
+    private static final int BPM_MIN = 30;
+    private static final int BPM_MAX = 300;
+    private int bpm = 0;
+
     public boolean haveSensorContact = false;
 
-    public int bpm = 0;
-    //public int bpmAverage = 0;
 
     public int rrIntervall = 0;
 
@@ -43,6 +45,18 @@ public class HeartRateAttributes extends GpxAttributes {
     }
 
 
+    public void setBpm(int bpm) {
+        if (bpm > BPM_MIN && bpm < BPM_MAX) {
+            this.bpm = bpm;
+        } else {
+            this.bpm = 0;
+        }
+    }
+
+
+    public boolean haveBpm() {
+        return bpm > 0;
+    }
 
     @Override
     public String get(int keyIndex) {

@@ -137,11 +137,11 @@ public final class HeartRateService extends HeartRateServiceID implements Servic
             offset += 1;
 
             if (bpmUint16) {
-                bpm = c.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT16, offset);
+                setBpm(c.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT16, offset));
                 offset += 2;
 
             } else {
-                bpm = c.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT8, offset);
+                setBpm(c.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT8, offset));
                 offset += 1;
 
             }
@@ -154,15 +154,15 @@ public final class HeartRateService extends HeartRateServiceID implements Servic
 
                 rrIntervall = c.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT16, offset);
 
-                if (bpm == 0 && rrIntervall > 0) {
-                    bpm = Math.round (MINUTE / (float)rrIntervall);
+                if (!haveBpm() && rrIntervall > 0) {
+                    setBpm(Math.round (MINUTE / (float)rrIntervall));
                 }
             }
 
 
 
 
-            if (bpm > 0) {
+            if (haveBpm()) {
                 if (!haveSensorContactStatus) haveSensorContact = true;
                 broadcaster.broadcast();
 

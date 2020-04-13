@@ -4,6 +4,7 @@ import android.content.Context;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorManager;
+
 import androidx.annotation.RequiresApi;
 
 import ch.bailu.aat.gpx.GpxInformation;
@@ -17,27 +18,33 @@ import ch.bailu.aat.services.sensor.list.SensorList;
 public final class HeartRateSensor extends InternalSensorSDK23 {
 
     private boolean contact = false;
-    private int bpm = 0;
 
+    private final HeartRateAttributes attributes;
     private GpxInformation information;
 
     private final Broadcaster broadcaster;
 
+
     public HeartRateSensor(Context c, SensorList list, Sensor sensor) {
         super(c, list, sensor, InfoID.HEART_RATE_SENSOR);
+
+
         broadcaster = new Broadcaster(c, InfoID.HEART_RATE_SENSOR);
 
-        information = factoryInformation();
+        attributes = new HeartRateAttributes();
+        information = new SensorInformation(attributes);
     }
 
 
     @Override
     public void onSensorChanged(SensorEvent event) {
         contact = toContact(event);
-        bpm = toBpm(event);
-        information = factoryInformation();
 
-        if (bpm > 0) {
+        attributes.setBpm(toBpm(event));
+        attributes.haveSensorContact = toContact(event);
+        information = new SensorInformation(attributes);
+
+        if (attributes.haveBpm()) {
             broadcaster.broadcast();
 
         } else if (contact == false) {
@@ -71,17 +78,6 @@ public final class HeartRateSensor extends InternalSensorSDK23 {
 
     }
 
-    private GpxInformation factoryInformation() {
-        final HeartRateAttributes attributes = new HeartRateAttributes();
-
-        attributes.bpm = bpm;
-        attributes.haveSensorContact = contact;
-
-        return new SensorInformation(attributes);
-    }
-
-
-
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
         contact = toContact(accuracy);
@@ -95,5 +91,4 @@ public final class HeartRateSensor extends InternalSensorSDK23 {
             return information;
         return null;
     }
-
 }
