@@ -9,7 +9,9 @@ import java.util.ArrayList;
 
 public class PercentageLayout  extends ViewGroup {
 
-    private final static int SPACE=2;
+    private final static int DEFAULT_SPACE=2;
+
+    private final int space;
 
     private static class Entry {
 
@@ -35,7 +37,12 @@ public class PercentageLayout  extends ViewGroup {
     private int orientation= LinearLayout.VERTICAL;
 
     public PercentageLayout(Context context) {
+        this(context, DEFAULT_SPACE);
+    }
+
+    public PercentageLayout(Context context, int space) {
         super(context);
+        this.space = space;
     }
 
     public void setOrientation(int o) {
@@ -152,7 +159,7 @@ public class PercentageLayout  extends ViewGroup {
                     e.view.layout(l, t + s, r, b);
 
                     t += view_height;
-                    s = SPACE;
+                    s = space;
                 }
             }
         }
@@ -179,7 +186,7 @@ public class PercentageLayout  extends ViewGroup {
                     e.view.layout(l + s, t, r, b);
 
                     l += view_width;
-                    s = SPACE;
+                    s = space;
                 }
             }
         }
