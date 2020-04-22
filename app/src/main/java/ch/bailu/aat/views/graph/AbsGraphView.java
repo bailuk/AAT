@@ -88,7 +88,10 @@ public abstract class AbsGraphView extends ViewGroup implements OnContentUpdated
         wSpec  = MeasureSpec.makeMeasureSpec (width,  MeasureSpec.EXACTLY);
         hSpec  = MeasureSpec.makeMeasureSpec (height,  MeasureSpec.EXACTLY);
 
+
         xlabel.measure(wSpec, hSpec);
+
+        ylabel.setTextSizeFromHeight(height);
         ylabel.measure(wSpec, hSpec);
         setMeasuredDimension(width, height);
     }
