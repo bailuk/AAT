@@ -35,8 +35,6 @@ public class NumberView extends ViewGroup implements OnContentUpdatedInterface {
         this.theme = theme;
 
         number = createLabel();
-        number.setIncludeFontPadding(false);
-
         theme.header(number);
 
         number.setTypeface(Typeface.create((String) null, Typeface.BOLD));
@@ -80,6 +78,8 @@ public class NumberView extends ViewGroup implements OnContentUpdatedInterface {
     private TextView createLabel() {
         TextView view = new TextView(getContext());
 
+        view.setPadding(0,0,0,0);
+        view.setIncludeFontPadding(false);
         addView(view);
         return view;
 
@@ -89,42 +89,84 @@ public class NumberView extends ViewGroup implements OnContentUpdatedInterface {
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
         if (changed) {
-            int height=(b-t);
-            int width=(r-l);
-
-            int margin=height/10;
-
-            l=t=0; b=height; r=width;
-
-
-
-            final float textSizeLimit = height /4f;
-            final float textSize = Math.min(defaultTextSize, textSizeLimit);
-
-            setTextSize(label, textSize);
-            setTextSize(unit, textSize);
-
-
-            label.measure(width,height);
-            label.layout(l, t+margin, r, label.getMeasuredHeight()+margin);
-            height-=label.getMeasuredHeight();
-
-            unit.measure(width,height);
-            unit.layout(l, b-unit.getMeasuredHeight()-margin, r, b-margin);
-            height-=unit.getMeasuredHeight();
-
-            height -= margin*2;
-            setTextSize(number, height);
-
-            number.measure(width, height);
-            number.layout(l, label.getMeasuredHeight()+margin, r, b-unit.getMeasuredHeight()-margin);
+            new Layouter(l,t,r,b).layout();
         }
     }
 
 
-    private static void setTextSize(TextView v, float s) {
-        if (s > 0) {
-            v.setTextSize(TypedValue.COMPLEX_UNIT_PX, s);
+
+    private class Layouter {
+        final int width,height;
+
+        final int labelHeight;
+        final int margin;
+
+
+        public Layouter(int l, int t, int r, int b) {
+            this(r - l, b - t);
+        }
+
+        public Layouter(int w, int h) {
+            this.width = w;
+            this.height = h;
+
+            int margin = height / 10;
+
+            int labelHeight = toHeight(defaultTextSize);
+            int numberHeight = height - labelHeight - labelHeight - margin*2;
+
+            if (numberHeight < labelHeight) {
+                numberHeight = height - labelHeight - labelHeight;
+                margin = 0;
+            }
+
+            if (numberHeight < labelHeight) {
+                numberHeight = toHeight(defaultTextSize);
+                labelHeight = (height - numberHeight) / 2;
+            }
+
+            this.labelHeight = labelHeight;
+            this.margin = margin;
+
+            setTextSize(label,  toTextSize(labelHeight));
+            setTextSize(unit,   toTextSize(labelHeight));
+            setTextSize(number, toTextSize(numberHeight));
+        }
+
+        final static float X = 5f;
+
+        private float toTextSize(int height) {
+            float h = height;
+            return (X*h) / (X+1) ;
+        }
+
+        private int toHeight(float textSize) {
+            return Math.round((textSize+(textSize / X)));
+        }
+
+        private void setTextSize(TextView v, float s) {
+            if (s > 0) {
+                v.setTextSize(TypedValue.COMPLEX_UNIT_PX, s);
+            }
+        }
+
+        public void layout() {
+            int l = 0, t = 0;
+            int b = height, r = width;
+            int height = this.height;
+
+            label.measure(width, height);
+            label.layout(l, t + margin, r, (label.getMeasuredHeight() + margin));
+            height -= label.getMeasuredHeight();
+
+            unit.measure(width, height);
+            unit.layout(l, b - unit.getMeasuredHeight() - margin, r, b - margin);
+            height -= unit.getMeasuredHeight();
+
+            height -= margin * 2;
+
+            number.measure(width, height);
+            number.layout(l, label.getMeasuredHeight() + margin, r, b - unit.getMeasuredHeight() - margin);
         }
     }
 
