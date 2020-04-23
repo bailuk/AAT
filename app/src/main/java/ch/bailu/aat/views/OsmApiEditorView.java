@@ -1,7 +1,6 @@
 package ch.bailu.aat.views;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -46,7 +45,6 @@ public class OsmApiEditorView extends LinearLayout {
         addView(inputMultiView);
 
     }
-
 
 
     private View createTitle(OsmApiConfiguration osmApi, UiTheme theme) {

@@ -22,6 +22,4 @@ public class NominatimActivity extends AbsOsmApiActivity {
         bar.addSpace();
     }
 
-
-
 }

@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.LinearLayout;
 
 import ch.bailu.aat.R;
 import ch.bailu.aat.coordinates.BoundingBoxE6;
@@ -33,12 +34,12 @@ public abstract class AbsOsmApiActivity extends ActivityContext implements OnCli
 
 
     private ImageButtonViewGroup download;
-    private BusyViewControl downloadBusy;
+    private BusyViewControl      downloadBusy;
 
-    private View               fileMenu;
+    private View                 fileMenu;
 
-    private NodeListView       list;
-    private OsmApiConfiguration configuration;
+    private NodeListView         list;
+    private OsmApiConfiguration  configuration;
 
     protected OsmApiEditorView   editorView;
 
@@ -130,11 +131,11 @@ public abstract class AbsOsmApiActivity extends ActivityContext implements OnCli
 
 
     protected View createMainContentView(ContentView contentView) {
-        PercentageLayout percentage = new PercentageLayout(this);
-        percentage.add(createEditorView(), 20);
-        percentage.add(createNodeListView(contentView), 80);
-
-        return percentage;
+        LinearLayout layout = new LinearLayout(this);
+        layout.setOrientation(LinearLayout.VERTICAL);
+        layout.addView(createEditorView());
+        layout.addView(createNodeListView(contentView));
+        return layout;
     }
 
     protected View createNodeListView(ContentView contentView) {

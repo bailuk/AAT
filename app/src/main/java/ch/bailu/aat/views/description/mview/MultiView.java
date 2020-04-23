@@ -1,7 +1,6 @@
 package ch.bailu.aat.views.description.mview;
 
 import android.content.Context;
-import android.util.SparseArray;
 import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +10,6 @@ import org.mapsforge.map.model.common.Observer;
 
 import java.util.ArrayList;
 
-import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.preferences.Storage;
 
 
@@ -129,20 +127,40 @@ public class MultiView extends ViewGroup implements ObservableInterface{
 
     @Override
     protected void onMeasure(int wSpec, int hSpec) {
+        onMeasureBiggestWins(wSpec, hSpec);
+    }
+
+
+    private void onMeasureAsBigAsPossible(int wSpec, int hSpec) {
         int width = MeasureSpec.getSize(wSpec);
         int height = MeasureSpec.getSize(hSpec);
 
-
-        // As big as possible
         wSpec  = MeasureSpec.makeMeasureSpec (width,  MeasureSpec.EXACTLY);
         hSpec  = MeasureSpec.makeMeasureSpec (height,  MeasureSpec.EXACTLY);
 
-        //int width=0,height=0;
         for (Page p : pages) {
             p.view.measure(wSpec, hSpec);
         }
         setMeasuredDimension(width, height);
     }
+
+
+    private void onMeasureBiggestWins(int wSpec, int hSpec) {
+        int width = MeasureSpec.getSize(wSpec);
+        int height = MeasureSpec.getSize(hSpec);
+        int p_width=0, p_height=0;
+
+        for (Page p : pages) {
+            p.view.measure(wSpec, hSpec);
+            p_width  = Math.max(p_width,  p.view.getMeasuredWidth());
+            p_height = Math.max(p_height, p.view.getMeasuredHeight());
+        }
+
+        width = Math.min(width, p_width);
+        height = Math.min(height, p_height);
+        setMeasuredDimension(width, height);
+    }
+
 
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
