@@ -86,7 +86,7 @@ public class SpmGraphView extends AbsGraphView {
         }
 
 
-        entries[0].getPlotter().drawXScale(5, sunit.getDistanceFactor());
+        entries[0].getPlotter().drawXScale(5, sunit.getDistanceFactor(), isXLabelVisible());
     }
 
 

@@ -62,14 +62,13 @@ public class DistanceAltitudeGraphView extends AbsGraphView {
             new IndexPainter(plotter, index).walkTrack(list);
         }
 
-        plotter.drawXScale(5, sunit.getDistanceFactor());
+        plotter.drawXScale(5, sunit.getDistanceFactor(), isXLabelVisible());
         plotter.drawYScale(5, sunit.getAltitudeFactor(), true);
 
 
 
 
     }
-
 
 
     private class ScaleGenerator extends GpxListWalker {

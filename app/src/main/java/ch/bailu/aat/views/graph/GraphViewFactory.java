@@ -15,8 +15,8 @@ public class GraphViewFactory  {
 
     public static PercentageLayout all(Context c, DispatcherInterface di, UiTheme theme, int... iid) {
         return new PercentageLayout(c,0).
-                add(new DistanceAltitudeGraphView(c, di, theme, iid).disableXLabel(), 33).
-                add(new DistanceSpeedGraphView(c, di , theme, iid).disableXLabel(), 33).
+                add(new DistanceAltitudeGraphView(c, di, theme, iid).hideXLabel(), 33).
+                add(new DistanceSpeedGraphView(c, di , theme, iid).hideXLabel(), 33).
                 add(new SpmGraphView(c, di, theme, iid), 33);
     }
 }

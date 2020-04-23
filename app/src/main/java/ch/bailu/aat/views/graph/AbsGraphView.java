@@ -74,9 +74,13 @@ public abstract class AbsGraphView extends ViewGroup implements OnContentUpdated
         ylabel.layout(0,0, r-l, b-t);
     }
 
-    public AbsGraphView disableXLabel() {
+    public AbsGraphView hideXLabel() {
         xlabel.setVisibility(GONE);
         return this;
+    }
+
+    public boolean isXLabelVisible() {
+        return xlabel.getVisibility() == VISIBLE;
     }
 
     @Override

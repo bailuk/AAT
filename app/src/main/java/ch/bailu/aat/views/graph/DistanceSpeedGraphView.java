@@ -65,7 +65,7 @@ public class DistanceSpeedGraphView extends AbsGraphView implements SharedPrefer
 
         new GraphPainter(plotter, meter_pixel).walkTrack(list);
 
-        plotter[0].drawXScale(5, sunit.getDistanceFactor());
+        plotter[0].drawXScale(5, sunit.getDistanceFactor(), isXLabelVisible());
         plotter[0].drawYScale(5, sunit.getSpeedFactor(), false);
 
     }

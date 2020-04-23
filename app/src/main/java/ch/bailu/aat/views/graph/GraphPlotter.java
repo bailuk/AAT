@@ -112,7 +112,7 @@ public class GraphPlotter {
 
 
 
-    public void drawXScale(int lines, float factor) {
+    public void drawXScale(int lines, float factor, boolean drawText) {
         lines = Math.min(width / (text_size*4), lines);
         lines = Math.max(1, lines);
 
@@ -120,17 +120,17 @@ public class GraphPlotter {
         space = Math.max(1, space);
 
         for (float x=0; x <= xscaler.getReal(); x+=space) {
-            drawVerticalLine(x, factor);
+            drawVerticalLine(x, factor, drawText);
         }
 
     }
 
-    private void drawVerticalLine(float value, float factor) {
+    private void drawVerticalLine(float value, float factor, boolean drawText) {
         int pixel = (int)xscaler.scale(value);
 
         drawScaleLine(pixel, 0 , pixel, height);
 
-        if (pixel > text_size) {
+        if (drawText && pixel > text_size) {
             String text = String.valueOf((int) (value * factor));
             drawScaleText(pixel-text_size, height, text);
         }
