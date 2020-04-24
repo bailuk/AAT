@@ -95,7 +95,7 @@ public class SolidRenderTheme extends SolidFile {
 
         ArrayList<Foc> dirs = new SolidMapsForgeDirectory(getContext()).getWellKnownMapDirs();
         for (Foc dir: dirs) {
-            add_ext(list, maps, EXTENSION);
+            add_ext(list, dir, EXTENSION);
             add_extInSubdirectories(list, dir, EXTENSION);
         }
 
