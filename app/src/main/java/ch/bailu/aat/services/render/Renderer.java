@@ -15,12 +15,12 @@ import org.mapsforge.map.layer.renderer.MapWorkerPool;
 import org.mapsforge.map.layer.renderer.RendererJob;
 import org.mapsforge.map.model.Model;
 import org.mapsforge.map.reader.MapFile;
+import org.mapsforge.map.reader.header.MapFileException;
 import org.mapsforge.map.rendertheme.XmlRenderTheme;
 import org.mapsforge.map.rendertheme.rule.RenderThemeFuture;
 
 import java.util.ArrayList;
 
-import ch.bailu.aat.util.ui.AppLog;
 import ch.bailu.util_java.foc.Foc;
 
 public final class Renderer extends Layer {
@@ -38,55 +38,83 @@ public final class Renderer extends Layer {
 
 
 
-    public Renderer(XmlRenderTheme t, TileCache cache, ArrayList<Foc> files) {
-        final Model model = new Model();
+    public Renderer(XmlRenderTheme t, TileCache cache, ArrayList<Foc> files) throws Exception {
+        try {
+            final Model model = new Model();
+
+            displayModel = model.displayModel;
+            jobQueue = new JobQueue<>(model.mapViewPosition, model.displayModel);
+
+            renderThemeFuture = createTheme(t);
+            mapDataStore = createMapDataStore(files);
+
+            final DatabaseRenderer databaseRenderer = new DatabaseRenderer(
+                    mapDataStore,
+                    AndroidGraphicFactory.INSTANCE,
+                    cache,
+                    null,
+                    RENDER_LABELS,
+                    CACHE_LABELS, null);
+
+            mapWorkerPool = new MapWorkerPool(
+                    cache,
+                    jobQueue,
+                    databaseRenderer,
+                    this);
 
 
-        displayModel=model.displayModel;
-        jobQueue = new JobQueue<>(model.mapViewPosition, model.displayModel);
+            mapWorkerPool.start();
+        } catch (Exception e) {
+            destroy();
+            throw e;
+        }
+    }
 
-        renderThemeFuture = createTheme(t);
 
-        if (files.size() == 1) {
-            mapDataStore = new MapFile(files.get(0).toString());
 
+
+    private MapDataStore createMapDataStore(ArrayList<Foc> files) throws Exception {
+        MapDataStore result;
+        ArrayList<MapFile> mapFiles = createMapFiles(files);
+
+        if (mapFiles.size()==1) {
+            result = mapFiles.get(0);
         } else {
-            MultiMapDataStore store = new MultiMapDataStore(MultiMapDataStore.DataPolicy.RETURN_ALL);
-
-            for (Foc f : files) {
-                try {
-                    // TODO: Translate FocContent to unix file
-
-                    store.addMapDataStore(new MapFile(f.toString()), true, true);
-                } catch (Exception e) {
-                    AppLog.w(this, e);
-                }
-            }
-
-            mapDataStore = store;
+            result = createMultiMapDataStore(mapFiles);
         }
 
-
-        final  DatabaseRenderer databaseRenderer = new DatabaseRenderer(
-                mapDataStore,
-                AndroidGraphicFactory.INSTANCE,
-                cache,
-                null,
-                RENDER_LABELS,
-                CACHE_LABELS, null);
-
-
-
-        mapWorkerPool = new MapWorkerPool(
-                cache,
-                jobQueue,
-                databaseRenderer,
-                this);
-
-
-
-        mapWorkerPool.start();
+        return result;
     }
+
+
+    private MapDataStore createMultiMapDataStore(ArrayList<MapFile> mapFiles) {
+        MultiMapDataStore result = new MultiMapDataStore(MultiMapDataStore.DataPolicy.RETURN_ALL);
+        for (MapFile mapFile : mapFiles) {
+            result.addMapDataStore(mapFile, true, true);
+        }
+        return result;
+    }
+
+
+    private ArrayList<MapFile> createMapFiles(ArrayList<Foc> files) throws Exception {
+        Exception exception = new MapFileException("No file specified");
+
+        ArrayList<MapFile> result = new ArrayList<>(files.size());
+
+        for (Foc file : files) {
+            try {
+                result.add(new MapFile(file.toString()));
+            } catch (Exception e) {
+                exception = e;
+            }
+        }
+        if (result.size() == 0) {
+            throw exception;
+        }
+
+        return result;
+    }
+
 
 
     private static RenderThemeFuture createTheme(XmlRenderTheme t) {
@@ -98,10 +126,19 @@ public final class Renderer extends Layer {
         return theme;
     }
 
+
     public void destroy() {
-        mapWorkerPool.stop();
-        mapDataStore.close();
-        renderThemeFuture.decrementRefCount();
+        if (mapWorkerPool != null) {
+            mapWorkerPool.stop();
+        }
+
+        if (mapDataStore != null) {
+            mapDataStore.close();
+        }
+
+        if (renderThemeFuture != null) {
+            renderThemeFuture.decrementRefCount();
+        }
     }
 
 

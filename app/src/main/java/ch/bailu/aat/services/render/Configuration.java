@@ -23,9 +23,15 @@ public final class Configuration {
 
 
     public void configure(Foc mapDir, Caches caches, XmlRenderTheme theme, String tID) {
+
         if (isConfigured() == false && configureMapList(mapDir)) {
             themeID = tID;
-            renderer = new Renderer(theme, caches.get(themeID), mapFiles);
+
+            try {
+                renderer = new Renderer(theme, caches.get(themeID), mapFiles);
+            } catch (Exception e) {
+                renderer = null;
+            }
         }
     }
 
