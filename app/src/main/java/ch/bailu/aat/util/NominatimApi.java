@@ -76,7 +76,7 @@ public abstract class NominatimApi extends DownloadApi {
         url.setLength(0);
         url.append(URL);
         url.append(URLEncoder.encode(query.replace('\n', ' '), "UTF-8"));
-        url.append(URLEncoder.encode(POST, "UTF-8"));
+        url.append(POST);
         url.append(bounding);
         return url.toString();
     }

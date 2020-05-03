@@ -62,14 +62,19 @@ public abstract class DownloadApi extends OsmApiConfiguration {
                 try {
                     BackgroundService background = scontext.getBackgroundService();
 
+
+
                     final String query = getQueryString();
+                    final String url = getUrl(query);
+
                     task = new ApiQueryTask(
                             scontext.getContext(),
-                            getUrl(query),
+                            url,
                             getResultFile(),
                             query,
                             getQueryFile());
                     background.process(task);
+
                 } catch (UnsupportedEncodingException e) {
                     e.printStackTrace();
                 }

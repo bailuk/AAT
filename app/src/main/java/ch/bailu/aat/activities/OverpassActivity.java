@@ -7,6 +7,7 @@ import ch.bailu.aat.coordinates.BoundingBoxE6;
 import ch.bailu.aat.util.OsmApiConfiguration;
 import ch.bailu.aat.util.OverpassApi;
 import ch.bailu.aat.util.ui.AppLayout;
+import ch.bailu.aat.util.ui.AppLog;
 import ch.bailu.aat.views.ContentView;
 import ch.bailu.aat.views.PercentageLayout;
 import ch.bailu.aat.views.bar.MainControlBar;

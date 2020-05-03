@@ -7,7 +7,6 @@ import android.content.Intent;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.util.AppBroadcaster;
-import ch.bailu.aat.util.ui.AppLog;
 
 public class SensorSource extends ContentSource {
     private final ServiceContext scontext;
@@ -22,7 +21,6 @@ public class SensorSource extends ContentSource {
     private final BroadcastReceiver onSensorUpdated = new BroadcastReceiver () {
         @Override
         public void onReceive(Context context, Intent intent) {
-            AppLog.d(SensorSource.this, "onSensorUpdated()");
             sendUpdate(getIID(), getInfo());
         }
 

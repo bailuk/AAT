@@ -57,7 +57,6 @@ public class CH1903Coordinates extends MeterCoordinates {
 
         for (String p : parts) {
             try {
-                AppLog.d(this, p);
                 final double d = Double.parseDouble(p.trim());
                 final int i;
 

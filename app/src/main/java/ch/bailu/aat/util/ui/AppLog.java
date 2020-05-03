@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Looper;
 
 import java.io.Closeable;
+import java.util.regex.Pattern;
 
 import ch.bailu.aat.BuildConfig;
 import ch.bailu.aat.R;
@@ -132,7 +133,24 @@ public class AppLog implements Closeable {
 
 
     public static void d(Object o, String m) {
-    	d(o.getClass().getSimpleName(), m);
+    	d(className(o), m);
+    }
+
+    private static String className(Object o) {
+        String result = o.getClass().getSimpleName();
+        if (result.length() == 0)
+                result =  classNameInnerClass(o);
+        return result;
+    }
+
+    private static String classNameInnerClass(Object o) {
+        String result = o.getClass().getName();
+
+        if (result.contains(".")) {
+            String[] parts = result.split(Pattern.quote("."));
+            result = parts[parts.length - 1];
+        }
+        return result;
     }
 
     public static void d(String a, String b) {

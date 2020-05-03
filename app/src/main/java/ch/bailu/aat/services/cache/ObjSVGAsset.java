@@ -8,7 +8,6 @@ import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.background.BackgroundTask;
 import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.util.graphic.SyncTileBitmap;
-import ch.bailu.aat.util.ui.AppLog;
 
 public final class ObjSVGAsset extends ObjImageAbstract {
 
@@ -21,9 +20,6 @@ public final class ObjSVGAsset extends ObjImageAbstract {
         super(id);
         this.name = name;
         this.size = size;
-
-        AppLog.d(this, name + " s: " + size);
-
     }
 
 
