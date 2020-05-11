@@ -4,8 +4,6 @@ import android.content.SharedPreferences;
 import android.view.View;
 
 import ch.bailu.aat.R;
-import ch.bailu.aat.activities.ActivitySwitcher;
-import ch.bailu.aat.activities.PoiActivity;
 import ch.bailu.aat.dispatcher.DispatcherInterface;
 import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.map.MapContext;
@@ -22,7 +20,7 @@ import ch.bailu.aat.views.bar.ControlBar;
 
 public final class InformationBarLayer extends ControlBarLayer {
 
-    private final ImageButtonViewGroup map, search, location, poi;
+    private final ImageButtonViewGroup map, search, location;
 
     private final AbsNodeViewLayer selector;
     private final MapContext mcontext;
@@ -46,7 +44,6 @@ public final class InformationBarLayer extends ControlBarLayer {
         View legend=bar.addSolidIndexButton(slegend);
 
         search = bar.addImageButton(R.drawable.edit_find);
-        poi = bar.addImageButton(R.drawable.go_bottom);
         location = bar.addImageButton(R.drawable.find_location);
 
         selector = new NodeViewLayer(cl);
@@ -70,11 +67,6 @@ public final class InformationBarLayer extends ControlBarLayer {
 
         } else if (v==search) {
             new MapQueryMenu(mcontext).showAsPopup(mcontext.getContext(), v);
-
-        } else if (v == poi) {
-            ActivitySwitcher.start(mcontext.getContext(),
-                    PoiActivity.class,
-                    mcontext.getMetrics().getBoundingBox());
 
         } else if (v==location) {
             new LocationMenu(mcontext.getMapView()).showAsPopup(mcontext.getContext(), location);
