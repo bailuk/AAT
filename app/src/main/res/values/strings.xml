@@ -7,7 +7,8 @@
     <!-- Keep structure intact when translating! -->
         <!-- Static -->
         <!-- General -->
-        <!-- GPS / Tracker-->
+        <!-- GPS / Tracker -->
+        <!-- Sensors -->
         <!-- Activity main -->
         <!-- Activity file list -->
         <!-- Activity OSM API Query -->
@@ -54,6 +55,14 @@
 
     <string name="status_paused">Paused</string>
     <string name="status_autopaused">A-Paused</string>
+
+
+    <!-- Sensors -->
+    <string name="sensor_heart_rate">Heart Rate</string>
+    <string name="sensor_cadence">Cadence</string>
+    <string name="sensor_speed">Speed</string>
+    <string name="sensor_barometer">Barometer</string>
+    <string name="sensor_step_counter">Step Counter</string>
 
 
     <!-- Activity main -->
@@ -178,6 +187,7 @@
     <string name="p_mapsforge_theme">Offline maps theme</string>
     <string name="p_enable_cache">Enable cache</string>
     <string name="p_directory_tiles">Tile cache directory</string>
+    <string name="p_use_volume_keys">"Use volume buttons for map zoom"</string>
 
 
     <!-- Preferences Map trim tiles -->

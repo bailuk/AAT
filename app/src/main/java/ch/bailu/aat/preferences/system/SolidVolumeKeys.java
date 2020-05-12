@@ -2,8 +2,8 @@ package ch.bailu.aat.preferences.system;
 
 import android.content.Context;
 
+import ch.bailu.aat.R;
 import ch.bailu.aat.preferences.SolidBoolean;
-import ch.bailu.aat.util.ToDo;
 
 public class SolidVolumeKeys extends SolidBoolean {
 
@@ -15,7 +15,7 @@ public class SolidVolumeKeys extends SolidBoolean {
 
     @Override
     public String getLabel() {
-        return ToDo.translate("Use volume buttons for map zoom.");
+        return getString(R.string.p_use_volume_keys);
     }
 }
 
