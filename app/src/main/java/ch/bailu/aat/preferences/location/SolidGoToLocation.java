@@ -4,6 +4,7 @@ import android.content.Context;
 
 import org.mapsforge.core.model.LatLong;
 
+import ch.bailu.aat.R;
 import ch.bailu.aat.coordinates.CH1903Coordinates;
 import ch.bailu.aat.coordinates.Coordinates;
 import ch.bailu.aat.coordinates.OlcCoordinates;
@@ -11,7 +12,6 @@ import ch.bailu.aat.coordinates.WGS84Coordinates;
 import ch.bailu.aat.exception.ValidationException;
 import ch.bailu.aat.map.MapViewInterface;
 import ch.bailu.aat.preferences.SolidString;
-import ch.bailu.aat.util.ToDo;
 import ch.bailu.aat.util.ui.AppLog;
 import ch.bailu.aat.views.preferences.SolidTextInputDialog;
 
@@ -27,7 +27,7 @@ public class SolidGoToLocation extends SolidString {
 
     @Override
     public String getLabel() {
-        return ToDo.translate("Center map at location (WGS84 decimal or Open Location Code)");
+        return getString(R.string.p_goto_location);
     }
 
 
@@ -84,8 +84,7 @@ public class SolidGoToLocation extends SolidString {
 
 
         if (! validate(s)) {
-            throw new ValidationException(ToDo.translate(
-                    "Supports WGS84 decimal, CH1903 and Open Location Code (Plus Code)"));
+            throw new ValidationException(getString(R.string.p_goto_location_hint));
         } else {
             setValue(s);
         }

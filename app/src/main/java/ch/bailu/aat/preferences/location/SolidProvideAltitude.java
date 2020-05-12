@@ -3,10 +3,10 @@ package ch.bailu.aat.preferences.location;
 import android.content.Context;
 import android.view.View;
 
+import ch.bailu.aat.R;
 import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.preferences.general.SolidUnit;
 import ch.bailu.aat.services.sensor.list.SensorState;
-import ch.bailu.aat.util.ToDo;
 import ch.bailu.aat.views.preferences.SolidTextInputDialog;
 
 public class SolidProvideAltitude extends SolidAltitude {
@@ -26,7 +26,7 @@ public class SolidProvideAltitude extends SolidAltitude {
 
     @Override
     public String getLabel() {
-        return addUnit(ToDo.translate("Set altitude"));
+        return addUnit(getString(R.string.p_set_altitude));
     }
 
 

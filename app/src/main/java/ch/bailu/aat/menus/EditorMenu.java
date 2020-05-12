@@ -6,14 +6,14 @@ import android.graphics.drawable.Drawable;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import ch.bailu.aat.R;
 import ch.bailu.aat.gpx.interfaces.GpxType;
 import ch.bailu.aat.preferences.map.SolidOverlayFileList;
 import ch.bailu.aat.services.InsideContext;
 import ch.bailu.aat.services.ServiceContext;
-import ch.bailu.aat.services.cache.ObjGpx;
 import ch.bailu.aat.services.cache.Obj;
+import ch.bailu.aat.services.cache.ObjGpx;
 import ch.bailu.aat.services.editor.EditorInterface;
-import ch.bailu.aat.util.ToDo;
 import ch.bailu.aat.util.fs.AppDirectory;
 import ch.bailu.aat.util.ui.AppSelectDirectoryDialog;
 import ch.bailu.aat.views.preferences.AbsSelectOverlayDialog;
@@ -38,18 +38,19 @@ public final class EditorMenu extends AbsMenu {
 
     @Override
     public void inflate(Menu menu) {
-        save = menu.add(ToDo.translate("Save"));
-        saveCopy = menu.add(ToDo.translate("Save copy"));
-        saveCopyTo = menu.add(ToDo.translate("Save copy to"));
-        inverse = menu.add(ToDo.translate("Inverse"));
-        changeType = menu.add(ToDo.translate("Set GPX type"));
-        simplify = menu.add(ToDo.translate("Simplify"));
-        attach = menu.add(ToDo.translate("Attach file"));
-        fix = menu.add(ToDo.translate("Fix"));
-        clearAll = menu.add(ToDo.translate("Clear all"));
-        cutRemaining = menu.add(ToDo.translate("Cut remaining"));
-        cutPreceding = menu.add(ToDo.translate("Cut preceding"));
+        save = menu.add(R.string.edit_save);
+        saveCopy = menu.add(R.string.edit_save_copy);
+        saveCopyTo = menu.add(R.string.edit_save_copy_to);
+        inverse = menu.add(R.string.edit_inverse);
+        changeType = menu.add(R.string.edit_change_type);
+        simplify = menu.add(R.string.edit_simplify);
+        attach = menu.add(R.string.edit_attach);
+        fix = menu.add(R.string.edit_fix);
+        clearAll = menu.add(R.string.edit_clear);
+        cutRemaining = menu.add(R.string.edit_cut_remaining);
+        cutPreceding = menu.add(R.string.edit_cut_preceding);
     }
+
 
     @Override
     public String getTitle() {

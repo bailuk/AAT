@@ -5,7 +5,6 @@ import android.content.Context;
 
 import ch.bailu.aat.R;
 import ch.bailu.aat.preferences.SolidBoolean;
-import ch.bailu.aat.util.ToDo;
 
 public class SolidGpsTimeFix extends SolidBoolean {
 
@@ -56,10 +55,9 @@ public class SolidGpsTimeFix extends SolidBoolean {
         if (checked > 0) {
 
             if (differenceHour == 0) {
-                return ToDo.translate("GPS time is correct (in UTC)");
+                return getString(R.string.p_fix_correct);
             } else {
-                return ToDo.translate("GPS time differs " +
-                        differenceHour + " hours from system time");
+                return getString(R.string.p_fix_differs) + " "  + differenceHour;
             }
         }
         return null;

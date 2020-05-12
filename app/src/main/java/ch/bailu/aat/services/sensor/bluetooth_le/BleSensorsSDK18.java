@@ -7,6 +7,7 @@ import android.content.Context;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 
+import ch.bailu.aat.R;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.sensor.Sensors;
 import ch.bailu.aat.services.sensor.list.SensorList;
@@ -114,16 +115,19 @@ public final class BleSensorsSDK18 extends Sensors {
     @Override
     public  synchronized String toString() {
         if (isEnabled()) {
-            if (scanning)
-                return ToDo.translate("Scanning for Bluetooth sensors...");
-
-            return ToDo.translate("Bluetooth is enabled");
-
+            if (scanning) {
+                return getString(R.string.sensor_bl_scanning);
+            } else {
+                return getString(R.string.sensor_bl_enabled);
+            }
         } else {
-            return ToDo.translate("Bluetooth is disabled");
+            return getString(R.string.sensor_bl_disabled);
         }
     }
 
+    private String getString(int r) {
+        return scontext.getContext().getString(r);
+    }
 
     @Override
     public synchronized void close() {

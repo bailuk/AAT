@@ -1,15 +1,16 @@
 package ch.bailu.aat.map.layer.control;
 
+import android.content.Context;
 import android.view.View;
 
 import org.mapsforge.core.model.Point;
 
+import ch.bailu.aat.R;
 import ch.bailu.aat.dispatcher.EditorSourceInterface;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.GpxPointNode;
 import ch.bailu.aat.map.MapContext;
 import ch.bailu.aat.services.cache.ObjGpxEditable;
-import ch.bailu.aat.util.ToDo;
 import ch.bailu.util_java.foc.Foc;
 
 public final class EditorNodeViewLayer extends NodeViewLayer {
@@ -17,12 +18,16 @@ public final class EditorNodeViewLayer extends NodeViewLayer {
     private final EditorSourceInterface editorSource;
     private boolean showNode = false;
 
+    private final Context context;
 
     public EditorNodeViewLayer(MapContext mc, EditorSourceInterface e) {
         super(mc);
         editorSource = e;
+        context = mc.getContext();
 
         setText();
+
+
     }
 
     private void setText() {
@@ -63,7 +68,7 @@ public final class EditorNodeViewLayer extends NodeViewLayer {
 
     private void setLoadEditorText(Foc file) {
         html.appendHeader(file.getName());
-        html.append(ToDo.translate("Load into editor"));
+        html.append(context.getString(R.string.edit_load));
         setHtmlText(html);
     }
 

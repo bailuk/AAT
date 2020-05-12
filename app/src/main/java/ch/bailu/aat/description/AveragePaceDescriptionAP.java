@@ -2,6 +2,7 @@ package ch.bailu.aat.description;
 
 import android.content.Context;
 
+import ch.bailu.aat.R;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.attributes.AutoPause;
 import ch.bailu.aat.util.ToDo;
@@ -14,7 +15,7 @@ public class AveragePaceDescriptionAP extends AveragePaceDescription {
 
     @Override
     public String getLabel() {
-        return ToDo.translate("Pace (without pauses)");
+        return getContext().getString(R.string.pace_ap);
     }
 
     @Override

@@ -19,6 +19,7 @@
         <!-- Preferences Map -->
         <!-- Preferences Map trim tiles -->
         <!-- File context menu and file operation -->
+        <!-- GPX editor -->
         <!-- Location menu -->
         <!-- Dialog -->
         <!-- Description -->
@@ -58,6 +59,10 @@
 
 
     <!-- Sensors -->
+    <string name="sensor_bl_enabled">Bluetooth is enabled</string>
+    <string name="sensor_bl_scanning">Scanning for Bluetooth sensors…</string>
+    <string name="sensor_bl_disabled">Bluetooth is disabled</string>
+
     <string name="sensor_heart_rate">Heart rate</string>
     <string name="sensor_heart_beats">Heart beats</string>
     <string name="sensor_heart_beats_unit">Beats</string>
@@ -116,20 +121,37 @@
         <item>Nautical (nm, kn)</item>
         <item>International System of Units</item>
     </string-array>
+    <string name="p_messages">Status Messages</string>
+    <string name="p_messages_size">Download size</string>
+    <string name="p_messages_url">URL</string>
+    <string name="p_messages_file">URL and file</string>
+
 
 
     <!-- Preferences System -->
     <string name="p_location_provider">Location provider</string>
+    <string name="p_location_provider_permission">No permission to access GPS</string>
     <string name="p_location_gps">System GPS</string>
+    <string name="p_location_gpsnet">System GPS and network</string>
+    <string name="p_location_network">Network only</string>
     <string name="p_location_mock">Mock location</string>
     <string name="p_directory_data">Data directory</string>
     <string name="p_cache_size">Internal cache size</string>
     <string name="p_fix_gps">Fix GPS time</string>
+    <string name="p_fix_correct">GPS time is correct (in UTC)</string>
+    <string name="p_fix_differs">Hours GPS differs from system time:</string>
+
+    <string name="p_adjust_altitude">Adjust GPS altitude</string>
+    <string name="p_set_altitude">Set altitude</string>
+    <string name="p_pressure_sealevel">Pressure at sealevel [hPa]</string>
+
 
 
     <!-- Preferences Context -->
     <string name="p_overlay">Overlays</string>
     <string name="p_legend_fulldistance">Distance continuous</string>
+    <string name="p_goto_location">Center map at location (WGS84 decimal or Open Location Code)</string>
+    <string name="p_goto_location_hint">Supports WGS84 decimal, CH1903 and Open Location Code (Plus Code)</string>
 
 
     <!-- Preferences Presets -->
@@ -194,7 +216,8 @@
     <string name="p_mapsforge_theme">Offline maps theme</string>
     <string name="p_enable_cache">Enable cache</string>
     <string name="p_directory_tiles">Tile cache directory</string>
-    <string name="p_use_volume_keys">"Use volume buttons for map zoom"</string>
+    <string name="p_use_volume_keys">Use volume buttons for map zoom</string>
+    <string name="p_render_threads">Renderer threads</string>
 
 
     <!-- Preferences Map trim tiles -->
@@ -239,8 +262,21 @@
     <string name="file_is_missing">\u0020does not exist.</string>
     <string name="file_is_denied">\u0020is not accessible.</string>
 
+    <!-- GPX editor -->
+    <string name="edit_load">Tap here to load file into editor</string>
+    <string name="edit_save">Save</string>
+    <string name="edit_save_copy">Save copy</string>
+    <string name="edit_save_copy_to">Save copy to …</string>
+    <string name="edit_inverse">Inverse</string>
+    <string name="edit_change_type">Set GPX type</string>
+    <string name="edit_simplify">Simplify</string>
+    <string name="edit_attach">Attach file</string>
+    <string name="edit_fix">Fix</string>
+    <string name="edit_clear">Clear all</string>
+    <string name="edit_cut_remaining">Cut remaining</string>
+    <string name="edit_cut_preceding">Cut preceding</string>
 
-    <!-- Location menu -->
+     <!-- Location menu -->
     <string name="location_title">Center location</string>
     <string name="location_view">View location…</string>
     <string name="location_send">Send location…</string>
@@ -291,6 +327,8 @@
     <string name="calories">Calories</string>
     <string name="name">Name</string>
 
+    <string name="pace">Pace</string>
+    <string name="pace_ap">Pace (without pauses)</string>
 
     <!-- ToolTip -->
     <string name ="tt_edit_add">Add a point with the location the map is centered to.</string>

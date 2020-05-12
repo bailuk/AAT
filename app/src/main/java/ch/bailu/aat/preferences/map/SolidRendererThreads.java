@@ -5,6 +5,7 @@ import android.os.Build;
 
 import org.mapsforge.core.util.Parameters;
 
+import ch.bailu.aat.R;
 import ch.bailu.aat.preferences.SolidIndexList;
 import ch.bailu.aat.util.ToDo;
 
@@ -43,7 +44,7 @@ public class SolidRendererThreads extends SolidIndexList {
 
     @Override
     public String getLabel() {
-        return ToDo.translate("Renderer Threads");
+        return getString(R.string.p_render_threads);
     }
 
 

@@ -13,7 +13,6 @@ import ch.bailu.aat.services.location.MockLocation;
 import ch.bailu.aat.services.location.NetworkLocation;
 import ch.bailu.aat.services.location.RealLocation;
 import ch.bailu.aat.util.AppPermission;
-import ch.bailu.aat.util.ToDo;
 
 public class SolidLocationProvider extends SolidStaticIndexList {
 
@@ -38,8 +37,8 @@ public class SolidLocationProvider extends SolidStaticIndexList {
             provider_list[0] = c.getString(R.string.p_location_gps);
             provider_list[1] = c.getString(R.string.p_location_gps) + " 2000ms";
             provider_list[2] = c.getString(R.string.p_location_gps) + " 3000ms";
-            provider_list[3] = c.getString(R.string.p_location_gps) + ToDo.translate(" or Network");
-            provider_list[4] = ToDo.translate("Network only");
+            provider_list[3] = c.getString(R.string.p_location_gpsnet);
+            provider_list[4] = c.getString(R.string.p_location_network);
             provider_list[5] = c.getString(R.string.p_location_mock);
 
             if (providers != null) {
@@ -86,7 +85,7 @@ public class SolidLocationProvider extends SolidStaticIndexList {
     @Override
     public String getToolTip() {
         if (AppPermission.checkLocation(getContext()) == false) {
-            return ToDo.translate("No permission to access GPS");
+            return getString(R.string.p_location_provider_permission);
         }
         return super.getToolTip();
     }
