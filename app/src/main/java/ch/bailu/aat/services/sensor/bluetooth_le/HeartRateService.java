@@ -2,17 +2,18 @@ package ch.bailu.aat.services.sensor.bluetooth_le;
 
 import android.bluetooth.BluetoothGattCharacteristic;
 import android.content.Context;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 
 import java.util.UUID;
 
+import ch.bailu.aat.R;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.services.sensor.Connector;
 import ch.bailu.aat.services.sensor.attributes.HeartRateAttributes;
 import ch.bailu.aat.services.sensor.attributes.SensorInformation;
-import ch.bailu.aat.services.sensor.list.SensorState;
 
 @RequiresApi(api = 18)
 public final class HeartRateService extends HeartRateServiceID implements ServiceInterface {
@@ -31,13 +32,14 @@ public final class HeartRateService extends HeartRateServiceID implements Servic
     private final Connector connector;
     private final Broadcaster broadcaster;
 
-
+    private final String name;
 
     public HeartRateService(Context c) {
         connector = new Connector(c, InfoID.HEART_RATE_SENSOR);
         broadcaster = new Broadcaster(c, InfoID.HEART_RATE_SENSOR);
 
         information = new SensorInformation(new HeartRateAttributes());
+        name = c.getString(R.string.sensor_heart_rate);
     }
 
 
@@ -99,7 +101,7 @@ public final class HeartRateService extends HeartRateServiceID implements Servic
     @NonNull
     @Override
     public String toString() {
-        return SensorState.getName(InfoID.HEART_RATE_SENSOR);
+        return name;
     }
 
     private void readBodySensorLocation(byte[] value) {

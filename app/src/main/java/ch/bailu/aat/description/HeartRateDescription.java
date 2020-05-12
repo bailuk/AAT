@@ -2,22 +2,25 @@ package ch.bailu.aat.description;
 
 import android.content.Context;
 
+import ch.bailu.aat.R;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.services.sensor.attributes.HeartRateAttributes;
 import ch.bailu.aat.services.sensor.list.SensorState;
 
 public class HeartRateDescription extends ContentDescription {
-    public static final String LABEL = SensorState.getName(InfoID.HEART_RATE_SENSOR);
+    public final String LABEL;
     public static final String UNIT = "bpm";
 
     private String value = VALUE_DISABLED;
     private String unit = UNIT;
-    private String label = LABEL;
+    private String label;
 
 
     public HeartRateDescription(Context c) {
         super(c);
+        LABEL = c.getString(R.string.sensor_heart_rate);
+        label = LABEL;
     }
 
     @Override

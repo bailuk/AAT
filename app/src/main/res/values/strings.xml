@@ -58,12 +58,19 @@
 
 
     <!-- Sensors -->
-    <string name="sensor_heart_rate">Heart Rate</string>
-    <string name="sensor_cadence">Cadence</string>
+    <string name="sensor_heart_rate">Heart rate</string>
+    <string name="sensor_heart_beats">Heart beats</string>
+    <string name="sensor_heart_beats_unit">Beats</string>
     <string name="sensor_speed">Speed</string>
     <string name="sensor_barometer">Barometer</string>
-    <string name="sensor_step_counter">Step Counter</string>
-
+    <string name="sensor_step_counter">Step counter</string>
+    <string name="sensor_step_rate">Steprate</string>
+    <string name="sensor_step_rate_unit">spm</string>
+    <string name="sensor_step_total">Total steps</string>
+    <string name="sensor_step_total_unit">Steps</string>
+    <string name="sensor_cadence">Cadence</string>
+    <string name="sensor_cadence_total">Crank rotations</string>
+    <string name="sensor_cadence_total_unit">Rotations</string>
 
     <!-- Activity main -->
     <string name="intro_about">About</string>

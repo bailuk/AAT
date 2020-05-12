@@ -1,5 +1,8 @@
 package ch.bailu.aat.services.sensor.list;
 
+import android.content.Context;
+
+import ch.bailu.aat.R;
 import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.util.ToDo;
 
@@ -9,12 +12,12 @@ public final class SensorState {
 
     private static final int[] connected = new int[SIZE];
 
-    public static final String[] NAMES = {
-            ToDo.translate("Heart Rate"),
-            ToDo.translate("Cadence"),
-            ToDo.translate("Speed"),
-            ToDo.translate("Barometer"),
-            ToDo.translate("Step Counter")
+    public static final int[] NAMES = {
+            R.string.sensor_heart_rate,
+            R.string.sensor_cadence,
+            R.string.sensor_speed,
+            R.string.sensor_barometer,
+            R.string.sensor_step_counter
     };
 
     public static final char[] CHARS = {
@@ -39,9 +42,10 @@ public final class SensorState {
     }
 
 
-    public static String getName(int iid) {
-        return NAMES[toIndex(iid)];
+    public static String getName(Context c, int iid) {
+        return c.getString(NAMES[toIndex(iid)]);
     }
+    
     public static char getChar(int iid) { return CHARS[toIndex(iid)]; }
 
 

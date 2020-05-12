@@ -2,6 +2,7 @@ package ch.bailu.aat.description;
 
 import android.content.Context;
 
+import ch.bailu.aat.R;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.attributes.SampleRate;
 import ch.bailu.aat.services.sensor.attributes.StepCounterAttributes;
@@ -47,7 +48,7 @@ public class IndexedAttributeDescription extends ContentDescription {
     public static class Cadence extends IndexedAttributeDescription {
 
         public Cadence(Context c) {
-            super(c, CadenceDescription.LABEL, CadenceDescription.UNIT,
+            super(c, c.getString(R.string.sensor_cadence), CadenceDescription.UNIT,
                     SampleRate.Cadence.INDEX_CADENCE);
         }
     }
@@ -56,7 +57,9 @@ public class IndexedAttributeDescription extends ContentDescription {
     public static class TotalCadence extends IndexedAttributeDescription {
 
         public TotalCadence(Context c) {
-            super(c, "Crank rotations", "Rotations", SampleRate.Cadence.INDEX_TOTAL_CADENCE);
+            super(c,c.getString(R.string.sensor_cadence_total),
+                    c.getString(R.string.sensor_cadence_total_unit),
+                    SampleRate.Cadence.INDEX_TOTAL_CADENCE);
         }
     }
 
@@ -64,7 +67,7 @@ public class IndexedAttributeDescription extends ContentDescription {
     public static class HeartRate extends IndexedAttributeDescription {
 
         public HeartRate(Context c) {
-            super(c, HeartRateDescription.LABEL, HeartRateDescription.UNIT, SampleRate.HeartRate.INDEX_AVERAGE_HR);
+            super(c, c.getString(R.string.sensor_heart_rate), HeartRateDescription.UNIT, SampleRate.HeartRate.INDEX_AVERAGE_HR);
         }
     }
 
@@ -72,21 +75,26 @@ public class IndexedAttributeDescription extends ContentDescription {
     public static class HeartBeats extends IndexedAttributeDescription {
 
         public HeartBeats(Context c) {
-            super(c, "Heartbeats", "Beats", SampleRate.HeartRate.INDEX_HEART_BEATS);
+            super(c,c.getString(R.string.sensor_heart_beats),
+                    c.getString(R.string.sensor_cadence_total_unit),
+                    SampleRate.HeartRate.INDEX_HEART_BEATS);
         }
     }
 
 
     public static class StepsRate extends IndexedAttributeDescription {
         public StepsRate(Context c) {
-            super(c, "Steprate", "spm", StepCounterAttributes.KEY_INDEX_STEPS_RATE);
+            super(c,c.getString(R.string.sensor_step_rate),
+                    c.getString(R.string.sensor_step_rate_unit),
+                    StepCounterAttributes.KEY_INDEX_STEPS_RATE);
         }
     }
 
     public static class StepsTotal extends IndexedAttributeDescription {
         public StepsTotal(Context c) {
-            super(c, "Total steps", "steps", StepCounterAttributes.KEY_INDEX_STEPS_TOTAL);
+            super(c,c.getString(R.string.sensor_step_total),
+                    c.getString(R.string.sensor_step_total_unit),
+                    StepCounterAttributes.KEY_INDEX_STEPS_TOTAL);
         }
     }
-
 }

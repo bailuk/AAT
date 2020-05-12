@@ -2,16 +2,17 @@
 package ch.bailu.aat.services.sensor.bluetooth_le;
 
 import android.bluetooth.BluetoothGattCharacteristic;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 
+import ch.bailu.aat.R;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.gpx.attributes.GpxAttributes;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.sensor.Connector;
 import ch.bailu.aat.services.sensor.attributes.CadenceSpeedAttributes;
-import ch.bailu.aat.services.sensor.list.SensorState;
 
 @RequiresApi(api = 18)
 public final class CscService extends CscServiceID implements ServiceInterface {
@@ -41,7 +42,7 @@ public final class CscService extends CscServiceID implements ServiceInterface {
     private final Connector connectorSpeed, connectorCadence;
     private final Broadcaster broadcasterSpeed, broadcasterCadence;
 
-
+    private final String name_speed, name_cadence;
 
     public CscService(ServiceContext c) {
         wheelCircumference = new WheelCircumference(c, speed);
@@ -50,6 +51,8 @@ public final class CscService extends CscServiceID implements ServiceInterface {
         broadcasterCadence = new Broadcaster(c.getContext(), InfoID.CADENCE_SENSOR);
         broadcasterSpeed = new Broadcaster(c.getContext(), InfoID.SPEED_SENSOR);
 
+        name_speed = c.getContext().getString(R.string.sensor_speed);
+        name_cadence = c.getContext().getString(R.string.sensor_cadence);
     }
 
 
@@ -140,11 +143,11 @@ public final class CscService extends CscServiceID implements ServiceInterface {
         }
 
         if (isSpeedSensor) {
-            name = SensorState.getName(InfoID.SPEED_SENSOR) + " ";
+            name = name_speed + " ";
         }
 
         if (isCadenceSensor) {
-            name += SensorState.getName(InfoID.CADENCE_SENSOR) + " ";
+            name += name_speed + " ";
         }
 
         return name + "Sensor";

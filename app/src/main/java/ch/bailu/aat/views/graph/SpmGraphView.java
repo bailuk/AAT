@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 
 import ch.bailu.aat.description.CadenceDescription;
+import ch.bailu.aat.description.ContentDescription;
 import ch.bailu.aat.description.HeartRateDescription;
 import ch.bailu.aat.description.StepRateDescription;
 import ch.bailu.aat.dispatcher.DispatcherInterface;
@@ -19,36 +20,32 @@ import ch.bailu.aat.util.ui.UiTheme;
 
 public class SpmGraphView extends AbsGraphView {
 
-    final Entry[] entries = {
-            new Entry(AppTheme.HL_BLUE,
-                    HeartRateDescription.LABEL,
-                    HeartRateDescription.UNIT,
-                    SampleRate.HeartRate.INDEX_MAX_HR,
-                    SampleRate.HeartRate.GPX_KEYS),
-
-            new Entry(AppTheme.HL_GREEN,
-                    CadenceDescription.LABEL,
-                    CadenceDescription.UNIT,
-                    SampleRate.Cadence.INDEX_MAX_CADENCE,
-                    SampleRate.Cadence.GPX_KEYS),
-
-
-            new Entry(AppTheme.HL_ORANGE,
-                    StepRateDescription.LABEL,
-                    StepRateDescription.UNIT,
-                    SampleRate.StepsRate.INDEX_MAX_SPM,
-                    SampleRate.StepsRate.GPX_KEYS)
-    };
+    final Entry[] entries;
 
     public SpmGraphView(Context context, DispatcherInterface di, UiTheme theme, int... iid) {
         super(context, di, theme, iid);
+        entries = createEntries(context);
         setLabelText();
     }
 
+    private Entry[] createEntries(Context context) {
+        return new Entry[]{
+                new Entry(AppTheme.HL_BLUE,
+                        new HeartRateDescription(context),
+                        SampleRate.HeartRate.INDEX_MAX_HR,
+                        SampleRate.HeartRate.GPX_KEYS),
 
-    public SpmGraphView(Context context, UiTheme theme) {
-        super(context, theme);
-        setLabelText();
+                new Entry(AppTheme.HL_GREEN,
+                        new CadenceDescription(context),
+                        SampleRate.Cadence.INDEX_MAX_CADENCE,
+                        SampleRate.Cadence.GPX_KEYS),
+
+
+                new Entry(AppTheme.HL_ORANGE,
+                        new StepRateDescription(context),
+                        SampleRate.StepsRate.INDEX_MAX_SPM,
+                        SampleRate.StepsRate.GPX_KEYS)
+        };
     }
 
 
@@ -56,6 +53,7 @@ public class SpmGraphView extends AbsGraphView {
         for (Entry e : entries)
             e.setLabelText();
     }
+
 
 
     @Override
@@ -103,6 +101,10 @@ public class SpmGraphView extends AbsGraphView {
 
         private float summaryDistance=0;
 
+
+        public Entry(int color, ContentDescription description, int maxKey, int... keys) {
+            this(color, description.getLabel(), description.getUnit(), maxKey, keys);
+        }
 
         public Entry(int color, String label, String unit, int maxKey, int... keys) {
             this.color = color;

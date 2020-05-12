@@ -2,6 +2,7 @@ package ch.bailu.aat.description;
 
 import android.content.Context;
 
+import ch.bailu.aat.R;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.services.sensor.attributes.CadenceSpeedAttributes;
@@ -9,16 +10,18 @@ import ch.bailu.aat.services.sensor.list.SensorState;
 
 public class CadenceDescription  extends ContentDescription {
     public static final String UNIT = "rpm";
-    public static final String LABEL = SensorState.getName(InfoID.CADENCE_SENSOR);
-    public static final String LABEL_WAIT = LABEL + "...";
-
+    private final String LABEL, LABEL_WAIT;
 
     private String value = VALUE_DISABLED;
-    private String label = LABEL;
+    private String label;
+
 
 
     public CadenceDescription(Context c) {
         super(c);
+        LABEL = c.getString(R.string.sensor_cadence);
+        LABEL_WAIT = LABEL + "...";
+        label = LABEL;
     }
 
     @Override

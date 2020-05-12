@@ -2,6 +2,7 @@ package ch.bailu.aat.description;
 
 import android.content.Context;
 
+import ch.bailu.aat.R;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.services.sensor.attributes.StepCounterAttributes;
@@ -9,16 +10,17 @@ import ch.bailu.aat.services.sensor.list.SensorState;
 
 public class StepRateDescription extends ContentDescription {
     public static final String UNIT = "spm";
-    public static final String LABEL = SensorState.getName(InfoID.STEP_COUNTER_SENSOR);
+
 
 
     private String value = VALUE_DISABLED;
     private String unit = UNIT;
-    private final String label = LABEL;
+    private final String label;
 
 
     public StepRateDescription(Context c) {
         super(c);
+        label = c.getString(R.string.sensor_step_counter);
     }
 
     @Override
@@ -48,7 +50,6 @@ public class StepRateDescription extends ContentDescription {
             unit = UNIT + " (" + info.getAttributes().get(StepCounterAttributes.KEY_INDEX_STEPS_TOTAL) + ")";
 
         } else {
-            //label = LABEL;
             value = VALUE_DISABLED;
 
         }
