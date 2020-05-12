@@ -118,7 +118,7 @@ public class Backlight implements OnContentUpdatedInterface,
         } else if (Build.VERSION.SDK_INT >= 26) {
             dismissKeyGuardSDK26(dismiss);
         } else {
-            dismissKeyGuardSDK1(dismiss);
+            dismissKeyGuardSDK5(dismiss);
         }
     }
 
@@ -131,29 +131,29 @@ public class Backlight implements OnContentUpdatedInterface,
 
     @RequiresApi(api = 26)
     private void dismissKeyGuardSDK26(boolean dismiss) {
-        if (dismiss)
-            window.addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED);
-        else
-            window.clearFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED);
+        updateFlags(dismiss, WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED);
     }
 
 
-    private void dismissKeyGuardSDK1(boolean dismiss) {
-        if (dismiss)
-            window.addFlags(WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD);
-        else
-            window.clearFlags(WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD);
+    private void dismissKeyGuardSDK5(boolean dismiss) {
+        updateFlags(dismiss,
+                WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD
+                 | WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED);
+
     }
 
 
     private void keepScreenOn(boolean keepOn) {
-        if (keepOn) {
-            window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-        } else {
-            window.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-        }
+        updateFlags(keepOn, WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
     }
 
+    private void updateFlags(boolean on, int flags) {
+        if (on) {
+            window.addFlags(flags);
+        } else {
+            window.clearFlags(flags);
+        }
+    }
 
     @Override
     public void close() {

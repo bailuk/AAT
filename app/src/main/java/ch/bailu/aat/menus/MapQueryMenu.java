@@ -13,7 +13,6 @@ import ch.bailu.aat.activities.PoiActivity;
 import ch.bailu.aat.map.MapContext;
 import ch.bailu.aat.util.NominatimApi;
 import ch.bailu.aat.util.OverpassApi;
-import ch.bailu.aat.util.PoiApi;
 
 public class MapQueryMenu extends AbsMenu {
 
@@ -37,7 +36,7 @@ public class MapQueryMenu extends AbsMenu {
 
         nominatim = menu.add(NominatimApi.NAME);
         overpass = menu.add(OverpassApi.getName(context));
-        poi = menu.add(PoiApi.NAME);
+        poi = menu.add(R.string.p_mapsforge_poi);
     }
 
     @Override
