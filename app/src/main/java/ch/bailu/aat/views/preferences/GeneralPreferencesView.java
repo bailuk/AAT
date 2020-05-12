@@ -18,7 +18,6 @@ import ch.bailu.aat.preferences.system.SolidCacheSize;
 import ch.bailu.aat.preferences.system.SolidDataDirectory;
 import ch.bailu.aat.preferences.system.SolidExternalDirectory;
 import ch.bailu.aat.preferences.system.SolidStatusMessages;
-import ch.bailu.aat.util.ToDo;
 import ch.bailu.aat.util.ui.UiTheme;
 import ch.bailu.aat.views.SensorListView;
 
@@ -59,7 +58,7 @@ public class GeneralPreferencesView extends VerticalScrollView {
                 theme));
 
         if (Build.VERSION.SDK_INT >= 18) {
-            add(new TitleView(acontext, ToDo.translate("Sensors"), theme));
+            add(new TitleView(acontext, R.string.sensors, theme));
             ScannBluetoothView scann = new ScannBluetoothView(
                     acontext.getServiceContext(), theme
             );
@@ -78,7 +77,7 @@ public class GeneralPreferencesView extends VerticalScrollView {
         }
 
 
-        add(new TitleView(acontext, ToDo.translate("Files"), theme));
+        add(new TitleView(acontext, R.string.files, theme));
         add(new SolidDirectoryViewSAF(acontext, new SolidDataDirectory(acontext), theme));
         add(new SolidDirectoryViewSAF(acontext, new SolidExternalDirectory(acontext), theme));
 

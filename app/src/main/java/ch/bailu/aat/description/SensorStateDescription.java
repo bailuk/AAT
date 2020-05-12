@@ -17,7 +17,7 @@ public class SensorStateDescription extends StateDescription {
 
     @Override
     public String getLabel() {
-        return getContext().getString(R.string.sensor_state);
+        return getContext().getString(R.string.sensors);
     }
 
 

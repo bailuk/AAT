@@ -2,9 +2,9 @@ package ch.bailu.aat.description;
 
 import android.content.Context;
 
+import ch.bailu.aat.R;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.attributes.AutoPause;
-import ch.bailu.aat.util.ToDo;
 
 public class DistanceApDescription extends DistanceDescription {
     public DistanceApDescription(Context context) {
@@ -20,7 +20,7 @@ public class DistanceApDescription extends DistanceDescription {
 
     @Override
     public String getLabel() {
-        return ToDo.translate("Distance (without pauses)");
+        return getContext().getString(R.string.distance_ap);
     }
 
 }

@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import ch.bailu.aat.R;
 import ch.bailu.aat.coordinates.BoundingBoxE6;
 import ch.bailu.aat.gpx.writer.WayWriter;
 import ch.bailu.aat.gpx.writer.WayWriterOsmTags;
@@ -27,7 +28,6 @@ import ch.bailu.util_java.foc.Foc;
 
 public abstract class PoiApi extends OsmApiConfiguration {
 
-    public final static String NAME = ToDo.translate("Offline POI");
     public final static String EXT=".gpx";
     public static final String SELECTED = "selected.txt";
 
@@ -38,9 +38,11 @@ public abstract class PoiApi extends OsmApiConfiguration {
 
     private BackgroundTask task = BackgroundTask.NULL;
 
+    private final Context context;
 
 
     public PoiApi(Context context, BoundingBoxE6 box) {
+        this.context = context;
         bounding = box;
         directory = AppDirectory.getDataDirectory(context, AppDirectory.DIR_POI);
     }
@@ -48,7 +50,7 @@ public abstract class PoiApi extends OsmApiConfiguration {
 
     @Override
     public String getApiName() {
-        return NAME;
+        return context.getString(R.string.p_mapsforge_poi);
     }
 
     @Override

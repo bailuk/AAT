@@ -4,8 +4,8 @@ import android.content.Context;
 
 import java.util.ArrayList;
 
+import ch.bailu.aat.R;
 import ch.bailu.aat.preferences.SolidFile;
-import ch.bailu.aat.util.ToDo;
 import ch.bailu.util_java.foc.Foc;
 
 public class SolidPoiDatabase extends SolidFile {
@@ -19,7 +19,7 @@ public class SolidPoiDatabase extends SolidFile {
 
     @Override
     public String getLabel() {
-        return ToDo.translate("MapsForge POI Database");
+        return getString(R.string.p_mapsforge_poi_db);
     }
 
 

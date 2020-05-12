@@ -40,6 +40,7 @@
     <string name="pick">Pick (SAF)…</string>
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
+    <string name="files">Files</string>
 
 
     <!-- GPS / Tracker-->
@@ -60,7 +61,7 @@
 
 
     <!-- Sensors -->
-    <string name="sensor_state">Sensors</string>
+    <string name="sensors">Sensors</string>
     <string name="sensor_type_internal">Internal</string>
     <string name="sensor_type_bluetooth">Bluetooth</string>
 
@@ -236,6 +237,8 @@
     <string name="p_directory_tiles">Tile cache directory</string>
     <string name="p_use_volume_keys">Use volume buttons for map zoom</string>
     <string name="p_render_threads">Renderer threads</string>
+    <string name="p_mapsforge_poi">Offline POI</string>
+    <string name="p_mapsforge_poi_db">Offline POI database</string>;
 
 
     <!-- Preferences Map trim tiles -->
@@ -337,6 +340,7 @@
     <string name="average_ap">Average (without pauses)</string>
     <string name="maximum">Maximum</string>
     <string name="distance">Distance</string>
+    <string name="distance_ap">Distance (without pauses)</string>
     <string name="altitude">Altitude</string>
 
     <string name="time">Total time</string>

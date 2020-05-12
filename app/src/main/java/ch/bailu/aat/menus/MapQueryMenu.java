@@ -5,6 +5,7 @@ import android.graphics.drawable.Drawable;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import ch.bailu.aat.R;
 import ch.bailu.aat.activities.ActivitySwitcher;
 import ch.bailu.aat.activities.NominatimActivity;
 import ch.bailu.aat.activities.OverpassActivity;
@@ -13,7 +14,6 @@ import ch.bailu.aat.map.MapContext;
 import ch.bailu.aat.util.NominatimApi;
 import ch.bailu.aat.util.OverpassApi;
 import ch.bailu.aat.util.PoiApi;
-import ch.bailu.aat.util.ToDo;
 
 public class MapQueryMenu extends AbsMenu {
 
@@ -42,7 +42,7 @@ public class MapQueryMenu extends AbsMenu {
 
     @Override
     public String getTitle() {
-        return ToDo.translate("Map search");
+        return context.getString(R.string.intro_nominatim);
     }
 
 
