@@ -3,10 +3,10 @@ package ch.bailu.aat.preferences.map;
 
 import android.content.Context;
 
+import ch.bailu.aat.R;
 import ch.bailu.aat.preferences.SolidBoolean;
 import ch.bailu.aat.services.cache.CacheService;
 import ch.bailu.aat.services.cache.osm_features.ObjMapFeatures;
-import ch.bailu.aat.util.ToDo;
 import ch.bailu.aat.util.filter_list.KeyList;
 
 public class SolidOsmFeaturesList extends SolidBoolean {
@@ -20,7 +20,7 @@ public class SolidOsmFeaturesList extends SolidBoolean {
 
     @Override
     public String getLabel() {
-        return ToDo.translate("All");
+        return getString(R.string.all);
     }
 
 

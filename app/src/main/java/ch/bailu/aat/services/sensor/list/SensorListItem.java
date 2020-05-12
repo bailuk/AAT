@@ -1,10 +1,12 @@
 package ch.bailu.aat.services.sensor.list;
 
+import android.content.Context;
+
 import androidx.annotation.NonNull;
 
+import ch.bailu.aat.R;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.services.sensor.SensorInterface;
-import ch.bailu.aat.util.ToDo;
 
 public final class SensorListItem extends SensorItemState implements SensorInterface {
 
@@ -15,13 +17,13 @@ public final class SensorListItem extends SensorItemState implements SensorInter
 
     private SensorInterface sensor;
 
+    private final Context context;
 
-
-    public SensorListItem(String a, String n, int initialState) {
+    public SensorListItem(Context context, String address, String name, int initialState) {
         super(initialState);
-
-        address = a;
-        setName(n);
+        this.context = context;
+        this.address = address;
+        setName(name);
     }
 
     public boolean isBluetoothDevice() {
@@ -89,7 +91,7 @@ public final class SensorListItem extends SensorItemState implements SensorInter
     public String toString() {
 
         final String sensorType = getSensorTypeDescription();
-        final String sensorState = getSensorStateDescription();
+        final String sensorState = getSensorStateDescription(context);
         final String sensorName = getName();
 
 
@@ -98,11 +100,11 @@ public final class SensorListItem extends SensorItemState implements SensorInter
 
 
 
-    public String getSensorTypeDescription() {
+    private String getSensorTypeDescription() {
         if (isBluetoothDevice()) {
-            return "Bluetooth";
+            return context.getString(R.string.sensor_type_bluetooth);
         } else {
-            return ToDo.translate("Internal");
+            return context.getString(R.string.sensor_type_internal);
         }
     }
 

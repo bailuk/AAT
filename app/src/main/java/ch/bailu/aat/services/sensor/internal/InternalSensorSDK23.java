@@ -4,6 +4,7 @@ import android.content.Context;
 import android.hardware.Sensor;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 
@@ -62,7 +63,7 @@ public abstract class InternalSensorSDK23 implements SensorEventListener, Sensor
     @NonNull
     @Override
     public String toString() {
-        return getName() + "@" + getAddress() + ":" + item.getSensorStateDescription();
+        return getName() + "@" + getAddress() + ":" + item.getSensorStateDescription(context);
     }
 
 

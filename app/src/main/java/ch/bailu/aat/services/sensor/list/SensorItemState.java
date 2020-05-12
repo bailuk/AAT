@@ -1,6 +1,8 @@
 package ch.bailu.aat.services.sensor.list;
 
-import ch.bailu.aat.util.ToDo;
+import android.content.Context;
+
+import ch.bailu.aat.R;
 
 public class SensorItemState {
     public final static int UNSCANNED = 0;
@@ -16,14 +18,14 @@ public class SensorItemState {
     // configuration, discovery: unscanned, supported, enabled, unsupported
     // from real time status : scanning, connecting, connected, disconnected trying to reconnect?
 
-    private static final String[] STATE_DESCRIPTION = {
-            ToDo.translate("Unscanned"),
-            ToDo.translate("Scanning..."),
-            ToDo.translate("Supported"),
-            ToDo.translate("Not connected"),
-            ToDo.translate("Connecting..."),
-            ToDo.translate("Connected"),
-            ToDo.translate("Not supported")
+    private static final int[] STATE_DESCRIPTION = {
+            R.string.sensor_state_unscanned,
+            R.string.sensor_state_scanning,
+            R.string.sensor_state_supported,
+            R.string.sensor_state_not_connected,
+            R.string.sensor_state_connecting,
+            R.string.sensor_state_not_connected,
+            R.string.sensor_state_not_supported
     };
 
     private int state;
@@ -107,7 +109,7 @@ public class SensorItemState {
     }
 
 
-    public String getSensorStateDescription() {
-        return STATE_DESCRIPTION[state];
+    public String getSensorStateDescription(Context c) {
+        return c.getString(STATE_DESCRIPTION[state]);
     }
 }

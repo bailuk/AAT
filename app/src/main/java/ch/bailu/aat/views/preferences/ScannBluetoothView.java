@@ -2,19 +2,19 @@ package ch.bailu.aat.views.preferences;
 
 import android.view.View;
 
+import ch.bailu.aat.R;
 import ch.bailu.aat.dispatcher.OnContentUpdatedInterface;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.services.InsideContext;
 import ch.bailu.aat.services.ServiceContext;
-import ch.bailu.aat.util.ToDo;
 import ch.bailu.aat.util.ui.UiTheme;
 import ch.bailu.aat.views.LabelTextView;
 
 public class ScannBluetoothView extends LabelTextView implements View.OnClickListener, OnContentUpdatedInterface {
     private final ServiceContext scontext;
     public ScannBluetoothView(ServiceContext s, UiTheme theme) {
-        super(s.getContext(), ToDo.translate("Scann for BluetoothLE sensors\u2026"), theme);
+        super(s.getContext(), s.getContext().getString(R.string.sensor_scann), theme);
         scontext = s;
         setText();
         setOnClickListener(this);

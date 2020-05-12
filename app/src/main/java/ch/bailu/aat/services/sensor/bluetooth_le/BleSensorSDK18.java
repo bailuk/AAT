@@ -9,6 +9,7 @@ import android.bluetooth.BluetoothGattService;
 import android.bluetooth.BluetoothProfile;
 import android.content.Context;
 import android.os.Build;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 
@@ -17,9 +18,9 @@ import java.util.List;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.sensor.SensorInterface;
+import ch.bailu.aat.services.sensor.list.SensorItemState;
 import ch.bailu.aat.services.sensor.list.SensorList;
 import ch.bailu.aat.services.sensor.list.SensorListItem;
-import ch.bailu.aat.services.sensor.list.SensorItemState;
 import ch.bailu.aat.util.Timer;
 import ch.bailu.aat.util.ui.AppLog;
 
@@ -229,7 +230,7 @@ public final class BleSensorSDK18 extends BluetoothGattCallback implements Senso
                 + "@"
                 + device.getAddress()
                 + ":"
-                + item.getSensorStateDescription();
+                + item.getSensorStateDescription(context);
     }
 
 

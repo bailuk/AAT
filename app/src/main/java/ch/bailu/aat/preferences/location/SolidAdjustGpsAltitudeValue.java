@@ -2,8 +2,8 @@ package ch.bailu.aat.preferences.location;
 
 import android.content.Context;
 
+import ch.bailu.aat.R;
 import ch.bailu.aat.preferences.general.SolidUnit;
-import ch.bailu.aat.util.ToDo;
 
 public class SolidAdjustGpsAltitudeValue extends SolidAltitude {
     public static final String KEY = "AltitudeCorrection";
@@ -21,6 +21,6 @@ public class SolidAdjustGpsAltitudeValue extends SolidAltitude {
 
     @Override
     public String getLabel() {
-        return addUnit(ToDo.translate("GPS altitude modification"));
+        return addUnit(getString(R.string.p_adjust_altitude_by));
     }
 }

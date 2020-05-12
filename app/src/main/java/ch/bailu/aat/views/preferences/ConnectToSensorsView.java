@@ -10,19 +10,16 @@ import ch.bailu.aat.gpx.StateID;
 import ch.bailu.aat.services.InsideContext;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.sensor.list.SensorState;
-import ch.bailu.aat.util.ToDo;
 import ch.bailu.aat.util.ui.UiTheme;
 import ch.bailu.aat.views.LabelTextView;
 
 public class ConnectToSensorsView extends LabelTextView implements View.OnClickListener, OnContentUpdatedInterface {
 
-    public static final String LABEL = ToDo.translate("Connect to enabled sensors\u2026");
-
     private String busy="";
     private final ServiceContext scontext;
 
     public ConnectToSensorsView(ServiceContext s, UiTheme theme) {
-        super(s.getContext(), LABEL, theme);
+        super(s.getContext(), s.getContext().getString(R.string.sensor_connect), theme);
         scontext = s;
         setText();
         setOnClickListener(this);

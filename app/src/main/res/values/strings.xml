@@ -35,6 +35,7 @@
     <string name="off">Off</string>
     <string name="auto">Auto</string>
     <string name="none">None</string>
+    <string name="all">All</string>
     <string name="enter">Enter…</string>
     <string name="pick">Pick (SAF)…</string>
     <string name="ok">OK</string>
@@ -59,9 +60,24 @@
 
 
     <!-- Sensors -->
+    <string name="sensor_state">Sensors</string>
+    <string name="sensor_type_internal">Internal</string>
+    <string name="sensor_type_bluetooth">Bluetooth</string>
+
     <string name="sensor_bl_enabled">Bluetooth is enabled</string>
     <string name="sensor_bl_scanning">Scanning for Bluetooth sensors…</string>
     <string name="sensor_bl_disabled">Bluetooth is disabled</string>
+
+    <string name="sensor_state_unscanned">Unscanned</string>
+    <string name="sensor_state_scanning">Scanning…</string>
+    <string name="sensor_state_supported">Supported</string>
+    <string name="sensor_state_not_supported">Not supported</string>
+    <string name="sensor_state_not_connected">Not connected</string>
+    <string name="sensor_state_connecting">Connecting…</string>
+    <string name="sensor_state_connected">Connected</string>
+
+    <string name="sensor_scann">Scan for BluetoothLE sensors…</string>
+    <string name="sensor_connect">Connect to enabled sensors…</string>
 
     <string name="sensor_heart_rate">Heart rate</string>
     <string name="sensor_heart_beats">Heart beats</string>
@@ -142,6 +158,7 @@
     <string name="p_fix_differs">Hours GPS differs from system time:</string>
 
     <string name="p_adjust_altitude">Adjust GPS altitude</string>
+    <string name="p_adjust_altitude_by">Adjust GPS altitude by…</string>
     <string name="p_set_altitude">Set altitude</string>
     <string name="p_pressure_sealevel">Pressure at sealevel [hPa]</string>
 
@@ -212,6 +229,7 @@
 
     <!-- Preferences Map -->
     <string name="p_map">Map</string>
+    <string name="p_offline_map">Offline map</string>
     <string name="p_mapsforge_directory">Offline maps directory</string>
     <string name="p_mapsforge_theme">Offline maps theme</string>
     <string name="p_enable_cache">Enable cache</string>

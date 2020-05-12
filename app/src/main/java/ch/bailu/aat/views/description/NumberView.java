@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import ch.bailu.aat.R;
 import ch.bailu.aat.description.ContentDescription;
 import ch.bailu.aat.dispatcher.OnContentUpdatedInterface;
 import ch.bailu.aat.gpx.GpxInformation;
@@ -17,7 +18,6 @@ import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.util.ui.AppLog;
 import ch.bailu.aat.util.ui.ToolTip;
 import ch.bailu.aat.util.ui.UiTheme;
-import ch.bailu.aat.views.preferences.ConnectToSensorsView;
 
 public class NumberView extends ViewGroup implements OnContentUpdatedInterface {
 
@@ -196,10 +196,10 @@ public class NumberView extends ViewGroup implements OnContentUpdatedInterface {
 
 
     public View requestOnClickSensorReconnect() {
-        ToolTip.set(this, ConnectToSensorsView.LABEL);
+        ToolTip.set(this, R.string.sensor_connect);
 
         setOnClickListener(v -> {
-            AppLog.i(v.getContext(), ConnectToSensorsView.LABEL);
+            AppLog.i(v.getContext(), v.getContext().getString(R.string.sensor_connect));
             AppBroadcaster.broadcast(v.getContext(), AppBroadcaster.SENSOR_RECONNECT + InfoID.SENSORS);
         });
         return this;

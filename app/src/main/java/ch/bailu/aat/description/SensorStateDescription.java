@@ -2,10 +2,10 @@ package ch.bailu.aat.description;
 
 import android.content.Context;
 
-import ch.bailu.aat.gpx.attributes.GpxAttributes;
+import ch.bailu.aat.R;
 import ch.bailu.aat.gpx.GpxInformation;
+import ch.bailu.aat.gpx.attributes.GpxAttributes;
 import ch.bailu.aat.services.sensor.list.SensorList;
-import ch.bailu.aat.util.ToDo;
 
 public class SensorStateDescription extends StateDescription {
     private String unit = "";
@@ -17,7 +17,7 @@ public class SensorStateDescription extends StateDescription {
 
     @Override
     public String getLabel() {
-        return ToDo.translate("Sensors");
+        return getContext().getString(R.string.sensor_state);
     }
 
 

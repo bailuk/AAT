@@ -1,6 +1,7 @@
 package ch.bailu.aat.services.background;
 
 import android.content.Context;
+
 import androidx.annotation.NonNull;
 
 import java.io.IOException;
@@ -12,7 +13,6 @@ import java.net.URL;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.util.ContextWrapperInterface;
-import ch.bailu.aat.util.ToDo;
 import ch.bailu.aat.util.net.URX;
 import ch.bailu.aat.util.ui.AppLog;
 import ch.bailu.aat.util.ui.AppString;
@@ -101,7 +101,6 @@ public class DownloadTask extends FileTask implements ContextWrapperInterface{
 
 
             while (( count = input.read(buffer)) != -1) {
-                //throwOrContinue();
 
                 total+=count;
                 output.write(buffer, 0, count);
@@ -110,18 +109,11 @@ public class DownloadTask extends FileTask implements ContextWrapperInterface{
 
         } finally {
             Foc.close(output);
-            //if (connection != null) connection.disconnect();
             Foc.close(input);
         }
 
         return total;
     }
-
-
-    public void throwOrContinue() throws IOException {
-        if (! super.canContinue()) throw new IOException(ToDo.translate("Cancel"));
-    }
-
 
 
 

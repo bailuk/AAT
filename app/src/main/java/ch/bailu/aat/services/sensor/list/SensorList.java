@@ -37,7 +37,7 @@ public final class SensorList extends ArrayList<SensorListItem> implements Close
         SensorListItem item = find(address);
 
         if (item == null) {
-            item = new SensorListItem(address, name, initialState);
+            item = new SensorListItem(context, address, name, initialState);
             add(item);
 
         }
