@@ -4,7 +4,6 @@ import android.content.Context;
 
 import ch.bailu.aat.R;
 import ch.bailu.aat.gpx.InfoID;
-import ch.bailu.aat.util.ToDo;
 
 public final class SensorState {
 
@@ -12,7 +11,7 @@ public final class SensorState {
 
     private static final int[] connected = new int[SIZE];
 
-    public static final int[] NAMES = {
+    private static final int[] NAMES = {
             R.string.sensor_heart_rate,
             R.string.sensor_cadence,
             R.string.sensor_speed,
@@ -20,9 +19,10 @@ public final class SensorState {
             R.string.sensor_step_counter
     };
 
-    public static final char[] CHARS = {
+    private static final char[] CHARS = {
             'H', 'C', 'S', 'B', 'T'
     };
+
 
     public static int toIndex(int iid) {
         return iid-InfoID.HEART_RATE_SENSOR;
@@ -46,9 +46,6 @@ public final class SensorState {
         return c.getString(NAMES[toIndex(iid)]);
     }
     
-    public static char getChar(int iid) { return CHARS[toIndex(iid)]; }
-
-
     public static String getOverviewString() {
         StringBuilder overview= new StringBuilder();
         for (int i = 0; i< SIZE; i++) {
