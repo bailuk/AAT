@@ -3,8 +3,8 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 28
 
-    // ndkVersion "21.1.6352462"
-    
+    ndkVersion "21.1.6352462"
+
     defaultConfig {
         applicationId "ch.bailu.aat"
 
