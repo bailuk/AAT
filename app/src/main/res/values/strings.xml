@@ -232,7 +232,7 @@
     <string name="p_map">Map</string>
     <string name="p_offline_map">Offline map</string>
     <string name="p_mapsforge_directory">Offline maps directory</string>
-    <string name="p_mapsforge_theme">Offline maps theme</string>
+    <string name="p_mapsforge_theme">Offline map theme</string>
     <string name="p_enable_cache">Enable cache</string>
     <string name="p_directory_tiles">Tile cache directory</string>
     <string name="p_use_volume_keys">Use volume buttons for map zoom</string>
@@ -249,7 +249,7 @@
         <item>Size or age</item>
     </string-array>
     <string name="p_trim_cache">Trim tile cache</string>
-    <string name="p_tiles">Map Tiles</string>
+    <string name="p_tiles">Map</string>
     <string name="p_trim_mode">Trim mode</string>
     <string name="p_trim_size">Trim size</string>
     <string name="p_trim_age">Trim age</string>
