@@ -28,6 +28,7 @@ AAT does not automatically remove downloaded and cached map tiles. Go to `Prefer
 
 ## OpenAndroMaps step by step
 [OpenAndroMaps](http://www.openandromaps.org) offers global coverage, POI-databases and a nice outdoor theme.
+
 1. Select a map from [Countries and Regions](https://www.openandromaps.org/en/downloads/countrys-and-regions). Click `Karte/Map+Pois` to download a zip-archive containing a map and a POI-database.
 2. Extract this zip-archive to `/maps` or to one of its subdirectories.
 3. Navigate to [Elevate Map Style](https://www.openandromaps.org/en/legend/elevate-mountain-hike-theme) and download `Elevate.zip` from `Manual download (advanced)`.

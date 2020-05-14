@@ -2,52 +2,49 @@
 
 <h2>Main view</h2>
 
-<p>When starting AAT the first time it shows the <strong>main view</strong>. That's basically a list of sub-views you can open. The first 3 entries are <strong>"Cockpit A, Cockpit B, and Map"</strong> if you have one of these open you can cycle through them with the down arrow. The right arrow switches trough the different pages of the view you are in.</p>
+<p>When starting AAT the first time it shows the <strong>main view</strong> with a list of sub-views you can open. The first 3 entries are <strong>"Cockpit A, Cockpit B, and Map"</strong> if you have one of these open you can cycle through them with the down arrow. The right arrow switches trough the different pages of the view.</p>
 
-<h2>Map view (or full screen map)</h2>
+<h2>Map view (and full screen map)</h2>
 
-<p>In the <strong>map view</strong> the down arrow is in the main bar (tap the top area of the map). For zooming and navigating tap the bottom area of the map. For grid, search, overpass etc. tap  the right area of the map. For the draft editor tap the left side of the map. 
-The track that gets currently recorded is always displayed on the map.</p>
+<p><strong>Tap the edges of the map view, to get extra functionality</strong>.
+Top edge:    Cycle trough cockpit views.
+Left edge:   Edit current track or <code>draft.gpx</code>.
+Right edge:  Configure map, select grid, map search, import/export of center location.
+Bottom edge: Zoom in and out, lock to current position, frame tracks.</p>
 
 <h2>Display recorded track</h2>
 
-<p>Now once you have stopped the tracker go back to the <strong>main view</strong> with your phones back button. Then select <strong>Track list</strong> to show a list of all recorded GPX tracks. Every track has a preview image if you tap on this image, you'll get a context menu for this GPX-file. <em>Here you can for example select this track for one of the 4 overlay slots.</em> You can display any recorded track by taping the text area of the list entry. (Always go back to the list with the phones back button). In the track view there are again different pages (graph, summary and map) and you can cycle trough all tracks with the up and down arrow.</p>
+<p>Once you have stopped the tracker go back to the <strong>main view</strong> with your phones back button. Then select <strong>Track list</strong> to show a list of all recorded GPX tracks. Every track has a preview image if you tap on this image, you'll get a context menu for this GPX-file. <em>Here you can for example select this track for one of the 4 overlay slots.</em> You can display any recorded track by taping the text area of the list entry. (Always go back to the list with the phones back button). In the track view there are again different pages (graph, summary and map) and you can cycle trough all tracks with the up and down arrow.</p>
 
 <p>There are different pages in the <strong>Track list</strong> view (Access them with &lt; &#8230; > ). These pages offer <strong>a map as an alternative to the track list</strong>, <strong>summary information</strong> and <strong>filter options</strong>.</p>
 
 <h1>Map Tiles</h1>
 
-<p>AAT does not automatically remove downloaded map tiles. This is to&#8230;</p>
+<p>AAT does not automatically remove downloaded and cached map tiles. Go to <code>Preferences-&gt;Map</code> and scroll down to <code>Trim tile cache</code> to remove old map tiles manually.</p>
+
+<h1>Install Offline Maps</h1>
+
+<h2>General</h2>
 
 <ul>
-<li>reduce network traffic as much as possible.</li>
-<li>reduce battery drain.</li>
-<li>speed up the map view.</li>
+<li>Download maps, themes and POI-databases from one of the supported <a href="https://github.com/mapsforge/mapsforge/blob/master/docs/Mapsforge-Maps.md">map providers</a>.</li>
+<li>Extract zip-archives.</li>
+<li>Save those files to <code>/maps</code> on the sd-card or internal storage.</li>
 </ul>
 
-<p>This means that you have to remove old tiles manually from time to time.
-Go to <code>Settings-&gt;Map Tiles</code> to remove old map tiles.</p>
+<h2>OpenAndroMaps step by step</h2>
 
-<h1>Offline Maps</h1>
-
-<h2>Download and store maps:</h2>
+<p><a href="http://www.openandromaps.org">OpenAndroMaps</a> offers global coverage, POI-databases and a nice outdoor theme.</p>
 
 <ol>
-<li>Download maps and render themes from one of these map providers: <br>
-<a href="http://www.openandromaps.org">OpenAndroMaps</a>, <a href="http://www.freizeitkarte-osm.de/android/en/index.html">Freizeitkarte</a> or <a href="http://download.mapsforge.org/">Mapsforge</a></li>
-<li>Store extracted maps in the directory <code>maps</code> or in one of its subdirectories. <br>
-Example: <code>maps/OAM/</code> contains <code>Alps.map</code></li>
-<li>Store extracted themes in a subdirectory of the directory containing the corresponding maps. <br>
-Example: <code>maps/OAM/OAM/</code> contains <code>andromaps_cycle.xml</code>, <code>symbols/</code>, <code>patterns/</code> and other files.</li>
-</ol>
-
-<h2>Enable offline maps</h2>
-
-<ol>
-<li>Inside AAT open the map settings dialog. (<code>Settings-&gt;Map Tiles</code>).</li>
-<li>Select the directory that contains the map files (In this example <code>maps/OAM/</code> will be listed). </li>
-<li>Select a render theme.</li>
-<li>Disable Mapnik and enable Mapsforge in <code>Menu-&gt;Map</code>.</li>
+<li>Select a map from <a href="https://www.openandromaps.org/en/downloads/countrys-and-regions">Countries and Regions</a>. Click <code>Karte/Map+Pois</code> to download a zip-archive containing a map and a POI-database.</li>
+<li>Extract this zip-archive to <code>/maps</code> or to one of its subdirectories.</li>
+<li>Navigate to <a href="https://www.openandromaps.org/en/legend/elevate-mountain-hike-theme">Elevate Map Style</a> and download <code>Elevate.zip</code> from <code>Manual download (advanced)</code>.</li>
+<li>Extract <code>Elevate.zip</code> to <code>/maps/elevate</code>.</li>
+<li>Inside AAT open the map preferences dialog. (<code>Preferences-&gt;Map</code>).</li>
+<li>Tap <code>Offline map</code>. This will list all maps stored in <code>/maps</code>.</li>
+<li>Tap <code>Offline map theme</code> and select <code>Elevate.xml</code>.</li>
+<li>Disable <code>Mapnik</code> and enable <code>Offline Elevate</code> in <code>Menu-&gt;Map</code>.</li>
 </ol>
 
 <h1>Where to find files?</h1>
@@ -59,22 +56,10 @@ The structure of the data directory is as follows: </p>
 <ul>
 <li><code>aat_data/activity[0-4]</code> - tracked activities</li>
 <li><code>aat_data/log</code>           - activity that gets tracked at the moment</li>
-<li><code>aat_data/nominatim</code>     - search result from OpenStreetMap Nominatim</li>
-<li><code>aat_data/osm_features</code>  - OSM Features original file and parsed files</li>
-<li><code>aat_data/overlay</code>       - overlays such as planned tracks or search results</li>
-<li><code>aat_data/overpass</code>      - queries from the OSM Overpass server</li>
-<li><code>aat_data/dem3</code>          - cached <a href="http://viewfinderpanoramas.org/dem3.html">Digital elevation data</a> from the Shuttle Radar Topography Mission and other sources</li>
+<li><code>aat_data/query</code>         - search results from OSM-Nominatim, OSM-Overpass and offline POI </li>
+<li><code>aat_data/overlay</code>       - GPX-files that can be used as overlays: Routes, way-points, search results&#8230;</li>
+<li><code>aat_data/dem3</code>          - cached <a href="http://bailu.ch/dem3/">Digital elevation data files </a>.</li>
 </ul>
-
-<h1>Overpass</h1>
-
-<h2>Overview</h2>
-
-<p>AAT lets you query the <a href="http://wiki.openstreetmap.org/wiki/Overpass_API">Overpass API</a>. Any result of a query can be saved to <code>aat_data/overlay</code>. It then can be displayed as an overlay inside the map-view whenever needed.</p>
-
-<h2>Example</h2>
-
-<p><code>[amenity=restaurant]</code> will get you list of all restaurants located inside the area that was visible on the map-view before opening the Overpass dialog. </p>
 
 <h1>Calculating calories</h1>
 
