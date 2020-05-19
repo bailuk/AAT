@@ -80,6 +80,11 @@ public class ControlBar extends LinearLayout {
     }
 
 
+
+    public ImageButtonViewGroup addImageButton(int res) {
+        return addImageButton(res, getControlSize());
+    }
+
     public ImageButtonViewGroup addImageButton(int res, int size) {
         ImageButtonViewGroup button = new ImageButtonViewGroup(getContext(), res);
         button.setOnClickListener(onClickListener);
@@ -149,7 +154,4 @@ public class ControlBar extends LinearLayout {
     };
 
 
-    public ImageButtonViewGroup addImageButton(int res) {
-        return addImageButton(res, getControlSize());
-    }
 }
