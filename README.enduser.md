@@ -4,11 +4,11 @@
 When starting AAT the first time it shows the **main view** with a list of sub-views you can open. The first 3 entries are **"Cockpit A, Cockpit B, and Map"** if you have one of these open you can cycle through them with the down arrow. The right arrow switches trough the different pages of the view.
 
 ## Map view (and full screen map)
-**Tap the edges of the map view, to get extra functionality**.
-Top edge:    Cycle trough cockpit views.
-Left edge:   Edit current track or `draft.gpx`.
-Right edge:  Configure map, select grid, map search, import/export of center location.
-Bottom edge: Zoom in and out, lock to current position, frame tracks.
+**Tap the edges of the map view, to get extra functionality**.  
+Top edge:    Cycle trough cockpit views.  
+Left edge:   Edit current track or `draft.gpx`.  
+Right edge:  Configure map, select grid, map search, import/export of center location.  
+Bottom edge: Zoom in and out, lock to current position, frame tracks.  
 
 ## Display recorded track
 Once you have stopped the tracker go back to the **main view** with your phones back button. Then select **Track list** to show a list of all recorded GPX tracks. Every track has a preview image if you tap on this image, you'll get a context menu for this GPX-file. _Here you can for example select this track for one of the 4 overlay slots._ You can display any recorded track by taping the text area of the list entry. (Always go back to the list with the phones back button). In the track view there are again different pages (graph, summary and map) and you can cycle trough all tracks with the up and down arrow.
@@ -48,7 +48,7 @@ The structure of the data directory is as follows:
 - `aat_data/log`           - activity that gets tracked at the moment
 - `aat_data/query`         - search results from OSM-Nominatim, OSM-Overpass and offline POI 
 - `aat_data/overlay`       - GPX-files that can be used as overlays: Routes, way-points, search results...
-- `aat_data/dem3`          - cached [Digital elevation data files ](http://bailu.ch/dem3/).
+- `aat_data/dem3`          - cached [Digital elevation data files ](http://bailu.ch/dem3/)
 
 
 # Calculating calories
