@@ -371,7 +371,7 @@
     <string name ="tt_map_zoomout">Zoom out of map.</string>
     <string name ="tt_map_home">Lock center of map to your currently known location.</string>
     <string name ="tt_map_frame">Switch between GPX-Overlays and frame them.</string>
-
+    <string name ="tt_map_edges">Tap edges for more functionality</string>
 
     <string name ="tt_nominatim_query">Start search.</string>
     <string name ="tt_nominatim_clear">Clear line in search text.</string>

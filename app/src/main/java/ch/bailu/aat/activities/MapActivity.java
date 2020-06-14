@@ -7,6 +7,7 @@ import android.os.Bundle;
 
 import org.mapsforge.core.model.LatLong;
 
+import ch.bailu.aat.R;
 import ch.bailu.aat.coordinates.WGS84Coordinates;
 import ch.bailu.aat.dispatcher.CurrentLocationSource;
 import ch.bailu.aat.dispatcher.EditorSource;
@@ -17,6 +18,7 @@ import ch.bailu.aat.map.MapViewInterface;
 import ch.bailu.aat.util.ui.AppLayout;
 import ch.bailu.aat.util.ui.AppLog;
 import ch.bailu.aat.util.ui.AppTheme;
+import ch.bailu.aat.util.ui.ToolTip;
 import ch.bailu.aat.views.ContentView;
 import ch.bailu.aat.views.bar.ControlBar;
 import ch.bailu.aat.views.bar.MainControlBar;
@@ -40,6 +42,8 @@ public class MapActivity extends AbsKeepScreenOnActivity {
         createDispatcher(edit);
 
 
+        contentView.showTip(getString(R.string.tt_map_edges));
+
         handleIntent(map);
     }
 
@@ -50,7 +54,6 @@ public class MapActivity extends AbsKeepScreenOnActivity {
 
         if (Objects.equals(intent.getAction(),Intent.ACTION_VIEW) && uri != null) {
             setMapCenterFromUri(map, uri);
-            //openQueryFromUri(uri);
         }
     }
 
@@ -65,18 +68,6 @@ public class MapActivity extends AbsKeepScreenOnActivity {
         }
     }
 
-/*
-    private void openQueryFromUri(Uri uri) {
-        String query = AbsOsmApiActivity.queryFromUri(uri);
-
-        if (query != null) {
-            Intent intent = new Intent();
-            AppIntent.setBoundingBox(intent, new BoundingBoxE6(0,0,0,0));
-            intent.setData(uri);
-            ActivitySwitcher.start(this, NominatimActivity.class, intent);
-        }
-    }
-*/
 
     private MapViewInterface createMap(EditorSource edit) {
         return MapFactory.DEF(this, SOLID_KEY).map(edit, createButtonBar());

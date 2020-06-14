@@ -86,14 +86,6 @@ public class AppLog implements Closeable {
         sendBroadcast(LOG_INFO, c, toSaveString(m));
     }
 
-    //private static void i(Object o, String m) {
-    //    i(o.getClass().getSimpleName(), m);
-    //}
-
-    //private static void i(String a, String b) {
-    //    android.util.Log.i(toSaveString(a), toSaveString(b));
-    //}
-
 
     public static void e(Context c, Throwable e) {
         e(c, toStringAndPrintStackTrace(e));

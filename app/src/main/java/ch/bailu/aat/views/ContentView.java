@@ -5,20 +5,25 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
-import java.util.ArrayList;
-
 import ch.bailu.aat.activities.ActivitySwitcher;
 import ch.bailu.aat.preferences.system.SolidStatusMessages;
-import ch.bailu.aat.util.ui.AppLog;
 import ch.bailu.aat.util.ui.UiTheme;
 import ch.bailu.aat.views.description.mview.MultiView;
 import ch.bailu.aat.views.description.mview.MultiViewIndicator;
+import ch.bailu.aat.views.msg_overlay.AbsMsgView;
+import ch.bailu.aat.views.msg_overlay.DownloadMsgView;
+import ch.bailu.aat.views.msg_overlay.DownloadSizeMsgView;
+import ch.bailu.aat.views.msg_overlay.FileChangeMsgView;
+import ch.bailu.aat.views.msg_overlay.InfoLogMsgView;
+import ch.bailu.aat.views.msg_overlay.MessageOverlay;
+import ch.bailu.aat.views.msg_overlay.TipMsgView;
 
 public class ContentView extends FrameLayout{
     private final LinearLayout mainContent;
-    private final LinearLayout messages;
+    private final MessageOverlay messages;
 
-    private final ArrayList<MessageView> messageViews = new ArrayList<MessageView>(5);
+    private final AbsMsgView ttBottom;
+    private final AbsMsgView ttTop;
 
 
     public ContentView(Context context, UiTheme theme) {
@@ -30,34 +35,40 @@ public class ContentView extends FrameLayout{
         mainContent.setOrientation(LinearLayout.VERTICAL);
         addView(mainContent);
 
-        messages = new LinearLayout(context);
-        messages.setOrientation(LinearLayout.VERTICAL);
+        messages = new MessageOverlay(context);
         addView(messages);
 
         SolidStatusMessages smessages = new SolidStatusMessages(context);
 
 
         if (smessages.showURL()) {
-            addM(new DownloadMessageView(context));
+            messages.add(new DownloadMsgView(context));
         }
 
         if (smessages.showPath()) {
-            addM(new FileMessageView(context));
+            messages.add(new FileChangeMsgView(context));
         }
-
-        addM(new LogInfoMessageView(context));
 
         if (smessages.showSummary()) {
-            addM(new DownloadSizeMessageView(context));
+            messages.add(new DownloadSizeMsgView(context));
+        }
+
+        ttTop = messages.add(new InfoLogMsgView(context));
+        messages.addSpace();
+        ttBottom = messages.addR(new TipMsgView(context));
+
+        logActivityLabel();
+    }
+
+
+    private void logActivityLabel() {
+        final ActivitySwitcher.Entry e = ActivitySwitcher.get(getContext());
+
+        if (e != null) {
+            ttTop.set(e.activityLabel);
         }
     }
 
-
-    private void addM(MessageView v) {
-        messages.addView(v,
-                new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
-        messageViews.add(v);
-    }
 
     public void add(View view) {
         mainContent.addView(view);
@@ -73,37 +84,12 @@ public class ContentView extends FrameLayout{
         v.setLayoutParams(l);
     }
 
-    @Override
-    public void onAttachedToWindow() {
-        super.onAttachedToWindow();
-        for (MessageView v: messageViews) {
-            v.attach();
-        }
-
-
-        logActivityLabel();
-    }
-
-
-    private void logActivityLabel() {
-        final ActivitySwitcher.Entry e = ActivitySwitcher.get(getContext());
-
-        if (e != null) {
-            AppLog.i(getContext(), e.activityLabel);
-        }
-    }
-
-
-    @Override
-    public void onDetachedFromWindow() {
-        for (MessageView v: messageViews) {
-            v.detach();
-        }
-
-        super.onDetachedFromWindow();
-    }
 
     public void addMvIndicator(MultiView mv) {
         messages.addView(new MultiViewIndicator(mv), 0);
+    }
+
+    public void showTip(String string) {
+        ttBottom.set(string);
     }
 }

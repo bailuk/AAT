@@ -17,6 +17,9 @@ import ch.bailu.aat.util.ui.UiTheme;
 
 public class DistanceAltitudeGraphView extends AbsGraphView {
 
+    private int firstPoint = -1;
+    private int lastPoint = -1;
+
 
     public DistanceAltitudeGraphView(Context context, DispatcherInterface di,
                                      UiTheme theme, int... iid) {
@@ -31,24 +34,41 @@ public class DistanceAltitudeGraphView extends AbsGraphView {
     }
 
 
+    public void setLimit(int first, int last) {
+        firstPoint = first;
+        lastPoint = last;
+    }
+
+    public boolean hasLimit() {
+        return firstPoint > -1 && lastPoint > firstPoint;
+    }
+
     @Override
     public void plot(Canvas canvas, GpxList list, int index, SolidUnit sunit,
                      boolean markerMode) {
-        int km_factor = (int) (list.getDelta().getDistance()/1000) + 1;
+
+        DistanceWalker distances = new DistanceWalker();
+        distances.walkTrack(list);
+
+        int km_factor = (int) (distances.getDistanceDelta()/1000) + 1;
         GraphPlotter plotter = new GraphPlotter(canvas,getWidth(), getHeight(), 1000 * km_factor,
                 new AppDensity(getContext()), theme);
 
         GpxListWalker painter, scaleGenerator;
 
-        if (markerMode) {
-            painter = new GraphPainterMarkerMode(plotter, (int)list.getDelta().getDistance() / getWidth());
+        int minDistance = (int)distances.getDistanceDelta() / getWidth();
+        if (hasLimit()) {
+            painter = new GraphPainterLimit(plotter, minDistance);
+            scaleGenerator = new ScaleGeneratorLimit(plotter);
+
+        } else if (markerMode) {
+            painter = new GraphPainterMarkerMode(plotter, minDistance);
             scaleGenerator = new ScaleGeneratorMarkerMode(plotter);
         } else {
-            painter = new GraphPainter(plotter, (int)list.getDelta().getDistance() / getWidth());
+            painter = new GraphPainter(plotter, minDistance);
             scaleGenerator = new ScaleGenerator(plotter);
 
         }
-
 
         scaleGenerator.walkTrack(list);
         plotter.roundYScale(50);
@@ -57,17 +77,79 @@ public class DistanceAltitudeGraphView extends AbsGraphView {
         painter.walkTrack(list);
 
 
-        new SegmentNodePainter(plotter).walkTrack(list);
+        new SegmentNodePainter(plotter, distances.getDistanceOffset()).walkTrack(list);
         if (index > -1) {
-            new IndexPainter(plotter, index).walkTrack(list);
+            new IndexPainter(plotter, index, distances.getDistanceOffset()).walkTrack(list);
         }
 
         plotter.drawXScale(5, sunit.getDistanceFactor(), isXLabelVisible());
         plotter.drawYScale(5, sunit.getAltitudeFactor(), true);
+    }
 
 
+    private class DistanceWalker extends GpxListWalker {
+        private int index = 0;
+        private float dstDelta = 0f;
+        private float dstOffset = 0f;
+
+        @Override
+        public boolean doList(GpxList track) {
+            if (hasLimit()) {
+                return true;
+            } else {
+                dstDelta = track.getDelta().getDistance();
+                return false;
+            }
+        }
+
+        @Override
+        public boolean doSegment(GpxSegmentNode segment) {
+            return doDelta(segment.getSegmentSize(), segment.getDistance());
+        }
+
+        @Override
+        public boolean doMarker(GpxSegmentNode marker) {
+            return doDelta(marker.getSegmentSize(), marker.getDistance());
+        }
 
 
+        private boolean doDelta(int size, float distance) {
+
+            if (index > lastPoint) {
+                return false;
+
+            } else {
+                int nextIndex = index + size;
+
+                if (nextIndex < firstPoint) {
+                    index = nextIndex;
+                    dstOffset += distance;
+                    return false;
+                }
+            }
+            return true;
+        }
+
+
+        @Override
+        public void doPoint(GpxPointNode point) {
+            if (index < firstPoint) {
+                dstOffset += point.getDistance();
+
+            } else if (index <= lastPoint) {
+                dstDelta += point.getDistance();
+            }
+            index++;
+        }
+
+
+        public float getDistanceDelta() {
+            return dstDelta;
+        }
+
+        public float getDistanceOffset() {
+            return dstOffset;
+        }
     }
 
 
@@ -78,14 +160,16 @@ public class DistanceAltitudeGraphView extends AbsGraphView {
         public ScaleGenerator(GraphPlotter p) {
             plotter=p;
         }
-        @Override
-        public boolean doMarker(GpxSegmentNode marker) {
-            return true;
-        }
 
         @Override
         public void doPoint(GpxPointNode point) {
             plotter.inlcudeInYScale((float)point.getAltitude());
+        }
+
+
+        @Override
+        public boolean doMarker(GpxSegmentNode marker) {
+            return true;
         }
 
         @Override
@@ -98,6 +182,49 @@ public class DistanceAltitudeGraphView extends AbsGraphView {
             return true;
         }
 
+    }
+
+
+    private class ScaleGeneratorLimit extends ScaleGenerator {
+        private int index = 0;
+
+        public ScaleGeneratorLimit(GraphPlotter p) {
+            super(p);
+        }
+
+        @Override
+        public boolean doMarker(GpxSegmentNode marker) {
+            return doDelta(marker.getSegmentSize());
+        }
+
+        @Override
+        public boolean doSegment(GpxSegmentNode segment) {
+            return doDelta(segment.getSegmentSize());
+        }
+
+        private boolean doDelta(int size) {
+
+            if (index > lastPoint) {
+                return false;
+
+            } else {
+                int nextIndex = index + size;
+
+                if (nextIndex < firstPoint) {
+                    index = nextIndex;
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        @Override
+        public void doPoint(GpxPointNode point) {
+            if (index >= firstPoint && index <= lastPoint) {
+                super.doPoint(point);
+            }
+            index++;
+        }
     }
 
 
@@ -177,6 +304,23 @@ public class DistanceAltitudeGraphView extends AbsGraphView {
     }
 
 
+    private class GraphPainterLimit extends GraphPainter {
+        private int index = 0;
+
+
+        public GraphPainterLimit(GraphPlotter p, int md) {
+            super(p, md);
+        }
+
+        @Override
+        public void doPoint(GpxPointNode point) {
+            if (index >= firstPoint && index <= lastPoint) {
+                super.doPoint(point);
+            }
+            index++;
+        }
+    }
+
 
     private class GraphPainterMarkerMode extends GraphPainter {
 
@@ -199,14 +343,16 @@ public class DistanceAltitudeGraphView extends AbsGraphView {
     private class IndexPainter extends GpxListWalker {
 
         private float distance = 0f;
+        private final float offset;
         private int index = 0;
 
         private final int nodeIndex;
         private final GraphPlotter plotter;
 
-        public IndexPainter(GraphPlotter p, int n) {
+        public IndexPainter(GraphPlotter p, int n, float offset) {
             nodeIndex = n;
             plotter = p;
+            this.offset = offset;
         }
 
         @Override
@@ -216,16 +362,16 @@ public class DistanceAltitudeGraphView extends AbsGraphView {
 
         @Override
         public boolean doSegment(GpxSegmentNode segment) {
-            return doSegmentOrMarker(segment);
+            return doDelta(segment);
         }
 
         @Override
         public boolean doMarker(GpxSegmentNode marker) {
-            return doSegmentOrMarker(marker);
+            return doDelta(marker);
         }
 
 
-        private boolean doSegmentOrMarker(GpxSegmentNode segment) {
+        private boolean doDelta(GpxSegmentNode segment) {
             if (index + segment.getSegmentSize() <= nodeIndex) {
                 index += segment.getSegmentSize();
                 distance += segment.getDistance();
@@ -238,7 +384,7 @@ public class DistanceAltitudeGraphView extends AbsGraphView {
         public void doPoint(GpxPointNode point) {
             if (index == nodeIndex) {
                 distance += point.getDistance();
-                plotPoint(point, distance);
+                plotPoint(point, distance - offset);
                 index++;
 
             } else if (index < nodeIndex) {
@@ -256,12 +402,14 @@ public class DistanceAltitudeGraphView extends AbsGraphView {
 
     private class SegmentNodePainter extends GpxListWalker {
 
-        private float distance = 0f;
+        private float distance;
 
         private final GraphPlotter plotter;
 
-        public SegmentNodePainter(GraphPlotter p) {
+        public SegmentNodePainter(GraphPlotter p, float offset) {
             plotter = p;
+            distance = 0f - offset;
+
         }
 
         @Override
@@ -273,7 +421,7 @@ public class DistanceAltitudeGraphView extends AbsGraphView {
         public boolean doSegment(GpxSegmentNode segment) {
             if (segment.getSegmentSize() > 0 && distance > 0f) {
                 GpxPointNode node = (GpxPointNode) segment.getFirstNode();
-                plotPoint(node, distance + node.getDistance() );
+                plotPoint(node, distance + node.getDistance());
             }
 
             distance += segment.getDistance();

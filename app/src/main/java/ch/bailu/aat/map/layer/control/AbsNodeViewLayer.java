@@ -6,6 +6,7 @@ import android.view.View;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.GpxPointNode;
 import ch.bailu.aat.map.MapContext;
+import ch.bailu.aat.map.layer.gpx.GpxVisibleLimit;
 import ch.bailu.aat.util.HtmlBuilder;
 import ch.bailu.aat.util.HtmlBuilderGpx;
 import ch.bailu.aat.util.ui.AppLayout;
@@ -42,12 +43,16 @@ public abstract class AbsNodeViewLayer extends AbsNodeSelectorLayer implements
     @Override
     public void setSelectedNode(int IID, GpxInformation info, GpxPointNode node, int i) {
         infoView.setBackgroundColorFromIID(IID);
-        setGraph(info, i);
+
+        GpxVisibleLimit limit = new GpxVisibleLimit(mcontext);
+        limit.walkTrack(info.getGpxList());
+
+        setGraph(info, i, limit.getFirstPoint(), limit.getLastPoint());
     }
 
 
-    public void setGraph(GpxInformation info, int index) {
-        infoView.setGraph(info, index);
+    public void setGraph(GpxInformation info, int index, int firstPoint, int lastPoint) {
+        infoView.setGraph(info, index, firstPoint, lastPoint);
         measure();
         layout();
     }

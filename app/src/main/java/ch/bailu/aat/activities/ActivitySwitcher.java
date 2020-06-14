@@ -99,7 +99,7 @@ public class ActivitySwitcher {
     }
 
     private static void initBoth(Context c) {
-        entries.add(new Entry(c.getString(R.string.intro_map), MapActivity.class));
+        entries.add(new Entry(c.getString(R.string.intro_map), c.getString(R.string.tt_map_edges), MapActivity.class));
         entries.add(new Entry(c.getString(R.string.intro_list), TrackListActivity.class));
         entries.add(new Entry(c.getString(R.string.intro_overlay_list), OverlayListActivity.class));
         entries.add(new Entry(c.getString(R.string.intro_external_list), ExternalListActivity.class));
@@ -108,7 +108,7 @@ public class ActivitySwitcher {
                 c.getString(R.string.tt_info_nominatim),
                 NominatimActivity.class));
         entries.add(new Entry(c.getString(R.string.intro_settings), PreferencesActivity.class));
-
+        entries.add(getAbout(c));
     }
     public int size() {
         return entries.size();

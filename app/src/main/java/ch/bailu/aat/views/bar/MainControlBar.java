@@ -1,7 +1,6 @@
 package ch.bailu.aat.views.bar;
 
 import android.app.Activity;
-import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
 import ch.bailu.aat.R;
@@ -13,8 +12,6 @@ import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.menus.OptionsMenu;
 import ch.bailu.aat.util.ui.AppLayout;
 import ch.bailu.aat.util.ui.AppTheme;
-import ch.bailu.aat.views.MessageView;
-import ch.bailu.aat.views.description.mview.MultiViewIndicator;
 import ch.bailu.aat.views.description.mview.MultiViewNextButton;
 import ch.bailu.aat.views.description.mview.MultiViewSelector;
 import ch.bailu.aat.views.ImageButtonViewGroup;

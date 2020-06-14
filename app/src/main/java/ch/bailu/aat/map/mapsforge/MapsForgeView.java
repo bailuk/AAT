@@ -46,6 +46,7 @@ public class MapsForgeView extends MapsForgeViewBase {
                 }
             }
         });
+
     }
 
 

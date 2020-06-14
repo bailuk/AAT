@@ -1,4 +1,4 @@
-package ch.bailu.aat.views;
+package ch.bailu.aat.views.msg_overlay;
 
 import android.content.Context;
 import android.content.Intent;
@@ -9,23 +9,16 @@ import ch.bailu.aat.util.AppIntent;
 import ch.bailu.aat.util.fs.foc.FocAndroid;
 import ch.bailu.util_java.foc.Foc;
 
-public class FileMessageView  extends MessageView{
-    public FileMessageView(Context context) {
+public class FileChangeMsgView extends AbsBroadcastMsgView {
+    public FileChangeMsgView(Context context) {
         super(context, AppBroadcaster.FILE_CHANGED_ONDISK);
         setSingleLine();
         setEllipsize(TextUtils.TruncateAt.MIDDLE);
     }
 
     @Override
-    public void updateContent(Intent intent) {
+    public void set(Intent intent) {
         Foc file = FocAndroid.factory(getContext(), AppIntent.getFile(intent));
-        setText(file.getPathName());
-        enableText();
-        disableText();
-    }
-
-    @Override
-    public void updateContent() {
-
+        set(file.getPathName());
     }
 }

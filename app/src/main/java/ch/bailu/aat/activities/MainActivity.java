@@ -57,9 +57,10 @@ public class MainActivity extends ActivityContext {
         contentView.add(createButtonBar());
         contentView.addW(createActionList());
 
-        contentView.add(createExtraButton());
+        //contentView.add(createExtraButton());
 
         setContentView(contentView);
+        contentView.showTip(getString(R.string.tt_map_edges));
     }
 
 
@@ -126,10 +127,6 @@ public class MainActivity extends ActivityContext {
             return new InternalDirectoryLabel(s, AppDirectory.DIR_OVERLAY);
         } else if (s.activityClass == ExternalListActivity.class) {
             return new ExternalDirectoryLabel(s);
-        } else if (s.activityClass == AboutActivity.class) {
-            ActivityLabel label = new ActivityLabel(AppTheme.alt, s);
-            label.setText(getString(R.string.intro_about) + " / " + getString(R.string.intro_readme));
-            return label;
         }
 
         return new ActivityLabel(s);

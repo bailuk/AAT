@@ -1,4 +1,4 @@
-package ch.bailu.aat.views;
+package ch.bailu.aat.views.msg_overlay;
 
 import android.content.Context;
 import android.content.Intent;
@@ -8,23 +8,18 @@ import ch.bailu.aat.services.background.DownloaderThread;
 import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.util.MemSize;
 
-public class DownloadSizeMessageView extends MessageView {
+public class DownloadSizeMsgView extends AbsBroadcastMsgView {
     private long size = 0;
     final StringBuilder builder = new StringBuilder();
 
 
-    DownloadSizeMessageView(Context context) {
+    public DownloadSizeMsgView(Context context) {
         super(context, AppBroadcaster.FILE_CHANGED_ONDISK);
         setTextColor(Color.WHITE);
     }
 
     @Override
-    protected void updateContent() {
-
-    }
-
-    @Override
-    protected void updateContent(Intent intent) {
+    public void set(Intent intent) {
         long newSize = DownloaderThread.getTotalSize();
 
         if (size != newSize) {
@@ -32,9 +27,7 @@ public class DownloadSizeMessageView extends MessageView {
             builder.setLength(0);
             MemSize.describe(builder, (double)size);
 
-            setText(builder.toString());
-            enableText();
-            disableText();
+            set(builder.toString());
         }
     }
 }

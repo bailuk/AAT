@@ -36,7 +36,7 @@ public final class EditorNodeViewLayer extends NodeViewLayer {
         } else {
             showNode = false;
             setLoadEditorText(editorSource.getFile());
-            setGraph(GpxInformation.NULL, 0);
+            setGraph(GpxInformation.NULL, 0, -1, -1);
         }
     }
 
