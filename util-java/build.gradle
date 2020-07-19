@@ -4,6 +4,3 @@ apply plugin: 'java'
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
 }
-
-sourceCompatibility = "1.8"
-targetCompatibility = "1.8"
