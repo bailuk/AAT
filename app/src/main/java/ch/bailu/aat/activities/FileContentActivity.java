@@ -62,7 +62,7 @@ public class FileContentActivity extends AbsFileContentActivity{
         summary.add(createAttributesView());
 
 
-        View graph = GraphViewFactory.all(this,this, theme,
+        View graph = GraphViewFactory.all(this,this, THEME,
                 InfoID.FILEVIEW, InfoID.EDITOR_OVERLAY);
 
 

@@ -26,7 +26,6 @@ import ch.bailu.aat.views.ErrorView;
 import ch.bailu.aat.views.ImageButtonViewGroup;
 import ch.bailu.aat.views.NodeListView;
 import ch.bailu.aat.views.OsmApiEditorView;
-import ch.bailu.aat.views.PercentageLayout;
 import ch.bailu.aat.views.bar.MainControlBar;
 
 

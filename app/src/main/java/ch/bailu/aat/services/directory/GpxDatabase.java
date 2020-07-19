@@ -19,7 +19,7 @@ public final class GpxDatabase extends AbsDatabase{
 
     private final String[] keys;
 
-    private SQLiteDatabase database;
+    private final SQLiteDatabase database;
 
 
 

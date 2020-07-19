@@ -10,7 +10,6 @@ import ch.bailu.aat.preferences.presets.SolidDistanceFilter;
 import ch.bailu.aat.preferences.presets.SolidMET;
 import ch.bailu.aat.preferences.presets.SolidMissingTrigger;
 import ch.bailu.aat.preferences.presets.SolidTrackerAutopause;
-import ch.bailu.aat.util.ui.AppTheme;
 import ch.bailu.aat.util.ui.UiTheme;
 
 public class PresetPreferencesView extends VerticalScrollView {

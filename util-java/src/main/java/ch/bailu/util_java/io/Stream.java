@@ -96,10 +96,9 @@ public class Stream implements Closeable {
     }
 
     public void to(int x) throws IOException {
-        while(true) {
+        do {
             read();
-            if (haveA(x) || haveEOF()) break;
-        }
+        } while (!haveA(x) && !haveEOF());
     }
 
     @Override

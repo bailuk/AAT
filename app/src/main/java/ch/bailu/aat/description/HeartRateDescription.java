@@ -13,7 +13,6 @@ public class HeartRateDescription extends ContentDescription {
     public static final String UNIT = "bpm";
 
     private String value = VALUE_DISABLED;
-    private String unit = UNIT;
     private String label;
 
 
@@ -35,7 +34,7 @@ public class HeartRateDescription extends ContentDescription {
 
     @Override
     public String getUnit() {
-        return unit;
+        return UNIT;
     }
 
 
@@ -49,12 +48,10 @@ public class HeartRateDescription extends ContentDescription {
 
             value = bpm;
             label = LABEL + " " + contact;
-            unit = UNIT;
 
         } else {
             value = VALUE_DISABLED;
             label = LABEL;
-            unit = UNIT;
         }
     }
 }

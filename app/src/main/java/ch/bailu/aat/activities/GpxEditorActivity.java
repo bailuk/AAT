@@ -55,7 +55,7 @@ public class GpxEditorActivity extends AbsFileContentActivity {
         summary.add(createAttributesView());
 
         DistanceAltitudeGraphView graph = new DistanceAltitudeGraphView(this,
-                this, theme,
+                this, THEME,
                 InfoID.EDITOR_OVERLAY,
                 InfoID.FILEVIEW);
 

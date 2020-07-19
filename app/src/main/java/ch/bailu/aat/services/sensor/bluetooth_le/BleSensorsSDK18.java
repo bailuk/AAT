@@ -13,7 +13,6 @@ import ch.bailu.aat.services.sensor.Sensors;
 import ch.bailu.aat.services.sensor.list.SensorList;
 import ch.bailu.aat.services.sensor.list.SensorListItem;
 import ch.bailu.aat.util.Timer;
-import ch.bailu.aat.util.ToDo;
 
 @RequiresApi(api = 18)
 public final class BleSensorsSDK18 extends Sensors {

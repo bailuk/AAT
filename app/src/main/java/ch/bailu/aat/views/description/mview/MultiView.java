@@ -17,7 +17,7 @@ public class MultiView extends ViewGroup implements ObservableInterface{
 
     private final String solidKey;
 
-    private final ArrayList<Observer> observers = new ArrayList(2);
+    private final ArrayList<Observer> observers = new ArrayList<>(2);
 
     @Override
     public void addObserver(Observer o) {

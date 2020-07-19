@@ -7,13 +7,13 @@ import ch.bailu.aat.util.ui.AppTheme;
 import ch.bailu.aat.util.ui.UiTheme;
 
 public class MultiViewIndicator extends ViewGroup {
+    private final static UiTheme THEME = AppTheme.bar;
+
     private final MultiView multiView;
     private final View indicatorView;
 
     private final static int HEIGHT = 5;
     private int width = 0;
-
-    private final UiTheme theme = AppTheme.bar;
 
     public MultiViewIndicator(MultiView multiView) {
         super(multiView.getContext());
@@ -25,7 +25,7 @@ public class MultiViewIndicator extends ViewGroup {
         setClickable(false);
 
         indicatorView = new View(getContext());
-        indicatorView.setBackgroundColor(theme.getHighlightColor());
+        indicatorView.setBackgroundColor(THEME.getHighlightColor());
         indicatorView.setClickable(false);
         addView(indicatorView);
     }

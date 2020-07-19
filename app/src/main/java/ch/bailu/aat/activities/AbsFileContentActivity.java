@@ -31,6 +31,8 @@ import ch.bailu.util_java.util.Objects;
 
 public abstract class AbsFileContentActivity extends ActivityContext implements OnClickListener {
 
+    protected final static UiTheme THEME = AppTheme.trackContent;
+
     private IteratorSource  currentFile;
     protected ImageButtonViewGroup nextFile, previousFile;
     protected PreviewView fileOperation;
@@ -44,8 +46,6 @@ public abstract class AbsFileContentActivity extends ActivityContext implements 
     protected EditorOrBackupSource editorSource = null;
 
     private String currentFileID;
-
-    protected UiTheme theme = AppTheme.trackContent;
 
     public void onCreate(Bundle savedInstanceState) {
 
@@ -61,7 +61,7 @@ public abstract class AbsFileContentActivity extends ActivityContext implements 
 
 
     private void createViews() {
-        final ContentView contentView = new ContentView(this, theme);
+        final ContentView contentView = new ContentView(this, THEME);
 
         MainControlBar bar = new MainControlBar(this,5);
 

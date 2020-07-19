@@ -20,12 +20,12 @@ import ch.bailu.aat.util.ui.UiTheme;
 
 public class NodeEntryView extends LinearLayout {
 
+    private final static UiTheme THEME = AppTheme.search;
+
     private final MapsForgeViewStatic map;
     private final TextView text;
 
     private final GpxDynLayer gpxOverlay;
-
-    private final UiTheme theme = AppTheme.search;
 
 
     public NodeEntryView(ServiceContext sc, AbsDispatcher d) {
@@ -47,8 +47,8 @@ public class NodeEntryView extends LinearLayout {
         addViewWeight(text);
         addView(map, previewSize, previewSize);
 
-        theme.content(text);
-        theme.button(this);
+        THEME.content(text);
+        THEME.button(this);
     }
 
 

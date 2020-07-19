@@ -10,7 +10,6 @@ import android.widget.ScrollView;
 import ch.bailu.aat.preferences.SolidIndexList;
 import ch.bailu.aat.util.ui.AppLayout;
 import ch.bailu.aat.util.ui.AppLog;
-import ch.bailu.aat.util.ui.AppTheme;
 import ch.bailu.aat.util.ui.UiTheme;
 import ch.bailu.aat.views.ImageButtonViewGroup;
 import ch.bailu.aat.views.preferences.SolidImageButton;

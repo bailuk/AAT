@@ -18,7 +18,6 @@ import ch.bailu.aat.preferences.map.SolidTrimMode;
 import ch.bailu.aat.preferences.map.SolidTrimSize;
 import ch.bailu.aat.preferences.system.SolidVolumeKeys;
 import ch.bailu.aat.services.ServiceContext;
-import ch.bailu.aat.util.ui.AppTheme;
 import ch.bailu.aat.util.ui.UiTheme;
 import ch.bailu.aat.views.tileremover.TileRemoverView;
 

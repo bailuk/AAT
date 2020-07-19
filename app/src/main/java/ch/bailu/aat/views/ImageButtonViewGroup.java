@@ -9,7 +9,7 @@ import ch.bailu.aat.util.ui.AppTheme;
 
 public class ImageButtonViewGroup extends FrameLayout  {
 
-    private final int MAX_IMAGE_SIZE = 40;
+    private static final int MAX_IMAGE_SIZE = 40;
     private final ImageView imageView;
 
     public ImageButtonViewGroup(Context context, int image_res) {

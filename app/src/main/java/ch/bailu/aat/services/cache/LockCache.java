@@ -2,6 +2,7 @@ package ch.bailu.aat.services.cache;
 
 import java.io.Closeable;
 
+@SuppressWarnings("unchecked")
 public final class LockCache<E extends Obj>  implements Closeable {
     private E[]    objects;
     private long[] access;

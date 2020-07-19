@@ -1,9 +1,6 @@
 package ch.bailu.aat.gpx.xml_parser.parser.osm;
 
 import org.xmlpull.v1.XmlPullParser;
-import org.xmlpull.v1.XmlPullParserException;
-
-import java.io.IOException;
 
 import ch.bailu.aat.gpx.xml_parser.parser.TagParser;
 import ch.bailu.aat.gpx.xml_parser.scanner.Scanner;

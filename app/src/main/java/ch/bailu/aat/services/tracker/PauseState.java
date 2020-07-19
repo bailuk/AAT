@@ -1,7 +1,5 @@
 package ch.bailu.aat.services.tracker;
 
-import java.io.IOException;
-
 import ch.bailu.aat.R;
 import ch.bailu.aat.gpx.StateID;
 

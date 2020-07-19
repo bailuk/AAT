@@ -30,7 +30,7 @@ public class AppHtml {
     }
 
 
-    private static Html.TagHandler CODE_TAG_HANDLER = new Html.TagHandler() {
+    private static final Html.TagHandler CODE_TAG_HANDLER = new Html.TagHandler() {
 
         private int code = 0;
 

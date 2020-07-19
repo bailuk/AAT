@@ -2,6 +2,7 @@ package ch.bailu.aat.preferences;
 
 import android.content.Context;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
+
 import androidx.annotation.NonNull;
 
 import ch.bailu.aat.exception.ValidationException;
@@ -57,20 +58,13 @@ public abstract class AbsSolidType implements SolidTypeInterface {
         return null;
     }
 
-
     protected static String toDefaultString(String s) {
         return s + DEFAULT_MARKER;
     }
-
     protected static String toDefaultString(String s, int sel) {
-        return toDefaultString(s, sel, 0);
-    }
-
-    protected static String toDefaultString(String s, int sel, int def) {
-        if (def == sel) return toDefaultString(s);
+        if (sel == 0) return toDefaultString(s);
         return s;
     }
-
 
     public boolean validate(String s) { return true; }
 

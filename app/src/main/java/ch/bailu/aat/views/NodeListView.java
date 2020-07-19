@@ -17,8 +17,8 @@ import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.GpxInformationCache;
 import ch.bailu.aat.gpx.GpxList;
 import ch.bailu.aat.gpx.GpxListArray;
-import ch.bailu.aat.util.ui.AppTheme;
 import ch.bailu.aat.services.ServiceContext;
+import ch.bailu.aat.util.ui.AppTheme;
 import ch.bailu.aat.util.ui.UiTheme;
 
 public class NodeListView extends ListView implements
@@ -26,6 +26,7 @@ public class NodeListView extends ListView implements
         ListAdapter,
         android.widget.AdapterView.OnItemClickListener
 {
+    private final static UiTheme THEME = AppTheme.search;
 
     private final SparseArray<DataSetObserver> observer= new SparseArray<>(5);
 
@@ -36,14 +37,12 @@ public class NodeListView extends ListView implements
     private final ServiceContext scontext;
     private final AbsDispatcher dispatcher;
 
-    private final UiTheme theme = AppTheme.search;
-
     public NodeListView(ServiceContext sc, AbsDispatcher d) {
         super(sc.getContext());
         scontext = sc;
         dispatcher = d;
 
-        theme.list(this);
+        THEME.list(this);
 
         setAdapter(this);
         setOnItemClickListener(this);
@@ -148,4 +147,3 @@ public class NodeListView extends ListView implements
         return true;
     }
 }
-

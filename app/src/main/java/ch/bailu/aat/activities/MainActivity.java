@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
 
-import ch.bailu.aat.R;
 import ch.bailu.aat.dispatcher.CurrentLocationSource;
 import ch.bailu.aat.dispatcher.SensorSource;
 import ch.bailu.aat.dispatcher.TrackerSource;
