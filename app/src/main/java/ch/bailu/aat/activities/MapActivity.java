@@ -41,7 +41,6 @@ public class MapActivity extends AbsKeepScreenOnActivity {
 
         createDispatcher(edit);
 
-
         contentView.showTip(getString(R.string.tt_map_edges));
 
         handleIntent(map);

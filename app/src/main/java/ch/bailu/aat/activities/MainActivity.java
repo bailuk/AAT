@@ -57,10 +57,7 @@ public class MainActivity extends ActivityContext {
         contentView.add(createButtonBar());
         contentView.addW(createActionList());
 
-        //contentView.add(createExtraButton());
-
         setContentView(contentView);
-        contentView.showTip(getString(R.string.tt_map_edges));
     }
 
 

@@ -9,7 +9,6 @@ import org.mapsforge.core.model.BoundingBox;
 import java.io.File;
 import java.util.ArrayList;
 
-import ch.bailu.aat.BuildConfig;
 import ch.bailu.aat.R;
 import ch.bailu.aat.coordinates.BoundingBoxE6;
 import ch.bailu.aat.util.AppIntent;
@@ -99,7 +98,7 @@ public class ActivitySwitcher {
     }
 
     private static void initBoth(Context c) {
-        entries.add(new Entry(c.getString(R.string.intro_map), c.getString(R.string.tt_map_edges), MapActivity.class));
+        entries.add(new Entry(c.getString(R.string.intro_map), MapActivity.class));
         entries.add(new Entry(c.getString(R.string.intro_list), TrackListActivity.class));
         entries.add(new Entry(c.getString(R.string.intro_overlay_list), OverlayListActivity.class));
         entries.add(new Entry(c.getString(R.string.intro_external_list), ExternalListActivity.class));
