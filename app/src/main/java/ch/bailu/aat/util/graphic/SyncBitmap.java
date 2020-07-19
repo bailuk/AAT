@@ -1,10 +1,5 @@
 package ch.bailu.aat.util.graphic;
 
-import android.content.res.Resources;
-import android.graphics.Canvas;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
-
 import com.caverock.androidsvg.SVG;
 
 import org.mapsforge.core.graphics.Bitmap;
@@ -12,20 +7,21 @@ import org.mapsforge.map.android.graphics.AndroidBitmap;
 import org.mapsforge.map.android.graphics.AndroidGraphicFactory;
 
 import java.io.BufferedInputStream;
-import java.io.Closeable;
 import java.io.IOException;
 import java.io.InputStream;
 
 import ch.bailu.aat.services.cache.Obj;
 import ch.bailu.util_java.foc.Foc;
 
-public class SyncBitmap implements Closeable {
+public class SyncBitmap {
     private Bitmap bitmap = null;
-    private Drawable drawable = null;
 
     private long size = Obj.MIN_SIZE;
 
 
+    public SyncBitmap() {
+
+    }
     public Bitmap getBitmap() {
         return bitmap;
     }
@@ -34,26 +30,6 @@ public class SyncBitmap implements Closeable {
         if (bitmap != null) return AndroidGraphicFactory.getBitmap(bitmap);
         return null;
     }
-
-
-    public synchronized Drawable getDrawable(Resources r) {
-        if (drawable == null) {
-            android.graphics.Bitmap bitmap = getAndroidBitmap();
-            if (bitmap != null) {
-                drawable = new BitmapDrawable(r, bitmap);
-            }
-        }
-        return drawable;
-    }
-
-
-
-    public synchronized Canvas getAndroidCanvas() {
-        android.graphics.Bitmap bitmap = getAndroidBitmap();
-        if (bitmap != null) return new Canvas(bitmap);
-        return null;
-    }
-
 
 
     private static Bitmap load(Foc file) throws IOException {
@@ -111,18 +87,12 @@ public class SyncBitmap implements Closeable {
 
 
 
+
     public synchronized void free() {
         if (bitmap != null) {
             bitmap.decrementRefCount();
         }
         bitmap = null;
-        drawable = null;
         size = Obj.MIN_SIZE;
-    }
-
-
-     @Override
-    public void close()  {
-        free();
     }
 }

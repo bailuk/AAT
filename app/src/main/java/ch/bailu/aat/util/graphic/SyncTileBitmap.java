@@ -11,14 +11,13 @@ import org.mapsforge.core.graphics.CorruptedInputStreamException;
 import org.mapsforge.core.graphics.TileBitmap;
 import org.mapsforge.map.android.graphics.AndroidGraphicFactory;
 
-import java.io.Closeable;
 import java.io.IOException;
 import java.io.InputStream;
 
 import ch.bailu.aat.services.cache.Obj;
 import ch.bailu.util_java.foc.Foc;
 
-public class SyncTileBitmap implements Closeable {
+public class SyncTileBitmap {
     private TileBitmap bitmap = null;
 
     private long size = 0;
@@ -113,9 +112,4 @@ public class SyncTileBitmap implements Closeable {
         size = Obj.MIN_SIZE;
     }
 
-
-    @Override
-    public void close()  {
-        free();
-    }
 }
