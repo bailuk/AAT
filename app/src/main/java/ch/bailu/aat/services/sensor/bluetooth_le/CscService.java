@@ -136,21 +136,19 @@ public final class CscService extends CscServiceID implements ServiceInterface {
     @NonNull
     @Override
     public String toString() {
-        String name = "";
+        String result = "";
 
-        if (!valid) {
-            name = "No ";
+        if (valid) {
+            if (isSpeedSensor && isCadenceSensor) {
+                result =  name_speed + " & " + name_cadence;
+            } else if (isSpeedSensor) {
+                result = name_speed;
+            } else if (isCadenceSensor) {
+                result = name_cadence;
+            }
         }
 
-        if (isSpeedSensor) {
-            name = name_speed + " ";
-        }
-
-        if (isCadenceSensor) {
-            name += name_speed + " ";
-        }
-
-        return name + "Sensor";
+        return result;
     }
 
 
