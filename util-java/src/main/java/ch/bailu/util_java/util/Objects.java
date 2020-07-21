@@ -21,7 +21,7 @@ public class Objects {
 
     public static long toLong(Object o) {
         try {
-            return Long.valueOf(toString(o));
+            return Long.parseLong(toString(o));
         } catch (NumberFormatException e) {
             return 0L;
         }
@@ -30,7 +30,7 @@ public class Objects {
 
     public static int toInt(Object o) {
         try {
-            return Integer.valueOf(toString(o));
+            return Integer.parseInt(toString(o));
         } catch (NumberFormatException e) {
             return 0;
         }
@@ -39,7 +39,7 @@ public class Objects {
 
     public static float toFloat(Object o) {
         try {
-            return Float.valueOf(toString(o));
+            return Float.parseFloat(toString(o));
         } catch (NumberFormatException e) {
             return 0f;
         }

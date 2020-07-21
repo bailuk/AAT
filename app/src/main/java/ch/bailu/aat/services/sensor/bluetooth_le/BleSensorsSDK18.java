@@ -31,7 +31,7 @@ public final class BleSensorsSDK18 extends Sensors {
     private boolean scanning = false;
 
 
-    private final Timer timer = new Timer(() -> stopScanner(), SCAN_DURATION);
+    private final Timer timer = new Timer(this::stopScanner, SCAN_DURATION);
 
 
 

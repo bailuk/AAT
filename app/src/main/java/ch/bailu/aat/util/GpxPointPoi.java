@@ -27,10 +27,10 @@ public class GpxPointPoi implements GpxPointInterface {
     @Override
     public double getAltitude() {
         if (attr.hasKey(KEY_ELE))
-            return Double.valueOf(attr.get(KEY_ELE));
+            return Double.parseDouble(attr.get(KEY_ELE));
 
         if (attr.hasKey(KEY_ALTITUDE))
-            return Double.valueOf(attr.get(KEY_ALTITUDE));
+            return Double.parseDouble(attr.get(KEY_ALTITUDE));
 
         return 0d;
     }

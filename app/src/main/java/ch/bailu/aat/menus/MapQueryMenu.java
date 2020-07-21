@@ -3,7 +3,6 @@ package ch.bailu.aat.menus;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.view.Menu;
-import android.view.MenuItem;
 
 import ch.bailu.aat.R;
 import ch.bailu.aat.activities.ActivitySwitcher;

@@ -31,7 +31,7 @@ public class SolidAltitude extends SolidInteger {
     @Override
     public void setValueFromString(String s) {
         try {
-            setValue(Math.round(Float.valueOf(s) / SolidUnit.ALT_FACTOR[unit]));
+            setValue(Math.round(Float.parseFloat(s) / SolidUnit.ALT_FACTOR[unit]));
         } catch (NumberFormatException e) {
             AppLog.e(getContext(), e);
         }

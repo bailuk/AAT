@@ -29,7 +29,7 @@ public class SolidPreset extends SolidIndexList {
                 name = name.replace(AppDirectory.PRESET_PREFIX, "");
 
                 try {
-                    preset = Integer.valueOf(name);
+                    preset = Integer.parseInt(name);
                     preset = Math.max(preset, 0);
                     preset = Math.min(preset, SolidPresetCount.MAX);
                 } catch (Exception e) {

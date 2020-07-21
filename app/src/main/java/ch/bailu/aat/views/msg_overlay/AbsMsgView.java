@@ -12,7 +12,7 @@ public abstract class AbsMsgView extends TextView {
     private final static int SHOW_TEXT_MILLIS = 4000;
 
     private final Timer fadeOutTimer = new Timer(
-            () -> AbsMsgView.this.set(),
+            AbsMsgView.this::set,
             SHOW_TEXT_MILLIS);
 
     AbsMsgView(Context context) {

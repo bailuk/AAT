@@ -34,7 +34,7 @@ public class SolidWeight extends SolidInteger {
             throw new ValidationException(getString(R.string.error_integer_positive));
         } else {
             try {
-                setValue(Integer.valueOf(s));
+                setValue(Integer.parseInt(s));
             } catch (NumberFormatException e) {
                 AppLog.e(getContext(), e);
             }

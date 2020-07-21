@@ -47,7 +47,7 @@ public class SolidMET extends SolidString {
         if (to > from) {
             try {
                 String met = val.substring(from, to);
-                r = Float.valueOf(met);
+                r = Float.parseFloat(met);
             } catch (NumberFormatException e) {
                 // TODO : userfeedback missing
                 r = 0f;

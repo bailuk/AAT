@@ -10,10 +10,7 @@ public final class TilesList {
 
     private final TreeSet<TileFile> files = new TreeSet<>(
 
-            (o1, o2) -> {
-
-                return Long.compare(o1.lastModified(), o2.lastModified());
-            });
+            (o1, o2) -> Long.compare(o1.lastModified(), o2.lastModified()));
 
     private  final ArrayList<TileFile> filesToRemove = new ArrayList<>(FILES_LIMIT);
 

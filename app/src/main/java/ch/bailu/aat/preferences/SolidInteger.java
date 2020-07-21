@@ -51,7 +51,7 @@ public class SolidInteger extends AbsSolidType {
             throw new ValidationException(getString(R.string.error_integer, s));
         } else {
             try {
-                setValue(Integer.valueOf(s));
+                setValue(Integer.parseInt(s));
             } catch (NumberFormatException e) {
                 AppLog.e(getContext(), e);
             }

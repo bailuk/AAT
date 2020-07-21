@@ -13,12 +13,12 @@ public final class TileFile {
 
 
     public static int getX(Foc file)throws NumberFormatException {
-        return Integer.valueOf(file.getName());
+        return Integer.parseInt(file.getName());
     }
 
 
     public static short getZoom(Foc file) throws NumberFormatException {
-        return Short.valueOf(file.getName());
+        return Short.parseShort(file.getName());
     }
 
 
@@ -26,7 +26,7 @@ public final class TileFile {
         final String name = file.getName();
         final String yname = name.substring(0, name.length()-4);
 
-        return Integer.valueOf(yname);
+        return Integer.parseInt(yname);
     }
 
 

@@ -4,7 +4,6 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.view.Menu;
-import android.view.MenuItem;
 
 import ch.bailu.aat.R;
 import ch.bailu.aat.gpx.interfaces.GpxType;
@@ -25,9 +24,6 @@ public final class EditorMenu extends AbsMenu {
     private final ServiceContext scontext;
     private final Context context;
 
-    private MenuItem save, saveCopy, saveCopyTo,
-            inverse, changeType, simplify, attach, fix, clearAll, cutRemaining, cutPreceding;
-
     public EditorMenu(ServiceContext sc, EditorInterface e, Foc f) {
         editor = e;
         scontext = sc;
@@ -38,17 +34,77 @@ public final class EditorMenu extends AbsMenu {
 
     @Override
     public void inflate(Menu menu) {
-        save = menu.add(R.string.edit_save);
-        saveCopy = menu.add(R.string.edit_save_copy);
-        saveCopyTo = menu.add(R.string.edit_save_copy_to);
-        inverse = menu.add(R.string.edit_inverse);
-        changeType = menu.add(R.string.edit_change_type);
-        simplify = menu.add(R.string.edit_simplify);
-        attach = menu.add(R.string.edit_attach);
-        fix = menu.add(R.string.edit_fix);
-        clearAll = menu.add(R.string.edit_clear);
-        cutRemaining = menu.add(R.string.edit_cut_remaining);
-        cutPreceding = menu.add(R.string.edit_cut_preceding);
+        add(new Item(menu, R.string.edit_save) {
+            @Override
+            public void onClick() {
+                editor.save();
+            }
+        });
+
+        add(new Item(menu, R.string.edit_save_copy) {
+            @Override
+            public void onClick() {
+                saveCopy();
+            }
+        });
+
+        add(new Item(menu, R.string.edit_save_copy_to) {
+            @Override
+            public void onClick() {
+                saveCopyTo();
+            }
+        });
+
+        add(new Item(menu, R.string.edit_inverse) {
+            @Override
+            public void onClick() {
+                editor.inverse();
+            }
+        });
+
+        add(new Item(menu, R.string.edit_change_type) {
+            @Override
+            public void onClick() {
+                changeType();
+            }
+        });
+
+        add(new Item(menu, R.string.edit_simplify) {
+            @Override
+            public void onClick() {
+                editor.simplify();
+            }
+        });
+        add(new Item(menu, R.string.edit_attach) {
+            @Override
+            public void onClick() {
+                attach();
+            }
+        });
+        add(new Item(menu, R.string.edit_fix) {
+            @Override
+            public void onClick() {
+                editor.fix();
+            }
+        });
+        add(new Item(menu, R.string.edit_clear) {
+            @Override
+            public void onClick() {
+                editor.clear();
+            }
+        });
+        add(new Item(menu, R.string.edit_cut_remaining) {
+            @Override
+            public void onClick() {
+                editor.cutRemaining();
+            }
+        });
+        add(new Item(menu, R.string.edit_cut_preceding) {
+            @Override
+            public void onClick() {
+                editor.cutPreceding();
+            }
+        });
     }
 
 
@@ -66,51 +122,6 @@ public final class EditorMenu extends AbsMenu {
     public void prepare(Menu menu) {
 
     }
-
-    @Override
-    public boolean onItemClick(MenuItem item) {
-        if (item == save) {
-            editor.save();
-
-        } else if (item == saveCopy) {
-            saveCopy();
-
-        } else if (item == saveCopyTo) {
-           saveCopyTo();
-
-
-        }else if (item == inverse) {
-            editor.inverse();
-
-        } else if (item == attach) {
-            attach();
-
-        } else if (item == fix) {
-            editor.fix();
-
-        } else if (item == simplify) {
-            editor.simplify();
-
-        } else if (item == clearAll) {
-            editor.clear();
-
-        } else if (item == cutPreceding) {
-            editor.cutPreceding();
-
-        } else if (item == cutRemaining) {
-            editor.cutRemaining();
-
-        } else if (item == changeType) {
-            changeType();
-
-        } else {
-            return false;
-
-        }
-
-        return true;
-    }
-
 
     private void saveCopy() {
         if (file.equals(AppDirectory.getEditorDraft(context))) {
@@ -163,7 +174,7 @@ public final class EditorMenu extends AbsMenu {
     private void changeType() {
         AlertDialog.Builder dialog = new AlertDialog.Builder(context);
 
-        dialog.setTitle(changeType.getTitle());
+        dialog.setTitle(R.string.edit_change_type);
         dialog.setItems(GpxType.toStrings(), (dialogInterface, i) -> editor.setType(GpxType.fromInteger(i)));
 
         dialog.show();

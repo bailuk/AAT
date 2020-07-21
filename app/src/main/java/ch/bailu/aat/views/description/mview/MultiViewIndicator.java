@@ -19,7 +19,7 @@ public class MultiViewIndicator extends ViewGroup {
         super(multiView.getContext());
         this.multiView = multiView;
 
-        multiView.addObserver(() -> layoutIndicator());
+        multiView.addObserver(this::layoutIndicator);
 
         setBackgroundColor(0);
         setClickable(false);

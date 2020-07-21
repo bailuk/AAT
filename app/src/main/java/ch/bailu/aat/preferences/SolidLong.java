@@ -34,7 +34,7 @@ public class SolidLong extends AbsSolidType {
                 throw new ValidationException(getString(R.string.error_long, s));
             } else {
                 try {
-                    setValue(Long.valueOf(s));
+                    setValue(Long.parseLong(s));
                 } catch (NumberFormatException e) {
                     AppLog.e(getContext(), e);
                 }
