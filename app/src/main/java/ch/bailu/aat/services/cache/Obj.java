@@ -9,7 +9,6 @@ import ch.bailu.util_java.foc.FocName;
 
 
 public abstract class Obj implements ObjBroadcastReceiver {
-    public final static Obj NULL = new ObjNull();
 
     public static final int MIN_SIZE=100;
 

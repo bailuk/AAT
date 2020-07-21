@@ -19,24 +19,45 @@ public class MapQueryMenu extends AbsMenu {
     private final MapContext mcontext;
     private final Context context;
 
-
-    private MenuItem nominatim, overpass, poi;
-
-
     public MapQueryMenu(MapContext m) {
         mcontext = m;
         context = m.getContext();
     }
 
     @Override
-    public void prepare(Menu menu){}
+    public void prepare(Menu menu) {
+    }
 
     @Override
     public void inflate(Menu menu) {
+        add(new Item(menu, NominatimApi.NAME) {
+            @Override
+            public void onClick() {
+                ActivitySwitcher.start(context,
+                        NominatimActivity.class,
+                        mcontext.getMetrics().getBoundingBox());
+            }
+        });
 
-        nominatim = menu.add(NominatimApi.NAME);
-        overpass = menu.add(OverpassApi.getName(context));
-        poi = menu.add(R.string.p_mapsforge_poi);
+
+        add(new Item(menu, OverpassApi.getName(context)) {
+            @Override
+            public void onClick() {
+                ActivitySwitcher.start(context,
+                        OverpassActivity.class,
+                        mcontext.getMetrics().getBoundingBox());
+            }
+        });
+
+
+        add(new Item(menu, R.string.p_mapsforge_poi) {
+            @Override
+            public void onClick() {
+                ActivitySwitcher.start(context,
+                        PoiActivity.class,
+                        mcontext.getMetrics().getBoundingBox());
+            }
+        });
     }
 
     @Override
@@ -49,27 +70,5 @@ public class MapQueryMenu extends AbsMenu {
     public Drawable getIcon() {
         return null;
     }
-
-
-
-    @Override
-    public boolean onItemClick(MenuItem item) {
-        if (item == overpass) {
-            ActivitySwitcher.start(context,
-                    OverpassActivity.class,
-                    mcontext.getMetrics().getBoundingBox());
-
-        } else if (item == nominatim) {
-            ActivitySwitcher.start(context,
-                    NominatimActivity.class,
-                    mcontext.getMetrics().getBoundingBox());
-
-        } else if (item == poi) {
-            ActivitySwitcher.start(context,
-                    PoiActivity.class,
-                    mcontext.getMetrics().getBoundingBox());
-        }
-        return false;
-    }
-
 }
+

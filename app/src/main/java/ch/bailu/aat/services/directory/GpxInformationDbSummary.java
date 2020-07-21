@@ -8,6 +8,7 @@ import ch.bailu.aat.gpx.GpxList;
 import ch.bailu.aat.gpx.GpxPoint;
 import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.gpx.attributes.GpxAttributes;
+import ch.bailu.aat.gpx.attributes.GpxAttributesNull;
 import ch.bailu.aat.gpx.attributes.GpxListAttributes;
 import ch.bailu.aat.gpx.attributes.MaxSpeed;
 import ch.bailu.aat.gpx.interfaces.GpxType;
@@ -52,7 +53,7 @@ public final class GpxInformationDbSummary extends GpxInformation {
                 entry.getBoundingBox().getCenter(),
                 0, entry.getTimeStamp());
 
-        list.appendToCurrentSegment(point, GpxAttributes.NULL);
+        list.appendToCurrentSegment(point, GpxAttributesNull.NULL);
         maxSpeed.add(entry.getSpeed());
     }
 

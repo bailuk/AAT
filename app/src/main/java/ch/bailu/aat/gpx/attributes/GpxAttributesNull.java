@@ -1,6 +1,9 @@
 package ch.bailu.aat.gpx.attributes;
 
 public class GpxAttributesNull extends GpxAttributes {
+
+    public final static GpxAttributes NULL = new GpxAttributesNull();
+
     @Override
     public String get(int keyIndex) {
         return NULL_VALUE;

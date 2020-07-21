@@ -4,7 +4,6 @@ import ch.bailu.util_java.util.Objects;
 
 public abstract class GpxAttributes {
 
-    public final static GpxAttributes NULL = new GpxAttributesNull();
     public final static String NULL_VALUE="";
 
 

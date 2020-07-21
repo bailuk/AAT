@@ -12,6 +12,7 @@ import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.cache.ObjGpx;
 import ch.bailu.aat.services.cache.ObjGpxStatic;
 import ch.bailu.aat.services.cache.Obj;
+import ch.bailu.aat.services.cache.ObjNull;
 import ch.bailu.aat.services.directory.Iterator;
 import ch.bailu.aat.services.directory.Iterator.OnCursorChangedListener;
 import ch.bailu.aat.services.directory.IteratorFollowFile;
@@ -100,7 +101,7 @@ public abstract class IteratorSource extends ContentSource implements OnCursorCh
     public static class FollowFile extends IteratorSource {
         private final Context context;
         private final ServiceContext scontext;
-        private Obj handle = Obj.NULL;
+        private Obj handle = ObjNull.NULL;
 
 
         public FollowFile(ServiceContext sc) {
@@ -129,7 +130,7 @@ public abstract class IteratorSource extends ContentSource implements OnCursorCh
             context.unregisterReceiver(onChangedInCache);
 
             handle.free();
-            handle = Obj.NULL;
+            handle = ObjNull.NULL;
             super.onPause();
         }
 

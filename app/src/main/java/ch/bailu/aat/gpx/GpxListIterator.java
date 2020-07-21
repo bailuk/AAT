@@ -1,6 +1,7 @@
 package ch.bailu.aat.gpx;
 
 import ch.bailu.aat.gpx.attributes.GpxAttributes;
+import ch.bailu.aat.gpx.attributes.GpxAttributesNull;
 import ch.bailu.aat.gpx.linked_list.Node;
 import ch.bailu.aat.gpx.segmented_list.SegmentNode;
 
@@ -8,7 +9,7 @@ public class GpxListIterator {
 
     private class PointPrimerNode extends GpxPointFirstNode {
         public PointPrimerNode() {
-            super(GpxPoint.NULL, GpxAttributes.NULL);
+            super(GpxPoint.NULL, GpxAttributesNull.NULL);
         }
 
         @Override

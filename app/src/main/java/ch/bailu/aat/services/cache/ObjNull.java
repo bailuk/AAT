@@ -4,6 +4,8 @@ import ch.bailu.aat.services.ServiceContext;
 
 public final class ObjNull extends Obj {
 
+    public final static Obj NULL = new ObjNull();
+
     protected ObjNull() {
         super(ObjNull.class.getSimpleName());
     }

@@ -3,6 +3,7 @@ package ch.bailu.aat.services.tracker;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.gpx.attributes.GpxAttributes;
+import ch.bailu.aat.gpx.attributes.GpxAttributesNull;
 import ch.bailu.aat.gpx.attributes.GpxAttributesStatic;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.sensor.SensorService;
@@ -45,7 +46,7 @@ public final class AttributesCollector {
             }
         }
 
-        if (attr == null) attr = GpxAttributes.NULL;
+        if (attr == null) attr = GpxAttributesNull.NULL;
         return attr;
     }
 

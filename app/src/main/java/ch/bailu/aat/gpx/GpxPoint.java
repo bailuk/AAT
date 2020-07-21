@@ -6,6 +6,7 @@ import org.mapsforge.core.model.LatLong;
 
 import ch.bailu.aat.coordinates.LatLongE6Interface;
 import ch.bailu.aat.gpx.attributes.GpxAttributes;
+import ch.bailu.aat.gpx.attributes.GpxAttributesNull;
 import ch.bailu.aat.gpx.interfaces.GpxPointInterface;
 
 
@@ -96,7 +97,7 @@ public class GpxPoint implements GpxPointInterface {
 
     @Override
     public GpxAttributes getAttributes() {
-        return GpxAttributes.NULL;
+        return GpxAttributesNull.NULL;
     }
 
 

@@ -5,6 +5,7 @@ import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.cache.ObjGpxEditable;
 import ch.bailu.aat.services.cache.Obj;
+import ch.bailu.aat.services.cache.ObjNull;
 import ch.bailu.aat.util.fs.AppDirectory;
 import ch.bailu.util_java.foc.Foc;
 
@@ -12,7 +13,7 @@ public final class EditorHelper {
     private final ServiceContext scontext;
 
 
-    private Obj handle = Obj.NULL;
+    private Obj handle = ObjNull.NULL;
 
     private int IID;
     private Foc file;
@@ -50,7 +51,7 @@ public final class EditorHelper {
         if (IID==InfoID.EDITOR_DRAFT) save();
 
         handle.free();
-        handle = Obj.NULL;
+        handle = ObjNull.NULL;
 
     }
 

@@ -18,7 +18,7 @@ public final class ObjectTable  {
 
 
     private static final class Container {
-        public static final Container NULL = new Container(Obj.NULL);
+        public static final Container NULL = new Container(ObjNull.NULL);
 
         public final Obj obj;
         public long size;
@@ -36,7 +36,7 @@ public final class ObjectTable  {
         Obj obj=getFromCache(key);
 
         if (obj == null) {
-            obj = Obj.NULL;
+            obj = ObjNull.NULL;
         }
 
         obj.lock(sc);
@@ -165,7 +165,7 @@ public final class ObjectTable  {
 
 
     private synchronized String findOldest() {
-        Container oldest = new Container(Obj.NULL);
+        Container oldest = new Container(ObjNull.NULL);
         oldest.obj.access();
 
         for (Container current : hashMap.values()) {

@@ -7,6 +7,7 @@ import ch.bailu.aat.gpx.GpxPointFirstNode;
 import ch.bailu.aat.gpx.GpxPointNode;
 import ch.bailu.aat.gpx.GpxSegmentNode;
 import ch.bailu.aat.gpx.attributes.GpxAttributes;
+import ch.bailu.aat.gpx.attributes.GpxAttributesNull;
 import ch.bailu.aat.gpx.attributes.GpxAttributesStatic;
 import ch.bailu.aat.gpx.attributes.GpxListAttributes;
 import ch.bailu.aat.gpx.interfaces.GpxPointInterface;
@@ -29,7 +30,7 @@ public final class NodeEditor {
 
     public NodeEditor(GpxType t) {
         gpxList = new GpxList(t, GpxListAttributes.NULL);
-        node = new GpxPointFirstNode(GpxPoint.NULL, GpxAttributes.NULL);
+        node = new GpxPointFirstNode(GpxPoint.NULL, GpxAttributesNull.NULL);
     }
 
     public NodeEditor(GpxPointNode n, GpxList l) {
@@ -239,7 +240,7 @@ public final class NodeEditor {
 
             if (point == node) {
                 newList.appendToCurrentSegment(new GpxPoint(newPoint),
-                        GpxAttributesStatic.NULL);
+                        GpxAttributesNull.NULL);
                 newNode = insertNewPoint();
             }
         }
@@ -247,7 +248,7 @@ public final class NodeEditor {
         public NodeEditor getNewNode() {
             if (newList.getPointList().size() == 0) {
                 newList.appendToCurrentSegment(new GpxPoint(newPoint),
-                        GpxAttributesStatic.NULL);
+                        GpxAttributesNull.NULL);
                 newNode = insertNewPoint();
             }
             return newNode;

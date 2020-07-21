@@ -8,6 +8,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.PopupMenu;
 
+import java.util.ArrayList;
+
 public abstract class AbsMenu {
     public abstract void inflate(Menu menu);
 
@@ -15,9 +17,6 @@ public abstract class AbsMenu {
     public abstract Drawable getIcon();
 
     public abstract void prepare(Menu menu);
-
-    public abstract boolean onItemClick(MenuItem item);
-
 
     public void showAsPopup (Context context, View view) {
         showAsPopupSDK11(context, view);
@@ -42,4 +41,39 @@ public abstract class AbsMenu {
         popup.show();
     }
 
+
+    public abstract static class Item {
+        private final MenuItem item;
+
+        public Item(Menu menu, int id) {
+            item = menu.add(id);
+        }
+
+        public Item(Menu menu, String name) {
+            item = menu.add(name);
+        }
+
+        public abstract void onClick();
+
+        public boolean onClick(MenuItem item) {
+            boolean result = (this.item == item);
+
+            if (result) {
+                onClick();
+            }
+            return result;
+        }
+    }
+
+    private final ArrayList<Item> items = new ArrayList<>(10);
+    public void add(Item item) {
+        items.add(item);
+    }
+
+    public boolean onItemClick(MenuItem item) {
+        for (Item i: items) {
+            if (i.onClick(item)) return true;
+        }
+        return false;
+    }
 }

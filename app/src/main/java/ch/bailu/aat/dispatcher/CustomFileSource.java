@@ -8,6 +8,7 @@ import ch.bailu.aat.gpx.GpxFileWrapper;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.services.InsideContext;
+import ch.bailu.aat.services.cache.ObjNull;
 import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.util.AppIntent;
 import ch.bailu.aat.services.ServiceContext;
@@ -17,7 +18,7 @@ import ch.bailu.aat.services.cache.Obj;
 
 public class CustomFileSource extends ContentSource {
     private final ServiceContext scontext;
-    private Obj handle= Obj.NULL;
+    private Obj handle= ObjNull.NULL;
     private final String fileID;
 
     private final BroadcastReceiver  onChangedInCache = new BroadcastReceiver () {
@@ -60,7 +61,7 @@ public class CustomFileSource extends ContentSource {
     public void onPause() {
         scontext.getContext().unregisterReceiver(onChangedInCache);
         handle.free();
-        handle = Obj.NULL;
+        handle = ObjNull.NULL;
     }
 
 
