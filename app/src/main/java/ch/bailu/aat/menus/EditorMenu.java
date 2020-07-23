@@ -34,77 +34,17 @@ public final class EditorMenu extends AbsMenu {
 
     @Override
     public void inflate(Menu menu) {
-        add(new Item(menu, R.string.edit_save) {
-            @Override
-            public void onClick() {
-                editor.save();
-            }
-        });
-
-        add(new Item(menu, R.string.edit_save_copy) {
-            @Override
-            public void onClick() {
-                saveCopy();
-            }
-        });
-
-        add(new Item(menu, R.string.edit_save_copy_to) {
-            @Override
-            public void onClick() {
-                saveCopyTo();
-            }
-        });
-
-        add(new Item(menu, R.string.edit_inverse) {
-            @Override
-            public void onClick() {
-                editor.inverse();
-            }
-        });
-
-        add(new Item(menu, R.string.edit_change_type) {
-            @Override
-            public void onClick() {
-                changeType();
-            }
-        });
-
-        add(new Item(menu, R.string.edit_simplify) {
-            @Override
-            public void onClick() {
-                editor.simplify();
-            }
-        });
-        add(new Item(menu, R.string.edit_attach) {
-            @Override
-            public void onClick() {
-                attach();
-            }
-        });
-        add(new Item(menu, R.string.edit_fix) {
-            @Override
-            public void onClick() {
-                editor.fix();
-            }
-        });
-        add(new Item(menu, R.string.edit_clear) {
-            @Override
-            public void onClick() {
-                editor.clear();
-            }
-        });
-        add(new Item(menu, R.string.edit_cut_remaining) {
-            @Override
-            public void onClick() {
-                editor.cutRemaining();
-            }
-        });
-        add(new Item(menu, R.string.edit_cut_preceding) {
-            @Override
-            public void onClick() {
-                editor.cutPreceding();
-            }
-        });
+        add(menu, R.string.edit_save, editor::save);
+        add(menu, R.string.edit_save_copy, this::saveCopy);
+        add(menu, R.string.edit_save_copy_to, this::saveCopyTo);
+        add(menu, R.string.edit_inverse, editor::inverse);
+        add(menu, R.string.edit_change_type, this::changeType);
+        add(menu, R.string.edit_simplify, editor::simplify);
+        add(menu, R.string.edit_attach, this::attach);
+        add(menu, R.string.edit_fix, editor::fix);
+        add(menu, R.string.edit_clear, editor::clear);
+        add(menu, R.string.edit_cut_remaining, editor::cutRemaining);
+        add(menu, R.string.edit_cut_preceding, editor::cutPreceding);
     }
 
 

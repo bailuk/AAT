@@ -12,7 +12,7 @@ public final class DownloaderThread  extends WorkerThread {
 
 
     public DownloaderThread(ServiceContext sc, String s) {
-        super(sc, DOWNLOAD_QUEUE_SIZE);
+        super("DT_" + s, sc, DOWNLOAD_QUEUE_SIZE);
         server = s;
     }
 

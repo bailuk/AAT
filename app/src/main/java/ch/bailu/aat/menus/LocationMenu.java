@@ -23,7 +23,7 @@ public final class LocationMenu extends AbsMenu{
     private final Context context;
     private final Clipboard clipboard;
 
-    private MenuItem send, view, copy, paste, goTo;
+    private MenuItem paste;
 
 
     public LocationMenu(MapViewInterface m) {
@@ -35,12 +35,12 @@ public final class LocationMenu extends AbsMenu{
 
     @Override
     public void inflate(Menu menu) {
-        send = menu.add(R.string.location_send);
-        view = menu.add(R.string.location_view);
-        copy = menu.add(R.string.clipboard_copy);
-        paste = menu.add(R.string.clipboard_paste);
-        goTo = menu.add(new SolidGoToLocation(context).getLabel());
-
+        add(menu,R.string.location_send, this::send);
+        add(menu,R.string.location_view, this::view);
+        add(menu, R.string.clipboard_copy, this::copy);
+        paste = add(menu, R.string.clipboard_paste, this::paste);
+        add(menu, new SolidGoToLocation(context).getLabel(),
+                ()->new SolidGoToLocation(context).goToLocationFromUser(map));
     }
 
     @Override
@@ -58,28 +58,6 @@ public final class LocationMenu extends AbsMenu{
     public void prepare(Menu menu) {
         paste.setEnabled(clipboard.getText() != null);
     }
-
-
-    @Override
-    public boolean onItemClick(MenuItem item) {
-        if (item == send) {
-            send();
-
-        } else if (item == view) {
-            view();
-
-        } else if (item == copy) {
-            copy();
-
-        } else if (item == paste) {
-            paste();
-
-        } else if (item == goTo) {
-            new SolidGoToLocation(context).goToLocationFromUser(map);
-        }
-        return false;
-    }
-
 
 
     private void paste() {

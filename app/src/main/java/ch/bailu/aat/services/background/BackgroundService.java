@@ -31,7 +31,7 @@ public final class BackgroundService extends VirtualService implements WithStatu
         super(sc);
         queue = new HandleStack(sc.getContext());
         for (int i=0; i< workers.length; i++)
-            workers[i] = new WorkerThread(sc, queue);
+            workers[i] = new WorkerThread("WT_" + i, sc, queue);
 
 
     }

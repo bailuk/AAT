@@ -6,6 +6,8 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+
 import ch.bailu.aat.util.OsmApiConfiguration;
 import ch.bailu.aat.util.ui.AppTheme;
 import ch.bailu.aat.util.ui.UiTheme;
@@ -87,6 +89,7 @@ public class OsmApiEditorView extends LinearLayout {
     }
 
     @Override
+    @NonNull
     public String toString() {
         return editor.edit.getText().toString();
     }

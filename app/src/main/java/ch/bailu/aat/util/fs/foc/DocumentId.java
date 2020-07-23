@@ -35,7 +35,7 @@ public class DocumentId {
         }
 
         if (child.charAt(child.length()-1) == '/') {
-            AppLog.w(this, child + " ends with \'/\'");
+            AppLog.w(this, child + " ends with '/'");
             return child(child.substring(0,child.length()-1));
         }
 

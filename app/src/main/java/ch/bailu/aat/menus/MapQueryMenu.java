@@ -29,34 +29,21 @@ public class MapQueryMenu extends AbsMenu {
 
     @Override
     public void inflate(Menu menu) {
-        add(new Item(menu, NominatimApi.NAME) {
-            @Override
-            public void onClick() {
+        add(menu, NominatimApi.NAME, ()->
                 ActivitySwitcher.start(context,
                         NominatimActivity.class,
-                        mcontext.getMetrics().getBoundingBox());
-            }
-        });
+                        mcontext.getMetrics().getBoundingBox()));
 
-
-        add(new Item(menu, OverpassApi.getName(context)) {
-            @Override
-            public void onClick() {
+        add(menu, OverpassApi.getName(context), ()->
                 ActivitySwitcher.start(context,
                         OverpassActivity.class,
-                        mcontext.getMetrics().getBoundingBox());
-            }
-        });
+                        mcontext.getMetrics().getBoundingBox()));
 
 
-        add(new Item(menu, R.string.p_mapsforge_poi) {
-            @Override
-            public void onClick() {
+        add(menu, R.string.p_mapsforge_poi, ()->
                 ActivitySwitcher.start(context,
                         PoiActivity.class,
-                        mcontext.getMetrics().getBoundingBox());
-            }
-        });
+                        mcontext.getMetrics().getBoundingBox()));
     }
 
     @Override

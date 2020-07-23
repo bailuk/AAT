@@ -8,14 +8,14 @@ public class WorkerThread extends ProcessThread {
     private final ServiceContext scontext;
 
 
-    public WorkerThread(ServiceContext sc, int limit) {
-        super(sc.getContext(), limit);
+    public WorkerThread(String name, ServiceContext sc, int limit) {
+        super(name, sc.getContext(), limit);
         scontext = sc;
     }
 
 
-    public WorkerThread(ServiceContext sc, HandleStack q) {
-        super(sc.getContext(), q);
+    public WorkerThread(String name, ServiceContext sc, HandleStack q) {
+        super(name, sc.getContext(), q);
         scontext = sc;
     }
 

@@ -41,33 +41,41 @@ public abstract class AbsMenu {
         popup.show();
     }
 
+    public interface OnClick {
+        void onClick();
+    }
 
-    public abstract static class Item {
+    private static class Item {
         private final MenuItem item;
+        private final OnClick onClick;
 
-        public Item(Menu menu, int id) {
-            item = menu.add(id);
+        public Item(MenuItem item, OnClick onClick) {
+            this.item = item;
+            this.onClick = onClick;
         }
-
-        public Item(Menu menu, String name) {
-            item = menu.add(name);
-        }
-
-        public abstract void onClick();
 
         public boolean onClick(MenuItem item) {
             boolean result = (this.item == item);
 
             if (result) {
-                onClick();
+                onClick.onClick();
             }
             return result;
         }
     }
 
-    private final ArrayList<Item> items = new ArrayList<>(10);
-    public void add(Item item) {
-        items.add(item);
+
+    private final ArrayList<Item> items = new ArrayList<>(5);
+    public MenuItem add(Menu menu, String name, OnClick onClick) {
+        MenuItem result = menu.add(name);
+        items.add(new Item(result, onClick));
+        return  result;
+    }
+
+    public MenuItem add(Menu menu, int nameID, OnClick onClick) {
+        MenuItem result = menu.add(nameID);
+        items.add(new Item(result, onClick));
+        return  result;
     }
 
     public boolean onItemClick(MenuItem item) {

@@ -12,7 +12,7 @@ public final class LoaderThread extends WorkerThread {
 
 
     public LoaderThread(ServiceContext sc, String d) {
-        super(sc, LOADER_QUEUE_SIZE);
+        super("LT_" + d, sc, LOADER_QUEUE_SIZE);
         directory=d;
     }
 

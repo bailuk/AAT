@@ -15,15 +15,16 @@ public abstract class ProcessThread extends Thread implements Closeable, ThreadC
 
     private final Context context;
 
-    public ProcessThread(Context c, HandleStack q) {
+    public ProcessThread(String name, Context c, HandleStack q) {
+        super(name);
         queue = q;
         context = c;
         start();
     }
 
 
-    public ProcessThread(Context c, int limit) {
-        this(c, new HandleStack(c, limit));
+    public ProcessThread(String name, Context c, int limit) {
+        this(name, c, new HandleStack(c, limit));
     }
 
 
