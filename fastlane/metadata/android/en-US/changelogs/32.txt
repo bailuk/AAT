@@ -1,0 +1,15 @@
+v1.19 (32)
+
+# Fix
+- "Disable lock screen" and "Screen always on"
+- Missing GPS permission for Android 10
+- Crash when invalid map file was provided
+
+# Add
+- MapView: Additional altitude graph showing only visible part of track.
+
+# Change
+- Improve documentation and HTML view
+- UI improvements
+- Make all strings translatable
+
