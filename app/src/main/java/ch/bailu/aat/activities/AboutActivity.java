@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.widget.LinearLayout;
 
 import ch.bailu.aat.R;
+import ch.bailu.aat.util.ToDo;
 import ch.bailu.aat.util.fs.foc.FocAsset;
 import ch.bailu.aat.util.ui.AppTheme;
 import ch.bailu.aat.util.ui.UiTheme;
@@ -19,7 +20,10 @@ public class AboutActivity extends ActivityContext {
     private final static String SOLID_KEY = AboutActivity.class.getSimpleName();
 
 
-    private final UiTheme theme = AppTheme.doc;
+    private final static UiTheme THEME = AppTheme.doc;
+
+
+    private HtmlScrollTextView status;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -32,7 +36,7 @@ public class AboutActivity extends ActivityContext {
 
     private void createViews() {
         MultiView multiView = createMultiView();
-        ContentView contentView = new ContentView(this, theme);
+        ContentView contentView = new ContentView(this, THEME);
 
         contentView.addMvIndicator(multiView);
         contentView.add(createButtonBar(multiView));
@@ -70,16 +74,30 @@ public class AboutActivity extends ActivityContext {
         final HtmlScrollTextView readme = new HtmlScrollTextView(this,
                 toStr("documentation/README.enduser.html"));
 
+        status = new HtmlScrollTextView(this);
+
         mv.add(about, getString(R.string.intro_about));
         mv.add(readme, getString(R.string.intro_readme));
 
-        readme.themify(theme);
-        about.themify(theme);
-        theme.background(mv);
+        mv.add(status, ToDo.translate("Status"));
+
+
+        readme.themify(THEME);
+        about.themify(THEME);
+        status.themify(THEME);
+        THEME.background(mv);
         return mv;
     }
 
     private String toStr(String asset) {
         return FUtil.toStr(new FocAsset(getAssets(),asset));
+    }
+
+    @Override
+    public void onResumeWithService() {
+        final StringBuilder builder = new StringBuilder();
+        getServiceContext().appendStatusText(builder);
+
+        status.setHtmlText(builder.toString());
     }
 }
