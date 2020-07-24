@@ -13,14 +13,21 @@ public class SolidRendererThreads extends SolidIndexList {
     private final static String KEY = "renderer_threads";
     private final static int[] values = {0,2,3,4,1};
 
-    public SolidRendererThreads(Context c) {
+    /**
+     * This does not has to be user configurable.
+     * Use numberOfBackgroundThreads() instead.
+     */
+    private SolidRendererThreads(Context c) {
         super(c, KEY);
         if (values[0] == 0) values[0] = numberOfBackgroundThreats();
     }
 
 
     public static int numberOfBackgroundThreats() {
-        return Math.max(1, numberOfCores()-1);
+        int result = numberOfCores()-1;
+        result = Math.min(result, 3);
+        result = Math.max(result, 1);
+        return result;
     }
 
 
@@ -51,7 +58,14 @@ public class SolidRendererThreads extends SolidIndexList {
         return values[getIndex()];
     }
 
+    /*
     public void set() {
         Parameters.NUMBER_OF_THREADS = getValue();
     }
+    */
+
+    public static void set() {
+        Parameters.NUMBER_OF_THREADS = numberOfBackgroundThreats();
+    }
+
 }
