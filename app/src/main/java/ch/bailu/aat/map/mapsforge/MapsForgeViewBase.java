@@ -250,6 +250,13 @@ public class MapsForgeViewBase extends MapView implements
     public void onDestroy() {
         detachLayers();
         destroyAll();
+
+        /* FIXME: this is a workaround to a bug:
+         * Sometimes the LayerManager thread is still running after calling destroyAll().
+         * This happens when MapView was never attached to window.
+         * Same problem with the Animator thread of MapViewPosition. */
+        getLayerManager().finish();
+        getMapViewPosition().destroy();
     }
 
 

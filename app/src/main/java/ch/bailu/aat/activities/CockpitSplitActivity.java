@@ -43,7 +43,7 @@ public class CockpitSplitActivity extends AbsKeepScreenOnActivity {
     private static final String SOLID_KEY="split";
     private static final String SOLID_MAP_KEY="themap";
 
-    private final UiTheme theme  = AppTheme.cockpit;
+    private static final UiTheme THEME = AppTheme.cockpit;
 
 
     @Override
@@ -58,10 +58,10 @@ public class CockpitSplitActivity extends AbsKeepScreenOnActivity {
 
     private View createContentView(EditorSource edit) {
         final MapViewInterface mapSlave = MapFactory.DEF(this, SOLID_KEY).split();
-        final CockpitView cockpitA = new CockpitView(this, theme);
-        final CockpitView cockpitB = new CockpitView(this, theme);
-        final CockpitView cockpitC = new CockpitView(this, theme);
-        final CockpitView cockpitD = new CockpitView(this, theme);
+        final CockpitView cockpitA = new CockpitView(this, THEME);
+        final CockpitView cockpitB = new CockpitView(this, THEME);
+        final CockpitView cockpitC = new CockpitView(this, THEME);
+        final CockpitView cockpitD = new CockpitView(this, THEME);
 
         PercentageLayout percentageB = new PercentageLayout(this);
         percentageB.setOrientation(AppLayout.getOrientationAlongLargeSide(this));
@@ -72,18 +72,21 @@ public class CockpitSplitActivity extends AbsKeepScreenOnActivity {
         PercentageLayout percentageD = new PercentageLayout(this);
         percentageD.setOrientation(AppLayout.getOrientationAlongLargeSide(this));
 
-        cockpitA.add(this, new CurrentSpeedDescription(this), InfoID.SPEED_SENSOR, InfoID.LOCATION);
+        cockpitA.add(this, new CurrentSpeedDescription(this),
+                InfoID.SPEED_SENSOR, InfoID.LOCATION);
         cockpitA.addC(this, new AverageSpeedDescriptionAP(this), InfoID.TRACKER);
         cockpitA.addC(this, new AveragePaceDescription(this), InfoID.TRACKER);
         cockpitA.addC(this, new DistanceDescription(this), InfoID.TRACKER);
-        cockpitA.add(this, new PredictiveTimeDescription(this), InfoID.TRACKER_TIMER);
+        cockpitA.add(this, new PredictiveTimeDescription(this),
+                InfoID.TRACKER_TIMER);
 
         cockpitB.addC(this, new AveragePaceDescription(this), InfoID.TRACKER);
         cockpitB.addC(this, new AverageSpeedDescriptionAP(this), InfoID.TRACKER);
         cockpitB.addC(this, new MaximumSpeedDescription(this), InfoID.TRACKER);
 
         percentageB.add(cockpitB, 50);
-        percentageB.add(new DistanceSpeedGraphView(this, this, theme, InfoID.TRACKER), 50);
+        percentageB.add(new DistanceSpeedGraphView(this, this, THEME,
+                InfoID.TRACKER), 50);
 
         cockpitD.addAltitude(this);
         cockpitD.add(this, new AscendDescription(this), InfoID.TRACKER);
@@ -91,7 +94,8 @@ public class CockpitSplitActivity extends AbsKeepScreenOnActivity {
         cockpitD.add(this, new SlopeDescription(this), InfoID.TRACKER);
 
         percentageD.add(cockpitD, 50);
-        percentageD.add(new DistanceAltitudeGraphView(this, this, theme, InfoID.TRACKER), 50);
+        percentageD.add(new DistanceAltitudeGraphView(this, this, THEME,
+                InfoID.TRACKER), 50);
 
         cockpitC.add(this, new CadenceDescription(this), InfoID.CADENCE_SENSOR);
         cockpitC.add(this, new HeartRateDescription(this), InfoID.HEART_RATE_SENSOR);
@@ -99,7 +103,7 @@ public class CockpitSplitActivity extends AbsKeepScreenOnActivity {
         cockpitC.add(this, new TotalStepsDescription(this), InfoID.TRACKER);
 
         percentageC.add(cockpitC, 50);
-        percentageC.add(new SpmGraphView(this, this, theme, InfoID.TRACKER), 50);
+        percentageC.add(new SpmGraphView(this, this, THEME, InfoID.TRACKER), 50);
 
         MultiView mv = new MultiView(this, SOLID_KEY);
         mv.add(cockpitA);
@@ -113,7 +117,7 @@ public class CockpitSplitActivity extends AbsKeepScreenOnActivity {
 
         new MapViewLinker(mapMaster, mapSlave);
 
-        ContentView contentView = new ContentView(this, theme);
+        ContentView contentView = new ContentView(this, THEME);
 
         contentView.addMvIndicator(mv);
         contentView.add(
@@ -154,8 +158,5 @@ public class CockpitSplitActivity extends AbsKeepScreenOnActivity {
         addSource(new SensorSource(getServiceContext(), InfoID.CADENCE_SENSOR));
         addSource(new SensorSource(getServiceContext(), InfoID.SPEED_SENSOR));
         addSource(new SensorSource(getServiceContext(), InfoID.STEP_COUNTER_SENSOR));
-
-
-
     }
 }

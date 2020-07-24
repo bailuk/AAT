@@ -4,6 +4,14 @@ import ch.bailu.aat.util.WithStatusText;
 
 public class AppThread implements WithStatusText {
 
+    /*
+     * threads:
+     * - CrAsyncTask or AsyncTask and Chrome_ProcessLauncher come from
+     *   HtmlTextView.enableAutoLink()
+     * - LayerManager (MapsForge) does not always terminate
+     * - Animator (MapsForge) does not always terminate
+     */
+
     @Override
     public void appendStatusText(StringBuilder builder) {
         builder.append("<h1>").append(getClass().getSimpleName()).append("</h1>");
