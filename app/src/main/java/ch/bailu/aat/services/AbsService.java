@@ -158,7 +158,7 @@ public abstract class AbsService  extends Service {
         builder.append(getClass().getSimpleName());
         builder.append("</h1>");
 
-        builder.append("<p>Start timeMillis: ");
+        builder.append("<p>Start time: ");
         builder.append(formatDate(startTime));
         builder.append(" - ");
         builder.append(formatTime(startTime));

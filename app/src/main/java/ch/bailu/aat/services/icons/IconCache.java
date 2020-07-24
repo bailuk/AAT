@@ -7,9 +7,10 @@ import ch.bailu.aat.services.cache.ObjImageAbstract;
 import ch.bailu.aat.services.cache.LockCache;
 import ch.bailu.aat.services.cache.Obj;
 import ch.bailu.aat.services.cache.ObjSVGAsset;
+import ch.bailu.aat.util.WithStatusText;
 import ch.bailu.util_java.util.Objects;
 
-public final class IconCache implements Closeable {
+public final class IconCache implements Closeable, WithStatusText {
     private final LockCache<ObjImageAbstract> icons = new LockCache<>(20);
 
     private final ServiceContext scontext;
@@ -72,4 +73,8 @@ public final class IconCache implements Closeable {
         icons.close();
     }
 
+    @Override
+    public void appendStatusText(StringBuilder builder) {
+        builder.append("IconCache (icons) size: ").append(icons.size()).append("<br>");
+    }
 }

@@ -15,7 +15,7 @@ import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.util.ContextWrapperInterface;
 import ch.bailu.aat.util.net.URX;
 import ch.bailu.aat.util.ui.AppLog;
-import ch.bailu.aat.util.ui.AppString;
+import ch.bailu.aat.util.ui.AppConfig;
 import ch.bailu.util_java.foc.Foc;
 
 public class DownloadTask extends FileTask implements ContextWrapperInterface{
@@ -23,7 +23,7 @@ public class DownloadTask extends FileTask implements ContextWrapperInterface{
 
     private final static int TIMEOUT = 30 * 1000;
     private final static String USER_AGENT_KEY = "User-Agent";
-    private final static String USER_AGENT_VALUE = AppString.getUserAgent();
+    private final static String USER_AGENT_VALUE = AppConfig.getUserAgent();
 
     private final static int IO_BUFFER_SIZE=8*1024;
 

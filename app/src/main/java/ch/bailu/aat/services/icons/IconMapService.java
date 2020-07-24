@@ -41,9 +41,8 @@ public final class IconMapService extends VirtualService implements WithStatusTe
         } catch (IOException e) {
             AppLog.e(getContext(), this, e);
         }
-
-
     }
+
 
     public ObjImageAbstract getIconSVG(final GpxPointInterface point, final int size) {
 
@@ -94,7 +93,6 @@ public final class IconMapService extends VirtualService implements WithStatusTe
     }
 
 
-
     public void close() {
         cache.close();
     }
@@ -102,8 +100,8 @@ public final class IconMapService extends VirtualService implements WithStatusTe
 
     @Override
     public void appendStatusText(StringBuilder builder) {
-        // TODO Auto-generated method stub
-
+        map.appendStatusText(builder);
+        cache.appendStatusText(builder);
     }
 
     public String toAssetPath(GpxPointNode gpxPointNode) {

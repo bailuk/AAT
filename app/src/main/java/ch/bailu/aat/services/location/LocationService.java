@@ -135,15 +135,7 @@ public final class LocationService extends VirtualService
 
 
     public void appendStatusText(StringBuilder builder) {
-        builder.append("<h2>");
-        builder.append(getClass().getSimpleName());
-        builder.append("</h2><p>");
-
-
         for (int i=0; i<itemList.size(); i++)
             itemList.get(i).appendStatusText(builder);
-
-        builder.append("</p>");
-
     }
 }

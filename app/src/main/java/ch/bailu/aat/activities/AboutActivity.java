@@ -3,17 +3,20 @@ package ch.bailu.aat.activities;
 import android.os.Bundle;
 import android.widget.LinearLayout;
 
+import ch.bailu.aat.BuildConfig;
 import ch.bailu.aat.R;
 import ch.bailu.aat.util.ToDo;
 import ch.bailu.aat.util.fs.foc.FocAsset;
+import ch.bailu.aat.util.ui.AppConfig;
 import ch.bailu.aat.util.ui.AppTheme;
 import ch.bailu.aat.util.ui.UiTheme;
 import ch.bailu.aat.views.ContentView;
-import ch.bailu.aat.views.html.HtmlScrollTextView;
 import ch.bailu.aat.views.bar.MainControlBar;
 import ch.bailu.aat.views.description.mview.MultiView;
+import ch.bailu.aat.views.html.HtmlScrollTextView;
 import ch.bailu.aat.views.html.LinkHandler;
 import ch.bailu.util_java.util.FUtil;
+import ch.bailu.util_java.util.Objects;
 
 
 public class AboutActivity extends ActivityContext {
@@ -74,17 +77,17 @@ public class AboutActivity extends ActivityContext {
         final HtmlScrollTextView readme = new HtmlScrollTextView(this,
                 toStr("documentation/README.enduser.html"));
 
-        status = new HtmlScrollTextView(this);
+
 
         mv.add(about, getString(R.string.intro_about));
         mv.add(readme, getString(R.string.intro_readme));
 
+        status = new HtmlScrollTextView(this);
         mv.add(status, ToDo.translate("Status"));
 
-
+        status.themify(THEME);
         readme.themify(THEME);
         about.themify(THEME);
-        status.themify(THEME);
         THEME.background(mv);
         return mv;
     }
@@ -95,9 +98,18 @@ public class AboutActivity extends ActivityContext {
 
     @Override
     public void onResumeWithService() {
-        final StringBuilder builder = new StringBuilder();
-        getServiceContext().appendStatusText(builder);
+        if (status != null) {
+            final StringBuilder builder = new StringBuilder();
 
-        status.setHtmlText(builder.toString());
+            new AppConfig().appendStatusText(builder);
+
+            if (BuildConfig.DEBUG) {
+                new AppThread().appendStatusText(builder);
+            }
+
+            getServiceContext().appendStatusText(builder);
+
+            status.setHtmlText(builder.toString());
+        }
     }
 }
