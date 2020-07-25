@@ -43,8 +43,11 @@ The developer distributes this software via F-droid where download counts are no
 
 ## Crash reports
 
-The developer is unable to get crash reports automatically when the app crashes. If you encounter a bug that caused the app to crash, please report it to the developer.
+The developer is unable to get crash reports automatically when the app crashes. Instead AAT uses [ACRA][1] to let the user send a generated crash report manually. When the app crashes a dialog gets displayed that gives the user a choice to open the e-mail program to edit and then send a mail with a stack trace attached. The stack trace is a text file that can be displayed with any text editor.
+
 AAT is a project under active development and the developer needs to get information when it doesn't work, to make it work. If you encounter any error while using the software, please open an issue on GitHub and it will be fixed. In a case where the app crashes, try to include logcats in your reports, when possible.
+
+[1]: https://www.acra.ch/
 
 ## Service Providers
 
