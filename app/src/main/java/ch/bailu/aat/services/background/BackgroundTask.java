@@ -15,6 +15,19 @@ public abstract class BackgroundTask implements ThreadControl {
     };
 
 
+    public static final BackgroundTask STOP = new BackgroundTask() {
+        @Override
+        public long bgOnProcess(ServiceContext sc) {
+            return 0;
+        }
+
+        @Override
+        public boolean canContinue() {
+            return false;
+        }
+    };
+
+
     private Exception exception;
 
     private boolean processing = true;
