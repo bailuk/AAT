@@ -19,7 +19,7 @@ import ch.bailu.aat.views.description.GPSStateButton;
 import ch.bailu.aat.views.description.mview.MultiView;
 import ch.bailu.aat.views.description.SensorStateButton;
 import ch.bailu.aat.views.description.TrackerStateButton;
-import ch.bailu.util_java.util.Objects;
+import ch.bailu.util.Objects;
 
 public class MainControlBar extends ControlBar {
 

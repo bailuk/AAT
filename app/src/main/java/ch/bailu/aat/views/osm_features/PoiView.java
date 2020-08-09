@@ -25,7 +25,7 @@ import ch.bailu.aat.util.filter_list.PoiListEntry;
 import ch.bailu.aat.util.ui.UiTheme;
 import ch.bailu.aat.views.EditTextTool;
 import ch.bailu.aat.views.preferences.SolidStringView;
-import ch.bailu.util_java.foc.Foc;
+import ch.bailu.foc.Foc;
 
 public class PoiView  extends LinearLayout implements SharedPreferences.OnSharedPreferenceChangeListener {
 

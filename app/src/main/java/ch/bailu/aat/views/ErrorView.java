@@ -7,7 +7,7 @@ import android.widget.TextView;
 import ch.bailu.aat.services.InsideContext;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.cache.Obj;
-import ch.bailu.util_java.foc.Foc;
+import ch.bailu.foc.Foc;
 
 
 public class ErrorView extends TextView  {

@@ -10,7 +10,7 @@ import ch.bailu.aat.services.editor.EditorHelper;
 import ch.bailu.aat.services.editor.EditorInterface;
 import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.util.AppIntent;
-import ch.bailu.util_java.foc.Foc;
+import ch.bailu.foc.Foc;
 
 public class EditorSource extends ContentSource implements  EditorSourceInterface{
 

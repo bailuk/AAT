@@ -11,9 +11,9 @@ import ch.bailu.aat.gpx.interfaces.GpxType;
 import ch.bailu.aat.gpx.xml_parser.GpxListReader;
 import ch.bailu.aat.preferences.location.SolidMockLocationFile;
 import ch.bailu.aat.util.Timer;
-import ch.bailu.aat.util.fs.foc.FocAndroid;
-import ch.bailu.util_java.foc.Foc;
-import ch.bailu.util_java.foc.FocName;
+import ch.bailu.foc.Foc;
+import ch.bailu.foc.FocName;
+import ch.bailu.foc_android.FocAndroid;
 
 public final class MockLocation extends LocationStackChainedItem implements Runnable{
 

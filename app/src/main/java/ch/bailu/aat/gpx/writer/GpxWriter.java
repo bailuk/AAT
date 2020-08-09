@@ -11,7 +11,7 @@ import ch.bailu.aat.gpx.GpxConstants;
 import ch.bailu.aat.gpx.interfaces.GpxPointInterface;
 import ch.bailu.aat.gpx.interfaces.GpxType;
 import ch.bailu.aat.util.ui.AppConfig;
-import ch.bailu.util_java.foc.Foc;
+import ch.bailu.foc.Foc;
 
 public abstract class GpxWriter {
 

@@ -9,7 +9,7 @@ import java.util.Locale;
 import ch.bailu.aat.R;
 import ch.bailu.aat.coordinates.BoundingBoxE6;
 import ch.bailu.aat.util.fs.AppDirectory;
-import ch.bailu.util_java.foc.Foc;
+import ch.bailu.foc.Foc;
 
 public abstract class OverpassApi extends DownloadApi {
 

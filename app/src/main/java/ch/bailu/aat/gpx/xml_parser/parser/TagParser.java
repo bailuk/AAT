@@ -6,7 +6,7 @@ import org.xmlpull.v1.XmlPullParserException;
 import java.io.IOException;
 
 import ch.bailu.aat.gpx.xml_parser.scanner.Scanner;
-import ch.bailu.util_java.util.Objects;
+import ch.bailu.util.Objects;
 
 public abstract class TagParser {
 

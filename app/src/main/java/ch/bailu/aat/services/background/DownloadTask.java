@@ -16,7 +16,7 @@ import ch.bailu.aat.util.ContextWrapperInterface;
 import ch.bailu.aat.util.net.URX;
 import ch.bailu.aat.util.ui.AppLog;
 import ch.bailu.aat.util.ui.AppConfig;
-import ch.bailu.util_java.foc.Foc;
+import ch.bailu.foc.Foc;
 
 public class DownloadTask extends FileTask implements ContextWrapperInterface{
 

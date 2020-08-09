@@ -1,13 +1,27 @@
-package ch.bailu.util_java.foc;
+package ch.bailu.foc_android;
+
+import android.content.ContentResolver;
+import android.net.Uri;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-public abstract class FocAbstractName extends Foc {
+import ch.bailu.foc.Foc;
+
+public class FocUri extends Foc {
+    final Uri uri;
+    final ContentResolver resolver;
+
+    public FocUri(ContentResolver r, Uri u) {
+        uri = u;
+        resolver = r;
+    }
+
+
     @Override
-    public boolean remove() throws SecurityException {
-        return false;
+    public boolean remove() {
+        return resolver.delete(uri,null,null) > 0;
     }
 
     @Override
@@ -22,7 +36,23 @@ public abstract class FocAbstractName extends Foc {
 
     @Override
     public Foc child(String name) {
-        return null;
+
+        return new FocUri(resolver, Uri.parse(this.toString() + "/" + name));
+    }
+
+    @Override
+    public String getName() {
+        return uri.getLastPathSegment();
+    }
+
+    @Override
+    public String getPath() {
+        return uri.toString();
+    }
+
+    @Override
+    public long length() {
+        return 0;
     }
 
 
@@ -67,22 +97,17 @@ public abstract class FocAbstractName extends Foc {
     }
 
     @Override
-    public long length() {
-        return 0;
-    }
-
-    @Override
     public long lastModified() {
-        return 0;
+        return System.currentTimeMillis();
     }
 
     @Override
-    public InputStream openR() throws IOException, SecurityException {
-        throw new IOException(getPathName());
+    public InputStream openR() throws IOException {
+        return resolver.openInputStream(uri);
     }
 
     @Override
-    public OutputStream openW() throws IOException, SecurityException {
-        throw new IOException(getPathName());
+    public OutputStream openW() throws IOException {
+        return resolver.openOutputStream(uri);
     }
 }

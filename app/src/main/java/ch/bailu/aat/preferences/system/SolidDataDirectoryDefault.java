@@ -9,8 +9,8 @@ import ch.bailu.aat.preferences.SolidFile;
 import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat.util.fs.AndroidVolumes;
 import ch.bailu.aat.util.fs.AppDirectory;
-import ch.bailu.util_java.foc.Foc;
-import ch.bailu.util_java.util.Objects;
+import ch.bailu.foc.Foc;
+import ch.bailu.util.Objects;
 
 public class SolidDataDirectoryDefault extends SolidFile {
 

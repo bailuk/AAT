@@ -7,7 +7,7 @@ import ch.bailu.aat.preferences.map.SolidRendererThreads;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.VirtualService;
 import ch.bailu.aat.util.WithStatusText;
-import ch.bailu.util_java.foc.Foc;
+import ch.bailu.foc.Foc;
 
 public final class BackgroundService extends VirtualService implements WithStatusText {
 

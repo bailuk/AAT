@@ -11,7 +11,7 @@ import java.util.concurrent.Future;
 
 import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.util.ui.AppLog;
-import ch.bailu.util_java.foc.Foc;
+import ch.bailu.foc.Foc;
 
 public final class StateRemove implements State, Runnable {
     private final StateMachine state;

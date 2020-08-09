@@ -1,27 +1,35 @@
-package ch.bailu.aat.util.fs.foc;
+package ch.bailu.foc_android;
 
-import android.content.ContentResolver;
-import android.net.Uri;
+import android.content.res.AssetManager;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-import ch.bailu.util_java.foc.Foc;
+import ch.bailu.foc.Foc;
 
-public class FocUri extends Foc {
-    final Uri uri;
-    final ContentResolver resolver;
+public class FocAsset extends Foc {
 
-    public FocUri(ContentResolver r, Uri u) {
-        uri = u;
-        resolver = r;
+    private final String asset;
+    private final AssetManager manager;
+
+
+    public FocAsset(AssetManager m, String a) {
+        manager = m;
+        asset = a;
     }
 
 
     @Override
+    public long lastModified() {
+        return System.currentTimeMillis();
+    }
+
+
+
+    @Override
     public boolean remove() {
-        return resolver.delete(uri,null,null) > 0;
+        return false;
     }
 
     @Override
@@ -34,27 +42,26 @@ public class FocUri extends Foc {
         return null;
     }
 
+
     @Override
     public Foc child(String name) {
-
-        return new FocUri(resolver, Uri.parse(this.toString() + "/" + name));
+        return null;
     }
 
     @Override
     public String getName() {
-        return uri.getLastPathSegment();
+        return asset;
     }
 
     @Override
     public String getPath() {
-        return uri.toString();
+        return asset;
     }
 
     @Override
     public long length() {
         return 0;
     }
-
 
     @Override
     public void foreach(Execute e) {
@@ -97,17 +104,12 @@ public class FocUri extends Foc {
     }
 
     @Override
-    public long lastModified() {
-        return System.currentTimeMillis();
-    }
-
-    @Override
     public InputStream openR() throws IOException {
-        return resolver.openInputStream(uri);
+        return manager.open(asset);
     }
 
     @Override
     public OutputStream openW() throws IOException {
-        return resolver.openOutputStream(uri);
+        throw new IOException();
     }
 }

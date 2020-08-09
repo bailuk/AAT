@@ -9,7 +9,7 @@ import ch.bailu.aat.gpx.attributes.GpxListAttributes;
 import ch.bailu.aat.gpx.interfaces.GpxType;
 import ch.bailu.aat.gpx.xml_parser.parser.AbsXmlParser;
 import ch.bailu.aat.services.background.ThreadControl;
-import ch.bailu.util_java.foc.Foc;
+import ch.bailu.foc.Foc;
 import ch.bailu.util_java.parser.OnParsedInterface;
 
 public class GpxListReader {

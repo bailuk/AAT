@@ -6,8 +6,8 @@ import android.content.Context;
 import java.util.ArrayList;
 
 import ch.bailu.aat.util.AppBroadcaster;
-import ch.bailu.util_java.foc.Foc;
-import ch.bailu.util_java.util.Objects;
+import ch.bailu.foc.Foc;
+import ch.bailu.util.Objects;
 
 public final class Tasks {
 

@@ -1,11 +1,11 @@
-package ch.bailu.aat.util.fs.foc;
+package ch.bailu.foc_android;
 
 import android.annotation.TargetApi;
 import android.database.Cursor;
 import android.provider.DocumentsContract.Document;
-import androidx.annotation.NonNull;
+import android.util.Log;
 
-import ch.bailu.aat.util.ui.AppLog;
+import androidx.annotation.NonNull;
 
 
 @TargetApi(FocAndroid.SAF_MIN_SDK)
@@ -57,9 +57,8 @@ public class DocumentData  {
     private int index(Cursor cursor, String columnDocumentId) {
         int i = cursor.getColumnIndex(columnDocumentId);
 
-
         if (cursor.isNull(i)) {
-            AppLog.w(this, columnDocumentId + " is null");
+            Log.w(getClass().getSimpleName(), columnDocumentId + " is null");
         }
         return i;
     }

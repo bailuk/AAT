@@ -21,8 +21,8 @@ import ch.bailu.aat.services.cache.ObjGpxStatic;
 import ch.bailu.aat.services.cache.Obj;
 import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.util.AppIntent;
-import ch.bailu.aat.util.fs.foc.FocAndroid;
-import ch.bailu.util_java.foc.Foc;
+import ch.bailu.foc.Foc;
+import ch.bailu.foc_android.FocAndroid;
 
 
 public class OverlaySource extends ContentSource {

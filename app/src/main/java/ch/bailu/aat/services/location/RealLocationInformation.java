@@ -2,8 +2,8 @@ package ch.bailu.aat.services.location;
 
 import android.location.Location;
 
-import ch.bailu.util_java.foc.Foc;
-import ch.bailu.util_java.foc.FocName;
+import ch.bailu.foc.Foc;
+import ch.bailu.foc.FocName;
 
 public class RealLocationInformation extends LocationInformation {
     private final Location location;

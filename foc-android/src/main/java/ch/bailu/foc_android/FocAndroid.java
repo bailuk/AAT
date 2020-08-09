@@ -1,4 +1,4 @@
-package ch.bailu.aat.util.fs.foc;
+package ch.bailu.foc_android;
 
 import android.content.ContentResolver;
 import android.content.Context;
@@ -8,9 +8,9 @@ import android.os.Build;
 import java.io.File;
 import java.util.List;
 
-import ch.bailu.util_java.foc.Foc;
-import ch.bailu.util_java.foc.FocFile;
-import ch.bailu.util_java.foc.FocName;
+import ch.bailu.foc.Foc;
+import ch.bailu.foc.FocFile;
+import ch.bailu.foc.FocName;
 
 public class FocAndroid {
     public static final int SAF_MIN_SDK = 21;

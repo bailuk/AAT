@@ -11,7 +11,7 @@ import ch.bailu.aat.gpx.attributes.GpxAttributes;
 import ch.bailu.aat.gpx.xml_parser.parser.RootParser;
 import ch.bailu.aat.gpx.xml_parser.scanner.Scanner;
 import ch.bailu.aat.gpx.xml_parser.parser.AbsXmlParser;
-import ch.bailu.util_java.foc.Foc;
+import ch.bailu.foc.Foc;
 import ch.bailu.util_java.parser.OnParsedInterface;
 
 public class XmlParser extends AbsXmlParser {

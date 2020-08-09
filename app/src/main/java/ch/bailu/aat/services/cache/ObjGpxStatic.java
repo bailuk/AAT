@@ -23,8 +23,8 @@ import ch.bailu.aat.services.dem.tile.Dem3Tile;
 import ch.bailu.aat.services.dem.tile.ElevationProvider;
 import ch.bailu.aat.services.dem.updater.ElevationUpdaterClient;
 import ch.bailu.aat.util.AppBroadcaster;
-import ch.bailu.aat.util.fs.foc.FocAndroid;
-import ch.bailu.util_java.foc.Foc;
+import ch.bailu.foc.Foc;
+import ch.bailu.foc_android.FocAndroid;
 
 public final class ObjGpxStatic extends ObjGpx implements ElevationUpdaterClient {
 

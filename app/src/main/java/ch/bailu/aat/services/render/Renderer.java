@@ -21,7 +21,7 @@ import org.mapsforge.map.rendertheme.rule.RenderThemeFuture;
 
 import java.util.ArrayList;
 
-import ch.bailu.util_java.foc.Foc;
+import ch.bailu.foc.Foc;
 
 public final class Renderer extends Layer {
     private final static boolean TRANSPARENT = false;

@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import ch.bailu.aat.R;
 import ch.bailu.aat.preferences.SolidFile;
 import ch.bailu.aat.preferences.Storage;
-import ch.bailu.util_java.util.Objects;
+import ch.bailu.util.Objects;
 
 public class SolidDataDirectory extends SolidFile {
 

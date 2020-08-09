@@ -4,7 +4,7 @@ import java.io.File;
 import java.io.IOException;
 
 import ch.bailu.aat.util.ui.AppLog;
-import ch.bailu.util_java.foc.Foc;
+import ch.bailu.foc.Foc;
 
 public abstract class TileScanner {
 

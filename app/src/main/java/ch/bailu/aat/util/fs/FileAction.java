@@ -18,7 +18,7 @@ import ch.bailu.aat.util.ui.AppDialog;
 import ch.bailu.aat.util.ui.AppLog;
 import ch.bailu.aat.util.ui.AppSelectDirectoryDialog;
 import ch.bailu.aat.views.preferences.AddOverlayDialog;
-import ch.bailu.util_java.foc.Foc;
+import ch.bailu.foc.Foc;
 
 public class FileAction {
 

@@ -1,11 +1,11 @@
-package ch.bailu.util_java.foc;
+package ch.bailu.foc;
 
 import java.io.Closeable;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-import ch.bailu.util_java.util.Objects;
+import ch.bailu.util.Objects;
 
 public abstract class Foc {
 
@@ -187,7 +187,6 @@ public abstract class Foc {
 
     @Override
     public boolean equals(Object o)  {
-
         return o instanceof Foc && Objects.equals(getPath(), ((Foc) o).getPath());
 
     }

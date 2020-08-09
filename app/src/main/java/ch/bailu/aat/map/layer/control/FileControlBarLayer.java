@@ -27,7 +27,7 @@ import ch.bailu.aat.util.ui.AppTheme;
 import ch.bailu.aat.util.ui.ToolTip;
 import ch.bailu.aat.views.PreviewView;
 import ch.bailu.aat.views.bar.ControlBar;
-import ch.bailu.util_java.foc.Foc;
+import ch.bailu.foc.Foc;
 
 public final class FileControlBarLayer extends ControlBarLayer {
 

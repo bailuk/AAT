@@ -1,7 +1,8 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion 30
+    buildToolsVersion '30.0.1'
 
     /* Set this to whatever version is installed on the GitHub build environment
     and hope it works everywhere.
@@ -12,17 +13,17 @@ android {
         applicationId "ch.bailu.aat"
 
         minSdkVersion 14
-        targetSdkVersion 28
+        targetSdkVersion 30
 
         versionCode 32
         versionName "v1.19"
-
 
         buildConfigField 'String', 'APP_SNAME', '\"AAT\"'
         buildConfigField 'String', 'APP_NAME', '\"Another Activity Tracker\"'
         buildConfigField 'String', 'APP_CONTACT', '\"aat@bailu.ch\"'
         resValue "string", "app_sname", "AAT"
     }
+
     buildTypes {
         release {
             minifyEnabled false
@@ -33,7 +34,6 @@ android {
             resValue "string", "app_sname", "AAT Debug"
             applicationIdSuffix = ".debug"
         }
-
     }
 
 
@@ -45,16 +45,26 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
-    buildToolsVersion '28.0.3'
 }
 
 
+repositories {
+    google()
+    jcenter()
+}
+
 dependencies {
+    // Local
+    implementation project(path: ':util')
+    implementation project(path: ':util-java')
+    implementation project(path: ':foc')
+    implementation project(path: ':foc-android')
+
     /*
             Automatic MapsForge integration as described here:
             https://github.com/mapsforge/mapsforge/raw/master/docs/Integration.md
     */
-    def mapsforgeVersion = '0.12.0'
+    def mapsforgeVersion = '0.13.0'
 
     // MapsForge Core
     implementation "org.mapsforge:mapsforge-core:$mapsforgeVersion"
@@ -71,6 +81,8 @@ dependencies {
     implementation "org.mapsforge:mapsforge-poi:$mapsforgeVersion"
     implementation "org.mapsforge:mapsforge-poi-android:$mapsforgeVersion"
     implementation "org.mapsforge:sqlite-android:$mapsforgeVersion"
+
+    // SqLite natives - uncomment when working with local MapsForge project
     implementation "org.mapsforge:sqlite-android:$mapsforgeVersion:natives-armeabi-v7a"
     implementation "org.mapsforge:sqlite-android:$mapsforgeVersion:natives-arm64-v8a"
     implementation "org.mapsforge:sqlite-android:$mapsforgeVersion:natives-x86"
@@ -84,6 +96,4 @@ dependencies {
     // open-location-code
     implementation "com.google.openlocationcode:openlocationcode:1.0.4"
 
-    // Local
-    implementation project(path: ':util-java')
 }

@@ -8,7 +8,7 @@ import ch.bailu.aat.R;
 import ch.bailu.aat.preferences.SolidFile;
 import ch.bailu.aat.util.fs.AndroidVolumes;
 import ch.bailu.aat.util.fs.AppDirectory;
-import ch.bailu.util_java.foc.Foc;
+import ch.bailu.foc.Foc;
 
 public class SolidExternalDirectory extends SolidFile {
     public SolidExternalDirectory(Context c) {

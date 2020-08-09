@@ -11,10 +11,10 @@ import ch.bailu.aat.preferences.map.SolidTileSize;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.background.FileTask;
 import ch.bailu.aat.util.AppBroadcaster;
-import ch.bailu.aat.util.fs.foc.FocAndroid;
 import ch.bailu.aat.util.graphic.SyncTileBitmap;
-import ch.bailu.util_java.foc.Foc;
-import ch.bailu.util_java.util.Objects;
+import ch.bailu.foc.Foc;
+import ch.bailu.foc_android.FocAndroid;
+import ch.bailu.util.Objects;
 
 public class ObjTileCacheOnly extends ObjTile {
 

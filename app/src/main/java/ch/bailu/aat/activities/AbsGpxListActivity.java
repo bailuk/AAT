@@ -33,7 +33,7 @@ import ch.bailu.aat.views.bar.MainControlBar;
 import ch.bailu.aat.views.description.mview.MultiView;
 import ch.bailu.aat.views.preferences.TitleView;
 import ch.bailu.aat.views.preferences.VerticalScrollView;
-import ch.bailu.util_java.foc.Foc;
+import ch.bailu.foc.Foc;
 
 
 public abstract class AbsGpxListActivity extends ActivityContext implements OnItemClickListener, SharedPreferences.OnSharedPreferenceChangeListener {

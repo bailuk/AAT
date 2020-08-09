@@ -2,7 +2,7 @@ package ch.bailu.aat.services.location;
 
 import ch.bailu.aat.coordinates.BoundingBoxE6;
 import ch.bailu.aat.gpx.GpxPointNode;
-import ch.bailu.util_java.foc.Foc;
+import ch.bailu.foc.Foc;
 
 public final class MockLocationInformation extends LocationInformation {
 

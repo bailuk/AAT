@@ -5,7 +5,7 @@ import org.mapsforge.core.model.Tile;
 import ch.bailu.aat.map.tile.source.DownloadSource;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.background.DownloadTask;
-import ch.bailu.util_java.foc.Foc;
+import ch.bailu.foc.Foc;
 
 public class ObjTileDownloadable extends ObjTileCacheOnly {
 

@@ -4,9 +4,10 @@ import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-import ch.bailu.util_java.foc.Foc;
+import ch.bailu.foc.Foc;
 
-public class FUtil {
+
+public class FocUtil {
 
     public static String toStr(Foc file) {
         try {

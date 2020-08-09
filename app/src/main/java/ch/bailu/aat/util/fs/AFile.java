@@ -5,7 +5,7 @@ import android.content.Context;
 import ch.bailu.aat.R;
 import ch.bailu.aat.util.MemSize;
 import ch.bailu.aat.util.ui.AppLog;
-import ch.bailu.util_java.foc.Foc;
+import ch.bailu.foc.Foc;
 
 public class AFile extends MemSize {
     public static void logErrorExists(Context c, Foc f) {

@@ -24,7 +24,7 @@ import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.background.BackgroundTask;
 import ch.bailu.aat.services.background.FileTask;
 import ch.bailu.aat.util.fs.AppDirectory;
-import ch.bailu.util_java.foc.Foc;
+import ch.bailu.foc.Foc;
 
 public abstract class PoiApi extends OsmApiConfiguration {
 

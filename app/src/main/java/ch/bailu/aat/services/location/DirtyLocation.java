@@ -6,8 +6,8 @@ import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.map.layer.MapPositionLayer;
 import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat.util.AppBroadcaster;
-import ch.bailu.util_java.foc.Foc;
-import ch.bailu.util_java.foc.FocName;
+import ch.bailu.foc.Foc;
+import ch.bailu.foc.FocName;
 
 public final class DirtyLocation extends LocationStackChainedItem {
     private final static String SOLID_KEY="DirtyLocation_";

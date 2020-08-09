@@ -19,13 +19,13 @@ import ch.bailu.aat.gpx.interfaces.GpxBigDeltaInterface;
 import ch.bailu.aat.map.mapsforge.MapsForgePreview;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.background.BackgroundTask;
+import ch.bailu.aat.services.cache.Obj;
 import ch.bailu.aat.services.cache.ObjGpx;
 import ch.bailu.aat.services.cache.ObjGpxStatic;
-import ch.bailu.aat.services.cache.Obj;
 import ch.bailu.aat.util.AppBroadcaster;
-import ch.bailu.aat.util.fs.foc.FocAndroid;
 import ch.bailu.aat.util.ui.AppLog;
-import ch.bailu.util_java.foc.Foc;
+import ch.bailu.foc.Foc;
+import ch.bailu.foc_android.FocAndroid;
 
 public final class DirectorySynchronizer  implements Closeable {
 

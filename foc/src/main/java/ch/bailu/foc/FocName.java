@@ -1,4 +1,4 @@
-package ch.bailu.util_java.foc;
+package ch.bailu.foc;
 
 public class FocName extends FocAbstractName {
 

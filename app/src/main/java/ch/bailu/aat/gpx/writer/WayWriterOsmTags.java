@@ -5,7 +5,7 @@ import java.io.IOException;
 import ch.bailu.aat.gpx.GpxConstants;
 import ch.bailu.aat.gpx.OsmConstants;
 import ch.bailu.aat.gpx.interfaces.GpxPointInterface;
-import ch.bailu.util_java.foc.Foc;
+import ch.bailu.foc.Foc;
 
 public class WayWriterOsmTags extends WayWriter {
     public WayWriterOsmTags(Foc file) throws IOException {

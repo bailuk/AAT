@@ -7,8 +7,8 @@ import ch.bailu.aat.preferences.SolidBoolean;
 import ch.bailu.aat.preferences.SolidString;
 import ch.bailu.aat.preferences.SolidTypeInterface;
 import ch.bailu.aat.preferences.Storage;
-import ch.bailu.aat.util.fs.foc.FocAndroid;
-import ch.bailu.util_java.foc.Foc;
+import ch.bailu.foc.Foc;
+import ch.bailu.foc_android.FocAndroid;
 
 public class SolidOverlayFile  implements SolidTypeInterface {
     private static final String KEY_NAME="overlay_path_";

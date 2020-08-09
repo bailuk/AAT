@@ -6,7 +6,6 @@ import android.widget.LinearLayout;
 import ch.bailu.aat.BuildConfig;
 import ch.bailu.aat.R;
 import ch.bailu.aat.util.ToDo;
-import ch.bailu.aat.util.fs.foc.FocAsset;
 import ch.bailu.aat.util.ui.AppConfig;
 import ch.bailu.aat.util.ui.AppTheme;
 import ch.bailu.aat.util.ui.UiTheme;
@@ -15,8 +14,8 @@ import ch.bailu.aat.views.bar.MainControlBar;
 import ch.bailu.aat.views.description.mview.MultiView;
 import ch.bailu.aat.views.html.HtmlScrollTextView;
 import ch.bailu.aat.views.html.LinkHandler;
-import ch.bailu.util_java.util.FUtil;
-import ch.bailu.util_java.util.Objects;
+import ch.bailu.foc_android.FocAsset;
+import ch.bailu.util_java.util.FocUtil;
 
 
 public class AboutActivity extends ActivityContext {
@@ -93,7 +92,7 @@ public class AboutActivity extends ActivityContext {
     }
 
     private String toStr(String asset) {
-        return FUtil.toStr(new FocAsset(getAssets(),asset));
+        return FocUtil.toStr(new FocAsset(getAssets(),asset));
     }
 
     @Override

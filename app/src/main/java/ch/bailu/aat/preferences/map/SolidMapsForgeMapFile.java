@@ -5,7 +5,7 @@ import android.content.Context;
 import java.util.ArrayList;
 
 import ch.bailu.aat.R;
-import ch.bailu.util_java.foc.Foc;
+import ch.bailu.foc.Foc;
 
 public class SolidMapsForgeMapFile extends SolidMapsForgeDirectory {
     public SolidMapsForgeMapFile(Context c) {

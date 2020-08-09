@@ -1,18 +1,18 @@
-package ch.bailu.aat.util.fs.foc;
+package ch.bailu.foc_android;
 
 import android.annotation.TargetApi;
 import android.content.ContentResolver;
 import android.database.Cursor;
 import android.net.Uri;
 import android.provider.DocumentsContract;
+import android.util.Log;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.Objects;
 
-import ch.bailu.aat.util.ui.AppLog;
-import ch.bailu.util_java.foc.Foc;
-import ch.bailu.util_java.util.Objects;
+import ch.bailu.foc.Foc;
 
 /**
  *
@@ -157,7 +157,7 @@ public class FocContent extends Foc {
                 } while (cursor.moveToNext());
             }
         } catch(Exception e) {
-            AppLog.w(this, e);
+            Log.w(getClass().getSimpleName(), e.toString());
         }
 
         if (cursor != null) cursor.close();

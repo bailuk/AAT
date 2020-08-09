@@ -10,9 +10,9 @@ import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.VirtualService;
 import ch.bailu.aat.services.cache.ObjImageAbstract;
 import ch.bailu.aat.util.WithStatusText;
-import ch.bailu.aat.util.fs.foc.FocAsset;
 import ch.bailu.aat.util.ui.AppLog;
-import ch.bailu.util_java.foc.Foc;
+import ch.bailu.foc.Foc;
+import ch.bailu.foc_android.FocAsset;
 
 public final class IconMapService extends VirtualService implements WithStatusText {
     public static final float BIG_ICON_SIZE = 48;

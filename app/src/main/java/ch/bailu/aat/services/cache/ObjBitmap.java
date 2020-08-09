@@ -5,9 +5,9 @@ import android.graphics.Bitmap;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.background.FileTask;
 import ch.bailu.aat.util.AppBroadcaster;
-import ch.bailu.aat.util.fs.foc.FocAndroid;
 import ch.bailu.aat.util.graphic.SyncBitmap;
-import ch.bailu.util_java.foc.Foc;
+import ch.bailu.foc.Foc;
+import ch.bailu.foc_android.FocAndroid;
 
 public final class ObjBitmap extends ObjImageAbstract {
     public final static ObjBitmap NULL=new ObjBitmap();
