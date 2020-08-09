@@ -5,7 +5,7 @@ import android.database.Cursor;
 import ch.bailu.aat.coordinates.BoundingBoxE6;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.interfaces.GpxType;
-import ch.bailu.util_java.foc.Foc;
+import ch.bailu.foc.Foc;
 
 public final class GpxInformationDbEntry extends GpxInformation {
     private final Cursor cursor;

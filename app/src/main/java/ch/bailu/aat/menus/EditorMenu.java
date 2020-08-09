@@ -16,7 +16,7 @@ import ch.bailu.aat.services.editor.EditorInterface;
 import ch.bailu.aat.util.fs.AppDirectory;
 import ch.bailu.aat.util.ui.AppSelectDirectoryDialog;
 import ch.bailu.aat.views.preferences.AbsSelectOverlayDialog;
-import ch.bailu.util_java.foc.Foc;
+import ch.bailu.foc.Foc;
 
 public final class EditorMenu extends AbsMenu {
     private final EditorInterface editor;

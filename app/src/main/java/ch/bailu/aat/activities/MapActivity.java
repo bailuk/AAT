@@ -21,7 +21,7 @@ import ch.bailu.aat.util.ui.AppTheme;
 import ch.bailu.aat.views.ContentView;
 import ch.bailu.aat.views.bar.ControlBar;
 import ch.bailu.aat.views.bar.MainControlBar;
-import ch.bailu.util_java.util.Objects;
+import ch.bailu.util.Objects;
 
 public class MapActivity extends AbsKeepScreenOnActivity {
 

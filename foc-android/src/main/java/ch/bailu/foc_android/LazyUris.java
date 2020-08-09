@@ -1,4 +1,4 @@
-package ch.bailu.aat.util.fs.foc;
+package ch.bailu.foc_android;
 
 import android.annotation.TargetApi;
 import android.net.Uri;

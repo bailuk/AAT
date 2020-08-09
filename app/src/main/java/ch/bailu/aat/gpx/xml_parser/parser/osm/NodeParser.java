@@ -10,7 +10,7 @@ import ch.bailu.aat.gpx.xml_parser.parser.Attr;
 import ch.bailu.aat.gpx.xml_parser.parser.TagParser;
 import ch.bailu.aat.gpx.xml_parser.parser.Util;
 import ch.bailu.aat.gpx.xml_parser.scanner.Scanner;
-import ch.bailu.util_java.util.Objects;
+import ch.bailu.util.Objects;
 
 public class NodeParser extends TagParser {
     private final TagParser tag = new OsmTagParser();

@@ -5,8 +5,8 @@ import android.os.Environment;
 
 import java.io.File;
 
-import ch.bailu.util_java.foc.Foc;
-import ch.bailu.util_java.foc.FocFile;
+import ch.bailu.foc.Foc;
+import ch.bailu.foc.FocFile;
 
 public class AndroidVolumes {
     private static Foc[] volumes, files, caches;

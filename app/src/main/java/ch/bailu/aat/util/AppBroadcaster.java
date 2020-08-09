@@ -7,7 +7,7 @@ import android.content.IntentFilter;
 
 import ch.bailu.aat.BuildConfig;
 import ch.bailu.aat.util.net.URX;
-import ch.bailu.util_java.foc.Foc;
+import ch.bailu.foc.Foc;
 
 public class AppBroadcaster {
     public static final String NAME_SPACE= BuildConfig.APPLICATION_ID + ".";

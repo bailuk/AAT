@@ -1,8 +1,8 @@
-package ch.bailu.aat.util.fs.foc;
+package ch.bailu.foc_android;
 
 import java.io.Closeable;
 
-import ch.bailu.util_java.foc.Foc;
+import ch.bailu.foc.Foc;
 
 public class FocTest {
 

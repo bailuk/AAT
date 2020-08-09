@@ -4,7 +4,7 @@ import android.database.Cursor;
 
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.services.ServiceContext;
-import ch.bailu.util_java.foc.Foc;
+import ch.bailu.foc.Foc;
 
 public final class IteratorSimple extends IteratorAbstract {
     private GpxInformation info = GpxInformation.NULL;

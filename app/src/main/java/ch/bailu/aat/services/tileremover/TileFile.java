@@ -2,7 +2,7 @@ package ch.bailu.aat.services.tileremover;
 
 import androidx.annotation.NonNull;
 
-import ch.bailu.util_java.foc.Foc;
+import ch.bailu.foc.Foc;
 
 public final class TileFile {
 

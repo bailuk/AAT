@@ -6,7 +6,7 @@ import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import androidx.annotation.NonNull;
 
 import ch.bailu.aat.exception.ValidationException;
-import ch.bailu.util_java.util.Objects;
+import ch.bailu.util.Objects;
 
 
 public abstract class AbsSolidType implements SolidTypeInterface {

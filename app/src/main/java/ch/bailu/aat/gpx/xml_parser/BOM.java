@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
 
-import ch.bailu.util_java.foc.Foc;
+import ch.bailu.foc.Foc;
 
 public class BOM {
     public static final int BOM_UTF8    = 0xEFBBBF;

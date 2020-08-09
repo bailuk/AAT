@@ -6,8 +6,8 @@ import android.text.TextUtils;
 
 import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.util.AppIntent;
-import ch.bailu.aat.util.fs.foc.FocAndroid;
-import ch.bailu.util_java.foc.Foc;
+import ch.bailu.foc.Foc;
+import ch.bailu.foc_android.FocAndroid;
 
 public class FileChangeMsgView extends AbsBroadcastMsgView {
     public FileChangeMsgView(Context context) {

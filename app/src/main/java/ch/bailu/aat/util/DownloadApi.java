@@ -10,7 +10,7 @@ import ch.bailu.aat.services.background.BackgroundService;
 import ch.bailu.aat.services.background.BackgroundTask;
 import ch.bailu.aat.services.background.DownloadTask;
 import ch.bailu.aat.util.ui.AppLog;
-import ch.bailu.util_java.foc.Foc;
+import ch.bailu.foc.Foc;
 
 public abstract class DownloadApi extends OsmApiConfiguration {
 

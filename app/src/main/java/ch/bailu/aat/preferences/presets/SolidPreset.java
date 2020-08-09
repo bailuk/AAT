@@ -6,7 +6,7 @@ import ch.bailu.aat.R;
 import ch.bailu.aat.preferences.SolidIndexList;
 import ch.bailu.aat.preferences.general.SolidPresetCount;
 import ch.bailu.aat.util.fs.AppDirectory;
-import ch.bailu.util_java.foc.Foc;
+import ch.bailu.foc.Foc;
 
 public class SolidPreset extends SolidIndexList {
 

@@ -27,7 +27,7 @@ import ch.bailu.aat.views.ImageButtonViewGroup;
 import ch.bailu.aat.views.PreviewView;
 import ch.bailu.aat.views.bar.MainControlBar;
 import ch.bailu.aat.views.html.AttributesView;
-import ch.bailu.util_java.util.Objects;
+import ch.bailu.util.Objects;
 
 public abstract class AbsFileContentActivity extends ActivityContext implements OnClickListener {
 

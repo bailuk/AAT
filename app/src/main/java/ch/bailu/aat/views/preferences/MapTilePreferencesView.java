@@ -40,7 +40,7 @@ public class MapTilePreferencesView extends VerticalScrollView {
         add(new SolidDirectoryView(new SolidMapsForgeMapFile(context), theme));
         add(new SolidDirectoryView(new SolidMapsForgeDirectory(context), theme));
         add(new SolidStringView(new SolidRenderTheme(context), theme));
-        add(new SolidIndexListView( new SolidRendererThreads(context), theme));
+        //add(new SolidIndexListView( new SolidRendererThreads(context), theme));
         add(new SolidCheckBox(new SolidEnableTileCache.MapsForge(context), theme));
 
         add(new TitleView(context, Source.ELEVATION_HILLSHADE.getName(), theme));

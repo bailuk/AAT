@@ -4,8 +4,8 @@ import android.content.res.AssetManager;
 
 import java.io.IOException;
 
-import ch.bailu.aat.util.fs.foc.FocAsset;
-import ch.bailu.util_java.foc.Foc;
+import ch.bailu.foc.Foc;
+import ch.bailu.foc_android.FocAsset;
 import ch.bailu.util_java.io.Stream;
 
 public final class MapFeaturesParser {

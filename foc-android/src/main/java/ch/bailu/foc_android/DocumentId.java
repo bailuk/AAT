@@ -1,8 +1,8 @@
-package ch.bailu.aat.util.fs.foc;
+package ch.bailu.foc_android;
+
+import android.util.Log;
 
 import androidx.annotation.NonNull;
-
-import ch.bailu.aat.util.ui.AppLog;
 
 public class DocumentId {
     final private String documentId;
@@ -35,7 +35,7 @@ public class DocumentId {
         }
 
         if (child.charAt(child.length()-1) == '/') {
-            AppLog.w(this, child + " ends with '/'");
+            Log.w(getClass().getSimpleName(), child + " ends with '/'");
             return child(child.substring(0,child.length()-1));
         }
 

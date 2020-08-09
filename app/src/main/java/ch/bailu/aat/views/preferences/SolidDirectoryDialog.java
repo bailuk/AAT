@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 import ch.bailu.aat.R;
 import ch.bailu.aat.preferences.SolidFile;
-import ch.bailu.aat.util.fs.foc.FocAndroid;
+import ch.bailu.foc_android.FocAndroid;
 
 public class SolidDirectoryDialog extends SolidStringDialog {
 

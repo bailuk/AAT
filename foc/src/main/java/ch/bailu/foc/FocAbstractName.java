@@ -1,34 +1,12 @@
-package ch.bailu.aat.util.fs.foc;
-
-import android.content.res.AssetManager;
+package ch.bailu.foc;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-import ch.bailu.util_java.foc.Foc;
-
-public class FocAsset extends Foc {
-
-    private final String asset;
-    private final AssetManager manager;
-
-
-    public FocAsset(AssetManager m, String a) {
-        manager = m;
-        asset = a;
-    }
-
-
+public abstract class FocAbstractName extends Foc {
     @Override
-    public long lastModified() {
-        return System.currentTimeMillis();
-    }
-
-
-
-    @Override
-    public boolean remove() {
+    public boolean remove() throws SecurityException {
         return false;
     }
 
@@ -42,26 +20,11 @@ public class FocAsset extends Foc {
         return null;
     }
 
-
     @Override
     public Foc child(String name) {
         return null;
     }
 
-    @Override
-    public String getName() {
-        return asset;
-    }
-
-    @Override
-    public String getPath() {
-        return asset;
-    }
-
-    @Override
-    public long length() {
-        return 0;
-    }
 
     @Override
     public void foreach(Execute e) {
@@ -104,12 +67,22 @@ public class FocAsset extends Foc {
     }
 
     @Override
-    public InputStream openR() throws IOException {
-        return manager.open(asset);
+    public long length() {
+        return 0;
     }
 
     @Override
-    public OutputStream openW() throws IOException {
-        throw new IOException();
+    public long lastModified() {
+        return 0;
+    }
+
+    @Override
+    public InputStream openR() throws IOException, SecurityException {
+        throw new IOException(getPathName());
+    }
+
+    @Override
+    public OutputStream openW() throws IOException, SecurityException {
+        throw new IOException(getPathName());
     }
 }

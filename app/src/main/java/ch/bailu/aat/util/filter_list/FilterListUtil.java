@@ -9,7 +9,7 @@ import java.io.Reader;
 import java.io.Writer;
 
 
-import ch.bailu.util_java.foc.Foc;
+import ch.bailu.foc.Foc;
 
 public class FilterListUtil {
     private final static int LINE_LIMIT = 500;

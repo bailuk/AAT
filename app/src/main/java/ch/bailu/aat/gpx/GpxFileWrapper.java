@@ -1,6 +1,6 @@
 package ch.bailu.aat.gpx;
 
-import ch.bailu.util_java.foc.Foc;
+import ch.bailu.foc.Foc;
 
 
 public class GpxFileWrapper extends GpxInformation {

@@ -5,7 +5,7 @@ import androidx.annotation.NonNull;
 import ch.bailu.aat.coordinates.SrtmCoordinates;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.background.BackgroundTask;
-import ch.bailu.util_java.foc.Foc;
+import ch.bailu.foc.Foc;
 
 public final class Dem3Tile implements ElevationProvider, DemProvider {
 

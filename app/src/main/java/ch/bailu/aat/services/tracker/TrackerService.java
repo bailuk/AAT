@@ -52,9 +52,8 @@ public final class TrackerService extends VirtualService implements WithStatusTe
 
     @Override
     public void appendStatusText(StringBuilder builder) {
-        builder.append("<p>Log to: ");
-        builder.append(internal.logger.getFile().getPathName());
-        builder.append("</p>");
+        builder .append("Log to: ")
+                .append(internal.logger.getFile().getPathName());
     }
 
     public void close() {

@@ -12,7 +12,7 @@ import ch.bailu.aat.description.NameDescription;
 import ch.bailu.aat.description.TimeDescription;
 import ch.bailu.aat.description.TrackSizeDescription;
 import ch.bailu.aat.preferences.presets.SolidPreset;
-import ch.bailu.util_java.foc.Foc;
+import ch.bailu.foc.Foc;
 
 public class TrackListActivity extends AbsGpxListActivity {
 

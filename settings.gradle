@@ -1,1 +1,10 @@
-include ':app', ':util-java'
+include ':util'
+include ':app'
+include ':util-java'
+include ':foc-android'
+include ':foc'
+
+
+// Uncomment to substitute MapsForge artifacts with local copy.
+// Only for testing and developing!
+// includeBuild '../mapsforge'

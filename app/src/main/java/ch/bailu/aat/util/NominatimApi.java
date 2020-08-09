@@ -7,7 +7,7 @@ import java.net.URLEncoder;
 
 import ch.bailu.aat.coordinates.BoundingBoxE6;
 import ch.bailu.aat.util.fs.AppDirectory;
-import ch.bailu.util_java.foc.Foc;
+import ch.bailu.foc.Foc;
 
 public abstract class NominatimApi extends DownloadApi {
     public final static String NAME="Nominatim";

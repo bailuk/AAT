@@ -1,4 +1,4 @@
-package ch.bailu.aat.util.fs.foc;
+package ch.bailu.foc_android;
 
 public class MimeType {
 

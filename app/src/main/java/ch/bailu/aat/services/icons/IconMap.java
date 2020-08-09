@@ -2,10 +2,12 @@ package ch.bailu.aat.services.icons;
 
 import java.util.HashMap;
 
-public final class IconMap {
+import ch.bailu.aat.util.WithStatusText;
+
+public final class IconMap implements WithStatusText {
 
 
-   public class Icon {
+    public class Icon {
         public final String svg;
 
         public Icon(String file_name) {
@@ -38,4 +40,11 @@ public final class IconMap {
         }
         return value_list.get(value);
     }
+
+
+    @Override
+    public void appendStatusText(StringBuilder builder) {
+        builder.append("IconMap (key_list) size: ").append(key_list.size()).append("<br>");
+    }
+
 }

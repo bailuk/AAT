@@ -3,7 +3,7 @@ package ch.bailu.aat.services.tileremover;
 import ch.bailu.aat.preferences.map.SolidTileCacheDirectory;
 import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.util.ui.AppLog;
-import ch.bailu.util_java.foc.Foc;
+import ch.bailu.foc.Foc;
 
 
 public final class StateScan implements State, Runnable {

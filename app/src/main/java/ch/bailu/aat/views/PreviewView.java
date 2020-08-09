@@ -6,9 +6,9 @@ import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.cache.ObjBitmap;
 import ch.bailu.aat.services.directory.SummaryConfig;
-import ch.bailu.aat.util.fs.foc.FocAndroid;
 import ch.bailu.aat.util.ui.ToolTip;
-import ch.bailu.util_java.foc.Foc;
+import ch.bailu.foc.Foc;
+import ch.bailu.foc_android.FocAndroid;
 
 public class PreviewView extends ImageObjectView implements OnContentUpdatedInterface {
 

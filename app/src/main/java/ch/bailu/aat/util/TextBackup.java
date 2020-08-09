@@ -3,7 +3,7 @@ package ch.bailu.aat.util;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 
-import ch.bailu.util_java.foc.Foc;
+import ch.bailu.foc.Foc;
 import ch.bailu.util_java.io.Stream;
 
 

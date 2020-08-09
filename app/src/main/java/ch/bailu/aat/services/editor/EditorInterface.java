@@ -4,7 +4,7 @@ import ch.bailu.aat.gpx.GpxList;
 import ch.bailu.aat.gpx.GpxPoint;
 import ch.bailu.aat.gpx.GpxPointNode;
 import ch.bailu.aat.gpx.interfaces.GpxType;
-import ch.bailu.util_java.foc.Foc;
+import ch.bailu.foc.Foc;
 
 public interface EditorInterface {
     EditorInterface NULL = new EditorInterface() {

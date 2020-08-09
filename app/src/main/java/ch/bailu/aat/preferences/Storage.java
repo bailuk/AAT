@@ -9,8 +9,8 @@ import java.io.File;
 import java.util.Map.Entry;
 
 import ch.bailu.aat.util.ContextWrapperInterface;
-import ch.bailu.util_java.foc.Foc;
-import ch.bailu.util_java.foc.FocFile;
+import ch.bailu.foc.Foc;
+import ch.bailu.foc.FocFile;
 
 public class Storage  implements ContextWrapperInterface {
     public final static String DEF_VALUE="0";

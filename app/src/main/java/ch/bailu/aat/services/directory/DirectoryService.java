@@ -12,7 +12,7 @@ import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.VirtualService;
 import ch.bailu.aat.util.WithStatusText;
 import ch.bailu.aat.util.fs.AFile;
-import ch.bailu.util_java.foc.Foc;
+import ch.bailu.foc.Foc;
 
 public final class DirectoryService extends VirtualService implements OnSharedPreferenceChangeListener, WithStatusText{
 

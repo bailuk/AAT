@@ -6,7 +6,7 @@ import android.widget.EditText;
 
 import ch.bailu.aat.util.TextBackup;
 import ch.bailu.aat.util.ui.AppLog;
-import ch.bailu.util_java.foc.Foc;
+import ch.bailu.foc.Foc;
 
 
 public class TagEditor extends EditText {

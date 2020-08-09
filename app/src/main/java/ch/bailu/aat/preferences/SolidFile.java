@@ -12,8 +12,8 @@ import java.util.ArrayList;
 
 import ch.bailu.aat.R;
 import ch.bailu.aat.menus.DirectoryMenu;
-import ch.bailu.aat.util.fs.foc.FocAndroid;
-import ch.bailu.util_java.foc.Foc;
+import ch.bailu.foc.Foc;
+import ch.bailu.foc_android.FocAndroid;
 
 
 public abstract class SolidFile extends SolidString {

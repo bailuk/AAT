@@ -17,7 +17,7 @@ public final class RenderService  extends VirtualService
 
     private final SolidMapsForgeDirectory sdirectory;
     private final SolidRenderTheme stheme;
-    private final SolidRendererThreads sthreads;
+    //private final SolidRendererThreads sthreads;
 
 
     private final Configuration configuration = new Configuration();
@@ -29,7 +29,7 @@ public final class RenderService  extends VirtualService
 
         sdirectory = new SolidMapsForgeDirectory(sc.getContext());
         stheme = new SolidRenderTheme(sc.getContext());
-        sthreads = new SolidRendererThreads(sc.getContext());
+        //sthreads = new SolidRendererThreads(sc.getContext());
 
         sdirectory.getStorage().register(this);
         reconfigureRenderer();
@@ -38,7 +38,7 @@ public final class RenderService  extends VirtualService
 
     private void reconfigureRenderer() {
         configuration.destroy();
-        sthreads.set();
+        SolidRendererThreads.set();
         configuration.configure(
                 sdirectory.getValueAsFile(),
                 caches,
@@ -66,7 +66,7 @@ public final class RenderService  extends VirtualService
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-        if (sdirectory.hasKey(key) || stheme.hasKey(key) || sthreads.hasKey(key)) {
+        if (sdirectory.hasKey(key) || stheme.hasKey(key) /*|| sthreads.hasKey(key)*/) {
             reconfigureRenderer();
         }
     }

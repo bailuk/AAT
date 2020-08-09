@@ -5,7 +5,7 @@ import java.io.IOException;
 import ch.bailu.aat.gpx.GpxConstants;
 import ch.bailu.aat.gpx.interfaces.GpxPointInterface;
 import ch.bailu.aat.services.dem.tile.ElevationProvider;
-import ch.bailu.util_java.foc.Foc;
+import ch.bailu.foc.Foc;
 
 public class RouteWriter extends GpxWriter {
 

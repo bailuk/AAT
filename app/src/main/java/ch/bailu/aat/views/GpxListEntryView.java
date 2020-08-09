@@ -10,10 +10,10 @@ import ch.bailu.aat.dispatcher.OnContentUpdatedInterface;
 import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.menus.FileMenu;
 import ch.bailu.aat.util.AbsServiceLink;
-import ch.bailu.aat.util.fs.foc.FocAndroid;
 import ch.bailu.aat.util.ui.AppLayout;
 import ch.bailu.aat.util.ui.UiTheme;
-import ch.bailu.util_java.foc.Foc;
+import ch.bailu.foc.Foc;
+import ch.bailu.foc_android.FocAndroid;
 
 public class GpxListEntryView extends LinearLayout implements OnContentUpdatedInterface {
 

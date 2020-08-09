@@ -8,7 +8,7 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringReader;
 
-import ch.bailu.util_java.foc.Foc;
+import ch.bailu.foc.Foc;
 
 public class Stream implements Closeable {
     private final static String CHARSET="UTF-8";
@@ -104,17 +104,5 @@ public class Stream implements Closeable {
     @Override
     public void close() throws IOException {
         reader.close();
-    }
-
-    public boolean haveDoubleQuote() {
-        return c=='"';
-    }
-
-    public boolean haveQuotation() {
-        return (c=='\'' || c=='"');
-    }
-
-    public void toQuotation() throws IOException {
-        while (haveQuotation()==false && haveEOF()==false) read();
     }
 }

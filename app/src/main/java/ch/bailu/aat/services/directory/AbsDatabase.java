@@ -5,7 +5,7 @@ import android.database.sqlite.SQLiteException;
 
 import java.io.Closeable;
 
-import ch.bailu.util_java.foc.Foc;
+import ch.bailu.foc.Foc;
 
 public abstract class AbsDatabase implements Closeable{
 

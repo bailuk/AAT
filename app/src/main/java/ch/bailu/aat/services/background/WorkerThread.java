@@ -29,12 +29,7 @@ public class WorkerThread extends ProcessThread {
             new InsideContext(scontext) {
                 @Override
                 public void run() {
-                    long size;
-
-                    //handle.bgLock();
-                    size = handle.bgOnProcess(scontext);
-                    //handle.bgUnlock();
-
+                    long size = handle.bgOnProcess(scontext);
                     bgOnHandleProcessed(handle, size);
 
                 }

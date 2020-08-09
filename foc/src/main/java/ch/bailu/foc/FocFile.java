@@ -1,4 +1,4 @@
-package ch.bailu.util_java.foc;
+package ch.bailu.foc;
 
 import java.io.File;
 import java.io.FileInputStream;

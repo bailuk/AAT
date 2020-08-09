@@ -3,7 +3,7 @@ package ch.bailu.aat.services.background;
 import android.content.Context;
 import androidx.annotation.NonNull;
 
-import ch.bailu.util_java.foc.Foc;
+import ch.bailu.foc.Foc;
 
 public abstract class FileTask extends BackgroundTask {
     private final Foc file;

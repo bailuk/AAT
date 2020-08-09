@@ -5,7 +5,7 @@ import android.content.Context;
 import ch.bailu.aat.preferences.map.SolidTrimIndex;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.util.AppBroadcaster;
-import ch.bailu.util_java.foc.Foc;
+import ch.bailu.foc.Foc;
 
 public final class StateMachine implements State {
 

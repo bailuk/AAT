@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 import ch.bailu.aat.preferences.map.SolidMapsForgeDirectory;
 import ch.bailu.aat.services.cache.ObjTileMapsForge;
-import ch.bailu.util_java.foc.Foc;
+import ch.bailu.foc.Foc;
 
 public final class Configuration {
     private final ArrayList<Foc> mapFiles = new ArrayList<>(10);

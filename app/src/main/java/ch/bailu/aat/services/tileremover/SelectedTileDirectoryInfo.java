@@ -1,6 +1,6 @@
 package ch.bailu.aat.services.tileremover;
 
-import ch.bailu.util_java.foc.Foc;
+import ch.bailu.foc.Foc;
 
 public final class SelectedTileDirectoryInfo {
 

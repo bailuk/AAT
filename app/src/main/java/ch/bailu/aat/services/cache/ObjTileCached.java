@@ -10,8 +10,8 @@ import ch.bailu.aat.map.tile.source.CacheOnlySource;
 import ch.bailu.aat.map.tile.source.Source;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.util.AppBroadcaster;
-import ch.bailu.aat.util.fs.foc.FocAndroid;
-import ch.bailu.util_java.foc.Foc;
+import ch.bailu.foc.Foc;
+import ch.bailu.foc_android.FocAndroid;
 
 public final class ObjTileCached extends ObjTile {
     private final static int MIN_SAVE_ZOOM_LEVEL = 16;

@@ -8,13 +8,6 @@ public class GpxDistanceWindow extends GpxWindow {
 
     private final float distanceLimit;
 
-
-    public GpxDistanceWindow(GpxPointNode node, float limit) {
-        super(node);
-        distanceLimit = limit;
-    }
-
-
     public GpxDistanceWindow(GpxList list) {
         super((GpxPointNode) list.getPointList().getFirst());
         distanceLimit = getDistanceLimit(list.getDelta().getDistance());
@@ -33,15 +26,6 @@ public class GpxDistanceWindow extends GpxWindow {
         return "";
 
     }
-
-    private static GpxDistanceWindow createDistanceWindow(GpxList list) {
-        final float distance = list.getDelta().getDistance();
-        final GpxPointNode first = (GpxPointNode) list.getPointList().getFirst();
-        final int limit = getDistanceLimit(distance);
-
-        return new GpxDistanceWindow(first, limit);
-    }
-
 
     private static int getDistanceLimit(float distance) {
 

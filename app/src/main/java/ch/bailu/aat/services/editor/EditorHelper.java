@@ -7,7 +7,7 @@ import ch.bailu.aat.services.cache.ObjGpxEditable;
 import ch.bailu.aat.services.cache.Obj;
 import ch.bailu.aat.services.cache.ObjNull;
 import ch.bailu.aat.util.fs.AppDirectory;
-import ch.bailu.util_java.foc.Foc;
+import ch.bailu.foc.Foc;
 
 public final class EditorHelper {
     private final ServiceContext scontext;

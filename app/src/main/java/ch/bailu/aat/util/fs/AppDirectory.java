@@ -7,7 +7,7 @@ import java.util.Locale;
 
 import ch.bailu.aat.preferences.system.SolidDataDirectory;
 import ch.bailu.aat.preferences.map.SolidTileCacheDirectory;
-import ch.bailu.util_java.foc.Foc;
+import ch.bailu.foc.Foc;
 
 public class AppDirectory  {
 
