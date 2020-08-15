@@ -6,5 +6,5 @@ include ':foc'
 
 
 // Uncomment to substitute MapsForge artifacts with local copy.
-// Only for testing and developing!
+// Only for testing and developing!!!
 // includeBuild '../mapsforge'

@@ -4,6 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="ch.bailu.aat">
 
+    <!-- force min SDK version (if using local MapsForge) -->
+    <uses-sdk tools:overrideLibrary = "
+        org.mapsforge.map.android,
+        org.mapsforge.poi.android,
+        org.sqlite.database
+        "/>
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
