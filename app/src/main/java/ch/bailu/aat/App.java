@@ -19,7 +19,11 @@ public class App extends Application {
     @Override
     public void onCreate() {
         initMapsForge();
-        //initAcra();
+
+        if (!BuildConfig.DEBUG) {
+            initAcra();
+        }
+
         super.onCreate();
     }
 
@@ -46,6 +50,5 @@ public class App extends Application {
 
                 .setEnabled(true);
         ACRA.init(this, builder);
-
     }
 }
