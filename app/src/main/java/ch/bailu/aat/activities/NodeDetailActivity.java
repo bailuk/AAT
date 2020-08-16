@@ -139,19 +139,14 @@ public class NodeDetailActivity extends ActivityContext
         infoCache = info;
 
         graph.setVisibility(info);
-        initSeekBar(info);
+        setSeekBarMax();
 
         int index = getIntent().getIntExtra("I", 0);
         updateToIndex(index);
     }
 
-    private void initSeekBar(GpxInformation info) {
-        int max = 0;
-
-        if (arrayCache.size() > 0)
-            max = arrayCache.size() -1;
-
-        seekBar.setMax(max);
+    private void setSeekBarMax() {
+        seekBar.setMax(Math.max(0, arrayCache.size()-1));
     }
 
 
@@ -160,8 +155,6 @@ public class NodeDetailActivity extends ActivityContext
 
             if (i < 0) i = arrayCache.size()-1;
             if (i >= arrayCache.size()) i=0;
-
-
 
             mapView.setCenter(arrayCache.get(i).getBoundingBox().getCenter().toLatLong());
 
