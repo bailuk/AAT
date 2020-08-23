@@ -83,10 +83,10 @@ dependencies {
     implementation "org.mapsforge:sqlite-android:$mapsforgeVersion"
 
     // SqLite natives - uncomment when working with local MapsForge project
-    implementation "org.mapsforge:sqlite-android:$mapsforgeVersion:natives-armeabi-v7a"
-    implementation "org.mapsforge:sqlite-android:$mapsforgeVersion:natives-arm64-v8a"
-    implementation "org.mapsforge:sqlite-android:$mapsforgeVersion:natives-x86"
-    implementation "org.mapsforge:sqlite-android:$mapsforgeVersion:natives-x86_64"
+    //implementation "org.mapsforge:sqlite-android:$mapsforgeVersion:natives-armeabi-v7a"
+    //implementation "org.mapsforge:sqlite-android:$mapsforgeVersion:natives-arm64-v8a"
+    //implementation "org.mapsforge:sqlite-android:$mapsforgeVersion:natives-x86"
+    //implementation "org.mapsforge:sqlite-android:$mapsforgeVersion:natives-x86_64"
 
     // Acra
     def acraVersion = '5.5.0'
