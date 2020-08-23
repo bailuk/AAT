@@ -13,6 +13,7 @@ import org.mapsforge.map.layer.queue.JobQueue;
 import org.mapsforge.map.layer.renderer.DatabaseRenderer;
 import org.mapsforge.map.layer.renderer.MapWorkerPool;
 import org.mapsforge.map.layer.renderer.RendererJob;
+import org.mapsforge.map.model.DisplayModel;
 import org.mapsforge.map.model.Model;
 import org.mapsforge.map.reader.MapFile;
 import org.mapsforge.map.reader.header.MapFileException;
@@ -39,8 +40,10 @@ public final class Renderer extends Layer {
 
 
     public Renderer(XmlRenderTheme t, TileCache cache, ArrayList<Foc> files) throws Exception {
+        // important: call model.mapViewPosition.destroy() to free resources
+        final Model model = new Model();
+
         try {
-            final Model model = new Model();
 
             displayModel = model.displayModel;
             jobQueue = new JobQueue<>(model.mapViewPosition, model.displayModel);
@@ -67,6 +70,8 @@ public final class Renderer extends Layer {
         } catch (Exception e) {
             destroy();
             throw e;
+        } finally {
+            model.mapViewPosition.destroy();
         }
     }
 
@@ -121,7 +126,7 @@ public final class Renderer extends Layer {
         RenderThemeFuture theme = new RenderThemeFuture(
                 AndroidGraphicFactory.INSTANCE,
                 t,
-                new Model().displayModel);
+                new DisplayModel());
         new Thread(theme).start();
         return theme;
     }
