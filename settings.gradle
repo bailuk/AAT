@@ -4,7 +4,14 @@ include ':util-java'
 include ':foc-android'
 include ':foc'
 
+// uncomment and set to use a local mapsForge repository
+gradle.ext.mapsForgeDir = '../../git/mapsforge'
 
-// Uncomment to substitute MapsForge artifacts with local copy.
-// Only for testing and developing!!!
-includeBuild '../mapsforge'
+// uncomment to use the default remote mapsForge repository
+//gradle.ext.mapsForgeDir = ''
+
+
+if (! gradle.ext.mapsForgeDir.equals("")) {
+    includeBuild "${gradle.ext.mapsForgeDir}"
+}
+

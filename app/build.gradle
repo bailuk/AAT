@@ -1,5 +1,6 @@
 apply plugin: 'com.android.application'
 
+
 android {
     compileSdkVersion 30
     buildToolsVersion '30.0.1'
@@ -23,6 +24,20 @@ android {
         buildConfigField 'String', 'APP_CONTACT', '\"aat@bailu.ch\"'
         resValue "string", "app_sname", "AAT"
     }
+
+    // SqLite natives needed by MapsForge POI (when using local repository)
+    // configure in 'settings.gradle'
+    if (!gradle.ext.mapsForgeDir.equals("")) {
+        def mapsForgeDir = gradle.ext.mapsForgeDir
+        sourceSets {
+            main {
+                file("${rootDir}/${mapsForgeDir}/sqlite-android/natives").eachDir() { dir ->
+                    jniLibs.srcDirs += "${dir.path}/lib"
+                }
+            }
+        }
+    }
+
 
     buildTypes {
         release {
@@ -64,29 +79,31 @@ dependencies {
             Automatic MapsForge integration as described here:
             https://github.com/mapsforge/mapsforge/raw/master/docs/Integration.md
     */
-    def mapsforgeVersion = '0.13.0'
+    def mapsForgeVersion = '0.14.0'
 
     // MapsForge Core
-    implementation "org.mapsforge:mapsforge-core:$mapsforgeVersion"
-    implementation "org.mapsforge:mapsforge-map:$mapsforgeVersion"
-    implementation "org.mapsforge:mapsforge-map-reader:$mapsforgeVersion"
-    implementation "org.mapsforge:mapsforge-themes:$mapsforgeVersion"
-    //implementation 'net.sf.kxml:kxml2:2.3.0'
+    implementation "org.mapsforge:mapsforge-core:$mapsForgeVersion"
+    implementation "org.mapsforge:mapsforge-map:$mapsForgeVersion"
+    implementation "org.mapsforge:mapsforge-map-reader:$mapsForgeVersion"
+    implementation "org.mapsforge:mapsforge-themes:$mapsForgeVersion"
 
     // MapsForge Android
-    implementation "org.mapsforge:mapsforge-map-android:$mapsforgeVersion"
+    implementation "org.mapsforge:mapsforge-map-android:$mapsForgeVersion"
     implementation 'com.caverock:androidsvg:1.4'
 
     // MapsForge POI
-    implementation "org.mapsforge:mapsforge-poi:$mapsforgeVersion"
-    implementation "org.mapsforge:mapsforge-poi-android:$mapsforgeVersion"
-    implementation "org.mapsforge:sqlite-android:$mapsforgeVersion"
+    implementation "org.mapsforge:mapsforge-poi:$mapsForgeVersion"
+    implementation "org.mapsforge:mapsforge-poi-android:$mapsForgeVersion"
+    implementation "org.mapsforge:sqlite-android:$mapsForgeVersion"
 
-    // SqLite natives - uncomment when working with local MapsForge project
-    //implementation "org.mapsforge:sqlite-android:$mapsforgeVersion:natives-armeabi-v7a"
-    //implementation "org.mapsforge:sqlite-android:$mapsforgeVersion:natives-arm64-v8a"
-    //implementation "org.mapsforge:sqlite-android:$mapsforgeVersion:natives-x86"
-    //implementation "org.mapsforge:sqlite-android:$mapsforgeVersion:natives-x86_64"
+    // SqLite natives needed by MapsForge POI (when using remote repository)
+    // configure in 'settings.gradle'
+    if ( gradle.ext.mapsForgeDir.equals("") ) {
+        implementation "org.mapsforge:sqlite-android:$mapsForgeVersion:natives-armeabi-v7a"
+        implementation "org.mapsforge:sqlite-android:$mapsForgeVersion:natives-arm64-v8a"
+        implementation "org.mapsforge:sqlite-android:$mapsForgeVersion:natives-x86"
+        implementation "org.mapsforge:sqlite-android:$mapsForgeVersion:natives-x86_64"
+    }
 
     // Acra
     def acraVersion = '5.5.0'
