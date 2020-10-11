@@ -1,5 +1,7 @@
 package ch.bailu.aat.activities;
 
+import org.mapsforge.map.android.graphics.AndroidBitmap;
+
 import ch.bailu.aat.util.WithStatusText;
 
 public class AppThread implements WithStatusText {
@@ -9,13 +11,18 @@ public class AppThread implements WithStatusText {
      * - CrAsyncTask or AsyncTask and Chrome_ProcessLauncher come from
      *   HtmlTextView.enableAutoLink()
      * - LayerManager (MapsForge) does not always terminate
-     * - Animator (MapsForge) does not always terminate
+     *
      */
+
 
     @Override
     public void appendStatusText(StringBuilder builder) {
         builder.append("<h1>").append(getClass().getSimpleName()).append("</h1>");
         builder.append("<p>");
+
+        builder.append("Total Allocated Bitmaps: ");
+        builder.append(AndroidBitmap.getAllocatedBitmap());
+        builder.append("<br><br>");
 
         Thread[] threads = new Thread[Thread.activeCount()+5];
         int count = Thread.enumerate(threads);
