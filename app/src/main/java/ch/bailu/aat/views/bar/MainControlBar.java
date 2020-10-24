@@ -1,6 +1,5 @@
 package ch.bailu.aat.views.bar;
 
-import android.app.Activity;
 import android.widget.LinearLayout;
 
 import ch.bailu.aat.R;
@@ -12,13 +11,13 @@ import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.menus.OptionsMenu;
 import ch.bailu.aat.util.ui.AppLayout;
 import ch.bailu.aat.util.ui.AppTheme;
-import ch.bailu.aat.views.description.mview.MultiViewNextButton;
-import ch.bailu.aat.views.description.mview.MultiViewSelector;
 import ch.bailu.aat.views.ImageButtonViewGroup;
 import ch.bailu.aat.views.description.GPSStateButton;
-import ch.bailu.aat.views.description.mview.MultiView;
 import ch.bailu.aat.views.description.SensorStateButton;
 import ch.bailu.aat.views.description.TrackerStateButton;
+import ch.bailu.aat.views.description.mview.MultiView;
+import ch.bailu.aat.views.description.mview.MultiViewNextButton;
+import ch.bailu.aat.views.description.mview.MultiViewSelector;
 import ch.bailu.util.Objects;
 
 public class MainControlBar extends ControlBar {
@@ -104,10 +103,15 @@ public class MainControlBar extends ControlBar {
     }
 
 
-    public void addActivityCycle(final Activity acontext) {
-        ImageButtonViewGroup cb = addImageButton(R.drawable.go_down_inverse, getControlSize());
-        cb.setOnClickListener(v -> new ActivitySwitcher(acontext).cycle());
+    public void addActivityCycle(final ActivityContext acontext) {
+        if (ActivitySwitcher.DISABLE_ACTIVITY_CYCLING) {
+            addSpace();
+        } else {
+            ImageButtonViewGroup cb = addImageButton(R.drawable.go_down_inverse, getControlSize());
+            cb.setOnClickListener(v -> new ActivitySwitcher(acontext).cycle());
+        }
     }
+
 
     public void addMvNext(MultiView mv) {
         addMvNext(mv, getControlSize());

@@ -14,6 +14,12 @@ import ch.bailu.aat.util.ui.AppLayout;
 
 public class ActivitySwitcher {
 
+    /**
+     * Disable activity cycling because Android leaks memory
+     * when switching activities
+     */
+    public final static boolean DISABLE_ACTIVITY_CYCLING = true;
+
     private final static int PHONE_CYCLABLE = 3;
     private final static int TABLET_CYCLABLE = 2;
 
@@ -117,6 +123,8 @@ public class ActivitySwitcher {
     }
 
     public void cycle() {
+        if (DISABLE_ACTIVITY_CYCLING) return;
+
         for (int i=0; i<entries.size(); i++) {
             if (entries.get(i).activityClass.equals(callingActivity.getClass())) {
                 int x = i+1;
