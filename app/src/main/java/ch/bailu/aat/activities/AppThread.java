@@ -20,8 +20,9 @@ public class AppThread implements WithStatusText {
         builder.append("<h1>").append(getClass().getSimpleName()).append("</h1>");
         builder.append("<p>");
 
-        builder.append("Total Allocated Bitmaps: ");
-        builder.append(AndroidBitmap.getAllocatedBitmap());
+
+        //builder.append("Total Allocated Bitmaps: ");
+        //builder.append(AndroidBitmap.getAllocatedBitmap());
         builder.append("<br><br>");
 
         Thread[] threads = new Thread[Thread.activeCount()+5];

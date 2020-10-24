@@ -7,7 +7,6 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 
 import org.mapsforge.core.graphics.Canvas;
-import org.mapsforge.core.graphics.GraphicContext;
 import org.mapsforge.core.model.BoundingBox;
 import org.mapsforge.core.model.Dimension;
 import org.mapsforge.core.model.MapPosition;
@@ -122,40 +121,10 @@ public class MapsForgePreview extends MapsForgeViewBase {
 
     @Override
     public FrameBuffer getFrameBuffer() {
-        return new FrameBuffer() {
-            @Override
-            public void adjustMatrix(float diffX, float diffY, float scaleFactor, Dimension mapViewDimension, float pivotDistanceX, float pivotDistanceY) {
-
-            }
-
-            @Override
-            public void destroy() {
-
-            }
-
-            @Override
-            public void draw(GraphicContext graphicContext) {
-
-            }
-
-            @Override
-            public void frameFinished(MapPosition frameMapPosition) {
-
-            }
-
-            @Override
-            public Dimension getDimension() {
-                return null;
-            }
-
+        return new FrameBuffer(getModel().frameBufferModel, getModel().displayModel, AndroidGraphicFactory.INSTANCE) {
             @Override
             public org.mapsforge.core.graphics.Bitmap getDrawingBitmap() {
                 return null;
-            }
-
-            @Override
-            public void setDimension(Dimension dimension) {
-
             }
         };
     }
