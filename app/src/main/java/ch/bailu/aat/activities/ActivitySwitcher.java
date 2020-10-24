@@ -6,11 +6,9 @@ import android.content.Intent;
 
 import org.mapsforge.core.model.BoundingBox;
 
-import java.io.File;
 import java.util.ArrayList;
 
 import ch.bailu.aat.R;
-import ch.bailu.aat.coordinates.BoundingBoxE6;
 import ch.bailu.aat.util.AppIntent;
 import ch.bailu.aat.util.ui.AppLayout;
 
@@ -134,28 +132,11 @@ public class ActivitySwitcher {
 
 
     public static void start(Context context, Class<?> activityClass) {
-        start(context, activityClass, activityClass.getSimpleName());
-    }
-
-
-    public static void start(Context context, Class<?> activityClass, String string) {
         Intent intent = new Intent();
 
-        AppIntent.setFile(intent, string);
+        AppIntent.setFile(intent, activityClass.getSimpleName());
         start(context, activityClass, intent);
     }
-
-
-
-
-    public static void start(Context context, Class<?> activityClass, File file) {
-        Intent intent = new Intent();
-
-        AppIntent.setFile(intent, file.getAbsolutePath());
-        start(context, activityClass, intent);
-    }
-
-
 
 
     public static void start(Context context, Class<?> activityClass, Intent intent) {
@@ -166,13 +147,6 @@ public class ActivitySwitcher {
 
     }
 
-
-    public static void start(Context context, Class<?> a, BoundingBoxE6 box) {
-        Intent intent = new Intent();
-        AppIntent.setBoundingBox(intent, box);
-        start(context, a, intent);
-
-    }
 
     public static void start(Context context, Class<?> a, BoundingBox box) {
         Intent intent = new Intent();
