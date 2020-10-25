@@ -6,6 +6,7 @@ import android.content.Context;
 import ch.bailu.aat.R;
 import ch.bailu.aat.map.tile.source.MapsForgeSource;
 import ch.bailu.aat.map.tile.source.Source;
+import ch.bailu.aat.preferences.map.SolidDem3Directory;
 import ch.bailu.aat.preferences.map.SolidEnableTileCache;
 import ch.bailu.aat.preferences.map.SolidMapsForgeDirectory;
 import ch.bailu.aat.preferences.map.SolidMapsForgeMapFile;
@@ -18,6 +19,7 @@ import ch.bailu.aat.preferences.map.SolidTrimMode;
 import ch.bailu.aat.preferences.map.SolidTrimSize;
 import ch.bailu.aat.preferences.system.SolidVolumeKeys;
 import ch.bailu.aat.services.ServiceContext;
+import ch.bailu.aat.util.ToDo;
 import ch.bailu.aat.util.ui.UiTheme;
 import ch.bailu.aat.views.tileremover.TileRemoverView;
 
@@ -40,8 +42,10 @@ public class MapTilePreferencesView extends VerticalScrollView {
         add(new SolidDirectoryView(new SolidMapsForgeMapFile(context), theme));
         add(new SolidDirectoryView(new SolidMapsForgeDirectory(context), theme));
         add(new SolidStringView(new SolidRenderTheme(context), theme));
-        //add(new SolidIndexListView( new SolidRendererThreads(context), theme));
         add(new SolidCheckBox(new SolidEnableTileCache.MapsForge(context), theme));
+
+        add(new TitleView(context, ToDo.translate("Dem3 altitude tiles"), theme));
+        add(new SolidDirectoryView(new SolidDem3Directory(context), theme));
 
         add(new TitleView(context, Source.ELEVATION_HILLSHADE.getName(), theme));
         add(new SolidCheckBox(new SolidEnableTileCache.Hillshade(context), theme));
