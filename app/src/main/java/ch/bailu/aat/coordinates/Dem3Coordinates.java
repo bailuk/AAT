@@ -7,6 +7,7 @@ import org.mapsforge.core.model.LatLong;
 
 import java.text.DecimalFormat;
 
+import ch.bailu.aat.preferences.map.SolidDem3Directory;
 import ch.bailu.aat.preferences.system.SolidDataDirectory;
 import ch.bailu.foc.Foc;
 
@@ -111,17 +112,17 @@ public class Dem3Coordinates extends Coordinates implements LatLongE6Interface {
      * Example: /sdcard/aat_data/dem3/N16/N16E077.hgt.zip
      */
     public Foc toFile(Context context) {
-        return toFile(new SolidDataDirectory(context).getValueAsFile());
+        return toFile(new SolidDem3Directory(context).getValueAsFile());
     }
 
 
     /**
      *
-     * @param base directory that contains "dem3/" directory
+     * @param base directory that contains tiles
      * @return a complete file path for a dem3 tile.
      */
-    public Foc toFile(Foc base) {
-        return base.descendant("dem3/" + toExtString() + ".hgt.zip");
+    private Foc toFile(Foc base) {
+        return base.descendant(toExtString() + ".hgt.zip");
     }
 
 

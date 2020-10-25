@@ -7,6 +7,7 @@ import android.content.Intent;
 import java.io.Closeable;
 
 import ch.bailu.aat.coordinates.Dem3Coordinates;
+import ch.bailu.aat.preferences.map.SolidDem3EnableDownload;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.background.DownloadTask;
 import ch.bailu.aat.services.dem.tile.Dem3Tile;
@@ -56,12 +57,15 @@ public final class Dem3TileLoader implements Closeable {
 
 
     private void loadOrDownloadPending() {
-        final Dem3Coordinates loadNow = pending;
+        final Dem3Coordinates toLoad = pending;
         pending = null;
 
-        if (loadNow != null) {
-            loadNow(loadNow);
-            downloadNow(loadNow);
+        if (toLoad != null) {
+            loadNow(toLoad);
+
+            if (new SolidDem3EnableDownload(scontext.getContext()).getValue()) {
+                downloadNow(toLoad);
+            }
         }
     }
 
