@@ -6,7 +6,7 @@ import android.content.Intent;
 
 import java.io.Closeable;
 
-import ch.bailu.aat.coordinates.SrtmCoordinates;
+import ch.bailu.aat.coordinates.Dem3Coordinates;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.background.DownloadTask;
 import ch.bailu.aat.services.dem.tile.Dem3Tile;
@@ -21,7 +21,7 @@ public final class Dem3TileLoader implements Closeable {
     private final ServiceContext scontext;
     private final Dem3Tiles tiles;
 
-    private SrtmCoordinates pending = null;
+    private Dem3Coordinates pending = null;
 
 
 
@@ -56,7 +56,7 @@ public final class Dem3TileLoader implements Closeable {
 
 
     private void loadOrDownloadPending() {
-        final SrtmCoordinates loadNow = pending;
+        final Dem3Coordinates loadNow = pending;
         pending = null;
 
         if (loadNow != null) {
@@ -66,12 +66,12 @@ public final class Dem3TileLoader implements Closeable {
     }
 
 
-    public Dem3Tile loadNow(SrtmCoordinates c) {
+    public Dem3Tile loadNow(Dem3Coordinates c) {
         if (havePending()) cancelPending();
         return loadIntoOldestSlot(c);
     }
 
-    private Dem3Tile loadIntoOldestSlot(SrtmCoordinates c) {
+    private Dem3Tile loadIntoOldestSlot(Dem3Coordinates c) {
         if (tiles.have(c) == false) {
             final Dem3Tile slot = tiles.getOldestProcessed();
 
@@ -85,7 +85,7 @@ public final class Dem3TileLoader implements Closeable {
 
 
 
-    public void loadOrDownloadLater(SrtmCoordinates c) {
+    public void loadOrDownloadLater(Dem3Coordinates c) {
         if (pending == null) { // first BitmapRequest
             startTimer();
         }
@@ -114,7 +114,7 @@ public final class Dem3TileLoader implements Closeable {
 
 
 
-    private void downloadNow(SrtmCoordinates c) {
+    private void downloadNow(Dem3Coordinates c) {
         Foc file = c.toFile(scontext.getContext());
         if (!file.exists()) {
             DownloadTask handle = new DownloadTask(scontext.getContext(), c.toURL(), file);

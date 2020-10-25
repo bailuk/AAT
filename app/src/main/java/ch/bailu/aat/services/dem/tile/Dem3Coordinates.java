@@ -3,14 +3,12 @@ package ch.bailu.aat.services.dem.tile;
 import org.mapsforge.core.model.LatLong;
 import org.mapsforge.core.util.LatLongUtils;
 
-import ch.bailu.aat.coordinates.SrtmCoordinates;
-
 public final class Dem3Coordinates {
     private final static double REF_LO_1=7d;
     private final static double REF_LO_2=8d;
 
 
-    protected SrtmCoordinates coordinates = new SrtmCoordinates(0,0);
+    protected ch.bailu.aat.coordinates.Dem3Coordinates coordinates = new ch.bailu.aat.coordinates.Dem3Coordinates(0,0);
 
 
     public float getCellsize() {

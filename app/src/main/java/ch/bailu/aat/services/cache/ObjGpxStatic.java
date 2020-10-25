@@ -2,7 +2,7 @@ package ch.bailu.aat.services.cache;
 
 import android.util.SparseArray;
 
-import ch.bailu.aat.coordinates.SrtmCoordinates;
+import ch.bailu.aat.coordinates.Dem3Coordinates;
 import ch.bailu.aat.gpx.GpxList;
 import ch.bailu.aat.gpx.GpxListWalker;
 import ch.bailu.aat.gpx.GpxPoint;
@@ -118,12 +118,12 @@ public final class ObjGpxStatic extends ObjGpx implements ElevationUpdaterClient
     public void onChanged(String id, ServiceContext sc) {}
 
 
-    public SrtmCoordinates[] getSrtmTileCoordinates() {
+    public Dem3Coordinates[] getSrtmTileCoordinates() {
 
         SrtmTileCollector f = new SrtmTileCollector();
         f.walkTrack(gpxList);
 
-        final SrtmCoordinates[] r=new SrtmCoordinates[f.coordinates.size()];
+        final Dem3Coordinates[] r=new Dem3Coordinates[f.coordinates.size()];
         for (int i=0; i<f.coordinates.size(); i++) {
             r[i]=f.coordinates.valueAt(i);
         }
@@ -168,7 +168,7 @@ public final class ObjGpxStatic extends ObjGpx implements ElevationUpdaterClient
         @Override
         public void doPoint(GpxPointNode point) {
             if (point.getAltitude() == ElevationProvider.NULL_ALTITUDE) {
-                SrtmCoordinates coordinates = new SrtmCoordinates(point.getLatitudeE6(), point.getLongitudeE6());
+                Dem3Coordinates coordinates = new Dem3Coordinates(point.getLatitudeE6(), point.getLongitudeE6());
                 if (tile.hashCode()== coordinates.hashCode()) {
                     point.setAltitude(tile.getElevation(point.getLatitudeE6(), point.getLongitudeE6()));
                 }
@@ -177,7 +177,7 @@ public final class ObjGpxStatic extends ObjGpx implements ElevationUpdaterClient
     }
 
     private class SrtmTileCollector extends GpxListWalker {
-        public final SparseArray<SrtmCoordinates> coordinates = new SparseArray<>();
+        public final SparseArray<Dem3Coordinates> coordinates = new SparseArray<>();
 
         @Override
         public boolean doList(GpxList l) {
@@ -197,7 +197,7 @@ public final class ObjGpxStatic extends ObjGpx implements ElevationUpdaterClient
         @Override
         public void doPoint(GpxPointNode point) {
             if (point.getAltitude() == ElevationProvider.NULL_ALTITUDE) {
-                final SrtmCoordinates c = new SrtmCoordinates(point);
+                final Dem3Coordinates c = new Dem3Coordinates(point);
                 coordinates.put(c.toString().hashCode(), c);
             }
         }

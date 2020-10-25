@@ -5,15 +5,15 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 
-import ch.bailu.aat.coordinates.SrtmCoordinates;
+import ch.bailu.aat.coordinates.Dem3Coordinates;
 
 public final class PendingUpdatesMap {
-    private final HashMap<SrtmCoordinates,ArrayList<ElevationUpdaterClient>> map =
+    private final HashMap<Dem3Coordinates,ArrayList<ElevationUpdaterClient>> map =
             new HashMap<>();
 
 
 
-    public void add(SrtmCoordinates c , ElevationUpdaterClient e) {
+    public void add(Dem3Coordinates c , ElevationUpdaterClient e) {
         ArrayList<ElevationUpdaterClient> l = map.get(c);
 
         if (l==null) {
@@ -27,12 +27,12 @@ public final class PendingUpdatesMap {
     }
 
 
-    public void remove(SrtmCoordinates s) {
+    public void remove(Dem3Coordinates s) {
         map.remove(s);
     }
 
 
-    public void removeIfEmpty(SrtmCoordinates s) {
+    public void removeIfEmpty(Dem3Coordinates s) {
         ArrayList<ElevationUpdaterClient> l = map.get(s);
 
         if (l == null || l.isEmpty()) {
@@ -54,7 +54,7 @@ public final class PendingUpdatesMap {
 
     private void removeAllEmpty() {
 
-        Iterator<SrtmCoordinates> c = coordinates();
+        Iterator<Dem3Coordinates> c = coordinates();
 
         while (c.hasNext()) {
             removeIfEmpty(c.next());
@@ -63,12 +63,12 @@ public final class PendingUpdatesMap {
 
 
 
-    public Iterator<SrtmCoordinates> coordinates() {
+    public Iterator<Dem3Coordinates> coordinates() {
         return new HashSet<>(map.keySet()).iterator();
     }
 
 
-    public ArrayList<ElevationUpdaterClient> get(SrtmCoordinates c) {
+    public ArrayList<ElevationUpdaterClient> get(Dem3Coordinates c) {
         return map.get(c);
     }
 }

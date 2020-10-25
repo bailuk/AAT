@@ -2,7 +2,7 @@ package ch.bailu.aat.services.dem.tile;
 
 import androidx.annotation.NonNull;
 
-import ch.bailu.aat.coordinates.SrtmCoordinates;
+import ch.bailu.aat.coordinates.Dem3Coordinates;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.background.BackgroundTask;
 import ch.bailu.foc.Foc;
@@ -47,7 +47,7 @@ public final class Dem3Tile implements ElevationProvider, DemProvider {
      */
 
 
-    private final Dem3Coordinates coordinates = new Dem3Coordinates();
+    private final ch.bailu.aat.services.dem.tile.Dem3Coordinates coordinates = new ch.bailu.aat.services.dem.tile.Dem3Coordinates();
     private final Dem3Status status = new Dem3Status();
     private final Dem3Array  array = new Dem3Array();
     private final Dem3Lock lock = new Dem3Lock();
@@ -73,7 +73,7 @@ public final class Dem3Tile implements ElevationProvider, DemProvider {
     }
 
 
-    public  synchronized void load(ServiceContext sc, SrtmCoordinates c) {
+    public  synchronized void load(ServiceContext sc, Dem3Coordinates c) {
 
         if (!lock.isLocked()) {
 
@@ -94,7 +94,7 @@ public final class Dem3Tile implements ElevationProvider, DemProvider {
 
 
 
-    public SrtmCoordinates getCoordinates() {
+    public Dem3Coordinates getCoordinates() {
         return coordinates.coordinates;
     }
 

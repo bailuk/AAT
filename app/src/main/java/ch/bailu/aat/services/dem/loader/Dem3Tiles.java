@@ -1,6 +1,6 @@
 package ch.bailu.aat.services.dem.loader;
 
-import ch.bailu.aat.coordinates.SrtmCoordinates;
+import ch.bailu.aat.coordinates.Dem3Coordinates;
 import ch.bailu.aat.services.dem.tile.Dem3Status;
 import ch.bailu.aat.services.dem.tile.Dem3Tile;
 
@@ -42,7 +42,7 @@ public final class Dem3Tiles {
         return null;
     }
 
-    public Dem3Tile get(SrtmCoordinates c) {
+    public Dem3Tile get(Dem3Coordinates c) {
         for (int i=0; i<NUM_TILES; i++) {
             if (tiles[i].hashCode() == c.hashCode()) {
                 return tiles[i];
@@ -64,7 +64,7 @@ public final class Dem3Tiles {
     public boolean have(String id) {
         return get(id) != null;
     }
-    public boolean have(SrtmCoordinates c) {
+    public boolean have(Dem3Coordinates c) {
         return get(c) != null;
     }
 

@@ -2,7 +2,7 @@ package ch.bailu.aat.services.dem.loader;
 
 import java.io.Closeable;
 
-import ch.bailu.aat.coordinates.SrtmCoordinates;
+import ch.bailu.aat.coordinates.Dem3Coordinates;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.dem.tile.Dem3Status;
 import ch.bailu.aat.services.dem.tile.Dem3Tile;
@@ -20,7 +20,7 @@ public final class Dem3Loader implements Closeable, ElevationProvider {
     @Override
     public short getElevation(int laE6, int loE6) {
         short r=0;
-        SrtmCoordinates c = new SrtmCoordinates (laE6, loE6);
+        Dem3Coordinates c = new Dem3Coordinates(laE6, loE6);
         Dem3Tile t = tiles.get(c);
 
         if (t == null) {
@@ -36,7 +36,7 @@ public final class Dem3Loader implements Closeable, ElevationProvider {
 
 
 
-    public  Dem3Tile requestDem3Tile(SrtmCoordinates c) {
+    public  Dem3Tile requestDem3Tile(Dem3Coordinates c) {
         Dem3Tile t=tiles.get(c);
 
         if (t == null) {

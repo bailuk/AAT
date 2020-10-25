@@ -8,7 +8,7 @@ import java.io.Closeable;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import ch.bailu.aat.coordinates.SrtmCoordinates;
+import ch.bailu.aat.coordinates.Dem3Coordinates;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.dem.loader.Dem3Loader;
 import ch.bailu.aat.services.dem.loader.Dem3Tiles;
@@ -55,8 +55,8 @@ public final class ElevationUpdater implements Closeable {
 
 
     public synchronized void requestElevationUpdates(ElevationUpdaterClient e,
-                                                     SrtmCoordinates[] coordinates) {
-        for (SrtmCoordinates c : coordinates) {
+                                                     Dem3Coordinates[] coordinates) {
+        for (Dem3Coordinates c : coordinates) {
             addObject(c, e);
         }
 
@@ -73,13 +73,13 @@ public final class ElevationUpdater implements Closeable {
     }
 
 
-    private void addObject(SrtmCoordinates c, ElevationUpdaterClient e) {
+    private void addObject(Dem3Coordinates c, ElevationUpdaterClient e) {
         pendingUpdates.add(c, e);
     }
 
 
     private void loadTiles() {
-        Iterator<SrtmCoordinates> c = pendingUpdates.coordinates();
+        Iterator<Dem3Coordinates> c = pendingUpdates.coordinates();
 
         while(c.hasNext()) {
             Dem3Tile tile = loader.requestDem3Tile(c.next());

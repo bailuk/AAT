@@ -4,12 +4,12 @@ import android.util.SparseArray;
 
 import java.util.ArrayList;
 
-import ch.bailu.aat.coordinates.SrtmCoordinates;
+import ch.bailu.aat.coordinates.Dem3Coordinates;
 import ch.bailu.aat.services.cache.Span;
 
 public final class SubTiles {
     private final SparseArray<SubTile> subTiles = new SparseArray<>(25);
-    private SrtmCoordinates[] coordinates;
+    private Dem3Coordinates[] coordinates;
 
     private int inUse=0;
 
@@ -26,10 +26,10 @@ public final class SubTiles {
     public synchronized boolean isNotPainting() {return inUse==0;}
     public synchronized boolean areAllPainted() {return isNotPainting() && subTiles.size() == 0;}
 
-    public synchronized SrtmCoordinates[] toSrtmCoordinates() {
+    public synchronized Dem3Coordinates[] toSrtmCoordinates() {
         if (coordinates == null || coordinates.length != subTiles.size()) {
 
-            coordinates = new SrtmCoordinates[subTiles.size()];
+            coordinates = new Dem3Coordinates[subTiles.size()];
 
             for (int i = 0; i < subTiles.size(); i++) {
                 coordinates[i] = subTiles.valueAt(i).coordinates;

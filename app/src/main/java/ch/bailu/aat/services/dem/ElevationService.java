@@ -1,6 +1,6 @@
 package ch.bailu.aat.services.dem;
 
-import ch.bailu.aat.coordinates.SrtmCoordinates;
+import ch.bailu.aat.coordinates.Dem3Coordinates;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.VirtualService;
 import ch.bailu.aat.services.dem.loader.Dem3Loader;
@@ -24,7 +24,7 @@ public final class ElevationService extends VirtualService implements ElevationP
 
     }
 
-    public void requestElevationUpdates(ElevationUpdaterClient e, SrtmCoordinates[] c) {
+    public void requestElevationUpdates(ElevationUpdaterClient e, Dem3Coordinates[] c) {
         updater.requestElevationUpdates(e, c);
     }
 
