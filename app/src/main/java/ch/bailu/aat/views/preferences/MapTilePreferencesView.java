@@ -7,6 +7,7 @@ import ch.bailu.aat.R;
 import ch.bailu.aat.map.tile.source.MapsForgeSource;
 import ch.bailu.aat.map.tile.source.Source;
 import ch.bailu.aat.preferences.map.SolidDem3Directory;
+import ch.bailu.aat.preferences.map.SolidDem3EnableDownload;
 import ch.bailu.aat.preferences.map.SolidEnableTileCache;
 import ch.bailu.aat.preferences.map.SolidMapsForgeDirectory;
 import ch.bailu.aat.preferences.map.SolidMapsForgeMapFile;
@@ -46,6 +47,7 @@ public class MapTilePreferencesView extends VerticalScrollView {
 
         add(new TitleView(context, ToDo.translate("Dem3 altitude tiles"), theme));
         add(new SolidDirectoryView(new SolidDem3Directory(context), theme));
+        add(new SolidCheckBox(new SolidDem3EnableDownload(context), theme));
 
         add(new TitleView(context, Source.ELEVATION_HILLSHADE.getName(), theme));
         add(new SolidCheckBox(new SolidEnableTileCache.Hillshade(context), theme));
