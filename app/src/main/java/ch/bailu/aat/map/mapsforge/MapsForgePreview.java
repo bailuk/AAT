@@ -17,7 +17,7 @@ import org.mapsforge.map.layer.TilePosition;
 import org.mapsforge.map.util.LayerUtil;
 import org.mapsforge.map.util.MapPositionUtil;
 import org.mapsforge.map.view.FrameBuffer;
-import org.mapsforge.map.view.FrameBufferHA3;
+import org.mapsforge.map.view.FrameBufferHA2;
 
 import java.io.OutputStream;
 import java.util.List;
@@ -122,7 +122,8 @@ public class MapsForgePreview extends MapsForgeViewBase {
 
     @Override
     public FrameBuffer getFrameBuffer() {
-        return new FrameBufferHA3(getModel().frameBufferModel, getModel().displayModel, AndroidGraphicFactory.INSTANCE) {
+        // TODO: change this to HA3 when updating to MapsForge 0.15
+        return new FrameBufferHA2(getModel().frameBufferModel, getModel().displayModel, AndroidGraphicFactory.INSTANCE) {
             @Override
             public org.mapsforge.core.graphics.Bitmap getDrawingBitmap() {
                 return null;
