@@ -47,12 +47,8 @@ You can support this project with a [donation](https://bailu.ch/aat/donate.html)
 
 ## Screenshots
 <div style="display:flex;">
-<img alt="Screenshot" src="fastlane/metadata/android/en-US/images/phoneScreenshots/screen1.png" width="30%">
-<img alt="Screenshot" src="fastlane/metadata/android/en-US/images/phoneScreenshots/screen2.png" width="30%">
-<img alt="Screenshot" src="fastlane/metadata/android/en-US/images/phoneScreenshots/screen3.png" width="30%">
-<img alt="Screenshot" src="fastlane/metadata/android/en-US/images/phoneScreenshots/screen4.png" width="30%">
-<img alt="Screenshot" src="fastlane/metadata/android/en-US/images/phoneScreenshots/screen5.png" width="30%">
-<img alt="Screenshot" src="fastlane/metadata/android/en-US/images/phoneScreenshots/screen6.png" width="30%">
-<img alt="Screenshot" src="fastlane/metadata/android/en-US/images/phoneScreenshots/screen7.png" width="30%">
-<img alt="Screenshot" src="fastlane/metadata/android/en-US/images/phoneScreenshots/screen8.png" width="30%">
+<img alt="Screenshot" src="fastlane/metadata/android/en-US/images/phoneScreenshots/screen1.jpg" width="30%">
+<img alt="Screenshot" src="fastlane/metadata/android/en-US/images/phoneScreenshots/screen2.jpg" width="30%">
+<img alt="Screenshot" src="fastlane/metadata/android/en-US/images/phoneScreenshots/screen3.jpg" width="30%">
+<img alt="Screenshot" src="fastlane/metadata/android/en-US/images/phoneScreenshots/screen4.jpg" width="30%">
 </div>
