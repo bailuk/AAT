@@ -79,7 +79,7 @@ dependencies {
             Automatic MapsForge integration as described here:
             https://github.com/mapsforge/mapsforge/raw/master/docs/Integration.md
     */
-    def mapsForgeVersion = '0.14.0'
+    def mapsForgeVersion = '0.15.0'
 
     // MapsForge Core
     implementation "org.mapsforge:mapsforge-core:$mapsForgeVersion"
