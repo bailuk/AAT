@@ -54,3 +54,9 @@ freeline_project_description.json
 *.DS_Store
 Thumbs.db
 
+
+# Visual Studio code
+.classpath
+.project
+.settings/
+
