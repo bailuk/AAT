@@ -17,10 +17,19 @@ public class CH1903Coordinates extends MeterCoordinates {
      */
 
     public final static double SECONDS=3600d;
-    public final static double BERNE_LA=169028.66d/SECONDS;
-    public final static double BERNE_LO=26782.5d/SECONDS;
-    public final static int BERNE_SIX=200000;
+
+    private final static double BERNE_LA=169028.66d/SECONDS;
+    private final static double BERNE_LO=26782.5d/SECONDS;
+
+    // x corespondents to northing and latitude
     public final static int BERNE_SIY=600000;
+
+    // y corespondents to easting and longitude
+    public final static int BERNE_SIX=200000;
+
+
+    public final static WGS84Coordinates.Sexagesimal LA_PRECISSION = new WGS84Coordinates.Sexagesimal(0,0,0.12);
+    public final static WGS84Coordinates.Sexagesimal LO_PRECISSION = new WGS84Coordinates.Sexagesimal(0,0,0.08);
 
     private int easting, northing;
 
@@ -152,39 +161,48 @@ public class CH1903Coordinates extends MeterCoordinates {
         double y = getRelativeY(easting);
 
         double x2=x*x;
-        double y3=y*y*y;
         double x3=x2*x;
         double y2=y*y;
+        double y3=y2*y;
 
-        return new LatLongE6(
-                toDecimalDegree(
-                  16.9023892d
-                +  3.238272d     *x
-                -  0.270978d *y2
-                -  0.002528d     *x2
-                -  0.0447d   *y2 *x
-                -  0.0140d       *x3),
+        // latitude phi (φ) => x northing
+        double la1 = 16.9023892d
+                +  3.238272d  *x
+                -  0.270978d  *y2
+                -  0.002528d  *x2
+                -  0.0447d    *y2 *x
+                -  0.0140d    *x3;
+        int la =  toE6Degree(la1);
 
-                toDecimalDegree(
-                  2.6779094d
-                + 4.728982d * y
-                + 0.791484d * y * x
-                + 0.1306d   * y * x2
-                - 0.0436d   * y3)
-        );
+
+        // longitude lambda (λ) => y easting
+        double lo1 = 2.6779094d
+                   + 4.728982d * y
+                   + 0.791484d * y * x
+                   + 0.1306d   * y * x2
+                   - 0.0436d   * y3;
+        int lo = toE6Degree(lo1);
+
+        return new LatLongE6(la,lo);
     }
 
 
-    private static double toDecimalDegree(double c) {
-        return c * 100d / 36d;
+    private static final double TOE6DEGREE = (1e6d / 36d) *100d;
+    private static int toE6Degree(double c) {
+        double result = c * TOE6DEGREE;
+        long int_result = Math.round(result);
+        return (int) int_result;
     }
+
 
     private static double getRelativeY(int si) {
-        return ( (double)(si - BERNE_SIY) ) / 1e6d;
+        double rel = si - BERNE_SIY;
+        return rel / 1e6d;
     }
 
     private static double getRelativeX(int si) {
-        return ( (double)(si - BERNE_SIX) ) / 1e6d;
+        double rel = si - BERNE_SIX;
+        return rel / 1e6d;
     }
 
 

@@ -8,6 +8,7 @@ import ch.bailu.aat.R;
 import ch.bailu.aat.coordinates.CH1903Coordinates;
 import ch.bailu.aat.coordinates.Coordinates;
 import ch.bailu.aat.coordinates.OlcCoordinates;
+import ch.bailu.aat.coordinates.UTMCoordinates;
 import ch.bailu.aat.coordinates.WGS84Coordinates;
 import ch.bailu.aat.exception.ValidationException;
 import ch.bailu.aat.map.MapViewInterface;
@@ -71,7 +72,11 @@ public class SolidGoToLocation extends SolidString {
                     return new WGS84Coordinates(code).toLatLong();
 
                 } catch (Exception eWGS) {
-                    throw Coordinates.getCodeNotValidException(code);
+                    try {
+                        return new UTMCoordinates(code).toLatLong();
+                    } catch(Exception eUTM) {
+                        throw Coordinates.getCodeNotValidException(code);
+                    }
                 }
             }
         }

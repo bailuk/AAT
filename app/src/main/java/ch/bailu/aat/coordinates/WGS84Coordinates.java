@@ -17,8 +17,21 @@ public class WGS84Coordinates extends Coordinates {
 
 
     public static class Sexagesimal {
-        public final int deg, min, sec;
-        public final double coordinate;
+        private final int deg, min;
+        private final double sec;
+        private final double coordinate;
+
+        public Sexagesimal(int deg, int min, double sec) {
+                this.deg = deg;
+                this.min = min;
+                this.sec = sec;
+
+                double coord=deg;
+                coord += ((double)min)/60d;
+                coord += sec / 60d / 60d;
+                coordinate = coord;
+        }
+
 
         public Sexagesimal(double c) {
             coordinate = c;
@@ -27,19 +40,22 @@ public class WGS84Coordinates extends Coordinates {
             c = (Math.abs(c)-Math.abs(deg))*60d;
             min = (int)c;
 
-            c = (c-min)*60d;
-            sec = (int)Math.round(c);
+            sec = (c-min)*60d;
         }
 
         public int toE6() {
-            return (int) (coordinate * 1e6);
+            return (int) Math.round(coordinate * 1e6);
         }
 
 
 
         public int getDegree() {return deg;}
         public int getMinute() {return min;}
-        public int getSecond() {return sec;}
+        public double getSecond() {return sec;}
+
+        public double getDecimal() {
+            return coordinate;
+        }
 
         private final static DecimalFormat fX = new DecimalFormat("#");
         private final static DecimalFormat f00 = new DecimalFormat("00");

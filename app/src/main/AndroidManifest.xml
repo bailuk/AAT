@@ -21,6 +21,7 @@
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
 
 
+
     <application
         android:name="ch.bailu.aat.App"
         android:allowBackup="true"
@@ -29,6 +30,8 @@
         android:label="@string/app_sname"
         android:theme="@android:style/Theme.Black.NoTitleBar"
         android:fullBackupContent="@xml/backup_descriptor">
+
+        <uses-library android:name="android.test.runner" />
 
         <activity
             android:name="ch.bailu.aat.activities.MainActivity">
@@ -185,5 +188,7 @@
         </provider>
 
     </application>
+
+
 
 </manifest>

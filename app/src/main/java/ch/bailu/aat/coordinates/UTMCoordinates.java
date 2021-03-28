@@ -5,14 +5,13 @@ import androidx.annotation.NonNull;
 import org.mapsforge.core.model.LatLong;
 
 import ch.bailu.aat.description.FF;
+import ch.bailu.aat.util.ui.AppLog;
 
 public class UTMCoordinates extends MeterCoordinates {
 
 
-
     private static class EastingZones {
         private final static double WIDTH_DEG=6d;
-        //private static final int MIDDLE_ZONE=31;
 
         public static int getZone(double lo) {
             lo = lo + 180d;
@@ -42,6 +41,21 @@ public class UTMCoordinates extends MeterCoordinates {
             if (z>=zones.length) z=zones.length-1;
             return zones[z];
         }
+
+        public static int getZone(char zoneChar) {
+            zoneChar = Character.toUpperCase(zoneChar);
+
+            for (int i=0; i< zones.length; i++) {
+                if (zones[i] == zoneChar) {
+                    return i;
+                }
+            }
+            return 0;
+        }
+
+        public static boolean isInSouthernHemnisphere(int zone) {
+            return zone < MIDDLE_ZONE;
+        }
     }
 
 
@@ -52,10 +66,10 @@ public class UTMCoordinates extends MeterCoordinates {
     private final static double UTM_SCALE_FACTOR = 0.9996;
 
 
-    private int nzone;
+    private final int nzone;
     private final int ezone;
-    double easting, northing;
-    private final boolean south;
+    private double easting, northing;
+
 
     public UTMCoordinates(LatLong p) {
         this(p.getLatitude(), p.getLongitude());
@@ -64,16 +78,21 @@ public class UTMCoordinates extends MeterCoordinates {
     public UTMCoordinates(double la, double lo) {
         ezone=EastingZones.getZone(lo);
         nzone=NorthingZones.getZone(la);
-        south=(la<0d);
 
         toUTM(Math.toRadians(la), Math.toRadians(lo), ezone);
     }
 
-    public UTMCoordinates(int e, int n, int z, boolean s) {
+
+
+    public UTMCoordinates(int easting, int northing, int ezone, char nzone) {
+        this(easting, northing, ezone, NorthingZones.getZone(nzone));
+    }
+
+    public UTMCoordinates(int e, int n, int ezone, int nzone) {
         northing=n;
         easting=e;
-        ezone=z;
-        south=s;
+        this.ezone=ezone;
+        this.nzone = nzone;
     }
 
 
@@ -81,6 +100,27 @@ public class UTMCoordinates extends MeterCoordinates {
         this(((double)point.getLatitudeE6())/1e6d, ((double)point.getLongitudeE6())/1e6d);
     }
 
+
+
+    public UTMCoordinates(String code) {
+
+        String[] parts = code.split(" ");
+
+        if (parts.length != 3 || parts[0].length() < 2 || parts[1].length() < 6 || parts[2].length() < 6) {
+            throw getCodeNotValidException(code);
+        }
+
+        try  {
+            nzone = NorthingZones.getZone(parts[0].charAt(parts[0].length()-1));
+            ezone = Integer.valueOf(parts[0].substring(0,parts[0].length()-1));
+            easting = Integer.valueOf(parts[1]);
+            northing = Integer.valueOf(parts[2]);
+
+
+        } catch (NumberFormatException e){
+            throw getCodeNotValidException(code);
+        }
+    }
 
     public void round(int c) {
         easting=round((int)easting,c);
@@ -96,7 +136,7 @@ public class UTMCoordinates extends MeterCoordinates {
     }
 
     public boolean isInSouthernHemnisphere() {
-        return south;
+        return NorthingZones.isInSouthernHemnisphere(nzone);
     }
 
     public char getNorthingZoneCharacter() {
@@ -120,8 +160,7 @@ public class UTMCoordinates extends MeterCoordinates {
 
     @Override
     public LatLong toLatLong() {
-        return toLatLongE6(easting, northing, ezone, south);
-
+        return toLatLong(easting, northing, ezone, isInSouthernHemnisphere());
     }
 
     @NonNull
@@ -461,7 +500,6 @@ public class UTMCoordinates extends MeterCoordinates {
         northing = northing * UTM_SCALE_FACTOR;
         if (northing < 0d)
             northing = northing + 10000000d;
-
     }
 
 
@@ -474,7 +512,7 @@ public class UTMCoordinates extends MeterCoordinates {
     *
     */
 
-    private static LatLong toLatLongE6(double easting, double northing, int zone, boolean southhemi)
+    private static LatLong toLatLong(double easting, double northing, int zone, boolean southhemi)
     {
         double cmeridian;
 
