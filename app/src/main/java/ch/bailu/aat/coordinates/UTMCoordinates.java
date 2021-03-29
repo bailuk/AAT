@@ -25,37 +25,45 @@ public class UTMCoordinates extends MeterCoordinates {
 
 
     private static class NorthingZones {
-        private final static int MIDDLE_ZONE=10;
-        private final static int WIDTH_DEG=8;
+        private final static double WIDTH_DEG=8d;
 
-        private static final char[] zones =
-            new char[] {'C','D','E','F','G','H','J','K','L','M','N','P','Q','R','S','T','U','V','W','X'};
+        private static final char[] zonesSouth = {'M', 'L', 'K', 'J', 'H', 'G', 'F', 'E', 'D', 'C'};
+            //new char[] {'C','D','E','F','G','H','J','K','L','M'};
 
+        private static final char[] zonesNorth =
+                new char[] {'N','P','Q','R','S','T','U','V','W','X'};
 
-        private static int getZone(double la) {
-            int x = ((int)la)/WIDTH_DEG;
-            return x+MIDDLE_ZONE;
-        }
-
-        public static char getZoneCharacter(int z) {
-            if (z>=zones.length) z=zones.length-1;
-            return zones[z];
-        }
-
-        public static int getZone(char zoneChar) {
-            zoneChar = Character.toUpperCase(zoneChar);
-
-            for (int i=0; i< zones.length; i++) {
-                if (zones[i] == zoneChar) {
-                    return i;
-                }
+        public static char getZone(double la) {
+            if (la < 0) {
+                return getZone(Math.abs(la), zonesSouth);
             }
-            return 0;
+            return getZone(la, zonesNorth);
         }
 
-        public static boolean isInSouthernHemnisphere(int zone) {
-            return zone < MIDDLE_ZONE;
+        private static char getZone(double la, char[] zones) {
+            int i = (int) (la / WIDTH_DEG);
+
+            if (i >= zones.length) {
+                i = zones.length -1;
+            }
+            return zones[i];
         }
+
+        public static boolean isValid(char nzone) {
+            return  (findZone(nzone, zonesNorth) || findZone(nzone, zonesSouth));
+        }
+
+        public static boolean isInSouthernHemnisphere(char nzone) {
+            return findZone(nzone, zonesSouth);
+        }
+
+        private static boolean findZone(char nzone, char[] zones) {
+            for (char x: zones) {
+                if (nzone == x) return true;
+            }
+            return false;
+        }
+
     }
 
 
@@ -66,8 +74,9 @@ public class UTMCoordinates extends MeterCoordinates {
     private final static double UTM_SCALE_FACTOR = 0.9996;
 
 
-    private final int nzone;
+    private final char nzone;
     private final int ezone;
+
     private double easting, northing;
 
 
@@ -84,11 +93,7 @@ public class UTMCoordinates extends MeterCoordinates {
 
 
 
-    public UTMCoordinates(int easting, int northing, int ezone, char nzone) {
-        this(easting, northing, ezone, NorthingZones.getZone(nzone));
-    }
-
-    public UTMCoordinates(int e, int n, int ezone, int nzone) {
+    public UTMCoordinates(int e, int n, int ezone, char nzone) {
         northing=n;
         easting=e;
         this.ezone=ezone;
@@ -111,10 +116,14 @@ public class UTMCoordinates extends MeterCoordinates {
         }
 
         try  {
-            nzone = NorthingZones.getZone(parts[0].charAt(parts[0].length()-1));
-            ezone = Integer.valueOf(parts[0].substring(0,parts[0].length()-1));
-            easting = Integer.valueOf(parts[1]);
-            northing = Integer.valueOf(parts[2]);
+            nzone = parts[0].charAt(parts[0].length()-1);
+            if (NorthingZones.isValid(nzone)) {
+                ezone = Integer.valueOf(parts[0].substring(0, parts[0].length() - 1));
+                easting = Integer.valueOf(parts[1]);
+                northing = Integer.valueOf(parts[2]);
+            } else {
+                throw getCodeNotValidException(code);
+            }
 
 
         } catch (NumberFormatException e){
@@ -127,20 +136,16 @@ public class UTMCoordinates extends MeterCoordinates {
         northing=round((int)northing,c);
     }
 
-    public int getZone() {
+    public int getEastingZone() {
         return ezone;
-    }
-
-    public int getNorthingZone() {
-        return nzone;
     }
 
     public boolean isInSouthernHemnisphere() {
         return NorthingZones.isInSouthernHemnisphere(nzone);
     }
 
-    public char getNorthingZoneCharacter() {
-        return NorthingZones.getZoneCharacter(nzone);
+    public char getNorthingZone() {
+        return nzone;
     }
 
     @Override
@@ -167,7 +172,7 @@ public class UTMCoordinates extends MeterCoordinates {
     @Override
     public String toString() {
 
-        return "Z " + ezone + getNorthingZoneCharacter()
+        return "Z " + ezone + getNorthingZone()
                 + ", E " + FF.f().N3_3.format(((float)easting)/1000f)
                 + ", N " + FF.f().N3_3.format(((float)northing)/1000f);
     }

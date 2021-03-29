@@ -90,8 +90,8 @@ public class CoordinatesTest {
         assertEquals(la, u1.toLatLong().latitude,0.0001);
         assertEquals(lo, u1.toLatLong().longitude,0.0001);
 
-        assertEquals(nzone, u1.getNorthingZoneCharacter());
-        assertEquals(ezone, u1.getZone());
+        assertEquals(nzone, u1.getNorthingZone());
+        assertEquals(ezone, u1.getEastingZone());
 
         assertEquals(la < 0, u1.isInSouthernHemnisphere());
 
@@ -101,8 +101,8 @@ public class CoordinatesTest {
         assertEquals(la, u2.toLatLong().latitude,0.0001);
         assertEquals(lo, u2.toLatLong().longitude,0.0001);
 
-        assertEquals(nzone, u2.getNorthingZoneCharacter());
-        assertEquals(ezone, u2.getZone());
+        assertEquals(nzone, u2.getNorthingZone());
+        assertEquals(ezone, u2.getEastingZone());
 
         assertEquals(la < 0, u2.isInSouthernHemnisphere());
 
@@ -142,7 +142,7 @@ public class CoordinatesTest {
     private void testUTMCoordinate(String utm, String geoUrl) {
         UTMCoordinates u = new  UTMCoordinates(utm);
 
-        testUTMCoordinate(u.getEasting(), u.getNorthing(), u.getZone(), u.getNorthingZoneCharacter(), geoUrl);
+        testUTMCoordinate(u.getEasting(), u.getNorthing(), u.getEastingZone(), u.getNorthingZone(), geoUrl);
     }
 
 
