@@ -79,6 +79,10 @@ public class CoordinatesTest {
         testUTMCoordinate(537208, 5258493, 32, 'T', 47.478814, 9.493842);
     }
 
+    @Test
+    public void testSantiagoChile () {
+        testUTMCoordinate("19H 345093 6297582","geo:-33.45,-70.666667");
+    }
 
     private void testUTMCoordinate(int easting, int northing, int ezone, char nzone,  double la, double lo) {
         UTMCoordinates u1 = new UTMCoordinates(la, lo);
@@ -138,6 +142,18 @@ public class CoordinatesTest {
     public void testJohannesburg() {
         testUTMCoordinate("35J 606572 7101729", "geo:-26.2,28.066667");
     }
+
+
+    @Test
+    public void testTokyo() {
+        testUTMCoordinate( 	"54S 381670 3950323","geo:35.689722,139.692222");
+    }
+
+    @Test
+    public void testJambi() {
+        testUTMCoordinate( 	"48N 345372 175795","geo:1.59,103.61");
+    }
+
 
     private void testUTMCoordinate(String utm, String geoUrl) {
         UTMCoordinates u = new  UTMCoordinates(utm);
