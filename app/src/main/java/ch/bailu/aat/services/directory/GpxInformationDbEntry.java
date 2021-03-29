@@ -54,23 +54,35 @@ public final class GpxInformationDbEntry extends GpxInformation {
     }
 
     private String getString(String key) {
-        if (isValid())
-            return cursor.getString(cursor.getColumnIndex(key));
-        else return "";
+        if (isValid()) {
+            int index = cursor.getColumnIndex(key);
+            if (index > -1) {
+                return cursor.getString(cursor.getColumnIndex(key));
+            }
+        }
+        return "";
     }
 
 
     private long getLong(String key) {
-        if (isValid())
-            return cursor.getLong(cursor.getColumnIndex(key));
-        else return 0;
+        if (isValid()) {
+            int index = cursor.getColumnIndex(key);
+            if (index > -1) {
+                return cursor.getLong(cursor.getColumnIndex(key));
+            }
+        }
+        return 0;
     }
 
 
     private float getFloat(String key) {
-        if (isValid())
-            return cursor.getFloat(cursor.getColumnIndex(key));
-        else return 0f;
+        if (isValid()) {
+            int index = cursor.getColumnIndex(key);
+            if (index > -1) {
+                return cursor.getFloat(index);
+            }
+        }
+        return 0f;
     }
 
 

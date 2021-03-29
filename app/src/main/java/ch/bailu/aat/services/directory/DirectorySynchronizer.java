@@ -225,7 +225,11 @@ public final class DirectorySynchronizer  implements Closeable {
         }
 
         private String getFileName(Cursor cursor) {
-            return cursor.getString(cursor.getColumnIndex(GpxDbConstants.KEY_FILENAME));
+            int index = cursor.getColumnIndex(GpxDbConstants.KEY_FILENAME);
+            if (index > -1) {
+                return cursor.getString(index);
+            }
+            return "";
         }
 
 
