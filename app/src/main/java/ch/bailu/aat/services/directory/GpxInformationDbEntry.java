@@ -57,7 +57,7 @@ public final class GpxInformationDbEntry extends GpxInformation {
         if (isValid()) {
             int index = cursor.getColumnIndex(key);
             if (index > -1) {
-                return cursor.getString(cursor.getColumnIndex(key));
+                return cursor.getString(index);
             }
         }
         return "";
@@ -68,7 +68,7 @@ public final class GpxInformationDbEntry extends GpxInformation {
         if (isValid()) {
             int index = cursor.getColumnIndex(key);
             if (index > -1) {
-                return cursor.getLong(cursor.getColumnIndex(key));
+                return cursor.getLong(index);
             }
         }
         return 0;

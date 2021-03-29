@@ -25,6 +25,10 @@ android {
         resValue "string", "app_sname", "AAT"
     }
 
+    lintOptions {
+        abortOnError false
+    }
+
     // SqLite natives needed by MapsForge POI (when using local repository)
     // configure in 'settings.gradle'
     if (!gradle.ext.mapsForgeDir.equals("")) {
