@@ -14,13 +14,13 @@ import ch.bailu.aat.util.ui.AppConfig;
 
 public class App extends Application {
 
-
+    public final static boolean RELEASE_MODE = true;
 
     @Override
     public void onCreate() {
         initMapsForge();
 
-        if (!BuildConfig.DEBUG) {
+        if (RELEASE_MODE) {
             initAcra();
         }
 
