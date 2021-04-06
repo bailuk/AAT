@@ -1,0 +1,10 @@
+v1.20 (33)
+
+# Change
+- Update MapsForge to 0.15.0
+- Disable downloading of DEM3 tiles by default (can be enabled in map settings)
+- Improve DEM3 tile location presets
+
+# Fixes
+- MapView: background threads did not always terminate 
+- Wrong UTM zones in southern hemisphere
