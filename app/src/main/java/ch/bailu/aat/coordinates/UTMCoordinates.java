@@ -28,7 +28,6 @@ public class UTMCoordinates extends MeterCoordinates {
         private final static double WIDTH_DEG=8d;
 
         private static final char[] zonesSouth = {'M', 'L', 'K', 'J', 'H', 'G', 'F', 'E', 'D', 'C'};
-            //new char[] {'C','D','E','F','G','H','J','K','L','M'};
 
         private static final char[] zonesNorth =
                 new char[] {'N','P','Q','R','S','T','U','V','W','X'};
@@ -106,8 +105,14 @@ public class UTMCoordinates extends MeterCoordinates {
     }
 
 
-
-    public UTMCoordinates(String code) {
+    /**
+     * Parse string for a valid UTM coordinate to initialize this object
+     * @param code string of the format "18T 612284 5040357"
+     *             (easting zone as number, northing zone as letter, easting in meters, northing in meters)
+     *
+     * @throws IllegalArgumentException if string can't be parsed
+     */
+    public UTMCoordinates(String code) throws IllegalArgumentException {
 
         String[] parts = code.split(" ");
 
@@ -131,6 +136,7 @@ public class UTMCoordinates extends MeterCoordinates {
         }
     }
 
+
     public void round(int c) {
         easting=round((int)easting,c);
         northing=round((int)northing,c);
@@ -144,6 +150,10 @@ public class UTMCoordinates extends MeterCoordinates {
         return NorthingZones.isInSouthernHemnisphere(nzone);
     }
 
+    /**
+     *
+     * @return character representating northing zone of this coordinate
+     */
     public char getNorthingZone() {
         return nzone;
     }
