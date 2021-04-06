@@ -4,15 +4,12 @@ package ch.bailu.aat;
 
 import static org.junit.Assert.*;
 
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 
-import org.mapsforge.core.model.LatLong;
 
 import ch.bailu.aat.coordinates.CH1903Coordinates;
+import ch.bailu.aat.coordinates.Dem3Coordinates;
 import ch.bailu.aat.coordinates.LatLongE6;
-import ch.bailu.aat.coordinates.LatLongE6Interface;
 import ch.bailu.aat.coordinates.UTMCoordinates;
 import ch.bailu.aat.coordinates.WGS84Coordinates;
 
@@ -209,5 +206,24 @@ public class CoordinatesTest {
 
         assertEquals(c1.toLatLong().latitude, c2.toLatLong().latitude, 0.0001);
         assertEquals(c1.toLatLong().longitude, c2.toLatLong().longitude, 0.0001);
+    }
+
+    @Test
+    public void testDem3() {
+        Dem3Coordinates coord = new Dem3Coordinates(0,0);
+        assertEquals(0,coord.getLatitudeE6());
+        assertEquals(0,coord.getLongitudeE6());
+        assertEquals("N00E000", coord.toString());
+
+        coord = new Dem3Coordinates(-0.2,0.2);
+        assertEquals(-1000000,coord.getLatitudeE6());
+        assertEquals(0,coord.getLongitudeE6());
+        assertEquals("S01E000", coord.toString());
+
+
+        coord = new Dem3Coordinates(-0.2,-0.2);
+        assertEquals(-1000000,coord.getLatitudeE6());
+        assertEquals(-1000000,coord.getLongitudeE6());
+        assertEquals("S01W001", coord.toString());
     }
 }
