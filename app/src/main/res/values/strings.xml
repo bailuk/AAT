@@ -93,6 +93,7 @@
     <string name="sensor_cadence">Cadence</string>
     <string name="sensor_cadence_total">Crank rotations</string>
     <string name="sensor_cadence_total_unit">Rotations</string>
+    <string name="sensor_power">Power</string>
 
     <!-- Activity main -->
     <string name="intro_about">About</string>

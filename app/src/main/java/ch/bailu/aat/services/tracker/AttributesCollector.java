@@ -9,6 +9,7 @@ import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.sensor.SensorService;
 import ch.bailu.aat.services.sensor.attributes.CadenceSpeedAttributes;
 import ch.bailu.aat.services.sensor.attributes.HeartRateAttributes;
+import ch.bailu.aat.services.sensor.attributes.PowerAttributes;
 import ch.bailu.aat.services.sensor.attributes.StepCounterAttributes;
 
 public final class AttributesCollector {
@@ -25,6 +26,9 @@ public final class AttributesCollector {
                     SHORT_TIMEOUT),
 
             new Collector(InfoID.CADENCE_SENSOR, CadenceSpeedAttributes.KEY_INDEX_CRANK_RPM,
+                    SHORT_TIMEOUT),
+
+            new Collector(InfoID.POWER_SENSOR, PowerAttributes.KEY_INDEX_POWER,
                     SHORT_TIMEOUT),
 
             new Collector(InfoID.STEP_COUNTER_SENSOR, StepCounterAttributes.KEY_INDEX_STEPS_RATE,

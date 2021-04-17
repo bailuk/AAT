@@ -17,12 +17,11 @@ public class InfoID {
 
     public final static int UNSPECIFIED = -1;
 
-
-
     public final static int SENSORS = 70;
     public final static int HEART_RATE_SENSOR = 71;
-    public final static int CADENCE_SENSOR = 72;
-    public final static int SPEED_SENSOR = 73;
-    public final static int BAROMETER_SENSOR = 74;
-    public final static int STEP_COUNTER_SENSOR = 75;
+    public final static int POWER_SENSOR = 72;
+    public final static int CADENCE_SENSOR = 73;
+    public final static int SPEED_SENSOR = 74;
+    public final static int BAROMETER_SENSOR = 75;
+    public final static int STEP_COUNTER_SENSOR = 76;
 }

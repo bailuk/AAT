@@ -9,6 +9,7 @@ import ch.bailu.aat.description.AltitudeConfigurationDescription;
 import ch.bailu.aat.description.CadenceDescription;
 import ch.bailu.aat.description.ContentDescription;
 import ch.bailu.aat.description.HeartRateDescription;
+import ch.bailu.aat.description.PowerDescription;
 import ch.bailu.aat.dispatcher.DispatcherInterface;
 import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.preferences.location.SolidProvideAltitude;
@@ -61,6 +62,10 @@ public class CockpitView extends ViewGroup {
         v.requestOnClickSensorReconnect();
     }
 
+    public void addPower(DispatcherInterface di) {
+        NumberView v = add(di, new PowerDescription(getContext()), InfoID.POWER_SENSOR);
+        v.requestOnClickSensorReconnect();
+    }
 
     public void addCadence(DispatcherInterface di) {
         NumberView v = add(di, new CadenceDescription(getContext()), InfoID.CADENCE_SENSOR);

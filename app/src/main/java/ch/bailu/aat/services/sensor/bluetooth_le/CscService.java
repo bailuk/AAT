@@ -55,7 +55,6 @@ public final class CscService extends CscServiceID implements ServiceInterface {
         name_cadence = c.getContext().getString(R.string.sensor_cadence);
     }
 
-
     public boolean isValid() {
         return valid;
     }
