@@ -23,6 +23,7 @@
 
 
     <application
+        android:requestLegacyExternalStorage="true"
         android:name="ch.bailu.aat.App"
         android:allowBackup="true"
         android:usesCleartextTraffic="true"
