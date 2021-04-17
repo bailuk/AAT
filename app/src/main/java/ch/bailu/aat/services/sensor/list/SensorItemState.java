@@ -24,7 +24,7 @@ public class SensorItemState {
             R.string.sensor_state_supported,
             R.string.sensor_state_not_connected,
             R.string.sensor_state_connecting,
-            R.string.sensor_state_not_connected,
+            R.string.sensor_state_connected,
             R.string.sensor_state_not_supported
     };
 
