@@ -65,8 +65,8 @@ public final class CscService extends CscServiceID implements ServiceInterface {
     @Override
     public void changed(BluetoothGattCharacteristic c) {
         if (CSC_SERVICE.equals(c.getService().getUuid())) {
-            if (CSC_MESUREMENT.equals(c.getUuid())) {
-                readCscMesurement(c, c.getValue());
+            if (CSC_MEASUREMENT.equals(c.getUuid())) {
+                readCscMeasurement(c, c.getValue());
             }
         }
     }
@@ -84,7 +84,7 @@ public final class CscService extends CscServiceID implements ServiceInterface {
             } else if (CSC_SENSOR_LOCATION.equals(c.getUuid())) {
                 execute.read(c);
 
-            } else if (CSC_MESUREMENT.equals(c.getUuid())) {
+            } else if (CSC_MEASUREMENT.equals(c.getUuid())) {
                 execute.notify(c);
 
             }
@@ -116,7 +116,7 @@ public final class CscService extends CscServiceID implements ServiceInterface {
 
 
 
-    private void readCscMesurement(BluetoothGattCharacteristic c, byte[] value) {
+    private void readCscMeasurement(BluetoothGattCharacteristic c, byte[] value) {
         information = new Information(new Attributes(c, value));
         connectorSpeed.connect(isSpeedSensor);
         connectorCadence.connect(isCadenceSensor);
