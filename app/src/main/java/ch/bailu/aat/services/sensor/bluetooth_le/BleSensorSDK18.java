@@ -50,15 +50,6 @@ public final class BleSensorSDK18 extends BluetoothGattCallback implements Senso
         }
     }, BleSensorsSDK18.SCAN_DURATION);
 
-
-    private final Timer connectingTimeout = new Timer(new Runnable() {
-        @Override
-        public void run() {
-            if (item.isConnecting())  close();
-        }
-    }, BleSensorsSDK18.CONNECTING_DURATION);
-
-
     public BleSensorSDK18(ServiceContext c, BluetoothDevice d, SensorList l, SensorListItem i) {
         synchronized (this) {
             sensorList = l;
@@ -82,7 +73,6 @@ public final class BleSensorSDK18 extends BluetoothGattCallback implements Senso
             } else {
                 execute.next(gatt);
                 scanningTimeout.kick();
-                connectingTimeout.kick();
                 item.setState(SensorItemState.CONNECTING);
                 item.setState(SensorItemState.SCANNING);
             }
@@ -266,7 +256,6 @@ public final class BleSensorSDK18 extends BluetoothGattCallback implements Senso
             closed = true;
 
             scanningTimeout.close();
-            connectingTimeout.close();
 
             updateListItemName();
 
