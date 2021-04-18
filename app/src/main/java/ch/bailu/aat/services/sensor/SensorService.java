@@ -71,7 +71,7 @@ public final class SensorService extends VirtualService implements WithStatusTex
         @Override
         public void onReceive(Context context, Intent intent) {
             updateConnections();
-            scann();                        // rescan to get them in cache if they were not
+            scan();                        // rescan to get them in cache if they were not
         }
     };
 
@@ -97,8 +97,8 @@ public final class SensorService extends VirtualService implements WithStatusTex
         sensorList.broadcast();
     }
 
-    public  synchronized void scann() {
-        bluetoothLE.scann();
+    public synchronized void scan() {
+        bluetoothLE.scan();
     }
 
 

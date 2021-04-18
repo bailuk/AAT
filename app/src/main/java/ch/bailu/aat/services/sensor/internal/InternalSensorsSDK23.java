@@ -26,19 +26,19 @@ public final class InternalSensorsSDK23 extends Sensors {
         context = c;
         manager = context.getSystemService(SensorManager.class);
 
-        scann();
+        scan();
     }
 
 
     @Override
-    public void scann() {
-        scann(Sensor.TYPE_STEP_COUNTER);
-        scann(Sensor.TYPE_PRESSURE);
-        scann(Sensor.TYPE_HEART_RATE);
+    public void scan() {
+        scan(Sensor.TYPE_STEP_COUNTER);
+        scan(Sensor.TYPE_PRESSURE);
+        scan(Sensor.TYPE_HEART_RATE);
     }
 
 
-    private void scann(int type) {
+    private void scan(int type) {
         if (manager instanceof SensorManager) {
             List<Sensor> sensors = manager.getSensorList(type);
 

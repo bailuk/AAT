@@ -77,7 +77,7 @@
     <string name="sensor_state_connecting">Connecting…</string>
     <string name="sensor_state_connected">Connected</string>
 
-    <string name="sensor_scann">Scan for BluetoothLE sensors…</string>
+    <string name="sensor_scan">Scan for BluetoothLE sensors…</string>
     <string name="sensor_connect">Connect to enabled sensors…</string>
 
     <string name="sensor_heart_rate">Heart rate</string>

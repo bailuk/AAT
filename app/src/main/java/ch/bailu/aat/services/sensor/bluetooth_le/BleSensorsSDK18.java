@@ -48,7 +48,7 @@ public final class BleSensorsSDK18 extends Sensors {
 
 
     @Override
-    public  synchronized void scann() {
+    public synchronized void scan() {
         stopScanner();
 
         if (isEnabled()) {

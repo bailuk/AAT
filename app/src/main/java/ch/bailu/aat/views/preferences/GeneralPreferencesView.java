@@ -59,7 +59,7 @@ public class GeneralPreferencesView extends VerticalScrollView {
 
         if (Build.VERSION.SDK_INT >= 18) {
             add(new TitleView(acontext, R.string.sensors, theme));
-            ScannBluetoothView scann = new ScannBluetoothView(
+            ScanBluetoothView scan = new ScanBluetoothView(
                     acontext.getServiceContext(), theme
             );
             ConnectToSensorsView updateConnection = new ConnectToSensorsView(
@@ -68,10 +68,10 @@ public class GeneralPreferencesView extends VerticalScrollView {
             );
             SensorListView sensors = new SensorListView(acontext.getServiceContext(), theme);
 
-            add(scann);
+            add(scan);
             add(updateConnection);
             add(sensors);
-            acontext.addTarget(scann, InfoID.SENSORS);
+            acontext.addTarget(scan, InfoID.SENSORS);
             acontext.addTarget(updateConnection, InfoID.SENSORS);
             acontext.addTarget(sensors, InfoID.SENSORS);
         }
