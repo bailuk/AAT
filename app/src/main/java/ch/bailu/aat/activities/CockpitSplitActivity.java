@@ -11,6 +11,7 @@ import ch.bailu.aat.description.CurrentSpeedDescription;
 import ch.bailu.aat.description.DescendDescription;
 import ch.bailu.aat.description.DistanceDescription;
 import ch.bailu.aat.description.HeartRateDescription;
+import ch.bailu.aat.description.PowerDescription;
 import ch.bailu.aat.description.MaximumSpeedDescription;
 import ch.bailu.aat.description.PredictiveTimeDescription;
 import ch.bailu.aat.description.SlopeDescription;
@@ -99,6 +100,7 @@ public class CockpitSplitActivity extends AbsKeepScreenOnActivity {
 
         cockpitC.add(this, new CadenceDescription(this), InfoID.CADENCE_SENSOR);
         cockpitC.add(this, new HeartRateDescription(this), InfoID.HEART_RATE_SENSOR);
+        cockpitC.add(this, new PowerDescription(this), InfoID.POWER_SENSOR);
         cockpitC.add(this, new StepRateDescription(this), InfoID.STEP_COUNTER_SENSOR);
         cockpitC.add(this, new TotalStepsDescription(this), InfoID.TRACKER);
 
@@ -155,6 +157,7 @@ public class CockpitSplitActivity extends AbsKeepScreenOnActivity {
         addSource(new CurrentLocationSource(getServiceContext()));
         addSource(new OverlaySource(getServiceContext()));
         addSource(new SensorSource(getServiceContext(), InfoID.HEART_RATE_SENSOR));
+        addSource(new SensorSource(getServiceContext(), InfoID.POWER_SENSOR));
         addSource(new SensorSource(getServiceContext(), InfoID.CADENCE_SENSOR));
         addSource(new SensorSource(getServiceContext(), InfoID.SPEED_SENSOR));
         addSource(new SensorSource(getServiceContext(), InfoID.STEP_COUNTER_SENSOR));

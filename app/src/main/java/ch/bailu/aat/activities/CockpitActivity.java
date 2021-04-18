@@ -79,6 +79,7 @@ public class CockpitActivity extends AbsKeepScreenOnActivity {
         CockpitView c2 = new CockpitView(this, theme);
         c2.add(this, new MaximumSpeedDescription(this), InfoID.TRACKER);
         c2.addHeartRate(this);        // With click to update sensors
+        c2.addPower(this);            // With click to update sensors
         c2.addCadence(this);          // With click to update sensors
 
         p.add(c1, 80);
@@ -111,6 +112,7 @@ public class CockpitActivity extends AbsKeepScreenOnActivity {
         addSource(new OverlaySource(getServiceContext()));
 
         addSource(new SensorSource(getServiceContext(), InfoID.HEART_RATE_SENSOR));
+        addSource(new SensorSource(getServiceContext(), InfoID.POWER_SENSOR));
         addSource(new SensorSource(getServiceContext(), InfoID.CADENCE_SENSOR));
         addSource(new SensorSource(getServiceContext(), InfoID.SPEED_SENSOR));
     }

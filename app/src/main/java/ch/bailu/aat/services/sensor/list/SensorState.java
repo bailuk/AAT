@@ -13,6 +13,7 @@ public final class SensorState {
 
     private static final int[] NAMES = {
             R.string.sensor_heart_rate,
+            R.string.sensor_power,
             R.string.sensor_cadence,
             R.string.sensor_speed,
             R.string.sensor_barometer,
@@ -20,7 +21,7 @@ public final class SensorState {
     };
 
     private static final char[] CHARS = {
-            'H', 'C', 'S', 'B', 'T'
+            'H', 'P', 'C', 'S', 'B', 'T'
     };
 
 

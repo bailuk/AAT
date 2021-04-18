@@ -66,6 +66,7 @@ public final class BleSensorSDK18 extends BluetoothGattCallback implements Senso
             context = c.getContext();
 
             services = new ServiceInterface[]{
+                    new CyclingPower(c),
                     new CscService(c),
                     new HeartRateService(context)
             };
