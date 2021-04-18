@@ -57,7 +57,7 @@ public final class HeartRateService extends HeartRateServiceID implements Servic
             valid = true;
             disc = true;
 
-            if (HEART_RATE_MESUREMENT.equals(cid)) {
+            if (HEART_RATE_MEASUREMENT.equals(cid)) {
                 execute.notify(c);
             } else if (BODY_SENSOR_LOCATION.equals(cid)) {
                 execute.read(c);
@@ -84,14 +84,14 @@ public final class HeartRateService extends HeartRateServiceID implements Servic
     public void changed(BluetoothGattCharacteristic c) {
         if (HEART_RATE_SERVICE.equals(c.getService().getUuid())) {
 
-            if (HEART_RATE_MESUREMENT.equals(c.getUuid())) {
-                readHeartRateMesurement(c, c.getValue());
+            if (HEART_RATE_MEASUREMENT.equals(c.getUuid())) {
+                readHeartRateMeasurement(c, c.getValue());
             }
         }
 
     }
 
-    private void readHeartRateMesurement(BluetoothGattCharacteristic c, byte[] value) {
+    private void readHeartRateMeasurement(BluetoothGattCharacteristic c, byte[] value) {
         information = new SensorInformation(new Attributes(c, value));
 
 

@@ -5,7 +5,7 @@ import java.util.UUID;
 public class CscServiceID extends ID {
 
     public final static UUID CSC_SERVICE = toUUID(0x1816);
-    public final static UUID CSC_MESUREMENT = toUUID(0x2A5B);
+    public final static UUID CSC_MEASUREMENT = toUUID(0x2A5B);
     public final static int BIT_SPEED = 0;
     public final static int BIT_CADENCE = 1;
     public final static int BIT_SPEED_AND_CADENCE = 2;
