@@ -1,6 +1,7 @@
 package ch.bailu.aat.services.sensor.bluetooth_le;
 
 import android.bluetooth.BluetoothGattCharacteristic;
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 
 import java.util.UUID;
@@ -62,5 +63,11 @@ public final class BatteryService implements ServiceInterface {
     public GpxInformation getInformation(int iid) {
         // TODO
         return null;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return "Battery=" + level + "%";
     }
 }
