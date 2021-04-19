@@ -70,8 +70,6 @@ public abstract class InternalSensorSDK23 implements SensorEventListener, Sensor
 
     @Override
     public void close() {
-        SensorListItem item = getItem();
-
         if (item.unlock(this)) {
 
             connector.close();
