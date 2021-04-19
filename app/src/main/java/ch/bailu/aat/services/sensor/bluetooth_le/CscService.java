@@ -116,7 +116,7 @@ public final class CscService extends CscServiceID implements ServiceInterface {
 
 
     private void readCscMeasurement(BluetoothGattCharacteristic c, byte[] value) {
-        information = new Information(new Attributes(c, value));
+        information = new Information(new Attributes(this, c, value));
         connectorSpeed.connect(isSpeedSensor);
         connectorCadence.connect(isCadenceSensor);
     }
@@ -159,13 +159,13 @@ public final class CscService extends CscServiceID implements ServiceInterface {
     }
 
 
-    private class Attributes extends CadenceSpeedAttributes {
+    private static class Attributes extends CadenceSpeedAttributes {
 
         private float speedSI = 0f;
 
 
-        public Attributes(BluetoothGattCharacteristic c, byte[] v) {
-            super(CscService.this.location, CscService.this.isCadenceSensor, CscService.this.isSpeedSensor);
+        public Attributes(CscService parent, BluetoothGattCharacteristic c, byte[] v) {
+            super(parent.location, parent.isCadenceSensor, parent.isSpeedSensor);
 
             int offset = 0;
 
@@ -183,8 +183,9 @@ public final class CscService extends CscServiceID implements ServiceInterface {
 
                 offset += 2;
 
-                speed.addUINT32(time, revolutions);
-                broadcastSpeed(speed.rpm());
+                parent.speed.addUINT32(time, revolutions);
+                broadcastSpeed(parent.broadcasterSpeed, parent.speed,
+                               parent.wheelCircumference);
             }
 
 
@@ -194,14 +195,16 @@ public final class CscService extends CscServiceID implements ServiceInterface {
 
                 int time = c.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT16, offset);
 
-                cadence.add(time, revolutions);
-                broadcastCadence(cadence.rpm());
+                parent.cadence.add(time, revolutions);
+                broadcastCadence(parent.broadcasterCadence, parent.cadence.rpm());
             }
         }
 
 
-        private void broadcastSpeed(int rpm) {
-            if (rpm != 0 || broadcasterSpeed.timeout()) {
+        private void broadcastSpeed(Broadcaster broadcasterSpeed,
+                                    Revolution speed,
+                                    WheelCircumference wheelCircumference) {
+            if (speed.rpm() != 0 || broadcasterSpeed.timeout()) {
 
                 circumferenceSI = wheelCircumference.getCircumferenceSI();
 
@@ -216,7 +219,7 @@ public final class CscService extends CscServiceID implements ServiceInterface {
 
         }
 
-        private void broadcastCadence(int rpm) {
+        private void broadcastCadence(Broadcaster broadcasterCadence, int rpm) {
             if (rpm != 0 || broadcasterCadence.timeout()) {
 
                 cadence_rpm = rpm;
