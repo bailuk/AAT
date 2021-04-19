@@ -51,7 +51,7 @@ public abstract class InternalSensorSDK23 implements SensorEventListener, Sensor
 
 
     public SensorListItem getItem() {
-        return sensorList.add(this);
+        return item;
     }
 
     @Override
