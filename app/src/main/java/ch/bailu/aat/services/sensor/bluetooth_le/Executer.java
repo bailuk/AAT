@@ -17,7 +17,7 @@ public final class Executer {
     private final Queue<BluetoothGattCharacteristic> toReadQ = new LinkedList<BluetoothGattCharacteristic>();
     private final Queue<BluetoothGattCharacteristic> toNotifyQ = new LinkedList<BluetoothGattCharacteristic>();
 
-    private boolean discoverd = false;
+    private boolean discovered = false;
 
 
     public synchronized void notify(BluetoothGattCharacteristic c) {
@@ -27,7 +27,7 @@ public final class Executer {
         toReadQ.add(c);
     }
 
-    public boolean needToDiscover() { return !discoverd; }
+    public boolean needToDiscover() { return !discovered; }
 
     public synchronized boolean haveToRead() {
         return toReadQ.size() > 0;
@@ -41,7 +41,7 @@ public final class Executer {
 
     public synchronized void next(BluetoothGatt gatt) {
         if (needToDiscover()) {
-            discoverd = gatt.discoverServices();
+            discovered = gatt.discoverServices();
 
         } else if (haveToRead()) {
             gatt.readCharacteristic(toReadQ.poll());
