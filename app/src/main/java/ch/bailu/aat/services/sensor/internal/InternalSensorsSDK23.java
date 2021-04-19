@@ -39,26 +39,23 @@ public final class InternalSensorsSDK23 extends Sensors {
 
 
     private void scan(int type) {
-        if (manager instanceof SensorManager) {
-            List<Sensor> sensors = manager.getSensorList(type);
+        List<Sensor> sensors = manager.getSensorList(type);
 
-            if (sensors != null) {
-                for (Sensor sensor : sensors) {
-                    SensorListItem item =
-                            sensorList.add(toAddress(sensor), toName(sensor));
+        if (sensors != null) {
+            for (Sensor sensor : sensors) {
+                SensorListItem item =
+                    sensorList.add(toAddress(sensor), toName(sensor));
 
-                    if (item.getState() == SensorItemState.UNSCANNED) {
-                        item.setState(SensorItemState.SCANNING);
-                        if (isSupported(sensor)) {
-                            item.setState(SensorItemState.SUPPORTED);
-                        } else {
-                            item.setState(SensorItemState.UNSUPPORTED);
-                        }
+                if (item.getState() == SensorItemState.UNSCANNED) {
+                    item.setState(SensorItemState.SCANNING);
+                    if (isSupported(sensor)) {
+                        item.setState(SensorItemState.SUPPORTED);
+                    } else {
+                        item.setState(SensorItemState.UNSUPPORTED);
                     }
                 }
             }
         }
-
     }
 
     private boolean isSupported(Sensor sensor) {
@@ -84,18 +81,17 @@ public final class InternalSensorsSDK23 extends Sensors {
 
 
     private InternalSensorSDK23 factory(String address, SensorListItem item) {
-        if (manager instanceof SensorManager) {
-            List<Sensor> sensors = manager.getSensorList(Sensor.TYPE_ALL);
+        List<Sensor> sensors = manager.getSensorList(Sensor.TYPE_ALL);
 
-            if (sensors != null) {
-                for (Sensor sensor : sensors) {
+        if (sensors != null) {
+            for (Sensor sensor : sensors) {
 
-                    if (address.equals(toAddress(sensor))) {
-                        return factory(sensor, item);
-                    }
+                if (address.equals(toAddress(sensor))) {
+                    return factory(sensor, item);
                 }
             }
         }
+
         return null;
     }
 
