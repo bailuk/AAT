@@ -102,7 +102,6 @@ public final class BleSensorsSDK18 extends Sensors {
 
 
     public synchronized void foundDevice(BluetoothDevice device) {
-//        if (sensorList.add(device.getAddress(), device.getName()).isUnscanned()) {
         if (sensorList.add(device.getAddress(), device.getName()).isUnscanned_or_scanning()) {
             new BleSensorSDK18(scontext, device, sensorList);
         }
