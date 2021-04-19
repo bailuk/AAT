@@ -218,12 +218,6 @@ public final class BleSensorSDK18 extends BluetoothGattCallback implements Senso
         executeNextAndSetState(gatt);
     }
 
-
-    public synchronized String getAddress() {
-        return device.getAddress();
-    }
-
-
     @NonNull
     @Override
     public String toString() {

@@ -66,7 +66,7 @@ public abstract class InternalSensorSDK23 implements SensorEventListener, Sensor
     @NonNull
     @Override
     public String toString() {
-        return getName() + "@" + getAddress() + ":" + item.getSensorStateDescription(context);
+        return getName() + "@" + address + ":" + item.getSensorStateDescription(context);
     }
 
 
@@ -103,12 +103,6 @@ public abstract class InternalSensorSDK23 implements SensorEventListener, Sensor
             manager.unregisterListener(listener);
             registered = false;
         }
-    }
-
-
-    @Override
-    public String getAddress() {
-        return address;
     }
 }
 
