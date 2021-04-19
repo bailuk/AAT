@@ -84,11 +84,8 @@ public abstract class InternalSensorSDK23 implements SensorEventListener, Sensor
         final SensorManager manager = context.getSystemService(SensorManager.class);
 
         if (manager != null) {
-            if (sensor instanceof android.hardware.Sensor) {
-
-                manager.registerListener(listener, sensor, SensorManager.SENSOR_DELAY_NORMAL);
-                registered = true;
-            }
+            manager.registerListener(listener, sensor, SensorManager.SENSOR_DELAY_NORMAL);
+            registered = true;
         }
     }
 
@@ -96,7 +93,7 @@ public abstract class InternalSensorSDK23 implements SensorEventListener, Sensor
     private void cancelUpdates(SensorEventListener listener) {
         final SensorManager manager = context.getSystemService(SensorManager.class);
 
-        if (registered && manager instanceof SensorManager) {
+        if (registered) {
             manager.unregisterListener(listener);
             registered = false;
         }
