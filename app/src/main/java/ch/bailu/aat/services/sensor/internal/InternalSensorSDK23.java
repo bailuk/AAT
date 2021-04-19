@@ -11,7 +11,6 @@ import androidx.annotation.RequiresApi;
 import ch.bailu.aat.services.sensor.Connector;
 import ch.bailu.aat.services.sensor.SensorInterface;
 import ch.bailu.aat.services.sensor.list.SensorItemState;
-import ch.bailu.aat.services.sensor.list.SensorList;
 import ch.bailu.aat.services.sensor.list.SensorListItem;
 
 @RequiresApi(api = 23)
@@ -26,13 +25,11 @@ public abstract class InternalSensorSDK23 implements SensorEventListener, Sensor
     private boolean registered = false;
 
     private final Connector connector;
-    private final SensorList sensorList;
     private final SensorListItem item;
 
 
-    public InternalSensorSDK23(Context c, SensorList list, SensorListItem i, Sensor sensor, int iid) {
+    public InternalSensorSDK23(Context c, SensorListItem i, Sensor sensor, int iid) {
         context = c;
-        sensorList = list;
         item = i;
         name = InternalSensorsSDK23.toName(sensor);
         address = InternalSensorsSDK23.toAddress(sensor);
