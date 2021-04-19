@@ -18,8 +18,6 @@ import ch.bailu.aat.services.sensor.list.SensorListItem;
 @RequiresApi(api = 23)
 public final class HeartRateSensor extends InternalSensorSDK23 {
 
-    private boolean contact = false;
-
     private final HeartRateAttributes attributes;
     private GpxInformation information;
 
@@ -38,8 +36,6 @@ public final class HeartRateSensor extends InternalSensorSDK23 {
 
     @Override
     public void onSensorChanged(SensorEvent event) {
-        contact = toContact(event);
-
         attributes.setBpm(toBpm(event));
         attributes.haveSensorContact = toContact(event);
         information = new SensorInformation(attributes);
@@ -47,7 +43,7 @@ public final class HeartRateSensor extends InternalSensorSDK23 {
         if (attributes.haveBpm()) {
             broadcaster.broadcast();
 
-        } else if (contact == false) {
+        } else if (!attributes.haveSensorContact) {
             broadcaster.broadcast();
 
         } else if (broadcaster.timeout()) {
@@ -80,7 +76,7 @@ public final class HeartRateSensor extends InternalSensorSDK23 {
 
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
-        contact = toContact(accuracy);
+        attributes.haveSensorContact = toContact(accuracy);
         broadcaster.broadcast();
     }
 
