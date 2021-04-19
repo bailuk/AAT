@@ -29,7 +29,6 @@ public final class HeartRateSensor extends InternalSensorSDK23 {
         broadcaster = new Broadcaster(c, InfoID.HEART_RATE_SENSOR);
 
         attributes = new HeartRateAttributes();
-        information = new SensorInformation(attributes);
     }
 
 

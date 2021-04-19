@@ -38,7 +38,6 @@ public final class HeartRateService extends HeartRateServiceID implements Servic
         connector = new Connector(c, InfoID.HEART_RATE_SENSOR);
         broadcaster = new Broadcaster(c, InfoID.HEART_RATE_SENSOR);
 
-        information = new SensorInformation(new HeartRateAttributes());
         name = c.getString(R.string.sensor_heart_rate);
     }
 
