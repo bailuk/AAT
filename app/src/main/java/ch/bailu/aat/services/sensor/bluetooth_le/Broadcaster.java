@@ -8,14 +8,14 @@ public final class Broadcaster {
     private static final long BROADCAST_TIMEOUT = 2000;
 
     private final Context context;
-    private final int IID;
+    private final String action;
 
     private long lastBroadcast=0L;
 
 
     public Broadcaster(Context c, int iid) {
         context = c;
-        IID = iid;
+        action = AppBroadcaster.SENSOR_CHANGED + iid;
     }
 
 
@@ -26,6 +26,6 @@ public final class Broadcaster {
 
     public void broadcast() {
         lastBroadcast = System.currentTimeMillis();
-        AppBroadcaster.broadcast(context, AppBroadcaster.SENSOR_CHANGED + IID);
+        AppBroadcaster.broadcast(context, action);
     }
 }
