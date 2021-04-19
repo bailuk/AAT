@@ -49,9 +49,12 @@ public abstract class InternalSensorSDK23 implements SensorEventListener, Sensor
         }
     }
 
-
-    public SensorListItem getItem() {
-        return item;
+    /**
+     * Was this instance successfully registered with the
+     * SensorListItem?
+     */
+    protected final boolean isLocked() {
+        return item.isLocked(this);
     }
 
     @Override

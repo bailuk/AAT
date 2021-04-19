@@ -39,7 +39,7 @@ public final class BarometerSensor extends InternalSensorSDK23
         spressure  = new SolidPressureAtSeaLevel(c);
         saltitude  = new SolidProvideAltitude(c, SolidUnit.SI);
 
-        if (getItem().isLocked(this)) {
+        if (isLocked()) {
             hypsometric.setPressureAtSeaLevel(spressure.getPressure());
 
             spressure.register(this);
@@ -100,7 +100,7 @@ public final class BarometerSensor extends InternalSensorSDK23
 
     @Override
     public void close() {
-        if (getItem().isLocked(this)) {
+        if (isLocked()) {
             spressure.unregister(this);
         }
 
