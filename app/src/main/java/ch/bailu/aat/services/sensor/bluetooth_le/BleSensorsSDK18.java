@@ -78,7 +78,7 @@ public final class BleSensorsSDK18 extends Sensors {
         final BluetoothDevice device = adapter.getRemoteDevice(item.getAddress());
 
         if (device != null) {
-            new BleSensorSDK18(scontext, device, sensorList);
+            new BleSensorSDK18(scontext, device, sensorList, item);
         }
     }
 
@@ -102,8 +102,9 @@ public final class BleSensorsSDK18 extends Sensors {
 
 
     public synchronized void foundDevice(BluetoothDevice device) {
-        if (sensorList.add(device.getAddress(), device.getName()).isUnscanned_or_scanning()) {
-            new BleSensorSDK18(scontext, device, sensorList);
+        SensorListItem item = sensorList.add(device.getAddress(), device.getName());
+        if (item.isUnscanned_or_scanning()) {
+            new BleSensorSDK18(scontext, device, sensorList, item);
         }
     }
 

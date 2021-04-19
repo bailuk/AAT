@@ -13,6 +13,7 @@ import ch.bailu.aat.services.sensor.attributes.HeartRateAttributes;
 import ch.bailu.aat.services.sensor.attributes.SensorInformation;
 import ch.bailu.aat.services.sensor.bluetooth_le.Broadcaster;
 import ch.bailu.aat.services.sensor.list.SensorList;
+import ch.bailu.aat.services.sensor.list.SensorListItem;
 
 @RequiresApi(api = 23)
 public final class HeartRateSensor extends InternalSensorSDK23 {
@@ -25,9 +26,8 @@ public final class HeartRateSensor extends InternalSensorSDK23 {
     private final Broadcaster broadcaster;
 
 
-    public HeartRateSensor(Context c, SensorList list, Sensor sensor) {
-        super(c, list, sensor, InfoID.HEART_RATE_SENSOR);
-
+    public HeartRateSensor(Context c, SensorList list, SensorListItem item, Sensor sensor) {
+        super(c, list, item, sensor, InfoID.HEART_RATE_SENSOR);
 
         broadcaster = new Broadcaster(c, InfoID.HEART_RATE_SENSOR);
 

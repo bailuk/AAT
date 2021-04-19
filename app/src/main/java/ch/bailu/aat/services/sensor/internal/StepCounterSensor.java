@@ -11,6 +11,7 @@ import ch.bailu.aat.services.sensor.attributes.SensorInformation;
 import ch.bailu.aat.services.sensor.attributes.StepCounterAttributes;
 import ch.bailu.aat.services.sensor.bluetooth_le.Broadcaster;
 import ch.bailu.aat.services.sensor.list.SensorList;
+import ch.bailu.aat.services.sensor.list.SensorListItem;
 
 @RequiresApi(api = 23)
 public final class StepCounterSensor extends InternalSensorSDK23 {
@@ -25,8 +26,8 @@ public final class StepCounterSensor extends InternalSensorSDK23 {
 
 
 
-    public StepCounterSensor(Context c, SensorList list, Sensor sensor) {
-        super(c, list, sensor, InfoID.STEP_COUNTER_SENSOR);
+    public StepCounterSensor(Context c, SensorList list, SensorListItem item, Sensor sensor) {
+        super(c, list, item, sensor, InfoID.STEP_COUNTER_SENSOR);
 
         for (int i = 0; i< samples.length; i++) {
             samples[i] = Sample.NULL;

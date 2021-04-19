@@ -30,14 +30,14 @@ public abstract class InternalSensorSDK23 implements SensorEventListener, Sensor
     private final SensorListItem item;
 
 
-    public InternalSensorSDK23(Context c, SensorList list, Sensor sensor, int iid) {
+    public InternalSensorSDK23(Context c, SensorList list, SensorListItem i, Sensor sensor, int iid) {
         context = c;
         sensorList = list;
+        item = i;
         name = InternalSensorsSDK23.toName(sensor);
         address = InternalSensorsSDK23.toAddress(sensor);
         connector = new Connector(c, iid);
 
-        item = sensorList.add(this);
         if (item.lock(this)) {
             item.setState(SensorItemState.CONNECTING);
             item.setState(SensorItemState.CONNECTED);

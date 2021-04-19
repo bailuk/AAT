@@ -77,14 +77,13 @@ public final class InternalSensorsSDK23 extends Sensors {
     public void updateConnections() {
         for (SensorListItem item : sensorList) {
             if (item.isEnabled() && item.isConnected() == false) {
-               factory(item.getAddress(), sensorList);
-
+                factory(item.getAddress(), sensorList, item);
             }
         }
     }
 
 
-    private InternalSensorSDK23 factory(String address, SensorList list) {
+    private InternalSensorSDK23 factory(String address, SensorList list, SensorListItem item) {
         if (manager instanceof SensorManager) {
             List<Sensor> sensors = manager.getSensorList(Sensor.TYPE_ALL);
 
@@ -92,7 +91,7 @@ public final class InternalSensorsSDK23 extends Sensors {
                 for (Sensor sensor : sensors) {
 
                     if (address.equals(toAddress(sensor))) {
-                        return factory(sensor, list);
+                        return factory(sensor, list, item);
                     }
                 }
             }
@@ -101,13 +100,13 @@ public final class InternalSensorsSDK23 extends Sensors {
     }
 
 
-    private InternalSensorSDK23 factory(Sensor sensor, SensorList list) {
+    private InternalSensorSDK23 factory(Sensor sensor, SensorList list, SensorListItem item) {
         if (sensor.getType() == Sensor.TYPE_HEART_RATE)
-            return new HeartRateSensor(context, list, sensor);
+            return new HeartRateSensor(context, list, item, sensor);
         else if (sensor.getType() == Sensor.TYPE_PRESSURE)
-            return new BarometerSensor(context, list, sensor);
+            return new BarometerSensor(context, list, item, sensor);
         else if (sensor.getType() == Sensor.TYPE_STEP_COUNTER)
-            return new StepCounterSensor(context, list, sensor);
+            return new StepCounterSensor(context, list, item, sensor);
 
         return null;
     }

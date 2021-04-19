@@ -15,6 +15,7 @@ import ch.bailu.aat.preferences.location.SolidPressureAtSeaLevel;
 import ch.bailu.aat.preferences.location.SolidProvideAltitude;
 import ch.bailu.aat.services.location.Hypsometric;
 import ch.bailu.aat.services.sensor.list.SensorList;
+import ch.bailu.aat.services.sensor.list.SensorListItem;
 import ch.bailu.aat.util.AppBroadcaster;
 
 @RequiresApi(api = 23)
@@ -32,8 +33,8 @@ public final class BarometerSensor extends InternalSensorSDK23
 
     private GpxInformation information = null;
 
-    public BarometerSensor(Context c, SensorList list, Sensor sensor) {
-        super(c, list, sensor, InfoID.BAROMETER_SENSOR);
+    public BarometerSensor(Context c, SensorList list, SensorListItem item, Sensor sensor) {
+        super(c, list, item, sensor, InfoID.BAROMETER_SENSOR);
 
         context = c;
         spressure  = new SolidPressureAtSeaLevel(c);
