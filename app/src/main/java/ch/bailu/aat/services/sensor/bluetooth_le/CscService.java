@@ -55,11 +55,10 @@ public final class CscService extends CscServiceID implements ServiceInterface {
         name_cadence = c.getContext().getString(R.string.sensor_cadence);
     }
 
+    @Override
     public boolean isValid() {
         return valid;
     }
-
-
 
     @Override
     public void changed(BluetoothGattCharacteristic c) {
@@ -70,7 +69,7 @@ public final class CscService extends CscServiceID implements ServiceInterface {
         }
     }
 
-
+    @Override
     public boolean discovered(BluetoothGattCharacteristic c, Executer execute) {
         boolean disc = false;
         if (CSC_SERVICE.equals(c.getService().getUuid())) {
@@ -91,6 +90,7 @@ public final class CscService extends CscServiceID implements ServiceInterface {
         return disc;
     }
 
+    @Override
     public void read(BluetoothGattCharacteristic c) {
         if (CSC_SERVICE.equals(c.getService().getUuid())) {
             if (CSC_FEATURE.equals(c.getUuid())) {
