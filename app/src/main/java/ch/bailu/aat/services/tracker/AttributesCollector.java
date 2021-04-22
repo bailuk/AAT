@@ -18,7 +18,6 @@ public final class AttributesCollector {
     private final static long LONG_TIMEOUT = 10 * 1000;
 
     private long lastLog = System.currentTimeMillis();
-    private long time = System.currentTimeMillis();
 
 
     private final Collector[] collectors = new Collector[]{
@@ -40,13 +39,13 @@ public final class AttributesCollector {
 
     public GpxAttributes collect(ServiceContext scontext) {
         GpxAttributes attr = null;
-        time = System.currentTimeMillis();
+        final long time = System.currentTimeMillis();
 
         if ((time - lastLog) >= LOG_INTERVAL) {
             lastLog = time;
 
             for (Collector c : collectors) {
-                attr = c.collect(scontext, attr);
+                attr = c.collect(scontext, attr, time);
             }
         }
 
@@ -55,7 +54,7 @@ public final class AttributesCollector {
     }
 
 
-    private class Collector {
+    private static class Collector {
         private final int keyIndex;
         private final int infoID;
         private final long maxAge;
@@ -71,7 +70,7 @@ public final class AttributesCollector {
             this.maxAge = maxAge;
         }
 
-        public GpxAttributes collect(ServiceContext scontext, GpxAttributes target) {
+        public GpxAttributes collect(ServiceContext scontext, GpxAttributes target, long time) {
             final SensorService s = scontext.getSensorService();
 
             GpxInformation source = s.getInformationOrNull(infoID);
@@ -79,13 +78,13 @@ public final class AttributesCollector {
             if (source != null && source != lastInfo) {
                 lastInfo = source;
 
-                target = addAttribute(target, source, keyIndex);
+                target = addAttribute(target, source, keyIndex, time);
             }
             return target;
         }
 
 
-        protected GpxAttributes addAttribute(GpxAttributes target, GpxInformation source, int keyIndex) {
+        protected GpxAttributes addAttribute(GpxAttributes target, GpxInformation source, int keyIndex, long time) {
             if (source != null && (time - source.getTimeStamp()) < maxAge) {
                 target = addAttribute(target, source.getAttributes(), keyIndex);
             }
