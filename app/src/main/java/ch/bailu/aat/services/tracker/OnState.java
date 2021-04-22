@@ -48,11 +48,11 @@ public final class OnState extends State {
 
         } else  {
             final LocationService l = internal.scontext.getLocationService();
-            final GpxAttributes attr = attributes.collect(internal.scontext);
 
             if (l.hasLoggableLocation(location)) {
                 try {
                     location = l.getLoggableLocation();
+                    final GpxAttributes attr = attributes.collect(internal.scontext);
                     internal.logger.log(location, attr);
                 } catch (IOException e) {
                     internal.emergencyOff(e);
