@@ -11,10 +11,10 @@ import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.util.ui.UiTheme;
 import ch.bailu.aat.views.LabelTextView;
 
-public class ScannBluetoothView extends LabelTextView implements View.OnClickListener, OnContentUpdatedInterface {
+public class ScanBluetoothView extends LabelTextView implements View.OnClickListener, OnContentUpdatedInterface {
     private final ServiceContext scontext;
-    public ScannBluetoothView(ServiceContext s, UiTheme theme) {
-        super(s.getContext(), s.getContext().getString(R.string.sensor_scann), theme);
+    public ScanBluetoothView(ServiceContext s, UiTheme theme) {
+        super(s.getContext(), s.getContext().getString(R.string.sensor_scan), theme);
         scontext = s;
         setText();
         setOnClickListener(this);
@@ -37,7 +37,7 @@ public class ScannBluetoothView extends LabelTextView implements View.OnClickLis
         new InsideContext(scontext) {
             @Override
             public void run() {
-                scontext.getSensorService().scann();
+                scontext.getSensorService().scan();
             }
         };
     }

@@ -10,7 +10,6 @@ import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.gpx.StateID;
 import ch.bailu.aat.gpx.attributes.GpxAttributes;
 import ch.bailu.aat.gpx.attributes.Keys;
-import ch.bailu.aat.services.sensor.SensorInterface;
 import ch.bailu.aat.util.AppBroadcaster;
 
 public final class SensorList extends ArrayList<SensorListItem> implements Closeable {
@@ -45,13 +44,6 @@ public final class SensorList extends ArrayList<SensorListItem> implements Close
         return item;
 
     }
-
-
-    public SensorListItem add(SensorInterface sensor) {
-        return add(sensor.getAddress(), sensor.getName());
-    }
-
-
 
     public SensorListItem find(String address) {
         for (SensorListItem i : this) {

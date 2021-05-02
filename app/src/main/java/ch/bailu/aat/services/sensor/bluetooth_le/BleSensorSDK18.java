@@ -59,9 +59,10 @@ public final class BleSensorSDK18 extends BluetoothGattCallback implements Senso
     }, BleSensorsSDK18.CONNECTING_DURATION);
 
 
-    public BleSensorSDK18(ServiceContext c, BluetoothDevice d, SensorList l) {
+    public BleSensorSDK18(ServiceContext c, BluetoothDevice d, SensorList l, SensorListItem i) {
         synchronized (this) {
             sensorList = l;
+            item = i;
             device = d;
             context = c.getContext();
 
@@ -71,7 +72,6 @@ public final class BleSensorSDK18 extends BluetoothGattCallback implements Senso
                     new HeartRateService(context)
             };
 
-            item = sensorList.add(this);
             closeState = item.getState();
 
             gatt = connect();
@@ -217,12 +217,6 @@ public final class BleSensorSDK18 extends BluetoothGattCallback implements Senso
 
         executeNextAndSetState(gatt);
     }
-
-
-    public synchronized String getAddress() {
-        return device.getAddress();
-    }
-
 
     @NonNull
     @Override

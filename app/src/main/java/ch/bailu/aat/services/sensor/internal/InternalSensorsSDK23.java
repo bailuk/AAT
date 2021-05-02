@@ -26,39 +26,36 @@ public final class InternalSensorsSDK23 extends Sensors {
         context = c;
         manager = context.getSystemService(SensorManager.class);
 
-        scann();
+        scan();
     }
 
 
     @Override
-    public void scann() {
-        scann(Sensor.TYPE_STEP_COUNTER);
-        scann(Sensor.TYPE_PRESSURE);
-        scann(Sensor.TYPE_HEART_RATE);
+    public void scan() {
+        scan(Sensor.TYPE_STEP_COUNTER);
+        scan(Sensor.TYPE_PRESSURE);
+        scan(Sensor.TYPE_HEART_RATE);
     }
 
 
-    private void scann(int type) {
-        if (manager instanceof SensorManager) {
-            List<Sensor> sensors = manager.getSensorList(type);
+    private void scan(int type) {
+        List<Sensor> sensors = manager.getSensorList(type);
 
-            if (sensors != null) {
-                for (Sensor sensor : sensors) {
-                    SensorListItem item =
-                            sensorList.add(toAddress(sensor), toName(sensor));
+        if (sensors != null) {
+            for (Sensor sensor : sensors) {
+                SensorListItem item =
+                    sensorList.add(toAddress(sensor), toName(sensor));
 
-                    if (item.getState() == SensorItemState.UNSCANNED) {
-                        item.setState(SensorItemState.SCANNING);
-                        if (isSupported(sensor)) {
-                            item.setState(SensorItemState.SUPPORTED);
-                        } else {
-                            item.setState(SensorItemState.UNSUPPORTED);
-                        }
+                if (item.getState() == SensorItemState.UNSCANNED) {
+                    item.setState(SensorItemState.SCANNING);
+                    if (isSupported(sensor)) {
+                        item.setState(SensorItemState.SUPPORTED);
+                    } else {
+                        item.setState(SensorItemState.UNSUPPORTED);
                     }
                 }
             }
         }
-
     }
 
     private boolean isSupported(Sensor sensor) {
@@ -77,37 +74,35 @@ public final class InternalSensorsSDK23 extends Sensors {
     public void updateConnections() {
         for (SensorListItem item : sensorList) {
             if (item.isEnabled() && item.isConnected() == false) {
-               factory(item.getAddress(), sensorList);
-
+                factory(item.getAddress(), item);
             }
         }
     }
 
 
-    private InternalSensorSDK23 factory(String address, SensorList list) {
-        if (manager instanceof SensorManager) {
-            List<Sensor> sensors = manager.getSensorList(Sensor.TYPE_ALL);
+    private InternalSensorSDK23 factory(String address, SensorListItem item) {
+        List<Sensor> sensors = manager.getSensorList(Sensor.TYPE_ALL);
 
-            if (sensors != null) {
-                for (Sensor sensor : sensors) {
+        if (sensors != null) {
+            for (Sensor sensor : sensors) {
 
-                    if (address.equals(toAddress(sensor))) {
-                        return factory(sensor, list);
-                    }
+                if (address.equals(toAddress(sensor))) {
+                    return factory(sensor, item);
                 }
             }
         }
+
         return null;
     }
 
 
-    private InternalSensorSDK23 factory(Sensor sensor, SensorList list) {
+    private InternalSensorSDK23 factory(Sensor sensor, SensorListItem item) {
         if (sensor.getType() == Sensor.TYPE_HEART_RATE)
-            return new HeartRateSensor(context, list, sensor);
+            return new HeartRateSensor(context, item, sensor);
         else if (sensor.getType() == Sensor.TYPE_PRESSURE)
-            return new BarometerSensor(context, list, sensor);
+            return new BarometerSensor(context, item, sensor);
         else if (sensor.getType() == Sensor.TYPE_STEP_COUNTER)
-            return new StepCounterSensor(context, list, sensor);
+            return new StepCounterSensor(context, item, sensor);
 
         return null;
     }

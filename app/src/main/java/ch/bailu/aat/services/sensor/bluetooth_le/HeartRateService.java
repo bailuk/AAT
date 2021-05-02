@@ -38,16 +38,15 @@ public final class HeartRateService extends HeartRateServiceID implements Servic
         connector = new Connector(c, InfoID.HEART_RATE_SENSOR);
         broadcaster = new Broadcaster(c, InfoID.HEART_RATE_SENSOR);
 
-        information = new SensorInformation(new HeartRateAttributes());
         name = c.getString(R.string.sensor_heart_rate);
     }
 
-
+    @Override
     public boolean isValid() {
         return valid;
     }
 
-
+    @Override
     public boolean discovered(BluetoothGattCharacteristic c, Executer execute) {
         UUID sid = c.getService().getUuid();
         UUID cid = c.getUuid();
@@ -66,7 +65,7 @@ public final class HeartRateService extends HeartRateServiceID implements Servic
         return disc;
     }
 
-
+    @Override
     public void read(BluetoothGattCharacteristic c) {
         if (HEART_RATE_SERVICE.equals(c.getService().getUuid())) {
             if (BODY_SENSOR_LOCATION.equals(c.getUuid())) {

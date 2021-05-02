@@ -11,7 +11,6 @@ import androidx.annotation.RequiresApi;
 import ch.bailu.aat.services.sensor.Connector;
 import ch.bailu.aat.services.sensor.SensorInterface;
 import ch.bailu.aat.services.sensor.list.SensorItemState;
-import ch.bailu.aat.services.sensor.list.SensorList;
 import ch.bailu.aat.services.sensor.list.SensorListItem;
 
 @RequiresApi(api = 23)
@@ -26,18 +25,16 @@ public abstract class InternalSensorSDK23 implements SensorEventListener, Sensor
     private boolean registered = false;
 
     private final Connector connector;
-    private final SensorList sensorList;
     private final SensorListItem item;
 
 
-    public InternalSensorSDK23(Context c, SensorList list, Sensor sensor, int iid) {
+    public InternalSensorSDK23(Context c, SensorListItem i, Sensor sensor, int iid) {
         context = c;
-        sensorList = list;
+        item = i;
         name = InternalSensorsSDK23.toName(sensor);
         address = InternalSensorsSDK23.toAddress(sensor);
         connector = new Connector(c, iid);
 
-        item = sensorList.add(this);
         if (item.lock(this)) {
             item.setState(SensorItemState.CONNECTING);
             item.setState(SensorItemState.CONNECTED);
@@ -49,9 +46,12 @@ public abstract class InternalSensorSDK23 implements SensorEventListener, Sensor
         }
     }
 
-
-    public SensorListItem getItem() {
-        return sensorList.add(this);
+    /**
+     * Was this instance successfully registered with the
+     * SensorListItem?
+     */
+    protected final boolean isLocked() {
+        return item.isLocked(this);
     }
 
     @Override
@@ -63,15 +63,13 @@ public abstract class InternalSensorSDK23 implements SensorEventListener, Sensor
     @NonNull
     @Override
     public String toString() {
-        return getName() + "@" + getAddress() + ":" + item.getSensorStateDescription(context);
+        return getName() + "@" + address + ":" + item.getSensorStateDescription(context);
     }
 
 
 
     @Override
     public void close() {
-        SensorListItem item = getItem();
-
         if (item.unlock(this)) {
 
             connector.close();
@@ -86,11 +84,8 @@ public abstract class InternalSensorSDK23 implements SensorEventListener, Sensor
         final SensorManager manager = context.getSystemService(SensorManager.class);
 
         if (manager != null) {
-            if (sensor instanceof android.hardware.Sensor) {
-
-                manager.registerListener(listener, sensor, SensorManager.SENSOR_DELAY_NORMAL);
-                registered = true;
-            }
+            manager.registerListener(listener, sensor, SensorManager.SENSOR_DELAY_NORMAL);
+            registered = true;
         }
     }
 
@@ -98,16 +93,10 @@ public abstract class InternalSensorSDK23 implements SensorEventListener, Sensor
     private void cancelUpdates(SensorEventListener listener) {
         final SensorManager manager = context.getSystemService(SensorManager.class);
 
-        if (registered && manager instanceof SensorManager) {
+        if (registered) {
             manager.unregisterListener(listener);
             registered = false;
         }
-    }
-
-
-    @Override
-    public String getAddress() {
-        return address;
     }
 }
 

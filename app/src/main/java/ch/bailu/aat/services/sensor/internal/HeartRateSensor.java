@@ -12,12 +12,10 @@ import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.services.sensor.attributes.HeartRateAttributes;
 import ch.bailu.aat.services.sensor.attributes.SensorInformation;
 import ch.bailu.aat.services.sensor.bluetooth_le.Broadcaster;
-import ch.bailu.aat.services.sensor.list.SensorList;
+import ch.bailu.aat.services.sensor.list.SensorListItem;
 
 @RequiresApi(api = 23)
 public final class HeartRateSensor extends InternalSensorSDK23 {
-
-    private boolean contact = false;
 
     private final HeartRateAttributes attributes;
     private GpxInformation information;
@@ -25,21 +23,17 @@ public final class HeartRateSensor extends InternalSensorSDK23 {
     private final Broadcaster broadcaster;
 
 
-    public HeartRateSensor(Context c, SensorList list, Sensor sensor) {
-        super(c, list, sensor, InfoID.HEART_RATE_SENSOR);
-
+    public HeartRateSensor(Context c, SensorListItem item, Sensor sensor) {
+        super(c, item, sensor, InfoID.HEART_RATE_SENSOR);
 
         broadcaster = new Broadcaster(c, InfoID.HEART_RATE_SENSOR);
 
         attributes = new HeartRateAttributes();
-        information = new SensorInformation(attributes);
     }
 
 
     @Override
     public void onSensorChanged(SensorEvent event) {
-        contact = toContact(event);
-
         attributes.setBpm(toBpm(event));
         attributes.haveSensorContact = toContact(event);
         information = new SensorInformation(attributes);
@@ -47,7 +41,7 @@ public final class HeartRateSensor extends InternalSensorSDK23 {
         if (attributes.haveBpm()) {
             broadcaster.broadcast();
 
-        } else if (contact == false) {
+        } else if (!attributes.haveSensorContact) {
             broadcaster.broadcast();
 
         } else if (broadcaster.timeout()) {
@@ -80,7 +74,7 @@ public final class HeartRateSensor extends InternalSensorSDK23 {
 
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
-        contact = toContact(accuracy);
+        attributes.haveSensorContact = toContact(accuracy);
         broadcaster.broadcast();
     }
 

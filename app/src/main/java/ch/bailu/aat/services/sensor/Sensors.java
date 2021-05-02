@@ -14,7 +14,7 @@ import ch.bailu.aat.services.sensor.list.SensorList;
 public class Sensors implements Closeable {
 
     public void updateConnections() {}
-    public void scann() {}
+    public void scan() {}
 
     public GpxInformation getInformation(int iid) {
         return GpxInformation.NULL;

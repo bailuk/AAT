@@ -35,7 +35,7 @@ public class SensorItemState {
     }
 
 
-    public boolean setState(int nextState) {
+    public final boolean setState(int nextState) {
         if (isNextStateValid(nextState)) {
             state = nextState;
             return true;
@@ -44,7 +44,7 @@ public class SensorItemState {
     }
 
 
-    private boolean isNextStateValid(int nextState) {
+    private final boolean isNextStateValid(int nextState) {
         if (state == UNSCANNED) {
             return (nextState == SCANNING);
 
@@ -72,44 +72,44 @@ public class SensorItemState {
     }
 
 
-    public boolean isSupported() {
+    public final boolean isSupported() {
         return state == SUPPORTED || isEnabled();
     }
 
-    public boolean isEnabled() {
+    public final boolean isEnabled() {
         return state == ENABLED || state == CONNECTING || state == CONNECTED;
     }
 
-    public boolean isConnected() {
+    public final boolean isConnected() {
         return state == CONNECTED;
     }
 
-    public boolean isConnecting() {
+    public final boolean isConnecting() {
         return state == CONNECTING;
     }
 
-    public boolean isOpen() {
+    public final boolean isOpen() {
         return state == CONNECTING || state == SCANNING;
     }
 
-    public boolean isUnscanned() {
+    public final boolean isUnscanned() {
         return state == UNSCANNED;
     }
 
-    public boolean isUnscanned_or_scanning() {
+    public final boolean isUnscanned_or_scanning() {
         return state == UNSCANNED || state == SCANNING;
     }
 
-    public boolean isScanning() {
+    public final boolean isScanning() {
         return state == SCANNING;
     }
 
-    public int getState() {
+    public final int getState() {
         return state;
     }
 
 
-    public String getSensorStateDescription(Context c) {
+    public final String getSensorStateDescription(Context c) {
         return c.getString(STATE_DESCRIPTION[state]);
     }
 }
