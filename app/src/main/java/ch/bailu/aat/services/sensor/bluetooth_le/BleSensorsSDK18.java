@@ -18,7 +18,6 @@ import ch.bailu.aat.util.Timer;
 public final class BleSensorsSDK18 extends Sensors {
 
     public final static long SCAN_DURATION = 10 * 1000;
-    public static final long CONNECTING_DURATION = 60 * 1000;
 
     private final ServiceContext scontext;
 
