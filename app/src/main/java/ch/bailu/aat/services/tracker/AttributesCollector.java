@@ -13,7 +13,7 @@ import ch.bailu.aat.services.sensor.attributes.PowerAttributes;
 import ch.bailu.aat.services.sensor.attributes.StepCounterAttributes;
 
 public final class AttributesCollector {
-    private final static long LOG_INTERVAL = 3 * 1000;
+    private final static long LOG_INTERVAL = 0;
     private final static long SHORT_TIMEOUT = 2 * 1000;
     private final static long LONG_TIMEOUT = 10 * 1000;
 
