@@ -6,6 +6,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Looper;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.io.Closeable;
 import java.util.regex.Pattern;
 
@@ -103,7 +105,15 @@ public class AppLog implements Closeable {
     }
 
 
-    public static void w(Object o, String m) {
+    /**
+     *
+     * Log a message with log level warning.
+     * Message gets logged to Android's internal logger
+     * and is not visible to the user.
+     * @param o The class name of this object will be displayed in the log.
+     * @param m The message that gets logged. This parameter is null save.
+     */
+    public static void w(@NotNull Object o, String m) {
         _w(o.getClass().getSimpleName(), m);
     }
 
