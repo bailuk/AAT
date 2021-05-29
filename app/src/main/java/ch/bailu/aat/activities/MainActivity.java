@@ -20,6 +20,7 @@ import ch.bailu.aat.util.fs.AppDirectory;
 import ch.bailu.aat.util.ui.AppLayout;
 import ch.bailu.aat.util.ui.AppTheme;
 import ch.bailu.aat.util.ui.UiTheme;
+import ch.bailu.aat.views.ErrorView;
 import ch.bailu.aat.views.LabelTextView;
 import ch.bailu.aat.views.ContentView;
 import ch.bailu.aat.views.bar.MainControlBar;
@@ -36,9 +37,11 @@ public class MainActivity extends ActivityContext {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+
         createViews();
         createDispatcher();
     }
+
 
 
     @Override
@@ -54,21 +57,13 @@ public class MainActivity extends ActivityContext {
         ContentView contentView = new ContentView(this, theme);
 
         contentView.add(createButtonBar());
+        contentView.add(getErrorView());
         contentView.addW(createActionList());
 
         setContentView(contentView);
     }
 
 
-    private View createExtraButton() {
-        LinearLayout layout = new LinearLayout(this);
-        AppTheme.alt.background(layout);
-        layout.setOrientation(LinearLayout.VERTICAL);
-
-        layout.addView(labelFactory(ActivitySwitcher.getAbout(this)));
-
-        return layout;
-    }
 
     private View createActionList() {
 
@@ -170,7 +165,6 @@ public class MainActivity extends ActivityContext {
         @Override
         public void onAttachedToWindow() {
             super.onAttachedToWindow();
-
             sdirectory.register(this);
         }
 

@@ -72,6 +72,7 @@ public abstract class AbsFileContentActivity extends ActivityContext implements 
         fileError = new ErrorView(this);
         contentView.add(fileError);
 
+        contentView.add(getErrorView());
 
         busyControl = new BusyViewControlIID(contentView);
         busyControl.busy.setOrientation(BusyViewContainer.BOTTOM_RIGHT);
@@ -87,8 +88,7 @@ public abstract class AbsFileContentActivity extends ActivityContext implements 
 
     }
 
-
-    protected View createAttributesView() {
+     protected View createAttributesView() {
         final AttributesView v = new AttributesView(this);
         addTarget(v, InfoID.FILEVIEW, InfoID.EDITOR_OVERLAY);
         return v;

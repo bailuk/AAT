@@ -65,6 +65,7 @@ public class NodeDetailActivity extends ActivityContext
 
         final ContentView contentView = new ContentView(this, theme);
         contentView.add(createButtonBar());
+        contentView.add(getErrorView());
         contentView.add(createSeekBar());
         contentView.add(createVerticalView());
 

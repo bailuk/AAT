@@ -27,6 +27,7 @@ import ch.bailu.aat.util.ui.AppTheme;
 import ch.bailu.aat.util.ui.UiTheme;
 import ch.bailu.aat.views.BusyViewControlDbSync;
 import ch.bailu.aat.views.ContentView;
+import ch.bailu.aat.views.ErrorView;
 import ch.bailu.aat.views.GpxListView;
 import ch.bailu.aat.views.PercentageLayout;
 import ch.bailu.aat.views.bar.MainControlBar;
@@ -80,6 +81,7 @@ public abstract class AbsGpxListActivity extends ActivityContext implements OnIt
 
     }
 
+
     @Override
     public void onResumeWithService() {
 
@@ -112,6 +114,7 @@ public abstract class AbsGpxListActivity extends ActivityContext implements OnIt
     @Override
     public void onDestroy() {
         busyControl.close();
+
         super.onDestroy();
     }
 
@@ -185,7 +188,10 @@ public abstract class AbsGpxListActivity extends ActivityContext implements OnIt
             MainControlBar bar = new MainControlBar(acontext);
             View layout = createLayout(map, summary, bar);
 
+
+
             contentView.add(bar);
+            contentView.add(getErrorView());
             contentView.add(layout);
 
         }

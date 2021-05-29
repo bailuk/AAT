@@ -44,6 +44,7 @@ public abstract class AbsOsmApiActivity extends ActivityContext implements OnCli
 
     private ErrorView downloadError;
 
+
     protected final UiTheme theme = AppTheme.search;
 
 
@@ -77,9 +78,11 @@ public abstract class AbsOsmApiActivity extends ActivityContext implements OnCli
 
         ContentView contentView = new ContentView(this, theme);
         contentView.add(bar);
+
         contentView.add(downloadErrorView());
         contentView.add(fileErrorView());
 
+        contentView.add(getErrorView());
         contentView.add(createMainContentView(contentView));
 
         addDownloadButton(bar);

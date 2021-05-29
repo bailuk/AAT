@@ -80,6 +80,8 @@ public class GpxViewActivity extends ActivityContext
                 MainControlBar bar = new MainControlBar(this);
 
                 contentView.add(bar);
+                contentView.add(getErrorView());
+
                 View view = createLayout(bar, contentView);
                 initButtonBar(bar);
 

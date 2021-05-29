@@ -43,6 +43,7 @@ public class CockpitActivity extends AbsKeepScreenOnActivity {
 
         contentView.addMvIndicator(multiView);
         contentView.add(createButtonBar(multiView));
+        contentView.add(getErrorView());
         contentView.add(multiView);
 
         setContentView(contentView);
@@ -50,7 +51,7 @@ public class CockpitActivity extends AbsKeepScreenOnActivity {
     }
 
 
-    private MultiView createMultiView(EditorSource edit) {
+      private MultiView createMultiView(EditorSource edit) {
         MultiView multiView = new MultiView(this, SOLID_KEY);
         multiView.add(createCockpit());
         multiView.add(MapFactory.DEF(this, SOLID_KEY).tracker(edit).toView());

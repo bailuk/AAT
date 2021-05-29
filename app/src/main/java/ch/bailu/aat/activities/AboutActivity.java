@@ -36,12 +36,14 @@ public class AboutActivity extends ActivityContext {
 
 
 
+
     private void createViews() {
         MultiView multiView = createMultiView();
         ContentView contentView = new ContentView(this, THEME);
 
         contentView.addMvIndicator(multiView);
         contentView.add(createButtonBar(multiView));
+        contentView.add(getErrorView());
         contentView.add(multiView);
 
         setContentView(contentView);

@@ -1,22 +1,17 @@
 package ch.bailu.aat.util.ui;
 
-import android.app.AlertDialog;
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Looper;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.io.Closeable;
 import java.util.regex.Pattern;
 
 import ch.bailu.aat.BuildConfig;
-import ch.bailu.aat.R;
 import ch.bailu.aat.util.AppBroadcaster;
 
 
-public class AppLog implements Closeable {
+public class AppLog  {
     private final static String UNKNOWN = "";
 
     public final static String NAME_SPACE= AppBroadcaster.NAME_SPACE;
@@ -26,82 +21,44 @@ public class AppLog implements Closeable {
     public final static String EXTRA_MESSAGE = "MESSAGE";
     private final static String EXTRA_SOURCE = "TITLE";
 
-
-    private abstract static class Log extends BroadcastReceiver implements Closeable {
-
-        private final Context context;
-
-        public Log(Context c, String action) {
-            context = c;
-            AppBroadcaster.register(context, this, action);
-        }
-
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            String message = intent.getStringExtra(EXTRA_MESSAGE);
-            String title = intent.getStringExtra(EXTRA_SOURCE);
-            log(title, message);
-
-        }
-
-        @Override
-        public void close() {
-            context.unregisterReceiver(this);
-        }
-
-        public abstract void log(String t, String m);
+    /**
+     * Log a message with log level info
+     * @param context android context to broadcast message
+     * @param message the message that will be logged. Can be null
+     */
+    public static void i(@NotNull Context context, String message) {
+        sendBroadcast(LOG_INFO, context, toSaveString(message));
     }
 
 
-
-    private static class LogError extends Log {
-        private final AlertDialog.Builder alertbox;
-
-        public LogError(Context c) {
-            super(c, LOG_E);
-            alertbox = new AlertDialog.Builder(c);
-            alertbox.setPositiveButton(c.getString(R.string.ok), (arg0, arg1) -> {});
-        }
-
-
-        @Override
-        public void log(String t, String m) {
-            if (Looper.myLooper()==null) {
-                _w(t, m);
-            } else {
-                alertbox.setTitle(t);
-                alertbox.setMessage(m);
-                alertbox.show();
-            }
-        }
+    /**
+     * Log a message with log level error
+     * @param context android context to broadcast message
+     * @param throwable error that will be logged. Can be null
+     */
+    public static void e(@NotNull Context context, Throwable throwable) {
+        e(context, toStringAndPrintStackTrace(throwable));
     }
 
 
-
-    private final Log error;
-
-    public AppLog(Context context) {
-        error = new LogError(context);
-    }
-
-    public static void i(Context c, String m) {
-        sendBroadcast(LOG_INFO, c, toSaveString(m));
-    }
-
-
-    public static void e(Context c, Throwable e) {
-        e(c, toStringAndPrintStackTrace(e));
+    /**
+     * Log a message with log level error
+     * @param context android context to broadcast message
+     * @param object this will log the class name of this object
+     * @param throwable this error will be logged. Can be null
+     */
+    public static void e(@NotNull Context context, @NotNull Object object, Throwable throwable) {
+        e(context, object.getClass().getSimpleName(), toStringAndPrintStackTrace(throwable));
     }
 
 
-    public static void e(Context c, Object o, Throwable e) {
-        e(c, o.getClass().getSimpleName(), toStringAndPrintStackTrace(e));
-    }
-
-
-
-    public static void w(Object o, Throwable e) {
-        w(o, toStringAndPrintStackTrace(e));
+    /**
+     * Log a message with log level warning
+     * @param object
+     * @param throwable
+     */
+    public static void w(@NotNull Object object, Throwable throwable) {
+        w(object, toStringAndPrintStackTrace(throwable));
     }
 
 
@@ -196,9 +153,4 @@ public class AppLog implements Closeable {
         }
     }
 
-
-    @Override
-    public void close() {
-        error.close();
-    }
 }

@@ -35,6 +35,7 @@ public class MapActivity extends AbsKeepScreenOnActivity {
 
         ContentView contentView=new ContentView(this, AppTheme.cockpit);
         MapViewInterface map = createMap(edit);
+        contentView.add(getErrorView());
         contentView.add(map.toView());
         setContentView(contentView);
 

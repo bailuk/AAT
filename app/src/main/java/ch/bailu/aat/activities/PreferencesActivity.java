@@ -12,6 +12,7 @@ import ch.bailu.aat.preferences.general.SolidPresetCount;
 import ch.bailu.aat.util.ui.AppTheme;
 import ch.bailu.aat.util.ui.UiTheme;
 import ch.bailu.aat.views.ContentView;
+import ch.bailu.aat.views.ErrorView;
 import ch.bailu.aat.views.bar.MainControlBar;
 import ch.bailu.aat.views.description.mview.MultiView;
 import ch.bailu.aat.views.preferences.GeneralPreferencesView;
@@ -29,6 +30,7 @@ public class PreferencesActivity extends ActivityContext implements SharedPrefer
     private MultiView multiView;
     private SolidPresetCount spresetCount;
 
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,12 +44,15 @@ public class PreferencesActivity extends ActivityContext implements SharedPrefer
     }
 
 
+
     private void createViews() {
         ContentView contentView = new ContentView(this, theme);
 
         multiView = createMultiView(theme);
         contentView.addMvIndicator(multiView);
         contentView.add(new MainControlBar(this, multiView));
+
+        contentView.add(getErrorView());
         contentView.add(multiView);
 
         setContentView(contentView);

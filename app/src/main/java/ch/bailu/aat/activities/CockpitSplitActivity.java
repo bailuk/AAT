@@ -57,6 +57,7 @@ public class CockpitSplitActivity extends AbsKeepScreenOnActivity {
     }
 
 
+
     private View createContentView(EditorSource edit) {
         final MapViewInterface mapSlave = MapFactory.DEF(this, SOLID_KEY).split();
         final CockpitView cockpitA = new CockpitView(this, THEME);
@@ -122,6 +123,7 @@ public class CockpitSplitActivity extends AbsKeepScreenOnActivity {
         ContentView contentView = new ContentView(this, THEME);
 
         contentView.addMvIndicator(mv);
+        contentView.add(getErrorView());
         contentView.add(
                 new PercentageLayout(this)
                         .add(mapMaster.toView(), 70)

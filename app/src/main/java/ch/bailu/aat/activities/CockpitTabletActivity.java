@@ -25,6 +25,7 @@ import ch.bailu.aat.map.mapsforge.MapViewLinker;
 import ch.bailu.aat.util.ui.AppLayout;
 import ch.bailu.aat.util.ui.AppTheme;
 import ch.bailu.aat.util.ui.UiTheme;
+import ch.bailu.aat.views.ContentView;
 import ch.bailu.aat.views.PercentageLayout;
 import ch.bailu.aat.views.bar.ControlBar;
 import ch.bailu.aat.views.bar.MainControlBar;
@@ -71,6 +72,10 @@ public class CockpitTabletActivity extends AbsKeepScreenOnActivity {
         three.add(two,80);
         three.add(GraphViewFactory.all(this, this, theme, InfoID.TRACKER),20);
 
+
+        final ContentView contentView = new ContentView(this, theme);
+        contentView.add(getErrorView());
+        contentView.add(three);
 
         return three;
     }

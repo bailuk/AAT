@@ -6,10 +6,9 @@ import androidx.annotation.NonNull;
 
 import ch.bailu.aat.preferences.PreferenceLoadDefaults;
 import ch.bailu.aat.util.AppPermission;
-import ch.bailu.aat.util.ui.AppLog;
+import ch.bailu.aat.views.ErrorView;
 
 public abstract class AbsActivity extends Activity {
-    private AppLog logger;
 
     private static int instantiated=0;
     private static int created=0;
@@ -19,13 +18,22 @@ public abstract class AbsActivity extends Activity {
         instantiated++;
     }
 
+    private ErrorView errorView;
 
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        errorView = new ErrorView(this);
+        errorView.attach();
+
         new PreferenceLoadDefaults(this);
         created++;
+    }
+
+
+    protected ErrorView getErrorView() {
+        return errorView;
     }
 
 
@@ -39,14 +47,13 @@ public abstract class AbsActivity extends Activity {
 
     @Override
     public void onDestroy() {
+        errorView.detach();
         created--;
         super.onDestroy();
     }
 
     @Override
     public void onPause() {
-        logger.close();
-        logger=null;
         super.onPause();
 
     }
@@ -54,7 +61,6 @@ public abstract class AbsActivity extends Activity {
     @Override
     public void onResume() {
         super.onResume();
-        logger = new AppLog(this);
     }
 
 
