@@ -10,10 +10,18 @@ public class AppLogTest {
 
     public static String logged = "";
 
+
     @Test
     public void testDebug() {
+        logged = "";
         AppLog.d(null, null);
-        assertEquals("DEBUG: : ", logged);
+
+
+        if (BuildConfig.DEBUG) {
+            assertEquals("DEBUG: : ", logged);
+        } else {
+            assertEquals("" , logged);
+        }
     }
 
     @Test
