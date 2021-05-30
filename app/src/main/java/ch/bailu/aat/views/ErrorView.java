@@ -38,16 +38,17 @@ public class ErrorView extends TextView  {
     }
 
 
-
     private void displayError(Intent intent) {
         String message = intent.getStringExtra(AppLog.EXTRA_MESSAGE);
         displayError(message);
     }
 
+
     /**
-     * Gets an object from the cache service and displays its exception
-     * @param serviceContext needed to access cache service
-     * @param file needed to identify the object from the service context
+     * Gets an {@link Obj} from the {@link ch.bailu.aat.services.cache.CacheService}
+     * and displays its exception if it has one
+     * @param serviceContext needed to access  {@link ch.bailu.aat.services.cache.CacheService}
+     * @param file needed to identify the {@link Obj}
      */
     public void displayError(ServiceContext serviceContext, Foc file) {
         new InsideContext(serviceContext) {
@@ -65,7 +66,7 @@ public class ErrorView extends TextView  {
 
 
     /**
-     * Get an error message from an exception and display it as a message
+     * Get an error message from an exception and display it
      * @param exception that gets displayed
      */
     public void displayError(Exception exception) {
@@ -109,12 +110,18 @@ public class ErrorView extends TextView  {
     }
 
 
-    public void attach() {
+    /**
+     * Receive and display error logs sent from {@link AppLog}
+      */
+    public void registerReceiver() {
         AppBroadcaster.register(getContext(), onMessage, AppLog.LOG_E);
     }
 
 
-    public void detach() {
+    /**
+     * Stop displaying error logs sent from {@link AppLog}
+     */
+    public void unregisterReceiver() {
         getContext().unregisterReceiver(onMessage);
     }
 }

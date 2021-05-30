@@ -25,7 +25,7 @@ public abstract class AbsActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         errorView = new ErrorView(this);
-        errorView.attach();
+        errorView.registerReceiver();
 
         new PreferenceLoadDefaults(this);
         created++;
@@ -47,7 +47,7 @@ public abstract class AbsActivity extends Activity {
 
     @Override
     public void onDestroy() {
-        errorView.detach();
+        errorView.unregisterReceiver();
         created--;
         super.onDestroy();
     }
