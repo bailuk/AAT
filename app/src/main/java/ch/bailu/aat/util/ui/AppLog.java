@@ -171,7 +171,7 @@ public class AppLog  {
             if (e.getMessage() == null) {
                 return e.getClass().getSimpleName();
             } else {
-                return e.getClass().getSimpleName() + ": " + e.getMessage();
+                return e.getMessage();
             }
         }
     }

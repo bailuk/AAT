@@ -1,28 +1,34 @@
 package android.util;
 
+import ch.bailu.aat.AppLogTest;
+
 /**
  * mock log functions
  */
 public class Log {
+
     public static int d(String tag, String msg) {
-        System.out.println("DEBUG: " + tag + ": " + msg);
+        AppLogTest.logged = "DEBUG: " + tag + ": " + msg;
+        System.out.println(AppLogTest.logged);
         return 0;
     }
 
     public static int i(String tag, String msg) {
-        System.out.println("INFO: " + tag + ": " + msg);
+        AppLogTest.logged = "INFO: " + tag + ": " + msg;
+        System.out.println(AppLogTest.logged);
         return 0;
     }
 
     public static int w(String tag, String msg) {
-        System.out.println("WARN: " + tag + ": " + msg);
+        AppLogTest.logged = "WARN: " + tag + ": " + msg;
+        System.out.println(AppLogTest.logged);
         return 0;
     }
 
     public static int e(String tag, String msg) {
-        System.out.println("ERROR: " + tag + ": " + msg);
+        AppLogTest.logged = "ERROR: " + tag + ": " + msg;
+        System.out.println(AppLogTest.logged);
         return 0;
     }
 
-    // add other methods if required...
 }
