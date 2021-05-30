@@ -14,9 +14,16 @@ import ch.bailu.aat.util.AppBroadcaster;
 public class AppLog  {
     private final static String UNKNOWN = "";
 
-    public final static String NAME_SPACE= AppBroadcaster.NAME_SPACE;
+    private final static String NAME_SPACE= AppBroadcaster.NAME_SPACE;
+    /**
+     * Info level namespace for message broadcaster
+     */
     public final static String LOG_INFO = NAME_SPACE + "LOG_INFO";
-    public final static String LOG_E = NAME_SPACE + "LOG_ERROR";
+
+    /**
+     * Error level namespace for message broadcaster
+     */
+    public final static String LOG_ERROR = NAME_SPACE + "LOG_ERROR";
 
     public final static String EXTRA_MESSAGE = "MESSAGE";
     private final static String EXTRA_SOURCE = "TITLE";
@@ -44,7 +51,7 @@ public class AppLog  {
     /**
      * Log a message with log level error
      * @param context android context to broadcast message
-     * @param object this will log the class name of this object
+     * @param object to log the class name of this object
      * @param throwable this error will be logged. Can be null
      */
     public static void e(@NotNull Context context, @NotNull Object object, Throwable throwable) {
@@ -54,8 +61,8 @@ public class AppLog  {
 
     /**
      * Log a message with log level warning
-     * @param object
-     * @param throwable
+     * @param object The class name of this object will be displayed in the log as a tag to identify the source of this message.
+     * @param throwable this error will be logged. Can be null
      */
     public static void w(@NotNull Object object, Throwable throwable) {
         w(object, toStringAndPrintStackTrace(throwable));
@@ -67,11 +74,11 @@ public class AppLog  {
      * Log a message with log level warning.
      * Message gets logged to Android's internal logger
      * and is not visible to the user.
-     * @param o The class name of this object will be displayed in the log.
-     * @param m The message that gets logged. This parameter is null save.
+     * @param object The class name of this object will be displayed in the log as a tag to identify the source of this message.
+     * @param msg The message that gets logged. This parameter is null save.
      */
-    public static void w(@NotNull Object o, String m) {
-        _w(o.getClass().getSimpleName(), m);
+    public static void w(@NotNull Object object, String msg) {
+        _w(object.getClass().getSimpleName(), msg);
     }
 
 
@@ -82,16 +89,27 @@ public class AppLog  {
 
 
     public static void e(Context c, String m) {
-        sendBroadcast(LOG_E, c, toSaveString(m));
+        sendBroadcast(LOG_ERROR, c, toSaveString(m));
     }
 
 
-    public static void e(Context c, String a, String b) {
-        sendBroadcast(LOG_E, c, toSaveString(a), toSaveString(b));
+    /**
+     * Log a message with log level error
+     * @param context needed to broadcast the error
+     * @param tag that gets logged to identify the source of this message. Can be null
+     * @param msg the message that gets logged. Can be null
+     */
+    public static void e(@NotNull  Context context, String tag, String msg) {
+        sendBroadcast(LOG_ERROR, context, toSaveString(tag), toSaveString(msg));
     }
 
 
-    public static void d(Object o, String m) {
+    /**
+     * Log a message with log level debug
+     * @param o classname of object is used as a tag to identify the source of this message.
+     * @param m the message to log. Can be null.
+     */
+    public static void d(@NotNull  Object o, String m) {
     	d(className(o), m);
     }
 
@@ -112,9 +130,14 @@ public class AppLog  {
         return result;
     }
 
-    public static void d(String a, String b) {
+    /**
+     * Log a message with log level debug
+     * @param tag to identify the source of this message. Can be null.
+     * @param msg the message to log. Can be null.
+     */
+    public static void d(String tag, String msg) {
         if (BuildConfig.DEBUG) {
-            android.util.Log.d(toSaveString(a), toSaveString(b));
+            android.util.Log.d(toSaveString(tag), toSaveString(msg));
         }
     }
 

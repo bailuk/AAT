@@ -114,7 +114,7 @@ public class ErrorView extends TextView  {
      * Receive and display error logs sent from {@link AppLog}
       */
     public void registerReceiver() {
-        AppBroadcaster.register(getContext(), onMessage, AppLog.LOG_E);
+        AppBroadcaster.register(getContext(), onMessage, AppLog.LOG_ERROR);
     }
 
 
