@@ -81,8 +81,6 @@ dependencies {
     // Local
     implementation project(path: ':util')
     implementation project(path: ':util-java')
-    implementation project(path: ':foc')
-    implementation project(path: ':foc-android')
 
 
     // https://github.com/JetBrains/java-annotations
@@ -125,6 +123,9 @@ dependencies {
 
     // open-location-code
     implementation "com.google.openlocationcode:openlocationcode:1.0.4"
+
+    def focVersion = project.focVersion
+    implementation "com.github.bailuk:foc:$focVersion"
 
 
 
