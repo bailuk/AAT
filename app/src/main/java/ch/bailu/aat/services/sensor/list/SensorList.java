@@ -62,7 +62,7 @@ public final class SensorList extends ArrayList<SensorListItem> implements Close
         GpxInformation i = null;
 
         if (iid == InfoID.SENSORS)
-            return new Information();
+            return new Information(this);
 
         for (SensorListItem item: this) {
             i = item.getInformation(iid);
@@ -99,14 +99,14 @@ public final class SensorList extends ArrayList<SensorListItem> implements Close
 
 
 
-    public class Information extends GpxInformation {
+    public static class Information extends GpxInformation {
         private int state = StateID.OFF;
 
         private final Attributes attributes;
 
-        public Information() {
+        public Information(Iterable<SensorListItem> list) {
             int sensorCount = 0;
-            for (SensorListItem i : SensorList.this) {
+            for (SensorListItem i : list) {
                 if (i.isConnected()) {
                     sensorCount++;
                 } else if (i.isConnecting()) {
