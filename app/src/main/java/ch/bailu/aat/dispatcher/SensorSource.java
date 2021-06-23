@@ -11,10 +11,12 @@ import ch.bailu.aat.util.AppBroadcaster;
 public class SensorSource extends ContentSource {
     private final ServiceContext scontext;
     private final int iid;
+    private final String changedAction;
 
     public SensorSource(ServiceContext sc, int i) {
         scontext = sc;
         iid = i;
+        changedAction = AppBroadcaster.SENSOR_CHANGED + iid;
     }
 
 
@@ -40,8 +42,8 @@ public class SensorSource extends ContentSource {
 
     @Override
     public void onResume() {
-        AppBroadcaster.register(scontext.getContext(), onSensorUpdated, AppBroadcaster.SENSOR_CHANGED + iid);
-
+        AppBroadcaster.register(scontext.getContext(), onSensorUpdated,
+                                changedAction);
     }
 
     @Override
