@@ -181,7 +181,7 @@ public final class HeartRateService extends HeartRateServiceID implements Servic
 
     @Override
     public GpxInformation getInformation(int iid) {
-        if (isValid() && iid == InfoID.HEART_RATE_SENSOR)
+        if (iid == InfoID.HEART_RATE_SENSOR)
             return information;
         return null;
     }

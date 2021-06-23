@@ -111,7 +111,7 @@ public final class CyclingPower extends CyclingPowerID implements ServiceInterfa
 
     @Override
     public GpxInformation getInformation(int iid) {
-        if (isValid() && iid == InfoID.POWER_SENSOR)
+        if (iid == InfoID.POWER_SENSOR)
             return information;
 
         if (isSpeedSensor && iid == InfoID.SPEED_SENSOR)
