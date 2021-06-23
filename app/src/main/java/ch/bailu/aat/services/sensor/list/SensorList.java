@@ -14,6 +14,8 @@ import ch.bailu.aat.util.AppBroadcaster;
 
 public final class SensorList extends ArrayList<SensorListItem> implements Closeable {
 
+    private static final String changedAction = AppBroadcaster.SENSOR_CHANGED + InfoID.SENSORS;
+
     private final Context context;
 
     public SensorList(Context c) {
@@ -54,7 +56,7 @@ public final class SensorList extends ArrayList<SensorListItem> implements Close
 
 
     public void broadcast() {
-        AppBroadcaster.broadcast(context, AppBroadcaster.SENSOR_CHANGED + InfoID.SENSORS);
+        AppBroadcaster.broadcast(context, changedAction);
     }
 
 
