@@ -9,6 +9,9 @@ import ch.bailu.aat.services.sensor.list.SensorState;
 import ch.bailu.aat.util.AppBroadcaster;
 
 public final class Connector implements Closeable {
+    private static final String changedAction = AppBroadcaster.SENSOR_CHANGED + InfoID.SENSORS;
+    private static final String disconnectedAction = AppBroadcaster.SENSOR_DISCONNECTED + InfoID.SENSORS;
+
     private boolean connected = false;
     private final int iid;
     private final Context context;
@@ -38,7 +41,7 @@ public final class Connector implements Closeable {
 
 
     private void broadcast() {
-        AppBroadcaster.broadcast(context, AppBroadcaster.SENSOR_CHANGED + InfoID.SENSORS);
+        AppBroadcaster.broadcast(context, changedAction);
     }
 
 
@@ -49,7 +52,7 @@ public final class Connector implements Closeable {
             SensorState.disconnect(iid);
 
             // just disconnected try reconnect
-            AppBroadcaster.broadcast(context, AppBroadcaster.SENSOR_DISCONNECTED + InfoID.SENSORS);
+            AppBroadcaster.broadcast(context, disconnectedAction);
 
         }
     }

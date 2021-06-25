@@ -21,6 +21,8 @@ import ch.bailu.aat.util.AppBroadcaster;
 public final class BarometerSensor extends InternalSensorSDK23
         implements SharedPreferences.OnSharedPreferenceChangeListener {
 
+    private static final String changedAction =
+        AppBroadcaster.SENSOR_CHANGED + InfoID.BAROMETER_SENSOR;
 
     private final Hypsometric hypsometric = new Hypsometric();
 
@@ -54,10 +56,7 @@ public final class BarometerSensor extends InternalSensorSDK23
         information = new Information(hypsometric.getAltitude(), pressure);
 
 
-        AppBroadcaster.broadcast(context,
-                 AppBroadcaster.SENSOR_CHANGED + InfoID.BAROMETER_SENSOR);
-
-
+        AppBroadcaster.broadcast(context, changedAction);
     }
 
     @Override
