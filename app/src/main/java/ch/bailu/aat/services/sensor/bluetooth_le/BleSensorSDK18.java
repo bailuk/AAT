@@ -236,8 +236,10 @@ public final class BleSensorSDK18 extends BluetoothGattCallback implements Senso
 
     public synchronized GpxInformation getInformation(int iid) {
         for (ServiceInterface s : services) {
-            GpxInformation i = s.getInformation(iid);
-            if (i != null) return i;
+            if (s.isValid()) {
+                GpxInformation i = s.getInformation(iid);
+                if (i != null) return i;
+            }
         }
 
         return null;
