@@ -3,12 +3,13 @@ package ch.bailu.aat.util.ui;
 import android.content.Context;
 import android.content.Intent;
 
-import org.jetbrains.annotations.NotNull;
+import androidx.annotation.NonNull;
 
 import java.util.regex.Pattern;
 
 import ch.bailu.aat.BuildConfig;
 import ch.bailu.aat.util.AppBroadcaster;
+
 
 
 public class AppLog  {
@@ -33,7 +34,7 @@ public class AppLog  {
      * @param context android context to broadcast message
      * @param message the message that will be logged. Can be null
      */
-    public static void i(@NotNull Context context, String message) {
+    public static void i(@NonNull Context context, String message) {
         sendBroadcast(LOG_INFO, context, toSaveString(message));
     }
 
@@ -43,7 +44,7 @@ public class AppLog  {
      * @param context android context to broadcast message
      * @param throwable error that will be logged. Can be null
      */
-    public static void e(@NotNull Context context, Throwable throwable) {
+    public static void e(@NonNull Context context, Throwable throwable) {
         e(context, toStringAndPrintStackTrace(throwable));
     }
 
@@ -54,7 +55,7 @@ public class AppLog  {
      * @param object to log the class name of this object
      * @param throwable this error will be logged. Can be null
      */
-    public static void e(@NotNull Context context, @NotNull Object object, Throwable throwable) {
+    public static void e(@NonNull Context context, @NonNull Object object, Throwable throwable) {
         e(context, object.getClass().getSimpleName(), toStringAndPrintStackTrace(throwable));
     }
 
@@ -64,7 +65,7 @@ public class AppLog  {
      * @param object The class name of this object will be displayed in the log as a tag to identify the source of this message.
      * @param throwable this error will be logged. Can be null
      */
-    public static void w(@NotNull Object object, Throwable throwable) {
+    public static void w(@NonNull Object object, Throwable throwable) {
         w(object, toStringAndPrintStackTrace(throwable));
     }
 
@@ -77,7 +78,7 @@ public class AppLog  {
      * @param object The class name of this object will be displayed in the log as a tag to identify the source of this message.
      * @param msg The message that gets logged. This parameter is null save.
      */
-    public static void w(@NotNull Object object, String msg) {
+    public static void w(@NonNull Object object, String msg) {
         _w(object.getClass().getSimpleName(), msg);
     }
 
@@ -99,7 +100,7 @@ public class AppLog  {
      * @param tag that gets logged to identify the source of this message. Can be null
      * @param msg the message that gets logged. Can be null
      */
-    public static void e(@NotNull  Context context, String tag, String msg) {
+    public static void e(@NonNull  Context context, String tag, String msg) {
         sendBroadcast(LOG_ERROR, context, toSaveString(tag), toSaveString(msg));
     }
 
@@ -109,7 +110,7 @@ public class AppLog  {
      * @param o classname of object is used as a tag to identify the source of this message.
      * @param m the message to log. Can be null.
      */
-    public static void d(@NotNull  Object o, String m) {
+    public static void d(@NonNull  Object o, String m) {
     	d(className(o), m);
     }
 

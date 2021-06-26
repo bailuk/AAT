@@ -83,9 +83,6 @@ dependencies {
     implementation project(path: ':util-java')
 
 
-    // https://github.com/JetBrains/java-annotations
-    implementation 'org.jetbrains:annotations:15.0'
-
     /*
             Automatic MapsForge integration as described here:
             https://github.com/mapsforge/mapsforge/raw/master/docs/Integration.md
