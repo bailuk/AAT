@@ -72,7 +72,8 @@ public class DownloadTask extends FileTask implements ContextWrapperInterface{
 
 
     protected void logError(Exception e) {
-        AppLog.w(this, e.toString());
+        AppLog.w(this, getFile().getPathName());
+        AppLog.w(this, e);
     }
 
 
