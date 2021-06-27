@@ -51,38 +51,34 @@ public class CockpitTabletActivity extends AbsKeepScreenOnActivity {
     }
 
     private View createContentView(EditorSourceInterface edit) {
+        final ContentView result = new ContentView(this, theme);
+
         final MapViewInterface smallMap = MapFactory.DEF(this, SOLID_KEY).split();
         final MapViewInterface bigMap = MapFactory.DEF(this, SOLID_MAP_KEY).map(edit, createButtonBar());
         new MapViewLinker(bigMap, smallMap);
 
-
-        final PercentageLayout one = new PercentageLayout(this);
-        one.setOrientation(AppLayout.getOrientationAlongSmallSide(this));
-        one.add(createCockpit(), 60);
-        one.add(smallMap.toView(),40);
-
-
-        final PercentageLayout two = new PercentageLayout(this);
-        two.setOrientation(AppLayout.getOrientationAlongLargeSide(this));
-        two.add(bigMap.toView(),60);
-        two.add(one,40);
+        final PercentageLayout cockpitAndSmallMap = new PercentageLayout(this);
+        cockpitAndSmallMap.setOrientation(AppLayout.getOrientationAlongSmallSide(this));
+        cockpitAndSmallMap.add(createCockpit(), 60);
+        cockpitAndSmallMap.add(smallMap.toView(),40);
 
 
-        final PercentageLayout three = new PercentageLayout(this);
-        three.add(two,80);
-        three.add(GraphViewFactory.all(this, this, theme, InfoID.TRACKER),20);
+        final PercentageLayout cockpitAndBigMap = new PercentageLayout(this);
+        cockpitAndBigMap.setOrientation(AppLayout.getOrientationAlongLargeSide(this));
+        cockpitAndBigMap.add(bigMap.toView(),60);
+        cockpitAndBigMap.add(cockpitAndSmallMap,40);
 
+        final PercentageLayout allComponents = new PercentageLayout(this);
+        allComponents.add(cockpitAndBigMap,80);
+        allComponents.add(GraphViewFactory.all(this, this, theme, InfoID.TRACKER),20);
 
-        final ContentView contentView = new ContentView(this, theme);
-        contentView.add(getErrorView());
-        contentView.add(three);
-
-        return three;
+        result.add(getErrorView());
+        result.add(allComponents);
+        return result;
     }
 
 
     private CockpitView createCockpit() {
-
         CockpitView c = new CockpitView(this, theme);
 
         c.add(this, new CurrentSpeedDescription(this),
