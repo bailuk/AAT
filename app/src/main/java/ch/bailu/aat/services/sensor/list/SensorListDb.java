@@ -19,6 +19,8 @@ public final class SensorListDb {
             if (item.isEnabled())
                 write(db, item);
         }
+
+        db.close();
     }
 
 
@@ -60,5 +62,6 @@ public final class SensorListDb {
             list.addEnabled(address, name);
         }
         cursor.close();
+        db.close();
     }
 }
