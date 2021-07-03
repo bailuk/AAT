@@ -1,0 +1,6 @@
+v1.21 (34)
+
+# Change
+- Bluetooth improvements
+- Allow SAF for dem3 location
+- Non modal error messages

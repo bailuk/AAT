@@ -16,8 +16,8 @@ android {
         minSdkVersion 14
         targetSdkVersion 29
 
-        versionCode 33
-        versionName "v1.20"
+        versionCode 34
+        versionName "v1.21"
 
         buildConfigField 'String', 'APP_SNAME', '\"AAT\"'
         buildConfigField 'String', 'APP_NAME', '\"Another Activity Tracker\"'
