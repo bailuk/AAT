@@ -1,6 +1,6 @@
 include ':util'
-include ':app'
 include ':util-java'
+include ':aat-android'
 
 
 // use local MapsForge git repository (only for developing)
