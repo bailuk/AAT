@@ -308,8 +308,8 @@
 
     <!-- Errors -->
     <string name="error_integer">Nesprávný vstup, povolena jsou pouze celá čísla.\n\"%s\"</string>
-    <string name ="error_integer_positive">"Váha musí být mezi 1 a 999."</string>
+    <string name ="error_integer_positive">Váha musí být mezi 1 a 999.</string>
     <string name="error_long">Nesprávný vstup, povolena jsou pouze.\n\"%s\"</string>
-    <string name ="error_met">"První číslo musí být mezi 0.0 a 20.0 s mezerou na konci."</string>
+    <string name ="error_met">První číslo musí být mezi 0.0 a 20.0 s mezerou na konci.</string>
 
 </resources>

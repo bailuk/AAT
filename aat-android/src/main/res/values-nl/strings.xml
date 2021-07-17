@@ -311,8 +311,8 @@
     
     <!-- Errors -->
     <string name="error_integer">Verkeerde input, enkel gehele getallen zijn toegestaan.\n\"%s\"</string>
-    <string name ="error_integer_positive">"Gewicht moet tussen 1 en 999 zijn."</string>
+    <string name ="error_integer_positive">Gewicht moet tussen 1 en 999 zijn.</string>
     <string name="error_long">Verkeerde input, enkel getallen zijn toegestaan.\n\"%s\"</string>
-    <string name ="error_met">"Eerste Getal moet tussen 0.0 en 20.0 zijn, gevolgd door een spatie."</string>
+    <string name ="error_met">Eerste Getal moet tussen 0.0 en 20.0 zijn, gevolgd door een spatie.</string>
 
 </resources>
