@@ -1,0 +1,83 @@
+plugins {
+    id 'application'
+}
+
+repositories {
+    mavenCentral()
+}
+
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
+
+
+dependencies {
+
+    implementation project(path: ':aat-lib')
+
+
+    /**
+     *    https://github.com/bailuk/foc
+     */
+    implementation "com.github.bailuk.foc:foc:$focVersion"
+
+
+     /**
+     *    https://mvnrepository.com/artifact/com.github.hypfvieh/dbus-java
+     *    https://github.com/hypfvieh/dbus-java
+     */
+    implementation group: 'com.github.hypfvieh', name: 'dbus-java', version: '3.3.0'
+    implementation 'org.slf4j:slf4j-api:1.7.30'
+    implementation 'ch.qos.logback:logback-classic:1.2.3'
+    implementation 'ch.qos.logback:logback-core:1.2.3'
+
+
+    /**
+     *    https://github.com/mapsforge/mapsforge/blob/master/docs/Integration.md
+     */
+    def mapsForgeVersion = '0.15.0'
+
+    // MapsForge Core
+    implementation "org.mapsforge:mapsforge-core:$mapsForgeVersion"
+    implementation "org.mapsforge:mapsforge-map:$mapsForgeVersion"
+    implementation "org.mapsforge:mapsforge-map-reader:$mapsForgeVersion"
+    implementation "org.mapsforge:mapsforge-themes:$mapsForgeVersion"
+
+
+    // AWT
+    implementation "org.mapsforge:mapsforge-map-awt:$mapsForgeVersion"
+    implementation "com.formdev:svgSalamander:1.1.2.4"
+
+
+    /**
+     *
+     *   https://junit.org/junit5/docs/current/user-guide/#dependency-metadata
+     *   https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter
+     *
+      */
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.7.2'
+
+}
+
+
+application {
+    mainClassName = "ch.bailu.aat_awt.App"
+}
+
+
+/**
+ * https://docs.gradle.org/current/dsl/org.gradle.api.tasks.bundling.Jar.html
+ */
+jar {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    archiveClassifier = "all"
+
+    manifest {
+        attributes "Main-Class": "ch.bailu.aat_awt.App"
+    }
+
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+}
