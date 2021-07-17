@@ -1,6 +1,5 @@
 package ch.bailu.aat.map.layer.control;
 
-import android.content.SharedPreferences;
 import android.view.View;
 
 import org.mapsforge.core.model.LatLong;
@@ -8,7 +7,6 @@ import org.mapsforge.core.model.LatLong;
 import ch.bailu.aat.R;
 import ch.bailu.aat.dispatcher.DispatcherInterface;
 import ch.bailu.aat.dispatcher.EditorSourceInterface;
-import ch.bailu.aat.gpx.GpxPoint;
 import ch.bailu.aat.map.MapContext;
 import ch.bailu.aat.map.layer.gpx.GpxDynLayer;
 import ch.bailu.aat.menus.EditorMenu;
@@ -17,6 +15,8 @@ import ch.bailu.aat.services.editor.EditorInterface;
 import ch.bailu.aat.util.ui.AppTheme;
 import ch.bailu.aat.util.ui.ToolTip;
 import ch.bailu.aat.views.bar.ControlBar;
+import ch.bailu.aat_lib.gpx.GpxPoint;
+import ch.bailu.aat_lib.preferences.StorageInterface;
 
 public final class EditorLayer extends ControlBarLayer {
 
@@ -134,9 +134,9 @@ public final class EditorLayer extends ControlBarLayer {
 
 
     @Override
-    public void onSharedPreferenceChanged(SharedPreferences p, String key) {
-        content.onSharedPreferenceChanged(p, key);
-        selector.onSharedPreferenceChanged(p, key);
+    public void onPreferencesChanged(StorageInterface s, String key) {
+        content.onPreferencesChanged(s,key);
+        selector.onPreferencesChanged(s,key);
     }
 
 

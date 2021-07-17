@@ -2,12 +2,12 @@ package ch.bailu.aat.views;
 
 import android.widget.ImageView;
 
-import ch.bailu.aat.gpx.GpxPointNode;
 import ch.bailu.aat.services.InsideContext;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.cache.ObjSVGAsset;
 import ch.bailu.aat.services.icons.IconMapService;
 import ch.bailu.aat.util.ui.AppDensity;
+import ch.bailu.aat_lib.gpx.GpxPointNode;
 
 
 public class SVGAssetView extends ImageObjectView {

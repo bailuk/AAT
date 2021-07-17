@@ -7,7 +7,8 @@ import android.view.ViewGroup;
 
 import java.io.Closeable;
 
-import ch.bailu.aat.util.AppBroadcaster;
+import ch.bailu.aat.util.OldAppBroadcaster;
+import ch.bailu.aat_lib.dispatcher.AppBroadcaster;
 
 public class BusyViewControlDbSync extends BusyViewControlIID implements Closeable {
     private final Context context;
@@ -15,9 +16,9 @@ public class BusyViewControlDbSync extends BusyViewControlIID implements Closeab
     public BusyViewControlDbSync(ViewGroup parent) {
         super(parent);
         context = parent.getContext();
-        AppBroadcaster.register(context, onSyncStart,   AppBroadcaster.DBSYNC_START);
-        AppBroadcaster.register(context, onSyncDone,    AppBroadcaster.DBSYNC_DONE);
-        AppBroadcaster.register(context, onSyncChanged, AppBroadcaster.DB_SYNC_CHANGED);
+        OldAppBroadcaster.register(context, onSyncStart,   AppBroadcaster.DBSYNC_START);
+        OldAppBroadcaster.register(context, onSyncDone,    AppBroadcaster.DBSYNC_DONE);
+        OldAppBroadcaster.register(context, onSyncChanged, AppBroadcaster.DB_SYNC_CHANGED);
 
     }
 

@@ -1,8 +1,6 @@
 package ch.bailu.aat.activities;
 
-import org.mapsforge.map.android.graphics.AndroidBitmap;
-
-import ch.bailu.aat.util.WithStatusText;
+import ch.bailu.aat_lib.util.WithStatusText;
 
 public class AppThread implements WithStatusText {
 

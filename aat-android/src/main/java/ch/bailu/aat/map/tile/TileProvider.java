@@ -20,8 +20,9 @@ import ch.bailu.aat.services.InsideContext;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.cache.Obj;
 import ch.bailu.aat.services.cache.ObjTile;
-import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.util.AppIntent;
+import ch.bailu.aat.util.OldAppBroadcaster;
+import ch.bailu.aat_lib.dispatcher.AppBroadcaster;
 
 public class TileProvider implements Attachable, ObservableInterface {
     private final ServiceContext scontext;
@@ -130,7 +131,7 @@ public class TileProvider implements Attachable, ObservableInterface {
             cache.reset();
             cache = new TileObjectCache();
 
-            AppBroadcaster.register(scontext.getContext(),
+            OldAppBroadcaster.register(scontext.getContext(),
                     onFileChanged, AppBroadcaster.FILE_CHANGED_INCACHE);
 
             isAttached = true;

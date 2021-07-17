@@ -7,7 +7,7 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.Build;
 
-import ch.bailu.aat.preferences.system.SolidDataDirectoryDefault;
+import ch.bailu.aat.preferences.system.AndroidSolidDataDirectoryDefault;
 
 public class AppPermission {
     public static void requestFromUser(Activity activity) {
@@ -34,7 +34,7 @@ public class AppPermission {
 
     public static void onRequestPermissionsResult (Context c, int requestCode) {
         if (requestCode == AppPermission.APP_PERMISSION) {
-            new SolidDataDirectoryDefault(c).setDefaultValue();
+            new AndroidSolidDataDirectoryDefault(c).setDefaultValue();
         }
     }
 

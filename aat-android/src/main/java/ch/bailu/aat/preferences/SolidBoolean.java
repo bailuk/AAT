@@ -1,9 +1,9 @@
 package ch.bailu.aat.preferences;
 
 
-import android.content.Context;
-
-import ch.bailu.aat.R;
+import ch.bailu.aat_lib.preferences.SolidStaticIndexList;
+import ch.bailu.aat_lib.preferences.StorageInterface;
+import ch.bailu.aat_lib.resources.Res;
 
 public class SolidBoolean extends SolidStaticIndexList {
 
@@ -11,18 +11,18 @@ public class SolidBoolean extends SolidStaticIndexList {
     private static String[] label;
 
 
-    private static String[] generateLabel(Context c) {
+    private static String[] generateLabel() {
         if (label == null) {
             label = new String[] {
-                    c.getString(R.string.off),
-                    c.getString(R.string.on),
+                    Res.str().off(),
+                    Res.str().on(),
             };
         }
         return label;
     }
 
-    public SolidBoolean(Context c, String k) {
-        super(c, k, generateLabel(c));
+    public SolidBoolean(StorageInterface s, String k) {
+        super(s, k, generateLabel());
     }
 
     public boolean isEnabled() {

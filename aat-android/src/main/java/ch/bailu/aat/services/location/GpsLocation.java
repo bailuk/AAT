@@ -4,7 +4,11 @@ import android.content.Context;
 import android.location.Location;
 import android.location.LocationManager;
 
+import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat.preferences.location.SolidGpsTimeFix;
+import ch.bailu.aat_lib.preferences.StorageInterface;
+import ch.bailu.aat_lib.service.location.LocationInformation;
+import ch.bailu.aat_lib.service.location.LocationStackItem;
 
 public final class GpsLocation extends RealLocation {
 
@@ -14,7 +18,7 @@ public final class GpsLocation extends RealLocation {
     public GpsLocation(LocationStackItem i, Context c, int interval) {
         super(i, c, LocationManager.GPS_PROVIDER, interval);
 
-        fixTime = new SolidGpsTimeFix(c).getValue();
+        fixTime = new SolidGpsTimeFix(new Storage(c)).getValue();
     }
 
 
@@ -30,8 +34,8 @@ public final class GpsLocation extends RealLocation {
     }
 
     @Override
-    public void preferencesChanged(Context c, String key, int presetIndex) {
-        fixTime = new SolidGpsTimeFix(c).getValue();
+    public void onPreferencesChanged(StorageInterface storage, String key, int presetIndex) {
+        fixTime = new SolidGpsTimeFix(storage).getValue();
     }
 
     private void fixGpsTime(Location l, long systemTime) {

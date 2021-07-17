@@ -6,9 +6,9 @@ import android.text.InputType;
 import android.view.View;
 import android.widget.EditText;
 
-import ch.bailu.aat.R;
-import ch.bailu.aat.exception.ValidationException;
-import ch.bailu.aat.preferences.AbsSolidType;
+import ch.bailu.aat_lib.exception.ValidationException;
+import ch.bailu.aat_lib.preferences.AbsSolidType;
+import ch.bailu.aat_lib.resources.Res;
 
 public class SolidTextInputDialog extends AbsSolidDialog {
 
@@ -20,14 +20,14 @@ public class SolidTextInputDialog extends AbsSolidDialog {
     public static final int TEXT = InputType.TYPE_CLASS_TEXT;
 
 
-    public SolidTextInputDialog(final AbsSolidType s, int inputType,
+    public SolidTextInputDialog(Context context, final AbsSolidType s, int inputType,
                                 final View.OnClickListener onClick) {
-        final Context context = s.getContext();
-        final AlertDialog.Builder builder = createDefaultDialog(s);
 
-        builder.setPositiveButton(context.getString(R.string.ok), (dialogInterface, i) -> {
+        final AlertDialog.Builder builder = createDefaultDialog(context,s);
+
+        builder.setPositiveButton(Res.str().ok(), (dialogInterface, i) -> {
         });
-        builder.setNegativeButton(context.getString(R.string.cancel), (dialogInterface, i) -> {
+        builder.setNegativeButton(Res.str().cancel(), (dialogInterface, i) -> {
         });
 
         AlertDialog dialog = builder.create();
@@ -56,8 +56,8 @@ public class SolidTextInputDialog extends AbsSolidDialog {
 
 
 
-    public SolidTextInputDialog(final AbsSolidType s, int inputType) {
-        this(s, inputType, v -> {
+    public SolidTextInputDialog(Context c, final AbsSolidType s, int inputType) {
+        this(c,s, inputType, v -> {
 
         });
     }

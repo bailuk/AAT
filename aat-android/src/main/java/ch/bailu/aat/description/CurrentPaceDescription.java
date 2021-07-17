@@ -2,10 +2,10 @@ package ch.bailu.aat.description;
 
 import android.content.Context;
 
-import ch.bailu.aat.R;
-import ch.bailu.aat.gpx.GpxInformation;
-import ch.bailu.aat.gpx.GpxList;
-import ch.bailu.aat.gpx.interfaces.GpxDeltaInterface;
+import ch.bailu.aat_lib.gpx.GpxInformation;
+import ch.bailu.aat_lib.gpx.GpxList;
+import ch.bailu.aat_lib.gpx.interfaces.GpxDeltaInterface;
+import ch.bailu.aat_lib.resources.Res;
 
 public class CurrentPaceDescription extends PaceDescription {
     public CurrentPaceDescription(Context c) {
@@ -14,7 +14,7 @@ public class CurrentPaceDescription extends PaceDescription {
 
     @Override
     public String getLabel() {
-        return getContext().getString(R.string.pace);
+        return Res.str().pace();
     }
 
 

@@ -4,9 +4,10 @@ import android.content.Context;
 
 import java.io.Closeable;
 
-import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.services.sensor.list.SensorState;
-import ch.bailu.aat.util.AppBroadcaster;
+import ch.bailu.aat.util.OldAppBroadcaster;
+import ch.bailu.aat_lib.dispatcher.AppBroadcaster;
+import ch.bailu.aat_lib.gpx.InfoID;
 
 public final class Connector implements Closeable {
     private static final String changedAction = AppBroadcaster.SENSOR_CHANGED + InfoID.SENSORS;
@@ -41,7 +42,7 @@ public final class Connector implements Closeable {
 
 
     private void broadcast() {
-        AppBroadcaster.broadcast(context, changedAction);
+        OldAppBroadcaster.broadcast(context, changedAction);
     }
 
 
@@ -52,7 +53,7 @@ public final class Connector implements Closeable {
             SensorState.disconnect(iid);
 
             // just disconnected try reconnect
-            AppBroadcaster.broadcast(context, disconnectedAction);
+            OldAppBroadcaster.broadcast(context, disconnectedAction);
 
         }
     }

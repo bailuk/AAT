@@ -3,17 +3,20 @@ package ch.bailu.aat.services.cache;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 
+import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat.preferences.system.SolidCacheSize;
 import ch.bailu.aat.services.ServiceContext;
-import ch.bailu.aat.services.VirtualService;
-import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.util.MemSize;
-import ch.bailu.aat.util.WithStatusText;
+import ch.bailu.aat.util.OldAppBroadcaster;
+import ch.bailu.aat_lib.dispatcher.AppBroadcaster;
+import ch.bailu.aat_lib.preferences.OnPreferencesChanged;
+import ch.bailu.aat_lib.preferences.StorageInterface;
+import ch.bailu.aat_lib.service.VirtualService;
+import ch.bailu.aat_lib.util.WithStatusText;
 
 
-public final class CacheService extends VirtualService implements SharedPreferences.OnSharedPreferenceChangeListener, WithStatusText {
+public final class CacheService extends VirtualService implements OnPreferencesChanged, WithStatusText {
 
 
 
@@ -24,19 +27,16 @@ public final class CacheService extends VirtualService implements SharedPreferen
 
     private final SolidCacheSize slimit;
 
-
     public CacheService(ServiceContext sc) {
-        super(sc);
-
         scontext = sc;
-        broadcaster = new ObjectBroadcaster(getSContext());
+        broadcaster = new ObjectBroadcaster(sc);
 
-        slimit = new SolidCacheSize(sc.getContext());
+        slimit = new SolidCacheSize(new Storage(sc.getContext()));
         slimit.register(this);
 
         table.limit(this, slimit.getValueAsLong());
 
-        AppBroadcaster.register(getContext(), onFileProcessed, AppBroadcaster.FILE_CHANGED_INCACHE);
+        OldAppBroadcaster.register(sc.getContext(), onFileProcessed, AppBroadcaster.FILE_CHANGED_INCACHE);
     }
 
     public void onLowMemory() {
@@ -50,7 +50,7 @@ public final class CacheService extends VirtualService implements SharedPreferen
     }
 
     public Obj getObject(String id) {
-        return table.getHandle(id, getSContext());
+        return table.getHandle(id, scontext);
     }
 
     @Override
@@ -60,7 +60,7 @@ public final class CacheService extends VirtualService implements SharedPreferen
 
 
     public void close() {
-        getContext().unregisterReceiver(onFileProcessed);
+        scontext.getContext().unregisterReceiver(onFileProcessed);
 
         slimit.unregister(this);
         table.logLocked();
@@ -85,8 +85,8 @@ public final class CacheService extends VirtualService implements SharedPreferen
     }
 
     @Override
-    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s) {
-        if (slimit.hasKey(s)) {
+    public void onPreferencesChanged(StorageInterface s, String key) {
+        if (slimit.hasKey(key)) {
             table.limit(this, slimit.getValueAsLong());
         }
     }

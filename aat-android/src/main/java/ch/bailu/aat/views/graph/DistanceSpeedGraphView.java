@@ -10,19 +10,21 @@ import ch.bailu.aat.description.AverageSpeedDescription;
 import ch.bailu.aat.description.AverageSpeedDescriptionAP;
 import ch.bailu.aat.dispatcher.DispatcherInterface;
 import ch.bailu.aat.gpx.GpxDistanceWindow;
-import ch.bailu.aat.gpx.GpxList;
 import ch.bailu.aat.gpx.GpxListWalker;
-import ch.bailu.aat.gpx.GpxPointNode;
-import ch.bailu.aat.gpx.GpxSegmentNode;
-import ch.bailu.aat.gpx.attributes.AutoPause;
-import ch.bailu.aat.gpx.attributes.MaxSpeed;
-import ch.bailu.aat.preferences.SolidAutopause;
-import ch.bailu.aat.preferences.general.SolidPostprocessedAutopause;
-import ch.bailu.aat.preferences.general.SolidUnit;
-import ch.bailu.aat.preferences.presets.SolidPreset;
+import ch.bailu.aat.preferences.Storage;
+import ch.bailu.aat.preferences.system.AndroidSolidDataDirectory;
 import ch.bailu.aat.util.ui.AppDensity;
 import ch.bailu.aat.util.ui.AppTheme;
 import ch.bailu.aat.util.ui.UiTheme;
+import ch.bailu.aat_lib.gpx.GpxList;
+import ch.bailu.aat_lib.gpx.GpxPointNode;
+import ch.bailu.aat_lib.gpx.GpxSegmentNode;
+import ch.bailu.aat_lib.gpx.attributes.AutoPause;
+import ch.bailu.aat_lib.gpx.attributes.MaxSpeed;
+import ch.bailu.aat_lib.preferences.SolidAutopause;
+import ch.bailu.aat_lib.preferences.general.SolidPostprocessedAutopause;
+import ch.bailu.aat_lib.preferences.general.SolidUnit;
+import ch.bailu.aat_lib.preferences.presets.SolidPreset;
 
 
 public class DistanceSpeedGraphView extends AbsGraphView implements SharedPreferences.OnSharedPreferenceChangeListener {
@@ -64,8 +66,8 @@ public class DistanceSpeedGraphView extends AbsGraphView implements SharedPrefer
 
 
     private AutoPause getAutoPause() {
-        int preset = new SolidPreset(getContext()).getIndex();
-        final SolidAutopause spause = new SolidPostprocessedAutopause(getContext(), preset);
+        int preset = new SolidPreset(new AndroidSolidDataDirectory(getContext())).getIndex();
+        final SolidAutopause spause = new SolidPostprocessedAutopause(new Storage(getContext()), preset);
         return new AutoPause.Time(
                 spause.getTriggerSpeed(),
                 spause.getTriggerLevelMillis());

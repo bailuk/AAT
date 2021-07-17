@@ -11,11 +11,7 @@ import android.widget.SeekBar;
 import ch.bailu.aat.R;
 import ch.bailu.aat.dispatcher.CurrentLocationSource;
 import ch.bailu.aat.dispatcher.CustomFileSource;
-import ch.bailu.aat.dispatcher.OnContentUpdatedInterface;
-import ch.bailu.aat.gpx.GpxInformation;
-import ch.bailu.aat.gpx.GpxList;
 import ch.bailu.aat.gpx.GpxListArray;
-import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.map.MapFactory;
 import ch.bailu.aat.map.MapViewInterface;
 import ch.bailu.aat.util.HtmlBuilderGpx;
@@ -30,6 +26,10 @@ import ch.bailu.aat.views.bar.ControlBar;
 import ch.bailu.aat.views.bar.MainControlBar;
 import ch.bailu.aat.views.graph.DistanceAltitudeGraphView;
 import ch.bailu.aat.views.html.HtmlScrollTextView;
+import ch.bailu.aat_lib.dispatcher.OnContentUpdatedInterface;
+import ch.bailu.aat_lib.gpx.GpxInformation;
+import ch.bailu.aat_lib.gpx.GpxList;
+import ch.bailu.aat_lib.gpx.InfoID;
 
 public class NodeDetailActivity extends ActivityContext
         implements OnClickListener, OnContentUpdatedInterface, SeekBar.OnSeekBarChangeListener {

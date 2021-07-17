@@ -4,9 +4,11 @@ import android.content.Context;
 
 import java.text.DecimalFormat;
 
-import ch.bailu.aat.R;
-import ch.bailu.aat.gpx.GpxInformation;
-import ch.bailu.aat.preferences.general.SolidUnit;
+import ch.bailu.aat.preferences.Storage;
+import ch.bailu.aat_lib.description.FF;
+import ch.bailu.aat_lib.gpx.GpxInformation;
+import ch.bailu.aat_lib.preferences.general.SolidUnit;
+import ch.bailu.aat_lib.resources.Res;
 
 public class DistanceDescription extends FloatDescription {
     private final DecimalFormat[] FORMAT =
@@ -14,15 +16,13 @@ public class DistanceDescription extends FloatDescription {
     private final SolidUnit unit;
 
     public DistanceDescription(Context context) {
-        super(context);
-
-        unit = new SolidUnit(context);
+        unit = new SolidUnit(new Storage(context));
     }
 
 
     @Override
     public String getLabel() {
-        return getContext().getString(R.string.distance);
+        return Res.str().distance();
     }
 
 

@@ -17,17 +17,19 @@ import org.mapsforge.map.model.IMapViewPosition;
 
 import java.util.ArrayList;
 
-import ch.bailu.aat.coordinates.BoundingBoxE6;
 import ch.bailu.aat.map.MapContext;
 import ch.bailu.aat.map.MapDensity;
 import ch.bailu.aat.map.MapViewInterface;
 import ch.bailu.aat.map.layer.MapLayerInterface;
 import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat.services.ServiceContext;
+import ch.bailu.aat_lib.coordinates.BoundingBoxE6;
+import ch.bailu.aat_lib.preferences.OnPreferencesChanged;
+import ch.bailu.aat_lib.preferences.StorageInterface;
 
 public class MapsForgeViewBase extends MapView implements
         MapViewInterface,
-        SharedPreferences.OnSharedPreferenceChangeListener {
+        OnPreferencesChanged {
 
     private BoundingBox pendingFrameBounding=null;
 
@@ -180,9 +182,9 @@ public class MapsForgeViewBase extends MapView implements
 
 
     @Override
-    public void onSharedPreferenceChanged(SharedPreferences p, String key) {
-        for(SharedPreferences.OnSharedPreferenceChangeListener l: layers)
-            l.onSharedPreferenceChanged(p, key);
+    public void onPreferencesChanged(StorageInterface s, String key) {
+        for(OnPreferencesChanged l: layers)
+            l.onPreferencesChanged(s, key);
     }
 
 

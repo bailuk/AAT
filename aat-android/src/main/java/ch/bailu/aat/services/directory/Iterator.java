@@ -2,8 +2,8 @@ package ch.bailu.aat.services.directory;
 
 import java.io.Closeable;
 
-import ch.bailu.aat.gpx.GpxInformation;
-import ch.bailu.aat.gpx.InfoID;
+import ch.bailu.aat_lib.gpx.GpxInformation;
+import ch.bailu.aat_lib.gpx.InfoID;
 
 public class Iterator implements Closeable {
     public static final Iterator NULL = new Iterator();

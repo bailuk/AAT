@@ -9,15 +9,15 @@ import android.view.ViewGroup;
 import ch.bailu.aat.R;
 import ch.bailu.aat.activities.AbsHardwareButtons;
 import ch.bailu.aat.dispatcher.DispatcherInterface;
-import ch.bailu.aat.dispatcher.OnContentUpdatedInterface;
-import ch.bailu.aat.gpx.GpxInformation;
-import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.map.MapContext;
 import ch.bailu.aat.preferences.map.SolidPositionLock;
-import ch.bailu.aat.util.ui.AppLog;
 import ch.bailu.aat.util.ui.AppTheme;
 import ch.bailu.aat.util.ui.ToolTip;
 import ch.bailu.aat.views.bar.ControlBar;
+import ch.bailu.aat_lib.dispatcher.OnContentUpdatedInterface;
+import ch.bailu.aat_lib.gpx.GpxInformation;
+import ch.bailu.aat_lib.gpx.InfoID;
+import ch.bailu.aat_lib.logger.AppLog;
 
 public final class NavigationBarLayer extends ControlBarLayer implements OnContentUpdatedInterface {
 

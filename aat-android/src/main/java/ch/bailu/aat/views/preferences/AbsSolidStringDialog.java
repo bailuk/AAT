@@ -6,9 +6,9 @@ import android.content.DialogInterface;
 
 import java.util.ArrayList;
 
-import ch.bailu.aat.exception.ValidationException;
-import ch.bailu.aat.preferences.AbsSolidType;
-import ch.bailu.aat.preferences.SolidString;
+import ch.bailu.aat_lib.exception.ValidationException;
+import ch.bailu.aat_lib.preferences.AbsSolidType;
+import ch.bailu.aat_lib.preferences.SolidString;
 
 public abstract class AbsSolidStringDialog extends AbsSolidDialog
         implements  DialogInterface.OnClickListener{
@@ -19,7 +19,7 @@ public abstract class AbsSolidStringDialog extends AbsSolidDialog
     private final int baseSelectionSize;
 
 
-    public AbsSolidStringDialog(SolidString s)  {
+    public AbsSolidStringDialog(Context context, SolidString s)  {
         solid = s;
 
         final AlertDialog.Builder dialog;
@@ -27,12 +27,12 @@ public abstract class AbsSolidStringDialog extends AbsSolidDialog
 
         baseSelectionSize = selectionList.size();
 
-        buildExtraSelection(s.getContext(), selectionList);
+        buildExtraSelection(context, selectionList);
 
         selection = selectionList.toArray(new String[selectionList.size()]);
 
 
-        dialog = createDefaultDialog(s);
+        dialog = createDefaultDialog(context,s);
         dialog.setItems(selection, this);
 
         dialog.create();

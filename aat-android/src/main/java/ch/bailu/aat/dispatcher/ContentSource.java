@@ -1,6 +1,7 @@
 package ch.bailu.aat.dispatcher;
 
-import ch.bailu.aat.gpx.GpxInformation;
+import ch.bailu.aat_lib.dispatcher.OnContentUpdatedInterface;
+import ch.bailu.aat_lib.gpx.GpxInformation;
 
 public abstract class ContentSource  {
     private OnContentUpdatedInterface target = OnContentUpdatedInterface.NULL;

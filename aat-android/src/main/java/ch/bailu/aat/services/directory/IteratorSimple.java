@@ -2,8 +2,8 @@ package ch.bailu.aat.services.directory;
 
 import android.database.Cursor;
 
-import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.services.ServiceContext;
+import ch.bailu.aat_lib.gpx.GpxInformation;
 import ch.bailu.foc.Foc;
 
 public final class IteratorSimple extends IteratorAbstract {

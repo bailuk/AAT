@@ -7,8 +7,9 @@ import java.net.URLEncoder;
 import java.util.Locale;
 
 import ch.bailu.aat.R;
-import ch.bailu.aat.coordinates.BoundingBoxE6;
-import ch.bailu.aat.util.fs.AppDirectory;
+import ch.bailu.aat.preferences.system.AndroidSolidDataDirectory;
+import ch.bailu.aat_lib.coordinates.BoundingBoxE6;
+import ch.bailu.aat_lib.util.fs.AppDirectory;
 import ch.bailu.foc.Foc;
 
 public abstract class OverpassApi extends DownloadApi {
@@ -27,7 +28,7 @@ public abstract class OverpassApi extends DownloadApi {
     public OverpassApi(Context context, BoundingBoxE6 b) {
         NAME=getName(context);
         bounding = toString(b);
-        directory = AppDirectory.getDataDirectory(context, AppDirectory.DIR_OVERPASS);
+        directory = AppDirectory.getDataDirectory(new AndroidSolidDataDirectory(context), AppDirectory.DIR_OVERPASS);
     }
 
 

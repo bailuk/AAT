@@ -2,22 +2,23 @@ package ch.bailu.aat.description;
 
 import android.content.Context;
 
-import ch.bailu.aat.R;
-import ch.bailu.aat.gpx.GpxInformation;
-import ch.bailu.aat.gpx.attributes.GpxAttributes;
 import ch.bailu.aat.services.sensor.list.SensorList;
+import ch.bailu.aat_lib.description.StateDescription;
+import ch.bailu.aat_lib.gpx.GpxInformation;
+import ch.bailu.aat_lib.gpx.attributes.GpxAttributes;
+import ch.bailu.aat_lib.resources.Res;
 
 public class SensorStateDescription extends StateDescription {
     private String unit = "";
 
     public SensorStateDescription(Context c) {
-        super(c);
+
     }
 
 
     @Override
     public String getLabel() {
-        return getContext().getString(R.string.sensors);
+        return Res.str().sensors();
     }
 
 

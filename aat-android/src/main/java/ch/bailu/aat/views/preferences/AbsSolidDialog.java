@@ -3,12 +3,12 @@ package ch.bailu.aat.views.preferences;
 import android.app.AlertDialog;
 import android.content.Context;
 
-import ch.bailu.aat.preferences.AbsSolidType;
+import ch.bailu.aat_lib.preferences.AbsSolidType;
 
 public abstract class AbsSolidDialog  {
 
-    public static AlertDialog.Builder createDefaultDialog(AbsSolidType s) {
-        AlertDialog.Builder dialog = new AlertDialog.Builder(s.getContext());
+    public static AlertDialog.Builder createDefaultDialog(Context context, AbsSolidType s) {
+        AlertDialog.Builder dialog = new AlertDialog.Builder(context);
 
         dialog.setTitle(s.getLabel());
         if (s.getIconResource() != 0) {

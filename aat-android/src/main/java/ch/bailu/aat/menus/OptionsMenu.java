@@ -10,12 +10,13 @@ import ch.bailu.aat.activities.ActivitySwitcher;
 import ch.bailu.aat.activities.PreferencesActivity;
 import ch.bailu.aat.preferences.map.SolidMapTileStack;
 import ch.bailu.aat.preferences.presets.SolidBacklight;
-import ch.bailu.aat.preferences.presets.SolidPreset;
+import ch.bailu.aat.preferences.system.AndroidSolidDataDirectory;
 import ch.bailu.aat.services.InsideContext;
 import ch.bailu.aat.services.ServiceContext;
-import ch.bailu.aat.services.tracker.State;
 import ch.bailu.aat.views.preferences.SolidCheckListDialog;
 import ch.bailu.aat.views.preferences.SolidIndexListDialog;
+import ch.bailu.aat_lib.preferences.presets.SolidPreset;
+import ch.bailu.aat_lib.service.tracker.State;
 
 public final class OptionsMenu extends AbsMenu {
     private MenuItem start, pause, backlight, preferences, map;
@@ -68,9 +69,9 @@ public final class OptionsMenu extends AbsMenu {
 
 
     private void updateMenuText(State state) {
-        start.setTitle(state.getStartStopTextID());
+        start.setTitle(state.getStartStopText());
         start.setIcon(state.getStartStopIconID());
-        pause.setTitle(state.getPauseResumeTextID());
+        pause.setTitle(state.getPauseResumeText());
     }
 
 
@@ -96,7 +97,7 @@ public final class OptionsMenu extends AbsMenu {
             };
 
         } else if (item == backlight) {
-            new SolidIndexListDialog(new SolidBacklight(c, new SolidPreset(c).getIndex()));
+            new SolidIndexListDialog(scontext.getContext(),new SolidBacklight(c, new SolidPreset(new AndroidSolidDataDirectory(scontext.getContext())).getIndex()));
 
 
         } else if (item == preferences) {
@@ -104,7 +105,7 @@ public final class OptionsMenu extends AbsMenu {
 
 
         } else if (item == map) {
-                new SolidCheckListDialog(new SolidMapTileStack(c));
+                new SolidCheckListDialog(c,new SolidMapTileStack(c));
         } else {
             return false;
         }

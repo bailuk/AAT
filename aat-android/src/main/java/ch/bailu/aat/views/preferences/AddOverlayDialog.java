@@ -13,11 +13,11 @@ public class AddOverlayDialog extends AbsSolidDialog implements  DialogInterface
     private final Foc file;
 
 
-    public AddOverlayDialog (SolidOverlayFileList l, Foc f) {
+    public AddOverlayDialog (Context context, SolidOverlayFileList l, Foc f) {
         slist=l;
         file=f;
 
-        final AlertDialog.Builder dialog = createDefaultDialog(l);
+        final AlertDialog.Builder dialog = createDefaultDialog(context,l);
         dialog.setItems(slist.getStringArray(), this);
         dialog.create();
         dialog.show();
@@ -25,7 +25,7 @@ public class AddOverlayDialog extends AbsSolidDialog implements  DialogInterface
 
 
     public AddOverlayDialog(Context context, Foc f) {
-        this(new SolidOverlayFileList(context), f);
+        this(context, new SolidOverlayFileList(context), f);
     }
 
     @Override

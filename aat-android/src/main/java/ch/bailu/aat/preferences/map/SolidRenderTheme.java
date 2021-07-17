@@ -11,15 +11,24 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 import ch.bailu.aat.R;
-import ch.bailu.aat.preferences.SolidFile;
+import ch.bailu.aat.factory.AndroidFocFactory;
+import ch.bailu.aat.preferences.Storage;
+import ch.bailu.aat_lib.preferences.SolidFile;
 import ch.bailu.foc.Foc;
 
 public class SolidRenderTheme extends SolidFile {
 
     private final static String EXTENSION = ".xml";
 
+    private final Context context;
+
     public SolidRenderTheme(Context c) {
-        super(c, SolidRenderTheme.class.getSimpleName());
+        super(new Storage(c), SolidRenderTheme.class.getSimpleName(), new AndroidFocFactory(c));
+        context = c;
+    }
+
+    public Context getContext() {
+        return context;
     }
 
 

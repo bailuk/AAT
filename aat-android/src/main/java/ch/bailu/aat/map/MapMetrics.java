@@ -5,10 +5,10 @@ import android.graphics.Rect;
 import org.mapsforge.core.model.BoundingBox;
 import org.mapsforge.core.model.LatLong;
 
-import ch.bailu.aat.coordinates.BoundingBoxE6;
-import ch.bailu.aat.coordinates.LatLongE6Interface;
 import ch.bailu.aat.util.graphic.Pixel;
 import ch.bailu.aat.util.ui.AppDensity;
+import ch.bailu.aat_lib.coordinates.BoundingBoxE6;
+import ch.bailu.aat_lib.coordinates.LatLongE6Interface;
 
 public interface MapMetrics {
     AppDensity getDensity();

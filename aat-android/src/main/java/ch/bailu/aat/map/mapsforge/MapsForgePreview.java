@@ -22,8 +22,6 @@ import org.mapsforge.map.view.FrameBufferHA2;
 import java.io.OutputStream;
 import java.util.List;
 
-import ch.bailu.aat.gpx.GpxInformation;
-import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.map.MapDensity;
 import ch.bailu.aat.map.layer.gpx.GpxDynLayer;
 import ch.bailu.aat.map.tile.TileProvider;
@@ -34,9 +32,12 @@ import ch.bailu.aat.map.tile.source.Source;
 import ch.bailu.aat.preferences.map.SolidMapTileStack;
 import ch.bailu.aat.preferences.map.SolidRenderTheme;
 import ch.bailu.aat.services.ServiceContext;
-import ch.bailu.aat.util.AppBroadcaster;
+import ch.bailu.aat.util.OldAppBroadcaster;
 import ch.bailu.aat.util.graphic.SyncTileBitmap;
-import ch.bailu.aat.util.ui.AppLog;
+import ch.bailu.aat_lib.dispatcher.AppBroadcaster;
+import ch.bailu.aat_lib.gpx.GpxInformation;
+import ch.bailu.aat_lib.gpx.InfoID;
+import ch.bailu.aat_lib.logger.AppLog;
 import ch.bailu.foc.Foc;
 
 public class MapsForgePreview extends MapsForgeViewBase {
@@ -170,7 +171,7 @@ public class MapsForgePreview extends MapsForgeViewBase {
             OutputStream outStream = imageFile.openW();
             bitmap.getAndroidBitmap().compress(Bitmap.CompressFormat.PNG, 90, outStream);
             outStream.close();
-            AppBroadcaster.broadcast(getContext(),
+            OldAppBroadcaster.broadcast(getContext(),
                     AppBroadcaster.FILE_CHANGED_ONDISK,
                     imageFile.toString(),
                     getClass().getName());

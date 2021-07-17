@@ -3,8 +3,9 @@ package ch.bailu.aat.preferences.map;
 import android.content.Context;
 import android.text.format.DateUtils;
 
-import ch.bailu.aat.R;
-import ch.bailu.aat.preferences.SolidIndexList;
+import ch.bailu.aat.preferences.Storage;
+import ch.bailu.aat_lib.preferences.SolidIndexList;
+import ch.bailu.aat_lib.resources.Res;
 
 public class SolidTrimDate extends SolidIndexList {
 
@@ -25,20 +26,20 @@ public class SolidTrimDate extends SolidIndexList {
         if (size >= DateUtils.YEAR_IN_MILLIS) {
             size=size/ DateUtils.YEAR_IN_MILLIS;
             if (size == 1)
-                s = getContext().getString(R.string.p_trim_year);
+                s = Res.str().p_trim_year();
             else
-                s = getContext().getString(R.string.p_trim_years);
+                s = Res.str().p_trim_years();
 
         } else if (size >= DateUtils.DAY_IN_MILLIS*30) {
             size =size / (DateUtils.DAY_IN_MILLIS*30);
             if (size == 1)
-                s = getContext().getString(R.string.p_trim_month);
+                s = Res.str().p_trim_month();
             else
-                s = getContext().getString(R.string.p_trim_months);
+                s = Res.str().p_trim_months();
 
         } else  {
             size=size / DateUtils.DAY_IN_MILLIS;
-            s = getContext().getString(R.string.p_trim_days);
+            s = Res.str().p_trim_days();
 
         }
 
@@ -60,13 +61,13 @@ public class SolidTrimDate extends SolidIndexList {
 
 
     public SolidTrimDate(Context context) {
-        super(context, SolidTrimDate.class.getSimpleName());
+        super(new Storage(context), SolidTrimDate.class.getSimpleName());
     }
 
 
     @Override
     public String getLabel() {
-        return getContext().getString(R.string.p_trim_age);
+        return Res.str().p_trim_age();
     }
 
 

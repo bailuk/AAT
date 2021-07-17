@@ -6,16 +6,17 @@ import android.graphics.drawable.Drawable;
 import android.view.Menu;
 
 import ch.bailu.aat.R;
-import ch.bailu.aat.gpx.interfaces.GpxType;
 import ch.bailu.aat.preferences.map.SolidOverlayFileList;
+import ch.bailu.aat.preferences.system.AndroidSolidDataDirectory;
 import ch.bailu.aat.services.InsideContext;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.cache.Obj;
 import ch.bailu.aat.services.cache.ObjGpx;
 import ch.bailu.aat.services.editor.EditorInterface;
-import ch.bailu.aat.util.fs.AppDirectory;
 import ch.bailu.aat.util.ui.AppSelectDirectoryDialog;
 import ch.bailu.aat.views.preferences.AbsSelectOverlayDialog;
+import ch.bailu.aat_lib.gpx.interfaces.GpxType;
+import ch.bailu.aat_lib.util.fs.AppDirectory;
 import ch.bailu.foc.Foc;
 
 public final class EditorMenu extends AbsMenu {
@@ -64,9 +65,9 @@ public final class EditorMenu extends AbsMenu {
     }
 
     private void saveCopy() {
-        if (file.equals(AppDirectory.getEditorDraft(context))) {
+        if (file.equals(AppDirectory.getEditorDraft(new AndroidSolidDataDirectory(context)))) {
             editor.saveTo(
-                    AppDirectory.getDataDirectory(context, AppDirectory.DIR_OVERLAY));
+                    AppDirectory.getDataDirectory(new AndroidSolidDataDirectory(context), AppDirectory.DIR_OVERLAY));
 
         } else if (file.hasParent())
             editor.saveTo(file.parent());

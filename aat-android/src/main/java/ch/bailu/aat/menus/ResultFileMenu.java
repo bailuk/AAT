@@ -5,9 +5,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import ch.bailu.aat.R;
+import ch.bailu.aat.preferences.system.AndroidSolidDataDirectory;
 import ch.bailu.aat.util.AbsServiceLink;
-import ch.bailu.aat.util.fs.AppDirectory;
 import ch.bailu.aat.util.fs.FileAction;
+import ch.bailu.aat_lib.util.fs.AppDirectory;
 import ch.bailu.foc.Foc;
 
 public final class ResultFileMenu extends FileMenu {
@@ -39,7 +40,7 @@ public final class ResultFileMenu extends FileMenu {
     public boolean onItemClick(MenuItem item) {
         if (item == saveCopy) {
             FileAction.copyToDir(scontext.getContext(), file,
-                    AppDirectory.getDataDirectory(scontext.getContext(), AppDirectory.DIR_OVERLAY),
+                    AppDirectory.getDataDirectory(new AndroidSolidDataDirectory(scontext.getContext()), AppDirectory.DIR_OVERLAY),
                     targetPrefix, targetExtendsion);
             return true;
         }

@@ -11,10 +11,11 @@ import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.background.BackgroundTask;
 import ch.bailu.aat.services.cache.Obj;
 import ch.bailu.aat.services.cache.OnObject;
-import ch.bailu.aat.util.AppBroadcaster;
+import ch.bailu.aat.util.OldAppBroadcaster;
 import ch.bailu.aat.util.filter_list.AbsFilterList;
 import ch.bailu.aat.util.filter_list.KeyList;
 import ch.bailu.aat.util.filter_list.ListEntry;
+import ch.bailu.aat_lib.dispatcher.AppBroadcaster;
 
 public final class ObjMapFeatures extends Obj {
 
@@ -105,7 +106,7 @@ public final class ObjMapFeatures extends Obj {
                     bgOnProcess(sc.getContext());
 
                     owner.isLoaded = true;
-                    AppBroadcaster.broadcast(sc.getContext(),
+                    OldAppBroadcaster.broadcast(sc.getContext(),
                             AppBroadcaster.FILE_CHANGED_INCACHE, ID);
 
                     size[0] = owner.size;
@@ -144,7 +145,7 @@ public final class ObjMapFeatures extends Obj {
             doBroadcast++;
             if (doBroadcast > 10) {
                 doBroadcast = 0;
-                AppBroadcaster.broadcast(scontext.getContext(),
+                OldAppBroadcaster.broadcast(scontext.getContext(),
                         AppBroadcaster.FILE_CHANGED_INCACHE, ID);
             }
         }

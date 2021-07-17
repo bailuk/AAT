@@ -1,7 +1,5 @@
 package ch.bailu.aat.map.layer.gpx;
 
-import android.content.SharedPreferences;
-
 import org.mapsforge.core.graphics.Cap;
 import org.mapsforge.core.graphics.Join;
 import org.mapsforge.core.graphics.Paint;
@@ -11,6 +9,7 @@ import org.mapsforge.map.android.graphics.AndroidGraphicFactory;
 import ch.bailu.aat.map.MapContext;
 import ch.bailu.aat.map.TwoNodes;
 import ch.bailu.aat.views.graph.AltitudeColorTable;
+import ch.bailu.aat_lib.preferences.StorageInterface;
 
 public final class TrackLayer  extends GpxLayer{
     private static final int STROKE_WIDTH=3;
@@ -35,9 +34,8 @@ public final class TrackLayer  extends GpxLayer{
 
 
     @Override
-    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+    public void onPreferencesChanged(StorageInterface s, String key) {}
 
-    }
 
     @Override
     public void drawInside(MapContext mcontext) {

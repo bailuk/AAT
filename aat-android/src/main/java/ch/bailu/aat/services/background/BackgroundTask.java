@@ -3,6 +3,7 @@ package ch.bailu.aat.services.background;
 import android.content.Context;
 
 import ch.bailu.aat.services.ServiceContext;
+import ch.bailu.aat_lib.service.background.ThreadControl;
 
 public abstract class BackgroundTask implements ThreadControl {
 

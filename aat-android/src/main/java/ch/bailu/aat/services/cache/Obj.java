@@ -3,7 +3,7 @@ package ch.bailu.aat.services.cache;
 import androidx.annotation.NonNull;
 
 import ch.bailu.aat.services.ServiceContext;
-import ch.bailu.aat.util.ui.AppLog;
+import ch.bailu.aat_lib.logger.AppLog;
 import ch.bailu.foc.Foc;
 import ch.bailu.foc.FocName;
 

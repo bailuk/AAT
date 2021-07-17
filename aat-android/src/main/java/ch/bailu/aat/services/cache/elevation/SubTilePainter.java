@@ -7,8 +7,9 @@ import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.background.BackgroundTask;
 import ch.bailu.aat.services.cache.Obj;
 import ch.bailu.aat.services.cache.OnObject;
-import ch.bailu.aat.services.dem.tile.Dem3Tile;
-import ch.bailu.aat.util.AppBroadcaster;
+import ch.bailu.aat.services.elevation.tile.Dem3Tile;
+import ch.bailu.aat.util.OldAppBroadcaster;
+import ch.bailu.aat_lib.dispatcher.AppBroadcaster;
 
 public final class SubTilePainter extends BackgroundTask {
     private final Dem3Tile tile;
@@ -42,7 +43,7 @@ public final class SubTilePainter extends BackgroundTask {
                 ObjTileElevation owner = (ObjTileElevation) handle;
 
                 size[0] = owner.bgOnProcessPainter(tile);
-                AppBroadcaster.broadcast(sc.getContext(), AppBroadcaster.FILE_CHANGED_INCACHE, iid);
+                OldAppBroadcaster.broadcast(sc.getContext(), AppBroadcaster.FILE_CHANGED_INCACHE, iid);
             }
         };
 

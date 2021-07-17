@@ -3,12 +3,12 @@ package ch.bailu.aat.activities;
 import android.content.Intent;
 
 import ch.bailu.aat.R;
-import ch.bailu.aat.description.ContentDescription;
 import ch.bailu.aat.description.DateDescription;
 import ch.bailu.aat.description.DistanceDescription;
 import ch.bailu.aat.description.NameDescription;
 import ch.bailu.aat.description.TrackSizeDescription;
 import ch.bailu.aat.preferences.system.SolidExternalDirectory;
+import ch.bailu.aat_lib.description.ContentDescription;
 import ch.bailu.foc.Foc;
 
 public class ExternalListActivity extends AbsGpxListActivity {
@@ -16,7 +16,7 @@ public class ExternalListActivity extends AbsGpxListActivity {
     @Override
     public ContentDescription[] getGpxListItemData() {
         return new ContentDescription[] {
-                new DateDescription(this),
+                new DateDescription(),
                 new DistanceDescription(this),
                 new NameDescription(this)
         };

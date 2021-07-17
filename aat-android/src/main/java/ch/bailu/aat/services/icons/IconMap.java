@@ -2,7 +2,7 @@ package ch.bailu.aat.services.icons;
 
 import java.util.HashMap;
 
-import ch.bailu.aat.util.WithStatusText;
+import ch.bailu.aat_lib.util.WithStatusText;
 
 public final class IconMap implements WithStatusText {
 

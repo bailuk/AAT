@@ -5,8 +5,8 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.text.TextUtils;
 
-import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.util.AppIntent;
+import ch.bailu.aat_lib.dispatcher.AppBroadcaster;
 
 public class DownloadMsgView extends AbsBroadcastMsgView {
 

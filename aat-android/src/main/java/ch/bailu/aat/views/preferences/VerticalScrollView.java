@@ -5,13 +5,15 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 
-import ch.bailu.aat.description.ContentDescription;
 import ch.bailu.aat.dispatcher.DispatcherInterface;
+import ch.bailu.aat.factory.AndroidFocFactory;
 import ch.bailu.aat.map.MapContext;
 import ch.bailu.aat.preferences.SolidDirectoryQuery;
+import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat.util.ui.AppTheme;
 import ch.bailu.aat.util.ui.UiTheme;
 import ch.bailu.aat.views.description.DescriptionLabelTextView;
+import ch.bailu.aat_lib.description.ContentDescription;
 
 
 public class VerticalScrollView extends ScrollView {
@@ -53,24 +55,24 @@ public class VerticalScrollView extends ScrollView {
 
 
     public void addAllFilterViews(MapContext mc, UiTheme theme) {
-        final SolidDirectoryQuery sdirectory = new SolidDirectoryQuery(mc.getContext());
+        final SolidDirectoryQuery sdirectory = new SolidDirectoryQuery(new Storage(mc.getContext()), new AndroidFocFactory(mc.getContext()));
 
         LinearLayout geo = new LinearLayout(mc.getContext());
 
-        geo.addView(new SolidCheckBox(sdirectory.getUseGeo(), theme));
+        geo.addView(new SolidCheckBox(mc.getContext(),sdirectory.getUseGeo(), theme));
         geo.addView(new SolidBoundingBoxView(sdirectory.getBoundingBox(), mc, theme));
         layout.addView(geo);
 
         LinearLayout from = new LinearLayout(mc.getContext());
         //AppTheme.alt.background(from);
-        from.addView(new SolidCheckBox(sdirectory.getUseDateStart(), theme));
-        from.addView(new SolidDateView(sdirectory.getDateStart(), theme));
+        from.addView(new SolidCheckBox(mc.getContext(),sdirectory.getUseDateStart(), theme));
+        from.addView(new SolidDateView(mc.getContext(),sdirectory.getDateStart(), theme));
         layout.addView(from);
 
         LinearLayout to = new LinearLayout(mc.getContext());
         //AppTheme.alt.background(to);
-        to.addView(new SolidCheckBox(sdirectory.getUseDateEnd(), theme));
-        to.addView(new SolidDateView(sdirectory.getDateTo(), theme));
+        to.addView(new SolidCheckBox(mc.getContext(), sdirectory.getUseDateEnd(), theme));
+        to.addView(new SolidDateView(mc.getContext(), sdirectory.getDateTo(), theme));
         layout.addView(to);
     }
 

@@ -9,6 +9,7 @@ import ch.bailu.aat.map.tile.source.Source;
 import ch.bailu.aat.preferences.SolidBoolean;
 import ch.bailu.aat.preferences.SolidCheckList;
 import ch.bailu.aat.preferences.Storage;
+import ch.bailu.aat_lib.preferences.StorageInterface;
 
 
 public final class SolidMapTileStack extends SolidCheckList {
@@ -34,6 +35,12 @@ public final class SolidMapTileStack extends SolidCheckList {
             DownloadSource.TRAIL_CYCLING,
     };
 
+    private final Context context;
+
+
+    public Context getContext() {
+        return context;
+    }
 
 
 
@@ -42,14 +49,16 @@ public final class SolidMapTileStack extends SolidCheckList {
 
     public SolidMapTileStack (Context context) {
         this (context, 0);
+
     }
 
     // FIXME: use preset for tile stack
     private SolidMapTileStack (Context context, int preset) {
 
         for (int i=0; i<enabledArray.length; i++) {
-            enabledArray[i]=new SolidBoolean(context, KEY+preset+"_"+i);
+            enabledArray[i]=new SolidBoolean(new Storage(context), KEY+preset+"_"+i);
         }
+        this.context = context;
     }
 
 
@@ -95,7 +104,7 @@ public final class SolidMapTileStack extends SolidCheckList {
 
 
     @Override
-    public Storage getStorage() {
+    public StorageInterface getStorage() {
         return enabledArray[0].getStorage();
     }
 

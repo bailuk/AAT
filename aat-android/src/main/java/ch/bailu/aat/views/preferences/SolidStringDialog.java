@@ -6,16 +6,19 @@ import android.content.Context;
 import java.util.ArrayList;
 
 import ch.bailu.aat.R;
-import ch.bailu.aat.preferences.SolidString;
+import ch.bailu.aat_lib.preferences.SolidString;
 
 public class SolidStringDialog extends AbsSolidStringDialog {
 
     private final SolidString solid;
 
-    public SolidStringDialog (SolidString s) {
-        super(s);
+    private final Context context;
+
+    public SolidStringDialog (Context context, SolidString s) {
+        super(context,s);
 
         solid = s;
+        this.context = context;
     }
 
 
@@ -26,6 +29,6 @@ public class SolidStringDialog extends AbsSolidStringDialog {
 
     @Override
     protected void onExtraItemClick(int i) {
-        new SolidTextInputDialog(solid, SolidTextInputDialog.TEXT);
+        new SolidTextInputDialog(context, solid, SolidTextInputDialog.TEXT);
     }
 }

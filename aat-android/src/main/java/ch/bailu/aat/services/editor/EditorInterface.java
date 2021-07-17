@@ -1,9 +1,9 @@
 package ch.bailu.aat.services.editor;
 
-import ch.bailu.aat.gpx.GpxList;
-import ch.bailu.aat.gpx.GpxPoint;
-import ch.bailu.aat.gpx.GpxPointNode;
-import ch.bailu.aat.gpx.interfaces.GpxType;
+import ch.bailu.aat_lib.gpx.GpxList;
+import ch.bailu.aat_lib.gpx.GpxPoint;
+import ch.bailu.aat_lib.gpx.GpxPointNode;
+import ch.bailu.aat_lib.gpx.interfaces.GpxType;
 import ch.bailu.foc.Foc;
 
 public interface EditorInterface {

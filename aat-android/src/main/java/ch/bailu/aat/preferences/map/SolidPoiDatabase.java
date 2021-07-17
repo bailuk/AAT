@@ -4,8 +4,10 @@ import android.content.Context;
 
 import java.util.ArrayList;
 
-import ch.bailu.aat.R;
-import ch.bailu.aat.preferences.SolidFile;
+import ch.bailu.aat.factory.AndroidFocFactory;
+import ch.bailu.aat.preferences.Storage;
+import ch.bailu.aat_lib.preferences.SolidFile;
+import ch.bailu.aat_lib.resources.Res;
 import ch.bailu.foc.Foc;
 
 public class SolidPoiDatabase extends SolidFile {
@@ -13,13 +15,19 @@ public class SolidPoiDatabase extends SolidFile {
     private final static String EXTENSION = ".poi";
 
     public SolidPoiDatabase(Context c) {
-        super(c, SolidPoiDatabase.class.getSimpleName());
+        super(new Storage(c), SolidPoiDatabase.class.getSimpleName(), new AndroidFocFactory(c));
+        context = c;
     }
 
+    private final Context context;
 
+
+    public Context getContext() {
+        return context;
+    }
     @Override
     public String getLabel() {
-        return getString(R.string.p_mapsforge_poi_db);
+        return Res.str().p_mapsforge_poi_db();
     }
 
 

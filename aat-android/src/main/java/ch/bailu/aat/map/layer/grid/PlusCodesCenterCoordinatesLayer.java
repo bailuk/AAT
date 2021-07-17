@@ -1,7 +1,6 @@
 package ch.bailu.aat.map.layer.grid;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 
 import com.google.openlocationcode.OpenLocationCode;
 
@@ -9,6 +8,7 @@ import org.mapsforge.core.model.LatLong;
 
 import ch.bailu.aat.map.MapContext;
 import ch.bailu.aat.map.layer.MapLayerInterface;
+import ch.bailu.aat_lib.preferences.StorageInterface;
 
 public final class PlusCodesCenterCoordinatesLayer  implements MapLayerInterface {
 
@@ -62,9 +62,8 @@ public final class PlusCodesCenterCoordinatesLayer  implements MapLayerInterface
 
 
     @Override
-    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+    public void onPreferencesChanged(StorageInterface s, String key) {}
 
-    }
 
     @Override
     public void onAttached() {

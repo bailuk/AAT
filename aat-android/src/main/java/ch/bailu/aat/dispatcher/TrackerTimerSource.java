@@ -1,10 +1,10 @@
 package ch.bailu.aat.dispatcher;
 
 
-import ch.bailu.aat.gpx.GpxInformation;
-import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.util.Timer;
+import ch.bailu.aat_lib.gpx.GpxInformation;
+import ch.bailu.aat_lib.gpx.InfoID;
 
 public class TrackerTimerSource extends ContentSource {
     private static final int INTERVAL=500;

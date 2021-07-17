@@ -5,8 +5,9 @@ import android.os.Build;
 
 import org.mapsforge.core.util.Parameters;
 
-import ch.bailu.aat.R;
-import ch.bailu.aat.preferences.SolidIndexList;
+import ch.bailu.aat.preferences.Storage;
+import ch.bailu.aat_lib.preferences.SolidIndexList;
+import ch.bailu.aat_lib.resources.Res;
 
 public class SolidRendererThreads extends SolidIndexList {
 
@@ -18,7 +19,7 @@ public class SolidRendererThreads extends SolidIndexList {
      * Use numberOfBackgroundThreads() instead.
      */
     private SolidRendererThreads(Context c) {
-        super(c, KEY);
+        super(new Storage(c), KEY);
         if (values[0] == 0) values[0] = numberOfBackgroundThreats();
     }
 
@@ -50,7 +51,7 @@ public class SolidRendererThreads extends SolidIndexList {
 
     @Override
     public String getLabel() {
-        return getString(R.string.p_render_threads);
+        return Res.str().p_render_threads();
     }
 
 

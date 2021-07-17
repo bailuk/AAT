@@ -1,10 +1,9 @@
 package ch.bailu.aat.map.layer;
 
-import android.content.SharedPreferences;
-
 import org.mapsforge.core.model.Point;
 
 import ch.bailu.aat.map.MapContext;
+import ch.bailu.aat_lib.preferences.StorageInterface;
 
 public final class FpsLayer implements MapLayerInterface {
 
@@ -38,11 +37,10 @@ public final class FpsLayer implements MapLayerInterface {
     }
 
     @Override
-    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+    public void onPreferencesChanged(StorageInterface s, String key) {}
 
-    }
 
-    @Override
+        @Override
     public void onAttached() {
 
     }

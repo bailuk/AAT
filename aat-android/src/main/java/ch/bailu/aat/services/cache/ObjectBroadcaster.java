@@ -8,8 +8,9 @@ import android.util.SparseArray;
 import java.io.Closeable;
 
 import ch.bailu.aat.services.ServiceContext;
-import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.util.AppIntent;
+import ch.bailu.aat.util.OldAppBroadcaster;
+import ch.bailu.aat_lib.dispatcher.AppBroadcaster;
 
 public final class ObjectBroadcaster implements Closeable {
 
@@ -23,8 +24,8 @@ public final class ObjectBroadcaster implements Closeable {
     public ObjectBroadcaster(ServiceContext sc) {
         serviceContext = sc;
 
-        AppBroadcaster.register(sc.getContext(), onFileChanged, AppBroadcaster.FILE_CHANGED_INCACHE);
-        AppBroadcaster.register(sc.getContext(), onFileDownloaded, AppBroadcaster.FILE_CHANGED_ONDISK);
+        OldAppBroadcaster.register(sc.getContext(), onFileChanged, AppBroadcaster.FILE_CHANGED_INCACHE);
+        OldAppBroadcaster.register(sc.getContext(), onFileDownloaded, AppBroadcaster.FILE_CHANGED_ONDISK);
 
 
 

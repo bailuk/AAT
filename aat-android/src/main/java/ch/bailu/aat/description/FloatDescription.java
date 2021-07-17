@@ -1,15 +1,11 @@
 package ch.bailu.aat.description;
 
-import android.content.Context;
+import ch.bailu.aat_lib.description.ContentDescription;
 
 
 public abstract class FloatDescription extends ContentDescription {
 
     private float cache=0f;
-
-    public FloatDescription(Context c) {
-        super(c);
-    }
 
     protected float getCache() {
         return cache;

@@ -1,10 +1,11 @@
 package ch.bailu.aat.preferences;
 
-import android.content.Context;
-import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
-
-import ch.bailu.aat.coordinates.BoundingBoxE6;
 import ch.bailu.aat.services.directory.GpxDbConstants;
+import ch.bailu.aat_lib.coordinates.BoundingBoxE6;
+import ch.bailu.aat_lib.preferences.OnPreferencesChanged;
+import ch.bailu.aat_lib.preferences.SolidInteger;
+import ch.bailu.aat_lib.preferences.SolidTypeInterface;
+import ch.bailu.aat_lib.preferences.StorageInterface;
 
 public class SolidBoundingBox implements SolidTypeInterface {
     private final SolidInteger N, W, S, E;
@@ -12,13 +13,13 @@ public class SolidBoundingBox implements SolidTypeInterface {
 
     private final String label;
 
-    public SolidBoundingBox(final Context c, final String key, String l) {
+    public SolidBoundingBox(final StorageInterface s, final String key, String l) {
         label = l;
 
-        N = new SolidInteger(c, key + "_N");
-        E = new SolidInteger(c, key + "_E");
-        S = new SolidInteger(c, key + "_S");
-        W = new SolidInteger(c, key + "_W");
+        N = new SolidInteger(s, key + "_N");
+        E = new SolidInteger(s, key + "_E");
+        S = new SolidInteger(s, key + "_S");
+        W = new SolidInteger(s, key + "_W");
     }
 
     public BoundingBoxE6 getValue() {
@@ -41,16 +42,22 @@ public class SolidBoundingBox implements SolidTypeInterface {
         return N.hasKey(k) || E.hasKey(k) || S.hasKey(k) || W.hasKey(k);
     }
 
+    @Override
+    public void register(OnPreferencesChanged listener) {
+        N.register(listener);
+    }
+
+    @Override
+    public void unregister(OnPreferencesChanged listener) {
+        N.unregister(listener);
+    }
+
 
     public String getValueAsString() {
         return getValue().toString();
     }
 
 
-    @Override
-    public Context getContext() {
-        return N.getContext();
-    }
 
     @Override
     public String getKey() {
@@ -58,7 +65,7 @@ public class SolidBoundingBox implements SolidTypeInterface {
     }
 
     @Override
-    public Storage getStorage() {
+    public StorageInterface getStorage() {
         return N.getStorage();
     }
 
@@ -66,17 +73,6 @@ public class SolidBoundingBox implements SolidTypeInterface {
     @Override
     public String getLabel() {
         return label;
-    }
-
-
-    @Override
-    public void register(OnSharedPreferenceChangeListener listener) {
-        N.register(listener);
-    }
-
-    @Override
-    public void unregister(OnSharedPreferenceChangeListener listener) {
-        N.unregister(listener);
     }
 
 

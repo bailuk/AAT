@@ -5,12 +5,13 @@ import android.content.Context;
 import java.io.Closeable;
 import java.util.ArrayList;
 
-import ch.bailu.aat.gpx.GpxInformation;
-import ch.bailu.aat.gpx.InfoID;
-import ch.bailu.aat.gpx.StateID;
-import ch.bailu.aat.gpx.attributes.GpxAttributes;
-import ch.bailu.aat.gpx.attributes.Keys;
-import ch.bailu.aat.util.AppBroadcaster;
+import ch.bailu.aat.util.OldAppBroadcaster;
+import ch.bailu.aat_lib.dispatcher.AppBroadcaster;
+import ch.bailu.aat_lib.gpx.GpxInformation;
+import ch.bailu.aat_lib.gpx.InfoID;
+import ch.bailu.aat_lib.gpx.StateID;
+import ch.bailu.aat_lib.gpx.attributes.GpxAttributes;
+import ch.bailu.aat_lib.gpx.attributes.Keys;
 
 public final class SensorList extends ArrayList<SensorListItem> implements Closeable {
 
@@ -56,7 +57,7 @@ public final class SensorList extends ArrayList<SensorListItem> implements Close
 
 
     public void broadcast() {
-        AppBroadcaster.broadcast(context, changedAction);
+        OldAppBroadcaster.broadcast(context, changedAction);
     }
 
 

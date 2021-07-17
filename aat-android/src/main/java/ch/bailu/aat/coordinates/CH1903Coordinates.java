@@ -4,8 +4,11 @@ import androidx.annotation.NonNull;
 
 import org.mapsforge.core.model.LatLong;
 
-import ch.bailu.aat.description.FF;
-import ch.bailu.aat.util.ui.AppLog;
+import ch.bailu.aat_lib.coordinates.BoundingBoxE6;
+import ch.bailu.aat_lib.coordinates.LatLongE6;
+import ch.bailu.aat_lib.coordinates.LatLongE6Interface;
+import ch.bailu.aat_lib.description.FF;
+import ch.bailu.aat_lib.logger.AppLog;
 
 
 public class CH1903Coordinates extends MeterCoordinates {

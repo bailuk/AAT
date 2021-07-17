@@ -6,14 +6,19 @@ import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.os.Environment;
 
 import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Map.Entry;
 
 import ch.bailu.aat.util.ContextWrapperInterface;
+import ch.bailu.aat_lib.logger.AppLog;
+import ch.bailu.aat_lib.preferences.OnPreferencesChanged;
+import ch.bailu.aat_lib.preferences.StorageInterface;
 import ch.bailu.foc.Foc;
 import ch.bailu.foc.FocFile;
 
-public class Storage  implements ContextWrapperInterface {
-    public final static String DEF_VALUE="0";
+public class Storage  implements ContextWrapperInterface, StorageInterface {
+    private final static String DEF_VALUE="0";
 
     private final static String GLOBAL_NAME="Preferences";
 
@@ -130,13 +135,37 @@ public class Storage  implements ContextWrapperInterface {
         }
     }
 
-    public void register(OnSharedPreferenceChangeListener listener)  {
-        preferences.registerOnSharedPreferenceChangeListener(listener);
+
+    private final Map<OnPreferencesChanged, OnSharedPreferenceChangeListener> observers = new HashMap<>(20);
+
+    @Override
+    public void register(OnPreferencesChanged observer) {
+        if (!observers.containsKey(observer)) {
+            OnSharedPreferenceChangeListener listener = (sharedPreferences, key) -> observer.onPreferencesChanged(Storage.this, key);
+            observers.put(observer, listener);
+        } else {
+            AppLog.e(this, "Observer was allready registered");
+        }
     }
 
+    @Override
+    public void unregister(OnPreferencesChanged observer) {
+        OnSharedPreferenceChangeListener listener = observers.remove(observer);
+        if (listener != null) {
+            preferences.unregisterOnSharedPreferenceChangeListener(listener);
+        } else {
+            AppLog.e(this, "Observer was not registered");
+        }
+    }
 
-    public void unregister(OnSharedPreferenceChangeListener l) {
-        preferences.unregisterOnSharedPreferenceChangeListener(l);
+    @Override
+    public boolean isDefaultString(String s) {
+        return getDefaultString().equals(s);
+    }
+
+    @Override
+    public String getDefaultString() {
+        return DEF_VALUE;
     }
 
 

@@ -4,8 +4,9 @@ import androidx.annotation.NonNull;
 
 import org.mapsforge.core.model.LatLong;
 
-import ch.bailu.aat.description.FF;
-import ch.bailu.aat.util.ui.AppLog;
+import ch.bailu.aat_lib.coordinates.LatLongE6;
+import ch.bailu.aat_lib.coordinates.LatLongE6Interface;
+import ch.bailu.aat_lib.description.FF;
 
 public class UTMCoordinates extends MeterCoordinates {
 

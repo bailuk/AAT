@@ -2,7 +2,8 @@ package ch.bailu.aat.services.sensor.bluetooth_le;
 
 import android.content.Context;
 
-import ch.bailu.aat.util.AppBroadcaster;
+import ch.bailu.aat.util.OldAppBroadcaster;
+import ch.bailu.aat_lib.dispatcher.AppBroadcaster;
 
 public final class Broadcaster {
     private static final long BROADCAST_TIMEOUT = 2000;
@@ -26,6 +27,6 @@ public final class Broadcaster {
 
     public void broadcast() {
         lastBroadcast = System.currentTimeMillis();
-        AppBroadcaster.broadcast(context, action);
+        OldAppBroadcaster.broadcast(context, action);
     }
 }

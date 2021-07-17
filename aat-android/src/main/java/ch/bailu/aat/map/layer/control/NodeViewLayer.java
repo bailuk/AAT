@@ -5,9 +5,9 @@ import android.view.View;
 import org.mapsforge.core.model.Point;
 
 import ch.bailu.aat.activities.NodeDetailActivity;
-import ch.bailu.aat.gpx.GpxInformation;
-import ch.bailu.aat.gpx.GpxPointNode;
 import ch.bailu.aat.map.MapContext;
+import ch.bailu.aat_lib.gpx.GpxInformation;
+import ch.bailu.aat_lib.gpx.GpxPointNode;
 import ch.bailu.foc.Foc;
 
 public class NodeViewLayer extends AbsNodeViewLayer {

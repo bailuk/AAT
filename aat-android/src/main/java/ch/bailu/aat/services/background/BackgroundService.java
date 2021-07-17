@@ -5,8 +5,8 @@ import java.util.HashMap;
 
 import ch.bailu.aat.preferences.map.SolidRendererThreads;
 import ch.bailu.aat.services.ServiceContext;
-import ch.bailu.aat.services.VirtualService;
-import ch.bailu.aat.util.WithStatusText;
+import ch.bailu.aat_lib.service.VirtualService;
+import ch.bailu.aat_lib.util.WithStatusText;
 import ch.bailu.foc.Foc;
 
 public final class BackgroundService extends VirtualService implements WithStatusText {
@@ -26,9 +26,10 @@ public final class BackgroundService extends VirtualService implements WithStatu
             new WorkerThread[SolidRendererThreads.numberOfBackgroundThreats()];
 
 
+    private final ServiceContext scontext;
 
     public BackgroundService(final ServiceContext sc) {
-        super(sc);
+        scontext = sc;
         queue = new HandleStack(sc.getContext());
         for (int i=0; i< workers.length; i++)
             workers[i] = new WorkerThread("WT_" + i, sc, queue);
@@ -60,7 +61,7 @@ public final class BackgroundService extends VirtualService implements WithStatu
             DownloaderThread downloader = downloaders.get(host);
 
             if (downloader == null) {
-                downloader = new DownloaderThread(getSContext(), host);
+                downloader = new DownloaderThread(scontext, host);
                 downloaders.put(host, downloader);
             }
 
@@ -78,7 +79,7 @@ public final class BackgroundService extends VirtualService implements WithStatu
         LoaderThread loader = loaders.get(base);
 
         if (loader == null) {
-            loader = new LoaderThread(getSContext(), base);
+            loader = new LoaderThread(scontext, base);
             loaders.put(base, loader);
         }
 

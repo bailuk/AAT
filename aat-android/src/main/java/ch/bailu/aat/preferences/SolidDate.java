@@ -5,11 +5,14 @@ import android.text.format.DateFormat;
 
 import java.util.GregorianCalendar;
 
+import ch.bailu.aat_lib.description.FF;
+import ch.bailu.aat_lib.preferences.StorageInterface;
+
 public class SolidDate extends SolidLong {
     private final String label;
 
-    public SolidDate(Context c, String k, String l) {
-        super(c, k);
+    public SolidDate(StorageInterface s, String k, String l) {
+        super(s, k);
         label = l;
     }
 
@@ -27,12 +30,7 @@ public class SolidDate extends SolidLong {
 
     @Override
     public String getValueAsString() {
-        final GregorianCalendar calendar=new GregorianCalendar();
-        final java.text.DateFormat formater = DateFormat.getDateFormat(getContext());
-
-        calendar.setTimeInMillis(getValue());
-
-        return formater.format(calendar.getTime());
+        return FF.f().LOCAL_DATE.format(getValue());
     }
 
 

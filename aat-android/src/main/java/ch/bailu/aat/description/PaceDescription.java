@@ -2,7 +2,9 @@ package ch.bailu.aat.description;
 
 import android.content.Context;
 
-import ch.bailu.aat.preferences.general.SolidUnit;
+import ch.bailu.aat.preferences.Storage;
+import ch.bailu.aat_lib.description.FF;
+import ch.bailu.aat_lib.preferences.general.SolidUnit;
 
 public abstract class PaceDescription extends FloatDescription {
     private final SolidUnit sunit;
@@ -30,8 +32,7 @@ public abstract class PaceDescription extends FloatDescription {
     }
 
     public PaceDescription(Context c) {
-        super(c);
-        sunit = new SolidUnit(c);
+        sunit = new SolidUnit(new Storage(c));
     }
 
     public float speedToPace(float speed) {

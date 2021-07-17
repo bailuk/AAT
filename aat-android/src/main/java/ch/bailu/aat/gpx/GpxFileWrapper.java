@@ -1,5 +1,8 @@
 package ch.bailu.aat.gpx;
 
+import ch.bailu.aat_lib.gpx.GpxInformation;
+import ch.bailu.aat_lib.gpx.GpxList;
+import ch.bailu.aat_lib.gpx.GpxPointNode;
 import ch.bailu.foc.Foc;
 
 

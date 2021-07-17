@@ -6,8 +6,9 @@ import java.io.OutputStream;
 
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.background.FileTask;
-import ch.bailu.aat.util.AppBroadcaster;
-import ch.bailu.aat.util.ui.AppLog;
+import ch.bailu.aat.util.OldAppBroadcaster;
+import ch.bailu.aat_lib.dispatcher.AppBroadcaster;
+import ch.bailu.aat_lib.logger.AppLog;
 import ch.bailu.foc.Foc;
 
 public final class SaveTileTask extends FileTask {
@@ -51,7 +52,7 @@ public final class SaveTileTask extends FileTask {
                     bitmap.compress(Bitmap.CompressFormat.PNG, 0, out);
                 }
 
-                AppBroadcaster.broadcast(sc.getContext(), AppBroadcaster.FILE_CHANGED_ONDISK,
+                OldAppBroadcaster.broadcast(sc.getContext(), AppBroadcaster.FILE_CHANGED_ONDISK,
                         getFile().getPath(), sourceID);
 
                 size = self.getSize();

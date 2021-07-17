@@ -4,12 +4,12 @@ import org.mapsforge.core.model.Tile;
 
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.cache.Obj;
-import ch.bailu.aat.services.dem.tile.DemDimension;
-import ch.bailu.aat.services.dem.tile.DemGeoToIndex;
-import ch.bailu.aat.services.dem.tile.DemProvider;
-import ch.bailu.aat.services.dem.tile.DemSplitter;
-import ch.bailu.aat.services.dem.tile.MultiCell;
-import ch.bailu.aat.services.dem.tile.MultiCell8;
+import ch.bailu.aat.services.elevation.tile.DemDimension;
+import ch.bailu.aat.services.elevation.tile.DemGeoToIndex;
+import ch.bailu.aat.services.elevation.tile.DemProvider;
+import ch.bailu.aat.services.elevation.tile.DemSplitter;
+import ch.bailu.aat.services.elevation.tile.MultiCell;
+import ch.bailu.aat.services.elevation.tile.MultiCell8;
 
 public final class ObjTileHillshade extends ObjTileElevation {
 

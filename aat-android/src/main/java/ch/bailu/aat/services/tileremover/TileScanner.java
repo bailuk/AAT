@@ -3,7 +3,7 @@ package ch.bailu.aat.services.tileremover;
 import java.io.File;
 import java.io.IOException;
 
-import ch.bailu.aat.util.ui.AppLog;
+import ch.bailu.aat_lib.logger.AppLog;
 import ch.bailu.foc.Foc;
 
 public abstract class TileScanner {

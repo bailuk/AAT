@@ -1,7 +1,9 @@
 package ch.bailu.aat.services.tracker;
 
 import ch.bailu.aat.R;
-import ch.bailu.aat.gpx.StateID;
+import ch.bailu.aat_lib.gpx.StateID;
+import ch.bailu.aat_lib.resources.Res;
+import ch.bailu.aat_lib.service.tracker.State;
 
 public final class NullState extends State {
 
@@ -26,13 +28,13 @@ public final class NullState extends State {
 
 
     @Override
-    public int getStartStopTextID() {
-        return R.string.tracker_start;
+    public String getStartStopText() {
+        return Res.str().tracker_start();
     }
 
     @Override
-    public int getPauseResumeTextID() {
-        return R.string.tracker_pause;
+    public String getPauseResumeText() {
+        return Res.str().tracker_pause();
     }
 
     @Override

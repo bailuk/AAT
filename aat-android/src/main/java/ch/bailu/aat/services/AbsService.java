@@ -11,7 +11,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import ch.bailu.aat.util.Timer;
-import ch.bailu.aat.util.ui.AppLog;
+import ch.bailu.aat_lib.logger.AppLog;
 
 public abstract class AbsService  extends Service {
     private static int allinstances, allcreations;

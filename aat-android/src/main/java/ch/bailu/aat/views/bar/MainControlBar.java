@@ -7,7 +7,6 @@ import ch.bailu.aat.activities.AbsDispatcher;
 import ch.bailu.aat.activities.ActivityContext;
 import ch.bailu.aat.activities.ActivitySwitcher;
 import ch.bailu.aat.activities.MainActivity;
-import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.menus.OptionsMenu;
 import ch.bailu.aat.util.ui.AppLayout;
 import ch.bailu.aat.util.ui.AppTheme;
@@ -18,6 +17,7 @@ import ch.bailu.aat.views.description.TrackerStateButton;
 import ch.bailu.aat.views.description.mview.MultiView;
 import ch.bailu.aat.views.description.mview.MultiViewNextButton;
 import ch.bailu.aat.views.description.mview.MultiViewSelector;
+import ch.bailu.aat_lib.gpx.InfoID;
 import ch.bailu.util.Objects;
 
 public class MainControlBar extends ControlBar {

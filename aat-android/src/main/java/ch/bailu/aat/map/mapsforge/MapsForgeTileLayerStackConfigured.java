@@ -1,7 +1,5 @@
 package ch.bailu.aat.map.mapsforge;
 
-import android.content.SharedPreferences;
-
 import ch.bailu.aat.map.tile.TileProvider;
 import ch.bailu.aat.map.tile.source.CachedSource;
 import ch.bailu.aat.map.tile.source.DoubleSource;
@@ -12,6 +10,7 @@ import ch.bailu.aat.preferences.map.SolidEnableTileCache;
 import ch.bailu.aat.preferences.map.SolidMapTileStack;
 import ch.bailu.aat.preferences.map.SolidRenderTheme;
 import ch.bailu.aat.services.ServiceContext;
+import ch.bailu.aat_lib.preferences.StorageInterface;
 
 public abstract class MapsForgeTileLayerStackConfigured extends MapsForgeTileLayerStack {
 
@@ -78,7 +77,8 @@ public abstract class MapsForgeTileLayerStackConfigured extends MapsForgeTileLay
 
 
     @Override
-    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+    public void onPreferencesChanged(StorageInterface s, String key) {
+
         if (
                 stiles.hasKey(key) ||
                 scacheMF.hasKey(key) ||

@@ -8,11 +8,12 @@ import android.widget.ImageView;
 
 import ch.bailu.aat.services.InsideContext;
 import ch.bailu.aat.services.ServiceContext;
+import ch.bailu.aat.services.cache.Obj;
 import ch.bailu.aat.services.cache.ObjBitmap;
 import ch.bailu.aat.services.cache.ObjImageAbstract;
-import ch.bailu.aat.services.cache.Obj;
-import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.util.AppIntent;
+import ch.bailu.aat.util.OldAppBroadcaster;
+import ch.bailu.aat_lib.dispatcher.AppBroadcaster;
 
 public class ImageObjectView extends ImageView {
 
@@ -112,7 +113,7 @@ public class ImageObjectView extends ImageView {
         super.onAttachedToWindow();
         isAttached=true;
 
-        AppBroadcaster.register(getContext(),
+        OldAppBroadcaster.register(getContext(),
                 onFileChanged,
                 AppBroadcaster.FILE_CHANGED_INCACHE);
         loadAndDisplayImage();

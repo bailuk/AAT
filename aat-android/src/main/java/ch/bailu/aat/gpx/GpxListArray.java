@@ -1,6 +1,9 @@
 package ch.bailu.aat.gpx;
 
-import ch.bailu.aat.gpx.linked_list.Node;
+
+import ch.bailu.aat_lib.gpx.GpxList;
+import ch.bailu.aat_lib.gpx.GpxPointNode;
+import ch.bailu.aat_lib.gpx.linked_list.Node;
 
 public class GpxListArray {
     private int index=0;

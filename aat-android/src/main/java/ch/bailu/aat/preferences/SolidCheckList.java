@@ -1,6 +1,8 @@
 package ch.bailu.aat.preferences;
 
 
+import ch.bailu.aat_lib.preferences.AbsSolidType;
+
 public abstract class SolidCheckList extends AbsSolidType {
 
     public abstract CharSequence[] getStringArray();

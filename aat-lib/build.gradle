@@ -1,0 +1,56 @@
+plugins {
+    id 'java-library'
+}
+
+repositories {
+    google()
+    mavenCentral()
+}
+
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
+
+
+dependencies {
+    // Local
+    implementation project(path: ':util')
+    implementation project(path: ':util-java')
+
+    def focVersion = project.focVersion
+    implementation "com.github.bailuk.foc:foc:$focVersion"
+
+    def mapsForgeVersion = '0.15.0'
+
+    // MapsForge Core
+    implementation "org.mapsforge:mapsforge-core:$mapsForgeVersion"
+
+    /**
+     *  Notnull annotation
+     */
+    implementation 'com.google.code.findbugs:jsr305:3.0.2'
+
+    /**
+     *  https://mvnrepository.com/artifact/net.sf.kxml/kxml2
+     *  xml parser implementation
+     */
+    implementation 'net.sf.kxml:kxml2:2.3.0'
+
+
+    /**
+     *  https://mvnrepository.com/artifact/org.apache.commons/commons-text
+     *  To escape html
+     */
+    implementation 'org.apache.commons:commons-text:1.9'
+
+    /**
+     *
+     *   https://junit.org/junit5/docs/current/user-guide/#dependency-metadata
+     *   https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter
+     *
+     */
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.7.2'
+
+
+}

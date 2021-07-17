@@ -14,9 +14,10 @@ import ch.bailu.aat.activities.ActivitySwitcher;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.util.ui.AppTheme;
 import ch.bailu.aat.util.ui.UiTheme;
+import ch.bailu.aat_lib.service.tracker.StatusIconInterface;
 
 
-public final class StatusIcon  {
+public final class StatusIcon implements StatusIconInterface {
     private final static int MY_ID=5;
 
     private final ServiceContext scontext;

@@ -1,25 +1,28 @@
 package ch.bailu.aat.services.sensor.internal;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
+
 import androidx.annotation.RequiresApi;
 
-import ch.bailu.aat.gpx.GpxInformation;
-import ch.bailu.aat.gpx.InfoID;
-import ch.bailu.aat.gpx.attributes.GpxAttributes;
-import ch.bailu.aat.gpx.attributes.Keys;
-import ch.bailu.aat.preferences.general.SolidUnit;
 import ch.bailu.aat.preferences.location.SolidPressureAtSeaLevel;
 import ch.bailu.aat.preferences.location.SolidProvideAltitude;
 import ch.bailu.aat.services.location.Hypsometric;
 import ch.bailu.aat.services.sensor.list.SensorListItem;
-import ch.bailu.aat.util.AppBroadcaster;
+import ch.bailu.aat.util.OldAppBroadcaster;
+import ch.bailu.aat_lib.dispatcher.AppBroadcaster;
+import ch.bailu.aat_lib.gpx.GpxInformation;
+import ch.bailu.aat_lib.gpx.InfoID;
+import ch.bailu.aat_lib.gpx.attributes.GpxAttributes;
+import ch.bailu.aat_lib.gpx.attributes.Keys;
+import ch.bailu.aat_lib.preferences.OnPreferencesChanged;
+import ch.bailu.aat_lib.preferences.StorageInterface;
+import ch.bailu.aat_lib.preferences.general.SolidUnit;
 
 @RequiresApi(api = 23)
 public final class BarometerSensor extends InternalSensorSDK23
-        implements SharedPreferences.OnSharedPreferenceChangeListener {
+        implements OnPreferencesChanged {
 
     private static final String changedAction =
         AppBroadcaster.SENSOR_CHANGED + InfoID.BAROMETER_SENSOR;
@@ -56,7 +59,7 @@ public final class BarometerSensor extends InternalSensorSDK23
         information = new Information(hypsometric.getAltitude(), pressure);
 
 
-        AppBroadcaster.broadcast(context, changedAction);
+        OldAppBroadcaster.broadcast(context, changedAction);
     }
 
     @Override
@@ -76,7 +79,8 @@ public final class BarometerSensor extends InternalSensorSDK23
 
 
     @Override
-    public void onSharedPreferenceChanged(SharedPreferences p, String key) {
+    public void onPreferencesChanged(StorageInterface s, String key) {
+
         if (saltitude.hasKey(key)) {
             hypsometric.setAltitude(saltitude.getValue());
             if (hypsometric.isPressureAtSeaLevelValid()) {

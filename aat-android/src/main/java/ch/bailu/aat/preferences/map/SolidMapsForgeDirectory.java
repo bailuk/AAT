@@ -5,11 +5,12 @@ import android.content.Context;
 import java.io.File;
 import java.util.ArrayList;
 
-import ch.bailu.aat.R;
-import ch.bailu.aat.preferences.SolidFile;
+import ch.bailu.aat.factory.AndroidFocFactory;
 import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat.util.fs.AndroidVolumes;
-import ch.bailu.aat.util.fs.AppDirectory;
+import ch.bailu.aat_lib.preferences.SolidFile;
+import ch.bailu.aat_lib.resources.Res;
+import ch.bailu.aat_lib.util.fs.AppDirectory;
 import ch.bailu.foc.Foc;
 import ch.bailu.foc_android.FocAndroid;
 
@@ -21,13 +22,18 @@ public class SolidMapsForgeDirectory extends SolidFile {
 
     private final static String KEY = SolidMapsForgeDirectory.class.getSimpleName();
 
+    private final Context context;
     public SolidMapsForgeDirectory(Context c) {
-        super(c, KEY);
+        super(new Storage(c), KEY, new AndroidFocFactory(c));
+        context = c;
     }
 
+    public Context getContext() {
+        return context;
+    }
     @Override
     public String getLabel() {
-        return getContext().getString(R.string.p_mapsforge_directory);
+        return Res.str().p_mapsforge_directory();
     }
 
 
@@ -38,7 +44,7 @@ public class SolidMapsForgeDirectory extends SolidFile {
         String r = super.getValueAsString();
 
 
-        if (r.equals(Storage.DEF_VALUE)) {
+        if (getStorage().isDefaultString(r)) {
             r = getDefaultValue();
 
             setValue(r);

@@ -7,7 +7,6 @@ import org.mapsforge.poi.storage.PoiCategory;
 
 import java.util.ArrayList;
 
-import ch.bailu.aat.coordinates.BoundingBoxE6;
 import ch.bailu.aat.util.OsmApiConfiguration;
 import ch.bailu.aat.util.PoiApi;
 import ch.bailu.aat.util.ui.AppLayout;
@@ -17,6 +16,7 @@ import ch.bailu.aat.views.bar.MainControlBar;
 import ch.bailu.aat.views.description.mview.MultiView;
 import ch.bailu.aat.views.osm_features.PoiView;
 import ch.bailu.aat.views.preferences.TitleView;
+import ch.bailu.aat_lib.coordinates.BoundingBoxE6;
 
 public class PoiActivity extends AbsOsmApiActivity {
 

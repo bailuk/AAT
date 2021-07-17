@@ -1,13 +1,13 @@
 package ch.bailu.aat.map.layer.gpx;
 
-import ch.bailu.aat.gpx.GpxList;
 import ch.bailu.aat.gpx.GpxListWalker;
-import ch.bailu.aat.gpx.GpxPointNode;
-import ch.bailu.aat.gpx.GpxSegmentNode;
-import ch.bailu.aat.gpx.interfaces.GpxPointInterface;
 import ch.bailu.aat.map.MapContext;
 import ch.bailu.aat.map.TwoNodes;
 import ch.bailu.aat.util.ui.AppDensity;
+import ch.bailu.aat_lib.gpx.GpxList;
+import ch.bailu.aat_lib.gpx.GpxPointNode;
+import ch.bailu.aat_lib.gpx.GpxSegmentNode;
+import ch.bailu.aat_lib.gpx.interfaces.GpxPointInterface;
 
 public abstract class GpxListPainter extends GpxListWalker {
     private static final int MIN_PIXEL_SPACE=10;

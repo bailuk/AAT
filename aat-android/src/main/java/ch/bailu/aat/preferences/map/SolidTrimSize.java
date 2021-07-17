@@ -2,9 +2,10 @@ package ch.bailu.aat.preferences.map;
 
 import android.content.Context;
 
-import ch.bailu.aat.R;
-import ch.bailu.aat.preferences.SolidIndexList;
+import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat.util.MemSize;
+import ch.bailu.aat_lib.preferences.SolidIndexList;
+import ch.bailu.aat_lib.resources.Res;
 
 public class SolidTrimSize extends SolidIndexList {
 
@@ -35,7 +36,7 @@ public class SolidTrimSize extends SolidIndexList {
 
 
     public SolidTrimSize(Context context) {
-        super(context, SolidTrimSize.class.getSimpleName());
+        super(new Storage(context), SolidTrimSize.class.getSimpleName());
     }
 
     @Override
@@ -46,7 +47,7 @@ public class SolidTrimSize extends SolidIndexList {
 
     @Override
     public String getLabel() {
-        return getContext().getString(R.string.p_trim_size);
+        return Res.str().p_trim_size();
     }
 
     @Override

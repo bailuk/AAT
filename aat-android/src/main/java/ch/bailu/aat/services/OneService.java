@@ -2,19 +2,25 @@ package ch.bailu.aat.services;
 
 import android.content.Context;
 
+import ch.bailu.aat.dispatcher.AndroidBroadcaster;
+import ch.bailu.aat.preferences.AndroidSolidFactory;
+import ch.bailu.aat.preferences.system.AndroidSolidDataDirectory;
 import ch.bailu.aat.services.background.BackgroundService;
-import ch.bailu.aat.services.sensor.SensorService;
 import ch.bailu.aat.services.cache.CacheService;
-import ch.bailu.aat.services.dem.ElevationService;
 import ch.bailu.aat.services.directory.DirectoryService;
+import ch.bailu.aat.services.elevation.ElevationService;
 import ch.bailu.aat.services.icons.IconMapService;
-import ch.bailu.aat.services.location.LocationService;
 import ch.bailu.aat.services.render.RenderService;
+import ch.bailu.aat.services.sensor.SensorService;
 import ch.bailu.aat.services.tileremover.TileRemoverService;
-import ch.bailu.aat.services.tracker.TrackerService;
-import ch.bailu.aat.util.WithStatusText;
+import ch.bailu.aat.services.tracker.StatusIcon;
+import ch.bailu.aat_lib.service.ServicesInterface;
+import ch.bailu.aat_lib.service.location.LocationService;
+import ch.bailu.aat_lib.service.sensor.SensorServiceInterface;
+import ch.bailu.aat_lib.service.tracker.TrackerService;
+import ch.bailu.aat_lib.util.WithStatusText;
 
-public final class OneService extends AbsService  implements ServiceContext {
+public final class OneService extends AbsService  implements ServiceContext, ServicesInterface {
 
     private LocationService location;
     private TrackerService tracker;
@@ -106,7 +112,7 @@ public final class OneService extends AbsService  implements ServiceContext {
     @Override
     public  synchronized LocationService getLocationService() {
         if (location == null) {
-            location = new LocationService(this);
+            location = new LocationService(new AndroidSolidFactory(this), new AndroidBroadcaster(this));
         }
         return location;
     }
@@ -137,7 +143,7 @@ public final class OneService extends AbsService  implements ServiceContext {
     }
 
     @Override
-    public SensorService getSensorService() {
+    public SensorServiceInterface getSensorService() {
         if (ble == null) {
             ble = new SensorService(this);
         }
@@ -168,7 +174,11 @@ public final class OneService extends AbsService  implements ServiceContext {
     @Override
     public synchronized  TrackerService getTrackerService() {
         if (tracker == null)
-            tracker = new TrackerService(this);
+            tracker = new TrackerService(
+                    new AndroidSolidDataDirectory(this),
+                    new StatusIcon(this),
+                    new AndroidBroadcaster(this),
+                    this);
         return tracker;
     }
 

@@ -8,7 +8,7 @@ import org.mapsforge.core.model.LatLong;
 import java.text.DecimalFormat;
 
 import ch.bailu.aat.preferences.map.SolidDem3Directory;
-import ch.bailu.aat.preferences.system.SolidDataDirectory;
+import ch.bailu.aat_lib.coordinates.LatLongE6Interface;
 import ch.bailu.foc.Foc;
 
 

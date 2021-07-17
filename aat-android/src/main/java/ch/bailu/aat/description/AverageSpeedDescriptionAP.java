@@ -2,9 +2,9 @@ package ch.bailu.aat.description;
 
 import android.content.Context;
 
-import ch.bailu.aat.R;
-import ch.bailu.aat.gpx.GpxInformation;
-import ch.bailu.aat.gpx.attributes.AutoPause;
+import ch.bailu.aat_lib.gpx.GpxInformation;
+import ch.bailu.aat_lib.gpx.attributes.AutoPause;
+import ch.bailu.aat_lib.resources.Res;
 
 public class AverageSpeedDescriptionAP extends AverageSpeedDescription {
     public AverageSpeedDescriptionAP(Context context) {
@@ -13,7 +13,7 @@ public class AverageSpeedDescriptionAP extends AverageSpeedDescription {
 
     @Override
     public String getLabel() {
-        return getContext().getString(R.string.average_ap);
+        return Res.str().average_ap();
     }
 
     @Override

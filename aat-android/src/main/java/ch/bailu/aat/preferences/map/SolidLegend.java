@@ -14,14 +14,17 @@ import ch.bailu.aat.map.layer.gpx.legend.PointDistanceWalker;
 import ch.bailu.aat.map.layer.gpx.legend.PointIndexWalker;
 import ch.bailu.aat.map.layer.gpx.legend.PointNameWalker;
 import ch.bailu.aat.map.layer.gpx.legend.SegmentIndexWalker;
-import ch.bailu.aat.preferences.SolidStaticIndexList;
+import ch.bailu.aat.preferences.Storage;
+import ch.bailu.aat_lib.preferences.SolidStaticIndexList;
 
 public class SolidLegend extends SolidStaticIndexList {
 
     private static final String POSTFIX="_LEGEND";
 
+    private final Context context;
+
     public SolidLegend(Context context, String k) {
-        super(context, k+POSTFIX, new String[] {
+        super(new Storage(context), k+POSTFIX, new String[] {
             context.getString(R.string.none),
             context.getString(R.string.p_legend_fulldistance) + " / " + context.getString(R.string.name),
             context.getString(R.string.distance)+ " / " + context.getString(R.string.name),
@@ -29,9 +32,13 @@ public class SolidLegend extends SolidStaticIndexList {
             context.getString(R.string.speed)
             });
 
+        this.context = context;
     }
 
 
+    public final Context getContext() {
+        return context;
+    }
 
 
     public GpxLayer createTrackLegendLayer() {

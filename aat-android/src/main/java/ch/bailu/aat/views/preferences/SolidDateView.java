@@ -1,6 +1,7 @@
 package ch.bailu.aat.views.preferences;
 
 import android.app.DatePickerDialog;
+import android.content.Context;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -11,8 +12,8 @@ import ch.bailu.aat.util.ui.UiTheme;
 public class SolidDateView extends AbsSolidView {
     private final SolidDate sdate;
 
-    public SolidDateView(SolidDate s, UiTheme theme) {
-        super(s, theme);
+    public SolidDateView(Context context, SolidDate s, UiTheme theme) {
+        super(context,s, theme);
         sdate = s;
     }
 

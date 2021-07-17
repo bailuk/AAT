@@ -1,15 +1,17 @@
 package ch.bailu.aat.views.preferences;
 
-import ch.bailu.aat.preferences.AbsSolidType;
+import android.content.Context;
+
 import ch.bailu.aat.util.ui.UiTheme;
+import ch.bailu.aat_lib.preferences.AbsSolidType;
 
 public class SolidTextInputView extends AbsSolidView {
     private final AbsSolidType solid;
     private final int inputType;
 
 
-    public SolidTextInputView(AbsSolidType s, int input_type, UiTheme theme) {
-        super(s, theme);
+    public SolidTextInputView(Context c, AbsSolidType s, int input_type, UiTheme theme) {
+        super(c,s, theme);
 
         solid = s;
         inputType = input_type;
@@ -17,7 +19,7 @@ public class SolidTextInputView extends AbsSolidView {
 
         @Override
         public void onRequestNewValue() {
-            new SolidTextInputDialog(solid, inputType);
+            new SolidTextInputDialog(getContext(),solid, inputType);
         }
 
 }

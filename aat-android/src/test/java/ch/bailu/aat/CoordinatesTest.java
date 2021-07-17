@@ -9,7 +9,6 @@ import org.junit.Test;
 
 import ch.bailu.aat.coordinates.CH1903Coordinates;
 import ch.bailu.aat.coordinates.Dem3Coordinates;
-import ch.bailu.aat.coordinates.LatLongE6;
 import ch.bailu.aat.coordinates.UTMCoordinates;
 import ch.bailu.aat.coordinates.WGS84Coordinates;
 

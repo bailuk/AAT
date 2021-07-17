@@ -2,19 +2,20 @@ package ch.bailu.aat.description;
 
 import android.content.Context;
 
-import ch.bailu.aat.R;
-import ch.bailu.aat.gpx.attributes.AutoPause;
-import ch.bailu.aat.gpx.GpxInformation;
+import ch.bailu.aat_lib.description.TimeDescription;
+import ch.bailu.aat_lib.gpx.GpxInformation;
+import ch.bailu.aat_lib.gpx.attributes.AutoPause;
+import ch.bailu.aat_lib.resources.Res;
 
 public class AutoPauseDescription extends TimeDescription {
     public AutoPauseDescription(Context context) {
-        super(context);
+
     }
 
 
     @Override
     public String getLabel() {
-        return getContext().getString(R.string.p_autopause);
+        return Res.str().p_autopause();
     }
 
     @Override

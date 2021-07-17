@@ -1,7 +1,8 @@
 package ch.bailu.aat.services.tileremover;
 
 
-import ch.bailu.aat.util.AppBroadcaster;
+import ch.bailu.aat.util.OldAppBroadcaster;
+import ch.bailu.aat_lib.dispatcher.AppBroadcaster;
 import ch.bailu.foc.Foc;
 
 public final class StateRemoveAll implements State, Runnable{
@@ -109,6 +110,6 @@ public final class StateRemoveAll implements State, Runnable{
     }
 
     private void broadcast() {
-        AppBroadcaster.broadcast(state.context, AppBroadcaster.TILE_REMOVER_REMOVE);
+        OldAppBroadcaster.broadcast(state.context, AppBroadcaster.TILE_REMOVER_REMOVE);
     }
 }

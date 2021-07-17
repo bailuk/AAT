@@ -3,9 +3,9 @@ package ch.bailu.aat.map.layer.gpx.legend;
 import android.content.Context;
 
 import ch.bailu.aat.description.DistanceDescription;
-import ch.bailu.aat.gpx.GpxList;
-import ch.bailu.aat.gpx.GpxPointNode;
-import ch.bailu.aat.gpx.GpxSegmentNode;
+import ch.bailu.aat_lib.gpx.GpxList;
+import ch.bailu.aat_lib.gpx.GpxPointNode;
+import ch.bailu.aat_lib.gpx.GpxSegmentNode;
 
 public final class PointDistanceWalker extends LegendWalker {
 

@@ -1,17 +1,18 @@
 package ch.bailu.aat.views.preferences;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 
-import ch.bailu.aat.preferences.SolidIndexList;
+import ch.bailu.aat_lib.preferences.SolidIndexList;
 
 public class SolidIndexListDialog extends AbsSolidDialog implements  DialogInterface.OnClickListener {
     private final SolidIndexList slist;
     final AlertDialog.Builder dialog;
 
-    public SolidIndexListDialog(SolidIndexList l) {
+    public SolidIndexListDialog(Context context, SolidIndexList l) {
         slist=l;
-        dialog = createDefaultDialog(l);
+        dialog = createDefaultDialog(context, l);
         dialog.setSingleChoiceItems(slist.getStringArray(), slist.getIndex(), this);
         dialog.create();
         dialog.show();

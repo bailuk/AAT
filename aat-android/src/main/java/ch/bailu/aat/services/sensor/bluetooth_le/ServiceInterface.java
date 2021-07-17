@@ -2,7 +2,7 @@ package ch.bailu.aat.services.sensor.bluetooth_le;
 
 import android.bluetooth.BluetoothGattCharacteristic;
 
-import ch.bailu.aat.gpx.GpxInformation;
+import ch.bailu.aat_lib.gpx.GpxInformation;
 
 public interface ServiceInterface {
     void close();

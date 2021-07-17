@@ -10,20 +10,21 @@ import java.io.Closeable;
 import java.io.File;
 import java.util.ArrayList;
 
-import ch.bailu.aat.coordinates.BoundingBoxE6;
 import ch.bailu.aat.gpx.GpxFileWrapper;
-import ch.bailu.aat.gpx.GpxInformation;
-import ch.bailu.aat.gpx.GpxList;
-import ch.bailu.aat.gpx.attributes.MaxSpeed;
-import ch.bailu.aat.gpx.interfaces.GpxBigDeltaInterface;
 import ch.bailu.aat.map.mapsforge.MapsForgePreview;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.background.BackgroundTask;
 import ch.bailu.aat.services.cache.Obj;
 import ch.bailu.aat.services.cache.ObjGpx;
 import ch.bailu.aat.services.cache.ObjGpxStatic;
-import ch.bailu.aat.util.AppBroadcaster;
-import ch.bailu.aat.util.ui.AppLog;
+import ch.bailu.aat.util.OldAppBroadcaster;
+import ch.bailu.aat_lib.coordinates.BoundingBoxE6;
+import ch.bailu.aat_lib.dispatcher.AppBroadcaster;
+import ch.bailu.aat_lib.gpx.GpxInformation;
+import ch.bailu.aat_lib.gpx.GpxList;
+import ch.bailu.aat_lib.gpx.attributes.MaxSpeed;
+import ch.bailu.aat_lib.gpx.interfaces.GpxBigDeltaInterface;
+import ch.bailu.aat_lib.logger.AppLog;
 import ch.bailu.foc.Foc;
 import ch.bailu.foc_android.FocAndroid;
 
@@ -103,7 +104,7 @@ public final class DirectorySynchronizer  implements Closeable {
         @Override
         public void start() {
 
-            AppBroadcaster.register(scontext.getContext(),
+            OldAppBroadcaster.register(scontext.getContext(),
                     onFileChanged, AppBroadcaster.FILE_CHANGED_INCACHE);
             try {
                 database = openDatabase();
@@ -151,7 +152,7 @@ public final class DirectorySynchronizer  implements Closeable {
                 } finally {
                     backgroundTask = null;
 
-                    AppBroadcaster.broadcast(sc.getContext(),
+                    OldAppBroadcaster.broadcast(sc.getContext(),
                             AppBroadcaster.FILE_CHANGED_INCACHE, directory);
                 }
 
@@ -165,7 +166,7 @@ public final class DirectorySynchronizer  implements Closeable {
 
         @Override
         public void start() {
-            AppBroadcaster.broadcast(scontext.getContext(), AppBroadcaster.DBSYNC_START);
+            OldAppBroadcaster.broadcast(scontext.getContext(), AppBroadcaster.DBSYNC_START);
 
             scontext.getBackgroundService().process(backgroundTask);
         }
@@ -190,7 +191,7 @@ public final class DirectorySynchronizer  implements Closeable {
 
                     removeFileFromDatabase(filesToRemove.get(i));
                 }
-                AppBroadcaster.broadcast(scontext.getContext(), AppBroadcaster.DB_SYNC_CHANGED);
+                OldAppBroadcaster.broadcast(scontext.getContext(), AppBroadcaster.DB_SYNC_CHANGED);
             }
         }
 
@@ -361,7 +362,7 @@ public final class DirectorySynchronizer  implements Closeable {
             } catch (Exception e) {
                 AppLog.w(this, e);
 
-                AppBroadcaster.broadcast(scontext.getContext(), AppBroadcaster.DB_SYNC_CHANGED);
+                OldAppBroadcaster.broadcast(scontext.getContext(), AppBroadcaster.DB_SYNC_CHANGED);
                 setState(new StateLoadNextGpx());
             }
 
@@ -377,7 +378,7 @@ public final class DirectorySynchronizer  implements Closeable {
 
                 pendingPreviewGenerator.generateBitmapFile();
 
-                AppBroadcaster.broadcast(scontext.getContext(), AppBroadcaster.DB_SYNC_CHANGED);
+                OldAppBroadcaster.broadcast(scontext.getContext(), AppBroadcaster.DB_SYNC_CHANGED);
                 setState(new StateLoadNextGpx());
             }
         }
@@ -417,7 +418,7 @@ public final class DirectorySynchronizer  implements Closeable {
             setPendingGpxHandle(null);
             setPendingPreviewGenerator(null);
 
-            AppBroadcaster.broadcast(scontext.getContext(), AppBroadcaster.DBSYNC_DONE);
+            OldAppBroadcaster.broadcast(scontext.getContext(), AppBroadcaster.DBSYNC_DONE);
 
 
             scontext.free();

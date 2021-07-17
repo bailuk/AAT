@@ -1,6 +1,5 @@
 package ch.bailu.aat.views.osm_features;
 
-import android.content.SharedPreferences;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -16,7 +15,7 @@ import org.mapsforge.poi.storage.UnknownPoiCategoryException;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import ch.bailu.aat.preferences.SolidString;
+import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat.preferences.map.SolidPoiDatabase;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.util.filter_list.FilterList;
@@ -25,9 +24,12 @@ import ch.bailu.aat.util.filter_list.PoiListEntry;
 import ch.bailu.aat.util.ui.UiTheme;
 import ch.bailu.aat.views.EditTextTool;
 import ch.bailu.aat.views.preferences.SolidStringView;
+import ch.bailu.aat_lib.preferences.OnPreferencesChanged;
+import ch.bailu.aat_lib.preferences.SolidString;
+import ch.bailu.aat_lib.preferences.StorageInterface;
 import ch.bailu.foc.Foc;
 
-public class PoiView  extends LinearLayout implements SharedPreferences.OnSharedPreferenceChangeListener {
+public class PoiView  extends LinearLayout implements OnPreferencesChanged {
 
     private final static String FILTER_KEY = PoiView.class.getSimpleName();
 
@@ -102,7 +104,7 @@ public class PoiView  extends LinearLayout implements SharedPreferences.OnShared
     }
 
     public View createHeader(UiTheme theme) {
-        return new SolidStringView(new SolidPoiDatabase(getContext()), theme);
+        return new SolidStringView(getContext(),new SolidPoiDatabase(getContext()), theme);
     }
 
 
@@ -126,7 +128,7 @@ public class PoiView  extends LinearLayout implements SharedPreferences.OnShared
     private View createFilterView(UiTheme theme) {
         filterView = new EditText(getContext());
         filterView.setSingleLine(true);
-        filterView.setText(new SolidString(getContext(), FILTER_KEY).getValueAsStringNonDef());
+        filterView.setText(new SolidString(new Storage(getContext()), FILTER_KEY).getValueAsStringNonDef());
         filterView.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -158,7 +160,7 @@ public class PoiView  extends LinearLayout implements SharedPreferences.OnShared
 
         saveSelected();
 
-        new SolidString(sc.getContext(), FILTER_KEY).setValue(filterView.getText().toString());
+        new SolidString(new Storage(sc.getContext()), FILTER_KEY).setValue(filterView.getText().toString());
         sdatabase.unregister(this);
     }
 
@@ -177,7 +179,7 @@ public class PoiView  extends LinearLayout implements SharedPreferences.OnShared
     }
 
     @Override
-    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+    public void onPreferencesChanged(StorageInterface s, String key) {
         if (sdatabase.hasKey(key)) {
             saveSelected();
             readList();

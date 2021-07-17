@@ -9,11 +9,11 @@ import androidx.annotation.RequiresApi;
 import java.util.UUID;
 
 import ch.bailu.aat.R;
-import ch.bailu.aat.gpx.GpxInformation;
-import ch.bailu.aat.gpx.InfoID;
+import ch.bailu.aat.gpx.attributes.SensorInformation;
 import ch.bailu.aat.services.sensor.Connector;
-import ch.bailu.aat.services.sensor.attributes.HeartRateAttributes;
-import ch.bailu.aat.services.sensor.attributes.SensorInformation;
+import ch.bailu.aat_lib.gpx.GpxInformation;
+import ch.bailu.aat_lib.gpx.InfoID;
+import ch.bailu.aat_lib.gpx.attributes.HeartRateAttributes;
 
 @RequiresApi(api = 18)
 public final class HeartRateService extends HeartRateServiceID implements ServiceInterface {

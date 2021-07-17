@@ -8,11 +8,13 @@ import ch.bailu.aat.preferences.map.SolidMapsForgeDirectory;
 import ch.bailu.aat.preferences.map.SolidRenderTheme;
 import ch.bailu.aat.preferences.map.SolidRendererThreads;
 import ch.bailu.aat.services.ServiceContext;
-import ch.bailu.aat.services.VirtualService;
 import ch.bailu.aat.services.cache.ObjTileMapsForge;
+import ch.bailu.aat_lib.preferences.OnPreferencesChanged;
+import ch.bailu.aat_lib.preferences.StorageInterface;
+import ch.bailu.aat_lib.service.VirtualService;
 
 public final class RenderService  extends VirtualService
-        implements SharedPreferences.OnSharedPreferenceChangeListener {
+        implements OnPreferencesChanged {
 
 
     private final SolidMapsForgeDirectory sdirectory;
@@ -25,7 +27,7 @@ public final class RenderService  extends VirtualService
 
 
     public RenderService(ServiceContext sc) {
-        super(sc);
+
 
         sdirectory = new SolidMapsForgeDirectory(sc.getContext());
         stheme = new SolidRenderTheme(sc.getContext());
@@ -65,7 +67,7 @@ public final class RenderService  extends VirtualService
 
 
     @Override
-    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+    public void onPreferencesChanged(StorageInterface s, String key) {
         if (sdirectory.hasKey(key) || stheme.hasKey(key) /*|| sthreads.hasKey(key)*/) {
             reconfigureRenderer();
         }

@@ -1,7 +1,8 @@
 package ch.bailu.aat.gpx;
 
-import ch.bailu.aat.coordinates.BoundingBoxE6;
-import ch.bailu.aat.gpx.interfaces.GpxDeltaInterface;
+import ch.bailu.aat_lib.coordinates.BoundingBoxE6;
+import ch.bailu.aat_lib.gpx.GpxPointNode;
+import ch.bailu.aat_lib.gpx.interfaces.GpxDeltaInterface;
 
 public abstract class GpxWindow implements GpxDeltaInterface {
 

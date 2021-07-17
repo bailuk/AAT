@@ -1,21 +1,26 @@
 package ch.bailu.aat.views.preferences;
 
-import ch.bailu.aat.preferences.SolidFile;
+import android.content.Context;
+
 import ch.bailu.aat.util.ui.UiTheme;
+import ch.bailu.aat_lib.preferences.SolidFile;
 
 public class SolidDirectoryView extends AbsSolidView {
     protected final SolidFile solid;
 
 
 
-    public SolidDirectoryView(SolidFile s, UiTheme theme) {
-        super(s, theme);
+    private final Context context;
+
+    public SolidDirectoryView(Context context, SolidFile s, UiTheme theme) {
+        super(context,s, theme);
         solid = s;
+        this.context = context;
     }
 
 
     @Override
     public void onRequestNewValue() {
-        new SolidStringDialog(solid);
+        new SolidStringDialog(context, solid);
     }
 }

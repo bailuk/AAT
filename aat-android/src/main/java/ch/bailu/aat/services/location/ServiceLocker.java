@@ -5,9 +5,8 @@ import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 
 import java.io.Closeable;
 
-import ch.bailu.aat.gpx.StateID;
-//import ch.bailu.aat.preferences.SolidGPSLock;
 import ch.bailu.aat.services.ServiceContext;
+import ch.bailu.aat_lib.gpx.StateID;
 
 public final class ServiceLocker implements Closeable, OnSharedPreferenceChangeListener{
 

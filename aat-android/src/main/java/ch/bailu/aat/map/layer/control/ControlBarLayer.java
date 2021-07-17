@@ -1,6 +1,5 @@
 package ch.bailu.aat.map.layer.control;
 
-import android.content.SharedPreferences;
 import android.view.View;
 import android.widget.LinearLayout;
 
@@ -13,6 +12,7 @@ import ch.bailu.aat.map.MapViewInterface;
 import ch.bailu.aat.map.layer.MapLayerInterface;
 import ch.bailu.aat.util.ui.AppLayout;
 import ch.bailu.aat.views.bar.ControlBar;
+import ch.bailu.aat_lib.preferences.StorageInterface;
 
 public abstract class ControlBarLayer implements MapLayerInterface, View.OnClickListener {
     public final static int TOP=0;
@@ -166,16 +166,9 @@ public abstract class ControlBarLayer implements MapLayerInterface, View.OnClick
         else hideBar();
     }
 
-
-
     @Override
     public void drawForeground(MapContext mcontext) {}
 
-
-
-
     @Override
-    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-
-    }
+    public void onPreferencesChanged(StorageInterface s, String key) {}
 }

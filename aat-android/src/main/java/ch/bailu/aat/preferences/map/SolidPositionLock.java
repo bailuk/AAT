@@ -5,12 +5,14 @@ import android.content.Context;
 
 import ch.bailu.aat.R;
 import ch.bailu.aat.preferences.SolidBoolean;
+import ch.bailu.aat.preferences.Storage;
+import ch.bailu.aat_lib.resources.Res;
 
 public class SolidPositionLock extends SolidBoolean {
     private static final String POSTFIX = "_POSITION_LOCK";
 
     public SolidPositionLock(Context c, String k) {
-        super(c, k + POSTFIX);
+        super(new Storage(c), k + POSTFIX);
     }
 
 
@@ -26,6 +28,6 @@ public class SolidPositionLock extends SolidBoolean {
 
     @Override
     public String getValueAsString() {
-        return getContext().getString(R.string.tt_map_home);
+        return Res.str().tt_map_home();
     }
 }

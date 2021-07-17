@@ -4,8 +4,9 @@ import android.graphics.Bitmap;
 
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.background.FileTask;
-import ch.bailu.aat.util.AppBroadcaster;
+import ch.bailu.aat.util.OldAppBroadcaster;
 import ch.bailu.aat.util.graphic.SyncBitmap;
+import ch.bailu.aat_lib.dispatcher.AppBroadcaster;
 import ch.bailu.foc.Foc;
 import ch.bailu.foc_android.FocAndroid;
 
@@ -108,7 +109,7 @@ public final class ObjBitmap extends ObjImageAbstract {
                         self.setException(e);
                     }
 
-                    AppBroadcaster.broadcast(sc.getContext(), AppBroadcaster.FILE_CHANGED_INCACHE,
+                    OldAppBroadcaster.broadcast(sc.getContext(), AppBroadcaster.FILE_CHANGED_INCACHE,
                             self.imageFile);
 
                 }

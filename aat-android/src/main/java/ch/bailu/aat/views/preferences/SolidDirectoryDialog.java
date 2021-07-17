@@ -7,18 +7,19 @@ import android.os.Build;
 import java.util.ArrayList;
 
 import ch.bailu.aat.R;
-import ch.bailu.aat.preferences.SolidFile;
+import ch.bailu.aat.preferences.SolidSAF;
+import ch.bailu.aat_lib.preferences.SolidFile;
 import ch.bailu.foc_android.FocAndroid;
 
 public class SolidDirectoryDialog extends SolidStringDialog {
 
     private final Activity acontext;
-    private final SolidFile sdirectory;
+    private final SolidSAF saf;
 
-    public SolidDirectoryDialog(Activity ac, SolidFile s) {
-        super(s);
+    public SolidDirectoryDialog(Activity ac, SolidFile sdirectory) {
+        super(ac,sdirectory);
         acontext = ac;
-        sdirectory=s;
+        saf = new SolidSAF(sdirectory);
     }
 
 
@@ -32,7 +33,7 @@ public class SolidDirectoryDialog extends SolidStringDialog {
 
     @Override
     protected void onExtraItemClick(int i) {
-        if (i==1)   sdirectory.setFromPickerActivity(acontext);
+        if (i==1)   saf.setFromPickerActivity(acontext);
         else super.onExtraItemClick(i);
     }
 }

@@ -1,21 +1,21 @@
 package ch.bailu.aat.services.editor;
 
-import ch.bailu.aat.gpx.GpxList;
 import ch.bailu.aat.gpx.GpxListWalker;
-import ch.bailu.aat.gpx.GpxPoint;
-import ch.bailu.aat.gpx.GpxPointFirstNode;
-import ch.bailu.aat.gpx.GpxPointNode;
-import ch.bailu.aat.gpx.GpxSegmentNode;
-import ch.bailu.aat.gpx.attributes.GpxAttributesNull;
-import ch.bailu.aat.gpx.attributes.GpxListAttributes;
-import ch.bailu.aat.gpx.interfaces.GpxPointInterface;
-import ch.bailu.aat.gpx.interfaces.GpxType;
 import ch.bailu.aat.gpx.tools.Attacher;
 import ch.bailu.aat.gpx.tools.Copier;
 import ch.bailu.aat.gpx.tools.Inverser;
 import ch.bailu.aat.gpx.tools.SimplifierBearing;
 import ch.bailu.aat.gpx.tools.SimplifierDistance;
 import ch.bailu.aat.gpx.tools.TimeStampFixer;
+import ch.bailu.aat_lib.gpx.GpxList;
+import ch.bailu.aat_lib.gpx.GpxPoint;
+import ch.bailu.aat_lib.gpx.GpxPointFirstNode;
+import ch.bailu.aat_lib.gpx.GpxPointNode;
+import ch.bailu.aat_lib.gpx.GpxSegmentNode;
+import ch.bailu.aat_lib.gpx.attributes.GpxAttributesNull;
+import ch.bailu.aat_lib.gpx.attributes.GpxListAttributes;
+import ch.bailu.aat_lib.gpx.interfaces.GpxPointInterface;
+import ch.bailu.aat_lib.gpx.interfaces.GpxType;
 
 public final class NodeEditor {
     private final GpxList gpxList;

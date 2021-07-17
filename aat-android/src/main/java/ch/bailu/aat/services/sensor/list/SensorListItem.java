@@ -5,8 +5,8 @@ import android.content.Context;
 import androidx.annotation.NonNull;
 
 import ch.bailu.aat.R;
-import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.services.sensor.SensorInterface;
+import ch.bailu.aat_lib.gpx.GpxInformation;
 
 public final class SensorListItem extends SensorItemState implements SensorInterface {
 

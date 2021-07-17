@@ -1,6 +1,5 @@
 package ch.bailu.aat.map.layer.control;
 
-import android.content.SharedPreferences;
 import android.view.View;
 
 import org.mapsforge.core.model.Point;
@@ -9,17 +8,14 @@ import ch.bailu.aat.R;
 import ch.bailu.aat.activities.AbsGpxListActivity;
 import ch.bailu.aat.description.AverageSpeedDescription;
 import ch.bailu.aat.description.CaloriesDescription;
-import ch.bailu.aat.description.ContentDescription;
 import ch.bailu.aat.description.DateDescription;
 import ch.bailu.aat.description.DistanceDescription;
 import ch.bailu.aat.description.MaximumSpeedDescription;
-import ch.bailu.aat.description.TimeDescription;
-import ch.bailu.aat.gpx.GpxInformation;
-import ch.bailu.aat.gpx.GpxPointNode;
-import ch.bailu.aat.gpx.InfoID;
+import ch.bailu.aat.factory.AndroidFocFactory;
 import ch.bailu.aat.map.MapContext;
 import ch.bailu.aat.menus.FileMenu;
 import ch.bailu.aat.preferences.SolidDirectoryQuery;
+import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat.preferences.map.SolidOverlayFile;
 import ch.bailu.aat.services.directory.Iterator;
 import ch.bailu.aat.util.fs.FileAction;
@@ -27,6 +23,12 @@ import ch.bailu.aat.util.ui.AppTheme;
 import ch.bailu.aat.util.ui.ToolTip;
 import ch.bailu.aat.views.PreviewView;
 import ch.bailu.aat.views.bar.ControlBar;
+import ch.bailu.aat_lib.description.ContentDescription;
+import ch.bailu.aat_lib.description.TimeDescription;
+import ch.bailu.aat_lib.gpx.GpxInformation;
+import ch.bailu.aat_lib.gpx.GpxPointNode;
+import ch.bailu.aat_lib.gpx.InfoID;
+import ch.bailu.aat_lib.preferences.StorageInterface;
 import ch.bailu.foc.Foc;
 
 public final class FileControlBarLayer extends ControlBarLayer {
@@ -152,8 +154,8 @@ public final class FileControlBarLayer extends ControlBarLayer {
 
         final ContentDescription[] summaryData = {
 
-                new DateDescription(acontext),
-                new TimeDescription(acontext),
+                new DateDescription(),
+                new TimeDescription(),
 
                 new DistanceDescription(acontext),
                 new AverageSpeedDescription(acontext),
@@ -165,7 +167,7 @@ public final class FileControlBarLayer extends ControlBarLayer {
         public void setSelectedNode(int IID, GpxInformation info, GpxPointNode node, int i) {
             super.setSelectedNode(IID, info, node, i);
 
-            new SolidDirectoryQuery(acontext).getPosition().setValue(i);
+            new SolidDirectoryQuery(new Storage(acontext), new AndroidFocFactory(acontext)).getPosition().setValue(i);
 
             iterator.moveToPosition(i);
 
@@ -195,8 +197,8 @@ public final class FileControlBarLayer extends ControlBarLayer {
         }
 
         @Override
-        public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-            selector.onSharedPreferenceChanged(sharedPreferences, key);
+        public void onPreferencesChanged(StorageInterface s, String key) {
+            selector.onPreferencesChanged(s, key);
         }
 
         @Override

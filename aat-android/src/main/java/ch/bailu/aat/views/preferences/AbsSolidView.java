@@ -1,18 +1,20 @@
 package ch.bailu.aat.views.preferences;
 
-import android.content.SharedPreferences;
+import android.content.Context;
 
-import ch.bailu.aat.preferences.AbsSolidType;
 import ch.bailu.aat.util.ui.UiTheme;
 import ch.bailu.aat.views.LabelTextView;
+import ch.bailu.aat_lib.preferences.AbsSolidType;
+import ch.bailu.aat_lib.preferences.OnPreferencesChanged;
+import ch.bailu.aat_lib.preferences.StorageInterface;
 
 public abstract class AbsSolidView extends LabelTextView
-        implements SharedPreferences.OnSharedPreferenceChangeListener {
+        implements OnPreferencesChanged {
 
     private final AbsSolidType solid;
 
-    public AbsSolidView(final AbsSolidType s, UiTheme theme) {
-        super(s.getContext(), s.getLabel(), theme);
+    public AbsSolidView(Context context, final AbsSolidType s, UiTheme theme) {
+        super(context, s.getLabel(), theme);
 
         solid = s;
 
@@ -38,7 +40,7 @@ public abstract class AbsSolidView extends LabelTextView
 
 
     @Override
-    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+    public void onPreferencesChanged(StorageInterface s, String key) {
         if (solid.hasKey(key)) {
             setText();
         }

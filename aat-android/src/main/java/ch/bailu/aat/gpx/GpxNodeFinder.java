@@ -1,6 +1,9 @@
 package ch.bailu.aat.gpx;
 
-import ch.bailu.aat.coordinates.BoundingBoxE6;
+import ch.bailu.aat_lib.coordinates.BoundingBoxE6;
+import ch.bailu.aat_lib.gpx.GpxList;
+import ch.bailu.aat_lib.gpx.GpxPointNode;
+import ch.bailu.aat_lib.gpx.GpxSegmentNode;
 
 public class GpxNodeFinder extends GpxListWalker {
 

@@ -4,8 +4,6 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import ch.bailu.aat.util.ui.AppLog;
-
 public class AppLogTest {
 
     public static String logged = "";

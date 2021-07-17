@@ -1,12 +1,14 @@
 package ch.bailu.aat.services.editor;
 
-import ch.bailu.aat.gpx.GpxInformation;
-import ch.bailu.aat.gpx.InfoID;
+import ch.bailu.aat.preferences.system.AndroidSolidDataDirectory;
+import ch.bailu.aat.preferences.system.AndroidSolidDataDirectoryDefault;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.cache.ObjGpxEditable;
 import ch.bailu.aat.services.cache.Obj;
 import ch.bailu.aat.services.cache.ObjNull;
-import ch.bailu.aat.util.fs.AppDirectory;
+import ch.bailu.aat_lib.gpx.GpxInformation;
+import ch.bailu.aat_lib.gpx.InfoID;
+import ch.bailu.aat_lib.util.fs.AppDirectory;
 import ch.bailu.foc.Foc;
 
 public final class EditorHelper {
@@ -24,7 +26,7 @@ public final class EditorHelper {
         scontext = sc;
 
         IID = InfoID.EDITOR_DRAFT;
-        file = AppDirectory.getEditorDraft(scontext.getContext());
+        file = AppDirectory.getEditorDraft(new AndroidSolidDataDirectory(scontext.getContext()));
         vid = ObjGpxEditable.getVirtualID(file);
     }
 
@@ -48,7 +50,7 @@ public final class EditorHelper {
     }
 
     public void onPause() {
-        if (IID==InfoID.EDITOR_DRAFT) save();
+        if (IID== InfoID.EDITOR_DRAFT) save();
 
         handle.free();
         handle = ObjNull.NULL;

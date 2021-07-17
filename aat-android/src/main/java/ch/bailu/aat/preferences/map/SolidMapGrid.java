@@ -17,7 +17,8 @@ import ch.bailu.aat.map.layer.grid.PlusCodesCenterCoordinatesLayer;
 import ch.bailu.aat.map.layer.grid.UTMCenterCoordinatesLayer;
 import ch.bailu.aat.map.layer.grid.UTMGridLayer;
 import ch.bailu.aat.map.layer.grid.WGS84Layer;
-import ch.bailu.aat.preferences.SolidStaticIndexList;
+import ch.bailu.aat.preferences.Storage;
+import ch.bailu.aat_lib.preferences.SolidStaticIndexList;
 
 public class SolidMapGrid extends SolidStaticIndexList {
 
@@ -26,8 +27,15 @@ public class SolidMapGrid extends SolidStaticIndexList {
     private static final String[] LABEL={"WGS84", "CH1903", "UTM", "Open Location Code (plus codes)", "None"};
 
 
+    private final Context context;
+
     public SolidMapGrid(Context context, String k) {
-        super(context, k + POSTFIX, LABEL);
+        super(new Storage(context), k + POSTFIX, LABEL);
+        this.context = context;
+    }
+
+    public Context getContext() {
+        return context;
     }
 
 

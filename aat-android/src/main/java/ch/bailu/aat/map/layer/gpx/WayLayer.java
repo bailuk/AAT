@@ -9,6 +9,7 @@ import ch.bailu.aat.map.TwoNodes;
 import ch.bailu.aat.services.InsideContext;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.cache.ObjImageAbstract;
+import ch.bailu.aat_lib.preferences.StorageInterface;
 
 public final class WayLayer extends GpxLayer {
 
@@ -30,9 +31,8 @@ public final class WayLayer extends GpxLayer {
 
 
     @Override
-    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+    public void onPreferencesChanged(StorageInterface s, String key) {}
 
-    }
 
     @Override
     public void drawInside(MapContext mcontext) {

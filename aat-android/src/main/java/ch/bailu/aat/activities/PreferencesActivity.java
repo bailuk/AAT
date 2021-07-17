@@ -1,25 +1,26 @@
 package ch.bailu.aat.activities;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import ch.bailu.aat.R;
 import ch.bailu.aat.dispatcher.SensorSource;
-import ch.bailu.aat.gpx.InfoID;
-import ch.bailu.aat.preferences.SolidFile;
-import ch.bailu.aat.preferences.general.SolidPresetCount;
+import ch.bailu.aat.preferences.SolidSAF;
+import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat.util.ui.AppTheme;
 import ch.bailu.aat.util.ui.UiTheme;
 import ch.bailu.aat.views.ContentView;
-import ch.bailu.aat.views.ErrorView;
 import ch.bailu.aat.views.bar.MainControlBar;
 import ch.bailu.aat.views.description.mview.MultiView;
 import ch.bailu.aat.views.preferences.GeneralPreferencesView;
 import ch.bailu.aat.views.preferences.MapTilePreferencesView;
 import ch.bailu.aat.views.preferences.PresetPreferencesView;
+import ch.bailu.aat_lib.gpx.InfoID;
+import ch.bailu.aat_lib.preferences.OnPreferencesChanged;
+import ch.bailu.aat_lib.preferences.StorageInterface;
+import ch.bailu.aat_lib.preferences.general.SolidPresetCount;
 
-public class PreferencesActivity extends ActivityContext implements SharedPreferences.OnSharedPreferenceChangeListener {
+public class PreferencesActivity extends ActivityContext implements OnPreferencesChanged {
 
     public final static String SOLID_KEY=PreferencesActivity.class.getSimpleName();
 
@@ -35,7 +36,7 @@ public class PreferencesActivity extends ActivityContext implements SharedPrefer
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        spresetCount = new SolidPresetCount(this);
+        spresetCount = new SolidPresetCount(new Storage(this));
         spresetCount.register(this);
         createViews();
 
@@ -79,7 +80,7 @@ public class PreferencesActivity extends ActivityContext implements SharedPrefer
     protected void onActivityResult(int requestCode,
                                     int resultCode,
                                     Intent data) {
-        SolidFile.onActivityResult(this, requestCode, resultCode, data);
+        SolidSAF.onActivityResult(this, requestCode, resultCode, data);
     }
 
 
@@ -97,8 +98,8 @@ public class PreferencesActivity extends ActivityContext implements SharedPrefer
 
 
     @Override
-    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s) {
-        if (spresetCount.hasKey(s)) {
+    public void onPreferencesChanged(StorageInterface s, String key) {
+        if (spresetCount.hasKey(key)) {
             addPresetPreferences(theme);
         }
     }

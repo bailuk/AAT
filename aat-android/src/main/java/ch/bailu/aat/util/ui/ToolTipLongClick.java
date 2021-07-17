@@ -3,6 +3,9 @@ package ch.bailu.aat.util.ui;
 
 import android.view.View;
 
+import ch.bailu.aat_lib.logger.AppLog;
+import ch.bailu.aat_lib.util.ui.ToolTipProvider;
+
 public class ToolTipLongClick implements View.OnLongClickListener{
 
     private final ToolTipProvider tip;

@@ -7,12 +7,12 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 
 import ch.bailu.aat.R;
-import ch.bailu.aat.gpx.GpxInformation;
-import ch.bailu.aat.gpx.InfoID;
-import ch.bailu.aat.gpx.attributes.GpxAttributes;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.sensor.Connector;
-import ch.bailu.aat.services.sensor.attributes.CadenceSpeedAttributes;
+import ch.bailu.aat_lib.gpx.GpxInformation;
+import ch.bailu.aat_lib.gpx.InfoID;
+import ch.bailu.aat_lib.gpx.attributes.CadenceSpeedAttributes;
+import ch.bailu.aat_lib.gpx.attributes.GpxAttributes;
 
 @RequiresApi(api = 18)
 public final class CscService extends CscServiceID implements ServiceInterface {

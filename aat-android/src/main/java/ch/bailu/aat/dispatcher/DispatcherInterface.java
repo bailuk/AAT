@@ -1,5 +1,7 @@
 package ch.bailu.aat.dispatcher;
 
+import ch.bailu.aat_lib.dispatcher.OnContentUpdatedInterface;
+
 /**
  * Connect sources with targets
  */

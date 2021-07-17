@@ -11,11 +11,12 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 import ch.bailu.aat.services.ServiceContext;
-import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.util.ContextWrapperInterface;
+import ch.bailu.aat.util.OldAppBroadcaster;
 import ch.bailu.aat.util.net.URX;
-import ch.bailu.aat.util.ui.AppLog;
 import ch.bailu.aat.util.ui.AppConfig;
+import ch.bailu.aat_lib.dispatcher.AppBroadcaster;
+import ch.bailu.aat_lib.logger.AppLog;
 import ch.bailu.foc.Foc;
 
 public class DownloadTask extends FileTask implements ContextWrapperInterface{
@@ -52,7 +53,7 @@ public class DownloadTask extends FileTask implements ContextWrapperInterface{
 
         try {
             size = bgDownload();
-            AppBroadcaster.broadcast(sc.getContext(),
+            OldAppBroadcaster.broadcast(sc.getContext(),
                     AppBroadcaster.FILE_CHANGED_ONDISK, getFile(), urx);
 
         } catch (Exception e) {

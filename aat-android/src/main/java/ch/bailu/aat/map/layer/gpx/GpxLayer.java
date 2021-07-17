@@ -1,15 +1,15 @@
 package ch.bailu.aat.map.layer.gpx;
 
-import ch.bailu.aat.dispatcher.OnContentUpdatedInterface;
-import ch.bailu.aat.gpx.GpxInformation;
-import ch.bailu.aat.gpx.GpxList;
 import ch.bailu.aat.map.MapColor;
 import ch.bailu.aat.map.MapContext;
 import ch.bailu.aat.map.layer.MapLayerInterface;
+import ch.bailu.aat_lib.dispatcher.OnContentUpdatedInterface;
+import ch.bailu.aat_lib.gpx.GpxInformation;
+import ch.bailu.aat_lib.gpx.GpxList;
 
 public abstract class GpxLayer implements MapLayerInterface, OnContentUpdatedInterface {
     private int color;
-    private GpxList gpxList=GpxList.NULL_ROUTE;
+    private GpxList gpxList= GpxList.NULL_ROUTE;
 
 
 

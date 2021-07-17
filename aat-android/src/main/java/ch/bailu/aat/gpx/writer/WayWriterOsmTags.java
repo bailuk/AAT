@@ -2,9 +2,9 @@ package ch.bailu.aat.gpx.writer;
 
 import java.io.IOException;
 
-import ch.bailu.aat.gpx.GpxConstants;
-import ch.bailu.aat.gpx.OsmConstants;
-import ch.bailu.aat.gpx.interfaces.GpxPointInterface;
+import ch.bailu.aat_lib.gpx.GpxConstants;
+import ch.bailu.aat_lib.gpx.interfaces.GpxPointInterface;
+import ch.bailu.aat_lib.xml.writer.WayWriter;
 import ch.bailu.foc.Foc;
 
 public class WayWriterOsmTags extends WayWriter {

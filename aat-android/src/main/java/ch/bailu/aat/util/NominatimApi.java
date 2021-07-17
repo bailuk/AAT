@@ -5,8 +5,9 @@ import android.content.Context;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
-import ch.bailu.aat.coordinates.BoundingBoxE6;
-import ch.bailu.aat.util.fs.AppDirectory;
+import ch.bailu.aat.preferences.system.AndroidSolidDataDirectory;
+import ch.bailu.aat_lib.coordinates.BoundingBoxE6;
+import ch.bailu.aat_lib.util.fs.AppDirectory;
 import ch.bailu.foc.Foc;
 
 public abstract class NominatimApi extends DownloadApi {
@@ -20,7 +21,7 @@ public abstract class NominatimApi extends DownloadApi {
     private final String bounding;
 
     public NominatimApi(Context context, BoundingBoxE6 boundingBox) {
-        directory = AppDirectory.getDataDirectory(context, AppDirectory.DIR_NOMINATIM);
+        directory = AppDirectory.getDataDirectory(new AndroidSolidDataDirectory(context), AppDirectory.DIR_NOMINATIM);
         bounding = toString(boundingBox);
     }
 

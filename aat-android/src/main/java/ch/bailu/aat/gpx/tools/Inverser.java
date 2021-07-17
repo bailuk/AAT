@@ -1,11 +1,11 @@
 package ch.bailu.aat.gpx.tools;
 
-import ch.bailu.aat.gpx.attributes.GpxListAttributes;
-import ch.bailu.aat.gpx.GpxList;
 import ch.bailu.aat.gpx.GpxListArray;
-import ch.bailu.aat.gpx.GpxPoint;
-import ch.bailu.aat.gpx.GpxPointFirstNode;
-import ch.bailu.aat.gpx.GpxPointNode;
+import ch.bailu.aat_lib.gpx.GpxList;
+import ch.bailu.aat_lib.gpx.GpxPoint;
+import ch.bailu.aat_lib.gpx.GpxPointFirstNode;
+import ch.bailu.aat_lib.gpx.GpxPointNode;
+import ch.bailu.aat_lib.gpx.attributes.GpxListAttributes;
 
 public class Inverser {
 

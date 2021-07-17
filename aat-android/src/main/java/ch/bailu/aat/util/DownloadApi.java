@@ -9,7 +9,8 @@ import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.background.BackgroundService;
 import ch.bailu.aat.services.background.BackgroundTask;
 import ch.bailu.aat.services.background.DownloadTask;
-import ch.bailu.aat.util.ui.AppLog;
+import ch.bailu.aat_lib.dispatcher.AppBroadcaster;
+import ch.bailu.aat_lib.logger.AppLog;
 import ch.bailu.foc.Foc;
 
 public abstract class DownloadApi extends OsmApiConfiguration {
@@ -33,7 +34,7 @@ public abstract class DownloadApi extends OsmApiConfiguration {
                 long size = bgDownload();
                 TextBackup.write(queryFile, queryString);
 
-                AppBroadcaster.broadcast(sc.getContext(),
+                OldAppBroadcaster.broadcast(sc.getContext(),
                         AppBroadcaster.FILE_CHANGED_ONDISK, getFile(), getSource());
 
                 return size;

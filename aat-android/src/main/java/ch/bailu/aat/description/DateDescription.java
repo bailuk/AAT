@@ -1,19 +1,15 @@
 package ch.bailu.aat.description;
 
 
-import android.content.Context;
-
-import ch.bailu.aat.R;
-import ch.bailu.aat.gpx.GpxInformation;
+import ch.bailu.aat_lib.description.FF;
+import ch.bailu.aat_lib.description.LongDescription;
+import ch.bailu.aat_lib.gpx.GpxInformation;
+import ch.bailu.aat_lib.resources.Res;
 
 public class DateDescription extends LongDescription {
-    public DateDescription(Context context) {
-        super(context);
-    }
-
     @Override
     public String getLabel() {
-        return getContext().getString(R.string.d_startdate);
+        return Res.str().d_startdate();
     }
 
     @Override

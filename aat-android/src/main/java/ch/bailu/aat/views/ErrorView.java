@@ -9,8 +9,9 @@ import android.widget.TextView;
 import ch.bailu.aat.services.InsideContext;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.cache.Obj;
-import ch.bailu.aat.util.AppBroadcaster;
-import ch.bailu.aat.util.ui.AppLog;
+import ch.bailu.aat.util.OldAppBroadcaster;
+import ch.bailu.aat_lib.dispatcher.AppBroadcaster;
+import ch.bailu.aat_lib.logger.AppLog;
 import ch.bailu.foc.Foc;
 
 
@@ -39,7 +40,7 @@ public class ErrorView extends TextView  {
 
 
     private void displayError(Intent intent) {
-        String message = intent.getStringExtra(AppLog.EXTRA_MESSAGE);
+        String message = intent.getStringExtra(AppBroadcaster.EXTRA_MESSAGE);
         displayError(message);
     }
 
@@ -114,7 +115,7 @@ public class ErrorView extends TextView  {
      * Receive and display error logs sent from {@link AppLog}
       */
     public void registerReceiver() {
-        AppBroadcaster.register(getContext(), onMessage, AppLog.LOG_ERROR);
+        OldAppBroadcaster.register(getContext(), onMessage, AppBroadcaster.LOG_ERROR);
     }
 
 

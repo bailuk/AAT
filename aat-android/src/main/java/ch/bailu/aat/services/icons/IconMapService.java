@@ -2,15 +2,15 @@ package ch.bailu.aat.services.icons;
 
 import java.io.IOException;
 
-import ch.bailu.aat.gpx.GpxPointNode;
-import ch.bailu.aat.gpx.attributes.GpxAttributes;
-import ch.bailu.aat.gpx.attributes.Keys;
-import ch.bailu.aat.gpx.interfaces.GpxPointInterface;
 import ch.bailu.aat.services.ServiceContext;
-import ch.bailu.aat.services.VirtualService;
 import ch.bailu.aat.services.cache.ObjImageAbstract;
-import ch.bailu.aat.util.WithStatusText;
-import ch.bailu.aat.util.ui.AppLog;
+import ch.bailu.aat_lib.gpx.GpxPointNode;
+import ch.bailu.aat_lib.gpx.attributes.GpxAttributes;
+import ch.bailu.aat_lib.gpx.attributes.Keys;
+import ch.bailu.aat_lib.gpx.interfaces.GpxPointInterface;
+import ch.bailu.aat_lib.logger.AppLog;
+import ch.bailu.aat_lib.service.VirtualService;
+import ch.bailu.aat_lib.util.WithStatusText;
 import ch.bailu.foc.Foc;
 import ch.bailu.foc_android.FocAsset;
 
@@ -30,7 +30,6 @@ public final class IconMapService extends VirtualService implements WithStatusTe
 
 
     public IconMapService(ServiceContext sc) {
-        super(sc);
 
         cache = new IconCache(sc);
         map = new IconMap();
@@ -39,7 +38,7 @@ public final class IconMapService extends VirtualService implements WithStatusTe
             Foc map_file = new FocAsset(sc.getContext().getAssets(), SVG_MAP_FILE);
             new IconMapParser(map_file, map);
         } catch (IOException e) {
-            AppLog.e(getContext(), this, e);
+            AppLog.e(this, e);
         }
     }
 

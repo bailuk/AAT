@@ -2,7 +2,10 @@ package ch.bailu.aat.services.location;
 
 import android.content.Context;
 
-import ch.bailu.aat.gpx.StateID;
+import ch.bailu.aat_lib.gpx.StateID;
+import ch.bailu.aat_lib.service.location.LocationInformation;
+import ch.bailu.aat_lib.service.location.LocationStackChainedItem;
+import ch.bailu.aat_lib.service.location.LocationStackItem;
 
 public final class GpsOrNetworkLocation extends LocationStackChainedItem {
 

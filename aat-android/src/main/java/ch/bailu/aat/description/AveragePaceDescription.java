@@ -2,8 +2,8 @@ package ch.bailu.aat.description;
 
 import android.content.Context;
 
-import ch.bailu.aat.R;
-import ch.bailu.aat.gpx.GpxInformation;
+import ch.bailu.aat_lib.gpx.GpxInformation;
+import ch.bailu.aat_lib.resources.Res;
 
 public class AveragePaceDescription extends PaceDescription {
     public AveragePaceDescription(Context c) {
@@ -14,7 +14,7 @@ public class AveragePaceDescription extends PaceDescription {
 
     @Override
     public String getLabel() {
-        return getContext().getString(R.string.pace);
+        return Res.str().pace();
     }
 
     @Override

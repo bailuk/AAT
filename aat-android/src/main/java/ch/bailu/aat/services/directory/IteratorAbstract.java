@@ -3,17 +3,20 @@ package ch.bailu.aat.services.directory;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.database.Cursor;
 
-import ch.bailu.aat.gpx.GpxInformation;
-import ch.bailu.aat.util.AppBroadcaster;
+import ch.bailu.aat.factory.AndroidFocFactory;
 import ch.bailu.aat.preferences.SolidDirectoryQuery;
+import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat.services.ServiceContext;
+import ch.bailu.aat.util.OldAppBroadcaster;
+import ch.bailu.aat_lib.dispatcher.AppBroadcaster;
+import ch.bailu.aat_lib.gpx.GpxInformation;
+import ch.bailu.aat_lib.preferences.OnPreferencesChanged;
+import ch.bailu.aat_lib.preferences.StorageInterface;
 import ch.bailu.foc.Foc;
 
-public abstract class IteratorAbstract extends Iterator implements OnSharedPreferenceChangeListener {
+public abstract class IteratorAbstract extends Iterator implements OnPreferencesChanged {
     private final ServiceContext scontext;
 
 
@@ -24,10 +27,10 @@ public abstract class IteratorAbstract extends Iterator implements OnSharedPrefe
 
 
     public IteratorAbstract (ServiceContext sc) {
-        sdirectory = new SolidDirectoryQuery(sc.getContext());
+        sdirectory = new SolidDirectoryQuery(new Storage(sc.getContext()), new AndroidFocFactory(sc.getContext()));
         scontext = sc;
         sdirectory.register(this);
-        AppBroadcaster.register(sc.getContext(), onSyncChanged, AppBroadcaster.DB_SYNC_CHANGED);
+        OldAppBroadcaster.register(sc.getContext(), onSyncChanged, AppBroadcaster.DB_SYNC_CHANGED);
     }
 
 
@@ -38,7 +41,7 @@ public abstract class IteratorAbstract extends Iterator implements OnSharedPrefe
 
 
     @Override
-    public void onSharedPreferenceChanged(SharedPreferences pref, String key) {
+    public void onPreferencesChanged(StorageInterface s, String key) {
         if (sdirectory.containsKey(key) && selection.equals(sdirectory.createSelectionString()) == false) {
             query();
         }

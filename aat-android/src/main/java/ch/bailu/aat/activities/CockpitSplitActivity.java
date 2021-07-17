@@ -23,7 +23,6 @@ import ch.bailu.aat.dispatcher.OverlaySource;
 import ch.bailu.aat.dispatcher.SensorSource;
 import ch.bailu.aat.dispatcher.TrackerSource;
 import ch.bailu.aat.dispatcher.TrackerTimerSource;
-import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.map.MapFactory;
 import ch.bailu.aat.map.MapViewInterface;
 import ch.bailu.aat.map.mapsforge.MapViewLinker;
@@ -39,6 +38,7 @@ import ch.bailu.aat.views.description.mview.MultiView;
 import ch.bailu.aat.views.graph.DistanceAltitudeGraphView;
 import ch.bailu.aat.views.graph.DistanceSpeedGraphView;
 import ch.bailu.aat.views.graph.SpmGraphView;
+import ch.bailu.aat_lib.gpx.InfoID;
 
 public class CockpitSplitActivity extends AbsKeepScreenOnActivity {
     private static final String SOLID_KEY="split";

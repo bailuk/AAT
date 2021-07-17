@@ -4,8 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.text.TextUtils;
 
-import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.util.AppIntent;
+import ch.bailu.aat_lib.dispatcher.AppBroadcaster;
 import ch.bailu.foc.Foc;
 import ch.bailu.foc_android.FocAndroid;
 

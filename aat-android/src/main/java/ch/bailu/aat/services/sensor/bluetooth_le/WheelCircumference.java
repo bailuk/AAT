@@ -6,11 +6,12 @@ import android.content.Intent;
 
 import java.io.Closeable;
 
-import ch.bailu.aat.gpx.GpxDeltaHelper;
-import ch.bailu.aat.gpx.GpxInformation;
-import ch.bailu.aat.gpx.interfaces.GpxPointInterface;
 import ch.bailu.aat.services.ServiceContext;
-import ch.bailu.aat.util.AppBroadcaster;
+import ch.bailu.aat.util.OldAppBroadcaster;
+import ch.bailu.aat_lib.dispatcher.AppBroadcaster;
+import ch.bailu.aat_lib.gpx.GpxDeltaHelper;
+import ch.bailu.aat_lib.gpx.GpxInformation;
+import ch.bailu.aat_lib.gpx.interfaces.GpxPointInterface;
 
 public final class WheelCircumference implements Closeable {
 
@@ -73,7 +74,7 @@ public final class WheelCircumference implements Closeable {
         scontext = sc;
         revolution = r;
 
-        AppBroadcaster.register(sc.getContext(), onLocationChanged, AppBroadcaster.LOCATION_CHANGED);
+        OldAppBroadcaster.register(sc.getContext(), onLocationChanged, AppBroadcaster.LOCATION_CHANGED);
     }
 
 

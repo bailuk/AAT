@@ -4,31 +4,40 @@ import android.content.Context;
 
 import org.mapsforge.core.model.LatLong;
 
-import ch.bailu.aat.R;
 import ch.bailu.aat.coordinates.CH1903Coordinates;
 import ch.bailu.aat.coordinates.Coordinates;
 import ch.bailu.aat.coordinates.OlcCoordinates;
 import ch.bailu.aat.coordinates.UTMCoordinates;
 import ch.bailu.aat.coordinates.WGS84Coordinates;
-import ch.bailu.aat.exception.ValidationException;
 import ch.bailu.aat.map.MapViewInterface;
-import ch.bailu.aat.preferences.SolidString;
-import ch.bailu.aat.util.ui.AppLog;
+import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat.views.preferences.SolidTextInputDialog;
+import ch.bailu.aat_lib.exception.ValidationException;
+import ch.bailu.aat_lib.logger.AppLog;
+import ch.bailu.aat_lib.preferences.SolidString;
+import ch.bailu.aat_lib.resources.Res;
 
 public class SolidGoToLocation extends SolidString {
     private final static String KEY = "GoToLocation";
     public SolidGoToLocation(Context c) {
-        super(c, KEY);
+        super(new Storage(c), KEY);
+        this.context = c;
     }
 
+
+    private final Context context;
+
+
+    public Context getContext() {
+        return context;
+    }
 
     private LatLong reference = null;
 
 
     @Override
     public String getLabel() {
-        return getString(R.string.p_goto_location);
+        return Res.str().p_goto_location();
     }
 
 
@@ -36,7 +45,7 @@ public class SolidGoToLocation extends SolidString {
 
         reference = map.getMapViewPosition().getCenter();
 
-        new SolidTextInputDialog(this, SolidTextInputDialog.TEXT, v -> goToLocation(map, getValueAsString()));
+        new SolidTextInputDialog(context, this, SolidTextInputDialog.TEXT, v -> goToLocation(map, getValueAsString()));
     }
 
     public void goToLocation(MapViewInterface map, String s) {
@@ -89,7 +98,7 @@ public class SolidGoToLocation extends SolidString {
 
 
         if (! validate(s)) {
-            throw new ValidationException(getString(R.string.p_goto_location_hint));
+            throw new ValidationException(Res.str().p_goto_location_hint());
         } else {
             setValue(s);
         }

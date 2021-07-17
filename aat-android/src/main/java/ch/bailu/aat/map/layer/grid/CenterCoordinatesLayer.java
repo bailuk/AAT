@@ -9,6 +9,7 @@ import org.mapsforge.core.model.Point;
 import ch.bailu.aat.coordinates.Coordinates;
 import ch.bailu.aat.map.MapContext;
 import ch.bailu.aat.map.layer.MapLayerInterface;
+import ch.bailu.aat_lib.preferences.StorageInterface;
 
 public abstract class CenterCoordinatesLayer implements MapLayerInterface {
 
@@ -49,9 +50,7 @@ public abstract class CenterCoordinatesLayer implements MapLayerInterface {
 
 
     @Override
-    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-
-    }
+    public void onPreferencesChanged(StorageInterface s, String key) {}
 
     @Override
     public void onAttached() {

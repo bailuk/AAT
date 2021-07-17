@@ -11,11 +11,12 @@ import org.mapsforge.core.model.LatLong;
 import org.mapsforge.map.android.graphics.AndroidGraphicFactory;
 
 import ch.bailu.aat.dispatcher.DispatcherInterface;
-import ch.bailu.aat.dispatcher.OnContentUpdatedInterface;
-import ch.bailu.aat.gpx.GpxInformation;
-import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.map.MapContext;
 import ch.bailu.aat.util.ui.AppTheme;
+import ch.bailu.aat_lib.dispatcher.OnContentUpdatedInterface;
+import ch.bailu.aat_lib.gpx.GpxInformation;
+import ch.bailu.aat_lib.gpx.InfoID;
+import ch.bailu.aat_lib.preferences.StorageInterface;
 
 public final class CurrentLocationLayer implements OnContentUpdatedInterface, MapLayerInterface {
     private static final int MIN_RADIUS=7;
@@ -134,17 +135,11 @@ public final class CurrentLocationLayer implements OnContentUpdatedInterface, Ma
 
 
     @Override
-    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-
-    }
+    public void onPreferencesChanged(StorageInterface s, String key) {}
 
     @Override
-    public void onAttached() {
-
-    }
+    public void onAttached() {}
 
     @Override
-    public void onDetached() {
-
-    }
+    public void onDetached() {}
 }

@@ -20,9 +20,11 @@ import java.util.Date;
 import java.util.HashSet;
 
 import ch.bailu.aat.R;
-import ch.bailu.aat.preferences.general.SolidPresetCount;
-import ch.bailu.aat.preferences.presets.SolidMET;
-import ch.bailu.aat.util.fs.AppDirectory;
+import ch.bailu.aat.preferences.Storage;
+import ch.bailu.aat.preferences.system.AndroidSolidDataDirectory;
+import ch.bailu.aat_lib.preferences.general.SolidPresetCount;
+import ch.bailu.aat_lib.preferences.presets.SolidMET;
+import ch.bailu.aat_lib.util.fs.AppDirectory;
 
 @TargetApi(Build.VERSION_CODES.KITKAT)
 public class GpxDocumentProvider extends DocumentsProvider {
@@ -68,8 +70,8 @@ public class GpxDocumentProvider extends DocumentsProvider {
     private void includeDirectory(MatrixCursor result, int preset) {
         final Context context = getContext();
         final String presetLabel = context.getString(R.string.p_preset);
-        final File file = new File(AppDirectory.getTrackListDirectory(context, preset).getPath());
-        final String met = new SolidMET(context, preset).getValueAsString();
+        final File file = new File(AppDirectory.getTrackListDirectory(new AndroidSolidDataDirectory(context), preset).getPath());
+        final String met = new SolidMET(new Storage(context),preset).getValueAsString();
         result.newRow()
                 .add(Document.COLUMN_DOCUMENT_ID, DIR_PREFIX + preset)
                 .add(Document.COLUMN_DISPLAY_NAME, presetLabel + " " + (preset+1) + ": " + met)
@@ -97,7 +99,7 @@ public class GpxDocumentProvider extends DocumentsProvider {
             final int sep = documentId.indexOf(GPX_INFIX);
             final int preset = Integer.parseInt(documentId.substring(GPX_PREFIX.length(), sep));
             final String gpx = documentId.substring(sep + GPX_INFIX.length());
-            final File file = new File(AppDirectory.getTrackListDirectory(getContext(), preset).descendant(gpx).getPath());
+            final File file = new File(AppDirectory.getTrackListDirectory(new AndroidSolidDataDirectory(getContext()), preset).descendant(gpx).getPath());
             includeFile(result, preset, file);
         }
         return result;
@@ -108,7 +110,7 @@ public class GpxDocumentProvider extends DocumentsProvider {
         final Context context = getContext();
         final MatrixCursor result = new MatrixCursor(projection == null ? DEFAULT_DOCUMENT_PROJECTION : projection);
         if (parentDocumentId.equals(ROOT)) {
-            final int length = new SolidPresetCount(context).getValue();
+            final int length = new SolidPresetCount(new Storage(context)).getValue();
             for (int i = 0; i < length; ++i) {
                 includeDirectory(result, i);
             }
@@ -116,7 +118,7 @@ public class GpxDocumentProvider extends DocumentsProvider {
             return result;
         }
         final int preset = Integer.parseInt(parentDocumentId.substring(DIR_PREFIX.length()));
-        final File dir = new File(AppDirectory.getTrackListDirectory(context, preset).getPath());
+        final File dir = new File(AppDirectory.getTrackListDirectory(new AndroidSolidDataDirectory(context), preset).getPath());
 
         for (File file: dir.listFiles()) {
             if (file.isFile() && file.getName().endsWith(".gpx")) {
@@ -134,10 +136,10 @@ public class GpxDocumentProvider extends DocumentsProvider {
         final int preset = Integer.parseInt(documentId.substring(GPX_PREFIX.length(), sep));
         final String gpx = documentId.substring(sep + GPX_INFIX.length());
         final Context context = getContext();
-        final File file = new File(AppDirectory.getTrackListDirectory(context, preset).descendant(gpx).getPath());
+        final File file = new File(AppDirectory.getTrackListDirectory(new AndroidSolidDataDirectory(context), preset).descendant(gpx).getPath());
         if (!file.isFile() || !file.getName().endsWith(".gpx"))
             throw new FileNotFoundException(documentId);
-        if (!file.getParentFile().equals(new File(AppDirectory.getTrackListDirectory(context, preset).getPath())))
+        if (!file.getParentFile().equals(new File(AppDirectory.getTrackListDirectory(new AndroidSolidDataDirectory(context), preset).getPath())))
             throw new FileNotFoundException(documentId);
         return ParcelFileDescriptor.open(file, ParcelFileDescriptor.parseMode(mode));
     }
@@ -146,7 +148,7 @@ public class GpxDocumentProvider extends DocumentsProvider {
     public Cursor queryRecentDocuments(String rootId, String[] projection) {
         final Context context = getContext();
         final MatrixCursor result = new MatrixCursor(projection == null ? DEFAULT_DOCUMENT_PROJECTION : projection);
-        final int length = new SolidPresetCount(context).getValue();
+        final int length = new SolidPresetCount(new Storage(context)).getValue();
         addRecentDocuments(result, length);
         return result;
     }
@@ -156,7 +158,7 @@ public class GpxDocumentProvider extends DocumentsProvider {
         final Context context = getContext();
         final long yesterday = new Date().getTime() - 86400000;
         for (int preset = 0; preset < numPresets; ++preset) {
-            final File dir = new File(AppDirectory.getTrackListDirectory(context, preset).getPath());
+            final File dir = new File(AppDirectory.getTrackListDirectory(new AndroidSolidDataDirectory(context), preset).getPath());
             if (dir.exists() && dir.isDirectory()) {
                 for (File file : dir.listFiles()) {
                     if (file.isFile() && file.getName().endsWith(".gpx") && file.lastModified() > yesterday) {

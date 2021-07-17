@@ -4,7 +4,7 @@ import org.mapsforge.core.model.Tile;
 
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.cache.Obj;
-import ch.bailu.aat.services.dem.tile.DemProvider;
+import ch.bailu.aat.services.elevation.tile.DemProvider;
 import ch.bailu.aat.views.graph.AltitudeColorTable;
 
 public final class ObjTileElevationColor extends ObjTileElevation {

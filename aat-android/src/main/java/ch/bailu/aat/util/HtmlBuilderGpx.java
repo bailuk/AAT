@@ -4,14 +4,15 @@ package ch.bailu.aat.util;
 import android.content.Context;
 
 import ch.bailu.aat.description.AltitudeDescription;
-import ch.bailu.aat.description.ContentDescription;
 import ch.bailu.aat.description.CurrentSpeedDescription;
 import ch.bailu.aat.description.DistanceDescription;
 import ch.bailu.aat.description.SpeedDescription;
-import ch.bailu.aat.gpx.attributes.GpxAttributes;
-import ch.bailu.aat.gpx.GpxInformation;
-import ch.bailu.aat.gpx.GpxPointNode;
-import ch.bailu.aat.gpx.interfaces.GpxType;
+import ch.bailu.aat_lib.description.ContentDescription;
+import ch.bailu.aat_lib.gpx.GpxInformation;
+import ch.bailu.aat_lib.gpx.GpxPointNode;
+import ch.bailu.aat_lib.gpx.attributes.GpxAttributes;
+import ch.bailu.aat_lib.gpx.interfaces.GpxType;
+
 
 public class HtmlBuilderGpx extends HtmlBuilder {
 

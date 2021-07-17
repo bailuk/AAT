@@ -1,13 +1,13 @@
 package ch.bailu.aat.description;
 
-import ch.bailu.aat.gpx.GpxInformation;
+import ch.bailu.aat_lib.description.ContentDescription;
+import ch.bailu.aat_lib.gpx.GpxInformation;
 
 public class ContentDescriptions extends ContentDescription {
 
     private final ContentDescription[] descriptions;
 
     public ContentDescriptions(ContentDescription... d) {
-        super(d[0].getContext());
         descriptions = d;
     }
 

@@ -2,8 +2,8 @@ package ch.bailu.aat.views;
 
 import android.view.ViewGroup;
 
-import ch.bailu.aat.dispatcher.OnContentUpdatedInterface;
-import ch.bailu.aat.gpx.GpxInformation;
+import ch.bailu.aat_lib.dispatcher.OnContentUpdatedInterface;
+import ch.bailu.aat_lib.gpx.GpxInformation;
 
 public class BusyViewControlIID extends BusyViewControl implements OnContentUpdatedInterface {
 

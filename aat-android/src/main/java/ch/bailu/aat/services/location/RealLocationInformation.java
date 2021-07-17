@@ -2,6 +2,7 @@ package ch.bailu.aat.services.location;
 
 import android.location.Location;
 
+import ch.bailu.aat_lib.service.location.LocationInformation;
 import ch.bailu.foc.Foc;
 import ch.bailu.foc.FocName;
 

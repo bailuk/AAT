@@ -1,5 +1,6 @@
 package ch.bailu.aat.views.description;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Build;
@@ -10,14 +11,15 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import ch.bailu.aat.R;
-import ch.bailu.aat.description.ContentDescription;
-import ch.bailu.aat.dispatcher.OnContentUpdatedInterface;
-import ch.bailu.aat.gpx.GpxInformation;
-import ch.bailu.aat.gpx.InfoID;
-import ch.bailu.aat.util.AppBroadcaster;
-import ch.bailu.aat.util.ui.AppLog;
+import ch.bailu.aat.util.OldAppBroadcaster;
 import ch.bailu.aat.util.ui.ToolTip;
 import ch.bailu.aat.util.ui.UiTheme;
+import ch.bailu.aat_lib.description.ContentDescription;
+import ch.bailu.aat_lib.dispatcher.AppBroadcaster;
+import ch.bailu.aat_lib.dispatcher.OnContentUpdatedInterface;
+import ch.bailu.aat_lib.gpx.GpxInformation;
+import ch.bailu.aat_lib.gpx.InfoID;
+import ch.bailu.aat_lib.logger.AppLog;
 
 public class NumberView extends ViewGroup implements OnContentUpdatedInterface {
 
@@ -29,8 +31,8 @@ public class NumberView extends ViewGroup implements OnContentUpdatedInterface {
     private final UiTheme theme;
 
 
-    public NumberView(ContentDescription data, UiTheme theme) {
-        super(data.getContext());
+    public NumberView(Context context, ContentDescription data, UiTheme theme) {
+        super(context);
 
         this.theme = theme;
 
@@ -200,7 +202,7 @@ public class NumberView extends ViewGroup implements OnContentUpdatedInterface {
 
         setOnClickListener(v -> {
             AppLog.i(v.getContext(), v.getContext().getString(R.string.sensor_connect));
-            AppBroadcaster.broadcast(v.getContext(), AppBroadcaster.SENSOR_RECONNECT + InfoID.SENSORS);
+            OldAppBroadcaster.broadcast(v.getContext(), AppBroadcaster.SENSOR_RECONNECT + InfoID.SENSORS);
         });
         return this;
     }

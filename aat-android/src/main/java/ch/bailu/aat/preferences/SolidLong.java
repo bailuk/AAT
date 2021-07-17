@@ -1,20 +1,21 @@
 package ch.bailu.aat.preferences;
 
-import android.content.Context;
-
 import ch.bailu.aat.R;
-import ch.bailu.aat.exception.ValidationException;
-import ch.bailu.aat.util.ui.AppLog;
+import ch.bailu.aat_lib.exception.ValidationException;
+import ch.bailu.aat_lib.logger.AppLog;
+import ch.bailu.aat_lib.preferences.AbsSolidType;
+import ch.bailu.aat_lib.preferences.StorageInterface;
+import ch.bailu.aat_lib.resources.Res;
 
 public class SolidLong extends AbsSolidType {
 
 
     private final String key;
-    private final Storage storage;
+    private final StorageInterface storage;
 
 
-    public SolidLong(Context c, String k) {
-        storage=new Storage(c);
+    public SolidLong(StorageInterface s, String k) {
+        storage=s;
         key=k;
     }
 
@@ -31,12 +32,12 @@ public class SolidLong extends AbsSolidType {
             s = s.trim();
 
             if (! validate(s)) {
-                throw new ValidationException(getString(R.string.error_long, s));
+                throw new ValidationException(String.format(Res.str().error_long(),s));
             } else {
                 try {
                     setValue(Long.parseLong(s));
                 } catch (NumberFormatException e) {
-                    AppLog.e(getContext(), e);
+                    AppLog.e(this, e);
                 }
             }
     }
@@ -48,7 +49,7 @@ public class SolidLong extends AbsSolidType {
     }
 
     @Override
-    public Storage getStorage() {
+    public StorageInterface getStorage() {
         return storage;
     }
 

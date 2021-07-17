@@ -6,7 +6,7 @@ import org.mapsforge.core.model.LatLong;
 
 import java.text.DecimalFormat;
 
-import ch.bailu.aat.util.ui.AppLog;
+import ch.bailu.aat_lib.logger.AppLog;
 
 public class WGS84Coordinates extends Coordinates {
 

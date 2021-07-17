@@ -1,10 +1,11 @@
 package ch.bailu.aat.services.cache.elevation;
 
-import ch.bailu.aat.services.cache.Obj;
-import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.background.BackgroundTask;
-import ch.bailu.aat.services.dem.tile.MultiCell;
+import ch.bailu.aat.services.cache.Obj;
+import ch.bailu.aat.services.elevation.tile.MultiCell;
+import ch.bailu.aat.util.OldAppBroadcaster;
+import ch.bailu.aat_lib.dispatcher.AppBroadcaster;
 
 public final class ObjHillshadeColorTable extends Obj {
 
@@ -113,7 +114,7 @@ public final class ObjHillshadeColorTable extends Obj {
             }
 
             isInitialized = true;
-            AppBroadcaster.broadcast(sc.getContext(), AppBroadcaster.FILE_CHANGED_INCACHE, ID);
+            OldAppBroadcaster.broadcast(sc.getContext(), AppBroadcaster.FILE_CHANGED_INCACHE, ID);
 
             return TABLE_SIZE;
         }

@@ -1,7 +1,6 @@
 package ch.bailu.aat.util.ui;
 
 import android.app.Activity;
-import android.content.SharedPreferences;
 import android.os.Build;
 import android.view.Window;
 import android.view.WindowManager;
@@ -10,16 +9,19 @@ import androidx.annotation.RequiresApi;
 
 import java.io.Closeable;
 
-import ch.bailu.aat.dispatcher.OnContentUpdatedInterface;
-import ch.bailu.aat.gpx.GpxInformation;
-import ch.bailu.aat.gpx.StateID;
 import ch.bailu.aat.preferences.presets.SolidBacklight;
-import ch.bailu.aat.preferences.presets.SolidPreset;
+import ch.bailu.aat.preferences.system.AndroidSolidDataDirectory;
 import ch.bailu.aat.services.InsideContext;
 import ch.bailu.aat.services.ServiceContext;
+import ch.bailu.aat_lib.dispatcher.OnContentUpdatedInterface;
+import ch.bailu.aat_lib.gpx.GpxInformation;
+import ch.bailu.aat_lib.gpx.StateID;
+import ch.bailu.aat_lib.preferences.OnPreferencesChanged;
+import ch.bailu.aat_lib.preferences.StorageInterface;
+import ch.bailu.aat_lib.preferences.presets.SolidPreset;
 
 public class Backlight implements OnContentUpdatedInterface,
-        SharedPreferences.OnSharedPreferenceChangeListener, Closeable {
+        OnPreferencesChanged, Closeable {
 
     private final ServiceContext scontext;
     private final Activity activity;
@@ -36,7 +38,7 @@ public class Backlight implements OnContentUpdatedInterface,
         activity = a;
         window = a.getWindow();
 
-        spreset = new SolidPreset(sc.getContext());
+        spreset = new SolidPreset(new AndroidSolidDataDirectory(sc.getContext()));
         sbacklight = setToPreset();
 
         spreset.register(this);
@@ -59,7 +61,7 @@ public class Backlight implements OnContentUpdatedInterface,
 
 
     @Override
-    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+    public void onPreferencesChanged(StorageInterface s, String key) {
         if (spreset.hasKey(key)) {
             setBacklightAndPreset();
 

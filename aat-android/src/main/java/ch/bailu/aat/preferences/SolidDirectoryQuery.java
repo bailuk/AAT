@@ -1,11 +1,13 @@
 package ch.bailu.aat.preferences;
 
-import android.content.Context;
-
 import java.util.ArrayList;
 
-import ch.bailu.aat.R;
 import ch.bailu.aat.services.directory.GpxDbConstants;
+import ch.bailu.aat_lib.factory.FocFactory;
+import ch.bailu.aat_lib.preferences.SolidFile;
+import ch.bailu.aat_lib.preferences.SolidInteger;
+import ch.bailu.aat_lib.preferences.StorageInterface;
+import ch.bailu.aat_lib.resources.Res;
 
 public class SolidDirectoryQuery extends SolidFile {
     private static final String KEY_DIR_DIRECTORY="DIR_DIRECTORY";
@@ -21,8 +23,8 @@ public class SolidDirectoryQuery extends SolidFile {
     private final static String KEY_BOUNDING_BOX = "BOX_";
 
 
-    public SolidDirectoryQuery(Context c) {
-        super(c, KEY_DIR_DIRECTORY);
+    public SolidDirectoryQuery(StorageInterface s, FocFactory f) {
+        super(s, KEY_DIR_DIRECTORY, f);
 
     }
 
@@ -31,46 +33,46 @@ public class SolidDirectoryQuery extends SolidFile {
     }
 
     public SolidInteger getPosition() {
-        return new SolidInteger(getContext(), KEY_DIR_INDEX+ getValueAsString());
+        return new SolidInteger(getStorage(), KEY_DIR_INDEX+ getValueAsString());
     }
 
 
     public SolidBoolean getUseDateStart() {
-        return new SolidBoolean(getContext(), KEY_USE_DATE_START+ getValueAsString());
+        return new SolidBoolean(getStorage(), KEY_USE_DATE_START+ getValueAsString());
     }
 
 
     public SolidBoolean getUseDateEnd() {
-        return new SolidBoolean(getContext(), KEY_USE_DATE_END+ getValueAsString());
+        return new SolidBoolean(getStorage(), KEY_USE_DATE_END+ getValueAsString());
     }
 
 
     public SolidDate getDateStart() {
         return new SolidDate(
-                getContext(),
+                getStorage(),
                 KEY_DATE_START+ getValueAsString(),
-                getContext().getString(R.string.filter_date_start));
+                Res.str().filter_date_start());
 
     }
 
 
     public SolidDate getDateTo() {
         return new SolidDate(
-                getContext(),
+                getStorage(),
                 KEY_DATE_END+ getValueAsString(),
-                getContext().getString(R.string.filter_date_to));
+                Res.str().filter_date_to());
     }
 
     public SolidBoolean getUseGeo() {
-        return new SolidBoolean(getContext(), KEY_USE_GEO+ getValueAsString());
+        return new SolidBoolean(getStorage(), KEY_USE_GEO+ getValueAsString());
 
     }
 
     public SolidBoundingBox getBoundingBox() {
         return new SolidBoundingBox(
-                getContext(),
+                getStorage(),
                 KEY_BOUNDING_BOX+ getValueAsString(),
-                getContext().getString(R.string.filter_geo));
+                 Res.str().filter_geo());
     }
 
 

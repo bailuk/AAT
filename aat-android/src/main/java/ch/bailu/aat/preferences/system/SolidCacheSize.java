@@ -1,10 +1,10 @@
 package ch.bailu.aat.preferences.system;
 
-import android.content.Context;
-
 import ch.bailu.aat.R;
-import ch.bailu.aat.preferences.SolidIndexList;
 import ch.bailu.aat.util.MemSize;
+import ch.bailu.aat_lib.preferences.SolidIndexList;
+import ch.bailu.aat_lib.preferences.StorageInterface;
+import ch.bailu.aat_lib.resources.Res;
 
 public class SolidCacheSize extends SolidIndexList {
     final static String KEY = "cache_size";
@@ -12,8 +12,8 @@ public class SolidCacheSize extends SolidIndexList {
     private static long[] sizes;
 
 
-    public SolidCacheSize(Context c) {
-        super(c, KEY);
+    public SolidCacheSize(StorageInterface s) {
+        super(s, KEY);
 
         if (sizes == null) {
             long max = Runtime.getRuntime().maxMemory();
@@ -37,7 +37,7 @@ public class SolidCacheSize extends SolidIndexList {
 
     @Override
     public String getLabel() {
-        return getString(R.string.p_cache_size);
+        return Res.str().p_cache_size();
     }
 
     @Override

@@ -5,11 +5,11 @@ import android.os.Build;
 
 import java.io.Closeable;
 
-import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.sensor.bluetooth_le.BleSensorsSDK18;
 import ch.bailu.aat.services.sensor.internal.InternalSensorsSDK23;
 import ch.bailu.aat.services.sensor.list.SensorList;
+import ch.bailu.aat_lib.gpx.GpxInformation;
 
 public class Sensors implements Closeable {
 

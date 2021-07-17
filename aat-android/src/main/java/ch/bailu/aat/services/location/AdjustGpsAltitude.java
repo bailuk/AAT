@@ -2,10 +2,14 @@ package ch.bailu.aat.services.location;
 
 import android.content.Context;
 
-import ch.bailu.aat.preferences.general.SolidUnit;
 import ch.bailu.aat.preferences.location.SolidAdjustGpsAltitude;
 import ch.bailu.aat.preferences.location.SolidAdjustGpsAltitudeValue;
 import ch.bailu.aat.preferences.location.SolidProvideAltitude;
+import ch.bailu.aat_lib.preferences.StorageInterface;
+import ch.bailu.aat_lib.preferences.general.SolidUnit;
+import ch.bailu.aat_lib.service.location.LocationInformation;
+import ch.bailu.aat_lib.service.location.LocationStackChainedItem;
+import ch.bailu.aat_lib.service.location.LocationStackItem;
 
 public final class AdjustGpsAltitude extends LocationStackChainedItem {
 
@@ -45,7 +49,7 @@ public final class AdjustGpsAltitude extends LocationStackChainedItem {
 
 
     @Override
-    public void preferencesChanged(Context c, String key, int presetIndex) {
+    public void onPreferencesChanged(StorageInterface storage, String key, int presetIndex) {
         if (senabled.hasKey(key)) {
             enabled = senabled.getValue();
 

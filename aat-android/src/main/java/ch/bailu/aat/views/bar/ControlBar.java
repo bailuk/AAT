@@ -7,12 +7,12 @@ import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 
-import ch.bailu.aat.preferences.SolidIndexList;
 import ch.bailu.aat.util.ui.AppLayout;
-import ch.bailu.aat.util.ui.AppLog;
 import ch.bailu.aat.util.ui.UiTheme;
 import ch.bailu.aat.views.ImageButtonViewGroup;
 import ch.bailu.aat.views.preferences.SolidImageButton;
+import ch.bailu.aat_lib.logger.AppLog;
+import ch.bailu.aat_lib.preferences.SolidIndexList;
 
 
 public class ControlBar extends LinearLayout {
@@ -130,7 +130,7 @@ public class ControlBar extends LinearLayout {
 
 
     public View addSolidIndexButton(SolidIndexList slist) {
-        View button = new SolidImageButton(slist);
+        View button = new SolidImageButton(getContext(),slist);
         theme.button(button);
         return add(button);
     }

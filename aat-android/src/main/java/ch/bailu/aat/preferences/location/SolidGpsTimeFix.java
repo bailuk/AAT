@@ -1,10 +1,9 @@
 package ch.bailu.aat.preferences.location;
 
 
-import android.content.Context;
-
-import ch.bailu.aat.R;
 import ch.bailu.aat.preferences.SolidBoolean;
+import ch.bailu.aat_lib.preferences.StorageInterface;
+import ch.bailu.aat_lib.resources.Res;
 
 public class SolidGpsTimeFix extends SolidBoolean {
 
@@ -12,13 +11,13 @@ public class SolidGpsTimeFix extends SolidBoolean {
     private static long differenceHour = 0;
     private static long differenceMillis = 0;
 
-    public SolidGpsTimeFix(Context c) {
-        super(c, SolidGpsTimeFix.class.getSimpleName());
+    public SolidGpsTimeFix(StorageInterface s) {
+        super(s, SolidGpsTimeFix.class.getSimpleName());
     }
 
     @Override
     public String getLabel() {
-        return getString(R.string.p_fix_gps);
+        return Res.str().p_fix_gps();
     }
 
 
@@ -55,9 +54,9 @@ public class SolidGpsTimeFix extends SolidBoolean {
         if (checked > 0) {
 
             if (differenceHour == 0) {
-                return getString(R.string.p_fix_correct);
+                return Res.str().p_fix_correct();
             } else {
-                return getString(R.string.p_fix_differs) + " "  + differenceHour;
+                return Res.str().p_fix_differs() + " "  + differenceHour;
             }
         }
         return null;

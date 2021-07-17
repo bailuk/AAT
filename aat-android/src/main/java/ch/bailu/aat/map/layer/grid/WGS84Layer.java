@@ -1,14 +1,14 @@
 package ch.bailu.aat.map.layer.grid;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 
 import org.mapsforge.core.model.LatLong;
 
 import ch.bailu.aat.coordinates.WGS84Coordinates;
-import ch.bailu.aat.description.FF;
 import ch.bailu.aat.map.MapContext;
 import ch.bailu.aat.map.layer.MapLayerInterface;
+import ch.bailu.aat_lib.description.FF;
+import ch.bailu.aat_lib.preferences.StorageInterface;
 
 public final class WGS84Layer implements MapLayerInterface {
 
@@ -50,28 +50,17 @@ public final class WGS84Layer implements MapLayerInterface {
     }
 
 
-
+    @Override
+    public void onLayout(boolean changed, int l, int t, int r, int b) {}
 
 
     @Override
-    public void onLayout(boolean changed, int l, int t, int r, int b) {
-
-    }
-
+    public void onPreferencesChanged(StorageInterface s, String key) {}
 
 
     @Override
-    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-
-    }
+    public void onAttached() {}
 
     @Override
-    public void onAttached() {
-
-    }
-
-    @Override
-    public void onDetached() {
-
-    }
+    public void onDetached() {}
 }

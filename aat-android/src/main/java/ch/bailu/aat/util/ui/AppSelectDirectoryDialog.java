@@ -5,7 +5,9 @@ import android.content.Context;
 import android.content.DialogInterface;
 
 import ch.bailu.aat.R;
-import ch.bailu.aat.util.fs.AppDirectory;
+import ch.bailu.aat.preferences.system.AndroidSolidDataDirectory;
+import ch.bailu.aat_lib.preferences.system.SolidDataDirectory;
+import ch.bailu.aat_lib.util.fs.AppDirectory;
 import ch.bailu.foc.Foc;
 
 public abstract class AppSelectDirectoryDialog  implements  DialogInterface.OnClickListener {
@@ -17,15 +19,16 @@ public abstract class AppSelectDirectoryDialog  implements  DialogInterface.OnCl
     public AppSelectDirectoryDialog (Context c, Foc u) {
 
         context=c;
+        SolidDataDirectory sdirectory = new AndroidSolidDataDirectory(context);
         srcFile = u;
         directories = new Foc[] {
-                AppDirectory.getTrackListDirectory(context, 0),
-                AppDirectory.getTrackListDirectory(context, 1),
-                AppDirectory.getTrackListDirectory(context, 2),
-                AppDirectory.getTrackListDirectory(context, 3),
-                AppDirectory.getTrackListDirectory(context, 4),
-                AppDirectory.getDataDirectory(context, AppDirectory.DIR_OVERLAY),
-                AppDirectory.getDataDirectory(context, AppDirectory.DIR_IMPORT)
+                AppDirectory.getTrackListDirectory(sdirectory, 0),
+                AppDirectory.getTrackListDirectory(sdirectory, 1),
+                AppDirectory.getTrackListDirectory(sdirectory, 2),
+                AppDirectory.getTrackListDirectory(sdirectory, 3),
+                AppDirectory.getTrackListDirectory(sdirectory, 4),
+                AppDirectory.getDataDirectory(sdirectory, AppDirectory.DIR_OVERLAY),
+                AppDirectory.getDataDirectory(sdirectory, AppDirectory.DIR_IMPORT)
                 };
 
 

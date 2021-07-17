@@ -6,8 +6,9 @@ import com.caverock.androidsvg.SVG;
 
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.background.BackgroundTask;
-import ch.bailu.aat.util.AppBroadcaster;
+import ch.bailu.aat.util.OldAppBroadcaster;
 import ch.bailu.aat.util.graphic.SyncTileBitmap;
+import ch.bailu.aat_lib.dispatcher.AppBroadcaster;
 
 public final class ObjSVGAsset extends ObjImageAbstract {
 
@@ -117,7 +118,7 @@ public final class ObjSVGAsset extends ObjImageAbstract {
                         self.setException(e);
                     }
 
-                    AppBroadcaster.broadcast(sc.getContext(),
+                    OldAppBroadcaster.broadcast(sc.getContext(),
                            AppBroadcaster.FILE_CHANGED_INCACHE, ID);
 
 

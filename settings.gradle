@@ -1,5 +1,6 @@
 include ':util'
 include ':util-java'
+include ':aat-lib'
 include ':aat-android'
 
 

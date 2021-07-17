@@ -8,6 +8,7 @@ import org.mapsforge.core.model.Point;
 import ch.bailu.aat.coordinates.CH1903Coordinates;
 import ch.bailu.aat.coordinates.MeterCoordinates;
 import ch.bailu.aat.map.MapContext;
+import ch.bailu.aat_lib.preferences.StorageInterface;
 
 public final class CH1903GridLayer extends MeterGridLayer {
     public CH1903GridLayer(MapContext cl) {
@@ -52,9 +53,8 @@ public final class CH1903GridLayer extends MeterGridLayer {
 
 
     @Override
-    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+    public void onPreferencesChanged(StorageInterface s, String key) {}
 
-    }
 
     @Override
     public void onAttached() {

@@ -6,13 +6,14 @@ import android.content.Context;
 import ch.bailu.aat.R;
 import ch.bailu.aat.map.tile.source.MapsForgeSource;
 import ch.bailu.aat.map.tile.source.Source;
+import ch.bailu.aat.preferences.Storage;
+import ch.bailu.aat.preferences.map.AndroidSolidTileCacheDirectory;
 import ch.bailu.aat.preferences.map.SolidDem3Directory;
 import ch.bailu.aat.preferences.map.SolidDem3EnableDownload;
 import ch.bailu.aat.preferences.map.SolidEnableTileCache;
 import ch.bailu.aat.preferences.map.SolidMapsForgeDirectory;
 import ch.bailu.aat.preferences.map.SolidMapsForgeMapFile;
 import ch.bailu.aat.preferences.map.SolidRenderTheme;
-import ch.bailu.aat.preferences.map.SolidTileCacheDirectory;
 import ch.bailu.aat.preferences.map.SolidTileSize;
 import ch.bailu.aat.preferences.map.SolidTrimDate;
 import ch.bailu.aat.preferences.map.SolidTrimMode;
@@ -34,27 +35,27 @@ public class MapTilePreferencesView extends VerticalScrollView {
 
 
         add(new TitleView(context, context.getString(R.string.p_tiles), theme));
-        add(new SolidIndexListView(new SolidTileSize(context), theme));
-        add(new SolidDirectoryViewSAF(acontext, new SolidTileCacheDirectory(context), theme));
-        add(new SolidCheckBox(new SolidVolumeKeys(acontext), theme));
+        add(new SolidIndexListView(context,new SolidTileSize(context), theme));
+        add(new SolidDirectoryViewSAF(acontext, new AndroidSolidTileCacheDirectory(context), theme));
+        add(new SolidCheckBox(acontext, new SolidVolumeKeys(new Storage(context)), theme));
 
         add(new TitleView(context, MapsForgeSource.NAME, theme));
-        add(new SolidDirectoryView(new SolidMapsForgeMapFile(context), theme));
-        add(new SolidDirectoryView(new SolidMapsForgeDirectory(context), theme));
-        add(new SolidStringView(new SolidRenderTheme(context), theme));
-        add(new SolidCheckBox(new SolidEnableTileCache.MapsForge(context), theme));
+        add(new SolidDirectoryView(context,new SolidMapsForgeMapFile(context), theme));
+        add(new SolidDirectoryView(context,new SolidMapsForgeDirectory(context), theme));
+        add(new SolidStringView(context,new SolidRenderTheme(context), theme));
+        add(new SolidCheckBox(acontext, new SolidEnableTileCache.MapsForge(context), theme));
 
         add(new TitleView(context, ToDo.translate("Dem3 altitude tiles"), theme));
         add(new SolidDirectoryViewSAF(acontext, new SolidDem3Directory(context), theme));
-        add(new SolidCheckBox(new SolidDem3EnableDownload(context), theme));
+        add(new SolidCheckBox(acontext, new SolidDem3EnableDownload(context), theme));
 
         add(new TitleView(context, Source.ELEVATION_HILLSHADE.getName(), theme));
-        add(new SolidCheckBox(new SolidEnableTileCache.Hillshade(context), theme));
+        add(new SolidCheckBox(acontext, new SolidEnableTileCache.Hillshade(context), theme));
 
         add(new TitleView(context, context.getString(R.string.p_trim_cache), theme));
-        add(new SolidIndexListView(new SolidTrimMode(context), theme));
-        add(new SolidIndexListView(new SolidTrimSize(context), theme));
-        add(new SolidIndexListView(new SolidTrimDate(context), theme));
+        add(new SolidIndexListView(context,new SolidTrimMode(context), theme));
+        add(new SolidIndexListView(context,new SolidTrimSize(context), theme));
+        add(new SolidIndexListView(context,new SolidTrimDate(context), theme));
 
         tileRemover = new TileRemoverView(scontext, acontext, theme);
         add(tileRemover);

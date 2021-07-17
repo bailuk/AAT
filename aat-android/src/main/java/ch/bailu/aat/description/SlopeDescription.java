@@ -2,15 +2,15 @@ package ch.bailu.aat.description;
 
 import android.content.Context;
 
-import ch.bailu.aat.R;
-import ch.bailu.aat.gpx.attributes.AltitudeDelta;
-import ch.bailu.aat.gpx.GpxInformation;
+import ch.bailu.aat_lib.description.ContentDescription;
+import ch.bailu.aat_lib.gpx.GpxInformation;
+import ch.bailu.aat_lib.gpx.attributes.AltitudeDelta;
+import ch.bailu.aat_lib.resources.Res;
 
 public class SlopeDescription extends ContentDescription {
     private String slope="0";
 
     public SlopeDescription(Context c) {
-        super(c);
     }
 
     @Override
@@ -29,6 +29,6 @@ public class SlopeDescription extends ContentDescription {
 
     @Override
     public String getLabel() {
-        return getContext().getString(R.string.d_slope);
+        return Res.str().d_slope();
     }
 }

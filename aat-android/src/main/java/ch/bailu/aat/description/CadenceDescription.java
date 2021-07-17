@@ -3,10 +3,11 @@ package ch.bailu.aat.description;
 import android.content.Context;
 
 import ch.bailu.aat.R;
-import ch.bailu.aat.gpx.GpxInformation;
-import ch.bailu.aat.gpx.InfoID;
-import ch.bailu.aat.services.sensor.attributes.CadenceSpeedAttributes;
 import ch.bailu.aat.services.sensor.list.SensorState;
+import ch.bailu.aat_lib.description.ContentDescription;
+import ch.bailu.aat_lib.gpx.GpxInformation;
+import ch.bailu.aat_lib.gpx.InfoID;
+import ch.bailu.aat_lib.gpx.attributes.CadenceSpeedAttributes;
 
 public class CadenceDescription  extends ContentDescription {
     public static final String UNIT = "rpm";
@@ -18,7 +19,6 @@ public class CadenceDescription  extends ContentDescription {
 
 
     public CadenceDescription(Context c) {
-        super(c);
         LABEL = c.getString(R.string.sensor_cadence);
         LABEL_WAIT = LABEL + "...";
         label = LABEL;

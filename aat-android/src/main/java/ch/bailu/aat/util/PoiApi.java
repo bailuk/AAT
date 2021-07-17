@@ -15,15 +15,17 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import ch.bailu.aat.R;
-import ch.bailu.aat.coordinates.BoundingBoxE6;
-import ch.bailu.aat.gpx.writer.WayWriter;
 import ch.bailu.aat.gpx.writer.WayWriterOsmTags;
 import ch.bailu.aat.preferences.map.SolidPoiDatabase;
+import ch.bailu.aat.preferences.system.AndroidSolidDataDirectory;
 import ch.bailu.aat.services.InsideContext;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.background.BackgroundTask;
 import ch.bailu.aat.services.background.FileTask;
-import ch.bailu.aat.util.fs.AppDirectory;
+import ch.bailu.aat_lib.coordinates.BoundingBoxE6;
+import ch.bailu.aat_lib.dispatcher.AppBroadcaster;
+import ch.bailu.aat_lib.util.fs.AppDirectory;
+import ch.bailu.aat_lib.xml.writer.WayWriter;
 import ch.bailu.foc.Foc;
 
 public abstract class PoiApi extends OsmApiConfiguration {
@@ -44,7 +46,7 @@ public abstract class PoiApi extends OsmApiConfiguration {
     public PoiApi(Context context, BoundingBoxE6 box) {
         this.context = context;
         bounding = box;
-        directory = AppDirectory.getDataDirectory(context, AppDirectory.DIR_POI);
+        directory = AppDirectory.getDataDirectory(new AndroidSolidDataDirectory(context), AppDirectory.DIR_POI);
     }
 
 
@@ -134,7 +136,7 @@ public abstract class PoiApi extends OsmApiConfiguration {
             persistenceManager.close();
 
 
-            AppBroadcaster.broadcast(sc.getContext(), AppBroadcaster.FILE_CHANGED_ONDISK,
+            OldAppBroadcaster.broadcast(sc.getContext(), AppBroadcaster.FILE_CHANGED_ONDISK,
                     getFile().getPath(), poiDatabase);
 
             return 100;

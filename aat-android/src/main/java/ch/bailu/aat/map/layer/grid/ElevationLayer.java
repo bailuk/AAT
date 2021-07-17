@@ -1,7 +1,6 @@
 package ch.bailu.aat.map.layer.grid;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 
 import org.mapsforge.core.model.LatLong;
 import org.mapsforge.core.model.Point;
@@ -10,6 +9,7 @@ import ch.bailu.aat.description.AltitudeDescription;
 import ch.bailu.aat.map.MapContext;
 import ch.bailu.aat.map.layer.MapLayerInterface;
 import ch.bailu.aat.services.InsideContext;
+import ch.bailu.aat_lib.preferences.StorageInterface;
 
 public final class ElevationLayer implements MapLayerInterface {
 
@@ -62,9 +62,8 @@ public final class ElevationLayer implements MapLayerInterface {
     }
 
     @Override
-    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s) {
+    public void onPreferencesChanged(StorageInterface s, String key) {}
 
-    }
 
     @Override
     public void onAttached() {

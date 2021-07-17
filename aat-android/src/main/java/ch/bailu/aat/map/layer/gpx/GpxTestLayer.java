@@ -1,6 +1,5 @@
 package ch.bailu.aat.map.layer.gpx;
 
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Rect;
 
@@ -9,13 +8,14 @@ import org.mapsforge.core.graphics.Style;
 import org.mapsforge.core.model.Point;
 import org.mapsforge.map.android.graphics.AndroidGraphicFactory;
 
-import ch.bailu.aat.coordinates.BoundingBoxE6;
 import ch.bailu.aat.dispatcher.DispatcherInterface;
-import ch.bailu.aat.gpx.GpxList;
 import ch.bailu.aat.gpx.GpxListWalker;
-import ch.bailu.aat.gpx.GpxPointNode;
-import ch.bailu.aat.gpx.GpxSegmentNode;
 import ch.bailu.aat.map.MapContext;
+import ch.bailu.aat_lib.coordinates.BoundingBoxE6;
+import ch.bailu.aat_lib.gpx.GpxList;
+import ch.bailu.aat_lib.gpx.GpxPointNode;
+import ch.bailu.aat_lib.gpx.GpxSegmentNode;
+import ch.bailu.aat_lib.preferences.StorageInterface;
 
 public final class GpxTestLayer extends GpxLayer {
 
@@ -114,9 +114,7 @@ public final class GpxTestLayer extends GpxLayer {
     }
 
     @Override
-    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-
-    }
+    public void onPreferencesChanged(StorageInterface s, String key) {}
 
 
 }

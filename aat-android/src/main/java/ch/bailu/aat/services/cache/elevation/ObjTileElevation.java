@@ -10,12 +10,12 @@ import org.mapsforge.core.model.Tile;
 import ch.bailu.aat.preferences.map.SolidTileSize;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.cache.ObjTile;
-import ch.bailu.aat.services.dem.tile.Dem3Tile;
-import ch.bailu.aat.services.dem.tile.DemDimension;
-import ch.bailu.aat.services.dem.tile.DemGeoToIndex;
-import ch.bailu.aat.services.dem.tile.DemProvider;
-import ch.bailu.aat.services.dem.tile.DemSplitter;
-import ch.bailu.aat.services.dem.updater.ElevationUpdaterClient;
+import ch.bailu.aat.services.elevation.tile.Dem3Tile;
+import ch.bailu.aat.services.elevation.tile.DemDimension;
+import ch.bailu.aat.services.elevation.tile.DemGeoToIndex;
+import ch.bailu.aat.services.elevation.tile.DemProvider;
+import ch.bailu.aat.services.elevation.tile.DemSplitter;
+import ch.bailu.aat.services.elevation.updater.ElevationUpdaterClient;
 import ch.bailu.aat.util.graphic.SyncTileBitmap;
 
 public abstract class ObjTileElevation extends ObjTile implements ElevationUpdaterClient {

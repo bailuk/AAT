@@ -2,15 +2,17 @@ package ch.bailu.aat.services.location;
 
 import android.content.Context;
 
-import ch.bailu.aat.gpx.attributes.AutoPause;
-import ch.bailu.aat.gpx.attributes.GpxListAttributes;
-import ch.bailu.aat.gpx.GpxList;
-import ch.bailu.aat.gpx.GpxPointNode;
-import ch.bailu.aat.gpx.StateID;
-import ch.bailu.aat.gpx.interfaces.GpxType;
-import ch.bailu.aat.gpx.xml_parser.GpxListReader;
 import ch.bailu.aat.preferences.location.SolidMockLocationFile;
 import ch.bailu.aat.util.Timer;
+import ch.bailu.aat_lib.gpx.GpxList;
+import ch.bailu.aat_lib.gpx.GpxPointNode;
+import ch.bailu.aat_lib.gpx.StateID;
+import ch.bailu.aat_lib.gpx.attributes.AutoPause;
+import ch.bailu.aat_lib.gpx.attributes.GpxListAttributes;
+import ch.bailu.aat_lib.gpx.interfaces.GpxType;
+import ch.bailu.aat_lib.service.location.LocationStackChainedItem;
+import ch.bailu.aat_lib.service.location.LocationStackItem;
+import ch.bailu.aat_lib.xml.parser.gpx.GpxListReader;
 import ch.bailu.foc.Foc;
 import ch.bailu.foc.FocName;
 import ch.bailu.foc_android.FocAndroid;

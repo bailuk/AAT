@@ -1,7 +1,7 @@
 package ch.bailu.aat.util.ui;
 
 import ch.bailu.aat.BuildConfig;
-import ch.bailu.aat.util.WithStatusText;
+import ch.bailu.aat_lib.util.WithStatusText;
 
 public class AppConfig implements WithStatusText {
     static public String getLongName() {

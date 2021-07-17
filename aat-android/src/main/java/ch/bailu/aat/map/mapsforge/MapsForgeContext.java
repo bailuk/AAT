@@ -1,7 +1,6 @@
 package ch.bailu.aat.map.mapsforge;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 
 import org.mapsforge.core.graphics.Canvas;
 import org.mapsforge.core.model.BoundingBox;
@@ -20,6 +19,7 @@ import ch.bailu.aat.map.TwoNodes;
 import ch.bailu.aat.map.layer.MapLayerInterface;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.util.ui.AppDensity;
+import ch.bailu.aat_lib.preferences.StorageInterface;
 
 public class MapsForgeContext extends Layer implements MapContext, MapLayerInterface {
 
@@ -78,9 +78,7 @@ public class MapsForgeContext extends Layer implements MapContext, MapLayerInter
 
 
     @Override
-    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-
-    }
+    public void onPreferencesChanged(StorageInterface s, String key) {}
 
     @Override
     public MapMetrics getMetrics() {

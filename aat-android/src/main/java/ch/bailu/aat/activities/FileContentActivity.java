@@ -11,7 +11,6 @@ import ch.bailu.aat.description.AveragePaceDescriptionAP;
 import ch.bailu.aat.description.AverageSpeedDescription;
 import ch.bailu.aat.description.AverageSpeedDescriptionAP;
 import ch.bailu.aat.description.CaloriesDescription;
-import ch.bailu.aat.description.ContentDescription;
 import ch.bailu.aat.description.ContentDescriptions;
 import ch.bailu.aat.description.DateDescription;
 import ch.bailu.aat.description.DescendDescription;
@@ -25,9 +24,7 @@ import ch.bailu.aat.description.PathDescription;
 import ch.bailu.aat.description.PauseApDescription;
 import ch.bailu.aat.description.PauseDescription;
 import ch.bailu.aat.description.TimeApDescription;
-import ch.bailu.aat.description.TimeDescription;
 import ch.bailu.aat.description.TrackSizeDescription;
-import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.map.MapFactory;
 import ch.bailu.aat.util.ui.AppLayout;
 import ch.bailu.aat.util.ui.AppTheme;
@@ -37,6 +34,9 @@ import ch.bailu.aat.views.bar.MainControlBar;
 import ch.bailu.aat.views.description.mview.MultiView;
 import ch.bailu.aat.views.graph.GraphViewFactory;
 import ch.bailu.aat.views.preferences.VerticalScrollView;
+import ch.bailu.aat_lib.description.ContentDescription;
+import ch.bailu.aat_lib.description.TimeDescription;
+import ch.bailu.aat_lib.gpx.InfoID;
 
 
 public class FileContentActivity extends AbsFileContentActivity{
@@ -79,11 +79,11 @@ public class FileContentActivity extends AbsFileContentActivity{
         return new ContentDescription[] {
                 new NameDescription(c),
                 new PathDescription(c),
-                new DateDescription(c),
+                new DateDescription(),
                 new EndDateDescription(c),
 
                 new ContentDescriptions(
-                        new TimeDescription(c),
+                        new TimeDescription(),
                         new TimeApDescription(c)),
 
                 new ContentDescriptions(

@@ -3,10 +3,10 @@ package ch.bailu.aat.views.description;
 import android.view.View;
 import android.view.View.OnClickListener;
 
-import ch.bailu.aat.description.TrackerStateDescription;
 import ch.bailu.aat.services.InsideContext;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.util.ui.AppTheme;
+import ch.bailu.aat_lib.description.TrackerStateDescription;
 
 public class TrackerStateButton extends ColorNumberView implements OnClickListener {
 
@@ -14,7 +14,7 @@ public class TrackerStateButton extends ColorNumberView implements OnClickListen
 
 
     public TrackerStateButton(ServiceContext c) {
-        super(new TrackerStateDescription(c.getContext()), AppTheme.bar);
+        super(c.getContext(),new TrackerStateDescription(), AppTheme.bar);
 
         scontext=c;
 

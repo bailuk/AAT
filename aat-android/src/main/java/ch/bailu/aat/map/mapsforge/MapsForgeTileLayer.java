@@ -1,6 +1,5 @@
 package ch.bailu.aat.map.mapsforge;
 
-import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Paint;
@@ -23,6 +22,7 @@ import ch.bailu.aat.map.layer.MapLayerInterface;
 import ch.bailu.aat.map.tile.TileProvider;
 import ch.bailu.aat.services.InsideContext;
 import ch.bailu.aat.services.ServiceContext;
+import ch.bailu.aat_lib.preferences.StorageInterface;
 
 public class MapsForgeTileLayer extends Layer implements MapLayerInterface, Observer {
 
@@ -162,5 +162,6 @@ public class MapsForgeTileLayer extends Layer implements MapLayerInterface, Obse
     public boolean onTap(LatLong tapLatLong, Point layerXY, Point tapXY) {return false;}
 
     @Override
-    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {}
+    public void onPreferencesChanged(StorageInterface s, String key) {}
+
 }

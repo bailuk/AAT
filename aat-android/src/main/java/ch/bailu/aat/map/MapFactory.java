@@ -4,7 +4,6 @@ import ch.bailu.aat.activities.AbsDispatcher;
 import ch.bailu.aat.activities.AbsGpxListActivity;
 import ch.bailu.aat.dispatcher.DispatcherInterface;
 import ch.bailu.aat.dispatcher.EditorSourceInterface;
-import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.map.layer.CurrentLocationLayer;
 import ch.bailu.aat.map.layer.control.CustomBarLayer;
 import ch.bailu.aat.map.layer.control.EditorLayer;
@@ -18,6 +17,7 @@ import ch.bailu.aat.map.mapsforge.MapsForgeView;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.util.ui.AppTheme;
 import ch.bailu.aat.views.bar.ControlBar;
+import ch.bailu.aat_lib.gpx.InfoID;
 
 public final class MapFactory {
 

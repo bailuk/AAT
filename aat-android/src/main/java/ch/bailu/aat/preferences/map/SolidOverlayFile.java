@@ -1,12 +1,13 @@
 package ch.bailu.aat.preferences.map;
 
 import android.content.Context;
-import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 
 import ch.bailu.aat.preferences.SolidBoolean;
-import ch.bailu.aat.preferences.SolidString;
-import ch.bailu.aat.preferences.SolidTypeInterface;
 import ch.bailu.aat.preferences.Storage;
+import ch.bailu.aat_lib.preferences.OnPreferencesChanged;
+import ch.bailu.aat_lib.preferences.SolidString;
+import ch.bailu.aat_lib.preferences.SolidTypeInterface;
+import ch.bailu.aat_lib.preferences.StorageInterface;
 import ch.bailu.foc.Foc;
 import ch.bailu.foc_android.FocAndroid;
 
@@ -18,11 +19,17 @@ public class SolidOverlayFile  implements SolidTypeInterface {
     private final SolidBoolean enabled;
 
 
+    private final Context context;
+
     public SolidOverlayFile(Context c, int i) {
-        path = new SolidString(c, KEY_NAME+i);
-        enabled = new SolidBoolean(c, KEY_ENABLED+i);
+        path = new SolidString(new Storage(c), KEY_NAME+i);
+        enabled = new SolidBoolean(new Storage(c), KEY_ENABLED+i);
+        context = c;
     }
 
+    public Context getContext() {
+        return context;
+    }
 
     public void setValueFromFile(Foc file) {
         if (file.exists()) {
@@ -60,10 +67,6 @@ public class SolidOverlayFile  implements SolidTypeInterface {
     }
 
 
-    @Override
-    public Context getContext() {
-        return enabled.getContext();
-    }
 
 
     @Override
@@ -73,7 +76,7 @@ public class SolidOverlayFile  implements SolidTypeInterface {
 
 
     @Override
-    public Storage getStorage() {
+    public StorageInterface getStorage() {
         return enabled.getStorage();
     }
 
@@ -85,14 +88,14 @@ public class SolidOverlayFile  implements SolidTypeInterface {
 
 
     @Override
-    public void register(OnSharedPreferenceChangeListener listener) {
+    public void register(OnPreferencesChanged listener) {
         getStorage().register(listener);
 
     }
 
 
     @Override
-    public void unregister(OnSharedPreferenceChangeListener listener) {
+    public void unregister(OnPreferencesChanged listener) {
         getStorage().unregister(listener);
 
     }

@@ -11,9 +11,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import ch.bailu.aat.R;
-import ch.bailu.aat.preferences.SolidFile;
+import ch.bailu.aat.preferences.SolidSAF;
 import ch.bailu.aat.util.Clipboard;
 import ch.bailu.aat.util.fs.FileIntent;
+import ch.bailu.aat_lib.preferences.SolidFile;
 
 public final class DirectoryMenu extends AbsMenu {
 
@@ -57,10 +58,10 @@ public final class DirectoryMenu extends AbsMenu {
 
     @Override
     public boolean onItemClick(MenuItem item) {
-        Context c = sdirectory.getContext();
+        Context c = acontext;
 
         if (item == browse) {
-            sdirectory.setFromPickerActivity(acontext);
+            new SolidSAF(sdirectory).setFromPickerActivity(acontext);
 
         } else if  (item == view) {
             FileIntent.view(c, new Intent(), sdirectory.getValueAsFile());

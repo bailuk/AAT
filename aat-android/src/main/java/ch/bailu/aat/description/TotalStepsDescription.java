@@ -3,9 +3,10 @@ package ch.bailu.aat.description;
 import android.content.Context;
 
 import ch.bailu.aat.R;
-import ch.bailu.aat.gpx.GpxInformation;
-import ch.bailu.aat.gpx.attributes.GpxAttributes;
-import ch.bailu.aat.services.sensor.attributes.StepCounterAttributes;
+import ch.bailu.aat_lib.description.ContentDescription;
+import ch.bailu.aat_lib.gpx.GpxInformation;
+import ch.bailu.aat_lib.gpx.attributes.GpxAttributes;
+import ch.bailu.aat_lib.gpx.attributes.StepCounterAttributes;
 
 public class TotalStepsDescription extends ContentDescription {
 
@@ -15,7 +16,6 @@ public class TotalStepsDescription extends ContentDescription {
 
 
     public TotalStepsDescription(Context c) {
-        super(c);
         unit = c.getString(R.string.sensor_step_total_unit);
         label = c.getString(R.string.sensor_step_total);
     }

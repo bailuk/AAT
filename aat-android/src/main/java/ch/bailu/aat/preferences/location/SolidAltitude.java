@@ -2,9 +2,10 @@ package ch.bailu.aat.preferences.location;
 
 import android.content.Context;
 
-import ch.bailu.aat.preferences.SolidInteger;
-import ch.bailu.aat.preferences.general.SolidUnit;
-import ch.bailu.aat.util.ui.AppLog;
+import ch.bailu.aat.preferences.Storage;
+import ch.bailu.aat_lib.logger.AppLog;
+import ch.bailu.aat_lib.preferences.SolidInteger;
+import ch.bailu.aat_lib.preferences.general.SolidUnit;
 
 public class SolidAltitude extends SolidInteger {
 
@@ -12,7 +13,7 @@ public class SolidAltitude extends SolidInteger {
 
 
     public SolidAltitude(Context c, String k, int u) {
-        super(c, k);
+        super(new Storage(c), k);
         unit = u;
     }
 
@@ -33,7 +34,7 @@ public class SolidAltitude extends SolidInteger {
         try {
             setValue(Math.round(Float.parseFloat(s) / SolidUnit.ALT_FACTOR[unit]));
         } catch (NumberFormatException e) {
-            AppLog.e(getContext(), e);
+            AppLog.e(this, e);
         }
     }
 

@@ -3,24 +3,25 @@ package ch.bailu.aat.dispatcher;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 
 import java.io.Closeable;
 
-import ch.bailu.aat.coordinates.BoundingBoxE6;
-import ch.bailu.aat.gpx.GpxInformation;
-import ch.bailu.aat.gpx.GpxList;
-import ch.bailu.aat.gpx.InfoID;
-import ch.bailu.aat.gpx.interfaces.GpxType;
 import ch.bailu.aat.preferences.map.SolidOverlayFile;
 import ch.bailu.aat.preferences.map.SolidOverlayFileList;
 import ch.bailu.aat.services.ServiceContext;
+import ch.bailu.aat.services.cache.Obj;
 import ch.bailu.aat.services.cache.ObjGpx;
 import ch.bailu.aat.services.cache.ObjGpxStatic;
-import ch.bailu.aat.services.cache.Obj;
-import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.util.AppIntent;
+import ch.bailu.aat.util.OldAppBroadcaster;
+import ch.bailu.aat_lib.coordinates.BoundingBoxE6;
+import ch.bailu.aat_lib.dispatcher.AppBroadcaster;
+import ch.bailu.aat_lib.gpx.GpxInformation;
+import ch.bailu.aat_lib.gpx.GpxList;
+import ch.bailu.aat_lib.gpx.InfoID;
+import ch.bailu.aat_lib.gpx.interfaces.GpxType;
+import ch.bailu.aat_lib.preferences.OnPreferencesChanged;
+import ch.bailu.aat_lib.preferences.StorageInterface;
 import ch.bailu.foc.Foc;
 import ch.bailu.foc_android.FocAndroid;
 
@@ -84,7 +85,7 @@ public class OverlaySource extends ContentSource {
 
             soverlay = new SolidOverlayFile(scontext.getContext(), index);
             soverlay.register(onPreferencesChanged);
-            AppBroadcaster.register(scontext.getContext(), onFileProcessed, AppBroadcaster.FILE_CHANGED_INCACHE);
+            OldAppBroadcaster.register(scontext.getContext(), onFileProcessed, AppBroadcaster.FILE_CHANGED_INCACHE);
         }
 
 
@@ -98,9 +99,9 @@ public class OverlaySource extends ContentSource {
 
         };
 
-        private final OnSharedPreferenceChangeListener onPreferencesChanged = new OnSharedPreferenceChangeListener() {
+        private final OnPreferencesChanged onPreferencesChanged = new OnPreferencesChanged() {
             @Override
-            public void onSharedPreferenceChanged(SharedPreferences sp, String key) {
+            public void onPreferencesChanged(StorageInterface s, String key) {
                 if (soverlay.hasKey(key)) {
                     initAndUpdateOverlay();
                 }

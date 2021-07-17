@@ -1,12 +1,13 @@
 package ch.bailu.aat.services.sensor.bluetooth_le;
 
 import android.bluetooth.BluetoothGattCharacteristic;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 
 import java.util.UUID;
 
-import ch.bailu.aat.gpx.GpxInformation;
+import ch.bailu.aat_lib.gpx.GpxInformation;
 
 @RequiresApi(api = 18)
 public final class BatteryService implements ServiceInterface {

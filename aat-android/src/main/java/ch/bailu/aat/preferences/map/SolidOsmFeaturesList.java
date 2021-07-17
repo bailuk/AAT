@@ -3,24 +3,25 @@ package ch.bailu.aat.preferences.map;
 
 import android.content.Context;
 
-import ch.bailu.aat.R;
 import ch.bailu.aat.preferences.SolidBoolean;
+import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat.services.cache.CacheService;
 import ch.bailu.aat.services.cache.osm_features.ObjMapFeatures;
 import ch.bailu.aat.util.filter_list.KeyList;
+import ch.bailu.aat_lib.resources.Res;
 
 public class SolidOsmFeaturesList extends SolidBoolean {
 
     private final static String SMALL_LIST_KEYS = "amenity emergency leisure shop sport tourism name";
 
     public SolidOsmFeaturesList(Context c) {
-        super(c, SolidOsmFeaturesList.class.getSimpleName());
+        super(new Storage(c), SolidOsmFeaturesList.class.getSimpleName());
     }
 
 
     @Override
     public String getLabel() {
-        return getString(R.string.all);
+        return Res.str().all();
     }
 
 

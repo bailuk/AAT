@@ -14,7 +14,6 @@ import ch.bailu.aat.dispatcher.OverlaySource;
 import ch.bailu.aat.dispatcher.SensorSource;
 import ch.bailu.aat.dispatcher.TrackerSource;
 import ch.bailu.aat.dispatcher.TrackerTimerSource;
-import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.map.MapFactory;
 import ch.bailu.aat.util.ui.AppLayout;
 import ch.bailu.aat.util.ui.AppTheme;
@@ -26,6 +25,7 @@ import ch.bailu.aat.views.bar.MainControlBar;
 import ch.bailu.aat.views.description.CockpitView;
 import ch.bailu.aat.views.description.mview.MultiView;
 import ch.bailu.aat.views.graph.GraphViewFactory;
+import ch.bailu.aat_lib.gpx.InfoID;
 
 public class CockpitActivity extends AbsKeepScreenOnActivity {
 

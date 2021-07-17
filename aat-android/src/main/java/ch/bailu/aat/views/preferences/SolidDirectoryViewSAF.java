@@ -2,14 +2,14 @@ package ch.bailu.aat.views.preferences;
 
 import android.app.Activity;
 
-import ch.bailu.aat.preferences.SolidFile;
 import ch.bailu.aat.util.ui.UiTheme;
+import ch.bailu.aat_lib.preferences.SolidFile;
 
 public class SolidDirectoryViewSAF extends SolidDirectoryView {
     private final Activity acontext;
 
     public SolidDirectoryViewSAF(Activity ac, SolidFile s, UiTheme theme) {
-        super(s, theme);
+        super(ac,s, theme);
         acontext = ac;
 
     }

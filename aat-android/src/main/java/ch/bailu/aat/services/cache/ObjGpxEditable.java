@@ -2,19 +2,20 @@ package ch.bailu.aat.services.cache;
 
 import android.content.Context;
 
-import ch.bailu.aat.coordinates.BoundingBoxE6;
-import ch.bailu.aat.gpx.GpxInformation;
-import ch.bailu.aat.gpx.GpxList;
-import ch.bailu.aat.gpx.GpxPoint;
-import ch.bailu.aat.gpx.GpxPointNode;
-import ch.bailu.aat.gpx.interfaces.GpxType;
-import ch.bailu.aat.gpx.writer.GpxListWriter;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.editor.EditorInterface;
 import ch.bailu.aat.services.editor.GpxEditor;
-import ch.bailu.aat.util.AppBroadcaster;
-import ch.bailu.aat.util.fs.AppDirectory;
-import ch.bailu.aat.util.ui.AppLog;
+import ch.bailu.aat.util.OldAppBroadcaster;
+import ch.bailu.aat_lib.coordinates.BoundingBoxE6;
+import ch.bailu.aat_lib.dispatcher.AppBroadcaster;
+import ch.bailu.aat_lib.gpx.GpxInformation;
+import ch.bailu.aat_lib.gpx.GpxList;
+import ch.bailu.aat_lib.gpx.GpxPoint;
+import ch.bailu.aat_lib.gpx.GpxPointNode;
+import ch.bailu.aat_lib.gpx.interfaces.GpxType;
+import ch.bailu.aat_lib.logger.AppLog;
+import ch.bailu.aat_lib.util.fs.AppDirectory;
+import ch.bailu.aat_lib.xml.writer.GpxListWriter;
 import ch.bailu.foc.Foc;
 
 public final class ObjGpxEditable extends ObjGpx {
@@ -157,7 +158,7 @@ public final class ObjGpxEditable extends ObjGpx {
             setVisibleTrackPoint(editor.getSelectedPoint());
             setVisibleTrackSegment(editor.getList().getDelta());
 
-            AppBroadcaster.broadcast(context, AppBroadcaster.FILE_CHANGED_INCACHE, getID());
+            OldAppBroadcaster.broadcast(context, AppBroadcaster.FILE_CHANGED_INCACHE, getID());
         }
 
         @Override
@@ -180,9 +181,9 @@ public final class ObjGpxEditable extends ObjGpx {
                 new GpxListWriter(editor.getList(),file).close();
                 modified=false;
 
-                AppBroadcaster.broadcast(context, AppBroadcaster.FILE_CHANGED_ONDISK, file.getPath(), getID());
+                OldAppBroadcaster.broadcast(context, AppBroadcaster.FILE_CHANGED_ONDISK, file.getPath(), getID());
             } catch (Exception e) {
-                AppLog.e(context, this, e);
+                AppLog.e(this, e);
             }
         }
 
@@ -239,11 +240,11 @@ public final class ObjGpxEditable extends ObjGpx {
 
                 new GpxListWriter(editor.getList(),file).close();
 
-                AppBroadcaster.broadcast(context, AppBroadcaster.FILE_CHANGED_ONDISK,
+                OldAppBroadcaster.broadcast(context, AppBroadcaster.FILE_CHANGED_ONDISK,
                         file.getPath(), getID());
 
             } catch (Exception e) {
-                AppLog.e(context, this, e);
+                AppLog.e( this, e);
             }
         }
 

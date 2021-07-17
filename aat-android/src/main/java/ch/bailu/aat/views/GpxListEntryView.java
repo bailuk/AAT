@@ -5,13 +5,13 @@ import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.LinearLayout;
 
-import ch.bailu.aat.description.ContentDescription;
-import ch.bailu.aat.dispatcher.OnContentUpdatedInterface;
-import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.menus.FileMenu;
 import ch.bailu.aat.util.AbsServiceLink;
 import ch.bailu.aat.util.ui.AppLayout;
 import ch.bailu.aat.util.ui.UiTheme;
+import ch.bailu.aat_lib.description.ContentDescription;
+import ch.bailu.aat_lib.dispatcher.OnContentUpdatedInterface;
+import ch.bailu.aat_lib.gpx.GpxInformation;
 import ch.bailu.foc.Foc;
 import ch.bailu.foc_android.FocAndroid;
 

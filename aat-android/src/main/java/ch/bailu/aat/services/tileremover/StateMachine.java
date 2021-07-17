@@ -4,7 +4,7 @@ import android.content.Context;
 
 import ch.bailu.aat.preferences.map.SolidTrimIndex;
 import ch.bailu.aat.services.ServiceContext;
-import ch.bailu.aat.util.AppBroadcaster;
+import ch.bailu.aat.util.OldAppBroadcaster;
 import ch.bailu.foc.Foc;
 
 public final class StateMachine implements State {
@@ -110,7 +110,7 @@ public final class StateMachine implements State {
     }
 
     public void broadcast(String msg) {
-        AppBroadcaster.broadcast(context, msg);
+        OldAppBroadcaster.broadcast(context, msg);
     }
 
 }

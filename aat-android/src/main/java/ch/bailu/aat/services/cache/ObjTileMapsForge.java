@@ -7,8 +7,9 @@ import org.mapsforge.core.model.Tile;
 
 import ch.bailu.aat.preferences.map.SolidTileSize;
 import ch.bailu.aat.services.ServiceContext;
-import ch.bailu.aat.util.AppBroadcaster;
+import ch.bailu.aat.util.OldAppBroadcaster;
 import ch.bailu.aat.util.graphic.SyncTileBitmap;
+import ch.bailu.aat_lib.dispatcher.AppBroadcaster;
 
 public final class ObjTileMapsForge extends ObjTile {
     private static long DEFAULT_SIZE = SolidTileSize.DEFAULT_TILESIZE_BYTES * 4;
@@ -58,7 +59,7 @@ public final class ObjTileMapsForge extends ObjTile {
 
     public void onRendered(TileBitmap fromRenderer) {
             bitmap.set(fromRenderer);
-            AppBroadcaster.broadcast(scontext.getContext(),
+            OldAppBroadcaster.broadcast(scontext.getContext(),
                     AppBroadcaster.FILE_CHANGED_INCACHE,
                     getID());
     }

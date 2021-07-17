@@ -1,8 +1,8 @@
 package ch.bailu.aat.services.tileremover;
 
-import ch.bailu.aat.preferences.map.SolidTileCacheDirectory;
-import ch.bailu.aat.util.AppBroadcaster;
-import ch.bailu.aat.util.ui.AppLog;
+import ch.bailu.aat.preferences.map.AndroidSolidTileCacheDirectory;
+import ch.bailu.aat_lib.dispatcher.AppBroadcaster;
+import ch.bailu.aat_lib.logger.AppLog;
 import ch.bailu.foc.Foc;
 
 
@@ -12,7 +12,7 @@ public final class StateScan implements State, Runnable {
 
     public StateScan(StateMachine s) {
         state = s;
-        state.baseDirectory = new SolidTileCacheDirectory(s.context).getValueAsFile();
+        state.baseDirectory = new AndroidSolidTileCacheDirectory(s.context).getValueAsFile();
 
         state.list = new TilesList();
         new Thread(this).start();

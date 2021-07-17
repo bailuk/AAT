@@ -1,40 +1,40 @@
 package ch.bailu.aat.services.sensor;
 
 import android.bluetooth.BluetoothAdapter;
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
 import android.os.Build;
+
 import androidx.annotation.NonNull;
 
-import ch.bailu.aat.gpx.GpxInformation;
-import ch.bailu.aat.gpx.InfoID;
+import ch.bailu.aat.dispatcher.AndroidBroadcaster;
 import ch.bailu.aat.services.ServiceContext;
-import ch.bailu.aat.services.VirtualService;
 import ch.bailu.aat.services.sensor.list.SensorList;
-import ch.bailu.aat.util.AppBroadcaster;
-import ch.bailu.aat.util.WithStatusText;
+import ch.bailu.aat_lib.dispatcher.AppBroadcaster;
+import ch.bailu.aat_lib.dispatcher.BroadcastReceiver;
+import ch.bailu.aat_lib.dispatcher.Broadcaster;
+import ch.bailu.aat_lib.gpx.GpxInformation;
+import ch.bailu.aat_lib.gpx.InfoID;
+import ch.bailu.aat_lib.service.VirtualService;
+import ch.bailu.aat_lib.service.sensor.SensorServiceInterface;
+import ch.bailu.aat_lib.util.WithStatusText;
 
-public final class SensorService extends VirtualService implements WithStatusText {
+public final class SensorService extends VirtualService implements WithStatusText, SensorServiceInterface {
     private final SensorList sensorList;
 
     private final Sensors bluetoothLE;
     private final Sensors internal;
 
+    private final Broadcaster broadcaster;
 
     public SensorService(ServiceContext sc) {
-        super(sc);
-
         sensorList = new SensorList(sc.getContext());
         bluetoothLE = Sensors.factoryBle(sc, sensorList);
         internal = Sensors.factoryInternal(sc.getContext(), sensorList);
 
+        broadcaster = new AndroidBroadcaster(sc.getContext());
 
-        AppBroadcaster.register(getContext(), onBluetoothStateChanged, BluetoothAdapter.ACTION_STATE_CHANGED);
-
-        AppBroadcaster.register(getContext(), onSensorDisconnected, AppBroadcaster.SENSOR_DISCONNECTED + InfoID.SENSORS);
-
-        AppBroadcaster.register(getContext(), onSensorReconnect, AppBroadcaster.SENSOR_RECONNECT + InfoID.SENSORS);
+        broadcaster.register(onBluetoothStateChanged, BluetoothAdapter.ACTION_STATE_CHANGED);
+        broadcaster.register(onSensorDisconnected, AppBroadcaster.SENSOR_DISCONNECTED + InfoID.SENSORS);
+        broadcaster.register(onSensorReconnect, AppBroadcaster.SENSOR_RECONNECT + InfoID.SENSORS);
 
         updateConnections();
     }
@@ -47,9 +47,8 @@ public final class SensorService extends VirtualService implements WithStatusTex
 
     final BroadcastReceiver onBluetoothStateChanged = new BroadcastReceiver() {
         @Override
-        public void onReceive(Context context, Intent intent) {
-            int state = intent.getIntExtra(BluetoothAdapter.EXTRA_STATE, BluetoothAdapter.ERROR);
-
+        public void onReceive(Object ...args) {
+            Integer state = (Integer) args[0];
             if (state == BluetoothAdapter.STATE_ON || state == BluetoothAdapter.STATE_OFF) {
                 updateConnections();
             }
@@ -61,7 +60,7 @@ public final class SensorService extends VirtualService implements WithStatusTex
 
     final BroadcastReceiver onSensorDisconnected = new BroadcastReceiver() {
         @Override
-        public void onReceive(Context context, Intent intent) {
+        public void onReceive(Object ...args) {
             updateConnections();
         }
     };
@@ -69,7 +68,7 @@ public final class SensorService extends VirtualService implements WithStatusTex
 
     final BroadcastReceiver onSensorReconnect = new BroadcastReceiver() {
         @Override
-        public void onReceive(Context context, Intent intent) {
+        public void onReceive(Object ...args) {
             updateConnections();
             scan();                        // rescan to get them in cache if they were not
         }
@@ -86,9 +85,9 @@ public final class SensorService extends VirtualService implements WithStatusTex
         bluetoothLE.close();
         internal.close();
         sensorList.close();
-        getContext().unregisterReceiver(onBluetoothStateChanged);
-        getContext().unregisterReceiver(onSensorDisconnected);
-        getContext().unregisterReceiver(onSensorReconnect);
+        broadcaster.unregister(onBluetoothStateChanged);
+        broadcaster.unregister(onSensorDisconnected);
+        broadcaster.unregister(onSensorReconnect);
     }
 
     public synchronized void updateConnections() {

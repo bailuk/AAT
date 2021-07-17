@@ -1,9 +1,9 @@
 package ch.bailu.aat.activities;
 
-import ch.bailu.aat.coordinates.BoundingBoxE6;
 import ch.bailu.aat.util.NominatimApi;
 import ch.bailu.aat.util.OsmApiConfiguration;
 import ch.bailu.aat.views.bar.MainControlBar;
+import ch.bailu.aat_lib.coordinates.BoundingBoxE6;
 
 public class NominatimActivity extends AbsOsmApiActivity {
 

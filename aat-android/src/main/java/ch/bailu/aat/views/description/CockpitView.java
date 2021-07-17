@@ -7,13 +7,13 @@ import android.view.ViewGroup;
 
 import ch.bailu.aat.description.AltitudeConfigurationDescription;
 import ch.bailu.aat.description.CadenceDescription;
-import ch.bailu.aat.description.ContentDescription;
 import ch.bailu.aat.description.HeartRateDescription;
 import ch.bailu.aat.description.PowerDescription;
 import ch.bailu.aat.dispatcher.DispatcherInterface;
-import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.preferences.location.SolidProvideAltitude;
 import ch.bailu.aat.util.ui.UiTheme;
+import ch.bailu.aat_lib.description.ContentDescription;
+import ch.bailu.aat_lib.gpx.InfoID;
 
 
 public class CockpitView extends ViewGroup {
@@ -35,7 +35,7 @@ public class CockpitView extends ViewGroup {
 
 
     public void addC(DispatcherInterface di, ContentDescription de, int... iid) {
-        final NumberView v = new ColorNumberView(de, theme);
+        final NumberView v = new ColorNumberView(getContext(), de, theme);
 
         addView(v);
         di.addTarget(v, iid);
@@ -43,7 +43,7 @@ public class CockpitView extends ViewGroup {
 
 
     public NumberView add(DispatcherInterface di, ContentDescription de, int... iid) {
-        final NumberView v = new NumberView(de, theme);
+        final NumberView v = new NumberView(getContext(),de, theme);
 
         addView(v);
         di.addTarget(v, iid);

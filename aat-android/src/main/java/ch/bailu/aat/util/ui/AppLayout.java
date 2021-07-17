@@ -10,6 +10,8 @@ import android.view.WindowManager;
 import android.view.animation.AlphaAnimation;
 import android.widget.LinearLayout;
 
+import ch.bailu.aat_lib.logger.AppLog;
+
 public class AppLayout {
     private static final int BIG_BUTTON_SIZE=100;
 

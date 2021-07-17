@@ -12,11 +12,9 @@ import ch.bailu.aat.dispatcher.EditorOrBackupSource;
 import ch.bailu.aat.dispatcher.IteratorSource;
 import ch.bailu.aat.dispatcher.OverlaySource;
 import ch.bailu.aat.dispatcher.TrackerSource;
-import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.map.MapViewInterface;
 import ch.bailu.aat.menus.FileMenu;
 import ch.bailu.aat.util.ui.AppDialog;
-import ch.bailu.aat.util.ui.AppLog;
 import ch.bailu.aat.util.ui.AppTheme;
 import ch.bailu.aat.util.ui.UiTheme;
 import ch.bailu.aat.views.BusyViewContainer;
@@ -27,6 +25,8 @@ import ch.bailu.aat.views.ImageButtonViewGroup;
 import ch.bailu.aat.views.PreviewView;
 import ch.bailu.aat.views.bar.MainControlBar;
 import ch.bailu.aat.views.html.AttributesView;
+import ch.bailu.aat_lib.gpx.InfoID;
+import ch.bailu.aat_lib.logger.AppLog;
 import ch.bailu.util.Objects;
 
 public abstract class AbsFileContentActivity extends ActivityContext implements OnClickListener {

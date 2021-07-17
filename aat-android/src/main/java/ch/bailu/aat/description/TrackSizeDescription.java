@@ -2,16 +2,16 @@ package ch.bailu.aat.description;
 
 import android.content.Context;
 
-import ch.bailu.aat.R;
-import ch.bailu.aat.gpx.GpxInformation;
-import ch.bailu.aat.gpx.GpxList;
+import ch.bailu.aat_lib.description.ContentDescription;
+import ch.bailu.aat_lib.gpx.GpxInformation;
+import ch.bailu.aat_lib.gpx.GpxList;
+import ch.bailu.aat_lib.resources.Res;
 
 public class TrackSizeDescription extends ContentDescription {
     private String value="";
     private int size=-1;
 
     public TrackSizeDescription(Context context) {
-        super(context);
     }
 
     @Override
@@ -34,6 +34,6 @@ public class TrackSizeDescription extends ContentDescription {
 
     @Override
     public String getLabel() {
-        return getContext().getString(R.string.d_size);
+        return Res.str().d_size();
     }
 }

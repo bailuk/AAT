@@ -1,17 +1,16 @@
 package ch.bailu.aat.map.layer.gpx;
 
-import android.content.SharedPreferences;
-
 import org.mapsforge.core.model.Point;
 
 import ch.bailu.aat.dispatcher.DispatcherInterface;
-import ch.bailu.aat.dispatcher.OnContentUpdatedInterface;
-import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.GpxInformationCache;
-import ch.bailu.aat.gpx.interfaces.GpxType;
 import ch.bailu.aat.map.MapContext;
 import ch.bailu.aat.map.layer.MapLayerInterface;
 import ch.bailu.aat.preferences.map.SolidLegend;
+import ch.bailu.aat_lib.dispatcher.OnContentUpdatedInterface;
+import ch.bailu.aat_lib.gpx.GpxInformation;
+import ch.bailu.aat_lib.gpx.interfaces.GpxType;
+import ch.bailu.aat_lib.preferences.StorageInterface;
 
 public final class GpxDynLayer implements MapLayerInterface, OnContentUpdatedInterface {
     private final GpxInformationCache infoCache = new GpxInformationCache();
@@ -79,7 +78,8 @@ public final class GpxDynLayer implements MapLayerInterface, OnContentUpdatedInt
 
 
     @Override
-    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+    public void onPreferencesChanged(StorageInterface s, String key) {
+
         if (slegend.hasKey(key)) {
             createLegendOverlay();
             infoCache.letUpdate(legendOverlay);

@@ -3,6 +3,8 @@ package ch.bailu.aat.util.ui;
 
 import android.content.Context;
 
+import ch.bailu.aat_lib.util.ui.ToolTipProvider;
+
 public class ToolTipRes implements ToolTipProvider {
     private final int res;
     private final Context context;

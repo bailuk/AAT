@@ -3,15 +3,15 @@ package ch.bailu.aat.views.preferences;
 import android.view.View;
 
 import ch.bailu.aat.R;
-import ch.bailu.aat.dispatcher.OnContentUpdatedInterface;
-import ch.bailu.aat.gpx.GpxInformation;
-import ch.bailu.aat.gpx.InfoID;
-import ch.bailu.aat.gpx.StateID;
 import ch.bailu.aat.services.InsideContext;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.sensor.list.SensorState;
 import ch.bailu.aat.util.ui.UiTheme;
 import ch.bailu.aat.views.LabelTextView;
+import ch.bailu.aat_lib.dispatcher.OnContentUpdatedInterface;
+import ch.bailu.aat_lib.gpx.GpxInformation;
+import ch.bailu.aat_lib.gpx.InfoID;
+import ch.bailu.aat_lib.gpx.StateID;
 
 public class ConnectToSensorsView extends LabelTextView implements View.OnClickListener, OnContentUpdatedInterface {
 

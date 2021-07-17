@@ -3,7 +3,6 @@ package ch.bailu.aat.views.osm_features;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -11,13 +10,13 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 
 import ch.bailu.aat.R;
-import ch.bailu.aat.preferences.SolidString;
+import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat.preferences.map.SolidOsmFeaturesList;
 import ch.bailu.aat.services.InsideContext;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.cache.osm_features.ObjMapFeatures;
-import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.util.AppIntent;
+import ch.bailu.aat.util.OldAppBroadcaster;
 import ch.bailu.aat.util.filter_list.FilterList;
 import ch.bailu.aat.util.ui.AppTheme;
 import ch.bailu.aat.util.ui.UiTheme;
@@ -25,8 +24,12 @@ import ch.bailu.aat.views.BusyIndicator;
 import ch.bailu.aat.views.EditTextTool;
 import ch.bailu.aat.views.preferences.SolidCheckBox;
 import ch.bailu.aat.views.preferences.TitleView;
+import ch.bailu.aat_lib.dispatcher.AppBroadcaster;
+import ch.bailu.aat_lib.preferences.OnPreferencesChanged;
+import ch.bailu.aat_lib.preferences.SolidString;
+import ch.bailu.aat_lib.preferences.StorageInterface;
 
-public class OsmFeaturesView extends LinearLayout implements SharedPreferences.OnSharedPreferenceChangeListener {
+public class OsmFeaturesView extends LinearLayout implements OnPreferencesChanged {
 
     private final static String FILTER_KEY="FilterView";
 
@@ -125,7 +128,7 @@ public class OsmFeaturesView extends LinearLayout implements SharedPreferences.O
         });
 
         EditTextTool layout = new EditTextTool(filterView, LinearLayout.VERTICAL, theme);
-        layout.add(new SolidCheckBox(slist, theme));
+        layout.add(new SolidCheckBox(getContext(),slist, theme));
         return layout;
     }
 
@@ -134,9 +137,9 @@ public class OsmFeaturesView extends LinearLayout implements SharedPreferences.O
 
 
     public void onResume(final ServiceContext sc) {
-        AppBroadcaster.register(sc.getContext(), onListLoaded, AppBroadcaster.FILE_CHANGED_INCACHE);
+        OldAppBroadcaster.register(sc.getContext(), onListLoaded, AppBroadcaster.FILE_CHANGED_INCACHE);
 
-        filterView.setText(new SolidString(getContext(), FILTER_KEY ).getValueAsStringNonDef());
+        filterView.setText(new SolidString(new Storage(getContext()), FILTER_KEY ).getValueAsStringNonDef());
 
         getListHandle();
 
@@ -150,12 +153,13 @@ public class OsmFeaturesView extends LinearLayout implements SharedPreferences.O
 
         freeListHandle();
 
-        new SolidString(sc.getContext(), FILTER_KEY).setValue(filterView.getText().toString());
+        new SolidString(new Storage(sc.getContext()), FILTER_KEY).setValue(filterView.getText().toString());
     }
 
     @Override
-    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s) {
-        if (slist.hasKey(s)) {
+    public void onPreferencesChanged(StorageInterface s, String key) {
+
+        if (slist.hasKey(key)) {
             freeListHandle();
             getListHandle();
         }

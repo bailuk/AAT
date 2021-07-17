@@ -6,7 +6,7 @@ import ch.bailu.aat.services.InsideContext;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.background.BackgroundService;
 import ch.bailu.aat.services.background.BackgroundTask;
-import ch.bailu.aat.util.fs.AppDirectory;
+import ch.bailu.aat_lib.util.fs.AppDirectory;
 import ch.bailu.foc.Foc;
 
 

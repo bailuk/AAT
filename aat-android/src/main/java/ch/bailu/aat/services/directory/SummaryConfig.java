@@ -2,7 +2,7 @@ package ch.bailu.aat.services.directory;
 
 import android.content.Context;
 
-import ch.bailu.aat.util.fs.AppDirectory;
+import ch.bailu.aat_lib.util.fs.AppDirectory;
 import ch.bailu.foc.Foc;
 import ch.bailu.foc.FocFile;
 

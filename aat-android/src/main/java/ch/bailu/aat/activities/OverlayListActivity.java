@@ -3,12 +3,13 @@ package ch.bailu.aat.activities;
 import android.content.Intent;
 
 import ch.bailu.aat.R;
-import ch.bailu.aat.description.ContentDescription;
 import ch.bailu.aat.description.DateDescription;
 import ch.bailu.aat.description.DistanceDescription;
 import ch.bailu.aat.description.NameDescription;
 import ch.bailu.aat.description.TrackSizeDescription;
-import ch.bailu.aat.util.fs.AppDirectory;
+import ch.bailu.aat.preferences.system.AndroidSolidDataDirectory;
+import ch.bailu.aat_lib.description.ContentDescription;
+import ch.bailu.aat_lib.util.fs.AppDirectory;
 import ch.bailu.foc.Foc;
 
 
@@ -16,7 +17,7 @@ public class OverlayListActivity extends AbsGpxListActivity {
     @Override
     public ContentDescription[] getGpxListItemData() {
         return new ContentDescription[] {
-                new DateDescription(this),
+                new DateDescription(),
                 new DistanceDescription(this),
                 new NameDescription(this)
         };
@@ -40,7 +41,7 @@ public class OverlayListActivity extends AbsGpxListActivity {
 
     @Override
     public Foc getDirectory() {
-        return AppDirectory.getDataDirectory(this, AppDirectory.DIR_OVERLAY);
+        return AppDirectory.getDataDirectory(new AndroidSolidDataDirectory(this), AppDirectory.DIR_OVERLAY);
     }
 
     @Override

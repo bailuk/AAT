@@ -1,7 +1,7 @@
 package ch.bailu.aat.map.layer.gpx.legend;
 
-import ch.bailu.aat.gpx.GpxPointNode;
-import ch.bailu.aat.gpx.GpxSegmentNode;
+import ch.bailu.aat_lib.gpx.GpxPointNode;
+import ch.bailu.aat_lib.gpx.GpxSegmentNode;
 
 public final class NullLegendWalker extends LegendWalker {
     @Override

@@ -2,9 +2,9 @@ package ch.bailu.aat.services.directory;
 
 import android.database.Cursor;
 
-import ch.bailu.aat.coordinates.BoundingBoxE6;
-import ch.bailu.aat.gpx.GpxInformation;
-import ch.bailu.aat.gpx.interfaces.GpxType;
+import ch.bailu.aat_lib.coordinates.BoundingBoxE6;
+import ch.bailu.aat_lib.gpx.GpxInformation;
+import ch.bailu.aat_lib.gpx.interfaces.GpxType;
 import ch.bailu.foc.Foc;
 
 public final class GpxInformationDbEntry extends GpxInformation {

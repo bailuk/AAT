@@ -10,8 +10,9 @@ import ch.bailu.aat.map.tile.source.Source;
 import ch.bailu.aat.preferences.map.SolidTileSize;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.background.FileTask;
-import ch.bailu.aat.util.AppBroadcaster;
+import ch.bailu.aat.util.OldAppBroadcaster;
 import ch.bailu.aat.util.graphic.SyncTileBitmap;
+import ch.bailu.aat_lib.dispatcher.AppBroadcaster;
 import ch.bailu.foc.Foc;
 import ch.bailu.foc_android.FocAndroid;
 import ch.bailu.util.Objects;
@@ -145,7 +146,7 @@ public class ObjTileCacheOnly extends ObjTile {
                             TileFlags.ALWAYS_TRANSPARENT || tile.source.isTransparent());
 
 
-                    AppBroadcaster.broadcast(sc.getContext(), AppBroadcaster.FILE_CHANGED_INCACHE,
+                    OldAppBroadcaster.broadcast(sc.getContext(), AppBroadcaster.FILE_CHANGED_INCACHE,
                             getFile());
 
                     size[0] =  tile.bitmap.getSize();

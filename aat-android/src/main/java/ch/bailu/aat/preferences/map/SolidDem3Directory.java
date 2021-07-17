@@ -4,11 +4,12 @@ import android.content.Context;
 
 import java.util.ArrayList;
 
-import ch.bailu.aat.preferences.SolidFile;
+import ch.bailu.aat.factory.AndroidFocFactory;
 import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat.util.ToDo;
 import ch.bailu.aat.util.fs.AndroidVolumes;
-import ch.bailu.aat.util.fs.AppDirectory;
+import ch.bailu.aat_lib.preferences.SolidFile;
+import ch.bailu.aat_lib.util.fs.AppDirectory;
 import ch.bailu.foc.Foc;
 
 public class SolidDem3Directory extends SolidFile {
@@ -16,10 +17,17 @@ public class SolidDem3Directory extends SolidFile {
     public final static String DEM3_DIR = "dem3";
 
     public SolidDem3Directory(Context c) {
-        super(c, SolidDem3Directory.class.getSimpleName());
+        super(new Storage(c), SolidDem3Directory.class.getSimpleName(), new AndroidFocFactory(c));
+        context = c;
     }
 
 
+    private final Context context;
+
+
+    public Context getContext() {
+        return context;
+    }
     @Override
     public String getLabel() {
         return ToDo.translate("Location of dem3 tiles");
@@ -29,7 +37,7 @@ public class SolidDem3Directory extends SolidFile {
     public String getValueAsString() {
         String r = super.getValueAsString();
 
-        if (r.equals(Storage.DEF_VALUE)) {
+        if (getStorage().isDefaultString(r)) {
             r = getDefaultValue();
 
             setValue(r);

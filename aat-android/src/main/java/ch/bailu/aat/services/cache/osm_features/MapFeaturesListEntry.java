@@ -2,9 +2,9 @@ package ch.bailu.aat.services.cache.osm_features;
 
 import java.util.ArrayList;
 
-import ch.bailu.aat.gpx.attributes.Keys;
 import ch.bailu.aat.util.filter_list.KeyList;
 import ch.bailu.aat.util.filter_list.ListEntry;
+import ch.bailu.aat_lib.gpx.attributes.Keys;
 
 
 public final class MapFeaturesListEntry extends ListEntry {

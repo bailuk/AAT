@@ -13,13 +13,13 @@ public abstract class AbsSelectOverlayDialog extends AbsSolidDialog implements  
     private final SolidOverlayFileList slist;
 
     public AbsSelectOverlayDialog(Context context) {
-        this(new SolidOverlayFileList(context));
+        this(context, new SolidOverlayFileList(context));
     }
 
-    public AbsSelectOverlayDialog (SolidOverlayFileList l) {
+    public AbsSelectOverlayDialog (Context context, SolidOverlayFileList l) {
         slist=l;
 
-        final AlertDialog.Builder dialog = createDefaultDialog(l);
+        final AlertDialog.Builder dialog = createDefaultDialog(context, l);
         dialog.setItems(slist.getStringArray(), this);
         dialog.create();
         dialog.show();

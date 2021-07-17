@@ -2,7 +2,9 @@ package ch.bailu.aat.description;
 
 import android.content.Context;
 
-import ch.bailu.aat.preferences.general.SolidUnit;
+import ch.bailu.aat.preferences.Storage;
+import ch.bailu.aat_lib.description.FF;
+import ch.bailu.aat_lib.preferences.general.SolidUnit;
 
 
 public abstract class SpeedDescription extends FloatDescription{
@@ -10,8 +12,7 @@ public abstract class SpeedDescription extends FloatDescription{
     private final SolidUnit sunit;
 
     public SpeedDescription(Context context) {
-        super(context);
-        sunit = new SolidUnit(context);
+        sunit = new SolidUnit(new Storage(context));
     }
 
     @Override

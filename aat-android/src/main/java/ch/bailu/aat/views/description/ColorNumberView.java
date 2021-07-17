@@ -1,15 +1,17 @@
 package ch.bailu.aat.views.description;
 
-import ch.bailu.aat.description.ContentDescription;
-import ch.bailu.aat.gpx.GpxInformation;
-import ch.bailu.aat.gpx.StateID;
+import android.content.Context;
+
 import ch.bailu.aat.util.ui.UiTheme;
+import ch.bailu.aat_lib.description.ContentDescription;
+import ch.bailu.aat_lib.gpx.GpxInformation;
+import ch.bailu.aat_lib.gpx.StateID;
 
 public class ColorNumberView extends NumberView {
     private int state = StateID.OFF;
 
-    public ColorNumberView(ContentDescription c, UiTheme theme) {
-        super(c, theme);
+    public ColorNumberView(Context context, ContentDescription c, UiTheme theme) {
+        super(context, c, theme);
     }
 
 

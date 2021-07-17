@@ -1,14 +1,15 @@
 package ch.bailu.aat.gpx.tools;
 
-import ch.bailu.aat.gpx.attributes.GpxListAttributes;
-import ch.bailu.aat.gpx.GpxDeltaHelper;
-import ch.bailu.aat.gpx.GpxList;
+import android.location.Location;
+
 import ch.bailu.aat.gpx.GpxListWalker;
-import ch.bailu.aat.gpx.GpxPoint;
-import ch.bailu.aat.gpx.GpxPointFirstNode;
-import ch.bailu.aat.gpx.GpxPointNode;
-import ch.bailu.aat.gpx.GpxSegmentNode;
-import ch.bailu.aat.gpx.interfaces.GpxPointInterface;
+import ch.bailu.aat_lib.gpx.GpxList;
+import ch.bailu.aat_lib.gpx.GpxPoint;
+import ch.bailu.aat_lib.gpx.GpxPointFirstNode;
+import ch.bailu.aat_lib.gpx.GpxPointNode;
+import ch.bailu.aat_lib.gpx.GpxSegmentNode;
+import ch.bailu.aat_lib.gpx.attributes.GpxListAttributes;
+import ch.bailu.aat_lib.gpx.interfaces.GpxPointInterface;
 
 public class SimplifierBearing extends GpxListWalker {
 
@@ -51,7 +52,7 @@ public class SimplifierBearing extends GpxListWalker {
 
 
             if (!isLastInSegment(point)) {
-                lastBearing = GpxDeltaHelper.getBearing(lastPoint, (GpxPointInterface) lastPoint.getNext());
+                lastBearing = getBearing(lastPoint, (GpxPointInterface) lastPoint.getNext());
             }
 
         } else {
@@ -67,8 +68,20 @@ public class SimplifierBearing extends GpxListWalker {
         }
     }
 
+    public static double getBearing(GpxPointInterface a, GpxPointInterface b) {
+        Location la = new Location("");
+        la.setLatitude(a.getLatitude());
+        la.setLongitude(a.getLongitude());
+
+        Location lb = new Location("");
+        lb.setLatitude(b.getLatitude());
+        lb.setLongitude(b.getLongitude());
+
+        return la.bearingTo(lb);
+    }
+
     private boolean hasBearingChanged(GpxPointNode point) {
-        currentBearing = GpxDeltaHelper.getBearing(point, (GpxPointInterface) point.getNext());
+        currentBearing = getBearing(point, (GpxPointInterface) point.getNext());
 
         double delta = Math.abs(currentBearing - lastBearing);
 

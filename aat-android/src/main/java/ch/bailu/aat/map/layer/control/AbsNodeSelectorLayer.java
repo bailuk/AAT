@@ -1,22 +1,22 @@
 package ch.bailu.aat.map.layer.control;
 
-import android.content.SharedPreferences;
 import android.graphics.Rect;
 import android.util.SparseArray;
 
 import org.mapsforge.core.model.LatLong;
 
-import ch.bailu.aat.coordinates.BoundingBoxE6;
-import ch.bailu.aat.dispatcher.OnContentUpdatedInterface;
-import ch.bailu.aat.gpx.GpxInformation;
-import ch.bailu.aat.gpx.GpxList;
 import ch.bailu.aat.gpx.GpxNodeFinder;
-import ch.bailu.aat.gpx.GpxPointNode;
 import ch.bailu.aat.map.MapColor;
 import ch.bailu.aat.map.MapContext;
 import ch.bailu.aat.map.layer.MapLayerInterface;
 import ch.bailu.aat.preferences.map.SolidMapGrid;
 import ch.bailu.aat.util.graphic.Pixel;
+import ch.bailu.aat_lib.coordinates.BoundingBoxE6;
+import ch.bailu.aat_lib.dispatcher.OnContentUpdatedInterface;
+import ch.bailu.aat_lib.gpx.GpxInformation;
+import ch.bailu.aat_lib.gpx.GpxList;
+import ch.bailu.aat_lib.gpx.GpxPointNode;
+import ch.bailu.aat_lib.preferences.StorageInterface;
 
 public abstract class AbsNodeSelectorLayer implements MapLayerInterface, OnContentUpdatedInterface {
 
@@ -152,7 +152,7 @@ public abstract class AbsNodeSelectorLayer implements MapLayerInterface, OnConte
 
 
     @Override
-    public void onSharedPreferenceChanged(SharedPreferences p, String key) {
+    public void onPreferencesChanged(StorageInterface s, String key) {
         if (sgrid.hasKey(key)) {
             coordinates = sgrid.createCenterCoordinatesLayer();
         }

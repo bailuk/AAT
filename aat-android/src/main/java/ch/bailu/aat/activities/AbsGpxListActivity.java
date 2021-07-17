@@ -1,7 +1,6 @@
 package ch.bailu.aat.activities;
 
 
-import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.View;
@@ -10,16 +9,16 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.LinearLayout;
 
 import ch.bailu.aat.R;
-import ch.bailu.aat.description.ContentDescription;
 import ch.bailu.aat.description.PathDescription;
 import ch.bailu.aat.dispatcher.CurrentLocationSource;
 import ch.bailu.aat.dispatcher.IteratorSource;
 import ch.bailu.aat.dispatcher.OverlaySource;
-import ch.bailu.aat.gpx.InfoID;
+import ch.bailu.aat.factory.AndroidFocFactory;
 import ch.bailu.aat.map.MapFactory;
 import ch.bailu.aat.map.MapViewInterface;
 import ch.bailu.aat.map.layer.control.FileControlBarLayer;
 import ch.bailu.aat.preferences.SolidDirectoryQuery;
+import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat.services.directory.Iterator;
 import ch.bailu.aat.services.directory.IteratorSimple;
 import ch.bailu.aat.util.ui.AppLayout;
@@ -27,17 +26,20 @@ import ch.bailu.aat.util.ui.AppTheme;
 import ch.bailu.aat.util.ui.UiTheme;
 import ch.bailu.aat.views.BusyViewControlDbSync;
 import ch.bailu.aat.views.ContentView;
-import ch.bailu.aat.views.ErrorView;
 import ch.bailu.aat.views.GpxListView;
 import ch.bailu.aat.views.PercentageLayout;
 import ch.bailu.aat.views.bar.MainControlBar;
 import ch.bailu.aat.views.description.mview.MultiView;
 import ch.bailu.aat.views.preferences.TitleView;
 import ch.bailu.aat.views.preferences.VerticalScrollView;
+import ch.bailu.aat_lib.description.ContentDescription;
+import ch.bailu.aat_lib.gpx.InfoID;
+import ch.bailu.aat_lib.preferences.OnPreferencesChanged;
+import ch.bailu.aat_lib.preferences.StorageInterface;
 import ch.bailu.foc.Foc;
 
 
-public abstract class AbsGpxListActivity extends ActivityContext implements OnItemClickListener, SharedPreferences.OnSharedPreferenceChangeListener {
+public abstract class AbsGpxListActivity extends ActivityContext implements OnItemClickListener, OnPreferencesChanged {
 
     private String                      solid_key;
 
@@ -64,7 +66,7 @@ public abstract class AbsGpxListActivity extends ActivityContext implements OnIt
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        sdirectory = new SolidDirectoryQuery(this);
+        sdirectory = new SolidDirectoryQuery(new Storage(this), new AndroidFocFactory(this));
         sdirectory.setValue(getDirectory().getPath());
         solid_key = AbsGpxListActivity.class.getSimpleName() +  "_" + sdirectory.getValueAsString();
 
@@ -133,8 +135,8 @@ public abstract class AbsGpxListActivity extends ActivityContext implements OnIt
     }
 
     @Override
-    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s) {
-        if (sdirectory.containsKey(s)) {
+    public void onPreferencesChanged(StorageInterface s, String key) {
+        if (sdirectory.containsKey(key)) {
             setListBackgroundColor();
         }
     }

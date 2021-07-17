@@ -3,13 +3,13 @@ package ch.bailu.aat.map.layer.control;
 import android.content.Context;
 import android.view.View;
 
-import ch.bailu.aat.gpx.GpxInformation;
-import ch.bailu.aat.gpx.GpxPointNode;
 import ch.bailu.aat.map.MapContext;
 import ch.bailu.aat.map.layer.gpx.GpxVisibleLimit;
 import ch.bailu.aat.util.HtmlBuilder;
 import ch.bailu.aat.util.HtmlBuilderGpx;
 import ch.bailu.aat.util.ui.AppLayout;
+import ch.bailu.aat_lib.gpx.GpxInformation;
+import ch.bailu.aat_lib.gpx.GpxPointNode;
 
 public abstract class AbsNodeViewLayer extends AbsNodeSelectorLayer implements
         View.OnLongClickListener, View.OnClickListener {

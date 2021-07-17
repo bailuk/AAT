@@ -4,6 +4,8 @@ import android.content.Context;
 
 import java.io.Closeable;
 
+import ch.bailu.aat_lib.service.background.ThreadControl;
+
 public abstract class ProcessThread extends Thread implements Closeable, ThreadControl {
 
     private boolean continueThread=true;

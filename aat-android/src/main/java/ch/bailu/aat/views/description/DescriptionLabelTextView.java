@@ -2,11 +2,11 @@ package ch.bailu.aat.views.description;
 
 import android.content.Context;
 
-import ch.bailu.aat.description.ContentDescription;
-import ch.bailu.aat.dispatcher.OnContentUpdatedInterface;
-import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.util.ui.UiTheme;
 import ch.bailu.aat.views.LabelTextView;
+import ch.bailu.aat_lib.description.ContentDescription;
+import ch.bailu.aat_lib.dispatcher.OnContentUpdatedInterface;
+import ch.bailu.aat_lib.gpx.GpxInformation;
 
 public class DescriptionLabelTextView extends LabelTextView implements OnContentUpdatedInterface {
     private final ContentDescription description;

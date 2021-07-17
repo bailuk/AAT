@@ -4,8 +4,8 @@ import android.content.Context;
 
 import ch.bailu.aat.R;
 import ch.bailu.aat.preferences.SolidCheckList;
-import ch.bailu.aat.preferences.Storage;
-import ch.bailu.aat.preferences.map.SolidOverlayFile;
+import ch.bailu.aat_lib.preferences.StorageInterface;
+import ch.bailu.aat_lib.resources.Res;
 
 public class SolidOverlayFileList extends SolidCheckList {
     public static final int MAX_OVERLAYS=4;
@@ -58,7 +58,7 @@ public class SolidOverlayFileList extends SolidCheckList {
 
 
     @Override
-    public Storage getStorage() {
+    public StorageInterface getStorage() {
         return list[0].getStorage();
     }
 
@@ -72,7 +72,7 @@ public class SolidOverlayFileList extends SolidCheckList {
 
     @Override
     public String getLabel() {
-        return getContext().getString(R.string.file_overlay);
+        return Res.str().file_overlay();
     }
 
     @Override

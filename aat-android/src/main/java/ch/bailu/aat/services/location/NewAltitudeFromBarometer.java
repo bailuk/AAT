@@ -1,8 +1,11 @@
 package ch.bailu.aat.services.location;
 
-import ch.bailu.aat.gpx.GpxInformation;
-import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.services.ServiceContext;
+import ch.bailu.aat_lib.gpx.GpxInformation;
+import ch.bailu.aat_lib.gpx.InfoID;
+import ch.bailu.aat_lib.service.location.LocationInformation;
+import ch.bailu.aat_lib.service.location.LocationStackChainedItem;
+import ch.bailu.aat_lib.service.location.LocationStackItem;
 
 public class NewAltitudeFromBarometer extends LocationStackChainedItem {
     private final ServiceContext scontext;

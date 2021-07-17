@@ -1,8 +1,8 @@
 package ch.bailu.aat.map;
 
-import ch.bailu.aat.gpx.GpxPoint;
-import ch.bailu.aat.gpx.interfaces.GpxPointInterface;
 import ch.bailu.aat.util.graphic.Pixel;
+import ch.bailu.aat_lib.gpx.GpxPoint;
+import ch.bailu.aat_lib.gpx.interfaces.GpxPointInterface;
 
 public final class TwoNodes {
     private final MapMetrics metrics;

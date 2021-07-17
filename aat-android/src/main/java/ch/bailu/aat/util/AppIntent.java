@@ -1,10 +1,14 @@
 package ch.bailu.aat.util;
 
+import android.bluetooth.BluetoothAdapter;
 import android.content.Intent;
 
 import org.mapsforge.core.model.BoundingBox;
 
-import ch.bailu.aat.coordinates.BoundingBoxE6;
+import java.util.ArrayList;
+import java.util.List;
+
+import ch.bailu.aat_lib.coordinates.BoundingBoxE6;
 
 public class AppIntent {
     private static final String EXTRA_FILE="file";
@@ -66,4 +70,20 @@ public class AppIntent {
                 );
     }
 
+    public static Object[] toArgs(Intent intent) {
+        List args = new ArrayList<>();
+        addIfNotNull(args, AppIntent.getFile(intent));
+        addIfNotNull(args, AppIntent.getUrl(intent));
+
+        if (intent.hasExtra(BluetoothAdapter.EXTRA_STATE))
+             addIfNotNull(args, intent.getIntExtra(BluetoothAdapter.EXTRA_STATE, BluetoothAdapter.ERROR));
+
+        return args.toArray();
+    }
+
+    private static void addIfNotNull(List list, Object obj) {
+        if (obj != null) {
+            list.add(obj);
+        }
+    }
 }

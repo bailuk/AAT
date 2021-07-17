@@ -6,10 +6,10 @@ import org.mapsforge.poi.storage.PointOfInterest;
 
 import java.util.Set;
 
-import ch.bailu.aat.gpx.attributes.GpxAttributes;
-import ch.bailu.aat.gpx.attributes.GpxAttributesStatic;
-import ch.bailu.aat.gpx.attributes.Keys;
-import ch.bailu.aat.gpx.interfaces.GpxPointInterface;
+import ch.bailu.aat_lib.gpx.attributes.GpxAttributes;
+import ch.bailu.aat_lib.gpx.attributes.GpxAttributesStatic;
+import ch.bailu.aat_lib.gpx.attributes.Keys;
+import ch.bailu.aat_lib.gpx.interfaces.GpxPointInterface;
 
 public class GpxPointPoi implements GpxPointInterface {
 

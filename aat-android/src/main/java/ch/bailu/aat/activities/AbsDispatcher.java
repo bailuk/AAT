@@ -7,9 +7,9 @@ import ch.bailu.aat.dispatcher.Dispatcher;
 import ch.bailu.aat.dispatcher.DispatcherInterface;
 import ch.bailu.aat.dispatcher.LifeCycleDispatcher;
 import ch.bailu.aat.dispatcher.LifeCycleInterface;
-import ch.bailu.aat.dispatcher.OnContentUpdatedInterface;
-import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.util.AbsServiceLink;
+import ch.bailu.aat_lib.dispatcher.OnContentUpdatedInterface;
+import ch.bailu.aat_lib.gpx.InfoID;
 
 public abstract class AbsDispatcher extends AbsServiceLink
         implements DispatcherInterface {

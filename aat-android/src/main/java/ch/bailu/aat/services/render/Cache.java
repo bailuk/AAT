@@ -11,7 +11,7 @@ import org.mapsforge.map.model.common.Observer;
 import java.util.Set;
 
 import ch.bailu.aat.services.cache.ObjTileMapsForge;
-import ch.bailu.aat.util.ui.AppLog;
+import ch.bailu.aat_lib.logger.AppLog;
 
 public final class Cache implements TileCache {
 

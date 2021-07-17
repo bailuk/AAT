@@ -2,10 +2,10 @@ package ch.bailu.aat.map.layer.gpx.legend;
 
 import org.mapsforge.core.graphics.Paint;
 
-import ch.bailu.aat.gpx.GpxList;
 import ch.bailu.aat.gpx.GpxListWalker;
-import ch.bailu.aat.gpx.GpxSegmentNode;
 import ch.bailu.aat.map.MapContext;
+import ch.bailu.aat_lib.gpx.GpxList;
+import ch.bailu.aat_lib.gpx.GpxSegmentNode;
 
 public abstract class LegendWalker extends GpxListWalker {
 

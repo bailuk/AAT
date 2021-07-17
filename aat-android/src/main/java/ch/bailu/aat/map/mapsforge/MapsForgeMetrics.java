@@ -12,13 +12,13 @@ import org.mapsforge.core.util.MercatorProjection;
 import org.mapsforge.map.android.view.MapView;
 import org.mapsforge.map.util.MapPositionUtil;
 
-import ch.bailu.aat.coordinates.BoundingBoxE6;
-import ch.bailu.aat.coordinates.LatLongE6;
-import ch.bailu.aat.coordinates.LatLongE6Interface;
 import ch.bailu.aat.map.MapDistances;
 import ch.bailu.aat.map.MapMetrics;
 import ch.bailu.aat.util.graphic.Pixel;
 import ch.bailu.aat.util.ui.AppDensity;
+import ch.bailu.aat_lib.coordinates.BoundingBoxE6;
+import ch.bailu.aat_lib.coordinates.LatLongE6;
+import ch.bailu.aat_lib.coordinates.LatLongE6Interface;
 
 public class MapsForgeMetrics implements MapMetrics {
 

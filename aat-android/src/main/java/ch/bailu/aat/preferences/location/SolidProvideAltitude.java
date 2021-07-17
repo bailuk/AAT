@@ -3,11 +3,12 @@ package ch.bailu.aat.preferences.location;
 import android.content.Context;
 import android.view.View;
 
-import ch.bailu.aat.R;
-import ch.bailu.aat.gpx.InfoID;
-import ch.bailu.aat.preferences.general.SolidUnit;
+import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat.services.sensor.list.SensorState;
 import ch.bailu.aat.views.preferences.SolidTextInputDialog;
+import ch.bailu.aat_lib.gpx.InfoID;
+import ch.bailu.aat_lib.preferences.general.SolidUnit;
+import ch.bailu.aat_lib.resources.Res;
 
 public class SolidProvideAltitude extends SolidAltitude {
     private final static String KEY = "ProvideAltitude";
@@ -26,7 +27,7 @@ public class SolidProvideAltitude extends SolidAltitude {
 
     @Override
     public String getLabel() {
-        return addUnit(getString(R.string.p_set_altitude));
+        return addUnit(Res.str().p_set_altitude());
     }
 
 
@@ -45,9 +46,9 @@ public class SolidProvideAltitude extends SolidAltitude {
     }
 
     public static void reqeustValueFromUser(Context c) {
-        new SolidTextInputDialog(
+        new SolidTextInputDialog(c,
                 new SolidProvideAltitude(c,
-                        new SolidUnit(c).getIndex()),
+                        new SolidUnit(new Storage(c)).getIndex()),
                 SolidTextInputDialog.INTEGER_SIGNED);
 
     }

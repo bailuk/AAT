@@ -4,19 +4,19 @@ import android.content.Context;
 import android.graphics.Canvas;
 
 import ch.bailu.aat.description.CadenceDescription;
-import ch.bailu.aat.description.ContentDescription;
 import ch.bailu.aat.description.HeartRateDescription;
 import ch.bailu.aat.description.StepRateDescription;
 import ch.bailu.aat.dispatcher.DispatcherInterface;
-import ch.bailu.aat.gpx.GpxList;
 import ch.bailu.aat.gpx.GpxListWalker;
-import ch.bailu.aat.gpx.GpxPointNode;
-import ch.bailu.aat.gpx.GpxSegmentNode;
-import ch.bailu.aat.gpx.attributes.SampleRate;
-import ch.bailu.aat.preferences.general.SolidUnit;
 import ch.bailu.aat.util.ui.AppDensity;
 import ch.bailu.aat.util.ui.AppTheme;
 import ch.bailu.aat.util.ui.UiTheme;
+import ch.bailu.aat_lib.description.ContentDescription;
+import ch.bailu.aat_lib.gpx.GpxList;
+import ch.bailu.aat_lib.gpx.GpxPointNode;
+import ch.bailu.aat_lib.gpx.GpxSegmentNode;
+import ch.bailu.aat_lib.gpx.attributes.SampleRate;
+import ch.bailu.aat_lib.preferences.general.SolidUnit;
 
 public class SpmGraphView extends AbsGraphView {
 

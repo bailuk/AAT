@@ -1,20 +1,20 @@
 package ch.bailu.aat.views.preferences;
 
-import android.content.SharedPreferences;
-
-import ch.bailu.aat.coordinates.BoundingBoxE6;
 import ch.bailu.aat.map.MapContext;
 import ch.bailu.aat.preferences.SolidBoundingBox;
 import ch.bailu.aat.util.ui.UiTheme;
 import ch.bailu.aat.views.LabelTextView;
+import ch.bailu.aat_lib.coordinates.BoundingBoxE6;
+import ch.bailu.aat_lib.preferences.OnPreferencesChanged;
+import ch.bailu.aat_lib.preferences.StorageInterface;
 
 
-public class SolidBoundingBoxView extends LabelTextView implements SharedPreferences.OnSharedPreferenceChangeListener {
+public class SolidBoundingBoxView extends LabelTextView implements OnPreferencesChanged {
     private final SolidBoundingBox sbounding;
 
 
     public SolidBoundingBoxView(SolidBoundingBox bounding, final MapContext map, UiTheme theme) {
-        super(bounding.getContext(), bounding.getLabel(), theme);
+        super(map.getContext(), bounding.getLabel(), theme);
 
         sbounding = bounding;
         setText(bounding.getValueAsString());
@@ -33,7 +33,7 @@ public class SolidBoundingBoxView extends LabelTextView implements SharedPrefere
 
 
     @Override
-    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+    public void onPreferencesChanged(StorageInterface s, String key) {
         if (sbounding.hasKey(key)) {
             setText(sbounding.getValueAsString());
         }

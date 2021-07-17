@@ -4,27 +4,30 @@ import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.view.View;
 import android.widget.LinearLayout;
 
 import ch.bailu.aat.R;
 import ch.bailu.aat.menus.RemoveTilesMenu;
+import ch.bailu.aat.preferences.map.AndroidSolidTileCacheDirectory;
 import ch.bailu.aat.services.InsideContext;
-import ch.bailu.aat.util.AppBroadcaster;
-import ch.bailu.aat.preferences.map.SolidTileCacheDirectory;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.tileremover.TileRemoverService;
+import ch.bailu.aat.util.OldAppBroadcaster;
 import ch.bailu.aat.util.ui.AppTheme;
 import ch.bailu.aat.util.ui.UiTheme;
 import ch.bailu.aat.views.BusyViewControl;
 import ch.bailu.aat.views.ImageButtonViewGroup;
 import ch.bailu.aat.views.bar.ControlBar;
+import ch.bailu.aat_lib.dispatcher.AppBroadcaster;
+import ch.bailu.aat_lib.preferences.OnPreferencesChanged;
+import ch.bailu.aat_lib.preferences.StorageInterface;
+import ch.bailu.aat_lib.preferences.map.SolidTileCacheDirectory;
 
 
 public class TileRemoverView
         extends LinearLayout
-        implements View.OnClickListener, SharedPreferences.OnSharedPreferenceChangeListener {
+        implements View.OnClickListener, OnPreferencesChanged {
 
 
     private TileSummariesView summaryView;
@@ -45,7 +48,7 @@ public class TileRemoverView
         scontext = sc;
         acontext = ac;
 
-        sdirectory = new SolidTileCacheDirectory(getContext());
+        sdirectory = new AndroidSolidTileCacheDirectory(getContext());
 
         addW(createFilterLayout(ac, theme));
         addView(createControlBar(getContext(), theme));
@@ -93,16 +96,16 @@ public class TileRemoverView
         super.onAttachedToWindow();
         sdirectory.register(this);
 
-        AppBroadcaster.register(getContext(),
+        OldAppBroadcaster.register(getContext(),
                 onTileRemoverStopped,
                 AppBroadcaster.TILE_REMOVER_STOPPED);
 
 
-        AppBroadcaster.register(getContext(),
+        OldAppBroadcaster.register(getContext(),
                 onTileRemoverScan,
                 AppBroadcaster.TILE_REMOVER_SCAN);
 
-        AppBroadcaster.register(getContext(),
+        OldAppBroadcaster.register(getContext(),
                 onTileRemoverRemove,
                 AppBroadcaster.TILE_REMOVER_REMOVE);
 
@@ -175,7 +178,8 @@ public class TileRemoverView
 
 
     @Override
-    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, final String key) {
+    public void onPreferencesChanged(StorageInterface s, String key) {
+
         new InsideContext(scontext) {
             @Override
             public void run() {

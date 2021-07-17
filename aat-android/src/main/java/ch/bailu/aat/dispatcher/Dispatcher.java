@@ -4,8 +4,9 @@ import android.util.SparseArray;
 
 import java.util.ArrayList;
 
-import ch.bailu.aat.gpx.GpxInformation;
-import ch.bailu.aat.gpx.InfoID;
+import ch.bailu.aat_lib.dispatcher.OnContentUpdatedInterface;
+import ch.bailu.aat_lib.gpx.GpxInformation;
+import ch.bailu.aat_lib.gpx.InfoID;
 
 public class Dispatcher implements DispatcherInterface, OnContentUpdatedInterface {
 

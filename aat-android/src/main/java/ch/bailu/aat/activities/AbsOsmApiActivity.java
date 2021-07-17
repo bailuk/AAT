@@ -9,12 +9,10 @@ import android.view.View.OnClickListener;
 import android.widget.LinearLayout;
 
 import ch.bailu.aat.R;
-import ch.bailu.aat.coordinates.BoundingBoxE6;
 import ch.bailu.aat.dispatcher.CustomFileSource;
-import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.menus.ResultFileMenu;
-import ch.bailu.aat.util.AppBroadcaster;
 import ch.bailu.aat.util.AppIntent;
+import ch.bailu.aat.util.OldAppBroadcaster;
 import ch.bailu.aat.util.OsmApiConfiguration;
 import ch.bailu.aat.util.TextBackup;
 import ch.bailu.aat.util.ui.AppTheme;
@@ -27,6 +25,9 @@ import ch.bailu.aat.views.ImageButtonViewGroup;
 import ch.bailu.aat.views.NodeListView;
 import ch.bailu.aat.views.OsmApiEditorView;
 import ch.bailu.aat.views.bar.MainControlBar;
+import ch.bailu.aat_lib.coordinates.BoundingBoxE6;
+import ch.bailu.aat_lib.dispatcher.AppBroadcaster;
+import ch.bailu.aat_lib.gpx.InfoID;
 
 
 public abstract class AbsOsmApiActivity extends ActivityContext implements OnClickListener {
@@ -68,7 +69,7 @@ public abstract class AbsOsmApiActivity extends ActivityContext implements OnCli
         addSource(new CustomFileSource(getServiceContext(), configuration.getResultFile().getPath()));
         addTarget(list, InfoID.FILEVIEW);
 
-        AppBroadcaster.register(this, onFileTaskChanged,
+        OldAppBroadcaster.register(this, onFileTaskChanged,
                 AppBroadcaster.FILE_BACKGROND_TASK_CHANGED);
     }
 

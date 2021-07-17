@@ -4,13 +4,14 @@ import android.widget.LinearLayout;
 
 import java.util.ArrayList;
 
-import ch.bailu.aat.dispatcher.OnContentUpdatedInterface;
-import ch.bailu.aat.gpx.GpxInformation;
-import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.services.InsideContext;
 import ch.bailu.aat.services.ServiceContext;
+import ch.bailu.aat.services.sensor.SensorService;
 import ch.bailu.aat.services.sensor.list.SensorList;
 import ch.bailu.aat.util.ui.UiTheme;
+import ch.bailu.aat_lib.dispatcher.OnContentUpdatedInterface;
+import ch.bailu.aat_lib.gpx.GpxInformation;
+import ch.bailu.aat_lib.gpx.InfoID;
 
 public class SensorListView  extends LinearLayout implements OnContentUpdatedInterface {
 
@@ -44,7 +45,7 @@ public class SensorListView  extends LinearLayout implements OnContentUpdatedInt
 
             @Override
             public void run() {
-                SensorList sensorList = scontext.getSensorService().getSensorList();
+                SensorList sensorList = ((SensorService)scontext.getSensorService()).getSensorList();
 
                 for (int i=0; i<sensorList.size(); i++) {
                     if (children.size() <= i) {

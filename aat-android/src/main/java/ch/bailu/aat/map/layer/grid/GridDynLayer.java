@@ -1,12 +1,11 @@
 package ch.bailu.aat.map.layer.grid;
 
-import android.content.SharedPreferences;
-
 import org.mapsforge.core.model.Point;
 
 import ch.bailu.aat.map.MapContext;
 import ch.bailu.aat.map.layer.MapLayerInterface;
 import ch.bailu.aat.preferences.map.SolidMapGrid;
+import ch.bailu.aat_lib.preferences.StorageInterface;
 
 public final class GridDynLayer implements MapLayerInterface {
     private MapLayerInterface gridLayer;
@@ -47,7 +46,7 @@ public final class GridDynLayer implements MapLayerInterface {
 
 
     @Override
-    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+    public void onPreferencesChanged(StorageInterface s, String key) {
         if (sgrid.hasKey(key)) {
             gridLayer = sgrid.createGridLayer(mcontext);
             mcontext.getMapView().requestRedraw();

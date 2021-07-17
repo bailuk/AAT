@@ -15,14 +15,14 @@ import androidx.annotation.RequiresApi;
 
 import java.util.List;
 
-import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.sensor.SensorInterface;
 import ch.bailu.aat.services.sensor.list.SensorItemState;
 import ch.bailu.aat.services.sensor.list.SensorList;
 import ch.bailu.aat.services.sensor.list.SensorListItem;
 import ch.bailu.aat.util.Timer;
-import ch.bailu.aat.util.ui.AppLog;
+import ch.bailu.aat_lib.gpx.GpxInformation;
+import ch.bailu.aat_lib.logger.AppLog;
 
 @RequiresApi(api = 18)
 public final class BleSensorSDK18 extends BluetoothGattCallback implements SensorInterface {

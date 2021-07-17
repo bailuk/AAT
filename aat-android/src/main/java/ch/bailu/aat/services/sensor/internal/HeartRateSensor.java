@@ -7,12 +7,12 @@ import android.hardware.SensorManager;
 
 import androidx.annotation.RequiresApi;
 
-import ch.bailu.aat.gpx.GpxInformation;
-import ch.bailu.aat.gpx.InfoID;
-import ch.bailu.aat.services.sensor.attributes.HeartRateAttributes;
-import ch.bailu.aat.services.sensor.attributes.SensorInformation;
+import ch.bailu.aat.gpx.attributes.SensorInformation;
 import ch.bailu.aat.services.sensor.bluetooth_le.Broadcaster;
 import ch.bailu.aat.services.sensor.list.SensorListItem;
+import ch.bailu.aat_lib.gpx.GpxInformation;
+import ch.bailu.aat_lib.gpx.InfoID;
+import ch.bailu.aat_lib.gpx.attributes.HeartRateAttributes;
 
 @RequiresApi(api = 23)
 public final class HeartRateSensor extends InternalSensorSDK23 {

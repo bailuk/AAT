@@ -5,7 +5,7 @@ import android.text.InputType;
 import android.widget.EditText;
 
 import ch.bailu.aat.util.TextBackup;
-import ch.bailu.aat.util.ui.AppLog;
+import ch.bailu.aat_lib.logger.AppLog;
 import ch.bailu.foc.Foc;
 
 
@@ -60,7 +60,7 @@ public class TagEditor extends EditText {
         try {
             TextBackup.write(backup, getText().toString());
         } catch (Exception e) {
-            AppLog.e(getContext(), TagEditor.this, e);
+            AppLog.e(TagEditor.this, e);
 
         }
     }

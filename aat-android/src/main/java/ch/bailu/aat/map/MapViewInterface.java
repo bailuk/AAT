@@ -5,9 +5,9 @@ import android.view.View;
 import org.mapsforge.core.model.LatLong;
 import org.mapsforge.map.model.IMapViewPosition;
 
-import ch.bailu.aat.coordinates.BoundingBoxE6;
 import ch.bailu.aat.dispatcher.LifeCycleInterface;
 import ch.bailu.aat.map.layer.MapLayerInterface;
+import ch.bailu.aat_lib.coordinates.BoundingBoxE6;
 
 public interface MapViewInterface extends LifeCycleInterface {
     void frameBounding(BoundingBoxE6 boundingBox);

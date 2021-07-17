@@ -1,22 +1,22 @@
 package ch.bailu.aat.map.layer.control;
 
-import android.content.SharedPreferences;
 import android.view.View;
 
 import ch.bailu.aat.R;
 import ch.bailu.aat.dispatcher.DispatcherInterface;
-import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.map.MapContext;
 import ch.bailu.aat.menus.LocationMenu;
 import ch.bailu.aat.menus.MapMenu;
 import ch.bailu.aat.menus.MapQueryMenu;
-import ch.bailu.aat.preferences.SolidIndexList;
 import ch.bailu.aat.preferences.map.SolidLegend;
 import ch.bailu.aat.preferences.map.SolidMapGrid;
 import ch.bailu.aat.util.ui.AppTheme;
 import ch.bailu.aat.util.ui.ToolTip;
 import ch.bailu.aat.views.ImageButtonViewGroup;
 import ch.bailu.aat.views.bar.ControlBar;
+import ch.bailu.aat_lib.gpx.InfoID;
+import ch.bailu.aat_lib.preferences.SolidIndexList;
+import ch.bailu.aat_lib.preferences.StorageInterface;
 
 public final class InformationBarLayer extends ControlBarLayer {
 
@@ -116,7 +116,8 @@ public final class InformationBarLayer extends ControlBarLayer {
 
 
     @Override
-    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-        selector.onSharedPreferenceChanged(sharedPreferences, key);
+    public void onPreferencesChanged(StorageInterface s, String key) {
+
+        selector.onPreferencesChanged(s, key);
     }
 }

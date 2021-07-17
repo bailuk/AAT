@@ -2,14 +2,14 @@ package ch.bailu.aat.description;
 
 import android.content.Context;
 
-import ch.bailu.aat.R;
-import ch.bailu.aat.gpx.GpxInformation;
-import ch.bailu.aat.gpx.GpxList;
-import ch.bailu.aat.gpx.InfoID;
-import ch.bailu.aat.gpx.attributes.GpxAttributes;
-import ch.bailu.aat.gpx.interfaces.GpxDeltaInterface;
-import ch.bailu.aat.services.sensor.attributes.CadenceSpeedAttributes;
 import ch.bailu.aat.services.sensor.list.SensorState;
+import ch.bailu.aat_lib.gpx.GpxInformation;
+import ch.bailu.aat_lib.gpx.GpxList;
+import ch.bailu.aat_lib.gpx.InfoID;
+import ch.bailu.aat_lib.gpx.attributes.CadenceSpeedAttributes;
+import ch.bailu.aat_lib.gpx.attributes.GpxAttributes;
+import ch.bailu.aat_lib.gpx.interfaces.GpxDeltaInterface;
+import ch.bailu.aat_lib.resources.Res;
 
 public class CurrentSpeedDescription extends SpeedDescription {
 
@@ -23,14 +23,13 @@ public class CurrentSpeedDescription extends SpeedDescription {
     }
 
     private void setLabel() {
+        label = Res.str().speed();
 
         if (currentIID == InfoID.SPEED_SENSOR) {
-            label = getContext().getString(R.string.speed) + " S";
+            label += " S";
 
         } else if (currentIID == InfoID.LOCATION) {
-            label = getContext().getString(R.string.speed) + " GPS";
-        } else {
-            label = getContext().getString(R.string.speed);
+            label += " GPS";
         }
     }
 

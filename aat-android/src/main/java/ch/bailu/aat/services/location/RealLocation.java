@@ -10,9 +10,12 @@ import android.os.Bundle;
 
 import java.util.List;
 
-import ch.bailu.aat.gpx.StateID;
 import ch.bailu.aat.util.AppPermission;
 import ch.bailu.aat.util.ContextWrapperInterface;
+import ch.bailu.aat_lib.gpx.StateID;
+import ch.bailu.aat_lib.service.location.LocationInformation;
+import ch.bailu.aat_lib.service.location.LocationStackChainedItem;
+import ch.bailu.aat_lib.service.location.LocationStackItem;
 import ch.bailu.util.Objects;
 
 

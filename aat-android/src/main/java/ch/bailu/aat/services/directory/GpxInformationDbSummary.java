@@ -2,16 +2,16 @@ package ch.bailu.aat.services.directory;
 
 import android.database.Cursor;
 
-import ch.bailu.aat.gpx.GpxBigDelta;
-import ch.bailu.aat.gpx.GpxInformation;
-import ch.bailu.aat.gpx.GpxList;
-import ch.bailu.aat.gpx.GpxPoint;
-import ch.bailu.aat.gpx.InfoID;
-import ch.bailu.aat.gpx.attributes.GpxAttributes;
-import ch.bailu.aat.gpx.attributes.GpxAttributesNull;
-import ch.bailu.aat.gpx.attributes.GpxListAttributes;
-import ch.bailu.aat.gpx.attributes.MaxSpeed;
-import ch.bailu.aat.gpx.interfaces.GpxType;
+import ch.bailu.aat_lib.gpx.GpxBigDelta;
+import ch.bailu.aat_lib.gpx.GpxInformation;
+import ch.bailu.aat_lib.gpx.GpxList;
+import ch.bailu.aat_lib.gpx.GpxPoint;
+import ch.bailu.aat_lib.gpx.InfoID;
+import ch.bailu.aat_lib.gpx.attributes.GpxAttributes;
+import ch.bailu.aat_lib.gpx.attributes.GpxAttributesNull;
+import ch.bailu.aat_lib.gpx.attributes.GpxListAttributes;
+import ch.bailu.aat_lib.gpx.attributes.MaxSpeed;
+import ch.bailu.aat_lib.gpx.interfaces.GpxType;
 import ch.bailu.foc.Foc;
 
 public final class GpxInformationDbSummary extends GpxInformation {

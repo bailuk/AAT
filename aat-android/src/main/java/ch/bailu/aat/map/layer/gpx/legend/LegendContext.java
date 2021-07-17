@@ -2,11 +2,11 @@ package ch.bailu.aat.map.layer.gpx.legend;
 
 import org.mapsforge.core.graphics.Paint;
 
-import ch.bailu.aat.coordinates.BoundingBoxE6;
-import ch.bailu.aat.gpx.GpxPointNode;
 import ch.bailu.aat.map.MapColor;
 import ch.bailu.aat.map.MapContext;
 import ch.bailu.aat.map.TwoNodes;
+import ch.bailu.aat_lib.coordinates.BoundingBoxE6;
+import ch.bailu.aat_lib.gpx.GpxPointNode;
 
 public final class LegendContext {
 

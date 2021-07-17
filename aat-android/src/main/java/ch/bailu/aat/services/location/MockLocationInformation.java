@@ -1,7 +1,8 @@
 package ch.bailu.aat.services.location;
 
-import ch.bailu.aat.coordinates.BoundingBoxE6;
-import ch.bailu.aat.gpx.GpxPointNode;
+import ch.bailu.aat_lib.coordinates.BoundingBoxE6;
+import ch.bailu.aat_lib.gpx.GpxPointNode;
+import ch.bailu.aat_lib.service.location.LocationInformation;
 import ch.bailu.foc.Foc;
 
 public final class MockLocationInformation extends LocationInformation {

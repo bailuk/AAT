@@ -6,14 +6,14 @@ import android.graphics.Color;
 
 import ch.bailu.aat.R;
 import ch.bailu.aat.dispatcher.DispatcherInterface;
-import ch.bailu.aat.gpx.GpxList;
 import ch.bailu.aat.gpx.GpxListWalker;
-import ch.bailu.aat.gpx.GpxPointNode;
-import ch.bailu.aat.gpx.GpxSegmentNode;
 import ch.bailu.aat.map.MapColor;
-import ch.bailu.aat.preferences.general.SolidUnit;
 import ch.bailu.aat.util.ui.AppDensity;
 import ch.bailu.aat.util.ui.UiTheme;
+import ch.bailu.aat_lib.gpx.GpxList;
+import ch.bailu.aat_lib.gpx.GpxPointNode;
+import ch.bailu.aat_lib.gpx.GpxSegmentNode;
+import ch.bailu.aat_lib.preferences.general.SolidUnit;
 
 public class DistanceAltitudeGraphView extends AbsGraphView {
 

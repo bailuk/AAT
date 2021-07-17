@@ -3,14 +3,15 @@ package ch.bailu.aat.services.sensor.internal;
 import android.content.Context;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
+
 import androidx.annotation.RequiresApi;
 
-import ch.bailu.aat.gpx.GpxInformation;
-import ch.bailu.aat.gpx.InfoID;
-import ch.bailu.aat.services.sensor.attributes.SensorInformation;
-import ch.bailu.aat.services.sensor.attributes.StepCounterAttributes;
+import ch.bailu.aat.gpx.attributes.SensorInformation;
 import ch.bailu.aat.services.sensor.bluetooth_le.Broadcaster;
 import ch.bailu.aat.services.sensor.list.SensorListItem;
+import ch.bailu.aat_lib.gpx.GpxInformation;
+import ch.bailu.aat_lib.gpx.InfoID;
+import ch.bailu.aat_lib.gpx.attributes.StepCounterAttributes;
 
 @RequiresApi(api = 23)
 public final class StepCounterSensor extends InternalSensorSDK23 {

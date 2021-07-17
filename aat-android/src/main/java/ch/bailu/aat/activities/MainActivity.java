@@ -1,7 +1,6 @@
 package ch.bailu.aat.activities;
 
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -9,23 +8,25 @@ import android.widget.LinearLayout;
 import ch.bailu.aat.dispatcher.CurrentLocationSource;
 import ch.bailu.aat.dispatcher.SensorSource;
 import ch.bailu.aat.dispatcher.TrackerSource;
-import ch.bailu.aat.gpx.InfoID;
-import ch.bailu.aat.preferences.SolidFile;
-import ch.bailu.aat.preferences.presets.SolidPreset;
-import ch.bailu.aat.preferences.system.SolidDataDirectory;
+import ch.bailu.aat.preferences.system.AndroidSolidDataDirectory;
 import ch.bailu.aat.preferences.system.SolidExternalDirectory;
 import ch.bailu.aat.services.sensor.SensorService;
-import ch.bailu.aat.util.AppBroadcaster;
-import ch.bailu.aat.util.fs.AppDirectory;
+import ch.bailu.aat.util.OldAppBroadcaster;
 import ch.bailu.aat.util.ui.AppLayout;
 import ch.bailu.aat.util.ui.AppTheme;
 import ch.bailu.aat.util.ui.UiTheme;
-import ch.bailu.aat.views.ErrorView;
-import ch.bailu.aat.views.LabelTextView;
 import ch.bailu.aat.views.ContentView;
+import ch.bailu.aat.views.LabelTextView;
 import ch.bailu.aat.views.bar.MainControlBar;
 import ch.bailu.aat.views.preferences.SolidIndexListView;
 import ch.bailu.aat.views.preferences.VerticalScrollView;
+import ch.bailu.aat_lib.dispatcher.AppBroadcaster;
+import ch.bailu.aat_lib.gpx.InfoID;
+import ch.bailu.aat_lib.preferences.OnPreferencesChanged;
+import ch.bailu.aat_lib.preferences.SolidFile;
+import ch.bailu.aat_lib.preferences.StorageInterface;
+import ch.bailu.aat_lib.preferences.presets.SolidPreset;
+import ch.bailu.aat_lib.util.fs.AppDirectory;
 
 
 public class MainActivity extends ActivityContext {
@@ -48,7 +49,7 @@ public class MainActivity extends ActivityContext {
     public void onResumeWithService() {
         super.onResumeWithService();
 
-        AppBroadcaster.broadcast(this, AppBroadcaster.SENSOR_CHANGED + InfoID.SENSORS);
+        OldAppBroadcaster.broadcast(this, AppBroadcaster.SENSOR_CHANGED + InfoID.SENSORS);
     }
 
 
@@ -68,7 +69,7 @@ public class MainActivity extends ActivityContext {
     private View createActionList() {
 
         final VerticalScrollView list = new VerticalScrollView(this);
-        list.add(new SolidIndexListView(new SolidPreset(this), theme));
+        list.add(new SolidIndexListView(this,new SolidPreset(new AndroidSolidDataDirectory(this)), theme));
 
         final int accessibleCount = new ActivitySwitcher(this).size();
         for (int i = 0; i < accessibleCount; i++) {
@@ -142,7 +143,7 @@ public class MainActivity extends ActivityContext {
     }
 
 
-    private class ExternalDirectoryLabel extends ActivityLabel implements SharedPreferences.OnSharedPreferenceChangeListener {
+    private class ExternalDirectoryLabel extends ActivityLabel implements OnPreferencesChanged {
         private final SolidExternalDirectory sdirectory;
 
         public ExternalDirectoryLabel(final ActivitySwitcher.Entry s) {
@@ -177,7 +178,7 @@ public class MainActivity extends ActivityContext {
         }
 
         @Override
-        public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        public void onPreferencesChanged(StorageInterface s, String key) {
             if (sdirectory.hasKey(key)) {
                 setText();
             }
@@ -186,7 +187,7 @@ public class MainActivity extends ActivityContext {
 
 
 
-    private class PresetDirectoryLabel extends ActivityLabel implements SharedPreferences.OnSharedPreferenceChangeListener {
+    private class PresetDirectoryLabel extends ActivityLabel implements OnPreferencesChanged {
 
         private final SolidFile sdirectory;
         private final SolidPreset spreset;
@@ -194,14 +195,14 @@ public class MainActivity extends ActivityContext {
 
         public PresetDirectoryLabel(ActivitySwitcher.Entry s) {
             super(s);
-            sdirectory = new SolidDataDirectory(getContext());
-            spreset = new SolidPreset(getContext());
+            sdirectory = new AndroidSolidDataDirectory(getContext());
+            spreset = new SolidPreset(new AndroidSolidDataDirectory(getContext()));
 
             setText();
         }
 
         public void setText() {
-            setText(new SolidPreset(getContext()).getDirectoryName());
+            setText(new SolidPreset(new AndroidSolidDataDirectory(getContext())).getDirectoryName());
         }
 
         @Override
@@ -220,7 +221,7 @@ public class MainActivity extends ActivityContext {
         }
 
         @Override
-        public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        public void onPreferencesChanged(StorageInterface s, String key) {
             if (spreset.hasKey(key) || sdirectory.hasKey(key)) {
                 setText();
             }
@@ -228,7 +229,7 @@ public class MainActivity extends ActivityContext {
     }
 
 
-    private class InternalDirectoryLabel extends ActivityLabel implements SharedPreferences.OnSharedPreferenceChangeListener {
+    private class InternalDirectoryLabel extends ActivityLabel implements OnPreferencesChanged {
 
         private final SolidFile sdirectory;
         private final String directory;
@@ -236,12 +237,12 @@ public class MainActivity extends ActivityContext {
 
         public InternalDirectoryLabel(ActivitySwitcher.Entry s, String d) {
             super(s);
-            sdirectory = new SolidDataDirectory(getContext());
+            sdirectory = new AndroidSolidDataDirectory(getContext());
             directory = d;
         }
 
         public void setText() {
-            setText(AppDirectory.getDataDirectory(getContext(), directory).getPathName());
+            setText(AppDirectory.getDataDirectory(new AndroidSolidDataDirectory(getContext()), directory).getPathName());
         }
 
         @Override
@@ -259,7 +260,7 @@ public class MainActivity extends ActivityContext {
         }
 
         @Override
-        public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        public void onPreferencesChanged(StorageInterface s, String key) {
             if (sdirectory.hasKey(key)) {
                 setText();
             }

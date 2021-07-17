@@ -4,7 +4,7 @@ import android.content.Context;
 
 import java.util.ArrayList;
 
-import ch.bailu.aat.R;
+import ch.bailu.aat_lib.resources.Res;
 import ch.bailu.foc.Foc;
 
 public class SolidMapsForgeMapFile extends SolidMapsForgeDirectory {
@@ -15,7 +15,7 @@ public class SolidMapsForgeMapFile extends SolidMapsForgeDirectory {
 
     @Override
     public String getLabel() {
-        return getString(R.string.p_offline_map);
+        return Res.str().p_offline_map();
     }
 
     @Override

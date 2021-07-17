@@ -9,12 +9,13 @@ import android.view.ViewGroup;
 
 import ch.bailu.aat.R;
 import ch.bailu.aat.dispatcher.DispatcherInterface;
-import ch.bailu.aat.dispatcher.OnContentUpdatedInterface;
-import ch.bailu.aat.gpx.GpxInformation;
-import ch.bailu.aat.gpx.GpxList;
-import ch.bailu.aat.gpx.interfaces.GpxType;
-import ch.bailu.aat.preferences.general.SolidUnit;
+import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat.util.ui.UiTheme;
+import ch.bailu.aat_lib.dispatcher.OnContentUpdatedInterface;
+import ch.bailu.aat_lib.gpx.GpxInformation;
+import ch.bailu.aat_lib.gpx.GpxList;
+import ch.bailu.aat_lib.gpx.interfaces.GpxType;
+import ch.bailu.aat_lib.preferences.general.SolidUnit;
 
 public abstract class AbsGraphView extends ViewGroup implements OnContentUpdatedInterface {
 
@@ -39,7 +40,7 @@ public abstract class AbsGraphView extends ViewGroup implements OnContentUpdated
         super(context);
         this.theme = theme;
         setWillNotDraw(false);
-        sunit = new SolidUnit(context);
+        sunit = new SolidUnit(new Storage(context));
 
         xlabel = new LabelOverlay(context, Gravity.LEFT | Gravity.BOTTOM);
         ylabel = new LabelOverlay(context, Gravity.RIGHT | Gravity.TOP);

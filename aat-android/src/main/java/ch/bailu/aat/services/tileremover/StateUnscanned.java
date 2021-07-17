@@ -2,8 +2,8 @@ package ch.bailu.aat.services.tileremover;
 
 import java.io.IOException;
 
-import ch.bailu.aat.preferences.map.SolidTileCacheDirectory;
-import ch.bailu.aat.util.AppBroadcaster;
+import ch.bailu.aat.preferences.map.AndroidSolidTileCacheDirectory;
+import ch.bailu.aat_lib.dispatcher.AppBroadcaster;
 
 public class StateUnscanned implements State {
 
@@ -26,7 +26,7 @@ public class StateUnscanned implements State {
     @Override
     public void reset() {
         state.list = null;
-        state.baseDirectory = new SolidTileCacheDirectory(state.context).getValueAsFile();
+        state.baseDirectory = new AndroidSolidTileCacheDirectory(state.context).getValueAsFile();
         try {
             state.summaries.rescanKeep(state.context, state.baseDirectory);
         } catch (IOException e) {

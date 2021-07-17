@@ -12,14 +12,14 @@ import android.widget.ListView;
 import ch.bailu.aat.activities.AbsDispatcher;
 import ch.bailu.aat.activities.ActivitySwitcher;
 import ch.bailu.aat.activities.NodeDetailActivity;
-import ch.bailu.aat.dispatcher.OnContentUpdatedInterface;
-import ch.bailu.aat.gpx.GpxInformation;
 import ch.bailu.aat.gpx.GpxInformationCache;
-import ch.bailu.aat.gpx.GpxList;
 import ch.bailu.aat.gpx.GpxListArray;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.util.ui.AppTheme;
 import ch.bailu.aat.util.ui.UiTheme;
+import ch.bailu.aat_lib.dispatcher.OnContentUpdatedInterface;
+import ch.bailu.aat_lib.gpx.GpxInformation;
+import ch.bailu.aat_lib.gpx.GpxList;
 
 public class NodeListView extends ListView implements
         OnContentUpdatedInterface,

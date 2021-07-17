@@ -3,7 +3,9 @@ package ch.bailu.aat.preferences.map;
 import android.content.Context;
 
 import ch.bailu.aat.R;
-import ch.bailu.aat.preferences.SolidStaticIndexList;
+import ch.bailu.aat.preferences.Storage;
+import ch.bailu.aat_lib.preferences.SolidStaticIndexList;
+import ch.bailu.aat_lib.resources.Res;
 
 public class SolidTrimMode extends SolidStaticIndexList {
 
@@ -15,7 +17,7 @@ public class SolidTrimMode extends SolidStaticIndexList {
     private static String[] modes = null;
 
     public SolidTrimMode(Context context) {
-        super(context,
+        super(new Storage(context),
                 SolidTrimMode.class.getSimpleName(),
                 generateModes(context));
 
@@ -38,7 +40,7 @@ public class SolidTrimMode extends SolidStaticIndexList {
 
     @Override
     public String getLabel() {
-        return getContext().getString(R.string.p_trim_mode);
+        return Res.str().p_trim_mode();
     }
 
 

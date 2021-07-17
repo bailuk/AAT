@@ -66,16 +66,16 @@ public final class MapMenu extends AbsMenu {
         final Context c = mcontext.getContext();
 
         if (item == stack) {
-            new SolidCheckListDialog(new SolidMapTileStack(c));
+            new SolidCheckListDialog(c, new SolidMapTileStack(c));
         } else if (item ==reload) {
                 mcontext.getMapView().reDownloadTiles();
 
             } else if (item == overlays) {
-            new SolidCheckListDialog(new SolidOverlayFileList(c));
+            new SolidCheckListDialog(c, new SolidOverlayFileList(c));
         } else if (item == theme) {
-            new SolidStringDialog(new SolidRenderTheme(c));
+            new SolidStringDialog(c, new SolidRenderTheme(c));
         } else if (item == map) {
-            new SolidStringDialog(new SolidMapsForgeMapFile(c));
+            new SolidStringDialog(c, new SolidMapsForgeMapFile(c));
         } else if (item == preferences) {
             MultiView.storeActive(c, PreferencesActivity.SOLID_KEY, 1);
             ActivitySwitcher.start(mcontext.getContext(), PreferencesActivity.class);

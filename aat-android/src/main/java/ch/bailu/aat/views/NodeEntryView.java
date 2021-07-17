@@ -6,9 +6,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import ch.bailu.aat.activities.AbsDispatcher;
-import ch.bailu.aat.coordinates.BoundingBoxE6;
-import ch.bailu.aat.gpx.GpxInformation;
-import ch.bailu.aat.gpx.GpxPointNode;
 import ch.bailu.aat.map.layer.gpx.GpxDynLayer;
 import ch.bailu.aat.map.mapsforge.MapsForgeViewStatic;
 import ch.bailu.aat.services.ServiceContext;
@@ -17,6 +14,9 @@ import ch.bailu.aat.util.HtmlBuilderGpx;
 import ch.bailu.aat.util.ui.AppLayout;
 import ch.bailu.aat.util.ui.AppTheme;
 import ch.bailu.aat.util.ui.UiTheme;
+import ch.bailu.aat_lib.coordinates.BoundingBoxE6;
+import ch.bailu.aat_lib.gpx.GpxInformation;
+import ch.bailu.aat_lib.gpx.GpxPointNode;
 
 public class NodeEntryView extends LinearLayout {
 

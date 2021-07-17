@@ -5,6 +5,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
+import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat.preferences.system.SolidVolumeKeys;
 
 public abstract class AbsHardwareButtons extends AbsBackButton {
@@ -18,7 +19,7 @@ public abstract class AbsHardwareButtons extends AbsBackButton {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        svolumeKeys = new SolidVolumeKeys(this);
+        svolumeKeys = new SolidVolumeKeys(new Storage(this));
     }
 
     @Override

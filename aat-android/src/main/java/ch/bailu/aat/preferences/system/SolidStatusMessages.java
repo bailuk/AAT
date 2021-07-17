@@ -2,8 +2,9 @@ package ch.bailu.aat.preferences.system;
 
 import android.content.Context;
 
-import ch.bailu.aat.R;
-import ch.bailu.aat.preferences.SolidIndexList;
+import ch.bailu.aat.preferences.Storage;
+import ch.bailu.aat_lib.preferences.SolidIndexList;
+import ch.bailu.aat_lib.resources.Res;
 
 public class SolidStatusMessages extends SolidIndexList {
 
@@ -12,12 +13,12 @@ public class SolidStatusMessages extends SolidIndexList {
     private final String[] VAL;
 
     public SolidStatusMessages(Context c) {
-        super(c, KEY);
+        super(new Storage(c), KEY);
         VAL = new String[] {
-                getString(R.string.p_messages_size),
-                getString(R.string.p_messages_url),
-                getString(R.string.p_messages_file),
-                getString(R.string.none)
+                Res.str().p_messages_size(),
+                Res.str().p_messages_url(),
+                Res.str().p_messages_file(),
+                Res.str().none()
         };
     }
 
@@ -33,7 +34,7 @@ public class SolidStatusMessages extends SolidIndexList {
 
     @Override
     public String getLabel() {
-        return getString(R.string.p_messages);
+        return Res.str().p_messages();
     }
 
 

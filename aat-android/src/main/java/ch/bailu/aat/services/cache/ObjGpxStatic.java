@@ -3,26 +3,28 @@ package ch.bailu.aat.services.cache;
 import android.util.SparseArray;
 
 import ch.bailu.aat.coordinates.Dem3Coordinates;
-import ch.bailu.aat.gpx.GpxList;
 import ch.bailu.aat.gpx.GpxListWalker;
-import ch.bailu.aat.gpx.GpxPoint;
-import ch.bailu.aat.gpx.GpxPointLinkedNode;
-import ch.bailu.aat.gpx.GpxPointNode;
-import ch.bailu.aat.gpx.GpxSegmentNode;
-import ch.bailu.aat.gpx.attributes.AutoPause;
-import ch.bailu.aat.gpx.linked_list.Node;
-import ch.bailu.aat.gpx.xml_parser.GpxListReader;
-import ch.bailu.aat.preferences.SolidAutopause;
-import ch.bailu.aat.preferences.general.SolidPostprocessedAutopause;
-import ch.bailu.aat.preferences.presets.SolidPreset;
+import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat.services.InsideContext;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.background.FileTask;
-import ch.bailu.aat.services.dem.tile.Dem3Status;
-import ch.bailu.aat.services.dem.tile.Dem3Tile;
-import ch.bailu.aat.services.dem.tile.ElevationProvider;
-import ch.bailu.aat.services.dem.updater.ElevationUpdaterClient;
-import ch.bailu.aat.util.AppBroadcaster;
+import ch.bailu.aat.services.elevation.tile.Dem3Status;
+import ch.bailu.aat.services.elevation.tile.Dem3Tile;
+import ch.bailu.aat.services.elevation.updater.ElevationUpdaterClient;
+import ch.bailu.aat.util.OldAppBroadcaster;
+import ch.bailu.aat_lib.dispatcher.AppBroadcaster;
+import ch.bailu.aat_lib.gpx.GpxList;
+import ch.bailu.aat_lib.gpx.GpxPoint;
+import ch.bailu.aat_lib.gpx.GpxPointLinkedNode;
+import ch.bailu.aat_lib.gpx.GpxPointNode;
+import ch.bailu.aat_lib.gpx.GpxSegmentNode;
+import ch.bailu.aat_lib.gpx.attributes.AutoPause;
+import ch.bailu.aat_lib.gpx.linked_list.Node;
+import ch.bailu.aat_lib.preferences.SolidAutopause;
+import ch.bailu.aat_lib.preferences.general.SolidPostprocessedAutopause;
+import ch.bailu.aat_lib.preferences.presets.SolidPreset;
+import ch.bailu.aat_lib.service.elevation.ElevationProvider;
+import ch.bailu.aat_lib.xml.parser.gpx.GpxListReader;
 import ch.bailu.foc.Foc;
 import ch.bailu.foc_android.FocAndroid;
 
@@ -136,7 +138,7 @@ public final class ObjGpxStatic extends ObjGpx implements ElevationUpdaterClient
     public void updateFromSrtmTile(ServiceContext sc, Dem3Tile srtm) {
         new ListUpdater(srtm).walkTrack(gpxList);
 
-        AppBroadcaster.broadcast(sc.getContext(), AppBroadcaster.FILE_CHANGED_INCACHE, toString());
+        OldAppBroadcaster.broadcast(sc.getContext(), AppBroadcaster.FILE_CHANGED_INCACHE, toString());
 
     }
 
@@ -225,7 +227,7 @@ public final class ObjGpxStatic extends ObjGpx implements ElevationUpdaterClient
                     sc.getElevationService().requestElevationUpdates(owner,
                             owner.getSrtmTileCoordinates());
 
-                    AppBroadcaster.broadcast(sc.getContext(),
+                    OldAppBroadcaster.broadcast(sc.getContext(),
                             AppBroadcaster.FILE_CHANGED_INCACHE, getID());
 
                 }
@@ -256,7 +258,7 @@ public final class ObjGpxStatic extends ObjGpx implements ElevationUpdaterClient
 
 
         private AutoPause getAutoPause(ServiceContext sc, int preset) {
-            SolidAutopause spause = new SolidPostprocessedAutopause(sc.getContext(), preset);
+            SolidAutopause spause = new SolidPostprocessedAutopause(new Storage(sc.getContext()), preset);
             return new AutoPause.Time(
                     spause.getTriggerSpeed(),
                     spause.getTriggerLevelMillis());

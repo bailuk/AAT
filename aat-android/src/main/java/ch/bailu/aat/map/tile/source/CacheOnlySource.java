@@ -4,9 +4,10 @@ import android.content.Context;
 
 import org.mapsforge.core.model.Tile;
 
+import ch.bailu.aat.preferences.map.AndroidSolidTileCacheDirectory;
 import ch.bailu.aat.services.cache.Obj;
 import ch.bailu.aat.services.cache.ObjTileCacheOnly;
-import ch.bailu.aat.util.fs.AppDirectory;
+import ch.bailu.aat_lib.util.fs.AppDirectory;
 
 public class CacheOnlySource extends Source {
 
@@ -22,7 +23,7 @@ public class CacheOnlySource extends Source {
 
     @Override
     public String getID(Tile tile, Context context) {
-        return AppDirectory.getTileFile(genRelativeFilePath(tile, original.getName()), context).getPath();
+        return AppDirectory.getTileFile(genRelativeFilePath(tile, original.getName()), new AndroidSolidTileCacheDirectory(context)).getPath();
     }
 
 

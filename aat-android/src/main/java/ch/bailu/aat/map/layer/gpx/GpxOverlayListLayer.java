@@ -1,14 +1,13 @@
 package ch.bailu.aat.map.layer.gpx;
 
-import android.content.SharedPreferences;
-
 import org.mapsforge.core.model.Point;
 
 import ch.bailu.aat.dispatcher.DispatcherInterface;
-import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.map.MapContext;
 import ch.bailu.aat.map.layer.MapLayerInterface;
 import ch.bailu.aat.preferences.map.SolidOverlayFileList;
+import ch.bailu.aat_lib.gpx.InfoID;
+import ch.bailu.aat_lib.preferences.StorageInterface;
 
 public final class GpxOverlayListLayer implements MapLayerInterface {
     private final GpxDynLayer[] overlays;
@@ -38,8 +37,8 @@ public final class GpxOverlayListLayer implements MapLayerInterface {
 
 
     @Override
-    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-        for (MapLayerInterface o : overlays) o.onSharedPreferenceChanged(sharedPreferences, key);
+    public void onPreferencesChanged(StorageInterface s, String key) {
+        for (MapLayerInterface o : overlays) o.onPreferencesChanged(s, key);
     }
 
     @Override

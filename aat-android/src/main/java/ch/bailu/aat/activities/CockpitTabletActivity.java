@@ -18,7 +18,6 @@ import ch.bailu.aat.dispatcher.OverlaySource;
 import ch.bailu.aat.dispatcher.SensorSource;
 import ch.bailu.aat.dispatcher.TrackerSource;
 import ch.bailu.aat.dispatcher.TrackerTimerSource;
-import ch.bailu.aat.gpx.InfoID;
 import ch.bailu.aat.map.MapFactory;
 import ch.bailu.aat.map.MapViewInterface;
 import ch.bailu.aat.map.mapsforge.MapViewLinker;
@@ -31,6 +30,7 @@ import ch.bailu.aat.views.bar.ControlBar;
 import ch.bailu.aat.views.bar.MainControlBar;
 import ch.bailu.aat.views.description.CockpitView;
 import ch.bailu.aat.views.graph.GraphViewFactory;
+import ch.bailu.aat_lib.gpx.InfoID;
 
 public class CockpitTabletActivity extends AbsKeepScreenOnActivity {
     private final static String SOLID_KEY="cockpit_tablet";

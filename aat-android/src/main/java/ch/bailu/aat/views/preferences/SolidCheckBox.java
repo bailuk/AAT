@@ -1,5 +1,6 @@
 package ch.bailu.aat.views.preferences;
 
+import android.content.Context;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
 
@@ -12,8 +13,8 @@ public class SolidCheckBox extends LinearLayout {
 
     private final ToolTipView toolTip;
 
-    public SolidCheckBox(final SolidBoolean sboolean, UiTheme theme) {
-        super(sboolean.getContext());
+    public SolidCheckBox(Context context, final SolidBoolean sboolean, UiTheme theme) {
+        super(context);
         setOrientation(VERTICAL);
 
         CheckBox checkBox = new CheckBox(getContext());

@@ -10,6 +10,7 @@ import ch.bailu.aat.map.MapContext;
 import ch.bailu.aat.map.MapMetrics;
 import ch.bailu.aat.map.MapPaint;
 import ch.bailu.aat.map.layer.gpx.GpxLayer;
+import ch.bailu.aat_lib.preferences.StorageInterface;
 
 public final class GpxLegendLayer extends GpxLayer {
     private final LegendWalker walker;
@@ -57,9 +58,8 @@ public final class GpxLegendLayer extends GpxLayer {
     }
 
     @Override
-    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+    public void onPreferencesChanged(StorageInterface s, String key) {}
 
-    }
 
     @Override
     public void onAttached() {

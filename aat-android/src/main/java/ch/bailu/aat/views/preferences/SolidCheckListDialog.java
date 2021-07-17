@@ -1,6 +1,7 @@
 package ch.bailu.aat.views.preferences;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnMultiChoiceClickListener;
 
@@ -10,10 +11,10 @@ public class SolidCheckListDialog extends AbsSolidDialog implements  OnMultiChoi
     private final SolidCheckList slist;
 
 
-    public SolidCheckListDialog(SolidCheckList l) {
+    public SolidCheckListDialog(Context context, SolidCheckList l) {
         slist=l;
 
-        final AlertDialog.Builder dialog = createDefaultDialog(l);
+        final AlertDialog.Builder dialog = createDefaultDialog(context, l);
         dialog.setMultiChoiceItems(slist.getStringArray(), slist.getEnabledArray(), this);
         dialog.create();
         dialog.show();

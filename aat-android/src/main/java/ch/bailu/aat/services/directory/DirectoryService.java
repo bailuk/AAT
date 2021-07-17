@@ -1,5 +1,6 @@
 package ch.bailu.aat.services.directory;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.database.Cursor;
@@ -7,33 +8,45 @@ import android.database.sqlite.SQLiteCantOpenDatabaseException;
 
 import java.io.IOException;
 
+import ch.bailu.aat.factory.AndroidFocFactory;
 import ch.bailu.aat.preferences.SolidDirectoryQuery;
+import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat.services.ServiceContext;
-import ch.bailu.aat.services.VirtualService;
-import ch.bailu.aat.util.WithStatusText;
 import ch.bailu.aat.util.fs.AFile;
+import ch.bailu.aat_lib.preferences.OnPreferencesChanged;
+import ch.bailu.aat_lib.preferences.StorageInterface;
+import ch.bailu.aat_lib.service.VirtualService;
+import ch.bailu.aat_lib.util.WithStatusText;
 import ch.bailu.foc.Foc;
 
-public final class DirectoryService extends VirtualService implements OnSharedPreferenceChangeListener, WithStatusText{
+public final class DirectoryService extends VirtualService implements OnPreferencesChanged, WithStatusText {
 
 
     private AbsDatabase database=AbsDatabase.NULL_DATABASE;
     private final SolidDirectoryQuery sdirectory;
     private DirectorySynchronizer synchronizer=null;
 
+    private final ServiceContext scontext;
 
     public DirectoryService(ServiceContext scontext) {
-        super(scontext);
-        sdirectory = new SolidDirectoryQuery(getContext());
+        this.scontext = scontext;
+        sdirectory = new SolidDirectoryQuery(new Storage(getContext()), new AndroidFocFactory(getContext()));
         sdirectory.getStorage().register(this);
 
         openDir(sdirectory.getValueAsFile());
     }
 
+    public Context getContext() {
+        return scontext.getContext();
+    }
+
+    public ServiceContext getSContext() {
+        return scontext;
+    }
 
 
     @Override
-    public void onSharedPreferenceChanged(SharedPreferences sp, String key) {
+    public void onPreferencesChanged(StorageInterface s, String key) {
         if (sdirectory.hasKey(key)) {
             openDir(sdirectory.getValueAsFile());
         }

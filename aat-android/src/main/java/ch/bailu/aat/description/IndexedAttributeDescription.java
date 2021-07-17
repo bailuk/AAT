@@ -3,9 +3,10 @@ package ch.bailu.aat.description;
 import android.content.Context;
 
 import ch.bailu.aat.R;
-import ch.bailu.aat.gpx.GpxInformation;
-import ch.bailu.aat.gpx.attributes.SampleRate;
-import ch.bailu.aat.services.sensor.attributes.StepCounterAttributes;
+import ch.bailu.aat_lib.description.ContentDescription;
+import ch.bailu.aat_lib.gpx.GpxInformation;
+import ch.bailu.aat_lib.gpx.attributes.SampleRate;
+import ch.bailu.aat_lib.gpx.attributes.StepCounterAttributes;
 
 public class IndexedAttributeDescription extends ContentDescription {
 
@@ -17,7 +18,6 @@ public class IndexedAttributeDescription extends ContentDescription {
     public String value = "";
 
     public IndexedAttributeDescription(Context c, String l, String u, int i) {
-        super(c);
         label = l;
         keyIndex = i;
         unit = u;
