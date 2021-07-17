@@ -8,8 +8,13 @@ import org.acra.config.DialogConfigurationBuilder;
 import org.acra.config.MailSenderConfigurationBuilder;
 import org.acra.data.StringFormat;
 
+import ch.bailu.aat.dispatcher.AndroidBroadcaster;
 import ch.bailu.aat.map.mapsforge.MapsForgeContext;
+import ch.bailu.aat.util.AndroidLogger;
 import ch.bailu.aat.util.ui.AppConfig;
+import ch.bailu.aat_lib.dispatcher.AppBroadcaster;
+import ch.bailu.aat_lib.logger.AppLog;
+import ch.bailu.aat_lib.logger.BroadcastLogger;
 
 
 public class App extends Application {
@@ -18,6 +23,7 @@ public class App extends Application {
 
     @Override
     public void onCreate() {
+        initLogger();
         initMapsForge();
 
         if (RELEASE_MODE) {
@@ -25,6 +31,19 @@ public class App extends Application {
         }
 
         super.onCreate();
+    }
+
+    private void initLogger() {
+        AppLog.set(new AndroidLogger());
+        AppLog.setError(new BroadcastLogger(
+                new AndroidBroadcaster(getApplicationContext()),
+                AppBroadcaster.LOG_ERROR,
+                new AndroidLogger()));
+
+        AppLog.setInfo(new BroadcastLogger(
+                new AndroidBroadcaster(getApplicationContext()),
+                AppBroadcaster.LOG_INFO,
+                new AndroidLogger()));
     }
 
 
