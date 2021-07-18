@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ch.bailu.aat_lib.coordinates.BoundingBoxE6;
+import ch.bailu.aat_lib.dispatcher.AppBroadcaster;
 
 public class AppIntent {
     private static final String EXTRA_FILE="file";
@@ -70,13 +71,28 @@ public class AppIntent {
                 );
     }
 
+    public static Intent toIntent(String action, Object[] args) {
+        Intent result = new Intent(action);
+
+        if (action == AppBroadcaster.LOG_INFO || action == AppBroadcaster.LOG_ERROR && args.length > 1) {
+            String msg = args[1].toString();
+            result.putExtra(AppBroadcaster.EXTRA_MESSAGE, msg);
+        }
+        return result;
+    }
+
     public static Object[] toArgs(Intent intent) {
         List args = new ArrayList<>();
         addIfNotNull(args, AppIntent.getFile(intent));
         addIfNotNull(args, AppIntent.getUrl(intent));
 
-        if (intent.hasExtra(BluetoothAdapter.EXTRA_STATE))
-             addIfNotNull(args, intent.getIntExtra(BluetoothAdapter.EXTRA_STATE, BluetoothAdapter.ERROR));
+        if (intent.hasExtra(BluetoothAdapter.EXTRA_STATE)) {
+            addIfNotNull(args, intent.getIntExtra(BluetoothAdapter.EXTRA_STATE, BluetoothAdapter.ERROR));
+        }
+
+        if (intent.hasExtra(AppBroadcaster.EXTRA_MESSAGE)) {
+            addIfNotNull(args, intent.getStringArrayExtra(AppBroadcaster.EXTRA_MESSAGE));
+        }
 
         return args.toArray();
     }

@@ -23,11 +23,8 @@ public class AndroidBroadcaster implements Broadcaster {
 
 
     @Override
-    public void broadcast(String action, Object... objects) {
-        Intent intent=new Intent();
-        intent.setAction(action);
-
-        context.sendBroadcast(intent);
+    public void broadcast(String action, Object... args) {
+        context.sendBroadcast(AppIntent.toIntent(action, args));
     }
 
     @Override

@@ -39,7 +39,7 @@ public class SolidImageButton extends ImageButtonViewGroup implements OnPreferen
     public void onPreferencesChanged(StorageInterface s, String key) {
         if (solid.hasKey(key)) {
             setImageResource(solid.getIconResource());
-            AppLog.i(getContext(), solid.getValueAsString());
+            AppLog.i(this, solid.getValueAsString());
         }
     }
 
