@@ -1,6 +1,5 @@
 package ch.bailu.aat_lib.service.location;
 
-import ch.bailu.aat_lib.logger.AppLog;
 import ch.bailu.aat_lib.preferences.StorageInterface;
 import ch.bailu.aat_lib.preferences.presets.SolidMissingTrigger;
 
@@ -15,8 +14,6 @@ public final class MissingTrigger extends LocationStackChainedItem {
 
     @Override
     public void passLocation(LocationInformation location) {
-        AppLog.d(this, "pass location");
-
         stamp=location.getTimeStamp();
         super.passLocation(location);
 
@@ -31,6 +28,4 @@ public final class MissingTrigger extends LocationStackChainedItem {
     public void onPreferencesChanged(StorageInterface storage, String key, int presetIndex) {
         triggerMillis=new SolidMissingTrigger(storage, presetIndex).getTriggerMillis();
     }
-
-
 }

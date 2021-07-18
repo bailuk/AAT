@@ -6,6 +6,7 @@ import ch.bailu.aat_lib.dispatcher.AppBroadcaster;
 import ch.bailu.aat_lib.gpx.GpxInformation;
 import ch.bailu.aat_lib.gpx.StateID;
 import ch.bailu.aat_lib.gpx.attributes.GpxAttributes;
+import ch.bailu.aat_lib.logger.AppLog;
 import ch.bailu.aat_lib.resources.Res;
 import ch.bailu.aat_lib.service.location.LocationServiceInterface;
 
@@ -17,7 +18,6 @@ public final class OnState extends State {
 
     public OnState(TrackerInternals tracker) {
         super(tracker);
-
 
         if (tracker.isReadyForAutoPause()) {
             tracker.state = new AutoPauseState(tracker);

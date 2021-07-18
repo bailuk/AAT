@@ -8,18 +8,18 @@ import ch.bailu.aat_lib.gpx.StateID;
 import ch.bailu.aat_lib.gpx.attributes.GpxAttributes;
 import ch.bailu.aat_lib.gpx.interfaces.GpxPointInterface;
 
-public class Logger extends GpxInformation implements Closeable {
+public abstract class Logger extends GpxInformation implements Closeable {
     private int state = StateID.OFF;
 
-    public static Logger createNullLogger() {
-        return new Logger();
-    }
+    public static final Logger NULL_LOGGER = new Logger() {
+        @Override
+        public void log(GpxPointInterface tp, GpxAttributes attr) {}
+    };
 
     public void logPause() {
     }
 
-    public void log(GpxPointInterface tp, GpxAttributes attr) throws IOException {
-    }
+    public abstract void log(GpxPointInterface tp, GpxAttributes attr) throws IOException;
 
     @Override
     public void close() {

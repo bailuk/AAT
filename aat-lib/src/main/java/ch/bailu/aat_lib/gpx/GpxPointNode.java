@@ -19,32 +19,32 @@ public abstract class GpxPointNode extends Node implements GpxDeltaPointInterfac
         attributes = at;
     }
 
-
+    @Override
     public double getAltitude() {
         return point.getAltitude();
     }
 
-
+    @Override
     public double getLatitude() {
         return point.getLatitude();
     }
 
-
+    @Override
     public double getLongitude() {
         return point.getLongitude();
     }
 
-
+    @Override
     public long getTimeStamp() {
         return point.getTimeStamp();
     }
 
-
+    @Override
     public int getLatitudeE6() {
         return point.getLatitudeE6();
     }
 
-
+    @Override
     public int getLongitudeE6() {
         return point.getLongitudeE6();
     }
@@ -60,10 +60,10 @@ public abstract class GpxPointNode extends Node implements GpxDeltaPointInterfac
         return point;
     }
 
+    @Override
     public GpxAttributes getAttributes() {
         return attributes;
     }
-
 
     public void setAltitude(double e) {
         point.setAltitude((float) e);

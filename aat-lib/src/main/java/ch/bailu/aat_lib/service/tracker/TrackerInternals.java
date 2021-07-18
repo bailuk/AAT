@@ -46,10 +46,9 @@ public final class TrackerInternals
             logger = createLogger();
             logger.close();
         } catch (Exception e) {
-            // TODO: transmit error
             AppLog.e(e);
         }
-        logger = Logger.createNullLogger();
+        logger = Logger.NULL_LOGGER;
 
         state = new OffState(this);
         sdirectory.getStorage().register(this);
@@ -105,10 +104,9 @@ public final class TrackerInternals
 
 
     public void emergencyOff(Exception e) {
-        // TODO error to gui
         AppLog.e(this,e);
         logger.close();
-        logger = Logger.createNullLogger();
+        logger = Logger.NULL_LOGGER;
         state = new OffState(this);
     }
 

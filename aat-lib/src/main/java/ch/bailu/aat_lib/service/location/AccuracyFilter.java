@@ -1,6 +1,5 @@
 package ch.bailu.aat_lib.service.location;
 
-import ch.bailu.aat_lib.logger.AppLog;
 import ch.bailu.aat_lib.preferences.StorageInterface;
 import ch.bailu.aat_lib.preferences.presets.SolidAccuracyFilter;
 
@@ -20,12 +19,8 @@ public final class AccuracyFilter extends LocationStackChainedItem {
 
     @Override
     public void passLocation(LocationInformation location) {
-
         if (location.getAccuracy() < minAccuracy) {
-            AppLog.d(this, "pass location");
             super.passLocation(location);
-        } else {
-            AppLog.d(this, "do not pass location (low accuracy: " + location.getAccuracy() + " < " + minAccuracy +")");
         }
     }
 

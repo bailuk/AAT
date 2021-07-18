@@ -3,7 +3,6 @@ package ch.bailu.aat_lib.service.location;
 import ch.bailu.aat_lib.dispatcher.AppBroadcaster;
 import ch.bailu.aat_lib.dispatcher.Broadcaster;
 import ch.bailu.aat_lib.gpx.GpxInformation;
-import ch.bailu.aat_lib.logger.AppLog;
 import ch.bailu.aat_lib.preferences.StorageInterface;
 import ch.bailu.aat_lib.preferences.location.SolidMapPosition;
 import ch.bailu.foc.Foc;
@@ -41,8 +40,6 @@ public final class DirtyLocation extends LocationStackChainedItem {
 
     @Override
     public void passLocation(LocationInformation location) {
-        AppLog.d(this, "pass location");
-
         locationInformation=location;
         super.passLocation(location);
         broadcast.broadcast(AppBroadcaster.LOCATION_CHANGED);

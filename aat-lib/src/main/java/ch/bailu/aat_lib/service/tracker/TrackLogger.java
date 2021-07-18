@@ -2,8 +2,6 @@ package ch.bailu.aat_lib.service.tracker;
 
 import java.io.IOException;
 
-import javax.naming.Context;
-
 import ch.bailu.aat_lib.gpx.GpxList;
 import ch.bailu.aat_lib.gpx.GpxPoint;
 import ch.bailu.aat_lib.gpx.GpxPointNode;
@@ -11,14 +9,13 @@ import ch.bailu.aat_lib.gpx.attributes.GpxAttributes;
 import ch.bailu.aat_lib.gpx.attributes.GpxListAttributes;
 import ch.bailu.aat_lib.gpx.interfaces.GpxPointInterface;
 import ch.bailu.aat_lib.gpx.interfaces.GpxType;
+import ch.bailu.aat_lib.logger.AppLog;
 import ch.bailu.aat_lib.preferences.SolidAutopause;
-import ch.bailu.aat_lib.preferences.SolidFactory;
 import ch.bailu.aat_lib.preferences.StorageInterface;
 import ch.bailu.aat_lib.preferences.general.SolidPostprocessedAutopause;
 import ch.bailu.aat_lib.preferences.system.SolidDataDirectory;
-import ch.bailu.aat_lib.xml.writer.GpxListWriter;
-import ch.bailu.aat_lib.logger.AppLog;
 import ch.bailu.aat_lib.util.fs.AppDirectory;
+import ch.bailu.aat_lib.xml.writer.GpxListWriter;
 import ch.bailu.foc.Foc;
 
 public final class TrackLogger extends Logger {
@@ -107,7 +104,6 @@ public final class TrackLogger extends Logger {
             }
 
         } catch (IOException e) {
-            // TODO error to gui
             AppLog.e(e);
         }
 

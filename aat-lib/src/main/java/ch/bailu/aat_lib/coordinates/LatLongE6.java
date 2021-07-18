@@ -9,7 +9,7 @@ import javax.annotation.Nonnull;
 
 
 public class LatLongE6 implements LatLongE6Interface {
-    public final int la, lo;
+    private final int la, lo;
 
 
     public LatLongE6(int latitude, int longitude) {
@@ -61,5 +61,13 @@ public class LatLongE6 implements LatLongE6Interface {
     @Override
     public String toString() {
         return toLatLong().toString();
+    }
+
+    public double getLatitude() {
+        return toD(la);
+    }
+
+    public double getLongitude() {
+        return toD(lo);
     }
 }

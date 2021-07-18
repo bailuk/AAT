@@ -26,6 +26,12 @@ public class GeoClue2Dbus {
     private final Properties properties;
 
 
+    private final static UInt32 GCLUE_ACCURACY_LEVEL_COUNTRY = new UInt32(1);
+    private final static UInt32 GCLUE_ACCURACY_LEVEL_CITY = new UInt32(4);
+    private final static UInt32 GCLUE_ACCURACY_LEVEL_NEIGHBORHOOD = new UInt32(5);
+    private final static UInt32 GCLUE_ACCURACY_LEVEL_STREET = new UInt32(6);
+    private final static UInt32 GCLUE_ACCURACY_LEVEL_EXACT = new UInt32(8);
+
 
     public GeoClue2Dbus() throws DBusException {
         connection = DBusConnection.getConnection(DBusConnection.DBusBusType.SYSTEM);
@@ -41,6 +47,7 @@ public class GeoClue2Dbus {
         properties = connection.getRemoteObject(BUS_NAME, client_path, Properties.class);
 
         setDesktopId(DESKTOP_ID);
+        setRequestedAccuracyLevel(GCLUE_ACCURACY_LEVEL_EXACT);
     }
 
 

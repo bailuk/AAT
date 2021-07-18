@@ -73,10 +73,6 @@ public class RealLocation extends LocationStackChainedItem
     }
 
 
-
-
-
-
     private void validateProvider(LocationManager lm) throws NoServiceException {
         try {
             List <String> list = lm.getAllProviders();

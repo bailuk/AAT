@@ -40,7 +40,7 @@ public final class OffState extends State {
 
         } catch (Exception e) {
             AppLog.e(this, e);
-            internal.logger = Logger.createNullLogger();
+            internal.logger = Logger.NULL_LOGGER;
         }
     }
 

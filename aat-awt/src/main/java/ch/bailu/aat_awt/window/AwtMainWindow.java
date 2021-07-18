@@ -22,8 +22,8 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JToggleButton;
 import javax.swing.WindowConstants;
 
 import ch.bailu.aat_awt.App;
@@ -32,7 +32,6 @@ import ch.bailu.aat_lib.description.FF;
 import ch.bailu.aat_lib.description.GpsStateDescription;
 import ch.bailu.aat_lib.description.LatitudeDescription;
 import ch.bailu.aat_lib.description.LongitudeDescription;
-import ch.bailu.aat_lib.description.TimeDescription;
 import ch.bailu.aat_lib.description.TrackerStateDescription;
 import ch.bailu.aat_lib.dispatcher.AppBroadcaster;
 import ch.bailu.aat_lib.dispatcher.Broadcaster;
@@ -58,10 +57,11 @@ public class AwtMainWindow implements OnContentUpdatedInterface {
             statusPane = new JPanel();
 
     private final JButton
-            center = new JButton("Location"),
             showMap = new JButton("Map"),
             plus = new JButton("+"),
             minus = new JButton("-");
+
+    private final JToggleButton center = new JToggleButton("Center");
 
     private LatLong currentPos = null;
 
@@ -172,9 +172,9 @@ public class AwtMainWindow implements OnContentUpdatedInterface {
             gps.onContentUpdated(iid, info);
 
             locationStatus.setText(time + " " + gps.getLabel() + " " + gps.getValue() + " " + la.getValue() + ", " + lo.getValue());
-
-
             currentPos = new LatLong(info.getLatitude(), info.getLongitude());
+            doCenter();
+
         } else if (iid == InfoID.TRACKER) {
             tracker.onContentUpdated(iid, info);
             trackerStatus.setText(time + ": "+ tracker.getLabel() + " " + tracker.getValue() + " " + la.getValue() + ", " + lo.getValue());
@@ -183,17 +183,17 @@ public class AwtMainWindow implements OnContentUpdatedInterface {
 
 
     private void doQuit() {
-        int result = JOptionPane.showConfirmDialog(frame, MESSAGE, TITLE, JOptionPane.YES_NO_OPTION);
-        if (result == JOptionPane.YES_OPTION) {
+        /*int result = JOptionPane.showConfirmDialog(frame, MESSAGE, TITLE, JOptionPane.YES_NO_OPTION);
+        if (result == JOptionPane.YES_OPTION) {*/
             map.savePreferences();
             frame.dispose();
             App.exit(0);
-        }
+//        }
     }
 
 
     private void doCenter() {
-        if (currentPos != null) {
+        if (currentPos != null && center.isSelected()) {
             map.setCenter(currentPos);
         }
     }

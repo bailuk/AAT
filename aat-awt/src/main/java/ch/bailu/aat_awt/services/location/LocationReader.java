@@ -3,62 +3,38 @@ package ch.bailu.aat_awt.services.location;
 import org.freedesktop.dbus.connections.impl.DBusConnection;
 import org.freedesktop.dbus.exceptions.DBusException;
 import org.freedesktop.dbus.interfaces.DBusInterface;
-import org.freedesktop.dbus.interfaces.Properties;
-import org.freedesktop.dbus.types.UInt64;
 
+import ch.bailu.aat_lib.coordinates.LatLongE6;
 import ch.bailu.aat_lib.service.location.LocationInformation;
 import ch.bailu.foc.Foc;
 import ch.bailu.foc.FocName;
 
 public class LocationReader extends LocationInformation {
-    private final static String LOCATION_INTERFACE = "org.freedesktop.GeoClue2.Location";
-    private final Double latitude;
-    private final Double longitude;
-    private final Double accuracy;
-    private final Double speed;
-    private final Long time;
 
-    private Double altitude;
-
-
-    private final String description;
-
-    private final Properties properties;
+    private final LatLongE6 latLongE6;
+    private final float accuracy;
+    private final float speed;
+    private final long time;
+    private double altitude;
+    private final long creationTime;
 
     public LocationReader(DBusConnection connection, DBusInterface location) throws DBusException {
-        Object times[];
 
-        properties = connection.getRemoteObject(GeoClue2Dbus.BUS_NAME, location.getObjectPath(), Properties.class);
+        LocationProperties properties = new LocationProperties(connection, location);
 
+        latLongE6 = new LatLongE6(properties.readDouble("Latitude"), properties.readDouble("Longitude"));
+        accuracy = properties.readDouble("Accuracy").floatValue();
+        speed = properties.readDouble("Speed").floatValue();
+        altitude = properties.readDouble("Altitude");
 
-        latitude = readDouble("Latitude");
-        longitude = readDouble("Longitude");
-        accuracy = readDouble("Accuracy");
-        speed = readDouble("Speed");
-        altitude = readDouble("Altitude");
-
-
-
-
-        description = readDescription();
-
-        times = properties.Get(LOCATION_INTERFACE, "Timestamp");
-
-        time = ((UInt64) times[0]).longValue()*1000;
+        time = properties.readTimeStamp();
+        creationTime = System.currentTimeMillis();
     }
 
-
-    private Double readDouble(String key) {
-        return properties.Get(LOCATION_INTERFACE, key);
-    }
-
-    private String readDescription() {
-        return properties.Get(LOCATION_INTERFACE, "Description");
-    }
 
     @Override
     public Foc getFile() {
-        return new FocName(description);
+        return new FocName(this.getClass().getSimpleName());
     }
 
     @Override
@@ -68,27 +44,32 @@ public class LocationReader extends LocationInformation {
 
     @Override
     public float getSpeed() {
-        return speed.floatValue();
+        return speed;
     }
 
     @Override
     public float getAccuracy() {
-        return accuracy.floatValue();
+        return accuracy;
     }
 
     @Override
     public double getLongitude() {
-        return longitude;
+        return latLongE6.getLongitude();
     }
 
     @Override
     public double getLatitude() {
-        return latitude;
+        return latLongE6.getLatitude();
     }
 
+    @Override
+    public int getLongitudeE6() {
+        return latLongE6.getLongitudeE6();
+    }
 
-    public String getDescription() {
-        return description;
+    @Override
+    public int getLatitudeE6() {
+        return latLongE6.getLatitudeE6();
     }
 
 
@@ -120,7 +101,7 @@ public class LocationReader extends LocationInformation {
 
     @Override
     public long getCreationTime() {
-        return 0;
+        return creationTime;
     }
 
     @Override

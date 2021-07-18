@@ -1,8 +1,8 @@
 package ch.bailu.aat_lib.service.tracker;
 
 import ch.bailu.aat_lib.dispatcher.AppBroadcaster;
-import ch.bailu.aat_lib.dispatcher.Broadcaster;
 import ch.bailu.aat_lib.dispatcher.BroadcastReceiver;
+import ch.bailu.aat_lib.dispatcher.Broadcaster;
 import ch.bailu.aat_lib.gpx.GpxInformation;
 import ch.bailu.aat_lib.preferences.system.SolidDataDirectory;
 import ch.bailu.aat_lib.service.ServicesInterface;

@@ -18,24 +18,24 @@ public class GpxPointLinkedNode extends GpxPointNode {
         distance = GpxDeltaHelper.getDistance((GpxPointNode)node, this);
     }
 
-
+    @Override
     public float getAcceleration() {
         return GpxDeltaHelper.getAcceleration((GpxPointNode)getPrevious(), this);
     }
 
-
+    @Override
     public float getDistance() {
         return distance;
     }
 
-
+    @Override
     public float getSpeed() {
         return GpxDeltaHelper.getSpeed(
                 distance,
                 GpxDeltaHelper.getTimeDeltaSI(((GpxPointNode)getPrevious()), this));
     }
 
-
+    @Override
     public long getTimeDelta() {
         return GpxDeltaHelper.getTimeDeltaMilli((GpxPointNode)getPrevious(), this);
     }

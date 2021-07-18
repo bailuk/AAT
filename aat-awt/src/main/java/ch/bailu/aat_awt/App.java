@@ -7,10 +7,11 @@ import java.util.List;
 import ch.bailu.aat_awt.dispatcher.AwtBroadcaster;
 import ch.bailu.aat_awt.logger.SL4JLogger;
 import ch.bailu.aat_awt.preferences.AppPreferences;
-import ch.bailu.aat_awt.preferences.SolidAwtFactory;
+import ch.bailu.aat_awt.preferences.AwtSolidFactory;
 import ch.bailu.aat_awt.services.AwtServices;
 import ch.bailu.aat_awt.window.AwtMainWindow;
 import ch.bailu.aat_lib.dispatcher.AppBroadcaster;
+import ch.bailu.aat_lib.dispatcher.Broadcaster;
 import ch.bailu.aat_lib.gpx.InfoID;
 import ch.bailu.aat_lib.logger.AppLog;
 import ch.bailu.aat_lib.logger.BroadcastLogger;
@@ -21,7 +22,7 @@ public class App {
 
     private final AwtMainWindow window;
     private final AwtServices services;
-    private final AwtBroadcaster broadcaster;
+    private final Broadcaster broadcaster;
 
     private App() {
 
@@ -31,13 +32,13 @@ public class App {
         AppLog.setError(new BroadcastLogger(broadcaster, AppBroadcaster.LOG_ERROR, new SL4JLogger()));
         AppLog.setInfo(new BroadcastLogger(broadcaster, AppBroadcaster.LOG_INFO, new SL4JLogger()));
 
-        SolidFactory sfactory = new SolidAwtFactory();
+        SolidFactory sfactory = new AwtSolidFactory();
 
         services = new AwtServices(sfactory, broadcaster);
 
         window = new AwtMainWindow(getMapFiles(), broadcaster);
-        window.onContentUpdated(InfoID.LOCATION, services.getLocationService().getLocationInformation());
-        window.onContentUpdated(InfoID.TRACKER, services.getLocationService().getLocationInformation());
+        //window.onContentUpdated(InfoID.LOCATION, services.getLocationService().getLocationInformation());
+        //window.onContentUpdated(InfoID.TRACKER, services.getLocationService().getLocationInformation());
 
 
         broadcaster.register(data -> window.onContentUpdated(InfoID.LOCATION, services.getLocationService().getLocationInformation()), AppBroadcaster.LOCATION_CHANGED);

@@ -4,7 +4,6 @@ import org.freedesktop.dbus.exceptions.DBusException;
 
 import ch.bailu.aat_awt.services.location.interfaces.Client;
 import ch.bailu.aat_lib.gpx.StateID;
-import ch.bailu.aat_lib.logger.AppLog;
 import ch.bailu.aat_lib.service.location.LocationInformation;
 import ch.bailu.aat_lib.service.location.LocationService;
 import ch.bailu.aat_lib.service.location.LocationStackChainedItem;
@@ -43,38 +42,27 @@ public class GeoClue2LocationProvider extends LocationStackChainedItem {
         try {
             geoClue2.connect(signal -> updateStateAndLocation(signal));
             geoClue2.start();
-            updateStateAndLocation();
+            updateState();
 
         } catch (DBusException e) {
-            AppLog.e(this, e);
+            passState(StateID.NOSERVICE);
         }
     }
 
     private void updateStateAndLocation(Client.LocationUpdated signal) {
         try {
-            AppLog.d(this, "pass location");
             LocationInformation location = geoClue2.getLocation(signal.getNew());
-            passState(StateID.ON);
             passLocation(location);
         } catch (Exception e) {
-            AppLog.e(this, e);
             passState(StateID.NOSERVICE);
         }
     }
 
-    private void updateStateAndLocation() {
-
+    private void updateState() {
         if (geoClue2.getActive()) {
-            try {
-                LocationInformation location = geoClue2.getLocation();
-                passState(StateID.ON);
-                passLocation(location);
-            } catch (Exception e) {
-                AppLog.e(this, e);
-                passState(StateID.NOSERVICE);
-            }
-        } else {
             passState(LocationService.INITIAL_STATE);
+        } else {
+            passState(StateID.OFF);
         }
     }
 

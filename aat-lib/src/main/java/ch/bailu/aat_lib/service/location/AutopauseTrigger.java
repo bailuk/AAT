@@ -1,6 +1,5 @@
 package ch.bailu.aat_lib.service.location;
 
-import ch.bailu.aat_lib.logger.AppLog;
 import ch.bailu.aat_lib.preferences.StorageInterface;
 import ch.bailu.aat_lib.preferences.presets.SolidTrackerAutopause;
 
@@ -30,7 +29,6 @@ public final class AutopauseTrigger extends LocationStackChainedItem {
 
         trigger.log();
 
-        AppLog.d(this, "pass location");
         super.passLocation(location);
     }
 
