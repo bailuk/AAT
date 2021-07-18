@@ -19,7 +19,7 @@ import ch.bailu.aat_lib.logger.BroadcastLogger;
 
 public class App extends Application {
 
-    public final static boolean RELEASE_MODE = true;
+    public final static boolean RELEASE_MODE = false;
 
     @Override
     public void onCreate() {
@@ -32,6 +32,13 @@ public class App extends Application {
 
         super.onCreate();
     }
+
+    @Override
+    public void onTerminate() {
+        AppLog.set(new AndroidLogger());
+        super.onTerminate();
+    }
+
 
     private void initLogger() {
         AppLog.set(new AndroidLogger());

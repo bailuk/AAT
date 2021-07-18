@@ -29,9 +29,9 @@ public final class MapPositionLayer implements MapLayerInterface, OnContentUpdat
 
     public MapPositionLayer(MapContext mc, DispatcherInterface d) {
         mcontext = mc;
-
         storage = new Storage(mcontext.getContext());
-        slock = new SolidPositionLock(mcontext.getContext(), mcontext.getSolidKey());
+
+        slock = new SolidPositionLock(storage, mcontext.getSolidKey());
 
         loadState();
         d.addTarget(this, InfoID.LOCATION);

@@ -10,6 +10,7 @@ import ch.bailu.aat.R;
 import ch.bailu.aat.activities.AbsHardwareButtons;
 import ch.bailu.aat.dispatcher.DispatcherInterface;
 import ch.bailu.aat.map.MapContext;
+import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat.preferences.map.SolidPositionLock;
 import ch.bailu.aat.util.ui.AppTheme;
 import ch.bailu.aat.util.ui.ToolTip;
@@ -45,7 +46,7 @@ public final class NavigationBarLayer extends ControlBarLayer implements OnConte
         buttonPlus = getBar().addImageButton(R.drawable.zoom_in);
         buttonMinus = getBar().addImageButton(R.drawable.zoom_out);
         View lock = getBar().addSolidIndexButton(
-                new SolidPositionLock(mc.getContext(), mc.getSolidKey()));
+                new SolidPositionLock(new Storage(mc.getContext()), mc.getSolidKey()));
         buttonFrame = getBar().addImageButton(R.drawable.zoom_fit_best);
 
         ToolTip.set(buttonPlus, R.string.tt_map_zoomin);

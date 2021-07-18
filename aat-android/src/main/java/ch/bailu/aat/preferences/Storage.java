@@ -142,6 +142,7 @@ public class Storage  implements ContextWrapperInterface, StorageInterface {
     public void register(OnPreferencesChanged observer) {
         if (!observers.containsKey(observer)) {
             OnSharedPreferenceChangeListener listener = (sharedPreferences, key) -> observer.onPreferencesChanged(Storage.this, key);
+            preferences.registerOnSharedPreferenceChangeListener(listener);
             observers.put(observer, listener);
         } else {
             AppLog.e(this, "Observer was allready registered");

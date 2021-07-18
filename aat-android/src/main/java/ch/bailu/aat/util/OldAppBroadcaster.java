@@ -22,8 +22,6 @@ public class OldAppBroadcaster {
 
     public static void register(Context context, BroadcastReceiver receiver, String action) {
         IntentFilter  filter = new IntentFilter(action);
-
-
         context.registerReceiver(receiver, filter);
     }
 
