@@ -11,8 +11,8 @@ import ch.bailu.aat.description.CurrentSpeedDescription;
 import ch.bailu.aat.description.DescendDescription;
 import ch.bailu.aat.description.DistanceDescription;
 import ch.bailu.aat.description.HeartRateDescription;
-import ch.bailu.aat.description.PowerDescription;
 import ch.bailu.aat.description.MaximumSpeedDescription;
+import ch.bailu.aat.description.PowerDescription;
 import ch.bailu.aat.description.PredictiveTimeDescription;
 import ch.bailu.aat.description.SlopeDescription;
 import ch.bailu.aat.description.StepRateDescription;
@@ -26,6 +26,7 @@ import ch.bailu.aat.dispatcher.TrackerTimerSource;
 import ch.bailu.aat.map.MapFactory;
 import ch.bailu.aat.map.MapViewInterface;
 import ch.bailu.aat.map.mapsforge.MapViewLinker;
+import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat.util.ui.AppLayout;
 import ch.bailu.aat.util.ui.AppTheme;
 import ch.bailu.aat.util.ui.UiTheme;
@@ -91,8 +92,8 @@ public class CockpitSplitActivity extends AbsKeepScreenOnActivity {
                 InfoID.TRACKER), 50);
 
         cockpitD.addAltitude(this);
-        cockpitD.add(this, new AscendDescription(this), InfoID.TRACKER);
-        cockpitD.add(this, new DescendDescription(this), InfoID.TRACKER);
+        cockpitD.add(this, new AscendDescription(new Storage(this)), InfoID.TRACKER);
+        cockpitD.add(this, new DescendDescription(new Storage(this)), InfoID.TRACKER);
         cockpitD.add(this, new SlopeDescription(this), InfoID.TRACKER);
 
         percentageD.add(cockpitD, 50);

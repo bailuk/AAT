@@ -74,8 +74,8 @@ public final class MapPositionLayer implements MapLayerInterface, OnContentUpdat
 
         int zoom = mcontext.getMetrics().getZoomLevel();
 
-        storage.writeInteger(mcontext.getSolidKey() + LATITUDE_SUFFIX, center.la);
-        storage.writeInteger(mcontext.getSolidKey() + LONGITUDE_SUFFIX, center.lo);
+        storage.writeInteger(mcontext.getSolidKey() + LATITUDE_SUFFIX, center.getLatitudeE6());
+        storage.writeInteger(mcontext.getSolidKey() + LONGITUDE_SUFFIX, center.getLongitudeE6());
         storage.writeInteger(mcontext.getSolidKey() + ZOOM_SUFFIX, zoom);
     }
 

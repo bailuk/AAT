@@ -1,7 +1,5 @@
 package ch.bailu.aat.map.layer.grid;
 
-import android.content.Context;
-
 import org.mapsforge.core.model.LatLong;
 
 import ch.bailu.aat.coordinates.WGS84Coordinates;
@@ -16,8 +14,8 @@ public final class WGS84Layer implements MapLayerInterface {
     private final Crosshair crosshair;
 
 
-    public WGS84Layer (Context c) {
-        elevation = new ElevationLayer(c);
+    public WGS84Layer(StorageInterface storageInterface) {
+        elevation = new ElevationLayer(storageInterface);
         crosshair = new Crosshair();
     }
     @Override

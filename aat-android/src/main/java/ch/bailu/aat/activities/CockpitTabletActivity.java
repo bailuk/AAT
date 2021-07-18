@@ -3,7 +3,7 @@ package ch.bailu.aat.activities;
 import android.os.Bundle;
 import android.view.View;
 
-import ch.bailu.aat.description.AltitudeDescription;
+import ch.bailu.aat_lib.description.AltitudeDescription;
 import ch.bailu.aat.description.AverageSpeedDescription;
 import ch.bailu.aat.description.CadenceDescription;
 import ch.bailu.aat.description.CurrentSpeedDescription;
@@ -21,6 +21,7 @@ import ch.bailu.aat.dispatcher.TrackerTimerSource;
 import ch.bailu.aat.map.MapFactory;
 import ch.bailu.aat.map.MapViewInterface;
 import ch.bailu.aat.map.mapsforge.MapViewLinker;
+import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat.util.ui.AppLayout;
 import ch.bailu.aat.util.ui.AppTheme;
 import ch.bailu.aat.util.ui.UiTheme;
@@ -87,7 +88,7 @@ public class CockpitTabletActivity extends AbsKeepScreenOnActivity {
         c.add(this, new CadenceDescription(this), InfoID.CADENCE_SENSOR);
         c.add(this, new PredictiveTimeDescription(this), InfoID.TRACKER_TIMER);
         c.addC(this, new DistanceDescription(this), InfoID.TRACKER);
-        c.add(this, new AltitudeDescription(this), InfoID.LOCATION);
+        c.add(this, new AltitudeDescription(new Storage(this)), InfoID.LOCATION);
 
         c.add(this, new MaximumSpeedDescription(this), InfoID.TRACKER);
         c.add(this, new HeartRateDescription(this), InfoID.HEART_RATE_SENSOR);

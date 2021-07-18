@@ -1,11 +1,9 @@
 package ch.bailu.aat.map.layer.grid;
 
-import android.content.Context;
-
 import org.mapsforge.core.model.LatLong;
 import org.mapsforge.core.model.Point;
 
-import ch.bailu.aat.description.AltitudeDescription;
+import ch.bailu.aat_lib.description.AltitudeDescription;
 import ch.bailu.aat.map.MapContext;
 import ch.bailu.aat.map.layer.MapLayerInterface;
 import ch.bailu.aat.services.InsideContext;
@@ -17,8 +15,8 @@ public final class ElevationLayer implements MapLayerInterface {
 
     private final AltitudeDescription altitudeDescription;
 
-    public ElevationLayer(Context c) {
-        altitudeDescription= new AltitudeDescription(c);
+    public ElevationLayer(StorageInterface storageInterface) {
+        altitudeDescription= new AltitudeDescription(storageInterface);
     }
 
     @Override

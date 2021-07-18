@@ -1,7 +1,5 @@
 package ch.bailu.aat.map.layer.grid;
 
-import android.content.Context;
-
 import com.google.openlocationcode.OpenLocationCode;
 
 import org.mapsforge.core.model.LatLong;
@@ -15,8 +13,8 @@ public final class PlusCodesCenterCoordinatesLayer  implements MapLayerInterface
     private final ElevationLayer elevation;
     private final Crosshair crosshair;
 
-    public PlusCodesCenterCoordinatesLayer (Context c) {
-        elevation = new ElevationLayer(c);
+    public PlusCodesCenterCoordinatesLayer (StorageInterface storageInterface) {
+        elevation = new ElevationLayer(storageInterface);
         crosshair = new Crosshair();
     }
     @Override

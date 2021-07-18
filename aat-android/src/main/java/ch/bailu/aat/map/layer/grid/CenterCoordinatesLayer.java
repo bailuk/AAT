@@ -1,8 +1,5 @@
 package ch.bailu.aat.map.layer.grid;
 
-import android.content.Context;
-import android.content.SharedPreferences;
-
 import org.mapsforge.core.model.LatLong;
 import org.mapsforge.core.model.Point;
 
@@ -17,8 +14,8 @@ public abstract class CenterCoordinatesLayer implements MapLayerInterface {
     private final ElevationLayer elevation;
 
 
-    public CenterCoordinatesLayer(Context c) {
-        elevation = new ElevationLayer(c);
+    public CenterCoordinatesLayer(StorageInterface storageInterface) {
+        elevation = new ElevationLayer(storageInterface);
     }
 
     @Override

@@ -1,11 +1,9 @@
-package ch.bailu.aat.description;
-
-import android.content.Context;
+package ch.bailu.aat_lib.description;
 
 import java.text.DecimalFormat;
 
-import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat_lib.gpx.GpxInformation;
+import ch.bailu.aat_lib.preferences.StorageInterface;
 import ch.bailu.aat_lib.preferences.general.SolidUnit;
 import ch.bailu.aat_lib.resources.Res;
 
@@ -14,8 +12,8 @@ public class AltitudeDescription extends FloatDescription {
     private final SolidUnit unit;
 
 
-    public AltitudeDescription(Context context) {
-        unit = new SolidUnit(new Storage(context));
+    public AltitudeDescription(StorageInterface storageInterface) {
+        unit = new SolidUnit(storageInterface);
     }
 
 

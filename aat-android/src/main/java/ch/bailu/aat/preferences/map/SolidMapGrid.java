@@ -47,7 +47,7 @@ public class SolidMapGrid extends SolidStaticIndexList {
 
     public MapLayerInterface createGridLayer(MapContext cl) {
         if (this.getIndex()==0) {
-            return new WGS84Layer(cl.getContext());
+            return new WGS84Layer(new Storage(cl.getContext()));
         }
 
         if (this.getIndex()==1) {
@@ -59,7 +59,7 @@ public class SolidMapGrid extends SolidStaticIndexList {
         }
 
         if (this.getIndex()==3) {
-            return new PlusCodesCenterCoordinatesLayer(getContext());
+            return new PlusCodesCenterCoordinatesLayer(new Storage(getContext()));
         }
 
         return new NullLayer();
@@ -68,11 +68,11 @@ public class SolidMapGrid extends SolidStaticIndexList {
 
     public MapLayerInterface createCenterCoordinatesLayer() {
         if (this.getIndex()==1) {
-            return new CH1903CenterCoordinatesLayer(getContext());
+            return new CH1903CenterCoordinatesLayer(new Storage(getContext()));
         }
 
         if (this.getIndex()==2) {
-            return new UTMCenterCoordinatesLayer(getContext());
+            return new UTMCenterCoordinatesLayer(new Storage(getContext()));
         }
 
         return new NullLayer();

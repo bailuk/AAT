@@ -26,6 +26,7 @@ import ch.bailu.aat.description.PauseDescription;
 import ch.bailu.aat.description.TimeApDescription;
 import ch.bailu.aat.description.TrackSizeDescription;
 import ch.bailu.aat.map.MapFactory;
+import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat.util.ui.AppLayout;
 import ch.bailu.aat.util.ui.AppTheme;
 import ch.bailu.aat.views.ContentView;
@@ -108,8 +109,8 @@ public class FileContentActivity extends AbsFileContentActivity{
 
 
                 new ContentDescriptions(
-                    new AscendDescription(c),
-                    new DescendDescription(c)),
+                    new AscendDescription(new Storage(c)),
+                    new DescendDescription(new Storage(c))),
 
                 new ContentDescriptions(
                     new IndexedAttributeDescription.HeartRate(c),

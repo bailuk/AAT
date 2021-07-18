@@ -3,10 +3,11 @@ package ch.bailu.aat.util;
 
 import android.content.Context;
 
-import ch.bailu.aat.description.AltitudeDescription;
+import ch.bailu.aat_lib.description.AltitudeDescription;
 import ch.bailu.aat.description.CurrentSpeedDescription;
 import ch.bailu.aat.description.DistanceDescription;
 import ch.bailu.aat.description.SpeedDescription;
+import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat_lib.description.ContentDescription;
 import ch.bailu.aat_lib.gpx.GpxInformation;
 import ch.bailu.aat_lib.gpx.GpxPointNode;
@@ -24,7 +25,7 @@ public class HtmlBuilderGpx extends HtmlBuilder {
     public HtmlBuilderGpx(Context context) {
         distance = new DistanceDescription(context);
         speed = new CurrentSpeedDescription(context);
-        altitude = new AltitudeDescription(context);
+        altitude = new AltitudeDescription(new Storage(context));
     }
 
     public void appendInfo(GpxInformation info, int index) {

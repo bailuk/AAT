@@ -160,6 +160,7 @@ public class AwtMainWindow implements OnContentUpdatedInterface {
     public void onContentUpdated(int iid, GpxInformation info) {
         LatitudeDescription la = new LatitudeDescription();
         LongitudeDescription lo = new LongitudeDescription();
+
         GpsStateDescription gps = new GpsStateDescription();
         TrackerStateDescription tracker = new TrackerStateDescription();
 

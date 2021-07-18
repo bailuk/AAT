@@ -4,6 +4,7 @@ import android.content.Context;
 
 import ch.bailu.aat.R;
 import ch.bailu.aat_lib.description.FF;
+import ch.bailu.aat_lib.description.FloatDescription;
 import ch.bailu.aat_lib.gpx.GpxInformation;
 
 public class AccelerationDescription extends FloatDescription {

@@ -1,6 +1,4 @@
-package ch.bailu.aat.description;
-
-import ch.bailu.aat_lib.description.ContentDescription;
+package ch.bailu.aat_lib.description;
 
 
 public abstract class FloatDescription extends ContentDescription {

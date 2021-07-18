@@ -1,16 +1,15 @@
 package ch.bailu.aat.map.layer.grid;
 
-import android.content.Context;
-
 import org.mapsforge.core.model.LatLong;
 
 import ch.bailu.aat.coordinates.CH1903Coordinates;
 import ch.bailu.aat.coordinates.MeterCoordinates;
 import ch.bailu.aat.map.MapContext;
+import ch.bailu.aat_lib.preferences.StorageInterface;
 
 public final class CH1903CenterCoordinatesLayer extends CenterCoordinatesLayer {
-    public CH1903CenterCoordinatesLayer(Context c) {
-        super(c);
+    public CH1903CenterCoordinatesLayer(StorageInterface storageInterface) {
+        super(storageInterface);
     }
 
     @Override

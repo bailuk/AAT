@@ -1,13 +1,13 @@
 package ch.bailu.aat.description;
 
-import android.content.Context;
-
+import ch.bailu.aat_lib.description.AltitudeDescription;
 import ch.bailu.aat_lib.gpx.GpxInformation;
+import ch.bailu.aat_lib.preferences.StorageInterface;
 import ch.bailu.aat_lib.resources.Res;
 
 public class AccuracyDescription extends AltitudeDescription {
-    public AccuracyDescription(Context c) {
-        super(c);
+    public AccuracyDescription(StorageInterface storageInterface) {
+        super(storageInterface);
     }
 
 
