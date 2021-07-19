@@ -1,13 +1,12 @@
 package ch.bailu.aat.map.layer.gpx.legend;
 
-import android.content.SharedPreferences;
 import android.graphics.Color;
 
 import org.mapsforge.core.graphics.Paint;
 import org.mapsforge.core.model.Point;
 
-import ch.bailu.aat.map.MapContext;
-import ch.bailu.aat.map.MapMetrics;
+import ch.bailu.aat_lib.map.MapContext;
+import ch.bailu.aat_lib.map.MapMetrics;
 import ch.bailu.aat.map.MapPaint;
 import ch.bailu.aat.map.layer.gpx.GpxLayer;
 import ch.bailu.aat_lib.preferences.StorageInterface;

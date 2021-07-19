@@ -9,17 +9,19 @@ import org.mapsforge.map.android.view.MapView;
 import java.util.ArrayList;
 
 import ch.bailu.aat.map.AndroidDraw;
-import ch.bailu.aat.map.MapContext;
-import ch.bailu.aat.map.MapDraw;
-import ch.bailu.aat.map.MapMetrics;
-import ch.bailu.aat.map.MapViewInterface;
-import ch.bailu.aat.map.TwoNodes;
-import ch.bailu.aat.map.layer.MapLayerInterface;
+import ch.bailu.aat.map.AndroidMapContext;
+import ch.bailu.aat_lib.map.MapContext;
+import ch.bailu.aat_lib.map.MapViewInterface;
+import ch.bailu.aat.map.To;
+import ch.bailu.aat_lib.map.layer.MapLayerInterface;
 import ch.bailu.aat.services.InsideContext;
 import ch.bailu.aat.services.ServiceContext;
-import ch.bailu.aat.util.ui.AppDensity;
+import ch.bailu.aat.util.ui.AndroidAppDensity;
+import ch.bailu.aat_lib.map.MapDraw;
+import ch.bailu.aat_lib.map.MapMetrics;
+import ch.bailu.aat_lib.map.TwoNodes;
 
-public class MapsForgeForeground implements MapContext {
+public class MapsForgeForeground implements AndroidMapContext {
 
     private final MapContext mcontext;
     private final AndroidDraw draw;
@@ -27,7 +29,7 @@ public class MapsForgeForeground implements MapContext {
 
     private final ArrayList<MapLayerInterface> layers;
 
-    public MapsForgeForeground(MapView mapView, MapContext mc, AppDensity d, ArrayList<MapLayerInterface> l) {
+    public MapsForgeForeground(MapView mapView, MapContext mc, AndroidAppDensity d, ArrayList<MapLayerInterface> l) {
         mcontext = mc;
         layers = l;
 
@@ -39,7 +41,7 @@ public class MapsForgeForeground implements MapContext {
 
     public void dispatchDraw(final Canvas canvas) {
 
-        new InsideContext(mcontext.getSContext()) {
+        new InsideContext(To.scontext(mcontext)) {
             @Override
             public void run() {
                 metrics.init(new Dimension(canvas.getWidth(), canvas.getHeight()));
@@ -65,12 +67,12 @@ public class MapsForgeForeground implements MapContext {
 
     @Override
     public ServiceContext getSContext() {
-        return mcontext.getSContext();
+        return To.scontext(mcontext);
     }
 
     @Override
     public Context getContext() {
-        return mcontext.getContext();
+        return To.context(mcontext);
     }
 
 

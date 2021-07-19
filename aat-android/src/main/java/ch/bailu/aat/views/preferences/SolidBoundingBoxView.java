@@ -1,6 +1,7 @@
 package ch.bailu.aat.views.preferences;
 
-import ch.bailu.aat.map.MapContext;
+import ch.bailu.aat_lib.map.MapContext;
+import ch.bailu.aat.map.To;
 import ch.bailu.aat.preferences.SolidBoundingBox;
 import ch.bailu.aat.util.ui.UiTheme;
 import ch.bailu.aat.views.LabelTextView;
@@ -13,14 +14,14 @@ public class SolidBoundingBoxView extends LabelTextView implements OnPreferences
     private final SolidBoundingBox sbounding;
 
 
-    public SolidBoundingBoxView(SolidBoundingBox bounding, final MapContext map, UiTheme theme) {
-        super(map.getContext(), bounding.getLabel(), theme);
+    public SolidBoundingBoxView(SolidBoundingBox bounding, final MapContext mc, UiTheme theme) {
+        super(To.context(mc), bounding.getLabel(), theme);
 
         sbounding = bounding;
         setText(bounding.getValueAsString());
 
         theme.button(this);
-        this.setOnClickListener(v -> sbounding.setValue(new BoundingBoxE6(map.getMetrics().getBoundingBox())));
+        this.setOnClickListener(v -> sbounding.setValue(new BoundingBoxE6(mc.getMetrics().getBoundingBox())));
     }
 
 

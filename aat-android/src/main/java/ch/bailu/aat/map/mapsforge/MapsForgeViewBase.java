@@ -1,6 +1,5 @@
 package ch.bailu.aat.map.mapsforge;
 
-import android.content.SharedPreferences;
 import android.view.GestureDetector;
 import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.MotionEvent;
@@ -17,10 +16,10 @@ import org.mapsforge.map.model.IMapViewPosition;
 
 import java.util.ArrayList;
 
-import ch.bailu.aat.map.MapContext;
+import ch.bailu.aat_lib.map.MapContext;
 import ch.bailu.aat.map.MapDensity;
-import ch.bailu.aat.map.MapViewInterface;
-import ch.bailu.aat.map.layer.MapLayerInterface;
+import ch.bailu.aat_lib.map.MapViewInterface;
+import ch.bailu.aat_lib.map.layer.MapLayerInterface;
 import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat_lib.coordinates.BoundingBoxE6;
@@ -89,7 +88,6 @@ public class MapsForgeViewBase extends MapView implements
         return mcontext;
     }
 
-    @Override
     public View toView() {
         return this;
     }

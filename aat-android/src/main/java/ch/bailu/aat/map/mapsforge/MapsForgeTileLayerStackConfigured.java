@@ -1,5 +1,6 @@
 package ch.bailu.aat.map.mapsforge;
 
+import ch.bailu.aat.map.To;
 import ch.bailu.aat.map.tile.TileProvider;
 import ch.bailu.aat.map.tile.source.CachedSource;
 import ch.bailu.aat.map.tile.source.DoubleSource;
@@ -23,9 +24,9 @@ public abstract class MapsForgeTileLayerStackConfigured extends MapsForgeTileLay
     protected final ServiceContext scontext;
 
     public MapsForgeTileLayerStackConfigured(MapsForgeViewBase v) {
-        super(v.getMContext().getSContext());
+        super(To.scontext(v.getMContext()));
 
-        scontext = v.getMContext().getSContext();
+        scontext = To.scontext(v.getMContext());
 
         mapView = v;
         stiles = new SolidMapTileStack(scontext.getContext());

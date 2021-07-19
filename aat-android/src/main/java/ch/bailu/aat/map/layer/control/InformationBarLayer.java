@@ -4,7 +4,8 @@ import android.view.View;
 
 import ch.bailu.aat.R;
 import ch.bailu.aat.dispatcher.DispatcherInterface;
-import ch.bailu.aat.map.MapContext;
+import ch.bailu.aat_lib.map.MapContext;
+import ch.bailu.aat.map.To;
 import ch.bailu.aat.menus.LocationMenu;
 import ch.bailu.aat.menus.MapMenu;
 import ch.bailu.aat.menus.MapQueryMenu;
@@ -26,15 +27,15 @@ public final class InformationBarLayer extends ControlBarLayer {
     private final MapContext mcontext;
 
 
-    public InformationBarLayer(MapContext cl, DispatcherInterface d) {
-        super(cl,new ControlBar(cl.getContext(), getOrientation(RIGHT), AppTheme.bar), RIGHT);
+    public InformationBarLayer(MapContext mc, DispatcherInterface d) {
+        super(mc,new ControlBar(To.context(mc), getOrientation(RIGHT), AppTheme.bar), RIGHT);
 
-        mcontext = cl;
+        mcontext = mc;
         final SolidIndexList sgrid, slegend;
 
 
-        sgrid = new SolidMapGrid(cl.getContext(), cl.getSolidKey());
-        slegend = new SolidLegend(cl.getContext(), cl.getSolidKey());
+        sgrid = new SolidMapGrid(To.context(mc), mc.getSolidKey());
+        slegend = new SolidLegend(To.context(mc), mc.getSolidKey());
 
         ControlBar bar = getBar();
 
@@ -46,7 +47,7 @@ public final class InformationBarLayer extends ControlBarLayer {
         search = bar.addImageButton(R.drawable.edit_find);
         location = bar.addImageButton(R.drawable.find_location);
 
-        selector = new NodeViewLayer(cl);
+        selector = new NodeViewLayer(mc);
 
 
         ToolTip.set(grid,R.string.tt_info_grid);
@@ -63,13 +64,13 @@ public final class InformationBarLayer extends ControlBarLayer {
 
 
         if (v == map) {
-            new MapMenu(mcontext).showAsPopup(mcontext.getContext(),v);
+            new MapMenu(mcontext).showAsPopup(To.context(mcontext),v);
 
         } else if (v==search) {
-            new MapQueryMenu(mcontext).showAsPopup(mcontext.getContext(), v);
+            new MapQueryMenu(mcontext).showAsPopup(To.context(mcontext), v);
 
         } else if (v==location) {
-            new LocationMenu(mcontext.getMapView()).showAsPopup(mcontext.getContext(), location);
+            new LocationMenu(mcontext.getMapView()).showAsPopup(To.context(mcontext), location);
         }
 
 

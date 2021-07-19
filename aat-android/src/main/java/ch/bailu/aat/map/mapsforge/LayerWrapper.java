@@ -5,8 +5,9 @@ import org.mapsforge.core.model.BoundingBox;
 import org.mapsforge.core.model.Point;
 import org.mapsforge.map.layer.Layer;
 
-import ch.bailu.aat.map.MapContext;
-import ch.bailu.aat.map.layer.MapLayerInterface;
+import ch.bailu.aat_lib.map.MapContext;
+import ch.bailu.aat.map.To;
+import ch.bailu.aat_lib.map.layer.MapLayerInterface;
 import ch.bailu.aat.services.InsideContext;
 
 public class LayerWrapper extends Layer {
@@ -22,7 +23,7 @@ public class LayerWrapper extends Layer {
 
     @Override
     public void draw(BoundingBox bounding, byte zoom, Canvas canvas, Point topLeftPoint) {
-        new InsideContext(mcontext.getSContext()) {
+        new InsideContext(To.scontext(mcontext)) {
             @Override
             public void run() {
                 layer.drawInside(mcontext);

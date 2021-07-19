@@ -9,7 +9,7 @@ import ch.bailu.aat_lib.coordinates.Coordinates;
 import ch.bailu.aat_lib.coordinates.OlcCoordinates;
 import ch.bailu.aat_lib.coordinates.UTMCoordinates;
 import ch.bailu.aat_lib.coordinates.WGS84Coordinates;
-import ch.bailu.aat.map.MapViewInterface;
+import ch.bailu.aat_lib.map.MapViewInterface;
 import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat.views.preferences.SolidTextInputDialog;
 import ch.bailu.aat_lib.exception.ValidationException;
@@ -55,7 +55,7 @@ public class SolidGoToLocation extends SolidString {
             map.setCenter(latLongFromString(s));
 
         } catch (Exception e) {
-            AppLog.e(map.getMContext().getContext(), e);
+            AppLog.e(this, e);
         }
 
     }

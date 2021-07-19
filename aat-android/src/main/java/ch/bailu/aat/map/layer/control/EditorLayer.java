@@ -7,7 +7,8 @@ import org.mapsforge.core.model.LatLong;
 import ch.bailu.aat.R;
 import ch.bailu.aat.dispatcher.DispatcherInterface;
 import ch.bailu.aat.dispatcher.EditorSourceInterface;
-import ch.bailu.aat.map.MapContext;
+import ch.bailu.aat_lib.map.MapContext;
+import ch.bailu.aat.map.To;
 import ch.bailu.aat.map.layer.gpx.GpxDynLayer;
 import ch.bailu.aat.menus.EditorMenu;
 import ch.bailu.aat.services.ServiceContext;
@@ -36,11 +37,11 @@ public final class EditorLayer extends ControlBarLayer {
     public EditorLayer(MapContext mc, DispatcherInterface d,
                        int iid, EditorSourceInterface e) {
         super(mc, new ControlBar(
-                mc.getContext(),
+                To.context(mc),
                 getOrientation(LEFT), AppTheme.bar), LEFT);
 
         edit = e;
-        scontext=mc.getSContext();
+        scontext=To.scontext(mc);
         mcontext=mc;
 
 

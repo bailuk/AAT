@@ -1,4 +1,4 @@
-package ch.bailu.aat.map;
+package ch.bailu.aat_lib.map;
 
 import org.mapsforge.core.model.BoundingBox;
 import org.mapsforge.core.model.Dimension;

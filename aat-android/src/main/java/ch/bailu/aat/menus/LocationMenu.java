@@ -10,12 +10,13 @@ import android.view.MenuItem;
 import org.mapsforge.core.model.LatLong;
 
 import ch.bailu.aat.R;
-import ch.bailu.aat_lib.coordinates.OlcCoordinates;
-import ch.bailu.aat_lib.coordinates.WGS84Coordinates;
-import ch.bailu.aat.map.MapViewInterface;
+import ch.bailu.aat_lib.map.MapViewInterface;
+import ch.bailu.aat.map.To;
 import ch.bailu.aat.preferences.location.SolidGoToLocation;
 import ch.bailu.aat.preferences.map.SolidMapGrid;
 import ch.bailu.aat.util.Clipboard;
+import ch.bailu.aat_lib.coordinates.OlcCoordinates;
+import ch.bailu.aat_lib.coordinates.WGS84Coordinates;
 
 public final class LocationMenu extends AbsMenu{
 
@@ -28,7 +29,7 @@ public final class LocationMenu extends AbsMenu{
 
     public LocationMenu(MapViewInterface m) {
         map = m;
-        context = m.getMContext().getContext();
+        context = To.context(m.getMContext());
         clipboard = new Clipboard(context);
     }
 

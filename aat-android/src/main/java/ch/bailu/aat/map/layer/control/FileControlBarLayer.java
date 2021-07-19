@@ -6,13 +6,9 @@ import org.mapsforge.core.model.Point;
 
 import ch.bailu.aat.R;
 import ch.bailu.aat.activities.AbsGpxListActivity;
-import ch.bailu.aat_lib.description.AverageSpeedDescription;
-import ch.bailu.aat_lib.description.CaloriesDescription;
-import ch.bailu.aat_lib.description.DateDescription;
-import ch.bailu.aat_lib.description.DistanceDescription;
-import ch.bailu.aat_lib.description.MaximumSpeedDescription;
 import ch.bailu.aat.factory.AndroidFocFactory;
-import ch.bailu.aat.map.MapContext;
+import ch.bailu.aat_lib.map.MapContext;
+import ch.bailu.aat.map.To;
 import ch.bailu.aat.menus.FileMenu;
 import ch.bailu.aat.preferences.SolidDirectoryQuery;
 import ch.bailu.aat.preferences.Storage;
@@ -23,7 +19,12 @@ import ch.bailu.aat.util.ui.AppTheme;
 import ch.bailu.aat.util.ui.ToolTip;
 import ch.bailu.aat.views.PreviewView;
 import ch.bailu.aat.views.bar.ControlBar;
+import ch.bailu.aat_lib.description.AverageSpeedDescription;
+import ch.bailu.aat_lib.description.CaloriesDescription;
 import ch.bailu.aat_lib.description.ContentDescription;
+import ch.bailu.aat_lib.description.DateDescription;
+import ch.bailu.aat_lib.description.DistanceDescription;
+import ch.bailu.aat_lib.description.MaximumSpeedDescription;
 import ch.bailu.aat_lib.description.TimeDescription;
 import ch.bailu.aat_lib.gpx.GpxInformation;
 import ch.bailu.aat_lib.gpx.GpxPointNode;
@@ -49,12 +50,12 @@ public final class FileControlBarLayer extends ControlBarLayer {
 
     public FileControlBarLayer(MapContext mc, AbsGpxListActivity a) {
         super(mc, new ControlBar(
-                mc.getContext(),
+                To.context(mc),
                 getOrientation(LEFT), AppTheme.bar), LEFT);
 
         final ControlBar bar = getBar();
 
-        storage = new Storage(mc.getContext());
+        storage = new Storage(To.context(mc));
         acontext = a;
 
         selector = new FileViewLayer(mc);

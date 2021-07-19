@@ -25,6 +25,8 @@ dependencies {
 
     // MapsForge Core
     implementation "org.mapsforge:mapsforge-core:$mapsForgeVersion"
+    implementation "org.mapsforge:mapsforge-map:$mapsForgeVersion"
+
 
     /**
      *  Notnull annotation

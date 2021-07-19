@@ -3,14 +3,15 @@ package ch.bailu.aat.map.layer.grid;
 import org.mapsforge.core.model.LatLong;
 import org.mapsforge.core.model.Point;
 
+import ch.bailu.aat.map.To;
 import ch.bailu.aat_lib.coordinates.MeterCoordinates;
 import ch.bailu.aat_lib.coordinates.UTMCoordinates;
-import ch.bailu.aat.map.MapContext;
+import ch.bailu.aat_lib.map.MapContext;
 import ch.bailu.aat_lib.preferences.StorageInterface;
 
 public final class UTMGridLayer extends MeterGridLayer{
-    public UTMGridLayer(MapContext cl) {
-        super(cl.getContext());
+    public UTMGridLayer(MapContext mc) {
+        super(To.context(mc));
     }
 
     @Override

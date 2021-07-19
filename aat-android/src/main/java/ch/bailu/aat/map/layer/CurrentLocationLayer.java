@@ -1,9 +1,7 @@
 package ch.bailu.aat.map.layer;
 
 
-import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.graphics.Point;
 
 import org.mapsforge.core.graphics.Paint;
 import org.mapsforge.core.graphics.Style;
@@ -11,11 +9,13 @@ import org.mapsforge.core.model.LatLong;
 import org.mapsforge.map.android.graphics.AndroidGraphicFactory;
 
 import ch.bailu.aat.dispatcher.DispatcherInterface;
-import ch.bailu.aat.map.MapContext;
+import ch.bailu.aat_lib.map.MapContext;
 import ch.bailu.aat.util.ui.AppTheme;
 import ch.bailu.aat_lib.dispatcher.OnContentUpdatedInterface;
 import ch.bailu.aat_lib.gpx.GpxInformation;
 import ch.bailu.aat_lib.gpx.InfoID;
+import ch.bailu.aat_lib.map.Point;
+import ch.bailu.aat_lib.map.layer.MapLayerInterface;
 import ch.bailu.aat_lib.preferences.StorageInterface;
 
 public final class CurrentLocationLayer implements OnContentUpdatedInterface, MapLayerInterface {

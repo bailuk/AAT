@@ -3,13 +3,9 @@ package ch.bailu.aat.map;
 import android.content.Context;
 
 import ch.bailu.aat.services.ServiceContext;
+import ch.bailu.aat_lib.map.MapContext;
 
-public interface MapContext {
-    MapMetrics getMetrics();
-    MapDraw draw();
+public interface AndroidMapContext extends MapContext {
     ServiceContext getSContext();
     Context getContext();
-    String getSolidKey();
-    TwoNodes getTwoNodes();
-    MapViewInterface getMapView();
 }

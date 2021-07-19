@@ -1,8 +1,5 @@
 package ch.bailu.aat.map.mapsforge;
 
-import android.graphics.Point;
-import android.graphics.Rect;
-
 import org.mapsforge.core.graphics.Canvas;
 import org.mapsforge.core.model.BoundingBox;
 import org.mapsforge.core.model.Dimension;
@@ -12,32 +9,33 @@ import org.mapsforge.core.util.MercatorProjection;
 import org.mapsforge.map.android.view.MapView;
 import org.mapsforge.map.util.MapPositionUtil;
 
-import ch.bailu.aat.map.MapDistances;
-import ch.bailu.aat.map.MapMetrics;
-import ch.bailu.aat.util.graphic.Pixel;
-import ch.bailu.aat.util.ui.AppDensity;
+import ch.bailu.aat_lib.map.MapDistances;
+import ch.bailu.aat_lib.map.MapMetrics;
+import ch.bailu.aat.util.ui.AndroidAppDensity;
 import ch.bailu.aat_lib.coordinates.BoundingBoxE6;
 import ch.bailu.aat_lib.coordinates.LatLongE6;
 import ch.bailu.aat_lib.coordinates.LatLongE6Interface;
+import ch.bailu.aat_lib.map.Point;
+import ch.bailu.aat_lib.map.Rect;
 
 public class MapsForgeMetrics implements MapMetrics {
 
     private org.mapsforge.core.model.Point tl;
     private byte zoom = 0;
     private Dimension dim;
-    private Pixel center;
+    private Point center;
     private BoundingBox bounding;
 
 
     private final MapView mapView;
-    private final AppDensity density;
+    private final AndroidAppDensity density;
     private final MapDistances distances = new MapDistances();
 
 
     private final int tileSize;
 
 
-    public MapsForgeMetrics(MapView v, AppDensity d) {
+    public MapsForgeMetrics(MapView v, AndroidAppDensity d) {
         density = d;
         mapView = v;
         bounding = v.getBoundingBox();
@@ -52,7 +50,7 @@ public class MapsForgeMetrics implements MapMetrics {
         zoom=z;
 
         distances.init(bounding, dim);
-        center = new Pixel(dim.width/2, dim.height/2);
+        center = new Point(dim.width/2, dim.height/2);
     }
 
 
@@ -72,7 +70,7 @@ public class MapsForgeMetrics implements MapMetrics {
 
 
     @Override
-    public AppDensity getDensity() {
+    public AndroidAppDensity getDensity() {
         return density;
     }
 
@@ -109,7 +107,7 @@ public class MapsForgeMetrics implements MapMetrics {
 
 
     @Override
-    public Pixel getCenterPixel() {
+    public Point getCenterPixel() {
         return center;
     }
     @Override
@@ -138,18 +136,18 @@ public class MapsForgeMetrics implements MapMetrics {
 
 
     @Override
-    public Pixel toPixel(LatLongE6Interface tp) {
+    public Point toPixel(LatLongE6Interface tp) {
         return toPixel(LatLongE6.toLatLong(tp));
     }
 
 
     @Override
-    public Pixel toPixel(LatLong p) {
+    public Point toPixel(LatLong p) {
         double y = MercatorProjection.latitudeToPixelY(p.getLatitude(), zoom, tileSize);
         double x = MercatorProjection.longitudeToPixelX(p.getLongitude(), zoom, tileSize);
 
 
-        return new Pixel((int)(x-tl.x), (int)(y-tl.y));
+        return new Point((int)(x-tl.x), (int)(y-tl.y));
     }
 
 

@@ -1,6 +1,5 @@
-package ch.bailu.aat.map;
+package ch.bailu.aat_lib.map;
 
-import ch.bailu.aat.util.graphic.Pixel;
 import ch.bailu.aat_lib.gpx.GpxPoint;
 import ch.bailu.aat_lib.gpx.interfaces.GpxPointInterface;
 
@@ -13,7 +12,7 @@ public final class TwoNodes {
 
 
     public class PixelNode {
-        public final Pixel pixel = new Pixel();
+        public final Point pixel = new Point();
         public GpxPointInterface point = GpxPoint.NULL;
 
         public boolean isVisible() {
@@ -22,7 +21,7 @@ public final class TwoNodes {
 
         public void set(GpxPointInterface tp) {
             point=tp;
-            pixel.setCopy(metrics.toPixel(tp));
+            pixel.set(metrics.toPixel(tp));
         }
     }
 

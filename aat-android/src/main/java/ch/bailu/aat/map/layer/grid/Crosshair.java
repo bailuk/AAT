@@ -2,8 +2,8 @@ package ch.bailu.aat.map.layer.grid;
 
 import org.mapsforge.core.model.Point;
 
-import ch.bailu.aat.map.MapContext;
-import ch.bailu.aat.map.layer.MapLayerInterface;
+import ch.bailu.aat_lib.map.MapContext;
+import ch.bailu.aat_lib.map.layer.MapLayerInterface;
 import ch.bailu.aat_lib.preferences.StorageInterface;
 
 public final class Crosshair implements MapLayerInterface {
@@ -27,7 +27,7 @@ public final class Crosshair implements MapLayerInterface {
 
 
     private void drawGrid(MapContext mcontext) {
-        final android.graphics.Point pixel = mcontext.getMetrics().getCenterPixel();
+        final ch.bailu.aat_lib.map.Point pixel = mcontext.getMetrics().getCenterPixel();
 
         mcontext.draw().vLine(pixel.x);
         mcontext.draw().hLine(pixel.y);

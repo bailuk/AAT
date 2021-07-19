@@ -11,17 +11,18 @@ import org.mapsforge.map.layer.Layer;
 
 import ch.bailu.aat.app.App;
 import ch.bailu.aat.map.AndroidDraw;
-import ch.bailu.aat.map.MapContext;
-import ch.bailu.aat.map.MapDraw;
-import ch.bailu.aat.map.MapMetrics;
-import ch.bailu.aat.map.MapViewInterface;
-import ch.bailu.aat.map.TwoNodes;
-import ch.bailu.aat.map.layer.MapLayerInterface;
+import ch.bailu.aat.map.AndroidMapContext;
+import ch.bailu.aat_lib.map.MapContext;
+import ch.bailu.aat_lib.map.MapDraw;
+import ch.bailu.aat_lib.map.MapMetrics;
+import ch.bailu.aat_lib.map.MapViewInterface;
+import ch.bailu.aat_lib.map.TwoNodes;
+import ch.bailu.aat_lib.map.layer.MapLayerInterface;
 import ch.bailu.aat.services.ServiceContext;
-import ch.bailu.aat.util.ui.AppDensity;
+import ch.bailu.aat.util.ui.AndroidAppDensity;
 import ch.bailu.aat_lib.preferences.StorageInterface;
 
-public class MapsForgeContext extends Layer implements MapContext, MapLayerInterface {
+public class MapsForgeContext extends Layer implements AndroidMapContext, MapLayerInterface {
 
     private final ServiceContext scontext;
     private final Context context;
@@ -38,7 +39,7 @@ public class MapsForgeContext extends Layer implements MapContext, MapLayerInter
     public MapsForgeContext(MapsForgeViewBase map,
                             ServiceContext sc,
                             String key,
-                            AppDensity d) {
+                            AndroidAppDensity d) {
         metrics = new MapsForgeMetrics(map, d);
         draw = new AndroidDraw(metrics.getDensity());
         nodes = new TwoNodes(metrics);

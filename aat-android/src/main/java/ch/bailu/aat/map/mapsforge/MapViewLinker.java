@@ -3,14 +3,15 @@ package ch.bailu.aat.map.mapsforge;
 import org.mapsforge.map.model.IMapViewPosition;
 import org.mapsforge.map.model.common.Observer;
 
-import ch.bailu.aat.map.MapViewInterface;
+import ch.bailu.aat.map.To;
+import ch.bailu.aat_lib.map.MapViewInterface;
 
 public class MapViewLinker implements Observer {
     private final IMapViewPosition master;
     private final IMapViewPosition slave;
 
     public MapViewLinker(MapViewInterface m, MapViewInterface s) {
-        s.toView().setClickable(false);
+        To.view(s).setClickable(false);
 
         master = m.getMapViewPosition();
         slave = s.getMapViewPosition();

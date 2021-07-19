@@ -1,4 +1,4 @@
-package ch.bailu.aat.map;
+package ch.bailu.aat_lib.map;
 
 public interface Attachable {
 

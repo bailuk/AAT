@@ -3,6 +3,28 @@ package ch.bailu.aat.activities;
 import android.os.Bundle;
 import android.view.View;
 
+import ch.bailu.aat.dispatcher.CurrentLocationSource;
+import ch.bailu.aat.dispatcher.EditorSource;
+import ch.bailu.aat.dispatcher.OverlaySource;
+import ch.bailu.aat.dispatcher.SensorSource;
+import ch.bailu.aat.dispatcher.TrackerSource;
+import ch.bailu.aat.dispatcher.TrackerTimerSource;
+import ch.bailu.aat.map.MapFactory;
+import ch.bailu.aat.map.mapsforge.MapViewLinker;
+import ch.bailu.aat.map.mapsforge.MapsForgeViewBase;
+import ch.bailu.aat.preferences.Storage;
+import ch.bailu.aat.util.ui.AppLayout;
+import ch.bailu.aat.util.ui.AppTheme;
+import ch.bailu.aat.util.ui.UiTheme;
+import ch.bailu.aat.views.ContentView;
+import ch.bailu.aat.views.PercentageLayout;
+import ch.bailu.aat.views.bar.ControlBar;
+import ch.bailu.aat.views.bar.MainControlBar;
+import ch.bailu.aat.views.description.CockpitView;
+import ch.bailu.aat.views.description.mview.MultiView;
+import ch.bailu.aat.views.graph.DistanceAltitudeGraphView;
+import ch.bailu.aat.views.graph.DistanceSpeedGraphView;
+import ch.bailu.aat.views.graph.SpmGraphView;
 import ch.bailu.aat_lib.description.AscendDescription;
 import ch.bailu.aat_lib.description.AveragePaceDescription;
 import ch.bailu.aat_lib.description.AverageSpeedDescriptionAP;
@@ -17,28 +39,6 @@ import ch.bailu.aat_lib.description.PredictiveTimeDescription;
 import ch.bailu.aat_lib.description.SlopeDescription;
 import ch.bailu.aat_lib.description.StepRateDescription;
 import ch.bailu.aat_lib.description.TotalStepsDescription;
-import ch.bailu.aat.dispatcher.CurrentLocationSource;
-import ch.bailu.aat.dispatcher.EditorSource;
-import ch.bailu.aat.dispatcher.OverlaySource;
-import ch.bailu.aat.dispatcher.SensorSource;
-import ch.bailu.aat.dispatcher.TrackerSource;
-import ch.bailu.aat.dispatcher.TrackerTimerSource;
-import ch.bailu.aat.map.MapFactory;
-import ch.bailu.aat.map.MapViewInterface;
-import ch.bailu.aat.map.mapsforge.MapViewLinker;
-import ch.bailu.aat.preferences.Storage;
-import ch.bailu.aat.util.ui.AppLayout;
-import ch.bailu.aat.util.ui.AppTheme;
-import ch.bailu.aat.util.ui.UiTheme;
-import ch.bailu.aat.views.ContentView;
-import ch.bailu.aat.views.PercentageLayout;
-import ch.bailu.aat.views.bar.ControlBar;
-import ch.bailu.aat.views.bar.MainControlBar;
-import ch.bailu.aat.views.description.CockpitView;
-import ch.bailu.aat.views.description.mview.MultiView;
-import ch.bailu.aat.views.graph.DistanceAltitudeGraphView;
-import ch.bailu.aat.views.graph.DistanceSpeedGraphView;
-import ch.bailu.aat.views.graph.SpmGraphView;
 import ch.bailu.aat_lib.gpx.InfoID;
 
 public class CockpitSplitActivity extends AbsKeepScreenOnActivity {
@@ -60,7 +60,7 @@ public class CockpitSplitActivity extends AbsKeepScreenOnActivity {
 
 
     private View createContentView(EditorSource edit) {
-        final MapViewInterface mapSlave = MapFactory.DEF(this, SOLID_KEY).split();
+        final MapsForgeViewBase mapSlave = MapFactory.DEF(this, SOLID_KEY).split();
         final CockpitView cockpitA = new CockpitView(this, THEME);
         final CockpitView cockpitB = new CockpitView(this, THEME);
         final CockpitView cockpitC = new CockpitView(this, THEME);
@@ -114,9 +114,9 @@ public class CockpitSplitActivity extends AbsKeepScreenOnActivity {
         mv.add(percentageB);
         mv.add(percentageC);
         mv.add(percentageD);
-        mv.add(mapSlave.toView());
+        mv.add(mapSlave);
 
-        MapViewInterface mapMaster =
+        MapsForgeViewBase mapMaster =
                 MapFactory.DEF(this, SOLID_MAP_KEY).map(edit, createButtonBar(mv));
 
         new MapViewLinker(mapMaster, mapSlave);
@@ -127,7 +127,7 @@ public class CockpitSplitActivity extends AbsKeepScreenOnActivity {
         contentView.add(getErrorView());
         contentView.add(
                 new PercentageLayout(this)
-                        .add(mapMaster.toView(), 70)
+                        .add(mapMaster, 70)
                         .add(mv,30));
 
         return contentView;

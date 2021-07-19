@@ -13,7 +13,7 @@ import ch.bailu.aat.dispatcher.CustomFileSource;
 import ch.bailu.aat.dispatcher.OverlaySource;
 import ch.bailu.aat.dispatcher.TrackerSource;
 import ch.bailu.aat.map.MapFactory;
-import ch.bailu.aat.map.MapViewInterface;
+import ch.bailu.aat.map.To;
 import ch.bailu.aat.menus.ContentMenu;
 import ch.bailu.aat.util.fs.FileAction;
 import ch.bailu.aat.util.ui.AppLayout;
@@ -33,6 +33,7 @@ import ch.bailu.aat_lib.dispatcher.OnContentUpdatedInterface;
 import ch.bailu.aat_lib.gpx.GpxInformation;
 import ch.bailu.aat_lib.gpx.InfoID;
 import ch.bailu.aat_lib.logger.AppLog;
+import ch.bailu.aat_lib.map.MapViewInterface;
 import ch.bailu.foc.Foc;
 import ch.bailu.foc_android.FocAndroid;
 
@@ -125,7 +126,7 @@ public class GpxViewActivity extends ActivityContext
 
         MultiView mv = new MultiView(this, SOLID_KEY);
         mv.add(summary);
-        mv.add(map.toView());
+        mv.add(To.view(map));
         mv.add(graph);
 
         bar.addMvNext(mv);
@@ -140,7 +141,7 @@ public class GpxViewActivity extends ActivityContext
 
         PercentageLayout a = new PercentageLayout(this);
         a.setOrientation(AppLayout.getOrientationAlongLargeSide(this));
-        a.add(map.toView(), 60);
+        a.add(To.view(map), 60);
         a.add(summary, 40);
 
         PercentageLayout b = new PercentageLayout(this);

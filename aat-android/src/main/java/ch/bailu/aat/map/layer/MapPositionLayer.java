@@ -4,13 +4,15 @@ import org.mapsforge.core.model.LatLong;
 import org.mapsforge.core.model.Point;
 
 import ch.bailu.aat.dispatcher.DispatcherInterface;
-import ch.bailu.aat.map.MapContext;
+import ch.bailu.aat_lib.map.MapContext;
+import ch.bailu.aat.map.To;
 import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat.preferences.map.SolidPositionLock;
 import ch.bailu.aat_lib.coordinates.LatLongE6;
 import ch.bailu.aat_lib.dispatcher.OnContentUpdatedInterface;
 import ch.bailu.aat_lib.gpx.GpxInformation;
 import ch.bailu.aat_lib.gpx.InfoID;
+import ch.bailu.aat_lib.map.layer.MapLayerInterface;
 import ch.bailu.aat_lib.preferences.StorageInterface;
 
 public final class MapPositionLayer implements MapLayerInterface, OnContentUpdatedInterface {
@@ -29,7 +31,7 @@ public final class MapPositionLayer implements MapLayerInterface, OnContentUpdat
 
     public MapPositionLayer(MapContext mc, DispatcherInterface d) {
         mcontext = mc;
-        storage = new Storage(mcontext.getContext());
+        storage = new Storage(To.context(mcontext));
 
         slock = new SolidPositionLock(storage, mcontext.getSolidKey());
 

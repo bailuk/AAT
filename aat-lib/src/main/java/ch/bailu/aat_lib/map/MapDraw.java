@@ -1,9 +1,7 @@
-package ch.bailu.aat.map;
+package ch.bailu.aat_lib.map;
 
-import android.graphics.Bitmap;
-import android.graphics.Point;
-import android.graphics.Rect;
 
+import org.mapsforge.core.graphics.Bitmap;
 import org.mapsforge.core.graphics.Paint;
 
 public interface MapDraw {
@@ -25,7 +23,7 @@ public interface MapDraw {
     void textBottom(String s, int line);
     void circle(Point pixel, int radius, Paint paint);
 
-    void rect(Rect rect, Paint paint);
+    void rect(Rect r, Paint paint);
 
     void bitmap(Bitmap b, Point pixel);
     void bitmap(Bitmap b, Point pixel, int color);

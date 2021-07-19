@@ -1,14 +1,17 @@
 package ch.bailu.aat.map;
 
-import android.graphics.Bitmap;
-import android.graphics.Point;
-import android.graphics.Rect;
 
+import org.mapsforge.core.graphics.Bitmap;
 import org.mapsforge.core.graphics.Canvas;
 import org.mapsforge.core.graphics.Paint;
 import org.mapsforge.map.android.graphics.AndroidGraphicFactory;
 
-import ch.bailu.aat.util.ui.AppDensity;
+import ch.bailu.aat_lib.map.AppDensity;
+import ch.bailu.aat_lib.map.MapDraw;
+import ch.bailu.aat_lib.map.MapMetrics;
+import ch.bailu.aat_lib.map.Point;
+import ch.bailu.aat_lib.map.Rect;
+import ch.bailu.aat_lib.map.TwoNodes;
 
 public final class AndroidDraw implements MapDraw {
     private final static int SPACE=5;
@@ -43,6 +46,7 @@ public final class AndroidDraw implements MapDraw {
 
     }
 
+
     private void init(MapMetrics metric) {
         left   = metric.getLeft();
         top    = metric.getTop();
@@ -72,21 +76,21 @@ public final class AndroidDraw implements MapDraw {
 
     @Override
     public Bitmap getNodeBitmap() {
-        return nodePainter.getTileBitmap().getAndroidBitmap();
+        return nodePainter.getTileBitmap().getTileBitmap();
     }
 
     @Override
     public void grid(Point center, int space) {
-        for (int x=center.x; x < right; x+=space)
+        for (int x = center.x; x < right; x+=space)
             vLine(x);
 
-        for (int x=center.x-space; x > left; x-=space)
+        for (int x =  (center.x-space); x > left; x-=space)
             vLine(x);
 
-        for (int y=center.y; y < bottom; y+=space)
+        for (int y = center.y; y < bottom; y+=space)
             hLine(y);
 
-        for (int y=center.y-space; y > top; y-=space)
+        for (int y = (center.y-space); y > top; y-=space)
             hLine(y);
     }
 
@@ -121,7 +125,7 @@ public final class AndroidDraw implements MapDraw {
 
     @Override
     public void circle(Point pixel, int radius, Paint paint) {
-        canvas.drawCircle(pixel.x, pixel.y, radius, paint);
+        canvas.drawCircle((int)pixel.x, (int)pixel.y, radius, paint);
     }
 
 
@@ -137,23 +141,29 @@ public final class AndroidDraw implements MapDraw {
 
     @Override
     public void bitmap(Bitmap b, Point p, int c) {
-        bitmapCanvas.draw(convert(canvas), b, p, c);
+        bitmapCanvas.draw(convert(canvas), convert(b), convert(p), c);
     }
 
 
 
     private static Point center(Bitmap b, Point p) {
-        p.x = p.x - (b.getWidth() / 2);
-        p.y = p.y - (b.getHeight() / 2);
-        return p;
+
+        return new Point(p.x - (b.getWidth() / 2),p.y - (b.getHeight() / 2));
     }
 
 
     @Override
     public void bitmap(Bitmap b, Point p) {
-        bitmapCanvas.draw(convert(canvas), b, p);
+        bitmapCanvas.draw(convert(canvas), convert(b), convert(p));
     }
 
+    public static android.graphics.Point convert(Point p) {
+        return new android.graphics.Point((int)p.x, (int)p.y);
+    }
+
+    public static android.graphics.Bitmap convert(Bitmap b) {
+        return AndroidGraphicFactory.getBitmap(b);
+    }
 
 
     @Override
@@ -170,7 +180,7 @@ public final class AndroidDraw implements MapDraw {
     public void label(String text, Point pixel, Paint background, Paint frame) {
         drawBackground(text, pixel, background);
         drawBackground(text, pixel, frame);
-        canvas.drawText(text, pixel.x, pixel.y, legendPaint);
+        canvas.drawText(text, (int)pixel.x, (int)pixel.y, legendPaint);
     }
 
 
@@ -179,10 +189,10 @@ public final class AndroidDraw implements MapDraw {
 
         android.graphics.Paint.FontMetrics legendMetrics = lp.getFontMetrics();
 
-        convert(canvas).drawRect(pixel.x,
-                pixel.y + legendMetrics.top - MARGIN,
-                pixel.x + lp.measureText(text) + MARGIN*2,
-                pixel.y + legendMetrics.bottom + MARGIN,
+        convert(canvas).drawRect((float)pixel.x,
+                (float)pixel.y + legendMetrics.top - MARGIN,
+                (float)pixel.x + lp.measureText(text) + MARGIN*2,
+                (float)pixel.y + legendMetrics.bottom + MARGIN,
                 convert(paint));
     }
 

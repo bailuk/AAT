@@ -7,7 +7,8 @@ import org.mapsforge.core.model.Point;
 
 import ch.bailu.aat.R;
 import ch.bailu.aat.dispatcher.EditorSourceInterface;
-import ch.bailu.aat.map.MapContext;
+import ch.bailu.aat_lib.map.MapContext;
+import ch.bailu.aat.map.To;
 import ch.bailu.aat.services.cache.ObjGpxEditable;
 import ch.bailu.aat_lib.gpx.GpxInformation;
 import ch.bailu.aat_lib.gpx.GpxPointNode;
@@ -23,7 +24,7 @@ public final class EditorNodeViewLayer extends NodeViewLayer {
     public EditorNodeViewLayer(MapContext mc, EditorSourceInterface e) {
         super(mc);
         editorSource = e;
-        context = mc.getContext();
+        context = To.context(mc);
 
         setText();
 

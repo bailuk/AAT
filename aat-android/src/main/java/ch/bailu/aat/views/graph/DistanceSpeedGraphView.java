@@ -12,7 +12,7 @@ import ch.bailu.aat.dispatcher.DispatcherInterface;
 import ch.bailu.aat.gpx.GpxDistanceWindow;
 import ch.bailu.aat.gpx.GpxListWalker;
 import ch.bailu.aat.preferences.Storage;
-import ch.bailu.aat.util.ui.AppDensity;
+import ch.bailu.aat.util.ui.AndroidAppDensity;
 import ch.bailu.aat.util.ui.AppTheme;
 import ch.bailu.aat.util.ui.UiTheme;
 import ch.bailu.aat_lib.gpx.GpxList;
@@ -77,13 +77,13 @@ public class DistanceSpeedGraphView extends AbsGraphView implements SharedPrefer
         int xscale = km_factor * 1000;
 
         float maxSpeed = list.getDelta().getAttributes().getAsFloat((MaxSpeed.INDEX_MAX_SPEED));
-        AppDensity density = new AppDensity(getContext());
+        AndroidAppDensity density = new AndroidAppDensity(getContext());
 
         return  initPlotter(canvas, xscale, density, maxSpeed);
     }
 
 
-    private GraphPlotter[] initPlotter(Canvas canvas, int xscale, AppDensity density, float maxSpeed) {
+    private GraphPlotter[] initPlotter(Canvas canvas, int xscale, AndroidAppDensity density, float maxSpeed) {
         GraphPlotter[] result = new GraphPlotter[3];
         for (int i=0; i<result.length; i++) {
             result[i] = new GraphPlotter(canvas, getWidth(), getHeight(), xscale,

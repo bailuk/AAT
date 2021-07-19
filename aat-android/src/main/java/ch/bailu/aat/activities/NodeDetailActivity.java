@@ -13,7 +13,7 @@ import ch.bailu.aat.dispatcher.CurrentLocationSource;
 import ch.bailu.aat.dispatcher.CustomFileSource;
 import ch.bailu.aat.gpx.GpxListArray;
 import ch.bailu.aat.map.MapFactory;
-import ch.bailu.aat.map.MapViewInterface;
+import ch.bailu.aat.map.To;
 import ch.bailu.aat.util.HtmlBuilderGpx;
 import ch.bailu.aat.util.ui.AppLayout;
 import ch.bailu.aat.util.ui.AppTheme;
@@ -30,6 +30,7 @@ import ch.bailu.aat_lib.dispatcher.OnContentUpdatedInterface;
 import ch.bailu.aat_lib.gpx.GpxInformation;
 import ch.bailu.aat_lib.gpx.GpxList;
 import ch.bailu.aat_lib.gpx.InfoID;
+import ch.bailu.aat_lib.map.MapViewInterface;
 
 public class NodeDetailActivity extends ActivityContext
         implements OnClickListener, OnContentUpdatedInterface, SeekBar.OnSeekBarChangeListener {
@@ -109,7 +110,7 @@ public class NodeDetailActivity extends ActivityContext
         htmlView.themify(theme);
 
         viewB.add(htmlView, 40);
-        viewB.add(mapView.toView(), 60);
+        viewB.add(To.view(mapView), 60);
 
         graph = new DistanceAltitudeGraphView(this, theme);
         viewA.add(graph, 20);

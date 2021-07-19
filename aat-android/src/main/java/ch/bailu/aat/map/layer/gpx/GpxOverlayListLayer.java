@@ -3,8 +3,8 @@ package ch.bailu.aat.map.layer.gpx;
 import org.mapsforge.core.model.Point;
 
 import ch.bailu.aat.dispatcher.DispatcherInterface;
-import ch.bailu.aat.map.MapContext;
-import ch.bailu.aat.map.layer.MapLayerInterface;
+import ch.bailu.aat_lib.map.MapContext;
+import ch.bailu.aat_lib.map.layer.MapLayerInterface;
 import ch.bailu.aat.preferences.map.SolidOverlayFileList;
 import ch.bailu.aat_lib.gpx.InfoID;
 import ch.bailu.aat_lib.preferences.StorageInterface;

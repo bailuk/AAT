@@ -8,7 +8,7 @@ import ch.bailu.aat_lib.description.HeartRateDescription;
 import ch.bailu.aat_lib.description.StepRateDescription;
 import ch.bailu.aat.dispatcher.DispatcherInterface;
 import ch.bailu.aat.gpx.GpxListWalker;
-import ch.bailu.aat.util.ui.AppDensity;
+import ch.bailu.aat.util.ui.AndroidAppDensity;
 import ch.bailu.aat.util.ui.AppTheme;
 import ch.bailu.aat.util.ui.UiTheme;
 import ch.bailu.aat_lib.description.ContentDescription;
@@ -122,7 +122,7 @@ public class SpmGraphView extends AbsGraphView {
 
         public void setPlotter(int kmFactor, Canvas canvas) {
             plotter =  new GraphPlotter(canvas, getWidth(), getHeight(), 1000 * kmFactor,
-                    new AppDensity(getContext()), theme);
+                    new AndroidAppDensity(getContext()), theme);
 
         }
 

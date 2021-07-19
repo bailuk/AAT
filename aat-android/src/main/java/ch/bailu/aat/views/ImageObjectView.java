@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.widget.ImageView;
 
+import ch.bailu.aat.map.AndroidDraw;
 import ch.bailu.aat.services.InsideContext;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.cache.Obj;
@@ -134,7 +135,7 @@ public class ImageObjectView extends ImageView {
         if (imageHandle.hasException()) {
             resetImage();
         } else if (imageHandle.isReadyAndLoaded()) {
-            setImageBitmap(imageHandle.getBitmap());
+            setImageBitmap(AndroidDraw.convert(imageHandle.getBitmap()));
         }
     }
 

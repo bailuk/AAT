@@ -1,6 +1,6 @@
 package ch.bailu.aat.map.layer.gpx;
 
-import ch.bailu.aat.map.MapContext;
+import ch.bailu.aat_lib.map.MapContext;
 import ch.bailu.aat.preferences.map.SolidLegend;
 import ch.bailu.aat_lib.gpx.interfaces.GpxType;
 

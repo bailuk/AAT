@@ -3,14 +3,15 @@ package ch.bailu.aat.map.layer.grid;
 import org.mapsforge.core.model.LatLong;
 import org.mapsforge.core.model.Point;
 
+import ch.bailu.aat.map.To;
 import ch.bailu.aat_lib.coordinates.CH1903Coordinates;
 import ch.bailu.aat_lib.coordinates.MeterCoordinates;
-import ch.bailu.aat.map.MapContext;
+import ch.bailu.aat_lib.map.MapContext;
 import ch.bailu.aat_lib.preferences.StorageInterface;
 
 public final class CH1903GridLayer extends MeterGridLayer {
-    public CH1903GridLayer(MapContext cl) {
-        super(cl.getContext());
+    public CH1903GridLayer(MapContext mc) {
+        super(To.context(mc));
     }
 
     @Override
@@ -20,17 +21,17 @@ public final class CH1903GridLayer extends MeterGridLayer {
 
 
     @Override
-    public void drawInside(MapContext c) {
-        if (CH1903Coordinates.inSwitzerland(c.getMetrics().getBoundingBox().getCenterPoint()))
-            super.drawInside(c);
+    public void drawInside(MapContext mc) {
+        if (CH1903Coordinates.inSwitzerland(mc.getMetrics().getBoundingBox().getCenterPoint()))
+            super.drawInside(mc);
     }
 
 
 
     @Override
-    public void drawForeground(MapContext c) {
-        if (CH1903Coordinates.inSwitzerland(c.getMetrics().getBoundingBox().getCenterPoint()))
-            super.drawForeground(c);
+    public void drawForeground(MapContext mc) {
+        if (CH1903Coordinates.inSwitzerland(mc.getMetrics().getBoundingBox().getCenterPoint()))
+            super.drawForeground(mc);
     }
 
 

@@ -6,8 +6,8 @@ import org.mapsforge.core.graphics.Paint;
 import org.mapsforge.core.model.Point;
 import org.mapsforge.map.android.graphics.AndroidGraphicFactory;
 
-import ch.bailu.aat.map.MapContext;
-import ch.bailu.aat.map.TwoNodes;
+import ch.bailu.aat_lib.map.MapContext;
+import ch.bailu.aat_lib.map.TwoNodes;
 import ch.bailu.aat.views.graph.AltitudeColorTable;
 import ch.bailu.aat_lib.preferences.StorageInterface;
 

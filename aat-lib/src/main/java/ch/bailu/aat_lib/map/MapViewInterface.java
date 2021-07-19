@@ -1,13 +1,11 @@
-package ch.bailu.aat.map;
-
-import android.view.View;
+package ch.bailu.aat_lib.map;
 
 import org.mapsforge.core.model.LatLong;
 import org.mapsforge.map.model.IMapViewPosition;
 
-import ch.bailu.aat.dispatcher.LifeCycleInterface;
-import ch.bailu.aat.map.layer.MapLayerInterface;
 import ch.bailu.aat_lib.coordinates.BoundingBoxE6;
+import ch.bailu.aat_lib.dispatcher.LifeCycleInterface;
+import ch.bailu.aat_lib.map.layer.MapLayerInterface;
 
 public interface MapViewInterface extends LifeCycleInterface {
     void frameBounding(BoundingBoxE6 boundingBox);
@@ -26,10 +24,6 @@ public interface MapViewInterface extends LifeCycleInterface {
     void setZoomLevel(byte z);
 
     void setCenter(LatLong gpsLocation);
-
-    void addView(View view);
-
-    View toView();
 
     void reDownloadTiles();
 

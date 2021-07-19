@@ -5,11 +5,9 @@ import android.content.Context;
 import org.mapsforge.core.model.LatLong;
 
 import ch.bailu.aat.R;
-import ch.bailu.aat_lib.coordinates.CH1903Coordinates;
-import ch.bailu.aat_lib.coordinates.OlcCoordinates;
-import ch.bailu.aat_lib.coordinates.WGS84Coordinates;
-import ch.bailu.aat.map.MapContext;
-import ch.bailu.aat.map.layer.MapLayerInterface;
+import ch.bailu.aat_lib.map.MapContext;
+import ch.bailu.aat.map.To;
+import ch.bailu.aat_lib.map.layer.MapLayerInterface;
 import ch.bailu.aat.map.layer.NullLayer;
 import ch.bailu.aat.map.layer.grid.CH1903CenterCoordinatesLayer;
 import ch.bailu.aat.map.layer.grid.CH1903GridLayer;
@@ -18,6 +16,9 @@ import ch.bailu.aat.map.layer.grid.UTMCenterCoordinatesLayer;
 import ch.bailu.aat.map.layer.grid.UTMGridLayer;
 import ch.bailu.aat.map.layer.grid.WGS84Layer;
 import ch.bailu.aat.preferences.Storage;
+import ch.bailu.aat_lib.coordinates.CH1903Coordinates;
+import ch.bailu.aat_lib.coordinates.OlcCoordinates;
+import ch.bailu.aat_lib.coordinates.WGS84Coordinates;
 import ch.bailu.aat_lib.preferences.SolidStaticIndexList;
 
 public class SolidMapGrid extends SolidStaticIndexList {
@@ -45,17 +46,17 @@ public class SolidMapGrid extends SolidStaticIndexList {
         return R.drawable.view_grid;
     }
 
-    public MapLayerInterface createGridLayer(MapContext cl) {
+    public MapLayerInterface createGridLayer(MapContext mc) {
         if (this.getIndex()==0) {
-            return new WGS84Layer(new Storage(cl.getContext()));
+            return new WGS84Layer(new Storage(To.context(mc)));
         }
 
         if (this.getIndex()==1) {
-            return new CH1903GridLayer(cl);
+            return new CH1903GridLayer(mc);
         }
 
         if (this.getIndex()==2) {
-            return new UTMGridLayer(cl);
+            return new UTMGridLayer(mc);
         }
 
         if (this.getIndex()==3) {

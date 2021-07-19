@@ -10,7 +10,7 @@ import android.util.SparseArray;
 import org.mapsforge.map.android.graphics.AndroidGraphicFactory;
 
 import ch.bailu.aat.util.graphic.SyncTileBitmap;
-import ch.bailu.aat.util.ui.AppDensity;
+import ch.bailu.aat_lib.map.AppDensity;
 
 public final class NodeBitmap {
 

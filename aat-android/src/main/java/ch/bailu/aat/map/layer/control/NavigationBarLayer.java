@@ -9,7 +9,8 @@ import android.view.ViewGroup;
 import ch.bailu.aat.R;
 import ch.bailu.aat.activities.AbsHardwareButtons;
 import ch.bailu.aat.dispatcher.DispatcherInterface;
-import ch.bailu.aat.map.MapContext;
+import ch.bailu.aat_lib.map.MapContext;
+import ch.bailu.aat.map.To;
 import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat.preferences.map.SolidPositionLock;
 import ch.bailu.aat.util.ui.AppTheme;
@@ -38,7 +39,7 @@ public final class NavigationBarLayer extends ControlBarLayer implements OnConte
 
 
     public NavigationBarLayer(MapContext mc, DispatcherInterface d, int i) {
-        super(mc,new ControlBar(mc.getContext(),
+        super(mc,new ControlBar(To.context(mc),
                 getOrientation(BOTTOM), i, AppTheme.bar), BOTTOM);
 
         mcontext = mc;
@@ -46,7 +47,7 @@ public final class NavigationBarLayer extends ControlBarLayer implements OnConte
         buttonPlus = getBar().addImageButton(R.drawable.zoom_in);
         buttonMinus = getBar().addImageButton(R.drawable.zoom_out);
         View lock = getBar().addSolidIndexButton(
-                new SolidPositionLock(new Storage(mc.getContext()), mc.getSolidKey()));
+                new SolidPositionLock(new Storage(To.context(mc)), mc.getSolidKey()));
         buttonFrame = getBar().addImageButton(R.drawable.zoom_fit_best);
 
         ToolTip.set(buttonPlus, R.string.tt_map_zoomin);
@@ -56,10 +57,10 @@ public final class NavigationBarLayer extends ControlBarLayer implements OnConte
 
         d.addTarget(this, InfoID.ALL);
 
-        VolumeView volumeView = new VolumeView(mc.getContext());
+        VolumeView volumeView = new VolumeView(To.context(mc));
         volumeView.setVisibility(View.INVISIBLE);
 
-        mcontext.getMapView().addView(volumeView);
+        To.view(mcontext.getMapView()).addView(volumeView);
     }
 
 
@@ -78,7 +79,7 @@ public final class NavigationBarLayer extends ControlBarLayer implements OnConte
 
             if (nextInBoundingCycle()) {
                 mcontext.getMapView().frameBounding(infoCache.valueAt(boundingCycle).getBoundingBox());
-                AppLog.i(mcontext.getContext(), infoCache.valueAt(boundingCycle).getFile().getName());
+                AppLog.i(To.context(mcontext), infoCache.valueAt(boundingCycle).getFile().getName());
 
             }
         }
@@ -143,7 +144,7 @@ public final class NavigationBarLayer extends ControlBarLayer implements OnConte
 
         @Override
         public boolean onHardwareButtonPressed(int code, AbsHardwareButtons.EventType type) {
-            if (mcontext.getMapView().toView().getVisibility()==VISIBLE) {
+            if (To.view(mcontext.getMapView()).getVisibility()==VISIBLE) {
                 if (code == KeyEvent.KEYCODE_VOLUME_UP) {
                     if (type == AbsHardwareButtons.EventType.DOWN) mcontext.getMapView().zoomIn();
                     return true;

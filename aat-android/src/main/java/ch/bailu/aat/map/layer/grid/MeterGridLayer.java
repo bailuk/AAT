@@ -2,16 +2,16 @@ package ch.bailu.aat.map.layer.grid;
 
 
 import android.content.Context;
-import android.graphics.Point;
 
 import org.mapsforge.core.model.BoundingBox;
 import org.mapsforge.core.model.LatLong;
 
+import ch.bailu.aat_lib.map.MapContext;
+import ch.bailu.aat_lib.map.layer.MapLayerInterface;
+import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat_lib.coordinates.MeterCoordinates;
 import ch.bailu.aat_lib.description.DistanceDescription;
-import ch.bailu.aat.map.MapContext;
-import ch.bailu.aat.map.layer.MapLayerInterface;
-import ch.bailu.aat.preferences.Storage;
+import ch.bailu.aat_lib.map.Point;
 
 public abstract class MeterGridLayer implements MapLayerInterface {
 

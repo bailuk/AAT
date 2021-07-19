@@ -14,7 +14,7 @@ import org.mapsforge.map.model.common.Observer;
 
 import java.util.List;
 
-import ch.bailu.aat.map.Attachable;
+import ch.bailu.aat_lib.map.Attachable;
 import ch.bailu.aat.map.tile.source.Source;
 import ch.bailu.aat.services.InsideContext;
 import ch.bailu.aat.services.ServiceContext;

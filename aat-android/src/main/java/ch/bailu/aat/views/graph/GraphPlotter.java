@@ -6,7 +6,7 @@ import android.graphics.Point;
 
 import ch.bailu.aat.map.BitmapDraw;
 import ch.bailu.aat.map.NodeBitmap;
-import ch.bailu.aat.util.ui.AppDensity;
+import ch.bailu.aat.util.ui.AndroidAppDensity;
 import ch.bailu.aat.util.ui.UiTheme;
 
 public class GraphPlotter {
@@ -31,7 +31,7 @@ public class GraphPlotter {
 
     private final NodeBitmap nodeBitmap;
 
-    public GraphPlotter(Canvas c, int w, int h, float xScale, AppDensity res, UiTheme theme) {
+    public GraphPlotter(Canvas c, int w, int h, float xScale, AndroidAppDensity res, UiTheme theme) {
         width=w;
         height=h;
 

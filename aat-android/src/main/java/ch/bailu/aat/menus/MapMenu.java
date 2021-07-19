@@ -8,7 +8,8 @@ import android.view.MenuItem;
 import ch.bailu.aat.R;
 import ch.bailu.aat.activities.ActivitySwitcher;
 import ch.bailu.aat.activities.PreferencesActivity;
-import ch.bailu.aat.map.MapContext;
+import ch.bailu.aat_lib.map.MapContext;
+import ch.bailu.aat.map.To;
 import ch.bailu.aat.preferences.map.SolidMapTileStack;
 import ch.bailu.aat.preferences.map.SolidMapsForgeMapFile;
 import ch.bailu.aat.preferences.map.SolidOverlayFileList;
@@ -34,8 +35,8 @@ public final class MapMenu extends AbsMenu {
         overlays = menu.add(R.string.p_overlay);
         overlays.setIcon(R.drawable.view_paged_inverse);
 
-        map = menu.add(new SolidMapsForgeMapFile(mcontext.getContext()).getLabel());
-        theme = menu.add(new SolidRenderTheme(mcontext.getContext()).getLabel());
+        map = menu.add(new SolidMapsForgeMapFile(To.context(mcontext)).getLabel());
+        theme = menu.add(new SolidRenderTheme(To.context(mcontext)).getLabel());
 
         preferences = menu.add(R.string.intro_settings);
 
@@ -63,7 +64,7 @@ public final class MapMenu extends AbsMenu {
 
     @Override
     public boolean onItemClick(MenuItem item) {
-        final Context c = mcontext.getContext();
+        final Context c = To.context(mcontext);
 
         if (item == stack) {
             new SolidCheckListDialog(c, new SolidMapTileStack(c));
@@ -78,7 +79,7 @@ public final class MapMenu extends AbsMenu {
             new SolidStringDialog(c, new SolidMapsForgeMapFile(c));
         } else if (item == preferences) {
             MultiView.storeActive(c, PreferencesActivity.SOLID_KEY, 1);
-            ActivitySwitcher.start(mcontext.getContext(), PreferencesActivity.class);
+            ActivitySwitcher.start(To.context(mcontext), PreferencesActivity.class);
         } else {
             return false;
         }

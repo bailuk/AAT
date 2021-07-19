@@ -9,9 +9,9 @@ import org.mapsforge.map.view.MapView;
 
 import java.util.ArrayList;
 
-import ch.bailu.aat.map.Attachable;
-import ch.bailu.aat.map.MapContext;
-import ch.bailu.aat.map.layer.MapLayerInterface;
+import ch.bailu.aat_lib.map.Attachable;
+import ch.bailu.aat_lib.map.MapContext;
+import ch.bailu.aat_lib.map.layer.MapLayerInterface;
 import ch.bailu.aat.map.tile.TileProvider;
 import ch.bailu.aat.services.InsideContext;
 import ch.bailu.aat.services.ServiceContext;

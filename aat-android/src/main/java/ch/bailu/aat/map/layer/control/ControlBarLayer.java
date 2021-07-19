@@ -7,9 +7,10 @@ import org.mapsforge.core.model.Point;
 
 import ch.bailu.aat.activities.AbsBackButton;
 import ch.bailu.aat.map.MapColor;
-import ch.bailu.aat.map.MapContext;
-import ch.bailu.aat.map.MapViewInterface;
-import ch.bailu.aat.map.layer.MapLayerInterface;
+import ch.bailu.aat_lib.map.MapContext;
+import ch.bailu.aat_lib.map.MapViewInterface;
+import ch.bailu.aat.map.To;
+import ch.bailu.aat_lib.map.layer.MapLayerInterface;
 import ch.bailu.aat.util.ui.AppLayout;
 import ch.bailu.aat.views.bar.ControlBar;
 import ch.bailu.aat_lib.preferences.StorageInterface;
@@ -41,13 +42,13 @@ public abstract class ControlBarLayer implements MapLayerInterface, View.OnClick
         bar.setBackgroundColor(color);
         bar.setOnClickListener2(this);
         bar.setVisibility(View.GONE);
-        map.addView(bar);
+        To.view(map).addView(bar);
 
 
-        map.addView(new AbsBackButton.OnBackPressedListener(mc.getContext()) {
+        To.view(map).addView(new AbsBackButton.OnBackPressedListener(To.context(mc)) {
             @Override
             public boolean onBackPressed() {
-                if (map.toView().getVisibility() == VISIBLE && isBarVisible()) {
+                if (To.view(map).getVisibility() == VISIBLE && isBarVisible()) {
                     hideBar();
                     return true;
                 }

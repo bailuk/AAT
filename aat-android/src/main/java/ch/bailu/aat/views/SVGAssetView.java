@@ -6,7 +6,7 @@ import ch.bailu.aat.services.InsideContext;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.cache.ObjSVGAsset;
 import ch.bailu.aat.services.icons.IconMapService;
-import ch.bailu.aat.util.ui.AppDensity;
+import ch.bailu.aat.util.ui.AndroidAppDensity;
 import ch.bailu.aat_lib.gpx.GpxPointNode;
 
 
@@ -17,7 +17,7 @@ public class SVGAssetView extends ImageObjectView {
         super(sc, rid);
         setScaleType(ImageView.ScaleType.CENTER);
 
-         size = new AppDensity(sc).toPixel_i(IconMapService.BIG_ICON_SIZE);
+         size = new AndroidAppDensity(sc).toPixel_i(IconMapService.BIG_ICON_SIZE);
     }
 
 

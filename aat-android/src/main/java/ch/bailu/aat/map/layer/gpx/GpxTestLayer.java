@@ -1,7 +1,6 @@
 package ch.bailu.aat.map.layer.gpx;
 
 import android.graphics.Color;
-import android.graphics.Rect;
 
 import org.mapsforge.core.graphics.Paint;
 import org.mapsforge.core.graphics.Style;
@@ -10,11 +9,12 @@ import org.mapsforge.map.android.graphics.AndroidGraphicFactory;
 
 import ch.bailu.aat.dispatcher.DispatcherInterface;
 import ch.bailu.aat.gpx.GpxListWalker;
-import ch.bailu.aat.map.MapContext;
+import ch.bailu.aat_lib.map.MapContext;
 import ch.bailu.aat_lib.coordinates.BoundingBoxE6;
 import ch.bailu.aat_lib.gpx.GpxList;
 import ch.bailu.aat_lib.gpx.GpxPointNode;
 import ch.bailu.aat_lib.gpx.GpxSegmentNode;
+import ch.bailu.aat_lib.map.Rect;
 import ch.bailu.aat_lib.preferences.StorageInterface;
 
 public final class GpxTestLayer extends GpxLayer {

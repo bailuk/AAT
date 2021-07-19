@@ -3,7 +3,8 @@ package ch.bailu.aat.map.layer;
 import org.mapsforge.core.model.Point;
 
 import ch.bailu.aat_lib.coordinates.Dem3Coordinates;
-import ch.bailu.aat.map.MapContext;
+import ch.bailu.aat_lib.map.MapContext;
+import ch.bailu.aat_lib.map.layer.MapLayerInterface;
 import ch.bailu.aat_lib.preferences.StorageInterface;
 
 public final class Dem3NameLayer implements MapLayerInterface {

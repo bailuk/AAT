@@ -4,8 +4,9 @@ import org.mapsforge.core.model.Point;
 
 import ch.bailu.aat.dispatcher.DispatcherInterface;
 import ch.bailu.aat.gpx.GpxInformationCache;
-import ch.bailu.aat.map.MapContext;
-import ch.bailu.aat.map.layer.MapLayerInterface;
+import ch.bailu.aat_lib.map.MapContext;
+import ch.bailu.aat.map.To;
+import ch.bailu.aat_lib.map.layer.MapLayerInterface;
 import ch.bailu.aat.preferences.map.SolidLegend;
 import ch.bailu.aat_lib.dispatcher.OnContentUpdatedInterface;
 import ch.bailu.aat_lib.gpx.GpxInformation;
@@ -25,7 +26,7 @@ public final class GpxDynLayer implements MapLayerInterface, OnContentUpdatedInt
 
     public GpxDynLayer(MapContext mc) {
         mcontext = mc;
-        slegend = new SolidLegend(mcontext.getContext(), mcontext.getSolidKey());
+        slegend = new SolidLegend(To.context(mcontext), mcontext.getSolidKey());
 
         createLegendOverlay();
         createGpxOverlay();

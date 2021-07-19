@@ -9,13 +9,12 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.LinearLayout;
 
 import ch.bailu.aat.R;
-import ch.bailu.aat_lib.description.PathDescription;
 import ch.bailu.aat.dispatcher.CurrentLocationSource;
 import ch.bailu.aat.dispatcher.IteratorSource;
 import ch.bailu.aat.dispatcher.OverlaySource;
 import ch.bailu.aat.factory.AndroidFocFactory;
 import ch.bailu.aat.map.MapFactory;
-import ch.bailu.aat.map.MapViewInterface;
+import ch.bailu.aat.map.To;
 import ch.bailu.aat.map.layer.control.FileControlBarLayer;
 import ch.bailu.aat.preferences.SolidDirectoryQuery;
 import ch.bailu.aat.preferences.Storage;
@@ -33,7 +32,9 @@ import ch.bailu.aat.views.description.mview.MultiView;
 import ch.bailu.aat.views.preferences.TitleView;
 import ch.bailu.aat.views.preferences.VerticalScrollView;
 import ch.bailu.aat_lib.description.ContentDescription;
+import ch.bailu.aat_lib.description.PathDescription;
 import ch.bailu.aat_lib.gpx.InfoID;
+import ch.bailu.aat_lib.map.MapViewInterface;
 import ch.bailu.aat_lib.preferences.OnPreferencesChanged;
 import ch.bailu.aat_lib.preferences.StorageInterface;
 import ch.bailu.foc.Foc;
@@ -215,7 +216,7 @@ public abstract class AbsGpxListActivity extends ActivityContext implements OnIt
             MultiView multiView = new MultiView(acontext, solid_key);
 
             multiView.add(listView, list_label);
-            multiView.add(map.toView(), map_label);
+            multiView.add(To.view(map), map_label);
             multiView.add(summary, summary_label + "/" + filter_label);
             bar.addAll(multiView);
             contentView.addMvIndicator(multiView);
@@ -232,7 +233,7 @@ public abstract class AbsGpxListActivity extends ActivityContext implements OnIt
                 a.setOrientation(LinearLayout.HORIZONTAL);
                 a.add(listView,30);
                 a.add(summary,30);
-                a.add(map.toView(), 40);
+                a.add(To.view(map), 40);
                 return a;
             } else {
                 PercentageLayout a = new PercentageLayout(acontext);
@@ -242,7 +243,7 @@ public abstract class AbsGpxListActivity extends ActivityContext implements OnIt
 
                 PercentageLayout b = new PercentageLayout(acontext);
                 b.add(a, 60);
-                b.add(map.toView(), 40);
+                b.add(To.view(map), 40);
                 return b;
             }
         }

@@ -2,6 +2,8 @@ package ch.bailu.aat.dispatcher;
 
 import java.util.ArrayList;
 
+import ch.bailu.aat_lib.dispatcher.LifeCycleInterface;
+
 public class LifeCycleDispatcher implements LifeCycleInterface {
     private final ArrayList<LifeCycleInterface> targets = new ArrayList<>(10);
 

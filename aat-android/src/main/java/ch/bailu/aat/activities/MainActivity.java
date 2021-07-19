@@ -202,7 +202,7 @@ public class MainActivity extends ActivityContext {
         }
 
         public void setText() {
-            setText(new SolidPreset(getStorage()).getDirectory(sdirectory).getName());
+            setText(new SolidPreset(getStorage()).getDirectory(sdirectory).getPathName());
         }
 
         @Override

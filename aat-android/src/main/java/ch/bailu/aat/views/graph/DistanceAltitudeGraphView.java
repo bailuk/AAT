@@ -8,7 +8,7 @@ import ch.bailu.aat.R;
 import ch.bailu.aat.dispatcher.DispatcherInterface;
 import ch.bailu.aat.gpx.GpxListWalker;
 import ch.bailu.aat.map.MapColor;
-import ch.bailu.aat.util.ui.AppDensity;
+import ch.bailu.aat.util.ui.AndroidAppDensity;
 import ch.bailu.aat.util.ui.UiTheme;
 import ch.bailu.aat_lib.gpx.GpxList;
 import ch.bailu.aat_lib.gpx.GpxPointNode;
@@ -52,7 +52,7 @@ public class DistanceAltitudeGraphView extends AbsGraphView {
 
         int km_factor = (int) (distances.getDistanceDelta()/1000) + 1;
         GraphPlotter plotter = new GraphPlotter(canvas,getWidth(), getHeight(), 1000 * km_factor,
-                new AppDensity(getContext()), theme);
+                new AndroidAppDensity(getContext()), theme);
 
         GpxListWalker painter, scaleGenerator;
 

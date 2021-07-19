@@ -6,7 +6,7 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import ch.bailu.aat.util.ui.AppDensity;
+import ch.bailu.aat.util.ui.AndroidAppDensity;
 
 public class BusyView extends LinearLayout {
     private final TextView label;
@@ -15,7 +15,7 @@ public class BusyView extends LinearLayout {
         super(context);
         setOrientation(HORIZONTAL);
 
-        AppDensity density = new AppDensity(context);
+        AndroidAppDensity density = new AndroidAppDensity(context);
         int m = density.toPixel_i(2);
 
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);

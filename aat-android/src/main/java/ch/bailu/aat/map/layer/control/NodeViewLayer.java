@@ -5,7 +5,8 @@ import android.view.View;
 import org.mapsforge.core.model.Point;
 
 import ch.bailu.aat.activities.NodeDetailActivity;
-import ch.bailu.aat.map.MapContext;
+import ch.bailu.aat_lib.map.MapContext;
+import ch.bailu.aat.map.To;
 import ch.bailu.aat_lib.gpx.GpxInformation;
 import ch.bailu.aat_lib.gpx.GpxPointNode;
 import ch.bailu.foc.Foc;
@@ -39,7 +40,7 @@ public class NodeViewLayer extends AbsNodeViewLayer {
 
 
     protected void startNodeDetailActivity(String path) {
-        NodeDetailActivity.start(mcontext.getContext(), path, index);
+        NodeDetailActivity.start(To.context(mcontext), path, index);
     }
 
 

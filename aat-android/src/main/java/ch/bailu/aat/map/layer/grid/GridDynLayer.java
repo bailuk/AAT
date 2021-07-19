@@ -2,8 +2,9 @@ package ch.bailu.aat.map.layer.grid;
 
 import org.mapsforge.core.model.Point;
 
-import ch.bailu.aat.map.MapContext;
-import ch.bailu.aat.map.layer.MapLayerInterface;
+import ch.bailu.aat_lib.map.MapContext;
+import ch.bailu.aat.map.To;
+import ch.bailu.aat_lib.map.layer.MapLayerInterface;
 import ch.bailu.aat.preferences.map.SolidMapGrid;
 import ch.bailu.aat_lib.preferences.StorageInterface;
 
@@ -14,10 +15,10 @@ public final class GridDynLayer implements MapLayerInterface {
     private final MapContext mcontext;
 
 
-    public GridDynLayer(MapContext cl) {
-        mcontext = cl;
-        sgrid = new SolidMapGrid(cl.getContext(), cl.getSolidKey());
-        gridLayer = sgrid.createGridLayer(cl);
+    public GridDynLayer(MapContext mc) {
+        mcontext = mc;
+        sgrid = new SolidMapGrid(To.context(mc), mc.getSolidKey());
+        gridLayer = sgrid.createGridLayer(mc);
     }
 
 

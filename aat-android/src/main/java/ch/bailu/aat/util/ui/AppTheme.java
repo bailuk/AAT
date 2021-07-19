@@ -93,12 +93,12 @@ public class AppTheme {
 
 
     public static void padding(View view, int p) {
-        int padding = new AppDensity(view.getContext()).toPixel_i(p);
+        int padding = new AndroidAppDensity(view.getContext()).toPixel_i(p);
         view.setPadding(padding,padding,padding,padding);
     }
 
     public static void paddingV(View view, int p) {
-        int padding = new AppDensity(view.getContext()).toPixel_i(p);
+        int padding = new AndroidAppDensity(view.getContext()).toPixel_i(p);
         view.setPadding(0,padding,0,padding);
     }
 

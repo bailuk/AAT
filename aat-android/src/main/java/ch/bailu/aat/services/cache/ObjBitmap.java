@@ -1,6 +1,6 @@
 package ch.bailu.aat.services.cache;
 
-import android.graphics.Bitmap;
+import org.mapsforge.core.graphics.Bitmap;
 
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.background.FileTask;
@@ -62,7 +62,7 @@ public final class ObjBitmap extends ObjImageAbstract {
 
     @Override
     public synchronized Bitmap getBitmap() {
-        return bitmap.getAndroidBitmap();
+        return bitmap.getBitmap();
     }
 
 

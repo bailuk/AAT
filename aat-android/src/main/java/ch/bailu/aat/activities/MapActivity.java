@@ -8,19 +8,20 @@ import android.os.Bundle;
 import org.mapsforge.core.model.LatLong;
 
 import ch.bailu.aat.R;
-import ch.bailu.aat_lib.coordinates.WGS84Coordinates;
 import ch.bailu.aat.dispatcher.CurrentLocationSource;
 import ch.bailu.aat.dispatcher.EditorSource;
 import ch.bailu.aat.dispatcher.OverlaySource;
 import ch.bailu.aat.dispatcher.TrackerSource;
 import ch.bailu.aat.map.MapFactory;
-import ch.bailu.aat.map.MapViewInterface;
+import ch.bailu.aat.map.To;
 import ch.bailu.aat.util.ui.AppLayout;
 import ch.bailu.aat.util.ui.AppTheme;
 import ch.bailu.aat.views.ContentView;
 import ch.bailu.aat.views.bar.ControlBar;
 import ch.bailu.aat.views.bar.MainControlBar;
+import ch.bailu.aat_lib.coordinates.WGS84Coordinates;
 import ch.bailu.aat_lib.logger.AppLog;
+import ch.bailu.aat_lib.map.MapViewInterface;
 import ch.bailu.util.Objects;
 
 public class MapActivity extends AbsKeepScreenOnActivity {
@@ -36,7 +37,7 @@ public class MapActivity extends AbsKeepScreenOnActivity {
         ContentView contentView=new ContentView(this, AppTheme.cockpit);
         MapViewInterface map = createMap(edit);
         contentView.add(getErrorView());
-        contentView.add(map.toView());
+        contentView.add(To.view(map));
         setContentView(contentView);
 
         createDispatcher(edit);

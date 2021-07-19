@@ -1,11 +1,11 @@
 package ch.bailu.aat.map.layer.gpx;
 
-import android.content.SharedPreferences;
-
+import org.mapsforge.core.graphics.Bitmap;
 import org.mapsforge.core.model.Point;
 
-import ch.bailu.aat.map.MapContext;
-import ch.bailu.aat.map.TwoNodes;
+import ch.bailu.aat_lib.map.MapContext;
+import ch.bailu.aat.map.To;
+import ch.bailu.aat_lib.map.TwoNodes;
 import ch.bailu.aat.services.InsideContext;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.cache.ObjImageAbstract;
@@ -77,8 +77,8 @@ public final class WayLayer extends GpxLayer {
         public void drawNode(final TwoNodes.PixelNode node) {
             if (node.isVisible() && count < MAX_VISIBLE_NODES) {
 
-                final ServiceContext scontext = mcontext.getSContext();
-                final android.graphics.Bitmap[] nodeDrawable = {null};
+                final ServiceContext scontext = To.scontext(mcontext);
+                final Bitmap[] nodeDrawable = {null};
 
                 new InsideContext(scontext) {
                     @Override

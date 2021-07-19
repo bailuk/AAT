@@ -1,21 +1,22 @@
 package ch.bailu.aat.map.layer.control;
 
-import android.graphics.Rect;
 import android.util.SparseArray;
 
 import org.mapsforge.core.model.LatLong;
 
 import ch.bailu.aat.gpx.GpxNodeFinder;
 import ch.bailu.aat.map.MapColor;
-import ch.bailu.aat.map.MapContext;
-import ch.bailu.aat.map.layer.MapLayerInterface;
+import ch.bailu.aat_lib.map.MapContext;
+import ch.bailu.aat.map.To;
+import ch.bailu.aat_lib.map.layer.MapLayerInterface;
 import ch.bailu.aat.preferences.map.SolidMapGrid;
-import ch.bailu.aat.util.graphic.Pixel;
 import ch.bailu.aat_lib.coordinates.BoundingBoxE6;
 import ch.bailu.aat_lib.dispatcher.OnContentUpdatedInterface;
 import ch.bailu.aat_lib.gpx.GpxInformation;
 import ch.bailu.aat_lib.gpx.GpxList;
 import ch.bailu.aat_lib.gpx.GpxPointNode;
+import ch.bailu.aat_lib.map.Point;
+import ch.bailu.aat_lib.map.Rect;
 import ch.bailu.aat_lib.preferences.StorageInterface;
 
 public abstract class AbsNodeSelectorLayer implements MapLayerInterface, OnContentUpdatedInterface {
@@ -48,7 +49,7 @@ public abstract class AbsNodeSelectorLayer implements MapLayerInterface, OnConte
         centerRect.top = 0;
         centerRect.bottom = square_size;
 
-        sgrid = new SolidMapGrid(mc.getContext(), mc.getSolidKey());
+        sgrid = new SolidMapGrid(To.context(mc), mc.getSolidKey());
         coordinates = sgrid.createCenterCoordinatesLayer();
 
     }
@@ -126,7 +127,7 @@ public abstract class AbsNodeSelectorLayer implements MapLayerInterface, OnConte
         GpxPointNode node = getSelectedNode();
 
         if (node != null) {
-            Pixel selectedPixel = mcontext.getMetrics().toPixel(node);
+            Point selectedPixel = mcontext.getMetrics().toPixel(node);
             mcontext.draw().bitmap(mcontext.draw().getNodeBitmap(), selectedPixel, MapColor.NODE_SELECTED);
         }
     }

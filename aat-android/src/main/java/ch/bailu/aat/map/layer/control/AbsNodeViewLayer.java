@@ -3,7 +3,8 @@ package ch.bailu.aat.map.layer.control;
 import android.content.Context;
 import android.view.View;
 
-import ch.bailu.aat.map.MapContext;
+import ch.bailu.aat_lib.map.MapContext;
+import ch.bailu.aat.map.To;
 import ch.bailu.aat.map.layer.gpx.GpxVisibleLimit;
 import ch.bailu.aat.util.HtmlBuilder;
 import ch.bailu.aat.util.HtmlBuilderGpx;
@@ -26,17 +27,17 @@ public abstract class AbsNodeViewLayer extends AbsNodeSelectorLayer implements
         super(mc);
         mcontext = mc;
 
-        pos = new Position(mc.getContext());
+        pos = new Position(To.context(mc));
 
-        html = new HtmlBuilderGpx(mc.getContext());
+        html = new HtmlBuilderGpx(To.context(mc));
 
-        infoView = new NodeInfoView(mc.getContext());
+        infoView = new NodeInfoView(To.context(mc));
         infoView.setOnLongClickListener(this);
         infoView.setOnClickListener(this);
 
         infoView.setVisibility(View.GONE);
 
-        mc.getMapView().addView(infoView);
+        To.view(mc.getMapView()).addView(infoView);
 
     }
 
