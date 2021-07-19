@@ -23,12 +23,14 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTabbedPane;
 import javax.swing.JToggleButton;
 import javax.swing.WindowConstants;
 
 import ch.bailu.aat_awt.app.App;
 import ch.bailu.aat_awt.map.AwtCustomMapView;
 import ch.bailu.aat_awt.preferences.AwtStorage;
+import ch.bailu.aat_awt.views.JCockpitPanel;
 import ch.bailu.aat_awt.views.JNumberView;
 import ch.bailu.aat_lib.description.AltitudeDescription;
 import ch.bailu.aat_lib.description.FF;
@@ -55,7 +57,9 @@ public class AwtMainWindow implements OnContentUpdatedInterface {
             errorStatus = new JLabel(),
             infoStatus = new JLabel();
 
+    private final JCockpitPanel cockpit = new JCockpitPanel();
     private final JPanel
+            preferences = new JPanel(),
             buttonPane = new JPanel(),
             statusPane = new JPanel();
 
@@ -67,6 +71,8 @@ public class AwtMainWindow implements OnContentUpdatedInterface {
     private final JNumberView
             gpsButton = new JNumberView(new GpsStateDescription()),
             trackerButton = new JNumberView(new TrackerStateDescription());
+
+    private final JTabbedPane tabbedPane = new JTabbedPane();
 
     private final JToggleButton center = new JToggleButton("Center");
 
@@ -82,7 +88,7 @@ public class AwtMainWindow implements OnContentUpdatedInterface {
 
         frame = new JFrame("AAT - AWT (swing) edition");
         frame.setName("test");
-        frame.setLayout(new BorderLayout());
+        frame.getContentPane().setLayout(new BorderLayout());
 
         buttonPane.setLayout(new BoxLayout(buttonPane, BoxLayout.LINE_AXIS));
         buttonPane.setBorder(BorderFactory.createEmptyBorder(2, 2, 2, 2));
@@ -101,7 +107,11 @@ public class AwtMainWindow implements OnContentUpdatedInterface {
 
         Container pane = frame.getContentPane();
         pane.add(buttonPane, BorderLayout.PAGE_START);
-        pane.add(map, BorderLayout.CENTER);
+        tabbedPane.addTab("Map",map);
+        tabbedPane.addTab("Cockpit",cockpit);
+        tabbedPane.addTab("Preferences",preferences);
+
+        pane.add(tabbedPane, BorderLayout.CENTER);
 
         statusPane.setLayout(new BoxLayout(statusPane, BoxLayout.PAGE_AXIS));
         statusPane.add(locationStatus);
@@ -181,6 +191,7 @@ public class AwtMainWindow implements OnContentUpdatedInterface {
 
         String time = FF.f().LOCAL_TIME.format(info.getTimeStamp());
 
+        cockpit.onContentUpdated(iid, info);
         if (iid == InfoID.LOCATION) {
             gps.onContentUpdated(iid, info);
             gpsButton.onContentUpdated(iid, info);
