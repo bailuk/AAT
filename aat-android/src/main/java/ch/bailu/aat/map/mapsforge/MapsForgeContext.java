@@ -9,7 +9,7 @@ import org.mapsforge.core.util.Parameters;
 import org.mapsforge.map.android.graphics.AndroidGraphicFactory;
 import org.mapsforge.map.layer.Layer;
 
-import ch.bailu.aat.App;
+import ch.bailu.aat.app.App;
 import ch.bailu.aat.map.AndroidDraw;
 import ch.bailu.aat.map.MapContext;
 import ch.bailu.aat.map.MapDraw;

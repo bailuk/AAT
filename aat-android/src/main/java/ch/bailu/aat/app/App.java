@@ -1,4 +1,4 @@
-package ch.bailu.aat;
+package ch.bailu.aat.app;
 
 import android.app.Application;
 
@@ -8,10 +8,11 @@ import org.acra.config.DialogConfigurationBuilder;
 import org.acra.config.MailSenderConfigurationBuilder;
 import org.acra.data.StringFormat;
 
+import ch.bailu.aat.BuildConfig;
 import ch.bailu.aat.dispatcher.AndroidBroadcaster;
 import ch.bailu.aat.map.mapsforge.MapsForgeContext;
 import ch.bailu.aat.util.AndroidLogger;
-import ch.bailu.aat.util.ui.AppConfig;
+import ch.bailu.aat_lib.app.AppConfig;
 import ch.bailu.aat_lib.dispatcher.AppBroadcaster;
 import ch.bailu.aat_lib.logger.AppLog;
 import ch.bailu.aat_lib.logger.BroadcastLogger;
@@ -19,14 +20,13 @@ import ch.bailu.aat_lib.logger.BroadcastLogger;
 
 public class App extends Application {
 
-    public final static boolean RELEASE_MODE = false;
-
     @Override
     public void onCreate() {
+        AppConfig.setInstance(new AndroidAppConfig());
         initLogger();
         initMapsForge();
 
-        if (RELEASE_MODE) {
+        if (AppConfig.getInstance().isRelease()) {
             initAcra();
         }
 
@@ -63,14 +63,14 @@ public class App extends Application {
                 .setBuildConfigClass(BuildConfig.class)
                 .setReportFormat(StringFormat.KEY_VALUE_LIST);
         builder.getPluginConfigurationBuilder(MailSenderConfigurationBuilder.class)
-                .setMailTo(AppConfig.getContact())
+                .setMailTo(AppConfig.getInstance().getContact())
                 .setEnabled(true);
         builder.getPluginConfigurationBuilder(DialogConfigurationBuilder.class)
-                .setTitle(AppConfig.getShortName() + " crashed")
+                .setTitle(AppConfig.getInstance().getShortName() + " crashed")
                 .setText(
                         "This will open your e-mail app to send a crash report " +
                         "including some information about your device to \"" +
-                        AppConfig.getContact() +
+                        AppConfig.getInstance().getContact() +
                         "\".\n" +
                         "This will help the author to fix and improve this app.")
 

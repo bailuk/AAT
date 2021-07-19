@@ -34,7 +34,7 @@
 
     <application
         android:requestLegacyExternalStorage="true"
-        android:name="ch.bailu.aat.App"
+        android:name="ch.bailu.aat.app.App"
         android:allowBackup="true"
         android:usesCleartextTraffic="true"
         android:icon="@mipmap/ic_launcher"

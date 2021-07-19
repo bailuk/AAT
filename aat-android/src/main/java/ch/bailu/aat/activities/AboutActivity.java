@@ -6,7 +6,7 @@ import android.widget.LinearLayout;
 import ch.bailu.aat.BuildConfig;
 import ch.bailu.aat.R;
 import ch.bailu.aat.util.ToDo;
-import ch.bailu.aat.util.ui.AppConfig;
+import ch.bailu.aat.app.AndroidAppConfig;
 import ch.bailu.aat.util.ui.AppTheme;
 import ch.bailu.aat.util.ui.UiTheme;
 import ch.bailu.aat.views.ContentView;
@@ -102,7 +102,7 @@ public class AboutActivity extends ActivityContext {
         if (status != null) {
             final StringBuilder builder = new StringBuilder();
 
-            new AppConfig().appendStatusText(builder);
+            new AndroidAppConfig().appendStatusText(builder);
 
             if (BuildConfig.DEBUG) {
                 new AppThread().appendStatusText(builder);

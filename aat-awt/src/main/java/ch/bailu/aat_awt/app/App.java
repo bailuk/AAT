@@ -1,4 +1,4 @@
-package ch.bailu.aat_awt;
+package ch.bailu.aat_awt.app;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -6,10 +6,11 @@ import java.util.List;
 
 import ch.bailu.aat_awt.dispatcher.AwtBroadcaster;
 import ch.bailu.aat_awt.logger.SL4JLogger;
-import ch.bailu.aat_awt.preferences.AwtStorage;
 import ch.bailu.aat_awt.preferences.AwtSolidFactory;
+import ch.bailu.aat_awt.preferences.AwtStorage;
 import ch.bailu.aat_awt.services.AwtServices;
 import ch.bailu.aat_awt.window.AwtMainWindow;
+import ch.bailu.aat_lib.app.AppConfig;
 import ch.bailu.aat_lib.dispatcher.AppBroadcaster;
 import ch.bailu.aat_lib.dispatcher.Broadcaster;
 import ch.bailu.aat_lib.gpx.InfoID;
@@ -25,6 +26,7 @@ public class App {
     private final Broadcaster broadcaster;
 
     private App() {
+        AppConfig.setInstance(new AwtAppConfig());
 
         broadcaster = new AwtBroadcaster();
 

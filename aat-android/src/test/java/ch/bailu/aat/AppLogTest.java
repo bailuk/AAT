@@ -1,12 +1,28 @@
 package ch.bailu.aat;
 
-import static org.junit.Assert.*;
-
+import org.junit.BeforeClass;
 import org.junit.Test;
+
+import ch.bailu.aat.app.AndroidAppConfig;
+import ch.bailu.aat.util.AndroidLogger;
+import ch.bailu.aat_lib.app.AppConfig;
+import ch.bailu.aat_lib.logger.AppLog;
+
+import static org.junit.Assert.assertEquals;
 
 public class AppLogTest {
 
     public static String logged = "";
+    private static boolean initialized = false;
+
+    @BeforeClass
+    public static void init() {
+        if (!initialized) {
+            AppConfig.setInstance(new AndroidAppConfig());
+            AppLog.set(new AndroidLogger());
+            initialized = true;
+        }
+    }
 
 
     @Test
@@ -15,17 +31,17 @@ public class AppLogTest {
         AppLog.d(null, null);
 
 
-        if (BuildConfig.DEBUG) {
-            assertEquals("DEBUG: : ", logged);
-        } else {
+        if (AppConfig.getInstance().isRelease()) {
             assertEquals("" , logged);
+        } else {
+            assertEquals("DEBUG: AppLog: ", logged);
         }
     }
 
     @Test
     public void testWarning() {
         AppLog.w(this, new Throwable("message"));
-        assertEquals("WARN: AppLogTest: message", logged);
+        assertEquals("WARN: AppLogTest: [Throwable] message", logged);
 
         AppLog.w(this, "message");
         assertEquals("WARN: AppLogTest: message", logged);

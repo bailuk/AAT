@@ -2,6 +2,8 @@ package ch.bailu.aat_lib.logger;
 
 import java.util.regex.Pattern;
 
+import ch.bailu.aat_lib.app.AppConfig;
+
 
 /**
  * Logging facade for application scope
@@ -134,9 +136,9 @@ public class AppLog  {
      * @param msg the message to log. Can be null.
      */
     public static void d(String tag, String msg) {
-        //if (BuildConfig.DEBUG) {
-        debug.d(toSaveTag(tag), toSaveString(msg));
-        //}
+        if (!AppConfig.getInstance().isRelease()) {
+            debug.d(toSaveTag(tag), toSaveString(msg));
+        }
     }
 
 

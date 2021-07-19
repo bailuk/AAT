@@ -62,7 +62,7 @@ dependencies {
 
 
 application {
-    mainClassName = "ch.bailu.aat_awt.App"
+    mainClassName = "ch.bailu.aat_awt.app.App"
 }
 
 
@@ -74,7 +74,7 @@ jar {
     archiveClassifier = "all"
 
     manifest {
-        attributes "Main-Class": "ch.bailu.aat_awt.App"
+        attributes "Main-Class": "ch.bailu.aat_awt.app.App"
     }
 
     from {

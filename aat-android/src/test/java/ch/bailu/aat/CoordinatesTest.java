@@ -1,19 +1,24 @@
 package ch.bailu.aat;
 
 
-
-import static org.junit.Assert.*;
-
+import org.junit.BeforeClass;
 import org.junit.Test;
-
 
 import ch.bailu.aat.coordinates.CH1903Coordinates;
 import ch.bailu.aat.coordinates.Dem3Coordinates;
 import ch.bailu.aat.coordinates.UTMCoordinates;
 import ch.bailu.aat.coordinates.WGS84Coordinates;
+import ch.bailu.aat_lib.coordinates.LatLongE6;
+
+import static org.junit.Assert.assertEquals;
 
 public class CoordinatesTest {
 
+
+    @BeforeClass
+    public static void init() {
+        AppLogTest.init();
+    }
 
     @Test
     public void testSexagesimal() {
@@ -25,14 +30,14 @@ public class CoordinatesTest {
         WGS84Coordinates.Sexagesimal sla = new WGS84Coordinates.Sexagesimal(la);
         WGS84Coordinates.Sexagesimal slo = new WGS84Coordinates.Sexagesimal(lo);
 
-        assertEquals(lalo.la, sla.toE6(),0);
-        assertEquals(lalo.lo, slo.toE6(),0);
+        assertEquals(lalo.getLatitudeE6(), sla.toE6(),0);
+        assertEquals(lalo.getLongitudeE6(), slo.toE6(),0);
 
         sla = new WGS84Coordinates.Sexagesimal(sla.getDegree(), sla.getMinute(), sla.getSecond());
         slo = new WGS84Coordinates.Sexagesimal(slo.getDegree(), slo.getMinute(), slo.getSecond());
 
-        assertEquals(lalo.la, sla.toE6(),0);
-        assertEquals(lalo.lo, slo.toE6(),0);
+        assertEquals(lalo.getLatitudeE6(), sla.toE6(),0);
+        assertEquals(lalo.getLongitudeE6(), slo.toE6(),0);
 
     }
 
@@ -50,8 +55,8 @@ public class CoordinatesTest {
         assertEquals(700000, c.getEasting());
         assertEquals(100000, c.getNorthing());
 
-        assertEquals(la, c.toLatLongE6().la,5);
-        assertEquals(lo, c.toLatLongE6().lo,5);
+        assertEquals(la, c.toLatLongE6().getLatitudeE6(),5);
+        assertEquals(lo, c.toLatLongE6().getLongitudeE6(),5);
 
 
         WGS84Coordinates.Sexagesimal sla =  new WGS84Coordinates.Sexagesimal(c.toLatLong().latitude);
@@ -160,8 +165,8 @@ public class CoordinatesTest {
 
     private void testCH1903Coordinate(int easting, int northing, double la, double lo) {
         final LatLongE6 latLongE6 = new LatLongE6(la, lo);
-        final int laE6 = latLongE6.la;
-        final int loE6 = latLongE6.lo;
+        final int laE6 = latLongE6.getLatitudeE6();
+        final int loE6 = latLongE6.getLongitudeE6();
 
 
 
@@ -170,20 +175,20 @@ public class CoordinatesTest {
         CH1903Coordinates c2 = new CH1903Coordinates(easting, northing);
         CH1903Coordinates c3 = new CH1903Coordinates(la, lo);
 
-        assertEquals(loE6, c1.toLatLongE6().lo, CH1903Coordinates.LO_PRECISSION.toE6());
-        assertEquals(laE6, c1.toLatLongE6().la, CH1903Coordinates.LA_PRECISSION.toE6());
+        assertEquals(loE6, c1.toLatLongE6().getLongitudeE6(), CH1903Coordinates.LO_PRECISSION.toE6());
+        assertEquals(laE6, c1.toLatLongE6().getLatitudeE6(), CH1903Coordinates.LA_PRECISSION.toE6());
 
         assertEquals(la, c1.toLatLong().latitude, CH1903Coordinates.LA_PRECISSION.getDecimal());
         assertEquals(lo, c1.toLatLong().longitude, CH1903Coordinates.LO_PRECISSION.getDecimal());
 
-        assertEquals(loE6, c2.toLatLongE6().lo,CH1903Coordinates.LO_PRECISSION.toE6());
-        assertEquals(laE6, c2.toLatLongE6().la,CH1903Coordinates.LA_PRECISSION.toE6());
+        assertEquals(loE6, c2.toLatLongE6().getLongitudeE6(),CH1903Coordinates.LO_PRECISSION.toE6());
+        assertEquals(laE6, c2.toLatLongE6().getLatitudeE6(),CH1903Coordinates.LA_PRECISSION.toE6());
 
         assertEquals(la, c2.toLatLong().latitude, CH1903Coordinates.LA_PRECISSION.getDecimal());
         assertEquals(lo, c2.toLatLong().longitude, CH1903Coordinates.LO_PRECISSION.getDecimal());
 
-        assertEquals(loE6, c3.toLatLongE6().lo,CH1903Coordinates.LO_PRECISSION.toE6());
-        assertEquals(laE6, c3.toLatLongE6().la,CH1903Coordinates.LA_PRECISSION.toE6());
+        assertEquals(loE6, c3.toLatLongE6().getLongitudeE6(),CH1903Coordinates.LO_PRECISSION.toE6());
+        assertEquals(laE6, c3.toLatLongE6().getLatitudeE6(),CH1903Coordinates.LA_PRECISSION.toE6());
 
         assertEquals(la, c3.toLatLong().latitude, 0.0001);
         assertEquals(lo, c3.toLatLong().longitude, 0.0001);

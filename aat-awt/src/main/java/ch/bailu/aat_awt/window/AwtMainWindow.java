@@ -26,7 +26,7 @@ import javax.swing.JPanel;
 import javax.swing.JToggleButton;
 import javax.swing.WindowConstants;
 
-import ch.bailu.aat_awt.App;
+import ch.bailu.aat_awt.app.App;
 import ch.bailu.aat_awt.map.AwtCustomMapView;
 import ch.bailu.aat_awt.preferences.AwtStorage;
 import ch.bailu.aat_awt.views.JNumberView;

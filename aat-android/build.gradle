@@ -18,10 +18,12 @@ android {
 
         versionCode 34
         versionName "v1.21"
-
+/*
         buildConfigField 'String', 'APP_SNAME', '\"AAT\"'
         buildConfigField 'String', 'APP_NAME', '\"Another Activity Tracker\"'
         buildConfigField 'String', 'APP_CONTACT', '\"aat@bailu.ch\"'
+
+ */
         resValue "string", "app_sname", "AAT"
     }
 

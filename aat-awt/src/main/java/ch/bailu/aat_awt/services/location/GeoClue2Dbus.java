@@ -10,9 +10,10 @@ import org.freedesktop.dbus.types.UInt32;
 import ch.bailu.aat_awt.services.location.interfaces.Client;
 import ch.bailu.aat_awt.services.location.interfaces.Location;
 import ch.bailu.aat_awt.services.location.interfaces.Manager;
+import ch.bailu.aat_lib.app.AppConfig;
 
 public class GeoClue2Dbus {
-    public final static String DESKTOP_ID = "ch.bailu.aat_awt";
+    public final static String DESKTOP_ID = AppConfig.getInstance().getApplicationId();
     public final static String BUS_NAME = "org.freedesktop.GeoClue2";
     public final static String MANAGER_PATH = "/org/freedesktop/GeoClue2/Manager";
     public final static String CLIENT_INTERFACE = "org.freedesktop.GeoClue2.Client";
