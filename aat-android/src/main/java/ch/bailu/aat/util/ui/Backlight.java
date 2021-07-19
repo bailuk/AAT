@@ -9,8 +9,8 @@ import androidx.annotation.RequiresApi;
 
 import java.io.Closeable;
 
+import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat.preferences.presets.SolidBacklight;
-import ch.bailu.aat.preferences.system.AndroidSolidDataDirectory;
 import ch.bailu.aat.services.InsideContext;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat_lib.dispatcher.OnContentUpdatedInterface;
@@ -38,7 +38,7 @@ public class Backlight implements OnContentUpdatedInterface,
         activity = a;
         window = a.getWindow();
 
-        spreset = new SolidPreset(new AndroidSolidDataDirectory(sc.getContext()));
+        spreset = new SolidPreset(new Storage(sc.getContext()));
         sbacklight = setToPreset();
 
         spreset.register(this);

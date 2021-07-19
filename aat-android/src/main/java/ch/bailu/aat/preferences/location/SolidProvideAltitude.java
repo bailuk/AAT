@@ -7,6 +7,7 @@ import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat.services.sensor.list.SensorState;
 import ch.bailu.aat.views.preferences.SolidTextInputDialog;
 import ch.bailu.aat_lib.gpx.InfoID;
+import ch.bailu.aat_lib.preferences.StorageInterface;
 import ch.bailu.aat_lib.preferences.general.SolidUnit;
 import ch.bailu.aat_lib.resources.Res;
 
@@ -14,8 +15,8 @@ public class SolidProvideAltitude extends SolidAltitude {
     private final static String KEY = "ProvideAltitude";
 
 
-    public SolidProvideAltitude(Context c, int unit) {
-        super(c, KEY, unit);
+    public SolidProvideAltitude(StorageInterface s, int unit) {
+        super(s, KEY, unit);
     }
 
 
@@ -39,7 +40,7 @@ public class SolidProvideAltitude extends SolidAltitude {
 
     public static void requestValueFromUserIfEnabled(Context c) {
         if (SensorState.isConnected(InfoID.BAROMETER_SENSOR) ||
-                new SolidAdjustGpsAltitude(c).isEnabled()) {
+                new SolidAdjustGpsAltitude(new Storage(c)).isEnabled()) {
             reqeustValueFromUser(c);
         }
 
@@ -47,7 +48,7 @@ public class SolidProvideAltitude extends SolidAltitude {
 
     public static void reqeustValueFromUser(Context c) {
         new SolidTextInputDialog(c,
-                new SolidProvideAltitude(c,
+                new SolidProvideAltitude(new Storage(c),
                         new SolidUnit(new Storage(c)).getIndex()),
                 SolidTextInputDialog.INTEGER_SIGNED);
 

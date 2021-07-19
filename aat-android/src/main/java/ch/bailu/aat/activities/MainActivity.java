@@ -69,7 +69,7 @@ public class MainActivity extends ActivityContext {
     private View createActionList() {
 
         final VerticalScrollView list = new VerticalScrollView(this);
-        list.add(new SolidIndexListView(this,new SolidPreset(new AndroidSolidDataDirectory(this)), theme));
+        list.add(new SolidIndexListView(this,new SolidPreset(getStorage()), theme));
 
         final int accessibleCount = new ActivitySwitcher(this).size();
         for (int i = 0; i < accessibleCount; i++) {
@@ -189,20 +189,20 @@ public class MainActivity extends ActivityContext {
 
     private class PresetDirectoryLabel extends ActivityLabel implements OnPreferencesChanged {
 
-        private final SolidFile sdirectory;
+        private final AndroidSolidDataDirectory sdirectory;
         private final SolidPreset spreset;
 
 
         public PresetDirectoryLabel(ActivitySwitcher.Entry s) {
             super(s);
             sdirectory = new AndroidSolidDataDirectory(getContext());
-            spreset = new SolidPreset(new AndroidSolidDataDirectory(getContext()));
+            spreset = new SolidPreset(getStorage());
 
             setText();
         }
 
         public void setText() {
-            setText(new SolidPreset(new AndroidSolidDataDirectory(getContext())).getDirectoryName());
+            setText(new SolidPreset(getStorage()).getDirectory(sdirectory).getName());
         }
 
         @Override

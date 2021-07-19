@@ -164,7 +164,7 @@ public final class FileControlBarLayer extends ControlBarLayer {
                 new DistanceDescription(storage),
                 new AverageSpeedDescription(storage),
                 new MaximumSpeedDescription(storage),
-                new CaloriesDescription(acontext),
+                new CaloriesDescription(storage),
         };
 
         @Override

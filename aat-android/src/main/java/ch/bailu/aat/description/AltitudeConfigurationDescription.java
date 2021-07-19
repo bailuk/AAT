@@ -1,13 +1,11 @@
 package ch.bailu.aat.description;
 
-import android.content.Context;
-
-import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat.preferences.location.SolidAdjustGpsAltitude;
 import ch.bailu.aat.services.sensor.list.SensorState;
 import ch.bailu.aat_lib.description.AltitudeDescription;
 import ch.bailu.aat_lib.gpx.GpxInformation;
 import ch.bailu.aat_lib.gpx.InfoID;
+import ch.bailu.aat_lib.preferences.StorageInterface;
 import ch.bailu.aat_lib.resources.Res;
 
 public class AltitudeConfigurationDescription extends AltitudeDescription {
@@ -16,26 +14,20 @@ public class AltitudeConfigurationDescription extends AltitudeDescription {
 
     private boolean haveSensor = SensorState.isConnected(InfoID.BAROMETER_SENSOR);
 
+    private final SolidAdjustGpsAltitude sadjustAltitude;
 
-    public AltitudeConfigurationDescription(Context context) {
-        super(new Storage(context));
-        this.context = context;
+    public AltitudeConfigurationDescription(StorageInterface storage) {
+        super(storage);
+        sadjustAltitude = new SolidAdjustGpsAltitude(storage);
         setLabel();
 
-    }
-
-    private final Context context;
-
-
-    public Context getContext() {
-        return context;
     }
 
     private void setLabel() {
         if (haveSensor) {
             configuration  = " " + Res.str().sensor_barometer();
 
-        } else if (new SolidAdjustGpsAltitude(context).isEnabled()) {
+        } else if (sadjustAltitude.isEnabled()) {
             configuration = " GPS+-";
 
         } else {

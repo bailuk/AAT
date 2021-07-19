@@ -1,6 +1,7 @@
 package ch.bailu.aat_lib.preferences.presets;
 
 import ch.bailu.aat_lib.preferences.SolidIndexList;
+import ch.bailu.aat_lib.preferences.StorageInterface;
 import ch.bailu.aat_lib.preferences.general.SolidPresetCount;
 import ch.bailu.aat_lib.preferences.system.SolidDataDirectory;
 import ch.bailu.aat_lib.resources.Res;
@@ -11,11 +12,8 @@ public class SolidPreset extends SolidIndexList {
 
     final public static String KEY="preset";
 
-    private final SolidDataDirectory sdirectory;
-
-    public SolidPreset(SolidDataDirectory sdirectory) {
-        super(sdirectory.getStorage(), KEY);
-        this.sdirectory = sdirectory;
+    public SolidPreset(StorageInterface s) {
+        super(s, KEY);
     }
 
 
@@ -81,11 +79,7 @@ public class SolidPreset extends SolidIndexList {
     }
 
 
-    public Foc getDirectory() {
+    public Foc getDirectory(SolidDataDirectory sdirectory) {
         return AppDirectory.getTrackListDirectory(sdirectory,getIndex());
     }
-    public String getDirectoryName() {
-        return getDirectory().getPathName();
-    }
-
 }

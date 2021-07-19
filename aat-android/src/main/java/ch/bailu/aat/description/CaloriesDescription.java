@@ -8,26 +8,22 @@ import ch.bailu.aat.preferences.general.SolidWeight;
 import ch.bailu.aat.preferences.system.AndroidSolidDataDirectory;
 import ch.bailu.aat_lib.description.LongDescription;
 import ch.bailu.aat_lib.gpx.GpxInformation;
+import ch.bailu.aat_lib.preferences.StorageInterface;
 import ch.bailu.aat_lib.preferences.presets.SolidMET;
 import ch.bailu.aat_lib.preferences.presets.SolidPreset;
+import ch.bailu.aat_lib.resources.Res;
 
 public class CaloriesDescription extends LongDescription {
 
+    private final StorageInterface storage;
 
-    private final Context context;
-
-
-    public Context getContext() {
-        return context;
-    }
-
-    public CaloriesDescription(Context context) {
-        this.context = context;
+    public CaloriesDescription(StorageInterface s) {
+        storage = s;
     }
 
     @Override
     public String getLabel() {
-        return getContext().getString(R.string.calories);
+        return Res.str().calories();
     }
 
     @Override
@@ -47,12 +43,12 @@ public class CaloriesDescription extends LongDescription {
 
 
     private float calculateCalories(GpxInformation track) {
-        int preset = new SolidPreset(new AndroidSolidDataDirectory(getContext())).getIndex();
+        int preset = new SolidPreset(storage).getIndex();
 
         float hours = ((float)track.getTimeDelta()) / (1000f * 60f * 60f);
-        float met = new SolidMET(new Storage(getContext()), preset).getMETValue();
+        float met = new SolidMET(storage, preset).getMETValue();
         // TODO : add userfeedback about wrong calculation here ?
-        float weight = new SolidWeight(getContext()).getValue();
+        float weight = new SolidWeight(storage).getValue();
         float kcal = hours*met*weight;
 
         return kcal;

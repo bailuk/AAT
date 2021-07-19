@@ -1,7 +1,5 @@
 package ch.bailu.aat.description;
 
-import android.content.Context;
-
 import ch.bailu.aat_lib.description.ContentDescription;
 import ch.bailu.aat_lib.gpx.GpxInformation;
 import ch.bailu.aat_lib.gpx.GpxList;
@@ -10,9 +8,6 @@ import ch.bailu.aat_lib.resources.Res;
 public class TrackSizeDescription extends ContentDescription {
     private String value="";
     private int size=-1;
-
-    public TrackSizeDescription(Context context) {
-    }
 
     @Override
     public void onContentUpdated(int iid, GpxInformation info) {
@@ -26,7 +21,6 @@ public class TrackSizeDescription extends ContentDescription {
                     ", S: " + track.getSegmentList().size();
         }
     }
-
 
     public String getValue() {
         return value;

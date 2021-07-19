@@ -73,7 +73,7 @@ public class CockpitActivity extends AbsKeepScreenOnActivity {
                 InfoID.SPEED_SENSOR, InfoID.LOCATION);
 
         c1.addAltitude(this);
-        c1.add(this, new PredictiveTimeDescription(this), InfoID.TRACKER_TIMER);
+        c1.add(this, new PredictiveTimeDescription(), InfoID.TRACKER_TIMER);
         c1.addC(this, new DistanceDescription(getStorage()), InfoID.TRACKER);
         c1.addC(this, new AverageSpeedDescriptionAP(getStorage()), InfoID.TRACKER);
 

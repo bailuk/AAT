@@ -24,25 +24,25 @@ public class SpmGraphView extends AbsGraphView {
 
     public SpmGraphView(Context context, DispatcherInterface di, UiTheme theme, int... iid) {
         super(context, di, theme, iid);
-        entries = createEntries(context);
+        entries = createEntries();
         setLabelText();
     }
 
-    private Entry[] createEntries(Context context) {
+    private Entry[] createEntries() {
         return new Entry[]{
                 new Entry(AppTheme.HL_BLUE,
-                        new HeartRateDescription(context),
+                        new HeartRateDescription(),
                         SampleRate.HeartRate.INDEX_MAX_HR,
                         SampleRate.HeartRate.GPX_KEYS),
 
                 new Entry(AppTheme.HL_GREEN,
-                        new CadenceDescription(context),
+                        new CadenceDescription(),
                         SampleRate.Cadence.INDEX_MAX_CADENCE,
                         SampleRate.Cadence.GPX_KEYS),
 
 
                 new Entry(AppTheme.HL_ORANGE,
-                        new StepRateDescription(context),
+                        new StepRateDescription(),
                         SampleRate.StepsRate.INDEX_MAX_SPM,
                         SampleRate.StepsRate.GPX_KEYS)
         };

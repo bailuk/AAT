@@ -1,13 +1,11 @@
 package ch.bailu.aat.description;
 
-import android.content.Context;
-
-import ch.bailu.aat.R;
 import ch.bailu.aat.services.sensor.list.SensorState;
 import ch.bailu.aat_lib.description.ContentDescription;
 import ch.bailu.aat_lib.gpx.GpxInformation;
 import ch.bailu.aat_lib.gpx.InfoID;
 import ch.bailu.aat_lib.gpx.attributes.HeartRateAttributes;
+import ch.bailu.aat_lib.resources.Res;
 
 public class HeartRateDescription extends ContentDescription {
     public final String LABEL;
@@ -17,8 +15,8 @@ public class HeartRateDescription extends ContentDescription {
     private String label;
 
 
-    public HeartRateDescription(Context c) {
-        LABEL = c.getString(R.string.sensor_heart_rate);
+    public HeartRateDescription() {
+        LABEL = Res.str().sensor_heart_rate();
         label = LABEL;
     }
 

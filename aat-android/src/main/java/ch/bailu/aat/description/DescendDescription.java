@@ -7,8 +7,8 @@ import ch.bailu.aat_lib.preferences.StorageInterface;
 import ch.bailu.aat_lib.resources.Res;
 
 public class DescendDescription extends AltitudeDescription {
-    public DescendDescription(StorageInterface storageInterface) {
-        super(storageInterface);
+    public DescendDescription(StorageInterface storage) {
+        super(storage);
     }
 
     @Override

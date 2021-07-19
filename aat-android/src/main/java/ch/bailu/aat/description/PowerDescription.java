@@ -1,13 +1,11 @@
 package ch.bailu.aat.description;
 
-import android.content.Context;
-
-import ch.bailu.aat.R;
 import ch.bailu.aat.services.sensor.list.SensorState;
 import ch.bailu.aat_lib.description.ContentDescription;
 import ch.bailu.aat_lib.gpx.GpxInformation;
 import ch.bailu.aat_lib.gpx.InfoID;
 import ch.bailu.aat_lib.gpx.attributes.PowerAttributes;
+import ch.bailu.aat_lib.resources.Res;
 
 public class PowerDescription  extends ContentDescription {
     public static final String UNIT = "W";
@@ -16,8 +14,8 @@ public class PowerDescription  extends ContentDescription {
     private String value = VALUE_DISABLED;
     private String label;
 
-    public PowerDescription(Context c) {
-        LABEL = c.getString(R.string.sensor_power);
+    public PowerDescription() {
+        LABEL = Res.str().sensor_power();
         LABEL_WAIT = LABEL + "...";
         label = LABEL;
     }

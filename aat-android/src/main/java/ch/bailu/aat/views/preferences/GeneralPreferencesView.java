@@ -33,7 +33,7 @@ public class GeneralPreferencesView extends VerticalScrollView {
 
         add(new TitleView(acontext, R.string.p_general, theme));
         add(new SolidIndexListView(acontext,new SolidUnit(storage), theme));
-        add(new SolidTextInputView(acontext,new SolidWeight(acontext),
+        add(new SolidTextInputView(acontext,new SolidWeight(storage),
                 SolidTextInputDialog.INTEGER, theme));
 
         add(new SolidIndexListView(acontext,new SolidPresetCount(storage), theme));
@@ -42,9 +42,9 @@ public class GeneralPreferencesView extends VerticalScrollView {
         add(new TitleView(acontext, "GPS", theme));
         add(new SolidIndexListView(acontext,new AndroidSolidLocationProvider(acontext), theme));
         add(new SolidCheckBox(acontext,new SolidGpsTimeFix(storage), theme));
-        add(new SolidCheckBox(acontext,new SolidAdjustGpsAltitude(acontext), theme));
+        add(new SolidCheckBox(acontext,new SolidAdjustGpsAltitude(storage), theme));
         add(new SolidTextInputView(acontext,
-                new SolidAdjustGpsAltitudeValue(acontext, new SolidUnit(storage).getIndex()),
+                new SolidAdjustGpsAltitudeValue(storage, new SolidUnit(storage).getIndex()),
                 SolidTextInputDialog.INTEGER_SIGNED,
                 theme));
 
@@ -52,10 +52,10 @@ public class GeneralPreferencesView extends VerticalScrollView {
                 SolidTextInputDialog.FLOAT,
                 theme));
 
-        add(new SolidTextInputView(acontext,new SolidProvideAltitude(acontext, SolidUnit.SI),
+        add(new SolidTextInputView(acontext,new SolidProvideAltitude(storage, SolidUnit.SI),
                 SolidTextInputDialog.INTEGER_SIGNED,
                 theme));
-        add(new SolidTextInputView(acontext,new SolidProvideAltitude(acontext, SolidUnit.IMPERIAL),
+        add(new SolidTextInputView(acontext,new SolidProvideAltitude(storage, SolidUnit.IMPERIAL),
                 SolidTextInputDialog.INTEGER_SIGNED,
                 theme));
 

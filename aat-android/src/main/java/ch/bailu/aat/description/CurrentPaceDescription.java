@@ -1,15 +1,14 @@
 package ch.bailu.aat.description;
 
-import android.content.Context;
-
 import ch.bailu.aat_lib.gpx.GpxInformation;
 import ch.bailu.aat_lib.gpx.GpxList;
 import ch.bailu.aat_lib.gpx.interfaces.GpxDeltaInterface;
+import ch.bailu.aat_lib.preferences.StorageInterface;
 import ch.bailu.aat_lib.resources.Res;
 
 public class CurrentPaceDescription extends PaceDescription {
-    public CurrentPaceDescription(Context c) {
-        super(c);
+    public CurrentPaceDescription(StorageInterface storage) {
+        super(storage);
     }
 
     @Override

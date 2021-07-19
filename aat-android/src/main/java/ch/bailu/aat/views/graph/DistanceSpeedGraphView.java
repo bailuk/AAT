@@ -12,7 +12,6 @@ import ch.bailu.aat.dispatcher.DispatcherInterface;
 import ch.bailu.aat.gpx.GpxDistanceWindow;
 import ch.bailu.aat.gpx.GpxListWalker;
 import ch.bailu.aat.preferences.Storage;
-import ch.bailu.aat.preferences.system.AndroidSolidDataDirectory;
 import ch.bailu.aat.util.ui.AppDensity;
 import ch.bailu.aat.util.ui.AppTheme;
 import ch.bailu.aat.util.ui.UiTheme;
@@ -66,7 +65,7 @@ public class DistanceSpeedGraphView extends AbsGraphView implements SharedPrefer
 
 
     private AutoPause getAutoPause() {
-        int preset = new SolidPreset(new AndroidSolidDataDirectory(getContext())).getIndex();
+        int preset = new SolidPreset(new Storage(getContext())).getIndex();
         final SolidAutopause spause = new SolidPostprocessedAutopause(new Storage(getContext()), preset);
         return new AutoPause.Time(
                 spause.getTriggerSpeed(),

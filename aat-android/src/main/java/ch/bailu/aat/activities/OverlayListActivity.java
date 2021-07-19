@@ -19,7 +19,7 @@ public class OverlayListActivity extends AbsGpxListActivity {
         return new ContentDescription[] {
                 new DateDescription(),
                 new DistanceDescription(getStorage()),
-                new NameDescription(this)
+                new NameDescription()
         };
     }
 
@@ -27,7 +27,7 @@ public class OverlayListActivity extends AbsGpxListActivity {
     public ContentDescription[] getSummaryData() {
         return new ContentDescription[] {
 
-                new TrackSizeDescription(this),
+                new TrackSizeDescription(),
         };
     }
 

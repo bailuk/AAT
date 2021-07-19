@@ -86,13 +86,13 @@ public class CockpitTabletActivity extends AbsKeepScreenOnActivity {
         c.add(this, new CurrentSpeedDescription(getStorage()),
                 InfoID.SPEED_SENSOR, InfoID.LOCATION);
         c.addC(this, new AverageSpeedDescription(storage), InfoID.TRACKER);
-        c.add(this, new CadenceDescription(this), InfoID.CADENCE_SENSOR);
-        c.add(this, new PredictiveTimeDescription(this), InfoID.TRACKER_TIMER);
+        c.add(this, new CadenceDescription(), InfoID.CADENCE_SENSOR);
+        c.add(this, new PredictiveTimeDescription(), InfoID.TRACKER_TIMER);
         c.addC(this, new DistanceDescription(getStorage()), InfoID.TRACKER);
         c.add(this, new AltitudeDescription(new Storage(this)), InfoID.LOCATION);
 
         c.add(this, new MaximumSpeedDescription(getStorage()), InfoID.TRACKER);
-        c.add(this, new HeartRateDescription(this), InfoID.HEART_RATE_SENSOR);
+        c.add(this, new HeartRateDescription(), InfoID.HEART_RATE_SENSOR);
 
         return c;
     }

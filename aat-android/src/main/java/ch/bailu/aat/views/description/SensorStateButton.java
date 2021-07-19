@@ -7,7 +7,7 @@ import ch.bailu.aat.util.ui.AppTheme;
 public class SensorStateButton extends NumberView {
 
     public SensorStateButton(ServiceContext c) {
-        super(c.getContext(),new SensorStateDescription(c.getContext()), AppTheme.bar);
+        super(c.getContext(),new SensorStateDescription(), AppTheme.bar);
         requestOnClickSensorReconnect();
     }
 }

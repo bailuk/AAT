@@ -78,12 +78,12 @@ public class CockpitSplitActivity extends AbsKeepScreenOnActivity {
         cockpitA.add(this, new CurrentSpeedDescription(getStorage()),
                 InfoID.SPEED_SENSOR, InfoID.LOCATION);
         cockpitA.addC(this, new AverageSpeedDescriptionAP(getStorage()), InfoID.TRACKER);
-        cockpitA.addC(this, new AveragePaceDescription(this), InfoID.TRACKER);
+        cockpitA.addC(this, new AveragePaceDescription(getStorage()), InfoID.TRACKER);
         cockpitA.addC(this, new DistanceDescription(getStorage()), InfoID.TRACKER);
-        cockpitA.add(this, new PredictiveTimeDescription(this),
+        cockpitA.add(this, new PredictiveTimeDescription(),
                 InfoID.TRACKER_TIMER);
 
-        cockpitB.addC(this, new AveragePaceDescription(this), InfoID.TRACKER);
+        cockpitB.addC(this, new AveragePaceDescription(getStorage()), InfoID.TRACKER);
         cockpitB.addC(this, new AverageSpeedDescriptionAP(getStorage()), InfoID.TRACKER);
         cockpitB.addC(this, new MaximumSpeedDescription(getStorage()), InfoID.TRACKER);
 
@@ -94,16 +94,16 @@ public class CockpitSplitActivity extends AbsKeepScreenOnActivity {
         cockpitD.addAltitude(this);
         cockpitD.add(this, new AscendDescription(new Storage(this)), InfoID.TRACKER);
         cockpitD.add(this, new DescendDescription(new Storage(this)), InfoID.TRACKER);
-        cockpitD.add(this, new SlopeDescription(this), InfoID.TRACKER);
+        cockpitD.add(this, new SlopeDescription(), InfoID.TRACKER);
 
         percentageD.add(cockpitD, 50);
         percentageD.add(new DistanceAltitudeGraphView(this, this, THEME,
                 InfoID.TRACKER), 50);
 
-        cockpitC.add(this, new CadenceDescription(this), InfoID.CADENCE_SENSOR);
-        cockpitC.add(this, new HeartRateDescription(this), InfoID.HEART_RATE_SENSOR);
-        cockpitC.add(this, new PowerDescription(this), InfoID.POWER_SENSOR);
-        cockpitC.add(this, new StepRateDescription(this), InfoID.STEP_COUNTER_SENSOR);
+        cockpitC.add(this, new CadenceDescription(), InfoID.CADENCE_SENSOR);
+        cockpitC.add(this, new HeartRateDescription(), InfoID.HEART_RATE_SENSOR);
+        cockpitC.add(this, new PowerDescription(), InfoID.POWER_SENSOR);
+        cockpitC.add(this, new StepRateDescription(), InfoID.STEP_COUNTER_SENSOR);
         cockpitC.add(this, new TotalStepsDescription(this), InfoID.TRACKER);
 
         percentageC.add(cockpitC, 50);

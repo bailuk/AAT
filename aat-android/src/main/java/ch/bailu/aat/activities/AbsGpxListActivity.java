@@ -176,7 +176,7 @@ public abstract class AbsGpxListActivity extends ActivityContext implements OnIt
 
             VerticalScrollView summary = new VerticalScrollView(acontext);
             summary.add(new TitleView(acontext, getLabel(), theme));
-            summary.add(acontext,new PathDescription(acontext), theme, InfoID.LIST_SUMMARY);
+            summary.add(acontext,new PathDescription(), theme, InfoID.LIST_SUMMARY);
             summary.add(new TitleView(acontext, summary_label, theme));
             summary.addAllContent(acontext, getSummaryData(), theme, InfoID.LIST_SUMMARY);
 

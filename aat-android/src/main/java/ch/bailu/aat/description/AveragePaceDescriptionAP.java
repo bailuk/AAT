@@ -1,15 +1,14 @@
 package ch.bailu.aat.description;
 
-import android.content.Context;
-
 import ch.bailu.aat_lib.gpx.GpxInformation;
 import ch.bailu.aat_lib.gpx.attributes.AutoPause;
+import ch.bailu.aat_lib.preferences.StorageInterface;
 import ch.bailu.aat_lib.resources.Res;
 
 public class AveragePaceDescriptionAP extends AveragePaceDescription {
 
-    public AveragePaceDescriptionAP(Context context) {
-        super(context);
+    public AveragePaceDescriptionAP(StorageInterface s) {
+        super(s);
     }
 
     @Override

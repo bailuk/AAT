@@ -1,17 +1,12 @@
 package ch.bailu.aat.description;
 
 
-import android.content.Context;
-
 import ch.bailu.aat_lib.description.ContentDescription;
 import ch.bailu.aat_lib.gpx.GpxInformation;
 import ch.bailu.aat_lib.resources.Res;
 
 public class NameDescription extends ContentDescription {
     private String name = "";
-
-    public NameDescription(Context context) {
-    }
 
     @Override
     public String getLabel() {

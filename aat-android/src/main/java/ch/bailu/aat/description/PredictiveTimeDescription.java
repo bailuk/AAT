@@ -1,8 +1,6 @@
 package ch.bailu.aat.description;
 
 
-import android.content.Context;
-
 import ch.bailu.aat_lib.description.TimeDescription;
 import ch.bailu.aat_lib.gpx.GpxInformation;
 import ch.bailu.aat_lib.gpx.StateID;
@@ -12,9 +10,6 @@ public class PredictiveTimeDescription extends TimeDescription {
 
     private long time = 0;
     private long time_paused = 0;
-
-    public PredictiveTimeDescription(Context context) {
-    }
 
     @Override
     public String getUnit() {

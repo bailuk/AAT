@@ -1,16 +1,14 @@
 package ch.bailu.aat.preferences.location;
 
-import android.content.Context;
-
 import ch.bailu.aat.preferences.SolidBoolean;
-import ch.bailu.aat.preferences.Storage;
+import ch.bailu.aat_lib.preferences.StorageInterface;
 import ch.bailu.aat_lib.resources.Res;
 
 public class SolidAdjustGpsAltitude extends SolidBoolean {
     private final static String KEY = "UseGpsAltitudeCorrection";
 
-    public SolidAdjustGpsAltitude(Context c) {
-        super(new Storage(c), KEY);
+    public SolidAdjustGpsAltitude(StorageInterface s) {
+        super(s, KEY);
     }
 
     @Override

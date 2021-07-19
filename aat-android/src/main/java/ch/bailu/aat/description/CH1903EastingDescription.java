@@ -1,7 +1,5 @@
 package ch.bailu.aat.description;
 
-import android.content.Context;
-
 import ch.bailu.aat.coordinates.CH1903Coordinates;
 import ch.bailu.aat_lib.description.DoubleDescription;
 import ch.bailu.aat_lib.description.FF;
@@ -11,9 +9,6 @@ import ch.bailu.aat_lib.resources.Res;
 public class CH1903EastingDescription extends DoubleDescription {
 
     protected int coordinate=0;
-
-    public CH1903EastingDescription(Context c) {
-    }
 
     @Override
     public String getLabel() {

@@ -1,16 +1,11 @@
 package ch.bailu.aat.description;
 
-import android.content.Context;
-
 import ch.bailu.aat_lib.description.TimeDescription;
 import ch.bailu.aat_lib.gpx.GpxInformation;
 import ch.bailu.aat_lib.gpx.attributes.AutoPause;
 import ch.bailu.aat_lib.resources.Res;
 
 public class TimeApDescription extends TimeDescription {
-
-    public TimeApDescription(Context context) {
-    }
 
     @Override
     public void onContentUpdated(int iid, GpxInformation info) {

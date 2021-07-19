@@ -6,6 +6,7 @@ import android.hardware.SensorEvent;
 
 import androidx.annotation.RequiresApi;
 
+import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat.preferences.location.SolidPressureAtSeaLevel;
 import ch.bailu.aat.preferences.location.SolidProvideAltitude;
 import ch.bailu.aat.services.location.Hypsometric;
@@ -42,7 +43,7 @@ public final class BarometerSensor extends InternalSensorSDK23
 
         context = c;
         spressure  = new SolidPressureAtSeaLevel(c);
-        saltitude  = new SolidProvideAltitude(c, SolidUnit.SI);
+        saltitude  = new SolidProvideAltitude(new Storage(c), SolidUnit.SI);
 
         if (isLocked()) {
             hypsometric.setPressureAtSeaLevel(spressure.getPressure());

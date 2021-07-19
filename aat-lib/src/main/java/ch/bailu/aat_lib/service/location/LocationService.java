@@ -48,7 +48,7 @@ public final class LocationService extends VirtualService
         createLocationStack(broadcastInterface);
         createLocationProvider();
 
-        setPresetIndex(new SolidPreset(sfactory.getDataDirectory()).getIndex());
+        setPresetIndex(new SolidPreset(sprovider.getStorage()).getIndex());
     }
 
 

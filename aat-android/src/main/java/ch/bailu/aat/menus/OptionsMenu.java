@@ -8,9 +8,9 @@ import android.view.MenuItem;
 import ch.bailu.aat.R;
 import ch.bailu.aat.activities.ActivitySwitcher;
 import ch.bailu.aat.activities.PreferencesActivity;
+import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat.preferences.map.SolidMapTileStack;
 import ch.bailu.aat.preferences.presets.SolidBacklight;
-import ch.bailu.aat.preferences.system.AndroidSolidDataDirectory;
 import ch.bailu.aat.services.InsideContext;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.views.preferences.SolidCheckListDialog;
@@ -97,7 +97,7 @@ public final class OptionsMenu extends AbsMenu {
             };
 
         } else if (item == backlight) {
-            new SolidIndexListDialog(scontext.getContext(),new SolidBacklight(c, new SolidPreset(new AndroidSolidDataDirectory(scontext.getContext())).getIndex()));
+            new SolidIndexListDialog(scontext.getContext(),new SolidBacklight(c, new SolidPreset(new Storage(c)).getIndex()));
 
 
         } else if (item == preferences) {

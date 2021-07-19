@@ -79,18 +79,18 @@ public class FileContentActivity extends AbsFileContentActivity{
     public static ContentDescription[] getSummaryData(Context c) {
         Storage storage = new Storage(c);
         return new ContentDescription[] {
-                new NameDescription(c),
-                new PathDescription(c),
+                new NameDescription(),
+                new PathDescription(),
                 new DateDescription(),
-                new EndDateDescription(c),
+                new EndDateDescription(),
 
                 new ContentDescriptions(
                         new TimeDescription(),
-                        new TimeApDescription(c)),
+                        new TimeApDescription()),
 
                 new ContentDescriptions(
-                        new PauseDescription(c),
-                        new PauseApDescription(c)),
+                        new PauseDescription(),
+                        new PauseApDescription()),
 
                 new ContentDescriptions(
                     new DistanceDescription(storage),
@@ -102,26 +102,26 @@ public class FileContentActivity extends AbsFileContentActivity{
                         new MaximumSpeedDescription(storage)),
 
 
-                new CaloriesDescription(c),
+                new CaloriesDescription(storage),
 
                 new ContentDescriptions(
-                    new AveragePaceDescription(c),
-                    new AveragePaceDescriptionAP(c)),
+                    new AveragePaceDescription(storage),
+                    new AveragePaceDescriptionAP(storage)),
 
 
                 new ContentDescriptions(
-                    new AscendDescription(new Storage(c)),
-                    new DescendDescription(new Storage(c))),
+                    new AscendDescription(storage),
+                    new DescendDescription(storage)),
 
                 new ContentDescriptions(
                     new IndexedAttributeDescription.HeartRate(c),
                     new IndexedAttributeDescription.HeartBeats(c)),
 
                 new ContentDescriptions(
-                    new IndexedAttributeDescription.Cadence(c),
-                    new IndexedAttributeDescription.TotalCadence(c)),
+                    new IndexedAttributeDescription.Cadence(),
+                    new IndexedAttributeDescription.TotalCadence()),
 
-                new TrackSizeDescription(c)
+                new TrackSizeDescription()
         };
     }
 

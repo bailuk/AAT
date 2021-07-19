@@ -57,7 +57,7 @@ public final class TrackerInternals
 
 
     public void rereadPreferences() {
-        presetIndex = new SolidPreset(sdirectory).getIndex();
+        presetIndex = new SolidPreset(sdirectory.getStorage()).getIndex();
         sautopause = new SolidTrackerAutopause(sdirectory.getStorage(), presetIndex);
 
         services.getLocationService().setPresetIndex(presetIndex);
@@ -89,7 +89,7 @@ public final class TrackerInternals
 
 
     public  TrackLogger createLogger() throws IOException, SecurityException {
-        return new TrackLogger(sdirectory, new SolidPreset(sdirectory).getIndex());
+        return new TrackLogger(sdirectory, new SolidPreset(sdirectory.getStorage()).getIndex());
     }
 
 

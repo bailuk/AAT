@@ -25,13 +25,13 @@ public final class AdjustGpsAltitude extends LocationStackChainedItem {
     private final AltitudeCache altitude = new AltitudeCache();
 
 
-    public AdjustGpsAltitude(LocationStackItem n, Context c) {
+    public AdjustGpsAltitude(LocationStackItem n, StorageInterface s) {
         super(n);
 
-        senabled  = new SolidAdjustGpsAltitude(c);
-        sadjust = new SolidAdjustGpsAltitudeValue(c);
+        senabled  = new SolidAdjustGpsAltitude(s);
+        sadjust = new SolidAdjustGpsAltitudeValue(s);
 
-        saltitude = new SolidProvideAltitude(c, SolidUnit.SI);
+        saltitude = new SolidProvideAltitude(s, SolidUnit.SI);
 
         adjust    = sadjust.getValue();
         enabled   = senabled.isEnabled();

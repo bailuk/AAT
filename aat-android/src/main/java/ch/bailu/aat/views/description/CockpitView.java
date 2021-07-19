@@ -10,10 +10,12 @@ import ch.bailu.aat.description.CadenceDescription;
 import ch.bailu.aat.description.HeartRateDescription;
 import ch.bailu.aat.description.PowerDescription;
 import ch.bailu.aat.dispatcher.DispatcherInterface;
+import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat.preferences.location.SolidProvideAltitude;
 import ch.bailu.aat.util.ui.UiTheme;
 import ch.bailu.aat_lib.description.ContentDescription;
 import ch.bailu.aat_lib.gpx.InfoID;
+import ch.bailu.aat_lib.preferences.StorageInterface;
 
 
 public class CockpitView extends ViewGroup {
@@ -21,10 +23,12 @@ public class CockpitView extends ViewGroup {
     private final Layouter layouter = new Layouter();
 
     private final UiTheme theme;
+    private final StorageInterface storage;
 
     public CockpitView(Context context, UiTheme theme) {
         super(context);
         this.theme = theme;
+        this.storage = new Storage((context));
         theme.background(this);
     }
 
@@ -53,22 +57,22 @@ public class CockpitView extends ViewGroup {
 
 
     public void addAltitude(DispatcherInterface di) {
-        NumberView v = add(di, new AltitudeConfigurationDescription(getContext()), InfoID.LOCATION);
+        NumberView v = add(di, new AltitudeConfigurationDescription(storage), InfoID.LOCATION);
         SolidProvideAltitude.requestOnClick(v);
     }
 
     public void addHeartRate(DispatcherInterface di) {
-        NumberView v = add(di, new HeartRateDescription(getContext()), InfoID.HEART_RATE_SENSOR);
+        NumberView v = add(di, new HeartRateDescription(), InfoID.HEART_RATE_SENSOR);
         v.requestOnClickSensorReconnect();
     }
 
     public void addPower(DispatcherInterface di) {
-        NumberView v = add(di, new PowerDescription(getContext()), InfoID.POWER_SENSOR);
+        NumberView v = add(di, new PowerDescription(), InfoID.POWER_SENSOR);
         v.requestOnClickSensorReconnect();
     }
 
     public void addCadence(DispatcherInterface di) {
-        NumberView v = add(di, new CadenceDescription(getContext()), InfoID.CADENCE_SENSOR);
+        NumberView v = add(di, new CadenceDescription(), InfoID.CADENCE_SENSOR);
         v.requestOnClickSensorReconnect();
     }
 

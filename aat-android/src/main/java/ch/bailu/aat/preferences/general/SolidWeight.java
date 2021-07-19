@@ -1,33 +1,22 @@
 package ch.bailu.aat.preferences.general;
 
-import android.content.Context;
-
-import ch.bailu.aat.R;
-import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat_lib.exception.ValidationException;
 import ch.bailu.aat_lib.logger.AppLog;
 import ch.bailu.aat_lib.preferences.SolidInteger;
+import ch.bailu.aat_lib.preferences.StorageInterface;
 import ch.bailu.aat_lib.resources.Res;
 
 public class SolidWeight extends SolidInteger {
 
     final private static String KEY="weight";
 
-    private final Context context;
-
-
-    public Context getContext() {
-        return context;
-    }
-
-    public SolidWeight(Context c) {
-        super(new Storage(c), KEY);
-        context = c;
+    public SolidWeight(StorageInterface s) {
+        super(s, KEY);
     }
 
     @Override
     public String getLabel() {
-        return getContext().getString(R.string.p_weight_title);
+        return Res.str().p_weight_title();
     }
 
     public void setDefaults() {
@@ -44,7 +33,7 @@ public class SolidWeight extends SolidInteger {
             try {
                 setValue(Integer.parseInt(s));
             } catch (NumberFormatException e) {
-                AppLog.e(getContext(), e);
+                AppLog.e(this, e);
             }
         }
     }
