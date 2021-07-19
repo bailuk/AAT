@@ -5,8 +5,10 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 
 import ch.bailu.aat.preferences.PreferenceLoadDefaults;
+import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat.util.AppPermission;
 import ch.bailu.aat.views.ErrorView;
+import ch.bailu.aat_lib.preferences.StorageInterface;
 
 public abstract class AbsActivity extends Activity {
 
@@ -84,4 +86,7 @@ public abstract class AbsActivity extends Activity {
 
     }
 
+    public StorageInterface getStorage() {
+        return new Storage(this);
+    }
 }

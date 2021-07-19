@@ -4,6 +4,7 @@ import android.content.Context;
 
 import ch.bailu.aat.description.CurrentSpeedDescription;
 import ch.bailu.aat.description.SpeedDescription;
+import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat_lib.gpx.GpxList;
 import ch.bailu.aat_lib.gpx.GpxPointNode;
 import ch.bailu.aat_lib.gpx.GpxSegmentNode;
@@ -12,7 +13,7 @@ public final class MarkerSpeedWalker extends LegendWalker {
     private final SpeedDescription description;
 
     public MarkerSpeedWalker(Context context) {
-        description = new CurrentSpeedDescription(context);
+        description = new CurrentSpeedDescription(new Storage(context));
     }
 
 

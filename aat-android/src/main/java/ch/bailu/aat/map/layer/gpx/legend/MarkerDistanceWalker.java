@@ -3,6 +3,7 @@ package ch.bailu.aat.map.layer.gpx.legend;
 import android.content.Context;
 
 import ch.bailu.aat.description.DistanceDescription;
+import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat_lib.gpx.GpxList;
 import ch.bailu.aat_lib.gpx.GpxPointNode;
 import ch.bailu.aat_lib.gpx.GpxSegmentNode;
@@ -15,7 +16,7 @@ public final class MarkerDistanceWalker extends LegendWalker {
 
     public MarkerDistanceWalker(Context context, boolean reset) {
         resetAfterDraw=reset;
-        description=new DistanceDescription(context);
+        description=new DistanceDescription(new Storage(context));
     }
 
 

@@ -1,14 +1,13 @@
 package ch.bailu.aat.description;
 
-import android.content.Context;
-
 import ch.bailu.aat_lib.gpx.GpxInformation;
 import ch.bailu.aat_lib.gpx.attributes.AutoPause;
+import ch.bailu.aat_lib.preferences.StorageInterface;
 import ch.bailu.aat_lib.resources.Res;
 
 public class DistanceApDescription extends DistanceDescription {
-    public DistanceApDescription(Context context) {
-        super(context);
+    public DistanceApDescription(StorageInterface storage) {
+        super(storage);
     }
 
 

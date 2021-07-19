@@ -1,10 +1,8 @@
 package ch.bailu.aat.description;
 
-import android.content.Context;
-
-import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat_lib.description.FF;
 import ch.bailu.aat_lib.description.FloatDescription;
+import ch.bailu.aat_lib.preferences.StorageInterface;
 import ch.bailu.aat_lib.preferences.general.SolidUnit;
 
 
@@ -12,8 +10,8 @@ public abstract class SpeedDescription extends FloatDescription {
 
     private final SolidUnit sunit;
 
-    public SpeedDescription(Context context) {
-        sunit = new SolidUnit(new Storage(context));
+    public SpeedDescription(StorageInterface storage) {
+        sunit = new SolidUnit(storage);
     }
 
     @Override

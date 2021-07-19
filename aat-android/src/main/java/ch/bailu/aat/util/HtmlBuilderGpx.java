@@ -23,8 +23,8 @@ public class HtmlBuilderGpx extends HtmlBuilder {
 
 
     public HtmlBuilderGpx(Context context) {
-        distance = new DistanceDescription(context);
-        speed = new CurrentSpeedDescription(context);
+        distance = new DistanceDescription(new Storage(context));
+        speed = new CurrentSpeedDescription(new Storage(context));
         altitude = new AltitudeDescription(new Storage(context));
     }
 

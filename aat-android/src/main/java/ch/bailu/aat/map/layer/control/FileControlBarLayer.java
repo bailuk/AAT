@@ -45,6 +45,8 @@ public final class FileControlBarLayer extends ControlBarLayer {
     private Foc selectedFile = null;
 
 
+    private final Storage storage;
+
     public FileControlBarLayer(MapContext mc, AbsGpxListActivity a) {
         super(mc, new ControlBar(
                 mc.getContext(),
@@ -52,6 +54,7 @@ public final class FileControlBarLayer extends ControlBarLayer {
 
         final ControlBar bar = getBar();
 
+        storage = new Storage(mc.getContext());
         acontext = a;
 
         selector = new FileViewLayer(mc);
@@ -152,14 +155,15 @@ public final class FileControlBarLayer extends ControlBarLayer {
             super(mc);
         }
 
+
         final ContentDescription[] summaryData = {
 
                 new DateDescription(),
                 new TimeDescription(),
 
-                new DistanceDescription(acontext),
-                new AverageSpeedDescription(acontext),
-                new MaximumSpeedDescription(acontext),
+                new DistanceDescription(storage),
+                new AverageSpeedDescription(storage),
+                new MaximumSpeedDescription(storage),
                 new CaloriesDescription(acontext),
         };
 

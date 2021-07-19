@@ -75,17 +75,17 @@ public class CockpitSplitActivity extends AbsKeepScreenOnActivity {
         PercentageLayout percentageD = new PercentageLayout(this);
         percentageD.setOrientation(AppLayout.getOrientationAlongLargeSide(this));
 
-        cockpitA.add(this, new CurrentSpeedDescription(this),
+        cockpitA.add(this, new CurrentSpeedDescription(getStorage()),
                 InfoID.SPEED_SENSOR, InfoID.LOCATION);
-        cockpitA.addC(this, new AverageSpeedDescriptionAP(this), InfoID.TRACKER);
+        cockpitA.addC(this, new AverageSpeedDescriptionAP(getStorage()), InfoID.TRACKER);
         cockpitA.addC(this, new AveragePaceDescription(this), InfoID.TRACKER);
-        cockpitA.addC(this, new DistanceDescription(this), InfoID.TRACKER);
+        cockpitA.addC(this, new DistanceDescription(getStorage()), InfoID.TRACKER);
         cockpitA.add(this, new PredictiveTimeDescription(this),
                 InfoID.TRACKER_TIMER);
 
         cockpitB.addC(this, new AveragePaceDescription(this), InfoID.TRACKER);
-        cockpitB.addC(this, new AverageSpeedDescriptionAP(this), InfoID.TRACKER);
-        cockpitB.addC(this, new MaximumSpeedDescription(this), InfoID.TRACKER);
+        cockpitB.addC(this, new AverageSpeedDescriptionAP(getStorage()), InfoID.TRACKER);
+        cockpitB.addC(this, new MaximumSpeedDescription(getStorage()), InfoID.TRACKER);
 
         percentageB.add(cockpitB, 50);
         percentageB.add(new DistanceSpeedGraphView(this, this, THEME,

@@ -1,13 +1,11 @@
 package ch.bailu.aat.description;
 
-import android.content.Context;
-
 import java.text.DecimalFormat;
 
-import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat_lib.description.FF;
 import ch.bailu.aat_lib.description.FloatDescription;
 import ch.bailu.aat_lib.gpx.GpxInformation;
+import ch.bailu.aat_lib.preferences.StorageInterface;
 import ch.bailu.aat_lib.preferences.general.SolidUnit;
 import ch.bailu.aat_lib.resources.Res;
 
@@ -16,8 +14,8 @@ public class DistanceDescription extends FloatDescription {
             {FF.f().N3, FF.f().N2, FF.f().N1, FF.f().N};
     private final SolidUnit unit;
 
-    public DistanceDescription(Context context) {
-        unit = new SolidUnit(new Storage(context));
+    public DistanceDescription(StorageInterface storage) {
+        unit = new SolidUnit(storage);
     }
 
 

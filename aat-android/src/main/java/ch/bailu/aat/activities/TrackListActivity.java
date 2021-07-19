@@ -21,8 +21,8 @@ public class TrackListActivity extends AbsGpxListActivity {
     public ContentDescription[] getGpxListItemData() {
         return new ContentDescription[] {
                 new DateDescription(),
-                new DistanceDescription(this),
-                new AverageSpeedDescription(this),
+                new DistanceDescription(getStorage()),
+                new AverageSpeedDescription(getStorage()),
                 new TimeDescription(),
                 new NameDescription(this)
         };
@@ -33,9 +33,9 @@ public class TrackListActivity extends AbsGpxListActivity {
         return new ContentDescription[] {
 
                 new TrackSizeDescription(this),
-                new MaximumSpeedDescription(this),
-                new DistanceDescription(this),
-                new AverageSpeedDescription(this),
+                new MaximumSpeedDescription(getStorage()),
+                new DistanceDescription(getStorage()),
+                new AverageSpeedDescription(getStorage()),
                 new TimeDescription()
         };
     }

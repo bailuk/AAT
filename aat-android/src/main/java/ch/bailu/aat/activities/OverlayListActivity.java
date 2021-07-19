@@ -18,7 +18,7 @@ public class OverlayListActivity extends AbsGpxListActivity {
     public ContentDescription[] getGpxListItemData() {
         return new ContentDescription[] {
                 new DateDescription(),
-                new DistanceDescription(this),
+                new DistanceDescription(getStorage()),
                 new NameDescription(this)
         };
     }

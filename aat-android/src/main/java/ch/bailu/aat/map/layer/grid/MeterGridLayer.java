@@ -11,6 +11,7 @@ import ch.bailu.aat.coordinates.MeterCoordinates;
 import ch.bailu.aat.description.DistanceDescription;
 import ch.bailu.aat.map.MapContext;
 import ch.bailu.aat.map.layer.MapLayerInterface;
+import ch.bailu.aat.preferences.Storage;
 
 public abstract class MeterGridLayer implements MapLayerInterface {
 
@@ -24,7 +25,7 @@ public abstract class MeterGridLayer implements MapLayerInterface {
     private String btext = "";
 
     public MeterGridLayer(Context c) {
-        distanceDescription = new DistanceDescription(c);
+        distanceDescription = new DistanceDescription(new Storage(c));
     }
 
     @Override

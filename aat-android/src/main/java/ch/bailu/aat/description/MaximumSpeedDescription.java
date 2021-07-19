@@ -1,16 +1,15 @@
 package ch.bailu.aat.description;
 
 
-import android.content.Context;
-
 import ch.bailu.aat_lib.gpx.GpxInformation;
 import ch.bailu.aat_lib.gpx.attributes.MaxSpeed;
+import ch.bailu.aat_lib.preferences.StorageInterface;
 import ch.bailu.aat_lib.resources.Res;
 
 public class MaximumSpeedDescription  extends SpeedDescription {
 
-    public MaximumSpeedDescription(Context context) {
-        super(context);
+    public MaximumSpeedDescription(StorageInterface storage) {
+        super(storage);
     }
 
     @Override

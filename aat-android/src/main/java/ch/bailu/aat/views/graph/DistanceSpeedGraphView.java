@@ -38,8 +38,8 @@ public class DistanceSpeedGraphView extends AbsGraphView implements SharedPrefer
 
     private void setLabelText(Context context) {
         ylabel.setText(Color.WHITE, R.string.speed, sunit.getSpeedUnit());
-        ylabel.setText(AppTheme.HL_BLUE, new AverageSpeedDescriptionAP(context).getLabel());
-        ylabel.setText(AppTheme.HL_GREEN, new AverageSpeedDescription(context).getLabel());
+        ylabel.setText(AppTheme.HL_BLUE, new AverageSpeedDescriptionAP(new Storage(context)).getLabel());
+        ylabel.setText(AppTheme.HL_GREEN, new AverageSpeedDescription(new Storage(context)).getLabel());
     }
 
 

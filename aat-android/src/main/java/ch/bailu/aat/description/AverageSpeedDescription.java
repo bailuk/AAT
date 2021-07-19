@@ -1,14 +1,13 @@
 package ch.bailu.aat.description;
 
-import android.content.Context;
-
 import ch.bailu.aat_lib.gpx.GpxInformation;
+import ch.bailu.aat_lib.preferences.StorageInterface;
 import ch.bailu.aat_lib.resources.Res;
 
 public class AverageSpeedDescription extends SpeedDescription {
 
-    public AverageSpeedDescription(Context context) {
-        super(context);
+    public AverageSpeedDescription(StorageInterface storage) {
+        super(storage);
     }
 
     @Override

@@ -1,7 +1,5 @@
 package ch.bailu.aat.description;
 
-import android.content.Context;
-
 import ch.bailu.aat.services.sensor.list.SensorState;
 import ch.bailu.aat_lib.gpx.GpxInformation;
 import ch.bailu.aat_lib.gpx.GpxList;
@@ -9,6 +7,7 @@ import ch.bailu.aat_lib.gpx.InfoID;
 import ch.bailu.aat_lib.gpx.attributes.CadenceSpeedAttributes;
 import ch.bailu.aat_lib.gpx.attributes.GpxAttributes;
 import ch.bailu.aat_lib.gpx.interfaces.GpxDeltaInterface;
+import ch.bailu.aat_lib.preferences.StorageInterface;
 import ch.bailu.aat_lib.resources.Res;
 
 public class CurrentSpeedDescription extends SpeedDescription {
@@ -17,8 +16,8 @@ public class CurrentSpeedDescription extends SpeedDescription {
     private String label;
 
 
-    public CurrentSpeedDescription(Context context) {
-        super(context);
+    public CurrentSpeedDescription(StorageInterface storage) {
+        super(storage);
         setLabel();
     }
 

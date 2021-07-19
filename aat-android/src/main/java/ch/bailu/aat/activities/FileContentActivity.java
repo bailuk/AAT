@@ -77,6 +77,7 @@ public class FileContentActivity extends AbsFileContentActivity{
 
 
     public static ContentDescription[] getSummaryData(Context c) {
+        Storage storage = new Storage(c);
         return new ContentDescription[] {
                 new NameDescription(c),
                 new PathDescription(c),
@@ -92,13 +93,13 @@ public class FileContentActivity extends AbsFileContentActivity{
                         new PauseApDescription(c)),
 
                 new ContentDescriptions(
-                    new DistanceDescription(c),
-                    new DistanceApDescription(c)),
+                    new DistanceDescription(storage),
+                    new DistanceApDescription(storage)),
 
                 new ContentDescriptions(
-                        new AverageSpeedDescription(c),
-                        new AverageSpeedDescriptionAP(c),
-                        new MaximumSpeedDescription(c)),
+                        new AverageSpeedDescription(storage),
+                        new AverageSpeedDescriptionAP(storage),
+                        new MaximumSpeedDescription(storage)),
 
 
                 new CaloriesDescription(c),
