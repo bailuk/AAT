@@ -9,7 +9,7 @@ import ch.bailu.aat_lib.preferences.system.SolidDataDirectoryDefault;
 import ch.bailu.foc.FocFile;
 
 public class AwtSolidFactory implements SolidFactory {
-    private final StorageInterface storage = new AppPreferences();
+    private final StorageInterface storage = new AwtStorage();
     private final FocFactory focFactory = string -> new FocFile(string);
 
 

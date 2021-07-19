@@ -33,6 +33,8 @@ import java.util.List;
 import java.util.UUID;
 import java.util.prefs.Preferences;
 
+import javax.swing.JButton;
+
 public class AwtCustomMapView extends MapView {
     private static final GraphicFactory GRAPHIC_FACTORY = AwtGraphicFactory.INSTANCE;
     private static final boolean SHOW_DEBUG_LAYERS = true;
@@ -41,6 +43,11 @@ public class AwtCustomMapView extends MapView {
 
     final PreferencesFacade preferencesFacade = new JavaPreferences(Preferences.userNodeForPackage(AwtCustomMapView.class));
     final BoundingBox boundingBox;
+
+    private final JButton
+            showMap = new JButton("Map"),
+            plus = new JButton("+"),
+            minus = new JButton("-");
 
     public AwtCustomMapView(List<File> mapFiles) {
         getMapScaleBar().setVisible(true);
@@ -51,6 +58,10 @@ public class AwtCustomMapView extends MapView {
         Parameters.SQUARE_FRAME_BUFFER = false;
         boundingBox = addLayers(this, mapFiles, null);
 
+        this.add(minus);
+        this.add(plus);
+        minus.setBounds(54,2,50,50);
+        plus.setBounds(2,2,50,50);
     }
 
 

@@ -6,7 +6,7 @@ import java.util.List;
 
 import ch.bailu.aat_awt.dispatcher.AwtBroadcaster;
 import ch.bailu.aat_awt.logger.SL4JLogger;
-import ch.bailu.aat_awt.preferences.AppPreferences;
+import ch.bailu.aat_awt.preferences.AwtStorage;
 import ch.bailu.aat_awt.preferences.AwtSolidFactory;
 import ch.bailu.aat_awt.services.AwtServices;
 import ch.bailu.aat_awt.window.AwtMainWindow;
@@ -74,7 +74,7 @@ public class App {
         if (app != null) {
             app.close();
         }
-        AppPreferences.save();
+        AwtStorage.save();
         System.exit(i);
     }
 

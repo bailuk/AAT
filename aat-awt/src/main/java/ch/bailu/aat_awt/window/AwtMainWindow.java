@@ -28,6 +28,9 @@ import javax.swing.WindowConstants;
 
 import ch.bailu.aat_awt.App;
 import ch.bailu.aat_awt.map.AwtCustomMapView;
+import ch.bailu.aat_awt.preferences.AwtStorage;
+import ch.bailu.aat_awt.views.JNumberView;
+import ch.bailu.aat_lib.description.AltitudeDescription;
 import ch.bailu.aat_lib.description.FF;
 import ch.bailu.aat_lib.description.GpsStateDescription;
 import ch.bailu.aat_lib.description.LatitudeDescription;
@@ -61,13 +64,17 @@ public class AwtMainWindow implements OnContentUpdatedInterface {
             plus = new JButton("+"),
             minus = new JButton("-");
 
+    private final JNumberView
+            gpsButton = new JNumberView(new GpsStateDescription()),
+            trackerButton = new JNumberView(new TrackerStateDescription());
+
     private final JToggleButton center = new JToggleButton("Center");
 
     private LatLong currentPos = null;
 
     public AwtMainWindow(List<File> mapFiles, Broadcaster broadcaster) {
         map = new AwtCustomMapView(mapFiles);
-        ;
+
         center.addActionListener(itemEvent -> doCenter());
         showMap.addActionListener(itemEvent -> doShowMap());
         plus.addActionListener(itemEvent -> doZoomIn());
@@ -79,6 +86,7 @@ public class AwtMainWindow implements OnContentUpdatedInterface {
 
         buttonPane.setLayout(new BoxLayout(buttonPane, BoxLayout.LINE_AXIS));
         buttonPane.setBorder(BorderFactory.createEmptyBorder(2, 2, 2, 2));
+
         buttonPane.add(Box.createHorizontalGlue());
         buttonPane.add(center);
         buttonPane.add(showMap);
@@ -86,6 +94,9 @@ public class AwtMainWindow implements OnContentUpdatedInterface {
         buttonPane.add(plus);
         buttonPane.add(minus);
         buttonPane.add(Box.createHorizontalGlue());
+        buttonPane.add(gpsButton);
+        buttonPane.add(Box.createHorizontalGlue());
+        buttonPane.add(trackerButton);
 
 
         Container pane = frame.getContentPane();
@@ -160,25 +171,28 @@ public class AwtMainWindow implements OnContentUpdatedInterface {
     public void onContentUpdated(int iid, GpxInformation info) {
         LatitudeDescription la = new LatitudeDescription();
         LongitudeDescription lo = new LongitudeDescription();
-
+        AltitudeDescription altitude = new AltitudeDescription(new AwtStorage());
         GpsStateDescription gps = new GpsStateDescription();
         TrackerStateDescription tracker = new TrackerStateDescription();
 
         la.onContentUpdated(iid, info);
         lo.onContentUpdated(iid, info);
+        altitude.onContentUpdated(iid, info);
 
         String time = FF.f().LOCAL_TIME.format(info.getTimeStamp());
 
         if (iid == InfoID.LOCATION) {
             gps.onContentUpdated(iid, info);
+            gpsButton.onContentUpdated(iid, info);
 
-            locationStatus.setText(time + " " + gps.getLabel() + " " + gps.getValue() + " " + la.getValue() + ", " + lo.getValue());
+            locationStatus.setText(time + " " + gps.getLabel() + " " + gps.getValue() + " " + la.getValue() + ", " + lo.getValue() +", " + altitude.getValue());
             currentPos = new LatLong(info.getLatitude(), info.getLongitude());
             doCenter();
 
         } else if (iid == InfoID.TRACKER) {
             tracker.onContentUpdated(iid, info);
-            trackerStatus.setText(time + ": "+ tracker.getLabel() + " " + tracker.getValue() + " " + la.getValue() + ", " + lo.getValue());
+            trackerButton.onContentUpdated(iid, info);
+            trackerStatus.setText(time + ": "+ tracker.getLabel() + " " + tracker.getValue() + " " + la.getValue() + ", " + lo.getValue() +", " + altitude.getValue());
         }
     }
 

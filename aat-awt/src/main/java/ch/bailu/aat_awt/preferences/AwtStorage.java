@@ -9,7 +9,7 @@ import ch.bailu.aat_lib.logger.AppLog;
 import ch.bailu.aat_lib.preferences.OnPreferencesChanged;
 import ch.bailu.aat_lib.preferences.StorageInterface;
 
-public class AppPreferences implements StorageInterface {
+public class AwtStorage implements StorageInterface {
 
 
     private final static Preferences NODE = Preferences.userRoot().node("ch/bailu/aat");
