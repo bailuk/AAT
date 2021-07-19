@@ -22,8 +22,9 @@ public class JNumberView extends JPanel implements OnContentUpdatedInterface {
         setDefaultUnitLabelColor();
 
         description=data;
-
         updateAllText();
+
+        number.setFont(label.getFont().deriveFont(30f));
     }
 
     public void setDefaultUnitLabelColor() {
