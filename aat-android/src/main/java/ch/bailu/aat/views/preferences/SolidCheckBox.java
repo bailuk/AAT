@@ -4,7 +4,7 @@ import android.content.Context;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
 
-import ch.bailu.aat.preferences.SolidBoolean;
+import ch.bailu.aat_lib.preferences.SolidBoolean;
 import ch.bailu.aat.util.ui.ToolTipView;
 import ch.bailu.aat.util.ui.UiTheme;
 

@@ -6,7 +6,7 @@ import android.content.Context;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
-import ch.bailu.aat.preferences.SolidDate;
+import ch.bailu.aat_lib.preferences.SolidDate;
 import ch.bailu.aat.util.ui.UiTheme;
 
 public class SolidDateView extends AbsSolidView {

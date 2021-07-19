@@ -1,12 +1,10 @@
 package ch.bailu.aat.map.layer.grid;
 
-import android.content.SharedPreferences;
-
 import org.mapsforge.core.model.LatLong;
 import org.mapsforge.core.model.Point;
 
-import ch.bailu.aat.coordinates.CH1903Coordinates;
-import ch.bailu.aat.coordinates.MeterCoordinates;
+import ch.bailu.aat_lib.coordinates.CH1903Coordinates;
+import ch.bailu.aat_lib.coordinates.MeterCoordinates;
 import ch.bailu.aat.map.MapContext;
 import ch.bailu.aat_lib.preferences.StorageInterface;
 

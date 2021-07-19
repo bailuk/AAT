@@ -7,8 +7,8 @@ import android.graphics.Point;
 import org.mapsforge.core.model.BoundingBox;
 import org.mapsforge.core.model.LatLong;
 
-import ch.bailu.aat.coordinates.MeterCoordinates;
-import ch.bailu.aat.description.DistanceDescription;
+import ch.bailu.aat_lib.coordinates.MeterCoordinates;
+import ch.bailu.aat_lib.description.DistanceDescription;
 import ch.bailu.aat.map.MapContext;
 import ch.bailu.aat.map.layer.MapLayerInterface;
 import ch.bailu.aat.preferences.Storage;

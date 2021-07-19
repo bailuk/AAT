@@ -2,7 +2,8 @@ package ch.bailu.aat.services.elevation.tile;
 
 import androidx.annotation.NonNull;
 
-import ch.bailu.aat.coordinates.Dem3Coordinates;
+import ch.bailu.aat.preferences.map.SolidDem3Directory;
+import ch.bailu.aat_lib.coordinates.Dem3Coordinates;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.background.BackgroundTask;
 import ch.bailu.aat_lib.service.elevation.ElevationProvider;
@@ -84,7 +85,7 @@ public final class Dem3Tile implements ElevationProvider, DemProvider {
                 status.setStatus(Dem3Status.LOADING);
                 coordinates.coordinates = c;
 
-                Foc file = c.toFile(sc.getContext());
+                Foc file = new SolidDem3Directory(sc.getContext()).toFile(c);
                 loader = new Dem3LoaderTask(file, array, status);
 
 

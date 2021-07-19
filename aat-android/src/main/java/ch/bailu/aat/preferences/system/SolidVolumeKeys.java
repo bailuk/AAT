@@ -1,6 +1,6 @@
 package ch.bailu.aat.preferences.system;
 
-import ch.bailu.aat.preferences.SolidBoolean;
+import ch.bailu.aat_lib.preferences.SolidBoolean;
 import ch.bailu.aat_lib.preferences.StorageInterface;
 import ch.bailu.aat_lib.resources.Res;
 

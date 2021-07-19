@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 import ch.bailu.aat.services.directory.GpxDbConstants;
 import ch.bailu.aat_lib.factory.FocFactory;
+import ch.bailu.aat_lib.preferences.SolidBoolean;
+import ch.bailu.aat_lib.preferences.SolidDate;
 import ch.bailu.aat_lib.preferences.SolidFile;
 import ch.bailu.aat_lib.preferences.SolidInteger;
 import ch.bailu.aat_lib.preferences.StorageInterface;

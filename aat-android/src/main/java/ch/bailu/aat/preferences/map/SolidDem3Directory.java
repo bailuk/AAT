@@ -8,6 +8,7 @@ import ch.bailu.aat.factory.AndroidFocFactory;
 import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat.util.ToDo;
 import ch.bailu.aat.util.fs.AndroidVolumes;
+import ch.bailu.aat_lib.coordinates.Dem3Coordinates;
 import ch.bailu.aat_lib.preferences.SolidFile;
 import ch.bailu.aat_lib.util.fs.AppDirectory;
 import ch.bailu.foc.Foc;
@@ -101,4 +102,19 @@ public class SolidDem3Directory extends SolidFile {
 
         return list;
     }
+
+    /**
+     *
+     * @return a complete file path for a dem3 tile. The base path is taken from configuration.
+     * Example: /sdcard/aat_data/dem3/N16/N16E077.hgt.zip
+     */
+    public Foc toFile(Dem3Coordinates dem3Coordinates) {
+        return toFile(dem3Coordinates, getValueAsFile());
+    }
+
+
+    private Foc toFile(Dem3Coordinates dem3Coordinates, Foc base) {
+        return base.descendant(dem3Coordinates.toExtString() + ".hgt.zip");
+    }
+
 }

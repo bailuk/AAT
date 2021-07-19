@@ -5,26 +5,26 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 
-import ch.bailu.aat.description.AscendDescription;
-import ch.bailu.aat.description.AveragePaceDescription;
-import ch.bailu.aat.description.AveragePaceDescriptionAP;
-import ch.bailu.aat.description.AverageSpeedDescription;
-import ch.bailu.aat.description.AverageSpeedDescriptionAP;
-import ch.bailu.aat.description.CaloriesDescription;
-import ch.bailu.aat.description.ContentDescriptions;
-import ch.bailu.aat.description.DateDescription;
-import ch.bailu.aat.description.DescendDescription;
-import ch.bailu.aat.description.DistanceApDescription;
-import ch.bailu.aat.description.DistanceDescription;
-import ch.bailu.aat.description.EndDateDescription;
-import ch.bailu.aat.description.IndexedAttributeDescription;
-import ch.bailu.aat.description.MaximumSpeedDescription;
-import ch.bailu.aat.description.NameDescription;
-import ch.bailu.aat.description.PathDescription;
-import ch.bailu.aat.description.PauseApDescription;
-import ch.bailu.aat.description.PauseDescription;
-import ch.bailu.aat.description.TimeApDescription;
-import ch.bailu.aat.description.TrackSizeDescription;
+import ch.bailu.aat_lib.description.AscendDescription;
+import ch.bailu.aat_lib.description.AveragePaceDescription;
+import ch.bailu.aat_lib.description.AveragePaceDescriptionAP;
+import ch.bailu.aat_lib.description.AverageSpeedDescription;
+import ch.bailu.aat_lib.description.AverageSpeedDescriptionAP;
+import ch.bailu.aat_lib.description.CaloriesDescription;
+import ch.bailu.aat_lib.description.ContentDescriptions;
+import ch.bailu.aat_lib.description.DateDescription;
+import ch.bailu.aat_lib.description.DescendDescription;
+import ch.bailu.aat_lib.description.DistanceApDescription;
+import ch.bailu.aat_lib.description.DistanceDescription;
+import ch.bailu.aat_lib.description.EndDateDescription;
+import ch.bailu.aat_lib.description.IndexedAttributeDescription;
+import ch.bailu.aat_lib.description.MaximumSpeedDescription;
+import ch.bailu.aat_lib.description.NameDescription;
+import ch.bailu.aat_lib.description.PathDescription;
+import ch.bailu.aat_lib.description.PauseApDescription;
+import ch.bailu.aat_lib.description.PauseDescription;
+import ch.bailu.aat_lib.description.TimeApDescription;
+import ch.bailu.aat_lib.description.TrackSizeDescription;
 import ch.bailu.aat.map.MapFactory;
 import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat.util.ui.AppLayout;
@@ -114,8 +114,8 @@ public class FileContentActivity extends AbsFileContentActivity{
                     new DescendDescription(storage)),
 
                 new ContentDescriptions(
-                    new IndexedAttributeDescription.HeartRate(c),
-                    new IndexedAttributeDescription.HeartBeats(c)),
+                    new IndexedAttributeDescription.HeartRate(),
+                    new IndexedAttributeDescription.HeartBeats()),
 
                 new ContentDescriptions(
                     new IndexedAttributeDescription.Cadence(),

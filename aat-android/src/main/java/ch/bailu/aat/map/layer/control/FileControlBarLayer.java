@@ -6,11 +6,11 @@ import org.mapsforge.core.model.Point;
 
 import ch.bailu.aat.R;
 import ch.bailu.aat.activities.AbsGpxListActivity;
-import ch.bailu.aat.description.AverageSpeedDescription;
-import ch.bailu.aat.description.CaloriesDescription;
-import ch.bailu.aat.description.DateDescription;
-import ch.bailu.aat.description.DistanceDescription;
-import ch.bailu.aat.description.MaximumSpeedDescription;
+import ch.bailu.aat_lib.description.AverageSpeedDescription;
+import ch.bailu.aat_lib.description.CaloriesDescription;
+import ch.bailu.aat_lib.description.DateDescription;
+import ch.bailu.aat_lib.description.DistanceDescription;
+import ch.bailu.aat_lib.description.MaximumSpeedDescription;
 import ch.bailu.aat.factory.AndroidFocFactory;
 import ch.bailu.aat.map.MapContext;
 import ch.bailu.aat.menus.FileMenu;

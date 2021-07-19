@@ -3,11 +3,11 @@ package ch.bailu.aat.activities;
 import android.os.Bundle;
 import android.view.View;
 
-import ch.bailu.aat.description.AverageSpeedDescriptionAP;
-import ch.bailu.aat.description.CurrentSpeedDescription;
-import ch.bailu.aat.description.DistanceDescription;
-import ch.bailu.aat.description.MaximumSpeedDescription;
-import ch.bailu.aat.description.PredictiveTimeDescription;
+import ch.bailu.aat_lib.description.AverageSpeedDescriptionAP;
+import ch.bailu.aat_lib.description.CurrentSpeedDescription;
+import ch.bailu.aat_lib.description.DistanceDescription;
+import ch.bailu.aat_lib.description.MaximumSpeedDescription;
+import ch.bailu.aat_lib.description.PredictiveTimeDescription;
 import ch.bailu.aat.dispatcher.CurrentLocationSource;
 import ch.bailu.aat.dispatcher.EditorSource;
 import ch.bailu.aat.dispatcher.OverlaySource;

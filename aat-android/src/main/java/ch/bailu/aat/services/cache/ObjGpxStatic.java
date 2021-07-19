@@ -2,7 +2,7 @@ package ch.bailu.aat.services.cache;
 
 import android.util.SparseArray;
 
-import ch.bailu.aat.coordinates.Dem3Coordinates;
+import ch.bailu.aat_lib.coordinates.Dem3Coordinates;
 import ch.bailu.aat.gpx.GpxListWalker;
 import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat.services.InsideContext;

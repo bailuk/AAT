@@ -4,7 +4,7 @@ import android.util.SparseArray;
 
 import java.util.ArrayList;
 
-import ch.bailu.aat.coordinates.Dem3Coordinates;
+import ch.bailu.aat_lib.coordinates.Dem3Coordinates;
 import ch.bailu.aat.services.cache.Span;
 
 public final class SubTiles {

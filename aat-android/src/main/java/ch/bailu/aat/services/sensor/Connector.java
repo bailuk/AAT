@@ -4,7 +4,7 @@ import android.content.Context;
 
 import java.io.Closeable;
 
-import ch.bailu.aat.services.sensor.list.SensorState;
+import ch.bailu.aat_lib.service.sensor.SensorState;
 import ch.bailu.aat.util.OldAppBroadcaster;
 import ch.bailu.aat_lib.dispatcher.AppBroadcaster;
 import ch.bailu.aat_lib.gpx.InfoID;

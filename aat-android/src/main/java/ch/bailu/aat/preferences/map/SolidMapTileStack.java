@@ -6,8 +6,8 @@ import ch.bailu.aat.R;
 import ch.bailu.aat.map.tile.source.DownloadSource;
 import ch.bailu.aat.map.tile.source.MapsForgeSource;
 import ch.bailu.aat.map.tile.source.Source;
-import ch.bailu.aat.preferences.SolidBoolean;
-import ch.bailu.aat.preferences.SolidCheckList;
+import ch.bailu.aat_lib.preferences.SolidBoolean;
+import ch.bailu.aat_lib.preferences.SolidCheckList;
 import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat_lib.preferences.StorageInterface;
 

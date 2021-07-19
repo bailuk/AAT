@@ -5,9 +5,9 @@ import android.content.Context;
 import org.mapsforge.core.model.LatLong;
 
 import ch.bailu.aat.R;
-import ch.bailu.aat.coordinates.CH1903Coordinates;
-import ch.bailu.aat.coordinates.OlcCoordinates;
-import ch.bailu.aat.coordinates.WGS84Coordinates;
+import ch.bailu.aat_lib.coordinates.CH1903Coordinates;
+import ch.bailu.aat_lib.coordinates.OlcCoordinates;
+import ch.bailu.aat_lib.coordinates.WGS84Coordinates;
 import ch.bailu.aat.map.MapContext;
 import ch.bailu.aat.map.layer.MapLayerInterface;
 import ch.bailu.aat.map.layer.NullLayer;

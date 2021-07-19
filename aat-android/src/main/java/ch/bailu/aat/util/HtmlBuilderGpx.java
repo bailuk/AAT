@@ -4,9 +4,9 @@ package ch.bailu.aat.util;
 import android.content.Context;
 
 import ch.bailu.aat_lib.description.AltitudeDescription;
-import ch.bailu.aat.description.CurrentSpeedDescription;
-import ch.bailu.aat.description.DistanceDescription;
-import ch.bailu.aat.description.SpeedDescription;
+import ch.bailu.aat_lib.description.CurrentSpeedDescription;
+import ch.bailu.aat_lib.description.DistanceDescription;
+import ch.bailu.aat_lib.description.SpeedDescription;
 import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat_lib.description.ContentDescription;
 import ch.bailu.aat_lib.gpx.GpxInformation;

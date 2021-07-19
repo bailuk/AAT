@@ -2,8 +2,8 @@ package ch.bailu.aat.map.layer.gpx.legend;
 
 import android.content.Context;
 
-import ch.bailu.aat.description.CurrentSpeedDescription;
-import ch.bailu.aat.description.SpeedDescription;
+import ch.bailu.aat_lib.description.CurrentSpeedDescription;
+import ch.bailu.aat_lib.description.SpeedDescription;
 import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat_lib.gpx.GpxList;
 import ch.bailu.aat_lib.gpx.GpxPointNode;

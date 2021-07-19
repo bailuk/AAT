@@ -8,7 +8,7 @@ public final class Dem3Coordinates {
     private final static double REF_LO_2=8d;
 
 
-    protected ch.bailu.aat.coordinates.Dem3Coordinates coordinates = new ch.bailu.aat.coordinates.Dem3Coordinates(0,0);
+    protected ch.bailu.aat_lib.coordinates.Dem3Coordinates coordinates = new ch.bailu.aat_lib.coordinates.Dem3Coordinates(0,0);
 
 
     public float getCellsize() {

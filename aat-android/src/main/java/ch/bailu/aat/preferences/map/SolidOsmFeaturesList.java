@@ -3,7 +3,7 @@ package ch.bailu.aat.preferences.map;
 
 import android.content.Context;
 
-import ch.bailu.aat.preferences.SolidBoolean;
+import ch.bailu.aat_lib.preferences.SolidBoolean;
 import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat.services.cache.CacheService;
 import ch.bailu.aat.services.cache.osm_features.ObjMapFeatures;

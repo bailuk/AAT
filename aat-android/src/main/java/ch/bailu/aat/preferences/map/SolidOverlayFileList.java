@@ -3,7 +3,7 @@ package ch.bailu.aat.preferences.map;
 import android.content.Context;
 
 import ch.bailu.aat.R;
-import ch.bailu.aat.preferences.SolidCheckList;
+import ch.bailu.aat_lib.preferences.SolidCheckList;
 import ch.bailu.aat_lib.preferences.StorageInterface;
 import ch.bailu.aat_lib.resources.Res;
 

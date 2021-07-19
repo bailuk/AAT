@@ -3,12 +3,12 @@ package ch.bailu.aat.activities;
 import android.content.Intent;
 
 import ch.bailu.aat.R;
-import ch.bailu.aat.description.AverageSpeedDescription;
-import ch.bailu.aat.description.DateDescription;
-import ch.bailu.aat.description.DistanceDescription;
-import ch.bailu.aat.description.MaximumSpeedDescription;
-import ch.bailu.aat.description.NameDescription;
-import ch.bailu.aat.description.TrackSizeDescription;
+import ch.bailu.aat_lib.description.AverageSpeedDescription;
+import ch.bailu.aat_lib.description.DateDescription;
+import ch.bailu.aat_lib.description.DistanceDescription;
+import ch.bailu.aat_lib.description.MaximumSpeedDescription;
+import ch.bailu.aat_lib.description.NameDescription;
+import ch.bailu.aat_lib.description.TrackSizeDescription;
 import ch.bailu.aat.preferences.system.AndroidSolidDataDirectory;
 import ch.bailu.aat_lib.description.ContentDescription;
 import ch.bailu.aat_lib.description.TimeDescription;

@@ -1,8 +1,6 @@
 package ch.bailu.aat.services.location;
 
-import android.content.Context;
-
-import ch.bailu.aat.preferences.location.SolidAdjustGpsAltitude;
+import ch.bailu.aat_lib.preferences.location.SolidAdjustGpsAltitude;
 import ch.bailu.aat.preferences.location.SolidAdjustGpsAltitudeValue;
 import ch.bailu.aat.preferences.location.SolidProvideAltitude;
 import ch.bailu.aat_lib.preferences.StorageInterface;

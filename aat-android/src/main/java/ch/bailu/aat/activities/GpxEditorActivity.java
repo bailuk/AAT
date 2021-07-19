@@ -6,10 +6,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
-import ch.bailu.aat.description.DistanceDescription;
-import ch.bailu.aat.description.NameDescription;
-import ch.bailu.aat.description.PathDescription;
-import ch.bailu.aat.description.TrackSizeDescription;
+import ch.bailu.aat_lib.description.DistanceDescription;
+import ch.bailu.aat_lib.description.NameDescription;
+import ch.bailu.aat_lib.description.PathDescription;
+import ch.bailu.aat_lib.description.TrackSizeDescription;
 import ch.bailu.aat.map.MapFactory;
 import ch.bailu.aat.util.ui.AppLayout;
 import ch.bailu.aat.util.ui.AppTheme;

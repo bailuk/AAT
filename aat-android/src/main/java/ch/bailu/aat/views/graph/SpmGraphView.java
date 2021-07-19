@@ -3,9 +3,9 @@ package ch.bailu.aat.views.graph;
 import android.content.Context;
 import android.graphics.Canvas;
 
-import ch.bailu.aat.description.CadenceDescription;
-import ch.bailu.aat.description.HeartRateDescription;
-import ch.bailu.aat.description.StepRateDescription;
+import ch.bailu.aat_lib.description.CadenceDescription;
+import ch.bailu.aat_lib.description.HeartRateDescription;
+import ch.bailu.aat_lib.description.StepRateDescription;
 import ch.bailu.aat.dispatcher.DispatcherInterface;
 import ch.bailu.aat.gpx.GpxListWalker;
 import ch.bailu.aat.util.ui.AppDensity;

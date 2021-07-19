@@ -6,8 +6,8 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 
 import ch.bailu.aat.R;
-import ch.bailu.aat.description.AverageSpeedDescription;
-import ch.bailu.aat.description.AverageSpeedDescriptionAP;
+import ch.bailu.aat_lib.description.AverageSpeedDescription;
+import ch.bailu.aat_lib.description.AverageSpeedDescriptionAP;
 import ch.bailu.aat.dispatcher.DispatcherInterface;
 import ch.bailu.aat.gpx.GpxDistanceWindow;
 import ch.bailu.aat.gpx.GpxListWalker;

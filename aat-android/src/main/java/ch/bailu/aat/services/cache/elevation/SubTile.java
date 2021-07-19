@@ -3,7 +3,7 @@ package ch.bailu.aat.services.cache.elevation;
 import android.graphics.Rect;
 import androidx.annotation.NonNull;
 
-import ch.bailu.aat.coordinates.Dem3Coordinates;
+import ch.bailu.aat_lib.coordinates.Dem3Coordinates;
 import ch.bailu.aat.services.cache.Span;
 
 public final class SubTile {

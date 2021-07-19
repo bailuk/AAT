@@ -2,7 +2,7 @@ package ch.bailu.aat.services.elevation.loader;
 
 import java.io.Closeable;
 
-import ch.bailu.aat.coordinates.Dem3Coordinates;
+import ch.bailu.aat_lib.coordinates.Dem3Coordinates;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.elevation.tile.Dem3Status;
 import ch.bailu.aat.services.elevation.tile.Dem3Tile;

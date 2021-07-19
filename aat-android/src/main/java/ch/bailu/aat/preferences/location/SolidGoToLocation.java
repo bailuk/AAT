@@ -4,11 +4,11 @@ import android.content.Context;
 
 import org.mapsforge.core.model.LatLong;
 
-import ch.bailu.aat.coordinates.CH1903Coordinates;
-import ch.bailu.aat.coordinates.Coordinates;
-import ch.bailu.aat.coordinates.OlcCoordinates;
-import ch.bailu.aat.coordinates.UTMCoordinates;
-import ch.bailu.aat.coordinates.WGS84Coordinates;
+import ch.bailu.aat_lib.coordinates.CH1903Coordinates;
+import ch.bailu.aat_lib.coordinates.Coordinates;
+import ch.bailu.aat_lib.coordinates.OlcCoordinates;
+import ch.bailu.aat_lib.coordinates.UTMCoordinates;
+import ch.bailu.aat_lib.coordinates.WGS84Coordinates;
 import ch.bailu.aat.map.MapViewInterface;
 import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat.views.preferences.SolidTextInputDialog;

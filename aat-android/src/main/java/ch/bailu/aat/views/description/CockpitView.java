@@ -5,10 +5,10 @@ import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 
-import ch.bailu.aat.description.AltitudeConfigurationDescription;
-import ch.bailu.aat.description.CadenceDescription;
-import ch.bailu.aat.description.HeartRateDescription;
-import ch.bailu.aat.description.PowerDescription;
+import ch.bailu.aat_lib.description.AltitudeConfigurationDescription;
+import ch.bailu.aat_lib.description.CadenceDescription;
+import ch.bailu.aat_lib.description.HeartRateDescription;
+import ch.bailu.aat_lib.description.PowerDescription;
 import ch.bailu.aat.dispatcher.DispatcherInterface;
 import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat.preferences.location.SolidProvideAltitude;

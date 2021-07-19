@@ -4,7 +4,8 @@ import android.content.Context;
 import android.view.View;
 
 import ch.bailu.aat.preferences.Storage;
-import ch.bailu.aat.services.sensor.list.SensorState;
+import ch.bailu.aat_lib.preferences.location.SolidAdjustGpsAltitude;
+import ch.bailu.aat_lib.service.sensor.SensorState;
 import ch.bailu.aat.views.preferences.SolidTextInputDialog;
 import ch.bailu.aat_lib.gpx.InfoID;
 import ch.bailu.aat_lib.preferences.StorageInterface;

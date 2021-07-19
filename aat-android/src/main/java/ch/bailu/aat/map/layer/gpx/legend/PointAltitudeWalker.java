@@ -2,7 +2,7 @@ package ch.bailu.aat.map.layer.gpx.legend;
 
 import android.content.Context;
 
-import ch.bailu.aat.description.DistanceDescription;
+import ch.bailu.aat_lib.description.DistanceDescription;
 import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat_lib.gpx.GpxPointNode;
 import ch.bailu.aat_lib.gpx.GpxSegmentNode;
