@@ -10,6 +10,7 @@ import ch.bailu.aat.services.editor.EditorInterface;
 import ch.bailu.aat.util.AppIntent;
 import ch.bailu.aat.util.OldAppBroadcaster;
 import ch.bailu.aat_lib.dispatcher.AppBroadcaster;
+import ch.bailu.aat_lib.dispatcher.ContentSource;
 import ch.bailu.aat_lib.gpx.GpxInformation;
 import ch.bailu.foc.Foc;
 

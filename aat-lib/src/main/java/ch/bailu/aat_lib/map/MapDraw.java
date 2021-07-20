@@ -30,4 +30,6 @@ public interface MapDraw {
 
     void edge(TwoNodes nodes, Paint paint);
     void label(String text, Point pixel, Paint background, Paint frame);
+
+    Paint createPaint();
 }

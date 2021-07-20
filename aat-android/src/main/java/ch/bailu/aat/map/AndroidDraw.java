@@ -204,5 +204,10 @@ public final class AndroidDraw implements MapDraw {
         return AndroidGraphicFactory.getPaint(p);
     }
 
+    @Override
+    public Paint createPaint() {
+        return AndroidGraphicFactory.INSTANCE.createPaint();
+    }
+
 
 }

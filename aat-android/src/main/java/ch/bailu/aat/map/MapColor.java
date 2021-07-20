@@ -5,6 +5,7 @@ import android.graphics.Color;
 
 import ch.bailu.aat.util.ui.AppTheme;
 import ch.bailu.aat.util.ui.UiTheme;
+import ch.bailu.aat_lib.app.AppColor;
 import ch.bailu.aat_lib.gpx.InfoID;
 
 public final class MapColor {
@@ -57,7 +58,7 @@ public final class MapColor {
 
 
     public static int getColorFromIID(int iid) {
-        final int OVERLAY_COUNT = AppTheme.OVERLAY_COLOR.length;
+        final int OVERLAY_COUNT = AppColor.OVERLAY_COLOR.length;
 
         if (iid== InfoID.TRACKER)
             return theme.getHighlightColor();
@@ -65,18 +66,18 @@ public final class MapColor {
         if (iid >= InfoID.OVERLAY && iid < InfoID.OVERLAY + OVERLAY_COUNT) {
             int slot =  iid - InfoID.OVERLAY;
 
-            return AppTheme.OVERLAY_COLOR[slot];
+            return AppColor.OVERLAY_COLOR[slot];
         }
 
         if (iid == InfoID.EDITOR_DRAFT)
-            return AppTheme.HL_GREEN;
+            return AppColor.HL_GREEN;
 
         if (iid == InfoID.EDITOR_OVERLAY)
             return Color.MAGENTA; //AppTheme.getHighlightColor3();
 
 
         if (iid == InfoID.FILEVIEW)
-            return AppTheme.HL_BLUE;
+            return AppColor.HL_BLUE;
 
 
 

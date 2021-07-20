@@ -3,7 +3,7 @@ package ch.bailu.aat.map.layer.control;
 import android.view.View;
 
 import ch.bailu.aat.R;
-import ch.bailu.aat.dispatcher.DispatcherInterface;
+import ch.bailu.aat_lib.dispatcher.DispatcherInterface;
 import ch.bailu.aat_lib.map.MapContext;
 import ch.bailu.aat.map.To;
 import ch.bailu.aat.menus.LocationMenu;

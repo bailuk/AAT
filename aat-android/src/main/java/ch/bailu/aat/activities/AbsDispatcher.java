@@ -2,9 +2,9 @@ package ch.bailu.aat.activities;
 
 import android.os.Bundle;
 
-import ch.bailu.aat.dispatcher.ContentSource;
+import ch.bailu.aat_lib.dispatcher.ContentSource;
 import ch.bailu.aat.dispatcher.Dispatcher;
-import ch.bailu.aat.dispatcher.DispatcherInterface;
+import ch.bailu.aat_lib.dispatcher.DispatcherInterface;
 import ch.bailu.aat.dispatcher.LifeCycleDispatcher;
 import ch.bailu.aat_lib.dispatcher.LifeCycleInterface;
 import ch.bailu.aat.util.AbsServiceLink;

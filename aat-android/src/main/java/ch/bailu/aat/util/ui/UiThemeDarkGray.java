@@ -7,6 +7,8 @@ import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import ch.bailu.aat_lib.app.AppColor;
+
 public class UiThemeDarkGray extends UiThemeDark {
     public UiThemeDarkGray(int hl_color) {
         super(hl_color);
@@ -73,7 +75,7 @@ public class UiThemeDarkGray extends UiThemeDark {
 
     @Override
     public void toolTip(TextView v) {
-        v.setTextColor(AppTheme.HL_BLUE);
+        v.setTextColor(AppColor.HL_BLUE);
     }
 
     @Override

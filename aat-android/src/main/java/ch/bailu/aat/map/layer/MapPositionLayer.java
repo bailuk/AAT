@@ -3,7 +3,7 @@ package ch.bailu.aat.map.layer;
 import org.mapsforge.core.model.LatLong;
 import org.mapsforge.core.model.Point;
 
-import ch.bailu.aat.dispatcher.DispatcherInterface;
+import ch.bailu.aat_lib.dispatcher.DispatcherInterface;
 import ch.bailu.aat_lib.map.MapContext;
 import ch.bailu.aat.map.To;
 import ch.bailu.aat.preferences.Storage;
@@ -27,11 +27,11 @@ public final class MapPositionLayer implements MapLayerInterface, OnContentUpdat
 
     private LatLong gpsLocation = new LatLong(0,0);
 
-    private final Storage storage;
+    private final StorageInterface storage;
 
-    public MapPositionLayer(MapContext mc, DispatcherInterface d) {
+    public MapPositionLayer(MapContext mc, StorageInterface storage, DispatcherInterface d) {
         mcontext = mc;
-        storage = new Storage(To.context(mcontext));
+        this.storage = storage;
 
         slock = new SolidPositionLock(storage, mcontext.getSolidKey());
 

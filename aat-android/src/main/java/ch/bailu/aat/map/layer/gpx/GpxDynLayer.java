@@ -2,7 +2,7 @@ package ch.bailu.aat.map.layer.gpx;
 
 import org.mapsforge.core.model.Point;
 
-import ch.bailu.aat.dispatcher.DispatcherInterface;
+import ch.bailu.aat_lib.dispatcher.DispatcherInterface;
 import ch.bailu.aat.gpx.GpxInformationCache;
 import ch.bailu.aat_lib.map.MapContext;
 import ch.bailu.aat.map.To;

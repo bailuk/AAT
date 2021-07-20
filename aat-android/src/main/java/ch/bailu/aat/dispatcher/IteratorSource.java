@@ -21,6 +21,7 @@ import ch.bailu.aat.services.directory.IteratorSummary;
 import ch.bailu.aat.util.AppIntent;
 import ch.bailu.aat.util.OldAppBroadcaster;
 import ch.bailu.aat_lib.dispatcher.AppBroadcaster;
+import ch.bailu.aat_lib.dispatcher.ContentSource;
 import ch.bailu.aat_lib.gpx.GpxInformation;
 
 public abstract class IteratorSource extends ContentSource implements OnCursorChangedListener {

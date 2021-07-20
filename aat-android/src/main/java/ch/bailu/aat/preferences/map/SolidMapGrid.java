@@ -8,7 +8,7 @@ import ch.bailu.aat.R;
 import ch.bailu.aat_lib.map.MapContext;
 import ch.bailu.aat.map.To;
 import ch.bailu.aat_lib.map.layer.MapLayerInterface;
-import ch.bailu.aat.map.layer.NullLayer;
+import ch.bailu.aat_lib.map.layer.NullLayer;
 import ch.bailu.aat.map.layer.grid.CH1903CenterCoordinatesLayer;
 import ch.bailu.aat.map.layer.grid.CH1903GridLayer;
 import ch.bailu.aat.map.layer.grid.PlusCodesCenterCoordinatesLayer;

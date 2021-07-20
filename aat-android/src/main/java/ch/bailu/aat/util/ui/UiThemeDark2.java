@@ -3,6 +3,8 @@ package ch.bailu.aat.util.ui;
 import android.graphics.Color;
 import android.widget.TextView;
 
+import ch.bailu.aat_lib.app.AppColor;
+
 public class UiThemeDark2 extends UiThemeDark {
 
     public UiThemeDark2(int hl_color) {
@@ -23,7 +25,7 @@ public class UiThemeDark2 extends UiThemeDark {
 
     @Override
     public void header(TextView v) {
-        v.setTextColor(AppTheme.HL_BLUE);
+        v.setTextColor(AppColor.HL_BLUE);
         v.setTextSize(HEADER_TEXT_SIZE);
     }
 }

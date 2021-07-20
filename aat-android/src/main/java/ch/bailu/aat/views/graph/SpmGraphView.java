@@ -3,15 +3,15 @@ package ch.bailu.aat.views.graph;
 import android.content.Context;
 import android.graphics.Canvas;
 
-import ch.bailu.aat_lib.description.CadenceDescription;
-import ch.bailu.aat_lib.description.HeartRateDescription;
-import ch.bailu.aat_lib.description.StepRateDescription;
-import ch.bailu.aat.dispatcher.DispatcherInterface;
+import ch.bailu.aat_lib.dispatcher.DispatcherInterface;
 import ch.bailu.aat.gpx.GpxListWalker;
 import ch.bailu.aat.util.ui.AndroidAppDensity;
-import ch.bailu.aat.util.ui.AppTheme;
 import ch.bailu.aat.util.ui.UiTheme;
+import ch.bailu.aat_lib.app.AppColor;
+import ch.bailu.aat_lib.description.CadenceDescription;
 import ch.bailu.aat_lib.description.ContentDescription;
+import ch.bailu.aat_lib.description.HeartRateDescription;
+import ch.bailu.aat_lib.description.StepRateDescription;
 import ch.bailu.aat_lib.gpx.GpxList;
 import ch.bailu.aat_lib.gpx.GpxPointNode;
 import ch.bailu.aat_lib.gpx.GpxSegmentNode;
@@ -30,18 +30,18 @@ public class SpmGraphView extends AbsGraphView {
 
     private Entry[] createEntries() {
         return new Entry[]{
-                new Entry(AppTheme.HL_BLUE,
+                new Entry(AppColor.HL_BLUE,
                         new HeartRateDescription(),
                         SampleRate.HeartRate.INDEX_MAX_HR,
                         SampleRate.HeartRate.GPX_KEYS),
 
-                new Entry(AppTheme.HL_GREEN,
+                new Entry(AppColor.HL_GREEN,
                         new CadenceDescription(),
                         SampleRate.Cadence.INDEX_MAX_CADENCE,
                         SampleRate.Cadence.GPX_KEYS),
 
 
-                new Entry(AppTheme.HL_ORANGE,
+                new Entry(AppColor.HL_ORANGE,
                         new StepRateDescription(),
                         SampleRate.StepsRate.INDEX_MAX_SPM,
                         SampleRate.StepsRate.GPX_KEYS)

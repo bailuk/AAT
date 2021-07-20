@@ -1,4 +1,4 @@
-package ch.bailu.aat.dispatcher;
+package ch.bailu.aat_lib.dispatcher;
 
 import ch.bailu.aat_lib.dispatcher.OnContentUpdatedInterface;
 

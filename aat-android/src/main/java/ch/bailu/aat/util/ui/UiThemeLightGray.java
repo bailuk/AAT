@@ -6,6 +6,8 @@ import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import ch.bailu.aat_lib.app.AppColor;
+
 public class UiThemeLightGray implements  UiTheme {
 
     public static final int DARK_TEXT = 0xFF24292e;
@@ -32,7 +34,7 @@ public class UiThemeLightGray implements  UiTheme {
 
     @Override
     public void button(View v) {
-        v.setBackgroundDrawable(AppTheme.getButtonDrawable(LIGHT_GRAY, AppTheme.HL_GREEN));
+        v.setBackgroundDrawable(AppTheme.getButtonDrawable(LIGHT_GRAY, AppColor.HL_GREEN));
     }
 
     @Override
@@ -75,7 +77,7 @@ public class UiThemeLightGray implements  UiTheme {
 
     @Override
     public int getHighlightColor() {
-        return AppTheme.HL_GREEN;
+        return AppColor.HL_GREEN;
     }
 
     @Override

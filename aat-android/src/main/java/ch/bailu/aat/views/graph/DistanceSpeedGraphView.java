@@ -6,15 +6,15 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 
 import ch.bailu.aat.R;
-import ch.bailu.aat_lib.description.AverageSpeedDescription;
-import ch.bailu.aat_lib.description.AverageSpeedDescriptionAP;
-import ch.bailu.aat.dispatcher.DispatcherInterface;
+import ch.bailu.aat_lib.dispatcher.DispatcherInterface;
 import ch.bailu.aat.gpx.GpxDistanceWindow;
 import ch.bailu.aat.gpx.GpxListWalker;
 import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat.util.ui.AndroidAppDensity;
-import ch.bailu.aat.util.ui.AppTheme;
 import ch.bailu.aat.util.ui.UiTheme;
+import ch.bailu.aat_lib.app.AppColor;
+import ch.bailu.aat_lib.description.AverageSpeedDescription;
+import ch.bailu.aat_lib.description.AverageSpeedDescriptionAP;
 import ch.bailu.aat_lib.gpx.GpxList;
 import ch.bailu.aat_lib.gpx.GpxPointNode;
 import ch.bailu.aat_lib.gpx.GpxSegmentNode;
@@ -37,8 +37,8 @@ public class DistanceSpeedGraphView extends AbsGraphView implements SharedPrefer
 
     private void setLabelText(Context context) {
         ylabel.setText(Color.WHITE, R.string.speed, sunit.getSpeedUnit());
-        ylabel.setText(AppTheme.HL_BLUE, new AverageSpeedDescriptionAP(new Storage(context)).getLabel());
-        ylabel.setText(AppTheme.HL_GREEN, new AverageSpeedDescription(new Storage(context)).getLabel());
+        ylabel.setText(AppColor.HL_BLUE, new AverageSpeedDescriptionAP(new Storage(context)).getLabel());
+        ylabel.setText(AppColor.HL_GREEN, new AverageSpeedDescription(new Storage(context)).getLabel());
     }
 
 
@@ -47,7 +47,7 @@ public class DistanceSpeedGraphView extends AbsGraphView implements SharedPrefer
         GraphPlotter[] plotter = initPlotter(canvas, list);
         GpxDistanceWindow window = new GpxDistanceWindow(list);
 
-        ylabel.setText(AppTheme.HL_ORANGE,
+        ylabel.setText(AppColor.HL_ORANGE,
                 window.getLimitAsString(getContext()));
 
         new GraphPainter(plotter, getAutoPause(), getMinDistance(list), window)
@@ -173,7 +173,7 @@ public class DistanceSpeedGraphView extends AbsGraphView implements SharedPrefer
         private void plotAverage() {
             if (window.getTimeDelta() > 0) {
                 float avg=window.getSpeed();
-                plotter[0].plotData(totalDistance, avg, AppTheme.HL_ORANGE);
+                plotter[0].plotData(totalDistance, avg, AppColor.HL_ORANGE);
             }
         }
 
@@ -183,10 +183,10 @@ public class DistanceSpeedGraphView extends AbsGraphView implements SharedPrefer
 
             if (timeDelta > 0) {
                 float avg = totalDistance / totalTime * 1000;
-                plotter[1].plotData(totalDistance, avg, AppTheme.HL_GREEN);
+                plotter[1].plotData(totalDistance, avg, AppColor.HL_GREEN);
 
                 float avgAp=totalDistance / timeDelta * 1000;
-                plotter[2].plotData(totalDistance, avgAp, AppTheme.HL_BLUE);
+                plotter[2].plotData(totalDistance, avgAp, AppColor.HL_BLUE);
 
             }
         }

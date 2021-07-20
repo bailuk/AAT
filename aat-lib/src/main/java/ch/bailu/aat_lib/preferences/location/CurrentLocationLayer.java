@@ -1,19 +1,17 @@
-package ch.bailu.aat.map.layer;
+package ch.bailu.aat_lib.preferences.location;
 
-
-import android.graphics.Color;
 
 import org.mapsforge.core.graphics.Paint;
 import org.mapsforge.core.graphics.Style;
 import org.mapsforge.core.model.LatLong;
-import org.mapsforge.map.android.graphics.AndroidGraphicFactory;
 
-import ch.bailu.aat.dispatcher.DispatcherInterface;
-import ch.bailu.aat_lib.map.MapContext;
-import ch.bailu.aat.util.ui.AppTheme;
+import ch.bailu.aat_lib.app.AppColor;
+import ch.bailu.aat_lib.dispatcher.DispatcherInterface;
 import ch.bailu.aat_lib.dispatcher.OnContentUpdatedInterface;
 import ch.bailu.aat_lib.gpx.GpxInformation;
 import ch.bailu.aat_lib.gpx.InfoID;
+import ch.bailu.aat_lib.map.ARGB;
+import ch.bailu.aat_lib.map.MapContext;
 import ch.bailu.aat_lib.map.Point;
 import ch.bailu.aat_lib.map.layer.MapLayerInterface;
 import ch.bailu.aat_lib.preferences.StorageInterface;
@@ -22,11 +20,11 @@ public final class CurrentLocationLayer implements OnContentUpdatedInterface, Ma
     private static final int MIN_RADIUS=7;
     private final static int STROKE_WIDTH=2;
 
-    private final static Satturate COLOR = new Satturate(AppTheme.bar.getHighlightColor());
+    private final static Saturate COLOR = new Saturate(AppColor.HL_ORANGE);
 
     private GpxInformation center = GpxInformation.NULL;
 
-    private final Paint paint = AndroidGraphicFactory.INSTANCE.createPaint();
+    private final Paint paint;
 
     private final MapContext mcontext;
 
@@ -35,6 +33,7 @@ public final class CurrentLocationLayer implements OnContentUpdatedInterface, Ma
     public CurrentLocationLayer(MapContext mc, DispatcherInterface d) {
         mcontext = mc;
 
+        paint = mc.draw().createPaint();
         paint.setStyle(Style.STROKE);
         paint.setStrokeWidth(STROKE_WIDTH);
         //paint.setColor(AppTheme.getHighlightColor());
@@ -45,24 +44,22 @@ public final class CurrentLocationLayer implements OnContentUpdatedInterface, Ma
     }
 
 
-    private static class Satturate {
+    private static class Saturate {
         private final static int STEPS=60;
 
         private final short[] r = new short[STEPS];
         private final short[] g = new short[STEPS];
         private final short[] b = new short[STEPS];
 
+        private final ARGB rgb;
+        public Saturate(int c) {
+            rgb = new ARGB(c);
 
-        public Satturate(int c) {
-            int r = Color.red(c);
-            int g = Color.green(c);
-            int b = Color.blue(c);
+            int max = Math.max(rgb.r, Math.max(rgb.g,rgb.b));
 
-            int max = Math.max(r, Math.max(g,b));
-
-            fill(r, max, this.r);
-            fill(g, max, this.g);
-            fill(b, max, this.b);
+            fill(rgb.r, max, r);
+            fill(rgb.g, max, g);
+            fill(rgb.b, max, b);
         }
 
 
@@ -84,8 +81,7 @@ public final class CurrentLocationLayer implements OnContentUpdatedInterface, Ma
 
         public int color(int i) {
             i = Math.min(STEPS-1, Math.abs(i));
-
-            return Color.rgb(r[i], g[i], b[i]);
+            return new ARGB(rgb.a, r[i], g[i], b[i]).toInt();
         }
     }
 

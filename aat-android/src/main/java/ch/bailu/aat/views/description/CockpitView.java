@@ -9,7 +9,7 @@ import ch.bailu.aat_lib.description.AltitudeConfigurationDescription;
 import ch.bailu.aat_lib.description.CadenceDescription;
 import ch.bailu.aat_lib.description.HeartRateDescription;
 import ch.bailu.aat_lib.description.PowerDescription;
-import ch.bailu.aat.dispatcher.DispatcherInterface;
+import ch.bailu.aat_lib.dispatcher.DispatcherInterface;
 import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat.preferences.location.SolidProvideAltitude;
 import ch.bailu.aat.util.ui.UiTheme;

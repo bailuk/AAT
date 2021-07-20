@@ -5,7 +5,7 @@ import android.view.View;
 import org.mapsforge.core.model.LatLong;
 
 import ch.bailu.aat.R;
-import ch.bailu.aat.dispatcher.DispatcherInterface;
+import ch.bailu.aat_lib.dispatcher.DispatcherInterface;
 import ch.bailu.aat.dispatcher.EditorSourceInterface;
 import ch.bailu.aat_lib.map.MapContext;
 import ch.bailu.aat.map.To;

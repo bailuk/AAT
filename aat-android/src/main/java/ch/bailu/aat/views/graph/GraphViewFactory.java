@@ -2,7 +2,7 @@ package ch.bailu.aat.views.graph;
 
 import android.content.Context;
 
-import ch.bailu.aat.dispatcher.DispatcherInterface;
+import ch.bailu.aat_lib.dispatcher.DispatcherInterface;
 import ch.bailu.aat.util.ui.UiTheme;
 import ch.bailu.aat.views.PercentageLayout;
 

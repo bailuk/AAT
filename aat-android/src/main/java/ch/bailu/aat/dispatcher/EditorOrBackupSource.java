@@ -3,6 +3,7 @@ package ch.bailu.aat.dispatcher;
 import ch.bailu.aat.gpx.GpxFileWrapper;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.editor.EditorInterface;
+import ch.bailu.aat_lib.dispatcher.ContentSource;
 import ch.bailu.aat_lib.dispatcher.OnContentUpdatedInterface;
 import ch.bailu.aat_lib.gpx.GpxInformation;
 import ch.bailu.aat_lib.gpx.GpxList;
