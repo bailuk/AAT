@@ -12,8 +12,9 @@ import org.mapsforge.map.view.MapView;
 import ch.bailu.aat_lib.coordinates.BoundingBoxE6;
 import ch.bailu.aat_lib.coordinates.LatLongE6;
 import ch.bailu.aat_lib.coordinates.LatLongInterface;
+import ch.bailu.aat_lib.logger.AppLog;
 
-public class MapsForgeMetrics implements MapMetrics {
+public final class MapsForgeMetrics implements MapMetrics {
 
     private org.mapsforge.core.model.Point tl;
     private byte zoom = 0;
@@ -43,7 +44,7 @@ public class MapsForgeMetrics implements MapMetrics {
         bounding = b;
         tl = p;
         zoom=z;
-
+        AppLog.d(this, b.toString() + " " + dim.toString());
         distances.init(bounding, dim);
         center = new Point(dim.width/2, dim.height/2);
     }
@@ -103,6 +104,7 @@ public class MapsForgeMetrics implements MapMetrics {
 
     @Override
     public Point getCenterPixel() {
+        AppLog.d(this, ""  + center.x + " " + center.y);
         return center;
     }
     @Override

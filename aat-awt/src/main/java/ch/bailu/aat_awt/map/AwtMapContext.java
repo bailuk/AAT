@@ -61,4 +61,6 @@ public class AwtMapContext extends Layer implements MapContext {
         metrics.init(boundingBox, zoomLevel, canvas, topLeftPoint);
         draw.init(canvas, metrics);
     }
+
+
 }

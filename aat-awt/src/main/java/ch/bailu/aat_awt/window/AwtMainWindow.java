@@ -46,6 +46,8 @@ import ch.bailu.aat_lib.dispatcher.OnContentUpdatedInterface;
 import ch.bailu.aat_lib.dispatcher.TrackerSource;
 import ch.bailu.aat_lib.gpx.GpxInformation;
 import ch.bailu.aat_lib.gpx.InfoID;
+import ch.bailu.aat_lib.map.layer.grid.CH1903GridLayer;
+import ch.bailu.aat_lib.map.layer.grid.Crosshair;
 import ch.bailu.aat_lib.preferences.location.CurrentLocationLayer;
 import ch.bailu.aat_lib.service.ServicesInterface;
 
@@ -177,6 +179,8 @@ public class AwtMainWindow implements OnContentUpdatedInterface {
         dispatcher.addSource(new TrackerSource(services, broadcaster));
 
         map.add(new CurrentLocationLayer(map.getMContext(), new Dispatcher()));
+        map.add(new CH1903GridLayer(new AwtStorage()));
+        map.add(new Crosshair());
     }
 
     private void doZoomOut() {

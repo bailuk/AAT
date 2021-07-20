@@ -5,6 +5,7 @@ import ch.bailu.aat_lib.dispatcher.Broadcaster;
 import ch.bailu.aat_lib.gpx.GpxInformation;
 import ch.bailu.aat_lib.preferences.SolidFactory;
 import ch.bailu.aat_lib.service.ServicesInterface;
+import ch.bailu.aat_lib.service.elevation.ElevetionServiceInterface;
 import ch.bailu.aat_lib.service.location.LocationService;
 import ch.bailu.aat_lib.service.location.LocationServiceInterface;
 import ch.bailu.aat_lib.service.sensor.SensorServiceInterface;
@@ -34,6 +35,19 @@ public class AwtServices implements ServicesInterface {
     @Override
     public void free(String simpleName) {
 
+    }
+
+    @Override
+    public boolean lock() {
+        return true;
+    }
+
+    @Override
+    public void free() {}
+
+    @Override
+    public ElevetionServiceInterface getElevationService() {
+        return null;
     }
 
     @Override

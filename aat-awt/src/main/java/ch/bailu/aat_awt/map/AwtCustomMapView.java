@@ -1,5 +1,6 @@
 package ch.bailu.aat_awt.map;
 
+import org.mapsforge.core.graphics.Canvas;
 import org.mapsforge.core.graphics.GraphicFactory;
 import org.mapsforge.core.model.BoundingBox;
 import org.mapsforge.core.model.LatLong;
@@ -28,6 +29,7 @@ import org.mapsforge.map.model.common.PreferencesFacade;
 import org.mapsforge.map.reader.MapFile;
 import org.mapsforge.map.rendertheme.InternalRenderTheme;
 
+import java.awt.Graphics;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -37,6 +39,7 @@ import java.util.prefs.Preferences;
 import javax.swing.JButton;
 
 import ch.bailu.aat_lib.coordinates.BoundingBoxE6;
+import ch.bailu.aat_lib.map.AppDensity;
 import ch.bailu.aat_lib.map.MapContext;
 import ch.bailu.aat_lib.map.MapViewInterface;
 import ch.bailu.aat_lib.map.layer.MapLayerInterface;
@@ -46,7 +49,8 @@ public class AwtCustomMapView extends MapView implements MapViewInterface {
     private static final boolean SHOW_DEBUG_LAYERS = true;
     private static final boolean SHOW_RASTER_MAP = false;
 
-    private final AwtMapContext mcontext;
+    private final AwtMapContext bgMapContext;
+    private final AwtMapContextForeground fgMapContext;
 
 
     private final ArrayList<MapLayerInterface> layers = new ArrayList<>(10);
@@ -61,8 +65,10 @@ public class AwtCustomMapView extends MapView implements MapViewInterface {
 
     public AwtCustomMapView(List<File> mapFiles) {
 
-        mcontext = new AwtMapContext(this, this.getClass().getSimpleName());
-        addLayer(mcontext);
+        bgMapContext = new AwtMapContext(this, this.getClass().getSimpleName());
+        fgMapContext = new AwtMapContextForeground(this, bgMapContext, new AppDensity(), layers);
+
+        addLayer(bgMapContext);
 
 
         getMapScaleBar().setVisible(true);
@@ -195,13 +201,13 @@ public class AwtCustomMapView extends MapView implements MapViewInterface {
 
     @Override
     public void add(MapLayerInterface l) {
-        addLayer(new AwtLayerWrapper(mcontext, l));
+        addLayer(new AwtLayerWrapper(bgMapContext, l));
         layers.add(l);
     }
 
     @Override
     public MapContext getMContext() {
-        return mcontext;
+        return bgMapContext;
     }
 
     @Override
@@ -214,4 +220,13 @@ public class AwtCustomMapView extends MapView implements MapViewInterface {
         return getModel().mapViewPosition;
     }
 
+
+    @Override
+    public void paint(Graphics graphics) {
+        super.paint(graphics);
+        Canvas canvas = (Canvas) AwtGraphicFactory.createGraphicContext(graphics);
+
+        fgMapContext.dispatchDraw(canvas);
+
+    }
 }

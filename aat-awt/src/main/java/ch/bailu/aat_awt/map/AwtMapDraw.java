@@ -5,6 +5,7 @@ import org.mapsforge.core.graphics.Canvas;
 import org.mapsforge.core.graphics.Paint;
 import org.mapsforge.map.awt.graphics.AwtGraphicFactory;
 
+import ch.bailu.aat_lib.logger.AppLog;
 import ch.bailu.aat_lib.map.AppDensity;
 import ch.bailu.aat_lib.map.MapDraw;
 import ch.bailu.aat_lib.map.MapMetrics;
@@ -69,22 +70,35 @@ public class AwtMapDraw implements MapDraw {
 
     @Override
     public void grid(Point center, int space) {
+        for (int x = center.x; x < right; x+=space)
+            vLine(x);
 
+        for (int x =  (center.x-space); x > left; x-=space)
+            vLine(x);
+
+        for (int y = center.y; y < bottom; y+=space)
+            hLine(y);
+
+        for (int y = (center.y-space); y > top; y-=space)
+            hLine(y);
     }
+
+
 
     @Override
     public void vLine(int x) {
-
+        canvas.drawLine(x, top, x, bottom, gridPaint);
     }
 
     @Override
     public void hLine(int y) {
-
+        canvas.drawLine(left, y, right, y, gridPaint);
     }
+
 
     @Override
     public void point(Point pixel) {
-
+        circle(pixel, point_radius, gridPaint);
     }
 
     @Override
@@ -99,7 +113,7 @@ public class AwtMapDraw implements MapDraw {
 
     @Override
     public void circle(Point pixel, int radius, Paint paint) {
-
+        canvas.drawCircle((int)pixel.x, (int)pixel.y, radius, paint);
     }
 
     @Override
