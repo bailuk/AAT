@@ -3,11 +3,11 @@ package ch.bailu.aat.activities;
 import android.os.Bundle;
 import android.view.View;
 
-import ch.bailu.aat.dispatcher.CurrentLocationSource;
+import ch.bailu.aat_lib.dispatcher.CurrentLocationSource;
 import ch.bailu.aat.dispatcher.EditorSource;
 import ch.bailu.aat.dispatcher.OverlaySource;
 import ch.bailu.aat.dispatcher.SensorSource;
-import ch.bailu.aat.dispatcher.TrackerSource;
+import ch.bailu.aat_lib.dispatcher.TrackerSource;
 import ch.bailu.aat.dispatcher.TrackerTimerSource;
 import ch.bailu.aat.map.MapFactory;
 import ch.bailu.aat.map.mapsforge.MapViewLinker;
@@ -155,9 +155,9 @@ public class CockpitSplitActivity extends AbsKeepScreenOnActivity {
 
     private void createDispatcher(EditorSource edit) {
         addSource(edit);
-        addSource(new TrackerSource(getServiceContext()));
+        addSource(new TrackerSource(getServiceContext(),getBroadcaster()));
         addSource(new TrackerTimerSource(getServiceContext()));
-        addSource(new CurrentLocationSource(getServiceContext()));
+        addSource(new CurrentLocationSource(getServiceContext(),getBroadcaster()));
         addSource(new OverlaySource(getServiceContext()));
         addSource(new SensorSource(getServiceContext(), InfoID.HEART_RATE_SENSOR));
         addSource(new SensorSource(getServiceContext(), InfoID.POWER_SENSOR));

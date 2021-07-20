@@ -26,11 +26,9 @@ public final class TwoNodes {
     }
 
 
-
     public TwoNodes(MapMetrics m) {
         metrics = m;
     }
-
 
 
     public boolean arePointsTooClose(int distance) {

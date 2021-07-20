@@ -16,6 +16,7 @@ import org.mapsforge.map.model.IMapViewPosition;
 
 import java.util.ArrayList;
 
+import ch.bailu.aat_lib.dispatcher.LifeCycleInterface;
 import ch.bailu.aat_lib.map.MapContext;
 import ch.bailu.aat.map.MapDensity;
 import ch.bailu.aat_lib.map.MapViewInterface;
@@ -28,6 +29,7 @@ import ch.bailu.aat_lib.preferences.StorageInterface;
 
 public class MapsForgeViewBase extends MapView implements
         MapViewInterface,
+        LifeCycleInterface,
         OnPreferencesChanged {
 
     private BoundingBox pendingFrameBounding=null;
@@ -78,6 +80,7 @@ public class MapsForgeViewBase extends MapView implements
     }
 
 
+    @Override
     public void add(MapLayerInterface layer) {
         LayerWrapper wrapper = new LayerWrapper(mcontext, layer);
         add(wrapper, layer);

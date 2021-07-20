@@ -16,6 +16,7 @@ import ch.bailu.aat_lib.map.MapContext;
 import ch.bailu.aat_lib.map.MapDraw;
 import ch.bailu.aat_lib.map.MapMetrics;
 import ch.bailu.aat_lib.map.MapViewInterface;
+import ch.bailu.aat_lib.map.MapsForgeMetrics;
 import ch.bailu.aat_lib.map.TwoNodes;
 import ch.bailu.aat_lib.map.layer.MapLayerInterface;
 import ch.bailu.aat.services.ServiceContext;

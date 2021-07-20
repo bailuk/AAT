@@ -40,9 +40,14 @@ import ch.bailu.aat_lib.description.LongitudeDescription;
 import ch.bailu.aat_lib.description.TrackerStateDescription;
 import ch.bailu.aat_lib.dispatcher.AppBroadcaster;
 import ch.bailu.aat_lib.dispatcher.Broadcaster;
+import ch.bailu.aat_lib.dispatcher.CurrentLocationSource;
+import ch.bailu.aat_lib.dispatcher.Dispatcher;
 import ch.bailu.aat_lib.dispatcher.OnContentUpdatedInterface;
+import ch.bailu.aat_lib.dispatcher.TrackerSource;
 import ch.bailu.aat_lib.gpx.GpxInformation;
 import ch.bailu.aat_lib.gpx.InfoID;
+import ch.bailu.aat_lib.preferences.location.CurrentLocationLayer;
+import ch.bailu.aat_lib.service.ServicesInterface;
 
 public class AwtMainWindow implements OnContentUpdatedInterface {
     private static final String MESSAGE = "Exit the application?";
@@ -78,7 +83,10 @@ public class AwtMainWindow implements OnContentUpdatedInterface {
 
     private LatLong currentPos = null;
 
-    public AwtMainWindow(List<File> mapFiles, Broadcaster broadcaster) {
+    private final Dispatcher dispatcher = new Dispatcher();
+
+
+    public AwtMainWindow(List<File> mapFiles, ServicesInterface services, Broadcaster broadcaster) {
         map = new AwtCustomMapView(mapFiles);
 
         center.addActionListener(itemEvent -> doCenter());
@@ -164,6 +172,11 @@ public class AwtMainWindow implements OnContentUpdatedInterface {
             String msg = (String) objects[1];
             infoStatus.setText(tag + ": " + msg);
         }, AppBroadcaster.LOG_INFO);
+
+        dispatcher.addSource(new CurrentLocationSource(services, broadcaster));
+        dispatcher.addSource(new TrackerSource(services, broadcaster));
+
+        map.add(new CurrentLocationLayer(map.getMContext(), new Dispatcher()));
     }
 
     private void doZoomOut() {

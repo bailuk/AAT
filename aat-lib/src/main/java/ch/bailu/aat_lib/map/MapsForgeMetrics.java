@@ -1,4 +1,4 @@
-package ch.bailu.aat.map.mapsforge;
+package ch.bailu.aat_lib.map;
 
 import org.mapsforge.core.graphics.Canvas;
 import org.mapsforge.core.model.BoundingBox;
@@ -6,17 +6,12 @@ import org.mapsforge.core.model.Dimension;
 import org.mapsforge.core.model.LatLong;
 import org.mapsforge.core.model.MapPosition;
 import org.mapsforge.core.util.MercatorProjection;
-import org.mapsforge.map.android.view.MapView;
 import org.mapsforge.map.util.MapPositionUtil;
+import org.mapsforge.map.view.MapView;
 
-import ch.bailu.aat_lib.map.MapDistances;
-import ch.bailu.aat_lib.map.MapMetrics;
-import ch.bailu.aat.util.ui.AndroidAppDensity;
 import ch.bailu.aat_lib.coordinates.BoundingBoxE6;
 import ch.bailu.aat_lib.coordinates.LatLongE6;
 import ch.bailu.aat_lib.coordinates.LatLongInterface;
-import ch.bailu.aat_lib.map.Point;
-import ch.bailu.aat_lib.map.Rect;
 
 public class MapsForgeMetrics implements MapMetrics {
 
@@ -28,14 +23,14 @@ public class MapsForgeMetrics implements MapMetrics {
 
 
     private final MapView mapView;
-    private final AndroidAppDensity density;
+    private final AppDensity density;
     private final MapDistances distances = new MapDistances();
 
 
     private final int tileSize;
 
 
-    public MapsForgeMetrics(MapView v, AndroidAppDensity d) {
+    public MapsForgeMetrics(MapView v, AppDensity d) {
         density = d;
         mapView = v;
         bounding = v.getBoundingBox();
@@ -70,7 +65,7 @@ public class MapsForgeMetrics implements MapMetrics {
 
 
     @Override
-    public AndroidAppDensity getDensity() {
+    public AppDensity getDensity() {
         return density;
     }
 

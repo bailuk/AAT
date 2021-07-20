@@ -29,27 +29,42 @@ import org.mapsforge.map.reader.MapFile;
 import org.mapsforge.map.rendertheme.InternalRenderTheme;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import java.util.prefs.Preferences;
 
 import javax.swing.JButton;
 
-public class AwtCustomMapView extends MapView {
+import ch.bailu.aat_lib.coordinates.BoundingBoxE6;
+import ch.bailu.aat_lib.map.MapContext;
+import ch.bailu.aat_lib.map.MapViewInterface;
+import ch.bailu.aat_lib.map.layer.MapLayerInterface;
+
+public class AwtCustomMapView extends MapView implements MapViewInterface {
     private static final GraphicFactory GRAPHIC_FACTORY = AwtGraphicFactory.INSTANCE;
     private static final boolean SHOW_DEBUG_LAYERS = true;
     private static final boolean SHOW_RASTER_MAP = false;
+
+    private final AwtMapContext mcontext;
+
+
+    private final ArrayList<MapLayerInterface> layers = new ArrayList<>(10);
 
 
     final PreferencesFacade preferencesFacade = new JavaPreferences(Preferences.userNodeForPackage(AwtCustomMapView.class));
     final BoundingBox boundingBox;
 
     private final JButton
-            showMap = new JButton("Map"),
             plus = new JButton("+"),
             minus = new JButton("-");
 
     public AwtCustomMapView(List<File> mapFiles) {
+
+        mcontext = new AwtMapContext(this, this.getClass().getSimpleName());
+        addLayer(mcontext);
+
+
         getMapScaleBar().setVisible(true);
         if (SHOW_DEBUG_LAYERS) {
             getFpsCounter().setVisible(true);
@@ -155,4 +170,48 @@ public class AwtCustomMapView extends MapView {
         byte zoomLevel = LatLongUtils.zoomForBounds(model.mapViewDimension.getDimension(), boundingBox, model.displayModel.getTileSize());
         model.mapViewPosition.setMapPosition(new MapPosition(boundingBox.getCenterPoint(), zoomLevel));
     }
+
+
+
+    @Override
+    public void frameBounding(BoundingBoxE6 boundingBox) {
+
+    }
+
+    @Override
+    public void zoomOut() {
+
+    }
+
+    @Override
+    public void zoomIn() {
+
+    }
+
+    @Override
+    public void requestRedraw() {
+
+    }
+
+    @Override
+    public void add(MapLayerInterface l) {
+        addLayer(new AwtLayerWrapper(mcontext, l));
+        layers.add(l);
+    }
+
+    @Override
+    public MapContext getMContext() {
+        return mcontext;
+    }
+
+    @Override
+    public void reDownloadTiles() {
+
+    }
+
+    @Override
+    public IMapViewPosition getMapViewPosition() {
+        return getModel().mapViewPosition;
+    }
+
 }

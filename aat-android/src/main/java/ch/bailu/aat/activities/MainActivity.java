@@ -5,9 +5,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
 
-import ch.bailu.aat.dispatcher.CurrentLocationSource;
+import ch.bailu.aat_lib.dispatcher.CurrentLocationSource;
 import ch.bailu.aat.dispatcher.SensorSource;
-import ch.bailu.aat.dispatcher.TrackerSource;
+import ch.bailu.aat_lib.dispatcher.TrackerSource;
 import ch.bailu.aat.preferences.system.AndroidSolidDataDirectory;
 import ch.bailu.aat.preferences.system.SolidExternalDirectory;
 import ch.bailu.aat.services.sensor.SensorService;
@@ -84,8 +84,8 @@ public class MainActivity extends ActivityContext {
 
 
     private void createDispatcher() {
-        addSource(new TrackerSource(getServiceContext()));
-        addSource(new CurrentLocationSource(getServiceContext()));
+        addSource(new TrackerSource(getServiceContext(),getBroadcaster()));
+        addSource(new CurrentLocationSource(getServiceContext(),getBroadcaster()));
         addSource(new SensorSource(getServiceContext(), InfoID.SENSORS));
     }
 

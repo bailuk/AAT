@@ -9,7 +9,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.LinearLayout;
 
 import ch.bailu.aat.R;
-import ch.bailu.aat.dispatcher.CurrentLocationSource;
+import ch.bailu.aat_lib.dispatcher.CurrentLocationSource;
 import ch.bailu.aat.dispatcher.IteratorSource;
 import ch.bailu.aat.dispatcher.OverlaySource;
 import ch.bailu.aat.factory.AndroidFocFactory;
@@ -78,7 +78,7 @@ public abstract class AbsGpxListActivity extends ActivityContext implements OnIt
     private void createDispatcher() {
         addSource(new IteratorSource.Summary(getServiceContext()));
         addSource(new OverlaySource(getServiceContext()));
-        addSource(new CurrentLocationSource(getServiceContext()));
+        addSource(new CurrentLocationSource(getServiceContext(),getBroadcaster()));
 
         addTarget(busyControl, InfoID.OVERLAY, InfoID.OVERLAY+1,InfoID.OVERLAY+2,InfoID.OVERLAY+3);
 

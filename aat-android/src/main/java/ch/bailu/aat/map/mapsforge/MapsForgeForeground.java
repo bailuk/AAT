@@ -13,6 +13,7 @@ import ch.bailu.aat.map.AndroidMapContext;
 import ch.bailu.aat_lib.map.MapContext;
 import ch.bailu.aat_lib.map.MapViewInterface;
 import ch.bailu.aat.map.To;
+import ch.bailu.aat_lib.map.MapsForgeMetrics;
 import ch.bailu.aat_lib.map.layer.MapLayerInterface;
 import ch.bailu.aat.services.InsideContext;
 import ch.bailu.aat.services.ServiceContext;

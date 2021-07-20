@@ -10,11 +10,12 @@ import ch.bailu.aat.services.icons.IconMapService;
 import ch.bailu.aat.services.render.RenderService;
 import ch.bailu.aat.services.tileremover.TileRemoverService;
 import ch.bailu.aat.util.ContextWrapperInterface;
+import ch.bailu.aat_lib.service.ServicesInterface;
 import ch.bailu.aat_lib.service.location.LocationServiceInterface;
 import ch.bailu.aat_lib.service.sensor.SensorServiceInterface;
 import ch.bailu.aat_lib.service.tracker.TrackerServiceInterface;
 
-public interface ServiceContext extends ContextWrapperInterface {
+public interface ServiceContext extends ContextWrapperInterface, ServicesInterface {
 
     void lock(String s);
     void free(String s);

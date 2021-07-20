@@ -36,9 +36,6 @@ public final class CurrentLocationLayer implements OnContentUpdatedInterface, Ma
         paint = mc.draw().createPaint();
         paint.setStyle(Style.STROKE);
         paint.setStrokeWidth(STROKE_WIDTH);
-        //paint.setColor(AppTheme.getHighlightColor());
-
-        //paint.setAntiAlias(true);
 
         d.addTarget(this, InfoID.LOCATION);
     }

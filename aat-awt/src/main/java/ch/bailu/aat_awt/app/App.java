@@ -38,7 +38,7 @@ public class App {
 
         services = new AwtServices(sfactory, broadcaster);
 
-        window = new AwtMainWindow(getMapFiles(), broadcaster);
+        window = new AwtMainWindow(getMapFiles(), services, broadcaster);
         //window.onContentUpdated(InfoID.LOCATION, services.getLocationService().getLocationInformation());
         //window.onContentUpdated(InfoID.TRACKER, services.getLocationService().getLocationInformation());
 

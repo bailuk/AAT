@@ -4,13 +4,16 @@ package ch.bailu.aat.util;
 import android.os.Bundle;
 
 import ch.bailu.aat.activities.AbsHardwareButtons;
+import ch.bailu.aat.dispatcher.AndroidBroadcaster;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.ServiceLink;
+import ch.bailu.aat_lib.dispatcher.Broadcaster;
 
 public abstract class AbsServiceLink extends AbsHardwareButtons {
 
 
     private ServiceLink serviceLink=null;
+    private Broadcaster broadcaster;
 
     private enum State {
         destroyed,
@@ -25,6 +28,7 @@ public abstract class AbsServiceLink extends AbsHardwareButtons {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        broadcaster = new AndroidBroadcaster(this);
         state = State.created;
 
         serviceLink = new ServiceLink(this) {
@@ -79,4 +83,5 @@ public abstract class AbsServiceLink extends AbsHardwareButtons {
     public ServiceContext getServiceContext() {
         return serviceLink;
     }
+    public Broadcaster getBroadcaster() {return broadcaster;}
 }

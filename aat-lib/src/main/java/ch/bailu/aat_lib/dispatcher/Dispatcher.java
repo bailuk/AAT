@@ -1,21 +1,16 @@
-package ch.bailu.aat.dispatcher;
-
-import android.util.SparseArray;
+package ch.bailu.aat_lib.dispatcher;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
-import ch.bailu.aat_lib.dispatcher.ContentSource;
-import ch.bailu.aat_lib.dispatcher.DispatcherInterface;
-import ch.bailu.aat_lib.dispatcher.OnContentUpdatedInterface;
 import ch.bailu.aat_lib.gpx.GpxInformation;
 import ch.bailu.aat_lib.gpx.InfoID;
 
 public class Dispatcher implements DispatcherInterface, OnContentUpdatedInterface {
 
 
-    private final SparseArray<TargetList>
-            targets = new SparseArray<>(10);
-
+    private final Map<Integer, TargetList> targets = new HashMap<>(10);
     private final ArrayList<ContentSource> sources = new ArrayList<>(5);
 
 
@@ -108,8 +103,8 @@ public class Dispatcher implements DispatcherInterface, OnContentUpdatedInterfac
 
 
         public void update(int listID, int infoID, GpxInformation info) {
-            final TargetList l = targets.get(listID, TargetList.NULL_LIST);
-            l.onContentUpdated(infoID, info);
+            TargetList l = targets.get(listID);
+            if (l != null) l.onContentUpdated(infoID, info);
         }
     };
 }

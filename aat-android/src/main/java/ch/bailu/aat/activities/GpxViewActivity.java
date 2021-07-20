@@ -8,10 +8,10 @@ import android.view.View.OnClickListener;
 import android.widget.LinearLayout;
 
 import ch.bailu.aat.R;
-import ch.bailu.aat.dispatcher.CurrentLocationSource;
+import ch.bailu.aat_lib.dispatcher.CurrentLocationSource;
 import ch.bailu.aat.dispatcher.CustomFileSource;
 import ch.bailu.aat.dispatcher.OverlaySource;
-import ch.bailu.aat.dispatcher.TrackerSource;
+import ch.bailu.aat_lib.dispatcher.TrackerSource;
 import ch.bailu.aat.map.MapFactory;
 import ch.bailu.aat.map.To;
 import ch.bailu.aat.menus.ContentMenu;
@@ -170,8 +170,8 @@ public class GpxViewActivity extends ActivityContext
 
 
     private void createDispatcher() {
-        addSource(new TrackerSource(getServiceContext()));
-        addSource(new CurrentLocationSource(getServiceContext()));
+        addSource(new TrackerSource(getServiceContext(),getBroadcaster()));
+        addSource(new CurrentLocationSource(getServiceContext(),getBroadcaster()));
         addSource(new OverlaySource(getServiceContext()));
         addSource(new CustomFileSource(getServiceContext(), fileID));
 

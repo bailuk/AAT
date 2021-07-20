@@ -4,10 +4,9 @@ import org.mapsforge.core.model.LatLong;
 import org.mapsforge.map.model.IMapViewPosition;
 
 import ch.bailu.aat_lib.coordinates.BoundingBoxE6;
-import ch.bailu.aat_lib.dispatcher.LifeCycleInterface;
 import ch.bailu.aat_lib.map.layer.MapLayerInterface;
 
-public interface MapViewInterface extends LifeCycleInterface {
+public interface MapViewInterface {
     void frameBounding(BoundingBoxE6 boundingBox);
 
     void zoomOut();
