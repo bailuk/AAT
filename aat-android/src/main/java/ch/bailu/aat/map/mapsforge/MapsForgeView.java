@@ -6,7 +6,7 @@ import org.mapsforge.core.model.LatLong;
 import org.mapsforge.map.model.common.Observer;
 
 import ch.bailu.aat.map.MapDensity;
-import ch.bailu.aat.map.layer.MapPositionLayer;
+import ch.bailu.aat_lib.map.layer.MapPositionLayer;
 import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat_lib.dispatcher.DispatcherInterface;

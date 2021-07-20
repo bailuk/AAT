@@ -1,8 +1,7 @@
-package ch.bailu.aat.map.layer;
+package ch.bailu.aat_lib.map.layer;
 
 import org.mapsforge.core.model.LatLong;
 
-import ch.bailu.aat.preferences.map.SolidPositionLock;
 import ch.bailu.aat_lib.coordinates.LatLongE6;
 import ch.bailu.aat_lib.dispatcher.DispatcherInterface;
 import ch.bailu.aat_lib.dispatcher.OnContentUpdatedInterface;
@@ -10,8 +9,8 @@ import ch.bailu.aat_lib.gpx.GpxInformation;
 import ch.bailu.aat_lib.gpx.InfoID;
 import ch.bailu.aat_lib.map.MapContext;
 import ch.bailu.aat_lib.map.Point;
-import ch.bailu.aat_lib.map.layer.MapLayerInterface;
 import ch.bailu.aat_lib.preferences.StorageInterface;
+import ch.bailu.aat_lib.preferences.map.SolidPositionLock;
 
 public final class MapPositionLayer implements MapLayerInterface, OnContentUpdatedInterface {
 
