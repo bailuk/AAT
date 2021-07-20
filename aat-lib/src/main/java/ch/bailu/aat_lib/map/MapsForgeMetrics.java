@@ -142,7 +142,7 @@ public class MapsForgeMetrics implements MapMetrics {
         double x = MercatorProjection.longitudeToPixelX(p.getLongitude(), zoom, tileSize);
 
 
-        return new Point((int)(x-tl.x), (int)(y-tl.y));
+        return new Point(x-tl.x, y-tl.y);
     }
 
 

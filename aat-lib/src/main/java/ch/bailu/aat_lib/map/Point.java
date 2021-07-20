@@ -14,8 +14,13 @@ public class Point {
     }
 
     public Point(float x2, float y2) {
-        x = Math.round(x);
-        y = Math.round(y);
+        x = Math.round(x2);
+        y = Math.round(y2);
+    }
+
+    public Point(double x2, double y2) {
+        x = Math.round((float)x2);
+        y = Math.round((float)y2);
     }
 
     public void set(Point p) {
