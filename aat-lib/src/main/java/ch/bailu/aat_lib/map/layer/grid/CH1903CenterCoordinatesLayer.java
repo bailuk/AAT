@@ -1,15 +1,17 @@
-package ch.bailu.aat.map.layer.grid;
+package ch.bailu.aat_lib.map.layer.grid;
 
 import org.mapsforge.core.model.LatLong;
 
 import ch.bailu.aat_lib.coordinates.CH1903Coordinates;
 import ch.bailu.aat_lib.coordinates.MeterCoordinates;
 import ch.bailu.aat_lib.map.MapContext;
+import ch.bailu.aat_lib.map.layer.grid.CenterCoordinatesLayer;
 import ch.bailu.aat_lib.preferences.StorageInterface;
+import ch.bailu.aat_lib.service.ServicesInterface;
 
 public final class CH1903CenterCoordinatesLayer extends CenterCoordinatesLayer {
-    public CH1903CenterCoordinatesLayer(StorageInterface storageInterface) {
-        super(storageInterface);
+    public CH1903CenterCoordinatesLayer(ServicesInterface services, StorageInterface storage) {
+        super(services, storage);
     }
 
     @Override

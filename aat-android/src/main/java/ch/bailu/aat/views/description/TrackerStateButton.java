@@ -3,7 +3,7 @@ package ch.bailu.aat.views.description;
 import android.view.View;
 import android.view.View.OnClickListener;
 
-import ch.bailu.aat.services.InsideContext;
+import ch.bailu.aat_lib.service.InsideContext;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.util.ui.AppTheme;
 import ch.bailu.aat_lib.description.TrackerStateDescription;

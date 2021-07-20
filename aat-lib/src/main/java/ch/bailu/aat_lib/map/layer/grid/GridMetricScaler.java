@@ -1,4 +1,4 @@
-package ch.bailu.aat.map.layer.grid;
+package ch.bailu.aat_lib.map.layer.grid;
 
 public final class GridMetricScaler {
     private static final int KM=1000;

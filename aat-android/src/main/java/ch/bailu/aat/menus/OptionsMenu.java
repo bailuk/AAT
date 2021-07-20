@@ -11,7 +11,7 @@ import ch.bailu.aat.activities.PreferencesActivity;
 import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat.preferences.map.SolidMapTileStack;
 import ch.bailu.aat.preferences.presets.SolidBacklight;
-import ch.bailu.aat.services.InsideContext;
+import ch.bailu.aat_lib.service.InsideContext;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.views.preferences.SolidCheckListDialog;
 import ch.bailu.aat.views.preferences.SolidIndexListDialog;

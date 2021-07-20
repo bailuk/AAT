@@ -3,7 +3,7 @@ package ch.bailu.aat.views.preferences;
 import android.view.View;
 
 import ch.bailu.aat.R;
-import ch.bailu.aat.services.InsideContext;
+import ch.bailu.aat_lib.service.InsideContext;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.util.ui.UiTheme;
 import ch.bailu.aat.views.LabelTextView;

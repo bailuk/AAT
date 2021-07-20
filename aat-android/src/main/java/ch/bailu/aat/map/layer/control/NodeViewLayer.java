@@ -9,6 +9,7 @@ import ch.bailu.aat_lib.gpx.GpxPointNode;
 import ch.bailu.aat_lib.map.MapContext;
 import ch.bailu.aat_lib.map.Point;
 import ch.bailu.aat_lib.preferences.StorageInterface;
+import ch.bailu.aat_lib.service.ServicesInterface;
 import ch.bailu.foc.Foc;
 
 public class NodeViewLayer extends AbsNodeViewLayer {
@@ -19,8 +20,8 @@ public class NodeViewLayer extends AbsNodeViewLayer {
 
     private final MapContext mcontext;
 
-    public NodeViewLayer(StorageInterface s, MapContext mc) {
-        super(s,mc);
+    public NodeViewLayer(ServicesInterface services, StorageInterface s, MapContext mc) {
+        super(services, s,mc);
         mcontext = mc;
     }
 

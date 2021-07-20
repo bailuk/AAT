@@ -9,7 +9,6 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.LinearLayout;
 
 import ch.bailu.aat.R;
-import ch.bailu.aat_lib.dispatcher.CurrentLocationSource;
 import ch.bailu.aat.dispatcher.IteratorSource;
 import ch.bailu.aat.dispatcher.OverlaySource;
 import ch.bailu.aat.factory.AndroidFocFactory;
@@ -33,6 +32,7 @@ import ch.bailu.aat.views.preferences.TitleView;
 import ch.bailu.aat.views.preferences.VerticalScrollView;
 import ch.bailu.aat_lib.description.ContentDescription;
 import ch.bailu.aat_lib.description.PathDescription;
+import ch.bailu.aat_lib.dispatcher.CurrentLocationSource;
 import ch.bailu.aat_lib.gpx.InfoID;
 import ch.bailu.aat_lib.map.MapViewInterface;
 import ch.bailu.aat_lib.preferences.OnPreferencesChanged;
@@ -172,7 +172,7 @@ public abstract class AbsGpxListActivity extends ActivityContext implements OnIt
             busyControl = new BusyViewControlDbSync(contentView);
 
             MapViewInterface map = MapFactory.DEF(AbsGpxListActivity.this, solid_key).list(acontext);
-            fileControlBar = new FileControlBarLayer(map.getMContext(), acontext);
+            fileControlBar = new FileControlBarLayer(getServiceContext(), map.getMContext(), acontext);
             map.add(fileControlBar);
 
             VerticalScrollView summary = new VerticalScrollView(acontext);

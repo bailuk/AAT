@@ -12,6 +12,7 @@ import ch.bailu.aat_lib.gpx.GpxInformation;
 import ch.bailu.aat_lib.gpx.GpxPointNode;
 import ch.bailu.aat_lib.map.MapContext;
 import ch.bailu.aat_lib.preferences.StorageInterface;
+import ch.bailu.aat_lib.service.ServicesInterface;
 
 public abstract class AbsNodeViewLayer extends AbsNodeSelectorLayer implements
         View.OnLongClickListener, View.OnClickListener {
@@ -24,8 +25,8 @@ public abstract class AbsNodeViewLayer extends AbsNodeSelectorLayer implements
     private final Position pos;
 
 
-    public AbsNodeViewLayer(StorageInterface s, MapContext mc) {
-        super(s, mc);
+    public AbsNodeViewLayer(ServicesInterface services, StorageInterface s, MapContext mc) {
+        super(services, s, mc);
         mcontext = mc;
 
         pos = new Position(To.context(mc));

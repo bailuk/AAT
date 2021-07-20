@@ -11,7 +11,7 @@ import java.io.Closeable;
 
 import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat.preferences.presets.SolidBacklight;
-import ch.bailu.aat.services.InsideContext;
+import ch.bailu.aat_lib.service.InsideContext;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat_lib.dispatcher.OnContentUpdatedInterface;
 import ch.bailu.aat_lib.gpx.GpxInformation;

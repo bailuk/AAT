@@ -3,7 +3,7 @@ package ch.bailu.aat.map.layer.gpx;
 import org.mapsforge.core.graphics.Bitmap;
 
 import ch.bailu.aat.map.To;
-import ch.bailu.aat.services.InsideContext;
+import ch.bailu.aat_lib.service.InsideContext;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.cache.ObjImageAbstract;
 import ch.bailu.aat_lib.map.MapContext;

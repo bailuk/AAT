@@ -2,7 +2,7 @@ package ch.bailu.aat.views;
 
 import android.widget.ImageView;
 
-import ch.bailu.aat.services.InsideContext;
+import ch.bailu.aat_lib.service.InsideContext;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.cache.ObjSVGAsset;
 import ch.bailu.aat.services.icons.IconMapService;

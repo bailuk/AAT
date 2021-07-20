@@ -5,7 +5,7 @@ import android.util.SparseArray;
 import ch.bailu.aat_lib.coordinates.Dem3Coordinates;
 import ch.bailu.aat_lib.gpx.GpxListWalker;
 import ch.bailu.aat.preferences.Storage;
-import ch.bailu.aat.services.InsideContext;
+import ch.bailu.aat_lib.service.InsideContext;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.background.FileTask;
 import ch.bailu.aat.services.elevation.tile.Dem3Status;

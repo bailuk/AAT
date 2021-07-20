@@ -1,4 +1,4 @@
-package ch.bailu.aat.map.layer.grid;
+package ch.bailu.aat_lib.map.layer.grid;
 
 import org.mapsforge.core.model.LatLong;
 
@@ -7,13 +7,14 @@ import ch.bailu.aat_lib.map.MapContext;
 import ch.bailu.aat_lib.map.Point;
 import ch.bailu.aat_lib.map.layer.MapLayerInterface;
 import ch.bailu.aat_lib.preferences.StorageInterface;
+import ch.bailu.aat_lib.service.ServicesInterface;
 
 public abstract class CenterCoordinatesLayer implements MapLayerInterface {
 
     private final ElevationLayer elevation;
 
-    public CenterCoordinatesLayer(StorageInterface storageInterface) {
-        elevation = new ElevationLayer(storageInterface);
+    public CenterCoordinatesLayer(ServicesInterface services, StorageInterface storage) {
+        elevation = new ElevationLayer(services, storage);
     }
 
     @Override

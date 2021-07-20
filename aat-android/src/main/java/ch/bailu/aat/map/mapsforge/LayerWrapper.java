@@ -8,7 +8,7 @@ import org.mapsforge.map.layer.Layer;
 import ch.bailu.aat_lib.map.MapContext;
 import ch.bailu.aat.map.To;
 import ch.bailu.aat_lib.map.layer.MapLayerInterface;
-import ch.bailu.aat.services.InsideContext;
+import ch.bailu.aat_lib.service.InsideContext;
 
 public class LayerWrapper extends Layer {
 

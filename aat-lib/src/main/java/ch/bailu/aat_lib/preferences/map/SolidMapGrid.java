@@ -1,21 +1,22 @@
-package ch.bailu.aat.preferences.map;
+package ch.bailu.aat_lib.preferences.map;
 
 import org.mapsforge.core.model.LatLong;
 
-import ch.bailu.aat.R;
-import ch.bailu.aat.map.layer.grid.CH1903CenterCoordinatesLayer;
-import ch.bailu.aat.map.layer.grid.CH1903GridLayer;
-import ch.bailu.aat.map.layer.grid.PlusCodesCenterCoordinatesLayer;
-import ch.bailu.aat.map.layer.grid.UTMCenterCoordinatesLayer;
-import ch.bailu.aat.map.layer.grid.UTMGridLayer;
-import ch.bailu.aat.map.layer.grid.WGS84Layer;
 import ch.bailu.aat_lib.coordinates.CH1903Coordinates;
 import ch.bailu.aat_lib.coordinates.OlcCoordinates;
 import ch.bailu.aat_lib.coordinates.WGS84Coordinates;
 import ch.bailu.aat_lib.map.layer.MapLayerInterface;
 import ch.bailu.aat_lib.map.layer.NullLayer;
+import ch.bailu.aat_lib.map.layer.grid.CH1903CenterCoordinatesLayer;
+import ch.bailu.aat_lib.map.layer.grid.CH1903GridLayer;
+import ch.bailu.aat_lib.map.layer.grid.PlusCodesCenterCoordinatesLayer;
+import ch.bailu.aat_lib.map.layer.grid.UTMCenterCoordinatesLayer;
+import ch.bailu.aat_lib.map.layer.grid.UTMGridLayer;
+import ch.bailu.aat_lib.map.layer.grid.WGS84Layer;
 import ch.bailu.aat_lib.preferences.SolidStaticIndexList;
 import ch.bailu.aat_lib.preferences.StorageInterface;
+import ch.bailu.aat_lib.resources.Images;
+import ch.bailu.aat_lib.service.ServicesInterface;
 
 public class SolidMapGrid extends SolidStaticIndexList {
 
@@ -30,12 +31,12 @@ public class SolidMapGrid extends SolidStaticIndexList {
 
     @Override
     public int getIconResource() {
-        return R.drawable.view_grid;
+        return Images.view_grid();
     }
 
-    public MapLayerInterface createGridLayer() {
+    public MapLayerInterface createGridLayer(ServicesInterface services) {
         if (this.getIndex()==0) {
-            return new WGS84Layer(getStorage());
+            return new WGS84Layer(services, getStorage());
         }
 
         if (this.getIndex()==1) {
@@ -47,20 +48,20 @@ public class SolidMapGrid extends SolidStaticIndexList {
         }
 
         if (this.getIndex()==3) {
-            return new PlusCodesCenterCoordinatesLayer(getStorage());
+            return new PlusCodesCenterCoordinatesLayer(services, getStorage());
         }
 
         return new NullLayer();
     }
 
 
-    public MapLayerInterface createCenterCoordinatesLayer() {
+    public MapLayerInterface createCenterCoordinatesLayer(ServicesInterface services) {
         if (this.getIndex()==1) {
-            return new CH1903CenterCoordinatesLayer(getStorage());
+            return new CH1903CenterCoordinatesLayer(services, getStorage());
         }
 
         if (this.getIndex()==2) {
-            return new UTMCenterCoordinatesLayer(getStorage());
+            return new UTMCenterCoordinatesLayer(services, getStorage());
         }
 
         return new NullLayer();

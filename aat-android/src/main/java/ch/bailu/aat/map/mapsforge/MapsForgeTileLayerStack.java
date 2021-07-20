@@ -13,7 +13,7 @@ import ch.bailu.aat_lib.map.Attachable;
 import ch.bailu.aat_lib.map.MapContext;
 import ch.bailu.aat_lib.map.layer.MapLayerInterface;
 import ch.bailu.aat.map.tile.TileProvider;
-import ch.bailu.aat.services.InsideContext;
+import ch.bailu.aat_lib.service.InsideContext;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat_lib.preferences.StorageInterface;
 

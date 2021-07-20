@@ -117,19 +117,13 @@ public final class NavigationBarLayer extends ControlBarLayer implements OnConte
     }
 
     @Override
-    public void drawInside(MapContext mcontext) {
-
-    }
+    public void drawInside(MapContext mcontext) {}
 
     @Override
-    public void onAttached() {
-
-    }
+    public void onAttached() {}
 
     @Override
-    public void onDetached() {
-
-    }
+    public void onDetached() {}
 
     private class VolumeView extends ViewGroup implements AbsHardwareButtons.OnHardwareButtonPressed {
 

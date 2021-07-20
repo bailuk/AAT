@@ -4,7 +4,7 @@ import android.graphics.Color;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
 
-import ch.bailu.aat.services.InsideContext;
+import ch.bailu.aat_lib.service.InsideContext;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.sensor.list.SensorListItem;
 import ch.bailu.aat.util.ui.UiTheme;

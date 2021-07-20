@@ -5,7 +5,6 @@ import android.view.View;
 import ch.bailu.aat.R;
 import ch.bailu.aat.activities.AbsGpxListActivity;
 import ch.bailu.aat.factory.AndroidFocFactory;
-import ch.bailu.aat_lib.map.MapContext;
 import ch.bailu.aat.map.To;
 import ch.bailu.aat.menus.FileMenu;
 import ch.bailu.aat.preferences.SolidDirectoryQuery;
@@ -27,8 +26,10 @@ import ch.bailu.aat_lib.description.TimeDescription;
 import ch.bailu.aat_lib.gpx.GpxInformation;
 import ch.bailu.aat_lib.gpx.GpxPointNode;
 import ch.bailu.aat_lib.gpx.InfoID;
+import ch.bailu.aat_lib.map.MapContext;
 import ch.bailu.aat_lib.map.Point;
 import ch.bailu.aat_lib.preferences.StorageInterface;
+import ch.bailu.aat_lib.service.ServicesInterface;
 import ch.bailu.foc.Foc;
 
 public final class FileControlBarLayer extends ControlBarLayer {
@@ -45,7 +46,7 @@ public final class FileControlBarLayer extends ControlBarLayer {
 
     private final Storage storage;
 
-    public FileControlBarLayer(MapContext mc, AbsGpxListActivity a) {
+    public FileControlBarLayer(ServicesInterface services, MapContext mc, AbsGpxListActivity a) {
         super(mc, new ControlBar(
                 To.context(mc),
                 getOrientation(LEFT), AppTheme.bar), LEFT);
@@ -55,7 +56,7 @@ public final class FileControlBarLayer extends ControlBarLayer {
         storage = new Storage(To.context(mc));
         acontext = a;
 
-        selector = new FileViewLayer(mc);
+        selector = new FileViewLayer(services, mc);
         preview = new PreviewView(a.getServiceContext());
 
         bar.add(preview);
@@ -149,8 +150,8 @@ public final class FileControlBarLayer extends ControlBarLayer {
 
 
     private class FileViewLayer extends AbsNodeViewLayer {
-        public FileViewLayer(MapContext mc) {
-            super(storage, mc);
+        public FileViewLayer(ServicesInterface services, MapContext mc) {
+            super(services, storage, mc);
         }
 
 

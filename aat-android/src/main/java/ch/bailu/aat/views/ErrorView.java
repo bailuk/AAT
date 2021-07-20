@@ -6,7 +6,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.widget.TextView;
 
-import ch.bailu.aat.services.InsideContext;
+import ch.bailu.aat_lib.service.InsideContext;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.cache.Obj;
 import ch.bailu.aat.util.OldAppBroadcaster;

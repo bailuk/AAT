@@ -9,7 +9,7 @@ import ch.bailu.aat.menus.MapMenu;
 import ch.bailu.aat.menus.MapQueryMenu;
 import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat.preferences.map.SolidLegend;
-import ch.bailu.aat.preferences.map.SolidMapGrid;
+import ch.bailu.aat_lib.preferences.map.SolidMapGrid;
 import ch.bailu.aat.util.ui.AppTheme;
 import ch.bailu.aat.util.ui.ToolTip;
 import ch.bailu.aat.views.ImageButtonViewGroup;
@@ -51,7 +51,7 @@ public final class InformationBarLayer extends ControlBarLayer {
         search = bar.addImageButton(R.drawable.edit_find);
         location = bar.addImageButton(R.drawable.find_location);
 
-        selector = new NodeViewLayer(storage, mc);
+        selector = new NodeViewLayer(To.scontext(mc), storage, mc);
 
 
         ToolTip.set(grid, Res.str().tt_info_grid());

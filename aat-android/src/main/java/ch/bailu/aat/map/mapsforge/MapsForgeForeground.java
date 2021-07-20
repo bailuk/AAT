@@ -15,7 +15,7 @@ import ch.bailu.aat_lib.map.MapViewInterface;
 import ch.bailu.aat.map.To;
 import ch.bailu.aat_lib.map.MapsForgeMetrics;
 import ch.bailu.aat_lib.map.layer.MapLayerInterface;
-import ch.bailu.aat.services.InsideContext;
+import ch.bailu.aat_lib.service.InsideContext;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.util.ui.AndroidAppDensity;
 import ch.bailu.aat_lib.map.MapDraw;

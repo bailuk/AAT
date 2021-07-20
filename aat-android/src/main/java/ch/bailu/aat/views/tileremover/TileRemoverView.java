@@ -10,7 +10,7 @@ import android.widget.LinearLayout;
 import ch.bailu.aat.R;
 import ch.bailu.aat.menus.RemoveTilesMenu;
 import ch.bailu.aat.preferences.map.AndroidSolidTileCacheDirectory;
-import ch.bailu.aat.services.InsideContext;
+import ch.bailu.aat_lib.service.InsideContext;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.tileremover.TileRemoverService;
 import ch.bailu.aat.util.OldAppBroadcaster;

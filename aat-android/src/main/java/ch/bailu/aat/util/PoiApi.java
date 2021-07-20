@@ -18,7 +18,7 @@ import ch.bailu.aat.R;
 import ch.bailu.aat_lib.xml.writer.WayWriterOsmTags;
 import ch.bailu.aat.preferences.map.SolidPoiDatabase;
 import ch.bailu.aat.preferences.system.AndroidSolidDataDirectory;
-import ch.bailu.aat.services.InsideContext;
+import ch.bailu.aat_lib.service.InsideContext;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.background.BackgroundTask;
 import ch.bailu.aat.services.background.FileTask;

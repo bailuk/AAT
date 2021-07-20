@@ -8,7 +8,7 @@ import ch.bailu.aat.factory.AndroidFocFactory;
 import ch.bailu.aat_lib.gpx.GpxFileWrapper;
 import ch.bailu.aat.preferences.SolidDirectoryQuery;
 import ch.bailu.aat.preferences.Storage;
-import ch.bailu.aat.services.InsideContext;
+import ch.bailu.aat_lib.service.InsideContext;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.cache.Obj;
 import ch.bailu.aat.services.cache.ObjGpx;

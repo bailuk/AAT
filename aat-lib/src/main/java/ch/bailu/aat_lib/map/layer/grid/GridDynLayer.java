@@ -1,23 +1,25 @@
-package ch.bailu.aat.map.layer.grid;
+package ch.bailu.aat_lib.map.layer.grid;
 
 
-import ch.bailu.aat.preferences.map.SolidMapGrid;
 import ch.bailu.aat_lib.map.MapContext;
 import ch.bailu.aat_lib.map.Point;
 import ch.bailu.aat_lib.map.layer.MapLayerInterface;
 import ch.bailu.aat_lib.preferences.StorageInterface;
+import ch.bailu.aat_lib.preferences.map.SolidMapGrid;
+import ch.bailu.aat_lib.service.ServicesInterface;
 
 public final class GridDynLayer implements MapLayerInterface {
     private MapLayerInterface gridLayer;
     private final SolidMapGrid sgrid;
 
     private final MapContext mcontext;
+    private final ServicesInterface services;
 
-
-    public GridDynLayer(StorageInterface s, MapContext mc) {
+    public GridDynLayer(ServicesInterface services, StorageInterface s, MapContext mc) {
         mcontext = mc;
+        this.services = services;
         sgrid = new SolidMapGrid(s, mc.getSolidKey());
-        gridLayer = sgrid.createGridLayer();
+        gridLayer = sgrid.createGridLayer(services);
     }
 
 
@@ -43,7 +45,7 @@ public final class GridDynLayer implements MapLayerInterface {
     @Override
     public void onPreferencesChanged(StorageInterface s, String key) {
         if (sgrid.hasKey(key)) {
-            gridLayer = sgrid.createGridLayer();
+            gridLayer = sgrid.createGridLayer(services);
             mcontext.getMapView().requestRedraw();
         }
 

@@ -7,7 +7,7 @@ import android.content.Intent;
 import android.widget.ImageView;
 
 import ch.bailu.aat.map.AndroidDraw;
-import ch.bailu.aat.services.InsideContext;
+import ch.bailu.aat_lib.service.InsideContext;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.cache.Obj;
 import ch.bailu.aat.services.cache.ObjBitmap;

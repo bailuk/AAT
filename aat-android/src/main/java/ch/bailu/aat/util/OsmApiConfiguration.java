@@ -2,7 +2,7 @@ package ch.bailu.aat.util;
 
 import java.io.UnsupportedEncodingException;
 
-import ch.bailu.aat.services.InsideContext;
+import ch.bailu.aat_lib.service.InsideContext;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.background.BackgroundService;
 import ch.bailu.aat.services.background.BackgroundTask;

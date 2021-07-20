@@ -4,7 +4,7 @@ import android.content.Context;
 
 import org.mapsforge.core.model.Tile;
 
-import ch.bailu.aat.services.InsideContext;
+import ch.bailu.aat_lib.service.InsideContext;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.cache.Obj;
 

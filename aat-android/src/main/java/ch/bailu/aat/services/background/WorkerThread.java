@@ -1,6 +1,6 @@
 package ch.bailu.aat.services.background;
 
-import ch.bailu.aat.services.InsideContext;
+import ch.bailu.aat_lib.service.InsideContext;
 import ch.bailu.aat.services.ServiceContext;
 
 public class WorkerThread extends ProcessThread {

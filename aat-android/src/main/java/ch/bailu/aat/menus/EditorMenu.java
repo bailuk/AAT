@@ -8,7 +8,7 @@ import android.view.Menu;
 import ch.bailu.aat.R;
 import ch.bailu.aat.preferences.map.SolidOverlayFileList;
 import ch.bailu.aat.preferences.system.AndroidSolidDataDirectory;
-import ch.bailu.aat.services.InsideContext;
+import ch.bailu.aat_lib.service.InsideContext;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.cache.Obj;
 import ch.bailu.aat.services.cache.ObjGpx;

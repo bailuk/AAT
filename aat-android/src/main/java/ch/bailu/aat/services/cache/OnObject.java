@@ -1,6 +1,6 @@
 package ch.bailu.aat.services.cache;
 
-import ch.bailu.aat.services.InsideContext;
+import ch.bailu.aat_lib.service.InsideContext;
 import ch.bailu.aat.services.ServiceContext;
 
 

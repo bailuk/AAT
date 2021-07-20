@@ -9,7 +9,6 @@ import ch.bailu.aat.dispatcher.EditorSourceInterface;
 import ch.bailu.aat.map.To;
 import ch.bailu.aat.map.layer.gpx.GpxDynLayer;
 import ch.bailu.aat.menus.EditorMenu;
-import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.editor.EditorInterface;
 import ch.bailu.aat.util.ui.AppTheme;
@@ -20,6 +19,7 @@ import ch.bailu.aat_lib.gpx.GpxPoint;
 import ch.bailu.aat_lib.map.MapContext;
 import ch.bailu.aat_lib.preferences.StorageInterface;
 import ch.bailu.aat_lib.resources.Res;
+import ch.bailu.aat_lib.service.ServicesInterface;
 
 public final class EditorLayer extends ControlBarLayer {
 
@@ -36,7 +36,7 @@ public final class EditorLayer extends ControlBarLayer {
 
     private final EditorSourceInterface edit;
 
-    public EditorLayer(MapContext mc, DispatcherInterface d,
+    public EditorLayer(ServicesInterface services, StorageInterface storage, MapContext mc, DispatcherInterface d,
                        int iid, EditorSourceInterface e) {
         super(mc, new ControlBar(
                 To.context(mc),
@@ -46,8 +46,8 @@ public final class EditorLayer extends ControlBarLayer {
         scontext=To.scontext(mc);
         mcontext=mc;
 
-        content = new GpxDynLayer(new Storage(scontext.getContext()), mc);
-        selector = new EditorNodeViewLayer(new Storage(scontext.getContext()), mc, e);
+        content = new GpxDynLayer(storage, mc);
+        selector = new EditorNodeViewLayer(services, storage, mc, e);
 
         ControlBar bar = getBar();
 

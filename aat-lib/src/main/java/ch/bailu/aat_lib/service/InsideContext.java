@@ -1,8 +1,8 @@
-package ch.bailu.aat.services;
+package ch.bailu.aat_lib.service;
 
 public abstract class InsideContext {
 
-    public InsideContext(ServiceContext sc) {
+    public InsideContext(ServicesInterface sc) {
         if (sc.lock()) {
             try {
                 run();
@@ -12,7 +12,6 @@ public abstract class InsideContext {
             }
         }
     }
-
 
     public abstract void run();
 }

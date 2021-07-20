@@ -4,7 +4,7 @@ import android.util.SparseArray;
 
 import org.mapsforge.core.model.LatLong;
 
-import ch.bailu.aat.preferences.map.SolidMapGrid;
+import ch.bailu.aat_lib.preferences.map.SolidMapGrid;
 import ch.bailu.aat_lib.coordinates.BoundingBoxE6;
 import ch.bailu.aat_lib.dispatcher.OnContentUpdatedInterface;
 import ch.bailu.aat_lib.gpx.GpxInformation;
@@ -17,6 +17,7 @@ import ch.bailu.aat_lib.map.Point;
 import ch.bailu.aat_lib.map.Rect;
 import ch.bailu.aat_lib.map.layer.MapLayerInterface;
 import ch.bailu.aat_lib.preferences.StorageInterface;
+import ch.bailu.aat_lib.service.ServicesInterface;
 
 public abstract class AbsNodeSelectorLayer implements MapLayerInterface, OnContentUpdatedInterface {
 
@@ -33,14 +34,15 @@ public abstract class AbsNodeSelectorLayer implements MapLayerInterface, OnConte
     private int foundID, foundIndex;
     private GpxPointNode foundNode;
 
-
+    private final ServicesInterface services;
 
     private final SolidMapGrid sgrid;
     private MapLayerInterface coordinates;
 
 
-    public AbsNodeSelectorLayer(StorageInterface s, MapContext mc) {
+    public AbsNodeSelectorLayer(ServicesInterface services, StorageInterface s, MapContext mc) {
 
+        this.services = services;
         square_size = mc.getMetrics().getDensity().toPixel_i(SQUARE_SIZE);
         square_hsize = mc.getMetrics().getDensity().toPixel_i(SQUARE_HSIZE);
         centerRect.left = 0;
@@ -49,7 +51,7 @@ public abstract class AbsNodeSelectorLayer implements MapLayerInterface, OnConte
         centerRect.bottom = square_size;
 
         sgrid = new SolidMapGrid(s, mc.getSolidKey());
-        coordinates = sgrid.createCenterCoordinatesLayer();
+        coordinates = sgrid.createCenterCoordinatesLayer(services);
 
     }
 
@@ -154,7 +156,7 @@ public abstract class AbsNodeSelectorLayer implements MapLayerInterface, OnConte
     @Override
     public void onPreferencesChanged(StorageInterface s, String key) {
         if (sgrid.hasKey(key)) {
-            coordinates = sgrid.createCenterCoordinatesLayer();
+            coordinates = sgrid.createCenterCoordinatesLayer(services);
         }
     }
 }

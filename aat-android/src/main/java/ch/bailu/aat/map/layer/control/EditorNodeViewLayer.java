@@ -9,6 +9,7 @@ import ch.bailu.aat_lib.gpx.GpxPointNode;
 import ch.bailu.aat_lib.map.MapContext;
 import ch.bailu.aat_lib.preferences.StorageInterface;
 import ch.bailu.aat_lib.resources.Res;
+import ch.bailu.aat_lib.service.ServicesInterface;
 import ch.bailu.foc.Foc;
 
 public final class EditorNodeViewLayer extends NodeViewLayer {
@@ -16,8 +17,8 @@ public final class EditorNodeViewLayer extends NodeViewLayer {
     private final EditorSourceInterface editorSource;
     private boolean showNode = false;
 
-    public EditorNodeViewLayer(StorageInterface s, MapContext mc, EditorSourceInterface e) {
-        super(s, mc);
+    public EditorNodeViewLayer(ServicesInterface services, StorageInterface s, MapContext mc, EditorSourceInterface e) {
+        super(services, s, mc);
         editorSource = e;
 
         setText();

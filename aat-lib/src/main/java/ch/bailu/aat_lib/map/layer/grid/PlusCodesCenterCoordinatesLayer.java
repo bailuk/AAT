@@ -1,23 +1,24 @@
-package ch.bailu.aat.map.layer.grid;
+package ch.bailu.aat_lib.map.layer.grid;
 
+import com.google.openlocationcode.OpenLocationCode;
 
 import org.mapsforge.core.model.LatLong;
 
-import ch.bailu.aat_lib.coordinates.WGS84Coordinates;
-import ch.bailu.aat_lib.description.FF;
 import ch.bailu.aat_lib.map.MapContext;
 import ch.bailu.aat_lib.map.Point;
 import ch.bailu.aat_lib.map.layer.MapLayerInterface;
+import ch.bailu.aat_lib.map.layer.grid.Crosshair;
+import ch.bailu.aat_lib.map.layer.grid.ElevationLayer;
 import ch.bailu.aat_lib.preferences.StorageInterface;
+import ch.bailu.aat_lib.service.ServicesInterface;
 
-public final class WGS84Layer implements MapLayerInterface {
+public final class PlusCodesCenterCoordinatesLayer  implements MapLayerInterface {
 
     private final ElevationLayer elevation;
     private final Crosshair crosshair;
 
-
-    public WGS84Layer(StorageInterface storageInterface) {
-        elevation = new ElevationLayer(storageInterface);
+    public PlusCodesCenterCoordinatesLayer (ServicesInterface services, StorageInterface storageInterface) {
+        elevation = new ElevationLayer(services, storageInterface);
         crosshair = new Crosshair();
     }
     @Override
@@ -37,16 +38,18 @@ public final class WGS84Layer implements MapLayerInterface {
     }
 
     @Override
-    public boolean onTap(Point tapXY) {
+    public boolean onTap( Point tapXY) {
         return false;
     }
 
 
     private void drawCoordinates(MapContext clayer,LatLong point) {
-        final FF f = FF.f();
+        final OpenLocationCode center =
+                new OpenLocationCode(point.latitude, point.longitude);
 
-        clayer.draw().textBottom(new WGS84Coordinates(point).toString(),1);
-        clayer.draw().textBottom(f.N6.format(point.latitude) + "/" + f.N6.format(point.getLongitude()),0);
+        final String code = center.getCode();
+        clayer.draw().textBottom(code,1);
+
     }
 
 

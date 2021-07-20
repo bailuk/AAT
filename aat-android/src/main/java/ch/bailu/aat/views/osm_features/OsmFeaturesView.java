@@ -12,7 +12,7 @@ import android.widget.LinearLayout;
 import ch.bailu.aat.R;
 import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat.preferences.map.SolidOsmFeaturesList;
-import ch.bailu.aat.services.InsideContext;
+import ch.bailu.aat_lib.service.InsideContext;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.cache.osm_features.ObjMapFeatures;
 import ch.bailu.aat.util.AppIntent;

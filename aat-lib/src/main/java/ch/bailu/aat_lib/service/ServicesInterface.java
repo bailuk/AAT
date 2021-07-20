@@ -1,5 +1,6 @@
 package ch.bailu.aat_lib.service;
 
+import ch.bailu.aat_lib.service.elevation.ElevetionServiceInterface;
 import ch.bailu.aat_lib.service.location.LocationServiceInterface;
 import ch.bailu.aat_lib.service.sensor.SensorServiceInterface;
 import ch.bailu.aat_lib.service.tracker.TrackerServiceInterface;
@@ -13,6 +14,8 @@ public interface ServicesInterface {
 
     void free(String simpleName);
 
+    boolean lock();
+    void free();
 
-
+    ElevetionServiceInterface getElevationService();
 }
