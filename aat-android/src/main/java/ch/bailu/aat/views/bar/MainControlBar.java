@@ -18,7 +18,7 @@ import ch.bailu.aat.views.description.mview.MultiView;
 import ch.bailu.aat.views.description.mview.MultiViewNextButton;
 import ch.bailu.aat.views.description.mview.MultiViewSelector;
 import ch.bailu.aat_lib.gpx.InfoID;
-import ch.bailu.util.Objects;
+import ch.bailu.aat_lib.util.Objects;
 
 public class MainControlBar extends ControlBar {
 

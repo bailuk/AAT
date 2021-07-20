@@ -3,8 +3,8 @@ package ch.bailu.aat.services.icons;
 import java.io.IOException;
 
 import ch.bailu.aat_lib.gpx.attributes.Keys;
+import ch.bailu.aat_lib.xml.parser.util.Stream;
 import ch.bailu.foc.Foc;
-import ch.bailu.util_java.io.Stream;
 
 
 public final class IconMapParser {

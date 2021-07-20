@@ -1,4 +1,4 @@
-package ch.bailu.util;
+package ch.bailu.aat_lib.util;
 
 public class Objects {
     public static boolean equals(Object a, Object b) {

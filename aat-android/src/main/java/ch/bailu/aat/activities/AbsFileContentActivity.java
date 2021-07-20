@@ -27,7 +27,7 @@ import ch.bailu.aat.views.html.AttributesView;
 import ch.bailu.aat_lib.gpx.InfoID;
 import ch.bailu.aat_lib.logger.AppLog;
 import ch.bailu.aat_lib.map.MapViewInterface;
-import ch.bailu.util.Objects;
+import ch.bailu.aat_lib.util.Objects;
 
 public abstract class AbsFileContentActivity extends ActivityContext implements OnClickListener {
 

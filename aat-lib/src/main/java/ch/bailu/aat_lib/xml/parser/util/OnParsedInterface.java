@@ -1,4 +1,4 @@
-package ch.bailu.util_java.parser;
+package ch.bailu.aat_lib.xml.parser.util;
 
 import java.io.IOException;
 

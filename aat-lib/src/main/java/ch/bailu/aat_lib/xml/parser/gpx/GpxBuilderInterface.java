@@ -6,7 +6,7 @@ import java.io.Closeable;
 import java.io.IOException;
 
 import ch.bailu.aat_lib.gpx.interfaces.GpxPointInterface;
-import ch.bailu.util_java.parser.OnParsedInterface;
+import ch.bailu.aat_lib.xml.parser.util.OnParsedInterface;
 
 /**
  * Interface to build GPX Tracks

@@ -15,7 +15,7 @@ import ch.bailu.aat.views.description.mview.MultiView;
 import ch.bailu.aat.views.html.HtmlScrollTextView;
 import ch.bailu.aat.views.html.LinkHandler;
 import ch.bailu.foc_android.FocAsset;
-import ch.bailu.util_java.util.FocUtil;
+import ch.bailu.aat_lib.util.fs.FocUtil;
 
 
 public class AboutActivity extends ActivityContext {

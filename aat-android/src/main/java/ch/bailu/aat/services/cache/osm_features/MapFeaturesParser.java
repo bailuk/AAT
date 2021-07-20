@@ -4,9 +4,9 @@ import android.content.res.AssetManager;
 
 import java.io.IOException;
 
+import ch.bailu.aat_lib.xml.parser.util.Stream;
 import ch.bailu.foc.Foc;
 import ch.bailu.foc_android.FocAsset;
-import ch.bailu.util_java.io.Stream;
 
 public final class MapFeaturesParser {
     private static final String MAP_FEATURES_ASSET = "map_features";

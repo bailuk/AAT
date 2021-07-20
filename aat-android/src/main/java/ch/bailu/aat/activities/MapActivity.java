@@ -22,7 +22,7 @@ import ch.bailu.aat.views.bar.MainControlBar;
 import ch.bailu.aat_lib.coordinates.WGS84Coordinates;
 import ch.bailu.aat_lib.logger.AppLog;
 import ch.bailu.aat_lib.map.MapViewInterface;
-import ch.bailu.util.Objects;
+import ch.bailu.aat_lib.util.Objects;
 
 public class MapActivity extends AbsKeepScreenOnActivity {
 

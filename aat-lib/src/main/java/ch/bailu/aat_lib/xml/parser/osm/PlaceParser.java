@@ -6,7 +6,7 @@ import java.io.IOException;
 
 import ch.bailu.aat_lib.xml.parser.Util;
 import ch.bailu.aat_lib.xml.parser.scanner.Scanner;
-import ch.bailu.util.Objects;
+import ch.bailu.aat_lib.util.Objects;
 
 public class PlaceParser extends TagParser {
     public PlaceParser() {

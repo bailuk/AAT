@@ -16,7 +16,7 @@ import ch.bailu.aat_lib.gpx.StateID;
 import ch.bailu.aat_lib.service.location.LocationInformation;
 import ch.bailu.aat_lib.service.location.LocationStackChainedItem;
 import ch.bailu.aat_lib.service.location.LocationStackItem;
-import ch.bailu.util.Objects;
+import ch.bailu.aat_lib.util.Objects;
 
 
 @SuppressLint("MissingPermission")

@@ -1,7 +1,0 @@
-apply plugin: 'java'
-
-dependencies {
-    def focVersion = project.focVersion
-    implementation "com.github.bailuk.foc:foc:$focVersion"
-}
-

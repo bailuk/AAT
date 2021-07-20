@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import ch.bailu.aat.util.OldAppBroadcaster;
 import ch.bailu.aat_lib.dispatcher.AppBroadcaster;
 import ch.bailu.foc.Foc;
-import ch.bailu.util.Objects;
+import ch.bailu.aat_lib.util.Objects;
 
 public final class Tasks {
 

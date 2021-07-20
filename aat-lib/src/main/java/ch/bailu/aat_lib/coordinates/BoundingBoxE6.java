@@ -9,8 +9,8 @@ import java.io.IOException;
 import javax.annotation.Nonnull;
 
 import ch.bailu.aat_lib.description.FF;
-import ch.bailu.util_java.io.Stream;
-import ch.bailu.util_java.parser.scanner.DoubleScanner;
+import ch.bailu.aat_lib.xml.parser.util.DoubleScanner;
+import ch.bailu.aat_lib.xml.parser.util.Stream;
 
 public class BoundingBoxE6 {
 

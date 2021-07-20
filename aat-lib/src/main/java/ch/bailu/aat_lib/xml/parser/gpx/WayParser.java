@@ -14,7 +14,7 @@ import ch.bailu.aat_lib.xml.parser.osm.OsmTagParser;
 import ch.bailu.aat_lib.xml.parser.osm.TagParser;
 import ch.bailu.aat_lib.xml.parser.Util;
 import ch.bailu.aat_lib.xml.parser.scanner.Scanner;
-import ch.bailu.util.Objects;
+import ch.bailu.aat_lib.util.Objects;
 
 public class WayParser extends TagParser {
 

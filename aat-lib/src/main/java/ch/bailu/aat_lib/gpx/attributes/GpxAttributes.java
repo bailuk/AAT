@@ -1,7 +1,7 @@
 package ch.bailu.aat_lib.gpx.attributes;
 
 
-import ch.bailu.util.Objects;
+import ch.bailu.aat_lib.util.Objects;
 
 public abstract class GpxAttributes {
 

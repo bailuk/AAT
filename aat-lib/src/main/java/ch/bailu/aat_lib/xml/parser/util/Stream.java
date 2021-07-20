@@ -1,4 +1,4 @@
-package ch.bailu.util_java.io;
+package ch.bailu.aat_lib.xml.parser.util;
 
 import java.io.BufferedReader;
 import java.io.Closeable;

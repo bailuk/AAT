@@ -1,12 +1,10 @@
-package ch.bailu.util_java.parser.scanner;
+package ch.bailu.aat_lib.xml.parser.util;
+
 
 import java.io.IOException;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.TimeZone;
-
-import ch.bailu.util_java.io.Stream;
-
 
 public class DateScanner extends AbsScanner {
     // Localtime to UTC fix

@@ -1,8 +1,9 @@
 package ch.bailu.aat_lib.xml.parser.scanner;
 
-import ch.bailu.util_java.parser.OnParsedInterface;
-import ch.bailu.util_java.parser.scanner.DateScanner;
-import ch.bailu.util_java.parser.scanner.DoubleScanner;
+
+import ch.bailu.aat_lib.xml.parser.util.DateScanner;
+import ch.bailu.aat_lib.xml.parser.util.DoubleScanner;
+import ch.bailu.aat_lib.xml.parser.util.OnParsedInterface;
 
 public class Scanner {
     public final DoubleScanner latitude,longitude,altitude,id;

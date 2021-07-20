@@ -81,8 +81,6 @@ repositories {
 
 dependencies {
     // Local
-    implementation project(path: ':util')
-    implementation project(path: ':util-java')
     implementation project(path: ':aat-lib')
 
 

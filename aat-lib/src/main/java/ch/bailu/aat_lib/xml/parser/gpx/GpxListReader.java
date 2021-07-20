@@ -7,10 +7,10 @@ import ch.bailu.aat_lib.gpx.GpxPoint;
 import ch.bailu.aat_lib.gpx.attributes.AutoPause;
 import ch.bailu.aat_lib.gpx.attributes.GpxListAttributes;
 import ch.bailu.aat_lib.gpx.interfaces.GpxType;
-import ch.bailu.aat_lib.xml.parser.XmlParser;
 import ch.bailu.aat_lib.service.background.ThreadControl;
+import ch.bailu.aat_lib.xml.parser.XmlParser;
+import ch.bailu.aat_lib.xml.parser.util.OnParsedInterface;
 import ch.bailu.foc.Foc;
-import ch.bailu.util_java.parser.OnParsedInterface;
 
 public class GpxListReader {
     private final ThreadControl threadControl;

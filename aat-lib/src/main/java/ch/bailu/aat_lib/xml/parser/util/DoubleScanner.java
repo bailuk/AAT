@@ -1,8 +1,7 @@
-package ch.bailu.util_java.parser.scanner;
+package ch.bailu.aat_lib.xml.parser.util;
+
+
 import java.io.IOException;
-
-import ch.bailu.util_java.io.Stream;
-
 
 public class DoubleScanner extends AbsScanner {
     private static final int[] exp_table = {

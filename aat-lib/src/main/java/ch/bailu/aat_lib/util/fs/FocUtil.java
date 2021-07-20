@@ -1,4 +1,4 @@
-package ch.bailu.util_java.util;
+package ch.bailu.aat_lib.util.fs;
 
 import java.io.BufferedInputStream;
 import java.io.IOException;

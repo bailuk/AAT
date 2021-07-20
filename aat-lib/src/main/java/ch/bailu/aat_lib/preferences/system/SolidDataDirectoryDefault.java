@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import ch.bailu.aat_lib.factory.FocFactory;
 import ch.bailu.aat_lib.preferences.SolidFile;
 import ch.bailu.aat_lib.preferences.StorageInterface;
-import ch.bailu.util.Objects;
 
 public abstract class SolidDataDirectoryDefault extends SolidFile {
 

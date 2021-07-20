@@ -6,7 +6,6 @@ import ch.bailu.aat_lib.factory.FocFactory;
 import ch.bailu.aat_lib.preferences.SolidFile;
 import ch.bailu.aat_lib.preferences.StorageInterface;
 import ch.bailu.aat_lib.resources.Res;
-import ch.bailu.util.Objects;
 
 public class SolidDataDirectory extends SolidFile {
 

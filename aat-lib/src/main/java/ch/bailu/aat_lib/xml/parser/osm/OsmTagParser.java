@@ -5,7 +5,7 @@ import org.xmlpull.v1.XmlPullParser;
 import java.io.IOException;
 
 import ch.bailu.aat_lib.xml.parser.scanner.Scanner;
-import ch.bailu.util.Objects;
+import ch.bailu.aat_lib.util.Objects;
 
 public class OsmTagParser extends TagParser {
     public OsmTagParser() {

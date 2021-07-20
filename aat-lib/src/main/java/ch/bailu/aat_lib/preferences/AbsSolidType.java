@@ -3,7 +3,7 @@ package ch.bailu.aat_lib.preferences;
 import javax.annotation.Nonnull;
 
 import ch.bailu.aat_lib.exception.ValidationException;
-import ch.bailu.util.Objects;
+import ch.bailu.aat_lib.util.Objects;
 
 public abstract class AbsSolidType implements SolidTypeInterface {
     public static final String NULL_LABEL="";

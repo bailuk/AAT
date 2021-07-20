@@ -8,7 +8,7 @@ import ch.bailu.aat.services.cache.Obj;
 import ch.bailu.aat.services.cache.ObjImageAbstract;
 import ch.bailu.aat.services.cache.ObjSVGAsset;
 import ch.bailu.aat_lib.util.WithStatusText;
-import ch.bailu.util.Objects;
+import ch.bailu.aat_lib.util.Objects;
 
 public final class IconCache implements Closeable, WithStatusText {
     private final LockCache<ObjImageAbstract> icons = new LockCache<>(20);

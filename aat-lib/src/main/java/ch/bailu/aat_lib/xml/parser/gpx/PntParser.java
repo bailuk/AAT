@@ -9,7 +9,7 @@ import ch.bailu.aat_lib.gpx.GpxConstants;
 import ch.bailu.aat_lib.xml.parser.osm.TagParser;
 import ch.bailu.aat_lib.xml.parser.osm.Attr;
 import ch.bailu.aat_lib.xml.parser.scanner.Scanner;
-import ch.bailu.util.Objects;
+import ch.bailu.aat_lib.util.Objects;
 
 public abstract class PntParser extends TagParser {
     private final TagParser time = new TimeParser();

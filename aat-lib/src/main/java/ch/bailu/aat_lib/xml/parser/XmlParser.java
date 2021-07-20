@@ -10,8 +10,9 @@ import java.io.Reader;
 import ch.bailu.aat_lib.gpx.attributes.GpxAttributes;
 import ch.bailu.aat_lib.xml.parser.gpx.GpxBuilderInterface;
 import ch.bailu.aat_lib.xml.parser.scanner.Scanner;
+import ch.bailu.aat_lib.xml.parser.util.OnParsedInterface;
 import ch.bailu.foc.Foc;
-import ch.bailu.util_java.parser.OnParsedInterface;
+
 
 public class XmlParser implements GpxBuilderInterface {
 

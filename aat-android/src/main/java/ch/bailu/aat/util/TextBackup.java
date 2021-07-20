@@ -3,8 +3,8 @@ package ch.bailu.aat.util;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 
+import ch.bailu.aat_lib.xml.parser.util.Stream;
 import ch.bailu.foc.Foc;
-import ch.bailu.util_java.io.Stream;
 
 
 public abstract class TextBackup {
