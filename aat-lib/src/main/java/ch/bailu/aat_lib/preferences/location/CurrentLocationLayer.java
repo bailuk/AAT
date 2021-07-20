@@ -10,11 +10,11 @@ import ch.bailu.aat_lib.dispatcher.DispatcherInterface;
 import ch.bailu.aat_lib.dispatcher.OnContentUpdatedInterface;
 import ch.bailu.aat_lib.gpx.GpxInformation;
 import ch.bailu.aat_lib.gpx.InfoID;
-import ch.bailu.aat_lib.map.ARGB;
 import ch.bailu.aat_lib.map.MapContext;
 import ch.bailu.aat_lib.map.Point;
 import ch.bailu.aat_lib.map.layer.MapLayerInterface;
 import ch.bailu.aat_lib.preferences.StorageInterface;
+import ch.bailu.aat_lib.util.color.ARGB;
 
 public final class CurrentLocationLayer implements OnContentUpdatedInterface, MapLayerInterface {
     private static final int MIN_RADIUS=7;
@@ -52,11 +52,11 @@ public final class CurrentLocationLayer implements OnContentUpdatedInterface, Ma
         public Saturate(int c) {
             rgb = new ARGB(c);
 
-            int max = Math.max(rgb.r, Math.max(rgb.g,rgb.b));
+            int max = (int) Math.max(rgb.red(), Math.max(rgb.green(),rgb.blue()));
 
-            fill(rgb.r, max, r);
-            fill(rgb.g, max, g);
-            fill(rgb.b, max, b);
+            fill((int) rgb.red(), max, r);
+            fill((int) rgb.green(), max, g);
+            fill((int) rgb.blue(), max, b);
         }
 
 
@@ -78,7 +78,7 @@ public final class CurrentLocationLayer implements OnContentUpdatedInterface, Ma
 
         public int color(int i) {
             i = Math.min(STEPS-1, Math.abs(i));
-            return new ARGB(rgb.a, r[i], g[i], b[i]).toInt();
+            return new ARGB(rgb.alpha(), r[i], g[i], b[i]).toInt();
         }
     }
 
@@ -117,7 +117,7 @@ public final class CurrentLocationLayer implements OnContentUpdatedInterface, Ma
     }
 
     @Override
-    public boolean onTap( org.mapsforge.core.model.Point tapXY) {
+    public boolean onTap( Point tapXY) {
         return false;
     }
 

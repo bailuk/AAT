@@ -3,10 +3,10 @@ package ch.bailu.aat.map.layer.gpx;
 import android.graphics.Color;
 
 import org.mapsforge.core.graphics.Paint;
-import org.mapsforge.core.model.Point;
 
 import ch.bailu.aat_lib.map.MapContext;
-import ch.bailu.aat.map.MapPaint;
+import ch.bailu.aat_lib.map.MapPaint;
+import ch.bailu.aat_lib.map.Point;
 import ch.bailu.aat_lib.map.TwoNodes;
 import ch.bailu.aat.views.graph.AltitudeColorTable;
 import ch.bailu.aat_lib.preferences.StorageInterface;
@@ -54,19 +54,16 @@ public final class RouteLayer extends GpxLayer {
     }
 
     @Override
-    public boolean onTap(Point tapXY) {
+    public boolean onTap(Point tapPos) {
         return false;
     }
 
-    @Override
-    public void onAttached() {
-
-    }
 
     @Override
-    public void onDetached() {
+    public void onAttached() {}
 
-    }
+    @Override
+    public void onDetached() {}
 
     private class RouteShadowPainter extends GpxListPainter {
         public RouteShadowPainter() {
@@ -117,9 +114,6 @@ public final class RouteLayer extends GpxLayer {
 
 
     private class RoutePainterEdge extends GpxListPainter {
-
-
-
         public RoutePainterEdge() {
 
             super(mcontext,MIN_PIXEL_SPACE);

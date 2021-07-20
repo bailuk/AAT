@@ -2,13 +2,13 @@ package ch.bailu.aat.map.layer.control;
 
 import android.view.View;
 
-import org.mapsforge.core.model.Point;
-
 import ch.bailu.aat.activities.NodeDetailActivity;
-import ch.bailu.aat_lib.map.MapContext;
 import ch.bailu.aat.map.To;
 import ch.bailu.aat_lib.gpx.GpxInformation;
 import ch.bailu.aat_lib.gpx.GpxPointNode;
+import ch.bailu.aat_lib.map.MapContext;
+import ch.bailu.aat_lib.map.Point;
+import ch.bailu.aat_lib.preferences.StorageInterface;
 import ch.bailu.foc.Foc;
 
 public class NodeViewLayer extends AbsNodeViewLayer {
@@ -19,8 +19,8 @@ public class NodeViewLayer extends AbsNodeViewLayer {
 
     private final MapContext mcontext;
 
-    public NodeViewLayer(MapContext mc) {
-        super(mc);
+    public NodeViewLayer(StorageInterface s, MapContext mc) {
+        super(s,mc);
         mcontext = mc;
     }
 
@@ -57,20 +57,14 @@ public class NodeViewLayer extends AbsNodeViewLayer {
         setHtmlText(html);
     }
 
-
+    @Override
+    public void onAttached() {}
 
     @Override
-    public boolean onTap(Point tapXY) {
+    public void onDetached() {}
+
+    @Override
+    public boolean onTap(Point tapPos) {
         return false;
-    }
-
-    @Override
-    public void onAttached() {
-
-    }
-
-    @Override
-    public void onDetached() {
-
     }
 }

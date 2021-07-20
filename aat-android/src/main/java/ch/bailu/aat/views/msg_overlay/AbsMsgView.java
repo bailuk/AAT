@@ -3,7 +3,7 @@ package ch.bailu.aat.views.msg_overlay;
 import android.content.Context;
 import android.widget.TextView;
 
-import ch.bailu.aat.map.MapColor;
+import ch.bailu.aat_lib.map.MapColor;
 import ch.bailu.aat.util.Timer;
 import ch.bailu.aat.util.ui.AppLayout;
 

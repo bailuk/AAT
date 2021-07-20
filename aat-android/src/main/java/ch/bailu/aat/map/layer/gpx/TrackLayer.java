@@ -3,10 +3,10 @@ package ch.bailu.aat.map.layer.gpx;
 import org.mapsforge.core.graphics.Cap;
 import org.mapsforge.core.graphics.Join;
 import org.mapsforge.core.graphics.Paint;
-import org.mapsforge.core.model.Point;
 import org.mapsforge.map.android.graphics.AndroidGraphicFactory;
 
 import ch.bailu.aat_lib.map.MapContext;
+import ch.bailu.aat_lib.map.Point;
 import ch.bailu.aat_lib.map.TwoNodes;
 import ch.bailu.aat.views.graph.AltitudeColorTable;
 import ch.bailu.aat_lib.preferences.StorageInterface;
@@ -14,7 +14,6 @@ import ch.bailu.aat_lib.preferences.StorageInterface;
 public final class TrackLayer  extends GpxLayer{
     private static final int STROKE_WIDTH=3;
     private final Paint paint;
-
 
     private final MapContext mcontext;
 
@@ -26,16 +25,10 @@ public final class TrackLayer  extends GpxLayer{
         paint.setStrokeWidth(mcontext.getMetrics().getDensity().toPixel_f(STROKE_WIDTH));
         paint.setStrokeCap(Cap.ROUND);
         paint.setStrokeJoin(Join.ROUND);
-
-
-
     }
-
-
 
     @Override
     public void onPreferencesChanged(StorageInterface s, String key) {}
-
 
     @Override
     public void drawInside(MapContext mcontext) {
@@ -43,19 +36,15 @@ public final class TrackLayer  extends GpxLayer{
     }
 
     @Override
-    public boolean onTap(Point tapXY) {
+    public boolean onTap(Point tapPos) {
         return false;
     }
 
     @Override
-    public void onAttached() {
-
-    }
+    public void onAttached() {}
 
     @Override
-    public void onDetached() {
-
-    }
+    public void onDetached() {}
 
 
     private class TrackPainter extends GpxListPainter {
@@ -69,8 +58,6 @@ public final class TrackLayer  extends GpxLayer{
         public void drawEdge(TwoNodes nodes) {
             mcontext.draw().edge(nodes, paint);
         }
-
-
 
 
         @Override

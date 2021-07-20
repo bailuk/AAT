@@ -5,6 +5,7 @@ import com.google.openlocationcode.OpenLocationCode;
 import org.mapsforge.core.model.LatLong;
 
 import ch.bailu.aat_lib.map.MapContext;
+import ch.bailu.aat_lib.map.Point;
 import ch.bailu.aat_lib.map.layer.MapLayerInterface;
 import ch.bailu.aat_lib.preferences.StorageInterface;
 
@@ -34,7 +35,7 @@ public final class PlusCodesCenterCoordinatesLayer  implements MapLayerInterface
     }
 
     @Override
-    public boolean onTap( org.mapsforge.core.model.Point tapXY) {
+    public boolean onTap( Point tapXY) {
         return false;
     }
 
@@ -64,12 +65,8 @@ public final class PlusCodesCenterCoordinatesLayer  implements MapLayerInterface
 
 
     @Override
-    public void onAttached() {
-
-    }
+    public void onAttached() {}
 
     @Override
-    public void onDetached() {
-
-    }
+    public void onDetached() {}
 }

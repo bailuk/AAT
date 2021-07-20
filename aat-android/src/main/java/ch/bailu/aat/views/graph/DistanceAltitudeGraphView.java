@@ -7,7 +7,7 @@ import android.graphics.Color;
 import ch.bailu.aat.R;
 import ch.bailu.aat_lib.dispatcher.DispatcherInterface;
 import ch.bailu.aat_lib.gpx.GpxListWalker;
-import ch.bailu.aat.map.MapColor;
+import ch.bailu.aat_lib.map.MapColor;
 import ch.bailu.aat.util.ui.AndroidAppDensity;
 import ch.bailu.aat.util.ui.UiTheme;
 import ch.bailu.aat_lib.gpx.GpxList;

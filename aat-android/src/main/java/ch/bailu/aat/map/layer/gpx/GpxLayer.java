@@ -1,6 +1,6 @@
 package ch.bailu.aat.map.layer.gpx;
 
-import ch.bailu.aat.map.MapColor;
+import ch.bailu.aat_lib.map.MapColor;
 import ch.bailu.aat_lib.map.MapContext;
 import ch.bailu.aat_lib.map.layer.MapLayerInterface;
 import ch.bailu.aat_lib.dispatcher.OnContentUpdatedInterface;

@@ -1,17 +1,15 @@
 package ch.bailu.aat.map.layer.grid;
 
 
-import android.content.Context;
-
 import org.mapsforge.core.model.BoundingBox;
 import org.mapsforge.core.model.LatLong;
 
-import ch.bailu.aat_lib.map.MapContext;
-import ch.bailu.aat_lib.map.layer.MapLayerInterface;
-import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat_lib.coordinates.MeterCoordinates;
 import ch.bailu.aat_lib.description.DistanceDescription;
+import ch.bailu.aat_lib.map.MapContext;
 import ch.bailu.aat_lib.map.Point;
+import ch.bailu.aat_lib.map.layer.MapLayerInterface;
+import ch.bailu.aat_lib.preferences.StorageInterface;
 
 public abstract class MeterGridLayer implements MapLayerInterface {
 
@@ -24,8 +22,8 @@ public abstract class MeterGridLayer implements MapLayerInterface {
     private String ttext = "";
     private String btext = "";
 
-    public MeterGridLayer(Context c) {
-        distanceDescription = new DistanceDescription(new Storage(c));
+    public MeterGridLayer(StorageInterface storage) {
+        distanceDescription = new DistanceDescription(storage);
     }
 
     @Override
@@ -54,17 +52,12 @@ public abstract class MeterGridLayer implements MapLayerInterface {
                 btext = coordinates.toString();
             }
         }
-
-
     }
-
-
 
 
     private Point getCenterPixel(MapContext mc, MeterCoordinates c) {
         return mc.getMetrics().toPixel(c.toLatLong());
     }
-
 
 
     private MeterCoordinates getRoundedCoordinates(BoundingBox box) {

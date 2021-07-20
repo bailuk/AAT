@@ -4,7 +4,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.widget.LinearLayout;
 
-import ch.bailu.aat.map.MapColor;
+import ch.bailu.aat_lib.map.MapColor;
 import ch.bailu.aat.util.ui.AppTheme;
 import ch.bailu.aat.views.PercentageLayout;
 import ch.bailu.aat.views.graph.DistanceAltitudeGraphView;

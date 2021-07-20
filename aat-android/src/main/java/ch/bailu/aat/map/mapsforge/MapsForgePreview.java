@@ -29,6 +29,7 @@ import ch.bailu.aat.map.tile.source.CacheOnlySource;
 import ch.bailu.aat.map.tile.source.DownloadSource;
 import ch.bailu.aat.map.tile.source.MapsForgeSource;
 import ch.bailu.aat.map.tile.source.Source;
+import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat.preferences.map.SolidMapTileStack;
 import ch.bailu.aat.preferences.map.SolidRenderTheme;
 import ch.bailu.aat.services.ServiceContext;
@@ -67,7 +68,7 @@ public class MapsForgePreview extends MapsForgeViewBase {
         MapsForgeTileLayer tileLayer = new MapsForgeTileLayer(scontext, provider);
         add(tileLayer, tileLayer);
 
-        GpxDynLayer gpxLayer = new GpxDynLayer(getMContext());
+        GpxDynLayer gpxLayer = new GpxDynLayer(new Storage(getContext()), getMContext());
         add(gpxLayer);
 
         attachLayers();

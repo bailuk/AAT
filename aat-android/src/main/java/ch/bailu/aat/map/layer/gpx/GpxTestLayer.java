@@ -4,7 +4,6 @@ import android.graphics.Color;
 
 import org.mapsforge.core.graphics.Paint;
 import org.mapsforge.core.graphics.Style;
-import org.mapsforge.core.model.Point;
 import org.mapsforge.map.android.graphics.AndroidGraphicFactory;
 
 import ch.bailu.aat_lib.dispatcher.DispatcherInterface;
@@ -14,6 +13,7 @@ import ch.bailu.aat_lib.coordinates.BoundingBoxE6;
 import ch.bailu.aat_lib.gpx.GpxList;
 import ch.bailu.aat_lib.gpx.GpxPointNode;
 import ch.bailu.aat_lib.gpx.GpxSegmentNode;
+import ch.bailu.aat_lib.map.Point;
 import ch.bailu.aat_lib.map.Rect;
 import ch.bailu.aat_lib.preferences.StorageInterface;
 
@@ -53,25 +53,19 @@ public final class GpxTestLayer extends GpxLayer {
     }
 
     @Override
-    public boolean onTap(Point tapXY) {
+    public boolean onTap(Point tapPos) {
         return false;
     }
 
     @Override
-    public void onAttached() {
-
-    }
+    public void onAttached() {}
 
     @Override
-    public void onDetached() {
-
-    }
+    public void onDetached() {}
 
     private class Walker extends GpxListWalker {
 
-        public Walker() {
-
-        }
+        public Walker() {}
 
 
         @Override
@@ -115,6 +109,5 @@ public final class GpxTestLayer extends GpxLayer {
 
     @Override
     public void onPreferencesChanged(StorageInterface s, String key) {}
-
 
 }

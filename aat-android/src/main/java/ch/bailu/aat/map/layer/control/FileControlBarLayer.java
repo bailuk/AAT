@@ -2,8 +2,6 @@ package ch.bailu.aat.map.layer.control;
 
 import android.view.View;
 
-import org.mapsforge.core.model.Point;
-
 import ch.bailu.aat.R;
 import ch.bailu.aat.activities.AbsGpxListActivity;
 import ch.bailu.aat.factory.AndroidFocFactory;
@@ -29,12 +27,11 @@ import ch.bailu.aat_lib.description.TimeDescription;
 import ch.bailu.aat_lib.gpx.GpxInformation;
 import ch.bailu.aat_lib.gpx.GpxPointNode;
 import ch.bailu.aat_lib.gpx.InfoID;
+import ch.bailu.aat_lib.map.Point;
 import ch.bailu.aat_lib.preferences.StorageInterface;
 import ch.bailu.foc.Foc;
 
 public final class FileControlBarLayer extends ControlBarLayer {
-
-
 
     private final PreviewView preview;
     private final AbsGpxListActivity acontext;
@@ -153,7 +150,7 @@ public final class FileControlBarLayer extends ControlBarLayer {
 
     private class FileViewLayer extends AbsNodeViewLayer {
         public FileViewLayer(MapContext mc) {
-            super(mc);
+            super(storage, mc);
         }
 
 
@@ -196,10 +193,7 @@ public final class FileControlBarLayer extends ControlBarLayer {
             acontext.displayFile();
         }
 
-        @Override
-        public boolean onTap(Point tapXY) {
-            return false;
-        }
+
 
         @Override
         public void onPreferencesChanged(StorageInterface s, String key) {
@@ -222,6 +216,11 @@ public final class FileControlBarLayer extends ControlBarLayer {
                 new SolidOverlayFile(acontext,0).setValueFromFile(selectedFile);
                 return true;
             }
+            return false;
+        }
+
+        @Override
+        public boolean onTap(Point tapPos) {
             return false;
         }
     }

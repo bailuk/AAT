@@ -1,6 +1,6 @@
 package ch.bailu.aat.map.layer.control;
 
-import ch.bailu.aat.map.MapColor;
+import ch.bailu.aat_lib.map.MapColor;
 import ch.bailu.aat_lib.map.MapContext;
 import ch.bailu.aat.util.ui.UiTheme;
 import ch.bailu.aat.views.bar.ControlBar;

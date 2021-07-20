@@ -1,11 +1,9 @@
-package ch.bailu.aat.map;
+package ch.bailu.aat_lib.map;
 
 import org.mapsforge.core.graphics.Paint;
 import org.mapsforge.core.graphics.Style;
-import org.mapsforge.map.android.graphics.AndroidGraphicFactory;
 
-import ch.bailu.aat_lib.map.AppDensity;
-import ch.bailu.aat_lib.map.MapDraw;
+import ch.bailu.aat_lib.app.AppGraphicFactory;
 
 public final class MapPaint {
 
@@ -14,26 +12,22 @@ public final class MapPaint {
 
     private final static float TEXT_SIZE=20;
 
-
     public static Paint createBackgroundPaint(int color) {
-        Paint p = AndroidGraphicFactory.INSTANCE.createPaint();
-        //p.setColor(color);
-
-
+        Paint p = AppGraphicFactory.instance().createPaint();
         p.setColor(MapColor.toLightTransparent(color));
         p.setStyle(Style.FILL);
         return p;
     }
 
     public static Paint createBackgroundPaint() {
-        Paint p= AndroidGraphicFactory.INSTANCE.createPaint();
+        Paint p= AppGraphicFactory.instance().createPaint();
         p.setColor(MapColor.LIGHT);
         p.setStyle(Style.FILL);
         return p;
     }
 
     public static Paint  createGridPaint(AppDensity res) {
-        Paint p=AndroidGraphicFactory.INSTANCE.createPaint();
+        Paint p=AppGraphicFactory.instance().createPaint();
         p.setColor(MapColor.GRID);
         p.setStyle(Style.FILL);
         p.setStrokeWidth(Math.max(1, res.toPixel_f(1)));
@@ -54,11 +48,11 @@ public final class MapPaint {
 
 
     public static Paint  createTextPaint(AppDensity res, float size) {
-        Paint p=AndroidGraphicFactory.INSTANCE.createPaint();
+        Paint p = AppGraphicFactory.instance().createPaint();
         p.setColor(MapColor.TEXT);
 
         p.setTextSize(res.toPixelScaled_f(size));
-        AndroidGraphicFactory.getPaint(p).setFakeBoldText(true);
+        //AppGraphicFactory.instance().getPaint(p).setFakeBoldText(true);
         p.setStyle(Style.FILL);
 
         return p;
@@ -66,7 +60,7 @@ public final class MapPaint {
 
 
     public static Paint createEdgePaintLine(AppDensity res) {
-        Paint edge = AndroidGraphicFactory.INSTANCE.createPaint();
+        Paint edge = AppGraphicFactory.instance().createPaint();
 
         edge.setStrokeWidth(Math.max(res.toPixel_f(EDGE_WIDTH_LINE), 1));
         edge.setColor(MapColor.EDGE);
@@ -77,15 +71,13 @@ public final class MapPaint {
 
 
     public static Paint createEdgePaintBlur(MapDraw draw, int color, int zoom) {
-        Paint edge = AndroidGraphicFactory.INSTANCE.createPaint();
+        Paint edge = AppGraphicFactory.instance().createPaint();
 
         color = MapColor.setAlpha(color, zoomToAlpha(zoom));
 
         edge.setStrokeWidth(draw.getNodeBitmap().getWidth());
         edge.setColor(color);
         edge.setStyle(Style.STROKE);
-
-
 
         return edge;
     }
@@ -102,10 +94,6 @@ public final class MapPaint {
         else if (z > 9) a = 50;
         else if (z > 8) a = 40;
         else if (z > 7) a = 30;
-
-
-
-
 
         return a;
     }

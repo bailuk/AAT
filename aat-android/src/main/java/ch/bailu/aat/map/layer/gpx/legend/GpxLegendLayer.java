@@ -1,22 +1,21 @@
 package ch.bailu.aat.map.layer.gpx.legend;
 
-import android.graphics.Color;
-
 import org.mapsforge.core.graphics.Paint;
-import org.mapsforge.core.model.Point;
 
+import ch.bailu.aat.map.layer.gpx.GpxLayer;
 import ch.bailu.aat_lib.map.MapContext;
 import ch.bailu.aat_lib.map.MapMetrics;
-import ch.bailu.aat.map.MapPaint;
-import ch.bailu.aat.map.layer.gpx.GpxLayer;
+import ch.bailu.aat_lib.map.MapPaint;
+import ch.bailu.aat_lib.map.Point;
 import ch.bailu.aat_lib.preferences.StorageInterface;
+import ch.bailu.aat_lib.util.color.ARGB;
 
 public final class GpxLegendLayer extends GpxLayer {
     private final LegendWalker walker;
 
     private Paint backgroundPaint, framePaint;
 
-    private int color = Color.WHITE;
+    private int color = ARGB.WHITE;
 
     public GpxLegendLayer(LegendWalker w) {
         walker=w;
@@ -36,6 +35,10 @@ public final class GpxLegendLayer extends GpxLayer {
         walker.walkTrack(getGpxList());
     }
 
+    @Override
+    public boolean onTap(Point tapPos) {
+        return false;
+    }
 
 
     private void initPaint(MapMetrics metrics) {
@@ -50,23 +53,12 @@ public final class GpxLegendLayer extends GpxLayer {
         framePaint = MapPaint.createBackgroundPaint(color);
     }
 
-
-    @Override
-    public boolean onTap(Point tapXY) {
-        return false;
-    }
-
     @Override
     public void onPreferencesChanged(StorageInterface s, String key) {}
 
+    @Override
+    public void onAttached() {}
 
     @Override
-    public void onAttached() {
-
-    }
-
-    @Override
-    public void onDetached() {
-
-    }
+    public void onDetached() {}
 }

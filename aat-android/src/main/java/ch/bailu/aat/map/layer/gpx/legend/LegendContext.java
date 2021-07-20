@@ -2,7 +2,7 @@ package ch.bailu.aat.map.layer.gpx.legend;
 
 import org.mapsforge.core.graphics.Paint;
 
-import ch.bailu.aat.map.MapColor;
+import ch.bailu.aat_lib.map.MapColor;
 import ch.bailu.aat_lib.map.MapContext;
 import ch.bailu.aat_lib.map.TwoNodes;
 import ch.bailu.aat_lib.coordinates.BoundingBoxE6;

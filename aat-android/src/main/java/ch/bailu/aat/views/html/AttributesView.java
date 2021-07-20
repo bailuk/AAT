@@ -3,7 +3,7 @@ package ch.bailu.aat.views.html;
 import android.content.Context;
 import android.graphics.Color;
 
-import ch.bailu.aat.map.MapColor;
+import ch.bailu.aat_lib.map.MapColor;
 import ch.bailu.aat.util.HtmlBuilderGpx;
 import ch.bailu.aat_lib.dispatcher.OnContentUpdatedInterface;
 import ch.bailu.aat_lib.gpx.GpxInformation;

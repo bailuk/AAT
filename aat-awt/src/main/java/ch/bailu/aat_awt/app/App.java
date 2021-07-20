@@ -1,5 +1,7 @@
 package ch.bailu.aat_awt.app;
 
+import org.mapsforge.map.awt.graphics.AwtGraphicFactory;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,6 +13,7 @@ import ch.bailu.aat_awt.preferences.AwtStorage;
 import ch.bailu.aat_awt.services.AwtServices;
 import ch.bailu.aat_awt.window.AwtMainWindow;
 import ch.bailu.aat_lib.app.AppConfig;
+import ch.bailu.aat_lib.app.AppGraphicFactory;
 import ch.bailu.aat_lib.dispatcher.AppBroadcaster;
 import ch.bailu.aat_lib.dispatcher.Broadcaster;
 import ch.bailu.aat_lib.gpx.InfoID;
@@ -26,6 +29,7 @@ public class App {
     private final Broadcaster broadcaster;
 
     private App() {
+        AppGraphicFactory.set(AwtGraphicFactory.INSTANCE);
         AppConfig.setInstance(new AwtAppConfig());
 
         broadcaster = new AwtBroadcaster();

@@ -1,16 +1,17 @@
 package ch.bailu.aat.map.layer.gpx;
 
-import org.mapsforge.core.model.Point;
+import android.content.Context;
 
-import ch.bailu.aat_lib.dispatcher.DispatcherInterface;
-import ch.bailu.aat_lib.gpx.GpxInformationCache;
-import ch.bailu.aat_lib.map.MapContext;
 import ch.bailu.aat.map.To;
-import ch.bailu.aat_lib.map.layer.MapLayerInterface;
 import ch.bailu.aat.preferences.map.SolidLegend;
+import ch.bailu.aat_lib.dispatcher.DispatcherInterface;
 import ch.bailu.aat_lib.dispatcher.OnContentUpdatedInterface;
 import ch.bailu.aat_lib.gpx.GpxInformation;
+import ch.bailu.aat_lib.gpx.GpxInformationCache;
 import ch.bailu.aat_lib.gpx.interfaces.GpxType;
+import ch.bailu.aat_lib.map.MapContext;
+import ch.bailu.aat_lib.map.Point;
+import ch.bailu.aat_lib.map.layer.MapLayerInterface;
 import ch.bailu.aat_lib.preferences.StorageInterface;
 
 public final class GpxDynLayer implements MapLayerInterface, OnContentUpdatedInterface {
@@ -22,24 +23,23 @@ public final class GpxDynLayer implements MapLayerInterface, OnContentUpdatedInt
     private final SolidLegend slegend;
 
     private final MapContext mcontext;
+    private final Context context;
 
 
-    public GpxDynLayer(MapContext mc) {
+    public GpxDynLayer(StorageInterface s, MapContext mc) {
+        context = To.context(mc);
         mcontext = mc;
-        slegend = new SolidLegend(To.context(mcontext), mcontext.getSolidKey());
+        slegend = new SolidLegend(s, mcontext.getSolidKey());
 
         createLegendOverlay();
         createGpxOverlay();
     }
 
-
-    public GpxDynLayer(MapContext mc,
+    public GpxDynLayer(StorageInterface s, MapContext mc,
                          DispatcherInterface dispatcher, int iid) {
-        this(mc);
+        this(s, mc);
         dispatcher.addTarget(this, iid);
     }
-
-
 
     @Override
     public void drawInside(MapContext mcontext) {
@@ -48,13 +48,11 @@ public final class GpxDynLayer implements MapLayerInterface, OnContentUpdatedInt
     }
 
     @Override
-    public boolean onTap(Point tapXY) {
-        return false;
-    }
+    public void drawForeground(MapContext mcontext) {}
 
     @Override
-    public void drawForeground(MapContext mcontext) {
-
+    public boolean onTap(Point tapPos) {
+        return false;
     }
 
     private GpxType type = GpxType.NONE;
@@ -96,36 +94,24 @@ public final class GpxDynLayer implements MapLayerInterface, OnContentUpdatedInt
     }
 
 
-
-
     private void createGpxOverlay() {
         GpxType type = toType(infoCache.info);
-
         gpxOverlay = Factory.get(type).layer(mcontext, 0);
     }
 
 
     private void createLegendOverlay() {
         GpxType type = toType(infoCache.info);
-
-        legendOverlay = Factory.get(type).legend(slegend, 0);
+        legendOverlay = Factory.get(type).legend(context,slegend, 0);
     }
 
 
     @Override
-    public void onLayout(boolean changed, int l, int t, int r, int b) {
-
-    }
-
-
+    public void onLayout(boolean changed, int l, int t, int r, int b) {}
 
     @Override
-    public void onAttached() {
-
-    }
+    public void onAttached() {}
 
     @Override
-    public void onDetached() {
-
-    }
+    public void onDetached() {}
 }

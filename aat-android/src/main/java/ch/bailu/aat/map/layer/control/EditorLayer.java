@@ -5,19 +5,21 @@ import android.view.View;
 import org.mapsforge.core.model.LatLong;
 
 import ch.bailu.aat.R;
-import ch.bailu.aat_lib.dispatcher.DispatcherInterface;
 import ch.bailu.aat.dispatcher.EditorSourceInterface;
-import ch.bailu.aat_lib.map.MapContext;
 import ch.bailu.aat.map.To;
 import ch.bailu.aat.map.layer.gpx.GpxDynLayer;
 import ch.bailu.aat.menus.EditorMenu;
+import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.editor.EditorInterface;
 import ch.bailu.aat.util.ui.AppTheme;
 import ch.bailu.aat.util.ui.ToolTip;
 import ch.bailu.aat.views.bar.ControlBar;
+import ch.bailu.aat_lib.dispatcher.DispatcherInterface;
 import ch.bailu.aat_lib.gpx.GpxPoint;
+import ch.bailu.aat_lib.map.MapContext;
 import ch.bailu.aat_lib.preferences.StorageInterface;
+import ch.bailu.aat_lib.resources.Res;
 
 public final class EditorLayer extends ControlBarLayer {
 
@@ -44,32 +46,30 @@ public final class EditorLayer extends ControlBarLayer {
         scontext=To.scontext(mc);
         mcontext=mc;
 
-
-        content = new GpxDynLayer(mc);
-        selector = new EditorNodeViewLayer(mc, e);
-
+        content = new GpxDynLayer(new Storage(scontext.getContext()), mc);
+        selector = new EditorNodeViewLayer(new Storage(scontext.getContext()), mc, e);
 
         ControlBar bar = getBar();
 
         menu = bar.addImageButton(R.drawable.open_menu);
 
         add = bar.addImageButton(R.drawable.list_add);
-        ToolTip.set(add, R.string.tt_edit_add);
+        ToolTip.set(add, Res.str().tt_edit_add());
 
         remove = bar.addImageButton(R.drawable.list_remove);
-        ToolTip.set(remove, R.string.tt_edit_remove);
+        ToolTip.set(remove, Res.str().tt_edit_remove());
 
         up = bar.addImageButton(R.drawable.go_up);
-        ToolTip.set(up, R.string.tt_edit_up);
+        ToolTip.set(up, Res.str().tt_edit_up());
 
         down = bar.addImageButton(R.drawable.go_down);
-        ToolTip.set(down, R.string.tt_edit_down);
+        ToolTip.set(down, Res.str().tt_edit_down());
 
         redo = bar.addImageButton(R.drawable.edit_redo);
-        ToolTip.set(redo, R.string.tt_edit_redo);
+        ToolTip.set(redo, Res.str().tt_edit_redo());
 
         undo = bar.addImageButton(R.drawable.edit_undo);
-        ToolTip.set(undo, R.string.tt_edit_undo);
+        ToolTip.set(undo, Res.str().tt_edit_undo());
 
         d.addTarget(selector, iid);
         d.addTarget(content, iid);
@@ -142,12 +142,8 @@ public final class EditorLayer extends ControlBarLayer {
 
 
     @Override
-    public void onAttached() {
-
-    }
+    public void onAttached() {}
 
     @Override
-    public void onDetached() {
-
-    }
+    public void onDetached() {}
 }

@@ -7,12 +7,14 @@ import org.acra.config.CoreConfigurationBuilder;
 import org.acra.config.DialogConfigurationBuilder;
 import org.acra.config.MailSenderConfigurationBuilder;
 import org.acra.data.StringFormat;
+import org.mapsforge.core.util.Parameters;
+import org.mapsforge.map.android.graphics.AndroidGraphicFactory;
 
 import ch.bailu.aat.BuildConfig;
 import ch.bailu.aat.dispatcher.AndroidBroadcaster;
-import ch.bailu.aat.map.mapsforge.MapsForgeContext;
 import ch.bailu.aat.util.AndroidLogger;
 import ch.bailu.aat_lib.app.AppConfig;
+import ch.bailu.aat_lib.app.AppGraphicFactory;
 import ch.bailu.aat_lib.dispatcher.AppBroadcaster;
 import ch.bailu.aat_lib.logger.AppLog;
 import ch.bailu.aat_lib.logger.BroadcastLogger;
@@ -55,7 +57,9 @@ public class App extends Application {
 
 
     private void initMapsForge() {
-        MapsForgeContext.initMapsForge(this);
+        AndroidGraphicFactory.createInstance(this);
+        AppGraphicFactory.set(AndroidGraphicFactory.INSTANCE);
+        Parameters.SQUARE_FRAME_BUFFER = false;
     }
 
     private void initAcra() {

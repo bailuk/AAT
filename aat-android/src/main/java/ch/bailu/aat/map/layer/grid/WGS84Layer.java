@@ -1,11 +1,13 @@
 package ch.bailu.aat.map.layer.grid;
 
+
 import org.mapsforge.core.model.LatLong;
 
 import ch.bailu.aat_lib.coordinates.WGS84Coordinates;
-import ch.bailu.aat_lib.map.MapContext;
-import ch.bailu.aat_lib.map.layer.MapLayerInterface;
 import ch.bailu.aat_lib.description.FF;
+import ch.bailu.aat_lib.map.MapContext;
+import ch.bailu.aat_lib.map.Point;
+import ch.bailu.aat_lib.map.layer.MapLayerInterface;
 import ch.bailu.aat_lib.preferences.StorageInterface;
 
 public final class WGS84Layer implements MapLayerInterface {
@@ -35,7 +37,7 @@ public final class WGS84Layer implements MapLayerInterface {
     }
 
     @Override
-    public boolean onTap( org.mapsforge.core.model.Point tapXY) {
+    public boolean onTap(Point tapXY) {
         return false;
     }
 

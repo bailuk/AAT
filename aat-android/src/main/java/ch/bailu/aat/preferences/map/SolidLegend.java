@@ -14,58 +14,49 @@ import ch.bailu.aat.map.layer.gpx.legend.PointDistanceWalker;
 import ch.bailu.aat.map.layer.gpx.legend.PointIndexWalker;
 import ch.bailu.aat.map.layer.gpx.legend.PointNameWalker;
 import ch.bailu.aat.map.layer.gpx.legend.SegmentIndexWalker;
-import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat_lib.preferences.SolidStaticIndexList;
+import ch.bailu.aat_lib.preferences.StorageInterface;
+import ch.bailu.aat_lib.resources.Res;
 
 public class SolidLegend extends SolidStaticIndexList {
 
     private static final String POSTFIX="_LEGEND";
 
-    private final Context context;
-
-    public SolidLegend(Context context, String k) {
-        super(new Storage(context), k+POSTFIX, new String[] {
-            context.getString(R.string.none),
-            context.getString(R.string.p_legend_fulldistance) + " / " + context.getString(R.string.name),
-            context.getString(R.string.distance)+ " / " + context.getString(R.string.name),
-            context.getString(R.string.altitude),
-            context.getString(R.string.speed)
+    public SolidLegend(StorageInterface storage, String k) {
+        super(storage, k+POSTFIX, new String[] {
+            Res.str().none(),
+            Res.str().p_legend_fulldistance() + " / " + Res.str().name(),
+            Res.str().distance()+ " / " + Res.str().name(),
+            Res.str().altitude(),
+            Res.str().speed()
             });
-
-        this.context = context;
     }
 
-
-    public final Context getContext() {
-        return context;
-    }
-
-
-    public GpxLayer createTrackLegendLayer() {
+    public GpxLayer createTrackLegendLayer(Context context) {
         if (getIndex()==0) return new GpxLegendLayer(new SegmentIndexWalker());
-        if (getIndex()==1) return new GpxLegendLayer(new MarkerDistanceWalker(getContext(), false));
-        if (getIndex()==2) return new GpxLegendLayer(new MarkerDistanceWalker(getContext(), true));
-        if (getIndex()==3) return new GpxLegendLayer(new MarkerAltitudeWalker(getContext()));
+        if (getIndex()==1) return new GpxLegendLayer(new MarkerDistanceWalker(context, false));
+        if (getIndex()==2) return new GpxLegendLayer(new MarkerDistanceWalker(context, true));
+        if (getIndex()==3) return new GpxLegendLayer(new MarkerAltitudeWalker(context));
 
-        return new GpxLegendLayer(new MarkerSpeedWalker(getContext()));
+        return new GpxLegendLayer(new MarkerSpeedWalker(context));
     }
 
 
-    public GpxLayer createWayLegendLayer() {
+    public GpxLayer createWayLegendLayer(Context context) {
         if (getIndex()==0) return new GpxLegendLayer(new NullLegendWalker());
         if (getIndex()==1) return new GpxLegendLayer(new PointNameWalker());
         if (getIndex()==2) return new GpxLegendLayer(new PointNameWalker());
-        if (getIndex()==3) return new GpxLegendLayer(new PointAltitudeWalker(getContext()));
+        if (getIndex()==3) return new GpxLegendLayer(new PointAltitudeWalker(context));
 
         return new GpxLegendLayer(new PointIndexWalker());
     }
 
 
-    public GpxLayer createRouteLegendLayer() {
+    public GpxLayer createRouteLegendLayer(Context context) {
         if (getIndex()==0) return new GpxLegendLayer(new NullLegendWalker());
-        if (getIndex()==1) return new GpxLegendLayer(new PointDistanceWalker(getContext(), false));
-        if (getIndex()==2) return new GpxLegendLayer(new PointDistanceWalker(getContext(), true));
-        if (getIndex()==3) return new GpxLegendLayer(new PointAltitudeWalker(getContext()));
+        if (getIndex()==1) return new GpxLegendLayer(new PointDistanceWalker(context, false));
+        if (getIndex()==2) return new GpxLegendLayer(new PointDistanceWalker(context, true));
+        if (getIndex()==3) return new GpxLegendLayer(new PointAltitudeWalker(context));
 
         return new GpxLegendLayer(new PointIndexWalker());
     }

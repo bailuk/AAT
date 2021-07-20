@@ -9,6 +9,7 @@ import org.mapsforge.map.android.graphics.AndroidGraphicFactory;
 import ch.bailu.aat_lib.map.AppDensity;
 import ch.bailu.aat_lib.map.MapDraw;
 import ch.bailu.aat_lib.map.MapMetrics;
+import ch.bailu.aat_lib.map.MapPaint;
 import ch.bailu.aat_lib.map.Point;
 import ch.bailu.aat_lib.map.Rect;
 import ch.bailu.aat_lib.map.TwoNodes;

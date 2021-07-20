@@ -11,10 +11,11 @@ import org.mapsforge.map.android.graphics.AndroidGraphicFactory;
 
 import ch.bailu.aat.util.graphic.SyncTileBitmap;
 import ch.bailu.aat_lib.map.AppDensity;
+import ch.bailu.aat_lib.map.MapPaint;
 
 public final class NodeBitmap {
 
-    private static final int STROKE_WIDTH=MapPaint.EDGE_WIDTH_LINE;
+    private static final int STROKE_WIDTH= MapPaint.EDGE_WIDTH_LINE;
     private static final int RADIUS=6;
 
     private static final SparseArray<NodeBitmap> nodes = new SparseArray<>(10);

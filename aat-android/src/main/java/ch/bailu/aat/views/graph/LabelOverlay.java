@@ -7,7 +7,7 @@ import android.util.TypedValue;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import ch.bailu.aat.map.MapColor;
+import ch.bailu.aat_lib.map.MapColor;
 
 public class LabelOverlay extends LinearLayout {
     private final static int BACKGROUND_COLOR  = MapColor.setAlpha(Color.BLACK, 100);

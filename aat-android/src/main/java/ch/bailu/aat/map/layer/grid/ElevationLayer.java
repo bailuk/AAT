@@ -1,13 +1,14 @@
 package ch.bailu.aat.map.layer.grid;
 
+
 import org.mapsforge.core.model.LatLong;
-import org.mapsforge.core.model.Point;
 
 import ch.bailu.aat.map.To;
+import ch.bailu.aat.services.InsideContext;
 import ch.bailu.aat_lib.description.AltitudeDescription;
 import ch.bailu.aat_lib.map.MapContext;
+import ch.bailu.aat_lib.map.Point;
 import ch.bailu.aat_lib.map.layer.MapLayerInterface;
-import ch.bailu.aat.services.InsideContext;
 import ch.bailu.aat_lib.preferences.StorageInterface;
 
 public final class ElevationLayer implements MapLayerInterface {
@@ -16,8 +17,8 @@ public final class ElevationLayer implements MapLayerInterface {
 
     private final AltitudeDescription altitudeDescription;
 
-    public ElevationLayer(StorageInterface storageInterface) {
-        altitudeDescription= new AltitudeDescription(storageInterface);
+    public ElevationLayer(StorageInterface storage) {
+        altitudeDescription= new AltitudeDescription(storage);
     }
 
     @Override
@@ -63,14 +64,9 @@ public final class ElevationLayer implements MapLayerInterface {
     @Override
     public void onPreferencesChanged(StorageInterface s, String key) {}
 
+    @Override
+    public void onAttached() {}
 
     @Override
-    public void onAttached() {
-
-    }
-
-    @Override
-    public void onDetached() {
-
-    }
+    public void onDetached() {}
 }

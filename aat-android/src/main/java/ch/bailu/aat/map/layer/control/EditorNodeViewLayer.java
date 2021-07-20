@@ -1,17 +1,14 @@
 package ch.bailu.aat.map.layer.control;
 
-import android.content.Context;
 import android.view.View;
 
-import org.mapsforge.core.model.Point;
-
-import ch.bailu.aat.R;
 import ch.bailu.aat.dispatcher.EditorSourceInterface;
-import ch.bailu.aat_lib.map.MapContext;
-import ch.bailu.aat.map.To;
 import ch.bailu.aat.services.cache.ObjGpxEditable;
 import ch.bailu.aat_lib.gpx.GpxInformation;
 import ch.bailu.aat_lib.gpx.GpxPointNode;
+import ch.bailu.aat_lib.map.MapContext;
+import ch.bailu.aat_lib.preferences.StorageInterface;
+import ch.bailu.aat_lib.resources.Res;
 import ch.bailu.foc.Foc;
 
 public final class EditorNodeViewLayer extends NodeViewLayer {
@@ -19,12 +16,9 @@ public final class EditorNodeViewLayer extends NodeViewLayer {
     private final EditorSourceInterface editorSource;
     private boolean showNode = false;
 
-    private final Context context;
-
-    public EditorNodeViewLayer(MapContext mc, EditorSourceInterface e) {
-        super(mc);
+    public EditorNodeViewLayer(StorageInterface s, MapContext mc, EditorSourceInterface e) {
+        super(s, mc);
         editorSource = e;
-        context = To.context(mc);
 
         setText();
 
@@ -69,7 +63,7 @@ public final class EditorNodeViewLayer extends NodeViewLayer {
 
     private void setLoadEditorText(Foc file) {
         html.appendHeader(file.getName());
-        html.append(context.getString(R.string.edit_load));
+        html.append(Res.str().edit_load());
         setHtmlText(html);
     }
 
@@ -78,7 +72,6 @@ public final class EditorNodeViewLayer extends NodeViewLayer {
         html.appendHeader(file.getName());
         setHtmlText(html);
     }
-
 
     @Override
     public void onClick(View v) {
@@ -89,20 +82,9 @@ public final class EditorNodeViewLayer extends NodeViewLayer {
 
     }
 
+    @Override
+    public void onAttached() {}
 
     @Override
-    public boolean onTap(Point tapXY) {
-        return false;
-    }
-
-
-    @Override
-    public void onAttached() {
-
-    }
-
-    @Override
-    public void onDetached() {
-
-    }
+    public void onDetached() {}
 }

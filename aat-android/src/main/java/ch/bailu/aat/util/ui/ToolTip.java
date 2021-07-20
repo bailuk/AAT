@@ -5,7 +5,7 @@ import android.os.Build;
 import android.view.View;
 import android.widget.TextView;
 
-import ch.bailu.aat.map.MapColor;
+import ch.bailu.aat_lib.map.MapColor;
 
 public class ToolTip {
     public static void set(View view, Integer resID) {

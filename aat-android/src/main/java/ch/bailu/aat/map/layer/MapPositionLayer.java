@@ -1,17 +1,15 @@
 package ch.bailu.aat.map.layer;
 
 import org.mapsforge.core.model.LatLong;
-import org.mapsforge.core.model.Point;
 
-import ch.bailu.aat_lib.dispatcher.DispatcherInterface;
-import ch.bailu.aat_lib.map.MapContext;
-import ch.bailu.aat.map.To;
-import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat.preferences.map.SolidPositionLock;
 import ch.bailu.aat_lib.coordinates.LatLongE6;
+import ch.bailu.aat_lib.dispatcher.DispatcherInterface;
 import ch.bailu.aat_lib.dispatcher.OnContentUpdatedInterface;
 import ch.bailu.aat_lib.gpx.GpxInformation;
 import ch.bailu.aat_lib.gpx.InfoID;
+import ch.bailu.aat_lib.map.MapContext;
+import ch.bailu.aat_lib.map.Point;
 import ch.bailu.aat_lib.map.layer.MapLayerInterface;
 import ch.bailu.aat_lib.preferences.StorageInterface;
 
@@ -95,9 +93,7 @@ public final class MapPositionLayer implements MapLayerInterface, OnContentUpdat
 
 
     @Override
-    public void onAttached() {
-       // loadState();
-    }
+    public void onAttached() {}
 
     @Override
     public void onDetached() {
@@ -115,11 +111,12 @@ public final class MapPositionLayer implements MapLayerInterface, OnContentUpdat
     @Override
     public void drawInside(MapContext mcontext) {}
 
-    @Override
-    public boolean onTap(Point tapXY) {
-        return false;
-    }
 
     @Override
     public void drawForeground(MapContext mcontext) {}
+
+    @Override
+    public boolean onTap(Point tapPos) {
+        return false;
+    }
 }

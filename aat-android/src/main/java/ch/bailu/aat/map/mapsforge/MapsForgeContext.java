@@ -5,13 +5,12 @@ import android.content.Context;
 import org.mapsforge.core.graphics.Canvas;
 import org.mapsforge.core.model.BoundingBox;
 import org.mapsforge.core.model.Point;
-import org.mapsforge.core.util.Parameters;
-import org.mapsforge.map.android.graphics.AndroidGraphicFactory;
 import org.mapsforge.map.layer.Layer;
 
-import ch.bailu.aat.app.App;
 import ch.bailu.aat.map.AndroidDraw;
 import ch.bailu.aat.map.AndroidMapContext;
+import ch.bailu.aat.services.ServiceContext;
+import ch.bailu.aat.util.ui.AndroidAppDensity;
 import ch.bailu.aat_lib.map.MapContext;
 import ch.bailu.aat_lib.map.MapDraw;
 import ch.bailu.aat_lib.map.MapMetrics;
@@ -19,8 +18,6 @@ import ch.bailu.aat_lib.map.MapViewInterface;
 import ch.bailu.aat_lib.map.MapsForgeMetrics;
 import ch.bailu.aat_lib.map.TwoNodes;
 import ch.bailu.aat_lib.map.layer.MapLayerInterface;
-import ch.bailu.aat.services.ServiceContext;
-import ch.bailu.aat.util.ui.AndroidAppDensity;
 import ch.bailu.aat_lib.preferences.StorageInterface;
 
 public class MapsForgeContext extends Layer implements AndroidMapContext, MapLayerInterface {
@@ -52,25 +49,18 @@ public class MapsForgeContext extends Layer implements AndroidMapContext, MapLay
 
 
     @Override
-    public void onLayout(boolean changed, int l, int t, int r, int b) {
-
-    }
+    public void onLayout(boolean changed, int l, int t, int r, int b) {}
 
     @Override
-    public void drawInside(MapContext mcontext) {
-
-    }
+    public void drawInside(MapContext mcontext) {}
 
     @Override
-    public void drawForeground(MapContext mcontext) {
-
-    }
+    public void drawForeground(MapContext mcontext) {}
 
     @Override
-    public boolean onTap(Point tapPos) {
+    public boolean onTap(ch.bailu.aat_lib.map.Point tapPos) {
         return false;
     }
-
 
     @Override
     public void draw(BoundingBox boundingBox, byte zoomLevel, Canvas canvas, Point topLeftPoint) {
@@ -117,21 +107,9 @@ public class MapsForgeContext extends Layer implements AndroidMapContext, MapLay
         return mapView;
     }
 
+    @Override
+    public void onAttached() {}
 
     @Override
-    public void onAttached() {
-
-    }
-
-    @Override
-    public void onDetached() {
-
-    }
-
-
-    public static void initMapsForge(App app) {
-        AndroidGraphicFactory.createInstance(app);
-
-        Parameters.SQUARE_FRAME_BUFFER = false; // move to app
-    }
+    public void onDetached() {}
 }

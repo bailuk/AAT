@@ -13,6 +13,11 @@ public class Point {
         x=y=0;
     }
 
+    public Point(float x2, float y2) {
+        x = Math.round(x);
+        y = Math.round(y);
+    }
+
     public void set(Point p) {
         x = p.x;
         y = p.y;

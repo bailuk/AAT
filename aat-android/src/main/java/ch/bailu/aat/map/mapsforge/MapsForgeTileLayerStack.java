@@ -26,7 +26,6 @@ public class MapsForgeTileLayerStack extends Layer implements MapLayerInterface 
     int minZoom=5, maxZoom = 5;
 
 
-
     public MapsForgeTileLayerStack(ServiceContext sc) {
         scontext = sc;
     }
@@ -92,7 +91,7 @@ public class MapsForgeTileLayerStack extends Layer implements MapLayerInterface 
     public void drawForeground(MapContext mcontext) {}
 
     @Override
-    public boolean onTap(Point tapPos) {
+    public boolean onTap(ch.bailu.aat_lib.map.Point tapPos) {
         return false;
     }
 

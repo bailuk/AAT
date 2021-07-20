@@ -1,18 +1,16 @@
 package ch.bailu.aat.map.layer.grid;
 
 import org.mapsforge.core.model.LatLong;
-import org.mapsforge.core.model.Point;
 
 import ch.bailu.aat_lib.coordinates.Coordinates;
 import ch.bailu.aat_lib.map.MapContext;
+import ch.bailu.aat_lib.map.Point;
 import ch.bailu.aat_lib.map.layer.MapLayerInterface;
 import ch.bailu.aat_lib.preferences.StorageInterface;
 
 public abstract class CenterCoordinatesLayer implements MapLayerInterface {
 
-
     private final ElevationLayer elevation;
-
 
     public CenterCoordinatesLayer(StorageInterface storageInterface) {
         elevation = new ElevationLayer(storageInterface);
@@ -33,9 +31,7 @@ public abstract class CenterCoordinatesLayer implements MapLayerInterface {
     }
 
     @Override
-    public void drawInside(MapContext mc) {
-
-    }
+    public void drawInside(MapContext mc) {}
 
     @Override
     public boolean onTap(Point tapXY) {
@@ -50,12 +46,8 @@ public abstract class CenterCoordinatesLayer implements MapLayerInterface {
     public void onPreferencesChanged(StorageInterface s, String key) {}
 
     @Override
-    public void onAttached() {
-
-    }
+    public void onAttached() {}
 
     @Override
-    public void onDetached() {
-
-    }
+    public void onDetached() {}
 }

@@ -1,14 +1,13 @@
 package ch.bailu.aat.map.layer.gpx;
 
 import org.mapsforge.core.graphics.Bitmap;
-import org.mapsforge.core.model.Point;
 
-import ch.bailu.aat_lib.map.MapContext;
 import ch.bailu.aat.map.To;
-import ch.bailu.aat_lib.map.TwoNodes;
 import ch.bailu.aat.services.InsideContext;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.cache.ObjImageAbstract;
+import ch.bailu.aat_lib.map.MapContext;
+import ch.bailu.aat_lib.map.TwoNodes;
 import ch.bailu.aat_lib.preferences.StorageInterface;
 
 public final class WayLayer extends GpxLayer {
@@ -19,16 +18,11 @@ public final class WayLayer extends GpxLayer {
     private final MapContext mcontext;
     private final int icon_size;
 
-
-
-
     public WayLayer(MapContext mc) {
         mcontext = mc;
 
         icon_size = mcontext.getMetrics().getDensity().toPixel_i(ICON_SIZE);
     }
-
-
 
     @Override
     public void onPreferencesChanged(StorageInterface s, String key) {}
@@ -40,37 +34,26 @@ public final class WayLayer extends GpxLayer {
     }
 
     @Override
-    public boolean onTap(Point tapXY) {
+    public boolean onTap(ch.bailu.aat_lib.map.Point tapPos) {
         return false;
     }
 
     @Override
-    public void onAttached() {
-
-    }
+    public void onAttached() {}
 
     @Override
-    public void onDetached() {
-
-    }
-
+    public void onDetached() {}
 
     private class WayPainter extends GpxListPainter {
-
-
         private int count = 0;
 
         public WayPainter() {
             super(mcontext);
-
-
         }
 
 
         @Override
-        public void drawEdge(TwoNodes nodes) {
-
-        }
+        public void drawEdge(TwoNodes nodes) {}
 
 
         @Override
@@ -101,7 +84,6 @@ public final class WayLayer extends GpxLayer {
                 }
 
                 count++;
-
             }
         }
     }

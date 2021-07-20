@@ -1,12 +1,14 @@
 package ch.bailu.aat.map.layer.gpx;
 
-import ch.bailu.aat_lib.map.MapContext;
+import android.content.Context;
+
 import ch.bailu.aat.preferences.map.SolidLegend;
 import ch.bailu.aat_lib.gpx.interfaces.GpxType;
+import ch.bailu.aat_lib.map.MapContext;
 
 public abstract class Factory {
 
-    public abstract GpxLayer legend(SolidLegend slegend, int color);
+    public abstract GpxLayer legend(Context context, SolidLegend slegend, int color);
     public abstract GpxLayer layer(MapContext mcontext, int color);
 
 
@@ -22,8 +24,8 @@ public abstract class Factory {
 
 
         @Override
-        public GpxLayer legend(SolidLegend slegend, int iid) {
-            return slegend.createWayLegendLayer();
+        public GpxLayer legend(Context context, SolidLegend slegend, int iid) {
+            return slegend.createWayLegendLayer(context);
         }
 
         @Override
@@ -40,8 +42,8 @@ public abstract class Factory {
 
 
         @Override
-        public GpxLayer legend(SolidLegend slegend, int iid) {
-            return slegend.createRouteLegendLayer();
+        public GpxLayer legend(Context context, SolidLegend slegend, int iid) {
+            return slegend.createRouteLegendLayer(context);
         }
 
         @Override
@@ -55,8 +57,8 @@ public abstract class Factory {
     public final static Factory TRACK = new Factory() {
 
         @Override
-        public GpxLayer legend(SolidLegend slegend, int iid) {
-            return slegend.createTrackLegendLayer();
+        public GpxLayer legend(Context context, SolidLegend slegend, int iid) {
+            return slegend.createTrackLegendLayer(context);
         }
 
         @Override

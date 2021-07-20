@@ -3,16 +3,15 @@ package ch.bailu.aat.map.layer.control;
 import android.view.View;
 import android.widget.LinearLayout;
 
-import org.mapsforge.core.model.Point;
-
 import ch.bailu.aat.activities.AbsBackButton;
-import ch.bailu.aat.map.MapColor;
-import ch.bailu.aat_lib.map.MapContext;
-import ch.bailu.aat_lib.map.MapViewInterface;
 import ch.bailu.aat.map.To;
-import ch.bailu.aat_lib.map.layer.MapLayerInterface;
 import ch.bailu.aat.util.ui.AppLayout;
 import ch.bailu.aat.views.bar.ControlBar;
+import ch.bailu.aat_lib.map.MapColor;
+import ch.bailu.aat_lib.map.MapContext;
+import ch.bailu.aat_lib.map.MapViewInterface;
+import ch.bailu.aat_lib.map.Point;
+import ch.bailu.aat_lib.map.layer.MapLayerInterface;
 import ch.bailu.aat_lib.preferences.StorageInterface;
 
 public abstract class ControlBarLayer implements MapLayerInterface, View.OnClickListener {
@@ -20,8 +19,6 @@ public abstract class ControlBarLayer implements MapLayerInterface, View.OnClick
     public final static int LEFT=1;
     public final static int BOTTOM=2;
     public final static int RIGHT=3;
-
-
 
     private final ControlBar bar;
 
@@ -117,7 +114,6 @@ public abstract class ControlBarLayer implements MapLayerInterface, View.OnClick
     public void onHideBar() {}
 
 
-
     @Override
     public boolean onTap(Point tapXY) {
         int size=bar.getControlSize();
@@ -149,7 +145,6 @@ public abstract class ControlBarLayer implements MapLayerInterface, View.OnClick
     public void onClick(View v) {
         showBar();
     }
-
 
 
     public void topTap()   {

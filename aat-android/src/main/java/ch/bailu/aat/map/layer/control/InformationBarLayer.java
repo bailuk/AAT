@@ -3,21 +3,23 @@ package ch.bailu.aat.map.layer.control;
 import android.view.View;
 
 import ch.bailu.aat.R;
-import ch.bailu.aat_lib.dispatcher.DispatcherInterface;
-import ch.bailu.aat_lib.map.MapContext;
 import ch.bailu.aat.map.To;
 import ch.bailu.aat.menus.LocationMenu;
 import ch.bailu.aat.menus.MapMenu;
 import ch.bailu.aat.menus.MapQueryMenu;
+import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat.preferences.map.SolidLegend;
 import ch.bailu.aat.preferences.map.SolidMapGrid;
 import ch.bailu.aat.util.ui.AppTheme;
 import ch.bailu.aat.util.ui.ToolTip;
 import ch.bailu.aat.views.ImageButtonViewGroup;
 import ch.bailu.aat.views.bar.ControlBar;
+import ch.bailu.aat_lib.dispatcher.DispatcherInterface;
 import ch.bailu.aat_lib.gpx.InfoID;
+import ch.bailu.aat_lib.map.MapContext;
 import ch.bailu.aat_lib.preferences.SolidIndexList;
 import ch.bailu.aat_lib.preferences.StorageInterface;
+import ch.bailu.aat_lib.resources.Res;
 
 public final class InformationBarLayer extends ControlBarLayer {
 
@@ -30,12 +32,14 @@ public final class InformationBarLayer extends ControlBarLayer {
     public InformationBarLayer(MapContext mc, DispatcherInterface d) {
         super(mc,new ControlBar(To.context(mc), getOrientation(RIGHT), AppTheme.bar), RIGHT);
 
+        StorageInterface storage = new Storage(To.context(mc));
         mcontext = mc;
+
         final SolidIndexList sgrid, slegend;
 
 
-        sgrid = new SolidMapGrid(To.context(mc), mc.getSolidKey());
-        slegend = new SolidLegend(To.context(mc), mc.getSolidKey());
+        sgrid = new SolidMapGrid(storage, mc.getSolidKey());
+        slegend = new SolidLegend(storage, mc.getSolidKey());
 
         ControlBar bar = getBar();
 
@@ -47,12 +51,12 @@ public final class InformationBarLayer extends ControlBarLayer {
         search = bar.addImageButton(R.drawable.edit_find);
         location = bar.addImageButton(R.drawable.find_location);
 
-        selector = new NodeViewLayer(mc);
+        selector = new NodeViewLayer(storage, mc);
 
 
-        ToolTip.set(grid,R.string.tt_info_grid);
-        ToolTip.set(legend,R.string.tt_info_legend);
-        ToolTip.set(location, R.string.tt_info_location);
+        ToolTip.set(grid, Res.str().tt_info_grid());
+        ToolTip.set(legend,Res.str().tt_info_legend());
+        ToolTip.set(location, Res.str().tt_info_location());
 
         d.addTarget(selector, InfoID.ALL);
     }
@@ -114,7 +118,6 @@ public final class InformationBarLayer extends ControlBarLayer {
     public void onDetached() {
 
     }
-
 
     @Override
     public void onPreferencesChanged(StorageInterface s, String key) {

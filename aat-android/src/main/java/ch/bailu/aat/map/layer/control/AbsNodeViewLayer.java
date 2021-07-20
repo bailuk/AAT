@@ -3,7 +3,6 @@ package ch.bailu.aat.map.layer.control;
 import android.content.Context;
 import android.view.View;
 
-import ch.bailu.aat_lib.map.MapContext;
 import ch.bailu.aat.map.To;
 import ch.bailu.aat.map.layer.gpx.GpxVisibleLimit;
 import ch.bailu.aat.util.HtmlBuilder;
@@ -11,6 +10,8 @@ import ch.bailu.aat.util.HtmlBuilderGpx;
 import ch.bailu.aat.util.ui.AppLayout;
 import ch.bailu.aat_lib.gpx.GpxInformation;
 import ch.bailu.aat_lib.gpx.GpxPointNode;
+import ch.bailu.aat_lib.map.MapContext;
+import ch.bailu.aat_lib.preferences.StorageInterface;
 
 public abstract class AbsNodeViewLayer extends AbsNodeSelectorLayer implements
         View.OnLongClickListener, View.OnClickListener {
@@ -23,8 +24,8 @@ public abstract class AbsNodeViewLayer extends AbsNodeSelectorLayer implements
     private final Position pos;
 
 
-    public AbsNodeViewLayer(MapContext mc) {
-        super(mc);
+    public AbsNodeViewLayer(StorageInterface s, MapContext mc) {
+        super(s, mc);
         mcontext = mc;
 
         pos = new Position(To.context(mc));
