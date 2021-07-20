@@ -17,7 +17,7 @@ import javax.annotation.Nonnull;
  * Most tiles are originally from the 2000 Shuttle Radar Topography Mission.
  * See http://viewfinderpanoramas.org/dem3 and https://bailu.ch/dem3 for details.
  */
-public class Dem3Coordinates extends Coordinates implements LatLongE6Interface {
+public class Dem3Coordinates extends Coordinates implements LatLongInterface {
 
     private final static String BASE_URL = "https://bailu.ch/dem3/";
 
@@ -39,7 +39,7 @@ public class Dem3Coordinates extends Coordinates implements LatLongE6Interface {
 
 
 
-    public Dem3Coordinates(LatLongE6Interface p) {
+    public Dem3Coordinates(LatLongInterface p) {
         this(p.getLatitudeE6(), p.getLongitudeE6());
     }
 
@@ -120,6 +120,16 @@ public class Dem3Coordinates extends Coordinates implements LatLongE6Interface {
     @Override
     public int getLongitudeE6() {
         return lo * (int)1e6;
+    }
+
+    @Override
+    public double getLatitude() {
+        return la;
+    }
+
+    @Override
+    public double getLongitude() {
+        return lo;
     }
 
 }

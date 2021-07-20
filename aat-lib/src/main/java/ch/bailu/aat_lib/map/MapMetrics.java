@@ -5,7 +5,7 @@ import org.mapsforge.core.model.BoundingBox;
 import org.mapsforge.core.model.LatLong;
 
 import ch.bailu.aat_lib.coordinates.BoundingBoxE6;
-import ch.bailu.aat_lib.coordinates.LatLongE6Interface;
+import ch.bailu.aat_lib.coordinates.LatLongInterface;
 
 public interface MapMetrics {
     AppDensity getDensity();
@@ -25,9 +25,9 @@ public interface MapMetrics {
     Point getCenterPixel();
 
     boolean isVisible(BoundingBoxE6 box);
-    boolean isVisible(LatLongE6Interface point);
+    boolean isVisible(LatLongInterface point);
     Rect toMapPixels(BoundingBoxE6 box);
-    Point toPixel(LatLongE6Interface tp);
+    Point toPixel(LatLongInterface tp);
     Point toPixel(LatLong p);
     LatLong fromPixel(int x, int y);
 

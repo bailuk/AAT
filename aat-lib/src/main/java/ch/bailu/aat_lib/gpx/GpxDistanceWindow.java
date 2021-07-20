@@ -1,11 +1,7 @@
-package ch.bailu.aat.gpx;
-
-import android.content.Context;
+package ch.bailu.aat_lib.gpx;
 
 import ch.bailu.aat_lib.description.DistanceDescription;
-import ch.bailu.aat.preferences.Storage;
-import ch.bailu.aat_lib.gpx.GpxList;
-import ch.bailu.aat_lib.gpx.GpxPointNode;
+import ch.bailu.aat_lib.preferences.StorageInterface;
 
 public class GpxDistanceWindow extends GpxWindow {
 
@@ -23,9 +19,9 @@ public class GpxDistanceWindow extends GpxWindow {
     }
 
 
-    public String getLimitAsString(Context c) {
+    public String getLimitAsString(StorageInterface s) {
         if (distanceLimit > 0)
-            return new DistanceDescription(new Storage(c)).getDistanceDescription(distanceLimit);
+            return new DistanceDescription(s).getDistanceDescription(distanceLimit);
         return "";
 
     }

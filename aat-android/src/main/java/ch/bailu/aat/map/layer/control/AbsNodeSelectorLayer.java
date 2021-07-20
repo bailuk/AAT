@@ -4,7 +4,7 @@ import android.util.SparseArray;
 
 import org.mapsforge.core.model.LatLong;
 
-import ch.bailu.aat.gpx.GpxNodeFinder;
+import ch.bailu.aat_lib.gpx.GpxNodeFinder;
 import ch.bailu.aat.map.MapColor;
 import ch.bailu.aat_lib.map.MapContext;
 import ch.bailu.aat.map.To;

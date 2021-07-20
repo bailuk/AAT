@@ -4,7 +4,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 
 import ch.bailu.aat_lib.dispatcher.DispatcherInterface;
-import ch.bailu.aat.gpx.GpxListWalker;
+import ch.bailu.aat_lib.gpx.GpxListWalker;
 import ch.bailu.aat.util.ui.AndroidAppDensity;
 import ch.bailu.aat.util.ui.UiTheme;
 import ch.bailu.aat_lib.app.AppColor;

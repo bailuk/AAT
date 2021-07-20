@@ -1,12 +1,12 @@
 package ch.bailu.aat.services.editor;
 
-import ch.bailu.aat.gpx.GpxListWalker;
-import ch.bailu.aat.gpx.tools.Attacher;
-import ch.bailu.aat.gpx.tools.Copier;
-import ch.bailu.aat.gpx.tools.Inverser;
-import ch.bailu.aat.gpx.tools.SimplifierBearing;
-import ch.bailu.aat.gpx.tools.SimplifierDistance;
-import ch.bailu.aat.gpx.tools.TimeStampFixer;
+import ch.bailu.aat_lib.gpx.GpxListWalker;
+import ch.bailu.aat_lib.gpx.tools.Attacher;
+import ch.bailu.aat_lib.gpx.tools.Copier;
+import ch.bailu.aat_lib.gpx.tools.Inverser;
+import ch.bailu.aat_lib.gpx.tools.SimplifierBearing;
+import ch.bailu.aat_lib.gpx.tools.SimplifierDistance;
+import ch.bailu.aat_lib.gpx.tools.TimeStampFixer;
 import ch.bailu.aat_lib.gpx.GpxList;
 import ch.bailu.aat_lib.gpx.GpxPoint;
 import ch.bailu.aat_lib.gpx.GpxPointFirstNode;

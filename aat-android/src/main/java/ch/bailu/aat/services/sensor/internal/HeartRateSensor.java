@@ -7,7 +7,7 @@ import android.hardware.SensorManager;
 
 import androidx.annotation.RequiresApi;
 
-import ch.bailu.aat.gpx.attributes.SensorInformation;
+import ch.bailu.aat_lib.gpx.attributes.SensorInformation;
 import ch.bailu.aat.services.sensor.bluetooth_le.Broadcaster;
 import ch.bailu.aat.services.sensor.list.SensorListItem;
 import ch.bailu.aat_lib.gpx.GpxInformation;

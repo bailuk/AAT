@@ -5,7 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 
 import ch.bailu.aat.factory.AndroidFocFactory;
-import ch.bailu.aat.gpx.GpxFileWrapper;
+import ch.bailu.aat_lib.gpx.GpxFileWrapper;
 import ch.bailu.aat.preferences.SolidDirectoryQuery;
 import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat.services.InsideContext;

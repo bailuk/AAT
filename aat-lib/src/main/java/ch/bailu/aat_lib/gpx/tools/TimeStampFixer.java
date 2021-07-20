@@ -1,6 +1,6 @@
-package ch.bailu.aat.gpx.tools;
+package ch.bailu.aat_lib.gpx.tools;
 
-import ch.bailu.aat.gpx.GpxListWalker;
+import ch.bailu.aat_lib.gpx.GpxListWalker;
 import ch.bailu.aat_lib.gpx.GpxList;
 import ch.bailu.aat_lib.gpx.GpxPoint;
 import ch.bailu.aat_lib.gpx.GpxPointFirstNode;

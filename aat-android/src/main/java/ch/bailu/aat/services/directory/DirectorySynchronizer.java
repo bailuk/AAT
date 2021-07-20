@@ -10,7 +10,7 @@ import java.io.Closeable;
 import java.io.File;
 import java.util.ArrayList;
 
-import ch.bailu.aat.gpx.GpxFileWrapper;
+import ch.bailu.aat_lib.gpx.GpxFileWrapper;
 import ch.bailu.aat.map.mapsforge.MapsForgePreview;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.background.BackgroundTask;

@@ -95,7 +95,7 @@ public class BoundingBoxE6 {
         add(latLong.getLatitudeE6(), latLong.getLongitudeE6());
     }
 
-    public void add(LatLongE6Interface point) {
+    public void add(LatLongInterface point) {
         add(point.getLatitudeE6(), point.getLongitudeE6());
     }
 
@@ -117,7 +117,7 @@ public class BoundingBoxE6 {
         return contains(p.getLatitudeE6(), p.getLongitudeE6());
     }
 
-    public boolean contains(LatLongE6Interface p) {
+    public boolean contains(LatLongInterface p) {
         return contains(p.getLatitudeE6(), p.getLongitudeE6());
     }
 

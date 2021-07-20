@@ -99,7 +99,7 @@ public class UTMCoordinates extends MeterCoordinates {
     }
 
 
-    public UTMCoordinates(LatLongE6Interface point) {
+    public UTMCoordinates(LatLongInterface point) {
         this(((double)point.getLatitudeE6())/1e6d, ((double)point.getLongitudeE6())/1e6d);
     }
 

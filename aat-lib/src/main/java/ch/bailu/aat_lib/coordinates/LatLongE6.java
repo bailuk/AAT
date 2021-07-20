@@ -8,7 +8,7 @@ import org.mapsforge.core.util.LatLongUtils;
 import javax.annotation.Nonnull;
 
 
-public class LatLongE6 implements LatLongE6Interface {
+public class LatLongE6 implements LatLongInterface {
     private final int la, lo;
 
 
@@ -52,7 +52,7 @@ public class LatLongE6 implements LatLongE6Interface {
         return lo;
     }
 
-    public static LatLong toLatLong(LatLongE6Interface tp) {
+    public static LatLong toLatLong(LatLongInterface tp) {
         return new LatLong(toD(tp.getLatitudeE6()), toD(tp.getLongitudeE6()));
 
     }

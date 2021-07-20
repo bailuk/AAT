@@ -1,6 +1,6 @@
 package ch.bailu.aat.map.layer.gpx;
 
-import ch.bailu.aat.gpx.GpxListWalker;
+import ch.bailu.aat_lib.gpx.GpxListWalker;
 import ch.bailu.aat_lib.map.MapContext;
 import ch.bailu.aat_lib.map.TwoNodes;
 import ch.bailu.aat_lib.gpx.GpxList;

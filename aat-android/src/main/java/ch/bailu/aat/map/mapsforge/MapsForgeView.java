@@ -5,10 +5,11 @@ import android.graphics.Canvas;
 import org.mapsforge.core.model.LatLong;
 import org.mapsforge.map.model.common.Observer;
 
-import ch.bailu.aat_lib.dispatcher.DispatcherInterface;
 import ch.bailu.aat.map.MapDensity;
 import ch.bailu.aat.map.layer.MapPositionLayer;
+import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat.services.ServiceContext;
+import ch.bailu.aat_lib.dispatcher.DispatcherInterface;
 
 public class MapsForgeView extends MapsForgeViewBase {
 
@@ -23,7 +24,7 @@ public class MapsForgeView extends MapsForgeViewBase {
         add(stack, stack);
 
         // Depends on zoom limits (setItem by TileLayerStack)
-        pos = new MapPositionLayer(getMContext(), dispatcher);
+        pos = new MapPositionLayer(getMContext(), new Storage(sc.getContext()), dispatcher);
         add(pos);
 
         foreground = new MapsForgeForeground(this,

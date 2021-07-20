@@ -11,7 +11,7 @@ import android.widget.SeekBar;
 import ch.bailu.aat.R;
 import ch.bailu.aat.dispatcher.CurrentLocationSource;
 import ch.bailu.aat.dispatcher.CustomFileSource;
-import ch.bailu.aat.gpx.GpxListArray;
+import ch.bailu.aat_lib.gpx.GpxListArray;
 import ch.bailu.aat.map.MapFactory;
 import ch.bailu.aat.map.To;
 import ch.bailu.aat.util.HtmlBuilderGpx;

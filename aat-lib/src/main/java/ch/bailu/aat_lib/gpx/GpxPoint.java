@@ -2,7 +2,7 @@ package ch.bailu.aat_lib.gpx;
 
 import org.mapsforge.core.model.LatLong;
 
-import ch.bailu.aat_lib.coordinates.LatLongE6Interface;
+import ch.bailu.aat_lib.coordinates.LatLongInterface;
 import ch.bailu.aat_lib.gpx.attributes.GpxAttributes;
 import ch.bailu.aat_lib.gpx.attributes.GpxAttributesNull;
 import ch.bailu.aat_lib.gpx.interfaces.GpxPointInterface;
@@ -50,7 +50,7 @@ public class GpxPoint implements GpxPointInterface {
         timestamp=time;
     }
 
-    public GpxPoint(LatLongE6Interface gp, float a, long time) {
+    public GpxPoint(LatLongInterface gp, float a, long time) {
         latitude = gp.getLatitudeE6();
         longitude = gp.getLongitudeE6();
         altitude = a;

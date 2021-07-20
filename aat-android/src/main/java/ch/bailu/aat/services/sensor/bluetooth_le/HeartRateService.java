@@ -9,7 +9,7 @@ import androidx.annotation.RequiresApi;
 import java.util.UUID;
 
 import ch.bailu.aat.R;
-import ch.bailu.aat.gpx.attributes.SensorInformation;
+import ch.bailu.aat_lib.gpx.attributes.SensorInformation;
 import ch.bailu.aat.services.sensor.Connector;
 import ch.bailu.aat_lib.gpx.GpxInformation;
 import ch.bailu.aat_lib.gpx.InfoID;

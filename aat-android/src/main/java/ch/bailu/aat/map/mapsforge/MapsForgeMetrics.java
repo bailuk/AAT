@@ -14,7 +14,7 @@ import ch.bailu.aat_lib.map.MapMetrics;
 import ch.bailu.aat.util.ui.AndroidAppDensity;
 import ch.bailu.aat_lib.coordinates.BoundingBoxE6;
 import ch.bailu.aat_lib.coordinates.LatLongE6;
-import ch.bailu.aat_lib.coordinates.LatLongE6Interface;
+import ch.bailu.aat_lib.coordinates.LatLongInterface;
 import ch.bailu.aat_lib.map.Point;
 import ch.bailu.aat_lib.map.Rect;
 
@@ -115,7 +115,7 @@ public class MapsForgeMetrics implements MapMetrics {
         return BoundingBoxE6.doOverlap(box, new BoundingBoxE6(bounding));
     }
     @Override
-    public boolean isVisible(LatLongE6Interface point) {
+    public boolean isVisible(LatLongInterface point) {
         return bounding.contains(
                 LatLongE6.toD(point.getLatitudeE6()),
                 LatLongE6.toD(point.getLongitudeE6()));
@@ -136,7 +136,7 @@ public class MapsForgeMetrics implements MapMetrics {
 
 
     @Override
-    public Point toPixel(LatLongE6Interface tp) {
+    public Point toPixel(LatLongInterface tp) {
         return toPixel(LatLongE6.toLatLong(tp));
     }
 

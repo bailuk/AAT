@@ -7,8 +7,8 @@ import android.graphics.Color;
 
 import ch.bailu.aat.R;
 import ch.bailu.aat_lib.dispatcher.DispatcherInterface;
-import ch.bailu.aat.gpx.GpxDistanceWindow;
-import ch.bailu.aat.gpx.GpxListWalker;
+import ch.bailu.aat_lib.gpx.GpxDistanceWindow;
+import ch.bailu.aat_lib.gpx.GpxListWalker;
 import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat.util.ui.AndroidAppDensity;
 import ch.bailu.aat.util.ui.UiTheme;
@@ -48,7 +48,7 @@ public class DistanceSpeedGraphView extends AbsGraphView implements SharedPrefer
         GpxDistanceWindow window = new GpxDistanceWindow(list);
 
         ylabel.setText(AppColor.HL_ORANGE,
-                window.getLimitAsString(getContext()));
+                window.getLimitAsString(new Storage(getContext())));
 
         new GraphPainter(plotter, getAutoPause(), getMinDistance(list), window)
                 .walkTrack(list);

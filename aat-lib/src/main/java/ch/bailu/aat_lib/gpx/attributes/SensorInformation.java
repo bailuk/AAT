@@ -1,7 +1,6 @@
-package ch.bailu.aat.gpx.attributes;
+package ch.bailu.aat_lib.gpx.attributes;
 
 import ch.bailu.aat_lib.gpx.GpxInformation;
-import ch.bailu.aat_lib.gpx.attributes.GpxAttributes;
 
 public final class SensorInformation extends GpxInformation {
         private final GpxAttributes attributes;

@@ -98,7 +98,7 @@ public class CH1903Coordinates extends MeterCoordinates {
         this(p.getLatitude(), p.getLongitude());
     }
 
-    public CH1903Coordinates(LatLongE6Interface point) {
+    public CH1903Coordinates(LatLongInterface point) {
         toCH1903(((double)point.getLatitudeE6())/1e6d,
         		((double)point.getLongitudeE6())/1e6d);
     }

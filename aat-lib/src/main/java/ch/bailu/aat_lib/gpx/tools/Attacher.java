@@ -1,22 +1,22 @@
-package ch.bailu.aat.gpx.tools;
+package ch.bailu.aat_lib.gpx.tools;
 
-import ch.bailu.aat.gpx.GpxListWalker;
+import ch.bailu.aat_lib.gpx.GpxListWalker;
 import ch.bailu.aat_lib.gpx.GpxList;
 import ch.bailu.aat_lib.gpx.GpxPointNode;
 import ch.bailu.aat_lib.gpx.GpxSegmentNode;
-import ch.bailu.aat_lib.gpx.attributes.GpxListAttributes;
 
-public class Copier extends GpxListWalker {
-    private GpxList newList;
+public class Attacher extends GpxListWalker {
+    private final GpxList newList;
 
     private boolean newSegment = true;
 
+    public Attacher(GpxList base) {
+        newList = base;
+    }
 
 
     @Override
-    public boolean doList(GpxList track) {
-        newList = new GpxList(track.getDelta().getType(),
-                GpxListAttributes.NULL);
+    public boolean doList(GpxList toAttach) {
         newSegment = true;
         return true;
     }
@@ -47,4 +47,5 @@ public class Copier extends GpxListWalker {
     public GpxList getNewList() {
         return newList;
     }
+
 }
