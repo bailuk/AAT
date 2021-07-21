@@ -57,7 +57,7 @@ public final class MapPositionLayer implements MapLayerInterface, OnContentUpdat
 
         byte z = (byte) storage.readInteger(mcontext.getSolidKey() + ZOOM_SUFFIX);
 
-        mcontext.getMapView().setZoomLevel(z);
+        mcontext.getMapView().setZoomLevel((byte) 15);
         mcontext.getMapView().setCenter(gpsLocation);
     }
 

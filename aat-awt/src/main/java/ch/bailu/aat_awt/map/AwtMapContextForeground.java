@@ -34,8 +34,8 @@ public class AwtMapContextForeground implements MapContext {
     }
 
 
-    public void dispatchDraw(final Canvas canvas) {
-        metrics.init(new Dimension(canvas.getWidth(), canvas.getHeight()));
+    public void dispatchDraw(final Canvas canvas, int width, int height) {
+        metrics.init(new Dimension(width, height));
         draw.init(canvas, metrics);
 
         for (MapLayerInterface l : layers) {

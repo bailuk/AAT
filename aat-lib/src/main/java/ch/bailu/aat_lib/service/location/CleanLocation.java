@@ -1,7 +1,6 @@
 package ch.bailu.aat_lib.service.location;
 
 import ch.bailu.aat_lib.gpx.GpxInformation;
-import ch.bailu.aat_lib.logger.AppLog;
 import ch.bailu.aat_lib.preferences.StorageInterface;
 
 public final class CleanLocation extends LocationStackItem {
@@ -27,13 +26,9 @@ public final class CleanLocation extends LocationStackItem {
 
     @Override
     public void passLocation(LocationInformation location) {
-
         if (location.isFromGPS()) {
-            AppLog.d(this, "location accepted");
             loggableLocation = location;
             creationTime = location.getCreationTime();
-        } else {
-            AppLog.d(this, "location not accepted");
         }
     }
 

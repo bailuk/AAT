@@ -16,10 +16,12 @@ import ch.bailu.aat_lib.app.AppConfig;
 import ch.bailu.aat_lib.app.AppGraphicFactory;
 import ch.bailu.aat_lib.dispatcher.AppBroadcaster;
 import ch.bailu.aat_lib.dispatcher.Broadcaster;
+import ch.bailu.aat_lib.dispatcher.CurrentLocationSource;
+import ch.bailu.aat_lib.dispatcher.Dispatcher;
+import ch.bailu.aat_lib.dispatcher.TrackerSource;
 import ch.bailu.aat_lib.gpx.InfoID;
 import ch.bailu.aat_lib.logger.AppLog;
 import ch.bailu.aat_lib.logger.BroadcastLogger;
-import ch.bailu.aat_lib.preferences.SolidFactory;
 
 public class App {
 
@@ -27,30 +29,28 @@ public class App {
     private final AwtMainWindow window;
     private final AwtServices services;
     private final Broadcaster broadcaster;
+    private final Dispatcher dispatcher = new Dispatcher();
 
     private App() {
+        AppLog.set(new SL4JLogger());
         AppGraphicFactory.set(AwtGraphicFactory.INSTANCE);
         AppConfig.setInstance(new AwtAppConfig());
 
         broadcaster = new AwtBroadcaster();
 
-        AppLog.set(new SL4JLogger());
+        services = new AwtServices(new AwtSolidFactory(), broadcaster);
+        dispatcher.addSource(new CurrentLocationSource(services, broadcaster));
+        dispatcher.addSource(new TrackerSource(services, broadcaster));
+        dispatcher.onResume();
+
         AppLog.setError(new BroadcastLogger(broadcaster, AppBroadcaster.LOG_ERROR, new SL4JLogger()));
         AppLog.setInfo(new BroadcastLogger(broadcaster, AppBroadcaster.LOG_INFO, new SL4JLogger()));
 
-        SolidFactory sfactory = new AwtSolidFactory();
-
-        services = new AwtServices(sfactory, broadcaster);
-
-        window = new AwtMainWindow(getMapFiles(), services, broadcaster);
-        //window.onContentUpdated(InfoID.LOCATION, services.getLocationService().getLocationInformation());
-        //window.onContentUpdated(InfoID.TRACKER, services.getLocationService().getLocationInformation());
-
-
+        window = new AwtMainWindow(getMapFiles(), services, broadcaster, dispatcher);
         broadcaster.register(data -> window.onContentUpdated(InfoID.LOCATION, services.getLocationService().getLocationInformation()), AppBroadcaster.LOCATION_CHANGED);
         broadcaster.register(data -> window.onContentUpdated(InfoID.TRACKER, services.getTrackerService().getLoggerInformation()), AppBroadcaster.TRACKER);
 
-        services.getTrackerService().getState().onStartStop();
+        services.getTrackerService().getState().onStartPauseResume();
     }
 
     private static List<File> getMapFiles() {

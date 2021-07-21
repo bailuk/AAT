@@ -1,8 +1,6 @@
 package ch.bailu.aat_awt.window;
 
 
-import org.mapsforge.core.model.LatLong;
-
 import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.Dimension;
@@ -19,19 +17,18 @@ import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
-import javax.swing.JToggleButton;
 import javax.swing.WindowConstants;
 
 import ch.bailu.aat_awt.app.App;
-import ch.bailu.aat_awt.map.AwtCustomMapView;
 import ch.bailu.aat_awt.preferences.AwtStorage;
 import ch.bailu.aat_awt.views.JCockpitPanel;
+import ch.bailu.aat_awt.views.JMapPanel;
 import ch.bailu.aat_awt.views.JNumberView;
+import ch.bailu.aat_lib.app.AppConfig;
 import ch.bailu.aat_lib.description.AltitudeDescription;
 import ch.bailu.aat_lib.description.FF;
 import ch.bailu.aat_lib.description.GpsStateDescription;
@@ -40,23 +37,15 @@ import ch.bailu.aat_lib.description.LongitudeDescription;
 import ch.bailu.aat_lib.description.TrackerStateDescription;
 import ch.bailu.aat_lib.dispatcher.AppBroadcaster;
 import ch.bailu.aat_lib.dispatcher.Broadcaster;
-import ch.bailu.aat_lib.dispatcher.CurrentLocationSource;
 import ch.bailu.aat_lib.dispatcher.Dispatcher;
 import ch.bailu.aat_lib.dispatcher.OnContentUpdatedInterface;
-import ch.bailu.aat_lib.dispatcher.TrackerSource;
 import ch.bailu.aat_lib.gpx.GpxInformation;
 import ch.bailu.aat_lib.gpx.InfoID;
-import ch.bailu.aat_lib.map.layer.grid.CH1903GridLayer;
-import ch.bailu.aat_lib.map.layer.grid.Crosshair;
-import ch.bailu.aat_lib.preferences.location.CurrentLocationLayer;
 import ch.bailu.aat_lib.service.ServicesInterface;
 
 public class AwtMainWindow implements OnContentUpdatedInterface {
-    private static final String MESSAGE = "Exit the application?";
-    private static final String TITLE = "Confirm close";
-
     final JFrame frame;
-    final AwtCustomMapView map;
+    final JMapPanel map;
 
     private final JLabel
             locationStatus = new JLabel(),
@@ -70,10 +59,6 @@ public class AwtMainWindow implements OnContentUpdatedInterface {
             buttonPane = new JPanel(),
             statusPane = new JPanel();
 
-    private final JButton
-            showMap = new JButton("Map"),
-            plus = new JButton("+"),
-            minus = new JButton("-");
 
     private final JNumberView
             gpsButton = new JNumberView(new GpsStateDescription()),
@@ -81,37 +66,19 @@ public class AwtMainWindow implements OnContentUpdatedInterface {
 
     private final JTabbedPane tabbedPane = new JTabbedPane();
 
-    private final JToggleButton center = new JToggleButton("Center");
 
-    private LatLong currentPos = null;
-
-    private final Dispatcher dispatcher = new Dispatcher();
+    public AwtMainWindow(List<File> mapFiles, ServicesInterface services, Broadcaster broadcaster, Dispatcher dispatcher) {
 
 
-    public AwtMainWindow(List<File> mapFiles, ServicesInterface services, Broadcaster broadcaster) {
-        map = new AwtCustomMapView(mapFiles);
-
-        center.addActionListener(itemEvent -> doCenter());
-        showMap.addActionListener(itemEvent -> doShowMap());
-        plus.addActionListener(itemEvent -> doZoomIn());
-        minus.addActionListener(itemEvent -> doZoomOut());
-
-        frame = new JFrame("AAT - AWT (swing) edition");
-        frame.setName("test");
+        frame = new JFrame(AppConfig.getInstance().getLongName());
         frame.getContentPane().setLayout(new BorderLayout());
 
         buttonPane.setLayout(new BoxLayout(buttonPane, BoxLayout.LINE_AXIS));
         buttonPane.setBorder(BorderFactory.createEmptyBorder(2, 2, 2, 2));
 
-        buttonPane.add(Box.createHorizontalGlue());
-        buttonPane.add(center);
-        buttonPane.add(showMap);
-        buttonPane.add(Box.createHorizontalGlue());
-        buttonPane.add(plus);
-        buttonPane.add(minus);
+        map = new JMapPanel(mapFiles, services, new AwtStorage(), dispatcher);
         buttonPane.add(Box.createHorizontalGlue());
         buttonPane.add(gpsButton);
-        buttonPane.add(Box.createHorizontalGlue());
         buttonPane.add(trackerButton);
 
 
@@ -136,17 +103,11 @@ public class AwtMainWindow implements OnContentUpdatedInterface {
             }
         });
 
-
         frame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
         frame.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
                 doQuit();
-            }
-
-            @Override
-            public void windowOpened(WindowEvent e) {
-                map.loadPreferences();
             }
         });
 
@@ -174,25 +135,8 @@ public class AwtMainWindow implements OnContentUpdatedInterface {
             String msg = (String) objects[1];
             infoStatus.setText(tag + ": " + msg);
         }, AppBroadcaster.LOG_INFO);
-
-        dispatcher.addSource(new CurrentLocationSource(services, broadcaster));
-        dispatcher.addSource(new TrackerSource(services, broadcaster));
-
-        map.add(new CurrentLocationLayer(map.getMContext(), new Dispatcher()));
-        map.add(new CH1903GridLayer(new AwtStorage()));
-        map.add(new Crosshair());
     }
 
-    private void doZoomOut() {
-        byte zoom = (byte) (map.getModel().mapViewPosition.getZoomLevel() - 1);
-        map.setZoomLevel(zoom);
-    }
-
-
-    private void doZoomIn() {
-        byte zoom = (byte) (map.getModel().mapViewPosition.getZoomLevel() + 1);
-        map.setZoomLevel(zoom);
-    }
 
     @Override
     public void onContentUpdated(int iid, GpxInformation info) {
@@ -214,8 +158,6 @@ public class AwtMainWindow implements OnContentUpdatedInterface {
             gpsButton.onContentUpdated(iid, info);
 
             locationStatus.setText(time + " " + gps.getLabel() + " " + gps.getValue() + " " + la.getValue() + ", " + lo.getValue() +", " + altitude.getValue());
-            currentPos = new LatLong(info.getLatitude(), info.getLongitude());
-            doCenter();
 
         } else if (iid == InfoID.TRACKER) {
             tracker.onContentUpdated(iid, info);
@@ -226,22 +168,8 @@ public class AwtMainWindow implements OnContentUpdatedInterface {
 
 
     private void doQuit() {
-        /*int result = JOptionPane.showConfirmDialog(frame, MESSAGE, TITLE, JOptionPane.YES_NO_OPTION);
-        if (result == JOptionPane.YES_OPTION) {*/
-            map.savePreferences();
-            frame.dispose();
-            App.exit(0);
-//        }
+        frame.dispose();
+        App.exit(0);
     }
 
-
-    private void doCenter() {
-        if (currentPos != null && center.isSelected()) {
-            map.setCenter(currentPos);
-        }
-    }
-
-    private void doShowMap() {
-        map.showMap();
-    }
 }

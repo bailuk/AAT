@@ -47,7 +47,12 @@ public class AwtServices implements ServicesInterface {
 
     @Override
     public ElevetionServiceInterface getElevationService() {
-        return null;
+        return new ElevetionServiceInterface() {
+            @Override
+            public short getElevation(int latitudeE6, int longitudeE6) {
+                return 0;
+            }
+        };
     }
 
     @Override

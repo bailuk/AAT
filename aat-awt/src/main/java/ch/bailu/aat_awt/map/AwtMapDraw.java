@@ -5,7 +5,6 @@ import org.mapsforge.core.graphics.Canvas;
 import org.mapsforge.core.graphics.Paint;
 import org.mapsforge.map.awt.graphics.AwtGraphicFactory;
 
-import ch.bailu.aat_lib.logger.AppLog;
 import ch.bailu.aat_lib.map.AppDensity;
 import ch.bailu.aat_lib.map.MapDraw;
 import ch.bailu.aat_lib.map.MapMetrics;
@@ -103,13 +102,14 @@ public class AwtMapDraw implements MapDraw {
 
     @Override
     public void textTop(String text, int line) {
-
+        canvas.drawText(text, left + SPACE, top + SPACE + textHeight*line, textPaint);
     }
 
     @Override
     public void textBottom(String s, int line) {
-
+        canvas.drawText(s, left + SPACE, bottom - SPACE - textHeight*(line+1), textPaint);
     }
+
 
     @Override
     public void circle(Point pixel, int radius, Paint paint) {
@@ -117,9 +117,13 @@ public class AwtMapDraw implements MapDraw {
     }
 
     @Override
-    public void rect(Rect r, Paint paint) {
-
+    public void rect(Rect rect, Paint paint) {
+        canvas.drawLine(rect.left,  rect.top,    rect.left,  rect.bottom, paint);
+        canvas.drawLine(rect.left,  rect.bottom, rect.right, rect.bottom, paint);
+        canvas.drawLine(rect.right, rect.bottom, rect.right, rect.top, paint);
+        canvas.drawLine(rect.right, rect.top,    rect.left,  rect.top, paint);
     }
+
 
     @Override
     public void bitmap(Bitmap b, Point pixel) {
@@ -131,14 +135,25 @@ public class AwtMapDraw implements MapDraw {
 
     }
 
+
     @Override
     public void edge(TwoNodes nodes, Paint paint) {
-
+        canvas.drawLine(
+                nodes.nodeA.pixel.x,
+                nodes.nodeA.pixel.y,
+                nodes.nodeB.pixel.x,
+                nodes.nodeB.pixel.y,
+                paint);
     }
 
     @Override
     public void label(String text, Point pixel, Paint background, Paint frame) {
+        drawBackground(text, pixel, background);
+        drawBackground(text, pixel, frame);
+        canvas.drawText(text, (int)pixel.x, (int)pixel.y, legendPaint);
+    }
 
+    public void drawBackground(String text, Point pixel, Paint paint) {
     }
 
     @Override

@@ -54,4 +54,10 @@ public class Objects {
 
         return c == 't' || c == 'T';
     }
+
+    public static int limit(int val, int min, int max) {
+        val = Math.max(val, min);
+        val = Math.min(val, max);
+        return val;
+    }
 }
