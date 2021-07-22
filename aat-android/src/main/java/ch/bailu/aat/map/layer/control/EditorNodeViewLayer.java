@@ -22,8 +22,6 @@ public final class EditorNodeViewLayer extends NodeViewLayer {
         editorSource = e;
 
         setText();
-
-
     }
 
     private void setText() {
@@ -41,8 +39,6 @@ public final class EditorNodeViewLayer extends NodeViewLayer {
     public GpxPointNode getSelectedNode() {
         return editorSource.getEditor().getSelected();
     }
-
-
 
 
     @Override

@@ -195,21 +195,16 @@ public final class FileControlBarLayer extends ControlBarLayer {
         }
 
 
-
         @Override
         public void onPreferencesChanged(StorageInterface s, String key) {
             selector.onPreferencesChanged(s, key);
         }
 
         @Override
-        public void onAttached() {
-
-        }
+        public void onAttached() {}
 
         @Override
-        public void onDetached() {
-
-        }
+        public void onDetached() {}
 
         @Override
         public boolean onLongClick(View view) {
