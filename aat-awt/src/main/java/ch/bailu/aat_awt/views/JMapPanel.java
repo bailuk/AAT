@@ -9,6 +9,7 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 
 import ch.bailu.aat_awt.map.AwtCustomMapView;
+import ch.bailu.aat_awt.preferences.AwtSolidLocationProvider;
 import ch.bailu.aat_lib.dispatcher.Dispatcher;
 import ch.bailu.aat_lib.dispatcher.DispatcherInterface;
 import ch.bailu.aat_lib.map.layer.grid.GridDynLayer;
@@ -31,6 +32,7 @@ public class JMapPanel extends JPanel {
 
     private final JSolidToggleButton center;
     private final JSolidIndexButton  grid;
+    private final JSolidIndexButton  provider;
 
     public JMapPanel(List<File> mapFiles, ServicesInterface services, StorageInterface storage, DispatcherInterface dispatcher) {
 
@@ -42,6 +44,7 @@ public class JMapPanel extends JPanel {
 
         center = new JSolidToggleButton(new SolidPositionLock(storage, key));
         grid = new JSolidIndexButton(new SolidMapGrid(storage, key));
+        provider = new JSolidIndexButton(new AwtSolidLocationProvider(storage));
 
         showMap.addActionListener(itemEvent -> doShowMap());
         plus.addActionListener(itemEvent -> map.zoomIn());
@@ -52,6 +55,7 @@ public class JMapPanel extends JPanel {
         positionPane.add(center);
         positionPane.add(showMap);
         positionPane.add(grid);
+        positionPane.add(provider);
         positionPane.add(Box.createHorizontalGlue());
         positionPane.add(minus);
         positionPane.add(plus);

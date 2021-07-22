@@ -1,8 +1,7 @@
 package ch.bailu.aat_awt.services;
 
 import ch.bailu.aat_awt.preferences.SolidAwtDataDirectory;
-import ch.bailu.aat_awt.preferences.SolidAwtDefaultDirectory;
-import ch.bailu.aat_awt.preferences.SolidGeoClue2Provider;
+import ch.bailu.aat_awt.preferences.AwtSolidLocationProvider;
 import ch.bailu.aat_awt.window.AwtStatusIcon;
 import ch.bailu.aat_lib.dispatcher.Broadcaster;
 import ch.bailu.aat_lib.factory.FocFactory;
@@ -26,8 +25,8 @@ public class AwtServices implements ServicesInterface {
     public AwtServices (StorageInterface storage, Broadcaster broadcaster) {
         FocFactory factory = string -> new FocFile(string);
 
-        locationService = new LocationService(new SolidGeoClue2Provider(storage), broadcaster);
-        trackerService = new TrackerService(new SolidAwtDataDirectory(new SolidAwtDefaultDirectory(storage, factory),factory), new AwtStatusIcon(),broadcaster, this);
+        locationService = new LocationService(new AwtSolidLocationProvider(storage), broadcaster);
+        trackerService = new TrackerService(new SolidAwtDataDirectory(storage,factory), new AwtStatusIcon(),broadcaster, this);
     }
 
     @Override
