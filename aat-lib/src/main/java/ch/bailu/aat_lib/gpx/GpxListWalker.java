@@ -1,8 +1,5 @@
 package ch.bailu.aat_lib.gpx;
 
-import ch.bailu.aat_lib.gpx.GpxList;
-import ch.bailu.aat_lib.gpx.GpxPointNode;
-import ch.bailu.aat_lib.gpx.GpxSegmentNode;
 import ch.bailu.aat_lib.gpx.linked_list.Node;
 import ch.bailu.aat_lib.gpx.segmented_list.SegmentNode;
 

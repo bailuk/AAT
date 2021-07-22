@@ -1,23 +1,24 @@
-package ch.bailu.aat.map.layer.gpx;
+package ch.bailu.aat_lib.map.layer.gpx;
 
 import ch.bailu.aat_lib.dispatcher.DispatcherInterface;
+import ch.bailu.aat_lib.gpx.InfoID;
 import ch.bailu.aat_lib.map.MapContext;
 import ch.bailu.aat_lib.map.Point;
 import ch.bailu.aat_lib.map.layer.MapLayerInterface;
-import ch.bailu.aat.preferences.map.SolidOverlayFileList;
-import ch.bailu.aat_lib.gpx.InfoID;
 import ch.bailu.aat_lib.preferences.StorageInterface;
+import ch.bailu.aat_lib.preferences.map.SolidOverlayFileList;
+import ch.bailu.aat_lib.service.ServicesInterface;
 
 public final class GpxOverlayListLayer implements MapLayerInterface {
     private final GpxDynLayer[] overlays;
 
 
-    public GpxOverlayListLayer(StorageInterface s, MapContext mc, DispatcherInterface d) {
+    public GpxOverlayListLayer(StorageInterface s, MapContext mc, ServicesInterface services, DispatcherInterface d) {
 
         overlays = new GpxDynLayer[SolidOverlayFileList.MAX_OVERLAYS];
 
         for (int i = 0; i< overlays.length; i++) {
-            overlays[i] = new GpxDynLayer(s, mc, d, InfoID.OVERLAY +i);
+            overlays[i] = new GpxDynLayer(s, mc,services, d, InfoID.OVERLAY +i);
         }
     }
 

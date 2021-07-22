@@ -2,6 +2,7 @@ package ch.bailu.aat.services.location;
 
 import android.content.Context;
 
+import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat_lib.preferences.location.SolidMockLocationFile;
 import ch.bailu.aat.util.Timer;
 import ch.bailu.aat_lib.gpx.GpxList;
@@ -38,7 +39,7 @@ public final class MockLocation extends LocationStackChainedItem implements Runn
         list = new GpxList(GpxType.TRACK, GpxListAttributes.NULL);
         timer = new Timer(this, INTERVAL);
 
-        file = FocAndroid.factory(c,(new SolidMockLocationFile(c).getValueAsString()));
+        file = FocAndroid.factory(c,(new SolidMockLocationFile(new Storage(c)).getValueAsString()));
         list = new GpxListReader(file, AutoPause.NULL).getGpxList();
 
         timer.kick();

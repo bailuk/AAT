@@ -70,7 +70,7 @@ public final class RemoveTilesMenu extends AbsMenu {
             new InsideContext(scontext) {
                 @Override
                 public void run() {
-                    scontext.getTileRemoverService().remove();
+                    scontext.getTileRemoverService().getState().remove();
                 }
             };
 
@@ -81,7 +81,7 @@ public final class RemoveTilesMenu extends AbsMenu {
                     new InsideContext(scontext) {
                         @Override
                         public void run() {
-                            scontext.getTileRemoverService().removeAll();
+                            scontext.getTileRemoverService().getState().removeAll();
                         }
                     };
                 }

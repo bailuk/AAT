@@ -1,17 +1,17 @@
-package ch.bailu.aat.map.layer.gpx;
+package ch.bailu.aat_lib.map.layer.gpx;
 
 import org.mapsforge.core.graphics.Cap;
 import org.mapsforge.core.graphics.Join;
 import org.mapsforge.core.graphics.Paint;
-import org.mapsforge.map.android.graphics.AndroidGraphicFactory;
 
+import ch.bailu.aat_lib.app.AppGraphicFactory;
 import ch.bailu.aat_lib.map.MapContext;
 import ch.bailu.aat_lib.map.Point;
 import ch.bailu.aat_lib.map.TwoNodes;
-import ch.bailu.aat.views.graph.AltitudeColorTable;
 import ch.bailu.aat_lib.preferences.StorageInterface;
+import ch.bailu.aat_lib.util.color.AltitudeColorTable;
 
-public final class TrackLayer  extends GpxLayer{
+public final class TrackLayer  extends GpxLayer {
     private static final int STROKE_WIDTH=3;
     private final Paint paint;
 
@@ -19,8 +19,7 @@ public final class TrackLayer  extends GpxLayer{
 
     public TrackLayer(MapContext mc) {
         mcontext = mc;
-        paint = AndroidGraphicFactory.INSTANCE.createPaint();
-
+        paint = AppGraphicFactory.instance().createPaint();
 
         paint.setStrokeWidth(mcontext.getMetrics().getDensity().toPixel_f(STROKE_WIDTH));
         paint.setStrokeCap(Cap.ROUND);
@@ -63,7 +62,7 @@ public final class TrackLayer  extends GpxLayer{
         @Override
         public void drawNode(TwoNodes.PixelNode node) {
             int altitude= (int) node.point.getAltitude();
-            int color= AltitudeColorTable.INSTANCE.getColor(altitude);
+            int color= AltitudeColorTable.instance().getColor(altitude);
             paint.setColor(color);
         }
     }

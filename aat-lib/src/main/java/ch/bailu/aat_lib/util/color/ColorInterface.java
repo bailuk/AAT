@@ -10,6 +10,7 @@ public interface ColorInterface {
     int MAGENTA = 0xFFFF00FF;
     int WHITE = 0xFFFFFFFF;
     int LTGRAY = 0xFFD3D3D3;
+    int DKGRAY = 0xFFD3D3D3;
 
     int red();
     int green();

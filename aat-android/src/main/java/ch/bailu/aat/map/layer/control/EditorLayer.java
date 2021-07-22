@@ -7,7 +7,7 @@ import org.mapsforge.core.model.LatLong;
 import ch.bailu.aat.R;
 import ch.bailu.aat.dispatcher.EditorSourceInterface;
 import ch.bailu.aat.map.To;
-import ch.bailu.aat.map.layer.gpx.GpxDynLayer;
+import ch.bailu.aat_lib.map.layer.gpx.GpxDynLayer;
 import ch.bailu.aat.menus.EditorMenu;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.editor.EditorInterface;
@@ -46,7 +46,7 @@ public final class EditorLayer extends ControlBarLayer {
         scontext=To.scontext(mc);
         mcontext=mc;
 
-        content = new GpxDynLayer(storage, mc);
+        content = new GpxDynLayer(storage, mc, services);
         selector = new EditorNodeViewLayer(services, storage, mc, e);
 
         ControlBar bar = getBar();

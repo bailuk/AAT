@@ -1,4 +1,4 @@
-package ch.bailu.aat.map.layer.gpx;
+package ch.bailu.aat_lib.map.layer.gpx;
 
 import ch.bailu.aat_lib.map.MapColor;
 import ch.bailu.aat_lib.map.MapContext;
@@ -10,7 +10,6 @@ import ch.bailu.aat_lib.gpx.GpxList;
 public abstract class GpxLayer implements MapLayerInterface, OnContentUpdatedInterface {
     private int color;
     private GpxList gpxList= GpxList.NULL_ROUTE;
-
 
 
     @Override
@@ -37,6 +36,4 @@ public abstract class GpxLayer implements MapLayerInterface, OnContentUpdatedInt
 
     @Override
     public void onLayout(boolean changed, int l, int t, int r, int b) {}
-
-
 }

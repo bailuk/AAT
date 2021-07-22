@@ -14,6 +14,7 @@ import ch.bailu.aat.services.render.RenderService;
 import ch.bailu.aat.services.sensor.SensorService;
 import ch.bailu.aat.services.tileremover.TileRemoverService;
 import ch.bailu.aat.services.tracker.StatusIcon;
+import ch.bailu.aat_lib.service.IconMapServiceInterface;
 import ch.bailu.aat_lib.service.ServicesInterface;
 import ch.bailu.aat_lib.service.location.LocationService;
 import ch.bailu.aat_lib.service.sensor.SensorServiceInterface;
@@ -158,7 +159,7 @@ public final class OneService extends AbsService  implements ServiceContext, Ser
     }
 
     @Override
-    public  synchronized IconMapService getIconMapService() {
+    public  synchronized IconMapServiceInterface getIconMapService() {
         if (iconMap == null)
             iconMap = new IconMapService(this);
         return iconMap;

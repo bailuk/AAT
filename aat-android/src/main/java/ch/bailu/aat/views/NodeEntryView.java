@@ -6,7 +6,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import ch.bailu.aat.activities.AbsDispatcher;
-import ch.bailu.aat.map.layer.gpx.GpxDynLayer;
+import ch.bailu.aat_lib.map.layer.gpx.GpxDynLayer;
 import ch.bailu.aat.map.mapsforge.MapsForgeViewStatic;
 import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat.services.ServiceContext;
@@ -39,7 +39,7 @@ public class NodeEntryView extends LinearLayout {
         map =  new MapsForgeViewStatic(sc);
         d.addLC(map);
 
-        gpxOverlay = new GpxDynLayer(new Storage(getContext()), map.getMContext());
+        gpxOverlay = new GpxDynLayer(new Storage(getContext()), map.getMContext(), sc);
         map.add(gpxOverlay);
 
         text=new TextView(sc.getContext());

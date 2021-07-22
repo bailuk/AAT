@@ -1,14 +1,13 @@
-package ch.bailu.aat.map.layer.gpx;
+package ch.bailu.aat_lib.map.layer.gpx;
 
 import org.mapsforge.core.graphics.Bitmap;
 
-import ch.bailu.aat.map.To;
-import ch.bailu.aat_lib.service.InsideContext;
-import ch.bailu.aat.services.ServiceContext;
-import ch.bailu.aat.services.cache.ObjImageAbstract;
 import ch.bailu.aat_lib.map.MapContext;
 import ch.bailu.aat_lib.map.TwoNodes;
 import ch.bailu.aat_lib.preferences.StorageInterface;
+import ch.bailu.aat_lib.service.InsideContext;
+import ch.bailu.aat_lib.service.ServicesInterface;
+import ch.bailu.aat_lib.service.cache.ObjeImageInterface;
 
 public final class WayLayer extends GpxLayer {
 
@@ -17,10 +16,11 @@ public final class WayLayer extends GpxLayer {
 
     private final MapContext mcontext;
     private final int icon_size;
+    private final ServicesInterface services;
 
-    public WayLayer(MapContext mc) {
+    public WayLayer(MapContext mc,  ServicesInterface services) {
         mcontext = mc;
-
+        this.services = services;
         icon_size = mcontext.getMetrics().getDensity().toPixel_i(ICON_SIZE);
     }
 
@@ -60,13 +60,12 @@ public final class WayLayer extends GpxLayer {
         public void drawNode(final TwoNodes.PixelNode node) {
             if (node.isVisible() && count < MAX_VISIBLE_NODES) {
 
-                final ServiceContext scontext = To.scontext(mcontext);
                 final Bitmap[] nodeDrawable = {null};
 
-                new InsideContext(scontext) {
+                new InsideContext(services) {
                     @Override
                     public void run() {
-                        ObjImageAbstract i = scontext.getIconMapService().getIconSVG(node.point,
+                        ObjeImageInterface i = services.getIconMapService().getIconSVG(node.point,
                                 icon_size);
 
                         if (i != null)

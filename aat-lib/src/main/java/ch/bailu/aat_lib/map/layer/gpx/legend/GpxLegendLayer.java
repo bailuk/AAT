@@ -1,8 +1,8 @@
-package ch.bailu.aat.map.layer.gpx.legend;
+package ch.bailu.aat_lib.map.layer.gpx.legend;
 
 import org.mapsforge.core.graphics.Paint;
 
-import ch.bailu.aat.map.layer.gpx.GpxLayer;
+import ch.bailu.aat_lib.map.layer.gpx.GpxLayer;
 import ch.bailu.aat_lib.map.MapContext;
 import ch.bailu.aat_lib.map.MapMetrics;
 import ch.bailu.aat_lib.map.MapPaint;

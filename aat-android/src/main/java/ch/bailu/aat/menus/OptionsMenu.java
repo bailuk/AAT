@@ -11,12 +11,12 @@ import ch.bailu.aat.activities.PreferencesActivity;
 import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat.preferences.map.SolidMapTileStack;
 import ch.bailu.aat.preferences.presets.SolidBacklight;
-import ch.bailu.aat_lib.service.InsideContext;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.views.preferences.SolidCheckListDialog;
 import ch.bailu.aat.views.preferences.SolidIndexListDialog;
 import ch.bailu.aat_lib.preferences.presets.SolidPreset;
-import ch.bailu.aat_lib.service.tracker.State;
+import ch.bailu.aat_lib.service.InsideContext;
+import ch.bailu.aat_lib.service.tracker.StateInterface;
 
 public final class OptionsMenu extends AbsMenu {
     private MenuItem start, pause, backlight, preferences, map;
@@ -61,14 +61,13 @@ public final class OptionsMenu extends AbsMenu {
         new InsideContext(scontext) {
             @Override
             public void run() {
-                updateMenuText(scontext.getTrackerService().
-                        getState());
+                updateMenuText(scontext.getTrackerService());
             }
         };
     }
 
 
-    private void updateMenuText(State state) {
+    private void updateMenuText(StateInterface state) {
         start.setTitle(state.getStartStopText());
         start.setIcon(state.getStartStopIconID());
         pause.setTitle(state.getPauseResumeText());

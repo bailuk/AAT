@@ -1,4 +1,4 @@
-package ch.bailu.aat.map.layer.gpx.legend;
+package ch.bailu.aat_lib.map.layer.gpx.legend;
 
 import org.mapsforge.core.graphics.Paint;
 

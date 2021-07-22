@@ -1,19 +1,17 @@
-package ch.bailu.aat.map.layer.gpx.legend;
-
-import android.content.Context;
+package ch.bailu.aat_lib.map.layer.gpx.legend;
 
 import ch.bailu.aat_lib.description.CurrentSpeedDescription;
 import ch.bailu.aat_lib.description.SpeedDescription;
-import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat_lib.gpx.GpxList;
 import ch.bailu.aat_lib.gpx.GpxPointNode;
 import ch.bailu.aat_lib.gpx.GpxSegmentNode;
+import ch.bailu.aat_lib.preferences.StorageInterface;
 
 public final class MarkerSpeedWalker extends LegendWalker {
     private final SpeedDescription description;
 
-    public MarkerSpeedWalker(Context context) {
-        description = new CurrentSpeedDescription(new Storage(context));
+    public MarkerSpeedWalker(StorageInterface storage) {
+        description = new CurrentSpeedDescription(storage);
     }
 
 

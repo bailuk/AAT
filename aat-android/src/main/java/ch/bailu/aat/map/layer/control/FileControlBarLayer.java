@@ -9,7 +9,7 @@ import ch.bailu.aat.map.To;
 import ch.bailu.aat.menus.FileMenu;
 import ch.bailu.aat.preferences.SolidDirectoryQuery;
 import ch.bailu.aat.preferences.Storage;
-import ch.bailu.aat.preferences.map.SolidOverlayFile;
+import ch.bailu.aat_lib.preferences.map.SolidOverlayFile;
 import ch.bailu.aat.services.directory.Iterator;
 import ch.bailu.aat.util.fs.FileAction;
 import ch.bailu.aat.util.ui.AppTheme;
@@ -214,7 +214,7 @@ public final class FileControlBarLayer extends ControlBarLayer {
         @Override
         public boolean onLongClick(View view) {
             if (selectedFile != null) {
-                new SolidOverlayFile(acontext,0).setValueFromFile(selectedFile);
+                new SolidOverlayFile(new Storage(acontext), new AndroidFocFactory(acontext), 0).setValueFromFile(selectedFile);
                 return true;
             }
             return false;

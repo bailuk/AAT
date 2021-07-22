@@ -1,4 +1,4 @@
-package ch.bailu.aat.map.layer.gpx.legend;
+package ch.bailu.aat_lib.map.layer.gpx.legend;
 
 import ch.bailu.aat_lib.gpx.GpxList;
 import ch.bailu.aat_lib.gpx.GpxPointNode;

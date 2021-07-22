@@ -9,6 +9,7 @@ public interface ServicesInterface {
     LocationServiceInterface getLocationService();
     SensorServiceInterface getSensorService();
     TrackerServiceInterface getTrackerService();
+    IconMapServiceInterface getIconMapService();
 
     void lock(String simpleName);
 
@@ -18,4 +19,6 @@ public interface ServicesInterface {
     void free();
 
     ElevetionServiceInterface getElevationService();
+
+
 }

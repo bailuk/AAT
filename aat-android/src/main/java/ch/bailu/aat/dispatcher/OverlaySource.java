@@ -6,8 +6,10 @@ import android.content.Intent;
 
 import java.io.Closeable;
 
-import ch.bailu.aat.preferences.map.SolidOverlayFile;
-import ch.bailu.aat.preferences.map.SolidOverlayFileList;
+import ch.bailu.aat.factory.AndroidFocFactory;
+import ch.bailu.aat.preferences.Storage;
+import ch.bailu.aat_lib.preferences.map.SolidOverlayFile;
+import ch.bailu.aat_lib.preferences.map.SolidOverlayFileList;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.cache.Obj;
 import ch.bailu.aat.services.cache.ObjGpx;
@@ -84,7 +86,7 @@ public class OverlaySource extends ContentSource {
         public OverlayInformation(int index) {
             infoID = InfoID.OVERLAY+index;
 
-            soverlay = new SolidOverlayFile(scontext.getContext(), index);
+            soverlay = new SolidOverlayFile(new Storage(scontext.getContext()), new AndroidFocFactory(scontext.getContext()), index);
             soverlay.register(onPreferencesChanged);
             OldAppBroadcaster.register(scontext.getContext(), onFileProcessed, AppBroadcaster.FILE_CHANGED_INCACHE);
         }

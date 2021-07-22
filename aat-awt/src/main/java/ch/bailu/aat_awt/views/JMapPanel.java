@@ -10,8 +10,9 @@ import javax.swing.JPanel;
 
 import ch.bailu.aat_awt.map.AwtCustomMapView;
 import ch.bailu.aat_awt.preferences.AwtSolidLocationProvider;
-import ch.bailu.aat_lib.dispatcher.Dispatcher;
 import ch.bailu.aat_lib.dispatcher.DispatcherInterface;
+import ch.bailu.aat_lib.gpx.InfoID;
+import ch.bailu.aat_lib.map.layer.gpx.GpxDynLayer;
 import ch.bailu.aat_lib.map.layer.grid.GridDynLayer;
 import ch.bailu.aat_lib.preferences.StorageInterface;
 import ch.bailu.aat_lib.preferences.location.CurrentLocationLayer;
@@ -65,8 +66,10 @@ public class JMapPanel extends JPanel {
         add(map, BorderLayout.CENTER);
         add(positionPane, BorderLayout.PAGE_END);
 
-        map.add(new CurrentLocationLayer(map.getMContext(), new Dispatcher()));
+        map.add(new CurrentLocationLayer(map.getMContext(), dispatcher));
         map.add(new GridDynLayer(services, storage, map.getMContext()));
+        map.add(new GpxDynLayer(storage, map.getMContext(), services, dispatcher, InfoID.TRACKER));
+
     }
 
 

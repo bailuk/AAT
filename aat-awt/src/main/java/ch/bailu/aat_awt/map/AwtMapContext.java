@@ -15,12 +15,11 @@ import ch.bailu.aat_lib.map.TwoNodes;
 
 public class AwtMapContext extends Layer implements MapContext {
 
-    private final MapViewInterface mapView;
+    private final AwtCustomMapView mapView;
     private final MapsForgeMetrics metrics;
     private final String key;
     private final AwtMapDraw draw = new AwtMapDraw();
     private final TwoNodes twoNodes;
-
 
 
     public AwtMapContext(AwtCustomMapView v, String k) {
@@ -58,9 +57,7 @@ public class AwtMapContext extends Layer implements MapContext {
 
     @Override
     public void draw(BoundingBox boundingBox, byte zoomLevel, Canvas canvas, Point topLeftPoint) {
-        metrics.init(boundingBox, zoomLevel, canvas, topLeftPoint);
+        metrics.init(boundingBox, zoomLevel, canvas.getDimension(), topLeftPoint);
         draw.init(canvas, metrics);
     }
-
-
 }

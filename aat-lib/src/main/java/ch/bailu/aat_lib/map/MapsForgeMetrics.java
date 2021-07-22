@@ -1,6 +1,5 @@
 package ch.bailu.aat_lib.map;
 
-import org.mapsforge.core.graphics.Canvas;
 import org.mapsforge.core.model.BoundingBox;
 import org.mapsforge.core.model.Dimension;
 import org.mapsforge.core.model.LatLong;
@@ -38,7 +37,7 @@ public final class MapsForgeMetrics implements MapMetrics {
     }
 
 
-    private void init(Dimension d, org.mapsforge.core.model.Point p, BoundingBox b, byte z) {
+    public void init(BoundingBox b, byte z, Dimension d, org.mapsforge.core.model.Point p) {
         dim = d;
         bounding = b;
         tl = p;
@@ -48,17 +47,12 @@ public final class MapsForgeMetrics implements MapMetrics {
     }
 
 
-    public void init(BoundingBox b, byte z, Canvas c, org.mapsforge.core.model.Point p) {
-        init(c.getDimension(), p, b, z);
-    }
-
     public void init(Dimension d) {
         MapPosition pos = mapView.getModel().mapViewPosition.getMapPosition();
-        init(
+        init(   MapPositionUtil.getBoundingBox(pos, d, tileSize),
+                mapView.getModel().mapViewPosition.getZoomLevel(),
                 d,
-                MapPositionUtil.getTopLeftPoint(pos, d, tileSize),
-                MapPositionUtil.getBoundingBox(pos, d, tileSize),
-                mapView.getModel().mapViewPosition.getZoomLevel());
+                MapPositionUtil.getTopLeftPoint(pos, d, tileSize));
     }
 
 

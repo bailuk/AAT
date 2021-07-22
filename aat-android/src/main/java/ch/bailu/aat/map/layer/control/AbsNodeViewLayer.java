@@ -4,7 +4,7 @@ import android.content.Context;
 import android.view.View;
 
 import ch.bailu.aat.map.To;
-import ch.bailu.aat.map.layer.gpx.GpxVisibleLimit;
+import ch.bailu.aat_lib.map.layer.gpx.GpxVisibleLimit;
 import ch.bailu.aat.util.HtmlBuilder;
 import ch.bailu.aat.util.HtmlBuilderGpx;
 import ch.bailu.aat.util.ui.AppLayout;

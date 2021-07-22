@@ -6,8 +6,12 @@ import ch.bailu.aat_awt.window.AwtStatusIcon;
 import ch.bailu.aat_lib.dispatcher.Broadcaster;
 import ch.bailu.aat_lib.factory.FocFactory;
 import ch.bailu.aat_lib.gpx.GpxInformation;
+import ch.bailu.aat_lib.gpx.GpxPointNode;
+import ch.bailu.aat_lib.gpx.interfaces.GpxPointInterface;
 import ch.bailu.aat_lib.preferences.StorageInterface;
+import ch.bailu.aat_lib.service.IconMapServiceInterface;
 import ch.bailu.aat_lib.service.ServicesInterface;
+import ch.bailu.aat_lib.service.cache.ObjeImageInterface;
 import ch.bailu.aat_lib.service.elevation.ElevetionServiceInterface;
 import ch.bailu.aat_lib.service.location.LocationService;
 import ch.bailu.aat_lib.service.location.LocationServiceInterface;
@@ -90,6 +94,27 @@ public class AwtServices implements ServicesInterface {
     @Override
     public TrackerServiceInterface getTrackerService() {
         return trackerService;
+    }
+
+    @Override
+    public IconMapServiceInterface getIconMapService() {
+        return new IconMapServiceInterface() {
+
+            @Override
+            public ObjeImageInterface getIconSVG(GpxPointInterface point, int icon_size) {
+                return null;
+            }
+
+            @Override
+            public String toAssetPath(int key, String value) {
+                return "";
+            }
+
+            @Override
+            public String toAssetPath(GpxPointNode gpxPointNode) {
+                return "";
+            }
+        };
     }
 
 }

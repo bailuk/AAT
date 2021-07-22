@@ -8,11 +8,13 @@ import android.view.MenuItem;
 import ch.bailu.aat.R;
 import ch.bailu.aat.activities.ActivitySwitcher;
 import ch.bailu.aat.activities.PreferencesActivity;
+import ch.bailu.aat.factory.AndroidFocFactory;
+import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat_lib.map.MapContext;
 import ch.bailu.aat.map.To;
 import ch.bailu.aat.preferences.map.SolidMapTileStack;
 import ch.bailu.aat.preferences.map.SolidMapsForgeMapFile;
-import ch.bailu.aat.preferences.map.SolidOverlayFileList;
+import ch.bailu.aat_lib.preferences.map.SolidOverlayFileList;
 import ch.bailu.aat.preferences.map.SolidRenderTheme;
 import ch.bailu.aat.views.description.mview.MultiView;
 import ch.bailu.aat.views.preferences.SolidCheckListDialog;
@@ -72,7 +74,7 @@ public final class MapMenu extends AbsMenu {
                 mcontext.getMapView().reDownloadTiles();
 
             } else if (item == overlays) {
-            new SolidCheckListDialog(c, new SolidOverlayFileList(c));
+            new SolidCheckListDialog(c, new SolidOverlayFileList(new Storage(c), new AndroidFocFactory(c)));
         } else if (item == theme) {
             new SolidStringDialog(c, new SolidRenderTheme(c));
         } else if (item == map) {

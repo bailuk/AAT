@@ -1,6 +1,4 @@
-package ch.bailu.aat.map.layer.gpx;
-
-import android.graphics.Color;
+package ch.bailu.aat_lib.map.layer.gpx;
 
 import org.mapsforge.core.graphics.Paint;
 
@@ -8,9 +6,10 @@ import ch.bailu.aat_lib.map.MapContext;
 import ch.bailu.aat_lib.map.MapPaint;
 import ch.bailu.aat_lib.map.Point;
 import ch.bailu.aat_lib.map.TwoNodes;
-import ch.bailu.aat.views.graph.AltitudeColorTable;
 import ch.bailu.aat_lib.preferences.StorageInterface;
 import ch.bailu.aat_lib.service.elevation.ElevationProvider;
+import ch.bailu.aat_lib.util.color.AltitudeColorTable;
+import ch.bailu.aat_lib.util.color.ColorInterface;
 
 public final class RouteLayer extends GpxLayer {
 
@@ -42,7 +41,7 @@ public final class RouteLayer extends GpxLayer {
 
 
             paint = MapPaint.createEdgePaintLine(mcontext.getMetrics().getDensity());
-            shadow = MapPaint.createEdgePaintBlur(mcontext.draw(),Color.BLACK, zoom);
+            shadow = MapPaint.createEdgePaintBlur(mcontext.draw(), ColorInterface.BLACK, zoom);
 
             paint.setColor(color);
         }
@@ -106,7 +105,7 @@ public final class RouteLayer extends GpxLayer {
             int altitude= (int) node.point.getAltitude();
 
             if (altitude == ElevationProvider.NULL_ALTITUDE) c=getColor();
-            else c= AltitudeColorTable.INSTANCE.getColor(altitude);
+            else c= AltitudeColorTable.instance().getColor(altitude);
 
             mcontext.draw().bitmap(mcontext.draw().getNodeBitmap(), node.pixel, c);
         }

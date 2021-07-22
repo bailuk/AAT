@@ -11,8 +11,8 @@ import ch.bailu.aat.map.layer.control.CustomBarLayer;
 import ch.bailu.aat.map.layer.control.EditorLayer;
 import ch.bailu.aat.map.layer.control.InformationBarLayer;
 import ch.bailu.aat.map.layer.control.NavigationBarLayer;
-import ch.bailu.aat.map.layer.gpx.GpxDynLayer;
-import ch.bailu.aat.map.layer.gpx.GpxOverlayListLayer;
+import ch.bailu.aat_lib.map.layer.gpx.GpxDynLayer;
+import ch.bailu.aat_lib.map.layer.gpx.GpxOverlayListLayer;
 import ch.bailu.aat_lib.map.layer.grid.Crosshair;
 import ch.bailu.aat_lib.map.layer.grid.GridDynLayer;
 import ch.bailu.aat.map.mapsforge.MapsForgeView;
@@ -61,9 +61,9 @@ public final class MapFactory {
 
     public MapsForgeViewBase split() {
         m.add(new CurrentLocationLayer(mc, d));
-        m.add(new GpxOverlayListLayer(s,mc,d));
-        m.add(new GpxDynLayer(s,mc, d, InfoID.EDITOR_DRAFT));
-        m.add(new GpxDynLayer(s,mc, d, InfoID.TRACKER));
+        m.add(new GpxOverlayListLayer(s,mc,ser, d));
+        m.add(new GpxDynLayer(s,mc, ser, d, InfoID.EDITOR_DRAFT));
+        m.add(new GpxDynLayer(s,mc, ser, d, InfoID.TRACKER));
         m.add(new Crosshair());
 
         return m;
@@ -75,10 +75,10 @@ public final class MapFactory {
 
     private MapsForgeViewBase tracker(EditorSourceInterface e, int iid) {
         base(4);
-        m.add(new GpxOverlayListLayer(s,mc,d));
+        m.add(new GpxOverlayListLayer(s,mc,ser, d));
         m.add(new EditorLayer(ser, s, mc, d, iid, e));
-        m.add(new GpxDynLayer(s,mc, d, InfoID.FILEVIEW));
-        m.add(new GpxDynLayer(s,mc, d, InfoID.TRACKER));
+        m.add(new GpxDynLayer(s,mc, ser, d, InfoID.FILEVIEW));
+        m.add(new GpxDynLayer(s,mc, ser, d, InfoID.TRACKER));
         m.add(new GridDynLayer(ser, s,mc));
         m.add(new InformationBarLayer(mc, d));
 
@@ -98,8 +98,8 @@ public final class MapFactory {
     public MapsForgeViewBase list(AbsGpxListActivity a) {
         base(4);
 
-        m.add(new GpxOverlayListLayer(s,mc, d));
-        m.add(new GpxDynLayer(s,mc, d, InfoID.LIST_SUMMARY));
+        m.add(new GpxOverlayListLayer(s,mc, ser, d));
+        m.add(new GpxDynLayer(s,mc, ser, d, InfoID.LIST_SUMMARY));
         m.add(new GridDynLayer(ser, s,mc));
         m.add(new InformationBarLayer(mc, d));
         return m;
@@ -119,8 +119,8 @@ public final class MapFactory {
     public MapsForgeViewBase node() {
         base(4);
 
-        m.add(new GpxDynLayer(s,mc, d, InfoID.TRACKER));
-        m.add(new GpxDynLayer(s,mc, d, InfoID.FILEVIEW));
+        m.add(new GpxDynLayer(s,mc, ser, d, InfoID.TRACKER));
+        m.add(new GpxDynLayer(s,mc, ser, d, InfoID.FILEVIEW));
         m.add(new GridDynLayer(ser, s,mc));
 
         return m;
@@ -128,8 +128,8 @@ public final class MapFactory {
 
 
     public MapsForgeViewBase externalContent() {
-        m.add(new GpxOverlayListLayer(s,mc, d));
-        m.add(new GpxDynLayer(s,mc, d, InfoID.FILEVIEW));
+        m.add(new GpxOverlayListLayer(s,mc, ser, d));
+        m.add(new GpxDynLayer(s,mc, ser, d, InfoID.FILEVIEW));
         m.add(new CurrentLocationLayer(mc, d));
         m.add(new GridDynLayer(ser, s,mc));
         m.add(new NavigationBarLayer(mc, d));

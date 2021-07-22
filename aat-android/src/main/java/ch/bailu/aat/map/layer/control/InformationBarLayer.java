@@ -8,7 +8,7 @@ import ch.bailu.aat.menus.LocationMenu;
 import ch.bailu.aat.menus.MapMenu;
 import ch.bailu.aat.menus.MapQueryMenu;
 import ch.bailu.aat.preferences.Storage;
-import ch.bailu.aat.preferences.map.SolidLegend;
+import ch.bailu.aat_lib.preferences.map.SolidLegend;
 import ch.bailu.aat_lib.preferences.map.SolidMapGrid;
 import ch.bailu.aat.util.ui.AppTheme;
 import ch.bailu.aat.util.ui.ToolTip;

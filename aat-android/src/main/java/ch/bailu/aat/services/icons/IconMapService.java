@@ -9,12 +9,13 @@ import ch.bailu.aat_lib.gpx.attributes.GpxAttributes;
 import ch.bailu.aat_lib.gpx.attributes.Keys;
 import ch.bailu.aat_lib.gpx.interfaces.GpxPointInterface;
 import ch.bailu.aat_lib.logger.AppLog;
+import ch.bailu.aat_lib.service.IconMapServiceInterface;
 import ch.bailu.aat_lib.service.VirtualService;
 import ch.bailu.aat_lib.util.WithStatusText;
 import ch.bailu.foc.Foc;
 import ch.bailu.foc_android.FocAsset;
 
-public final class IconMapService extends VirtualService implements WithStatusText {
+public final class IconMapService extends VirtualService implements WithStatusText, IconMapServiceInterface {
     public static final float BIG_ICON_SIZE = 48;
 
     private final static int NKEY_KEY = Keys.toIndex("class");

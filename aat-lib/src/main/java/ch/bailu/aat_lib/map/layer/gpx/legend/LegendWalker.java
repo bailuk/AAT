@@ -1,4 +1,4 @@
-package ch.bailu.aat.map.layer.gpx.legend;
+package ch.bailu.aat_lib.map.layer.gpx.legend;
 
 import org.mapsforge.core.graphics.Paint;
 
@@ -16,14 +16,12 @@ public abstract class LegendWalker extends GpxListWalker {
     }
 
 
-
     @Override
     public boolean doList(GpxList track) {
         return
                 track.getPointList().size() > 0 &&
                         c.isVisible(track.getDelta().getBoundingBox());
     }
-
 
 
     @Override

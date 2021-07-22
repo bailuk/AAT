@@ -1,9 +1,6 @@
-package ch.bailu.aat.map.layer.gpx;
+package ch.bailu.aat_lib.map.layer.gpx;
 
-import android.content.Context;
-
-import ch.bailu.aat.map.To;
-import ch.bailu.aat.preferences.map.SolidLegend;
+import ch.bailu.aat_lib.preferences.map.SolidLegend;
 import ch.bailu.aat_lib.dispatcher.DispatcherInterface;
 import ch.bailu.aat_lib.dispatcher.OnContentUpdatedInterface;
 import ch.bailu.aat_lib.gpx.GpxInformation;
@@ -13,6 +10,7 @@ import ch.bailu.aat_lib.map.MapContext;
 import ch.bailu.aat_lib.map.Point;
 import ch.bailu.aat_lib.map.layer.MapLayerInterface;
 import ch.bailu.aat_lib.preferences.StorageInterface;
+import ch.bailu.aat_lib.service.ServicesInterface;
 
 public final class GpxDynLayer implements MapLayerInterface, OnContentUpdatedInterface {
     private final GpxInformationCache infoCache = new GpxInformationCache();
@@ -23,21 +21,21 @@ public final class GpxDynLayer implements MapLayerInterface, OnContentUpdatedInt
     private final SolidLegend slegend;
 
     private final MapContext mcontext;
-    private final Context context;
 
+    private final ServicesInterface services;
 
-    public GpxDynLayer(StorageInterface s, MapContext mc) {
-        context = To.context(mc);
+    public GpxDynLayer(StorageInterface s, MapContext mc, ServicesInterface services) {
         mcontext = mc;
+        this.services = services;
         slegend = new SolidLegend(s, mcontext.getSolidKey());
 
         createLegendOverlay();
         createGpxOverlay();
     }
 
-    public GpxDynLayer(StorageInterface s, MapContext mc,
+    public GpxDynLayer(StorageInterface s, MapContext mc, ServicesInterface services,
                          DispatcherInterface dispatcher, int iid) {
-        this(s, mc);
+        this(s, mc, services);
         dispatcher.addTarget(this, iid);
     }
 
@@ -96,13 +94,13 @@ public final class GpxDynLayer implements MapLayerInterface, OnContentUpdatedInt
 
     private void createGpxOverlay() {
         GpxType type = toType(infoCache.info);
-        gpxOverlay = Factory.get(type).layer(mcontext, 0);
+        gpxOverlay = Factory.get(type).layer(mcontext, services,0);
     }
 
 
     private void createLegendOverlay() {
         GpxType type = toType(infoCache.info);
-        legendOverlay = Factory.get(type).legend(context,slegend, 0);
+        legendOverlay = Factory.get(type).legend(slegend.getStorage(), slegend, 0);
     }
 
 

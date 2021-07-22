@@ -64,7 +64,7 @@ public class MapsForgeContext extends Layer implements AndroidMapContext, MapLay
 
     @Override
     public void draw(BoundingBox boundingBox, byte zoomLevel, Canvas canvas, Point topLeftPoint) {
-        metrics.init(boundingBox, zoomLevel, canvas, topLeftPoint);
+        metrics.init(boundingBox, zoomLevel, canvas.getDimension(), topLeftPoint);
         draw.init(canvas, metrics);
     }
 

@@ -1,12 +1,10 @@
-package ch.bailu.aat.map.layer.gpx.legend;
-
-import android.content.Context;
+package ch.bailu.aat_lib.map.layer.gpx.legend;
 
 import ch.bailu.aat_lib.description.DistanceDescription;
-import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat_lib.gpx.GpxList;
 import ch.bailu.aat_lib.gpx.GpxPointNode;
 import ch.bailu.aat_lib.gpx.GpxSegmentNode;
+import ch.bailu.aat_lib.preferences.StorageInterface;
 
 public final class PointDistanceWalker extends LegendWalker {
 
@@ -14,9 +12,9 @@ public final class PointDistanceWalker extends LegendWalker {
     private float distance=0;
     private final boolean resetAfterDraw;
 
-    public PointDistanceWalker(Context context, boolean r) {
+    public PointDistanceWalker(StorageInterface storage, boolean r) {
         resetAfterDraw=r;
-        description = new DistanceDescription(new Storage(context));
+        description = new DistanceDescription(storage);
     }
 
     @Override

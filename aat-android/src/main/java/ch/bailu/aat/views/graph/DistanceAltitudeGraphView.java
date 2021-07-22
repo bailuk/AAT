@@ -14,6 +14,7 @@ import ch.bailu.aat_lib.gpx.GpxList;
 import ch.bailu.aat_lib.gpx.GpxPointNode;
 import ch.bailu.aat_lib.gpx.GpxSegmentNode;
 import ch.bailu.aat_lib.preferences.general.SolidUnit;
+import ch.bailu.aat_lib.util.color.AltitudeColorTable;
 
 public class DistanceAltitudeGraphView extends AbsGraphView {
 
@@ -285,7 +286,7 @@ public class DistanceAltitudeGraphView extends AbsGraphView {
                 distance+=summaryDistance;
                 summaryDistance=0;
 
-                plotter.plotData(distance, altitude, AltitudeColorTable.INSTANCE.getColor(altitude));
+                plotter.plotData(distance, altitude, AltitudeColorTable.instance().getColor(altitude));
             }
         }
 

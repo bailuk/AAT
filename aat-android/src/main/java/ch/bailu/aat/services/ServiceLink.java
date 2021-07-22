@@ -13,10 +13,10 @@ import ch.bailu.aat.services.background.BackgroundService;
 import ch.bailu.aat.services.cache.CacheService;
 import ch.bailu.aat.services.directory.DirectoryService;
 import ch.bailu.aat.services.elevation.ElevationService;
-import ch.bailu.aat.services.icons.IconMapService;
 import ch.bailu.aat.services.render.RenderService;
 import ch.bailu.aat.services.tileremover.TileRemoverService;
 import ch.bailu.aat_lib.logger.AppLog;
+import ch.bailu.aat_lib.service.IconMapServiceInterface;
 import ch.bailu.aat_lib.service.location.LocationServiceInterface;
 import ch.bailu.aat_lib.service.sensor.SensorServiceInterface;
 import ch.bailu.aat_lib.service.tracker.TrackerServiceInterface;
@@ -214,7 +214,7 @@ public abstract class ServiceLink implements
     }
 
     @Override
-    public IconMapService getIconMapService() {
+    public IconMapServiceInterface getIconMapService() {
         return getService().getIconMapService();
     }
 

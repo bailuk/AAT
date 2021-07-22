@@ -1,18 +1,16 @@
-package ch.bailu.aat.map.layer.gpx.legend;
-
-import android.content.Context;
+package ch.bailu.aat_lib.map.layer.gpx.legend;
 
 import ch.bailu.aat_lib.description.DistanceDescription;
-import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat_lib.gpx.GpxPointNode;
 import ch.bailu.aat_lib.gpx.GpxSegmentNode;
+import ch.bailu.aat_lib.preferences.StorageInterface;
 
 public final class MarkerAltitudeWalker extends LegendWalker {
 
     private final DistanceDescription description;
 
-    public MarkerAltitudeWalker(Context context) {
-        description = new DistanceDescription(new Storage(context));
+    public MarkerAltitudeWalker(StorageInterface storage) {
+        description = new DistanceDescription(storage);
     }
 
 

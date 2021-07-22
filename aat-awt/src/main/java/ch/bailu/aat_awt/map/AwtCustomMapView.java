@@ -101,7 +101,7 @@ public class AwtCustomMapView extends MapView implements MapViewInterface, OnPre
     private static BoundingBox addLayers(MapView mapView, List<File> mapFiles, HillsRenderConfig hillsRenderConfig) {
         Layers layers = mapView.getLayerManager().getLayers();
 
-        int tileSize = SHOW_RASTER_MAP ? 256 : 512;
+        int tileSize = 256;
 
         // Tile cache
         TileCache tileCache = AwtUtil.createTileCache(

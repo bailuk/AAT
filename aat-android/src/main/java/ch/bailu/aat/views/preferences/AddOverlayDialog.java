@@ -4,7 +4,9 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 
-import ch.bailu.aat.preferences.map.SolidOverlayFileList;
+import ch.bailu.aat.factory.AndroidFocFactory;
+import ch.bailu.aat.preferences.Storage;
+import ch.bailu.aat_lib.preferences.map.SolidOverlayFileList;
 import ch.bailu.foc.Foc;
 
 public class AddOverlayDialog extends AbsSolidDialog implements  DialogInterface.OnClickListener{
@@ -25,7 +27,7 @@ public class AddOverlayDialog extends AbsSolidDialog implements  DialogInterface
 
 
     public AddOverlayDialog(Context context, Foc f) {
-        this(context, new SolidOverlayFileList(context), f);
+        this(context, new SolidOverlayFileList(new Storage(context), new AndroidFocFactory(context)), f);
     }
 
     @Override

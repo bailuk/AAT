@@ -19,7 +19,7 @@ public class ARGB implements ColorInterface {
     }
 
     public ARGB(int r, int g, int b) {
-        this(0,r,g,b);
+        this(255,r,g,b);
     }
 
     public ARGB(int a, int r, int g, int b) {

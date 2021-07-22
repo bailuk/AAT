@@ -1,4 +1,4 @@
-package ch.bailu.aat.map.layer.gpx;
+package ch.bailu.aat_lib.map.layer.gpx;
 
 import ch.bailu.aat_lib.gpx.GpxListWalker;
 import ch.bailu.aat_lib.map.MapContext;

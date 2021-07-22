@@ -1,10 +1,9 @@
-package ch.bailu.aat.preferences.map;
+package ch.bailu.aat_lib.preferences.map;
 
-import android.content.Context;
-
-import ch.bailu.aat.R;
+import ch.bailu.aat_lib.factory.FocFactory;
 import ch.bailu.aat_lib.preferences.SolidCheckList;
 import ch.bailu.aat_lib.preferences.StorageInterface;
+import ch.bailu.aat_lib.resources.Images;
 import ch.bailu.aat_lib.resources.Res;
 
 public class SolidOverlayFileList extends SolidCheckList {
@@ -12,9 +11,9 @@ public class SolidOverlayFileList extends SolidCheckList {
 
     private final SolidOverlayFile[] list = new SolidOverlayFile[MAX_OVERLAYS];
 
-    public SolidOverlayFileList(Context context) {
+    public SolidOverlayFileList(StorageInterface storage, FocFactory focFactory) {
         for (int i=0; i<list.length; i++)
-            list[i] = new SolidOverlayFile(context,i);
+            list[i] = new SolidOverlayFile(storage,focFactory, i);
     }
 
 
@@ -76,6 +75,6 @@ public class SolidOverlayFileList extends SolidCheckList {
     }
 
     @Override
-    public int getIconResource() {return R.drawable.view_paged_inverse;}
+    public int getIconResource() {return Images.view_paged_inverse();}
 
 }

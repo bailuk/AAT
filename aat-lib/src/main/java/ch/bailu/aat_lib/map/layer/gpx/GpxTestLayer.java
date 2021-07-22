@@ -1,21 +1,20 @@
-package ch.bailu.aat.map.layer.gpx;
-
-import android.graphics.Color;
+package ch.bailu.aat_lib.map.layer.gpx;
 
 import org.mapsforge.core.graphics.Paint;
 import org.mapsforge.core.graphics.Style;
-import org.mapsforge.map.android.graphics.AndroidGraphicFactory;
 
-import ch.bailu.aat_lib.dispatcher.DispatcherInterface;
-import ch.bailu.aat_lib.gpx.GpxListWalker;
-import ch.bailu.aat_lib.map.MapContext;
+import ch.bailu.aat_lib.app.AppGraphicFactory;
 import ch.bailu.aat_lib.coordinates.BoundingBoxE6;
+import ch.bailu.aat_lib.dispatcher.DispatcherInterface;
 import ch.bailu.aat_lib.gpx.GpxList;
+import ch.bailu.aat_lib.gpx.GpxListWalker;
 import ch.bailu.aat_lib.gpx.GpxPointNode;
 import ch.bailu.aat_lib.gpx.GpxSegmentNode;
+import ch.bailu.aat_lib.map.MapContext;
 import ch.bailu.aat_lib.map.Point;
 import ch.bailu.aat_lib.map.Rect;
 import ch.bailu.aat_lib.preferences.StorageInterface;
+import ch.bailu.aat_lib.util.color.ColorInterface;
 
 public final class GpxTestLayer extends GpxLayer {
 
@@ -28,14 +27,14 @@ public final class GpxTestLayer extends GpxLayer {
     public GpxTestLayer(MapContext mc, DispatcherInterface d, int iid) {
         mcontext = mc;
 
-        segmentPaint = createPaint(Color.BLACK);
-        markerPaint = createPaint(Color.DKGRAY);
+        segmentPaint = createPaint(ColorInterface.BLACK);
+        markerPaint = createPaint(ColorInterface.DKGRAY);
 
         d.addTarget(this, iid);
     }
 
     private Paint createPaint(int color) {
-        Paint paint = AndroidGraphicFactory.INSTANCE.createPaint();
+        Paint paint = AppGraphicFactory.instance().createPaint();
         paint.setColor(color);
         paint.setStyle(Style.STROKE);
         paint.setStrokeWidth(3);
