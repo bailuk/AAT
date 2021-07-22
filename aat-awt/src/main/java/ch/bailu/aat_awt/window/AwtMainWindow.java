@@ -168,6 +168,7 @@ public class AwtMainWindow implements OnContentUpdatedInterface {
 
 
     private void doQuit() {
+
         frame.dispose();
         App.exit(0);
     }

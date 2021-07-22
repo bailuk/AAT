@@ -1,5 +1,6 @@
 package ch.bailu.aat_awt.views;
 
+import java.awt.FlowLayout;
 import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
@@ -20,11 +21,14 @@ import ch.bailu.aat_lib.gpx.GpxInformation;
 import ch.bailu.aat_lib.preferences.StorageInterface;
 
 public class JCockpitPanel extends JPanel implements OnContentUpdatedInterface {
+
+    private final static int BORDER=6;
     private final ArrayList<JNumberView> items = new ArrayList<>(20);
 
     private final StorageInterface storage = new AwtStorage();
 
     public JCockpitPanel() {
+        setLayout(new FlowLayout(FlowLayout.LEADING));
         addItem(new CurrentSpeedDescription(storage));
         addItem(new AltitudeDescription(storage));
         addItem(new TimeDescription());
@@ -37,7 +41,8 @@ public class JCockpitPanel extends JPanel implements OnContentUpdatedInterface {
 
     private void addItem(ContentDescription description) {
         JNumberView item = new JNumberView(description);
-        item.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+
+        item.setBorder(BorderFactory.createEmptyBorder(BORDER, BORDER, BORDER, BORDER));
         items.add(item);
         add(item);
     }
