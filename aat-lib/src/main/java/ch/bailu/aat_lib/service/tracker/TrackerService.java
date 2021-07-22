@@ -22,14 +22,8 @@ public final class TrackerService extends VirtualService implements WithStatusTe
     }
 
 
-    public State getState() {
-        return internal.state;
-    }
-
-
-
     @Override
-    public GpxInformation getLoggerInformation() {
+    public synchronized GpxInformation getLoggerInformation() {
         return internal.logger;
     }
 
@@ -43,22 +37,61 @@ public final class TrackerService extends VirtualService implements WithStatusTe
     };
 
 
-
-    public int getPresetIndex() {
+    @Override
+    public synchronized int getPresetIndex() {
         return internal.presetIndex;
     }
 
 
 
     @Override
-    public void appendStatusText(StringBuilder builder) {
+    public synchronized void appendStatusText(StringBuilder builder) {
         builder .append("Log to: ")
                 .append(internal.logger.getFile().getPathName());
     }
 
-    public void close() {
+    public synchronized void close() {
         internal.close();
         broadcaster.unregister(onLocation);
     }
 
+    @Override
+    public synchronized void updateTrack() {
+        internal.state.updateTrack();
+    }
+
+    @Override
+    public synchronized void onStartPauseResume() {
+        internal.state.onStartPauseResume();
+    }
+
+    @Override
+    public synchronized void onStartStop() {
+        internal.state.onStartStop();
+    }
+
+    @Override
+    public synchronized void onPauseResume() {
+        internal.state.onPauseResume();
+    }
+
+    @Override
+    public synchronized int getStateID() {
+        return internal.state.getStateID();
+    }
+
+    @Override
+    public synchronized String getStartStopText() {
+        return internal.state.getStartStopText();
+    }
+
+    @Override
+    public synchronized String getPauseResumeText() {
+        return internal.state.getPauseResumeText();
+    }
+
+    @Override
+    public synchronized int getStartStopIconID() {
+        return internal.state.getStartStopIconID();
+    }
 }

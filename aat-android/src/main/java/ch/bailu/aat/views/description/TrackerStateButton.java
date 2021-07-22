@@ -28,7 +28,7 @@ public class TrackerStateButton extends ColorNumberView implements OnClickListen
 
                 @Override
                 public void run() {
-                    scontext.getTrackerService().getState().onStartPauseResume();
+                    scontext.getTrackerService().onStartPauseResume();
                 }
             };
 

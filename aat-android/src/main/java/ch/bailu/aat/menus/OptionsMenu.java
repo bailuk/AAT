@@ -83,7 +83,7 @@ public final class OptionsMenu extends AbsMenu {
             new InsideContext(scontext) {
                 @Override
                 public void run() {
-                    scontext.getTrackerService().getState().onStartStop();
+                    scontext.getTrackerService().onStartStop();
                 }
 
             };
@@ -92,7 +92,7 @@ public final class OptionsMenu extends AbsMenu {
             new InsideContext(scontext) {
                 @Override
                 public void run() {
-                    scontext.getTrackerService().getState().onPauseResume();
+                    scontext.getTrackerService().onPauseResume();
                 }
             };
 

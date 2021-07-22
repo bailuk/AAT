@@ -49,7 +49,7 @@ public class App {
         broadcaster.register(data -> window.onContentUpdated(InfoID.LOCATION, services.getLocationService().getLocationInformation()), AppBroadcaster.LOCATION_CHANGED);
         broadcaster.register(data -> window.onContentUpdated(InfoID.TRACKER, services.getTrackerService().getLoggerInformation()), AppBroadcaster.TRACKER);
 
-        services.getTrackerService().getState().onStartPauseResume();
+        services.getTrackerService().onStartPauseResume();
     }
 
     private static List<File> getMapFiles() {
@@ -84,6 +84,6 @@ public class App {
     }
 
     private void close() {
-        services.getTrackerService().getState().onStartStop();
+        services.getTrackerService().onStartStop();
     }
 }
