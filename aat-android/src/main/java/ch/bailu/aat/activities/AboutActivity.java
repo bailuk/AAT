@@ -5,7 +5,6 @@ import android.widget.LinearLayout;
 
 import ch.bailu.aat.BuildConfig;
 import ch.bailu.aat.R;
-import ch.bailu.aat.util.ToDo;
 import ch.bailu.aat.app.AndroidAppConfig;
 import ch.bailu.aat.util.ui.AppTheme;
 import ch.bailu.aat.util.ui.UiTheme;
@@ -14,8 +13,9 @@ import ch.bailu.aat.views.bar.MainControlBar;
 import ch.bailu.aat.views.description.mview.MultiView;
 import ch.bailu.aat.views.html.HtmlScrollTextView;
 import ch.bailu.aat.views.html.LinkHandler;
-import ch.bailu.foc_android.FocAsset;
+import ch.bailu.aat_lib.resources.ToDo;
 import ch.bailu.aat_lib.util.fs.FocUtil;
+import ch.bailu.foc_android.FocAsset;
 
 
 public class AboutActivity extends ActivityContext {

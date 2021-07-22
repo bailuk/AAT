@@ -4,15 +4,14 @@ import java.util.ArrayList;
 
 import ch.bailu.aat_lib.factory.FocFactory;
 import ch.bailu.aat_lib.preferences.SolidFile;
-import ch.bailu.aat_lib.preferences.StorageInterface;
 import ch.bailu.aat_lib.resources.Res;
 
 public class SolidDataDirectory extends SolidFile {
 
     private final SolidDataDirectoryDefault defaultDirectory;
 
-    public SolidDataDirectory(StorageInterface s, SolidDataDirectoryDefault defaultDirectory, FocFactory focFactory) {
-        super(s, SolidDataDirectory.class.getSimpleName(), focFactory);
+    public SolidDataDirectory(SolidDataDirectoryDefault defaultDirectory, FocFactory focFactory) {
+        super(defaultDirectory.getStorage(), SolidDataDirectory.class.getSimpleName(), focFactory);
         this.defaultDirectory = defaultDirectory;
     }
 

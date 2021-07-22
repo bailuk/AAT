@@ -6,6 +6,7 @@ import ch.bailu.aat_awt.services.location.interfaces.Client;
 import ch.bailu.aat_lib.gpx.StateID;
 import ch.bailu.aat_lib.service.location.LocationInformation;
 import ch.bailu.aat_lib.service.location.LocationService;
+import ch.bailu.aat_lib.service.location.LocationServiceInterface;
 import ch.bailu.aat_lib.service.location.LocationStackChainedItem;
 import ch.bailu.aat_lib.service.location.LocationStackItem;
 
@@ -31,44 +32,57 @@ import ch.bailu.aat_lib.service.location.LocationStackItem;
 public class GeoClue2LocationProvider extends LocationStackChainedItem {
 
 
-    private final GeoClue2Dbus geoClue2;
+    private GeoClue2Dbus geoClue2;
+    private final Object lock;
 
 
-    public GeoClue2LocationProvider(LocationStackItem i) throws DBusException {
-        super(i);
+    public GeoClue2LocationProvider(LocationServiceInterface serviceInterface, LocationStackItem item) {
+        super(item);
 
-        geoClue2 = new GeoClue2Dbus();
+        lock = serviceInterface;
 
-        try {
-            geoClue2.connect(signal -> updateStateAndLocation(signal));
-            geoClue2.start();
-            updateState();
+        new Thread(GeoClue2Dbus.class.getSimpleName()) {
+            @Override
+            public void run() {
+                try {
+                    geoClue2 = new GeoClue2Dbus();
+                    geoClue2.connect(signal -> updateStateAndLocation(signal));
+                    geoClue2.start();
+                    updateState();
 
-        } catch (DBusException e) {
-            passState(StateID.NOSERVICE);
-        }
+                } catch (DBusException e) {
+                    passState(StateID.NOSERVICE);
+                }
+            }
+        }.start();
     }
 
     private void updateStateAndLocation(Client.LocationUpdated signal) {
-        try {
-            LocationInformation location = geoClue2.getLocation(signal.getNew());
-            passLocation(location);
-        } catch (Exception e) {
-            passState(StateID.NOSERVICE);
+        synchronized (lock) {
+            try {
+                LocationInformation location = geoClue2.getLocation(signal.getNew());
+                passLocation(location);
+            } catch (Exception e) {
+                passState(StateID.NOSERVICE);
+            }
         }
     }
 
     private void updateState() {
-        if (geoClue2.getActive()) {
-            passState(LocationService.INITIAL_STATE);
-        } else {
-            passState(StateID.OFF);
+        synchronized (lock) {
+            if (geoClue2.getActive()) {
+                passState(LocationService.INITIAL_STATE);
+            } else {
+                passState(StateID.OFF);
+            }
         }
     }
 
     @Override
     public void close() {
-        geoClue2.stop();
+        if (geoClue2 != null) {
+            geoClue2.stop();
+        }
     }
 
 }

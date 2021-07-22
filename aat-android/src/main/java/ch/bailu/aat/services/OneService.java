@@ -3,7 +3,7 @@ package ch.bailu.aat.services;
 import android.content.Context;
 
 import ch.bailu.aat.dispatcher.AndroidBroadcaster;
-import ch.bailu.aat.preferences.AndroidSolidFactory;
+import ch.bailu.aat.preferences.location.AndroidSolidLocationProvider;
 import ch.bailu.aat.preferences.system.AndroidSolidDataDirectory;
 import ch.bailu.aat.services.background.BackgroundService;
 import ch.bailu.aat.services.cache.CacheService;
@@ -112,7 +112,7 @@ public final class OneService extends AbsService  implements ServiceContext, Ser
     @Override
     public  synchronized LocationService getLocationService() {
         if (location == null) {
-            location = new LocationService(new AndroidSolidFactory(this), new AndroidBroadcaster(this));
+            location = new LocationService(new AndroidSolidLocationProvider(this), new AndroidBroadcaster(this));
         }
         return location;
     }

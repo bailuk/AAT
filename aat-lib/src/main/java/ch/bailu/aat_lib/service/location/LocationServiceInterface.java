@@ -6,12 +6,8 @@ public interface LocationServiceInterface {
     void setPresetIndex(int presetIndex);
 
     boolean isMissingUpdates();
-
     boolean isAutopaused();
 
-    boolean hasLoggableLocation(GpxInformation location);
-
-    GpxInformation getLoggableLocation();
-
+    GpxInformation getLoggableLocationOrNull(GpxInformation old);
     GpxInformation getLocationInformation();
 }

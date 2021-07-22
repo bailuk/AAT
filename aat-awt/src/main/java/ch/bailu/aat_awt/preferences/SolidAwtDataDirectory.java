@@ -7,7 +7,7 @@ import ch.bailu.aat_lib.preferences.system.SolidDataDirectoryDefault;
 import ch.bailu.foc.FocFile;
 
 public class SolidAwtDataDirectory extends SolidDataDirectory {
-    public SolidAwtDataDirectory(StorageInterface s, SolidDataDirectoryDefault defaultDirectory, FocFactory focFactory) {
-        super(s, defaultDirectory, focFactory);
+    public SolidAwtDataDirectory(SolidDataDirectoryDefault defaultDirectory, FocFactory focFactory) {
+        super(defaultDirectory, focFactory);
     }
 }

@@ -8,7 +8,6 @@ import java.util.List;
 
 import ch.bailu.aat_awt.dispatcher.AwtBroadcaster;
 import ch.bailu.aat_awt.logger.SL4JLogger;
-import ch.bailu.aat_awt.preferences.AwtSolidFactory;
 import ch.bailu.aat_awt.preferences.AwtStorage;
 import ch.bailu.aat_awt.services.AwtServices;
 import ch.bailu.aat_awt.window.AwtMainWindow;
@@ -38,7 +37,7 @@ public class App {
 
         broadcaster = new AwtBroadcaster();
 
-        services = new AwtServices(new AwtSolidFactory(), broadcaster);
+        services = new AwtServices(new AwtStorage(), broadcaster);
         dispatcher.addSource(new CurrentLocationSource(services, broadcaster));
         dispatcher.addSource(new TrackerSource(services, broadcaster));
         dispatcher.onResume();

@@ -8,7 +8,6 @@ import ch.bailu.aat_lib.gpx.GpxInformation;
 import ch.bailu.aat_lib.gpx.StateID;
 import ch.bailu.aat_lib.preferences.OnPreferencesChanged;
 import ch.bailu.aat_lib.preferences.OnPresetPreferencesChanged;
-import ch.bailu.aat_lib.preferences.SolidFactory;
 import ch.bailu.aat_lib.preferences.StorageInterface;
 import ch.bailu.aat_lib.preferences.location.SolidLocationProvider;
 import ch.bailu.aat_lib.preferences.presets.SolidPreset;
@@ -39,10 +38,10 @@ public final class LocationService extends VirtualService
 
     private int presetIndex;
 
-    public LocationService(SolidFactory sfactory, Broadcaster broadcastInterface) {
+    public LocationService(SolidLocationProvider sprovider, Broadcaster broadcastInterface) {
         super();
 
-        sprovider = sfactory.getLocationProvider();
+        this.sprovider = sprovider;
         sprovider.register(this);
 
         createLocationStack(broadcastInterface);
@@ -52,7 +51,7 @@ public final class LocationService extends VirtualService
     }
 
 
-    public void setPresetIndex(int i) {
+    public synchronized void setPresetIndex(int i) {
         presetIndex = i;
         onPreferencesChanged(sprovider.getStorage(),SolidPreset.KEY, presetIndex);
     }
@@ -92,13 +91,13 @@ public final class LocationService extends VirtualService
             provider.close();
         }
 
-        provider = sprovider.createProvider(lastItem());
+        provider = sprovider.createProvider(this, lastItem());
         itemList.add(provider);
     }
 
 
     @Override
-    public void close() {
+    public synchronized void close() {
         for (int i=0; i<itemList.size(); i++)
             itemList.get(i).close();
 
@@ -107,34 +106,41 @@ public final class LocationService extends VirtualService
 
 
     @Override
-    public void onPreferencesChanged(StorageInterface storage, String key, int presetIndex) {
+    public synchronized void onPreferencesChanged(StorageInterface storage, String key, int presetIndex) {
         for (int i=0; i<itemList.size(); i++)
             itemList.get(i).onPreferencesChanged(storage, key, presetIndex);
     }
 
-    public GpxInformation getLocationInformation() {
+    public synchronized GpxInformation getLocationInformation() {
         return dirty.getLocationInformation();
     }
 
+    @Override
+    public synchronized GpxInformation getLoggableLocationOrNull(GpxInformation old) {
+        if (hasLoggableLocation(old)) {
+            return getLoggableLocation();
+        }
+        return null;
+    }
 
-    public GpxInformation getLoggableLocation() {return clean.getLoggableLocation();}
+    private GpxInformation getLoggableLocation() {return clean.getLoggableLocation();}
 
-    public boolean hasLoggableLocation(GpxInformation old) {
+    private boolean hasLoggableLocation(GpxInformation old) {
         return clean.hasLoggableLocation(old);
     }
 
-    public boolean isAutopaused() {
+    public synchronized boolean isAutopaused() {
         return autopause.isAutopaused();
     }
 
-    public boolean isMissingUpdates() {
+    public synchronized boolean isMissingUpdates() {
         return missing.isMissingUpdates();
     }
 
 
 
     @Override
-    public void onPreferencesChanged(StorageInterface storage, String key) {
+    public synchronized void onPreferencesChanged(StorageInterface storage, String key) {
         if (sprovider.hasKey(key)) createLocationProvider();
 
         onPreferencesChanged(storage, key, presetIndex);
@@ -142,7 +148,7 @@ public final class LocationService extends VirtualService
 
 
 
-    public void appendStatusText(StringBuilder builder) {
+    public synchronized void appendStatusText(StringBuilder builder) {
         for (int i=0; i<itemList.size(); i++)
             itemList.get(i).appendStatusText(builder);
     }

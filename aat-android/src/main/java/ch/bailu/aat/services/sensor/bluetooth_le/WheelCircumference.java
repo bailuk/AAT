@@ -43,8 +43,10 @@ public final class WheelCircumference implements Closeable {
         @Override
         public void onReceive(Context context, Intent intent) {
 
-            if (scontext.getLocationService().hasLoggableLocation(currentLocation)) {
-                currentLocation = scontext.getLocationService().getLoggableLocation();
+            GpxInformation newLocation = scontext.getLocationService().getLoggableLocationOrNull(currentLocation);
+
+            if (newLocation != null) {
+                currentLocation = newLocation;
 
                 if (currentLocation.getAccuracy() <= MIN_ACCURACY && revolution.isInitialized()) {
                     if (previousLocation == null) {

@@ -6,10 +6,10 @@ import java.util.ArrayList;
 
 import ch.bailu.aat.factory.AndroidFocFactory;
 import ch.bailu.aat.preferences.Storage;
-import ch.bailu.aat.util.ToDo;
 import ch.bailu.aat.util.fs.AndroidVolumes;
 import ch.bailu.aat_lib.coordinates.Dem3Coordinates;
 import ch.bailu.aat_lib.preferences.SolidFile;
+import ch.bailu.aat_lib.resources.ToDo;
 import ch.bailu.aat_lib.util.fs.AppDirectory;
 import ch.bailu.foc.Foc;
 

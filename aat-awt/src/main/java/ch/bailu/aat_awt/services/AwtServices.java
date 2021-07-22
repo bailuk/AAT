@@ -1,9 +1,13 @@
 package ch.bailu.aat_awt.services;
 
+import ch.bailu.aat_awt.preferences.SolidAwtDataDirectory;
+import ch.bailu.aat_awt.preferences.SolidAwtDefaultDirectory;
+import ch.bailu.aat_awt.preferences.SolidGeoClue2Provider;
 import ch.bailu.aat_awt.window.AwtStatusIcon;
 import ch.bailu.aat_lib.dispatcher.Broadcaster;
+import ch.bailu.aat_lib.factory.FocFactory;
 import ch.bailu.aat_lib.gpx.GpxInformation;
-import ch.bailu.aat_lib.preferences.SolidFactory;
+import ch.bailu.aat_lib.preferences.StorageInterface;
 import ch.bailu.aat_lib.service.ServicesInterface;
 import ch.bailu.aat_lib.service.elevation.ElevetionServiceInterface;
 import ch.bailu.aat_lib.service.location.LocationService;
@@ -11,6 +15,7 @@ import ch.bailu.aat_lib.service.location.LocationServiceInterface;
 import ch.bailu.aat_lib.service.sensor.SensorServiceInterface;
 import ch.bailu.aat_lib.service.tracker.TrackerService;
 import ch.bailu.aat_lib.service.tracker.TrackerServiceInterface;
+import ch.bailu.foc.FocFile;
 
 public class AwtServices implements ServicesInterface {
     private final LocationService locationService;
@@ -18,10 +23,13 @@ public class AwtServices implements ServicesInterface {
 
 
 
-    public AwtServices (SolidFactory sfactory, Broadcaster broadcastInterface) {
-        locationService = new LocationService(sfactory, broadcastInterface);
-        trackerService = new TrackerService(sfactory.getDataDirectory(), new AwtStatusIcon(),broadcastInterface, this);
+    public AwtServices (StorageInterface storage, Broadcaster broadcaster) {
+        FocFactory factory = string -> new FocFile(string);
+
+        locationService = new LocationService(new SolidGeoClue2Provider(storage), broadcaster);
+        trackerService = new TrackerService(new SolidAwtDataDirectory(new SolidAwtDefaultDirectory(storage, factory),factory), new AwtStatusIcon(),broadcaster, this);
     }
+
     @Override
     public LocationServiceInterface getLocationService() {
         return locationService;
