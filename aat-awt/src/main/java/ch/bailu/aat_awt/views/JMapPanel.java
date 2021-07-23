@@ -26,7 +26,6 @@ public class JMapPanel extends JPanel {
 
     private final JButton
             showMap = new JButton("Map"),
-            x = new JButton("x"),
             plus = new JButton("+"),
             minus = new JButton("-");
 
@@ -37,7 +36,6 @@ public class JMapPanel extends JPanel {
 
     public JMapPanel(List<File> mapFiles, ServicesInterface services, StorageInterface storage, DispatcherInterface dispatcher) {
 
-
         setLayout(new BorderLayout());
 
         map = new AwtCustomMapView(storage, mapFiles, dispatcher);
@@ -47,10 +45,9 @@ public class JMapPanel extends JPanel {
         grid = new JSolidIndexButton(new SolidMapGrid(storage, key));
         provider = new JSolidIndexButton(new AwtSolidLocationProvider(storage));
 
-        showMap.addActionListener(itemEvent -> doShowMap());
+        showMap.addActionListener(itemEvent -> map.showMap());
         plus.addActionListener(itemEvent -> map.zoomIn());
         minus.addActionListener(itemEvent -> map.zoomOut());
-        x.addActionListener(actionEvent -> map.setZoomLevel((byte) 15));
 
         positionPane.add(Box.createHorizontalGlue());
         positionPane.add(center);
@@ -61,7 +58,6 @@ public class JMapPanel extends JPanel {
         positionPane.add(minus);
         positionPane.add(plus);
         positionPane.add(Box.createHorizontalGlue());
-        positionPane.add(x);
 
         add(map, BorderLayout.CENTER);
         add(positionPane, BorderLayout.PAGE_END);
@@ -72,8 +68,4 @@ public class JMapPanel extends JPanel {
 
     }
 
-
-    private void doShowMap() {
-        map.showMap();
-    }
 }

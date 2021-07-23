@@ -3,7 +3,6 @@ package ch.bailu.aat_awt.window;
 
 import java.awt.BorderLayout;
 import java.awt.Container;
-import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
@@ -25,6 +24,7 @@ import javax.swing.WindowConstants;
 
 import ch.bailu.aat_awt.app.App;
 import ch.bailu.aat_awt.preferences.AwtStorage;
+import ch.bailu.aat_awt.preferences.SolidMainWindow;
 import ch.bailu.aat_awt.views.JCockpitPanel;
 import ch.bailu.aat_awt.views.JMapPanel;
 import ch.bailu.aat_awt.views.JNumberView;
@@ -68,7 +68,6 @@ public class AwtMainWindow implements OnContentUpdatedInterface {
 
 
     public AwtMainWindow(List<File> mapFiles, ServicesInterface services, Broadcaster broadcaster, Dispatcher dispatcher) {
-
 
         frame = new JFrame(AppConfig.getInstance().getLongName());
         frame.getContentPane().setLayout(new BorderLayout());
@@ -119,10 +118,10 @@ public class AwtMainWindow implements OnContentUpdatedInterface {
             e.printStackTrace();
         }
 
-        // FIXME: frame does not receive resize event from initial window placement (on Mobian posh)
-        frame.setPreferredSize(new Dimension(370, 675));
         frame.pack();
         frame.setVisible(true);
+        new SolidMainWindow(new AwtStorage()).load(tabbedPane);
+        new SolidMainWindow(new AwtStorage()).load(frame);
 
         broadcaster.register(objects -> {
             String tag = (String) objects[0];
@@ -135,6 +134,9 @@ public class AwtMainWindow implements OnContentUpdatedInterface {
             String msg = (String) objects[1];
             infoStatus.setText(tag + ": " + msg);
         }, AppBroadcaster.LOG_INFO);
+
+
+
     }
 
 
@@ -168,6 +170,8 @@ public class AwtMainWindow implements OnContentUpdatedInterface {
 
 
     private void doQuit() {
+        new SolidMainWindow(new AwtStorage()).save(tabbedPane);
+        new SolidMainWindow(new AwtStorage()).save(frame);
 
         frame.dispose();
         App.exit(0);
