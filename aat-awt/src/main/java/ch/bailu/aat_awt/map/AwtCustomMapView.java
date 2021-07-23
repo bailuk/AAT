@@ -43,7 +43,7 @@ import ch.bailu.aat_lib.map.layer.MapLayerInterface;
 import ch.bailu.aat_lib.map.layer.MapPositionLayer;
 import ch.bailu.aat_lib.preferences.OnPreferencesChanged;
 import ch.bailu.aat_lib.preferences.StorageInterface;
-import ch.bailu.aat_lib.util.Objects;
+import ch.bailu.aat_lib.util.Limit;
 
 public class AwtCustomMapView extends MapView implements MapViewInterface, OnPreferencesChanged {
     private static final boolean SHOW_DEBUG_LAYERS = false;
@@ -184,7 +184,7 @@ public class AwtCustomMapView extends MapView implements MapViewInterface, OnPre
 
     @Override
     public void zoomOut() {
-        setZoomLevel((byte) Objects.limit(
+        setZoomLevel((byte) Limit.clamp(
                 getModel().mapViewPosition.getZoomLevel()-1,
                 getModel().mapViewPosition.getZoomLevelMin(),
                 getModel().mapViewPosition.getZoomLevelMax()));
@@ -192,7 +192,7 @@ public class AwtCustomMapView extends MapView implements MapViewInterface, OnPre
 
     @Override
     public void zoomIn() {
-        setZoomLevel((byte) Objects.limit(
+        setZoomLevel((byte) Limit.clamp(
                 getModel().mapViewPosition.getZoomLevel()+1,
                 getModel().mapViewPosition.getZoomLevelMin(),
                 getModel().mapViewPosition.getZoomLevelMax()));

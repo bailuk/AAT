@@ -2,47 +2,37 @@ package ch.bailu.aat_lib.util;
 
 public class Limit {
 
-    public static int inside(int val, int min, int max) {
+    public static int clamp(int val, int min, int max) {
         val = Math.max(val, min);
         val = Math.min(val, max);
         return val;
     }
 
-
-    public static int smallest(Integer first, Integer ...ints) {
-        int result = first;
-
-        for(Integer i : ints) {
-            result = Math.min(first, i);
+    public static int smallest(Integer value, Integer ...values) {
+        for(Integer v : values) {
+            value = Math.min(value, v);
         }
-        return result;
+        return value;
     }
 
-    public static int biggest(Integer first, Integer ...ints) {
-        int result = first;
-
-        for(Integer i : ints) {
-            result = Math.max(first, i);
+    public static int biggest(Integer value, Integer ...values) {
+        for(Integer val : values) {
+            value = Math.max(value, val);
         }
-        return result;
+        return value;
     }
 
-    public static double smallest(Double first, Double ...ints) {
-        double result = first;
-
-        for(Double i : ints) {
-            result = Math.min(first, i);
+    public static double smallest(Double value, Double ...values) {
+        for(Double v : values) {
+            value = Math.min(value, v);
         }
-        return result;
+        return value;
     }
 
-    public static double biggest(Double first, Double ...ints) {
-        double result = first;
-
-        for(Double i : ints) {
-            result = Math.max(first, i);
+    public static double biggest(Double value, Double ...values) {
+        for(Double v : values) {
+            value = Math.max(value, v);
         }
-        return result;
+        return value;
     }
-
 }

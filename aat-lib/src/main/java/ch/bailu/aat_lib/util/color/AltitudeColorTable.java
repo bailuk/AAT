@@ -90,7 +90,7 @@ public class AltitudeColorTable {
     }
 
     private int getColorAtIndex(int index) {
-        index = Limit.inside(index, 0, color_table.length-1);
+        index = Limit.clamp(index, 0, color_table.length-1);
         return color_table[index];
     }
 
