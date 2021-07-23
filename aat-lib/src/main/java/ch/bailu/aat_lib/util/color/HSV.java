@@ -1,9 +1,11 @@
 package ch.bailu.aat_lib.util.color;
 
+import ch.bailu.aat_lib.util.Limit;
+
 public class HSV implements ColorInterface{
 
 
-
+    private int alpha;
     private double H,S,V;
 
     /**
@@ -14,33 +16,35 @@ public class HSV implements ColorInterface{
         //R, G and B input range = 0 ÷ 255
         //H, S and V output range = 0 ÷ 1.0
 
-        double var_R = ( color.red() / 255 );
-        double var_G = ( color.green() / 255 );
-        double var_B = ( color.blue() / 255 );
+        alpha = color.alpha();
 
-        double var_Min = Math.min( var_R, Math.min(var_G, var_B ));
-        double var_Max = Math.max( var_R, Math.max(var_G, var_B ));
+        double var_R = ( ((double)color.red()) / 255d );
+        double var_G = ( ((double)color.green()) / 255d );
+        double var_B = ( ((double)color.blue()) / 255d );
+
+        double var_Min = Limit.smallest(var_R, var_G, var_B);
+        double var_Max = Limit.biggest( var_R, var_G, var_B );
         double del_Max = var_Max - var_Min;
 
         V = var_Max;
 
-        H = 0;
+        H = 0d;
 
-        if ( del_Max == 0 ) {
-            S = 0;
+        if ( del_Max == 0d ) {
+            S = 0d;
         } else {
             S = del_Max / var_Max;
 
-            double del_R = ( ( ( var_Max - var_R ) / 6 ) + ( del_Max / 2 ) ) / del_Max;
-            double del_G = ( ( ( var_Max - var_G ) / 6 ) + ( del_Max / 2 ) ) / del_Max;
-            double del_B = ( ( ( var_Max - var_B ) / 6 ) + ( del_Max / 2 ) ) / del_Max;
+            double del_R = ( ( ( var_Max - var_R ) / 6d ) + ( del_Max / 2d ) ) / del_Max;
+            double del_G = ( ( ( var_Max - var_G ) / 6d ) + ( del_Max / 2d ) ) / del_Max;
+            double del_B = ( ( ( var_Max - var_B ) / 6d ) + ( del_Max / 2d ) ) / del_Max;
 
             if      ( var_R == var_Max ) H = del_B - del_G;
-            else if ( var_G == var_Max ) H = ( 1 / 3 ) + del_R - del_B;
-            else if ( var_B == var_Max ) H = ( 2 / 3 ) + del_G - del_R;
+            else if ( var_G == var_Max ) H = ( 1d / 3d ) + del_R - del_B;
+            else if ( var_B == var_Max ) H = ( 2d / 3d ) + del_G - del_R;
 
-            if ( H < 0 ) H += 1;
-            if ( H > 1 ) H -= 1;
+            if ( H < 0d ) H += 1d;
+            if ( H > 1d ) H -= 1d;
         }
     }
 
@@ -52,23 +56,21 @@ public class HSV implements ColorInterface{
     @Override
     public int toInt()
     {
-
-
         double R,G,B;
         if ( S == 0 )
         {
-            R = V * 255;
-            G = V * 255;
-            B = V * 255;
+            R = V * 255d;
+            G = V * 255d;
+            B = V * 255d;
         }
         else
         {
-            double var_h = H * 6;
-            if ( var_h == 6 ) var_h = 0;
-            double var_i = (int)( var_h );
-                double var_1 = V * ( 1 - S );
-            double var_2 = V * ( 1 - S * ( var_h - var_i ) );
-            double var_3 = V * ( 1 - S * ( 1 - ( var_h - var_i ) ) );
+            double var_h = H * 6d;
+            if ( var_h == 6d ) var_h = 0d;
+            int var_i = (int)( var_h );
+            double var_1 = V * ( 1d - S );
+            double var_2 = V * ( 1d - S * ( var_h - var_i ) );
+            double var_3 = V * ( 1d - S * ( 1d - ( var_h - var_i ) ) );
 
             double var_r, var_g, var_b;
 
@@ -79,11 +81,11 @@ public class HSV implements ColorInterface{
             else if ( var_i == 4 ) { var_r = var_3 ; var_g = var_1 ; var_b = V;     }
             else                   { var_r = V     ; var_g = var_1 ; var_b = var_2; }
 
-            R = var_r * 255;
-            G = var_g * 255;
-            B = var_b * 255;
+            R = var_r * 255d;
+            G = var_g * 255d;
+            B = var_b * 255d;
         }
-        return new ARGB((int)R,(int)G,(int)B).toInt();
+        return new ARGB(alpha, (int)R,(int)G,(int)B).toInt();
     }
 
     @Override
@@ -103,7 +105,7 @@ public class HSV implements ColorInterface{
 
     @Override
     public int alpha() {
-        return new ARGB(toInt()).alpha();
+        return alpha;
     }
 
     public void setSaturation(float saturation) {

@@ -23,7 +23,6 @@ public final class AndroidDraw implements MapDraw {
     private final Paint gridPaint;
     private final Paint legendPaint;
 
-
     private final BitmapDraw bitmapCanvas = new BitmapDraw();
 
     private final int textHeight;
@@ -35,16 +34,18 @@ public final class AndroidDraw implements MapDraw {
     private final NodeBitmap nodePainter;
 
     public AndroidDraw(AppDensity res) {
-        legendPaint = MapPaint.createLegendTextPaint(res);
+        legendPaint = setFakeBoldText(MapPaint.createLegendTextPaint(res));
         gridPaint   = MapPaint.createGridPaint(res);
-        textPaint   = MapPaint.createStatusTextPaint(res);
+        textPaint   = setFakeBoldText(MapPaint.createStatusTextPaint(res));
 
         textHeight  = textPaint.getTextHeight("X")+5;
-
         nodePainter = NodeBitmap.get(res);
-
         point_radius = res.toPixel_i(POINT_RADIUS);
+    }
 
+    private Paint setFakeBoldText(Paint p) {
+        convert(p).setFakeBoldText(true);
+        return p;
     }
 
 
@@ -126,7 +127,7 @@ public final class AndroidDraw implements MapDraw {
 
     @Override
     public void circle(Point pixel, int radius, Paint paint) {
-        canvas.drawCircle((int)pixel.x, (int)pixel.y, radius, paint);
+        canvas.drawCircle(pixel.x, pixel.y, radius, paint);
     }
 
 
@@ -146,20 +147,13 @@ public final class AndroidDraw implements MapDraw {
     }
 
 
-
-    private static Point center(Bitmap b, Point p) {
-
-        return new Point(p.x - (b.getWidth() / 2),p.y - (b.getHeight() / 2));
-    }
-
-
     @Override
     public void bitmap(Bitmap b, Point p) {
         bitmapCanvas.draw(convert(canvas), convert(b), convert(p));
     }
 
     public static android.graphics.Point convert(Point p) {
-        return new android.graphics.Point((int)p.x, (int)p.y);
+        return new android.graphics.Point(p.x, p.y);
     }
 
     public static android.graphics.Bitmap convert(Bitmap b) {
@@ -181,7 +175,7 @@ public final class AndroidDraw implements MapDraw {
     public void label(String text, Point pixel, Paint background, Paint frame) {
         drawBackground(text, pixel, background);
         drawBackground(text, pixel, frame);
-        canvas.drawText(text, (int)pixel.x, (int)pixel.y, legendPaint);
+        canvas.drawText(text, pixel.x, pixel.y, legendPaint);
     }
 
 
@@ -209,6 +203,4 @@ public final class AndroidDraw implements MapDraw {
     public Paint createPaint() {
         return AndroidGraphicFactory.INSTANCE.createPaint();
     }
-
-
 }

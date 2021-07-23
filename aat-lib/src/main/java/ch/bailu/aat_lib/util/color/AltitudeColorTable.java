@@ -1,7 +1,7 @@
 package ch.bailu.aat_lib.util.color;
 
 import ch.bailu.aat_lib.app.AppColor;
-import ch.bailu.aat_lib.util.Objects;
+import ch.bailu.aat_lib.util.Limit;
 
 public class AltitudeColorTable {
 
@@ -90,7 +90,7 @@ public class AltitudeColorTable {
     }
 
     private int getColorAtIndex(int index) {
-        index = Objects.limit(index, 0, color_table.length-1);
+        index = Limit.inside(index, 0, color_table.length-1);
         return color_table[index];
     }
 

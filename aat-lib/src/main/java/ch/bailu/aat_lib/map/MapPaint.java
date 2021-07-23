@@ -52,7 +52,6 @@ public final class MapPaint {
         p.setColor(MapColor.TEXT);
 
         p.setTextSize(res.toPixelScaled_f(size));
-        //AppGraphicFactory.instance().getPaint(p).setFakeBoldText(true);
         p.setStyle(Style.FILL);
 
         return p;
