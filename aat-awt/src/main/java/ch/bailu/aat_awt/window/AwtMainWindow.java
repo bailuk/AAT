@@ -28,6 +28,7 @@ import ch.bailu.aat_awt.preferences.SolidMainWindow;
 import ch.bailu.aat_awt.views.JCockpitPanel;
 import ch.bailu.aat_awt.views.JMapPanel;
 import ch.bailu.aat_awt.views.JNumberView;
+import ch.bailu.aat_awt.views.JPreferencesPane;
 import ch.bailu.aat_lib.app.AppConfig;
 import ch.bailu.aat_lib.description.AltitudeDescription;
 import ch.bailu.aat_lib.description.FF;
@@ -53,12 +54,12 @@ public class AwtMainWindow implements OnContentUpdatedInterface {
             errorStatus = new JLabel(),
             infoStatus = new JLabel();
 
-    private final JCockpitPanel cockpit = new JCockpitPanel();
+    private final JCockpitPanel cockpit;
     private final JPanel
-            preferences = new JPanel(),
             buttonPane = new JPanel(),
             statusPane = new JPanel();
 
+    private final JPreferencesPane preferences;
 
     private final JNumberView
             gpsButton = new JNumberView(new GpsStateDescription()),
@@ -68,6 +69,9 @@ public class AwtMainWindow implements OnContentUpdatedInterface {
 
 
     public AwtMainWindow(List<File> mapFiles, ServicesInterface services, Broadcaster broadcaster, Dispatcher dispatcher) {
+
+        preferences = new JPreferencesPane(new AwtStorage());
+        cockpit = new JCockpitPanel(dispatcher);
 
         frame = new JFrame(AppConfig.getInstance().getLongName());
         frame.getContentPane().setLayout(new BorderLayout());
@@ -154,7 +158,6 @@ public class AwtMainWindow implements OnContentUpdatedInterface {
 
         String time = FF.f().LOCAL_TIME.format(info.getTimeStamp());
 
-        cockpit.onContentUpdated(iid, info);
         if (iid == InfoID.LOCATION) {
             gps.onContentUpdated(iid, info);
             gpsButton.onContentUpdated(iid, info);

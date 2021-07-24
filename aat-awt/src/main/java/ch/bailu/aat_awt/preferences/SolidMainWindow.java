@@ -57,6 +57,6 @@ public class SolidMainWindow {
 
 
     public void save(JTabbedPane t) {
-        tab.setValue(tab.getValue());
+        tab.setValue(t.getSelectedIndex());
     }
 }
