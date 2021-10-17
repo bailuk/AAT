@@ -60,3 +60,5 @@ Thumbs.db
 .project
 .settings/
 
+# Other
+*.hprof
