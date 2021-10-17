@@ -18,3 +18,9 @@ jobs:
           java-version: 1.8
       - name: Build for Android with Gradle
         run: ./gradlew aat-android:build
+      - name: Upload artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: aat-android
+          path: aat-android/build/outputs/apk/*
+          if-no-files-found: error
