@@ -55,7 +55,7 @@ public final class ObjBitmap extends ObjImageAbstract {
         return bitmap.getSize();
     }
 
-
+    @Override
     public boolean isReadyAndLoaded() {
         return getBitmap() != null;
     }

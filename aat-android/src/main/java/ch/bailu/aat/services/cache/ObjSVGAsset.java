@@ -57,6 +57,10 @@ public final class ObjSVGAsset extends ObjImageAbstract {
 
     }
 
+    @Override
+    public boolean isReadyAndLoaded() {
+        return getBitmap() != null;
+    }
 
     public void onRemove(ServiceContext sc) {
         super.onRemove(sc);
