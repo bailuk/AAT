@@ -3,10 +3,8 @@ package ch.bailu.aat_gtk.map
 import ch.bailu.aat_lib.app.AppGraphicFactory
 import ch.bailu.aat_lib.coordinates.BoundingBoxE6
 import ch.bailu.aat_lib.dispatcher.DispatcherInterface
-import ch.bailu.aat_lib.map.AppDensity
-import ch.bailu.aat_lib.map.MapContext
-import ch.bailu.aat_lib.map.MapViewInterface
-import ch.bailu.aat_lib.map.MapsForgeMetrics
+import ch.bailu.aat_lib.logger.AppLog
+import ch.bailu.aat_lib.map.*
 import ch.bailu.aat_lib.map.layer.MapLayerInterface
 import ch.bailu.aat_lib.map.layer.MapPositionLayer
 import ch.bailu.aat_lib.preferences.OnPreferencesChanged
@@ -46,8 +44,8 @@ import java.util.*
 class GtkCustomMapView(
     private val storage: StorageInterface,
     mapFiles: List<File>,
-    dispatcher: DispatcherInterface?
-) : MapView(), MapViewInterface, OnPreferencesChanged {
+    dispatcher: DispatcherInterface
+) : MapView(), MapViewInterface, OnPreferencesChanged, Attachable {
 
     private val backgroundContext: GtkMapContext = GtkMapContext(this, this.javaClass.simpleName)
     private val foregroundContext: GtkMapContextForeground
@@ -67,6 +65,7 @@ class GtkCustomMapView(
         Parameters.SQUARE_FRAME_BUFFER = false
         bounding = addLayers(this, mapFiles, null)
         pos = MapPositionLayer(mContext, storage, dispatcher)
+
         add(pos)
         model.mapViewPosition.addObserver(object : Observer {
             private var center: LatLong = model.mapViewPosition.center
@@ -78,7 +77,7 @@ class GtkCustomMapView(
                 }
             }
         })
-        attach()
+        onAttached()
     }
     fun showMap() {
         val model: Model = model
@@ -112,7 +111,7 @@ class GtkCustomMapView(
     }
 
     override fun requestRedraw() {
-        repaint()
+        layerManager.redrawLayers()
     }
 
     override fun add(l: MapLayerInterface) {
@@ -134,14 +133,14 @@ class GtkCustomMapView(
         foregroundContext.dispatchDraw(canvas)
     }
 
-    fun attach() {
+    override fun onAttached() {
         storage.register(this)
         for (layer in layers) {
             layer.onAttached()
         }
     }
 
-    fun detach() {
+    override fun onDetached() {
         storage.unregister(this)
         for (layer in layers) {
             layer.onDetached()
@@ -162,7 +161,7 @@ class GtkCustomMapView(
             mapFiles: List<File>,
             hillsRenderConfig: HillsRenderConfig?
         ): BoundingBox {
-            val layers: Layers = mapView.getLayerManager().getLayers()
+            val layers: Layers = mapView.layerManager.layers
             val tileSize = 256
 
             // Tile cache
