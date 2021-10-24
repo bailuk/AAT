@@ -3,7 +3,6 @@ package ch.bailu.aat_gtk.map
 import ch.bailu.aat_lib.app.AppGraphicFactory
 import ch.bailu.aat_lib.coordinates.BoundingBoxE6
 import ch.bailu.aat_lib.dispatcher.DispatcherInterface
-import ch.bailu.aat_lib.logger.AppLog
 import ch.bailu.aat_lib.map.*
 import ch.bailu.aat_lib.map.layer.MapLayerInterface
 import ch.bailu.aat_lib.map.layer.MapPositionLayer
@@ -11,16 +10,13 @@ import ch.bailu.aat_lib.preferences.OnPreferencesChanged
 import ch.bailu.aat_lib.preferences.StorageInterface
 import ch.bailu.aat_lib.util.Limit
 import ch.bailu.gtk.cairo.Context
-import org.mapsforge.core.model.BoundingBox
-import org.mapsforge.core.model.LatLong
-import org.mapsforge.core.model.MapPosition
+import org.mapsforge.core.model.*
 import org.mapsforge.core.model.Point
 import org.mapsforge.core.util.LatLongUtils
 import org.mapsforge.core.util.Parameters
 import org.mapsforge.map.datastore.MapDataStore
 import org.mapsforge.map.datastore.MultiMapDataStore
 import org.mapsforge.map.gtk.graphics.GtkGraphicContext
-import org.mapsforge.map.gtk.graphics.GtkGraphicFactory
 import org.mapsforge.map.gtk.util.TileCacheUtil
 import org.mapsforge.map.gtk.view.MapView
 import org.mapsforge.map.layer.Layers
@@ -37,7 +33,6 @@ import org.mapsforge.map.model.Model
 import org.mapsforge.map.model.common.Observer
 import org.mapsforge.map.reader.MapFile
 import org.mapsforge.map.rendertheme.InternalRenderTheme
-import java.awt.Graphics
 import java.io.File
 import java.util.*
 
@@ -89,7 +84,36 @@ class GtkCustomMapView(
         model.mapViewPosition.mapPosition = MapPosition(bounding.centerPoint, zoomLevel)
     }
 
-    override fun frameBounding(boundingBox: BoundingBoxE6) {}
+    override fun frameBounding(boundingBox: BoundingBoxE6) {
+        frameBounding(boundingBox.toBoundingBox())
+    }
+
+    private fun frameBounding(bounding: BoundingBox) {
+        val dimension = model.mapViewDimension.dimension
+        if (dimension != null) {
+            val zoom: Byte = zoomForBounds(bounding, dimension)
+            val position = MapPosition(bounding.centerPoint, zoom)
+            model.mapViewPosition.mapPosition = position
+        }
+    }
+
+    private fun zoomForBounds(bounding: BoundingBox, dimension: Dimension): Byte {
+        var zoom: Byte
+        zoom =
+            if (bounding.minLatitude == 0.0 && bounding.minLongitude == 0.0 && bounding.maxLatitude == 0.0 && bounding.maxLongitude == 0.0) {
+                0
+            } else {
+                LatLongUtils.zoomForBounds(
+                    dimension,
+                    bounding,
+                    model.displayModel.tileSize
+                )
+            }
+        zoom = Math.min(zoom.toInt(), model.mapViewPosition.zoomLevelMax.toInt()).toByte()
+        zoom = Math.max(zoom.toInt(), model.mapViewPosition.zoomLevelMin.toInt()).toByte()
+        return zoom
+    }
+
     override fun zoomOut() {
         setZoomLevel(
             Limit.clamp(

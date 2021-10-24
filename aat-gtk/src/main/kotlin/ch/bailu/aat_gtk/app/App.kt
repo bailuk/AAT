@@ -1,10 +1,10 @@
 package ch.bailu.aat_gtk.app
 
-import ch.bailu.aat_gtk.app.window.MainWindow
 import ch.bailu.aat_gtk.dispatcher.GtkBroadcaster
 import ch.bailu.aat_gtk.logger.SL4JLogger
 import ch.bailu.aat_gtk.service.GtkServices
 import ch.bailu.aat_gtk.solid.GtkStorage
+import ch.bailu.aat_gtk.window.MainWindow
 import ch.bailu.aat_lib.app.AppConfig
 import ch.bailu.aat_lib.app.AppGraphicFactory
 import ch.bailu.aat_lib.dispatcher.AppBroadcaster
@@ -15,6 +15,7 @@ import ch.bailu.aat_lib.service.ServicesInterface
 import ch.bailu.gtk.GTK
 import ch.bailu.gtk.gio.ApplicationFlags
 import ch.bailu.gtk.gtk.Application
+import ch.bailu.gtk.gtk.ApplicationWindow
 import ch.bailu.gtk.type.Str
 import ch.bailu.gtk.type.Strs
 import org.mapsforge.map.gtk.graphics.GtkGraphicFactory
@@ -26,7 +27,8 @@ fun main(args: Array<String>) {
     val app = Application(Str(GtkAppConfig.applicationId), ApplicationFlags.FLAGS_NONE)
 
     app.onActivate {
-        App.attach(MainWindow(app, App.services, App.storage, App.broadcaster))
+        val window = MainWindow(ApplicationWindow(app), App.services, App.storage, App.broadcaster)
+        App.attach(window)
     }
     app.run(args.size, Strs(args))
 }

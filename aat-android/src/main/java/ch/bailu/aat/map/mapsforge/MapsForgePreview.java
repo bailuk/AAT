@@ -23,7 +23,6 @@ import java.io.OutputStream;
 import java.util.List;
 
 import ch.bailu.aat.map.MapDensity;
-import ch.bailu.aat_lib.map.layer.gpx.GpxDynLayer;
 import ch.bailu.aat.map.tile.TileProvider;
 import ch.bailu.aat.map.tile.source.CacheOnlySource;
 import ch.bailu.aat.map.tile.source.DownloadSource;
@@ -39,6 +38,7 @@ import ch.bailu.aat_lib.dispatcher.AppBroadcaster;
 import ch.bailu.aat_lib.gpx.GpxInformation;
 import ch.bailu.aat_lib.gpx.InfoID;
 import ch.bailu.aat_lib.logger.AppLog;
+import ch.bailu.aat_lib.map.layer.gpx.GpxDynLayer;
 import ch.bailu.foc.Foc;
 
 public class MapsForgePreview extends MapsForgeViewBase {

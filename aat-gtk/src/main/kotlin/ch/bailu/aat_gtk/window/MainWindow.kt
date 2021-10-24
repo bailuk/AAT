@@ -1,7 +1,8 @@
-package ch.bailu.aat_gtk.app.window
+package ch.bailu.aat_gtk.window
 
 import ch.bailu.aat_gtk.app.App
 import ch.bailu.aat_gtk.app.GtkAppConfig
+import ch.bailu.aat_gtk.view.AppMenu
 import ch.bailu.aat_gtk.view.MapMainView
 import ch.bailu.aat_lib.dispatcher.Broadcaster
 import ch.bailu.aat_lib.dispatcher.CurrentLocationSource
@@ -10,6 +11,8 @@ import ch.bailu.aat_lib.dispatcher.TrackerSource
 import ch.bailu.aat_lib.logger.AppLog
 import ch.bailu.aat_lib.map.Attachable
 import ch.bailu.aat_lib.preferences.StorageInterface
+import ch.bailu.aat_lib.preferences.map.SolidMapGrid
+import ch.bailu.aat_lib.preferences.map.SolidPositionLock
 import ch.bailu.aat_lib.service.ServicesInterface
 import ch.bailu.gtk.GTK
 import ch.bailu.gtk.gtk.*
@@ -17,21 +20,24 @@ import ch.bailu.gtk.type.Str
 import ch.bailu.gtk.bridge.Image as BridgeImage
 
 class MainWindow(
-    app: Application,
+    window: ApplicationWindow,
     services: ServicesInterface,
     storage: StorageInterface,
     broadcaster: Broadcaster) : Attachable {
 
     private val dispatcher = Dispatcher()
-    private val window = ApplicationWindow(app)
     private val mapView = MapMainView(services, storage, dispatcher)
 
+    private val menu: AppMenu
+
     init {
-        window.add(mapView.map.drawingArea)
-        window.titlebar = createHeader()
+        val key = mapView.map.mContext.solidKey
+        window.add(mapView.box)
+        menu = AppMenu(window, SolidPositionLock(storage, key), SolidMapGrid(storage, key))
+        window.titlebar = createHeader(menu.menu)
 
         setIcon(window)
-        window.setSizeRequest(720 / 2, 1440 / 2)
+        window.setDefaultSize(720 / 2, 1440 / 2)
         window.onDestroy {
             App.exit(0)
         }
@@ -53,14 +59,20 @@ class MainWindow(
         return
     }
 
-    private fun createHeader(): HeaderBar {
+    private fun createHeader(menu: Menu): HeaderBar {
         val header = HeaderBar()
+        val tracker = Button.newWithLabelButton(Str("Start"))
+
         header.showCloseButton = GTK.TRUE
         header.title = Str(GtkAppConfig.title)
 
+
         val menuButton = MenuButton()
         menuButton.add(Image.newFromIconNameImage(Str("open-menu-symbolic"), IconSize.BUTTON))
+        menuButton.setPopup(menu)
+
         header.packStart(menuButton)
+        header.packStart(tracker)
 
         return header
     }
@@ -72,6 +84,4 @@ class MainWindow(
     override fun onDetached() {
         mapView.onDetached()
     }
-
-
 }

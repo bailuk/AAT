@@ -9,8 +9,11 @@ import ch.bailu.aat_lib.map.layer.grid.GridDynLayer
 import ch.bailu.aat_lib.preferences.StorageInterface
 import ch.bailu.aat_lib.preferences.location.CurrentLocationLayer
 import ch.bailu.aat_lib.service.ServicesInterface
+import ch.bailu.gtk.GTK
+import ch.bailu.gtk.gtk.Box
+import ch.bailu.gtk.gtk.Orientation
 import java.io.File
-import java.util.ArrayList
+import java.util.*
 
 class MapMainView(
     services: ServicesInterface,
@@ -18,11 +21,18 @@ class MapMainView(
     dispatcher: DispatcherInterface): Attachable {
 
     val map = GtkCustomMapView(storage, getMapFiles(), dispatcher)
+    val box = Box(Orientation.VERTICAL,0)
+    val bar = NavigationBar(map.mContext, storage)
 
     init {
+        box.packStart(map.drawingArea, GTK.TRUE, GTK.TRUE, 0)
+        box.packEnd(bar.box, GTK.FALSE,GTK.FALSE, 2)
+
         map.add(CurrentLocationLayer(map.mContext, dispatcher))
         map.add(GridDynLayer(services, storage, map.mContext))
         map.add(GpxDynLayer(storage, map.mContext, services, dispatcher, InfoID.TRACKER))
+
+        dispatcher.addTarget(bar, InfoID.ALL)
     }
 
 
@@ -41,5 +51,4 @@ class MapMainView(
     override fun onDetached() {
         map.onDetached()
     }
-
 }
