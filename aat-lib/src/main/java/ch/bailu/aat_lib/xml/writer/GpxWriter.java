@@ -53,7 +53,7 @@ public abstract class GpxWriter {
         writeString(AppConfig.getInstance().getLongName());
         writeString(" ");
         writeString(AppConfig.getInstance().getVersionName());
-        writeString("\" version=\"1.0\"" +
+        writeString("\" version=\"1.1\"" +
                 "\n    xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"" +
                 "\n    xsi:schemaLocation=\"http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd\">" +
 
