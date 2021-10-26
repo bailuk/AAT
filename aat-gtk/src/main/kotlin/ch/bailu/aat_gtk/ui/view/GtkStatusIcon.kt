@@ -1,4 +1,4 @@
-package ch.bailu.aat_gtk.view
+package ch.bailu.aat_gtk.ui.view
 
 import ch.bailu.aat_lib.service.tracker.StatusIconInterface
 

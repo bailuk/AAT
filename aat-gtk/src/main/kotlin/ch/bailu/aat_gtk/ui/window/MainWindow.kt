@@ -1,9 +1,9 @@
-package ch.bailu.aat_gtk.window
+package ch.bailu.aat_gtk.ui.window
 
 import ch.bailu.aat_gtk.app.App
 import ch.bailu.aat_gtk.app.GtkAppConfig
-import ch.bailu.aat_gtk.view.AppMenu
-import ch.bailu.aat_gtk.view.MapMainView
+import ch.bailu.aat_gtk.ui.view.AppMenu
+import ch.bailu.aat_gtk.ui.view.MapMainView
 import ch.bailu.aat_lib.dispatcher.Broadcaster
 import ch.bailu.aat_lib.dispatcher.CurrentLocationSource
 import ch.bailu.aat_lib.dispatcher.Dispatcher

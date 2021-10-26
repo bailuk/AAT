@@ -1,8 +1,7 @@
-package ch.bailu.aat_gtk.view
+package ch.bailu.aat_gtk.ui.view
 
 import ch.bailu.aat_lib.preferences.map.SolidMapGrid
 import ch.bailu.aat_lib.preferences.map.SolidPositionLock
-import ch.bailu.gtk.GTK
 import ch.bailu.gtk.gtk.*
 import ch.bailu.gtk.type.Str
 

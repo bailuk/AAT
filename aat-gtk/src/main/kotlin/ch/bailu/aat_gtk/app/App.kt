@@ -4,7 +4,7 @@ import ch.bailu.aat_gtk.dispatcher.GtkBroadcaster
 import ch.bailu.aat_gtk.logger.SL4JLogger
 import ch.bailu.aat_gtk.service.GtkServices
 import ch.bailu.aat_gtk.solid.GtkStorage
-import ch.bailu.aat_gtk.window.MainWindow
+import ch.bailu.aat_gtk.ui.window.MainWindow
 import ch.bailu.aat_lib.app.AppConfig
 import ch.bailu.aat_lib.app.AppGraphicFactory
 import ch.bailu.aat_lib.dispatcher.AppBroadcaster

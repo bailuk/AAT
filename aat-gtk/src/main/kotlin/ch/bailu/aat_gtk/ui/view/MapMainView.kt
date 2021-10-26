@@ -1,6 +1,6 @@
-package ch.bailu.aat_gtk.view
+package ch.bailu.aat_gtk.ui.view
 
-import ch.bailu.aat_gtk.map.GtkCustomMapView
+import ch.bailu.aat_gtk.ui.view.map.GtkCustomMapView
 import ch.bailu.aat_lib.dispatcher.DispatcherInterface
 import ch.bailu.aat_lib.gpx.InfoID
 import ch.bailu.aat_lib.map.Attachable

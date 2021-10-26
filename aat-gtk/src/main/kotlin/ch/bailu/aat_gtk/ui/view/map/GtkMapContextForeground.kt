@@ -1,4 +1,4 @@
-package ch.bailu.aat_gtk.map
+package ch.bailu.aat_gtk.ui.view.map
 
 import ch.bailu.aat_lib.map.*
 import ch.bailu.aat_lib.map.layer.MapLayerInterface

@@ -1,5 +1,6 @@
-package ch.bailu.aat_gtk.view
+package ch.bailu.aat_gtk.ui.view
 
+import ch.bailu.aat_gtk.ui.util.IconMap
 import ch.bailu.aat_gtk.util.IndexedMap
 import ch.bailu.aat_lib.dispatcher.OnContentUpdatedInterface
 import ch.bailu.aat_lib.gpx.GpxInformation
@@ -13,31 +14,35 @@ import ch.bailu.gtk.gtk.Box
 import ch.bailu.gtk.gtk.Button
 import ch.bailu.gtk.gtk.Orientation
 import ch.bailu.gtk.type.Str
-import ch.qos.logback.core.pattern.SpacePadder
 
 class NavigationBar(mcontext: MapContext, storage: StorageInterface) : OnContentUpdatedInterface {
+    val SIZE = 30
+    
     val box: Box = Box(Orientation.HORIZONTAL, 2)
-    private val plus: Button = Button.newWithLabelButton(Str("+"))
-    private val minus: Button = Button.newWithLabelButton(Str("-"))
-    private val lock: Button = Button.newWithLabelButton(Str("Lock"))
-    private val frame: Button = Button.newWithLabelButton(Str("Frame"))
-    private val grid: Button = Button.newWithLabelButton(Str("Grid"))
+    private val plus: Button = Button()
+    private val minus: Button = Button()
+    private val lock: Button = Button()
+    private val frame: Button = Button()
+    private val grid: Button = Button()
 
     private val infoCache = IndexedMap<Int, GpxInformation>()
 
     private var boundingCycle = 0
 
     init {
-
+        plus.image = IconMap.getImage("zoom-in-symbolic", SIZE)
         plus.onClicked { mcontext.mapView.zoomIn() }
         box.packStart(plus, GTK.FALSE, GTK.FALSE, 2)
 
+        minus.image = IconMap.getImage("zoom-out-symbolic", SIZE)
         minus.onClicked { mcontext.mapView.zoomOut() }
         box.packStart(minus, GTK.FALSE, GTK.FALSE, 0)
 
+        lock.image = IconMap.getImage("zoom-original-symbolic", SIZE)
         lock.onClicked { SolidPositionLock(storage, mcontext.solidKey).cycle() }
         box.packStart(lock, GTK.FALSE, GTK.FALSE, 2)
 
+        frame.image = IconMap.getImage("zoom-fit-best-symbolic", SIZE)
         frame.onClicked {
             if (nextInBoundingCycle()) {
                 mcontext.mapView.frameBounding(infoCache.getAt(boundingCycle)?.boundingBox)
@@ -46,6 +51,7 @@ class NavigationBar(mcontext: MapContext, storage: StorageInterface) : OnContent
         }
         box.packStart(frame, GTK.FALSE, GTK.FALSE, 0)
 
+        grid.image = IconMap.getImage("view-grid-symbolic", SIZE)
         grid.onClicked { SolidMapGrid(storage, mcontext.solidKey).cycle() }
         box.packStart(grid, GTK.FALSE, GTK.FALSE, 2)
     }
