@@ -13,7 +13,6 @@ import ch.bailu.aat_lib.map.layer.gpx.legend.PointNameWalker;
 import ch.bailu.aat_lib.map.layer.gpx.legend.SegmentIndexWalker;
 import ch.bailu.aat_lib.preferences.SolidStaticIndexList;
 import ch.bailu.aat_lib.preferences.StorageInterface;
-import ch.bailu.aat_lib.resources.Images;
 import ch.bailu.aat_lib.resources.Res;
 
 public class SolidLegend extends SolidStaticIndexList {
@@ -60,8 +59,8 @@ public class SolidLegend extends SolidStaticIndexList {
     }
 
     @Override
-    public int getIconResource() {
-        return Images.dialog_question();
+    public String getIconResource() {
+        return "dialog_question";
     }
 
 }

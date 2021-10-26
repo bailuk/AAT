@@ -15,7 +15,6 @@ import ch.bailu.aat_lib.map.layer.grid.UTMGridLayer;
 import ch.bailu.aat_lib.map.layer.grid.WGS84Layer;
 import ch.bailu.aat_lib.preferences.SolidStaticIndexList;
 import ch.bailu.aat_lib.preferences.StorageInterface;
-import ch.bailu.aat_lib.resources.Images;
 import ch.bailu.aat_lib.service.ServicesInterface;
 
 public class SolidMapGrid extends SolidStaticIndexList {
@@ -30,8 +29,8 @@ public class SolidMapGrid extends SolidStaticIndexList {
 
 
     @Override
-    public int getIconResource() {
-        return Images.view_grid();
+    public String getIconResource() {
+        return "view_grid";
     }
 
     public MapLayerInterface createGridLayer(ServicesInterface services) {

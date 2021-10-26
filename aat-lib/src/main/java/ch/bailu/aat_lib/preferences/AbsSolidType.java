@@ -10,7 +10,7 @@ public abstract class AbsSolidType implements SolidTypeInterface {
     public static final String DEFAULT_MARKER=" ✓";
 
 
-    public int getIconResource() {return 0;}
+    public String getIconResource() {return "";}
 
     @Override
     public String getLabel() {

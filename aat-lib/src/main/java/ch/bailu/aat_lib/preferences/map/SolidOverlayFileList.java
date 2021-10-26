@@ -3,7 +3,6 @@ package ch.bailu.aat_lib.preferences.map;
 import ch.bailu.aat_lib.factory.FocFactory;
 import ch.bailu.aat_lib.preferences.SolidCheckList;
 import ch.bailu.aat_lib.preferences.StorageInterface;
-import ch.bailu.aat_lib.resources.Images;
 import ch.bailu.aat_lib.resources.Res;
 
 public class SolidOverlayFileList extends SolidCheckList {
@@ -75,6 +74,6 @@ public class SolidOverlayFileList extends SolidCheckList {
     }
 
     @Override
-    public int getIconResource() {return Images.view_paged_inverse();}
+    public String getIconResource() {return "view_paged_inverse";}
 
 }

@@ -3,7 +3,6 @@ package ch.bailu.aat_lib.preferences.map;
 
 import ch.bailu.aat_lib.preferences.SolidBoolean;
 import ch.bailu.aat_lib.preferences.StorageInterface;
-import ch.bailu.aat_lib.resources.Images;
 import ch.bailu.aat_lib.resources.Res;
 import ch.bailu.aat_lib.resources.ToDo;
 
@@ -16,12 +15,12 @@ public class SolidPositionLock extends SolidBoolean {
 
 
     @Override
-    public int getIconResource() {
+    public String getIconResource() {
         if (getValue()==true) {
-            return Images.zoom_original_inverse();
+            return "zoom_original_inverse";
 
         } else {
-            return Images.zoom_original();
+            return "zoom_original";
         }
     }
 

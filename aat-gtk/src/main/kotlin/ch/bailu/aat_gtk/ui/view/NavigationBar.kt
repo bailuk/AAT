@@ -9,16 +9,15 @@ import ch.bailu.aat_lib.map.MapContext
 import ch.bailu.aat_lib.preferences.StorageInterface
 import ch.bailu.aat_lib.preferences.map.SolidMapGrid
 import ch.bailu.aat_lib.preferences.map.SolidPositionLock
-import ch.bailu.gtk.GTK
-import ch.bailu.gtk.gtk.Box
 import ch.bailu.gtk.gtk.Button
+import ch.bailu.gtk.gtk.ButtonBox
+import ch.bailu.gtk.gtk.ButtonBoxStyle
 import ch.bailu.gtk.gtk.Orientation
-import ch.bailu.gtk.type.Str
 
 class NavigationBar(mcontext: MapContext, storage: StorageInterface) : OnContentUpdatedInterface {
-    val SIZE = 30
+    val SIZE = 24
     
-    val box: Box = Box(Orientation.HORIZONTAL, 2)
+    val box = ButtonBox(Orientation.HORIZONTAL)
     private val plus: Button = Button()
     private val minus: Button = Button()
     private val lock: Button = Button()
@@ -30,17 +29,23 @@ class NavigationBar(mcontext: MapContext, storage: StorageInterface) : OnContent
     private var boundingCycle = 0
 
     init {
+        box.borderWidth = 3
+        box.spacing = 0
+        box.marginBottom = 0
+        box.setLayout(ButtonBoxStyle.EXPAND)
+
+
         plus.image = IconMap.getImage("zoom-in-symbolic", SIZE)
         plus.onClicked { mcontext.mapView.zoomIn() }
-        box.packStart(plus, GTK.FALSE, GTK.FALSE, 2)
+        box.add(plus)
 
         minus.image = IconMap.getImage("zoom-out-symbolic", SIZE)
         minus.onClicked { mcontext.mapView.zoomOut() }
-        box.packStart(minus, GTK.FALSE, GTK.FALSE, 0)
+        box.add(minus)
 
         lock.image = IconMap.getImage("zoom-original-symbolic", SIZE)
         lock.onClicked { SolidPositionLock(storage, mcontext.solidKey).cycle() }
-        box.packStart(lock, GTK.FALSE, GTK.FALSE, 2)
+        box.add(lock)
 
         frame.image = IconMap.getImage("zoom-fit-best-symbolic", SIZE)
         frame.onClicked {
@@ -49,11 +54,11 @@ class NavigationBar(mcontext: MapContext, storage: StorageInterface) : OnContent
                 AppLog.i(infoCache.getAt(boundingCycle)?.getFile()?.name)
             }
         }
-        box.packStart(frame, GTK.FALSE, GTK.FALSE, 0)
+        box.add(frame)
 
-        grid.image = IconMap.getImage("view-grid-symbolic", SIZE)
+        grid.image = IconMap.getImage(SolidMapGrid(storage, mcontext.solidKey).iconResource, SIZE)
         grid.onClicked { SolidMapGrid(storage, mcontext.solidKey).cycle() }
-        box.packStart(grid, GTK.FALSE, GTK.FALSE, 2)
+        box.add(grid)
     }
 
     private fun nextInBoundingCycle(): Boolean {

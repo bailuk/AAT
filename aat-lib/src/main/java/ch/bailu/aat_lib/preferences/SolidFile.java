@@ -33,7 +33,7 @@ public abstract class SolidFile extends SolidString {
 
 
 
-    public int getIconResource() {return Res.getIconResource("R.drawable.folder_inverse");}
+    public String getIconResource() {return "folder_inverse";}
 
     public abstract ArrayList<String> buildSelection(ArrayList<String> list);
 
