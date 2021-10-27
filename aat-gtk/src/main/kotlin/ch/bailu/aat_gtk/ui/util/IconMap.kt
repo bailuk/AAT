@@ -1,9 +1,9 @@
 package ch.bailu.aat_gtk.ui.util
 
 import ch.bailu.aat_lib.logger.AppLog
-import ch.bailu.gtk.bridge.Image as ImageBridge
 import ch.bailu.gtk.gdkpixbuf.Pixbuf
 import ch.bailu.gtk.gtk.Image
+import ch.bailu.gtk.bridge.Image as ImageBridge
 
 object IconMap {
     private data class IconId (val name: String, val size: Int)
@@ -28,6 +28,7 @@ object IconMap {
             val input = IconMap.javaClass.getResourceAsStream("/icons/${name}.svg")
             result = ImageBridge.load(input, size, size)
             pixbufs[IconId(name, size)] = result
+            result.ref()
             result
         } else {
             result
