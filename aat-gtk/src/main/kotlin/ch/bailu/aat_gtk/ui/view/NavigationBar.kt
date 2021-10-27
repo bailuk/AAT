@@ -1,6 +1,7 @@
 package ch.bailu.aat_gtk.ui.view
 
 import ch.bailu.aat_gtk.ui.util.IconMap
+import ch.bailu.aat_gtk.ui.view.solid.SolidImageButton
 import ch.bailu.aat_gtk.util.IndexedMap
 import ch.bailu.aat_lib.dispatcher.OnContentUpdatedInterface
 import ch.bailu.aat_lib.gpx.GpxInformation
@@ -20,9 +21,9 @@ class NavigationBar(mcontext: MapContext, storage: StorageInterface) : OnContent
     val box = ButtonBox(Orientation.HORIZONTAL)
     private val plus: Button = Button()
     private val minus: Button = Button()
-    private val lock: Button = Button()
     private val frame: Button = Button()
-    private val grid: Button = Button()
+    private val lock = SolidImageButton(SolidPositionLock(storage, mcontext.solidKey))
+    private val grid = SolidImageButton(SolidMapGrid(storage, mcontext.solidKey))
 
     private val infoCache = IndexedMap<Int, GpxInformation>()
 
@@ -34,7 +35,6 @@ class NavigationBar(mcontext: MapContext, storage: StorageInterface) : OnContent
         box.marginBottom = 0
         box.setLayout(ButtonBoxStyle.EXPAND)
 
-
         plus.image = IconMap.getImage("zoom-in-symbolic", SIZE)
         plus.onClicked { mcontext.mapView.zoomIn() }
         box.add(plus)
@@ -43,9 +43,7 @@ class NavigationBar(mcontext: MapContext, storage: StorageInterface) : OnContent
         minus.onClicked { mcontext.mapView.zoomOut() }
         box.add(minus)
 
-        lock.image = IconMap.getImage("zoom-original-symbolic", SIZE)
-        lock.onClicked { SolidPositionLock(storage, mcontext.solidKey).cycle() }
-        box.add(lock)
+        box.add(lock.button)
 
         frame.image = IconMap.getImage("zoom-fit-best-symbolic", SIZE)
         frame.onClicked {
@@ -56,9 +54,7 @@ class NavigationBar(mcontext: MapContext, storage: StorageInterface) : OnContent
         }
         box.add(frame)
 
-        grid.image = IconMap.getImage(SolidMapGrid(storage, mcontext.solidKey).iconResource, SIZE)
-        grid.onClicked { SolidMapGrid(storage, mcontext.solidKey).cycle() }
-        box.add(grid)
+        box.add(grid.button)
     }
 
     private fun nextInBoundingCycle(): Boolean {
