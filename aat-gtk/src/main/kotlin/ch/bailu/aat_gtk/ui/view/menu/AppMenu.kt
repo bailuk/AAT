@@ -1,17 +1,17 @@
 package ch.bailu.aat_gtk.ui.view.menu
 
-import ch.bailu.aat_gtk.ui.view.menu.model.Item
-import ch.bailu.aat_gtk.ui.view.menu.model.LabelItem
-import ch.bailu.aat_gtk.ui.view.menu.model.Menu
-import ch.bailu.aat_gtk.ui.view.menu.model.SeparatorItem
+import ch.bailu.aat_gtk.ui.view.menu.model.*
 import ch.bailu.aat_lib.service.ServicesInterface
 import ch.bailu.gtk.gtk.ApplicationWindow
 
 class AppMenu(window: ApplicationWindow, private val services: ServicesInterface) : Menu() {
 
-    private class TrackerItem(private val services: ServicesInterface, label: String, onSelect: (Item) -> Unit) : LabelItem(label, onSelect) {
+    private inner class TrackerItem(onSelected: (Item) -> Unit) : Item(Type.LABEL, onSelected) {
         override val label: String
             get() = services.trackerService.startStopText
+
+        override val selected = false
+        override val group = Group()
     }
 
     init {
@@ -20,7 +20,7 @@ class AppMenu(window: ApplicationWindow, private val services: ServicesInterface
         add(LabelItem("Tracks & Overlays") {})
         add(LabelItem("Preferences") {})
         add(SeparatorItem())
-        add(TrackerItem(services, "") {
+        add(TrackerItem() {
             services.trackerService.onStartStop()
         })
         add(SeparatorItem())

@@ -17,47 +17,35 @@ class GtkMenu(model: MenuModel){
     init {
         menu.onShow {
             items.forEach { gtk, model ->
-                if (model is LabelItem) {
+
+                if (model.type != Type.SEPARATOR) {
                     val old = gtk.label
                     gtk.label = Str(model.label)
                     old.destroy()
                 }
 
-                if (model is CheckItem && gtk is CheckMenuItem) {
-                    gtk.active = GTK.IS(model.selected)
-                }
-
-                if (model is RadioItem && gtk is RadioMenuItem) {
+                if (model.type == Type.RADIO && gtk is RadioMenuItem) {
                     gtk.active = GTK.IS(model.selected)
                 }
             }
         }
 
         model.forEach {
-            when (it) {
-                is SeparatorItem -> {
+            when (it.type) {
+                Type.SEPARATOR -> {
                     add(SeparatorMenuItem(), it)
                 }
 
-                is CheckItem -> {
-                    val item = CheckMenuItem()
-                    item.onActivate {
-                        it.selected = GTK.IS(item.active)
-                        it.onSelect(it)
-                    }
-                    add(item, it)
-                }
-
-                is RadioItem -> {
+                Type.RADIO -> {
                     val item = RadioMenuItem(groups[it.group])
                     groups[it.group] = item.group
-                    item.onActivate { it.onSelect(it) }
+                    item.onActivate { it.onSelected(it) }
                     add(item, it)
                 }
 
-                is LabelItem -> {
+                Type.LABEL -> {
                     val item = MenuItem()
-                    item.onActivate { it.onSelect(it) }
+                    item.onActivate { it.onSelected(it) }
                     add(item, it)
                 }
             }
