@@ -2,12 +2,15 @@ package ch.bailu.aat_gtk.ui.window
 
 import ch.bailu.aat_gtk.app.App
 import ch.bailu.aat_gtk.app.GtkAppConfig
-import ch.bailu.aat_gtk.ui.view.AppMenu
 import ch.bailu.aat_gtk.ui.view.MapMainView
+import ch.bailu.aat_gtk.ui.view.TrackerButton
+import ch.bailu.aat_gtk.ui.view.menu.AppMenu
+import ch.bailu.aat_gtk.ui.view.menu.GtkMenu
 import ch.bailu.aat_lib.dispatcher.Broadcaster
 import ch.bailu.aat_lib.dispatcher.CurrentLocationSource
 import ch.bailu.aat_lib.dispatcher.Dispatcher
 import ch.bailu.aat_lib.dispatcher.TrackerSource
+import ch.bailu.aat_lib.gpx.InfoID
 import ch.bailu.aat_lib.logger.AppLog
 import ch.bailu.aat_lib.map.Attachable
 import ch.bailu.aat_lib.preferences.StorageInterface
@@ -23,7 +26,10 @@ class MainWindow(
     window: ApplicationWindow,
     services: ServicesInterface,
     storage: StorageInterface,
-    broadcaster: Broadcaster) : Attachable {
+    broadcaster: Broadcaster) : Attachable
+{
+
+    private val trackerButton = TrackerButton(services)
 
     private val dispatcher = Dispatcher()
     private val mapView = MapMainView(services, storage, dispatcher)
@@ -33,8 +39,8 @@ class MainWindow(
     init {
         val key = mapView.map.mContext.solidKey
         window.add(mapView.box)
-        menu = AppMenu(window, SolidPositionLock(storage, key), SolidMapGrid(storage, key))
-        window.titlebar = createHeader(menu.menu)
+        menu = AppMenu(window)
+        window.titlebar = createHeader(GtkMenu(menu).menu)
 
         setIcon(window)
         window.setDefaultSize(720 / 2, 1440 / 2)
@@ -47,6 +53,8 @@ class MainWindow(
         dispatcher.addSource(CurrentLocationSource(services, broadcaster))
         dispatcher.addSource(TrackerSource(services, broadcaster))
         dispatcher.onResume()
+
+        dispatcher.addTarget(trackerButton, InfoID.TRACKER)
     }
 
     private fun setIcon(window: ApplicationWindow) {
@@ -61,18 +69,16 @@ class MainWindow(
 
     private fun createHeader(menu: Menu): HeaderBar {
         val header = HeaderBar()
-        val tracker = Button.newWithLabelButton(Str("Start"))
 
         header.showCloseButton = GTK.TRUE
         header.title = Str(GtkAppConfig.title)
-
 
         val menuButton = MenuButton()
         menuButton.add(Image.newFromIconNameImage(Str("open-menu-symbolic"), IconSize.BUTTON))
         menuButton.setPopup(menu)
 
         header.packStart(menuButton)
-        header.packStart(tracker)
+        header.packStart(trackerButton.button)
 
         return header
     }

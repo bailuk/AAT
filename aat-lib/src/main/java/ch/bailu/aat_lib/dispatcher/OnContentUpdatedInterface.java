@@ -1,5 +1,7 @@
 package ch.bailu.aat_lib.dispatcher;
 
+import javax.annotation.Nonnull;
+
 import ch.bailu.aat_lib.gpx.GpxInformation;
 
 public interface OnContentUpdatedInterface {
@@ -7,5 +9,5 @@ public interface OnContentUpdatedInterface {
 
     };
 
-    void onContentUpdated(int iid, GpxInformation info);
+    void onContentUpdated(int iid, @Nonnull GpxInformation info);
 }
