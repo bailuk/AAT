@@ -14,8 +14,6 @@ import ch.bailu.aat_lib.gpx.InfoID
 import ch.bailu.aat_lib.logger.AppLog
 import ch.bailu.aat_lib.map.Attachable
 import ch.bailu.aat_lib.preferences.StorageInterface
-import ch.bailu.aat_lib.preferences.map.SolidMapGrid
-import ch.bailu.aat_lib.preferences.map.SolidPositionLock
 import ch.bailu.aat_lib.service.ServicesInterface
 import ch.bailu.gtk.GTK
 import ch.bailu.gtk.gtk.*
@@ -37,9 +35,8 @@ class MainWindow(
     private val menu: AppMenu
 
     init {
-        val key = mapView.map.mContext.solidKey
         window.add(mapView.box)
-        menu = AppMenu(window)
+        menu = AppMenu(window, services)
         window.titlebar = createHeader(GtkMenu(menu).menu)
 
         setIcon(window)
@@ -54,7 +51,7 @@ class MainWindow(
         dispatcher.addSource(TrackerSource(services, broadcaster))
         dispatcher.onResume()
 
-        dispatcher.addTarget(trackerButton, InfoID.TRACKER)
+        dispatcher.addTarget(trackerButton, InfoID.ALL)
     }
 
     private fun setIcon(window: ApplicationWindow) {

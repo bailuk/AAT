@@ -2,6 +2,7 @@ package ch.bailu.aat_gtk.ui.view
 
 import ch.bailu.aat_gtk.ui.util.IconMap
 import ch.bailu.aat_gtk.ui.view.solid.SolidImageButton
+import ch.bailu.aat_gtk.ui.view.solid.SolidMenuButton
 import ch.bailu.aat_gtk.util.IndexedMap
 import ch.bailu.aat_lib.dispatcher.OnContentUpdatedInterface
 import ch.bailu.aat_lib.gpx.GpxInformation
@@ -23,7 +24,7 @@ class NavigationBar(mcontext: MapContext, storage: StorageInterface) : OnContent
     private val minus: Button = Button()
     private val frame: Button = Button()
     private val lock = SolidImageButton(SolidPositionLock(storage, mcontext.solidKey))
-    private val grid = SolidImageButton(SolidMapGrid(storage, mcontext.solidKey))
+    private val grid = SolidMenuButton(SolidMapGrid(storage, mcontext.solidKey))
 
     private val infoCache = IndexedMap<Int, GpxInformation>()
 

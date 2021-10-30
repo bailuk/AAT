@@ -10,7 +10,6 @@ public abstract class State implements  StateInterface {
         internal = ti;
 
         internal.logger.setState(getStateID());
-        internal.broadcaster.broadcast(AppBroadcaster.TRACKER);
     }
 
     public State() {

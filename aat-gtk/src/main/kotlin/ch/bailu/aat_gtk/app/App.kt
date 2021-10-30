@@ -61,7 +61,6 @@ object App {
             )
         )
         services = GtkServices(storage, broadcaster)
-        services.trackerService.onStartStop()
     }
 
 

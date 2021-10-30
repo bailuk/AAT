@@ -36,7 +36,7 @@ public final class OffState extends State {
 
             internal.lockService();
 
-            internal.state = new OnState(internal);
+            internal.setState(new OnState(internal));
 
         } catch (Exception e) {
             AppLog.e(this, e);
@@ -56,7 +56,7 @@ public final class OffState extends State {
 
     @Override
     public String getPauseResumeText() {
-        return Res.str().tracker_pause();
+        return Res.str().tracker_start();
     }
 
     @Override

@@ -1,29 +1,25 @@
 package ch.bailu.aat_gtk.ui.view.solid
 
 import ch.bailu.aat_gtk.ui.util.IconMap
+import ch.bailu.aat_gtk.ui.view.menu.GtkMenu
+import ch.bailu.aat_gtk.ui.view.menu.SolidIndexMenu
 import ch.bailu.aat_lib.logger.AppLog
 import ch.bailu.aat_lib.map.Attachable
 import ch.bailu.aat_lib.preferences.OnPreferencesChanged
 import ch.bailu.aat_lib.preferences.SolidIndexList
 import ch.bailu.aat_lib.preferences.StorageInterface
-import ch.bailu.gtk.gtk.Button
+import ch.bailu.gtk.gtk.MenuButton
 
-class SolidImageButton (val solid: SolidIndexList) : OnPreferencesChanged, Attachable {
-
-    val button = Button()
+class SolidMenuButton(private val solid: SolidIndexList): OnPreferencesChanged, Attachable {
+    val button = MenuButton()
 
     companion object {
         const val ICON_SIZE = 25
     }
 
-
     init {
         button.image = IconMap.getImage(solid.iconResource, ICON_SIZE)
-
-        button.onClicked {
-            solid.cycle()
-        }
-
+        button.setPopup(GtkMenu(SolidIndexMenu(solid)).menu)
         solid.register(this)
     }
 

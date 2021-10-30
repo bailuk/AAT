@@ -37,13 +37,13 @@ public final class PauseState extends State {
 
     @Override
     public void onStartStop() {
-        internal.state = new OffState(internal);
+        internal.setState(new OffState(internal));
 
     }
 
     @Override
     public void onPauseResume() {
-        internal.state = new OnState(internal);
+        internal.setState(new OnState(internal));
 
     }
 

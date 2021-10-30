@@ -19,7 +19,7 @@ public final class OnState extends State {
         super(tracker);
 
         if (tracker.isReadyForAutoPause()) {
-            tracker.state = new AutoPauseState(tracker);
+            tracker.setState(new AutoPauseState(tracker));
 
         } else {
             tracker.statusIcon.showOn();
@@ -43,7 +43,7 @@ public final class OnState extends State {
     @Override
     public void updateTrack() {
         if (internal.isReadyForAutoPause()) {
-            internal.state = new AutoPauseState(internal);
+            internal.setState(new AutoPauseState(internal));
 
         } else  {
             final LocationServiceInterface l = internal.services.getLocationService();
@@ -73,13 +73,13 @@ public final class OnState extends State {
 
     @Override
     public void onStartStop() {
-        internal.state = new OffState(internal);
+        internal.setState(new OffState(internal));
 
     }
 
     @Override
     public void onPauseResume() {
-        internal.state = new PauseState(internal);
+        internal.setState(new PauseState(internal));
 
     }
 

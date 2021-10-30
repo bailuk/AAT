@@ -32,7 +32,7 @@ public final class TrackerService extends VirtualService implements WithStatusTe
 
         @Override
         public void onReceive(Object ...data) {
-            internal.state.updateTrack();
+            internal.getState().updateTrack();
         }
     };
 
@@ -57,41 +57,41 @@ public final class TrackerService extends VirtualService implements WithStatusTe
 
     @Override
     public synchronized void updateTrack() {
-        internal.state.updateTrack();
+        internal.getState().updateTrack();
     }
 
     @Override
     public synchronized void onStartPauseResume() {
-        internal.state.onStartPauseResume();
+        internal.getState().onStartPauseResume();
     }
 
     @Override
     public synchronized void onStartStop() {
-        internal.state.onStartStop();
+        internal.getState().onStartStop();
     }
 
     @Override
     public synchronized void onPauseResume() {
-        internal.state.onPauseResume();
+        internal.getState().onPauseResume();
     }
 
     @Override
     public synchronized int getStateID() {
-        return internal.state.getStateID();
+        return internal.getState().getStateID();
     }
 
     @Override
     public synchronized String getStartStopText() {
-        return internal.state.getStartStopText();
+        return internal.getState().getStartStopText();
     }
 
     @Override
     public synchronized String getPauseResumeText() {
-        return internal.state.getPauseResumeText();
+        return internal.getState().getPauseResumeText();
     }
 
     @Override
     public synchronized int getStartStopIconID() {
-        return internal.state.getStartStopIconID();
+        return internal.getState().getStartStopIconID();
     }
 }

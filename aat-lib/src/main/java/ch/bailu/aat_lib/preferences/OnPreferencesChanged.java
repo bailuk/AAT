@@ -1,5 +1,7 @@
 package ch.bailu.aat_lib.preferences;
 
+import javax.annotation.Nonnull;
+
 public interface OnPreferencesChanged {
-    void onPreferencesChanged(StorageInterface storage, String key);
+    void onPreferencesChanged(@Nonnull StorageInterface storage, @Nonnull String key);
 }

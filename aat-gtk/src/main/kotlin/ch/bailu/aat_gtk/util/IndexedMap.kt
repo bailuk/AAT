@@ -25,4 +25,15 @@ class IndexedMap<K, V> {
         map.remove(key)
         keys.remove(key)
     }
+
+    fun forEach(function: (K, V) -> Unit) {
+        keys.forEach {
+            val value = get(it)
+
+            if (value != null) {
+                function(it, value)
+            }
+        }
+    }
+
 }

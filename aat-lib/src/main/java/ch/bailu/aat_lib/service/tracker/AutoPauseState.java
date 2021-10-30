@@ -27,14 +27,14 @@ public final class AutoPauseState extends State {
     @Override
     public void preferencesChanged() {
         if (!internal.isReadyForAutoPause()) {
-            internal.state = new OnState(internal);
+            internal.setState(new OnState(internal));
         }
     }
 
     @Override
     public void updateTrack() {
         if (! internal.isReadyForAutoPause() ) {
-            internal.state = new OnState(internal);
+            internal.setState(new OnState(internal));
         }
     }
 
@@ -48,13 +48,13 @@ public final class AutoPauseState extends State {
 
     @Override
     public void onStartStop() {
-        internal.state = new OffState(internal);
+        internal.setState(new OffState(internal));
 
     }
 
     @Override
     public void onPauseResume() {
-        internal.state = new PauseState(internal);
+        internal.setState(new PauseState(internal));
 
     }
 
