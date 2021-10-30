@@ -11,7 +11,7 @@ import java.util.prefs.Preferences
 class GtkStorage : StorageInterface {
     companion object {
         private val NODE = Preferences.userRoot().node("ch/bailu/aat")
-        private val OBSERVERS = ArrayList<OnPreferencesChanged>(50)
+        private val OBSERVERS = ArrayList<OnPreferencesChanged>()
 
         fun save() {
             try {
@@ -34,21 +34,25 @@ class GtkStorage : StorageInterface {
     }
 
     override fun writeString(key: String, value: String) {
-        NODE.put(key, value)
-        propagate(key)
+        if (value != readString(key)) {
+            NODE.put(key, value)
+            propagate(key)
+        }
     }
 
     override fun readInteger(key: String): Int {
         return NODE.getInt(key, 0)
     }
 
-    override fun writeInteger(key: String, v: Int) {
-        NODE.putInt(key, v)
-        propagate(key)
+    override fun writeInteger(key: String, value: Int) {
+        if (value != readInteger(key)) {
+            NODE.putInt(key, value)
+            propagate(key)
+        }
     }
 
-    override fun writeIntegerForce(key: String, v: Int) {
-        writeInteger(key, v)
+    override fun writeIntegerForce(key: String, value: Int) {
+        writeInteger(key, value)
         propagate(key)
     }
 
@@ -56,9 +60,11 @@ class GtkStorage : StorageInterface {
         return NODE.getLong(key, 0)
     }
 
-    override fun writeLong(key: String, v: Long) {
-        NODE.putLong(key, v)
-        propagate(key)
+    override fun writeLong(key: String, value: Long) {
+        if (value != readLong(key)) {
+            NODE.putLong(key, value)
+            propagate(key)
+        }
     }
 
     override fun register(listener: OnPreferencesChanged) {
