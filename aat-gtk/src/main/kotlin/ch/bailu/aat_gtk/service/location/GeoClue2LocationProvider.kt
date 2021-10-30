@@ -3,7 +3,6 @@ package ch.bailu.aat_gtk.service.location
 import ch.bailu.aat_gtk.service.location.interfaces.Client
 import ch.bailu.aat_lib.gpx.StateID
 import ch.bailu.aat_lib.service.location.*
-import org.freedesktop.dbus.exceptions.DBusException
 
 
 /**
@@ -79,7 +78,7 @@ class GeoClue2LocationProvider(
                     geo.start()
                     geoClue2 = geo
                     updateState()
-                } catch (e: DBusException) {
+                } catch (e: Exception) {
                     passState(StateID.NOSERVICE)
                 }
             }
