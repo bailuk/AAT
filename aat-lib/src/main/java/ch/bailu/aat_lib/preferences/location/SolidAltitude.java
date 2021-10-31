@@ -1,4 +1,4 @@
-package ch.bailu.aat.preferences.location;
+package ch.bailu.aat_lib.preferences.location;
 
 import ch.bailu.aat_lib.logger.AppLog;
 import ch.bailu.aat_lib.preferences.SolidInteger;

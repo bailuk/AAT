@@ -1,6 +1,6 @@
 package ch.bailu.aat.services.tileremover;
 
-import ch.bailu.aat.util.MemSize;
+import ch.bailu.aat_lib.util.MemSize;
 
 public final class SourceSummary implements SourceSummaryInterface {
     private final String name;

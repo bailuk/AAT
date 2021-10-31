@@ -10,18 +10,21 @@ import ch.bailu.aat_lib.service.location.LocationServiceInterface
 import ch.bailu.aat_lib.service.location.LocationStackItem
 import ch.bailu.foc.FocFile
 
-class GtkSolidLocationProvider (s: StorageInterface?) :
-    SolidLocationProvider(s, arrayOf("GeoClue2", ToDo.translate("Threaded mock location"))) {
+class GtkSolidLocationProvider (storage: StorageInterface) :
+    SolidLocationProvider(storage, arrayOf("GeoClue2", ToDo.translate("Threaded mock location")))
+{
+
     override fun createProvider(
         locationService: LocationServiceInterface,
         last: LocationStackItem
     ): LocationStackItem {
+
         return if (index == 0) {
             GeoClue2LocationProvider(locationService, last)
         } else {
             ThreadedMockLocation(locationService, last,
-                storage,
-                FocFactory { string: String? -> FocFile(string) })
+                storage
+            ) { string: String? -> FocFile(string) }
         }
     }
 }

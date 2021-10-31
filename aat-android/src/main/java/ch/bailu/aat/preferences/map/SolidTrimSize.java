@@ -3,7 +3,7 @@ package ch.bailu.aat.preferences.map;
 import android.content.Context;
 
 import ch.bailu.aat.preferences.Storage;
-import ch.bailu.aat.util.MemSize;
+import ch.bailu.aat_lib.util.MemSize;
 import ch.bailu.aat_lib.preferences.SolidIndexList;
 import ch.bailu.aat_lib.resources.Res;
 

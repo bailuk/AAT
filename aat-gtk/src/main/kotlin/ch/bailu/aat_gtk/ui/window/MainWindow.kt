@@ -3,6 +3,7 @@ package ch.bailu.aat_gtk.ui.window
 import ch.bailu.aat_gtk.app.App
 import ch.bailu.aat_gtk.app.GtkAppConfig
 import ch.bailu.aat_gtk.ui.view.MapMainView
+import ch.bailu.aat_gtk.ui.view.PreferencesView
 import ch.bailu.aat_gtk.ui.view.TrackerButton
 import ch.bailu.aat_gtk.ui.view.menu.AppMenu
 import ch.bailu.aat_gtk.ui.view.menu.GtkMenu
@@ -30,12 +31,14 @@ class MainWindow(
     private val trackerButton = TrackerButton(services)
 
     private val dispatcher = Dispatcher()
-    private val mapView = MapMainView(services, storage, dispatcher)
+    //private val mapView = MapMainView(services, storage, dispatcher)
+    private val preferences = PreferencesView(storage, window)
 
     private val menu: AppMenu
 
     init {
-        window.add(mapView.box)
+        //window.add(mapView.box)
+        window.add(preferences.container)
         menu = AppMenu(window, services)
         window.titlebar = createHeader(GtkMenu(menu).menu)
 
@@ -81,10 +84,10 @@ class MainWindow(
     }
 
     override fun onAttached() {
-        mapView.onAttached()
+        //mapView.onAttached()
     }
 
     override fun onDetached() {
-        mapView.onDetached()
+        //mapView.onDetached()
     }
 }

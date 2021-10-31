@@ -6,7 +6,8 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
 import ch.bailu.aat.activities.ActivitySwitcher;
-import ch.bailu.aat.preferences.system.SolidStatusMessages;
+import ch.bailu.aat.preferences.Storage;
+import ch.bailu.aat_lib.preferences.system.SolidStatusMessages;
 import ch.bailu.aat.util.ui.UiTheme;
 import ch.bailu.aat.views.description.mview.MultiView;
 import ch.bailu.aat.views.description.mview.MultiViewIndicator;
@@ -38,7 +39,7 @@ public class ContentView extends FrameLayout{
         messages = new MessageOverlay(context);
         addView(messages);
 
-        SolidStatusMessages smessages = new SolidStatusMessages(context);
+        SolidStatusMessages smessages = new SolidStatusMessages(new Storage(context));
 
 
         if (smessages.showURL()) {

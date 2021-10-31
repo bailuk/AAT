@@ -8,8 +8,6 @@ import ch.bailu.aat_lib.description.FF;
 import ch.bailu.aat_lib.map.MapContext;
 import ch.bailu.aat_lib.map.Point;
 import ch.bailu.aat_lib.map.layer.MapLayerInterface;
-import ch.bailu.aat_lib.map.layer.grid.Crosshair;
-import ch.bailu.aat_lib.map.layer.grid.ElevationLayer;
 import ch.bailu.aat_lib.preferences.StorageInterface;
 import ch.bailu.aat_lib.service.ServicesInterface;
 
@@ -23,6 +21,7 @@ public final class WGS84Layer implements MapLayerInterface {
         elevation = new ElevationLayer(services, storage);
         crosshair = new Crosshair();
     }
+
     @Override
     public void drawForeground(MapContext mcontext) {
         final LatLong point = mcontext.getMapView().getMapViewPosition().getCenter();

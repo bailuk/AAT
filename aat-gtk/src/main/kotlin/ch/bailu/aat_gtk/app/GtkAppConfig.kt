@@ -1,9 +1,19 @@
 package ch.bailu.aat_gtk.app
 
 import ch.bailu.aat_lib.app.AppConfig
+import ch.bailu.aat_lib.factory.FocFactory
 import ch.bailu.aat_lib.resources.Res
+import ch.bailu.foc.Foc
+import ch.bailu.foc.FocFile
 
 object GtkAppConfig : AppConfig() {
+    object FFactory : FocFactory {
+        override fun toFoc(string: String?): Foc {
+            return FocFile(string)
+        }
+    }
+
+
     val icon = "/images/icon.svg"
     val title = Res.str().app_name()
 

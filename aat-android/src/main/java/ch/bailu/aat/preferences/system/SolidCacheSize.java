@@ -1,7 +1,6 @@
 package ch.bailu.aat.preferences.system;
 
-import ch.bailu.aat.R;
-import ch.bailu.aat.util.MemSize;
+import ch.bailu.aat_lib.util.MemSize;
 import ch.bailu.aat_lib.preferences.SolidIndexList;
 import ch.bailu.aat_lib.preferences.StorageInterface;
 import ch.bailu.aat_lib.resources.Res;

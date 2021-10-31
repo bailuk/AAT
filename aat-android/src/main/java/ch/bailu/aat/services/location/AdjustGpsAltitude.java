@@ -1,7 +1,7 @@
 package ch.bailu.aat.services.location;
 
 import ch.bailu.aat_lib.preferences.location.SolidAdjustGpsAltitude;
-import ch.bailu.aat.preferences.location.SolidAdjustGpsAltitudeValue;
+import ch.bailu.aat_lib.preferences.location.SolidAdjustGpsAltitudeValue;
 import ch.bailu.aat.preferences.location.SolidProvideAltitude;
 import ch.bailu.aat_lib.preferences.StorageInterface;
 import ch.bailu.aat_lib.preferences.general.SolidUnit;

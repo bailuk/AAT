@@ -5,7 +5,7 @@ import android.content.Intent;
 import android.graphics.Color;
 
 import ch.bailu.aat.services.background.DownloaderThread;
-import ch.bailu.aat.util.MemSize;
+import ch.bailu.aat_lib.util.MemSize;
 import ch.bailu.aat_lib.dispatcher.AppBroadcaster;
 
 public class DownloadSizeMsgView extends AbsBroadcastMsgView {

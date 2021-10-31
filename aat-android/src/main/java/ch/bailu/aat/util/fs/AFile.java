@@ -3,7 +3,7 @@ package ch.bailu.aat.util.fs;
 import android.content.Context;
 
 import ch.bailu.aat.R;
-import ch.bailu.aat.util.MemSize;
+import ch.bailu.aat_lib.util.MemSize;
 import ch.bailu.aat_lib.logger.AppLog;
 import ch.bailu.foc.Foc;
 

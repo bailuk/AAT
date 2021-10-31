@@ -38,7 +38,7 @@ class GtkMapContextForeground(
     }
 
     override fun getMapView(): MapViewInterface {
-        return mapView
+        return mcontext.mapView
     }
 
 

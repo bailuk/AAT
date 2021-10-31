@@ -7,7 +7,7 @@ import java.util.HashMap;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.cache.Obj.Factory;
 import ch.bailu.aat.util.AppIntent;
-import ch.bailu.aat.util.MemSize;
+import ch.bailu.aat_lib.util.MemSize;
 
 
 public final class ObjectTable  {

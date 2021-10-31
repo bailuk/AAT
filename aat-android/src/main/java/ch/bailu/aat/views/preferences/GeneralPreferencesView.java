@@ -8,14 +8,14 @@ import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat_lib.preferences.general.SolidWeight;
 import ch.bailu.aat.preferences.location.AndroidSolidLocationProvider;
 import ch.bailu.aat_lib.preferences.location.SolidAdjustGpsAltitude;
-import ch.bailu.aat.preferences.location.SolidAdjustGpsAltitudeValue;
+import ch.bailu.aat_lib.preferences.location.SolidAdjustGpsAltitudeValue;
 import ch.bailu.aat.preferences.location.SolidGpsTimeFix;
 import ch.bailu.aat.preferences.location.SolidPressureAtSeaLevel;
 import ch.bailu.aat.preferences.location.SolidProvideAltitude;
 import ch.bailu.aat.preferences.system.AndroidSolidDataDirectory;
 import ch.bailu.aat.preferences.system.SolidCacheSize;
 import ch.bailu.aat.preferences.system.SolidExternalDirectory;
-import ch.bailu.aat.preferences.system.SolidStatusMessages;
+import ch.bailu.aat_lib.preferences.system.SolidStatusMessages;
 import ch.bailu.aat.util.ui.UiTheme;
 import ch.bailu.aat.views.SensorListView;
 import ch.bailu.aat_lib.gpx.InfoID;
@@ -37,7 +37,7 @@ public class GeneralPreferencesView extends VerticalScrollView {
                 SolidTextInputDialog.INTEGER, theme));
 
         add(new SolidIndexListView(acontext,new SolidPresetCount(storage), theme));
-        add(new SolidIndexListView(acontext,new SolidStatusMessages(acontext), theme));
+        add(new SolidIndexListView(acontext,new SolidStatusMessages(storage), theme));
 
         add(new TitleView(acontext, "GPS", theme));
         add(new SolidIndexListView(acontext,new AndroidSolidLocationProvider(acontext), theme));

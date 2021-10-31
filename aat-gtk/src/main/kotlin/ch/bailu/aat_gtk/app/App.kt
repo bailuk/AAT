@@ -27,8 +27,13 @@ fun main(args: Array<String>) {
     val app = Application(Str(GtkAppConfig.applicationId), ApplicationFlags.FLAGS_NONE)
 
     app.onActivate {
-        val window = MainWindow(ApplicationWindow(app), App.services, App.storage, App.broadcaster)
-        App.attach(window)
+        try {
+            val window = MainWindow(ApplicationWindow(app), App.services, App.storage, App.broadcaster)
+            App.attach(window)
+
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
     app.run(args.size, Strs(args))
 }

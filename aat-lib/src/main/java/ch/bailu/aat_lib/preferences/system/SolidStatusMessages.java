@@ -1,9 +1,7 @@
-package ch.bailu.aat.preferences.system;
+package ch.bailu.aat_lib.preferences.system;
 
-import android.content.Context;
-
-import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat_lib.preferences.SolidIndexList;
+import ch.bailu.aat_lib.preferences.StorageInterface;
 import ch.bailu.aat_lib.resources.Res;
 
 public class SolidStatusMessages extends SolidIndexList {
@@ -12,8 +10,8 @@ public class SolidStatusMessages extends SolidIndexList {
 
     private final String[] VAL;
 
-    public SolidStatusMessages(Context c) {
-        super(new Storage(c), KEY);
+    public SolidStatusMessages(StorageInterface storage) {
+        super(storage, KEY);
         VAL = new String[] {
                 Res.str().p_messages_size(),
                 Res.str().p_messages_url(),

@@ -1,4 +1,4 @@
-package ch.bailu.aat.util;
+package ch.bailu.aat_lib.util;
 
 import java.text.DecimalFormat;
 
@@ -66,6 +66,4 @@ public class MemSize {
         size = Math.round(size / (double)ldivider[i]);
         return size * ldivider[i];
     }
-
-
 }
