@@ -1,10 +1,8 @@
-package ch.bailu.aat.preferences.map;
+package ch.bailu.aat_lib.preferences.map;
 
-import android.content.Context;
-
-import ch.bailu.aat.preferences.Storage;
-import ch.bailu.aat.util.ui.AndroidAppDensity;
+import ch.bailu.aat_lib.map.AppDensity;
 import ch.bailu.aat_lib.preferences.SolidIndexList;
+import ch.bailu.aat_lib.preferences.StorageInterface;
 import ch.bailu.aat_lib.resources.Res;
 
 
@@ -36,9 +34,9 @@ public class SolidTileSize extends SolidIndexList {
 
     };
 
-    public SolidTileSize(Context c) {
-        super(new Storage(c), KEY);
-        tileSizeDP = new AndroidAppDensity(c).toPixel_i(DEFAULT_TILESIZE);
+    public SolidTileSize(StorageInterface storage, AppDensity density) {
+        super(storage, KEY);
+        tileSizeDP = density.toPixel_i(DEFAULT_TILESIZE);
     }
 
 

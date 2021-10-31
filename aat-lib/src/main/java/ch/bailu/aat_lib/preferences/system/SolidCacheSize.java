@@ -1,4 +1,4 @@
-package ch.bailu.aat.preferences.system;
+package ch.bailu.aat_lib.preferences.system;
 
 import ch.bailu.aat_lib.util.MemSize;
 import ch.bailu.aat_lib.preferences.SolidIndexList;

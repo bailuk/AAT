@@ -2,8 +2,9 @@ package ch.bailu.aat.map;
 
 import android.content.Context;
 
+import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat.util.ui.AndroidAppDensity;
-import ch.bailu.aat.preferences.map.SolidTileSize;
+import ch.bailu.aat_lib.preferences.map.SolidTileSize;
 
 
 public final class MapDensity extends AndroidAppDensity {
@@ -13,7 +14,7 @@ public final class MapDensity extends AndroidAppDensity {
     public MapDensity(Context context) {
         super(context);
 
-        tileSize = new SolidTileSize(context).getTileSize();
+        tileSize = new SolidTileSize(new Storage(context), new AndroidAppDensity(context)).getTileSize();
     }
 
     public MapDensity() {

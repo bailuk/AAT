@@ -14,14 +14,16 @@ import ch.bailu.aat.preferences.map.SolidEnableTileCache;
 import ch.bailu.aat.preferences.map.SolidMapsForgeDirectory;
 import ch.bailu.aat.preferences.map.SolidMapsForgeMapFile;
 import ch.bailu.aat.preferences.map.SolidRenderTheme;
-import ch.bailu.aat.preferences.map.SolidTileSize;
+import ch.bailu.aat_lib.preferences.map.SolidTileSize;
 import ch.bailu.aat.preferences.map.SolidTrimDate;
 import ch.bailu.aat.preferences.map.SolidTrimMode;
 import ch.bailu.aat.preferences.map.SolidTrimSize;
 import ch.bailu.aat.preferences.system.SolidVolumeKeys;
 import ch.bailu.aat.services.ServiceContext;
+import ch.bailu.aat.util.ui.AndroidAppDensity;
 import ch.bailu.aat.util.ui.UiTheme;
 import ch.bailu.aat.views.tileremover.TileRemoverView;
+import ch.bailu.aat_lib.preferences.StorageInterface;
 import ch.bailu.aat_lib.resources.ToDo;
 
 public class MapTilePreferencesView extends VerticalScrollView {
@@ -32,10 +34,11 @@ public class MapTilePreferencesView extends VerticalScrollView {
         super(scontext.getContext());
 
         final Context context = scontext.getContext();
+        final StorageInterface storage = new Storage(context);
 
 
         add(new TitleView(context, context.getString(R.string.p_tiles), theme));
-        add(new SolidIndexListView(context,new SolidTileSize(context), theme));
+        add(new SolidIndexListView(context,new SolidTileSize(storage, new AndroidAppDensity(context)), theme));
         add(new SolidDirectoryViewSAF(acontext, new AndroidSolidTileCacheDirectory(context), theme));
         add(new SolidCheckBox(acontext, new SolidVolumeKeys(new Storage(context)), theme));
 

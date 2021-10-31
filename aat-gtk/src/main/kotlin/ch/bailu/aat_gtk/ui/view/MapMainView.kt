@@ -21,17 +21,17 @@ class MapMainView(
     dispatcher: DispatcherInterface): Attachable {
 
     val map = GtkCustomMapView(storage, getMapFiles(), dispatcher)
-    val box = Box(Orientation.VERTICAL,0)
+    val layout = Box(Orientation.VERTICAL,0)
     val bar = NavigationBar(map.mContext, storage)
 
     init {
-        box.packStart(map.drawingArea, GTK.TRUE, GTK.TRUE, 0)
-        box.packEnd(bar.box, GTK.FALSE,GTK.FALSE, 2)
+        layout.packStart(map.drawingArea, GTK.TRUE, GTK.TRUE, 0)
+        layout.packEnd(bar.box, GTK.FALSE,GTK.FALSE, 2)
 
         map.add(CurrentLocationLayer(map.mContext, dispatcher))
         map.add(GridDynLayer(services, storage, map.mContext))
         map.add(GpxDynLayer(storage, map.mContext, services, dispatcher, InfoID.TRACKER))
-
+        layout.showAll()
         dispatcher.addTarget(bar, InfoID.ALL)
     }
 

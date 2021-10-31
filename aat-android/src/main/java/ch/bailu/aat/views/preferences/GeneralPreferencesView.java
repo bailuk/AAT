@@ -13,7 +13,7 @@ import ch.bailu.aat.preferences.location.SolidGpsTimeFix;
 import ch.bailu.aat.preferences.location.SolidPressureAtSeaLevel;
 import ch.bailu.aat.preferences.location.SolidProvideAltitude;
 import ch.bailu.aat.preferences.system.AndroidSolidDataDirectory;
-import ch.bailu.aat.preferences.system.SolidCacheSize;
+import ch.bailu.aat_lib.preferences.system.SolidCacheSize;
 import ch.bailu.aat.preferences.system.SolidExternalDirectory;
 import ch.bailu.aat_lib.preferences.system.SolidStatusMessages;
 import ch.bailu.aat.util.ui.UiTheme;

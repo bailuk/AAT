@@ -7,7 +7,7 @@ import org.mapsforge.core.model.Tile;
 
 import ch.bailu.aat.map.tile.TileFlags;
 import ch.bailu.aat.map.tile.source.Source;
-import ch.bailu.aat.preferences.map.SolidTileSize;
+import ch.bailu.aat_lib.preferences.map.SolidTileSize;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.background.FileTask;
 import ch.bailu.aat.util.OldAppBroadcaster;

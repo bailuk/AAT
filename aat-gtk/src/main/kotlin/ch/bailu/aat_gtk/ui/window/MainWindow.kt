@@ -2,11 +2,14 @@ package ch.bailu.aat_gtk.ui.window
 
 import ch.bailu.aat_gtk.app.App
 import ch.bailu.aat_gtk.app.GtkAppConfig
-import ch.bailu.aat_gtk.ui.view.MapMainView
-import ch.bailu.aat_gtk.ui.view.PreferencesView
+import ch.bailu.aat_gtk.ui.view.MainStackView
+import ch.bailu.aat_gtk.ui.view.solid.PreferencesView
 import ch.bailu.aat_gtk.ui.view.TrackerButton
 import ch.bailu.aat_gtk.ui.view.menu.AppMenu
 import ch.bailu.aat_gtk.ui.view.menu.GtkMenu
+import ch.bailu.aat_gtk.ui.view.solid.GeneralPreferencesView
+import ch.bailu.aat_gtk.ui.view.solid.MapPreferencesView
+import ch.bailu.aat_gtk.ui.view.solid.PreferencesStackView
 import ch.bailu.aat_lib.dispatcher.Broadcaster
 import ch.bailu.aat_lib.dispatcher.CurrentLocationSource
 import ch.bailu.aat_lib.dispatcher.Dispatcher
@@ -31,15 +34,13 @@ class MainWindow(
     private val trackerButton = TrackerButton(services)
 
     private val dispatcher = Dispatcher()
-    //private val mapView = MapMainView(services, storage, dispatcher)
-    private val preferences = PreferencesView(storage, window)
+    private val mainView = MainStackView(services, storage, dispatcher,window)
 
     private val menu: AppMenu
 
     init {
-        //window.add(mapView.box)
-        window.add(preferences.container)
-        menu = AppMenu(window, services)
+        window.add(mainView.layout)
+        menu = AppMenu(window, services, mainView)
         window.titlebar = createHeader(GtkMenu(menu).menu)
 
         setIcon(window)
