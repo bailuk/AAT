@@ -56,25 +56,25 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter:5.7.2")
 }
 
+val appMainClass = "ch.bailu.aat_gtk.app.AppKt"
 
 application {
-    mainClass.set("ch.bailu.aat_gtk.app.AppKt")
+    mainClass.set(appMainClass)
 }
 
 
 /**
  * https://docs.gradle.org/current/dsl/org.gradle.api.tasks.bundling.Jar.html
+ * https://stackoverflow.com/questions/41794914/how-to-create-the-fat-jar-with-gradle-kotlin-script
  */
-/*
-jar {
+val fatJar = task("fatJar", type = Jar::class) {
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
-    archiveClassifier = "all"
 
     manifest {
-        attributes "Main-Class": "ch.bailu.aat_awt.app.AppKt"
+        attributes["Main-Class"] = appMainClass
     }
+    from(configurations.runtimeClasspath.get().map({ if (it.isDirectory) it else zipTree(it) }))
+    with(tasks.jar.get() as CopySpec)
+}
 
-    from {
-        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
-    }
-}*/
+
