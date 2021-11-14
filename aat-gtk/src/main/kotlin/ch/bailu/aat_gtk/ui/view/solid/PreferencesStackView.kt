@@ -18,8 +18,8 @@ class PreferencesStackView(storage: StorageInterface, window: Window) {
         val strGeneral = Str(Res.str().p_general())
         val strMap = Str(Res.str().p_map())
 
-        stack.addTitled(general.container, strGeneral, strGeneral)
-        stack.addTitled(map.container, strMap, strMap)
+        stack.addTitled(general.scrolled, strGeneral, strGeneral)
+        stack.addTitled(map.scrolled, strMap, strMap)
 
 
         switcher.stack = stack
