@@ -9,12 +9,8 @@ import ch.bailu.foc.Foc;
 public final class IteratorFollowFile extends IteratorAbstract {
     private GpxInformation info = GpxInformation.NULL;
 
-
-    //private final ServiceContext scontext;
-
     public IteratorFollowFile(ServiceContext sc) {
         super(sc);
-        //scontext=sc;
         query();
     }
 
@@ -23,7 +19,6 @@ public final class IteratorFollowFile extends IteratorAbstract {
     public GpxInformation getInfo() {
         return info;
     }
-
 
 
     @Override
