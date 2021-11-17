@@ -3,37 +3,46 @@ package ch.bailu.aat.services;
 import android.content.Context;
 
 import ch.bailu.aat.dispatcher.AndroidBroadcaster;
+import ch.bailu.aat.factory.AndroidFocFactory;
+import ch.bailu.aat.map.mapsforge.MapsForgePreview;
+import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat.preferences.location.AndroidSolidLocationProvider;
+import ch.bailu.aat.preferences.map.SolidRendererThreads;
 import ch.bailu.aat.preferences.system.AndroidSolidDataDirectory;
 import ch.bailu.aat.services.background.BackgroundService;
 import ch.bailu.aat.services.cache.CacheService;
-import ch.bailu.aat.services.directory.DirectoryService;
+import ch.bailu.aat.services.directory.AndroidSummaryConfig;
+import ch.bailu.aat_lib.service.directory.DirectoryService;
 import ch.bailu.aat.services.elevation.ElevationService;
 import ch.bailu.aat.services.icons.IconMapService;
 import ch.bailu.aat.services.render.RenderService;
 import ch.bailu.aat.services.sensor.SensorService;
 import ch.bailu.aat.services.tileremover.TileRemoverService;
 import ch.bailu.aat.services.tracker.StatusIcon;
+import ch.bailu.aat.util.sql.AndroidDatabase;
 import ch.bailu.aat_lib.service.IconMapServiceInterface;
-import ch.bailu.aat_lib.service.ServicesInterface;
+import ch.bailu.aat_lib.service.background.BackgroundServiceInterface;
+import ch.bailu.aat_lib.service.cache.CacheServiceInterface;
+import ch.bailu.aat_lib.service.directory.DirectoryServiceInterface;
 import ch.bailu.aat_lib.service.location.LocationService;
+import ch.bailu.aat_lib.service.location.LocationServiceInterface;
 import ch.bailu.aat_lib.service.sensor.SensorServiceInterface;
 import ch.bailu.aat_lib.service.tracker.TrackerService;
+import ch.bailu.aat_lib.service.tracker.TrackerServiceInterface;
 import ch.bailu.aat_lib.util.WithStatusText;
 
-public final class OneService extends AbsService  implements ServiceContext, ServicesInterface {
+public final class OneService extends AbsService  implements ServiceContext {
 
     private LocationService location;
     private TrackerService tracker;
-    private BackgroundService background;
+    private BackgroundServiceInterface background;
     private IconMapService iconMap;
-    private CacheService   cache;
+    private CacheServiceInterface cache;
     private DirectoryService directory;
     private ElevationService elevation;
     private TileRemoverService tileRemover;
     private RenderService render;
     private SensorService ble;
-
 
 
     @Override
@@ -111,7 +120,7 @@ public final class OneService extends AbsService  implements ServiceContext, Ser
 
 
     @Override
-    public  synchronized LocationService getLocationService() {
+    public  synchronized LocationServiceInterface getLocationService() {
         if (location == null) {
             location = new LocationService(new AndroidSolidLocationProvider(this), new AndroidBroadcaster(this));
         }
@@ -119,15 +128,15 @@ public final class OneService extends AbsService  implements ServiceContext, Ser
     }
 
     @Override
-    public  synchronized BackgroundService getBackgroundService() {
+    public  synchronized BackgroundServiceInterface getBackgroundService() {
         if (background == null) {
-            background = new BackgroundService(this);
+            background = new BackgroundService(this, new AndroidBroadcaster(this), SolidRendererThreads.numberOfBackgroundThreats());
         }
         return background;
     }
 
     @Override
-    public synchronized CacheService getCacheService() {
+    public synchronized CacheServiceInterface getCacheService() {
         if (cache == null) {
             cache = new CacheService(this);
             getElevationService();
@@ -166,14 +175,21 @@ public final class OneService extends AbsService  implements ServiceContext, Ser
     }
 
     @Override
-    public synchronized  DirectoryService getDirectoryService() {
+    public synchronized DirectoryServiceInterface getDirectoryService() {
         if (directory == null)
-            directory = new DirectoryService(this);
+            directory = new DirectoryService(
+                    this,
+                    new Storage(getContext()),
+                    new AndroidFocFactory(getContext()),
+                    new AndroidSummaryConfig(getContext()),
+                    () -> new AndroidDatabase(getContext()),
+                    new AndroidBroadcaster(getContext()),
+                    (info, previewImageFile) -> new MapsForgePreview(OneService.this, info, previewImageFile));
         return directory;
     }
 
     @Override
-    public synchronized  TrackerService getTrackerService() {
+    public synchronized TrackerServiceInterface getTrackerService() {
         if (tracker == null)
             tracker = new TrackerService(
                     new AndroidSolidDataDirectory(this),

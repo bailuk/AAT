@@ -3,10 +3,10 @@ package ch.bailu.aat.services.cache.elevation;
 import org.mapsforge.core.model.Tile;
 
 import ch.bailu.aat.services.ServiceContext;
-import ch.bailu.aat.services.cache.Obj;
-import ch.bailu.aat.services.elevation.tile.DemDimension;
-import ch.bailu.aat.services.elevation.tile.DemGeoToIndex;
-import ch.bailu.aat.services.elevation.tile.DemProvider;
+import ch.bailu.aat_lib.service.cache.Obj;
+import ch.bailu.aat_lib.service.elevation.tile.DemDimension;
+import ch.bailu.aat_lib.service.elevation.tile.DemGeoToIndex;
+import ch.bailu.aat_lib.service.elevation.tile.DemProvider;
 import ch.bailu.aat.services.elevation.tile.DemSplitter;
 import ch.bailu.aat.services.elevation.tile.MultiCell;
 import ch.bailu.aat.services.elevation.tile.MultiCell8;

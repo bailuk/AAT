@@ -8,7 +8,7 @@ import ch.bailu.aat.map.tile.source.MapsForgeSource;
 import ch.bailu.aat.map.tile.source.Source;
 import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat.preferences.map.AndroidSolidTileCacheDirectory;
-import ch.bailu.aat.preferences.map.SolidDem3Directory;
+import ch.bailu.aat_lib.preferences.map.SolidDem3Directory;
 import ch.bailu.aat.preferences.map.SolidDem3EnableDownload;
 import ch.bailu.aat.preferences.map.SolidEnableTileCache;
 import ch.bailu.aat.preferences.map.SolidMapsForgeDirectory;

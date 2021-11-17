@@ -2,7 +2,7 @@ package ch.bailu.aat.views.preferences;
 
 import ch.bailu.aat_lib.map.MapContext;
 import ch.bailu.aat.map.To;
-import ch.bailu.aat.preferences.SolidBoundingBox;
+import ch.bailu.aat_lib.preferences.SolidBoundingBox;
 import ch.bailu.aat.util.ui.UiTheme;
 import ch.bailu.aat.views.LabelTextView;
 import ch.bailu.aat_lib.coordinates.BoundingBoxE6;

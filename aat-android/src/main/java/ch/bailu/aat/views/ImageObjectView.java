@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import ch.bailu.aat.map.AndroidDraw;
 import ch.bailu.aat_lib.service.InsideContext;
 import ch.bailu.aat.services.ServiceContext;
-import ch.bailu.aat.services.cache.Obj;
+import ch.bailu.aat_lib.service.cache.Obj;
 import ch.bailu.aat.services.cache.ObjBitmap;
 import ch.bailu.aat.services.cache.ObjImageAbstract;
 import ch.bailu.aat.util.AppIntent;

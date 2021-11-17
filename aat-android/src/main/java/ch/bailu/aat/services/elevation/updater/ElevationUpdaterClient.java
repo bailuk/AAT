@@ -1,11 +1,9 @@
 package ch.bailu.aat.services.elevation.updater;
 
-import ch.bailu.aat.services.ServiceContext;
-import ch.bailu.aat.services.elevation.tile.Dem3Tile;
+import ch.bailu.aat_lib.service.elevation.tile.Dem3Tile;
+import ch.bailu.aat_lib.service.ServicesInterface;
 
 public interface ElevationUpdaterClient {
-    //SrtmCoordinates[] getSrtmTileCoordinates();
-
-    void updateFromSrtmTile(ServiceContext cs, Dem3Tile tile);
+    void updateFromSrtmTile(ServicesInterface cs, Dem3Tile tile);
 }
 

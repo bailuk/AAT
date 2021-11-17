@@ -1,6 +1,7 @@
 package ch.bailu.aat.services.background;
 
-import ch.bailu.aat.services.ServiceContext;
+import ch.bailu.aat_lib.service.ServicesInterface;
+import ch.bailu.aat_lib.service.background.BackgroundTask;
 
 public final class LoaderThread extends WorkerThread {
     private static final int LOADER_QUEUE_SIZE = 100;
@@ -11,7 +12,7 @@ public final class LoaderThread extends WorkerThread {
     private long total_bytes=0;
 
 
-    public LoaderThread(ServiceContext sc, String d) {
+    public LoaderThread(ServicesInterface sc, String d) {
         super("LT_" + d, sc, LOADER_QUEUE_SIZE);
         directory=d;
     }

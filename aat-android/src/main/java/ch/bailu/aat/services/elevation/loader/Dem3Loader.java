@@ -4,8 +4,8 @@ import java.io.Closeable;
 
 import ch.bailu.aat_lib.coordinates.Dem3Coordinates;
 import ch.bailu.aat.services.ServiceContext;
-import ch.bailu.aat.services.elevation.tile.Dem3Status;
-import ch.bailu.aat.services.elevation.tile.Dem3Tile;
+import ch.bailu.aat_lib.service.elevation.Dem3Status;
+import ch.bailu.aat_lib.service.elevation.tile.Dem3Tile;
 import ch.bailu.aat_lib.service.elevation.ElevationProvider;
 
 public final class Dem3Loader implements Closeable, ElevationProvider {

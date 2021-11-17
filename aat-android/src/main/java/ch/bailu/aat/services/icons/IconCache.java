@@ -4,7 +4,7 @@ import java.io.Closeable;
 
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.cache.LockCache;
-import ch.bailu.aat.services.cache.Obj;
+import ch.bailu.aat_lib.service.cache.Obj;
 import ch.bailu.aat.services.cache.ObjImageAbstract;
 import ch.bailu.aat.services.cache.ObjSVGAsset;
 import ch.bailu.aat_lib.util.WithStatusText;

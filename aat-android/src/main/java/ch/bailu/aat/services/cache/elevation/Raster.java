@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 import ch.bailu.aat_lib.preferences.map.SolidTileSize;
 import ch.bailu.aat.services.cache.Span;
-import ch.bailu.aat.services.elevation.tile.DemGeoToIndex;
+import ch.bailu.aat_lib.service.elevation.tile.DemGeoToIndex;
 
 public final class Raster {
     public final int[] toLaRaster = new int[SolidTileSize.DEFAULT_TILESIZE];

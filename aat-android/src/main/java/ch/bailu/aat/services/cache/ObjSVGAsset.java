@@ -5,10 +5,11 @@ import com.caverock.androidsvg.SVG;
 import org.mapsforge.core.graphics.Bitmap;
 
 import ch.bailu.aat.services.ServiceContext;
-import ch.bailu.aat.services.background.BackgroundTask;
+import ch.bailu.aat_lib.service.background.BackgroundTask;
 import ch.bailu.aat.util.OldAppBroadcaster;
 import ch.bailu.aat.util.graphic.SyncTileBitmap;
 import ch.bailu.aat_lib.dispatcher.AppBroadcaster;
+import ch.bailu.aat_lib.service.cache.Obj;
 
 public final class ObjSVGAsset extends ObjImageAbstract {
 

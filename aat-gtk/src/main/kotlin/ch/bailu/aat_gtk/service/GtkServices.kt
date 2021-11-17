@@ -11,7 +11,7 @@ import ch.bailu.aat_lib.gpx.interfaces.GpxPointInterface
 import ch.bailu.aat_lib.preferences.StorageInterface
 import ch.bailu.aat_lib.service.IconMapServiceInterface
 import ch.bailu.aat_lib.service.ServicesInterface
-import ch.bailu.aat_lib.service.cache.ObjeImageInterface
+import ch.bailu.aat_lib.service.cache.ObjImageInterface
 import ch.bailu.aat_lib.service.elevation.ElevetionServiceInterface
 import ch.bailu.aat_lib.service.location.LocationService
 import ch.bailu.aat_lib.service.location.LocationServiceInterface
@@ -60,7 +60,7 @@ class GtkServices (storage: StorageInterface, broadcaster: Broadcaster) :
 
     override fun getIconMapService(): IconMapServiceInterface {
         return object : IconMapServiceInterface {
-            override fun getIconSVG(point: GpxPointInterface, icon_size: Int): ObjeImageInterface? {
+            override fun getIconSVG(point: GpxPointInterface, icon_size: Int): ObjImageInterface? {
                 return null
             }
 

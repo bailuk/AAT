@@ -3,7 +3,7 @@ package ch.bailu.aat.views;
 import ch.bailu.aat.R;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.cache.ObjBitmap;
-import ch.bailu.aat.services.directory.SummaryConfig;
+import ch.bailu.aat.services.directory.AndroidSummaryConfig;
 import ch.bailu.aat.util.ui.ToolTip;
 import ch.bailu.aat_lib.dispatcher.OnContentUpdatedInterface;
 import ch.bailu.aat_lib.gpx.GpxInformation;
@@ -26,7 +26,7 @@ public class PreviewView extends ImageObjectView implements OnContentUpdatedInte
 
 
     public void setFilePath(Foc fileID) {
-        final Foc file = SummaryConfig
+        final Foc file = AndroidSummaryConfig
                 .getReadablePreviewFile(getContext(), fileID);
         setPreviewPath(file);
     }

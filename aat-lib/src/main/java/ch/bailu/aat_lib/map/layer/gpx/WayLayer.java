@@ -7,7 +7,7 @@ import ch.bailu.aat_lib.map.TwoNodes;
 import ch.bailu.aat_lib.preferences.StorageInterface;
 import ch.bailu.aat_lib.service.InsideContext;
 import ch.bailu.aat_lib.service.ServicesInterface;
-import ch.bailu.aat_lib.service.cache.ObjeImageInterface;
+import ch.bailu.aat_lib.service.cache.ObjImageInterface;
 
 public final class WayLayer extends GpxLayer {
 
@@ -65,7 +65,7 @@ public final class WayLayer extends GpxLayer {
                 new InsideContext(services) {
                     @Override
                     public void run() {
-                        ObjeImageInterface i = services.getIconMapService().getIconSVG(node.point,
+                        ObjImageInterface i = services.getIconMapService().getIconSVG(node.point,
                                 icon_size);
 
                         if (i != null)

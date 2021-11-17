@@ -1,5 +1,7 @@
 package ch.bailu.aat.services.elevation.tile;
 
+import ch.bailu.aat_lib.service.elevation.tile.DemProvider;
+
 public abstract class MultiCell {
 
     public abstract void set(final int e);

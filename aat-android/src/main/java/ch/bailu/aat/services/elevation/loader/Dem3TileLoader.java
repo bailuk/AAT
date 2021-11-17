@@ -6,11 +6,11 @@ import android.content.Intent;
 
 import java.io.Closeable;
 
-import ch.bailu.aat.preferences.map.SolidDem3Directory;
+import ch.bailu.aat_lib.preferences.map.SolidDem3Directory;
 import ch.bailu.aat.preferences.map.SolidDem3EnableDownload;
 import ch.bailu.aat.services.ServiceContext;
-import ch.bailu.aat.services.background.DownloadTask;
-import ch.bailu.aat.services.elevation.tile.Dem3Tile;
+import ch.bailu.aat_lib.service.background.DownloadTask;
+import ch.bailu.aat_lib.service.elevation.tile.Dem3Tile;
 import ch.bailu.aat.util.AppIntent;
 import ch.bailu.aat.util.OldAppBroadcaster;
 import ch.bailu.aat.util.Timer;
@@ -123,7 +123,7 @@ public final class Dem3TileLoader implements Closeable {
     private void downloadNow(Dem3Coordinates c) {
         Foc file = new SolidDem3Directory(scontext.getContext()).toFile(c);
         if (!file.exists()) {
-            DownloadTask handle = new DownloadTask(scontext.getContext(), c.toURL(), file);
+            DownloadTask handle = new DownloadTask(c.toURL(), file);
             scontext.getBackgroundService().process(handle);
         }
     }

@@ -11,7 +11,7 @@ import java.io.Closeable;
 
 import ch.bailu.aat.services.background.BackgroundService;
 import ch.bailu.aat.services.cache.CacheService;
-import ch.bailu.aat.services.directory.DirectoryService;
+import ch.bailu.aat_lib.service.directory.DirectoryService;
 import ch.bailu.aat.services.elevation.ElevationService;
 import ch.bailu.aat.services.render.RenderService;
 import ch.bailu.aat.services.tileremover.TileRemoverService;

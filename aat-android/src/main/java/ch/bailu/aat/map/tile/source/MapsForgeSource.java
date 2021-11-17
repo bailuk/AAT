@@ -7,7 +7,7 @@ import org.mapsforge.map.rendertheme.InternalRenderTheme;
 
 import ch.bailu.aat.preferences.map.SolidRenderTheme;
 import ch.bailu.aat.services.cache.ObjTileMapsForge;
-import ch.bailu.aat.services.cache.Obj;
+import ch.bailu.aat_lib.service.cache.Obj;
 
 public class MapsForgeSource extends Source {
     public final static Source MAPSFORGE = new MapsForgeSource(InternalRenderTheme.DEFAULT.name());

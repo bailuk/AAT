@@ -39,9 +39,10 @@ import ch.bailu.aat_lib.gpx.GpxInformation;
 import ch.bailu.aat_lib.gpx.InfoID;
 import ch.bailu.aat_lib.logger.AppLog;
 import ch.bailu.aat_lib.map.layer.gpx.GpxDynLayer;
+import ch.bailu.aat_lib.service.directory.MapPreviewInterface;
 import ch.bailu.foc.Foc;
 
-public class MapsForgePreview extends MapsForgeViewBase {
+public class MapsForgePreview extends MapsForgeViewBase implements MapPreviewInterface {
     private static final int BITMAP_SIZE=128;
     private static final Dimension DIM = new Dimension(BITMAP_SIZE, BITMAP_SIZE);
     private static final Source MAPNIK = new CacheOnlySource(DownloadSource.MAPNIK);

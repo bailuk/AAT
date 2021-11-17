@@ -2,18 +2,17 @@ package ch.bailu.aat.services.cache;
 
 import android.util.SparseArray;
 
-import ch.bailu.aat_lib.coordinates.Dem3Coordinates;
-import ch.bailu.aat_lib.gpx.GpxListWalker;
-import ch.bailu.aat.preferences.Storage;
-import ch.bailu.aat_lib.service.InsideContext;
 import ch.bailu.aat.services.ServiceContext;
-import ch.bailu.aat.services.background.FileTask;
-import ch.bailu.aat.services.elevation.tile.Dem3Status;
-import ch.bailu.aat.services.elevation.tile.Dem3Tile;
+import ch.bailu.aat_lib.service.background.FileTask;
+import ch.bailu.aat_lib.service.elevation.Dem3Status;
+import ch.bailu.aat_lib.service.elevation.tile.Dem3Tile;
 import ch.bailu.aat.services.elevation.updater.ElevationUpdaterClient;
 import ch.bailu.aat.util.OldAppBroadcaster;
+import ch.bailu.aat_lib.app.AppContext;
+import ch.bailu.aat_lib.coordinates.Dem3Coordinates;
 import ch.bailu.aat_lib.dispatcher.AppBroadcaster;
 import ch.bailu.aat_lib.gpx.GpxList;
+import ch.bailu.aat_lib.gpx.GpxListWalker;
 import ch.bailu.aat_lib.gpx.GpxPoint;
 import ch.bailu.aat_lib.gpx.GpxPointLinkedNode;
 import ch.bailu.aat_lib.gpx.GpxPointNode;
@@ -23,10 +22,12 @@ import ch.bailu.aat_lib.gpx.linked_list.Node;
 import ch.bailu.aat_lib.preferences.SolidAutopause;
 import ch.bailu.aat_lib.preferences.general.SolidPostprocessedAutopause;
 import ch.bailu.aat_lib.preferences.presets.SolidPreset;
+import ch.bailu.aat_lib.service.InsideContext;
+import ch.bailu.aat_lib.service.cache.Obj;
+import ch.bailu.aat_lib.service.cache.ObjGpx;
 import ch.bailu.aat_lib.service.elevation.ElevationProvider;
 import ch.bailu.aat_lib.xml.parser.gpx.GpxListReader;
 import ch.bailu.foc.Foc;
-import ch.bailu.foc_android.FocAndroid;
 
 public final class ObjGpxStatic extends ObjGpx implements ElevationUpdaterClient {
 
@@ -38,26 +39,26 @@ public final class ObjGpxStatic extends ObjGpx implements ElevationUpdaterClient
     private final Foc file;
 
 
-    public ObjGpxStatic(String id, ServiceContext sc) {
+    public ObjGpxStatic(String id, AppContext appContext) {
         super(id);
-        sc.getCacheService().addToBroadcaster(this);
+        appContext.getServices().getCacheService().addToBroadcaster(this);
 
-        file = FocAndroid.factory(sc.getContext(), id);
+        file = appContext.getFocFactory().toFoc(id);
     }
 
 
     @Override
-    public void onInsert(ServiceContext sc) {
-        reload(sc);
+    public void onInsert(AppContext appContext) {
+        reload(appContext);
     }
 
 
     @Override
-    public void onRemove(final ServiceContext sc) {
-        new InsideContext(sc) {
+    public void onRemove(final AppContext appContext) {
+        new InsideContext(appContext) {
             @Override
             public void run() {
-                sc.getElevationService().cancelElevationUpdates(ObjGpxStatic.this);
+                appContext.getServices().getElevationService().cancelElevationUpdates(ObjGpxStatic.this);
             }
         };
     }
@@ -68,8 +69,8 @@ public final class ObjGpxStatic extends ObjGpx implements ElevationUpdaterClient
         return file;
     }
 
-    private void reload(final ServiceContext sc) {
-        sc.getBackgroundService().process(new FileLoader(file));
+    private void reload(final AppContext appContext) {
+        appContext.getServices().getBackgroundService().process(new FileLoader(file));
     }
 
 
@@ -102,22 +103,22 @@ public final class ObjGpxStatic extends ObjGpx implements ElevationUpdaterClient
     public static class Factory extends Obj.Factory {
 
         @Override
-        public Obj factory(String id, ServiceContext sc) {
-            return new ObjGpxStatic(id, sc);
+        public Obj factory(String id, AppContext appContext) {
+            return new ObjGpxStatic(id, appContext);
         }
     }
 
 
 
     @Override
-    public void onDownloaded(String id, String url,  ServiceContext sc) {
+    public void onDownloaded(String id, String url,  AppContext appContext) {
         if (id.equals(getID())) {
-            reload(sc);
+            reload(appContext);
         }
     }
 
     @Override
-    public void onChanged(String id, ServiceContext sc) {}
+    public void onChanged(String id, AppContext appContext) {}
 
 
     public Dem3Coordinates[] getSrtmTileCoordinates() {
@@ -135,10 +136,10 @@ public final class ObjGpxStatic extends ObjGpx implements ElevationUpdaterClient
 
 
     @Override
-    public void updateFromSrtmTile(ServiceContext sc, Dem3Tile srtm) {
+    public void updateFromSrtmTile(ServiceContext appContext, Dem3Tile srtm) {
         new ListUpdater(srtm).walkTrack(gpxList);
 
-        OldAppBroadcaster.broadcast(sc.getContext(), AppBroadcaster.FILE_CHANGED_INCACHE, toString());
+        OldAppBroadcaster.broadcast(appContext.getContext(), AppBroadcaster.FILE_CHANGED_INCACHE, toString());
 
     }
 
@@ -214,21 +215,20 @@ public final class ObjGpxStatic extends ObjGpx implements ElevationUpdaterClient
         }
 
         @Override
-        public long bgOnProcess(final ServiceContext sc) {
+        public long bgOnProcess(final AppContext appContext) {
             final long[] size = {0};
 
-            new OnObject(sc, getID(), ObjGpxStatic.class) {
+            new OnObject(appContext, getID(), ObjGpxStatic.class) {
                 @Override
                 public void run(Obj handle) {
                     ObjGpxStatic owner = (ObjGpxStatic) handle;
 
-                    size[0] = load(sc, owner);
+                    size[0] = load(appContext, owner);
 
-                    sc.getElevationService().requestElevationUpdates(owner,
+                    appContext.getServices().getElevationService().requestElevationUpdates(owner,
                             owner.getSrtmTileCoordinates());
 
-                    OldAppBroadcaster.broadcast(sc.getContext(),
-                            AppBroadcaster.FILE_CHANGED_INCACHE, getID());
+                    appContext.getBroadcaster().broadcast(AppBroadcaster.FILE_CHANGED_INCACHE, getID());
 
                 }
             };
@@ -237,13 +237,13 @@ public final class ObjGpxStatic extends ObjGpx implements ElevationUpdaterClient
         }
 
 
-        private long load(ServiceContext sc, ObjGpxStatic handle) {
+        private long load(AppContext appContext, ObjGpxStatic handle) {
             long size = 0;
 
             GpxListReader reader = new GpxListReader(
                     getThreadControl(),
                     getFile(),
-                    getAutoPause(sc, SolidPreset.getPresetFromFile(getFile())));
+                    getAutoPause(appContext, SolidPreset.getPresetFromFile(getFile())));
 
             handle.setException(reader.getException());
 
@@ -257,8 +257,8 @@ public final class ObjGpxStatic extends ObjGpx implements ElevationUpdaterClient
         }
 
 
-        private AutoPause getAutoPause(ServiceContext sc, int preset) {
-            SolidAutopause spause = new SolidPostprocessedAutopause(new Storage(sc.getContext()), preset);
+        private AutoPause getAutoPause(AppContext appContext, int preset) {
+            SolidAutopause spause = new SolidPostprocessedAutopause(appContext.getStorage(), preset);
             return new AutoPause.Time(
                     spause.getTriggerSpeed(),
                     spause.getTriggerLevelMillis());

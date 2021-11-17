@@ -1,32 +1,26 @@
 package ch.bailu.aat.dispatcher;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
 
-import ch.bailu.aat.factory.AndroidFocFactory;
-import ch.bailu.aat_lib.gpx.GpxFileWrapper;
-import ch.bailu.aat.preferences.SolidDirectoryQuery;
-import ch.bailu.aat.preferences.Storage;
-import ch.bailu.aat_lib.service.InsideContext;
-import ch.bailu.aat.services.ServiceContext;
-import ch.bailu.aat.services.cache.Obj;
-import ch.bailu.aat.services.cache.ObjGpx;
+import ch.bailu.aat_lib.service.cache.ObjGpx;
 import ch.bailu.aat.services.cache.ObjGpxStatic;
-import ch.bailu.aat.services.cache.ObjNull;
-import ch.bailu.aat.services.directory.Iterator;
-import ch.bailu.aat.services.directory.Iterator.OnCursorChangedListener;
-import ch.bailu.aat.services.directory.IteratorFollowFile;
-import ch.bailu.aat.services.directory.IteratorSummary;
-import ch.bailu.aat.util.AppIntent;
-import ch.bailu.aat.util.OldAppBroadcaster;
+import ch.bailu.aat_lib.service.directory.Iterator;
+import ch.bailu.aat_lib.service.directory.Iterator.OnCursorChangedListener;
+import ch.bailu.aat_lib.service.directory.IteratorFollowFile;
+import ch.bailu.aat_lib.service.directory.IteratorSummary;
+import ch.bailu.aat_lib.app.AppContext;
 import ch.bailu.aat_lib.dispatcher.AppBroadcaster;
+import ch.bailu.aat_lib.dispatcher.BroadcastReceiver;
 import ch.bailu.aat_lib.dispatcher.ContentSource;
+import ch.bailu.aat_lib.gpx.GpxFileWrapper;
 import ch.bailu.aat_lib.gpx.GpxInformation;
+import ch.bailu.aat_lib.preferences.SolidDirectoryQuery;
+import ch.bailu.aat_lib.service.InsideContext;
+import ch.bailu.aat_lib.service.cache.Obj;
+import ch.bailu.aat_lib.service.cache.ObjNull;
 
 public abstract class IteratorSource extends ContentSource implements OnCursorChangedListener {
 
-    private final ServiceContext scontext;
+    private final AppContext appContext;
     private final SolidDirectoryQuery sdirectory;
 
     private Iterator iterator = Iterator.NULL;
@@ -39,9 +33,9 @@ public abstract class IteratorSource extends ContentSource implements OnCursorCh
     }
 
 
-    public IteratorSource(ServiceContext sc) {
-        scontext = sc;
-        sdirectory = new SolidDirectoryQuery(new Storage(sc.getContext()), new AndroidFocFactory(sc.getContext()));
+    public IteratorSource(AppContext appContext) {
+        this.appContext = appContext;
+        sdirectory = new SolidDirectoryQuery(appContext.getStorage(), appContext.getFocFactory());
     }
 
 
@@ -70,13 +64,13 @@ public abstract class IteratorSource extends ContentSource implements OnCursorCh
 
     @Override
     public void onResume() {
-        iterator = factoryIterator(scontext);
+        iterator = factoryIterator(appContext);
         iterator.moveToPosition(sdirectory.getPosition().getValue());
         iterator.setOnCursorChangedLinsener(this);
     }
 
 
-    public abstract Iterator factoryIterator(ServiceContext scontext);
+    public abstract Iterator factoryIterator(AppContext appContext);
 
     @Override
     public GpxInformation getInfo() {
@@ -103,35 +97,30 @@ public abstract class IteratorSource extends ContentSource implements OnCursorCh
 
 
     public static class FollowFile extends IteratorSource {
-        private final Context context;
-        private final ServiceContext scontext;
+        private final AppContext appContext;
         private Obj handle = ObjNull.NULL;
 
-
-        public FollowFile(ServiceContext sc) {
-            super(sc);
-            context = sc.getContext();
-            scontext = sc;
+        public FollowFile(AppContext appContext) {
+            super(appContext);
+            this.appContext = appContext;
         }
 
         @Override
-        public Iterator factoryIterator(ServiceContext scontext) {
-            return new IteratorFollowFile(scontext);
+        public Iterator factoryIterator(AppContext appContext) {
+            return new IteratorFollowFile(appContext);
         }
 
 
-        private final BroadcastReceiver  onChangedInCache = new BroadcastReceiver () {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                if (AppIntent.hasFile(intent, getID())) {
-                    requestUpdate();
-                }
+        private final BroadcastReceiver onChangedInCache = objs -> {
+            if (getID().equals(objs[0])) {
+                requestUpdate();
             }
+
         };
 
         @Override
         public void onPause() {
-            context.unregisterReceiver(onChangedInCache);
+            appContext.getBroadcaster().unregister(onChangedInCache);
 
             handle.free();
             handle = ObjNull.NULL;
@@ -141,7 +130,7 @@ public abstract class IteratorSource extends ContentSource implements OnCursorCh
 
         @Override
         public void onResume() {
-            OldAppBroadcaster.register(context, onChangedInCache, AppBroadcaster.FILE_CHANGED_INCACHE);
+            appContext.getBroadcaster().register(onChangedInCache, AppBroadcaster.FILE_CHANGED_INCACHE);
             super.onResume();
         }
 
@@ -149,10 +138,10 @@ public abstract class IteratorSource extends ContentSource implements OnCursorCh
         public GpxInformation getInfo() {
             final GpxInformation[] info = {super.getInfo()};
 
-            new InsideContext(scontext) {
+            new InsideContext(appContext.getServices()) {
                 @Override
                 public void run() {
-                    Obj h = scontext.getCacheService().getObject(getID(),
+                    Obj h = appContext.getServices().getCacheService().getObject(getID(),
                             new ObjGpxStatic.Factory());
 
                     if (h instanceof ObjGpx) {
@@ -180,13 +169,13 @@ public abstract class IteratorSource extends ContentSource implements OnCursorCh
 
 
     public static class Summary extends IteratorSource {
-        public Summary(ServiceContext sc) {
-            super(sc);
+        public Summary(AppContext appContext) {
+            super(appContext);
         }
 
         @Override
-        public Iterator factoryIterator(ServiceContext scontext) {
-            return new IteratorSummary(scontext);
+        public Iterator factoryIterator(AppContext appContext) {
+            return new IteratorSummary(appContext);
         }
     }
 }

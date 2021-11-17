@@ -14,6 +14,8 @@ import ch.bailu.aat_lib.gpx.GpxPoint;
 import ch.bailu.aat_lib.gpx.GpxPointNode;
 import ch.bailu.aat_lib.gpx.interfaces.GpxType;
 import ch.bailu.aat_lib.logger.AppLog;
+import ch.bailu.aat_lib.service.cache.Obj;
+import ch.bailu.aat_lib.service.cache.ObjGpx;
 import ch.bailu.aat_lib.util.fs.AppDirectory;
 import ch.bailu.aat_lib.xml.writer.GpxListWriter;
 import ch.bailu.foc.Foc;

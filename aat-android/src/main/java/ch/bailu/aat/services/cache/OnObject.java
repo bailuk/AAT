@@ -1,28 +1,29 @@
 package ch.bailu.aat.services.cache;
 
+import ch.bailu.aat_lib.app.AppContext;
 import ch.bailu.aat_lib.service.InsideContext;
-import ch.bailu.aat.services.ServiceContext;
+import ch.bailu.aat_lib.service.cache.Obj;
 
 
 public abstract class OnObject {
-    public OnObject(final ServiceContext sc, final String id, final Class c) {
-        this (sc, id, c, null);
+    public OnObject(final AppContext appContext, final String id, final Class c) {
+        this (appContext, id, c, null);
     }
 
 
-    public OnObject(final ServiceContext sc, final String id, final Class c,
+    public OnObject(final AppContext appContext, final String id, final Class c,
                     final Obj.Factory factory) {
 
-        new InsideContext(sc) {
+        new InsideContext(appContext.getServices()) {
             @Override
             public void run() {
                 Obj handle;
 
                 if (factory == null)
-                    handle = sc.getCacheService().getObject(id);
+                    handle = appContext.getServices().getCacheService().getObject(id);
 
                 else
-                    handle = sc.getCacheService().getObject(id, factory);
+                    handle = appContext.getServices().getCacheService().getObject(id, factory);
 
                 try {
                     if (c.isInstance(handle))

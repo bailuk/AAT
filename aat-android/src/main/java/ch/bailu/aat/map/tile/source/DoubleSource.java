@@ -6,7 +6,7 @@ import org.mapsforge.core.model.Tile;
 
 import ch.bailu.aat_lib.service.InsideContext;
 import ch.bailu.aat.services.ServiceContext;
-import ch.bailu.aat.services.cache.Obj;
+import ch.bailu.aat_lib.service.cache.Obj;
 
 public class DoubleSource extends Source {
 

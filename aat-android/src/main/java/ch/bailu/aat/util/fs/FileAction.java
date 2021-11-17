@@ -10,7 +10,7 @@ import java.io.IOException;
 
 import ch.bailu.aat.R;
 import ch.bailu.aat.factory.AndroidFocFactory;
-import ch.bailu.aat.preferences.SolidDirectoryQuery;
+import ch.bailu.aat_lib.preferences.SolidDirectoryQuery;
 import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat_lib.preferences.location.SolidMockLocationFile;
 import ch.bailu.aat.services.ServiceContext;
@@ -21,6 +21,7 @@ import ch.bailu.aat.util.ui.AppSelectDirectoryDialog;
 import ch.bailu.aat.views.preferences.AddOverlayDialog;
 import ch.bailu.aat_lib.dispatcher.AppBroadcaster;
 import ch.bailu.aat_lib.logger.AppLog;
+import ch.bailu.aat_lib.util.fs.AFile;
 import ch.bailu.aat_lib.util.fs.AppDirectory;
 import ch.bailu.foc.Foc;
 

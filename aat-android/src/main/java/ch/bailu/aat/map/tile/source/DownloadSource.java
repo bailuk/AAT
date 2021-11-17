@@ -8,7 +8,7 @@ import java.util.Random;
 
 import ch.bailu.aat.map.tile.TileFlags;
 import ch.bailu.aat.preferences.map.AndroidSolidTileCacheDirectory;
-import ch.bailu.aat.services.cache.Obj;
+import ch.bailu.aat_lib.service.cache.Obj;
 import ch.bailu.aat.services.cache.ObjTileDownloadable;
 import ch.bailu.aat_lib.util.fs.AppDirectory;
 

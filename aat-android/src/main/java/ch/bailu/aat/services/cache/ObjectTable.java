@@ -5,8 +5,10 @@ import android.content.Intent;
 import java.util.HashMap;
 
 import ch.bailu.aat.services.ServiceContext;
-import ch.bailu.aat.services.cache.Obj.Factory;
+import ch.bailu.aat_lib.service.cache.Obj;
+import ch.bailu.aat_lib.service.cache.Obj.Factory;
 import ch.bailu.aat.util.AppIntent;
+import ch.bailu.aat_lib.service.cache.ObjNull;
 import ch.bailu.aat_lib.util.MemSize;
 
 

@@ -5,7 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 
-import ch.bailu.aat.util.net.URX;
+import ch.bailu.aat_lib.util.net.URX;
 import ch.bailu.foc.Foc;
 
 public class OldAppBroadcaster {

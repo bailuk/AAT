@@ -7,6 +7,7 @@ import org.mapsforge.core.model.Tile;
 
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.util.graphic.SyncTileBitmap;
+import ch.bailu.aat_lib.service.cache.Obj;
 
 public abstract class ObjTile extends Obj {
 

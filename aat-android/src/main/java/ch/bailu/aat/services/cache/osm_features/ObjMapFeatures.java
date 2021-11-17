@@ -8,8 +8,8 @@ import java.util.ArrayList;
 
 import ch.bailu.aat.preferences.map.SolidOsmFeaturesList;
 import ch.bailu.aat.services.ServiceContext;
-import ch.bailu.aat.services.background.BackgroundTask;
-import ch.bailu.aat.services.cache.Obj;
+import ch.bailu.aat_lib.service.background.BackgroundTask;
+import ch.bailu.aat_lib.service.cache.Obj;
 import ch.bailu.aat.services.cache.OnObject;
 import ch.bailu.aat.util.OldAppBroadcaster;
 import ch.bailu.aat.util.filter_list.AbsFilterList;

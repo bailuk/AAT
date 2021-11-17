@@ -15,10 +15,10 @@ import ch.bailu.aat.factory.AndroidFocFactory;
 import ch.bailu.aat.map.MapFactory;
 import ch.bailu.aat.map.To;
 import ch.bailu.aat.map.layer.control.FileControlBarLayer;
-import ch.bailu.aat.preferences.SolidDirectoryQuery;
+import ch.bailu.aat_lib.preferences.SolidDirectoryQuery;
 import ch.bailu.aat.preferences.Storage;
-import ch.bailu.aat.services.directory.Iterator;
-import ch.bailu.aat.services.directory.IteratorSimple;
+import ch.bailu.aat_lib.service.directory.Iterator;
+import ch.bailu.aat_lib.service.directory.IteratorSimple;
 import ch.bailu.aat.util.ui.AppLayout;
 import ch.bailu.aat.util.ui.AppTheme;
 import ch.bailu.aat.util.ui.UiTheme;
@@ -76,8 +76,8 @@ public abstract class AbsGpxListActivity extends ActivityContext implements OnIt
     }
 
     private void createDispatcher() {
-        addSource(new IteratorSource.Summary(getServiceContext()));
-        addSource(new OverlaySource(getServiceContext()));
+        addSource(new IteratorSource.Summary(getAppContext()));
+        addSource(new OverlaySource(getAppContext()));
         addSource(new CurrentLocationSource(getServiceContext(),getBroadcaster()));
 
         addTarget(busyControl, InfoID.OVERLAY, InfoID.OVERLAY+1,InfoID.OVERLAY+2,InfoID.OVERLAY+3);
@@ -88,7 +88,7 @@ public abstract class AbsGpxListActivity extends ActivityContext implements OnIt
     @Override
     public void onResumeWithService() {
 
-        iteratorSimple = new IteratorSimple(getServiceContext());
+        iteratorSimple = new IteratorSimple(getAppContext());
         listView.setIterator(this, iteratorSimple);
         fileControlBar.setIterator(iteratorSimple);
         listView.setSelection(sdirectory.getPosition().getValue());

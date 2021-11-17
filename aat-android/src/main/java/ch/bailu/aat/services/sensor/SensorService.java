@@ -45,33 +45,20 @@ public final class SensorService extends VirtualService implements WithStatusTex
     }
 
 
-    final BroadcastReceiver onBluetoothStateChanged = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Object ...args) {
-            Integer state = (Integer) args[0];
-            if (state == BluetoothAdapter.STATE_ON || state == BluetoothAdapter.STATE_OFF) {
-                updateConnections();
-            }
-        }
-
-
-    };
-
-
-    final BroadcastReceiver onSensorDisconnected = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Object ...args) {
+    final BroadcastReceiver onBluetoothStateChanged = args -> {
+        Integer state = (Integer) args[0];
+        if (state == BluetoothAdapter.STATE_ON || state == BluetoothAdapter.STATE_OFF) {
             updateConnections();
         }
     };
 
 
-    final BroadcastReceiver onSensorReconnect = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Object ...args) {
-            updateConnections();
-            scan();                        // rescan to get them in cache if they were not
-        }
+    final BroadcastReceiver onSensorDisconnected = args -> updateConnections();
+
+
+    final BroadcastReceiver onSensorReconnect = args -> {
+        updateConnections();
+        scan();                        // rescan to get them in cache if they were not
     };
 
 

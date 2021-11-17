@@ -11,7 +11,7 @@ import ch.bailu.aat_lib.gpx.interfaces.GpxPointInterface;
 import ch.bailu.aat_lib.preferences.StorageInterface;
 import ch.bailu.aat_lib.service.IconMapServiceInterface;
 import ch.bailu.aat_lib.service.ServicesInterface;
-import ch.bailu.aat_lib.service.cache.ObjeImageInterface;
+import ch.bailu.aat_lib.service.cache.ObjImageInterface;
 import ch.bailu.aat_lib.service.elevation.ElevetionServiceInterface;
 import ch.bailu.aat_lib.service.location.LocationService;
 import ch.bailu.aat_lib.service.location.LocationServiceInterface;
@@ -101,7 +101,7 @@ public class AwtServices implements ServicesInterface {
         return new IconMapServiceInterface() {
 
             @Override
-            public ObjeImageInterface getIconSVG(GpxPointInterface point, int icon_size) {
+            public ObjImageInterface getIconSVG(GpxPointInterface point, int icon_size) {
                 return null;
             }
 

@@ -5,7 +5,7 @@ import android.content.Context;
 import org.mapsforge.core.model.Tile;
 
 import ch.bailu.aat.preferences.map.AndroidSolidTileCacheDirectory;
-import ch.bailu.aat.services.cache.Obj;
+import ch.bailu.aat_lib.service.cache.Obj;
 import ch.bailu.aat.services.cache.ObjTileCacheOnly;
 import ch.bailu.aat_lib.util.fs.AppDirectory;
 

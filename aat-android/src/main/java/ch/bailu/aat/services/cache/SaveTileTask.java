@@ -5,10 +5,11 @@ import android.graphics.Bitmap;
 import java.io.OutputStream;
 
 import ch.bailu.aat.services.ServiceContext;
-import ch.bailu.aat.services.background.FileTask;
+import ch.bailu.aat_lib.service.background.FileTask;
 import ch.bailu.aat.util.OldAppBroadcaster;
 import ch.bailu.aat_lib.dispatcher.AppBroadcaster;
 import ch.bailu.aat_lib.logger.AppLog;
+import ch.bailu.aat_lib.service.cache.Obj;
 import ch.bailu.foc.Foc;
 
 public final class SaveTileTask extends FileTask {

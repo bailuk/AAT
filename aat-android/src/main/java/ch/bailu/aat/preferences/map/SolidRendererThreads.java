@@ -1,12 +1,11 @@
 package ch.bailu.aat.preferences.map;
 
-import android.content.Context;
 import android.os.Build;
 
 import org.mapsforge.core.util.Parameters;
 
-import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat_lib.preferences.SolidIndexList;
+import ch.bailu.aat_lib.preferences.StorageInterface;
 import ch.bailu.aat_lib.resources.Res;
 
 public class SolidRendererThreads extends SolidIndexList {
@@ -18,8 +17,8 @@ public class SolidRendererThreads extends SolidIndexList {
      * This does not has to be user configurable.
      * Use numberOfBackgroundThreads() instead.
      */
-    private SolidRendererThreads(Context c) {
-        super(new Storage(c), KEY);
+    private SolidRendererThreads(StorageInterface storageInterface) {
+        super(storageInterface, KEY);
         if (values[0] == 0) values[0] = numberOfBackgroundThreats();
     }
 
@@ -58,12 +57,6 @@ public class SolidRendererThreads extends SolidIndexList {
     public int getValue() {
         return values[getIndex()];
     }
-
-    /*
-    public void set() {
-        Parameters.NUMBER_OF_THREADS = getValue();
-    }
-    */
 
     public static void set() {
         Parameters.NUMBER_OF_THREADS = numberOfBackgroundThreats();

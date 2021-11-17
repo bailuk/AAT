@@ -4,7 +4,7 @@ import android.content.Context;
 
 import org.mapsforge.core.model.Tile;
 
-import ch.bailu.aat.services.cache.Obj;
+import ch.bailu.aat_lib.service.cache.Obj;
 import ch.bailu.aat.services.cache.elevation.ObjTileElevationColor;
 import ch.bailu.aat.services.cache.elevation.ObjTileHillshade;
 

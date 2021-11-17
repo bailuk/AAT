@@ -5,7 +5,7 @@ import android.content.Context;
 import org.mapsforge.core.model.Tile;
 
 import ch.bailu.aat.services.cache.ObjTileCached;
-import ch.bailu.aat.services.cache.Obj;
+import ch.bailu.aat_lib.service.cache.Obj;
 
 public class CachedSource extends Source {
     private final Source source;

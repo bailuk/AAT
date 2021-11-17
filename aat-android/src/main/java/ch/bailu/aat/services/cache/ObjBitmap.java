@@ -3,10 +3,11 @@ package ch.bailu.aat.services.cache;
 import org.mapsforge.core.graphics.Bitmap;
 
 import ch.bailu.aat.services.ServiceContext;
-import ch.bailu.aat.services.background.FileTask;
+import ch.bailu.aat_lib.service.background.FileTask;
 import ch.bailu.aat.util.OldAppBroadcaster;
 import ch.bailu.aat.util.graphic.SyncBitmap;
 import ch.bailu.aat_lib.dispatcher.AppBroadcaster;
+import ch.bailu.aat_lib.service.cache.Obj;
 import ch.bailu.foc.Foc;
 import ch.bailu.foc_android.FocAndroid;
 

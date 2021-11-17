@@ -9,7 +9,7 @@ import ch.bailu.aat_lib.dispatcher.DispatcherInterface;
 import ch.bailu.aat.factory.AndroidFocFactory;
 import ch.bailu.aat_lib.map.MapContext;
 import ch.bailu.aat.map.To;
-import ch.bailu.aat.preferences.SolidDirectoryQuery;
+import ch.bailu.aat_lib.preferences.SolidDirectoryQuery;
 import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat.util.ui.AppTheme;
 import ch.bailu.aat.util.ui.UiTheme;

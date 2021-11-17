@@ -10,13 +10,14 @@ import org.mapsforge.core.model.Tile;
 import ch.bailu.aat_lib.preferences.map.SolidTileSize;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.cache.ObjTile;
-import ch.bailu.aat.services.elevation.tile.Dem3Tile;
-import ch.bailu.aat.services.elevation.tile.DemDimension;
-import ch.bailu.aat.services.elevation.tile.DemGeoToIndex;
-import ch.bailu.aat.services.elevation.tile.DemProvider;
+import ch.bailu.aat_lib.service.elevation.tile.Dem3Tile;
+import ch.bailu.aat_lib.service.elevation.tile.DemDimension;
+import ch.bailu.aat_lib.service.elevation.tile.DemGeoToIndex;
+import ch.bailu.aat_lib.service.elevation.tile.DemProvider;
 import ch.bailu.aat.services.elevation.tile.DemSplitter;
 import ch.bailu.aat.services.elevation.updater.ElevationUpdaterClient;
 import ch.bailu.aat.util.graphic.SyncTileBitmap;
+import ch.bailu.aat_lib.service.ServicesInterface;
 
 public abstract class ObjTileElevation extends ObjTile implements ElevationUpdaterClient {
 
@@ -134,7 +135,7 @@ public abstract class ObjTileElevation extends ObjTile implements ElevationUpdat
 
 
     @Override
-    public void updateFromSrtmTile(ServiceContext sc, Dem3Tile tile) {
+    public void updateFromSrtmTile(ServicesInterface sc, Dem3Tile tile) {
         sc.getBackgroundService().process(new SubTilePainter(sc, getID(), tile));
     }
 

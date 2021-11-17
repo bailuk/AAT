@@ -3,39 +3,42 @@ package ch.bailu.aat.services.background;
 import java.net.URL;
 import java.util.HashMap;
 
-import ch.bailu.aat.preferences.map.SolidRendererThreads;
-import ch.bailu.aat.services.ServiceContext;
+import ch.bailu.aat_lib.dispatcher.Broadcaster;
+import ch.bailu.aat_lib.service.ServicesInterface;
 import ch.bailu.aat_lib.service.VirtualService;
+import ch.bailu.aat_lib.service.background.BackgroundServiceInterface;
+import ch.bailu.aat_lib.service.background.BackgroundTask;
+import ch.bailu.aat_lib.service.background.DownloadTask;
+import ch.bailu.aat_lib.service.background.FileTask;
+import ch.bailu.aat_lib.service.background.Tasks;
 import ch.bailu.aat_lib.util.WithStatusText;
 import ch.bailu.foc.Foc;
 
-public final class BackgroundService extends VirtualService implements WithStatusText {
+public final class BackgroundService extends VirtualService implements BackgroundServiceInterface, WithStatusText {
 
     final static int FILE_LOADER_BASE_DIRECTORY_DEPTH = 4;
 
-    private final Tasks tasks = new Tasks();
+    private final Tasks tasks;
 
     private final HashMap<String, DownloaderThread> downloaders = new HashMap<>(5);
     private final HashMap<String, LoaderThread> loaders = new HashMap<>(5);
 
 
     private final HandleStack queue;
+    private final WorkerThread[] workers;
+    private final ServicesInterface scontext;
 
 
-    private final WorkerThread[] workers =
-            new WorkerThread[SolidRendererThreads.numberOfBackgroundThreats()];
-
-
-    private final ServiceContext scontext;
-
-    public BackgroundService(final ServiceContext sc) {
+    public BackgroundService(final ServicesInterface sc, Broadcaster broadcaster, int threads) {
         scontext = sc;
-        queue = new HandleStack(sc.getContext());
-        for (int i=0; i< workers.length; i++)
+        tasks = new Tasks(broadcaster);
+        queue = new HandleStack();
+        workers = new WorkerThread[threads];
+        for (int i=0; i< workers.length; i++) {
             workers[i] = new WorkerThread("WT_" + i, sc, queue);
-
-
+        }
     }
+
 
     public void process(BackgroundTask handle) {
         if (handle instanceof DownloadTask) {
