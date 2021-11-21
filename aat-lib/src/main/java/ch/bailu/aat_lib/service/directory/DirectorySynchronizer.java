@@ -4,22 +4,20 @@ import java.io.Closeable;
 import java.io.File;
 import java.util.ArrayList;
 
+import ch.bailu.aat_lib.app.AppContext;
 import ch.bailu.aat_lib.coordinates.BoundingBoxE6;
 import ch.bailu.aat_lib.dispatcher.AppBroadcaster;
 import ch.bailu.aat_lib.dispatcher.BroadcastReceiver;
-import ch.bailu.aat_lib.dispatcher.Broadcaster;
-import ch.bailu.aat_lib.factory.FocFactory;
 import ch.bailu.aat_lib.gpx.GpxFileWrapper;
 import ch.bailu.aat_lib.gpx.GpxInformation;
 import ch.bailu.aat_lib.gpx.GpxList;
 import ch.bailu.aat_lib.gpx.attributes.MaxSpeed;
 import ch.bailu.aat_lib.gpx.interfaces.GpxBigDeltaInterface;
 import ch.bailu.aat_lib.logger.AppLog;
-import ch.bailu.aat_lib.service.ServicesInterface;
 import ch.bailu.aat_lib.service.background.BackgroundTask;
 import ch.bailu.aat_lib.service.cache.Obj;
 import ch.bailu.aat_lib.service.cache.ObjGpx;
-import ch.bailu.aat_lib.util.sql.DbFactory;
+import ch.bailu.aat_lib.service.cache.ObjGpxStatic;
 import ch.bailu.aat_lib.util.sql.ResultSet;
 import ch.bailu.foc.Foc;
 
@@ -37,28 +35,16 @@ public final class DirectorySynchronizer  implements Closeable {
     private long dbAccessTime;
 
     private final Foc directory;
-    private final ServicesInterface scontext;
+    private final AppContext appContext;
 
     private boolean canContinue=true;
     private State state;
 
-    private final Broadcaster broadcaster;
-    private final FocFactory focFactory;
-    private final SummaryConfig summaryConfig;
-    private final DbFactory dbFactory;
-    private final MapPreviewFactory mapPreviewFactory;
-
-
-    public DirectorySynchronizer(ServicesInterface cs, Broadcaster broadcaster, FocFactory focFactory, SummaryConfig summaryConfig, DbFactory dbFactory, MapPreviewFactory mapPreviewFactory, Foc d) {
-        scontext=cs;
+    public DirectorySynchronizer(AppContext appContext, Foc d) {
+        this.appContext = appContext;
         directory=d;
-        this.mapPreviewFactory = mapPreviewFactory;
-        this.dbFactory = dbFactory;
-        this.broadcaster = broadcaster;
-        this.focFactory = focFactory;
-        this.summaryConfig = summaryConfig;
 
-        if (scontext.lock()) {
+        if (appContext.getServices().lock()) {
             setState(new StateInit());
         }
     }
@@ -111,7 +97,7 @@ public final class DirectorySynchronizer  implements Closeable {
          */
         @Override
         public void start() {
-            broadcaster.register(onFileChanged, AppBroadcaster.FILE_CHANGED_INCACHE);
+            appContext.getBroadcaster().register(onFileChanged, AppBroadcaster.FILE_CHANGED_INCACHE);
             try {
                 database = openDatabase();
                 setState(new StatePrepareSync());
@@ -121,11 +107,11 @@ public final class DirectorySynchronizer  implements Closeable {
         }
 
         private GpxDatabase openDatabase() {
-            final String dbPath = summaryConfig.getDBPath(directory);
+            final String dbPath = appContext.getSummaryConfig().getDBPath(directory);
             final String[] query = {GpxDbConstants.KEY_FILENAME};
 
             dbAccessTime = new File(dbPath).lastModified();
-            return new GpxDatabase(dbFactory.createDataBase(), dbPath, query);
+            return new GpxDatabase(appContext.createDataBase(), dbPath, query);
         }
 
         @Override
@@ -140,7 +126,7 @@ public final class DirectorySynchronizer  implements Closeable {
         private BackgroundTask backgroundTask = new BackgroundTask() {
 
             @Override
-            public long bgOnProcess(ServicesInterface sc) {
+            public long bgOnProcess(AppContext sc) {
                 try {
                     filesToAdd = new FilesInDirectory(directory);
                     compareFileSystemWithDatabase();
@@ -152,7 +138,7 @@ public final class DirectorySynchronizer  implements Closeable {
                 } finally {
                     backgroundTask = null;
 
-                    broadcaster.broadcast(AppBroadcaster.FILE_CHANGED_INCACHE, directory);
+                    sc.getBroadcaster().broadcast(AppBroadcaster.FILE_CHANGED_INCACHE, directory);
                 }
 
                 return 100;
@@ -163,9 +149,8 @@ public final class DirectorySynchronizer  implements Closeable {
 
         @Override
         public void start() {
-            broadcaster.broadcast(AppBroadcaster.DBSYNC_START);
-
-            scontext.getBackgroundService().process(backgroundTask);
+            appContext.getBroadcaster().broadcast(AppBroadcaster.DBSYNC_START);
+            appContext.getServices().getBackgroundService().process(backgroundTask);
         }
 
 
@@ -188,7 +173,7 @@ public final class DirectorySynchronizer  implements Closeable {
 
                     removeFileFromDatabase(filesToRemove.get(i));
                 }
-                broadcaster.broadcast(AppBroadcaster.DB_SYNC_CHANGED);
+                appContext.getBroadcaster().broadcast(AppBroadcaster.DB_SYNC_CHANGED);
             }
         }
 
@@ -196,7 +181,7 @@ public final class DirectorySynchronizer  implements Closeable {
         private void removeFileFromDatabase(String name) {
             final Foc file = directory.child(name);
 
-            summaryConfig.getPreviewFile(file).rm();
+            appContext.getSummaryConfig().getPreviewFile(file).rm();
             database.deleteEntry(file);
         }
 
@@ -256,7 +241,7 @@ public final class DirectorySynchronizer  implements Closeable {
 
 
             } else {
-                Obj h = scontext.getCacheService().getObject(
+                Obj h = appContext.getServices().getCacheService().getObject(
                         file.getPath(), new ObjGpxStatic.Factory());
                 if (h instanceof ObjGpx) {
 
@@ -292,7 +277,7 @@ public final class DirectorySynchronizer  implements Closeable {
 
 
         private void addGpxSummaryToDatabase(String id, GpxList list) {
-            final Foc file = focFactory.toFoc(id);
+            final Foc file = appContext.toFoc(id);
 
             ArrayList<String> keys = new ArrayList<>();
             ArrayList<String> values = new ArrayList<>();
@@ -342,16 +327,16 @@ public final class DirectorySynchronizer  implements Closeable {
 
         public void start() {
 
-            Foc gpxFile = focFactory.toFoc(pendingHandle.getID());
+            Foc gpxFile = appContext.toFoc(pendingHandle.getID());
 
-            Foc previewImageFile = summaryConfig.getPreviewFile(gpxFile);
+            Foc previewImageFile = appContext.getSummaryConfig().getPreviewFile(gpxFile);
 
             GpxInformation info =
                     new GpxFileWrapper(gpxFile, pendingHandle.getGpxList());
 
 
             try {
-                MapPreviewInterface p = mapPreviewFactory.createMapPreview(info, previewImageFile);
+                MapPreviewInterface p = appContext.createMapPreview(info, previewImageFile);
 
                 setPendingPreviewGenerator(p);
                 state.ping();
@@ -359,7 +344,7 @@ public final class DirectorySynchronizer  implements Closeable {
             } catch (Exception e) {
                 AppLog.w(this, e);
 
-                broadcaster.broadcast(AppBroadcaster.DB_SYNC_CHANGED);
+                appContext.getBroadcaster().broadcast(AppBroadcaster.DB_SYNC_CHANGED);
                 setState(new StateLoadNextGpx());
             }
 
@@ -375,7 +360,7 @@ public final class DirectorySynchronizer  implements Closeable {
 
                 pendingPreviewGenerator.generateBitmapFile();
 
-                broadcaster.broadcast(AppBroadcaster.DB_SYNC_CHANGED);
+                appContext.getBroadcaster().broadcast(AppBroadcaster.DB_SYNC_CHANGED);
                 setState(new StateLoadNextGpx());
             }
         }
@@ -406,7 +391,7 @@ public final class DirectorySynchronizer  implements Closeable {
 
         @Override
         public void start() {
-            broadcaster.unregister(onFileChanged);
+            appContext.getBroadcaster().unregister(onFileChanged);
 
             if (database != null) {
                 database.close();
@@ -415,10 +400,10 @@ public final class DirectorySynchronizer  implements Closeable {
             setPendingGpxHandle(null);
             setPendingPreviewGenerator(null);
 
-            broadcaster.broadcast(AppBroadcaster.DBSYNC_DONE);
+            appContext.getBroadcaster().broadcast(AppBroadcaster.DBSYNC_DONE);
 
 
-            scontext.free();
+            appContext.getServices().free();
         }
     }
 

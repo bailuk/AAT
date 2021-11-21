@@ -7,15 +7,14 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import ch.bailu.aat.preferences.map.SolidOsmFeaturesList;
-import ch.bailu.aat.services.ServiceContext;
-import ch.bailu.aat_lib.service.background.BackgroundTask;
-import ch.bailu.aat_lib.service.cache.Obj;
-import ch.bailu.aat.services.cache.OnObject;
-import ch.bailu.aat.util.OldAppBroadcaster;
 import ch.bailu.aat.util.filter_list.AbsFilterList;
 import ch.bailu.aat.util.filter_list.KeyList;
 import ch.bailu.aat.util.filter_list.ListEntry;
+import ch.bailu.aat_lib.app.AppContext;
 import ch.bailu.aat_lib.dispatcher.AppBroadcaster;
+import ch.bailu.aat_lib.service.background.BackgroundTask;
+import ch.bailu.aat_lib.service.cache.Obj;
+import ch.bailu.aat_lib.service.cache.OnObject;
 
 public final class ObjMapFeatures extends Obj {
 
@@ -52,17 +51,17 @@ public final class ObjMapFeatures extends Obj {
 
 
     @Override
-    public void onInsert(ServiceContext sc) {
+    public void onInsert(AppContext sc) {
         super.onInsert(sc);
 
-        sc.getBackgroundService().process(new ListLoader(getID()));
+        sc.getServices().getBackgroundService().process(new ListLoader(getID()));
     }
 
     @Override
-    public void onDownloaded(String id, String url, ServiceContext sc) {}
+    public void onDownloaded(String id, String url, AppContext sc) {}
 
     @Override
-    public void onChanged(String id, ServiceContext sc) {}
+    public void onChanged(String id, AppContext sc) {}
 
     @Override
     public long getSize() {
@@ -84,7 +83,7 @@ public final class ObjMapFeatures extends Obj {
     public static class ListLoader extends BackgroundTask implements MapFeaturesParser.OnHaveFeature {
         private final String ID;
 
-        private ServiceContext scontext;
+        private AppContext appContext;
 
         private ObjMapFeatures owner = null;
         public ListLoader(String id) {
@@ -96,22 +95,22 @@ public final class ObjMapFeatures extends Obj {
         private int doBroadcast = 0;
 
         @Override
-        public long bgOnProcess(final ServiceContext sc) {
+        public long bgOnProcess(final AppContext appContext) {
             final long[] size = {0};
-            new OnObject(sc, ID, ObjMapFeatures.class) {
+            new OnObject(appContext, ID, ObjMapFeatures.class) {
                 @Override
                 public void run(Obj handle) {
                     owner = (ObjMapFeatures) handle;
-                    scontext = sc;
-                    bgOnProcess(sc.getContext());
+                    ListLoader.this.appContext = appContext;
+                    bgOnProcess(appContext);
 
                     owner.isLoaded = true;
-                    OldAppBroadcaster.broadcast(sc.getContext(),
+                    ListLoader.this.appContext.getBroadcaster().broadcast(
                             AppBroadcaster.FILE_CHANGED_INCACHE, ID);
 
                     size[0] = owner.size;
                     owner = null;
-                    scontext = null;
+                    ListLoader.this.appContext = null;
                 }
             };
             return size[0];
@@ -122,7 +121,7 @@ public final class ObjMapFeatures extends Obj {
             keyList = SolidOsmFeaturesList.getKeyList(ID);
 
             try {
-                new MapFeaturesParser(context.getAssets(), this);
+                new MapFeaturesParser(appContext.getAssets(), this);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -145,8 +144,7 @@ public final class ObjMapFeatures extends Obj {
             doBroadcast++;
             if (doBroadcast > 10) {
                 doBroadcast = 0;
-                OldAppBroadcaster.broadcast(scontext.getContext(),
-                        AppBroadcaster.FILE_CHANGED_INCACHE, ID);
+                appContext.getBroadcaster().broadcast(AppBroadcaster.FILE_CHANGED_INCACHE, ID);
             }
         }
     }
@@ -159,7 +157,7 @@ public final class ObjMapFeatures extends Obj {
         }
 
         @Override
-        public Obj factory(String id, ServiceContext cs) {
+        public Obj factory(String id, AppContext cs) {
             return new ObjMapFeatures(ID);
         }
     }

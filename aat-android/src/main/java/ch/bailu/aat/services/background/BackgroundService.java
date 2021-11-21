@@ -3,8 +3,8 @@ package ch.bailu.aat.services.background;
 import java.net.URL;
 import java.util.HashMap;
 
+import ch.bailu.aat_lib.app.AppContext;
 import ch.bailu.aat_lib.dispatcher.Broadcaster;
-import ch.bailu.aat_lib.service.ServicesInterface;
 import ch.bailu.aat_lib.service.VirtualService;
 import ch.bailu.aat_lib.service.background.BackgroundServiceInterface;
 import ch.bailu.aat_lib.service.background.BackgroundTask;
@@ -26,11 +26,11 @@ public final class BackgroundService extends VirtualService implements Backgroun
 
     private final HandleStack queue;
     private final WorkerThread[] workers;
-    private final ServicesInterface scontext;
+    private final AppContext appContext;
 
 
-    public BackgroundService(final ServicesInterface sc, Broadcaster broadcaster, int threads) {
-        scontext = sc;
+    public BackgroundService(final AppContext sc, Broadcaster broadcaster, int threads) {
+        appContext = sc;
         tasks = new Tasks(broadcaster);
         queue = new HandleStack();
         workers = new WorkerThread[threads];
@@ -64,7 +64,7 @@ public final class BackgroundService extends VirtualService implements Backgroun
             DownloaderThread downloader = downloaders.get(host);
 
             if (downloader == null) {
-                downloader = new DownloaderThread(scontext, host);
+                downloader = new DownloaderThread(appContext, host);
                 downloaders.put(host, downloader);
             }
 
@@ -82,7 +82,7 @@ public final class BackgroundService extends VirtualService implements Backgroun
         LoaderThread loader = loaders.get(base);
 
         if (loader == null) {
-            loader = new LoaderThread(scontext, base);
+            loader = new LoaderThread(appContext, base);
             loaders.put(base, loader);
         }
 

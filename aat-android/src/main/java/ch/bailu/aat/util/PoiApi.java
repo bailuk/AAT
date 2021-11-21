@@ -15,17 +15,17 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import ch.bailu.aat.R;
-import ch.bailu.aat_lib.xml.writer.WayWriterOsmTags;
 import ch.bailu.aat.preferences.map.SolidPoiDatabase;
 import ch.bailu.aat.preferences.system.AndroidSolidDataDirectory;
-import ch.bailu.aat_lib.service.InsideContext;
-import ch.bailu.aat.services.ServiceContext;
-import ch.bailu.aat_lib.service.background.BackgroundTask;
-import ch.bailu.aat_lib.service.background.FileTask;
+import ch.bailu.aat_lib.app.AppContext;
 import ch.bailu.aat_lib.coordinates.BoundingBoxE6;
 import ch.bailu.aat_lib.dispatcher.AppBroadcaster;
+import ch.bailu.aat_lib.service.InsideContext;
+import ch.bailu.aat_lib.service.background.BackgroundTask;
+import ch.bailu.aat_lib.service.background.FileTask;
 import ch.bailu.aat_lib.util.fs.AppDirectory;
 import ch.bailu.aat_lib.xml.writer.WayWriter;
+import ch.bailu.aat_lib.xml.writer.WayWriterOsmTags;
 import ch.bailu.foc.Foc;
 
 public abstract class PoiApi extends OsmApiConfiguration {
@@ -82,12 +82,12 @@ public abstract class PoiApi extends OsmApiConfiguration {
 
 
     @Override
-    public void startTask(ServiceContext scontext) {
+    public void startTask(AppContext appContext) {
 
         final ArrayList<PoiCategory> categories = getSelectedCategories();
-        final String poiDatabase = new SolidPoiDatabase(scontext.getContext()).getValueAsString();
+        final String poiDatabase = new SolidPoiDatabase(appContext.getMapDirectory(), appContext).getValueAsString();
 
-        new InsideContext(scontext) {
+        new InsideContext(appContext.getServices()) {
             @Override
             public void run() {
                 task.stopProcessing();
@@ -95,7 +95,7 @@ public abstract class PoiApi extends OsmApiConfiguration {
                         bounding.toBoundingBox(),
                         categories,
                         poiDatabase);
-                scontext.getBackgroundService().process(task);
+                appContext.getServices().getBackgroundService().process(task);
 
             }
         };
@@ -123,7 +123,7 @@ public abstract class PoiApi extends OsmApiConfiguration {
 
 
         @Override
-        public long bgOnProcess(ServiceContext sc) {
+        public long bgOnProcess(AppContext sc) {
             final PoiPersistenceManager persistenceManager =
                     AndroidPoiPersistenceManagerFactory.getPoiPersistenceManager(poiDatabase);
 
@@ -136,7 +136,7 @@ public abstract class PoiApi extends OsmApiConfiguration {
             persistenceManager.close();
 
 
-            OldAppBroadcaster.broadcast(sc.getContext(), AppBroadcaster.FILE_CHANGED_ONDISK,
+            sc.getBroadcaster().broadcast(AppBroadcaster.FILE_CHANGED_ONDISK,
                     getFile().getPath(), poiDatabase);
 
             return 100;

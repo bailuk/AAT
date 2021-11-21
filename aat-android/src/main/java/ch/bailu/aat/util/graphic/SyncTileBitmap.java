@@ -112,4 +112,7 @@ public class SyncTileBitmap {
         size = Obj.MIN_SIZE;
     }
 
+    public boolean isLoaded() {
+        return bitmap != null;
+    }
 }

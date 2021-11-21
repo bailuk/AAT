@@ -51,8 +51,8 @@ public abstract class AbsFileContentActivity extends ActivityContext implements 
 
         super.onCreate(savedInstanceState);
 
-        currentFile = new IteratorSource.FollowFile(getServiceContext());
-        editorSource = new EditorOrBackupSource(getServiceContext(), currentFile);
+        currentFile = new IteratorSource.FollowFile(getAppContext());
+        editorSource = new EditorOrBackupSource(getAppContext(), currentFile);
 
         createViews();
         createDispatcher();
@@ -100,7 +100,7 @@ public abstract class AbsFileContentActivity extends ActivityContext implements 
         nextFile = bar.addImageButton(R.drawable.go_down_inverse);
 
 
-        fileOperation = new PreviewView(getServiceContext());
+        fileOperation = new PreviewView(getServiceContext(),getAppContext().getSummaryConfig());
         bar.addButton(fileOperation);
 
 
@@ -120,7 +120,7 @@ public abstract class AbsFileContentActivity extends ActivityContext implements 
 
         addSource(new TrackerSource(getServiceContext(), getBroadcaster()));
         addSource(new CurrentLocationSource(getServiceContext(), getBroadcaster()));
-        addSource(new OverlaySource(getServiceContext()));
+        addSource(new OverlaySource(getAppContext()));
 
         addSource(editorSource);
 

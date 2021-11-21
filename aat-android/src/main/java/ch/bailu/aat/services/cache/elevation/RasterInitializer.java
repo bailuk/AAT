@@ -1,9 +1,9 @@
 package ch.bailu.aat.services.cache.elevation;
 
-import ch.bailu.aat.services.ServiceContext;
+import ch.bailu.aat_lib.app.AppContext;
 import ch.bailu.aat_lib.service.background.BackgroundTask;
 import ch.bailu.aat_lib.service.cache.Obj;
-import ch.bailu.aat.services.cache.OnObject;
+import ch.bailu.aat_lib.service.cache.OnObject;
 
 public final class RasterInitializer extends BackgroundTask {
 
@@ -16,7 +16,7 @@ public final class RasterInitializer extends BackgroundTask {
     }
 
     @Override
-    public long bgOnProcess(final ServiceContext sc) {
+    public long bgOnProcess(final AppContext sc) {
         size = 0;
 
         new OnObject(sc, iid, ObjTileElevation.class) {

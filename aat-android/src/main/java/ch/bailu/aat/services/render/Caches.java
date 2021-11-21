@@ -2,7 +2,7 @@ package ch.bailu.aat.services.render;
 
 import java.util.HashMap;
 
-import ch.bailu.aat.services.cache.ObjTileMapsForge;
+import ch.bailu.aat_lib.service.cache.ObjTileMapsForge;
 
 public final class Caches {
     private final HashMap<String, Cache> caches = new HashMap<>(5);

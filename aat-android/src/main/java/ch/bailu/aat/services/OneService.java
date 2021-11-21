@@ -3,29 +3,26 @@ package ch.bailu.aat.services;
 import android.content.Context;
 
 import ch.bailu.aat.dispatcher.AndroidBroadcaster;
-import ch.bailu.aat.factory.AndroidFocFactory;
-import ch.bailu.aat.map.mapsforge.MapsForgePreview;
-import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat.preferences.location.AndroidSolidLocationProvider;
 import ch.bailu.aat.preferences.map.SolidRendererThreads;
 import ch.bailu.aat.preferences.system.AndroidSolidDataDirectory;
 import ch.bailu.aat.services.background.BackgroundService;
 import ch.bailu.aat.services.cache.CacheService;
-import ch.bailu.aat.services.directory.AndroidSummaryConfig;
-import ch.bailu.aat_lib.service.directory.DirectoryService;
 import ch.bailu.aat.services.elevation.ElevationService;
 import ch.bailu.aat.services.icons.IconMapService;
 import ch.bailu.aat.services.render.RenderService;
 import ch.bailu.aat.services.sensor.SensorService;
 import ch.bailu.aat.services.tileremover.TileRemoverService;
 import ch.bailu.aat.services.tracker.StatusIcon;
-import ch.bailu.aat.util.sql.AndroidDatabase;
+import ch.bailu.aat_lib.app.AppContext;
 import ch.bailu.aat_lib.service.IconMapServiceInterface;
 import ch.bailu.aat_lib.service.background.BackgroundServiceInterface;
 import ch.bailu.aat_lib.service.cache.CacheServiceInterface;
+import ch.bailu.aat_lib.service.directory.DirectoryService;
 import ch.bailu.aat_lib.service.directory.DirectoryServiceInterface;
 import ch.bailu.aat_lib.service.location.LocationService;
 import ch.bailu.aat_lib.service.location.LocationServiceInterface;
+import ch.bailu.aat_lib.service.render.RenderServiceInterface;
 import ch.bailu.aat_lib.service.sensor.SensorServiceInterface;
 import ch.bailu.aat_lib.service.tracker.TrackerService;
 import ch.bailu.aat_lib.service.tracker.TrackerServiceInterface;
@@ -130,7 +127,7 @@ public final class OneService extends AbsService  implements ServiceContext {
     @Override
     public  synchronized BackgroundServiceInterface getBackgroundService() {
         if (background == null) {
-            background = new BackgroundService(this, new AndroidBroadcaster(this), SolidRendererThreads.numberOfBackgroundThreats());
+            background = new BackgroundService(getAppContext(), new AndroidBroadcaster(this), SolidRendererThreads.numberOfBackgroundThreats());
         }
         return background;
     }
@@ -138,14 +135,14 @@ public final class OneService extends AbsService  implements ServiceContext {
     @Override
     public synchronized CacheServiceInterface getCacheService() {
         if (cache == null) {
-            cache = new CacheService(this);
+            cache = new CacheService(getAppContext());
             getElevationService();
         }
         return cache;
     }
 
     @Override
-    public synchronized  RenderService getRenderService() {
+    public synchronized RenderServiceInterface getRenderService() {
         if (render == null) {
             render = new RenderService(this);
         }
@@ -163,8 +160,12 @@ public final class OneService extends AbsService  implements ServiceContext {
     @Override
     public synchronized  ElevationService getElevationService() {
         if (elevation == null)
-            elevation = new ElevationService(this);
+            elevation = new ElevationService(getAppContext());
         return elevation;
+    }
+
+    private AppContext getAppContext() {
+        return null;
     }
 
     @Override
@@ -177,14 +178,7 @@ public final class OneService extends AbsService  implements ServiceContext {
     @Override
     public synchronized DirectoryServiceInterface getDirectoryService() {
         if (directory == null)
-            directory = new DirectoryService(
-                    this,
-                    new Storage(getContext()),
-                    new AndroidFocFactory(getContext()),
-                    new AndroidSummaryConfig(getContext()),
-                    () -> new AndroidDatabase(getContext()),
-                    new AndroidBroadcaster(getContext()),
-                    (info, previewImageFile) -> new MapsForgePreview(OneService.this, info, previewImageFile));
+            directory = new DirectoryService(getAppContext());
         return directory;
     }
 

@@ -1,34 +1,32 @@
-package ch.bailu.aat.services.cache;
-
-import android.graphics.Bitmap;
+package ch.bailu.aat_lib.service.cache;
 
 import org.mapsforge.core.graphics.TileBitmap;
 import org.mapsforge.core.model.Tile;
 
-import ch.bailu.aat_lib.preferences.map.SolidTileSize;
-import ch.bailu.aat.services.ServiceContext;
-import ch.bailu.aat.util.OldAppBroadcaster;
-import ch.bailu.aat.util.graphic.SyncTileBitmap;
+import ch.bailu.aat_lib.app.AppContext;
 import ch.bailu.aat_lib.dispatcher.AppBroadcaster;
-import ch.bailu.aat_lib.service.cache.Obj;
+import ch.bailu.aat_lib.map.tile.MapTileInterface;
+import ch.bailu.aat_lib.preferences.map.SolidTileSize;
 
 public final class ObjTileMapsForge extends ObjTile {
     private static long DEFAULT_SIZE = SolidTileSize.DEFAULT_TILESIZE_BYTES * 4;
 
-    private final ServiceContext scontext;
+    private final AppContext appContext;
     private final Tile tile;
 
-    private final SyncTileBitmap bitmap = new SyncTileBitmap();
+    private final MapTileInterface bitmap;
 
     private final String themeID;
 
-    public ObjTileMapsForge(String id, ServiceContext sc, Tile t, String tID) {
+    public ObjTileMapsForge(String id, AppContext appContext, Tile t, String tID) {
         super(id);
-        scontext = sc;
+        this.appContext = appContext;
         tile = t;
         themeID = tID;
 
-        sc.getRenderService().lockToRenderer(this);
+        bitmap = appContext.createMapTile();
+
+        this.appContext.getServices().getRenderService().lockToRenderer(this);
     }
 
 
@@ -38,37 +36,31 @@ public final class ObjTileMapsForge extends ObjTile {
 
 
     @Override
-    public Bitmap getAndroidBitmap() {
-            return bitmap.getAndroidBitmap();
-    }
-
-
-    @Override
-    public void reDownload(ServiceContext sc) {}
+    public void reDownload(AppContext sc) {}
 
     @Override
     public boolean isLoaded() {
-        return bitmap.getAndroidBitmap() != null;
+        return bitmap.isLoaded();
     }
 
     @Override
-    public void onDownloaded(String id, String url, ServiceContext sc) {}
+    public void onDownloaded(String id, String url, AppContext sc) {}
 
     @Override
-    public void onChanged(String id, ServiceContext sc) {}
+    public void onChanged(String id, AppContext sc) {}
 
 
     public void onRendered(TileBitmap fromRenderer) {
             bitmap.set(fromRenderer);
-            OldAppBroadcaster.broadcast(scontext.getContext(),
+            appContext.getBroadcaster().broadcast(
                     AppBroadcaster.FILE_CHANGED_INCACHE,
                     getID());
     }
 
 
     @Override
-    public void onRemove(ServiceContext sc) {
-        scontext.getRenderService().freeFromRenderer(ObjTileMapsForge.this);
+    public void onRemove(AppContext sc) {
+        appContext.getServices().getRenderService().freeFromRenderer(ObjTileMapsForge.this);
         bitmap.free();
         super.onRemove(sc);
     }
@@ -76,7 +68,7 @@ public final class ObjTileMapsForge extends ObjTile {
 
     @Override
     public long getSize() {
-        DEFAULT_SIZE = getSize(bitmap, DEFAULT_SIZE);
+        DEFAULT_SIZE = ObjTile.getSize(bitmap, DEFAULT_SIZE);
 
         if (isLoaded()) {
             return DEFAULT_SIZE;
@@ -107,8 +99,8 @@ public final class ObjTileMapsForge extends ObjTile {
         }
 
         @Override
-        public Obj factory(String id, ServiceContext sc) {
-            return  new ObjTileMapsForge(id, sc, mapTile, themeID);
+        public Obj factory(String id, AppContext appContext) {
+            return  new ObjTileMapsForge(id, appContext, mapTile, themeID);
         }
 
     }

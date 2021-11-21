@@ -1,11 +1,10 @@
 package ch.bailu.aat.map.tile.source;
 
-import android.content.Context;
-
 import org.mapsforge.core.model.Tile;
 
+import ch.bailu.aat_lib.app.AppContext;
 import ch.bailu.aat_lib.service.InsideContext;
-import ch.bailu.aat.services.ServiceContext;
+import ch.bailu.aat_lib.service.ServicesInterface;
 import ch.bailu.aat_lib.service.cache.Obj;
 
 public class DoubleSource extends Source {
@@ -13,9 +12,9 @@ public class DoubleSource extends Source {
     private final Source sourceA, sourceB;
     private final int minZoomA;
 
-    private final ServiceContext scontext;
+    private final ServicesInterface scontext;
 
-    public DoubleSource(ServiceContext sc, Source a, Source b, int zoom) {
+    public DoubleSource(ServicesInterface sc, Source a, Source b, int zoom) {
         sourceA = a;
         sourceB = b;
 
@@ -31,7 +30,7 @@ public class DoubleSource extends Source {
     }
 
     @Override
-    public String getID(Tile aTile, Context context) {
+    public String getID(Tile aTile, AppContext context) {
         return decide(aTile).getID(aTile, context);
     }
 

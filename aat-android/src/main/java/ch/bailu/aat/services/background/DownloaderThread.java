@@ -1,6 +1,6 @@
 package ch.bailu.aat.services.background;
 
-import ch.bailu.aat_lib.service.ServicesInterface;
+import ch.bailu.aat_lib.app.AppContext;
 import ch.bailu.aat_lib.service.background.BackgroundTask;
 
 public final class DownloaderThread  extends WorkerThread {
@@ -12,7 +12,7 @@ public final class DownloaderThread  extends WorkerThread {
 
 
 
-    public DownloaderThread(ServicesInterface sc, String s) {
+    public DownloaderThread(AppContext sc, String s) {
         super("DT_" + s, sc, DOWNLOAD_QUEUE_SIZE);
         server = s;
     }

@@ -1,13 +1,5 @@
-package ch.bailu.aat.services.cache;
+package ch.bailu.aat_lib.service.cache;
 
-import android.util.SparseArray;
-
-import ch.bailu.aat.services.ServiceContext;
-import ch.bailu.aat_lib.service.background.FileTask;
-import ch.bailu.aat_lib.service.elevation.Dem3Status;
-import ch.bailu.aat_lib.service.elevation.tile.Dem3Tile;
-import ch.bailu.aat.services.elevation.updater.ElevationUpdaterClient;
-import ch.bailu.aat.util.OldAppBroadcaster;
 import ch.bailu.aat_lib.app.AppContext;
 import ch.bailu.aat_lib.coordinates.Dem3Coordinates;
 import ch.bailu.aat_lib.dispatcher.AppBroadcaster;
@@ -23,9 +15,12 @@ import ch.bailu.aat_lib.preferences.SolidAutopause;
 import ch.bailu.aat_lib.preferences.general.SolidPostprocessedAutopause;
 import ch.bailu.aat_lib.preferences.presets.SolidPreset;
 import ch.bailu.aat_lib.service.InsideContext;
-import ch.bailu.aat_lib.service.cache.Obj;
-import ch.bailu.aat_lib.service.cache.ObjGpx;
+import ch.bailu.aat_lib.service.background.FileTask;
+import ch.bailu.aat_lib.service.elevation.Dem3Status;
 import ch.bailu.aat_lib.service.elevation.ElevationProvider;
+import ch.bailu.aat_lib.service.elevation.tile.Dem3Tile;
+import ch.bailu.aat_lib.service.elevation.updater.ElevationUpdaterClient;
+import ch.bailu.aat_lib.util.IndexedMap;
 import ch.bailu.aat_lib.xml.parser.gpx.GpxListReader;
 import ch.bailu.foc.Foc;
 
@@ -43,7 +38,7 @@ public final class ObjGpxStatic extends ObjGpx implements ElevationUpdaterClient
         super(id);
         appContext.getServices().getCacheService().addToBroadcaster(this);
 
-        file = appContext.getFocFactory().toFoc(id);
+        file = appContext.toFoc(id);
     }
 
 
@@ -55,7 +50,7 @@ public final class ObjGpxStatic extends ObjGpx implements ElevationUpdaterClient
 
     @Override
     public void onRemove(final AppContext appContext) {
-        new InsideContext(appContext) {
+        new InsideContext(appContext.getServices()) {
             @Override
             public void run() {
                 appContext.getServices().getElevationService().cancelElevationUpdates(ObjGpxStatic.this);
@@ -128,7 +123,7 @@ public final class ObjGpxStatic extends ObjGpx implements ElevationUpdaterClient
 
         final Dem3Coordinates[] r=new Dem3Coordinates[f.coordinates.size()];
         for (int i=0; i<f.coordinates.size(); i++) {
-            r[i]=f.coordinates.valueAt(i);
+            r[i]=f.coordinates.getAt(i);
         }
         return r;
     }
@@ -136,10 +131,10 @@ public final class ObjGpxStatic extends ObjGpx implements ElevationUpdaterClient
 
 
     @Override
-    public void updateFromSrtmTile(ServiceContext appContext, Dem3Tile srtm) {
+    public void updateFromSrtmTile(AppContext appContext, Dem3Tile srtm) {
         new ListUpdater(srtm).walkTrack(gpxList);
 
-        OldAppBroadcaster.broadcast(appContext.getContext(), AppBroadcaster.FILE_CHANGED_INCACHE, toString());
+        appContext.getBroadcaster().broadcast(AppBroadcaster.FILE_CHANGED_INCACHE, toString());
 
     }
 
@@ -180,7 +175,8 @@ public final class ObjGpxStatic extends ObjGpx implements ElevationUpdaterClient
     }
 
     private class SrtmTileCollector extends GpxListWalker {
-        public final SparseArray<Dem3Coordinates> coordinates = new SparseArray<>();
+
+        public final IndexedMap<String, Dem3Coordinates> coordinates = new IndexedMap<>();
 
         @Override
         public boolean doList(GpxList l) {
@@ -201,7 +197,7 @@ public final class ObjGpxStatic extends ObjGpx implements ElevationUpdaterClient
         public void doPoint(GpxPointNode point) {
             if (point.getAltitude() == ElevationProvider.NULL_ALTITUDE) {
                 final Dem3Coordinates c = new Dem3Coordinates(point);
-                coordinates.put(c.toString().hashCode(), c);
+                coordinates.put(c.toString(), c);
             }
         }
     }

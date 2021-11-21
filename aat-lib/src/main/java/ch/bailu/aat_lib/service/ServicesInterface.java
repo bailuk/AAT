@@ -5,6 +5,7 @@ import ch.bailu.aat_lib.service.cache.CacheServiceInterface;
 import ch.bailu.aat_lib.service.directory.DirectoryServiceInterface;
 import ch.bailu.aat_lib.service.elevation.ElevetionServiceInterface;
 import ch.bailu.aat_lib.service.location.LocationServiceInterface;
+import ch.bailu.aat_lib.service.render.RenderServiceInterface;
 import ch.bailu.aat_lib.service.sensor.SensorServiceInterface;
 import ch.bailu.aat_lib.service.tracker.TrackerServiceInterface;
 
@@ -25,4 +26,6 @@ public interface ServicesInterface {
     void free();
 
     ElevetionServiceInterface getElevationService();
+
+    RenderServiceInterface getRenderService();
 }

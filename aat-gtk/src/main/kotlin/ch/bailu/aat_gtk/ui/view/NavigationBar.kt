@@ -3,7 +3,7 @@ package ch.bailu.aat_gtk.ui.view
 import ch.bailu.aat_gtk.ui.util.IconMap
 import ch.bailu.aat_gtk.ui.view.solid.SolidImageButton
 import ch.bailu.aat_gtk.ui.view.solid.SolidMenuButton
-import ch.bailu.aat_gtk.util.IndexedMap
+import ch.bailu.aat_lib.util.IndexedMap
 import ch.bailu.aat_lib.dispatcher.OnContentUpdatedInterface
 import ch.bailu.aat_lib.gpx.GpxInformation
 import ch.bailu.aat_lib.logger.AppLog

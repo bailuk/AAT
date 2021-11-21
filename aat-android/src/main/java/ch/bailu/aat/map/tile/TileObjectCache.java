@@ -4,9 +4,9 @@ import org.mapsforge.core.model.Tile;
 
 import java.io.Closeable;
 
-import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.cache.LockCache;
-import ch.bailu.aat.services.cache.ObjTile;
+import ch.bailu.aat_lib.app.AppContext;
+import ch.bailu.aat_lib.service.cache.ObjTile;
 
 public class TileObjectCache implements Closeable {
 
@@ -78,7 +78,7 @@ public class TileObjectCache implements Closeable {
     }
 
 
-    public synchronized void reDownloadTiles(ServiceContext sc) {
+    public synchronized void reDownloadTiles(AppContext sc) {
         for (int i = 0; i<tiles.size(); i++) {
             tiles.get(i).reDownload(sc);
         }

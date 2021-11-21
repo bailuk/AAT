@@ -103,7 +103,7 @@ public class GpxViewActivity extends ActivityContext
 
 
     private View createLayout(MainControlBar bar, ContentView contentView) {
-        map = MapFactory.DEF(this, SOLID_KEY).externalContent();
+        map = MapFactory.DEF(getAppContext(),this, SOLID_KEY).externalContent();
 
 
         VerticalScrollView summary = new VerticalScrollView(this);
@@ -172,7 +172,7 @@ public class GpxViewActivity extends ActivityContext
     private void createDispatcher() {
         addSource(new TrackerSource(getServiceContext(),getBroadcaster()));
         addSource(new CurrentLocationSource(getServiceContext(),getBroadcaster()));
-        addSource(new OverlaySource(getServiceContext()));
+        addSource(new OverlaySource(getAppContext()));
         addSource(new CustomFileSource(getServiceContext(), fileID));
 
         addTarget(this, InfoID.FILEVIEW);

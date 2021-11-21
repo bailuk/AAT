@@ -4,8 +4,12 @@ import org.mapsforge.core.model.Tile;
 
 import ch.bailu.aat.map.tile.source.DownloadSource;
 import ch.bailu.aat.services.ServiceContext;
+import ch.bailu.aat_lib.app.AppContext;
+import ch.bailu.aat_lib.service.ServicesInterface;
+import ch.bailu.aat_lib.service.background.DownloadConfig;
 import ch.bailu.aat_lib.service.background.DownloadTask;
 import ch.bailu.aat_lib.service.cache.Obj;
+import ch.bailu.aat_lib.service.cache.OnObject;
 import ch.bailu.foc.Foc;
 
 public class ObjTileDownloadable extends ObjTileCacheOnly {
@@ -13,36 +17,36 @@ public class ObjTileDownloadable extends ObjTileCacheOnly {
     private final DownloadSource source;
 
 
-    public ObjTileDownloadable(String id, ServiceContext sc, Tile t, DownloadSource s) {
+    public ObjTileDownloadable(String id, AppContext sc, Tile t, DownloadSource s) {
         super(id, sc, t, s);
         source=s;
     }
 
 
     @Override
-    public void onInsert(ServiceContext sc) {
+    public void onInsert(AppContext sc) {
         if (isLoadable()) {
-            load(sc);
-        } else if (isDownloadable() && !isSheduled(sc) && !fileExists()) {
+            load(sc.getServices());
+        } else if (isDownloadable() && !isSheduled(sc.getServices()) && !fileExists()) {
             download(sc);
         }
     }
 
 
-    private void download(ServiceContext sc) {
+    private void download(AppContext sc) {
         final String url = source.getTileURLString(getTile());
-        sc.getBackgroundService().process(new FileDownloader(url, getFile(), sc));
+        sc.getServices().getBackgroundService().process(new FileDownloader(url, getFile(), sc));
     }
 
 
-    private boolean isSheduled(ServiceContext sc) {
+    private boolean isSheduled(ServicesInterface sc) {
         return sc.getBackgroundService().findTask(getFile()) != null;
     }
 
 
     @Override
-    public void reDownload(ServiceContext sc) {
-        if (isDownloadable() && !isSheduled(sc)) {
+    public void reDownload(AppContext sc) {
+        if (isDownloadable() && !isSheduled(sc.getServices())) {
             getFile().rm();
             download(sc);
         }
@@ -59,16 +63,15 @@ public class ObjTileDownloadable extends ObjTileCacheOnly {
 
     private static class FileDownloader extends DownloadTask {
 
-        private final ServiceContext scontext;
-
-        public FileDownloader(String source, Foc target, ServiceContext sc)  {
-            super(sc.getContext(), source, target);
-            scontext = sc;
+        final AppContext appContext;
+        public FileDownloader(String source, Foc target, AppContext sc)  {
+            super(source, target,sc.getDownloadConfig());
+            this.appContext = sc;
         }
 
 
         @Override
-        public long bgOnProcess(ServiceContext sc) {
+        public long bgOnProcess(AppContext sc) {
             if (isInCache()) {
                 return super.bgOnProcess(sc);
             }
@@ -78,7 +81,7 @@ public class ObjTileDownloadable extends ObjTileCacheOnly {
         private boolean isInCache() {
             final boolean[] result = {false};
 
-            new OnObject(scontext, getFile().getPath(), ObjTileCacheOnly.class) {
+            new OnObject(appContext, getFile().getPath(), ObjTileCacheOnly.class) {
                 @Override
                 public void run(Obj handle) {
                     result[0] = true;
@@ -100,8 +103,8 @@ public class ObjTileDownloadable extends ObjTileCacheOnly {
         }
 
         @Override
-        public Obj factory(String id, ServiceContext cs) {
-            return new ObjTileDownloadable(id, cs, tile, source);
+        public Obj factory(String id, AppContext appContext) {
+            return new ObjTileDownloadable(id, appContext, tile, source);
         }
     }
 }

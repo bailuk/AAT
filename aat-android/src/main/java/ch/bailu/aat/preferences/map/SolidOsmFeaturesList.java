@@ -3,12 +3,12 @@ package ch.bailu.aat.preferences.map;
 
 import android.content.Context;
 
-import ch.bailu.aat_lib.preferences.SolidBoolean;
 import ch.bailu.aat.preferences.Storage;
-import ch.bailu.aat.services.cache.CacheService;
 import ch.bailu.aat.services.cache.osm_features.ObjMapFeatures;
 import ch.bailu.aat.util.filter_list.KeyList;
+import ch.bailu.aat_lib.preferences.SolidBoolean;
 import ch.bailu.aat_lib.resources.Res;
+import ch.bailu.aat_lib.service.cache.CacheServiceInterface;
 
 public class SolidOsmFeaturesList extends SolidBoolean {
 
@@ -25,7 +25,7 @@ public class SolidOsmFeaturesList extends SolidBoolean {
     }
 
 
-    public ObjMapFeatures getList(CacheService cacheService) {
+    public ObjMapFeatures getList(CacheServiceInterface cacheService) {
         String id = ObjMapFeatures.ID_SMALL;
 
         if (isEnabled())

@@ -9,6 +9,7 @@ import org.mapsforge.core.graphics.Canvas;
 import org.mapsforge.core.model.BoundingBox;
 import org.mapsforge.core.model.LatLong;
 import org.mapsforge.core.model.Point;
+import org.mapsforge.map.android.graphics.AndroidGraphicFactory;
 import org.mapsforge.map.layer.Layer;
 import org.mapsforge.map.layer.TilePosition;
 import org.mapsforge.map.model.common.Observer;
@@ -17,12 +18,12 @@ import org.mapsforge.map.util.LayerUtil;
 import java.util.List;
 
 import ch.bailu.aat.map.AndroidDraw;
+import ch.bailu.aat.map.tile.TileProvider;
+import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat_lib.map.MapContext;
 import ch.bailu.aat_lib.map.layer.MapLayerInterface;
-import ch.bailu.aat.map.tile.TileProvider;
-import ch.bailu.aat_lib.service.InsideContext;
-import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat_lib.preferences.StorageInterface;
+import ch.bailu.aat_lib.service.InsideContext;
 
 public class MapsForgeTileLayer extends Layer implements MapLayerInterface, Observer {
 
@@ -79,10 +80,9 @@ public class MapsForgeTileLayer extends Layer implements MapLayerInterface, Obse
         provider.preload(tilePositions);
 
         for (TilePosition tilePosition : tilePositions) {
-            final Bitmap bitmap = provider.get(tilePosition.tile, resources);
+            final Bitmap bitmap = AndroidGraphicFactory.getBitmap(provider.get(tilePosition.tile, resources));
 
             if (bitmap != null) {
-
                 final Point p = tilePosition.point;
 
                 rect.left = (int) Math.round(p.x);

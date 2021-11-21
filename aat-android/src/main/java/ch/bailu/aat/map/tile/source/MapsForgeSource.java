@@ -1,13 +1,12 @@
 package ch.bailu.aat.map.tile.source;
 
-import android.content.Context;
-
 import org.mapsforge.core.model.Tile;
 import org.mapsforge.map.rendertheme.InternalRenderTheme;
 
 import ch.bailu.aat.preferences.map.SolidRenderTheme;
-import ch.bailu.aat.services.cache.ObjTileMapsForge;
+import ch.bailu.aat_lib.app.AppContext;
 import ch.bailu.aat_lib.service.cache.Obj;
+import ch.bailu.aat_lib.service.cache.ObjTileMapsForge;
 
 public class MapsForgeSource extends Source {
     public final static Source MAPSFORGE = new MapsForgeSource(InternalRenderTheme.DEFAULT.name());
@@ -27,7 +26,7 @@ public class MapsForgeSource extends Source {
     }
 
     @Override
-    public String getID(Tile t, Context x) {
+    public String getID(Tile t, AppContext x) {
         return genID(t, themeIdName);
     }
 

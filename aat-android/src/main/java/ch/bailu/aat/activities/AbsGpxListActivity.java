@@ -171,8 +171,8 @@ public abstract class AbsGpxListActivity extends ActivityContext implements OnIt
 
             busyControl = new BusyViewControlDbSync(contentView);
 
-            MapViewInterface map = MapFactory.DEF(AbsGpxListActivity.this, solid_key).list(acontext);
-            fileControlBar = new FileControlBarLayer(getServiceContext(), map.getMContext(), acontext);
+            MapViewInterface map = MapFactory.DEF(getAppContext(),AbsGpxListActivity.this, solid_key).list(acontext);
+            fileControlBar = new FileControlBarLayer(getServiceContext(), map.getMContext(), acontext, getAppContext().getSummaryConfig());
             map.add(fileControlBar);
 
             VerticalScrollView summary = new VerticalScrollView(acontext);

@@ -1,13 +1,10 @@
-package ch.bailu.aat.services.cache;
-
-import android.graphics.Bitmap;
+package ch.bailu.aat_lib.service.cache;
 
 import org.mapsforge.core.graphics.TileBitmap;
 import org.mapsforge.core.model.Tile;
 
-import ch.bailu.aat.services.ServiceContext;
-import ch.bailu.aat.util.graphic.SyncTileBitmap;
-import ch.bailu.aat_lib.service.cache.Obj;
+import ch.bailu.aat_lib.app.AppContext;
+import ch.bailu.aat_lib.map.tile.MapTileInterface;
 
 public abstract class ObjTile extends Obj {
 
@@ -18,17 +15,15 @@ public abstract class ObjTile extends Obj {
         hash = id.hashCode();
     }
 
-
-    public abstract Bitmap getAndroidBitmap();
     public abstract TileBitmap getTileBitmap();
     public abstract Tile getTile();
-    public abstract void reDownload(ServiceContext sc);
+    public abstract void reDownload(AppContext sc);
 
     public abstract boolean isLoaded();
 
 
 
-    protected static long getSize(SyncTileBitmap bitmap, long defaultSize) {
+    protected static long getSize(MapTileInterface bitmap, long defaultSize) {
         long size = bitmap.getSize();
 
         if (size == 0) size = defaultSize;
@@ -44,12 +39,6 @@ public abstract class ObjTile extends Obj {
 
 
     public static final ObjTile NULL = new ObjTile("") {
-
-        @Override
-        public Bitmap getAndroidBitmap() {
-            return null;
-        }
-
         @Override
         public TileBitmap getTileBitmap() {
             return null;
@@ -61,9 +50,7 @@ public abstract class ObjTile extends Obj {
         }
 
         @Override
-        public void reDownload(ServiceContext sc) {
-
-        }
+        public void reDownload(AppContext sc) {}
 
         @Override
         public boolean isLoaded() {
@@ -76,12 +63,12 @@ public abstract class ObjTile extends Obj {
         }
 
         @Override
-        public void onDownloaded(String id, String url, ServiceContext sc) {
+        public void onDownloaded(String id, String url, AppContext sc) {
 
         }
 
         @Override
-        public void onChanged(String id, ServiceContext sc) {
+        public void onChanged(String id, AppContext sc) {
 
         }
     };

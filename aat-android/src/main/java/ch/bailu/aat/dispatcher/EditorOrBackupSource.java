@@ -1,10 +1,10 @@
 package ch.bailu.aat.dispatcher;
 
-import ch.bailu.aat_lib.gpx.GpxFileWrapper;
-import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.editor.EditorInterface;
+import ch.bailu.aat_lib.app.AppContext;
 import ch.bailu.aat_lib.dispatcher.ContentSource;
 import ch.bailu.aat_lib.dispatcher.OnContentUpdatedInterface;
+import ch.bailu.aat_lib.gpx.GpxFileWrapper;
 import ch.bailu.aat_lib.gpx.GpxInformation;
 import ch.bailu.aat_lib.gpx.GpxList;
 import ch.bailu.aat_lib.gpx.InfoID;
@@ -18,8 +18,8 @@ public class EditorOrBackupSource extends ContentSource implements EditorSourceI
     private boolean isEditing = false;
 
 
-    public EditorOrBackupSource(ServiceContext sc, ContentSource source) {
-        editorSource = new EditorSource(sc);
+    public EditorOrBackupSource(AppContext appContext, ContentSource source) {
+        editorSource = new EditorSource(appContext);
         backupSource = source;
 
     }

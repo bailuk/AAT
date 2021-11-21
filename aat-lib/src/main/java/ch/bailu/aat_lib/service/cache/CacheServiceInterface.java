@@ -9,7 +9,7 @@ public interface CacheServiceInterface extends WithStatusText {
 
     Obj getObject(String path, Obj.Factory factory);
 
-    void addToBroadcaster(Obj obj);
+    void addToBroadcaster(ObjBroadcastReceiver obj);
 
     Obj getObject(String id);
 }

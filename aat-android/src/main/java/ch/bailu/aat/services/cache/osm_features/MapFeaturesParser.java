@@ -4,6 +4,8 @@ import android.content.res.AssetManager;
 
 import java.io.IOException;
 
+import ch.bailu.aat_lib.app.AppContext;
+import ch.bailu.aat_lib.resources.AssetsInterface;
 import ch.bailu.aat_lib.xml.parser.util.Stream;
 import ch.bailu.foc.Foc;
 import ch.bailu.foc_android.FocAsset;
@@ -24,18 +26,18 @@ public final class MapFeaturesParser {
 
     private int id = 0;
 
-    public MapFeaturesParser(AssetManager assets, OnHaveFeature hf) throws IOException {
+    public MapFeaturesParser(AssetsInterface assets, OnHaveFeature hf) throws IOException {
         this(assets, hf, assets.list(MAP_FEATURES_ASSET));
     }
 
-    public MapFeaturesParser(AssetManager assets,
+    public MapFeaturesParser(AssetsInterface assets,
                              OnHaveFeature hf,
                              String[] files) throws IOException {
         haveFeature = hf;
 
         for (String f : files) {
             if (haveFeature.onParseFile(f)) {
-                Foc file = new FocAsset(assets, MAP_FEATURES_ASSET + "/" + f);
+                Foc file = assets.toFoc(f);
                 parseFeatures(file);
             }
 

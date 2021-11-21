@@ -30,6 +30,7 @@ import ch.bailu.aat_lib.map.MapContext;
 import ch.bailu.aat_lib.map.Point;
 import ch.bailu.aat_lib.preferences.StorageInterface;
 import ch.bailu.aat_lib.service.ServicesInterface;
+import ch.bailu.aat_lib.service.directory.SummaryConfig;
 import ch.bailu.foc.Foc;
 
 public final class FileControlBarLayer extends ControlBarLayer {
@@ -46,7 +47,7 @@ public final class FileControlBarLayer extends ControlBarLayer {
 
     private final Storage storage;
 
-    public FileControlBarLayer(ServicesInterface services, MapContext mc, AbsGpxListActivity a) {
+    public FileControlBarLayer(ServicesInterface services, MapContext mc, AbsGpxListActivity a, SummaryConfig config) {
         super(mc, new ControlBar(
                 To.context(mc),
                 getOrientation(LEFT), AppTheme.bar), LEFT);
@@ -57,7 +58,7 @@ public final class FileControlBarLayer extends ControlBarLayer {
         acontext = a;
 
         selector = new FileViewLayer(services, mc);
-        preview = new PreviewView(a.getServiceContext());
+        preview = new PreviewView(a.getServiceContext(), config);
 
         bar.add(preview);
         overlay = bar.addImageButton(R.drawable.view_paged);

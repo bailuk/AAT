@@ -1,19 +1,15 @@
 package ch.bailu.aat.services.cache;
 
-import android.content.Context;
-import android.graphics.Bitmap;
-
 import org.mapsforge.core.graphics.TileBitmap;
 import org.mapsforge.core.model.Tile;
 
 import ch.bailu.aat.map.tile.source.CacheOnlySource;
 import ch.bailu.aat.map.tile.source.Source;
-import ch.bailu.aat.services.ServiceContext;
-import ch.bailu.aat.util.OldAppBroadcaster;
+import ch.bailu.aat_lib.app.AppContext;
 import ch.bailu.aat_lib.dispatcher.AppBroadcaster;
 import ch.bailu.aat_lib.service.cache.Obj;
+import ch.bailu.aat_lib.service.cache.ObjTile;
 import ch.bailu.foc.Foc;
-import ch.bailu.foc_android.FocAndroid;
 
 public final class ObjTileCached extends ObjTile {
     private final static int MIN_SAVE_ZOOM_LEVEL = 16;
@@ -29,20 +25,20 @@ public final class ObjTileCached extends ObjTile {
 
     private final Foc cachedImageFile;
 
-    public ObjTileCached(String id, final ServiceContext sc, Tile t, Source source) {
+    public ObjTileCached(String id, final AppContext sc, Tile t, Source source) {
         super(id);
 
         mapTile = t;
 
-        sourceID = source.getID(t, sc.getContext());
+        sourceID = source.getID(t, sc);
         sourceFactory = source.getFactory(t);
 
         final Source cached = new CacheOnlySource(source);
 
-        cachedID = cached.getID(t, sc.getContext());
+        cachedID = cached.getID(t, sc);
         cachedFactory = cached.getFactory(t);
 
-        cachedImageFile = FocAndroid.factory(sc.getContext(), cachedID);
+        cachedImageFile = sc.toFoc(cachedID);
 
         save = new SaveTileTask(sourceID, cachedImageFile);
     }
@@ -51,16 +47,16 @@ public final class ObjTileCached extends ObjTile {
 
 
     @Override
-    public void onInsert(ServiceContext sc) {
-        if (isLoadable(sc.getContext())) {
-            tile = (ObjTile) sc.getCacheService().getObject(cachedID, cachedFactory);
+    public void onInsert(AppContext sc) {
+        if (isLoadable()) {
+            tile = (ObjTile) sc.getServices().getCacheService().getObject(cachedID, cachedFactory);
         } else {
-            tile = (ObjTile) sc.getCacheService().getObject(sourceID, sourceFactory);
+            tile = (ObjTile) sc.getServices().getCacheService().getObject(sourceID, sourceFactory);
         }
-        sc.getCacheService().addToBroadcaster(this);
+        sc.getServices().getCacheService().addToBroadcaster(this);
     }
 
-    private boolean isLoadable(Context c) {
+    private boolean isLoadable() {
         return cachedImageFile.exists();
     }
 
@@ -68,9 +64,9 @@ public final class ObjTileCached extends ObjTile {
 
 
     @Override
-    public void onChanged(String id, ServiceContext sc) {
+    public void onChanged(String id, AppContext sc) {
         if (id.equals(tile.toString())) {
-            OldAppBroadcaster.broadcast(sc.getContext(),
+            sc.getBroadcaster().broadcast(
                     AppBroadcaster.FILE_CHANGED_INCACHE,
                     toString());
 
@@ -81,7 +77,7 @@ public final class ObjTileCached extends ObjTile {
                             id.equals(sourceID) &&
                             tile.isLoaded()) {
 
-                sc.getBackgroundService().process(save);
+                sc.getServices().getBackgroundService().process(save);
             }
         }
     }
@@ -93,16 +89,13 @@ public final class ObjTileCached extends ObjTile {
     }
 
     @Override
-    public void onRemove(ServiceContext cs) {
+    public void onRemove(AppContext cs) {
         tile.free();
     }
 
 
 
-    @Override
-    public Bitmap getAndroidBitmap() {
-        return tile.getAndroidBitmap();
-    }
+
 
     @Override
     public TileBitmap getTileBitmap() {
@@ -115,11 +108,11 @@ public final class ObjTileCached extends ObjTile {
     }
 
     @Override
-    public void reDownload(ServiceContext sc) {
+    public void reDownload(AppContext sc) {
         cachedImageFile.rm();
 
         tile.free();
-        tile = (ObjTile) sc.getCacheService().getObject(sourceID, sourceFactory);
+        tile = (ObjTile) sc.getServices().getCacheService().getObject(sourceID, sourceFactory);
     }
 
     @Override
@@ -134,7 +127,7 @@ public final class ObjTileCached extends ObjTile {
     }
 
     @Override
-    public void onDownloaded(String id, String url, ServiceContext sc) {}
+    public void onDownloaded(String id, String url, AppContext sc) {}
 
 
     @Override
@@ -153,7 +146,7 @@ public final class ObjTileCached extends ObjTile {
         }
 
         @Override
-        public Obj factory(String id, ServiceContext cs) {
+        public Obj factory(String id, AppContext cs) {
             return new ObjTileCached(id, cs, tile, source);
         }
     }

@@ -1,20 +1,21 @@
 package ch.bailu.aat.services.render;
 
-import android.content.SharedPreferences;
-
 import org.mapsforge.core.model.Tile;
 
-import ch.bailu.aat.preferences.map.SolidMapsForgeDirectory;
+import ch.bailu.aat.factory.AndroidFocFactory;
+import ch.bailu.aat.preferences.map.AndroidSolidMapsForgeDirectory;
 import ch.bailu.aat.preferences.map.SolidRenderTheme;
 import ch.bailu.aat.preferences.map.SolidRendererThreads;
 import ch.bailu.aat.services.ServiceContext;
-import ch.bailu.aat.services.cache.ObjTileMapsForge;
 import ch.bailu.aat_lib.preferences.OnPreferencesChanged;
 import ch.bailu.aat_lib.preferences.StorageInterface;
+import ch.bailu.aat_lib.preferences.map.SolidMapsForgeDirectory;
 import ch.bailu.aat_lib.service.VirtualService;
+import ch.bailu.aat_lib.service.cache.ObjTileMapsForge;
+import ch.bailu.aat_lib.service.render.RenderServiceInterface;
 
 public final class RenderService  extends VirtualService
-        implements OnPreferencesChanged {
+        implements OnPreferencesChanged, RenderServiceInterface {
 
 
     private final SolidMapsForgeDirectory sdirectory;
@@ -29,8 +30,8 @@ public final class RenderService  extends VirtualService
     public RenderService(ServiceContext sc) {
 
 
-        sdirectory = new SolidMapsForgeDirectory(sc.getContext());
-        stheme = new SolidRenderTheme(sc.getContext());
+        sdirectory = new AndroidSolidMapsForgeDirectory(sc.getContext());
+        stheme = new SolidRenderTheme(new AndroidSolidMapsForgeDirectory(sc.getContext()), new AndroidFocFactory(sc.getContext()));
         //sthreads = new SolidRendererThreads(sc.getContext());
 
         sdirectory.getStorage().register(this);

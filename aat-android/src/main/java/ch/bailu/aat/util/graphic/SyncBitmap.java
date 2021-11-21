@@ -26,10 +26,7 @@ public class SyncBitmap {
         return bitmap;
     }
 
-    public synchronized android.graphics.Bitmap getAndroidBitmap() {
-        if (bitmap != null) return AndroidGraphicFactory.getBitmap(bitmap);
-        return null;
-    }
+
 
 
     private static Bitmap load(Foc file) throws IOException {
@@ -61,14 +58,14 @@ public class SyncBitmap {
         free();
         bitmap = b;
 
-        android.graphics.Bitmap bitmap = getAndroidBitmap();
 
         if (bitmap != null) {
-            size = bitmap.getRowBytes() * bitmap.getHeight();
+            size = bitmap.getWidth() * bitmap.getHeight() + 4;
         } else {
             size = Obj.MIN_SIZE;
         }
     }
+
 
     public synchronized void set(int size, boolean transparent) {
         set(AndroidGraphicFactory.INSTANCE.createTileBitmap(size, transparent));

@@ -83,7 +83,7 @@ public class PoiActivity extends AbsOsmApiActivity {
     }
 
     private View createPoiListView() {
-        poiView = new PoiView(getServiceContext(),
+        poiView = new PoiView(getServiceContext(),getAppContext().getMapDirectory(), getAppContext(),
                 getConfiguration().getBaseDirectory().child(PoiApi.SELECTED), theme);
 
         theme.background(poiView);

@@ -1,47 +1,43 @@
 package ch.bailu.aat.services.elevation.updater;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
 
 import java.io.Closeable;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import ch.bailu.aat_lib.coordinates.Dem3Coordinates;
-import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.elevation.loader.Dem3Loader;
 import ch.bailu.aat.services.elevation.loader.Dem3Tiles;
+import ch.bailu.aat_lib.app.AppContext;
+import ch.bailu.aat_lib.coordinates.Dem3Coordinates;
+import ch.bailu.aat_lib.dispatcher.AppBroadcaster;
+import ch.bailu.aat_lib.dispatcher.BroadcastReceiver;
 import ch.bailu.aat_lib.service.elevation.Dem3Status;
 import ch.bailu.aat_lib.service.elevation.tile.Dem3Tile;
-import ch.bailu.aat.util.AppIntent;
-import ch.bailu.aat.util.OldAppBroadcaster;
-import ch.bailu.aat_lib.dispatcher.AppBroadcaster;
+import ch.bailu.aat_lib.service.elevation.updater.ElevationUpdaterClient;
 
 public final class ElevationUpdater implements Closeable {
 
 
     private final PendingUpdatesMap pendingUpdates = new PendingUpdatesMap();
 
-    private final ServiceContext scontext;
+    private final AppContext appContext;
 
     private final Dem3Loader loader;
     private final Dem3Tiles tiles;
 
-    public ElevationUpdater(ServiceContext cs, Dem3Loader d, Dem3Tiles t) {
-        scontext = cs;
-        Context context = cs.getContext();
+    public ElevationUpdater(AppContext appContext, Dem3Loader d, Dem3Tiles t) {
+        this.appContext = appContext;
         tiles = t;
         loader = d;
 
-        OldAppBroadcaster.register(context, onFileChanged, AppBroadcaster.FILE_CHANGED_INCACHE);
+        this.appContext.getBroadcaster().register(onFileChanged, AppBroadcaster.FILE_CHANGED_INCACHE);
     }
 
 
     private final BroadcastReceiver onFileChanged = new BroadcastReceiver() {
         @Override
-        public void onReceive(Context context, Intent intent) {
-            String id = AppIntent.getFile(intent);
+        public void onReceive(Object... objs) {
+            String id = (String) objs[0];
 
             synchronized(ElevationUpdater.this) {
                 if (tiles.have(id)) {
@@ -110,7 +106,7 @@ public final class ElevationUpdater implements Closeable {
 
             if (l != null) {
                 for (ElevationUpdaterClient e : l) {
-                    e.updateFromSrtmTile(scontext, tile);
+                    e.updateFromSrtmTile(appContext, tile);
                 }
             }
         }
@@ -125,7 +121,7 @@ public final class ElevationUpdater implements Closeable {
 
     @Override
     public  void close() {
-        scontext.getContext().unregisterReceiver(onFileChanged);
+        appContext.getBroadcaster().unregister(onFileChanged);
     }
 
 }

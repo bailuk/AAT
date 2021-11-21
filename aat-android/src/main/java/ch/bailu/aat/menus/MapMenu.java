@@ -10,6 +10,7 @@ import ch.bailu.aat.activities.ActivitySwitcher;
 import ch.bailu.aat.activities.PreferencesActivity;
 import ch.bailu.aat.factory.AndroidFocFactory;
 import ch.bailu.aat.preferences.Storage;
+import ch.bailu.aat.preferences.map.AndroidSolidMapsForgeDirectory;
 import ch.bailu.aat_lib.map.MapContext;
 import ch.bailu.aat.map.To;
 import ch.bailu.aat.preferences.map.SolidMapTileStack;
@@ -37,8 +38,9 @@ public final class MapMenu extends AbsMenu {
         overlays = menu.add(R.string.p_overlay);
         overlays.setIcon(R.drawable.view_paged_inverse);
 
-        map = menu.add(new SolidMapsForgeMapFile(To.context(mcontext)).getLabel());
-        theme = menu.add(new SolidRenderTheme(To.context(mcontext)).getLabel());
+        SolidMapsForgeMapFile smapFile = new SolidMapsForgeMapFile(To.context(mcontext));
+        map = menu.add(smapFile.getLabel());
+        theme = menu.add(new SolidRenderTheme(smapFile, new AndroidFocFactory(To.context(mcontext))).getLabel());
 
         preferences = menu.add(R.string.intro_settings);
 
@@ -68,15 +70,17 @@ public final class MapMenu extends AbsMenu {
     public boolean onItemClick(MenuItem item) {
         final Context c = To.context(mcontext);
 
+        final SolidRenderTheme stheme = new SolidRenderTheme(new AndroidSolidMapsForgeDirectory(c), new AndroidFocFactory(c));
         if (item == stack) {
-            new SolidCheckListDialog(c, new SolidMapTileStack(c));
+            new SolidCheckListDialog(c,
+                    new SolidMapTileStack(stheme));
         } else if (item ==reload) {
                 mcontext.getMapView().reDownloadTiles();
 
             } else if (item == overlays) {
             new SolidCheckListDialog(c, new SolidOverlayFileList(new Storage(c), new AndroidFocFactory(c)));
         } else if (item == theme) {
-            new SolidStringDialog(c, new SolidRenderTheme(c));
+            new SolidStringDialog(c, stheme);
         } else if (item == map) {
             new SolidStringDialog(c, new SolidMapsForgeMapFile(c));
         } else if (item == preferences) {

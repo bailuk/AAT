@@ -32,7 +32,7 @@ public class MapActivity extends AbsKeepScreenOnActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        EditorSource edit = new EditorSource(getServiceContext());
+        EditorSource edit = new EditorSource(getAppContext());
 
         ContentView contentView=new ContentView(this, AppTheme.cockpit);
         MapViewInterface map = createMap(edit);
@@ -70,7 +70,7 @@ public class MapActivity extends AbsKeepScreenOnActivity {
 
 
     private MapViewInterface createMap(EditorSource edit) {
-        return MapFactory.DEF(this, SOLID_KEY).map(edit, createButtonBar());
+        return MapFactory.DEF(getAppContext(),this, SOLID_KEY).map(edit, createButtonBar());
     }
 
 
@@ -78,7 +78,7 @@ public class MapActivity extends AbsKeepScreenOnActivity {
         addSource(edit);
         addSource(new TrackerSource(getServiceContext(),getBroadcaster()));
         addSource(new CurrentLocationSource(getServiceContext(),getBroadcaster()));
-        addSource(new OverlaySource(getServiceContext()));
+        addSource(new OverlaySource(getAppContext()));
     }
 
 

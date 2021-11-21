@@ -1,13 +1,11 @@
 package ch.bailu.aat.services.cache;
 
-import android.content.Intent;
-
 import java.util.HashMap;
 
-import ch.bailu.aat.services.ServiceContext;
+import ch.bailu.aat_lib.app.AppContext;
+import ch.bailu.aat_lib.dispatcher.BroadcastData;
 import ch.bailu.aat_lib.service.cache.Obj;
 import ch.bailu.aat_lib.service.cache.Obj.Factory;
-import ch.bailu.aat.util.AppIntent;
 import ch.bailu.aat_lib.service.cache.ObjNull;
 import ch.bailu.aat_lib.util.MemSize;
 
@@ -34,7 +32,7 @@ public final class ObjectTable  {
     private final HashMap<String, Container> hashMap = new HashMap<>(INITIAL_CAPACITY);
 
 
-    public synchronized Obj getHandle(String key, ServiceContext sc) {
+    public synchronized Obj getHandle(String key, AppContext sc) {
         Obj obj=getFromCache(key);
 
         if (obj == null) {
@@ -47,26 +45,26 @@ public final class ObjectTable  {
 
 
     public synchronized Obj getHandle(String id, Factory factory, CacheService self) {
-        Obj h =  getHandle(id, factory, self.scontext);
+        Obj h =  getHandle(id, factory, self.appContext);
         trim(self);
         return h;
     }
 
 
 
-    public synchronized Obj getHandle(String id, Factory factory, ServiceContext scontext) {
+    public synchronized Obj getHandle(String id, Factory factory, AppContext appContext) {
         Obj h=getFromCache(id);
 
         if (h == null) {
-            h = factory.factory(id, scontext);
+            h = factory.factory(id, appContext);
 
             putIntoCache(h);
 
-            h.lock(scontext);
-            h.onInsert(scontext);
+            h.lock(appContext);
+            h.onInsert(appContext);
 
         } else {
-            h.lock(scontext);
+            h.lock(appContext);
         }
         return h;
     }
@@ -76,8 +74,6 @@ public final class ObjectTable  {
 
         hashMap.put(obj.toString(),new Container(obj));
         totalMemorySize += obj.getSize();
-
-        log();
     }
 
 
@@ -111,15 +107,15 @@ public final class ObjectTable  {
 
 
 
-    public void onObjectChanged(Intent intent, CacheService self) {
-        if (updateSize(toID(intent)))
+    public void onObjectChanged(CacheService self, Object...objs) {
+        if (updateSize(toID(objs)))
             trim(self);
 
     }
 
 
-    private String toID(Intent intent) {
-        return AppIntent.getFile(intent);
+    private String toID(Object... objs) {
+        return BroadcastData.getFile(objs);
     }
 
 
@@ -144,7 +140,7 @@ public final class ObjectTable  {
 
     public void close(CacheService self)  {
         for (Container current : hashMap.values()) {
-            current.obj.onRemove(self.scontext);
+            current.obj.onRemove(self.appContext);
         }
         hashMap.clear();
     }
@@ -157,7 +153,7 @@ public final class ObjectTable  {
             self.broadcaster.delete(remove.obj);
             hashMap.remove(id);
             totalMemorySize -= remove.size;
-            remove.obj.onRemove(self.scontext);
+            remove.obj.onRemove(self.appContext);
             return true;
         }
         return false;
@@ -222,46 +218,5 @@ public final class ObjectTable  {
         builder.append("<br>TOTAL cache entries: ");
         builder.append(hashMap.size());
         builder.append("</p>");
-    }
-
-    public void logLocked() {
-/*        int locked=0;
-
-        for (Container current : hashMap.values()) {
-            if (current.obj.isLocked()){
-                AppLog.d(this, current.obj.toString());
-                locked++;
-            }
-        }
-        AppLog.d(this, "Still locked: " + locked);*/
-    }
-
-
-    private int logCount=0;
-    public void log() {
- /*       logCount++;
-
-        if (logCount > 10) {
-            logCount = 0;
-        } else {
-            return;
-        }
-
-
-        int locked=0;
-
-        for (Container current : hashMap.values()) {
-
-            if (current.obj.isLocked()){
-                locked++;
-            }
-        }
-
-
-        AppLog.d(this,
-                        totalMemorySize/MB + "/" +
-                        limit/MB + "MB - l:" + locked +
-                        " f:" + (hashMap.size()-locked)
-                        );*/
     }
 }

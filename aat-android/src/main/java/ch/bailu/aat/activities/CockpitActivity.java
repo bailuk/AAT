@@ -37,7 +37,7 @@ public class CockpitActivity extends AbsKeepScreenOnActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        EditorSource edit = new EditorSource(getServiceContext());
+        EditorSource edit = new EditorSource(getAppContext());
         ContentView contentView = new ContentView(this, theme);
         MultiView multiView = createMultiView(edit);
 
@@ -54,7 +54,7 @@ public class CockpitActivity extends AbsKeepScreenOnActivity {
       private MultiView createMultiView(EditorSource edit) {
         MultiView multiView = new MultiView(this, SOLID_KEY);
         multiView.add(createCockpit());
-        multiView.add(MapFactory.DEF(this, SOLID_KEY).tracker(edit).toView());
+        multiView.add(MapFactory.DEF(getAppContext(),this, SOLID_KEY).tracker(edit).toView());
         multiView.add(GraphViewFactory.all(this, this, theme, InfoID.TRACKER));
 
         return multiView;
@@ -110,7 +110,7 @@ public class CockpitActivity extends AbsKeepScreenOnActivity {
         addSource(new TrackerSource(getServiceContext(),getBroadcaster()));
         addSource(new TrackerTimerSource(getServiceContext()));
         addSource(new CurrentLocationSource(getServiceContext(),getBroadcaster()));
-        addSource(new OverlaySource(getServiceContext()));
+        addSource(new OverlaySource(getAppContext()));
 
         addSource(new SensorSource(getServiceContext(), InfoID.HEART_RATE_SENSOR));
         addSource(new SensorSource(getServiceContext(), InfoID.POWER_SENSOR));

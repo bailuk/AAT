@@ -24,9 +24,11 @@ import ch.bailu.aat.util.filter_list.PoiListEntry;
 import ch.bailu.aat.util.ui.UiTheme;
 import ch.bailu.aat.views.EditTextTool;
 import ch.bailu.aat.views.preferences.SolidStringView;
+import ch.bailu.aat_lib.factory.FocFactory;
 import ch.bailu.aat_lib.preferences.OnPreferencesChanged;
 import ch.bailu.aat_lib.preferences.SolidString;
 import ch.bailu.aat_lib.preferences.StorageInterface;
+import ch.bailu.aat_lib.preferences.map.SolidMapsForgeDirectory;
 import ch.bailu.foc.Foc;
 
 public class PoiView  extends LinearLayout implements OnPreferencesChanged {
@@ -44,13 +46,13 @@ public class PoiView  extends LinearLayout implements OnPreferencesChanged {
 
     private final Foc selected;
 
-    public PoiView(ServiceContext sc, Foc s, UiTheme theme) {
+    public PoiView(ServiceContext sc, SolidMapsForgeDirectory smap, FocFactory focFactory, Foc s, UiTheme theme) {
         super(sc.getContext());
         scontext = sc;
 
         selected = s;
 
-        sdatabase = new SolidPoiDatabase(sc.getContext());
+        sdatabase = new SolidPoiDatabase(smap, focFactory);
         sdatabase.register(this);
 
         setOrientation(VERTICAL);
@@ -104,7 +106,7 @@ public class PoiView  extends LinearLayout implements OnPreferencesChanged {
     }
 
     public View createHeader(UiTheme theme) {
-        return new SolidStringView(getContext(),new SolidPoiDatabase(getContext()), theme);
+        return new SolidStringView(getContext(),sdatabase, theme);
     }
 
 

@@ -5,10 +5,9 @@ import android.os.Bundle;
 
 import ch.bailu.aat.activities.AbsHardwareButtons;
 import ch.bailu.aat.dispatcher.AndroidBroadcaster;
+import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.ServiceLink;
-import ch.bailu.aat_lib.app.AppContext;
 import ch.bailu.aat_lib.dispatcher.Broadcaster;
-import ch.bailu.aat_lib.service.ServicesInterface;
 
 public abstract class AbsServiceLink extends AbsHardwareButtons {
 
@@ -45,9 +44,6 @@ public abstract class AbsServiceLink extends AbsHardwareButtons {
         };
     }
 
-
-
-
     @Override
     public void onResume() {
         super.onResume();
@@ -81,17 +77,7 @@ public abstract class AbsServiceLink extends AbsHardwareButtons {
     }
 
 
-    public AppContext getAppContext() {
-        return new AppContext() {
-            @Override
-            public int hashCode() {
-                return super.hashCode();
-            }
-        };
-    }
-
-
-    public ServicesInterface getServiceContext() {
+    public ServiceContext getServiceContext() {
         return serviceLink;
     }
     public Broadcaster getBroadcaster() {return broadcaster;}

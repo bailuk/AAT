@@ -65,7 +65,7 @@ public class FileAction {
                     scontext.getContext().getString(R.string.file_delete_ask),
                     file.getPathName());
         } else {
-            AFile.logErrorReadOnly(scontext.getContext(), file);
+            AFile.logErrorReadOnly(file);
         }
     }
 
@@ -93,7 +93,7 @@ public class FileAction {
         if (file.canRead())
             new SolidMockLocationFile(new Storage(context)).setValue(file.getPath());
         else
-            AFile.logErrorNoAccess(context, file);
+            AFile.logErrorNoAccess(file);
     }
 
 
@@ -151,7 +151,7 @@ public class FileAction {
     private static void copyToDest(Context context, Foc src, Foc dest) throws IOException {
         if (src != null && dest != null) {
             if (dest.exists()) {
-                AFile.logErrorExists(context, dest);
+                AFile.logErrorExists(dest);
 
             } else {
                 src.copy(dest);
@@ -181,7 +181,7 @@ public class FileAction {
 
                     if (source.exists()) {
                         if (target.exists()) {
-                            AFile.logErrorExists(activity, target);
+                            AFile.logErrorExists(target);
                         } else {
                             source.mv(target);
                             rescanDirectory(scontext, file);
@@ -191,7 +191,7 @@ public class FileAction {
                 }
             }.displayTextDialog(activity, title, edit);
         } else {
-            AFile.logErrorReadOnly(context, file);
+            AFile.logErrorReadOnly(file);
         }
     }
 

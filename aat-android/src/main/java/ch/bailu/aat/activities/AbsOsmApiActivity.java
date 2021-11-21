@@ -185,7 +185,7 @@ public abstract class AbsOsmApiActivity extends ActivityContext implements OnCli
         if (configuration.isTaskRunning(getServiceContext())) {
             configuration.stopTask(getServiceContext());
         } else {
-            configuration.startTask(getServiceContext());
+            configuration.startTask(getAppContext());
         }
     }
 

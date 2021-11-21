@@ -1,11 +1,10 @@
 package ch.bailu.aat.services.cache.elevation;
 
-import ch.bailu.aat.services.ServiceContext;
+import ch.bailu.aat.services.elevation.tile.MultiCell;
+import ch.bailu.aat_lib.app.AppContext;
+import ch.bailu.aat_lib.dispatcher.AppBroadcaster;
 import ch.bailu.aat_lib.service.background.BackgroundTask;
 import ch.bailu.aat_lib.service.cache.Obj;
-import ch.bailu.aat.services.elevation.tile.MultiCell;
-import ch.bailu.aat.util.OldAppBroadcaster;
-import ch.bailu.aat_lib.dispatcher.AppBroadcaster;
 
 public final class ObjHillshadeColorTable extends Obj {
 
@@ -32,19 +31,15 @@ public final class ObjHillshadeColorTable extends Obj {
     private boolean isInitialized=false;
 
     @Override
-    public void onInsert(ServiceContext sc) {
-        sc.getBackgroundService().process(new TableInitializer());
+    public void onInsert(AppContext sc) {
+        sc.getServices().getBackgroundService().process(new TableInitializer());
     }
 
     @Override
-    public void onDownloaded(String id, String url, ServiceContext sc) {
-
-    }
+    public void onDownloaded(String id, String url, AppContext sc) {}
 
     @Override
-    public void onChanged(String id, ServiceContext sc) {
-
-    }
+    public void onChanged(String id, AppContext sc) {}
 
     @Override
     public boolean isReadyAndLoaded() {
@@ -106,7 +101,7 @@ public final class ObjHillshadeColorTable extends Obj {
 
 
         @Override
-        public long bgOnProcess(ServiceContext sc) {
+        public long bgOnProcess(AppContext sc) {
             for (int x=0; x<TABLE_DIM; x++) {
                 for (int y=0; y<TABLE_DIM; y++) {
                     table[x][y]=hillshade(indexToDelta(x), indexToDelta(y));
@@ -114,7 +109,7 @@ public final class ObjHillshadeColorTable extends Obj {
             }
 
             isInitialized = true;
-            OldAppBroadcaster.broadcast(sc.getContext(), AppBroadcaster.FILE_CHANGED_INCACHE, ID);
+            sc.getBroadcaster().broadcast(AppBroadcaster.FILE_CHANGED_INCACHE, ID);
 
             return TABLE_SIZE;
         }
@@ -170,7 +165,7 @@ public final class ObjHillshadeColorTable extends Obj {
     public static final Factory FACTORY = new Obj.Factory() {
 
         @Override
-        public Obj factory(String id, ServiceContext sc) {
+        public Obj factory(String id, AppContext sc) {
             return  new ObjHillshadeColorTable();
         }
     };

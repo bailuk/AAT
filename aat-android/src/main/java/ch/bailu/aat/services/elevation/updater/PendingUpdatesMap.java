@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 
 import ch.bailu.aat_lib.coordinates.Dem3Coordinates;
+import ch.bailu.aat_lib.service.elevation.updater.ElevationUpdaterClient;
 
 public final class PendingUpdatesMap {
     private final HashMap<Dem3Coordinates,ArrayList<ElevationUpdaterClient>> map =

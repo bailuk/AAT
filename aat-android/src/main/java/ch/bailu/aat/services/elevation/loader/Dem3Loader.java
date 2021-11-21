@@ -2,19 +2,19 @@ package ch.bailu.aat.services.elevation.loader;
 
 import java.io.Closeable;
 
+import ch.bailu.aat_lib.app.AppContext;
 import ch.bailu.aat_lib.coordinates.Dem3Coordinates;
-import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat_lib.service.elevation.Dem3Status;
-import ch.bailu.aat_lib.service.elevation.tile.Dem3Tile;
 import ch.bailu.aat_lib.service.elevation.ElevationProvider;
+import ch.bailu.aat_lib.service.elevation.tile.Dem3Tile;
 
 public final class Dem3Loader implements Closeable, ElevationProvider {
     private final Dem3TileLoader loader;
     private final Dem3Tiles tiles;
 
-    public Dem3Loader(ServiceContext sc, Dem3Tiles t) {
+    public Dem3Loader(AppContext appContext, Dem3Tiles t) {
         tiles = t;
-        loader = new Dem3TileLoader(sc, tiles);
+        loader = new Dem3TileLoader(appContext, tiles);
     }
 
     @Override

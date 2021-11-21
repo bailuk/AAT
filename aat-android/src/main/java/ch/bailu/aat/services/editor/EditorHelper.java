@@ -1,17 +1,16 @@
 package ch.bailu.aat.services.editor;
 
-import ch.bailu.aat.preferences.system.AndroidSolidDataDirectory;
-import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.cache.ObjGpxEditable;
-import ch.bailu.aat_lib.service.cache.Obj;
-import ch.bailu.aat_lib.service.cache.ObjNull;
+import ch.bailu.aat_lib.app.AppContext;
 import ch.bailu.aat_lib.gpx.GpxInformation;
 import ch.bailu.aat_lib.gpx.InfoID;
+import ch.bailu.aat_lib.service.cache.Obj;
+import ch.bailu.aat_lib.service.cache.ObjNull;
 import ch.bailu.aat_lib.util.fs.AppDirectory;
 import ch.bailu.foc.Foc;
 
 public final class EditorHelper {
-    private final ServiceContext scontext;
+    private final AppContext appContext;
 
 
     private Obj handle = ObjNull.NULL;
@@ -21,11 +20,11 @@ public final class EditorHelper {
     private String vid;
 
 
-    public EditorHelper(ServiceContext sc) {
-        scontext = sc;
+    public EditorHelper(AppContext sc) {
+        appContext = sc;
 
         IID = InfoID.EDITOR_DRAFT;
-        file = AppDirectory.getEditorDraft(new AndroidSolidDataDirectory(scontext.getContext()));
+        file = AppDirectory.getEditorDraft(appContext.getDataDirectory());
         vid = ObjGpxEditable.getVirtualID(file);
     }
 
@@ -40,7 +39,7 @@ public final class EditorHelper {
 
 
     public void onResume() {
-        Obj new_handle = scontext.getCacheService().getObject(
+        Obj new_handle = appContext.getServices().getCacheService().getObject(
                 vid,
                 new ObjGpxEditable.Factory(file));
 

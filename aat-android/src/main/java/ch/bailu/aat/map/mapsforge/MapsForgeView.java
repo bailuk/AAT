@@ -6,6 +6,7 @@ import org.mapsforge.core.model.LatLong;
 import org.mapsforge.map.model.common.Observer;
 
 import ch.bailu.aat.map.MapDensity;
+import ch.bailu.aat_lib.app.AppContext;
 import ch.bailu.aat_lib.map.layer.MapPositionLayer;
 import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat.services.ServiceContext;
@@ -17,10 +18,10 @@ public class MapsForgeView extends MapsForgeViewBase {
     private final MapsForgeTileLayerStackConfigured stack;
     private final MapPositionLayer pos;
 
-    public MapsForgeView(ServiceContext sc, DispatcherInterface dispatcher, String key) {
+    public MapsForgeView(AppContext appContext, ServiceContext sc, DispatcherInterface dispatcher, String key) {
         super(sc, key, new MapDensity(sc.getContext()));
 
-        stack = new MapsForgeTileLayerStackConfigured.All(this);
+        stack = new MapsForgeTileLayerStackConfigured.All(this, appContext);
         add(stack, stack);
 
         // Depends on zoom limits (setItem by TileLayerStack)

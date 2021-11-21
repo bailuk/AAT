@@ -1,7 +1,5 @@
 package ch.bailu.aat.preferences.map;
 
-import android.content.Context;
-
 import org.mapsforge.map.rendertheme.ExternalRenderTheme;
 import org.mapsforge.map.rendertheme.InternalRenderTheme;
 import org.mapsforge.map.rendertheme.XmlRenderTheme;
@@ -10,31 +8,28 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
-import ch.bailu.aat.R;
-import ch.bailu.aat.factory.AndroidFocFactory;
-import ch.bailu.aat.preferences.Storage;
+import ch.bailu.aat_lib.factory.FocFactory;
 import ch.bailu.aat_lib.preferences.SolidFile;
+import ch.bailu.aat_lib.preferences.map.SolidMapsForgeDirectory;
+import ch.bailu.aat_lib.resources.Res;
 import ch.bailu.foc.Foc;
 
 public class SolidRenderTheme extends SolidFile {
 
     private final static String EXTENSION = ".xml";
 
-    private final Context context;
+    private final SolidMapsForgeDirectory mapsForgeDirectory;
 
-    public SolidRenderTheme(Context c) {
-        super(new Storage(c), SolidRenderTheme.class.getSimpleName(), new AndroidFocFactory(c));
-        context = c;
+    public SolidRenderTheme(SolidMapsForgeDirectory mapsForgeDirectory, FocFactory focFactory) {
+        super(mapsForgeDirectory.getStorage(), SolidRenderTheme.class.getSimpleName(), focFactory);
+        this.mapsForgeDirectory = mapsForgeDirectory;
     }
 
-    public Context getContext() {
-        return context;
-    }
 
 
     @Override
     public String getLabel() {
-        return getContext().getString(R.string.p_mapsforge_theme);
+        return Res.str().p_mapsforge_theme();
     }
 
 
@@ -98,11 +93,11 @@ public class SolidRenderTheme extends SolidFile {
         list.add(InternalRenderTheme.DEFAULT.toString());
         list.add(InternalRenderTheme.OSMARENDER.toString());
 
-        Foc maps = new SolidMapsForgeDirectory(getContext()).getValueAsFile();
+        Foc maps = mapsForgeDirectory.getValueAsFile();
         add_ext(list, maps, EXTENSION);
         add_extInSubdirectories(list, maps, EXTENSION);
 
-        ArrayList<Foc> dirs = new SolidMapsForgeDirectory(getContext()).getWellKnownMapDirs();
+        ArrayList<Foc> dirs = mapsForgeDirectory.getWellKnownMapDirs();
         for (Foc dir: dirs) {
             add_ext(list, dir, EXTENSION);
             add_extInSubdirectories(list, dir, EXTENSION);

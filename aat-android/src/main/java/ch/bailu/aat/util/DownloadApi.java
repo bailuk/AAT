@@ -4,6 +4,7 @@ import android.content.Context;
 
 import java.io.UnsupportedEncodingException;
 
+import ch.bailu.aat_lib.app.AppContext;
 import ch.bailu.aat_lib.service.InsideContext;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat_lib.service.background.BackgroundTask;
@@ -21,20 +22,20 @@ public abstract class DownloadApi extends OsmApiConfiguration {
         private final String queryString;
         private final Foc queryFile;
 
-        public ApiQueryTask(Context c, String source, Foc target, String qs, Foc qf) {
-            super(c, source, target);
+        public ApiQueryTask(AppContext c, String source, Foc target, String qs, Foc qf) {
+            super(source, target, c.getDownloadConfig());
             queryString = qs;
             queryFile   = qf;
         }
 
 
         @Override
-        public long bgOnProcess(ServiceContext sc) {
+        public long bgOnProcess(AppContext sc) {
             try {
                 long size = bgDownload();
                 TextBackup.write(queryFile, queryString);
 
-                OldAppBroadcaster.broadcast(sc.getContext(),
+                sc.getBroadcaster().broadcast(
                         AppBroadcaster.FILE_CHANGED_ONDISK, getFile(), getSource());
 
                 return size;
@@ -46,7 +47,7 @@ public abstract class DownloadApi extends OsmApiConfiguration {
 
         @Override
         protected void logError(Exception e) {
-            AppLog.e(getContext(), e);
+            AppLog.e(e);
         }
     }
 
@@ -55,13 +56,13 @@ public abstract class DownloadApi extends OsmApiConfiguration {
 
 
     @Override
-    public void startTask(ServiceContext scontext) {
-        new InsideContext(scontext) {
+    public void startTask(AppContext appContext) {
+        new InsideContext(appContext.getServices()) {
             @Override
             public void run() {
 
                 try {
-                    BackgroundServiceInterface background = scontext.getBackgroundService();
+                    BackgroundServiceInterface background = appContext.getServices().getBackgroundService();
 
 
 
@@ -69,7 +70,7 @@ public abstract class DownloadApi extends OsmApiConfiguration {
                     final String url = getUrl(query);
 
                     task = new ApiQueryTask(
-                            scontext.getContext(),
+                            appContext,
                             url,
                             getResultFile(),
                             query,

@@ -2,8 +2,8 @@ package ch.bailu.aat_lib.service.elevation.tile;
 
 import javax.annotation.Nonnull;
 
-import ch.bailu.aat.preferences.map.SolidDem3Directory;
 import ch.bailu.aat_lib.coordinates.Dem3Coordinates;
+import ch.bailu.aat_lib.preferences.map.SolidDem3Directory;
 import ch.bailu.aat_lib.service.ServicesInterface;
 import ch.bailu.aat_lib.service.background.BackgroundTask;
 import ch.bailu.aat_lib.service.elevation.Dem3Lock;
@@ -57,7 +57,6 @@ public final class Dem3Tile implements ElevationProvider, DemProvider {
     private final Dem3Lock lock = new Dem3Lock();
 
 
-
     private BackgroundTask loader = BackgroundTask.NULL;
 
     @Nonnull
@@ -74,12 +73,12 @@ public final class Dem3Tile implements ElevationProvider, DemProvider {
 
 
 
-    public void reload(ServicesInterface sc) {
-        load(sc, coordinates.coordinates);
+    public void reload(ServicesInterface sc, SolidDem3Directory solidDem3Directory) {
+        load(sc, coordinates.coordinates, solidDem3Directory);
     }
 
 
-    public  synchronized void load(ServicesInterface sc, Dem3Coordinates c) {
+    public  synchronized void load(ServicesInterface sc, Dem3Coordinates c, SolidDem3Directory solidDem3Directory) {
 
         if (!lock.isLocked()) {
 
@@ -89,7 +88,7 @@ public final class Dem3Tile implements ElevationProvider, DemProvider {
                 status.setStatus(Dem3Status.LOADING);
                 coordinates.coordinates = c;
 
-                Foc file = new SolidDem3Directory(sc.getContext()).toFile(c);
+                Foc file = solidDem3Directory.toFile(c);
                 loader = new Dem3LoaderTask(file, array, status);
 
 

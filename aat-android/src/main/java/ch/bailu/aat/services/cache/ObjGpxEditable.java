@@ -1,13 +1,11 @@
 package ch.bailu.aat.services.cache;
 
-import android.content.Context;
-
-import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.editor.EditorInterface;
 import ch.bailu.aat.services.editor.GpxEditor;
-import ch.bailu.aat.util.OldAppBroadcaster;
+import ch.bailu.aat_lib.app.AppContext;
 import ch.bailu.aat_lib.coordinates.BoundingBoxE6;
 import ch.bailu.aat_lib.dispatcher.AppBroadcaster;
+import ch.bailu.aat_lib.dispatcher.Broadcaster;
 import ch.bailu.aat_lib.gpx.GpxInformation;
 import ch.bailu.aat_lib.gpx.GpxList;
 import ch.bailu.aat_lib.gpx.GpxPoint;
@@ -16,6 +14,7 @@ import ch.bailu.aat_lib.gpx.interfaces.GpxType;
 import ch.bailu.aat_lib.logger.AppLog;
 import ch.bailu.aat_lib.service.cache.Obj;
 import ch.bailu.aat_lib.service.cache.ObjGpx;
+import ch.bailu.aat_lib.service.cache.ObjGpxStatic;
 import ch.bailu.aat_lib.util.fs.AppDirectory;
 import ch.bailu.aat_lib.xml.writer.GpxListWriter;
 import ch.bailu.foc.Foc;
@@ -28,12 +27,12 @@ public final class ObjGpxEditable extends ObjGpx {
     private final GpxListEditor editor;
 
 
-    public ObjGpxEditable(String _id, Foc _file, ServiceContext sc) {
+    public ObjGpxEditable(String _id, Foc _file, AppContext sc) {
         super(_id);
         file = _file;
 
-        editor = new GpxListEditor(sc.getContext());
-        sc.getCacheService().addToBroadcaster(this);
+        editor = new GpxListEditor(sc.getBroadcaster());
+        sc.getServices().getCacheService().addToBroadcaster(this);
     }
 
     public GpxListEditor getEditor() {
@@ -41,8 +40,8 @@ public final class ObjGpxEditable extends ObjGpx {
     }
 
     @Override
-    public void onInsert(ServiceContext sc) {
-        Obj handle = sc.getCacheService().getObject(file.getPath(), new ObjGpxStatic.Factory());
+    public void onInsert(AppContext sc) {
+        Obj handle = sc.getServices().getCacheService().getObject(file.getPath(), new ObjGpxStatic.Factory());
 
         if (handle instanceof ObjGpx) {
             currentHandle = (ObjGpx) handle;
@@ -54,7 +53,7 @@ public final class ObjGpxEditable extends ObjGpx {
 
 
     @Override
-    public void onRemove(ServiceContext sc) {
+    public void onRemove(AppContext sc) {
         currentHandle.free();
         currentHandle=NULL;
     }
@@ -71,11 +70,11 @@ public final class ObjGpxEditable extends ObjGpx {
 
 
     @Override
-    public void onDownloaded(String id, String url, ServiceContext sc) {}
+    public void onDownloaded(String id, String url, AppContext sc) {}
 
 
     @Override
-    public void onChanged(String id, ServiceContext sc) {
+    public void onChanged(String id, AppContext sc) {
         if (id.equals(file.getPath())) {
             editor.loadIntoEditor(currentHandle.getGpxList());
         }
@@ -90,10 +89,9 @@ public final class ObjGpxEditable extends ObjGpx {
 
         private boolean modified = false;
 
-        private final Context context;
-
-        public GpxListEditor(Context c) {
-            context=c;
+        private final Broadcaster broadcaster;
+        public GpxListEditor(Broadcaster broadcaster) {
+            this.broadcaster = broadcaster;
         }
 
 
@@ -160,7 +158,7 @@ public final class ObjGpxEditable extends ObjGpx {
             setVisibleTrackPoint(editor.getSelectedPoint());
             setVisibleTrackSegment(editor.getList().getDelta());
 
-            OldAppBroadcaster.broadcast(context, AppBroadcaster.FILE_CHANGED_INCACHE, getID());
+            broadcaster.broadcast(AppBroadcaster.FILE_CHANGED_INCACHE, getID());
         }
 
         @Override
@@ -183,7 +181,7 @@ public final class ObjGpxEditable extends ObjGpx {
                 new GpxListWriter(editor.getList(),file).close();
                 modified=false;
 
-                OldAppBroadcaster.broadcast(context, AppBroadcaster.FILE_CHANGED_ONDISK, file.getPath(), getID());
+                broadcaster.broadcast(AppBroadcaster.FILE_CHANGED_ONDISK, file.getPath(), getID());
             } catch (Exception e) {
                 AppLog.e(this, e);
             }
@@ -242,7 +240,7 @@ public final class ObjGpxEditable extends ObjGpx {
 
                 new GpxListWriter(editor.getList(),file).close();
 
-                OldAppBroadcaster.broadcast(context, AppBroadcaster.FILE_CHANGED_ONDISK,
+                broadcaster.broadcast(AppBroadcaster.FILE_CHANGED_ONDISK,
                         file.getPath(), getID());
 
             } catch (Exception e) {
@@ -293,7 +291,7 @@ public final class ObjGpxEditable extends ObjGpx {
 
 
         @Override
-        public Obj factory(String id, ServiceContext sc) {
+        public Obj factory(String id, AppContext sc) {
             return new ObjGpxEditable(id, file, sc);
         }
 

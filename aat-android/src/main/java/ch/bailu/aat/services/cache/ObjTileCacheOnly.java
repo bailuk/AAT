@@ -1,22 +1,21 @@
 package ch.bailu.aat.services.cache;
 
-import android.graphics.Bitmap;
-
 import org.mapsforge.core.graphics.TileBitmap;
 import org.mapsforge.core.model.Tile;
 
 import ch.bailu.aat.map.tile.TileFlags;
 import ch.bailu.aat.map.tile.source.Source;
-import ch.bailu.aat_lib.preferences.map.SolidTileSize;
-import ch.bailu.aat.services.ServiceContext;
-import ch.bailu.aat_lib.service.background.FileTask;
-import ch.bailu.aat.util.OldAppBroadcaster;
 import ch.bailu.aat.util.graphic.SyncTileBitmap;
+import ch.bailu.aat_lib.app.AppContext;
 import ch.bailu.aat_lib.dispatcher.AppBroadcaster;
+import ch.bailu.aat_lib.preferences.map.SolidTileSize;
+import ch.bailu.aat_lib.service.ServicesInterface;
+import ch.bailu.aat_lib.service.background.FileTask;
 import ch.bailu.aat_lib.service.cache.Obj;
-import ch.bailu.foc.Foc;
-import ch.bailu.foc_android.FocAndroid;
+import ch.bailu.aat_lib.service.cache.ObjTile;
+import ch.bailu.aat_lib.service.cache.OnObject;
 import ch.bailu.aat_lib.util.Objects;
+import ch.bailu.foc.Foc;
 
 public class ObjTileCacheOnly extends ObjTile {
 
@@ -28,14 +27,14 @@ public class ObjTileCacheOnly extends ObjTile {
 
 
 
-    public ObjTileCacheOnly(String id, ServiceContext sc, Tile t, Source s) {
+    public ObjTileCacheOnly(String id, AppContext sc, Tile t, Source s) {
         super(id);
         tile = t;
-        file = FocAndroid.factory(sc.getContext(), id);
+        file = sc.toFoc(id);
 
         source = s;
 
-        sc.getCacheService().addToBroadcaster(this);
+        sc.getServices().getCacheService().addToBroadcaster(this);
 
     }
 
@@ -50,24 +49,27 @@ public class ObjTileCacheOnly extends ObjTile {
         return tile;
     }
 
-
     @Override
-    public void onInsert(ServiceContext sc) {
-        if (isLoadable()) load(sc);
+    public void reDownload(AppContext sc) {
+
     }
 
 
-    public void onRemove(ServiceContext sc) {
+    @Override
+    public void onInsert(AppContext sc) {
+        if (isLoadable()) load(sc.getServices());
+    }
+
+
+    public void onRemove(AppContext sc) {
         super.onRemove(sc);
         bitmap.free();
     }
 
-    @Override
-    public void reDownload(ServiceContext sc) {}
 
     @Override
     public boolean isLoaded() {
-        return getAndroidBitmap() != null;
+        return bitmap.isLoaded();
     }
 
 
@@ -78,9 +80,9 @@ public class ObjTileCacheOnly extends ObjTile {
 
 
     @Override
-    public void onDownloaded(String id, String u, ServiceContext sc) {
+    public void onDownloaded(String id, String u, AppContext sc) {
         if (Objects.equals(id, getID()) && isLoadable()) {
-            load(sc);
+            load(sc.getServices());
         }
     }
 
@@ -90,7 +92,7 @@ public class ObjTileCacheOnly extends ObjTile {
         return getFile().exists();
     }
 
-    protected void load(ServiceContext sc) {
+    protected void load(ServicesInterface sc) {
         sc.getBackgroundService().process(new TileLoaderTask(file));
     }
 
@@ -104,21 +106,16 @@ public class ObjTileCacheOnly extends ObjTile {
 
 
     @Override
-    public void onChanged(String id, ServiceContext sc) {}
+    public void onChanged(String id, AppContext sc) {}
 
 
 
     @Override
     public long getSize() {
-        return getSize(bitmap, SolidTileSize.DEFAULT_TILESIZE_BYTES);
+        return bitmap.getSize();
     }
 
 
-
-    @Override
-    public Bitmap getAndroidBitmap() {
-        return bitmap.getAndroidBitmap();
-    }
 
     @Override
     public Foc getFile() {
@@ -132,7 +129,7 @@ public class ObjTileCacheOnly extends ObjTile {
         }
 
         @Override
-        public long bgOnProcess(final ServiceContext sc) {
+        public long bgOnProcess(final AppContext sc) {
             final long[] size = {0};
 
 
@@ -147,7 +144,7 @@ public class ObjTileCacheOnly extends ObjTile {
                             TileFlags.ALWAYS_TRANSPARENT || tile.source.isTransparent());
 
 
-                    OldAppBroadcaster.broadcast(sc.getContext(), AppBroadcaster.FILE_CHANGED_INCACHE,
+                    sc.getBroadcaster().broadcast(AppBroadcaster.FILE_CHANGED_INCACHE,
                             getFile());
 
                     size[0] =  tile.bitmap.getSize();
@@ -173,7 +170,7 @@ public class ObjTileCacheOnly extends ObjTile {
         }
 
         @Override
-        public Obj factory(String id, ServiceContext cs) {
+        public Obj factory(String id, AppContext cs) {
             return new ObjTileCacheOnly(id, cs, tile, source);
         }
     }

@@ -2,14 +2,14 @@ package ch.bailu.aat.services.cache.elevation;
 
 import org.mapsforge.core.model.Tile;
 
-import ch.bailu.aat.services.ServiceContext;
+import ch.bailu.aat.services.elevation.tile.DemSplitter;
+import ch.bailu.aat.services.elevation.tile.MultiCell;
+import ch.bailu.aat.services.elevation.tile.MultiCell8;
+import ch.bailu.aat_lib.app.AppContext;
 import ch.bailu.aat_lib.service.cache.Obj;
 import ch.bailu.aat_lib.service.elevation.tile.DemDimension;
 import ch.bailu.aat_lib.service.elevation.tile.DemGeoToIndex;
 import ch.bailu.aat_lib.service.elevation.tile.DemProvider;
-import ch.bailu.aat.services.elevation.tile.DemSplitter;
-import ch.bailu.aat.services.elevation.tile.MultiCell;
-import ch.bailu.aat.services.elevation.tile.MultiCell8;
 
 public final class ObjTileHillshade extends ObjTileElevation {
 
@@ -21,9 +21,9 @@ public final class ObjTileHillshade extends ObjTileElevation {
 
 
     @Override
-    public void onInsert(ServiceContext sc) {
+    public void onInsert(AppContext sc) {
         table=(ObjHillshadeColorTable)
-                sc.getCacheService().getObject(
+                sc.getServices().getCacheService().getObject(
                         ObjHillshadeColorTable.ID,
                         ObjHillshadeColorTable.FACTORY);
 
@@ -40,7 +40,7 @@ public final class ObjTileHillshade extends ObjTileElevation {
 
 
     @Override
-    public void onChanged(String id, ServiceContext sc) {
+    public void onChanged(String id, AppContext sc) {
         if (ObjHillshadeColorTable.ID.equals(id)) {
             requestElevationUpdates(sc);
         }
@@ -48,7 +48,7 @@ public final class ObjTileHillshade extends ObjTileElevation {
     }
 
     @Override
-    public void onRemove(ServiceContext sc) {
+    public void onRemove(AppContext sc) {
         super.onRemove(sc);
         table.free();
     }
@@ -140,7 +140,7 @@ public final class ObjTileHillshade extends ObjTileElevation {
         }
 
         @Override
-        public Obj factory(String id, ServiceContext sc) {
+        public Obj factory(String id, AppContext sc) {
             return  new ObjTileHillshade(id, mapTile);
         }
 

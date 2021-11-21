@@ -3,7 +3,6 @@ package ch.bailu.aat.services;
 import android.app.Notification;
 
 import ch.bailu.aat.services.elevation.ElevationService;
-import ch.bailu.aat.services.render.RenderService;
 import ch.bailu.aat.services.tileremover.TileRemoverService;
 import ch.bailu.aat.util.ContextWrapperInterface;
 import ch.bailu.aat_lib.service.IconMapServiceInterface;
@@ -21,7 +20,6 @@ public interface ServiceContext extends ContextWrapperInterface, ServicesInterfa
     ElevationService getElevationService();
     IconMapServiceInterface getIconMapService();
     TileRemoverService getTileRemoverService();
-    RenderService getRenderService();
     SensorServiceInterface getSensorService();
 
     void startForeground(int id, Notification notification);

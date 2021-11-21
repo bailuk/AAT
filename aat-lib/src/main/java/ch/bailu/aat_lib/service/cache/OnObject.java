@@ -1,8 +1,7 @@
-package ch.bailu.aat.services.cache;
+package ch.bailu.aat_lib.service.cache;
 
 import ch.bailu.aat_lib.app.AppContext;
 import ch.bailu.aat_lib.service.InsideContext;
-import ch.bailu.aat_lib.service.cache.Obj;
 
 
 public abstract class OnObject {

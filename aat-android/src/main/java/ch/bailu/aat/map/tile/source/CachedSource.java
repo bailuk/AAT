@@ -1,10 +1,9 @@
 package ch.bailu.aat.map.tile.source;
 
-import android.content.Context;
-
 import org.mapsforge.core.model.Tile;
 
 import ch.bailu.aat.services.cache.ObjTileCached;
+import ch.bailu.aat_lib.app.AppContext;
 import ch.bailu.aat_lib.service.cache.Obj;
 
 public class CachedSource extends Source {
@@ -19,7 +18,7 @@ public class CachedSource extends Source {
     }
 
     @Override
-    public String getID(Tile aTile, Context context) {
+    public String getID(Tile aTile, AppContext context) {
         return "Cached" + source.getID(aTile, context);
     }
 

@@ -10,7 +10,7 @@ import ch.bailu.aat.map.tile.source.Source;
 import ch.bailu.aat.preferences.map.SolidEnableTileCache;
 import ch.bailu.aat.preferences.map.SolidMapTileStack;
 import ch.bailu.aat.preferences.map.SolidRenderTheme;
-import ch.bailu.aat.services.ServiceContext;
+import ch.bailu.aat_lib.app.AppContext;
 import ch.bailu.aat_lib.preferences.StorageInterface;
 
 public abstract class MapsForgeTileLayerStackConfigured extends MapsForgeTileLayerStack {
@@ -21,18 +21,18 @@ public abstract class MapsForgeTileLayerStackConfigured extends MapsForgeTileLay
     private final SolidRenderTheme stheme;
 
     private final MapsForgeViewBase mapView;
-    protected final ServiceContext scontext;
+    protected final AppContext scontext;
 
-    public MapsForgeTileLayerStackConfigured(MapsForgeViewBase v) {
+    public MapsForgeTileLayerStackConfigured(MapsForgeViewBase v, AppContext appContext) {
         super(To.scontext(v.getMContext()));
 
-        scontext = To.scontext(v.getMContext());
+        scontext = appContext;
 
         mapView = v;
-        stiles = new SolidMapTileStack(scontext.getContext());
-        stheme = new SolidRenderTheme(scontext.getContext());
-        scacheMF = new SolidEnableTileCache.MapsForge(scontext.getContext());
-        scacheHS = new SolidEnableTileCache.Hillshade(scontext.getContext());
+        stheme = new SolidRenderTheme(appContext.getMapDirectory(), appContext);
+        stiles = new SolidMapTileStack(stheme);
+        scacheMF = new SolidEnableTileCache.MapsForge(appContext.getStorage());
+        scacheHS = new SolidEnableTileCache.Hillshade(appContext.getStorage());
 
         initLayers();
     }
@@ -93,8 +93,8 @@ public abstract class MapsForgeTileLayerStackConfigured extends MapsForgeTileLay
 
 
     public static class BackgroundOnly extends MapsForgeTileLayerStackConfigured {
-        public BackgroundOnly(MapsForgeViewBase v) {
-            super(v);
+        public BackgroundOnly(MapsForgeViewBase v, AppContext appContext) {
+            super(v, appContext);
         }
 
         @Override
@@ -114,7 +114,7 @@ public abstract class MapsForgeTileLayerStackConfigured extends MapsForgeTileLay
 
             if (download != null && mapsforge != null) {
                 addLayer(new TileProvider(scontext,
-                        new DoubleSource(scontext, mapsforge, download, 6)));
+                        new DoubleSource(scontext.getServices(), mapsforge, download, 6)));
 
             } else if (download != null) {
                 addLayer(new TileProvider(scontext, download));
@@ -132,8 +132,8 @@ public abstract class MapsForgeTileLayerStackConfigured extends MapsForgeTileLay
 
 
     public static class All extends BackgroundOnly {
-        public All(MapsForgeViewBase v) {
-            super(v);
+        public All(MapsForgeViewBase v, AppContext appContext) {
+            super(v, appContext);
         }
 
         @Override

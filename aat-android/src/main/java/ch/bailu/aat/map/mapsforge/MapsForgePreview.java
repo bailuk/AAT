@@ -2,7 +2,6 @@ package ch.bailu.aat.map.mapsforge;
 
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 
@@ -34,6 +33,7 @@ import ch.bailu.aat.preferences.map.SolidRenderTheme;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.util.OldAppBroadcaster;
 import ch.bailu.aat.util.graphic.SyncTileBitmap;
+import ch.bailu.aat_lib.app.AppContext;
 import ch.bailu.aat_lib.dispatcher.AppBroadcaster;
 import ch.bailu.aat_lib.gpx.GpxInformation;
 import ch.bailu.aat_lib.gpx.InfoID;
@@ -55,7 +55,7 @@ public class MapsForgePreview extends MapsForgeViewBase implements MapPreviewInt
     private final BoundingBox bounding;
     private final Point tlPoint;
 
-    public MapsForgePreview(ServiceContext scontext, GpxInformation info, Foc out) throws IllegalArgumentException {
+    public MapsForgePreview(ServiceContext scontext, AppContext appContext, GpxInformation info, Foc out) throws IllegalArgumentException {
         super(scontext, MapsForgePreview.class.getSimpleName(), new MapDensity());
 
 
@@ -64,7 +64,7 @@ public class MapsForgePreview extends MapsForgeViewBase implements MapPreviewInt
         getModel().mapViewDimension.setDimension(DIM);
 
         imageFile = out;
-        provider = new TileProvider(scontext, getSource(scontext.getContext()));
+        provider = new TileProvider(appContext, getSource(new SolidRenderTheme(appContext.getMapDirectory(), appContext)));
 
         MapsForgeTileLayer tileLayer = new MapsForgeTileLayer(scontext, provider);
         add(tileLayer, tileLayer);
@@ -97,14 +97,15 @@ public class MapsForgePreview extends MapsForgeViewBase implements MapPreviewInt
     }
 
 
-    private static Source getSource(Context c) {
-        SolidMapTileStack tiles = new SolidMapTileStack(c);
+    private static Source getSource(SolidRenderTheme stheme) {
+        SolidMapTileStack tiles = new SolidMapTileStack(stheme);
 
         boolean[] enabled = tiles.getEnabledArray();
 
         if (enabled[0]) {
-            String theme =
-                    new SolidRenderTheme(c).getValueAsString();
+
+            String theme = stheme.getValueAsString();
+
 
             MapsForgeSource mfs = new MapsForgeSource(theme);
             return new CacheOnlySource(mfs);

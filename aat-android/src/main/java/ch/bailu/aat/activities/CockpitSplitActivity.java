@@ -52,7 +52,7 @@ public class CockpitSplitActivity extends AbsKeepScreenOnActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        EditorSource edit = new EditorSource(getServiceContext());
+        EditorSource edit = new EditorSource(getAppContext());
         setContentView(createContentView(edit));
         createDispatcher(edit);
     }
@@ -60,7 +60,7 @@ public class CockpitSplitActivity extends AbsKeepScreenOnActivity {
 
 
     private View createContentView(EditorSource edit) {
-        final MapsForgeViewBase mapSlave = MapFactory.DEF(this, SOLID_KEY).split();
+        final MapsForgeViewBase mapSlave = MapFactory.DEF(getAppContext(),this, SOLID_KEY).split();
         final CockpitView cockpitA = new CockpitView(this, THEME);
         final CockpitView cockpitB = new CockpitView(this, THEME);
         final CockpitView cockpitC = new CockpitView(this, THEME);
@@ -117,7 +117,7 @@ public class CockpitSplitActivity extends AbsKeepScreenOnActivity {
         mv.add(mapSlave);
 
         MapsForgeViewBase mapMaster =
-                MapFactory.DEF(this, SOLID_MAP_KEY).map(edit, createButtonBar(mv));
+                MapFactory.DEF(getAppContext(),this, SOLID_MAP_KEY).map(edit, createButtonBar(mv));
 
         new MapViewLinker(mapMaster, mapSlave);
 
@@ -158,7 +158,7 @@ public class CockpitSplitActivity extends AbsKeepScreenOnActivity {
         addSource(new TrackerSource(getServiceContext(),getBroadcaster()));
         addSource(new TrackerTimerSource(getServiceContext()));
         addSource(new CurrentLocationSource(getServiceContext(),getBroadcaster()));
-        addSource(new OverlaySource(getServiceContext()));
+        addSource(new OverlaySource(getAppContext()));
         addSource(new SensorSource(getServiceContext(), InfoID.HEART_RATE_SENSOR));
         addSource(new SensorSource(getServiceContext(), InfoID.POWER_SENSOR));
         addSource(new SensorSource(getServiceContext(), InfoID.CADENCE_SENSOR));

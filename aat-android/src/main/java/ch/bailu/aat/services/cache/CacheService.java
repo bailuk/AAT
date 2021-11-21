@@ -1,21 +1,16 @@
 package ch.bailu.aat.services.cache;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-
-import ch.bailu.aat.preferences.Storage;
+import ch.bailu.aat_lib.app.AppContext;
+import ch.bailu.aat_lib.dispatcher.AppBroadcaster;
+import ch.bailu.aat_lib.dispatcher.BroadcastReceiver;
+import ch.bailu.aat_lib.preferences.OnPreferencesChanged;
+import ch.bailu.aat_lib.preferences.StorageInterface;
 import ch.bailu.aat_lib.preferences.system.SolidCacheSize;
-import ch.bailu.aat.services.ServiceContext;
+import ch.bailu.aat_lib.service.VirtualService;
 import ch.bailu.aat_lib.service.cache.CacheServiceInterface;
 import ch.bailu.aat_lib.service.cache.Obj;
 import ch.bailu.aat_lib.service.cache.ObjBroadcastReceiver;
 import ch.bailu.aat_lib.util.MemSize;
-import ch.bailu.aat.util.OldAppBroadcaster;
-import ch.bailu.aat_lib.dispatcher.AppBroadcaster;
-import ch.bailu.aat_lib.preferences.OnPreferencesChanged;
-import ch.bailu.aat_lib.preferences.StorageInterface;
-import ch.bailu.aat_lib.service.VirtualService;
 import ch.bailu.aat_lib.util.WithStatusText;
 
 
@@ -26,20 +21,20 @@ public final class CacheService extends VirtualService implements CacheServiceIn
     public final ObjectTable table=new ObjectTable();
     public final ObjectBroadcaster broadcaster;
 
-    public final ServiceContext scontext;
+    public final AppContext appContext;
 
     private final SolidCacheSize slimit;
 
-    public CacheService(ServiceContext sc) {
-        scontext = sc;
+    public CacheService(AppContext sc) {
+        appContext = sc;
         broadcaster = new ObjectBroadcaster(sc);
 
-        slimit = new SolidCacheSize(new Storage(sc.getContext()));
+        slimit = new SolidCacheSize(sc.getStorage());
         slimit.register(this);
 
         table.limit(this, slimit.getValueAsLong());
 
-        OldAppBroadcaster.register(sc.getContext(), onFileProcessed, AppBroadcaster.FILE_CHANGED_INCACHE);
+        sc.getBroadcaster().register(onFileProcessed, AppBroadcaster.FILE_CHANGED_INCACHE);
     }
 
     public void onLowMemory() {
@@ -53,7 +48,7 @@ public final class CacheService extends VirtualService implements CacheServiceIn
     }
 
     public Obj getObject(String id) {
-        return table.getHandle(id, scontext);
+        return table.getHandle(id, appContext);
     }
 
     @Override
@@ -63,10 +58,9 @@ public final class CacheService extends VirtualService implements CacheServiceIn
 
 
     public void close() {
-        scontext.getContext().unregisterReceiver(onFileProcessed);
+        appContext.getBroadcaster().unregister(onFileProcessed);
 
         slimit.unregister(this);
-        table.logLocked();
         broadcaster.close();
         table.close(this);
     }
@@ -78,14 +72,10 @@ public final class CacheService extends VirtualService implements CacheServiceIn
 
     private final BroadcastReceiver onFileProcessed = new BroadcastReceiver() {
         @Override
-        public void onReceive(Context context, Intent intent) {
-            table.onObjectChanged(intent, CacheService.this);
+        public void onReceive(Object... objs) {
+            table.onObjectChanged(CacheService.this, objs);
         }
     };
-
-    public void log() {
-        table.log();
-    }
 
     @Override
     public void onPreferencesChanged(StorageInterface s, String key) {

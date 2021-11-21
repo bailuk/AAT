@@ -1,7 +1,6 @@
 package ch.bailu.aat_lib.service.directory;
 
-import ch.bailu.aat_lib.dispatcher.Broadcaster;
-import ch.bailu.aat_lib.factory.FocFactory;
+import ch.bailu.aat_lib.app.AppContext;
 import ch.bailu.aat_lib.preferences.OnPreferencesChanged;
 import ch.bailu.aat_lib.preferences.SolidDirectoryQuery;
 import ch.bailu.aat_lib.preferences.StorageInterface;
@@ -9,7 +8,6 @@ import ch.bailu.aat_lib.service.ServicesInterface;
 import ch.bailu.aat_lib.service.VirtualService;
 import ch.bailu.aat_lib.util.fs.AFile;
 import ch.bailu.aat_lib.util.sql.DbException;
-import ch.bailu.aat_lib.util.sql.DbFactory;
 import ch.bailu.aat_lib.util.sql.ResultSet;
 import ch.bailu.foc.Foc;
 
@@ -18,24 +16,15 @@ public final class DirectoryService extends VirtualService implements OnPreferen
 
     private AbsDatabase database=AbsDatabase.NULL_DATABASE;
     private final SolidDirectoryQuery sdirectory;
-    private final SummaryConfig summaryConfig;
     private DirectorySynchronizer synchronizer=null;
 
     private final ServicesInterface scontext;
-    private final DbFactory dbFactory;
-    private final FocFactory focFactory;
-    private final Broadcaster broadcaster;
-    private final MapPreviewFactory mapPreviewFactory;
+    private final AppContext appContext;
 
-
-    public DirectoryService(ServicesInterface scontext, StorageInterface storage, FocFactory focFactory, SummaryConfig summaryConfig, DbFactory dbFactory, Broadcaster broadcaster, MapPreviewFactory mapPreviewFactory) {
-        this.mapPreviewFactory = mapPreviewFactory;
-        this.summaryConfig = summaryConfig;
-        this.broadcaster = broadcaster;
-        this.focFactory = focFactory;
-        this.scontext = scontext;
-        this.dbFactory = dbFactory;
-        sdirectory = new SolidDirectoryQuery(storage, focFactory);
+    public DirectoryService(AppContext appContext) {
+        this.appContext = appContext;
+        this.scontext = appContext.getServices();
+        sdirectory = new SolidDirectoryQuery(appContext.getStorage(), appContext);
         sdirectory.getStorage().register(this);
 
         openDir(sdirectory.getValueAsFile());
@@ -63,7 +52,7 @@ public final class DirectoryService extends VirtualService implements OnPreferen
 
 
     private void open(Foc dir) {
-        final String dbPath = summaryConfig.getDBPath(dir);
+        final String dbPath = appContext.getSummaryConfig().getDBPath(dir);
 
         try {
             openDataBase(dbPath);
@@ -77,7 +66,7 @@ public final class DirectoryService extends VirtualService implements OnPreferen
 
     private void openDataBase(String dbPath) throws DbException {
         database.close();
-        database = new GpxDatabase(dbFactory.createDataBase(), dbPath);
+        database = new GpxDatabase(appContext.createDataBase(), dbPath);
     }
 
 
@@ -102,7 +91,7 @@ public final class DirectoryService extends VirtualService implements OnPreferen
     private void rescan(Foc dir) {
         if (dir.canRead()) {
             stopSynchronizer();
-            synchronizer = new DirectorySynchronizer(scontext, broadcaster, focFactory, summaryConfig, dbFactory, mapPreviewFactory,dir);
+            synchronizer = new DirectorySynchronizer(appContext,dir);
         }
     }
 

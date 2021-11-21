@@ -7,17 +7,16 @@ import android.graphics.Rect;
 import org.mapsforge.core.graphics.TileBitmap;
 import org.mapsforge.core.model.Tile;
 
+import ch.bailu.aat.services.elevation.tile.DemSplitter;
+import ch.bailu.aat.util.graphic.SyncTileBitmap;
+import ch.bailu.aat_lib.app.AppContext;
 import ch.bailu.aat_lib.preferences.map.SolidTileSize;
-import ch.bailu.aat.services.ServiceContext;
-import ch.bailu.aat.services.cache.ObjTile;
+import ch.bailu.aat_lib.service.cache.ObjTile;
 import ch.bailu.aat_lib.service.elevation.tile.Dem3Tile;
 import ch.bailu.aat_lib.service.elevation.tile.DemDimension;
 import ch.bailu.aat_lib.service.elevation.tile.DemGeoToIndex;
 import ch.bailu.aat_lib.service.elevation.tile.DemProvider;
-import ch.bailu.aat.services.elevation.tile.DemSplitter;
-import ch.bailu.aat.services.elevation.updater.ElevationUpdaterClient;
-import ch.bailu.aat.util.graphic.SyncTileBitmap;
-import ch.bailu.aat_lib.service.ServicesInterface;
+import ch.bailu.aat_lib.service.elevation.updater.ElevationUpdaterClient;
 
 public abstract class ObjTileElevation extends ObjTile implements ElevationUpdaterClient {
 
@@ -81,44 +80,35 @@ public abstract class ObjTileElevation extends ObjTile implements ElevationUpdat
 
 
     @Override
-    public void onInsert(ServiceContext sc) {
-        sc.getCacheService().addToBroadcaster(this);
+    public void onInsert(AppContext appContext) {
+        appContext.getServices().getCacheService().addToBroadcaster(this);
 
         if (!raster.isInitialized()) {
-            sc.getBackgroundService().process(new RasterInitializer(getID()));
+            appContext.getServices().getBackgroundService().process(new RasterInitializer(getID()));
         }
     }
 
 
-    public void onRemove(ServiceContext sc) {
-        sc.getElevationService().cancelElevationUpdates(this);
+    public void onRemove(AppContext appContext) {
+        appContext.getServices().getElevationService().cancelElevationUpdates(this);
 
-        super.onRemove(sc);
+        super.onRemove(appContext);
         bitmap.free();
     }
 
+    @Override
+    public void onChanged(String id, AppContext appContext) {}
 
     @Override
-    public void onChanged(String id, ServiceContext sc) {
-    }
-
-
-    @Override
-    public void onDownloaded(String id, String url, ServiceContext sc) {
+    public void onDownloaded(String id, String url, AppContext appContext) {
         if (subTiles.haveID(url)) {
-            requestElevationUpdates(sc);
+            requestElevationUpdates(appContext);
         }
-    }
-
-
-    @Override
-    public Bitmap getAndroidBitmap() {
-        return bitmap.getAndroidBitmap();
     }
 
     @Override
     public long getSize() {
-        return getSize(bitmap, SolidTileSize.DEFAULT_TILESIZE_BYTES);
+        return bitmap.getSize();
     }
 
 
@@ -135,13 +125,13 @@ public abstract class ObjTileElevation extends ObjTile implements ElevationUpdat
 
 
     @Override
-    public void updateFromSrtmTile(ServicesInterface sc, Dem3Tile tile) {
-        sc.getBackgroundService().process(new SubTilePainter(sc, getID(), tile));
+    public void updateFromSrtmTile(AppContext appContext, Dem3Tile tile) {
+        appContext.getServices().getBackgroundService().process(new SubTilePainter(appContext.getServices(), getID(), tile));
     }
 
 
     @Override
-    public void reDownload(ServiceContext sc) {
+    public void reDownload(AppContext sc) {
 
     }
 
@@ -208,17 +198,17 @@ public abstract class ObjTileElevation extends ObjTile implements ElevationUpdat
         }
     }
 
-    public long bgOnProcessInitializer(ServiceContext sc) {
+    public long bgOnProcessInitializer(AppContext a) {
 
         raster.initialize(getTile(), getGeoToIndex(), subTiles);
-        requestElevationUpdates(sc);
+        requestElevationUpdates(a);
 
         return SolidTileSize.DEFAULT_TILESIZE * 2;
     }
 
 
-    public void requestElevationUpdates(ServiceContext sc) {
+    public void requestElevationUpdates(AppContext appContext) {
         if (isInitialized())
-            sc.getElevationService().requestElevationUpdates(this, subTiles.toSrtmCoordinates());
+            appContext.getServices().getElevationService().requestElevationUpdates(this, subTiles.toSrtmCoordinates());
     }
 }

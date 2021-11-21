@@ -1,4 +1,4 @@
-package ch.bailu.aat_gtk.util
+package ch.bailu.aat_lib.util
 
 class IndexedMap<K, V> {
     private val keys = ArrayList<K>()

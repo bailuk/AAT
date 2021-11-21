@@ -3,11 +3,14 @@ package ch.bailu.aat.preferences;
 import android.app.Activity;
 import android.content.Context;
 
-import ch.bailu.aat_lib.preferences.general.SolidWeight;
+import ch.bailu.aat.factory.AndroidFocFactory;
+import ch.bailu.aat.preferences.map.AndroidSolidMapsForgeDirectory;
 import ch.bailu.aat.preferences.map.SolidMapTileStack;
+import ch.bailu.aat.preferences.map.SolidRenderTheme;
 import ch.bailu.aat.util.AppPermission;
 import ch.bailu.aat_lib.preferences.OldSolidMET;
 import ch.bailu.aat_lib.preferences.SolidLong;
+import ch.bailu.aat_lib.preferences.general.SolidWeight;
 
 public class PreferenceLoadDefaults {
     private static final String KEY_STARTCOUNT="start_count";
@@ -25,7 +28,8 @@ public class PreferenceLoadDefaults {
 
 
     private void setDefaults(Context c) {
-        new SolidMapTileStack(c).setDefaults();
+        SolidRenderTheme stheme = new SolidRenderTheme(new AndroidSolidMapsForgeDirectory(c), new AndroidFocFactory(c));
+        new SolidMapTileStack(stheme).setDefaults();
         new SolidWeight(new Storage(c)).setDefaults();
         OldSolidMET.setDefaults(new Storage(c));
     }

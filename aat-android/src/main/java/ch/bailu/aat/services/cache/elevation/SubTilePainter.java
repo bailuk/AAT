@@ -5,7 +5,7 @@ import ch.bailu.aat_lib.service.InsideContext;
 import ch.bailu.aat_lib.service.ServicesInterface;
 import ch.bailu.aat_lib.service.background.BackgroundTask;
 import ch.bailu.aat_lib.service.cache.Obj;
-import ch.bailu.aat.services.cache.OnObject;
+import ch.bailu.aat_lib.service.cache.OnObject;
 import ch.bailu.aat_lib.service.elevation.tile.Dem3Tile;
 import ch.bailu.aat_lib.dispatcher.AppBroadcaster;
 

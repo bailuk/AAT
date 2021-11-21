@@ -1,12 +1,11 @@
 package ch.bailu.aat.map.tile.source;
 
-import android.content.Context;
-
 import org.mapsforge.core.model.Tile;
 
-import ch.bailu.aat_lib.service.cache.Obj;
 import ch.bailu.aat.services.cache.elevation.ObjTileElevationColor;
 import ch.bailu.aat.services.cache.elevation.ObjTileHillshade;
+import ch.bailu.aat_lib.app.AppContext;
+import ch.bailu.aat_lib.service.cache.Obj;
 
 public abstract class Source {
     public final static String EXT = ".png";
@@ -15,7 +14,7 @@ public abstract class Source {
     public final static int OPAQUE = 255;
 
     public abstract String getName();
-    public abstract String getID(Tile aTile, Context context);
+    public abstract String getID(Tile aTile, AppContext context);
 
     public abstract int getMinimumZoomLevel();
     public abstract int getMaximumZoomLevel();
@@ -51,7 +50,7 @@ public abstract class Source {
                 }
 
                 @Override
-                public String getID(Tile t, Context x) {
+                public String getID(Tile t, AppContext x) {
                     return genID(t, NAME);
                 }
 
@@ -91,7 +90,7 @@ public abstract class Source {
                 }
 
                 @Override
-                public String getID(Tile t, Context x) {
+                public String getID(Tile t, AppContext x) {
                     return Source.genID(t, ObjTileElevationColor.class.getSimpleName());
                 }
 

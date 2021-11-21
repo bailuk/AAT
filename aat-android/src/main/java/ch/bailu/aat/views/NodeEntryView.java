@@ -6,7 +6,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import ch.bailu.aat.activities.AbsDispatcher;
-import ch.bailu.aat_lib.map.layer.gpx.GpxDynLayer;
 import ch.bailu.aat.map.mapsforge.MapsForgeViewStatic;
 import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat.services.ServiceContext;
@@ -18,6 +17,7 @@ import ch.bailu.aat.util.ui.UiTheme;
 import ch.bailu.aat_lib.coordinates.BoundingBoxE6;
 import ch.bailu.aat_lib.gpx.GpxInformation;
 import ch.bailu.aat_lib.gpx.GpxPointNode;
+import ch.bailu.aat_lib.map.layer.gpx.GpxDynLayer;
 
 public class NodeEntryView extends LinearLayout {
 
@@ -36,7 +36,7 @@ public class NodeEntryView extends LinearLayout {
         int previewSize = AppLayout.getBigButtonSize(sc.getContext());
 
 
-        map =  new MapsForgeViewStatic(sc);
+        map =  new MapsForgeViewStatic(d.getAppContext(), sc);
         d.addLC(map);
 
         gpxOverlay = new GpxDynLayer(new Storage(getContext()), map.getMContext(), sc);

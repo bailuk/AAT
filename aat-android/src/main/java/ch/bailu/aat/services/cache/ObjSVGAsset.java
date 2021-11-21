@@ -4,12 +4,16 @@ import com.caverock.androidsvg.SVG;
 
 import org.mapsforge.core.graphics.Bitmap;
 
-import ch.bailu.aat.services.ServiceContext;
-import ch.bailu.aat_lib.service.background.BackgroundTask;
-import ch.bailu.aat.util.OldAppBroadcaster;
+import java.io.InputStream;
+
 import ch.bailu.aat.util.graphic.SyncTileBitmap;
+import ch.bailu.aat_lib.app.AppContext;
 import ch.bailu.aat_lib.dispatcher.AppBroadcaster;
+import ch.bailu.aat_lib.service.ServicesInterface;
+import ch.bailu.aat_lib.service.background.BackgroundTask;
 import ch.bailu.aat_lib.service.cache.Obj;
+import ch.bailu.aat_lib.service.cache.OnObject;
+import ch.bailu.foc.Foc;
 
 public final class ObjSVGAsset extends ObjImageAbstract {
 
@@ -26,11 +30,11 @@ public final class ObjSVGAsset extends ObjImageAbstract {
 
 
     @Override
-    public void onInsert(ServiceContext sc){
-        load(sc);
+    public void onInsert(AppContext sc){
+        load(sc.getServices());
     }
 
-    private void load(ServiceContext sc) {
+    private void load(ServicesInterface sc) {
         sc.getBackgroundService().process(new SvgLoader(getID()));
     }
 
@@ -49,21 +53,18 @@ public final class ObjSVGAsset extends ObjImageAbstract {
     }
 
     @Override
-    public void onDownloaded(String id, String url, ServiceContext sc) {
-
-    }
+    public void onDownloaded(String id, String url, AppContext sc) {}
 
     @Override
-    public void onChanged(String id, ServiceContext sc) {
-
-    }
+    public void onChanged(String id, AppContext sc) {}
 
     @Override
     public boolean isReadyAndLoaded() {
         return getBitmap() != null;
     }
 
-    public void onRemove(ServiceContext sc) {
+    @Override
+    public void onRemove(AppContext sc) {
         super.onRemove(sc);
         bitmap.free();
     }
@@ -80,7 +81,7 @@ public final class ObjSVGAsset extends ObjImageAbstract {
 
 
         @Override
-        public Obj factory(String id, ServiceContext sc) {
+        public Obj factory(String id, AppContext sc) {
             return new ObjSVGAsset(id, name, size);
         }
     }
@@ -103,7 +104,7 @@ public final class ObjSVGAsset extends ObjImageAbstract {
         }
 
         @Override
-        public long bgOnProcess(final ServiceContext sc) {
+        public long bgOnProcess(final AppContext sc) {
             final long[] size = {0};
 
             new OnObject(sc, ID, ObjSVGAsset.class) {
@@ -111,9 +112,10 @@ public final class ObjSVGAsset extends ObjImageAbstract {
                 public void run(Obj obj) {
                     ObjSVGAsset self = (ObjSVGAsset) obj;
 
-
+                    InputStream input = null;
                     try {
-                        SVG svg = SVG.getFromAsset(sc.getContext().getAssets(), self.name);
+                        input =  sc.getAssets().toFoc(self.name).openR();
+                        SVG svg = SVG.getFromInputStream(input);
 
                         self.bitmap.set(svg, self.size);
                         size[0] = self.size;
@@ -121,10 +123,11 @@ public final class ObjSVGAsset extends ObjImageAbstract {
 
                     } catch (Exception e) {
                         self.setException(e);
+                    } finally {
+                        Foc.close(input);
                     }
 
-                    OldAppBroadcaster.broadcast(sc.getContext(),
-                           AppBroadcaster.FILE_CHANGED_INCACHE, ID);
+                    sc.getBroadcaster().broadcast(AppBroadcaster.FILE_CHANGED_INCACHE, ID);
 
 
 

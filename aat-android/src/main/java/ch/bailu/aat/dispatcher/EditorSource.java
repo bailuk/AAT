@@ -1,40 +1,35 @@
 package ch.bailu.aat.dispatcher;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-
-import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.editor.EditorHelper;
 import ch.bailu.aat.services.editor.EditorInterface;
-import ch.bailu.aat.util.AppIntent;
-import ch.bailu.aat.util.OldAppBroadcaster;
+import ch.bailu.aat_lib.app.AppContext;
 import ch.bailu.aat_lib.dispatcher.AppBroadcaster;
+import ch.bailu.aat_lib.dispatcher.BroadcastData;
+import ch.bailu.aat_lib.dispatcher.BroadcastReceiver;
 import ch.bailu.aat_lib.dispatcher.ContentSource;
 import ch.bailu.aat_lib.gpx.GpxInformation;
 import ch.bailu.foc.Foc;
 
 public class EditorSource extends ContentSource implements  EditorSourceInterface{
 
-    private final ServiceContext scontext;
+    private final AppContext appContext;
     private final EditorHelper edit;
 
 
     private final BroadcastReceiver onFileEdited = new BroadcastReceiver () {
         @Override
-        public void onReceive(Context context, Intent intent) {
-            if (AppIntent.hasFile(intent, edit.getVID())) {
+        public void onReceive(Object... objs) {
+            if (BroadcastData.hasFile(objs, edit.getVID())) {
                 requestUpdate();
             }
         }
     };
 
 
-    public EditorSource (ServiceContext sc) {
-        scontext = sc;
-        edit = new EditorHelper(sc);
+    public EditorSource (AppContext appContext) {
+        this.appContext = appContext;
+        edit = new EditorHelper(appContext);
     }
-
 
 
     @Override
@@ -43,18 +38,16 @@ public class EditorSource extends ContentSource implements  EditorSourceInterfac
     }
 
 
-
-
     @Override
     public void onPause() {
-        scontext.getContext().unregisterReceiver(onFileEdited);
+        appContext.getBroadcaster().unregister(onFileEdited);
         edit.onPause();
     }
 
 
     @Override
     public void onResume() {
-        OldAppBroadcaster.register(scontext.getContext(), onFileEdited, AppBroadcaster.FILE_CHANGED_INCACHE);
+        appContext.getBroadcaster().register(onFileEdited, AppBroadcaster.FILE_CHANGED_INCACHE);
         edit.onResume();
     }
 
@@ -86,10 +79,6 @@ public class EditorSource extends ContentSource implements  EditorSourceInterfac
     @Override
     public void edit() {
 
-    }
-
-    public int getInfoID() {
-        return edit.getInfoID();
     }
 
     public void edit(Foc file) {

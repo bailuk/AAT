@@ -1,6 +1,6 @@
 package ch.bailu.aat_lib.service.cache;
 
-import ch.bailu.aat_lib.service.ServicesInterface;
+import ch.bailu.aat_lib.app.AppContext;
 
 public final class ObjNull extends Obj {
 
@@ -16,8 +16,8 @@ public final class ObjNull extends Obj {
     }
 
     @Override
-    public void onDownloaded(String id, String url, ServicesInterface sc) {}
+    public void onDownloaded(String id, String url, AppContext sc) {}
 
     @Override
-    public void onChanged(String id, ServicesInterface sc) {}
+    public void onChanged(String id, AppContext sc) {}
 }

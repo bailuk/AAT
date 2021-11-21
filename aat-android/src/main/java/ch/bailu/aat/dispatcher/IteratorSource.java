@@ -2,7 +2,7 @@ package ch.bailu.aat.dispatcher;
 
 
 import ch.bailu.aat_lib.service.cache.ObjGpx;
-import ch.bailu.aat.services.cache.ObjGpxStatic;
+import ch.bailu.aat_lib.service.cache.ObjGpxStatic;
 import ch.bailu.aat_lib.service.directory.Iterator;
 import ch.bailu.aat_lib.service.directory.Iterator.OnCursorChangedListener;
 import ch.bailu.aat_lib.service.directory.IteratorFollowFile;
@@ -35,7 +35,7 @@ public abstract class IteratorSource extends ContentSource implements OnCursorCh
 
     public IteratorSource(AppContext appContext) {
         this.appContext = appContext;
-        sdirectory = new SolidDirectoryQuery(appContext.getStorage(), appContext.getFocFactory());
+        sdirectory = new SolidDirectoryQuery(appContext.getStorage(), appContext);
     }
 
 

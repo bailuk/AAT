@@ -14,7 +14,7 @@ public final class AndroidSummaryConfig extends SummaryConfig {
         this.context = context;
     }
 
-     @Override
+    @Override
     public Foc getSummaryDir(Foc dir) {
         Foc summaryDir;
 

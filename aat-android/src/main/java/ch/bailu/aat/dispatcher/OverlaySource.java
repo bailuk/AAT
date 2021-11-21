@@ -1,23 +1,12 @@
 package ch.bailu.aat.dispatcher;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-
 import java.io.Closeable;
 
-import ch.bailu.aat.factory.AndroidFocFactory;
-import ch.bailu.aat.preferences.Storage;
-import ch.bailu.aat_lib.preferences.map.SolidOverlayFile;
-import ch.bailu.aat_lib.preferences.map.SolidOverlayFileList;
-import ch.bailu.aat.services.ServiceContext;
-import ch.bailu.aat_lib.service.cache.Obj;
-import ch.bailu.aat_lib.service.cache.ObjGpx;
-import ch.bailu.aat.services.cache.ObjGpxStatic;
-import ch.bailu.aat.util.AppIntent;
-import ch.bailu.aat.util.OldAppBroadcaster;
+import ch.bailu.aat_lib.app.AppContext;
 import ch.bailu.aat_lib.coordinates.BoundingBoxE6;
 import ch.bailu.aat_lib.dispatcher.AppBroadcaster;
+import ch.bailu.aat_lib.dispatcher.BroadcastData;
+import ch.bailu.aat_lib.dispatcher.BroadcastReceiver;
 import ch.bailu.aat_lib.dispatcher.ContentSource;
 import ch.bailu.aat_lib.gpx.GpxInformation;
 import ch.bailu.aat_lib.gpx.GpxList;
@@ -25,20 +14,24 @@ import ch.bailu.aat_lib.gpx.InfoID;
 import ch.bailu.aat_lib.gpx.interfaces.GpxType;
 import ch.bailu.aat_lib.preferences.OnPreferencesChanged;
 import ch.bailu.aat_lib.preferences.StorageInterface;
+import ch.bailu.aat_lib.preferences.map.SolidOverlayFile;
+import ch.bailu.aat_lib.preferences.map.SolidOverlayFileList;
+import ch.bailu.aat_lib.service.cache.Obj;
+import ch.bailu.aat_lib.service.cache.ObjGpx;
+import ch.bailu.aat_lib.service.cache.ObjGpxStatic;
 import ch.bailu.foc.Foc;
-import ch.bailu.foc_android.FocAndroid;
 
 
 public class OverlaySource extends ContentSource {
 
 
 
-    private final ServiceContext scontext;
+    private final AppContext appContext;
 
     private final OverlayInformation[] overlays = new OverlayInformation[SolidOverlayFileList.MAX_OVERLAYS];
 
-    public OverlaySource(ServiceContext sc) {
-        scontext=sc;
+    public OverlaySource(AppContext sc) {
+        appContext =sc;
     }
 
 
@@ -86,16 +79,16 @@ public class OverlaySource extends ContentSource {
         public OverlayInformation(int index) {
             infoID = InfoID.OVERLAY+index;
 
-            soverlay = new SolidOverlayFile(new Storage(scontext.getContext()), new AndroidFocFactory(scontext.getContext()), index);
+            soverlay = new SolidOverlayFile(appContext.getStorage(), appContext, index);
             soverlay.register(onPreferencesChanged);
-            OldAppBroadcaster.register(scontext.getContext(), onFileProcessed, AppBroadcaster.FILE_CHANGED_INCACHE);
+            appContext.getBroadcaster().register(onFileProcessed, AppBroadcaster.FILE_CHANGED_INCACHE);
         }
 
 
-        private final BroadcastReceiver  onFileProcessed = new BroadcastReceiver () {
+        private final BroadcastReceiver onFileProcessed = new BroadcastReceiver () {
             @Override
-            public void onReceive(Context context, Intent intent) {
-                if (AppIntent.hasFile(intent, handle.toString())) {
+            public void onReceive(Object... objs) {
+                if (BroadcastData.hasFile(objs, handle.toString())) {
                     initAndUpdateOverlay();
                 }
             }
@@ -144,7 +137,7 @@ public class OverlaySource extends ContentSource {
 
 
         private ObjGpx getObjectSave(String id) {
-            Obj h = scontext.getCacheService().getObject(id, new ObjGpxStatic.Factory());
+            Obj h = appContext.getServices().getCacheService().getObject(id, new ObjGpxStatic.Factory());
             if (ObjGpx.class.isInstance(h)==false) {
                 h= ObjGpx.NULL;
             }
@@ -167,7 +160,7 @@ public class OverlaySource extends ContentSource {
 
         @Override
         public Foc getFile() {
-            return FocAndroid.factory(scontext.getContext(),handle.toString());
+            return appContext.toFoc(handle.toString());
         }
 
 
@@ -191,7 +184,7 @@ public class OverlaySource extends ContentSource {
             handle.free();
             handle = ObjGpxStatic.NULL;
             soverlay.unregister(onPreferencesChanged);
-            scontext.getContext().unregisterReceiver(onFileProcessed);
+            appContext.getBroadcaster().unregister(onFileProcessed);
         }
     }
 }

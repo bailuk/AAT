@@ -1,7 +1,7 @@
 package ch.bailu.aat_gtk.ui.view.menu
 
 import ch.bailu.aat_gtk.ui.view.menu.model.*
-import ch.bailu.aat_gtk.util.IndexedMap
+import ch.bailu.aat_lib.util.IndexedMap
 import ch.bailu.gtk.GTK
 import ch.bailu.gtk.glib.SList
 import ch.bailu.gtk.gtk.*

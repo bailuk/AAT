@@ -3,6 +3,7 @@ package ch.bailu.aat.map;
 import ch.bailu.aat.activities.AbsDispatcher;
 import ch.bailu.aat.activities.AbsGpxListActivity;
 import ch.bailu.aat.preferences.Storage;
+import ch.bailu.aat_lib.app.AppContext;
 import ch.bailu.aat_lib.dispatcher.DispatcherInterface;
 import ch.bailu.aat.dispatcher.EditorSourceInterface;
 import ch.bailu.aat_lib.preferences.StorageInterface;
@@ -33,12 +34,12 @@ public final class MapFactory {
     private final ServicesInterface ser;
 
 
-    public static MapFactory DEF(AbsDispatcher d, String skey) {
-        return MF(d.getServiceContext(), d, skey);
+    public static MapFactory DEF(AppContext appContext, AbsDispatcher d, String skey) {
+        return MF(d.getServiceContext(), appContext, d, skey);
     }
 
-    public static MapFactory MF(ServiceContext sc, AbsDispatcher d, String skey) {
-        return new MapFactory(new MapsForgeView(sc, d, skey), d);
+    public static MapFactory MF(ServiceContext sc, AppContext appContext, AbsDispatcher d, String skey) {
+        return new MapFactory(new MapsForgeView(appContext, sc, d, skey), d);
     }
 
 

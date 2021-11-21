@@ -5,8 +5,8 @@ import org.mapsforge.map.rendertheme.XmlRenderTheme;
 
 import java.util.ArrayList;
 
-import ch.bailu.aat.preferences.map.SolidMapsForgeDirectory;
-import ch.bailu.aat.services.cache.ObjTileMapsForge;
+import ch.bailu.aat_lib.preferences.map.SolidMapsForgeDirectory;
+import ch.bailu.aat_lib.service.cache.ObjTileMapsForge;
 import ch.bailu.foc.Foc;
 
 public final class Configuration {

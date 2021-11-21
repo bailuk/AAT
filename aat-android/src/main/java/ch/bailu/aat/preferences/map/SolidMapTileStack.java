@@ -1,15 +1,12 @@
 package ch.bailu.aat.preferences.map;
 
-import android.content.Context;
-
-import ch.bailu.aat.R;
 import ch.bailu.aat.map.tile.source.DownloadSource;
 import ch.bailu.aat.map.tile.source.MapsForgeSource;
 import ch.bailu.aat.map.tile.source.Source;
 import ch.bailu.aat_lib.preferences.SolidBoolean;
 import ch.bailu.aat_lib.preferences.SolidCheckList;
-import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat_lib.preferences.StorageInterface;
+import ch.bailu.aat_lib.resources.Res;
 
 
 public final class SolidMapTileStack extends SolidCheckList {
@@ -35,30 +32,24 @@ public final class SolidMapTileStack extends SolidCheckList {
             DownloadSource.TRAIL_CYCLING,
     };
 
-    private final Context context;
-
-
-    public Context getContext() {
-        return context;
-    }
-
 
 
     private final SolidBoolean[] enabledArray = new SolidBoolean[SOURCES.length];
 
+    private final SolidRenderTheme srenderTheme;
 
-    public SolidMapTileStack (Context context) {
-        this (context, 0);
+    public SolidMapTileStack (SolidRenderTheme srender) {
+        this (srender, 0);
 
     }
 
     // FIXME: use preset for tile stack
-    private SolidMapTileStack (Context context, int preset) {
+    private SolidMapTileStack (SolidRenderTheme srender, int preset) {
 
         for (int i=0; i<enabledArray.length; i++) {
-            enabledArray[i]=new SolidBoolean(new Storage(context), KEY+preset+"_"+i);
+            enabledArray[i]=new SolidBoolean(srender.getStorage(), KEY+preset+"_"+i);
         }
-        this.context = context;
+        srenderTheme = srender;
     }
 
 
@@ -66,7 +57,7 @@ public final class SolidMapTileStack extends SolidCheckList {
     public CharSequence[] getStringArray() {
         String mapsForgeLabel =
                 MapsForgeSource.NAME
-                        + " " + new SolidRenderTheme(getContext()).getValueAsThemeName();
+                        + " " + srenderTheme.getValueAsThemeName();
         String[] array = new String[SOURCES.length];
         array[0] = mapsForgeLabel;
         for (int i=1; i<SOURCES.length; i++)
@@ -92,7 +83,7 @@ public final class SolidMapTileStack extends SolidCheckList {
 
     @Override
     public String getLabel() {
-        return getContext().getString(R.string.p_map);
+        return Res.str().p_map();
     }
 
 

@@ -43,7 +43,7 @@ public class CockpitTabletActivity extends AbsKeepScreenOnActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        EditorSource edit = new EditorSource(getServiceContext());
+        EditorSource edit = new EditorSource(getAppContext());
 
         setContentView(createContentView(edit));
         createDispatcher(edit);
@@ -54,8 +54,8 @@ public class CockpitTabletActivity extends AbsKeepScreenOnActivity {
     private View createContentView(EditorSourceInterface edit) {
         final ContentView result = new ContentView(this, theme);
 
-        final MapsForgeViewBase smallMap = MapFactory.DEF(this, SOLID_KEY).split();
-        final MapsForgeViewBase bigMap = MapFactory.DEF(this, SOLID_MAP_KEY).map(edit, createButtonBar());
+        final MapsForgeViewBase smallMap = MapFactory.DEF(getAppContext(),this, SOLID_KEY).split();
+        final MapsForgeViewBase bigMap = MapFactory.DEF(getAppContext(),this, SOLID_MAP_KEY).map(edit, createButtonBar());
         new MapViewLinker(bigMap, smallMap);
 
         final PercentageLayout cockpitAndSmallMap = new PercentageLayout(this);
@@ -118,7 +118,7 @@ public class CockpitTabletActivity extends AbsKeepScreenOnActivity {
         addSource(new TrackerSource(getServiceContext(),getBroadcaster()));
         addSource(new TrackerTimerSource(getServiceContext()));
         addSource(new CurrentLocationSource(getServiceContext(),getBroadcaster()));
-        addSource(new OverlaySource(getServiceContext()));
+        addSource(new OverlaySource(getAppContext()));
         addSource(new SensorSource(getServiceContext(), InfoID.HEART_RATE_SENSOR));
         addSource(new SensorSource(getServiceContext(), InfoID.CADENCE_SENSOR));
         addSource(new SensorSource(getServiceContext(), InfoID.SPEED_SENSOR));
