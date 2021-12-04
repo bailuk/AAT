@@ -1,5 +1,6 @@
 package ch.bailu.aat.map.layer.control;
 
+import android.content.Context;
 import android.view.View;
 
 import ch.bailu.aat.dispatcher.EditorSourceInterface;
@@ -17,8 +18,8 @@ public final class EditorNodeViewLayer extends NodeViewLayer {
     private final EditorSourceInterface editorSource;
     private boolean showNode = false;
 
-    public EditorNodeViewLayer(ServicesInterface services, StorageInterface s, MapContext mc, EditorSourceInterface e) {
-        super(services, s, mc);
+    public EditorNodeViewLayer(Context context, ServicesInterface services, StorageInterface s, MapContext mc, EditorSourceInterface e) {
+        super(context, services, s, mc);
         editorSource = e;
 
         setText();

@@ -77,9 +77,7 @@ public class EditorSource extends ContentSource implements  EditorSourceInterfac
     }
 
     @Override
-    public void edit() {
-
-    }
+    public void edit() {}
 
     public void edit(Foc file) {
         edit.edit(file);

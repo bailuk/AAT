@@ -5,10 +5,9 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import ch.bailu.aat.activities.AbsDispatcher;
+import ch.bailu.aat.activities.ActivityContext;
 import ch.bailu.aat.map.mapsforge.MapsForgeViewStatic;
 import ch.bailu.aat.preferences.Storage;
-import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.util.AppHtml;
 import ch.bailu.aat.util.HtmlBuilderGpx;
 import ch.bailu.aat.util.ui.AppLayout;
@@ -29,20 +28,20 @@ public class NodeEntryView extends LinearLayout {
     private final GpxDynLayer gpxOverlay;
 
 
-    public NodeEntryView(ServiceContext sc, AbsDispatcher d) {
-        super(sc.getContext());
+    public NodeEntryView(ActivityContext activityContext) {
+        super(activityContext);
         setOrientation(HORIZONTAL);
 
-        int previewSize = AppLayout.getBigButtonSize(sc.getContext());
+        int previewSize = AppLayout.getBigButtonSize(activityContext);
 
 
-        map =  new MapsForgeViewStatic(d.getAppContext(), sc);
-        d.addLC(map);
+        map =  new MapsForgeViewStatic(activityContext, activityContext.getAppContext());
+        activityContext.addLC(map);
 
-        gpxOverlay = new GpxDynLayer(new Storage(getContext()), map.getMContext(), sc);
+        gpxOverlay = new GpxDynLayer(new Storage(getContext()), map.getMContext(), activityContext.getServiceContext());
         map.add(gpxOverlay);
 
-        text=new TextView(sc.getContext());
+        text=new TextView(activityContext);
         text.setTextColor(Color.WHITE);
 
         addViewWeight(text);

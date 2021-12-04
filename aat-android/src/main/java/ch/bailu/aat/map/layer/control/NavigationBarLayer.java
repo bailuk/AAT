@@ -33,13 +33,13 @@ public final class NavigationBarLayer extends ControlBarLayer implements OnConte
     private int boundingCycle=0;
 
 
-    public NavigationBarLayer(MapContext mc, DispatcherInterface d) {
-        this(mc, d, 4);
+    public NavigationBarLayer(Context context, MapContext mc, DispatcherInterface d) {
+        this(context, mc, d, 4);
     }
 
 
-    public NavigationBarLayer(MapContext mc, DispatcherInterface d, int i) {
-        super(mc,new ControlBar(To.context(mc),
+    public NavigationBarLayer(Context context, MapContext mc, DispatcherInterface d, int i) {
+        super(mc,new ControlBar(context,
                 getOrientation(BOTTOM), i, AppTheme.bar), BOTTOM);
 
         mcontext = mc;
@@ -47,7 +47,7 @@ public final class NavigationBarLayer extends ControlBarLayer implements OnConte
         buttonPlus = getBar().addImageButton(R.drawable.zoom_in);
         buttonMinus = getBar().addImageButton(R.drawable.zoom_out);
         View lock = getBar().addSolidIndexButton(
-                new SolidPositionLock(new Storage(To.context(mc)), mc.getSolidKey()));
+                new SolidPositionLock(new Storage(context), mc.getSolidKey()));
         buttonFrame = getBar().addImageButton(R.drawable.zoom_fit_best);
 
         ToolTip.set(buttonPlus, R.string.tt_map_zoomin);
@@ -57,7 +57,7 @@ public final class NavigationBarLayer extends ControlBarLayer implements OnConte
 
         d.addTarget(this, InfoID.ALL);
 
-        VolumeView volumeView = new VolumeView(To.context(mc));
+        VolumeView volumeView = new VolumeView(context);
         volumeView.setVisibility(View.INVISIBLE);
 
         To.view(mcontext.getMapView()).addView(volumeView);
@@ -79,7 +79,7 @@ public final class NavigationBarLayer extends ControlBarLayer implements OnConte
 
             if (nextInBoundingCycle()) {
                 mcontext.getMapView().frameBounding(infoCache.valueAt(boundingCycle).getBoundingBox());
-                AppLog.i(To.context(mcontext), infoCache.valueAt(boundingCycle).getFile().getName());
+                AppLog.i(v.getContext(), infoCache.valueAt(boundingCycle).getFile().getName());
 
             }
         }

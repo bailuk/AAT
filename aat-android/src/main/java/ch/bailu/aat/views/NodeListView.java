@@ -9,17 +9,17 @@ import android.widget.AdapterView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
-import ch.bailu.aat.activities.AbsDispatcher;
+import ch.bailu.aat.activities.ActivityContext;
 import ch.bailu.aat.activities.ActivitySwitcher;
 import ch.bailu.aat.activities.NodeDetailActivity;
-import ch.bailu.aat_lib.gpx.GpxInformationCache;
-import ch.bailu.aat_lib.gpx.GpxListArray;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.util.ui.AppTheme;
 import ch.bailu.aat.util.ui.UiTheme;
 import ch.bailu.aat_lib.dispatcher.OnContentUpdatedInterface;
 import ch.bailu.aat_lib.gpx.GpxInformation;
+import ch.bailu.aat_lib.gpx.GpxInformationCache;
 import ch.bailu.aat_lib.gpx.GpxList;
+import ch.bailu.aat_lib.gpx.GpxListArray;
 
 public class NodeListView extends ListView implements
         OnContentUpdatedInterface,
@@ -34,13 +34,11 @@ public class NodeListView extends ListView implements
 
     private final GpxInformationCache cachedInfo = new GpxInformationCache();
 
-    private final ServiceContext scontext;
-    private final AbsDispatcher dispatcher;
+    private final ActivityContext dispatcher;
 
-    public NodeListView(ServiceContext sc, AbsDispatcher d) {
-        super(sc.getContext());
-        scontext = sc;
-        dispatcher = d;
+    public NodeListView(ActivityContext activityContext) {
+        super(activityContext);
+        dispatcher = activityContext;
 
         THEME.list(this);
 
@@ -76,7 +74,7 @@ public class NodeListView extends ListView implements
         NodeEntryView entry = (NodeEntryView) recycle;
 
         if (entry == null) {
-            entry = new NodeEntryView(scontext, dispatcher);
+            entry = new NodeEntryView(dispatcher);
         }
 
         entry.update(cachedInfo.infoID, cachedInfo.info, array.get(position));

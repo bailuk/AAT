@@ -56,7 +56,7 @@ public class MapsForgePreview extends MapsForgeViewBase implements MapPreviewInt
     private final Point tlPoint;
 
     public MapsForgePreview(ServiceContext scontext, AppContext appContext, GpxInformation info, Foc out) throws IllegalArgumentException {
-        super(scontext, MapsForgePreview.class.getSimpleName(), new MapDensity());
+        super(scontext.getContext(), appContext.getServices(), MapsForgePreview.class.getSimpleName(), new MapDensity());
 
 
 

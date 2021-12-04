@@ -60,7 +60,7 @@ public class CockpitSplitActivity extends AbsKeepScreenOnActivity {
 
 
     private View createContentView(EditorSource edit) {
-        final MapsForgeViewBase mapSlave = MapFactory.DEF(getAppContext(),this, SOLID_KEY).split();
+        final MapsForgeViewBase mapSlave = MapFactory.DEF(this, SOLID_KEY).split();
         final CockpitView cockpitA = new CockpitView(this, THEME);
         final CockpitView cockpitB = new CockpitView(this, THEME);
         final CockpitView cockpitC = new CockpitView(this, THEME);
@@ -117,7 +117,7 @@ public class CockpitSplitActivity extends AbsKeepScreenOnActivity {
         mv.add(mapSlave);
 
         MapsForgeViewBase mapMaster =
-                MapFactory.DEF(getAppContext(),this, SOLID_MAP_KEY).map(edit, createButtonBar(mv));
+                MapFactory.DEF(this, SOLID_MAP_KEY).map(edit, createButtonBar(mv));
 
         new MapViewLinker(mapMaster, mapSlave);
 

@@ -1,6 +1,5 @@
 package ch.bailu.aat.map.mapsforge;
 
-import android.content.Context;
 import android.graphics.Canvas;
 
 import org.mapsforge.core.model.Dimension;
@@ -9,20 +8,18 @@ import org.mapsforge.map.android.view.MapView;
 import java.util.ArrayList;
 
 import ch.bailu.aat.map.AndroidDraw;
-import ch.bailu.aat.map.AndroidMapContext;
-import ch.bailu.aat_lib.map.MapContext;
-import ch.bailu.aat_lib.map.MapViewInterface;
-import ch.bailu.aat.map.To;
-import ch.bailu.aat_lib.map.MapsForgeMetrics;
-import ch.bailu.aat_lib.map.layer.MapLayerInterface;
-import ch.bailu.aat_lib.service.InsideContext;
-import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.util.ui.AndroidAppDensity;
+import ch.bailu.aat_lib.map.MapContext;
 import ch.bailu.aat_lib.map.MapDraw;
 import ch.bailu.aat_lib.map.MapMetrics;
+import ch.bailu.aat_lib.map.MapViewInterface;
+import ch.bailu.aat_lib.map.MapsForgeMetrics;
 import ch.bailu.aat_lib.map.TwoNodes;
+import ch.bailu.aat_lib.map.layer.MapLayerInterface;
+import ch.bailu.aat_lib.service.InsideContext;
+import ch.bailu.aat_lib.service.ServicesInterface;
 
-public class MapsForgeForeground implements AndroidMapContext {
+public class MapsForgeForeground implements MapContext {
 
     private final MapContext mcontext;
     private final AndroidDraw draw;
@@ -40,9 +37,9 @@ public class MapsForgeForeground implements AndroidMapContext {
     }
 
 
-    public void dispatchDraw(final Canvas canvas) {
+    public void dispatchDraw(ServicesInterface services, final Canvas canvas) {
 
-        new InsideContext(To.scontext(mcontext)) {
+        new InsideContext(services) {
             @Override
             public void run() {
                 metrics.init(new Dimension(canvas.getWidth(), canvas.getHeight()));
@@ -65,17 +62,6 @@ public class MapsForgeForeground implements AndroidMapContext {
     public MapDraw draw() {
         return draw;
     }
-
-    @Override
-    public ServiceContext getSContext() {
-        return To.scontext(mcontext);
-    }
-
-    @Override
-    public Context getContext() {
-        return To.context(mcontext);
-    }
-
 
     @Override
     public String getSolidKey() {

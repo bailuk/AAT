@@ -9,19 +9,18 @@ import ch.bailu.aat.activities.ActivitySwitcher;
 import ch.bailu.aat.activities.NominatimActivity;
 import ch.bailu.aat.activities.OverpassActivity;
 import ch.bailu.aat.activities.PoiActivity;
-import ch.bailu.aat_lib.map.MapContext;
-import ch.bailu.aat.map.To;
 import ch.bailu.aat.util.NominatimApi;
 import ch.bailu.aat.util.OverpassApi;
+import ch.bailu.aat_lib.map.MapContext;
 
 public class MapQueryMenu extends AbsMenu {
 
     private final MapContext mcontext;
     private final Context context;
 
-    public MapQueryMenu(MapContext mc) {
+    public MapQueryMenu(Context c, MapContext mc) {
         mcontext = mc;
-        context = To.context(mc);
+        context = c;
     }
 
     @Override

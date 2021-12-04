@@ -36,7 +36,7 @@ public class GpxEditorActivity extends AbsFileContentActivity {
 
     @Override
     protected ViewGroup createLayout(MainControlBar bar, ContentView contentView) {
-        map = MapFactory.DEF(getAppContext(),this, SOLID_KEY).editor(editorSource);
+        map = MapFactory.DEF(this, SOLID_KEY).editor(editorSource);
 
 
         ContentDescription[] summaryData = {

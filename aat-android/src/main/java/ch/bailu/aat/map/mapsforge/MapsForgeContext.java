@@ -1,15 +1,11 @@
 package ch.bailu.aat.map.mapsforge;
 
-import android.content.Context;
-
 import org.mapsforge.core.graphics.Canvas;
 import org.mapsforge.core.model.BoundingBox;
 import org.mapsforge.core.model.Point;
 import org.mapsforge.map.layer.Layer;
 
 import ch.bailu.aat.map.AndroidDraw;
-import ch.bailu.aat.map.AndroidMapContext;
-import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.util.ui.AndroidAppDensity;
 import ch.bailu.aat_lib.map.MapContext;
 import ch.bailu.aat_lib.map.MapDraw;
@@ -20,10 +16,7 @@ import ch.bailu.aat_lib.map.TwoNodes;
 import ch.bailu.aat_lib.map.layer.MapLayerInterface;
 import ch.bailu.aat_lib.preferences.StorageInterface;
 
-public class MapsForgeContext extends Layer implements AndroidMapContext, MapLayerInterface {
-
-    private final ServiceContext scontext;
-    private final Context context;
+public class MapsForgeContext extends Layer implements MapContext, MapLayerInterface {
 
     private final String skey;
 
@@ -35,7 +28,6 @@ public class MapsForgeContext extends Layer implements AndroidMapContext, MapLay
 
 
     public MapsForgeContext(MapsForgeViewBase map,
-                            ServiceContext sc,
                             String key,
                             AndroidAppDensity d) {
         metrics = new MapsForgeMetrics(map, d);
@@ -43,8 +35,6 @@ public class MapsForgeContext extends Layer implements AndroidMapContext, MapLay
         nodes = new TwoNodes(metrics);
         skey = key;
         mapView = map;
-        scontext = sc;
-        context = sc.getContext();
     }
 
 
@@ -80,16 +70,6 @@ public class MapsForgeContext extends Layer implements AndroidMapContext, MapLay
     @Override
     public MapDraw draw() {
         return draw;
-    }
-
-    @Override
-    public ServiceContext getSContext() {
-        return scontext;
-    }
-
-    @Override
-    public Context getContext() {
-        return context;
     }
 
     @Override

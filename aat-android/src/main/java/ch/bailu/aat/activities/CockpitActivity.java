@@ -54,7 +54,7 @@ public class CockpitActivity extends AbsKeepScreenOnActivity {
       private MultiView createMultiView(EditorSource edit) {
         MultiView multiView = new MultiView(this, SOLID_KEY);
         multiView.add(createCockpit());
-        multiView.add(MapFactory.DEF(getAppContext(),this, SOLID_KEY).tracker(edit).toView());
+        multiView.add(MapFactory.DEF(this, SOLID_KEY).tracker(edit).toView());
         multiView.add(GraphViewFactory.all(this, this, theme, InfoID.TRACKER));
 
         return multiView;

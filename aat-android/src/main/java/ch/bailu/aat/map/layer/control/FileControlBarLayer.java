@@ -1,16 +1,13 @@
 package ch.bailu.aat.map.layer.control;
 
+import android.content.Context;
 import android.view.View;
 
 import ch.bailu.aat.R;
 import ch.bailu.aat.activities.AbsGpxListActivity;
 import ch.bailu.aat.factory.AndroidFocFactory;
-import ch.bailu.aat.map.To;
 import ch.bailu.aat.menus.FileMenu;
-import ch.bailu.aat_lib.preferences.SolidDirectoryQuery;
 import ch.bailu.aat.preferences.Storage;
-import ch.bailu.aat_lib.preferences.map.SolidOverlayFile;
-import ch.bailu.aat_lib.service.directory.Iterator;
 import ch.bailu.aat.util.fs.FileAction;
 import ch.bailu.aat.util.ui.AppTheme;
 import ch.bailu.aat.util.ui.ToolTip;
@@ -28,8 +25,11 @@ import ch.bailu.aat_lib.gpx.GpxPointNode;
 import ch.bailu.aat_lib.gpx.InfoID;
 import ch.bailu.aat_lib.map.MapContext;
 import ch.bailu.aat_lib.map.Point;
+import ch.bailu.aat_lib.preferences.SolidDirectoryQuery;
 import ch.bailu.aat_lib.preferences.StorageInterface;
+import ch.bailu.aat_lib.preferences.map.SolidOverlayFile;
 import ch.bailu.aat_lib.service.ServicesInterface;
+import ch.bailu.aat_lib.service.directory.Iterator;
 import ch.bailu.aat_lib.service.directory.SummaryConfig;
 import ch.bailu.foc.Foc;
 
@@ -47,18 +47,18 @@ public final class FileControlBarLayer extends ControlBarLayer {
 
     private final Storage storage;
 
-    public FileControlBarLayer(ServicesInterface services, MapContext mc, AbsGpxListActivity a, SummaryConfig config) {
+    public FileControlBarLayer(ServicesInterface services, MapContext mc, AbsGpxListActivity absGpxListActivity, SummaryConfig config) {
         super(mc, new ControlBar(
-                To.context(mc),
+                absGpxListActivity,
                 getOrientation(LEFT), AppTheme.bar), LEFT);
 
         final ControlBar bar = getBar();
 
-        storage = new Storage(To.context(mc));
-        acontext = a;
+        storage = new Storage(absGpxListActivity);
+        acontext = absGpxListActivity;
 
-        selector = new FileViewLayer(services, mc);
-        preview = new PreviewView(a.getServiceContext(), config);
+        selector = new FileViewLayer(absGpxListActivity, services, mc);
+        preview = new PreviewView(absGpxListActivity.getServiceContext(), config);
 
         bar.add(preview);
         overlay = bar.addImageButton(R.drawable.view_paged);
@@ -151,8 +151,8 @@ public final class FileControlBarLayer extends ControlBarLayer {
 
 
     private class FileViewLayer extends AbsNodeViewLayer {
-        public FileViewLayer(ServicesInterface services, MapContext mc) {
-            super(services, storage, mc);
+        public FileViewLayer(Context context, ServicesInterface services, MapContext mc) {
+            super(context, services, storage, mc);
         }
 
 

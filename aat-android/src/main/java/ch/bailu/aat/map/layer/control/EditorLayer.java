@@ -1,5 +1,6 @@
 package ch.bailu.aat.map.layer.control;
 
+import android.content.Context;
 import android.view.View;
 
 import org.mapsforge.core.model.LatLong;
@@ -7,7 +8,6 @@ import org.mapsforge.core.model.LatLong;
 import ch.bailu.aat.R;
 import ch.bailu.aat.dispatcher.EditorSourceInterface;
 import ch.bailu.aat.map.To;
-import ch.bailu.aat_lib.map.layer.gpx.GpxDynLayer;
 import ch.bailu.aat.menus.EditorMenu;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.editor.EditorInterface;
@@ -17,6 +17,7 @@ import ch.bailu.aat.views.bar.ControlBar;
 import ch.bailu.aat_lib.dispatcher.DispatcherInterface;
 import ch.bailu.aat_lib.gpx.GpxPoint;
 import ch.bailu.aat_lib.map.MapContext;
+import ch.bailu.aat_lib.map.layer.gpx.GpxDynLayer;
 import ch.bailu.aat_lib.preferences.StorageInterface;
 import ch.bailu.aat_lib.resources.Res;
 import ch.bailu.aat_lib.service.ServicesInterface;
@@ -27,8 +28,8 @@ public final class EditorLayer extends ControlBarLayer {
             undo, redo;
 
 
-    private final ServiceContext scontext;
     private final MapContext mcontext;
+    private final ServiceContext scontext;
 
     private final EditorNodeViewLayer selector;
     private final GpxDynLayer content;
@@ -36,18 +37,18 @@ public final class EditorLayer extends ControlBarLayer {
 
     private final EditorSourceInterface edit;
 
-    public EditorLayer(ServicesInterface services, StorageInterface storage, MapContext mc, DispatcherInterface d,
+    public EditorLayer(Context context, ServicesInterface services, StorageInterface storage, MapContext mc, DispatcherInterface d,
                        int iid, EditorSourceInterface e) {
         super(mc, new ControlBar(
-                To.context(mc),
+                context,
                 getOrientation(LEFT), AppTheme.bar), LEFT);
 
         edit = e;
-        scontext=To.scontext(mc);
         mcontext=mc;
+        scontext = To.serviceContext(services);
 
         content = new GpxDynLayer(storage, mc, services);
-        selector = new EditorNodeViewLayer(services, storage, mc, e);
+        selector = new EditorNodeViewLayer(context, services, storage, mc, e);
 
         ControlBar bar = getBar();
 

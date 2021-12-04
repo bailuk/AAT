@@ -142,7 +142,7 @@ public abstract class AbsOsmApiActivity extends ActivityContext implements OnCli
     }
 
     protected View createNodeListView(ContentView contentView) {
-        list = new NodeListView(getServiceContext(), this);
+        list = new NodeListView(this);
         return list;
     }
 

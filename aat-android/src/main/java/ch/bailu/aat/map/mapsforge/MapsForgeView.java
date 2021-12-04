@@ -1,36 +1,40 @@
 package ch.bailu.aat.map.mapsforge;
 
+import android.content.Context;
 import android.graphics.Canvas;
 
 import org.mapsforge.core.model.LatLong;
 import org.mapsforge.map.model.common.Observer;
 
 import ch.bailu.aat.map.MapDensity;
-import ch.bailu.aat_lib.app.AppContext;
-import ch.bailu.aat_lib.map.layer.MapPositionLayer;
 import ch.bailu.aat.preferences.Storage;
-import ch.bailu.aat.services.ServiceContext;
+import ch.bailu.aat_lib.app.AppContext;
 import ch.bailu.aat_lib.dispatcher.DispatcherInterface;
+import ch.bailu.aat_lib.map.layer.MapPositionLayer;
+import ch.bailu.aat_lib.service.ServicesInterface;
 
 public class MapsForgeView extends MapsForgeViewBase {
 
     private final MapsForgeForeground foreground;
     private final MapsForgeTileLayerStackConfigured stack;
     private final MapPositionLayer pos;
+    private final ServicesInterface services;
 
-    public MapsForgeView(AppContext appContext, ServiceContext sc, DispatcherInterface dispatcher, String key) {
-        super(sc, key, new MapDensity(sc.getContext()));
+    public MapsForgeView(Context context, AppContext appContext, DispatcherInterface dispatcher, String key) {
+        super(context, appContext.getServices(), key, new MapDensity(context));
 
         stack = new MapsForgeTileLayerStackConfigured.All(this, appContext);
         add(stack, stack);
 
+        services = appContext.getServices();
+
         // Depends on zoom limits (setItem by TileLayerStack)
-        pos = new MapPositionLayer(getMContext(), new Storage(sc.getContext()), dispatcher);
+        pos = new MapPositionLayer(getMContext(), new Storage(context), dispatcher);
         add(pos);
 
         foreground = new MapsForgeForeground(this,
                 getMContext(),
-                new MapDensity(sc.getContext()),
+                new MapDensity(context),
                 getLayers());
 
         setClickable(true);
@@ -61,6 +65,6 @@ public class MapsForgeView extends MapsForgeViewBase {
     @Override
     public void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        foreground.dispatchDraw(canvas);
+        foreground.dispatchDraw(services, canvas);
     }
 }

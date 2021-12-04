@@ -1,15 +1,13 @@
 package ch.bailu.aat.map.layer.control;
 
+import android.content.Context;
 import android.view.View;
 
 import ch.bailu.aat.R;
-import ch.bailu.aat.map.To;
 import ch.bailu.aat.menus.LocationMenu;
 import ch.bailu.aat.menus.MapMenu;
 import ch.bailu.aat.menus.MapQueryMenu;
 import ch.bailu.aat.preferences.Storage;
-import ch.bailu.aat_lib.preferences.map.SolidLegend;
-import ch.bailu.aat_lib.preferences.map.SolidMapGrid;
 import ch.bailu.aat.util.ui.AppTheme;
 import ch.bailu.aat.util.ui.ToolTip;
 import ch.bailu.aat.views.ImageButtonViewGroup;
@@ -19,7 +17,10 @@ import ch.bailu.aat_lib.gpx.InfoID;
 import ch.bailu.aat_lib.map.MapContext;
 import ch.bailu.aat_lib.preferences.SolidIndexList;
 import ch.bailu.aat_lib.preferences.StorageInterface;
+import ch.bailu.aat_lib.preferences.map.SolidLegend;
+import ch.bailu.aat_lib.preferences.map.SolidMapGrid;
 import ch.bailu.aat_lib.resources.Res;
+import ch.bailu.aat_lib.service.ServicesInterface;
 
 public final class InformationBarLayer extends ControlBarLayer {
 
@@ -27,12 +28,14 @@ public final class InformationBarLayer extends ControlBarLayer {
 
     private final AbsNodeViewLayer selector;
     private final MapContext mcontext;
+    private final Context context;
 
 
-    public InformationBarLayer(MapContext mc, DispatcherInterface d) {
-        super(mc,new ControlBar(To.context(mc), getOrientation(RIGHT), AppTheme.bar), RIGHT);
+    public InformationBarLayer(Context context, ServicesInterface services, MapContext mc, DispatcherInterface d) {
+        super(mc,new ControlBar(context, getOrientation(RIGHT), AppTheme.bar), RIGHT);
 
-        StorageInterface storage = new Storage(To.context(mc));
+        this.context = context;
+        StorageInterface storage = new Storage(context);
         mcontext = mc;
 
         final SolidIndexList sgrid, slegend;
@@ -51,7 +54,7 @@ public final class InformationBarLayer extends ControlBarLayer {
         search = bar.addImageButton(R.drawable.edit_find);
         location = bar.addImageButton(R.drawable.find_location);
 
-        selector = new NodeViewLayer(To.scontext(mc), storage, mc);
+        selector = new NodeViewLayer(context, services, storage, mc);
 
 
         ToolTip.set(grid, Res.str().tt_info_grid());
@@ -68,13 +71,13 @@ public final class InformationBarLayer extends ControlBarLayer {
 
 
         if (v == map) {
-            new MapMenu(mcontext).showAsPopup(To.context(mcontext),v);
+            new MapMenu(context, mcontext).showAsPopup(v.getContext(),v);
 
         } else if (v==search) {
-            new MapQueryMenu(mcontext).showAsPopup(To.context(mcontext), v);
+            new MapQueryMenu(context, mcontext).showAsPopup(v.getContext(), v);
 
         } else if (v==location) {
-            new LocationMenu(mcontext.getMapView()).showAsPopup(To.context(mcontext), location);
+            new LocationMenu(context, mcontext.getMapView()).showAsPopup(v.getContext(), location);
         }
 
 

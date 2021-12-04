@@ -70,7 +70,7 @@ public class MapActivity extends AbsKeepScreenOnActivity {
 
 
     private MapViewInterface createMap(EditorSource edit) {
-        return MapFactory.DEF(getAppContext(),this, SOLID_KEY).map(edit, createButtonBar());
+        return MapFactory.DEF(this, SOLID_KEY).map(edit, createButtonBar());
     }
 
 

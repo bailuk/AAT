@@ -11,23 +11,24 @@ import ch.bailu.aat.activities.PreferencesActivity;
 import ch.bailu.aat.factory.AndroidFocFactory;
 import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat.preferences.map.AndroidSolidMapsForgeDirectory;
-import ch.bailu.aat_lib.map.MapContext;
-import ch.bailu.aat.map.To;
 import ch.bailu.aat.preferences.map.SolidMapTileStack;
 import ch.bailu.aat.preferences.map.SolidMapsForgeMapFile;
-import ch.bailu.aat_lib.preferences.map.SolidOverlayFileList;
 import ch.bailu.aat.preferences.map.SolidRenderTheme;
 import ch.bailu.aat.views.description.mview.MultiView;
 import ch.bailu.aat.views.preferences.SolidCheckListDialog;
 import ch.bailu.aat.views.preferences.SolidStringDialog;
+import ch.bailu.aat_lib.map.MapContext;
+import ch.bailu.aat_lib.preferences.map.SolidOverlayFileList;
 
 public final class MapMenu extends AbsMenu {
     private MenuItem stack, overlays, reload, theme, preferences, map;
 
     private final MapContext mcontext;
+    private final Context context;
 
 
-    public MapMenu(MapContext mc) {
+    public MapMenu(Context c, MapContext mc) {
+        context = c;
         mcontext = mc;
     }
 
@@ -38,9 +39,9 @@ public final class MapMenu extends AbsMenu {
         overlays = menu.add(R.string.p_overlay);
         overlays.setIcon(R.drawable.view_paged_inverse);
 
-        SolidMapsForgeMapFile smapFile = new SolidMapsForgeMapFile(To.context(mcontext));
+        SolidMapsForgeMapFile smapFile = new SolidMapsForgeMapFile(context);
         map = menu.add(smapFile.getLabel());
-        theme = menu.add(new SolidRenderTheme(smapFile, new AndroidFocFactory(To.context(mcontext))).getLabel());
+        theme = menu.add(new SolidRenderTheme(smapFile, new AndroidFocFactory(context)).getLabel());
 
         preferences = menu.add(R.string.intro_settings);
 
@@ -68,7 +69,7 @@ public final class MapMenu extends AbsMenu {
 
     @Override
     public boolean onItemClick(MenuItem item) {
-        final Context c = To.context(mcontext);
+        final Context c = context;
 
         final SolidRenderTheme stheme = new SolidRenderTheme(new AndroidSolidMapsForgeDirectory(c), new AndroidFocFactory(c));
         if (item == stack) {
@@ -85,7 +86,7 @@ public final class MapMenu extends AbsMenu {
             new SolidStringDialog(c, new SolidMapsForgeMapFile(c));
         } else if (item == preferences) {
             MultiView.storeActive(c, PreferencesActivity.SOLID_KEY, 1);
-            ActivitySwitcher.start(To.context(mcontext), PreferencesActivity.class);
+            ActivitySwitcher.start(context, PreferencesActivity.class);
         } else {
             return false;
         }

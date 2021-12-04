@@ -1,12 +1,13 @@
 package ch.bailu.aat.views.preferences;
 
-import ch.bailu.aat_lib.map.MapContext;
-import ch.bailu.aat.map.To;
-import ch.bailu.aat_lib.preferences.SolidBoundingBox;
+import android.content.Context;
+
 import ch.bailu.aat.util.ui.UiTheme;
 import ch.bailu.aat.views.LabelTextView;
 import ch.bailu.aat_lib.coordinates.BoundingBoxE6;
+import ch.bailu.aat_lib.map.MapContext;
 import ch.bailu.aat_lib.preferences.OnPreferencesChanged;
+import ch.bailu.aat_lib.preferences.SolidBoundingBox;
 import ch.bailu.aat_lib.preferences.StorageInterface;
 
 
@@ -14,8 +15,8 @@ public class SolidBoundingBoxView extends LabelTextView implements OnPreferences
     private final SolidBoundingBox sbounding;
 
 
-    public SolidBoundingBoxView(SolidBoundingBox bounding, final MapContext mc, UiTheme theme) {
-        super(To.context(mc), bounding.getLabel(), theme);
+    public SolidBoundingBoxView(Context context, SolidBoundingBox bounding, final MapContext mc, UiTheme theme) {
+        super(context, bounding.getLabel(), theme);
 
         sbounding = bounding;
         setText(bounding.getValueAsString());

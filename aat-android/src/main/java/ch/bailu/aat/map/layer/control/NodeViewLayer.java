@@ -1,9 +1,9 @@
 package ch.bailu.aat.map.layer.control;
 
+import android.content.Context;
 import android.view.View;
 
 import ch.bailu.aat.activities.NodeDetailActivity;
-import ch.bailu.aat.map.To;
 import ch.bailu.aat_lib.gpx.GpxInformation;
 import ch.bailu.aat_lib.gpx.GpxPointNode;
 import ch.bailu.aat_lib.map.MapContext;
@@ -19,10 +19,12 @@ public class NodeViewLayer extends AbsNodeViewLayer {
     private int index = 0;
 
     private final MapContext mcontext;
+    private final Context context;
 
-    public NodeViewLayer(ServicesInterface services, StorageInterface s, MapContext mc) {
-        super(services, s,mc);
+    public NodeViewLayer(Context context, ServicesInterface services, StorageInterface s, MapContext mc) {
+        super(context, services, s,mc);
         mcontext = mc;
+        this.context = context;
     }
 
 
@@ -41,7 +43,7 @@ public class NodeViewLayer extends AbsNodeViewLayer {
 
 
     protected void startNodeDetailActivity(String path) {
-        NodeDetailActivity.start(To.context(mcontext), path, index);
+        NodeDetailActivity.start(context, path, index);
     }
 
 

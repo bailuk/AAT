@@ -103,7 +103,7 @@ public class GpxViewActivity extends ActivityContext
 
 
     private View createLayout(MainControlBar bar, ContentView contentView) {
-        map = MapFactory.DEF(getAppContext(),this, SOLID_KEY).externalContent();
+        map = MapFactory.DEF(this, SOLID_KEY).externalContent();
 
 
         VerticalScrollView summary = new VerticalScrollView(this);

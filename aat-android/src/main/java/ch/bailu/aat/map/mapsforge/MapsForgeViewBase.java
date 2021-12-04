@@ -1,6 +1,7 @@
 package ch.bailu.aat.map.mapsforge;
 
 
+import android.content.Context;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
@@ -26,6 +27,7 @@ import ch.bailu.aat_lib.map.Point;
 import ch.bailu.aat_lib.map.layer.MapLayerInterface;
 import ch.bailu.aat_lib.preferences.OnPreferencesChanged;
 import ch.bailu.aat_lib.preferences.StorageInterface;
+import ch.bailu.aat_lib.service.ServicesInterface;
 
 public class MapsForgeViewBase extends MapView implements
         MapViewInterface,
@@ -35,6 +37,7 @@ public class MapsForgeViewBase extends MapView implements
     private BoundingBox pendingFrameBounding=null;
 
     private final MapsForgeContext mcontext;
+    private final ServicesInterface services;
     private final Storage storage;
 
     public boolean areServicesUp=false;
@@ -50,16 +53,17 @@ public class MapsForgeViewBase extends MapView implements
 
 
 
-    public MapsForgeViewBase(ServiceContext sc, String key, MapDensity d) {
-        super(sc.getContext());
+    public MapsForgeViewBase(Context context, ServicesInterface servicesInterface, String key, MapDensity d) {
+        super(context);
 
         this.setBackgroundColor(getModel().displayModel.getBackgroundColor());
         getModel().displayModel.setFixedTileSize(d.getTileSize());
 
-        mcontext = new MapsForgeContext(this, sc, key, d);
+        services = servicesInterface;
+        mcontext = new MapsForgeContext(this, key, d);
         add(mcontext, mcontext);
 
-        storage = new Storage(mcontext.getContext());
+        storage = new Storage(context);
 
         getMapScaleBar().setVisible(false);
         setBuiltInZoomControls(false);
@@ -82,7 +86,7 @@ public class MapsForgeViewBase extends MapView implements
 
     @Override
     public void add(MapLayerInterface layer) {
-        LayerWrapper wrapper = new LayerWrapper(mcontext, layer);
+        LayerWrapper wrapper = new LayerWrapper(services, mcontext, layer);
         add(wrapper, layer);
     }
 

@@ -1,6 +1,5 @@
 package ch.bailu.aat.map.mapsforge;
 
-import ch.bailu.aat.map.To;
 import ch.bailu.aat.map.tile.TileProvider;
 import ch.bailu.aat.map.tile.source.CachedSource;
 import ch.bailu.aat.map.tile.source.DoubleSource;
@@ -10,6 +9,7 @@ import ch.bailu.aat.map.tile.source.Source;
 import ch.bailu.aat.preferences.map.SolidEnableTileCache;
 import ch.bailu.aat.preferences.map.SolidMapTileStack;
 import ch.bailu.aat.preferences.map.SolidRenderTheme;
+import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat_lib.app.AppContext;
 import ch.bailu.aat_lib.preferences.StorageInterface;
 
@@ -24,7 +24,7 @@ public abstract class MapsForgeTileLayerStackConfigured extends MapsForgeTileLay
     protected final AppContext scontext;
 
     public MapsForgeTileLayerStackConfigured(MapsForgeViewBase v, AppContext appContext) {
-        super(To.scontext(v.getMContext()));
+        super((ServiceContext) appContext.getServices());
 
         scontext = appContext;
 

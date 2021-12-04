@@ -42,7 +42,7 @@ public abstract class ControlBarLayer implements MapLayerInterface, View.OnClick
         To.view(map).addView(bar);
 
 
-        To.view(map).addView(new AbsBackButton.OnBackPressedListener(To.context(mc)) {
+        To.view(map).addView(new AbsBackButton.OnBackPressedListener(b.getContext()) {
             @Override
             public boolean onBackPressed() {
                 if (To.view(map).getVisibility() == VISIBLE && isBarVisible()) {

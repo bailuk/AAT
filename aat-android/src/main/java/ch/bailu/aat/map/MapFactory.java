@@ -1,28 +1,28 @@
 package ch.bailu.aat.map;
 
-import ch.bailu.aat.activities.AbsDispatcher;
+import android.content.Context;
+
 import ch.bailu.aat.activities.AbsGpxListActivity;
-import ch.bailu.aat.preferences.Storage;
-import ch.bailu.aat_lib.app.AppContext;
-import ch.bailu.aat_lib.dispatcher.DispatcherInterface;
+import ch.bailu.aat.activities.ActivityContext;
 import ch.bailu.aat.dispatcher.EditorSourceInterface;
-import ch.bailu.aat_lib.preferences.StorageInterface;
-import ch.bailu.aat_lib.preferences.location.CurrentLocationLayer;
 import ch.bailu.aat.map.layer.control.CustomBarLayer;
 import ch.bailu.aat.map.layer.control.EditorLayer;
 import ch.bailu.aat.map.layer.control.InformationBarLayer;
 import ch.bailu.aat.map.layer.control.NavigationBarLayer;
+import ch.bailu.aat.map.mapsforge.MapsForgeView;
+import ch.bailu.aat.map.mapsforge.MapsForgeViewBase;
+import ch.bailu.aat.preferences.Storage;
+import ch.bailu.aat.util.ui.AppTheme;
+import ch.bailu.aat.views.bar.ControlBar;
+import ch.bailu.aat_lib.dispatcher.DispatcherInterface;
+import ch.bailu.aat_lib.gpx.InfoID;
+import ch.bailu.aat_lib.map.MapContext;
 import ch.bailu.aat_lib.map.layer.gpx.GpxDynLayer;
 import ch.bailu.aat_lib.map.layer.gpx.GpxOverlayListLayer;
 import ch.bailu.aat_lib.map.layer.grid.Crosshair;
 import ch.bailu.aat_lib.map.layer.grid.GridDynLayer;
-import ch.bailu.aat.map.mapsforge.MapsForgeView;
-import ch.bailu.aat.map.mapsforge.MapsForgeViewBase;
-import ch.bailu.aat.services.ServiceContext;
-import ch.bailu.aat.util.ui.AppTheme;
-import ch.bailu.aat.views.bar.ControlBar;
-import ch.bailu.aat_lib.gpx.InfoID;
-import ch.bailu.aat_lib.map.MapContext;
+import ch.bailu.aat_lib.preferences.StorageInterface;
+import ch.bailu.aat_lib.preferences.location.CurrentLocationLayer;
 import ch.bailu.aat_lib.service.ServicesInterface;
 
 public final class MapFactory {
@@ -32,30 +32,32 @@ public final class MapFactory {
     private final MapContext mc;
     private final StorageInterface s;
     private final ServicesInterface ser;
+    private final Context c;
 
 
-    public static MapFactory DEF(AppContext appContext, AbsDispatcher d, String skey) {
-        return MF(d.getServiceContext(), appContext, d, skey);
+    public static MapFactory DEF(ActivityContext activityContext, String skey) {
+        return MF(activityContext, skey);
     }
 
-    public static MapFactory MF(ServiceContext sc, AppContext appContext, AbsDispatcher d, String skey) {
-        return new MapFactory(new MapsForgeView(appContext, sc, d, skey), d);
+    public static MapFactory MF(ActivityContext activityContext, String skey) {
+        return new MapFactory(new MapsForgeView(activityContext, activityContext.getAppContext(), activityContext, skey), activityContext);
     }
 
 
-    public MapFactory(MapsForgeViewBase map, final AbsDispatcher dispatcher) {
-        d = dispatcher;
+    public MapFactory(MapsForgeViewBase map, ActivityContext activityContext) {
+        c = activityContext;
+        d = activityContext;
         m = map;
         mc = m.getMContext();
         s = new Storage(map.getContext());
-        ser = To.scontext(map.getMContext());
-        dispatcher.addLC(m);
+        ser = activityContext.getServiceContext();
+        activityContext.addLC(m);
     }
 
 
     public MapsForgeViewBase base(int size) {
         m.add(new CurrentLocationLayer(mc, d));
-        m.add(new NavigationBarLayer(mc, d, size));
+        m.add(new NavigationBarLayer(c, mc, d, size));
         return m;
     }
 
@@ -77,11 +79,11 @@ public final class MapFactory {
     private MapsForgeViewBase tracker(EditorSourceInterface e, int iid) {
         base(4);
         m.add(new GpxOverlayListLayer(s,mc,ser, d));
-        m.add(new EditorLayer(ser, s, mc, d, iid, e));
+        m.add(new EditorLayer(c, ser, s, mc, d, iid, e));
         m.add(new GpxDynLayer(s,mc, ser, d, InfoID.FILEVIEW));
         m.add(new GpxDynLayer(s,mc, ser, d, InfoID.TRACKER));
         m.add(new GridDynLayer(ser, s,mc));
-        m.add(new InformationBarLayer(mc, d));
+        m.add(new InformationBarLayer(c, ser, mc, d));
 
         return m;
     }
@@ -102,7 +104,7 @@ public final class MapFactory {
         m.add(new GpxOverlayListLayer(s,mc, ser, d));
         m.add(new GpxDynLayer(s,mc, ser, d, InfoID.LIST_SUMMARY));
         m.add(new GridDynLayer(ser, s,mc));
-        m.add(new InformationBarLayer(mc, d));
+        m.add(new InformationBarLayer(c, ser, mc, d));
         return m;
     }
 
@@ -133,8 +135,8 @@ public final class MapFactory {
         m.add(new GpxDynLayer(s,mc, ser, d, InfoID.FILEVIEW));
         m.add(new CurrentLocationLayer(mc, d));
         m.add(new GridDynLayer(ser, s,mc));
-        m.add(new NavigationBarLayer(mc, d));
-        m.add(new InformationBarLayer(mc,d));
+        m.add(new NavigationBarLayer(c, mc, d));
+        m.add(new InformationBarLayer(c, ser, mc,d));
 
         return m;
     }

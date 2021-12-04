@@ -103,7 +103,7 @@ public class NodeDetailActivity extends ActivityContext
 
         viewB.setOrientation(AppLayout.getOrientationAlongLargeSide(this));
 
-        mapView = MapFactory.DEF(getAppContext(),this, SOLID_KEY).node();
+        mapView = MapFactory.DEF(this, SOLID_KEY).node();
 
         htmlView =new HtmlScrollTextView(this);
         htmlView.enableAutoLink();

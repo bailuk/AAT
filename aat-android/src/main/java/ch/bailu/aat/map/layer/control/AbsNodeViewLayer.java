@@ -25,15 +25,15 @@ public abstract class AbsNodeViewLayer extends AbsNodeSelectorLayer implements
     private final Position pos;
 
 
-    public AbsNodeViewLayer(ServicesInterface services, StorageInterface s, MapContext mc) {
+    public AbsNodeViewLayer(Context context, ServicesInterface services, StorageInterface s, MapContext mc) {
         super(services, s, mc);
         mcontext = mc;
 
-        pos = new Position(To.context(mc));
+        pos = new Position(context);
 
-        html = new HtmlBuilderGpx(To.context(mc));
+        html = new HtmlBuilderGpx(context);
 
-        infoView = new NodeInfoView(To.context(mc));
+        infoView = new NodeInfoView(context);
         infoView.setOnLongClickListener(this);
         infoView.setOnClickListener(this);
 

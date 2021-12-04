@@ -5,8 +5,8 @@ import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.LinearLayout;
 
+import ch.bailu.aat.activities.ActivityContext;
 import ch.bailu.aat.menus.FileMenu;
-import ch.bailu.aat.util.AbsServiceLink;
 import ch.bailu.aat.util.ui.AppLayout;
 import ch.bailu.aat.util.ui.UiTheme;
 import ch.bailu.aat_lib.description.ContentDescription;
@@ -24,7 +24,7 @@ public class GpxListEntryView extends LinearLayout implements OnContentUpdatedIn
 
     private Foc file = FocAndroid.NULL;
 
-    public GpxListEntryView(final AbsServiceLink acontext, ContentDescription[] d, UiTheme theme) {
+    public GpxListEntryView(final ActivityContext acontext, ContentDescription[] d, UiTheme theme) {
         super(acontext);
 
         descriptions = d;

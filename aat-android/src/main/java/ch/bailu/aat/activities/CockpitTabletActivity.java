@@ -54,8 +54,8 @@ public class CockpitTabletActivity extends AbsKeepScreenOnActivity {
     private View createContentView(EditorSourceInterface edit) {
         final ContentView result = new ContentView(this, theme);
 
-        final MapsForgeViewBase smallMap = MapFactory.DEF(getAppContext(),this, SOLID_KEY).split();
-        final MapsForgeViewBase bigMap = MapFactory.DEF(getAppContext(),this, SOLID_MAP_KEY).map(edit, createButtonBar());
+        final MapsForgeViewBase smallMap = MapFactory.DEF(this, SOLID_KEY).split();
+        final MapsForgeViewBase bigMap = MapFactory.DEF(this, SOLID_MAP_KEY).map(edit, createButtonBar());
         new MapViewLinker(bigMap, smallMap);
 
         final PercentageLayout cockpitAndSmallMap = new PercentageLayout(this);
