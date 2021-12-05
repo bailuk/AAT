@@ -43,7 +43,7 @@ public class DownloadTask extends FileTask {
         try {
             size = bgDownload();
             sc.getBroadcaster().broadcast(
-                    AppBroadcaster.FILE_CHANGED_ONDISK, getFile(), urx);
+                    AppBroadcaster.FILE_CHANGED_ONDISK, getFile(), urx.toString());
 
         } catch (Exception e) {
             logError(e);

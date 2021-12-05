@@ -162,7 +162,7 @@ public abstract class IteratorSource extends ContentSource implements OnCursorCh
         }
 
         private String getID() {
-            return super.getInfo().getFile().getPath();
+            return super.getInfo().getFile().toString();
         }
 
     }

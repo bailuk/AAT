@@ -1,8 +1,6 @@
 package ch.bailu.aat.map.tile;
 
 
-import android.content.res.Resources;
-
 import org.mapsforge.core.graphics.TileBitmap;
 import org.mapsforge.core.model.Tile;
 import org.mapsforge.map.layer.TilePosition;
@@ -43,8 +41,8 @@ public class TileProvider implements Attachable, ObservableInterface {
     private final BroadcastReceiver onFileChanged = new BroadcastReceiver() {
 
         @Override
-        public void onReceive(Object... objs) {
-            String file =  BroadcastData.getFile(objs);
+        public void onReceive(String... args) {
+            String file =  BroadcastData.getFile(args);
 
             if (cache.isInCache(file)) observers.notifyChange();
         }
@@ -78,7 +76,7 @@ public class TileProvider implements Attachable, ObservableInterface {
 
 
 
-    public synchronized TileBitmap get(Tile tile, Resources r) {
+    public synchronized TileBitmap get(Tile tile) {
         ObjTile handle = getHandle(tile);
 
         if (handle != null) {

@@ -20,7 +20,7 @@ import ch.bailu.aat_lib.gpx.InfoID;
 
 public class CustomFileSource extends ContentSource {
     private final ServiceContext scontext;
-    private Obj handle= ObjNull.NULL;
+    private Obj handle = ObjNull.NULL;
     private final String fileID;
 
     private final BroadcastReceiver  onChangedInCache = new BroadcastReceiver () {

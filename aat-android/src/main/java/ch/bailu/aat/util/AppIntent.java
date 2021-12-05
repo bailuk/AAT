@@ -1,21 +1,18 @@
 package ch.bailu.aat.util;
 
-import android.bluetooth.BluetoothAdapter;
 import android.content.Intent;
 
 import org.mapsforge.core.model.BoundingBox;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import ch.bailu.aat_lib.coordinates.BoundingBoxE6;
-import ch.bailu.aat_lib.dispatcher.AppBroadcaster;
+import ch.bailu.aat_lib.util.Objects;
 
 public class AppIntent {
     private static final String EXTRA_FILE="file";
     private static final String EXTRA_URL="source";
+    public final static String EXTRA_MESSAGE = "source";
 
-
+    private static final String[] KEYS ={ "file", "source", "c", "d", "e", "f"};
 
     public static void setUrl(Intent intent, String url) {
         intent.putExtra(EXTRA_URL, url);
@@ -38,7 +35,7 @@ public class AppIntent {
     }
 
     public static boolean hasFile(Intent intent, String file) {
-        return intent.getStringExtra(EXTRA_FILE).equals(file);
+        return Objects.equals(intent.getStringExtra(EXTRA_FILE), file);
     }
 
 
@@ -72,34 +69,32 @@ public class AppIntent {
     }
 
     public static Intent toIntent(String action, Object[] args) {
+        int size = Math.min(args.length, KEYS.length);
         Intent result = new Intent(action);
 
-        if (action == AppBroadcaster.LOG_INFO || action == AppBroadcaster.LOG_ERROR && args.length > 1) {
-            String msg = args[1].toString();
-            result.putExtra(AppBroadcaster.EXTRA_MESSAGE, msg);
+        result.putExtra("size", size);
+
+        for (int i = 0; i < size; i++) {
+            result.putExtra(KEYS[i], args[i].toString());
         }
         return result;
     }
 
-    public static Object[] toArgs(Intent intent) {
-        List args = new ArrayList<>();
-        addIfNotNull(args, AppIntent.getFile(intent));
-        addIfNotNull(args, AppIntent.getUrl(intent));
+    public static String[] toArgs(Intent intent) {
+        int size = Math.min(intent.getIntExtra("size", 0), KEYS.length);
 
-        if (intent.hasExtra(BluetoothAdapter.EXTRA_STATE)) {
-            addIfNotNull(args, intent.getIntExtra(BluetoothAdapter.EXTRA_STATE, BluetoothAdapter.ERROR));
+        String[] result = new String[size];
+
+        for (int i = 0; i< size; i++) {
+            result[i] = toSaveString(intent.getStringExtra(KEYS[i]));
         }
-
-        if (intent.hasExtra(AppBroadcaster.EXTRA_MESSAGE)) {
-            addIfNotNull(args, intent.getStringArrayExtra(AppBroadcaster.EXTRA_MESSAGE));
-        }
-
-        return args.toArray();
+        return result;
     }
 
-    private static void addIfNotNull(List list, Object obj) {
-        if (obj != null) {
-            list.add(obj);
+    private static String toSaveString(String stringExtra) {
+        if (stringExtra == null) {
+            stringExtra = "";
         }
+        return stringExtra;
     }
 }

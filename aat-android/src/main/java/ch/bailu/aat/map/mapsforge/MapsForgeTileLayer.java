@@ -1,11 +1,11 @@
 package ch.bailu.aat.map.mapsforge;
 
-import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Paint;
 import android.graphics.Rect;
 
 import org.mapsforge.core.graphics.Canvas;
+import org.mapsforge.core.graphics.TileBitmap;
 import org.mapsforge.core.model.BoundingBox;
 import org.mapsforge.core.model.LatLong;
 import org.mapsforge.core.model.Point;
@@ -19,11 +19,11 @@ import java.util.List;
 
 import ch.bailu.aat.map.AndroidDraw;
 import ch.bailu.aat.map.tile.TileProvider;
-import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat_lib.map.MapContext;
 import ch.bailu.aat_lib.map.layer.MapLayerInterface;
 import ch.bailu.aat_lib.preferences.StorageInterface;
 import ch.bailu.aat_lib.service.InsideContext;
+import ch.bailu.aat_lib.service.ServicesInterface;
 
 public class MapsForgeTileLayer extends Layer implements MapLayerInterface, Observer {
 
@@ -31,17 +31,15 @@ public class MapsForgeTileLayer extends Layer implements MapLayerInterface, Obse
 
     private boolean isAttached = false;
 
-    private final ServiceContext scontext;
-    private final Resources resources;
+    private final ServicesInterface services;
 
     private final Paint paint = new Paint();
     private final Rect rect = new Rect();
 
-    public MapsForgeTileLayer(ServiceContext sc, TileProvider p) {
-        scontext = sc;
+    public MapsForgeTileLayer(ServicesInterface sc, TileProvider p) {
+        services = sc;
         provider = p;
 
-        resources = sc.getContext().getResources();
         paint.setAlpha(p.getSource().getAlpha());
         paint.setFlags(p.getSource().getPaintFlags());
 
@@ -55,7 +53,7 @@ public class MapsForgeTileLayer extends Layer implements MapLayerInterface, Obse
     public void draw(final BoundingBox box, final byte zoom, final Canvas c, final Point tlp) {
 
         synchronized (provider) {
-            new InsideContext(scontext) {
+            new InsideContext(services) {
                 @Override
                 public void run() {
                     if (detachAttach(zoom)) {
@@ -80,17 +78,21 @@ public class MapsForgeTileLayer extends Layer implements MapLayerInterface, Obse
         provider.preload(tilePositions);
 
         for (TilePosition tilePosition : tilePositions) {
-            final Bitmap bitmap = AndroidGraphicFactory.getBitmap(provider.get(tilePosition.tile, resources));
+            final TileBitmap tileBitmap = provider.get(tilePosition.tile);
 
-            if (bitmap != null) {
-                final Point p = tilePosition.point;
+            if (tileBitmap != null) {
+                final Bitmap bitmap = AndroidGraphicFactory.getBitmap(tileBitmap);
 
-                rect.left = (int) Math.round(p.x);
-                rect.top = (int) Math.round(p.y);
-                rect.right = rect.left + tileSize;
-                rect.bottom = rect.top + tileSize;
+                if (bitmap != null) {
+                    final Point p = tilePosition.point;
 
-                AndroidDraw.convert(canvas).drawBitmap(bitmap, null, rect, paint);
+                    rect.left = (int) Math.round(p.x);
+                    rect.top = (int) Math.round(p.y);
+                    rect.right = rect.left + tileSize;
+                    rect.bottom = rect.top + tileSize;
+
+                    AndroidDraw.convert(canvas).drawBitmap(bitmap, null, rect, paint);
+                }
             }
         }
     }

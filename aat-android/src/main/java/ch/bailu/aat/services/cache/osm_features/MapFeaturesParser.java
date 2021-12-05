@@ -1,14 +1,10 @@
 package ch.bailu.aat.services.cache.osm_features;
 
-import android.content.res.AssetManager;
-
 import java.io.IOException;
 
-import ch.bailu.aat_lib.app.AppContext;
 import ch.bailu.aat_lib.resources.AssetsInterface;
 import ch.bailu.aat_lib.xml.parser.util.Stream;
 import ch.bailu.foc.Foc;
-import ch.bailu.foc_android.FocAsset;
 
 public final class MapFeaturesParser {
     private static final String MAP_FEATURES_ASSET = "map_features";
@@ -26,8 +22,8 @@ public final class MapFeaturesParser {
 
     private int id = 0;
 
-    public MapFeaturesParser(AssetsInterface assets, OnHaveFeature hf) throws IOException {
-        this(assets, hf, assets.list(MAP_FEATURES_ASSET));
+    public MapFeaturesParser(AssetsInterface assets, OnHaveFeature onHaveFeature) throws IOException {
+        this(assets, onHaveFeature, assets.list(MAP_FEATURES_ASSET));
     }
 
     public MapFeaturesParser(AssetsInterface assets,
@@ -36,8 +32,9 @@ public final class MapFeaturesParser {
         haveFeature = hf;
 
         for (String f : files) {
-            if (haveFeature.onParseFile(f)) {
-                Foc file = assets.toFoc(f);
+            final String path = MAP_FEATURES_ASSET + "/" + f;
+            if (haveFeature.onParseFile(path)) {
+                Foc file = assets.toFoc(path);
                 parseFeatures(file);
             }
 

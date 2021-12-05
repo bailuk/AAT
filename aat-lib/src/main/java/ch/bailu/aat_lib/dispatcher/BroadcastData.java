@@ -3,20 +3,26 @@ package ch.bailu.aat_lib.dispatcher;
 import ch.bailu.aat_lib.util.Objects;
 
 public class BroadcastData {
-    public static boolean hasFile(Object[] objs, String vid) {
-        return objs.length > 0 && Objects.equals(objs[0], vid);
+
+    public static boolean has(String[] args, String vid) {
+        for (String arg : args) {
+            if (Objects.equals(arg, vid)) {
+                return true;
+            }
+        }
+        return false;
     }
 
-    public static String getFile(Object[] objs) {
-        return getString(0);
+    public static String getFile(String[] args) {
+        return get(args,0);
     }
 
-    public static String getUrl(Object[] objs) {
-        return getString(1, objs);
+    public static String getUrl(String[] args) {
+        return get(args, 1);
     }
 
-    public static String getString(int index, Object ...objs) {
-        if (objs.length > index && objs[index] instanceof String) return (String) objs[index];
+    public static String get(String[] args, int index) {
+        if (args.length > index) return args[index];
         return "";
     }
 }

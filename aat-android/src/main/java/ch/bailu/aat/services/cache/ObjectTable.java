@@ -86,9 +86,6 @@ public final class ObjectTable  {
     }
 
 
-
-
-
     private synchronized boolean updateSize(String id) {
         Container c = hashMap.get(id);
 
@@ -107,14 +104,14 @@ public final class ObjectTable  {
 
 
 
-    public void onObjectChanged(CacheService self, Object...objs) {
+    public void onObjectChanged(CacheService self, String...objs) {
         if (updateSize(toID(objs)))
             trim(self);
 
     }
 
 
-    private String toID(Object... objs) {
+    private String toID(String... objs) {
         return BroadcastData.getFile(objs);
     }
 

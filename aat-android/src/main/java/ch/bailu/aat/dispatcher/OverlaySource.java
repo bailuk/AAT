@@ -87,8 +87,8 @@ public class OverlaySource extends ContentSource {
 
         private final BroadcastReceiver onFileProcessed = new BroadcastReceiver () {
             @Override
-            public void onReceive(Object... objs) {
-                if (BroadcastData.hasFile(objs, handle.toString())) {
+            public void onReceive(String... args) {
+                if (BroadcastData.has(args, handle.toString())) {
                     initAndUpdateOverlay();
                 }
             }

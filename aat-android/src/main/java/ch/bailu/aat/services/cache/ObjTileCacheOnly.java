@@ -133,7 +133,7 @@ public class ObjTileCacheOnly extends ObjTile {
             final long[] size = {0};
 
 
-            new OnObject(sc, getFile().getPath(), ObjTileCacheOnly.class) {
+            new OnObject(sc, getFile().toString(), ObjTileCacheOnly.class) {
                 @Override
                 public void run(Obj handle) {
                     ObjTileCacheOnly tile = (ObjTileCacheOnly) handle;

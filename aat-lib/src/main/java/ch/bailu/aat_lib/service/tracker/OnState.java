@@ -32,13 +32,8 @@ public final class OnState extends State {
         return StateID.ON;
     }
 
-
     @Override
-    public void preferencesChanged() {
-
-    }
-
-
+    public void preferencesChanged() {}
 
     @Override
     public void updateTrack() {

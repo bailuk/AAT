@@ -42,7 +42,4 @@ public class AppBroadcaster {
      */
     public final static String LOG_ERROR = NAME_SPACE + "LOG_ERROR";
 
-    public final static String EXTRA_MESSAGE = "MESSAGE";
-    private final static String EXTRA_SOURCE = "TITLE";
-
 }

@@ -33,7 +33,7 @@ public final class IteratorFollowFile extends IteratorAbstract {
 
         moveToPosition(-1);
         while ( moveToNext()) {
-            if (info.getFile().getPath().equals(fID)) {
+            if (info.getFile().equals(fID)) {
                 return true;
             }
         }

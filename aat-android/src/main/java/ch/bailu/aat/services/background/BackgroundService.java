@@ -5,6 +5,7 @@ import java.util.HashMap;
 
 import ch.bailu.aat_lib.app.AppContext;
 import ch.bailu.aat_lib.dispatcher.Broadcaster;
+import ch.bailu.aat_lib.logger.AppLog;
 import ch.bailu.aat_lib.service.VirtualService;
 import ch.bailu.aat_lib.service.background.BackgroundServiceInterface;
 import ch.bailu.aat_lib.service.background.BackgroundTask;
@@ -57,9 +58,9 @@ public final class BackgroundService extends VirtualService implements Backgroun
 
 
     private void download(DownloadTask handle) {
-        URL url = handle.getSource().getURL();
+        try {
+            final URL url = handle.getSource().toURL();
 
-        if (url != null) {
             String host = url.getHost();
             DownloaderThread downloader = downloaders.get(host);
 
@@ -70,6 +71,8 @@ public final class BackgroundService extends VirtualService implements Backgroun
 
             handle.register(tasks);
             downloader.process(handle);
+        } catch (Exception e) {
+            AppLog.e(this, e);
         }
     }
 

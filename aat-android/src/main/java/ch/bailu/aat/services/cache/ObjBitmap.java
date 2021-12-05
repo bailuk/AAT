@@ -113,7 +113,7 @@ public final class ObjBitmap extends ObjImageAbstract {
                     }
 
                     appContext.getBroadcaster().broadcast(AppBroadcaster.FILE_CHANGED_INCACHE,
-                            self.imageFile);
+                            self.imageFile.getPath());
 
                 }
             };

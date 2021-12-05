@@ -36,8 +36,8 @@ public final class ElevationUpdater implements Closeable {
 
     private final BroadcastReceiver onFileChanged = new BroadcastReceiver() {
         @Override
-        public void onReceive(Object... objs) {
-            String id = (String) objs[0];
+        public void onReceive(String... args) {
+            String id = args[0];
 
             synchronized(ElevationUpdater.this) {
                 if (tiles.have(id)) {

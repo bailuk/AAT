@@ -13,7 +13,7 @@ public class CurrentLocationSource extends ContentSource {
 
     private final BroadcastReceiver onLocationChange = new BroadcastReceiver () {
         @Override
-        public void onReceive(Object ...o) {
+        public void onReceive(String ...args) {
             sendUpdate(InfoID.LOCATION, services.getLocationService().getLocationInformation());
         }
 

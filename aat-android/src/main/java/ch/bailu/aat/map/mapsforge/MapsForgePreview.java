@@ -2,6 +2,7 @@ package ch.bailu.aat.map.mapsforge;
 
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 
@@ -30,7 +31,6 @@ import ch.bailu.aat.map.tile.source.Source;
 import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat.preferences.map.SolidMapTileStack;
 import ch.bailu.aat.preferences.map.SolidRenderTheme;
-import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.util.OldAppBroadcaster;
 import ch.bailu.aat.util.graphic.SyncTileBitmap;
 import ch.bailu.aat_lib.app.AppContext;
@@ -55,8 +55,8 @@ public class MapsForgePreview extends MapsForgeViewBase implements MapPreviewInt
     private final BoundingBox bounding;
     private final Point tlPoint;
 
-    public MapsForgePreview(ServiceContext scontext, AppContext appContext, GpxInformation info, Foc out) throws IllegalArgumentException {
-        super(scontext.getContext(), appContext.getServices(), MapsForgePreview.class.getSimpleName(), new MapDensity());
+    public MapsForgePreview(Context context, AppContext appContext, GpxInformation info, Foc out) throws IllegalArgumentException {
+        super(context, appContext.getServices(), MapsForgePreview.class.getSimpleName(), new MapDensity());
 
 
 
@@ -66,10 +66,10 @@ public class MapsForgePreview extends MapsForgeViewBase implements MapPreviewInt
         imageFile = out;
         provider = new TileProvider(appContext, getSource(new SolidRenderTheme(appContext.getMapDirectory(), appContext)));
 
-        MapsForgeTileLayer tileLayer = new MapsForgeTileLayer(scontext, provider);
+        MapsForgeTileLayer tileLayer = new MapsForgeTileLayer(appContext.getServices(), provider);
         add(tileLayer, tileLayer);
 
-        GpxDynLayer gpxLayer = new GpxDynLayer(new Storage(getContext()), getMContext(), scontext);
+        GpxDynLayer gpxLayer = new GpxDynLayer(new Storage(getContext()), getMContext(), appContext.getServices());
         add(gpxLayer);
 
         attachLayers();

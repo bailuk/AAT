@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.widget.TextView;
 
+import ch.bailu.aat.util.AppIntent;
 import ch.bailu.aat_lib.service.InsideContext;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat_lib.service.cache.Obj;
@@ -40,7 +41,7 @@ public class ErrorView extends TextView  {
 
 
     private void displayError(Intent intent) {
-        String message = intent.getStringExtra(AppBroadcaster.EXTRA_MESSAGE);
+        String message = intent.getStringExtra(AppIntent.EXTRA_MESSAGE);
         displayError(message);
     }
 

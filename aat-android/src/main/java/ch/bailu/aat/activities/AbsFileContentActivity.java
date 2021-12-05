@@ -134,7 +134,7 @@ public abstract class AbsFileContentActivity extends ActivityContext implements 
 
 
         addTarget((iid, info) -> {
-            String newFileID = info.getFile().getPath();
+            String newFileID = info.getFile().toString();
 
             if (!Objects.equals(currentFileID, newFileID)) {
                 currentFileID = newFileID;

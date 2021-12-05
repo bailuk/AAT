@@ -3,10 +3,8 @@ package ch.bailu.aat.services.cache;
 import org.mapsforge.core.model.Tile;
 
 import ch.bailu.aat.map.tile.source.DownloadSource;
-import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat_lib.app.AppContext;
 import ch.bailu.aat_lib.service.ServicesInterface;
-import ch.bailu.aat_lib.service.background.DownloadConfig;
 import ch.bailu.aat_lib.service.background.DownloadTask;
 import ch.bailu.aat_lib.service.cache.Obj;
 import ch.bailu.aat_lib.service.cache.OnObject;
@@ -27,7 +25,7 @@ public class ObjTileDownloadable extends ObjTileCacheOnly {
     public void onInsert(AppContext sc) {
         if (isLoadable()) {
             load(sc.getServices());
-        } else if (isDownloadable() && !isSheduled(sc.getServices()) && !fileExists()) {
+        } else if (isDownloadable() && !isScheduled(sc.getServices()) && !fileExists()) {
             download(sc);
         }
     }
@@ -39,14 +37,14 @@ public class ObjTileDownloadable extends ObjTileCacheOnly {
     }
 
 
-    private boolean isSheduled(ServicesInterface sc) {
+    private boolean isScheduled(ServicesInterface sc) {
         return sc.getBackgroundService().findTask(getFile()) != null;
     }
 
 
     @Override
     public void reDownload(AppContext sc) {
-        if (isDownloadable() && !isSheduled(sc.getServices())) {
+        if (isDownloadable() && !isScheduled(sc.getServices())) {
             getFile().rm();
             download(sc);
         }
@@ -81,7 +79,7 @@ public class ObjTileDownloadable extends ObjTileCacheOnly {
         private boolean isInCache() {
             final boolean[] result = {false};
 
-            new OnObject(appContext, getFile().getPath(), ObjTileCacheOnly.class) {
+            new OnObject(appContext, getFile().toString(), ObjTileCacheOnly.class) {
                 @Override
                 public void run(Obj handle) {
                     result[0] = true;

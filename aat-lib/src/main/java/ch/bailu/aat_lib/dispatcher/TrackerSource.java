@@ -18,7 +18,7 @@ public class TrackerSource extends ContentSource {
 
     private final BroadcastReceiver onTrackChanged = new BroadcastReceiver() {
         @Override
-        public void onReceive(Object... objs) {
+        public void onReceive(String... args) {
             sendUpdate(InfoID.TRACKER, services.getTrackerService().getLoggerInformation());
         }
     };

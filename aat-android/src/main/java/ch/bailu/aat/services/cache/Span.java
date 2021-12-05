@@ -15,7 +15,6 @@ public final class Span {
     }
 
 
-
     public Span(Span s) {
         deg = s.deg;
         firstPixel = s.firstPixel;
@@ -68,6 +67,4 @@ public final class Span {
         r.right=loSpan.lastPixel;
         return r;
     }
-
-
 }

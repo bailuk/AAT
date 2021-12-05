@@ -1,17 +1,14 @@
 package ch.bailu.aat.util;
 
-import android.content.Context;
-
 import java.io.UnsupportedEncodingException;
 
 import ch.bailu.aat_lib.app.AppContext;
-import ch.bailu.aat_lib.service.InsideContext;
-import ch.bailu.aat.services.ServiceContext;
-import ch.bailu.aat_lib.service.background.BackgroundTask;
-import ch.bailu.aat_lib.service.background.DownloadTask;
 import ch.bailu.aat_lib.dispatcher.AppBroadcaster;
 import ch.bailu.aat_lib.logger.AppLog;
+import ch.bailu.aat_lib.service.InsideContext;
 import ch.bailu.aat_lib.service.background.BackgroundServiceInterface;
+import ch.bailu.aat_lib.service.background.BackgroundTask;
+import ch.bailu.aat_lib.service.background.DownloadTask;
 import ch.bailu.foc.Foc;
 
 public abstract class DownloadApi extends OsmApiConfiguration {
@@ -36,7 +33,7 @@ public abstract class DownloadApi extends OsmApiConfiguration {
                 TextBackup.write(queryFile, queryString);
 
                 sc.getBroadcaster().broadcast(
-                        AppBroadcaster.FILE_CHANGED_ONDISK, getFile(), getSource());
+                        AppBroadcaster.FILE_CHANGED_ONDISK, getFile(), getSource().toString());
 
                 return size;
             } catch (Exception e) {

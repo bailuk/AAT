@@ -2,10 +2,9 @@ package ch.bailu.aat.services;
 
 import android.content.Context;
 
-import ch.bailu.aat.dispatcher.AndroidBroadcaster;
+import ch.bailu.aat.app.AndroidAppContext;
 import ch.bailu.aat.preferences.location.AndroidSolidLocationProvider;
 import ch.bailu.aat.preferences.map.SolidRendererThreads;
-import ch.bailu.aat.preferences.system.AndroidSolidDataDirectory;
 import ch.bailu.aat.services.background.BackgroundService;
 import ch.bailu.aat.services.cache.CacheService;
 import ch.bailu.aat.services.elevation.ElevationService;
@@ -40,7 +39,7 @@ public final class OneService extends AbsService  implements ServiceContext {
     private TileRemoverService tileRemover;
     private RenderService render;
     private SensorService ble;
-
+    private AppContext appContext;
 
     @Override
     public  void onCreate() {
@@ -119,7 +118,7 @@ public final class OneService extends AbsService  implements ServiceContext {
     @Override
     public  synchronized LocationServiceInterface getLocationService() {
         if (location == null) {
-            location = new LocationService(new AndroidSolidLocationProvider(this), new AndroidBroadcaster(this));
+            location = new LocationService(new AndroidSolidLocationProvider(this), getAppContext().getBroadcaster());
         }
         return location;
     }
@@ -127,7 +126,7 @@ public final class OneService extends AbsService  implements ServiceContext {
     @Override
     public  synchronized BackgroundServiceInterface getBackgroundService() {
         if (background == null) {
-            background = new BackgroundService(getAppContext(), new AndroidBroadcaster(this), SolidRendererThreads.numberOfBackgroundThreats());
+            background = new BackgroundService(getAppContext(), getAppContext().getBroadcaster(), SolidRendererThreads.numberOfBackgroundThreats());
         }
         return background;
     }
@@ -165,7 +164,10 @@ public final class OneService extends AbsService  implements ServiceContext {
     }
 
     private AppContext getAppContext() {
-        return null;
+        if (appContext == null) {
+            appContext = new AndroidAppContext(this, this);
+        }
+        return appContext;
     }
 
     @Override
@@ -186,9 +188,9 @@ public final class OneService extends AbsService  implements ServiceContext {
     public synchronized TrackerServiceInterface getTrackerService() {
         if (tracker == null)
             tracker = new TrackerService(
-                    new AndroidSolidDataDirectory(this),
+                    getAppContext().getDataDirectory(),
                     new StatusIcon(this),
-                    new AndroidBroadcaster(this),
+                    getAppContext().getBroadcaster(),
                     this);
         return tracker;
     }

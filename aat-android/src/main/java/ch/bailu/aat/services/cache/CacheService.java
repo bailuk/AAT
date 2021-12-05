@@ -70,12 +70,7 @@ public final class CacheService extends VirtualService implements CacheServiceIn
         broadcaster.put(b);
     }
 
-    private final BroadcastReceiver onFileProcessed = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Object... objs) {
-            table.onObjectChanged(CacheService.this, objs);
-        }
-    };
+    private final BroadcastReceiver onFileProcessed = args -> table.onObjectChanged(CacheService.this, args);
 
     @Override
     public void onPreferencesChanged(StorageInterface s, String key) {

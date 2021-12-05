@@ -53,7 +53,7 @@ public final class DirectorySynchronizer  implements Closeable {
 
     private final BroadcastReceiver onFileChanged = new BroadcastReceiver () {
         @Override
-        public void onReceive(Object... objs) {
+        public void onReceive(String... args) {
             state.ping();
         }
     };
@@ -138,7 +138,7 @@ public final class DirectorySynchronizer  implements Closeable {
                 } finally {
                     backgroundTask = null;
 
-                    sc.getBroadcaster().broadcast(AppBroadcaster.FILE_CHANGED_INCACHE, directory);
+                    sc.getBroadcaster().broadcast(AppBroadcaster.FILE_CHANGED_INCACHE, directory.getPath());
                 }
 
                 return 100;

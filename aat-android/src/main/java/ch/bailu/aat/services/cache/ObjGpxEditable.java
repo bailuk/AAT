@@ -181,7 +181,7 @@ public final class ObjGpxEditable extends ObjGpx {
                 new GpxListWriter(editor.getList(),file).close();
                 modified=false;
 
-                broadcaster.broadcast(AppBroadcaster.FILE_CHANGED_ONDISK, file.getPath(), getID());
+                broadcaster.broadcast(AppBroadcaster.FILE_CHANGED_ONDISK, file, getID());
             } catch (Exception e) {
                 AppLog.e(this, e);
             }
@@ -282,21 +282,14 @@ public final class ObjGpxEditable extends ObjGpx {
     public static class Factory extends Obj.Factory {
         private final Foc file;
 
-
         public Factory(Foc f) {
             file=f;
         }
-
-
-
 
         @Override
         public Obj factory(String id, AppContext sc) {
             return new ObjGpxEditable(id, file, sc);
         }
-
-
-
     }
 
 

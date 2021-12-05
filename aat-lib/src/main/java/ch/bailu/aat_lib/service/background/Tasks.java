@@ -5,7 +5,6 @@ import java.util.ArrayList;
 
 import ch.bailu.aat_lib.dispatcher.AppBroadcaster;
 import ch.bailu.aat_lib.dispatcher.Broadcaster;
-import ch.bailu.aat_lib.service.background.FileTask;
 import ch.bailu.aat_lib.util.Objects;
 import ch.bailu.foc.Foc;
 
@@ -58,7 +57,7 @@ public final class Tasks {
             broadcaster.broadcast(
                     AppBroadcaster.FILE_BACKGROND_TASK_CHANGED,
                     t.getFile(),
-                    ((DownloadTask) t).getSource());
+                    ((DownloadTask) t).getSource().toString());
 
         } else {
             broadcaster.broadcast(

@@ -1,8 +1,6 @@
 package ch.bailu.aat.services.cache.osm_features;
 
 
-import android.content.Context;
-
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -96,13 +94,14 @@ public final class ObjMapFeatures extends Obj {
 
         @Override
         public long bgOnProcess(final AppContext appContext) {
+            ListLoader.this.appContext = appContext;
             final long[] size = {0};
             new OnObject(appContext, ID, ObjMapFeatures.class) {
                 @Override
                 public void run(Obj handle) {
                     owner = (ObjMapFeatures) handle;
-                    ListLoader.this.appContext = appContext;
-                    bgOnProcess(appContext);
+
+                    parseMapFeatures();
 
                     owner.isLoaded = true;
                     ListLoader.this.appContext.getBroadcaster().broadcast(
@@ -117,7 +116,7 @@ public final class ObjMapFeatures extends Obj {
         }
 
 
-        private void bgOnProcess(Context context) {
+        private void parseMapFeatures() {
             keyList = SolidOsmFeaturesList.getKeyList(ID);
 
             try {

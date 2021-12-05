@@ -14,10 +14,11 @@ import org.mapsforge.map.android.graphics.AndroidGraphicFactory;
 import java.io.IOException;
 import java.io.InputStream;
 
+import ch.bailu.aat_lib.map.tile.MapTileInterface;
 import ch.bailu.aat_lib.service.cache.Obj;
 import ch.bailu.foc.Foc;
 
-public class SyncTileBitmap {
+public class SyncTileBitmap implements MapTileInterface {
     private TileBitmap bitmap = null;
 
     private long size = 0;

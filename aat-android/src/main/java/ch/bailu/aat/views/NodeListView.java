@@ -12,7 +12,6 @@ import android.widget.ListView;
 import ch.bailu.aat.activities.ActivityContext;
 import ch.bailu.aat.activities.ActivitySwitcher;
 import ch.bailu.aat.activities.NodeDetailActivity;
-import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.util.ui.AppTheme;
 import ch.bailu.aat.util.ui.UiTheme;
 import ch.bailu.aat_lib.dispatcher.OnContentUpdatedInterface;
@@ -99,7 +98,7 @@ public class NodeListView extends ListView implements
     public void onItemClick(AdapterView<?> arg0, View arg1, int pos, long arg3) {
         final Intent intent = new Intent();
         intent.putExtra("I", pos);
-        intent.putExtra("ID", cachedInfo.info.getFile().getPath());
+        intent.putExtra("ID", cachedInfo.info.getFile().toString());
         ActivitySwitcher.start(getContext(), NodeDetailActivity.class, intent);
 
     }

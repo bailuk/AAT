@@ -9,11 +9,10 @@ import javax.annotation.Nonnull;
 
 public class URX {
 
-    private URL url;
-    private MalformedURLException urlException;
+    private URL url = null;
+    private String string = null;
 
-    private String string;
-
+    private MalformedURLException urlException = null;
 
     public URX(URL u) {
         url = u;
@@ -23,40 +22,34 @@ public class URX {
     }
 
 
-
     @Nonnull
     @Override
     public String toString() {
         if (string == null) {
-                string = url.toString();
-            }
+            string = url.toString();
+        }
 
-
-        if (string == null) string = "";
+        if (string == null) {
+            string = "";
+        }
 
         return string;
     }
 
-
-    public URL getURL() {
-        try {
-            return toURL();
-        } catch (MalformedURLException e) {
-            return null;
-        }
-    }
-
-
-
     public URL toURL() throws MalformedURLException {
-        if (urlException != null) throw urlException;
-
+        if (urlException != null) {
+            throw urlException;
+        }
 
         if (url == null) {
-            url = new URL(toString());
+            try {
+                url = new URL(toString());
+            } catch (MalformedURLException e) {
+                urlException = e;
+                throw urlException;
+            }
         }
 
         return url;
     }
-
 }

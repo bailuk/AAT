@@ -1,6 +1,8 @@
 package ch.bailu.aat.services.sensor;
 
 import android.bluetooth.BluetoothAdapter;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 
 import androidx.annotation.NonNull;
@@ -8,6 +10,7 @@ import androidx.annotation.NonNull;
 import ch.bailu.aat.dispatcher.AndroidBroadcaster;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.sensor.list.SensorList;
+import ch.bailu.aat.util.OldAppBroadcaster;
 import ch.bailu.aat_lib.dispatcher.AppBroadcaster;
 import ch.bailu.aat_lib.dispatcher.BroadcastReceiver;
 import ch.bailu.aat_lib.dispatcher.Broadcaster;
@@ -25,14 +28,17 @@ public final class SensorService extends VirtualService implements WithStatusTex
 
     private final Broadcaster broadcaster;
 
+    private final Context context;
+
     public SensorService(ServiceContext sc) {
+        context = sc.getContext();
         sensorList = new SensorList(sc.getContext());
         bluetoothLE = Sensors.factoryBle(sc, sensorList);
         internal = Sensors.factoryInternal(sc.getContext(), sensorList);
 
         broadcaster = new AndroidBroadcaster(sc.getContext());
 
-        broadcaster.register(onBluetoothStateChanged, BluetoothAdapter.ACTION_STATE_CHANGED);
+        OldAppBroadcaster.register(context, onBluetoothStateChanged, BluetoothAdapter.ACTION_STATE_CHANGED);
         broadcaster.register(onSensorDisconnected, AppBroadcaster.SENSOR_DISCONNECTED + InfoID.SENSORS);
         broadcaster.register(onSensorReconnect, AppBroadcaster.SENSOR_RECONNECT + InfoID.SENSORS);
 
@@ -45,10 +51,13 @@ public final class SensorService extends VirtualService implements WithStatusTex
     }
 
 
-    final BroadcastReceiver onBluetoothStateChanged = args -> {
-        Integer state = (Integer) args[0];
-        if (state == BluetoothAdapter.STATE_ON || state == BluetoothAdapter.STATE_OFF) {
-            updateConnections();
+    final android.content.BroadcastReceiver onBluetoothStateChanged = new android.content.BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Integer state = intent.getIntExtra(BluetoothAdapter.ACTION_STATE_CHANGED,0);
+            if (state == BluetoothAdapter.STATE_ON || state == BluetoothAdapter.STATE_OFF) {
+                updateConnections();
+            }
         }
     };
 
@@ -72,7 +81,7 @@ public final class SensorService extends VirtualService implements WithStatusTex
         bluetoothLE.close();
         internal.close();
         sensorList.close();
-        broadcaster.unregister(onBluetoothStateChanged);
+        context.unregisterReceiver(onBluetoothStateChanged);
         broadcaster.unregister(onSensorDisconnected);
         broadcaster.unregister(onSensorReconnect);
     }
