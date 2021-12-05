@@ -1,9 +1,9 @@
 package ch.bailu.aat_gtk.app
 
 import ch.bailu.aat_lib.app.AppConfig
-import ch.bailu.aat_lib.factory.FocFactory
 import ch.bailu.aat_lib.map.AppDensity
 import ch.bailu.aat_lib.resources.Res
+import ch.bailu.foc.FocFactory
 import ch.bailu.foc.FocFile
 
 object GtkAppConfig : AppConfig() {

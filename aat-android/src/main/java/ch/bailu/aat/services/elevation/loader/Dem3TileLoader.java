@@ -8,6 +8,7 @@ import ch.bailu.aat.util.Timer;
 import ch.bailu.aat_lib.app.AppContext;
 import ch.bailu.aat_lib.coordinates.Dem3Coordinates;
 import ch.bailu.aat_lib.dispatcher.AppBroadcaster;
+import ch.bailu.aat_lib.dispatcher.BroadcastData;
 import ch.bailu.aat_lib.dispatcher.BroadcastReceiver;
 import ch.bailu.aat_lib.service.background.DownloadTask;
 import ch.bailu.aat_lib.service.elevation.tile.Dem3Tile;
@@ -42,7 +43,7 @@ public final class Dem3TileLoader implements Closeable {
     private final BroadcastReceiver onFileDownloaded = new BroadcastReceiver() {
         @Override
         public void onReceive(String... args) {
-            String id = args[0];
+            String id = BroadcastData.getFile(args);
             Dem3Tile tile = tiles.get(id);
 
             if (tile != null) {

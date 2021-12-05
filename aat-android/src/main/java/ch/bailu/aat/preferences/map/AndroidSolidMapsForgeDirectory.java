@@ -5,20 +5,20 @@ import android.content.Context;
 import java.io.File;
 import java.util.ArrayList;
 
-import ch.bailu.aat.factory.AndroidFocFactory;
 import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat.util.fs.AndroidVolumes;
 import ch.bailu.aat_lib.preferences.map.SolidMapsForgeDirectory;
 import ch.bailu.aat_lib.util.fs.AppDirectory;
 import ch.bailu.foc.Foc;
 import ch.bailu.foc_android.FocAndroid;
+import ch.bailu.foc_android.FocAndroidFactory;
 
 public class AndroidSolidMapsForgeDirectory extends SolidMapsForgeDirectory {
 
     private final Context context;
 
     public AndroidSolidMapsForgeDirectory(Context context) {
-        super(new Storage(context), new AndroidFocFactory(context));
+        super(new Storage(context), new FocAndroidFactory(context));
         this.context = context;
     }
 

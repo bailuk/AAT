@@ -2,11 +2,11 @@ package ch.bailu.aat.preferences.map;
 
 import java.util.ArrayList;
 
-import ch.bailu.aat_lib.factory.FocFactory;
 import ch.bailu.aat_lib.preferences.SolidFile;
 import ch.bailu.aat_lib.preferences.map.SolidMapsForgeDirectory;
 import ch.bailu.aat_lib.resources.Res;
 import ch.bailu.foc.Foc;
+import ch.bailu.foc.FocFactory;
 
 public class SolidPoiDatabase extends SolidFile {
 

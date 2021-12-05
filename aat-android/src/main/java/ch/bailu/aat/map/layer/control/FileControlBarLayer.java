@@ -5,7 +5,6 @@ import android.view.View;
 
 import ch.bailu.aat.R;
 import ch.bailu.aat.activities.AbsGpxListActivity;
-import ch.bailu.aat.factory.AndroidFocFactory;
 import ch.bailu.aat.menus.FileMenu;
 import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat.util.fs.FileAction;
@@ -32,6 +31,7 @@ import ch.bailu.aat_lib.service.ServicesInterface;
 import ch.bailu.aat_lib.service.directory.Iterator;
 import ch.bailu.aat_lib.service.directory.SummaryConfig;
 import ch.bailu.foc.Foc;
+import ch.bailu.foc_android.FocAndroidFactory;
 
 public final class FileControlBarLayer extends ControlBarLayer {
 
@@ -171,7 +171,7 @@ public final class FileControlBarLayer extends ControlBarLayer {
         public void setSelectedNode(int IID, GpxInformation info, GpxPointNode node, int i) {
             super.setSelectedNode(IID, info, node, i);
 
-            new SolidDirectoryQuery(new Storage(acontext), new AndroidFocFactory(acontext)).getPosition().setValue(i);
+            new SolidDirectoryQuery(new Storage(acontext), new FocAndroidFactory(acontext)).getPosition().setValue(i);
 
             iterator.moveToPosition(i);
 
@@ -210,7 +210,7 @@ public final class FileControlBarLayer extends ControlBarLayer {
         @Override
         public boolean onLongClick(View view) {
             if (selectedFile != null) {
-                new SolidOverlayFile(new Storage(acontext), new AndroidFocFactory(acontext), 0).setValueFromFile(selectedFile);
+                new SolidOverlayFile(new Storage(acontext), new FocAndroidFactory(acontext), 0).setValueFromFile(selectedFile);
                 return true;
             }
             return false;

@@ -1,8 +1,8 @@
 package ch.bailu.aat_gtk.solid
 
-import ch.bailu.aat_lib.factory.FocFactory
 import ch.bailu.aat_lib.preferences.StorageInterface
 import ch.bailu.aat_lib.preferences.map.SolidTileCacheDirectory
+import ch.bailu.foc.FocFactory
 import java.util.ArrayList
 
 class SolidGtkTileCacheDirectory(storage: StorageInterface,

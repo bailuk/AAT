@@ -1,5 +1,7 @@
 package ch.bailu.aat_lib.util;
 
+import java.util.List;
+
 public class Objects {
     public static boolean equals(Object a, Object b) {
         if (a != null && b!= null) {
@@ -55,4 +57,12 @@ public class Objects {
         return c == 't' || c == 'T';
     }
 
+    public static String[] toArray(List<String> list) {
+        String[] result = new String[list.size()];
+
+        for (int i=0; i<result.length; i++) {
+            result[i] = list.get(i);
+        }
+        return result;
+    }
 }

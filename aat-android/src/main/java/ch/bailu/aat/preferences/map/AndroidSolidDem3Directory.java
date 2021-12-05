@@ -4,18 +4,18 @@ import android.content.Context;
 
 import java.util.ArrayList;
 
-import ch.bailu.aat.factory.AndroidFocFactory;
 import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat.util.fs.AndroidVolumes;
 import ch.bailu.aat_lib.preferences.map.SolidDem3Directory;
 import ch.bailu.aat_lib.util.fs.AppDirectory;
 import ch.bailu.foc.Foc;
+import ch.bailu.foc_android.FocAndroidFactory;
 
 public class AndroidSolidDem3Directory extends SolidDem3Directory {
     private final Context context;
 
     public AndroidSolidDem3Directory(Context c) {
-        super(new Storage(c), new AndroidFocFactory(c));
+        super(new Storage(c), new FocAndroidFactory(c));
         context = c;
     }
 

@@ -3,7 +3,6 @@ package ch.bailu.aat.app;
 import android.content.Context;
 
 import ch.bailu.aat.dispatcher.AndroidBroadcaster;
-import ch.bailu.aat.factory.AndroidFocFactory;
 import ch.bailu.aat.map.mapsforge.MapsForgePreview;
 import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat.preferences.map.AndroidSolidDem3Directory;
@@ -22,25 +21,27 @@ import ch.bailu.aat_lib.preferences.map.SolidDem3Directory;
 import ch.bailu.aat_lib.preferences.map.SolidMapsForgeDirectory;
 import ch.bailu.aat_lib.preferences.map.SolidTileCacheDirectory;
 import ch.bailu.aat_lib.preferences.system.SolidDataDirectory;
-import ch.bailu.aat_lib.resources.AssetsInterface;
 import ch.bailu.aat_lib.service.ServicesInterface;
 import ch.bailu.aat_lib.service.background.DownloadConfig;
 import ch.bailu.aat_lib.service.directory.MapPreviewInterface;
 import ch.bailu.aat_lib.service.directory.SummaryConfig;
 import ch.bailu.aat_lib.util.sql.Database;
 import ch.bailu.foc.Foc;
+import ch.bailu.foc.FocFactory;
+import ch.bailu.foc_android.FocAndroidFactory;
+import ch.bailu.foc_android.FocAssetFactory;
 
 public class AndroidAppContext implements AppContext {
     private final Context context;
     private final Broadcaster broadcaster;
     private final ServicesInterface services;
-    private final AndroidAssets assets;
-    
+    private final FocFactory assets;
+
     public AndroidAppContext(Context context, ServicesInterface serivces) {
         this.context = context;
         this.services = serivces;
         this.broadcaster = new AndroidBroadcaster(context);
-        this.assets = new AndroidAssets(context);
+        this.assets = new FocAssetFactory(context);
     }
     
     @Override
@@ -94,7 +95,7 @@ public class AndroidAppContext implements AppContext {
     }
 
     @Override
-    public AssetsInterface getAssets() {
+    public FocFactory getAssets() {
         return assets;
     }
 
@@ -110,6 +111,6 @@ public class AndroidAppContext implements AppContext {
 
     @Override
     public Foc toFoc(String string) {
-        return new AndroidFocFactory(context).toFoc(string);
+        return new FocAndroidFactory(context).toFoc(string);
     }
 }

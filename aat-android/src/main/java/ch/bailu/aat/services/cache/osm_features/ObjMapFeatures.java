@@ -1,7 +1,6 @@
 package ch.bailu.aat.services.cache.osm_features;
 
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 import ch.bailu.aat.preferences.map.SolidOsmFeaturesList;
@@ -118,12 +117,7 @@ public final class ObjMapFeatures extends Obj {
 
         private void parseMapFeatures() {
             keyList = SolidOsmFeaturesList.getKeyList(ID);
-
-            try {
-                new MapFeaturesParser(appContext.getAssets(), this);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            new MapFeaturesParser(appContext.getAssets(), this);
         }
 
 

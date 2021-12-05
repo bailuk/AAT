@@ -3,11 +3,11 @@ package ch.bailu.aat_lib.preferences.map;
 import java.util.ArrayList;
 
 import ch.bailu.aat_lib.coordinates.Dem3Coordinates;
-import ch.bailu.aat_lib.factory.FocFactory;
 import ch.bailu.aat_lib.preferences.SolidFile;
 import ch.bailu.aat_lib.preferences.StorageInterface;
 import ch.bailu.aat_lib.resources.ToDo;
 import ch.bailu.foc.Foc;
+import ch.bailu.foc.FocFactory;
 
 public class SolidDem3Directory extends SolidFile {
 

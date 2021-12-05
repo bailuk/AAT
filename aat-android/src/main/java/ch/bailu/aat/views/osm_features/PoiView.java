@@ -24,12 +24,12 @@ import ch.bailu.aat.util.filter_list.PoiListEntry;
 import ch.bailu.aat.util.ui.UiTheme;
 import ch.bailu.aat.views.EditTextTool;
 import ch.bailu.aat.views.preferences.SolidStringView;
-import ch.bailu.aat_lib.factory.FocFactory;
 import ch.bailu.aat_lib.preferences.OnPreferencesChanged;
 import ch.bailu.aat_lib.preferences.SolidString;
 import ch.bailu.aat_lib.preferences.StorageInterface;
 import ch.bailu.aat_lib.preferences.map.SolidMapsForgeDirectory;
 import ch.bailu.foc.Foc;
+import ch.bailu.foc.FocFactory;
 
 public class PoiView  extends LinearLayout implements OnPreferencesChanged {
 

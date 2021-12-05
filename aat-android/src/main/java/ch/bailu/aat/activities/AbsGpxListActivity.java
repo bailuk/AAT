@@ -11,14 +11,10 @@ import android.widget.LinearLayout;
 import ch.bailu.aat.R;
 import ch.bailu.aat.dispatcher.IteratorSource;
 import ch.bailu.aat.dispatcher.OverlaySource;
-import ch.bailu.aat.factory.AndroidFocFactory;
 import ch.bailu.aat.map.MapFactory;
 import ch.bailu.aat.map.To;
 import ch.bailu.aat.map.layer.control.FileControlBarLayer;
-import ch.bailu.aat_lib.preferences.SolidDirectoryQuery;
 import ch.bailu.aat.preferences.Storage;
-import ch.bailu.aat_lib.service.directory.Iterator;
-import ch.bailu.aat_lib.service.directory.IteratorSimple;
 import ch.bailu.aat.util.ui.AppLayout;
 import ch.bailu.aat.util.ui.AppTheme;
 import ch.bailu.aat.util.ui.UiTheme;
@@ -36,8 +32,12 @@ import ch.bailu.aat_lib.dispatcher.CurrentLocationSource;
 import ch.bailu.aat_lib.gpx.InfoID;
 import ch.bailu.aat_lib.map.MapViewInterface;
 import ch.bailu.aat_lib.preferences.OnPreferencesChanged;
+import ch.bailu.aat_lib.preferences.SolidDirectoryQuery;
 import ch.bailu.aat_lib.preferences.StorageInterface;
+import ch.bailu.aat_lib.service.directory.Iterator;
+import ch.bailu.aat_lib.service.directory.IteratorSimple;
 import ch.bailu.foc.Foc;
+import ch.bailu.foc_android.FocAndroidFactory;
 
 
 public abstract class AbsGpxListActivity extends ActivityContext implements OnItemClickListener, OnPreferencesChanged {
@@ -67,7 +67,7 @@ public abstract class AbsGpxListActivity extends ActivityContext implements OnIt
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        sdirectory = new SolidDirectoryQuery(new Storage(this), new AndroidFocFactory(this));
+        sdirectory = new SolidDirectoryQuery(new Storage(this), new FocAndroidFactory(this));
         sdirectory.setValue(getDirectory().getPath());
         solid_key = AbsGpxListActivity.class.getSimpleName() +  "_" + sdirectory.getValueAsString();
 

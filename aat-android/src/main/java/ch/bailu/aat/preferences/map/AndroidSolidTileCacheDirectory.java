@@ -4,19 +4,19 @@ import android.content.Context;
 
 import java.util.ArrayList;
 
-import ch.bailu.aat.factory.AndroidFocFactory;
 import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat.util.fs.AndroidVolumes;
 import ch.bailu.aat_lib.preferences.map.SolidTileCacheDirectory;
 import ch.bailu.aat_lib.util.fs.AppDirectory;
 import ch.bailu.foc.Foc;
+import ch.bailu.foc_android.FocAndroidFactory;
 
 public class AndroidSolidTileCacheDirectory extends SolidTileCacheDirectory {
 
     private final Context context;
 
     public AndroidSolidTileCacheDirectory(Context c) {
-        super(new Storage(c), new AndroidFocFactory(c));
+        super(new Storage(c), new FocAndroidFactory(c));
         context = c;
     }
 

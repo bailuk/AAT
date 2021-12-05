@@ -59,6 +59,7 @@ android {
 repositories {
     google()
     mavenCentral()
+    mavenLocal()
 }
 
 dependencies {
@@ -70,6 +71,10 @@ dependencies {
      */
     val focVersion : String by project
     implementation("com.github.bailuk.foc:foc-android:$focVersion")
+    //implementation("ch.bailu:foc:$focVersion")
+    //implementation("ch.bailu:foc-android:$focVersion")
+
+
 
     /*
             Automatic MapsForge integration as described here:

@@ -24,7 +24,7 @@ import kotlin.system.exitProcess
 fun main(args: Array<String>) {
     GTK.init()
 
-    val app = Application(Str(GtkAppConfig.applicationId), ApplicationFlags.FLAGS_NONE)
+    val app = Application(Str(GtkAppConfig.applicationId), 0)
 
     app.onActivate {
         try {

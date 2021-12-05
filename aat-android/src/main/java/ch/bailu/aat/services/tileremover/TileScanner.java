@@ -31,9 +31,9 @@ public abstract class TileScanner {
 
     private void scanSourceContainer(Foc dir) {
         if (doDirectory(dir) && doSourceContainer(dir)) {
-            dir.foreachDir(new Foc.Execute() {
+            dir.foreachDir(new Foc.OnHaveFoc() {
                 @Override
-                public void execute(Foc child) {
+                public void run(Foc child) {
                     source = child.getName();
                     scanZoomContainer(child);
                 }
@@ -46,9 +46,9 @@ public abstract class TileScanner {
 
     private void scanZoomContainer(final Foc dir) {
         if (doZoomContainer(dir)) {
-            dir.foreachDir(new Foc.Execute() {
+            dir.foreachDir(new Foc.OnHaveFoc() {
                 @Override
-                public void execute(Foc child) {
+                public void run(Foc child) {
                     try {
                         zoom = Short.decode(child.getName());
                         scanXContainer(child);
@@ -68,9 +68,9 @@ public abstract class TileScanner {
     private void scanXContainer(Foc dir) {
 
         if (doXContainer(dir)) {
-            dir.foreachDir(new Foc.Execute() {
+            dir.foreachDir(new Foc.OnHaveFoc() {
                 @Override
-                public void execute(Foc child) {
+                public void run(Foc child) {
                     try {
                         x = Integer.decode(child.getName());
                         scanYContainer(child);
@@ -89,9 +89,9 @@ public abstract class TileScanner {
 
     private void scanYContainer(Foc dir) {
         if (doYContainer(dir)) {
-            dir.foreachFile(new Foc.Execute() {
+            dir.foreachFile(new Foc.OnHaveFoc() {
                 @Override
-                public void execute(Foc child) {
+                public void run(Foc child) {
 
                     try {
                         String[] parts = child.getName().split("\\.");

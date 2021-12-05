@@ -21,12 +21,7 @@ public final class FilesInDirectory {
     private static NavigableMap<String,Foc> getFileList(Foc directory) {
         final NavigableMap<String, Foc> files = new TreeMap<>();
 
-        directory.foreachFile(new Foc.Execute() {
-            @Override
-            public void execute(Foc child) {
-                files.put(child.getName(), child);
-            }
-        });
+        directory.foreachFile(child -> files.put(child.getName(), child));
 
         return files;
     }

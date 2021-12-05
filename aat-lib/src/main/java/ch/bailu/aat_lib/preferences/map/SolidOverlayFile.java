@@ -1,12 +1,12 @@
 package ch.bailu.aat_lib.preferences.map;
 
-import ch.bailu.aat_lib.factory.FocFactory;
 import ch.bailu.aat_lib.preferences.OnPreferencesChanged;
 import ch.bailu.aat_lib.preferences.SolidBoolean;
 import ch.bailu.aat_lib.preferences.SolidString;
 import ch.bailu.aat_lib.preferences.SolidTypeInterface;
 import ch.bailu.aat_lib.preferences.StorageInterface;
 import ch.bailu.foc.Foc;
+import ch.bailu.foc.FocFactory;
 
 public class SolidOverlayFile  implements SolidTypeInterface {
     private static final String KEY_NAME="overlay_path_";

@@ -7,6 +7,7 @@ plugins {
 
 
 repositories {
+    mavenLocal()
     google()
     mavenCentral()
 }
@@ -20,6 +21,7 @@ tasks.test {
 dependencies {
     val focVersion : String by project
     api("com.github.bailuk.foc:foc:$focVersion")
+    //api("ch.bailu:foc:$focVersion")
 
 
     // MapsForge Core

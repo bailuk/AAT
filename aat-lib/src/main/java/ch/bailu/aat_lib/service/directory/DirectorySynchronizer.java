@@ -18,6 +18,7 @@ import ch.bailu.aat_lib.service.background.BackgroundTask;
 import ch.bailu.aat_lib.service.cache.Obj;
 import ch.bailu.aat_lib.service.cache.ObjGpx;
 import ch.bailu.aat_lib.service.cache.ObjGpxStatic;
+import ch.bailu.aat_lib.util.Objects;
 import ch.bailu.aat_lib.util.sql.ResultSet;
 import ch.bailu.foc.Foc;
 
@@ -283,7 +284,7 @@ public final class DirectorySynchronizer  implements Closeable {
             ArrayList<String> values = new ArrayList<>();
 
             createContentValues(file.getName(), list.getDelta(), keys, values);
-            database.insert((String[]) keys.toArray(), (String[]) values.toArray());
+            database.insert(Objects.toArray(keys), Objects.toArray(values));
         }
 
         private void createContentValues(String filename,

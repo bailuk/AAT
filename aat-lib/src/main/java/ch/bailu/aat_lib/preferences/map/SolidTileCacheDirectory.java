@@ -2,10 +2,10 @@ package ch.bailu.aat_lib.preferences.map;
 
 import java.util.ArrayList;
 
-import ch.bailu.aat_lib.factory.FocFactory;
 import ch.bailu.aat_lib.preferences.SolidFile;
 import ch.bailu.aat_lib.preferences.StorageInterface;
 import ch.bailu.aat_lib.resources.Res;
+import ch.bailu.foc.FocFactory;
 
 public abstract class SolidTileCacheDirectory extends SolidFile {
 

@@ -5,7 +5,6 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 
-import ch.bailu.aat.factory.AndroidFocFactory;
 import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat.util.ui.AppTheme;
 import ch.bailu.aat.util.ui.UiTheme;
@@ -14,6 +13,7 @@ import ch.bailu.aat_lib.description.ContentDescription;
 import ch.bailu.aat_lib.dispatcher.DispatcherInterface;
 import ch.bailu.aat_lib.map.MapContext;
 import ch.bailu.aat_lib.preferences.SolidDirectoryQuery;
+import ch.bailu.foc_android.FocAndroidFactory;
 
 
 public class VerticalScrollView extends ScrollView {
@@ -55,7 +55,7 @@ public class VerticalScrollView extends ScrollView {
 
 
     public void addAllFilterViews(MapContext mc, UiTheme theme) {
-        final SolidDirectoryQuery sdirectory = new SolidDirectoryQuery(new Storage(getContext()), new AndroidFocFactory(getContext()));
+        final SolidDirectoryQuery sdirectory = new SolidDirectoryQuery(new Storage(getContext()), new FocAndroidFactory(getContext()));
 
         LinearLayout geo = new LinearLayout(getContext());
 

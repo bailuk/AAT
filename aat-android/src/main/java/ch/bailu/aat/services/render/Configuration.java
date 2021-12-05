@@ -50,12 +50,9 @@ public final class Configuration {
         if (dir.isFile()) {
             mapFiles.add(dir);
         } else {
-            dir.foreachFile(new Foc.Execute() {
-                @Override
-                public void execute(Foc child) {
-                    if (child.getName().endsWith(SolidMapsForgeDirectory.EXTENSION)) {
-                        mapFiles.add(child);
-                    }
+            dir.foreachFile(child -> {
+                if (child.getName().endsWith(SolidMapsForgeDirectory.EXTENSION)) {
+                    mapFiles.add(child);
                 }
             });
         }

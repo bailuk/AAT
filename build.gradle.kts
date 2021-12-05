@@ -11,6 +11,7 @@ buildscript {
 }
 
 
+
 allprojects {
     repositories {
         maven {
@@ -18,4 +19,5 @@ allprojects {
         }
     }
 }
+
 

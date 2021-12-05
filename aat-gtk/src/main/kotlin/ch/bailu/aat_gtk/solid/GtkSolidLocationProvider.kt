@@ -2,7 +2,6 @@ package ch.bailu.aat_gtk.solid
 
 import ch.bailu.aat_gtk.service.location.GeoClue2LocationProvider
 import ch.bailu.aat_gtk.service.location.ThreadedMockLocation
-import ch.bailu.aat_lib.factory.FocFactory
 import ch.bailu.aat_lib.preferences.StorageInterface
 import ch.bailu.aat_lib.preferences.location.SolidLocationProvider
 import ch.bailu.aat_lib.resources.ToDo

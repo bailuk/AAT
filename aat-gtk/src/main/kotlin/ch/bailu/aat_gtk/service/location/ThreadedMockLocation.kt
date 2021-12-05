@@ -1,7 +1,6 @@
 package ch.bailu.aat_gtk.service.location
 
 import ch.bailu.aat_gtk.solid.SolidGtkDataDirectory
-import ch.bailu.aat_lib.factory.FocFactory
 import ch.bailu.aat_lib.gpx.GpxPointNode
 import ch.bailu.aat_lib.gpx.StateID
 import ch.bailu.aat_lib.gpx.attributes.AutoPause
@@ -10,6 +9,7 @@ import ch.bailu.aat_lib.preferences.StorageInterface
 import ch.bailu.aat_lib.service.location.*
 import ch.bailu.aat_lib.xml.parser.gpx.GpxListReader
 import ch.bailu.foc.Foc
+import ch.bailu.foc.FocFactory
 
 class ThreadedMockLocation(
     locationService: LocationServiceInterface,

@@ -2,9 +2,9 @@ package ch.bailu.aat_lib.preferences;
 
 import java.util.ArrayList;
 
-import ch.bailu.aat_lib.factory.FocFactory;
 import ch.bailu.aat_lib.resources.Res;
 import ch.bailu.aat_lib.service.directory.GpxDbConstants;
+import ch.bailu.foc.FocFactory;
 
 public class SolidDirectoryQuery extends SolidFile {
     private static final String KEY_DIR_DIRECTORY="DIR_DIRECTORY";

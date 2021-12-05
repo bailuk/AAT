@@ -3,21 +3,27 @@ package ch.bailu.aat_gtk.service
 import ch.bailu.aat_gtk.solid.GtkSolidLocationProvider
 import ch.bailu.aat_gtk.solid.SolidGtkDataDirectory
 import ch.bailu.aat_gtk.ui.view.GtkStatusIcon
+import ch.bailu.aat_lib.coordinates.Dem3Coordinates
 import ch.bailu.aat_lib.dispatcher.Broadcaster
-import ch.bailu.aat_lib.factory.FocFactory
 import ch.bailu.aat_lib.gpx.GpxInformation
 import ch.bailu.aat_lib.gpx.GpxPointNode
 import ch.bailu.aat_lib.gpx.interfaces.GpxPointInterface
 import ch.bailu.aat_lib.preferences.StorageInterface
 import ch.bailu.aat_lib.service.IconMapServiceInterface
 import ch.bailu.aat_lib.service.ServicesInterface
+import ch.bailu.aat_lib.service.background.BackgroundServiceInterface
+import ch.bailu.aat_lib.service.cache.CacheServiceInterface
 import ch.bailu.aat_lib.service.cache.ObjImageInterface
+import ch.bailu.aat_lib.service.directory.DirectoryServiceInterface
 import ch.bailu.aat_lib.service.elevation.ElevetionServiceInterface
+import ch.bailu.aat_lib.service.elevation.updater.ElevationUpdaterClient
 import ch.bailu.aat_lib.service.location.LocationService
 import ch.bailu.aat_lib.service.location.LocationServiceInterface
+import ch.bailu.aat_lib.service.render.RenderServiceInterface
 import ch.bailu.aat_lib.service.sensor.SensorServiceInterface
 import ch.bailu.aat_lib.service.tracker.TrackerService
 import ch.bailu.aat_lib.service.tracker.TrackerServiceInterface
+import ch.bailu.foc.FocFactory
 import ch.bailu.foc.FocFile
 
 class GtkServices (storage: StorageInterface, broadcaster: Broadcaster) :
@@ -36,7 +42,30 @@ class GtkServices (storage: StorageInterface, broadcaster: Broadcaster) :
 
     override fun free() {}
     override fun getElevationService(): ElevetionServiceInterface {
-        return ElevetionServiceInterface { latitudeE6, longitudeE6 -> 0 }
+        return ElevationService()
+    }
+
+    class ElevationService() : ElevetionServiceInterface {
+        override fun getElevation(latitudeE6: Int, longitudeE6: Int): Short {
+            return 0;
+        }
+
+        override fun requestElevationUpdates(owner: ElevationUpdaterClient?, srtmTileCoordinates: Array<out Dem3Coordinates>?) {
+
+        }
+
+        override fun requestElevationUpdates() {
+
+        }
+
+        override fun cancelElevationUpdates(objGpxStatic: ElevationUpdaterClient?) {
+
+        }
+
+    }
+
+    override fun getRenderService(): RenderServiceInterface {
+        TODO("Not yet implemented")
     }
 
     override fun getSensorService(): SensorServiceInterface {
@@ -72,6 +101,18 @@ class GtkServices (storage: StorageInterface, broadcaster: Broadcaster) :
                 return ""
             }
         }
+    }
+
+    override fun getBackgroundService(): BackgroundServiceInterface {
+        TODO("Not yet implemented")
+    }
+
+    override fun getCacheService(): CacheServiceInterface {
+        TODO("Not yet implemented")
+    }
+
+    override fun getDirectoryService(): DirectoryServiceInterface {
+        TODO("Not yet implemented")
     }
 
     init {

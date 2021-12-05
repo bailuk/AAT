@@ -8,7 +8,6 @@ import android.view.MenuItem;
 import ch.bailu.aat.R;
 import ch.bailu.aat.activities.ActivitySwitcher;
 import ch.bailu.aat.activities.PreferencesActivity;
-import ch.bailu.aat.factory.AndroidFocFactory;
 import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat.preferences.map.AndroidSolidMapsForgeDirectory;
 import ch.bailu.aat.preferences.map.SolidMapTileStack;
@@ -19,6 +18,7 @@ import ch.bailu.aat.views.preferences.SolidCheckListDialog;
 import ch.bailu.aat.views.preferences.SolidStringDialog;
 import ch.bailu.aat_lib.map.MapContext;
 import ch.bailu.aat_lib.preferences.map.SolidOverlayFileList;
+import ch.bailu.foc_android.FocAndroidFactory;
 
 public final class MapMenu extends AbsMenu {
     private MenuItem stack, overlays, reload, theme, preferences, map;
@@ -41,7 +41,7 @@ public final class MapMenu extends AbsMenu {
 
         SolidMapsForgeMapFile smapFile = new SolidMapsForgeMapFile(context);
         map = menu.add(smapFile.getLabel());
-        theme = menu.add(new SolidRenderTheme(smapFile, new AndroidFocFactory(context)).getLabel());
+        theme = menu.add(new SolidRenderTheme(smapFile, new FocAndroidFactory(context)).getLabel());
 
         preferences = menu.add(R.string.intro_settings);
 
@@ -71,7 +71,7 @@ public final class MapMenu extends AbsMenu {
     public boolean onItemClick(MenuItem item) {
         final Context c = context;
 
-        final SolidRenderTheme stheme = new SolidRenderTheme(new AndroidSolidMapsForgeDirectory(c), new AndroidFocFactory(c));
+        final SolidRenderTheme stheme = new SolidRenderTheme(new AndroidSolidMapsForgeDirectory(c), new FocAndroidFactory(c));
         if (item == stack) {
             new SolidCheckListDialog(c,
                     new SolidMapTileStack(stheme));
@@ -79,7 +79,7 @@ public final class MapMenu extends AbsMenu {
                 mcontext.getMapView().reDownloadTiles();
 
             } else if (item == overlays) {
-            new SolidCheckListDialog(c, new SolidOverlayFileList(new Storage(c), new AndroidFocFactory(c)));
+            new SolidCheckListDialog(c, new SolidOverlayFileList(new Storage(c), new FocAndroidFactory(c)));
         } else if (item == theme) {
             new SolidStringDialog(c, stheme);
         } else if (item == map) {

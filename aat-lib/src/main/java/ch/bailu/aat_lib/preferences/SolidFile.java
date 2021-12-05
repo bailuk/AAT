@@ -4,9 +4,9 @@ import java.util.ArrayList;
 
 import javax.annotation.Nonnull;
 
-import ch.bailu.aat_lib.factory.FocFactory;
 import ch.bailu.aat_lib.resources.Res;
 import ch.bailu.foc.Foc;
+import ch.bailu.foc.FocFactory;
 
 public abstract class SolidFile extends SolidString {
 
@@ -54,12 +54,7 @@ public abstract class SolidFile extends SolidString {
     }
 
     public static void add_subdirectories_r(final ArrayList<String> list, Foc directory) {
-        directory.foreachDir(new Foc.Execute() {
-            @Override
-            public void execute(Foc child) {
-                add_r(list, child);
-            }
-        });
+        directory.foreachDir(child -> add_r(list, child));
     }
 
 
@@ -108,21 +103,13 @@ public abstract class SolidFile extends SolidString {
 
     public static ArrayList<String> add_extInSubdirectories(final ArrayList<String> list,
                                                             Foc directory, String ext) {
-        directory.foreachDir(new Foc.Execute() {
-            @Override
-            public void execute(Foc child) {
-                add_ext(list, child, ext);
-            }
-        });
+        directory.foreachDir(child -> add_ext(list, child, ext));
         return list;
     }
 
     public static ArrayList<String> add_ext(final ArrayList<String> list, Foc directory, String ext) {
-        directory.foreachFile(new Foc.Execute() {
-            @Override
-            public void execute(Foc child) {
-                if (child.getName().endsWith(ext)) add_r(list, child);
-            }
+        directory.foreachFile(child -> {
+            if (child.getName().endsWith(ext)) add_r(list, child);
         });
         return list;
     }

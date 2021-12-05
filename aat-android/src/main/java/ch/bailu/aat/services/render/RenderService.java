@@ -2,7 +2,6 @@ package ch.bailu.aat.services.render;
 
 import org.mapsforge.core.model.Tile;
 
-import ch.bailu.aat.factory.AndroidFocFactory;
 import ch.bailu.aat.preferences.map.AndroidSolidMapsForgeDirectory;
 import ch.bailu.aat.preferences.map.SolidRenderTheme;
 import ch.bailu.aat.preferences.map.SolidRendererThreads;
@@ -13,6 +12,7 @@ import ch.bailu.aat_lib.preferences.map.SolidMapsForgeDirectory;
 import ch.bailu.aat_lib.service.VirtualService;
 import ch.bailu.aat_lib.service.cache.ObjTileMapsForge;
 import ch.bailu.aat_lib.service.render.RenderServiceInterface;
+import ch.bailu.foc_android.FocAndroidFactory;
 
 public final class RenderService  extends VirtualService
         implements OnPreferencesChanged, RenderServiceInterface {
@@ -31,7 +31,7 @@ public final class RenderService  extends VirtualService
 
 
         sdirectory = new AndroidSolidMapsForgeDirectory(sc.getContext());
-        stheme = new SolidRenderTheme(new AndroidSolidMapsForgeDirectory(sc.getContext()), new AndroidFocFactory(sc.getContext()));
+        stheme = new SolidRenderTheme(new AndroidSolidMapsForgeDirectory(sc.getContext()), new FocAndroidFactory(sc.getContext()));
         //sthreads = new SolidRendererThreads(sc.getContext());
 
         sdirectory.getStorage().register(this);

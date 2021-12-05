@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 
 import ch.bailu.aat.R;
-import ch.bailu.aat.factory.AndroidFocFactory;
 import ch.bailu.aat.map.tile.source.MapsForgeSource;
 import ch.bailu.aat.map.tile.source.Source;
 import ch.bailu.aat.preferences.Storage;
@@ -26,6 +25,7 @@ import ch.bailu.aat.views.tileremover.TileRemoverView;
 import ch.bailu.aat_lib.preferences.StorageInterface;
 import ch.bailu.aat_lib.preferences.map.SolidTileSize;
 import ch.bailu.aat_lib.resources.ToDo;
+import ch.bailu.foc_android.FocAndroidFactory;
 
 public class MapTilePreferencesView extends VerticalScrollView {
     private final TileRemoverView tileRemover;
@@ -46,7 +46,7 @@ public class MapTilePreferencesView extends VerticalScrollView {
         add(new TitleView(context, MapsForgeSource.NAME, theme));
         add(new SolidDirectoryView(context,new SolidMapsForgeMapFile(context), theme));
         add(new SolidDirectoryView(context,new AndroidSolidMapsForgeDirectory(context), theme));
-        add(new SolidStringView(context,new SolidRenderTheme(new AndroidSolidMapsForgeDirectory(context), new AndroidFocFactory(context)), theme));
+        add(new SolidStringView(context,new SolidRenderTheme(new AndroidSolidMapsForgeDirectory(context), new FocAndroidFactory(context)), theme));
         add(new SolidCheckBox(acontext, new SolidEnableTileCache.MapsForge(storage), theme));
 
         add(new TitleView(context, ToDo.translate("Dem3 altitude tiles"), theme));

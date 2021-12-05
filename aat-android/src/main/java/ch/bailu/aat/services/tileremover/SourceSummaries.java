@@ -60,12 +60,7 @@ public final class SourceSummaries {
 
         reset(c);
 
-        tileCacheDirectory.foreachDir(new Foc.Execute() {
-            @Override
-            public void execute(Foc child) {
-                sourceSummaries.add(new SourceSummary(child.getName()));
-            }
-        });
+        tileCacheDirectory.foreachDir(child -> sourceSummaries.add(new SourceSummary(child.getName())));
 
     }
 

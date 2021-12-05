@@ -8,7 +8,6 @@ import android.view.MenuItem;
 import ch.bailu.aat.R;
 import ch.bailu.aat.activities.ActivitySwitcher;
 import ch.bailu.aat.activities.PreferencesActivity;
-import ch.bailu.aat.factory.AndroidFocFactory;
 import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat.preferences.map.AndroidSolidMapsForgeDirectory;
 import ch.bailu.aat.preferences.map.SolidMapTileStack;
@@ -20,6 +19,7 @@ import ch.bailu.aat.views.preferences.SolidIndexListDialog;
 import ch.bailu.aat_lib.preferences.presets.SolidPreset;
 import ch.bailu.aat_lib.service.InsideContext;
 import ch.bailu.aat_lib.service.tracker.StateInterface;
+import ch.bailu.foc_android.FocAndroidFactory;
 
 public final class OptionsMenu extends AbsMenu {
     private MenuItem start, pause, backlight, preferences, map;
@@ -107,7 +107,7 @@ public final class OptionsMenu extends AbsMenu {
 
 
         } else if (item == map) {
-            SolidRenderTheme stheme = new SolidRenderTheme(new AndroidSolidMapsForgeDirectory(c), new AndroidFocFactory(c));
+            SolidRenderTheme stheme = new SolidRenderTheme(new AndroidSolidMapsForgeDirectory(c), new FocAndroidFactory(c));
             new SolidCheckListDialog(c,new SolidMapTileStack(stheme));
         } else {
             return false;

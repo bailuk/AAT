@@ -1,9 +1,9 @@
 package ch.bailu.aat_lib.preferences.map;
 
-import ch.bailu.aat_lib.factory.FocFactory;
 import ch.bailu.aat_lib.preferences.SolidCheckList;
 import ch.bailu.aat_lib.preferences.StorageInterface;
 import ch.bailu.aat_lib.resources.Res;
+import ch.bailu.foc.FocFactory;
 
 public class SolidOverlayFileList extends SolidCheckList {
     public static final int MAX_OVERLAYS=4;
