@@ -4,7 +4,6 @@ import ch.bailu.aat_gtk.ui.view.Label
 import ch.bailu.aat_lib.preferences.AbsSolidType
 import ch.bailu.aat_lib.preferences.OnPreferencesChanged
 import ch.bailu.aat_lib.preferences.StorageInterface
-import ch.bailu.gtk.GTK
 import ch.bailu.gtk.gtk.Box
 import ch.bailu.gtk.gtk.Editable
 import ch.bailu.gtk.gtk.Entry
@@ -16,23 +15,23 @@ class SolidEntryView (private val solid: AbsSolidType) : OnPreferencesChanged{
     val label = Label()
 
     val entry = Entry()
-    val editable = Editable(entry.cPointer)
+    val editable = Editable(entry.cast())
 
     init {
         label.text = solid.label
-        layout.packStart(label, GTK.FALSE, GTK.FALSE, 4)
-        layout.packStart(entry, GTK.FALSE, GTK.FALSE, 4)
+        layout.append(label)
+        layout.append(entry)
 
-        entry.text = Str(solid.valueAsString)
+        entry.buffer.setText(Str(solid.valueAsString),-1)
 
         editable.onChanged {
-            solid.setValueFromString(entry.text.toString())
+            solid.setValueFromString(entry.buffer.text.toString())
         }
     }
 
     override fun onPreferencesChanged(storage: StorageInterface, key: String) {
         if (solid.hasKey(key)) {
-            entry.text = Str(solid.valueAsString)
+            entry.buffer.setText(Str(solid.valueAsString),-1)
         }
     }
 

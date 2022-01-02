@@ -1,24 +1,22 @@
 package ch.bailu.aat_gtk.ui.view.solid
 
-import ch.bailu.gtk.GTK
 import ch.bailu.gtk.gtk.*
 import ch.bailu.gtk.type.Str
 
 abstract class PreferencesView() {
-    val scrolled = ScrolledWindow(null, null)
+    val scrolled = ScrolledWindow()
     private val container = Box(Orientation.VERTICAL,5)
 
     init {
-        container.borderWidth = 5
-        scrolled.add(container)
+        scrolled.child = container
     }
 
     fun add(child: Widget) {
-        container.packStart(child, GTK.FALSE, GTK.TRUE, 5)
+        container.append(child)
     }
 
     fun add(text: String) {
-        val label = Label(null)
+        val label = Label(Str.NULL)
         label.setMarkup(Str("<b>${text}</b>"))
         add(label)
     }

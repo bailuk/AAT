@@ -9,29 +9,30 @@ import ch.bailu.aat_lib.map.layer.grid.GridDynLayer
 import ch.bailu.aat_lib.preferences.StorageInterface
 import ch.bailu.aat_lib.preferences.location.CurrentLocationLayer
 import ch.bailu.aat_lib.service.ServicesInterface
-import ch.bailu.gtk.GTK
+import ch.bailu.gtk.gio.ActionMap
 import ch.bailu.gtk.gtk.Box
 import ch.bailu.gtk.gtk.Orientation
 import java.io.File
 import java.util.*
 
 class MapMainView(
-    services: ServicesInterface,
-    storage: StorageInterface,
-    dispatcher: DispatcherInterface): Attachable {
+        actionMap: ActionMap,
+        services: ServicesInterface,
+        storage: StorageInterface,
+        dispatcher: DispatcherInterface): Attachable {
 
     val map = GtkCustomMapView(storage, getMapFiles(), dispatcher)
     val layout = Box(Orientation.VERTICAL,0)
-    val bar = NavigationBar(map.mContext, storage)
+    val bar = NavigationBar(actionMap, map.mContext, storage)
 
     init {
-        layout.packStart(map.drawingArea, GTK.TRUE, GTK.TRUE, 0)
-        layout.packEnd(bar.box, GTK.FALSE,GTK.FALSE, 2)
+        layout.append(map.drawingArea)
+        layout.append(bar.box)
 
         map.add(CurrentLocationLayer(map.mContext, dispatcher))
         map.add(GridDynLayer(services, storage, map.mContext))
         map.add(GpxDynLayer(storage, map.mContext, services, dispatcher, InfoID.TRACKER))
-        layout.showAll()
+        layout.show()
         dispatcher.addTarget(bar, InfoID.ALL)
     }
 

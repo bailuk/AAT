@@ -27,7 +27,7 @@ class AppMenu(window: ApplicationWindow, private val services: ServicesInterface
             services.trackerService.onStartStop()
         })
         add(SeparatorItem())
-        add(LabelItem("PinePhone low res") {window.resize(720 / 2, 1440 / 2)})
-        add(LabelItem("PinePhone hight res") {window.resize(720, 1440)})
+        add(LabelItem("PinePhone low res") {window.setSizeRequest(720 / 2, 1440 / 2)})
+        add(LabelItem("PinePhone hight res") {window.setSizeRequest(720, 1440)})
     }
 }

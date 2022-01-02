@@ -14,8 +14,8 @@ open class LabelTextView(labelText: String) {
 
     init {
         label.text = labelText
-        layout.packStart(label, GTK.FALSE, GTK.TRUE, 4)
-        layout.packStart(value, GTK.FALSE, GTK.TRUE, 4)
+        layout.append(label)
+        layout.append(value)
 
     }
 

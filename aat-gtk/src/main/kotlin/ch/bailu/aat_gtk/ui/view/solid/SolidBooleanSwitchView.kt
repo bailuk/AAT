@@ -19,8 +19,8 @@ class SolidBooleanSwitchView(private val solid: SolidBoolean) : OnPreferencesCha
 
     init {
         label.text = solid.label
-        layout.packStart(label, GTK.FALSE, GTK.FALSE, 4)
-        layout.packStart(toggle, GTK.FALSE, GTK.FALSE, 4)
+        layout.append(label)
+        layout.append(toggle)
 
         toggle.active = GTK.IS(solid.value)
     }

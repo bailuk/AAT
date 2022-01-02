@@ -1,11 +1,9 @@
 package ch.bailu.aat_gtk.ui.view.solid
 
 import ch.bailu.aat_gtk.ui.view.Label
-import ch.bailu.aat_lib.logger.AppLog
 import ch.bailu.aat_lib.preferences.OnPreferencesChanged
 import ch.bailu.aat_lib.preferences.SolidFile
 import ch.bailu.aat_lib.preferences.StorageInterface
-import ch.bailu.gtk.GTK
 import ch.bailu.gtk.gtk.*
 import ch.bailu.gtk.type.Str
 
@@ -19,8 +17,8 @@ class SolidDirectorySelectorView(private val solid: SolidFile, window: Window) :
 
     init {
         label.text = solid.label
-        layout.packStart(label, GTK.FALSE, GTK.FALSE, 4)
-        layout.packStart(button, GTK.FALSE, GTK.FALSE, 4)
+        layout.append(label)
+        layout.append(button)
 
         button.label = Str(solid.toString())
         solid.register(this)
@@ -31,10 +29,12 @@ class SolidDirectorySelectorView(private val solid: SolidFile, window: Window) :
 
             dialog.onResponse {
                 if (it == ResponseType.OK) {
-                    var file = FileChooser(dialog.cPointer).filename
+                    var file = FileChooser(dialog.cast()).file
+                    var path = file.path
 
-                    solid.setValueFromString(file.toString())
-                    file.destroy()
+                    solid.setValueFromString(path.toString())
+                    path.destroy()
+                    ch.bailu.gtk.gobject.Object(file.cast()).unref()
                     dialog.close()
                 }
             }

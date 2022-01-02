@@ -1,6 +1,5 @@
 package ch.bailu.aat_gtk.ui.view.solid
 
-import ch.bailu.aat_gtk.ui.util.IconMap
 import ch.bailu.aat_gtk.ui.view.menu.GtkMenu
 import ch.bailu.aat_gtk.ui.view.menu.SolidIndexMenu
 import ch.bailu.aat_lib.logger.AppLog
@@ -8,9 +7,10 @@ import ch.bailu.aat_lib.map.Attachable
 import ch.bailu.aat_lib.preferences.OnPreferencesChanged
 import ch.bailu.aat_lib.preferences.SolidIndexList
 import ch.bailu.aat_lib.preferences.StorageInterface
+import ch.bailu.gtk.gio.ActionMap
 import ch.bailu.gtk.gtk.MenuButton
 
-class SolidMenuButton(private val solid: SolidIndexList): OnPreferencesChanged, Attachable {
+class SolidMenuButton(actionMap: ActionMap, private val solid: SolidIndexList): OnPreferencesChanged, Attachable {
     val button = MenuButton()
 
     companion object {
@@ -18,15 +18,15 @@ class SolidMenuButton(private val solid: SolidIndexList): OnPreferencesChanged, 
     }
 
     init {
-        button.image = IconMap.getImage(solid.iconResource, ICON_SIZE)
-        button.setPopup(GtkMenu(SolidIndexMenu(solid)).menu)
+        //button. .child = IconMap.getImage(solid.iconResource, ICON_SIZE)
+        button.menuModel = GtkMenu(actionMap, SolidIndexMenu(solid)).menu
         solid.register(this)
     }
 
 
     override fun onPreferencesChanged(storage: StorageInterface, key: String) {
         if (solid.hasKey(key)) {
-            button.image = IconMap.getImage(solid.iconResource, ICON_SIZE)
+            //button.image = IconMap.getImage(solid.iconResource, ICON_SIZE)
             AppLog.i(this, solid.valueAsString)
         }
     }

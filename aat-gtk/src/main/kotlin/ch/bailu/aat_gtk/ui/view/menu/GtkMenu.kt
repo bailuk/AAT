@@ -1,61 +1,45 @@
 package ch.bailu.aat_gtk.ui.view.menu
 
-import ch.bailu.aat_gtk.ui.view.menu.model.*
-import ch.bailu.aat_lib.util.IndexedMap
+import ch.bailu.aat_gtk.ui.view.menu.model.Type
 import ch.bailu.gtk.GTK
-import ch.bailu.gtk.glib.SList
-import ch.bailu.gtk.gtk.*
+import ch.bailu.gtk.gio.ActionMap
+import ch.bailu.gtk.gio.Menu
+import ch.bailu.gtk.gio.MenuItem
+import ch.bailu.gtk.helper.ActionHelper
 import ch.bailu.gtk.type.Str
 import ch.bailu.aat_gtk.ui.view.menu.model.Menu as MenuModel
 
-class GtkMenu(model: MenuModel){
+class GtkMenu(actionMap: ActionMap, model: MenuModel){
     val menu = Menu()
 
-    private val items = IndexedMap<MenuItem, Item>()
-    private val groups = HashMap<Group, SList>()
-
     init {
-        menu.onShow {
-            items.forEach { gtk, model ->
+        val actions = ActionHelper(actionMap, "app")
 
-                if (model.type != Type.SEPARATOR) {
-                    val old = gtk.label
-                    gtk.label = Str(model.label)
-                    old.destroy()
-                }
-
-                if (model.type == Type.RADIO && gtk is RadioMenuItem) {
-                    gtk.active = GTK.IS(model.selected)
-                }
-            }
-        }
-
+        var index = 0
         model.forEach {
             when (it.type) {
                 Type.SEPARATOR -> {
-                    add(SeparatorMenuItem(), it)
+                    //
                 }
 
                 Type.RADIO -> {
-                    val item = RadioMenuItem(groups[it.group])
-                    groups[it.group] = item.group
-                    item.onActivate { it.onSelected(it) }
-                    add(item, it)
+                    val item = MenuItem(Str(it.label), Str("app.${index}"))
+                    menu.appendItem(item)
+
+                    val i = it
+                    actions.addBoolean("${index}", GTK.TRUE) {i.onSelected(i)}
                 }
 
                 Type.LABEL -> {
-                    val item = MenuItem()
-                    item.onActivate { it.onSelected(it) }
-                    add(item, it)
+                    val item = MenuItem(Str(it.label), Str("app.${index}"))
+                    menu.appendItem(item)
+
+                    val i = it
+                    actions.add("${index}") {i.onSelected(i)}
                 }
             }
+            index++
         }
-        menu.showAll()
-    }
-
-    private fun add(key: MenuItem, value: Item) {
-        menu.add(key)
-        items.put(key, value)
     }
 }
 

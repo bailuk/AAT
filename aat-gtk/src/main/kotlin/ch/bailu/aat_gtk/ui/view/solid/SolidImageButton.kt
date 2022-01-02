@@ -18,7 +18,7 @@ class SolidImageButton (val solid: SolidIndexList) : OnPreferencesChanged, Attac
 
 
     init {
-        button.image = IconMap.getImage(solid.iconResource, ICON_SIZE)
+        button.child = IconMap.getImage(solid.iconResource, ICON_SIZE)
 
         button.onClicked {
             solid.cycle()
@@ -30,7 +30,7 @@ class SolidImageButton (val solid: SolidIndexList) : OnPreferencesChanged, Attac
 
     override fun onPreferencesChanged(storage: StorageInterface, key: String) {
         if (solid.hasKey(key)) {
-            button.image = IconMap.getImage(solid.iconResource, ICON_SIZE)
+            button.child = IconMap.getImage(solid.iconResource, ICON_SIZE)
             AppLog.i(this, solid.valueAsString)
         }
     }

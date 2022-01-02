@@ -6,18 +6,18 @@ import ch.bailu.aat_lib.dispatcher.DispatcherInterface
 import ch.bailu.aat_lib.preferences.StorageInterface
 import ch.bailu.aat_lib.resources.Res
 import ch.bailu.aat_lib.service.ServicesInterface
+import ch.bailu.gtk.gio.ActionMap
 import ch.bailu.gtk.gtk.Stack
 import ch.bailu.gtk.gtk.StackTransitionType
 import ch.bailu.gtk.gtk.Window
 import ch.bailu.gtk.type.Str
 
-class MainStackView (services: ServicesInterface, storage: StorageInterface, dispatcher: DispatcherInterface, window: Window) {
+class MainStackView (actionMap: ActionMap, services: ServicesInterface, storage: StorageInterface, dispatcher: DispatcherInterface, window: Window) {
 
     val layout = Stack()
 
-
     private val preferences = PreferencesStackView(storage, window)
-    private val map = MapMainView(services, storage, dispatcher )
+    private val map = MapMainView(actionMap, services, storage, dispatcher )
     private val fileList = FileList()
 
     private val strPreferences = Str(Res.str().intro_settings())
@@ -29,7 +29,7 @@ class MainStackView (services: ServicesInterface, storage: StorageInterface, dis
         layout.addTitled(map.layout, strMap, strMap)
         layout.addTitled(fileList.vbox, Str("Files"), Str("Files"))
         showMap()
-        layout.showAll()
+        layout.show()
     }
 
     fun showMap() {

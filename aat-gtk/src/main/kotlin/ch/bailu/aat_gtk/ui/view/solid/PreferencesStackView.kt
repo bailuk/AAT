@@ -24,10 +24,11 @@ class PreferencesStackView(storage: StorageInterface, window: Window) {
 
         switcher.stack = stack
 
-        layout.borderWidth = 5
-        layout.packStart(switcher, GTK.FALSE, GTK.TRUE, 5)
-        layout.packStart(stack, GTK.TRUE, GTK.TRUE, 5)
+        layout.append(switcher)
+        layout.append(stack)
+        stack.hexpand = GTK.TRUE
+        stack.vexpand = GTK.TRUE
 
-        layout.showAll()
+        layout.show()
     }
 }

@@ -13,7 +13,7 @@ import ch.bailu.aat_lib.logger.BroadcastLogger
 import ch.bailu.aat_lib.map.Attachable
 import ch.bailu.aat_lib.service.ServicesInterface
 import ch.bailu.gtk.GTK
-import ch.bailu.gtk.gio.ApplicationFlags
+import ch.bailu.gtk.gio.ActionMap
 import ch.bailu.gtk.gtk.Application
 import ch.bailu.gtk.gtk.ApplicationWindow
 import ch.bailu.gtk.type.Str
@@ -28,7 +28,7 @@ fun main(args: Array<String>) {
 
     app.onActivate {
         try {
-            val window = MainWindow(ApplicationWindow(app), App.services, App.storage, App.broadcaster)
+            val window = MainWindow(ActionMap(app.cast()), ApplicationWindow(app), App.services, App.storage, App.broadcaster)
             App.attach(window)
 
         } catch (e: Exception) {
