@@ -12,7 +12,7 @@ import ch.bailu.aat_lib.service.ServicesInterface;
 import ch.bailu.aat_lib.service.background.DownloadConfig;
 import ch.bailu.aat_lib.service.directory.MapPreviewInterface;
 import ch.bailu.aat_lib.service.directory.SummaryConfig;
-import ch.bailu.aat_lib.util.sql.Database;
+import ch.bailu.aat_lib.util.sql.DbConnection;
 import ch.bailu.foc.Foc;
 import ch.bailu.foc.FocFactory;
 
@@ -25,7 +25,7 @@ public interface AppContext extends FocFactory {
 
     SummaryConfig getSummaryConfig();
 
-    Database createDataBase();
+    DbConnection createDataBase();
 
     MapPreviewInterface createMapPreview(GpxInformation info, Foc previewImageFile);
 

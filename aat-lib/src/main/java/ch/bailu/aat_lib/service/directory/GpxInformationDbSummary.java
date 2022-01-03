@@ -11,7 +11,7 @@ import ch.bailu.aat_lib.gpx.attributes.GpxAttributesNull;
 import ch.bailu.aat_lib.gpx.attributes.GpxListAttributes;
 import ch.bailu.aat_lib.gpx.attributes.MaxSpeed;
 import ch.bailu.aat_lib.gpx.interfaces.GpxType;
-import ch.bailu.aat_lib.util.sql.ResultSet;
+import ch.bailu.aat_lib.util.sql.DbResultSet;
 import ch.bailu.foc.Foc;
 
 public final class GpxInformationDbSummary extends GpxInformation {
@@ -21,7 +21,7 @@ public final class GpxInformationDbSummary extends GpxInformation {
     private final MaxSpeed maxSpeed = new MaxSpeed.Raw2();
 
 
-    public GpxInformationDbSummary(Foc dir, ResultSet cursor) {
+    public GpxInformationDbSummary(Foc dir, DbResultSet cursor) {
         directory = dir;
         list = new GpxList(GpxType.WAY, GpxListAttributes.factoryTrackList());
 

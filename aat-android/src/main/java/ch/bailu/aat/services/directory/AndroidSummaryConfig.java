@@ -32,4 +32,11 @@ public final class AndroidSummaryConfig extends SummaryConfig {
         return summaryDir;
 
     }
+
+    @Override
+    public String getDBPath(Foc dir) {
+        return getSummaryDir(dir)
+                .child(AppDirectory.FILE_CACHE_DB)
+                .toString();
+    }
 }

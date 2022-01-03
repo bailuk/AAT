@@ -3,14 +3,14 @@ package ch.bailu.aat_lib.service.directory;
 import ch.bailu.aat_lib.coordinates.BoundingBoxE6;
 import ch.bailu.aat_lib.gpx.GpxInformation;
 import ch.bailu.aat_lib.gpx.interfaces.GpxType;
-import ch.bailu.aat_lib.util.sql.ResultSet;
+import ch.bailu.aat_lib.util.sql.DbResultSet;
 import ch.bailu.foc.Foc;
 
 public final class GpxInformationDbEntry extends GpxInformation {
-    private final ResultSet cursor;
+    private final DbResultSet cursor;
     private final Foc parent;
 
-    public GpxInformationDbEntry(ResultSet c, Foc p) {
+    public GpxInformationDbEntry(DbResultSet c, Foc p) {
         parent = p;
         cursor = c;
     }
@@ -54,10 +54,7 @@ public final class GpxInformationDbEntry extends GpxInformation {
 
     private String getString(String key) {
         if (isValid()) {
-            int index = cursor.getColumnIndex(key);
-            if (index > -1) {
-                return cursor.getString(index);
-            }
+            return cursor.getString(key);
         }
         return "";
     }
@@ -65,10 +62,7 @@ public final class GpxInformationDbEntry extends GpxInformation {
 
     private long getLong(String key) {
         if (isValid()) {
-            int index = cursor.getColumnIndex(key);
-            if (index > -1) {
-                return cursor.getLong(index);
-            }
+            return cursor.getLong(key);
         }
         return 0;
     }
@@ -76,10 +70,7 @@ public final class GpxInformationDbEntry extends GpxInformation {
 
     private float getFloat(String key) {
         if (isValid()) {
-            int index = cursor.getColumnIndex(key);
-            if (index > -1) {
-                return cursor.getFloat(index);
-            }
+            return cursor.getFloat(key);
         }
         return 0f;
     }

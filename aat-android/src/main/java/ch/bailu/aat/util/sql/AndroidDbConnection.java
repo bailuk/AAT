@@ -1,6 +1,5 @@
 package ch.bailu.aat.util.sql;
 
-import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -8,17 +7,17 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import androidx.annotation.Nullable;
 
-import ch.bailu.aat_lib.util.sql.Database;
+import ch.bailu.aat_lib.util.sql.DbConnection;
 import ch.bailu.aat_lib.util.sql.DbException;
-import ch.bailu.aat_lib.util.sql.ResultSet;
+import ch.bailu.aat_lib.util.sql.DbResultSet;
 
-public class AndroidDatabase implements Database {
+public class AndroidDbConnection implements DbConnection {
 
     private SQLiteDatabase database;
     private boolean needsUpdate = false;
     private final Context context;
 
-    public AndroidDatabase(Context context) {
+    public AndroidDbConnection(Context context) {
         this.context = context;
     }
 
@@ -39,10 +38,14 @@ public class AndroidDatabase implements Database {
     }
 
     @Override
-    public void execSQL(String sql) {
+    public void execSQL(String sql, Object ... bindArgs) {
         try {
             if (isOpen()) {
-                database.execSQL(sql);
+                if (bindArgs.length > 0) {
+                    database.execSQL(sql, toStringArgs(bindArgs));
+                } else {
+                    database.execSQL(sql);
+                }
             }
         } catch (Exception e) {
             throw new DbException(e);
@@ -50,16 +53,11 @@ public class AndroidDatabase implements Database {
     }
 
     @Override
-    public ResultSet query(String table, String[] keys, String selection, String[] selectionArgs, String groupBy, String having, String orderBy) {
+    public DbResultSet query(String sql, Object ... bindArgs) {
         try {
             if (isOpen()) {
-                Cursor cursor = database.query(
-                        table,
-                        keys,
-                        selection,
-                        selectionArgs, groupBy, having,
-                        orderBy);
-                return new AndroidResultSet(cursor);
+                Cursor cursor = database.rawQuery(sql, toStringArgs(bindArgs));
+                return new AndroidDbResultSet(cursor);
             }
             return null;
         } catch (Exception e) {
@@ -67,30 +65,16 @@ public class AndroidDatabase implements Database {
         }
     }
 
-    @Override
-    public void delete(String table, String where, String[] whereArgs) {
-        try {
-            if (isOpen())
-                database.delete(table, where, whereArgs);
-        } catch (Exception e) {
-            throw new DbException(e);
+    private String[] toStringArgs(Object[] bindArgs) {
+        String[] res = new String[bindArgs.length];
+
+        int index = 0;
+        for (Object o: bindArgs) {
+            res [index++] = o.toString();
         }
+        return res;
     }
 
-    @Override
-    public void insert(String table, String[] keys, String[] values) {
-        try {
-            if (isOpen() && keys.length == values.length) {
-                ContentValues contentValues = new ContentValues();
-                for (int i = 0; i < keys.length; i++) {
-                    contentValues.put(keys[i], values[i]);
-                }
-                database.insert(table, null, contentValues);
-            }
-        } catch (Exception e) {
-            throw new DbException(e);
-        }
-    }
 
     @Override
     public void close() {

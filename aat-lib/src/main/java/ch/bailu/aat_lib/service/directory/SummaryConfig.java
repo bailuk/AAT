@@ -3,17 +3,11 @@ package ch.bailu.aat_lib.service.directory;
 import ch.bailu.aat_lib.util.fs.AppDirectory;
 import ch.bailu.foc.Foc;
 
-public class SummaryConfig {
+public abstract class SummaryConfig {
 
-    public Foc getSummaryDir(Foc dir) {
-        return dir.child(AppDirectory.DIR_CACHE);
-    }
+    public abstract Foc getSummaryDir(Foc dir);
 
-    public String getDBPath(Foc dir) {
-        return getSummaryDir(dir)
-                .child(AppDirectory.FILE_CACHE_DB)
-                .toString();
-    }
+    public abstract String getDBPath(Foc dir);
 
     public Foc getPreviewFile(Foc gpxFile) {
         String name = gpxFile.getName();

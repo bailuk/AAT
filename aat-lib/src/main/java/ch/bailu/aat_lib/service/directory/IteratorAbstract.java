@@ -7,13 +7,13 @@ import ch.bailu.aat_lib.gpx.GpxInformation;
 import ch.bailu.aat_lib.preferences.OnPreferencesChanged;
 import ch.bailu.aat_lib.preferences.SolidDirectoryQuery;
 import ch.bailu.aat_lib.preferences.StorageInterface;
-import ch.bailu.aat_lib.util.sql.ResultSet;
+import ch.bailu.aat_lib.util.sql.DbResultSet;
 import ch.bailu.foc.Foc;
 
 public abstract class IteratorAbstract extends Iterator implements OnPreferencesChanged {
 
     private OnCursorChangedListener onCursorChangedListener = NULL_LISTENER;
-    private ResultSet resultSet = null;
+    private DbResultSet resultSet = null;
     private final SolidDirectoryQuery sdirectory;
     private String selection="";
     private final BroadcastReceiver onSyncChanged = objs -> query();
@@ -81,7 +81,7 @@ public abstract class IteratorAbstract extends Iterator implements OnPreferences
     @Override
     public abstract GpxInformation getInfo();
 
-    public abstract void onCursorChanged(ResultSet resultSet, Foc directory, String fid);
+    public abstract void onCursorChanged(DbResultSet resultSet, Foc directory, String fid);
 
 
     @Override

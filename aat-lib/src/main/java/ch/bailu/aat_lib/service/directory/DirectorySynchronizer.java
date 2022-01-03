@@ -19,7 +19,7 @@ import ch.bailu.aat_lib.service.cache.Obj;
 import ch.bailu.aat_lib.service.cache.ObjGpx;
 import ch.bailu.aat_lib.service.cache.ObjGpxStatic;
 import ch.bailu.aat_lib.util.Objects;
-import ch.bailu.aat_lib.util.sql.ResultSet;
+import ch.bailu.aat_lib.util.sql.DbResultSet;
 import ch.bailu.foc.Foc;
 
 
@@ -189,7 +189,7 @@ public final class DirectorySynchronizer  implements Closeable {
 
 
         private void compareFileSystemWithDatabase() {
-            final ResultSet resultSet = database.query(null);
+            final DbResultSet resultSet = database.query(null);
 
             for (boolean r=resultSet.moveToFirst(); canContinue && r; r=resultSet.moveToNext()) {
                 final String name = getFileName(resultSet);
@@ -208,12 +208,8 @@ public final class DirectorySynchronizer  implements Closeable {
             resultSet.close();
         }
 
-        private String getFileName(ResultSet resultSet) {
-            int index = resultSet.getColumnIndex(GpxDbConstants.KEY_FILENAME);
-            if (index > -1) {
-                return resultSet.getString(index);
-            }
-            return "";
+        private String getFileName(DbResultSet resultSet) {
+            return resultSet.getString(GpxDbConstants.KEY_FILENAME);
         }
 
 
@@ -327,7 +323,6 @@ public final class DirectorySynchronizer  implements Closeable {
     private final class StateLoadPreview extends State {
 
         public void start() {
-
             Foc gpxFile = appContext.toFoc(pendingHandle.getID());
 
             Foc previewImageFile = appContext.getSummaryConfig().getPreviewFile(gpxFile);
@@ -392,6 +387,7 @@ public final class DirectorySynchronizer  implements Closeable {
 
         @Override
         public void start() {
+            AppLog.d(this, "state terminate");
             appContext.getBroadcaster().unregister(onFileChanged);
 
             if (database != null) {

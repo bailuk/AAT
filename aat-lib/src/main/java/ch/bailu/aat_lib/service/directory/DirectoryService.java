@@ -7,7 +7,7 @@ import ch.bailu.aat_lib.preferences.StorageInterface;
 import ch.bailu.aat_lib.service.VirtualService;
 import ch.bailu.aat_lib.util.fs.AFile;
 import ch.bailu.aat_lib.util.sql.DbException;
-import ch.bailu.aat_lib.util.sql.ResultSet;
+import ch.bailu.aat_lib.util.sql.DbResultSet;
 import ch.bailu.foc.Foc;
 
 public final class DirectoryService extends VirtualService implements OnPreferencesChanged, DirectoryServiceInterface {
@@ -65,7 +65,7 @@ public final class DirectoryService extends VirtualService implements OnPreferen
 
 
 
-    public ResultSet query(String sel) {
+    public DbResultSet query(String sel) {
         return database.query(sel);
     }
 

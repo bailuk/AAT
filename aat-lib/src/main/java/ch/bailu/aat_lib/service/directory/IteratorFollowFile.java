@@ -2,7 +2,7 @@ package ch.bailu.aat_lib.service.directory;
 
 import ch.bailu.aat_lib.app.AppContext;
 import ch.bailu.aat_lib.gpx.GpxInformation;
-import ch.bailu.aat_lib.util.sql.ResultSet;
+import ch.bailu.aat_lib.util.sql.DbResultSet;
 import ch.bailu.foc.Foc;
 
 public final class IteratorFollowFile extends IteratorAbstract {
@@ -21,7 +21,7 @@ public final class IteratorFollowFile extends IteratorAbstract {
 
 
     @Override
-    public void onCursorChanged(ResultSet resultSet, Foc directory, String fid) {
+    public void onCursorChanged(DbResultSet resultSet, Foc directory, String fid) {
         info = new GpxInformationDbEntry(resultSet, directory);
 
         findFile(fid);

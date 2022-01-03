@@ -2,12 +2,12 @@ package ch.bailu.aat.util.sql;
 
 import android.database.Cursor;
 
-import ch.bailu.aat_lib.util.sql.ResultSet;
+import ch.bailu.aat_lib.util.sql.DbResultSet;
 
-public class AndroidResultSet implements ResultSet {
+public class AndroidDbResultSet implements DbResultSet {
     private final Cursor cursor;
 
-    public AndroidResultSet(Cursor cursor) {
+    public AndroidDbResultSet(Cursor cursor) {
         this.cursor = cursor;
     }
 
@@ -26,15 +26,6 @@ public class AndroidResultSet implements ResultSet {
         cursor.close();
     }
 
-    @Override
-    public int getColumnIndex(String keyFilename) {
-        return cursor.getColumnIndex(keyFilename);
-    }
-
-    @Override
-    public String getString(int index) {
-        return cursor.getString(index);
-    }
 
     @Override
     public boolean moveToPrevious() {
@@ -52,18 +43,23 @@ public class AndroidResultSet implements ResultSet {
     }
 
     @Override
+    public String getString(String column) {
+        return cursor.getString(cursor.getColumnIndex(column));
+    }
+
+    @Override
+    public long getLong(String column) {
+        return cursor.getLong(cursor.getColumnIndex(column));
+    }
+
+    @Override
+    public float getFloat(String column) {
+        return cursor.getFloat(cursor.getColumnIndex(column));
+    }
+
+    @Override
     public int getPosition() {
         return cursor.getPosition();
-    }
-
-    @Override
-    public long getLong(int index) {
-        return cursor.getLong(index);
-    }
-
-    @Override
-    public float getFloat(int index) {
-        return cursor.getFloat(index);
     }
 
     @Override

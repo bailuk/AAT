@@ -1,23 +1,23 @@
 package ch.bailu.aat_lib.service.directory;
 
-import ch.bailu.aat_lib.util.sql.Database;
+import ch.bailu.aat_lib.util.sql.DbConnection;
 import ch.bailu.aat_lib.util.sql.DbException;
-import ch.bailu.aat_lib.util.sql.ResultSet;
+import ch.bailu.aat_lib.util.sql.DbResultSet;
 import ch.bailu.foc.Foc;
 
 
 public final class GpxDatabase extends AbsDatabase{
 
     private final String[] keys;
-    private final Database database;
+    private final DbConnection database;
 
 
-    public GpxDatabase (Database database, String path)
+    public GpxDatabase (DbConnection database, String path)
             throws DbException {
         this(database, path, GpxDbConstants.KEY_LIST_NEW);
     }
 
-    public GpxDatabase (Database database, String path, String[] k)
+    public GpxDatabase (DbConnection database, String path, String[] k)
             throws DbException {
 
         keys = k;
@@ -44,15 +44,16 @@ public final class GpxDatabase extends AbsDatabase{
     }
 
     @Override
-    public ResultSet query(String selection) {
-        return database.query(
-                GpxDbConstants.DB_TABLE,
-                keys,
-                selection,
-                null, null, null,
-                GpxDbConstants.KEY_START_TIME+ " DESC");
+    public DbResultSet query(String selection) {
+        return database.query("SELECT " + join(keys) + " FROM " + GpxDbConstants.DB_TABLE + where(selection) + " ORDER BY " + GpxDbConstants.KEY_START_TIME + " DESC");
     }
 
+    private static String where(String selection) {
+        if (selection != null && selection.length() > 3) {
+            return " WHERE " + selection;
+        }
+        return "";
+    }
 
     @Override
     public void close() {
@@ -61,12 +62,32 @@ public final class GpxDatabase extends AbsDatabase{
 
     @Override
     public void deleteEntry(Foc file) throws DbException {
-        final String where = GpxDbConstants.KEY_FILENAME + "=?";
-        database.delete(GpxDbConstants.DB_TABLE, where,
-                        new String[]{file.getName()});
+        database.execSQL("DELETE FROM " + GpxDbConstants.DB_TABLE + " WHERE "+ GpxDbConstants.KEY_FILENAME+ " = ?", file.getName());
     }
 
-    public void insert(String[] keys, String[] values) {
-        database.insert(GpxDbConstants.DB_TABLE, keys, values);
+    public void insert(String[] keys, Object ... values) {
+        database.execSQL("INSERT INTO " + GpxDbConstants.DB_TABLE + " ( " + join(keys) + ") VALUES ( " + repeat("?" , values.length) + " )", values);
+    }
+
+    private static String repeat(String what, int times) {
+        StringBuilder builder = new StringBuilder();
+        String del = "";
+        for (int i = 0; i<times; i++) {
+            builder.append(del);
+            builder.append(what);
+            del = ", ";
+        }
+        return builder.toString();
+    }
+
+    private static String join(String[] keys) {
+        StringBuilder builder = new StringBuilder();
+        String del = "";
+        for (String k : keys) {
+            builder.append(del);
+            builder.append(k);
+            del = ", ";
+        }
+        return builder.toString();
     }
 }

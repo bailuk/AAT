@@ -42,6 +42,7 @@ public class AppDirectory  {
 
     public static final String DIR_CACHE = "cache";
     public static final String FILE_CACHE_DB="summary.db";
+    public static final String FILE_CACHE_MVDB="summary.mv.db";
 
 
 

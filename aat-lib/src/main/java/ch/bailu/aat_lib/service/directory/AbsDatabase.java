@@ -3,12 +3,12 @@ package ch.bailu.aat_lib.service.directory;
 import java.io.Closeable;
 
 import ch.bailu.aat_lib.util.sql.DbException;
-import ch.bailu.aat_lib.util.sql.ResultSet;
+import ch.bailu.aat_lib.util.sql.DbResultSet;
 import ch.bailu.foc.Foc;
 
 public abstract class AbsDatabase implements Closeable{
 
-    public abstract ResultSet query(String selection);
+    public abstract DbResultSet query(String selection);
 
 
     public abstract void deleteEntry(Foc file) throws DbException;
@@ -18,7 +18,7 @@ public abstract class AbsDatabase implements Closeable{
 
 
         @Override
-        public ResultSet query(String selection) {return null;}
+        public DbResultSet query(String selection) {return null;}
 
         @Override
         public void deleteEntry(Foc file) {}
