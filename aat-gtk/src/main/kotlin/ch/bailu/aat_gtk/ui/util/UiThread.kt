@@ -7,17 +7,14 @@ import ch.bailu.gtk.glib.Glib
 
 
 object UiThread {
-    val emitterID = Callback.EmitterID()
+    private val emitterID = Callback.EmitterID()
 
     fun toUi(function: () -> (Unit)) {
         if (isUi()) {
             function()
         } else {
             AppLog.d(this, "not ui")
-            Glib.idleAdd({
-                function()
-                GTK.FALSE
-            }, emitterID)
+            idleAdd { function() }
         }
     }
 
@@ -29,5 +26,12 @@ object UiThread {
 
     fun isUi(): Boolean {
         return "main" == Thread.currentThread().name
+    }
+
+    fun idleAdd(function: () -> Unit) {
+        Glib.idleAdd({
+            function()
+            GTK.FALSE
+        }, emitterID)
     }
 }

@@ -8,14 +8,13 @@ import ch.bailu.foc.Foc;
 
 public final class FilesInDirectory {
 
-    final NavigableMap<String,Foc> files;
+    private final NavigableMap<String,Foc> files;
 
 
     public FilesInDirectory(Foc directory) {
         files = getFileList(directory);
 
     }
-
 
 
     private static NavigableMap<String,Foc> getFileList(Foc directory) {
