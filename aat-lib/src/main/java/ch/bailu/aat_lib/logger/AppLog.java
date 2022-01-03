@@ -111,7 +111,9 @@ public class AppLog  {
     private static String toSaveClassName(Object o) {
         String result = DEFAULT_TAG;
 
-        if (o != null) {
+        if (o instanceof String) {
+          result = (String) o;
+        } else if (o != null) {
             result = o.getClass().getSimpleName();
             if (result.length() == 0) {
                 result = classNameInnerClass(o);
@@ -169,5 +171,4 @@ public class AppLog  {
         }
         return result;
     }
-
 }
