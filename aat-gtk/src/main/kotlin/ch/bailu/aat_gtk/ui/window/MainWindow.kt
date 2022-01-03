@@ -2,6 +2,7 @@ package ch.bailu.aat_gtk.ui.window
 
 import ch.bailu.aat_gtk.app.App
 import ch.bailu.aat_gtk.app.GtkAppConfig
+import ch.bailu.aat_gtk.app.GtkAppContext
 import ch.bailu.aat_gtk.ui.view.MainStackView
 import ch.bailu.aat_gtk.ui.view.TrackerButton
 import ch.bailu.aat_gtk.ui.view.menu.AppMenu
@@ -12,7 +13,6 @@ import ch.bailu.aat_lib.dispatcher.Dispatcher
 import ch.bailu.aat_lib.dispatcher.TrackerSource
 import ch.bailu.aat_lib.gpx.InfoID
 import ch.bailu.aat_lib.map.Attachable
-import ch.bailu.aat_lib.preferences.StorageInterface
 import ch.bailu.aat_lib.service.ServicesInterface
 import ch.bailu.gtk.GTK
 import ch.bailu.gtk.gio.ActionMap
@@ -26,14 +26,17 @@ class MainWindow(
         actionMap: ActionMap,
     window: ApplicationWindow,
     services: ServicesInterface,
-    storage: StorageInterface,
     broadcaster: Broadcaster) : Attachable
 {
 
     private val trackerButton = TrackerButton(services)
 
     private val dispatcher = Dispatcher()
-    private val mainView = MainStackView(actionMap, services, storage, dispatcher,window)
+    private val mainView = MainStackView(
+            actionMap,
+            services,
+            GtkAppContext.storage,
+            dispatcher,window)
 
     private val menu: AppMenu
 
@@ -47,7 +50,6 @@ class MainWindow(
         window.onDestroy {
             App.exit(0)
         }
-
         window.show()
 
         dispatcher.addSource(CurrentLocationSource(services, broadcaster))
@@ -56,7 +58,6 @@ class MainWindow(
 
         dispatcher.addTarget(trackerButton, InfoID.ALL)
     }
-
 
 
     private fun createHeader(menu: Menu): HeaderBar {
