@@ -7,6 +7,7 @@ import ch.bailu.foc.FocFactory
 import ch.bailu.foc.FocFile
 
 object GtkAppConfig : AppConfig() {
+
     object Foc : FocFactory {
         override fun toFoc(string: String?): ch.bailu.foc.Foc {
             return FocFile(string)
@@ -34,5 +35,4 @@ object GtkAppConfig : AppConfig() {
     override fun isRelease(): Boolean {
         return false
     }
-
 }

@@ -3,17 +3,19 @@ package ch.bailu.aat_gtk.service
 import ch.bailu.aat_gtk.solid.GtkSolidLocationProvider
 import ch.bailu.aat_gtk.solid.SolidGtkDataDirectory
 import ch.bailu.aat_gtk.ui.view.GtkStatusIcon
+import ch.bailu.aat_lib.app.AppContext
 import ch.bailu.aat_lib.coordinates.Dem3Coordinates
-import ch.bailu.aat_lib.dispatcher.Broadcaster
 import ch.bailu.aat_lib.gpx.GpxInformation
 import ch.bailu.aat_lib.gpx.GpxPointNode
 import ch.bailu.aat_lib.gpx.interfaces.GpxPointInterface
-import ch.bailu.aat_lib.preferences.StorageInterface
 import ch.bailu.aat_lib.service.IconMapServiceInterface
 import ch.bailu.aat_lib.service.ServicesInterface
+import ch.bailu.aat_lib.service.background.BackgroundService
 import ch.bailu.aat_lib.service.background.BackgroundServiceInterface
+import ch.bailu.aat_lib.service.cache.CacheService
 import ch.bailu.aat_lib.service.cache.CacheServiceInterface
 import ch.bailu.aat_lib.service.cache.ObjImageInterface
+import ch.bailu.aat_lib.service.directory.DirectoryService
 import ch.bailu.aat_lib.service.directory.DirectoryServiceInterface
 import ch.bailu.aat_lib.service.elevation.ElevetionServiceInterface
 import ch.bailu.aat_lib.service.elevation.updater.ElevationUpdaterClient
@@ -23,13 +25,20 @@ import ch.bailu.aat_lib.service.render.RenderServiceInterface
 import ch.bailu.aat_lib.service.sensor.SensorServiceInterface
 import ch.bailu.aat_lib.service.tracker.TrackerService
 import ch.bailu.aat_lib.service.tracker.TrackerServiceInterface
-import ch.bailu.foc.FocFactory
-import ch.bailu.foc.FocFile
 
-class GtkServices (storage: StorageInterface, broadcaster: Broadcaster) :
-    ServicesInterface {
-    private val locationService: LocationService
-    private val trackerService: TrackerService
+class GtkServices (appContext: AppContext) : ServicesInterface {
+    private val cacheService = CacheService(appContext)
+    private val locationService: LocationService = LocationService(GtkSolidLocationProvider(appContext.storage), appContext.broadcaster)
+    private val trackerService: TrackerService = TrackerService(
+            SolidGtkDataDirectory(appContext.storage, appContext),
+            GtkStatusIcon(),
+            appContext.broadcaster,
+            this
+    )
+    private val backgroundService = BackgroundService(appContext, appContext.broadcaster, 5)
+
+    private val directoryService = DirectoryService(appContext)
+
     override fun getLocationService(): LocationServiceInterface {
         return locationService
     }
@@ -65,6 +74,7 @@ class GtkServices (storage: StorageInterface, broadcaster: Broadcaster) :
     }
 
     override fun getRenderService(): RenderServiceInterface {
+        System.out.println("Not yet implemented getRenderService")
         TODO("Not yet implemented")
     }
 
@@ -104,25 +114,14 @@ class GtkServices (storage: StorageInterface, broadcaster: Broadcaster) :
     }
 
     override fun getBackgroundService(): BackgroundServiceInterface {
-        TODO("Not yet implemented")
+        return backgroundService
     }
 
     override fun getCacheService(): CacheServiceInterface {
-        TODO("Not yet implemented")
+        return cacheService
     }
 
     override fun getDirectoryService(): DirectoryServiceInterface {
-        TODO("Not yet implemented")
-    }
-
-    init {
-        val factory = FocFactory { string: String? -> FocFile(string) }
-        locationService = LocationService(GtkSolidLocationProvider(storage), broadcaster)
-        trackerService = TrackerService(
-            SolidGtkDataDirectory(storage, factory),
-            GtkStatusIcon(),
-            broadcaster,
-            this
-        )
+       return directoryService
     }
 }
