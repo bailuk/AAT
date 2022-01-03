@@ -30,6 +30,12 @@ dependencies {
     implementation("com.github.bailuk.foc:foc:$focVersion")
     //implementation("ch.bailu:foc:$focVersion")
 
+    // https://mvnrepository.com/artifact/org.xerial/sqlite-jdbc
+    // same version as in mapsforge-poi-awt
+    //implementation("org.xerial:sqlite-jdbc:3.28.0")
+
+    // https://mvnrepository.com/artifact/com.h2database/h2
+    implementation("com.h2database:h2:2.0.204")
 
     /**
      *    https://mvnrepository.com/artifact/com.github.hypfvieh/dbus-java
