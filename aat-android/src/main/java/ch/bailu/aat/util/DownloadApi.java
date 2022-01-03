@@ -33,7 +33,7 @@ public abstract class DownloadApi extends OsmApiConfiguration {
                 TextBackup.write(queryFile, queryString);
 
                 sc.getBroadcaster().broadcast(
-                        AppBroadcaster.FILE_CHANGED_ONDISK, getFile(), getSource().toString());
+                        AppBroadcaster.FILE_CHANGED_ONDISK, getFile().toString(), getSource().toString());
 
                 return size;
             } catch (Exception e) {

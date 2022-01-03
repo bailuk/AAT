@@ -56,13 +56,13 @@ public final class Tasks {
         if (t instanceof DownloadTask) {
             broadcaster.broadcast(
                     AppBroadcaster.FILE_BACKGROND_TASK_CHANGED,
-                    t.getFile(),
+                    t.getFile().toString(),
                     ((DownloadTask) t).getSource().toString());
 
         } else {
             broadcaster.broadcast(
                     AppBroadcaster.FILE_BACKGROND_TASK_CHANGED,
-                    t.getFile());
+                    t.getFile().toString());
         }
     }
 }

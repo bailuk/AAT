@@ -55,7 +55,7 @@ public final class SaveTileTask extends FileTask {
                 }
 
                 sc.getBroadcaster().broadcast(AppBroadcaster.FILE_CHANGED_ONDISK,
-                        getFile(), sourceID);
+                        getFile().toString(), sourceID);
 
                 size = self.getSize();
 

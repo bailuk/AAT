@@ -61,7 +61,7 @@ public final class Dem3LoaderTask extends FileTask {
 
         if (status.getStatus() == Dem3Status.VALID || status.getStatus() == Dem3Status.EMPTY) {
             appContext.getBroadcaster().broadcast(
-                    AppBroadcaster.FILE_CHANGED_INCACHE, getFile());
+                    AppBroadcaster.FILE_CHANGED_INCACHE, getFile().toString());
 
             return array.data.length;
         }

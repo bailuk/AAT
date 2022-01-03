@@ -137,7 +137,7 @@ public abstract class PoiApi extends OsmApiConfiguration {
 
 
             sc.getBroadcaster().broadcast(AppBroadcaster.FILE_CHANGED_ONDISK,
-                    getFile(), poiDatabase);
+                    getFile().toString(), poiDatabase);
 
             return 100;
         }

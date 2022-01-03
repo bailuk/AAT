@@ -145,7 +145,7 @@ public class ObjTileCacheOnly extends ObjTile {
 
 
                     sc.getBroadcaster().broadcast(AppBroadcaster.FILE_CHANGED_INCACHE,
-                            getFile());
+                            getFile().toString());
 
                     size[0] =  tile.bitmap.getSize();
 

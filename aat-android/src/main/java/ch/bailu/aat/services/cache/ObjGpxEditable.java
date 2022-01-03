@@ -181,7 +181,7 @@ public final class ObjGpxEditable extends ObjGpx {
                 new GpxListWriter(editor.getList(),file).close();
                 modified=false;
 
-                broadcaster.broadcast(AppBroadcaster.FILE_CHANGED_ONDISK, file, getID());
+                broadcaster.broadcast(AppBroadcaster.FILE_CHANGED_ONDISK, file.toString(), getID());
             } catch (Exception e) {
                 AppLog.e(this, e);
             }
