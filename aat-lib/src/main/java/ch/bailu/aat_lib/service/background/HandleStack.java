@@ -1,9 +1,7 @@
-package ch.bailu.aat.services.background;
+package ch.bailu.aat_lib.service.background;
 
 import java.util.concurrent.BlockingDeque;
 import java.util.concurrent.LinkedBlockingDeque;
-
-import ch.bailu.aat_lib.service.background.BackgroundTask;
 
 public final class HandleStack {
     private final static int DEFAULT_LIMIT = 5000;
@@ -16,13 +14,10 @@ public final class HandleStack {
     }
 
 
-
-
     public HandleStack(int l) {
         limit = l;
         queue = new LinkedBlockingDeque<>(limit);
     }
-
 
 
     public BackgroundTask take() throws InterruptedException {
@@ -59,5 +54,4 @@ public final class HandleStack {
         }
         return handle;
     }
-
 }

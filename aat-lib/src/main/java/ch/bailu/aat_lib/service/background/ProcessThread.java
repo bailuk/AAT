@@ -1,9 +1,6 @@
-package ch.bailu.aat.services.background;
+package ch.bailu.aat_lib.service.background;
 
 import java.io.Closeable;
-
-import ch.bailu.aat_lib.service.background.BackgroundTask;
-import ch.bailu.aat_lib.service.background.ThreadControl;
 
 public abstract class ProcessThread extends Thread implements Closeable, ThreadControl {
 

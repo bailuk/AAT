@@ -1,4 +1,4 @@
-package ch.bailu.aat.services.cache;
+package ch.bailu.aat_lib.service.cache;
 
 import ch.bailu.aat_lib.app.AppContext;
 import ch.bailu.aat_lib.dispatcher.AppBroadcaster;
@@ -7,17 +7,11 @@ import ch.bailu.aat_lib.preferences.OnPreferencesChanged;
 import ch.bailu.aat_lib.preferences.StorageInterface;
 import ch.bailu.aat_lib.preferences.system.SolidCacheSize;
 import ch.bailu.aat_lib.service.VirtualService;
-import ch.bailu.aat_lib.service.cache.CacheServiceInterface;
-import ch.bailu.aat_lib.service.cache.Obj;
-import ch.bailu.aat_lib.service.cache.ObjBroadcastReceiver;
 import ch.bailu.aat_lib.util.MemSize;
 import ch.bailu.aat_lib.util.WithStatusText;
 
 
 public final class CacheService extends VirtualService implements CacheServiceInterface, OnPreferencesChanged, WithStatusText {
-
-
-
     public final ObjectTable table=new ObjectTable();
     public final ObjectBroadcaster broadcaster;
 
@@ -79,4 +73,3 @@ public final class CacheService extends VirtualService implements CacheServiceIn
         }
     }
 }
-

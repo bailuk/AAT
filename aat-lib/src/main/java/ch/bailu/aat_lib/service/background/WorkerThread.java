@@ -1,8 +1,7 @@
-package ch.bailu.aat.services.background;
+package ch.bailu.aat_lib.service.background;
 
 import ch.bailu.aat_lib.app.AppContext;
 import ch.bailu.aat_lib.service.InsideContext;
-import ch.bailu.aat_lib.service.background.BackgroundTask;
 
 public class WorkerThread extends ProcessThread {
 
@@ -37,6 +36,4 @@ public class WorkerThread extends ProcessThread {
             };
         }
     }
-
-
 }

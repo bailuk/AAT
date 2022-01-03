@@ -4,7 +4,6 @@ import ch.bailu.aat_lib.app.AppContext;
 import ch.bailu.aat_lib.preferences.OnPreferencesChanged;
 import ch.bailu.aat_lib.preferences.SolidDirectoryQuery;
 import ch.bailu.aat_lib.preferences.StorageInterface;
-import ch.bailu.aat_lib.service.ServicesInterface;
 import ch.bailu.aat_lib.service.VirtualService;
 import ch.bailu.aat_lib.util.fs.AFile;
 import ch.bailu.aat_lib.util.sql.DbException;
@@ -18,12 +17,10 @@ public final class DirectoryService extends VirtualService implements OnPreferen
     private final SolidDirectoryQuery sdirectory;
     private DirectorySynchronizer synchronizer=null;
 
-    private final ServicesInterface scontext;
     private final AppContext appContext;
 
     public DirectoryService(AppContext appContext) {
         this.appContext = appContext;
-        this.scontext = appContext.getServices();
         sdirectory = new SolidDirectoryQuery(appContext.getStorage(), appContext);
         sdirectory.getStorage().register(this);
 
@@ -46,9 +43,6 @@ public final class DirectoryService extends VirtualService implements OnPreferen
             AFile.logErrorNoAccess(dir);
         }
     }
-
-
-
 
 
     private void open(Foc dir) {

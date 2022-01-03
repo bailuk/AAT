@@ -1,7 +1,6 @@
-package ch.bailu.aat.services.background;
+package ch.bailu.aat_lib.service.background;
 
 import ch.bailu.aat_lib.app.AppContext;
-import ch.bailu.aat_lib.service.background.BackgroundTask;
 
 public final class LoaderThread extends WorkerThread {
     private static final int LOADER_QUEUE_SIZE = 100;
@@ -40,8 +39,6 @@ public final class LoaderThread extends WorkerThread {
             builder.append(" bytes");
         }
 
-
         builder.append("</p>");
     }
 }
-

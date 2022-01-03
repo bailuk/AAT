@@ -1,12 +1,10 @@
-package ch.bailu.aat.services.cache;
+package ch.bailu.aat_lib.service.cache;
 
 import java.util.HashMap;
 
 import ch.bailu.aat_lib.app.AppContext;
 import ch.bailu.aat_lib.dispatcher.BroadcastData;
-import ch.bailu.aat_lib.service.cache.Obj;
 import ch.bailu.aat_lib.service.cache.Obj.Factory;
-import ch.bailu.aat_lib.service.cache.ObjNull;
 import ch.bailu.aat_lib.util.MemSize;
 
 
@@ -171,8 +169,6 @@ public final class ObjectTable  {
 
         return oldest.obj.getID();
     }
-
-
 
 
     public synchronized void appendStatusText(StringBuilder builder) {

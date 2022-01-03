@@ -5,8 +5,8 @@ import android.content.Context;
 import ch.bailu.aat.app.AndroidAppContext;
 import ch.bailu.aat.preferences.location.AndroidSolidLocationProvider;
 import ch.bailu.aat.preferences.map.SolidRendererThreads;
-import ch.bailu.aat.services.background.BackgroundService;
-import ch.bailu.aat.services.cache.CacheService;
+import ch.bailu.aat_lib.service.background.BackgroundService;
+import ch.bailu.aat_lib.service.cache.CacheService;
 import ch.bailu.aat.services.elevation.ElevationService;
 import ch.bailu.aat.services.icons.IconMapService;
 import ch.bailu.aat.services.render.RenderService;
@@ -231,5 +231,4 @@ public final class OneService extends AbsService  implements ServiceContext {
     public  synchronized Context getContext() {
         return this;
     }
-
 }

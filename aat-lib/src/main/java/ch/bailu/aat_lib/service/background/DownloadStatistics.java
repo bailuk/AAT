@@ -1,4 +1,4 @@
-package ch.bailu.aat.services.background;
+package ch.bailu.aat_lib.service.background;
 
 
 public final class DownloadStatistics {
@@ -10,8 +10,6 @@ public final class DownloadStatistics {
     private long bytes=0;
 
     private long nextDownload=System.currentTimeMillis() - 100;
-
-
 
 
     public synchronized void increment(long size) {

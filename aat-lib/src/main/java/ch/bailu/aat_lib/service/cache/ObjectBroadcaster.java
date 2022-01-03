@@ -1,4 +1,4 @@
-package ch.bailu.aat.services.cache;
+package ch.bailu.aat_lib.service.cache;
 
 
 import java.io.Closeable;
@@ -7,7 +7,6 @@ import ch.bailu.aat_lib.app.AppContext;
 import ch.bailu.aat_lib.dispatcher.AppBroadcaster;
 import ch.bailu.aat_lib.dispatcher.BroadcastData;
 import ch.bailu.aat_lib.dispatcher.BroadcastReceiver;
-import ch.bailu.aat_lib.service.cache.ObjBroadcastReceiver;
 import ch.bailu.aat_lib.util.IndexedMap;
 
 public final class ObjectBroadcaster implements Closeable {

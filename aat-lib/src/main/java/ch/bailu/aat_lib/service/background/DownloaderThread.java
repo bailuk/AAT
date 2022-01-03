@@ -1,7 +1,6 @@
-package ch.bailu.aat.services.background;
+package ch.bailu.aat_lib.service.background;
 
 import ch.bailu.aat_lib.app.AppContext;
-import ch.bailu.aat_lib.service.background.BackgroundTask;
 
 public final class DownloaderThread  extends WorkerThread {
     private final static int DOWNLOAD_QUEUE_SIZE=100;
@@ -9,7 +8,6 @@ public final class DownloaderThread  extends WorkerThread {
     private final DownloadStatistics statistics = new DownloadStatistics();
 
     private static long totalSize = 0;
-
 
 
     public DownloaderThread(AppContext sc, String s) {

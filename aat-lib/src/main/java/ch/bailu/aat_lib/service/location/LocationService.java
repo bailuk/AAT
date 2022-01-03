@@ -90,7 +90,6 @@ public final class LocationService extends VirtualService
         if (itemList.remove(provider)) {
             provider.close();
         }
-
         provider = sprovider.createProvider(this, lastItem());
         itemList.add(provider);
     }
@@ -138,14 +137,12 @@ public final class LocationService extends VirtualService
     }
 
 
-
     @Override
     public synchronized void onPreferencesChanged(StorageInterface storage, String key) {
         if (sprovider.hasKey(key)) createLocationProvider();
 
         onPreferencesChanged(storage, key, presetIndex);
     }
-
 
 
     public synchronized void appendStatusText(StringBuilder builder) {

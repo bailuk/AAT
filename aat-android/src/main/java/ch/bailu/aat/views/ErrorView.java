@@ -9,6 +9,7 @@ import android.widget.TextView;
 import ch.bailu.aat.util.AppIntent;
 import ch.bailu.aat_lib.service.InsideContext;
 import ch.bailu.aat.services.ServiceContext;
+import ch.bailu.aat_lib.service.cache.CacheService;
 import ch.bailu.aat_lib.service.cache.Obj;
 import ch.bailu.aat.util.OldAppBroadcaster;
 import ch.bailu.aat_lib.dispatcher.AppBroadcaster;
@@ -20,8 +21,6 @@ public class ErrorView extends TextView  {
 
     private final static int BACKGROUND = Color.rgb(50,0,0);
     private final static int PADDING = 20;
-
-
 
 
     private final BroadcastReceiver onMessage = new BroadcastReceiver() {
@@ -47,9 +46,9 @@ public class ErrorView extends TextView  {
 
 
     /**
-     * Gets an {@link Obj} from the {@link ch.bailu.aat.services.cache.CacheService}
+     * Gets an {@link Obj} from the {@link CacheService}
      * and displays its exception if it has one
-     * @param serviceContext needed to access  {@link ch.bailu.aat.services.cache.CacheService}
+     * @param serviceContext needed to access  {@link CacheService}
      * @param file needed to identify the {@link Obj}
      */
     public void displayError(ServiceContext serviceContext, Foc file) {

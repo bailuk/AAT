@@ -10,7 +10,7 @@ import ch.bailu.aat_lib.service.background.FileTask;
 import ch.bailu.aat_lib.service.cache.Obj;
 import ch.bailu.aat_lib.service.cache.OnObject;
 import ch.bailu.foc.Foc;
-import ch.bailu.foc_android.FocAndroid;
+import ch.bailu.foc.FocName;
 
 public final class ObjBitmap extends ObjImageAbstract {
     public final static ObjBitmap NULL=new ObjBitmap();
@@ -20,15 +20,13 @@ public final class ObjBitmap extends ObjImageAbstract {
 
 
     private ObjBitmap() {
-        this(FocAndroid.NULL);
+        this(new FocName(""));
     }
 
     public ObjBitmap(Foc id) {
         super(id.getPath());
         imageFile = id;
     }
-
-
 
 
     @Override
@@ -52,7 +50,6 @@ public final class ObjBitmap extends ObjImageAbstract {
     }
 
 
-
     @Override
     public long getSize() {
         return bitmap.getSize();
@@ -67,7 +64,6 @@ public final class ObjBitmap extends ObjImageAbstract {
     public synchronized Bitmap getBitmap() {
         return bitmap.getBitmap();
     }
-
 
     public static class Factory extends Obj.Factory {
         @Override
@@ -119,8 +115,5 @@ public final class ObjBitmap extends ObjImageAbstract {
             };
             return size[0];
         }
-
     }
-
-
 }

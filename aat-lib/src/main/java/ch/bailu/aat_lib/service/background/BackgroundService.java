@@ -1,4 +1,4 @@
-package ch.bailu.aat.services.background;
+package ch.bailu.aat_lib.service.background;
 
 import java.net.URL;
 import java.util.HashMap;
@@ -7,11 +7,6 @@ import ch.bailu.aat_lib.app.AppContext;
 import ch.bailu.aat_lib.dispatcher.Broadcaster;
 import ch.bailu.aat_lib.logger.AppLog;
 import ch.bailu.aat_lib.service.VirtualService;
-import ch.bailu.aat_lib.service.background.BackgroundServiceInterface;
-import ch.bailu.aat_lib.service.background.BackgroundTask;
-import ch.bailu.aat_lib.service.background.DownloadTask;
-import ch.bailu.aat_lib.service.background.FileTask;
-import ch.bailu.aat_lib.service.background.Tasks;
 import ch.bailu.aat_lib.util.WithStatusText;
 import ch.bailu.foc.Foc;
 
