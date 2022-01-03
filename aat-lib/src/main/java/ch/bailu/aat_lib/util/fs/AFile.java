@@ -2,6 +2,7 @@ package ch.bailu.aat_lib.util.fs;
 
 import ch.bailu.aat_lib.logger.AppLog;
 import ch.bailu.aat_lib.resources.Res;
+import ch.bailu.aat_lib.resources.ToDo;
 import ch.bailu.foc.Foc;
 
 public class AFile {
@@ -9,26 +10,22 @@ public class AFile {
         AppLog.e( f.getPathName() + Res.str().file_exists());
     }
 
-
     public static void logErrorReadOnly(Foc f) {
-        AppLog.e(f.getPathName() + " is read only.*");
+        AppLog.e(f.getPathName() + ToDo.translate(" is read only."));
     }
 
     public static void logErrorNoAccess(Foc f) {
-        AppLog.e(f.getPathName() + " no access.*");
+        AppLog.e(f.getPathName() + ToDo.translate(" no access."));
     }
 
-
     public static void logInfoAcess(Foc f) {
-        String msg = ": no acess.*";
+        String msg = ToDo.translate(": no acess.");
         if (f.canWrite()) {
-            msg = " is writeable.*";
+            msg = ToDo.translate(" is writeable.");
         } else if (f.canRead()) {
-            msg = " is read only.*";
+            msg = ToDo.translate(" is read only.");
         }
 
         AppLog.i(f.getPathName() + msg);
     }
-
-
 }
