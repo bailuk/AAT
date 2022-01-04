@@ -32,7 +32,7 @@ class ScrollInsensitiveResultSet(private val resultSet: ResultSet) : DbResultSet
     }
 
     override fun moveToPosition(pos: Int): Boolean {
-        return resultSet.absolute(pos)
+        return resultSet.absolute(pos + 1)
     }
 
     override fun getCount(): Int {
