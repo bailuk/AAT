@@ -9,7 +9,7 @@ import android.widget.LinearLayout;
 import ch.bailu.aat.R;
 import ch.bailu.aat_lib.dispatcher.CurrentLocationSource;
 import ch.bailu.aat.dispatcher.EditorOrBackupSource;
-import ch.bailu.aat.dispatcher.IteratorSource;
+import ch.bailu.aat_lib.dispatcher.IteratorSource;
 import ch.bailu.aat.dispatcher.OverlaySource;
 import ch.bailu.aat_lib.dispatcher.TrackerSource;
 import ch.bailu.aat.menus.FileMenu;

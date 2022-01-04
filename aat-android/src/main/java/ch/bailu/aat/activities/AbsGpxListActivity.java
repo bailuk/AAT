@@ -9,7 +9,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.LinearLayout;
 
 import ch.bailu.aat.R;
-import ch.bailu.aat.dispatcher.IteratorSource;
+import ch.bailu.aat_lib.dispatcher.IteratorSource;
 import ch.bailu.aat.dispatcher.OverlaySource;
 import ch.bailu.aat.map.MapFactory;
 import ch.bailu.aat.map.To;
@@ -125,7 +125,6 @@ public abstract class AbsGpxListActivity extends ActivityContext implements OnIt
 
     @Override
     public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
-
         displayFileOnPosition(position);
     }
 
@@ -253,4 +252,3 @@ public abstract class AbsGpxListActivity extends ActivityContext implements OnIt
         }
     }
 }
-
