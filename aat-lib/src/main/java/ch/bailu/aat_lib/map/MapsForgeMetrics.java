@@ -25,9 +25,7 @@ public final class MapsForgeMetrics implements MapMetrics {
     private final AppDensity density;
     private final MapDistances distances = new MapDistances();
 
-
-    private final int tileSize;
-
+    private int tileSize;
 
     public MapsForgeMetrics(MapView v, AppDensity d) {
         density = d;
@@ -38,10 +36,11 @@ public final class MapsForgeMetrics implements MapMetrics {
 
 
     public void init(BoundingBox b, byte z, Dimension d, org.mapsforge.core.model.Point p) {
+        tileSize = mapView.getModel().displayModel.getTileSize();
         dim = d;
         bounding = b;
         tl = p;
-        zoom=z;
+        zoom = z;
         distances.init(bounding, dim);
         center = new Point(dim.width/2, dim.height/2);
     }
@@ -133,7 +132,6 @@ public final class MapsForgeMetrics implements MapMetrics {
     public Point toPixel(LatLong p) {
         double y = MercatorProjection.latitudeToPixelY(p.getLatitude(), zoom, tileSize);
         double x = MercatorProjection.longitudeToPixelX(p.getLongitude(), zoom, tileSize);
-
 
         return new Point(x-tl.x, y-tl.y);
     }
