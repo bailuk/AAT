@@ -3,6 +3,7 @@ package ch.bailu.aat_gtk.ui.view.list
 import ch.bailu.aat_gtk.app.GtkAppContext
 import ch.bailu.aat_lib.description.TimeDescription
 import ch.bailu.aat_lib.gpx.InfoID
+import ch.bailu.aat_lib.logger.AppLog
 import ch.bailu.aat_lib.preferences.SolidDirectoryQuery
 import ch.bailu.aat_lib.preferences.presets.SolidPreset
 import ch.bailu.aat_lib.service.directory.IteratorSimple
@@ -21,8 +22,9 @@ class FileList {
         val timeDescription = TimeDescription()
 
         try {
+            val sdirectory = SolidDirectoryQuery(GtkAppContext.storage, GtkAppContext)
             val directory = SolidPreset(GtkAppContext.storage).getDirectory(GtkAppContext.dataDirectory)
-            SolidDirectoryQuery(GtkAppContext.storage, GtkAppContext).setValue(directory.path)
+            sdirectory.setValue(directory.path)
 
             GtkAppContext.services.directoryService.rescan()
             val iteratorSimple = IteratorSimple(GtkAppContext)
@@ -58,6 +60,11 @@ class FileList {
             }
 
             val list = ListView(listIndex.inSelectionModel(), factory)
+
+            list.onActivate {
+                AppLog.d(this, "set positon to ${it}")
+                sdirectory.position.value = it
+            }
 
             val scrolled = ScrolledWindow()
             scrolled.setChild(list)

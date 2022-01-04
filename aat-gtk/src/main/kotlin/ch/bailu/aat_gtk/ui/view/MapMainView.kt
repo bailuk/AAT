@@ -1,7 +1,9 @@
 package ch.bailu.aat_gtk.ui.view
 
+import ch.bailu.aat_gtk.app.GtkAppContext
 import ch.bailu.aat_gtk.ui.view.map.GtkCustomMapView
 import ch.bailu.aat_lib.dispatcher.DispatcherInterface
+import ch.bailu.aat_lib.dispatcher.IteratorSource
 import ch.bailu.aat_lib.gpx.InfoID
 import ch.bailu.aat_lib.map.Attachable
 import ch.bailu.aat_lib.map.layer.gpx.GpxDynLayer
@@ -9,7 +11,6 @@ import ch.bailu.aat_lib.map.layer.grid.GridDynLayer
 import ch.bailu.aat_lib.preferences.StorageInterface
 import ch.bailu.aat_lib.preferences.location.CurrentLocationLayer
 import ch.bailu.aat_lib.service.ServicesInterface
-import ch.bailu.gtk.gio.ActionMap
 import ch.bailu.gtk.gtk.Box
 import ch.bailu.gtk.gtk.Orientation
 import ch.bailu.gtk.helper.ActionHelper
@@ -30,9 +31,13 @@ class MapMainView(
         layout.append(map.drawingArea)
         layout.append(bar.box)
 
+        dispatcher.addSource(IteratorSource.FollowFile(GtkAppContext))
+
         map.add(CurrentLocationLayer(map.mContext, dispatcher))
         map.add(GridDynLayer(services, storage, map.mContext))
         map.add(GpxDynLayer(storage, map.mContext, services, dispatcher, InfoID.TRACKER))
+        map.add(GpxDynLayer(storage, map.mContext, services, dispatcher, InfoID.FILEVIEW))
+
         layout.show()
         dispatcher.addTarget(bar, InfoID.ALL)
     }
