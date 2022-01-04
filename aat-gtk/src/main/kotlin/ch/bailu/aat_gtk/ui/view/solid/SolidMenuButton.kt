@@ -7,10 +7,10 @@ import ch.bailu.aat_lib.map.Attachable
 import ch.bailu.aat_lib.preferences.OnPreferencesChanged
 import ch.bailu.aat_lib.preferences.SolidIndexList
 import ch.bailu.aat_lib.preferences.StorageInterface
-import ch.bailu.gtk.gio.ActionMap
 import ch.bailu.gtk.gtk.MenuButton
+import ch.bailu.gtk.helper.ActionHelper
 
-class SolidMenuButton(actionMap: ActionMap, private val solid: SolidIndexList): OnPreferencesChanged, Attachable {
+class SolidMenuButton(actionHelper: ActionHelper, private val solid: SolidIndexList): OnPreferencesChanged, Attachable {
     val button = MenuButton()
 
     companion object {
@@ -19,7 +19,7 @@ class SolidMenuButton(actionMap: ActionMap, private val solid: SolidIndexList): 
 
     init {
         //button. .child = IconMap.getImage(solid.iconResource, ICON_SIZE)
-        button.menuModel = GtkMenu(actionMap, SolidIndexMenu(solid)).menu
+        button.menuModel = GtkMenu(actionHelper, SolidIndexMenu(solid)).menu
         solid.register(this)
     }
 

@@ -11,12 +11,12 @@ import ch.bailu.aat_lib.preferences.StorageInterface
 import ch.bailu.aat_lib.preferences.map.SolidMapGrid
 import ch.bailu.aat_lib.preferences.map.SolidPositionLock
 import ch.bailu.aat_lib.util.IndexedMap
-import ch.bailu.gtk.gio.ActionMap
 import ch.bailu.gtk.gtk.Box
 import ch.bailu.gtk.gtk.Button
 import ch.bailu.gtk.gtk.Orientation
+import ch.bailu.gtk.helper.ActionHelper
 
-class NavigationBar(actionMap: ActionMap, mcontext: MapContext, storage: StorageInterface) : OnContentUpdatedInterface {
+class NavigationBar(actionHelper: ActionHelper, mcontext: MapContext, storage: StorageInterface) : OnContentUpdatedInterface {
     val SIZE = 24
     
     val box = Box(Orientation.HORIZONTAL, 2)
@@ -24,7 +24,7 @@ class NavigationBar(actionMap: ActionMap, mcontext: MapContext, storage: Storage
     private val minus: Button = Button()
     private val frame: Button = Button()
     private val lock = SolidImageButton(SolidPositionLock(storage, mcontext.solidKey))
-    private val grid = SolidMenuButton(actionMap, SolidMapGrid(storage, mcontext.solidKey))
+    private val grid = SolidMenuButton(actionHelper, SolidMapGrid(storage, mcontext.solidKey))
 
     private val infoCache = IndexedMap<Int, GpxInformation>()
 

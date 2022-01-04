@@ -1,45 +1,66 @@
 package ch.bailu.aat_gtk.ui.view.menu
 
+import ch.bailu.aat_gtk.ui.view.menu.model.Item
 import ch.bailu.aat_gtk.ui.view.menu.model.Type
-import ch.bailu.gtk.GTK
-import ch.bailu.gtk.gio.ActionMap
 import ch.bailu.gtk.gio.Menu
 import ch.bailu.gtk.gio.MenuItem
 import ch.bailu.gtk.helper.ActionHelper
 import ch.bailu.gtk.type.Str
+import java.util.*
 import ch.bailu.aat_gtk.ui.view.menu.model.Menu as MenuModel
 
-class GtkMenu(actionMap: ActionMap, model: MenuModel){
+class GtkMenu(actionHelper: ActionHelper, model: MenuModel){
     val menu = Menu()
 
     init {
-        val actions = ActionHelper(actionMap, "app")
 
+        var section = Menu()
+        var id = ""
         var index = 0
-        model.forEach {
+        var items = ArrayList<Item>()
+
+        model.forEach { it ->
+
             when (it.type) {
                 Type.SEPARATOR -> {
-                    //
+                    menu.appendSection(null, section)
+                    section = Menu()
+                    index = 0
                 }
 
                 Type.RADIO -> {
-                    val item = MenuItem(Str(it.label), Str("app.${index}"))
-                    menu.appendItem(item)
 
-                    val i = it
-                    actions.addBoolean("${index}", GTK.TRUE) {i.onSelected(i)}
+                    if (index == 0) {
+                        items = ArrayList<Item>()
+                        id = UUID.randomUUID().toString()
+
+                        actionHelper.add(id, index) {
+                            val index = it?.int32 ?: 0
+
+                            if (index < items.size)
+                                items[index].onSelected(items[index])
+                        }
+                    }
+                    items.add(it)
+                    val item = MenuItem(Str(it.label), Str("app.${id}(${index})"))
+                    section.appendItem(item)
+
+                    index++
                 }
 
                 Type.LABEL -> {
-                    val item = MenuItem(Str(it.label), Str("app.${index}"))
-                    menu.appendItem(item)
+                    id = UUID.randomUUID().toString()
+                    index = 0
+
+                    val item = MenuItem(Str(it.label), Str("app.${id}"))
+                    section.appendItem(item)
 
                     val i = it
-                    actions.add("${index}") {i.onSelected(i)}
+                    actionHelper.add(id) {i.onSelected(i)}
                 }
             }
-            index++
         }
+        menu.appendSection(null, section)
+
     }
 }
-

@@ -10,10 +10,10 @@ import ch.bailu.aat_lib.logger.AppLog
 import ch.bailu.aat_lib.logger.BroadcastLogger
 import ch.bailu.aat_lib.map.Attachable
 import ch.bailu.gtk.GTK
-import ch.bailu.gtk.gio.ActionMap
 import ch.bailu.gtk.gio.ApplicationFlags
 import ch.bailu.gtk.gtk.Application
 import ch.bailu.gtk.gtk.ApplicationWindow
+import ch.bailu.gtk.helper.ActionHelper
 import ch.bailu.gtk.type.Str
 import org.mapsforge.map.gtk.graphics.GtkGraphicFactory
 import kotlin.system.exitProcess
@@ -53,7 +53,7 @@ object App {
 
         app.onActivate {
             try {
-                val window = MainWindow(ActionMap(app.cast()), ApplicationWindow(app), GtkAppContext.services, GtkAppContext.broadcaster)
+                val window = MainWindow(ActionHelper(app), ApplicationWindow(app), GtkAppContext.services, GtkAppContext.broadcaster)
                 attach(window)
 
             } catch (e: Exception) {

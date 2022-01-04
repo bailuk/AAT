@@ -12,18 +12,19 @@ import ch.bailu.aat_lib.service.ServicesInterface
 import ch.bailu.gtk.gio.ActionMap
 import ch.bailu.gtk.gtk.Box
 import ch.bailu.gtk.gtk.Orientation
+import ch.bailu.gtk.helper.ActionHelper
 import java.io.File
 import java.util.*
 
 class MapMainView(
-        actionMap: ActionMap,
+        actionHelper: ActionHelper,
         services: ServicesInterface,
         storage: StorageInterface,
         dispatcher: DispatcherInterface): Attachable {
 
     val map = GtkCustomMapView(storage, getMapFiles(), dispatcher)
     val layout = Box(Orientation.VERTICAL,0)
-    val bar = NavigationBar(actionMap, map.mContext, storage)
+    val bar = NavigationBar(actionHelper, map.mContext, storage)
 
     init {
         layout.append(map.drawingArea)
