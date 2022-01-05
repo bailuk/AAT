@@ -9,7 +9,7 @@ import android.widget.LinearLayout;
 
 import ch.bailu.aat.R;
 import ch.bailu.aat_lib.dispatcher.CurrentLocationSource;
-import ch.bailu.aat.dispatcher.CustomFileSource;
+import ch.bailu.aat_lib.dispatcher.CustomFileSource;
 import ch.bailu.aat.dispatcher.OverlaySource;
 import ch.bailu.aat_lib.dispatcher.TrackerSource;
 import ch.bailu.aat.map.MapFactory;
@@ -173,7 +173,7 @@ public class GpxViewActivity extends ActivityContext
         addSource(new TrackerSource(getServiceContext(),getBroadcaster()));
         addSource(new CurrentLocationSource(getServiceContext(),getBroadcaster()));
         addSource(new OverlaySource(getAppContext()));
-        addSource(new CustomFileSource(getServiceContext(), fileID));
+        addSource(new CustomFileSource(getAppContext(), fileID));
 
         addTarget(this, InfoID.FILEVIEW);
         addTarget(busyControl, InfoID.FILEVIEW,

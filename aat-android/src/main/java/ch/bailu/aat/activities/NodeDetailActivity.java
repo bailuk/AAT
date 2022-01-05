@@ -10,7 +10,7 @@ import android.widget.SeekBar;
 
 import ch.bailu.aat.R;
 import ch.bailu.aat_lib.dispatcher.CurrentLocationSource;
-import ch.bailu.aat.dispatcher.CustomFileSource;
+import ch.bailu.aat_lib.dispatcher.CustomFileSource;
 import ch.bailu.aat_lib.gpx.GpxListArray;
 import ch.bailu.aat.map.MapFactory;
 import ch.bailu.aat.map.To;
@@ -128,7 +128,7 @@ public class NodeDetailActivity extends ActivityContext
     private void createDispatcher() {
         addTarget(this, InfoID.FILEVIEW);
         addSource(new CurrentLocationSource(getServiceContext(),getBroadcaster()));
-        addSource(new CustomFileSource(getServiceContext(), fileID));
+        addSource(new CustomFileSource(getAppContext(), fileID));
 
 
     }
