@@ -2,8 +2,10 @@ package ch.bailu.aat_gtk.ui.view
 
 import ch.bailu.aat_gtk.app.GtkAppContext
 import ch.bailu.aat_gtk.ui.view.list.FileList
+import ch.bailu.aat_gtk.ui.view.solid.ContextCallback
 import ch.bailu.aat_gtk.ui.view.solid.PreferencesStackView
 import ch.bailu.aat_lib.dispatcher.DispatcherInterface
+import ch.bailu.aat_lib.logger.AppLog
 import ch.bailu.aat_lib.resources.Res
 import ch.bailu.gtk.gtk.Stack
 import ch.bailu.gtk.gtk.StackTransitionType
@@ -11,7 +13,7 @@ import ch.bailu.gtk.gtk.Window
 import ch.bailu.gtk.helper.ActionHelper
 import ch.bailu.gtk.type.Str
 
-class MainStackView (actionHelper: ActionHelper, dispatcher: DispatcherInterface, window: Window) {
+class MainStackView (actionHelper: ActionHelper, dispatcher: DispatcherInterface, window: Window) : ContextCallback {
 
     val layout = Stack()
 
@@ -41,5 +43,17 @@ class MainStackView (actionHelper: ActionHelper, dispatcher: DispatcherInterface
 
     fun showFiles() {
         layout.visibleChild = fileList.vbox
+    }
+
+    override fun showInMap() {
+        showMap()
+    }
+
+    override fun showDetail() {
+        AppLog.d(this, "show detail")
+    }
+
+    override fun showInList() {
+        showFiles()
     }
 }
