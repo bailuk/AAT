@@ -17,34 +17,29 @@ import ch.bailu.gtk.helper.ActionHelper
 import java.io.File
 import java.util.*
 
-class MapMainView(
-        actionHelper: ActionHelper,
-        services: ServicesInterface,
-        storage: StorageInterface,
-        dispatcher: DispatcherInterface): Attachable {
+class MapMainView(actionHelper: ActionHelper, dispatcher: DispatcherInterface): Attachable {
 
-    val map = GtkCustomMapView(storage, getMapFiles(), dispatcher)
+    val map = GtkCustomMapView(GtkAppContext.storage, getMapFiles(), dispatcher)
     val layout = Box(Orientation.VERTICAL,0)
-    val bar = NavigationBar(actionHelper, map.mContext, storage)
+    private val bar = NavigationBar(actionHelper, map.mContext, GtkAppContext.storage)
 
     init {
         layout.append(map.drawingArea)
         layout.append(bar.box)
 
-        dispatcher.addSource(IteratorSource.FollowFile(GtkAppContext))
+        dispatcher.addTarget(bar, InfoID.ALL)
 
         map.add(CurrentLocationLayer(map.mContext, dispatcher))
-        map.add(GridDynLayer(services, storage, map.mContext))
-        map.add(GpxDynLayer(storage, map.mContext, services, dispatcher, InfoID.TRACKER))
-        map.add(GpxDynLayer(storage, map.mContext, services, dispatcher, InfoID.FILEVIEW))
+        map.add(GridDynLayer(GtkAppContext.services, GtkAppContext.storage, map.mContext))
+        map.add(GpxDynLayer(GtkAppContext.storage, map.mContext, GtkAppContext.services, dispatcher, InfoID.TRACKER))
+        map.add(GpxDynLayer(GtkAppContext.storage, map.mContext, GtkAppContext.services, dispatcher, InfoID.FILEVIEW))
 
         layout.show()
-        dispatcher.addTarget(bar, InfoID.ALL)
     }
 
 
     private fun getMapFiles(): List<File> {
-        val result: MutableList<File> = ArrayList(2)
+        val result = ArrayList<File>()
         val home = System.getProperty("user.home")
         result.add(File("${home}/maps/Alps/Alps_oam.osm.map"))
         return result

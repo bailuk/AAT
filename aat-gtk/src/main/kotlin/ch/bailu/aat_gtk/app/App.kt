@@ -53,7 +53,7 @@ object App {
 
         app.onActivate {
             try {
-                val window = MainWindow(ActionHelper(app), ApplicationWindow(app), GtkAppContext.services, GtkAppContext.broadcaster)
+                val window = MainWindow(ActionHelper(app), ApplicationWindow(app))
                 attach(window)
 
             } catch (e: Exception) {

@@ -7,13 +7,11 @@ import ch.bailu.aat_gtk.ui.view.MainStackView
 import ch.bailu.aat_gtk.ui.view.TrackerButton
 import ch.bailu.aat_gtk.ui.view.menu.AppMenu
 import ch.bailu.aat_gtk.ui.view.menu.GtkMenu
-import ch.bailu.aat_lib.dispatcher.Broadcaster
 import ch.bailu.aat_lib.dispatcher.CurrentLocationSource
 import ch.bailu.aat_lib.dispatcher.Dispatcher
 import ch.bailu.aat_lib.dispatcher.TrackerSource
 import ch.bailu.aat_lib.gpx.InfoID
 import ch.bailu.aat_lib.map.Attachable
-import ch.bailu.aat_lib.service.ServicesInterface
 import ch.bailu.gtk.GTK
 import ch.bailu.gtk.gio.Menu
 import ch.bailu.gtk.gtk.ApplicationWindow
@@ -22,27 +20,19 @@ import ch.bailu.gtk.gtk.MenuButton
 import ch.bailu.gtk.helper.ActionHelper
 import ch.bailu.gtk.type.Str
 
-class MainWindow(
-        actionHelper: ActionHelper,
-    window: ApplicationWindow,
-    services: ServicesInterface,
-    broadcaster: Broadcaster) : Attachable
+class MainWindow(actionHelper: ActionHelper, window: ApplicationWindow) : Attachable
 {
 
-    private val trackerButton = TrackerButton(services)
+    private val trackerButton = TrackerButton(GtkAppContext.services)
 
     private val dispatcher = Dispatcher()
-    private val mainView = MainStackView(
-            actionHelper,
-            services,
-            GtkAppContext.storage,
-            dispatcher,window)
+    private val mainView = MainStackView(actionHelper,dispatcher,window)
 
     private val menu: AppMenu
 
     init {
         window.child = mainView.layout
-        menu = AppMenu(window, services, mainView)
+        menu = AppMenu(window, GtkAppContext.services, mainView)
         window.title = Str(GtkAppConfig.title)
         window.titlebar = createHeader(GtkMenu(actionHelper, menu).menu)
 
@@ -52,8 +42,8 @@ class MainWindow(
         }
         window.show()
 
-        dispatcher.addSource(CurrentLocationSource(services, broadcaster))
-        dispatcher.addSource(TrackerSource(services, broadcaster))
+        dispatcher.addSource(CurrentLocationSource(GtkAppContext.services, GtkAppContext.broadcaster))
+        dispatcher.addSource(TrackerSource(GtkAppContext.services, GtkAppContext.broadcaster))
         dispatcher.onResume()
 
         dispatcher.addTarget(trackerButton, InfoID.ALL)
