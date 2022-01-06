@@ -51,9 +51,11 @@ class MainWindow(actionHelper: ActionHelper, window: ApplicationWindow) : Attach
 
         dispatcher.addSource(CurrentLocationSource(GtkAppContext.services, GtkAppContext.broadcaster))
         dispatcher.addSource(TrackerSource(GtkAppContext.services, GtkAppContext.broadcaster))
-        dispatcher.onResume()
 
         dispatcher.addTarget(trackerButton, InfoID.ALL)
+        dispatcher.addTarget(contextBar, InfoID.FILEVIEW)
+
+        dispatcher.onResume()
     }
 
 

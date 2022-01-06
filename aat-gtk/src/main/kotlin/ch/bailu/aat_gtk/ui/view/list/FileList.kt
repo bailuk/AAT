@@ -19,7 +19,6 @@ import ch.bailu.gtk.type.Str
 
 class FileList(dispatcher: DispatcherInterface) {
     val vbox = Box(Orientation.VERTICAL,12)
-    private val label = Label(Str("Track List"))
     private val listIndex = ListIndex()
 
     init {
@@ -79,8 +78,6 @@ class FileList(dispatcher: DispatcherInterface) {
                 val hbox = Box(item.child.cast())
                 val vbox = Box(hbox.firstChild.cast())
 
-                val menu = MenuButton(hbox.nextSibling.cast())
-
                 val label1 = Label(vbox.firstChild.cast())
                 val label2 = Label(label1.nextSibling.cast())
                 val label3 = Label(label2.nextSibling.cast())
@@ -104,7 +101,6 @@ class FileList(dispatcher: DispatcherInterface) {
             val list = ListView(listIndex.inSelectionModel(), factory)
 
             list.onActivate {
-                LabelHelper.setLabel(label, iteratorSimple.info.file.name)
                 sdirectory.position.value = it
                 customFileSource.setFileID(iteratorSimple.info.file.toString())
             }
@@ -114,7 +110,6 @@ class FileList(dispatcher: DispatcherInterface) {
             scrolled.hexpand = GTK.TRUE
             scrolled.vexpand = GTK.TRUE
 
-            vbox.append(label)
             vbox.append(scrolled)
         } catch (e: Exception) {
             System.out.println("catched")

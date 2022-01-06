@@ -5,6 +5,7 @@ import ch.bailu.aat_gtk.ui.view.list.FileList
 import ch.bailu.aat_gtk.ui.view.solid.ContextCallback
 import ch.bailu.aat_gtk.ui.view.solid.PreferencesStackView
 import ch.bailu.aat_lib.dispatcher.DispatcherInterface
+import ch.bailu.aat_lib.gpx.GpxInformation
 import ch.bailu.aat_lib.logger.AppLog
 import ch.bailu.aat_lib.resources.Res
 import ch.bailu.gtk.gtk.Stack
@@ -45,7 +46,8 @@ class MainStackView (actionHelper: ActionHelper, dispatcher: DispatcherInterface
         layout.visibleChild = fileList.vbox
     }
 
-    override fun showInMap() {
+    override fun showInMap(info: GpxInformation) {
+        map.map.frameBounding(info.boundingBox)
         showMap()
     }
 

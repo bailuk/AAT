@@ -1,31 +1,55 @@
 package ch.bailu.aat_gtk.ui.view
 
 import ch.bailu.aat_gtk.ui.view.solid.ContextCallback
+import ch.bailu.aat_lib.dispatcher.OnContentUpdatedInterface
+import ch.bailu.aat_lib.gpx.GpxInformation
+import ch.bailu.aat_lib.gpx.InfoID
 import ch.bailu.gtk.GTK
-import ch.bailu.gtk.gtk.Box
-import ch.bailu.gtk.gtk.Button
-import ch.bailu.gtk.gtk.Orientation
-import ch.bailu.gtk.gtk.Revealer
+import ch.bailu.gtk.gtk.*
+import ch.bailu.gtk.helper.LabelHelper
 import ch.bailu.gtk.type.Str
 
-class ContextBar(contextCallback: ContextCallback) {
+class ContextBar(contextCallback: ContextCallback) : OnContentUpdatedInterface {
     val revealer = Revealer()
 
+    private val label = Label()
+    private var cache = GpxInformation.NULL
+
     init {
-        val box = Box(Orientation.HORIZONTAL,3)
-        val mapButton = Button.newWithLabelButton(Str("Map"))
-        val listButton = Button.newWithLabelButton(Str("List"))
-        val detailButton = Button.newWithLabelButton(Str("Detail"))
 
-        mapButton.onClicked { contextCallback.showInMap() }
-        detailButton.onClicked { contextCallback.showDetail() }
-        listButton.onClicked { contextCallback.showInList() }
+        val vbox = Box(Orientation.VERTICAL,0)
+        val hbox = Box(Orientation.HORIZONTAL,0)
+        hbox.append(createButton("Map") { contextCallback.showInMap(cache) })
+        hbox.append(createButton("List") { contextCallback.showInList() })
+        hbox.append(createButton("Detail") { contextCallback.showDetail() })
 
-        box.append(mapButton)
-        box.append(listButton)
-        box.append(detailButton)
 
-        revealer.child = box
+        vbox.append(label)
+        vbox.append(hbox)
+        revealer.child = vbox
         revealer.revealChild = GTK.FALSE
+    }
+
+
+    private fun createButton(label: String, onClicked: Button.OnClicked) : Button {
+        val result = Button.newWithLabelButton(Str(label))
+        result.onClicked(onClicked)
+        setMargin(result, 3)
+        return result
+    }
+
+
+    private fun setMargin(widget: Widget, margin: Int) {
+        widget.marginBottom = margin
+        widget.marginTop = margin
+        widget.marginStart = margin
+        widget.marginEnd = margin
+    }
+
+    override fun onContentUpdated(iid: Int, info: GpxInformation) {
+        if (iid == InfoID.FILEVIEW) {
+            cache = info
+            LabelHelper.setLabel(label, info.file.name)
+        }
     }
 }
