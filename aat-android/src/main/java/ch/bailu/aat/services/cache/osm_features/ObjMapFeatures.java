@@ -2,6 +2,7 @@ package ch.bailu.aat.services.cache.osm_features;
 
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 import ch.bailu.aat.preferences.map.SolidOsmFeaturesList;
 import ch.bailu.aat.util.filter_list.AbsFilterList;
@@ -123,7 +124,7 @@ public final class ObjMapFeatures extends Obj {
 
         @Override
         public boolean onParseFile(String file) {
-            return keyList.isEmpty() || keyList.hasKey(file.toLowerCase());
+            return keyList.isEmpty() || keyList.hasKey(file.toLowerCase(Locale.ROOT));
 
         }
 

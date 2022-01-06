@@ -2,6 +2,7 @@ package ch.bailu.aat.util.filter_list;
 
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class KeyList {
     public static final int MIN_KEY_LENGTH = 3;
@@ -29,7 +30,7 @@ public class KeyList {
 
     private void addKey(String k) {
         if (k.length() >= MIN_KEY_LENGTH) {
-            k = k.toLowerCase();
+            k = k.toLowerCase(Locale.ROOT);
             if (hasKey(k) == false) {
                 keys.add(k);
             }

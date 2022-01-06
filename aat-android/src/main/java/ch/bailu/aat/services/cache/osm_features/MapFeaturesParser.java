@@ -1,6 +1,7 @@
 package ch.bailu.aat.services.cache.osm_features;
 
 import java.io.IOException;
+import java.util.Locale;
 
 import ch.bailu.aat_lib.logger.AppLog;
 import ch.bailu.aat_lib.xml.parser.util.Stream;
@@ -198,7 +199,7 @@ public final class MapFeaturesParser {
 
     private void haveSummary() {
 
-        outSummaryKey = outName.toString().toLowerCase();
+        outSummaryKey = outName.toString().toLowerCase(Locale.ROOT);
         outSummarySearchKey = "_" + outSummaryKey;
 
 

@@ -3,6 +3,8 @@ package ch.bailu.aat.util;
 
 import android.content.Context;
 
+import java.util.Locale;
+
 import ch.bailu.aat_lib.description.AltitudeDescription;
 import ch.bailu.aat_lib.description.CurrentSpeedDescription;
 import ch.bailu.aat_lib.description.DistanceDescription;
@@ -57,11 +59,10 @@ public class HtmlBuilderGpx extends HtmlBuilder {
         if (a.size() > 0) {
 
             for (int i = 0; i < a.size(); i++) {
-                int k = a.getKeyAt(i);
                 String kString = a.getSKeyAt(i);
                 String v = a.getAt(i);
 
-                if (kString.toLowerCase().contains("name")) {
+                if (kString.toLowerCase(Locale.ROOT).contains("name")) {
                     appendKeyValueBold(kString, v);
                 }  else {
                     appendKeyValue(kString, v);

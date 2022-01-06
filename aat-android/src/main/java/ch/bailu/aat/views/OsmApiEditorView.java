@@ -8,6 +8,8 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
+import java.util.Locale;
+
 import ch.bailu.aat.util.OsmApiConfiguration;
 import ch.bailu.aat.util.ui.AppTheme;
 import ch.bailu.aat.util.ui.UiTheme;
@@ -53,7 +55,7 @@ public class OsmApiEditorView extends LinearLayout {
         LinearLayout layout = new LinearLayout(getContext());
         layout.setOrientation(LinearLayout.HORIZONTAL);
 
-        String[] strings = osmApi.getUrlStart().split(osmApi.getApiName().toLowerCase());
+        String[] strings = osmApi.getUrlStart().split(osmApi.getApiName().toLowerCase(Locale.ROOT));
 
         TextView b = new TitleView(getContext(), osmApi.getApiName(), AppTheme.search);
         b.setSingleLine();
