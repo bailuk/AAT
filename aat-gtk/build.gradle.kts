@@ -73,7 +73,7 @@ application {
 /**
  * https://docs.gradle.org/current/dsl/org.gradle.api.tasks.bundling.Jar.html
  * https://stackoverflow.com/questions/41794914/how-to-create-the-fat-jar-with-gradle-kotlin-script
- */
+*/
 val fatJar = task("fatJar", type = Jar::class) {
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 

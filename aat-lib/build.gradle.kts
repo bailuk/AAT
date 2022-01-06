@@ -2,7 +2,7 @@ plugins {
     id ("java-library")
 
     // https://kotlinlang.org/docs/gradle.html#targeting-the-jvm
-    kotlin("jvm") version "1.5.31"
+    kotlin("jvm") version "1.6.10"
 }
 
 

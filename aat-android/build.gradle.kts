@@ -5,7 +5,7 @@ plugins {
 
 android {
     compileSdkVersion(30)
-    buildToolsVersion("30.0.2")
+    buildToolsVersion("30.0.3")
 
     /* Set this to whatever version is installed on the GitHub build environment
     and hope it works everywhere.
@@ -24,7 +24,8 @@ android {
     }
 
     lintOptions {
-        isAbortOnError = false
+        isAbortOnError = true
+        isCheckDependencies = true
     }
 
 
@@ -108,22 +109,10 @@ dependencies {
 
 
     // test
-    // Core library
-    androidTestImplementation ("androidx.test:core:1.0.0")
-
-    // AndroidJUnitRunner and JUnit Rules
-    androidTestImplementation ("androidx.test:runner:1.1.0")
-    androidTestImplementation ("androidx.test:rules:1.1.0")
-
-    // Assertions
-    androidTestImplementation ("androidx.test.ext:junit:1.0.0")
-    androidTestImplementation ("androidx.test.ext:truth:1.0.0")
-    androidTestImplementation ("com.google.truth:truth:0.42")
-
     // Required -- JUnit 4 framework
     testImplementation ("junit:junit:4.12")
     // Optional -- Robolectric environment
-    testImplementation("androidx.test:core:1.0.0")
+    testImplementation("androidx.test:core:1.4.0")
     // Optional -- Mockito framework
     testImplementation ("org.mockito:mockito-core:1.10.19")
 
