@@ -7,6 +7,7 @@ import ch.bailu.gtk.gio.MenuItem
 import ch.bailu.gtk.helper.ActionHelper
 import ch.bailu.gtk.type.Str
 import java.util.*
+import kotlin.collections.ArrayList
 import ch.bailu.aat_gtk.ui.view.menu.model.Menu as MenuModel
 
 class GtkMenu(actionHelper: ActionHelper, model: MenuModel){
@@ -35,10 +36,10 @@ class GtkMenu(actionHelper: ActionHelper, model: MenuModel){
                         id = UUID.randomUUID().toString()
 
                         actionHelper.add(id, index) {
-                            val index = it?.int32 ?: 0
+                            val idx = it?.int32 ?: 0
 
-                            if (index < items.size)
-                                items[index].onSelected(items[index])
+                            if (idx < items.size)
+                                items[idx].onSelected(items[idx])
                         }
                     }
                     items.add(it)
@@ -58,9 +59,10 @@ class GtkMenu(actionHelper: ActionHelper, model: MenuModel){
                     val i = it
                     actionHelper.add(id) {i.onSelected(i)}
                 }
+
+                else -> {}
             }
         }
         menu.appendSection(null, section)
-
     }
 }
