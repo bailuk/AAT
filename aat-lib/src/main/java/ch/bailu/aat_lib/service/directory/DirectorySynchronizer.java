@@ -280,7 +280,7 @@ public final class DirectorySynchronizer  implements Closeable {
             ArrayList<String> values = new ArrayList<>();
 
             createContentValues(file.getName(), list.getDelta(), keys, values);
-            database.insert(Objects.toArray(keys), Objects.toArray(values));
+            database.insert(Objects.toArray(keys), (Object[]) Objects.toArray(values));
         }
 
         private void createContentValues(String filename,
