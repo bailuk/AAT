@@ -74,6 +74,8 @@ application {
  * https://docs.gradle.org/current/dsl/org.gradle.api.tasks.bundling.Jar.html
  * https://stackoverflow.com/questions/41794914/how-to-create-the-fat-jar-with-gradle-kotlin-script
 */
+
+/* With this gradle tries to load all dependencies of all modules during configuration
 val fatJar = task("fatJar", type = Jar::class) {
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 
@@ -83,5 +85,5 @@ val fatJar = task("fatJar", type = Jar::class) {
     from(configurations.runtimeClasspath.get().map({ if (it.isDirectory) it else zipTree(it) }))
     with(tasks.jar.get() as CopySpec)
 }
-
+*/
 
