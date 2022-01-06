@@ -25,9 +25,6 @@
         <!-- Errors -->
 
 
-    <!-- Static -->
-    <string name="app_name" translatable="false">AAT</string>
-
     <!-- General -->
     <string name="on">Aan</string>
     <string name="off">Uit</string>
@@ -234,7 +231,6 @@
     <!-- Dialog -->
     <string name="dialog_yes">Ja</string>
     <string name="dialog_no">Nee</string>
-    <string name="dialog_ok" translatable="false">OK</string>
     <string name="dialog_cancel">Annuleer</string>
     <string name="dialog_discard">Gooi weg</string>
     <string name="dialog_save">Sla op</string>
@@ -244,9 +240,7 @@
     <!-- Description -->
     <string name="d_longitude">Lengtegraad</string>
     <string name="d_latitude">Breedtegraad</string>
-    <string name="d_chx" translatable="false">CH1903 X</string>
-    <string name="d_chy" translatable="false">CH1903 Y</string>
-    <string name="d_name">Naam</string>
+     <string name="d_name">Naam</string>
     <string name="d_accuracy">Nauwkeurigheid</string>
     <string name="d_enddate">Einde</string>
     <string name="d_startdate">Start</string>

@@ -25,9 +25,6 @@
         <!-- Errors -->
 
 
-    <!-- Static -->
-    <string name="app_name" translatable="false">AAT</string>
-
     <!-- General -->
     <string name="on">Zap.</string>
     <string name="off">Vyp.</string>
@@ -234,7 +231,6 @@
     <!-- Dialog -->
     <string name="dialog_yes">Ano</string>
     <string name="dialog_no">Ne</string>
-    <string name="dialog_ok" translatable="false">OK</string>
     <string name="dialog_cancel">Zrušit</string>
     <string name="dialog_discard">Vyřadit</string>
     <string name="dialog_save">Uložit</string>
@@ -244,8 +240,6 @@
     <!-- Description -->
     <string name="d_longitude">Délka</string>
     <string name="d_latitude">Šířka</string>
-    <string name="d_chx" translatable="false">CH1903 X</string>
-    <string name="d_chy" translatable="false">CH1903 Y</string>
     <string name="d_name">Název</string>
     <string name="d_accuracy">Přesnost</string>
     <string name="d_enddate">Konec</string>

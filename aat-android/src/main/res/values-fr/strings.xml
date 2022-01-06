@@ -25,8 +25,6 @@
         <!-- Errors -->
 
 
-    <!-- Static -->
-    <string name="app_name" translatable="false">AAT</string>
 
     <!-- General -->
     <string name="on">On</string>
@@ -234,7 +232,6 @@
     <!-- Dialog -->
     <string name="dialog_yes">Oui</string>
     <string name="dialog_no">Non</string>
-    <string name="dialog_ok" translatable="false">OK</string>
     <string name="dialog_cancel">Annuler</string>
     <string name="dialog_discard">Abandonner</string>
     <string name="dialog_save">Sauvegarder</string>
@@ -244,8 +241,6 @@
     <!-- Description -->
     <string name="d_longitude">Longitude</string>
     <string name="d_latitude">Latitude</string>
-    <string name="d_chx" translatable="false">CH1903 X</string>
-    <string name="d_chy" translatable="false">CH1903 Y</string>
     <string name="d_name">Nom</string>
     <string name="d_accuracy">Précision</string>
     <string name="d_enddate">Fin</string>
