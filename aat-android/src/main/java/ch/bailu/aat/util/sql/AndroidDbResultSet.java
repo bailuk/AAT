@@ -44,17 +44,29 @@ public class AndroidDbResultSet implements DbResultSet {
 
     @Override
     public String getString(String column) {
-        return cursor.getString(cursor.getColumnIndex(column));
+        int index = cursor.getColumnIndex(column);
+
+        if (index > -1)
+            return cursor.getString(index);
+        return "";
     }
 
     @Override
     public long getLong(String column) {
-        return cursor.getLong(cursor.getColumnIndex(column));
+        int index = cursor.getColumnIndex(column);
+
+        if (index > -1)
+            return cursor.getLong(index);
+        return 0;
     }
 
     @Override
     public float getFloat(String column) {
-        return cursor.getFloat(cursor.getColumnIndex(column));
+        int index = cursor.getColumnIndex(column);
+
+        if (index > -1)
+            return cursor.getFloat(index);
+        return 0f;
     }
 
     @Override
