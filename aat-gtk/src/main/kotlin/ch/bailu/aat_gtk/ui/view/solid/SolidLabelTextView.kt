@@ -15,7 +15,7 @@ abstract class SolidLabelTextView(private val solid: AbsSolidType) : LabelTextVi
 
     override fun onPreferencesChanged(storage: StorageInterface, key: String) {
         if (solid.hasKey(key)) {
-            setValue()
+            updateText()
         }
     }
 
@@ -23,7 +23,7 @@ abstract class SolidLabelTextView(private val solid: AbsSolidType) : LabelTextVi
     abstract fun onRequestNewValue()
 
     override fun onAttached() {
-        setValue()
+        updateText()
         solid.register(this)
     }
 
@@ -32,7 +32,7 @@ abstract class SolidLabelTextView(private val solid: AbsSolidType) : LabelTextVi
     }
 
 
-    private fun setValue() {
-        setValue("[$solid]")
+    private fun updateText() {
+        text = "[$solid]"
     }
 }

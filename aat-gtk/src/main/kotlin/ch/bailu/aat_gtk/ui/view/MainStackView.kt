@@ -21,6 +21,7 @@ class MainStackView (actionHelper: ActionHelper, dispatcher: DispatcherInterface
     private val preferences = PreferencesStackView(GtkAppContext.storage, window)
     private val map = MapMainView(actionHelper, dispatcher)
     private val fileList = FileList(dispatcher)
+    private val detail = GpxDetailView(dispatcher, GtkAppContext.storage)
 
     private val strPreferences = Str(Res.str().intro_settings())
     private val strMap = Str(Res.str().p_map())
@@ -30,6 +31,7 @@ class MainStackView (actionHelper: ActionHelper, dispatcher: DispatcherInterface
         layout.addTitled(preferences.layout, strPreferences, strPreferences)
         layout.addTitled(map.layout, strMap, strMap)
         layout.addTitled(fileList.vbox, Str("Files"), Str("Files"))
+        layout.addTitled(detail.scrolled, Str("Detail"), Str("Detail"))
         showMap()
         layout.show()
     }
@@ -52,7 +54,7 @@ class MainStackView (actionHelper: ActionHelper, dispatcher: DispatcherInterface
     }
 
     override fun showDetail() {
-        AppLog.d(this, "show detail")
+        layout.visibleChild = detail.scrolled
     }
 
     override fun showInList() {
