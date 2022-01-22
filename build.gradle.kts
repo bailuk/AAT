@@ -10,14 +10,9 @@ buildscript {
     }
 }
 
-
-
 allprojects {
     repositories {
-        maven {
-            setUrl("https://jitpack.io")
-        }
+        // for java-gtk and foc
+        maven { url = uri("https://jitpack.io") }
     }
 }
-
-
