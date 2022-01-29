@@ -10,8 +10,8 @@ import ch.bailu.aat_lib.map.AppDensity;
 import ch.bailu.aat_lib.map.MapDraw;
 import ch.bailu.aat_lib.map.MapMetrics;
 import ch.bailu.aat_lib.map.MapPaint;
-import ch.bailu.aat_lib.map.Point;
-import ch.bailu.aat_lib.map.Rect;
+import ch.bailu.aat_lib.util.Point;
+import ch.bailu.aat_lib.util.Rect;
 import ch.bailu.aat_lib.map.TwoNodes;
 
 public final class AndroidDraw implements MapDraw {
@@ -143,13 +143,13 @@ public final class AndroidDraw implements MapDraw {
 
     @Override
     public void bitmap(Bitmap b, Point p, int c) {
-        bitmapCanvas.draw(convert(canvas), convert(b), convert(p), c);
+        bitmapCanvas.draw(convert(canvas), convert(b), p, c);
     }
 
 
     @Override
     public void bitmap(Bitmap b, Point p) {
-        bitmapCanvas.draw(convert(canvas), convert(b), convert(p));
+        bitmapCanvas.draw(convert(canvas), convert(b), p);
     }
 
     public static android.graphics.Point convert(Point p) {

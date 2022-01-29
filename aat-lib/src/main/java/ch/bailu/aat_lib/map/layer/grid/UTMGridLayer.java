@@ -4,8 +4,7 @@ import org.mapsforge.core.model.LatLong;
 
 import ch.bailu.aat_lib.coordinates.MeterCoordinates;
 import ch.bailu.aat_lib.coordinates.UTMCoordinates;
-import ch.bailu.aat_lib.map.Point;
-import ch.bailu.aat_lib.map.layer.grid.MeterGridLayer;
+import ch.bailu.aat_lib.util.Point;
 import ch.bailu.aat_lib.preferences.StorageInterface;
 
 public final class UTMGridLayer extends MeterGridLayer {

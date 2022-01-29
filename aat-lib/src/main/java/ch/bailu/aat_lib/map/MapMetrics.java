@@ -6,6 +6,8 @@ import org.mapsforge.core.model.LatLong;
 
 import ch.bailu.aat_lib.coordinates.BoundingBoxE6;
 import ch.bailu.aat_lib.coordinates.LatLongInterface;
+import ch.bailu.aat_lib.util.Point;
+import ch.bailu.aat_lib.util.Rect;
 
 public interface MapMetrics {
     AppDensity getDensity();

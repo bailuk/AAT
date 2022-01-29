@@ -1,6 +1,8 @@
 package ch.bailu.aat_gtk.ui.view.map
 
 import ch.bailu.aat_lib.map.*
+import ch.bailu.aat_lib.util.Point
+import ch.bailu.aat_lib.util.Rect
 import org.mapsforge.core.graphics.Bitmap
 import org.mapsforge.core.graphics.Canvas
 import org.mapsforge.core.graphics.Paint

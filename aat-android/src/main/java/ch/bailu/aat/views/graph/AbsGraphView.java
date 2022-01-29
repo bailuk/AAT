@@ -8,14 +8,15 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import ch.bailu.aat.R;
-import ch.bailu.aat_lib.dispatcher.DispatcherInterface;
 import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat.util.ui.UiTheme;
+import ch.bailu.aat_lib.dispatcher.DispatcherInterface;
 import ch.bailu.aat_lib.dispatcher.OnContentUpdatedInterface;
 import ch.bailu.aat_lib.gpx.GpxInformation;
 import ch.bailu.aat_lib.gpx.GpxList;
 import ch.bailu.aat_lib.gpx.interfaces.GpxType;
 import ch.bailu.aat_lib.preferences.general.SolidUnit;
+import ch.bailu.aat_lib.view.graph.Segment;
 
 public abstract class AbsGraphView extends ViewGroup implements OnContentUpdatedInterface {
 
@@ -28,6 +29,9 @@ public abstract class AbsGraphView extends ViewGroup implements OnContentUpdated
     protected final LabelOverlay ylabel, xlabel;
 
     protected final UiTheme theme;
+
+    private final Segment segment = new Segment();
+
 
     public AbsGraphView(Context context, DispatcherInterface di, UiTheme theme, int... iid) {
         this(context, theme);
@@ -106,7 +110,7 @@ public abstract class AbsGraphView extends ViewGroup implements OnContentUpdated
     public void onDraw(Canvas c) {
         if (getWidth() > 0 && getHeight() > 0) {
             boolean markerMode = gpxCache.getMarkerList().size() > getWidth() / SAMPLE_WIDTH_PIXEL;
-            plot(c, gpxCache, nodeIndex, sunit, markerMode);
+            plot(c, gpxCache, segment, nodeIndex, sunit, markerMode);
         }
     }
 
@@ -124,6 +128,7 @@ public abstract class AbsGraphView extends ViewGroup implements OnContentUpdated
 
 
     public abstract void plot(Canvas canvas, GpxList list,
+                              Segment segment,
                               int index, SolidUnit sunit,
                               boolean markerMode);
 
@@ -134,5 +139,9 @@ public abstract class AbsGraphView extends ViewGroup implements OnContentUpdated
         } else {
             setVisibility(View.GONE);
         }
+    }
+
+    public void setLimit(int firstPoint, int lastPoint) {
+        segment.setLimit(firstPoint, lastPoint);
     }
 }

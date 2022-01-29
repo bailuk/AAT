@@ -3,8 +3,6 @@ package ch.bailu.aat.views.graph;
 import android.content.Context;
 import android.graphics.Canvas;
 
-import ch.bailu.aat_lib.dispatcher.DispatcherInterface;
-import ch.bailu.aat_lib.gpx.GpxListWalker;
 import ch.bailu.aat.util.ui.AndroidAppDensity;
 import ch.bailu.aat.util.ui.UiTheme;
 import ch.bailu.aat_lib.app.AppColor;
@@ -12,11 +10,16 @@ import ch.bailu.aat_lib.description.CadenceDescription;
 import ch.bailu.aat_lib.description.ContentDescription;
 import ch.bailu.aat_lib.description.HeartRateDescription;
 import ch.bailu.aat_lib.description.StepRateDescription;
+import ch.bailu.aat_lib.dispatcher.DispatcherInterface;
 import ch.bailu.aat_lib.gpx.GpxList;
+import ch.bailu.aat_lib.gpx.GpxListWalker;
 import ch.bailu.aat_lib.gpx.GpxPointNode;
 import ch.bailu.aat_lib.gpx.GpxSegmentNode;
 import ch.bailu.aat_lib.gpx.attributes.SampleRate;
 import ch.bailu.aat_lib.preferences.general.SolidUnit;
+import ch.bailu.aat_lib.view.graph.GraphCanvas;
+import ch.bailu.aat_lib.view.graph.GraphPlotter;
+import ch.bailu.aat_lib.view.graph.Segment;
 
 public class SpmGraphView extends AbsGraphView {
 
@@ -57,7 +60,7 @@ public class SpmGraphView extends AbsGraphView {
 
 
     @Override
-    public void plot(Canvas canvas, GpxList list, int index, SolidUnit sunit, boolean markerMode) {
+    public void plot(Canvas canvas, GpxList list, Segment segment, int index, SolidUnit sunit, boolean markerMode) {
 
         int max = 0;
         int min = 25;
@@ -121,9 +124,8 @@ public class SpmGraphView extends AbsGraphView {
 
 
         public void setPlotter(int kmFactor, Canvas canvas) {
-            plotter =  new GraphPlotter(canvas, getWidth(), getHeight(), 1000 * kmFactor,
-                    new AndroidAppDensity(getContext()), theme);
-
+            GraphCanvas graphCanvas = new AndroidCanvas(canvas, new AndroidAppDensity(getContext()), theme);
+            plotter =  new GraphPlotter(graphCanvas, getWidth(), getHeight(), 1000 * kmFactor);
         }
 
         public GraphPlotter getPlotter() {

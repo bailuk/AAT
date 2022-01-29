@@ -155,7 +155,7 @@ public class MapsForgeTileLayer extends Layer implements MapLayerInterface, Obse
     public void drawForeground(MapContext mcontext) {}
 
     @Override
-    public boolean onTap(ch.bailu.aat_lib.map.Point tapPos) {
+    public boolean onTap(ch.bailu.aat_lib.util.Point tapPos) {
         return false;
     }
 

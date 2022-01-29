@@ -2,6 +2,7 @@ package ch.bailu.aat_lib.map;
 
 import ch.bailu.aat_lib.gpx.GpxPoint;
 import ch.bailu.aat_lib.gpx.interfaces.GpxPointInterface;
+import ch.bailu.aat_lib.util.Point;
 
 public final class TwoNodes {
     private final MapMetrics metrics;

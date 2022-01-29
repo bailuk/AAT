@@ -8,6 +8,7 @@ import ch.bailu.aat_lib.preferences.StorageInterface;
 import ch.bailu.aat_lib.service.InsideContext;
 import ch.bailu.aat_lib.service.ServicesInterface;
 import ch.bailu.aat_lib.service.cache.ObjImageInterface;
+import ch.bailu.aat_lib.util.Point;
 
 public final class WayLayer extends GpxLayer {
 
@@ -34,7 +35,7 @@ public final class WayLayer extends GpxLayer {
     }
 
     @Override
-    public boolean onTap(ch.bailu.aat_lib.map.Point tapPos) {
+    public boolean onTap(Point tapPos) {
         return false;
     }
 

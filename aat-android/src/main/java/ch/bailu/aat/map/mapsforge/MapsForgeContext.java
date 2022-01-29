@@ -48,7 +48,7 @@ public class MapsForgeContext extends Layer implements MapContext, MapLayerInter
     public void drawForeground(MapContext mcontext) {}
 
     @Override
-    public boolean onTap(ch.bailu.aat_lib.map.Point tapPos) {
+    public boolean onTap(ch.bailu.aat_lib.util.Point tapPos) {
         return false;
     }
 

@@ -6,7 +6,7 @@ import org.mapsforge.core.model.LatLong;
 import ch.bailu.aat_lib.coordinates.WGS84Coordinates;
 import ch.bailu.aat_lib.description.FF;
 import ch.bailu.aat_lib.map.MapContext;
-import ch.bailu.aat_lib.map.Point;
+import ch.bailu.aat_lib.util.Point;
 import ch.bailu.aat_lib.map.layer.MapLayerInterface;
 import ch.bailu.aat_lib.preferences.StorageInterface;
 import ch.bailu.aat_lib.service.ServicesInterface;

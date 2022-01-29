@@ -1,4 +1,4 @@
-package ch.bailu.aat.views.graph;
+package ch.bailu.aat_lib.view.graph;
 
 
 public class InvertetOffsetScaler {

@@ -7,7 +7,7 @@ import org.mapsforge.core.model.LatLong;
 import ch.bailu.aat_lib.coordinates.MeterCoordinates;
 import ch.bailu.aat_lib.description.DistanceDescription;
 import ch.bailu.aat_lib.map.MapContext;
-import ch.bailu.aat_lib.map.Point;
+import ch.bailu.aat_lib.util.Point;
 import ch.bailu.aat_lib.map.layer.MapLayerInterface;
 import ch.bailu.aat_lib.preferences.StorageInterface;
 

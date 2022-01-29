@@ -4,6 +4,9 @@ package ch.bailu.aat_lib.map;
 import org.mapsforge.core.graphics.Bitmap;
 import org.mapsforge.core.graphics.Paint;
 
+import ch.bailu.aat_lib.util.Point;
+import ch.bailu.aat_lib.util.Rect;
+
 public interface MapDraw {
     int POINT_RADIUS=3;
     int MARGIN=5;

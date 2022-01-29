@@ -1,5 +1,9 @@
-package ch.bailu.aat_lib.map;
+package ch.bailu.aat_lib.util;
 
+/**
+ * A point holding two integer coordinates.
+ * To keep some code independent from UI libraries.
+ */
 public class Point {
 
     public int x, y;

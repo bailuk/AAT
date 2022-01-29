@@ -6,16 +6,16 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 
 import ch.bailu.aat.R;
-import ch.bailu.aat_lib.dispatcher.DispatcherInterface;
-import ch.bailu.aat_lib.gpx.GpxDistanceWindow;
-import ch.bailu.aat_lib.gpx.GpxListWalker;
 import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat.util.ui.AndroidAppDensity;
 import ch.bailu.aat.util.ui.UiTheme;
 import ch.bailu.aat_lib.app.AppColor;
 import ch.bailu.aat_lib.description.AverageSpeedDescription;
 import ch.bailu.aat_lib.description.AverageSpeedDescriptionAP;
+import ch.bailu.aat_lib.dispatcher.DispatcherInterface;
+import ch.bailu.aat_lib.gpx.GpxDistanceWindow;
 import ch.bailu.aat_lib.gpx.GpxList;
+import ch.bailu.aat_lib.gpx.GpxListWalker;
 import ch.bailu.aat_lib.gpx.GpxPointNode;
 import ch.bailu.aat_lib.gpx.GpxSegmentNode;
 import ch.bailu.aat_lib.gpx.attributes.AutoPause;
@@ -24,6 +24,9 @@ import ch.bailu.aat_lib.preferences.SolidAutopause;
 import ch.bailu.aat_lib.preferences.general.SolidPostprocessedAutopause;
 import ch.bailu.aat_lib.preferences.general.SolidUnit;
 import ch.bailu.aat_lib.preferences.presets.SolidPreset;
+import ch.bailu.aat_lib.view.graph.GraphCanvas;
+import ch.bailu.aat_lib.view.graph.GraphPlotter;
+import ch.bailu.aat_lib.view.graph.Segment;
 
 
 public class DistanceSpeedGraphView extends AbsGraphView implements SharedPreferences.OnSharedPreferenceChangeListener {
@@ -43,7 +46,7 @@ public class DistanceSpeedGraphView extends AbsGraphView implements SharedPrefer
 
 
     @Override
-    public void plot(Canvas canvas, GpxList list, int index, SolidUnit sunit, boolean markerMode) {
+    public void plot(Canvas canvas, GpxList list, Segment segment, int index, SolidUnit sunit, boolean markerMode) {
         GraphPlotter[] plotter = initPlotter(canvas, list);
         GpxDistanceWindow window = new GpxDistanceWindow(list);
 
@@ -86,8 +89,8 @@ public class DistanceSpeedGraphView extends AbsGraphView implements SharedPrefer
     private GraphPlotter[] initPlotter(Canvas canvas, int xscale, AndroidAppDensity density, float maxSpeed) {
         GraphPlotter[] result = new GraphPlotter[3];
         for (int i=0; i<result.length; i++) {
-            result[i] = new GraphPlotter(canvas, getWidth(), getHeight(), xscale,
-                    density, theme);
+            GraphCanvas graphCanvas = new AndroidCanvas(canvas, density, theme);
+            result[i] = new GraphPlotter(graphCanvas, getWidth(), getHeight(), xscale);
             result[i].inlcudeInYScale(0f);
             result[i].inlcudeInYScale(maxSpeed);
         }

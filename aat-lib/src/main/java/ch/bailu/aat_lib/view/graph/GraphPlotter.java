@@ -1,70 +1,31 @@
-package ch.bailu.aat.views.graph;
+package ch.bailu.aat_lib.view.graph;
 
-import android.graphics.Canvas;
-import android.graphics.Paint;
-import android.graphics.Point;
-
-import ch.bailu.aat.map.BitmapDraw;
-import ch.bailu.aat.map.NodeBitmap;
-import ch.bailu.aat.util.ui.AndroidAppDensity;
-import ch.bailu.aat.util.ui.UiTheme;
+import ch.bailu.aat_lib.util.Point;
 
 public class GraphPlotter {
-    private static final int TEXT_SIZE=15;
     private final int text_size;
 
     private final Scaler xscaler;
     private final InvertetOffsetScaler yscaler;
 
-    private final Paint paintFont;
-    private final Paint paintPlotLines;
-    private final Paint paintLines;
-
-
-    private final Canvas canvas;
-    private final BitmapDraw bitmapCanvas = new BitmapDraw();
+    private final GraphCanvas canvas;
 
     private final int width;
     private final int height;
 
     private Point pointA=new Point(-5,-5), pointB = new Point(-5,-5);
 
-    private final NodeBitmap nodeBitmap;
 
-    public GraphPlotter(Canvas c, int w, int h, float xScale, AndroidAppDensity res, UiTheme theme) {
+    public GraphPlotter(GraphCanvas c, int w, int h, float xScale) {
         width=w;
         height=h;
-
         canvas = c;
 
-
-        paintFont = new Paint();
-        paintFont.setAntiAlias(true);
-        paintFont.setDither(false);
-        paintFont.setColor(theme.getGraphTextColor());
-        paintFont.setTextSize(res.toPixelScaled_f(TEXT_SIZE));
-
-
-        paintPlotLines = new Paint();
-        paintPlotLines.setAntiAlias(true);
-        paintPlotLines.setDither(false);
-        paintPlotLines.setStrokeWidth(res.toPixel_f(2));
-
-        paintLines = new Paint();
-        paintLines.setAntiAlias(true);
-        paintLines.setDither(false);
-        paintLines.setStrokeWidth(0);
-        paintLines.setColor(theme.getGraphLineColor());
-
-
-        text_size = Math.max(Math.round(paintFont.getTextSize()), 1);
+        text_size = canvas.getTextSize();
         xscaler = new Scaler(width, xScale);
         yscaler = new InvertetOffsetScaler(height);
 
-        nodeBitmap = NodeBitmap.get(res);
     }
-
-
 
     public void roundYScale(int roundTo) {
         yscaler.round(roundTo);
@@ -73,6 +34,7 @@ public class GraphPlotter {
     public void inlcudeInYScale(float value) {
         yscaler.addValue(value);
     }
+
     public void drawYScale(int lines, float factor, boolean drawFirstValue) {
         lines = Math.min(height / (text_size*2), lines);
         lines = Math.max(1, lines);
@@ -85,19 +47,13 @@ public class GraphPlotter {
         }
     }
 
-
     private void drawHorizontalLine(float value, float factor, boolean drawFirstValue) {
         int pixel = (int)yscaler.scale(value);
 
-        drawScaleLine(0, pixel, width, pixel);
+        canvas.drawLine(0, pixel, width, pixel);
 
         if (drawFirstValue || pixel < height-text_size)
             drawScaleText(0,pixel, String.valueOf((int) (value*factor)) );
-    }
-
-
-    private void drawScaleLine(int x1, int y1, int x2, int y2) {
-        canvas.drawLine(x1, y1 , x2, y2,  paintLines);
     }
 
     private void drawScaleText(int x,int y, String value) {
@@ -107,10 +63,8 @@ public class GraphPlotter {
         if ((x+w) > width) x = width - w;
         if ((y-h) < 0) y=h;
 
-        canvas.drawText(value, x, y, paintFont);
+        canvas.drawText(value, x, y);
     }
-
-
 
     public void drawXScale(int lines, float factor, boolean drawText) {
         lines = Math.min(width / (text_size*4), lines);
@@ -128,7 +82,7 @@ public class GraphPlotter {
     private void drawVerticalLine(float value, float factor, boolean drawText) {
         int pixel = (int)xscaler.scale(value);
 
-        drawScaleLine(pixel, 0 , pixel, height);
+        canvas.drawLine(pixel, 0 , pixel, height);
 
         if (drawText && pixel > text_size) {
             String text = String.valueOf((int) (value * factor));
@@ -145,7 +99,7 @@ public class GraphPlotter {
 
         if (delta > 1) {
             if (pointB.x < 0) pointB.y=pointA.y;
-            plotLine(pointB,pointA,color);
+            canvas.drawLine(pointB, pointA, color);
             switchPoints();
         }
         return delta;
@@ -156,12 +110,6 @@ public class GraphPlotter {
         pointA.y=(int)yscaler.scale(yvalue);
     }
 
-
-    private void plotLine(Point pA, Point pB, int color) {
-        paintPlotLines.setColor(color);
-        canvas.drawLine(pA.x, pA.y, pB.x, pB.y, paintPlotLines);
-    }
-
     private void switchPoints() {
         Point t=pointB;
         pointB=pointA;
@@ -170,6 +118,6 @@ public class GraphPlotter {
 
     public void plotPoint(float xvalue, float yvalue, int color) {
         scaleToPixel(xvalue,yvalue);
-        bitmapCanvas.draw(canvas, nodeBitmap.getTileBitmap().getAndroidBitmap(), pointA, color);
+        canvas.drawBitmap(pointA, color);
     }
 }

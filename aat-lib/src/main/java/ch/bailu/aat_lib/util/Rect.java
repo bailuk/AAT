@@ -1,7 +1,8 @@
-package ch.bailu.aat_lib.map;
+package ch.bailu.aat_lib.util;
 
 /**
- * Simple rectangle util class. To keep some code independent from UI libraries.
+ * Simple rectangle util class.
+ * To keep some code independent from UI libraries.
  */
 public class Rect {
     public int left, right, top, bottom;

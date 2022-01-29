@@ -6,7 +6,7 @@ import ch.bailu.aat_lib.map.layer.gpx.GpxLayer;
 import ch.bailu.aat_lib.map.MapContext;
 import ch.bailu.aat_lib.map.MapMetrics;
 import ch.bailu.aat_lib.map.MapPaint;
-import ch.bailu.aat_lib.map.Point;
+import ch.bailu.aat_lib.util.Point;
 import ch.bailu.aat_lib.preferences.StorageInterface;
 import ch.bailu.aat_lib.util.color.ARGB;
 

@@ -4,8 +4,9 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.LightingColorFilter;
 import android.graphics.Paint;
-import android.graphics.Point;
 import android.graphics.Rect;
+
+import ch.bailu.aat_lib.util.Point;
 
 
 public final class BitmapDraw {
