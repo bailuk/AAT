@@ -28,7 +28,7 @@ public class DistanceAltitudePlotter extends Plotter {
 
         GpxListWalker painter, scaleGenerator;
 
-        int minDistance = (int)distances.getDistanceDelta() / config.getWidth();
+        int minDistance = (int)distances.getDistanceDelta() / Math.max(config.getWidth(), 1);
         if (segment.isValid()) {
             painter = new GraphPainterLimit(plotter, segment, minDistance);
             scaleGenerator = new ScaleGeneratorSegmented(plotter, segment);

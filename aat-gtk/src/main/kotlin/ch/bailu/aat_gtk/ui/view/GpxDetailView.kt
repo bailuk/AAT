@@ -1,14 +1,22 @@
 package ch.bailu.aat_gtk.ui.view
 
+import ch.bailu.aat_gtk.ui.view.graph.GraphView
 import ch.bailu.aat_lib.description.*
 import ch.bailu.aat_lib.description.IndexedAttributeDescription.HeartBeats
 import ch.bailu.aat_lib.description.IndexedAttributeDescription.TotalCadence
 import ch.bailu.aat_lib.dispatcher.DispatcherInterface
 import ch.bailu.aat_lib.gpx.InfoID
 import ch.bailu.aat_lib.preferences.StorageInterface
+import ch.bailu.aat_lib.preferences.general.SolidUnit
+import ch.bailu.aat_lib.view.graph.DistanceAltitudePlotter
 
 class GpxDetailView(di: DispatcherInterface, storage: StorageInterface) : VerticalScrollView() {
     init {
+        val graphView = GraphView(DistanceAltitudePlotter(SolidUnit(storage)))
+        graphView.drawingArea.contentHeight = 100
+        di.addTarget(graphView, InfoID.FILEVIEW)
+
+        add(graphView.drawingArea)
         addAllContent(di, getSummaryData(storage), InfoID.FILEVIEW)
     }
 

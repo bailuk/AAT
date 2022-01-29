@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="14.3.0">
+  <zoom_level>10</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>580</x>
+      <y>240</y>
+      <w>390</w>
+      <h>100</h>
+    </coordinates>
+    <panel_attributes>OnContentUpdatedInterface
+--
++onContentUpdated(iid: Int, info: GpxInformation)</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>570</x>
+      <y>470</y>
+      <w>390</w>
+      <h>100</h>
+    </coordinates>
+    <panel_attributes>DispatcherInterface
+--
++addTarget(OnContentUpdateInterface, iid: Int)</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>740</x>
+      <y>330</y>
+      <w>160</w>
+      <h>160</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.
+&lt;&lt;someStereotype&gt;&gt;</panel_attributes>
+    <additional_attributes>10.0;140.0;10.0;10.0</additional_attributes>
+  </element>
+</diagram>
