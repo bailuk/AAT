@@ -8,8 +8,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import ch.bailu.aat_lib.map.MapColor;
+import ch.bailu.aat_lib.view.graph.LabelInterface;
 
-public class LabelOverlay extends LinearLayout {
+public class LabelOverlay extends LinearLayout implements LabelInterface {
     private final static int BACKGROUND_COLOR  = MapColor.setAlpha(Color.BLACK, 100);
 
     private final SparseArray<TextView> labels = new SparseArray<>(4);

@@ -3,6 +3,7 @@ package ch.bailu.aat.activities;
 import android.os.Bundle;
 import android.view.View;
 
+import ch.bailu.aat.views.graph.GraphViewFactory;
 import ch.bailu.aat_lib.dispatcher.CurrentLocationSource;
 import ch.bailu.aat.dispatcher.EditorSource;
 import ch.bailu.aat.dispatcher.OverlaySource;
@@ -22,9 +23,6 @@ import ch.bailu.aat.views.bar.ControlBar;
 import ch.bailu.aat.views.bar.MainControlBar;
 import ch.bailu.aat.views.description.CockpitView;
 import ch.bailu.aat.views.description.mview.MultiView;
-import ch.bailu.aat.views.graph.DistanceAltitudeGraphView;
-import ch.bailu.aat.views.graph.DistanceSpeedGraphView;
-import ch.bailu.aat.views.graph.SpmGraphView;
 import ch.bailu.aat_lib.description.AscendDescription;
 import ch.bailu.aat_lib.description.AveragePaceDescription;
 import ch.bailu.aat_lib.description.AverageSpeedDescriptionAP;
@@ -88,8 +86,8 @@ public class CockpitSplitActivity extends AbsKeepScreenOnActivity {
         cockpitB.addC(this, new MaximumSpeedDescription(getStorage()), InfoID.TRACKER);
 
         percentageB.add(cockpitB, 50);
-        percentageB.add(new DistanceSpeedGraphView(this, this, THEME,
-                InfoID.TRACKER), 50);
+        percentageB.add(GraphViewFactory.createSpeedGraph(this, THEME)
+                .connect(this, InfoID.TRACKER), 50);
 
         cockpitD.addAltitude(this);
         cockpitD.add(this, new AscendDescription(new Storage(this)), InfoID.TRACKER);
@@ -97,8 +95,8 @@ public class CockpitSplitActivity extends AbsKeepScreenOnActivity {
         cockpitD.add(this, new SlopeDescription(), InfoID.TRACKER);
 
         percentageD.add(cockpitD, 50);
-        percentageD.add(new DistanceAltitudeGraphView(this, this, THEME,
-                InfoID.TRACKER), 50);
+        percentageD.add(GraphViewFactory.createAltitudeGraph(this,THEME)
+                        .connect(this, InfoID.TRACKER), 50);
 
         cockpitC.add(this, new CadenceDescription(), InfoID.CADENCE_SENSOR);
         cockpitC.add(this, new HeartRateDescription(), InfoID.HEART_RATE_SENSOR);
@@ -107,7 +105,8 @@ public class CockpitSplitActivity extends AbsKeepScreenOnActivity {
         cockpitC.add(this, new TotalStepsDescription(), InfoID.TRACKER);
 
         percentageC.add(cockpitC, 50);
-        percentageC.add(new SpmGraphView(this, this, THEME, InfoID.TRACKER), 50);
+        percentageC.add(GraphViewFactory.createSpmGraph(this, THEME)
+                .connect(this, InfoID.TRACKER), 50);
 
         MultiView mv = new MultiView(this, SOLID_KEY);
         mv.add(cockpitA);

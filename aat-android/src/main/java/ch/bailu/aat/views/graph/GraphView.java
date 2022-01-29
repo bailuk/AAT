@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 
 import ch.bailu.aat.R;
 import ch.bailu.aat.preferences.Storage;
+import ch.bailu.aat.util.ui.AndroidAppDensity;
 import ch.bailu.aat.util.ui.UiTheme;
 import ch.bailu.aat_lib.dispatcher.DispatcherInterface;
 import ch.bailu.aat_lib.dispatcher.OnContentUpdatedInterface;
@@ -16,34 +17,32 @@ import ch.bailu.aat_lib.gpx.GpxInformation;
 import ch.bailu.aat_lib.gpx.GpxList;
 import ch.bailu.aat_lib.gpx.interfaces.GpxType;
 import ch.bailu.aat_lib.preferences.general.SolidUnit;
-import ch.bailu.aat_lib.view.graph.Config;
-import ch.bailu.aat_lib.view.graph.Segment;
+import ch.bailu.aat_lib.view.graph.LabelInterface;
+import ch.bailu.aat_lib.view.graph.Plotter;
+import ch.bailu.aat_lib.view.graph.PlotterConfig;
 
-public abstract class AbsGraphView extends ViewGroup implements OnContentUpdatedInterface {
+public class GraphView extends ViewGroup implements OnContentUpdatedInterface, PlotterConfig {
+
+    private final AndroidAppDensity density;
+    private final UiTheme theme;
 
     private GpxList gpxCache = GpxList.NULL_TRACK;
     private int nodeIndex = -1;
 
-    private final SolidUnit sunit;
     private final LabelOverlay ylabel, xlabel;
 
-    protected final UiTheme theme;
+    private final Plotter plotter;
 
-    private final Segment segment = new Segment();
-
-
-    public AbsGraphView(Context context, DispatcherInterface di, UiTheme theme, int... iid) {
-        this(context, theme);
-        di.addTarget(this, iid);
-
-    }
-
-
-    public AbsGraphView(Context context, UiTheme theme) {
+    public GraphView(Context context, Plotter plotter, UiTheme theme) {
         super(context);
+
         this.theme = theme;
+        this.density = new AndroidAppDensity(getContext());
+        this.plotter = plotter;
+
         setWillNotDraw(false);
-        sunit = new SolidUnit(new Storage(context));
+
+        SolidUnit sunit = new SolidUnit(new Storage(context));
 
         xlabel = new LabelOverlay(context, Gravity.LEFT | Gravity.BOTTOM);
         ylabel = new LabelOverlay(context, Gravity.RIGHT | Gravity.TOP);
@@ -55,6 +54,8 @@ public abstract class AbsGraphView extends ViewGroup implements OnContentUpdated
         addView(ylabel);
 
         setBackgroundColor(theme.getGraphBackgroundColor());
+
+        plotter.initLabels(ylabel);
     }
 
 
@@ -71,6 +72,13 @@ public abstract class AbsGraphView extends ViewGroup implements OnContentUpdated
         invalidate();
     }
 
+    @Override
+    public void onDraw(Canvas canvas) {
+        if (getWidth() > 0 && getHeight() > 0) {
+            plotter.plot(new AndroidCanvas(canvas, density, theme), this);
+        }
+    }
+
 
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
@@ -78,13 +86,29 @@ public abstract class AbsGraphView extends ViewGroup implements OnContentUpdated
         ylabel.layout(0,0, r-l, b-t);
     }
 
-    public AbsGraphView hideXLabel() {
+    public GraphView hideXLabel() {
         xlabel.setVisibility(GONE);
         return this;
     }
 
+    @Override
+    public GpxList getList() {
+        return gpxCache;
+    }
+
+
+    @Override
+    public int getIndex() {
+        return nodeIndex;
+    }
+
     public boolean isXLabelVisible() {
         return xlabel.getVisibility() == VISIBLE;
+    }
+
+    @Override
+    public LabelInterface getLabels() {
+        return ylabel;
     }
 
     @Override
@@ -104,16 +128,6 @@ public abstract class AbsGraphView extends ViewGroup implements OnContentUpdated
         setMeasuredDimension(width, height);
     }
 
-
-    @Override
-    public void onDraw(Canvas c) {
-        if (getWidth() > 0 && getHeight() > 0) {
-            boolean markerMode = gpxCache.getMarkerList().size() > getWidth() / Config.SAMPLE_WIDTH_PIXEL;
-            plot(c, gpxCache, segment, nodeIndex, sunit, markerMode);
-        }
-    }
-
-
     public void showLabel(boolean b) {
         if (b) {
             xlabel.setVisibility(VISIBLE);
@@ -125,13 +139,6 @@ public abstract class AbsGraphView extends ViewGroup implements OnContentUpdated
     }
 
 
-
-    public abstract void plot(Canvas canvas, GpxList list,
-                              Segment segment,
-                              int index, SolidUnit sunit,
-                              boolean markerMode);
-
-
     public void setVisibility(GpxInformation info) {
         if (info.isLoaded() && info.getType() == GpxType.ROUTE || info.getType() == GpxType.TRACK) {
             setVisibility(View.VISIBLE);
@@ -140,7 +147,13 @@ public abstract class AbsGraphView extends ViewGroup implements OnContentUpdated
         }
     }
 
+
+    public GraphView connect(DispatcherInterface di, int...iid) {
+        di.addTarget(this, iid);
+        return this;
+    }
+
     public void setLimit(int firstPoint, int lastPoint) {
-        segment.setLimit(firstPoint, lastPoint);
+        plotter.setLimit(firstPoint, lastPoint);
     }
 }

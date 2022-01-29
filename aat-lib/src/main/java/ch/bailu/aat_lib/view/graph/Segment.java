@@ -1,31 +1,28 @@
 package ch.bailu.aat_lib.view.graph;
 
-public class Segment {
-    private int firstPoint = -1;
-    private int lastPoint = -1;
 
-    public void setLimit(int first, int last) {
-        firstPoint = first;
-        lastPoint = last;
+public class Segment {
+    private int start = -1;
+    private int end = -1;
+
+    public void setLimit(int start, int end) {
+        this.start = start;
+        this.end = end;
     }
 
-    public boolean hasLimit() {
-        return firstPoint > -1 && lastPoint > firstPoint;
+    public boolean isValid() {
+        return start > -1 && end > start;
     }
 
     public boolean isAfter(int index) {
-        return index > lastPoint;
+        return index > end;
     }
 
     public boolean isBefore(int index) {
-        return index < firstPoint;
-    }
-
-    public boolean isNotAfter(int index) {
-        return index <= lastPoint;
+        return index < start;
     }
 
     public boolean isInside(int index) {
-        return index >= firstPoint && index <= lastPoint;
+        return index >= start && index <= end;
     }
 }

@@ -9,9 +9,6 @@ import android.widget.LinearLayout;
 import android.widget.SeekBar;
 
 import ch.bailu.aat.R;
-import ch.bailu.aat_lib.dispatcher.CurrentLocationSource;
-import ch.bailu.aat_lib.dispatcher.CustomFileSource;
-import ch.bailu.aat_lib.gpx.GpxListArray;
 import ch.bailu.aat.map.MapFactory;
 import ch.bailu.aat.map.To;
 import ch.bailu.aat.util.HtmlBuilderGpx;
@@ -24,11 +21,15 @@ import ch.bailu.aat.views.PercentageLayout;
 import ch.bailu.aat.views.SVGAssetView;
 import ch.bailu.aat.views.bar.ControlBar;
 import ch.bailu.aat.views.bar.MainControlBar;
-import ch.bailu.aat.views.graph.DistanceAltitudeGraphView;
+import ch.bailu.aat.views.graph.GraphView;
+import ch.bailu.aat.views.graph.GraphViewFactory;
 import ch.bailu.aat.views.html.HtmlScrollTextView;
+import ch.bailu.aat_lib.dispatcher.CurrentLocationSource;
+import ch.bailu.aat_lib.dispatcher.CustomFileSource;
 import ch.bailu.aat_lib.dispatcher.OnContentUpdatedInterface;
 import ch.bailu.aat_lib.gpx.GpxInformation;
 import ch.bailu.aat_lib.gpx.GpxList;
+import ch.bailu.aat_lib.gpx.GpxListArray;
 import ch.bailu.aat_lib.gpx.InfoID;
 import ch.bailu.aat_lib.map.MapViewInterface;
 
@@ -43,7 +44,7 @@ public class NodeDetailActivity extends ActivityContext
 
     private MapViewInterface mapView;
     private HtmlScrollTextView htmlView;
-    private DistanceAltitudeGraphView graph;
+    private GraphView graph;
     private SeekBar seekBar;
 
     private String fileID="";
@@ -112,7 +113,7 @@ public class NodeDetailActivity extends ActivityContext
         viewB.add(htmlView, 40);
         viewB.add(To.view(mapView), 60);
 
-        graph = new DistanceAltitudeGraphView(this, theme);
+        graph = GraphViewFactory.createAltitudeGraph(this, theme);
         viewA.add(graph, 20);
         viewA.add(viewB, 80);
         return viewA;

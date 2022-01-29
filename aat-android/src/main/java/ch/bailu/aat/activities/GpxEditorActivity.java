@@ -14,7 +14,8 @@ import ch.bailu.aat.views.ContentView;
 import ch.bailu.aat.views.PercentageLayout;
 import ch.bailu.aat.views.bar.MainControlBar;
 import ch.bailu.aat.views.description.mview.MultiView;
-import ch.bailu.aat.views.graph.DistanceAltitudeGraphView;
+import ch.bailu.aat.views.graph.GraphView;
+import ch.bailu.aat.views.graph.GraphViewFactory;
 import ch.bailu.aat.views.preferences.VerticalScrollView;
 import ch.bailu.aat_lib.description.ContentDescription;
 import ch.bailu.aat_lib.description.DistanceDescription;
@@ -55,10 +56,8 @@ public class GpxEditorActivity extends AbsFileContentActivity {
 
         summary.add(createAttributesView());
 
-        DistanceAltitudeGraphView graph = new DistanceAltitudeGraphView(this,
-                this, THEME,
-                InfoID.EDITOR_OVERLAY,
-                InfoID.FILEVIEW);
+        GraphView graph = GraphViewFactory.createAltitudeGraph(this,THEME)
+                .connect(this, InfoID.EDITOR_OVERLAY, InfoID.FILEVIEW);
 
 
         if (AppLayout.isTablet(this)) {

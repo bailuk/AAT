@@ -4,19 +4,20 @@ import android.content.Context;
 import android.graphics.Color;
 import android.widget.LinearLayout;
 
-import ch.bailu.aat_lib.map.MapColor;
 import ch.bailu.aat.util.ui.AppTheme;
 import ch.bailu.aat.views.PercentageLayout;
-import ch.bailu.aat.views.graph.DistanceAltitudeGraphView;
+import ch.bailu.aat.views.graph.GraphView;
+import ch.bailu.aat.views.graph.GraphViewFactory;
 import ch.bailu.aat.views.html.HtmlScrollTextView;
 import ch.bailu.aat_lib.gpx.GpxInformation;
 import ch.bailu.aat_lib.gpx.InfoID;
+import ch.bailu.aat_lib.map.MapColor;
 
 
 public final class NodeInfoView extends PercentageLayout {
     private final HtmlScrollTextView htmlView;
-    private final DistanceAltitudeGraphView graphView;
-    private final DistanceAltitudeGraphView limitGraphView;
+    private final GraphView graphView;
+    private final GraphView limitGraphView;
 
 
     private int backgroundColor;
@@ -44,8 +45,8 @@ public final class NodeInfoView extends PercentageLayout {
         setBackgroundColor(Color.TRANSPARENT);
     }
 
-    private DistanceAltitudeGraphView createGraphView(Context context) {
-        DistanceAltitudeGraphView g = new DistanceAltitudeGraphView(context, AppTheme.bar);
+    private GraphView createGraphView(Context context) {
+        GraphView g = GraphViewFactory.createAltitudeGraph(context, AppTheme.bar);
         g.setVisibility(GONE);
         g.setBackgroundColor(MapColor.DARK);
         g.showLabel(false);
