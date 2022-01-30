@@ -12,19 +12,16 @@ import ch.bailu.aat.util.ui.UiThemeLight;
 
 public class AppHtml {
 
-    private static final int FLAGS =
-            Html.FROM_HTML_MODE_LEGACY | Html.FROM_HTML_SEPARATOR_LINE_BREAK_LIST_ITEM;
-
-
     public static Spanned fromHtml(String source) {
         return fromHtml(source, null);
     }
 
     public static Spanned fromHtml(String source, Html.ImageGetter imageGetter) {
         if (android.os.Build.VERSION.SDK_INT >= 24) {
+            final int FLAGS =
+                    Html.FROM_HTML_MODE_LEGACY | Html.FROM_HTML_SEPARATOR_LINE_BREAK_LIST_ITEM;
             return Html.fromHtml(source, FLAGS, imageGetter, CODE_TAG_HANDLER);
         } else {
-            //noinspection deprecation
             return Html.fromHtml(source, imageGetter, CODE_TAG_HANDLER);
         }
     }

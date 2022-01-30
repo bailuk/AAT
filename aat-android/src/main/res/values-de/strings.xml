@@ -66,7 +66,7 @@
     <!-- Preferences System -->
     <string name="p_directory_data">Interne Dateien</string>
     <string name="p_system">System</string>
-    <string name="p_location_provider">Standortbestimmung durch...</string>
+    <string name="p_location_provider">Standortbestimmung durch…</string>
     <string name="p_post_autopause">Postprocessed Autopause</string>
     <string name="p_cache_size">Größe des internen Zwischenspeichers</string>
     <string name="p_fix_gps">GPS-Zeit anpassen</string>

@@ -4,4 +4,8 @@
     <issue id="UnusedResources">
         <ignore path="res/values/strings.xml" />
     </issue>
+
+    <issue id="ViewConstructor">
+        <ignore path="*"></ignore>
+    </issue>
 </lint>

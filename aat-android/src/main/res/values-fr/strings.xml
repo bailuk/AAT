@@ -223,8 +223,8 @@
 
     <!-- Location menu -->
     <string name="location_title">Centrer la position</string>
-    <string name="location_view">Voir la position...</string>
-    <string name="location_send">Envoyer la position...</string>
+    <string name="location_view">Voir la position…</string>
+    <string name="location_send">Envoyer la position…</string>
     <string name="clipboard_copy">\u21d2 Bloc-notes</string>
     <string name="clipboard_paste">\u21d0 Bloc-notes</string>
 
