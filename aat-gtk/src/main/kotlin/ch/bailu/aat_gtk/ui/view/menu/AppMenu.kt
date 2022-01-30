@@ -18,7 +18,7 @@ class AppMenu(window: ApplicationWindow, private val services: ServicesInterface
 
     init {
         add(LabelItem(Res.str().intro_map()) {stack.showMap()} )
-        add(LabelItem("Cockpit") {})
+        add(LabelItem("Cockpit") {stack.showCockpit()})
         add(LabelItem("Tracks & Overlays") {stack.showFiles()})
         add(LabelItem(Res.str().intro_settings()) {stack.showPreferences()})
 
