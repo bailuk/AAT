@@ -13,10 +13,10 @@ import ch.bailu.aat_lib.view.graph.DistanceAltitudePlotter
 class GpxDetailView(di: DispatcherInterface, storage: StorageInterface) : VerticalScrollView() {
     init {
         val graphView = GraphView(DistanceAltitudePlotter(SolidUnit(storage)))
-        graphView.drawingArea.contentHeight = 100
+        graphView.height = 100
         di.addTarget(graphView, InfoID.FILEVIEW)
 
-        add(graphView.drawingArea)
+        add(graphView.overlay)
         addAllContent(di, getSummaryData(storage), InfoID.FILEVIEW)
     }
 

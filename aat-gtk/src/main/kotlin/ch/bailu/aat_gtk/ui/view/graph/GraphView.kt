@@ -10,17 +10,26 @@ import ch.bailu.gtk.Callback.EmitterID
 import ch.bailu.gtk.GTK
 import ch.bailu.gtk.cairo.Context
 import ch.bailu.gtk.glib.Glib
-import ch.bailu.gtk.gtk.DrawingArea
+import ch.bailu.gtk.gtk.*
 import ch.bailu.gtk.type.Pointer
 
 class GraphView(private val plotter: Plotter) : OnContentUpdatedInterface {
-    val drawingArea = DrawingArea()
+    private val drawingArea = DrawingArea()
 
     private var _width = 0
     private var _height = 0
     private var nodeIndex = -1
 
     private var gpxCache = GpxList.NULL_TRACK
+
+    private val labels = GraphLabel()
+
+    var height: Int
+        set(height) {drawingArea.contentHeight = height}
+        get() = drawingArea.height
+
+
+    val overlay = Overlay()
 
     private val plotterConfig = object : PlotterConfig {
         override fun getWidth(): Int {
@@ -44,7 +53,7 @@ class GraphView(private val plotter: Plotter) : OnContentUpdatedInterface {
         }
 
         override fun getLabels(): LabelInterface {
-            return GraphLabel()
+            return labels
         }
     }
 
@@ -59,6 +68,12 @@ class GraphView(private val plotter: Plotter) : OnContentUpdatedInterface {
             println("$w $h")
 
         }, EmitterID(), {})
+
+
+        overlay.child = drawingArea
+        overlay.addOverlay(labels.layout)
+
+        plotter.initLabels(labels)
     }
 
 
