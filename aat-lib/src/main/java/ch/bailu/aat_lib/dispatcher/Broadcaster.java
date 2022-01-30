@@ -1,10 +1,8 @@
 package ch.bailu.aat_lib.dispatcher;
 
 public interface Broadcaster {
+    void broadcast(String action, String ...args);
 
-
-    void broadcast(String broadcastId, String ...args);
-
-    void register(BroadcastReceiver onLocation, String locationChanged);
-    void unregister(BroadcastReceiver onLocation);
+    void register(BroadcastReceiver broadcastReceiver, String action);
+    void unregister(BroadcastReceiver broadcastReceiver);
 }
