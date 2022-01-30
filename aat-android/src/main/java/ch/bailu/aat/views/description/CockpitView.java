@@ -36,7 +36,7 @@ public class CockpitView extends ViewGroup {
         theme.background(this);
 
         layouter = new Layouter(contentDescriptions,
-                (index, x, y, w, h) -> getChildAt(index).layout(x,y,w,h));
+                (index, x, y, x2, y2) -> getChildAt(index).layout(x,y,x2,y2));
     }
 
 

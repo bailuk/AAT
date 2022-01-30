@@ -5,7 +5,7 @@ import ch.bailu.aat_gtk.ui.view.description.CockpitView
 import ch.bailu.aat_gtk.ui.view.list.FileList
 import ch.bailu.aat_gtk.ui.view.solid.ContextCallback
 import ch.bailu.aat_gtk.ui.view.solid.PreferencesStackView
-import ch.bailu.aat_lib.description.CurrentSpeedDescription
+import ch.bailu.aat_lib.description.*
 import ch.bailu.aat_lib.dispatcher.DispatcherInterface
 import ch.bailu.aat_lib.gpx.GpxInformation
 import ch.bailu.aat_lib.gpx.InfoID
@@ -35,7 +35,7 @@ class MainStackView (actionHelper: ActionHelper, dispatcher: DispatcherInterface
         layout.addTitled(map.layout, strMap, strMap)
         layout.addTitled(fileList.vbox, Str("Files"), Str("Files"))
         layout.addTitled(detail.scrolled, Str("Detail"), Str("Detail"))
-        layout.addTitled(cockpit.fixed, Str("Cockpit"), Str("Cockpit"))
+        layout.addTitled(cockpit.layout, Str("Cockpit"), Str("Cockpit"))
 
         initCockpit(dispatcher)
         showMap()
@@ -44,10 +44,16 @@ class MainStackView (actionHelper: ActionHelper, dispatcher: DispatcherInterface
 
     private fun initCockpit(dispatcher: DispatcherInterface) {
         cockpit.add(dispatcher, CurrentSpeedDescription(GtkAppContext.storage), InfoID.LOCATION)
+        cockpit.add(dispatcher, AltitudeDescription(GtkAppContext.storage), InfoID.LOCATION)
+
+        cockpit.add(dispatcher, PredictiveTimeDescription(), InfoID.TRACKER_TIMER)
+        cockpit.add(dispatcher, DistanceDescription(GtkAppContext.storage), InfoID.TRACKER)
+        cockpit.add(dispatcher, AverageSpeedDescriptionAP(GtkAppContext.storage), InfoID.TRACKER)
     }
 
     fun showCockpit() {
-        layout.visibleChild = cockpit.fixed
+        layout.visibleChild = cockpit.layout
+        cockpit.layout()
     }
 
     fun showMap() {

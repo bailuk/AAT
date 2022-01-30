@@ -119,6 +119,6 @@ public class Layouter {
     }
 
     public interface DoPlacement {
-        void setGeometry(int index, int x, int y, int w, int h);
+        void setGeometry(int index, int x, int y, int x2, int y2);
     }
 }

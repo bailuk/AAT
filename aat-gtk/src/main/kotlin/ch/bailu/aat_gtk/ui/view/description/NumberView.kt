@@ -3,25 +3,38 @@ package ch.bailu.aat_gtk.ui.view.description
 import ch.bailu.aat_lib.description.ContentDescription
 import ch.bailu.aat_lib.dispatcher.OnContentUpdatedInterface
 import ch.bailu.aat_lib.gpx.GpxInformation
+import ch.bailu.gtk.GTK
 import ch.bailu.gtk.gtk.Box
 import ch.bailu.gtk.gtk.Label
 import ch.bailu.gtk.gtk.Orientation
 import ch.bailu.gtk.helper.LabelHelper
 import ch.bailu.gtk.type.Str
 
-class NumberView(val description: ContentDescription) : OnContentUpdatedInterface {
+class NumberView(private val description: ContentDescription) : OnContentUpdatedInterface {
     private val label  = Label(Str.NULL)
     private val number = Label(Str.NULL)
     private val unit   = Label(Str.NULL)
 
     val box = Box(Orientation.VERTICAL,5)
 
+    private val margin = 6
+    private var ptSize = 2000
+
     init {
-        box.append(label)
-        box.append(number)
-        box.append(unit)
+        addView(label, margin, 0)
+        addView(number, 0, 0).useMarkup = GTK.TRUE
+        addView(unit, 0, margin)
 
         updateAllText()
+    }
+
+    private fun addView(view: Label, marginTop: Int, marginBottom: Int): Label {
+        view.xalign = 0f
+        view.marginStart = margin
+        view.marginTop = marginTop
+        view.marginBottom = marginBottom
+        box.append(view)
+        return view
     }
 
     override fun onContentUpdated(iid: Int, info: GpxInformation) {
@@ -30,8 +43,21 @@ class NumberView(val description: ContentDescription) : OnContentUpdatedInterfac
     }
 
     fun updateAllText() {
-        LabelHelper.setLabel(number, description.value)
+        LabelHelper.setLabel(number, "<span color=\"#9e462d\" weight=\"bold\" size=\"${ptSize}\">${description.value}</span>")
         LabelHelper.setLabel(label, description.labelShort)
         LabelHelper.setLabel(unit, description.unit)
+    }
+
+    fun setFontSize(size: Int) {
+        ptSize = size
+        updateAllText()
+    }
+
+    fun calculateFontSize(width: Float, height: Float): Int {
+        val vSize = Math.max(number.height.toFloat(), height - unit.height - label.height)
+        val hSize = width / Math.max(description.value.length,1)
+
+        val pxSize = Math.min(vSize, hSize)
+        return (pxSize * 0.75 * 1000f).toInt()
     }
 }
