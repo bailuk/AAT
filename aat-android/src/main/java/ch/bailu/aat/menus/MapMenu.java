@@ -9,15 +9,18 @@ import ch.bailu.aat.R;
 import ch.bailu.aat.activities.ActivitySwitcher;
 import ch.bailu.aat.activities.PreferencesActivity;
 import ch.bailu.aat.preferences.Storage;
-import ch.bailu.aat.preferences.map.AndroidSolidMapsForgeDirectory;
+import ch.bailu.aat.preferences.map.AndroidMapDirectories;
 import ch.bailu.aat.preferences.map.SolidMapTileStack;
-import ch.bailu.aat.preferences.map.SolidMapsForgeMapFile;
-import ch.bailu.aat.preferences.map.SolidRenderTheme;
 import ch.bailu.aat.views.description.mview.MultiView;
 import ch.bailu.aat.views.preferences.SolidCheckListDialog;
 import ch.bailu.aat.views.preferences.SolidStringDialog;
 import ch.bailu.aat_lib.map.MapContext;
+import ch.bailu.aat_lib.preferences.StorageInterface;
+import ch.bailu.aat_lib.preferences.map.SolidMapsForgeDirectory;
+import ch.bailu.aat_lib.preferences.map.SolidMapsForgeMapFile;
 import ch.bailu.aat_lib.preferences.map.SolidOverlayFileList;
+import ch.bailu.aat_lib.preferences.map.SolidRenderTheme;
+import ch.bailu.foc.FocFactory;
 import ch.bailu.foc_android.FocAndroidFactory;
 
 public final class MapMenu extends AbsMenu {
@@ -39,7 +42,7 @@ public final class MapMenu extends AbsMenu {
         overlays = menu.add(R.string.p_overlay);
         overlays.setIcon(R.drawable.view_paged_inverse);
 
-        SolidMapsForgeMapFile smapFile = new SolidMapsForgeMapFile(context);
+        SolidMapsForgeMapFile smapFile = AndroidMapDirectories.createSolidMapsForgeMapFile(context);
         map = menu.add(smapFile.getLabel());
         theme = menu.add(new SolidRenderTheme(smapFile, new FocAndroidFactory(context)).getLabel());
 
@@ -70,8 +73,11 @@ public final class MapMenu extends AbsMenu {
     @Override
     public boolean onItemClick(MenuItem item) {
         final Context c = context;
+        final FocFactory foc = new FocAndroidFactory(c);
+        final StorageInterface storage = new Storage(c);
 
-        final SolidRenderTheme stheme = new SolidRenderTheme(new AndroidSolidMapsForgeDirectory(c), new FocAndroidFactory(c));
+        final SolidMapsForgeDirectory sdir = new SolidMapsForgeDirectory(storage, foc, new AndroidMapDirectories(c));
+        final SolidRenderTheme stheme = new SolidRenderTheme(sdir, foc);
         if (item == stack) {
             new SolidCheckListDialog(c,
                     new SolidMapTileStack(stheme));
@@ -79,11 +85,11 @@ public final class MapMenu extends AbsMenu {
                 mcontext.getMapView().reDownloadTiles();
 
             } else if (item == overlays) {
-            new SolidCheckListDialog(c, new SolidOverlayFileList(new Storage(c), new FocAndroidFactory(c)));
+            new SolidCheckListDialog(c, new SolidOverlayFileList(storage, foc));
         } else if (item == theme) {
             new SolidStringDialog(c, stheme);
         } else if (item == map) {
-            new SolidStringDialog(c, new SolidMapsForgeMapFile(c));
+            new SolidStringDialog(c, new SolidMapsForgeMapFile(storage, foc, new AndroidMapDirectories(c)));
         } else if (item == preferences) {
             MultiView.storeActive(c, PreferencesActivity.SOLID_KEY, 1);
             ActivitySwitcher.start(context, PreferencesActivity.class);

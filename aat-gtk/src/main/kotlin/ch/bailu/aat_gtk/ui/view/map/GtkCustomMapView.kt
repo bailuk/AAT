@@ -36,7 +36,7 @@ import org.mapsforge.map.rendertheme.InternalRenderTheme
 import java.io.File
 import java.util.*
 
-class GtkCustomMapView(
+class GtkCustomMapView (
     private val storage: StorageInterface,
     mapFiles: List<File>,
     dispatcher: DispatcherInterface

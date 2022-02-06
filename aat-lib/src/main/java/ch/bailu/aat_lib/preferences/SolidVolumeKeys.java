@@ -1,7 +1,5 @@
-package ch.bailu.aat.preferences.system;
+package ch.bailu.aat_lib.preferences;
 
-import ch.bailu.aat_lib.preferences.SolidBoolean;
-import ch.bailu.aat_lib.preferences.StorageInterface;
 import ch.bailu.aat_lib.resources.Res;
 
 public class SolidVolumeKeys extends SolidBoolean {
@@ -17,4 +15,3 @@ public class SolidVolumeKeys extends SolidBoolean {
         return Res.str().p_use_volume_keys();
     }
 }
-

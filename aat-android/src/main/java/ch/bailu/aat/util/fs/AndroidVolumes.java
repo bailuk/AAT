@@ -29,20 +29,6 @@ public class AndroidVolumes {
         return files;
     }
 
-/*
-    public void log() {
-        for (Foc f : volumes) {
-            AppLog.d(f, f.toString());
-        }
-        for (Foc f : caches) {
-            AppLog.d(f, f.toString());
-        }
-        for (Foc f : files) {
-            AppLog.d(f, f.toString());
-        }
-
-    }
-*/
     public static void init(Context context) {
         File internal_cache = context.getCacheDir();
         File internal_file = context.getFilesDir();
@@ -65,7 +51,6 @@ public class AndroidVolumes {
 
         volumes=volumesFromFiles(external_volume, external_files);
     }
-
 
 
     private static int countMounted(File file, File[] files) {
@@ -116,9 +101,6 @@ public class AndroidVolumes {
 
         return getMounted(externalVolume, volumes);
     }
-
-
-
 
     private static File getParent(File file, int i) {
         while (i > 0) {

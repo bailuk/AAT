@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat.util.fs.AndroidVolumes;
+import ch.bailu.aat_lib.preferences.SelectionList;
 import ch.bailu.aat_lib.preferences.map.SolidDem3Directory;
 import ch.bailu.aat_lib.util.fs.AppDirectory;
 import ch.bailu.foc.Foc;
@@ -28,8 +29,8 @@ public class AndroidSolidDem3Directory extends SolidDem3Directory {
             final Foc dem3 =  vol.child(DEM3_DIR);
             final Foc aat = vol.child(AppDirectory.DIR_AAT_DATA + "/" + DEM3_DIR);
 
-            add_w(list, aat);
-            add_w(list, dem3);
+            SelectionList.add_w(list, aat);
+            SelectionList.add_w(list, dem3);
         }
 
 
@@ -39,8 +40,8 @@ public class AndroidSolidDem3Directory extends SolidDem3Directory {
             final Foc dem3 =  vol.child(DEM3_DIR);
 
 
-            if (!aat_dem3.exists())  add_w(list, aat_dem3.parent(), aat_dem3);
-            if (!dem3.exists()) add_w(list, dem3.parent(), dem3);
+            if (!aat_dem3.exists())  SelectionList.add_w(list, aat_dem3.parent(), aat_dem3);
+            if (!dem3.exists()) SelectionList.add_w(list, dem3.parent(), dem3);
         }
 
         // exists and is read only
@@ -48,14 +49,14 @@ public class AndroidSolidDem3Directory extends SolidDem3Directory {
             final Foc aat_dem3 = vol.child(AppDirectory.DIR_AAT_DATA + "/" + DEM3_DIR);
             final Foc dem3 =  vol.child(DEM3_DIR);
 
-            add_ro(list, aat_dem3);
-            add_ro(list, dem3);
+            SelectionList.add_ro(list, aat_dem3);
+            SelectionList.add_ro(list, dem3);
         }
 
         // official writeable cache directory
         for (Foc cache : volumes.getCaches()) {
             final Foc dem3 = cache.child(DEM3_DIR);
-            add_w(list, cache, dem3);
+            SelectionList.add_w(list, cache, dem3);
         }
 
 

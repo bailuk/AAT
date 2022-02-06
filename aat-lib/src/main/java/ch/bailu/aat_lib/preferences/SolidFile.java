@@ -17,13 +17,9 @@ public abstract class SolidFile extends SolidString {
         this.focFactory = focFactory;
     }
 
-
     public Foc getValueAsFile() {
         return focFactory.toFoc(getValueAsString());
     }
-
-
-
 
     @Nonnull
     @Override
@@ -31,45 +27,9 @@ public abstract class SolidFile extends SolidString {
         return getValueAsFile().getPathName();
     }
 
-
-
     public String getIconResource() {return "folder_inverse";}
 
     public abstract ArrayList<String> buildSelection(ArrayList<String> list);
-
-
-    public static void add_ro(ArrayList<String> list, Foc file) {
-        add_ro(list, file, file);
-    }
-
-    public static void add_ro(ArrayList<String> list, Foc check, Foc file) {
-        if (check.canOnlyRead()) {
-            list.add(file.toString());
-        }
-    }
-
-    public static void add_r(ArrayList<String> list, Foc file) {
-        if (file.canRead())
-            list.add(file.toString());
-    }
-
-    public static void add_subdirectories_r(final ArrayList<String> list, Foc directory) {
-        directory.foreachDir(child -> add_r(list, child));
-    }
-
-
-    public static void add_w(ArrayList<String> list, Foc file) {
-        add_w(list, file, file);
-
-    }
-
-
-    public static void add_w(ArrayList<String> list, Foc check, Foc file) {
-        if (file != null && check.canWrite())  {
-            list.add(file.toString());
-        }
-    }
-
 
 
     @Override
@@ -109,7 +69,7 @@ public abstract class SolidFile extends SolidString {
 
     public static ArrayList<String> add_ext(final ArrayList<String> list, Foc directory, String ext) {
         directory.foreachFile(child -> {
-            if (child.getName().endsWith(ext)) add_r(list, child);
+            if (child.getName().endsWith(ext)) SelectionList.add_r(list, child);
         });
         return list;
     }

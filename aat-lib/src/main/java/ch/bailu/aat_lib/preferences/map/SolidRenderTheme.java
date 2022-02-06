@@ -1,4 +1,4 @@
-package ch.bailu.aat.preferences.map;
+package ch.bailu.aat_lib.preferences.map;
 
 import org.mapsforge.map.rendertheme.ExternalRenderTheme;
 import org.mapsforge.map.rendertheme.InternalRenderTheme;
@@ -9,7 +9,6 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 import ch.bailu.aat_lib.preferences.SolidFile;
-import ch.bailu.aat_lib.preferences.map.SolidMapsForgeDirectory;
 import ch.bailu.aat_lib.resources.Res;
 import ch.bailu.foc.Foc;
 import ch.bailu.foc.FocFactory;

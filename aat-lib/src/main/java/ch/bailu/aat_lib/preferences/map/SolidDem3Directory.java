@@ -9,7 +9,7 @@ import ch.bailu.aat_lib.resources.ToDo;
 import ch.bailu.foc.Foc;
 import ch.bailu.foc.FocFactory;
 
-public class SolidDem3Directory extends SolidFile {
+public abstract class SolidDem3Directory extends SolidFile {
 
     public final static String DEM3_DIR = "dem3";
 
@@ -65,8 +65,4 @@ public class SolidDem3Directory extends SolidFile {
         return base.descendant(dem3Coordinates.toExtString() + ".hgt.zip");
     }
 
-    @Override
-    public ArrayList<String> buildSelection(ArrayList<String> list) {
-        return list;
-    }
 }

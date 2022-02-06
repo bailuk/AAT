@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import ch.bailu.aat.R;
 import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat.util.fs.AndroidVolumes;
+import ch.bailu.aat_lib.preferences.SelectionList;
 import ch.bailu.aat_lib.preferences.SolidFile;
 import ch.bailu.aat_lib.resources.Res;
 import ch.bailu.aat_lib.util.fs.AppDirectory;
@@ -49,13 +50,13 @@ public class SolidExternalDirectory extends SolidFile {
 
         for (String dir : KNOWN_DIRS) {
             for (Foc vol : volumes.getVolumes()) {
-                add_w(list, vol.child(dir));
+                SelectionList.add_w(list, vol.child(dir));
             }
         }
 
         for (String dir : KNOWN_DIRS) {
             for (Foc vol : volumes.getVolumes()) {
-                add_ro(list, vol.child(dir));
+                SelectionList.add_ro(list, vol.child(dir));
             }
         }
 

@@ -6,7 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import ch.bailu.aat.preferences.Storage;
-import ch.bailu.aat.preferences.system.SolidVolumeKeys;
+import ch.bailu.aat_lib.preferences.SolidVolumeKeys;
 
 public abstract class AbsHardwareButtons extends AbsBackButton {
 

@@ -75,7 +75,8 @@ application {
  * https://stackoverflow.com/questions/41794914/how-to-create-the-fat-jar-with-gradle-kotlin-script
 */
 
-/* With this gradle tries to load all dependencies of all modules during configuration
+// With this gradle tries to load all dependencies of all modules during configuration
+/*
 val fatJar = task("fatJar", type = Jar::class) {
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 
@@ -86,4 +87,3 @@ val fatJar = task("fatJar", type = Jar::class) {
     with(tasks.jar.get() as CopySpec)
 }
 */
-

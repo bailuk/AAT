@@ -83,9 +83,6 @@ dependencies {
     */
     val mapsForgeVersion: String by project
 
-    // MapsForge Core
-    implementation ("org.mapsforge:mapsforge-map-reader:$mapsForgeVersion")
-    implementation ("org.mapsforge:mapsforge-themes:$mapsForgeVersion")
 
     // MapsForge Android
     implementation ("org.mapsforge:mapsforge-map-android:$mapsForgeVersion")

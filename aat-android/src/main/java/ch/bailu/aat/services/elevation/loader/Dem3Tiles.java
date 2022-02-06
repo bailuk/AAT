@@ -16,8 +16,6 @@ public final class Dem3Tiles {
         for (int i=0; i< NUM_TILES; i++) tiles[i]=new Dem3Tile();
     }
 
-
-
     public Dem3Tile getOldestProcessed() {
         Dem3Tile t=null;
         long stamp=System.currentTimeMillis();
@@ -67,6 +65,4 @@ public final class Dem3Tiles {
     public boolean have(Dem3Coordinates c) {
         return get(c) != null;
     }
-
-
 }

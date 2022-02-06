@@ -30,7 +30,7 @@ import ch.bailu.aat.map.tile.source.MapsForgeSource;
 import ch.bailu.aat.map.tile.source.Source;
 import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat.preferences.map.SolidMapTileStack;
-import ch.bailu.aat.preferences.map.SolidRenderTheme;
+import ch.bailu.aat_lib.preferences.map.SolidRenderTheme;
 import ch.bailu.aat.util.OldAppBroadcaster;
 import ch.bailu.aat.util.graphic.SyncTileBitmap;
 import ch.bailu.aat_lib.app.AppContext;

@@ -3,7 +3,7 @@ package ch.bailu.aat.map.tile.source;
 import org.mapsforge.core.model.Tile;
 import org.mapsforge.map.rendertheme.InternalRenderTheme;
 
-import ch.bailu.aat.preferences.map.SolidRenderTheme;
+import ch.bailu.aat_lib.preferences.map.SolidRenderTheme;
 import ch.bailu.aat_lib.app.AppContext;
 import ch.bailu.aat_lib.service.cache.Obj;
 import ch.bailu.aat_lib.service.cache.ObjTileMapsForge;

@@ -3,7 +3,7 @@ package ch.bailu.aat.services.elevation.loader;
 
 import java.io.Closeable;
 
-import ch.bailu.aat.preferences.map.SolidDem3EnableDownload;
+import ch.bailu.aat_lib.preferences.map.SolidDem3EnableDownload;
 import ch.bailu.aat.util.Timer;
 import ch.bailu.aat_lib.app.AppContext;
 import ch.bailu.aat_lib.coordinates.Dem3Coordinates;

@@ -2,13 +2,14 @@ package ch.bailu.aat_lib.preferences.map;
 
 import java.util.ArrayList;
 
+import ch.bailu.aat_lib.preferences.SelectionList;
 import ch.bailu.aat_lib.preferences.SolidFile;
 import ch.bailu.aat_lib.preferences.StorageInterface;
 import ch.bailu.aat_lib.resources.Res;
 import ch.bailu.foc.Foc;
 import ch.bailu.foc.FocFactory;
 
-public abstract class SolidMapsForgeDirectory extends SolidFile {
+public class SolidMapsForgeDirectory extends SolidFile {
 
     public final static String EXTENSION = ".map";
     public final static String MAPS_DIR = "maps";
@@ -16,8 +17,9 @@ public abstract class SolidMapsForgeDirectory extends SolidFile {
 
     private final static String KEY = SolidMapsForgeDirectory.class.getSimpleName();
 
-    public SolidMapsForgeDirectory(StorageInterface storageInterface, FocFactory factory) {
-        super(storageInterface, KEY, factory);
+    public SolidMapsForgeDirectory(StorageInterface storage, FocFactory factory, MapDirectories directories) {
+        super(storage, KEY, factory);
+        this.directories = directories;
     }
 
 
@@ -43,27 +45,38 @@ public abstract class SolidMapsForgeDirectory extends SolidFile {
     }
 
 
+    private final MapDirectories directories;
 
-    public abstract String getDefaultValue();
+
+    public String getDefaultValue() {
+        ArrayList<String> list = new ArrayList<>(5);
+
+        list = buildSelection(list);
+
+        Foc external = directories.getDefault();
+        if (external != null) {
+            SelectionList.add_w(list, external);
+        }
+
+        if (list.size()>0) {
+            return list.get(0);
+        }
+        return "";
+    }
 
 
     @Override
     public ArrayList<String> buildSelection(ArrayList<String> list) {
-        final ArrayList<Foc> dirs = getWellKnownMapDirs();
+        final ArrayList<Foc> dirs = directories.getWellKnownMapDirs();
 
         for (Foc dir : dirs) {
-            add_r(list, dir);
-            add_subdirectories_r(list, dir);
+            SelectionList.add_r(list, dir);
+            SelectionList.add_subdirectories_r(list, dir);
         }
         return list;
     }
 
-
-    public abstract ArrayList<Foc> getWellKnownMapDirs();
-
-    protected static void add_dr(ArrayList<Foc> dirs, Foc file) {
-        if (file.canRead() && file.isDir()) {
-            dirs.add(file);
-        }
+    public ArrayList<Foc> getWellKnownMapDirs() {
+        return directories.getWellKnownMapDirs();
     }
 }

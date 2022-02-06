@@ -7,22 +7,23 @@ import ch.bailu.aat.R;
 import ch.bailu.aat.map.tile.source.MapsForgeSource;
 import ch.bailu.aat.map.tile.source.Source;
 import ch.bailu.aat.preferences.Storage;
+import ch.bailu.aat.preferences.map.AndroidMapDirectories;
 import ch.bailu.aat.preferences.map.AndroidSolidDem3Directory;
-import ch.bailu.aat.preferences.map.AndroidSolidMapsForgeDirectory;
 import ch.bailu.aat.preferences.map.AndroidSolidTileCacheDirectory;
-import ch.bailu.aat.preferences.map.SolidDem3EnableDownload;
-import ch.bailu.aat.preferences.map.SolidEnableTileCache;
-import ch.bailu.aat.preferences.map.SolidMapsForgeMapFile;
-import ch.bailu.aat.preferences.map.SolidRenderTheme;
+import ch.bailu.aat_lib.preferences.map.SolidDem3EnableDownload;
+import ch.bailu.aat_lib.preferences.map.SolidEnableTileCache;
+import ch.bailu.aat_lib.preferences.map.SolidMapsForgeMapFile;
+import ch.bailu.aat_lib.preferences.map.SolidRenderTheme;
 import ch.bailu.aat.preferences.map.SolidTrimDate;
 import ch.bailu.aat.preferences.map.SolidTrimMode;
 import ch.bailu.aat.preferences.map.SolidTrimSize;
-import ch.bailu.aat.preferences.system.SolidVolumeKeys;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.util.ui.AndroidAppDensity;
 import ch.bailu.aat.util.ui.UiTheme;
 import ch.bailu.aat.views.tileremover.TileRemoverView;
+import ch.bailu.aat_lib.preferences.SolidVolumeKeys;
 import ch.bailu.aat_lib.preferences.StorageInterface;
+import ch.bailu.aat_lib.preferences.map.SolidMapsForgeDirectory;
 import ch.bailu.aat_lib.preferences.map.SolidTileSize;
 import ch.bailu.aat_lib.resources.ToDo;
 import ch.bailu.foc_android.FocAndroidFactory;
@@ -37,6 +38,8 @@ public class MapTilePreferencesView extends VerticalScrollView {
         final Context context = scontext.getContext();
         final StorageInterface storage = new Storage(context);
 
+        SolidMapsForgeDirectory solidMapDirectory = new SolidMapsForgeDirectory(storage, new FocAndroidFactory(context), new AndroidMapDirectories(context));
+        SolidMapsForgeMapFile solidMapFile = new SolidMapsForgeMapFile(storage, new FocAndroidFactory(context), new AndroidMapDirectories(context));
 
         add(new TitleView(context, context.getString(R.string.p_tiles), theme));
         add(new SolidIndexListView(context,new SolidTileSize(storage, new AndroidAppDensity(context)), theme));
@@ -44,9 +47,9 @@ public class MapTilePreferencesView extends VerticalScrollView {
         add(new SolidCheckBox(acontext, new SolidVolumeKeys(new Storage(context)), theme));
 
         add(new TitleView(context, MapsForgeSource.NAME, theme));
-        add(new SolidDirectoryView(context,new SolidMapsForgeMapFile(context), theme));
-        add(new SolidDirectoryView(context,new AndroidSolidMapsForgeDirectory(context), theme));
-        add(new SolidStringView(context,new SolidRenderTheme(new AndroidSolidMapsForgeDirectory(context), new FocAndroidFactory(context)), theme));
+        add(new SolidDirectoryView(context,solidMapFile, theme));
+        add(new SolidDirectoryView(context,solidMapDirectory, theme));
+        add(new SolidStringView(context,new SolidRenderTheme(solidMapDirectory, new FocAndroidFactory(context)), theme));
         add(new SolidCheckBox(acontext, new SolidEnableTileCache.MapsForge(storage), theme));
 
         add(new TitleView(context, ToDo.translate("Dem3 altitude tiles"), theme));

@@ -5,7 +5,7 @@ import ch.bailu.aat_lib.preferences.map.SolidTileCacheDirectory
 import ch.bailu.foc.FocFactory
 import java.util.ArrayList
 
-class SolidGtkTileCacheDirectory(storage: StorageInterface,
+class GtkSolidTileCacheDirectory(storage: StorageInterface,
                                  private val focFactory: FocFactory
 ) : SolidTileCacheDirectory(storage, focFactory) {
 

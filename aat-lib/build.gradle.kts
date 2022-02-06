@@ -23,11 +23,13 @@ dependencies {
     api("com.github.bailuk.foc:foc:$focVersion")
     //api("ch.bailu:foc:$focVersion")
 
+    val mapsForgeVersion: String by project
 
     // MapsForge Core
-    val mapsForgeVersion: String by project
     implementation("org.mapsforge:mapsforge-core:$mapsForgeVersion")
     implementation("org.mapsforge:mapsforge-map:$mapsForgeVersion")
+    implementation ("org.mapsforge:mapsforge-map-reader:$mapsForgeVersion")
+    api ("org.mapsforge:mapsforge-themes:$mapsForgeVersion")
 
 
     /**

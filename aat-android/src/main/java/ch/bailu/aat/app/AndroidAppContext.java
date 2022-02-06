@@ -5,8 +5,8 @@ import android.content.Context;
 import ch.bailu.aat.dispatcher.AndroidBroadcaster;
 import ch.bailu.aat.map.mapsforge.MapsForgePreview;
 import ch.bailu.aat.preferences.Storage;
+import ch.bailu.aat.preferences.map.AndroidMapDirectories;
 import ch.bailu.aat.preferences.map.AndroidSolidDem3Directory;
-import ch.bailu.aat.preferences.map.AndroidSolidMapsForgeDirectory;
 import ch.bailu.aat.preferences.map.AndroidSolidTileCacheDirectory;
 import ch.bailu.aat.preferences.system.AndroidSolidDataDirectory;
 import ch.bailu.aat.services.directory.AndroidSummaryConfig;
@@ -101,7 +101,7 @@ public class AndroidAppContext implements AppContext {
 
     @Override
     public SolidMapsForgeDirectory getMapDirectory() {
-        return new AndroidSolidMapsForgeDirectory(context);
+        return AndroidMapDirectories.createSolidMapsForgeDirectory(context);
     }
 
     @Override
