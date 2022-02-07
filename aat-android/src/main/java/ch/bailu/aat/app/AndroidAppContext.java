@@ -10,6 +10,7 @@ import ch.bailu.aat.preferences.map.AndroidSolidDem3Directory;
 import ch.bailu.aat.preferences.map.AndroidSolidTileCacheDirectory;
 import ch.bailu.aat.preferences.system.AndroidSolidDataDirectory;
 import ch.bailu.aat.services.directory.AndroidSummaryConfig;
+import ch.bailu.aat.util.AndroidTimer;
 import ch.bailu.aat.util.graphic.SyncTileBitmap;
 import ch.bailu.aat.util.sql.AndroidDbConnection;
 import ch.bailu.aat_lib.app.AppContext;
@@ -25,6 +26,7 @@ import ch.bailu.aat_lib.service.ServicesInterface;
 import ch.bailu.aat_lib.service.background.DownloadConfig;
 import ch.bailu.aat_lib.service.directory.MapPreviewInterface;
 import ch.bailu.aat_lib.service.directory.SummaryConfig;
+import ch.bailu.aat_lib.util.Timer;
 import ch.bailu.aat_lib.util.sql.DbConnection;
 import ch.bailu.foc.Foc;
 import ch.bailu.foc.FocFactory;
@@ -107,6 +109,11 @@ public class AndroidAppContext implements AppContext {
     @Override
     public SolidTileCacheDirectory getTileCacheDirectory() {
         return new AndroidSolidTileCacheDirectory(context);
+    }
+
+    @Override
+    public Timer createTimer() {
+        return new AndroidTimer();
     }
 
     @Override

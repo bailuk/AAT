@@ -20,7 +20,7 @@ import ch.bailu.aat.services.sensor.SensorInterface;
 import ch.bailu.aat.services.sensor.list.SensorItemState;
 import ch.bailu.aat.services.sensor.list.SensorList;
 import ch.bailu.aat.services.sensor.list.SensorListItem;
-import ch.bailu.aat.util.Timer;
+import ch.bailu.aat.util.AndroidTimer;
 import ch.bailu.aat_lib.gpx.GpxInformation;
 import ch.bailu.aat_lib.logger.AppLog;
 
@@ -43,12 +43,7 @@ public final class BleSensorSDK18 extends BluetoothGattCallback implements Senso
     private int closeState;
 
 
-    private final Timer scanningTimeout = new Timer(new Runnable() {
-        @Override
-        public void run() {
-            if (item.isScanning())  close();
-        }
-    }, BleSensorsSDK18.SCAN_DURATION);
+    private final AndroidTimer scanningTimeout = new AndroidTimer();
 
     public BleSensorSDK18(ServiceContext c, BluetoothDevice d, SensorList l, SensorListItem i) {
         synchronized (this) {
@@ -73,7 +68,9 @@ public final class BleSensorSDK18 extends BluetoothGattCallback implements Senso
 
             } else {
                 execute.next(gatt);
-                scanningTimeout.kick();
+                scanningTimeout.kick(() -> {
+                    if (item.isScanning())  close();
+                }, BleSensorsSDK18.SCAN_DURATION);
                 item.setState(SensorItemState.CONNECTING);
                 item.setState(SensorItemState.SCANNING);
             }
@@ -258,7 +255,7 @@ public final class BleSensorSDK18 extends BluetoothGattCallback implements Senso
         if (!closed) {
             closed = true;
 
-            scanningTimeout.close();
+            scanningTimeout.cancel();
 
             updateListItemName();
 

@@ -12,7 +12,7 @@ import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.sensor.Sensors;
 import ch.bailu.aat.services.sensor.list.SensorList;
 import ch.bailu.aat.services.sensor.list.SensorListItem;
-import ch.bailu.aat.util.Timer;
+import ch.bailu.aat.util.AndroidTimer;
 
 @RequiresApi(api = 18)
 public final class BleSensorsSDK18 extends Sensors {
@@ -30,7 +30,7 @@ public final class BleSensorsSDK18 extends Sensors {
     private boolean scanning = false;
 
 
-    private final Timer timer = new Timer(this::stopScanner, SCAN_DURATION);
+    private final AndroidTimer timer = new AndroidTimer();
 
 
 
@@ -135,7 +135,7 @@ public final class BleSensorsSDK18 extends Sensors {
 
     private void startScanner() {
         scannerBonded.start();
-        timer.kick();
+        timer.kick(this::stopScanner, SCAN_DURATION);
         scannerBle.start();
 
         scanning = isEnabled();

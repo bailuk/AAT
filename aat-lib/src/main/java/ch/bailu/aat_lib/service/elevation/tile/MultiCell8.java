@@ -1,6 +1,4 @@
-package ch.bailu.aat.services.elevation.tile;
-
-import ch.bailu.aat_lib.service.elevation.tile.DemProvider;
+package ch.bailu.aat_lib.service.elevation.tile;
 
 public final class MultiCell8 extends MultiCell {
     /**

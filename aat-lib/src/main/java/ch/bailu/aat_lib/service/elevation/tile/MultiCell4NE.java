@@ -1,11 +1,9 @@
-package ch.bailu.aat.services.elevation.tile;
+package ch.bailu.aat_lib.service.elevation.tile;
 
-import ch.bailu.aat_lib.service.elevation.tile.DemProvider;
-
-public final class MultiCell4SW extends MultiCell {
+public final class MultiCell4NE extends MultiCell {
     /**
-     *      a  B
-     *      c  d
+     *      a  b
+     *      C  d
      */
 
     private short a, b, c, d;
@@ -16,7 +14,7 @@ public final class MultiCell4SW extends MultiCell {
     private final int total_cellsize;
 
 
-    public MultiCell4SW(final DemProvider dem) {
+    public MultiCell4NE(final DemProvider dem) {
         demtile = dem;
         dim = dem.getDim().DIM;
         total_cellsize=Math.round(dem.getCellsize()*4f);
@@ -24,25 +22,20 @@ public final class MultiCell4SW extends MultiCell {
 
     @Override
     public void set(int x) {
-        _set(x);
+            _set(x);
         dzx=_delta_zx();
         dzy=_delta_zy();
     }
 
-
     private void _set(int x) {
-
-        final int a=x-1;
-        final int b=x;
-        final int d=x+dim;
-        final int c=d-1;
-
-
+        final int a=x-dim;
+        final int b=a+1;
+        final int c=x;
+        final int d=x+1;
         this.a=demtile.getElevation(a);
         this.b=demtile.getElevation(b);
         this.c=demtile.getElevation(c);
         this.d=demtile.getElevation(d);
-
     }
 
 

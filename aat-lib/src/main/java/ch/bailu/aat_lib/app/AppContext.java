@@ -12,6 +12,7 @@ import ch.bailu.aat_lib.service.ServicesInterface;
 import ch.bailu.aat_lib.service.background.DownloadConfig;
 import ch.bailu.aat_lib.service.directory.MapPreviewInterface;
 import ch.bailu.aat_lib.service.directory.SummaryConfig;
+import ch.bailu.aat_lib.util.Timer;
 import ch.bailu.aat_lib.util.sql.DbConnection;
 import ch.bailu.foc.Foc;
 import ch.bailu.foc.FocFactory;
@@ -42,4 +43,6 @@ public interface AppContext extends FocFactory {
     SolidMapsForgeDirectory getMapDirectory();
 
     SolidTileCacheDirectory getTileCacheDirectory();
+
+    Timer createTimer();
 }

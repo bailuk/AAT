@@ -1,4 +1,4 @@
-package ch.bailu.aat.services.elevation.loader;
+package ch.bailu.aat_lib.service.elevation.loader;
 
 import ch.bailu.aat_lib.coordinates.Dem3Coordinates;
 import ch.bailu.aat_lib.service.elevation.Dem3Status;

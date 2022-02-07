@@ -3,6 +3,7 @@ package ch.bailu.aat.activities;
 import android.os.Bundle;
 import android.view.View;
 
+import ch.bailu.aat.util.AndroidTimer;
 import ch.bailu.aat_lib.description.AverageSpeedDescriptionAP;
 import ch.bailu.aat_lib.description.CurrentSpeedDescription;
 import ch.bailu.aat_lib.description.DistanceDescription;
@@ -108,7 +109,7 @@ public class CockpitActivity extends AbsKeepScreenOnActivity {
     private void createDispatcher(EditorSource edit) {
         addSource(edit);
         addSource(new TrackerSource(getServiceContext(),getBroadcaster()));
-        addSource(new TrackerTimerSource(getServiceContext()));
+        addSource(new TrackerTimerSource(getServiceContext(), new AndroidTimer()));
         addSource(new CurrentLocationSource(getServiceContext(),getBroadcaster()));
         addSource(new OverlaySource(getAppContext()));
 

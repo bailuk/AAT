@@ -2,10 +2,10 @@ package ch.bailu.aat.dispatcher;
 
 
 import ch.bailu.aat.services.ServiceContext;
-import ch.bailu.aat.util.Timer;
 import ch.bailu.aat_lib.dispatcher.ContentSource;
 import ch.bailu.aat_lib.gpx.GpxInformation;
 import ch.bailu.aat_lib.gpx.InfoID;
+import ch.bailu.aat_lib.util.Timer;
 
 public class TrackerTimerSource extends ContentSource {
     private static final int INTERVAL=500;
@@ -13,8 +13,8 @@ public class TrackerTimerSource extends ContentSource {
     private final ServiceContext scontext;
     private final Timer timer;
 
-    public TrackerTimerSource(ServiceContext sc) {
-        timer = new Timer(this::requestUpdate, INTERVAL);
+    public TrackerTimerSource(ServiceContext sc, Timer timer) {
+        this.timer = timer;
 
         scontext = sc;
     }
@@ -25,7 +25,7 @@ public class TrackerTimerSource extends ContentSource {
     public void requestUpdate() {
         sendUpdate(InfoID.TRACKER_TIMER,
                 scontext.getTrackerService().getLoggerInformation());
-        timer.kick();
+        timer.kick(() -> requestUpdate(), INTERVAL);
     }
 
 
@@ -38,7 +38,7 @@ public class TrackerTimerSource extends ContentSource {
 
     @Override
     public void onResume() {
-        timer.kick();
+        timer.kick(()->requestUpdate(), INTERVAL);
     }
 
     @Override

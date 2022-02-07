@@ -7,7 +7,7 @@ import android.graphics.Rect;
 import org.mapsforge.core.graphics.TileBitmap;
 import org.mapsforge.core.model.Tile;
 
-import ch.bailu.aat.services.elevation.tile.DemSplitter;
+import ch.bailu.aat_lib.service.elevation.tile.DemSplitter;
 import ch.bailu.aat.util.graphic.SyncTileBitmap;
 import ch.bailu.aat_lib.app.AppContext;
 import ch.bailu.aat_lib.preferences.map.SolidTileSize;

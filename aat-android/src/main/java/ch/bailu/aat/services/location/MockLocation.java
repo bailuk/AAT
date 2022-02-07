@@ -4,7 +4,7 @@ import android.content.Context;
 
 import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat_lib.preferences.location.SolidMockLocationFile;
-import ch.bailu.aat.util.Timer;
+import ch.bailu.aat.util.AndroidTimer;
 import ch.bailu.aat_lib.gpx.GpxList;
 import ch.bailu.aat_lib.gpx.GpxPointNode;
 import ch.bailu.aat_lib.gpx.StateID;
@@ -31,18 +31,18 @@ public final class MockLocation extends LocationStackChainedItem implements Runn
     private long interval = INTERVAL;
     private final Foc file;
 
-    private final Timer timer;
+    private final AndroidTimer timer;
 
     public MockLocation(Context c, LocationStackItem i) {
         super(i);
 
         list = new GpxList(GpxType.TRACK, GpxListAttributes.NULL);
-        timer = new Timer(this, INTERVAL);
+        timer = new AndroidTimer();
 
         file = FocAndroid.factory(c,(new SolidMockLocationFile(new Storage(c)).getValueAsString()));
         list = new GpxListReader(file, AutoPause.NULL).getGpxList();
 
-        timer.kick();
+        timer.kick(this, INTERVAL);
         passState(StateID.WAIT);
 
     }
@@ -50,7 +50,7 @@ public final class MockLocation extends LocationStackChainedItem implements Runn
 
     @Override
     public void close() {
-        timer.close();
+        timer.cancel();
     }
 
     @Override
@@ -84,10 +84,10 @@ public final class MockLocation extends LocationStackChainedItem implements Runn
 
     private void kickTimer() {
         if (interval <= 0 || interval > 10*INTERVAL) {
-            timer.kick(INTERVAL);
+            timer.kick(this,INTERVAL);
 
         } else {
-            timer.kick(interval);
+            timer.kick(this, interval);
 
         }
     }

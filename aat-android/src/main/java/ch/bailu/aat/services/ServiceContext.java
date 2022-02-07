@@ -2,7 +2,7 @@ package ch.bailu.aat.services;
 
 import android.app.Notification;
 
-import ch.bailu.aat.services.elevation.ElevationService;
+import ch.bailu.aat_lib.service.elevation.ElevationService;
 import ch.bailu.aat.services.tileremover.TileRemoverService;
 import ch.bailu.aat.util.ContextWrapperInterface;
 import ch.bailu.aat_lib.service.IconMapServiceInterface;

@@ -1,17 +1,17 @@
-package ch.bailu.aat.services.elevation.loader;
+package ch.bailu.aat_lib.service.elevation.loader;
 
 
 import java.io.Closeable;
 
-import ch.bailu.aat_lib.preferences.map.SolidDem3EnableDownload;
-import ch.bailu.aat.util.Timer;
 import ch.bailu.aat_lib.app.AppContext;
 import ch.bailu.aat_lib.coordinates.Dem3Coordinates;
 import ch.bailu.aat_lib.dispatcher.AppBroadcaster;
 import ch.bailu.aat_lib.dispatcher.BroadcastData;
 import ch.bailu.aat_lib.dispatcher.BroadcastReceiver;
+import ch.bailu.aat_lib.preferences.map.SolidDem3EnableDownload;
 import ch.bailu.aat_lib.service.background.DownloadTask;
 import ch.bailu.aat_lib.service.elevation.tile.Dem3Tile;
+import ch.bailu.aat_lib.util.Timer;
 import ch.bailu.foc.Foc;
 
 public final class Dem3TileLoader implements Closeable {
@@ -22,9 +22,11 @@ public final class Dem3TileLoader implements Closeable {
 
     private Dem3Coordinates pending = null;
 
+    private final Timer timer;
 
 
-    public Dem3TileLoader(AppContext appContext, Dem3Tiles t) {
+    public Dem3TileLoader(AppContext appContext, Timer timer, Dem3Tiles t) {
+        this.timer = timer;
         tiles = t;
         this.appContext = appContext;
         this.appContext.getBroadcaster().register(onFileDownloaded, AppBroadcaster.FILE_CHANGED_ONDISK);
@@ -32,12 +34,13 @@ public final class Dem3TileLoader implements Closeable {
     }
 
 
-    private final Timer timer = new Timer(() -> {
+    private final Runnable timout = () -> {
         if (havePending()) {
             loadOrDownloadPending();
             stopTimer();
         }
-    }, MILLIS);
+    };
+
 
 
     private final BroadcastReceiver onFileDownloaded = new BroadcastReceiver() {
@@ -105,12 +108,12 @@ public final class Dem3TileLoader implements Closeable {
 
 
     private void startTimer() {
-        timer.close();
-        timer.kick();
+        timer.cancel();
+        timer.kick(timout, MILLIS);
     }
 
     private void stopTimer() {
-        timer.close();
+        timer.cancel();
     }
 
 

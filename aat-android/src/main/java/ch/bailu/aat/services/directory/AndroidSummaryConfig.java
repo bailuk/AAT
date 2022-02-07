@@ -30,7 +30,6 @@ public final class AndroidSummaryConfig extends SummaryConfig {
         summaryDir.mkdirs();
 
         return summaryDir;
-
     }
 
     @Override

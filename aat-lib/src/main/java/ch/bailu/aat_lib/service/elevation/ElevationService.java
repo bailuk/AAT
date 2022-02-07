@@ -1,13 +1,11 @@
-package ch.bailu.aat.services.elevation;
+package ch.bailu.aat_lib.service.elevation;
 
-import ch.bailu.aat.services.elevation.loader.Dem3Loader;
-import ch.bailu.aat.services.elevation.loader.Dem3Tiles;
-import ch.bailu.aat.services.elevation.updater.ElevationUpdater;
 import ch.bailu.aat_lib.app.AppContext;
 import ch.bailu.aat_lib.coordinates.Dem3Coordinates;
 import ch.bailu.aat_lib.service.VirtualService;
-import ch.bailu.aat_lib.service.elevation.ElevationProvider;
-import ch.bailu.aat_lib.service.elevation.ElevetionServiceInterface;
+import ch.bailu.aat_lib.service.elevation.loader.Dem3Loader;
+import ch.bailu.aat_lib.service.elevation.loader.Dem3Tiles;
+import ch.bailu.aat_lib.service.elevation.updater.ElevationUpdater;
 import ch.bailu.aat_lib.service.elevation.updater.ElevationUpdaterClient;
 
 public final class ElevationService extends VirtualService implements ElevationProvider, ElevetionServiceInterface {
@@ -18,7 +16,7 @@ public final class ElevationService extends VirtualService implements ElevationP
 
     public ElevationService(AppContext appContext) {
         Dem3Tiles tiles = new Dem3Tiles();
-        loader = new Dem3Loader(appContext, tiles);
+        loader = new Dem3Loader(appContext, appContext.createTimer(), tiles);
         updater = new ElevationUpdater(appContext, loader, tiles);
 
     }

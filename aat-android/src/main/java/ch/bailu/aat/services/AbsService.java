@@ -10,7 +10,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-import ch.bailu.aat.util.Timer;
+import ch.bailu.aat.util.AndroidTimer;
 import ch.bailu.aat_lib.logger.AppLog;
 
 public abstract class AbsService  extends Service {
@@ -35,7 +35,7 @@ public abstract class AbsService  extends Service {
                 AppLog.w(this, e);
             }
 
-            lazyOff.close();
+            lazyOff.cancel();
 
         }
         return up;
@@ -48,7 +48,7 @@ public abstract class AbsService  extends Service {
             lock--;
 
             if (lock == 0) {
-                lazyOff.kick();
+                lazyOff.kick(this::stopService, 15*1000);
 
             } else if (lock < 0) {
                 AppLog.w(this, "lock < 0 !!!");
@@ -60,7 +60,7 @@ public abstract class AbsService  extends Service {
 
     private final Set<String> locks = new HashSet<>();
 
-    private final Timer lazyOff = new Timer(this::stopService, 15*1000);
+    private final AndroidTimer lazyOff = new AndroidTimer();
 
 
     private synchronized void stopService() {

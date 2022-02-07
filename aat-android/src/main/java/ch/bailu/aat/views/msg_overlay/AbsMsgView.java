@@ -4,16 +4,14 @@ import android.content.Context;
 import android.widget.TextView;
 
 import ch.bailu.aat_lib.map.MapColor;
-import ch.bailu.aat.util.Timer;
+import ch.bailu.aat.util.AndroidTimer;
 import ch.bailu.aat.util.ui.AppLayout;
 
 public abstract class AbsMsgView extends TextView {
 
     private final static int SHOW_TEXT_MILLIS = 4000;
 
-    private final Timer fadeOutTimer = new Timer(
-            AbsMsgView.this::set,
-            SHOW_TEXT_MILLIS);
+    private final AndroidTimer fadeOutTimer = new AndroidTimer();
 
     AbsMsgView(Context context) {
         super(context);
@@ -32,7 +30,7 @@ public abstract class AbsMsgView extends TextView {
         if (getVisibility() == GONE)
             AppLayout.fadeIn(this);
 
-        fadeOutTimer.kick();
+        fadeOutTimer.kick(()->set(), SHOW_TEXT_MILLIS);
     }
 
 

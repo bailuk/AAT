@@ -1,19 +1,18 @@
-package ch.bailu.aat.services.elevation.updater;
+package ch.bailu.aat_lib.service.elevation.updater;
 
 
 import java.io.Closeable;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import ch.bailu.aat.services.elevation.loader.Dem3Loader;
-import ch.bailu.aat.services.elevation.loader.Dem3Tiles;
+import ch.bailu.aat_lib.service.elevation.loader.Dem3Loader;
+import ch.bailu.aat_lib.service.elevation.loader.Dem3Tiles;
 import ch.bailu.aat_lib.app.AppContext;
 import ch.bailu.aat_lib.coordinates.Dem3Coordinates;
 import ch.bailu.aat_lib.dispatcher.AppBroadcaster;
 import ch.bailu.aat_lib.dispatcher.BroadcastReceiver;
 import ch.bailu.aat_lib.service.elevation.Dem3Status;
 import ch.bailu.aat_lib.service.elevation.tile.Dem3Tile;
-import ch.bailu.aat_lib.service.elevation.updater.ElevationUpdaterClient;
 
 public final class ElevationUpdater implements Closeable {
 

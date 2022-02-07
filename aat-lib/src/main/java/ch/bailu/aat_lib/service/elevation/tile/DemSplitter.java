@@ -1,8 +1,5 @@
-package ch.bailu.aat.services.elevation.tile;
+package ch.bailu.aat_lib.service.elevation.tile;
 
-
-import ch.bailu.aat_lib.service.elevation.tile.DemDimension;
-import ch.bailu.aat_lib.service.elevation.tile.DemProvider;
 
 public class DemSplitter implements DemProvider {
     public final DemProvider parent;

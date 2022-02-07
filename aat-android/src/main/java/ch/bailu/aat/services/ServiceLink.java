@@ -9,7 +9,7 @@ import android.os.IBinder;
 
 import java.io.Closeable;
 
-import ch.bailu.aat.services.elevation.ElevationService;
+import ch.bailu.aat_lib.service.elevation.ElevationService;
 import ch.bailu.aat.services.tileremover.TileRemoverService;
 import ch.bailu.aat_lib.logger.AppLog;
 import ch.bailu.aat_lib.service.IconMapServiceInterface;

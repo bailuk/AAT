@@ -3,6 +3,7 @@ package ch.bailu.aat.activities;
 import android.os.Bundle;
 import android.view.View;
 
+import ch.bailu.aat.util.AndroidTimer;
 import ch.bailu.aat_lib.dispatcher.CurrentLocationSource;
 import ch.bailu.aat.dispatcher.EditorSource;
 import ch.bailu.aat.dispatcher.EditorSourceInterface;
@@ -116,7 +117,7 @@ public class CockpitTabletActivity extends AbsKeepScreenOnActivity {
     private void createDispatcher(EditorSource edit) {
         addSource(edit);
         addSource(new TrackerSource(getServiceContext(),getBroadcaster()));
-        addSource(new TrackerTimerSource(getServiceContext()));
+        addSource(new TrackerTimerSource(getServiceContext(), new AndroidTimer()));
         addSource(new CurrentLocationSource(getServiceContext(),getBroadcaster()));
         addSource(new OverlaySource(getAppContext()));
         addSource(new SensorSource(getServiceContext(), InfoID.HEART_RATE_SENSOR));
