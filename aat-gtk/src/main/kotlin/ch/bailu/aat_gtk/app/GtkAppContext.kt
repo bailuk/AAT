@@ -20,6 +20,7 @@ import ch.bailu.aat_lib.service.ServicesInterface
 import ch.bailu.aat_lib.service.background.DownloadConfig
 import ch.bailu.aat_lib.service.directory.MapPreviewInterface
 import ch.bailu.aat_lib.service.directory.SummaryConfig
+import ch.bailu.aat_lib.util.Timer
 import ch.bailu.aat_lib.util.sql.DbConnection
 import ch.bailu.foc.Foc
 import ch.bailu.foc.FocFactory
@@ -104,6 +105,11 @@ object GtkAppContext: AppContext {
 
     override fun getTileCacheDirectory(): SolidTileCacheDirectory {
         AppLog.d(this, "Not yet implemented getTileCacheDirectory")
+        TODO("Not yet implemented")
+    }
+
+    override fun createTimer(): Timer {
+        AppLog.d(this, "Not yet implemented createTimer")
         TODO("Not yet implemented")
     }
 }

@@ -1,4 +1,4 @@
-package ch.bailu.aat_gtk.ui.view
+package ch.bailu.aat_gtk.ui.view.map.control
 
 import ch.bailu.aat_gtk.ui.util.IconMap
 import ch.bailu.aat_gtk.ui.view.solid.SolidImageButton
@@ -16,9 +16,9 @@ import ch.bailu.gtk.gtk.Button
 import ch.bailu.gtk.gtk.Orientation
 import ch.bailu.gtk.helper.ActionHelper
 
-class NavigationBar(actionHelper: ActionHelper, mcontext: MapContext, storage: StorageInterface) : OnContentUpdatedInterface {
-    val SIZE = 24
-    
+class NavigationBar(actionHelper: ActionHelper, mcontext: MapContext, storage: StorageInterface) :
+    OnContentUpdatedInterface {
+
     val box = Box(Orientation.HORIZONTAL, 2)
     private val plus: Button = Button()
     private val minus: Button = Button()
@@ -33,17 +33,17 @@ class NavigationBar(actionHelper: ActionHelper, mcontext: MapContext, storage: S
     init {
 
 
-        plus.child = IconMap.getImage("zoom-in-symbolic", SIZE)
+        plus.child = IconMap.getImage("zoom-in-symbolic", BarControl.ICON_SIZE)
         plus.onClicked { mcontext.mapView.zoomIn() }
         box.append(plus)
 
-        minus.child = IconMap.getImage("zoom-out-symbolic", SIZE)
+        minus.child = IconMap.getImage("zoom-out-symbolic", BarControl.ICON_SIZE)
         minus.onClicked { mcontext.mapView.zoomOut() }
         box.append(minus)
 
         box.append(lock.button)
 
-        frame.child = IconMap.getImage("zoom-fit-best-symbolic", SIZE)
+        frame.child = IconMap.getImage("zoom-fit-best-symbolic", BarControl.ICON_SIZE)
         frame.onClicked {
             if (nextInBoundingCycle()) {
                 mcontext.mapView.frameBounding(infoCache.getAt(boundingCycle)?.boundingBox)

@@ -32,7 +32,7 @@ class MainStackView (actionHelper: ActionHelper, dispatcher: DispatcherInterface
     init {
         layout.transitionType = StackTransitionType.SLIDE_LEFT
         layout.addTitled(preferences.layout, strPreferences, strPreferences)
-        layout.addTitled(map.layout, strMap, strMap)
+        layout.addTitled(map.overlay, strMap, strMap)
         layout.addTitled(fileList.vbox, Str("Files"), Str("Files"))
         layout.addTitled(detail.scrolled, Str("Detail"), Str("Detail"))
         layout.addTitled(cockpit.layout, Str("Cockpit"), Str("Cockpit"))
@@ -57,7 +57,7 @@ class MainStackView (actionHelper: ActionHelper, dispatcher: DispatcherInterface
     }
 
     fun showMap() {
-        layout.visibleChild = map.layout
+        layout.visibleChild = map.overlay
     }
 
     fun showPreferences() {
