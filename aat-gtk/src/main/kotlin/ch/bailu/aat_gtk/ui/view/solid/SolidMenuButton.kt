@@ -1,18 +1,28 @@
 package ch.bailu.aat_gtk.ui.view.solid
 
 import ch.bailu.aat_gtk.ui.view.menu.PopupButton
+import ch.bailu.aat_gtk.ui.view.menu.SolidCheckMenu
 import ch.bailu.aat_gtk.ui.view.menu.SolidIndexMenu
 import ch.bailu.aat_lib.logger.AppLog
 import ch.bailu.aat_lib.map.Attachable
-import ch.bailu.aat_lib.preferences.OnPreferencesChanged
-import ch.bailu.aat_lib.preferences.SolidIndexList
-import ch.bailu.aat_lib.preferences.StorageInterface
+import ch.bailu.aat_lib.preferences.*
 import ch.bailu.gtk.helper.ActionHelper
 
-class SolidMenuButton(actionHelper: ActionHelper, private val solid: SolidIndexList)
-    : PopupButton(actionHelper, SolidIndexMenu(solid)), OnPreferencesChanged, Attachable {
+class SolidMenuButton
+    : PopupButton, OnPreferencesChanged, Attachable {
 
-    init {
+
+    private val solid: AbsSolidType
+
+    constructor(actionHelper: ActionHelper, solidIndexList: SolidIndexList) : super(actionHelper, SolidIndexMenu(solidIndexList)) {
+        solid = solidIndexList
+        solid.register(this)
+        setIcon(solid.iconResource)
+
+    }
+
+    constructor(actionHelper: ActionHelper, soldiCheckList: SolidCheckList) : super(actionHelper, SolidCheckMenu(soldiCheckList)) {
+        solid = soldiCheckList
         solid.register(this)
         setIcon(solid.iconResource)
     }

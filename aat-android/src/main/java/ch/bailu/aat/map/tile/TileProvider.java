@@ -9,7 +9,7 @@ import org.mapsforge.map.model.common.Observer;
 
 import java.util.List;
 
-import ch.bailu.aat.map.tile.source.Source;
+import ch.bailu.aat_lib.map.tile.source.Source;
 import ch.bailu.aat_lib.app.AppContext;
 import ch.bailu.aat_lib.dispatcher.AppBroadcaster;
 import ch.bailu.aat_lib.dispatcher.BroadcastData;
@@ -38,15 +38,10 @@ public class TileProvider implements Attachable, ObservableInterface {
 
 
 
-    private final BroadcastReceiver onFileChanged = new BroadcastReceiver() {
+    private final BroadcastReceiver onFileChanged = args -> {
+        String file =  BroadcastData.getFile(args);
 
-        @Override
-        public void onReceive(String... args) {
-            String file =  BroadcastData.getFile(args);
-
-            if (cache.isInCache(file)) observers.notifyChange();
-        }
-
+        if (cache.isInCache(file)) observers.notifyChange();
     };
 
 
@@ -121,7 +116,7 @@ public class TileProvider implements Attachable, ObservableInterface {
 
     @Override
     public synchronized void onAttached() {
-        if (isAttached == false) {
+        if (!isAttached) {
 
             cache.reset();
             cache = new TileObjectCache();

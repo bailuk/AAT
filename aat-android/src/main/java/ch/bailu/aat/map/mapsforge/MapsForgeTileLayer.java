@@ -4,6 +4,8 @@ import android.graphics.Bitmap;
 import android.graphics.Paint;
 import android.graphics.Rect;
 
+import androidx.annotation.NonNull;
+
 import org.mapsforge.core.graphics.Canvas;
 import org.mapsforge.core.graphics.TileBitmap;
 import org.mapsforge.core.model.BoundingBox;
@@ -41,11 +43,13 @@ public class MapsForgeTileLayer extends Layer implements MapLayerInterface, Obse
         provider = p;
 
         paint.setAlpha(p.getSource().getAlpha());
-        paint.setFlags(p.getSource().getPaintFlags());
+
+        if (p.getSource().filterBitmap()) {
+            // Paint.FILTER_BITMAP_FLAG -> slow drawing
+            paint.setFlags(Paint.FILTER_BITMAP_FLAG);
+        }
 
         provider.addObserver(this);
-
-
     }
 
 
@@ -164,6 +168,6 @@ public class MapsForgeTileLayer extends Layer implements MapLayerInterface, Obse
     public boolean onTap(LatLong tapLatLong, Point layerXY, Point tapXY) {return false;}
 
     @Override
-    public void onPreferencesChanged(StorageInterface s, String key) {}
+    public void onPreferencesChanged(@NonNull StorageInterface s, @NonNull String key) {}
 
 }

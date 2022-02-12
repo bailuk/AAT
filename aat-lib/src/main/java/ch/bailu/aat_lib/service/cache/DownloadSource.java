@@ -1,17 +1,14 @@
-package ch.bailu.aat.map.tile.source;
+package ch.bailu.aat_lib.service.cache;
 
 import org.mapsforge.core.model.Tile;
 
 import java.util.Random;
 
-import ch.bailu.aat.map.tile.TileFlags;
-import ch.bailu.aat.services.cache.ObjTileDownloadable;
 import ch.bailu.aat_lib.app.AppContext;
-import ch.bailu.aat_lib.service.cache.Obj;
+import ch.bailu.aat_lib.map.tile.source.Source;
 import ch.bailu.aat_lib.util.fs.AppDirectory;
 
 public class DownloadSource extends Source {
-
 
     public static final int MIN_ZOOM = 1;
     public static final int MAX_ZOOM =17; // 18 takes way too much space for the gain.
@@ -31,14 +28,14 @@ public class DownloadSource extends Source {
 
 
     public DownloadSource(String n, int a, final String... url) {
-        this(n, "", MIN_ZOOM, MAX_ZOOM, a, (a != OPAQUE), url);
+        this(n, "", MIN_ZOOM, MAX_ZOOM, a, (a != Source.OPAQUE), url);
     }
 
     public DownloadSource(String n, String k, int a, final String... url) {
-        this(n, k, MIN_ZOOM, MAX_ZOOM, a, (a != OPAQUE), url);
+        this(n, k, MIN_ZOOM, MAX_ZOOM, a, (a != Source.OPAQUE), url);
     }
     public DownloadSource(String n, int minZ, int maxZ, int a, final String... url) {
-        this(n, "",minZ, maxZ, a, (a != OPAQUE), url);
+        this(n, "",minZ, maxZ, a, (a != Source.OPAQUE), url);
     }
 
 
@@ -49,7 +46,7 @@ public class DownloadSource extends Source {
         maxZoom = maxZ;
         urls = u;
         alpha = a;
-        transparent = (a != OPAQUE);
+        transparent = (a != Source.OPAQUE);
     }
 
 
@@ -61,7 +58,7 @@ public class DownloadSource extends Source {
 
     @Override
     public String getID(Tile tile, AppContext context) {
-        return AppDirectory.getTileFile(genRelativeFilePath(tile, name), context.getTileCacheDirectory()).getPath();
+        return AppDirectory.getTileFile(Source.genRelativeFilePath(tile, name), context.getTileCacheDirectory()).getPath();
     }
 
 
@@ -92,7 +89,7 @@ public class DownloadSource extends Source {
     }
 
     public String getTileURLString(Tile tile) {
-        return getBaseUrl() + tile.zoomLevel + "/" + tile.tileX + "/" + tile.tileY + EXT + apiKey;
+        return getBaseUrl() + tile.zoomLevel + "/" + tile.tileX + "/" + tile.tileY + Source.EXT + apiKey;
     }
 
     private String getBaseUrl() {
@@ -107,64 +104,64 @@ public class DownloadSource extends Source {
 
     public final static DownloadSource MAPNIK =
             new DownloadSource("Mapnik",
-                    OPAQUE,
+                    Source.OPAQUE,
                     "https://a.tile.openstreetmap.org/",
                     "https://b.tile.openstreetmap.org/",
                     "https://c.tile.openstreetmap.org/") {
 
                 @Override
-                public int getPaintFlags() {
-                    return TileFlags.SCALE_FLAGS;
+                public boolean filterBitmap() {
+                    return true;
                 }
             };
 
 
     public final static DownloadSource OPEN_TOPO_MAP =
             new DownloadSource("OpenTopoMap",
-                    OPAQUE,
+                    Source.OPAQUE,
                     "https://a.tile.opentopomap.org/",
                     "https://b.tile.opentopomap.org/",
                     "https://c.tile.opentopomap.org/") {
 
                 @Override
-                public int getPaintFlags() {
-                    return TileFlags.SCALE_FLAGS;
+                public boolean filterBitmap() {
+                    return true;
                 }
             };
 
     public final static DownloadSource OPEN_CYCLE_MAP =
             new DownloadSource("OpenCycleMap",
                     "?apikey=4fc8425f35f44f11a59407ef5de1e2c2",
-                    OPAQUE,
+                    Source.OPAQUE,
                     "https://tile.thunderforest.com/cycle/") {
 
                 @Override
-                public int getPaintFlags() {
-                    return TileFlags.SCALE_FLAGS;
+                public boolean filterBitmap() {
+                    return true;
                 }
             };
 
 
     public final static DownloadSource TRAIL_MTB =
             new DownloadSource("TrailMTB",
-                    TRANSPARENT,
+                    Source.TRANSPARENT,
                     "https://tile.waymarkedtrails.org/mtb/");
 
     public final static DownloadSource TRAIL_SKATING =
             new DownloadSource("TrailSkating",
-                    TRANSPARENT,
+                    Source.TRANSPARENT,
                     "https://tile.waymarkedtrails.org/skating/");
 
 
     public final static DownloadSource TRAIL_HIKING =
             new DownloadSource("TrailHiking",
-                    TRANSPARENT,
+                    Source.TRANSPARENT,
                     "https://tile.waymarkedtrails.org/hiking/");
 
 
     public final static DownloadSource TRAIL_CYCLING =
             new DownloadSource("TrailCycling",
-                    TRANSPARENT,
+                    Source.TRANSPARENT,
                     "https://tile.waymarkedtrails.org/cycling/");
 
 
@@ -172,7 +169,7 @@ public class DownloadSource extends Source {
     public final static DownloadSource TRANSPORT_OVERLAY =
             new DownloadSource("OpenPtMap",
                     5, 16,
-                    TRANSPARENT,
+                    Source.TRANSPARENT,
                     "http://openptmap.org/tiles/");
 
 }

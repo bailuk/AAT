@@ -3,6 +3,7 @@ package ch.bailu.aat.map.tile.source;
 import org.mapsforge.core.model.Tile;
 
 import ch.bailu.aat_lib.app.AppContext;
+import ch.bailu.aat_lib.map.tile.source.Source;
 import ch.bailu.aat_lib.service.InsideContext;
 import ch.bailu.aat_lib.service.ServicesInterface;
 import ch.bailu.aat_lib.service.cache.Obj;

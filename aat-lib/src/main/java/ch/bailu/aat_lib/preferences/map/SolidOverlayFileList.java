@@ -24,7 +24,7 @@ public class SolidOverlayFileList extends SolidCheckList {
     }
 
     @Override
-    public CharSequence[] getStringArray() {
+    public String[] getStringArray() {
         String[] array = new String[list.length];
         for (int i=0; i < list.length; i++) {
             array[i] = list[i].getLabel();

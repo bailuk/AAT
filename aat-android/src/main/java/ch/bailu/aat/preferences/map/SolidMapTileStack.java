@@ -1,8 +1,9 @@
 package ch.bailu.aat.preferences.map;
 
-import ch.bailu.aat.map.tile.source.DownloadSource;
+import ch.bailu.aat.map.tile.source.ElevationSource;
+import ch.bailu.aat_lib.service.cache.DownloadSource;
 import ch.bailu.aat.map.tile.source.MapsForgeSource;
-import ch.bailu.aat.map.tile.source.Source;
+import ch.bailu.aat_lib.map.tile.source.Source;
 import ch.bailu.aat_lib.preferences.SolidBoolean;
 import ch.bailu.aat_lib.preferences.SolidCheckList;
 import ch.bailu.aat_lib.preferences.StorageInterface;
@@ -12,10 +13,7 @@ import ch.bailu.aat_lib.resources.Res;
 
 public final class SolidMapTileStack extends SolidCheckList {
 
-
     private final static String KEY = "tile_overlay_";
-
-
 
     public final static int FIRST_OVERLAY_INDEX = 4;
 
@@ -24,8 +22,8 @@ public final class SolidMapTileStack extends SolidCheckList {
             DownloadSource.MAPNIK,
             DownloadSource.OPEN_TOPO_MAP,
             DownloadSource.OPEN_CYCLE_MAP,
-            Source.ELEVATION_COLOR,
-            Source.ELEVATION_HILLSHADE,
+            ElevationSource.ELEVATION_COLOR,
+            ElevationSource.ELEVATION_HILLSHADE,
             DownloadSource.TRANSPORT_OVERLAY,
             DownloadSource.TRAIL_SKATING,
             DownloadSource.TRAIL_HIKING,
@@ -55,7 +53,7 @@ public final class SolidMapTileStack extends SolidCheckList {
 
 
     @Override
-    public CharSequence[] getStringArray() {
+    public String[] getStringArray() {
         String mapsForgeLabel =
                 MapsForgeSource.NAME
                         + " " + srenderTheme.getValueAsThemeName();

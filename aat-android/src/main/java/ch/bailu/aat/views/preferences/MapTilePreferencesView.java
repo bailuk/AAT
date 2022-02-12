@@ -4,16 +4,12 @@ import android.app.Activity;
 import android.content.Context;
 
 import ch.bailu.aat.R;
+import ch.bailu.aat.map.tile.source.ElevationSource;
 import ch.bailu.aat.map.tile.source.MapsForgeSource;
-import ch.bailu.aat.map.tile.source.Source;
 import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat.preferences.map.AndroidMapDirectories;
 import ch.bailu.aat.preferences.map.AndroidSolidDem3Directory;
 import ch.bailu.aat.preferences.map.AndroidSolidTileCacheDirectory;
-import ch.bailu.aat_lib.preferences.map.SolidDem3EnableDownload;
-import ch.bailu.aat_lib.preferences.map.SolidEnableTileCache;
-import ch.bailu.aat_lib.preferences.map.SolidMapsForgeMapFile;
-import ch.bailu.aat_lib.preferences.map.SolidRenderTheme;
 import ch.bailu.aat.preferences.map.SolidTrimDate;
 import ch.bailu.aat.preferences.map.SolidTrimMode;
 import ch.bailu.aat.preferences.map.SolidTrimSize;
@@ -23,7 +19,11 @@ import ch.bailu.aat.util.ui.UiTheme;
 import ch.bailu.aat.views.tileremover.TileRemoverView;
 import ch.bailu.aat_lib.preferences.SolidVolumeKeys;
 import ch.bailu.aat_lib.preferences.StorageInterface;
+import ch.bailu.aat_lib.preferences.map.SolidDem3EnableDownload;
+import ch.bailu.aat_lib.preferences.map.SolidEnableTileCache;
 import ch.bailu.aat_lib.preferences.map.SolidMapsForgeDirectory;
+import ch.bailu.aat_lib.preferences.map.SolidMapsForgeMapFile;
+import ch.bailu.aat_lib.preferences.map.SolidRenderTheme;
 import ch.bailu.aat_lib.preferences.map.SolidTileSize;
 import ch.bailu.aat_lib.resources.ToDo;
 import ch.bailu.foc_android.FocAndroidFactory;
@@ -56,7 +56,7 @@ public class MapTilePreferencesView extends VerticalScrollView {
         add(new SolidDirectoryViewSAF(acontext, new AndroidSolidDem3Directory(context), theme));
         add(new SolidCheckBox(acontext, new SolidDem3EnableDownload(storage), theme));
 
-        add(new TitleView(context, Source.ELEVATION_HILLSHADE.getName(), theme));
+        add(new TitleView(context, ElevationSource.ELEVATION_HILLSHADE.getName(), theme));
         add(new SolidCheckBox(acontext, new SolidEnableTileCache.Hillshade(storage), theme));
 
         add(new TitleView(context, context.getString(R.string.p_trim_cache), theme));

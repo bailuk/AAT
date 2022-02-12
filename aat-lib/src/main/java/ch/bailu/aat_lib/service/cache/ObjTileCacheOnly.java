@@ -1,19 +1,15 @@
-package ch.bailu.aat.services.cache;
+package ch.bailu.aat_lib.service.cache;
 
 import org.mapsforge.core.graphics.TileBitmap;
 import org.mapsforge.core.model.Tile;
 
-import ch.bailu.aat.map.tile.TileFlags;
-import ch.bailu.aat.map.tile.source.Source;
-import ch.bailu.aat.util.graphic.SyncTileBitmap;
 import ch.bailu.aat_lib.app.AppContext;
 import ch.bailu.aat_lib.dispatcher.AppBroadcaster;
+import ch.bailu.aat_lib.map.tile.MapTileInterface;
+import ch.bailu.aat_lib.map.tile.source.Source;
 import ch.bailu.aat_lib.preferences.map.SolidTileSize;
 import ch.bailu.aat_lib.service.ServicesInterface;
 import ch.bailu.aat_lib.service.background.FileTask;
-import ch.bailu.aat_lib.service.cache.Obj;
-import ch.bailu.aat_lib.service.cache.ObjTile;
-import ch.bailu.aat_lib.service.cache.OnObject;
 import ch.bailu.aat_lib.util.Objects;
 import ch.bailu.foc.Foc;
 
@@ -21,7 +17,7 @@ public class ObjTileCacheOnly extends ObjTile {
 
     private final Foc file;
     private final Tile tile;
-    private final SyncTileBitmap bitmap = new SyncTileBitmap();
+    private final MapTileInterface bitmap;
 
     private final Source source;
 
@@ -33,6 +29,7 @@ public class ObjTileCacheOnly extends ObjTile {
         file = sc.toFoc(id);
 
         source = s;
+        bitmap = sc.createMapTile();
 
         sc.getServices().getCacheService().addToBroadcaster(this);
 
@@ -99,7 +96,7 @@ public class ObjTileCacheOnly extends ObjTile {
 
     public boolean isReadyAndLoaded() {
         boolean loaded = isLoaded();
-        boolean notLoadable = isLoadable() == false;
+        boolean notLoadable = !isLoadable();
 
         return loaded || notLoadable;
     }
@@ -141,7 +138,7 @@ public class ObjTileCacheOnly extends ObjTile {
                     tile.bitmap.set(
                             getFile(),
                             SolidTileSize.DEFAULT_TILESIZE,
-                            TileFlags.ALWAYS_TRANSPARENT || tile.source.isTransparent());
+                            tile.source.isTransparent());
 
 
                     sc.getBroadcaster().broadcast(AppBroadcaster.FILE_CHANGED_INCACHE,
@@ -153,8 +150,6 @@ public class ObjTileCacheOnly extends ObjTile {
                 }
             };
             return size[0];
-
-
         }
     }
 

@@ -3,7 +3,7 @@ package ch.bailu.aat_lib.preferences;
 
 public abstract class SolidCheckList extends AbsSolidType {
 
-    public abstract CharSequence[] getStringArray();
+    public abstract String[] getStringArray();
     public abstract boolean[] getEnabledArray();
     public abstract void setEnabled(int i, boolean isChecked);
 

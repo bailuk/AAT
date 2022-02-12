@@ -1,13 +1,10 @@
-package ch.bailu.aat.services.cache;
+package ch.bailu.aat_lib.service.cache;
 
 import org.mapsforge.core.model.Tile;
 
-import ch.bailu.aat.map.tile.source.DownloadSource;
 import ch.bailu.aat_lib.app.AppContext;
 import ch.bailu.aat_lib.service.ServicesInterface;
 import ch.bailu.aat_lib.service.background.DownloadTask;
-import ch.bailu.aat_lib.service.cache.Obj;
-import ch.bailu.aat_lib.service.cache.OnObject;
 import ch.bailu.foc.Foc;
 
 public class ObjTileDownloadable extends ObjTileCacheOnly {

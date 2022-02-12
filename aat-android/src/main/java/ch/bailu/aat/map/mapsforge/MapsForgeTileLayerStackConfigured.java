@@ -3,9 +3,10 @@ package ch.bailu.aat.map.mapsforge;
 import ch.bailu.aat.map.tile.TileProvider;
 import ch.bailu.aat.map.tile.source.CachedSource;
 import ch.bailu.aat.map.tile.source.DoubleSource;
-import ch.bailu.aat.map.tile.source.DownloadSource;
+import ch.bailu.aat.map.tile.source.ElevationSource;
+import ch.bailu.aat_lib.service.cache.DownloadSource;
 import ch.bailu.aat.map.tile.source.MapsForgeSource;
-import ch.bailu.aat.map.tile.source.Source;
+import ch.bailu.aat_lib.map.tile.source.Source;
 import ch.bailu.aat_lib.preferences.map.SolidEnableTileCache;
 import ch.bailu.aat.preferences.map.SolidMapTileStack;
 import ch.bailu.aat_lib.preferences.map.SolidRenderTheme;
@@ -62,7 +63,7 @@ public abstract class MapsForgeTileLayerStackConfigured extends MapsForgeTileLay
         if (scacheHS.isEnabled()) {
             return CachedSource.CACHED_ELEVATION_HILLSHADE;
         }
-        return Source.ELEVATION_HILLSHADE;
+        return ElevationSource.ELEVATION_HILLSHADE;
     }
 
 
@@ -142,7 +143,7 @@ public abstract class MapsForgeTileLayerStackConfigured extends MapsForgeTileLay
                 if (enabled[i]) {
                     Source s = sources[i];
 
-                    if (s == Source.ELEVATION_HILLSHADE) {
+                    if (s == ElevationSource.ELEVATION_HILLSHADE) {
                         s = getHillShadeSource();
                     }
 
