@@ -12,6 +12,7 @@ import ch.bailu.aat_lib.preferences.StorageInterface;
 import ch.bailu.aat_lib.preferences.map.MapDirectories;
 import ch.bailu.aat_lib.preferences.map.SolidMapsForgeDirectory;
 import ch.bailu.aat_lib.preferences.map.SolidMapsForgeMapFile;
+import ch.bailu.aat_lib.preferences.map.SolidRenderTheme;
 import ch.bailu.aat_lib.util.fs.AppDirectory;
 import ch.bailu.foc.Foc;
 import ch.bailu.foc.FocFactory;
@@ -21,7 +22,7 @@ import ch.bailu.foc_android.FocAndroidFactory;
 public class AndroidMapDirectories implements MapDirectories {
 
 
-    private Context context;
+    private final Context context;
 
     public AndroidMapDirectories(Context context) {
         this.context = context;
@@ -47,17 +48,24 @@ public class AndroidMapDirectories implements MapDirectories {
         return FocAndroid.factory(context, external.getAbsolutePath());
     }
 
-    public static SolidMapsForgeDirectory createSolidMapsForgeDirectory(Context c) {
-        final FocFactory foc = new FocAndroidFactory(c);
-        final StorageInterface storage = new Storage(c);
+    @Override
+    public SolidMapsForgeDirectory createSolidDirectory() {
+        final FocFactory foc = new FocAndroidFactory(context);
+        final StorageInterface storage = new Storage(context);
 
-        return new SolidMapsForgeDirectory(storage, foc, new AndroidMapDirectories(c));
+        return new SolidMapsForgeDirectory(storage, foc, this);
     }
 
-    public static SolidMapsForgeMapFile createSolidMapsForgeMapFile(Context c) {
-        final FocFactory foc = new FocAndroidFactory(c);
-        final StorageInterface storage = new Storage(c);
+    @Override
+    public SolidMapsForgeMapFile createSolidFile() {
+        final FocFactory foc = new FocAndroidFactory(context);
+        final StorageInterface storage = new Storage(context);
 
-        return new SolidMapsForgeMapFile(storage, foc, new AndroidMapDirectories(c));
+        return new SolidMapsForgeMapFile(storage, foc, this);
+    }
+
+    @Override
+    public SolidRenderTheme createSolidRenderTheme() {
+        return new SolidRenderTheme(createSolidDirectory(),new FocAndroidFactory(context));
     }
 }

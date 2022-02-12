@@ -17,19 +17,17 @@ public class SolidMapsForgeDirectory extends SolidFile {
 
     private final static String KEY = SolidMapsForgeDirectory.class.getSimpleName();
 
+    private final MapDirectories directories;
+
     public SolidMapsForgeDirectory(StorageInterface storage, FocFactory factory, MapDirectories directories) {
         super(storage, KEY, factory);
         this.directories = directories;
     }
 
-
     @Override
     public String getLabel() {
         return Res.str().p_mapsforge_directory();
     }
-
-
-
 
     @Override
     public String getValueAsString() {
@@ -43,10 +41,6 @@ public class SolidMapsForgeDirectory extends SolidFile {
         }
         return r;
     }
-
-
-    private final MapDirectories directories;
-
 
     public String getDefaultValue() {
         ArrayList<String> list = new ArrayList<>(5);
@@ -63,7 +57,6 @@ public class SolidMapsForgeDirectory extends SolidFile {
         }
         return "";
     }
-
 
     @Override
     public ArrayList<String> buildSelection(ArrayList<String> list) {

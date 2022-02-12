@@ -12,30 +12,20 @@ class ControlBarLayer(private val barControl: MapBars) : MapLayerInterface {
     private var width = 0
     private var height = 0
 
-    override fun onAttached() {
+    override fun onAttached() {}
 
-    }
+    override fun onDetached() {}
 
-    override fun onDetached() {
-
-    }
-
-    override fun onPreferencesChanged(storage: StorageInterface, key: String) {
-
-    }
+    override fun onPreferencesChanged(storage: StorageInterface, key: String) {}
 
     override fun onLayout(changed: Boolean, l: Int, t: Int, r: Int, b: Int) {
         width = r - l
         height = b - t
     }
 
-    override fun drawInside(mcontext: MapContext?) {
+    override fun drawInside(mcontext: MapContext?) {}
 
-    }
-
-    override fun drawForeground(mcontext: MapContext?) {
-
-    }
+    override fun drawForeground(mcontext: MapContext?) {}
 
     override fun onTap(tapXY: Point): Boolean {
         val size: Int = Bar.SIZE

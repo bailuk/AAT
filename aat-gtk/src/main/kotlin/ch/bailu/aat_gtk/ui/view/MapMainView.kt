@@ -24,8 +24,8 @@ class MapMainView(actionHelper: ActionHelper, dispatcher: DispatcherInterface): 
     val overlay = Overlay()
 
     private val barControl = MapBars()
-    private val navigationBar = NavigationBar(actionHelper, map.mContext, GtkAppContext.storage)
-    private val infoBar = InfoBar()
+    private val navigationBar = NavigationBar(map.mContext, GtkAppContext.storage)
+    private val infoBar = InfoBar(actionHelper, map.mContext, GtkAppContext.storage)
     private val editBar = EditBar()
 
     init {

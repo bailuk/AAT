@@ -29,7 +29,7 @@ public class PreferenceLoadDefaults {
 
     private void setDefaults(Context c) {
 
-        SolidRenderTheme stheme = new SolidRenderTheme(AndroidMapDirectories.createSolidMapsForgeDirectory(c), new FocAndroidFactory(c));
+        SolidRenderTheme stheme = new SolidRenderTheme(new AndroidMapDirectories(c).createSolidDirectory(), new FocAndroidFactory(c));
         new SolidMapTileStack(stheme).setDefaults();
         new SolidWeight(new Storage(c)).setDefaults();
         OldSolidMET.setDefaults(new Storage(c));

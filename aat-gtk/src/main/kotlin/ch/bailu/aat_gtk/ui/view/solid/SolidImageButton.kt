@@ -1,6 +1,6 @@
 package ch.bailu.aat_gtk.ui.view.solid
 
-import ch.bailu.aat_gtk.ui.util.IconMap
+import ch.bailu.aat_gtk.ui.view.map.control.Bar
 import ch.bailu.aat_lib.logger.AppLog
 import ch.bailu.aat_lib.map.Attachable
 import ch.bailu.aat_lib.preferences.OnPreferencesChanged
@@ -12,13 +12,8 @@ class SolidImageButton (val solid: SolidIndexList) : OnPreferencesChanged, Attac
 
     val button = Button()
 
-    companion object {
-        const val ICON_SIZE = 25
-    }
-
-
     init {
-        button.child = IconMap.getImage(solid.iconResource, ICON_SIZE)
+        setIcon(solid.iconResource)
 
         button.onClicked {
             solid.cycle()
@@ -27,10 +22,9 @@ class SolidImageButton (val solid: SolidIndexList) : OnPreferencesChanged, Attac
         solid.register(this)
     }
 
-
     override fun onPreferencesChanged(storage: StorageInterface, key: String) {
         if (solid.hasKey(key)) {
-            button.child = IconMap.getImage(solid.iconResource, ICON_SIZE)
+            setIcon(solid.iconResource)
             AppLog.i(this, solid.valueAsString)
         }
     }
@@ -43,4 +37,7 @@ class SolidImageButton (val solid: SolidIndexList) : OnPreferencesChanged, Attac
         solid.unregister(this)
     }
 
+    private fun setIcon(imageResource: String) {
+        Bar.setIcon(button, imageResource)
+    }
 }

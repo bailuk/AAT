@@ -1,33 +1,32 @@
 package ch.bailu.aat_gtk.ui.view.map.control
 
 import ch.bailu.aat_gtk.ui.view.solid.SolidImageButton
-import ch.bailu.aat_gtk.ui.view.solid.SolidMenuButton
 import ch.bailu.aat_lib.dispatcher.OnContentUpdatedInterface
 import ch.bailu.aat_lib.gpx.GpxInformation
 import ch.bailu.aat_lib.logger.AppLog
 import ch.bailu.aat_lib.map.MapContext
 import ch.bailu.aat_lib.preferences.StorageInterface
-import ch.bailu.aat_lib.preferences.map.SolidMapGrid
 import ch.bailu.aat_lib.preferences.map.SolidPositionLock
 import ch.bailu.aat_lib.util.IndexedMap
 import ch.bailu.gtk.gtk.Orientation
 import ch.bailu.gtk.helper.ActionHelper
 
-class NavigationBar(actionHelper: ActionHelper, mcontext: MapContext, storage: StorageInterface) :
+class NavigationBar(mcontext: MapContext, storage: StorageInterface) :
     OnContentUpdatedInterface {
 
     val bar = Bar(Orientation.HORIZONTAL)
     private val plus  = bar.add("zoom-in-symbolic")
     private val minus = bar.add("zoom-out-symbolic")
     private val frame = bar.add("zoom-fit-best-symbolic")
-    private val lock  = bar.add(SolidImageButton(SolidPositionLock(storage, mcontext.solidKey)).button)
-    private val grid  = bar.add(SolidMenuButton(actionHelper, SolidMapGrid(storage, mcontext.solidKey)).button)
+
 
     private val infoCache = IndexedMap<Int, GpxInformation>()
 
     private var boundingCycle = 0
 
     init {
+        bar.add(SolidImageButton(SolidPositionLock(storage, mcontext.solidKey)).button)
+
         plus.onClicked { mcontext.mapView.zoomIn() }
         minus.onClicked { mcontext.mapView.zoomOut() }
 

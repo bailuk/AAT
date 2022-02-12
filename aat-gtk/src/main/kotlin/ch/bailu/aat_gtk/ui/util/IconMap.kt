@@ -42,6 +42,7 @@ object IconMap {
             result = Image.newFromPixbufImage(getPixbuf(name, size))
             images[IconId(name, size)] = result
             result.ref()
+            result.setSizeRequest(size, size)
             result
         } else {
             result

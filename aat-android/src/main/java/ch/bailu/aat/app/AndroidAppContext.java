@@ -103,7 +103,7 @@ public class AndroidAppContext implements AppContext {
 
     @Override
     public SolidMapsForgeDirectory getMapDirectory() {
-        return AndroidMapDirectories.createSolidMapsForgeDirectory(context);
+        return new AndroidMapDirectories(context).createSolidDirectory();
     }
 
     @Override

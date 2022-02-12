@@ -1,32 +1,25 @@
 package ch.bailu.aat_gtk.ui.view.solid
 
-import ch.bailu.aat_gtk.ui.view.menu.GtkMenu
+import ch.bailu.aat_gtk.ui.view.menu.PopupButton
 import ch.bailu.aat_gtk.ui.view.menu.SolidIndexMenu
 import ch.bailu.aat_lib.logger.AppLog
 import ch.bailu.aat_lib.map.Attachable
 import ch.bailu.aat_lib.preferences.OnPreferencesChanged
 import ch.bailu.aat_lib.preferences.SolidIndexList
 import ch.bailu.aat_lib.preferences.StorageInterface
-import ch.bailu.gtk.gtk.MenuButton
 import ch.bailu.gtk.helper.ActionHelper
 
-class SolidMenuButton(actionHelper: ActionHelper, private val solid: SolidIndexList): OnPreferencesChanged, Attachable {
-    val button = MenuButton()
-
-    companion object {
-        const val ICON_SIZE = 25
-    }
+class SolidMenuButton(actionHelper: ActionHelper, private val solid: SolidIndexList)
+    : PopupButton(actionHelper, SolidIndexMenu(solid)), OnPreferencesChanged, Attachable {
 
     init {
-        //button. .child = IconMap.getImage(solid.iconResource, ICON_SIZE)
-        button.menuModel = GtkMenu(actionHelper, SolidIndexMenu(solid)).menu
         solid.register(this)
+        setIcon(solid.iconResource)
     }
-
 
     override fun onPreferencesChanged(storage: StorageInterface, key: String) {
         if (solid.hasKey(key)) {
-            //button.image = IconMap.getImage(solid.iconResource, ICON_SIZE)
+            setIcon(solid.iconResource)
             AppLog.i(this, solid.valueAsString)
         }
     }
@@ -38,5 +31,4 @@ class SolidMenuButton(actionHelper: ActionHelper, private val solid: SolidIndexL
     override fun onDetached() {
         solid.unregister(this)
     }
-
 }

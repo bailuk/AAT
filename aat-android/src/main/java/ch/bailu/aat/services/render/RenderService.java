@@ -1,5 +1,7 @@
 package ch.bailu.aat.services.render;
 
+import androidx.annotation.NonNull;
+
 import org.mapsforge.core.model.Tile;
 
 import ch.bailu.aat.preferences.map.AndroidMapDirectories;
@@ -27,9 +29,8 @@ public final class RenderService  extends VirtualService
 
     public RenderService(ServiceContext sc) {
 
-
-        sdirectory = AndroidMapDirectories.createSolidMapsForgeDirectory(sc.getContext());
-        stheme = new SolidRenderTheme(AndroidMapDirectories.createSolidMapsForgeDirectory(sc.getContext()), new FocAndroidFactory(sc.getContext()));
+        sdirectory = new AndroidMapDirectories(sc.getContext()).createSolidDirectory();
+        stheme = new SolidRenderTheme(sdirectory, new FocAndroidFactory(sc.getContext()));
 
         sdirectory.getStorage().register(this);
         reconfigureRenderer();
@@ -65,7 +66,7 @@ public final class RenderService  extends VirtualService
 
 
     @Override
-    public void onPreferencesChanged(StorageInterface s, String key) {
+    public void onPreferencesChanged(@NonNull StorageInterface s, @NonNull String key) {
         if (sdirectory.hasKey(key) || stheme.hasKey(key)) {
             reconfigureRenderer();
         }

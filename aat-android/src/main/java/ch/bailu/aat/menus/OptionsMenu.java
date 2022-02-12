@@ -107,7 +107,7 @@ public final class OptionsMenu extends AbsMenu {
 
 
         } else if (item == map) {
-            SolidRenderTheme stheme = new SolidRenderTheme(AndroidMapDirectories.createSolidMapsForgeDirectory(c), new FocAndroidFactory(c));
+            SolidRenderTheme stheme = new SolidRenderTheme(new AndroidMapDirectories(c).createSolidDirectory(), new FocAndroidFactory(c));
             new SolidCheckListDialog(c,new SolidMapTileStack(stheme));
         } else {
             return false;

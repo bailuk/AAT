@@ -42,7 +42,7 @@ public final class MapMenu extends AbsMenu {
         overlays = menu.add(R.string.p_overlay);
         overlays.setIcon(R.drawable.view_paged_inverse);
 
-        SolidMapsForgeMapFile smapFile = AndroidMapDirectories.createSolidMapsForgeMapFile(context);
+        SolidMapsForgeMapFile smapFile = new AndroidMapDirectories(context).createSolidFile();
         map = menu.add(smapFile.getLabel());
         theme = menu.add(new SolidRenderTheme(smapFile, new FocAndroidFactory(context)).getLabel());
 
@@ -50,9 +50,6 @@ public final class MapMenu extends AbsMenu {
 
         reload = menu.add(R.string.tt_info_reload);
         reload.setIcon(R.drawable.view_refresh);
-
-
-
     }
 
     @Override
@@ -66,9 +63,7 @@ public final class MapMenu extends AbsMenu {
     }
 
     @Override
-    public void prepare(Menu menu) {
-
-    }
+    public void prepare(Menu menu) {}
 
     @Override
     public boolean onItemClick(MenuItem item) {
@@ -89,7 +84,7 @@ public final class MapMenu extends AbsMenu {
         } else if (item == theme) {
             new SolidStringDialog(c, stheme);
         } else if (item == map) {
-            new SolidStringDialog(c, new SolidMapsForgeMapFile(storage, foc, new AndroidMapDirectories(c)));
+            new SolidStringDialog(c,new AndroidMapDirectories(c).createSolidFile());
         } else if (item == preferences) {
             MultiView.storeActive(c, PreferencesActivity.SOLID_KEY, 1);
             ActivitySwitcher.start(context, PreferencesActivity.class);

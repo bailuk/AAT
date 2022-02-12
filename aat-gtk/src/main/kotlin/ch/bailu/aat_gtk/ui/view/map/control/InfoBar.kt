@@ -1,11 +1,26 @@
 package ch.bailu.aat_gtk.ui.view.map.control
 
+import ch.bailu.aat_gtk.app.GtkAppContext
+import ch.bailu.aat_gtk.ui.view.menu.MapMenu
+import ch.bailu.aat_gtk.ui.view.menu.MapQueryMenu
+import ch.bailu.aat_gtk.ui.view.menu.PopupButton
+import ch.bailu.aat_gtk.ui.view.menu.model.LocationMenu
+import ch.bailu.aat_gtk.ui.view.solid.SolidMenuButton
+import ch.bailu.aat_lib.map.MapContext
+import ch.bailu.aat_lib.preferences.StorageInterface
+import ch.bailu.aat_lib.preferences.map.SolidLegend
+import ch.bailu.aat_lib.preferences.map.SolidMapGrid
 import ch.bailu.gtk.gtk.Orientation
+import ch.bailu.gtk.helper.ActionHelper
 
-class InfoBar {
+class InfoBar(actionHelper: ActionHelper, mcontext: MapContext, storage: StorageInterface) {
 
-    val bar = Bar(Orientation.VERTICAL)
-    private val plus  = bar.add("zoom-in-symbolic")
-    private val minus = bar.add("zoom-out-symbolic")
-    private val frame = bar.add("zoom-fit-best-symbolic")
+    val bar = Bar(Orientation.VERTICAL).apply {
+
+        add(PopupButton(actionHelper, MapMenu(storage, GtkAppContext)).apply { setIcon("menu") }.overlay)
+        add(SolidMenuButton(actionHelper, SolidMapGrid(storage, mcontext.solidKey)).overlay)
+        add(SolidMenuButton(actionHelper, SolidLegend(storage, mcontext.solidKey)).overlay)
+        add(PopupButton(actionHelper, MapQueryMenu()).apply { setIcon("search") }.overlay)
+        add(PopupButton(actionHelper, LocationMenu()).apply { setIcon("location") }.overlay)
+    }
 }
