@@ -11,7 +11,6 @@ import ch.bailu.aat_lib.preferences.StorageInterface
 import ch.bailu.aat_lib.util.Limit
 import ch.bailu.gtk.cairo.Context
 import org.mapsforge.core.model.*
-import org.mapsforge.core.model.Point
 import org.mapsforge.core.util.LatLongUtils
 import org.mapsforge.core.util.Parameters
 import org.mapsforge.map.datastore.MapDataStore
@@ -66,7 +65,7 @@ class GtkCustomMapView (
             private var center: LatLong = model.mapViewPosition.center
             override fun onChange() {
                 val newCenter: LatLong = model.mapViewPosition.center
-                if (newCenter != null && newCenter != center) {
+                if (newCenter != center) {
                     center = newCenter
                     pos.onMapCenterChanged(center)
                 }
@@ -132,6 +131,13 @@ class GtkCustomMapView (
                 model.mapViewPosition.zoomLevelMax.toInt()
             ).toByte()
         )
+    }
+
+    override fun onResize(width: Int, height: Int) {
+        super.onResize(width, height)
+        layers.forEach {
+            it.onLayout(true, 0,0,width, height)
+        }
     }
 
     override fun requestRedraw() {

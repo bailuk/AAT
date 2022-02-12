@@ -4,44 +4,41 @@ import ch.bailu.gtk.GTK
 import ch.bailu.gtk.gtk.Align
 import ch.bailu.gtk.gtk.Box
 
-class BarControl  {
+class MapBars  {
     companion object {
-        const val ICON_SIZE = 24
         const val TOP = 0
         const val LEFT = 1
         const val BOTTOM = 2
         const val RIGHT = 3
     }
 
-
     private val controlBars = HashMap<Int, Box>()
 
-    open fun isVisible(pos: Int): Boolean {
-        return GTK.IS(controlBars[pos]?.visible ?: GTK.FALSE)
-    }
-
     fun add(bar: Box, pos: Int): Box {
+        bar.visible = GTK.FALSE
         controlBars[pos] = bar
 
-        if (pos == TOP) {
-            bar.halign = Align.FILL
-            bar.valign = Align.START
-        } else if (pos == BOTTOM) {
-            bar.halign = Align.FILL
-            bar.valign = Align.END
-        } else if (pos == LEFT) {
-            bar.valign = Align.FILL
-            bar.halign = Align.END
-        } else if (pos == RIGHT) {
-            bar.valign = Align.FILL
-            bar.halign = Align.START
+        when (pos) {
+            TOP -> {
+                bar.halign = Align.FILL
+                bar.valign = Align.START
+            } BOTTOM -> {
+                bar.halign = Align.FILL
+                bar.valign = Align.END
+            } LEFT -> {
+                bar.valign = Align.FILL
+                bar.halign = Align.START
+            } RIGHT -> {
+                bar.valign = Align.FILL
+                bar.halign = Align.END
+            }
+
         }
         return bar
     }
 
-
     fun hide() {
-        controlBars.forEach { it.value.hide() }
+        controlBars.forEach { it.value.visible = GTK.FALSE }
     }
 
     fun show(p: Int) {

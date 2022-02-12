@@ -1,6 +1,5 @@
 package ch.bailu.aat_gtk.ui.view.map.control
 
-import ch.bailu.aat_gtk.ui.util.IconMap
 import ch.bailu.aat_gtk.ui.view.solid.SolidImageButton
 import ch.bailu.aat_gtk.ui.view.solid.SolidMenuButton
 import ch.bailu.aat_lib.dispatcher.OnContentUpdatedInterface
@@ -11,48 +10,33 @@ import ch.bailu.aat_lib.preferences.StorageInterface
 import ch.bailu.aat_lib.preferences.map.SolidMapGrid
 import ch.bailu.aat_lib.preferences.map.SolidPositionLock
 import ch.bailu.aat_lib.util.IndexedMap
-import ch.bailu.gtk.gtk.Box
-import ch.bailu.gtk.gtk.Button
 import ch.bailu.gtk.gtk.Orientation
 import ch.bailu.gtk.helper.ActionHelper
 
 class NavigationBar(actionHelper: ActionHelper, mcontext: MapContext, storage: StorageInterface) :
     OnContentUpdatedInterface {
 
-    val box = Box(Orientation.HORIZONTAL, 2)
-    private val plus: Button = Button()
-    private val minus: Button = Button()
-    private val frame: Button = Button()
-    private val lock = SolidImageButton(SolidPositionLock(storage, mcontext.solidKey))
-    private val grid = SolidMenuButton(actionHelper, SolidMapGrid(storage, mcontext.solidKey))
+    val bar = Bar(Orientation.HORIZONTAL)
+    private val plus  = bar.add("zoom-in-symbolic")
+    private val minus = bar.add("zoom-out-symbolic")
+    private val frame = bar.add("zoom-fit-best-symbolic")
+    private val lock  = bar.add(SolidImageButton(SolidPositionLock(storage, mcontext.solidKey)).button)
+    private val grid  = bar.add(SolidMenuButton(actionHelper, SolidMapGrid(storage, mcontext.solidKey)).button)
 
     private val infoCache = IndexedMap<Int, GpxInformation>()
 
     private var boundingCycle = 0
 
     init {
-
-
-        plus.child = IconMap.getImage("zoom-in-symbolic", BarControl.ICON_SIZE)
         plus.onClicked { mcontext.mapView.zoomIn() }
-        box.append(plus)
-
-        minus.child = IconMap.getImage("zoom-out-symbolic", BarControl.ICON_SIZE)
         minus.onClicked { mcontext.mapView.zoomOut() }
-        box.append(minus)
 
-        box.append(lock.button)
-
-        frame.child = IconMap.getImage("zoom-fit-best-symbolic", BarControl.ICON_SIZE)
         frame.onClicked {
             if (nextInBoundingCycle()) {
                 mcontext.mapView.frameBounding(infoCache.getAt(boundingCycle)?.boundingBox)
                 AppLog.i(infoCache.getAt(boundingCycle)?.getFile()?.name)
             }
         }
-        box.append(frame)
-
-        box.append(grid.button)
     }
 
     private fun nextInBoundingCycle(): Boolean {
@@ -67,7 +51,7 @@ class NavigationBar(actionHelper: ActionHelper, mcontext: MapContext, storage: S
             val pointList = info?.gpxList?.pointList
 
             if (boundingBox != null && pointList != null) {
-                return boundingBox.hasBounding() && pointList.size() > 0;
+                return boundingBox.hasBounding() && pointList.size() > 0
             }
         }
         return false
