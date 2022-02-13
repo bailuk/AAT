@@ -76,7 +76,7 @@ application {
 */
 
 // With this gradle tries to load all dependencies of all modules during configuration
-
+/*
 val fatJar = task("fatJar", type = Jar::class) {
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 
@@ -86,4 +86,4 @@ val fatJar = task("fatJar", type = Jar::class) {
     from(configurations.runtimeClasspath.get().map { if (it.isDirectory) it else zipTree(it) })
     with(tasks.jar.get() as CopySpec)
 }
-
+*/

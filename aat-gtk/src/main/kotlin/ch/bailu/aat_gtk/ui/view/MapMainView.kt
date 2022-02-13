@@ -7,6 +7,7 @@ import ch.bailu.aat_gtk.ui.view.map.control.EditBar
 import ch.bailu.aat_gtk.ui.view.map.control.InfoBar
 import ch.bailu.aat_gtk.ui.view.map.control.NavigationBar
 import ch.bailu.aat_gtk.ui.view.map.layer.ControlBarLayer
+import ch.bailu.aat_gtk.ui.view.solid.UiController
 import ch.bailu.aat_lib.dispatcher.DispatcherInterface
 import ch.bailu.aat_lib.gpx.InfoID
 import ch.bailu.aat_lib.map.Attachable
@@ -18,14 +19,14 @@ import ch.bailu.gtk.helper.ActionHelper
 import java.io.File
 import java.util.*
 
-class MapMainView(actionHelper: ActionHelper, dispatcher: DispatcherInterface): Attachable {
+class MapMainView(actionHelper: ActionHelper, dispatcher: DispatcherInterface, uiController: UiController): Attachable {
 
     val map = GtkCustomMapView(GtkAppContext.storage, getMapFiles(), dispatcher)
     val overlay = Overlay()
 
     private val barControl = MapBars()
     private val navigationBar = NavigationBar(map.mContext, GtkAppContext.storage)
-    private val infoBar = InfoBar(actionHelper, map.mContext, GtkAppContext.storage)
+    private val infoBar = InfoBar(actionHelper, map.mContext, GtkAppContext.storage, uiController)
     private val editBar = EditBar()
 
     init {

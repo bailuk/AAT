@@ -1,6 +1,6 @@
 package ch.bailu.aat_gtk.ui.view
 
-import ch.bailu.aat_gtk.ui.view.solid.ContextCallback
+import ch.bailu.aat_gtk.ui.view.solid.UiController
 import ch.bailu.aat_lib.dispatcher.OnContentUpdatedInterface
 import ch.bailu.aat_lib.gpx.GpxInformation
 import ch.bailu.aat_lib.gpx.InfoID
@@ -9,7 +9,7 @@ import ch.bailu.gtk.gtk.*
 import ch.bailu.gtk.helper.LabelHelper
 import ch.bailu.gtk.type.Str
 
-class ContextBar(contextCallback: ContextCallback) : OnContentUpdatedInterface {
+class ContextBar(contextCallback: UiController) : OnContentUpdatedInterface {
     val revealer = Revealer()
 
     private val label = Label()

@@ -1,41 +1,45 @@
 package ch.bailu.aat_gtk.ui.view.menu
 
-import ch.bailu.aat_gtk.ui.view.menu.model.Item
-import ch.bailu.aat_gtk.ui.view.menu.model.Type
+import ch.bailu.aat_gtk.ui.view.menu.model.*
 import ch.bailu.gtk.gio.Menu
 import ch.bailu.gtk.gio.MenuItem
 import ch.bailu.gtk.helper.ActionHelper
 import ch.bailu.gtk.type.Str
-import java.util.*
-import kotlin.collections.ArrayList
 import ch.bailu.aat_gtk.ui.view.menu.model.Menu as MenuModel
 
 class GtkMenu(actionHelper: ActionHelper, model: MenuModel){
-    val menu = Menu()
+    val menu = Menu().apply {
+        appendSection(strOrNull(model.title), createMenu(actionHelper, model))
+    }
 
-    init {
 
-        var section = Menu()
-        var id = ""
+
+    private fun createMenu(actionHelper: ActionHelper, model: MenuModel) : Menu {
+        val result = Menu()
+
         var index = 0
-        var items = ArrayList<Item>()
+        var items = ArrayList<RadioItem>()
+        var group = Group()
+
 
         model.forEach { it ->
 
-            when (it.type) {
-                Type.SEPARATOR -> {
-                    menu.appendSection(null, section)
-                    section = Menu()
-                    index = 0
+            when (it) {
+                is SubmenuItem -> {
+                    result.appendSubmenu(Str(it.menu.title), createMenu(actionHelper, it.menu))
                 }
 
-                Type.RADIO -> {
+                is SeparatorItem -> {
+                    result.appendSection(strOrNull(it.menu.title), createMenu(actionHelper, it.menu))
+                }
 
-                    if (index == 0) {
-                        items = ArrayList<Item>()
-                        id = UUID.randomUUID().toString()
+                is RadioItem -> {
+                    if (group != it.group) {
+                        index = 0
+                        group = it.group
+                        items = ArrayList<RadioItem>()
 
-                        actionHelper.add(id, index) {
+                        actionHelper.add(group.id, index) {
                             val idx = it?.int32 ?: 0
 
                             if (idx < items.size)
@@ -43,35 +47,37 @@ class GtkMenu(actionHelper: ActionHelper, model: MenuModel){
                         }
                     }
                     items.add(it)
-                    val item = MenuItem(Str(it.label), Str("app.${id}(${index})"))
-                    section.appendItem(item)
+                    val item = MenuItem(Str(it.label), Str("app.${group.id}(${index})"))
+                    result.appendItem(item)
 
                     index++
                 }
 
-                Type.LABEL -> {
-                    id = UUID.randomUUID().toString()
-                    index = 0
-
-                    val item = MenuItem(Str(it.label), Str("app.${id}"))
-                    section.appendItem(item)
-
+                is LabelItem -> {
+                    result.appendItem(toGtkItem(it.label, it.id))
                     val i = it
-                    actionHelper.add(id) {i.onSelected(i)}
+                    actionHelper.add(it.id) { i.onSelected(i) }
                 }
 
-                Type.CHECK -> {
-                    id = UUID.randomUUID().toString()
-                    index = 0
-
-                    val item = MenuItem(Str(it.label), Str("app.${id}"))
-                    section.appendItem(item)
-
+                is CheckItem -> {
+                    result.appendItem(toGtkItem(it.label, it.id))
                     val i = it
-                    actionHelper.add(id, it.selected) {i.onSelected(i)}
+                    actionHelper.add(it.id, it.selected) { i.onSelected(i) }
                 }
             }
         }
-        menu.appendSection(null, section)
+        return result
+    }
+
+    private fun toGtkItem(label : String, id: String) : MenuItem {
+        return MenuItem(Str(label), Str("app.${id}"))
+    }
+
+    private fun strOrNull(title: String): Str? {
+        return if (title.isNotEmpty()) {
+            Str(title)
+        } else {
+            null
+        }
     }
 }

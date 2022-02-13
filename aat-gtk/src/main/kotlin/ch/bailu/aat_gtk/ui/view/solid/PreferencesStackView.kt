@@ -7,6 +7,7 @@ import ch.bailu.gtk.gtk.*
 import ch.bailu.gtk.type.Str
 
 class PreferencesStackView(storage: StorageInterface, window: Window) {
+
     val layout = Box(Orientation.VERTICAL, 5)
     private val switcher = StackSwitcher()
     private val stack = Stack()
@@ -31,4 +32,9 @@ class PreferencesStackView(storage: StorageInterface, window: Window) {
 
         layout.show()
     }
+
+    fun showMap() {
+        stack.visibleChild = map.scrolled
+    }
+
 }

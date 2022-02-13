@@ -3,7 +3,7 @@ package ch.bailu.aat_gtk.ui.view
 import ch.bailu.aat_gtk.app.GtkAppContext
 import ch.bailu.aat_gtk.ui.view.description.CockpitView
 import ch.bailu.aat_gtk.ui.view.list.FileList
-import ch.bailu.aat_gtk.ui.view.solid.ContextCallback
+import ch.bailu.aat_gtk.ui.view.solid.UiController
 import ch.bailu.aat_gtk.ui.view.solid.PreferencesStackView
 import ch.bailu.aat_lib.description.*
 import ch.bailu.aat_lib.dispatcher.DispatcherInterface
@@ -16,12 +16,12 @@ import ch.bailu.gtk.gtk.Window
 import ch.bailu.gtk.helper.ActionHelper
 import ch.bailu.gtk.type.Str
 
-class MainStackView (actionHelper: ActionHelper, dispatcher: DispatcherInterface, window: Window) : ContextCallback {
+class MainStackView (actionHelper: ActionHelper, dispatcher: DispatcherInterface, window: Window) : UiController {
 
     val layout = Stack()
 
     private val preferences = PreferencesStackView(GtkAppContext.storage, window)
-    private val map = MapMainView(actionHelper, dispatcher)
+    private val map = MapMainView(actionHelper, dispatcher, this)
     private val cockpit = CockpitView()
     private val fileList = FileList(dispatcher)
     private val detail = GpxDetailView(dispatcher, GtkAppContext.storage)
@@ -79,5 +79,10 @@ class MainStackView (actionHelper: ActionHelper, dispatcher: DispatcherInterface
 
     override fun showInList() {
         showFiles()
+    }
+
+    override fun showPreferencesMap() {
+        showPreferences()
+        preferences.showMap()
     }
 }
