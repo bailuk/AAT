@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 
 import ch.bailu.aat.preferences.map.AndroidMapDirectories;
-import ch.bailu.aat.preferences.map.SolidMapTileStack;
+import ch.bailu.aat_lib.preferences.map.SolidMapTileStack;
 import ch.bailu.aat.util.AppPermission;
 import ch.bailu.aat_lib.preferences.OldSolidMET;
 import ch.bailu.aat_lib.preferences.SolidLong;

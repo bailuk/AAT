@@ -10,7 +10,7 @@ import ch.bailu.aat.activities.ActivitySwitcher;
 import ch.bailu.aat.activities.PreferencesActivity;
 import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat.preferences.map.AndroidMapDirectories;
-import ch.bailu.aat.preferences.map.SolidMapTileStack;
+import ch.bailu.aat_lib.preferences.map.SolidMapTileStack;
 import ch.bailu.aat_lib.preferences.map.SolidRenderTheme;
 import ch.bailu.aat.preferences.presets.SolidBacklight;
 import ch.bailu.aat.services.ServiceContext;

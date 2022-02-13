@@ -60,7 +60,16 @@ class GtkMenu(actionHelper: ActionHelper, model: MenuModel){
                     actionHelper.add(id) {i.onSelected(i)}
                 }
 
-                else -> {}
+                Type.CHECK -> {
+                    id = UUID.randomUUID().toString()
+                    index = 0
+
+                    val item = MenuItem(Str(it.label), Str("app.${id}"))
+                    section.appendItem(item)
+
+                    val i = it
+                    actionHelper.add(id, it.selected) {i.onSelected(i)}
+                }
             }
         }
         menu.appendSection(null, section)

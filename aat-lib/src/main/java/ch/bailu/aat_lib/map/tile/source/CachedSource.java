@@ -1,11 +1,10 @@
-package ch.bailu.aat.map.tile.source;
+package ch.bailu.aat_lib.map.tile.source;
 
 import org.mapsforge.core.model.Tile;
 
-import ch.bailu.aat.services.cache.ObjTileCached;
 import ch.bailu.aat_lib.app.AppContext;
-import ch.bailu.aat_lib.map.tile.source.Source;
 import ch.bailu.aat_lib.service.cache.Obj;
+import ch.bailu.aat_lib.service.cache.ObjTileCached;
 
 public class CachedSource extends Source {
     private final Source source;
@@ -50,8 +49,6 @@ public class CachedSource extends Source {
     }
 
 
-//    public final static Source CACHED_ELEVATION_COLOR = new Source(Source.ELEVATION_COLOR);
     public final static CachedSource CACHED_ELEVATION_HILLSHADE = new CachedSource(ElevationSource.ELEVATION_HILLSHADE);
-    //public final static Source CACHED_MAPSFORGE = new Source(Source.MAPSFORGE);
 }
 

@@ -21,8 +21,8 @@ class SolidMenuButton
 
     }
 
-    constructor(actionHelper: ActionHelper, soldiCheckList: SolidCheckList) : super(actionHelper, SolidCheckMenu(soldiCheckList)) {
-        solid = soldiCheckList
+    constructor(actionHelper: ActionHelper, solidCheckList: SolidCheckList) : super(actionHelper, SolidCheckMenu(solidCheckList)) {
+        solid = solidCheckList
         solid.register(this)
         setIcon(solid.iconResource)
     }

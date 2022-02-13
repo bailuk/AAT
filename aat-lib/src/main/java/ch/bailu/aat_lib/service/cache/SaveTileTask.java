@@ -1,4 +1,4 @@
-package ch.bailu.aat.services.cache;
+package ch.bailu.aat_lib.service.cache;
 
 import org.mapsforge.core.graphics.TileBitmap;
 
@@ -8,9 +8,6 @@ import ch.bailu.aat_lib.app.AppContext;
 import ch.bailu.aat_lib.dispatcher.AppBroadcaster;
 import ch.bailu.aat_lib.logger.AppLog;
 import ch.bailu.aat_lib.service.background.FileTask;
-import ch.bailu.aat_lib.service.cache.Obj;
-import ch.bailu.aat_lib.service.cache.ObjTile;
-import ch.bailu.aat_lib.service.cache.OnObject;
 import ch.bailu.foc.Foc;
 
 public final class SaveTileTask extends FileTask {
@@ -44,7 +41,7 @@ public final class SaveTileTask extends FileTask {
         OutputStream out = null;
         Foc file = getFile();
 
-        if (file.exists() == false) {
+        if (!file.exists()) {
             try {
 
                 out = file.openW();

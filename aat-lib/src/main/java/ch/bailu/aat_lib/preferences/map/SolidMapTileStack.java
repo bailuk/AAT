@@ -1,14 +1,13 @@
-package ch.bailu.aat.preferences.map;
+package ch.bailu.aat_lib.preferences.map;
 
-import ch.bailu.aat.map.tile.source.ElevationSource;
-import ch.bailu.aat_lib.service.cache.DownloadSource;
+import ch.bailu.aat_lib.map.tile.source.ElevationSource;
 import ch.bailu.aat_lib.map.tile.source.MapsForgeSource;
 import ch.bailu.aat_lib.map.tile.source.Source;
 import ch.bailu.aat_lib.preferences.SolidBoolean;
 import ch.bailu.aat_lib.preferences.SolidCheckList;
 import ch.bailu.aat_lib.preferences.StorageInterface;
-import ch.bailu.aat_lib.preferences.map.SolidRenderTheme;
 import ch.bailu.aat_lib.resources.Res;
+import ch.bailu.aat_lib.service.cache.DownloadSource;
 
 
 public final class SolidMapTileStack extends SolidCheckList {
