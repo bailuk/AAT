@@ -1,39 +1,38 @@
-package ch.bailu.aat.services.cache.elevation;
+package ch.bailu.aat_lib.service.cache.elevation;
 
-import android.graphics.Bitmap;
-import android.graphics.Color;
-import android.graphics.Rect;
 
 import org.mapsforge.core.graphics.TileBitmap;
 import org.mapsforge.core.model.Tile;
 
-import ch.bailu.aat_lib.service.elevation.tile.DemSplitter;
-import ch.bailu.aat.util.graphic.SyncTileBitmap;
 import ch.bailu.aat_lib.app.AppContext;
+import ch.bailu.aat_lib.map.tile.MapTileInterface;
 import ch.bailu.aat_lib.preferences.map.SolidTileSize;
 import ch.bailu.aat_lib.service.cache.ObjTile;
 import ch.bailu.aat_lib.service.elevation.tile.Dem3Tile;
 import ch.bailu.aat_lib.service.elevation.tile.DemDimension;
 import ch.bailu.aat_lib.service.elevation.tile.DemGeoToIndex;
 import ch.bailu.aat_lib.service.elevation.tile.DemProvider;
+import ch.bailu.aat_lib.service.elevation.tile.DemSplitter;
 import ch.bailu.aat_lib.service.elevation.updater.ElevationUpdaterClient;
+import ch.bailu.aat_lib.util.Rect;
 
 public abstract class ObjTileElevation extends ObjTile implements ElevationUpdaterClient {
 
     private final Tile mapTile;
     private final int split;
 
-    private final SyncTileBitmap bitmap = new SyncTileBitmap();
+    private final MapTileInterface bitmap;
 
     private final SubTiles subTiles = new SubTiles();
     private final Raster raster = new Raster();
 
 
 
-    public ObjTileElevation(String id, Tile _map_tile, int _split) {
+    public ObjTileElevation(String id, MapTileInterface bitmap, Tile _map_tile, int _split) {
         super(id);
         mapTile = _map_tile;
         split = _split;
+        this.bitmap = bitmap;
     }
 
 
@@ -144,7 +143,7 @@ public abstract class ObjTileElevation extends ObjTile implements ElevationUpdat
 
         if (isInitialized()) {
 
-            final SubTile subTile = subTiles.take(dem3Tile.hashCode());
+            final SubTile subTile = subTiles.take(dem3Tile.getCoordinates());
 
             if (subTile != null) {
 
@@ -159,43 +158,14 @@ public abstract class ObjTileElevation extends ObjTile implements ElevationUpdat
 
 
     private long paintSubTile(SubTile subTile, Dem3Tile dem3Tile) {
-        Bitmap b = initBitmap();
 
-        if (b != null) {
-            final Rect interR = subTile.toRect();
+        final Rect interR = subTile.toRect();
+        final int[] buffer = new int[interR.width() * interR.height()];
+        fillBuffer(buffer, raster, subTile, split(dem3Tile));
 
-            final int[] buffer = new int[interR.width() * interR.height()];
+        bitmap.setBuffer(buffer, interR);
 
-            fillBuffer(buffer, raster, subTile, split(dem3Tile));
-
-            b.setPixels(
-                    buffer,
-                    0,
-                    interR.width(),
-                    interR.left,
-                    interR.top,
-                    interR.width(),
-                    interR.height());
-
-            return interR.width() * interR.height() * 2;
-        }
-
-        return 0;
-    }
-
-
-
-    private Bitmap initBitmap() {
-        synchronized(bitmap) {
-            Bitmap b = bitmap.getAndroidBitmap();
-            if (b == null) {
-                bitmap.set(SolidTileSize.DEFAULT_TILESIZE, true);
-                b = bitmap.getAndroidBitmap();
-
-                if (b != null) b.eraseColor(Color.TRANSPARENT);
-            }
-            return b;
-        }
+        return (long) interR.width() * interR.height() * 2;
     }
 
     public long bgOnProcessInitializer(AppContext a) {
@@ -205,7 +175,6 @@ public abstract class ObjTileElevation extends ObjTile implements ElevationUpdat
 
         return SolidTileSize.DEFAULT_TILESIZE * 2;
     }
-
 
     public void requestElevationUpdates(AppContext appContext) {
         if (isInitialized())

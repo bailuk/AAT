@@ -26,7 +26,7 @@ import ch.bailu.aat.map.MapDensity;
 import ch.bailu.aat.map.tile.TileProvider;
 import ch.bailu.aat.map.tile.source.CacheOnlySource;
 import ch.bailu.aat_lib.service.cache.DownloadSource;
-import ch.bailu.aat.map.tile.source.MapsForgeSource;
+import ch.bailu.aat_lib.map.tile.source.MapsForgeSource;
 import ch.bailu.aat_lib.map.tile.source.Source;
 import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat.preferences.map.SolidMapTileStack;

@@ -2,6 +2,7 @@ package ch.bailu.aat_lib.map.tile;
 
 import org.mapsforge.core.graphics.TileBitmap;
 
+import ch.bailu.aat_lib.util.Rect;
 import ch.bailu.foc.Foc;
 
 public interface MapTileInterface {
@@ -16,4 +17,5 @@ public interface MapTileInterface {
 
     long getSize();
 
+    void setBuffer(int[] buffer, Rect interR);
 }

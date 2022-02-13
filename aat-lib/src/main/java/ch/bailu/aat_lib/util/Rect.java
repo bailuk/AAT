@@ -5,7 +5,9 @@ package ch.bailu.aat_lib.util;
  * To keep some code independent from UI libraries.
  */
 public class Rect {
+
     public int left, right, top, bottom;
+
 
     /**
      * Set new left and top coordinates while keeping width and height
@@ -32,5 +34,25 @@ public class Rect {
         right+=x;
         top+=y;
         bottom+=y;
+    }
+
+    public int width() {
+        return right - left + 1;
+    }
+
+    public int height() {
+        return bottom - top + 1;
+    }
+
+    @Override
+    public String toString() {
+        return "Rect{" +
+                "left=" + left +
+                ", right=" + right +
+                ", top=" + top +
+                ", bottom=" + bottom +
+                ", width=" + width() +
+                ", height=" + height() +
+                '}';
     }
 }

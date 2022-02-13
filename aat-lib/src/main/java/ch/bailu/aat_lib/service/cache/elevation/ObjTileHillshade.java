@@ -1,22 +1,23 @@
-package ch.bailu.aat.services.cache.elevation;
+package ch.bailu.aat_lib.service.cache.elevation;
 
 import org.mapsforge.core.model.Tile;
 
-import ch.bailu.aat_lib.service.elevation.tile.DemSplitter;
-import ch.bailu.aat_lib.service.elevation.tile.MultiCell;
-import ch.bailu.aat_lib.service.elevation.tile.MultiCell8;
 import ch.bailu.aat_lib.app.AppContext;
+import ch.bailu.aat_lib.map.tile.MapTileInterface;
 import ch.bailu.aat_lib.service.cache.Obj;
 import ch.bailu.aat_lib.service.elevation.tile.DemDimension;
 import ch.bailu.aat_lib.service.elevation.tile.DemGeoToIndex;
 import ch.bailu.aat_lib.service.elevation.tile.DemProvider;
+import ch.bailu.aat_lib.service.elevation.tile.DemSplitter;
+import ch.bailu.aat_lib.service.elevation.tile.MultiCell;
+import ch.bailu.aat_lib.service.elevation.tile.MultiCell8;
 
 public final class ObjTileHillshade extends ObjTileElevation {
 
     private ObjHillshadeColorTable table;
 
-    public ObjTileHillshade(String id, Tile t) {
-        super(id, t, splitFromZoom(t.zoomLevel));
+    public ObjTileHillshade(String id, MapTileInterface ti,  Tile t) {
+        super(id, ti, t, splitFromZoom(t.zoomLevel));
     }
 
 
@@ -83,31 +84,31 @@ public final class ObjTileHillshade extends ObjTileElevation {
 
         final MultiCell mcell = factoryMultiCell(demtile);
 
-        for (int la = subTile.laSpan.firstPixelIndex(); la< subTile.laSpan.lastPixelIndex(); la++) {
+        for (int la = subTile.laSpan.firstPixelIndex(); la <= subTile.laSpan.lastPixelIndex(); la++) {
             final int line = raster.toLaRaster[la]*demtile_dim;
 
             if (old_line != line) {
                 int old_offset = -1;
 
-                for (int lo = subTile.loSpan.firstPixelIndex(); lo<subTile.loSpan.lastPixelIndex(); lo++) {
-                    final int offset=raster.toLoRaster[lo];
+                for (int lo = subTile.loSpan.firstPixelIndex(); lo <= subTile.loSpan.lastPixelIndex(); lo++) {
+                    final int offset = raster.toLoRaster[lo];
 
                     if (old_offset != offset) {
                         old_offset = offset;
 
-                        mcell.set(line+offset);
+                        mcell.set(line + offset);
                         color = table.getColor(mcell);
                     }
 
-                    bitmap[index]=color;
+                    bitmap[index] = color;
                     index++;
                 }
             } else {
-                copyLine(bitmap, index-bitmap_dim, index);
-                index+=bitmap_dim;
+                copyLine(bitmap, index - bitmap_dim, index);
+                index += bitmap_dim;
             }
 
-            old_line=line;
+            old_line = line;
         }
     }
 
@@ -141,7 +142,7 @@ public final class ObjTileHillshade extends ObjTileElevation {
 
         @Override
         public Obj factory(String id, AppContext sc) {
-            return  new ObjTileHillshade(id, mapTile);
+            return  new ObjTileHillshade(id, sc.createMapTile(), mapTile);
         }
 
     }

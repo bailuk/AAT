@@ -1,17 +1,19 @@
-package ch.bailu.aat.services.cache;
+package ch.bailu.aat_lib.service.cache;
 
-import android.graphics.Rect;
 
 import java.util.ArrayList;
+
+import ch.bailu.aat_lib.util.Rect;
 
 public final class Span {
     private int deg;
     private int firstPixel;
     private int lastPixel;
 
-    public Span(int d) {
-        deg = d;
-        firstPixel = lastPixel = 0;
+    public Span() {
+        deg = -1;
+        firstPixel = 0;
+        lastPixel = -1;
     }
 
 
@@ -34,12 +36,15 @@ public final class Span {
     }
 
 
-    public int pixelCount() {
-        return lastPixel - firstPixel;
+    public int pixelDim() {
+        if (deg > -1 && lastPixel >= firstPixel) {
+            return lastPixel - firstPixel + 1;
+        }
+        return 0;
     }
 
 
-    public void copyIntoArray(ArrayList<Span> span_array, int pixel_index, int deg) {
+    public void incrementAndCopyIntoArray(ArrayList<Span> span_array, int pixel_index, int deg) {
         lastPixel = pixel_index;
 
         if (deg != this.deg) {
@@ -50,13 +55,15 @@ public final class Span {
         }
     }
 
+    /*
     public void copyIntoArray(ArrayList<Span> span_array, int pixel_index) {
         lastPixel = pixel_index;
         copyIntoArray(span_array);
     }
+     */
 
-    private void copyIntoArray(ArrayList<Span> l) {
-        if (pixelCount() >0) l.add(new Span(this));
+    public void copyIntoArray(ArrayList<Span> l) {
+        if (pixelDim() > 0) l.add(new Span(this));
     }
 
     public static Rect toRect(Span laSpan, Span loSpan) {

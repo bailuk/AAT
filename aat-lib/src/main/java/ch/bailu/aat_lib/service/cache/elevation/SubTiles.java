@@ -1,14 +1,14 @@
-package ch.bailu.aat.services.cache.elevation;
+package ch.bailu.aat_lib.service.cache.elevation;
 
-import android.util.SparseArray;
 
 import java.util.ArrayList;
 
 import ch.bailu.aat_lib.coordinates.Dem3Coordinates;
-import ch.bailu.aat.services.cache.Span;
+import ch.bailu.aat_lib.service.cache.Span;
+import ch.bailu.aat_lib.util.IndexedMap;
 
 public final class SubTiles {
-    private final SparseArray<SubTile> subTiles = new SparseArray<>(25);
+    private final IndexedMap<Dem3Coordinates, SubTile> subTiles = new IndexedMap<>();
     private Dem3Coordinates[] coordinates;
 
     private int inUse=0;
@@ -16,7 +16,8 @@ public final class SubTiles {
     public synchronized boolean haveID(String id) {
 
         for (int i = 0; i< subTiles.size(); i++) {
-            if (id.contains(subTiles.valueAt(i).toString())) {
+            final SubTile subTile = subTiles.getAt(i);
+            if (subTile != null && id.contains(subTile.toString())) {
                 return true;
             }
         }
@@ -32,7 +33,7 @@ public final class SubTiles {
             coordinates = new Dem3Coordinates[subTiles.size()];
 
             for (int i = 0; i < subTiles.size(); i++) {
-                coordinates[i] = subTiles.valueAt(i).coordinates;
+                coordinates[i] = subTiles.getAt(i).coordinates;
             }
         }
         return coordinates;
@@ -50,17 +51,17 @@ public final class SubTiles {
 
     private void put(Span la, Span lo) {
         SubTile subTile = new SubTile(la, lo);
-        subTiles.put(subTile.hashCode(), subTile);
+        subTiles.put(subTile.coordinates, subTile);
     }
 
 
-    public synchronized SubTile take(int key) {
+    public synchronized SubTile take(Dem3Coordinates coordinates) {
 
-        final SubTile r = subTiles.get(key);
+        final SubTile r = subTiles.get(coordinates);
 
         if (r != null) {
             inUse++;
-            subTiles.remove(key);
+            subTiles.remove(coordinates);
         }
         return r;
     }
@@ -69,6 +70,4 @@ public final class SubTiles {
     public synchronized void done() {
         inUse--;
     }
-
-
 }

@@ -1,10 +1,9 @@
-package ch.bailu.aat.services.cache.elevation;
+package ch.bailu.aat_lib.service.cache.elevation;
 
-import android.graphics.Rect;
-import androidx.annotation.NonNull;
 
 import ch.bailu.aat_lib.coordinates.Dem3Coordinates;
-import ch.bailu.aat.services.cache.Span;
+import ch.bailu.aat_lib.service.cache.Span;
+import ch.bailu.aat_lib.util.Rect;
 
 public final class SubTile {
     public final Span laSpan;
@@ -24,7 +23,7 @@ public final class SubTile {
 
 
     public int pixelDim() {
-        return loSpan.pixelCount();
+        return loSpan.pixelDim();
     }
 
     @Override
@@ -32,10 +31,8 @@ public final class SubTile {
         return coordinates.hashCode();
     }
 
-    @NonNull
     @Override
     public String toString() {
         return coordinates.toString();
     }
-
 }

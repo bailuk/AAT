@@ -1,7 +1,5 @@
-package ch.bailu.aat.services.cache.elevation;
+package ch.bailu.aat_lib.service.cache.elevation;
 
-import android.graphics.Point;
-import android.graphics.Rect;
 
 import org.mapsforge.core.model.LatLong;
 import org.mapsforge.core.model.Tile;
@@ -10,8 +8,9 @@ import org.mapsforge.core.util.MercatorProjection;
 import java.util.ArrayList;
 
 import ch.bailu.aat_lib.preferences.map.SolidTileSize;
-import ch.bailu.aat.services.cache.Span;
+import ch.bailu.aat_lib.service.cache.Span;
 import ch.bailu.aat_lib.service.elevation.tile.DemGeoToIndex;
+import ch.bailu.aat_lib.util.Rect;
 
 public final class Raster {
     public final int[] toLaRaster = new int[SolidTileSize.DEFAULT_TILESIZE];
@@ -51,37 +50,37 @@ public final class Raster {
                 tileR.right,
                 tileR.bottom);
 
-        final int laDiff=br.getLatitudeE6()-tl.getLatitudeE6();
-        final int loDiff=br.getLongitudeE6()-tl.getLongitudeE6(); //-1.2 - -1.5 = 0.3  //1.5 - 1.2 = 0.3
+        final float laDiff = br.getLatitudeE6()  - tl.getLatitudeE6();
+        final float loDiff = br.getLongitudeE6() - tl.getLongitudeE6(); //-1.2 - -1.5 = 0.3  //1.5 - 1.2 = 0.3
 
 
-        int la = tl.getLatitudeE6();
-        int lo = tl.getLongitudeE6();
+        float la = tl.getLatitudeE6();
+        float lo = tl.getLongitudeE6();
 
-        final Span laS=new Span((int) Math.floor(la/1e6d));
-        final Span loS=new Span((int) Math.floor(lo/1e6d));
+        final Span laS = new Span();
+        final Span loS = new Span();
 
-        final int laInc=laDiff / SolidTileSize.DEFAULT_TILESIZE;
-        final int loInc=loDiff / SolidTileSize.DEFAULT_TILESIZE;
+        final float laInc = laDiff / (SolidTileSize.DEFAULT_TILESIZE);
+        final float loInc = loDiff / (SolidTileSize.DEFAULT_TILESIZE);
 
         int i;
         for (i=0; i< SolidTileSize.DEFAULT_TILESIZE; i++) {
-            toLaRaster[i]=la;
-            toLoRaster[i]=lo;
+            toLaRaster[i]=Math.round(la);
+            toLoRaster[i]=Math.round(lo);
 
-            final int laDeg = (int) Math.floor(la/1e6d);
-            final int loDeg = (int) Math.floor(lo/1e6d);
+            final int laDeg = (int) Math.floor(la/1e6f);
+            final int loDeg = (int) Math.floor(lo/1e6f);
 
-            laS.copyIntoArray(laSpan, i, laDeg);
-            loS.copyIntoArray(loSpan, i, loDeg);
+            laS.incrementAndCopyIntoArray(laSpan, i, laDeg);
+            loS.incrementAndCopyIntoArray(loSpan, i, loDeg);
 
             la+=laInc;
             lo+=loInc;
         }
 
-
-        laS.copyIntoArray(laSpan,i);
-        loS.copyIntoArray(loSpan,i);
+        // flush
+        laS.copyIntoArray(laSpan);
+        loS.copyIntoArray(loSpan);
     }
 
 
@@ -100,19 +99,11 @@ public final class Raster {
 
 
     private Rect getTileR(Tile tile) {
-        final Point tileTL = tileToPixel(tile);
-
-        final Point tileBR = new Point(
-                tileTL.x+SolidTileSize.DEFAULT_TILESIZE,
-                tileTL.y+SolidTileSize.DEFAULT_TILESIZE);
-
-
-
-        return new Rect(tileTL.x, tileTL.y, tileBR.x, tileBR.y);
-    }
-
-    private Point tileToPixel(Tile tile) {
-        return new Point(tile.tileX*SolidTileSize.DEFAULT_TILESIZE,
-                tile.tileY*SolidTileSize.DEFAULT_TILESIZE);
+        Rect r = new Rect();
+        r.top    = tile.tileY * SolidTileSize.DEFAULT_TILESIZE;
+        r.left   = tile.tileX * SolidTileSize.DEFAULT_TILESIZE;
+        r.right  = r.left + SolidTileSize.DEFAULT_TILESIZE - 1;
+        r.bottom = r.top  + SolidTileSize.DEFAULT_TILESIZE - 1;
+        return r;
     }
 }

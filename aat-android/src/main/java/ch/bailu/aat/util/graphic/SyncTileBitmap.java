@@ -15,7 +15,9 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import ch.bailu.aat_lib.map.tile.MapTileInterface;
+import ch.bailu.aat_lib.preferences.map.SolidTileSize;
 import ch.bailu.aat_lib.service.cache.Obj;
+import ch.bailu.aat_lib.util.Rect;
 import ch.bailu.foc.Foc;
 
 public class SyncTileBitmap implements MapTileInterface {
@@ -78,7 +80,7 @@ public class SyncTileBitmap implements MapTileInterface {
         Bitmap bitmap = getAndroidBitmap();
 
         if (bitmap != null) {
-            result = bitmap.getRowBytes() * bitmap.getHeight();
+            result = (long) bitmap.getRowBytes() * bitmap.getHeight();
         }
         return result;
     }
@@ -104,6 +106,25 @@ public class SyncTileBitmap implements MapTileInterface {
         return size;
     }
 
+
+    @Override
+    public synchronized void setBuffer(int[] buffer, Rect r) {
+        initBitmap();
+        Bitmap b = getAndroidBitmap();
+
+        if (b != null) {
+            b.setPixels(buffer, 0, r.width(), r.left, r.top, r.width(), r.height());
+        }
+    }
+
+    private void initBitmap() {
+        Bitmap b = getAndroidBitmap();
+        if (b == null) {
+            set(SolidTileSize.DEFAULT_TILESIZE, true);
+            //b = getAndroidBitmap();
+            //if (b != null) b.eraseColor(android.graphics.Color.TRANSPARENT);
+        }
+    }
 
     public synchronized void free() {
         if (bitmap != null) {

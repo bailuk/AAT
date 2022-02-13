@@ -5,7 +5,7 @@ import ch.bailu.aat.map.tile.source.CachedSource;
 import ch.bailu.aat.map.tile.source.DoubleSource;
 import ch.bailu.aat.map.tile.source.ElevationSource;
 import ch.bailu.aat_lib.service.cache.DownloadSource;
-import ch.bailu.aat.map.tile.source.MapsForgeSource;
+import ch.bailu.aat_lib.map.tile.source.MapsForgeSource;
 import ch.bailu.aat_lib.map.tile.source.Source;
 import ch.bailu.aat_lib.preferences.map.SolidEnableTileCache;
 import ch.bailu.aat.preferences.map.SolidMapTileStack;
