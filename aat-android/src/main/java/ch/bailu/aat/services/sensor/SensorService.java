@@ -16,6 +16,7 @@ import ch.bailu.aat_lib.dispatcher.BroadcastReceiver;
 import ch.bailu.aat_lib.dispatcher.Broadcaster;
 import ch.bailu.aat_lib.gpx.GpxInformation;
 import ch.bailu.aat_lib.gpx.InfoID;
+import ch.bailu.aat_lib.logger.AppLog;
 import ch.bailu.aat_lib.service.VirtualService;
 import ch.bailu.aat_lib.service.sensor.SensorServiceInterface;
 import ch.bailu.aat_lib.util.WithStatusText;
@@ -54,7 +55,7 @@ public final class SensorService extends VirtualService implements WithStatusTex
     final android.content.BroadcastReceiver onBluetoothStateChanged = new android.content.BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            Integer state = intent.getIntExtra(BluetoothAdapter.ACTION_STATE_CHANGED,0);
+            int state = intent.getIntExtra(BluetoothAdapter.ACTION_STATE_CHANGED,0);
             if (state == BluetoothAdapter.STATE_ON || state == BluetoothAdapter.STATE_OFF) {
                 updateConnections();
             }
@@ -93,7 +94,11 @@ public final class SensorService extends VirtualService implements WithStatusTex
     }
 
     public synchronized void scan() {
-        bluetoothLE.scan();
+        try {
+            bluetoothLE.scan();
+        } catch (Exception e) {
+            AppLog.e(this, e);
+        }
     }
 
 

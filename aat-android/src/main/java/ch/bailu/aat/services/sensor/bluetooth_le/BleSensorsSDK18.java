@@ -47,7 +47,7 @@ public final class BleSensorsSDK18 extends Sensors {
 
 
     @Override
-    public synchronized void scan() {
+    public synchronized void scan() throws SecurityException {
         stopScanner();
 
         if (isEnabled()) {
@@ -133,7 +133,7 @@ public final class BleSensorsSDK18 extends Sensors {
     }
 
 
-    private void startScanner() {
+    private void startScanner() throws SecurityException {
         scannerBonded.start();
         timer.kick(this::stopScanner, SCAN_DURATION);
         scannerBle.start();

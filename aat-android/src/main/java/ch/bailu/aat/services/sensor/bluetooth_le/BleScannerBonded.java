@@ -19,7 +19,7 @@ public final class BleScannerBonded extends BleScanner {
 
 
     @Override
-    public void start() {
+    public void start() throws SecurityException {
         if (adapter == null) return;
 
         final Set<BluetoothDevice> devices = adapter.getBondedDevices();
