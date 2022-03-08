@@ -1,13 +1,11 @@
 package ch.bailu.aat_gtk.ui.util
 
 import ch.bailu.aat_lib.logger.AppLog
-import ch.bailu.gtk.Callback
 import ch.bailu.gtk.GTK
 import ch.bailu.gtk.glib.Glib
 
 
 object UiThread {
-    private val emitterID = Callback.EmitterID()
 
     fun toUi(function: () -> (Unit)) {
         if (isUi()) {
@@ -32,6 +30,6 @@ object UiThread {
         Glib.idleAdd({
             function()
             GTK.FALSE
-        }, emitterID)
+        }, null)
     }
 }

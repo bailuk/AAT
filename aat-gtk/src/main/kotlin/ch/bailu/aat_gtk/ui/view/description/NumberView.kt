@@ -18,7 +18,7 @@ class NumberView(private val description: ContentDescription) : OnContentUpdated
     val box = Box(Orientation.VERTICAL,5)
 
     private val margin = 6
-    private var ptSize = 2000
+    private val ptSize = 30000
 
     init {
         addView(label, margin, 0)
@@ -43,21 +43,8 @@ class NumberView(private val description: ContentDescription) : OnContentUpdated
     }
 
     fun updateAllText() {
-        LabelHelper.setLabel(number, "<span color=\"#9e462d\" weight=\"bold\" size=\"${ptSize}\">${description.value}</span>")
+        LabelHelper.setLabel(number, "<span color=\"#51506b\" weight=\"bold\" size=\"${ptSize}\">${description.value}</span>")
         LabelHelper.setLabel(label, description.labelShort)
         LabelHelper.setLabel(unit, description.unit)
-    }
-
-    fun setFontSize(size: Int) {
-        ptSize = size
-        updateAllText()
-    }
-
-    fun calculateFontSize(width: Float, height: Float): Int {
-        val vSize = Math.max(number.height.toFloat(), height - unit.height - label.height)
-        val hSize = width / Math.max(description.value.length,1)
-
-        val pxSize = Math.min(vSize, hSize)
-        return (pxSize * 0.75 * 1000f).toInt()
     }
 }

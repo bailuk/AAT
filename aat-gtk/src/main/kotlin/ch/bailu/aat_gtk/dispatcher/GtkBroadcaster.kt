@@ -3,27 +3,33 @@ package ch.bailu.aat_gtk.dispatcher
 import ch.bailu.aat_lib.dispatcher.BroadcastReceiver
 import ch.bailu.aat_lib.dispatcher.Broadcaster
 import ch.bailu.aat_lib.logger.AppLog
-import ch.bailu.gtk.Callback
 import ch.bailu.gtk.GTK
+import ch.bailu.gtk.Refs
 import ch.bailu.gtk.glib.Glib
 import java.util.*
 
 class GtkBroadcaster : Broadcaster {
     private val signals: MutableMap<String, ArrayList<BroadcastReceiver>> = HashMap()
 
+    private var linkedList = LinkedList<Glib.OnSourceFunc>()
+
     override fun broadcast(signal: String, vararg args: String) {
         val observers = signals[signal]?.toTypedArray()
 
         if (observers != null) {
-            val emitterID = Callback.EmitterID()
-            Glib.idleAdd({
+            val onSourceFunc = Glib.OnSourceFunc {
                 for (observer in observers) {
                     observer.onReceive(*args)
                 }
-                Callback.remove(emitterID)
-                emitterID.destroy()
+                Refs.remove(linkedList.removeLast())
                 GTK.FALSE
-            }, emitterID)
+            }
+            linkedList.addFirst(onSourceFunc)
+            if (linkedList.size > 5) {
+                AppLog.w(this, "Stack size: ${linkedList.size}")
+            }
+
+            Glib.idleAdd(onSourceFunc, null)
         }
     }
 

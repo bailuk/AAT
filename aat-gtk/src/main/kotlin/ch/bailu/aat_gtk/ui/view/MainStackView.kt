@@ -35,11 +35,10 @@ class MainStackView (actionHelper: ActionHelper, dispatcher: DispatcherInterface
         layout.addTitled(map.overlay, strMap, strMap)
         layout.addTitled(fileList.vbox, Str("Files"), Str("Files"))
         layout.addTitled(detail.scrolled, Str("Detail"), Str("Detail"))
-        layout.addTitled(cockpit.layout, Str("Cockpit"), Str("Cockpit"))
+        layout.addTitled(cockpit.flow, Str("Cockpit"), Str("Cockpit"))
 
         initCockpit(dispatcher)
         showMap()
-        layout.show()
     }
 
     private fun initCockpit(dispatcher: DispatcherInterface) {
@@ -52,8 +51,7 @@ class MainStackView (actionHelper: ActionHelper, dispatcher: DispatcherInterface
     }
 
     fun showCockpit() {
-        layout.visibleChild = cockpit.layout
-        cockpit.layout()
+        layout.visibleChild = cockpit.flow
     }
 
     fun showMap() {

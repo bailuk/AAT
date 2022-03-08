@@ -8,8 +8,6 @@ import ch.bailu.aat_lib.app.AppGraphicFactory
 import ch.bailu.aat_lib.dispatcher.AppBroadcaster
 import ch.bailu.aat_lib.logger.AppLog
 import ch.bailu.aat_lib.logger.BroadcastLogger
-import ch.bailu.aat_lib.map.Attachable
-import ch.bailu.gtk.GTK
 import ch.bailu.gtk.gio.ApplicationFlags
 import ch.bailu.gtk.gtk.Application
 import ch.bailu.gtk.gtk.ApplicationWindow
@@ -19,14 +17,11 @@ import org.mapsforge.map.gtk.graphics.GtkGraphicFactory
 import kotlin.system.exitProcess
 
 fun main() {
-    GTK.init()
     App.run()
 }
 
 
 object App {
-    private val attachables = ArrayList<Attachable>()
-
     init {
         AppLog.set(SL4JLogger())
         AppGraphicFactory.set(GtkGraphicFactory.INSTANCE)
@@ -53,8 +48,7 @@ object App {
 
         app.onActivate {
             try {
-                val window = MainWindow(ActionHelper(app), ApplicationWindow(app))
-                attach(window)
+                MainWindow(ActionHelper(app), ApplicationWindow(app))
 
             } catch (e: Exception) {
                 e.printStackTrace()
@@ -66,12 +60,7 @@ object App {
     fun exit(exitCode: Int) {
         GtkAppContext.services.trackerService.onStartStop()
 
-        attachables.forEach { it.onDetached() }
         GtkStorage.save()
         exitProcess(exitCode)
-    }
-
-    fun attach(attachable: Attachable) {
-        attachables.add(attachable)
     }
 }

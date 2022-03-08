@@ -60,7 +60,7 @@ dependencies {
      *   https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter
      *
      */
-    testImplementation("org.junit.jupiter:junit-jupiter:5.7.2")
+    testImplementation("org.junit.jupiter:junit-jupiter:5.8.2")
 }
 
 val appMainClass = "ch.bailu.aat_gtk.app.AppKt"
@@ -76,7 +76,7 @@ application {
 */
 
 // With this gradle tries to load all dependencies of all modules during configuration
-/*
+
 val fatJar = task("fatJar", type = Jar::class) {
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 
@@ -86,4 +86,4 @@ val fatJar = task("fatJar", type = Jar::class) {
     from(configurations.runtimeClasspath.get().map { if (it.isDirectory) it else zipTree(it) })
     with(tasks.jar.get() as CopySpec)
 }
-*/
+

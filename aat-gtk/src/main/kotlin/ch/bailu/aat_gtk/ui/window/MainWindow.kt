@@ -13,14 +13,13 @@ import ch.bailu.aat_lib.dispatcher.CurrentLocationSource
 import ch.bailu.aat_lib.dispatcher.Dispatcher
 import ch.bailu.aat_lib.dispatcher.TrackerSource
 import ch.bailu.aat_lib.gpx.InfoID
-import ch.bailu.aat_lib.map.Attachable
 import ch.bailu.gtk.GTK
 import ch.bailu.gtk.gio.Menu
 import ch.bailu.gtk.gtk.*
 import ch.bailu.gtk.helper.ActionHelper
 import ch.bailu.gtk.type.Str
 
-class MainWindow(actionHelper: ActionHelper, window: ApplicationWindow) : Attachable
+class MainWindow(actionHelper: ActionHelper, window: ApplicationWindow)
 {
 
     private val trackerButton = TrackerButton(GtkAppContext.services)
@@ -39,6 +38,7 @@ class MainWindow(actionHelper: ActionHelper, window: ApplicationWindow) : Attach
         box.append(mainView.layout)
 
         window.child = box
+
         menu = AppMenu(window, GtkAppContext.services, mainView)
         window.title = Str(GtkAppConfig.title)
         window.titlebar = createHeader(GtkMenu(actionHelper, menu).menu)
@@ -79,13 +79,5 @@ class MainWindow(actionHelper: ActionHelper, window: ApplicationWindow) : Attach
         header.packEnd(contextRevealButton)
 
         return header
-    }
-
-    override fun onAttached() {
-        //mapView.onAttached()
-    }
-
-    override fun onDetached() {
-        //mapView.onDetached()
     }
 }

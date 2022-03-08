@@ -6,7 +6,6 @@ import ch.bailu.aat_lib.gpx.GpxList
 import ch.bailu.aat_lib.view.graph.LabelInterface
 import ch.bailu.aat_lib.view.graph.Plotter
 import ch.bailu.aat_lib.view.graph.PlotterConfig
-import ch.bailu.gtk.Callback.EmitterID
 import ch.bailu.gtk.GTK
 import ch.bailu.gtk.cairo.Context
 import ch.bailu.gtk.glib.Glib
@@ -22,7 +21,7 @@ class GraphView(private val plotter: Plotter) : OnContentUpdatedInterface {
 
     private var gpxCache = GpxList.NULL_TRACK
 
-    private val labels = GraphLabel()
+    private val _labels = GraphLabel()
 
     var height: Int
         set(height) {drawingArea.contentHeight = height}
@@ -53,7 +52,7 @@ class GraphView(private val plotter: Plotter) : OnContentUpdatedInterface {
         }
 
         override fun getLabels(): LabelInterface {
-            return labels
+            return _labels
         }
     }
 
@@ -67,18 +66,17 @@ class GraphView(private val plotter: Plotter) : OnContentUpdatedInterface {
             plotter.plot(GtkCanvas(cr), plotterConfig)
             println("$w $h")
 
-        }, EmitterID(), {})
+        }, null, {})
 
 
         overlay.child = drawingArea
-        overlay.addOverlay(labels.layout)
+        overlay.addOverlay(_labels.layout)
 
-        plotter.initLabels(labels)
+        plotter.initLabels(_labels)
     }
 
 
     private var redrawNeeded = false
-    private val emitterID = EmitterID()
 
     fun repaint() {
         /**
@@ -89,13 +87,13 @@ class GraphView(private val plotter: Plotter) : OnContentUpdatedInterface {
          * This callback will then call queueDraw() from within the main (UI) thread.
          */
         redrawNeeded = true
-        Glib.idleAdd({ l: Pointer? ->
+        Glib.idleAdd({
             if (redrawNeeded) {
                 redrawNeeded = false
                 drawingArea.queueDraw()
             }
             GTK.FALSE
-        }, emitterID)
+        }, null)
     }
 
     override fun onContentUpdated(iid: Int, info: GpxInformation) {

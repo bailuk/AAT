@@ -9,7 +9,6 @@ object IconMap {
     private data class IconId (val name: String, val size: Int)
 
     private val pixbufs = HashMap<IconId, Pixbuf>()
-    private val images = HashMap<IconId, Image>()
 
     fun getPixbuf(name: String, size: Int): Pixbuf {
         try {
@@ -36,17 +35,9 @@ object IconMap {
     }
 
     fun getImage(name: String, size: Int): Image {
-        var result = images[IconId(name, size)]
-
-        return if (result == null) {
-            result = Image.newFromPixbufImage(getPixbuf(name, size))
-            images[IconId(name, size)] = result
-            result.ref()
-            result.setSizeRequest(size, size)
-            result
-        } else {
-            result
-        }
+        val result = Image.newFromPixbufImage(getPixbuf(name, size))
+        result.setSizeRequest(size, size)
+        return  result
     }
 }
 
