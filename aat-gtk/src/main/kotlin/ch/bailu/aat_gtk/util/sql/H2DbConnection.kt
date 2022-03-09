@@ -26,15 +26,15 @@ class H2DbConnection : DbConnection {
                 setVersion(version)
             }
         } catch (e: Exception) {
-            throw DbException(e)
             close()
+            throw DbException(e)
         }
     }
 
     private fun getVersion(): Int {
-        var result = 0
+        var result: Int
         try {
-            var res = query("SELECT * FROM version")
+            val res = query("SELECT * FROM version")
             result = res.getLong("version").toInt()
             res.close()
         } catch (e: Exception) {
@@ -67,7 +67,7 @@ class H2DbConnection : DbConnection {
             //println(sqlStatement)
 
             val stmt = getPreparedStatement(sqlStatement, params)
-            var res = stmt.executeQuery()
+            val res = stmt.executeQuery()
 
             //stmt.close()
             return ScrollInsensitiveResultSet(res)
@@ -84,7 +84,7 @@ class H2DbConnection : DbConnection {
 
 
      private fun getPreparedStatement(sqlStatement: String, params: Array<out Any?>) : PreparedStatement {
-        var connection = connection
+        val connection = connection
 
         if (connection != null) {
             val stmt = connection.prepareStatement(sqlStatement, TYPE_SCROLL_INSENSITIVE, java.sql.ResultSet.CONCUR_READ_ONLY)
