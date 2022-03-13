@@ -2,7 +2,7 @@ package ch.bailu.aat_gtk.service
 
 import ch.bailu.aat_gtk.solid.GtkSolidLocationProvider
 import ch.bailu.aat_gtk.solid.SolidGtkDataDirectory
-import ch.bailu.aat_gtk.ui.view.GtkStatusIcon
+import ch.bailu.aat_gtk.view.GtkStatusIcon
 import ch.bailu.aat_lib.app.AppContext
 import ch.bailu.aat_lib.coordinates.Dem3Coordinates
 import ch.bailu.aat_lib.gpx.GpxInformation
@@ -56,7 +56,7 @@ class GtkServices (appContext: AppContext) : ServicesInterface {
 
     class ElevationService() : ElevetionServiceInterface {
         override fun getElevation(latitudeE6: Int, longitudeE6: Int): Short {
-            return 0;
+            return 0
         }
 
         override fun requestElevationUpdates(owner: ElevationUpdaterClient?, srtmTileCoordinates: Array<out Dem3Coordinates>?) {

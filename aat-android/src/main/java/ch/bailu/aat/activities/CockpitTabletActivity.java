@@ -10,7 +10,7 @@ import ch.bailu.aat.dispatcher.EditorSourceInterface;
 import ch.bailu.aat.dispatcher.OverlaySource;
 import ch.bailu.aat.dispatcher.SensorSource;
 import ch.bailu.aat_lib.dispatcher.TrackerSource;
-import ch.bailu.aat.dispatcher.TrackerTimerSource;
+import ch.bailu.aat_lib.dispatcher.TrackerTimerSource;
 import ch.bailu.aat.map.MapFactory;
 import ch.bailu.aat.map.mapsforge.MapViewLinker;
 import ch.bailu.aat.map.mapsforge.MapsForgeViewBase;
