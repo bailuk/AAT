@@ -1,5 +1,7 @@
 package ch.bailu.aat_gtk.view
 
+import ch.bailu.aat_gtk.util.IconMap
+import ch.bailu.aat_gtk.view.map.control.Bar
 import ch.bailu.aat_gtk.view.solid.UiController
 import ch.bailu.aat_lib.dispatcher.OnContentUpdatedInterface
 import ch.bailu.aat_lib.gpx.GpxInformation
@@ -19,9 +21,11 @@ class ContextBar(contextCallback: UiController) : OnContentUpdatedInterface {
 
         val vbox = Box(Orientation.VERTICAL,0)
         val hbox = Box(Orientation.HORIZONTAL,0)
-        hbox.append(createButton("Map") { contextCallback.showInMap(cache) })
+        hbox.append(createImageButton("zoom-fit-best-symbolic") { contextCallback.showInMap(cache) } )
+        hbox.append(createButton("Map") { contextCallback.showMap() })
         hbox.append(createButton("List") { contextCallback.showInList() })
         hbox.append(createButton("Detail") { contextCallback.showDetail() })
+        hbox.append(createButton("Cockpit") { contextCallback.showCockpit() })
 
 
         vbox.append(label)
@@ -38,6 +42,13 @@ class ContextBar(contextCallback: UiController) : OnContentUpdatedInterface {
         return result
     }
 
+    private fun createImageButton(resource: String, onClicked: Button.OnClicked) : Button {
+        val result = Button()
+        result.onClicked(onClicked)
+        result.child = IconMap.getImage(resource, Bar.ICON_SIZE)
+        setMargin(result, 3)
+        return result
+    }
 
     private fun setMargin(widget: Widget, margin: Int) {
         widget.marginBottom = margin

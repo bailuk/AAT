@@ -50,11 +50,11 @@ class MainStackView (actionHelper: ActionHelper, dispatcher: DispatcherInterface
         cockpit.add(dispatcher, AverageSpeedDescriptionAP(GtkAppContext.storage), InfoID.TRACKER)
     }
 
-    fun showCockpit() {
+    override fun showCockpit() {
         layout.visibleChild = cockpit.flow
     }
 
-    fun showMap() {
+    override fun showMap() {
         layout.visibleChild = map.overlay
     }
 
@@ -67,7 +67,9 @@ class MainStackView (actionHelper: ActionHelper, dispatcher: DispatcherInterface
     }
 
     override fun showInMap(info: GpxInformation) {
-        map.map.frameBounding(info.boundingBox)
+        if (info.boundingBox.hasBounding()) {
+            map.map.frameBounding(info.boundingBox)
+        }
         showMap()
     }
 
