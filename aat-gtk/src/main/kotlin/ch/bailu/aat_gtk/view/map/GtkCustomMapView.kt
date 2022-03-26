@@ -268,7 +268,7 @@ class GtkCustomMapView (
                 tileSource,
                 AppGraphicFactory.instance()
             ) {
-                override fun onTap(tapLatLong: LatLong, layerXY: Point, tapXY: Point): Boolean {
+                override fun onTap(tapLatLong: LatLong, layerXY: Point?, tapXY: Point): Boolean {
                     println("Tap on: $tapLatLong")
                     return true
                 }
@@ -291,7 +291,7 @@ class GtkCustomMapView (
                 AppGraphicFactory.instance(),
                 hillsRenderConfig
             ) {
-                override fun onTap(tapLatLong: LatLong, layerXY: Point, tapXY: Point): Boolean {
+                override fun onTap(tapLatLong: LatLong, layerXY: Point?, tapXY: Point): Boolean {
                     println("Tap on: $tapLatLong")
                     return true
                 }

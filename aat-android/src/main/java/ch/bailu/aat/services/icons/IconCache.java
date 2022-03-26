@@ -3,7 +3,7 @@ package ch.bailu.aat.services.icons;
 import java.io.Closeable;
 
 import ch.bailu.aat.services.ServiceContext;
-import ch.bailu.aat.services.cache.LockCache;
+import ch.bailu.aat_lib.service.cache.LockCache;
 import ch.bailu.aat_lib.service.cache.Obj;
 import ch.bailu.aat.services.cache.ObjImageAbstract;
 import ch.bailu.aat.services.cache.ObjSVGAsset;
@@ -56,7 +56,7 @@ public final class IconCache implements Closeable, WithStatusText {
         final Obj handle = scontext.getCacheService().
                 getObject(id, new ObjSVGAsset.Factory(path, size));
 
-        if (ObjSVGAsset.class.isInstance(handle)) {
+        if (handle instanceof ObjSVGAsset) {
             final ObjSVGAsset imageHandle = ((ObjSVGAsset) handle);
 
             icons.add(imageHandle);

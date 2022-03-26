@@ -10,6 +10,7 @@ import ch.bailu.aat_lib.app.AppContext
 import ch.bailu.aat_lib.dispatcher.Broadcaster
 import ch.bailu.aat_lib.gpx.GpxInformation
 import ch.bailu.aat_lib.logger.AppLog
+import ch.bailu.aat_lib.map.TilePainter
 import ch.bailu.aat_lib.map.tile.MapTileInterface
 import ch.bailu.aat_lib.preferences.StorageInterface
 import ch.bailu.aat_lib.preferences.map.SolidDem3Directory
@@ -110,6 +111,10 @@ object GtkAppContext: AppContext {
 
     override fun createTimer(): Timer {
         AppLog.d(this, "Not yet implemented createTimer")
+        TODO("Not yet implemented")
+    }
+
+    override fun getTilePainter(): TilePainter {
         TODO("Not yet implemented")
     }
 }

@@ -1,4 +1,4 @@
-package ch.bailu.aat.map.mapsforge;
+package ch.bailu.aat_lib.map.tile;
 
 import org.mapsforge.core.graphics.Canvas;
 import org.mapsforge.core.model.BoundingBox;
@@ -9,39 +9,41 @@ import org.mapsforge.map.view.MapView;
 
 import java.util.ArrayList;
 
+import javax.annotation.Nonnull;
+
 import ch.bailu.aat_lib.map.Attachable;
 import ch.bailu.aat_lib.map.MapContext;
+import ch.bailu.aat_lib.map.TilePainter;
 import ch.bailu.aat_lib.map.layer.MapLayerInterface;
-import ch.bailu.aat.map.tile.TileProvider;
-import ch.bailu.aat_lib.service.InsideContext;
-import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat_lib.preferences.StorageInterface;
+import ch.bailu.aat_lib.service.InsideContext;
+import ch.bailu.aat_lib.service.ServicesInterface;
 
 public class MapsForgeTileLayerStack extends Layer implements MapLayerInterface {
 
     private final SubLayers layers = new SubLayers();
 
-    private final ServiceContext scontext;
+    private final ServicesInterface scontext;
 
     int minZoom=5, maxZoom = 5;
 
 
-    public MapsForgeTileLayerStack(ServiceContext sc) {
+    public MapsForgeTileLayerStack(ServicesInterface sc) {
         scontext = sc;
     }
 
 
-    public void addLayer(TileProvider provider) {
-        MapsForgeTileLayer layer = new MapsForgeTileLayer(scontext, provider);
+    public void addLayer(TileProvider tileProvider, TilePainter tilePainter) {
+        MapsForgeTileLayer layer = new MapsForgeTileLayer(scontext, tileProvider, tilePainter);
 
         layer.setDisplayModel(getDisplayModel());
 
         layers.add(layer);
 
-        provider.addObserver(this::requestRedraw);
+        tileProvider.addObserver(this::requestRedraw);
 
-        maxZoom = Math.max(provider.getMaximumZoomLevel(), maxZoom);
-        minZoom = Math.min(provider.getMinimumZoomLevel(), minZoom);
+        maxZoom = Math.max(tileProvider.getMaximumZoomLevel(), maxZoom);
+        minZoom = Math.min(tileProvider.getMinimumZoomLevel(), minZoom);
 
 
     }
@@ -97,7 +99,7 @@ public class MapsForgeTileLayerStack extends Layer implements MapLayerInterface 
 
 
     @Override
-    public void onPreferencesChanged(StorageInterface s, String key) {}
+    public void onPreferencesChanged(@Nonnull StorageInterface s, @Nonnull String key) {}
 
     @Override
     public void onAttached() { layers.attach(); }

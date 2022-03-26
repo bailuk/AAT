@@ -1,8 +1,6 @@
-package ch.bailu.aat.services.cache;
+package ch.bailu.aat_lib.service.cache;
 
 import java.io.Closeable;
-
-import ch.bailu.aat_lib.service.cache.Obj;
 
 @SuppressWarnings("unchecked")
 public final class LockCache<E extends Obj>  implements Closeable {

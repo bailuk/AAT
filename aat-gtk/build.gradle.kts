@@ -52,7 +52,7 @@ dependencies {
     val mapsForgeVersion: String by project
     implementation("org.mapsforge:mapsforge-map-reader:$mapsForgeVersion")
     implementation("org.mapsforge:mapsforge-themes:$mapsForgeVersion")
-    implementation("org.mapsforge:mapsforge-map-gtk:master-SNAPSHOT")
+    implementation("org.mapsforge:mapsforge-map-gtk:SNAPSHOT")
 
     /**
      *

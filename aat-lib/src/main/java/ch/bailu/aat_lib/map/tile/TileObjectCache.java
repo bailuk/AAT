@@ -1,10 +1,10 @@
-package ch.bailu.aat.map.tile;
+package ch.bailu.aat_lib.map.tile;
 
 import org.mapsforge.core.model.Tile;
 
 import java.io.Closeable;
 
-import ch.bailu.aat.services.cache.LockCache;
+import ch.bailu.aat_lib.service.cache.LockCache;
 import ch.bailu.aat_lib.app.AppContext;
 import ch.bailu.aat_lib.service.cache.ObjTile;
 

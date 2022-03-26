@@ -23,7 +23,8 @@ import java.io.OutputStream;
 import java.util.List;
 
 import ch.bailu.aat.map.MapDensity;
-import ch.bailu.aat.map.tile.TileProvider;
+import ch.bailu.aat_lib.map.tile.MapsForgeTileLayer;
+import ch.bailu.aat_lib.map.tile.TileProvider;
 import ch.bailu.aat_lib.map.tile.source.CacheOnlySource;
 import ch.bailu.aat_lib.service.cache.DownloadSource;
 import ch.bailu.aat_lib.map.tile.source.MapsForgeSource;
@@ -66,7 +67,7 @@ public class MapsForgePreview extends MapsForgeViewBase implements MapPreviewInt
         imageFile = out;
         provider = new TileProvider(appContext, getSource(new SolidRenderTheme(appContext.getMapDirectory(), appContext)));
 
-        MapsForgeTileLayer tileLayer = new MapsForgeTileLayer(appContext.getServices(), provider);
+        MapsForgeTileLayer tileLayer = new MapsForgeTileLayer(appContext.getServices(), provider, appContext.getTilePainter());
         add(tileLayer, tileLayer);
 
         GpxDynLayer gpxLayer = new GpxDynLayer(new Storage(getContext()), getMContext(), appContext.getServices());

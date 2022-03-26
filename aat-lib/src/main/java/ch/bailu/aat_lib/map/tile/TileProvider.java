@@ -1,4 +1,4 @@
-package ch.bailu.aat.map.tile;
+package ch.bailu.aat_lib.map.tile;
 
 
 import org.mapsforge.core.graphics.TileBitmap;

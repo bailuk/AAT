@@ -43,6 +43,14 @@ public final class AndroidDraw implements MapDraw {
         point_radius = res.toPixel_i(POINT_RADIUS);
     }
 
+    public static android.graphics.Rect convert(Rect rect, android.graphics.Rect cache) {
+        cache.bottom = rect.bottom;
+        cache.top = rect.top;
+        cache.left = rect.left;
+        cache.right = rect.right;
+        return cache;
+    }
+
     private Paint setFakeBoldText(Paint p) {
         convert(p).setFakeBoldText(true);
         return p;

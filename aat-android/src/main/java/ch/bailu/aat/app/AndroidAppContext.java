@@ -4,6 +4,7 @@ import android.content.Context;
 
 import ch.bailu.aat.dispatcher.AndroidBroadcaster;
 import ch.bailu.aat.map.mapsforge.MapsForgePreview;
+import ch.bailu.aat.map.tile.AndroidTilePainter;
 import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat.preferences.map.AndroidMapDirectories;
 import ch.bailu.aat.preferences.map.AndroidSolidDem3Directory;
@@ -16,6 +17,7 @@ import ch.bailu.aat.util.sql.AndroidDbConnection;
 import ch.bailu.aat_lib.app.AppContext;
 import ch.bailu.aat_lib.dispatcher.Broadcaster;
 import ch.bailu.aat_lib.gpx.GpxInformation;
+import ch.bailu.aat_lib.map.TilePainter;
 import ch.bailu.aat_lib.map.tile.MapTileInterface;
 import ch.bailu.aat_lib.preferences.StorageInterface;
 import ch.bailu.aat_lib.preferences.map.SolidDem3Directory;
@@ -114,6 +116,11 @@ public class AndroidAppContext implements AppContext {
     @Override
     public Timer createTimer() {
         return new AndroidTimer();
+    }
+
+    @Override
+    public TilePainter getTilePainter() {
+        return new AndroidTilePainter();
     }
 
     @Override

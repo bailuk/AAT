@@ -25,7 +25,7 @@ class LayerWrapper(
         layer.drawInside(mcontext)
     }
 
-    override fun onTap(tapLatLong: LatLong, layerXY: Point, tapXY: Point): Boolean {
+    override fun onTap(tapLatLong: LatLong, layerXY: Point?, tapXY: Point): Boolean {
         return layer.onTap(UtilPoint(tapXY.x, tapXY.y))
     }
 }

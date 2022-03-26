@@ -10,7 +10,7 @@ public final class MapPaint {
 
     public static final int EDGE_WIDTH_LINE=2;
 
-    private final static float TEXT_SIZE=20;
+    private final static float TEXT_SIZE=15;
 
     public static Paint createBackgroundPaint(int color) {
         Paint p = AppGraphicFactory.instance().createPaint();

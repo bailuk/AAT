@@ -2,6 +2,7 @@ package ch.bailu.aat_lib.app;
 
 import ch.bailu.aat_lib.dispatcher.Broadcaster;
 import ch.bailu.aat_lib.gpx.GpxInformation;
+import ch.bailu.aat_lib.map.TilePainter;
 import ch.bailu.aat_lib.map.tile.MapTileInterface;
 import ch.bailu.aat_lib.preferences.StorageInterface;
 import ch.bailu.aat_lib.preferences.map.SolidDem3Directory;
@@ -45,4 +46,6 @@ public interface AppContext extends FocFactory {
     SolidTileCacheDirectory getTileCacheDirectory();
 
     Timer createTimer();
+
+    TilePainter getTilePainter();
 }

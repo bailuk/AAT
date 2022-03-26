@@ -1,17 +1,13 @@
-package ch.bailu.aat.map.mapsforge;
+package ch.bailu.aat_lib.map.tile;
 
-import android.graphics.Bitmap;
-import android.graphics.Paint;
-import android.graphics.Rect;
 
-import androidx.annotation.NonNull;
-
+import org.jetbrains.annotations.NotNull;
 import org.mapsforge.core.graphics.Canvas;
+import org.mapsforge.core.graphics.Paint;
 import org.mapsforge.core.graphics.TileBitmap;
 import org.mapsforge.core.model.BoundingBox;
 import org.mapsforge.core.model.LatLong;
 import org.mapsforge.core.model.Point;
-import org.mapsforge.map.android.graphics.AndroidGraphicFactory;
 import org.mapsforge.map.layer.Layer;
 import org.mapsforge.map.layer.TilePosition;
 import org.mapsforge.map.model.common.Observer;
@@ -19,44 +15,42 @@ import org.mapsforge.map.util.LayerUtil;
 
 import java.util.List;
 
-import ch.bailu.aat.map.AndroidDraw;
-import ch.bailu.aat.map.tile.TileProvider;
 import ch.bailu.aat_lib.map.MapContext;
+import ch.bailu.aat_lib.map.TilePainter;
 import ch.bailu.aat_lib.map.layer.MapLayerInterface;
+import ch.bailu.aat_lib.map.tile.TileProvider;
 import ch.bailu.aat_lib.preferences.StorageInterface;
 import ch.bailu.aat_lib.service.InsideContext;
 import ch.bailu.aat_lib.service.ServicesInterface;
+import ch.bailu.aat_lib.util.Rect;
 
 public class MapsForgeTileLayer extends Layer implements MapLayerInterface, Observer {
 
-    private final TileProvider provider;
+    private final TileProvider tileProvider;
+    private final TilePainter tilePainter;
 
     private boolean isAttached = false;
 
     private final ServicesInterface services;
 
-    private final Paint paint = new Paint();
+    private final Paint paint;
     private final Rect rect = new Rect();
 
-    public MapsForgeTileLayer(ServicesInterface sc, TileProvider p) {
+    public MapsForgeTileLayer(ServicesInterface sc, TileProvider tileProvider, TilePainter tilePainter) {
         services = sc;
-        provider = p;
+        this.tileProvider = tileProvider;
+        this.tilePainter = tilePainter;
 
-        paint.setAlpha(p.getSource().getAlpha());
+        paint = tilePainter.createPaint(tileProvider.getSource());
 
-        if (p.getSource().filterBitmap()) {
-            // Paint.FILTER_BITMAP_FLAG -> slow drawing
-            paint.setFlags(Paint.FILTER_BITMAP_FLAG);
-        }
-
-        provider.addObserver(this);
+        this.tileProvider.addObserver(this);
     }
 
 
     @Override
     public void draw(final BoundingBox box, final byte zoom, final Canvas c, final Point tlp) {
 
-        synchronized (provider) {
+        synchronized (tileProvider) {
             new InsideContext(services) {
                 @Override
                 public void run() {
@@ -79,24 +73,20 @@ public class MapsForgeTileLayer extends Layer implements MapLayerInterface, Obse
 
         List<TilePosition> tilePositions = LayerUtil.getTilePositions(box, zoom, tlp, tileSize);
 
-        provider.preload(tilePositions);
+        tileProvider.preload(tilePositions);
 
         for (TilePosition tilePosition : tilePositions) {
-            final TileBitmap tileBitmap = provider.get(tilePosition.tile);
+            final TileBitmap tileBitmap = tileProvider.get(tilePosition.tile);
 
             if (tileBitmap != null) {
-                final Bitmap bitmap = AndroidGraphicFactory.getBitmap(tileBitmap);
+                final Point p = tilePosition.point;
 
-                if (bitmap != null) {
-                    final Point p = tilePosition.point;
+                rect.left = (int) Math.round(p.x);
+                rect.top = (int) Math.round(p.y);
+                rect.right = rect.left + tileSize;
+                rect.bottom = rect.top + tileSize;
 
-                    rect.left = (int) Math.round(p.x);
-                    rect.top = (int) Math.round(p.y);
-                    rect.right = rect.left + tileSize;
-                    rect.bottom = rect.top + tileSize;
-
-                    AndroidDraw.convert(canvas).drawBitmap(bitmap, null, rect, paint);
-                }
+                tilePainter.paint(tileBitmap, canvas, rect, paint);
             }
         }
     }
@@ -110,7 +100,7 @@ public class MapsForgeTileLayer extends Layer implements MapLayerInterface, Obse
 
     @Override
     public void onAttached() {
-        synchronized(provider) {
+        synchronized(tileProvider) {
             isAttached = true;
         }
     }
@@ -118,9 +108,9 @@ public class MapsForgeTileLayer extends Layer implements MapLayerInterface, Obse
 
     @Override
     public void onDetached() {
-        synchronized(provider) {
+        synchronized(tileProvider) {
             isAttached = false;
-            provider.onDetached();
+            tileProvider.onDetached();
         }
     }
 
@@ -128,23 +118,23 @@ public class MapsForgeTileLayer extends Layer implements MapLayerInterface, Obse
     private boolean detachAttach(int zoom) {
 
         if (isVisible() && isZoomSupported(zoom) && isAttached) {
-            provider.onAttached();
+            tileProvider.onAttached();
         } else  {
-            provider.onDetached();
+            tileProvider.onDetached();
         }
 
-        return provider.isAttached();
+        return tileProvider.isAttached();
     }
 
 
     private boolean isZoomSupported(int zoom) {
-        return (provider.getMinimumZoomLevel() <= zoom && provider.getMaximumZoomLevel() >= zoom);
+        return (tileProvider.getMinimumZoomLevel() <= zoom && tileProvider.getMaximumZoomLevel() >= zoom);
     }
 
 
     public void reDownloadTiles() {
-        synchronized (provider) {
-            provider.reDownloadTiles();
+        synchronized (tileProvider) {
+            tileProvider.reDownloadTiles();
         }
     }
 
@@ -168,6 +158,6 @@ public class MapsForgeTileLayer extends Layer implements MapLayerInterface, Obse
     public boolean onTap(LatLong tapLatLong, Point layerXY, Point tapXY) {return false;}
 
     @Override
-    public void onPreferencesChanged(@NonNull StorageInterface s, @NonNull String key) {}
+    public void onPreferencesChanged(@NotNull StorageInterface s, @NotNull String key) {}
 
 }

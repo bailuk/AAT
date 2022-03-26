@@ -7,6 +7,7 @@ import org.mapsforge.core.model.LatLong;
 import org.mapsforge.map.model.common.Observer;
 
 import ch.bailu.aat.map.MapDensity;
+import ch.bailu.aat_lib.map.tile.MapsForgeTileLayerStackConfigured;
 import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat_lib.app.AppContext;
 import ch.bailu.aat_lib.dispatcher.DispatcherInterface;
@@ -46,7 +47,7 @@ public class MapsForgeView extends MapsForgeViewBase {
             public void onChange() {
                 LatLong newCenter = getModel().mapViewPosition.getCenter();
 
-                if (newCenter != null && newCenter.equals(center) == false) {
+                if (newCenter != null && !newCenter.equals(center)) {
                     center = newCenter;
                     pos.onMapCenterChanged(center);
                 }
