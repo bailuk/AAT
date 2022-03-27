@@ -35,7 +35,7 @@ dependencies {
     /**
      *  Notnull annotation
      */
-    implementation("com.google.code.findbugs:jsr305:3.0.2")
+    api("com.google.code.findbugs:jsr305:3.0.2")
 
     /**
      *  https://mvnrepository.com/artifact/net.sf.kxml/kxml2
@@ -56,7 +56,7 @@ dependencies {
      *   https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter
      *
      */
-    testImplementation("org.junit.jupiter:junit-jupiter:5.7.2")
+    testImplementation("org.junit.jupiter:junit-jupiter:5.8.2")
 
 
     // open-location-code

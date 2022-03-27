@@ -21,7 +21,7 @@ import java.util.*
 
 class MapMainView(actionHelper: ActionHelper, dispatcher: DispatcherInterface, uiController: UiController): Attachable {
 
-    val map = GtkCustomMapView(GtkAppContext.storage, getMapFiles(), dispatcher)
+    val map = GtkCustomMapView(GtkAppContext.storage, dispatcher)
     val overlay = Overlay()
 
     private val barControl = MapBars()

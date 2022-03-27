@@ -16,17 +16,20 @@ import org.mapsforge.map.model.IMapViewPosition;
 
 import java.util.ArrayList;
 
+import javax.annotation.Nonnull;
+
 import ch.bailu.aat.map.MapDensity;
 import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat_lib.coordinates.BoundingBoxE6;
 import ch.bailu.aat_lib.dispatcher.LifeCycleInterface;
 import ch.bailu.aat_lib.map.MapContext;
 import ch.bailu.aat_lib.map.MapViewInterface;
-import ch.bailu.aat_lib.util.Point;
+import ch.bailu.aat_lib.map.layer.LayerWrapper;
 import ch.bailu.aat_lib.map.layer.MapLayerInterface;
 import ch.bailu.aat_lib.preferences.OnPreferencesChanged;
 import ch.bailu.aat_lib.preferences.StorageInterface;
 import ch.bailu.aat_lib.service.ServicesInterface;
+import ch.bailu.aat_lib.util.Point;
 
 public class MapsForgeViewBase extends MapView implements
         MapViewInterface,
@@ -186,7 +189,7 @@ public class MapsForgeViewBase extends MapView implements
 
 
     @Override
-    public void onPreferencesChanged(StorageInterface s, String key) {
+    public void onPreferencesChanged(@Nonnull StorageInterface s, @Nonnull String key) {
         for(OnPreferencesChanged l: layers)
             l.onPreferencesChanged(s, key);
     }

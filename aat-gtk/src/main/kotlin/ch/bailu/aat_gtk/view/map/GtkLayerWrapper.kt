@@ -12,7 +12,7 @@ import org.mapsforge.map.layer.Layer
 
 
 
-class LayerWrapper(
+class GtkLayerWrapper(
     private val mcontext: MapContext,
     private val layer: MapLayerInterface) : Layer() {
 

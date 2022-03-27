@@ -1,10 +1,14 @@
 package ch.bailu.aat_gtk.app
 
 import ch.bailu.aat_gtk.dispatcher.GtkBroadcaster
+import ch.bailu.aat_gtk.map.GtkTilePainter
 import ch.bailu.aat_gtk.service.GtkServices
 import ch.bailu.aat_gtk.service.location.directory.GtkSummaryConfig
+import ch.bailu.aat_gtk.solid.GtkMapDirectories
+import ch.bailu.aat_gtk.solid.GtkSolidTileCacheDirectory
 import ch.bailu.aat_gtk.solid.GtkStorage
 import ch.bailu.aat_gtk.solid.SolidGtkDataDirectory
+import ch.bailu.aat_gtk.util.GtkTimer
 import ch.bailu.aat_gtk.util.sql.H2DbConnection
 import ch.bailu.aat_lib.app.AppContext
 import ch.bailu.aat_lib.dispatcher.Broadcaster
@@ -100,21 +104,18 @@ object GtkAppContext: AppContext {
     }
 
     override fun getMapDirectory(): SolidMapsForgeDirectory {
-        AppLog.d(this, "Not yet implemented getMapDirectory")
-        TODO("Not yet implemented")
+        return GtkMapDirectories(storage, focFactory).createSolidDirectory()
     }
 
     override fun getTileCacheDirectory(): SolidTileCacheDirectory {
-        AppLog.d(this, "Not yet implemented getTileCacheDirectory")
-        TODO("Not yet implemented")
+        return GtkSolidTileCacheDirectory(storage, focFactory)
     }
 
     override fun createTimer(): Timer {
-        AppLog.d(this, "Not yet implemented createTimer")
-        TODO("Not yet implemented")
+        return GtkTimer()
     }
 
     override fun getTilePainter(): TilePainter {
-        TODO("Not yet implemented")
+        return GtkTilePainter()
     }
 }

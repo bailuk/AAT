@@ -1,4 +1,4 @@
-package ch.bailu.aat.map.mapsforge;
+package ch.bailu.aat_lib.map.layer;
 
 import org.mapsforge.core.graphics.Canvas;
 import org.mapsforge.core.model.BoundingBox;
@@ -6,7 +6,6 @@ import org.mapsforge.core.model.Point;
 import org.mapsforge.map.layer.Layer;
 
 import ch.bailu.aat_lib.map.MapContext;
-import ch.bailu.aat_lib.map.layer.MapLayerInterface;
 import ch.bailu.aat_lib.service.InsideContext;
 import ch.bailu.aat_lib.service.ServicesInterface;
 
