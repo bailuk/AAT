@@ -9,7 +9,7 @@ import android.util.SparseArray;
 
 import org.mapsforge.map.android.graphics.AndroidGraphicFactory;
 
-import ch.bailu.aat.util.graphic.SyncTileBitmap;
+import ch.bailu.aat.util.graphic.AndroidSyncTileBitmap;
 import ch.bailu.aat_lib.map.AppDensity;
 import ch.bailu.aat_lib.map.MapPaint;
 
@@ -33,7 +33,7 @@ public final class NodeBitmap {
         return node;
     }
 
-    private final SyncTileBitmap bitmap = new SyncTileBitmap();
+    private final AndroidSyncTileBitmap bitmap = new AndroidSyncTileBitmap();
 
     private NodeBitmap(int radius, AppDensity res) {
 
@@ -62,7 +62,7 @@ public final class NodeBitmap {
     }
 
 
-    public SyncTileBitmap getTileBitmap() {
+    public AndroidSyncTileBitmap getTileBitmap() {
         return bitmap;
     }
 }

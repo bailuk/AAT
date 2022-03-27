@@ -1,6 +1,7 @@
 package ch.bailu.aat_gtk.app
 
 import ch.bailu.aat_gtk.dispatcher.GtkBroadcaster
+import ch.bailu.aat_gtk.map.GtkSyncTileBitmap
 import ch.bailu.aat_gtk.map.GtkTilePainter
 import ch.bailu.aat_gtk.service.GtkServices
 import ch.bailu.aat_gtk.service.location.directory.GtkSummaryConfig
@@ -30,6 +31,7 @@ import ch.bailu.aat_lib.util.sql.DbConnection
 import ch.bailu.foc.Foc
 import ch.bailu.foc.FocFactory
 import ch.bailu.foc.FocFile
+import org.mapsforge.map.gtk.graphics.GtkTileBitmap
 
 object GtkAppContext: AppContext {
     private val focFactory = FocFactory { string: String? -> FocFile(string) }
@@ -80,8 +82,7 @@ object GtkAppContext: AppContext {
     }
 
     override fun createMapTile(): MapTileInterface {
-        AppLog.d(this, "Not yet implemented createMapTile")
-        TODO("Not yet implemented")
+        return GtkSyncTileBitmap()
     }
 
     override fun getDem3Directory(): SolidDem3Directory {
@@ -90,8 +91,7 @@ object GtkAppContext: AppContext {
     }
 
     override fun getDownloadConfig(): DownloadConfig {
-        AppLog.d(this, "Not yet implemented getDownloadConfig")
-        TODO("Not yet implemented")
+        return DownloadConfig(GtkAppConfig)
     }
 
     override fun getDataDirectory(): SolidDataDirectory {

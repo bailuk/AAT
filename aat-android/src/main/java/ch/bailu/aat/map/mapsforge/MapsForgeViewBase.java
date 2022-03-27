@@ -2,8 +2,6 @@ package ch.bailu.aat.map.mapsforge;
 
 
 import android.content.Context;
-import android.view.GestureDetector;
-import android.view.MotionEvent;
 import android.view.View;
 
 import org.mapsforge.core.model.BoundingBox;
@@ -29,7 +27,6 @@ import ch.bailu.aat_lib.map.layer.MapLayerInterface;
 import ch.bailu.aat_lib.preferences.OnPreferencesChanged;
 import ch.bailu.aat_lib.preferences.StorageInterface;
 import ch.bailu.aat_lib.service.ServicesInterface;
-import ch.bailu.aat_lib.util.Point;
 
 public class MapsForgeViewBase extends MapView implements
         MapViewInterface,
@@ -69,15 +66,6 @@ public class MapsForgeViewBase extends MapView implements
 
         getMapScaleBar().setVisible(false);
         setBuiltInZoomControls(false);
-
-        this.setGestureDetector(new GestureDetector(getContext(), new GestureDetector.SimpleOnGestureListener(){
-            @Override
-            public boolean onSingleTapConfirmed(MotionEvent e) {
-                for(MapLayerInterface layer: layers) layer.onTap(new Point(e.getX(), e.getY()));
-                return false;
-            }
-        }));
-
     }
 
     @Override

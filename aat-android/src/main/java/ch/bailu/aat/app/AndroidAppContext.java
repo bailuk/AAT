@@ -12,7 +12,7 @@ import ch.bailu.aat.preferences.map.AndroidSolidTileCacheDirectory;
 import ch.bailu.aat.preferences.system.AndroidSolidDataDirectory;
 import ch.bailu.aat.services.directory.AndroidSummaryConfig;
 import ch.bailu.aat.util.AndroidTimer;
-import ch.bailu.aat.util.graphic.SyncTileBitmap;
+import ch.bailu.aat.util.graphic.AndroidSyncTileBitmap;
 import ch.bailu.aat.util.sql.AndroidDbConnection;
 import ch.bailu.aat_lib.app.AppContext;
 import ch.bailu.aat_lib.dispatcher.Broadcaster;
@@ -80,7 +80,7 @@ public class AndroidAppContext implements AppContext {
 
     @Override
     public MapTileInterface createMapTile() {
-        return new SyncTileBitmap();
+        return new AndroidSyncTileBitmap();
     }
 
     @Override

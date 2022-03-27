@@ -33,7 +33,7 @@ import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat_lib.preferences.map.SolidMapTileStack;
 import ch.bailu.aat_lib.preferences.map.SolidRenderTheme;
 import ch.bailu.aat.util.OldAppBroadcaster;
-import ch.bailu.aat.util.graphic.SyncTileBitmap;
+import ch.bailu.aat.util.graphic.AndroidSyncTileBitmap;
 import ch.bailu.aat_lib.app.AppContext;
 import ch.bailu.aat_lib.dispatcher.AppBroadcaster;
 import ch.bailu.aat_lib.gpx.GpxInformation;
@@ -146,8 +146,8 @@ public class MapsForgePreview extends MapsForgeViewBase implements MapPreviewInt
      */
 
 
-    private SyncTileBitmap generateBitmap() {
-        final SyncTileBitmap bitmap = new SyncTileBitmap();
+    private AndroidSyncTileBitmap generateBitmap() {
+        final AndroidSyncTileBitmap bitmap = new AndroidSyncTileBitmap();
 
         bitmap.set(BITMAP_SIZE, false);
         if (bitmap.getAndroidBitmap() != null) {
@@ -168,7 +168,7 @@ public class MapsForgePreview extends MapsForgeViewBase implements MapPreviewInt
 
     @SuppressLint("WrongThread")
     public void generateBitmapFile() {
-        SyncTileBitmap bitmap = generateBitmap();
+        AndroidSyncTileBitmap bitmap = generateBitmap();
 
 
         try {

@@ -20,7 +20,7 @@ import ch.bailu.aat_lib.service.cache.Obj;
 import ch.bailu.aat_lib.util.Rect;
 import ch.bailu.foc.Foc;
 
-public class SyncTileBitmap implements MapTileInterface {
+public class AndroidSyncTileBitmap implements MapTileInterface {
     private TileBitmap bitmap = null;
 
     private long size = 0;

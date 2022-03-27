@@ -3,6 +3,8 @@ package ch.bailu.aat.map.layer.control;
 import android.view.View;
 import android.widget.LinearLayout;
 
+import javax.annotation.Nonnull;
+
 import ch.bailu.aat.activities.AbsBackButton;
 import ch.bailu.aat.map.To;
 import ch.bailu.aat.util.ui.AppLayout;
@@ -118,8 +120,8 @@ public abstract class ControlBarLayer implements MapLayerInterface, View.OnClick
     public boolean onTap(Point tapXY) {
         int size=bar.getControlSize();
 
-        int y=(int)tapXY.y;
-        int x=(int)tapXY.x;
+        int y = tapXY.y;
+        int x = tapXY.x;
 
         if (y < size) {
             topTap();
@@ -166,5 +168,5 @@ public abstract class ControlBarLayer implements MapLayerInterface, View.OnClick
     public void drawForeground(MapContext mcontext) {}
 
     @Override
-    public void onPreferencesChanged(StorageInterface s, String key) {}
+    public void onPreferencesChanged(@Nonnull StorageInterface s, @Nonnull String key) {}
 }

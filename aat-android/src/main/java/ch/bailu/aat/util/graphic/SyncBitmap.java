@@ -16,7 +16,7 @@ import ch.bailu.foc.Foc;
 public class SyncBitmap {
     private Bitmap bitmap = null;
 
-    private long size = Obj.MIN_SIZE;
+    private int size = Obj.MIN_SIZE;
 
 
     public SyncBitmap() {
@@ -30,14 +30,12 @@ public class SyncBitmap {
 
 
     private static Bitmap load(Foc file) throws IOException {
-        android.graphics.Bitmap bitmap = null;
+        android.graphics.Bitmap bitmap;
         InputStream in = null;
 
         try {
             in = new BufferedInputStream(file.openR());
             bitmap = android.graphics.BitmapFactory.decodeStream(in);
-        } catch (Exception e) {
-            throw e;
 
         } finally {
             Foc.close(in);
@@ -72,7 +70,7 @@ public class SyncBitmap {
     }
 
     public synchronized void set(SVG svg, int size) {
-        SyncTileBitmap b = new SyncTileBitmap();
+        AndroidSyncTileBitmap b = new AndroidSyncTileBitmap();
         b.set(svg, size);
         set(b.getTileBitmap());
     }

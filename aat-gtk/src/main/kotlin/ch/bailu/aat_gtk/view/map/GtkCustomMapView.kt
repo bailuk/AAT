@@ -10,6 +10,7 @@ import ch.bailu.aat_lib.map.layer.MapPositionLayer
 import ch.bailu.aat_lib.map.tile.MapsForgeTileLayerStackConfigured
 import ch.bailu.aat_lib.preferences.OnPreferencesChanged
 import ch.bailu.aat_lib.preferences.StorageInterface
+import ch.bailu.aat_lib.preferences.map.SolidTileSize
 import ch.bailu.aat_lib.util.Limit
 import ch.bailu.gtk.cairo.Context
 import org.mapsforge.core.model.BoundingBox
@@ -43,6 +44,8 @@ class GtkCustomMapView (
     private val stack: MapsForgeTileLayerStackConfigured
 
     init {
+        model.displayModel.setFixedTileSize(SolidTileSize(storage, AppDensity()).getTileSize())
+
         foregroundContext = GtkMapContextForeground(
             MapsForgeMetrics(this, AppDensity()), backgroundContext, layers)
         addLayer(backgroundContext)
