@@ -3,6 +3,8 @@ package ch.bailu.aat.map.layer.control;
 import android.content.Context;
 import android.view.View;
 
+import javax.annotation.Nonnull;
+
 import ch.bailu.aat.R;
 import ch.bailu.aat.menus.LocationMenu;
 import ch.bailu.aat.menus.MapMenu;
@@ -69,7 +71,6 @@ public final class InformationBarLayer extends ControlBarLayer {
     public void onClick(View v) {
         super.onClick(v);
 
-
         if (v == map) {
             new MapMenu(context, mcontext).showAsPopup(v.getContext(),v);
 
@@ -79,9 +80,6 @@ public final class InformationBarLayer extends ControlBarLayer {
         } else if (v==location) {
             new LocationMenu(context, mcontext.getMapView()).showAsPopup(v.getContext(), location);
         }
-
-
-
     }
 
     @Override
@@ -123,8 +121,7 @@ public final class InformationBarLayer extends ControlBarLayer {
     }
 
     @Override
-    public void onPreferencesChanged(StorageInterface s, String key) {
-
+    public void onPreferencesChanged(@Nonnull StorageInterface s, @Nonnull String key) {
         selector.onPreferencesChanged(s, key);
     }
 }

@@ -5,6 +5,8 @@ import android.view.View;
 
 import org.mapsforge.core.model.LatLong;
 
+import javax.annotation.Nonnull;
+
 import ch.bailu.aat.R;
 import ch.bailu.aat.dispatcher.EditorSourceInterface;
 import ch.bailu.aat.map.To;
@@ -136,7 +138,7 @@ public final class EditorLayer extends ControlBarLayer {
 
 
     @Override
-    public void onPreferencesChanged(StorageInterface s, String key) {
+    public void onPreferencesChanged(@Nonnull StorageInterface s, @Nonnull String key) {
         content.onPreferencesChanged(s,key);
         selector.onPreferencesChanged(s,key);
     }
