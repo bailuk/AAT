@@ -20,7 +20,7 @@ class GtkTilePainter : TilePainter {
     }
 
     override fun createPaint(source: Source): Paint {
-        alpha = 100f / 255f * source.alpha.toFloat()
+        alpha = source.alpha.toFloat() / 255f
 
         return GtkGraphicFactory.INSTANCE.createPaint()
     }
