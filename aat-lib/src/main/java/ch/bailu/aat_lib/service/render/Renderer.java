@@ -1,10 +1,9 @@
-package ch.bailu.aat.services.render;
+package ch.bailu.aat_lib.service.render;
 
 import org.mapsforge.core.graphics.Canvas;
 import org.mapsforge.core.model.BoundingBox;
 import org.mapsforge.core.model.Point;
 import org.mapsforge.core.model.Tile;
-import org.mapsforge.map.android.graphics.AndroidGraphicFactory;
 import org.mapsforge.map.datastore.MapDataStore;
 import org.mapsforge.map.datastore.MultiMapDataStore;
 import org.mapsforge.map.layer.Layer;
@@ -22,6 +21,7 @@ import org.mapsforge.map.rendertheme.rule.RenderThemeFuture;
 
 import java.util.ArrayList;
 
+import ch.bailu.aat_lib.app.AppGraphicFactory;
 import ch.bailu.foc.Foc;
 
 public final class Renderer extends Layer {
@@ -38,7 +38,6 @@ public final class Renderer extends Layer {
     private final JobQueue<RendererJob> jobQueue;
 
 
-
     public Renderer(XmlRenderTheme t, TileCache cache, ArrayList<Foc> files) throws Exception {
         // important: call model.mapViewPosition.destroy() to free resources
         final Model model = new Model();
@@ -53,7 +52,7 @@ public final class Renderer extends Layer {
 
             final DatabaseRenderer databaseRenderer = new DatabaseRenderer(
                     mapDataStore,
-                    AndroidGraphicFactory.INSTANCE,
+                    AppGraphicFactory.instance(),
                     cache,
                     null,
                     RENDER_LABELS,
@@ -74,8 +73,6 @@ public final class Renderer extends Layer {
             model.mapViewPosition.destroy();
         }
     }
-
-
 
 
     private MapDataStore createMapDataStore(ArrayList<Foc> files) throws Exception {
@@ -124,7 +121,7 @@ public final class Renderer extends Layer {
 
     private static RenderThemeFuture createTheme(XmlRenderTheme t) {
         RenderThemeFuture theme = new RenderThemeFuture(
-                AndroidGraphicFactory.INSTANCE,
+                AppGraphicFactory.instance(),
                 t,
                 new DisplayModel());
         new Thread(theme).start();
@@ -169,5 +166,4 @@ public final class Renderer extends Layer {
     public boolean supportsTile(Tile t) {
         return mapDataStore.supportsTile(t);
     }
-
 }

@@ -1,6 +1,4 @@
-package ch.bailu.aat.preferences.map;
-
-import android.os.Build;
+package ch.bailu.aat_lib.preferences.map;
 
 import org.mapsforge.core.util.Parameters;
 
@@ -32,10 +30,11 @@ public class SolidRendererThreads extends SolidIndexList {
 
 
     public static int numberOfCores() {
-        if(Build.VERSION.SDK_INT >= 17) {
-            return Math.max(Runtime.getRuntime().availableProcessors(), 1);
+        try {
+           return Math.max(Runtime.getRuntime().availableProcessors(), 1);
+        } catch (Exception e) {
+            return 1;
         }
-        return 1;
     }
 
     @Override

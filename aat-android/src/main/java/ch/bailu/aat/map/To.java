@@ -6,16 +6,7 @@ import ch.bailu.aat_lib.map.MapViewInterface;
 import ch.bailu.aat_lib.service.ServicesInterface;
 
 public class To {
-   /* public static Context context(MapContext mc) {
-        AndroidMapContext amc = (AndroidMapContext) mc;
-        return amc.getContext();
-    }
 
-    public static ServiceContext scontext(MapContext mc) {
-        AndroidMapContext amc = (AndroidMapContext) mc;
-        return amc.getSContext();
-    }
-*/
     public static MapsForgeViewBase view(MapViewInterface map) {
         return  (MapsForgeViewBase) map;
 

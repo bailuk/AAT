@@ -1,6 +1,4 @@
-package ch.bailu.aat.services.render;
-
-import android.util.SparseArray;
+package ch.bailu.aat_lib.service.render;
 
 import org.mapsforge.core.graphics.TileBitmap;
 import org.mapsforge.core.model.Tile;
@@ -8,20 +6,26 @@ import org.mapsforge.map.layer.cache.TileCache;
 import org.mapsforge.map.layer.queue.Job;
 import org.mapsforge.map.model.common.Observer;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 
-import ch.bailu.aat_lib.service.cache.ObjTileMapsForge;
 import ch.bailu.aat_lib.logger.AppLog;
+import ch.bailu.aat_lib.service.cache.ObjTileMapsForge;
 
 public final class Cache implements TileCache {
 
-    private final SparseArray<ObjTileMapsForge> cache = new SparseArray<>(20);
+    private final Map <Integer, ObjTileMapsForge> cache = new HashMap<>();
 
-
+    /**
+     * Interface function for MapWorkerPool.
+     * If this returns true MapWorkerPool will remove this RendererJob
+     *
+     * @param j job id
+     * @return returns true if render job does not exists or exists and is finished
+     */
     @Override
     public boolean containsKey(Job j) {
-        // if this returns true MapWorkerPool will remove this RendererJob
-
         ObjTileMapsForge o = cache.get(toKey(j));
 
         return (o == null || o.isLoaded());
@@ -37,12 +41,10 @@ public final class Cache implements TileCache {
         cache.clear();
     }
 
-
     @Override
     public int getCapacity() {
         return cache.size();
     }
-
 
     @Override
     public int getCapacityFirstLevel() {
@@ -64,8 +66,6 @@ public final class Cache implements TileCache {
         return null;
     }
 
-
-
     /**
      *
      * This gets called from the renderer
@@ -83,17 +83,13 @@ public final class Cache implements TileCache {
         }
     }
 
-
-
     public void lockToRenderer(ObjTileMapsForge o) {
         cache.put(toKey(o), o);
     }
 
-
     public void freeFromRenderer(ObjTileMapsForge o) {
         cache.remove(toKey(o));
     }
-
 
     private int toKey(Tile t) { return t.hashCode();}
     private int toKey(ObjTileMapsForge o) {
@@ -102,7 +98,6 @@ public final class Cache implements TileCache {
     private int toKey(Job j) {
         return toKey(j.tile);
     }
-
 
     @Override
     public void setWorkingSet(Set<Job> workingSet) {}

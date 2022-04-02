@@ -21,6 +21,7 @@ import ch.bailu.aat_lib.service.elevation.ElevetionServiceInterface
 import ch.bailu.aat_lib.service.elevation.updater.ElevationUpdaterClient
 import ch.bailu.aat_lib.service.location.LocationService
 import ch.bailu.aat_lib.service.location.LocationServiceInterface
+import ch.bailu.aat_lib.service.render.RenderService
 import ch.bailu.aat_lib.service.render.RenderServiceInterface
 import ch.bailu.aat_lib.service.sensor.SensorServiceInterface
 import ch.bailu.aat_lib.service.tracker.TrackerService
@@ -36,8 +37,8 @@ class GtkServices (appContext: AppContext) : ServicesInterface {
             this
     )
     private val backgroundService = BackgroundService(appContext, appContext.broadcaster, 5)
-
     private val directoryService = DirectoryService(appContext)
+    private val renderService = RenderService(appContext, appContext.mapDirectory)
 
     override fun getLocationService(): LocationServiceInterface {
         return locationService
@@ -74,8 +75,7 @@ class GtkServices (appContext: AppContext) : ServicesInterface {
     }
 
     override fun getRenderService(): RenderServiceInterface {
-        System.out.println("Not yet implemented getRenderService")
-        TODO("Not yet implemented")
+        return renderService
     }
 
     override fun getSensorService(): SensorServiceInterface {

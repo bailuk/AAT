@@ -7,41 +7,55 @@ import ch.bailu.gtk.GTK
 import ch.bailu.gtk.Refs
 import ch.bailu.gtk.glib.Glib
 import java.util.*
+import java.util.concurrent.ConcurrentLinkedQueue
 
 class GtkBroadcaster : Broadcaster {
+
     private val signals: MutableMap<String, ArrayList<BroadcastReceiver>> = HashMap()
+    private val broadcastQueue = ConcurrentLinkedQueue<BroadcastEntry>()
+    private val onSourceFunc = Glib.OnSourceFunc {
+        do {
+            val entry = broadcastQueue.poll()
+            if (entry is BroadcastEntry) {
+                entry.broadcast()
+            }
+        } while(entry != null)
 
-    private var linkedList = LinkedList<Glib.OnSourceFunc>()
+        GTK.FALSE
+    }
 
+    @Synchronized
     override fun broadcast(signal: String, vararg args: String) {
         val observers = signals[signal]?.toTypedArray()
 
         if (observers != null) {
-            val onSourceFunc = Glib.OnSourceFunc {
-                for (observer in observers) {
-                    observer.onReceive(*args)
-                }
-                Refs.remove(linkedList.removeLast())
-                GTK.FALSE
+            if (broadcastQueue.offer(BroadcastEntry(observers, arrayOf(*args)))) {
+                Glib.idleAdd(onSourceFunc, null)
+            } else {
+                AppLog.e(this, "Failed to queue broadcast entry")
             }
-            linkedList.addFirst(onSourceFunc)
-            if (linkedList.size > 5) {
-                AppLog.w(this, "Stack size: ${linkedList.size}")
-            }
-
-            Glib.idleAdd(onSourceFunc, null)
         }
     }
 
+    @Synchronized
     override fun register(observer: BroadcastReceiver, signal: String) {
         unregister(observer)
         signals.putIfAbsent(signal, ArrayList())
         signals[signal]?.add(observer)
     }
 
+    @Synchronized
     override fun unregister(onLocation: BroadcastReceiver) {
         for (observers in signals.values) {
             observers.remove(onLocation)
+        }
+    }
+}
+
+class BroadcastEntry(private val observers: Array<BroadcastReceiver>, private val args: Array<String>) {
+    fun broadcast() {
+        for (observer in observers) {
+            observer.onReceive(*args)
         }
     }
 }

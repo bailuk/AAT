@@ -4,12 +4,12 @@ import android.content.Context;
 
 import ch.bailu.aat.app.AndroidAppContext;
 import ch.bailu.aat.preferences.location.AndroidSolidLocationProvider;
-import ch.bailu.aat.preferences.map.SolidRendererThreads;
+import ch.bailu.aat_lib.preferences.map.SolidRendererThreads;
 import ch.bailu.aat_lib.service.background.BackgroundService;
 import ch.bailu.aat_lib.service.cache.CacheService;
 import ch.bailu.aat_lib.service.elevation.ElevationService;
 import ch.bailu.aat.services.icons.IconMapService;
-import ch.bailu.aat.services.render.RenderService;
+import ch.bailu.aat_lib.service.render.RenderService;
 import ch.bailu.aat.services.sensor.SensorService;
 import ch.bailu.aat.services.tileremover.TileRemoverService;
 import ch.bailu.aat.services.tracker.StatusIcon;
@@ -143,7 +143,7 @@ public final class OneService extends AbsService  implements ServiceContext {
     @Override
     public synchronized RenderServiceInterface getRenderService() {
         if (render == null) {
-            render = new RenderService(this);
+            render = new RenderService(getAppContext(),getAppContext().getMapDirectory());
         }
         return render;
     }
