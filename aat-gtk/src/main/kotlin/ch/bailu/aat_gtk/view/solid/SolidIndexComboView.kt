@@ -1,6 +1,6 @@
 package ch.bailu.aat_gtk.view.solid
 
-import ch.bailu.aat_gtk.view.Label
+import ch.bailu.aat_gtk.view.util.GtkLabel
 import ch.bailu.aat_lib.preferences.OnPreferencesChanged
 import ch.bailu.aat_lib.preferences.SolidIndexList
 import ch.bailu.aat_lib.preferences.StorageInterface
@@ -11,8 +11,8 @@ import ch.bailu.gtk.type.Str
 
 
 class SolidIndexComboView(private val solid: SolidIndexList) : OnPreferencesChanged {
-    val layout = Box(Orientation.HORIZONTAL, 4)
-    val label = Label()
+    val layout = Box(Orientation.VERTICAL, 5)
+    val label = GtkLabel()
 
     val combo = ComboBoxText()
 
@@ -20,6 +20,8 @@ class SolidIndexComboView(private val solid: SolidIndexList) : OnPreferencesChan
 
     init {
         label.text = solid.label
+        label.xalign = 0f
+
         layout.append(label)
         layout.append(combo)
 

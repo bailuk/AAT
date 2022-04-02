@@ -6,7 +6,7 @@ import ch.bailu.aat_gtk.view.menu.MapQueryMenu
 import ch.bailu.aat_gtk.view.menu.PopupButton
 import ch.bailu.aat_gtk.view.menu.model.LocationMenu
 import ch.bailu.aat_gtk.view.solid.SolidMenuButton
-import ch.bailu.aat_gtk.view.solid.UiController
+import ch.bailu.aat_gtk.view.UiController
 import ch.bailu.aat_lib.map.MapContext
 import ch.bailu.aat_lib.preferences.StorageInterface
 import ch.bailu.aat_lib.preferences.map.SolidLegend

@@ -2,19 +2,23 @@ package ch.bailu.aat_gtk.view
 
 import ch.bailu.aat_gtk.util.IconMap
 import ch.bailu.aat_gtk.view.map.control.Bar
-import ch.bailu.aat_gtk.view.solid.UiController
+import ch.bailu.aat_gtk.view.util.GtkLabel
+import ch.bailu.aat_gtk.view.util.margin
 import ch.bailu.aat_lib.dispatcher.OnContentUpdatedInterface
 import ch.bailu.aat_lib.gpx.GpxInformation
 import ch.bailu.aat_lib.gpx.InfoID
 import ch.bailu.gtk.GTK
-import ch.bailu.gtk.gtk.*
+import ch.bailu.gtk.gtk.Box
+import ch.bailu.gtk.gtk.Button
+import ch.bailu.gtk.gtk.Orientation
+import ch.bailu.gtk.gtk.Revealer
 import ch.bailu.gtk.helper.LabelHelper
 import ch.bailu.gtk.type.Str
 
 class ContextBar(contextCallback: UiController) : OnContentUpdatedInterface {
     val revealer = Revealer()
 
-    private val label = Label()
+    private val label = GtkLabel()
     private var cache = GpxInformation.NULL
 
     init {
@@ -38,7 +42,7 @@ class ContextBar(contextCallback: UiController) : OnContentUpdatedInterface {
     private fun createButton(label: String, onClicked: Button.OnClicked) : Button {
         val result = Button.newWithLabelButton(Str(label))
         result.onClicked(onClicked)
-        setMargin(result, 3)
+        result.margin(3)
         return result
     }
 
@@ -46,15 +50,8 @@ class ContextBar(contextCallback: UiController) : OnContentUpdatedInterface {
         val result = Button()
         result.onClicked(onClicked)
         result.child = IconMap.getImage(resource, Bar.ICON_SIZE)
-        setMargin(result, 3)
+        result.margin(3)
         return result
-    }
-
-    private fun setMargin(widget: Widget, margin: Int) {
-        widget.marginBottom = margin
-        widget.marginTop = margin
-        widget.marginStart = margin
-        widget.marginEnd = margin
     }
 
     override fun onContentUpdated(iid: Int, info: GpxInformation) {

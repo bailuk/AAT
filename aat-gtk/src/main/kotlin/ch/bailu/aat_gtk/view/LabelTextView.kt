@@ -1,5 +1,6 @@
 package ch.bailu.aat_gtk.view
 
+import ch.bailu.aat_gtk.view.util.GtkLabel
 import ch.bailu.gtk.GTK
 import ch.bailu.gtk.gtk.Box
 import ch.bailu.gtk.gtk.Orientation
@@ -8,8 +9,8 @@ open class LabelTextView(labelText: String) {
 
     val layout = Box(Orientation.VERTICAL, 2)
 
-    private val _label = Label()
-    private val _value = Label()
+    private val _label = GtkLabel()
+    private val _value = GtkLabel()
 
     private val inverse = true
 

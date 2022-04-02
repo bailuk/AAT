@@ -1,12 +1,17 @@
 package ch.bailu.aat_gtk.view
 
 import ch.bailu.aat_gtk.view.description.DescriptionLabelTextView
+import ch.bailu.aat_gtk.view.util.margin
 import ch.bailu.aat_lib.description.ContentDescription
 import ch.bailu.aat_lib.dispatcher.DispatcherInterface
 import ch.bailu.gtk.gtk.*
 import ch.bailu.gtk.type.Str
 
 abstract class VerticalScrollView() {
+    companion object {
+        const val MARGIN = 10
+    }
+
     val scrolled = ScrolledWindow()
     private val container = Box(Orientation.VERTICAL,5)
 
@@ -15,6 +20,7 @@ abstract class VerticalScrollView() {
     }
 
     fun add(child: Widget) {
+        child.margin(MARGIN)
         container.append(child)
     }
 

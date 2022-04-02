@@ -4,7 +4,7 @@ import ch.bailu.aat_gtk.solid.GtkMapDirectories
 import ch.bailu.aat_gtk.view.menu.model.FixedLabelItem
 import ch.bailu.aat_gtk.view.menu.model.Menu
 import ch.bailu.aat_gtk.view.menu.model.SubmenuItem
-import ch.bailu.aat_gtk.view.solid.UiController
+import ch.bailu.aat_gtk.view.UiController
 import ch.bailu.aat_lib.map.MapContext
 import ch.bailu.aat_lib.preferences.StorageInterface
 import ch.bailu.aat_lib.preferences.map.SolidMapTileStack

@@ -1,6 +1,7 @@
 package ch.bailu.aat_gtk.view.solid
 
-import ch.bailu.aat_gtk.view.Label
+import ch.bailu.aat_gtk.view.util.GtkLabel
+import ch.bailu.aat_gtk.view.util.truncate
 import ch.bailu.aat_lib.preferences.OnPreferencesChanged
 import ch.bailu.aat_lib.preferences.SolidFile
 import ch.bailu.aat_lib.preferences.StorageInterface
@@ -10,18 +11,33 @@ import ch.bailu.gtk.type.Str
 class SolidDirectorySelectorView(private val solid: SolidFile, window: Window) : OnPreferencesChanged {
     val layout = Box(Orientation.VERTICAL, 2)
 
-    private val label = Label()
 
+    private val label = GtkLabel()
+
+    private val selector = Box(Orientation.HORIZONTAL, 5)
     private val button = Button()
+    private val combo = ComboBoxText()
+    private val dropDown = MenuButton()
 
 
     init {
         label.text = solid.label
-        layout.append(label)
-        layout.append(button)
+        label.xalign = 0f
 
-        button.label = Str(solid.toString())
+        layout.append(label)
+        layout.append(selector)
+        selector.append(button)
+        selector.append(dropDown)
+
+        button.label = Str(solid.toString().truncate())
         solid.register(this)
+
+        val selection = solid.buildSelection(ArrayList())
+
+        for (index in 0 until selection.size) {
+            combo.insertText(index, Str(selection[index]))
+        }
+        //combo.active = solid.index
 
         button.onClicked {
             val dialog = FileChooserDialog(label.label, window,FileChooserAction.SELECT_FOLDER,null)
@@ -44,7 +60,7 @@ class SolidDirectorySelectorView(private val solid: SolidFile, window: Window) :
 
     override fun onPreferencesChanged(storage: StorageInterface, key: String) {
         if (solid.hasKey(key)) {
-            button.label = Str(solid.toString())
+            button.label = Str(solid.toString().truncate())
         }
     }
 }

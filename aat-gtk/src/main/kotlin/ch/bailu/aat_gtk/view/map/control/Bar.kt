@@ -1,6 +1,7 @@
 package ch.bailu.aat_gtk.view.map.control
 
 import ch.bailu.aat_gtk.util.IconMap
+import ch.bailu.aat_gtk.view.util.margin
 import ch.bailu.gtk.gtk.Box
 import ch.bailu.gtk.gtk.Button
 import ch.bailu.gtk.gtk.Widget
@@ -11,18 +12,9 @@ class Bar(orientation: Int) {
         const val MARGIN = 6
         const val SIZE = ICON_SIZE + MARGIN * 4
 
-        fun setMargin(widget: Widget) {
-            widget.apply {
-                marginBottom = MARGIN
-                marginEnd    = MARGIN
-                marginStart  = MARGIN
-                marginTop    = MARGIN
-            }
-        }
-
         fun setIcon(button: Button, imageResource: String) {
             val image = IconMap.getImage(imageResource, ICON_SIZE)
-            setMargin(image)
+            image.margin(MARGIN)
             button.child = image
         }
     }
@@ -37,7 +29,7 @@ class Bar(orientation: Int) {
     }
 
     fun add(widget : Widget) {
-        setMargin(widget)
+        widget.margin(MARGIN)
         box.append(widget)
     }
 }

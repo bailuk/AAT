@@ -7,7 +7,6 @@ import ch.bailu.aat_gtk.view.map.control.EditBar
 import ch.bailu.aat_gtk.view.map.control.InfoBar
 import ch.bailu.aat_gtk.view.map.control.NavigationBar
 import ch.bailu.aat_gtk.view.map.layer.ControlBarLayer
-import ch.bailu.aat_gtk.view.solid.UiController
 import ch.bailu.aat_lib.dispatcher.DispatcherInterface
 import ch.bailu.aat_lib.gpx.InfoID
 import ch.bailu.aat_lib.map.Attachable
