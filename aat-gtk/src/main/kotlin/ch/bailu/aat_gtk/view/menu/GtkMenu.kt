@@ -70,7 +70,7 @@ class GtkMenu(actionHelper: ActionHelper, model: MenuModel){
     }
 
     private fun toGtkItem(label : String, id: String) : MenuItem {
-        return MenuItem(Str(label), Str("app.${id}"))
+        return MenuItem(Str(truncate(label, 30)), Str("app.${id}"))
     }
 
     private fun strOrNull(title: String): Str? {
@@ -79,5 +79,12 @@ class GtkMenu(actionHelper: ActionHelper, model: MenuModel){
         } else {
             null
         }
+    }
+
+    private fun truncate(label : String, max : Int): String {
+        if (label.length > max -1) {
+            return "…" + label.substring(label.length - max, label.length)
+        }
+        return label
     }
 }
