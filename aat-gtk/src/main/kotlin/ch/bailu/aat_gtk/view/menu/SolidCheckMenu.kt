@@ -1,6 +1,8 @@
 package ch.bailu.aat_gtk.view.menu
 
-import ch.bailu.aat_gtk.view.menu.model.*
+import ch.bailu.aat_gtk.view.menu.model.CheckItem
+import ch.bailu.aat_gtk.view.menu.model.Item
+import ch.bailu.aat_gtk.view.menu.model.Menu
 import ch.bailu.aat_lib.preferences.SolidCheckList
 
 class SolidCheckMenu(private val sindex: SolidCheckList): Menu(sindex.label) {

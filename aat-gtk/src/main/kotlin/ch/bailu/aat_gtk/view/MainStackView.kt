@@ -22,7 +22,7 @@ class MainStackView (actionHelper: ActionHelper, dispatcher: DispatcherInterface
     val layout = Stack()
 
 
-    private val preferences = PreferencesStackView(this, GtkAppContext.storage, window)
+    private val preferences = PreferencesStackView(this, GtkAppContext.storage, actionHelper, window)
     private val map = MapMainView(actionHelper, dispatcher, this)
     private val cockpit = CockpitView()
     private val fileList = FileList(dispatcher)

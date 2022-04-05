@@ -1,66 +1,71 @@
 package ch.bailu.aat_gtk.view.solid
 
+import ch.bailu.aat_gtk.lib.FileDialog
+import ch.bailu.aat_gtk.view.menu.PopupButton
+import ch.bailu.aat_gtk.view.menu.model.FixedLabelItem
+import ch.bailu.aat_gtk.view.menu.model.Menu
 import ch.bailu.aat_gtk.view.util.GtkLabel
-import ch.bailu.aat_gtk.view.util.truncate
+import ch.bailu.aat_gtk.view.util.escapeUnderscore
 import ch.bailu.aat_lib.preferences.OnPreferencesChanged
 import ch.bailu.aat_lib.preferences.SolidFile
 import ch.bailu.aat_lib.preferences.StorageInterface
-import ch.bailu.gtk.gtk.*
+import ch.bailu.gtk.GTK
+import ch.bailu.gtk.gtk.Box
+import ch.bailu.gtk.gtk.Entry
+import ch.bailu.gtk.gtk.Orientation
+import ch.bailu.gtk.gtk.Window
+import ch.bailu.gtk.helper.ActionHelper
 import ch.bailu.gtk.type.Str
 
-class SolidDirectorySelectorView(private val solid: SolidFile, window: Window) : OnPreferencesChanged {
-    val layout = Box(Orientation.VERTICAL, 2)
-
+class SolidDirectorySelectorView(private val solid: SolidFile, actionHelper: ActionHelper, window: Window) : OnPreferencesChanged {
+    val layout = Box(Orientation.VERTICAL, 5)
 
     private val label = GtkLabel()
 
-    private val selector = Box(Orientation.HORIZONTAL, 5)
-    private val button = Button()
-    private val combo = ComboBoxText()
-    private val dropDown = MenuButton()
+    private val hbox = Box(Orientation.HORIZONTAL, 5)
+    private val entry = Entry()
+    private val menu = PopupButton(actionHelper, Menu().also { it ->
+        val selection = solid.buildSelection(ArrayList())
+        for (s in selection) {
+            it.add(FixedLabelItem(s.escapeUnderscore()) {
+                solid.setValue(s)
+            })
+        }
+
+        it.add(FixedLabelItem("…") {
+            FileDialog()
+                .label(solid.label)
+                .selectFolder()
+                .path(solid.valueAsString)
+                .response {
+                    if (it.isNotEmpty()) {
+                        solid.setValueFromString(it)
+                    }
+                }
+                .show(window)
+        })
+    })
 
 
     init {
         label.text = solid.label
         label.xalign = 0f
 
+        entry.hexpand = GTK.TRUE
+        menu.setIcon("menu", 12)
         layout.append(label)
-        layout.append(selector)
-        selector.append(button)
-        selector.append(dropDown)
+        layout.append(hbox)
 
-        button.label = Str(solid.toString().truncate())
+        hbox.append(entry)
+        hbox.append(menu.overlay)
+
+        entry.buffer.setText(Str(solid.toString()), solid.toString().length)
         solid.register(this)
-
-        val selection = solid.buildSelection(ArrayList())
-
-        for (index in 0 until selection.size) {
-            combo.insertText(index, Str(selection[index]))
-        }
-        //combo.active = solid.index
-
-        button.onClicked {
-            val dialog = FileChooserDialog(label.label, window,FileChooserAction.SELECT_FOLDER,null)
-            dialog.addButton(Str("OK"), ResponseType.OK)
-
-            dialog.onResponse {
-                if (it == ResponseType.OK) {
-                    val file = FileChooser(dialog.cast()).file
-                    val path = file.path
-
-                    solid.setValueFromString(path.toString())
-                    path.destroy()
-                    ch.bailu.gtk.gobject.Object(file.cast()).unref()
-                    dialog.close()
-                }
-            }
-            dialog.show()
-        }
     }
 
     override fun onPreferencesChanged(storage: StorageInterface, key: String) {
         if (solid.hasKey(key)) {
-            button.label = Str(solid.toString().truncate())
+            entry.buffer.setText(Str(solid.toString()), solid.toString().length)
         }
     }
 }

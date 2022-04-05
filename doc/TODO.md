@@ -9,6 +9,7 @@
 - Update menu text
   
 # Map
+- Memory management bug (minus allocation)
 - Map position must be saved
 - Replace Legend icon
 - Altitude Service

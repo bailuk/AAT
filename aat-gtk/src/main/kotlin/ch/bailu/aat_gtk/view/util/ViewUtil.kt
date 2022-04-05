@@ -1,6 +1,9 @@
 package ch.bailu.aat_gtk.view.util
 
 import ch.bailu.aat_gtk.util.EmptyStr
+import ch.bailu.aat_gtk.util.IconMap
+import ch.bailu.aat_gtk.view.map.control.Bar
+import ch.bailu.gtk.gtk.Button
 import ch.bailu.gtk.gtk.Widget
 import ch.bailu.gtk.type.Str
 import ch.bailu.gtk.gtk.Label
@@ -37,4 +40,14 @@ fun String.truncate(max: Int = 30): String {
         return "…" + this.substring(this.length - max, this.length)
     }
     return this
+}
+
+fun String.escapeUnderscore(): String {
+    return replace("_", "__")
+}
+
+fun Button.setIcon(imageResource: String, size: Int = Bar.ICON_SIZE) {
+    val image = IconMap.getImage(imageResource, size)
+    image.margin(Bar.MARGIN)
+    child = image
 }

@@ -2,6 +2,7 @@ package ch.bailu.aat_gtk.view.menu
 
 import ch.bailu.aat_gtk.view.map.control.Bar
 import ch.bailu.aat_gtk.view.menu.model.Menu
+import ch.bailu.aat_gtk.view.util.setIcon
 import ch.bailu.gtk.gtk.Button
 import ch.bailu.gtk.gtk.Overlay
 import ch.bailu.gtk.gtk.PopoverMenu
@@ -19,7 +20,7 @@ open class PopupButton(actionHelper: ActionHelper, model: Menu) {
         button.onClicked { popup.popup() }
     }
 
-    fun setIcon(iconResource: String) {
-        Bar.setIcon(button, iconResource)
+    fun setIcon(resource: String, size: Int = Bar.ICON_SIZE) {
+        button.setIcon(resource, size)
     }
 }

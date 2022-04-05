@@ -9,11 +9,11 @@ import ch.bailu.gtk.type.Str
 import ch.bailu.aat_gtk.view.menu.model.Menu as MenuModel
 
 class GtkMenu(actionHelper: ActionHelper, model: MenuModel){
-    val menu = Menu().apply {
-        appendSection(strOrNull(model.title), createMenu(actionHelper, model))
+    val menu = Menu()
+
+    init {
+        menu.appendSection(strOrNull(model.title), createMenu(actionHelper, model))
     }
-
-
 
     private fun createMenu(actionHelper: ActionHelper, model: MenuModel) : Menu {
         val result = Menu()
@@ -38,7 +38,7 @@ class GtkMenu(actionHelper: ActionHelper, model: MenuModel){
                     if (group != it.group) {
                         index = 0
                         group = it.group
-                        items = ArrayList<RadioItem>()
+                        items = ArrayList()
 
                         actionHelper.add(group.id, index) {
                             val idx = it?.int32 ?: 0
