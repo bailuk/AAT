@@ -24,7 +24,8 @@ class MainWindow(actionHelper: ActionHelper, window: ApplicationWindow, app: App
 
     private val dispatcher = Dispatcher()
 
-    private val mainView = MainStackView(actionHelper,dispatcher,window)
+    private val contextRevealButton = ToggleButton()
+    private val mainView = MainStackView(app, actionHelper,dispatcher,window, contextRevealButton)
     private val contextBar = ContextBar(mainView)
 
     private val box = Box(Orientation.VERTICAL, 0)
@@ -61,7 +62,6 @@ class MainWindow(actionHelper: ActionHelper, window: ApplicationWindow, app: App
 
         header.showTitleButtons = GTK.TRUE
 
-        val contextRevealButton = ToggleButton()
         contextRevealButton.child = IconMap.getImage("zoom-original", 24)
         contextRevealButton.onToggled {
             contextBar.revealer.revealChild = contextRevealButton.active

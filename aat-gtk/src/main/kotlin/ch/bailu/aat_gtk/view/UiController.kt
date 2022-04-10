@@ -10,4 +10,5 @@ interface UiController {
     fun showInList()
     fun showPreferencesMap()
     fun back()
+    fun showContextBar()
 }

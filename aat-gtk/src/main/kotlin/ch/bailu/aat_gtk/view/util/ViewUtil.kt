@@ -51,3 +51,9 @@ fun Button.setIcon(imageResource: String, size: Int = Bar.ICON_SIZE) {
     image.margin(Bar.MARGIN)
     child = image
 }
+
+fun Label.setLabel(text: String) {
+    val old = label
+    label = Str(text)
+    if (old is Str) old.destroy()
+}

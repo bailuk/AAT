@@ -9,23 +9,22 @@ import ch.bailu.aat_lib.dispatcher.DispatcherInterface
 import ch.bailu.aat_lib.gpx.GpxInformation
 import ch.bailu.aat_lib.gpx.InfoID
 import ch.bailu.aat_lib.resources.Res
-import ch.bailu.gtk.gtk.Stack
-import ch.bailu.gtk.gtk.StackTransitionType
-import ch.bailu.gtk.gtk.Widget
-import ch.bailu.gtk.gtk.Window
+import ch.bailu.gtk.GTK
+import ch.bailu.gtk.gtk.*
 import ch.bailu.gtk.helper.ActionHelper
 import ch.bailu.gtk.type.Str
 
-class MainStackView (actionHelper: ActionHelper, dispatcher: DispatcherInterface, window: Window) :
+class MainStackView (app: Application, actionHelper: ActionHelper, dispatcher: DispatcherInterface, window: Window, private val revealer: ToggleButton) :
     UiController {
 
     val layout = Stack()
 
+    private var revealerRestore = GTK.FALSE
 
     private val preferences = PreferencesStackView(this, GtkAppContext.storage, actionHelper, window)
     private val map = MapMainView(actionHelper, dispatcher, this)
     private val cockpit = CockpitView()
-    private val fileList = FileList(dispatcher)
+    private val fileList = FileList(app, this, dispatcher)
     private val detail = GpxDetailView(dispatcher, GtkAppContext.storage)
 
     private val strPreferences = Str(Res.str().intro_settings())
@@ -63,6 +62,8 @@ class MainStackView (actionHelper: ActionHelper, dispatcher: DispatcherInterface
     }
 
     fun showPreferences() {
+        revealerRestore = revealer.active
+        revealer.active = GTK.FALSE
         select(preferences.layout)
     }
 
@@ -91,7 +92,12 @@ class MainStackView (actionHelper: ActionHelper, dispatcher: DispatcherInterface
     }
 
     override fun back() {
+        revealer.active = revealerRestore
         layout.visibleChild = lastSelected
+    }
+
+    override fun showContextBar() {
+        revealer.active = GTK.TRUE
     }
 
     private fun select(widget: Widget) {
