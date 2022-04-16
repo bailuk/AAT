@@ -2,6 +2,7 @@ package ch.bailu.aat_gtk.view.list
 
 import ch.bailu.aat_gtk.app.GtkAppContext
 import ch.bailu.aat_gtk.lib.menu.MenuFacade
+import ch.bailu.aat_gtk.lib.menu.MenuModelBuilder
 import ch.bailu.aat_gtk.view.UiController
 import ch.bailu.aat_gtk.view.util.margin
 import ch.bailu.aat_gtk.view.util.setLabel
@@ -14,6 +15,7 @@ import ch.bailu.aat_lib.dispatcher.DispatcherInterface
 import ch.bailu.aat_lib.gpx.InfoID
 import ch.bailu.aat_lib.logger.AppLog
 import ch.bailu.aat_lib.preferences.SolidDirectoryQuery
+import ch.bailu.aat_lib.preferences.map.SolidOverlayFileList
 import ch.bailu.aat_lib.preferences.presets.SolidPreset
 import ch.bailu.aat_lib.resources.Res
 import ch.bailu.aat_lib.resources.ToDo
@@ -22,7 +24,6 @@ import ch.bailu.gtk.GTK
 import ch.bailu.gtk.bridge.ListIndex
 import ch.bailu.gtk.gio.Menu
 import ch.bailu.gtk.gtk.*
-import ch.bailu.gtk.helper.LabelHelper
 import ch.bailu.gtk.type.Str
 
 class FileList(app: Application, private val uiController: UiController, dispatcher: DispatcherInterface) {
@@ -40,10 +41,14 @@ class FileList(app: Application, private val uiController: UiController, dispatc
     private val sdirectory = SolidDirectoryQuery(GtkAppContext.storage, GtkAppContext)
 
     private var menuIndex = 0
+    companion object {
+        private val ID_OVERLAYS = Str("id-overlays")
+    }
 
     init {
 
         try {
+
 
             dispatcher.addSource(customFileSource)
 
@@ -91,6 +96,8 @@ class FileList(app: Application, private val uiController: UiController, dispatc
 
         menu.margin(10)
         menu.menuModel = menuModel
+        val popover = PopoverMenu(menu.popover.cast())
+        popover.addChild(createOverlaysWidget(), ID_OVERLAYS)
         menu.popover.onShow { menuIndex = label4.label.toString().toInt() }
 
         vbox.hexpand = GTK.TRUE
@@ -107,6 +114,31 @@ class FileList(app: Application, private val uiController: UiController, dispatc
 
 
         return hbox
+    }
+
+    private fun createOverlaysWidget(): Widget {
+        val soverlay = SolidOverlayFileList(GtkAppContext.storage, GtkAppContext)
+        val list = ListBox()
+
+        soverlay.stringArray.forEachIndexed { index, name ->
+            val row = createOverlayRow(index, name)
+            list.append(row)
+        }
+        return list
+    }
+
+    private fun createOverlayRow(index: Int, name: String): Widget {
+        val row   = Box(Orientation.HORIZONTAL, 2)
+        val check = CheckButton()
+        val label = Label(Str.NULL)
+
+        label.setLabel("${index+1}: ${name}")
+        label.xalign = 0f
+        row.margin(5)
+
+        row.append(check)
+        row.append(label)
+        return row
     }
 
     private fun createLabel(): Label {
@@ -144,9 +176,7 @@ class FileList(app: Application, private val uiController: UiController, dispatc
     private fun createMenu(app: Application): Menu {
         val menuFacade = MenuFacade(app)
         menuFacade.build()
-            .label(Res.str().file_overlay()) {
-                println("Use as overlay (${menuIndex})")
-            }
+            .submenu(Res.str().file_overlay(), MenuModelBuilder().custom(ID_OVERLAYS.toString()))
             .label(ToDo.translate("Load...")) {
                 sdirectory.position.value = menuIndex
                 iteratorSimple.moveToPosition(menuIndex)

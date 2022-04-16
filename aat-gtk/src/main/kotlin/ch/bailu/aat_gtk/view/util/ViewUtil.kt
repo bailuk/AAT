@@ -4,6 +4,7 @@ import ch.bailu.aat_gtk.util.EmptyStr
 import ch.bailu.aat_gtk.util.IconMap
 import ch.bailu.aat_gtk.view.map.control.Bar
 import ch.bailu.gtk.gtk.Button
+import ch.bailu.gtk.gtk.CheckButton
 import ch.bailu.gtk.gtk.Widget
 import ch.bailu.gtk.type.Str
 import ch.bailu.gtk.gtk.Label
@@ -53,6 +54,12 @@ fun Button.setIcon(imageResource: String, size: Int = Bar.ICON_SIZE) {
 }
 
 fun Label.setLabel(text: String) {
+    val old = label
+    label = Str(text)
+    if (old is Str) old.destroy()
+}
+
+fun CheckButton.setLabel(text: String) {
     val old = label
     label = Str(text)
     if (old is Str) old.destroy()

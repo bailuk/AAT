@@ -92,8 +92,8 @@ public class MenuModelBuilder {
     private class SubmenuItem extends Item {
         final MenuModelBuilder submenu;
 
-        public SubmenuItem(MenuModelBuilder submenu) {
-            super("");
+        public SubmenuItem(String label, MenuModelBuilder submenu) {
+            super(label);
             this.submenu = submenu;
         }
 
@@ -111,8 +111,8 @@ public class MenuModelBuilder {
     }
 
     private class SeparatorItem extends SubmenuItem {
-        public SeparatorItem(MenuModelBuilder submenu) {
-            super(submenu);
+        public SeparatorItem(String label, MenuModelBuilder submenu) {
+            super(label, submenu);
         }
 
         @Override
@@ -167,13 +167,13 @@ public class MenuModelBuilder {
         return this;
     }
 
-    public MenuModelBuilder submenu(MenuModelBuilder submenu) {
-        items.add(new SubmenuItem(submenu));
+    public MenuModelBuilder submenu(String label, MenuModelBuilder submenu) {
+        items.add(new SubmenuItem(label, submenu));
         return this;
     }
 
-    public MenuModelBuilder separator(MenuModelBuilder submenu) {
-        items.add(new SeparatorItem(submenu));
+    public MenuModelBuilder separator(String label, MenuModelBuilder submenu) {
+        items.add(new SeparatorItem(label, submenu));
         return this;
     }
 
