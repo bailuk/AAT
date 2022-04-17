@@ -3,6 +3,8 @@ package ch.bailu.aat_lib.map.layer.grid;
 
 import org.mapsforge.core.model.LatLong;
 
+import javax.annotation.Nonnull;
+
 import ch.bailu.aat_lib.coordinates.WGS84Coordinates;
 import ch.bailu.aat_lib.description.FF;
 import ch.bailu.aat_lib.map.MapContext;
@@ -33,10 +35,7 @@ public final class WGS84Layer implements MapLayerInterface {
 
 
     @Override
-    public void drawInside(MapContext mcontext) {
-
-
-    }
+    public void drawInside(MapContext mcontext) {}
 
     @Override
     public boolean onTap(Point tapXY) {
@@ -44,7 +43,7 @@ public final class WGS84Layer implements MapLayerInterface {
     }
 
 
-    private void drawCoordinates(MapContext clayer,LatLong point) {
+    private void drawCoordinates(MapContext clayer, LatLong point) {
         final FF f = FF.f();
 
         clayer.draw().textBottom(new WGS84Coordinates(point).toString(),1);
@@ -57,7 +56,7 @@ public final class WGS84Layer implements MapLayerInterface {
 
 
     @Override
-    public void onPreferencesChanged(StorageInterface s, String key) {}
+    public void onPreferencesChanged(@Nonnull StorageInterface s, @Nonnull String key) {}
 
 
     @Override

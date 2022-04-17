@@ -5,10 +5,7 @@ import ch.bailu.aat_gtk.map.GtkSyncTileBitmap
 import ch.bailu.aat_gtk.map.GtkTilePainter
 import ch.bailu.aat_gtk.service.GtkServices
 import ch.bailu.aat_gtk.service.location.directory.GtkSummaryConfig
-import ch.bailu.aat_gtk.solid.GtkMapDirectories
-import ch.bailu.aat_gtk.solid.GtkSolidTileCacheDirectory
-import ch.bailu.aat_gtk.solid.GtkStorage
-import ch.bailu.aat_gtk.solid.SolidGtkDataDirectory
+import ch.bailu.aat_gtk.solid.*
 import ch.bailu.aat_gtk.util.GtkTimer
 import ch.bailu.aat_gtk.util.sql.H2DbConnection
 import ch.bailu.aat_lib.app.AppContext
@@ -39,6 +36,7 @@ object GtkAppContext: AppContext {
     private val broadcaster = GtkBroadcaster()
     private val solidDataDirectory = SolidGtkDataDirectory(storage, focFactory)
     private val solidSummaryConfig = GtkSummaryConfig()
+    private val solidDem3Directory = GtkSolidDem3Directory(storage, focFactory)
     private val services = GtkServices(this)
 
 
@@ -86,8 +84,7 @@ object GtkAppContext: AppContext {
     }
 
     override fun getDem3Directory(): SolidDem3Directory {
-        AppLog.d(this, "Not yet implemented getDem3Directory")
-        TODO("Not yet implemented")
+        return solidDem3Directory
     }
 
     override fun getDownloadConfig(): DownloadConfig {

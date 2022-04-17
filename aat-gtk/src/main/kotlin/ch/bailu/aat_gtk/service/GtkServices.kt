@@ -4,7 +4,6 @@ import ch.bailu.aat_gtk.solid.GtkSolidLocationProvider
 import ch.bailu.aat_gtk.solid.SolidGtkDataDirectory
 import ch.bailu.aat_gtk.view.GtkStatusIcon
 import ch.bailu.aat_lib.app.AppContext
-import ch.bailu.aat_lib.coordinates.Dem3Coordinates
 import ch.bailu.aat_lib.gpx.GpxInformation
 import ch.bailu.aat_lib.gpx.GpxPointNode
 import ch.bailu.aat_lib.gpx.interfaces.GpxPointInterface
@@ -17,8 +16,8 @@ import ch.bailu.aat_lib.service.cache.CacheServiceInterface
 import ch.bailu.aat_lib.service.cache.ObjImageInterface
 import ch.bailu.aat_lib.service.directory.DirectoryService
 import ch.bailu.aat_lib.service.directory.DirectoryServiceInterface
+import ch.bailu.aat_lib.service.elevation.ElevationService
 import ch.bailu.aat_lib.service.elevation.ElevetionServiceInterface
-import ch.bailu.aat_lib.service.elevation.updater.ElevationUpdaterClient
 import ch.bailu.aat_lib.service.location.LocationService
 import ch.bailu.aat_lib.service.location.LocationServiceInterface
 import ch.bailu.aat_lib.service.render.RenderService
@@ -40,6 +39,8 @@ class GtkServices (appContext: AppContext) : ServicesInterface {
     private val directoryService = DirectoryService(appContext)
     private val renderService = RenderService(appContext, appContext.mapDirectory)
 
+    private val elevationService = ElevationService(appContext)
+
     override fun getLocationService(): LocationServiceInterface {
         return locationService
     }
@@ -52,26 +53,7 @@ class GtkServices (appContext: AppContext) : ServicesInterface {
 
     override fun free() {}
     override fun getElevationService(): ElevetionServiceInterface {
-        return ElevationService()
-    }
-
-    class ElevationService() : ElevetionServiceInterface {
-        override fun getElevation(latitudeE6: Int, longitudeE6: Int): Short {
-            return 0
-        }
-
-        override fun requestElevationUpdates(owner: ElevationUpdaterClient?, srtmTileCoordinates: Array<out Dem3Coordinates>?) {
-
-        }
-
-        override fun requestElevationUpdates() {
-
-        }
-
-        override fun cancelElevationUpdates(objGpxStatic: ElevationUpdaterClient?) {
-
-        }
-
+        return elevationService
     }
 
     override fun getRenderService(): RenderServiceInterface {
