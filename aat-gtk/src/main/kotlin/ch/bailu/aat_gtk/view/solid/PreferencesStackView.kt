@@ -17,11 +17,13 @@ class PreferencesStackView(controller: UiController, storage: StorageInterface, 
 
     val layout = Box(Orientation.VERTICAL, 0)
     private val box = Box(Orientation.HORIZONTAL, 0)
-    private val switcher = StackSwitcher()
     private val stack = Stack()
 
     private val general = GeneralPreferencesView(storage, app, window)
+    private val activity = ActivityPreferencesView(storage, 0)
     private val map = MapPreferencesView(storage, app, window)
+
+    private val switcher = Box(Orientation.HORIZONTAL, 0)
 
     init {
         val strGeneral = Str(Res.str().p_general())
@@ -34,12 +36,29 @@ class PreferencesStackView(controller: UiController, storage: StorageInterface, 
 
         stack.margin(MARGIN)
 
-        stack.addTitled(general.scrolled, strGeneral, strGeneral)
-        stack.addTitled(map.scrolled, strMap, strMap)
+        stack.addChild(general.scrolled)
+        stack.addChild(activity.scrolled)
+        stack.addChild(map.scrolled)
 
-        switcher.stack = stack
+        switcher.append(Button.newWithLabelButton(strGeneral).apply {
+            onClicked {
+                stack.visibleChild = general.scrolled
+            }
+        })
+
+        switcher.append(Button.newWithLabelButton(Str(activity.title)).apply {
+            onClicked {
+                stack.visibleChild = activity.scrolled
+            }
+        })
+
+        switcher.append(Button.newWithLabelButton(strMap).apply {
+            onClicked {
+                stack.visibleChild = map.scrolled
+            }
+        })
+
         switcher.margin(MARGIN)
-
         layout.append(box)
         layout.append(switcher)
         layout.append(stack)

@@ -14,8 +14,8 @@ class SolidEntryView (private val solid: AbsSolidType) : OnPreferencesChanged{
     val layout = Box(Orientation.VERTICAL, 5)
     val label = GtkLabel()
 
-    val entry = Entry()
-    val editable = Editable(entry.cast())
+    private val entry = Entry()
+    private val editable = Editable(entry.cast())
 
     init {
         label.text = solid.label

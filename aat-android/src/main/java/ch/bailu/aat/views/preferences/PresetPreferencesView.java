@@ -15,22 +15,22 @@ import ch.bailu.aat_lib.preferences.presets.SolidMissingTrigger;
 import ch.bailu.aat_lib.preferences.presets.SolidTrackerAutopause;
 
 public class PresetPreferencesView extends VerticalScrollView {
-    public PresetPreferencesView(Context context, int i, UiTheme theme) {
+    public PresetPreferencesView(Context context, int index, UiTheme theme) {
         super(context);
 
         add(new TitleView(
                 context,
-                context.getString(R.string.p_preset) + " " + (i + 1),
+                context.getString(R.string.p_preset) + " " + (index + 1),
                 theme)
         );
         StorageInterface storage = new Storage(context);
-        add(new SolidStringView(context,new SolidMET(storage, i), theme));
-        add(new SolidIndexListView(context,new SolidPostprocessedAutopause(storage, i), theme));
-        add(new SolidIndexListView(context,new SolidTrackerAutopause(storage, i), theme));
-        add(new SolidIndexListView(context,new SolidDistanceFilter(storage, i), theme));
-        add(new SolidIndexListView(context,new SolidAccuracyFilter(storage, i), theme));
-        add(new SolidIndexListView(context,new SolidMissingTrigger(storage, i), theme));
-        add(new SolidIndexListView(context,new SolidBacklight(context, i), theme));
+        add(new SolidStringView(context,new SolidMET(storage, index), theme));
+        add(new SolidIndexListView(context,new SolidPostprocessedAutopause(storage, index), theme));
+        add(new SolidIndexListView(context,new SolidTrackerAutopause(storage, index), theme));
+        add(new SolidIndexListView(context,new SolidDistanceFilter(storage, index), theme));
+        add(new SolidIndexListView(context,new SolidAccuracyFilter(storage, index), theme));
+        add(new SolidIndexListView(context,new SolidMissingTrigger(storage, index), theme));
+        add(new SolidIndexListView(context,new SolidBacklight(context, index), theme));
     }
 
 }
