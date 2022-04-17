@@ -4,8 +4,8 @@ import ch.bailu.aat_gtk.app.GtkAppContext
 import ch.bailu.aat_gtk.lib.menu.MenuFacade
 import ch.bailu.aat_gtk.lib.menu.MenuModelBuilder
 import ch.bailu.aat_gtk.view.UiController
+import ch.bailu.aat_gtk.view.util.setText
 import ch.bailu.aat_gtk.view.util.margin
-import ch.bailu.aat_gtk.view.util.setLabel
 import ch.bailu.aat_lib.description.AverageSpeedDescription
 import ch.bailu.aat_lib.description.DateDescription
 import ch.bailu.aat_lib.description.DistanceDescription
@@ -132,7 +132,7 @@ class FileList(app: Application, private val uiController: UiController, dispatc
         val check = CheckButton()
         val label = Label(Str.NULL)
 
-        label.setLabel("${index+1}: ${name}")
+        label.setText("${index+1}: ${name}")
         label.xalign = 0f
         row.margin(5)
 
@@ -167,10 +167,10 @@ class FileList(app: Application, private val uiController: UiController, dispatc
         averageSpeedDistanceDescription.onContentUpdated(InfoID.ALL, iteratorSimple.info)
         dateDescription.onContentUpdated(InfoID.ALL, iteratorSimple.info)
 
-        label1.setLabel("<b>${dateDescription.valueAsString}</b>")
-        label2.setLabel("${distanceDescription.valueAsString} - ${averageSpeedDistanceDescription.valueAsString} - ${timeDescription.valueAsString}")
-        label3.setLabel(iteratorSimple.info.file.name)
-        label4.setLabel(index.toString())
+        label1.setText("<b>${dateDescription.valueAsString}</b>")
+        label2.setText("${distanceDescription.valueAsString} - ${averageSpeedDistanceDescription.valueAsString} - ${timeDescription.valueAsString}")
+        label3.setText(iteratorSimple.info.file.name)
+        label4.setText(index.toString())
     }
 
     private fun createMenu(app: Application): Menu {
@@ -186,5 +186,4 @@ class FileList(app: Application, private val uiController: UiController, dispatc
 
         return menuFacade.model
     }
-
 }

@@ -7,10 +7,9 @@ import ch.bailu.aat_lib.resources.Res
 import ch.bailu.aat_lib.resources.ToDo
 import ch.bailu.gtk.GTK
 import ch.bailu.gtk.gtk.*
-import ch.bailu.gtk.helper.ActionHelper
 import ch.bailu.gtk.type.Str
 
-class PreferencesStackView(controller: UiController, storage: StorageInterface, actionHelper: ActionHelper, window: Window) {
+class PreferencesStackView(controller: UiController, storage: StorageInterface, app: Application, window: Window) {
 
     companion object {
         const val MARGIN = 5
@@ -21,8 +20,8 @@ class PreferencesStackView(controller: UiController, storage: StorageInterface, 
     private val switcher = StackSwitcher()
     private val stack = Stack()
 
-    private val general = GeneralPreferencesView(storage, actionHelper, window)
-    private val map = MapPreferencesView(storage, actionHelper, window)
+    private val general = GeneralPreferencesView(storage, app, window)
+    private val map = MapPreferencesView(storage, app, window)
 
     init {
         val strGeneral = Str(Res.str().p_general())

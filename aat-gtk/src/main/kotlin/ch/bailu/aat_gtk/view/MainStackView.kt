@@ -21,7 +21,7 @@ class MainStackView (app: Application, actionHelper: ActionHelper, dispatcher: D
 
     private var revealerRestore = GTK.FALSE
 
-    private val preferences = PreferencesStackView(this, GtkAppContext.storage, actionHelper, window)
+    private val preferences = PreferencesStackView(this, GtkAppContext.storage, app, window)
     private val map = MapMainView(actionHelper, dispatcher, this)
     private val cockpit = CockpitView()
     private val fileList = FileList(app, this, dispatcher)

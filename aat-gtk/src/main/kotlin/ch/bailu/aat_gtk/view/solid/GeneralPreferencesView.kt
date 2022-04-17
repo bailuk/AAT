@@ -13,10 +13,11 @@ import ch.bailu.aat_lib.preferences.location.SolidAdjustGpsAltitudeValue
 import ch.bailu.aat_lib.preferences.system.SolidCacheSize
 import ch.bailu.aat_lib.preferences.system.SolidStatusMessages
 import ch.bailu.aat_lib.resources.Res
+import ch.bailu.gtk.gtk.Application
 import ch.bailu.gtk.gtk.Window
 import ch.bailu.gtk.helper.ActionHelper
 
-class GeneralPreferencesView(storage: StorageInterface, actionHelper: ActionHelper, window: Window) : VerticalScrollView() {
+class GeneralPreferencesView(storage: StorageInterface, app: Application, window: Window) : VerticalScrollView() {
     init {
         add(Res.str().p_general())
         add(SolidIndexComboView(SolidUnit(storage)).layout)
@@ -30,7 +31,7 @@ class GeneralPreferencesView(storage: StorageInterface, actionHelper: ActionHelp
         add(SolidEntryView(SolidAdjustGpsAltitudeValue(storage)).layout)
 
         add(Res.str().files())
-        add(SolidDirectorySelectorView(SolidGtkDataDirectory(storage, GtkAppConfig.Foc) , actionHelper, window).layout)
+        add(SolidDirectorySelectorView(SolidGtkDataDirectory(storage, GtkAppConfig.Foc) , app, window).layout)
         add(SolidIndexComboView(SolidCacheSize(storage)).layout)
     }
 }

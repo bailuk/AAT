@@ -2,23 +2,19 @@ package ch.bailu.aat_gtk.view
 
 import ch.bailu.aat_gtk.util.IconMap
 import ch.bailu.aat_gtk.view.map.control.Bar
-import ch.bailu.aat_gtk.view.util.GtkLabel
 import ch.bailu.aat_gtk.view.util.margin
 import ch.bailu.aat_lib.dispatcher.OnContentUpdatedInterface
 import ch.bailu.aat_lib.gpx.GpxInformation
 import ch.bailu.aat_lib.gpx.InfoID
 import ch.bailu.gtk.GTK
-import ch.bailu.gtk.gtk.Box
-import ch.bailu.gtk.gtk.Button
-import ch.bailu.gtk.gtk.Orientation
-import ch.bailu.gtk.gtk.Revealer
+import ch.bailu.gtk.gtk.*
 import ch.bailu.gtk.helper.LabelHelper
 import ch.bailu.gtk.type.Str
 
 class ContextBar(contextCallback: UiController) : OnContentUpdatedInterface {
     val revealer = Revealer()
 
-    private val label = GtkLabel()
+    private val label = Label(Str.NULL)
     private var cache = GpxInformation.NULL
 
     init {
@@ -31,7 +27,6 @@ class ContextBar(contextCallback: UiController) : OnContentUpdatedInterface {
         hbox.append(createButton("Detail") { contextCallback.showDetail() })
         hbox.append(createButton("Cockpit") { contextCallback.showCockpit() })
 
-
         vbox.append(label)
         vbox.append(hbox)
         revealer.child = vbox
@@ -40,7 +35,7 @@ class ContextBar(contextCallback: UiController) : OnContentUpdatedInterface {
 
 
     private fun createButton(label: String, onClicked: Button.OnClicked) : Button {
-        val result = Button.newWithLabelButton(Str(label))
+        val result = ToggleButton.newWithLabelButton(Str(label))
         result.onClicked(onClicked)
         result.margin(3)
         return result
