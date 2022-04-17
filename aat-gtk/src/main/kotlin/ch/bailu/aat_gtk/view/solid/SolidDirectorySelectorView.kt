@@ -48,7 +48,7 @@ class SolidDirectorySelectorView(private val solid: SolidFile, app: Application,
 
         entry.overwriteMode = 0
         Editable(entry.cast()).apply {
-            text = Str(solid.toString())
+            text = Str(solid.valueAsString)
 
             onChanged {
                 AppLog.d(this, text.toString())
@@ -97,7 +97,7 @@ class SolidDirectorySelectorView(private val solid: SolidFile, app: Application,
 
     override fun onPreferencesChanged(storage: StorageInterface, key: String) {
         if (solid.hasKey(key)) {
-            Editable(entry.cast()).text = Str(solid.toString())
+            Editable(entry.cast()).text = Str(solid.valueAsString)
         }
     }
 }
