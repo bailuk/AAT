@@ -11,7 +11,6 @@ import ch.bailu.aat_lib.gpx.InfoID
 import ch.bailu.aat_lib.resources.Res
 import ch.bailu.gtk.GTK
 import ch.bailu.gtk.gtk.*
-import ch.bailu.gtk.helper.ActionHelper
 import ch.bailu.gtk.type.Str
 
 class MainStackView (app: Application, dispatcher: DispatcherInterface, window: Window, private val revealer: ToggleButton) :
@@ -24,7 +23,7 @@ class MainStackView (app: Application, dispatcher: DispatcherInterface, window: 
     private val preferences = PreferencesStackView(this, GtkAppContext.storage, app, window)
     private val map = MapMainView(app, dispatcher, this, GtkAppContext, window)
     private val cockpit = CockpitView()
-    private val fileList = FileList(app, this, dispatcher)
+    private val fileList = FileList(app, this, GtkAppContext.storage, GtkAppContext, dispatcher)
     private val detail = GpxDetailView(dispatcher, GtkAppContext.storage)
 
     private val strPreferences = Str(Res.str().intro_settings())

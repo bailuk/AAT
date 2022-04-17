@@ -11,14 +11,13 @@ import ch.bailu.aat_lib.dispatcher.DispatcherInterface
 import ch.bailu.aat_lib.gpx.InfoID
 import ch.bailu.aat_lib.map.Attachable
 import ch.bailu.aat_lib.map.layer.gpx.GpxDynLayer
+import ch.bailu.aat_lib.map.layer.gpx.GpxOverlayListLayer
 import ch.bailu.aat_lib.map.layer.grid.GridDynLayer
 import ch.bailu.aat_lib.preferences.location.CurrentLocationLayer
 import ch.bailu.foc.FocFactory
 import ch.bailu.gtk.gtk.Application
 import ch.bailu.gtk.gtk.Overlay
 import ch.bailu.gtk.gtk.Window
-import java.io.File
-import java.util.*
 
 class MapMainView(app: Application, dispatcher: DispatcherInterface, uiController: UiController, focFactory: FocFactory, window: Window): Attachable {
 
@@ -31,28 +30,19 @@ class MapMainView(app: Application, dispatcher: DispatcherInterface, uiControlle
     private val editBar = EditBar()
 
     init {
-
         dispatcher.addTarget(navigationBar, InfoID.ALL)
 
         map.add(CurrentLocationLayer(map.mContext, dispatcher))
         map.add(GridDynLayer(GtkAppContext.services, GtkAppContext.storage, map.mContext))
         map.add(GpxDynLayer(GtkAppContext.storage, map.mContext, GtkAppContext.services, dispatcher, InfoID.TRACKER))
         map.add(GpxDynLayer(GtkAppContext.storage, map.mContext, GtkAppContext.services, dispatcher, InfoID.FILEVIEW))
+        map.add(GpxOverlayListLayer(GtkAppContext.storage,map.mContext, GtkAppContext.services, dispatcher))
         map.add(ControlBarLayer(barControl))
-
 
         overlay.child = map.drawingArea
         overlay.addOverlay(barControl.add(navigationBar.bar.box, MapBars.BOTTOM))
         overlay.addOverlay(barControl.add(infoBar.bar.box, MapBars.RIGHT))
         overlay.addOverlay(barControl.add(editBar.bar.box, MapBars.LEFT))
-    }
-
-
-    private fun getMapFiles(): List<File> {
-        val result = ArrayList<File>()
-        val home = System.getProperty("user.home")
-        result.add(File("${home}/maps/Alps/Alps_oam.osm.map"))
-        return result
     }
 
 

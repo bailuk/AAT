@@ -10,7 +10,7 @@ import ch.bailu.aat.R;
 import ch.bailu.aat_lib.dispatcher.CurrentLocationSource;
 import ch.bailu.aat.dispatcher.EditorOrBackupSource;
 import ch.bailu.aat_lib.dispatcher.IteratorSource;
-import ch.bailu.aat.dispatcher.OverlaySource;
+import ch.bailu.aat_lib.dispatcher.OverlaySource;
 import ch.bailu.aat_lib.dispatcher.TrackerSource;
 import ch.bailu.aat.menus.FileMenu;
 import ch.bailu.aat.util.ui.AppDialog;
@@ -77,9 +77,6 @@ public abstract class AbsFileContentActivity extends ActivityContext implements 
         busyControl = new BusyViewControlIID(contentView);
         busyControl.busy.setOrientation(BusyViewContainer.BOTTOM_RIGHT);
 
-
-
-
         contentView.add(layout);
 
         initButtonBar(bar);
@@ -112,12 +109,7 @@ public abstract class AbsFileContentActivity extends ActivityContext implements 
     protected abstract ViewGroup createLayout(MainControlBar bar, ContentView contentView);
 
 
-
-
-
     private void createDispatcher() {
-
-
         addSource(new TrackerSource(getServiceContext(), getBroadcaster()));
         addSource(new CurrentLocationSource(getServiceContext(), getBroadcaster()));
         addSource(new OverlaySource(getAppContext()));
@@ -159,9 +151,7 @@ public abstract class AbsFileContentActivity extends ActivityContext implements 
         } else if (v == fileOperation) {
             new FileMenu(this, currentFile.getInfo().getFile()).showAsPopup(this, v);
         }
-
     }
-
 
 
     private void changeFileAsk(View v) {
@@ -186,7 +176,6 @@ public abstract class AbsFileContentActivity extends ActivityContext implements 
         }
 
     }
-
 
 
     private void changeFile(View v) {
@@ -238,7 +227,4 @@ public abstract class AbsFileContentActivity extends ActivityContext implements 
     private void closeActivity() {
         super.onBackPressed();
     }
-
-
-
 }

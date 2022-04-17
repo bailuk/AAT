@@ -8,9 +8,11 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.LinearLayout;
 
+import javax.annotation.Nonnull;
+
 import ch.bailu.aat.R;
 import ch.bailu.aat_lib.dispatcher.IteratorSource;
-import ch.bailu.aat.dispatcher.OverlaySource;
+import ch.bailu.aat_lib.dispatcher.OverlaySource;
 import ch.bailu.aat.map.MapFactory;
 import ch.bailu.aat.map.To;
 import ch.bailu.aat.map.layer.control.FileControlBarLayer;
@@ -135,7 +137,7 @@ public abstract class AbsGpxListActivity extends ActivityContext implements OnIt
     }
 
     @Override
-    public void onPreferencesChanged(StorageInterface s, String key) {
+    public void onPreferencesChanged(@Nonnull StorageInterface s, @Nonnull String key) {
         if (sdirectory.containsKey(key)) {
             setListBackgroundColor();
         }

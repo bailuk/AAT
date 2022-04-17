@@ -1,13 +1,11 @@
-package ch.bailu.aat.dispatcher;
+package ch.bailu.aat_lib.dispatcher;
 
 import java.io.Closeable;
 
+import javax.annotation.Nonnull;
+
 import ch.bailu.aat_lib.app.AppContext;
 import ch.bailu.aat_lib.coordinates.BoundingBoxE6;
-import ch.bailu.aat_lib.dispatcher.AppBroadcaster;
-import ch.bailu.aat_lib.dispatcher.BroadcastData;
-import ch.bailu.aat_lib.dispatcher.BroadcastReceiver;
-import ch.bailu.aat_lib.dispatcher.ContentSource;
 import ch.bailu.aat_lib.gpx.GpxInformation;
 import ch.bailu.aat_lib.gpx.GpxList;
 import ch.bailu.aat_lib.gpx.InfoID;
@@ -24,8 +22,6 @@ import ch.bailu.foc.Foc;
 
 public class OverlaySource extends ContentSource {
 
-
-
     private final AppContext appContext;
 
     private final OverlayInformation[] overlays = new OverlayInformation[SolidOverlayFileList.MAX_OVERLAYS];
@@ -39,8 +35,6 @@ public class OverlaySource extends ContentSource {
     public void onPause() {
         for (OverlayInformation o : overlays) o.close();
     }
-
-
 
 
     @Override
@@ -85,19 +79,15 @@ public class OverlaySource extends ContentSource {
         }
 
 
-        private final BroadcastReceiver onFileProcessed = new BroadcastReceiver () {
-            @Override
-            public void onReceive(String... args) {
-                if (BroadcastData.has(args, handle.toString())) {
-                    initAndUpdateOverlay();
-                }
+        private final BroadcastReceiver onFileProcessed = args -> {
+            if (BroadcastData.has(args, handle.toString())) {
+                initAndUpdateOverlay();
             }
-
         };
 
         private final OnPreferencesChanged onPreferencesChanged = new OnPreferencesChanged() {
             @Override
-            public void onPreferencesChanged(StorageInterface s, String key) {
+            public void onPreferencesChanged(@Nonnull StorageInterface s, @Nonnull String key) {
                 if (soverlay.hasKey(key)) {
                     initAndUpdateOverlay();
                 }
@@ -137,11 +127,11 @@ public class OverlaySource extends ContentSource {
 
 
         private ObjGpx getObjectSave(String id) {
-            Obj h = appContext.getServices().getCacheService().getObject(id, new ObjGpxStatic.Factory());
-            if (ObjGpx.class.isInstance(h)==false) {
-                h= ObjGpx.NULL;
+            Obj handler = appContext.getServices().getCacheService().getObject(id, new ObjGpxStatic.Factory());
+            if (!(handler instanceof ObjGpx)) {
+                handler = ObjGpx.NULL;
             }
-            return (ObjGpx)h;
+            return (ObjGpx)handler;
         }
 
         private void setBounding() {

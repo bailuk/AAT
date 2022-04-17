@@ -6,10 +6,7 @@ import ch.bailu.aat_gtk.app.GtkAppContext
 import ch.bailu.aat_gtk.util.GtkTimer
 import ch.bailu.aat_gtk.util.IconMap
 import ch.bailu.aat_gtk.view.menu.provider.AppMenu
-import ch.bailu.aat_lib.dispatcher.CurrentLocationSource
-import ch.bailu.aat_lib.dispatcher.Dispatcher
-import ch.bailu.aat_lib.dispatcher.TrackerSource
-import ch.bailu.aat_lib.dispatcher.TrackerTimerSource
+import ch.bailu.aat_lib.dispatcher.*
 import ch.bailu.aat_lib.gpx.InfoID
 import ch.bailu.gtk.GTK
 import ch.bailu.gtk.gtk.*
@@ -47,6 +44,7 @@ class MainWindow(window: ApplicationWindow, app: Application)
         dispatcher.addSource(TrackerTimerSource(GtkAppContext.services, GtkTimer()))
         dispatcher.addSource(CurrentLocationSource(GtkAppContext.services, GtkAppContext.broadcaster))
         dispatcher.addSource(TrackerSource(GtkAppContext.services, GtkAppContext.broadcaster))
+        dispatcher.addSource(OverlaySource(GtkAppContext))
 
         dispatcher.addTarget(trackerButton, InfoID.ALL)
         dispatcher.addTarget(contextBar, InfoID.FILEVIEW)

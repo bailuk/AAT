@@ -3,6 +3,8 @@ package ch.bailu.aat_gtk.view.list
 import ch.bailu.aat_gtk.app.GtkAppContext
 import ch.bailu.aat_gtk.lib.menu.MenuModelBuilder
 import ch.bailu.aat_gtk.view.UiController
+import ch.bailu.aat_gtk.view.menu.provider.MenuProvider
+import ch.bailu.aat_gtk.view.menu.provider.SolidOverlayFileListMenu
 import ch.bailu.aat_gtk.view.util.margin
 import ch.bailu.aat_gtk.view.util.setText
 import ch.bailu.aat_lib.description.AverageSpeedDescription
@@ -14,11 +16,13 @@ import ch.bailu.aat_lib.dispatcher.DispatcherInterface
 import ch.bailu.aat_lib.gpx.InfoID
 import ch.bailu.aat_lib.logger.AppLog
 import ch.bailu.aat_lib.preferences.SolidDirectoryQuery
+import ch.bailu.aat_lib.preferences.StorageInterface
 import ch.bailu.aat_lib.preferences.map.SolidOverlayFileList
 import ch.bailu.aat_lib.preferences.presets.SolidPreset
 import ch.bailu.aat_lib.resources.Res
 import ch.bailu.aat_lib.resources.ToDo
 import ch.bailu.aat_lib.service.directory.IteratorSimple
+import ch.bailu.foc.FocFactory
 import ch.bailu.gtk.GTK
 import ch.bailu.gtk.bridge.ListIndex
 import ch.bailu.gtk.gio.Menu
@@ -28,6 +32,8 @@ import ch.bailu.gtk.type.Str
 class FileList(
     app: Application,
     private val uiController: UiController,
+    private val storage: StorageInterface,
+    private val focFactory: FocFactory,
     dispatcher: DispatcherInterface
 ) {
     val vbox = Box(Orientation.VERTICAL, 12)
@@ -39,14 +45,15 @@ class FileList(
     private val timeDescription = TimeDescription()
     private val iteratorSimple = IteratorSimple(GtkAppContext)
 
-    private val menuModel = createMenu(app)
     private val customFileSource = CustomFileSource(GtkAppContext)
     private val sdirectory = SolidDirectoryQuery(GtkAppContext.storage, GtkAppContext)
 
     private var menuIndex = 0
 
-    companion object {
-        private val ID_OVERLAYS = Str("id-overlays")
+    private val menuModel = createMenu(app, getOverlayMenu())
+
+    private fun getOverlayMenu(): MenuProvider {
+        return SolidOverlayFileListMenu(SolidOverlayFileList(storage, focFactory), iteratorSimple.info.file)
     }
 
     init {
@@ -93,14 +100,25 @@ class FileList(
         val vbox = Box(Orientation.VERTICAL, 5)
         val menu = MenuButton()
 
-        val label4 = createLabel()
-        label4.hide()
+        val hiden = createLabel()
+        hiden.hide()
 
         menu.margin(10)
         menu.menuModel = menuModel
-        val popover = PopoverMenu(menu.popover.cast())
-        popover.addChild(createOverlaysWidget(), ID_OVERLAYS)
-        menu.popover.onShow { menuIndex = label4.label.toString().toInt() }
+
+
+        PopoverMenu(menu.popover.cast()).apply {
+            onShow {
+                menuIndex = hiden.label.toString().toInt()
+
+                sdirectory.position.value = menuIndex
+                iteratorSimple.moveToPosition(menuIndex)
+
+                getOverlayMenu().createCustomWidgets().forEach {
+                    addChild(it.widget, Str(it.id))
+                }
+            }
+        }
 
         vbox.hexpand = GTK.TRUE
         hbox.append(vbox)
@@ -112,35 +130,9 @@ class FileList(
         vbox.append(title)
         vbox.append(createLabel())
         vbox.append(createLabel())
-        vbox.append(label4)
-
+        vbox.append(hiden)
 
         return hbox
-    }
-
-    private fun createOverlaysWidget(): Widget {
-        val soverlay = SolidOverlayFileList(GtkAppContext.storage, GtkAppContext)
-        val list = ListBox()
-
-        soverlay.stringArray.forEachIndexed { index, name ->
-            val row = createOverlayRow(index, name)
-            list.append(row)
-        }
-        return list
-    }
-
-    private fun createOverlayRow(index: Int, name: String): Widget {
-        val row = Box(Orientation.HORIZONTAL, 2)
-        val check = CheckButton()
-        val label = Label(Str.NULL)
-
-        label.setText("${index + 1}: ${name}")
-        label.xalign = 0f
-        row.margin(5)
-
-        row.append(check)
-        row.append(label)
-        return row
     }
 
     private fun createLabel(): Label {
@@ -175,9 +167,9 @@ class FileList(
         label4.setText(index.toString())
     }
 
-    private fun createMenu(app: Application): Menu {
+    private fun createMenu(app: Application, overlayMenu: MenuProvider): Menu {
         return MenuModelBuilder()
-            .submenu(Res.str().file_overlay(), MenuModelBuilder().custom(ID_OVERLAYS.toString()))
+            .submenu(Res.str().file_overlay(), overlayMenu.createMenu())
             .label(ToDo.translate("Load...")) {
                 sdirectory.position.value = menuIndex
                 iteratorSimple.moveToPosition(menuIndex)

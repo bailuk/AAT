@@ -7,7 +7,7 @@ import ch.bailu.aat.util.AndroidTimer;
 import ch.bailu.aat.views.graph.GraphViewFactory;
 import ch.bailu.aat_lib.dispatcher.CurrentLocationSource;
 import ch.bailu.aat.dispatcher.EditorSource;
-import ch.bailu.aat.dispatcher.OverlaySource;
+import ch.bailu.aat_lib.dispatcher.OverlaySource;
 import ch.bailu.aat.dispatcher.SensorSource;
 import ch.bailu.aat_lib.dispatcher.TrackerSource;
 import ch.bailu.aat_lib.dispatcher.TrackerTimerSource;
