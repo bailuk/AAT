@@ -14,7 +14,7 @@ import ch.bailu.gtk.gtk.*
 import ch.bailu.gtk.helper.ActionHelper
 import ch.bailu.gtk.type.Str
 
-class MainStackView (app: Application, actionHelper: ActionHelper, dispatcher: DispatcherInterface, window: Window, private val revealer: ToggleButton) :
+class MainStackView (app: Application, dispatcher: DispatcherInterface, window: Window, private val revealer: ToggleButton) :
     UiController {
 
     val layout = Stack()
@@ -22,7 +22,7 @@ class MainStackView (app: Application, actionHelper: ActionHelper, dispatcher: D
     private var revealerRestore = GTK.FALSE
 
     private val preferences = PreferencesStackView(this, GtkAppContext.storage, app, window)
-    private val map = MapMainView(actionHelper, dispatcher, this)
+    private val map = MapMainView(app, dispatcher, this, GtkAppContext, window)
     private val cockpit = CockpitView()
     private val fileList = FileList(app, this, dispatcher)
     private val detail = GpxDetailView(dispatcher, GtkAppContext.storage)

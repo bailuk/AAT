@@ -1,11 +1,10 @@
 package ch.bailu.aat_gtk.view.list
 
 import ch.bailu.aat_gtk.app.GtkAppContext
-import ch.bailu.aat_gtk.lib.menu.MenuFacade
 import ch.bailu.aat_gtk.lib.menu.MenuModelBuilder
 import ch.bailu.aat_gtk.view.UiController
-import ch.bailu.aat_gtk.view.util.setText
 import ch.bailu.aat_gtk.view.util.margin
+import ch.bailu.aat_gtk.view.util.setText
 import ch.bailu.aat_lib.description.AverageSpeedDescription
 import ch.bailu.aat_lib.description.DateDescription
 import ch.bailu.aat_lib.description.DistanceDescription
@@ -26,7 +25,11 @@ import ch.bailu.gtk.gio.Menu
 import ch.bailu.gtk.gtk.*
 import ch.bailu.gtk.type.Str
 
-class FileList(app: Application, private val uiController: UiController, dispatcher: DispatcherInterface) {
+class FileList(
+    app: Application,
+    private val uiController: UiController,
+    dispatcher: DispatcherInterface
+) {
     val vbox = Box(Orientation.VERTICAL, 12)
     private val listIndex = ListIndex()
 
@@ -41,6 +44,7 @@ class FileList(app: Application, private val uiController: UiController, dispatc
     private val sdirectory = SolidDirectoryQuery(GtkAppContext.storage, GtkAppContext)
 
     private var menuIndex = 0
+
     companion object {
         private val ID_OVERLAYS = Str("id-overlays")
     }
@@ -48,8 +52,6 @@ class FileList(app: Application, private val uiController: UiController, dispatc
     init {
 
         try {
-
-
             dispatcher.addSource(customFileSource)
 
             val directory =
@@ -128,11 +130,11 @@ class FileList(app: Application, private val uiController: UiController, dispatc
     }
 
     private fun createOverlayRow(index: Int, name: String): Widget {
-        val row   = Box(Orientation.HORIZONTAL, 2)
+        val row = Box(Orientation.HORIZONTAL, 2)
         val check = CheckButton()
         val label = Label(Str.NULL)
 
-        label.setText("${index+1}: ${name}")
+        label.setText("${index + 1}: ${name}")
         label.xalign = 0f
         row.margin(5)
 
@@ -174,16 +176,13 @@ class FileList(app: Application, private val uiController: UiController, dispatc
     }
 
     private fun createMenu(app: Application): Menu {
-        val menuFacade = MenuFacade(app)
-        menuFacade.build()
+        return MenuModelBuilder()
             .submenu(Res.str().file_overlay(), MenuModelBuilder().custom(ID_OVERLAYS.toString()))
             .label(ToDo.translate("Load...")) {
                 sdirectory.position.value = menuIndex
                 iteratorSimple.moveToPosition(menuIndex)
                 customFileSource.setFileID(iteratorSimple.info.file.toString())
                 uiController.showContextBar()
-            }
-
-        return menuFacade.model
+            }.create(app)
     }
 }

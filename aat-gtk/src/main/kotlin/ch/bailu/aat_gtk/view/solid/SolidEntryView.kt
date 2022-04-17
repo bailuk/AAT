@@ -36,6 +36,4 @@ class SolidEntryView (private val solid: AbsSolidType) : OnPreferencesChanged{
             entry.buffer.setText(Str(solid.valueAsString),-1)
         }
     }
-
-
 }

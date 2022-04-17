@@ -2,9 +2,9 @@ package ch.bailu.aat_gtk.view
 
 import ch.bailu.aat_gtk.app.GtkAppContext
 import ch.bailu.aat_gtk.view.map.GtkCustomMapView
-import ch.bailu.aat_gtk.view.map.control.MapBars
 import ch.bailu.aat_gtk.view.map.control.EditBar
 import ch.bailu.aat_gtk.view.map.control.InfoBar
+import ch.bailu.aat_gtk.view.map.control.MapBars
 import ch.bailu.aat_gtk.view.map.control.NavigationBar
 import ch.bailu.aat_gtk.view.map.layer.ControlBarLayer
 import ch.bailu.aat_lib.dispatcher.DispatcherInterface
@@ -13,19 +13,21 @@ import ch.bailu.aat_lib.map.Attachable
 import ch.bailu.aat_lib.map.layer.gpx.GpxDynLayer
 import ch.bailu.aat_lib.map.layer.grid.GridDynLayer
 import ch.bailu.aat_lib.preferences.location.CurrentLocationLayer
+import ch.bailu.foc.FocFactory
+import ch.bailu.gtk.gtk.Application
 import ch.bailu.gtk.gtk.Overlay
-import ch.bailu.gtk.helper.ActionHelper
+import ch.bailu.gtk.gtk.Window
 import java.io.File
 import java.util.*
 
-class MapMainView(actionHelper: ActionHelper, dispatcher: DispatcherInterface, uiController: UiController): Attachable {
+class MapMainView(app: Application, dispatcher: DispatcherInterface, uiController: UiController, focFactory: FocFactory, window: Window): Attachable {
 
     val map = GtkCustomMapView(GtkAppContext.storage, dispatcher)
     val overlay = Overlay()
 
     private val barControl = MapBars()
     private val navigationBar = NavigationBar(map.mContext, GtkAppContext.storage)
-    private val infoBar = InfoBar(actionHelper, map.mContext, GtkAppContext.storage, uiController)
+    private val infoBar = InfoBar(app, uiController, map.mContext, GtkAppContext.storage, focFactory, window)
     private val editBar = EditBar()
 
     init {

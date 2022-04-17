@@ -7,5 +7,4 @@ class SolidIndexListView(private val solid: SolidIndexList) : SolidLabelTextView
     override fun onRequestNewValue() {
         solid.cycle()
     }
-
 }

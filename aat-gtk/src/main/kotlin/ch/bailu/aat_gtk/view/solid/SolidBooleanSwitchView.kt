@@ -33,5 +33,4 @@ class SolidBooleanSwitchView(private val solid: SolidBoolean) : OnPreferencesCha
             toggle.active = GTK.IS(solid.value)
         }
     }
-
 }

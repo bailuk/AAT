@@ -7,14 +7,11 @@ import ch.bailu.gtk.GTK;
 import ch.bailu.gtk.gio.Menu;
 import ch.bailu.gtk.gio.MenuItem;
 import ch.bailu.gtk.glib.Variant;
+import ch.bailu.gtk.gtk.Application;
 import ch.bailu.gtk.type.Str;
 
 public class MenuModelBuilder {
     private final ArrayList<Item> items = new ArrayList<>();
-
-    public void clear() {
-        items.clear();
-    }
 
     public interface OnActivated {
         void onActivated(int index);
@@ -197,6 +194,13 @@ public class MenuModelBuilder {
     public MenuModelBuilder check(String label, boolean selected, OnChecked onChecked) {
         items.add(new CheckItem(label, selected, onChecked));
         return this;
+    }
+
+    public Menu create(Application app) {
+        Actions actions = new Actions(app);
+        Resources resources = new Resources();
+
+        return create(actions, resources);
     }
 
     public Menu create(Actions actions, Resources res) {

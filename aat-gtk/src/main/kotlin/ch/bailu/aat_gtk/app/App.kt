@@ -48,7 +48,7 @@ object App {
 
         app.onActivate {
             try {
-                MainWindow(ActionHelper(app), ApplicationWindow(app), app)
+                MainWindow(ApplicationWindow(app), app)
 
             } catch (e: Exception) {
                 e.printStackTrace()

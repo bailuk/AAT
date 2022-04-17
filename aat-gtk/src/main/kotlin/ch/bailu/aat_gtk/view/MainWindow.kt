@@ -5,7 +5,7 @@ import ch.bailu.aat_gtk.app.GtkAppConfig
 import ch.bailu.aat_gtk.app.GtkAppContext
 import ch.bailu.aat_gtk.util.GtkTimer
 import ch.bailu.aat_gtk.util.IconMap
-import ch.bailu.aat_gtk.view.menu.AppMenu
+import ch.bailu.aat_gtk.view.menu.provider.AppMenu
 import ch.bailu.aat_lib.dispatcher.CurrentLocationSource
 import ch.bailu.aat_lib.dispatcher.Dispatcher
 import ch.bailu.aat_lib.dispatcher.TrackerSource
@@ -13,10 +13,9 @@ import ch.bailu.aat_lib.dispatcher.TrackerTimerSource
 import ch.bailu.aat_lib.gpx.InfoID
 import ch.bailu.gtk.GTK
 import ch.bailu.gtk.gtk.*
-import ch.bailu.gtk.helper.ActionHelper
 import ch.bailu.gtk.type.Str
 
-class MainWindow(actionHelper: ActionHelper, window: ApplicationWindow, app: Application)
+class MainWindow(window: ApplicationWindow, app: Application)
 {
 
     private val trackerButton = TrackerButton(GtkAppContext.services)
@@ -24,7 +23,7 @@ class MainWindow(actionHelper: ActionHelper, window: ApplicationWindow, app: App
     private val dispatcher = Dispatcher()
 
     private val contextRevealButton = ToggleButton()
-    private val mainView = MainStackView(app, actionHelper,dispatcher,window, contextRevealButton)
+    private val mainView = MainStackView(app, dispatcher,window, contextRevealButton)
     private val contextBar = ContextBar(mainView)
 
     private val box = Box(Orientation.VERTICAL, 0)
@@ -67,8 +66,8 @@ class MainWindow(actionHelper: ActionHelper, window: ApplicationWindow, app: App
         }
 
         header.packStart(MenuButton().apply {
-            val appMenu = AppMenu(app, window, stack)
-            menuModel = appMenu.createMenu()
+            val appMenu = AppMenu(window, stack)
+            menuModel = appMenu.createMenu().create(app)
             PopoverMenu(popover.cast()).apply {
                 appMenu.createCustomWidgets().forEach {
                     addChild(it.widget, Str(it.id))

@@ -1,23 +1,35 @@
 package ch.bailu.aat_gtk.view.menu
 
 import ch.bailu.aat_gtk.view.map.control.Bar
-import ch.bailu.aat_gtk.view.menu.model.Menu
+import ch.bailu.aat_gtk.view.menu.provider.MenuProvider
 import ch.bailu.aat_gtk.view.util.setIcon
+import ch.bailu.gtk.gtk.Application
 import ch.bailu.gtk.gtk.Button
 import ch.bailu.gtk.gtk.Overlay
 import ch.bailu.gtk.gtk.PopoverMenu
-import ch.bailu.gtk.helper.ActionHelper
+import ch.bailu.gtk.type.Str
 
-open class PopupButton(actionHelper: ActionHelper, model: Menu) {
+open class PopupButton(app: Application, menuProvider: MenuProvider) {
     private val button = Button()
-    private val popup = PopoverMenu.newFromModelFullPopoverMenu(GtkMenu(actionHelper, model).menu, 0)
+    private val popover = PopoverMenu.newFromModelFullPopoverMenu(menuProvider.createMenu().create(app), 0)
 
     val overlay = Overlay()
 
     init {
         overlay.child = button
-        overlay.addOverlay(popup)
-        button.onClicked { popup.popup() }
+        overlay.addOverlay(popover)
+
+        PopoverMenu(popover.cast()).apply {
+            onShow {
+                menuProvider.createCustomWidgets().forEach {
+                    addChild(it.widget, Str(it.id))
+                }
+            }
+        }
+
+        button.onClicked {
+            popover.popup()
+        }
     }
 
     fun setIcon(resource: String, size: Int = Bar.ICON_SIZE) {

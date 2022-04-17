@@ -14,5 +14,4 @@ public class ActionId {
     public String get(int index) {
         return "menu_" + id + "(" + index + ")";
     }
-
 }
