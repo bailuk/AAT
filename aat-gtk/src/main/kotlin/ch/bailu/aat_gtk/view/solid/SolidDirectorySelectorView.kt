@@ -6,6 +6,7 @@ import ch.bailu.aat_gtk.view.util.GtkLabel
 import ch.bailu.aat_gtk.view.util.setText
 import ch.bailu.aat_gtk.view.util.margin
 import ch.bailu.aat_gtk.view.util.truncate
+import ch.bailu.aat_lib.logger.AppLog
 import ch.bailu.aat_lib.preferences.OnPreferencesChanged
 import ch.bailu.aat_lib.preferences.SolidFile
 import ch.bailu.aat_lib.preferences.StorageInterface
@@ -43,10 +44,17 @@ class SolidDirectorySelectorView(private val solid: SolidFile, app: Application,
                     addChild(createCustomWidget(), Str(solid.key))
                 }
             }
-
         })
 
-        entry.buffer.setText(Str(solid.toString()), solid.toString().length)
+        entry.overwriteMode = 0
+        Editable(entry.cast()).apply {
+            text = Str(solid.toString())
+
+            onChanged {
+                AppLog.d(this, text.toString())
+            }
+        }
+
         solid.register(this)
     }
 
@@ -89,7 +97,7 @@ class SolidDirectorySelectorView(private val solid: SolidFile, app: Application,
 
     override fun onPreferencesChanged(storage: StorageInterface, key: String) {
         if (solid.hasKey(key)) {
-            entry.buffer.setText(Str(solid.toString()), solid.toString().length)
+            Editable(entry.cast()).text = Str(solid.toString())
         }
     }
 }
