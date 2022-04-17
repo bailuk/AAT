@@ -1,4 +1,4 @@
-package ch.bailu.aat.services.editor;
+package ch.bailu.aat_lib.service.editor;
 
 public final class EditorRing {
     private final NodeEditor[] ring = new NodeEditor[10];
@@ -28,8 +28,6 @@ public final class EditorRing {
     public NodeEditor get() {
         return ring[index];
     }
-
-
 
 
     public boolean undo() {

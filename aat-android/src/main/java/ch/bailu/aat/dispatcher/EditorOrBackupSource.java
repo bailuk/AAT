@@ -1,6 +1,6 @@
 package ch.bailu.aat.dispatcher;
 
-import ch.bailu.aat.services.editor.EditorInterface;
+import ch.bailu.aat_lib.service.editor.EditorInterface;
 import ch.bailu.aat_lib.app.AppContext;
 import ch.bailu.aat_lib.dispatcher.ContentSource;
 import ch.bailu.aat_lib.dispatcher.OnContentUpdatedInterface;

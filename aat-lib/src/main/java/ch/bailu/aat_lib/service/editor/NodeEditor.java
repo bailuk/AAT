@@ -1,4 +1,4 @@
-package ch.bailu.aat.services.editor;
+package ch.bailu.aat_lib.service.editor;
 
 import ch.bailu.aat_lib.gpx.GpxListWalker;
 import ch.bailu.aat_lib.gpx.tools.Attacher;
@@ -360,7 +360,6 @@ public final class NodeEditor {
             }
         }
 
-
         public NodeEditor getNewNode() {
             if (newList.getPointList().size()>0) {
                 return new NodeEditor(
@@ -369,5 +368,4 @@ public final class NodeEditor {
             return null;
         }
     }
-
 }

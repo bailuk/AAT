@@ -12,7 +12,7 @@ import ch.bailu.aat_lib.service.InsideContext;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat_lib.service.cache.Obj;
 import ch.bailu.aat_lib.service.cache.ObjGpx;
-import ch.bailu.aat.services.editor.EditorInterface;
+import ch.bailu.aat_lib.service.editor.EditorInterface;
 import ch.bailu.aat.util.ui.AppSelectDirectoryDialog;
 import ch.bailu.aat.views.preferences.AbsSelectOverlayDialog;
 import ch.bailu.aat_lib.gpx.interfaces.GpxType;

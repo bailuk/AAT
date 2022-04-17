@@ -1,7 +1,7 @@
 package ch.bailu.aat.dispatcher;
 
-import ch.bailu.aat.services.editor.EditorHelper;
-import ch.bailu.aat.services.editor.EditorInterface;
+import ch.bailu.aat_lib.service.editor.EditorHelper;
+import ch.bailu.aat_lib.service.editor.EditorInterface;
 import ch.bailu.aat_lib.app.AppContext;
 import ch.bailu.aat_lib.dispatcher.AppBroadcaster;
 import ch.bailu.aat_lib.dispatcher.BroadcastData;

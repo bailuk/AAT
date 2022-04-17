@@ -1,4 +1,4 @@
-package ch.bailu.aat.services.editor;
+package ch.bailu.aat_lib.service.editor;
 
 import ch.bailu.aat_lib.gpx.GpxList;
 import ch.bailu.aat_lib.gpx.GpxPointNode;

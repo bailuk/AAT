@@ -1,7 +1,7 @@
-package ch.bailu.aat.services.cache;
+package ch.bailu.aat_lib.service.cache;
 
-import ch.bailu.aat.services.editor.EditorInterface;
-import ch.bailu.aat.services.editor.GpxEditor;
+import ch.bailu.aat_lib.service.editor.EditorInterface;
+import ch.bailu.aat_lib.service.editor.GpxEditor;
 import ch.bailu.aat_lib.app.AppContext;
 import ch.bailu.aat_lib.coordinates.BoundingBoxE6;
 import ch.bailu.aat_lib.dispatcher.AppBroadcaster;
@@ -12,9 +12,6 @@ import ch.bailu.aat_lib.gpx.GpxPoint;
 import ch.bailu.aat_lib.gpx.GpxPointNode;
 import ch.bailu.aat_lib.gpx.interfaces.GpxType;
 import ch.bailu.aat_lib.logger.AppLog;
-import ch.bailu.aat_lib.service.cache.Obj;
-import ch.bailu.aat_lib.service.cache.ObjGpx;
-import ch.bailu.aat_lib.service.cache.ObjGpxStatic;
 import ch.bailu.aat_lib.util.fs.AppDirectory;
 import ch.bailu.aat_lib.xml.writer.GpxListWriter;
 import ch.bailu.foc.Foc;
@@ -79,10 +76,6 @@ public final class ObjGpxEditable extends ObjGpx {
             editor.loadIntoEditor(currentHandle.getGpxList());
         }
     }
-
-
-
-
 
     public class GpxListEditor extends GpxInformation implements EditorInterface {
         private GpxEditor editor = new GpxEditor(GpxList.NULL_ROUTE);

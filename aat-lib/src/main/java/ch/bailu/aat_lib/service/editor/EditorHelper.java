@@ -1,17 +1,16 @@
-package ch.bailu.aat.services.editor;
+package ch.bailu.aat_lib.service.editor;
 
-import ch.bailu.aat.services.cache.ObjGpxEditable;
 import ch.bailu.aat_lib.app.AppContext;
 import ch.bailu.aat_lib.gpx.GpxInformation;
 import ch.bailu.aat_lib.gpx.InfoID;
 import ch.bailu.aat_lib.service.cache.Obj;
+import ch.bailu.aat_lib.service.cache.ObjGpxEditable;
 import ch.bailu.aat_lib.service.cache.ObjNull;
 import ch.bailu.aat_lib.util.fs.AppDirectory;
 import ch.bailu.foc.Foc;
 
 public final class EditorHelper {
     private final AppContext appContext;
-
 
     private Obj handle = ObjNull.NULL;
 
@@ -70,7 +69,7 @@ public final class EditorHelper {
 
 
     public EditorInterface getEditor() {
-        if (ObjGpxEditable.class.isInstance(handle)) {
+        if (handle instanceof ObjGpxEditable) {
             return ((ObjGpxEditable)handle).getEditor();
         }
         return EditorInterface.NULL;

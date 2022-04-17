@@ -12,7 +12,7 @@ import ch.bailu.aat.dispatcher.EditorSourceInterface;
 import ch.bailu.aat.map.To;
 import ch.bailu.aat.menus.EditorMenu;
 import ch.bailu.aat.services.ServiceContext;
-import ch.bailu.aat.services.editor.EditorInterface;
+import ch.bailu.aat_lib.service.editor.EditorInterface;
 import ch.bailu.aat.util.ui.AppTheme;
 import ch.bailu.aat.util.ui.ToolTip;
 import ch.bailu.aat.views.bar.ControlBar;
