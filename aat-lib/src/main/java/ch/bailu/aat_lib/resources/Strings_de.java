@@ -407,7 +407,7 @@ public class Strings_de extends Strings {
     public String tt_info_nominatim() { return "Suchanfrage über OSM-Nominatim";}
 
     @Override
-    public String tt_info_reload() { return "Sichtbare Kacheln neuladen";}
+    public String tt_info_reload() { return "Sichtbare Kacheln neu laden";}
 
     @Override
     public String tt_map_zoomin() { return "Hineinzoomen";}

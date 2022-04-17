@@ -236,7 +236,7 @@
     <string name ="tt_info_grid">Zwischen verschiedenen Kartengittern wechseln</string>
     <string name ="tt_info_legend">Zwischen Beschreibungsmodi wechseln</string>
     <string name ="tt_info_nominatim">Suchanfrage über OSM-Nominatim</string>
-    <string name ="tt_info_reload">Sichtbare Kacheln neuladen</string>
+    <string name ="tt_info_reload">Sichtbare Kacheln neu laden</string>
 
 
     <string name ="tt_map_zoomin">Hineinzoomen</string>
