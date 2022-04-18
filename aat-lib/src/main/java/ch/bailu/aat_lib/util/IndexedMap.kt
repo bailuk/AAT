@@ -36,4 +36,12 @@ class IndexedMap<K, V> {
         }
     }
 
+    fun indexOf(key: K): Int {
+        keys.forEachIndexed { index, it ->
+            if (it == key) {
+                return index
+            }
+        }
+        return -1
+    }
 }

@@ -47,7 +47,7 @@ class MainWindow(window: ApplicationWindow, app: Application)
         dispatcher.addSource(OverlaySource(GtkAppContext))
 
         dispatcher.addTarget(trackerButton, InfoID.ALL)
-        dispatcher.addTarget(contextBar, InfoID.FILEVIEW)
+        dispatcher.addTarget(contextBar, InfoID.ALL)
 
         dispatcher.onResume()
     }
