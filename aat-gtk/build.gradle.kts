@@ -41,10 +41,17 @@ dependencies {
      *    https://mvnrepository.com/artifact/com.github.hypfvieh/dbus-java
      *    https://github.com/hypfvieh/dbus-java
      */
-    implementation("com.github.hypfvieh:dbus-java:3.3.0")
-    implementation("org.slf4j:slf4j-api:1.7.30")
+    implementation("com.github.hypfvieh:dbus-java-core:4.0.0")
+    implementation("com.github.hypfvieh:dbus-java-transport-jnr-unixsocket:4.0.0")
+    implementation("org.slf4j:slf4j-api:1.7.32")
     implementation("ch.qos.logback:logback-classic:1.2.3")
     implementation("ch.qos.logback:logback-core:1.2.3")
+
+    /**
+     *    https://github.com/taimos/GPSd4Java
+     *    https://wiki.mobian-project.org/doku.php?id=location
+     */
+    implementation("de.taimos:gpsd4java:1.10")
 
     /**
      *    https://github.com/mapsforge/mapsforge/blob/master/docs/Integration.md
@@ -86,4 +93,3 @@ val fatJar = task("fatJar", type = Jar::class) {
     from(configurations.runtimeClasspath.get().map { if (it.isDirectory) it else zipTree(it) })
     with(tasks.jar.get() as CopySpec)
 }
-

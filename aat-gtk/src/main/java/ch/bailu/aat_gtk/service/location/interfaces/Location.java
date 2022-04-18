@@ -18,9 +18,4 @@ import org.freedesktop.dbus.interfaces.DBusInterface;
 @DBusProperty(name = "Heading", type = Double.class, access = Access.READ)
 @DBusProperty(name = "Description", type = String.class, access = Access.READ)
 @DBusProperty(name = "Timestamp", type = PropertyTimestampStruct.class, access = DBusProperty.Access.READ)
-public interface Location extends DBusInterface {
-
-
-
-}
-
+public interface Location extends DBusInterface {}

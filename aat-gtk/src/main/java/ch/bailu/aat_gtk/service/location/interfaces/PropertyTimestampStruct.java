@@ -18,7 +18,6 @@ public class PropertyTimestampStruct extends Struct {
         this.member1 = member1;
     }
 
-
     public UInt64 getMember0() {
         return member0;
     }

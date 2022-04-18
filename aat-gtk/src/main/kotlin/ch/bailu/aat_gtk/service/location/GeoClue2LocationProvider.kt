@@ -2,7 +2,9 @@ package ch.bailu.aat_gtk.service.location
 
 import ch.bailu.aat_gtk.service.location.interfaces.Client
 import ch.bailu.aat_lib.gpx.StateID
+import ch.bailu.aat_lib.logger.AppLog
 import ch.bailu.aat_lib.service.location.*
+import org.freedesktop.dbus.types.UInt32
 
 
 /**
@@ -25,18 +27,24 @@ import ch.bailu.aat_lib.service.location.*
  *
  */
 class GeoClue2LocationProvider(
-    serviceInterface: LocationServiceInterface,
+    private val lock: LocationServiceInterface,
     item: LocationStackItem?
 ) :
     LocationStackChainedItem(item) {
     private var geoClue2: GeoClue2Dbus? = null
-    private val lock: Any
+
     private fun updateStateAndLocation(signal: Client.LocationUpdated) {
+        AppLog.d(this, "signal received")
         synchronized(lock) {
             try {
                 val geoClue2 = geoClue2
-                if (geoClue2 != null) {
-                    val location: LocationInformation = geoClue2.getLocation(signal.new)
+                if (geoClue2 is GeoClue2Dbus) {
+                    val location = geoClue2.getLocation(signal.new)
+
+                    if (geoClue2.active) {
+                        AppLog.d(this, "Geoclue2 is active")
+                    }
+
                     passLocation(location)
                 } else {
                     passState(StateID.NOSERVICE)
@@ -51,7 +59,7 @@ class GeoClue2LocationProvider(
     private fun updateState() {
         synchronized(lock) {
             val geoClue2 = geoClue2
-            if (geoClue2 != null && geoClue2.active) {
+            if (geoClue2 is GeoClue2Dbus && geoClue2.active) {
                 passState(LocationService.INITIAL_STATE)
             } else {
                 passState(StateID.OFF)
@@ -64,19 +72,20 @@ class GeoClue2LocationProvider(
     }
 
     init {
-        lock = serviceInterface
         object :
             Thread(GeoClue2Dbus::class.java.simpleName) {
             override fun run() {
                 try {
                     val geo = GeoClue2Dbus()
-                    geo.connect { signal: Client.LocationUpdated ->
-                        updateStateAndLocation(
-                            signal
-                        )
-                    }
+                    geo.connect { signal -> updateStateAndLocation(signal) }
+                    geo.timeThreshold = UInt32(2)
                     geo.start()
+                    AppLog.d(this, "Geoclue2 started")
                     geoClue2 = geo
+
+                    if (geo.active) {
+                        AppLog.d(this, "Geoclue2 is active")
+                    }
                     updateState()
                 } catch (e: Exception) {
                     passState(StateID.NOSERVICE)

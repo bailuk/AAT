@@ -21,11 +21,8 @@ import org.freedesktop.dbus.types.UInt32;
 @DBusProperty(name = "Active", type = Boolean.class, access = Access.READ)
 public interface Client extends DBusInterface {
 
-
     void Start();
     void Stop();
-
-
 
     class LocationUpdated extends DBusSignal {
 

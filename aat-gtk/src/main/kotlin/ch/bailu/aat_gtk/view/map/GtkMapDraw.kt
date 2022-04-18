@@ -124,12 +124,8 @@ class GtkMapDraw: MapDraw {
     }
 
     override fun label(text: String, pixel: Point, background: Paint, frame: Paint) {
-        drawBackground(text, pixel, background)
-        drawBackground(text, pixel, frame)
         canvas?.drawText(text, pixel.x, pixel.y, legendPaint)
     }
-
-    private fun drawBackground(text: String, pixel: Point, paint: Paint) {}
 
     override fun createPaint(): Paint {
         return GtkGraphicFactory.INSTANCE.createPaint()

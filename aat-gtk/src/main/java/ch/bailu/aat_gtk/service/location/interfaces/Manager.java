@@ -13,11 +13,8 @@ import org.freedesktop.dbus.types.UInt32;
 @DBusProperty(name = "InUse", type = Boolean.class, access = DBusProperty.Access.READ)
 @DBusProperty(name = "AvailableAccuracyLevel", type = UInt32.class, access = DBusProperty.Access.READ)
 public interface Manager extends DBusInterface {
-
-
-    public DBusPath GetClient();
-    public DBusPath CreateClient();
-    public void DeleteClient(DBusPath client);
-    public void AddAgent(String id);
-
+    DBusPath GetClient();
+    DBusPath CreateClient();
+    void DeleteClient(DBusPath client);
+    void AddAgent(String id);
 }
