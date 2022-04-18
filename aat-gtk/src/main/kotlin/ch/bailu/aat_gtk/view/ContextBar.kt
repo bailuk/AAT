@@ -7,14 +7,14 @@ import ch.bailu.aat_gtk.view.util.margin
 import ch.bailu.aat_lib.dispatcher.OnContentUpdatedInterface
 import ch.bailu.aat_lib.gpx.GpxInformation
 import ch.bailu.aat_lib.gpx.InfoID
+import ch.bailu.aat_lib.preferences.StorageInterface
 import ch.bailu.aat_lib.preferences.map.SolidOverlayFileList
 import ch.bailu.aat_lib.util.IndexedMap
 import ch.bailu.gtk.GTK
 import ch.bailu.gtk.gtk.*
-import ch.bailu.gtk.helper.LabelHelper
 import ch.bailu.gtk.type.Str
 
-class ContextBar(contextCallback: UiController) : OnContentUpdatedInterface {
+class ContextBar(contextCallback: UiController, private val storage: StorageInterface) : OnContentUpdatedInterface {
     val revealer = Revealer()
 
     private val row1 = Box(Orientation.HORIZONTAL, 0)
@@ -30,16 +30,22 @@ class ContextBar(contextCallback: UiController) : OnContentUpdatedInterface {
         }
     }
 
+    private val buttons = ArrayList<ToggleButton>().apply {
+        add(createButton("Map") { contextCallback.showMap() })
+        add(createButton("List") { contextCallback.showInList() })
+        add(createButton("Detail") { contextCallback.showDetail() })
+        add(createButton("Cockpit") { contextCallback.showCockpit() })
+    }
+
     init {
         val layout = Box(Orientation.VERTICAL,0)
 
         row1.append(createImageButton("zoom-fit-best-symbolic") { contextCallback.showInMap(selectedGpx()) } )
         row1.append(combo.combo.apply { margin(3) })
 
-        row2.append(createButton("Map") { contextCallback.showMap() })
-        row2.append(createButton("List") { contextCallback.showInList() })
-        row2.append(createButton("Detail") { contextCallback.showDetail() })
-        row2.append(createButton("Cockpit") { contextCallback.showCockpit() })
+        buttons.forEach {
+            row2.append(it)
+        }
 
         layout.append(row1)
         layout.append(row2)
@@ -48,6 +54,13 @@ class ContextBar(contextCallback: UiController) : OnContentUpdatedInterface {
 
         revealer.child = layout
         revealer.revealChild = GTK.FALSE
+
+        storage.register { _, key ->
+            if (key == MainStackView.KEY) {
+                updateToggle()
+            }
+        }
+        updateToggle()
     }
 
     private fun updateCombo() {
@@ -63,8 +76,9 @@ class ContextBar(contextCallback: UiController) : OnContentUpdatedInterface {
     }
 
 
-    private fun createButton(label: String, onClicked: Button.OnClicked) : Button {
-        val result = ToggleButton.newWithLabelButton(Str(label))
+    private fun createButton(label: String, onClicked: Button.OnClicked) : ToggleButton {
+        val result = ToggleButton()
+        result.label = Str(label)
         result.onClicked(onClicked)
         result.marginTop = 3
         result.marginBottom = 3
@@ -99,6 +113,14 @@ class ContextBar(contextCallback: UiController) : OnContentUpdatedInterface {
                     revealer.show()
                 }
             }
+        }
+    }
+
+    private fun updateToggle() {
+        val index = storage.readInteger(MainStackView.KEY) - 1
+
+        buttons.forEachIndexed { i, it ->
+            it.active = GTK.IS(index == i)
         }
     }
 }

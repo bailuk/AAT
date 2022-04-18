@@ -3,18 +3,24 @@ package ch.bailu.aat_gtk.view
 import ch.bailu.aat_gtk.app.GtkAppContext
 import ch.bailu.aat_gtk.view.description.CockpitView
 import ch.bailu.aat_gtk.view.list.FileList
+import ch.bailu.aat_gtk.view.solid.Page
 import ch.bailu.aat_gtk.view.solid.PreferencesStackView
 import ch.bailu.aat_lib.description.*
 import ch.bailu.aat_lib.dispatcher.DispatcherInterface
 import ch.bailu.aat_lib.gpx.GpxInformation
 import ch.bailu.aat_lib.gpx.InfoID
+import ch.bailu.aat_lib.preferences.StorageInterface
 import ch.bailu.aat_lib.resources.Res
 import ch.bailu.gtk.GTK
 import ch.bailu.gtk.gtk.*
 import ch.bailu.gtk.type.Str
 
-class MainStackView (app: Application, dispatcher: DispatcherInterface, window: Window, private val revealer: ToggleButton) :
+class MainStackView (app: Application, dispatcher: DispatcherInterface, window: Window, private val storage: StorageInterface, private val revealer: ToggleButton) :
     UiController {
+
+    companion object {
+        const val KEY = "main-stack"
+    }
 
     val layout = Stack()
 
@@ -26,21 +32,30 @@ class MainStackView (app: Application, dispatcher: DispatcherInterface, window: 
     private val fileList = FileList(app, this, GtkAppContext.storage, GtkAppContext, dispatcher)
     private val detail = GpxDetailView(dispatcher, GtkAppContext.storage)
 
-    private val strPreferences = Str(Res.str().intro_settings())
-    private val strMap = Str(Res.str().p_map())
-
-    private var lastSelected : Widget = map.overlay
+    private var backTo : Widget = map.overlay
+    private val pages = ArrayList<Page>()
 
     init {
         layout.transitionType = StackTransitionType.SLIDE_LEFT
-        layout.addTitled(preferences.layout, strPreferences, strPreferences)
-        layout.addTitled(map.overlay, strMap, strMap)
-        layout.addTitled(fileList.vbox, Str("Files"), Str("Files"))
-        layout.addTitled(detail.scrolled, Str("Detail"), Str("Detail"))
-        layout.addTitled(cockpit.flow, Str("Cockpit"), Str("Cockpit"))
+
+        pages.add(Page(Str(Res.str().intro_settings()), preferences.layout))
+        pages.add(Page(Str(Res.str().p_map()), map.overlay))
+        pages.add(Page(Str("List"), fileList.vbox))
+        pages.add(Page(Str("Detail"), detail.scrolled))
+        pages.add(Page(Str("Cockpit"), cockpit.flow))
+
+        pages.forEach {
+            layout.addChild(it.widget)
+        }
 
         initCockpit(dispatcher)
-        showMap()
+
+        val index = storage.readInteger(KEY)
+        if (index > 0) {
+            select(pages[index].widget)
+        } else {
+            showMap()
+        }
     }
 
     private fun initCockpit(dispatcher: DispatcherInterface) {
@@ -92,7 +107,7 @@ class MainStackView (app: Application, dispatcher: DispatcherInterface, window: 
 
     override fun back() {
         revealer.active = revealerRestore
-        layout.visibleChild = lastSelected
+        layout.visibleChild = backTo
     }
 
     override fun showContextBar() {
@@ -100,7 +115,21 @@ class MainStackView (app: Application, dispatcher: DispatcherInterface, window: 
     }
 
     private fun select(widget: Widget) {
-        lastSelected = layout.visibleChild
+        val index = getPageIndex(widget)
+        if (index > 0) {
+            storage.writeInteger(KEY, index)
+            backTo = widget
+        }
+
         layout.visibleChild = widget
+    }
+
+    private fun getPageIndex(widget: Widget): Int {
+        pages.forEachIndexed { index, page ->
+            if (page.widget == widget) {
+                return index
+            }
+        }
+        return 0
     }
 }

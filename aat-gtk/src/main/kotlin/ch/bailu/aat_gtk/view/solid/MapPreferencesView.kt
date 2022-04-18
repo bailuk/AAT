@@ -1,6 +1,7 @@
 package ch.bailu.aat_gtk.view.solid
 
 import ch.bailu.aat_gtk.app.GtkAppConfig
+import ch.bailu.aat_gtk.app.GtkAppContext
 import ch.bailu.aat_gtk.solid.GtkMapDirectories
 import ch.bailu.aat_gtk.solid.GtkSolidDem3Directory
 import ch.bailu.aat_gtk.solid.GtkSolidTileCacheDirectory
@@ -18,22 +19,22 @@ class MapPreferencesView (storage: StorageInterface, app: Application, window: W
     init {
         add(Res.str().p_map())
 
-        val solidMapDirectory = SolidMapsForgeDirectory(storage, GtkAppConfig.Foc, GtkMapDirectories(storage, GtkAppConfig.Foc))
+        val solidMapDirectory = SolidMapsForgeDirectory(storage, GtkAppContext, GtkMapDirectories(storage, GtkAppContext))
 
         // TODO there is no density support yet
         add(SolidIndexComboView(SolidTileSize(storage, GtkAppConfig.density)).layout)
 
-        add(SolidDirectorySelectorView(GtkSolidTileCacheDirectory(storage, GtkAppConfig.Foc) , app, window).layout)
+        add(SolidDirectorySelectorView(GtkSolidTileCacheDirectory(storage, GtkAppContext) , app, window).layout)
         add(SolidBooleanSwitchView(SolidVolumeKeys(storage)).layout)
 
         add(Res.str().p_offline_map())
         add(SolidDirectorySelectorView(solidMapDirectory, app, window).layout)
-        add(SolidDirectorySelectorView(SolidMapsForgeMapFile(storage, GtkAppConfig.Foc, GtkMapDirectories(storage, GtkAppConfig.Foc)), app, window).layout)
-        add(SolidDirectorySelectorView(SolidRenderTheme(solidMapDirectory, GtkAppConfig.Foc), app, window).layout)
+        add(SolidDirectorySelectorView(SolidMapsForgeMapFile(storage, GtkAppContext, GtkMapDirectories(storage, GtkAppContext)), app, window).layout)
+        add(SolidDirectorySelectorView(SolidRenderTheme(solidMapDirectory, GtkAppContext), app, window).layout)
         add(SolidBooleanSwitchView(MapsForge(storage)).layout)
 
         add(ToDo.translate("Dem3 altitude tiles"))
-        add(SolidDirectorySelectorView(GtkSolidDem3Directory(storage, GtkAppConfig.Foc), app, window).layout)
+        add(SolidDirectorySelectorView(GtkSolidDem3Directory(storage, GtkAppContext), app, window).layout)
         add(SolidBooleanSwitchView(SolidDem3EnableDownload(storage)).layout)
     }
 }

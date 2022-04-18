@@ -20,8 +20,8 @@ class MainWindow(window: ApplicationWindow, app: Application)
     private val dispatcher = Dispatcher()
 
     private val contextRevealButton = ToggleButton()
-    private val mainView = MainStackView(app, dispatcher,window, contextRevealButton)
-    private val contextBar = ContextBar(mainView)
+    private val mainView = MainStackView(app, dispatcher,window, GtkAppContext.storage, contextRevealButton)
+    private val contextBar = ContextBar(mainView,GtkAppContext.storage)
 
     private val box = Box(Orientation.VERTICAL, 0)
 

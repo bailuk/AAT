@@ -71,6 +71,7 @@ class FileList(
 
             iteratorSimple.setOnCursorChangedLinsener {
                 listIndex.size = iteratorSimple.count
+                AppLog.d(this, "curserChanged(${iteratorSimple.count})")
             }
 
             val factory = SignalListItemFactory()
@@ -96,6 +97,7 @@ class FileList(
 
 
     private fun createItem(): Widget {
+        AppLog.d(this, "createItem()")
         val hbox = Box(Orientation.HORIZONTAL, 5)
         val vbox = Box(Orientation.VERTICAL, 5)
         val menu = MenuButton()
@@ -145,6 +147,7 @@ class FileList(
     }
 
     private fun bindItem(item: ListItem, index: Int) {
+        AppLog.d(this, "bindItem()")
         val hbox = Box(item.child.cast())
         val vbox = Box(hbox.firstChild.cast())
 
