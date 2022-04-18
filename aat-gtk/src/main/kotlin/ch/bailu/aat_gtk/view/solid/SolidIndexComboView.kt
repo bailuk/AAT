@@ -14,9 +14,7 @@ class SolidIndexComboView(private val solid: SolidIndexList) : OnPreferencesChan
     val layout = Box(Orientation.VERTICAL, 5)
     val label = GtkLabel()
 
-    val combo = ComboBoxText()
-
-
+    private val combo = ComboBoxText()
 
     init {
         label.text = solid.label

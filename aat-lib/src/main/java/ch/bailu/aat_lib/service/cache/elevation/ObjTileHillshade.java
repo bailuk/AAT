@@ -144,6 +144,5 @@ public final class ObjTileHillshade extends ObjTileElevation {
         public Obj factory(String id, AppContext sc) {
             return  new ObjTileHillshade(id, sc.createMapTile(), mapTile);
         }
-
     }
 }

@@ -53,7 +53,6 @@ class GtkSyncTileBitmap : MapTileInterface {
         return result
     }
 
-
     @Synchronized
     override fun free() {
         val tileBitmap = bitmap
