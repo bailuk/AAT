@@ -77,24 +77,26 @@ public final class BleSensorSDK18 extends BluetoothGattCallback implements Senso
         }
     }
 
-
     private BluetoothGatt connect() {
-        if (item.lock(this)) {
-            if (Build.VERSION.SDK_INT >= 23) {
-                return device.connectGatt(context, true, this, BluetoothDevice.TRANSPORT_LE);
-            } else {
-                return device.connectGatt(context, true, this);
+        try {
+            if (item.lock(this)) {
+                if (Build.VERSION.SDK_INT >= 23) {
+                    return device.connectGatt(context, true, this, BluetoothDevice.TRANSPORT_LE);
+                } else {
+                    return device.connectGatt(context, true, this);
+                }
             }
+        } catch (SecurityException e) {
+            AppLog.e(this, e);
+            return null;
         }
         return null;
     }
-
 
     private void updateListItemName() {
         if (item.isScanning() || item.isConnected())
             item.setName(getName());
     }
-
 
     @Override
     public synchronized void onConnectionStateChange(BluetoothGatt g, int status, int state) {
@@ -118,7 +120,6 @@ public final class BleSensorSDK18 extends BluetoothGattCallback implements Senso
     private static boolean isConnecting(int status, int state) {
         return (status == BluetoothGatt.GATT_SUCCESS && state == BluetoothProfile.STATE_CONNECTING);
     }
-
 
     private void executeNextAndSetState(BluetoothGatt gatt) {
         if (execute.haveToRead()) {
@@ -146,7 +147,6 @@ public final class BleSensorSDK18 extends BluetoothGattCallback implements Senso
         }
     }
 
-
     @Override
     public synchronized void onServicesDiscovered(BluetoothGatt gatt, int status) {
 
@@ -158,7 +158,6 @@ public final class BleSensorSDK18 extends BluetoothGattCallback implements Senso
 
         }
     }
-
 
     private boolean discover(BluetoothGatt gatt) {
         boolean discovered = false;
@@ -179,12 +178,10 @@ public final class BleSensorSDK18 extends BluetoothGattCallback implements Senso
         return discovered;
     }
 
-
     @Override
     public synchronized void onDescriptorWrite(BluetoothGatt gatt, BluetoothGattDescriptor d, int s) {
         executeNextAndSetState(gatt);
     }
-
 
     @Override
     public synchronized void onCharacteristicChanged(BluetoothGatt gatt,
@@ -194,7 +191,6 @@ public final class BleSensorSDK18 extends BluetoothGattCallback implements Senso
             s.changed(c);
 
     }
-
 
     @Override
     public synchronized void onCharacteristicRead(BluetoothGatt gatt, BluetoothGattCharacteristic c,
@@ -216,7 +212,6 @@ public final class BleSensorSDK18 extends BluetoothGattCallback implements Senso
                 + item.getSensorStateDescription(context);
     }
 
-
     @Override
     public String getName() {
         final StringBuilder builder = new StringBuilder(20);
@@ -225,12 +220,11 @@ public final class BleSensorSDK18 extends BluetoothGattCallback implements Senso
             builder.append(device.getName());
 
         for (ServiceInterface s : services) {
-            if (s.isValid()) builder.append(" ").append(s.toString());
+            if (s.isValid()) builder.append(" ").append(s);
         }
 
         return builder.toString();
     }
-
 
     public synchronized GpxInformation getInformation(int iid) {
         for (ServiceInterface s : services) {
@@ -243,12 +237,10 @@ public final class BleSensorSDK18 extends BluetoothGattCallback implements Senso
         return null;
     }
 
-
     private void close(int state) {
         closeState = state;
         close();
     }
-
 
     @Override
     public synchronized void close() {
