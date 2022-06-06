@@ -4,18 +4,18 @@
 # Usage: ./install.sh
 #
 
+desktop_dir="${HOME}/.local/share/applications"
+desktop="${desktop_dir}/ch.bailu.aat_gtk.desktop"
 data="${HOME}/aat_data"
-desktop="${HOME}/.local/share/applications/ch.bailu.aat_awt.desktop"
-
-test -d "${data}" || mkdir "${data}"
 
 cd ../../ || exit 1
 ./gradlew aat-gtk::build || exit 1
 
-ssh $remote "test -d ${data} || mkdir ${data}" || exit 1
-cp  aat-gtk/build/libs/aat-gtk-all.jar"${data}/aat.jar" || exit 1
-cp  src/main/resources/images/icon.svg "${data}/aat.svg" || exit 1
+test -d "${data}" || mkdir "${data}"
+cp  aat-gtk/build/libs/aat-gtk-all.jar "${data}/aat.jar" || exit 1
+cp  aat-gtk/src/main/resources/images/icon.svg "${data}/aat.svg" || exit 1
 
+mkdir -p ${desktop_dir} || exit 1
 cat > "${desktop}" << EOF
 [Desktop Entry]
 Version=1.0
