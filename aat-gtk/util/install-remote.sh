@@ -20,10 +20,10 @@ desktop="${home}/.local/share/applications/ch.bailu.aat_awt.desktop"
 data="${home}/aat_data"
 
 cd ../../ || exit 1
-./gradlew aat-gtk::fatJar || exit 1
+./gradlew aat-gtk::build || exit 1
 
 ssh $remote "test -d ${data} || mkdir ${data}" || exit 1
-scp  aat-gtk/build/libs/aat-gtk.jar "${remote}:${data}/aat.jar"  || exit 1
+scp  aat-gtk/build/libs/aat-gtk-all.jar "${remote}:${data}/aat.jar"  || exit 1
 scp  aat-gtk/src/main/resources/images/icon.svg "${remote}:${data}/aat.svg" || exit 1
 
 ssh "${remote}" "cat > ${desktop}" << EOF
