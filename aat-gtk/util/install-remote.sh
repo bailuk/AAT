@@ -16,7 +16,8 @@ remote=$1
 echo "Install to ${remote}"
 
 home=$(ssh $remote pwd)
-desktop="${home}/.local/share/applications/ch.bailu.aat_awt.desktop"
+desktop_dir="${home}/.local/share/applications"
+desktop="${desktop_dir}/ch.bailu.aat_gtk.desktop"
 data="${home}/aat_data"
 
 cd ../../ || exit 1
@@ -26,6 +27,7 @@ ssh $remote "test -d ${data} || mkdir ${data}" || exit 1
 scp  aat-gtk/build/libs/aat-gtk-all.jar "${remote}:${data}/aat.jar"  || exit 1
 scp  aat-gtk/src/main/resources/images/icon.svg "${remote}:${data}/aat.svg" || exit 1
 
+ssh "${remote}" "mkdir -p ${desktop_dir}" || exit 1
 ssh "${remote}" "cat > ${desktop}" << EOF
 [Desktop Entry]
 Version=1.0
