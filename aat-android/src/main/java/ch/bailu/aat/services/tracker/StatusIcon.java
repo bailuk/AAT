@@ -45,7 +45,6 @@ public final class StatusIcon implements StatusIconInterface {
         return PendingIntent.getActivity(scontext.getContext(), 0, intent, 0);
     }
 
-
     private Notification createNotification(PendingIntent intent, int status_id) {
         if (Build.VERSION.SDK_INT < 16) {
             return createNotificationSDK11(intent, status_id);
@@ -59,8 +58,6 @@ public final class StatusIcon implements StatusIconInterface {
         }
     }
 
-
-    @TargetApi(11)
     private Notification createNotificationSDK11(PendingIntent intent, int status_id) {
         String appName = scontext.getContext().getString(R.string.app_name);
         String appInfo = scontext.getContext().getString(status_id);
@@ -77,7 +74,6 @@ public final class StatusIcon implements StatusIconInterface {
 
         return notification;
     }
-
 
     @TargetApi(16)
     private Notification createNotificationSDK16(PendingIntent intent, int status_id) {
@@ -96,7 +92,6 @@ public final class StatusIcon implements StatusIconInterface {
 
         return notification;
     }
-
 
     @TargetApi(21)
     private Notification createNotificationSDK21(PendingIntent intent, int status_id) {
@@ -156,7 +151,6 @@ public final class StatusIcon implements StatusIconInterface {
             notificationManager.createNotificationChannel(chan);
 
         return channelId;
-
     }
 
     public void showAutoPause() {
@@ -168,11 +162,9 @@ public final class StatusIcon implements StatusIconInterface {
         scontext.startForeground(MY_ID, pauseNotification);
     }
 
-
     public void showOn() {
         scontext.startForeground(MY_ID, onNotification);
     }
-
 
     public void hide() {
         scontext.stopForeground(true);

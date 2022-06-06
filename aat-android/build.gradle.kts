@@ -1,11 +1,10 @@
 plugins {
     id("com.android.application")
+    id ("kotlin-android")
 }
 
-
 android {
-    compileSdkVersion(30)
-    buildToolsVersion("30.0.3")
+    compileSdk = 30
 
     /* Set this to whatever version is installed on the GitHub build environment
     and hope it works everywhere.
@@ -13,19 +12,16 @@ android {
     ndkVersion="21.3.6528147"
 
     defaultConfig {
-        applicationId("ch.bailu.aat")
-
-        minSdkVersion(14)
-        targetSdkVersion(29)
-
-        versionCode(34)
-        versionName("v1.21")
-
+        minSdk = 14
+        targetSdk = 29
+        versionCode = 34
+        versionName = "v1.21"
+        applicationId = "ch.bailu.aat"
     }
 
-    lintOptions {
-        isAbortOnError = true
-        isCheckDependencies = true
+    lint {
+        abortOnError = true
+        checkDependencies = true
     }
 
 
@@ -33,21 +29,29 @@ android {
     buildTypes {
         getByName("release") {
             resValue("string", "app_sname", "AAT")
-            minifyEnabled(false)
+            isMinifyEnabled = true
+            isShrinkResources = true
             proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.txt")
         }
 
         getByName("debug") {
             resValue("string", "app_sname", "AAT Debug")
             applicationIdSuffix = ".debug"
+            isMinifyEnabled = false
+            isShrinkResources = false
             isDebuggable = true
         }
     }
 
 
     compileOptions {
-        sourceCompatibility(JavaVersion.VERSION_1_8)
-        targetCompatibility(JavaVersion.VERSION_1_8)
+        sourceCompatibility(JavaVersion.VERSION_11)
+        targetCompatibility(JavaVersion.VERSION_11)
+    }
+    tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
+        kotlinOptions {
+            jvmTarget = "11"
+        }
     }
 
     useLibrary ("android.test.runner")
@@ -56,12 +60,6 @@ android {
     useLibrary ("android.test.mock")
 }
 
-
-repositories {
-    google()
-    mavenCentral()
-    mavenLocal()
-}
 
 dependencies {
     // Local
@@ -107,7 +105,7 @@ dependencies {
 
     // test
     // Required -- JUnit 4 framework
-    testImplementation ("junit:junit:4.12")
+    testImplementation ("junit:junit:4.13.2")
     // Optional -- Robolectric environment
     testImplementation("androidx.test:core:1.4.0")
     // Optional -- Mockito framework

@@ -7,6 +7,8 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 
+import javax.annotation.Nonnull;
+
 import ch.bailu.aat.R;
 import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat.util.ui.AndroidAppDensity;
@@ -44,8 +46,8 @@ public class GraphView extends ViewGroup implements OnContentUpdatedInterface, P
 
         SolidUnit sunit = new SolidUnit(new Storage(context));
 
-        xlabel = new LabelOverlay(context, Gravity.LEFT | Gravity.BOTTOM);
-        ylabel = new LabelOverlay(context, Gravity.RIGHT | Gravity.TOP);
+        xlabel = new LabelOverlay(context, Gravity.START | Gravity.BOTTOM);
+        ylabel = new LabelOverlay(context, Gravity.END | Gravity.TOP);
 
         xlabel.setGravity(Gravity.BOTTOM);
         xlabel.setText(Color.WHITE, R.string.distance, sunit.getDistanceUnit());
@@ -61,7 +63,7 @@ public class GraphView extends ViewGroup implements OnContentUpdatedInterface, P
 
 
     @Override
-    public void onContentUpdated(int iid, GpxInformation info) {
+    public void onContentUpdated(int iid, @Nonnull GpxInformation info) {
         onContentUpdated(iid, info, -1);
     }
 
@@ -137,7 +139,6 @@ public class GraphView extends ViewGroup implements OnContentUpdatedInterface, P
             ylabel.setVisibility(GONE);
         }
     }
-
 
     public void setVisibility(GpxInformation info) {
         if (info.isLoaded() && info.getType() == GpxType.ROUTE || info.getType() == GpxType.TRACK) {

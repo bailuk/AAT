@@ -1,6 +1,5 @@
 package ch.bailu.aat.util.ui;
 
-import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.graphics.Point;
@@ -22,7 +21,6 @@ public class AppLayout {
 
     private static final Point size = new Point();
 
-
     public static void updateMeasurement(Context context) {
 
         if (size.x==0 || size.y==0) {
@@ -37,12 +35,9 @@ public class AppLayout {
         }
     }
 
-
-    @TargetApi(13)
     public static void getSizeSDK13(Display disp, Point size) {
         disp.getSize(size);
     }
-
 
     public static int getScreenSmallSide(Context context) {
         updateMeasurement(context);
@@ -71,7 +66,6 @@ public class AppLayout {
             return LinearLayout.HORIZONTAL;
         return LinearLayout.VERTICAL;
     }
-
 
     public static int getBigButtonSize(Context context) {
         return getBigButtonSize(context, AppLayout.DEFAULT_VISIBLE_BUTTON_COUNT);
@@ -118,8 +112,6 @@ public class AppLayout {
         view.startAnimation(anim);
         view.setVisibility(visibility);
     }
-
-
 
     public static void logMeasuredDimension(View view, String view_string) {
         int height = view.getMeasuredHeight();

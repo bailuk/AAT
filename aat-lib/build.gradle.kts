@@ -1,15 +1,9 @@
 plugins {
     id ("java-library")
+    id ("com.android.lint")
 
     // https://kotlinlang.org/docs/gradle.html#targeting-the-jvm
-    kotlin("jvm") version "1.6.10"
-}
-
-
-repositories {
-    mavenLocal()
-    google()
-    mavenCentral()
+    kotlin("jvm")
 }
 
 
@@ -17,6 +11,14 @@ tasks.test {
     useJUnitPlatform()
 }
 
+
+java.sourceCompatibility = JavaVersion.VERSION_11
+java.targetCompatibility = JavaVersion.VERSION_11
+tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
+    kotlinOptions {
+        jvmTarget = "11"
+    }
+}
 
 dependencies {
     val focVersion : String by project

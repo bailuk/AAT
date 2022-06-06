@@ -1,6 +1,5 @@
 package ch.bailu.aat.menus;
 
-import android.annotation.TargetApi;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.view.Menu;
@@ -22,14 +21,10 @@ public abstract class AbsMenu {
         showAsPopupSDK11(context, view);
     }
 
-
-
     public void showAsDialog(Context context) {
         new MenuDialog(context, this);
     }
 
-
-    @TargetApi(11)
     private void showAsPopupSDK11(Context context, View view) {
         final PopupMenu popup = new PopupMenu(context, view);
 
@@ -63,7 +58,6 @@ public abstract class AbsMenu {
             return result;
         }
     }
-
 
     private final ArrayList<Item> items = new ArrayList<>(5);
     public MenuItem add(Menu menu, String name, OnClick onClick) {

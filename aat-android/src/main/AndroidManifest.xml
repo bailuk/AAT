@@ -36,7 +36,6 @@
         android:requestLegacyExternalStorage="true"
         android:name="ch.bailu.aat.app.App"
         android:allowBackup="true"
-        android:usesCleartextTraffic="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_sname"
         android:theme="@android:style/Theme.Black.NoTitleBar"
@@ -45,8 +44,9 @@
         <uses-library android:name="android.test.runner" />
 
         <activity
+            android:exported="true"
             android:name="ch.bailu.aat.activities.MainActivity">
-            <intent-filter>
+                        <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
@@ -69,6 +69,7 @@
         </activity>
 
         <activity
+            android:exported="true"
             android:name="ch.bailu.aat.activities.GpxViewActivity">
             <!-- Reference: http://stackoverflow.com/questions/1733195/android-intent-filter-for-a-particular-file-extension -->
 
@@ -144,6 +145,7 @@
         </activity>
 
         <activity
+            android:exported="true"
             android:name="ch.bailu.aat.activities.MapActivity">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -199,7 +201,4 @@
         </provider>
 
     </application>
-
-
-
 </manifest>

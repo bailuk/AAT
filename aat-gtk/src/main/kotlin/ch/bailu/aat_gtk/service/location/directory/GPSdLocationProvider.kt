@@ -52,10 +52,9 @@ class GPSdLocationProvider(item: LocationStackItem?): LocationStackChainedItem(i
     }
 
     override fun handleDevices(devices: DevicesObject?) {
-        if (devices is DeviceObject) {
+        if (devices is DevicesObject) {
             AppLog.d(this, devices.toString())
         }
-
     }
 
     override fun handleDevice(device: DeviceObject?) {
