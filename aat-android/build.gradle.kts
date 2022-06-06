@@ -29,8 +29,7 @@ android {
     buildTypes {
         getByName("release") {
             resValue("string", "app_sname", "AAT")
-            isMinifyEnabled = true
-            isShrinkResources = true
+            isMinifyEnabled = false
             proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.txt")
         }
 
@@ -38,7 +37,6 @@ android {
             resValue("string", "app_sname", "AAT Debug")
             applicationIdSuffix = ".debug"
             isMinifyEnabled = false
-            isShrinkResources = false
             isDebuggable = true
         }
     }
