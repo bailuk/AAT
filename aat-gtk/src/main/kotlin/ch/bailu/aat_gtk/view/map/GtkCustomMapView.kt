@@ -1,6 +1,7 @@
 package ch.bailu.aat_gtk.view.map
 
 import ch.bailu.aat_gtk.app.GtkAppContext
+import ch.bailu.aat_gtk.app.GtkAppDensity
 import ch.bailu.aat_lib.coordinates.BoundingBoxE6
 import ch.bailu.aat_lib.dispatcher.DispatcherInterface
 import ch.bailu.aat_lib.map.*
@@ -44,10 +45,10 @@ class GtkCustomMapView (
     private val stack: MapsForgeTileLayerStackConfigured
 
     init {
-        model.displayModel.setFixedTileSize(SolidTileSize(storage, AppDensity()).getTileSize())
+        model.displayModel.setFixedTileSize(SolidTileSize(storage, GtkAppDensity).getTileSize())
 
         foregroundContext = GtkMapContextForeground(
-            MapsForgeMetrics(this, AppDensity()), backgroundContext, layers)
+            MapsForgeMetrics(this, GtkAppDensity), backgroundContext, layers)
         addLayer(backgroundContext)
         mapScaleBar.isVisible = false
         if (SHOW_DEBUG_LAYERS) {

@@ -6,11 +6,8 @@ import org.mapsforge.core.graphics.Style;
 import ch.bailu.aat_lib.app.AppGraphicFactory;
 
 public final class MapPaint {
-
-
-    public static final int EDGE_WIDTH_LINE=2;
-
-    private final static float TEXT_SIZE=15;
+    public final static int EDGE_WIDTH_LINE=2;
+    private final static float TEXT_SIZE=20;
 
     public static Paint createBackgroundPaint(int color) {
         Paint p = AppGraphicFactory.instance().createPaint();

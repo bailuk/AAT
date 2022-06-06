@@ -1,5 +1,6 @@
 package ch.bailu.aat_gtk.view.map
 
+import ch.bailu.aat_gtk.app.GtkAppDensity
 import ch.bailu.aat_lib.map.*
 import ch.bailu.aat_lib.util.Point
 import ch.bailu.aat_lib.util.Rect
@@ -13,7 +14,7 @@ class GtkMapDraw: MapDraw {
 
     private var canvas: Canvas? = null
 
-    private val res = AppDensity()
+    private val res = GtkAppDensity
     val textPaint   = MapPaint.createStatusTextPaint(res)
     private val gridPaint   = MapPaint.createGridPaint(res)
     val legendPaint = MapPaint.createLegendTextPaint(res)

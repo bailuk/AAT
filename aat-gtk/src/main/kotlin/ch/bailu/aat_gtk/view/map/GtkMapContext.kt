@@ -1,5 +1,6 @@
 package ch.bailu.aat_gtk.view.map
 
+import ch.bailu.aat_gtk.app.GtkAppDensity
 import ch.bailu.aat_lib.map.*
 import org.mapsforge.core.graphics.Canvas
 import org.mapsforge.core.model.BoundingBox
@@ -7,7 +8,7 @@ import org.mapsforge.core.model.Point
 import org.mapsforge.map.layer.Layer
 
 class GtkMapContext(val mapView: GtkCustomMapView, val key: String): Layer(), MapContext {
-    private val metrics = MapsForgeMetrics(mapView, AppDensity())
+    private val metrics = MapsForgeMetrics(mapView, GtkAppDensity)
     private val draw = GtkMapDraw()
     private val twoNodes = TwoNodes(metrics)
 

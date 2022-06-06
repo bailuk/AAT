@@ -1,7 +1,7 @@
 package ch.bailu.aat_gtk.view.solid
 
-import ch.bailu.aat_gtk.app.GtkAppConfig
 import ch.bailu.aat_gtk.app.GtkAppContext
+import ch.bailu.aat_gtk.app.GtkAppDensity
 import ch.bailu.aat_gtk.solid.GtkMapDirectories
 import ch.bailu.aat_gtk.solid.GtkSolidDem3Directory
 import ch.bailu.aat_gtk.solid.GtkSolidTileCacheDirectory
@@ -22,7 +22,7 @@ class MapPreferencesView (storage: StorageInterface, app: Application, window: W
         val solidMapDirectory = SolidMapsForgeDirectory(storage, GtkAppContext, GtkMapDirectories(storage, GtkAppContext))
 
         // TODO there is no density support yet
-        add(SolidIndexComboView(SolidTileSize(storage, GtkAppConfig.density)).layout)
+        add(SolidIndexComboView(SolidTileSize(storage, GtkAppDensity)).layout)
 
         add(SolidDirectorySelectorView(GtkSolidTileCacheDirectory(storage, GtkAppContext) , app, window).layout)
         add(SolidBooleanSwitchView(SolidVolumeKeys(storage)).layout)
