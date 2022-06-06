@@ -27,19 +27,24 @@ import ch.bailu.aat_lib.service.tracker.TrackerService
 import ch.bailu.aat_lib.service.tracker.TrackerServiceInterface
 
 class GtkServices (appContext: AppContext) : ServicesInterface {
-    private val cacheService = CacheService(appContext)
-    private val locationService: LocationService = LocationService(GtkSolidLocationProvider(appContext.storage), appContext.broadcaster)
-    private val trackerService: TrackerService = TrackerService(
+    private val locationService by lazy { LocationService(
+        GtkSolidLocationProvider(appContext.storage),
+        appContext.broadcaster
+    ) }
+
+    private val trackerService by lazy { TrackerService(
             SolidGtkDataDirectory(appContext.storage, appContext),
             GtkStatusIcon(),
             appContext.broadcaster,
             this
-    )
-    private val backgroundService = BackgroundService(appContext, appContext.broadcaster, 5)
-    private val directoryService = DirectoryService(appContext)
-    private val renderService = RenderService(appContext, appContext.mapDirectory)
+    ) }
 
-    private val elevationService = ElevationService(appContext)
+    private val cacheService by lazy { CacheService(appContext) }
+    private val backgroundService by lazy { BackgroundService(appContext, appContext.broadcaster, 5) }
+    private val directoryService by lazy { DirectoryService(appContext) }
+    private val renderService by lazy { RenderService(appContext, appContext.mapDirectory) }
+
+    private val elevationService by lazy { ElevationService(appContext) }
 
     override fun getLocationService(): LocationServiceInterface {
         return locationService

@@ -1,6 +1,5 @@
 package ch.bailu.aat_gtk.view
 
-import ch.bailu.aat_gtk.util.UiThread
 import ch.bailu.aat_lib.dispatcher.OnContentUpdatedInterface
 import ch.bailu.aat_lib.gpx.GpxInformation
 import ch.bailu.aat_lib.service.ServicesInterface
@@ -22,9 +21,7 @@ class TrackerButton(private val services: ServicesInterface) : OnContentUpdatedI
         val newText = services.trackerService.pauseResumeText
 
         if (text != newText) {
-            UiThread.toUi {
-                setNewText(newText)
-            }
+             setNewText(newText)
         }
     }
 

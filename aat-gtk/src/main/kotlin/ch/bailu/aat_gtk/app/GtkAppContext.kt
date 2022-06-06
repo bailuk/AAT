@@ -28,16 +28,15 @@ import ch.bailu.aat_lib.util.sql.DbConnection
 import ch.bailu.foc.Foc
 import ch.bailu.foc.FocFactory
 import ch.bailu.foc.FocFile
-import org.mapsforge.map.gtk.graphics.GtkTileBitmap
 
 object GtkAppContext: AppContext {
-    private val focFactory = FocFactory { string: String? -> FocFile(string) }
-    private val storage = GtkStorage()
-    private val broadcaster = GtkBroadcaster()
-    private val solidDataDirectory = SolidGtkDataDirectory(storage, focFactory)
-    private val solidSummaryConfig = GtkSummaryConfig()
-    private val solidDem3Directory = GtkSolidDem3Directory(storage, focFactory)
-    private val services = GtkServices(this)
+    private val focFactory         by lazy { FocFactory { string: String? -> FocFile(string) } }
+    private val storage            by lazy { GtkStorage() }
+    private val broadcaster        by lazy { GtkBroadcaster() }
+    private val solidDataDirectory by lazy { SolidGtkDataDirectory(storage, focFactory) }
+    private val solidSummaryConfig by lazy { GtkSummaryConfig() }
+    private val solidDem3Directory by lazy { GtkSolidDem3Directory(storage, focFactory) }
+    private val services           by lazy { GtkServices(this) }
 
 
     override fun toFoc(string: String?): Foc {

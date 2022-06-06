@@ -3,6 +3,7 @@ package ch.bailu.aat_gtk.view
 import ch.bailu.aat_gtk.app.App
 import ch.bailu.aat_gtk.app.GtkAppConfig
 import ch.bailu.aat_gtk.app.GtkAppContext
+import ch.bailu.aat_gtk.app.TimeStation
 import ch.bailu.aat_gtk.util.GtkTimer
 import ch.bailu.aat_gtk.util.IconMap
 import ch.bailu.aat_gtk.view.menu.provider.AppMenu
@@ -14,9 +15,7 @@ import ch.bailu.gtk.type.Str
 
 class MainWindow(window: ApplicationWindow, app: Application)
 {
-
     private val trackerButton = TrackerButton(GtkAppContext.services)
-
     private val dispatcher = Dispatcher()
 
     private val contextRevealButton = ToggleButton()
@@ -27,11 +26,12 @@ class MainWindow(window: ApplicationWindow, app: Application)
 
 
     init {
+        TimeStation.log("init")
+
         box.append(contextBar.revealer)
-        box.append(mainView.layout)
+        box.append(mainView.widget)
 
         window.child = box
-
         window.title = Str(GtkAppConfig.title)
         window.titlebar = createHeader(window, app, mainView)
 
@@ -39,6 +39,7 @@ class MainWindow(window: ApplicationWindow, app: Application)
         window.onDestroy {
             App.exit(0)
         }
+        TimeStation.log("-> window.show")
         window.show()
 
         dispatcher.addSource(TrackerTimerSource(GtkAppContext.services, GtkTimer()))
@@ -74,7 +75,6 @@ class MainWindow(window: ApplicationWindow, app: Application)
         })
 
         header.packStart(trackerButton.button)
-
         header.packEnd(contextRevealButton)
 
         return header

@@ -7,6 +7,7 @@ import ch.bailu.aat_gtk.view.util.margin
 import ch.bailu.aat_lib.dispatcher.OnContentUpdatedInterface
 import ch.bailu.aat_lib.gpx.GpxInformation
 import ch.bailu.aat_lib.gpx.InfoID
+import ch.bailu.aat_lib.logger.AppLog
 import ch.bailu.aat_lib.preferences.StorageInterface
 import ch.bailu.aat_lib.preferences.map.SolidOverlayFileList
 import ch.bailu.aat_lib.util.IndexedMap
@@ -44,6 +45,7 @@ class ContextBar(contextCallback: UiController, private val storage: StorageInte
         row1.append(combo.combo.apply { margin(3) })
 
         buttons.forEach {
+            it.margin(3)
             row2.append(it)
         }
 
@@ -117,8 +119,9 @@ class ContextBar(contextCallback: UiController, private val storage: StorageInte
     }
 
     private fun updateToggle() {
-        val index = storage.readInteger(MainStackView.KEY) - 1
+        val index = storage.readInteger(MainStackView.KEY)
 
+        AppLog.d(this, "update toggle $index")
         buttons.forEachIndexed { i, it ->
             it.active = GTK.IS(index == i)
         }
