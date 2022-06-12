@@ -21,7 +21,6 @@ class MapPreferencesView (storage: StorageInterface, app: Application, window: W
 
         val solidMapDirectory = SolidMapsForgeDirectory(storage, GtkAppContext, GtkMapDirectories(storage, GtkAppContext))
 
-        // TODO there is no density support yet
         add(SolidIndexComboView(SolidTileSize(storage, GtkAppDensity)).layout)
 
         add(SolidDirectorySelectorView(GtkSolidTileCacheDirectory(storage, GtkAppContext) , app, window).layout)

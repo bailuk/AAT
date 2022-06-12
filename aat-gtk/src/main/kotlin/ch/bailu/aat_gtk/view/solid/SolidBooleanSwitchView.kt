@@ -26,11 +26,18 @@ class SolidBooleanSwitchView(private val solid: SolidBoolean) : OnPreferencesCha
         toggleBox.append(toggle)
         toggle.hexpand = GTK.FALSE
         toggle.active = GTK.IS(solid.value)
+
+        solid.storage.register(this)
+
+        toggle.onStateSet {
+            solid.value = GTK.IS(it)
+            GTK.TRUE
+        }
     }
 
     override fun onPreferencesChanged(storage: StorageInterface, key: String) {
         if (solid.hasKey(key)) {
-            toggle.active = GTK.IS(solid.value)
+            toggle.state = GTK.IS(solid.value)
         }
     }
 }
