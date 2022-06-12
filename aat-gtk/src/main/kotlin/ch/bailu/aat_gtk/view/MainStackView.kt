@@ -4,7 +4,7 @@ import ch.bailu.aat_gtk.app.GtkAppContext
 import ch.bailu.aat_gtk.app.TimeStation
 import ch.bailu.aat_gtk.view.description.CockpitView
 import ch.bailu.aat_gtk.view.list.FileList
-import ch.bailu.aat_gtk.view.share.LazyStackView
+import ch.bailu.aat_gtk.view.stack.LazyStackView
 import ch.bailu.aat_gtk.view.solid.PreferencesStackView
 import ch.bailu.aat_lib.description.*
 import ch.bailu.aat_lib.dispatcher.DispatcherInterface

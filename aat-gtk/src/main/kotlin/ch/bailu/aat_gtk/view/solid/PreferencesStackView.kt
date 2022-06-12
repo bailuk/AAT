@@ -1,7 +1,8 @@
 package ch.bailu.aat_gtk.view.solid
 
 import ch.bailu.aat_gtk.view.UiController
-import ch.bailu.aat_gtk.view.share.LazyStackView
+import ch.bailu.aat_gtk.view.stack.LazyStackView
+import ch.bailu.aat_gtk.view.stack.StackViewSelector
 import ch.bailu.aat_gtk.view.util.margin
 import ch.bailu.aat_lib.preferences.StorageInterface
 import ch.bailu.aat_lib.preferences.general.SolidPresetCount
@@ -42,7 +43,7 @@ class PreferencesStackView(controller: UiController, storage: StorageInterface, 
     val layout = Box(Orientation.VERTICAL, 0)
     private val box = Box(Orientation.HORIZONTAL, 0)
 
-    private val combo = stack.createCombo()
+    private val selector = StackViewSelector(stack)
 
     init {
         val back = Button.newWithLabelButton(Str(ToDo.translate("Back")))
@@ -50,14 +51,7 @@ class PreferencesStackView(controller: UiController, storage: StorageInterface, 
         back.onClicked { controller.back() }
         box.append(back)
 
-        combo.onChanged {
-            stack.show(combo.active)
-        }
-
-        combo.margin(MARGIN)
-        combo.active = stack.restore()
-
-        box.append(combo)
+        box.append(selector.combo)
 
         layout.append(box)
         layout.append(stack.widget)

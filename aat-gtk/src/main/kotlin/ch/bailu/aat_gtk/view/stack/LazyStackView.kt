@@ -1,4 +1,4 @@
-package ch.bailu.aat_gtk.view.share
+package ch.bailu.aat_gtk.view.stack
 
 import ch.bailu.aat_lib.preferences.StorageInterface
 import ch.bailu.gtk.gtk.ComboBoxText
@@ -6,7 +6,7 @@ import ch.bailu.gtk.gtk.Stack
 import ch.bailu.gtk.gtk.Widget
 import ch.bailu.gtk.type.Str
 
-class LazyStackView(val stack: Stack, private val key: String, private val storage: StorageInterface) {
+class LazyStackView(val stack: Stack, val key: String, val storage: StorageInterface) {
     private val pages = ArrayList<LazyPage>()
 
     val widget: Widget

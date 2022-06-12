@@ -2,7 +2,7 @@ package ch.bailu.aat_gtk.view
 
 import ch.bailu.aat_gtk.util.IconMap
 import ch.bailu.aat_gtk.view.map.control.Bar
-import ch.bailu.aat_gtk.view.share.ComboBoxString
+import ch.bailu.aat_gtk.view.stack.ComboBoxString
 import ch.bailu.aat_gtk.view.util.margin
 import ch.bailu.aat_lib.dispatcher.OnContentUpdatedInterface
 import ch.bailu.aat_lib.gpx.GpxInformation

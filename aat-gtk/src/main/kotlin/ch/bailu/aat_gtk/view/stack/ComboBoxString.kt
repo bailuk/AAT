@@ -1,4 +1,4 @@
-package ch.bailu.aat_gtk.view.share
+package ch.bailu.aat_gtk.view.stack
 
 import ch.bailu.aat_lib.logger.AppLog
 import ch.bailu.gtk.gtk.ComboBoxText
