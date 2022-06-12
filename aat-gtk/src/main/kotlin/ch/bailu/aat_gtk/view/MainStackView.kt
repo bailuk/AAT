@@ -33,6 +33,8 @@ class MainStackView(
 
     }
 
+    private var preferencesStackView: PreferencesStackView?  = null
+
     private val stack = LazyStackView(Stack().apply {
         transitionType = StackTransitionType.SLIDE_LEFT
     }, KEY, storage)
@@ -67,7 +69,9 @@ class MainStackView(
     }
 
     private val preferences = stack.add("Preferences") {
-        PreferencesStackView(this, GtkAppContext.storage, app, window).layout
+        val stackView = PreferencesStackView(this, GtkAppContext.storage, app, window)
+        preferencesStackView = stackView
+        stackView.layout
     }
 
     private var backTo = INDEX_MAP
@@ -102,7 +106,6 @@ class MainStackView(
 
     override fun showInMap(info: GpxInformation) {
         if (info.boundingBox.hasBounding()) {
-
             //map.map.frameBounding(info.boundingBox)
         }
         showMap()
@@ -119,7 +122,7 @@ class MainStackView(
 
     override fun showPreferencesMap() {
         showPreferences()
-        //preferences.showMap()
+        preferencesStackView?.showMap()
     }
 
     override fun back() {

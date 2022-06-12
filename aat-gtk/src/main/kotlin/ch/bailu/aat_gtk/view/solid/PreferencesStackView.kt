@@ -63,4 +63,8 @@ class PreferencesStackView(controller: UiController, storage: StorageInterface, 
         layout.append(stack.widget)
         layout.show()
     }
+
+    fun showMap() {
+       stack.show(stack.lastIndex())
+    }
 }
