@@ -7,7 +7,7 @@ import java.util.ArrayList
 
 class GtkSolidDem3Directory(storage: StorageInterface, private val focFactory: FocFactory) : SolidDem3Directory(storage, focFactory) {
     override fun buildSelection(list: ArrayList<String>): ArrayList<String> {
-        list.add(SolidGtkDefaultDirectory(storage, focFactory).valueAsString + "dem3")
-        return list;
+        list.add("${SolidGtkDefaultDirectory(storage, focFactory).valueAsString}/dem3")
+        return list
     }
 }
