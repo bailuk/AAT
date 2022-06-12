@@ -34,6 +34,7 @@ class MainStackView(
     }
 
     private var preferencesStackView: PreferencesStackView?  = null
+    private var mapView: MapMainView? = null
 
     private val stack = LazyStackView(Stack().apply {
         transitionType = StackTransitionType.SLIDE_LEFT
@@ -45,41 +46,43 @@ class MainStackView(
     private var revealerRestore = GTK.FALSE
 
 
-    private val map = stack.add("Map") {
-        MapMainView(app, dispatcher, this, GtkAppContext, window).overlay
-    }
-
-    private val files = stack.add("Files") {
-        FileList(app, this, GtkAppContext.storage, GtkAppContext, dispatcher).vbox
-    }
-
-    private val detail = stack.add("Detail") {
-        GpxDetailView(dispatcher, GtkAppContext.storage).scrolled
-    }
-
-    private val cockpit = stack.add("Cockpit") {
-        CockpitView().apply {
-            add(dispatcher, CurrentSpeedDescription(GtkAppContext.storage), InfoID.LOCATION)
-            add(dispatcher, AltitudeDescription(GtkAppContext.storage), InfoID.LOCATION)
-
-            add(dispatcher, PredictiveTimeDescription(), InfoID.TRACKER_TIMER)
-            add(dispatcher, DistanceDescription(GtkAppContext.storage), InfoID.TRACKER)
-            add(dispatcher, AverageSpeedDescriptionAP(GtkAppContext.storage), InfoID.TRACKER)
-        }.flow
-    }
-
-    private val preferences = stack.add("Preferences") {
-        val stackView = PreferencesStackView(this, GtkAppContext.storage, app, window)
-        preferencesStackView = stackView
-        stackView.layout
-    }
+    private val preferences: LazyStackView.LazyPage
 
     private var backTo = INDEX_MAP
 
     init {
-        TimeStation.log("init -> stack.restore()")
+        stack.add("Map") {
+            val mapView = MapMainView(app, dispatcher, this, GtkAppContext, window)
+            this.mapView = mapView
+            mapView.overlay
+        }
+
+        stack.add("Files") {
+            FileList(app, this, GtkAppContext.storage, GtkAppContext, dispatcher).vbox
+        }
+
+        stack.add("Detail") {
+            GpxDetailView(dispatcher, GtkAppContext.storage).scrolled
+        }
+
+        stack.add("Cockpit") {
+            CockpitView().apply {
+                add(dispatcher, CurrentSpeedDescription(GtkAppContext.storage), InfoID.LOCATION)
+                add(dispatcher, AltitudeDescription(GtkAppContext.storage), InfoID.LOCATION)
+
+                add(dispatcher, PredictiveTimeDescription(), InfoID.TRACKER_TIMER)
+                add(dispatcher, DistanceDescription(GtkAppContext.storage), InfoID.TRACKER)
+                add(dispatcher, AverageSpeedDescriptionAP(GtkAppContext.storage), InfoID.TRACKER)
+            }.flow
+        }
+
+        preferences = stack.add("Preferences") {
+            val stackView = PreferencesStackView(this, GtkAppContext.storage, app, window)
+            preferencesStackView = stackView
+            stackView.layout
+        }
+
         stack.restore()
-        TimeStation.log("init <- stack.restore()")
     }
 
 
@@ -106,9 +109,10 @@ class MainStackView(
 
     override fun showInMap(info: GpxInformation) {
         if (info.boundingBox.hasBounding()) {
-            //map.map.frameBounding(info.boundingBox)
+            showMap()
+            mapView?.map?.frameBounding(info.boundingBox)
         }
-        showMap()
+
     }
 
     override fun showDetail() {
