@@ -1,5 +1,6 @@
-package ch.bailu.aat_gtk.view.description
+package ch.bailu.aat_gtk.view.toplevel
 
+import ch.bailu.aat_gtk.view.description.NumberView
 import ch.bailu.aat_lib.description.ContentDescription
 import ch.bailu.aat_lib.dispatcher.DispatcherInterface
 import ch.bailu.gtk.gtk.FlowBox

@@ -1,11 +1,12 @@
 package ch.bailu.aat_gtk.view
 
 import ch.bailu.aat_gtk.app.GtkAppContext
-import ch.bailu.aat_gtk.app.TimeStation
-import ch.bailu.aat_gtk.view.description.CockpitView
-import ch.bailu.aat_gtk.view.list.FileList
+import ch.bailu.aat_gtk.view.toplevel.FileList
 import ch.bailu.aat_gtk.view.stack.LazyStackView
 import ch.bailu.aat_gtk.view.solid.PreferencesStackView
+import ch.bailu.aat_gtk.view.toplevel.CockpitView
+import ch.bailu.aat_gtk.view.toplevel.DetailView
+import ch.bailu.aat_gtk.view.toplevel.MapMainView
 import ch.bailu.aat_lib.description.*
 import ch.bailu.aat_lib.dispatcher.DispatcherInterface
 import ch.bailu.aat_lib.gpx.GpxInformation
@@ -62,7 +63,7 @@ class MainStackView(
         }
 
         stack.add("Detail") {
-            GpxDetailView(dispatcher, GtkAppContext.storage).scrolled
+            DetailView(dispatcher, GtkAppContext.storage).scrolled
         }
 
         stack.add("Cockpit") {

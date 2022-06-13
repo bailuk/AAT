@@ -1,6 +1,7 @@
-package ch.bailu.aat_gtk.view
+package ch.bailu.aat_gtk.view.toplevel
 
 import ch.bailu.aat_gtk.app.GtkAppContext
+import ch.bailu.aat_gtk.view.UiController
 import ch.bailu.aat_gtk.view.map.GtkCustomMapView
 import ch.bailu.aat_gtk.view.map.control.EditBar
 import ch.bailu.aat_gtk.view.map.control.InfoBar

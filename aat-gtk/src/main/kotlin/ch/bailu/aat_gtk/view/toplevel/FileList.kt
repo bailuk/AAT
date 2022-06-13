@@ -1,4 +1,4 @@
-package ch.bailu.aat_gtk.view.list
+package ch.bailu.aat_gtk.view.toplevel
 
 import ch.bailu.aat_gtk.app.GtkAppContext
 import ch.bailu.aat_gtk.lib.menu.MenuModelBuilder
@@ -56,6 +56,7 @@ class FileList(
         return SolidOverlayFileListMenu(SolidOverlayFileList(storage, focFactory), iteratorSimple.info.file)
     }
 
+    var instantinated = 0
     init {
 
         try {
@@ -97,7 +98,8 @@ class FileList(
 
 
     private fun createItem(): Widget {
-        //AppLog.d(this, "createItem()")
+        instantinated ++
+        AppLog.d(this, "instantiated widgets: $instantinated")
         val hbox = Box(Orientation.HORIZONTAL, 5)
         val vbox = Box(Orientation.VERTICAL, 5)
         val menu = MenuButton()

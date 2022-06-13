@@ -19,15 +19,11 @@ public class SyncBitmap {
     private int size = Obj.MIN_SIZE;
 
 
-    public SyncBitmap() {
+    public SyncBitmap() {}
 
-    }
     public Bitmap getBitmap() {
         return bitmap;
     }
-
-
-
 
     private static Bitmap load(Foc file) throws IOException {
         android.graphics.Bitmap bitmap;
@@ -64,7 +60,6 @@ public class SyncBitmap {
         }
     }
 
-
     public synchronized void set(int size, boolean transparent) {
         set(AndroidGraphicFactory.INSTANCE.createTileBitmap(size, transparent));
     }
@@ -75,13 +70,9 @@ public class SyncBitmap {
         set(b.getTileBitmap());
     }
 
-
     public synchronized long getSize() {
         return size;
     }
-
-
-
 
     public synchronized void free() {
         if (bitmap != null) {
