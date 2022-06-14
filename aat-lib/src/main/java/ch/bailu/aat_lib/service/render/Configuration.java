@@ -1,6 +1,7 @@
 package ch.bailu.aat_lib.service.render;
 
 import org.mapsforge.core.model.Tile;
+import org.mapsforge.map.layer.cache.TileCache;
 import org.mapsforge.map.rendertheme.XmlRenderTheme;
 
 import java.util.ArrayList;
@@ -18,12 +19,12 @@ public final class Configuration {
     public boolean isConfigured() {
         return renderer != null;     }
 
-    public void configure(Foc mapDir, Caches caches, XmlRenderTheme theme, String tID) {
+    public void configure(Foc mapDir, TileCache cache, XmlRenderTheme theme, String tID) {
         if (!isConfigured() && configureMapList(mapDir)) {
             themeID = tID;
 
             try {
-                renderer = new Renderer(theme, caches.get(themeID), mapFiles);
+                renderer = new Renderer(theme, cache, mapFiles);
             } catch (Exception e) {
                 renderer = null;
             }
@@ -62,10 +63,6 @@ public final class Configuration {
         if (isConfigured() && themeID.equals(o.getThemeID())) {
             renderer.addJob(o.getTile());
         }
-    }
-
-    public void freeFromRenderer(ObjTileMapsForge o) {
-        //renderer.removeJob(o.getTile());
     }
 }
 

@@ -6,6 +6,7 @@ import org.mapsforge.map.layer.cache.TileCache;
 import org.mapsforge.map.layer.queue.Job;
 import org.mapsforge.map.model.common.Observer;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -110,5 +111,9 @@ public final class Cache implements TileCache {
     @Override
     public void removeObserver(Observer observer) {
         AppLog.w(this, "Use freeFromRenderer()!");
+    }
+
+    public Collection<ObjTileMapsForge> getTiles() {
+        return cache.values();
     }
 }

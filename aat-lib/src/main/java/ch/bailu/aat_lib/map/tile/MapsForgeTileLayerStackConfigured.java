@@ -55,11 +55,7 @@ public abstract class MapsForgeTileLayerStackConfigured extends MapsForgeTileLay
 
     protected abstract void addBackgroundLayers(boolean[] enabled, Source[] sources);
 
-
-
     protected abstract void addOverlayLayers(boolean[] enabled, Source[] sources);
-
-
 
     protected Source getHillShadeSource() {
         if (scacheHS.isEnabled()) {
@@ -68,17 +64,14 @@ public abstract class MapsForgeTileLayerStackConfigured extends MapsForgeTileLay
         return ElevationSource.ELEVATION_HILLSHADE;
     }
 
-
     protected Source getMapsForgeSource() {
-        String theme =
-                stheme.getValueAsString();
+        String theme = stheme.getValueAsString();
 
         if (scacheMF.isEnabled()) {
             return new CachedSource(new MapsForgeSource(theme));
         }
         return new MapsForgeSource(theme);
     }
-
 
     @Override
     public void onPreferencesChanged(@Nonnull StorageInterface s, @Nonnull String key) {
@@ -128,9 +121,7 @@ public abstract class MapsForgeTileLayerStackConfigured extends MapsForgeTileLay
         }
 
         @Override
-        protected void addOverlayLayers(boolean[] enabled, Source[] sources) {
-
-        }
+        protected void addOverlayLayers(boolean[] enabled, Source[] sources) {}
     }
 
 

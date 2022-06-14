@@ -21,7 +21,7 @@ public final class RenderService  extends VirtualService
     private final SolidRenderTheme stheme;
 
     private final Configuration configuration = new Configuration();
-    private final Caches caches= new Caches();
+    private final Caches caches = new Caches();
 
 
     public RenderService(FocFactory focFactory, SolidMapsForgeDirectory sdirectory) {
@@ -37,22 +37,32 @@ public final class RenderService  extends VirtualService
     private void reconfigureRenderer() {
         configuration.destroy();
         SolidRendererThreads.set();
+
+        var themeID = stheme.getValueAsThemeID();
+        var tileCache = caches.get(themeID);
+
         configuration.configure(
                 sdirectory.getValueAsFile(),
-                caches,
+                tileCache,
                 stheme.getValueAsRenderTheme(),
-                stheme.getValueAsThemeID());
+                themeID);
+
+        reSchedule(tileCache);
     }
 
+    private void reSchedule(Cache cache) {
+        for (var tile: cache.getTiles()) {
+            configuration.lockToRenderer(tile);
+        }
+    }
 
-      public void lockToRenderer(ObjTileMapsForge o) {
+    public void lockToRenderer(ObjTileMapsForge o) {
         caches.lockToRenderer(o);
         configuration.lockToRenderer(o);
     }
 
 
     public void freeFromRenderer(ObjTileMapsForge o) {
-        configuration.freeFromRenderer(o);
         caches.freeFromRenderer(o);
     }
 
