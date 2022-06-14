@@ -6,6 +6,8 @@ import ch.bailu.aat_lib.preferences.StorageInterface;
 import ch.bailu.aat_lib.resources.Res;
 
 public class SolidCacheSize extends SolidIndexList {
+    private final static long MAX_CACHE_SIZE = 256 * MemSize.MB;
+
     final static String KEY = "cache_size";
 
     private static long[] sizes;
@@ -15,7 +17,7 @@ public class SolidCacheSize extends SolidIndexList {
         super(s, KEY);
 
         if (sizes == null) {
-            long max = Runtime.getRuntime().maxMemory();
+            long max = Math.min(Runtime.getRuntime().maxMemory(), MAX_CACHE_SIZE);
 
             sizes = new long[11];
 
@@ -27,7 +29,6 @@ public class SolidCacheSize extends SolidIndexList {
             }
         }
     }
-
 
     @Override
     public int length() {
@@ -47,7 +48,6 @@ public class SolidCacheSize extends SolidIndexList {
 
         return toDefaultString(b.toString(), i);
     }
-
 
     public long getValueAsLong() {
         return sizes[getIndex()];

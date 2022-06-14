@@ -116,7 +116,6 @@ public final class ObjectTable  {
 
 
     public synchronized void limit(CacheService self, long l) {
-        //AppLog.w(this, "Limit: " + MemSize.describe(new StringBuilder(), l).toString());
         limit = l;
         trim(self);
     }
@@ -144,7 +143,7 @@ public final class ObjectTable  {
     private synchronized boolean removeFromTable(String id, CacheService self) {
         Container remove = hashMap.get(id);
 
-        if (remove !=null && remove.obj.isLocked() == false) {
+        if (remove !=null && !remove.obj.isLocked()) {
             self.broadcaster.delete(remove.obj);
             hashMap.remove(id);
             totalMemorySize -= remove.size;

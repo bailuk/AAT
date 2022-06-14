@@ -11,7 +11,7 @@ import org.mapsforge.map.gtk.graphics.GtkTileBitmap
 class GtkSyncTileBitmap : MapTileInterface {
 
     private var bitmap: TileBitmap? = null
-    private var size: Int = 0
+    private var size: Int = Obj.MIN_SIZE
 
 
     @Synchronized
