@@ -7,7 +7,7 @@ class StackViewSelector(private val stack: LazyStackView) {
     val combo = stack.createCombo()
 
     init {
-        stack.storage.register { storage, key ->
+        stack.storage.register { _, key ->
             if (key == stack.key) {
                 selectFromPreferences()
             }
