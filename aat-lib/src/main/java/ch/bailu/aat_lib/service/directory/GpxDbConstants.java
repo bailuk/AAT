@@ -29,7 +29,7 @@ public final class GpxDbConstants {
     public final static String TYPE_FLOAT="REAL";
     public final static String TYPE_LONG="BIGINT";
     public final static String TYPE_STRING = "TEXT";
-    public final static String TYPE_ID = "INTEGER PRIMARY KEY AUTO_INCREMENT";
+    public final static String TYPE_ID = "INTEGER PRIMARY KEY AUTOINCREMENT";
 
 
     public static final String[] KEY_LIST_NEW = new String[] {
