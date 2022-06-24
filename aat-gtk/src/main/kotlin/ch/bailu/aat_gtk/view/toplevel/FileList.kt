@@ -99,7 +99,10 @@ class FileList(
 
     private fun createItem(): Widget {
         instantinated ++
-        AppLog.d(this, "instantiated widgets: $instantinated")
+        if (instantinated % 10 == 0) {
+            AppLog.d(this, "instantiated widgets: $instantinated")
+        }
+
         val hbox = Box(Orientation.HORIZONTAL, 5)
         val vbox = Box(Orientation.VERTICAL, 5)
         val menu = MenuButton()
@@ -149,7 +152,6 @@ class FileList(
     }
 
     private fun bindItem(item: ListItem, index: Int) {
-        //AppLog.d(this, "bindItem()")
         val hbox = Box(item.child.cast())
         val vbox = Box(hbox.firstChild.cast())
 

@@ -1,6 +1,9 @@
 package ch.bailu.aat_lib.service.directory;
 
+import javax.annotation.Nonnull;
+
 import ch.bailu.aat_lib.app.AppContext;
+import ch.bailu.aat_lib.logger.AppLog;
 import ch.bailu.aat_lib.preferences.OnPreferencesChanged;
 import ch.bailu.aat_lib.preferences.SolidDirectoryQuery;
 import ch.bailu.aat_lib.preferences.StorageInterface;
@@ -20,6 +23,7 @@ public final class DirectoryService extends VirtualService implements OnPreferen
     private final AppContext appContext;
 
     public DirectoryService(AppContext appContext) {
+        AppLog.d(this, "DirectoryService()");
         this.appContext = appContext;
         sdirectory = new SolidDirectoryQuery(appContext.getStorage(), appContext);
         sdirectory.getStorage().register(this);
@@ -28,7 +32,7 @@ public final class DirectoryService extends VirtualService implements OnPreferen
     }
 
     @Override
-    public void onPreferencesChanged(StorageInterface s, String key) {
+    public void onPreferencesChanged(@Nonnull StorageInterface s, @Nonnull String key) {
         if (sdirectory.hasKey(key)) {
             openDir(sdirectory.getValueAsFile());
         }
