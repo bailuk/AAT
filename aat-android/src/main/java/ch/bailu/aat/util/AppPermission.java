@@ -26,6 +26,7 @@ public class AppPermission {
                         Manifest.permission.ACCESS_COARSE_LOCATION,
                         Manifest.permission.ACCESS_FINE_LOCATION,
                         Manifest.permission.BODY_SENSORS,
+                        Manifest.permission.ACTIVITY_RECOGNITION,
                         Manifest.permission.READ_EXTERNAL_STORAGE,
                         Manifest.permission.WRITE_EXTERNAL_STORAGE},
                 APP_PERMISSION);
