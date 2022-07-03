@@ -1,0 +1,7 @@
+v1.22 (35)
+
+# Change
+- Add step counter permission
+- Fix bluetooth crashes
+- Use JDK 11
+- New project layout and refactoring
