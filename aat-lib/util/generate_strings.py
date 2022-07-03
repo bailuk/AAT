@@ -31,7 +31,6 @@ java_header = """package ch.bailu.aat_lib.resources;
 """
 
 out.write(java_header)
-
 out.write('public class ' + class_name + ' {\n')
 
 root_node = ET.parse(input_file).getroot()
@@ -54,9 +53,5 @@ for array_tag in root_node.findall('string-array'):
     out.write('        };\n')
     out.write('    }\n\n')
         
-    
-    
 out.write("}")
-
-
 out.close()
