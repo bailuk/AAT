@@ -8,6 +8,7 @@ import ch.bailu.aat_gtk.view.map.control.InfoBar
 import ch.bailu.aat_gtk.view.map.control.MapBars
 import ch.bailu.aat_gtk.view.map.control.NavigationBar
 import ch.bailu.aat_gtk.view.map.layer.ControlBarLayer
+import ch.bailu.aat_lib.description.EditorSource
 import ch.bailu.aat_lib.dispatcher.DispatcherInterface
 import ch.bailu.aat_lib.gpx.InfoID
 import ch.bailu.aat_lib.map.Attachable
@@ -22,21 +23,25 @@ import ch.bailu.gtk.gtk.Window
 
 class MapMainView(app: Application, dispatcher: DispatcherInterface, uiController: UiController, focFactory: FocFactory, window: Window): Attachable {
 
-    val map = GtkCustomMapView(GtkAppContext.storage, dispatcher)
+    val map = GtkCustomMapView(GtkAppContext, dispatcher)
     val overlay = Overlay()
+
+    private val editorSource = EditorSource(GtkAppContext)
 
     private val barControl = MapBars()
     private val navigationBar = NavigationBar(map.mContext, GtkAppContext.storage)
     private val infoBar = InfoBar(app, uiController, map.mContext, GtkAppContext.storage, focFactory, window)
-    private val editBar = EditBar()
+    private val editBar = EditBar(GtkAppContext.services, map.mContext, editorSource)
 
     init {
+        dispatcher.addSource(editorSource)
         dispatcher.addTarget(navigationBar, InfoID.ALL)
 
         map.add(CurrentLocationLayer(map.mContext, dispatcher))
         map.add(GridDynLayer(GtkAppContext.services, GtkAppContext.storage, map.mContext))
         map.add(GpxDynLayer(GtkAppContext.storage, map.mContext, GtkAppContext.services, dispatcher, InfoID.TRACKER))
         map.add(GpxDynLayer(GtkAppContext.storage, map.mContext, GtkAppContext.services, dispatcher, InfoID.FILEVIEW))
+        map.add(GpxDynLayer(GtkAppContext.storage, map.mContext, GtkAppContext.services, dispatcher, InfoID.EDITOR_DRAFT))
         map.add(GpxOverlayListLayer(GtkAppContext.storage,map.mContext, GtkAppContext.services, dispatcher))
         map.add(ControlBarLayer(barControl))
 

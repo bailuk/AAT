@@ -9,6 +9,7 @@ import ch.bailu.aat.views.PercentageLayout;
 import ch.bailu.aat.views.graph.GraphView;
 import ch.bailu.aat.views.graph.GraphViewFactory;
 import ch.bailu.aat.views.html.HtmlScrollTextView;
+import ch.bailu.aat_lib.app.AppContext;
 import ch.bailu.aat_lib.gpx.GpxInformation;
 import ch.bailu.aat_lib.gpx.InfoID;
 import ch.bailu.aat_lib.map.MapColor;
@@ -22,7 +23,7 @@ public final class NodeInfoView extends PercentageLayout {
 
     private int backgroundColor;
 
-    public NodeInfoView(Context context) {
+    public NodeInfoView(AppContext appContext, Context context) {
         super(context,0);
         setOrientation(LinearLayout.VERTICAL);
 
@@ -36,17 +37,17 @@ public final class NodeInfoView extends PercentageLayout {
 
 
 
-        graphView = createGraphView(context);
+        graphView = createGraphView(appContext, context);
         add(graphView, 25);
 
-        limitGraphView = createGraphView(context);
+        limitGraphView = createGraphView(appContext, context);
         add(limitGraphView, 25);
 
         setBackgroundColor(Color.TRANSPARENT);
     }
 
-    private GraphView createGraphView(Context context) {
-        GraphView g = GraphViewFactory.createAltitudeGraph(context, AppTheme.bar);
+    private GraphView createGraphView(AppContext appContext, Context context) {
+        GraphView g = GraphViewFactory.createAltitudeGraph(appContext, context, AppTheme.bar);
         g.setVisibility(GONE);
         g.setBackgroundColor(MapColor.DARK);
         g.showLabel(false);

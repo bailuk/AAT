@@ -4,15 +4,14 @@ import android.content.Context;
 import android.view.View;
 
 import ch.bailu.aat.map.To;
-import ch.bailu.aat_lib.map.layer.gpx.GpxVisibleLimit;
 import ch.bailu.aat.util.HtmlBuilder;
 import ch.bailu.aat.util.HtmlBuilderGpx;
 import ch.bailu.aat.util.ui.AppLayout;
+import ch.bailu.aat_lib.app.AppContext;
 import ch.bailu.aat_lib.gpx.GpxInformation;
 import ch.bailu.aat_lib.gpx.GpxPointNode;
 import ch.bailu.aat_lib.map.MapContext;
-import ch.bailu.aat_lib.preferences.StorageInterface;
-import ch.bailu.aat_lib.service.ServicesInterface;
+import ch.bailu.aat_lib.map.layer.gpx.GpxVisibleLimit;
 
 public abstract class AbsNodeViewLayer extends AbsNodeSelectorLayer implements
         View.OnLongClickListener, View.OnClickListener {
@@ -25,15 +24,15 @@ public abstract class AbsNodeViewLayer extends AbsNodeSelectorLayer implements
     private final Position pos;
 
 
-    public AbsNodeViewLayer(Context context, ServicesInterface services, StorageInterface s, MapContext mc) {
-        super(services, s, mc);
+    public AbsNodeViewLayer(AppContext appContext, Context context, MapContext mc) {
+        super(appContext.getServices(), appContext.getStorage(), mc);
         mcontext = mc;
 
         pos = new Position(context);
 
         html = new HtmlBuilderGpx(context);
 
-        infoView = new NodeInfoView(context);
+        infoView = new NodeInfoView(appContext, context);
         infoView.setOnLongClickListener(this);
         infoView.setOnClickListener(this);
 

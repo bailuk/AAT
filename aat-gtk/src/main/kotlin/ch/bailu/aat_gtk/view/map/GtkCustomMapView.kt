@@ -2,6 +2,7 @@ package ch.bailu.aat_gtk.view.map
 
 import ch.bailu.aat_gtk.app.GtkAppContext
 import ch.bailu.aat_gtk.app.GtkAppDensity
+import ch.bailu.aat_lib.app.AppContext
 import ch.bailu.aat_lib.coordinates.BoundingBoxE6
 import ch.bailu.aat_lib.dispatcher.DispatcherInterface
 import ch.bailu.aat_lib.map.*
@@ -28,7 +29,7 @@ import org.mapsforge.map.model.common.Observer
 import java.util.*
 
 class GtkCustomMapView (
-    private val storage: StorageInterface,
+    private val appContext: AppContext,
     dispatcher: DispatcherInterface
 ) : MapView(), MapViewInterface, OnPreferencesChanged, Attachable {
 
@@ -36,7 +37,7 @@ class GtkCustomMapView (
         private const val SHOW_DEBUG_LAYERS = false
     }
 
-    private val backgroundContext: GtkMapContext = GtkMapContext(this, this.javaClass.simpleName)
+    private val backgroundContext: GtkMapContext = GtkMapContext(this, this.javaClass.simpleName, NodeBitmap.get(GtkAppDensity, appContext))
     private val foregroundContext: GtkMapContextForeground
 
     private val layers = ArrayList<MapLayerInterface>(10)
@@ -45,9 +46,9 @@ class GtkCustomMapView (
     private val stack: MapsForgeTileLayerStackConfigured
 
     init {
-        model.displayModel.setFixedTileSize(SolidTileSize(storage, GtkAppDensity).getTileSize())
+        model.displayModel.setFixedTileSize(SolidTileSize(appContext.storage, GtkAppDensity).getTileSize())
 
-        foregroundContext = GtkMapContextForeground(
+        foregroundContext = GtkMapContextForeground(appContext,
             MapsForgeMetrics(this, GtkAppDensity), backgroundContext, layers)
         addLayer(backgroundContext)
         mapScaleBar.isVisible = false
@@ -58,7 +59,7 @@ class GtkCustomMapView (
         stack = MapsForgeTileLayerStackConfigured.All(this, GtkAppContext)
         add(stack)
 
-        pos = MapPositionLayer(mContext, storage, dispatcher)
+        pos = MapPositionLayer(mContext, appContext.storage, dispatcher)
         add(pos)
         model.mapViewPosition.addObserver(object : Observer {
             private var center: LatLong = model.mapViewPosition.center
@@ -163,14 +164,14 @@ class GtkCustomMapView (
     }
 
     override fun onAttached() {
-        storage.register(this)
+        appContext.storage.register(this)
         for (layer in layers) {
             layer.onAttached()
         }
     }
 
     override fun onDetached() {
-        storage.unregister(this)
+        appContext.storage.unregister(this)
         for (layer in layers) {
             layer.onDetached()
         }

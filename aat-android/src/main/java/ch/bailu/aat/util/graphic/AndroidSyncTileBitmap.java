@@ -43,6 +43,13 @@ public class AndroidSyncTileBitmap implements MapTileInterface {
         return null;
     }
 
+    @Override
+    public synchronized org.mapsforge.core.graphics.Canvas getCanvas() {
+        if (bitmap != null) {
+            return AndroidGraphicFactory.createGraphicContext(getAndroidCanvas());
+        }
+        return null;
+    }
 
 
     private static TileBitmap load(Foc file, int size, boolean transparent) {
@@ -86,6 +93,7 @@ public class AndroidSyncTileBitmap implements MapTileInterface {
     }
 
 
+    @Override
     public synchronized void set(int size, boolean transparent) {
         set(AndroidGraphicFactory.INSTANCE.createTileBitmap(size, transparent));
     }

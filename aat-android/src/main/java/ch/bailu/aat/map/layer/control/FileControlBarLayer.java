@@ -12,6 +12,7 @@ import ch.bailu.aat.util.ui.AppTheme;
 import ch.bailu.aat.util.ui.ToolTip;
 import ch.bailu.aat.views.PreviewView;
 import ch.bailu.aat.views.bar.ControlBar;
+import ch.bailu.aat_lib.app.AppContext;
 import ch.bailu.aat_lib.description.AverageSpeedDescription;
 import ch.bailu.aat_lib.description.CaloriesDescription;
 import ch.bailu.aat_lib.description.ContentDescription;
@@ -23,13 +24,12 @@ import ch.bailu.aat_lib.gpx.GpxInformation;
 import ch.bailu.aat_lib.gpx.GpxPointNode;
 import ch.bailu.aat_lib.gpx.InfoID;
 import ch.bailu.aat_lib.map.MapContext;
-import ch.bailu.aat_lib.util.Point;
 import ch.bailu.aat_lib.preferences.SolidDirectoryQuery;
 import ch.bailu.aat_lib.preferences.StorageInterface;
 import ch.bailu.aat_lib.preferences.map.SolidOverlayFile;
-import ch.bailu.aat_lib.service.ServicesInterface;
 import ch.bailu.aat_lib.service.directory.Iterator;
 import ch.bailu.aat_lib.service.directory.SummaryConfig;
+import ch.bailu.aat_lib.util.Point;
 import ch.bailu.foc.Foc;
 import ch.bailu.foc_android.FocAndroidFactory;
 
@@ -47,7 +47,7 @@ public final class FileControlBarLayer extends ControlBarLayer {
 
     private final Storage storage;
 
-    public FileControlBarLayer(ServicesInterface services, MapContext mc, AbsGpxListActivity absGpxListActivity, SummaryConfig config) {
+    public FileControlBarLayer(AppContext appContext, MapContext mc, AbsGpxListActivity absGpxListActivity, SummaryConfig config) {
         super(mc, new ControlBar(
                 absGpxListActivity,
                 getOrientation(LEFT), AppTheme.bar), LEFT);
@@ -57,7 +57,7 @@ public final class FileControlBarLayer extends ControlBarLayer {
         storage = new Storage(absGpxListActivity);
         acontext = absGpxListActivity;
 
-        selector = new FileViewLayer(absGpxListActivity, services, mc);
+        selector = new FileViewLayer(appContext, absGpxListActivity, mc);
         preview = new PreviewView(absGpxListActivity.getServiceContext(), config);
 
         bar.add(preview);
@@ -151,8 +151,8 @@ public final class FileControlBarLayer extends ControlBarLayer {
 
 
     private class FileViewLayer extends AbsNodeViewLayer {
-        public FileViewLayer(Context context, ServicesInterface services, MapContext mc) {
-            super(context, services, storage, mc);
+        public FileViewLayer(AppContext appContext, Context context, MapContext mc) {
+            super(appContext, context, mc);
         }
 
 
@@ -221,7 +221,4 @@ public final class FileControlBarLayer extends ControlBarLayer {
             return false;
         }
     }
-
-
 }
-

@@ -6,29 +6,29 @@ import android.graphics.drawable.Drawable;
 import android.view.Menu;
 
 import ch.bailu.aat.R;
-import ch.bailu.aat_lib.preferences.map.SolidOverlayFileList;
 import ch.bailu.aat.preferences.system.AndroidSolidDataDirectory;
-import ch.bailu.aat_lib.service.InsideContext;
-import ch.bailu.aat.services.ServiceContext;
-import ch.bailu.aat_lib.service.cache.Obj;
-import ch.bailu.aat_lib.service.cache.ObjGpx;
-import ch.bailu.aat_lib.service.editor.EditorInterface;
 import ch.bailu.aat.util.ui.AppSelectDirectoryDialog;
 import ch.bailu.aat.views.preferences.AbsSelectOverlayDialog;
 import ch.bailu.aat_lib.gpx.interfaces.GpxType;
+import ch.bailu.aat_lib.preferences.map.SolidOverlayFileList;
+import ch.bailu.aat_lib.service.InsideContext;
+import ch.bailu.aat_lib.service.ServicesInterface;
+import ch.bailu.aat_lib.service.cache.Obj;
+import ch.bailu.aat_lib.service.cache.ObjGpx;
+import ch.bailu.aat_lib.service.editor.EditorInterface;
 import ch.bailu.aat_lib.util.fs.AppDirectory;
 import ch.bailu.foc.Foc;
 
 public final class EditorMenu extends AbsMenu {
     private final EditorInterface editor;
     private final Foc file;
-    private final ServiceContext scontext;
+    private final ServicesInterface scontext;
     private final Context context;
 
-    public EditorMenu(ServiceContext sc, EditorInterface e, Foc f) {
+    public EditorMenu(Context c, ServicesInterface sc, EditorInterface e, Foc f) {
         editor = e;
         scontext = sc;
-        context = sc.getContext();
+        context = c;
         file = f;
     }
 

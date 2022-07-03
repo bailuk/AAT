@@ -8,21 +8,20 @@ import org.mapsforge.core.model.LatLong;
 import javax.annotation.Nonnull;
 
 import ch.bailu.aat.R;
-import ch.bailu.aat.dispatcher.EditorSourceInterface;
-import ch.bailu.aat.map.To;
 import ch.bailu.aat.menus.EditorMenu;
-import ch.bailu.aat.services.ServiceContext;
-import ch.bailu.aat_lib.service.editor.EditorInterface;
 import ch.bailu.aat.util.ui.AppTheme;
 import ch.bailu.aat.util.ui.ToolTip;
 import ch.bailu.aat.views.bar.ControlBar;
+import ch.bailu.aat_lib.app.AppContext;
 import ch.bailu.aat_lib.dispatcher.DispatcherInterface;
+import ch.bailu.aat_lib.dispatcher.EditorSourceInterface;
 import ch.bailu.aat_lib.gpx.GpxPoint;
 import ch.bailu.aat_lib.map.MapContext;
 import ch.bailu.aat_lib.map.layer.gpx.GpxDynLayer;
 import ch.bailu.aat_lib.preferences.StorageInterface;
 import ch.bailu.aat_lib.resources.Res;
 import ch.bailu.aat_lib.service.ServicesInterface;
+import ch.bailu.aat_lib.service.editor.EditorInterface;
 
 public final class EditorLayer extends ControlBarLayer {
 
@@ -31,7 +30,7 @@ public final class EditorLayer extends ControlBarLayer {
 
 
     private final MapContext mcontext;
-    private final ServiceContext scontext;
+    private final ServicesInterface services;
 
     private final EditorNodeViewLayer selector;
     private final GpxDynLayer content;
@@ -39,7 +38,7 @@ public final class EditorLayer extends ControlBarLayer {
 
     private final EditorSourceInterface edit;
 
-    public EditorLayer(Context context, ServicesInterface services, StorageInterface storage, MapContext mc, DispatcherInterface d,
+    public EditorLayer(AppContext appContext, Context context, MapContext mc, DispatcherInterface d,
                        int iid, EditorSourceInterface e) {
         super(mc, new ControlBar(
                 context,
@@ -47,10 +46,10 @@ public final class EditorLayer extends ControlBarLayer {
 
         edit = e;
         mcontext=mc;
-        scontext = To.serviceContext(services);
+        services = appContext.getServices();
 
-        content = new GpxDynLayer(storage, mc, services);
-        selector = new EditorNodeViewLayer(context, services, storage, mc, e);
+        content = new GpxDynLayer(appContext.getStorage(), mc, appContext.getServices());
+        selector = new EditorNodeViewLayer(appContext, context, mc, e);
 
         ControlBar bar = getBar();
 
@@ -112,7 +111,7 @@ public final class EditorLayer extends ControlBarLayer {
 
         if (v==add)    {
             LatLong p = mcontext.getMapView().getMapViewPosition().getCenter();
-            editor.add(new GpxPoint(p, scontext.getElevationService().getElevation(p.getLatitudeE6(), p.getLongitudeE6()), 0));
+            editor.add(new GpxPoint(p, services.getElevationService().getElevation(p.getLatitudeE6(), p.getLongitudeE6()), 0));
         }
         else if (v==remove) editor.remove();
 
@@ -120,7 +119,7 @@ public final class EditorLayer extends ControlBarLayer {
         else if (v==down)    editor.down();
         else if (v==undo)    editor.undo();
         else if (v==redo)    editor.redo();
-        else if (v==menu)    new EditorMenu(scontext, editor, edit.getFile())
+        else if (v==menu)    new EditorMenu(v.getContext(), services, editor, edit.getFile())
                 .showAsPopup(v.getContext(), v);
     }
 

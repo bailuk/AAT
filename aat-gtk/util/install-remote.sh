@@ -23,7 +23,7 @@ data="${home}/aat_data"
 cd ../../ || exit 1
 ./gradlew aat-gtk::build || exit 1
 
-ssh $remote "test -d ${data} || mkdir ${data}" || exit 1
+ssh $remote "mkdir -p ${data}" || exit 1
 scp  aat-gtk/build/libs/aat-gtk-all.jar "${remote}:${data}/aat.jar"  || exit 1
 scp  aat-gtk/src/main/resources/images/icon.svg "${remote}:${data}/aat.svg" || exit 1
 

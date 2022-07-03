@@ -7,9 +7,9 @@ import org.mapsforge.core.model.BoundingBox
 import org.mapsforge.core.model.Point
 import org.mapsforge.map.layer.Layer
 
-class GtkMapContext(val mapView: GtkCustomMapView, val key: String): Layer(), MapContext {
+class GtkMapContext(val mapView: GtkCustomMapView, val key: String, val nodeBitmap: NodeBitmap): Layer(), MapContext {
     private val metrics = MapsForgeMetrics(mapView, GtkAppDensity)
-    private val draw = GtkMapDraw()
+    private val draw = GtkMapDraw(nodeBitmap)
     private val twoNodes = TwoNodes(metrics)
 
     override fun getMetrics(): MapMetrics {

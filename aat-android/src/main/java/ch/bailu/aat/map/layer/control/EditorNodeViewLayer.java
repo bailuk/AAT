@@ -3,14 +3,13 @@ package ch.bailu.aat.map.layer.control;
 import android.content.Context;
 import android.view.View;
 
-import ch.bailu.aat.dispatcher.EditorSourceInterface;
-import ch.bailu.aat_lib.service.cache.ObjGpxEditable;
+import ch.bailu.aat_lib.app.AppContext;
+import ch.bailu.aat_lib.dispatcher.EditorSourceInterface;
 import ch.bailu.aat_lib.gpx.GpxInformation;
 import ch.bailu.aat_lib.gpx.GpxPointNode;
 import ch.bailu.aat_lib.map.MapContext;
-import ch.bailu.aat_lib.preferences.StorageInterface;
 import ch.bailu.aat_lib.resources.Res;
-import ch.bailu.aat_lib.service.ServicesInterface;
+import ch.bailu.aat_lib.service.cache.ObjGpxEditable;
 import ch.bailu.foc.Foc;
 
 public final class EditorNodeViewLayer extends NodeViewLayer {
@@ -18,8 +17,8 @@ public final class EditorNodeViewLayer extends NodeViewLayer {
     private final EditorSourceInterface editorSource;
     private boolean showNode = false;
 
-    public EditorNodeViewLayer(Context context, ServicesInterface services, StorageInterface s, MapContext mc, EditorSourceInterface e) {
-        super(context, services, s, mc);
+    public EditorNodeViewLayer(AppContext appContext, Context context, MapContext mc, EditorSourceInterface e) {
+        super(appContext, context, mc);
         editorSource = e;
 
         setText();

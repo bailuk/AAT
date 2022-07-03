@@ -56,7 +56,7 @@ public class GpxEditorActivity extends AbsFileContentActivity {
 
         summary.add(createAttributesView());
 
-        GraphView graph = GraphViewFactory.createAltitudeGraph(this,THEME)
+        GraphView graph = GraphViewFactory.createAltitudeGraph(getAppContext(),this,THEME)
                 .connect(this, InfoID.EDITOR_OVERLAY, InfoID.FILEVIEW);
 
 

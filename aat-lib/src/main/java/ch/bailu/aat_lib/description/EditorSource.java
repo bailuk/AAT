@@ -1,16 +1,17 @@
-package ch.bailu.aat.dispatcher;
+package ch.bailu.aat_lib.description;
 
-import ch.bailu.aat_lib.service.editor.EditorHelper;
-import ch.bailu.aat_lib.service.editor.EditorInterface;
 import ch.bailu.aat_lib.app.AppContext;
 import ch.bailu.aat_lib.dispatcher.AppBroadcaster;
 import ch.bailu.aat_lib.dispatcher.BroadcastData;
 import ch.bailu.aat_lib.dispatcher.BroadcastReceiver;
 import ch.bailu.aat_lib.dispatcher.ContentSource;
+import ch.bailu.aat_lib.dispatcher.EditorSourceInterface;
 import ch.bailu.aat_lib.gpx.GpxInformation;
+import ch.bailu.aat_lib.service.editor.EditorHelper;
+import ch.bailu.aat_lib.service.editor.EditorInterface;
 import ch.bailu.foc.Foc;
 
-public class EditorSource extends ContentSource implements  EditorSourceInterface{
+public class EditorSource extends ContentSource implements EditorSourceInterface {
 
     private final AppContext appContext;
     private final EditorHelper edit;

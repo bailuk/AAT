@@ -14,6 +14,7 @@ import ch.bailu.aat.util.ui.AppTheme;
 import ch.bailu.aat.util.ui.ToolTip;
 import ch.bailu.aat.views.ImageButtonViewGroup;
 import ch.bailu.aat.views.bar.ControlBar;
+import ch.bailu.aat_lib.app.AppContext;
 import ch.bailu.aat_lib.dispatcher.DispatcherInterface;
 import ch.bailu.aat_lib.gpx.InfoID;
 import ch.bailu.aat_lib.map.MapContext;
@@ -22,7 +23,6 @@ import ch.bailu.aat_lib.preferences.StorageInterface;
 import ch.bailu.aat_lib.preferences.map.SolidLegend;
 import ch.bailu.aat_lib.preferences.map.SolidMapGrid;
 import ch.bailu.aat_lib.resources.Res;
-import ch.bailu.aat_lib.service.ServicesInterface;
 
 public final class InformationBarLayer extends ControlBarLayer {
 
@@ -33,7 +33,7 @@ public final class InformationBarLayer extends ControlBarLayer {
     private final Context context;
 
 
-    public InformationBarLayer(Context context, ServicesInterface services, MapContext mc, DispatcherInterface d) {
+    public InformationBarLayer(AppContext appContext, Context context, MapContext mc, DispatcherInterface d) {
         super(mc,new ControlBar(context, getOrientation(RIGHT), AppTheme.bar), RIGHT);
 
         this.context = context;
@@ -56,7 +56,7 @@ public final class InformationBarLayer extends ControlBarLayer {
         search = bar.addImageButton(R.drawable.edit_find);
         location = bar.addImageButton(R.drawable.find_location);
 
-        selector = new NodeViewLayer(context, services, storage, mc);
+        selector = new NodeViewLayer(appContext, context,  mc);
 
 
         ToolTip.set(grid, Res.str().tt_info_grid());

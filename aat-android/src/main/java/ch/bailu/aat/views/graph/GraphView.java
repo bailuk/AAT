@@ -13,6 +13,7 @@ import ch.bailu.aat.R;
 import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat.util.ui.AndroidAppDensity;
 import ch.bailu.aat.util.ui.UiTheme;
+import ch.bailu.aat_lib.app.AppContext;
 import ch.bailu.aat_lib.dispatcher.DispatcherInterface;
 import ch.bailu.aat_lib.dispatcher.OnContentUpdatedInterface;
 import ch.bailu.aat_lib.gpx.GpxInformation;
@@ -26,6 +27,7 @@ import ch.bailu.aat_lib.view.graph.PlotterConfig;
 public class GraphView extends ViewGroup implements OnContentUpdatedInterface, PlotterConfig {
 
     private final AndroidAppDensity density;
+    private final AppContext appContext;
     private final UiTheme theme;
 
     private GpxList gpxCache = GpxList.NULL_TRACK;
@@ -35,9 +37,10 @@ public class GraphView extends ViewGroup implements OnContentUpdatedInterface, P
 
     private final Plotter plotter;
 
-    public GraphView(Context context, Plotter plotter, UiTheme theme) {
+    public GraphView(Context context, AppContext appContext, Plotter plotter, UiTheme theme) {
         super(context);
 
+        this.appContext = appContext;
         this.theme = theme;
         this.density = new AndroidAppDensity(getContext());
         this.plotter = plotter;
@@ -77,7 +80,7 @@ public class GraphView extends ViewGroup implements OnContentUpdatedInterface, P
     @Override
     public void onDraw(Canvas canvas) {
         if (getWidth() > 0 && getHeight() > 0) {
-            plotter.plot(new AndroidCanvas(canvas, density, theme), this);
+            plotter.plot(new AndroidCanvas(canvas, appContext, density, theme), this);
         }
     }
 

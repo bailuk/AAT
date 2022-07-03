@@ -1,13 +1,15 @@
 package ch.bailu.aat.dispatcher;
 
-import ch.bailu.aat_lib.service.editor.EditorInterface;
 import ch.bailu.aat_lib.app.AppContext;
+import ch.bailu.aat_lib.description.EditorSource;
 import ch.bailu.aat_lib.dispatcher.ContentSource;
+import ch.bailu.aat_lib.dispatcher.EditorSourceInterface;
 import ch.bailu.aat_lib.dispatcher.OnContentUpdatedInterface;
 import ch.bailu.aat_lib.gpx.GpxFileWrapper;
 import ch.bailu.aat_lib.gpx.GpxInformation;
 import ch.bailu.aat_lib.gpx.GpxList;
 import ch.bailu.aat_lib.gpx.InfoID;
+import ch.bailu.aat_lib.service.editor.EditorInterface;
 import ch.bailu.foc.Foc;
 
 public class EditorOrBackupSource extends ContentSource implements EditorSourceInterface {
@@ -105,14 +107,11 @@ public class EditorOrBackupSource extends ContentSource implements EditorSourceI
         }
     }
 
-
-
     @Override
     public void onPause() {
         if (isEditing) editorSource.onPause();
         else backupSource.onPause();
     }
-
 
     @Override
     public void onResume() {
@@ -127,7 +126,6 @@ public class EditorOrBackupSource extends ContentSource implements EditorSourceI
         }
     }
 
-
     @Override
     public Foc getFile() {
         if (isEditing) return editorSource.getFile();
@@ -141,5 +139,4 @@ public class EditorOrBackupSource extends ContentSource implements EditorSourceI
     private void requestBackupNullUpdate() {
         sendUpdate(backupSource.getIID(), new GpxFileWrapper(getFile(), GpxList.NULL_ROUTE));
     }
-
 }

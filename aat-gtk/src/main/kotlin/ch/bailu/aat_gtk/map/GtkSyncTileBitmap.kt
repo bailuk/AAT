@@ -4,6 +4,7 @@ import ch.bailu.aat_lib.map.tile.MapTileInterface
 import ch.bailu.aat_lib.service.cache.Obj
 import ch.bailu.aat_lib.util.Rect
 import ch.bailu.foc.Foc
+import org.mapsforge.core.graphics.Canvas
 import org.mapsforge.core.graphics.TileBitmap
 import org.mapsforge.map.gtk.graphics.GtkGraphicFactory
 import org.mapsforge.map.gtk.graphics.GtkTileBitmap
@@ -44,6 +45,11 @@ class GtkSyncTileBitmap : MapTileInterface {
         set(load(file, size, transparent))
     }
 
+    @Synchronized
+    override fun set(defaultTilesize: Int, transparent: Boolean) {
+        set(GtkGraphicFactory.INSTANCE.createTileBitmap(size, transparent))
+    }
+
     private fun load(file: Foc, size: Int, transparent:Boolean): TileBitmap? {
         var result: TileBitmap? = null
         file.openR()?.use {
@@ -72,6 +78,14 @@ class GtkSyncTileBitmap : MapTileInterface {
     @Synchronized
     override fun getSize(): Long {
         return size.toLong()
+    }
+
+    override fun getCanvas(): Canvas {
+        val canvas = GtkGraphicFactory.INSTANCE.createCanvas()
+        if (tileBitmap is GtkTileBitmap) {
+            canvas.setBitmap(tileBitmap)
+        }
+        return canvas
     }
 
     @Synchronized
