@@ -13,8 +13,7 @@
     <option name="MODE" value="default_activity" />
     <option name="CLEAR_LOGCAT" value="false" />
     <option name="SHOW_LOGCAT_AUTOMATICALLY" value="false" />
-    <option name="SKIP_NOOP_APK_INSTALLATIONS" value="true" />
-    <option name="FORCE_STOP_RUNNING_APP" value="true" />
+    <option name="INSPECTION_WITHOUT_ACTIVITY_RESTART" value="false" />
     <option name="TARGET_SELECTION_MODE" value="DEVICE_AND_SNAPSHOT_COMBO_BOX" />
     <option name="DEBUGGER_TYPE" value="Java" />
     <Java />
@@ -22,7 +21,7 @@
       <option name="ADVANCED_PROFILING_ENABLED" value="false" />
       <option name="STARTUP_PROFILING_ENABLED" value="false" />
       <option name="STARTUP_CPU_PROFILING_ENABLED" value="false" />
-      <option name="STARTUP_CPU_PROFILING_CONFIGURATION_NAME" value="Sample Java Methods" />
+      <option name="STARTUP_CPU_PROFILING_CONFIGURATION_NAME" value="Callstack Sample" />
       <option name="STARTUP_NATIVE_MEMORY_PROFILING_ENABLED" value="false" />
       <option name="NATIVE_MEMORY_SAMPLE_RATE_BYTES" value="2048" />
     </Profilers>
