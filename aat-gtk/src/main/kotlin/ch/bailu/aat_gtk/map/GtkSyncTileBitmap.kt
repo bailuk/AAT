@@ -1,13 +1,13 @@
 package ch.bailu.aat_gtk.map
 
+import ch.bailu.aat_lib.app.AppGraphicFactory
 import ch.bailu.aat_lib.map.tile.MapTileInterface
 import ch.bailu.aat_lib.service.cache.Obj
 import ch.bailu.aat_lib.util.Rect
 import ch.bailu.foc.Foc
 import org.mapsforge.core.graphics.Canvas
 import org.mapsforge.core.graphics.TileBitmap
-import org.mapsforge.map.gtk.graphics.GtkGraphicFactory
-import org.mapsforge.map.gtk.graphics.GtkTileBitmap
+
 
 class GtkSyncTileBitmap : MapTileInterface {
 
@@ -33,7 +33,7 @@ class GtkSyncTileBitmap : MapTileInterface {
     private fun getSizeOfBitmap(): Int {
         val tileBitmap = bitmap
 
-        return if (tileBitmap is GtkTileBitmap) {
+        return if (tileBitmap is TileBitmap) {
             (tileBitmap.height * tileBitmap.width * 4)
         } else {
             Obj.MIN_SIZE
@@ -46,14 +46,14 @@ class GtkSyncTileBitmap : MapTileInterface {
     }
 
     @Synchronized
-    override fun set(defaultTilesize: Int, transparent: Boolean) {
-        set(GtkGraphicFactory.INSTANCE.createTileBitmap(size, transparent))
+    override fun set(size: Int, transparent: Boolean) {
+        set(AppGraphicFactory.instance().createTileBitmap(size, transparent))
     }
 
     private fun load(file: Foc, size: Int, transparent:Boolean): TileBitmap? {
         var result: TileBitmap? = null
         file.openR()?.use {
-            result = GtkGraphicFactory.INSTANCE.createTileBitmap(it, size, transparent)
+            result = AppGraphicFactory.instance().createTileBitmap(it, size, transparent)
             result?.timestamp = file.lastModified()
         }
         return result
@@ -81,8 +81,8 @@ class GtkSyncTileBitmap : MapTileInterface {
     }
 
     override fun getCanvas(): Canvas {
-        val canvas = GtkGraphicFactory.INSTANCE.createCanvas()
-        if (tileBitmap is GtkTileBitmap) {
+        val canvas = AppGraphicFactory.instance().createCanvas()
+        if (tileBitmap is TileBitmap) {
             canvas.setBitmap(tileBitmap)
         }
         return canvas

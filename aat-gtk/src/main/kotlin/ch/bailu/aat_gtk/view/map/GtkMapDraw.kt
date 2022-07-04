@@ -109,10 +109,25 @@ class GtkMapDraw(private val nodeBitmap: NodeBitmap): MapDraw {
     }
 
 
-    override fun bitmap(b: Bitmap?, pixel: Point?) {}
+    override fun bitmap(b: Bitmap, pixel: Point) {
+        canvas?.drawBitmap(b, centerX(b,pixel), centerY(b,pixel))
+    }
 
-    override fun bitmap(b: Bitmap?, pixel: Point?, color: Int) {}
+    override fun bitmap(b: Bitmap, pixel: Point, color: Int) {
+        canvas?.drawBitmap(b, centerX(b,pixel), centerY(b,pixel))
+    }
 
+    private fun centerX(b: Bitmap, p: Point): Int {
+        return center(b.width, p.x)
+    }
+
+    private fun centerY(b: Bitmap, p: Point): Int {
+        return center(b.height, p.y)
+    }
+
+    private fun center(size: Int, pos: Int): Int {
+        return pos - size / 2
+    }
 
     override fun edge(nodes: TwoNodes, paint: Paint) {
         canvas?.drawLine(
