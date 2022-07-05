@@ -13,10 +13,9 @@ import ch.bailu.gtk.GTK
 import ch.bailu.gtk.gtk.*
 import ch.bailu.gtk.type.Str
 
-class MainWindow(window: ApplicationWindow, app: Application)
+class MainWindow(window: ApplicationWindow, app: Application, dispatcher: Dispatcher)
 {
     private val trackerButton = TrackerButton(GtkAppContext.services)
-    private val dispatcher = Dispatcher()
 
     private val contextRevealButton = ToggleButton()
     private val mainView = MainStackView(app, dispatcher,window, GtkAppContext.storage, contextRevealButton)
@@ -49,8 +48,6 @@ class MainWindow(window: ApplicationWindow, app: Application)
 
         dispatcher.addTarget(trackerButton, InfoID.ALL)
         dispatcher.addTarget(contextBar, InfoID.ALL)
-
-        dispatcher.onResume()
     }
 
 
