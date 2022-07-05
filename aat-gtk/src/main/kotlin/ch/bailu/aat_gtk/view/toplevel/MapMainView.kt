@@ -3,7 +3,7 @@ package ch.bailu.aat_gtk.view.toplevel
 import ch.bailu.aat_gtk.app.GtkAppContext
 import ch.bailu.aat_gtk.view.UiController
 import ch.bailu.aat_gtk.view.map.GtkCustomMapView
-import ch.bailu.aat_gtk.view.map.control.EditBar
+import ch.bailu.aat_gtk.view.map.control.EditorBar
 import ch.bailu.aat_gtk.view.map.control.InfoBar
 import ch.bailu.aat_gtk.view.map.control.MapBars
 import ch.bailu.aat_gtk.view.map.control.NavigationBar
@@ -31,7 +31,7 @@ class MapMainView(app: Application, dispatcher: DispatcherInterface, uiControlle
     private val barControl = MapBars()
     private val navigationBar = NavigationBar(map.mContext, GtkAppContext.storage)
     private val infoBar = InfoBar(app, uiController, map.mContext, GtkAppContext.storage, focFactory, window)
-    private val editBar = EditBar(GtkAppContext.services, map.mContext, editorSource)
+    private val editorBar = EditorBar(GtkAppContext.services, map.mContext, editorSource)
 
     init {
         dispatcher.addSource(editorSource)
@@ -48,7 +48,7 @@ class MapMainView(app: Application, dispatcher: DispatcherInterface, uiControlle
         overlay.child = map.drawingArea
         overlay.addOverlay(barControl.add(navigationBar.bar.box, MapBars.BOTTOM))
         overlay.addOverlay(barControl.add(infoBar.bar.box, MapBars.RIGHT))
-        overlay.addOverlay(barControl.add(editBar.bar.box, MapBars.LEFT))
+        overlay.addOverlay(barControl.add(editorBar.bar.box, MapBars.LEFT))
     }
 
 

@@ -5,7 +5,7 @@ import android.content.Context;
 import ch.bailu.aat.activities.AbsGpxListActivity;
 import ch.bailu.aat.activities.ActivityContext;
 import ch.bailu.aat.map.layer.control.CustomBarLayer;
-import ch.bailu.aat.map.layer.control.EditorLayer;
+import ch.bailu.aat.map.layer.control.EditorBarLayer;
 import ch.bailu.aat.map.layer.control.InformationBarLayer;
 import ch.bailu.aat.map.layer.control.NavigationBarLayer;
 import ch.bailu.aat.map.mapsforge.MapsForgeView;
@@ -82,7 +82,7 @@ public final class MapFactory {
     private MapsForgeViewBase tracker(EditorSourceInterface e, int iid) {
         base(4);
         m.add(new GpxOverlayListLayer(s,mc,ser, d));
-        m.add(new EditorLayer(appContext, c, mc, d, iid, e));
+        m.add(new EditorBarLayer(appContext, c, mc, d, iid, e));
         m.add(new GpxDynLayer(s,mc, ser, d, InfoID.FILEVIEW));
         m.add(new GpxDynLayer(s,mc, ser, d, InfoID.TRACKER));
         m.add(new GridDynLayer(ser, s,mc));

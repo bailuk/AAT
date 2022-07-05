@@ -23,7 +23,7 @@ import ch.bailu.aat_lib.resources.Res;
 import ch.bailu.aat_lib.service.ServicesInterface;
 import ch.bailu.aat_lib.service.editor.EditorInterface;
 
-public final class EditorLayer extends ControlBarLayer {
+public final class EditorBarLayer extends ControlBarLayer {
 
     private final View menu, add, remove, up, down,
             undo, redo;
@@ -38,8 +38,8 @@ public final class EditorLayer extends ControlBarLayer {
 
     private final EditorSourceInterface edit;
 
-    public EditorLayer(AppContext appContext, Context context, MapContext mc, DispatcherInterface d,
-                       int iid, EditorSourceInterface e) {
+    public EditorBarLayer(AppContext appContext, Context context, MapContext mc, DispatcherInterface d,
+                          int iid, EditorSourceInterface e) {
         super(mc, new ControlBar(
                 context,
                 getOrientation(LEFT), AppTheme.bar), LEFT);

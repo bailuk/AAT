@@ -1,10 +1,7 @@
-package ch.bailu.aat.map.layer.control;
-
-import android.util.SparseArray;
+package ch.bailu.aat_lib.map.layer.control;
 
 import org.mapsforge.core.model.LatLong;
 
-import ch.bailu.aat_lib.preferences.map.SolidMapGrid;
 import ch.bailu.aat_lib.coordinates.BoundingBoxE6;
 import ch.bailu.aat_lib.dispatcher.OnContentUpdatedInterface;
 import ch.bailu.aat_lib.gpx.GpxInformation;
@@ -13,11 +10,13 @@ import ch.bailu.aat_lib.gpx.GpxNodeFinder;
 import ch.bailu.aat_lib.gpx.GpxPointNode;
 import ch.bailu.aat_lib.map.MapColor;
 import ch.bailu.aat_lib.map.MapContext;
-import ch.bailu.aat_lib.util.Point;
-import ch.bailu.aat_lib.util.Rect;
 import ch.bailu.aat_lib.map.layer.MapLayerInterface;
 import ch.bailu.aat_lib.preferences.StorageInterface;
+import ch.bailu.aat_lib.preferences.map.SolidMapGrid;
 import ch.bailu.aat_lib.service.ServicesInterface;
+import ch.bailu.aat_lib.util.IndexedMap;
+import ch.bailu.aat_lib.util.Point;
+import ch.bailu.aat_lib.util.Rect;
 
 public abstract class AbsNodeSelectorLayer implements MapLayerInterface, OnContentUpdatedInterface {
 
@@ -26,8 +25,8 @@ public abstract class AbsNodeSelectorLayer implements MapLayerInterface, OnConte
 
     public final int square_size, square_hsize;
 
-    private final SparseArray<GpxInformation> infoCache =
-            new SparseArray<>(5);
+    private final IndexedMap<Integer, GpxInformation> infoCache =
+            new IndexedMap<>();
 
     private final Rect centerRect = new Rect();
 

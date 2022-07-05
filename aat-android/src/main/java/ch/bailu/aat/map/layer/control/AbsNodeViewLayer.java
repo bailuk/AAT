@@ -11,6 +11,7 @@ import ch.bailu.aat_lib.app.AppContext;
 import ch.bailu.aat_lib.gpx.GpxInformation;
 import ch.bailu.aat_lib.gpx.GpxPointNode;
 import ch.bailu.aat_lib.map.MapContext;
+import ch.bailu.aat_lib.map.layer.control.AbsNodeSelectorLayer;
 import ch.bailu.aat_lib.map.layer.gpx.GpxVisibleLimit;
 
 public abstract class AbsNodeViewLayer extends AbsNodeSelectorLayer implements
