@@ -3,6 +3,8 @@ package ch.bailu.aat.map.layer.control;
 import android.content.Context;
 import android.view.View;
 
+import javax.annotation.Nonnull;
+
 import ch.bailu.aat.R;
 import ch.bailu.aat.activities.AbsGpxListActivity;
 import ch.bailu.aat.menus.FileMenu;
@@ -24,6 +26,7 @@ import ch.bailu.aat_lib.gpx.GpxInformation;
 import ch.bailu.aat_lib.gpx.GpxPointNode;
 import ch.bailu.aat_lib.gpx.InfoID;
 import ch.bailu.aat_lib.map.MapContext;
+import ch.bailu.aat_lib.map.edge.Position;
 import ch.bailu.aat_lib.preferences.SolidDirectoryQuery;
 import ch.bailu.aat_lib.preferences.StorageInterface;
 import ch.bailu.aat_lib.preferences.map.SolidOverlayFile;
@@ -50,7 +53,7 @@ public final class FileControlBarLayer extends ControlBarLayer {
     public FileControlBarLayer(AppContext appContext, MapContext mc, AbsGpxListActivity absGpxListActivity, SummaryConfig config) {
         super(mc, new ControlBar(
                 absGpxListActivity,
-                getOrientation(LEFT), AppTheme.bar), LEFT);
+                getOrientation(Position.LEFT), AppTheme.bar), Position.LEFT);
 
         final ControlBar bar = getBar();
 
@@ -168,7 +171,7 @@ public final class FileControlBarLayer extends ControlBarLayer {
         };
 
         @Override
-        public void setSelectedNode(int IID, GpxInformation info, GpxPointNode node, int i) {
+        public void setSelectedNode(int IID, @Nonnull GpxInformation info, @Nonnull GpxPointNode node, int i) {
             super.setSelectedNode(IID, info, node, i);
 
             new SolidDirectoryQuery(new Storage(acontext), new FocAndroidFactory(acontext)).getPosition().setValue(i);
@@ -197,7 +200,7 @@ public final class FileControlBarLayer extends ControlBarLayer {
 
 
         @Override
-        public void onPreferencesChanged(StorageInterface s, String key) {
+        public void onPreferencesChanged(@Nonnull StorageInterface s, @Nonnull String key) {
             selector.onPreferencesChanged(s, key);
         }
 

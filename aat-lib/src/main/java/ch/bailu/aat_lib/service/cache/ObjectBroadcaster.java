@@ -46,13 +46,13 @@ public final class ObjectBroadcaster implements Closeable {
 
     private synchronized void sendOnChanged(String id) {
         for (int i=0; i<table.size(); i++) {
-            table.getAt(i).onChanged(id, appContext);
+            table.getValueAt(i).onChanged(id, appContext);
         }
     }
 
     private synchronized void sendOnDownloaded(String id, String uri) {
         for (int i=0; i<table.size(); i++) {
-            table.getAt(i).onDownloaded(id, uri, appContext);
+            table.getValueAt(i).onDownloaded(id, uri, appContext);
         }
     }
 }

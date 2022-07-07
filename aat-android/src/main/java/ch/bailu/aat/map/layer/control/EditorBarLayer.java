@@ -17,6 +17,7 @@ import ch.bailu.aat_lib.dispatcher.DispatcherInterface;
 import ch.bailu.aat_lib.dispatcher.EditorSourceInterface;
 import ch.bailu.aat_lib.gpx.GpxPoint;
 import ch.bailu.aat_lib.map.MapContext;
+import ch.bailu.aat_lib.map.edge.Position;
 import ch.bailu.aat_lib.map.layer.gpx.GpxDynLayer;
 import ch.bailu.aat_lib.preferences.StorageInterface;
 import ch.bailu.aat_lib.resources.Res;
@@ -42,7 +43,7 @@ public final class EditorBarLayer extends ControlBarLayer {
                           int iid, EditorSourceInterface e) {
         super(mc, new ControlBar(
                 context,
-                getOrientation(LEFT), AppTheme.bar), LEFT);
+                getOrientation(Position.LEFT), AppTheme.bar), Position.LEFT);
 
         edit = e;
         mcontext=mc;

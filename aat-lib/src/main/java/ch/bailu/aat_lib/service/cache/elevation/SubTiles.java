@@ -16,7 +16,7 @@ public final class SubTiles {
     public synchronized boolean haveID(String id) {
 
         for (int i = 0; i< subTiles.size(); i++) {
-            final SubTile subTile = subTiles.getAt(i);
+            final SubTile subTile = subTiles.getValueAt(i);
             if (subTile != null && id.contains(subTile.toString())) {
                 return true;
             }
@@ -33,7 +33,7 @@ public final class SubTiles {
             coordinates = new Dem3Coordinates[subTiles.size()];
 
             for (int i = 0; i < subTiles.size(); i++) {
-                coordinates[i] = subTiles.getAt(i).coordinates;
+                coordinates[i] = subTiles.getValueAt(i).coordinates;
             }
         }
         return coordinates;
@@ -57,7 +57,7 @@ public final class SubTiles {
 
     public synchronized SubTile take(Dem3Coordinates coordinates) {
 
-        final SubTile r = subTiles.get(coordinates);
+        final SubTile r = subTiles.getValue(coordinates);
 
         if (r != null) {
             inUse++;

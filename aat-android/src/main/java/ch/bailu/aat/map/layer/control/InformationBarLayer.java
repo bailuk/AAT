@@ -18,6 +18,7 @@ import ch.bailu.aat_lib.app.AppContext;
 import ch.bailu.aat_lib.dispatcher.DispatcherInterface;
 import ch.bailu.aat_lib.gpx.InfoID;
 import ch.bailu.aat_lib.map.MapContext;
+import ch.bailu.aat_lib.map.edge.Position;
 import ch.bailu.aat_lib.preferences.SolidIndexList;
 import ch.bailu.aat_lib.preferences.StorageInterface;
 import ch.bailu.aat_lib.preferences.map.SolidLegend;
@@ -34,7 +35,7 @@ public final class InformationBarLayer extends ControlBarLayer {
 
 
     public InformationBarLayer(AppContext appContext, Context context, MapContext mc, DispatcherInterface d) {
-        super(mc,new ControlBar(context, getOrientation(RIGHT), AppTheme.bar), RIGHT);
+        super(mc,new ControlBar(context, getOrientation(Position.RIGHT), AppTheme.bar), Position.RIGHT);
 
         this.context = context;
         StorageInterface storage = new Storage(context);

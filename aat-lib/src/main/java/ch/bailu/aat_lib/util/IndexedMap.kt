@@ -9,12 +9,16 @@ class IndexedMap<K, V> {
         map[key] = value
     }
 
-    fun get(key: K) : V? {
+    fun getValue(key: K) : V? {
         return map[key]
     }
 
-    fun getAt(index: Int) : V? {
+    fun getValueAt(index: Int) : V? {
         return map[keys[index]]
+    }
+
+    fun getKeyAt(index: Int) : K? {
+        return keys[index]
     }
 
     fun size(): Int {
@@ -28,7 +32,7 @@ class IndexedMap<K, V> {
 
     fun forEach(function: (K, V) -> Unit) {
         keys.forEach {
-            val value = get(it)
+            val value = getValue(it)
 
             if (value != null) {
                 function(it, value)
@@ -36,7 +40,7 @@ class IndexedMap<K, V> {
         }
     }
 
-    fun indexOf(key: K): Int {
+    fun indexOfKey(key: K): Int {
         keys.forEachIndexed { index, it ->
             if (it == key) {
                 return index

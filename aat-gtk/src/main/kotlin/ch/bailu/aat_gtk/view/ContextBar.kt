@@ -96,7 +96,7 @@ class ContextBar(contextCallback: UiController, private val storage: StorageInte
     }
 
     private fun selectedGpx(): GpxInformation {
-        val info = cache.getAt(combo.combo.active)
+        val info = cache.getValueAt(combo.combo.active)
 
         if (info is GpxInformation) {
             return info
@@ -105,13 +105,13 @@ class ContextBar(contextCallback: UiController, private val storage: StorageInte
     }
 
     override fun onContentUpdated(iid: Int, info: GpxInformation) {
-        if (cache.get(iid) is GpxInformation) {
+        if (cache.getValue(iid) is GpxInformation) {
             cache.put(iid, info)
 
             if (iid != InfoID.TRACKER) {
-                combo.insert(cache.indexOf(iid), info.file.name)
+                combo.insert(cache.indexOfKey(iid), info.file.name)
                 if (iid == InfoID.FILEVIEW) {
-                    combo.combo.active = cache.indexOf(iid)
+                    combo.combo.active = cache.indexOfKey(iid)
                     revealer.show()
                 }
             }

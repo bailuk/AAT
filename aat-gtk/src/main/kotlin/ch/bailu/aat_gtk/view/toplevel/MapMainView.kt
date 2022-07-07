@@ -3,15 +3,15 @@ package ch.bailu.aat_gtk.view.toplevel
 import ch.bailu.aat_gtk.app.GtkAppContext
 import ch.bailu.aat_gtk.view.UiController
 import ch.bailu.aat_gtk.view.map.GtkCustomMapView
-import ch.bailu.aat_gtk.view.map.control.EditorBar
-import ch.bailu.aat_gtk.view.map.control.InfoBar
-import ch.bailu.aat_gtk.view.map.control.MapBars
-import ch.bailu.aat_gtk.view.map.control.NavigationBar
+import ch.bailu.aat_gtk.view.map.control.*
 import ch.bailu.aat_gtk.view.map.layer.ControlBarLayer
 import ch.bailu.aat_lib.description.EditorSource
 import ch.bailu.aat_lib.dispatcher.DispatcherInterface
 import ch.bailu.aat_lib.gpx.InfoID
 import ch.bailu.aat_lib.map.Attachable
+import ch.bailu.aat_lib.map.edge.EdgeControl
+import ch.bailu.aat_lib.map.edge.Position
+import ch.bailu.aat_lib.map.layer.selector.NodeSelectorLayer
 import ch.bailu.aat_lib.map.layer.gpx.GpxDynLayer
 import ch.bailu.aat_lib.map.layer.gpx.GpxOverlayListLayer
 import ch.bailu.aat_lib.map.layer.grid.GridDynLayer
@@ -28,10 +28,10 @@ class MapMainView(app: Application, dispatcher: DispatcherInterface, uiControlle
 
     private val editorSource = EditorSource(GtkAppContext)
 
-    private val barControl = MapBars()
+    private val edgeControl = EdgeControl()
     private val navigationBar = NavigationBar(map.mContext, GtkAppContext.storage)
     private val infoBar = InfoBar(app, uiController, map.mContext, GtkAppContext.storage, focFactory, window)
-    private val editorBar = EditorBar(GtkAppContext.services, map.mContext, editorSource)
+    private val editorBar = EditorBar(app, map.mContext, GtkAppContext.services, editorSource)
 
     init {
         dispatcher.addSource(editorSource)
@@ -43,14 +43,23 @@ class MapMainView(app: Application, dispatcher: DispatcherInterface, uiControlle
         map.add(GpxDynLayer(GtkAppContext.storage, map.mContext, GtkAppContext.services, dispatcher, InfoID.FILEVIEW))
         map.add(GpxDynLayer(GtkAppContext.storage, map.mContext, GtkAppContext.services, dispatcher, InfoID.EDITOR_DRAFT))
         map.add(GpxOverlayListLayer(GtkAppContext.storage,map.mContext, GtkAppContext.services, dispatcher))
-        map.add(ControlBarLayer(barControl))
+        map.add(ControlBarLayer(map.mContext, edgeControl))
+        map.add(NodeSelectorLayer(GtkAppContext.services, GtkAppContext.storage, map.mContext, Position.LEFT).apply {
+            observe(editorBar)
+            dispatcher.addTarget(this, InfoID.EDITOR_DRAFT)
+            edgeControl.add(this)
+        })
 
         overlay.child = map.drawingArea
-        overlay.addOverlay(barControl.add(navigationBar.bar.box, MapBars.BOTTOM))
-        overlay.addOverlay(barControl.add(infoBar.bar.box, MapBars.RIGHT))
-        overlay.addOverlay(barControl.add(editorBar.bar.box, MapBars.LEFT))
+        addBar(navigationBar)
+        addBar(infoBar)
+        addBar(editorBar)
     }
 
+    private fun addBar(bar: Bar) {
+        edgeControl.add(bar)
+        overlay.addOverlay(bar.box)
+    }
 
     override fun onAttached() {
         map.onAttached()

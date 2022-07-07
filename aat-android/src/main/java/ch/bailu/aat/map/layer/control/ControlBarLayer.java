@@ -12,29 +12,25 @@ import ch.bailu.aat.views.bar.ControlBar;
 import ch.bailu.aat_lib.map.MapColor;
 import ch.bailu.aat_lib.map.MapContext;
 import ch.bailu.aat_lib.map.MapViewInterface;
-import ch.bailu.aat_lib.util.Point;
+import ch.bailu.aat_lib.map.edge.Position;
 import ch.bailu.aat_lib.map.layer.MapLayerInterface;
 import ch.bailu.aat_lib.preferences.StorageInterface;
+import ch.bailu.aat_lib.util.Point;
 
 public abstract class ControlBarLayer implements MapLayerInterface, View.OnClickListener {
-    public final static int TOP=0;
-    public final static int LEFT=1;
-    public final static int BOTTOM=2;
-    public final static int RIGHT=3;
-
     private final ControlBar bar;
 
-    private final int placement;
+    private final Position placement;
 
     private int w, h;
-    public static int getOrientation(int placement) {
-        if (placement == TOP || placement == BOTTOM) {
+    public static int getOrientation(Position placement) {
+        if (placement == Position.TOP || placement == Position.BOTTOM) {
             return LinearLayout.HORIZONTAL;
         }
         return LinearLayout.VERTICAL;
     }
 
-    public ControlBarLayer(MapContext mc, ControlBar b, int p, int color) {
+    public ControlBarLayer(MapContext mc, ControlBar b, Position p, int color) {
         MapViewInterface map = mc.getMapView();
         placement = p;
         bar=b;
@@ -57,7 +53,7 @@ public abstract class ControlBarLayer implements MapLayerInterface, View.OnClick
     }
 
 
-    public ControlBarLayer(MapContext c, ControlBar b, int p) {
+    public ControlBarLayer(MapContext c, ControlBar b, Position p) {
         this(c,b,p, MapColor.MEDIUM);
     }
 
@@ -81,14 +77,14 @@ public abstract class ControlBarLayer implements MapLayerInterface, View.OnClick
             final int cs = bar.getControlSize();
 
 
-            if (placement == TOP) {
+            if (placement == Position.TOP) {
                 bar.place(0, 0, w);
-            } else if (placement == LEFT) {
+            } else if (placement == Position.LEFT) {
                 bar.place(0, 0, h);
-            } else if (placement == BOTTOM) {
+            } else if (placement == Position.BOTTOM) {
 
                 bar.place(0, h - cs, w);
-            } else if (placement == RIGHT) {
+            } else if (placement == Position.RIGHT) {
                 bar.place(w - cs, 0, h);
             }
         }
@@ -150,17 +146,17 @@ public abstract class ControlBarLayer implements MapLayerInterface, View.OnClick
 
 
     public void topTap()   {
-        showHideBar(TOP); }
+        showHideBar(Position.TOP); }
     public void bottomTap(){
-        showHideBar(BOTTOM);}
+        showHideBar(Position.BOTTOM);}
     public void middleTap(){hideBar();}
     public void rightTab() {
-        showHideBar(RIGHT);}
+        showHideBar(Position.RIGHT);}
     public void leftTab()  {
-        showHideBar(LEFT);}
+        showHideBar(Position.LEFT);}
 
-    private void showHideBar(int p) {
-        if (p==placement) showBar();
+    private void showHideBar(Position p) {
+        if (p == placement) showBar();
         else hideBar();
     }
 

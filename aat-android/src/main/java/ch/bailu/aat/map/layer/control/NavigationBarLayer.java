@@ -12,6 +12,7 @@ import ch.bailu.aat_lib.dispatcher.DispatcherInterface;
 import ch.bailu.aat_lib.map.MapContext;
 import ch.bailu.aat.map.To;
 import ch.bailu.aat.preferences.Storage;
+import ch.bailu.aat_lib.map.edge.Position;
 import ch.bailu.aat_lib.preferences.map.SolidPositionLock;
 import ch.bailu.aat.util.ui.AppTheme;
 import ch.bailu.aat.util.ui.ToolTip;
@@ -40,7 +41,7 @@ public final class NavigationBarLayer extends ControlBarLayer implements OnConte
 
     public NavigationBarLayer(Context context, MapContext mc, DispatcherInterface d, int i) {
         super(mc,new ControlBar(context,
-                getOrientation(BOTTOM), i, AppTheme.bar), BOTTOM);
+                getOrientation(Position.BOTTOM), i, AppTheme.bar), Position.BOTTOM);
 
         mcontext = mc;
 
