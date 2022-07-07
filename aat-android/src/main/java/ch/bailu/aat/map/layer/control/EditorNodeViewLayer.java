@@ -3,6 +3,8 @@ package ch.bailu.aat.map.layer.control;
 import android.content.Context;
 import android.view.View;
 
+import javax.annotation.Nonnull;
+
 import ch.bailu.aat_lib.app.AppContext;
 import ch.bailu.aat_lib.dispatcher.EditorSourceInterface;
 import ch.bailu.aat_lib.gpx.GpxInformation;
@@ -42,7 +44,7 @@ public final class EditorNodeViewLayer extends NodeViewLayer {
 
 
     @Override
-    public void setSelectedNode(int IID, GpxInformation info, GpxPointNode node, int index) {
+    public void setSelectedNode(int IID, @Nonnull GpxInformation info, @Nonnull GpxPointNode node, int index) {
         showNode = true;
         editorSource.getEditor().select(node);
         super.setSelectedNode(IID, info, node, index);
@@ -50,7 +52,7 @@ public final class EditorNodeViewLayer extends NodeViewLayer {
 
 
     @Override
-    public void onContentUpdated(int iid, GpxInformation info) {
+    public void onContentUpdated(int iid, @Nonnull GpxInformation info) {
         super.onContentUpdated(iid, info);
         setBackgroundColorFromIID(iid);
 

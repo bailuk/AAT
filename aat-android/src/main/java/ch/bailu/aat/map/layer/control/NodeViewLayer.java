@@ -3,6 +3,8 @@ package ch.bailu.aat.map.layer.control;
 import android.content.Context;
 import android.view.View;
 
+import javax.annotation.Nonnull;
+
 import ch.bailu.aat.activities.NodeDetailActivity;
 import ch.bailu.aat_lib.app.AppContext;
 import ch.bailu.aat_lib.gpx.GpxInformation;
@@ -45,7 +47,7 @@ public class NodeViewLayer extends AbsNodeViewLayer {
 
 
     @Override
-    public void setSelectedNode(int IID, GpxInformation info, GpxPointNode node, int i) {
+    public void setSelectedNode(int IID, @Nonnull GpxInformation info, @Nonnull GpxPointNode node, int i) {
         super.setSelectedNode(IID, info, node, i);
 
         index = i;
