@@ -1,17 +1,17 @@
-package ch.bailu.aat_gtk.view.map.layer
+package ch.bailu.aat_lib.map.edge
 
-import ch.bailu.aat_gtk.view.map.control.Bar
-import ch.bailu.aat_lib.map.edge.EdgeControl
-import ch.bailu.aat_lib.map.edge.Position
 import ch.bailu.aat_lib.map.MapContext
 import ch.bailu.aat_lib.map.layer.MapLayerInterface
 import ch.bailu.aat_lib.preferences.StorageInterface
 import ch.bailu.aat_lib.util.Point
 
-class ControlBarLayer(private val mcontext: MapContext, private val barControl: EdgeControl) : MapLayerInterface {
+class EdgeControlLayer(private val mcontext: MapContext, private val edgeSize: Int) : MapLayerInterface {
+
+    private val controlBars = ArrayList<EdgeViewInterface>()
 
     private var width = 0
     private var height = 0
+
 
     override fun onAttached() {}
 
@@ -30,24 +30,42 @@ class ControlBarLayer(private val mcontext: MapContext, private val barControl: 
 
     override fun onTap(tapXY: Point): Boolean {
         var result = true
-        val size: Int = Bar.SIZE
 
         val y = tapXY.y
         val x = tapXY.x
 
-        if (y < size) {
-            barControl.show(Position.TOP)
-        } else if (y > height - size) {
-            barControl.show(Position.BOTTOM)
-        } else if (x < size) {
-            barControl.show(Position.LEFT)
-        } else if (x > width - size) {
-            barControl.show(Position.RIGHT)
+        if (y < edgeSize) {
+            show(Position.TOP)
+        } else if (y > height - edgeSize) {
+            show(Position.BOTTOM)
+        } else if (x < edgeSize) {
+            show(Position.LEFT)
+        } else if (x > width - edgeSize) {
+            show(Position.RIGHT)
         } else {
-            barControl.hide()
+            hide()
             result = false
         }
         mcontext.mapView.requestRedraw()
         return result
+    }
+
+    fun add(bar: EdgeViewInterface) {
+        bar.hide()
+        controlBars.add(bar)
+    }
+
+    private fun hide() {
+        controlBars.forEach { it.hide() }
+    }
+
+    private fun show(pos: Position) {
+        controlBars.forEach {
+            if (it.pos() == pos) {
+                it.show()
+            } else {
+                it.hide()
+            }
+        }
     }
 }
