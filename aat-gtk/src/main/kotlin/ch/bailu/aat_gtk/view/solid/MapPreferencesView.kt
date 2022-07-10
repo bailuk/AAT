@@ -6,12 +6,14 @@ import ch.bailu.aat_gtk.solid.GtkMapDirectories
 import ch.bailu.aat_gtk.solid.GtkSolidDem3Directory
 import ch.bailu.aat_gtk.solid.GtkSolidTileCacheDirectory
 import ch.bailu.aat_gtk.view.VerticalScrollView
+import ch.bailu.aat_lib.map.tile.source.ElevationSource
 import ch.bailu.aat_lib.preferences.SolidVolumeKeys
 import ch.bailu.aat_lib.preferences.StorageInterface
 import ch.bailu.aat_lib.preferences.map.*
 import ch.bailu.aat_lib.preferences.map.SolidEnableTileCache.MapsForge
 import ch.bailu.aat_lib.resources.Res
 import ch.bailu.aat_lib.resources.ToDo
+import ch.bailu.aat_lib.service.elevation.ElevationService
 import ch.bailu.gtk.gtk.Application
 import ch.bailu.gtk.gtk.Window
 
@@ -35,5 +37,8 @@ class MapPreferencesView (storage: StorageInterface, app: Application, window: W
         add(ToDo.translate("Dem3 altitude tiles"))
         add(SolidDirectorySelectorView(GtkSolidDem3Directory(storage, GtkAppContext), app, window).layout)
         add(SolidBooleanSwitchView(SolidDem3EnableDownload(storage)).layout)
+
+        add(ElevationSource.ELEVATION_HILLSHADE.name)
+        add(SolidBooleanSwitchView(SolidEnableTileCache.Hillshade(storage)).layout)
     }
 }

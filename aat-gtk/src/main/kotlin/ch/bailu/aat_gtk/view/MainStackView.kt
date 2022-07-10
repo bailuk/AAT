@@ -1,16 +1,17 @@
 package ch.bailu.aat_gtk.view
 
 import ch.bailu.aat_gtk.app.GtkAppContext
-import ch.bailu.aat_gtk.view.toplevel.FileList
-import ch.bailu.aat_gtk.view.stack.LazyStackView
 import ch.bailu.aat_gtk.view.solid.PreferencesStackView
+import ch.bailu.aat_gtk.view.stack.LazyStackView
 import ch.bailu.aat_gtk.view.toplevel.CockpitView
 import ch.bailu.aat_gtk.view.toplevel.DetailView
+import ch.bailu.aat_gtk.view.toplevel.FileList
 import ch.bailu.aat_gtk.view.toplevel.MapMainView
 import ch.bailu.aat_lib.description.*
 import ch.bailu.aat_lib.dispatcher.DispatcherInterface
 import ch.bailu.aat_lib.gpx.GpxInformation
 import ch.bailu.aat_lib.gpx.InfoID
+import ch.bailu.aat_lib.map.Attachable
 import ch.bailu.aat_lib.preferences.StorageInterface
 import ch.bailu.gtk.GTK
 import ch.bailu.gtk.gtk.*
@@ -20,7 +21,8 @@ class MainStackView(
     dispatcher: DispatcherInterface,
     window: Window,
     storage: StorageInterface,
-    private val revealer: ToggleButton
+    private val revealer: ToggleButton,
+    attachable: ArrayList<Attachable>
 ) :
     UiController {
 
@@ -55,6 +57,7 @@ class MainStackView(
         stack.add("Map") {
             val mapView = MapMainView(app, dispatcher, this, GtkAppContext, window)
             this.mapView = mapView
+            attachable.add(mapView)
             mapView.overlay
         }
 

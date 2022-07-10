@@ -28,11 +28,11 @@ import ch.bailu.aat_lib.preferences.map.SolidTileSize;
 import ch.bailu.aat_lib.resources.ToDo;
 import ch.bailu.foc_android.FocAndroidFactory;
 
-public class MapTilePreferencesView extends VerticalScrollView {
+public class MapPreferencesView extends VerticalScrollView {
     private final TileRemoverView tileRemover;
 
 
-    public MapTilePreferencesView(Activity acontext, ServiceContext scontext, UiTheme theme) {
+    public MapPreferencesView(Activity acontext, ServiceContext scontext, UiTheme theme) {
         super(scontext.getContext());
 
         final Context context = scontext.getContext();

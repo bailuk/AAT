@@ -9,16 +9,17 @@ import ch.bailu.aat_gtk.util.IconMap
 import ch.bailu.aat_gtk.view.menu.provider.AppMenu
 import ch.bailu.aat_lib.dispatcher.*
 import ch.bailu.aat_lib.gpx.InfoID
+import ch.bailu.aat_lib.map.Attachable
 import ch.bailu.gtk.GTK
 import ch.bailu.gtk.gtk.*
 import ch.bailu.gtk.type.Str
 
-class MainWindow(window: ApplicationWindow, app: Application, dispatcher: Dispatcher)
+class MainWindow(window: ApplicationWindow, app: Application, dispatcher: Dispatcher, attachable: ArrayList<Attachable>)
 {
     private val trackerButton = TrackerButton(GtkAppContext.services)
 
     private val contextRevealButton = ToggleButton()
-    private val mainView = MainStackView(app, dispatcher,window, GtkAppContext.storage, contextRevealButton)
+    private val mainView = MainStackView(app, dispatcher,window, GtkAppContext.storage, contextRevealButton, attachable)
     private val contextBar = ContextBar(mainView,GtkAppContext.storage)
 
     private val box = Box(Orientation.VERTICAL, 0)
