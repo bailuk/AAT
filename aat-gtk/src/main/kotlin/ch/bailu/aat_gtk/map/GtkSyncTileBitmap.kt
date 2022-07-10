@@ -2,11 +2,14 @@ package ch.bailu.aat_gtk.map
 
 import ch.bailu.aat_lib.app.AppGraphicFactory
 import ch.bailu.aat_lib.map.tile.MapTileInterface
+import ch.bailu.aat_lib.preferences.map.SolidTileSize
 import ch.bailu.aat_lib.service.cache.Obj
 import ch.bailu.aat_lib.util.Rect
 import ch.bailu.foc.Foc
+import ch.bailu.gtk.cairo.Surface
 import org.mapsforge.core.graphics.Canvas
 import org.mapsforge.core.graphics.TileBitmap
+import org.mapsforge.map.gtk.graphics.GtkBitmap
 
 
 class GtkSyncTileBitmap : MapTileInterface {
@@ -50,7 +53,7 @@ class GtkSyncTileBitmap : MapTileInterface {
         set(AppGraphicFactory.instance().createTileBitmap(size, transparent))
     }
 
-    private fun load(file: Foc, size: Int, transparent:Boolean): TileBitmap? {
+    private fun load(file: Foc, size: Int, transparent: Boolean): TileBitmap? {
         var result: TileBitmap? = null
         file.openR()?.use {
             result = AppGraphicFactory.instance().createTileBitmap(it, size, transparent)
@@ -89,7 +92,50 @@ class GtkSyncTileBitmap : MapTileInterface {
     }
 
     @Synchronized
-    override fun setBuffer(buffer: IntArray?, interR: Rect?) {
-        println("GtkSyncTileBitmap::setBuffer")
+    override fun setBuffer(src: IntArray, srcRect: Rect) {
+        initBitmap()
+
+        val b = bitmap
+        if (b is GtkBitmap) {
+            b.surface.flush()
+            setPixels(b.surface, src, srcRect)
+            b.surface.markDirty()
+        }
     }
+
+    private fun setPixels(surface: Surface, src: IntArray, srcRect: Rect) {
+        val dst = surface.data
+        val dstPixelsPerLine = surface.width
+        val dstLines = surface.height
+        val dstPixelSize = dstPixelsPerLine * dstLines
+        val dstPixelOffset = srcRect.left
+        val srcPixelsPerLine = srcRect.width()
+        val srcPixelSize = src.size
+
+        var srcLine = 0
+        var dstLine = srcRect.top
+        var dstPixel = dstLine * dstPixelsPerLine + dstPixelOffset
+        var srcPixel = srcLine * srcPixelsPerLine
+
+        while (dstPixel < dstPixelSize && srcPixel < srcPixelSize) {
+            dst.setInt(dstPixel * 4, src[srcPixel])
+
+            dstPixel++
+            srcPixel++
+
+            if (dstPixel % dstPixelsPerLine == 0 || srcPixel % srcPixelsPerLine == 0) {
+                srcLine++
+                dstLine++
+                dstPixel = dstLine * dstPixelsPerLine + dstPixelOffset
+                srcPixel = srcLine * srcPixelsPerLine
+            }
+        }
+    }
+
+    private fun initBitmap() {
+        if (bitmap == null) {
+            set(SolidTileSize.DEFAULT_TILESIZE, true)
+        }
+    }
+
 }
