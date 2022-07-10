@@ -3,7 +3,7 @@ package ch.bailu.aat_gtk.view.menu.provider
 import ch.bailu.aat_gtk.lib.FileDialog
 import ch.bailu.aat_gtk.lib.menu.MenuModelBuilder
 import ch.bailu.aat_gtk.view.util.margin
-import ch.bailu.aat_gtk.view.util.setText
+import ch.bailu.aat_gtk.view.util.setTxt
 import ch.bailu.aat_gtk.view.util.truncate
 import ch.bailu.aat_lib.preferences.SolidFile
 import ch.bailu.aat_lib.resources.ToDo
@@ -42,7 +42,7 @@ class SolidFileSelectorMenu(private val solid: SolidFile, private val window: Wi
                         }
                     }.forEach {
                         val label = Label(Str.NULL)
-                        label.setText(it.truncate())
+                        label.setTxt(it.truncate())
                         label.xalign = 0f
                         label.margin(3)
                         append(label)

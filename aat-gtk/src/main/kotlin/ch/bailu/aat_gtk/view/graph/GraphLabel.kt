@@ -1,11 +1,11 @@
 package ch.bailu.aat_gtk.view.graph
 
+import ch.bailu.aat_gtk.view.util.setTxt
 import ch.bailu.aat_lib.view.graph.LabelInterface
 import ch.bailu.gtk.gtk.Align
 import ch.bailu.gtk.gtk.Box
 import ch.bailu.gtk.gtk.Label
 import ch.bailu.gtk.gtk.Orientation
-import ch.bailu.gtk.helper.LabelHelper
 import ch.bailu.gtk.type.Str
 
 class GraphLabel : LabelInterface {
@@ -28,7 +28,7 @@ class GraphLabel : LabelInterface {
             layout.append(label)
             labels.put(color, label)
         } else {
-            LabelHelper.setLabel(labels[color], text)
+            labels[color]?.setTxt(text)
         }
     }
 

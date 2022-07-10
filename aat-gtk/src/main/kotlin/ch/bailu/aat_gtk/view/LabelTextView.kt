@@ -1,26 +1,28 @@
 package ch.bailu.aat_gtk.view
 
-import ch.bailu.aat_gtk.view.util.GtkLabel
+import ch.bailu.aat_gtk.view.util.setLbl
 import ch.bailu.gtk.GTK
 import ch.bailu.gtk.gtk.Box
+import ch.bailu.gtk.gtk.Label
 import ch.bailu.gtk.gtk.Orientation
+import ch.bailu.gtk.type.Str
 
 open class LabelTextView(labelText: String) {
 
     val layout = Box(Orientation.VERTICAL, 2)
 
-    private val _label = GtkLabel()
-    private val _value = GtkLabel()
+    private val _label = Label(Str.NULL)
+    private val _value = Label(Str.NULL)
 
     private val inverse = true
 
     var text : String
-        get() = _value.text
-        set(t)  { _value.text = if (!inverse) t else "<b>$t</b>"}
+        get() = _value.text.toString()
+        set(t)  { _value.setLbl(if (!inverse) t else "<b>$t</b>")}
 
     var label : String
-        get() = _label.text
-        set(t)  { _label.text = if (inverse) t else "<b>$t</b>" }
+        get() = _label.text.toString()
+        set(t)  { _label.setLbl(if (inverse) t else "<b>$t</b>")}
 
     init {
         label = labelText
