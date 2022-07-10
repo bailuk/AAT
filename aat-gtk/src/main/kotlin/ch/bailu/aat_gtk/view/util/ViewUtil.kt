@@ -49,13 +49,9 @@ fun Button.setIcon(imageResource: String, size: Int = Bar.ICON_SIZE) {
 }
 
 fun Label.setText(text: String) {
-    val old = label
     label = Str(text)
-    if (old is Str) old.destroy()
 }
 
 fun CheckButton.setText(text: String) {
-    val old = label
     label = Str(text)
-    if (old is Str) old.destroy()
 }
