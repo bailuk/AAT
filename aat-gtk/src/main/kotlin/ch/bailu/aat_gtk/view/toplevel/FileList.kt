@@ -6,6 +6,7 @@ import ch.bailu.aat_gtk.lib.menu.MenuModelBuilder
 import ch.bailu.aat_gtk.view.UiController
 import ch.bailu.aat_gtk.view.menu.provider.MenuProvider
 import ch.bailu.aat_gtk.view.menu.provider.SolidOverlayFileListMenu
+import ch.bailu.aat_gtk.view.solid.SolidDirectoryQueryComboView
 import ch.bailu.aat_gtk.view.util.margin
 import ch.bailu.aat_lib.description.AverageSpeedDescription
 import ch.bailu.aat_lib.description.DateDescription
@@ -18,7 +19,6 @@ import ch.bailu.aat_lib.logger.AppLog
 import ch.bailu.aat_lib.preferences.SolidDirectoryQuery
 import ch.bailu.aat_lib.preferences.StorageInterface
 import ch.bailu.aat_lib.preferences.map.SolidOverlayFileList
-import ch.bailu.aat_lib.preferences.presets.SolidPreset
 import ch.bailu.aat_lib.resources.Res
 import ch.bailu.aat_lib.resources.ToDo
 import ch.bailu.aat_lib.service.directory.IteratorSimple
@@ -62,15 +62,11 @@ class FileList(
         try {
             dispatcher.addSource(customFileSource)
 
-            val directory =
-                SolidPreset(GtkAppContext.storage).getDirectory(GtkAppContext.dataDirectory)
-            sdirectory.setValue(directory.path)
-
             GtkAppContext.services.directoryService.rescan()
 
             listIndex.size = iteratorSimple.count
 
-            iteratorSimple.setOnCursorChangedLinsener {
+            iteratorSimple.setOnCursorChangedListener {
                 listIndex.size = iteratorSimple.count
                 AppLog.d(this, "curserChanged(${iteratorSimple.count})")
             }
@@ -90,6 +86,7 @@ class FileList(
             scrolled.hexpand = GTK.TRUE
             scrolled.vexpand = GTK.TRUE
 
+            vbox.append(SolidDirectoryQueryComboView(storage, focFactory).combo)
             vbox.append(scrolled)
         } catch (e: Exception) {
             AppLog.e(this, e)

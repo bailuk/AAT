@@ -63,7 +63,7 @@ public abstract class IteratorSource extends ContentSource implements OnCursorCh
     public void onResume() {
         iterator = factoryIterator(appContext);
         iterator.moveToPosition(sdirectory.getPosition().getValue());
-        iterator.setOnCursorChangedLinsener(this);
+        iterator.setOnCursorChangedListener(this);
     }
 
 
@@ -75,7 +75,7 @@ public abstract class IteratorSource extends ContentSource implements OnCursorCh
     }
 
     public void moveToPrevious() {
-        if (iterator.moveToPrevious() == false)
+        if (!iterator.moveToPrevious())
             iterator.moveToPosition(iterator.getCount()-1);
 
         sdirectory.getPosition().setValue(iterator.getPosition());
@@ -83,7 +83,7 @@ public abstract class IteratorSource extends ContentSource implements OnCursorCh
     }
 
     public void moveToNext() {
-        if (iterator.moveToNext() == false)
+        if (!iterator.moveToNext())
             iterator.moveToPosition(0);
 
         sdirectory.getPosition().setValue(iterator.getPosition());

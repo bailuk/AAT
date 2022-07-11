@@ -16,27 +16,20 @@ import ch.bailu.aat_lib.description.ContentDescription;
 
 public class GpxListView extends ListView implements OnCursorChangedListener {
 
-
     private DataSetObserver observer;
-
     private final ContentDescription[] data;
-
 
     private UiTheme theme = AppTheme.trackList;
 
 
-    public GpxListView(Context c,
-                       ContentDescription[] cd) {
+    public GpxListView(Context c, ContentDescription[] cd) {
         super(c);
-
         data = cd;
-
         theme.list(this);
     }
 
-
     public void setIterator(ActivityContext acontext, Iterator iterator) {
-        iterator.setOnCursorChangedLinsener(this);
+        iterator.setOnCursorChangedListener(this);
         setAdapter(new IteratorAdapter(acontext, iterator));
     }
 
@@ -130,7 +123,5 @@ public class GpxListView extends ListView implements OnCursorChangedListener {
         public boolean isEnabled(int position) {
             return true;
         }
-
-
     }
 }

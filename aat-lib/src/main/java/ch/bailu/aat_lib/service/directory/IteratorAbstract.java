@@ -1,5 +1,7 @@
 package ch.bailu.aat_lib.service.directory;
 
+import javax.annotation.Nonnull;
+
 import ch.bailu.aat_lib.app.AppContext;
 import ch.bailu.aat_lib.dispatcher.AppBroadcaster;
 import ch.bailu.aat_lib.dispatcher.BroadcastReceiver;
@@ -30,14 +32,14 @@ public abstract class IteratorAbstract extends Iterator implements OnPreferences
 
 
     @Override
-    public void setOnCursorChangedLinsener(OnCursorChangedListener l) {
+    public void setOnCursorChangedListener(OnCursorChangedListener l) {
         onCursorChangedListener = l;
     }
 
 
     @Override
-    public void onPreferencesChanged(StorageInterface s, String key) {
-        if (sdirectory.containsKey(key) && selection.equals(sdirectory.createSelectionString()) == false) {
+    public void onPreferencesChanged(@Nonnull StorageInterface s, @Nonnull String key) {
+        if (sdirectory.containsKey(key) && !selection.equals(sdirectory.createSelectionString())) {
             query();
         }
     }

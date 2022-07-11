@@ -52,6 +52,6 @@ public class Iterator implements Closeable {
     public void close() {}
 
 
-    public void setOnCursorChangedLinsener(OnCursorChangedListener l) {}
+    public void setOnCursorChangedListener(OnCursorChangedListener l) {}
 
 }
