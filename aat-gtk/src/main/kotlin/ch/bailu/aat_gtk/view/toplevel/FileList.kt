@@ -1,13 +1,12 @@
 package ch.bailu.aat_gtk.view.toplevel
 
 import ch.bailu.aat_gtk.app.GtkAppContext
+import ch.bailu.aat_gtk.app.GtkRefs
 import ch.bailu.aat_gtk.lib.menu.MenuModelBuilder
 import ch.bailu.aat_gtk.view.UiController
 import ch.bailu.aat_gtk.view.menu.provider.MenuProvider
 import ch.bailu.aat_gtk.view.menu.provider.SolidOverlayFileListMenu
 import ch.bailu.aat_gtk.view.util.margin
-import ch.bailu.aat_gtk.view.util.setLbl
-import ch.bailu.aat_gtk.view.util.setTxt
 import ch.bailu.aat_lib.description.AverageSpeedDescription
 import ch.bailu.aat_lib.description.DateDescription
 import ch.bailu.aat_lib.description.DistanceDescription
@@ -169,10 +168,10 @@ class FileList(
         averageSpeedDistanceDescription.onContentUpdated(InfoID.ALL, iteratorSimple.info)
         dateDescription.onContentUpdated(InfoID.ALL, iteratorSimple.info)
 
-        label1.setLbl("<b>${dateDescription.valueAsString}</b>")
-        label2.setTxt("${distanceDescription.valueAsString} - ${averageSpeedDistanceDescription.valueAsString} - ${timeDescription.valueAsString}")
-        label3.setTxt(iteratorSimple.info.file.name)
-        label4.setTxt(index.toString())
+        GtkRefs.label(label1, "<b>${dateDescription.valueAsString}</b>")
+        GtkRefs.label(label2, "${distanceDescription.valueAsString} - ${averageSpeedDistanceDescription.valueAsString} - ${timeDescription.valueAsString}")
+        GtkRefs.label(label3, iteratorSimple.info.file.name)
+        GtkRefs.label(label4, index.toString())
     }
 
     private fun createMenu(app: Application, overlayMenu: MenuProvider): Menu {

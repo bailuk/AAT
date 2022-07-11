@@ -1,7 +1,7 @@
 package ch.bailu.aat_gtk.view.solid
 
+import ch.bailu.aat_gtk.app.GtkRefs
 import ch.bailu.aat_gtk.view.menu.provider.SolidFileSelectorMenu
-import ch.bailu.aat_gtk.view.util.setTxt
 import ch.bailu.aat_lib.logger.AppLog
 import ch.bailu.aat_lib.preferences.OnPreferencesChanged
 import ch.bailu.aat_lib.preferences.SolidFile
@@ -22,7 +22,7 @@ class SolidDirectorySelectorView(private val solid: SolidFile, app: Application,
     private val fileSelectorMenu = SolidFileSelectorMenu(solid, window)
 
     init {
-        label.setTxt(solid.label)
+        GtkRefs.text(label, solid.label)
         label.xalign = 0f
 
         entry.hexpand = GTK.TRUE

@@ -3,9 +3,7 @@ package ch.bailu.aat_gtk.view.util
 import ch.bailu.aat_gtk.util.IconMap
 import ch.bailu.aat_gtk.view.map.control.Bar
 import ch.bailu.gtk.gtk.Button
-import ch.bailu.gtk.gtk.Label
 import ch.bailu.gtk.gtk.Widget
-import ch.bailu.gtk.type.Str
 
 
 fun Widget.margin(margin: Int) {
@@ -32,17 +30,3 @@ fun Button.setIcon(imageResource: String, size: Int = Bar.ICON_SIZE) {
     child = image
 }
 
-fun Label.setTxt(s: String) {
-    Str(s).apply {
-        text = this
-        //destroy()
-    }
-}
-
-
-fun Label.setLbl(s: String) {
-    Str(s).apply {
-        label = this
-        //destroy()
-    }
-}

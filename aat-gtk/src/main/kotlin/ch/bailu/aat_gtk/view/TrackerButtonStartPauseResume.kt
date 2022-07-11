@@ -1,12 +1,13 @@
 package ch.bailu.aat_gtk.view
 
+import ch.bailu.aat_gtk.app.GtkRefs
 import ch.bailu.aat_lib.dispatcher.OnContentUpdatedInterface
 import ch.bailu.aat_lib.gpx.GpxInformation
 import ch.bailu.aat_lib.service.ServicesInterface
 import ch.bailu.gtk.gtk.Button
 import ch.bailu.gtk.type.Str
 
-class TrackerButton(private val services: ServicesInterface) : OnContentUpdatedInterface{
+class TrackerButtonStartPauseResume(private val services: ServicesInterface) : OnContentUpdatedInterface{
     val button = Button()
     private var text = services.trackerService.pauseResumeText
 
@@ -14,21 +15,15 @@ class TrackerButton(private val services: ServicesInterface) : OnContentUpdatedI
         button.onClicked {
             services.trackerService.onStartPauseResume()
         }
-        button.label = Str(text)
+        GtkRefs.label(button, text)
     }
 
     override fun onContentUpdated(iid: Int, info: GpxInformation) {
         val newText = services.trackerService.pauseResumeText
 
         if (text != newText) {
-             setNewText(newText)
+            text = newText
+            GtkRefs.label(button, text)
         }
-    }
-
-    private fun setNewText(newText: String) {
-        text = newText
-        val old = button.label
-        button.label = Str(text)
-        old.destroy()
     }
 }

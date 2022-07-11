@@ -1,6 +1,6 @@
 package ch.bailu.aat_gtk.view.graph
 
-import ch.bailu.aat_gtk.view.util.setTxt
+import ch.bailu.aat_gtk.app.GtkRefs
 import ch.bailu.aat_lib.view.graph.LabelInterface
 import ch.bailu.gtk.gtk.Align
 import ch.bailu.gtk.gtk.Box
@@ -26,9 +26,11 @@ class GraphLabel : LabelInterface {
             val label = Label(Str(text))
             label.xalign = 1f
             layout.append(label)
-            labels.put(color, label)
+            labels[color] = label
         } else {
-            labels[color]?.setTxt(text)
+            labels[color]?.apply {
+                GtkRefs.text(this, text)
+            }
         }
     }
 

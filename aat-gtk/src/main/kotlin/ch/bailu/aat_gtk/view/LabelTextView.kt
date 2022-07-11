@@ -1,6 +1,6 @@
 package ch.bailu.aat_gtk.view
 
-import ch.bailu.aat_gtk.view.util.setLbl
+import ch.bailu.aat_gtk.app.GtkRefs
 import ch.bailu.gtk.GTK
 import ch.bailu.gtk.gtk.Box
 import ch.bailu.gtk.gtk.Label
@@ -18,11 +18,11 @@ open class LabelTextView(labelText: String) {
 
     var text : String
         get() = _value.text.toString()
-        set(t)  { _value.setLbl(if (!inverse) t else "<b>$t</b>")}
+        set(t)  { GtkRefs.label(_value, if (!inverse) t else "<b>$t</b>")}
 
     var label : String
         get() = _label.text.toString()
-        set(t)  { _label.setLbl(if (inverse) t else "<b>$t</b>")}
+        set(t)  { GtkRefs.label(_label, if (inverse) t else "<b>$t</b>")}
 
     init {
         label = labelText
@@ -45,5 +45,4 @@ open class LabelTextView(labelText: String) {
         layout.append(_label)
         layout.append(_value)
     }
-
 }

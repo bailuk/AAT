@@ -1,7 +1,7 @@
 package ch.bailu.aat_gtk.view.menu.provider
 
+import ch.bailu.aat_gtk.app.GtkRefs
 import ch.bailu.aat_gtk.lib.menu.MenuModelBuilder
-import ch.bailu.aat_gtk.view.util.setTxt
 import ch.bailu.aat_gtk.view.util.truncate
 import ch.bailu.aat_lib.preferences.map.SolidOverlayFileList
 import ch.bailu.foc.Foc
@@ -67,7 +67,7 @@ class SolidOverlayFileListMenu(private val solid: SolidOverlayFileList, private 
 
     private fun updateLabels() {
         labels.forEachIndexed { index, it ->
-            it.setTxt(solid[index].valueAsString.truncate())
+            GtkRefs.text(it, solid[index].valueAsString.truncate())
         }
     }
 }
