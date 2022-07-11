@@ -15,44 +15,37 @@ import ch.bailu.aat_lib.resources.Res;
 
 public class SolidProvideAltitude extends SolidAltitude {
     private final static String KEY = "ProvideAltitude";
-
-
     public SolidProvideAltitude(StorageInterface s, int unit) {
         super(s, KEY, unit);
     }
-
 
     @Override
     public void setValue(int v) {
         getStorage().writeIntegerForce(getKey(), v);
     }
 
-
     @Override
     public String getLabel() {
         return addUnit(Res.str().p_set_altitude());
     }
-
 
     public static View requestOnClick(View v) {
         v.setOnClickListener(v1 -> requestValueFromUserIfEnabled(v1.getContext()));
         return v;
     }
 
-
     public static void requestValueFromUserIfEnabled(Context c) {
         if (SensorState.isConnected(InfoID.BAROMETER_SENSOR) ||
                 new SolidAdjustGpsAltitude(new Storage(c)).isEnabled()) {
-            reqeustValueFromUser(c);
+            requestValueFromUser(c);
         }
 
     }
 
-    public static void reqeustValueFromUser(Context c) {
+    public static void requestValueFromUser(Context c) {
         new SolidTextInputDialog(c,
                 new SolidProvideAltitude(new Storage(c),
                         new SolidUnit(new Storage(c)).getIndex()),
                 SolidTextInputDialog.INTEGER_SIGNED);
-
     }
 }
