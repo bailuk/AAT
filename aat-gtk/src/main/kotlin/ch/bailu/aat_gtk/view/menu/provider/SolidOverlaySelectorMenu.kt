@@ -3,22 +3,28 @@ package ch.bailu.aat_gtk.view.menu.provider
 import ch.bailu.aat_gtk.app.GtkRefs
 import ch.bailu.aat_gtk.lib.menu.MenuModelBuilder
 import ch.bailu.aat_gtk.view.util.truncate
+import ch.bailu.aat_lib.logger.AppLog
 import ch.bailu.aat_lib.preferences.map.SolidOverlayFileList
 import ch.bailu.foc.Foc
+import ch.bailu.foc.FocName
 import ch.bailu.gtk.GTK
 import ch.bailu.gtk.gtk.*
 import ch.bailu.gtk.type.Str
 
-class SolidOverlayFileListMenu(private val solid: SolidOverlayFileList, private val file: Foc): MenuProvider {
-
-    private val labels: ArrayList<Label> = ArrayList()
-    private var replaced = file
-
+class SolidOverlaySelectorMenu(private val solid: SolidOverlayFileList): MenuProvider {
     override fun createMenu(): MenuModelBuilder {
         return MenuModelBuilder().custom(solid.key)
     }
 
     override fun createCustomWidgets(): Array<CustomWidget> {
+        return createCustomWidgets(FocName(solid.key))
+    }
+
+    fun createCustomWidgets(file: Foc): Array<CustomWidget> {
+        AppLog.d(this, file.path)
+        var replaced = file
+        val labels: ArrayList<Label> = ArrayList()
+
         return arrayOf(
             CustomWidget(
                 ListBox().apply {
@@ -41,7 +47,7 @@ class SolidOverlayFileListMenu(private val solid: SolidOverlayFileList, private 
                         append(layout)
                     }
 
-                    updateLabels()
+                    updateLabels(labels)
                     onRowActivated {
                         if (!haveAsOverlay(file)) {
                             replaced = solid[it.index].valueAsFile
@@ -49,7 +55,7 @@ class SolidOverlayFileListMenu(private val solid: SolidOverlayFileList, private 
                         } else if (file == solid[it.index].valueAsFile) {
                             solid[it.index].setValueFromFile(replaced)
                         }
-                        updateLabels()
+                        updateLabels(labels)
                     }
                 }, solid.key
             )
@@ -65,7 +71,7 @@ class SolidOverlayFileListMenu(private val solid: SolidOverlayFileList, private 
         return false
     }
 
-    private fun updateLabels() {
+    private fun updateLabels(labels: ArrayList<Label>) {
         labels.forEachIndexed { index, it ->
             GtkRefs.text(it, solid[index].valueAsString.truncate())
         }

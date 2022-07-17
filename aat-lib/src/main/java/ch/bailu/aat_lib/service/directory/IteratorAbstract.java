@@ -28,6 +28,7 @@ public abstract class IteratorAbstract extends Iterator implements OnPreferences
         sdirectory = new SolidDirectoryQuery(appContext.getStorage(), appContext);
         sdirectory.register(this);
         appContext.getBroadcaster().register(onSyncChanged, AppBroadcaster.DB_SYNC_CHANGED);
+        openAndQuery();
     }
 
 
@@ -39,7 +40,10 @@ public abstract class IteratorAbstract extends Iterator implements OnPreferences
 
     @Override
     public void onPreferencesChanged(@Nonnull StorageInterface s, @Nonnull String key) {
-        if (sdirectory.containsKey(key) && !selection.equals(sdirectory.createSelectionString())) {
+        if (sdirectory.hasKey(key)) {
+            openAndQuery();
+
+        } else if (sdirectory.containsKey(key) && !selection.equals(sdirectory.createSelectionString())) {
             query();
         }
     }
@@ -86,18 +90,12 @@ public abstract class IteratorAbstract extends Iterator implements OnPreferences
     public abstract void onCursorChanged(DbResultSet resultSet, Foc directory, String fid);
 
 
-    @Override
-    public void query() {
+    private void openAndQuery() {
         String fileOnOldPosition = "";
         int oldPosition=0;
 
+        appContext.getServices().getDirectoryService().openDir(sdirectory.getValueAsFile());
         selection = sdirectory.createSelectionString();
-        if (resultSet != null) {
-            oldPosition = resultSet.getPosition();
-            fileOnOldPosition = getInfo().getFile().getPath();
-            resultSet.close();
-        }
-
         resultSet = appContext.getServices().getDirectoryService().query(selection);
 
         if (resultSet != null) {
@@ -108,6 +106,27 @@ public abstract class IteratorAbstract extends Iterator implements OnPreferences
         }
     }
 
+    @Override
+    public void query() {
+        String fileOnOldPosition = "";
+        int oldPosition=0;
+
+        if (resultSet != null) {
+            oldPosition = resultSet.getPosition();
+            fileOnOldPosition = getInfo().getFile().getPath();
+            resultSet.close();
+        }
+
+        selection = sdirectory.createSelectionString();
+        resultSet = appContext.getServices().getDirectoryService().query(selection);
+
+        if (resultSet != null) {
+            resultSet.moveToPosition(oldPosition);
+
+            onCursorChanged(resultSet, sdirectory.getValueAsFile(), fileOnOldPosition);
+            onCursorChangedListener.onCursorChanged();
+        }
+    }
 
     @Override
     public void close() {

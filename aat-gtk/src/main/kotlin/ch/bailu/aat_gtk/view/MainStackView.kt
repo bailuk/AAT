@@ -5,9 +5,10 @@ import ch.bailu.aat_gtk.view.solid.PreferencesStackView
 import ch.bailu.aat_gtk.view.stack.LazyStackView
 import ch.bailu.aat_gtk.view.toplevel.CockpitView
 import ch.bailu.aat_gtk.view.toplevel.DetailView
-import ch.bailu.aat_gtk.view.toplevel.FileList
 import ch.bailu.aat_gtk.view.toplevel.MapMainView
+import ch.bailu.aat_gtk.view.toplevel.list.FileList
 import ch.bailu.aat_lib.description.*
+import ch.bailu.aat_lib.dispatcher.CustomFileSource
 import ch.bailu.aat_lib.dispatcher.DispatcherInterface
 import ch.bailu.aat_lib.gpx.GpxInformation
 import ch.bailu.aat_lib.gpx.InfoID
@@ -16,13 +17,14 @@ import ch.bailu.aat_lib.preferences.StorageInterface
 import ch.bailu.gtk.GTK
 import ch.bailu.gtk.gtk.*
 
-class MainStackView(
+class MainStackView (
     app: Application,
     dispatcher: DispatcherInterface,
     window: Window,
     storage: StorageInterface,
     private val revealer: ToggleButton,
     attachable: ArrayList<Attachable>
+
 ) :
     UiController {
 
@@ -35,6 +37,8 @@ class MainStackView(
 
 
     }
+
+    private val customFileSource = CustomFileSource(GtkAppContext)
 
     private var preferencesStackView: PreferencesStackView?  = null
     private var mapView: MapMainView? = null
@@ -54,6 +58,8 @@ class MainStackView(
     private var backTo = INDEX_MAP
 
     init {
+        dispatcher.addSource(customFileSource)
+
         stack.add("Map") {
             val mapView = MapMainView(app, dispatcher, this, GtkAppContext, window)
             this.mapView = mapView
@@ -62,7 +68,7 @@ class MainStackView(
         }
 
         stack.add("Files") {
-            FileList(app, this, GtkAppContext.storage, GtkAppContext, dispatcher).vbox
+            FileList(app, GtkAppContext.storage, GtkAppContext, this).vbox
         }
 
         stack.add("Detail") {
@@ -140,5 +146,10 @@ class MainStackView(
 
     override fun showContextBar() {
         revealer.active = GTK.TRUE
+    }
+
+    override fun load(info: GpxInformation) {
+        customFileSource.setFileID(info.file.toString())
+        showContextBar()
     }
 }

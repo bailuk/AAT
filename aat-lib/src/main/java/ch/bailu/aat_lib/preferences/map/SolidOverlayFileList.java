@@ -17,7 +17,7 @@ public class SolidOverlayFileList extends SolidCheckList {
 
 
     public SolidOverlayFile get(int i) {
-        i=Math.min(MAX_OVERLAYS, i);
+        i=Math.min(MAX_OVERLAYS - 1, i);
         i=Math.max(0, i);
 
         return list[i];

@@ -49,4 +49,9 @@ object GtkRefs {
         }
     }
 
+    fun release(obj: Any) {
+        map[obj]?.destroy()
+        map.remove(obj)
+    }
+
 }
