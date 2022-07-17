@@ -1,5 +1,7 @@
 package ch.bailu.aat_lib.map.layer.gpx;
 
+import javax.annotation.Nonnull;
+
 import ch.bailu.aat_lib.dispatcher.DispatcherInterface;
 import ch.bailu.aat_lib.gpx.InfoID;
 import ch.bailu.aat_lib.map.MapContext;
@@ -18,7 +20,7 @@ public final class GpxOverlayListLayer implements MapLayerInterface {
         overlays = new GpxDynLayer[SolidOverlayFileList.MAX_OVERLAYS];
 
         for (int i = 0; i< overlays.length; i++) {
-            overlays[i] = new GpxDynLayer(s, mc,services, d, InfoID.OVERLAY +i);
+            overlays[i] = new GpxDynLayer(s, mc,services, d, InfoID.OVERLAY + i);
         }
     }
 
@@ -36,7 +38,7 @@ public final class GpxOverlayListLayer implements MapLayerInterface {
     }
 
     @Override
-    public void onPreferencesChanged(StorageInterface s, String key) {
+    public void onPreferencesChanged(@Nonnull StorageInterface s, @Nonnull String key) {
         for (MapLayerInterface o : overlays) o.onPreferencesChanged(s, key);
     }
 

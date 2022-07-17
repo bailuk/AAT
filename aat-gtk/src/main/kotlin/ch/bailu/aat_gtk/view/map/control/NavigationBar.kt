@@ -22,8 +22,17 @@ class NavigationBar(mcontext: MapContext, storage: StorageInterface) : Bar(Posit
         add(SolidImageButton(SolidPositionLock(storage, mcontext.solidKey)).button)
         add("zoom-fit-best-symbolic").onClicked {
             if (nextInBoundingCycle()) {
-                mcontext.mapView.frameBounding(infoCache.getValueAt(boundingCycle)?.boundingBox)
-                AppLog.i(infoCache.getValueAt(boundingCycle)?.getFile()?.name)
+                val info = infoCache.getValueAt(boundingCycle)
+
+                if (info is GpxInformation) {
+                    val bounding = info.boundingBox
+                    val fileName = info.file.name
+
+                    if (bounding != null && fileName != null) {
+                        mcontext.mapView.frameBounding(bounding)
+                        AppLog.i(fileName)
+                    }
+                }
             }
         }
     }
@@ -39,8 +48,8 @@ class NavigationBar(mcontext: MapContext, storage: StorageInterface) : Bar(Posit
             val boundingBox = info?.boundingBox
             val pointList = info?.gpxList?.pointList
 
-            if (boundingBox != null && pointList != null) {
-                return boundingBox.hasBounding() && pointList.size() > 0
+            if (boundingBox != null && pointList != null && boundingBox.hasBounding() && pointList.size() > 0) {
+                return true
             }
         }
         return false

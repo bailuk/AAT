@@ -7,6 +7,7 @@ import ch.bailu.aat_gtk.view.map.control.*
 import ch.bailu.aat_lib.map.edge.EdgeControlLayer
 import ch.bailu.aat_lib.description.EditorSource
 import ch.bailu.aat_lib.dispatcher.DispatcherInterface
+import ch.bailu.aat_lib.dispatcher.OverlaySource
 import ch.bailu.aat_lib.gpx.InfoID
 import ch.bailu.aat_lib.map.Attachable
 import ch.bailu.aat_lib.map.edge.Position
@@ -26,6 +27,7 @@ class MapMainView(app: Application, dispatcher: DispatcherInterface, uiControlle
     val overlay = Overlay()
 
     private val editorSource = EditorSource(GtkAppContext)
+    private val overlaySource = OverlaySource(GtkAppContext)
 
     private val navigationBar = NavigationBar(map.mContext, GtkAppContext.storage)
     private val infoBar = InfoBar(app, uiController, map.mContext, GtkAppContext.storage, focFactory, window)
@@ -33,6 +35,7 @@ class MapMainView(app: Application, dispatcher: DispatcherInterface, uiControlle
     private val edgeControl = EdgeControlLayer(map.mContext, Bar.SIZE)
 
     init {
+        dispatcher.addSource(overlaySource)
         dispatcher.addSource(editorSource)
         dispatcher.addTarget(navigationBar, InfoID.ALL)
 
@@ -41,7 +44,7 @@ class MapMainView(app: Application, dispatcher: DispatcherInterface, uiControlle
         map.add(GpxDynLayer(GtkAppContext.storage, map.mContext, GtkAppContext.services, dispatcher, InfoID.TRACKER))
         map.add(GpxDynLayer(GtkAppContext.storage, map.mContext, GtkAppContext.services, dispatcher, InfoID.FILEVIEW))
         map.add(GpxDynLayer(GtkAppContext.storage, map.mContext, GtkAppContext.services, dispatcher, InfoID.EDITOR_DRAFT))
-        map.add(GpxOverlayListLayer(GtkAppContext.storage,map.mContext, GtkAppContext.services, dispatcher))
+        map.add(GpxOverlayListLayer(GtkAppContext.storage, map.mContext, GtkAppContext.services, dispatcher))
         map.add(edgeControl)
         map.add(NodeSelectorLayer(GtkAppContext.services, GtkAppContext.storage, map.mContext, Position.LEFT).apply {
             observe(editorBar)

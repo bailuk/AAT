@@ -5,7 +5,9 @@ class IndexedMap<K, V> {
     private val map  = HashMap<K, V>()
 
     fun put(key: K, value: V) {
-        keys.add(key)
+        if (!map.containsKey(key)) {
+            keys.add(key)
+        }
         map[key] = value
     }
 
