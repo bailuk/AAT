@@ -9,22 +9,19 @@ import ch.bailu.aat_gtk.view.toplevel.MapMainView
 import ch.bailu.aat_gtk.view.toplevel.list.FileList
 import ch.bailu.aat_lib.description.*
 import ch.bailu.aat_lib.dispatcher.CustomFileSource
-import ch.bailu.aat_lib.dispatcher.DispatcherInterface
+import ch.bailu.aat_lib.dispatcher.Dispatcher
 import ch.bailu.aat_lib.gpx.GpxInformation
 import ch.bailu.aat_lib.gpx.InfoID
-import ch.bailu.aat_lib.map.Attachable
 import ch.bailu.aat_lib.preferences.StorageInterface
 import ch.bailu.gtk.GTK
 import ch.bailu.gtk.gtk.*
 
 class MainStackView (
     app: Application,
-    dispatcher: DispatcherInterface,
+    dispatcher: Dispatcher,
     window: Window,
     storage: StorageInterface,
-    private val revealer: ToggleButton,
-    attachable: ArrayList<Attachable>
-
+    private val revealer: ToggleButton
 ) :
     UiController {
 
@@ -63,7 +60,8 @@ class MainStackView (
         stack.add("Map") {
             val mapView = MapMainView(app, dispatcher, this, GtkAppContext, window)
             this.mapView = mapView
-            attachable.add(mapView)
+            mapView.onAttached()
+            dispatcher.requestUpdate()
             mapView.overlay
         }
 
@@ -72,11 +70,13 @@ class MainStackView (
         }
 
         stack.add("Detail") {
-            DetailView(dispatcher, GtkAppContext.storage).scrolled
+            val result = DetailView(dispatcher, GtkAppContext.storage).scrolled
+            dispatcher.requestUpdate()
+            result
         }
 
         stack.add("Cockpit") {
-            CockpitView().apply {
+            val result = CockpitView().apply {
                 add(dispatcher, CurrentSpeedDescription(GtkAppContext.storage), InfoID.LOCATION)
                 add(dispatcher, AltitudeDescription(GtkAppContext.storage), InfoID.LOCATION)
 
@@ -84,6 +84,8 @@ class MainStackView (
                 add(dispatcher, DistanceDescription(GtkAppContext.storage), InfoID.TRACKER)
                 add(dispatcher, AverageSpeedDescriptionAP(GtkAppContext.storage), InfoID.TRACKER)
             }.flow
+            dispatcher.requestUpdate()
+            result
         }
 
         preferences = stack.add("Preferences") {

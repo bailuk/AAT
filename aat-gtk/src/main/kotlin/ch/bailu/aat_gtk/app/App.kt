@@ -9,7 +9,6 @@ import ch.bailu.aat_lib.dispatcher.AppBroadcaster
 import ch.bailu.aat_lib.dispatcher.Dispatcher
 import ch.bailu.aat_lib.logger.AppLog
 import ch.bailu.aat_lib.logger.BroadcastLogger
-import ch.bailu.aat_lib.map.Attachable
 import ch.bailu.gtk.gio.ApplicationFlags
 import ch.bailu.gtk.gtk.Application
 import ch.bailu.gtk.gtk.ApplicationWindow
@@ -24,7 +23,6 @@ fun main() {
 
 object App {
     private val dispatcher = Dispatcher()
-    private val attachables = ArrayList<Attachable>()
 
     init {
         AppLog.set(SL4JLogger())
@@ -54,8 +52,7 @@ object App {
 
         app.onActivate {
             try {
-                MainWindow(ApplicationWindow(app), app, dispatcher, attachables)
-                attachables.forEach { it.onAttached() }
+                MainWindow(ApplicationWindow(app), app, dispatcher)
                 dispatcher.onResume()
 
             } catch (e: Exception) {
@@ -67,7 +64,6 @@ object App {
 
     fun exit(exitCode: Int) {
         dispatcher.onPause()
-        attachables.forEach { it.onDetached() }
         GtkAppContext.services.trackerService.onStartStop()
 
         GtkStorage.save()
