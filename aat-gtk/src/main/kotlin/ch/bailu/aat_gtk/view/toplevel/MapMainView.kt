@@ -27,7 +27,6 @@ class MapMainView(app: Application, dispatcher: DispatcherInterface, uiControlle
     val overlay = Overlay()
 
     private val editorSource = EditorSource(GtkAppContext)
-    private val overlaySource = OverlaySource(GtkAppContext)
 
     private val navigationBar = NavigationBar(map.mContext, GtkAppContext.storage)
     private val infoBar = InfoBar(app, uiController, map.mContext, GtkAppContext.storage, focFactory, window)
@@ -35,7 +34,6 @@ class MapMainView(app: Application, dispatcher: DispatcherInterface, uiControlle
     private val edgeControl = EdgeControlLayer(map.mContext, Bar.SIZE)
 
     init {
-        dispatcher.addSource(overlaySource)
         dispatcher.addSource(editorSource)
         dispatcher.addTarget(navigationBar, InfoID.ALL)
 

@@ -55,8 +55,8 @@ object App {
         app.onActivate {
             try {
                 MainWindow(ApplicationWindow(app), app, dispatcher, attachables)
-                dispatcher.onResume()
                 attachables.forEach { it.onAttached() }
+                dispatcher.onResume()
 
             } catch (e: Exception) {
                 e.printStackTrace()
