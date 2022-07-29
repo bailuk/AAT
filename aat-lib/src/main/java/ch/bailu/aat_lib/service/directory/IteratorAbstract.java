@@ -6,6 +6,7 @@ import ch.bailu.aat_lib.app.AppContext;
 import ch.bailu.aat_lib.dispatcher.AppBroadcaster;
 import ch.bailu.aat_lib.dispatcher.BroadcastReceiver;
 import ch.bailu.aat_lib.gpx.GpxInformation;
+import ch.bailu.aat_lib.logger.AppLog;
 import ch.bailu.aat_lib.preferences.OnPreferencesChanged;
 import ch.bailu.aat_lib.preferences.SolidDirectoryQuery;
 import ch.bailu.aat_lib.preferences.StorageInterface;
@@ -31,12 +32,10 @@ public abstract class IteratorAbstract extends Iterator implements OnPreferences
         openAndQuery();
     }
 
-
     @Override
     public void setOnCursorChangedListener(OnCursorChangedListener l) {
         onCursorChangedListener = l;
     }
-
 
     @Override
     public void onPreferencesChanged(@Nonnull StorageInterface s, @Nonnull String key) {
@@ -48,13 +47,11 @@ public abstract class IteratorAbstract extends Iterator implements OnPreferences
         }
     }
 
-
     @Override
     public boolean moveToPrevious() {
         if (resultSet!=null) return resultSet.moveToPrevious();
         return false;
     }
-
 
     @Override
     public boolean moveToNext() {
@@ -62,13 +59,11 @@ public abstract class IteratorAbstract extends Iterator implements OnPreferences
         return false;
     }
 
-
     @Override
     public boolean moveToPosition(int pos) {
         if (resultSet != null) return resultSet.moveToPosition(pos);
         return false;
     }
-
 
     @Override
     public int getCount() {
@@ -76,34 +71,25 @@ public abstract class IteratorAbstract extends Iterator implements OnPreferences
         return 0;
     }
 
-
     @Override
     public int getPosition() {
         if (resultSet != null) return resultSet.getPosition();
         return -1;
     }
 
-
     @Override
     public abstract GpxInformation getInfo();
 
     public abstract void onCursorChanged(DbResultSet resultSet, Foc directory, String fid);
-
 
     private void openAndQuery() {
         String fileOnOldPosition = "";
         int oldPosition=0;
 
         appContext.getServices().getDirectoryService().openDir(sdirectory.getValueAsFile());
-        selection = sdirectory.createSelectionString();
-        resultSet = appContext.getServices().getDirectoryService().query(selection);
 
-        if (resultSet != null) {
-            resultSet.moveToPosition(oldPosition);
-
-            onCursorChanged(resultSet, sdirectory.getValueAsFile(), fileOnOldPosition);
-            onCursorChangedListener.onCursorChanged();
-        }
+        updateResultFromSelection();
+        moveToOldPosition(oldPosition, fileOnOldPosition);
     }
 
     @Override
@@ -117,9 +103,20 @@ public abstract class IteratorAbstract extends Iterator implements OnPreferences
             resultSet.close();
         }
 
-        selection = sdirectory.createSelectionString();
-        resultSet = appContext.getServices().getDirectoryService().query(selection);
+        updateResultFromSelection();
+        moveToOldPosition(oldPosition, fileOnOldPosition);
+    }
 
+    private void updateResultFromSelection() {
+        try {
+            selection = sdirectory.createSelectionString();
+            resultSet = appContext.getServices().getDirectoryService().query(selection);
+        } catch (Exception e) {
+            AppLog.e(e);
+        }
+    }
+
+    private void moveToOldPosition(int oldPosition, String fileOnOldPosition) {
         if (resultSet != null) {
             resultSet.moveToPosition(oldPosition);
 
