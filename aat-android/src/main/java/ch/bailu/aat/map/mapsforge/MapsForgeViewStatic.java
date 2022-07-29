@@ -9,7 +9,7 @@ import ch.bailu.aat_lib.app.AppContext;
 public class MapsForgeViewStatic extends MapsForgeViewBase {
 
     public MapsForgeViewStatic(Context context, AppContext appContext) {
-        super(context, appContext.getServices(), MapsForgeViewStatic.class.getSimpleName(),
+        super(appContext, context, MapsForgeViewStatic.class.getSimpleName(),
                 new MapDensity(context));
 
         MapsForgeTileLayerStackConfigured tiles = new MapsForgeTileLayerStackConfigured.BackgroundOnly(this, appContext);
@@ -17,5 +17,4 @@ public class MapsForgeViewStatic extends MapsForgeViewBase {
 
         setClickable(false);
     }
-
 }

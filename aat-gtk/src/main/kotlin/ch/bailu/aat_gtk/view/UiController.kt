@@ -5,6 +5,7 @@ import ch.bailu.aat_lib.gpx.GpxInformation
 interface UiController {
     fun showMap()
     fun showInMap(info: GpxInformation)
+    fun load(info: GpxInformation)
     fun showCockpit()
     fun showDetail()
     fun showInList()

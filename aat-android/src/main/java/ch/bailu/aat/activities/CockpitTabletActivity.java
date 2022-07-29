@@ -3,18 +3,12 @@ package ch.bailu.aat.activities;
 import android.os.Bundle;
 import android.view.View;
 
-import ch.bailu.aat.util.AndroidTimer;
-import ch.bailu.aat_lib.dispatcher.CurrentLocationSource;
-import ch.bailu.aat.dispatcher.EditorSource;
-import ch.bailu.aat.dispatcher.EditorSourceInterface;
-import ch.bailu.aat_lib.dispatcher.OverlaySource;
 import ch.bailu.aat.dispatcher.SensorSource;
-import ch.bailu.aat_lib.dispatcher.TrackerSource;
-import ch.bailu.aat_lib.dispatcher.TrackerTimerSource;
 import ch.bailu.aat.map.MapFactory;
 import ch.bailu.aat.map.mapsforge.MapViewLinker;
 import ch.bailu.aat.map.mapsforge.MapsForgeViewBase;
 import ch.bailu.aat.preferences.Storage;
+import ch.bailu.aat.util.AndroidTimer;
 import ch.bailu.aat.util.ui.AppLayout;
 import ch.bailu.aat.util.ui.AppTheme;
 import ch.bailu.aat.util.ui.UiTheme;
@@ -29,9 +23,15 @@ import ch.bailu.aat_lib.description.AverageSpeedDescription;
 import ch.bailu.aat_lib.description.CadenceDescription;
 import ch.bailu.aat_lib.description.CurrentSpeedDescription;
 import ch.bailu.aat_lib.description.DistanceDescription;
+import ch.bailu.aat_lib.description.EditorSource;
 import ch.bailu.aat_lib.description.HeartRateDescription;
 import ch.bailu.aat_lib.description.MaximumSpeedDescription;
 import ch.bailu.aat_lib.description.PredictiveTimeDescription;
+import ch.bailu.aat_lib.dispatcher.CurrentLocationSource;
+import ch.bailu.aat_lib.dispatcher.EditorSourceInterface;
+import ch.bailu.aat_lib.dispatcher.OverlaySource;
+import ch.bailu.aat_lib.dispatcher.TrackerSource;
+import ch.bailu.aat_lib.dispatcher.TrackerTimerSource;
 import ch.bailu.aat_lib.gpx.InfoID;
 
 public class CockpitTabletActivity extends AbsKeepScreenOnActivity {
@@ -72,7 +72,7 @@ public class CockpitTabletActivity extends AbsKeepScreenOnActivity {
 
         final PercentageLayout allComponents = new PercentageLayout(this);
         allComponents.add(cockpitAndBigMap,80);
-        allComponents.add(GraphViewFactory.all(this, this, theme, InfoID.TRACKER),20);
+        allComponents.add(GraphViewFactory.all(getAppContext(),this, this, theme, InfoID.TRACKER),20);
 
         result.add(getErrorView());
         result.add(allComponents);

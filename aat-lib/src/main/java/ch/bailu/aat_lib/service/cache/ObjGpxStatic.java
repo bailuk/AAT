@@ -123,7 +123,7 @@ public final class ObjGpxStatic extends ObjGpx implements ElevationUpdaterClient
 
         final Dem3Coordinates[] r=new Dem3Coordinates[f.coordinates.size()];
         for (int i=0; i<f.coordinates.size(); i++) {
-            r[i]=f.coordinates.getAt(i);
+            r[i]=f.coordinates.getValueAt(i);
         }
         return r;
     }

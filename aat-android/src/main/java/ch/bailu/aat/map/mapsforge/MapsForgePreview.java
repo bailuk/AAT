@@ -57,7 +57,7 @@ public class MapsForgePreview extends MapsForgeViewBase implements MapPreviewInt
     private final Point tlPoint;
 
     public MapsForgePreview(Context context, AppContext appContext, GpxInformation info, Foc out) throws IllegalArgumentException {
-        super(context, appContext.getServices(), MapsForgePreview.class.getSimpleName(), new MapDensity());
+        super(appContext,context, MapsForgePreview.class.getSimpleName(), new MapDensity());
 
 
 
@@ -187,17 +187,13 @@ public class MapsForgePreview extends MapsForgeViewBase implements MapPreviewInt
         bitmap.free();
     }
 
-
-
     public boolean isReady() {
         return provider.isReadyAndLoaded();
     }
-
 
     @Override
     public void onDestroy() {
         provider.onDetached();
         super.onDestroy();
     }
-
 }

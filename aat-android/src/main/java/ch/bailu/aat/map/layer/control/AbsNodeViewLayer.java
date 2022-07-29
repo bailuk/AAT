@@ -3,16 +3,19 @@ package ch.bailu.aat.map.layer.control;
 import android.content.Context;
 import android.view.View;
 
+import javax.annotation.Nonnull;
+
 import ch.bailu.aat.map.To;
-import ch.bailu.aat_lib.map.layer.gpx.GpxVisibleLimit;
 import ch.bailu.aat.util.HtmlBuilder;
 import ch.bailu.aat.util.HtmlBuilderGpx;
 import ch.bailu.aat.util.ui.AppLayout;
+import ch.bailu.aat_lib.app.AppContext;
 import ch.bailu.aat_lib.gpx.GpxInformation;
 import ch.bailu.aat_lib.gpx.GpxPointNode;
 import ch.bailu.aat_lib.map.MapContext;
-import ch.bailu.aat_lib.preferences.StorageInterface;
-import ch.bailu.aat_lib.service.ServicesInterface;
+import ch.bailu.aat_lib.map.edge.Position;
+import ch.bailu.aat_lib.map.layer.gpx.GpxVisibleLimit;
+import ch.bailu.aat_lib.map.layer.selector.AbsNodeSelectorLayer;
 
 public abstract class AbsNodeViewLayer extends AbsNodeSelectorLayer implements
         View.OnLongClickListener, View.OnClickListener {
@@ -22,18 +25,18 @@ public abstract class AbsNodeViewLayer extends AbsNodeSelectorLayer implements
 
     private final MapContext mcontext;
 
-    private final Position pos;
+    private final Placer pos;
 
 
-    public AbsNodeViewLayer(Context context, ServicesInterface services, StorageInterface s, MapContext mc) {
-        super(services, s, mc);
+    public AbsNodeViewLayer(AppContext appContext, Context context, MapContext mc) {
+        super(appContext.getServices(), appContext.getStorage(), mc, Position.BOTTOM);
         mcontext = mc;
 
-        pos = new Position(context);
+        pos = new Placer(context);
 
         html = new HtmlBuilderGpx(context);
 
-        infoView = new NodeInfoView(context);
+        infoView = new NodeInfoView(appContext, context);
         infoView.setOnLongClickListener(this);
         infoView.setOnClickListener(this);
 
@@ -44,7 +47,7 @@ public abstract class AbsNodeViewLayer extends AbsNodeSelectorLayer implements
     }
 
     @Override
-    public void setSelectedNode(int IID, GpxInformation info, GpxPointNode node, int i) {
+    public void setSelectedNode(int IID, @Nonnull GpxInformation info, @Nonnull GpxPointNode node, int i) {
         infoView.setBackgroundColorFromIID(IID);
 
         GpxVisibleLimit limit = new GpxVisibleLimit(mcontext);
@@ -91,7 +94,7 @@ public abstract class AbsNodeViewLayer extends AbsNodeSelectorLayer implements
     }
 
 
-    private void show() {
+    public void show() {
         measure();
         layout();
         AppLayout.fadeIn(infoView);
@@ -124,11 +127,11 @@ public abstract class AbsNodeViewLayer extends AbsNodeSelectorLayer implements
 
 
 
-    private static class Position {
+    private static class Placer {
         private int xoffset=0, width, height, right_space;
         private final int button_space;
 
-        public Position(Context c) {
+        public Placer(Context c) {
             button_space = AppLayout.getBigButtonSize(c);
         }
 

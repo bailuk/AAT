@@ -16,25 +16,18 @@ import ch.bailu.foc.Foc;
 
 public class DownloadTask extends FileTask {
 
-
-
     private final URX urx;
     private final DownloadConfig downloadConnection;
-
 
     public DownloadTask(String source, Foc target, DownloadConfig downloadConnection) {
         this(new URX(source), target, downloadConnection);
     }
-
 
     public DownloadTask(URX source, Foc target, DownloadConfig downloadConnection) {
         super(target);
         this.downloadConnection = downloadConnection;
         urx = source;
     }
-
-
-
 
     @Override
     public long bgOnProcess(AppContext sc) {
@@ -54,18 +47,14 @@ public class DownloadTask extends FileTask {
         return size;
     }
 
-
-
     protected long bgDownload() throws IOException {
         return download(urx.toURL(), getFile());
     }
-
 
     protected void logError(Exception e) {
         AppLog.w(this, getFile().getPathName());
         AppLog.w(this, e);
     }
-
 
     @Nonnull
     @Override
@@ -73,9 +62,7 @@ public class DownloadTask extends FileTask {
         return urx.toString();
     }
 
-
-
-    private long download(URL url, Foc file) throws IOException {
+    private long download(URL url, Foc file) {
         int count;
         long total=0;
         InputStream input = null;
@@ -83,20 +70,19 @@ public class DownloadTask extends FileTask {
         HttpURLConnection connection;
         byte[] buffer = downloadConnection.createBuffer();
 
-
         try {
             output = file.openW();
 
             connection = downloadConnection.openConnection(url);
             input = downloadConnection.openInput(connection);
 
-
-            while (( count = input.read(buffer)) != -1) {
-
-                total+=count;
+            while ((count = input.read(buffer)) != -1) {
+                total += count;
                 output.write(buffer, 0, count);
             }
 
+        } catch (Exception e) {
+            AppLog.e(e);
 
         } finally {
             Foc.close(output);
@@ -105,9 +91,6 @@ public class DownloadTask extends FileTask {
 
         return total;
     }
-
-
-
 
     public URX getSource() {
         return urx;

@@ -113,7 +113,7 @@ public class NodeDetailActivity extends ActivityContext
         viewB.add(htmlView, 40);
         viewB.add(To.view(mapView), 60);
 
-        graph = GraphViewFactory.createAltitudeGraph(this, theme);
+        graph = GraphViewFactory.createAltitudeGraph(getAppContext(),this, theme);
         viewA.add(graph, 20);
         viewA.add(viewB, 80);
         return viewA;

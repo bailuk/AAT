@@ -13,10 +13,9 @@ import ch.bailu.gtk.GTK
 import ch.bailu.gtk.gtk.*
 import ch.bailu.gtk.type.Str
 
-class MainWindow(window: ApplicationWindow, app: Application)
+class MainWindow(window: ApplicationWindow, app: Application, dispatcher: Dispatcher)
 {
-    private val trackerButton = TrackerButton(GtkAppContext.services)
-    private val dispatcher = Dispatcher()
+    private val trackerButton = TrackerButtonStartPauseResume(GtkAppContext.services)
 
     private val contextRevealButton = ToggleButton()
     private val mainView = MainStackView(app, dispatcher,window, GtkAppContext.storage, contextRevealButton)
@@ -33,7 +32,7 @@ class MainWindow(window: ApplicationWindow, app: Application)
 
         window.child = box
         window.title = Str(GtkAppConfig.title)
-        window.titlebar = createHeader(window, app, mainView)
+        window.titlebar = createHeader(window, app,dispatcher, mainView)
 
         window.setDefaultSize(720 / 2, 1440 / 2)
         window.onDestroy {
@@ -49,12 +48,10 @@ class MainWindow(window: ApplicationWindow, app: Application)
 
         dispatcher.addTarget(trackerButton, InfoID.ALL)
         dispatcher.addTarget(contextBar, InfoID.ALL)
-
-        dispatcher.onResume()
     }
 
 
-    private fun createHeader(window: ApplicationWindow, app: Application, stack: MainStackView): HeaderBar {
+    private fun createHeader(window: ApplicationWindow, app: Application, dispatcher: Dispatcher, stack: MainStackView): HeaderBar {
         val header = HeaderBar()
 
         header.showTitleButtons = GTK.TRUE
@@ -65,7 +62,7 @@ class MainWindow(window: ApplicationWindow, app: Application)
         }
 
         header.packStart(MenuButton().apply {
-            val appMenu = AppMenu(window, stack)
+            val appMenu = AppMenu(window, GtkAppContext.services, dispatcher, stack)
             menuModel = appMenu.createMenu().create(app)
             PopoverMenu(popover.cast()).apply {
                 appMenu.createCustomWidgets().forEach {

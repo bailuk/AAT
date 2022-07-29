@@ -7,7 +7,7 @@ import ch.bailu.foc.Foc;
 public interface DirectoryServiceInterface extends WithStatusText {
     DbResultSet query(String selection);
 
+    void openDir(Foc dir);
     void rescan();
-
     void deleteEntry(Foc file);
 }

@@ -18,13 +18,11 @@ public class AppDirectory  {
     public static final String DIR_TILES = "tiles";
     public static final String DIR_TILES_OSMDROID = "osmdroid/tiles";
 
-
     private static final String DIR_LOG = "log";
     private static final String FILE_LOG = "log.gpx";
     public static Foc getLogFile(SolidDataDirectory sdirectory) {
         return getDataDirectory(sdirectory, DIR_LOG).child(FILE_LOG);
     }
-
 
     public static final String DIR_OVERLAY = "overlay";
     public static final String DIR_IMPORT = "import";
@@ -33,18 +31,11 @@ public class AppDirectory  {
     public static final String DIR_OVERPASS = "query/overpass";
     public static final String DIR_POI = "query/poi";
 
-
     public static final String DIR_TEST = "test";
-
-
-
-
 
     public static final String DIR_CACHE = "cache";
     public static final String FILE_CACHE_DB="summary.db";
     public static final String FILE_CACHE_MVDB="summary.mv.db";
-
-
 
     private static final String DIR_EDIT = "overlay/draft";
     private static final String FILE_DRAFT= "draft.gpx";
@@ -52,10 +43,7 @@ public class AppDirectory  {
     public static Foc getEditorDraft(SolidDataDirectory sdirectory) {
         return getDataDirectory(sdirectory, DIR_EDIT).child(FILE_DRAFT);
     }
-
     //////////////////////////////////////////////////////////////////////////////////////
-
-
 
 
     /////////////////////////////////////////////////////////////////////////////////////////////////
@@ -68,8 +56,6 @@ public class AppDirectory  {
         return sdirectory.getValueAsFile();
     }
     //////////////////////////////////////////////////////////////////////////////////////////////////
-
-
 
 
     ///////////////////////////////////////////////////////////////////////////////////////
@@ -88,10 +74,8 @@ public class AppDirectory  {
 
 
     ///////////////////////////////////////////////////////////////////////////////////////////////
-
     private static final int MAX_TRY=99;
     public static final String GPX_EXTENSION=".gpx";
-
 
     public static Foc generateUniqueFilePath(Foc directory, String prefix, String extension)
             throws IOException {
@@ -110,13 +94,11 @@ public class AppDirectory  {
         return file;
     }
 
-
     public static String generateDatePrefix() {
         long time = System.currentTimeMillis();
         return String.format(Locale.ROOT,
                 "%tY_%tm_%td_%tH_%tM", time, time, time, time, time);
     }
-
 
     private static String generateFileName(String prefix, String extension) {
         return prefix + extension;
@@ -126,8 +108,6 @@ public class AppDirectory  {
         return String.format(Locale.ROOT,
                 "%s_%d%s", prefix, i, extension);
     }
-
-
 
     public static String parsePrefix(Foc file) {
         StringBuilder name = new StringBuilder(file.getName());
@@ -146,4 +126,15 @@ public class AppDirectory  {
         return name.toString();
     }
 
+    public static Foc[] getGpxDirectories(SolidDataDirectory sdirectory) {
+        return new Foc[] {
+                AppDirectory.getTrackListDirectory(sdirectory, 0),
+                AppDirectory.getTrackListDirectory(sdirectory, 1),
+                AppDirectory.getTrackListDirectory(sdirectory, 2),
+                AppDirectory.getTrackListDirectory(sdirectory, 3),
+                AppDirectory.getTrackListDirectory(sdirectory, 4),
+                AppDirectory.getDataDirectory(sdirectory, AppDirectory.DIR_OVERLAY),
+                AppDirectory.getDataDirectory(sdirectory, AppDirectory.DIR_IMPORT)
+        };
+    }
 }

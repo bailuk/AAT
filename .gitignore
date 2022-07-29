@@ -20,11 +20,12 @@ local.properties
 # Log Files
 *.log
 
-# Android Studio, Intellij and Gradle 
+# Android Studio, Intellij and Gradle
 *.iml
 .idea
 .gradle
 build/
+release/
 .navigation
 captures/
 output.json

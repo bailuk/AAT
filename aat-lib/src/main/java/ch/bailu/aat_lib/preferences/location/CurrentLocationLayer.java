@@ -5,6 +5,8 @@ import org.mapsforge.core.graphics.Paint;
 import org.mapsforge.core.graphics.Style;
 import org.mapsforge.core.model.LatLong;
 
+import javax.annotation.Nonnull;
+
 import ch.bailu.aat_lib.app.AppColor;
 import ch.bailu.aat_lib.dispatcher.DispatcherInterface;
 import ch.bailu.aat_lib.dispatcher.OnContentUpdatedInterface;
@@ -21,13 +23,9 @@ public final class CurrentLocationLayer implements OnContentUpdatedInterface, Ma
     private final static int STROKE_WIDTH=2;
 
     private final static Saturate COLOR = new Saturate(AppColor.HL_ORANGE);
-
     private GpxInformation center = GpxInformation.NULL;
-
     private final Paint paint;
-
     private final MapContext mcontext;
-
 
 
     public CurrentLocationLayer(MapContext mc, DispatcherInterface d) {
@@ -40,7 +38,6 @@ public final class CurrentLocationLayer implements OnContentUpdatedInterface, Ma
         d.addTarget(this, InfoID.LOCATION);
     }
 
-
     private static class Saturate {
         private final static int STEPS=60;
 
@@ -52,24 +49,20 @@ public final class CurrentLocationLayer implements OnContentUpdatedInterface, Ma
         public Saturate(int c) {
             rgb = new ARGB(c);
 
-            int max = (int) Math.max(rgb.red(), Math.max(rgb.green(),rgb.blue()));
+            int max = Math.max(rgb.red(), Math.max(rgb.green(),rgb.blue()));
 
-            fill((int) rgb.red(), max, r);
-            fill((int) rgb.green(), max, g);
-            fill((int) rgb.blue(), max, b);
+            fill(rgb.red(), max, r);
+            fill(rgb.green(), max, g);
+            fill(rgb.blue(), max, b);
         }
 
-
         private void fill(int base, int max, short[] t) {
-            final float steps = STEPS;
-
             for (int i=0; i<STEPS; i++) {
-                float step = (max - base) / steps;
+                float step = (max - base) / (float) STEPS;
 
                 t[i] = (short) (base+ Math.round(step * i));
             }
         }
-
 
         public int colorFromTimeStamp(long time) {
 
@@ -83,21 +76,15 @@ public final class CurrentLocationLayer implements OnContentUpdatedInterface, Ma
     }
 
     @Override
-    public void onContentUpdated(int iid, GpxInformation info) {
+    public void onContentUpdated(int iid, @Nonnull GpxInformation info) {
         center = info;
 
         if (contains(center))
             mcontext.getMapView().requestRedraw();
     }
 
-
-
-
     @Override
-    public void onLayout(boolean changed, int l, int t, int r, int b) {
-
-    }
-
+    public void onLayout(boolean changed, int l, int t, int r, int b) {}
 
     @Override
     public void drawInside(MapContext mcontext) {
@@ -117,18 +104,15 @@ public final class CurrentLocationLayer implements OnContentUpdatedInterface, Ma
     }
 
     @Override
-    public boolean onTap( Point tapXY) {
+    public boolean onTap(Point tapXY) {
         return false;
     }
 
     @Override
-    public void drawForeground(MapContext mcontext) {
-
-    }
-
+    public void drawForeground(MapContext mcontext) {}
 
     @Override
-    public void onPreferencesChanged(StorageInterface s, String key) {}
+    public void onPreferencesChanged(@Nonnull StorageInterface s, @Nonnull String key) {}
 
     @Override
     public void onAttached() {}

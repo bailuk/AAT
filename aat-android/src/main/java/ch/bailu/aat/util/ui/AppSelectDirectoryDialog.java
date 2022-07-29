@@ -14,24 +14,13 @@ public abstract class AppSelectDirectoryDialog  implements  DialogInterface.OnCl
     private final Foc srcFile;
     private final Foc[] directories;
 
-
     private final Context context;
     public AppSelectDirectoryDialog (Context c, Foc u) {
 
         context=c;
         SolidDataDirectory sdirectory = new AndroidSolidDataDirectory(context);
         srcFile = u;
-        directories = new Foc[] {
-                AppDirectory.getTrackListDirectory(sdirectory, 0),
-                AppDirectory.getTrackListDirectory(sdirectory, 1),
-                AppDirectory.getTrackListDirectory(sdirectory, 2),
-                AppDirectory.getTrackListDirectory(sdirectory, 3),
-                AppDirectory.getTrackListDirectory(sdirectory, 4),
-                AppDirectory.getDataDirectory(sdirectory, AppDirectory.DIR_OVERLAY),
-                AppDirectory.getDataDirectory(sdirectory, AppDirectory.DIR_IMPORT)
-                };
-
-
+        directories = AppDirectory.getGpxDirectories(sdirectory);
 
         final String[] names = new String[directories.length];
 
@@ -45,14 +34,11 @@ public abstract class AppSelectDirectoryDialog  implements  DialogInterface.OnCl
         dialog.show();
     }
 
-
     @Override
     public void onClick(DialogInterface dialog, int i) {
         copyTo(context, srcFile, directories[i]);
         dialog.dismiss();
     }
 
-
     public abstract void copyTo(Context context, Foc srcFile, Foc destDirectory);
-
 }

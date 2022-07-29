@@ -254,7 +254,7 @@ public final class DirectorySynchronizer  implements Closeable {
 
         @Override
         public void ping() {
-            if (canContinue == false) {
+            if (!canContinue) {
                 terminate();
 
             } else if (pendingHandle.isReadyAndLoaded()) {
@@ -267,8 +267,6 @@ public final class DirectorySynchronizer  implements Closeable {
 
             }  else if (pendingHandle.hasException()) {
                 state.start();
-                //setState(new StateLoadNextGpx());
-
             }
         }
 
@@ -292,8 +290,7 @@ public final class DirectorySynchronizer  implements Closeable {
             keys.add(GpxDbConstants.KEY_FILENAME);   values.add(filename);
             keys.add(GpxDbConstants.KEY_AVG_SPEED);  values.add(String.valueOf(summary.getSpeed()));
 
-            keys.add(GpxDbConstants.KEY_MAX_SPEED);  values.add(summary.getAttributes().get(
-                    MaxSpeed.INDEX_MAX_SPEED));
+            keys.add(GpxDbConstants.KEY_MAX_SPEED);  values.add(toNumber(summary.getAttributes().get(MaxSpeed.INDEX_MAX_SPEED)));
 
             keys.add(GpxDbConstants.KEY_DISTANCE);   values.add(String.valueOf(summary.getDistance()));
             keys.add(GpxDbConstants.KEY_START_TIME); values.add(String.valueOf(summary.getStartTime()));
@@ -307,6 +304,11 @@ public final class DirectorySynchronizer  implements Closeable {
             keys.add(GpxDbConstants.KEY_SOUTH_BOUNDING); values.add(String.valueOf(bounding.getLatSouthE6()));
         }
 
+    }
+
+    private String toNumber(String s) {
+        if (s.equals("")) return "0";
+        return s;
     }
 
 
@@ -350,7 +352,7 @@ public final class DirectorySynchronizer  implements Closeable {
 
         @Override
         public void ping() {
-            if (canContinue==false) {
+            if (!canContinue) {
                 terminate();
             } else if (pendingPreviewGenerator.isReady()) {
 

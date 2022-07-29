@@ -26,7 +26,6 @@ public class DownloadSource extends Source {
     private final boolean transparent;
 
 
-
     public DownloadSource(String n, int a, final String... url) {
         this(n, "", MIN_ZOOM, MAX_ZOOM, a, (a != Source.OPAQUE), url);
     }
@@ -38,7 +37,6 @@ public class DownloadSource extends Source {
         this(n, "",minZ, maxZ, a, (a != Source.OPAQUE), url);
     }
 
-
     public DownloadSource(String n, String k, int minZ, int maxZ, int a, boolean t, String... u) {
         name = n;
         apiKey = k;
@@ -49,18 +47,14 @@ public class DownloadSource extends Source {
         transparent = (a != Source.OPAQUE);
     }
 
-
-
     public String getName() {
         return name;
     }
-
 
     @Override
     public String getID(Tile tile, AppContext context) {
         return AppDirectory.getTileFile(Source.genRelativeFilePath(tile, name), context.getTileCacheDirectory()).getPath();
     }
-
 
     @Override
     public int getMinimumZoomLevel() {
@@ -81,8 +75,6 @@ public class DownloadSource extends Source {
         return alpha;
     }
 
-
-
     @Override
     public Obj.Factory getFactory(Tile t) {
         return new ObjTileDownloadable.Factory(t, this);
@@ -96,11 +88,9 @@ public class DownloadSource extends Source {
         return urls[random.nextInt(urls.length)];
     }
 
-
     public static boolean isDownloadBackgroundSource(Source source) {
         return (source == MAPNIK || source == OPEN_TOPO_MAP || source == OPEN_CYCLE_MAP);
     }
-
 
     public final static DownloadSource MAPNIK =
             new DownloadSource("Mapnik",
@@ -141,7 +131,6 @@ public class DownloadSource extends Source {
                 }
             };
 
-
     public final static DownloadSource TRAIL_MTB =
             new DownloadSource("TrailMTB",
                     Source.TRANSPARENT,
@@ -152,24 +141,35 @@ public class DownloadSource extends Source {
                     Source.TRANSPARENT,
                     "https://tile.waymarkedtrails.org/skating/");
 
-
     public final static DownloadSource TRAIL_HIKING =
             new DownloadSource("TrailHiking",
                     Source.TRANSPARENT,
                     "https://tile.waymarkedtrails.org/hiking/");
-
 
     public final static DownloadSource TRAIL_CYCLING =
             new DownloadSource("TrailCycling",
                     Source.TRANSPARENT,
                     "https://tile.waymarkedtrails.org/cycling/");
 
-
-
+    // https://wiki.openstreetmap.org/wiki/Openptmap Seems to be gone
+    // Use https://www.öpnvkarte.de/ instead
     public final static DownloadSource TRANSPORT_OVERLAY =
-            new DownloadSource("OpenPtMap",
+            new DownloadSource("OePNVKarte",
                     5, 16,
-                    Source.TRANSPARENT,
-                    "http://openptmap.org/tiles/");
+                    Source.OPAQUE,
+                    "https://tileserver.memomaps.de/tilegen/");
 
+    // Support old devices
+    public final static DownloadSource MAPNIK_NO_TLS =
+            new DownloadSource("Mapnik-no-TLS",
+                    Source.OPAQUE,
+                    "http://a.tile.openstreetmap.org/",
+                    "http://b.tile.openstreetmap.org/",
+                    "http://c.tile.openstreetmap.org/") {
+
+                @Override
+                public boolean filterBitmap() {
+                    return true;
+                }
+            };
 }

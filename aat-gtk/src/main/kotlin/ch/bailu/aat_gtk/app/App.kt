@@ -6,6 +6,7 @@ import ch.bailu.aat_gtk.view.MainWindow
 import ch.bailu.aat_lib.app.AppConfig
 import ch.bailu.aat_lib.app.AppGraphicFactory
 import ch.bailu.aat_lib.dispatcher.AppBroadcaster
+import ch.bailu.aat_lib.dispatcher.Dispatcher
 import ch.bailu.aat_lib.logger.AppLog
 import ch.bailu.aat_lib.logger.BroadcastLogger
 import ch.bailu.gtk.gio.ApplicationFlags
@@ -21,6 +22,8 @@ fun main() {
 
 
 object App {
+    private val dispatcher = Dispatcher()
+
     init {
         AppLog.set(SL4JLogger())
         AppGraphicFactory.set(GtkGraphicFactory.INSTANCE)
@@ -40,14 +43,17 @@ object App {
                 SL4JLogger()
             )
         )
+
     }
 
     fun run() {
         val app = Application(Str(GtkAppConfig.applicationId), ApplicationFlags.FLAGS_NONE)
 
+
         app.onActivate {
             try {
-                MainWindow(ApplicationWindow(app), app)
+                MainWindow(ApplicationWindow(app), app, dispatcher)
+                dispatcher.onResume()
 
             } catch (e: Exception) {
                 e.printStackTrace()
@@ -57,6 +63,7 @@ object App {
     }
 
     fun exit(exitCode: Int) {
+        dispatcher.onPause()
         GtkAppContext.services.trackerService.onStartStop()
 
         GtkStorage.save()

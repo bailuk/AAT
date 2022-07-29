@@ -14,6 +14,8 @@ import org.mapsforge.map.android.graphics.AndroidGraphicFactory;
 import java.io.IOException;
 import java.io.InputStream;
 
+import javax.annotation.Nonnull;
+
 import ch.bailu.aat_lib.map.tile.MapTileInterface;
 import ch.bailu.aat_lib.preferences.map.SolidTileSize;
 import ch.bailu.aat_lib.service.cache.Obj;
@@ -43,6 +45,13 @@ public class AndroidSyncTileBitmap implements MapTileInterface {
         return null;
     }
 
+    @Override
+    public synchronized org.mapsforge.core.graphics.Canvas getCanvas() {
+        if (bitmap != null) {
+            return AndroidGraphicFactory.createGraphicContext(getAndroidCanvas());
+        }
+        return null;
+    }
 
 
     private static TileBitmap load(Foc file, int size, boolean transparent) {
@@ -86,6 +95,7 @@ public class AndroidSyncTileBitmap implements MapTileInterface {
     }
 
 
+    @Override
     public synchronized void set(int size, boolean transparent) {
         set(AndroidGraphicFactory.INSTANCE.createTileBitmap(size, transparent));
     }
@@ -108,7 +118,7 @@ public class AndroidSyncTileBitmap implements MapTileInterface {
 
 
     @Override
-    public synchronized void setBuffer(int[] buffer, Rect r) {
+    public synchronized void setBuffer(@Nonnull int[] buffer, @Nonnull Rect r) {
         initBitmap();
         Bitmap b = getAndroidBitmap();
 
@@ -118,11 +128,8 @@ public class AndroidSyncTileBitmap implements MapTileInterface {
     }
 
     private void initBitmap() {
-        Bitmap b = getAndroidBitmap();
-        if (b == null) {
+        if (bitmap == null) {
             set(SolidTileSize.DEFAULT_TILESIZE, true);
-            //b = getAndroidBitmap();
-            //if (b != null) b.eraseColor(android.graphics.Color.TRANSPARENT);
         }
     }
 

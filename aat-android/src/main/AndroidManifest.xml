@@ -56,8 +56,6 @@
             android:name="ch.bailu.aat.activities.PreferencesActivity">
         </activity>
 
-
-
         <activity
             android:name="ch.bailu.aat.activities.TrackListActivity">
         </activity>

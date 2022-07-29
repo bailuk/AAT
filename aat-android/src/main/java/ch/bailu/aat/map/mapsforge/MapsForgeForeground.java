@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 import ch.bailu.aat.map.AndroidDraw;
 import ch.bailu.aat.util.ui.AndroidAppDensity;
+import ch.bailu.aat_lib.app.AppContext;
 import ch.bailu.aat_lib.map.MapContext;
 import ch.bailu.aat_lib.map.MapDraw;
 import ch.bailu.aat_lib.map.MapMetrics;
@@ -27,12 +28,12 @@ public class MapsForgeForeground implements MapContext {
 
     private final ArrayList<MapLayerInterface> layers;
 
-    public MapsForgeForeground(MapView mapView, MapContext mc, AndroidAppDensity d, ArrayList<MapLayerInterface> l) {
+    public MapsForgeForeground(AppContext appContext, MapView mapView, MapContext mc, AndroidAppDensity d, ArrayList<MapLayerInterface> l) {
         mcontext = mc;
         layers = l;
 
         metrics = new MapsForgeMetrics(mapView, d);
-        draw = new AndroidDraw(mc.getMetrics().getDensity());
+        draw = new AndroidDraw(mc.getMetrics().getDensity(), appContext);
 
     }
 

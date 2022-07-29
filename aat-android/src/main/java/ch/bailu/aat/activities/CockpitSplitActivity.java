@@ -6,7 +6,7 @@ import android.view.View;
 import ch.bailu.aat.util.AndroidTimer;
 import ch.bailu.aat.views.graph.GraphViewFactory;
 import ch.bailu.aat_lib.dispatcher.CurrentLocationSource;
-import ch.bailu.aat.dispatcher.EditorSource;
+import ch.bailu.aat_lib.description.EditorSource;
 import ch.bailu.aat_lib.dispatcher.OverlaySource;
 import ch.bailu.aat.dispatcher.SensorSource;
 import ch.bailu.aat_lib.dispatcher.TrackerSource;
@@ -87,7 +87,7 @@ public class CockpitSplitActivity extends AbsKeepScreenOnActivity {
         cockpitB.addC(this, new MaximumSpeedDescription(getStorage()), InfoID.TRACKER);
 
         percentageB.add(cockpitB, 50);
-        percentageB.add(GraphViewFactory.createSpeedGraph(this, THEME)
+        percentageB.add(GraphViewFactory.createSpeedGraph(getAppContext(), this, THEME)
                 .connect(this, InfoID.TRACKER), 50);
 
         cockpitD.addAltitude(this);
@@ -96,7 +96,7 @@ public class CockpitSplitActivity extends AbsKeepScreenOnActivity {
         cockpitD.add(this, new SlopeDescription(), InfoID.TRACKER);
 
         percentageD.add(cockpitD, 50);
-        percentageD.add(GraphViewFactory.createAltitudeGraph(this,THEME)
+        percentageD.add(GraphViewFactory.createAltitudeGraph(getAppContext(), this,THEME)
                         .connect(this, InfoID.TRACKER), 50);
 
         cockpitC.add(this, new CadenceDescription(), InfoID.CADENCE_SENSOR);
@@ -106,7 +106,7 @@ public class CockpitSplitActivity extends AbsKeepScreenOnActivity {
         cockpitC.add(this, new TotalStepsDescription(), InfoID.TRACKER);
 
         percentageC.add(cockpitC, 50);
-        percentageC.add(GraphViewFactory.createSpmGraph(this, THEME)
+        percentageC.add(GraphViewFactory.createSpmGraph(getAppContext(), this, THEME)
                 .connect(this, InfoID.TRACKER), 50);
 
         MultiView mv = new MultiView(this, SOLID_KEY);

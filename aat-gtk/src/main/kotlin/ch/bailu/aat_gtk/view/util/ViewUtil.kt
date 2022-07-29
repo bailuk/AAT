@@ -1,13 +1,9 @@
 package ch.bailu.aat_gtk.view.util
 
-import ch.bailu.aat_gtk.util.EmptyStr
 import ch.bailu.aat_gtk.util.IconMap
 import ch.bailu.aat_gtk.view.map.control.Bar
 import ch.bailu.gtk.gtk.Button
-import ch.bailu.gtk.gtk.CheckButton
-import ch.bailu.gtk.gtk.Label
 import ch.bailu.gtk.gtk.Widget
-import ch.bailu.gtk.type.Str
 
 
 fun Widget.margin(margin: Int) {
@@ -16,20 +12,6 @@ fun Widget.margin(margin: Int) {
     this.marginTop    = margin
     this.marginBottom = margin
 }
-
-
-class GtkLabel : Label(EmptyStr) {
-    private var str: Str = EmptyStr
-    var text = ""
-    set(value) {
-        val newStr = Str(value)
-        label = newStr
-        str.destroy()
-        str = newStr
-        field = value
-    }
-}
-
 
 fun String.truncate(max: Int = 30): String {
     if (this.length > max -1) {
@@ -48,14 +30,3 @@ fun Button.setIcon(imageResource: String, size: Int = Bar.ICON_SIZE) {
     child = image
 }
 
-fun Label.setText(text: String) {
-    val old = label
-    label = Str(text)
-    if (old is Str) old.destroy()
-}
-
-fun CheckButton.setText(text: String) {
-    val old = label
-    label = Str(text)
-    if (old is Str) old.destroy()
-}

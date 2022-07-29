@@ -47,7 +47,7 @@ public final class EditorHelper {
     }
 
     public void onPause() {
-        if (IID== InfoID.EDITOR_DRAFT) save();
+        if (IID == InfoID.EDITOR_DRAFT) save();
 
         handle.free();
         handle = ObjNull.NULL;

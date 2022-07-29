@@ -9,7 +9,7 @@ import org.mapsforge.core.model.LatLong;
 
 import ch.bailu.aat.R;
 import ch.bailu.aat_lib.dispatcher.CurrentLocationSource;
-import ch.bailu.aat.dispatcher.EditorSource;
+import ch.bailu.aat_lib.description.EditorSource;
 import ch.bailu.aat_lib.dispatcher.OverlaySource;
 import ch.bailu.aat_lib.dispatcher.TrackerSource;
 import ch.bailu.aat.map.MapFactory;

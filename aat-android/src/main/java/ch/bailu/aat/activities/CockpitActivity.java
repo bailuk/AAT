@@ -10,7 +10,7 @@ import ch.bailu.aat_lib.description.DistanceDescription;
 import ch.bailu.aat_lib.description.MaximumSpeedDescription;
 import ch.bailu.aat_lib.description.PredictiveTimeDescription;
 import ch.bailu.aat_lib.dispatcher.CurrentLocationSource;
-import ch.bailu.aat.dispatcher.EditorSource;
+import ch.bailu.aat_lib.description.EditorSource;
 import ch.bailu.aat_lib.dispatcher.OverlaySource;
 import ch.bailu.aat.dispatcher.SensorSource;
 import ch.bailu.aat_lib.dispatcher.TrackerSource;
@@ -56,7 +56,7 @@ public class CockpitActivity extends AbsKeepScreenOnActivity {
         MultiView multiView = new MultiView(this, SOLID_KEY);
         multiView.add(createCockpit());
         multiView.add(MapFactory.DEF(this, SOLID_KEY).tracker(edit).toView());
-        multiView.add(GraphViewFactory.all(this, this, theme, InfoID.TRACKER));
+        multiView.add(GraphViewFactory.all(getAppContext(),this, this, theme, InfoID.TRACKER));
 
         return multiView;
     }

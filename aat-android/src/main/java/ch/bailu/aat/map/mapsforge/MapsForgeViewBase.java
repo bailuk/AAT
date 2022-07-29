@@ -18,6 +18,7 @@ import javax.annotation.Nonnull;
 
 import ch.bailu.aat.map.MapDensity;
 import ch.bailu.aat.preferences.Storage;
+import ch.bailu.aat_lib.app.AppContext;
 import ch.bailu.aat_lib.coordinates.BoundingBoxE6;
 import ch.bailu.aat_lib.dispatcher.LifeCycleInterface;
 import ch.bailu.aat_lib.map.MapContext;
@@ -50,16 +51,14 @@ public class MapsForgeViewBase extends MapView implements
 
 
 
-
-
-    public MapsForgeViewBase(Context context, ServicesInterface servicesInterface, String key, MapDensity d) {
+    public MapsForgeViewBase(AppContext appContext, Context context, String key, MapDensity d) {
         super(context);
 
         this.setBackgroundColor(getModel().displayModel.getBackgroundColor());
         getModel().displayModel.setFixedTileSize(d.getTileSize());
 
-        services = servicesInterface;
-        mcontext = new MapsForgeContext(this, key, d);
+        services = appContext.getServices();
+        mcontext = new MapsForgeContext(appContext,this, key, d);
         add(mcontext, mcontext);
 
         storage = new Storage(context);

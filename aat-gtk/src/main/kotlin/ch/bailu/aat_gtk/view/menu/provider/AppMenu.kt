@@ -1,15 +1,19 @@
 package ch.bailu.aat_gtk.view.menu.provider
 
-import ch.bailu.aat_gtk.app.GtkAppContext
 import ch.bailu.aat_gtk.lib.menu.MenuModelBuilder
 import ch.bailu.aat_gtk.view.MainStackView
+import ch.bailu.aat_gtk.view.TrackerButtonStartStop
+import ch.bailu.aat_lib.dispatcher.Dispatcher
+import ch.bailu.aat_lib.gpx.InfoID
 import ch.bailu.aat_lib.resources.Res
 import ch.bailu.aat_lib.resources.ToDo
+import ch.bailu.aat_lib.service.ServicesInterface
 import ch.bailu.gtk.gtk.ApplicationWindow
-import ch.bailu.gtk.gtk.Button
-import ch.bailu.gtk.type.Str
 
-class AppMenu(private val window: ApplicationWindow, private val stack: MainStackView) :
+class AppMenu(private val window: ApplicationWindow,
+              private val services: ServicesInterface,
+              private val dispatcher: Dispatcher,
+              private val stack: MainStackView) :
     MenuProvider {
     override fun createMenu(): MenuModelBuilder {
         return MenuModelBuilder()
@@ -27,11 +31,9 @@ class AppMenu(private val window: ApplicationWindow, private val stack: MainStac
     }
 
     override fun createCustomWidgets(): Array<CustomWidget> {
-        val trackerButton = Button.newWithLabelButton(Str(GtkAppContext.services.trackerService.startStopText))
-        trackerButton.onClicked {
-            GtkAppContext.services.trackerService.onStartStop()
-            trackerButton.label = Str(GtkAppContext.services.trackerService.startStopText)
-        }
-        return arrayOf(CustomWidget(trackerButton, "tracker-button"))
+        val trackerButton = TrackerButtonStartStop(services)
+        dispatcher.addTarget(trackerButton, InfoID.TRACKER)
+
+        return arrayOf(CustomWidget(trackerButton.button, "tracker-button"))
     }
 }

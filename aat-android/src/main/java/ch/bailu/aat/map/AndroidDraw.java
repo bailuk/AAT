@@ -6,10 +6,12 @@ import org.mapsforge.core.graphics.Canvas;
 import org.mapsforge.core.graphics.Paint;
 import org.mapsforge.map.android.graphics.AndroidGraphicFactory;
 
+import ch.bailu.aat_lib.app.AppContext;
 import ch.bailu.aat_lib.map.AppDensity;
 import ch.bailu.aat_lib.map.MapDraw;
 import ch.bailu.aat_lib.map.MapMetrics;
 import ch.bailu.aat_lib.map.MapPaint;
+import ch.bailu.aat_lib.map.NodeBitmap;
 import ch.bailu.aat_lib.util.Point;
 import ch.bailu.aat_lib.util.Rect;
 import ch.bailu.aat_lib.map.TwoNodes;
@@ -33,13 +35,13 @@ public final class AndroidDraw implements MapDraw {
 
     private final NodeBitmap nodePainter;
 
-    public AndroidDraw(AppDensity res) {
+    public AndroidDraw(AppDensity res, AppContext appContext) {
         legendPaint = setFakeBoldText(MapPaint.createLegendTextPaint(res));
         gridPaint   = MapPaint.createGridPaint(res);
         textPaint   = setFakeBoldText(MapPaint.createStatusTextPaint(res));
 
         textHeight  = textPaint.getTextHeight("X")+5;
-        nodePainter = NodeBitmap.get(res);
+        nodePainter = NodeBitmap.get(res, appContext);
         point_radius = res.toPixel_i(POINT_RADIUS);
     }
 

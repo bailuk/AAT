@@ -22,7 +22,7 @@ public class MapsForgeView extends MapsForgeViewBase {
     private final ServicesInterface services;
 
     public MapsForgeView(Context context, AppContext appContext, DispatcherInterface dispatcher, String key) {
-        super(context, appContext.getServices(), key, new MapDensity(context));
+        super(appContext, context, key, new MapDensity(context));
 
         stack = new MapsForgeTileLayerStackConfigured.All(this, appContext);
         add(stack, stack);
@@ -33,7 +33,7 @@ public class MapsForgeView extends MapsForgeViewBase {
         pos = new MapPositionLayer(getMContext(), new Storage(context), dispatcher);
         add(pos);
 
-        foreground = new MapsForgeForeground(this,
+        foreground = new MapsForgeForeground(appContext,this,
                 getMContext(),
                 new MapDensity(context),
                 getLayers());

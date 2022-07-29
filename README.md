@@ -17,7 +17,7 @@ Get source code at [GitHub](https://github.com/bailuk/AAT)
 Install from [F-Droid](https://f-droid.org/repository/browse/?fdid=ch.bailu.aat)
 
 ## Copyright
-(c) 2011-2022 Lukas Bai bailu@bailu.ch
+(c) 2011-2022 Lukas Bai bailu@bailu.ch  
 license: [GNU GPLv3 or later](http://www.gnu.org/licenses/gpl.html)  
 
 ### Contributors

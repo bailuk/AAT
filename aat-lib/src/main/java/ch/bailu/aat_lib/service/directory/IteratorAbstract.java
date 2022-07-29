@@ -1,9 +1,12 @@
 package ch.bailu.aat_lib.service.directory;
 
+import javax.annotation.Nonnull;
+
 import ch.bailu.aat_lib.app.AppContext;
 import ch.bailu.aat_lib.dispatcher.AppBroadcaster;
 import ch.bailu.aat_lib.dispatcher.BroadcastReceiver;
 import ch.bailu.aat_lib.gpx.GpxInformation;
+import ch.bailu.aat_lib.logger.AppLog;
 import ch.bailu.aat_lib.preferences.OnPreferencesChanged;
 import ch.bailu.aat_lib.preferences.SolidDirectoryQuery;
 import ch.bailu.aat_lib.preferences.StorageInterface;
@@ -26,22 +29,23 @@ public abstract class IteratorAbstract extends Iterator implements OnPreferences
         sdirectory = new SolidDirectoryQuery(appContext.getStorage(), appContext);
         sdirectory.register(this);
         appContext.getBroadcaster().register(onSyncChanged, AppBroadcaster.DB_SYNC_CHANGED);
+        openAndQuery();
     }
 
-
     @Override
-    public void setOnCursorChangedLinsener(OnCursorChangedListener l) {
+    public void setOnCursorChangedListener(OnCursorChangedListener l) {
         onCursorChangedListener = l;
     }
 
-
     @Override
-    public void onPreferencesChanged(StorageInterface s, String key) {
-        if (sdirectory.containsKey(key) && selection.equals(sdirectory.createSelectionString()) == false) {
+    public void onPreferencesChanged(@Nonnull StorageInterface s, @Nonnull String key) {
+        if (sdirectory.hasKey(key)) {
+            openAndQuery();
+
+        } else if (sdirectory.containsKey(key) && !selection.equals(sdirectory.createSelectionString())) {
             query();
         }
     }
-
 
     @Override
     public boolean moveToPrevious() {
@@ -49,13 +53,11 @@ public abstract class IteratorAbstract extends Iterator implements OnPreferences
         return false;
     }
 
-
     @Override
     public boolean moveToNext() {
         if (resultSet != null) return resultSet.moveToNext();
         return false;
     }
-
 
     @Override
     public boolean moveToPosition(int pos) {
@@ -63,13 +65,11 @@ public abstract class IteratorAbstract extends Iterator implements OnPreferences
         return false;
     }
 
-
     @Override
     public int getCount() {
         if (resultSet != null) return resultSet.getCount();
         return 0;
     }
-
 
     @Override
     public int getPosition() {
@@ -77,27 +77,46 @@ public abstract class IteratorAbstract extends Iterator implements OnPreferences
         return -1;
     }
 
-
     @Override
     public abstract GpxInformation getInfo();
 
     public abstract void onCursorChanged(DbResultSet resultSet, Foc directory, String fid);
 
+    private void openAndQuery() {
+        String fileOnOldPosition = "";
+        int oldPosition=0;
+
+        appContext.getServices().getDirectoryService().openDir(sdirectory.getValueAsFile());
+
+        updateResultFromSelection();
+        moveToOldPosition(oldPosition, fileOnOldPosition);
+    }
 
     @Override
     public void query() {
         String fileOnOldPosition = "";
         int oldPosition=0;
 
-        selection = sdirectory.createSelectionString();
         if (resultSet != null) {
             oldPosition = resultSet.getPosition();
             fileOnOldPosition = getInfo().getFile().getPath();
             resultSet.close();
         }
 
-        resultSet = appContext.getServices().getDirectoryService().query(selection);
+        updateResultFromSelection();
+        moveToOldPosition(oldPosition, fileOnOldPosition);
+    }
 
+    private void updateResultFromSelection() {
+        try {
+            selection = sdirectory.createSelectionString();
+            resultSet = appContext.getServices().getDirectoryService().query(selection);
+        } catch (Exception e) {
+            AppLog.e(e.getClass().getSimpleName());
+        }
+    }
+
+    private void moveToOldPosition(int oldPosition, String fileOnOldPosition) {
         if (resultSet != null) {
             resultSet.moveToPosition(oldPosition);
 
@@ -105,7 +124,6 @@ public abstract class IteratorAbstract extends Iterator implements OnPreferences
             onCursorChangedListener.onCursorChanged();
         }
     }
-
 
     @Override
     public void close() {

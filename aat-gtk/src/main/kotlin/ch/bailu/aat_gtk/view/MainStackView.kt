@@ -1,23 +1,24 @@
 package ch.bailu.aat_gtk.view
 
 import ch.bailu.aat_gtk.app.GtkAppContext
-import ch.bailu.aat_gtk.view.toplevel.FileList
-import ch.bailu.aat_gtk.view.stack.LazyStackView
 import ch.bailu.aat_gtk.view.solid.PreferencesStackView
+import ch.bailu.aat_gtk.view.stack.LazyStackView
 import ch.bailu.aat_gtk.view.toplevel.CockpitView
 import ch.bailu.aat_gtk.view.toplevel.DetailView
 import ch.bailu.aat_gtk.view.toplevel.MapMainView
+import ch.bailu.aat_gtk.view.toplevel.list.FileList
 import ch.bailu.aat_lib.description.*
-import ch.bailu.aat_lib.dispatcher.DispatcherInterface
+import ch.bailu.aat_lib.dispatcher.CustomFileSource
+import ch.bailu.aat_lib.dispatcher.Dispatcher
 import ch.bailu.aat_lib.gpx.GpxInformation
 import ch.bailu.aat_lib.gpx.InfoID
 import ch.bailu.aat_lib.preferences.StorageInterface
 import ch.bailu.gtk.GTK
 import ch.bailu.gtk.gtk.*
 
-class MainStackView(
+class MainStackView (
     app: Application,
-    dispatcher: DispatcherInterface,
+    dispatcher: Dispatcher,
     window: Window,
     storage: StorageInterface,
     private val revealer: ToggleButton
@@ -33,6 +34,8 @@ class MainStackView(
 
 
     }
+
+    private val customFileSource = CustomFileSource(GtkAppContext)
 
     private var preferencesStackView: PreferencesStackView?  = null
     private var mapView: MapMainView? = null
@@ -52,22 +55,28 @@ class MainStackView(
     private var backTo = INDEX_MAP
 
     init {
+        dispatcher.addSource(customFileSource)
+
         stack.add("Map") {
             val mapView = MapMainView(app, dispatcher, this, GtkAppContext, window)
             this.mapView = mapView
+            mapView.onAttached()
+            dispatcher.requestUpdate()
             mapView.overlay
         }
 
         stack.add("Files") {
-            FileList(app, this, GtkAppContext.storage, GtkAppContext, dispatcher).vbox
+            FileList(app, GtkAppContext.storage, GtkAppContext, this).vbox
         }
 
         stack.add("Detail") {
-            DetailView(dispatcher, GtkAppContext.storage).scrolled
+            val result = DetailView(dispatcher, GtkAppContext.storage).scrolled
+            dispatcher.requestUpdate()
+            result
         }
 
         stack.add("Cockpit") {
-            CockpitView().apply {
+            val result = CockpitView().apply {
                 add(dispatcher, CurrentSpeedDescription(GtkAppContext.storage), InfoID.LOCATION)
                 add(dispatcher, AltitudeDescription(GtkAppContext.storage), InfoID.LOCATION)
 
@@ -75,6 +84,8 @@ class MainStackView(
                 add(dispatcher, DistanceDescription(GtkAppContext.storage), InfoID.TRACKER)
                 add(dispatcher, AverageSpeedDescriptionAP(GtkAppContext.storage), InfoID.TRACKER)
             }.flow
+            dispatcher.requestUpdate()
+            result
         }
 
         preferences = stack.add("Preferences") {
@@ -137,5 +148,10 @@ class MainStackView(
 
     override fun showContextBar() {
         revealer.active = GTK.TRUE
+    }
+
+    override fun load(info: GpxInformation) {
+        customFileSource.setFileID(info.file.toString())
+        showContextBar()
     }
 }

@@ -9,7 +9,7 @@ import org.mapsforge.core.graphics.Canvas
 import org.mapsforge.core.graphics.Paint
 import org.mapsforge.map.gtk.graphics.GtkGraphicFactory
 
-class GtkMapDraw: MapDraw {
+class GtkMapDraw(private val nodeBitmap: NodeBitmap): MapDraw {
     private val SPACE = 5
 
     private var canvas: Canvas? = null
@@ -45,7 +45,7 @@ class GtkMapDraw: MapDraw {
     }
 
     override fun getNodeBitmap(): Bitmap? {
-        return null
+        return nodeBitmap.tileBitmap.tileBitmap
     }
 
     override fun grid(center: Point, space: Int) {
@@ -109,10 +109,25 @@ class GtkMapDraw: MapDraw {
     }
 
 
-    override fun bitmap(b: Bitmap?, pixel: Point?) {}
+    override fun bitmap(b: Bitmap, pixel: Point) {
+        canvas?.drawBitmap(b, centerX(b,pixel), centerY(b,pixel))
+    }
 
-    override fun bitmap(b: Bitmap?, pixel: Point?, color: Int) {}
+    override fun bitmap(b: Bitmap, pixel: Point, color: Int) {
+        canvas?.drawBitmap(b, centerX(b,pixel), centerY(b,pixel))
+    }
 
+    private fun centerX(b: Bitmap, p: Point): Int {
+        return center(b.width, p.x)
+    }
+
+    private fun centerY(b: Bitmap, p: Point): Int {
+        return center(b.height, p.y)
+    }
+
+    private fun center(size: Int, pos: Int): Int {
+        return pos - size / 2
+    }
 
     override fun edge(nodes: TwoNodes, paint: Paint) {
         canvas?.drawLine(

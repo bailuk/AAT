@@ -21,7 +21,6 @@ public class AndroidDbConnection implements DbConnection {
         this.context = context;
     }
 
-
     @Override
     public void open(String path, int version, OnModelUpdate update) {
         try {
@@ -34,7 +33,6 @@ public class AndroidDbConnection implements DbConnection {
         } catch (Exception e) {
             throw new DbException(e);
         }
-
     }
 
     @Override

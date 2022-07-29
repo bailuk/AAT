@@ -5,8 +5,11 @@ import org.mapsforge.core.model.BoundingBox;
 import org.mapsforge.core.model.Point;
 import org.mapsforge.map.layer.Layer;
 
+import javax.annotation.Nonnull;
+
 import ch.bailu.aat.map.AndroidDraw;
 import ch.bailu.aat.util.ui.AndroidAppDensity;
+import ch.bailu.aat_lib.app.AppContext;
 import ch.bailu.aat_lib.map.MapContext;
 import ch.bailu.aat_lib.map.MapDraw;
 import ch.bailu.aat_lib.map.MapMetrics;
@@ -27,11 +30,11 @@ public class MapsForgeContext extends Layer implements MapContext, MapLayerInter
     private final MapsForgeViewBase mapView;
 
 
-    public MapsForgeContext(MapsForgeViewBase map,
+    public MapsForgeContext(AppContext appContext, MapsForgeViewBase map,
                             String key,
                             AndroidAppDensity d) {
         metrics = new MapsForgeMetrics(map, d);
-        draw = new AndroidDraw(metrics.getDensity());
+        draw = new AndroidDraw(metrics.getDensity(), appContext);
         nodes = new TwoNodes(metrics);
         skey = key;
         mapView = map;
@@ -60,7 +63,7 @@ public class MapsForgeContext extends Layer implements MapContext, MapLayerInter
 
 
     @Override
-    public void onPreferencesChanged(StorageInterface s, String key) {}
+    public void onPreferencesChanged(@Nonnull StorageInterface s, @Nonnull String key) {}
 
     @Override
     public MapMetrics getMetrics() {

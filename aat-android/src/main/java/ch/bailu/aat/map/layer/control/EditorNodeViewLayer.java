@@ -3,14 +3,15 @@ package ch.bailu.aat.map.layer.control;
 import android.content.Context;
 import android.view.View;
 
-import ch.bailu.aat.dispatcher.EditorSourceInterface;
-import ch.bailu.aat_lib.service.cache.ObjGpxEditable;
+import javax.annotation.Nonnull;
+
+import ch.bailu.aat_lib.app.AppContext;
+import ch.bailu.aat_lib.dispatcher.EditorSourceInterface;
 import ch.bailu.aat_lib.gpx.GpxInformation;
 import ch.bailu.aat_lib.gpx.GpxPointNode;
 import ch.bailu.aat_lib.map.MapContext;
-import ch.bailu.aat_lib.preferences.StorageInterface;
 import ch.bailu.aat_lib.resources.Res;
-import ch.bailu.aat_lib.service.ServicesInterface;
+import ch.bailu.aat_lib.service.cache.ObjGpxEditable;
 import ch.bailu.foc.Foc;
 
 public final class EditorNodeViewLayer extends NodeViewLayer {
@@ -18,8 +19,8 @@ public final class EditorNodeViewLayer extends NodeViewLayer {
     private final EditorSourceInterface editorSource;
     private boolean showNode = false;
 
-    public EditorNodeViewLayer(Context context, ServicesInterface services, StorageInterface s, MapContext mc, EditorSourceInterface e) {
-        super(context, services, s, mc);
+    public EditorNodeViewLayer(AppContext appContext, Context context, MapContext mc, EditorSourceInterface e) {
+        super(appContext, context, mc);
         editorSource = e;
 
         setText();
@@ -43,7 +44,7 @@ public final class EditorNodeViewLayer extends NodeViewLayer {
 
 
     @Override
-    public void setSelectedNode(int IID, GpxInformation info, GpxPointNode node, int index) {
+    public void setSelectedNode(int IID, @Nonnull GpxInformation info, @Nonnull GpxPointNode node, int index) {
         showNode = true;
         editorSource.getEditor().select(node);
         super.setSelectedNode(IID, info, node, index);
@@ -51,7 +52,7 @@ public final class EditorNodeViewLayer extends NodeViewLayer {
 
 
     @Override
-    public void onContentUpdated(int iid, GpxInformation info) {
+    public void onContentUpdated(int iid, @Nonnull GpxInformation info) {
         super.onContentUpdated(iid, info);
         setBackgroundColorFromIID(iid);
 

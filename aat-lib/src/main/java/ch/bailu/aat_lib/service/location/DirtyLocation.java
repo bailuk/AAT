@@ -1,5 +1,6 @@
 package ch.bailu.aat_lib.service.location;
 
+import ch.bailu.aat_lib.coordinates.LatLongInterface;
 import ch.bailu.aat_lib.dispatcher.AppBroadcaster;
 import ch.bailu.aat_lib.dispatcher.Broadcaster;
 import ch.bailu.aat_lib.gpx.GpxInformation;
@@ -33,8 +34,7 @@ public final class DirtyLocation extends LocationStackChainedItem {
 
     @Override
     public void close() {
-        storage.writeInteger(SOLID_KEY + SolidMapPosition.LONGITUDE_SUFFIX, locationInformation.getLongitudeE6());
-        storage.writeInteger(SOLID_KEY + SolidMapPosition.LATITUDE_SUFFIX, locationInformation.getLatitudeE6());
+        SolidMapPosition.savePosition(storage, SOLID_KEY, locationInformation);
     }
 
 
@@ -76,8 +76,10 @@ public final class DirtyLocation extends LocationStackChainedItem {
 
 
         private void readPosition(StorageInterface storage) {
-            longitude=storage.readInteger(SOLID_KEY + SolidMapPosition.LONGITUDE_SUFFIX);
-            latitude=storage.readInteger(SOLID_KEY + SolidMapPosition.LATITUDE_SUFFIX);
+            LatLongInterface latLongE6 = SolidMapPosition.loadPosition(storage, SOLID_KEY);
+
+            longitude=latLongE6.getLongitudeE6();
+            latitude= latLongE6.getLatitudeE6();
         }
 
         @Override
