@@ -28,6 +28,7 @@ public final class SolidMapTileStack extends SolidCheckList {
             DownloadSource.TRAIL_HIKING,
             DownloadSource.TRAIL_MTB,
             DownloadSource.TRAIL_CYCLING,
+            DownloadSource.MAPNIK_NO_TLS
     };
 
 
