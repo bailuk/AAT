@@ -1,10 +1,8 @@
 #!/bin/bash
 
 # Convert images to android resources and copies them to 'assets' directory
-# Depends on 'xcf2png' (https://github.com/j-jorge/xcftools/) 
+# Depends on 'xcf2png' (https://github.com/j-jorge/xcftools/)
 # and 'convert' from ImageMagick (https://imagemagick.org/index.php)
-
-
 
 DRAW="../../app/src/main/res/drawable"
 
@@ -122,67 +120,59 @@ CLEAR_DIRECTORY $XXXHDPI
 ####### Application
 SCOPY "status"
 
-
 ####### Preview
 COPY "open-menu-light"
 
 ####### Top-Bar
-INVERT "edit-undo" 
-INVERT "go-next" 
-INVERT "go-previous" 
-INVERT "go-down" 
-INVERT "go-up" 
+INVERT "edit-undo"
+INVERT "go-next"
+INVERT "go-previous"
+INVERT "go-down"
+INVERT "go-up"
 INVERT "open-menu"
 INVERT "folder"
 INVERT "edit-select-all"
 
 
 ####### Navigation-Bar
-COPY "zoom-fit-best" 
-COPY "zoom-in" 
-COPY "zoom-out" 
-COPY "zoom-original" 
+COPY "zoom-fit-best"
+COPY "zoom-in"
+COPY "zoom-out"
+COPY "zoom-original"
 INVERT "zoom-original"
 
 ####### File-Bar
 COPY "view-paged"
 
-
 ####### Edit-Bar
-COPY "go-up" 
-COPY "go-down" 
-COPY "edit-undo" 
-COPY "user-trash" 
-COPY "edit-redo" 
-COPY "list-add" 
-COPY "list-remove" 
-
+COPY "go-up"
+COPY "go-down"
+COPY "edit-undo"
+COPY "user-trash"
+COPY "edit-redo"
+COPY "list-add"
+COPY "list-remove"
 
 ####### Information-Bar
 COPY "open-menu"
-COPY "view-grid" 
-COPY "dialog-question" 
+COPY "view-grid"
+COPY "dialog-question"
 COPY "go-bottom"  ## Overpass
 COPY "edit-find"  ## Nominatim
-COPY "view-refresh"  
+COPY "view-refresh"
 COPY "find-location"
-
 
 ####### Tile-Remover
 INVERT "view-refresh"
 INVERT "user-trash"
 
-
 ####### Tracker / Menu
-INVERT "media-playback-pause" 
-INVERT "media-playback-start" 
-INVERT "media-playback-stop" 
-
-
+INVERT "media-playback-pause"
+INVERT "media-playback-start"
+INVERT "media-playback-stop"
 
 ####### FileView / OsmApi Activities
 INVERT "view-paged"
 INVERT "go-bottom"  ## Overpass
-INVERT "edit-clear-all" 
-INVERT "document-save-as" 
-
+INVERT "edit-clear-all"
+INVERT "document-save-as"
