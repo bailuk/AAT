@@ -12,7 +12,6 @@ public abstract class SolidDataDirectoryDefault extends SolidFile {
         super(s, SolidDataDirectoryDefault.class.getSimpleName(),focFactory);
     }
 
-
     @Override
     public String getValueAsString() {
         String r = super.getValueAsString();
@@ -23,7 +22,6 @@ public abstract class SolidDataDirectoryDefault extends SolidFile {
 
         return r;
     }
-
 
     public String setDefaultValue() {
         String r = getDefaultValue();

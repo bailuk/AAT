@@ -15,12 +15,10 @@ public class SolidDataDirectory extends SolidFile {
         this.defaultDirectory = defaultDirectory;
     }
 
-
     @Override
     public String getLabel() {
         return Res.str().p_directory_data();
     }
-
 
     @Override
     public String getValueAsString() {
@@ -38,10 +36,8 @@ public class SolidDataDirectory extends SolidFile {
         return super.hasKey(s) || defaultDirectory.hasKey(s);
     }
 
-
     @Override
     public ArrayList<String> buildSelection(ArrayList<String> list) {
         return defaultDirectory.buildSelection(list);
     }
-
 }
