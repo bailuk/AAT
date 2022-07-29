@@ -112,7 +112,7 @@ public abstract class IteratorAbstract extends Iterator implements OnPreferences
             selection = sdirectory.createSelectionString();
             resultSet = appContext.getServices().getDirectoryService().query(selection);
         } catch (Exception e) {
-            AppLog.e(e);
+            AppLog.e(e.getClass().getSimpleName());
         }
     }
 
