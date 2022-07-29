@@ -31,11 +31,7 @@ public class DownloadConfig {
         return connection;
     }
 
-
-
-
     public InputStream openInput(HttpURLConnection connection) throws IOException {
         return connection.getInputStream();
     }
-
 }
