@@ -1,23 +1,34 @@
 <h1>Name</h1>
-<p>The name=* tag is the primary tag used for mapping the name of an Element. See the page titled Names for an introduction on its usage.
+<p>The name tag is the primary tag used for naming an Element. See the page titled Names for an introduction on its usage.
 </p>
-<p>[<b>name</b>=<b>User defined</b>]<br>The common default name. (Notes:
-For disputed areas, please use the name as displayed on, e.g., street signs for the name tag
-Put all alternatives into either localized name tags (e.g., name:tr/name:el) or the variants (e.g., loc_name/old_name/alt_name)
-Do not abbreviate words: Abbreviation (don't do it)</p>
+<p>[<b>name</b>=<b>User defined</b>]<br>The common default name. (Note: For disputed areas, please use the 
+name as displayed on, e.g., street signs for the name tag. Put all 
+alternatives into either localized name tags (e.g., name:tr/name:el) or 
+the variants (e.g., loc_name/old_name/alt_name). Thank you.)</p>
 <p>[<b>name:<lg></b>=<b>User defined</b>]<br>Name in different language; e.g., name:fr=Londres. Note that all key variants below can use a language suffix. See: Multilingual names.</p>
-<p>[<b>name:left,  name:right</b>=<b>User defined</b>]<br>Used when a way has different names for different sides (e.g., a street that's forming the boundary between two municipalities).</p>
+<p>[<b>name:left and  name:right</b>=<b>User defined</b>]<br>Used when a way has different names for different sides (e.g., a street that's forming the boundary between two municipalities).</p>
 <p>[<b>int_name</b>=<b>User defined</b>]<br>International name (note: consider using language specific names instead; e.g., name:en=... - see above – International does not (necessarily) mean English).</p>
 <p>[<b>loc_name</b>=<b>User defined</b>]<br>Local name.</p>
 <p>[<b>nat_name</b>=<b>User defined</b>]<br>National name.</p>
-<p>[<b>official_name</b>=<b>User defined</b>]<br>It has been created for country names but we need a clarification for other cases between "name", "int_name", "loc_name" and "official_name". Example: official_name=Principat d'Andorra (where "name" is name=Andorra).</p>
+<p>[<b>official_name</b>=<b>User defined</b>]<br>It has been created for country names but we need a clarification 
+for other cases between "name", "int_name", "loc_name" and 
+"official_name". Example: official_name=Principat d'Andorra (where "name" is name=Andorra).</p>
 <p>[<b>old_name</b>=<b>User defined</b>]<br>Historical/old name.</p>
 <p>[<b>reg_name</b>=<b>User defined</b>]<br>Regional name.</p>
-<p>[<b>short_name</b>=<b>User defined</b>]<br>should be a recognizable, commonly used short version of the name, not a nick name (use alt_name for that), useful for searching (recognized by Nominatim).</p>
-<p>[<b>sorting_name</b>=<b>User defined</b>]<br>name, used for correct sorting of names — This is only needed when sorting names cannot be based only on their orthography (using the Unicode Collation Algorithm with collation tables tailored by language and script, or when sorted lists of names are including names written in multiple languages and/or scripts) but requires ignoring some parts such as:
+<p>[<b>short_name</b>=<b>User defined</b>]<br>should be a recognizable, commonly used short version of the name, 
+not a nick name (use alt_name for that), useful for searching 
+(recognized by Nominatim).</p>
+<p>[<b>sorting_name</b>=<b>User defined</b>]<br>name, used for correct sorting of names — This is only needed when 
+sorting names cannot be based only on their orthography (using the 
+Unicode Collation Algorithm with collation tables tailored by language 
+and script, or when sorted lists of names are including names written in
+ multiple languages and/or scripts) but requires ignoring some parts 
+such as:
 ignoring leading articles, or
 lowering the relative importance of first names cited before a last name,
-ignoring the generic part of a street name when it occurs before the specific name (e.g., in French with "rue", "boulevard", "place", etc.),
+ignoring the generic part of a street name when it occurs before the
+ specific name (e.g., in French with "rue", "boulevard", "place", etc.),
 all of them being ignored at the primary sort level and not easily inferable by a preprocessing algorithm.</p>
-<p>[<b>alt_name</b>=<b>User defined</b>]<br>Alternative name by which the feature is known. If there is a name that does not fit in any of the above keys, alt_name can be used, e.g., name=Field Fare Road and alt_name=Fieldfare Road, or name=University Centre and alt_name=Grad Pad. In rare cases, the key is used for multiple semicolon-separated names, e.g. alt_name=name1;name2;name3, but this usage is not preferred.</p>
+<p>[<b>alt_name</b>=<b>User defined</b>]<br>Alternative name by which the feature is known. If there is a name 
+that does not fit in any of the above keys, alt_name can be used, e.g., name=Field Fare Road and alt_name=Fieldfare Road, or name=University Centre and alt_name=Grad Pad. In rare cases, the key is used for multiple semicolon-separated names, e.g. alt_name=name1;name2;name3, but this usage is not preferred.</p>
 <p>[<b>name_1,  name_2, ...</b>=<b></b>]<br>Do not use this tag, suffixed name tagging for multiple values is deprecated.</p>

@@ -1,3 +1,42 @@
 <h1>Historic</h1>
-<p>This is used to describe various historic places. For example: archeological sites, wrecks, ruins, castles and ancient buildings. See the page titled Historic for an introduction on its usage.
+<p>This is used to describe various historic places. For example: 
+archeological sites, wrecks, ruins, castles and ancient buildings. See 
+the page titled Historic for an introduction on its usage.
 </p>
+<p>[<b>historic</b>=<b>aircraft</b>]<br>A decommissioned aircraft which generally remains in one place.</p>
+<p>[<b>historic</b>=<b>aqueduct</b>]<br>A historic structure to convey water</p>
+<p>[<b>historic</b>=<b>archaeological_site</b>]<br>A place in which evidence of past activity is preserved.</p>
+<p>[<b>historic</b>=<b>battlefield</b>]<br>The site of a battle or military skirmish in the past.</p>
+<p>[<b>historic</b>=<b>boundary_stone</b>]<br>A historic physical marker that identifies a boundary</p>
+<p>[<b>historic</b>=<b>building</b>]<br>Unspecified historic building.</p>
+<p>[<b>historic</b>=<b>cannon</b>]<br>A historic/retired cannon. Usually found on forts or battlefields.</p>
+<p>[<b>historic</b>=<b>castle</b>]<br>Used for various kinds of castles, palaces, fortresses, manors, stately homes, kremlins, shiros and other.</p>
+<p>[<b>historic</b>=<b>castle_wall</b>]<br>A fortification surrounding the bailey of a castle</p>
+<p>[<b>historic</b>=<b>church</b>]<br>A building with historical value for Christian religious activities, particularly for worship services.</p>
+<p>[<b>historic</b>=<b>city_gate</b>]<br>A city gate within a city wall</p>
+<p>[<b>historic</b>=<b>citywalls</b>]<br>A citywall is a fortification used to defend a city.</p>
+<p>[<b>historic</b>=<b>farm</b>]<br>A historical farm, kept in it's original state.</p>
+<p>[<b>historic</b>=<b>fort</b>]<br>A military fort, a stand-alone defensive structure which differs from a castle in that there is no permanent residence</p>
+<p>[<b>historic</b>=<b>gallows</b>]<br>remains of a gallows</p>
+<p>[<b>historic</b>=<b>highwater_mark</b>]<br>A marker for indicating past flood</p>
+<p>[<b>historic</b>=<b>locomotive</b>]<br>A decommissioned locomotive which generally remains in one place</p>
+<p>[<b>historic</b>=<b>manor</b>]<br>Historic manors/mansions having different use today</p>
+<p>[<b>historic</b>=<b>memorial</b>]<br>Small memorials, usually remembering special persons, people who lost their lives in the wars, past events or missing places.</p>
+<p>[<b>historic</b>=<b>milestone</b>]<br>A historic marker that shows the distance to important destinations</p>
+<p>[<b>historic</b>=<b>monastery</b>]<br>Building/place that was a monastery.</p>
+<p>[<b>historic</b>=<b>monument</b>]<br>A
+ memorial object, which is especially large, built to remember, show 
+respect to a person or group of people or to commemorate an event.</p>
+<p>[<b>historic</b>=<b>optical_telegraph</b>]<br>Semaphore system</p>
+<p>[<b>historic</b>=<b>pillory</b>]<br>A pillory.</p>
+<p>[<b>historic</b>=<b>railway_car</b>]<br>A decommissioned railway car which generally remains in one place</p>
+<p>[<b>historic</b>=<b>ruins</b>]<br>Remains of structures that were once complete, but have fallen into partial or complete disrepair.</p>
+<p>[<b>historic</b>=<b>rune_stone</b>]<br>Stones, boulders or bedrock with historical runic inscriptions.</p>
+<p>[<b>historic</b>=<b>ship</b>]<br>A decommissioned ship/submarine which generally remains in one place</p>
+<p>[<b>historic</b>=<b>tank</b>]<br>A decommissioned tank which generally remains in one place</p>
+<p>[<b>historic</b>=<b>tomb</b>]<br>A structure where somebody has been buried.</p>
+<p>[<b>historic</b>=<b>tower</b>]<br>This property distinguishes a tower as historic</p>
+<p>[<b>historic</b>=<b>wayside_cross</b>]<br>A historical cross, symbol of christian faith.</p>
+<p>[<b>historic</b>=<b>wayside_shrine</b>]<br>A shrine often showing a religious depiction. Tag is used also for modern shrines.</p>
+<p>[<b>historic</b>=<b>wreck</b>]<br>A nautical craft that has unintentionally been sunk or destroyed.</p>
+<p>[<b>historic</b>=<b>yes</b>]<br></p>

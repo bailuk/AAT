@@ -5,14 +5,18 @@
 <p>[<b>route</b>=<b>bus</b>]<br>The route a public bus service takes. See Buses.</p>
 <p>[<b>route</b>=<b>canoe</b>]<br>Signed route for canoeing through a waterway.</p>
 <p>[<b>route</b>=<b>detour</b>]<br>Route for fixed detour routes. Examples are Bedarfsumleitung in Germany and uitwijkroute in the Netherlands</p>
-<p>[<b>route</b>=<b>ferry</b>]<br>The route a ferry takes from terminal to terminal Please make sure to add at least one node per tile (zoom level 12), better at least one every few km, so offline editors catch it with bbox requests.</p>
-<p>[<b>route</b>=<b>foot</b>]<br>Walking Route - is used for routes which are walkable without any limitations regarding fitness, equipment or weather conditions.</p>
+<p>[<b>route</b>=<b>ferry</b>]<br>The route a ferry takes from terminal to terminal Please make sure 
+to add at least one node per tile (zoom level 12), better at least one 
+every few km, so offline editors catch it with bbox requests.</p>
+<p>[<b>route</b>=<b>foot</b>]<br>Walking Route - is used for routes which are walkable without any 
+limitations regarding fitness, equipment or weather conditions.</p>
 <p>[<b>route</b>=<b>hiking</b>]<br>Hiking explains how to tag hiking routes.</p>
 <p>[<b>route</b>=<b>horse</b>]<br>Riding routes</p>
 <p>[<b>route</b>=<b>inline_skates</b>]<br>Inline has more information on the subject.</p>
 <p>[<b>route</b>=<b>light_rail</b>]<br>Route of a light rail line.</p>
 <p>[<b>route</b>=<b>mtb</b>]<br>Mountain biking explains how to tag mtb routes.</p>
 <p>[<b>route</b>=<b>piste</b>]<br>Route of a piste (e.g., snowshoe or XC-Ski trails) in a winter sport area.</p>
+<p>[<b>route</b>=<b>power</b>]<br>Where power lines use the same towers (the same way).</p>
 <p>[<b>route</b>=<b>railway</b>]<br>A sequence of railway ways, often named (e.g., Channel Tunnel). See Railways.</p>
 <p>[<b>route</b>=<b>road</b>]<br>Can be used to map various road routes/long roads.</p>
 <p>[<b>route</b>=<b>running</b>]<br>For running (jogging) routes.</p>

@@ -1,3 +1,17 @@
 <h1>Aeroway</h1>
-<p>These are mainly related to aerodromes, airfields other ground facilities that support the operation of airplanes and helicopters. See the page Aeroways for an introduction on mapping these features.
+<p>These are mainly related to aerodromes, airfields other ground 
+facilities that support the operation of airplanes and helicopters. See 
+the page Aeroways for an introduction on mapping these features.
 </p>
+<p>[<b>aeroway</b>=<b>aerodrome</b>]<br>An aerodrome, airport or airfield</p>
+<p>[<b>aeroway</b>=<b>apron</b>]<br>An area of an airport where planes are parked, unloaded or loaded, refueled, or boarded</p>
+<p>[<b>aeroway</b>=<b>gate</b>]<br>The bounded space, inside the airport terminal, where passengers wait before boarding their flight</p>
+<p>[<b>aeroway</b>=<b>hangar</b>]<br>A large airport building with extensive floor areas for housing aircraft or spacecraft</p>
+<p>[<b>aeroway</b>=<b>helipad</b>]<br>A landing area or platform designed for helicopters</p>
+<p>[<b>aeroway</b>=<b>heliport</b>]<br>A special aerodrome built for helicopters</p>
+<p>[<b>aeroway</b>=<b>navigationaid</b>]<br>A facility that supports visual navigation for aircraft</p>
+<p>[<b>aeroway</b>=<b>runway</b>]<br>A strip of land on which aircraft can take off and land.</p>
+<p>[<b>aeroway</b>=<b>spaceport</b>]<br>A spaceport (other than airport / heliport)</p>
+<p>[<b>aeroway</b>=<b>taxiway</b>]<br>A route where airplanes manouevre between runways and parking areas within an aerodrome</p>
+<p>[<b>aeroway</b>=<b>terminal</b>]<br>An airport passenger building</p>
+<p>[<b>aeroway</b>=<b>windsock</b>]<br>An object that shows wind direction and speed.</p>

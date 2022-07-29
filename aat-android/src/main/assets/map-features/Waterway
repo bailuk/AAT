@@ -1,3 +1,9 @@
 <h1>Waterway</h1>
-<p>This is used to described different types of waterways. When mapping the way of a river, stream, drain, canal, etc. these need to be aligned in the direction of the water flow. See the page titled Waterways for an introduction on its usage.
+<p>This is used to described different types of waterways. When mapping 
+the way of a river, stream, drain, canal, etc. these need to be aligned 
+in the direction of the water flow. See the page titled Waterways for an introduction on its usage.
 </p>
+<p>[<b>waterway</b>=<b>river</b>]<br>The linear flow of a river, in flow direction.</p>
+<p>[<b>waterway</b>=<b>riverbank</b>]<br>The water-covered area of a river</p>
+<p>[<b>waterway</b>=<b>stream</b>]<br>A naturally-forming waterway that is too narrow to be classed as a river.</p>
+<p>[<b>waterway</b>=<b>tidal_channel</b>]<br>A natural intertidal waterway in mangroves, salt marshes and tidal flats with water flow in the direction of the tide</p>

@@ -1,48 +1,67 @@
 <h1>Restrictions</h1>
 <p>This is used to define restrictions that apply to the associated element. See the page titled Restrictions for an introduction on its usage.
 </p>
-<p>[<b>access</b>=<b>agricultural / delivery / designated / destination / forestry / no / official / permissive / private / yes</b>]<br>General access permission.
+<p>[<b>access</b>=<b>agricultural / delivery / designated / destination / forestry / no / official / permissive / private / unknown / yes</b>]<br>General access permission.
 agricultural – Only for agricultural traffic
 delivery – Only when delivering to the element.
 designated – A preferred or designated route for a specific vehicle type or types. Not compulsory but often marked by a traffic sign
 destination – Used for ways in designated local traffic areas, where traffic should only enter if its destination is within the area
 forestry – Only for forestry traffic
 no – No access for the general public. Consider using another tag indicating who can use the element
-official – The way is dedicated to a specific mode of travel by law. Usually marked by traffic signs and exclusive. In Germany use is also compulsory. clarification needed
-permissive – Open to general traffic until such time as the owner revokes the permission which they are legally allowed to do at any time in the future.
+official – The way is dedicated to a specific mode of travel 
+by law. Usually marked by traffic signs and exclusive. In Germany use is
+ also compulsory. clarification needed
+permissive – Open to general traffic until such time as the 
+owner revokes the permission which they are legally allowed to do at any
+ time in the future.
 private – Only with permission of the owner on an individual basis
+unknown – No information provided on access. This is the 
+default value for most features with a general assumption that access is
+ allowed for all purposes
 yes – The public has an official, legal right of access, i.e. it's a right of way  (default value)</p>
 <p>[<b>agricultural</b>=<b>yes / no</b>]<br>Access permission for agricultural vehicles, e.g. tractors.</p>
-<p>[<b>atv</b>=<b>For values see access above</b>]<br>Access restricted to wheeled vehicles 1.27m (50 inches) or less in width, for example  ATV</p>
-<p>[<b>bdouble</b>=<b>For values see access above</b>]<br>Access permission for  Road Train B-double. A B-double (B-Train) consists of a prime mover towing a specialised trailer (known as a "lead" or "A"-trailer) that has a fifth-wheel mounted on the rear towing another semi-trailer, resulting in two articulation points.</p>
-<p>[<b>bicycle</b>=<b>For values see access above + dismount</b>]<br>Access permission for bicycles. Usage of bicycle=dismount and bicycle=no will vary in different countries. If according to local traffic rules a bicycle is no longer seen as a bicycle when there's no one driving it, then there's no need for using bicycle=dismount. If the local legislation still sees an undriven bicycle as a bicycle then you may need to use both bicycle=dismount and bicycle=no.</p>
+<p>[<b>atv</b>=<b>For values see access above</b>]<br>Access restricted to wheeled vehicles 1.27m (50 inches) or less in width, for example ATV</p>
+<p>[<b>bdouble</b>=<b>For values see access above</b>]<br>Access permission for Road Train B-double.
+ A B-double (B-Train) consists of a prime mover towing a specialised 
+trailer (known as a "lead" or "A"-trailer) that has a fifth-wheel 
+mounted on the rear towing another semi-trailer, resulting in two 
+articulation points.</p>
+<p>[<b>bicycle</b>=<b>For values see access above + dismount</b>]<br>Access permission for bicycles. Usage of bicycle=dismount and bicycle=no
+ will vary in different countries. If according to local traffic rules a
+ bicycle is no longer seen as a bicycle when there's no one driving it, 
+then there's no need for using bicycle=dismount. If the local legislation still sees an undriven bicycle as a bicycle then you may need to use both bicycle=dismount and bicycle=no.</p>
 <p>[<b>boat</b>=<b>For values see access above</b>]<br>Access permission for small boats and pleasure crafts, including yachts</p>
-<p>[<b>electric_bicycle</b>=<b>For values see access above</b>]<br>Access permission for electric bicycles (mostly defined as having a maximum speed of 25 km/h)</p>
 <p>[<b>emergency</b>=<b>yes</b>]<br>Access permission for emergency motor vehicles; e.g., ambulance, fire truck, police car</p>
 <p>[<b>foot</b>=<b>For values see access above</b>]<br>Access permission for pedestrians.</p>
 <p>[<b>forestry</b>=<b>yes / no</b>]<br>Access permission for forestry vehicles, e.g. tractors.</p>
 <p>[<b>golf_cart</b>=<b>For values see access above</b>]<br>Access permission for golf carts and similar small, low-speed electric vehicles</p>
-<p>[<b>goods</b>=<b>For values see access above</b>]<br>Access permission for  light commercial vehicles (LCV) or goods vehicles of category N1 with a maximum allowed mass of up to 3.5 tonnes. In the USA, combined weight 26,000 lbs or less.</p>
+<p>[<b>goods</b>=<b>For values see access above</b>]<br>Access permission for light commercial vehicles (LCV)
+ or goods vehicles of category N1 with a maximum allowed mass of up to 
+3.5 tonnes. In the USA, combined weight 26,000 lbs or less.</p>
 <p>[<b>hazmat</b>=<b>For values see access above</b>]<br>Access permission for vehicles carrying hazardous materials.</p>
-<p>[<b>hgv</b>=<b>For values see access above</b>]<br>Access permission for  Heavy Goods Vehicles (HGV) (UK), e.g. for goods vehicles of category N2 and N3 (trucks, lorries) with a maximum allowed mass over 3.5 tonnes. In the USA, combined weight 26,001 lbs or greater.</p>
+<p>[<b>hgv</b>=<b>For values see access above</b>]<br>Access permission for Heavy Goods Vehicles (HGV)
+ (UK), e.g. for goods vehicles of category N2 and N3 (trucks, lorries) 
+with a maximum allowed mass over 3.5 tonnes. In the USA, combined weight
+ 26,001 lbs or greater.</p>
 <p>[<b>horse</b>=<b>For values see access above</b>]<br>Access permission for horse riders.</p>
-<p>[<b>inline_skates</b>=<b>yes / no</b>]<br>Access permission for  Inline Skates</p>
-<p>[<b>lhv</b>=<b>For values see access above</b>]<br>Access permission for  Longer Heavier Vehicle (LHV), e.g. for vehicles with 6 axles and can carry up to 44 metric tons</p>
-<p>[<b>mofa</b>=<b>For values see access above</b>]<br>Access permission for  mofas</p>
-<p>[<b>moped</b>=<b>For values see access above</b>]<br>Access permission for  mopeds</p>
+<p>[<b>inline_skates</b>=<b>yes / no</b>]<br>Access permission for Inline Skates</p>
+<p>[<b>lhv</b>=<b>For values see access above</b>]<br>Access permission for Longer Heavier Vehicle (LHV), e.g. for vehicles with 6 axles and can carry up to 44 metric tons</p>
+<p>[<b>mofa</b>=<b>For values see access above</b>]<br>Access permission for mofas</p>
+<p>[<b>moped</b>=<b>For values see access above</b>]<br>Access permission for mopeds</p>
 <p>[<b>motorboat</b>=<b>For values see access above</b>]<br>Access permission boats and yachts using motor</p>
 <p>[<b>motorcar</b>=<b>For values see access above</b>]<br>Access permission for (motor) cars</p>
 <p>[<b>motorcycle</b>=<b>For values see access above</b>]<br>Access permission for motorcycles</p>
 <p>[<b>motor_vehicle</b>=<b>For values see access above</b>]<br>Access permission for any motorized vehicle</p>
 <p>[<b>psv</b>=<b>For values see access above</b>]<br>Access permission for Public Service Vehicles (UK), e.g. buses and coaches</p>
-<p>[<b>roadtrain</b>=<b>For values see access above</b>]<br>Access permission for  Road train, A road train consists of a relatively conventional tractor unit, but instead of pulling one trailer or semi-trailer, the road train pulls two or more of them.</p>
-<p>[<b>ski</b>=<b>For values see access above</b>]<br>Access permission for  skiers</p>
-<p>[<b>speed_pedelec</b>=<b>For values see access above</b>]<br>Access permission for electric bicycles (mostly defined as having a maximum speed of 45 km/h)</p>
+<p>[<b>roadtrain</b>=<b>For values see access above</b>]<br>Access permission for Road train,
+ A road train consists of a relatively conventional tractor unit, but 
+instead of pulling one trailer or semi-trailer, the road train pulls two
+ or more of them.</p>
+<p>[<b>ski</b>=<b>For values see access above</b>]<br>Access permission for skiers</p>
 <p>[<b>tank</b>=<b>For values see access above</b>]<br>Access permission for (military) tanks</p>
 <p>[<b>vehicle</b>=<b>For values see access above</b>]<br>Access permission for all vehicles</p>
 <p>[<b>4wd_only</b>=<b>yes</b>]<br>A road signed as only suitable for 4WD (offroad) vehicles</p>
 <p>[<b>charge</b>=<b>Number</b>]<br>Amount of toll or fee. See toll=* as well</p>
-<p>[<b>maxaxleload</b>=<b>Weight</b>]<br>The legal maximum axleload – units other than tonnes should be explicit</p>
 <p>[<b>maxheight</b>=<b>Height</b>]<br>Height limit – units other than metres should be explicit</p>
 <p>[<b>maxlength</b>=<b>Length</b>]<br>Length limit – units other than metres should be explicit</p>
 <p>[<b>maxspeed</b>=<b>Speed</b>]<br>Maximum speed – units other than km/h should be explicit</p>

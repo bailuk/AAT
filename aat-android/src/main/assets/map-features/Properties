@@ -1,11 +1,14 @@
 <h1>Properties</h1>
 <p>This is used to give additional information of a general nature about another element.
 </p>
-<p>[<b>area</b>=<b>yes</b>]<br>Means a feature that is normally linear is an area. You should not add this to features that are already defined as an area type.</p>
+<p>[<b>area</b>=<b>yes</b>]<br>Means a feature that is normally linear is an area. You should not 
+add this to features that are already defined as an area type.</p>
 <p>[<b>bridge</b>=<b>yes / aqueduct / viaduct / cantilever / movable / covered / …</b>]<br>A bridge, use together with the tag layer=*. Value yes is generic, or you can specialize.</p>
 <p>[<b>charge</b>=<b>amount</b>]<br>Used for specifying how much is charged for use/access to a facility. See toll=* or fee=*.</p>
-<p>[<b>covered</b>=<b>yes</b>]<br>Used to denote that a node, way or area is covered by another entity (or in some cases the ground), when the use of layers is inappropriate, or additional clarification is needed.</p>
-<p>[<b>crossing</b>=<b>no / traffic_signals / uncontrolled / island / unmarked</b>]<br>Further refinement for nodes already tagged with highway=crossing or railway=crossing</p>
+<p>[<b>covered</b>=<b>yes</b>]<br>Used to denote that a node, way or area is covered by another entity
+ (or in some cases the ground), when the use of layers is inappropriate,
+ or additional clarification is needed.</p>
+<p>[<b>crossing</b>=<b>no / traffic_signals / uncontrolled / island / unmarked / unknown</b>]<br>Further refinement for nodes already tagged with highway=crossing or railway=crossing</p>
 <p>[<b>crossing:island</b>=<b>yes / no</b>]<br>Specifies whether a pedestrian crossing has a refuge island</p>
 <p>[<b>cutting</b>=<b>yes / left / right</b>]<br>A cut in the land to carry a road or tram. Mostly in hilly landscape. See Cutting on Wikipedia</p>
 <p>[<b>disused</b>=<b>yes</b>]<br>For features that are useful for navigation, yet are unused. See abandoned=* if infrastructure is removed.</p>
@@ -21,7 +24,9 @@
 <p>[<b>fire_rank</b>=<b>1bis / 2 to 5</b>]<br>Rank fire, defined for a particular object</p>
 <p>[<b>frequency</b>=<b>Number</b>]<br>Frequency in Hz</p>
 <p>[<b>inscription</b>=<b>User Defined</b>]<br>The full text of inscriptions, which can be found on buildings, memorials and other objects.</p>
-<p>[<b>internet_access</b>=<b>yes / wired / wlan / terminal / no</b>]<br>This tag is for indication that a map entity such as a building, a shop, restaurant, etc. offers internet access to the public, either as a paid service or even for free.</p>
+<p>[<b>internet_access</b>=<b>yes / wired / wlan / terminal / no</b>]<br>This tag is for indication that a map entity such as a building, a 
+shop, restaurant, etc. offers internet access to the public, either as a
+ paid service or even for free.</p>
 <p>[<b>layer</b>=<b>-5 to 5</b>]<br>0: ground (default); -1..-5:under ground layer; 1..5 (not +1):above ground layerThis is intended to indicate actual physical separation, shouldn't be used just to influence rendering order.</p>
 <p>[<b>leaf_cycle</b>=<b>evergreen / deciduous / semi_evergreen / semi_deciduous / mixed</b>]<br>Describes the phenology of leaves</p>
 <p>[<b>leaf_type</b>=<b>broadleaved / needleleaved / mixed / leafless</b>]<br>Describes the type of leaves</p>

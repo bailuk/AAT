@@ -1,3 +1,13 @@
 <h1>Place</h1>
-<p>See: Generic:Map Features:place.
+<p>This is used mainly to give details about settlements. See the page titled Places for an introduction on its usage.
 </p>
+<p>[<b>place</b>=<b>country</b>]<br>A nation state or other high-level national political/administrative area.</p>
+<p>[<b>place</b>=<b>state</b>]<br>A large sub-national political/administrative area.</p>
+<p>[<b>place</b>=<b>region</b>]<br>Used
+ both as a broad tag for geographic or historical areas with no clear 
+boundary and for distinct administration areas (with specific 
+boundaries) in some countries.</p>
+<p>[<b>place</b>=<b>province</b>]<br>A province</p>
+<p>[<b>place</b>=<b>district</b>]<br>A district - a type of administrative division that, in some countries, is managed by local government.</p>
+<p>[<b>place</b>=<b>county</b>]<br>A county - a geographical region of a country.</p>
+<p>[<b>place</b>=<b>municipality</b>]<br>A municipality - single urban administrative division having corporate status.</p>

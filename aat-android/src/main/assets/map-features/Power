@@ -1,3 +1,39 @@
 <h1>Power</h1>
-<p>These are used to map electrical power generation and distributions systems. See Power for an introduction on its usage.
+<p>These are used to map electrical power generation and distributions systems. See the page titled Power for an introduction on its usage.
 </p>
+<p>[<b>power</b>=<b>cable</b>]<br>An
+ insulated cable carrying electrical power, such as transmission or 
+distribution cables located underground and undersea cables</p>
+<p>[<b>power</b>=<b>catenary_mast</b>]<br>A pole supporting the overhead wires used to supply electricity to vehicles equipped with a pantograph such as trams and trains</p>
+<p>[<b>power</b>=<b>compensator</b>]<br>A static power device used to ensure power quality and electrical network resilience.</p>
+<p>[<b>power</b>=<b>converter</b>]<br>A
+ device to convert power between alternating and direct current 
+electrical power: often, but not only, over high voltage networks</p>
+<p>[<b>power</b>=<b>generator</b>]<br>A device which converts one form of energy to another, for example, an electrical generator.</p>
+<p>[<b>power</b>=<b>heliostat</b>]<br>A mirror of a heliostat device</p>
+<p>[<b>power</b>=<b>insulator</b>]<br>An electrical insulator which connects a power line to a support structure and prevents grounding.</p>
+<p>[<b>power</b>=<b>line</b>]<br>High-voltage power lines used for power transmission, usually supported by towers or pylons</p>
+<p>[<b>line</b>=<b>busbar</b>]<br>Specifies that a power line is a busbar in a substation</p>
+<p>[<b>line</b>=<b>bay</b>]<br>A bay connects an incoming circuit to a busbar assembly.</p>
+<p>[<b>power</b>=<b>minor_line</b>]<br>Minor power lines forming the distribution grid, usually carried by poles.</p>
+<p>[<b>power</b>=<b>plant</b>]<br>An industrial facility where power (electricity, useful heat, biogas) is produced by individual power generator units.</p>
+<p>[<b>power</b>=<b>pole</b>]<br>A single pole supporting power lines, often a wood, steel or concrete mast designed to carry minor power lines.</p>
+<p>[<b>power</b>=<b>portal</b>]<br>A supporting structure for power lines, composed of vertical legs with cables between them attached to a horizontal crossarm</p>
+<p>[<b>power</b>=<b>substation</b>]<br>A facility to step up and down voltage and transform power to suit transmission or distribution needs over an electrical network</p>
+<p>[<b>power</b>=<b>switch</b>]<br>A
+ device which allows electrical network operators to power up & down
+ lines and transformers in substations or along the power grid.</p>
+<p>[<b>power</b>=<b>switchgear</b>]<br>A
+ switchgear, which comprises one or more busbar assemblies and a number 
+of bays each connecting a circuit to the busbar assembly.</p>
+<p>[<b>power</b>=<b>terminal</b>]<br>A
+ point of connection where an overhead power line ends on a building or 
+wall, for example, when connecting it to an indoor substation</p>
+<p>[<b>power</b>=<b>tower</b>]<br>A
+ tower or pylon carrying high voltage electricity cables. Often 
+constructed from steel latticework but tubular or solid pylons are also 
+used.</p>
+<p>[<b>power</b>=<b>transformer</b>]<br>A
+ static device for stepping up or down electric voltage by inductive 
+coupling between its windings. Large power transformers are typically 
+located inside substations</p>
