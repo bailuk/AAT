@@ -1,0 +1,42 @@
+<h1>Landuse</h1>
+<p>This is used to describe the purpose for which an area of land is being used. See the page Landuse for an introduction on its usage.
+</p>
+<p>[<b>landuse</b>=<b>commercial</b>]<br>Predominantly commercial businesses and their offices. Commercial businesses which sell goods should be categorised as landuse=retail. Commercial businesses can sell services on site and may include private Doctor's Surgeries, and those non-government services for mental and physical health, such as a Counsellor's or Physiotherapist's practice or Veterinary. Government services and businesses should not use this tag. Commercial businesses can also include office buildings and business parks which have limited interface with the public and sell their services either on site, or externally. Commercial businesses have low amounts of public foot traffic.</p>
+<p>[<b>landuse</b>=<b>construction</b>]<br>A site which is under active development and construction of a building or structure, including any purposeful alteration to the land or vegetation upon it. Abandoned construction projects and sites should not use this tag.</p>
+<p>[<b>landuse</b>=<b>education</b>]<br>An area predominately used for educational purposes/facilities.</p>
+<p>[<b>landuse</b>=<b>industrial</b>]<br>Predominantly industrial landuses such as workshops, factories, or warehouses.</p>
+<p>[<b>landuse</b>=<b>residential</b>]<br>Land where people reside; predominantly residential detached (single houses, grouped dwellings), or attached (apartments, flats, units) dwellings. For "Mixed-Use" areas where more than half of the land is residential, tag as residential.  See also: Land use and areas of natural land § Open questions</p>
+<p>[<b>landuse</b>=<b>retail</b>]<br>Predominantly retail businesses such as shops. Retail businesses sell physical goods such as food (prepared or grocery), clothing, medicine, stationary, appliances, tools, or other similar physical items. Retail businesses have high amounts of public foot traffic. Retail businesses do not exclusively provide or sell their services. For businesses which sell services see landuse=commercial.
+Generally a member of the public could freely walk into and access a retail business. Retail is a subset of commercial, but should be used and treated as mutually exclusive in OpenStreetMap.</p>
+<p>[<b>landuse</b>=<b>allotments</b>]<br>A piece of land given over to local residents for growing vegetables and flowers.</p>
+<p>[<b>landuse</b>=<b>farmland</b>]<br>An area of farmland used for tillage (cereals, vegetables, oil plants, flowers).</p>
+<p>[<b>landuse</b>=<b>farmyard</b>]<br>An area of land with farm buildings like farmhouse, dwellings, farmsteads, sheds, stables, barns, equipment sheds, feed bunkers, etc. plus the open space in between them and the shrubbery/trees around them.</p>
+<p>[<b>landuse</b>=<b>flowerbed</b>]<br>An area designated for flowers</p>
+<p>[<b>landuse</b>=<b>forest</b>]<br>Managed forest or woodland plantation (Other languages). Some use this to map an area of trees rather than the use of the land. See Forest.</p>
+<p>[<b>landuse</b>=<b>meadow</b>]<br>A meadow or pasture: land primarily vegetated by grass and non-woody plants, mainly used for hay or grazing</p>
+<p>[<b>landuse</b>=<b>orchard</b>]<br>intentional planting of trees or shrubs maintained for food production</p>
+<p>[<b>landuse</b>=<b>vineyard</b>]<br>A piece of land where grapes are grown.</p>
+<p>[<b>landuse</b>=<b>aquaculture</b>]<br>Aquaculture is the farming of freshwater and saltwater organisms such as finfish, mollusks, crustaceans and aquatic plants.
+Warning: currently, there is no convention on the exact meaning of this tag. Therefore, it makes sense to treat it like "boundary of aquaculture" (without implication of water body), which means, water body should be tagged by its own, using natural=water etc.</p>
+<p>[<b>landuse</b>=<b>basin</b>]<br>An area artificially graded to hold water.Together with basin=* for stormwater/rainwater infiltration/detention/retention basins.Other languages.</p>
+<p>[<b>landuse</b>=<b>reservoir</b>]<br>A Reservoir on Wikipedia. Deprecated variant of natural=water + water=reservoir. See Proposed features/Reservoir for details.</p>
+<p>[<b>landuse</b>=<b>salt_pond</b>]<br>A place where salt (saline) water is evaporated to extract its salt.</p>
+<p>[<b>landuse</b>=<b>brownfield</b>]<br>Describes land scheduled for new development where old buildings have been demolished and cleared</p>
+<p>[<b>landuse</b>=<b>cemetery</b>]<br>Place for burials. You can add religion=* (values listed in the place of worship page). Smaller places (e.g. with a church nearby) may use amenity=grave_yard instead.</p>
+<p>[<b>landuse</b>=<b>conservation</b>]<br>Protected areas (deprecated) Alternate tagging of same thing: boundary=protected_area, protected_area=*</p>
+<p>[<b>landuse</b>=<b>depot</b>]<br>An area used as a depot for e.g. vehicles (trains, buses or trams). Consider using rather standard landuse tags like landuse=railway, landuse=commercial, landuse=industrial, with subtag like industrial=depot.</p>
+<p>[<b>landuse</b>=<b>garages</b>]<br>One level buildings with boxes commonly for cars, usually made of brick and metal. Usually this area belong to garage cooperative with own name, chairman, budget, rules, security, etc.</p>
+<p>[<b>landuse</b>=<b>grass</b>]<br>An area of mown and managed grass not otherwise covered by a more specific tag. Some view this as not a landuse, see the main page landuse=grass for discussion.</p>
+<p>[<b>landuse</b>=<b>greenfield</b>]<br>Describes land scheduled for new development where there have been no buildings before. A greenfield is scheduled to turn into a construction site</p>
+<p>[<b>landuse</b>=<b>greenhouse_horticulture</b>]<br>Area used for growing plants in greenhouses</p>
+<p>[<b>landuse</b>=<b>landfill</b>]<br>Place where waste is dumped.</p>
+<p>[<b>landuse</b>=<b>military</b>]<br>For land areas owned/used by the military for whatever purpose</p>
+<p>[<b>landuse</b>=<b>plant_nursery</b>]<br>intentional planting of plants maintaining for the production of new plants</p>
+<p>[<b>landuse</b>=<b>port</b>]<br>coastal industrial area where commercial traffic is handled. Consider using landuse=industrial + industrial=port for this type of industrial area.</p>
+<p>[<b>landuse</b>=<b>quarry</b>]<br>Surface mineral extraction</p>
+<p>[<b>landuse</b>=<b>railway</b>]<br>Area for railway use, generally off-limits to the general public</p>
+<p>[<b>landuse</b>=<b>recreation_ground</b>]<br>An open green space for general recreation, which may include pitches, nets and so on, usually municipal but possibly also private to colleges or companies</p>
+<p>[<b>landuse</b>=<b>religious</b>]<br>An area used for religious purposes</p>
+<p>[<b>landuse</b>=<b>village_green</b>]<br>A village green is a distinctive area of grassy public land in a village centre. Not a generic tag for urban greenery. It is a typical English term – defined separately from 'common land' under the Commons Registration Act 1965 and the Commons Act 2006.</p>
+<p>[<b>landuse</b>=<b>winter_sports</b>]<br>An area dedicated to winter sports (e.g. skiing)</p>
+<p>[<b>landuse</b>=<b>user defined</b>]<br>All commonly used values according to Taginfo</p>

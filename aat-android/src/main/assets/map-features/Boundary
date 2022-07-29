@@ -1,0 +1,22 @@
+<h1>Boundary</h1>
+<p>These are used to describe administrative and other boundaries. See the page Boundaries for an introduction on its usage.
+</p>
+<p>[<b>boundary</b>=<b>aboriginal_lands</b>]<br>A boundary representing official reservation boundaries of recognized aboriginal / indigenous / native peoples.</p>
+<p>[<b>boundary</b>=<b>administrative</b>]<br>An administrative boundary. Subdivisions of areas/territories/jurisdictions recognised by governments or other organisations for administrative purposes. These range from large groups of nation states right down to small administrative districts and suburbs, as indicated by the 'admin_level=*' combo tag.</p>
+<p>[<b>boundary</b>=<b>border_zone</b>]<br>A border zone is an area near the border where special restrictions on movement apply. Usually a permit is required for visiting.</p>
+<p>[<b>boundary</b>=<b>forest</b>]<br>A delimited forest is a land which is predominantly wooded and which is, for this reason, given defined boundaries. It may cover different tree stands, non-wooded areas, highways… but all the area within the boundaries are considered and managed as a single forest.</p>
+<p>[<b>boundary</b>=<b>forest_compartment</b>]<br>A forest compartment is a numbered sub-division within a delimited forest, physically materialized with visible, typically cleared, boundaries.</p>
+<p>[<b>boundary</b>=<b>hazard</b>]<br>A designated hazardous area, with a potential source of damage to health, life, property, or any other interest of value.</p>
+<p>[<b>boundary</b>=<b>maritime</b>]<br>Maritime boundaries which are not administrative boundaries: the Baseline, Contiguous Zone and EEZ (Exclusive Economic Zone).</p>
+<p>[<b>boundary</b>=<b>marker</b>]<br>A boundary marker, border marker, boundary stone, or border stone is a robust physical marker that identifies the start of a land boundary or the change in a boundary, especially a change in direction of a boundary. See also historic=boundary_stone</p>
+<p>[<b>boundary</b>=<b>national_park</b>]<br>Area of outstanding natural beauty, set aside for conservation and for recreation (Other languages).</p>
+<p>[<b>boundary</b>=<b>place</b>]<br>boundary=place is commonly used to map the boundaries of a place=*, when these boundaries can be defined but these are not administrative boundaries.</p>
+<p>[<b>boundary</b>=<b>political</b>]<br>Electoral boundaries</p>
+<p>[<b>boundary</b>=<b>postal_code</b>]<br>Postal code boundaries</p>
+<p>[<b>boundary</b>=<b>protected_area</b>]<br>Protected areas, such as for national parks, marine protection areas, heritage sites, wilderness, cultural assets and similar.</p>
+<p>[<b>boundary</b>=<b>special_economic_zone</b>]<br>A government-defined area in which business and trade laws are different.</p>
+<p>[<b>boundary</b>=<b>disputed</b>]<br>An area of landed claimed by two or more parties (use with caution). See also Disputed territories.</p>
+<p>[<b>boundary</b>=<b>user defined</b>]<br>All commonly used values according to Taginfo</p>
+<p>[<b>admin_level</b>=<b>(number)</b>]<br>Applies to boundary=administrative and is usually in the range 1 to 10, except for several countries (Bolivia, Germany, Mozambique, Netherlands, Philippines, Poland, Turkmenistan, Venezuela) where it is in the range 1 to 11 – see  boundary.</p>
+<p>[<b>border_type</b>=<b>*</b>]<br>To distinguish between types of boundary where admin_level isn't enough. Used in several different ways e.g in maritime contexts.</p>
+<p>[<b>start_date</b>=<b>(date)</b>]<br>Useful if the boundary is very recent (or if it will become effective in a near future).</p>
