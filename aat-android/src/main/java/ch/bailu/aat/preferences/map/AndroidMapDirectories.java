@@ -39,6 +39,12 @@ public class AndroidMapDirectories implements MapDirectories {
             SelectionList.add_dr(dirs, f.child(SolidMapsForgeDirectory.ORUX_MAPS_DIR));
         }
 
+        // app_private/files/maps (readable and on external medium)
+        Foc[] files = volumes.getFiles();
+        for (int i=1; i<files.length; i++) {
+            SelectionList.add_dr(dirs, files[i].child(SolidMapsForgeDirectory.MAPS_DIR));
+        }
+
         return dirs;
     }
 
