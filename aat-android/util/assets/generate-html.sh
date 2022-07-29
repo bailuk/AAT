@@ -2,7 +2,6 @@
 # Generate documentation that is used from within the app by
 # generating html files from markdown documentation.
 # Depends on 'markdown': http://daringfireball.net
-#
 
 
 # Use sed to htmlize some characters:
@@ -10,12 +9,10 @@ SED1="sed s/(c)/\&\#169\;/g"        # (c) ->  &#169;
 SED2="sed s/\°/\&deg\;/g"           # °   ->  &deg;
 SED3="sed s/\.\.\./\&\#8230\;/g"    # ... ->  &#8230;
 
-
 # Generate html with htmlized characters:
-function to_html { 
+function to_html {
      markdown --html4tags | $SED1 | $SED2 | $SED3
 }
-
 
 # Extract sections (from README.md):
 function extract {
@@ -25,10 +22,10 @@ function extract {
 }
 
 # Projects root directory (relative)
-ROOT="../.."
+ROOT="../../.."
 
 # Assets directory where documentation gets stored:
-RES="$ROOT/app/src/main/assets/documentation"
+RES="$ROOT/aat-android/src/main/assets/documentation"
 
 
 # Generate documentation that is used from within the app:
