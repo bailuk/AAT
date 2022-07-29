@@ -9,7 +9,7 @@ import ch.bailu.foc.Foc;
 import ch.bailu.foc.FocFactory;
 
 public final class MapFeaturesParser {
-    private static final String MAP_FEATURES_ASSET = "map_features";
+    private static final String MAP_FEATURES_ASSET = "map-features";
 
     private final OnHaveFeature haveFeature;
 
