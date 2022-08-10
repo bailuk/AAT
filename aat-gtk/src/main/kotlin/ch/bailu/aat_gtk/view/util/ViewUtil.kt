@@ -1,6 +1,6 @@
 package ch.bailu.aat_gtk.view.util
 
-import ch.bailu.aat_gtk.util.IconMap
+import ch.bailu.aat_gtk.lib.IconMap
 import ch.bailu.aat_gtk.view.map.control.Bar
 import ch.bailu.gtk.gtk.Button
 import ch.bailu.gtk.gtk.Widget
@@ -29,4 +29,3 @@ fun Button.setIcon(imageResource: String, size: Int = Bar.ICON_SIZE) {
     image.margin(Bar.MARGIN)
     child = image
 }
-

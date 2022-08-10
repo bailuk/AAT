@@ -1,4 +1,4 @@
-package ch.bailu.aat_gtk.util
+package ch.bailu.aat_gtk.lib
 
 import ch.bailu.aat_lib.logger.AppLog
 import ch.bailu.gtk.gdkpixbuf.Pixbuf
@@ -11,20 +11,19 @@ object IconMap {
     private val pixbufs = HashMap<IconId, Pixbuf>()
 
     fun getPixbuf(name: String, size: Int): Pixbuf {
-        try {
-            return _getPixbuf(name, size)
+        return try {
+            _getPixbuf(name, size)
         } catch (e: Exception) {
             AppLog.d(this,"Image resource not found: $name")
-            return _getPixbuf("none", size)
+            _getPixbuf("none", size)
         }
     }
-
 
     private fun _getPixbuf(name: String, size: Int): Pixbuf {
         var result = pixbufs[IconId(name, size)]
 
         return if (result == null) {
-            val input = IconMap.javaClass.getResourceAsStream("/icons/${name}.svg")
+            val input = IconMap.javaClass.getResourceAsStream("/svg/${name}.svg")
             result = ImageBridge.load(input, size, size)
             pixbufs[IconId(name, size)] = result
             result.ref()
@@ -40,5 +39,3 @@ object IconMap {
         return  result
     }
 }
-
-

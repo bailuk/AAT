@@ -5,7 +5,7 @@ import ch.bailu.aat_gtk.app.GtkAppConfig
 import ch.bailu.aat_gtk.app.GtkAppContext
 import ch.bailu.aat_gtk.app.TimeStation
 import ch.bailu.aat_gtk.util.GtkTimer
-import ch.bailu.aat_gtk.util.IconMap
+import ch.bailu.aat_gtk.lib.IconMap
 import ch.bailu.aat_gtk.view.menu.provider.AppMenu
 import ch.bailu.aat_lib.dispatcher.*
 import ch.bailu.aat_lib.gpx.InfoID
