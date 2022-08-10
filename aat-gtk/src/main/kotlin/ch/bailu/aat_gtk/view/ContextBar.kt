@@ -1,6 +1,6 @@
 package ch.bailu.aat_gtk.view
 
-import ch.bailu.aat_gtk.util.IconMap
+import ch.bailu.aat_gtk.lib.IconMap
 import ch.bailu.aat_gtk.view.map.control.Bar
 import ch.bailu.aat_gtk.view.stack.ComboBoxString
 import ch.bailu.aat_gtk.view.util.margin

@@ -1,7 +1,7 @@
 #!/bin/sh
 #
-# Compile AAT and install and run it on a remote host via ssh for a specific user
-# Example usage: ./install_remote.sh user@mobian
+# Compile, install and run app on a remote host via ssh for a specific user
+# Example usage: ./install-remote.sh user@mobian
 #
 
 if [ $# -eq 0 ]
@@ -20,12 +20,12 @@ desktop_dir="${home}/.local/share/applications"
 desktop="${desktop_dir}/ch.bailu.aat_gtk.desktop"
 data="${home}/aat_data"
 
-cd ../../ || exit 1
+test -d gradle || cd ../../
 ./gradlew aat-gtk::build || exit 1
 
 ssh $remote "mkdir -p ${data}" || exit 1
 scp  aat-gtk/build/libs/aat-gtk-all.jar "${remote}:${data}/aat.jar"  || exit 1
-scp  aat-gtk/src/main/resources/images/icon.svg "${remote}:${data}/aat.svg" || exit 1
+scp  aat-gtk/src/main/resources/svg/app-icon.svg "${remote}:${data}/aat.svg" || exit 1
 
 ssh "${remote}" "mkdir -p ${desktop_dir}" || exit 1
 ssh "${remote}" "cat > ${desktop}" << EOF
@@ -43,4 +43,3 @@ ssh $remote chmod 700 "${desktop}" || exit 1
 ssh -X $remote java -jar "${data}/aat.jar" || exit 1
 
 exit 0
-
