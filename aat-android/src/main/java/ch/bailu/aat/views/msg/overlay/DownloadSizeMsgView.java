@@ -1,4 +1,4 @@
-package ch.bailu.aat.views.msg_overlay;
+package ch.bailu.aat.views.msg.overlay;
 
 import android.content.Context;
 import android.content.Intent;

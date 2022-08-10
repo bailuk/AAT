@@ -7,7 +7,7 @@ import androidx.annotation.NonNull;
 import ch.bailu.aat.preferences.PreferenceLoadDefaults;
 import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat.util.AppPermission;
-import ch.bailu.aat.views.ErrorView;
+import ch.bailu.aat.views.msg.ErrorMsgView;
 import ch.bailu.aat_lib.preferences.StorageInterface;
 
 public abstract class AbsActivity extends Activity {
@@ -20,22 +20,22 @@ public abstract class AbsActivity extends Activity {
         instantiated++;
     }
 
-    private ErrorView errorView;
+    private ErrorMsgView errorMsgView;
 
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        errorView = new ErrorView(this);
-        errorView.registerReceiver();
+        errorMsgView = new ErrorMsgView(this);
+        errorMsgView.registerReceiver();
 
         new PreferenceLoadDefaults(this);
         created++;
     }
 
 
-    protected ErrorView getErrorView() {
-        return errorView;
+    protected ErrorMsgView getErrorView() {
+        return errorMsgView;
     }
 
 
@@ -49,7 +49,7 @@ public abstract class AbsActivity extends Activity {
 
     @Override
     public void onDestroy() {
-        errorView.unregisterReceiver();
+        errorMsgView.unregisterReceiver();
         created--;
         super.onDestroy();
     }

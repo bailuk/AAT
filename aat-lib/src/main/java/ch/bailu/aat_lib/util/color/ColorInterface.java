@@ -17,9 +17,5 @@ public interface ColorInterface {
     int blue();
     int alpha();
 
-
     int toInt();
-
-
-
 }

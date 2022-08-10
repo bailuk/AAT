@@ -20,10 +20,7 @@ import ch.bailu.foc_android.FocAsset;
 
 public class AboutActivity extends ActivityContext {
     private final static String SOLID_KEY = AboutActivity.class.getSimpleName();
-
-
     private final static UiTheme THEME = AppTheme.doc;
-
 
     private HtmlScrollTextView status;
 
@@ -33,9 +30,6 @@ public class AboutActivity extends ActivityContext {
 
         createViews();
     }
-
-
-
 
     private void createViews() {
         MultiView multiView = createMultiView();
@@ -56,7 +50,6 @@ public class AboutActivity extends ActivityContext {
 
         return bar;
     }
-
 
     private MultiView createMultiView() {
         final MultiView mv = new MultiView(this, SOLID_KEY);

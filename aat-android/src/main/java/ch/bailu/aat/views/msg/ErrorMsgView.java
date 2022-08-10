@@ -1,24 +1,24 @@
-package ch.bailu.aat.views;
+package ch.bailu.aat.views.msg;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.widget.TextView;
 
-import ch.bailu.aat.util.AppIntent;
-import ch.bailu.aat_lib.service.InsideContext;
 import ch.bailu.aat.services.ServiceContext;
-import ch.bailu.aat_lib.service.cache.CacheService;
-import ch.bailu.aat_lib.service.cache.Obj;
+import ch.bailu.aat.util.AppIntent;
 import ch.bailu.aat.util.OldAppBroadcaster;
 import ch.bailu.aat_lib.dispatcher.AppBroadcaster;
 import ch.bailu.aat_lib.logger.AppLog;
+import ch.bailu.aat_lib.service.InsideContext;
+import ch.bailu.aat_lib.service.cache.CacheService;
+import ch.bailu.aat_lib.service.cache.Obj;
 import ch.bailu.foc.Foc;
 
 
-public class ErrorView extends TextView  {
+public class ErrorMsgView extends AbsMsgView {
 
+    private final static int DISPLAY_FOR_MILLIS = 15000;
     private final static int BACKGROUND = Color.rgb(50,0,0);
     private final static int PADDING = 20;
 
@@ -26,24 +26,28 @@ public class ErrorView extends TextView  {
     private final BroadcastReceiver onMessage = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            ErrorView.this.displayError(intent);
+            ErrorMsgView.this.displayError(intent);
         }
     };
 
-    public ErrorView(Context c) {
-        super(c);
+    public ErrorMsgView(Context context) {
+        super(context, DISPLAY_FOR_MILLIS);
         setTextColor(Color.RED);
         setBackgroundColor(BACKGROUND);
         setVisibility(GONE);
         setPadding(PADDING, PADDING, PADDING, PADDING);
     }
 
+    @Override
+    public void attach() {}
+
+    @Override
+    public void detach() {}
 
     private void displayError(Intent intent) {
         String message = intent.getStringExtra(AppIntent.EXTRA_MESSAGE);
         displayError(message);
     }
-
 
     /**
      * Gets an {@link Obj} from the {@link CacheService}
@@ -65,7 +69,6 @@ public class ErrorView extends TextView  {
         };
     }
 
-
     /**
      * Get an error message from an exception and display it
      * @param exception that gets displayed
@@ -74,20 +77,17 @@ public class ErrorView extends TextView  {
         displayError(exceptionToCharSequence(exception));
     }
 
-
     /**
      * Display an error message
      * @param error message that gets displayed
      */
-    public void displayError(CharSequence error) {
+    private void displayError(CharSequence error) {
         if (error == null || error.length() == 0) {
-            clear();
+            set();
         } else {
-            setText(error);
-            setVisibility(VISIBLE);
+            set(error.toString());
         }
     }
-
 
     private static CharSequence exceptionToCharSequence(Exception e) {
         if (e == null) {
@@ -101,23 +101,12 @@ public class ErrorView extends TextView  {
         }
     }
 
-
-    /**
-     * Clear the error display
-     */
-    public void clear() {
-        setText("");
-        setVisibility(GONE);
-    }
-
-
     /**
      * Receive and display error logs sent from {@link AppLog}
       */
     public void registerReceiver() {
         OldAppBroadcaster.register(getContext(), onMessage, AppBroadcaster.LOG_ERROR);
     }
-
 
     /**
      * Stop displaying error logs sent from {@link AppLog}

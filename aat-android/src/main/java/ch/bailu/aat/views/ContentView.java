@@ -11,13 +11,13 @@ import ch.bailu.aat_lib.preferences.system.SolidStatusMessages;
 import ch.bailu.aat.util.ui.UiTheme;
 import ch.bailu.aat.views.description.mview.MultiView;
 import ch.bailu.aat.views.description.mview.MultiViewIndicator;
-import ch.bailu.aat.views.msg_overlay.AbsMsgView;
-import ch.bailu.aat.views.msg_overlay.DownloadMsgView;
-import ch.bailu.aat.views.msg_overlay.DownloadSizeMsgView;
-import ch.bailu.aat.views.msg_overlay.FileChangeMsgView;
-import ch.bailu.aat.views.msg_overlay.InfoLogMsgView;
-import ch.bailu.aat.views.msg_overlay.MessageOverlay;
-import ch.bailu.aat.views.msg_overlay.TipMsgView;
+import ch.bailu.aat.views.msg.AbsMsgView;
+import ch.bailu.aat.views.msg.overlay.DownloadMsgView;
+import ch.bailu.aat.views.msg.overlay.DownloadSizeMsgView;
+import ch.bailu.aat.views.msg.overlay.FileChangeMsgView;
+import ch.bailu.aat.views.msg.overlay.InfoLogMsgView;
+import ch.bailu.aat.views.msg.overlay.MessageOverlay;
+import ch.bailu.aat.views.msg.overlay.TipMsgView;
 
 public class ContentView extends FrameLayout{
     private final LinearLayout mainContent;
@@ -61,7 +61,6 @@ public class ContentView extends FrameLayout{
         logActivityLabel();
     }
 
-
     private void logActivityLabel() {
         final ActivitySwitcher.Entry e = ActivitySwitcher.get(getContext());
 
@@ -70,12 +69,10 @@ public class ContentView extends FrameLayout{
         }
     }
 
-
     public void add(View view) {
         mainContent.addView(view);
         messages.bringToFront();
     }
-
 
     public void addW(View v) {
         add(v);
@@ -84,7 +81,6 @@ public class ContentView extends FrameLayout{
         l.weight = 1;
         v.setLayoutParams(l);
     }
-
 
     public void addMvIndicator(MultiView mv) {
         messages.addView(new MultiViewIndicator(mv), 0);

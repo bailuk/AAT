@@ -19,7 +19,7 @@ import ch.bailu.aat.util.ui.UiTheme;
 import ch.bailu.aat.views.BusyViewContainer;
 import ch.bailu.aat.views.BusyViewControlIID;
 import ch.bailu.aat.views.ContentView;
-import ch.bailu.aat.views.ErrorView;
+import ch.bailu.aat.views.msg.ErrorMsgView;
 import ch.bailu.aat.views.ImageButtonViewGroup;
 import ch.bailu.aat.views.PreviewView;
 import ch.bailu.aat.views.bar.MainControlBar;
@@ -37,7 +37,7 @@ public abstract class AbsFileContentActivity extends ActivityContext implements 
     protected ImageButtonViewGroup nextFile, previousFile;
     protected PreviewView fileOperation;
 
-    private ErrorView fileError;
+    private ErrorMsgView fileError;
 
     private BusyViewControlIID busyControl;
     protected MapViewInterface map;
@@ -69,7 +69,7 @@ public abstract class AbsFileContentActivity extends ActivityContext implements 
 
         contentView.add(bar);
 
-        fileError = new ErrorView(this);
+        fileError = new ErrorMsgView(this);
         contentView.add(fileError);
 
         contentView.add(getErrorView());

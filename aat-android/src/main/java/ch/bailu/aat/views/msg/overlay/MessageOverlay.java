@@ -1,4 +1,4 @@
-package ch.bailu.aat.views.msg_overlay;
+package ch.bailu.aat.views.msg.overlay;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -9,6 +9,8 @@ import android.widget.LinearLayout;
 import androidx.annotation.NonNull;
 
 import java.util.ArrayList;
+
+import ch.bailu.aat.views.msg.AbsMsgView;
 
 public class MessageOverlay extends LinearLayout {
     private final ArrayList<AbsMsgView> messageViews =
@@ -27,9 +29,8 @@ public class MessageOverlay extends LinearLayout {
         LinearLayout space = new LinearLayout(v.getContext());
         space.setOrientation(v.getOrientation());
         space.setBackgroundColor(Color.TRANSPARENT);
-        v.addView(space, new LinearLayout.LayoutParams(0,0,1));
+        v.addView(space, new LinearLayout.LayoutParams(0, 0, 1));
     }
-
 
     public AbsMsgView add(@NonNull AbsMsgView v) {
         add(this, v);
@@ -48,10 +49,8 @@ public class MessageOverlay extends LinearLayout {
                 new FrameLayout.LayoutParams(
                         FrameLayout.LayoutParams.MATCH_PARENT,
                         FrameLayout.LayoutParams.WRAP_CONTENT));
-
         return v;
     }
-
 
     private void add(ViewGroup parent, AbsMsgView view) {
         parent.addView(view,
@@ -64,15 +63,14 @@ public class MessageOverlay extends LinearLayout {
     @Override
     public void onAttachedToWindow() {
         super.onAttachedToWindow();
-        for (AbsMsgView v: messageViews) {
+        for (AbsMsgView v : messageViews) {
             v.attach();
         }
     }
 
-
     @Override
     public void onDetachedFromWindow() {
-        for (AbsMsgView v: messageViews) {
+        for (AbsMsgView v : messageViews) {
             v.detach();
         }
 
