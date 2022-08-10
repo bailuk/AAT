@@ -59,9 +59,11 @@ dependencies {
      *    https://github.com/mapsforge/mapsforge/blob/master/docs/Integration.md
      */
     val mapsForgeVersion: String by project
+    val mapsForgeGtkVersion: String by project
     implementation("org.mapsforge:mapsforge-map-reader:$mapsForgeVersion")
     implementation("org.mapsforge:mapsforge-themes:$mapsForgeVersion")
-    implementation("org.mapsforge:mapsforge-map-gtk:SNAPSHOT")
+    implementation("com.github.bailuk:mapsforge-gtk:${mapsForgeGtkVersion}")
+    // implementation("org.mapsforge:mapsforge-map-gtk:SNAPSHOT")
 
     /**
      *
@@ -69,7 +71,7 @@ dependencies {
      *   https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter
      *
      */
-    testImplementation("org.junit.jupiter:junit-jupiter:5.8.2")
+    testImplementation("org.junit.jupiter:junit-jupiter:5.9.0")
 }
 
 val appMainClass = "ch.bailu.aat_gtk.app.AppKt"
