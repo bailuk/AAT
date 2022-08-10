@@ -3,7 +3,7 @@ package ch.bailu.aat_lib.preferences;
 import java.util.ArrayList;
 
 import ch.bailu.aat_lib.resources.Res;
-import ch.bailu.aat_lib.service.directory.GpxDbConstants;
+import ch.bailu.aat_lib.service.directory.database.GpxDbConfiguration;
 import ch.bailu.foc.FocFactory;
 
 public class SolidDirectoryQuery extends SolidFile {
@@ -118,7 +118,7 @@ public class SolidDirectoryQuery extends SolidFile {
             }
 
 
-            selection = GpxDbConstants.KEY_START_TIME
+            selection = GpxDbConfiguration.KEY_START_TIME
                     + " BETWEEN "
                     + Math.min(start, end)
                     + " AND "
@@ -133,6 +133,3 @@ public class SolidDirectoryQuery extends SolidFile {
         return null;
     }
 }
-
-
-

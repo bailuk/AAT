@@ -1,8 +1,9 @@
 package ch.bailu.aat_lib.service.directory;
 
 import ch.bailu.aat_lib.app.AppContext;
-import ch.bailu.aat_lib.logger.AppLog;
 import ch.bailu.aat_lib.service.VirtualService;
+import ch.bailu.aat_lib.service.directory.database.AbsDatabase;
+import ch.bailu.aat_lib.service.directory.database.GpxDatabase;
 import ch.bailu.aat_lib.util.fs.AFile;
 import ch.bailu.aat_lib.util.sql.DbException;
 import ch.bailu.aat_lib.util.sql.DbResultSet;
@@ -10,22 +11,21 @@ import ch.bailu.foc.Foc;
 import ch.bailu.foc.FocName;
 
 public final class DirectoryService extends VirtualService implements DirectoryServiceInterface {
-    private AbsDatabase database=AbsDatabase.NULL_DATABASE;
+    private AbsDatabase database = AbsDatabase.NULL_DATABASE;
     private Foc directory = new FocName("");
-    private DirectorySynchronizer synchronizer=null;
+    private DirectorySynchronizer synchronizer = null;
 
     private final AppContext appContext;
 
     public DirectoryService(AppContext appContext) {
-        AppLog.d(this, "DirectoryService()");
         this.appContext = appContext;
     }
 
     public void openDir(Foc dir) {
         if (dir.mkdirs() && dir.canRead()) {
-            open(dir);
-            rescan();
-
+            directory = dir;
+            open(directory);
+            rescan(directory);
         } else {
             AFile.logErrorNoAccess(dir);
         }

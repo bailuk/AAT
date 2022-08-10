@@ -1,4 +1,4 @@
-package ch.bailu.aat_lib.service.directory;
+package ch.bailu.aat_lib.service.directory.database;
 
 import ch.bailu.aat_lib.util.sql.DbConnection;
 import ch.bailu.aat_lib.util.sql.DbException;
@@ -6,46 +6,27 @@ import ch.bailu.aat_lib.util.sql.DbResultSet;
 import ch.bailu.foc.Foc;
 
 
-public final class GpxDatabase extends AbsDatabase{
-
+public final class GpxDatabase extends AbsDatabase {
     private final String[] keys;
     private final DbConnection database;
 
 
     public GpxDatabase (DbConnection database, String path)
             throws DbException {
-        this(database, path, GpxDbConstants.KEY_LIST_NEW);
+        this(database, path, GpxDbConfiguration.KEY_LIST);
     }
 
-    public GpxDatabase (DbConnection database, String path, String[] k)
+    public GpxDatabase (DbConnection database, String path, String[] keys)
             throws DbException {
 
-        keys = k;
+        this.keys = keys;
         this.database = database;
-        database.open(path, GpxDbConstants.DB_VERSION, (db) -> {
-            db.execSQL("DROP TABLE IF EXISTS " + GpxDbConstants.DB_TABLE);
-            db.execSQL(getCreateTableExpression());
-        });
-    }
-
-    private String getCreateTableExpression() {
-        StringBuilder expression= new StringBuilder();
-        expression
-                .append("CREATE TABLE ")
-                .append(GpxDbConstants.DB_TABLE)
-                .append(" (");
-
-        for (int i = 0; i<GpxDbConstants.KEY_LIST_OLD.length; i++) {
-            if (i> 0) expression.append(", ");
-            expression.append(GpxDbConstants.KEY_LIST_OLD[i]).append(" ").append(GpxDbConstants.TYPE_LIST_OLD[i]);
-        }
-        expression.append(")");
-        return expression.toString();
+        this.database.open(path, GpxDbConfiguration.DB_VERSION);
     }
 
     @Override
     public DbResultSet query(String selection) {
-        return database.query("SELECT " + join(keys) + " FROM " + GpxDbConstants.DB_TABLE + where(selection) + " ORDER BY " + GpxDbConstants.KEY_START_TIME + " DESC");
+        return database.query("SELECT " + join(keys) + " FROM " + GpxDbConfiguration.TABLE + where(selection) + " ORDER BY " + GpxDbConfiguration.KEY_START_TIME + " DESC");
     }
 
     private static String where(String selection) {
@@ -62,11 +43,11 @@ public final class GpxDatabase extends AbsDatabase{
 
     @Override
     public void deleteEntry(Foc file) throws DbException {
-        database.execSQL("DELETE FROM " + GpxDbConstants.DB_TABLE + " WHERE "+ GpxDbConstants.KEY_FILENAME+ " = ?", file.getName());
+        database.execSQL("DELETE FROM " + GpxDbConfiguration.TABLE + " WHERE "+ GpxDbConfiguration.KEY_FILENAME+ " = ?", file.getName());
     }
 
     public void insert(String[] keys, Object ... values) {
-        database.execSQL("INSERT INTO " + GpxDbConstants.DB_TABLE + " ( " + join(keys) + ") VALUES ( " + repeat("?" , values.length) + " )", values);
+        database.execSQL("INSERT INTO " + GpxDbConfiguration.TABLE + " ( " + join(keys) + ") VALUES ( " + repeat("?" , values.length) + " )", values);
     }
 
     private static String repeat(String what, int times) {
