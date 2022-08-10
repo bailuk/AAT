@@ -6,7 +6,6 @@ Options:
   --build: build first
   --run: run after installation
   usar@ssh_host: install on a remote device"
-./aat-gtk/build/libs/aat-gtk-all.jar
 
 # general
 app="aat-gtk"
@@ -37,8 +36,8 @@ if [ -f $jar ]; then
   source_jar=$jar
   source_icon=app-icon.svg
 else
-  source_jar="tlg_gtk/$build/$jar"
-  source_icon="tlg_gtk/src/main/resources/svg/app-icon.svg"
+  source_jar="aat-gtk/$build/$jar"
+  source_icon="aat-gtk/src/main/resources/svg/app-icon.svg"
   test -d gradle || cd ..
   test -d gradle || cd ..
 fi
