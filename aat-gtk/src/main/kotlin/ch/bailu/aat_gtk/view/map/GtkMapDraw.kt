@@ -10,17 +10,19 @@ import org.mapsforge.core.graphics.Paint
 import org.mapsforge.map.gtk.graphics.GtkGraphicFactory
 
 class GtkMapDraw(private val nodeBitmap: NodeBitmap): MapDraw {
-    private val SPACE = 5
+    companion object {
+        private const val SPACE = 5
+    }
 
     private var canvas: Canvas? = null
 
     private val res = GtkAppDensity
-    val textPaint   = MapPaint.createStatusTextPaint(res)
+    private val textPaint: Paint = MapPaint.createStatusTextPaint(res)
     private val gridPaint   = MapPaint.createGridPaint(res)
-    val legendPaint = MapPaint.createLegendTextPaint(res)
+    private val legendPaint: Paint = MapPaint.createLegendTextPaint(res)
 
     private val textHeight   = textPaint.getTextHeight("X") + 5
-    private val point_radius = res.toPixel_i(MapDraw.POINT_RADIUS.toFloat())
+    private val pointRadius = res.toPixel_i(MapDraw.POINT_RADIUS.toFloat())
 
     private var left = 0
     private var top = 0
@@ -85,7 +87,7 @@ class GtkMapDraw(private val nodeBitmap: NodeBitmap): MapDraw {
 
 
     override fun point(pixel: Point) {
-        circle(pixel, point_radius, gridPaint)
+        circle(pixel, pointRadius, gridPaint)
     }
 
     override fun textTop(text: String?, line: Int) {
