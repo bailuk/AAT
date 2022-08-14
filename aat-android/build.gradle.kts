@@ -11,11 +11,13 @@ android {
     ndkVersion "21.1.6352462" */
     ndkVersion="21.3.6528147"
 
+    val appVersionName : String by project
+
     defaultConfig {
         minSdk = 14
         targetSdk = 29
         versionCode = 35
-        versionName = "v1.22"
+        versionName = appVersionName
         applicationId = "ch.bailu.aat"
     }
 

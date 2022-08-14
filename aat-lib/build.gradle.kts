@@ -33,7 +33,6 @@ dependencies {
     implementation ("org.mapsforge:mapsforge-map-reader:$mapsForgeVersion")
     api ("org.mapsforge:mapsforge-themes:$mapsForgeVersion")
 
-
     /**
      *  Notnull annotation
      */
@@ -45,7 +44,6 @@ dependencies {
      */
     implementation("net.sf.kxml:kxml2:2.3.0")
 
-
     /**
      *  https://mvnrepository.com/artifact/org.apache.commons/commons-text
      *  To escape html
@@ -53,14 +51,19 @@ dependencies {
     implementation("org.apache.commons:commons-text:1.9")
 
     /**
-     *
      *   https://junit.org/junit5/docs/current/user-guide/#dependency-metadata
      *   https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter
-     *
      */
-    testImplementation("org.junit.jupiter:junit-jupiter:5.8.2")
+    testImplementation("org.junit.jupiter:junit-jupiter:5.9.0")
 
-
-    // open-location-code
+    /**
+     * https://mvnrepository.com/artifact/com.google.openlocationcode/openlocationcode
+     * https://github.com/google/open-location-code
+     */
     implementation("com.google.openlocationcode:openlocationcode:1.0.4")
+}
+
+
+tasks.compileJava() {
+    dependsOn(":ci:property2config")
 }
