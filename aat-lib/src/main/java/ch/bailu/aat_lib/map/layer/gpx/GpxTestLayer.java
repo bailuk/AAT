@@ -3,6 +3,8 @@ package ch.bailu.aat_lib.map.layer.gpx;
 import org.mapsforge.core.graphics.Paint;
 import org.mapsforge.core.graphics.Style;
 
+import javax.annotation.Nonnull;
+
 import ch.bailu.aat_lib.app.AppGraphicFactory;
 import ch.bailu.aat_lib.coordinates.BoundingBoxE6;
 import ch.bailu.aat_lib.dispatcher.DispatcherInterface;
@@ -10,11 +12,11 @@ import ch.bailu.aat_lib.gpx.GpxList;
 import ch.bailu.aat_lib.gpx.GpxListWalker;
 import ch.bailu.aat_lib.gpx.GpxPointNode;
 import ch.bailu.aat_lib.gpx.GpxSegmentNode;
+import ch.bailu.aat_lib.lib.color.ColorInterface;
 import ch.bailu.aat_lib.map.MapContext;
+import ch.bailu.aat_lib.preferences.StorageInterface;
 import ch.bailu.aat_lib.util.Point;
 import ch.bailu.aat_lib.util.Rect;
-import ch.bailu.aat_lib.preferences.StorageInterface;
-import ch.bailu.aat_lib.util.color.ColorInterface;
 
 public final class GpxTestLayer extends GpxLayer {
 
@@ -40,8 +42,6 @@ public final class GpxTestLayer extends GpxLayer {
         paint.setStrokeWidth(3);
         return paint;
     }
-
-
 
     @Override
     public void drawInside(MapContext mcontext) {
@@ -95,11 +95,9 @@ public final class GpxTestLayer extends GpxLayer {
             return false;
         }
 
-
         private Rect rectFromBox(BoundingBoxE6 box) {
             return mcontext.getMetrics().toMapPixels(box);
         }
-
 
         private void drawRect(Rect rect, Paint paint) {
             mcontext.draw().rect(rect, paint);
@@ -107,6 +105,6 @@ public final class GpxTestLayer extends GpxLayer {
     }
 
     @Override
-    public void onPreferencesChanged(StorageInterface s, String key) {}
+    public void onPreferencesChanged(@Nonnull StorageInterface s, @Nonnull String key) {}
 
 }

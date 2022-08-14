@@ -1,4 +1,4 @@
-package ch.bailu.aat_lib.util.color;
+package ch.bailu.aat_lib.lib.color;
 
 public class ARGB implements ColorInterface {
 
@@ -64,7 +64,6 @@ public class ARGB implements ColorInterface {
     }
 
     public int toInt() {
-        int result = (a & 0xff) << 24 | (r & 0xff) << 16 | (g & 0xff) << 8 | (b & 0xff);
-        return result;
+        return (a & 0xff) << 24 | (r & 0xff) << 16 | (g & 0xff) << 8 | (b & 0xff);
     }
 }

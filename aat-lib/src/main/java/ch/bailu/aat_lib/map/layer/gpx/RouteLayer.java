@@ -2,14 +2,16 @@ package ch.bailu.aat_lib.map.layer.gpx;
 
 import org.mapsforge.core.graphics.Paint;
 
+import javax.annotation.Nonnull;
+
+import ch.bailu.aat_lib.lib.color.AltitudeColorTable;
+import ch.bailu.aat_lib.lib.color.ColorInterface;
 import ch.bailu.aat_lib.map.MapContext;
 import ch.bailu.aat_lib.map.MapPaint;
-import ch.bailu.aat_lib.util.Point;
 import ch.bailu.aat_lib.map.TwoNodes;
 import ch.bailu.aat_lib.preferences.StorageInterface;
 import ch.bailu.aat_lib.service.elevation.ElevationProvider;
-import ch.bailu.aat_lib.util.color.AltitudeColorTable;
-import ch.bailu.aat_lib.util.color.ColorInterface;
+import ch.bailu.aat_lib.util.Point;
 
 public final class RouteLayer extends GpxLayer {
 
@@ -30,7 +32,7 @@ public final class RouteLayer extends GpxLayer {
     }
 
     @Override
-    public void onPreferencesChanged(StorageInterface s, String key) {}
+    public void onPreferencesChanged(@Nonnull StorageInterface s, @Nonnull String key) {}
 
 
     @Override

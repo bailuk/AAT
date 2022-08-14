@@ -4,12 +4,14 @@ import org.mapsforge.core.graphics.Cap;
 import org.mapsforge.core.graphics.Join;
 import org.mapsforge.core.graphics.Paint;
 
+import javax.annotation.Nonnull;
+
 import ch.bailu.aat_lib.app.AppGraphicFactory;
+import ch.bailu.aat_lib.lib.color.AltitudeColorTable;
 import ch.bailu.aat_lib.map.MapContext;
-import ch.bailu.aat_lib.util.Point;
 import ch.bailu.aat_lib.map.TwoNodes;
 import ch.bailu.aat_lib.preferences.StorageInterface;
-import ch.bailu.aat_lib.util.color.AltitudeColorTable;
+import ch.bailu.aat_lib.util.Point;
 
 public final class TrackLayer  extends GpxLayer {
     private static final int STROKE_WIDTH=3;
@@ -27,7 +29,7 @@ public final class TrackLayer  extends GpxLayer {
     }
 
     @Override
-    public void onPreferencesChanged(StorageInterface s, String key) {}
+    public void onPreferencesChanged(@Nonnull StorageInterface s, @Nonnull String key) {}
 
     @Override
     public void drawInside(MapContext mcontext) {

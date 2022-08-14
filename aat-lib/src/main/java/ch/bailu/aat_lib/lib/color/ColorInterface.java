@@ -1,4 +1,4 @@
-package ch.bailu.aat_lib.util.color;
+package ch.bailu.aat_lib.lib.color;
 
 /**
  * Representation of a color

@@ -1,4 +1,4 @@
-package ch.bailu.aat_lib.util.color;
+package ch.bailu.aat_lib.lib.color;
 
 import ch.bailu.aat_lib.util.Limit;
 
@@ -10,7 +10,7 @@ public class HSV implements ColorInterface{
 
     /**
      * http://www.easyrgb.com/en/math.php#text20
-     * @param color
+     * @param color a color
      */
     public HSV(ColorInterface color) {
         //R, G and B input range = 0 ÷ 255
@@ -51,7 +51,7 @@ public class HSV implements ColorInterface{
     /**
      * H, S and V input range = 0 ÷ 1.0
      * R, G and B output range = 0 ÷ 255
-     * @return
+     * @return return argb color as integer
      */
     @Override
     public int toInt()

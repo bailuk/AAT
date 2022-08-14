@@ -1,12 +1,12 @@
 package ch.bailu.aat_lib;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import org.junit.jupiter.api.Test;
 
-import ch.bailu.aat_lib.util.color.ARGB;
-import ch.bailu.aat_lib.util.color.ColorInterface;
-import ch.bailu.aat_lib.util.color.HSV;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import ch.bailu.aat_lib.lib.color.ARGB;
+import ch.bailu.aat_lib.lib.color.ColorInterface;
+import ch.bailu.aat_lib.lib.color.HSV;
 
 public class TestColor {
     @Test

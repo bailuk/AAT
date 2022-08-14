@@ -2,13 +2,15 @@ package ch.bailu.aat_lib.map.layer.gpx.legend;
 
 import org.mapsforge.core.graphics.Paint;
 
-import ch.bailu.aat_lib.map.layer.gpx.GpxLayer;
+import javax.annotation.Nonnull;
+
+import ch.bailu.aat_lib.lib.color.ARGB;
 import ch.bailu.aat_lib.map.MapContext;
 import ch.bailu.aat_lib.map.MapMetrics;
 import ch.bailu.aat_lib.map.MapPaint;
-import ch.bailu.aat_lib.util.Point;
+import ch.bailu.aat_lib.map.layer.gpx.GpxLayer;
 import ch.bailu.aat_lib.preferences.StorageInterface;
-import ch.bailu.aat_lib.util.color.ARGB;
+import ch.bailu.aat_lib.util.Point;
 
 public final class GpxLegendLayer extends GpxLayer {
     private final LegendWalker walker;
@@ -54,7 +56,7 @@ public final class GpxLegendLayer extends GpxLayer {
     }
 
     @Override
-    public void onPreferencesChanged(StorageInterface s, String key) {}
+    public void onPreferencesChanged(@Nonnull StorageInterface s, @Nonnull String key) {}
 
     @Override
     public void onAttached() {}
