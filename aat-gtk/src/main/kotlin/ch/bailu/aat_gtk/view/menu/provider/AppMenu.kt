@@ -3,6 +3,7 @@ package ch.bailu.aat_gtk.view.menu.provider
 import ch.bailu.aat_gtk.lib.menu.MenuModelBuilder
 import ch.bailu.aat_gtk.view.MainStackView
 import ch.bailu.aat_gtk.view.TrackerButtonStartStop
+import ch.bailu.aat_gtk.view.dialog.About
 import ch.bailu.aat_lib.dispatcher.Dispatcher
 import ch.bailu.aat_lib.gpx.InfoID
 import ch.bailu.aat_lib.resources.Res
@@ -18,16 +19,16 @@ class AppMenu(private val window: ApplicationWindow,
     override fun createMenu(): MenuModelBuilder {
         return MenuModelBuilder()
             .label(Res.str().intro_map()) {stack.showMap()}
-            .label("Cockpit") {stack.showCockpit()}
-            .label("Tracks & Overlays") {stack.showFiles()}
+            .label(ToDo.translate("Cockpit")) {stack.showCockpit()}
+            .label(ToDo.translate("Tracks & Overlays")) {stack.showFiles()}
             .label(Res.str().intro_settings()) {stack.showPreferences()}
             .separator(Res.str().tracker(), MenuModelBuilder().custom("tracker-button"))
             .separator(
-                ToDo.translate("Resolution"),
+                "",
                 MenuModelBuilder()
-                    .label("PinePhone low res") {window.setDefaultSize(720 / 2, 1440 / 2)}
-                    .label("PinePhone hight res") {window.setDefaultSize(720, 1440)}
+                    .label(ToDo.translate("About…")) { About.show(window) }
             )
+
     }
 
     override fun createCustomWidgets(): Array<CustomWidget> {

@@ -17,7 +17,7 @@ Get source code at [GitHub](https://github.com/bailuk/AAT)
 Install from [F-Droid](https://f-droid.org/repository/browse/?fdid=ch.bailu.aat)
 
 ## Copyright
-(c) 2011-2022 Lukas Bai bailu@bailu.ch  
+© 2011-2022 Lukas Bai bailu@bailu.ch  
 license: [GNU GPLv3 or later](http://www.gnu.org/licenses/gpl.html)  
 
 ### Contributors
@@ -25,13 +25,13 @@ Logo designed by Ibrahim Tenekeci
 All contributors: [https://github.com/bailuk/AAT/graphs/contributors](https://github.com/bailuk/AAT/graphs/contributors)
 
 ### Map tiles
-(c) [OpenStreetMap, CC-BY-SA 2.0](http://wiki.openstreetmap.org/wiki/Legal_FAQ)  
-(c) [Waymarked Trails, CC BY-SA 3.0 DE](http://waymarkedtrails.org/en/help/legal)  
-OpenTopoMap: (c) [OpenStreetMap](https://www.openstreetmap.org/copyright)-Mitwirkende, SRTM | Kartendarstellung: (c) [OpenTopoMap](https://opentopomap.org/#map=5/49.000/10.000) ([CC-BY-SA](https://creativecommons.org/licenses/by-sa/3.0/))  
-OpenCycleMap: (c) [Thunderforest](https://www.thunderforest.com/), Data (c) [OpenStreetMap](https://www.openstreetmap.org/copyright) contributors [CC-BY-SA 2.0](https://creativecommons.org/licenses/by-sa/2.0/)
+© [OpenStreetMap, CC-BY-SA 2.0](http://wiki.openstreetmap.org/wiki/Legal_FAQ)  
+© [Waymarked Trails, CC BY-SA 3.0 DE](http://waymarkedtrails.org/en/help/legal)  
+OpenTopoMap: © [OpenStreetMap](https://www.openstreetmap.org/copyright)-Mitwirkende, SRTM | Kartendarstellung: © [OpenTopoMap](https://opentopomap.org/#map=5/49.000/10.000) ([CC-BY-SA](https://creativecommons.org/licenses/by-sa/3.0/))  
+OpenCycleMap: © [Thunderforest](https://www.thunderforest.com/), Data © [OpenStreetMap](https://www.openstreetmap.org/copyright) contributors [CC-BY-SA 2.0](https://creativecommons.org/licenses/by-sa/2.0/)
 
 ### Mapsforge
-(c) [Mapsforge project](https://github.com/mapsforge/mapsforge)  
+© [Mapsforge project](https://github.com/mapsforge/mapsforge)  
 license: [GNU Lesser GPL v3](http://www.gnu.org/licenses/lgpl.html)
 
 ### Digital elevation model (DEM)

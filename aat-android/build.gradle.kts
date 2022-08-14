@@ -12,6 +12,7 @@ android {
     ndkVersion="21.3.6528147"
 
     val appVersionName : String by project
+    val appName : String by project
 
     defaultConfig {
         minSdk = 14
@@ -30,13 +31,13 @@ android {
 
     buildTypes {
         getByName("release") {
-            resValue("string", "app_sname", "AAT")
+            resValue("string", "app_sname", appName)
             isMinifyEnabled = false
             proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.txt")
         }
 
         getByName("debug") {
-            resValue("string", "app_sname", "AAT Debug")
+            resValue("string", "app_sname", "$appName Debug")
             applicationIdSuffix = ".debug"
             isMinifyEnabled = false
             isDebuggable = true

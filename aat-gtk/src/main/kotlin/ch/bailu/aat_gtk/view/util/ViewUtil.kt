@@ -1,6 +1,6 @@
 package ch.bailu.aat_gtk.view.util
 
-import ch.bailu.aat_gtk.lib.IconMap
+import ch.bailu.aat_gtk.lib.icons.IconMap
 import ch.bailu.aat_gtk.view.map.control.Bar
 import ch.bailu.gtk.gtk.Button
 import ch.bailu.gtk.gtk.Widget

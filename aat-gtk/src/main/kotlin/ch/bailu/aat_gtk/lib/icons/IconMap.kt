@@ -1,9 +1,9 @@
-package ch.bailu.aat_gtk.lib
+package ch.bailu.aat_gtk.lib.icons
 
 import ch.bailu.aat_lib.logger.AppLog
+import ch.bailu.gtk.gdk.Paintable
 import ch.bailu.gtk.gdkpixbuf.Pixbuf
 import ch.bailu.gtk.gtk.Image
-import ch.bailu.gtk.bridge.Image as ImageBridge
 
 object IconMap {
     private data class IconId (val name: String, val size: Int)
@@ -24,7 +24,7 @@ object IconMap {
 
         return if (result == null) {
             val input = IconMap.javaClass.getResourceAsStream("/svg/${name}.svg")
-            result = ImageBridge.load(input, size, size)
+            result = ch.bailu.gtk.bridge.Image.load(input, size, size)
             pixbufs[IconId(name, size)] = result
             result.ref()
             result
@@ -37,5 +37,9 @@ object IconMap {
         val result = Image.newFromPixbufImage(getPixbuf(name, size))
         result.setSizeRequest(size, size)
         return  result
+    }
+
+    fun getPaintable(name: String, size: Int): Paintable {
+        return getImage(name, size).paintable
     }
 }
