@@ -4,6 +4,7 @@ import ch.bailu.aat_lib.Configuration
 import ch.bailu.gtk.type.Str
 
 object Strings {
+    const val appIdName="aat-gtk"
     val appName = Str(Configuration.appName)
     val version = Str(Configuration.appVersionName)
     val copyright = Str(Configuration.appCopyright)
