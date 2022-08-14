@@ -28,6 +28,7 @@ class MapMainView(app: Application, dispatcher: DispatcherInterface, uiControlle
 
     private val editorSource = EditorSource(GtkAppContext)
 
+    private val searchBar = SearchBar(app) {map.setCenter(it)}
     private val navigationBar = NavigationBar(map.mContext, GtkAppContext.storage)
     private val infoBar = InfoBar(app, uiController, map.mContext, GtkAppContext.storage, focFactory, window)
     private val editorBar = EditorBar(app, map.mContext, GtkAppContext.services, editorSource)
@@ -56,6 +57,7 @@ class MapMainView(app: Application, dispatcher: DispatcherInterface, uiControlle
         })
 
         overlay.child = map.drawingArea
+        addBar(searchBar)
         addBar(navigationBar)
         addBar(infoBar)
         addBar(editorBar)

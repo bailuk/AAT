@@ -65,6 +65,9 @@ dependencies {
     implementation("com.github.bailuk:mapsforge-gtk:${mapsForgeGtkVersion}")
     // implementation("org.mapsforge:mapsforge-map-gtk:SNAPSHOT")
 
+    implementation("com.google.code.gson:gson:2.9.0")
+    implementation("com.squareup.okhttp3:okhttp:4.10.0")
+
     /**
      *
      *   https://junit.org/junit5/docs/current/user-guide/#dependency-metadata
