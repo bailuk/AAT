@@ -7,6 +7,10 @@ class SearchController(private val searchModel: SearchModel) {
     var updateSpinner: () -> Unit = {}
     private val rest = RestNominatim()
 
+    init {
+        searchModel.updateSearchResult(rest.restClient.json)
+    }
+
     fun search(search: String) {
         if (search.isNotEmpty()) {
             rest.search(search) {

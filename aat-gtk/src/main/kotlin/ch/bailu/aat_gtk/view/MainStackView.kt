@@ -12,6 +12,7 @@ import ch.bailu.aat_lib.dispatcher.CustomFileSource
 import ch.bailu.aat_lib.dispatcher.Dispatcher
 import ch.bailu.aat_lib.gpx.GpxInformation
 import ch.bailu.aat_lib.gpx.InfoID
+import ch.bailu.aat_lib.logger.AppLog
 import ch.bailu.aat_lib.preferences.StorageInterface
 import ch.bailu.gtk.GTK
 import ch.bailu.gtk.gtk.*
@@ -31,8 +32,6 @@ class MainStackView (
         const val INDEX_FILES = 1
         const val INDEX_DETAIL = 2
         const val INDEX_COCKPIT = 3
-
-
     }
 
     private val customFileSource = CustomFileSource(GtkAppContext)
@@ -153,5 +152,10 @@ class MainStackView (
     override fun load(info: GpxInformation) {
         customFileSource.setFileID(info.file.toString())
         showContextBar()
+    }
+
+    fun onDestroy() {
+        // IMPORTANT this saves map position
+        mapView?.onDetached()
     }
 }

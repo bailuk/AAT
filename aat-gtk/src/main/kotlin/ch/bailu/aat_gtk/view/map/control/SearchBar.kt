@@ -2,9 +2,9 @@ package ch.bailu.aat_gtk.view.map.control
 
 import ch.bailu.aat_gtk.config.Layout
 import ch.bailu.aat_gtk.config.Strings
-import ch.bailu.aat_gtk.search.SearchController
 import ch.bailu.aat_gtk.lib.extensions.ellipsize
 import ch.bailu.aat_gtk.lib.menu.MenuModelBuilder
+import ch.bailu.aat_gtk.search.SearchController
 import ch.bailu.aat_gtk.search.SearchModel
 import ch.bailu.aat_lib.map.edge.Position
 import ch.bailu.gtk.gtk.*
@@ -26,7 +26,6 @@ class SearchBar(app: Application, centerMap: (LatLong)-> Unit): Bar(Position.TOP
 
             val entry = SearchEntry()
             append(entry.apply {
-
                 onActivate {
                     searchController.search(Editable(cast()).text.toString())
                 }

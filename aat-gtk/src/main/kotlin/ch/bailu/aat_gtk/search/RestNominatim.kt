@@ -7,11 +7,11 @@ import ch.bailu.aat_lib.util.fs.AppDirectory
 import java.io.File
 
 class RestNominatim {
-    private val search = RestClient(getJsonFile("search"), Strings.appIdName,"{\"result\":","}")
+    val restClient = RestClient(getJsonFile("search"), Strings.appIdName,"{\"result\":","}")
 
     fun search(search: String, observer: (RestClient)->Unit) {
         val url = "https://nominatim.openstreetmap.org/search"
-        this.search.download("${url}?city=${search}&format=json", observer)
+        this.restClient.download("${url}?city=${search}&format=json", observer)
     }
 
     private fun getJsonFile(name: String): File {
@@ -21,4 +21,5 @@ class RestNominatim {
         dir.mkdirs()
         return File(dir.child(name).toString())
     }
+
 }

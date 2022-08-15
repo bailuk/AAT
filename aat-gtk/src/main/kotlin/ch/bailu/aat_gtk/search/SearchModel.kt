@@ -11,6 +11,7 @@ class SearchModel {
 
     fun observe(observer: (SearchModel) -> Unit) {
         observers.add(observer)
+        observer(this)
     }
 
     fun updateSearchResult(json: JsonMap) {
