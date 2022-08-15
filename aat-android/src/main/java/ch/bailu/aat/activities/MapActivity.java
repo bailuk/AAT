@@ -26,7 +26,7 @@ import ch.bailu.aat_lib.util.Objects;
 
 public class MapActivity extends AbsKeepScreenOnActivity {
 
-    private static final String SOLID_KEY="map";
+    public static final String SOLID_KEY="map";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

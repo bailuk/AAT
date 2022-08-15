@@ -34,10 +34,11 @@ class GtkCustomMapView (
 ) : MapView(), MapViewInterface, OnPreferencesChanged, Attachable {
 
     companion object {
+        const val KEY = "MAP_VIEW"
         private const val SHOW_DEBUG_LAYERS = false
     }
 
-    private val backgroundContext: GtkMapContext = GtkMapContext(this, this.javaClass.simpleName, NodeBitmap.get(GtkAppDensity, appContext))
+    private val backgroundContext: GtkMapContext = GtkMapContext(this, KEY, NodeBitmap.get(GtkAppDensity, appContext))
     private val foregroundContext: GtkMapContextForeground
 
     private val layers = ArrayList<MapLayerInterface>(10)

@@ -2,6 +2,7 @@ package ch.bailu.aat.activities;
 
 import android.app.Activity;
 import android.os.Bundle;
+
 import androidx.annotation.NonNull;
 
 import ch.bailu.aat.preferences.PreferenceLoadDefaults;
@@ -9,6 +10,7 @@ import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat.util.AppPermission;
 import ch.bailu.aat.views.msg.ErrorMsgView;
 import ch.bailu.aat_lib.preferences.StorageInterface;
+import ch.bailu.aat_lib.preferences.system.SolidStartCount;
 
 public abstract class AbsActivity extends Activity {
 
@@ -22,7 +24,6 @@ public abstract class AbsActivity extends Activity {
 
     private ErrorMsgView errorMsgView;
 
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,11 +34,9 @@ public abstract class AbsActivity extends Activity {
         created++;
     }
 
-
     protected ErrorMsgView getErrorView() {
         return errorMsgView;
     }
-
 
     @Override
     public void onRequestPermissionsResult (int requestCode,
@@ -65,7 +64,6 @@ public abstract class AbsActivity extends Activity {
         super.onResume();
     }
 
-
     @Override
     protected void finalize () throws Throwable {
         instantiated--;
@@ -81,9 +79,8 @@ public abstract class AbsActivity extends Activity {
         builder.append("<br>Created activities: ");
         builder.append(created);
         builder.append("<br>Count of application starts: ");
-        builder.append(PreferenceLoadDefaults.getStartCount(this));
+        builder.append(new SolidStartCount(getStorage()).getValue());
         builder.append("</p>");
-
     }
 
     public StorageInterface getStorage() {

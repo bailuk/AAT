@@ -13,12 +13,14 @@ public class SolidPositionLock extends SolidBoolean {
         super(s, k + POSTFIX);
     }
 
+    public void setDefaults() {
+        setValue(true);
+    }
 
     @Override
     public String getIconResource() {
-        if (getValue()==true) {
+        if (getValue()) {
             return "zoom_original_inverse";
-
         } else {
             return "zoom_original";
         }

@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 import ch.bailu.aat_lib.exception.ValidationException;
-import ch.bailu.aat_lib.preferences.OldSolidMET;
 import ch.bailu.aat_lib.preferences.SolidString;
 import ch.bailu.aat_lib.preferences.StorageInterface;
 import ch.bailu.aat_lib.resources.Res;
@@ -24,36 +23,40 @@ public class SolidMET extends SolidString {
 
     @Override
     public String getValueAsString() {
-        String r = super.getValueAsString();
-
-        if (getStorage().isDefaultString(r)) {
-            r = new OldSolidMET(getStorage(), preset).getValueAsString();
+        var result = super.getValueAsString();
+        if (getStorage().isDefaultString(result)) {
+            result = getDefaultValue();
         }
-        return r;
+        return result;
     }
 
+    private String getDefaultValue() {
+        var metList =  Res.str().p_met_list();
+        if (preset < metList.length) {
+            return metList[preset];
+        } else {
+            return metList[0];
+        }
+    }
 
     public float getMETValue() {
-        String val = getValueAsString();
+        var val = getValueAsString();
 
         final int from = 0;
         int to = val.indexOf(' ');
 
         float r = 0f;
 
-
         if (to > from) {
             try {
                 String met = val.substring(from, to);
                 r = Float.parseFloat(met);
             } catch (NumberFormatException e) {
-                // TODO : userfeedback missing
                 r = 0f;
             }
         }
 
         if (r > 20f || r < 0f) {
-            // TODO : userfeedback missing, validation should be moved to MET preferences
             r = 0f;
         }
         return r;
@@ -70,14 +73,10 @@ public class SolidMET extends SolidString {
         }
     }
 
-
     @Override
     public ArrayList<String> buildSelection(ArrayList<String> list) {
-
         String[] array = Res.str().p_met_list();
-
         Collections.addAll(list, array);
-
         return list;
     }
 

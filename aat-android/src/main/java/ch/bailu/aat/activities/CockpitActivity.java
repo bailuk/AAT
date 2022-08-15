@@ -30,7 +30,7 @@ import ch.bailu.aat_lib.gpx.InfoID;
 
 public class CockpitActivity extends AbsKeepScreenOnActivity {
 
-    private static final String SOLID_KEY="tracker";
+    public static final String SOLID_KEY="tracker";
 
     private final UiTheme theme  = AppTheme.cockpit;
 
