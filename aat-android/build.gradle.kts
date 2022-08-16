@@ -88,7 +88,6 @@ dependencies {
     implementation ("com.caverock:androidsvg:1.4")
 
     // MapsForge POI
-    implementation ("org.mapsforge:mapsforge-poi:$mapsForgeVersion")
     implementation ("org.mapsforge:mapsforge-poi-android:$mapsForgeVersion")
     implementation ("org.mapsforge:sqlite-android:$mapsForgeVersion")
 

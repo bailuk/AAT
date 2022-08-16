@@ -39,13 +39,14 @@ dependencies {
     // https://mvnrepository.com/artifact/com.h2database/h2
     implementation("com.h2database:h2:2.0.204")
 
+
     /**
      *    https://mvnrepository.com/artifact/com.github.hypfvieh/dbus-java
      *    https://github.com/hypfvieh/dbus-java
      */
-    implementation("com.github.hypfvieh:dbus-java-core:4.0.0")
-    implementation("com.github.hypfvieh:dbus-java-transport-jnr-unixsocket:4.0.0")
-    implementation("org.slf4j:slf4j-api:1.7.32")
+    implementation("com.github.hypfvieh:dbus-java-core:4.1.0")
+    implementation("com.github.hypfvieh:dbus-java-transport-jnr-unixsocket:4.1.0")
+    implementation("org.slf4j:slf4j-api:1.7.36")
     implementation("ch.qos.logback:logback-classic:1.2.3")
     implementation("ch.qos.logback:logback-core:1.2.3")
 
@@ -60,8 +61,7 @@ dependencies {
      */
     val mapsForgeVersion: String by project
     val mapsForgeGtkVersion: String by project
-    implementation("org.mapsforge:mapsforge-map-reader:$mapsForgeVersion")
-    implementation("org.mapsforge:mapsforge-themes:$mapsForgeVersion")
+    implementation("org.mapsforge:mapsforge-poi-awt:$mapsForgeVersion")
     implementation("com.github.bailuk:mapsforge-gtk:${mapsForgeGtkVersion}")
     // implementation("org.mapsforge:mapsforge-map-gtk:SNAPSHOT")
 

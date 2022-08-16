@@ -2,6 +2,7 @@ package ch.bailu.aat_gtk.service.location;
 
 import org.freedesktop.dbus.DBusPath;
 import org.freedesktop.dbus.connections.impl.DBusConnection;
+import org.freedesktop.dbus.connections.impl.DBusConnectionBuilder;
 import org.freedesktop.dbus.exceptions.DBusException;
 import org.freedesktop.dbus.interfaces.DBusSigHandler;
 import org.freedesktop.dbus.interfaces.Properties;
@@ -35,7 +36,7 @@ public class GeoClue2Dbus {
 
 
     public GeoClue2Dbus() throws DBusException {
-        connection = DBusConnection.getConnection(DBusConnection.DBusBusType.SYSTEM);
+        connection = DBusConnectionBuilder.forType(DBusConnection.DBusBusType.SYSTEM).build();
 
         manager = connection.getRemoteObject(
                 BUS_NAME,

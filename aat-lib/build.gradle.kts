@@ -33,6 +33,9 @@ dependencies {
     implementation ("org.mapsforge:mapsforge-map-reader:$mapsForgeVersion")
     api ("org.mapsforge:mapsforge-themes:$mapsForgeVersion")
 
+    // MapsForge POI TODO change to implementation after import of android code
+    api ("org.mapsforge:mapsforge-poi:$mapsForgeVersion")
+
     /**
      *  Notnull annotation
      */
