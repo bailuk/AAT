@@ -1,8 +1,8 @@
 package ch.bailu.aat_gtk.view.menu.provider
 
-import ch.bailu.aat_gtk.app.GtkRefs
+import ch.bailu.aat_gtk.lib.extensions.ellipsizeStart
+import ch.bailu.aat_gtk.lib.extensions.setText
 import ch.bailu.aat_gtk.lib.menu.MenuModelBuilder
-import ch.bailu.aat_gtk.view.util.truncate
 import ch.bailu.aat_lib.preferences.map.SolidOverlayFileList
 import ch.bailu.foc.Foc
 import ch.bailu.foc.FocName
@@ -79,7 +79,7 @@ class SolidOverlaySelectorMenu(private val solid: SolidOverlayFileList): MenuPro
 
     private fun updateLabels(labels: ArrayList<Label>) {
         labels.forEachIndexed { index, it ->
-            GtkRefs.text(it, solid[index].valueAsString.truncate())
+            it.setText(solid[index].valueAsString.ellipsizeStart(30))
         }
     }
 }

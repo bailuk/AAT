@@ -1,7 +1,7 @@
 package ch.bailu.aat_gtk.view.map.control
 
-import ch.bailu.aat_gtk.view.util.margin
-import ch.bailu.aat_gtk.view.util.setIcon
+import ch.bailu.aat_gtk.lib.extensions.margin
+import ch.bailu.aat_gtk.lib.extensions.setIcon
 import ch.bailu.aat_lib.map.edge.EdgeViewInterface
 import ch.bailu.aat_lib.map.edge.Position
 import ch.bailu.gtk.GTK

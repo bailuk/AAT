@@ -1,9 +1,9 @@
 package ch.bailu.aat_gtk.view.solid
 
+import ch.bailu.aat_gtk.lib.extensions.margin
 import ch.bailu.aat_gtk.view.UiController
 import ch.bailu.aat_gtk.view.stack.LazyStackView
 import ch.bailu.aat_gtk.view.stack.StackViewSelector
-import ch.bailu.aat_gtk.view.util.margin
 import ch.bailu.aat_lib.preferences.StorageInterface
 import ch.bailu.aat_lib.preferences.general.SolidPresetCount
 import ch.bailu.aat_lib.resources.Res

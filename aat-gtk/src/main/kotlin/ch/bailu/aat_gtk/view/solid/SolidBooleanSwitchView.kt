@@ -1,6 +1,6 @@
 package ch.bailu.aat_gtk.view.solid
 
-import ch.bailu.aat_gtk.app.GtkRefs
+import ch.bailu.aat_gtk.lib.extensions.setText
 import ch.bailu.aat_lib.preferences.OnPreferencesChanged
 import ch.bailu.aat_lib.preferences.SolidBoolean
 import ch.bailu.aat_lib.preferences.StorageInterface
@@ -21,7 +21,7 @@ class SolidBooleanSwitchView(private val solid: SolidBoolean) : OnPreferencesCha
 
 
     init {
-        GtkRefs.text(label, solid.label)
+        label.setText(solid.label)
         label.xalign = 0f
         layout.append(label)
         layout.append(toggleBox)

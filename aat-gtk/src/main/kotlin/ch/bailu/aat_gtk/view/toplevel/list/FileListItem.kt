@@ -1,8 +1,9 @@
 package ch.bailu.aat_gtk.view.toplevel.list
 
-import ch.bailu.aat_gtk.app.GtkRefs
+import ch.bailu.aat_gtk.lib.extensions.margin
+import ch.bailu.aat_gtk.lib.extensions.setLabel
+import ch.bailu.aat_gtk.lib.extensions.setText
 import ch.bailu.aat_gtk.view.toplevel.list.menu.FileContextMenu
-import ch.bailu.aat_gtk.view.util.margin
 import ch.bailu.aat_lib.description.ContentDescription
 import ch.bailu.aat_lib.gpx.GpxInformation
 import ch.bailu.aat_lib.gpx.InfoID
@@ -67,14 +68,8 @@ class FileListItem(listItem: ListItem, private val fileContextMenu: FileContextM
         }
 
 
-        GtkRefs.label(labels[0], title)
-        GtkRefs.text(labels[1], infos)
-        GtkRefs.text(labels[2], info.file.name)
-    }
-
-    fun release() {
-        labels.forEach {
-            GtkRefs.release(it)
-        }
+        labels[0].setLabel(title)
+        labels[1].setText(infos)
+        labels[2].setText(info.file.name)
     }
 }
