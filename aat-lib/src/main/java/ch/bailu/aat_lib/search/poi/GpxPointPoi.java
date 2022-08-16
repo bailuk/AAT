@@ -1,4 +1,4 @@
-package ch.bailu.aat.util;
+package ch.bailu.aat_lib.search.poi;
 
 
 import org.mapsforge.core.model.Tag;

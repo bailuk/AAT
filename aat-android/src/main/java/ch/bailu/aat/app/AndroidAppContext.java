@@ -2,6 +2,11 @@ package ch.bailu.aat.app;
 
 import android.content.Context;
 
+import org.mapsforge.poi.android.storage.AndroidPoiPersistenceManagerFactory;
+import org.mapsforge.poi.storage.PoiPersistenceManager;
+
+import javax.annotation.Nonnull;
+
 import ch.bailu.aat.dispatcher.AndroidBroadcaster;
 import ch.bailu.aat.map.mapsforge.MapsForgePreview;
 import ch.bailu.aat.map.tile.AndroidTilePainter;
@@ -47,7 +52,7 @@ public class AndroidAppContext implements AppContext {
         this.broadcaster = new AndroidBroadcaster(context);
         this.assets = new FocAssetFactory(context);
     }
-    
+
     @Override
     public Broadcaster getBroadcaster() {
         return broadcaster;
@@ -74,7 +79,7 @@ public class AndroidAppContext implements AppContext {
     }
 
     @Override
-    public MapPreviewInterface createMapPreview(GpxInformation info, Foc previewImageFile) {
+    public MapPreviewInterface createMapPreview(@Nonnull GpxInformation info, @Nonnull Foc previewImageFile) {
         return new MapsForgePreview(context, this, info, previewImageFile);
     }
 
@@ -121,6 +126,11 @@ public class AndroidAppContext implements AppContext {
     @Override
     public TilePainter getTilePainter() {
         return new AndroidTilePainter();
+    }
+
+    @Override
+    public PoiPersistenceManager getPoiPersistenceManager(@Nonnull String poiDatabase) {
+        return AndroidPoiPersistenceManagerFactory.getPoiPersistenceManager(poiDatabase);
     }
 
     @Override

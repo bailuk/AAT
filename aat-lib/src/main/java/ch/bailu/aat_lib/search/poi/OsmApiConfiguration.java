@@ -1,10 +1,10 @@
-package ch.bailu.aat.util;
+package ch.bailu.aat_lib.search.poi;
 
 import java.io.UnsupportedEncodingException;
 
-import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat_lib.app.AppContext;
 import ch.bailu.aat_lib.service.InsideContext;
+import ch.bailu.aat_lib.service.ServicesInterface;
 import ch.bailu.aat_lib.service.background.BackgroundServiceInterface;
 import ch.bailu.aat_lib.service.background.BackgroundTask;
 import ch.bailu.aat_lib.util.fs.AppDirectory;
@@ -32,7 +32,6 @@ public abstract class OsmApiConfiguration {
             return getBaseDirectory().child("result"+ getFileExtension());
         }
 
-
         public Foc getQueryFile() {
             return getBaseDirectory().child("query.txt");
         }
@@ -51,14 +50,13 @@ public abstract class OsmApiConfiguration {
             return name.toString();
         }
 
-
         private static void appendToName(char c, StringBuilder name) {
             if (Character.isLetter(c)) {
                 name.append(c);
             }
         }
 
-    final public boolean isTaskRunning(ServiceContext scontext) {
+    final public boolean isTaskRunning(ServicesInterface scontext) {
         final boolean[] running = {false};
 
         new InsideContext(scontext) {
@@ -71,7 +69,7 @@ public abstract class OsmApiConfiguration {
         return running[0];
     }
 
-    final public void stopTask(ServiceContext scontext) {
+    final public void stopTask(ServicesInterface scontext) {
         new InsideContext(scontext) {
             @Override
             public void run() {
@@ -81,7 +79,4 @@ public abstract class OsmApiConfiguration {
             }
         };
     }
-
 }
-
-

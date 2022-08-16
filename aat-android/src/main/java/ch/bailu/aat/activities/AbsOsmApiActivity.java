@@ -13,7 +13,7 @@ import ch.bailu.aat_lib.dispatcher.CustomFileSource;
 import ch.bailu.aat.menus.ResultFileMenu;
 import ch.bailu.aat.util.AppIntent;
 import ch.bailu.aat.util.OldAppBroadcaster;
-import ch.bailu.aat.util.OsmApiConfiguration;
+import ch.bailu.aat_lib.search.poi.OsmApiConfiguration;
 import ch.bailu.aat.util.TextBackup;
 import ch.bailu.aat.util.ui.AppTheme;
 import ch.bailu.aat.util.ui.ToolTip;

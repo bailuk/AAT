@@ -15,8 +15,10 @@ import org.mapsforge.poi.storage.UnknownPoiCategoryException;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import javax.annotation.Nonnull;
+
 import ch.bailu.aat.preferences.Storage;
-import ch.bailu.aat.preferences.map.SolidPoiDatabase;
+import ch.bailu.aat_lib.preferences.SolidPoiDatabase;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.util.filter_list.FilterList;
 import ch.bailu.aat.util.filter_list.FilterListUtil;
@@ -68,7 +70,6 @@ public class PoiView  extends LinearLayout implements OnPreferencesChanged {
     private void readList() {
         list.clear();
 
-
         final PoiPersistenceManager persistenceManager =
                 AndroidPoiPersistenceManagerFactory.getPoiPersistenceManager(
                         sdatabase.getValueAsString());
@@ -102,7 +103,6 @@ public class PoiView  extends LinearLayout implements OnPreferencesChanged {
                 list.add(new PoiListEntry(category, summaryEntry));
             }
         }
-
     }
 
     public View createHeader(UiTheme theme) {
@@ -148,8 +148,7 @@ public class PoiView  extends LinearLayout implements OnPreferencesChanged {
             }
         });
 
-        EditTextTool layout = new EditTextTool(filterView, LinearLayout.VERTICAL, theme);
-        return layout;
+        return new EditTextTool(filterView, LinearLayout.VERTICAL, theme);
     }
 
     private void filterList(String string) {
@@ -181,7 +180,7 @@ public class PoiView  extends LinearLayout implements OnPreferencesChanged {
     }
 
     @Override
-    public void onPreferencesChanged(StorageInterface s, String key) {
+    public void onPreferencesChanged(@Nonnull StorageInterface s, @Nonnull String key) {
         if (sdatabase.hasKey(key)) {
             saveSelected();
             readList();
@@ -199,5 +198,4 @@ public class PoiView  extends LinearLayout implements OnPreferencesChanged {
             e.printStackTrace();
         }
     }
-
 }

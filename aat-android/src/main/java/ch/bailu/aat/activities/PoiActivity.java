@@ -7,8 +7,8 @@ import org.mapsforge.poi.storage.PoiCategory;
 
 import java.util.ArrayList;
 
-import ch.bailu.aat.util.OsmApiConfiguration;
-import ch.bailu.aat.util.PoiApi;
+import ch.bailu.aat_lib.search.poi.OsmApiConfiguration;
+import ch.bailu.aat_lib.search.poi.PoiApi;
 import ch.bailu.aat.util.ui.AppLayout;
 import ch.bailu.aat.views.ContentView;
 import ch.bailu.aat.views.PercentageLayout;
@@ -26,7 +26,7 @@ public class PoiActivity extends AbsOsmApiActivity {
 
     @Override
     public OsmApiConfiguration createApiConfiguration(BoundingBoxE6 boundingBox) {
-        return new PoiApi(this, boundingBox) {
+        return new PoiApi(getAppContext(), boundingBox) {
 
             @Override
             protected ArrayList<PoiCategory> getSelectedCategories() {
@@ -35,7 +35,6 @@ public class PoiActivity extends AbsOsmApiActivity {
             }
         };
     }
-
 
     @Override
     protected View createMainContentView(ContentView contentView) {
@@ -48,7 +47,6 @@ public class PoiActivity extends AbsOsmApiActivity {
         return linear;
     }
 
-
     @Override
     protected View createNodeListView(ContentView contentView) {
         if (AppLayout.isTablet(this)) {
@@ -57,7 +55,6 @@ public class PoiActivity extends AbsOsmApiActivity {
 
             mainView.add(super.createNodeListView(contentView),50);
             mainView.add(createPoiListView(), 50);
-
 
             return mainView;
         } else {
@@ -71,7 +68,6 @@ public class PoiActivity extends AbsOsmApiActivity {
         }
 
     }
-
 
     @Override
     public void addCustomButtons(MainControlBar bar) {
@@ -88,7 +84,6 @@ public class PoiActivity extends AbsOsmApiActivity {
 
         theme.background(poiView);
         return poiView;
-
     }
 
     @Override
@@ -96,5 +91,4 @@ public class PoiActivity extends AbsOsmApiActivity {
         poiView.close(getServiceContext());
         super.onDestroy();
     }
-
 }

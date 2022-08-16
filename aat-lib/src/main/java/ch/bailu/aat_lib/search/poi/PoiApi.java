@@ -1,9 +1,6 @@
-package ch.bailu.aat.util;
-
-import android.content.Context;
+package ch.bailu.aat_lib.search.poi;
 
 import org.mapsforge.core.model.BoundingBox;
-import org.mapsforge.poi.android.storage.AndroidPoiPersistenceManagerFactory;
 import org.mapsforge.poi.storage.ExactMatchPoiCategoryFilter;
 import org.mapsforge.poi.storage.PoiCategory;
 import org.mapsforge.poi.storage.PoiCategoryFilter;
@@ -14,12 +11,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import ch.bailu.aat.R;
-import ch.bailu.aat.preferences.map.SolidPoiDatabase;
-import ch.bailu.aat.preferences.system.AndroidSolidDataDirectory;
 import ch.bailu.aat_lib.app.AppContext;
 import ch.bailu.aat_lib.coordinates.BoundingBoxE6;
 import ch.bailu.aat_lib.dispatcher.AppBroadcaster;
+import ch.bailu.aat_lib.preferences.SolidPoiDatabase;
 import ch.bailu.aat_lib.service.InsideContext;
 import ch.bailu.aat_lib.service.background.BackgroundTask;
 import ch.bailu.aat_lib.service.background.FileTask;
@@ -40,19 +35,15 @@ public abstract class PoiApi extends OsmApiConfiguration {
 
     private BackgroundTask task = BackgroundTask.NULL;
 
-    private final Context context;
 
-
-    public PoiApi(Context context, BoundingBoxE6 box) {
-        this.context = context;
+    public PoiApi(AppContext context, BoundingBoxE6 box) {
         bounding = box;
-        directory = AppDirectory.getDataDirectory(new AndroidSolidDataDirectory(context), AppDirectory.DIR_POI);
+        directory = AppDirectory.getDataDirectory(context.getDataDirectory(), AppDirectory.DIR_POI);
     }
-
 
     @Override
     public String getApiName() {
-        return context.getString(R.string.p_mapsforge_poi);
+        return ch.bailu.aat_lib.resources.Res.str().p_mapsforge_poi();
     }
 
     @Override
@@ -80,7 +71,6 @@ public abstract class PoiApi extends OsmApiConfiguration {
         return "";
     }
 
-
     @Override
     public void startTask(AppContext appContext) {
 
@@ -96,17 +86,13 @@ public abstract class PoiApi extends OsmApiConfiguration {
                         categories,
                         poiDatabase);
                 appContext.getServices().getBackgroundService().process(task);
-
             }
         };
     }
 
     protected abstract ArrayList<PoiCategory> getSelectedCategories();
 
-
     private static class PoiToGpxTask extends FileTask {
-
-
         private final BoundingBox bounding;
         private final String poiDatabase;
         private final ArrayList<PoiCategory> categories;
@@ -121,11 +107,9 @@ public abstract class PoiApi extends OsmApiConfiguration {
             categories = c;
         }
 
-
         @Override
         public long bgOnProcess(AppContext sc) {
-            final PoiPersistenceManager persistenceManager =
-                    AndroidPoiPersistenceManagerFactory.getPoiPersistenceManager(poiDatabase);
+            final PoiPersistenceManager persistenceManager = sc.getPoiPersistenceManager(poiDatabase);
 
             try {
                 queryPois(persistenceManager, bounding);
@@ -134,7 +118,6 @@ public abstract class PoiApi extends OsmApiConfiguration {
             }
 
             persistenceManager.close();
-
 
             sc.getBroadcaster().broadcast(AppBroadcaster.FILE_CHANGED_ONDISK,
                     getFile().toString(), poiDatabase);
@@ -153,7 +136,6 @@ public abstract class PoiApi extends OsmApiConfiguration {
 
         private Collection<PointOfInterest> searchPoi(PoiPersistenceManager persistenceManager,
                                                       BoundingBox box) {
-
             final PoiCategoryFilter categoryFilter = new ExactMatchPoiCategoryFilter();
 
             for (PoiCategory category : categories)
@@ -161,7 +143,6 @@ public abstract class PoiApi extends OsmApiConfiguration {
 
             return persistenceManager.findInRect(box, categoryFilter, null, LIMIT);
         }
-
 
         private void writeGpxFile(Collection<PointOfInterest> pois) throws IOException {
             WayWriter writer = new WayWriterOsmTags(getFile());
@@ -175,7 +156,6 @@ public abstract class PoiApi extends OsmApiConfiguration {
             writer.close();
         }
     }
-
 
     @Override
     public Exception getException() {
