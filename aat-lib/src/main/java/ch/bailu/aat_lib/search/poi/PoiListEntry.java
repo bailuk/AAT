@@ -1,6 +1,9 @@
-package ch.bailu.aat.util.filter_list;
+package ch.bailu.aat_lib.search.poi;
 
 import org.mapsforge.poi.storage.PoiCategory;
+
+import ch.bailu.aat_lib.lib.filter_list.KeyList;
+import ch.bailu.aat_lib.lib.filter_list.ListEntry;
 
 public class PoiListEntry extends ListEntry {
     private final PoiCategory self;
@@ -19,7 +22,6 @@ public class PoiListEntry extends ListEntry {
         keys = new KeyList(c.getTitle());
         summaryKey = "_" + keys.getKey(0);
         keys.addKeys(summaryKey);
-
     }
 
     public PoiListEntry(PoiCategory c, PoiListEntry s) {
@@ -30,8 +32,6 @@ public class PoiListEntry extends ListEntry {
         summaryKey = s.getSummaryKey();
         keys = new KeyList(c.getTitle());
         keys.addKeys(summaryKey);
-
-
     }
 
     @Override

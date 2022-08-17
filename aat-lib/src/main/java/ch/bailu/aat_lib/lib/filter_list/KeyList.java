@@ -1,4 +1,4 @@
-package ch.bailu.aat.util.filter_list;
+package ch.bailu.aat_lib.lib.filter_list;
 
 
 import java.util.ArrayList;
@@ -15,11 +15,9 @@ public class KeyList {
 
     public KeyList() {}
 
-
     public void addKeys(String s) {
         addKeys(s.split("[ =.;:/]"));
     }
-
 
     private void addKeys(String[] s) {
         for (String k : s) {
@@ -27,11 +25,10 @@ public class KeyList {
         }
     }
 
-
     private void addKey(String k) {
         if (k.length() >= MIN_KEY_LENGTH) {
             k = k.toLowerCase(Locale.ROOT);
-            if (hasKey(k) == false) {
+            if (!hasKey(k)) {
                 keys.add(k);
             }
         }
@@ -40,8 +37,6 @@ public class KeyList {
     public boolean hasKey(String k) {
         return hasKey(k, keys.size());
     }
-
-
     private boolean hasKey(String k, int limit) {
         limit = Math.min(keys.size(), limit);
 
@@ -56,7 +51,7 @@ public class KeyList {
 
     public boolean fits(KeyList list) {
         for (String k : list.keys)
-            if (fits(k) == false) return false;
+            if (!fits(k)) return false;
 
         return true;
     }
@@ -77,7 +72,7 @@ public class KeyList {
     }
 
     private void addKey(String k, int limit) {
-        if (hasKey(k, limit) == false)
+        if (!hasKey(k, limit))
             keys.add(k);
     }
 
@@ -96,7 +91,7 @@ public class KeyList {
     public int size() {
         return keys.size();
     }
-    
+
     public String getKey(int i) {
         if (keys.size() > i) return keys.get(i);
         else return "";

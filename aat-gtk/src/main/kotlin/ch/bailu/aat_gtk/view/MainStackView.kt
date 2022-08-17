@@ -1,6 +1,7 @@
 package ch.bailu.aat_gtk.view
 
 import ch.bailu.aat_gtk.app.GtkAppContext
+import ch.bailu.aat_gtk.view.search.PoiStackView
 import ch.bailu.aat_gtk.view.solid.PreferencesStackView
 import ch.bailu.aat_gtk.view.stack.LazyStackView
 import ch.bailu.aat_gtk.view.toplevel.CockpitView
@@ -50,6 +51,7 @@ class MainStackView (
 
 
     private val preferences: LazyStackView.LazyPage
+    private val poi: LazyStackView.LazyPage
 
     private var backTo = INDEX_MAP
 
@@ -93,6 +95,11 @@ class MainStackView (
             stackView.layout
         }
 
+        poi = stack.add("POI") {
+            val stackView = PoiStackView(this, app, window)
+            stackView.layout
+        }
+
         stack.restore()
     }
 
@@ -111,6 +118,12 @@ class MainStackView (
         revealerRestore = revealer.active
         revealer.active = GTK.FALSE
         preferences.show()
+    }
+
+    override fun showPoi() {
+        revealerRestore = revealer.active
+        revealer.active = GTK.FALSE
+        poi.show()
     }
 
     fun showFiles() {

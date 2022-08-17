@@ -5,7 +5,7 @@ import android.content.Context;
 
 import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat.services.cache.osm_features.ObjMapFeatures;
-import ch.bailu.aat.util.filter_list.KeyList;
+import ch.bailu.aat_lib.lib.filter_list.KeyList;
 import ch.bailu.aat_lib.preferences.SolidBoolean;
 import ch.bailu.aat_lib.resources.Res;
 import ch.bailu.aat_lib.service.cache.CacheServiceInterface;

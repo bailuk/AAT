@@ -1,7 +1,7 @@
 package ch.bailu.aat_gtk.view.stack
 
+import ch.bailu.aat_gtk.config.Layout
 import ch.bailu.aat_gtk.lib.extensions.margin
-import ch.bailu.aat_gtk.view.solid.PreferencesStackView
 
 class StackViewSelector(private val stack: LazyStackView) {
     val combo = stack.createCombo()
@@ -17,7 +17,7 @@ class StackViewSelector(private val stack: LazyStackView) {
             stack.show(combo.active)
         }
 
-        combo.margin(PreferencesStackView.MARGIN)
+        combo.margin(Layout.margin)
         selectFromPreferences()
     }
 

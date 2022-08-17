@@ -9,6 +9,8 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
+import javax.annotation.Nonnull;
+
 import ch.bailu.aat.R;
 import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat.preferences.map.SolidOsmFeaturesList;
@@ -17,7 +19,7 @@ import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.cache.osm_features.ObjMapFeatures;
 import ch.bailu.aat.util.AppIntent;
 import ch.bailu.aat.util.OldAppBroadcaster;
-import ch.bailu.aat.util.filter_list.FilterList;
+import ch.bailu.aat_lib.lib.filter_list.FilterList;
 import ch.bailu.aat.util.ui.AppTheme;
 import ch.bailu.aat.util.ui.UiTheme;
 import ch.bailu.aat.views.BusyIndicator;
@@ -55,8 +57,6 @@ public class OsmFeaturesView extends LinearLayout implements OnPreferencesChange
         }
     };
 
-
-
     public OsmFeaturesView(ServiceContext sc) {
         super(sc.getContext());
         scontext = sc;
@@ -84,12 +84,10 @@ public class OsmFeaturesView extends LinearLayout implements OnPreferencesChange
     }
 
     public View createHeader() {
-
         LinearLayout layout = new LinearLayout(getContext());
         layout.setOrientation(HORIZONTAL);
         layout.addView(new TitleView(getContext(), R.string.query_features, theme));
         layout.addView(busy);
-
 
         return layout;
     }
@@ -98,15 +96,12 @@ public class OsmFeaturesView extends LinearLayout implements OnPreferencesChange
         listView.setOnTextSelected(s);
     }
 
-
     private View createFeatureList() {
         listView = new MapFeaturesListView(scontext, list);
         return listView;
     }
 
     private View createFilterView() {
-
-
         filterView = new EditText(getContext());
         filterView.setSingleLine(true);
         filterView.addTextChangedListener(new TextWatcher() {
@@ -132,10 +127,6 @@ public class OsmFeaturesView extends LinearLayout implements OnPreferencesChange
         return layout;
     }
 
-
-
-
-
     public void onResume(final ServiceContext sc) {
         OldAppBroadcaster.register(sc.getContext(), onListLoaded, AppBroadcaster.FILE_CHANGED_INCACHE);
 
@@ -157,7 +148,7 @@ public class OsmFeaturesView extends LinearLayout implements OnPreferencesChange
     }
 
     @Override
-    public void onPreferencesChanged(StorageInterface s, String key) {
+    public void onPreferencesChanged(@Nonnull StorageInterface s, @Nonnull String key) {
 
         if (slist.hasKey(key)) {
             freeListHandle();

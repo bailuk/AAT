@@ -1,13 +1,13 @@
 package ch.bailu.aat.views.osm_features;
 
+import android.content.Context;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import ch.bailu.aat.services.ServiceContext;
-import ch.bailu.aat.util.filter_list.PoiListEntry;
 import ch.bailu.aat.util.ui.AppTheme;
 import ch.bailu.aat.util.ui.UiTheme;
+import ch.bailu.aat_lib.search.poi.PoiListEntry;
 
 public class PoiListEntryView extends LinearLayout  {
 
@@ -17,8 +17,8 @@ public class PoiListEntryView extends LinearLayout  {
     private final TextView textView;
 
 
-    public PoiListEntryView(final ServiceContext scontext, OnSelected onSelected, UiTheme theme) {
-        super(scontext.getContext());
+    public PoiListEntryView(final Context context, OnSelected onSelected, UiTheme theme) {
+        super(context);
 
         setOnClickListener(v -> onSelected.onSelected(entry, 0, null));
 

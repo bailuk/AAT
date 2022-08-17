@@ -7,9 +7,6 @@ import ch.bailu.aat_lib.preferences.SolidFile;
 
 public class SolidDirectoryView extends AbsSolidView {
     protected final SolidFile solid;
-
-
-
     private final Context context;
 
     public SolidDirectoryView(Context context, SolidFile s, UiTheme theme) {
@@ -17,7 +14,6 @@ public class SolidDirectoryView extends AbsSolidView {
         solid = s;
         this.context = context;
     }
-
 
     @Override
     public void onRequestNewValue() {

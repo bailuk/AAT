@@ -1,4 +1,4 @@
-package ch.bailu.aat.util.filter_list;
+package ch.bailu.aat_lib.lib.filter_list;
 
 public abstract class ListEntry {
     public abstract boolean isSelected();

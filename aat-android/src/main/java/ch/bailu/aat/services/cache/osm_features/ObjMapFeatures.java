@@ -5,9 +5,9 @@ import java.util.ArrayList;
 import java.util.Locale;
 
 import ch.bailu.aat.preferences.map.SolidOsmFeaturesList;
-import ch.bailu.aat.util.filter_list.AbsFilterList;
-import ch.bailu.aat.util.filter_list.KeyList;
-import ch.bailu.aat.util.filter_list.ListEntry;
+import ch.bailu.aat_lib.lib.filter_list.AbsFilterList;
+import ch.bailu.aat_lib.lib.filter_list.KeyList;
+import ch.bailu.aat_lib.lib.filter_list.ListEntry;
 import ch.bailu.aat_lib.app.AppContext;
 import ch.bailu.aat_lib.dispatcher.AppBroadcaster;
 import ch.bailu.aat_lib.service.background.BackgroundTask;
@@ -42,11 +42,9 @@ public final class ObjMapFeatures extends Obj {
 
     private final List list = new List();
 
-
     public ObjMapFeatures(String ID) {
         super(ID);
     }
-
 
     @Override
     public void onInsert(AppContext sc) {
@@ -66,17 +64,14 @@ public final class ObjMapFeatures extends Obj {
         return size;
     }
 
-
     public void syncList(AbsFilterList<ListEntry> filterList) {
         list.sync(filterList);
     }
-
 
     @Override
     public boolean isReadyAndLoaded() {
         return isLoaded;
     }
-
 
     public static class ListLoader extends BackgroundTask implements MapFeaturesParser.OnHaveFeature {
         private final String ID;
@@ -115,24 +110,21 @@ public final class ObjMapFeatures extends Obj {
             return size[0];
         }
 
-
         private void parseMapFeatures() {
             keyList = SolidOsmFeaturesList.getKeyList(ID);
             new MapFeaturesParser(appContext.getAssets(), this);
         }
 
-
         @Override
         public boolean onParseFile(String file) {
             return keyList.isEmpty() || keyList.hasKey(file.toLowerCase(Locale.ROOT));
-
         }
 
         @Override
         public void onHaveFeature(MapFeaturesParser parser) {
             MapFeaturesListEntry d = new MapFeaturesListEntry(parser);
 
-            owner.size += d.length() * 2;
+            owner.size += d.length() * 2L;
             owner.list.add(d);
 
             doBroadcast++;

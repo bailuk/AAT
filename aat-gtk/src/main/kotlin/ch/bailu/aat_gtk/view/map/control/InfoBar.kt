@@ -29,7 +29,7 @@ class InfoBar(app: Application,
         add(PopupButton(app, MapMenu(uiController, mcontext, mapDirectories, focFactory, window)).apply { setIcon("menu") }.overlay)
         add(SolidMenuButton(app, SolidMapGrid(storage, mcontext.solidKey)).overlay)
         add(SolidMenuButton(app, SolidLegend(storage, mcontext.solidKey)).overlay)
-        add(PopupButton(app, MapQueryMenu()).apply { setIcon("preferences-system-search-symbolic") }.overlay)
+        add(PopupButton(app, MapQueryMenu(uiController)).apply { setIcon("preferences-system-search-symbolic") }.overlay)
         add(PopupButton(app, LocationMenu()).apply { setIcon("location") }.overlay)
     }
 }

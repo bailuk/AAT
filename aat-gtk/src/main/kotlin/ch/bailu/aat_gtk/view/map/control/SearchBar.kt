@@ -21,8 +21,8 @@ class SearchBar(app: Application, centerMap: (LatLong)-> Unit): Bar(Position.TOP
             halign = Align.START
             valign = Align.START
             addCssClass(Strings.linked)
-            marginTop = Layout.margin
-            marginStart = Layout.margin
+            marginTop = Layout.marginBig
+            marginStart = Layout.marginBig
 
             val entry = SearchEntry()
             append(entry.apply {

@@ -1,5 +1,6 @@
 package ch.bailu.aat_gtk.view.solid
 
+import ch.bailu.aat_gtk.config.Layout
 import ch.bailu.aat_gtk.lib.extensions.margin
 import ch.bailu.aat_gtk.view.UiController
 import ch.bailu.aat_gtk.view.stack.LazyStackView
@@ -14,12 +15,8 @@ import ch.bailu.gtk.type.Str
 
 class PreferencesStackView(controller: UiController, storage: StorageInterface, app: Application, window: Window) {
 
-    companion object {
-        const val MARGIN = 5
-    }
-
     private val stack = LazyStackView(Stack().apply {
-        margin(MARGIN)
+        margin(Layout.margin)
         hexpand = GTK.TRUE
         vexpand = GTK.TRUE
         transitionType = StackTransitionType.CROSSFADE
@@ -47,7 +44,7 @@ class PreferencesStackView(controller: UiController, storage: StorageInterface, 
 
     init {
         val back = Button.newWithLabelButton(Str(ToDo.translate("Back")))
-        back.margin(MARGIN)
+        back.margin(Layout.margin)
         back.onClicked { controller.back() }
         box.append(back)
 
