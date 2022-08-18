@@ -63,9 +63,7 @@ public final class MapFeaturesListEntry extends ListEntry {
     }
 
     @Override
-    public void select() {
-
-    }
+    public void setSelected(boolean selected) {}
 
     public int length() {
         return name.length() +

@@ -27,11 +27,9 @@ class PoiStackView(private val controller: UiController, app: Application, windo
     private val poiList = PoiList(sdatabase, FocFile("test")) {
         if (it.isSummary) {
             Editable(searchEntry.cast()).setText(it.summaryKey)
-        } else {
-            it.select()
-            updateList()
         }
     }
+
     val layout = Box(Orientation.VERTICAL, Layout.margin).apply {
 
         margin(Layout.margin)

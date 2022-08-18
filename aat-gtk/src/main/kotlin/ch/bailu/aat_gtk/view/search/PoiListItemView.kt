@@ -32,11 +32,9 @@ class PoiListItemView(listItem: ListItem) {
             checkBox.setLabel(entry.title)
             checkBox.visible = GTK.TRUE
 
-
             // TODO unlink reference to lambda here
             checkBox.onToggled {
-                entry.select()
-                checkBox.active = GTK.IS(entry.isSelected)
+                entry.isSelected = GTK.IS(checkBox.active)
                 // TODO update filter list here to remove unselected from list?
             }
         }

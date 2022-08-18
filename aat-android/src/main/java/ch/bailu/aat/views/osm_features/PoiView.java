@@ -73,9 +73,8 @@ public class PoiView extends LinearLayout implements OnPreferencesChanged {
         listView.setOnTextSelected((e, action, variant) -> {
             if (e.isSummary()) {
                 filterView.setText(e.getSummaryKey());
-
             } else {
-                e.select();
+                e.setSelected(!e.isSelected());
                 filterList.filterAll();
                 listView.onChanged();
             }

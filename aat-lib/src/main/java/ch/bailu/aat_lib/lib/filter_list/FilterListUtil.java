@@ -91,7 +91,7 @@ public class FilterListUtil {
     private static void select(FilterList filterList, KeyList keys) {
         for(int e = 0; e<filterList.sizeAll(); e++) {
             if (filterList.getFromAll(e).getKeys().fits(keys)) {
-                filterList.getFromAll(e).select();
+                filterList.getFromAll(e).setSelected(true);
                 break;
             }
         }

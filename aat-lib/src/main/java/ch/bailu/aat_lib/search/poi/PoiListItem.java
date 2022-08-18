@@ -64,8 +64,8 @@ public class PoiListItem extends ListEntry {
     }
 
     @Override
-    public void select() {
-        if (!isSummary()) isSelected = !isSelected;
+    public void setSelected(boolean selected) {
+        if (!isSummary()) isSelected = selected;
     }
 
     public PoiCategory getCategory() {
