@@ -1,5 +1,6 @@
 package ch.bailu.aat_gtk.view
 
+import ch.bailu.aat_lib.coordinates.BoundingBoxE6
 import ch.bailu.aat_lib.gpx.GpxInformation
 
 interface UiController {
@@ -13,4 +14,5 @@ interface UiController {
     fun showPreferencesMap()
     fun back()
     fun showContextBar()
+    fun getMapBounding(): BoundingBoxE6
 }

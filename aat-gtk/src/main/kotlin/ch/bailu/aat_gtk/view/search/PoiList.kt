@@ -2,8 +2,8 @@ package ch.bailu.aat_gtk.view.search
 
 import ch.bailu.aat_gtk.app.GtkAppContext
 import ch.bailu.aat_lib.lib.filter_list.FilterList
+import ch.bailu.aat_lib.lib.filter_list.FilterListUtil
 import ch.bailu.aat_lib.preferences.SolidPoiDatabase
-import ch.bailu.aat_lib.search.poi.FilterListUtilPoi
 import ch.bailu.aat_lib.search.poi.PoiListItem
 import ch.bailu.foc.Foc
 import ch.bailu.gtk.GTK
@@ -12,6 +12,7 @@ import ch.bailu.gtk.gtk.ListItem
 import ch.bailu.gtk.gtk.ListView
 import ch.bailu.gtk.gtk.ScrolledWindow
 import ch.bailu.gtk.gtk.SignalListItemFactory
+import org.mapsforge.poi.storage.PoiCategory
 
 class PoiList(
     private val sdatabase: SolidPoiDatabase,
@@ -65,7 +66,7 @@ class PoiList(
     }
 
     private fun readList() {
-        FilterListUtilPoi.readList(filterList, GtkAppContext, sdatabase.valueAsString, selected)
+        FilterListUtil.readList(filterList, GtkAppContext, sdatabase.valueAsString, selected)
         listIndex.size = filterList.sizeVisible()
     }
 
@@ -79,4 +80,14 @@ class PoiList(
         listIndex.size = filterList.sizeVisible()
     }
 
+    fun getSelectedCategories(): ArrayList<PoiCategory> {
+        val export = ArrayList<PoiCategory>(10)
+        for (i in 0 until filterList.sizeVisible()) {
+            val e = filterList.getFromVisible(i) as PoiListItem
+            if (e.isSelected) {
+                export.add(e.category)
+            }
+        }
+        return export
+    }
 }

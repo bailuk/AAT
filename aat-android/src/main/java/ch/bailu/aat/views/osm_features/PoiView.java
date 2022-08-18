@@ -25,7 +25,6 @@ import ch.bailu.aat_lib.preferences.OnPreferencesChanged;
 import ch.bailu.aat_lib.preferences.SolidPoiDatabase;
 import ch.bailu.aat_lib.preferences.SolidString;
 import ch.bailu.aat_lib.preferences.StorageInterface;
-import ch.bailu.aat_lib.search.poi.FilterListUtilPoi;
 import ch.bailu.aat_lib.search.poi.PoiListItem;
 import ch.bailu.foc.Foc;
 
@@ -60,17 +59,14 @@ public class PoiView extends LinearLayout implements OnPreferencesChanged {
         filterList(filterView.getText().toString());
     }
 
-
     private void readList(AppContext appContext) {
-        FilterListUtilPoi.readList(filterList, appContext, sdatabase.getValueAsString(), selected);
+        FilterListUtil.readList(filterList, appContext, sdatabase.getValueAsString(), selected);
         listView.onChanged();
     }
-
 
     public View createHeader(UiTheme theme) {
         return new SolidStringView(getContext(),sdatabase, theme);
     }
-
 
     private View createPoiList(Context context, UiTheme theme) {
         listView = new PoiListView(context, filterList, theme);

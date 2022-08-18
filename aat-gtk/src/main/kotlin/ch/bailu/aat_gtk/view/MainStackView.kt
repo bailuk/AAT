@@ -8,15 +8,16 @@ import ch.bailu.aat_gtk.view.toplevel.CockpitView
 import ch.bailu.aat_gtk.view.toplevel.DetailView
 import ch.bailu.aat_gtk.view.toplevel.MapMainView
 import ch.bailu.aat_gtk.view.toplevel.list.FileList
+import ch.bailu.aat_lib.coordinates.BoundingBoxE6
 import ch.bailu.aat_lib.description.*
 import ch.bailu.aat_lib.dispatcher.CustomFileSource
 import ch.bailu.aat_lib.dispatcher.Dispatcher
 import ch.bailu.aat_lib.gpx.GpxInformation
 import ch.bailu.aat_lib.gpx.InfoID
-import ch.bailu.aat_lib.logger.AppLog
 import ch.bailu.aat_lib.preferences.StorageInterface
 import ch.bailu.gtk.GTK
 import ch.bailu.gtk.gtk.*
+import org.mapsforge.core.model.BoundingBox
 
 class MainStackView (
     app: Application,
@@ -160,6 +161,14 @@ class MainStackView (
 
     override fun showContextBar() {
         revealer.active = GTK.TRUE
+    }
+
+    override fun getMapBounding(): BoundingBoxE6 {
+        val bounding = mapView?.map?.boundingBox
+        if (bounding is BoundingBox) {
+            return BoundingBoxE6(bounding)
+        }
+        return BoundingBoxE6.NULL_BOX
     }
 
     override fun load(info: GpxInformation) {
