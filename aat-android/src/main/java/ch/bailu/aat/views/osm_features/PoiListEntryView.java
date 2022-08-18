@@ -7,11 +7,11 @@ import android.widget.TextView;
 
 import ch.bailu.aat.util.ui.AppTheme;
 import ch.bailu.aat.util.ui.UiTheme;
-import ch.bailu.aat_lib.search.poi.PoiListEntry;
+import ch.bailu.aat_lib.search.poi.PoiListItem;
 
 public class PoiListEntryView extends LinearLayout  {
 
-    private PoiListEntry entry;
+    private PoiListItem entry;
 
     private final CheckBox checkBox;
     private final TextView textView;
@@ -37,7 +37,7 @@ public class PoiListEntryView extends LinearLayout  {
     }
 
 
-    public void set(final PoiListEntry e) {
+    public void set(final PoiListItem e) {
         entry = e;
 
         if (e.isSummary()) {

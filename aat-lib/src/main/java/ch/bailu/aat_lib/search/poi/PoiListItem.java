@@ -5,7 +5,7 @@ import org.mapsforge.poi.storage.PoiCategory;
 import ch.bailu.aat_lib.lib.filter_list.KeyList;
 import ch.bailu.aat_lib.lib.filter_list.ListEntry;
 
-public class PoiListEntry extends ListEntry {
+public class PoiListItem extends ListEntry {
     private final PoiCategory self;
 
     private final boolean isSummary;
@@ -15,7 +15,7 @@ public class PoiListEntry extends ListEntry {
     private final String summaryKey;
 
 
-    public PoiListEntry(PoiCategory c) {
+    public PoiListItem(PoiCategory c) {
         isSummary = true;
         self = c;
 
@@ -24,7 +24,7 @@ public class PoiListEntry extends ListEntry {
         keys.addKeys(summaryKey);
     }
 
-    public PoiListEntry(PoiCategory c, PoiListEntry s) {
+    public PoiListItem(PoiCategory c, PoiListItem s) {
         isSummary = false;
 
         self = c;

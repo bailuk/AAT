@@ -26,7 +26,7 @@ import ch.bailu.aat_lib.preferences.SolidPoiDatabase;
 import ch.bailu.aat_lib.preferences.SolidString;
 import ch.bailu.aat_lib.preferences.StorageInterface;
 import ch.bailu.aat_lib.search.poi.FilterListUtilPoi;
-import ch.bailu.aat_lib.search.poi.PoiListEntry;
+import ch.bailu.aat_lib.search.poi.PoiListItem;
 import ch.bailu.foc.Foc;
 
 public class PoiView extends LinearLayout implements OnPreferencesChanged {
@@ -129,7 +129,7 @@ public class PoiView extends LinearLayout implements OnPreferencesChanged {
         ArrayList<PoiCategory> export = new ArrayList<>(10);
 
         for (int i = 0; i< filterList.sizeVisible(); i++) {
-            PoiListEntry e = (PoiListEntry) filterList.getFromVisible(i);
+            PoiListItem e = (PoiListItem) filterList.getFromVisible(i);
 
             if (e.isSelected()) {
                 export.add(e.getCategory());

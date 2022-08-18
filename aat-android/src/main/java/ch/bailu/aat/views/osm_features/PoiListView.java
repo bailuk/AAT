@@ -11,7 +11,7 @@ import android.widget.ListView;
 import ch.bailu.aat.util.ui.AppTheme;
 import ch.bailu.aat.util.ui.UiTheme;
 import ch.bailu.aat_lib.lib.filter_list.FilterList;
-import ch.bailu.aat_lib.search.poi.PoiListEntry;
+import ch.bailu.aat_lib.search.poi.PoiListItem;
 
 public class PoiListView extends ListView {
 
@@ -61,7 +61,7 @@ public class PoiListView extends ListView {
                 view = new PoiListEntryView(PoiListView.this.getContext(), onSelected, theme);
             }
 
-            view.set((PoiListEntry) list.getFromVisible(index));
+            view.set((PoiListItem) list.getFromVisible(index));
             return view;
         }
 

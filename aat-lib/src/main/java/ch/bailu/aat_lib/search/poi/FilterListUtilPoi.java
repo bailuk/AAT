@@ -7,6 +7,7 @@ import org.mapsforge.poi.storage.UnknownPoiCategoryException;
 import ch.bailu.aat_lib.app.AppContext;
 import ch.bailu.aat_lib.lib.filter_list.FilterList;
 import ch.bailu.aat_lib.lib.filter_list.FilterListUtil;
+import ch.bailu.aat_lib.logger.AppLog;
 import ch.bailu.foc.Foc;
 
 public class FilterListUtilPoi {
@@ -21,7 +22,7 @@ public class FilterListUtilPoi {
             readList(filterList, categoryManager);
             FilterListUtil.readSelected(filterList, selected);
         } catch (Exception e) {
-            e.printStackTrace();
+            AppLog.d(selected, e.getMessage());
         }
         persistenceManager.close();
     }
@@ -30,11 +31,11 @@ public class FilterListUtilPoi {
         final PoiCategory root = categoryManager.getRootCategory();
 
         for (PoiCategory summary : root.getChildren()) {
-            PoiListEntry summaryEntry = new PoiListEntry(summary);
+            PoiListItem summaryEntry = new PoiListItem(summary);
             filterList.add(summaryEntry);
 
             for (PoiCategory category : summary.getChildren()) {
-                filterList.add(new PoiListEntry(category, summaryEntry));
+                filterList.add(new PoiListItem(category, summaryEntry));
             }
         }
     }

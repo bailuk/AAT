@@ -2,10 +2,7 @@ package ch.bailu.aat_gtk.lib.extensions
 
 import ch.bailu.aat_gtk.lib.icons.IconMap
 import ch.bailu.aat_gtk.view.map.control.Bar
-import ch.bailu.gtk.gtk.Button
-import ch.bailu.gtk.gtk.ComboBoxText
-import ch.bailu.gtk.gtk.Label
-import ch.bailu.gtk.gtk.Widget
+import ch.bailu.gtk.gtk.*
 import ch.bailu.gtk.type.Str
 
 fun Label.setMarkup(string: String) {
@@ -26,7 +23,19 @@ fun Label.setText(string: String) {
     str.destroy()
 }
 
+fun Editable.setText(string: String) {
+    val str = Str(string)
+    text = str
+    str.destroy()
+}
+
 fun Button.setLabel(string: String) {
+    val str = Str(string)
+    label = str
+    str.destroy()
+}
+
+fun CheckButton.setLabel(string: String) {
     val str = Str(string)
     label = str
     str.destroy()
