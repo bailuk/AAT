@@ -27,7 +27,6 @@ public abstract class AbsNodeViewLayer extends AbsNodeSelectorLayer implements
 
     private final Placer pos;
 
-
     public AbsNodeViewLayer(AppContext appContext, Context context, MapContext mc) {
         super(appContext.getServices(), appContext.getStorage(), mc, Position.BOTTOM);
         mcontext = mc;
@@ -56,13 +55,11 @@ public abstract class AbsNodeViewLayer extends AbsNodeSelectorLayer implements
         setGraph(info, i, limit.getFirstPoint(), limit.getLastPoint());
     }
 
-
     public void setGraph(GpxInformation info, int index, int firstPoint, int lastPoint) {
         infoView.setGraph(info, index, firstPoint, lastPoint);
         measure();
         layout();
     }
-
 
     public void setBackgroundColorFromIID(int IID) {
         infoView.setBackgroundColorFromIID(IID);
@@ -75,12 +72,10 @@ public abstract class AbsNodeViewLayer extends AbsNodeSelectorLayer implements
         layout();
     }
 
-
     public void showAtLeft() {
         pos.toLeft();
         show();
     }
-
 
     public void showAtRight() {
         pos.toRight();
@@ -125,8 +120,6 @@ public abstract class AbsNodeViewLayer extends AbsNodeSelectorLayer implements
         infoView.measure(wspec, hspec);
     }
 
-
-
     private static class Placer {
         private int xoffset=0, width, height, right_space;
         private final int button_space;
@@ -141,7 +134,6 @@ public abstract class AbsNodeViewLayer extends AbsNodeSelectorLayer implements
 
             right_space = w - width - button_space;
         }
-
 
         public void toLeft() {
             xoffset = right_space;

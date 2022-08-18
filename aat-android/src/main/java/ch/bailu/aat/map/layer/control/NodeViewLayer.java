@@ -15,17 +15,16 @@ import ch.bailu.foc.Foc;
 
 public class NodeViewLayer extends AbsNodeViewLayer {
 
-
     private Foc file = null;
     private int index = 0;
 
     private final Context context;
 
+
     public NodeViewLayer(AppContext appContext, Context context, MapContext mc) {
         super(appContext, context, mc);
         this.context = context;
     }
-
 
     @Override
     public boolean onLongClick(View view) {
@@ -39,12 +38,9 @@ public class NodeViewLayer extends AbsNodeViewLayer {
         }
     }
 
-
-
     protected void startNodeDetailActivity(String path) {
         NodeDetailActivity.start(context, path, index);
     }
-
 
     @Override
     public void setSelectedNode(int IID, @Nonnull GpxInformation info, @Nonnull GpxPointNode node, int i) {

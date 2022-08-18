@@ -12,7 +12,6 @@ class EdgeControlLayer(private val mcontext: MapContext, private val edgeSize: I
     private var width = 0
     private var height = 0
 
-
     override fun onAttached() {}
 
     override fun onDetached() {}

@@ -1,7 +1,7 @@
 package ch.bailu.aat_gtk.lib.extensions
 
+import ch.bailu.aat_gtk.config.Layout
 import ch.bailu.aat_gtk.lib.icons.IconMap
-import ch.bailu.aat_gtk.view.map.control.Bar
 import ch.bailu.gtk.gtk.*
 import ch.bailu.gtk.type.Str
 
@@ -64,9 +64,9 @@ fun String.escapeUnderscore(): String {
     return replace("_", "__")
 }
 
-fun Button.setIcon(imageResource: String, size: Int = Bar.ICON_SIZE) {
+fun Button.setIcon(imageResource: String, size: Int = Layout.iconSize) {
     val image = IconMap.getImage(imageResource, size)
-    image.margin(Bar.MARGIN)
+    image.margin(Layout.margin)
     child = image
 }
 

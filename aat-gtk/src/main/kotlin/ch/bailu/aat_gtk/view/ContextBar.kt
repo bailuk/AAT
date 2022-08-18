@@ -1,11 +1,11 @@
 package ch.bailu.aat_gtk.view
 
+import ch.bailu.aat_gtk.config.Layout
 import ch.bailu.aat_gtk.config.Strings
 import ch.bailu.aat_gtk.lib.extensions.appendText
 import ch.bailu.aat_gtk.lib.extensions.margin
 import ch.bailu.aat_gtk.lib.extensions.setLabel
 import ch.bailu.aat_gtk.lib.icons.IconMap
-import ch.bailu.aat_gtk.view.map.control.Bar
 import ch.bailu.aat_lib.dispatcher.OnContentUpdatedInterface
 import ch.bailu.aat_lib.gpx.GpxInformation
 import ch.bailu.aat_lib.gpx.InfoID
@@ -96,7 +96,7 @@ class ContextBar(contextCallback: UiController, private val storage: StorageInte
     private fun createImageButton(resource: String, onClicked: Button.OnClicked) : Button {
         return Button().apply {
             onClicked(onClicked)
-            child = IconMap.getImage(resource, Bar.ICON_SIZE)
+            child = IconMap.getImage(resource, Layout.iconSize)
         }
     }
 

@@ -1,5 +1,6 @@
 package ch.bailu.aat_gtk.view.map.control
 
+import ch.bailu.aat_gtk.config.Layout
 import ch.bailu.aat_gtk.lib.extensions.margin
 import ch.bailu.aat_gtk.lib.extensions.setIcon
 import ch.bailu.aat_lib.map.edge.EdgeViewInterface
@@ -9,11 +10,6 @@ import ch.bailu.gtk.gtk.*
 
 open class Bar(private val pos: Position): EdgeViewInterface {
     companion object {
-
-        const val ICON_SIZE = 24
-        const val MARGIN = 6
-        const val SIZE = ICON_SIZE + MARGIN * 4
-
         private fun createBox(pos: Position): Box {
             when (pos) {
                 Position.TOP ->
@@ -40,9 +36,7 @@ open class Bar(private val pos: Position): EdgeViewInterface {
         }
     }
 
-
     val box = createBox(pos).apply { visible = GTK.FALSE }
-
 
     fun add(image: String): Button {
         val button = Button()
@@ -52,7 +46,7 @@ open class Bar(private val pos: Position): EdgeViewInterface {
     }
 
     fun add(widget: Widget) {
-        widget.margin(MARGIN)
+        widget.margin(Layout.margin)
         box.append(widget)
     }
 

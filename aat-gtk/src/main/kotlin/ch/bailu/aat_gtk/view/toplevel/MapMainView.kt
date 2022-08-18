@@ -1,6 +1,7 @@
 package ch.bailu.aat_gtk.view.toplevel
 
 import ch.bailu.aat_gtk.app.GtkAppContext
+import ch.bailu.aat_gtk.config.Layout
 import ch.bailu.aat_gtk.view.UiController
 import ch.bailu.aat_gtk.view.map.GtkCustomMapView
 import ch.bailu.aat_gtk.view.map.control.*
@@ -31,7 +32,7 @@ class MapMainView(app: Application, dispatcher: DispatcherInterface, uiControlle
     private val navigationBar = NavigationBar(map.mContext, GtkAppContext.storage)
     private val infoBar = InfoBar(app, uiController, map.mContext, GtkAppContext.storage, focFactory, window)
     private val editorBar = EditorBar(app, map.mContext, GtkAppContext.services, editorSource)
-    private val edgeControl = EdgeControlLayer(map.mContext, Bar.SIZE)
+    private val edgeControl = EdgeControlLayer(map.mContext, Layout.barSize)
 
     init {
         dispatcher.addSource(editorSource)
