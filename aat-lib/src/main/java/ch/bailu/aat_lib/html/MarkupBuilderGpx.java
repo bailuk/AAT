@@ -1,75 +1,67 @@
-package ch.bailu.aat.util;
+package ch.bailu.aat_lib.html;
 
-
-import android.content.Context;
 
 import java.util.Locale;
 
 import ch.bailu.aat_lib.description.AltitudeDescription;
+import ch.bailu.aat_lib.description.ContentDescription;
 import ch.bailu.aat_lib.description.CurrentSpeedDescription;
 import ch.bailu.aat_lib.description.DistanceDescription;
 import ch.bailu.aat_lib.description.SpeedDescription;
-import ch.bailu.aat.preferences.Storage;
-import ch.bailu.aat_lib.description.ContentDescription;
 import ch.bailu.aat_lib.gpx.GpxInformation;
 import ch.bailu.aat_lib.gpx.GpxPointNode;
 import ch.bailu.aat_lib.gpx.attributes.GpxAttributes;
 import ch.bailu.aat_lib.gpx.interfaces.GpxType;
+import ch.bailu.aat_lib.preferences.StorageInterface;
 
 
-public class HtmlBuilderGpx extends HtmlBuilder {
+public class MarkupBuilderGpx extends MarkupBuilder {
 
     private final DistanceDescription distance;
     private final SpeedDescription speed;
     private final AltitudeDescription altitude;
 
+    public MarkupBuilderGpx(StorageInterface storage) {
+        this(storage, MarkupConfig.HTML);
+    }
 
-    public HtmlBuilderGpx(Context context) {
-        distance = new DistanceDescription(new Storage(context));
-        speed = new CurrentSpeedDescription(new Storage(context));
-        altitude = new AltitudeDescription(new Storage(context));
+    public MarkupBuilderGpx(StorageInterface storage, MarkupConfig config) {
+        super(config);
+        distance = new DistanceDescription(storage);
+        speed = new CurrentSpeedDescription(storage);
+        altitude = new AltitudeDescription(storage);
     }
 
     public void appendInfo(GpxInformation info, int index) {
         final int count=index+1, total = info.getGpxList().getPointList().size();
 
-        appendHeader(info.getFile().getName());
-        append("<b>" + count + "</b>/" + total + "<br>");
+        appendHeaderNl(info.getFile().getName());
+        appendNl(config.getBoldOpen() + count + config.getBoldClose() + total);
     }
 
     public void appendNode(GpxPointNode n, GpxInformation i) {
         if (i.getType() == GpxType.TRACK && n.getTimeStamp() != 0 ) {
-            append(speed.getLabel(), speed.getSpeedDescription(n.getSpeed()));
-            append("<br>");
+            appendNl(speed.getLabel(), speed.getSpeedDescription(n.getSpeed()));
         }
-
-        append(altitude.getLabel(), distance.getAltitudeDescription(n.getAltitude()));
-        append("<br>");
-
+        appendNl(altitude.getLabel(), distance.getAltitudeDescription(n.getAltitude()));
     }
 
-
-    public void append(ContentDescription d) {
-        append(d.getLabel(), d.getValueAsString());
+    public void appendNl(ContentDescription d) {
+        appendNl(d.getLabel(), d.getValueAsString());
     }
-
-
 
     public void appendAttributes(GpxAttributes a) {
         if (a.size() > 0) {
-
             for (int i = 0; i < a.size(); i++) {
                 String kString = a.getSKeyAt(i);
                 String v = a.getAt(i);
 
                 if (kString.toLowerCase(Locale.ROOT).contains("name")) {
-                    appendKeyValueBold(kString, v);
+                    appendBoldNl(kString, v);
                 }  else {
-                    appendKeyValue(kString, v);
+                    appendKeyValueNl(kString, v);
                 }
-                append("<br>");
             }
         }
     }
-
 }

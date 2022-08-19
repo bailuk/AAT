@@ -49,10 +49,10 @@ public class NodeViewLayer extends AbsNodeViewLayer {
         index = i;
         file = info.getFile();
 
-        html.appendInfo(info, index);
-        html.appendNode(node, info);
-        html.appendAttributes(node.getAttributes());
-        setHtmlText(html);
+        markupBuilder.appendInfo(info, index);
+        markupBuilder.appendNode(node, info);
+        markupBuilder.appendAttributes(node.getAttributes());
+        setHtmlText(markupBuilder);
     }
 
     @Override

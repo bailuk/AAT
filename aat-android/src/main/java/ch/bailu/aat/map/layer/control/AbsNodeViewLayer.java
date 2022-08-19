@@ -6,8 +6,8 @@ import android.view.View;
 import javax.annotation.Nonnull;
 
 import ch.bailu.aat.map.To;
-import ch.bailu.aat.util.HtmlBuilder;
-import ch.bailu.aat.util.HtmlBuilderGpx;
+import ch.bailu.aat_lib.html.MarkupBuilder;
+import ch.bailu.aat_lib.html.MarkupBuilderGpx;
 import ch.bailu.aat.util.ui.AppLayout;
 import ch.bailu.aat_lib.app.AppContext;
 import ch.bailu.aat_lib.gpx.GpxInformation;
@@ -21,10 +21,8 @@ public abstract class AbsNodeViewLayer extends AbsNodeSelectorLayer implements
         View.OnLongClickListener, View.OnClickListener {
 
     private final NodeInfoView infoView;
-    protected final HtmlBuilderGpx html;
-
+    protected final MarkupBuilderGpx markupBuilder;
     private final MapContext mcontext;
-
     private final Placer pos;
 
     public AbsNodeViewLayer(AppContext appContext, Context context, MapContext mc) {
@@ -33,12 +31,11 @@ public abstract class AbsNodeViewLayer extends AbsNodeSelectorLayer implements
 
         pos = new Placer(context);
 
-        html = new HtmlBuilderGpx(context);
+        markupBuilder = new MarkupBuilderGpx(appContext.getStorage());
 
         infoView = new NodeInfoView(appContext, context);
         infoView.setOnLongClickListener(this);
         infoView.setOnClickListener(this);
-
         infoView.setVisibility(View.GONE);
 
         To.view(mc.getMapView()).addView(infoView);
@@ -65,7 +62,7 @@ public abstract class AbsNodeViewLayer extends AbsNodeSelectorLayer implements
         infoView.setBackgroundColorFromIID(IID);
     }
 
-    public void setHtmlText(HtmlBuilder html) {
+    public void setHtmlText(MarkupBuilder html) {
         infoView.setHtmlText(html.toString());
         html.clear();
         measure();
@@ -82,12 +79,10 @@ public abstract class AbsNodeViewLayer extends AbsNodeSelectorLayer implements
         show();
     }
 
-
     public void hide() {
         AppLayout.fadeOut(infoView);
         mcontext.getMapView().requestRedraw();
     }
-
 
     public void show() {
         measure();
@@ -95,7 +90,6 @@ public abstract class AbsNodeViewLayer extends AbsNodeSelectorLayer implements
         AppLayout.fadeIn(infoView);
 
         mcontext.getMapView().requestRedraw();
-
     }
 
     @Override

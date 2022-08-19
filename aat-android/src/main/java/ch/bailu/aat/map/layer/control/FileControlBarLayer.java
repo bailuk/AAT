@@ -182,14 +182,13 @@ public final class FileControlBarLayer extends ControlBarLayer {
 
             preview.setFilePath(selectedFile);
 
-            html.appendHeader(iterator.getInfo().getFile().getName());
+            markupBuilder.appendHeaderNl(iterator.getInfo().getFile().getName());
             for (ContentDescription d: summaryData) {
                 d.onContentUpdated(iterator.getInfoID(), iterator.getInfo());
-                html.append(d);
-                html.append("<br>");
+                markupBuilder.appendNl(d);
             }
 
-            setHtmlText(html);
+            setHtmlText(markupBuilder);
 
         }
 

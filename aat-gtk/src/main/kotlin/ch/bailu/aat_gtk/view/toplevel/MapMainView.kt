@@ -17,6 +17,7 @@ import ch.bailu.aat_lib.map.layer.grid.GridDynLayer
 import ch.bailu.aat_lib.map.layer.selector.NodeSelectorLayer
 import ch.bailu.aat_lib.preferences.location.CurrentLocationLayer
 import ch.bailu.foc.FocFactory
+import ch.bailu.gtk.gtk.Align
 import ch.bailu.gtk.gtk.Application
 import ch.bailu.gtk.gtk.Overlay
 import ch.bailu.gtk.gtk.Window
@@ -61,6 +62,11 @@ class MapMainView(app: Application, dispatcher: DispatcherInterface, uiControlle
         addBar(navigationBar)
         addBar(infoBar)
         addBar(editorBar)
+
+        val nodeInfo = NodeInfo()
+        nodeInfo.box.halign = Align.START
+        nodeInfo.box.valign = Align.START
+        overlay.addOverlay(nodeInfo.box)
     }
 
     private fun addBar(bar: Bar) {
