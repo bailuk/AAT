@@ -17,7 +17,6 @@ import ch.bailu.aat_lib.map.layer.grid.GridDynLayer
 import ch.bailu.aat_lib.map.layer.selector.NodeSelectorLayer
 import ch.bailu.aat_lib.preferences.location.CurrentLocationLayer
 import ch.bailu.foc.FocFactory
-import ch.bailu.gtk.gtk.Align
 import ch.bailu.gtk.gtk.Application
 import ch.bailu.gtk.gtk.Overlay
 import ch.bailu.gtk.gtk.Window
@@ -29,10 +28,11 @@ class MapMainView(app: Application, dispatcher: DispatcherInterface, uiControlle
 
     private val editorSource = EditorSource(GtkAppContext)
 
+    private val nodeInfo = NodeInfo()
     private val searchBar = SearchBar(app) {map.setCenter(it)}
     private val navigationBar = NavigationBar(map.mContext, GtkAppContext.storage)
-    private val infoBar = InfoBar(app, uiController, map.mContext, GtkAppContext.storage, focFactory, window)
-    private val editorBar = EditorBar(app, map.mContext, GtkAppContext.services, editorSource)
+    private val infoBar = InfoBar(app, nodeInfo, uiController, map.mContext, GtkAppContext.storage, focFactory, window)
+    private val editorBar = EditorBar(app, nodeInfo, map.mContext, GtkAppContext.services, editorSource)
     private val edgeControl = EdgeControlLayer(map.mContext, Layout.barSize)
 
     init {
@@ -53,6 +53,7 @@ class MapMainView(app: Application, dispatcher: DispatcherInterface, uiControlle
         })
 
         map.add(NodeSelectorLayer(GtkAppContext.services, GtkAppContext.storage, map.mContext, Position.RIGHT).apply {
+            observe(infoBar)
             dispatcher.addTarget(this, InfoID.ALL)
             edgeControl.add(this)
         })
@@ -63,9 +64,6 @@ class MapMainView(app: Application, dispatcher: DispatcherInterface, uiControlle
         addBar(infoBar)
         addBar(editorBar)
 
-        val nodeInfo = NodeInfo()
-        nodeInfo.box.halign = Align.START
-        nodeInfo.box.valign = Align.START
         overlay.addOverlay(nodeInfo.box)
     }
 
