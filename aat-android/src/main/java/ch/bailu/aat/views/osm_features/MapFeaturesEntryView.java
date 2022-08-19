@@ -9,7 +9,7 @@ import ch.bailu.aat.R;
 import ch.bailu.aat.menus.MapFeaturesMenu;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.cache.osm_features.MapFeaturesListEntry;
-import ch.bailu.aat.services.icons.IconMapService;
+import ch.bailu.aat_lib.service.icons.IconMapService;
 import ch.bailu.aat.util.AppHtml;
 import ch.bailu.aat.util.ui.AndroidAppDensity;
 import ch.bailu.aat.util.ui.UiTheme;

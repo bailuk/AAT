@@ -6,6 +6,7 @@ import android.graphics.Picture;
 import android.graphics.RectF;
 
 import com.caverock.androidsvg.SVG;
+import com.caverock.androidsvg.SVGParseException;
 
 import org.mapsforge.core.graphics.CorruptedInputStreamException;
 import org.mapsforge.core.graphics.TileBitmap;
@@ -70,8 +71,25 @@ public class AndroidSyncTileBitmap implements MapTileInterface {
         return bitmap;
     }
 
-    public synchronized void set(Foc file, int size, boolean transparent) {
-        set(load(file, size, transparent));
+
+    public synchronized void set(Foc file, int defaultTileSize, boolean transparent) {
+        set(load(file, defaultTileSize, transparent));
+    }
+
+    @Override
+    public void setSVG(Foc file, int size, boolean transparent) throws IOException {
+        InputStream input = null;
+        try {
+            input = file.openR();
+            SVG svg = SVG.getFromInputStream(input);
+            set(svg, size);
+        } catch (SVGParseException e) {
+            throw new IOException(e.getMessage());
+        } finally {
+            Foc.close(input);
+        }
+
+
     }
 
 
@@ -96,8 +114,8 @@ public class AndroidSyncTileBitmap implements MapTileInterface {
 
 
     @Override
-    public synchronized void set(int size, boolean transparent) {
-        set(AndroidGraphicFactory.INSTANCE.createTileBitmap(size, transparent));
+    public synchronized void set(int defaultTileSize, boolean transparent) {
+        set(AndroidGraphicFactory.INSTANCE.createTileBitmap(defaultTileSize, transparent));
     }
 
     public synchronized void set(SVG svg, int size) {
@@ -110,7 +128,6 @@ public class AndroidSyncTileBitmap implements MapTileInterface {
             c.drawPicture(p, new RectF(0, 0, size, size));
         }
     }
-
 
     public synchronized long getSize() {
         return size;

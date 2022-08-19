@@ -1,0 +1,313 @@
+# Map OSM key-value pairs to filenames from the SJJB icon set.
+# Original icon set is available from http://www.sjjb.co.uk/mapicons/introduction.
+#
+#
+# prefix of png-file                osm key         osm value
+
+accommodation/alpinehut             tourism         alpine_hut
+accommodation/bed_and_breakfast2    
+accommodation/bed_and_breakfast     guest_house     bed_and_breakfast
+accommodation/camping               tourism         camp_site
+accommodation/caravan_park          tourism         caravan_site
+accommodation/chalet2                 
+accommodation/chalet                tourism         chalet
+accommodation/hostel                tourism         hostel
+accommodation/hotel2
+accommodation/hotel                 tourism         hotel
+accommodation/motel                 tourism         motel
+accommodation/shelter2                                             
+accommodation/shelter               amenity         shelter
+accommodation/youth_hostel
+amenity/bench                       amenity         bench
+amenity/court                       amenity         courthouse
+amenity/firestation2
+amenity/firestation3
+amenity/firestation                 amenity         fire_station
+amenity/fountain2
+amenity/fountain                    amenity         fountain
+amenity/library2
+amenity/library                     amenity         library
+amenity/playground                  leisure         playground
+amenity/police2                   
+amenity/police                      amenity         police   
+amenity/post_box                    amenity         post_box
+amenity/post_office                 amenity         post_office
+amenity/prison                      amenity         prison
+amenity/public_building2
+amenity/public_building             building        public
+amenity/recycling                   amenity         recycling
+amenity/survey_point                man_made        survey_point
+amenity/telephone                   amenity         telephone
+amenity/toilets_disabled            toilets:wheelchair  yes
+amenity/toilets_men
+amenity/toilets                     amenity         toilets
+amenity/toilets_women
+amenity/town_hall2
+amenity/town_hall                   amenity         townhall
+amenity/waste_bin                   amenity         waste_disposal
+barrier/blocks                      barrier         block
+barrier/bollard                     barrier         bollard
+barrier/cattle_grid                 barrier         cattle_grid
+barrier/cycle_barrier               barrier         cycle_barrier
+barrier/entrance                    barrier         entrance
+barrier/exit                        
+barrier/gate                        barrier         gate
+barrier/kissing_gate                barrier         kissing_gate
+barrier/lift_gate                   barrier         list_gate
+barrier/steps                        
+barrier/stile
+barrier/toll_booth
+education/college                   amenity         college
+education/college_vocational        
+education/nursery2
+education/nursery3
+education/nursery                   amenity         kindergarten
+education/school                    amenity         school
+education/school_primary
+education/school_secondary
+education/university                amenity         university
+food/bar                            amenity         bar
+food/biergarten                     amenity         biergarten
+food/cafe                           amenity         cafe
+food/drinkingtap                    amenity         drinking_water
+food/fastfood2 
+food/fastfood                       amenity         fast_food
+food/fastfood_pizza
+food/ice_cream                      amenity         ice_cream
+food/pizza
+food/pub                            amenity         pub
+food/restaurant                     amenity         restaurant
+health/dentist                      amenity         dentist
+health/doctors2                     
+health/doctors                      amenity         doctors
+health/hospital_emergency2
+health/hospital_emergency           emergency       yes
+health/hospital                     amenity         hospital
+health/opticians                    shop            optician       
+health/opticians                    craft           optician
+health/pharmacy_dispencing          amenity         pharmacy
+health/pharmacy                     shop            chemist
+health/veterinary                   amenity         veterinary
+landuse/coniferous_and_deciduous    leaf_type       mixed
+landuse/coniferous                  leaf_type       needleleaved
+landuse/deciduous                   leaf_type       broadleaved
+landuse/grass                       landuse         grass
+landuse/hills                       landuse         bare_rock
+landuse/quary
+landuse/scrub
+landuse/swamp                       natural         wetland
+money/atm2
+money/atm                           amenity         atm
+money/bank2
+money/bank                          amenity         bank
+money/currency_exchange             amenity         bureau_de_change
+place_of_worship/bahai3
+place_of_worship/bahai              religion        bahai
+place_of_worship/buddhist3
+place_of_worship/buddhist           religion        buddhist
+place_of_worship/christian3 
+place_of_worship/christian          religion        christian
+place_of_worship/hindu3
+place_of_worship/hindu              religion        hindu
+place_of_worship/islamic3           religion        islamic
+place_of_worship/islamic
+place_of_worship/jain3
+place_of_worship/jain               religion        jain
+place_of_worship/jewish3
+place_of_worship/jewish             religion        jewish
+place_of_worship/shinto3
+place_of_worship/shinto             religion        shinto
+place_of_worship/sikh3 
+place_of_worship/sikh               religion        sikh
+place_of_worship/unknown3
+place_of_worship/unknown            amenity         place_of_worship
+poi/boundary_administrative         boundary        administrative
+poi/cave                            natural         cave_entrance
+poi/crane                           man_made        crane
+poi/embassy2
+poi/embassy                         amenity         embassy
+poi/military_bunker                 building        bunker
+poi/military_bunker                 military        bunker
+poi/mine_abandoned
+poi/mine
+poi/mountain_pass                   mountain_pass   yes
+poi/peak2
+poi/peak                            natural         peak
+poi/place_city                      place           city
+poi/place_hamlet                    place           hamlet
+poi/place_suburb                    place           suburb
+poi/place_town                      place           town
+poi/place_village                   place           village
+poi/point_of_interest               
+poi/tower_communications            tower:type      communication
+poi/tower_lookout                   tower:type      observation
+poi/tower_power                     power           tower
+poi/tower_water                     man_made        water_tower
+power/station_coal                  generator:source coal
+power/station_gas                   generator:source gas
+power/station_solar                 generator:source solar
+power/station_water                 generator:source hydro
+power/station_wind                  generator:source wind
+power/substation                    power           substation
+power/tower_high2
+power/tower_high
+power/tower_low                     power           pole
+power/transformer                   power           transformer
+shopping/alcohol                    shop            alkohol
+shopping/bakery                     shop            bakery
+shopping/bicycle                    shop            bicycle
+shopping/book                       shop            books
+shopping/butcher2 
+shopping/butcher                    shop            butcher
+shopping/car                        shop            car
+shopping/car_repair                 shop            car_repair
+shopping/clothes                    shop            clothes
+shopping/computer                   shop            computer
+shopping/confectionery              shop            confectionery
+shopping/convenience                shop            convenience
+shopping/copyshop                   shop            copyshop
+shopping/department_store           shop            department_store
+shopping/diy                        shop            diy
+shopping/estateagent2               
+shopping/estateagent3   
+shopping/estateagent                shop            estateagent
+shopping/fish                       shop            fish
+shopping/florist                    shop            florist
+shopping/garden_centre              shop            garden_centre
+shopping/gift                       shop            gift
+shopping/greengrocer                shop            greengrocer
+shopping/hairdresser                shop            hairdresser
+shopping/hearing_aids               shop            hearing_aids
+shopping/hifi                       shop            hifi
+shopping/jewelry2
+shopping/jewelry                    shop            jewelry
+shopping/kiosk                      shop            kiosk
+shopping/laundrette                 shop            laundrette
+shopping/marketplace                shop            marketplace
+shopping/mobile_phone               shop            mobile_phone
+shopping/motorcycle                 shop            motorcycle
+shopping/music                      shop            music
+shopping/newspaper                  shop            newspaper
+shopping/pet2
+shopping/pet                        shop            pet
+shopping/photo                      shop            photo
+shopping/supermarket                shop            supermarket
+shopping/tackle                     shop            tackle
+shopping/tobacco                    shop            tobacco
+shopping/toys                       shop            toys
+shopping/vending_machine            shop            vending_machine
+shopping/video_rental               shop            video_rental
+sport/archery                       sport           archery                                              
+sport/baseball                      sport           baseball
+sport/canoe                         sport           canoe
+sport/cricket                       sport           cricket
+sport/diving                        sport           scuba_diving
+sport/golf                          sport           golf
+sport/gymnasium2
+sport/gymnasium                     sport           gymnastics
+sport/gym                           sport           fitness         
+sport/hillclimbing                  sport           climbing
+sport/horse_racing                  sport           horse_racing
+sport/iceskating                    sport           ice_skating
+sport/jetski                        sport           water_ski 
+sport/leisure_centre                leisure         sports_centre
+sport/minature_golf                 leisure         minature_golf           
+sport/motorracing                   sport           motor
+sport/playground                    leisure         playground
+sport/sailing                       sport           sailing
+sport/shooting                      sport           shooting
+sport/skiing_crosscountry           piste:type      nordic
+sport/skiing_downhill               piste:type      downhill
+sport/snooker                       sport           billiard
+sport/soccer                        sport           soccer
+sport/stadium                       leisure         stadium
+sport/swimming_indoor               leisure         swimming_pool
+sport/swimming_outdoor              amenity         swimming_pool
+sport/swimming_outdoor              sport           swimming_pool
+sport/tennis                        sport           tennis
+sport/windsurfing                   sport           surfing
+tourist/archaeological2
+tourist/archaeological              historic        archaeological_site
+tourist/art_gallery2
+tourist/art_gallery                 tourism        gallery
+tourist/attraction                  tourism        attraction
+tourist/battlefield                 historic       battlefield
+tourist/beach                       natural        beach
+tourist/casino                      amenity        casino
+tourist/castle2
+tourist/castle                      historic       castle
+tourist/cinema2
+tourist/cinema                      amenity        cinema
+tourist/clock                       amenity        clock
+tourist/fountain                    amenity        fountain
+tourist/guidepost                   information    guidepost
+tourist/information                 tourism        information
+tourist/map                         information    map
+tourist/memorial                    historic       memorial
+tourist/monument                    historic       monument
+tourist/museum                      tourism        museum
+tourist/picnic                      tourism        picnic_site
+tourist/ruin                        historic       ruin
+tourist/steam_train                 historic       locomotive
+tourist/theatre                     amenity        theatre
+tourist/theme_park                  tourism        theme_park
+tourist/view_point                  tourism        viewpoint
+tourist/waterwheel                  man_made       watermill
+tourist/wayside_cross               historic       wayside_cross
+tourist/wayside_cross               man_made       cross
+tourist/wayside_shrine              historic       wayside_shrine
+tourist/windmill                    man_made       windmill
+tourist/wreck                       historic       wreck
+tourist/zoo                         tourism        zoo
+transport/aerodrome2
+transport/aerodrome                 aeroway        aerodrome
+transport/airport2
+transport/airport_gate              aeroway        gate
+transport/airport                   
+transport/airport_terminal          aeroway        terminal
+transport/bus_station               public_transport    station           
+transport/bus_stop2
+transport/bus_stop                  public_transport    stop_position
+transport/car_share                 amenity             car_sharing
+transport/emergency_phone           emergency           phone
+transport/ford                      highway             ford
+transport/fuel_lpg                  fuel:lpg            yes
+transport/fuel                      amenity             fuel
+transport/helicopter                
+transport/helicopter_pad            aeroway             helipad
+transport/lighthouse                man_made            lighthouse
+
+transport/marina                    leisure             marina
+transport/marina                    landuse             harbour
+transport/marina                    harbour             yes
+
+transport/miniroundabout_anticlockwise
+transport/miniroundabout_clockwise
+transport/parking_bicycle           amenity             bicycle_parking
+transport/parking_car               amenity             parking
+transport/parking_car_paid          
+transport/parking_disabled
+transport/parking
+transport/parking_private2
+transport/parking_private3
+transport/parking_private
+transport/port
+transport/rental_bicycle            amenity              bicycle_rental 
+transport/rental_car                amenity              car_rental
+transport/roundabout_anticlockwise
+transport/roundabout_clockwise
+transport/slipway                   leisure              slipway
+transport/speedbump                 
+transport/subway                    railway              subway
+transport/taxi_rank                 amenity              taxi
+transport/traffic_lights
+transport/train_station2
+transport/train_station             railway              station
+transport/tram_stop
+transport/turning_circle
+transport/walking
+transport/zebra_crossing
+water/dam
+water/tower
+water/weir
+

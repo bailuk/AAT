@@ -44,13 +44,18 @@ class GtkSyncTileBitmap : MapTileInterface {
     }
 
     @Synchronized
-    override fun set(file: Foc, size: Int, transparent: Boolean) {
-        set(load(file, size, transparent))
+    override fun set(file: Foc, defaultTileSize: Int, transparent: Boolean) {
+        set(load(file, defaultTileSize, transparent))
     }
 
     @Synchronized
-    override fun set(size: Int, transparent: Boolean) {
-        set(AppGraphicFactory.instance().createTileBitmap(size, transparent))
+    override fun set(defaultTileSize: Int, transparent: Boolean) {
+        set(AppGraphicFactory.instance().createTileBitmap(defaultTileSize, transparent))
+    }
+
+    @Synchronized
+    override fun setSVG(file: Foc, size: Int, transparent: Boolean) {
+        set(file, size, transparent)
     }
 
     private fun load(file: Foc, size: Int, transparent: Boolean): TileBitmap? {

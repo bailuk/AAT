@@ -4,8 +4,8 @@ import android.widget.ImageView;
 
 import ch.bailu.aat_lib.service.InsideContext;
 import ch.bailu.aat.services.ServiceContext;
-import ch.bailu.aat.services.cache.ObjSVGAsset;
-import ch.bailu.aat.services.icons.IconMapService;
+import ch.bailu.aat_lib.service.cache.icons.ObjSVGAsset;
+import ch.bailu.aat_lib.service.icons.IconMapService;
 import ch.bailu.aat.util.ui.AndroidAppDensity;
 import ch.bailu.aat_lib.gpx.GpxPointNode;
 

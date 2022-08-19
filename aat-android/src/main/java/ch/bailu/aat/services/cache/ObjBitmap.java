@@ -9,6 +9,7 @@ import ch.bailu.aat_lib.service.ServicesInterface;
 import ch.bailu.aat_lib.service.background.FileTask;
 import ch.bailu.aat_lib.service.cache.Obj;
 import ch.bailu.aat_lib.service.cache.OnObject;
+import ch.bailu.aat_lib.service.cache.icons.ObjImageAbstract;
 import ch.bailu.foc.Foc;
 import ch.bailu.foc.FocName;
 
