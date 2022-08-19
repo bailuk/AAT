@@ -48,7 +48,7 @@ fun Widget.margin(margin: Int) {
     this.marginBottom = margin
 }
 
-fun String.ellipsize(max: Int): String {
+fun String.ellipsize(max: Int = 30): String {
     if (this.length <= max) return this
     return this.substring(0, max) + "…"
 }

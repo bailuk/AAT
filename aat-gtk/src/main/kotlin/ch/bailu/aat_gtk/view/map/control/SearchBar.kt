@@ -1,6 +1,5 @@
 package ch.bailu.aat_gtk.view.map.control
 
-import ch.bailu.aat_gtk.config.Layout
 import ch.bailu.aat_gtk.config.Strings
 import ch.bailu.aat_gtk.lib.extensions.ellipsize
 import ch.bailu.aat_gtk.lib.menu.MenuModelBuilder
@@ -17,12 +16,8 @@ class SearchBar(app: Application, centerMap: (LatLong)-> Unit): Bar(Position.TOP
 
     init {
         searchController.centerMap = centerMap
-        box.append(Box(Orientation.HORIZONTAL, 0).apply {
-            halign = Align.START
-            valign = Align.START
+        add(Box(Orientation.HORIZONTAL, 0).apply {
             addCssClass(Strings.linked)
-            marginTop = Layout.marginBig
-            marginStart = Layout.marginBig
 
             val entry = SearchEntry()
             append(entry.apply {
@@ -42,7 +37,7 @@ class SearchBar(app: Application, centerMap: (LatLong)-> Unit): Bar(Position.TOP
                 searchModel.observe {
                     menuModel = MenuModelBuilder().apply {
                         it.forEach { name, latLong ->
-                            label(name.ellipsize(30)) {
+                            label(name.ellipsize()) {
                                 searchController.centerMap(latLong)
                             }
                         }

@@ -14,7 +14,11 @@ object Strings {
 
     // CSS
     val linked = Str("linked")
+    val mapControl = Str("map-control")
 
     // Defaults
     val empty = Str("")
+
+    // Files
+    const val appCss = "app.css"
 }
