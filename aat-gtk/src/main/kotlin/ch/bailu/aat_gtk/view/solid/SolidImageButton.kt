@@ -1,6 +1,6 @@
 package ch.bailu.aat_gtk.view.solid
 
-import ch.bailu.aat_gtk.view.util.setIcon
+import ch.bailu.aat_gtk.lib.extensions.setIcon
 import ch.bailu.aat_lib.logger.AppLog
 import ch.bailu.aat_lib.map.Attachable
 import ch.bailu.aat_lib.preferences.OnPreferencesChanged

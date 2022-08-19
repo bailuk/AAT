@@ -18,6 +18,8 @@ import ch.bailu.aat_lib.service.background.BackgroundTask;
 import ch.bailu.aat_lib.service.cache.Obj;
 import ch.bailu.aat_lib.service.cache.ObjGpx;
 import ch.bailu.aat_lib.service.cache.ObjGpxStatic;
+import ch.bailu.aat_lib.service.directory.database.GpxDatabase;
+import ch.bailu.aat_lib.service.directory.database.GpxDbConfiguration;
 import ch.bailu.aat_lib.util.Objects;
 import ch.bailu.aat_lib.util.sql.DbResultSet;
 import ch.bailu.foc.Foc;
@@ -109,7 +111,7 @@ public final class DirectorySynchronizer  implements Closeable {
 
         private GpxDatabase openDatabase() {
             final String dbPath = appContext.getSummaryConfig().getDBPath(directory);
-            final String[] query = {GpxDbConstants.KEY_FILENAME};
+            final String[] query = {GpxDbConfiguration.KEY_FILENAME};
 
             dbAccessTime = new File(dbPath).lastModified();
             return new GpxDatabase(appContext.createDataBase(), dbPath, query);
@@ -209,7 +211,7 @@ public final class DirectorySynchronizer  implements Closeable {
         }
 
         private String getFileName(DbResultSet resultSet) {
-            return resultSet.getString(GpxDbConstants.KEY_FILENAME);
+            return resultSet.getString(GpxDbConfiguration.KEY_FILENAME);
         }
 
 
@@ -287,21 +289,21 @@ public final class DirectorySynchronizer  implements Closeable {
             BoundingBoxE6 bounding = summary.getBoundingBox();
 
 
-            keys.add(GpxDbConstants.KEY_FILENAME);   values.add(filename);
-            keys.add(GpxDbConstants.KEY_AVG_SPEED);  values.add(String.valueOf(summary.getSpeed()));
+            keys.add(GpxDbConfiguration.KEY_FILENAME);   values.add(filename);
+            keys.add(GpxDbConfiguration.KEY_AVG_SPEED);  values.add(String.valueOf(summary.getSpeed()));
 
-            keys.add(GpxDbConstants.KEY_MAX_SPEED);  values.add(toNumber(summary.getAttributes().get(MaxSpeed.INDEX_MAX_SPEED)));
+            keys.add(GpxDbConfiguration.KEY_MAX_SPEED);  values.add(toNumber(summary.getAttributes().get(MaxSpeed.INDEX_MAX_SPEED)));
 
-            keys.add(GpxDbConstants.KEY_DISTANCE);   values.add(String.valueOf(summary.getDistance()));
-            keys.add(GpxDbConstants.KEY_START_TIME); values.add(String.valueOf(summary.getStartTime()));
-            keys.add(GpxDbConstants.KEY_TOTAL_TIME); values.add(String.valueOf(summary.getTimeDelta()));
-            keys.add(GpxDbConstants.KEY_END_TIME);   values.add(String.valueOf(summary.getEndTime()));
-            keys.add(GpxDbConstants.KEY_PAUSE);      values.add(String.valueOf(summary.getPause()));
-            keys.add(GpxDbConstants.KEY_TYPE_ID);    values.add(String.valueOf(summary.getType().toInteger()));
-            keys.add(GpxDbConstants.KEY_EAST_BOUNDING); values.add(String.valueOf(bounding.getLonEastE6()));
-            keys.add(GpxDbConstants.KEY_WEST_BOUNDING); values.add(String.valueOf(bounding.getLonWestE6()));
-            keys.add(GpxDbConstants.KEY_NORTH_BOUNDING); values.add(String.valueOf(bounding.getLatNorthE6()));
-            keys.add(GpxDbConstants.KEY_SOUTH_BOUNDING); values.add(String.valueOf(bounding.getLatSouthE6()));
+            keys.add(GpxDbConfiguration.KEY_DISTANCE);   values.add(String.valueOf(summary.getDistance()));
+            keys.add(GpxDbConfiguration.KEY_START_TIME); values.add(String.valueOf(summary.getStartTime()));
+            keys.add(GpxDbConfiguration.KEY_TOTAL_TIME); values.add(String.valueOf(summary.getTimeDelta()));
+            keys.add(GpxDbConfiguration.KEY_END_TIME);   values.add(String.valueOf(summary.getEndTime()));
+            keys.add(GpxDbConfiguration.KEY_PAUSE);      values.add(String.valueOf(summary.getPause()));
+            keys.add(GpxDbConfiguration.KEY_TYPE_ID);    values.add(String.valueOf(summary.getType().toInteger()));
+            keys.add(GpxDbConfiguration.KEY_EAST_BOUNDING); values.add(String.valueOf(bounding.getLonEastE6()));
+            keys.add(GpxDbConfiguration.KEY_WEST_BOUNDING); values.add(String.valueOf(bounding.getLonWestE6()));
+            keys.add(GpxDbConfiguration.KEY_NORTH_BOUNDING); values.add(String.valueOf(bounding.getLatNorthE6()));
+            keys.add(GpxDbConfiguration.KEY_SOUTH_BOUNDING); values.add(String.valueOf(bounding.getLatSouthE6()));
         }
 
     }

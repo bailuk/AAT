@@ -1,6 +1,7 @@
 package ch.bailu.aat_gtk.app
 
 import ch.bailu.aat_gtk.logger.SL4JLogger
+import ch.bailu.aat_gtk.preferences.PreferenceLoadDefaults
 import ch.bailu.aat_gtk.solid.GtkStorage
 import ch.bailu.aat_gtk.view.MainWindow
 import ch.bailu.aat_lib.app.AppConfig
@@ -44,6 +45,7 @@ object App {
             )
         )
 
+        PreferenceLoadDefaults(GtkAppContext)
     }
 
     fun run() {

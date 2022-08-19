@@ -1,5 +1,6 @@
 package ch.bailu.aat.views.osm_features;
 
+import android.content.Context;
 import android.database.DataSetObserver;
 import android.view.View;
 import android.view.ViewGroup;
@@ -7,30 +8,25 @@ import android.widget.AdapterView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
-import ch.bailu.aat.services.ServiceContext;
-import ch.bailu.aat.util.filter_list.FilterList;
-import ch.bailu.aat.util.filter_list.PoiListEntry;
 import ch.bailu.aat.util.ui.AppTheme;
 import ch.bailu.aat.util.ui.UiTheme;
+import ch.bailu.aat_lib.lib.filter_list.FilterList;
+import ch.bailu.aat_lib.search.poi.PoiListItem;
 
 public class PoiListView extends ListView {
 
-
     private DataSetObserver observer=null;
     private final FilterList list;
-    private final ServiceContext scontext;
 
     private OnSelected onSelected = OnSelected.NULL;
 
-
     private final UiTheme theme;
 
-    public PoiListView(ServiceContext sc, FilterList l, UiTheme theme) {
-        super(sc.getContext());
+    public PoiListView(Context context, FilterList l, UiTheme theme) {
+        super(context);
 
         this.theme = theme;
 
-        scontext = sc;
         list = l;
         final PoiListView.Adapter listAdapter = new PoiListView.Adapter();
 
@@ -45,11 +41,9 @@ public class PoiListView extends ListView {
         if (observer != null) observer.onChanged();
     }
 
-
     public void setOnTextSelected(OnSelected s) {
         onSelected = s;
     }
-
 
     private class Adapter implements ListAdapter, android.widget.AdapterView.OnItemClickListener{
 
@@ -58,17 +52,16 @@ public class PoiListView extends ListView {
             return list.sizeVisible();
         }
 
-
         @Override
         public View getView(int index, View v, ViewGroup p) {
             PoiListEntryView view;
-            if (v instanceof  MapFeaturesEntryView) {
+            if (v instanceof PoiListEntryView) {
                 view = (PoiListEntryView) v;
             } else {
-                view = new PoiListEntryView(scontext, onSelected, theme);
+                view = new PoiListEntryView(PoiListView.this.getContext(), onSelected, theme);
             }
 
-            view.set((PoiListEntry) list.getFromVisible(index));
+            view.set((PoiListItem) list.getFromVisible(index));
             return view;
         }
 
@@ -82,8 +75,6 @@ public class PoiListView extends ListView {
             observer = null;
         }
 
-
-
         @Override
         public void onItemClick(AdapterView<?> arg0, View view, int index, long arg3) {
             onSelected.onSelected(list.getFromVisible(index), 0,null);
@@ -94,50 +85,39 @@ public class PoiListView extends ListView {
             return list.getFromVisible(position);
         }
 
-
         @Override
         public long getItemId(int position) {
             return list.getFromVisible(position).getID();
         }
-
 
         @Override
         public int getItemViewType(int position) {
             return 0;
         }
 
-
         @Override
         public int getViewTypeCount() {
             return 1;
         }
-
 
         @Override
         public boolean hasStableIds() {
             return true;
         }
 
-
         @Override
         public boolean isEmpty() {
             return getCount()==0;
         }
-
 
         @Override
         public boolean areAllItemsEnabled() {
             return true;
         }
 
-
         @Override
         public boolean isEnabled(int index) {
             return true;
         }
-
     }
-
-
-
 }

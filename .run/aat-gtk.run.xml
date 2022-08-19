@@ -1,0 +1,10 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="aat-gtk" type="JetRunConfigurationType">
+    <option name="MAIN_CLASS_NAME" value="ch.bailu.aat_gtk.app.AppKt" />
+    <module name="AAT.aat-gtk.main" />
+    <shortenClasspath name="NONE" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>

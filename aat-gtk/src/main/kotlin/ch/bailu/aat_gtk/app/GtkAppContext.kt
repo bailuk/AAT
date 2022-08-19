@@ -28,6 +28,8 @@ import ch.bailu.aat_lib.util.sql.DbConnection
 import ch.bailu.foc.Foc
 import ch.bailu.foc.FocFactory
 import ch.bailu.foc.FocFile
+import org.mapsforge.poi.awt.storage.AwtPoiPersistenceManagerFactory
+import org.mapsforge.poi.storage.PoiPersistenceManager
 
 object GtkAppContext: AppContext {
     private val focFactory         by lazy { FocFactory { string: String? -> FocFile(string) } }
@@ -63,7 +65,6 @@ object GtkAppContext: AppContext {
         return H2DbConnection()
     }
 
-
     private class Preview: MapPreviewInterface {
         override fun isReady(): Boolean {
             return true
@@ -74,7 +75,7 @@ object GtkAppContext: AppContext {
         override fun onDestroy() {}
 
     }
-    override fun createMapPreview(info: GpxInformation?, previewImageFile: Foc?): MapPreviewInterface {
+    override fun createMapPreview(info: GpxInformation, previewImageFile: Foc): MapPreviewInterface {
         return Preview()
     }
 
@@ -113,5 +114,9 @@ object GtkAppContext: AppContext {
 
     override fun getTilePainter(): TilePainter {
         return GtkTilePainter()
+    }
+
+    override fun getPoiPersistenceManager(poiDatabase: String): PoiPersistenceManager {
+        return AwtPoiPersistenceManagerFactory.getPoiPersistenceManager(poiDatabase)
     }
 }

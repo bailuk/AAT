@@ -1,6 +1,7 @@
 package ch.bailu.aat_gtk.view.description
 
-import ch.bailu.aat_gtk.app.GtkRefs
+import ch.bailu.aat_gtk.lib.extensions.setLabel
+import ch.bailu.aat_gtk.lib.extensions.setText
 import ch.bailu.aat_lib.description.ContentDescription
 import ch.bailu.aat_lib.dispatcher.OnContentUpdatedInterface
 import ch.bailu.aat_lib.gpx.GpxInformation
@@ -43,8 +44,8 @@ class NumberView(private val description: ContentDescription) : OnContentUpdated
     }
 
     private fun updateAllText() {
-        GtkRefs.label(number, "<span color=\"#51506b\" weight=\"bold\" size=\"${ptSize}\">${description.value}</span>")
-        GtkRefs.text(label, description.labelShort)
-        GtkRefs.text(unit, description.unit)
+        number.setLabel("<span color=\"#51506b\" weight=\"bold\" size=\"${ptSize}\">${description.value}</span>")
+        label.setText(description.labelShort)
+        unit.setText(description.unit)
     }
 }

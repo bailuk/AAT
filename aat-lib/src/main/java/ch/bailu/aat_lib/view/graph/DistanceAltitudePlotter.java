@@ -3,7 +3,7 @@ package ch.bailu.aat_lib.view.graph;
 import ch.bailu.aat_lib.gpx.GpxListWalker;
 import ch.bailu.aat_lib.preferences.general.SolidUnit;
 import ch.bailu.aat_lib.resources.Res;
-import ch.bailu.aat_lib.util.color.ColorInterface;
+import ch.bailu.aat_lib.lib.color.ColorInterface;
 
 public class DistanceAltitudePlotter extends Plotter {
 

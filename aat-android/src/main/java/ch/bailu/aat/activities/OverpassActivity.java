@@ -3,7 +3,7 @@ package ch.bailu.aat.activities;
 import android.view.View;
 import android.widget.LinearLayout;
 
-import ch.bailu.aat.util.OsmApiConfiguration;
+import ch.bailu.aat_lib.search.poi.OsmApiConfiguration;
 import ch.bailu.aat.util.OverpassApi;
 import ch.bailu.aat.util.ui.AppLayout;
 import ch.bailu.aat.views.ContentView;
@@ -51,9 +51,6 @@ public class OverpassActivity extends AbsOsmApiActivity  {
 
             } else if (action == OnSelected.EDIT){
                 insertLine(variant);
-
-            } else if (action == OnSelected.SHOW) {
-
             }
         });
 
@@ -61,20 +58,17 @@ public class OverpassActivity extends AbsOsmApiActivity  {
         return osmFeatures;
     }
 
-
     @Override
     public void onResumeWithService() {
         super.onResumeWithService();
         osmFeatures.onResume(getServiceContext());
     }
 
-
     @Override
     public void onPause() {
         osmFeatures.onPause(getServiceContext());
         super.onPause();
     }
-
 
     @Override
     public OsmApiConfiguration createApiConfiguration(BoundingBoxE6 boundingBox) {
@@ -86,7 +80,6 @@ public class OverpassActivity extends AbsOsmApiActivity  {
         };
     }
 
-
     @Override
     public void addCustomButtons(MainControlBar bar) {
         if (!AppLayout.isTablet(this)) {
@@ -95,5 +88,4 @@ public class OverpassActivity extends AbsOsmApiActivity  {
             bar.addSpace();
         }
     }
-
 }

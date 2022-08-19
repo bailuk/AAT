@@ -8,10 +8,8 @@ import ch.bailu.aat_lib.preferences.SolidString;
 public class SolidStringView extends AbsSolidView {
     private final SolidString solid;
 
-
     public SolidStringView(Context c, SolidString s, UiTheme theme) {
         super(c,s, theme);
-
         solid = s;
     }
 
@@ -20,4 +18,3 @@ public class SolidStringView extends AbsSolidView {
         new SolidStringDialog(getContext(),solid);
     }
 }
-

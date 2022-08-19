@@ -7,11 +7,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import ch.bailu.aat.R;
-import ch.bailu.aat_lib.dispatcher.CurrentLocationSource;
 import ch.bailu.aat.dispatcher.EditorOrBackupSource;
-import ch.bailu.aat_lib.dispatcher.IteratorSource;
-import ch.bailu.aat_lib.dispatcher.OverlaySource;
-import ch.bailu.aat_lib.dispatcher.TrackerSource;
 import ch.bailu.aat.menus.FileMenu;
 import ch.bailu.aat.util.ui.AppDialog;
 import ch.bailu.aat.util.ui.AppTheme;
@@ -19,11 +15,15 @@ import ch.bailu.aat.util.ui.UiTheme;
 import ch.bailu.aat.views.BusyViewContainer;
 import ch.bailu.aat.views.BusyViewControlIID;
 import ch.bailu.aat.views.ContentView;
-import ch.bailu.aat.views.ErrorView;
 import ch.bailu.aat.views.ImageButtonViewGroup;
 import ch.bailu.aat.views.PreviewView;
 import ch.bailu.aat.views.bar.MainControlBar;
 import ch.bailu.aat.views.html.AttributesView;
+import ch.bailu.aat.views.msg.ErrorMsgView;
+import ch.bailu.aat_lib.dispatcher.CurrentLocationSource;
+import ch.bailu.aat_lib.dispatcher.IteratorSource;
+import ch.bailu.aat_lib.dispatcher.OverlaySource;
+import ch.bailu.aat_lib.dispatcher.TrackerSource;
 import ch.bailu.aat_lib.gpx.InfoID;
 import ch.bailu.aat_lib.logger.AppLog;
 import ch.bailu.aat_lib.map.MapViewInterface;
@@ -37,18 +37,17 @@ public abstract class AbsFileContentActivity extends ActivityContext implements 
     protected ImageButtonViewGroup nextFile, previousFile;
     protected PreviewView fileOperation;
 
-    private ErrorView fileError;
+    private ErrorMsgView fileError;
 
     private BusyViewControlIID busyControl;
     protected MapViewInterface map;
-
 
     protected EditorOrBackupSource editorSource = null;
 
     private String currentFileID;
 
-    public void onCreate(Bundle savedInstanceState) {
 
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         currentFile = new IteratorSource.FollowFile(getAppContext());
@@ -57,8 +56,6 @@ public abstract class AbsFileContentActivity extends ActivityContext implements 
         createViews();
         createDispatcher();
     }
-
-
 
     private void createViews() {
         final ContentView contentView = new ContentView(this, THEME);
@@ -69,7 +66,7 @@ public abstract class AbsFileContentActivity extends ActivityContext implements 
 
         contentView.add(bar);
 
-        fileError = new ErrorView(this);
+        fileError = new ErrorMsgView(this);
         contentView.add(fileError);
 
         contentView.add(getErrorView());
@@ -86,28 +83,23 @@ public abstract class AbsFileContentActivity extends ActivityContext implements 
     }
 
      protected View createAttributesView() {
-        final AttributesView v = new AttributesView(this);
+        final AttributesView v = new AttributesView(this, this.getStorage());
         addTarget(v, InfoID.FILEVIEW, InfoID.EDITOR_OVERLAY);
         return v;
     }
-
 
     private void initButtonBar(MainControlBar bar) {
         previousFile =  bar.addImageButton(R.drawable.go_up_inverse);
         nextFile = bar.addImageButton(R.drawable.go_down_inverse);
 
-
         fileOperation = new PreviewView(getServiceContext(),getAppContext().getSummaryConfig());
         bar.addButton(fileOperation);
-
 
         bar.setOrientation(LinearLayout.HORIZONTAL);
         bar.setOnClickListener1(this);
     }
 
-
     protected abstract ViewGroup createLayout(MainControlBar bar, ContentView contentView);
-
 
     private void createDispatcher() {
         addSource(new TrackerSource(getServiceContext(), getBroadcaster()));
@@ -123,7 +115,6 @@ public abstract class AbsFileContentActivity extends ActivityContext implements 
                 InfoID.OVERLAY+2,
                 InfoID.OVERLAY+3);
         addTarget(fileOperation, InfoID.FILEVIEW);
-
 
         addTarget((iid, info) -> {
             String newFileID = info.getFile().toString();
@@ -145,14 +136,12 @@ public abstract class AbsFileContentActivity extends ActivityContext implements 
 
     @Override
     public void onClick(final View v) {
-
         if (v == previousFile || v ==nextFile) {
             changeFileAsk(v);
         } else if (v == fileOperation) {
             new FileMenu(this, currentFile.getInfo().getFile()).showAsPopup(this, v);
         }
     }
-
 
     private void changeFileAsk(View v) {
         if (editorSource.isModified()) {
@@ -174,23 +163,17 @@ public abstract class AbsFileContentActivity extends ActivityContext implements 
         } else {
             changeFile(v);
         }
-
     }
 
-
     private void changeFile(View v) {
-
         if (v == previousFile) {
             editorSource.releaseEditorDiscard();
             currentFile.moveToPrevious();
-
         } else if (v ==nextFile) {
             editorSource.releaseEditorDiscard();
             currentFile.moveToNext();
-
         }
     }
-
 
     @Override
     public void onBackPressed() {
@@ -209,8 +192,6 @@ public abstract class AbsFileContentActivity extends ActivityContext implements 
                         editorSource.releaseEditorDiscard();
                         closeActivity();
                     }
-
-
                 }.displaySaveDiscardDialog(this, editorSource.getFile().getName());
             } else {
                 closeActivity();
@@ -220,9 +201,7 @@ public abstract class AbsFileContentActivity extends ActivityContext implements 
             AppLog.e(AbsFileContentActivity.this, e);
             closeActivity();
         }
-
     }
-
 
     private void closeActivity() {
         super.onBackPressed();

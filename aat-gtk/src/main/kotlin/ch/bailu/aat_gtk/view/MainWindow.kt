@@ -4,8 +4,11 @@ import ch.bailu.aat_gtk.app.App
 import ch.bailu.aat_gtk.app.GtkAppConfig
 import ch.bailu.aat_gtk.app.GtkAppContext
 import ch.bailu.aat_gtk.app.TimeStation
+import ch.bailu.aat_gtk.config.Layout
+import ch.bailu.aat_gtk.config.Strings
+import ch.bailu.aat_gtk.lib.css.CSS
+import ch.bailu.aat_gtk.lib.icons.IconMap
 import ch.bailu.aat_gtk.util.GtkTimer
-import ch.bailu.aat_gtk.util.IconMap
 import ch.bailu.aat_gtk.view.menu.provider.AppMenu
 import ch.bailu.aat_lib.dispatcher.*
 import ch.bailu.aat_lib.gpx.InfoID
@@ -34,10 +37,7 @@ class MainWindow(window: ApplicationWindow, app: Application, dispatcher: Dispat
         window.title = Str(GtkAppConfig.title)
         window.titlebar = createHeader(window, app,dispatcher, mainView)
 
-        window.setDefaultSize(720 / 2, 1440 / 2)
-        window.onDestroy {
-            App.exit(0)
-        }
+        window.setDefaultSize(Layout.windowWidth, Layout.windowHeight)
         TimeStation.log("-> window.show")
         window.show()
 
@@ -48,6 +48,12 @@ class MainWindow(window: ApplicationWindow, app: Application, dispatcher: Dispat
 
         dispatcher.addTarget(trackerButton, InfoID.ALL)
         dispatcher.addTarget(contextBar, InfoID.ALL)
+
+        CSS.addProviderForDisplay(window.display, Strings.appCss)
+        window.onDestroy {
+            mainView.onDestroy()
+            App.exit(0)
+        }
     }
 
 

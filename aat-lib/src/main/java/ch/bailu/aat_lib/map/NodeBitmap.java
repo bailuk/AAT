@@ -10,7 +10,7 @@ import java.util.HashMap;
 import ch.bailu.aat_lib.app.AppContext;
 import ch.bailu.aat_lib.app.AppGraphicFactory;
 import ch.bailu.aat_lib.map.tile.MapTileInterface;
-import ch.bailu.aat_lib.util.color.ARGB;
+import ch.bailu.aat_lib.lib.color.ARGB;
 
 public final class NodeBitmap {
 

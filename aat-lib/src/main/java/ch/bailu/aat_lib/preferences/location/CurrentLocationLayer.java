@@ -16,7 +16,7 @@ import ch.bailu.aat_lib.map.MapContext;
 import ch.bailu.aat_lib.util.Point;
 import ch.bailu.aat_lib.map.layer.MapLayerInterface;
 import ch.bailu.aat_lib.preferences.StorageInterface;
-import ch.bailu.aat_lib.util.color.ARGB;
+import ch.bailu.aat_lib.lib.color.ARGB;
 
 public final class CurrentLocationLayer implements OnContentUpdatedInterface, MapLayerInterface {
     private static final int MIN_RADIUS=7;

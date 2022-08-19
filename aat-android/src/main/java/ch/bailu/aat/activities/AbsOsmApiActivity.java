@@ -13,14 +13,14 @@ import ch.bailu.aat_lib.dispatcher.CustomFileSource;
 import ch.bailu.aat.menus.ResultFileMenu;
 import ch.bailu.aat.util.AppIntent;
 import ch.bailu.aat.util.OldAppBroadcaster;
-import ch.bailu.aat.util.OsmApiConfiguration;
+import ch.bailu.aat_lib.search.poi.OsmApiConfiguration;
 import ch.bailu.aat.util.TextBackup;
 import ch.bailu.aat.util.ui.AppTheme;
 import ch.bailu.aat.util.ui.ToolTip;
 import ch.bailu.aat.util.ui.UiTheme;
 import ch.bailu.aat.views.BusyViewControl;
 import ch.bailu.aat.views.ContentView;
-import ch.bailu.aat.views.ErrorView;
+import ch.bailu.aat.views.msg.ErrorMsgView;
 import ch.bailu.aat.views.ImageButtonViewGroup;
 import ch.bailu.aat.views.NodeListView;
 import ch.bailu.aat.views.OsmApiEditorView;
@@ -43,7 +43,7 @@ public abstract class AbsOsmApiActivity extends ActivityContext implements OnCli
 
     protected OsmApiEditorView   editorView;
 
-    private ErrorView downloadError;
+    private ErrorMsgView downloadError;
 
 
     protected final UiTheme theme = AppTheme.search;
@@ -94,13 +94,13 @@ public abstract class AbsOsmApiActivity extends ActivityContext implements OnCli
     }
 
     private View downloadErrorView() {
-        downloadError = new ErrorView(this);
+        downloadError = new ErrorMsgView(this);
 
         return downloadError;
     }
 
     private View fileErrorView() {
-        final ErrorView fileError = new ErrorView(this);
+        final ErrorMsgView fileError = new ErrorMsgView(this);
 
         addTarget((iid, info) -> fileError.displayError(getServiceContext(), info.getFile()),
                 InfoID.FILEVIEW);

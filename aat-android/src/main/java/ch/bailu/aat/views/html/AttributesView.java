@@ -4,17 +4,18 @@ import android.content.Context;
 import android.graphics.Color;
 
 import ch.bailu.aat_lib.map.MapColor;
-import ch.bailu.aat.util.HtmlBuilderGpx;
+import ch.bailu.aat_lib.html.MarkupBuilderGpx;
 import ch.bailu.aat_lib.dispatcher.OnContentUpdatedInterface;
 import ch.bailu.aat_lib.gpx.GpxInformation;
+import ch.bailu.aat_lib.preferences.StorageInterface;
 
 public class AttributesView extends HtmlTextView implements OnContentUpdatedInterface {
-    private final HtmlBuilderGpx htmlBuilder;
+    private final MarkupBuilderGpx markupBuilder;
 
 
-    public AttributesView(Context context) {
+    public AttributesView(Context context, StorageInterface storage) {
         super(context);
-        htmlBuilder = new HtmlBuilderGpx(context);
+        markupBuilder = new MarkupBuilderGpx(storage);
 
         enableAutoLink();
         setPadding(10,10,10,10);
@@ -27,9 +28,8 @@ public class AttributesView extends HtmlTextView implements OnContentUpdatedInte
         setBackgroundColor(MapColor.toLightTransparent(MapColor.getColorFromIID(iid)));
         setTextColor(Color.BLACK);
 
-        //htmlBuilder.clear();
-        htmlBuilder.appendAttributes(info.getAttributes());
-        setHtmlText(htmlBuilder.toString());
-        htmlBuilder.clear();
+        markupBuilder.appendAttributes(info.getAttributes());
+        setHtmlText(markupBuilder.toString());
+        markupBuilder.clear();
     }
 }

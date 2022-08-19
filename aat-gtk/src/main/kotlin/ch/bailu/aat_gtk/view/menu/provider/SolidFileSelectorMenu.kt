@@ -1,10 +1,10 @@
 package ch.bailu.aat_gtk.view.menu.provider
 
-import ch.bailu.aat_gtk.app.GtkRefs
 import ch.bailu.aat_gtk.lib.FileDialog
+import ch.bailu.aat_gtk.lib.extensions.ellipsizeStart
+import ch.bailu.aat_gtk.lib.extensions.margin
+import ch.bailu.aat_gtk.lib.extensions.setText
 import ch.bailu.aat_gtk.lib.menu.MenuModelBuilder
-import ch.bailu.aat_gtk.view.util.margin
-import ch.bailu.aat_gtk.view.util.truncate
 import ch.bailu.aat_lib.preferences.SolidFile
 import ch.bailu.aat_lib.resources.ToDo
 import ch.bailu.gtk.gtk.Label
@@ -42,7 +42,7 @@ class SolidFileSelectorMenu(private val solid: SolidFile, private val window: Wi
                         }
                     }.forEach {
                         val label = Label(Str.NULL)
-                        GtkRefs.text(label, it.truncate())
+                        label.setText(it.ellipsizeStart(30))
                         label.xalign = 0f
                         label.margin(3)
                         append(label)

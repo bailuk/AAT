@@ -13,7 +13,7 @@ import ch.bailu.aat_lib.preferences.general.SolidPostprocessedAutopause;
 import ch.bailu.aat_lib.preferences.general.SolidUnit;
 import ch.bailu.aat_lib.preferences.presets.SolidPreset;
 import ch.bailu.aat_lib.resources.Res;
-import ch.bailu.aat_lib.util.color.ColorInterface;
+import ch.bailu.aat_lib.lib.color.ColorInterface;
 
 public class DistanceSpeedPlotter extends Plotter{
 

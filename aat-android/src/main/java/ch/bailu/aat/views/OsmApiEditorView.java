@@ -10,7 +10,7 @@ import androidx.annotation.NonNull;
 
 import java.util.Locale;
 
-import ch.bailu.aat.util.OsmApiConfiguration;
+import ch.bailu.aat_lib.search.poi.OsmApiConfiguration;
 import ch.bailu.aat.util.ui.AppTheme;
 import ch.bailu.aat.util.ui.UiTheme;
 import ch.bailu.aat.views.description.mview.MultiView;
@@ -27,8 +27,6 @@ public class OsmApiEditorView extends LinearLayout {
     public OsmApiEditorView(Context context, OsmApiConfiguration osmApi, UiTheme theme) {
         super(context);
         setOrientation(LinearLayout.VERTICAL);
-
-
 
         preview = new TextView(getContext());
 

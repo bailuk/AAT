@@ -3,8 +3,8 @@ package ch.bailu.aat_lib.map;
 
 import ch.bailu.aat_lib.app.AppColor;
 import ch.bailu.aat_lib.gpx.InfoID;
-import ch.bailu.aat_lib.util.color.ARGB;
-import ch.bailu.aat_lib.util.color.HSV;
+import ch.bailu.aat_lib.lib.color.ARGB;
+import ch.bailu.aat_lib.lib.color.HSV;
 
 public final class MapColor {
 

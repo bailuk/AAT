@@ -1,0 +1,93 @@
+package ch.bailu.aat_gtk.view.search
+
+import ch.bailu.aat_gtk.app.GtkAppContext
+import ch.bailu.aat_lib.lib.filter_list.FilterList
+import ch.bailu.aat_lib.lib.filter_list.FilterListUtil
+import ch.bailu.aat_lib.preferences.SolidPoiDatabase
+import ch.bailu.aat_lib.search.poi.PoiListItem
+import ch.bailu.foc.Foc
+import ch.bailu.gtk.GTK
+import ch.bailu.gtk.bridge.ListIndex
+import ch.bailu.gtk.gtk.ListItem
+import ch.bailu.gtk.gtk.ListView
+import ch.bailu.gtk.gtk.ScrolledWindow
+import ch.bailu.gtk.gtk.SignalListItemFactory
+import org.mapsforge.poi.storage.PoiCategory
+
+class PoiList(
+    private val sdatabase: SolidPoiDatabase,
+    private val selected: Foc,
+    private val onSelected: (model: PoiListItem) -> Unit
+) {
+
+    private val listIndex = ListIndex()
+    private val filterList = FilterList()
+    private val items = HashMap<ListItem, PoiListItemView>()
+
+    private val list = ListView(listIndex.inSelectionModel(), SignalListItemFactory().apply {
+        onSetup {
+            items[it] = PoiListItemView(it)
+        }
+
+        onBind {
+            val view = items[it]
+
+            if (view is PoiListItemView) {
+                val model = filterList.getFromVisible(it.position)
+                if (model is PoiListItem) {
+                    view.set(model)
+                }
+            }
+        }
+
+        onTeardown {
+            val view = items.remove(it)
+            if (view is PoiListItemView) {
+                view.onTeardown()
+            }
+        }
+    }).apply {
+        onActivate {
+            val model = filterList.getFromVisible(it)
+            if (model is PoiListItem) {
+                onSelected(model)
+            }
+        }
+    }
+
+    val scrolled = ScrolledWindow().apply {
+        child = list
+        hexpand = GTK.TRUE
+        vexpand = GTK.TRUE
+    }
+
+    init {
+        readList()
+    }
+
+    private fun readList() {
+        FilterListUtil.readList(filterList, GtkAppContext, sdatabase.valueAsString, selected)
+        listIndex.size = filterList.sizeVisible()
+    }
+
+    fun updateList() {
+        filterList.filterAll()
+        listIndex.size = filterList.sizeVisible()
+    }
+
+    fun updateList(text: String) {
+        filterList.filter(text)
+        listIndex.size = filterList.sizeVisible()
+    }
+
+    fun getSelectedCategories(): ArrayList<PoiCategory> {
+        val export = ArrayList<PoiCategory>(10)
+        for (i in 0 until filterList.sizeVisible()) {
+            val e = filterList.getFromVisible(i) as PoiListItem
+            if (e.isSelected) {
+                export.add(e.category)
+            }
+        }
+        return export
+    }
+}

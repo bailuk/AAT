@@ -7,6 +7,7 @@ dependencyResolutionManagement {
         maven { url = uri("https://jitpack.io") }
     }
 }
+include("ci")
 include("aat-lib")
 include("aat-gtk")
 include("aat-android")

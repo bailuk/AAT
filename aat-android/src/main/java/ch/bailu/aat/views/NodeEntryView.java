@@ -7,9 +7,8 @@ import android.widget.TextView;
 
 import ch.bailu.aat.activities.ActivityContext;
 import ch.bailu.aat.map.mapsforge.MapsForgeViewStatic;
-import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat.util.AppHtml;
-import ch.bailu.aat.util.HtmlBuilderGpx;
+import ch.bailu.aat_lib.html.MarkupBuilderGpx;
 import ch.bailu.aat.util.ui.AppLayout;
 import ch.bailu.aat.util.ui.AppTheme;
 import ch.bailu.aat.util.ui.UiTheme;
@@ -26,6 +25,7 @@ public class NodeEntryView extends LinearLayout {
     private final TextView text;
 
     private final GpxDynLayer gpxOverlay;
+    private final MarkupBuilderGpx markupBuilder;
 
 
     public NodeEntryView(ActivityContext activityContext) {
@@ -34,11 +34,11 @@ public class NodeEntryView extends LinearLayout {
 
         int previewSize = AppLayout.getBigButtonSize(activityContext);
 
-
+        markupBuilder = new MarkupBuilderGpx(activityContext.getStorage());
         map =  new MapsForgeViewStatic(activityContext, activityContext.getAppContext());
         activityContext.addLC(map);
 
-        gpxOverlay = new GpxDynLayer(new Storage(getContext()), map.getMContext(), activityContext.getServiceContext());
+        gpxOverlay = new GpxDynLayer(activityContext.getStorage(), map.getMContext(), activityContext.getServiceContext());
         map.add(gpxOverlay);
 
         text=new TextView(activityContext);
@@ -51,7 +51,6 @@ public class NodeEntryView extends LinearLayout {
         THEME.button(this);
     }
 
-
     private void addViewWeight(View v) {
         addView(v);
 
@@ -60,14 +59,11 @@ public class NodeEntryView extends LinearLayout {
         v.setLayoutParams(l);
     }
 
-
-
     public void update(int iid, GpxInformation info, GpxPointNode node) {
-        HtmlBuilderGpx html = new HtmlBuilderGpx(getContext());
-        html.appendNode(node, info);
-        html.appendAttributes(node.getAttributes());
-
-        text.setText(AppHtml.fromHtml(html.toString()));
+        markupBuilder.appendNode(node, info);
+        markupBuilder.appendAttributes(node.getAttributes());
+        text.setText(AppHtml.fromHtml(markupBuilder.toString()));
+        markupBuilder.clear();
 
         final BoundingBoxE6 bounding = node.getBoundingBox();
         map.frameBounding(bounding);

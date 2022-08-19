@@ -1,12 +1,14 @@
 package ch.bailu.aat_gtk.view
 
 import ch.bailu.aat_gtk.app.GtkAppContext
+import ch.bailu.aat_gtk.view.search.PoiStackView
 import ch.bailu.aat_gtk.view.solid.PreferencesStackView
 import ch.bailu.aat_gtk.view.stack.LazyStackView
 import ch.bailu.aat_gtk.view.toplevel.CockpitView
 import ch.bailu.aat_gtk.view.toplevel.DetailView
 import ch.bailu.aat_gtk.view.toplevel.MapMainView
 import ch.bailu.aat_gtk.view.toplevel.list.FileList
+import ch.bailu.aat_lib.coordinates.BoundingBoxE6
 import ch.bailu.aat_lib.description.*
 import ch.bailu.aat_lib.dispatcher.CustomFileSource
 import ch.bailu.aat_lib.dispatcher.Dispatcher
@@ -15,6 +17,7 @@ import ch.bailu.aat_lib.gpx.InfoID
 import ch.bailu.aat_lib.preferences.StorageInterface
 import ch.bailu.gtk.GTK
 import ch.bailu.gtk.gtk.*
+import org.mapsforge.core.model.BoundingBox
 
 class MainStackView (
     app: Application,
@@ -31,8 +34,6 @@ class MainStackView (
         const val INDEX_FILES = 1
         const val INDEX_DETAIL = 2
         const val INDEX_COCKPIT = 3
-
-
     }
 
     private val customFileSource = CustomFileSource(GtkAppContext)
@@ -51,6 +52,7 @@ class MainStackView (
 
 
     private val preferences: LazyStackView.LazyPage
+    private val poi: LazyStackView.LazyPage
 
     private var backTo = INDEX_MAP
 
@@ -94,6 +96,11 @@ class MainStackView (
             stackView.layout
         }
 
+        poi = stack.add("POI") {
+            val stackView = PoiStackView(this, app, window)
+            stackView.layout
+        }
+
         stack.restore()
     }
 
@@ -112,6 +119,12 @@ class MainStackView (
         revealerRestore = revealer.active
         revealer.active = GTK.FALSE
         preferences.show()
+    }
+
+    override fun showPoi() {
+        revealerRestore = revealer.active
+        revealer.active = GTK.FALSE
+        poi.show()
     }
 
     fun showFiles() {
@@ -150,8 +163,21 @@ class MainStackView (
         revealer.active = GTK.TRUE
     }
 
+    override fun getMapBounding(): BoundingBoxE6 {
+        val bounding = mapView?.map?.boundingBox
+        if (bounding is BoundingBox) {
+            return BoundingBoxE6(bounding)
+        }
+        return BoundingBoxE6.NULL_BOX
+    }
+
     override fun load(info: GpxInformation) {
         customFileSource.setFileID(info.file.toString())
         showContextBar()
+    }
+
+    fun onDestroy() {
+        // IMPORTANT this saves map position
+        mapView?.onDetached()
     }
 }

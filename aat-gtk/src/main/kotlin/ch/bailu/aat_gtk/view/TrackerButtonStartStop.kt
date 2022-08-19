@@ -1,6 +1,6 @@
 package ch.bailu.aat_gtk.view
 
-import ch.bailu.aat_gtk.app.GtkRefs
+import ch.bailu.aat_gtk.lib.extensions.setLabel
 import ch.bailu.aat_lib.dispatcher.OnContentUpdatedInterface
 import ch.bailu.aat_lib.gpx.GpxInformation
 import ch.bailu.aat_lib.service.ServicesInterface
@@ -14,7 +14,7 @@ class TrackerButtonStartStop (private val services: ServicesInterface) : OnConte
         button.onClicked {
             services.trackerService.onStartStop()
         }
-        GtkRefs.label(button, text)
+        button.setLabel(text)
     }
 
     override fun onContentUpdated(iid: Int, info: GpxInformation) {
@@ -22,7 +22,7 @@ class TrackerButtonStartStop (private val services: ServicesInterface) : OnConte
 
         if (text != newText) {
             text = newText
-            GtkRefs.label(button, text)
+            button.setLabel(text)
         }
     }
 }

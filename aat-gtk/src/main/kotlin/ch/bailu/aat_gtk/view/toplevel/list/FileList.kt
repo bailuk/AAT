@@ -69,7 +69,6 @@ class FileList(
             }
 
             factory.onTeardown { item: ListItem->
-                items[item]?.release()
                 items.remove(item)
                 log()
             }

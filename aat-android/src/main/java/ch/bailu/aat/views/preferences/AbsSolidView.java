@@ -2,6 +2,8 @@ package ch.bailu.aat.views.preferences;
 
 import android.content.Context;
 
+import javax.annotation.Nonnull;
+
 import ch.bailu.aat.util.ui.UiTheme;
 import ch.bailu.aat.views.LabelTextView;
 import ch.bailu.aat_lib.preferences.AbsSolidType;
@@ -15,7 +17,6 @@ public abstract class AbsSolidView extends LabelTextView
 
     public AbsSolidView(Context context, final AbsSolidType s, UiTheme theme) {
         super(context, s.getLabel(), theme);
-
         solid = s;
 
         theme.button(this);
@@ -24,10 +25,8 @@ public abstract class AbsSolidView extends LabelTextView
 
     public abstract void onRequestNewValue();
 
-
     public void setText() {
         setText("["+solid.toString()+"]");
-
         setToolTip(solid);
     }
 
@@ -38,9 +37,8 @@ public abstract class AbsSolidView extends LabelTextView
         setText();
     }
 
-
     @Override
-    public void onPreferencesChanged(StorageInterface s, String key) {
+    public void onPreferencesChanged(@Nonnull StorageInterface s, @Nonnull String key) {
         if (solid.hasKey(key)) {
             setText();
         }
@@ -52,4 +50,3 @@ public abstract class AbsSolidView extends LabelTextView
         solid.unregister(this);
     }
 }
-

@@ -26,9 +26,7 @@ public class AppHtml {
         }
     }
 
-
     private static final Html.TagHandler CODE_TAG_HANDLER = new Html.TagHandler() {
-
         private int code = 0;
 
         @Override
@@ -46,10 +44,8 @@ public class AppHtml {
                             code,
                             output.length(),
                             Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-
                 }
             }
         }
     };
-
 }

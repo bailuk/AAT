@@ -11,7 +11,7 @@ import android.widget.SeekBar;
 import ch.bailu.aat.R;
 import ch.bailu.aat.map.MapFactory;
 import ch.bailu.aat.map.To;
-import ch.bailu.aat.util.HtmlBuilderGpx;
+import ch.bailu.aat_lib.html.MarkupBuilderGpx;
 import ch.bailu.aat.util.ui.AppLayout;
 import ch.bailu.aat.util.ui.AppTheme;
 import ch.bailu.aat.util.ui.UiTheme;
@@ -36,7 +36,6 @@ import ch.bailu.aat_lib.map.MapViewInterface;
 public class NodeDetailActivity extends ActivityContext
         implements OnClickListener, OnContentUpdatedInterface, SeekBar.OnSeekBarChangeListener {
 
-
     private static final String SOLID_KEY=NodeDetailActivity.class.getSimpleName();
 
     private ImageButtonViewGroup nextNode, previousNode;
@@ -53,7 +52,7 @@ public class NodeDetailActivity extends ActivityContext
     private GpxInformation infoCache = GpxInformation.NULL;
 
 
-    private HtmlBuilderGpx htmlBuilder;
+    private MarkupBuilderGpx markupBuilder;
 
     private final UiTheme theme = AppTheme.trackContent;
 
@@ -61,8 +60,7 @@ public class NodeDetailActivity extends ActivityContext
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
-        htmlBuilder = new HtmlBuilderGpx(this);
+        markupBuilder = new MarkupBuilderGpx(getStorage());
         fileID = getIntent().getStringExtra("ID");
 
         final ContentView contentView = new ContentView(this, theme);
@@ -119,7 +117,6 @@ public class NodeDetailActivity extends ActivityContext
         return viewA;
     }
 
-
     private SeekBar createSeekBar() {
         seekBar = new SeekBar(this);
         seekBar.setOnSeekBarChangeListener(this);
@@ -130,10 +127,7 @@ public class NodeDetailActivity extends ActivityContext
         addTarget(this, InfoID.FILEVIEW);
         addSource(new CurrentLocationSource(getServiceContext(),getBroadcaster()));
         addSource(new CustomFileSource(getAppContext(), fileID));
-
-
     }
-
 
     @Override
     public void onContentUpdated(int iid, GpxInformation info) {
@@ -161,11 +155,11 @@ public class NodeDetailActivity extends ActivityContext
 
             mapView.setCenter(arrayCache.get(i).getBoundingBox().getCenter().toLatLong());
 
-            htmlBuilder.clear();
-            htmlBuilder.appendInfo(infoCache, i);
-            htmlBuilder.appendNode(arrayCache.get(i), infoCache);
-            htmlBuilder.appendAttributes(arrayCache.get(i).getAttributes());
-            htmlView.setHtmlText(htmlBuilder.toString());
+            markupBuilder.appendInfo(infoCache, i);
+            markupBuilder.appendNode(arrayCache.get(i), infoCache);
+            markupBuilder.appendAttributes(arrayCache.get(i).getAttributes());
+            htmlView.setHtmlText(markupBuilder.toString());
+            markupBuilder.clear();
 
             graph.onContentUpdated(InfoID.ALL, infoCache, i);
 
@@ -174,7 +168,6 @@ public class NodeDetailActivity extends ActivityContext
             icon.setImageObject(arrayCache.get(i));
         }
     }
-
 
     @Override
     public void onClick(View v) {
@@ -191,7 +184,6 @@ public class NodeDetailActivity extends ActivityContext
             updateToIndex(i);
         }
     }
-
 
     public static void start(Context context, String fileId, int index) {
         final Intent intent = new Intent();

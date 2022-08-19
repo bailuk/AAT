@@ -1,5 +1,9 @@
 package ch.bailu.aat_lib.app;
 
+import org.mapsforge.poi.storage.PoiPersistenceManager;
+
+import javax.annotation.Nonnull;
+
 import ch.bailu.aat_lib.dispatcher.Broadcaster;
 import ch.bailu.aat_lib.gpx.GpxInformation;
 import ch.bailu.aat_lib.map.TilePainter;
@@ -29,7 +33,7 @@ public interface AppContext extends FocFactory {
 
     DbConnection createDataBase();
 
-    MapPreviewInterface createMapPreview(GpxInformation info, Foc previewImageFile);
+    MapPreviewInterface createMapPreview(@Nonnull GpxInformation info, @Nonnull Foc previewImageFile);
 
     MapTileInterface createMapTile();
 
@@ -48,4 +52,6 @@ public interface AppContext extends FocFactory {
     Timer createTimer();
 
     TilePainter getTilePainter();
+
+    PoiPersistenceManager getPoiPersistenceManager(@Nonnull String poiDatabase);
 }

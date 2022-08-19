@@ -6,7 +6,7 @@ import ch.bailu.aat_lib.app.AppContext;
 import ch.bailu.aat_lib.map.tile.MapTileInterface;
 import ch.bailu.aat_lib.service.cache.Obj;
 import ch.bailu.aat_lib.service.elevation.tile.DemProvider;
-import ch.bailu.aat_lib.util.color.AltitudeColorTable;
+import ch.bailu.aat_lib.lib.color.AltitudeColorTable;
 
 public final class ObjTileElevationColor extends ObjTileElevation {
 

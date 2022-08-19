@@ -12,7 +12,6 @@ class EdgeControlLayer(private val mcontext: MapContext, private val edgeSize: I
     private var width = 0
     private var height = 0
 
-
     override fun onAttached() {}
 
     override fun onDetached() {}
@@ -61,10 +60,13 @@ class EdgeControlLayer(private val mcontext: MapContext, private val edgeSize: I
 
     private fun show(pos: Position) {
         controlBars.forEach {
+            if (it.pos() != pos) {
+                it.hide()
+            }
+        }
+        controlBars.forEach {
             if (it.pos() == pos) {
                 it.show()
-            } else {
-                it.hide()
             }
         }
     }

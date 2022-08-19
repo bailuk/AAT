@@ -1,67 +1,76 @@
-# Built application files
+# Android
 *.apk
 *.ap_
-
-# Files for the ART/Dalvik VM
 *.dex
 
-# Java class files
+# Java
+.mtj.tmp/
 *.class
+*.jar
+*.war
+*.ear
+*.nar
+*.hprof
+hs_err_pid*
 
-# Generated files
-bin/
-gen/
-out/
+# Maven
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+pom.xml.bak
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+.mvn/timing.properties
+.mvn/wrapper/maven-wrapper.jar
 
-
-# Local configuration file (sdk path, etc)
+# Gradle
+build/
+.gradle
+.gradletasknamecache
+gradle-app.setting
+!gradle-wrapper.jar
 local.properties
 
-# Log Files
-*.log
-
-# Android Studio, Intellij and Gradle
+# IntelliJ
+out/
+.idea/
+.idea_modules/
 *.iml
-.idea
-.gradle
-build/
-release/
-.navigation
-captures/
-output.json
+*.ipr
+*.iws
 
 # Eclipse
-proguard/
-.metadata/
+.settings/
+bin/
+tmp/
+.metadata
+.classpath
+.project
+*.tmp
+*.bak
+*.swp
+*~.nib
+.loadpath
+.factorypath
 
+# NetBeans
+nbproject/private/
+nbbuild/
+dist/
+nbdist/
+nbactions.xml
+nb-configuration.xml
 
-# External native build folder generated in Android Studio 2.2 and later
-obj/
-.externalNativeBuild
-
-# Google Services (e.g. APIs or Firebase)
-google-services.json
-
-# Freeline
-freeline.py
-freeline/
-freeline_project_description.json
-
-# built native files (uncomment if you build your own)
-*.o
-*.so
+# Visual Studio Code
+.vscode/
+.code-workspace
 
 # Mac OS X / Windows
 *.DS_Store
 Thumbs.db
 
-
-# Visual Studio code
-.classpath
-.project
-.settings/
-
-# Other
-*.hprof
-
-doc/TODO.md
+# Development
+todo/

@@ -1,20 +1,20 @@
 package ch.bailu.aat_gtk.view.toplevel
 
 import ch.bailu.aat_gtk.app.GtkAppContext
+import ch.bailu.aat_gtk.config.Layout
 import ch.bailu.aat_gtk.view.UiController
 import ch.bailu.aat_gtk.view.map.GtkCustomMapView
 import ch.bailu.aat_gtk.view.map.control.*
-import ch.bailu.aat_lib.map.edge.EdgeControlLayer
 import ch.bailu.aat_lib.description.EditorSource
 import ch.bailu.aat_lib.dispatcher.DispatcherInterface
-import ch.bailu.aat_lib.dispatcher.OverlaySource
 import ch.bailu.aat_lib.gpx.InfoID
 import ch.bailu.aat_lib.map.Attachable
+import ch.bailu.aat_lib.map.edge.EdgeControlLayer
 import ch.bailu.aat_lib.map.edge.Position
-import ch.bailu.aat_lib.map.layer.selector.NodeSelectorLayer
 import ch.bailu.aat_lib.map.layer.gpx.GpxDynLayer
 import ch.bailu.aat_lib.map.layer.gpx.GpxOverlayListLayer
 import ch.bailu.aat_lib.map.layer.grid.GridDynLayer
+import ch.bailu.aat_lib.map.layer.selector.NodeSelectorLayer
 import ch.bailu.aat_lib.preferences.location.CurrentLocationLayer
 import ch.bailu.foc.FocFactory
 import ch.bailu.gtk.gtk.Application
@@ -28,10 +28,12 @@ class MapMainView(app: Application, dispatcher: DispatcherInterface, uiControlle
 
     private val editorSource = EditorSource(GtkAppContext)
 
+    private val nodeInfo = NodeInfo()
+    private val searchBar = SearchBar(app) {map.setCenter(it)}
     private val navigationBar = NavigationBar(map.mContext, GtkAppContext.storage)
-    private val infoBar = InfoBar(app, uiController, map.mContext, GtkAppContext.storage, focFactory, window)
-    private val editorBar = EditorBar(app, map.mContext, GtkAppContext.services, editorSource)
-    private val edgeControl = EdgeControlLayer(map.mContext, Bar.SIZE)
+    private val infoBar = InfoBar(app, nodeInfo, uiController, map.mContext, GtkAppContext.storage, focFactory, window)
+    private val editorBar = EditorBar(app, nodeInfo, map.mContext, GtkAppContext.services, editorSource)
+    private val edgeControl = EdgeControlLayer(map.mContext, Layout.barSize)
 
     init {
         dispatcher.addSource(editorSource)
@@ -51,14 +53,18 @@ class MapMainView(app: Application, dispatcher: DispatcherInterface, uiControlle
         })
 
         map.add(NodeSelectorLayer(GtkAppContext.services, GtkAppContext.storage, map.mContext, Position.RIGHT).apply {
+            observe(infoBar)
             dispatcher.addTarget(this, InfoID.ALL)
             edgeControl.add(this)
         })
 
         overlay.child = map.drawingArea
+        addBar(searchBar)
         addBar(navigationBar)
         addBar(infoBar)
         addBar(editorBar)
+
+        overlay.addOverlay(nodeInfo.box)
     }
 
     private fun addBar(bar: Bar) {

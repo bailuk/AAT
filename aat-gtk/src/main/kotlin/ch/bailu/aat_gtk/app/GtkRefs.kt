@@ -3,7 +3,7 @@ package ch.bailu.aat_gtk.app
 import ch.bailu.gtk.gtk.Button
 import ch.bailu.gtk.gtk.Label
 import ch.bailu.gtk.type.Str
-
+/*
 object GtkRefs {
 
     private val map = HashMap<Any, Str>()
@@ -55,3 +55,4 @@ object GtkRefs {
     }
 
 }
+*/

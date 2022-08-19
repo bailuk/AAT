@@ -1,7 +1,7 @@
 package ch.bailu.aat_lib.preferences;
 
 import ch.bailu.aat_lib.coordinates.BoundingBoxE6;
-import ch.bailu.aat_lib.service.directory.GpxDbConstants;
+import ch.bailu.aat_lib.service.directory.database.GpxDbConfiguration;
 
 public class SolidBoundingBox implements SolidTypeInterface {
     private final SolidInteger N, W, S, E;
@@ -78,13 +78,13 @@ public class SolidBoundingBox implements SolidTypeInterface {
 
         return
          "(("
-        +          GpxDbConstants.KEY_NORTH_BOUNDING  + " < " + n
-        +" AND " + GpxDbConstants.KEY_NORTH_BOUNDING  + " > " + s
+        +          GpxDbConfiguration.KEY_NORTH_BOUNDING  + " < " + n
+        +" AND " + GpxDbConfiguration.KEY_NORTH_BOUNDING  + " > " + s
 
         +") OR ("
 
-        +          GpxDbConstants.KEY_SOUTH_BOUNDING  + " < " + n
-        +" AND " + GpxDbConstants.KEY_SOUTH_BOUNDING  + " > " + s
+        +          GpxDbConfiguration.KEY_SOUTH_BOUNDING  + " < " + n
+        +" AND " + GpxDbConfiguration.KEY_SOUTH_BOUNDING  + " > " + s
         +"))"
 
 
@@ -92,13 +92,13 @@ public class SolidBoundingBox implements SolidTypeInterface {
 
 
         +"(("
-        +" AND " + GpxDbConstants.KEY_EAST_BOUNDING   + " > " + w
-        +" AND " + GpxDbConstants.KEY_EAST_BOUNDING   + " < " + e
+        +" AND " + GpxDbConfiguration.KEY_EAST_BOUNDING   + " > " + w
+        +" AND " + GpxDbConfiguration.KEY_EAST_BOUNDING   + " < " + e
 
         +") OR ("
 
-        +" AND " + GpxDbConstants.KEY_WEST_BOUNDING   + " > " + w
-        +" AND " + GpxDbConstants.KEY_WEST_BOUNDING   + " < " + e
+        +" AND " + GpxDbConfiguration.KEY_WEST_BOUNDING   + " > " + w
+        +" AND " + GpxDbConfiguration.KEY_WEST_BOUNDING   + " < " + e
         +"))";
 
     }
@@ -107,10 +107,10 @@ public class SolidBoundingBox implements SolidTypeInterface {
     public String createSelectionStringInside() {
         final int n = N.getValue(), e = E.getValue(), s = S.getValue(), w = W.getValue();
 
-        return    GpxDbConstants.KEY_NORTH_BOUNDING  + " < " + n +
-        " AND " + GpxDbConstants.KEY_SOUTH_BOUNDING  + " > " + s +
-        " AND " + GpxDbConstants.KEY_EAST_BOUNDING   + " < " + e +
-        " AND " + GpxDbConstants.KEY_WEST_BOUNDING   + " > " + w;
+        return    GpxDbConfiguration.KEY_NORTH_BOUNDING  + " < " + n +
+        " AND " + GpxDbConfiguration.KEY_SOUTH_BOUNDING  + " > " + s +
+        " AND " + GpxDbConfiguration.KEY_EAST_BOUNDING   + " < " + e +
+        " AND " + GpxDbConfiguration.KEY_WEST_BOUNDING   + " > " + w;
     }
 
     @Override

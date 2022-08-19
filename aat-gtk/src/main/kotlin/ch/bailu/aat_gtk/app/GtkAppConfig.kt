@@ -4,7 +4,6 @@ import ch.bailu.aat_lib.app.AppConfig
 import ch.bailu.aat_lib.resources.Res
 
 object GtkAppConfig : AppConfig() {
-    val icon = "/images/icon.svg"
     val title = Res.str().app_name()
 
     override fun getApplicationId(): String {

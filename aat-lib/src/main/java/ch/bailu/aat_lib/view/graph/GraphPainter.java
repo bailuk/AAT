@@ -4,7 +4,7 @@ import ch.bailu.aat_lib.gpx.GpxList;
 import ch.bailu.aat_lib.gpx.GpxListWalker;
 import ch.bailu.aat_lib.gpx.GpxPointNode;
 import ch.bailu.aat_lib.gpx.GpxSegmentNode;
-import ch.bailu.aat_lib.util.color.AltitudeColorTable;
+import ch.bailu.aat_lib.lib.color.AltitudeColorTable;
 
 public class GraphPainter extends GpxListWalker {
     private final GraphPlotter plotter;

@@ -7,9 +7,11 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import androidx.annotation.Nullable;
 
+import ch.bailu.aat_lib.service.directory.database.GpxDbConfiguration;
 import ch.bailu.aat_lib.util.sql.DbConnection;
 import ch.bailu.aat_lib.util.sql.DbException;
 import ch.bailu.aat_lib.util.sql.DbResultSet;
+import ch.bailu.aat_lib.util.sql.Sql;
 
 public class AndroidDbConnection implements DbConnection {
 
@@ -22,17 +24,22 @@ public class AndroidDbConnection implements DbConnection {
     }
 
     @Override
-    public void open(String path, int version, OnModelUpdate update) {
+    public void open(String path, int version) {
         try {
             close();
             database = new OpenHelper(context, path, null, version).getReadableDatabase();
             if (needsUpdate) {
-                update.run(this);
+                createTable();
                 needsUpdate = false;
             }
         } catch (Exception e) {
             throw new DbException(e);
         }
+    }
+
+    private void createTable() {
+        execSQL(Sql.getTableDropStatement(GpxDbConfiguration.TABLE));
+        execSQL(Sql.getCreateTableExpression(GpxDbConfiguration.TABLE, GpxDbConfiguration.KEY_LIST, GpxDbConfiguration.TYPE_LIST));
     }
 
     @Override

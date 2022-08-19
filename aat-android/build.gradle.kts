@@ -11,11 +11,14 @@ android {
     ndkVersion "21.1.6352462" */
     ndkVersion="21.3.6528147"
 
+    val appVersionName : String by project
+    val appName : String by project
+
     defaultConfig {
         minSdk = 14
         targetSdk = 29
         versionCode = 35
-        versionName = "v1.22"
+        versionName = appVersionName
         applicationId = "ch.bailu.aat"
     }
 
@@ -28,13 +31,13 @@ android {
 
     buildTypes {
         getByName("release") {
-            resValue("string", "app_sname", "AAT")
+            resValue("string", "app_sname", appName)
             isMinifyEnabled = false
             proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.txt")
         }
 
         getByName("debug") {
-            resValue("string", "app_sname", "AAT Debug")
+            resValue("string", "app_sname", "$appName Debug")
             applicationIdSuffix = ".debug"
             isMinifyEnabled = false
             isDebuggable = true
@@ -85,7 +88,6 @@ dependencies {
     implementation ("com.caverock:androidsvg:1.4")
 
     // MapsForge POI
-    implementation ("org.mapsforge:mapsforge-poi:$mapsForgeVersion")
     implementation ("org.mapsforge:mapsforge-poi-android:$mapsForgeVersion")
     implementation ("org.mapsforge:sqlite-android:$mapsForgeVersion")
 

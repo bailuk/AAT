@@ -42,7 +42,7 @@ import ch.bailu.aat_lib.gpx.InfoID;
 
 public class CockpitSplitActivity extends AbsKeepScreenOnActivity {
     private static final String SOLID_KEY="split";
-    private static final String SOLID_MAP_KEY="themap";
+    public static final String SOLID_MAP_KEY="themap";
 
     private static final UiTheme THEME = AppTheme.cockpit;
 

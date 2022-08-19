@@ -3,6 +3,7 @@ package ch.bailu.aat_lib.service.directory;
 import ch.bailu.aat_lib.coordinates.BoundingBoxE6;
 import ch.bailu.aat_lib.gpx.GpxInformation;
 import ch.bailu.aat_lib.gpx.interfaces.GpxType;
+import ch.bailu.aat_lib.service.directory.database.GpxDbConfiguration;
 import ch.bailu.aat_lib.util.sql.DbResultSet;
 import ch.bailu.foc.Foc;
 
@@ -24,30 +25,30 @@ public final class GpxInformationDbEntry extends GpxInformation {
 
     @Override
     public Foc getFile() {
-        String name = getString(GpxDbConstants.KEY_FILENAME);
+        String name = getString(GpxDbConfiguration.KEY_FILENAME);
         return parent.child(name);
     }
 
 
     @Override
     public float getSpeed() {
-        return getFloat(GpxDbConstants.KEY_AVG_SPEED);
+        return getFloat(GpxDbConfiguration.KEY_AVG_SPEED);
     }
 
     @Override
     public float getDistance() {
-        return getFloat(GpxDbConstants.KEY_DISTANCE);
+        return getFloat(GpxDbConfiguration.KEY_DISTANCE);
     }
 
 
     @Override
     public long getPause() {
-        return getLong(GpxDbConstants.KEY_PAUSE);
+        return getLong(GpxDbConfiguration.KEY_PAUSE);
     }
 
 
     public boolean isValid() {
-        return (cursor.isClosed() == false &&
+        return (!cursor.isClosed() &&
                 cursor.getPosition() > -1 &&
                 cursor.getPosition() < cursor.getCount());
     }
@@ -82,35 +83,35 @@ public final class GpxInformationDbEntry extends GpxInformation {
 
     @Override
     public long getStartTime() {
-        return getLong(GpxDbConstants.KEY_START_TIME);
+        return getLong(GpxDbConfiguration.KEY_START_TIME);
     }
 
     @Override
     public long getTimeDelta() {
-        return getLong(GpxDbConstants.KEY_TOTAL_TIME);
+        return getLong(GpxDbConfiguration.KEY_TOTAL_TIME);
     }
 
 
     @Override
     public long getEndTime() {
-        return getLong(GpxDbConstants.KEY_END_TIME);
+        return getLong(GpxDbConfiguration.KEY_END_TIME);
     }
 
 
     @Override
     public BoundingBoxE6 getBoundingBox() {
         return new BoundingBoxE6(
-                (int)getLong(GpxDbConstants.KEY_NORTH_BOUNDING),
-                (int)getLong(GpxDbConstants.KEY_EAST_BOUNDING),
-                (int)getLong(GpxDbConstants.KEY_SOUTH_BOUNDING),
-                (int)getLong(GpxDbConstants.KEY_WEST_BOUNDING));
+                (int)getLong(GpxDbConfiguration.KEY_NORTH_BOUNDING),
+                (int)getLong(GpxDbConfiguration.KEY_EAST_BOUNDING),
+                (int)getLong(GpxDbConfiguration.KEY_SOUTH_BOUNDING),
+                (int)getLong(GpxDbConfiguration.KEY_WEST_BOUNDING));
     }
 
 
 
     @Override
     public GpxType getType() {
-        int id = (int) getLong(GpxDbConstants.KEY_TYPE_ID);
+        int id = (int) getLong(GpxDbConfiguration.KEY_TYPE_ID);
         return GpxType.fromInteger(id);
     }
 

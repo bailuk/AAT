@@ -6,8 +6,8 @@ import android.view.View;
 import javax.annotation.Nonnull;
 
 import ch.bailu.aat.map.To;
-import ch.bailu.aat.util.HtmlBuilder;
-import ch.bailu.aat.util.HtmlBuilderGpx;
+import ch.bailu.aat_lib.html.MarkupBuilder;
+import ch.bailu.aat_lib.html.MarkupBuilderGpx;
 import ch.bailu.aat.util.ui.AppLayout;
 import ch.bailu.aat_lib.app.AppContext;
 import ch.bailu.aat_lib.gpx.GpxInformation;
@@ -21,12 +21,9 @@ public abstract class AbsNodeViewLayer extends AbsNodeSelectorLayer implements
         View.OnLongClickListener, View.OnClickListener {
 
     private final NodeInfoView infoView;
-    protected final HtmlBuilderGpx html;
-
+    protected final MarkupBuilderGpx markupBuilder;
     private final MapContext mcontext;
-
     private final Placer pos;
-
 
     public AbsNodeViewLayer(AppContext appContext, Context context, MapContext mc) {
         super(appContext.getServices(), appContext.getStorage(), mc, Position.BOTTOM);
@@ -34,12 +31,11 @@ public abstract class AbsNodeViewLayer extends AbsNodeSelectorLayer implements
 
         pos = new Placer(context);
 
-        html = new HtmlBuilderGpx(context);
+        markupBuilder = new MarkupBuilderGpx(appContext.getStorage());
 
         infoView = new NodeInfoView(appContext, context);
         infoView.setOnLongClickListener(this);
         infoView.setOnClickListener(this);
-
         infoView.setVisibility(View.GONE);
 
         To.view(mc.getMapView()).addView(infoView);
@@ -56,43 +52,37 @@ public abstract class AbsNodeViewLayer extends AbsNodeSelectorLayer implements
         setGraph(info, i, limit.getFirstPoint(), limit.getLastPoint());
     }
 
-
     public void setGraph(GpxInformation info, int index, int firstPoint, int lastPoint) {
         infoView.setGraph(info, index, firstPoint, lastPoint);
         measure();
         layout();
     }
 
-
     public void setBackgroundColorFromIID(int IID) {
         infoView.setBackgroundColorFromIID(IID);
     }
 
-    public void setHtmlText(HtmlBuilder html) {
+    public void setHtmlText(MarkupBuilder html) {
         infoView.setHtmlText(html.toString());
         html.clear();
         measure();
         layout();
     }
 
-
     public void showAtLeft() {
         pos.toLeft();
         show();
     }
-
 
     public void showAtRight() {
         pos.toRight();
         show();
     }
 
-
     public void hide() {
         AppLayout.fadeOut(infoView);
         mcontext.getMapView().requestRedraw();
     }
-
 
     public void show() {
         measure();
@@ -100,7 +90,6 @@ public abstract class AbsNodeViewLayer extends AbsNodeSelectorLayer implements
         AppLayout.fadeIn(infoView);
 
         mcontext.getMapView().requestRedraw();
-
     }
 
     @Override
@@ -125,8 +114,6 @@ public abstract class AbsNodeViewLayer extends AbsNodeSelectorLayer implements
         infoView.measure(wspec, hspec);
     }
 
-
-
     private static class Placer {
         private int xoffset=0, width, height, right_space;
         private final int button_space;
@@ -141,7 +128,6 @@ public abstract class AbsNodeViewLayer extends AbsNodeSelectorLayer implements
 
             right_space = w - width - button_space;
         }
-
 
         public void toLeft() {
             xoffset = right_space;

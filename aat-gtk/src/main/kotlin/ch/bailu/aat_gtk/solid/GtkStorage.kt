@@ -1,5 +1,6 @@
 package ch.bailu.aat_gtk.solid
 
+import ch.bailu.aat_gtk.config.Strings
 import ch.bailu.aat_lib.logger.AppLog
 import ch.bailu.aat_lib.preferences.OnPreferencesChanged
 import ch.bailu.aat_lib.preferences.StorageInterface
@@ -10,7 +11,7 @@ import java.util.prefs.Preferences
 
 class GtkStorage : StorageInterface {
     companion object {
-        private val NODE = Preferences.userRoot().node("ch/bailu/aat")
+        private val NODE = Preferences.userRoot().node(Strings.appPreferencesNode)
         private val OBSERVERS = ArrayList<OnPreferencesChanged>()
 
         fun save() {

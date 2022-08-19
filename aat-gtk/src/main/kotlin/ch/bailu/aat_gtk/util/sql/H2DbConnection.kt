@@ -1,8 +1,10 @@
 package ch.bailu.aat_gtk.util.sql
 
+import ch.bailu.aat_lib.service.directory.database.GpxDbConfiguration
 import ch.bailu.aat_lib.util.sql.DbConnection
 import ch.bailu.aat_lib.util.sql.DbException
 import ch.bailu.aat_lib.util.sql.DbResultSet
+import ch.bailu.aat_lib.util.sql.Sql
 import java.sql.Connection
 import java.sql.DriverManager
 import java.sql.PreparedStatement
@@ -12,7 +14,7 @@ class H2DbConnection : DbConnection {
     private var connection: Connection? = null
     private val dbSuffix = ".mv.db"
 
-    override fun open(name: String, version: Int, update: DbConnection.OnModelUpdate) {
+    override fun open(name: String, version: Int) {
         close()
         try {
             var dbName = name
@@ -22,13 +24,24 @@ class H2DbConnection : DbConnection {
             connection = DriverManager.getConnection("jdbc:h2:${dbName}")
 
             if (getVersion() != version) {
-                update.run(this)
+                createTable()
                 setVersion(version)
             }
         } catch (e: Exception) {
             close()
             throw DbException(e)
         }
+    }
+
+    private fun createTable() {
+        execSQL(Sql.getTableDropStatement(GpxDbConfiguration.TABLE))
+        execSQL(
+            Sql.getCreateTableExpression(
+                GpxDbConfiguration.TABLE,
+                GpxDbConfiguration.KEY_LIST,
+                GpxDbConfiguration.TYPE_LIST_H2
+            )
+        )
     }
 
     private fun getVersion(): Int {

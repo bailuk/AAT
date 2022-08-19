@@ -2,7 +2,6 @@ package ch.bailu.aat_gtk.view.map.control
 
 import ch.bailu.aat_gtk.view.menu.PopupButton
 import ch.bailu.aat_gtk.view.menu.provider.EditorMenu
-import ch.bailu.aat_gtk.view.menu.provider.MapMenu
 import ch.bailu.aat_lib.dispatcher.EditorSourceInterface
 import ch.bailu.aat_lib.gpx.GpxInformation
 import ch.bailu.aat_lib.gpx.GpxPoint
@@ -14,6 +13,7 @@ import ch.bailu.aat_lib.service.ServicesInterface
 import ch.bailu.gtk.gtk.Application
 
 class EditorBar(app: Application,
+                private val nodeInfo: NodeInfo,
                 mcontext: MapContext,
                 services: ServicesInterface,
                 private val edit: EditorSourceInterface
@@ -49,7 +49,18 @@ class EditorBar(app: Application,
         }
     }
 
+    override fun hide() {
+        super.hide()
+        nodeInfo.hide()
+    }
+
+    override fun show() {
+        super.show()
+        nodeInfo.showRight()
+    }
+
     override fun onNodeSelected(IID: Int, info: GpxInformation, node: GpxPointNode, index: Int) {
         edit.editor.select(node)
+        nodeInfo.displayNode(info, node, index)
     }
 }

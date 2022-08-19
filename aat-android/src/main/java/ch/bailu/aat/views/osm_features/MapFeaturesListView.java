@@ -9,21 +9,19 @@ import android.widget.ListView;
 
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.cache.osm_features.MapFeaturesListEntry;
-import ch.bailu.aat.util.filter_list.AbsFilterList;
-import ch.bailu.aat.util.filter_list.ListEntry;
+import ch.bailu.aat_lib.lib.filter_list.AbsFilterList;
+import ch.bailu.aat_lib.lib.filter_list.ListEntry;
 import ch.bailu.aat.util.ui.AppTheme;
 import ch.bailu.aat.util.ui.UiTheme;
 
 
 public class MapFeaturesListView extends ListView  {
 
-
     private DataSetObserver observer=null;
     private final AbsFilterList<ListEntry> list;
     private final ServiceContext scontext;
 
     private OnSelected onSelected = OnSelected.NULL;
-
 
     private final static UiTheme theme = AppTheme.search;
 
@@ -34,7 +32,6 @@ public class MapFeaturesListView extends ListView  {
         scontext = sc;
         list = l;
         final Adapter listAdapter = new Adapter();
-
 
         theme.list(this);
 
@@ -84,8 +81,6 @@ public class MapFeaturesListView extends ListView  {
             observer = null;
         }
 
-
-
         @Override
         public void onItemClick(AdapterView<?> arg0, View view, int index, long arg3) {
             final MapFeaturesListEntry d = (MapFeaturesListEntry) list.getFromVisible(index);
@@ -94,8 +89,6 @@ public class MapFeaturesListView extends ListView  {
                 onSelected.onSelected(d,OnSelected.FILTER, d.getSummaryKey());
             else
                 onSelected.onSelected(d,OnSelected.EDIT, d.getDefaultQuery());
-
-
         }
 
         @Override
@@ -121,24 +114,20 @@ public class MapFeaturesListView extends ListView  {
             return 1;
         }
 
-
         @Override
         public boolean hasStableIds() {
             return true;
         }
-
 
         @Override
         public boolean isEmpty() {
             return getCount()==0;
         }
 
-
         @Override
         public boolean areAllItemsEnabled() {
             return true;
         }
-
 
         @Override
         public boolean isEnabled(int index) {
@@ -146,7 +135,4 @@ public class MapFeaturesListView extends ListView  {
         }
 
     }
-
-
-
 }
