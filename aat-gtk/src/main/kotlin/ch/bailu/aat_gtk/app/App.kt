@@ -51,7 +51,6 @@ object App {
     fun run() {
         val app = Application(Str(GtkAppConfig.applicationId), ApplicationFlags.FLAGS_NONE)
 
-
         app.onActivate {
             try {
                 MainWindow(ApplicationWindow(app), app, dispatcher)

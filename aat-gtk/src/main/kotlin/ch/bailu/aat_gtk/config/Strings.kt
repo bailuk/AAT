@@ -5,6 +5,8 @@ import ch.bailu.gtk.type.Str
 
 object Strings {
     const val appIdName = "aat-gtk"
+    val appId = Str("ch.bailu.$appIdName")
+
     const val appPreferencesNode = "ch/bailu/aat"
 
     val appName = Str(Configuration.appName)

@@ -33,6 +33,7 @@ class MainWindow(window: ApplicationWindow, app: Application, dispatcher: Dispat
         box.append(contextBar.revealer)
         box.append(mainView.widget)
 
+        window.iconName = Strings.appId
         window.child = box
         window.title = Str(GtkAppConfig.title)
         window.titlebar = createHeader(window, app,dispatcher, mainView)
