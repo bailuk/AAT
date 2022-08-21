@@ -9,10 +9,7 @@ import ch.bailu.aat_lib.gpx.GpxInformation
 import ch.bailu.aat_lib.gpx.GpxPointNode
 import ch.bailu.aat_lib.html.MarkupBuilderGpx
 import ch.bailu.gtk.GTK
-import ch.bailu.gtk.gtk.Align
-import ch.bailu.gtk.gtk.Box
-import ch.bailu.gtk.gtk.Label
-import ch.bailu.gtk.gtk.Orientation
+import ch.bailu.gtk.gtk.*
 import ch.bailu.gtk.type.Str
 
 class NodeInfo {
@@ -20,16 +17,25 @@ class NodeInfo {
 
     private val label = Label(Str.NULL).apply {
         margin(Layout.margin)
+    }
 
+    private val scrolled = ScrolledWindow().apply {
+        child = label
+        setSizeRequest(Layout.windowWidth-Layout.barSize*2-Layout.margin*2,Layout.windowHeight/5)
     }
 
     val box = Box(Orientation.VERTICAL,0).apply {
         addCssClass(Strings.mapControl)
         margin(Layout.margin)
-        append(label)
+        append(scrolled)
         valign = Align.START
         halign = Align.CENTER
         visible = GTK.FALSE
+    }
+
+    fun showCenter() {
+        box.halign = Align.CENTER
+        box.visible = GTK.TRUE
     }
 
     fun showLeft() {

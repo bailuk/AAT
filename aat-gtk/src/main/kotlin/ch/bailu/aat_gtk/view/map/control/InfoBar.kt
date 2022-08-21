@@ -39,7 +39,7 @@ class InfoBar(app: Application,
 
     override fun show() {
         super.show()
-        nodeInfo.showLeft()
+        nodeInfo.showCenter()
     }
 
     override fun hide() {
