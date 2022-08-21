@@ -47,7 +47,7 @@ class GtkMapDraw(private val nodeBitmap: NodeBitmap): MapDraw {
     }
 
     override fun getNodeBitmap(): Bitmap? {
-        return nodeBitmap.tileBitmap.tileBitmap
+        return nodeBitmap.tileBitmap.bitmap
     }
 
     override fun grid(center: Point, space: Int) {

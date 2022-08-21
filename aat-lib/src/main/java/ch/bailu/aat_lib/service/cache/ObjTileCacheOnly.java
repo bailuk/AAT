@@ -170,4 +170,3 @@ public class ObjTileCacheOnly extends ObjTile {
         }
     }
 }
-

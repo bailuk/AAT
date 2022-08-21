@@ -38,8 +38,9 @@ public final class ObjSVGAsset extends ObjImageAbstract {
 
     @Override
     public Bitmap getBitmap() {
-        if (bitmap != null) {
-            return bitmap.getTileBitmap();
+        var b = bitmap;
+        if (b != null) {
+            return b.getBitmap();
         }
         return null;
     }
@@ -47,11 +48,18 @@ public final class ObjSVGAsset extends ObjImageAbstract {
 
     @Override
     public long getSize() {
-        long size = 0;
+        long result = 0;
 
-        if (bitmap != null) size = bitmap.getSize();
-        if (size == 0) size = Obj.MIN_SIZE;
-        return size;
+        var b = bitmap;
+        if (b != null) {
+            result = b.getSize();
+        }
+
+        if (result == 0) {
+            result = Obj.MIN_SIZE;
+        }
+
+        return result;
     }
 
     @Override
@@ -68,9 +76,11 @@ public final class ObjSVGAsset extends ObjImageAbstract {
     @Override
     public void onRemove(AppContext sc) {
         super.onRemove(sc);
-        if (bitmap != null) bitmap.free();
+        var b = bitmap;
+        if (b != null) {
+            b.free();
+        }
     }
-
 
     public static class Factory extends Obj.Factory {
         private final String name;
@@ -80,7 +90,6 @@ public final class ObjSVGAsset extends ObjImageAbstract {
             name = n;
             size = s;
         }
-
 
         @Override
         public Obj factory(String id, AppContext sc) {

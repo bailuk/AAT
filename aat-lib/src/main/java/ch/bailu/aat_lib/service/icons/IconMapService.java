@@ -45,7 +45,6 @@ public final class IconMapService extends VirtualService implements WithStatusTe
 
 
     public ObjImageAbstract getIconSVG(final GpxPointInterface point, final int size) {
-
         GpxAttributes attr = point.getAttributes();
         String path = toAssetPath(attr);
 

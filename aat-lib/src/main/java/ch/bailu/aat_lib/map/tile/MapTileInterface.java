@@ -1,5 +1,6 @@
 package ch.bailu.aat_lib.map.tile;
 
+import org.mapsforge.core.graphics.Bitmap;
 import org.mapsforge.core.graphics.Canvas;
 import org.mapsforge.core.graphics.TileBitmap;
 
@@ -13,7 +14,7 @@ import ch.bailu.foc.Foc;
 public interface MapTileInterface {
     boolean isLoaded();
 
-    void set(TileBitmap tileBitmap);
+    void set(Bitmap bitmap);
     void set(Foc file, int defaultTileSize, boolean transparent);
     void setSVG(Foc file, int size, boolean transparent) throws IOException;
 
@@ -22,6 +23,7 @@ public interface MapTileInterface {
     void free();
 
     TileBitmap getTileBitmap();
+    Bitmap getBitmap();
 
     long getSize();
     Canvas getCanvas();

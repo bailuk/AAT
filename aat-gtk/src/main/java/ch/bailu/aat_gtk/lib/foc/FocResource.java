@@ -125,7 +125,11 @@ public class FocResource extends Foc {
 
     @Override
     public InputStream openR() throws IOException {
-        return ClassLoader.class.getResourceAsStream(resource);
+        var result =  this.getClass().getClassLoader().getResourceAsStream(resource);
+        if (result == null) {
+            throw new IOException();
+        }
+        return result;
     }
 
     @Override
@@ -155,7 +159,7 @@ public class FocResource extends Foc {
                 children = listFile();
                 isDirectory.set(true);
             } catch (IOException | URISyntaxException e) {
-                children = new ArrayList(0);
+                children = new ArrayList<>(0);
                 isDirectory.set(false);
             }
         }
@@ -165,12 +169,20 @@ public class FocResource extends Foc {
     private List<String> listFile() throws IOException, URISyntaxException {
         ArrayList<String> result = new ArrayList<>();
 
-        URI uri = FocResource.class.getResource(resource).toURI();
-        Path dirPath = Paths.get(uri);
+        Path dirPath = Paths.get(getResourceURI(resource));
         Files.list(dirPath).forEach(p -> result.add(p.toString()));
-
         return result;
     }
+
+
+    private URI getResourceURI(String resource) throws IOException, URISyntaxException {
+        var res = FocResource.class.getResource(resource);
+        if (res == null) {
+            throw new IOException("Failed to get URI from '" + resource + "'");
+        }
+        return res.toURI();
+    }
+
 
     // TODO share code with FocAsset
     private static class Check {
@@ -183,7 +195,7 @@ public class FocResource extends Foc {
         }
 
         public boolean get() {
-            return (check != null && check.booleanValue());
+            return (check != null && check);
         }
 
         public  boolean isSet() {

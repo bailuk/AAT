@@ -3,10 +3,10 @@ package ch.bailu.aat_lib.service.cache;
 import org.mapsforge.core.graphics.TileBitmap;
 import org.mapsforge.core.model.Tile;
 
-import ch.bailu.aat_lib.map.tile.source.CacheOnlySource;
-import ch.bailu.aat_lib.map.tile.source.Source;
 import ch.bailu.aat_lib.app.AppContext;
 import ch.bailu.aat_lib.dispatcher.AppBroadcaster;
+import ch.bailu.aat_lib.map.tile.source.CacheOnlySource;
+import ch.bailu.aat_lib.map.tile.source.Source;
 import ch.bailu.foc.Foc;
 
 public final class ObjTileCached extends ObjTile {

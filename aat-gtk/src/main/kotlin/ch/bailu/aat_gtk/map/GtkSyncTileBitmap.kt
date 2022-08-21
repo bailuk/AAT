@@ -7,6 +7,7 @@ import ch.bailu.aat_lib.service.cache.Obj
 import ch.bailu.aat_lib.util.Rect
 import ch.bailu.foc.Foc
 import ch.bailu.gtk.cairo.Surface
+import org.mapsforge.core.graphics.Bitmap
 import org.mapsforge.core.graphics.Canvas
 import org.mapsforge.core.graphics.TileBitmap
 import org.mapsforge.map.gtk.graphics.GtkBitmap
@@ -14,30 +15,30 @@ import org.mapsforge.map.gtk.graphics.GtkBitmap
 
 class GtkSyncTileBitmap : MapTileInterface {
 
-    private var bitmap: TileBitmap? = null
+    private var bitmapOrNull: Bitmap? = null
     private var size: Int = Obj.MIN_SIZE
 
 
     @Synchronized
     override fun isLoaded(): Boolean {
-        return bitmap != null
+        return bitmapOrNull != null
     }
 
     @Synchronized
-    override fun set(tileBitmap: TileBitmap?) {
-        if (bitmap == tileBitmap) return
+    override fun set(tileBitmap: Bitmap?) {
+        if (bitmapOrNull == tileBitmap) return
 
         free()
-        bitmap = tileBitmap
+        bitmapOrNull = tileBitmap
         size = getSizeOfBitmap()
     }
 
 
     private fun getSizeOfBitmap(): Int {
-        val tileBitmap = bitmap
+        val bitmap = bitmapOrNull
 
-        return if (tileBitmap is TileBitmap) {
-            (tileBitmap.height * tileBitmap.width * 4)
+        return if (bitmap is Bitmap) {
+            (bitmap.height * bitmap.width * 4)
         } else {
             Obj.MIN_SIZE
         }
@@ -45,7 +46,7 @@ class GtkSyncTileBitmap : MapTileInterface {
 
     @Synchronized
     override fun set(file: Foc, defaultTileSize: Int, transparent: Boolean) {
-        set(load(file, defaultTileSize, transparent))
+        set(loadTileBitmap(file, defaultTileSize, transparent))
     }
 
     @Synchronized
@@ -55,10 +56,10 @@ class GtkSyncTileBitmap : MapTileInterface {
 
     @Synchronized
     override fun setSVG(file: Foc, size: Int, transparent: Boolean) {
-        set(file, size, transparent)
+        set(loadSVG(file, size))
     }
 
-    private fun load(file: Foc, size: Int, transparent: Boolean): TileBitmap? {
+    private fun loadTileBitmap(file: Foc, size: Int, transparent: Boolean): TileBitmap? {
         var result: TileBitmap? = null
         file.openR()?.use {
             result = AppGraphicFactory.instance().createTileBitmap(it, size, transparent)
@@ -67,20 +68,39 @@ class GtkSyncTileBitmap : MapTileInterface {
         return result
     }
 
-    @Synchronized
-    override fun free() {
-        val tileBitmap = bitmap
-
-        if (tileBitmap is TileBitmap) {
-            tileBitmap.decrementRefCount()
+    private fun loadSVG(file: Foc, size: Int): Bitmap? {
+        var result: Bitmap? = null
+        file.openR()?.use {
+            result = AppGraphicFactory.instance().createResourceBitmap(it,1f, size, size, 100, 0)
         }
-        bitmap = null
-        size = Obj.MIN_SIZE
+        return result
     }
 
     @Synchronized
+    override fun free() {
+        val bitmap = bitmapOrNull
+
+        if (bitmap is Bitmap) {
+            bitmap.decrementRefCount()
+        }
+        bitmapOrNull = null
+        size = Obj.MIN_SIZE
+    }
+
     override fun getTileBitmap(): TileBitmap? {
-        return bitmap
+        val bitmap = bitmapOrNull
+        if (bitmap is TileBitmap) {
+            return bitmap
+        }
+        return null
+    }
+
+    override fun getBitmap(): Bitmap? {
+        val bitmap = bitmapOrNull
+        if (bitmap is Bitmap) {
+            return bitmap
+        }
+        return null
     }
 
     @Synchronized
@@ -90,8 +110,9 @@ class GtkSyncTileBitmap : MapTileInterface {
 
     override fun getCanvas(): Canvas {
         val canvas = AppGraphicFactory.instance().createCanvas()
-        if (tileBitmap is TileBitmap) {
-            canvas.setBitmap(tileBitmap)
+        val bitmap = bitmapOrNull
+        if (bitmap is Bitmap) {
+            canvas.setBitmap(bitmap)
         }
         return canvas
     }
@@ -100,11 +121,11 @@ class GtkSyncTileBitmap : MapTileInterface {
     override fun setBuffer(src: IntArray, srcRect: Rect) {
         initBitmap()
 
-        val b = bitmap
-        if (b is GtkBitmap) {
-            b.surface.flush()
-            setPixels(b.surface, src, srcRect)
-            b.surface.markDirty()
+        val bitmap = bitmapOrNull
+        if (bitmap is GtkBitmap) {
+            bitmap.surface.flush()
+            setPixels(bitmap.surface, src, srcRect)
+            bitmap.surface.markDirty()
         }
     }
 
@@ -138,9 +159,8 @@ class GtkSyncTileBitmap : MapTileInterface {
     }
 
     private fun initBitmap() {
-        if (bitmap == null) {
+        if (bitmapOrNull == null) {
             set(SolidTileSize.DEFAULT_TILESIZE, true)
         }
     }
-
 }

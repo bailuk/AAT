@@ -36,7 +36,7 @@ public class MarkupBuilderGpx extends MarkupBuilder {
         final int count=index+1, total = info.getGpxList().getPointList().size();
 
         appendHeaderNl(info.getFile().getName());
-        appendNl(config.getBoldOpen() + count + config.getBoldClose() + total);
+        appendNl(config.getBoldOpen() + count + config.getBoldClose() + "/" + total);
     }
 
     public void appendNode(GpxPointNode n, GpxInformation i) {

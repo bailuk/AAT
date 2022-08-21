@@ -1,6 +1,5 @@
 package ch.bailu.aat.util.graphic;
 
-import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Picture;
 import android.graphics.RectF;
@@ -8,6 +7,7 @@ import android.graphics.RectF;
 import com.caverock.androidsvg.SVG;
 import com.caverock.androidsvg.SVGParseException;
 
+import org.mapsforge.core.graphics.Bitmap;
 import org.mapsforge.core.graphics.CorruptedInputStreamException;
 import org.mapsforge.core.graphics.TileBitmap;
 import org.mapsforge.map.android.graphics.AndroidGraphicFactory;
@@ -24,36 +24,50 @@ import ch.bailu.aat_lib.util.Rect;
 import ch.bailu.foc.Foc;
 
 public class AndroidSyncTileBitmap implements MapTileInterface {
-    private TileBitmap bitmap = null;
+    private Bitmap bitmap = null;
 
     private long size = 0;
 
-
-    public synchronized TileBitmap getTileBitmap() {
-        return bitmap;
-    }
-
-
-    public synchronized Bitmap getAndroidBitmap() {
-        if (bitmap != null) return AndroidGraphicFactory.getBitmap(bitmap);
-        return null;
-    }
-
-
-    public synchronized Canvas getAndroidCanvas() {
-        Bitmap bitmap = getAndroidBitmap();
-        if (bitmap != null) return new Canvas(bitmap);
-        return null;
-    }
-
     @Override
-    public synchronized org.mapsforge.core.graphics.Canvas getCanvas() {
-        if (bitmap != null) {
-            return AndroidGraphicFactory.createGraphicContext(getAndroidCanvas());
+    public TileBitmap getTileBitmap() {
+        var b = bitmap;
+        if (b instanceof TileBitmap) {
+            return (TileBitmap) b;
         }
         return null;
     }
 
+    @Override
+    public Bitmap getBitmap() {
+        return bitmap;
+    }
+
+
+    public android.graphics.Bitmap getAndroidBitmap() {
+        var b = bitmap;
+        if (b != null) {
+            return AndroidGraphicFactory.getBitmap(b);
+        }
+        return null;
+    }
+
+
+    public Canvas getAndroidCanvas() {
+        var b = getAndroidBitmap();
+        if (b != null) {
+            return new Canvas(b);
+        }
+        return null;
+    }
+
+    @Override
+    public org.mapsforge.core.graphics.Canvas getCanvas() {
+        var c = getAndroidCanvas();
+        if (c != null) {
+            return AndroidGraphicFactory.createGraphicContext(c);
+        }
+        return null;
+    }
 
     private static TileBitmap load(Foc file, int size, boolean transparent) {
         TileBitmap bitmap;
@@ -88,12 +102,10 @@ public class AndroidSyncTileBitmap implements MapTileInterface {
         } finally {
             Foc.close(input);
         }
-
-
     }
 
 
-    public synchronized void set(TileBitmap b) {
+    public synchronized void set(Bitmap b) {
         if (bitmap == b) return;
 
         free();
@@ -103,11 +115,11 @@ public class AndroidSyncTileBitmap implements MapTileInterface {
 
 
     private long getSizeOfBitmap() {
-        long result = Obj.MIN_SIZE;
-        Bitmap bitmap = getAndroidBitmap();
+        var result = Obj.MIN_SIZE;
+        var b = getAndroidBitmap();
 
-        if (bitmap != null) {
-            result = (long) bitmap.getRowBytes() * bitmap.getHeight();
+        if (b != null) {
+            result = b.getRowBytes() * b.getHeight();
         }
         return result;
     }
@@ -137,7 +149,7 @@ public class AndroidSyncTileBitmap implements MapTileInterface {
     @Override
     public synchronized void setBuffer(@Nonnull int[] buffer, @Nonnull Rect r) {
         initBitmap();
-        Bitmap b = getAndroidBitmap();
+        var b = getAndroidBitmap();
 
         if (b != null) {
             b.setPixels(buffer, 0, r.width(), r.left, r.top, r.width(), r.height());

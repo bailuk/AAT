@@ -12,9 +12,7 @@ import ch.bailu.aat_lib.util.WithStatusText;
 
 public final class IconCache implements Closeable, WithStatusText {
     private final LockCache<ObjImageAbstract> icons = new LockCache<>(20);
-
     private final ServicesInterface scontext;
-
 
     public IconCache(ServicesInterface sc) {
         scontext = sc;
@@ -26,19 +24,15 @@ public final class IconCache implements Closeable, WithStatusText {
 
         if (path != null) {
             String iconFileID = ObjSVGAsset.toID(path, size);
-
             ObjImageAbstract icon = get(iconFileID);
 
             if (icon == null) {
                 icon = add(iconFileID, path, size);
             }
-
-
             r[0] = icon;
         }
         return r[0];
     }
-
 
     private ObjImageAbstract get(String id) {
         for (int i = 0; i < icons.size(); i++) {
@@ -48,7 +42,6 @@ public final class IconCache implements Closeable, WithStatusText {
         }
         return null;
     }
-
 
     private ObjImageAbstract add(final String id, final String path, final int size) {
         ObjImageAbstract r = null;
@@ -63,10 +56,8 @@ public final class IconCache implements Closeable, WithStatusText {
             r = imageHandle;
         }
 
-
         return r;
     }
-
 
     @Override
     public void close() {

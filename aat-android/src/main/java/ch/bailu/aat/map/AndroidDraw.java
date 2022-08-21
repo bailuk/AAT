@@ -88,7 +88,7 @@ public final class AndroidDraw implements MapDraw {
 
     @Override
     public Bitmap getNodeBitmap() {
-        return nodePainter.getTileBitmap().getTileBitmap();
+        return nodePainter.getTileBitmap().getBitmap();
     }
 
     @Override

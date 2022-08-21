@@ -9,12 +9,12 @@ import org.mapsforge.map.model.common.Observer;
 
 import java.util.List;
 
-import ch.bailu.aat_lib.map.tile.source.Source;
 import ch.bailu.aat_lib.app.AppContext;
 import ch.bailu.aat_lib.dispatcher.AppBroadcaster;
 import ch.bailu.aat_lib.dispatcher.BroadcastData;
 import ch.bailu.aat_lib.dispatcher.BroadcastReceiver;
 import ch.bailu.aat_lib.map.Attachable;
+import ch.bailu.aat_lib.map.tile.source.Source;
 import ch.bailu.aat_lib.service.InsideContext;
 import ch.bailu.aat_lib.service.cache.Obj;
 import ch.bailu.aat_lib.service.cache.ObjTile;
