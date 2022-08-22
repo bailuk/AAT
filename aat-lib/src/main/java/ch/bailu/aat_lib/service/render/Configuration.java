@@ -69,8 +69,12 @@ public final class Configuration {
     }
 
     public void lockToRenderer(ObjTileMapsForge o) {
-        if (isConfigured() && themeID.equals(o.getThemeID())) {
-            renderer.addJob(o.getTile());
+        if (isConfigured()) {
+            if (themeID.equals(o.getThemeID())){
+                renderer.addJob(o.getTile());
+            } else {
+                AppLog.e("No valid theme for offline map - click on right edge and then on menu bars at top.");
+            }
         }
     }
 }
