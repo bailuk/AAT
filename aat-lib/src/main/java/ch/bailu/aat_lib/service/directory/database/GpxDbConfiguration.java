@@ -50,7 +50,6 @@ public final class GpxDbConfiguration {
     public static final String[] TYPE_LIST = new String[]{
             TYPE_ID,
             TYPE_STRING,
-            TYPE_STRING,
             TYPE_FLOAT,
             TYPE_FLOAT,
             TYPE_FLOAT,
@@ -67,7 +66,6 @@ public final class GpxDbConfiguration {
 
     public static final String[] TYPE_LIST_H2 = new String[]{
             TYPE_ID_H2,
-            TYPE_STRING,
             TYPE_STRING,
             TYPE_FLOAT,
             TYPE_FLOAT,
