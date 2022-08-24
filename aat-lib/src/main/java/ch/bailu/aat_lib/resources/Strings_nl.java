@@ -5,9 +5,6 @@ package ch.bailu.aat_lib.resources;
 */
 public class Strings_nl extends Strings {
     @Override
-    public String app_name() { return "AAT";}
-
-    @Override
     public String on() { return "Aan";}
 
     @Override
@@ -332,9 +329,6 @@ public class Strings_nl extends Strings {
     public String dialog_no() { return "Nee";}
 
     @Override
-    public String dialog_ok() { return "OK";}
-
-    @Override
     public String dialog_cancel() { return "Annuleer";}
 
     @Override
@@ -351,12 +345,6 @@ public class Strings_nl extends Strings {
 
     @Override
     public String d_latitude() { return "Breedtegraad";}
-
-    @Override
-    public String d_chx() { return "CH1903 X";}
-
-    @Override
-    public String d_chy() { return "CH1903 Y";}
 
     @Override
     public String d_name() { return "Naam";}
@@ -514,7 +502,8 @@ public class Strings_nl extends Strings {
     @Override
     public String error_met() { return "Eerste Getal moet tussen 0.0 en 20.0 zijn, gevolgd door een spatie.";}
 
-    @Override    public String[] p_unit_list() {
+    @Override
+    public String[] p_unit_list() {
         return new String[] {
             "Metrisch (km, km/h)",
             "Imperiaal (mi, mph)",
@@ -523,7 +512,8 @@ public class Strings_nl extends Strings {
         };
     }
 
-    @Override    public String[] p_met_list() {
+    @Override
+    public String[] p_met_list() {
         return new String[] {
             " 6.8 fietsen, vrije tijd, gematigde inspanning",
             " 8.5 fietsen, berg, algemeen",
@@ -556,7 +546,8 @@ public class Strings_nl extends Strings {
         };
     }
 
-    @Override    public String[] p_trim_modes() {
+    @Override
+    public String[] p_trim_modes() {
         return new String[] {
             "Grootte",
             "Grootte en ouderdom",

@@ -5,9 +5,6 @@ package ch.bailu.aat_lib.resources;
 */
 public class Strings_cs extends Strings {
     @Override
-    public String app_name() { return "AAT";}
-
-    @Override
     public String on() { return "Zap.";}
 
     @Override
@@ -332,9 +329,6 @@ public class Strings_cs extends Strings {
     public String dialog_no() { return "Ne";}
 
     @Override
-    public String dialog_ok() { return "OK";}
-
-    @Override
     public String dialog_cancel() { return "Zrušit";}
 
     @Override
@@ -351,12 +345,6 @@ public class Strings_cs extends Strings {
 
     @Override
     public String d_latitude() { return "Šířka";}
-
-    @Override
-    public String d_chx() { return "CH1903 X";}
-
-    @Override
-    public String d_chy() { return "CH1903 Y";}
 
     @Override
     public String d_name() { return "Název";}
@@ -505,7 +493,8 @@ public class Strings_cs extends Strings {
     @Override
     public String error_met() { return "První číslo musí být mezi 0.0 a 20.0 s mezerou na konci.";}
 
-    @Override    public String[] p_unit_list() {
+    @Override
+    public String[] p_unit_list() {
         return new String[] {
             "Metrické (km, km/h)",
             "Imperiální (mi, mph)",
@@ -514,7 +503,8 @@ public class Strings_cs extends Strings {
         };
     }
 
-    @Override    public String[] p_met_list() {
+    @Override
+    public String[] p_met_list() {
         return new String[] {
             " 6.8 cyklistika, volnočasová, mírná zátěž",
             " 8.5 cyklistika, horská, obecné",
@@ -547,7 +537,8 @@ public class Strings_cs extends Strings {
         };
     }
 
-    @Override    public String[] p_trim_modes() {
+    @Override
+    public String[] p_trim_modes() {
         return new String[] {
             "Velikost",
             "Velikost a stáří",

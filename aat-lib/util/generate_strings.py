@@ -7,14 +7,14 @@ import xml.etree.ElementTree as ET
 if (len(sys.argv) > 1):
     lang_path = 'values-'   + sys.argv[1] + '/'
     class_name = 'Strings_' + sys.argv[1] + ' extends Strings'
-    override = '@Override'
+    override = '    @Override\n'
     out_file = 'Strings_' + sys.argv[1] + '.java'
 else:
     lang_path = 'values/'
     class_name = 'Strings'
     override = ''
     out_file = 'Strings.java'
-    
+
 
 input_file = '../../aat-android/src/main/res/' + lang_path + 'strings.xml'
 output_file = '../../aat-lib/src/main/java/ch/bailu/aat_lib/resources/' + out_file
@@ -38,20 +38,20 @@ root_node = ET.parse(input_file).getroot()
 for tag in root_node.findall('string'):
     key = tag.get('name')
     value = tag.text
-    
-    out.write('    ' + override + '\n')
+
+    out.write(override)
     out.write('    public String ' + key + '() { return "' + value + '";}\n\n')
-    
+
 for array_tag in root_node.findall('string-array'):
-    out.write('    ' + override)
+    out.write(override)
     out.write('    public String[] ' + array_tag.get('name') + '() {\n')
     out.write('        return new String[] {\n')
-    
+
     for tag in array_tag.findall('item'):
         out.write('            "' + tag.text + '",\n')
-    
+
     out.write('        };\n')
     out.write('    }\n\n')
-        
+
 out.write("}")
 out.close()

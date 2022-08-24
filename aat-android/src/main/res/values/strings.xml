@@ -389,9 +389,7 @@
 
     <!-- Errors -->
     <string name="error_integer">Wrong input, only integers are allowed.\n\"%s\"</string>
-    <string name ="error_integer_positive">"Weight must be between 1 and 999."</string>
+    <string name ="error_integer_positive">Weight must be between 1 and 999.</string>
     <string name="error_long">Wrong input, only numbers are allowed.\n\"%s\"</string>
-    <string name ="error_met">"First Number must be between 0.0 to 20.0, followed by a space."</string>
-
-
+    <string name ="error_met">First Number must be between 0.0 to 20.0, followed by a space.</string>
 </resources>

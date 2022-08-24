@@ -5,9 +5,6 @@ package ch.bailu.aat_lib.resources;
 */
 public class Strings_fr extends Strings {
     @Override
-    public String app_name() { return "AAT";}
-
-    @Override
     public String on() { return "On";}
 
     @Override
@@ -314,10 +311,10 @@ public class Strings_fr extends Strings {
     public String location_title() { return "Centrer la position";}
 
     @Override
-    public String location_view() { return "Voir la position...";}
+    public String location_view() { return "Voir la position…";}
 
     @Override
-    public String location_send() { return "Envoyer la position...";}
+    public String location_send() { return "Envoyer la position…";}
 
     @Override
     public String clipboard_copy() { return "\u21d2 Bloc-notes";}
@@ -330,9 +327,6 @@ public class Strings_fr extends Strings {
 
     @Override
     public String dialog_no() { return "Non";}
-
-    @Override
-    public String dialog_ok() { return "OK";}
 
     @Override
     public String dialog_cancel() { return "Annuler";}
@@ -351,12 +345,6 @@ public class Strings_fr extends Strings {
 
     @Override
     public String d_latitude() { return "Latitude";}
-
-    @Override
-    public String d_chx() { return "CH1903 X";}
-
-    @Override
-    public String d_chy() { return "CH1903 Y";}
 
     @Override
     public String d_name() { return "Nom";}
@@ -514,7 +502,8 @@ public class Strings_fr extends Strings {
     @Override
     public String error_met() { return "Le premier nombre doit être entre 0.0 et 20.0, suivi d\'un espace.";}
 
-    @Override    public String[] p_unit_list() {
+    @Override
+    public String[] p_unit_list() {
         return new String[] {
             "Métriques (km, km/h)",
             "Impériales (mi, mph)",
@@ -523,7 +512,8 @@ public class Strings_fr extends Strings {
         };
     }
 
-    @Override    public String[] p_met_list() {
+    @Override
+    public String[] p_met_list() {
         return new String[] {
             " 6.8 Cyclisme : Route (20km/h)",
             " 8.5 Cyclisme : VTT Général",
@@ -556,7 +546,8 @@ public class Strings_fr extends Strings {
         };
     }
 
-    @Override    public String[] p_trim_modes() {
+    @Override
+    public String[] p_trim_modes() {
         return new String[] {
             "Taille",
             "Taille et âge",
