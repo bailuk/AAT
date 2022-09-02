@@ -56,7 +56,6 @@ public final class DirectorySynchronizer  implements Closeable {
      */
     private boolean active = false;
     public synchronized void start() {
-        System.out.println("DirectorySynchronizer.start(), active = " + active);
         if (!active) {
             if (appContext.getServices().lock()) {
                 active = true;
@@ -80,10 +79,8 @@ public final class DirectorySynchronizer  implements Closeable {
 
     private synchronized void setReceiver(boolean register, String msg) {
         if (register) {
-            System.out.println("DirectorySynchronizer.register " + msg);
             appContext.getBroadcaster().register(onFileChanged, msg);
         } else {
-            System.out.println("DirectorySynchronizer.unregister " + msg);
             appContext.getBroadcaster().unregister(onFileChanged);
         }
         isRegistered = register;
@@ -92,9 +89,6 @@ public final class DirectorySynchronizer  implements Closeable {
     private final BroadcastReceiver onFileChanged = new BroadcastReceiver () {
         @Override
         public void onReceive(String... args) {
-            System.out.print("DirectorySynchronizer.onReceive()");
-            for (String s: args) { System.out.print(", " + s); }
-            System.out.println("\n");
             state.ping();
         }
     };
@@ -139,7 +133,6 @@ public final class DirectorySynchronizer  implements Closeable {
             @Override
             public long bgOnProcess(AppContext sc) {
                 try {
-                    System.out.println("bgOnProcess()");
                     filesToAdd = new FilesInDirectory(directory);
                     compareFileSystemWithDatabase();
                     removeFilesFromDatabase();
@@ -161,7 +154,6 @@ public final class DirectorySynchronizer  implements Closeable {
 
         @Override
         public void start() {
-            System.out.println("StatePrepareSync.start()");
             appContext.getBroadcaster().broadcast(AppBroadcaster.DBSYNC_START);
             setReceiver(true, AppBroadcaster.CACHE_SYNCHRONIZED);
             appContext.getServices().getBackgroundService().process(backgroundTask);
@@ -170,9 +162,8 @@ public final class DirectorySynchronizer  implements Closeable {
 
         @Override
         public void ping() {
-            System.out.println("StatePrepareSync.ping()");
             setReceiver(false, AppBroadcaster.CACHE_SYNCHRONIZED);
-           if (backgroundTask == null) {
+            if (backgroundTask == null) {
                 if (exception == null) {
                     setState(new StateLoadNextGpx());
                 } else {
@@ -246,7 +237,6 @@ public final class DirectorySynchronizer  implements Closeable {
         public void start() {
 
             Foc file = filesToAdd.pollItem();
-            System.out.println("StateLoadNextGpx.start(), file = " + file);
 
 
             if (file==null) {
@@ -271,7 +261,6 @@ public final class DirectorySynchronizer  implements Closeable {
 
         @Override
         public void ping() {
-            System.out.println("StateLoadNextGpx.ping()");
             if (!canContinue) {
                 terminate();
 
@@ -345,7 +334,6 @@ public final class DirectorySynchronizer  implements Closeable {
 
         public void start() {
             Foc gpxFile = appContext.toFoc(pendingHandle.getID());
-            System.out.println("StateLoadPreview.start(), gpxFile = " + gpxFile);
 
             Foc previewImageFile = appContext.getSummaryConfig().getPreviewFile(gpxFile);
 
@@ -372,12 +360,10 @@ public final class DirectorySynchronizer  implements Closeable {
 
         @Override
         public void ping() {
-            System.out.println("StateLoadPreview.ping()");
-            setReceiver(false, AppBroadcaster.CACHE_IS_LOADED);
             if (!canContinue) {
                 terminate();
             } else if (pendingPreviewGenerator.isLoaded()) {
-
+                setReceiver(false, AppBroadcaster.CACHE_IS_LOADED);
                 pendingPreviewGenerator.generateBitmapFile();
 
                 appContext.getBroadcaster().broadcast(AppBroadcaster.DB_SYNC_CHANGED);
@@ -411,11 +397,9 @@ public final class DirectorySynchronizer  implements Closeable {
 
         @Override
         public void start() {
-            System.out.println("StateTerminate.start()");
             synchronized (this) {
                 AppLog.d(this, "state terminate");
                 if (isRegistered) {
-                    System.out.println("DirectorySynchronizer.terminate.unregister()");
                     appContext.getBroadcaster().unregister(onFileChanged);
                     isRegistered = false;
                 }

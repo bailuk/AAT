@@ -103,9 +103,6 @@ public final class ObjectTable  {
 
 
     public void onObjectChanged(CacheService self, String...objs) {
-        System.out.print("ObjectTable.onObjectChanged()");
-        for (String s: objs) { System.out.print(", " + s); }
-        System.out.println("\n");
         if (updateSize(toID(objs)))
             trim(self);
 
