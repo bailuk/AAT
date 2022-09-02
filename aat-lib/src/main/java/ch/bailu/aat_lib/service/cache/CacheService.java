@@ -38,6 +38,7 @@ public final class CacheService extends VirtualService implements CacheServiceIn
 
     public Obj getObject(String id, Obj.Factory factory) {
 
+        System.out.println("CacheService.getObject(), id = " + id);
         return table.getHandle(id, factory, this);
     }
 

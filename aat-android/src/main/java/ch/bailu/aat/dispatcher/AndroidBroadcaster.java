@@ -38,7 +38,7 @@ public class AndroidBroadcaster implements Broadcaster {
             });
             OldAppBroadcaster.register(context, observers.get(observer), action);
         } else {
-            AppLog.e(this, "Observer was allready registered.");
+            AppLog.e(this, "Observer was already registered.");
         }
     }
 

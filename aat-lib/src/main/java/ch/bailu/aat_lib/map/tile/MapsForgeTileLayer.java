@@ -95,6 +95,7 @@ public class MapsForgeTileLayer extends Layer implements MapLayerInterface, Obse
     @Override
     public void onChange() {
         requestRedraw();
+        tileProvider.CheckAllDone();
     }
 
 

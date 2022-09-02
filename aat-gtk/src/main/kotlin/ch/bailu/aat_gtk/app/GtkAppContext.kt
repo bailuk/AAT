@@ -67,14 +67,11 @@ object GtkAppContext: AppContext {
     }
 
     private class Preview: MapPreviewInterface {
-        override fun isReady(): Boolean {
-            return true
-        }
-
         override fun generateBitmapFile() {}
 
         override fun onDestroy() {}
 
+        override fun isLoaded(): Boolean { return false; }
     }
     override fun createMapPreview(info: GpxInformation, previewImageFile: Foc): MapPreviewInterface {
         return Preview()

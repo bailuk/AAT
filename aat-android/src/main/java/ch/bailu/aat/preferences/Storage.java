@@ -147,7 +147,7 @@ public class Storage  implements ContextWrapperInterface, StorageInterface {
             preferences.registerOnSharedPreferenceChangeListener(listener);
             observers.put(observer, listener);
         } else {
-            AppLog.e(this, "Observer was allready registered");
+            AppLog.e(this, "Observer was already registered");
         }
     }
 

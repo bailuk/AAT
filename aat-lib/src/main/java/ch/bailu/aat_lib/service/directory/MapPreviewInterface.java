@@ -1,7 +1,8 @@
 package ch.bailu.aat_lib.service.directory;
 
 public interface MapPreviewInterface {
-    boolean isReady();
+
+    boolean isLoaded();
 
     void generateBitmapFile();
 

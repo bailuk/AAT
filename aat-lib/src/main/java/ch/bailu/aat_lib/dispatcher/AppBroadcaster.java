@@ -25,6 +25,9 @@ public class AppBroadcaster {
     public static final String FILE_CHANGED_ONDISK  = NAME_SPACE + "ONDISK";
     public static final String FILE_CHANGED_INCACHE = NAME_SPACE + "INCACHE";
     public static final String FILE_BACKGROND_TASK_CHANGED = NAME_SPACE + "BACKGROUND_TASK";
+    public static final String CACHE_SYNCHRONIZED = NAME_SPACE + "CACHE_SYNCED";
+    public static final String CACHE_IS_LOADED = NAME_SPACE + "CACHE_LOADED";
+
 
 
 

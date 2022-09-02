@@ -62,8 +62,10 @@ public final class DirectoryService extends VirtualService implements DirectoryS
 
     private void rescan(Foc dir) {
         if (dir.canRead()) {
-            stopSynchronizer();
-            synchronizer = new DirectorySynchronizer(appContext,dir);
+            if (synchronizer == null) {
+                synchronizer = new DirectorySynchronizer(appContext, dir);
+            }
+            synchronizer.start();
         }
     }
 

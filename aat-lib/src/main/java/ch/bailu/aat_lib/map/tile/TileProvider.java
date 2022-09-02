@@ -207,8 +207,13 @@ public class TileProvider implements Attachable, ObservableInterface {
         return r[0];
     }
 
+    public synchronized boolean isLoaded() {
+        return cache.isLoaded();
+    }
 
-    public synchronized boolean isReadyAndLoaded() {
-        return cache.isReadyAndLoaded();
+    public synchronized void CheckAllDone() {
+        if (isLoaded()) {
+            appContext.getBroadcaster().broadcast(AppBroadcaster.CACHE_IS_LOADED);
+        }
     }
 }

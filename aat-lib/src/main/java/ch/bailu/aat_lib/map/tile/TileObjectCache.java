@@ -110,4 +110,14 @@ public class TileObjectCache implements Closeable {
         }
         return true;
     }
+
+    public synchronized boolean isLoaded() {
+        for (int i = 0; i<tiles.size(); i++) {
+            if (tiles.get(i) != null) {
+                if (!tiles.get(i).isLoaded())
+                    return false;
+            }
+        }
+        return true;
+    }
 }

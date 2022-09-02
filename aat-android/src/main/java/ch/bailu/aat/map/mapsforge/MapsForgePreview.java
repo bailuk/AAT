@@ -25,7 +25,6 @@ import java.util.List;
 import ch.bailu.aat.map.MapDensity;
 import ch.bailu.aat_lib.map.tile.MapsForgeTileLayer;
 import ch.bailu.aat_lib.map.tile.TileProvider;
-import ch.bailu.aat_lib.map.tile.source.CacheOnlySource;
 import ch.bailu.aat_lib.service.cache.DownloadSource;
 import ch.bailu.aat_lib.map.tile.source.MapsForgeSource;
 import ch.bailu.aat_lib.map.tile.source.Source;
@@ -46,7 +45,7 @@ import ch.bailu.foc.Foc;
 public class MapsForgePreview extends MapsForgeViewBase implements MapPreviewInterface {
     private static final int BITMAP_SIZE=128;
     private static final Dimension DIM = new Dimension(BITMAP_SIZE, BITMAP_SIZE);
-    private static final Source MAPNIK = new CacheOnlySource(DownloadSource.MAPNIK);
+    private static final Source MAPNIK = DownloadSource.MAPNIK;
 
     private final Foc          imageFile;
     private final TileProvider provider;
@@ -58,6 +57,7 @@ public class MapsForgePreview extends MapsForgeViewBase implements MapPreviewInt
 
     public MapsForgePreview(Context context, AppContext appContext, GpxInformation info, Foc out) throws IllegalArgumentException {
         super(appContext,context, MapsForgePreview.class.getSimpleName(), new MapDensity());
+        System.out.println("MapsForgePreview() -> " + out);
 
 
 
@@ -107,9 +107,7 @@ public class MapsForgePreview extends MapsForgeViewBase implements MapPreviewInt
 
             String theme = stheme.getValueAsString();
 
-
-            MapsForgeSource mfs = new MapsForgeSource(theme);
-            return new CacheOnlySource(mfs);
+            return new MapsForgeSource(theme);
         }
 
         return MAPNIK;
@@ -187,8 +185,8 @@ public class MapsForgePreview extends MapsForgeViewBase implements MapPreviewInt
         bitmap.free();
     }
 
-    public boolean isReady() {
-        return provider.isReadyAndLoaded();
+    public boolean isLoaded() {
+        return provider.isLoaded();
     }
 
     @Override
