@@ -4,23 +4,23 @@ import android.content.Context;
 
 import ch.bailu.aat.app.AndroidAppContext;
 import ch.bailu.aat.preferences.location.AndroidSolidLocationProvider;
-import ch.bailu.aat_lib.preferences.map.SolidRendererThreads;
-import ch.bailu.aat_lib.service.background.BackgroundService;
-import ch.bailu.aat_lib.service.cache.CacheService;
-import ch.bailu.aat_lib.service.elevation.ElevationService;
-import ch.bailu.aat.services.icons.IconMapService;
-import ch.bailu.aat_lib.service.render.RenderService;
 import ch.bailu.aat.services.sensor.SensorService;
 import ch.bailu.aat.services.tileremover.TileRemoverService;
 import ch.bailu.aat.services.tracker.StatusIcon;
 import ch.bailu.aat_lib.app.AppContext;
+import ch.bailu.aat_lib.preferences.map.SolidRendererThreads;
 import ch.bailu.aat_lib.service.IconMapServiceInterface;
+import ch.bailu.aat_lib.service.background.BackgroundService;
 import ch.bailu.aat_lib.service.background.BackgroundServiceInterface;
+import ch.bailu.aat_lib.service.cache.CacheService;
 import ch.bailu.aat_lib.service.cache.CacheServiceInterface;
 import ch.bailu.aat_lib.service.directory.DirectoryService;
 import ch.bailu.aat_lib.service.directory.DirectoryServiceInterface;
+import ch.bailu.aat_lib.service.elevation.ElevationService;
+import ch.bailu.aat_lib.service.icons.IconMapService;
 import ch.bailu.aat_lib.service.location.LocationService;
 import ch.bailu.aat_lib.service.location.LocationServiceInterface;
+import ch.bailu.aat_lib.service.render.RenderService;
 import ch.bailu.aat_lib.service.render.RenderServiceInterface;
 import ch.bailu.aat_lib.service.sensor.SensorServiceInterface;
 import ch.bailu.aat_lib.service.tracker.TrackerService;
@@ -45,8 +45,6 @@ public final class OneService extends AbsService  implements ServiceContext {
     public  void onCreate() {
         super.onCreate();
     }
-
-
 
     @Override
     public  synchronized void onDestroy() {
@@ -173,7 +171,7 @@ public final class OneService extends AbsService  implements ServiceContext {
     @Override
     public  synchronized IconMapServiceInterface getIconMapService() {
         if (iconMap == null)
-            iconMap = new IconMapService(this);
+            iconMap = new IconMapService(this, getAppContext().getAssets());
         return iconMap;
     }
 

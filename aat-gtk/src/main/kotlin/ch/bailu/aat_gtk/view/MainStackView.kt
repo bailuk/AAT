@@ -101,7 +101,8 @@ class MainStackView (
             stackView.layout
         }
 
-        stack.restore()
+        stack.show(INDEX_COCKPIT)
+        //stack.restore()
     }
 
 

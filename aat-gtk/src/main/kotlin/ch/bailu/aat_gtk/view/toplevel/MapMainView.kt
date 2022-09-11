@@ -48,7 +48,7 @@ class MapMainView(app: Application, dispatcher: DispatcherInterface, uiControlle
         map.add(edgeControl)
         map.add(NodeSelectorLayer(GtkAppContext.services, GtkAppContext.storage, map.mContext, Position.LEFT).apply {
             observe(editorBar)
-            dispatcher.addTarget(this, InfoID.EDITOR_DRAFT)
+            dispatcher.addTarget(this, InfoID.ALL)
             edgeControl.add(this)
         })
 

@@ -27,15 +27,12 @@ public final class NodeInfoView extends PercentageLayout {
         super(context,0);
         setOrientation(LinearLayout.VERTICAL);
 
-
         backgroundColor = MapColor.LIGHT;
 
         htmlView = new HtmlScrollTextView(context);
         htmlView.getTextView().setTextColor(MapColor.TEXT);
         htmlView.setBackgroundColor(backgroundColor);
         add(htmlView, 50);
-
-
 
         graphView = createGraphView(appContext, context);
         add(graphView, 25);
@@ -67,8 +64,6 @@ public final class NodeInfoView extends PercentageLayout {
         super.setOnLongClickListener(l);
     }
 
-
-
     public void setBackgroundColorFromIID(int IID) {
         int newBackgroundColor = MapColor.getColorFromIID(IID);
 
@@ -86,9 +81,7 @@ public final class NodeInfoView extends PercentageLayout {
 
     private int toBackgroundColorLight(int color) {
         return MapColor.toLightTransparent(color);
-
     }
-
 
     private int toBackgroundColorDark(int color) {
         return MapColor.toDarkTransparent(color);

@@ -5,19 +5,17 @@ import ch.bailu.aat_gtk.solid.SolidGtkDataDirectory
 import ch.bailu.aat_gtk.view.GtkStatusIcon
 import ch.bailu.aat_lib.app.AppContext
 import ch.bailu.aat_lib.gpx.GpxInformation
-import ch.bailu.aat_lib.gpx.GpxPointNode
-import ch.bailu.aat_lib.gpx.interfaces.GpxPointInterface
 import ch.bailu.aat_lib.service.IconMapServiceInterface
 import ch.bailu.aat_lib.service.ServicesInterface
 import ch.bailu.aat_lib.service.background.BackgroundService
 import ch.bailu.aat_lib.service.background.BackgroundServiceInterface
 import ch.bailu.aat_lib.service.cache.CacheService
 import ch.bailu.aat_lib.service.cache.CacheServiceInterface
-import ch.bailu.aat_lib.service.cache.ObjImageInterface
 import ch.bailu.aat_lib.service.directory.DirectoryService
 import ch.bailu.aat_lib.service.directory.DirectoryServiceInterface
 import ch.bailu.aat_lib.service.elevation.ElevationService
 import ch.bailu.aat_lib.service.elevation.ElevetionServiceInterface
+import ch.bailu.aat_lib.service.icons.IconMapService
 import ch.bailu.aat_lib.service.location.LocationService
 import ch.bailu.aat_lib.service.location.LocationServiceInterface
 import ch.bailu.aat_lib.service.render.RenderService
@@ -45,6 +43,7 @@ class GtkServices (appContext: AppContext) : ServicesInterface {
     private val renderService by lazy { RenderService(appContext, appContext.mapDirectory) }
 
     private val elevationService by lazy { ElevationService(appContext) }
+    private val iconMapService by lazy { IconMapService(appContext.services, appContext.assets) }
 
     override fun getLocationService(): LocationServiceInterface {
         return locationService
@@ -85,19 +84,7 @@ class GtkServices (appContext: AppContext) : ServicesInterface {
     }
 
     override fun getIconMapService(): IconMapServiceInterface {
-        return object : IconMapServiceInterface {
-            override fun getIconSVG(point: GpxPointInterface, icon_size: Int): ObjImageInterface? {
-                return null
-            }
-
-            override fun toAssetPath(key: Int, value: String): String {
-                return ""
-            }
-
-            override fun toAssetPath(gpxPointNode: GpxPointNode): String {
-                return ""
-            }
-        }
+        return iconMapService
     }
 
     override fun getBackgroundService(): BackgroundServiceInterface {

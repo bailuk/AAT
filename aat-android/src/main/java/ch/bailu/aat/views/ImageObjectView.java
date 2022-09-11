@@ -7,14 +7,14 @@ import android.content.Intent;
 import android.widget.ImageView;
 
 import ch.bailu.aat.map.AndroidDraw;
-import ch.bailu.aat_lib.service.InsideContext;
 import ch.bailu.aat.services.ServiceContext;
-import ch.bailu.aat_lib.service.cache.Obj;
 import ch.bailu.aat.services.cache.ObjBitmap;
-import ch.bailu.aat.services.cache.ObjImageAbstract;
 import ch.bailu.aat.util.AppIntent;
 import ch.bailu.aat.util.OldAppBroadcaster;
 import ch.bailu.aat_lib.dispatcher.AppBroadcaster;
+import ch.bailu.aat_lib.service.InsideContext;
+import ch.bailu.aat_lib.service.cache.Obj;
+import ch.bailu.aat_lib.service.cache.icons.ObjImageAbstract;
 
 public class ImageObjectView extends ImageView {
 
@@ -27,7 +27,6 @@ public class ImageObjectView extends ImageView {
     private String idToLoad=null;
     private Obj.Factory factoryToLoad=null;
 
-
     private final int defaultImageID;
 
     public ImageObjectView(ServiceContext sc, int resID) {
@@ -38,15 +37,12 @@ public class ImageObjectView extends ImageView {
         resetImage();
     }
 
-
     public void setImageObject() {
         idToLoad = null;
         factoryToLoad = null;
 
         resetImage();
     }
-
-
 
     public void setImageObject(String ID, Obj.Factory factory) {
         idToLoad = ID;
@@ -77,10 +73,7 @@ public class ImageObjectView extends ImageView {
         else setImageDrawable(null);
     }
 
-
     private boolean loadImage(final String id, final Obj.Factory factory) {
-
-
         final boolean[] r = {false};
         new InsideContext(scontext) {
             @Override
@@ -102,12 +95,10 @@ public class ImageObjectView extends ImageView {
         return r[0];
     }
 
-
     private void freeImageHandle() {
         imageHandle.free();
         imageHandle = ObjBitmap.NULL;
     }
-
 
     @Override
     public void onAttachedToWindow() {
@@ -120,7 +111,6 @@ public class ImageObjectView extends ImageView {
         loadAndDisplayImage();
     }
 
-
     @Override
     public void onDetachedFromWindow() {
         getContext().unregisterReceiver(onFileChanged);
@@ -130,7 +120,6 @@ public class ImageObjectView extends ImageView {
         super.onDetachedFromWindow();
     }
 
-
     private void displayImage() {
         if (imageHandle.hasException()) {
             resetImage();
@@ -138,7 +127,6 @@ public class ImageObjectView extends ImageView {
             setImageBitmap(AndroidDraw.convert(imageHandle.getBitmap()));
         }
     }
-
 
     private final BroadcastReceiver onFileChanged = new BroadcastReceiver () {
         @Override

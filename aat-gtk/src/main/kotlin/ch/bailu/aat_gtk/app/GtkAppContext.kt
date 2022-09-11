@@ -1,6 +1,7 @@
 package ch.bailu.aat_gtk.app
 
 import ch.bailu.aat_gtk.dispatcher.GtkBroadcaster
+import ch.bailu.aat_gtk.lib.foc.FocResourceFactory
 import ch.bailu.aat_gtk.map.GtkSyncTileBitmap
 import ch.bailu.aat_gtk.map.GtkTilePainter
 import ch.bailu.aat_gtk.service.GtkServices
@@ -96,8 +97,7 @@ object GtkAppContext: AppContext {
     }
 
     override fun getAssets(): FocFactory {
-        AppLog.d(this, "Not yet implemented getAssets")
-        TODO("Not yet implemented")
+        return FocResourceFactory()
     }
 
     override fun getMapDirectory(): SolidMapsForgeDirectory {

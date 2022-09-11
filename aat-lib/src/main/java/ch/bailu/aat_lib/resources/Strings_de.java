@@ -119,7 +119,7 @@ public class Strings_de extends Strings {
     public String p_system() { return "System";}
 
     @Override
-    public String p_location_provider() { return "Standortbestimmung durch...";}
+    public String p_location_provider() { return "Standortbestimmung durch…";}
 
     @Override
     public String p_post_autopause() { return "Postprocessed Autopause";}
@@ -454,7 +454,8 @@ public class Strings_de extends Strings {
     @Override
     public String error_met() { return "Die erste Zahl muss zwischen 0.0 und 20.0 sein, gefolgt von einem Leerzeichen.";}
 
-    @Override    public String[] p_unit_list() {
+    @Override
+    public String[] p_unit_list() {
         return new String[] {
             "Metrisch (km, km/h)",
             "Britisch (mi, mph)",
@@ -463,7 +464,8 @@ public class Strings_de extends Strings {
         };
     }
 
-    @Override    public String[] p_met_list() {
+    @Override
+    public String[] p_met_list() {
         return new String[] {
             " 6.8 Radfahren, mittlere Leistung",
             " 8.5 MTB, allgemein",
@@ -496,7 +498,8 @@ public class Strings_de extends Strings {
         };
     }
 
-    @Override    public String[] p_trim_modes() {
+    @Override
+    public String[] p_trim_modes() {
         return new String[] {
             "Größe",
             "Größe und alter",

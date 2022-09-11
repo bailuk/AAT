@@ -1,17 +1,15 @@
 package ch.bailu.aat.views.graph;
 
-import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 
 import org.mapsforge.map.android.graphics.AndroidGraphicFactory;
-import org.mapsforge.map.android.graphics.AndroidTileBitmap;
 
 import ch.bailu.aat.map.BitmapDraw;
-import ch.bailu.aat_lib.map.NodeBitmap;
 import ch.bailu.aat.util.ui.UiTheme;
 import ch.bailu.aat_lib.app.AppContext;
 import ch.bailu.aat_lib.map.AppDensity;
+import ch.bailu.aat_lib.map.NodeBitmap;
 import ch.bailu.aat_lib.util.Point;
 import ch.bailu.aat_lib.view.graph.GraphCanvas;
 
@@ -70,9 +68,13 @@ public class AndroidCanvas implements GraphCanvas {
 
     @Override
     public void drawBitmap(Point point, int color) {
-        AndroidTileBitmap androidBitmap = (AndroidTileBitmap) nodeBitmap.getTileBitmap().getTileBitmap();
-        Bitmap bitmap = AndroidGraphicFactory.getBitmap(androidBitmap);
-        bitmapCanvas.draw(canvas, bitmap, point, color);
+        var mfBitmap = nodeBitmap.getTileBitmap().getBitmap();
+        if (mfBitmap != null) {
+            var androidBitmap = AndroidGraphicFactory.getBitmap(mfBitmap);
+            if (androidBitmap != null) {
+                bitmapCanvas.draw(canvas, androidBitmap, point, color);
+            }
+        }
     }
 
     @Override

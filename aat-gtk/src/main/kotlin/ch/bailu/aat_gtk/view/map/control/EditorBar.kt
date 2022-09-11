@@ -56,7 +56,7 @@ class EditorBar(app: Application,
 
     override fun show() {
         super.show()
-        nodeInfo.showRight()
+        nodeInfo.showCenter()
     }
 
     override fun onNodeSelected(IID: Int, info: GpxInformation, node: GpxPointNode, index: Int) {
