@@ -59,7 +59,13 @@ public class TileProvider implements Attachable, ObservableInterface {
     }
 
 
-
+    /**
+     * Get tile from cache if it is there.
+     * If tile is not already inside the cache
+     * it loads the tile and puts it into the tile cache.
+     * @param tile coordinates and zoom level of tile
+     * @return the requested tile or null on failure.
+     */
     private synchronized ObjTile getHandle(Tile tile) {
         ObjTile handle = getTileHandle(tile);
 

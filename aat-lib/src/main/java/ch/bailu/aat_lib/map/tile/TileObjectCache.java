@@ -54,6 +54,13 @@ public class TileObjectCache implements Closeable {
     }
 
 
+    /**
+     * Get a tile with specific zoom level and coordinates from the cache
+     * If can find the tile inside the cache it sets the access time to now.
+     *
+     * @param tile Coordinates and zoom level of the requested tile
+     * @return A tile from the cache or null if it was not in the cache
+     */
     public synchronized ObjTile get(Tile tile) {
         for (int i = 0; i<tiles.size(); i++) {
             if (compare(tile, tiles.get(i).getTile())) {
