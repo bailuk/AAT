@@ -14,6 +14,7 @@ import ch.bailu.aat_lib.gpx.GpxList;
 import ch.bailu.aat_lib.gpx.attributes.MaxSpeed;
 import ch.bailu.aat_lib.gpx.interfaces.GpxBigDeltaInterface;
 import ch.bailu.aat_lib.logger.AppLog;
+import ch.bailu.aat_lib.resources.ToDo;
 import ch.bailu.aat_lib.service.background.BackgroundTask;
 import ch.bailu.aat_lib.service.cache.Obj;
 import ch.bailu.aat_lib.service.cache.ObjGpx;
@@ -163,12 +164,10 @@ public final class DirectorySynchronizer  implements Closeable {
                 if (exception == null) {
                     setState(new StateLoadNextGpx());
                 } else {
-                    // There should ne a nicer test for whether we're trying
-                    // to display the track list, but this will do.
                     if (exception.getMessage().contains(
                         "SELECT filename FROM summary")) {
                         exception = new Exception(
-                            "No tracks found in " + directory.toString());
+                                ToDo.translate("No tracks found in ") + directory.toString());
                     }
                     terminate(exception);
                 }
