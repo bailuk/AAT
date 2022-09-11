@@ -6,6 +6,7 @@ import org.mapsforge.map.rendertheme.XmlRenderTheme;
 
 import java.util.ArrayList;
 
+import ch.bailu.aat_lib.logger.AppLog;
 import ch.bailu.aat_lib.preferences.map.SolidMapsForgeDirectory;
 import ch.bailu.aat_lib.service.cache.ObjTileMapsForge;
 import ch.bailu.foc.Foc;
@@ -26,8 +27,16 @@ public final class Configuration {
             try {
                 renderer = new Renderer(theme, cache, mapFiles);
             } catch (Exception e) {
+                AppLog.e(renderer, e);
                 renderer = null;
             }
+        }
+        else
+        {
+            /* I've defined a string resource for this (which needs translations)
+             * but I can't find a way to access a string resource from here.
+             */
+            AppLog.e(this, "No map files found at " + mapDir.getPath());
         }
     }
 
