@@ -35,16 +35,11 @@ public class TileProvider implements Attachable, ObservableInterface {
         source = s;
     }
 
-
-
-
     private final BroadcastReceiver onFileChanged = args -> {
         String file =  BroadcastData.getFile(args);
 
         if (cache.isInCache(file)) observers.notifyChange();
     };
-
-
 
     public synchronized void preload(List<TilePosition> tilePositions) {
         cache.setCapacity(tilePositions.size());
@@ -58,11 +53,10 @@ public class TileProvider implements Attachable, ObservableInterface {
         }
     }
 
-
     /**
-     * Get tile from cache if it is there.
-     * If tile is not already inside the cache
-     * it loads the tile and puts it into the tile cache.
+     * Get a tile from cache if it is there.
+     * If tile is not already inside the cache it loads the tile and
+     * puts it into the tile cache.
      * @param tile coordinates and zoom level of tile
      * @return the requested tile or null on failure.
      */
@@ -75,8 +69,6 @@ public class TileProvider implements Attachable, ObservableInterface {
         return handle;
     }
 
-
-
     public synchronized TileBitmap get(Tile tile) {
         ObjTile handle = getHandle(tile);
 
@@ -85,7 +77,6 @@ public class TileProvider implements Attachable, ObservableInterface {
         }
         return null;
     }
-
 
     public synchronized boolean contains(Tile tile) {
         return cache.get(tile) != null;
@@ -98,11 +89,10 @@ public class TileProvider implements Attachable, ObservableInterface {
         observers.removeObserver(observer);
     }
 
-
-
     public int getMaximumZoomLevel() {
         return source.getMaximumZoomLevel();
     }
+
     public int getMinimumZoomLevel() {
         return source.getMinimumZoomLevel();
     }
@@ -115,7 +105,6 @@ public class TileProvider implements Attachable, ObservableInterface {
         return source;
     }
 
-
     public synchronized boolean isAttached() {
         return isAttached;
     }
@@ -123,19 +112,15 @@ public class TileProvider implements Attachable, ObservableInterface {
     @Override
     public synchronized void onAttached() {
         if (!isAttached) {
-
             cache.reset();
             cache = new TileObjectCache();
 
-            appContext.getBroadcaster().register(
-                    onFileChanged, AppBroadcaster.FILE_CHANGED_INCACHE);
+            appContext.getBroadcaster().register(onFileChanged, AppBroadcaster.FILE_CHANGED_INCACHE);
 
             isAttached = true;
         }
 
     }
-
-
 
     @Override
     public synchronized void onDetached() {
@@ -147,8 +132,6 @@ public class TileProvider implements Attachable, ObservableInterface {
             isAttached = false;
         }
     }
-
-
 
     private ObjTile getTileHandle(Tile tile) {
         ObjTile handle = cache.get(tile);
@@ -187,8 +170,6 @@ public class TileProvider implements Attachable, ObservableInterface {
         return r[0];
     }
 
-
-
     public synchronized TileBitmap getNonCached(final Tile mapTile) {
         final TileBitmap[] r = {null};
 
@@ -212,7 +193,6 @@ public class TileProvider implements Attachable, ObservableInterface {
 
         return r[0];
     }
-
 
     public synchronized boolean isReadyAndLoaded() {
         return cache.isReadyAndLoaded();

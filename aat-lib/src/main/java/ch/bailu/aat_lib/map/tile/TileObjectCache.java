@@ -22,14 +22,14 @@ public class TileObjectCache implements Closeable {
         }
     };
 
-
     /**
      * Non synchronized function. This works because LockCache can only grow.
-     *
+     * @param fileId id (path) of file that might be inside the cache
+     * @return true if object corresponding to  fileId is in cache else return false
      */
-    public boolean isInCache(String string) {
-        if (string != null) {
-            int hash = string.hashCode();
+    public boolean isInCache(String fileId) {
+        if (fileId != null) {
+            int hash = fileId.hashCode();
 
             for (int i = 0; i < tiles.size(); i++) {
                 ObjTile o = tiles.get(i);
@@ -38,11 +38,9 @@ public class TileObjectCache implements Closeable {
                     return true;
                 }
             }
-
         }
         return false;
     }
-
 
     public synchronized ObjTile get(String string) {
         for (int i = 0; i<tiles.size(); i++) {
@@ -53,10 +51,9 @@ public class TileObjectCache implements Closeable {
         return null;
     }
 
-
     /**
-     * Get a tile with specific zoom level and coordinates from the cache
-     * If can find the tile inside the cache it sets the access time to now.
+     * Get the tile with specific zoom level and coordinates from the cache
+     * If it can find the tile inside the cache it sets the access time to now.
      *
      * @param tile Coordinates and zoom level of the requested tile
      * @return A tile from the cache or null if it was not in the cache
@@ -74,7 +71,6 @@ public class TileObjectCache implements Closeable {
         return a.tileX == b.tileX && a.tileY == b.tileY && a.zoomLevel == b.zoomLevel;
     }
 
-
     public synchronized void put(ObjTile handle) {
         tiles.add(handle);
     }
@@ -84,18 +80,15 @@ public class TileObjectCache implements Closeable {
         tiles.close();
     }
 
-
     public synchronized void reDownloadTiles(AppContext sc) {
         for (int i = 0; i<tiles.size(); i++) {
             tiles.get(i).reDownload(sc);
         }
     }
 
-
     public synchronized void reset() {
         tiles.reset();
     }
-
 
     public synchronized void setCapacity(int capacity) {
         tiles.ensureCapacity(capacity);
@@ -106,10 +99,8 @@ public class TileObjectCache implements Closeable {
         return tiles.size();
     }
 
-
     public synchronized boolean isReadyAndLoaded() {
         for (int i = 0; i<tiles.size(); i++) {
-            //AppLog.d(this, tiles.get(i).getID());
             if (tiles.get(i) != null) {
                 if (!tiles.get(i).isReadyAndLoaded())
                     return false;
