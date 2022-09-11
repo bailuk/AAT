@@ -163,6 +163,13 @@ public final class DirectorySynchronizer  implements Closeable {
                 if (exception == null) {
                     setState(new StateLoadNextGpx());
                 } else {
+                    // There should ne a nicer test for whether we're trying
+                    // to display the track list, but this will do.
+                    if (exception.getMessage().contains(
+                        "SELECT filename FROM summary")) {
+                        exception = new Exception(
+                            "No tracks found in " + directory.toString());
+                    }
                     terminate(exception);
                 }
             }
