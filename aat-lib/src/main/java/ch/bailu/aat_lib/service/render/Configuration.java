@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 import ch.bailu.aat_lib.logger.AppLog;
 import ch.bailu.aat_lib.preferences.map.SolidMapsForgeDirectory;
+import ch.bailu.aat_lib.resources.Res;
 import ch.bailu.aat_lib.service.cache.ObjTileMapsForge;
 import ch.bailu.foc.Foc;
 
@@ -30,13 +31,8 @@ public final class Configuration {
                 AppLog.e(renderer, e);
                 renderer = null;
             }
-        }
-        else
-        {
-            /* I've defined a string resource for this (which needs translations)
-             * but I can't find a way to access a string resource from here.
-             */
-            AppLog.e(this, "No map files found at " + mapDir.getPath());
+        } else {
+            AppLog.e(this, Res.str().error_no_map_file() + mapDir.getPath());
         }
     }
 
@@ -74,4 +70,3 @@ public final class Configuration {
         }
     }
 }
-

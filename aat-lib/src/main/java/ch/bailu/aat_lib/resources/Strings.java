@@ -476,6 +476,8 @@ public class Strings {
 
     public String error_long() { return "Wrong input, only numbers are allowed.\n\"%s\"";}
 
+    public String error_no_map_file() { return "No map files found at ";}
+
     public String error_met() { return "First Number must be between 0.0 to 20.0, followed by a space.";}
 
     public String[] p_unit_list() {
