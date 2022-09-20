@@ -4,7 +4,7 @@ import ch.bailu.aat_lib.app.AppConfig
 import ch.bailu.aat_lib.resources.Res
 
 object GtkAppConfig : AppConfig() {
-    val title = Res.str().app_name()
+    val title: String = Res.str().app_name()
 
     override fun getApplicationId(): String {
         return "ch.bailu.aat_gtk"

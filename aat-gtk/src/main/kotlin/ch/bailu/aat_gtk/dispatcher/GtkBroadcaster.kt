@@ -4,13 +4,10 @@ import ch.bailu.aat_lib.dispatcher.BroadcastReceiver
 import ch.bailu.aat_lib.dispatcher.Broadcaster
 import ch.bailu.aat_lib.logger.AppLog
 import ch.bailu.gtk.GTK
-import ch.bailu.gtk.Refs
 import ch.bailu.gtk.glib.Glib
-import java.util.*
 import java.util.concurrent.ConcurrentLinkedQueue
 
 class GtkBroadcaster : Broadcaster {
-
     private val signals: MutableMap<String, ArrayList<BroadcastReceiver>> = HashMap()
     private val broadcastQueue = ConcurrentLinkedQueue<BroadcastEntry>()
     private val onSourceFunc = Glib.OnSourceFunc {
@@ -29,6 +26,7 @@ class GtkBroadcaster : Broadcaster {
         val observers = signals[signal]?.toTypedArray()
 
         if (observers != null) {
+            AppLog.d(this, "Current Thread is ${Thread.currentThread().name}")
             if (broadcastQueue.offer(BroadcastEntry(observers, arrayOf(*args)))) {
                 Glib.idleAdd(onSourceFunc, null)
             } else {
