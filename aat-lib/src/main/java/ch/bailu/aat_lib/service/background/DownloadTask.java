@@ -82,7 +82,7 @@ public class DownloadTask extends FileTask {
             }
 
         } catch (Exception e) {
-            AppLog.e(e);
+            AppLog.e("Download " + url + " -> " + file + ": " + e.getMessage());
 
         } finally {
             Foc.close(output);

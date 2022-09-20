@@ -2,6 +2,7 @@ package ch.bailu.aat_lib.lib.filter_list;
 
 import org.mapsforge.poi.storage.PoiCategory;
 import org.mapsforge.poi.storage.PoiCategoryManager;
+import org.mapsforge.poi.storage.PoiPersistenceManager;
 import org.mapsforge.poi.storage.UnknownPoiCategoryException;
 
 import java.io.BufferedInputStream;
@@ -62,18 +63,24 @@ public class FilterListUtil {
     }
 
     public static void readList(FilterList filterList, AppContext appContext, String db, Foc selected) {
-        filterList.clear();
 
-        var persistenceManager = appContext.getPoiPersistenceManager(db);
-        var categoryManager = persistenceManager.getCategoryManager();
+        PoiPersistenceManager persistenceManager = null;
 
         try {
+            filterList.clear();
+            persistenceManager = appContext.getPoiPersistenceManager(db);
+            var categoryManager = persistenceManager.getCategoryManager();
+
             readList(filterList, categoryManager);
             FilterListUtil.readSelected(filterList, selected);
         } catch (Exception e) {
-            AppLog.d(selected, e.getMessage());
+            AppLog.e(selected, "Load " + db + ": " + e.getMessage());
+        } finally {
+            if (persistenceManager != null) {
+                persistenceManager.close();
+            }
         }
-        persistenceManager.close();
+
     }
 
     private static void readList(FilterList filterList, PoiCategoryManager categoryManager) throws UnknownPoiCategoryException {
